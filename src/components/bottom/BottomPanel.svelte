@@ -1,6 +1,6 @@
 <!--
   (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
- 
+
   SPDX-License-Identifier: MIT
  -->
 
@@ -12,7 +12,7 @@
   import ConnectDialogContainer from '../connection-prompt/ConnectDialogContainer.svelte';
   import Microbits from '../../script/microbit-interfacing/Microbits';
   import StandardButton from '../StandardButton.svelte';
-  import { startConnectionProcess } from '../../script/stores/connectDialogStore';
+  import { startConnectionProcess, startSerialConnection } from '../../script/stores/connectDialogStore';
   import ConnectedLiveGraphButtons from './ConnectedLiveGraphButtons.svelte';
   import LiveGraphInformationSection from './LiveGraphInformationSection.svelte';
   import BaseDialog from '../dialogs/BaseDialog.svelte';
@@ -34,6 +34,10 @@
     Microbits.expelOutput();
   };
 
+  const serialButtonClicked = () => {
+    startSerialConnection();
+  }
+
   let isLive3DOpen = false;
 </script>
 
@@ -48,6 +52,9 @@
     <div class="h-full w-full flex justify-center bg-white">
       <StandardButton onClick={connectButtonClicked}
         >{$t('footer.connectButtonNotConnected')}</StandardButton>
+        <StandardButton onClick={serialButtonClicked}>
+          Connect to serial
+        </StandardButton>
     </div>
   {:else}
     <!-- Input microbit is assigned -->

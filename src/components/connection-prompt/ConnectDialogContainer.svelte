@@ -1,6 +1,6 @@
 <!--
   (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
- 
+
   SPDX-License-Identifier: MIT
  -->
 
@@ -22,6 +22,8 @@
   import { btPatternInput, btPatternOutput } from '../../script/stores/connectionStore';
   import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
   import BrokenFirmwareDetected from './usb/BrokenFirmwareDetected.svelte';
+    import StandardButton from '../StandardButton.svelte';
+    import MicrobitSerial from '../../script/microbit-interfacing/MicrobitSerial';
 
   let flashProgress = 0;
 
@@ -81,6 +83,8 @@
           ($connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH)}
         onStartUsbClick={() =>
           ($connectionDialogState.connectionState = ConnectDialogStates.USB_START)} />
+    {:else if $connectionDialogState.connectionState === ConnectDialogStates.SERIAL_START}
+      <StandardButton onClick={MicrobitSerial.connect}>{'Connect it'}</StandardButton>
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.START_OUTPUT}
       <ConnectSameDialog
         onConnectSameClick={connectSame}

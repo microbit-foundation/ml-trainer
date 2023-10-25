@@ -20,6 +20,7 @@ export enum ConnectDialogStates {
   USB_START, // Initial usb installation prompt
   USB_DOWNLOADING, // Downloading usb program status bar prompt
   USB_DONE, // Installation done prompt
+  SERIAL_START,
   MANUAL_TUTORIAL, // Prompt with tutorial gif for manual installation (and downloading of program)
   BAD_FIRMWARE, // We detected an issue with the firmware of the micro:bit trying to transfer program.
 }
@@ -37,6 +38,16 @@ export const startConnectionProcess = (): void => {
     s.connectionState = get(state).isInputConnected
       ? ConnectDialogStates.START_OUTPUT
       : ConnectDialogStates.START;
+    s.deviceState = get(state).isInputConnected
+      ? DeviceRequestStates.OUTPUT
+      : DeviceRequestStates.INPUT;
+    return s;
+  });
+};
+
+export const startSerialConnection = (): void => {
+  connectionDialogState.update(s => {
+    s.connectionState = ConnectDialogStates.SERIAL_START;
     s.deviceState = get(state).isInputConnected
       ? DeviceRequestStates.OUTPUT
       : DeviceRequestStates.INPUT;
