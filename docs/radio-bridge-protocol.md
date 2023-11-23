@@ -10,12 +10,49 @@ The solution to this could be a single "bridge" Micro:bit connected to a host co
 
 ## The message format
 
+Data is streamed to/from the Micro:bit and web app via serial data over USB.
+
+### Delimiter
+
+The messages will need to be delimited by a character for example a newline.
+
+```
+\n
+```
+
+### Handshake request from web app, response from Micro:bit
+
 In order to connect the bridge Micro:bit to the web app, a handshake should be performed. This confirms that the bridge Micro:bit is already running the correct binary, so the flashing step for the Micro:bit can be skipped.
 
-Handshake message format:
+Handshake request:
 ```
-message format here
+Req
 ```
+
+Handshake response
+```
+Ack
+```
+
+### Sending LED matrix data
+
+The web app has "triggers" that send LED data to the Micro:bit when a particular action is detected.
+
+```
+LED[1,1,0,1,1,0,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1]
+```
+
+### Sending Pin data
+
+The web app has "triggers" that send the PIN "up" or "down" state when a particular action is detected.
+
+Requirements: send pin data "always on" or for set amount of time.
+
+```
+
+```
+
+### Streaming accelerometer & button data from Micro:bit to web app
 
 The state of the accelerometer and buttons will be streamed:
 ```
