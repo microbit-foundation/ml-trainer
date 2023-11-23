@@ -2,15 +2,15 @@
 
 ## Context
 
-The current method of connecting a Micro:bit to the ML web app is via Web Bluetooth. The issue with this is that Web Bluetooth may not be enabled/available on many systems that are used in schools, which is the primary use-case for the ML trainer web app. It would also be beneficial to be able to handle multiple Micro:bit connections without having to change the design of the web app too much from its current state.
+The current method of connecting a micro:bit to the ML web app is via Web Bluetooth. The issue with this is that Web Bluetooth may not be enabled/available on many systems that are used in schools, which is the primary use-case for the ML trainer web app. It would also be beneficial to be able to handle multiple micro:bit connections without having to change the design of the web app too much from its current state.
 
 ## Proposed solution
 
-The solution to this could be a single "bridge" Micro:bit connected to a host computer via WebUSB. Micro:bits used in the classroom that need to connect to the ML trainer web app would then connect to the bridge Micro:bit via the Micro:bits' radio connection. The bridge would recieve streaming data from one Micro:bit in the classroom at a time and forward this data onto the web app using a message format that we have designed. The connections to the Micro:bits in the classroom are managed solely by the bridge Micro:bit.
+The solution to this could be a single "bridge" micro:bit connected to a host computer via WebUSB. micro:bits used in the classroom that need to connect to the ML trainer web app would then connect to the bridge micro:bit via the micro:bits' radio connection. The bridge would recieve streaming data from one micro:bit in the classroom at a time and forward this data onto the web app using a message format that we have designed. The connections to the micro:bits in the classroom are managed solely by the bridge micro:bit.
 
 ## The message format
 
-Data is streamed to/from the Micro:bit and web app via serial data over USB.
+Data is streamed to/from the micro:bit and web app via serial data over USB.
 
 ### Delimiter
 
@@ -20,9 +20,9 @@ The messages will need to be delimited by a character for example a newline.
 \n
 ```
 
-### Handshake request from web app, response from Micro:bit
+### Handshake request from web app, response from micro:bit
 
-In order to connect the bridge Micro:bit to the web app, a handshake should be performed. This confirms that the bridge Micro:bit is already running the correct binary, so the flashing step for the Micro:bit can be skipped.
+In order to connect the bridge micro:bit to the web app, a handshake should be performed. This confirms that the bridge micro:bit is already running the correct binary, so the flashing step for the micro:bit can be skipped.
 
 Handshake request:
 ```
@@ -36,7 +36,7 @@ Ack
 
 ### Sending LED matrix data
 
-The web app has "triggers" that send LED data to the Micro:bit when a particular action is detected.
+The web app has "triggers" that send LED data to the micro:bit when a particular action is detected.
 
 ```
 LED[1,1,0,1,1,0,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1]
@@ -52,7 +52,7 @@ Requirements: send pin data "always on" or for set amount of time.
 
 ```
 
-### Streaming accelerometer & button data from Micro:bit to web app
+### Streaming accelerometer & button data from micro:bit to web app
 
 The state of the accelerometer and buttons will be streamed:
 ```
@@ -90,4 +90,4 @@ The current Bluetooth implementation is event-based and listens to a "data chang
 
 The Web Serial interface only gives a polling method for recieving the data, so we will have to process the data as it comes in. We could always abstract over the top of this with our own custom event, and only fire that event off if we have detected that the data has changed. We may not need to do this from a performance optimisation point-of-view, but it could help make the interface consistent with the existing Web Bluetooth one.
 
-An alternative approach would be a request/response pattern where the web app would requests specific data from the Micro:bit and then the Micro:bit would respond with the requested data. This could create more overhead in the communication between the bridge and the web app.
+An alternative approach would be a request/response pattern where the web app would requests specific data from the micro:bit and then the micro:bit would respond with the requested data. This could create more overhead in the communication between the bridge and the web app.
