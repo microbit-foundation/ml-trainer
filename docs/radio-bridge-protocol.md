@@ -86,7 +86,7 @@ AX[408],AY[748],AZ[-1288],BA[0],BB[1],BL[0]
 
 ## Event-based, polling-based, or request/response message listening in web app?
 
-The current Bluetooth implementation is event-based and listens to a "data changed" event so the data is only processed when when the values change. Web Bluetooth has a data rate of around 24Mbps, which gives plenty enough resolution for the simple data messages we are processing in the web app.
+The current Bluetooth implementation is event-based and listens to a "data changed" event so the data is only processed when when the values change. Web Bluetooth has a data rate of around 24Mbps, and the micro:bit BLE profile is set to advertise at an interval of 50ms, which gives plenty enough resolution for the simple data messages we are processing in the web app.
 
 The Web Serial interface only gives a polling method for recieving the data, so we will have to process the data as it comes in. We could always abstract over the top of this with our own custom event, and only fire that event off if we have detected that the data has changed. We may not need to do this from a performance optimisation point-of-view, but it could help make the interface consistent with the existing Web Bluetooth one.
 
