@@ -5,7 +5,6 @@
  */
 
 import App from './App.svelte';
-import './appInsights';
 import 'virtual:windi.css';
 
 const app = new App({

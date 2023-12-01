@@ -10,7 +10,6 @@
   import OutputBehaviour from './script/connection-behaviours/OutputBehaviour';
   import OverlayView from './views/OverlayView.svelte';
   import PageContentView from './views/PageContentView.svelte';
-  import CookieBanner from './components/cookie-bannner/CookieBanner.svelte';
   import { state } from './script/stores/uiStore';
   import { checkCompatibility } from './script/compatibility/CompatibilityChecker';
   import IncompatiblePlatformView from './views/IncompatiblePlatformView.svelte';
@@ -23,6 +22,7 @@
   import SelectLanguageControlBarDropdown from './components/control-bar/control-bar-items/SelectLanguageControlBarDropdown.svelte';
   import BottomPanel from './components/bottom/BottomPanel.svelte';
   import { t } from './i18n';
+  import { consent } from './script/stores/complianceStore';
 
   ConnectionBehaviours.setInputBehaviour(new InputBehaviour());
   ConnectionBehaviours.setOutputBehaviour(new OutputBehaviour());
@@ -42,9 +42,11 @@
     <IncompatiblePlatformView />
   {:else}
     <main class="h-full w-screen m-0 relative flex">
-      <CookieBanner />
       <OverlayView />
-      <BluetoothIncompatibilityWarningDialog />
+      <!-- Wait for consent dialog to avoid a clash -->
+      {#if $consent}
+        <BluetoothIncompatibilityWarningDialog />
+      {/if}
 
       <div class="w-full flex flex-col bg-backgrounddark">
         <ControlBar>
