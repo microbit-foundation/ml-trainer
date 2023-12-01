@@ -241,37 +241,6 @@ export const translations: TranslationMap = {
 		"connectMB.outputMB.sameButton": "Samme",
 		"connectMB.outputMB.otherButton": "Anden",
 
-		// COOKIE BANNER
-		"cookies.banner.title": "Cookie politik",
-		"cookies.banner.subtitle": "Forbrug og analyse",
-		"cookies.banner.text.pleaseHelp": "Hjælp os med at forbedre siden! Tillad cookies for at hjælpe os.",
-		"cookies.banner.text.description": "Her hos ML-Machine bruger vi cookies for at indsamle information omkring forbrug af siden. Uden disse cookies er vi ikke i stand til at se hvordan vores side bliver brugt.",
-		"cookies.banner.text.readMore": "Du kan læse mere omkring vores cookie politik ",
-		"cookies.banner.text.readMore.here": "her",
-		"cookies.banner.buttons.reject": "Afvis",
-		"cookies.banner.buttons.accept": "Accepter",
-
-		"cookies.overlay.title": "Cookie politik",
-
-		"cookies.overlay.question.whatAreCookies": "Hvad er cookies?",
-		"cookies.overlay.question.ourReasoning": "Hvad bruger vi cookies til?",
-		"cookies.overlay.question.storageDuration": "Hvor lang tid gemmer vi cookies?",
-		"cookies.overlay.question.deleting": "Hvordan sletter man cookies?",
-		"cookies.overlay.question.consentChange": "Hvordan ændrer jeg mit samtykke?",
-
-		"cookies.overlay.answer.whatAreCookies": "Cookies er små filer med informationer, som der bliver gemt på den enhed du bruger til at browse med. Det er ikke programmer, som kan indeholder malware eller vira.",
-		"cookies.overlay.answer.ourReasoning": "Vi bruger cookies for at indsamle information omkring forbrug af siden. Uden disse cookies er vi ikke i stand til at se hvordan vores side bliver brugt. Du gør derfor os en stor tjeneste ved at give samtykke til cookies.",
-		"cookies.overlay.answer.storageDuration": "Det varier fra side til side og udnyttelsen af cookie'en. Nogle cookies bliver gemt indtil du forlader siden, andre bliver gemt i længere perioder. Alle vores cookies bliver gemt i et år.",
-		"cookies.overlay.answer.deleting": "Det er forskelligt fra browser til browser. Her er dog en liste af manualer til de mest populære browsere.",
-		"cookies.overlay.answer.consentChange": "På nuværende tidspunkt har du endnu ikke givet samtykke, men når du gør kan du blot slette din cookie, hvis du ønsker at trække samtykke tilbage eller på andenvis ombestemmer dig.",
-
-		"cookies.overlay.table.title": "Cookies som vi bruger",
-		"cookies.overlay.table.header.description": "Beskrivelse",
-
-		"cookies.overlay.table.row.ai_user.description": "Brugt af Microsoft Application Insights til at indsamle statistisk data omkring forbrug. Den gemmer derudover et unik identifikationsnummer, som bruges til at genkende dig næste gang du amkommer på siden. Den gemmer ikke noget personligt omkring dig, og genererer et identifikationsnummer tilfældigt.",
-		"cookies.overlay.table.row.ai_session.description": "Gemmer dit nuværende besøg, så vi kan genkende dig på tværs af vores sider.",
-		"cookies.overlay.table.row.cookie_consent.description": "Gemmer dine samtykkevalg af vores cookie politik.",
-
 		// COMPATIBILITY WARNING
 		"popup.compatibility.bluetooth.header": "Browser ikke understøttet!",
 		"popup.compatibility.bluetooth.explain": "Din nuværende browser understøtter ikke bluetooth. Bluetooth bruges til at drive siden. Uden det virker den ikke.",
@@ -527,37 +496,6 @@ export const translations: TranslationMap = {
 		"connectMB.outputMB.different": "Connect another micro:bit",
 		"connectMB.outputMB.sameButton": "Same",
 		"connectMB.outputMB.otherButton": "Other",
-
-		// COOKIE BANNER
-		"cookies.banner.title": "Cookie policy",
-		"cookies.banner.subtitle": "Performance & analytics",
-		"cookies.banner.text.pleaseHelp": "Please help us make it better by keeping the cookies enabled.",
-		"cookies.banner.text.description": "Here at ML-Machine we use cookies to collect information on the usage and performance of the website. Without these cookies, we will not be able to collect vital information on the performance of the site.",
-		"cookies.banner.text.readMore": "You can read more about it ",
-		"cookies.banner.text.readMore.here": "here",
-		"cookies.banner.buttons.reject": "Reject",
-		"cookies.banner.buttons.accept": "Accept",
-
-		"cookies.overlay.title": "Cookie policy",
-
-		"cookies.overlay.question.whatAreCookies": "What are cookies?",
-		"cookies.overlay.question.ourReasoning": "What do we use cookies for?",
-		"cookies.overlay.question.storageDuration": "For how long are cookies stored?",
-		"cookies.overlay.question.deleting": "How do i delete cookies?",
-		"cookies.overlay.question.consentChange": "How do i change my consent?",
-
-		"cookies.overlay.answer.whatAreCookies": "Cookies are small data files stored on the device you are using to browse websites. They are not programs, that contain harmful malware or viruses.",
-		"cookies.overlay.answer.ourReasoning": "We use cookies to collect information on the usage and performance of the website. Without these cookies, we will not be able to collect vital information on the performance of the site.",
-		"cookies.overlay.answer.storageDuration": "It varies from site to site and the usage of the cookie. Some may be stored for only the current session, while others may be stored for days. Our cookies are stored for one year.",
-		"cookies.overlay.answer.deleting": "It varies from browser to browser. However here are some of the manuals for some of the most commonly used browsers.",
-		"cookies.overlay.answer.consentChange": "Currently, you have not rejected nor agreed to our cookie policy. But once you do, you will be able to delete cookies to change your consent at any time.",
-
-		"cookies.overlay.table.title": "The cookies we use",
-		"cookies.overlay.table.header.description": "Description",
-
-		"cookies.overlay.table.row.ai_user.description": "Used by Microsoft Application Insights software to collect statistical usage and telemetry information. The cookie stores a unique identifier to recognise users on returning visits over time.",
-		"cookies.overlay.table.row.ai_session.description": "Preserves users states across page requests.",
-		"cookies.overlay.table.row.cookie_consent.description": "Stores the terms to which you have given consent to in regards to our cookie policy.",
 
 		// COMPATIBILITY WARNING
 		"popup.compatibility.bluetooth.header": "Bluetooth incompatible browser!",
