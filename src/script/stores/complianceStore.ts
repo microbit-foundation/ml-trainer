@@ -14,6 +14,7 @@ export interface CookieConsent {
   functional: boolean;
 }
 
+const domain = window.location.hostname;
 const config = {
   ga:
     process.env.VITE_STAGE === 'PRODUCTION' || process.env.VITE_STAGE === 'STAGING'
@@ -21,11 +22,32 @@ const config = {
       : undefined,
   custom: [
     {
-      type: 'cookie',
+      type: 'local',
+      domain,
       category: 'essential',
-      name: 'something',
-      domain: 'ml-tool.microbit.org',
-      purpose: 'Something helpful here',
+      name: 'gestureData',
+      purpose: 'Stores the training data and other settings for each gesture',
+    },
+    {
+      type: 'local',
+      domain,
+      category: 'essential',
+      name: 'btPatternInput',
+      purpose: 'Stores the pairing pattern for the most recent input micro:bit',
+    },
+    {
+      type: 'local',
+      domain,
+      category: 'essential',
+      name: 'btPatternOutput',
+      purpose: 'Stores the pairing pattern for the most recent output micro:bit',
+    },
+    {
+      type: 'local',
+      domain,
+      category: 'essential',
+      name: 'lang',
+      purpose: 'Stores your chosen language',
     },
     // Some of the Svelte stores use local storage, this needs investigating
   ],
