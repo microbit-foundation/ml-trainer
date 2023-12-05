@@ -23,6 +23,7 @@
   import Microbits from '../../script/microbit-interfacing/Microbits';
   import TrainModelFirstTitle from '../../components/TrainModelFirstTitle.svelte';
   import OutputGesture from '../../components/output/OutputGesture.svelte';
+  import downArrowImage from '../../imgs/down_arrow.svg';
 
   // In case of manual classification, variables for evaluation
   let recordingTime = 0;
@@ -150,7 +151,7 @@
             <div class="text-center ml-0 mb-2 mt-8">
               <img
                 class="m-auto arrow-filter-color"
-                src="/imgs/down_arrow.svg"
+                src={downArrowImage}
                 alt="down arrow icon"
                 width="80px" />
             </div>

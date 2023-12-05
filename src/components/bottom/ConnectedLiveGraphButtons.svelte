@@ -9,6 +9,7 @@
   import TypingUtils from '../../script/TypingUtils';
   import { state } from '../../script/stores/uiStore';
   import StandardButton from '../StandardButton.svelte';
+  import loadingSpinnerImage from '../../imgs/loadingspinner.gif';
 
   export let onOutputDisconnectButtonClicked: () => void;
   export let onInputDisconnectButtonClicked: () => void;
@@ -25,7 +26,7 @@
           >{$t('menu.model.disconnect')}</StandardButton>
       {:else}
         <StandardButton onClick={TypingUtils.emptyFunction} color="disabled">
-          <img alt="loading" src="imgs/loadingspinner.gif" style="height:24px" />
+          <img alt="loading" src={loadingSpinnerImage} style="height:24px" />
         </StandardButton>
       {/if}
     {/if}
@@ -37,7 +38,7 @@
         >{$t('footer.disconnectButton')}</StandardButton>
     {:else}
       <StandardButton onClick={TypingUtils.emptyFunction} color="disabled">
-        <img alt="loading" src="/imgs/loadingspinner.gif" style="height:24px" />
+        <img alt="loading" src={loadingSpinnerImage} style="height:24px" />
       </StandardButton>
     {/if}
   </div>

@@ -23,6 +23,7 @@
   import BottomPanel from './components/bottom/BottomPanel.svelte';
   import { t } from './i18n';
   import { consent } from './script/stores/complianceStore';
+  import microbitLogoImage from './imgs/microbit-logo.svg';
 
   ConnectionBehaviours.setInputBehaviour(new InputBehaviour());
   ConnectionBehaviours.setOutputBehaviour(new OutputBehaviour());
@@ -50,11 +51,7 @@
 
       <div class="w-full flex flex-col bg-backgrounddark">
         <ControlBar>
-          <img
-            class="mr-8"
-            src="/imgs/microbit-logo.svg"
-            alt="Micro:bit logo"
-            width="150px" />
+          <img class="mr-8" src={microbitLogoImage} alt="Micro:bit logo" width="150px" />
           <h1 class="text-xl font-thin whitespace-nowrap">{$t('content.index.title')}</h1>
           <div class="flex flex-row basis-full justify-end">
             <SelectLanguageControlBarDropdown />

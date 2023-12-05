@@ -30,6 +30,7 @@
   import ImageSkeleton from './skeletonloading/ImageSkeleton.svelte';
   import GestureTilePart from './GestureTilePart.svelte';
   import StaticConfiguration from '../StaticConfiguration';
+  import microbitRecordingGuideImage from '../imgs/microbit_record_guide.svg';
 
   // Variables for component
   export let onNoMicrobitSelect: () => void;
@@ -259,7 +260,7 @@
             <ImageSkeleton
               height={95}
               width={140}
-              src="/imgs/microbit_record_guide.svg"
+              src={microbitRecordingGuideImage}
               alt="microbit recording guide" />
           </div>
           <p class=" text-center absolute w-60px right-23px top-30px">

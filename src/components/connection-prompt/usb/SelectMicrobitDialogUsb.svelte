@@ -8,6 +8,7 @@
   import StandardButton from '../../StandardButton.svelte';
   import { t } from '../../../i18n';
   import Microbits from '../../../script/microbit-interfacing/Microbits';
+  import selectMicrobitImage from '../../../imgs/select-microbit.png';
 
   export let onBackClick: () => void;
   export let onFound: () => void;
@@ -29,7 +30,7 @@
       {$t('connectMB.webPopup')}
     </p>
     <img
-      src="/imgs/select-microbit.png"
+      src={selectMicrobitImage}
       alt="Instructions on how to choose microbit from web popup using usb"
       class="left-0 pt-5" />
     <p class="absolute left-3/4 transform -translate-x-1/2 top-1/2 -translate-y-28">

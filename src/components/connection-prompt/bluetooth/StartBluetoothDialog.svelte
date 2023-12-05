@@ -7,6 +7,7 @@
 <script lang="ts">
   import StandardButton from '../../StandardButton.svelte';
   import { t } from '../../../i18n';
+  import microbitImage from '../../../imgs/stylised-microbit-black.svg';
 
   export let onNextClick: () => void;
   export let onStartRadioClick: () => void;
@@ -18,7 +19,7 @@
     <p>{$t('connectMB.bluetoothStart.subtitle')}</p>
     <div class="inline-grid grid-cols-3 gap-30 py-20 px-10">
       <div>
-        <img src="imgs/stylised-microbit-black.svg" alt="radio ingredients" />
+        <img src={microbitImage} alt="radio ingredients" />
         <p class="pt-10 text-center font-bold">
           {$t('connectMB.bluetoothStart.requirements1')}
         </p>

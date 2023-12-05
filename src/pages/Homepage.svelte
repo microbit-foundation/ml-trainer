@@ -5,6 +5,9 @@
  -->
 
 <script lang="ts">
+  import trainModelImage from '../imgs/TrainModel.svg';
+  import inputDataImage from '../imgs/InputData.svg';
+  import testModelImage from '../imgs/TestModel.svg';
   import FrontPageContentTile from '../components/FrontPageContentTile.svelte';
   import StandardButton from '../components/StandardButton.svelte';
   import { t } from '../i18n';
@@ -42,11 +45,7 @@
           <h2 class="text-center text-3xl mb-5">
             {$t('content.index.toolProcessCards.data.title')}
           </h2>
-          <img
-            class="mb-5"
-            alt="add data"
-            src="/imgs/InputData.svg"
-            width={tileImageSize} />
+          <img class="mb-5" alt="add data" src={inputDataImage} width={tileImageSize} />
           <p class="text-center w-75">
             {$t('content.index.toolProcessCards.data.description')}
           </p>
@@ -59,7 +58,7 @@
           <img
             class="mb-5"
             alt="train model"
-            src="/imgs/TrainModel.svg"
+            src={trainModelImage}
             width={tileImageSize} />
           <p class="text-center w-75">
             {$t('content.index.toolProcessCards.train.description')}
@@ -70,11 +69,7 @@
           <h2 class="text-center text-3xl mb-5">
             {$t('content.index.toolProcessCards.model.title')}
           </h2>
-          <img
-            class="mb-5"
-            alt="test model"
-            src="/imgs/TestModel.svg"
-            width={tileImageSize} />
+          <img class="mb-5" alt="test model" src={testModelImage} width={tileImageSize} />
           <p class="text-center w-75">
             {$t('content.index.toolProcessCards.model.description')}
           </p>

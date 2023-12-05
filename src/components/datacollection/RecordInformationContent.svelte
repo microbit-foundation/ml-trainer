@@ -8,6 +8,7 @@
   import { t } from '../../i18n';
   import ImageSkeleton from '../skeletonloading/ImageSkeleton.svelte';
   import { getInfoBoxColors } from '../information/InformationComponentUtility';
+  import recordingGuideImage from '../../imgs/microbit_record_guide.svg';
   export let isLightTheme = true;
 
   const colors = getInfoBoxColors(isLightTheme);
@@ -26,7 +27,7 @@
       <ImageSkeleton
         alt="microbit recording guide"
         height={134}
-        src="/imgs/microbit_record_guide.svg"
+        src={recordingGuideImage}
         width={200} />
     </div>
     <p class=" text-center absolute w-60px right-10px top-35px">

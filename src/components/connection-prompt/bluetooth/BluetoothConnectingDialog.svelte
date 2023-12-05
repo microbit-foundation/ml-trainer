@@ -19,6 +19,7 @@
   import { DeviceRequestStates } from '../../../script/stores/connectDialogStore';
   import Environment from '../../../script/Environment';
   import StaticConfiguration from '../../../StaticConfiguration';
+  import loadingSpinnerImage from '../../../imgs/loadingspinner.gif';
 
   // callbacks
   export let deviceState: DeviceRequestStates;
@@ -114,7 +115,7 @@
     <!-- Show spinner while connecting -->
     <div class="w-650px flex flex-col justify-center items-center">
       <p>{$t('connectMB.bluetooth.connecting')}</p>
-      <img alt="loading" src="/imgs/loadingspinner.gif" width="100px" />
+      <img alt="loading" src={loadingSpinnerImage} width="100px" />
       <div class="bg-primary rounded w-full h-5">
         <div
           style="width: {`${timeoutProgress * 100}%`};"

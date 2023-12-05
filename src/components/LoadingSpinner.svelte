@@ -4,8 +4,10 @@
   SPDX-License-Identifier: MIT
  -->
 
-<script></script>
+<script>
+  import loadingSpinnerImage from '../imgs/loadingspinner.gif';
+</script>
 
 <div class="justify-center items-center self-center m-auto">
-  <img alt="loading" src="/imgs/loadingspinner.gif" width="150px" />
+  <img alt="loading" src={loadingSpinnerImage} width="150px" />
 </div>

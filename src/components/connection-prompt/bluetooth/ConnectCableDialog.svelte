@@ -7,6 +7,7 @@
 <script lang="ts">
   import StandardButton from '../../StandardButton.svelte';
   import { t } from '../../../i18n';
+  import connectCableImage from '../../../imgs/connect-cable.gif';
 
   export let onNextClick: () => void;
   export let onBackClick: () => void;
@@ -34,10 +35,7 @@
         {$t('connectMB.connectCableMB2.subtitle')}
       {/if}
     </p>
-    <img
-      src="imgs/connect-cable.gif"
-      alt="GIF of connecting micro:bit"
-      class="px-55 py-5" />
+    <img src={connectCableImage} alt="GIF of connecting micro:bit" class="px-55 py-5" />
   </div>
   <div class="flex">
     {#if currentStage === 'usb' || currentStage === 'usb1'}

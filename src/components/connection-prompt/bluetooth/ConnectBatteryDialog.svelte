@@ -7,6 +7,7 @@
 <script lang="ts">
   import StandardButton from '../../StandardButton.svelte';
   import { t } from '../../../i18n';
+  import microbitConnectedImage from '../../../imgs/stylised-microbit-connected.svg';
 
   export let onNextClick: () => void;
   export let onBackClick: () => void;
@@ -19,7 +20,7 @@
     </p>
     <p>{$t('connectMB.connectBattery.subtitle')}</p>
     <img
-      src="/imgs/stylised-microbit-connected.svg"
+      src={microbitConnectedImage}
       alt="Battery connection diagram"
       class="px-40 pt-5" />
   </div>

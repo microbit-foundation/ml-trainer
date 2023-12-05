@@ -12,7 +12,7 @@ import 'jest-expect-message';
 import * as path from 'path';
 
 // Place files you wish to ignore by name in here
-const ignoredFiles: string[] = ['.DS_Store'];
+const ignoredFiles: RegExp[] = [/^\.DS_Store$/, /\.(gif|svg|png|jpg|jpeg)$/];
 const directoriesToScan = ['./src/', './microbit/v2/source/', './microbit/v1/source/'];
 
 const licenseIdentifierStringSPDX = 'SPDX-License-Identifier:';
@@ -27,12 +27,12 @@ type DirectoryContents = {
   folders: string[];
 };
 
-const readDirectory = (directory: string, ignoreList: string[]): DirectoryContents => {
+const readDirectory = (directory: string, ignoreList: RegExp[]): DirectoryContents => {
   const files: string[] = [];
   const folders: string[] = [];
   const filesRead = fs.readdirSync(directory);
   filesRead.forEach(file => {
-    if (ignoreList.includes(file)) return;
+    if (ignoreList.some(ignoreRegExp => ignoreRegExp.test(file))) return;
     const fileLocation = path.join(directory, file);
     const stats = fs.statSync(fileLocation);
     if (stats.isFile()) {
