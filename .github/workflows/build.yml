@@ -29,8 +29,9 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+          registry-url: "https://npm.pkg.github.com"
       - run: npm ci
-      - run: npm install --no-save --registry=https://npm.pkg.github.com/microbit-foundation @microbit-foundation/website-deploy-aws@0.5 @microbit-foundation/website-deploy-aws-config@0.9 @microbit-foundation/npm-package-versioner@2
+      - run: npm install --no-save @microbit-foundation/website-deploy-aws@0.5 @microbit-foundation/website-deploy-aws-config@0.9 @microbit-foundation/npm-package-versioner@2
         if: github.repository_owner == 'microbit-foundation'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
