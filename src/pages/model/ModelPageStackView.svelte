@@ -4,13 +4,6 @@
   SPDX-License-Identifier: MIT
  -->
 
-<style>
-  .arrow-filter-color {
-    filter: invert(100%) sepia(100%) saturate(100%) hue-rotate(0deg) brightness(100%)
-      contrast(100%);
-  }
-</style>
-
 <script lang="ts">
   import { buttonPressed, areActionsAllowed, state } from '../../script/stores/uiStore';
   import { gestures, settings } from '../../script/stores/mlStore';
@@ -18,7 +11,6 @@
   import { onMount } from 'svelte';
   import { classify } from '../../script/ml';
   import { t } from '../../i18n';
-  import { fade } from 'svelte/transition';
   import Information from '../../components/information/Information.svelte';
   import Microbits from '../../script/microbit-interfacing/Microbits';
   import TrainModelFirstTitle from '../../components/TrainModelFirstTitle.svelte';
@@ -26,15 +18,6 @@
 
   // In case of manual classification, variables for evaluation
   let recordingTime = 0;
-  // let lastRecording;
-
-  // Bool flags to know whether output microbit popup should be show
-  let hasClosedPopup = false;
-  let hasInteracted = false;
-
-  function onUserInteraction(): void {
-    hasInteracted = true;
-  }
 
   /**
    * Classify based on button click
@@ -44,12 +27,9 @@
     if (!areActionsAllowed()) return;
 
     $state.isRecording = true;
-    // lastRecording = undefined;
 
-    // Get duration
     const duration = get(settings).duration;
 
-    // Loading interval
     const loadingInterval = setInterval(() => {
       recordingTime++;
     }, duration / 30);
@@ -91,7 +71,6 @@
   $: triggerButtonsClicked($buttonPressed);
 </script>
 
-<!-- Main pane -->
 <main class="h-full flex flex-col pt-4 pl-4">
   {#if $state.isPredicting}
     <div>
@@ -104,47 +83,10 @@
       </div>
 
       <div class="pl-1">
-        <!-- Display all gestures and their output capabilities -->
         {#each $gestures as gesture}
-          <OutputGesture variant="stack" {gesture} {onUserInteraction} />
+          <OutputGesture variant="stack" {gesture} />
         {/each}
       </div>
-      {#if !$state.isOutputConnected && !hasClosedPopup && hasInteracted}
-        <div
-          transition:fade
-          class="grid grid-cols-5 absolute bottom-5 w-full min-w-729px">
-          <div
-            class="flex relative col-start-2 rounded-lg col-end-5 h-35"
-            style="background-color:rgba(231, 229, 228, 0.85)">
-            <div class="m-4 mr-2 w-3/4">
-              <p class="text-2xl font-bold">
-                {$t('content.model.output.popup.header')}
-              </p>
-              <p>
-                {$t('content.model.output.popup.body')}
-              </p>
-            </div>
-            <div class="text-center ml-0 mb-2 mt-8">
-              <img
-                class="m-auto arrow-filter-color"
-                src="/imgs/down_arrow.svg"
-                alt="down arrow icon"
-                width="80px" />
-            </div>
-            <div class="absolute right-2 top-2 svelte-1rnkjvh">
-              <button
-                class="hover:bg-gray-100 rounded outline-transparent w-8 svelte-1rnkjvh"
-                on:click={() => {
-                  hasClosedPopup = true;
-                }}>
-                <i
-                  class="fas fa-plus text-lg text-gray-600 hover:text-gray-800 duration-75 svelte-1rnkjvh"
-                  style="transform: rotate(45deg);" />
-              </button>
-            </div>
-          </div>
-        </div>
-      {/if}
     </div>
   {:else}
     <TrainModelFirstTitle />

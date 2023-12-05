@@ -1,6 +1,6 @@
 <!--
   (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
- 
+
   SPDX-License-Identifier: MIT
  -->
 
@@ -85,7 +85,7 @@
   {#if matches}
     <div class="grid grid-cols-3 gap-4">
       {#each $gestures as gesture}
-        <OutputGesture {gesture} {onUserInteraction} variant={'tile'} />
+        <OutputGesture {gesture} variant={'tile'} />
       {/each}
     </div>
   {/if}
@@ -94,7 +94,7 @@
   {#if matches}
     <div class="grid grid-cols-4 gap-4">
       {#each $gestures as gesture}
-        <OutputGesture {gesture} {onUserInteraction} variant={'tile'} />
+        <OutputGesture {gesture} variant={'tile'} />
       {/each}
     </div>
   {/if}
@@ -103,7 +103,7 @@
   {#if matches}
     <div class="grid grid-cols-5 gap-4">
       {#each $gestures as gesture}
-        <OutputGesture {gesture} {onUserInteraction} variant={'tile'} />
+        <OutputGesture {gesture} variant={'tile'} />
       {/each}
     </div>
   {/if}

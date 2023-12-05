@@ -34,9 +34,7 @@
 
   // Variables for component
   export let gesture: GestureData;
-  export const onUserInteraction: () => void = () => {
-    return;
-  };
+
   let wasTriggered = false;
   let triggerFunctions: (() => void)[] = [];
   let selectedSound: SoundData | undefined = gesture.output.sound;
