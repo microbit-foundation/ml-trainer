@@ -1,0 +1,52 @@
+name: build
+
+on:
+  release:
+    types: [created]
+  push:
+    branches:
+      - "**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ startsWith(github.ref, 'refs/tags/v') && 'release' || github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/tags/v') }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    env:
+      AWS_DEFAULT_REGION: eu-west-1
+      PRODUCTION_CLOUDFRONT_DISTRIBUTION_ID: NOT_YET
+      STAGING_CLOUDFRONT_DISTRIBUTION_ID: E37K3V5Y65XQIX
+      REVIEW_CLOUDFRONT_DISTRIBUTION_ID: E3KUGPF02I4CJ4
+      VITE_FOUNDATION_BUILD: ${{ github.repository_owner == 'microbit-foundation' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm install --no-save --registry=https://npm.pkg.github.com/microbit-foundation @microbit-foundation/website-deploy-aws@0.5 @microbit-foundation/website-deploy-aws-config@0.9 @microbit-foundation/npm-package-versioner@2
+        if: github.repository_owner == 'microbit-foundation'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: npx update-ci-version
+      - run: node ./bin/print-ci-env.js >> $GITHUB_ENV
+      - run: npm run test
+      - run: npm run check
+      - run: npx prettier --check src
+      - run: npm run build
+      - run: npx website-deploy-aws
+        if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || success())
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.WEB_DEPLOY_AWS_ML_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.WEB_DEPLOY_ML_AWS_SECRET_ACCESS_KEY }}
+      - run: npx invalidate-cloudfront-distribution
+        if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || success())
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.WEB_DEPLOY_ML_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.WEB_DEPLOY_ML_AWS_SECRET_ACCESS_KEY }}
