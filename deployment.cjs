@@ -18,6 +18,7 @@ const { s3Config } = createDeploymentDetailsFromOptions({
 });
 
 module.exports = {
+  deploymentDir: './dist',
   ...s3Config,
   region: 'eu-west-1',
   removeNonexistentObjects: true,
