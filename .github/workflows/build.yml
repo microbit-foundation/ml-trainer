@@ -44,7 +44,7 @@ jobs:
       - run: npx website-deploy-aws
         if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || success())
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.WEB_DEPLOY_AWS_ML_ACCESS_KEY_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.WEB_DEPLOY_ML_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.WEB_DEPLOY_ML_AWS_SECRET_ACCESS_KEY }}
       - run: npx invalidate-cloudfront-distribution
         if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || success())
