@@ -104,17 +104,6 @@ export const translations: TranslationMap = {
 		"content.model.output.prediction.descriptionTitle": "Forudsigelse",
 		"content.model.output.prediction.descriptionBody": "Her kan du se, hvilken klasse din model forudsiger den nuværende bevægelse til at være. Du kan se i meteret hvor sikker modellen er i sin forudsigelse.",
 
-		"content.model.output.ledOutput.descriptionTitle": "LED output",
-		"content.model.output.ledOutput.descriptionBody": "Her kan du vælge, hvordan LED-lysene på din output-micro:bit skal opføre sig, når din model forudsiger en klasse. Prøv at tegne nogle mønstre nedenfor og se, hvordan disse mønstre vises på din output-micro:bit, når du bevæger input-micro:bit'en.",
-
-		"content.model.output.sound.iconTitle": "Lyd",
-		"content.model.output.sound.descriptionTitle": "Afspilling af lyd",
-		"content.model.output.sound.descriptionBody": "Her kan du vælge hvilken lyd din output-micro:bit skal afspille, når din model laver en forudsigelse. Bemærk at lyden afspilles af din computer, hvis du har en micro:bit version 1.",
-
-		"content.model.output.pin.iconTitle": "Pin",
-		"content.model.output.pin.descriptionTitle": "Pin output",
-		"content.model.output.pin.descriptionBody": "Her kan du vælge hvilken pin skal tænde når modellen laver en forudsigelse på en bevægelse. Alle pins har numre i overenstemmelse med micro:bits officielle pin diagram.",
-
 		"content.model.output.popup.header": "Tilslut output-micro:bit",
 		"content.model.output.popup.body": "Hvis du ikke har tilsluttet en output-micro:bit, kan du ikke se resultatet af de ændringer du laver på denne side. Tilslut nedenfor.",
 
@@ -361,17 +350,6 @@ export const translations: TranslationMap = {
 		"content.model.output.prediction.iconTitle": "Prediction",
 		"content.model.output.prediction.descriptionTitle": "Prediction",
 		"content.model.output.prediction.descriptionBody": "Here you can see the model's prediction of the current gesture. In the meter, you can see how confident the model is in the prediction.",
-
-		"content.model.output.ledOutput.descriptionTitle": "LED output",
-		"content.model.output.ledOutput.descriptionBody": "Here you can choose how the LEDs on your output micro:bit behaves when your model makes predictions. Try draw some patterns and see how they show on the output micro:bit when you move the input micro:bit.",
-
-		"content.model.output.sound.iconTitle": "Sound",
-		"content.model.output.sound.descriptionTitle": "Playback of sound",
-		"content.model.output.sound.descriptionBody": "Here you can choose which sound you output micro:bit plays when the model makes a prediction. Be aware that the sound plays from your computer if you have a micro:bit version 1.",
-
-		"content.model.output.pin.iconTitle": "Pin",
-		"content.model.output.pin.descriptionTitle": "Pin outputs",
-		"content.model.output.pin.descriptionBody": "Here you can select which pin will turn on when a gesture is predicted. Each pins are numbered according to micro:bit's official pin output diagram.",
 
 		"content.model.output.popup.header": "Connect output micro:bit",
 		"content.model.output.popup.body": "If you have not connected an output micro:bit, you cannot see the results of the changed made on this page. Use the connect button below",
