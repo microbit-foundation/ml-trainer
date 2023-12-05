@@ -17,7 +17,7 @@
   2 - Set favicon into it as src
   3 - Use onerror and onload to determine whether or not it was successfully loaded
    */
-  const pingDestination = '/imgs/favicon.png';
+  const pingDestination = import.meta.env.BASE_URL + 'imgs/favicon.png';
 
   const getAnimatedDots = (numOfDots: number) => {
     return `•`.repeat(numOfDots);
