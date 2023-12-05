@@ -40,7 +40,10 @@
     }
 
     if (shouldPushState) {
-      const url = window.location.origin + (path.startsWith('/') ? '' : '/') + path;
+      const url =
+        window.location.origin +
+        import.meta.env.BASE_URL +
+        (path.startsWith('/') ? path.slice(1) : path);
       history.pushState({ path: path }, '', url);
     }
   };
