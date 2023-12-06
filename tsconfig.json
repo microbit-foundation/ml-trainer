@@ -18,7 +18,7 @@
     "src/setup_tests.ts"
   ],
   "compilerOptions": {
-    "module": "ES6",
+    "module": "esnext",
     "lib": [
       "DOM",
       "ES6",

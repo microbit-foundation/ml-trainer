@@ -123,7 +123,12 @@ class Live3DUtility {
         resolve(group);
       };
 
-      this.loader.load('/assets/models/microbit.gltf', onFinished, onProgress, reject);
+      this.loader.load(
+        `${import.meta.env.BASE_URL}models/microbit.gltf`,
+        onFinished,
+        onProgress,
+        reject,
+      );
     });
   }
 }
