@@ -8,9 +8,9 @@
   import StandardButton from '../../StandardButton.svelte';
   import { t } from '../../../i18n';
   import microbitImage from '../../../imgs/stylised-microbit-black.svg';
-  import stylisedComputer from '../../../imgs/stylised_computer.svg';
-  import stylisedUsbCable from '../../../imgs/stylised-usb-cable.svg';
-  import stylisedBatteryPack from '../../../imgs/stylised-battery-pack.svg';
+  import computerImage from '../../../imgs/stylised_computer.svg';
+  import usbCableImage from '../../../imgs/stylised-usb-cable.svg';
+  import batteryPackImage from '../../../imgs/stylised-battery-pack.svg';
 
   export let onNextClick: () => void;
   export let onStartRadioClick: () => void;
@@ -35,7 +35,7 @@
       <div class="flex flex-col">
         <img
           class="h-{imageHeight}"
-          src={stylisedComputer}
+          src={computerImage}
           alt={$t('connectMB.bluetoothStart.requirements2')} />
         <p class="pt-10 text-center font-bold">
           {$t('connectMB.bluetoothStart.requirements2')}
@@ -44,7 +44,7 @@
       <div class="flex flex-col">
         <img
           class="h-{imageHeight}"
-          src={stylisedUsbCable}
+          src={usbCableImage}
           alt={$t('connectMB.bluetoothStart.requirements3')} />
         <p class="pt-10 text-center font-bold">
           {$t('connectMB.bluetoothStart.requirements3')}
@@ -53,7 +53,7 @@
       <div class="flex flex-col">
         <img
           class="h-{imageHeight}"
-          src={stylisedBatteryPack}
+          src={batteryPackImage}
           alt={$t('connectMB.bluetoothStart.requirements4')} />
         <p class="pt-10 text-center font-bold">
           {$t('connectMB.bluetoothStart.requirements4')}
