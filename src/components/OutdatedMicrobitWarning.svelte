@@ -1,6 +1,6 @@
 <!--
   (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
- 
+
   SPDX-License-Identifier: MIT
  -->
 
@@ -73,7 +73,7 @@
           <StandardButton onClick={() => (hasBeenClosed = true)}
             >{$t('popup.outdatedmicrobit.button.later')}</StandardButton>
           <div class="w-3" />
-          <StandardButton onClick={updateNowHasBeenClicked}
+          <StandardButton type="primary" onClick={updateNowHasBeenClicked}
             >{$t('popup.outdatedmicrobit.button.update.mkcd')}</StandardButton>
         </div>
       {:else}
@@ -82,7 +82,7 @@
           <StandardButton onClick={() => (hasBeenClosed = true)}
             >{$t('popup.outdatedmicrobit.button.later')}</StandardButton>
           <div class="w-3" />
-          <StandardButton onClick={updateNowHasBeenClicked}
+          <StandardButton type="primary" onClick={updateNowHasBeenClicked}
             >{$t('popup.outdatedmicrobit.button.update')}</StandardButton>
         </div>
       {/if}

@@ -63,6 +63,9 @@
 
   const confidence = Gestures.getConfidence(gesture.ID);
 
+  // Bool flag that determines the visibility of the output gesture panels
+  const enableOutputGestures = false;
+
   let requiredConfidence = StaticConfiguration.defaultRequiredConfidence;
   $: currentConfidence = $state.isInputReady ? $confidence : 0;
 
@@ -249,49 +252,51 @@
     </div>
   </GestureTilePart>
 
-  <!-- ARROW -->
-  <div class="text-center w-15">
-    <img
-      class="m-auto"
-      class:hidden={wasTriggered}
-      src={rightArrowImage}
-      alt="right arrow icon"
-      width="30px" />
-    <img
-      class="m-auto"
-      class:hidden={!wasTriggered || !$state.isInputReady}
-      src={rightArrowBlueImage}
-      alt="right arrow icon"
-      width="30px" />
-  </div>
-
-  <!-- OUTPUT SETTINGS -->
-  <div class="relative flex items-center">
-    <div
-      class="w-177px relative rounded-xl bg-transparent h-full border-1 border-primaryborder">
-      <ImageSkeleton
-        src={blankMicrobitImage}
-        alt="microbit guide"
-        width={177}
-        height={144}
-        loadingColorSecondary="#818181"
-        loadingColorPrimary="#4A4A4A"
-        onLoaded={() => (hasLoadedMicrobitImage = true)} />
-      <div
-        class="bg-black p-0 m-0 absolute top-9 left-12.7"
-        class:hidden={!hasLoadedMicrobitImage}
-        on:click={onUserInteraction}>
-        <OutputMatrix bind:trigger={triggerFunctions[0]} {gesture} />
-      </div>
+  {#if enableOutputGestures}
+    <!-- ARROW -->
+    <div class="text-center w-15">
+      <img
+        class="m-auto"
+        class:hidden={wasTriggered}
+        src={rightArrowImage}
+        alt="right arrow icon"
+        width="30px" />
+      <img
+        class="m-auto"
+        class:hidden={!wasTriggered || !$state.isInputReady}
+        src={rightArrowBlueImage}
+        alt="right arrow icon"
+        width="30px" />
     </div>
-    <OutputSoundSelector onSoundSelection={onSoundSelected} {selectedSound} />
-  </div>
-  <div class="ml-4">
-    <PinSelector
-      selectedPin={pinIOEnabled ? selectedPin : undefined}
-      {turnOnState}
-      {turnOnTime}
-      {onPinSelect}
-      {onTurnOnTimeSelect} />
-  </div>
+
+    <!-- OUTPUT SETTINGS -->
+    <div class="relative flex items-center">
+      <div
+        class="w-177px relative rounded-xl bg-transparent h-full border-1 border-primaryborder">
+        <ImageSkeleton
+          src={blankMicrobitImage}
+          alt="microbit guide"
+          width={177}
+          height={144}
+          loadingColorSecondary="#818181"
+          loadingColorPrimary="#4A4A4A"
+          onLoaded={() => (hasLoadedMicrobitImage = true)} />
+        <div
+          class="bg-black p-0 m-0 absolute top-9 left-12.7"
+          class:hidden={!hasLoadedMicrobitImage}
+          on:click={onUserInteraction}>
+          <OutputMatrix bind:trigger={triggerFunctions[0]} {gesture} />
+        </div>
+      </div>
+      <OutputSoundSelector onSoundSelection={onSoundSelected} {selectedSound} />
+    </div>
+    <div class="ml-4">
+      <PinSelector
+        selectedPin={pinIOEnabled ? selectedPin : undefined}
+        {turnOnState}
+        {turnOnTime}
+        {onPinSelect}
+        {onTurnOnTimeSelect} />
+    </div>
+  {/if}
 </main>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="83.854" height="143.661" viewBox="0 0 83.854 143.661">
+  <g id="Group_424" data-name="Group 424" transform="translate(-482 -532)">
+    <g id="Group_312" data-name="Group 312" transform="translate(-57 10)">
+      <g id="Group_362" data-name="Group 362" transform="translate(-11699.221 -5422.082) rotate(-90)">
+        <g id="Rectangle_459" data-name="Rectangle 459" transform="translate(-6063.88 12286.221)" fill="none" stroke="#161615" stroke-miterlimit="10" stroke-width="4">
+          <rect width="50.402" height="35.854" rx="4" stroke="none"/>
+          <rect x="2" y="2" width="46.402" height="31.854" rx="2" fill="none"/>
+        </g>
+        <g id="Rectangle_460" data-name="Rectangle 460" transform="translate(-6087.744 12290.221)" fill="none" stroke="#161615" stroke-miterlimit="10" stroke-width="4">
+          <rect width="27.661" height="27.953" rx="1" stroke="none"/>
+          <rect x="2" y="2" width="23.661" height="23.953" rx="1" fill="none"/>
+        </g>
+        <g id="Rectangle_461" data-name="Rectangle 461" transform="translate(-6017.382 12297.221)" fill="none" stroke="#161615" stroke-miterlimit="10" stroke-width="4">
+          <rect width="16.893" height="12.263" rx="4" stroke="none"/>
+          <rect x="2" y="2" width="12.893" height="8.263" rx="2" fill="none"/>
+        </g>
+        <g id="Rectangle_462" data-name="Rectangle 462" transform="translate(-6063.881 12238.221)" fill="none" stroke="#161615" stroke-miterlimit="10" stroke-width="4">
+          <rect width="29.627" height="22.706" rx="4" stroke="none"/>
+          <rect x="2" y="2" width="25.627" height="18.706" rx="2" fill="none"/>
+        </g>
+        <g id="Rectangle_463" data-name="Rectangle 463" transform="translate(-6037.794 12244.442)" fill="none" stroke="#161615" stroke-miterlimit="10" stroke-width="4">
+          <rect width="16.529" height="10.263" rx="4" stroke="none"/>
+          <rect x="2" y="2" width="12.529" height="6.263" rx="2" fill="none"/>
+        </g>
+        <g id="Rectangle_464" data-name="Rectangle 464" transform="translate(-6071.875 12242.442)" fill="none" stroke="#161615" stroke-miterlimit="10" stroke-width="4">
+          <rect width="11.792" height="14.263" rx="1" stroke="none"/>
+          <rect x="2" y="2" width="7.792" height="10.263" rx="1" fill="none"/>
+        </g>
+        <path id="Path_812" data-name="Path 812" d="M405.182,67.764h27.479c15.13,0,27.393-11.981,27.393-26.762S447.79,14.245,432.661,14.245H382.847" transform="translate(-6406.136 12235.588)" fill="none" stroke="#161615" stroke-miterlimit="10" stroke-width="4"/>
+      </g>
+    </g>
+    <g id="Group_363" data-name="Group 363" transform="translate(-1.684 -9.918)">
+      <path id="Path_880" data-name="Path 880" d="M72.133,41.254A2.954,2.954,0,1,1,69.18,38.3,2.954,2.954,0,0,1,72.133,41.254Z" transform="translate(473.459 592.964)" fill="none" stroke="#48ac34" stroke-miterlimit="10" stroke-width="2"/>
+      <path id="Path_881" data-name="Path 881" d="M86.144,71.839a2.954,2.954,0,1,1-2.953-2.954A2.954,2.954,0,0,1,86.144,71.839Z" transform="translate(466.392 577.536)" fill="none" stroke="#48ac34" stroke-miterlimit="10" stroke-width="2"/>
+      <rect id="Rectangle_487" data-name="Rectangle 487" width="5.432" height="5.431" transform="translate(553.817 630.003)" fill="none" stroke="#48ac34" stroke-linejoin="round" stroke-width="2"/>
+      <path id="Path_882" data-name="Path 882" d="M78.458,24.768,82.3,20.928l3.84,3.841" transform="translate(467.288 601.727)" fill="none" stroke="#48ac34" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <line id="Line_88" data-name="Line 88" x1="0.005" y2="21.723" transform="translate(549.582 624.319)" fill="none" stroke="#48ac34" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="Path_883" data-name="Path 883" d="M72.183,48.581V51.2a1.575,1.575,0,0,0,1.575,1.576l10.617,0a1.575,1.575,0,0,0,1.576-1.575V46.971" transform="translate(470.454 588.59)" fill="none" stroke="#48ac34" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+  </g>
+</svg>

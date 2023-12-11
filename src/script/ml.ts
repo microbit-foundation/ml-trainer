@@ -64,7 +64,7 @@ function createModel(): LayersModel {
   return model;
 }
 
-export function trainModel() {
+export async function trainModel(): Promise<boolean> {
   state.update(obj => {
     obj.isTraining = true;
     return obj;
@@ -74,7 +74,7 @@ export function trainModel() {
       obj.isTraining = false;
       return obj;
     });
-    return;
+    return false;
   }
 
   // Freeze modelSetting untill next training
@@ -129,6 +129,8 @@ export function trainModel() {
   });
 
   model.set(nn);
+
+  return trainingTimerPromise;
 }
 
 export function isParametersLegal(): boolean {

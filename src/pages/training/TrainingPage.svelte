@@ -11,7 +11,6 @@
   import StandardDialog from '../../components/dialogs/StandardDialog.svelte';
   import { slide } from 'svelte/transition';
   import TrainingButton from './TrainingButton.svelte';
-  import PleaseConnectFirst from '../../components/PleaseConnectFirst.svelte';
   import TabView from '../../views/TabView.svelte';
 
   $: sufficientData = hasSufficientData($gestures);
@@ -49,9 +48,7 @@
 <div class="flex flex-col h-full pb-10">
   <TabView />
   <div class="flex flex-col flex-grow justify-center items-center text-center">
-    {#if !$state.isInputConnected}
-      <PleaseConnectFirst />
-    {:else if !sufficientData}
+    {#if !sufficientData}
       <div class="w-full text-primarytext">
         <h1 class="w-3/4 text-3xl bold m-auto">
           {$t('menu.trainer.notEnoughDataHeader1')}

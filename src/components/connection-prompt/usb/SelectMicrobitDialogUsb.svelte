@@ -31,7 +31,7 @@
     </p>
     <img
       src={selectMicrobitImage}
-      alt="Instructions on how to choose microbit from web popup using usb"
+      alt="Screenshot of the browser window that will appear next.  Your connected micro:bit will be listed. Choose your micro:bit then select the Connect button."
       class="left-0 pt-5" />
     <p class="absolute left-3/4 transform -translate-x-1/2 top-1/2 -translate-y-28">
       {$t('connectMB.webPopup.instruction1')}
@@ -41,8 +41,9 @@
     </p>
   </div>
   <div class="justify-end flex flex-space-10 gap-x-5">
-    <StandardButton outlined={true} position="right" onClick={onBackClick}
+    <StandardButton position="right" onClick={onBackClick}
       >{$t('connectMB.backButton')}</StandardButton>
-    <StandardButton onClick={onNextClick}>{$t('connectMB.nextButton')}</StandardButton>
+    <StandardButton type="primary" onClick={onNextClick}
+      >{$t('connectMB.nextButton')}</StandardButton>
   </div>
 </main>

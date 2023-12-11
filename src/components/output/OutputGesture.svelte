@@ -1,10 +1,9 @@
 <!--
   (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
- 
+
   SPDX-License-Identifier: MIT
  -->
 <script lang="ts">
-  import CookieManager from '../../script/CookieManager';
   import Gestures from '../../script/Gestures';
   import ConnectionBehaviours from '../../script/connection-behaviours/ConnectionBehaviours';
   import Microbits from '../../script/microbit-interfacing/Microbits';

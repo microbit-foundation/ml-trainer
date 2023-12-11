@@ -2,7 +2,7 @@
   (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
 
   SPDX-License-Identifier: MIT
- -->
+-->
 
 <script lang="ts">
   import { hasSufficientData, state } from '../../script/stores/uiStore';
@@ -19,8 +19,7 @@
 
   $: sufficientData = hasSufficientData($gestures);
 
-  $: trainingButtonDisabled =
-    !sufficientData || !$state.isInputConnected || $state.isTraining;
+  $: trainingButtonDisabled = !sufficientData || $state.isTraining;
 
   let trainingDialogOpen = false;
 
@@ -28,10 +27,13 @@
     trainingDialogOpen = false;
   };
 
-  const startTraining = () => {
+  const startTraining = async (): Promise<void> => {
     closeTrainingDialog();
     navigate(Paths.TRAINING);
-    trainModel();
+    const shouldRedirect = await trainModel();
+    if (shouldRedirect) {
+      navigate(Paths.MODEL);
+    }
   };
 </script>
 
@@ -40,6 +42,7 @@
     trainingDialogOpen = true;
   }}
   disabled={trainingButtonDisabled}
+  type="primary"
   >{$t(trainButtonLabel)}
 </StandardButton>
 
@@ -49,10 +52,10 @@
   <div class="w-150">
     <h1 class="text-xl font-bold mb-4">{$t('content.data.trainDialog.title')}</h1>
     <p>{$t('content.data.trainDialog.text')}</p>
-    <div class="flex justify-end">
-      <!-- TODO: translation for "Back" button -->
-      <StandardButton onClick={closeTrainingDialog}>Back</StandardButton>
-      <StandardButton onClick={startTraining}
+    <div class="flex justify-end gap-3">
+      <StandardButton onClick={closeTrainingDialog}
+        >{$t('connectMB.backButton')}</StandardButton>
+      <StandardButton type="primary" onClick={startTraining}
         >{$t('content.data.trainDialog.title')}</StandardButton>
     </div>
   </div>

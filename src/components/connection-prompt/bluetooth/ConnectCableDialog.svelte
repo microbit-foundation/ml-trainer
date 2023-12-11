@@ -1,6 +1,6 @@
 <!--
   (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
- 
+
   SPDX-License-Identifier: MIT
  -->
 
@@ -35,18 +35,21 @@
         {$t('connectMB.connectCableMB2.subtitle')}
       {/if}
     </p>
-    <img src={connectCableImage} alt="GIF of connecting micro:bit" class="px-55 py-5" />
+    <img
+      src={connectCableImage}
+      alt="USB cable being connected at the top, centre of the micro:bit."
+      class="px-55 py-5" />
   </div>
   <div class="flex">
     {#if currentStage === 'usb' || currentStage === 'usb1'}
-      <p class="self-center w-full hover:cursor-pointer" on:click={onSkipClick}>
-        Skip: program already downloaded?
+      <p class="self-center w-full hover:cursor-pointer text-link" on:click={onSkipClick}>
+        {$t('connectMB.connectCable.skip')}
       </p>
     {/if}
     <div class="flex w-full justify-end gap-x-5">
-      <StandardButton outlined={true} onClick={onBackClick}
-        >{$t('connectMB.backButton')}</StandardButton>
-      <StandardButton onClick={onNextClick}>{$t('connectMB.nextButton')}</StandardButton>
+      <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
+      <StandardButton type="primary" onClick={onNextClick}
+        >{$t('connectMB.nextButton')}</StandardButton>
     </div>
   </div>
 </main>

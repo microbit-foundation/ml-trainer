@@ -1,6 +1,6 @@
 <!--
   (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
- 
+
   SPDX-License-Identifier: MIT
  -->
 
@@ -29,8 +29,9 @@
     </p>
   </div>
   <div class="justify-end flex flex-space-10 gap-x-5">
-    <StandardButton outlined={true} position="right" onClick={onBackClick}
+    <StandardButton position="right" onClick={onBackClick}
       >{$t('connectMB.backButton')}</StandardButton>
-    <StandardButton onClick={onNextClick}>{$t('connectMB.nextButton')}</StandardButton>
+    <StandardButton type="primary" onClick={onNextClick}
+      >{$t('connectMB.nextButton')}</StandardButton>
   </div>
 </main>

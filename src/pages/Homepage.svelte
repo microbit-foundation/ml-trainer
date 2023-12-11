@@ -17,6 +17,9 @@
   const introVideoUrl =
     'https://datatraener0dr0media-euno.streaming.media.azure.net/18233c69-2bc3-4b1b-9e2d-249e37b56307/Ultrabit_01_Introvideo_Datatræneren.mp4';
 
+  const playgroundSurveyUrl =
+    'https://stage.microbit.org/teach/playground-survey/exploring-machine-learning';
+
   const tileImageSize = '300';
 
   let connectDialogReference: ConnectDialogContainer;
@@ -32,7 +35,8 @@
       </video>
       <p>
         {$t('content.index.toolInfo1')}
-        <a class="text-link" href="" target="_blank">{$t('content.index.toolInfo2')}</a>
+        <a class="text-link" href={playgroundSurveyUrl} target="_blank"
+          >{$t('content.index.toolInfo2')}</a>
       </p>
     </div>
 
@@ -77,7 +81,7 @@
       </div>
     </div>
 
-    <StandardButton size="large" color="primary" onClick={startConnectionProcess}
+    <StandardButton size="large" type="primary" onClick={startConnectionProcess}
       >{$t('footer.connectButtonNotConnected')}</StandardButton>
   </div>
 </main>

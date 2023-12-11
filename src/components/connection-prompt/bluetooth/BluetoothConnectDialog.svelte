@@ -1,6 +1,6 @@
 <!--
   (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
- 
+
   SPDX-License-Identifier: MIT
  -->
 
@@ -39,8 +39,8 @@
     <PatternMatrix matrix={$patternMatrixState} onMatrixChange={updateMatrix} />
   </div>
   <div class="justify-end gap-x-5 flex pt-10">
-    <StandardButton outlined={true} onClick={onBackClick}
-      >{$t('connectMB.backButton')}</StandardButton>
-    <StandardButton onClick={onNextClick}>{$t('connectMB.nextButton')}</StandardButton>
+    <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
+    <StandardButton type="primary" onClick={onNextClick}
+      >{$t('connectMB.nextButton')}</StandardButton>
   </div>
 </main>

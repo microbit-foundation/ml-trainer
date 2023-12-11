@@ -14,7 +14,6 @@
 <div
   class="border-1 border-primaryborder border-solid rounded-xl bg-backgroundlight"
   class:h-30={small}
-  class:h-36={!small}
   class:shadow-md={elevated}
   class:ml-2={ml && small}
   class:mr-2={mr && small}

@@ -9,12 +9,20 @@
 
   export let isOpen: boolean;
   export let onClose: () => void;
+  export let background: 'light' | 'dark' = 'dark';
 
   function handleKeyPress(event: KeyboardEvent) {
     if (event.key === 'Escape') {
       event.preventDefault();
       onClose();
     }
+  }
+
+  let backgroundClasses: string;
+  if (background === 'light') {
+    backgroundClasses = ' bg-white/80 bg-blend-lighten';
+  } else {
+    backgroundClasses = 'bg-black/50 bg-blend-darken';
   }
 </script>
 
@@ -28,13 +36,12 @@
       fixed
       top-0
       left-0
-      bg-black/50
-      bg-blend-darken
       h-screen
       w-screen
       flex
       justify-center
       items-center
+      {backgroundClasses}
     "
     on:click={onClose}>
     <slot />
