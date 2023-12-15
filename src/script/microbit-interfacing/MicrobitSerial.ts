@@ -72,37 +72,48 @@ class MicrobitSerial {
     serialPort: SerialPort,
     options: SerialOptions,
   ): Promise<void> {
-    try {
-      const decoder = new TextDecoder();
+    const decoder = new TextDecoder();
+    const encoder = new TextEncoder();
 
+    try {
       await serialPort.open(options);
       writeLine(`Opened with baudRate: ${options.baudRate}`);
 
-      if (serialPort.readable) {
+      if (serialPort.readable && serialPort.writable) {
         const reader = serialPort.readable.getReader();
+        const writer = serialPort.writable.getWriter();
 
-        writeLine(`Listening for 5 seconds...`);
-        setTimeout(() => reader.cancel(), 5000);
-        // const interval = setInterval(() => console.log('THE STATE ->', microbitState), 100);
+        const listenTimeSeconds = 10
+        writeLine(`Listening for ${listenTimeSeconds} seconds...`);
+        setTimeout(() => reader.cancel(), listenTimeSeconds * 1000);
+
+        // setTimeout(() => {
+        //   console.log('handshake');
+        //   const data = encoder.encode('C[9C515AAF]HS[]\n');
+        //   writer.write(data);
+        // }, 2000);
+
+        const data = encoder.encode('C[9C515AAF]HS[]\n');
+        await writer.write(data);
 
         let reading = true;
         while (reading) {
+          console.log('await read');
           const { value, done } = await reader.read();
+          console.log('--- read', value);
           if (value) {
-            processMessage(decoder.decode(value));
+            console.log(decoder.decode(value));
           }
           if (done) {
             writeLine('Done');
             reading = false;
           }
-          // console.log(microbitState);
         }
-        // clearInterval(interval);
         reader.releaseLock();
+        writer.releaseLock();
       }
     } catch (error) {
-      console.log('There was an error');
-      console.log(error);
+      console.error('There was an error', error);
     } finally {
       await serialPort.close();
     }
