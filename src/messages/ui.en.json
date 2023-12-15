@@ -1,4 +1,9 @@
 {
+  "about.developedInPartnership": "Developed in partnership with Center for Computational Thinking and Design, Aarhus University",
+  "about.softwareVersions": "Software versions",
+
+  "actions.close": "Close",
+
   "alert.data.classNameLengthAlert": "Names must consists of maximum {maxLen} characters.",
   "alert.recording.disconnectedDuringRecording": "micro:bit disconnected during recording",
 
@@ -119,6 +124,12 @@
   "footer.helpContent": "Once you have connected a micro:bit you can watch the accelerometer data for all three axes on this graph in real time. Try moving your connected micro:bit to see what the data looks like to your computer!",
   "footer.reconnecting": "Reconnecting. Please wait",
 
+  "helpMenu.label": "Help",
+  "helpMenu.helpAndSupport": "Help & support",
+  "helpMenu.termsOfUse": "Terms of use",
+  "helpMenu.cookies": "Cookies",
+  "helpMenu.about": "About",
+
   "menu.data.helpHeading": "1. Add data",
   "menu.data.helpBody": "In order to train a model to recognize different movements, we need good examples of 'good behavior' that we can show the Trainer. Here you can create classes (types of gestures) and record examples for each class. There must be at least 2 classes with 3 examples each before the trainer can train a model.",
   "menu.data.examples": "examples",
@@ -230,6 +241,8 @@
   "connectMB.outputMB.sameButton": "Same",
   "connectMB.outputMB.otherButton": "Other",
 
+  "languageDialog.title": "Language",
+
   "popup.compatibility.bluetooth.header": "Bluetooth incompatible browser!",
   "popup.compatibility.bluetooth.explain": "The browser you are currently using does not support bluetooth.",
   "popup.compatibility.bluetooth.advice": "Please update the browser or use another one from our supported browsers list below.",
@@ -250,5 +263,7 @@
   "popup.outdatedmicrobit.text.mkcd": "Open the newest MakeCode template to use the updated extension.",
   "popup.outdatedmicrobit.button.later": "Later",
   "popup.outdatedmicrobit.button.update": "Update now",
-  "popup.outdatedmicrobit.button.update.mkcd": "Open MakeCode"
+  "popup.outdatedmicrobit.button.update.mkcd": "Open MakeCode",
+
+  "settings.label": "Settings"
 }

@@ -9,6 +9,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 import WindiCSS from 'vite-plugin-windicss';
 import { sveltePreprocess } from 'svelte-preprocess/dist/autoProcess';
 import EnvironmentPlugin from 'vite-plugin-environment';
+import Icons from 'unplugin-icons/vite';
 
 export default defineConfig({
   base: process.env.BASE_URL ?? '/',
@@ -24,8 +25,12 @@ export default defineConfig({
       },
     }),
     WindiCSS(),
+    Icons({ compiler: 'svelte' }),
     EnvironmentPlugin('all'),
   ],
+  define: {
+    'import.meta.env.VITE_APP_VERSION': JSON.stringify(process.env.npm_package_version),
+  },
   build: {
     target: 'esnext',
     rollupOptions: {

@@ -23,10 +23,10 @@ describe('Initialization tests', () => {
     vitest.resetModules();
   });
 
-  test('Language is set to danish when it is the preferred browser option', async () => {
+  test('Language is set to welsh when it is the preferred browser option', async () => {
     windowSpy.mockImplementation(() => ({
       navigator: {
-        languages: ['da', 'en'],
+        languages: ['cy', 'en'],
       },
     }));
     const i18n = await import('../i18n');
@@ -34,7 +34,7 @@ describe('Initialization tests', () => {
 
     const translatedText = getText('alert.isRecording');
 
-    expect(translatedText).toBe('Du er i gang med at optage!');
+    expect(translatedText).toBe("Rydych chi'n recordio ar hyn o bryd!");
   });
 
   test('Language falls back to english when an unsupported language is selected', async () => {

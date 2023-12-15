@@ -12,23 +12,11 @@
   "alert.oneDataRepresentation": "Du skal have mindst en data-repræsentation",
   "alert.recordingsPerGesture": "Du skal have mindst tre eksempler for hver klasse",
 
-  "content.index.title": "TRANSLATION_NEEDED",
-  "content.index.toolInfo1": "TRANSLATION_NEEDED",
-  "content.index.toolInfo2": "TRANSLATION_NEEDED",
-  "content.index.toolProcessCards.main.title": "TRANSLATION_NEEDED",
-  "content.index.toolProcessCards.data.title": "TRANSLATION_NEEDED",
-  "content.index.toolProcessCards.data.description": "TRANSLATION_NEEDED",
-  "content.index.toolProcessCards.train.title": "TRANSLATION_NEEDED",
-  "content.index.toolProcessCards.train.description": "TRANSLATION_NEEDED",
-  "content.index.toolProcessCards.model.title": "TRANSLATION_NEEDED",
-  "content.index.toolProcessCards.model.description": "TRANSLATION_NEEDED",
   "content.index.recordButtonDescription": "\"Optag\"-knap",
 
-  "content.data.classPlaceholderNewClass": "TRANSLATION_NEEDED",
   "content.data.addData": "Tilføj data",
   "content.data.classHelpHeader": "Klasse",
   "content.data.classHelpBody": "En klasse beskriver en type af bevægelse. Vi kan optage eksempler af en bestemt type bevægelse og putte eksemplerne i samme klasse. Træneren kan finde mønstre i eksemplerne/dataet og bruge disse mønstre til at træne en model, der kan genkende denne type bevægelse. Flere eksmpler vil typisk reulstere i en bedre model, men overvej på hvor mange forskellige måder en bevægelse kan laves.",
-  "content.data.classification": "TRANSLATION_NEEDED",
   "content.data.data": "Data",
   "content.data.choice": "Valg",
   "content.data.choice.header": "Valg af klasse",
@@ -40,19 +28,6 @@
   "content.data.controlbar.button.clearData.confirm": "Er du sikker på at du vil slette alle eksempler?\nDette kan ikke fortrydes.",
   "content.data.controlbar.button.downloadData": "Download dataset",
   "content.data.controlbar.button.uploadData": "Upload dataset",
-
-  "content.data.recording.button.cancel": "TRANSLATION_NEEDED",
-  "content.data.recording.description": "TRANSLATION_NEEDED",
-
-  "content.data.trainDialog.title": "TRANSLATION_NEEDED",
-  "content.data.trainDialog.text": "TRANSLATION_NEEDED",
-
-  "content.trainer.header": "TRANSLATION_NEEDED",
-  "content.trainer.description": "TRANSLATION_NEEDED",
-
-  "content.trainer.enoughdata.title": "TRANSLATION_NEEDED",
-
-  "content.trainer.training.title": "TRANSLATION_NEEDED",
 
   "content.trainer.failure.header": "Træning mislykkedes",
   "content.trainer.failure.body": "Træningen resulterede ikke i en brugbar model. Grunden til dette ligger sandsynligvis i dataet. Hvis dataet i forskellige klasser minder for meget om hinanden, kan dette resultere i nogle forskellige problemer i træningsprocessen, der ikke gør det muligt at træne modellen ordentligt.",
@@ -77,9 +52,6 @@
   "content.filters.rms.title": "Effektiv værdi ",
   "content.filters.rms.description": "Root mean square.",
 
-  "content.model.trainModelFirstHeading": "TRANSLATION_NEEDED",
-  "content.model.trainModelBody1": "TRANSLATION_NEEDED",
-  "content.model.trainModelBody2": "TRANSLATION_NEEDED",
   "content.model.classification.helpHeading": "Sandsynligheds-meteret",
   "content.model.classification.helpBody": "For hver forudsigelse, vil modellen producere et procent-tal, der beskriver hvor sikker modellen er i sin fordusigelse. Dette meter går fra 0% til 100%. Med slideren ved siden af, kan du bestemme grænsen for, hvor sikker modellen skal være i sin forudsigelse for at lave et output (fx afspille en lyd)",
   "content.model.output.soundOptionCongratulations": "Tillykke",
@@ -111,15 +83,11 @@
   "content.model.output.popup.header": "Tilslut output-micro:bit",
   "content.model.output.popup.body": "Hvis du ikke har tilsluttet en output-micro:bit, kan du ikke se resultatet af de ændringer du laver på denne side. Tilslut nedenfor.",
 
-  "content.model.addData": "TRANSLATION_NEEDED",
-
-  "footer.connectButtonNotConnected": "TRANSLATION_NEEDED",
   "footer.disconnectButton": "Frakobl",
   "footer.helpHeader": "Live graf",
   "footer.helpContent": "Når du har forbundet en micro:bit kan du live se Accelerometer-data for alle tre akser på denne graf. Prøv at bevæge din forbundende micro:bit og se, hvordan den data der produceres af bevægelserne ser ud for computeren!",
   "footer.reconnecting": "Genopretter forbindelsen. Vent venligst",
 
-  "menu.data.helpHeading": "TRANSLATION_NEEDED",
   "menu.data.helpBody": "For at træne en model til at genkende forskellige bevægelser, skal vi have gode eksempler på 'god opførsel', som vi kan vise træneren. Her kan i oprette klasser (en type bevægelse) og optage eksempler til hver klasse. Der skal være mindst 2 klasser med hver 3 eksempler før træneren kan træne en model.",
   "menu.data.examples": "eksempler",
 
@@ -131,63 +99,13 @@
   "menu.trainer.notEnoughDataInfoBody": "Der er brug for minimum 2 klasser med 3 eksempler i hver for at kunne træne en model.",
   "menu.trainer.notEnoughDataInfo": "Du har ikke indsamlet nok data til at træne en model. Der er brug for minimum 2 klasser med 3 eksempler i hver. Gå til Data-siden for at indsamle mere data",
   "menu.trainer.trainNewModelButton": "Træn en ny model",
-  "menu.trainer.TrainingFinished": "TRANSLATION_NEEDED",
 
-  "menu.trainer.trainModelButton": "TRANSLATION_NEEDED",
-  "menu.trainer.addDataButton": "TRANSLATION_NEEDED",
-  "menu.trainer.addMoreDataButton": "TRANSLATION_NEEDED",
-  "menu.trainer.testModelButton": "TRANSLATION_NEEDED",
-
-  "menu.model.helpHeading": "TRANSLATION_NEEDED",
   "menu.model.helpBody": "Modellen kan bruges i et interaktivt system. Her bruger vi den trænede model til at forudsige bevægelser. Du kan tilslutte endnu en micro:bit og få den til at reagere på de bevægelser du laver.",
   "menu.model.noModel": "Ingen model",
   "menu.model.disconnect": "Frakobl output-micro:bit",
   "menu.model.connectInputMicrobit": "Tilkobl micro:bit",
 
   "connectMB.nextButton": "Næste",
-  "connectMB.backButton": "TRANSLATION_NEEDED",
-
-  "connectMB.radioStart.heading": "TRANSLATION_NEEDED",
-  "connectMB.radioStart.requirements1": "TRANSLATION_NEEDED",
-  "connectMB.radioStart.requirements2": "TRANSLATION_NEEDED",
-  "connectMB.radioStart.requirements3": "TRANSLATION_NEEDED",
-  "connectMB.radioStart.requirements4": "TRANSLATION_NEEDED",
-  "connectMB.radioStart.switchBluetooth": "TRANSLATION_NEEDED",
-
-  "connectMB.bluetoothStart.heading": "TRANSLATION_NEEDED",
-  "connectMB.bluetoothStart.subtitle": "TRANSLATION_NEEDED",
-  "connectMB.bluetoothStart.requirements1": "TRANSLATION_NEEDED",
-  "connectMB.bluetoothStart.requirements2": "TRANSLATION_NEEDED",
-  "connectMB.bluetoothStart.requirements3": "TRANSLATION_NEEDED",
-  "connectMB.bluetoothStart.requirements4": "TRANSLATION_NEEDED",
-  "connectMB.bluetoothStart.switchRadio": "TRANSLATION_NEEDED",
-
-  "connectMB.connectCableMB1.heading": "TRANSLATION_NEEDED",
-  "connectMB.connectCableMB1.subtitle": "TRANSLATION_NEEDED",
-
-  "connectMB.connectCableMB2.heading": "TRANSLATION_NEEDED",
-  "connectMB.connectCableMB2.subtitle": "TRANSLATION_NEEDED",
-
-  "connectMB.connectCable.heading": "TRANSLATION_NEEDED",
-  "connectMB.connectCable.subtitle": "TRANSLATION_NEEDED",
-
-  "connectMB.connectCable.skip": "TRANSLATION_NEEDED",
-
-  "connectMB.webPopup": "TRANSLATION_NEEDED",
-  "connectMB.webPopup.instruction.heading": "TRANSLATION_NEEDED",
-  "connectMB.webPopup.instruction1": "TRANSLATION_NEEDED",
-  "connectMB.webPopup.instruction2": "TRANSLATION_NEEDED",
-
-  "connectMB.usbDownloadingMB1.header": "TRANSLATION_NEEDED",
-  "connectMB.usbDownloadingMB2.header": "TRANSLATION_NEEDED",
-  "connectMB.usbDownloading.header": "TRANSLATION_NEEDED",
-  "connectMB.usbDownloading.subtitle": "TRANSLATION_NEEDED",
-
-  "connectMB.connectBattery.heading": "TRANSLATION_NEEDED",
-  "connectMB.connectBattery.subtitle": "TRANSLATION_NEEDED",
-
-  "connectMB.pattern.heading": "TRANSLATION_NEEDED",
-  "connectMB.pattern.subtitle": "TRANSLATION_NEEDED",
 
   "connectMB.bluetooth.heading": "Tilslut med Bluetooth",
   "connectMB.main.bluetooth.subtitle": "Tilslut med Bluetooth",

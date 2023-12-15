@@ -19,11 +19,12 @@
   import Environment from './script/Environment';
   import Router from './router/Router.svelte';
   import ControlBar from './components/control-bar/ControlBar.svelte';
-  import SelectLanguageControlBarDropdown from './components/control-bar/control-bar-items/SelectLanguageControlBarDropdown.svelte';
   import BottomPanel from './components/bottom/BottomPanel.svelte';
   import { t } from './i18n';
   import { consent } from './script/stores/complianceStore';
   import microbitLogoImage from './imgs/microbit-logo.svg';
+  import HelpMenu from './components/control-bar/control-bar-items/HelpMenu.svelte';
+  import SettingsMenu from './components/control-bar/control-bar-items/SettingsMenu.svelte';
 
   ConnectionBehaviours.setInputBehaviour(new InputBehaviour());
   ConnectionBehaviours.setOutputBehaviour(new OutputBehaviour());
@@ -54,7 +55,10 @@
           <img class="mr-8" src={microbitLogoImage} alt="Micro:bit logo" width="150px" />
           <h1 class="text-xl font-thin whitespace-nowrap">{$t('content.index.title')}</h1>
           <div class="flex flex-row basis-full justify-end">
-            <SelectLanguageControlBarDropdown />
+            <div class="flex h-full gap-5">
+              <SettingsMenu />
+              <HelpMenu />
+            </div>
           </div>
         </ControlBar>
 
