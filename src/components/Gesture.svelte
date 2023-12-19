@@ -248,23 +248,25 @@
     </div>
   </BaseDialog>
 
-  <div class="items-center flex mb-1">
+  <div class="flex mb-1">
     <!-- Title of gesture-->
     <GestureTilePart mr small elevated>
-      <div class="grid grid-cols-5 place-items-center p-2 w-50 h-30">
-        <div class="w-40 col-start-2 col-end-5 transition ease rounded bg-gray-100">
-          <h3
-            class="px-2"
-            contenteditable
-            bind:innerText={$nameBind}
-            on:click={titleClicked}
-            on:keypress={onTitleKeypress} />
-        </div>
+      <div class="flex flex-col p-2 h-30 w-70">
         <button
-          class="pl-3 col-start-5 place-self-start justify-self-end outline-none"
+          class="w-5 outline-none ml-auto pb-5"
           on:click={removeClicked}>
-          <i class="far fa-times-circle fa-lg text-gray-500" />
+          <i class="fa fa-times fa-lg text-gray-500" />
         </button>
+        <div class="transition ease rounded">
+          <input
+            type="text"
+            class="px-2 w-full justify-self-start font-semibold bg-gray-100 py-1 rounded"
+            placeholder="Name of action"
+            maxlength="{StaticConfiguration.gestureNameMaxLength}"
+            bind:value={$nameBind}
+            on:click={titleClicked}
+            on:keypress={onTitleKeypress}/>
+        </div>
       </div>
     </GestureTilePart>
 
