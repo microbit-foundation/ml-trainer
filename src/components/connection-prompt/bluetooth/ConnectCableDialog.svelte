@@ -41,11 +41,9 @@
       class="px-55 py-5" />
   </div>
   <div class="flex">
-    {#if currentStage === 'usb' || currentStage === 'usb1'}
-      <p class="self-center w-full hover:cursor-pointer text-link" on:click={onSkipClick}>
-        {$t('connectMB.connectCable.skip')}
-      </p>
-    {/if}
+    <p class="self-center w-full hover:cursor-pointer text-link" on:click={onSkipClick}>
+      {$t('connectMB.connectCable.skip')}
+    </p>
     <div class="flex w-full justify-end gap-x-5">
       <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
       <StandardButton type="primary" onClick={onNextClick}
