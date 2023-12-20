@@ -7,7 +7,7 @@
 <script lang="ts">
   import { createDialog } from 'svelte-headlessui';
   import Transition from 'svelte-transition';
-
+  import { t } from '../../i18n';
   export let hasCloseButton = true;
   export let isOpen: boolean;
   export let onClose: () => void;
@@ -44,6 +44,7 @@
           {#if hasCloseButton}
             <div class="absolute right-2 top-2">
               <button
+                aria-label={$t('actions.close')}
                 type="button"
                 class="hover:bg-gray-100 rounded w-8 svelte-1rnkjvh focus-visible:ring-blue-500"
                 on:click={dialog.close}>
