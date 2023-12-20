@@ -4,9 +4,12 @@
  * SPDX-License-Identifier: MIT
  */
 
+import StaticConfiguration from '../../StaticConfiguration';
 import Environment from '../Environment';
 import TypingUtils from '../TypingUtils';
+import InputBehaviour from '../connection-behaviours/InputBehaviour';
 import MBSpecs from './MBSpecs';
+import { MicrobitConnection } from './MicrobitConnection';
 
 /**
  * UART data target. For fixing type compatibility issues.
@@ -18,7 +21,7 @@ type CharacteristicDataTarget = EventTarget & {
 /**
  * The connection to the micro:bit.
  */
-export class MicrobitBluetooth {
+export class MicrobitBluetooth implements MicrobitConnection {
   private readonly device: BluetoothDevice;
 
   private dcListener: OmitThisParameter<(event: Event) => void>;
@@ -67,6 +70,31 @@ export class MicrobitBluetooth {
    */
   public removeDisconnectListener(callback: (event: Event) => unknown): void {
     return this.device.removeEventListener('gattserverdisconnected', callback);
+  }
+
+  public async listenToInputServices(inputBehaviour: InputBehaviour, inputUartHandler: (data: string) => void): Promise<void> {
+    await this.listenToAccelerometer(
+      inputBehaviour.accelerometerChange.bind(inputBehaviour),
+    );
+    await this.listenToButton(
+      'A',
+      inputBehaviour.buttonChange.bind(inputBehaviour),
+    );
+    await this.listenToButton(
+      'B',
+      inputBehaviour.buttonChange.bind(inputBehaviour),
+    );
+    try {
+      await this.listenToUART(data => inputUartHandler(data));
+    } catch (error) {
+      console.error(error);
+    }
+    setTimeout(() => {
+      inputBehaviour.onIdentifiedAsOutdated();
+    }, StaticConfiguration.versionIdentificationTimeoutDuration);
+    // this.inputVersionIdentificationTimeout = setTimeout(() => {
+    //   inputBehaviour.onIdentifiedAsOutdated();
+    // }, StaticConfiguration.versionIdentificationTimeoutDuration);
   }
 
   /**
@@ -124,19 +152,6 @@ export class MicrobitBluetooth {
    */
   public isConnected(): boolean {
     return this.gattServer.connected;
-  }
-
-  /**
-   * @return {BluetoothRemoteGATTServer} The GATT server of the micro:bit.
-   */
-  public getGattServer(): BluetoothRemoteGATTServer {
-    if (!this.isConnected()) {
-      throw new Error(
-        'MicrobitConnection: gatt server is not available until after connection is established',
-      );
-    }
-
-    return this.gattServer;
   }
 
   /**

@@ -11,11 +11,13 @@ import ConnectionBehaviours from '../connection-behaviours/ConnectionBehaviours'
 import { get, writable } from 'svelte/store';
 import MBSpecs from './MBSpecs';
 import MicrobitBluetooth from './MicrobitBluetooth';
-import { onCatastrophicError, outputting } from '../stores/uiStore';
+import { outputting } from '../stores/uiStore';
 import MicrobitUSB from './MicrobitUSB';
 import type ConnectionBehaviour from '../connection-behaviours/ConnectionBehaviour';
 import TypingUtils from '../TypingUtils';
 import StaticConfiguration from '../../StaticConfiguration';
+import { MicrobitConnection } from './MicrobitConnection';
+import MicrobitSerial from './MicrobitSerial';
 
 type QueueElement = {
   service: BluetoothRemoteGATTCharacteristic;
@@ -39,7 +41,7 @@ class Microbits {
     2: 'firmware/MICROBIT.hex',
     universal: 'firmware/universal-hex.hex',
   };
-  private static assignedInputMicrobit: MicrobitBluetooth | undefined = undefined;
+  private static assignedInputMicrobit: MicrobitConnection | undefined = undefined;
   private static assignedOutputMicrobit: MicrobitBluetooth | undefined = undefined;
   private static inputName: string | undefined = undefined;
   private static outputName: string | undefined = undefined;
@@ -142,7 +144,7 @@ class Microbits {
   /**
    * The input MicrobitBluetooth object
    */
-  public static getInput(): MicrobitBluetooth {
+  public static getInput(): MicrobitConnection {
     if (!this.isInputAssigned() || !this.assignedInputMicrobit) {
       throw new Error('Cannot get input microbit, it is not assigned!');
     }
@@ -150,7 +152,7 @@ class Microbits {
   }
 
   /**
-   * The output MicrobitBluetooth object
+   * The output Microbit object
    */
   public static getOutput(): MicrobitBluetooth {
     if (!this.isOutputAssigned() || !this.assignedOutputMicrobit) {
@@ -164,7 +166,7 @@ class Microbits {
    * @param name The expected name of the microbit.
    * @return Returns true if the connection was successful, else false.
    */
-  public static async assignInput(name: string): Promise<boolean> {
+  public static async assignBluetoothInput(name: string): Promise<boolean> {
     // This function is long, and ought to be split up to make it easier to understand, but this is the short explanation
     // The goal is to save a MicrobitBluetooth instance to the field this.assignedInputMicrobit.
     // To do this we create a bluetooth connection, `MicrobitBluetooth.createMicrobitBluetooth`
@@ -279,18 +281,65 @@ class Microbits {
   }
 
   /**
+   * Attempts to assign and connect via serial.
+   * @param name The expected name of the microbit.
+   * @return Returns true if the connection was successful, else false.
+   */
+  public static async assignSerialInput(name: string): Promise<boolean> {
+    if (name.length !== 5) {
+      throw new Error('Could not connect, the name specified must be of length 5!');
+    }
+
+    const onInputDisconnect = (manual?: boolean) => {
+      this.inputBuildVersion = undefined;
+      if (manual) {
+        if (this.isInputAssigned()) {
+          ConnectionBehaviours.getInputBehaviour().onExpelled(manual, true);
+          ConnectionBehaviours.getOutputBehaviour().onExpelled(manual, true);
+          this.clearAssignedOutputReference();
+          this.clearAssignedInputReference();
+        }
+      } else {
+        connectionBehaviour.onDisconnected();
+        this.isInputReconnecting = true;
+      }
+    };
+
+    const connectionBehaviour = ConnectionBehaviours.getInputBehaviour();
+
+    const microbitSerial = new MicrobitSerial(Microbits.getLinked(), onInputDisconnect);
+
+    this.assignedInputMicrobit = microbitSerial;
+    this.inputName = name;
+    connectionBehaviour.onConnected(name);
+    microbitSerial.listenToInputServices(connectionBehaviour, () => {})
+      .then(() => {
+        connectionBehaviour.onReady();
+      })
+      .catch(reason => {
+        console.log(reason);
+      });
+
+    connectionBehaviour.onAssigned(this.getInput(), name);
+    this.inputName = name;
+    this.inputVersion = this.getInput().getVersion();
+    return true;
+  }
+
+  /**
    * For some reason, the function getPrimaryServices bricks if we do not listen to services before disconnecting
    * GATT server. Therefore, this function must be called if we intend to disconnect before listening to services
    * @param microbit The microbit we wish to disconnect from
    * @private
    */
-  private static async disconnectInputSafely(microbit: MicrobitBluetooth): Promise<void> {
+  private static async disconnectInputSafely(microbit: MicrobitConnection): Promise<void> {
     await microbit.listenToAccelerometer(TypingUtils.emptyFunction);
     await microbit.listenToButton('A', TypingUtils.emptyFunction);
     await microbit.listenToButton('B', TypingUtils.emptyFunction);
     microbit.disconnect();
   }
 
+  // TODO: rewrite this method to work with serial.
   private static async listenToInputServices(): Promise<void> {
     const connectionBehaviour = ConnectionBehaviours.getInputBehaviour();
     if (!this.isInputConnected()) {
@@ -486,10 +535,10 @@ class Microbits {
           // User just cancelled
           behaviour.onCancelledBluetoothRequest();
         } else {
-          behaviour.onBluetoothConnectionError(err);
+          behaviour.onConnectionError(err);
         }
       } else {
-        behaviour.onBluetoothConnectionError('Unknown error');
+        behaviour.onConnectionError('Unknown error');
       }
     };
   }
@@ -513,7 +562,7 @@ class Microbits {
   /**
    * Returns the reference to the connected output microbit. Throws error if none are connected.
    */
-  public static getAssignedOutput(): MicrobitBluetooth {
+  public static getAssignedOutput(): MicrobitConnection {
     if (!this.assignedOutputMicrobit) {
       throw new Error('No output microbit has been assigned!');
     }
@@ -523,7 +572,7 @@ class Microbits {
   /**
    * Returns the reference to the connected input microbit. Throws error if none are connected.
    */
-  public static getAssignedInput(): MicrobitBluetooth {
+  public static getAssignedInput(): MicrobitConnection {
     if (!this.assignedInputMicrobit) {
       throw new Error('No input microbit has been assigned!');
     }
@@ -537,7 +586,8 @@ class Microbits {
     if (!this.isOutputAssigned() || !this.isInputAssigned()) {
       return false;
     }
-    return this.getInput().getDevice().id == this.getOutput().getDevice().id;
+    return false;
+    // return this.getInput().getDevice().id == this.getOutput().getDevice().id;
   }
 
   /**
@@ -682,59 +732,6 @@ class Microbits {
     this.addToServiceActionQueue(this.outputMatrix, dataView);
   }
 
-  public static useInputAsOutput() {
-    if (!this.isInputAssigned()) {
-      throw new Error(
-        'No input microbit has be defined! Please check that it is connected before using it',
-      );
-    }
-    if (!this.inputName) {
-      throw new Error(
-        'Something went wrong. Input microbit was specified, but without name!',
-      );
-    }
-    this.assignedOutputMicrobit = this.getInput();
-    this.outputName = this.inputName;
-    this.outputVersion = this.inputVersion;
-    this.outputOrigin = this.inputOrigin;
-    this.outputBuildVersion = this.inputBuildVersion;
-
-    ConnectionBehaviours.getOutputBehaviour().onAssigned(
-      this.getOutput(),
-      this.outputName,
-    );
-    ConnectionBehaviours.getOutputBehaviour().onConnected(this.outputName);
-
-    this.listenToOutputServices()
-      .then(() => {
-        ConnectionBehaviours.getOutputBehaviour().onReady();
-        if (this.inputOrigin === HexOrigin.MAKECODE) {
-          ConnectionBehaviours.getOutputBehaviour().onIdentifiedAsMakecode();
-        }
-        if (this.inputOrigin === HexOrigin.PROPRIETARY) {
-          ConnectionBehaviours.getOutputBehaviour().onIdentifiedAsProprietary();
-        }
-        if (this.outputBuildVersion) {
-          ConnectionBehaviours.getOutputBehaviour().onVersionIdentified(
-            this.outputBuildVersion,
-          );
-          if (
-            StaticConfiguration.isMicrobitOutdated(
-              this.outputOrigin,
-              this.outputBuildVersion,
-            )
-          ) {
-            ConnectionBehaviours.getOutputBehaviour().onIdentifiedAsOutdated();
-          } else {
-            clearTimeout(this.outputVersionIdentificationTimeout);
-          }
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
   public static getInputVersion(): MBSpecs.MBVersion {
     if (!this.inputVersion) {
       throw new Error('No version has been set, has the micro:bit been connected?');
@@ -844,16 +841,6 @@ class Microbits {
     }
 
     return this.linkedMicrobit;
-  }
-
-  /**
-   * Attempt to disconnect a USB-connected microbit
-   */
-  public static async unlinkMicrobit() {
-    if (!this.isMicrobitLinked()) {
-      throw new Error('Cannot disconnect USB. No USB microbit could be found');
-    }
-    await this.getLinked().disconnect();
   }
 
   /**
@@ -1042,7 +1029,7 @@ class Microbits {
     this.bluetoothServiceActionQueue.set({ busy: false, queue: [] });
   }
 
-  private static async setGladSmiley(mb: MicrobitBluetooth) {
+  private static async setGladSmiley(mb: MicrobitConnection) {
     try {
       await mb.setLEDMatrix([
         [0, 0, 0, 0, 0],

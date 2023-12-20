@@ -68,7 +68,7 @@ interface ConnectionBehaviour {
   /**
    * What should happen when the micro:bit loses connection via Bluetooth
    */
-  onBluetoothConnectionError(error?: unknown): void;
+  onConnectionError(error?: unknown): void;
 
   /**
    * What should happen when the accelerometer changes.

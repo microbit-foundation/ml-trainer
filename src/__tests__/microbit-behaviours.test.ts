@@ -70,19 +70,19 @@ describe('Microbit behaviours tests', () => {
 
   describe('input behaviour tests', () => {
     test('bluetoothConnect fires when connected', async () => {
-      await Microbits.assignInput('vatav');
+      await Microbits.assignBluetoothInput('vatav');
       expect(spyInputBehaviour.hasConnectFired()).toBeTruthy();
       expect(spyInputBehaviour.getConnectedName()).toBe('vatav');
       expect(spyInputBehaviour.didFailConnection()).toBeFalsy();
     });
 
     test('bluetoothConnectionError fires when connection fails', async () => {
-      await Microbits.assignInput('noooo');
+      await Microbits.assignBluetoothInput('noooo');
       expect(spyInputBehaviour.didFailConnection()).toBeTruthy();
     });
 
     test('bluetoothDisconnect fires when disconnected manually', async () => {
-      await Microbits.assignInput('vatav');
+      await Microbits.assignBluetoothInput('vatav');
       Microbits.expelInput();
       expect(spyInputBehaviour.wasDisconnected()).toBeTruthy();
       expect(spyInputBehaviour.wasManuallyDisconnected()).toBeTruthy();
@@ -90,7 +90,7 @@ describe('Microbit behaviours tests', () => {
     });
 
     test('bluetoothDisconnect fires when both disconnected manually', async () => {
-      await Microbits.assignInput('vatav');
+      await Microbits.assignBluetoothInput('vatav');
       Microbits.expelInputAndOutput();
       expect(spyInputBehaviour.wasDisconnected()).toBeTruthy();
       expect(spyInputBehaviour.wasManuallyDisconnected()).toBeTruthy();

@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { isatty } from 'tty';
-import MicrobitBluetooth from './MicrobitBluetooth';
-
 /* eslint-disable @typescript-eslint/no-namespace */
 /**
  * References to the Bluetooth Profile UUIDs.

@@ -77,7 +77,7 @@ describe('Microbit facade tests', () => {
   });
 
   test('Input should be connected after connecting', async () => {
-    const wasConnected = await Microbits.assignInput('vatav');
+    const wasConnected = await Microbits.assignBluetoothInput('vatav');
     expect(wasConnected).toBeTruthy();
     expect(Microbits.isInputAssigned()).toBeTruthy();
     expect(Microbits.isOutputAssigned()).toBeFalsy();
@@ -94,26 +94,8 @@ describe('Microbit facade tests', () => {
     expect(Microbits.isInputAssigned()).toBeFalsy();
   });
 
-  test('Can connect the same microbit to output and input', async () => {
-    const wasConnected = await Microbits.assignInput('vatav');
-    Microbits.useInputAsOutput();
-    expect(wasConnected).toBeTruthy();
-    expect(Microbits.isOutputAssigned()).toBeTruthy();
-    expect(Microbits.isInputAssigned()).toBeTruthy();
-    expect(Microbits.isInputOutputTheSame()).toBeTruthy();
-  });
-
-  test('When same, disconnecting input also disconnects output', async () => {
-    const wasConnected = await Microbits.assignInput('vatav');
-    Microbits.useInputAsOutput();
-    expect(wasConnected).toBeTruthy();
-    Microbits.expelInputAndOutput();
-    expect(Microbits.isOutputAssigned()).toBeFalsy();
-    expect(Microbits.isInputAssigned()).toBeFalsy();
-  });
-
   test('Can get connected input', async () => {
-    await Microbits.assignInput('vatav');
+    await Microbits.assignBluetoothInput('vatav');
     expect(Microbits.getAssignedInput()).toBeDefined();
   });
 
@@ -124,14 +106,14 @@ describe('Microbit facade tests', () => {
 
   test('Should get correct name', async () => {
     await Microbits.assignOutput('vatav');
-    await Microbits.assignInput('vatav');
+    await Microbits.assignBluetoothInput('vatav');
     expect(Microbits.getOutputName()).toBe('vatav');
     expect(Microbits.getInputName()).toBe('vatav');
   });
 
   test('Should get correct version', async () => {
     await Microbits.assignOutput('vatav');
-    await Microbits.assignInput('vatav');
+    await Microbits.assignBluetoothInput('vatav');
     expect(Microbits.getInputVersion()).toBe(2);
     expect(Microbits.getOutputVersion()).toBe(2);
   });
