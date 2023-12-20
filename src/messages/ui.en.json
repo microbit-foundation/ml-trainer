@@ -173,7 +173,7 @@
   "connectMB.radioStart.requirements2": "Computer",
   "connectMB.radioStart.requirements3": "Micro USB cable",
   "connectMB.radioStart.requirements4": "Battery holder",
-  "connectMB.radioStart.switchBluetooth": "I only have one micro:bit",
+  "connectMB.radioStart.switchBluetooth": "Alternative method if you only have 1 micro:bit.",
 
   "connectMB.bluetoothStart.heading": "If you only have one micro:bit",
   "connectMB.bluetoothStart.subtitle": "You will need to have web Bluetooth enabled on your computer and in your web browser.",
@@ -181,7 +181,7 @@
   "connectMB.bluetoothStart.requirements2": "Computer",
   "connectMB.bluetoothStart.requirements3": "Micro USB cable",
   "connectMB.bluetoothStart.requirements4": "Battery holder",
-  "connectMB.bluetoothStart.switchRadio": "I have two micro:bits",
+  "connectMB.bluetoothStart.switchRadio": "Alternative method if you have 2 micro:bits.",
 
   "connectMB.connectCableMB1.heading": "Connect cable to micro:bit 1",
   "connectMB.connectCableMB1.subtitle": "Connect the first micro:bit to this computer with a USB cable so that the <brand name> program can be downloaded to it.",
