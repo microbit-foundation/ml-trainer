@@ -119,8 +119,8 @@
         onNextClick={() =>
           ($connectionDialogState.connectionState = ConnectDialogStates.WEARING_SETUP)} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.WEARING_SETUP}
-          {#if currentStage === 'usb'}
-          <MicrobitWearingInstructionDialog
+      {#if currentStage === 'usb'}
+        <MicrobitWearingInstructionDialog
           {currentStage}
           onBackClick={() =>
             ($connectionDialogState.connectionState =
@@ -128,16 +128,15 @@
           onNextClick={() =>
             ($connectionDialogState.connectionState =
               ConnectDialogStates.CONNECT_CABLE)} />
-          {:else if currentStage === 'usb1'}
-          <MicrobitWearingInstructionDialog
+      {:else if currentStage === 'usb1'}
+        <MicrobitWearingInstructionDialog
           {currentStage}
           onBackClick={() =>
-            ($connectionDialogState.connectionState =
-              ConnectDialogStates.START_RADIO)}
+            ($connectionDialogState.connectionState = ConnectDialogStates.START_RADIO)}
           onNextClick={() =>
             ($connectionDialogState.connectionState =
               ConnectDialogStates.CONNECT_CABLE)} />
-          {/if}
+      {/if}
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECT_CABLE}
       {#if currentStage === 'usb'}
         <ConnectCableDialog
@@ -146,8 +145,7 @@
             ($connectionDialogState.connectionState =
               ConnectDialogStates.CONNECT_BATTERY)}
           onBackClick={() =>
-            ($connectionDialogState.connectionState =
-              ConnectDialogStates.WEARING_SETUP)}
+            ($connectionDialogState.connectionState = ConnectDialogStates.WEARING_SETUP)}
           onNextClick={() =>
             ($connectionDialogState.connectionState =
               ConnectDialogStates.CONNECT_TUTORIAL_USB)} />
