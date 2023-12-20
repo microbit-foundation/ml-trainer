@@ -28,6 +28,7 @@
   import BluetoothConnectingDialog from './bluetooth/BluetoothConnectingDialog.svelte';
   import SelectMicrobitDialogBluetooth from './bluetooth/SelectMicrobitDialogBluetooth.svelte';
   import MicrobitSerial from '../../script/microbit-interfacing/MicrobitSerial';
+  import MicrobitWearingInstructionDialog from './MicrobitWearingInstructionDialog.svelte';
 
   let currentStage: 'usb' | 'usb1' | 'usb2' = 'usb1'; // "usb" is for the bluetooth connection flow, "usb1" and "usb2" determine the progress in the radio connection flow
 
@@ -106,7 +107,7 @@
           currentStage = 'usb';
         }}
         onNextClick={() => {
-          $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE;
+          $connectionDialogState.connectionState = ConnectDialogStates.WEARING_SETUP;
           currentStage = 'usb1';
         }} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.START_BLUETOOTH}
@@ -116,7 +117,27 @@
           currentStage = 'usb1';
         }}
         onNextClick={() =>
-          ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)} />
+          ($connectionDialogState.connectionState = ConnectDialogStates.WEARING_SETUP)} />
+    {:else if $connectionDialogState.connectionState === ConnectDialogStates.WEARING_SETUP}
+          {#if currentStage === 'usb'}
+          <MicrobitWearingInstructionDialog
+          {currentStage}
+          onBackClick={() =>
+            ($connectionDialogState.connectionState =
+              ConnectDialogStates.START_BLUETOOTH)}
+          onNextClick={() =>
+            ($connectionDialogState.connectionState =
+              ConnectDialogStates.CONNECT_CABLE)} />
+          {:else if currentStage === 'usb1'}
+          <MicrobitWearingInstructionDialog
+          {currentStage}
+          onBackClick={() =>
+            ($connectionDialogState.connectionState =
+              ConnectDialogStates.START_RADIO)}
+          onNextClick={() =>
+            ($connectionDialogState.connectionState =
+              ConnectDialogStates.CONNECT_CABLE)} />
+          {/if}
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECT_CABLE}
       {#if currentStage === 'usb'}
         <ConnectCableDialog
@@ -126,7 +147,7 @@
               ConnectDialogStates.CONNECT_BATTERY)}
           onBackClick={() =>
             ($connectionDialogState.connectionState =
-              ConnectDialogStates.START_BLUETOOTH)}
+              ConnectDialogStates.WEARING_SETUP)}
           onNextClick={() =>
             ($connectionDialogState.connectionState =
               ConnectDialogStates.CONNECT_TUTORIAL_USB)} />
@@ -138,7 +159,7 @@
             currentStage = 'usb2';
           }}
           onBackClick={() =>
-            ($connectionDialogState.connectionState = ConnectDialogStates.START_RADIO)}
+            ($connectionDialogState.connectionState = ConnectDialogStates.WEARING_SETUP)}
           onNextClick={() => {
             $connectionDialogState.connectionState =
               ConnectDialogStates.CONNECT_TUTORIAL_USB;

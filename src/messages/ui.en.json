@@ -173,6 +173,14 @@
   "connectMB.bluetoothStart.requirements4": "Battery holder",
   "connectMB.bluetoothStart.switchRadio": "I have two micro:bits",
 
+  "connectMB.wearingSetup.radioConnection.heading": "Is micro:bit 1 ready to wear?",
+  "connectMB.wearingSetup.bluetooth.heading": "Is the micro:bit ready to wear?",
+  "connectMB.wearingSetup.subtitle1": "Watch this video for instructions ",
+  "connectMB.wearingSetup.subtitle2": " on how to attach your micro:bit and battery pack to your flexible micro:bit holder and wearable strap so that it is easy to wear on your wrist.",
+  "connectMB.wearingSetup.requirements1": "micro:bit holder",
+  "connectMB.wearingSetup.requirements2": "Wearable strap",
+
+
   "connectMB.connectCableMB1.heading": "Connect cable to micro:bit 1",
   "connectMB.connectCableMB1.subtitle": "Connect the first micro:bit to this computer with a USB cable so that the <brand name> program can be downloaded to it.",
 
