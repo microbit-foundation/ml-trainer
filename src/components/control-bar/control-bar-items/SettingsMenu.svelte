@@ -22,26 +22,28 @@
   };
 </script>
 
-<LanguageDialog
-  isOpen={isLanguageDialogOpen}
-  onClose={() => {
-    isLanguageDialogOpen = false;
-  }} />
-<div class="relative inline-block">
-  <button
-    use:menu.button
-    on:select={onSelect}
-    class="inline-flex rounded-full text-xl p-2">
-    <SettingsIcon />
-  </button>
-  <MenuTransition show={$menu.expanded}>
-    <MenuItems {menu}>
-      <div class="py-2">
-        <MenuItem {menu} value="settings">
-          <GlobeIcon />
-          {$t('languageDialog.title')}
-        </MenuItem>
-      </div>
-    </MenuItems>
-  </MenuTransition>
+<div>
+  <LanguageDialog
+    isOpen={isLanguageDialogOpen}
+    onClose={() => {
+      isLanguageDialogOpen = false;
+    }} />
+  <div class="relative inline-block">
+    <button
+      use:menu.button
+      on:select={onSelect}
+      class="inline-flex rounded-full text-xl p-2">
+      <SettingsIcon />
+    </button>
+    <MenuTransition show={$menu.expanded}>
+      <MenuItems {menu}>
+        <div class="py-2">
+          <MenuItem {menu} value="settings">
+            <GlobeIcon />
+            {$t('languageDialog.title')}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </MenuTransition>
+  </div>
 </div>

@@ -45,41 +45,43 @@
   };
 </script>
 
-<AboutDialog
-  isOpen={isAboutDialogOpen}
-  onClose={() => {
-    isAboutDialogOpen = false;
-  }} />
-<div class="relative inline-block">
-  <button
-    use:menu.button
-    on:select={onSelect}
-    class="inline-flex rounded-full text-xl p-2">
-    <HelpIcon />
-  </button>
-  <MenuTransition show={$menu.expanded}>
-    <MenuItems {menu}>
-      <div class="py-2">
-        <MenuItem {menu} value="help-and-support">
-          <ExternalLinkIcon />
-          {$t('helpMenu.helpAndSupport')}
-        </MenuItem>
-      </div>
-      <div class="py-2">
-        <MenuItem {menu} value="terms-of-use">
-          <ExternalLinkIcon />
-          {$t('helpMenu.termsOfUse')}
-        </MenuItem>
-        <MenuItem {menu} value="cookies">
-          <CookiesIcon />
-          {$t('helpMenu.cookies')}
-        </MenuItem>
-      </div>
-      <div class="py-2">
-        <MenuItem {menu} value="about">
-          <InfoIcon />
-          {$t('helpMenu.about')}
-        </MenuItem>
-      </div>
-    </MenuItems></MenuTransition>
+<div>
+  <AboutDialog
+    isOpen={isAboutDialogOpen}
+    onClose={() => {
+      isAboutDialogOpen = false;
+    }} />
+  <div class="relative inline-block">
+    <button
+      use:menu.button
+      on:select={onSelect}
+      class="inline-flex rounded-full text-xl p-2">
+      <HelpIcon />
+    </button>
+    <MenuTransition show={$menu.expanded}>
+      <MenuItems {menu}>
+        <div class="py-2">
+          <MenuItem {menu} value="help-and-support">
+            <ExternalLinkIcon />
+            {$t('helpMenu.helpAndSupport')}
+          </MenuItem>
+        </div>
+        <div class="py-2">
+          <MenuItem {menu} value="terms-of-use">
+            <ExternalLinkIcon />
+            {$t('helpMenu.termsOfUse')}
+          </MenuItem>
+          <MenuItem {menu} value="cookies">
+            <CookiesIcon />
+            {$t('helpMenu.cookies')}
+          </MenuItem>
+        </div>
+        <div class="py-2">
+          <MenuItem {menu} value="about">
+            <InfoIcon />
+            {$t('helpMenu.about')}
+          </MenuItem>
+        </div>
+      </MenuItems></MenuTransition>
+  </div>
 </div>
