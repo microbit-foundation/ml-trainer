@@ -44,6 +44,6 @@
   <RecordingGraph data={recording.data} />
 
   <button class="absolute right-0px top-0px z-2" on:click={deleteClicked}>
-    <i class="far fa-times-circle fa-lg text-gray-500" />
+    <i class="fa fa-times fa-lg text-gray-500" />
   </button>
 </div>
