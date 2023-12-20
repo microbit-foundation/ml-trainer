@@ -252,9 +252,7 @@
     <!-- Title of gesture-->
     <GestureTilePart mr small elevated>
       <div class="flex flex-col p-2 h-30 w-70">
-        <button
-          class="w-5 outline-none ml-auto pb-5"
-          on:click={removeClicked}>
+        <button class="w-5 outline-none ml-auto pb-5" on:click={removeClicked}>
           <i class="fa fa-times fa-lg text-gray-500" />
         </button>
         <div class="transition ease rounded">
@@ -262,10 +260,10 @@
             type="text"
             class="px-2 w-full justify-self-start font-semibold bg-gray-100 py-1 rounded"
             placeholder="Name of action"
-            maxlength="{StaticConfiguration.gestureNameMaxLength}"
+            maxlength={StaticConfiguration.gestureNameMaxLength}
             bind:value={$nameBind}
             on:click={titleClicked}
-            on:keypress={onTitleKeypress}/>
+            on:keypress={onTitleKeypress} />
         </div>
       </div>
     </GestureTilePart>
