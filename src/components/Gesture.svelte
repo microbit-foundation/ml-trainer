@@ -252,7 +252,7 @@
     <!-- Title of gesture-->
     <GestureTilePart mr small elevated>
       <div class="flex flex-col p-2 h-30 w-70">
-        <button class="w-5 outline-none ml-auto pb-5" on:click={removeClicked}>
+        <button class="w-5 outline-none ml-auto pb-3" on:click={removeClicked}>
           <i class="fa fa-times fa-lg text-gray-500" />
         </button>
         <div class="transition ease rounded">
