@@ -108,7 +108,7 @@ class SpyConnectionBehaviour implements ConnectionBehaviour {
     /* Empty */
   }
 
-  onBluetoothConnectionError(error?: unknown): void {
+  onConnectionError(error?: unknown): void {
     this.hasFailedConnection = true;
   }
 }
