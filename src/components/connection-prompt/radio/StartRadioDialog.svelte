@@ -61,13 +61,10 @@
     </div>
   </div>
   <div class="flex justify-between items-center">
-    <div on:click={onStartBluetoothClick} class="w-full hover:cursor-pointer text-link">
+    <div on:click={onStartBluetoothClick} class="hover:cursor-pointer text-link">
       {$t('connectMB.radioStart.switchBluetooth')}
     </div>
-    <StandardButton
-      extraClasses="basis-full"
-      position="right"
-      onClick={onNextClick}
-      type="primary">{$t('connectMB.nextButton')}</StandardButton>
+    <StandardButton onClick={onNextClick} type="primary"
+      >{$t('connectMB.nextButton')}</StandardButton>
   </div>
 </main>

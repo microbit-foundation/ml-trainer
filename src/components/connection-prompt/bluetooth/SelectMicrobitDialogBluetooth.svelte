@@ -32,9 +32,8 @@
       </div>
     </div>
   </div>
-  <div class="justify-end flex flex-space-10 gap-x-5">
-    <StandardButton position="right" onClick={onBackClick}
-      >{$t('connectMB.backButton')}</StandardButton>
+  <div class="justify-end flex gap-x-5">
+    <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
     <StandardButton type="primary" onClick={onNextClick}
       >{$t('connectMB.nextButton')}</StandardButton>
   </div>
