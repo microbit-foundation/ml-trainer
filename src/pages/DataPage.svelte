@@ -64,7 +64,7 @@
   });
 </script>
 
-<main class="h-full inline-block w-full">
+<main class="h-full inline-block w-full bg-backgrounddark">
   <TabView />
 
   <div>

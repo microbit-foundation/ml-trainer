@@ -7,9 +7,8 @@
 <style>
   input[type='range'] {
     writing-mode: bt-lr;
-    appearance: slider-vertical;
-    width: 20px;
-    background: #13bba4;
+    appearance: slider-sideways;
+    width: 15rem;
   }
 </style>
 
@@ -193,57 +192,71 @@
 
   let hasLoadedMicrobitImage = false;
 
-  $: meterHeightPct = 100 * $gesture.confidence.currentConfidence;
+  const meterTotalWidth = 15;
+
+  $: meterWidthPct = 100 * $gesture.confidence.currentConfidence;
 </script>
 
-<main class="mb-4 items-center flex flex-row">
-  <!-- NAMES AND CONFIDENCE METER -->
-  <GestureTilePart>
-    <div class="items-center flex p-2">
+<main class="mb-4 items-center flex flex-row space-x-2">
+  <!-- ACTION TITLE -->
+  <GestureTilePart elevated={true}>
+    <div class="items-center flex p-2 w-60 h-29">
       <div
-        class="w-36 text-center font-semibold rounded-xl
-                    px-1 py-1 border border-gray-300
-                    border-dashed mr-2 break-words">
+        class="pr-20 font-semibold rounded
+                    px-1 py-1
+                    ml-5 break-words text-2xl">
         <h3>{$gesture.name}</h3>
       </div>
-      <div class="h-31" />
+    </div></GestureTilePart>
+
+  <GestureTilePart elevated={true}>
+    <!-- METER -->
+    <div class="w-90 h-13 relative">
+      <div class="pt-7 pl-5">
+        <div
+          class="h-3 rounded-full bg-gray-200 overflow-hidden"
+          style="width: {meterTotalWidth}rem">
+          <div
+            class="absolute h-3 rounded-full {wasTriggered
+              ? 'bg-secondary'
+              : 'bg-gray-500'}"
+            style="width: {meterWidthPct > 5
+              ? meterWidthPct * meterTotalWidth * 0.01
+              : 1}rem;" />
+          <div />
+          <div class="relative pl-5 grid grid-cols-8">
+            {#each Array(10) as _, index (index)}
+              <div class="bg-white w-0.5 h-5" />
+            {/each}
+          </div>
+        </div>
+        <p
+          class="absolute right-5 top-5 {wasTriggered
+            ? 'bg-secondary'
+            : 'bg-gray-500'} text-white rounded w-15 text-xl text-center">
+          {~~meterWidthPct}%
+        </p>
+      </div>
+    </div>
+    <div class="relative self-start">
+      <Information
+        titleText={$t('content.model.classification.helpHeading')}
+        bodyText={$t('content.model.classification.helpBody')}
+        isLightTheme={false} />
+    </div>
+    <!-- RECOGNITION POINT BAR -->
+    <div class="pl-5 pb-5">
+      <p class="text-sm text-gray-500 pl">
+        {$t('content.model.output.recognitionPoint')}
+      </p>
       <input
-        class="h-25 rotate-90 accent-primary"
+        class="accent-gray-500"
         type="range"
         name=""
         min="10"
         max="90"
         id=""
         bind:value={sliderValue} />
-
-      <!-- METER -->
-      <div class="w-4 h-25 relative">
-        <div
-          class="w-4 h-full absolute rounded border border-solid border-gray-400 overflow-hidden">
-          <div
-            class="absolute w-5 {wasTriggered ? 'bg-primary' : 'bg-info'} z-index: -10"
-            style="height: {meterHeightPct}px; margin-top: {100 - meterHeightPct}px;" />
-          <div
-            class="absolute w-5 bg-primary"
-            style="height: 1px; margin-top: {6.5 - 0.068 * sliderValue}rem;" />
-          <div class="absolute">
-            {#each [75, 50, 25] as line}
-              <div class="w-5 bg-gray-300 mt-6" style="height: 1px;">
-                <p class="absolute text-xs" style="margin-top: -8px; margin-left: 18px;">
-                  {line}%
-                </p>
-              </div>
-            {/each}
-          </div>
-          <div />
-        </div>
-      </div>
-      <div class="relative self-start">
-        <Information
-          titleText={$t('content.model.classification.helpHeading')}
-          bodyText={$t('content.model.classification.helpBody')}
-          isLightTheme={false} />
-      </div>
     </div>
   </GestureTilePart>
 

@@ -65,9 +65,19 @@
   "content.model.output.pin.option.xTime": "Tænd på tid",
   "content.model.output.pin.seconds": "Sekunder",
 
-  "content.model.output.prediction.iconTitle": "Forudsigelse",
-  "content.model.output.prediction.descriptionTitle": "Forudsigelse",
-  "content.model.output.prediction.descriptionBody": "Her kan du se, hvilken klasse din model forudsiger den nuværende bevægelse til at være. Du kan se i meteret hvor sikker modellen er i sin forudsigelse.",
+  "content.model.output.estimatedGesture.iconTitle": "TRANSLATION_NEEDED",
+  "content.model.output.estimatedGesture.descriptionTitle": "TRANSLATION_NEEDED",
+  "content.model.output.estimatedGesture.descriptionBody": "TRANSLATION_NEEDED",
+
+  "content.model.output.action.iconTitle": "TRANSLATION_NEEDED",
+  "content.model.output.action.descriptionTitle": "TRANSLATION_NEEDED",
+  "content.model.output.action.descriptionBody": "Her kan du se, hvilken klasse din model forudsiger den nuværende bevægelse til at være. Du kan se i meteret hvor sikker modellen er i sin forudsigelse.",
+
+  "content.model.output.certainty.iconTitle": "TRANSLATION_NEEDED",
+  "content.model.output.certainty.descriptionTitle": "TRANSLATION_NEEDED",
+  "content.model.output.certainty.descriptionBody": "TRANSLATION_NEEDED",
+
+  "content.model.output.recognitionPoint": "TRANSLATION_NEEDED`",
 
   "content.model.output.ledOutput.descriptionTitle": "LED output",
   "content.model.output.ledOutput.descriptionBody": "Her kan du vælge, hvordan LED-lysene på din output-micro:bit skal opføre sig, når din model forudsiger en klasse. Prøv at tegne nogle mønstre nedenfor og se, hvordan disse mønstre vises på din output-micro:bit, når du bevæger input-micro:bit'en.",

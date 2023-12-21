@@ -1,6 +1,6 @@
 <!--
   (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
- 
+
   SPDX-License-Identifier: MIT
  -->
 <script lang="ts">
@@ -11,6 +11,7 @@
   import { state } from '../../../script/stores/uiStore';
   import { t } from './../../../i18n';
   import downArrowImage from '../../../imgs/down_arrow.svg';
+  import { bestPrediction } from '../../../script/stores/mlStore';
 
   // Bool flags to know whether output microbit popup should be show
   let hasClosedPopup = false;
@@ -23,16 +24,43 @@
   function onUserInteraction(): void {
     hasInteracted = true;
   }
+
+  $: currentEstimatedGestureConfidence = $bestPrediction?.confidence.currentConfidence;
 </script>
 
-<div>
-  <div class="relative flex h-8">
-    <div class="absolute left-5 flex">
+<div class="bg-backgrounddark">
+  <div class="h-1 bg-gray-200 width-full" />
+  <div class="flex justify-center space-x-10 py-5 text-xl">
+    <Information
+      underlineIconText={false}
+      isLightTheme={false}
+      iconText={$t('content.model.output.estimatedGesture.iconTitle')}
+      titleText={$t('content.model.output.estimatedGesture.descriptionTitle')}
+      bodyText={$t('content.model.output.estimatedGesture.descriptionBody')} />
+    <p class="font-semibold text-2xl">
+      {$bestPrediction?.name ? $bestPrediction?.name : 'None'}
+    </p>
+    {#if currentEstimatedGestureConfidence}
+      <p class="bg-secondary text-white rounded w-15 text-center">
+        {Math.floor(currentEstimatedGestureConfidence * 100)}%
+      </p>
+    {/if}
+  </div>
+  <div class="h-1 bg-gray-200 width-full" />
+  <div class="relative flex h-8 text-xl">
+    <div class="absolute left-15 space-x-45 flex py-5">
       <Information
+        underlineIconText={false}
         isLightTheme={false}
-        iconText={$t('content.model.output.prediction.iconTitle')}
-        titleText={$t('content.model.output.prediction.descriptionTitle')}
-        bodyText={$t('content.model.output.prediction.descriptionBody')} />
+        iconText={$t('content.model.output.action.iconTitle')}
+        titleText={$t('content.model.output.action.descriptionTitle')}
+        bodyText={$t('content.model.output.action.descriptionBody')} />
+      <Information
+        underlineIconText={false}
+        isLightTheme={false}
+        iconText={$t('content.model.output.certainty.iconTitle')}
+        titleText={$t('content.model.output.certainty.descriptionTitle')}
+        bodyText={$t('content.model.output.certainty.descriptionBody')} />
     </div>
     {#if enableOutputGestures}
       <div class="absolute left-78 flex">
@@ -59,11 +87,13 @@
     {/if}
   </div>
 
-  <div class="pl-1">
+  <div class="pl-15">
     <!-- Display all gestures and their output capabilities -->
-    {#each gestures.getGestures() as gesture}
-      <OutputGesture variant="stack" {gesture} {onUserInteraction} />
-    {/each}
+    <div class="pt-6">
+      {#each gestures.getGestures() as gesture}
+        <OutputGesture variant="stack" {gesture} {onUserInteraction} />
+      {/each}
+    </div>
   </div>
   {#if !$state.isOutputConnected && !hasClosedPopup && hasInteracted}
     <div transition:fade class="grid grid-cols-5 absolute bottom-5 w-full min-w-729px">
