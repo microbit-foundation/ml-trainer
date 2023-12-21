@@ -28,7 +28,12 @@
         {$t('about.developedInPartnership')}
       </p>
       <div class="grid grid-cols-2 gap-5 items-center text-center">
-        <img class="flex-1" src={microbitHeartImage} width="724" height="589" />
+        <img
+          class="flex-1"
+          src={microbitHeartImage}
+          width="724"
+          height="589"
+          alt={$t('about.microbitHeartImageAlt')} />
         <table class="text-sm">
           <tbody
             ><tr class="divide-gray-100"
@@ -39,7 +44,7 @@
                   target="_blank"
                   rel="noopener noreferrer"
                   href="https://github.com/microbit-foundation/ml-trainer"
-                  ><GitHubIcon /></a>
+                  ><GitHubIcon /><span class="sr-only">GitHub</span></a>
               </td></tr
             ></tbody
           ><caption class="p-2">{$t('about.softwareVersions')}</caption>
