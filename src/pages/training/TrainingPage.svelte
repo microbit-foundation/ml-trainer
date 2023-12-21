@@ -58,9 +58,9 @@
   </div>
 </StandardDialog>
 
-<div class="flex flex-col pb-5">
+<div class="flex flex-col pb-5 bg-backgrounddark">
   <TabView />
-  <img class="self-center pt-50" src={trainModelImage} alt="train model" width="350" />
+  <img class="self-center pt-10" src={trainModelImage} alt="train model" width="350" />
   <p class="text-2xl font-semibold self-center pb-5">{$t('content.trainer.header')}</p>
   <p class="text-center self-center leading-relaxed text-[{descriptionTextColour}] w-180">
     {$t('content.trainer.description')}

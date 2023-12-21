@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 /**
  * (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
@@ -8,7 +8,6 @@
  */
 
 import fs from 'fs';
-import 'jest-expect-message';
 import * as path from 'path';
 
 // Place files you wish to ignore by name in here

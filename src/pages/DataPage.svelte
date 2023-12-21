@@ -13,7 +13,6 @@
     loadDatasetFromFile,
   } from '../script/stores/mlStore';
   import { t } from '../i18n';
-  import RecordInformationContent from '../components/datacollection/RecordInformationContent.svelte';
   import NewGestureButton from '../components/NewGestureButton.svelte';
   import PleaseConnectFirst from '../components/PleaseConnectFirst.svelte';
   import DataPageControlBar from '../components/datacollection/DataPageControlBar.svelte';
@@ -65,7 +64,7 @@
   });
 </script>
 
-<main class="h-full inline-block w-full">
+<main class="h-full inline-block w-full bg-backgrounddark">
   <TabView />
 
   <div>
@@ -93,24 +92,14 @@
               titleText={$t('content.data.classHelpHeader')}
               bodyText={$t('content.data.classHelpBody')} />
           </div>
-          <div class="absolute left-55 flex">
+          <div class="absolute left-65 flex">
             <Information
               isLightTheme={false}
-              iconText={$t('content.data.choice')}
-              underlineIconText={false}>
-              <RecordInformationContent isLightTheme={false} />
-            </Information>
+              underlineIconText={false}
+              iconText={$t('content.data.data')}
+              titleText={$t('content.data.data')}
+              bodyText={$t('content.data.dataDescription')} />
           </div>
-          {#if hasSomeData()}
-            <div class="absolute left-92 flex">
-              <Information
-                isLightTheme={false}
-                underlineIconText={false}
-                iconText={$t('content.data.data')}
-                titleText={$t('content.data.data')}
-                bodyText={$t('content.data.dataDescription')} />
-            </div>
-          {/if}
         </div>
       {:else}
         <div class="flex justify-center">
@@ -119,7 +108,7 @@
           </div>
         </div>
       {/if}
-      <!-- Display all gestures -->
+
       {#each $gestures as gesture (gesture.ID)}
         <Gesture
           gesture={gestures.getGesture(gesture.ID)}
@@ -128,6 +117,9 @@
 
       <NewGestureButton />
     </div>
-    <TrainingButton action="navigate" />
+
+    <div class="flex justify-end mx-10">
+      <TrainingButton action="navigate" />
+    </div>
   {/if}
 </main>

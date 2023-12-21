@@ -4,17 +4,12 @@
  * SPDX-License-Identifier: MIT
  */
 
-const util = require('util');
-
-// Required for the jest runtime
-TextDecoder = util.TextDecoder;
-
 // browser mocks
 const setLang = (lang: string) => {
   const localStorageMock = (function () {
     let store = {
       isTesting: true,
-      lang: lang,
+      lang: JSON.stringify(lang),
     };
     return {
       getItem: function (key: 'isTesting' | 'lang') {
@@ -30,7 +25,7 @@ const setLang = (lang: string) => {
       clear: function () {
         store = {
           isTesting: true,
-          lang: lang,
+          lang: JSON.stringify(lang),
         };
       },
     };

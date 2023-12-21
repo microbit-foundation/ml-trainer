@@ -7,7 +7,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ## Pull Request Process
 
-1. Ensure any install or build dependencies are removed and the tests using `jest` are running successfully.
+1. Ensure any install or build dependencies are removed and the tests using `npm run test` are running successfully.
 2. Update the README.md with details of changes to the interface, this includes new environment
    variables and useful file locations, if applicable.
 3. Increase the version numbers in any examples files and the README.md to the new version that this

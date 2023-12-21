@@ -1,18 +1,17 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 /**
  * (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
  *
  * SPDX-License-Identifier: MIT
  */
-import 'svelte-jester';
-import Microbits from '../../script/microbit-interfacing/Microbits';
-import ConnectionBehaviours from '../../script/connection-behaviours/ConnectionBehaviours';
-import OutputBehaviour from '../../script/connection-behaviours/OutputBehaviour';
-import InputBehaviour from '../../script/connection-behaviours/InputBehaviour';
-import SpyConnectionBehaviour from '../mocks/SpyConnectionBehaviour';
-import MockBTDevice from '../mocks/mock-microbit-bluetooth';
+import Microbits from '../script/microbit-interfacing/Microbits';
+import ConnectionBehaviours from '../script/connection-behaviours/ConnectionBehaviours';
+import OutputBehaviour from '../script/connection-behaviours/OutputBehaviour';
+import InputBehaviour from '../script/connection-behaviours/InputBehaviour';
+import SpyConnectionBehaviour from './mocks/SpyConnectionBehaviour';
+import MockBTDevice from './mocks/mock-microbit-bluetooth';
 
 describe('Microbit behaviours tests', () => {
   let spyInputBehaviour: SpyConnectionBehaviour;

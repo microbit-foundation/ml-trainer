@@ -5,7 +5,6 @@
  */
 
 import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
-import util from 'util';
 import { MockBluetoothCharacteristicProperties } from './mock-bluetooth';
 
 class MockInfoService implements BluetoothRemoteGATTService {
@@ -189,7 +188,7 @@ export class MockBluetoothModelNumberCharacteristic
 
     const selectedVersionString =
       this.versionNumber === 1 ? v1VersionString : v2VersionString;
-    const enc = new util.TextEncoder();
+    const enc = new TextEncoder();
     const buff = enc.encode(selectedVersionString);
     const dataView = new DataView(buff.buffer);
     return Promise.resolve(dataView);

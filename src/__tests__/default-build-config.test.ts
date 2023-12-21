@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 /**
  * (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors

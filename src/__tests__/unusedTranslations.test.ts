@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 /**
  * (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
@@ -10,8 +10,6 @@
 import en from './../messages/ui.en.json';
 import * as fs from 'fs';
 import * as path from 'path';
-
-import 'jest-expect-message';
 
 const ignoredFiles = ['translations.ts', 'smoothie.js', '__tests__'];
 

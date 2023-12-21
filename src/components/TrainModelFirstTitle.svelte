@@ -12,7 +12,7 @@
   import { Paths, navigate } from '../router/paths';
 </script>
 
-<div class="flex flex-col items-center">
+<div class="flex flex-col items-center bg-backgrounddark pb-10">
   <img src={testModelImage} width="300" class="mb-10" />
   <h2 class="text-xl font-bold mb-3">
     {$t('content.model.trainModelFirstHeading')}

@@ -23,7 +23,7 @@ type AccelerometerSynthesizerData = {
 };
 
 class AccelerometerSynthesizer implements Readable<AccelerometerSynthesizerData> {
-  private interval: NodeJS.Timer | undefined = undefined;
+  private interval: NodeJS.Timeout | undefined = undefined;
   private store: Writable<AccelerometerSynthesizerData>;
 
   constructor(private liveData: LiveData<MicrobitAccelerometerData>) {

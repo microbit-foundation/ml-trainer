@@ -1,4 +1,9 @@
 {
+  "about.developedInPartnership": "Developed in partnership with Center for Computational Thinking and Design, Aarhus University",
+  "about.softwareVersions": "Software versions",
+
+  "actions.close": "Close",
+
   "alert.data.classNameLengthAlert": "Names must consists of maximum {maxLen} characters.",
   "alert.recording.disconnectedDuringRecording": "micro:bit disconnected during recording",
 
@@ -24,8 +29,7 @@
   "content.index.toolProcessCards.model.description": "Find out if it correctly recognises each action. Add more data to improve the model.",
   "content.index.recordButtonDescription": "\"Record\"-button",
 
-  "content.data.classPlaceholderNewClass": "Press here to change name",
-  "content.data.record": "Record",
+  "content.data.classPlaceholderNewClass": "Name of action",
   "content.data.addData": "Add Data",
   "content.data.classHelpHeader": "Class",
   "content.data.classHelpBody": "A class describes a type of gesture. We can record examples of a certain type of gesture and put the examples in the same class. The trainer can find patterns in the examples/data and use these patterns to 'train' a model that can recognize this class of gestures. Multiple examples will typically result in a better model, and consider how many different ways a gesture can be performed.",
@@ -94,9 +98,19 @@
   "content.model.output.pin.option.xTime": "For time",
   "content.model.output.pin.seconds": "Seconds",
 
-  "content.model.output.prediction.iconTitle": "Prediction",
-  "content.model.output.prediction.descriptionTitle": "Prediction",
-  "content.model.output.prediction.descriptionBody": "Here you can see the model's prediction of the current gesture. In the meter, you can see how confident the model is in the prediction.",
+  "content.model.output.estimatedGesture.iconTitle": "Estimated action:",
+  "content.model.output.estimatedGesture.descriptionTitle": "Estimated action",
+  "content.model.output.estimatedGesture.descriptionBody": "This is the action the model thinks you are currently doing.",
+
+  "content.model.output.action.iconTitle": "Action",
+  "content.model.output.action.descriptionTitle": "Action",
+  "content.model.output.action.descriptionBody": "The type of movement you want the machine learning tool to recognise e.g. ‘wave’ or ‘clap’.",
+
+  "content.model.output.certainty.iconTitle": "Certainty",
+  "content.model.output.certainty.descriptionTitle": "Certainty",
+  "content.model.output.certainty.descriptionBody": "How confident the model is that you are currently doing each action.",
+
+  "content.model.output.recognitionPoint": "Recognition Point:",
 
   "content.model.output.ledOutput.descriptionTitle": "LED output",
   "content.model.output.ledOutput.descriptionBody": "Here you can choose how the LEDs on your output micro:bit behaves when your model makes predictions. Try draw some patterns and see how they show on the output micro:bit when you move the input micro:bit.",
@@ -119,6 +133,12 @@
   "footer.helpHeader": "Live graph",
   "footer.helpContent": "Once you have connected a micro:bit you can watch the accelerometer data for all three axes on this graph in real time. Try moving your connected micro:bit to see what the data looks like to your computer!",
   "footer.reconnecting": "Reconnecting. Please wait",
+
+  "helpMenu.label": "Help",
+  "helpMenu.helpAndSupport": "Help & support",
+  "helpMenu.termsOfUse": "Terms of use",
+  "helpMenu.cookies": "Cookies",
+  "helpMenu.about": "About",
 
   "menu.data.helpHeading": "1. Add data",
   "menu.data.helpBody": "In order to train a model to recognize different movements, we need good examples of 'good behavior' that we can show the Trainer. Here you can create classes (types of gestures) and record examples for each class. There must be at least 2 classes with 3 examples each before the trainer can train a model.",
@@ -153,7 +173,7 @@
   "connectMB.radioStart.requirements2": "Computer",
   "connectMB.radioStart.requirements3": "Micro USB cable",
   "connectMB.radioStart.requirements4": "Battery holder",
-  "connectMB.radioStart.switchBluetooth": "I only have one micro:bit",
+  "connectMB.radioStart.switchBluetooth": "Alternative method if you only have 1 micro:bit.",
 
   "connectMB.bluetoothStart.heading": "If you only have one micro:bit",
   "connectMB.bluetoothStart.subtitle": "You will need to have web Bluetooth enabled on your computer and in your web browser.",
@@ -161,16 +181,16 @@
   "connectMB.bluetoothStart.requirements2": "Computer",
   "connectMB.bluetoothStart.requirements3": "Micro USB cable",
   "connectMB.bluetoothStart.requirements4": "Battery holder",
-  "connectMB.bluetoothStart.switchRadio": "I have two micro:bits",
+  "connectMB.bluetoothStart.switchRadio": "Alternative method if you have 2 micro:bits.",
 
-  "connectMB.connectCableMB1.heading": "Connect cable to micro:bit 1",
-  "connectMB.connectCableMB1.subtitle": "Connect the first micro:bit to this computer with a USB cable so that the <brand name> program can be downloaded to it.",
+  "connectMB.connectCableMB1.heading": "Connect USB cable to micro:bit 1",
+  "connectMB.connectCableMB1.subtitle": "Connect the micro:bit that is ready to wear (micro:bit 1) to this computer with a USB cable so that the machine learning tool program can be downloaded to it.",
 
   "connectMB.connectCableMB2.heading": "Connect cable to micro:bit 2",
   "connectMB.connectCableMB2.subtitle": "Connect a second micro:bit to this computer with a USB cable.",
 
-  "connectMB.connectCable.heading": "Connect cable",
-  "connectMB.connectCable.subtitle": "Connect a micro:bit to this computer with a USB cable so that the <brand name> program can be downloaded to it.",
+  "connectMB.connectCable.heading": "Connect USB cable to micro:bit",
+  "connectMB.connectCable.subtitle": "Connect the micro:bit to this computer with a USB cable so that the machine learning program can be downloaded to it.",
 
   "connectMB.connectCable.skip": "Skip: program already downloaded?",
 
@@ -231,6 +251,8 @@
   "connectMB.outputMB.sameButton": "Same",
   "connectMB.outputMB.otherButton": "Other",
 
+  "languageDialog.title": "Language",
+
   "popup.compatibility.bluetooth.header": "Bluetooth incompatible browser!",
   "popup.compatibility.bluetooth.explain": "The browser you are currently using does not support bluetooth.",
   "popup.compatibility.bluetooth.advice": "Please update the browser or use another one from our supported browsers list below.",
@@ -251,5 +273,7 @@
   "popup.outdatedmicrobit.text.mkcd": "Open the newest MakeCode template to use the updated extension.",
   "popup.outdatedmicrobit.button.later": "Later",
   "popup.outdatedmicrobit.button.update": "Update now",
-  "popup.outdatedmicrobit.button.update.mkcd": "Open MakeCode"
+  "popup.outdatedmicrobit.button.update.mkcd": "Open MakeCode",
+
+  "settings.label": "Settings"
 }

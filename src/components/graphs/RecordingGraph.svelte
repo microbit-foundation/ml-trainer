@@ -1,6 +1,6 @@
 <!--
   (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
- 
+
   SPDX-License-Identifier: MIT
  -->
 
@@ -26,6 +26,8 @@
   let modalSize = 250;
   const verticalLineCol = 'black';
   const verticalLineWidth = 1;
+
+  const enableInspector = false;
 
   const getDataByIndex = (index: number) => {
     if (isNaN(index)) {
@@ -189,7 +191,7 @@
             var ctx = chart.ctx;
             var chartArea = chart.chartArea;
 
-            if (!isNaN(verticalLineX)) {
+            if (!isNaN(verticalLineX) && enableInspector) {
               ctx.save();
               ctx.strokeStyle = verticalLineCol;
               ctx.lineWidth = verticalLineWidth;
@@ -221,7 +223,7 @@
 
 <div bind:this={htmlElement} class="h-full w-full relative">
   <div class="z-1 h-full w-full absolute">
-    {#if !isNaN(hoverIndex)}
+    {#if enableInspector && !isNaN(hoverIndex)}
       <p
         style="margin-left: {verticalLineX - 20}px; pointer-events:none;"
         class="absolute mt-20 w-10 text-center">
@@ -231,9 +233,11 @@
 
     <canvas bind:this={canvas} />
   </div>
-  <RecordingInspector
-    dataPoint={getDataByIndex(hoverIndex)}
-    position={modalPosition}
-    isOpen={!isNaN(hoverIndex)}
-    size={modalSize} />
+  {#if enableInspector}
+    <RecordingInspector
+      dataPoint={getDataByIndex(hoverIndex)}
+      position={modalPosition}
+      isOpen={!isNaN(hoverIndex)}
+      size={modalSize} />
+  {/if}
 </div>

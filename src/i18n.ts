@@ -10,11 +10,31 @@ import { get } from 'svelte/store';
 import { persistantWritable } from './script/stores/storeUtil';
 import browserLang from 'browser-lang';
 
+export const allLanguages = [
+  {
+    id: 'en',
+    name: 'English',
+    enName: 'English',
+  },
+  // There are no Welsh translations yet but enabled to demo the language feature
+  {
+    id: 'cy',
+    name: 'Cymraeg',
+    enName: 'Welsh',
+  },
+  // Disabled for now as this fork doesn't have full Danish translations
+  /*{
+    id: 'da',
+    name: 'Dansk',
+    enName: 'Danish',
+  },*/
+];
+
 register('en', () => import('./messages/ui.en.json'));
-register('da', () => import('./messages/ui.da.json'));
+register('cy', () => import('./messages/ui.cy.json'));
 
 const initialLocale = browserLang({
-  languages: ['en', 'da'],
+  languages: allLanguages.map(l => l.id),
   fallback: 'en',
 });
 

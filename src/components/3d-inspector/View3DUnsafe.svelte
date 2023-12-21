@@ -26,7 +26,7 @@
   let microbitModel: THREE.Scene; // TODO: We have undefined checks for these, but their types do not indicate they could ever be undefined
   let canvas: HTMLCanvasElement; // TODO: We have undefined checks for these, but their types do not indicate they could ever be undefined
   let renderer: THREE.WebGLRenderer;
-  let updater: NodeJS.Timer | undefined;
+  let updater: NodeJS.Timeout | undefined;
 
   /**
    * ASSIGNED VARIABLES

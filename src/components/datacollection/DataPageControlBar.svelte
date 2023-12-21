@@ -12,7 +12,7 @@
 </style>
 
 <script lang="ts">
-  import { t } from '../../i18n.js';
+  import { t } from '../../i18n';
 
   export let downloadDisabled = false;
   export let clearDisabled = false;

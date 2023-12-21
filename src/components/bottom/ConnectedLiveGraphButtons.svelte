@@ -34,8 +34,10 @@
   <div class="ml-2">
     {#if !$state.isInputConnected || $state.isInputReady}
       <!-- Input MB is not in the connection process -->
-      <StandardButton onClick={onInputDisconnectButtonClicked} type="secondary"
-        >{$t('footer.disconnectButton')}</StandardButton>
+      <StandardButton
+        onClick={onInputDisconnectButtonClicked}
+        type="secondary"
+        size="small">{$t('footer.disconnectButton')}</StandardButton>
     {:else}
       <StandardButton onClick={TypingUtils.emptyFunction} disabled>
         <img alt="loading" src={loadingSpinnerImage} style="height:24px" />

@@ -16,8 +16,8 @@ export type MenuProperties = {
   infoBubbleTitle: string;
   infoBubbleContent: string;
   navigationPath: PathType;
-  collapsedButtonContent: typeof SvelteComponent | undefined;
-  expandedButtonContent: typeof SvelteComponent;
+  collapsedButtonContent: typeof SvelteComponent<any> | undefined;
+  expandedButtonContent: typeof SvelteComponent<any>;
   additionalExpandPaths?: PathType[];
 };
 

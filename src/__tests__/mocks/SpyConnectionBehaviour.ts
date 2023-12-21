@@ -13,7 +13,9 @@ import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
  */
 class SpyConnectionBehaviour implements ConnectionBehaviour {
   onIdentifiedAsOutdated(): void {
-    throw new Error('Method not implemented.');
+    // This happens in the tests due to async code that's not waited
+    // for. The test Bluetooth code doesn't ever send a version.
+    // Making a no-op for now.
   }
   onVersionIdentified(versionNumber: number): void {
     throw new Error('Method not implemented.');

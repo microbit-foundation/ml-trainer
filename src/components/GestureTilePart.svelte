@@ -1,6 +1,6 @@
 <!--
   (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
- 
+
   SPDX-License-Identifier: MIT
  -->
 
@@ -12,7 +12,7 @@
 </script>
 
 <div
-  class="border-1 border-primaryborder border-solid rounded-xl bg-backgroundlight"
+  class="rounded-lg bg-backgroundlight"
   class:h-30={small}
   class:shadow-md={elevated}
   class:ml-2={ml && small}

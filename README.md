@@ -44,7 +44,7 @@ We recommend starting here.
 
 ### ```npm test```
 
-Runs the test suite. Tests are driven by the framework [Jest](https://jestjs.io/). Runs all tests inside the folder `./src/__tests__/`.
+Runs the test suite. Tests are driven by the framework [Vitest](https://vitest.dev/). Runs all tests inside the folder `./src/__tests__/`.
 
 If you do not plan to contribute to the project, you may safely ignore this.
 
