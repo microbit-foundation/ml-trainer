@@ -22,7 +22,7 @@
   };
 </script>
 
-<div class="flex w-full justify-center">
+<div class="flex w-full justify-center bg-white border-b-3 border-gray-200">
   <div class="flex">
     {#each get(Menus.getMenuStore()) as menu, id}
       <MenuButton

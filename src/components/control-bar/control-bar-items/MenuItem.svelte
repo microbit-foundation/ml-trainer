@@ -9,12 +9,15 @@
 
   export let menu: ReturnType<typeof createMenu>;
   export let value: any;
+  export let disabled: boolean | undefined = undefined;
 </script>
 
 <button
   use:menu.item={{ value }}
   {...$$restProps}
+  {disabled}
   class="group flex gap-2 items-center w-full px-4 py-2 text-sm text-black"
-  class:bg-gray-100={$menu.active === value}>
+  class:bg-gray-100={$menu.active === value}
+  class:opacity-50={disabled}>
   <slot />
 </button>

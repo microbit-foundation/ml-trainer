@@ -15,12 +15,12 @@
   import { t } from '../i18n';
   import NewGestureButton from '../components/NewGestureButton.svelte';
   import PleaseConnectFirst from '../components/PleaseConnectFirst.svelte';
-  import DataPageControlBar from '../components/datacollection/DataPageControlBar.svelte';
   import Information from '../components/information/Information.svelte';
   import { onMount } from 'svelte';
   import TabView from '../views/TabView.svelte';
   import { gestures } from '../script/stores/Stores';
   import TrainingButton from './training/TrainingButton.svelte';
+  import DataPageMenu from '../components/datacollection/DataPageMenu.svelte';
 
   let isConnectionDialogOpen = false;
 
@@ -67,8 +67,8 @@
 <main class="h-full inline-block w-full bg-backgrounddark">
   <TabView />
 
-  <div>
-    <DataPageControlBar
+  <div class="flex justify-end px-10 my-3">
+    <DataPageMenu
       clearDisabled={$gestures.length === 0}
       downloadDisabled={$gestures.length === 0}
       {onClearGestures}
