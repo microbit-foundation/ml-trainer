@@ -14,6 +14,7 @@ import { DeviceRequestStates } from './connectDialogStore';
 import CookieManager from '../CookieManager';
 import { isInputPatternValid } from './connectionStore';
 import { gestures } from './Stores';
+import { tick } from 'svelte';
 
 // TODO: Rename? Split up further?
 
@@ -22,9 +23,10 @@ t.subscribe(t => (text = t));
 
 export const compatibility = writable<CompatibilityStatus>(checkCompatibility());
 
-export const isBluetoothWarningDialogOpen = writable<boolean>(
-  get(compatibility) ? !get(compatibility).bluetooth : false,
-);
+export const isBluetoothWarningDialogOpen = writable<boolean>(false);
+
+// Value must switch from false to true to trigger dialog transition.
+tick().then(() => isBluetoothWarningDialogOpen.set(!get(compatibility).bluetooth));
 
 export enum ModelView {
   TILE,
