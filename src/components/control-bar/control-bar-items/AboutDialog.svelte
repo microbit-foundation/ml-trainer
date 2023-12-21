@@ -46,7 +46,9 @@
         </table>
       </div>
     </div>
-    <StandardButton position="right" onClick={onClose} type="primary"
-      >{$t('actions.close')}</StandardButton>
+    <div class="flex justify-end">
+      <StandardButton onClick={onClose} type="primary"
+        >{$t('actions.close')}</StandardButton>
+    </div>
   </div>
 </StandardDialog>

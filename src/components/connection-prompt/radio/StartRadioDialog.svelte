@@ -60,7 +60,7 @@
       </div>
     </div>
   </div>
-  <div class="flex items-center w-full">
+  <div class="flex justify-between items-center">
     <div on:click={onStartBluetoothClick} class="w-full hover:cursor-pointer text-link">
       {$t('connectMB.radioStart.switchBluetooth')}
     </div>

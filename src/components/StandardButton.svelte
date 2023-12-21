@@ -40,8 +40,6 @@
   export let disabled = false;
   export let size: ButtonSize = 'normal';
   export let shadows = true;
-  export let position: 'center' | 'right' = 'center';
-  export let extraClasses: string = '';
 
   const classes: { [key in ButtonVariant]: string } = {
     primary: 'bg-primary text-white border-solid border-2 border-primary',
@@ -50,16 +48,9 @@
     info: 'bg-info',
     infolight: 'bg-infolight',
   };
-
-  function getPosition(): string {
-    if (position === 'right') {
-      return 'content-end place-items-end';
-    }
-    return 'content-center place-items-center';
-  }
 </script>
 
-<div class="grid grid-cols-1 {extraClasses} {getPosition()}">
+<div class="grid grid-cols-1 place-items-center">
   <button
     {disabled}
     class="{classes[type]} font-bold outline-none rounded-full {size}"
