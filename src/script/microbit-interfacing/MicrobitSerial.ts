@@ -9,15 +9,13 @@ import InputBehaviour from '../connection-behaviours/InputBehaviour';
 import MBSpecs from './MBSpecs';
 import { MicrobitConnection } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
-import { processMessage } from './serial-message-processing';
+import { processInput } from './serial-message-processing';
 
 const baudRate = 115200;
 
 const writeLine = (message: string) => {
   console.log(message);
 };
-
-let unprocessedInput = '';
 
 class MicrobitSerial implements MicrobitConnection {
   private decoder = new TextDecoderStream();
@@ -27,16 +25,17 @@ class MicrobitSerial implements MicrobitConnection {
 
   private connected = false;
 
+  private unprocessedInput = '';
+
   constructor(
     private usb: MicrobitUSB,
     private onDisconnect: (manual?: boolean) => void,
   ) {}
 
-  // public async connect(): Promise<void> {
-  //   await this.streamData(this.usb.serialPort, { baudRate });
-  // }
-
-  public async listenToInputServices(inputBehaviour: InputBehaviour, _inputUartHandler: (data: string) => void): Promise<void> {
+  public async listenToInputServices(
+    inputBehaviour: InputBehaviour,
+    _inputUartHandler: (data: string) => void,
+  ): Promise<void> {
     this.streamData(this.usb.serialPort, { baudRate }, inputBehaviour);
   }
 
@@ -54,34 +53,33 @@ class MicrobitSerial implements MicrobitConnection {
         this.encoder.readable.pipeTo(serialPort.writable);
         serialPort.readable.pipeTo(this.decoder.writable);
 
-        const listenTimeSeconds = 10
-        writeLine(`Listening for ${listenTimeSeconds} seconds...`);
-        // setTimeout(() => reader.cancel(), listenTimeSeconds * 1000);
+        writeLine(`Listening to serial device...`);
 
         setTimeout(() => {
           // this.writer.write('C[XXXXXXXX]HS[]\n'); // Invalid handshake message which will show error on micro:bit LED screen.
           this.writer.write('C[9C515AAF]HS[]\n');
-        }, 1000);
+        }, 500);
 
         setTimeout(() => {
           this.writer.write('C[9C515AAF]START[A,B,BL]\n');
-        }, 2000);
-
-        setInterval(() => {
-          const processedInput = processMessage(unprocessedInput);
-          for (const state of processedInput.states) {
-            inputBehaviour.accelerometerChange(state.X, state.Y, state.Z);
-          }
-        }, 50);
+        }, 1000);
 
         while (this.connected) {
           const { value, done } = await this.reader.read();
           if (value) {
-            console.log(value);
-            unprocessedInput += value;
+            this.unprocessedInput += value;
+            const processedInput = processInput(this.unprocessedInput);
+            if (processedInput) {
+              this.unprocessedInput = processedInput.remainingInput;
+              console.log(processedInput.state);
+              inputBehaviour.accelerometerChange(
+                processedInput.state.accelerometerX,
+                processedInput.state.accelerometerY,
+                processedInput.state.accelerometerZ,
+              );
+            }
           }
           if (done) {
-            writeLine('Done');
             this.connected = false;
           }
         }
@@ -95,13 +93,9 @@ class MicrobitSerial implements MicrobitConnection {
     }
   }
 
-  public listenForDisconnect(callback: (event: Event) => unknown): void {
+  public listenForDisconnect(callback: (event: Event) => unknown): void {}
 
-  }
-
-  public removeDisconnectListener(callback: (event: Event) => unknown): void {
-
-  }
+  public removeDisconnectListener(callback: (event: Event) => unknown): void {}
 
   public isConnected(): boolean {
     return true;
@@ -111,28 +105,26 @@ class MicrobitSerial implements MicrobitConnection {
     this.connected = false;
     this.usb.disconnect();
     this.onDisconnect(true);
+    this.unprocessedInput = '';
     navigate(Paths.HOME);
   }
 
-  public async listenToAccelerometer(onAccelerometerChanged: (x: number, y: number, z: number) => void): Promise<void> {
-
-  }
+  public async listenToAccelerometer(
+    onAccelerometerChanged: (x: number, y: number, z: number) => void,
+  ): Promise<void> {}
 
   public async setLEDMatrix(matrix: number[][]): Promise<void>;
 
   public async setLEDMatrix(matrix: boolean[][]): Promise<void>;
 
-  public async setLEDMatrix(matrix: unknown[][]): Promise<void> {
+  public async setLEDMatrix(matrix: unknown[][]): Promise<void> {}
 
-  }
+  public async listenToUART(onDataReceived: (data: string) => void): Promise<void> {}
 
-  public async listenToUART(onDataReceived: (data: string) => void): Promise<void> {
-
-  }
-
-  public async listenToButton(buttonToListenFor: MBSpecs.Button, onButtonChanged: (state: MBSpecs.ButtonState, button: MBSpecs.Button) => void): Promise<void> {
-
-  }
+  public async listenToButton(
+    buttonToListenFor: MBSpecs.Button,
+    onButtonChanged: (state: MBSpecs.ButtonState, button: MBSpecs.Button) => void,
+  ): Promise<void> {}
 
   public getVersion(): MBSpecs.MBVersion {
     return 2;

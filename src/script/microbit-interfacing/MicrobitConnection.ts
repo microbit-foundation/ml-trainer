@@ -4,11 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-import InputBehaviour from "../connection-behaviours/InputBehaviour";
-import MBSpecs from "./MBSpecs";
+import InputBehaviour from '../connection-behaviours/InputBehaviour';
+import MBSpecs from './MBSpecs';
 
 export interface MicrobitConnection {
-
   listenForDisconnect(callback: (event: Event) => unknown): void;
 
   removeDisconnectListener(callback: (event: Event) => unknown): void;
@@ -17,9 +16,14 @@ export interface MicrobitConnection {
 
   disconnect(): void;
 
-  listenToInputServices(inputBehaviour: InputBehaviour, inputUartHandler: (data: string) => void): Promise<void>
+  listenToInputServices(
+    inputBehaviour: InputBehaviour,
+    inputUartHandler: (data: string) => void,
+  ): Promise<void>;
 
-  listenToAccelerometer(onAccelerometerChanged: (x: number, y: number, z: number) => void): Promise<void>;
+  listenToAccelerometer(
+    onAccelerometerChanged: (x: number, y: number, z: number) => void,
+  ): Promise<void>;
 
   setLEDMatrix(matrix: number[][]): Promise<void>;
 
@@ -29,7 +33,10 @@ export interface MicrobitConnection {
 
   listenToUART(onDataReceived: (data: string) => void): Promise<void>;
 
-  listenToButton(buttonToListenFor: MBSpecs.Button, onButtonChanged: (state: MBSpecs.ButtonState, button: MBSpecs.Button) => void): Promise<void>;
+  listenToButton(
+    buttonToListenFor: MBSpecs.Button,
+    onButtonChanged: (state: MBSpecs.ButtonState, button: MBSpecs.Button) => void,
+  ): Promise<void>;
 
   getVersion(): MBSpecs.MBVersion;
 }

@@ -312,7 +312,8 @@ class Microbits {
     this.assignedInputMicrobit = microbitSerial;
     this.inputName = name;
     connectionBehaviour.onConnected(name);
-    microbitSerial.listenToInputServices(connectionBehaviour, () => {})
+    microbitSerial
+      .listenToInputServices(connectionBehaviour, () => {})
       .then(() => {
         connectionBehaviour.onReady();
       })
@@ -332,14 +333,15 @@ class Microbits {
    * @param microbit The microbit we wish to disconnect from
    * @private
    */
-  private static async disconnectInputSafely(microbit: MicrobitConnection): Promise<void> {
+  private static async disconnectInputSafely(
+    microbit: MicrobitConnection,
+  ): Promise<void> {
     await microbit.listenToAccelerometer(TypingUtils.emptyFunction);
     await microbit.listenToButton('A', TypingUtils.emptyFunction);
     await microbit.listenToButton('B', TypingUtils.emptyFunction);
     microbit.disconnect();
   }
 
-  // TODO: rewrite this method to work with serial.
   private static async listenToInputServices(): Promise<void> {
     const connectionBehaviour = ConnectionBehaviours.getInputBehaviour();
     if (!this.isInputConnected()) {

@@ -5,43 +5,45 @@
  */
 
 type MicrobitState = {
-  X: number;
-  Y: number;
-  Z: number;
-  ButtonA: boolean;
-  ButtonB: boolean;
-  ButtonLogo: boolean;
+  accelerometerX: number;
+  accelerometerY: number;
+  accelerometerZ: number;
+};
+
+export type ProcessedInput = {
+  state: MicrobitState;
+  remainingInput: string;
 };
 
 const messageRegex =
   /P\[[\w]*?\]AX\[[\d-]*?\]AY\[[\d-]*?\]AZ\[[\d-]*?\]BA\[[01]\]BB\[[01]\]BL\[[01]\]/g;
 
-const valueRegex = /(?<=\[)[\d-]+?(?=\])/;
+const allAfterMessageRegex =
+  /(?<=P\[[\w]*?\]AX\[[\d-]*?\]AY\[[\d-]*?\]AZ\[[\d-]*?\]BA\[[01]\]BB\[[01]\]BL\[[01]\]).*/g;
 
-const accelerometerXRegex = /AX\[[\d-]*?\]/;
-const accelerometerYRegex = /AY\[[\d-]*?\]/;
-const accelerometerZRegex = /AZ\[[\d-]*?\]/;
-const buttonARegex = /BA\[[01]*?\]/;
-const buttonBRegex = /BB\[[01]*?\]/;
-const buttonLogoRegex = /BL\[[01]*?\]/;
+const accelerometerXRegex = /(?<=AX\[)[\d-]+?(?=\])/;
+const accelerometerYRegex = /(?<=AY\[)[\d-]+?(?=\])/;
+const accelerometerZRegex = /(?<=AZ\[)[\d-]+?(?=\])/;
 
-const extractValueFromMessage = (message: string): number => {
-  return Number(message.match(valueRegex)?.[0]) || 0;
-}
+const extractValueFromMessage = (message: string, regex: RegExp): number => {
+  return Number(message.match(regex)?.[0]) || 0;
+};
 
-export const processMessage = (message: string): { states: MicrobitState[], remainingInput: string } => {
+export const processInput = (message: string): ProcessedInput | undefined => {
   const messages = message.match(messageRegex);
-  const states = messages?.map(message => ({
-    X: extractValueFromMessage(message.match(accelerometerXRegex)?.[0] || ''),
-    Y: extractValueFromMessage(message.match(accelerometerYRegex)?.[0] || ''),
-    Z: extractValueFromMessage(message.match(accelerometerZRegex)?.[0] || ''),
-    ButtonA: !!extractValueFromMessage(message.match(buttonARegex)?.[0] || ''),
-    ButtonB: !!extractValueFromMessage(message.match(buttonBRegex)?.[0] || ''),
-    ButtonLogo: !!extractValueFromMessage(message.match(buttonLogoRegex)?.[0] || ''),
-  })) || [];
+
+  if (!messages) {
+    return undefined;
+  }
+
+  const state: MicrobitState = {
+    accelerometerX: extractValueFromMessage(message, accelerometerXRegex),
+    accelerometerY: extractValueFromMessage(message, accelerometerYRegex),
+    accelerometerZ: extractValueFromMessage(message, accelerometerZRegex),
+  };
 
   return {
-    states,
-    remainingInput: message.replaceAll(messageRegex, ''),
+    state,
+    remainingInput: (message.match(allAfterMessageRegex) || []).join(''),
   };
 };
