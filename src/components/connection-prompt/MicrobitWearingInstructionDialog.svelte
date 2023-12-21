@@ -27,7 +27,7 @@
       {/if}
     </p>
     <p class="leading-normal">
-      <a class="text-link" href={instructionsVideoLink} target="_blank"
+      <a class="text-link" href={instructionsVideoLink} target="_blank" rel="noopener"
         >{$t('connectMB.wearingSetup.subtitle1')}</a>
       {$t('connectMB.wearingSetup.subtitle2')}
     </p>
@@ -38,11 +38,9 @@
       <p>{$t('connectMB.wearingSetup.requirements2')}</p>
     </div>
   </div>
-  <div class="flex">
-    <div class="flex w-full justify-end gap-x-5">
-      <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
-      <StandardButton type="primary" onClick={onNextClick}
-        >{$t('connectMB.nextButton')}</StandardButton>
-    </div>
+  <div class="flex justify-end gap-x-5">
+    <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
+    <StandardButton type="primary" onClick={onNextClick}
+      >{$t('connectMB.nextButton')}</StandardButton>
   </div>
 </main>
