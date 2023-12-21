@@ -46,10 +46,10 @@
               <button
                 aria-label={$t('actions.close')}
                 type="button"
-                class="hover:bg-gray-100 rounded w-8 svelte-1rnkjvh focus-visible:ring-blue-500"
+                class="hover:bg-gray-100 rounded w-8 focus-visible:ring-blue-500"
                 on:click={dialog.close}>
                 <i
-                  class="fas fa-plus text-lg text-gray-600 hover:text-gray-800 duration-75 svelte-1rnkjvh"
+                  class="fas fa-plus text-lg text-gray-600 hover:text-gray-800 duration-75"
                   style="transform: rotate(45deg);" />
               </button>
             </div>
