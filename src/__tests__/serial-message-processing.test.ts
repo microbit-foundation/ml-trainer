@@ -7,89 +7,57 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { processMessage } from "../script/microbit-interfacing/serial-message-processing";
+import { ProcessedInput, processInput } from '../script/microbit-interfacing/serial-message-processing';
 
-describe('processMessage', () => {
+describe('processInput', () => {
   it('extracts the micro:bit state from the message', () => {
     const message = 'P[213]AX[408]AY[748]AZ[-1288]BA[1]BB[1]BL[1]';
 
-    const got = processMessage(message);
+    const got = processInput(message);
 
-    expect(got.remainingInput).toEqual('');
-    expect(got.states).toEqual([
-      {
-        X: 408,
-        Y: 748,
-        Z: -1288,
-        ButtonA: true,
-        ButtonB: true,
-        ButtonLogo: true,
+    const want: ProcessedInput = {
+      remainingInput: '',
+      state: {
+        accelerometerX: 408,
+        accelerometerY: 748,
+        accelerometerZ: -1288,
       },
-    ]);
+    };
+    expect(got).toEqual(want);
   });
 
-  it('extracts multiple micro:bit states from the message', () => {
+  it('extracts state, and adds other messages to remaining input', () => {
     const message1 = 'P[213]AX[408]AY[748]AZ[-1288]BA[1]BB[1]BL[1]';
     const message2 = 'P[214]AX[-1]AY[133]AZ[84]BA[0]BB[0]BL[1]';
+    const message3 = 'P[45]AX[894]AY[-95]AZ[31]BA[1]BB[1]BL[0]';
 
-    const got = processMessage(message1 + message2);
+    const got = processInput(message1 + message2 + message3);
 
-    expect(got.remainingInput).toEqual('');
-    expect(got.states).toEqual([
-      {
-        X: 408,
-        Y: 748,
-        Z: -1288,
-        ButtonA: true,
-        ButtonB: true,
-        ButtonLogo: true,
+    const want: ProcessedInput = {
+      remainingInput: message2 + message3,
+      state: {
+        accelerometerX: 408,
+        accelerometerY: 748,
+        accelerometerZ: -1288,
       },
-      {
-        X: -1,
-        Y: 133,
-        Z: 84,
-        ButtonA: false,
-        ButtonB: false,
-        ButtonLogo: true,
-      },
-    ]);
+    };
+    expect(got).toEqual(want);
   });
 
-  it('returns the remaining incomplete message from the end of the string', () => {
-    const message = 'P[214]AX[-1]AY[133]AZ[84]BA[0]BB[0]BL[1]';
-    const incompleteMessage = 'P[213]AX[408]AY[748]';
+  it('extracts state, and adds incomplete messages to remaining input', () => {
+    const message1 = 'P[213]AX[408]AY[748]AZ[-1288]BA[1]BB[1]BL[1]';
+    const message2 = 'P[214]AX[-1]AY[133]A';
 
-    const got = processMessage(message + incompleteMessage);
+    const got = processInput(message1 + message2);
 
-    expect(got.remainingInput).toEqual(incompleteMessage);
-    expect(got.states).toEqual([
-      {
-        X: -1,
-        Y: 133,
-        Z: 84,
-        ButtonA: false,
-        ButtonB: false,
-        ButtonLogo: true,
+    const want: ProcessedInput = {
+      remainingInput: message2,
+      state: {
+        accelerometerX: 408,
+        accelerometerY: 748,
+        accelerometerZ: -1288,
       },
-    ]);
-  });
-
-  it('discards incomplete messages from the beginning of the string', () => {
-    const incompleteMessage = '288]BA[1]BB[1]BL[1]';
-    const message = 'P[214]AX[-1]AY[133]AZ[84]BA[0]BB[0]BL[1]';
-
-    const got = processMessage(incompleteMessage + message);
-
-    expect(got.remainingInput).toEqual('');
-    expect(got.states).toEqual([
-      {
-        X: -1,
-        Y: 133,
-        Z: 84,
-        ButtonA: false,
-        ButtonB: false,
-        ButtonLogo: true,
-      },
-    ]);
+    };
+    expect(got).toEqual(want);
   });
 });

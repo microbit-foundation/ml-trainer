@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-import StaticConfiguration from '../../StaticConfiguration';
 import { Paths, navigate } from '../../router/paths';
 import Environment from '../Environment';
 import TypingUtils from '../TypingUtils';
@@ -73,29 +72,20 @@ export class MicrobitBluetooth implements MicrobitConnection {
     return this.device.removeEventListener('gattserverdisconnected', callback);
   }
 
-  public async listenToInputServices(inputBehaviour: InputBehaviour, inputUartHandler: (data: string) => void): Promise<void> {
+  public async listenToInputServices(
+    inputBehaviour: InputBehaviour,
+    inputUartHandler: (data: string) => void,
+  ): Promise<void> {
     await this.listenToAccelerometer(
       inputBehaviour.accelerometerChange.bind(inputBehaviour),
     );
-    await this.listenToButton(
-      'A',
-      inputBehaviour.buttonChange.bind(inputBehaviour),
-    );
-    await this.listenToButton(
-      'B',
-      inputBehaviour.buttonChange.bind(inputBehaviour),
-    );
+    await this.listenToButton('A', inputBehaviour.buttonChange.bind(inputBehaviour));
+    await this.listenToButton('B', inputBehaviour.buttonChange.bind(inputBehaviour));
     try {
       await this.listenToUART(data => inputUartHandler(data));
     } catch (error) {
       console.error(error);
     }
-    setTimeout(() => {
-      inputBehaviour.onIdentifiedAsOutdated();
-    }, StaticConfiguration.versionIdentificationTimeoutDuration);
-    // this.inputVersionIdentificationTimeout = setTimeout(() => {
-    //   inputBehaviour.onIdentifiedAsOutdated();
-    // }, StaticConfiguration.versionIdentificationTimeoutDuration);
   }
 
   /**
