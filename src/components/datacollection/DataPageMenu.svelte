@@ -18,7 +18,6 @@
   import UploadIcon from 'virtual:icons/ri/upload-2-line';
   import DownloadIcon from 'virtual:icons/ri/download-2-line';
   import ArrowDownIcon from 'virtual:icons/ri/arrow-down-s-line';
-  import CookiesIcon from 'virtual:icons/mdi/cookie-outline';
   import MenuItems from '../control-bar/control-bar-items/MenuItems.svelte';
   import MenuItem from '../control-bar/control-bar-items/MenuItem.svelte';
   import MenuTransition from '../MenuTransition.svelte';
