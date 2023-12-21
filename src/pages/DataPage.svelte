@@ -118,6 +118,8 @@
       <NewGestureButton />
     </div>
 
-    <TrainingButton action="navigate" position="right" />
+    <div class="flex justify-end mx-10">
+      <TrainingButton action="navigate" />
+    </div>
   {/if}
 </main>
