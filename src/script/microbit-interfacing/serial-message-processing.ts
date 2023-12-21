@@ -15,19 +15,13 @@ export type ProcessedInput = {
   remainingInput: string;
 };
 
-const messageRegex =
-  /P\[[\w]*?\]AX\[[\d-]*?\]AY\[[\d-]*?\]AZ\[[\d-]*?\]BA\[[01]\]BB\[[01]\]BL\[[01]\]/g;
+const messageRegexString = 'P\\[[\\w]*?\\]AX\\[[\\d-]*?\\]AY\\[[\\d-]*?\\]AZ\\[[\\d-]*?\\]BA\\[[01]\\]BB\\[[01]\\]BL\\[[01]\\]';
 
-const allAfterMessageRegex =
-  /(?<=P\[[\w]*?\]AX\[[\d-]*?\]AY\[[\d-]*?\]AZ\[[\d-]*?\]BA\[[01]\]BB\[[01]\]BL\[[01]\]).*/g;
-
+const messageRegex = new RegExp(messageRegexString, 'g');
+const remainingInputAfterMessageRegex = new RegExp(`(?<=${messageRegexString}).*`, 'g');
 const accelerometerXRegex = /(?<=AX\[)[\d-]+?(?=\])/;
 const accelerometerYRegex = /(?<=AY\[)[\d-]+?(?=\])/;
 const accelerometerZRegex = /(?<=AZ\[)[\d-]+?(?=\])/;
-
-const extractValueFromMessage = (message: string, regex: RegExp): number => {
-  return Number(message.match(regex)?.[0]) || 0;
-};
 
 export const processInput = (message: string): ProcessedInput | undefined => {
   const messages = message.match(messageRegex);
@@ -36,14 +30,12 @@ export const processInput = (message: string): ProcessedInput | undefined => {
     return undefined;
   }
 
-  const state: MicrobitState = {
-    accelerometerX: extractValueFromMessage(message, accelerometerXRegex),
-    accelerometerY: extractValueFromMessage(message, accelerometerYRegex),
-    accelerometerZ: extractValueFromMessage(message, accelerometerZRegex),
-  };
-
   return {
-    state,
-    remainingInput: (message.match(allAfterMessageRegex) || []).join(''),
+    state: {
+      accelerometerX: Number(message.match(accelerometerXRegex)?.[0]) || 0,
+      accelerometerY: Number(message.match(accelerometerYRegex)?.[0]) || 0,
+      accelerometerZ: Number(message.match(accelerometerZRegex)?.[0]) || 0,
+    },
+    remainingInput: (message.match(remainingInputAfterMessageRegex) || []).join(''),
   };
 };
