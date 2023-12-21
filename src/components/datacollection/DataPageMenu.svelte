@@ -33,15 +33,15 @@
   const onSelect = (event: Event) => {
     const { selected } = (event as CustomEvent).detail;
     switch (selected) {
-      case 'upload-gestures': {
+      case 'upload': {
         onUploadGestures();
         break;
       }
-      case 'download-data': {
+      case 'download': {
         onDownloadGestures();
         break;
       }
-      case 'clear-data': {
+      case 'clear': {
         onClearGestures();
         break;
       }
@@ -55,21 +55,21 @@
     use:menu.button
     on:select={onSelect}
     class="inline-flex items-center gap-x-1 p-2">
-    Data actions
+    {$t('content.data.controlbar.button.menu')}
     <ArrowDownIcon />
   </button>
   <MenuTransition show={$menu.expanded}>
     <MenuItems {menu}>
       <div class="py-2">
-        <MenuItem {menu} value="upload-gestures">
+        <MenuItem {menu} value="upload">
           <UploadIcon />
           {$t('content.data.controlbar.button.uploadData')}
         </MenuItem>
-        <MenuItem {menu} disabled={downloadDisabled} value="download-data">
+        <MenuItem {menu} disabled={downloadDisabled} value="download">
           <DownloadIcon />
           {$t('content.data.controlbar.button.downloadData')}
         </MenuItem>
-        <MenuItem {menu} disabled={clearDisabled} value="clear-data">
+        <MenuItem {menu} disabled={clearDisabled} value="clear">
           <ClearIcon />
           {$t('content.data.controlbar.button.clearData')}
         </MenuItem>

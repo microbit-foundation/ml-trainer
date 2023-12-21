@@ -42,6 +42,7 @@
   "content.data.dataDescription": "Here you can see the gathered data. ",
   "content.data.noData": "You do not have any gestures to train on. Add the gestures you wish the micro:bit should learn to recognise.",
 
+  "content.data.controlbar.button.menu": "Data actions",
   "content.data.controlbar.button.clearData": "Clear examples",
   "content.data.controlbar.button.clearData.confirm": "Are you sure you wish to delete all gesture examples?\nThis cannot be undone.",
   "content.data.controlbar.button.downloadData": "Download dataset",
