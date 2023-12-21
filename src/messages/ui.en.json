@@ -32,8 +32,8 @@
 
   "content.data.classPlaceholderNewClass": "Name of action",
   "content.data.addData": "Add Data",
-  "content.data.classHelpHeader": "Class",
-  "content.data.classHelpBody": "A class describes a type of gesture. We can record examples of a certain type of gesture and put the examples in the same class. The trainer can find patterns in the examples/data and use these patterns to 'train' a model that can recognize this class of gestures. Multiple examples will typically result in a better model, and consider how many different ways a gesture can be performed.",
+  "content.data.classHelpHeader": "Action",
+  "content.data.classHelpBody": "The type of movement you want the machine learning tool to recognise e.g. 'wave' or 'clap'. ",
   "content.data.classification": "Action",
   "content.data.data": "Data samples",
   "content.data.choice": "Choice",

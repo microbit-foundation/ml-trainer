@@ -15,8 +15,8 @@
   "content.index.recordButtonDescription": "\"Optag\"-knap",
 
   "content.data.addData": "Tilføj data",
-  "content.data.classHelpHeader": "Klasse",
-  "content.data.classHelpBody": "En klasse beskriver en type af bevægelse. Vi kan optage eksempler af en bestemt type bevægelse og putte eksemplerne i samme klasse. Træneren kan finde mønstre i eksemplerne/dataet og bruge disse mønstre til at træne en model, der kan genkende denne type bevægelse. Flere eksmpler vil typisk reulstere i en bedre model, men overvej på hvor mange forskellige måder en bevægelse kan laves.",
+  "content.data.classHelpHeader": "TRANSLATION_NEEDED",
+  "content.data.classHelpBody": "TRANSLATION_NEEDED",
   "content.data.data": "Data",
   "content.data.choice": "Valg",
   "content.data.choice.header": "Valg af klasse",
