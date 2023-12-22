@@ -16,7 +16,7 @@
   use:menu.item={{ value }}
   {...$$restProps}
   {disabled}
-  class="group flex gap-2 items-center w-full px-4 py-2 text-sm text-black"
+  class="group flex gap-2 items-center w-full px-4 py-2 text-neutral-800"
   class:bg-gray-100={$menu.active === value}
   class:opacity-50={disabled}>
   <slot />

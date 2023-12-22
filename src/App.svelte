@@ -52,8 +52,12 @@
 
       <div class="w-full flex flex-col bg-backgrounddark">
         <ControlBar>
-          <img class="mr-8" src={microbitLogoImage} alt="Micro:bit logo" width="150px" />
-          <h1 class="text-xl font-thin whitespace-nowrap">{$t('content.index.title')}</h1>
+          <div class="flex items-center divide-x h-full">
+            <img src={microbitLogoImage} alt="micro:bit" width="150px" class="pr-3" />
+            <h1 class="text-xl tracking-wide whitespace-nowrap pl-3">
+              {$t('content.index.title')}
+            </h1>
+          </div>
           <div class="flex flex-row basis-full justify-end">
             <div class="flex h-full gap-5">
               <SettingsMenu />

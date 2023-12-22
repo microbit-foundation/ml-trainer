@@ -17,10 +17,10 @@
   <h2 class="text-xl font-bold mb-3">
     {$t('content.model.trainModelFirstHeading')}
   </h2>
-  <p class="mb-5 font-light">
+  <p class="mb-5">
     {$t('content.model.trainModelBody1')}
   </p>
-  <p class="mb-10 font-light">
+  <p class="mb-10">
     {$t('content.model.trainModelBody2')}
   </p>
   <div class="flex gap-20">

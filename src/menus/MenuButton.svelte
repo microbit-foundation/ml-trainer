@@ -30,7 +30,7 @@
 
 <div class="menu-button" class:selected={isSelected} on:click={onClickFunction}>
   <div class="h-full relative">
-    <p class="text-lg font-medium text-center">
+    <p class="text-lg font-bold text-center">
       {$t(title)}
     </p>
     <div class="absolute top-3px right-12">

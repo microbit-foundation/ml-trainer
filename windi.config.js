@@ -5,10 +5,16 @@
  */
 
 //Ml-Machine colors
+// @ts-check - enable TS check for js file
+import { defineConfig } from 'windicss/helpers';
 
-export default {
+export default defineConfig({
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Helvetica', 'Arial', 'sans-serif'],
+        serif: ['serif'],
+      },
       colors: {
         primary: '#2c92d6',
         primarytext: '#000000',
@@ -31,4 +37,4 @@ export default {
       },
     },
   },
-};
+});
