@@ -10,7 +10,11 @@
   import OutputBehaviour from './script/connection-behaviours/OutputBehaviour';
   import OverlayView from './views/OverlayView.svelte';
   import PageContentView from './views/PageContentView.svelte';
-  import { state } from './script/stores/uiStore';
+  import {
+    compatibility,
+    isBluetoothWarningDialogOpen,
+    state,
+  } from './script/stores/uiStore';
   import { checkCompatibility } from './script/compatibility/CompatibilityChecker';
   import IncompatiblePlatformView from './views/IncompatiblePlatformView.svelte';
   import BluetoothIncompatibilityWarningDialog from './components/BluetoothIncompatibilityWarningDialog.svelte';
@@ -24,6 +28,8 @@
   import microbitLogoImage from './imgs/microbit-logo.svg';
   import HelpMenu from './components/control-bar/control-bar-items/HelpMenu.svelte';
   import SettingsMenu from './components/control-bar/control-bar-items/SettingsMenu.svelte';
+  import { onMount } from 'svelte';
+  import { get } from 'svelte/store';
 
   ConnectionBehaviours.setInputBehaviour(new InputBehaviour());
   ConnectionBehaviours.setOutputBehaviour(new OutputBehaviour());
@@ -35,6 +41,11 @@
   }
 
   document.title = Environment.pageTitle;
+
+  onMount(() => {
+    // Value must switch from false to true after mount to trigger dialog transition
+    isBluetoothWarningDialogOpen.set(!get(compatibility).bluetooth);
+  });
 </script>
 
 <Router>
