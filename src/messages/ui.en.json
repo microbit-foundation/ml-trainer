@@ -38,6 +38,7 @@
   "content.data.data": "Data samples",
   "content.data.choice": "Choice",
   "content.data.choice.header": "Choice of class",
+  "content.data.addAction": "Add action",
   "content.data.choice.body": "Here, you choose which class you want to add data to. After having selected a class, you can either press the \"Record\" button below or press one of the buttons on your micro:bit to record a data segment. See the picture below.",
   "content.data.dataDescription": "Here you can see the gathered data. ",
   "content.data.noData": "You do not have any gestures to train on. Add the gestures you wish the micro:bit should learn to recognise.",

@@ -21,7 +21,7 @@
 </script>
 
 <div class="mt-5 mb-2">
-  <IconButton ariaLabel={$t('actions.addGesture')} {onClick} rounded>
+  <IconButton ariaLabel={$t('content.data.addAction')} {onClick} rounded>
     <AddIcon
       class="h-20 w-20 text-primary flex justify-center items-center rounded-full p-2 border-4 border-primary m-1.5" />
   </IconButton>
