@@ -5,10 +5,8 @@
  */
 
 //Ml-Machine colors
-// @ts-check - enable TS check for js file
-import { defineConfig } from 'windicss/helpers';
 
-export default defineConfig({
+export default {
   theme: {
     extend: {
       fontFamily: {
@@ -37,4 +35,4 @@ export default defineConfig({
       },
     },
   },
-});
+};
