@@ -25,8 +25,8 @@
   let connectDialogReference: ConnectDialogContainer;
 </script>
 
-<main class="h-full flex flex-col bg-backgrounddark">
-  <div class="overflow-x-auto mb-8">
+<main class="h-full flex flex-col items-center bg-backgrounddark">
+  <div class="mb-8">
     <ConnectDialogContainer bind:this={connectDialogReference} />
 
     <div class="flex flex-col items-center justify-center m-10">
@@ -40,17 +40,17 @@
       </p>
     </div>
 
-    <div class="flex flex-col flex-wrap items-center">
-      <h1 class="text-3xl px-10 w-325">
+    <div class="flex flex-col flex-wrap items-center max-w-325">
+      <h1 class="text-3xl px-10 lg:self-start">
         {$t('content.index.toolProcessCards.main.title')}
       </h1>
-      <div class="flex justify-between p-10 gap-5 w-325">
+      <div class="grid grid-cols-1 lg:grid-cols-3 p-10 gap-5">
         <FrontPageContentTile>
           <h2 class="text-center text-3xl mb-5">
             {$t('content.index.toolProcessCards.data.title')}
           </h2>
           <img class="mb-5" alt="add data" src={inputDataImage} width={tileImageSize} />
-          <p class="text-center w-75">
+          <p class="text-center">
             {$t('content.index.toolProcessCards.data.description')}
           </p>
         </FrontPageContentTile>
@@ -64,7 +64,7 @@
             alt="train model"
             src={trainModelImage}
             width={tileImageSize} />
-          <p class="text-center w-75">
+          <p class="text-center">
             {$t('content.index.toolProcessCards.train.description')}
           </p>
         </FrontPageContentTile>
@@ -74,7 +74,7 @@
             {$t('content.index.toolProcessCards.model.title')}
           </h2>
           <img class="mb-5" alt="test model" src={testModelImage} width={tileImageSize} />
-          <p class="text-center w-75">
+          <p class="text-center">
             {$t('content.index.toolProcessCards.model.description')}
           </p>
         </FrontPageContentTile>

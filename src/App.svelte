@@ -19,7 +19,6 @@
   import Environment from './script/Environment';
   import Router from './router/Router.svelte';
   import ControlBar from './components/control-bar/ControlBar.svelte';
-  import BottomPanel from './components/bottom/BottomPanel.svelte';
   import { t } from './i18n';
   import { consent } from './script/stores/complianceStore';
   import microbitLogoImage from './imgs/microbit-logo.svg';
@@ -43,7 +42,7 @@
     <!-- Denies mobile users access to the platform -->
     <IncompatiblePlatformView />
   {:else}
-    <main class="h-full w-screen m-0 relative flex">
+    <main class="h-full w-full m-0 relative flex">
       <OverlayView />
       <!-- Wait for consent dialog to avoid a clash -->
       {#if $consent}
@@ -65,12 +64,6 @@
         <div class="relative flex-1 flex-row">
           <PageContentView />
         </div>
-
-        {#if $state.isInputConnected}
-          <div class="h-160px w-full">
-            <BottomPanel />
-          </div>
-        {/if}
       </div>
     </main>
   {/if}

@@ -21,6 +21,7 @@
   import { gestures } from '../script/stores/Stores';
   import TrainingButton from './training/TrainingButton.svelte';
   import DataPageMenu from '../components/datacollection/DataPageMenu.svelte';
+  import BottomPanel from '../components/bottom/BottomPanel.svelte';
 
   let isConnectionDialogOpen = false;
 
@@ -64,10 +65,10 @@
   });
 </script>
 
-<main class="h-full inline-block w-full bg-backgrounddark">
+<main class="flex flex-col h-full inline-block w-full bg-backgrounddark">
   <TabView />
 
-  <div class="flex justify-end px-10 my-3">
+  <div class="flex justify-end px-10 mt-2">
     <DataPageMenu
       clearDisabled={$gestures.length === 0}
       downloadDisabled={$gestures.length === 0}
@@ -81,7 +82,7 @@
       <PleaseConnectFirst />
     </div>
   {:else}
-    <div class="mt-4 mx-10 overflow-y-auto">
+    <div class="flex-grow flex-shrink py-2 px-10 h-0 overflow-y-auto">
       {#if $gestures.length > 0}
         <div class=" p-0 relative flex h-7">
           <div class="absolute left-3 flex">
@@ -116,10 +117,12 @@
       {/each}
 
       <NewGestureButton />
-    </div>
-
-    <div class="flex justify-end mx-10">
-      <TrainingButton action="navigate" />
+      <div class="flex justify-end">
+        <TrainingButton action="navigate" />
+      </div>
     </div>
   {/if}
+  <div class="h-160px w-full">
+    <BottomPanel />
+  </div>
 </main>

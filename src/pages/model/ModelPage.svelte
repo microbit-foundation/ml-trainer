@@ -11,12 +11,8 @@
   import ModelPageTileView from './tileview/ModelPageTileView.svelte';
 </script>
 
-<div>
-  <TabView />
-
-  {#if $state.modelView == ModelView.TILE}
-    <ModelPageTileView />
-  {:else}
-    <ModelPageStackView />
-  {/if}
-</div>
+{#if $state.modelView == ModelView.TILE}
+  <ModelPageTileView />
+{:else}
+  <ModelPageStackView />
+{/if}

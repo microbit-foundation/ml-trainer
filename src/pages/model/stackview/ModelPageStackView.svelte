@@ -25,6 +25,7 @@
   import TrainModelFirstTitle from '../../../components/TrainModelFirstTitle.svelte';
   import ModelPageStackViewContent from './ModelPageStackViewContent.svelte';
   import PleaseConnectFirst from '../../../components/PleaseConnectFirst.svelte';
+  import TabView from '../../../views/TabView.svelte';
 
   // In case of manual classification, variables for evaluation
   let recordingTime = 0;
@@ -90,6 +91,7 @@
 
 <!-- Main pane -->
 <main class="h-full flex flex-col">
+  <TabView />
   {#if $state.isPredicting}
     <ModelPageStackViewContent />
   {:else}

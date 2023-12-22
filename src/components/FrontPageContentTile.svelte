@@ -5,6 +5,6 @@
  -->
 
 <div
-  class="flex flex-col flex-wrap content-center justify-center min-w-100 border-gray-200 border border-solid bg-white rounded-3xl p-6 shadow-xl">
+  class="flex flex-col flex-wrap items-center border-gray-200 border border-solid bg-white rounded-3xl p-6 shadow-xl max-w-88">
   <slot />
 </div>

@@ -12,6 +12,7 @@
   import { t } from './../../../i18n';
   import downArrowImage from '../../../imgs/down_arrow.svg';
   import { bestPrediction } from '../../../script/stores/mlStore';
+  import BottomPanel from '../../../components/bottom/BottomPanel.svelte';
 
   // Bool flags to know whether output microbit popup should be show
   let hasClosedPopup = false;
@@ -28,9 +29,8 @@
   $: currentEstimatedGestureConfidence = $bestPrediction?.confidence.currentConfidence;
 </script>
 
-<div class="bg-backgrounddark">
-  <div class="h-1 bg-gray-200 width-full" />
-  <div class="flex justify-center space-x-10 py-5 text-xl">
+<div class="flex flex-col h-full bg-backgrounddark">
+  <div class="flex justify-center space-x-10 py-5 text-xl border-b-3 border-b-gray-200">
     <Information
       underlineIconText={false}
       isLightTheme={false}
@@ -46,87 +46,91 @@
       </p>
     {/if}
   </div>
-  <div class="h-1 bg-gray-200 width-full" />
-  <div class="relative flex h-8 text-xl">
-    <div class="absolute left-15 space-x-45 flex py-5">
-      <Information
-        underlineIconText={false}
-        isLightTheme={false}
-        iconText={$t('content.model.output.action.iconTitle')}
-        titleText={$t('content.model.output.action.descriptionTitle')}
-        bodyText={$t('content.model.output.action.descriptionBody')} />
-      <Information
-        underlineIconText={false}
-        isLightTheme={false}
-        iconText={$t('content.model.output.certainty.iconTitle')}
-        titleText={$t('content.model.output.certainty.descriptionTitle')}
-        bodyText={$t('content.model.output.certainty.descriptionBody')} />
+  <div class=" flex-grow flex-shrink h-0 overflow-y-auto">
+    <div class="relative flex h-8 text-xl">
+      <div class="absolute left-15 space-x-45 flex py-5">
+        <Information
+          underlineIconText={false}
+          isLightTheme={false}
+          iconText={$t('content.model.output.action.iconTitle')}
+          titleText={$t('content.model.output.action.descriptionTitle')}
+          bodyText={$t('content.model.output.action.descriptionBody')} />
+        <Information
+          underlineIconText={false}
+          isLightTheme={false}
+          iconText={$t('content.model.output.certainty.iconTitle')}
+          titleText={$t('content.model.output.certainty.descriptionTitle')}
+          bodyText={$t('content.model.output.certainty.descriptionBody')} />
+      </div>
+      {#if enableOutputGestures}
+        <div class="absolute left-78 flex">
+          <Information
+            isLightTheme={false}
+            iconText={$t('content.model.output.ledOutput.descriptionTitle')}
+            titleText={$t('content.model.output.ledOutput.descriptionTitle')}
+            bodyText={$t('content.model.output.ledOutput.descriptionBody')} />
+        </div>
+        <div class="absolute left-125 flex">
+          <Information
+            isLightTheme={false}
+            iconText={$t('content.model.output.sound.iconTitle')}
+            titleText={$t('content.model.output.sound.descriptionTitle')}
+            bodyText={$t('content.model.output.sound.descriptionBody')} />
+        </div>
+        <div class="absolute left-167 flex">
+          <Information
+            isLightTheme={false}
+            iconText={$t('content.model.output.pin.iconTitle')}
+            titleText={$t('content.model.output.pin.descriptionTitle')}
+            bodyText={$t('content.model.output.pin.descriptionBody')} />
+        </div>
+      {/if}
     </div>
-    {#if enableOutputGestures}
-      <div class="absolute left-78 flex">
-        <Information
-          isLightTheme={false}
-          iconText={$t('content.model.output.ledOutput.descriptionTitle')}
-          titleText={$t('content.model.output.ledOutput.descriptionTitle')}
-          bodyText={$t('content.model.output.ledOutput.descriptionBody')} />
+
+    <div class="pl-15">
+      <!-- Display all gestures and their output capabilities -->
+      <div class="pt-6">
+        {#each gestures.getGestures() as gesture}
+          <OutputGesture variant="stack" {gesture} {onUserInteraction} />
+        {/each}
       </div>
-      <div class="absolute left-125 flex">
-        <Information
-          isLightTheme={false}
-          iconText={$t('content.model.output.sound.iconTitle')}
-          titleText={$t('content.model.output.sound.descriptionTitle')}
-          bodyText={$t('content.model.output.sound.descriptionBody')} />
-      </div>
-      <div class="absolute left-167 flex">
-        <Information
-          isLightTheme={false}
-          iconText={$t('content.model.output.pin.iconTitle')}
-          titleText={$t('content.model.output.pin.descriptionTitle')}
-          bodyText={$t('content.model.output.pin.descriptionBody')} />
+    </div>
+    {#if !$state.isOutputConnected && !hasClosedPopup && hasInteracted}
+      <div transition:fade class="grid grid-cols-5 absolute bottom-5 w-full min-w-729px">
+        <div
+          class="flex relative col-start-2 rounded-lg col-end-5 h-35"
+          style="background-color:rgba(231, 229, 228, 0.85)">
+          <div class="m-4 mr-2 w-3/4">
+            <p class="text-2xl font-bold">
+              {$t('content.model.output.popup.header')}
+            </p>
+            <p>
+              {$t('content.model.output.popup.body')}
+            </p>
+          </div>
+          <div class="text-center ml-0 mb-2 mt-8">
+            <img
+              class="m-auto arrow-filter-color"
+              src={downArrowImage}
+              alt="down arrow icon"
+              width="80px" />
+          </div>
+          <div class="absolute right-2 top-2">
+            <button
+              class="hover:bg-gray-100 rounded outline-transparent w-8"
+              on:click={() => {
+                hasClosedPopup = true;
+              }}>
+              <i
+                class="fas fa-plus text-lg text-gray-600 hover:text-gray-800 duration-75"
+                style="transform: rotate(45deg);" />
+            </button>
+          </div>
+        </div>
       </div>
     {/if}
   </div>
-
-  <div class="pl-15">
-    <!-- Display all gestures and their output capabilities -->
-    <div class="pt-6">
-      {#each gestures.getGestures() as gesture}
-        <OutputGesture variant="stack" {gesture} {onUserInteraction} />
-      {/each}
-    </div>
+  <div class="h-160px w-full">
+    <BottomPanel />
   </div>
-  {#if !$state.isOutputConnected && !hasClosedPopup && hasInteracted}
-    <div transition:fade class="grid grid-cols-5 absolute bottom-5 w-full min-w-729px">
-      <div
-        class="flex relative col-start-2 rounded-lg col-end-5 h-35"
-        style="background-color:rgba(231, 229, 228, 0.85)">
-        <div class="m-4 mr-2 w-3/4">
-          <p class="text-2xl font-bold">
-            {$t('content.model.output.popup.header')}
-          </p>
-          <p>
-            {$t('content.model.output.popup.body')}
-          </p>
-        </div>
-        <div class="text-center ml-0 mb-2 mt-8">
-          <img
-            class="m-auto arrow-filter-color"
-            src={downArrowImage}
-            alt="down arrow icon"
-            width="80px" />
-        </div>
-        <div class="absolute right-2 top-2 svelte-1rnkjvh">
-          <button
-            class="hover:bg-gray-100 rounded outline-transparent w-8 svelte-1rnkjvh"
-            on:click={() => {
-              hasClosedPopup = true;
-            }}>
-            <i
-              class="fas fa-plus text-lg text-gray-600 hover:text-gray-800 duration-75 svelte-1rnkjvh"
-              style="transform: rotate(45deg);" />
-          </button>
-        </div>
-      </div>
-    </div>
-  {/if}
 </div>
