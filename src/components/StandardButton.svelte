@@ -17,43 +17,46 @@
   .small {
     padding: 1px 10px;
   }
-
-  :disabled {
-    background-color: transparent;
-    border-color: #ccc;
-    color: #ccc;
-    box-shadow: none;
-  }
 </style>
 
 <script lang="ts" context="module">
-  export type ButtonVariant = 'secondary' | 'primary' | 'warning' | 'info' | 'infolight';
+  export type ButtonVariant = 'secondary' | 'primary' | 'warning' | 'link';
 </script>
 
 <script lang="ts">
-  import TypingUtils from '../script/TypingUtils';
-
   type ButtonSize = 'small' | 'normal' | 'large';
 
   export let type: ButtonVariant = 'secondary';
-  export let onClick: (e: Event) => void = TypingUtils.emptyFunction;
+  export let onClick: ((e: Event) => void) | undefined = undefined;
   export let disabled = false;
   export let size: ButtonSize = 'normal';
-  export let shadows = true;
+  export let shadows = false;
 
-  const classes: { [key in ButtonVariant]: string } = {
-    primary: 'bg-primary text-white border-solid border-2 border-primary',
-    secondary: 'bg-white text-black border-solid border-2 border-primary',
-    warning: 'bg-warning text-white',
-    info: 'bg-info',
-    infolight: 'bg-infolight',
+  const classes = {
+    link: {
+      base: 'text-link',
+      enabled: '',
+    },
+    primary: {
+      base: 'font-bold rounded-4xl bg-brand-500 text-white border-solid border-2 border-brand-500',
+      enabled: 'hover:bg-brand-600 active:bg-brand-700',
+    },
+    secondary: {
+      base: 'font-bold rounded-4xl bg-white text-brand-700 border-solid border-2 border-brand-500',
+      enabled: 'hover:border-brand-600 active:border-brand-700 active:bg-brand-50',
+    },
+    warning: { base: 'bg-warning text-white', enabled: '' },
   };
 </script>
 
 <div class="grid grid-cols-1 place-items-center">
   <button
     {disabled}
-    class="{classes[type]} font-bold outline-none rounded-full {size}"
+    class="{classes[type].base} {disabled
+      ? ''
+      : classes[type].enabled} outline-none disabled:opacity-60 {type === 'link'
+      ? ''
+      : size} transition-colors duration-200 focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
     class:shadow-md={shadows}
     class:cursor-pointer={!disabled}
     class:cursor-default={disabled}

@@ -8,6 +8,8 @@
   import { areActionsAllowed } from '../script/stores/uiStore';
   import { addGesture } from '../script/stores/mlStore';
   import { t } from '../i18n';
+  import AddIcon from 'virtual:icons/ri/add-line';
+  import IconButton from './IconButton.svelte';
 
   const defaultNewName = $t('content.data.classPlaceholderNewClass');
 
@@ -18,9 +20,9 @@
   }
 </script>
 
-<button
-  class="h-20 w-20 cursor-pointer flex justify-center items-center mt-5 mb-2
-    p-2 border-5 border-primary rounded-full text-center text-primary"
-  on:click={onClick}>
-  <i class="fas fa-plus fa-2x text-black-500" />
-</button>
+<div class="mt-5 mb-2">
+  <IconButton ariaLabel={$t('actions.addGesture')} {onClick} rounded>
+    <AddIcon
+      class="h-20 w-20 text-primary flex justify-center items-center rounded-full p-2 border-4 border-primary m-1.5" />
+  </IconButton>
+</div>

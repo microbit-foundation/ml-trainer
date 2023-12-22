@@ -6,8 +6,10 @@
 
 <script lang="ts">
   import { createDialog } from 'svelte-headlessui';
+  import CloseIcon from 'virtual:icons/ri/close-line';
   import Transition from 'svelte-transition';
   import { t } from '../../i18n';
+  import IconButton from '../IconButton.svelte';
   export let hasCloseButton = true;
   export let isOpen: boolean;
   export let onClose: () => void;
@@ -43,15 +45,9 @@
           use:dialog.modal>
           {#if hasCloseButton}
             <div class="absolute right-2 top-2">
-              <button
-                aria-label={$t('actions.close')}
-                type="button"
-                class="hover:bg-gray-100 rounded w-8 focus-visible:ring-blue-500"
-                on:click={dialog.close}>
-                <i
-                  class="fas fa-plus text-lg text-gray-600 hover:text-gray-800 duration-75"
-                  style="transform: rotate(45deg);" />
-              </button>
+              <IconButton ariaLabel={$t('actions.close')} onClick={dialog.close}>
+                <CloseIcon class="text-xl m-1" />
+              </IconButton>
             </div>
           {/if}
           <div class="m-1 {hasCloseButton ? 'mt-3' : 'mt-1'}">

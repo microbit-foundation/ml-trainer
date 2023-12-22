@@ -40,13 +40,12 @@
       alt="USB cable being connected at the top, centre of the micro:bit."
       class="px-55 py-5" />
   </div>
-  <div class="flex">
+  <div class="flex justify-between">
     {#if currentStage === 'usb' || currentStage === 'usb1'}
-      <p class="self-center w-full hover:cursor-pointer text-link" on:click={onSkipClick}>
-        {$t('connectMB.connectCable.skip')}
-      </p>
+      <StandardButton type="link" onClick={onSkipClick}
+        >{$t('connectMB.connectCable.skip')}</StandardButton>
     {/if}
-    <div class="flex w-full justify-end gap-x-5">
+    <div class="flex gap-x-5 ml-auto">
       <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
       <StandardButton type="primary" onClick={onNextClick}
         >{$t('connectMB.nextButton')}</StandardButton>

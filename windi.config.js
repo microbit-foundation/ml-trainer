@@ -14,7 +14,21 @@ export default {
         serif: ['serif'],
       },
       colors: {
-        primary: '#2c92d6',
+        brand: {
+          50: '#d4eaf7', // 80% tint
+          100: '#95caeb', // 50% tint
+          200: '#6ab4e2', // 30% tint
+          300: '#55a9de', // 20% tint
+          400: '#3f9fda', // 10% tint
+          // Brand color
+          500: '#2a94d6',
+          600: '#2685c1', // 10% shade
+          700: '#2276ab', // 20% shade
+          800: '#1d6896', // 30% shade
+          900: '#154a6b', // 50% shade
+          //950: '#081e2b', // 80% shade, too dark
+        },
+        primary: '#2a94d6',
         primarytext: '#000000',
         secondary: '#00a000',
         secondarytext: '#FFFFFF',
@@ -32,6 +46,7 @@ export default {
         infoicondark: '#787878',
         infotextlight: '#ffffff',
         infotextdark: '#787878',
+        ring: 'rgba(66, 153, 255, 0.6)',
       },
     },
   },
