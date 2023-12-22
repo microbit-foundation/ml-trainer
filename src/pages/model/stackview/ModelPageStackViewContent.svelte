@@ -46,7 +46,7 @@
       </p>
     {/if}
   </div>
-  <div class=" flex-grow flex-shrink h-0 overflow-y-auto">
+  <div class="flex-grow flex-shrink h-0 overflow-y-auto">
     <div class="relative flex h-8 text-xl">
       <div class="absolute left-15 space-x-45 flex py-5">
         <Information
