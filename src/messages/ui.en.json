@@ -60,7 +60,7 @@
 
   "content.trainer.enoughdata.title": "Status: You've collected enough data to train the model.",
 
-  "content.trainer.training.title": "Status: training the model in progress.",
+  "content.trainer.training.title": "Status: Training the model in progress.",
 
   "content.trainer.failure.header": "Training Failed",
   "content.trainer.failure.body": "The training did not result in a usable model. The reason for this is most likely the data used for training. If the data for different classes are too similar, this can result in issues in the training process.",
@@ -179,7 +179,7 @@
   "connectMB.radioStart.switchBluetooth": "Alternative method if you only have 1 micro:bit.",
 
   "connectMB.bluetoothStart.heading": "If you only have one micro:bit",
-  "connectMB.bluetoothStart.subtitle": "You will need to have web Bluetooth enabled on your computer and in your web browser.",
+  "connectMB.bluetoothStart.subtitle": "You will need to have Web Bluetooth enabled on your computer and in your web browser.",
   "connectMB.bluetoothStart.requirements1": "1 micro:bit",
   "connectMB.bluetoothStart.requirements2": "Computer",
   "connectMB.bluetoothStart.requirements3": "Micro USB cable",
@@ -196,11 +196,11 @@
   "connectMB.connectCableMB1.heading": "Connect USB cable to micro:bit 1",
   "connectMB.connectCableMB1.subtitle": "Connect the micro:bit that is ready to wear (micro:bit 1) to this computer with a USB cable so that the machine learning tool program can be downloaded to it.",
 
-  "connectMB.connectCableMB2.heading": "Connect cable to micro:bit 2",
+  "connectMB.connectCableMB2.heading": "Connect USB cable to micro:bit 2",
   "connectMB.connectCableMB2.subtitle": "Connect a second micro:bit to this computer with a USB cable.",
 
   "connectMB.connectCable.heading": "Connect USB cable to micro:bit",
-  "connectMB.connectCable.subtitle": "Connect the micro:bit to this computer with a USB cable so that the machine learning program can be downloaded to it.",
+  "connectMB.connectCable.subtitle": "Connect the micro:bit to this computer with a USB cable so that the machine learning tool program can be downloaded to it.",
 
   "connectMB.connectCable.skip": "Skip: program already downloaded?",
 
@@ -218,7 +218,7 @@
   "connectMB.connectBattery.subtitle": "Disconnect the micro:bit from the computer and connect the battery pack.",
 
   "connectMB.pattern.heading": "Copy pattern",
-  "connectMB.pattern.subtitle": "Copy the pattern displayed on the micro:bit",
+  "connectMB.pattern.subtitle": "Copy the pattern displayed on the micro:bit.",
 
   "connectMB.bluetooth.heading": "Connect using Bluetooth",
   "connectMB.main.bluetooth.subtitle": "Connect using Bluetooth",
