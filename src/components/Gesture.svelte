@@ -65,8 +65,12 @@
   function cancelCountdown(): void {
     clearInterval(countdownInterval);
     showCountdown = false;
-    isThisRecording = false;
     countdownValue = countdownInitialValue;
+  }
+
+  function cancelRecording(): void {
+    cancelCountdown();
+    isThisRecording = false;
   }
 
   function countdownStart(): void {
@@ -129,15 +133,17 @@
 
     // Once duration is over (1000ms default), stop recording
     setTimeout(() => {
-      $state.isRecording = false;
-      isThisRecording = false;
       unsubscribe();
       if (get(settings).numSamples <= newData.x.length) {
-        const recording = { ID: Date.now(), data: newData } as RecordingData;
-        addRecording(gesture.getId(), recording);
+        if (isThisRecording) {
+          const recording = { ID: Date.now(), data: newData } as RecordingData;
+          addRecording(gesture.getId(), recording);
+        }
       } else {
         alertUser($t('alert.recording.disconnectedDuringRecording'));
       }
+      $state.isRecording = false;
+      isThisRecording = false;
     }, recordingDuration);
   }
 
@@ -226,7 +232,7 @@
 <BaseDialog
   background="light"
   isOpen={showCountdown || isThisRecording}
-  onClose={cancelCountdown}>
+  onClose={cancelRecording}>
   <div class="flex flex-col space-y-10">
     <div class="space-y-10 w-70">
       {#if showCountdown}
@@ -237,7 +243,7 @@
           </p>
         </GestureTilePart>
       {/if}
-      <StandardButton type="warning" onClick={() => cancelCountdown}
+      <StandardButton type="warning" onClick={() => cancelRecording}
         >{$t('content.data.recording.button.cancel')}</StandardButton>
     </div>
     {#if isThisRecording}
