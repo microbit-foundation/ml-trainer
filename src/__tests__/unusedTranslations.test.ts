@@ -11,7 +11,12 @@ import en from './../messages/ui.en.json';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const ignoredFiles = ['translations.ts', 'smoothie.js', '__tests__'];
+const ignoredFiles: RegExp[] = [
+  // Alphabetical ignore list
+  /^smoothie.js$/,
+  /^__tests__$/,
+  /^ui.[a-z-]+.json$/,
+];
 
 const readFile = (fileLocation: string, expect: string) => {
   const fileContent = fs.readFileSync(fileLocation);
@@ -23,12 +28,12 @@ type DirectoryContents = {
   folders: string[];
 };
 
-const readDirectory = (directory: string, ignoreList: string[]): DirectoryContents => {
+const readDirectory = (directory: string, ignoreList: RegExp[]): DirectoryContents => {
   const files: string[] = [];
   const folders: string[] = [];
   const filesRead = fs.readdirSync(directory);
   filesRead.forEach(file => {
-    if (ignoreList.includes(file)) return;
+    if (ignoreList.some(pattern => pattern.test(file))) return;
     const fileLocation = path.join(directory, file);
     const stats = fs.statSync(fileLocation);
     if (stats.isFile()) {

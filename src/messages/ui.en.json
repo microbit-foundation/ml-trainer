@@ -31,7 +31,6 @@
   "content.index.recordButtonDescription": "\"Record\"-button",
 
   "content.data.classPlaceholderNewClass": "Name of action",
-  "content.data.addData": "Add Data",
   "content.data.classHelpHeader": "Action",
   "content.data.classHelpBody": "The type of movement you want the machine learning tool to recognise e.g. 'wave' or 'clap'. ",
   "content.data.classification": "Action",
@@ -52,9 +51,6 @@
   "content.data.recording.button.cancel": "Cancel recording",
   "content.data.recording.description": "Start action before the countdown finishes",
 
-  "content.data.trainDialog.title": "Train the model",
-  "content.data.trainDialog.text": "Do you want to train the model with the data you have added so you can test it?",
-
   "content.trainer.header": "Training a model",
   "content.trainer.description": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit machine learning tool to recognise different actions when you move your micro:bit.",
 
@@ -66,69 +62,11 @@
   "content.trainer.failure.body": "The training did not result in a usable model. The reason for this is most likely the data used for training. If the data samples for different actions are too similar, this can result in issues in the training process.",
   "content.trainer.failure.todo": "Return to the Add data page and change your data.",
 
-  "content.filters.NoDataHeader": "No available data",
-  "content.filters.NoDataBody": "Go to the Add data page to collect data samples.",
-  "content.filters.max.title": "Max values",
-  "content.filters.max.description": "The maximum point among all datapoints in a gesture.",
-  "content.filters.min.title": "Minimum values",
-  "content.filters.min.description": "The minimum point among all datapoints in a gesture.",
-  "content.filters.std.title": "Standard deviation",
-  "content.filters.std.description": "The average deviation from 0 among all datapoints in a gesture.",
-  "content.filters.peaks.title": "Number of extremes",
-  "content.filters.peaks.description": "The number of extremes among all datapoints in a gesture.",
-  "content.filters.acc.title": "Total acceleration",
-  "content.filters.acc.description": "The sum of acceleration for the whole gesture, calculated in absolute values. Good for understanding the amount of movement.",
-  "content.filters.mean.title": "Mean",
-  "content.filters.mean.description": "Mean value of accelerations",
-  "content.filters.zcr.title": "Zero crossing rate",
-  "content.filters.zcr.description": "The rate at which the input (acceleration) transitions between positive and negative.",
-  "content.filters.rms.title": "Root mean square",
-  "content.filters.rms.description": "",
-
   "content.model.trainModelFirstHeading": "Test model",
   "content.model.trainModelBody1": "You cannot test the model until it has been trained.",
   "content.model.trainModelBody2": "You need at least 3 data samples for 2 actions to train a model.",
   "content.model.classification.helpHeading": "Certainty",
   "content.model.classification.helpBody": "How confident the model is that you are currently doing each action. For an action to be the ‘estimated action’, the level of confidence must be above the recognition point.",
-  "content.model.output.soundOptionCongratulations": "Congratulations",
-  "content.model.output.soundOptionHighPitchBeep": "High pitch beep",
-  "content.model.output.soundOptionLowPitchBeep": "Low pitch beep",
-  "content.model.output.soundOptionLoser": "Loser",
-  "content.model.output.soundOptionMistake": "Mistake",
-  "content.model.output.soundOptionHugeMistake": "Huge Mistake",
-
-  "content.model.output.pin.option.allTime": "Always on",
-  "content.model.output.pin.option.xTime": "For time",
-  "content.model.output.pin.seconds": "Seconds",
-
-  "content.model.output.estimatedGesture.iconTitle": "Estimated action:",
-  "content.model.output.estimatedGesture.descriptionTitle": "Estimated action",
-  "content.model.output.estimatedGesture.descriptionBody": "This is the action the model thinks you are currently doing.",
-
-  "content.model.output.action.iconTitle": "Action",
-  "content.model.output.action.descriptionTitle": "Action",
-  "content.model.output.action.descriptionBody": "The type of movement you want the machine learning tool to recognise e.g. ‘wave’ or ‘clap’.",
-
-  "content.model.output.certainty.iconTitle": "Certainty",
-  "content.model.output.certainty.descriptionTitle": "Certainty",
-  "content.model.output.certainty.descriptionBody": "How confident the model is that you are currently doing each action.",
-
-  "content.model.output.recognitionPoint": "Recognition Point:",
-
-  "content.model.output.ledOutput.descriptionTitle": "LED output",
-  "content.model.output.ledOutput.descriptionBody": "Here you can choose how the LEDs on your output micro:bit behaves when your model makes predictions. Try draw some patterns and see how they show on the output micro:bit when you move the input micro:bit.",
-
-  "content.model.output.sound.iconTitle": "Sound",
-  "content.model.output.sound.descriptionTitle": "Playback of sound",
-  "content.model.output.sound.descriptionBody": "Here you can choose which sound you output micro:bit plays when the model makes a prediction. Be aware that the sound plays from your computer if you have a micro:bit version 1.",
-
-  "content.model.output.pin.iconTitle": "Pin",
-  "content.model.output.pin.descriptionTitle": "Pin outputs",
-  "content.model.output.pin.descriptionBody": "Here you can select which pin will turn on when a gesture is predicted. Each pins are numbered according to micro:bit's official pin output diagram.",
-
-  "content.model.output.popup.header": "Connect output micro:bit",
-  "content.model.output.popup.body": "If you have not connected an output micro:bit, you cannot see the results of the changed made on this page. Use the connect button below",
-
   "content.model.addData": "Add data",
 
   "footer.connectButtonNotConnected": "Start",
@@ -273,9 +211,6 @@
   "compatibility.platform.notSupported": "The tool is not supported on your current platform.",
   "compatibility.platform.notSupported.joinDesktop": "Join us on desktop.",
   "compatibility.webgl.notSupported": "WebGL not available. Enable WebGL to see 3D data view.",
-
-  "dialog.connection.lost.header": "Connection offline",
-  "dialog.connection.lost.body": "Your internet connection is offline, some features may not work properly",
 
   "popup.outdatedmicrobit.header": "Your micro:bit firmware is outdated.",
   "popup.outdatedmicrobit.text": "We strongly recommend that you update it now, as some features may not work as expected.",
