@@ -49,8 +49,8 @@
   <div class="flex-grow flex-shrink py-2 px-10 h-0 overflow-y-auto">
     <div
       class="grid {enableOutputGestures
-        ? 'grid-cols-5'
-        : 'grid-cols-[max-content,1fr]'} gap-x-7 gap-y-3">
+        ? 'grid-cols-[max-content,max-content,max-content,max-content,max-content]'
+        : 'grid-cols-[max-content,max-content]'} gap-x-7 gap-y-3">
       <Information
         underlineIconText={false}
         isLightTheme={false}

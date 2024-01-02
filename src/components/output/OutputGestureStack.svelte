@@ -199,85 +199,77 @@
 
 <!-- ACTION TITLE -->
 <GestureTilePart elevated={true}>
-  <div class="items-center flex p-2 w-60 h-29">
-    <div
-      class="pr-20 font-semibold rounded
-                    px-1 py-1
-                    ml-5 break-words text-2xl">
-      <h3>{$gesture.name}</h3>
-    </div>
+  <div class="items-center h-full flex py-2 px-6 w-60">
+    <h3 class="font-semibold break-words text-2xl">{$gesture.name}</h3>
   </div></GestureTilePart>
 
-<div class="max-w-max">
-  <GestureTilePart elevated={true}>
-    <!-- METER -->
-    <div class="w-90 h-13 relative">
-      <div class="pt-7 pl-5">
+<GestureTilePart elevated={true} class="relative">
+  <!-- METER -->
+  <div class="w-90 h-13 relative">
+    <div class="pt-7 pl-5">
+      <div
+        class="h-3 rounded-full bg-gray-200 overflow-hidden"
+        style="width: {meterTotalWidth}rem">
         <div
-          class="h-3 rounded-full bg-gray-200 overflow-hidden"
-          style="width: {meterTotalWidth}rem">
-          <div
-            class="absolute h-3 rounded-full {wasTriggered
-              ? 'bg-secondary'
-              : 'bg-gray-500'}"
-            style="width: {meterWidthPct > 5
-              ? meterWidthPct * meterTotalWidth * 0.01
-              : 1}rem;" />
-          <div />
-          <div class="relative pl-5 grid grid-cols-8">
-            {#each Array(10) as _, index (index)}
-              <div class="bg-white w-0.5 h-5" />
-            {/each}
-          </div>
-        </div>
-        <p
-          class="absolute right-5 top-5 {wasTriggered
+          class="absolute h-3 rounded-full {wasTriggered
             ? 'bg-secondary'
-            : 'bg-gray-500'} text-white rounded w-15 text-xl text-center">
-          {~~meterWidthPct}%
-        </p>
+            : 'bg-gray-500'}"
+          style="width: {meterWidthPct > 5
+            ? meterWidthPct * meterTotalWidth * 0.01
+            : 1}rem;" />
+        <div />
+        <div class="relative pl-5 grid grid-cols-8">
+          {#each Array(10) as _, index (index)}
+            <div class="bg-white w-0.5 h-5" />
+          {/each}
+        </div>
       </div>
-    </div>
-    <div class="relative self-start">
-      <Information
-        titleText={$t('content.model.classification.helpHeading')}
-        bodyText={$t('content.model.classification.helpBody')}
-        isLightTheme={false} />
-    </div>
-    <!-- RECOGNITION POINT BAR -->
-    <div class="pl-5 pb-5">
-      <p class="text-sm text-gray-500 pl">
-        {$t('content.model.output.recognitionPoint')}
+      <p
+        class="absolute right-5 top-5 {wasTriggered
+          ? 'bg-secondary'
+          : 'bg-gray-500'} text-white rounded w-15 text-xl text-center">
+        {~~meterWidthPct}%
       </p>
-      <input
-        class="accent-gray-500"
-        type="range"
-        name=""
-        min="10"
-        max="90"
-        id=""
-        bind:value={sliderValue} />
     </div>
-  </GestureTilePart>
-</div>
+  </div>
+  <div class="relative self-start">
+    <Information
+      titleText={$t('content.model.classification.helpHeading')}
+      bodyText={$t('content.model.classification.helpBody')}
+      isLightTheme={false} />
+  </div>
+  <!-- RECOGNITION POINT BAR -->
+  <div class="pl-5 pb-5">
+    <p class="text-sm text-gray-500 pl">
+      {$t('content.model.output.recognitionPoint')}
+    </p>
+    <input
+      class="accent-gray-500"
+      type="range"
+      name=""
+      min="10"
+      max="90"
+      id=""
+      bind:value={sliderValue} />
+  </div>
+  {#if enableOutputGestures}
+    <!-- ARROW -->
+    <div class="text-center absolute -right-30px top-1/2 translate-y-1/3">
+      <img
+        class:hidden={wasTriggered}
+        src={rightArrowImage}
+        alt="right arrow icon"
+        width="30px" />
+      <img
+        class:hidden={!wasTriggered || !$state.isInputReady}
+        src={rightArrowBlueImage}
+        alt="right arrow icon"
+        width="30px" />
+    </div>
+  {/if}
+</GestureTilePart>
 
 {#if enableOutputGestures}
-  <!-- ARROW -->
-  <div class="text-center w-15">
-    <img
-      class="m-auto"
-      class:hidden={wasTriggered}
-      src={rightArrowImage}
-      alt="right arrow icon"
-      width="30px" />
-    <img
-      class="m-auto"
-      class:hidden={!wasTriggered || !$state.isInputReady}
-      src={rightArrowBlueImage}
-      alt="right arrow icon"
-      width="30px" />
-  </div>
-
   <!-- OUTPUT SETTINGS -->
   <div class="relative flex items-center">
     <div
@@ -297,14 +289,12 @@
         <OutputMatrix bind:trigger={triggerFunctions[0]} gesture={$gesture} />
       </div>
     </div>
-    <OutputSoundSelector onSoundSelection={onSoundSelected} {selectedSound} />
   </div>
-  <div class="ml-4">
-    <PinSelector
-      selectedPin={pinIOEnabled ? selectedPin : undefined}
-      {turnOnState}
-      {turnOnTime}
-      {onPinSelect}
-      {onTurnOnTimeSelect} />
-  </div>
+  <OutputSoundSelector onSoundSelection={onSoundSelected} {selectedSound} />
+  <PinSelector
+    selectedPin={pinIOEnabled ? selectedPin : undefined}
+    {turnOnState}
+    {turnOnTime}
+    {onPinSelect}
+    {onTurnOnTimeSelect} />
 {/if}

@@ -12,7 +12,7 @@
 </script>
 
 <div
-  class="rounded-lg bg-backgroundlight"
+  class="{$$restProps.class || ''} rounded-lg bg-backgroundlight"
   class:h-30={small}
   class:shadow-md={elevated}
   class:ml-2={ml && small}
