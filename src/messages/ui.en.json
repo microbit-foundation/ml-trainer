@@ -11,12 +11,12 @@
   "alert.isRecording": "You are currently recording!",
   "alert.isTesting": "You are currently recording!",
   "alert.isTraining": "You are currently training a model!",
-  "alert.isNotConnected": "Your Micro:bit should be connected!",
-  "alert.deleteGestureConfirm": "Are you sure you want to delete the class ",
+  "alert.isNotConnected": "Your micro:bit should be connected!",
+  "alert.deleteGestureConfirm": "Are you sure you want to delete the action ",
 
-  "alert.twoGestures": "You need at least two classes",
+  "alert.twoGestures": "You need at least two actions",
   "alert.oneDataRepresentation": "You need at least one data representation",
-  "alert.recordingsPerGesture": "You need at least three examples per class",
+  "alert.recordingsPerGesture": "You need at least three examples per action",
 
   "content.index.title": "machine learning tool",
   "content.index.toolInfo1": "Use this tool with the",
@@ -40,12 +40,12 @@
   "content.data.choice.header": "Choice of class",
   "content.data.addAction": "Add action",
   "content.data.choice.body": "Here, you choose which class you want to add data to. After having selected a class, you can either press the \"Record\" button below or press one of the buttons on your micro:bit to record a data segment. See the picture below.",
-  "content.data.dataDescription": "Here you can see the gathered data. ",
-  "content.data.noData": "You do not have any gestures to train on. Add the gestures you wish the micro:bit should learn to recognise.",
+  "content.data.dataDescription": "Multiple samples of movement data collected in 1.8 second bursts.",
+  "content.data.noData": "You do not have any data to use to train the model. You need at least 2 actions with at least 3 data samples each.",
 
   "content.data.controlbar.button.menu": "Data actions",
-  "content.data.controlbar.button.clearData": "Clear examples",
-  "content.data.controlbar.button.clearData.confirm": "Are you sure you wish to delete all gesture examples?\nThis cannot be undone.",
+  "content.data.controlbar.button.clearData": "Clear data samples",
+  "content.data.controlbar.button.clearData.confirm": "Are you sure you wish to delete all data samples?\nThis cannot be undone.",
   "content.data.controlbar.button.downloadData": "Download dataset",
   "content.data.controlbar.button.uploadData": "Upload dataset",
 
@@ -62,12 +62,12 @@
 
   "content.trainer.training.title": "Status: Training the model in progress.",
 
-  "content.trainer.failure.header": "Training Failed",
-  "content.trainer.failure.body": "The training did not result in a usable model. The reason for this is most likely the data used for training. If the data for different classes are too similar, this can result in issues in the training process.",
-  "content.trainer.failure.todo": "Return to the data page and change your data.",
+  "content.trainer.failure.header": "Training failed",
+  "content.trainer.failure.body": "The training did not result in a usable model. The reason for this is most likely the data used for training. If the data samples for different actions are too similar, this can result in issues in the training process.",
+  "content.trainer.failure.todo": "Return to the Add data page and change your data.",
 
   "content.filters.NoDataHeader": "No available data",
-  "content.filters.NoDataBody": "Go to the Data page to collect data samples.",
+  "content.filters.NoDataBody": "Go to the Add data page to collect data samples.",
   "content.filters.max.title": "Max values",
   "content.filters.max.description": "The maximum point among all datapoints in a gesture.",
   "content.filters.min.title": "Minimum values",
@@ -88,8 +88,8 @@
   "content.model.trainModelFirstHeading": "Test model",
   "content.model.trainModelBody1": "You cannot test the model until it has been trained.",
   "content.model.trainModelBody2": "You need at least 3 data samples for 2 actions to train a model.",
-  "content.model.classification.helpHeading": "Probabil-ometer",
-  "content.model.classification.helpBody": "For each prediction you make, the model will produce a percentage that describes how confident the model is in its prediction. This meter goes from 0% to 100%. With the slider next to it, you can determine the limit of how certain the model should be in its preduction to make an output (e.g. play a sound)",
+  "content.model.classification.helpHeading": "Certainty",
+  "content.model.classification.helpBody": "How confident the model is that you are currently doing each action. For an action to be the ‘estimated action’, the level of confidence must be above the recognition point.",
   "content.model.output.soundOptionCongratulations": "Congratulations",
   "content.model.output.soundOptionHighPitchBeep": "High pitch beep",
   "content.model.output.soundOptionLowPitchBeep": "Low pitch beep",
@@ -149,11 +149,10 @@
 
   "menu.trainer.helpHeading": "2. Train model",
   "menu.trainer.helpBody": "The Trainer looks at the examples in each of the classes and tries to 'learn' how the different classes can be recognized by searching for patterns in the data. Here you can train a model to recognize different gestures.",
-  "menu.trainer.notConnected1": "You have not connected a micro:bit.",
-  "menu.trainer.notConnected2": " Please do so via the button below",
+  "menu.trainer.notConnected1": "You do not have a micro:bit connected",
+  "menu.trainer.notConnected2": " Select the ‘Connect’ button to connect a micro:bit.",
   "menu.trainer.notEnoughDataHeader1": "Status: You don't have enough data.",
   "menu.trainer.notEnoughDataInfoBody": "You need at least 3 data samples for 2 actions to train the model.",
-  "menu.trainer.notEnoughDataInfo": "You have not collected enough data to train a model. You need at least 2 classes with 3 examples each. Please go to the Data page to collect more data",
   "menu.trainer.trainNewModelButton": "Train a new model",
   "menu.trainer.TrainingFinished": "Status: Your model is trained.",
 
@@ -239,14 +238,14 @@
   "connectMB.usb.button1": "Next",
   "connectMB.usb.button2": "Find USB unit",
   "connectMB.usb.done.body1": "Done - the program has been downloaded.",
-  "connectMB.usb.done.body2": "You can now connect through bluetooth.",
+  "connectMB.usb.done.body2": "You can now connect through Bluetooth.",
   "connectMB.usb.done.body3": "If you have a battery for the micro:bit, you can now remove the usb-cable and use the battery instead.",
   "connectMB.usb.done.body4": "If you do not have a battery for the micro:bit, you can simply keep powering it through the usb cable.",
 
   "connectMB.usb.manual.header": "Transfer file to your micro:bit",
   "connectMB.usb.manual.manualDownload": "If the file did not automatically download press",
   "connectMB.usb.manual.manualDownloadLink": "here",
-  "connectMB.usb.manual.done": "Done: Connect using bluetooth",
+  "connectMB.usb.manual.done": "Done: Connect using Bluetooth",
 
   "connectMB.usb.firmwareBroken.warning": "We detected issues with your micro:bit firmware",
   "connectMB.usb.firmwareBroken.content1": "The version of micro:bit and firmware have known issues, that prevent us from uploading the program to it.",
@@ -264,7 +263,7 @@
   "languageDialog.title": "Language",
 
   "popup.compatibility.bluetooth.header": "Bluetooth incompatible browser!",
-  "popup.compatibility.bluetooth.explain": "The browser you are currently using does not support bluetooth.",
+  "popup.compatibility.bluetooth.explain": "The browser you are currently using does not support Bluetooth.",
   "popup.compatibility.bluetooth.advice": "Please update the browser or use another one from our supported browsers list below.",
 
   "connectMB.USBCompatibility.transferStep.step1": "Open the location to which the firmware was downloaded. Most commonly found in your download folder.",
