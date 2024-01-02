@@ -22,6 +22,7 @@ describe.skip('Translation tests', () => {
     const danishTranslationKeys = Object.getOwnPropertyNames(da) as (keyof typeof da)[];
     for (let i = 0; i < danishTranslationKeys.length; i++) {
       const danishKey = danishTranslationKeys[i];
+      // @ts-ignore - as translations are intentionally allowed to differ
       expect(en[danishKey], 'Something not the same -> ' + danishKey).toBeDefined();
     }
   });
