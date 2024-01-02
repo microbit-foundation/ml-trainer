@@ -60,24 +60,26 @@
   let isThisRecording = false;
   let showCountdown = false;
   let countdownValue = countdownInitialValue;
-  let countdownInterval: number = 1000; // the countdown interval in milliseconds
+  let countdownInterval: any;
 
-  async function countdownStart(): Promise<void> {
+  function cancelCountdown(): void {
+    clearInterval(countdownInterval);
+    showCountdown = false;
+    isThisRecording = false;
+    countdownValue = countdownInitialValue;
+  }
+
+  function countdownStart(): void {
     showCountdown = true;
-
-    return new Promise<void>(resolve => {
-      const interval = setInterval(() => {
-        countdownValue--;
-        if (countdownValue === 0 && showCountdown) {
-          recordData();
-          showCountdown = false;
-        } else if (!showCountdown) {
-          clearInterval(interval);
-          countdownValue = countdownInitialValue;
-          resolve();
-        }
-      }, countdownInterval);
-    });
+    countdownInterval = setInterval(() => {
+      countdownValue--;
+      if (countdownValue === 0 && showCountdown) {
+        recordData();
+        showCountdown = false;
+      } else if (!showCountdown) {
+        cancelCountdown();
+      }
+    }, 1000);
   }
 
   const nameBind = gesture.bindName();
@@ -220,78 +222,74 @@
   }
 </script>
 
-<main class="flex-row flex mb-2">
-  <!-- Recording countdown popup -->
-  <BaseDialog
-    background="light"
-    isOpen={showCountdown}
-    onClose={() => (showCountdown = false)}>
+<!-- Recording countdown popup -->
+<BaseDialog
+  background="light"
+  isOpen={showCountdown || isThisRecording}
+  onClose={cancelCountdown}>
+  <div class="flex flex-col space-y-10">
     <div class="space-y-10 w-70">
-      <GestureTilePart elevated={true}>
-        <p class="text-9xl text-center text-gray-400">{countdownValue}</p>
-        <p class="pt-5 px-10 text-gray-400 text-center">
-          {$t('content.data.recording.description')}
-        </p>
-      </GestureTilePart>
-      <StandardButton type="warning" onClick={() => (showCountdown = false)}
-        >{$t('content.data.recording.button.cancel')}</StandardButton>
-    </div>
-  </BaseDialog>
-
-  <!-- Recording bar to show recording progress -->
-  <BaseDialog
-    background="light"
-    isOpen={isThisRecording}
-    onClose={() => (isThisRecording = false)}>
-    <div class="w-70 h-6 bg-red-200 rounded-full overflow-hidden">
-      <div class="h-full bg-red-600 animate-loading-bar" />
-    </div>
-  </BaseDialog>
-
-  <div class="items-center flex mb-1">
-    <!-- Title of gesture-->
-    <GestureTilePart mr small elevated>
-      <div class="grid grid-cols-5 place-items-center p-2 w-50 h-30">
-        <div class="w-40 col-start-2 col-end-5 transition ease rounded bg-gray-100">
-          <h3
-            class="px-2"
-            contenteditable
-            bind:innerText={$nameBind}
-            on:click={titleClicked}
-            on:keypress={onTitleKeypress} />
-        </div>
-        <button
-          class="pl-3 col-start-5 place-self-start justify-self-end outline-none"
-          on:click={removeClicked}>
-          <i class="far fa-times-circle fa-lg text-gray-500" />
-        </button>
-      </div>
-    </GestureTilePart>
-
-    <div class="flex rounded-lg bg-backgroundlight shadow-md ml-10">
-      <GestureTilePart small mr>
-        <div
-          class="h-full w-35 flex justify-center"
-          class:cursor-pointer={$state.isInputConnected}
-          on:click={$chosenGesture === gesture ? countdownStart : selectClicked}>
-          <button
-            class="record-button"
-            class:disabled={$chosenGesture !== gesture}
-            class:cursor-default={!$state.isInputConnected}>
-            <i class="fas fa-circle text-rose-600 text-4xl" />
-          </button>
-        </div>
-      </GestureTilePart>
-
-      {#if $gesture.recordings.length > 0}
-        <GestureTilePart small>
-          <div class="flex p-2 h-30">
-            {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
-              <Recording {recording} onDelete={deleteRecording} />
-            {/each}
-          </div>
+      {#if showCountdown}
+        <GestureTilePart elevated={true}>
+          <p class="text-9xl text-center text-gray-400">{countdownValue}</p>
+          <p class="pt-5 px-10 text-gray-400 text-center">
+            {$t('content.data.recording.description')}
+          </p>
         </GestureTilePart>
       {/if}
+      <StandardButton type="warning" onClick={() => cancelCountdown}
+        >{$t('content.data.recording.button.cancel')}</StandardButton>
     </div>
+    {#if isThisRecording}
+      <!-- Recording bar to show recording progress -->
+      <div class="w-70 h-6 bg-red-200 rounded-full overflow-hidden">
+        <div class="h-full bg-red-600 animate-loading-bar" />
+      </div>
+    {/if}
   </div>
-</main>
+</BaseDialog>
+
+<!-- Title of gesture-->
+<GestureTilePart small elevated>
+  <div class="grid grid-cols-5 place-items-center p-2 w-50 h-30">
+    <div class="w-40 col-start-2 col-end-5 transition ease rounded bg-gray-100">
+      <h3
+        class="px-2"
+        contenteditable
+        bind:innerText={$nameBind}
+        on:click={titleClicked}
+        on:keypress={onTitleKeypress} />
+    </div>
+    <button
+      class="pl-3 col-start-5 place-self-start justify-self-end outline-none"
+      on:click={removeClicked}>
+      <i class="far fa-times-circle fa-lg text-gray-500" />
+    </button>
+  </div>
+</GestureTilePart>
+
+<div class="flex rounded-lg bg-backgroundlight shadow-md max-w-max">
+  <GestureTilePart small mr>
+    <div
+      class="h-full w-35 flex justify-center"
+      class:cursor-pointer={$state.isInputConnected}
+      on:click={$chosenGesture === gesture ? countdownStart : selectClicked}>
+      <button
+        class="record-button"
+        class:disabled={$chosenGesture !== gesture}
+        class:cursor-default={!$state.isInputConnected}>
+        <i class="fas fa-circle text-rose-600 text-4xl" />
+      </button>
+    </div>
+  </GestureTilePart>
+
+  {#if $gesture.recordings.length > 0}
+    <GestureTilePart small>
+      <div class="flex p-2 h-30">
+        {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
+          <Recording {recording} onDelete={deleteRecording} />
+        {/each}
+      </div>
+    </GestureTilePart>
+  {/if}
+</div>

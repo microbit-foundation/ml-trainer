@@ -83,38 +83,35 @@
     </div>
   {:else}
     <div class="flex-grow flex-shrink py-2 px-10 h-0 overflow-y-auto">
-      {#if $gestures.length > 0}
-        <div class=" p-0 relative flex h-7">
-          <div class="absolute left-3 flex">
-            <Information
-              isLightTheme={false}
-              underlineIconText={false}
-              iconText={$t('content.data.classification')}
-              titleText={$t('content.data.classHelpHeader')}
-              bodyText={$t('content.data.classHelpBody')} />
-          </div>
-          <div class="absolute left-65 flex">
-            <Information
-              isLightTheme={false}
-              underlineIconText={false}
-              iconText={$t('content.data.data')}
-              titleText={$t('content.data.data')}
-              bodyText={$t('content.data.dataDescription')} />
-          </div>
-        </div>
-      {:else}
+      {#if !$gestures.length}
         <div class="flex justify-center">
           <div class="text-center text-xl w-1/2 text-bold text-primarytext">
             <p>{$t('content.data.noData')}</p>
           </div>
         </div>
       {/if}
+      <div class="grid grid-cols-[max-content,1fr] gap-x-7 gap-y-3">
+        {#if $gestures.length > 0}
+          <Information
+            isLightTheme={false}
+            underlineIconText={false}
+            iconText={$t('content.data.classification')}
+            titleText={$t('content.data.classHelpHeader')}
+            bodyText={$t('content.data.classHelpBody')} />
+          <Information
+            isLightTheme={false}
+            underlineIconText={false}
+            iconText={$t('content.data.data')}
+            titleText={$t('content.data.data')}
+            bodyText={$t('content.data.dataDescription')} />
+        {/if}
 
-      {#each $gestures as gesture (gesture.ID)}
-        <Gesture
-          gesture={gestures.getGesture(gesture.ID)}
-          onNoMicrobitSelect={() => (isConnectionDialogOpen = true)} />
-      {/each}
+        {#each $gestures as gesture (gesture.ID)}
+          <Gesture
+            gesture={gestures.getGesture(gesture.ID)}
+            onNoMicrobitSelect={() => (isConnectionDialogOpen = true)} />
+        {/each}
+      </div>
 
       <NewGestureButton />
       <div class="flex justify-end">

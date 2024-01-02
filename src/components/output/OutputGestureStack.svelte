@@ -197,18 +197,18 @@
   $: meterWidthPct = 100 * $gesture.confidence.currentConfidence;
 </script>
 
-<main class="mb-4 items-center flex flex-row space-x-2">
-  <!-- ACTION TITLE -->
-  <GestureTilePart elevated={true}>
-    <div class="items-center flex p-2 w-60 h-29">
-      <div
-        class="pr-20 font-semibold rounded
+<!-- ACTION TITLE -->
+<GestureTilePart elevated={true}>
+  <div class="items-center flex p-2 w-60 h-29">
+    <div
+      class="pr-20 font-semibold rounded
                     px-1 py-1
                     ml-5 break-words text-2xl">
-        <h3>{$gesture.name}</h3>
-      </div>
-    </div></GestureTilePart>
+      <h3>{$gesture.name}</h3>
+    </div>
+  </div></GestureTilePart>
 
+<div class="max-w-max">
   <GestureTilePart elevated={true}>
     <!-- METER -->
     <div class="w-90 h-13 relative">
@@ -259,52 +259,52 @@
         bind:value={sliderValue} />
     </div>
   </GestureTilePart>
+</div>
 
-  {#if enableOutputGestures}
-    <!-- ARROW -->
-    <div class="text-center w-15">
-      <img
-        class="m-auto"
-        class:hidden={wasTriggered}
-        src={rightArrowImage}
-        alt="right arrow icon"
-        width="30px" />
-      <img
-        class="m-auto"
-        class:hidden={!wasTriggered || !$state.isInputReady}
-        src={rightArrowBlueImage}
-        alt="right arrow icon"
-        width="30px" />
-    </div>
+{#if enableOutputGestures}
+  <!-- ARROW -->
+  <div class="text-center w-15">
+    <img
+      class="m-auto"
+      class:hidden={wasTriggered}
+      src={rightArrowImage}
+      alt="right arrow icon"
+      width="30px" />
+    <img
+      class="m-auto"
+      class:hidden={!wasTriggered || !$state.isInputReady}
+      src={rightArrowBlueImage}
+      alt="right arrow icon"
+      width="30px" />
+  </div>
 
-    <!-- OUTPUT SETTINGS -->
-    <div class="relative flex items-center">
+  <!-- OUTPUT SETTINGS -->
+  <div class="relative flex items-center">
+    <div
+      class="w-177px relative rounded-xl bg-transparent h-full border-1 border-primaryborder">
+      <ImageSkeleton
+        src={blankMicrobitImage}
+        alt="microbit guide"
+        width={177}
+        height={144}
+        loadingColorSecondary="#818181"
+        loadingColorPrimary="#4A4A4A"
+        onLoaded={() => (hasLoadedMicrobitImage = true)} />
       <div
-        class="w-177px relative rounded-xl bg-transparent h-full border-1 border-primaryborder">
-        <ImageSkeleton
-          src={blankMicrobitImage}
-          alt="microbit guide"
-          width={177}
-          height={144}
-          loadingColorSecondary="#818181"
-          loadingColorPrimary="#4A4A4A"
-          onLoaded={() => (hasLoadedMicrobitImage = true)} />
-        <div
-          class="bg-black p-0 m-0 absolute top-9 left-12.7"
-          class:hidden={!hasLoadedMicrobitImage}
-          on:click={onUserInteraction}>
-          <OutputMatrix bind:trigger={triggerFunctions[0]} gesture={$gesture} />
-        </div>
+        class="bg-black p-0 m-0 absolute top-9 left-12.7"
+        class:hidden={!hasLoadedMicrobitImage}
+        on:click={onUserInteraction}>
+        <OutputMatrix bind:trigger={triggerFunctions[0]} gesture={$gesture} />
       </div>
-      <OutputSoundSelector onSoundSelection={onSoundSelected} {selectedSound} />
     </div>
-    <div class="ml-4">
-      <PinSelector
-        selectedPin={pinIOEnabled ? selectedPin : undefined}
-        {turnOnState}
-        {turnOnTime}
-        {onPinSelect}
-        {onTurnOnTimeSelect} />
-    </div>
-  {/if}
-</main>
+    <OutputSoundSelector onSoundSelection={onSoundSelected} {selectedSound} />
+  </div>
+  <div class="ml-4">
+    <PinSelector
+      selectedPin={pinIOEnabled ? selectedPin : undefined}
+      {turnOnState}
+      {turnOnTime}
+      {onPinSelect}
+      {onTurnOnTimeSelect} />
+  </div>
+{/if}

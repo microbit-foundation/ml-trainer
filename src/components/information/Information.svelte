@@ -38,7 +38,11 @@
   }
 </script>
 
-<div class="w-auto flex" bind:clientWidth={w} bind:clientHeight={h} bind:this={domNode}>
+<div
+  class="w-auto flex items-center"
+  bind:clientWidth={w}
+  bind:clientHeight={h}
+  bind:this={domNode}>
   {#if iconText !== undefined}
     <p
       class="text-white w-auto h-auto mr-0 whitespace-pre-line pr-1"

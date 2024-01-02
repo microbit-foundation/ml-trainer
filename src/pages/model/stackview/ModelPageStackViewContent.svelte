@@ -46,54 +46,45 @@
       </p>
     {/if}
   </div>
-  <div class="flex-grow flex-shrink h-0 overflow-y-auto">
-    <div class="relative flex h-8 text-xl">
-      <div class="absolute left-15 space-x-45 flex py-5">
-        <Information
-          underlineIconText={false}
-          isLightTheme={false}
-          iconText={$t('content.model.output.action.iconTitle')}
-          titleText={$t('content.model.output.action.descriptionTitle')}
-          bodyText={$t('content.model.output.action.descriptionBody')} />
-        <Information
-          underlineIconText={false}
-          isLightTheme={false}
-          iconText={$t('content.model.output.certainty.iconTitle')}
-          titleText={$t('content.model.output.certainty.descriptionTitle')}
-          bodyText={$t('content.model.output.certainty.descriptionBody')} />
-      </div>
+  <div class="flex-grow flex-shrink py-2 px-10 h-0 overflow-y-auto">
+    <div
+      class="grid {enableOutputGestures
+        ? 'grid-cols-5'
+        : 'grid-cols-[max-content,1fr]'} gap-x-7 gap-y-3">
+      <Information
+        underlineIconText={false}
+        isLightTheme={false}
+        iconText={$t('content.model.output.action.iconTitle')}
+        titleText={$t('content.model.output.action.descriptionTitle')}
+        bodyText={$t('content.model.output.action.descriptionBody')} />
+      <Information
+        underlineIconText={false}
+        isLightTheme={false}
+        iconText={$t('content.model.output.certainty.iconTitle')}
+        titleText={$t('content.model.output.certainty.descriptionTitle')}
+        bodyText={$t('content.model.output.certainty.descriptionBody')} />
       {#if enableOutputGestures}
-        <div class="absolute left-78 flex">
-          <Information
-            isLightTheme={false}
-            iconText={$t('content.model.output.ledOutput.descriptionTitle')}
-            titleText={$t('content.model.output.ledOutput.descriptionTitle')}
-            bodyText={$t('content.model.output.ledOutput.descriptionBody')} />
-        </div>
-        <div class="absolute left-125 flex">
-          <Information
-            isLightTheme={false}
-            iconText={$t('content.model.output.sound.iconTitle')}
-            titleText={$t('content.model.output.sound.descriptionTitle')}
-            bodyText={$t('content.model.output.sound.descriptionBody')} />
-        </div>
-        <div class="absolute left-167 flex">
-          <Information
-            isLightTheme={false}
-            iconText={$t('content.model.output.pin.iconTitle')}
-            titleText={$t('content.model.output.pin.descriptionTitle')}
-            bodyText={$t('content.model.output.pin.descriptionBody')} />
-        </div>
+        <Information
+          isLightTheme={false}
+          iconText={$t('content.model.output.ledOutput.descriptionTitle')}
+          titleText={$t('content.model.output.ledOutput.descriptionTitle')}
+          bodyText={$t('content.model.output.ledOutput.descriptionBody')} />
+        <Information
+          isLightTheme={false}
+          iconText={$t('content.model.output.sound.iconTitle')}
+          titleText={$t('content.model.output.sound.descriptionTitle')}
+          bodyText={$t('content.model.output.sound.descriptionBody')} />
+        <Information
+          isLightTheme={false}
+          iconText={$t('content.model.output.pin.iconTitle')}
+          titleText={$t('content.model.output.pin.descriptionTitle')}
+          bodyText={$t('content.model.output.pin.descriptionBody')} />
       {/if}
-    </div>
 
-    <div class="pl-15">
       <!-- Display all gestures and their output capabilities -->
-      <div class="pt-6">
-        {#each gestures.getGestures() as gesture}
-          <OutputGesture variant="stack" {gesture} {onUserInteraction} />
-        {/each}
-      </div>
+      {#each gestures.getGestures() as gesture}
+        <OutputGesture variant="stack" {gesture} {onUserInteraction} />
+      {/each}
     </div>
     {#if !$state.isOutputConnected && !hasClosedPopup && hasInteracted}
       <div transition:fade class="grid grid-cols-5 absolute bottom-5 w-full min-w-729px">
