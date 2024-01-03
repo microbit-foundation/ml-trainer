@@ -72,7 +72,7 @@
                 src={appNameImage}
                 alt={$t('content.index.title')}
                 width="253px"
-                class="pl-3" />
+                class="pl-3 mt-2px" />
             </div>
           </div>
           <div class="flex gap-5">
