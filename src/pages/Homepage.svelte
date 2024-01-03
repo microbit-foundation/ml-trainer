@@ -14,8 +14,11 @@
   import { startConnectionProcess } from '../script/stores/connectDialogStore';
   import ConnectDialogContainer from '../components/connection-prompt/ConnectDialogContainer.svelte';
 
+  // Avoid youtube cookie. rel=0 should limit related videos to youtube channel.
+  // Once we have translated videos we can try e.g. cc_lang_pref=fr
+  // but we'll need to check our codes match theirs.
   const introVideoUrl =
-    'https://datatraener0dr0media-euno.streaming.media.azure.net/18233c69-2bc3-4b1b-9e2d-249e37b56307/Ultrabit_01_Introvideo_Datatræneren.mp4';
+    'https://www.youtube-nocookie.com/embed/u2u7UJSRuko?rel=0&cc_load_policy=1';
 
   const playgroundSurveyUrl =
     'https://stage.microbit.org/teach/playground-survey/exploring-machine-learning';
@@ -29,10 +32,16 @@
   <div class="mb-8">
     <ConnectDialogContainer bind:this={connectDialogReference} />
 
-    <div class="flex flex-col items-center justify-center m-10">
-      <video class="w-150 mb-5" controls width="550">
-        <source src={introVideoUrl} type="video/mp4" />
-      </video>
+    <div class="flex flex-col items-center justify-center m-10 gap-5">
+      <iframe
+        class="w-38rem h-auto aspect-video"
+        style="aspect-ratio: 16/9"
+        title="introduction video"
+        src={introVideoUrl}
+        allow="encrypted-media"
+        frameBorder="0"
+        allowFullScreen>
+      </iframe>
       <p>
         {$t('content.index.toolInfo1')}
         <a class="text-link" href={playgroundSurveyUrl} target="_blank"
