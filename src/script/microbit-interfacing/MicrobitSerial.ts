@@ -9,9 +9,7 @@ import InputBehaviour from '../connection-behaviours/InputBehaviour';
 import MBSpecs from './MBSpecs';
 import { MicrobitConnection } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
-import { processInput } from './serial-message-processing';
-
-const baudRate = 115200;
+import * as protocol from './serial-message-processing';
 
 const writeLine = (message: string) => {
   console.log(message);
@@ -23,7 +21,11 @@ class MicrobitSerial implements MicrobitConnection {
   private reader = this.decoder.readable.getReader();
   private writer = this.encoder.writable.getWriter();
 
+  private t = 0;
+
   private connected = false;
+
+  private baudRate = 115200;
 
   private unprocessedInput = '';
 
@@ -36,54 +38,12 @@ class MicrobitSerial implements MicrobitConnection {
     inputBehaviour: InputBehaviour,
     _inputUartHandler: (data: string) => void,
   ): Promise<void> {
-    this.streamData(this.usb.serialPort, { baudRate }, inputBehaviour);
-  }
-
-  private async streamData(
-    serialPort: SerialPort,
-    options: SerialOptions,
-    inputBehaviour: InputBehaviour,
-  ): Promise<void> {
     try {
-      await serialPort.open(options);
-      writeLine(`Opened with baudRate: ${options.baudRate}`);
-
-      if (serialPort.readable && serialPort.writable) {
-        this.connected = true;
-        this.encoder.readable.pipeTo(serialPort.writable);
-        serialPort.readable.pipeTo(this.decoder.writable);
-
-        writeLine(`Listening to serial device...`);
-
-        setTimeout(() => {
-          // this.writer.write('C[XXXXXXXX]HS[]\n'); // Invalid handshake message which will show error on micro:bit LED screen.
-          this.writer.write('C[9C515AAF]HS[]\n');
-        }, 500);
-
-        setTimeout(() => {
-          this.writer.write('C[9C515AAF]START[A,B,BL]\n');
-        }, 1000);
-
-        while (this.connected) {
-          const { value, done } = await this.reader.read();
-          if (value) {
-            this.unprocessedInput += value;
-            const processedInput = processInput(this.unprocessedInput);
-            if (processedInput) {
-              this.unprocessedInput = processedInput.remainingInput;
-              console.log(processedInput.state);
-              inputBehaviour.accelerometerChange(
-                processedInput.state.accelerometerX,
-                processedInput.state.accelerometerY,
-                processedInput.state.accelerometerZ,
-              );
-            }
-          }
-          if (done) {
-            this.connected = false;
-          }
+        if (!this.connected) {
+          await this.connect();
         }
-      }
+        await this.protocolHandshake();
+        await this.streamPeriodicData(inputBehaviour);
     } catch (error) {
       console.error('There was an error', error);
     } finally {
@@ -93,12 +53,125 @@ class MicrobitSerial implements MicrobitConnection {
     }
   }
 
+  /**
+   * There is an issue where we cannot read data out from the micro:bit serial
+   * buffer until the buffer has been filled.
+   * As a workaround we can spam the micro:bit with handshake messages until
+   * enough responses have been queued in the buffer to fill it and the data
+   * starts to flow.
+   */
+  private async protocolHandshake(): Promise<void> {
+    if (!this.connected) {
+      await this.connect();
+    }
+
+    let handshakeReceived = false;
+    const readHandshakeRetry = (retries: number) => new Promise<string>((resolve, reject) => {
+      return this.reader.read().then(({ value, done }) => {
+        if (value) {
+          this.unprocessedInput += value;
+          let messages = protocol.splitMessages(this.unprocessedInput);
+          this.unprocessedInput = messages.remainingInput;
+
+          // TODO: Not currently looking at the responseId, as we only care
+          //      about receiving *any* handshake response
+          messages.messages.forEach(msg => {
+            let handshakeResponseId = protocol.processHandshake(msg);
+            if (handshakeResponseId) {
+              handshakeReceived = true;
+            }
+          });
+          if (handshakeReceived) {
+            return resolve("Handshake received");
+          }
+        }
+        throw new Error("No handshake received");
+      }).catch((reason) => {
+        if (retries > 0) {
+          return readHandshakeRetry(retries - 1).then(resolve).catch(reject);
+        } else {
+          return reject(reason);
+        }
+      });
+    });
+
+    // The first message we get out of the micro:bit serial buffer might be
+    // incomplete due to the issue described before. The second message should
+    // be complete, but we leave an extra retry just in case.
+    readHandshakeRetry(3).then(console.log).catch(console.error);
+
+    let attempts = 0;
+    while (!handshakeReceived && attempts++ < 20) {
+      const handshakeCmd = protocol.generateCommand(protocol.CommandTypes.Handshake);
+      writeLine(`Sending handshake ${handshakeCmd.message}`)
+      await this.writer.write(handshakeCmd.message);
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+
+    if (!handshakeReceived) {
+      throw new Error('Handshake not received');
+    }
+  }
+
+  private async streamPeriodicData(inputBehaviour: InputBehaviour): Promise<void> {
+    // Request the micro:bit to start sending the periodic messages
+    const startCmd = protocol.generateCommand(protocol.CommandTypes.Start);
+    await this.writer.write(startCmd.message);
+    // TODO: Unclear why we need to send this command twice, need to investigate
+    await this.writer.write(startCmd.message);
+
+    let previousButtonState = { A: 0, B: 0 };
+
+    while (this.connected) {
+      const { value, done } = await this.reader.read();
+      if (value) {
+        this.unprocessedInput += value;
+        const processedInput = protocol.processPeriodicMessage(this.unprocessedInput);
+        if (processedInput) {
+          this.unprocessedInput = processedInput.remainingInput;
+          let now = Date.now();
+          console.log(now - this.t, processedInput.state);
+          this.t = now;
+          inputBehaviour.accelerometerChange(
+            processedInput.state.accelerometerX,
+            processedInput.state.accelerometerY,
+            processedInput.state.accelerometerZ,
+          );
+          if (processedInput.state.buttonA !== previousButtonState.A) {
+            previousButtonState.A = processedInput.state.buttonA;
+            inputBehaviour.buttonChange(processedInput.state.buttonA, 'A');
+          }
+          if (processedInput.state.buttonB !== previousButtonState.B) {
+            previousButtonState.B = processedInput.state.buttonB;
+            inputBehaviour.buttonChange(processedInput.state.buttonB, 'B');
+          }
+        }
+      }
+      if (done) {
+        break;
+      }
+    }
+  }
+
   public listenForDisconnect(callback: (event: Event) => unknown): void {}
 
   public removeDisconnectListener(callback: (event: Event) => unknown): void {}
 
+  private async connect(): Promise<void> {
+    let serialPort = this.usb.serialPort;
+    await serialPort.open({ baudRate: this.baudRate });
+    writeLine(`Opened with baudRate: ${this.baudRate}`);
+    if (serialPort.readable && serialPort.writable) {
+      this.connected = true;
+      this.encoder.readable.pipeTo(serialPort.writable);
+      serialPort.readable.pipeTo(this.decoder.writable);
+    } else {
+      throw new Error('Serial port not readable or writable');
+    }
+  }
+
   public isConnected(): boolean {
-    return true;
+    return this.connected;
   }
 
   public disconnect(): void {
@@ -127,6 +200,7 @@ class MicrobitSerial implements MicrobitConnection {
   ): Promise<void> {}
 
   public getVersion(): MBSpecs.MBVersion {
+    // TODO: This is currently hardcoded, but can be query via the serial protocol
     return 2;
   }
 }

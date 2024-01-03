@@ -18,6 +18,7 @@
   export let onLinkError: () => void;
 
   function onNextClick() {
+    globalThis.mb = Microbits;
     Microbits.linkMicrobit()
       .then(() => onFound())
       .catch((e: Error) => {

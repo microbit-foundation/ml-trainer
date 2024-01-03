@@ -112,9 +112,9 @@ class MicrobitUSB extends CortexM {
     });
 
     try {
-      await target.connect();
-      await target.flash(buffer);
-      await target.disconnect();
+      //await target.connect();
+      //await target.flash(buffer);
+      //await target.disconnect();
     } catch (error) {
       console.log(error);
       return Promise.reject(error);
