@@ -119,7 +119,7 @@
 
       <NewGestureButton />
       <div class="flex justify-end">
-        <TrainingButton onClick={() => navigate(Paths.MODEL)} />
+        <TrainingButton onClick={() => navigate(Paths.TRAINING)} />
       </div>
     </div>
   {/if}
