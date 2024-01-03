@@ -35,53 +35,58 @@
     let domRect: DOMRect = domNode.getBoundingClientRect();
     boxTop = h + 5 + boxOffset.y + domRect.y; // hardcoded values to provide a 'nice' starting point
     boxLeft = w - 20 + boxOffset.x + domRect.x;
+    if (width + boxOffset.x + domRect.x > window.innerWidth) {
+      boxLeft = boxOffset.x + domRect.x - width - 5; // hardcoded values to provide a 'nice' starting point
+    }
     isOpen = true;
   }
 </script>
 
-<div
-  class="w-auto flex items-center"
-  bind:clientWidth={w}
-  bind:clientHeight={h}
-  bind:this={domNode}>
-  {#if iconText !== undefined}
-    <p
-      class="text-white w-auto h-auto mr-0 whitespace-pre-line pr-1"
-      class:underline={underlineIconText}
-      style="color: {colors.iconTextColor}">
-      {iconText}
-    </p>
-  {/if}
+<div>
   <div
-    on:mouseenter={() => onMouseEnter()}
-    on:mouseleave={() => (isOpen = false)}
-    class="flex items-center cursor-pointer"
-    style="color: {colors.iconTextColor}">
-    <InfoIcon />
-  </div>
-
-  {#if isOpen}
+    class="w-auto inline-flex"
+    bind:clientWidth={w}
+    bind:clientHeight={h}
+    bind:this={domNode}>
+    {#if iconText !== undefined}
+      <p
+        class="text-white w-auto h-auto mr-0 whitespace-pre-line pr-1"
+        class:underline={underlineIconText}
+        style="color: {colors.iconTextColor}">
+        {iconText}
+      </p>
+    {/if}
     <div
-      class="fixed z-10 rounded-md p-3 cursor-default"
-      style="top: {boxTop}px; left: {boxLeft}px; width: {width}px; background-color:{colors.backgroundColor}"
-      on:click|stopPropagation>
-      {#if titleText}
-        <p
-          class="font-bold text-left mb-1 mt-1 text-sm"
-          style="color: {colors.textColor}">
-          {titleText}
-        </p>
-      {/if}
-      {#if bodyText}
-        <p
-          class="text-sm text-left"
-          style="color: {colors.textColor}"
-          class:blackText={isLightTheme}
-          class:whiteText={!isLightTheme}>
-          {bodyText}
-        </p>
-      {/if}
-      <slot />
+      on:mouseenter={() => onMouseEnter()}
+      on:mouseleave={() => (isOpen = false)}
+      class="flex items-center cursor-pointer"
+      style="color: {colors.iconTextColor}">
+      <InfoIcon />
     </div>
-  {/if}
+
+    {#if isOpen}
+      <div
+        class="fixed z-10 rounded-md p-3 cursor-default"
+        style="top: {boxTop}px; left: {boxLeft}px; width: {width}px; background-color:{colors.backgroundColor}"
+        on:click|stopPropagation>
+        {#if titleText}
+          <p
+            class="font-bold text-left mb-1 mt-1 text-sm"
+            style="color: {colors.textColor}">
+            {titleText}
+          </p>
+        {/if}
+        {#if bodyText}
+          <p
+            class="text-sm text-left"
+            style="color: {colors.textColor}"
+            class:blackText={isLightTheme}
+            class:whiteText={!isLightTheme}>
+            {bodyText}
+          </p>
+        {/if}
+        <slot />
+      </div>
+    {/if}
+  </div>
 </div>

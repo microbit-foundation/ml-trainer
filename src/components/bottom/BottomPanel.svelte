@@ -14,6 +14,7 @@
   import LiveGraphInformationSection from './LiveGraphInformationSection.svelte';
   import BaseDialog from '../dialogs/BaseDialog.svelte';
   import View3DLive from '../3d-inspector/View3DLive.svelte';
+  import Information from '../information/Information.svelte';
 
   const live3dViewVisible = false;
   const live3dViewSize = live3dViewVisible ? 160 : 0;
@@ -49,16 +50,19 @@
         </div>
       {/if}
       <div
-        class="h-full flex p-0 m-0 absolute top-0 left-0 right-40 border-r border-solid border-black border-opacity-60">
-        <!-- The live text and info box -->
-        <div class="mt-5 ml-2">
+        class="flex items-center justify-between gap-2 pt-4 px-7 m-0 absolute top-0 left-0 right-0">
+        <div class="flex items-center gap-2">
+          <!-- The live text and info box -->
           <LiveGraphInformationSection />
-        </div>
-        <div class="mt-4">
           <ConnectedLiveGraphButtons
             onInputDisconnectButtonClicked={inputDisconnectButtonClicked}
             onOutputDisconnectButtonClicked={outputDisconnectButtonClicked} />
         </div>
+        <Information
+          titleText={$t('footer.helpHeader')}
+          bodyText={$t('footer.helpContent')}
+          isLightTheme={false}
+          boxOffset={{ x: 0, y: -150 }} />
       </div>
       <div
         class="absolute right-0 cursor-pointer hover:bg-secondary hover:bg-opacity-10 transition"
