@@ -26,6 +26,7 @@
   import { t } from './i18n';
   import { consent } from './script/stores/complianceStore';
   import microbitLogoImage from './imgs/microbit-logo.svg';
+  import appNameImage from './imgs/app-name.svg';
   import HelpMenu from './components/control-bar/control-bar-items/HelpMenu.svelte';
   import SettingsMenu from './components/control-bar/control-bar-items/SettingsMenu.svelte';
   import { onMount } from 'svelte';
@@ -63,16 +64,20 @@
       <div class="w-full flex flex-col bg-backgrounddark">
         <ControlBar>
           <div class="flex items-center divide-x h-full">
-            <img src={microbitLogoImage} alt="micro:bit" width="150px" class="pr-3" />
-            <h1 class="text-xl tracking-wide whitespace-nowrap pl-3">
-              {$t('content.index.title')}
-            </h1>
-          </div>
-          <div class="flex flex-row basis-full justify-end">
-            <div class="flex h-full gap-5">
-              <SettingsMenu />
-              <HelpMenu />
+            <div class="h-32px flex items-center">
+              <img src={microbitLogoImage} alt="micro:bit" width="166px" class="pr-3" />
             </div>
+            <div class="h-32px flex items-center">
+              <img
+                src={appNameImage}
+                alt={$t('content.index.title')}
+                width="253px"
+                class="pl-3" />
+            </div>
+          </div>
+          <div class="flex gap-5">
+            <SettingsMenu />
+            <HelpMenu />
           </div>
         </ControlBar>
 
