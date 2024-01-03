@@ -18,6 +18,7 @@
   // Once we have translated videos we can try e.g. cc_lang_pref=fr
   // but we'll need to check our codes match theirs.
   const introVideoUrl =
+    // TODO: Replace placeholder youtube video id
     'https://www.youtube-nocookie.com/embed/u2u7UJSRuko?rel=0&cc_load_policy=1';
 
   const playgroundSurveyUrl =
