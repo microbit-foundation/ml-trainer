@@ -16,6 +16,7 @@
   import loadingSpinnerImage from '../../imgs/loadingspinner.gif';
   import StandardButton from '../../components/StandardButton.svelte';
   import { Paths, navigate } from '../../router/paths';
+  import { trainModel } from '../../script/ml';
 
   let descriptionTextColour = '#8892A3';
 
@@ -79,6 +80,9 @@
       </div>
     {:else if sufficientData && !$state.isTraining && !$state.isPredicting}
       <p class="font-semibold text-2xl py-10">{$t('content.trainer.enoughdata.title')}</p>
+      <div class="pt-10">
+        <TrainingButton onClick={trainModel} />
+      </div>
     {:else if $state.isTraining}
       <div class="text-primarytext">
         <div class="ml-auto mr-auto flex flex-col center-items justify-center">
@@ -103,9 +107,5 @@
           >{$t('menu.trainer.testModelButton')}</StandardButton>
       </div>
     {/if}
-  </div>
-
-  <div class="pt-10">
-    <TrainingButton />
   </div>
 </div>

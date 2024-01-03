@@ -82,7 +82,6 @@
   "menu.trainer.notConnected2": " Select the ‘Connect’ button to connect a micro:bit.",
   "menu.trainer.notEnoughDataHeader1": "Status: You don't have enough data.",
   "menu.trainer.notEnoughDataInfoBody": "You need at least 3 data samples for 2 actions to train the model.",
-  "menu.trainer.trainNewModelButton": "Train a new model",
   "menu.trainer.TrainingFinished": "Status: Your model is trained.",
 
   "menu.trainer.trainModelButton": "Train model",

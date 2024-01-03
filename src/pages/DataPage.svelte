@@ -22,6 +22,7 @@
   import TrainingButton from './training/TrainingButton.svelte';
   import DataPageMenu from '../components/datacollection/DataPageMenu.svelte';
   import BottomPanel from '../components/bottom/BottomPanel.svelte';
+  import { Paths, navigate } from '../router/paths';
 
   let isConnectionDialogOpen = false;
 
@@ -118,7 +119,7 @@
 
       <NewGestureButton />
       <div class="flex justify-end">
-        <TrainingButton action="navigate" />
+        <TrainingButton onClick={() => navigate(Paths.MODEL)} />
       </div>
     </div>
   {/if}
