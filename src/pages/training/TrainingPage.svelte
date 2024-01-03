@@ -17,8 +17,7 @@
   import StandardButton from '../../components/StandardButton.svelte';
   import { Paths, navigate } from '../../router/paths';
   import { trainModel } from '../../script/ml';
-
-  let descriptionTextColour = '#8892A3';
+  import TrainingStatusSection from '../../components/TrainingStatusSection.svelte';
 
   function navigateModelPage(): void {
     navigate(Paths.MODEL);
@@ -59,53 +58,42 @@
   </div>
 </StandardDialog>
 
-<div class="flex flex-col pb-5 bg-backgrounddark">
+<div class="flex flex-col items-center pb-5 bg-backgrounddark">
   <TabView />
-  <img class="self-center pt-10" src={trainModelImage} alt="train model" width="350" />
-  <p class="text-2xl font-semibold self-center pb-5">{$t('content.trainer.header')}</p>
-  <p class="text-center self-center leading-relaxed text-[{descriptionTextColour}] w-180">
+  <img
+    class="pt-10 opacity-40"
+    src={trainModelImage}
+    alt={$t('content.trainer.imageAlt')}
+    width="350" />
+  <h2 class="text-2xl font-bold pb-3">{$t('content.trainer.header')}</h2>
+  <p class="text-center leading-relaxed w-150">
     {$t('content.trainer.description')}
   </p>
   <div class="flex flex-col flex-grow justify-center items-center text-center">
     {#if !sufficientData}
-      <div class="w-full py-10">
-        <h1 class="text-xl bold m-auto font-semibold">
-          {$t('menu.trainer.notEnoughDataHeader1')}
-        </h1>
-        <p class="pt-5 pb-10 text-[{descriptionTextColour}]">
-          {$t('menu.trainer.notEnoughDataInfoBody')}
-        </p>
+      <TrainingStatusSection
+        statusId="menu.trainer.notEnoughDataHeader1"
+        descriptionId="menu.trainer.notEnoughDataInfoBody">
         <StandardButton onClick={navigateDataPage} type="primary"
           >{$t('menu.trainer.addDataButton')}</StandardButton>
-      </div>
+      </TrainingStatusSection>
     {:else if sufficientData && !$state.isTraining && !$state.isPredicting}
-      <p class="font-semibold text-2xl py-10">{$t('content.trainer.enoughdata.title')}</p>
-      <div class="pt-10">
+      <TrainingStatusSection statusId="content.trainer.enoughdata.title">
         <TrainingButton onClick={trainModel} />
-      </div>
+      </TrainingStatusSection>
     {:else if $state.isTraining}
-      <div class="text-primarytext">
-        <div class="ml-auto mr-auto flex flex-col center-items justify-center">
-          <p class="text-2xl font-semibold pt-10">
-            {$t('content.trainer.training.title')}
-          </p>
-          <img
-            alt="loading"
-            src={loadingSpinnerImage}
-            width="100px"
-            class="self-center" />
-        </div>
-      </div>
+      <TrainingStatusSection statusId="content.trainer.training.title">
+        <img alt="loading" src={loadingSpinnerImage} width="100px" class="self-center" />
+      </TrainingStatusSection>
     {:else if $state.isPredicting}
-      <p class="text-2xl font-semibold mt-10 pb-10">
-        {$t('menu.trainer.TrainingFinished')}
-      </p>
-      <div class="flex flexbox space-x-10">
-        <StandardButton onClick={navigateDataPage} type="secondary"
-          >{$t('menu.trainer.addMoreDataButton')}</StandardButton>
-        <StandardButton onClick={navigateModelPage} type="primary"
-          >{$t('menu.trainer.testModelButton')}</StandardButton>
-      </div>
+      <TrainingStatusSection statusId="menu.trainer.TrainingFinished">
+        <div class="flex flexbox space-x-10">
+          <StandardButton onClick={navigateDataPage} type="secondary"
+            >{$t('menu.trainer.addMoreDataButton')}</StandardButton>
+          <StandardButton onClick={navigateModelPage} type="primary"
+            >{$t('menu.trainer.testModelButton')}</StandardButton>
+        </div>
+      </TrainingStatusSection>
     {/if}
   </div>
 </div>

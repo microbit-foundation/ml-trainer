@@ -49,6 +49,7 @@
   "content.data.recording.description": "Start action before the countdown finishes",
 
   "content.trainer.header": "Training a model",
+  "content.trainer.imageAlt": "train model",
   "content.trainer.description": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit machine learning tool to recognise different actions when you move your micro:bit.",
   "content.trainer.enoughdata.title": "Status: You've collected enough data to train the model.",
   "content.trainer.training.title": "Status: Training the model in progress.",
@@ -57,6 +58,7 @@
   "content.trainer.failure.todo": "Return to the Add data page and change your data.",
 
   "content.model.trainModelFirstHeading": "Test model",
+  "content.model.imageAlt": "test model",
   "content.model.trainModelBody1": "You cannot test the model until it has been trained.",
   "content.model.trainModelBody2": "You need at least 3 data samples for 2 actions to train a model.",
   "content.model.addData": "Add data",

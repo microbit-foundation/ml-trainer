@@ -13,8 +13,12 @@
 </script>
 
 <div class="flex flex-col items-center bg-backgrounddark pb-10">
-  <img src={testModelImage} width="300" class="mb-10" />
-  <h2 class="text-xl font-bold mb-3">
+  <img
+    class="pt-10 opacity-40"
+    src={testModelImage}
+    alt={$t('content.model.imageAlt')}
+    width="350" />
+  <h2 class="text-2xl font-bold mb-3">
     {$t('content.model.trainModelFirstHeading')}
   </h2>
   <p class="mb-5">
@@ -23,7 +27,7 @@
   <p class="mb-10">
     {$t('content.model.trainModelBody2')}
   </p>
-  <div class="flex gap-20">
+  <div class="flex gap-5">
     <StandardButton onClick={() => navigate(Paths.DATA)}>
       {$t('content.model.addData')}
     </StandardButton>
