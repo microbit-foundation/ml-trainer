@@ -7,7 +7,7 @@
 <script lang="ts">
   import StandardButton from '../../StandardButton.svelte';
   import { t } from '../../../i18n';
-  import microbitImage from '../../../imgs/stylised-microbit-black.svg';
+  import microbitImage from '../../../imgs/stylised-two-microbits-black.svg';
   import computerImage from '../../../imgs/stylised_computer.svg';
   import usbCableImage from '../../../imgs/stylised-usb-cable.svg';
   import batteryPackImage from '../../../imgs/stylised-battery-pack.svg';

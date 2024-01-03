@@ -6,6 +6,7 @@
 
 <script lang="ts">
   import StandardButton from '../../StandardButton.svelte';
+  import selectMicrobitImage from '../../../imgs/select-microbit-bluetooth.png';
   import { t } from '../../../i18n';
 
   export let onBackClick: () => void;
@@ -19,7 +20,8 @@
     </h2>
     <div class="flex mt-5">
       <img
-        src=""
+        width="418px"
+        src={selectMicrobitImage}
         alt="Screenshot of the browser window that will appear next.  Your connected micro:bit will be listed. Choose your micro:bit then select the Connect button." />
       <div class="flex flex-col w-full px-5">
         <h3 class="font-bold text-lg mb-5">

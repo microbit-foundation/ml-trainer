@@ -22,7 +22,7 @@
     <img
       src={microbitConnectedImage}
       alt="Showing the batteries need to go into the battery pack and the battery pack should be connected at the top left of the micro:bit."
-      class="px-40 pt-5" />
+      class="m-auto pt-5" />
   </div>
   <div class="justify-end gap-x-5 flex pt-10">
     <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
