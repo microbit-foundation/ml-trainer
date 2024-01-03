@@ -65,7 +65,7 @@
     src={trainModelImage}
     alt={$t('content.trainer.imageAlt')}
     width="350" />
-  <h2 class="text-2xl font-bold pb-3">{$t('content.trainer.header')}</h2>
+  <h1 class="text-2xl font-bold pb-3">{$t('content.trainer.header')}</h1>
   <p class="text-center leading-relaxed w-150">
     {$t('content.trainer.description')}
   </p>

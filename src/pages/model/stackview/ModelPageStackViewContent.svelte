@@ -29,6 +29,7 @@
   $: currentEstimatedGestureConfidence = $bestPrediction?.confidence.currentConfidence;
 </script>
 
+<h1 class="sr-only">{$t('content.index.toolProcessCards.model.title')}</h1>
 <div class="flex flex-col h-full bg-backgrounddark">
   <div class="flex justify-center space-x-10 py-5 text-xl border-b-3 border-b-gray-200">
     <Information

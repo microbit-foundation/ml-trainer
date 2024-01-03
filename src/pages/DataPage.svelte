@@ -68,6 +68,7 @@
 
 <main class="flex flex-col h-full inline-block w-full bg-backgrounddark">
   <TabView />
+  <h1 class="sr-only">{$t('content.index.toolProcessCards.data.title')}</h1>
 
   <div class="flex justify-end px-10 mt-2">
     <DataPageMenu

@@ -30,6 +30,7 @@
 </script>
 
 <main class="h-full flex flex-col items-center bg-backgrounddark">
+  <h1 class="sr-only">{$t('content.index.title')}</h1>
   <div class="mb-8">
     <ConnectDialogContainer bind:this={connectDialogReference} />
 
@@ -51,14 +52,14 @@
     </div>
 
     <div class="flex flex-col flex-wrap items-center max-w-325">
-      <h1 class="text-3xl px-10 lg:self-start">
+      <h2 class="text-3xl px-10 lg:self-start font-bold">
         {$t('content.index.toolProcessCards.main.title')}
-      </h1>
+      </h2>
       <div class="grid grid-cols-1 lg:grid-cols-3 p-10 gap-5">
         <FrontPageContentTile>
-          <h2 class="text-center text-3xl mb-5">
+          <h3 class="text-center text-2xl mb-5 font-bold">
             {$t('content.index.toolProcessCards.data.title')}
-          </h2>
+          </h3>
           <img class="mb-5" alt="add data" src={inputDataImage} width={tileImageSize} />
           <p class="text-center">
             {$t('content.index.toolProcessCards.data.description')}
@@ -66,9 +67,9 @@
         </FrontPageContentTile>
 
         <FrontPageContentTile>
-          <h2 class="text-center text-3xl mb-5">
+          <h3 class="text-center text-2xl mb-5 font-bold">
             {$t('content.index.toolProcessCards.train.title')}
-          </h2>
+          </h3>
           <img
             class="mb-5"
             alt="train model"
@@ -80,9 +81,9 @@
         </FrontPageContentTile>
 
         <FrontPageContentTile>
-          <h2 class="text-center text-3xl mb-5">
+          <h3 class="text-center text-2xl mb-5 font-bold">
             {$t('content.index.toolProcessCards.model.title')}
-          </h2>
+          </h3>
           <img class="mb-5" alt="test model" src={testModelImage} width={tileImageSize} />
           <p class="text-center">
             {$t('content.index.toolProcessCards.model.description')}
