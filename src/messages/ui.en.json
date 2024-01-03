@@ -63,6 +63,20 @@
   "content.model.classification.helpBody": "How confident the model is that you are currently doing each action. For an action to be the ‘estimated action’, the level of confidence must be above the recognition point.",
   "content.model.addData": "Add data",
 
+  "content.model.output.estimatedGesture.iconTitle": "Estimated action:",
+  "content.model.output.estimatedGesture.descriptionTitle": "Estimated action",
+  "content.model.output.estimatedGesture.descriptionBody": "This is the action the model thinks you are currently doing.",
+
+  "content.model.output.action.iconTitle": "Action",
+  "content.model.output.action.descriptionTitle": "Action",
+  "content.model.output.action.descriptionBody": "The type of movement you want the machine learning tool to recognise e.g. ‘wave’ or ‘clap’.",
+
+  "content.model.output.certainty.iconTitle": "Certainty",
+  "content.model.output.certainty.descriptionTitle": "Certainty",
+  "content.model.output.certainty.descriptionBody": "How confident the model is that you are currently doing each action.",
+
+  "content.model.output.recognitionPoint": "Recognition Point:",
+
   "footer.connectButtonNotConnected": "Start",
   "footer.disconnectButton": "Disconnect",
   "footer.helpHeader": "Live graph",
