@@ -35,10 +35,7 @@
   "content.data.classHelpBody": "The type of movement you want the machine learning tool to recognise e.g. 'wave' or 'clap'. ",
   "content.data.classification": "Action",
   "content.data.data": "Data samples",
-  "content.data.choice": "Choice",
-  "content.data.choice.header": "Choice of class",
   "content.data.addAction": "Add action",
-  "content.data.choice.body": "Here, you choose which class you want to add data to. After having selected a class, you can either press the \"Record\" button below or press one of the buttons on your micro:bit to record a data segment. See the picture below.",
   "content.data.dataDescription": "Multiple samples of movement data collected in 1.8 second bursts.",
   "content.data.noData": "You do not have any data to use to train the model. You need at least 2 actions with at least 3 data samples each.",
 
@@ -53,11 +50,8 @@
 
   "content.trainer.header": "Training a model",
   "content.trainer.description": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit machine learning tool to recognise different actions when you move your micro:bit.",
-
   "content.trainer.enoughdata.title": "Status: You've collected enough data to train the model.",
-
   "content.trainer.training.title": "Status: Training the model in progress.",
-
   "content.trainer.failure.header": "Training failed",
   "content.trainer.failure.body": "The training did not result in a usable model. The reason for this is most likely the data used for training. If the data samples for different actions are too similar, this can result in issues in the training process.",
   "content.trainer.failure.todo": "Return to the Add data page and change your data.",
@@ -72,7 +66,7 @@
   "footer.connectButtonNotConnected": "Start",
   "footer.disconnectButton": "Disconnect",
   "footer.helpHeader": "Live graph",
-  "footer.helpContent": "Once you have connected a micro:bit you can watch the accelerometer data for all three axes on this graph in real time. Try moving your connected micro:bit to see what the data looks like to your computer!",
+  "footer.helpContent": "This graph shows movement data from the microbit’s accelerometer in real time. Try moving your connected micro:bit to see the X, Y and Z axis change.",
   "footer.reconnecting": "Reconnecting. Please wait",
 
   "helpMenu.label": "Help",
@@ -82,11 +76,8 @@
   "helpMenu.about": "About",
 
   "menu.data.helpHeading": "1. Add data",
-  "menu.data.helpBody": "In order to train a model to recognize different movements, we need good examples of 'good behavior' that we can show the Trainer. Here you can create classes (types of gestures) and record examples for each class. There must be at least 2 classes with 3 examples each before the trainer can train a model.",
-  "menu.data.examples": "examples",
 
   "menu.trainer.helpHeading": "2. Train model",
-  "menu.trainer.helpBody": "The Trainer looks at the examples in each of the classes and tries to 'learn' how the different classes can be recognized by searching for patterns in the data. Here you can train a model to recognize different gestures.",
   "menu.trainer.notConnected1": "You do not have a micro:bit connected",
   "menu.trainer.notConnected2": " Select the ‘Connect’ button to connect a micro:bit.",
   "menu.trainer.notEnoughDataHeader1": "Status: You don't have enough data.",
@@ -100,7 +91,6 @@
   "menu.trainer.testModelButton": "Test model",
 
   "menu.model.helpHeading": "3. Test model",
-  "menu.model.helpBody": "The model can be used in an interactive system. Here we use the trained model to predict gestures. You can connect another micro:bit and make it respond to the predicted gestures.",
   "menu.model.noModel": "No model",
   "menu.model.disconnect": "Disconnect output micro:bit",
   "menu.model.connectInputMicrobit": "Connect micro:bit",
@@ -161,7 +151,7 @@
   "connectMB.main.bluetooth.subtitle": "Connect using Bluetooth",
   "connectMB.bluetooth.cancelledConnection": "You cancelled the connection process. Try again, if you wish to proceed.",
 
-  "connectMB.bluetooth.connecting": "Connecting...",
+  "connectMB.bluetooth.connecting": "Connecting…",
   "connectMB.bluetooth.invalidPattern": "The pattern you drew is invalid",
 
   "disconnectedWarning.input": "Your input micro:bit lost connection, do want to try again?",
