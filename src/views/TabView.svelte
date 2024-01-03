@@ -25,6 +25,7 @@
       <a
         class="block cursor-pointer mx-4 min-w-8rem py-2 px-12 border-b-4px border-b-white outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
         class:border-b-secondary={isSelected(menu)}
+        class:opacity-55={!isSelected(menu)}
         href={menu.navigationPath}
         on:click|preventDefault={() => navigate(menu.navigationPath)}>
         <div class="h-full relative">
