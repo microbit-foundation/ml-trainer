@@ -83,7 +83,7 @@
       <PleaseConnectFirst />
     </div>
   {:else}
-    <div class="flex-grow flex-shrink py-2 px-10 h-0 overflow-y-auto">
+    <div class="flex flex-col flex-grow flex-shrink py-2 px-10 h-0 overflow-y-auto">
       {#if !$gestures.length}
         <div class="flex justify-center">
           <div class="text-center text-xl w-1/2 text-bold text-primarytext">
@@ -115,7 +115,7 @@
       </div>
 
       <NewGestureButton />
-      <div class="flex justify-end">
+      <div class="flex justify-end mt-auto">
         <TrainingButton onClick={() => navigate(Paths.TRAINING)} />
       </div>
     </div>
