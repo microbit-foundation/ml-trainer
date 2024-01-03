@@ -6,6 +6,7 @@
 
 <script lang="ts">
   import { getInfoBoxColors } from './InformationComponentUtility';
+  import InfoIcon from 'virtual:icons/ri/information-line';
 
   export let underlineIconText = true;
   export let boxOffset: { x: number; y: number } = { x: 0, y: 0 };
@@ -50,12 +51,14 @@
       style="color: {colors.iconTextColor}">
       {iconText}
     </p>
-    <i
-      class="fas fa-info-circle cursor-pointer"
-      style="color: {colors.iconTextColor}; vertical-align: middle;"
-      on:mouseenter={() => onMouseEnter()}
-      on:mouseleave={() => (isOpen = false)} />
   {/if}
+  <div
+    on:mouseenter={() => onMouseEnter()}
+    on:mouseleave={() => (isOpen = false)}
+    class="flex items-center cursor-pointer"
+    style="color: {colors.iconTextColor}">
+    <InfoIcon />
+  </div>
 
   {#if isOpen}
     <div
