@@ -29,7 +29,6 @@
   import PinSelector from './PinSelector.svelte';
   import { state } from '../../script/stores/uiStore';
   import StaticConfiguration from '../../StaticConfiguration';
-  import Information from '../information/Information.svelte';
   import { PinTurnOnState } from './PinSelectorUtil';
   import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
   import Gesture from '../../script/domain/Gesture';
@@ -231,12 +230,6 @@
         {~~meterWidthPct}%
       </p>
     </div>
-  </div>
-  <div class="relative self-start">
-    <Information
-      titleText={$t('content.model.classification.helpHeading')}
-      bodyText={$t('content.model.classification.helpBody')}
-      isLightTheme={false} />
   </div>
   <!-- RECOGNITION POINT BAR -->
   <div class="pl-5 pb-5">

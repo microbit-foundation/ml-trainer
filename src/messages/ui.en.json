@@ -59,8 +59,6 @@
   "content.model.trainModelFirstHeading": "Test model",
   "content.model.trainModelBody1": "You cannot test the model until it has been trained.",
   "content.model.trainModelBody2": "You need at least 3 data samples for 2 actions to train a model.",
-  "content.model.classification.helpHeading": "Certainty",
-  "content.model.classification.helpBody": "How confident the model is that you are currently doing each action. For an action to be the ‘estimated action’, the level of confidence must be above the recognition point.",
   "content.model.addData": "Add data",
 
   "content.model.output.estimatedGesture.iconTitle": "Estimated action:",
