@@ -12,7 +12,7 @@
   "alert.isTesting": "You are currently recording!",
   "alert.isTraining": "You are currently training a model!",
   "alert.isNotConnected": "Your micro:bit should be connected!",
-  "alert.deleteGestureConfirm": "Are you sure you want to delete the action ",
+  "alert.deleteGestureConfirm": "Are you sure you want to delete the action \"{action}\"?",
 
   "alert.twoGestures": "You need at least two actions",
   "alert.oneDataRepresentation": "You need at least one data representation",
@@ -41,6 +41,11 @@
   "content.data.addRecordingWalkThrough": "Press to record a data sample or press button B on your micro:bit.",
   "content.data.addRecordingWalkThrough.imageAlt": "Press button to record a data sample",
   "content.data.dataDescription": "Multiple samples of movement data collected in 1.8 second bursts.",
+  "content.data.noData": "You do not have any data to use to train the model. You need at least 2 actions with at least 3 data samples each.",
+  "content.data.selectAction": "Select action \"{action}\"",
+  "content.data.recordAction": "Record data for action \"{action}\"",
+  "content.data.deleteAction": "Delete action \"{action}\"",
+  "content.data.deleteRecording": "Delete recording",
 
   "content.data.controlbar.button.menu": "Data actions",
   "content.data.controlbar.button.clearData": "Clear data samples",

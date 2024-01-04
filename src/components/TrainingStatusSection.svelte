@@ -12,9 +12,9 @@
 
 <div class="flex flex-col w-full py-10 gap-10">
   <div class="flex flex-col gap-3">
-    <h3 class="text-lg bold m-auto font-semibold">
+    <h2 class="text-lg bold m-auto font-semibold">
       {$t(statusId)}
-    </h3>
+    </h2>
     {#if descriptionId}
       <p>{$t(descriptionId)}</p>
     {/if}

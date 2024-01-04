@@ -17,10 +17,6 @@
   .animate-loading-bar {
     animation: loading-bar 1.8s linear;
   }
-
-  .record-button.disabled i {
-    color: lightgray;
-  }
 </style>
 
 <script lang="ts">
@@ -51,6 +47,9 @@
   import { gestures } from '../script/stores/Stores';
   import greetingEmojiWithArrowImage from '../imgs/greeting-emoji-with-arrow.svg';
   import upCurveArrowImage from '../imgs/curve-arrow-up.svg';
+  import IconButton from './IconButton.svelte';
+  import RecordIcon from 'virtual:icons/fluent/record-20-regular';
+  import CloseIcon from 'virtual:icons/ri/close-line';
 
   export let onNoMicrobitSelect: () => void;
   export let gesture: Gesture;
@@ -107,7 +106,7 @@
     }
 
     if (
-      !window.confirm($t('alert.deleteGestureConfirm') + '"' + gesture.getName() + '"?')
+      !window.confirm($t('alert.deleteGestureConfirm', { values: { action: $nameBind } }))
     ) {
       return;
     }
@@ -241,30 +240,45 @@
   onClose={cancelRecording}>
   <div class="flex flex-col space-y-10">
     <div class="space-y-10 w-70">
-      {#if showCountdown}
+      <div class={showCountdown ? 'visible' : 'invisible'}>
         <GestureTilePart elevated={true}>
           <p class="text-9xl text-center text-gray-400">{countdownValue}</p>
           <p class="pt-5 px-10 text-gray-400 text-center">
             {$t('content.data.recording.description')}
           </p>
         </GestureTilePart>
-      {/if}
+      </div>
       <StandardButton type="warning" onClick={() => cancelRecording}
         >{$t('content.data.recording.button.cancel')}</StandardButton>
     </div>
-    {#if isThisRecording}
-      <!-- Recording bar to show recording progress -->
-      <div class="w-70 h-6 bg-red-200 rounded-full overflow-hidden">
-        <div class="h-full bg-red-600 animate-loading-bar" />
-      </div>
-    {/if}
+    <!-- Recording bar to show recording progress -->
+    <div
+      class="w-70 h-6 bg-red-200 rounded-full overflow-hidden {isThisRecording
+        ? 'visible'
+        : 'invisible'}">
+      <div class="h-full bg-red-600 {isThisRecording ? 'animate-loading-bar' : ''}" />
+    </div>
   </div>
 </BaseDialog>
 
 <!-- Title of gesture-->
 <GestureTilePart small elevated>
-  <div class="grid grid-cols-5 place-items-center p-2 w-50 h-30">
+  <div class="grid grid-cols-5 place-items-center p-2 w-50 h-30 relative">
     <div class="w-40 col-start-2 col-end-5 transition ease rounded bg-gray-100">
+      {#if !showAddActionWalkThrough}
+        <div class="absolute right-2 top-2">
+          <IconButton
+            ariaLabel={$t('content.data.deleteAction', {
+              values: {
+                action: $nameBind,
+              },
+            })}
+            onClick={removeClicked}>
+            <CloseIcon class="text-xl m-1" />
+          </IconButton>
+        </div>
+      {/if}
+
       <h3
         class="px-2"
         contenteditable
@@ -272,13 +286,6 @@
         on:click={titleClicked}
         on:keypress={onTitleKeypress} />
     </div>
-    {#if !showAddActionWalkThrough}
-      <button
-        class="pl-3 col-start-5 place-self-start justify-self-end outline-none"
-        on:click={removeClicked}>
-        <i class="far fa-times-circle fa-lg text-gray-500" />
-      </button>
-    {/if}
   </div>
 </GestureTilePart>
 
@@ -295,30 +302,37 @@
     </p>
   </div>
 {:else}
-  <div class="flex rounded-lg bg-backgroundlight shadow-md max-w-max">
-    <GestureTilePart small mr>
-      <div
-        class="h-full w-35 flex justify-center"
-        class:cursor-pointer={$state.isInputConnected}
-        on:click={$chosenGesture === gesture ? countdownStart : selectClicked}>
-        <button
-          class="record-button"
-          class:disabled={$chosenGesture !== gesture}
-          class:cursor-default={!$state.isInputConnected}>
-          <i class="fas fa-circle text-rose-600 text-4xl" />
-        </button>
-      </div>
-    </GestureTilePart>
-
-    {#if $gesture.recordings.length > 0}
-      <GestureTilePart small>
-        <div class="flex p-2 h-30">
+  <div class="max-w-max">
+    <GestureTilePart small elevated>
+      <div class="h-full flex items-center gap-x-3 p-2">
+        <div class="w-33 flex justify-center items-center gap-x-3">
+          <IconButton
+            ariaLabel={$t(
+              $chosenGesture === gesture
+                ? 'content.data.recordAction'
+                : 'content.data.selectAction',
+              {
+                values: {
+                  action: $nameBind,
+                },
+              },
+            )}
+            onClick={$chosenGesture === gesture ? countdownStart : selectClicked}
+            disabled={!$state.isInputConnected}
+            rounded>
+            <RecordIcon
+              class="h-20 w-20 {$chosenGesture === gesture
+                ? 'text-rose-600'
+                : 'text-neutral-400'} flex justify-center items-center rounded-full" />
+          </IconButton>
+        </div>
+        {#if $gesture.recordings.length > 0}
           {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
             <Recording {recording} onDelete={deleteRecording} />
           {/each}
-        </div>
-      </GestureTilePart>
-    {/if}
+        {/if}
+      </div>
+    </GestureTilePart>
   </div>
 {/if}
 

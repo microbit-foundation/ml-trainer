@@ -18,9 +18,9 @@
     src={testModelImage}
     alt={$t('content.model.imageAlt')}
     width="350" />
-  <h2 class="text-2xl font-bold mb-3">
+  <h1 class="text-2xl font-bold mb-3">
     {$t('content.model.trainModelFirstHeading')}
-  </h2>
+  </h1>
   <p class="mb-5">
     {$t('content.model.trainModelBody1')}
   </p>
