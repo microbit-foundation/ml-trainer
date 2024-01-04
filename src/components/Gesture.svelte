@@ -49,9 +49,12 @@
   import BaseDialog from './dialogs/BaseDialog.svelte';
   import Gesture from '../script/domain/Gesture';
   import { gestures } from '../script/stores/Stores';
+  import greetingEmojiWithArrowImage from '../imgs/greeting-emoji-with-arrow.svg';
+  import upCurveArrowImage from '../imgs/curve-arrow-up.svg';
 
   export let onNoMicrobitSelect: () => void;
   export let gesture: Gesture;
+  export let showWalkThrough: Boolean = false;
 
   const defaultNewName = $t('content.data.classPlaceholderNewClass');
   const recordingDuration = get(settings).duration;
@@ -94,6 +97,9 @@
       gesture.setName('');
     }
   }
+
+  $: isGestureRenamed = $nameBind !== defaultNewName;
+  $: showAddActionWalkThrough = !isGestureRenamed && showWalkThrough;
 
   function removeClicked(): void {
     if (!areActionsAllowed(false)) {
@@ -266,36 +272,65 @@
         on:click={titleClicked}
         on:keypress={onTitleKeypress} />
     </div>
-    <button
-      class="pl-3 col-start-5 place-self-start justify-self-end outline-none"
-      on:click={removeClicked}>
-      <i class="far fa-times-circle fa-lg text-gray-500" />
-    </button>
+    {#if !showAddActionWalkThrough}
+      <button
+        class="pl-3 col-start-5 place-self-start justify-self-end outline-none"
+        on:click={removeClicked}>
+        <i class="far fa-times-circle fa-lg text-gray-500" />
+      </button>
+    {/if}
   </div>
 </GestureTilePart>
 
-<div class="flex rounded-lg bg-backgroundlight shadow-md max-w-max">
-  <GestureTilePart small mr>
-    <div
-      class="h-full w-35 flex justify-center"
-      class:cursor-pointer={$state.isInputConnected}
-      on:click={$chosenGesture === gesture ? countdownStart : selectClicked}>
-      <button
-        class="record-button"
-        class:disabled={$chosenGesture !== gesture}
-        class:cursor-default={!$state.isInputConnected}>
-        <i class="fas fa-circle text-rose-600 text-4xl" />
-      </button>
-    </div>
-  </GestureTilePart>
-
-  {#if $gesture.recordings.length > 0}
-    <GestureTilePart small>
-      <div class="flex p-2 h-30">
-        {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
-          <Recording {recording} onDelete={deleteRecording} />
-        {/each}
+{#if showAddActionWalkThrough}
+  <div
+    class="h-full flex w-50 flex-col relative items-center"
+    style="transform: translate(-50px, 50px)">
+    <img
+      class="mb-3 w-30"
+      alt={$t('content.data.addActionWalkThrough.imageAlt')}
+      src={greetingEmojiWithArrowImage} />
+    <p class="text-center">
+      {$t('content.data.addActionWalkThrough')}
+    </p>
+  </div>
+{:else}
+  <div class="flex rounded-lg bg-backgroundlight shadow-md max-w-max">
+    <GestureTilePart small mr>
+      <div
+        class="h-full w-35 flex justify-center"
+        class:cursor-pointer={$state.isInputConnected}
+        on:click={$chosenGesture === gesture ? countdownStart : selectClicked}>
+        <button
+          class="record-button"
+          class:disabled={$chosenGesture !== gesture}
+          class:cursor-default={!$state.isInputConnected}>
+          <i class="fas fa-circle text-rose-600 text-4xl" />
+        </button>
       </div>
     </GestureTilePart>
-  {/if}
-</div>
+
+    {#if $gesture.recordings.length > 0}
+      <GestureTilePart small>
+        <div class="flex p-2 h-30">
+          {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
+            <Recording {recording} onDelete={deleteRecording} />
+          {/each}
+        </div>
+      </GestureTilePart>
+    {/if}
+  </div>
+{/if}
+
+{#if isGestureRenamed && showWalkThrough && $gesture.recordings.length === 0 && !showCountdown && !isThisRecording}
+  <div></div>
+  <div class="h-full flex" style="transform: translateX(65px)">
+    <img
+      class="w-15"
+      alt={$t('content.data.addRecordingWalkThrough.imageAlt')}
+      src={upCurveArrowImage} />
+    <p class="text-center w-50" style="transform: translateY(20px)">
+      {$t('content.data.addRecordingWalkThrough')}
+    </p>
+  </div>
+{/if}

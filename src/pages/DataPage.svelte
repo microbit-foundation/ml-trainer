@@ -8,6 +8,7 @@
   import Gesture from '../components/Gesture.svelte';
   import { state } from '../script/stores/uiStore';
   import {
+    addGesture,
     clearGestures,
     downloadDataset,
     loadDatasetFromFile,
@@ -64,6 +65,11 @@
       filePicker.remove();
     };
   });
+
+  const defaultNewName = $t('content.data.classPlaceholderNewClass');
+  $: if (!$gestures || $gestures.length === 0) {
+    addGesture(defaultNewName);
+  }
 </script>
 
 <main class="flex flex-col h-full inline-block w-full bg-backgrounddark">
@@ -84,31 +90,27 @@
     </div>
   {:else}
     <div class="flex flex-col flex-grow flex-shrink py-2 px-10 h-0 overflow-y-auto">
-      {#if !$gestures.length}
-        <div class="flex justify-center">
-          <div class="text-center text-xl w-1/2 text-bold text-primarytext">
-            <p>{$t('content.data.noData')}</p>
-          </div>
-        </div>
-      {/if}
       <div class="grid grid-cols-[max-content,1fr] gap-x-7 gap-y-3">
-        {#if $gestures.length > 0}
-          <Information
-            isLightTheme={false}
-            underlineIconText={false}
-            iconText={$t('content.data.classification')}
-            titleText={$t('content.data.classHelpHeader')}
-            bodyText={$t('content.data.classHelpBody')} />
+        <Information
+          isLightTheme={false}
+          underlineIconText={false}
+          iconText={$t('content.data.classification')}
+          titleText={$t('content.data.classHelpHeader')}
+          bodyText={$t('content.data.classHelpBody')} />
+        {#if $gestures.length > 1 || $gestures[0].name !== defaultNewName}
           <Information
             isLightTheme={false}
             underlineIconText={false}
             iconText={$t('content.data.data')}
             titleText={$t('content.data.data')}
             bodyText={$t('content.data.dataDescription')} />
+        {:else}
+          <div></div>
         {/if}
 
         {#each $gestures as gesture (gesture.ID)}
           <Gesture
+            showWalkThrough={$gestures.length === 1}
             gesture={gestures.getGesture(gesture.ID)}
             onNoMicrobitSelect={() => (isConnectionDialogOpen = true)} />
         {/each}
