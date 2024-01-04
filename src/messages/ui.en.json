@@ -42,7 +42,6 @@
   "content.data.addRecordingWalkThrough": "Press to record a data sample or press button B on your micro:bit.",
   "content.data.addRecordingWalkThrough.imageAlt": "Press button to record a data sample",
   "content.data.dataDescription": "Multiple samples of movement data collected in 1.8 second bursts.",
-  "content.data.noData": "You do not have any data to use to train the model. You need at least 2 actions with at least 3 data samples each.",
   "content.data.selectAction": "Select action \"{action}\"",
   "content.data.recordAction": "Record data for action \"{action}\"",
   "content.data.deleteAction": "Delete action \"{action}\"",
