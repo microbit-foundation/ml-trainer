@@ -66,6 +66,7 @@
     };
   });
 
+  // Add a placeholder gesture
   $: if (!$gestures || $gestures.length === 0) {
     addGesture('');
   }
