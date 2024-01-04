@@ -84,7 +84,7 @@
       {onUploadGestures} />
   </div>
 
-  {#if false}
+  {#if !hasSomeData() && !$state.isInputConnected}
     <div class="h-full flex justify-center items-center">
       <PleaseConnectFirst />
     </div>
