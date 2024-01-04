@@ -42,6 +42,8 @@
   "content.data.recordAction": "Record data for action \"{action}\"",
   "content.data.deleteAction": "Delete action \"{action}\"",
   "content.data.deleteRecording": "Delete recording",
+  "content.data.recordingDialog.title": "Record data for action \"{action}\"",
+  "content.data.recordingDialog.recording": "Recording",
 
   "content.data.controlbar.button.menu": "Data actions",
   "content.data.controlbar.button.clearData": "Clear data samples",

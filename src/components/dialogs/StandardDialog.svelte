@@ -21,6 +21,8 @@
   // of using svelte-headlessui dialogs
   $: if (isOpen) {
     dialog.open();
+  } else {
+    dialog.close();
   }
   dialog.subscribe(({ expanded }) => {
     if (!expanded) {
@@ -29,7 +31,7 @@
   });
 </script>
 
-<div class="relative z-10">
+<div class="fixed z-10">
   <Transition show={$dialog.expanded}>
     <div
       class="fixed top-0 left-0 h-screen w-screen flex justify-center items-center bg-black/50 bg-blend-darken">
