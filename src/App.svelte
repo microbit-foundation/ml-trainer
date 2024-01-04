@@ -41,8 +41,6 @@
     CookieManager.unsetReconnectFlag();
   }
 
-  document.title = Environment.pageTitle;
-
   onMount(() => {
     // Value must switch from false to true after mount to trigger dialog transition
     isBluetoothWarningDialogOpen.set(!get(compatibility).bluetooth);
