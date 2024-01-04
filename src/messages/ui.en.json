@@ -219,7 +219,7 @@
   "compatibility.platform.notSupported.joinDesktop": "Join us on desktop.",
   "compatibility.webgl.notSupported": "WebGL not available. Enable WebGL to see 3D data view.",
 
-  "popup.outdatedmicrobit.header": "Your micro:bit firmware is outdated.",
+  "popup.outdatedmicrobit.header": "Your micro:bit has an outdated machine learning tool program",
   "popup.outdatedmicrobit.text": "We strongly recommend that you update it now, as some features may not work as expected.",
   "popup.outdatedmicrobit.text.mkcd": "Open the newest MakeCode template to use the updated extension.",
   "popup.outdatedmicrobit.button.later": "Later",
