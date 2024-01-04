@@ -32,7 +32,7 @@
   }
 </script>
 
-<div class="h-26 w-40 pt-1 bg-white relative">
+<div class="h-full w-40 relative">
   {#if hide}
     <div
       transition:fade

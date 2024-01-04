@@ -135,22 +135,26 @@
             min: 0,
             max: data.x.length,
             grid: {
-              color: '#f3f3f3',
+              drawTicks: false,
+              display: false,
             },
             ticks: {
               display: false, //this will remove only the label
             },
+            display: false,
           },
           y: {
             type: 'linear',
             min: -2.5,
             max: 2.5,
             grid: {
-              color: '#f3f3f3',
+              drawTicks: false,
+              display: false,
             },
             ticks: {
               display: false, //this will remove only the label
             },
+            display: false,
           },
         },
         plugins: {
@@ -221,7 +225,9 @@
   });
 </script>
 
-<div bind:this={htmlElement} class="h-full w-full relative">
+<div
+  bind:this={htmlElement}
+  class="h-full w-full relative rounded-md border-1 border-neutral-300">
   <div class="z-1 h-full w-full absolute">
     {#if enableInspector && !isNaN(hoverIndex)}
       <p
