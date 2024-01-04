@@ -8,6 +8,9 @@
   import { fade } from 'svelte/transition';
   import type { RecordingData } from '../script/stores/mlStore';
   import RecordingGraph from './graphs/RecordingGraph.svelte';
+  import IconButton from './IconButton.svelte';
+  import { t } from '../i18n';
+  import CloseIcon from 'virtual:icons/ri/close-line';
 
   // get recording from mother prop
   export let recording: RecordingData;
@@ -29,7 +32,7 @@
   }
 </script>
 
-<div class="h-26 w-40 mr-3 pt-1 bg-white relative">
+<div class="h-26 w-40 pt-1 bg-white relative">
   {#if hide}
     <div
       transition:fade
@@ -43,7 +46,9 @@
 
   <RecordingGraph data={recording.data} />
 
-  <button class="absolute right-0px top-0px z-2" on:click={deleteClicked}>
-    <i class="far fa-times-circle fa-lg text-gray-500" />
-  </button>
+  <div class="absolute right-0 top-0 z-2">
+    <IconButton ariaLabel={$t('content.data.deleteRecording')} onClick={deleteClicked}>
+      <CloseIcon class="text-xl m-1" />
+    </IconButton>
+  </div>
 </div>
