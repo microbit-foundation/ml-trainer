@@ -55,7 +55,7 @@
   export let gesture: Gesture;
   export let showWalkThrough: Boolean = false;
 
-  const defaultNewName = $t('content.data.classPlaceholderNewClass');
+  const gesturePlaceholderName = $t('content.data.classPlaceholderNewClass');
   const recordingDuration = get(settings).duration;
   const countdownInitialValue = 3;
 
@@ -90,15 +90,8 @@
 
   const nameBind = gesture.bindName();
 
-  // When title is clicked. Remove name
-  function titleClicked(): void {
-    if (gesture.getName() === defaultNewName) {
-      gesture.setName('');
-    }
-  }
-
-  $: isGestureRenamed = $nameBind !== defaultNewName;
-  $: showAddActionWalkThrough = !isGestureRenamed && showWalkThrough;
+  $: isGestureNamed = $nameBind.trim().length > 0;
+  $: showAddActionWalkThrough = !isGestureNamed && showWalkThrough;
 
   function removeClicked(): void {
     if (!areActionsAllowed(false)) {
@@ -264,28 +257,29 @@
 <!-- Title of gesture-->
 <GestureTilePart small elevated>
   <div class="grid grid-cols-5 place-items-center p-2 w-50 h-30 relative">
-    <div class="w-40 col-start-2 col-end-5 transition ease rounded bg-gray-100">
-      {#if !showAddActionWalkThrough}
-        <div class="absolute right-2 top-2">
-          <IconButton
-            ariaLabel={$t('content.data.deleteAction', {
-              values: {
-                action: $nameBind,
-              },
-            })}
-            onClick={removeClicked}>
-            <CloseIcon class="text-xl m-1" />
-          </IconButton>
-        </div>
-      {/if}
-
-      <h3
-        class="px-2"
-        contenteditable
-        bind:innerText={$nameBind}
-        on:click={titleClicked}
-        on:keypress={onTitleKeypress} />
-    </div>
+    {#if !showAddActionWalkThrough}
+      <div class="absolute right-2 top-2">
+        <IconButton
+          ariaLabel={$t('content.data.deleteAction', {
+            values: {
+              action: $nameBind,
+            },
+          })}
+          onClick={removeClicked}>
+          <CloseIcon class="text-xl m-1" />
+        </IconButton>
+      </div>
+    {/if}
+    <label for="gestureName" class="sr-only"
+      >{$t('content.data.addAction.inputLabel')}</label>
+    <input
+      name="gestureName"
+      class="w-40 col-start-2 p-2 col-end-5 transition ease rounded bg-gray-100 placeholder-gray-500"
+      contenteditable
+      id="gestureName"
+      placeholder={gesturePlaceholderName}
+      bind:value={$nameBind}
+      on:keypress={onTitleKeypress} />
   </div>
 </GestureTilePart>
 
@@ -302,7 +296,7 @@
     </p>
   </div>
 {:else}
-  <div class="max-w-max">
+  <div class="max-w-max {isGestureNamed ? 'visible' : 'invisible'}">
     <GestureTilePart small elevated>
       <div class="h-full flex items-center gap-x-3 p-2">
         <div class="w-33 flex justify-center items-center gap-x-3">
@@ -336,7 +330,7 @@
   </div>
 {/if}
 
-{#if isGestureRenamed && showWalkThrough && $gesture.recordings.length === 0 && !showCountdown && !isThisRecording}
+{#if isGestureNamed && showWalkThrough && $gesture.recordings.length === 0 && !showCountdown && !isThisRecording}
   <div></div>
   <div class="h-full flex" style="transform: translateX(65px)">
     <img

@@ -11,11 +11,9 @@
   import AddIcon from 'virtual:icons/ri/add-line';
   import IconButton from './IconButton.svelte';
 
-  const defaultNewName = $t('content.data.classPlaceholderNewClass');
-
   function onClick() {
     if (areActionsAllowed(false)) {
-      addGesture(defaultNewName);
+      addGesture('');
     }
   }
 </script>

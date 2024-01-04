@@ -34,6 +34,7 @@
   "content.data.classHelpHeader": "Action",
   "content.data.classHelpBody": "The type of movement you want the machine learning tool to recognise e.g. 'wave' or 'clap'. ",
   "content.data.classification": "Action",
+  "content.data.addAction.inputLabel": "Name of action field",
   "content.data.data": "Data samples",
   "content.data.addAction": "Add action",
   "content.data.addActionWalkThrough": "Add an action you want the micro:bit to recognise.",

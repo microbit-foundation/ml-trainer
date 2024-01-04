@@ -18,6 +18,7 @@
   export let iconText: string | undefined = undefined;
   export let titleText: string | undefined = undefined;
   export let bodyText: string | undefined = undefined;
+  export let isVisible: boolean = true;
 
   const colors = getInfoBoxColors(isLightTheme);
 
@@ -42,7 +43,7 @@
   }
 </script>
 
-<div>
+<div class={isVisible ? 'visible' : 'invisible'}>
   <div
     class="w-auto inline-flex"
     bind:clientWidth={w}

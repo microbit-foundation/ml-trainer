@@ -66,9 +66,8 @@
     };
   });
 
-  const defaultNewName = $t('content.data.classPlaceholderNewClass');
   $: if (!$gestures || $gestures.length === 0) {
-    addGesture(defaultNewName);
+    addGesture('');
   }
 </script>
 
@@ -85,7 +84,7 @@
       {onUploadGestures} />
   </div>
 
-  {#if !hasSomeData() && !$state.isInputConnected}
+  {#if false}
     <div class="h-full flex justify-center items-center">
       <PleaseConnectFirst />
     </div>
@@ -98,16 +97,13 @@
           iconText={$t('content.data.classification')}
           titleText={$t('content.data.classHelpHeader')}
           bodyText={$t('content.data.classHelpBody')} />
-        {#if $gestures.length > 1 || $gestures[0].name !== defaultNewName}
-          <Information
-            isLightTheme={false}
-            underlineIconText={false}
-            iconText={$t('content.data.data')}
-            titleText={$t('content.data.data')}
-            bodyText={$t('content.data.dataDescription')} />
-        {:else}
-          <div></div>
-        {/if}
+        <Information
+          isVisible={$gestures.some(g => g.name)}
+          isLightTheme={false}
+          underlineIconText={false}
+          iconText={$t('content.data.data')}
+          titleText={$t('content.data.data')}
+          bodyText={$t('content.data.dataDescription')} />
 
         {#each $gestures as gesture (gesture.ID)}
           <Gesture
