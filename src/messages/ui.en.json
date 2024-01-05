@@ -124,7 +124,7 @@
   "connectMB.bluetoothStart.subtitle": "You will need to have Web Bluetooth enabled on your computer and in your web browser.",
   "connectMB.bluetoothStart.requirements1": "1 micro:bit",
   "connectMB.bluetoothStart.requirements2": "Computer",
-  "connectMB.bluetoothStart.requirements2.subtitle": "with Internet & a USB port",
+  "connectMB.bluetoothStart.requirements2.subtitle": "with Internet, a USB port & Web Bluetooth",
   "connectMB.bluetoothStart.requirements3": "Micro USB cable",
   "connectMB.bluetoothStart.requirements4": "Battery holder",
   "connectMB.bluetoothStart.requirements4.subtitle": "with batteries",
