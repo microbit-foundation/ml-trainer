@@ -10,6 +10,7 @@
   import { t } from '../i18n';
   import AddIcon from 'virtual:icons/ri/add-line';
   import IconButton from './IconButton.svelte';
+  import StandardButton from './StandardButton.svelte';
 
   const defaultNewName = $t('content.data.classPlaceholderNewClass');
 
@@ -20,9 +21,4 @@
   }
 </script>
 
-<div class="mt-5 mb-2">
-  <IconButton ariaLabel={$t('content.data.addAction')} {onClick} rounded>
-    <AddIcon
-      class="h-20 w-20 text-primary flex justify-center items-center rounded-full p-2 border-4 border-primary m-1.5" />
-  </IconButton>
-</div>
+<StandardButton type="primary" {onClick}>{$t('content.data.addAction')}</StandardButton>

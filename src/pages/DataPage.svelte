@@ -70,21 +70,12 @@
   <TabView />
   <h1 class="sr-only">{$t('content.index.toolProcessCards.data.title')}</h1>
 
-  <div class="flex justify-end px-10 mt-2">
-    <DataPageMenu
-      clearDisabled={$gestures.length === 0}
-      downloadDisabled={$gestures.length === 0}
-      {onClearGestures}
-      {onDownloadGestures}
-      {onUploadGestures} />
-  </div>
-
   {#if !hasSomeData() && !$state.isInputConnected}
     <div class="h-full flex justify-center items-center">
       <PleaseConnectFirst />
     </div>
   {:else}
-    <div class="flex flex-col flex-grow flex-shrink py-2 px-10 h-0 overflow-y-auto">
+    <div class="flex flex-col flex-grow flex-shrink pb-2 px-10 h-0 overflow-y-auto">
       {#if !$gestures.length}
         <div class="flex justify-center">
           <div class="text-center text-xl w-1/2 text-bold text-primarytext">
@@ -94,18 +85,22 @@
       {/if}
       <div class="grid grid-cols-[max-content,1fr] gap-x-7 gap-y-3">
         {#if $gestures.length > 0}
-          <Information
-            isLightTheme={false}
-            underlineIconText={false}
-            iconText={$t('content.data.classification')}
-            titleText={$t('content.data.classHelpHeader')}
-            bodyText={$t('content.data.classHelpBody')} />
-          <Information
-            isLightTheme={false}
-            underlineIconText={false}
-            iconText={$t('content.data.data')}
-            titleText={$t('content.data.data')}
-            bodyText={$t('content.data.dataDescription')} />
+          <div class="sticky top-0 bg-backgrounddark z-2 py-2">
+            <Information
+              isLightTheme={false}
+              underlineIconText={false}
+              iconText={$t('content.data.classification')}
+              titleText={$t('content.data.classHelpHeader')}
+              bodyText={$t('content.data.classHelpBody')} />
+          </div>
+          <div class="sticky top-0 bg-backgrounddark z-2 py-2">
+            <Information
+              isLightTheme={false}
+              underlineIconText={false}
+              iconText={$t('content.data.data')}
+              titleText={$t('content.data.data')}
+              bodyText={$t('content.data.dataDescription')} />
+          </div>
         {/if}
 
         {#each $gestures as gesture (gesture.ID)}
@@ -114,13 +109,20 @@
             onNoMicrobitSelect={() => (isConnectionDialogOpen = true)} />
         {/each}
       </div>
-
-      <NewGestureButton />
-      <div class="flex justify-end mt-auto">
-        <TrainingButton onClick={() => navigate(Paths.TRAINING)} />
-      </div>
     </div>
   {/if}
+  <div class="flex items-center justify-between px-10 py-2 border-b-3 border-gray-200">
+    <NewGestureButton />
+    <div class="flex items-center gap-x-2">
+      <TrainingButton type="secondary" onClick={() => navigate(Paths.TRAINING)} />
+      <DataPageMenu
+        clearDisabled={$gestures.length === 0}
+        downloadDisabled={$gestures.length === 0}
+        {onClearGestures}
+        {onDownloadGestures}
+        {onUploadGestures} />
+    </div>
+  </div>
   <div class="h-160px w-full">
     <BottomPanel />
   </div>

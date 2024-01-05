@@ -14,6 +14,11 @@
   export let disabled = false;
   export let ariaLabel: string;
   export let rounded: boolean = false;
+  export let useAction:
+    | ((node: HTMLElement) => {
+        destroy: () => void;
+      })
+    | (() => void) = () => {};
 
   const classes = {
     ghost: {
@@ -34,6 +39,8 @@
   class:rounded-full={rounded}
   class:rounded-md={!rounded}
   aria-label={ariaLabel}
-  on:click={onClick}>
+  on:click={onClick}
+  on:select
+  use:useAction>
   <slot />
 </button>
