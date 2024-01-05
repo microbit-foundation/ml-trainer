@@ -72,8 +72,8 @@
   <div class="flex flex-col flex-grow justify-center items-center text-center">
     {#if !sufficientData}
       <TrainingStatusSection
-        statusId="content.trainer.notEnoughData.title"
-        descriptionId="content.trainer.notEnoughData.body">
+        statusId="menu.trainer.notEnoughDataHeader1"
+        descriptionId="menu.trainer.notEnoughDataInfoBody">
         <StandardButton onClick={navigateDataPage} type="primary"
           >{$t('menu.trainer.addDataButton')}</StandardButton>
       </TrainingStatusSection>
@@ -90,7 +90,7 @@
         <img alt="loading" src={loadingSpinnerImage} width="100px" class="self-center" />
       </TrainingStatusSection>
     {:else if $state.isPredicting}
-      <TrainingStatusSection statusId="content.trainer.trainingFinished.title">
+      <TrainingStatusSection statusId="menu.trainer.TrainingFinished">
         <div class="flex flexbox space-x-10">
           <StandardButton onClick={navigateDataPage} type="secondary"
             >{$t('menu.trainer.addMoreDataButton')}</StandardButton>
