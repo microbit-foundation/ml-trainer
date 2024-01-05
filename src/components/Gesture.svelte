@@ -342,6 +342,7 @@
 {/if}
 
 {#if isGestureNamed && showWalkThrough && !hasRecordings && !showCountdown && !isThisRecording}
+  <!-- Empty div to fill first column of grid  -->
   <div></div>
   <div class="h-full flex" style="transform: translateX(65px)">
     <img class="w-15" alt="" src={upCurveArrowImage} />
