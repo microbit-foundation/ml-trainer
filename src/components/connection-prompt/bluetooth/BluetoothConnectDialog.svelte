@@ -14,6 +14,7 @@
   } from '../../../script/stores/connectionStore';
   import type { Writable } from 'svelte/store';
   import StandardButton from '../../StandardButton.svelte';
+  import DialogHeading from '../../DialogHeading.svelte';
 
   // callbacks
   export let deviceState: DeviceRequestStates;
@@ -30,15 +31,15 @@
   }
 </script>
 
-<main class="w-180">
-  <h1 class="mb-5 font-bold text-2xl justify-center">
+<main class="w-175">
+  <DialogHeading>
     {$t('connectMB.pattern.heading')}
-  </h1>
+  </DialogHeading>
   <p>{$t('connectMB.pattern.subtitle')}</p>
-  <div class="flex justify-center pt-20 pb-10">
+  <div class="flex justify-center p-20">
     <PatternMatrix matrix={$patternMatrixState} onMatrixChange={updateMatrix} />
   </div>
-  <div class="justify-end gap-x-5 flex pt-10">
+  <div class="flex justify-end gap-x-5">
     <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
     <StandardButton type="primary" onClick={onNextClick}
       >{$t('connectMB.nextButton')}</StandardButton>

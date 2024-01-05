@@ -54,9 +54,7 @@
               </IconButton>
             </div>
           {/if}
-          <div class="m-1 {hasCloseButton ? 'mt-3' : 'mt-1'}">
-            <slot />
-          </div>
+          <slot />
         </div>
       </Transition>
     </div>

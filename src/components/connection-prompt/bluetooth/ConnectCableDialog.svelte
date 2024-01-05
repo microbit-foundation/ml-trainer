@@ -8,6 +8,7 @@
   import StandardButton from '../../StandardButton.svelte';
   import { t } from '../../../i18n';
   import connectCableImage from '../../../imgs/connect-cable.gif';
+  import DialogHeading from '../../DialogHeading.svelte';
 
   export let onNextClick: () => void;
   export let onBackClick: () => void;
@@ -16,8 +17,8 @@
 </script>
 
 <main>
-  <div class="w-200 leading-10">
-    <p class="font-bold text-2xl text-left pb-5">
+  <div class="w-175">
+    <DialogHeading>
       {#if currentStage === 'usb'}
         {$t('connectMB.connectCable.heading')}
       {:else if currentStage === 'usb1'}
@@ -25,8 +26,8 @@
       {:else if currentStage === 'usb2'}
         {$t('connectMB.connectCableMB2.heading')}
       {/if}
-    </p>
-    <p class="leading-normal">
+    </DialogHeading>
+    <p>
       {#if currentStage === 'usb'}
         {$t('connectMB.connectCable.subtitle')}
       {:else if currentStage === 'usb1'}

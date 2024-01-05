@@ -6,6 +6,7 @@
 
 <script lang="ts">
   import { t } from '../i18n';
+  import DialogHeading from './DialogHeading.svelte';
   import StandardButton from './StandardButton.svelte';
 
   interface Item {
@@ -24,12 +25,12 @@
 </script>
 
 <main>
-  <div class="w-200">
-    <h1 class="text-2xl font-bold pb-5">{$t(headingId)}</h1>
+  <div class="w-175">
+    <DialogHeading>{$t(headingId)}</DialogHeading>
     {#if subtitleId}
       <p>{$t(subtitleId)}</p>
     {/if}
-    <div class="inline-grid grid-cols-{items.length} gap-20 py-20 px-10">
+    <div class="inline-grid grid-cols-{items.length} gap-20 py-13 px-10">
       {#each items as item}
         <div class="flex flex-col text-md text-center">
           <img class="h-25" src={item.imgSrc} alt={$t(item.imgAltId)} />
