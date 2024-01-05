@@ -301,10 +301,7 @@
   <div
     class="h-full flex w-50 flex-col relative items-center"
     style="transform: translate(-50px, 50px)">
-    <img
-      class="mb-3 w-30"
-      alt={$t('content.data.addActionWalkThrough.imageAlt')}
-      src={greetingEmojiWithArrowImage} />
+    <img class="mb-3 w-30" alt="" src={greetingEmojiWithArrowImage} />
     <p class="text-center">
       {$t('content.data.addActionWalkThrough')}
     </p>
@@ -347,10 +344,7 @@
 {#if isGestureNamed && showWalkThrough && !hasRecordings && !showCountdown && !isThisRecording}
   <div></div>
   <div class="h-full flex" style="transform: translateX(65px)">
-    <img
-      class="w-15"
-      alt={$t('content.data.addRecordingWalkThrough.imageAlt')}
-      src={upCurveArrowImage} />
+    <img class="w-15" alt="" src={upCurveArrowImage} />
     <p class="text-center w-50" style="transform: translateY(20px)">
       {$t('content.data.addRecordingWalkThrough')}
     </p>
