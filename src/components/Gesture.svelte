@@ -282,7 +282,7 @@
       >{$t('content.data.addAction.inputLabel')}</label>
     <input
       name="gestureName"
-      class="w-40 col-start-2 p-2 col-end-5 transition ease rounded bg-gray-100 placeholder-gray-500"
+      class="w-40 col-start-2 p-2 col-end-5 transition ease rounded bg-gray-100 placeholder-gray-500 outline-primary"
       contenteditable
       id="gestureName"
       placeholder={gesturePlaceholderName}
