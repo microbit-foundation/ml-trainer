@@ -26,18 +26,18 @@
 <main>
   <div class="w-200">
     <h1 class="text-2xl font-bold pb-5">{$t(headingId)}</h1>
-    <p>{subtitleId ? $t(subtitleId) : ''}</p>
+    {#if subtitleId}
+      <p>{$t(subtitleId)}</p>
+    {/if}
     <div class="inline-grid grid-cols-{items.length} gap-20 py-20 px-10">
       {#each items as item}
-        <div class="flex flex-col">
+        <div class="flex flex-col text-md text-center">
           <img class="h-25" src={item.imgSrc} alt={$t(item.imgAltId)} />
-          <p class="pt-10 text-center font-bold">
+          <p class="pt-10 font-bold">
             {$t(item.titleId)}
           </p>
           {#if item.subtitleId}
-            <p class="text-center">
-              {$t(item.subtitleId)}
-            </p>
+            <p>{$t(item.subtitleId)}</p>
           {/if}
         </div>
       {/each}
