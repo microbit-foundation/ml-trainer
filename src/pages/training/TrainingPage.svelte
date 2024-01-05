@@ -18,6 +18,7 @@
   import { Paths, navigate } from '../../router/paths';
   import { trainModel } from '../../script/ml';
   import TrainingStatusSection from '../../components/TrainingStatusSection.svelte';
+  import DialogHeading from '../../components/DialogHeading.svelte';
 
   function navigateModelPage(): void {
     navigate(Paths.MODEL);
@@ -41,14 +42,12 @@
 <StandardDialog
   isOpen={isFailedTrainingDialogOpen}
   onClose={() => (isFailedTrainingDialogOpen = false)}>
-  <div
-    class="justify-center items-center content-center w-150 bg-white m-auto"
-    transition:slide>
-    <div>
-      <p class="text-warning font-bold text-center text-xl mb-5">
-        {$t('content.trainer.failure.header')}
-      </p>
-      <p class="mb-3">
+  <div class="w-175">
+    <DialogHeading>
+      {$t('content.trainer.failure.header')}
+    </DialogHeading>
+    <div class="space-y-3">
+      <p>
         {$t('content.trainer.failure.body')}
       </p>
       <p class="font-bold">
