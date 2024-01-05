@@ -214,6 +214,14 @@
     }
   }
 
+  // Select gesture when gesture is renamed
+  $: if ($nameBind) {
+    chosenGesture.update(chosen => {
+      chosen = gesture;
+      return chosen;
+    });
+  }
+
   // Make function depend on buttonsPressed store.
   let declaring = true;
   $: {
