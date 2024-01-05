@@ -63,6 +63,7 @@
   "content.trainer.failure.body": "The training did not result in a usable model. The reason for this is most likely the data used for training. If the data samples for different actions are too similar, this can result in issues in the training process.",
   "content.trainer.failure.todo": "Return to the Add data page and change your data.",
   "content.trainer.trainingFinished.title": "Status: Your model is trained.",
+  "content.trainer.retrain.title": "Status: You've collected new data and can retrain the model",
 
   "content.model.trainModelFirstHeading": "Test model",
   "content.model.imageAlt": "test model",
@@ -101,6 +102,7 @@
   "menu.trainer.helpHeading": "2. Train model",
   "menu.trainer.notConnected1": "You do not have a micro:bit connected",
   "menu.trainer.notConnected2": " Select the ‘Connect’ button to connect a micro:bit.",
+  "menu.trainer.TrainingFinished": "Status: Your model is trained.",
 
   "menu.trainer.trainModelButton": "Train model",
   "menu.trainer.addDataButton": "Add data",

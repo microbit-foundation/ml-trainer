@@ -23,7 +23,7 @@
         loadingColorPrimary="#68BDBF"
         loadingColorSecondary="#3C81F6" />
       <p class="text-white mt-3 mb-4">
-        {$t('content.trainer.trainingFinished.title')}
+        {$t('menu.trainer.TrainingFinished')}
       </p>
     </div>
   {:else}

@@ -77,8 +77,12 @@
         <StandardButton onClick={navigateDataPage} type="primary"
           >{$t('menu.trainer.addDataButton')}</StandardButton>
       </TrainingStatusSection>
-    {:else if sufficientData && !$state.isTraining && !$state.isPredicting}
+    {:else if sufficientData && !$state.isTraining && !$state.isPredicting && !$state.hasTrainedBefore}
       <TrainingStatusSection statusId="content.trainer.enoughdata.title">
+        <TrainingButton onClick={trainModel} />
+      </TrainingStatusSection>
+    {:else if sufficientData && !$state.isTraining && !$state.isPredicting}
+      <TrainingStatusSection statusId="content.trainer.retrain.title">
         <TrainingButton onClick={trainModel} />
       </TrainingStatusSection>
     {:else if $state.isTraining}

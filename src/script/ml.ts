@@ -186,6 +186,7 @@ function finishedTraining() {
   void trainingTimerPromise.then(() => {
     state.update(obj => {
       obj.isTraining = false;
+      obj.hasTrainedBefore = true;
       return obj;
     });
     setupPredictionInterval();
