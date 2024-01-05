@@ -24,10 +24,12 @@
   } else {
     dialog.close();
   }
+  let previousExpanded = false;
   dialog.subscribe(({ expanded }) => {
-    if (!expanded) {
+    if (previousExpanded && !expanded) {
       onClose();
     }
+    previousExpanded = expanded;
   });
 </script>
 
