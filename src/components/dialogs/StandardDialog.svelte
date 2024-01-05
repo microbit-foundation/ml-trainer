@@ -21,6 +21,8 @@
   // of using svelte-headlessui dialogs
   $: if (isOpen) {
     dialog.open();
+  } else {
+    dialog.close();
   }
   dialog.subscribe(({ expanded }) => {
     if (!expanded) {
