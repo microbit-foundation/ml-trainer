@@ -90,8 +90,9 @@
 
   const nameBind = gesture.bindName();
 
+  $: hasRecordings = $gesture.recordings.length > 0;
   $: isGestureNamed = $nameBind.trim().length > 0;
-  $: showAddActionWalkThrough = !isGestureNamed && showWalkThrough;
+  $: showAddActionWalkThrough = !isGestureNamed && showWalkThrough && !hasRecordings;
 
   function removeClicked(): void {
     if (!areActionsAllowed(false)) {
@@ -310,7 +311,7 @@
     </p>
   </div>
 {:else}
-  <div class="max-w-max {isGestureNamed ? 'visible' : 'invisible'}">
+  <div class="max-w-max {isGestureNamed || hasRecordings ? 'visible' : 'invisible'}">
     <GestureTilePart small elevated>
       <div class="h-full flex items-center gap-x-3 p-2">
         <div class="w-33 flex justify-center items-center gap-x-3">
@@ -334,7 +335,7 @@
                 : 'text-neutral-400'} flex justify-center items-center rounded-full" />
           </IconButton>
         </div>
-        {#if $gesture.recordings.length > 0}
+        {#if hasRecordings}
           {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
             <Recording {recording} onDelete={deleteRecording} />
           {/each}
@@ -344,7 +345,7 @@
   </div>
 {/if}
 
-{#if isGestureNamed && showWalkThrough && $gesture.recordings.length === 0 && !showCountdown && !isThisRecording}
+{#if isGestureNamed && showWalkThrough && !hasRecordings && !showCountdown && !isThisRecording}
   <div></div>
   <div class="h-full flex" style="transform: translateX(65px)">
     <img
