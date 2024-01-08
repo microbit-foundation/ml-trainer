@@ -48,7 +48,11 @@
       <p>
         {#each parseTag($t('content.index.toolInfo'), 'link') as { tag, text }}
           {#if tag}
-            <a class="text-link" href={playgroundSurveyUrl} target="_blank">{text}</a>
+            <a
+              class="text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
+              rel="noopener noreferrer"
+              href={playgroundSurveyUrl}
+              target="_blank">{text}</a>
           {:else}
             {text}
           {/if}
