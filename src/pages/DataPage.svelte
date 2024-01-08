@@ -99,7 +99,7 @@
           titleText={$t('content.data.classHelpHeader')}
           bodyText={$t('content.data.classHelpBody')} />
         <Information
-          isVisible={$gestures.some(g => g.name || g.recordings.length > 0)}
+          isVisible={$gestures.some(g => g.name.trim() || g.recordings.length > 0)}
           isLightTheme={false}
           underlineIconText={false}
           iconText={$t('content.data.data')}

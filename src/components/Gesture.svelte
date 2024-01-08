@@ -216,7 +216,7 @@
   }
 
   // Select gesture when gesture is renamed
-  $: if ($nameBind) {
+  $: if ($nameBind.trim()) {
     chosenGesture.update(chosen => {
       chosen = gesture;
       return chosen;
