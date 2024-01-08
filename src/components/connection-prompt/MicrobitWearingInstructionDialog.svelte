@@ -25,7 +25,8 @@
         {$t('connectMB.wearingSetup.bluetooth.heading')}
       {:else if currentStage === 'usb1'}
         {$t('connectMB.wearingSetup.radioConnection.heading')}
-      {/if}</DialogHeading>
+      {/if}
+    </DialogHeading>
     <div class="space-y-10">
       <p class="leading-normal">
         <a class="text-link" href={instructionsVideoLink} target="_blank" rel="noopener"
