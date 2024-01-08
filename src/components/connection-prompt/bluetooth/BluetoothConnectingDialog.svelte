@@ -117,7 +117,7 @@
       <!-- Show spinner while connecting -->
       <div class="flex flex-col justify-center items-center">
         <p>{$t('connectMB.bluetooth.connecting')}</p>
-        <img alt="" src={loadingSpinnerImage} width="100px" />
+        <img class="w-100px h-100px" alt="" src={loadingSpinnerImage} />
       </div>
     {/if}
   </div>

@@ -252,12 +252,12 @@
         class:hidden={wasTriggered}
         src={rightArrowImage}
         alt="right arrow icon"
-        width="30px" />
+        width={30} />
       <img
         class:hidden={!wasTriggered || !$state.isInputReady}
         src={rightArrowBlueImage}
         alt="right arrow icon"
-        width="30px" />
+        width={30} />
     </div>
   {/if}
 </GestureTilePart>

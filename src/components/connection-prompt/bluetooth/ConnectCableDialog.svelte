@@ -27,21 +27,23 @@
         {$t('connectMB.connectCableMB2.heading')}
       {/if}
     </DialogHeading>
-    <p>
-      {#if currentStage === 'usb'}
-        {$t('connectMB.connectCable.subtitle')}
-      {:else if currentStage === 'usb1'}
-        {$t('connectMB.connectCableMB1.subtitle')}
-      {:else if currentStage === 'usb2'}
-        {$t('connectMB.connectCableMB2.subtitle')}
-      {/if}
-    </p>
-    <img
-      src={connectCableImage}
-      alt="USB cable being connected at the top, centre of the micro:bit."
-      class="px-55 py-5" />
+    <div class="space-y-5">
+      <p>
+        {#if currentStage === 'usb'}
+          {$t('connectMB.connectCable.subtitle')}
+        {:else if currentStage === 'usb1'}
+          {$t('connectMB.connectCableMB1.subtitle')}
+        {:else if currentStage === 'usb2'}
+          {$t('connectMB.connectCableMB2.subtitle')}
+        {/if}
+      </p>
+      <img
+        src={connectCableImage}
+        alt="USB cable being connected at the top, centre of the micro:bit."
+        class="w-65 h-241px mx-auto" />
+    </div>
   </div>
-  <div class="flex justify-between">
+  <div class="flex justify-between pt-5">
     {#if currentStage === 'usb' || currentStage === 'usb1'}
       <StandardButton type="link" onClick={onSkipClick}
         >{$t('connectMB.connectCable.skip')}</StandardButton>

@@ -60,10 +60,9 @@
 <div class="flex flex-col items-center pb-5 bg-backgrounddark">
   <TabView />
   <img
-    class="pt-10 opacity-40"
+    class="pt-10 opacity-40 w-350px h-249px"
     src={trainModelImage}
-    alt={$t('content.trainer.imageAlt')}
-    width="350" />
+    alt={$t('content.trainer.imageAlt')} />
   <h1 class="text-2xl font-bold pb-3">{$t('content.trainer.header')}</h1>
   <p class="text-center leading-relaxed w-150">
     {$t('content.trainer.description')}
@@ -86,7 +85,10 @@
       </TrainingStatusSection>
     {:else if $state.isTraining}
       <TrainingStatusSection statusId="content.trainer.training.title">
-        <img alt="loading" src={loadingSpinnerImage} width="100px" class="self-center" />
+        <img
+          alt="loading"
+          src={loadingSpinnerImage}
+          class="self-center w-100px h-100px" />
       </TrainingStatusSection>
     {:else if $state.isPredicting}
       <TrainingStatusSection statusId="menu.trainer.TrainingFinished">

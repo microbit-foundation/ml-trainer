@@ -56,17 +56,15 @@
         </span>
       </p>
       <div class="flex gap-5">
-        <ol class="col-span-2">
+        <ol class="w-auto">
           <li>1. {$t('connectMB.USBCompatibility.transferStep.step1')}</li>
           <li>2. {$t('connectMB.USBCompatibility.transferStep.step2')}</li>
           <li>3. {$t('connectMB.USBCompatibility.transferStep.step3')}</li>
         </ol>
-        <ImageSkeleton
+        <img
+          class="w-290px h-168px flex-shrink-0"
           alt="Transferring the firmware"
-          castShadow
-          height={104}
-          src={transferIllustration}
-          width={290} />
+          src={transferIllustration} />
       </div>
     </div>
     <div class="flex justify-center pt-5">

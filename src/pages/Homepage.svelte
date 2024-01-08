@@ -4,6 +4,13 @@
   SPDX-License-Identifier: MIT
  -->
 
+<style>
+  .tile-img {
+    width: 300px;
+    height: 178.72px;
+  }
+</style>
+
 <script lang="ts">
   import trainModelImage from '../imgs/TrainModel.svg';
   import inputDataImage from '../imgs/InputData.svg';
@@ -23,8 +30,6 @@
 
   const playgroundSurveyUrl =
     'https://stage.microbit.org/teach/playground-survey/exploring-machine-learning';
-
-  const tileImageSize = '300';
 
   let connectDialogReference: ConnectDialogContainer;
 </script>
@@ -60,7 +65,7 @@
           <h3 class="text-center text-2xl mb-5 font-bold">
             {$t('content.index.toolProcessCards.data.title')}
           </h3>
-          <img class="mb-5" alt="add data" src={inputDataImage} width={tileImageSize} />
+          <img class="mb-5 tile-img" alt="" src={inputDataImage} />
           <p class="text-center">
             {$t('content.index.toolProcessCards.data.description')}
           </p>
@@ -70,11 +75,7 @@
           <h3 class="text-center text-2xl mb-5 font-bold">
             {$t('content.index.toolProcessCards.train.title')}
           </h3>
-          <img
-            class="mb-5"
-            alt="train model"
-            src={trainModelImage}
-            width={tileImageSize} />
+          <img class="mb-5 tile-img" alt="" src={trainModelImage} />
           <p class="text-center">
             {$t('content.index.toolProcessCards.train.description')}
           </p>
@@ -84,7 +85,7 @@
           <h3 class="text-center text-2xl mb-5 font-bold">
             {$t('content.index.toolProcessCards.model.title')}
           </h3>
-          <img class="mb-5" alt="test model" src={testModelImage} width={tileImageSize} />
+          <img class="mb-5 tile-img" alt="" src={testModelImage} />
           <p class="text-center">
             {$t('content.index.toolProcessCards.model.description')}
           </p>

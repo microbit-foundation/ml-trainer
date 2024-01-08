@@ -33,7 +33,7 @@
     <div class="inline-grid grid-cols-{items.length} gap-16 py-13 px-10">
       {#each items as item}
         <div class="flex flex-col text-md text-center">
-          <img class="h-25" src={item.imgSrc} alt={$t(item.imgAltId)} />
+          <img class="h-25 w-107px" src={item.imgSrc} alt={$t(item.imgAltId)} />
           <p class="pt-10 font-bold">
             {$t(item.titleId)}
           </p>

@@ -35,11 +35,11 @@
       </p>
       <div class="flex flex-col font-semibold items-center gap-8">
         <div class="flex flex-col items-center gap-y-2">
-          <img src={microbitHolderImage} class="w-50" alt="" />
+          <img src={microbitHolderImage} class="w-50 h-23" alt="" />
           <p>{$t('connectMB.wearingSetup.requirements1')}</p>
         </div>
         <div class="flex flex-col items-center gap-y-2">
-          <img src={microbitStrapImage} class="w-150" alt="" />
+          <img src={microbitStrapImage} class="w-150 h-66px" alt="" />
           <p>{$t('connectMB.wearingSetup.requirements2')}</p>
         </div>
       </div>
