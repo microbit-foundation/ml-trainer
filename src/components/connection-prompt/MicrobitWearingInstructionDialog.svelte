@@ -38,7 +38,7 @@
           <p>{$t('connectMB.wearingSetup.requirements1')}</p>
         </div>
         <div class="flex flex-col items-center gap-y-2">
-          <img src={microbitStrapImage} class="w-175" alt="" />
+          <img src={microbitStrapImage} class="w-150" alt="" />
           <p>{$t('connectMB.wearingSetup.requirements2')}</p>
         </div>
       </div>
