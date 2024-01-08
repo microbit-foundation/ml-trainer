@@ -39,12 +39,12 @@
             ><tr class="divide-gray-100"
               ><td>{$t('content.index.title')}</td><td
                 >{import.meta.env.VITE_APP_VERSION}</td
-              ><td class="flex align-middle"
+              ><td
                 ><a
                   target="_blank"
                   rel="noopener noreferrer"
                   href="https://github.com/microbit-foundation/ml-trainer"
-                  class="flex basis-auto outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
+                  class="inline-flex items-center outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
                   ><GitHubIcon /><span class="sr-only">GitHub</span></a>
               </td></tr
             ></tbody
