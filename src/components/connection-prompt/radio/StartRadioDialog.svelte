@@ -17,23 +17,19 @@
   const items = [
     {
       imgSrc: microbitImage,
-      imgAltId: 'connectMB.radioStart.requirements1',
       titleId: 'connectMB.radioStart.requirements1',
     },
     {
       imgSrc: computerImage,
-      imgAltId: 'connectMB.radioStart.requirements2',
       titleId: 'connectMB.radioStart.requirements2',
       subtitleId: 'connectMB.radioStart.requirements2.subtitle',
     },
     {
       imgSrc: usbCableImage,
-      imgAltId: 'connectMB.radioStart.requirements3',
       titleId: 'connectMB.radioStart.requirements3',
     },
     {
       imgSrc: batteryPackImage,
-      imgAltId: 'connectMB.radioStart.requirements4',
       titleId: 'connectMB.radioStart.requirements4',
       subtitleId: 'connectMB.radioStart.requirements4.subtitle',
     },

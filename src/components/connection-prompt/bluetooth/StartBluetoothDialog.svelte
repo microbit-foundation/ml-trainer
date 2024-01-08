@@ -17,23 +17,19 @@
   const items = [
     {
       imgSrc: microbitImage,
-      imgAltId: 'connectMB.bluetoothStart.requirements1',
       titleId: 'connectMB.bluetoothStart.requirements1',
     },
     {
       imgSrc: computerImage,
-      imgAltId: 'connectMB.bluetoothStart.requirements2',
       titleId: 'connectMB.bluetoothStart.requirements2',
       subtitleId: 'connectMB.bluetoothStart.requirements2.subtitle',
     },
     {
       imgSrc: usbCableImage,
-      imgAltId: 'connectMB.bluetoothStart.requirements3',
       titleId: 'connectMB.bluetoothStart.requirements3',
     },
     {
       imgSrc: batteryPackImage,
-      imgAltId: 'connectMB.bluetoothStart.requirements4',
       titleId: 'connectMB.bluetoothStart.requirements4',
       subtitleId: 'connectMB.bluetoothStart.requirements4.subtitle',
     },

@@ -53,7 +53,6 @@
   "content.data.recording.description": "Start action before the countdown finishes",
 
   "content.trainer.header": "Training a model",
-  "content.trainer.imageAlt": "train model",
   "content.trainer.description": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit machine learning tool to recognise different actions when you move your micro:bit.",
   "content.trainer.enoughdata.title": "Status: You've collected enough data to train the model.",
   "content.trainer.training.title": "Status: Training the model in progress.",
@@ -63,7 +62,6 @@
   "content.trainer.retrain.title": "Status: You've collected new data and can retrain the model.",
 
   "content.model.trainModelFirstHeading": "Test model",
-  "content.model.imageAlt": "test model",
   "content.model.trainModelBody1": "You cannot test the model until it has been trained.",
   "content.model.trainModelBody2": "You need at least 3 data samples for 2 actions to train a model.",
   "content.model.addData": "Add data",
@@ -223,6 +221,8 @@
   "compatibility.platform.notSupported": "The tool is not supported on your current platform.",
   "compatibility.platform.notSupported.joinDesktop": "Join us on desktop.",
   "compatibility.webgl.notSupported": "WebGL not available. Enable WebGL to see 3D data view.",
+
+  "loading": "loading",
 
   "popup.outdatedmicrobit.header": "Your micro:bit has an outdated machine learning tool program",
   "popup.outdatedmicrobit.text": "We strongly recommend that you update it now, as some features may not work as expected.",
