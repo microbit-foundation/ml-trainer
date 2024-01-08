@@ -114,7 +114,7 @@
         {/each}
       </div>
 
-      <NewGestureButton />
+      <NewGestureButton disabled={!$gestures.every(g => g.name.trim())} />
       <div class="flex justify-end mt-auto">
         <TrainingButton onClick={() => navigate(Paths.TRAINING)} />
       </div>
