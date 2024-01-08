@@ -32,6 +32,11 @@
     }
     previousExpanded = expanded;
   });
+
+  const onClickDialog = (e: Event) => {
+    // stop propagation of on:click outside event
+    e.stopPropagation();
+  };
 </script>
 
 <div class="relative z-10">
@@ -39,7 +44,6 @@
     <div
       class="fixed top-0 left-0 h-screen w-screen flex justify-center items-center bg-black/50 bg-blend-darken"
       use:dialog.modal
-      role="none"
       on:click={dismissOnClickOutside ? dialog.close : undefined}>
       <Transition
         enter="transition ease-out duration-200"
@@ -49,7 +53,8 @@
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95">
         <div
-          class="w-min h-min border-gray-200 border border-solid relative bg-white rounded-lg p-8">
+          class="w-min h-min border-gray-200 border border-solid relative bg-white rounded-lg p-8 z-15"
+          on:click={onClickDialog}>
           {#if hasCloseButton}
             <div class="absolute right-2 top-2">
               <IconButton ariaLabel={$t('actions.close')} onClick={dialog.close}>
