@@ -22,8 +22,8 @@
     },
     {
       imgSrc: computerImage,
-      imgAltId: 'connectMB.radioStart.requirements1',
-      titleId: 'connectMB.radioStart.requirements1',
+      imgAltId: 'connectMB.radioStart.requirements2',
+      titleId: 'connectMB.radioStart.requirements2',
       subtitleId: 'connectMB.radioStart.requirements2.subtitle',
     },
     {

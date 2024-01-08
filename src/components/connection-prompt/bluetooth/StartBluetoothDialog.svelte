@@ -22,8 +22,8 @@
     },
     {
       imgSrc: computerImage,
-      imgAltId: 'connectMB.bluetoothStart.requirements1',
-      titleId: 'connectMB.bluetoothStart.requirements1',
+      imgAltId: 'connectMB.bluetoothStart.requirements2',
+      titleId: 'connectMB.bluetoothStart.requirements2',
       subtitleId: 'connectMB.bluetoothStart.requirements2.subtitle',
     },
     {
