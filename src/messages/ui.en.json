@@ -19,8 +19,7 @@
   "alert.recordingsPerGesture": "You need at least three examples per action",
 
   "content.index.title": "machine learning tool",
-  "content.index.toolInfo1": "Use this tool with the",
-  "content.index.toolInfo2": "BBC micro:bit playground survey",
+  "content.index.toolInfo": "Use this tool with the <link>BBC micro:bit playground survey</link>",
   "content.index.toolProcessCards.main.title": "How this tool works",
   "content.index.toolProcessCards.data.title": "Add data",
   "content.index.toolProcessCards.data.description": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping).",
@@ -193,8 +192,7 @@
   "connectMB.usb.done.body4": "If you do not have a battery for the micro:bit, you can simply keep powering it through the usb cable.",
 
   "connectMB.usb.manual.header": "Transfer file to your micro:bit",
-  "connectMB.usb.manual.manualDownload": "If the file did not automatically download press",
-  "connectMB.usb.manual.manualDownloadLink": "here",
+  "connectMB.usb.manual.manualDownload": "If the file did not automatically download press <link>here</link>",
   "connectMB.usb.manual.done": "Done: Connect using Bluetooth",
 
   "connectMB.usb.firmwareBroken.warning": "We detected issues with your micro:bit firmware",

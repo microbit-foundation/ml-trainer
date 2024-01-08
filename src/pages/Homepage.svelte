@@ -13,6 +13,7 @@
   import { t } from '../i18n';
   import { startConnectionProcess } from '../script/stores/connectDialogStore';
   import ConnectDialogContainer from '../components/connection-prompt/ConnectDialogContainer.svelte';
+  import { parseTag } from '../parseTag';
 
   // Avoid youtube cookie. rel=0 should limit related videos to youtube channel.
   // Once we have translated videos we can try e.g. cc_lang_pref=fr
@@ -45,9 +46,13 @@
         allowFullScreen>
       </iframe>
       <p>
-        {$t('content.index.toolInfo1')}
-        <a class="text-link" href={playgroundSurveyUrl} target="_blank"
-          >{$t('content.index.toolInfo2')}</a>
+        {#each parseTag($t('content.index.toolInfo'), 'link') as { tag, text }}
+          {#if tag}
+            <a class="text-link" href={playgroundSurveyUrl} target="_blank">{text}</a>
+          {:else}
+            {text}
+          {/if}
+        {/each}
       </p>
     </div>
 

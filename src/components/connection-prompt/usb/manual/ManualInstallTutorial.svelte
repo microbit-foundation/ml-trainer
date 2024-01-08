@@ -15,6 +15,7 @@
   import transferFirmwareChromeOSImage from '../../../../imgs/transfer_firmware_chromeos.gif';
   import transferFirmwareWindowsImage from '../../../../imgs/transfer_firmware_windows.gif';
   import DialogHeading from '../../../DialogHeading.svelte';
+  import { parseTag } from '../../../../parseTag';
 
   export let onConnectBluetoothClick: () => void;
 
@@ -47,13 +48,17 @@
     </DialogHeading>
     <div class="space-y-5">
       <p>
-        {$t('connectMB.usb.manual.manualDownload')}
-        <span>
-          <button
-            class="hover:cursor-pointer text-red-500 underline"
-            on:click={() => Microbits.downloadFirmware()}
-            >{$t('connectMB.usb.manual.manualDownloadLink')}</button>
-        </span>
+        {#each parseTag($t('connectMB.usb.manual.manualDownload'), 'link') as { tag, text }}
+          {#if tag}
+            <span>
+              <button
+                class="hover:cursor-pointer text-red-500 underline"
+                on:click={() => Microbits.downloadFirmware()}>{text}</button>
+            </span>
+          {:else}
+            {text}
+          {/if}
+        {/each}
       </p>
       <div class="flex gap-5">
         <ol class="col-span-2">
