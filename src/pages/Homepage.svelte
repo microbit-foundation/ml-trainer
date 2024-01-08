@@ -48,6 +48,7 @@
         {$t('content.index.toolInfo1')}
         <a
           class="text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
+          rel="noopener noreferrer"
           href={playgroundSurveyUrl}
           target="_blank">{$t('content.index.toolInfo2')}</a>
       </p>
