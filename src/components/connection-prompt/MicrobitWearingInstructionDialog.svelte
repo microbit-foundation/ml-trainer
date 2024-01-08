@@ -10,6 +10,7 @@
   import microbitStrapImage from '../../imgs/microbit_strap.png';
   import microbitHolderImage from '../../imgs/microbit_holder.png';
   import DialogHeading from '../DialogHeading.svelte';
+  import { parseTag } from '../../parseTag.ts';
 
   export let onNextClick: () => void;
   export let onBackClick: () => void;
@@ -29,9 +30,17 @@
     </DialogHeading>
     <div class="space-y-10">
       <p class="leading-normal">
-        <a class="text-link" href={instructionsVideoLink} target="_blank" rel="noopener"
-          >{$t('connectMB.wearingSetup.subtitle1')}</a>
-        {$t('connectMB.wearingSetup.subtitle2')}
+        {#each parseTag($t('connectMB.wearingSetup.subtitle'), 'link') as { tag, text }}
+          {#if tag}
+            <a
+              class="text-link"
+              href={instructionsVideoLink}
+              target="_blank"
+              rel="noopener">{text}</a>
+          {:else}
+            {text}
+          {/if}
+        {/each}
       </p>
       <div class="flex flex-col font-semibold items-center gap-8">
         <div class="flex flex-col items-center gap-y-2">
