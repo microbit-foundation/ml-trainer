@@ -30,7 +30,7 @@
     {#if subtitleId}
       <p>{$t(subtitleId)}</p>
     {/if}
-    <div class="inline-grid grid-cols-{items.length} gap-20 py-13 px-10">
+    <div class="inline-grid grid-cols-{items.length} gap-16 py-13 px-10">
       {#each items as item}
         <div class="flex flex-col text-md text-center">
           <img class="h-25" src={item.imgSrc} alt={$t(item.imgAltId)} />
