@@ -160,7 +160,8 @@
   "connectMB.webPopup": "Select micro:bit",
   "connectMB.webPopup.instruction.heading": "In the next popup",
   "connectMB.webPopup.instruction1": "Choose your micro:bit",
-  "connectMB.webPopup.instruction2": "Select 'Connect'",
+  "connectMB.webPopup.webUsb.instruction2": "Select 'Connect'",
+  "connectMB.webPopup.webBluetooth.instruction2": "Select 'Pair'",
   "connectMB.webPopup.webUsb.altText": "WebUSB connection dialog with BBC micro:bit selected",
   "connectMB.webPopup.webBluetooth.altText": "Web Bluetooth connection dialog with BBC micro:bit selected",
 

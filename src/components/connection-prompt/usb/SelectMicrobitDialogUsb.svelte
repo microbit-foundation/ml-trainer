@@ -41,7 +41,7 @@
         </h3>
         <ol class="list-decimal list-inside">
           <li>{$t('connectMB.webPopup.instruction1')}</li>
-          <li>{$t('connectMB.webPopup.instruction2')}</li>
+          <li>{$t('connectMB.webPopup.webUsb.instruction2')}</li>
         </ol>
       </div>
     </div>
