@@ -5,7 +5,7 @@
 
   "actions.close": "Close",
 
-  "alert.data.classNameLengthAlert": "Names must consists of maximum {maxLen} characters.",
+  "alert.data.classNameLengthAlert": "Action names cannot be longer than {maxLen} characters.",
   "alert.recording.disconnectedDuringRecording": "micro:bit disconnected during recording",
 
   "alert.isRecording": "You are currently recording!",
@@ -44,6 +44,8 @@
   "content.data.recordAction": "Record data for action \"{action}\"",
   "content.data.deleteAction": "Delete action \"{action}\"",
   "content.data.deleteRecording": "Delete recording",
+  "content.data.recordingDialog.title": "Record data for action \"{action}\"",
+  "content.data.recordingDialog.recording": "Recording",
 
   "content.data.controlbar.button.menu": "Data actions",
   "content.data.controlbar.button.clearData": "Clear data samples",

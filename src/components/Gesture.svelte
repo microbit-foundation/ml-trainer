@@ -50,6 +50,7 @@
   import IconButton from './IconButton.svelte';
   import RecordIcon from 'virtual:icons/fluent/record-20-regular';
   import CloseIcon from 'virtual:icons/ri/close-line';
+  import StandardDialog from './dialogs/StandardDialog.svelte';
 
   export let onNoMicrobitSelect: () => void;
   export let gesture: Gesture;
@@ -67,7 +68,6 @@
   function cancelCountdown(): void {
     clearInterval(countdownInterval);
     showCountdown = false;
-    countdownValue = countdownInitialValue;
   }
 
   function cancelRecording(): void {
@@ -76,6 +76,7 @@
   }
 
   function countdownStart(): void {
+    countdownValue = countdownInitialValue;
     showCountdown = true;
     countdownInterval = setInterval(() => {
       countdownValue--;
@@ -248,32 +249,38 @@
 </script>
 
 <!-- Recording countdown popup -->
-<BaseDialog
-  background="light"
-  isOpen={showCountdown || isThisRecording}
-  onClose={cancelRecording}>
-  <div class="flex flex-col space-y-10">
-    <div class="space-y-10 w-70">
-      <div class={showCountdown ? 'visible' : 'invisible'}>
-        <GestureTilePart elevated={true}>
-          <p class="text-9xl text-center text-gray-400">{countdownValue}</p>
-          <p class="pt-5 px-10 text-gray-400 text-center">
-            {$t('content.data.recording.description')}
-          </p>
-        </GestureTilePart>
+<StandardDialog isOpen={showCountdown || isThisRecording} onClose={cancelRecording}>
+  <div class="flex flex-col items-center gap-8 w-120">
+    <h2 class="text-xl font-bold self-start">
+      {$t('content.data.recordingDialog.title', { values: { action: $nameBind } })}
+    </h2>
+    <div class="flex flex-col space-y-3 self-center items-center justify-center">
+      <div class="flex justify-center">
+        <p class="text-lg px-10 text-center">
+          {$t('content.data.recording.description')}
+        </p>
       </div>
-      <StandardButton type="warning" onClick={() => cancelRecording}
-        >{$t('content.data.recording.button.cancel')}</StandardButton>
+      <div class="flex items-center h-100px">
+        {#if countdownValue > 0}
+          <p class="text-8xl text-center font-bold text-brand-500">
+            {countdownValue}
+          </p>
+        {:else}
+          <p class="text-5xl text-center font-bold text-brand-500">
+            {$t('content.data.recordingDialog.recording')}
+          </p>
+        {/if}
+      </div>
+      <!-- Recording bar to show recording progress -->
+      <div class="w-70 h-6 bg-red-200 rounded-full overflow-hidden">
+        <div
+          class="h-full bg-red-600 w-0 {isThisRecording ? 'animate-loading-bar' : ''}" />
+      </div>
     </div>
-    <!-- Recording bar to show recording progress -->
-    <div
-      class="w-70 h-6 bg-red-200 rounded-full overflow-hidden {isThisRecording
-        ? 'visible'
-        : 'invisible'}">
-      <div class="h-full bg-red-600 {isThisRecording ? 'animate-loading-bar' : ''}" />
-    </div>
+    <StandardButton type="warning" onClick={cancelRecording}
+      >{$t('content.data.recording.button.cancel')}</StandardButton>
   </div>
-</BaseDialog>
+</StandardDialog>
 
 <!-- Title of gesture-->
 <GestureTilePart
@@ -336,7 +343,7 @@
             rounded>
             <RecordIcon
               class="h-20 w-20 {isChosenGesture
-                ? 'text-rose-600'
+                ? 'text-red-600'
                 : 'text-neutral-400'} flex justify-center items-center rounded-full" />
           </IconButton>
         </div>
