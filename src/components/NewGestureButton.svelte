@@ -9,6 +9,7 @@
   import { addGesture } from '../script/stores/mlStore';
   import { t } from '../i18n';
   import StandardButton from './StandardButton.svelte';
+  import AddIcon from 'virtual:icons/ri/add-line';
 
   export let disabled: boolean = false;
 
@@ -20,4 +21,7 @@
 </script>
 
 <StandardButton type="primary" {disabled} {onClick}
-  >{$t('content.data.addAction')}</StandardButton>
+  ><div class="flex items-center gap-x-1">
+    <AddIcon class="h-6 w-6" /><span>{$t('content.data.addAction')}</span>
+  </div>
+</StandardButton>
