@@ -251,12 +251,12 @@
       <img
         class:hidden={wasTriggered}
         src={rightArrowImage}
-        alt="right arrow icon"
+        alt={$t('arrowIconRight.altText')}
         width={30} />
       <img
         class:hidden={!wasTriggered || !$state.isInputReady}
         src={rightArrowBlueImage}
-        alt="right arrow icon"
+        alt={$t('arrowIconRight.altText')}
         width={30} />
     </div>
   {/if}

@@ -239,5 +239,8 @@
   "popup.outdatedmicrobit.button.update": "Update now",
   "popup.outdatedmicrobit.button.update.mkcd": "Open MakeCode",
 
+  "arrowIconRight.altText": "arrow pointing right",
+  "arrowIconDown.altText": "arrow pointing down",
+
   "settings.label": "Settings"
 }
