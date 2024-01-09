@@ -5,7 +5,7 @@
 
   "actions.close": "Close",
 
-  "alert.data.classNameLengthAlert": "Names must consists of maximum {maxLen} characters.",
+  "alert.data.classNameLengthAlert": "Names cannot be longer than {maxLen} characters.",
   "alert.recording.disconnectedDuringRecording": "micro:bit disconnected during recording",
 
   "alert.isRecording": "You are currently recording!",
