@@ -14,9 +14,10 @@
 </script>
 
 <div
-  on:click={onClick}
-  class="{$$restProps.class || ''} rounded-lg bg-backgroundlight {selected &&
-    'border-brand-500 border-1'}"
+  on:click
+  class="{$$restProps.class || ''} rounded-lg bg-backgroundlight border-1 {selected
+    ? 'border-brand-500'
+    : 'border-transparent'}"
   class:h-30={small}
   class:shadow-md={elevated}
   class:ml-2={ml && small}
