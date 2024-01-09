@@ -334,7 +334,7 @@
             rounded>
             <RecordIcon
               class="h-20 w-20 {$chosenGesture === gesture
-                ? 'text-rose-600'
+                ? 'text-red-600'
                 : 'text-neutral-400'} flex justify-center items-center rounded-full" />
           </IconButton>
         </div>
