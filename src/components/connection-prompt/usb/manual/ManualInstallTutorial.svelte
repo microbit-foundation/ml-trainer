@@ -68,7 +68,7 @@
         </ol>
         <img
           class="{imageProps.class} flex-shrink-0"
-          alt="Transferring the firmware"
+          alt={$t('connectMB.USBCompatibility.transferStep.altText')}
           src={imageProps.src} />
       </div>
     </div>

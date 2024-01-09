@@ -160,6 +160,8 @@
   "connectMB.webPopup.instruction.heading": "In the next popup",
   "connectMB.webPopup.instruction1": "Choose your micro:bit",
   "connectMB.webPopup.instruction2": "Select 'Connect'",
+  "connectMB.webPopup.webUsb.altText": "WebUSB connection dialog with BBC micro:bit selected",
+  "connectMB.webPopup.webBluetooth.altText": "Web Bluetooth connection dialog with BBC micro:bit selected",
 
   "connectMB.usbDownloadingMB1.header": "Downloading program to micro:bit 1",
   "connectMB.usbDownloadingMB2.header": "Downloading program to micro:bit 2",
@@ -222,6 +224,7 @@
   "connectMB.USBCompatibility.transferStep.step1": "Open the location to which the firmware was downloaded. Most commonly found in your download folder.",
   "connectMB.USBCompatibility.transferStep.step2": "Drag the file onto the micro:bit on your computer's file explorer.",
   "connectMB.USBCompatibility.transferStep.step3": "Once the file has finished transferring, the micro:bit can be connected using Bluetooth.",
+  "connectMB.USBCompatibility.transferStep.altText": "gif showing how to drag and drop a program onto the micro:bit",
 
   "compatibility.platform.notSupported": "The tool is not supported on your current platform.",
   "compatibility.platform.notSupported.joinDesktop": "Join us on desktop.",

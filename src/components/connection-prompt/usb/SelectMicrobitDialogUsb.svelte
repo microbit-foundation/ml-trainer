@@ -34,7 +34,7 @@
       <img
         class="w-418px h-365px flex-shrink-0"
         src={selectMicrobitImage}
-        alt="Screenshot of the browser window that will appear next.  Your connected micro:bit will be listed. Choose your micro:bit then select the Connect button." />
+        alt={$t('connectMB.webPopup.webUsb.altText')} />
       <div class="flex-grow px-5">
         <h3 class="font-bold text-lg mb-5">
           {$t('connectMB.webPopup.instruction.heading')}:
