@@ -32,7 +32,7 @@
 
   let domNode: HTMLElement;
 
-  function onMouseEnter(): void {
+  function openTooltip(): void {
     let domRect: DOMRect = domNode.getBoundingClientRect();
     boxTop = h + 5 + boxOffset.y + domRect.y; // hardcoded values to provide a 'nice' starting point
     boxLeft = w - 20 + boxOffset.x + domRect.x;
@@ -40,6 +40,10 @@
       boxLeft = boxOffset.x + domRect.x - width - 5; // hardcoded values to provide a 'nice' starting point
     }
     isOpen = true;
+  }
+
+  function closeTooltip(): void {
+    isOpen = false;
   }
 </script>
 
@@ -57,12 +61,16 @@
         {iconText}
       </p>
     {/if}
-    <div
-      on:mouseenter={() => onMouseEnter()}
-      on:mouseleave={() => (isOpen = false)}
-      class="flex items-center cursor-pointer"
-      style="color: {colors.iconTextColor}">
-      <InfoIcon />
+    <div class="flex flex-col justify-center">
+      <button
+        on:focusin={openTooltip}
+        on:focusout={closeTooltip}
+        on:mouseenter={openTooltip}
+        on:mouseleave={closeTooltip}
+        class="flex items-center cursor-pointer rounded-full outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
+        style="color: {colors.iconTextColor}">
+        <InfoIcon />
+      </button>
     </div>
 
     {#if isOpen}
