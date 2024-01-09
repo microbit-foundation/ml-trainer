@@ -10,7 +10,6 @@
   export let ml = false;
   export let small = false;
   export let selected = false;
-  export let onClick: () => void = () => {};
 </script>
 
 <div

@@ -287,7 +287,7 @@
   small
   elevated
   selected={isChosenGesture || showAddActionWalkThrough}
-  onClick={selectGesture}>
+  on:click={selectGesture}>
   <div class="grid grid-cols-5 place-items-center p-2 w-50 h-30 relative">
     {#if !showAddActionWalkThrough}
       <div class="absolute right-2 top-2">
@@ -326,7 +326,7 @@
   </div>
 {:else}
   <div class="max-w-max {isGestureNamed || hasRecordings ? 'visible' : 'invisible'}">
-    <GestureTilePart small elevated selected={isChosenGesture} onClick={selectGesture}>
+    <GestureTilePart small elevated selected={isChosenGesture} on:click={selectGesture}>
       <div class="h-full flex items-center gap-x-3 p-2">
         <div class="w-33 flex justify-center items-center gap-x-3">
           <IconButton
