@@ -12,7 +12,7 @@
 
 <div
   use:menu.items
-  class="z-999 absolute right-0 mt-3 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-  {...$$restProps}>
+  {...$$restProps}
+  class="z-999 absolute right-0 mt-3 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none {$$restProps.class}">
   <slot />
 </div>

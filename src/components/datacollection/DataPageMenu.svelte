@@ -62,7 +62,7 @@
       class="h-12 w-12 text-brand-500 flex justify-center items-center rounded-full" />
   </IconButton>
   <MenuTransition show={$menu.expanded}>
-    <MenuItems {menu}>
+    <MenuItems class="w-max" {menu}>
       <div class="py-2">
         <MenuItem {menu} value="upload">
           <UploadIcon />
