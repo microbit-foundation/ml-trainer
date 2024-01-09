@@ -215,6 +215,8 @@
   "connectMB.outputMB.sameButton": "Same",
   "connectMB.outputMB.otherButton": "Other",
 
+  "info.label": "More information about \"{item}\"",
+
   "languageDialog.title": "Language",
 
   "popup.compatibility.bluetooth.header": "Bluetooth incompatible browser!",
