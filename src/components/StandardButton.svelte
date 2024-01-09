@@ -47,9 +47,9 @@
       enabled: 'hover:border-brand-600 active:border-brand-700 active:bg-brand-50',
     },
     warning: {
-      base: 'font-bold rounded-4xl bg-red-500 text-white border-solid border-2 border-red-500',
+      base: 'font-bold rounded-4xl bg-red-600 text-white border-solid border-2 border-red-600',
       enabled:
-        'hover:bg-red-600 hover:border-red-600 active:bg-red-700 active:border-red-700',
+        'hover:bg-red-700 hover:border-red-700 active:bg-red-800 active:border-red-800',
     },
   };
 </script>

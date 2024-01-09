@@ -23,21 +23,26 @@
   const browser = Bowser.getParser(window.navigator.userAgent);
   const osName = browser.getOS().name ?? 'unknown';
 
+  interface ImageProps {
+    src: string;
+    class: string;
+  }
+
   // See https://github.com/lancedikson/bowser/blob/master/src/constants.js
-  const getIllustrationGif = (os: string) => {
+  const getImageProps = (os: string): ImageProps => {
     switch (os) {
       case 'Chrome OS':
-        return transferFirmwareChromeOSImage;
+        return { src: transferFirmwareChromeOSImage, class: 'w-290px h-133px' };
       case 'Windows':
-        return transferFirmwareWindowsImage;
+        return { src: transferFirmwareWindowsImage, class: 'w-290px h-146px' };
       case 'macOS':
-        return transferFirmwareMacOSImage;
+        return { src: transferFirmwareMacOSImage, class: 'w-290px h-104px' };
       default:
-        return transferFirmwareMacOSImage;
+        return { src: transferFirmwareMacOSImage, class: 'w-290px h-104px' };
     }
   };
 
-  const transferIllustration = getIllustrationGif(osName);
+  const imageProps = getImageProps(osName);
 </script>
 
 <main>
@@ -55,16 +60,16 @@
             >{$t('connectMB.usb.manual.manualDownloadLink')}</button>
         </span>
       </p>
-      <div class="flex gap-5">
+      <div class="flex align-top gap-5">
         <ol class="w-auto">
           <li>1. {$t('connectMB.USBCompatibility.transferStep.step1')}</li>
           <li>2. {$t('connectMB.USBCompatibility.transferStep.step2')}</li>
           <li>3. {$t('connectMB.USBCompatibility.transferStep.step3')}</li>
         </ol>
         <img
-          class="w-290px h-168px flex-shrink-0"
+          class="{imageProps.class} flex-shrink-0"
           alt="Transferring the firmware"
-          src={transferIllustration} />
+          src={imageProps.src} />
       </div>
     </div>
     <div class="flex justify-center pt-5">

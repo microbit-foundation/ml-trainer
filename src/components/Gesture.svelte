@@ -45,14 +45,18 @@
   import BaseDialog from './dialogs/BaseDialog.svelte';
   import Gesture from '../script/domain/Gesture';
   import { gestures } from '../script/stores/Stores';
+  import greetingEmojiWithArrowImage from '../imgs/greeting-emoji-with-arrow.svg';
+  import upCurveArrowImage from '../imgs/curve-arrow-up.svg';
   import IconButton from './IconButton.svelte';
   import RecordIcon from 'virtual:icons/fluent/record-20-regular';
   import CloseIcon from 'virtual:icons/ri/close-line';
+  import StandardDialog from './dialogs/StandardDialog.svelte';
 
   export let onNoMicrobitSelect: () => void;
   export let gesture: Gesture;
+  export let showWalkThrough: Boolean = false;
 
-  const defaultNewName = $t('content.data.classPlaceholderNewClass');
+  const gesturePlaceholderName = $t('content.data.classPlaceholderNewClass');
   const recordingDuration = get(settings).duration;
   const countdownInitialValue = 3;
 
@@ -64,7 +68,6 @@
   function cancelCountdown(): void {
     clearInterval(countdownInterval);
     showCountdown = false;
-    countdownValue = countdownInitialValue;
   }
 
   function cancelRecording(): void {
@@ -73,6 +76,7 @@
   }
 
   function countdownStart(): void {
+    countdownValue = countdownInitialValue;
     showCountdown = true;
     countdownInterval = setInterval(() => {
       countdownValue--;
@@ -87,12 +91,9 @@
 
   const nameBind = gesture.bindName();
 
-  // When title is clicked. Remove name
-  function titleClicked(): void {
-    if (gesture.getName() === defaultNewName) {
-      gesture.setName('');
-    }
-  }
+  $: hasRecordings = $gesture.recordings.length > 0;
+  $: isGestureNamed = $nameBind.trim().length > 0;
+  $: showAddActionWalkThrough = !isGestureNamed && showWalkThrough && !hasRecordings;
 
   function removeClicked(): void {
     if (!areActionsAllowed(false)) {
@@ -215,6 +216,14 @@
     }
   }
 
+  // Select gesture when gesture is renamed
+  $: if ($nameBind.trim()) {
+    chosenGesture.update(chosen => {
+      chosen = gesture;
+      return chosen;
+    });
+  }
+
   // Make function depend on buttonsPressed store.
   let declaring = true;
   $: {
@@ -225,40 +234,51 @@
       declaring = false;
     }
   }
+
+  // Focus on input element when gesture is just added
+  function init(el: HTMLElement) {
+    el.focus();
+  }
 </script>
 
 <!-- Recording countdown popup -->
-<BaseDialog
-  background="light"
-  isOpen={showCountdown || isThisRecording}
-  onClose={cancelRecording}>
-  <div class="flex flex-col space-y-10">
-    <div class="space-y-10 w-70">
-      <div class={showCountdown ? 'visible' : 'invisible'}>
-        <GestureTilePart elevated={true}>
-          <p class="text-9xl text-center text-gray-400">{countdownValue}</p>
-          <p class="pt-5 px-10 text-gray-400 text-center">
-            {$t('content.data.recording.description')}
-          </p>
-        </GestureTilePart>
+<StandardDialog isOpen={showCountdown || isThisRecording} onClose={cancelRecording}>
+  <div class="flex flex-col items-center gap-8 w-120">
+    <h2 class="text-xl font-bold self-start">
+      {$t('content.data.recordingDialog.title', { values: { action: $nameBind } })}
+    </h2>
+    <div class="flex flex-col space-y-3 self-center items-center justify-center">
+      <div class="flex justify-center">
+        <p class="text-lg px-10 text-center">
+          {$t('content.data.recording.description')}
+        </p>
       </div>
-      <StandardButton type="warning" onClick={() => cancelRecording}
-        >{$t('content.data.recording.button.cancel')}</StandardButton>
+      <div class="flex items-center h-100px">
+        {#if countdownValue > 0}
+          <p class="text-8xl text-center font-bold text-brand-500">
+            {countdownValue}
+          </p>
+        {:else}
+          <p class="text-5xl text-center font-bold text-brand-500">
+            {$t('content.data.recordingDialog.recording')}
+          </p>
+        {/if}
+      </div>
+      <!-- Recording bar to show recording progress -->
+      <div class="w-70 h-6 bg-red-200 rounded-full overflow-hidden">
+        <div
+          class="h-full bg-red-600 w-0 {isThisRecording ? 'animate-loading-bar' : ''}" />
+      </div>
     </div>
-    <!-- Recording bar to show recording progress -->
-    <div
-      class="w-70 h-6 bg-red-200 rounded-full overflow-hidden {isThisRecording
-        ? 'visible'
-        : 'invisible'}">
-      <div class="h-full bg-red-600 {isThisRecording ? 'animate-loading-bar' : ''}" />
-    </div>
+    <StandardButton type="warning" onClick={cancelRecording}
+      >{$t('content.data.recording.button.cancel')}</StandardButton>
   </div>
-</BaseDialog>
+</StandardDialog>
 
 <!-- Title of gesture-->
 <GestureTilePart small elevated>
   <div class="grid grid-cols-5 place-items-center p-2 w-50 h-30 relative">
-    <div class="w-40 col-start-2 col-end-5 transition ease rounded bg-gray-100">
+    {#if !showAddActionWalkThrough}
       <div class="absolute right-2 top-2">
         <IconButton
           ariaLabel={$t('content.data.deleteAction', {
@@ -270,45 +290,71 @@
           <CloseIcon class="text-xl m-1" />
         </IconButton>
       </div>
-      <h3
-        class="px-2"
-        contenteditable
-        bind:innerText={$nameBind}
-        on:click={titleClicked}
-        on:keypress={onTitleKeypress} />
-    </div>
+    {/if}
+    <label for="gestureName" class="sr-only"
+      >{$t('content.data.addAction.inputLabel')}</label>
+    <input
+      use:init
+      name="gestureName"
+      class="w-40 col-start-2 p-2 col-end-5 transition ease rounded bg-gray-100 placeholder-gray-500 outline-primary"
+      id="gestureName"
+      placeholder={gesturePlaceholderName}
+      bind:value={$nameBind}
+      on:keypress={onTitleKeypress} />
   </div>
 </GestureTilePart>
 
-<div class="max-w-max">
-  <GestureTilePart small elevated>
-    <div class="h-full flex items-center gap-x-3 p-2">
-      <div class="w-33 flex justify-center items-center gap-x-3">
-        <IconButton
-          ariaLabel={$t(
-            $chosenGesture === gesture
-              ? 'content.data.recordAction'
-              : 'content.data.selectAction',
-            {
-              values: {
-                action: $nameBind,
+{#if showAddActionWalkThrough}
+  <div
+    class="h-full flex w-50 flex-col relative items-center"
+    style="transform: translate(-50px, 50px)">
+    <img class="mb-3 w-30" alt="" src={greetingEmojiWithArrowImage} />
+    <p class="text-center">
+      {$t('content.data.addActionWalkThrough')}
+    </p>
+  </div>
+{:else}
+  <div class="max-w-max {isGestureNamed || hasRecordings ? 'visible' : 'invisible'}">
+    <GestureTilePart small elevated>
+      <div class="h-full flex items-center gap-x-3 p-2">
+        <div class="w-33 flex justify-center items-center gap-x-3">
+          <IconButton
+            ariaLabel={$t(
+              $chosenGesture === gesture
+                ? 'content.data.recordAction'
+                : 'content.data.selectAction',
+              {
+                values: {
+                  action: $nameBind,
+                },
               },
-            },
-          )}
-          onClick={$chosenGesture === gesture ? countdownStart : selectClicked}
-          disabled={!$state.isInputConnected}
-          rounded>
-          <RecordIcon
-            class="h-20 w-20 {$chosenGesture === gesture
-              ? 'text-rose-600'
-              : 'text-neutral-400'} flex justify-center items-center rounded-full" />
-        </IconButton>
+            )}
+            onClick={$chosenGesture === gesture ? countdownStart : selectClicked}
+            disabled={!$state.isInputConnected}
+            rounded>
+            <RecordIcon
+              class="h-20 w-20 {$chosenGesture === gesture
+                ? 'text-red-600'
+                : 'text-neutral-400'} flex justify-center items-center rounded-full" />
+          </IconButton>
+        </div>
+        {#if hasRecordings}
+          {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
+            <Recording {recording} onDelete={deleteRecording} />
+          {/each}
+        {/if}
       </div>
-      {#if $gesture.recordings.length > 0}
-        {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
-          <Recording {recording} onDelete={deleteRecording} />
-        {/each}
-      {/if}
-    </div>
-  </GestureTilePart>
-</div>
+    </GestureTilePart>
+  </div>
+{/if}
+
+{#if isGestureNamed && showWalkThrough && !hasRecordings && !showCountdown && !isThisRecording}
+  <!-- Empty div to fill first column of grid  -->
+  <div></div>
+  <div class="h-full flex" style="transform: translateX(65px)">
+    <img class="w-15" alt="" src={upCurveArrowImage} />
+    <p class="text-center w-50" style="transform: translateY(20px)">
+      {$t('content.data.addRecordingWalkThrough')}
+    </p>
+  </div>
+{/if}

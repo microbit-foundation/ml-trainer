@@ -8,6 +8,7 @@
   import Gesture from '../components/Gesture.svelte';
   import { state } from '../script/stores/uiStore';
   import {
+    addGesture,
     clearGestures,
     downloadDataset,
     loadDatasetFromFile,
@@ -64,6 +65,11 @@
       filePicker.remove();
     };
   });
+
+  // Add a placeholder gesture
+  $: if (!$gestures || $gestures.length === 0) {
+    addGesture('');
+  }
 </script>
 
 <main class="flex flex-col h-full inline-block w-full bg-backgrounddark">
@@ -85,37 +91,30 @@
     </div>
   {:else}
     <div class="flex flex-col flex-grow flex-shrink py-2 px-10 h-0 overflow-y-auto">
-      {#if !$gestures.length}
-        <div class="flex justify-center">
-          <div class="text-center text-xl w-1/2 text-bold text-primarytext">
-            <p>{$t('content.data.noData')}</p>
-          </div>
-        </div>
-      {/if}
       <div class="grid grid-cols-[max-content,1fr] gap-x-7 gap-y-3">
-        {#if $gestures.length > 0}
-          <Information
-            isLightTheme={false}
-            underlineIconText={false}
-            iconText={$t('content.data.classification')}
-            titleText={$t('content.data.classHelpHeader')}
-            bodyText={$t('content.data.classHelpBody')} />
-          <Information
-            isLightTheme={false}
-            underlineIconText={false}
-            iconText={$t('content.data.data')}
-            titleText={$t('content.data.data')}
-            bodyText={$t('content.data.dataDescription')} />
-        {/if}
+        <Information
+          isLightTheme={false}
+          underlineIconText={false}
+          iconText={$t('content.data.classification')}
+          titleText={$t('content.data.classHelpHeader')}
+          bodyText={$t('content.data.classHelpBody')} />
+        <Information
+          isVisible={$gestures.some(g => g.name.trim() || g.recordings.length > 0)}
+          isLightTheme={false}
+          underlineIconText={false}
+          iconText={$t('content.data.data')}
+          titleText={$t('content.data.data')}
+          bodyText={$t('content.data.dataDescription')} />
 
         {#each $gestures as gesture (gesture.ID)}
           <Gesture
+            showWalkThrough={$gestures.length === 1}
             gesture={gestures.getGesture(gesture.ID)}
             onNoMicrobitSelect={() => (isConnectionDialogOpen = true)} />
         {/each}
       </div>
 
-      <NewGestureButton />
+      <NewGestureButton disabled={!$gestures.every(g => g.name.trim())} />
       <div class="flex justify-end mt-auto">
         <TrainingButton onClick={() => navigate(Paths.TRAINING)} />
       </div>

@@ -5,7 +5,7 @@
 
   "actions.close": "Close",
 
-  "alert.data.classNameLengthAlert": "Names must consists of maximum {maxLen} characters.",
+  "alert.data.classNameLengthAlert": "Action names cannot be longer than {maxLen} characters.",
   "alert.recording.disconnectedDuringRecording": "micro:bit disconnected during recording",
 
   "alert.isRecording": "You are currently recording!",
@@ -34,14 +34,18 @@
   "content.data.classHelpHeader": "Action",
   "content.data.classHelpBody": "The type of movement you want the machine learning tool to recognise e.g. 'wave' or 'clap'. ",
   "content.data.classification": "Action",
+  "content.data.addAction.inputLabel": "Name of action field",
   "content.data.data": "Data samples",
   "content.data.addAction": "Add action",
+  "content.data.addActionWalkThrough": "Name an action you want the micro:bit to recognise",
+  "content.data.addRecordingWalkThrough": "Press to record a data sample or press button B on your micro:bit.",
   "content.data.dataDescription": "Multiple samples of movement data collected in 1.8 second bursts.",
-  "content.data.noData": "You do not have any data to use to train the model. You need at least 2 actions with at least 3 data samples each.",
   "content.data.selectAction": "Select action \"{action}\"",
   "content.data.recordAction": "Record data for action \"{action}\"",
   "content.data.deleteAction": "Delete action \"{action}\"",
   "content.data.deleteRecording": "Delete recording",
+  "content.data.recordingDialog.title": "Record data for action \"{action}\"",
+  "content.data.recordingDialog.recording": "Recording",
 
   "content.data.controlbar.button.menu": "Data actions",
   "content.data.controlbar.button.clearData": "Clear data samples",
@@ -69,6 +73,7 @@
   "content.model.output.estimatedGesture.iconTitle": "Estimated action:",
   "content.model.output.estimatedGesture.descriptionTitle": "Estimated action",
   "content.model.output.estimatedGesture.descriptionBody": "This is the action the model thinks you are currently doing.",
+  "content.model.output.estimatedGesture.none": "None",
 
   "content.model.output.action.iconTitle": "Action",
   "content.model.output.action.descriptionTitle": "Action",

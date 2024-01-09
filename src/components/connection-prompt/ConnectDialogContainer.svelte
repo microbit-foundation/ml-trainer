@@ -113,7 +113,8 @@
   <StandardDialog
     isOpen={$connectionDialogState.connectionState !== ConnectDialogStates.NONE &&
       !endOfFlow}
-    onClose={connectionStateNone}>
+    onClose={connectionStateNone}
+    dismissOnClickOutside={false}>
     {#if $connectionDialogState.connectionState === ConnectDialogStates.START_RADIO}
       <StartRadioDialog
         onStartBluetoothClick={() => {
