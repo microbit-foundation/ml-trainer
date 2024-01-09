@@ -29,6 +29,8 @@ class MicrobitSerial implements MicrobitConnection {
 
   private unprocessedInput = '';
 
+  private periodicDataPromise: Promise<void> | undefined;
+
   constructor(
     private usb: MicrobitUSB,
     private onDisconnect: (manual?: boolean) => void,
@@ -38,19 +40,14 @@ class MicrobitSerial implements MicrobitConnection {
     inputBehaviour: InputBehaviour,
     _inputUartHandler: (data: string) => void,
   ): Promise<void> {
-    try {
-        if (!this.connected) {
-          await this.connect();
-        }
-        await this.protocolHandshake();
-        await this.streamPeriodicData(inputBehaviour);
-    } catch (error) {
-      console.error('There was an error', error);
-    } finally {
-      if (this.connected) {
-        this.disconnect();
-      }
+    if (!this.connected) {
+      await this.connect();
     }
+    if (this.periodicDataPromise) {
+      throw new Error('Already listening');
+    }
+    await this.protocolHandshake();
+    this.periodicDataPromise = this.streamPeriodicData(inputBehaviour);
   }
 
   /**
@@ -66,34 +63,40 @@ class MicrobitSerial implements MicrobitConnection {
     }
 
     let handshakeReceived = false;
-    const readHandshakeRetry = (retries: number) => new Promise<string>((resolve, reject) => {
-      return this.reader.read().then(({ value, done }) => {
-        if (value) {
-          this.unprocessedInput += value;
-          let messages = protocol.splitMessages(this.unprocessedInput);
-          this.unprocessedInput = messages.remainingInput;
+    const readHandshakeRetry = (retries: number): Promise<string> =>
+      new Promise<string>((resolve, reject) => {
+        return this.reader
+          .read()
+          .then(({ value, done }) => {
+            if (value) {
+              this.unprocessedInput += value;
+              let messages = protocol.splitMessages(this.unprocessedInput);
+              this.unprocessedInput = messages.remainingInput;
 
-          // TODO: Not currently looking at the responseId, as we only care
-          //      about receiving *any* handshake response
-          messages.messages.forEach(msg => {
-            let handshakeResponseId = protocol.processHandshake(msg);
-            if (handshakeResponseId) {
-              handshakeReceived = true;
+              // TODO: Not currently looking at the responseId, as we only care
+              //      about receiving *any* handshake response
+              messages.messages.forEach(msg => {
+                let handshakeResponseId = protocol.processHandshake(msg);
+                if (handshakeResponseId) {
+                  handshakeReceived = true;
+                }
+              });
+              if (handshakeReceived) {
+                return resolve('Handshake received');
+              }
+            }
+            throw new Error('No handshake received');
+          })
+          .catch(reason => {
+            if (retries > 0) {
+              return readHandshakeRetry(retries - 1)
+                .then(resolve)
+                .catch(reject);
+            } else {
+              return reject(reason);
             }
           });
-          if (handshakeReceived) {
-            return resolve("Handshake received");
-          }
-        }
-        throw new Error("No handshake received");
-      }).catch((reason) => {
-        if (retries > 0) {
-          return readHandshakeRetry(retries - 1).then(resolve).catch(reject);
-        } else {
-          return reject(reason);
-        }
       });
-    });
 
     // The first message we get out of the micro:bit serial buffer might be
     // incomplete due to the issue described before. The second message should
@@ -103,7 +106,7 @@ class MicrobitSerial implements MicrobitConnection {
     let attempts = 0;
     while (!handshakeReceived && attempts++ < 20) {
       const handshakeCmd = protocol.generateCommand(protocol.CommandTypes.Handshake);
-      writeLine(`Sending handshake ${handshakeCmd.message}`)
+      writeLine(`Sending handshake ${handshakeCmd.message}`);
       await this.writer.write(handshakeCmd.message);
       await new Promise(resolve => setTimeout(resolve, 100));
     }
@@ -179,6 +182,15 @@ class MicrobitSerial implements MicrobitConnection {
     this.usb.disconnect();
     this.onDisconnect(true);
     this.unprocessedInput = '';
+
+    if (this.periodicDataPromise) {
+      // It's hard to make disconnect() async so we've left this as a background error for now.
+      this.periodicDataPromise.catch(e => {
+        console.error(e);
+      });
+      this.periodicDataPromise = undefined;
+    }
+
     navigate(Paths.HOME);
   }
 
