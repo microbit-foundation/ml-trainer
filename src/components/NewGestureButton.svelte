@@ -8,9 +8,10 @@
   import { areActionsAllowed } from '../script/stores/uiStore';
   import { addGesture } from '../script/stores/mlStore';
   import { t } from '../i18n';
-  import StandardButton from './StandardButton.svelte';
+  import StandardButton, { ButtonVariant } from './StandardButton.svelte';
   import AddIcon from 'virtual:icons/ri/add-line';
 
+  export let type: ButtonVariant = 'primary';
   export let disabled: boolean = false;
 
   function onClick() {
@@ -20,7 +21,7 @@
   }
 </script>
 
-<StandardButton type="primary" {disabled} {onClick}
+<StandardButton {type} {disabled} {onClick}
   ><div class="flex items-center gap-x-1">
     <AddIcon class="h-6 w-6" /><span>{$t('content.data.addAction')}</span>
   </div>

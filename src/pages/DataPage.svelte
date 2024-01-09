@@ -70,6 +70,13 @@
   $: if (!$gestures || $gestures.length === 0) {
     addGesture('');
   }
+
+  let trainingButtonPrimary = false;
+  gestures.subscribe(gestures => {
+    if (gestures.filter(g => g.recordings.length >= 3).length >= 2) {
+      trainingButtonPrimary = true;
+    }
+  });
 </script>
 
 <main class="flex flex-col h-full inline-block w-full bg-backgrounddark">
@@ -113,9 +120,13 @@
   {/if}
   <div
     class="flex items-center justify-between px-10 py-2 border-b-3 border-t-3 border-gray-200">
-    <NewGestureButton disabled={!$gestures.every(g => g.name.trim())} />
+    <NewGestureButton
+      type={!trainingButtonPrimary ? 'primary' : 'secondary'}
+      disabled={!$gestures.every(g => g.name.trim())} />
     <div class="flex items-center gap-x-2">
-      <TrainingButton type="secondary" onClick={() => navigate(Paths.TRAINING)} />
+      <TrainingButton
+        type={trainingButtonPrimary ? 'primary' : 'secondary'}
+        onClick={() => navigate(Paths.TRAINING)} />
       <DataPageMenu
         clearDisabled={$gestures.length === 0}
         downloadDisabled={$gestures.length === 0}
