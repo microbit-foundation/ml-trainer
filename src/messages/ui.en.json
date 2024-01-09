@@ -154,6 +154,7 @@
   "connectMB.connectCable.heading": "Connect USB cable to micro:bit",
   "connectMB.connectCable.subtitle": "Connect the micro:bit to this computer with a USB cable so that the machine learning tool program can be downloaded to it.",
 
+  "connectMB.connectCable.altText": "animation showing a USB cable being connected to the top of a micro:bit",
   "connectMB.connectCable.skip": "Skip: program already downloaded?",
 
   "connectMB.webPopup": "Select micro:bit",
@@ -224,7 +225,7 @@
   "connectMB.USBCompatibility.transferStep.step1": "Open the location to which the firmware was downloaded. Most commonly found in your download folder.",
   "connectMB.USBCompatibility.transferStep.step2": "Drag the file onto the micro:bit on your computer's file explorer.",
   "connectMB.USBCompatibility.transferStep.step3": "Once the file has finished transferring, the micro:bit can be connected using Bluetooth.",
-  "connectMB.USBCompatibility.transferStep.altText": "gif showing how to drag and drop a program onto the micro:bit",
+  "connectMB.USBCompatibility.transferStep.altText": "animation of using drag and drop to program a micro:bit",
 
   "compatibility.platform.notSupported": "The tool is not supported on your current platform.",
   "compatibility.platform.notSupported.joinDesktop": "Join us on desktop.",

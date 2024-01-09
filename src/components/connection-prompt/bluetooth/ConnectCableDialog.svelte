@@ -37,7 +37,10 @@
           {$t('connectMB.connectCableMB2.subtitle')}
         {/if}
       </p>
-      <img src={connectCableImage} alt="" class="w-65 h-241px mx-auto" />
+      <img
+        src={connectCableImage}
+        alt={$t('connectMB.connectCable.altText')}
+        class="w-65 h-241px mx-auto" />
     </div>
   </div>
   <div class="flex justify-between pt-5">
