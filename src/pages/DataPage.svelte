@@ -104,11 +104,6 @@
             onNoMicrobitSelect={() => (isConnectionDialogOpen = true)} />
         {/each}
       </div>
-
-      <NewGestureButton disabled={!$gestures.every(g => g.name.trim())} />
-      <div class="flex justify-end mt-auto">
-        <TrainingButton onClick={() => navigate(Paths.TRAINING)} />
-      </div>
     </div>
   {/if}
   <div class="flex items-center justify-between px-10 py-2 border-b-3 border-gray-200">
