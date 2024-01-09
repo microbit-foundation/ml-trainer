@@ -37,10 +37,7 @@
           {$t('connectMB.connectCableMB2.subtitle')}
         {/if}
       </p>
-      <img
-        src={connectCableImage}
-        alt="USB cable being connected at the top, centre of the micro:bit."
-        class="w-65 h-241px mx-auto" />
+      <img src={connectCableImage} alt="" class="w-65 h-241px mx-auto" />
     </div>
   </div>
   <div class="flex justify-between pt-5">

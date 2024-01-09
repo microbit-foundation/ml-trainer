@@ -21,10 +21,7 @@
     </DialogHeading>
     <div class="space-y-5">
       <p>{$t('connectMB.connectBattery.subtitle')}</p>
-      <img
-        src={microbitConnectedImage}
-        alt="Showing the batteries need to go into the battery pack and the battery pack should be connected at the top left of the micro:bit."
-        class="w-68 h-229px m-auto" />
+      <img src={microbitConnectedImage} alt="" class="w-68 h-229px m-auto" />
     </div>
   </div>
   <div class="flex justify-end gap-x-5 pt-5">
