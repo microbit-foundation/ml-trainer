@@ -20,6 +20,7 @@
   import Environment from '../../../script/Environment';
   import StaticConfiguration from '../../../StaticConfiguration';
   import loadingSpinnerImage from '../../../imgs/loadingspinner.gif';
+  import DialogHeading from '../../DialogHeading.svelte';
 
   // callbacks
   export let deviceState: DeviceRequestStates;
@@ -102,20 +103,22 @@
 </script>
 
 <main>
-  <h1 class="mb-5 font-bold w-150">
-    {$t('connectMB.bluetooth.heading')}
-  </h1>
-  {#if $state.requestDeviceWasCancelled && !isConnecting}
-    <p class="text-warning mb-1">{$t('connectMB.bluetooth.cancelledConnection')}</p>
-  {/if}
-  {#if attemptedToPairWithInvalidPattern}
-    <p class="text-warning mb-1">{$t('connectMB.bluetooth.invalidPattern')}</p>
-  {/if}
-  {#if isConnecting}
-    <!-- Show spinner while connecting -->
-    <div class="w-650px flex flex-col justify-center items-center">
-      <p>{$t('connectMB.bluetooth.connecting')}</p>
-      <img alt="loading" src={loadingSpinnerImage} width="100px" />
-    </div>
-  {/if}
+  <div class="w-175">
+    <DialogHeading>
+      {$t('connectMB.bluetooth.heading')}
+    </DialogHeading>
+    {#if $state.requestDeviceWasCancelled && !isConnecting}
+      <p class="text-warning">{$t('connectMB.bluetooth.cancelledConnection')}</p>
+    {/if}
+    {#if attemptedToPairWithInvalidPattern}
+      <p class="text-warning">{$t('connectMB.bluetooth.invalidPattern')}</p>
+    {/if}
+    {#if isConnecting}
+      <!-- Show spinner while connecting -->
+      <div class="flex flex-col justify-center items-center">
+        <p>{$t('connectMB.bluetooth.connecting')}</p>
+        <img class="w-100px h-100px" alt="" src={loadingSpinnerImage} />
+      </div>
+    {/if}
+  </div>
 </main>

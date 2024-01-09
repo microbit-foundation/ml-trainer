@@ -105,7 +105,7 @@
               class="m-auto arrow-filter-color"
               src={downArrowImage}
               alt="down arrow icon"
-              width="80px" />
+              width={80} />
           </div>
           <div class="absolute right-2 top-2">
             <button

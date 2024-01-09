@@ -9,6 +9,7 @@
   import { t } from '../../../i18n';
   import Microbits from '../../../script/microbit-interfacing/Microbits';
   import selectMicrobitImage from '../../../imgs/select-microbit-web-usb.png';
+  import DialogHeading from '../../DialogHeading.svelte';
 
   export let onBackClick: () => void;
   export let onFound: () => void;
@@ -25,16 +26,16 @@
 </script>
 
 <main>
-  <div class="w-180 leading-10 pb-5">
-    <h2 class="font-bold text-2xl">
+  <div class="w-175">
+    <DialogHeading>
       {$t('connectMB.webPopup')}
-    </h2>
-    <div class="flex mt-5">
+    </DialogHeading>
+    <div class="flex">
       <img
-        width="418px"
+        class="w-418px h-365px flex-shrink-0"
         src={selectMicrobitImage}
         alt="Screenshot of the browser window that will appear next.  Your connected micro:bit will be listed. Choose your micro:bit then select the Connect button." />
-      <div class="flex flex-col w-full px-5">
+      <div class="flex-grow px-5">
         <h3 class="font-bold text-lg mb-5">
           {$t('connectMB.webPopup.instruction.heading')}:
         </h3>
@@ -45,7 +46,7 @@
       </div>
     </div>
   </div>
-  <div class="justify-end flex gap-x-5">
+  <div class="justify-end flex gap-x-5 pt-5">
     <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
     <StandardButton type="primary" onClick={onNextClick}
       >{$t('connectMB.nextButton')}</StandardButton>

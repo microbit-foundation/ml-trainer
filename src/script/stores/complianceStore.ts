@@ -17,7 +17,8 @@ export interface CookieConsent {
 const domain = window.location.hostname;
 const config = {
   ga:
-    process.env.VITE_STAGE === 'PRODUCTION' || process.env.VITE_STAGE === 'STAGING'
+    import.meta.env.VITE_STAGE === 'PRODUCTION' ||
+    import.meta.env.VITE_STAGE === 'STAGING'
       ? {}
       : undefined,
   custom: [

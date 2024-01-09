@@ -5,67 +5,45 @@
  -->
 
 <script lang="ts">
-  import StandardButton from '../../StandardButton.svelte';
-  import { t } from '../../../i18n';
   import microbitImage from '../../../imgs/stylised-microbit-black.svg';
   import computerImage from '../../../imgs/stylised_computer.svg';
   import usbCableImage from '../../../imgs/stylised-usb-cable.svg';
   import batteryPackImage from '../../../imgs/stylised-battery-pack.svg';
+  import WhatYouWillNeedDialog from '../../WhatYouWillNeedDialog.svelte';
 
   export let onNextClick: () => void;
   export let onStartRadioClick: () => void;
 
-  const imageHeight = 25;
+  const items = [
+    {
+      imgSrc: microbitImage,
+      imgAltId: 'connectMB.bluetoothStart.requirements1',
+      titleId: 'connectMB.bluetoothStart.requirements1',
+    },
+    {
+      imgSrc: computerImage,
+      imgAltId: 'connectMB.bluetoothStart.requirements2',
+      titleId: 'connectMB.bluetoothStart.requirements2',
+      subtitleId: 'connectMB.bluetoothStart.requirements2.subtitle',
+    },
+    {
+      imgSrc: usbCableImage,
+      imgAltId: 'connectMB.bluetoothStart.requirements3',
+      titleId: 'connectMB.bluetoothStart.requirements3',
+    },
+    {
+      imgSrc: batteryPackImage,
+      imgAltId: 'connectMB.bluetoothStart.requirements4',
+      titleId: 'connectMB.bluetoothStart.requirements4',
+      subtitleId: 'connectMB.bluetoothStart.requirements4.subtitle',
+    },
+  ];
 </script>
 
-<main>
-  <div class="w-200">
-    <h1 class="text-2xl font-bold pb-5">{$t('connectMB.bluetoothStart.heading')}</h1>
-    <p>{$t('connectMB.bluetoothStart.subtitle')}</p>
-    <div class="inline-grid grid-cols-4 gap-20 py-20 px-10">
-      <div class="flex flex-col">
-        <img
-          class="h-{imageHeight}"
-          src={microbitImage}
-          alt={$t('connectMB.bluetoothStart.requirements1')} />
-        <p class="pt-10 text-center font-bold">
-          {$t('connectMB.bluetoothStart.requirements1')}
-        </p>
-      </div>
-      <div class="flex flex-col">
-        <img
-          class="h-{imageHeight}"
-          src={computerImage}
-          alt={$t('connectMB.bluetoothStart.requirements2')} />
-        <p class="pt-10 text-center font-bold">
-          {$t('connectMB.bluetoothStart.requirements2')}
-        </p>
-      </div>
-      <div class="flex flex-col">
-        <img
-          class="h-{imageHeight}"
-          src={usbCableImage}
-          alt={$t('connectMB.bluetoothStart.requirements3')} />
-        <p class="pt-10 text-center font-bold">
-          {$t('connectMB.bluetoothStart.requirements3')}
-        </p>
-      </div>
-      <div class="flex flex-col">
-        <img
-          class="h-{imageHeight}"
-          src={batteryPackImage}
-          alt={$t('connectMB.bluetoothStart.requirements4')} />
-        <p class="pt-10 text-center font-bold">
-          {$t('connectMB.bluetoothStart.requirements4')}
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="flex justify-between items-center">
-    <StandardButton type="link" onClick={onStartRadioClick}>
-      {$t('connectMB.bluetoothStart.switchRadio')}
-    </StandardButton>
-    <StandardButton onClick={onNextClick} type="primary"
-      >{$t('connectMB.nextButton')}</StandardButton>
-  </div>
-</main>
+<WhatYouWillNeedDialog
+  {items}
+  headingId="connectMB.bluetoothStart.heading"
+  subtitleId="connectMB.bluetoothStart.subtitle"
+  switchTextId="connectMB.bluetoothStart.switchRadio"
+  onSwitchClick={onStartRadioClick}
+  {onNextClick} />

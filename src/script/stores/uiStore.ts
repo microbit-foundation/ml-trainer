@@ -38,6 +38,7 @@ export const state = writable<{
   isTraining: boolean;
   isInputConnected: boolean;
   isOutputConnected: boolean;
+  hasTrainedBefore: boolean;
   isPredicting: boolean;
   offerReconnect: boolean;
   requestDeviceWasCancelled: boolean;
@@ -57,6 +58,7 @@ export const state = writable<{
   isTraining: false,
   isInputConnected: false,
   isOutputConnected: false,
+  hasTrainedBefore: false,
   isPredicting: false,
   offerReconnect: false,
   requestDeviceWasCancelled: false,

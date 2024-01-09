@@ -9,6 +9,7 @@
   import { t } from '../i18n';
   import StandardDialog from './dialogs/StandardDialog.svelte';
   import { isBluetoothWarningDialogOpen } from '../script/stores/uiStore';
+  import DialogHeading from './DialogHeading.svelte';
 </script>
 
 <StandardDialog
@@ -16,20 +17,15 @@
   onClose={() => {
     $isBluetoothWarningDialogOpen = false;
   }}>
-  <div>
-    <h1 class="font-bold text-red-500 text-xl min-w-140">
+  <div class="w-175">
+    <DialogHeading>
       {$t('popup.compatibility.bluetooth.header')}
-    </h1>
-    <hr />
-    <div class="pt-3">
-      <p>{$t('popup.compatibility.bluetooth.explain')}</p>
-      <div class="h-2" />
-      <p>{$t('popup.compatibility.bluetooth.advice')}</p>
-    </div>
-    <div class="h-4" />
-    <hr />
-    <div class="h-4" />
-    <div class="pl-2 pt-2 w-full">
+    </DialogHeading>
+    <div class="space-y-5">
+      <div class="space-y-2">
+        <p>{$t('popup.compatibility.bluetooth.explain')}</p>
+        <p>{$t('popup.compatibility.bluetooth.advice')}</p>
+      </div>
       <table class="m-auto">
         <thead>
           <tr class="font-bold">

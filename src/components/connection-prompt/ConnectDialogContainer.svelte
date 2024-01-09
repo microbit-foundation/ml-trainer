@@ -30,6 +30,7 @@
   import MicrobitSerial from '../../script/microbit-interfacing/MicrobitSerial';
   import MicrobitWearingInstructionDialog from './MicrobitWearingInstructionDialog.svelte';
 
+  let endOfFlow = false;
   let currentStage: 'usb' | 'usb1' | 'usb2' = 'usb1'; // "usb" is for the bluetooth connection flow, "usb1" and "usb2" determine the progress in the radio connection flow
 
   let flashProgress = 0;
@@ -84,7 +85,7 @@
   }
 
   function onConnectingSerial(): void {
-    $connectionDialogState.connectionState = ConnectDialogStates.NONE;
+    endFlow();
     MicrobitSerial.connect(Microbits.getLinked()).catch(() => {
       // Errors to consider: microbit is disconnected, some sort of connection error
     });
@@ -94,12 +95,26 @@
     Microbits.useInputAsOutput();
     $connectionDialogState.connectionState = ConnectDialogStates.NONE;
   }
+
+  function connectionStateNone() {
+    setTimeout(() => {
+      $connectionDialogState.connectionState = ConnectDialogStates.NONE;
+      endOfFlow = false;
+    }, 200);
+  }
+
+  function endFlow() {
+    endOfFlow = true;
+    connectionStateNone();
+  }
 </script>
 
 <main>
   <StandardDialog
-    isOpen={$connectionDialogState.connectionState !== ConnectDialogStates.NONE}
-    onClose={() => ($connectionDialogState.connectionState = ConnectDialogStates.NONE)}>
+    isOpen={$connectionDialogState.connectionState !== ConnectDialogStates.NONE &&
+      !endOfFlow}
+    onClose={connectionStateNone}
+    dismissOnClickOutside={false}>
     {#if $connectionDialogState.connectionState === ConnectDialogStates.START_RADIO}
       <StartRadioDialog
         onStartBluetoothClick={() => {
@@ -219,9 +234,7 @@
         onNextClick={onFoundBluetoothDevice} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.BLUETOOTH_CONNECTING}
       <BluetoothConnectingDialog
-        onBluetoothConnected={() => {
-          $connectionDialogState.connectionState = ConnectDialogStates.NONE;
-        }}
+        onBluetoothConnected={endFlow}
         deviceState={$connectionDialogState.deviceState} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECTING_MICROBITS}
       CONNECTING_MICROBITS
