@@ -45,14 +45,17 @@
   import BaseDialog from './dialogs/BaseDialog.svelte';
   import Gesture from '../script/domain/Gesture';
   import { gestures } from '../script/stores/Stores';
+  import greetingEmojiWithArrowImage from '../imgs/greeting-emoji-with-arrow.svg';
+  import upCurveArrowImage from '../imgs/curve-arrow-up.svg';
   import IconButton from './IconButton.svelte';
   import RecordIcon from 'virtual:icons/fluent/record-20-regular';
   import CloseIcon from 'virtual:icons/ri/close-line';
 
   export let onNoMicrobitSelect: () => void;
   export let gesture: Gesture;
+  export let showWalkThrough: Boolean = false;
 
-  const defaultNewName = $t('content.data.classPlaceholderNewClass');
+  const gesturePlaceholderName = $t('content.data.classPlaceholderNewClass');
   const recordingDuration = get(settings).duration;
   const countdownInitialValue = 3;
 
@@ -87,12 +90,9 @@
 
   const nameBind = gesture.bindName();
 
-  // When title is clicked. Remove name
-  function titleClicked(): void {
-    if (gesture.getName() === defaultNewName) {
-      gesture.setName('');
-    }
-  }
+  $: hasRecordings = $gesture.recordings.length > 0;
+  $: isGestureNamed = $nameBind.trim().length > 0;
+  $: showAddActionWalkThrough = !isGestureNamed && showWalkThrough && !hasRecordings;
 
   function removeClicked(): void {
     if (!areActionsAllowed(false)) {
@@ -215,6 +215,14 @@
     }
   }
 
+  // Select gesture when gesture is renamed
+  $: if ($nameBind.trim()) {
+    chosenGesture.update(chosen => {
+      chosen = gesture;
+      return chosen;
+    });
+  }
+
   // Make function depend on buttonsPressed store.
   let declaring = true;
   $: {
@@ -224,6 +232,11 @@
     } else {
       declaring = false;
     }
+  }
+
+  // Focus on input element when gesture is just added
+  function init(el: HTMLElement) {
+    el.focus();
   }
 </script>
 
@@ -258,7 +271,7 @@
 <!-- Title of gesture-->
 <GestureTilePart small elevated>
   <div class="grid grid-cols-5 place-items-center p-2 w-50 h-30 relative">
-    <div class="w-40 col-start-2 col-end-5 transition ease rounded bg-gray-100">
+    {#if !showAddActionWalkThrough}
       <div class="absolute right-2 top-2">
         <IconButton
           ariaLabel={$t('content.data.deleteAction', {
@@ -270,45 +283,71 @@
           <CloseIcon class="text-xl m-1" />
         </IconButton>
       </div>
-      <h3
-        class="px-2"
-        contenteditable
-        bind:innerText={$nameBind}
-        on:click={titleClicked}
-        on:keypress={onTitleKeypress} />
-    </div>
+    {/if}
+    <label for="gestureName" class="sr-only"
+      >{$t('content.data.addAction.inputLabel')}</label>
+    <input
+      use:init
+      name="gestureName"
+      class="w-40 col-start-2 p-2 col-end-5 transition ease rounded bg-gray-100 placeholder-gray-500 outline-primary"
+      id="gestureName"
+      placeholder={gesturePlaceholderName}
+      bind:value={$nameBind}
+      on:keypress={onTitleKeypress} />
   </div>
 </GestureTilePart>
 
-<div class="max-w-max">
-  <GestureTilePart small elevated>
-    <div class="h-full flex items-center gap-x-3 p-2">
-      <div class="w-33 flex justify-center items-center gap-x-3">
-        <IconButton
-          ariaLabel={$t(
-            $chosenGesture === gesture
-              ? 'content.data.recordAction'
-              : 'content.data.selectAction',
-            {
-              values: {
-                action: $nameBind,
+{#if showAddActionWalkThrough}
+  <div
+    class="h-full flex w-50 flex-col relative items-center"
+    style="transform: translate(-50px, 50px)">
+    <img class="mb-3 w-30" alt="" src={greetingEmojiWithArrowImage} />
+    <p class="text-center">
+      {$t('content.data.addActionWalkThrough')}
+    </p>
+  </div>
+{:else}
+  <div class="max-w-max {isGestureNamed || hasRecordings ? 'visible' : 'invisible'}">
+    <GestureTilePart small elevated>
+      <div class="h-full flex items-center gap-x-3 p-2">
+        <div class="w-33 flex justify-center items-center gap-x-3">
+          <IconButton
+            ariaLabel={$t(
+              $chosenGesture === gesture
+                ? 'content.data.recordAction'
+                : 'content.data.selectAction',
+              {
+                values: {
+                  action: $nameBind,
+                },
               },
-            },
-          )}
-          onClick={$chosenGesture === gesture ? countdownStart : selectClicked}
-          disabled={!$state.isInputConnected}
-          rounded>
-          <RecordIcon
-            class="h-20 w-20 {$chosenGesture === gesture
-              ? 'text-rose-600'
-              : 'text-neutral-400'} flex justify-center items-center rounded-full" />
-        </IconButton>
+            )}
+            onClick={$chosenGesture === gesture ? countdownStart : selectClicked}
+            disabled={!$state.isInputConnected}
+            rounded>
+            <RecordIcon
+              class="h-20 w-20 {$chosenGesture === gesture
+                ? 'text-rose-600'
+                : 'text-neutral-400'} flex justify-center items-center rounded-full" />
+          </IconButton>
+        </div>
+        {#if hasRecordings}
+          {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
+            <Recording {recording} onDelete={deleteRecording} />
+          {/each}
+        {/if}
       </div>
-      {#if $gesture.recordings.length > 0}
-        {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
-          <Recording {recording} onDelete={deleteRecording} />
-        {/each}
-      {/if}
-    </div>
-  </GestureTilePart>
-</div>
+    </GestureTilePart>
+  </div>
+{/if}
+
+{#if isGestureNamed && showWalkThrough && !hasRecordings && !showCountdown && !isThisRecording}
+  <!-- Empty div to fill first column of grid  -->
+  <div></div>
+  <div class="h-full flex" style="transform: translateX(65px)">
+    <img class="w-15" alt="" src={upCurveArrowImage} />
+    <p class="text-center w-50" style="transform: translateY(20px)">
+      {$t('content.data.addRecordingWalkThrough')}
+    </p>
+  </div>
+{/if}

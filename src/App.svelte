@@ -41,8 +41,6 @@
     CookieManager.unsetReconnectFlag();
   }
 
-  document.title = Environment.pageTitle;
-
   onMount(() => {
     // Value must switch from false to true after mount to trigger dialog transition
     isBluetoothWarningDialogOpen.set(!get(compatibility).bluetooth);
@@ -65,14 +63,13 @@
         <ControlBar>
           <div class="flex items-center divide-x h-full">
             <div class="h-32px flex items-center">
-              <img src={microbitLogoImage} alt="micro:bit" width="166px" class="pr-3" />
+              <img class="pr-3 w-166px" src={microbitLogoImage} alt="micro:bit" />
             </div>
             <div class="h-32px flex items-center">
               <img
+                class="pl-3 mt-2px w-253px"
                 src={appNameImage}
-                alt={$t('content.index.title')}
-                width="253px"
-                class="pl-3 mt-2px" />
+                alt={$t('content.index.title')} />
             </div>
           </div>
           <div class="flex gap-5">

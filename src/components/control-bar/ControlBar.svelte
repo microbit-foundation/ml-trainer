@@ -7,7 +7,6 @@
 <style>
   div {
     background-color: #00a000;
-    color: white;
     position: sticky;
     top: 0;
     z-index: 4;

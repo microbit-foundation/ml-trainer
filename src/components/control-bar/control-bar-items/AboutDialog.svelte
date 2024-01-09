@@ -29,10 +29,8 @@
       </p>
       <div class="grid grid-cols-2 gap-5 items-center text-center">
         <img
-          class="flex-1"
+          class="w-290px h-236px"
           src={microbitHeartImage}
-          width="724"
-          height="589"
           alt={$t('about.microbitHeartImageAlt')} />
         <table class="text-sm">
           <tbody
@@ -44,6 +42,7 @@
                   target="_blank"
                   rel="noopener noreferrer"
                   href="https://github.com/microbit-foundation/ml-trainer"
+                  class="inline-flex items-center outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
                   ><GitHubIcon /><span class="sr-only">GitHub</span></a>
               </td></tr
             ></tbody

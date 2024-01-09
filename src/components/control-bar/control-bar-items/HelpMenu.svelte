@@ -56,7 +56,7 @@
       use:menu.button
       on:select={onSelect}
       class="inline-flex rounded-full text-xl p-2">
-      <HelpIcon />
+      <HelpIcon class="text-white" />
     </button>
     <MenuTransition show={$menu.expanded}>
       <MenuItems {menu}>

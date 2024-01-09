@@ -9,5 +9,5 @@
 </script>
 
 <div class="justify-center items-center self-center m-auto">
-  <img alt="loading" src={loadingSpinnerImage} width="150px" />
+  <img alt="loading" src={loadingSpinnerImage} width={150} />
 </div>

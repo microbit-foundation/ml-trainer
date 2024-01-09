@@ -9,6 +9,7 @@
   import { allLanguages, t } from '../../../i18n';
   import { locale as currentLocale } from 'svelte-i18n';
   import StandardDialog from '../../dialogs/StandardDialog.svelte';
+  import DialogHeading from '../../DialogHeading.svelte';
 
   export let onClose: () => void;
   export let isOpen: boolean;
@@ -16,7 +17,7 @@
 
 <StandardDialog {isOpen} {onClose}>
   <div class="flex flex-col gap-5 w-150">
-    <h2 class="text-xl font-bold text-black">{$t('languageDialog.title')}</h2>
+    <DialogHeading>{$t('languageDialog.title')}</DialogHeading>
     <div class="grid grid-cols-2 gap-5">
       {#each allLanguages as language}
         <button

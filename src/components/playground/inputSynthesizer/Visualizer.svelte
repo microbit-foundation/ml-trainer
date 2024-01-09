@@ -57,5 +57,5 @@
 </script>
 
 <main class="flex">
-  <canvas bind:this={canvas} height="160" id="synthetic-visualizer" width={width - 30} />
+  <canvas bind:this={canvas} height={160} id="synthetic-visualizer" width={width - 30} />
 </main>

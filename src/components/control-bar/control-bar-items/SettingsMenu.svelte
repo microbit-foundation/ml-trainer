@@ -33,7 +33,7 @@
       use:menu.button
       on:select={onSelect}
       class="inline-flex rounded-full text-xl p-2">
-      <SettingsIcon />
+      <SettingsIcon class="text-white" />
     </button>
     <MenuTransition show={$menu.expanded}>
       <MenuItems {menu}>

@@ -8,23 +8,26 @@
   import StandardButton from '../../StandardButton.svelte';
   import { t } from '../../../i18n';
   import microbitConnectedImage from '../../../imgs/stylised-microbit-connected.svg';
+  import DialogHeading from '../../DialogHeading.svelte';
 
   export let onNextClick: () => void;
   export let onBackClick: () => void;
 </script>
 
 <main>
-  <div class="w-180 leading-10 pb-5">
-    <p class="font-bold text-2xl text-left pb-3">
+  <div class="w-175">
+    <DialogHeading>
       {$t('connectMB.connectBattery.heading')}
-    </p>
-    <p>{$t('connectMB.connectBattery.subtitle')}</p>
-    <img
-      src={microbitConnectedImage}
-      alt="Showing the batteries need to go into the battery pack and the battery pack should be connected at the top left of the micro:bit."
-      class="m-auto pt-5" />
+    </DialogHeading>
+    <div class="space-y-5">
+      <p>{$t('connectMB.connectBattery.subtitle')}</p>
+      <img
+        src={microbitConnectedImage}
+        alt="Showing the batteries need to go into the battery pack and the battery pack should be connected at the top left of the micro:bit."
+        class="w-68 h-229px m-auto" />
+    </div>
   </div>
-  <div class="justify-end gap-x-5 flex pt-10">
+  <div class="flex justify-end gap-x-5 pt-5">
     <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
     <StandardButton type="primary" onClick={onNextClick}
       >{$t('connectMB.nextButton')}</StandardButton>

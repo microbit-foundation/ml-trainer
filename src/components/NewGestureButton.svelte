@@ -8,17 +8,16 @@
   import { areActionsAllowed } from '../script/stores/uiStore';
   import { addGesture } from '../script/stores/mlStore';
   import { t } from '../i18n';
-  import AddIcon from 'virtual:icons/ri/add-line';
-  import IconButton from './IconButton.svelte';
   import StandardButton from './StandardButton.svelte';
 
-  const defaultNewName = $t('content.data.classPlaceholderNewClass');
+  export let disabled: boolean = false;
 
   function onClick() {
     if (areActionsAllowed(false)) {
-      addGesture(defaultNewName);
+      addGesture('');
     }
   }
 </script>
 
-<StandardButton type="primary" {onClick}>{$t('content.data.addAction')}</StandardButton>
+<StandardButton type="primary" {disabled} {onClick}
+  >{$t('content.data.addAction')}</StandardButton>

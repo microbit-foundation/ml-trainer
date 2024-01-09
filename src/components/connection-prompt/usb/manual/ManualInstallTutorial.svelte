@@ -14,6 +14,7 @@
   import transferFirmwareMacOSImage from '../../../../imgs/transfer_firmware_macos.gif';
   import transferFirmwareChromeOSImage from '../../../../imgs/transfer_firmware_chromeos.gif';
   import transferFirmwareWindowsImage from '../../../../imgs/transfer_firmware_windows.gif';
+  import DialogHeading from '../../../DialogHeading.svelte';
 
   export let onConnectBluetoothClick: () => void;
 
@@ -22,56 +23,58 @@
   const browser = Bowser.getParser(window.navigator.userAgent);
   const osName = browser.getOS().name ?? 'unknown';
 
+  interface ImageProps {
+    src: string;
+    class: string;
+  }
+
   // See https://github.com/lancedikson/bowser/blob/master/src/constants.js
-  const getIllustrationGif = (os: string) => {
+  const getImageProps = (os: string): ImageProps => {
     switch (os) {
       case 'Chrome OS':
-        return transferFirmwareChromeOSImage;
+        return { src: transferFirmwareChromeOSImage, class: 'w-290px h-133px' };
       case 'Windows':
-        return transferFirmwareWindowsImage;
+        return { src: transferFirmwareWindowsImage, class: 'w-290px h-146px' };
       case 'macOS':
-        return transferFirmwareMacOSImage;
+        return { src: transferFirmwareMacOSImage, class: 'w-290px h-104px' };
       default:
-        return transferFirmwareMacOSImage;
+        return { src: transferFirmwareMacOSImage, class: 'w-290px h-104px' };
     }
   };
 
-  const transferIllustration = getIllustrationGif(osName);
+  const imageProps = getImageProps(osName);
 </script>
 
 <main>
-  <h1 class="mb-5 font-bold">
-    {$t('connectMB.usb.manual.header')}
-  </h1>
-  <div class="flex float-left mb-3">
-    <p class="mr-1">
-      {$t('connectMB.usb.manual.manualDownload')}
-    </p>
-    <p
-      class="hover:cursor-pointer text-red-500 underline"
-      on:click={() => Microbits.downloadFirmware()}>
-      {$t('connectMB.usb.manual.manualDownloadLink')}
-    </p>
-  </div>
-  <div class="grid grid-cols-3 mb-5 w-900px">
-    <div class="col-span-2">
-      <p>1. {$t('connectMB.USBCompatibility.transferStep.step1')}</p>
-      <p>2. {$t('connectMB.USBCompatibility.transferStep.step2')}</p>
-      <p>3. {$t('connectMB.USBCompatibility.transferStep.step3')}</p>
-    </div>
-    <div>
-      <div class="">
-        <ImageSkeleton
+  <div class="w-175">
+    <DialogHeading>
+      {$t('connectMB.usb.manual.header')}
+    </DialogHeading>
+    <div class="space-y-5">
+      <p>
+        {$t('connectMB.usb.manual.manualDownload')}
+        <span>
+          <button
+            class="hover:cursor-pointer text-red-500 underline"
+            on:click={() => Microbits.downloadFirmware()}
+            >{$t('connectMB.usb.manual.manualDownloadLink')}</button>
+        </span>
+      </p>
+      <div class="flex align-top gap-5">
+        <ol class="w-auto">
+          <li>1. {$t('connectMB.USBCompatibility.transferStep.step1')}</li>
+          <li>2. {$t('connectMB.USBCompatibility.transferStep.step2')}</li>
+          <li>3. {$t('connectMB.USBCompatibility.transferStep.step3')}</li>
+        </ol>
+        <img
+          class="{imageProps.class} flex-shrink-0"
           alt="Transferring the firmware"
-          castShadow
-          height={104}
-          src={transferIllustration}
-          width={290} />
+          src={imageProps.src} />
       </div>
     </div>
-  </div>
-  <div class="grid grid-cols-1 place-items-center w-full">
-    <StandardButton type="primary" onClick={onConnectBluetoothClick}
-      >{$t('connectMB.usb.manual.done')}</StandardButton>
+    <div class="flex justify-center pt-5">
+      <StandardButton type="primary" onClick={onConnectBluetoothClick}
+        >{$t('connectMB.usb.manual.done')}</StandardButton>
+    </div>
   </div>
 </main>

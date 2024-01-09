@@ -227,7 +227,7 @@
         class="absolute right-5 top-5 {wasTriggered
           ? 'bg-secondary'
           : 'bg-gray-500'} text-white rounded w-15 text-xl text-center">
-        {~~meterWidthPct}%
+        {Math.round(meterWidthPct)}%
       </p>
     </div>
   </div>
@@ -252,12 +252,12 @@
         class:hidden={wasTriggered}
         src={rightArrowImage}
         alt="right arrow icon"
-        width="30px" />
+        width={30} />
       <img
         class:hidden={!wasTriggered || !$state.isInputReady}
         src={rightArrowBlueImage}
         alt="right arrow icon"
-        width="30px" />
+        width={30} />
     </div>
   {/if}
 </GestureTilePart>
