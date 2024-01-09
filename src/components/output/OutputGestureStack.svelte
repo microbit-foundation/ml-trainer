@@ -227,7 +227,7 @@
         class="absolute right-5 top-5 {wasTriggered
           ? 'bg-secondary'
           : 'bg-gray-500'} text-white rounded w-15 text-xl text-center">
-        {~~meterWidthPct}%
+        {Math.round(meterWidthPct)}%
       </p>
     </div>
   </div>

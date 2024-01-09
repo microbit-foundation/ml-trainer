@@ -25,8 +25,6 @@
   function onUserInteraction(): void {
     hasInteracted = true;
   }
-
-  $: currentEstimatedGestureConfidence = $bestPrediction?.confidence.currentConfidence;
 </script>
 
 <h1 class="sr-only">{$t('content.index.toolProcessCards.model.title')}</h1>
@@ -38,12 +36,16 @@
       iconText={$t('content.model.output.estimatedGesture.iconTitle')}
       titleText={$t('content.model.output.estimatedGesture.descriptionTitle')}
       bodyText={$t('content.model.output.estimatedGesture.descriptionBody')} />
-    <p class="font-semibold text-2xl">
-      {$bestPrediction?.name ? $bestPrediction?.name : 'None'}
-    </p>
-    {#if currentEstimatedGestureConfidence}
+    {#if $bestPrediction && $bestPrediction.confidence.isConfident}
+      <p class="font-semibold text-2xl">
+        {$bestPrediction.name}
+      </p>
       <p class="bg-secondary text-white rounded w-15 text-center">
-        {Math.floor(currentEstimatedGestureConfidence * 100)}%
+        {Math.round($bestPrediction.confidence.currentConfidence * 100)}%
+      </p>
+    {:else}
+      <p class="font-semibold text-2xl">
+        {$t('content.model.output.estimatedGesture.none')}
       </p>
     {/if}
   </div>
