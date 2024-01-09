@@ -9,10 +9,14 @@
   export let mr = false;
   export let ml = false;
   export let small = false;
+  export let selected = false;
+  export let onClick: () => void = () => {};
 </script>
 
 <div
-  class="{$$restProps.class || ''} rounded-lg bg-backgroundlight"
+  on:click={onClick}
+  class="{$$restProps.class || ''} rounded-lg bg-backgroundlight {selected &&
+    'border-brand-500 border-1'}"
   class:h-30={small}
   class:shadow-md={elevated}
   class:ml-2={ml && small}
