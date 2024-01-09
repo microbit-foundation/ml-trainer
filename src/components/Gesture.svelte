@@ -243,23 +243,23 @@
 
 <!-- Recording countdown popup -->
 <StandardDialog isOpen={showCountdown || isThisRecording} onClose={cancelRecording}>
-  <div class="flex flex-col gap-8 w-150">
-    <h2 class="text-xl font-bold">
+  <div class="flex flex-col items-center gap-8 w-120">
+    <h2 class="text-xl font-bold self-start">
       {$t('content.data.recordingDialog.title', { values: { action: $nameBind } })}
     </h2>
-    <div class="flex flex-col space-y-5 self-center items-center justify-center">
+    <div class="flex flex-col space-y-3 self-center items-center justify-center">
       <div class="flex justify-center">
-        <p class="px-10 text-center w-70">
+        <p class="text-lg px-10 text-center">
           {$t('content.data.recording.description')}
         </p>
       </div>
-      <div class="flex items-center h-128px">
+      <div class="flex items-center h-100px">
         {#if countdownValue > 0}
-          <p class="text-9xl text-center text-brand-500">
+          <p class="text-8xl text-center font-bold text-brand-500">
             {countdownValue}
           </p>
         {:else}
-          <p class="text-6xl text-center font-bold text-brand-500">
+          <p class="text-5xl text-center font-bold text-brand-500">
             {$t('content.data.recordingDialog.recording')}
           </p>
         {/if}
@@ -270,10 +270,8 @@
           class="h-full bg-red-600 w-0 {isThisRecording ? 'animate-loading-bar' : ''}" />
       </div>
     </div>
-    <div class="flex justify-end">
-      <StandardButton type="warning" onClick={cancelRecording}
-        >{$t('content.data.recording.button.cancel')}</StandardButton>
-    </div>
+    <StandardButton type="warning" onClick={cancelRecording}
+      >{$t('content.data.recording.button.cancel')}</StandardButton>
   </div>
 </StandardDialog>
 
