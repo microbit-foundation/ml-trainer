@@ -49,7 +49,7 @@ describe('HtmlFormattedMessage', () => {
     `);
   });
 
-  it('renderes a link', () => {
+  it('renders a link', () => {
     render(HtmlFormattedMessage, {
       id: 'link',
       options: {
