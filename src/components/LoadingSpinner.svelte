@@ -19,7 +19,6 @@
   }
   .loader {
     font-size: 10px;
-    margin: 80px auto;
     position: relative;
     text-indent: -9999em;
     -webkit-transform: translateZ(0);
@@ -68,6 +67,6 @@
   import { t } from '../i18n';
 </script>
 
-<div class="justify-center items-center self-center m-auto">
+<div class="flex justify-center items-center self-center m-auto h-20">
   <div alt={$t('loading')} class="loader text-secondary" />
 </div>
