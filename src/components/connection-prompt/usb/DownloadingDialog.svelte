@@ -8,7 +8,6 @@
   import { t } from '../../../i18n';
   export let currentStage: string;
   export let transferProgress: number;
-  $: transferProgressLabel = `${Math.round(transferProgress * 100)}%`;
 </script>
 
 <main>
@@ -32,9 +31,6 @@
             class="h-2 bg-secondary rounded"
             style="width: {transferProgress * 100}%;" />
         </div>
-        <p class="text-left mt-1">
-          {transferProgressLabel}
-        </p>
       </div>
     </div>
   </div>
