@@ -39,7 +39,7 @@ vitest.mock('../i18n', () => ({
 }));
 
 describe('HtmlFormattedMessage', () => {
-  it('renderes simple example', () => {
+  it('renders simple example', () => {
     render(HtmlFormattedMessage, { id: 'simple' });
     const dom = screen.getByText('An example');
     expect(dom).toMatchInlineSnapshot(`
@@ -49,7 +49,7 @@ describe('HtmlFormattedMessage', () => {
     `);
   });
 
-  it('renderes a link', () => {
+  it('renders a link', () => {
     render(HtmlFormattedMessage, {
       id: 'link',
       options: {
