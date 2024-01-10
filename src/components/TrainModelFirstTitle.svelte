@@ -13,10 +13,7 @@
 </script>
 
 <div class="flex flex-col items-center bg-backgrounddark pb-10">
-  <img
-    class="pt-10 opacity-40 w-350px h-249px"
-    src={testModelImage}
-    alt={$t('content.model.imageAlt')} />
+  <img class="pt-10 opacity-40 w-350px h-249px" src={testModelImage} alt="" />
   <h1 class="text-2xl font-bold mb-3">
     {$t('content.model.trainModelFirstHeading')}
   </h1>

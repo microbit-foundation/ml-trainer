@@ -288,7 +288,7 @@
   elevated
   selected={isChosenGesture || showAddActionWalkThrough}
   on:click={selectGesture}>
-  <div class="grid grid-cols-5 place-items-center p-2 w-50 h-30 relative">
+  <div class="flex items-center justify-center p-2 w-50 h-30 relative">
     {#if !showAddActionWalkThrough}
       <div class="absolute right-2 top-2">
         <IconButton

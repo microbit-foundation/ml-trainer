@@ -39,7 +39,7 @@
       </p>
       <img
         src={connectCableImage}
-        alt="USB cable being connected at the top, centre of the micro:bit."
+        alt={$t('connectMB.connectCable.altText')}
         class="w-65 h-241px mx-auto" />
     </div>
   </div>

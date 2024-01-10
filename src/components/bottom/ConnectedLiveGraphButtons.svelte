@@ -26,7 +26,7 @@
           >{$t('menu.model.disconnect')}</StandardButton>
       {:else}
         <StandardButton onClick={TypingUtils.emptyFunction} disabled>
-          <img alt="loading" src={loadingSpinnerImage} style="height:24px" />
+          <img alt={$t('loading')} src={loadingSpinnerImage} style="height:24px" />
         </StandardButton>
       {/if}
     {/if}
@@ -40,7 +40,7 @@
         size="small">{$t('footer.disconnectButton')}</StandardButton>
     {:else}
       <StandardButton onClick={TypingUtils.emptyFunction} disabled>
-        <img alt="loading" src={loadingSpinnerImage} style="height:24px" />
+        <img alt={$t('loading')} src={loadingSpinnerImage} style="height:24px" />
       </StandardButton>
     {/if}
   </div>

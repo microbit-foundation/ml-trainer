@@ -48,16 +48,15 @@
   "content.data.recordingDialog.recording": "Recording",
 
   "content.data.controlbar.button.menu": "Data actions",
-  "content.data.controlbar.button.clearData": "Clear data samples",
+  "content.data.controlbar.button.clearData": "Delete all data samples",
   "content.data.controlbar.button.clearData.confirm": "Are you sure you wish to delete all data samples?\nThis cannot be undone.",
-  "content.data.controlbar.button.downloadData": "Download dataset",
-  "content.data.controlbar.button.uploadData": "Upload dataset",
+  "content.data.controlbar.button.downloadData": "Download all data samples",
+  "content.data.controlbar.button.uploadData": "Import data samples",
 
   "content.data.recording.button.cancel": "Cancel recording",
   "content.data.recording.description": "Start action before the countdown finishes",
 
   "content.trainer.header": "Training a model",
-  "content.trainer.imageAlt": "train model",
   "content.trainer.description": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit machine learning tool to recognise different actions when you move your micro:bit.",
   "content.trainer.enoughdata.title": "Status: You've collected enough data to train the model.",
   "content.trainer.training.title": "Status: Training the model in progress.",
@@ -67,7 +66,6 @@
   "content.trainer.retrain.title": "Status: You've collected new data and can retrain the model.",
 
   "content.model.trainModelFirstHeading": "Test model",
-  "content.model.imageAlt": "test model",
   "content.model.trainModelBody1": "You cannot test the model until it has been trained.",
   "content.model.trainModelBody2": "You need at least 3 data samples for 2 actions to train a model.",
   "content.model.addData": "Add data",
@@ -156,12 +154,16 @@
   "connectMB.connectCable.heading": "Connect USB cable to micro:bit",
   "connectMB.connectCable.subtitle": "Connect the micro:bit to this computer with a USB cable so that the machine learning tool program can be downloaded to it.",
 
+  "connectMB.connectCable.altText": "animation showing a USB cable being connected to the top of a micro:bit",
   "connectMB.connectCable.skip": "Skip: program already downloaded?",
 
   "connectMB.webPopup": "Select micro:bit",
   "connectMB.webPopup.instruction.heading": "In the next popup",
   "connectMB.webPopup.instruction1": "Choose your micro:bit",
-  "connectMB.webPopup.instruction2": "Select 'Connect'",
+  "connectMB.webPopup.webUsb.instruction2": "Select 'Connect'",
+  "connectMB.webPopup.webBluetooth.instruction2": "Select 'Pair'",
+  "connectMB.webPopup.webUsb.altText": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2",
+  "connectMB.webPopup.webBluetooth.altText": "Web Bluetooth connection dialog with BBC micro:bit entry labelled 1 and Pair button labelled 2",
 
   "connectMB.usbDownloadingMB1.header": "Downloading program to micro:bit 1",
   "connectMB.usbDownloadingMB2.header": "Downloading program to micro:bit 2",
@@ -215,6 +217,8 @@
   "connectMB.outputMB.sameButton": "Same",
   "connectMB.outputMB.otherButton": "Other",
 
+  "info.label": "More information about \"{item}\"",
+
   "languageDialog.title": "Language",
 
   "popup.compatibility.bluetooth.header": "Bluetooth incompatible browser!",
@@ -224,10 +228,13 @@
   "connectMB.USBCompatibility.transferStep.step1": "Open the location to which the firmware was downloaded. Most commonly found in your download folder.",
   "connectMB.USBCompatibility.transferStep.step2": "Drag the file onto the micro:bit on your computer's file explorer.",
   "connectMB.USBCompatibility.transferStep.step3": "Once the file has finished transferring, the micro:bit can be connected using Bluetooth.",
+  "connectMB.USBCompatibility.transferStep.altText": "animation of dragging a hex file from the downloads folder onto the micro:bit drive or device listed in the file explorer",
 
   "compatibility.platform.notSupported": "The tool is not supported on your current platform.",
   "compatibility.platform.notSupported.joinDesktop": "Join us on desktop.",
   "compatibility.webgl.notSupported": "WebGL not available. Enable WebGL to see 3D data view.",
+
+  "loading": "loading",
 
   "popup.outdatedmicrobit.header": "Your micro:bit has an outdated machine learning tool program",
   "popup.outdatedmicrobit.text": "We strongly recommend that you update it now, as some features may not work as expected.",
@@ -235,6 +242,9 @@
   "popup.outdatedmicrobit.button.later": "Later",
   "popup.outdatedmicrobit.button.update": "Update now",
   "popup.outdatedmicrobit.button.update.mkcd": "Open MakeCode",
+
+  "arrowIconRight.altText": "arrow pointing right",
+  "arrowIconDown.altText": "arrow pointing down",
 
   "settings.label": "Settings"
 }

@@ -49,11 +49,11 @@
       </p>
     {/if}
   </div>
-  <div class="flex-grow flex-shrink py-2 px-10 h-0 overflow-y-auto">
+  <div class="flex flex-col flex-grow">
     <div
       class="grid {enableOutputGestures
-        ? 'grid-cols-[max-content,max-content,max-content,max-content,max-content]'
-        : 'grid-cols-[max-content,max-content]'} gap-x-7 gap-y-3">
+        ? 'grid-cols-[240px,360px,177px,146px,1fr]'
+        : 'grid-cols-[240px,max-content]'} gap-x-7 items-center flex-shrink-0 h-13 px-10 z-1 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
       <Information
         underlineIconText={false}
         isLightTheme={false}
@@ -83,10 +83,16 @@
           titleText={$t('content.model.output.pin.descriptionTitle')}
           bodyText={$t('content.model.output.pin.descriptionBody')} />
       {/if}
-
+    </div>
+    <div
+      class="grid {enableOutputGestures
+        ? 'grid-cols-[240px,360px,177px,146px,max-content]'
+        : 'grid-cols-[240px,max-content]'} auto-rows-max gap-x-7 gap-y-3 py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
       <!-- Display all gestures and their output capabilities -->
       {#each gestures.getGestures() as gesture}
-        <OutputGesture variant="stack" {gesture} {onUserInteraction} />
+        <section class="contents">
+          <OutputGesture variant="stack" {gesture} {onUserInteraction} />
+        </section>
       {/each}
     </div>
     {#if !$state.isOutputConnected && !hasClosedPopup && hasInteracted}
@@ -106,7 +112,7 @@
             <img
               class="m-auto arrow-filter-color"
               src={downArrowImage}
-              alt="down arrow icon"
+              alt={$t('arrowIconDown.altText')}
               width={80} />
           </div>
           <div class="absolute right-2 top-2">
