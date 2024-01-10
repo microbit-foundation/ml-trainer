@@ -108,7 +108,7 @@
     {#if attemptedToPairWithInvalidPattern}
       <p class="text-warning">{$t('connectMB.bluetooth.invalidPattern')}</p>
     {/if}
-    {#if true}
+    {#if isConnecting}
       <!-- Show spinner while connecting -->
       <div class="flex flex-col justify-center items-center mb-40px">
         <p>{$t('connectMB.bluetooth.connecting')}</p>
