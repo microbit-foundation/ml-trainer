@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-import * as matchers from 'vitest-dom/matchers';
 import 'vitest-dom/extend-expect';
 
 // browser mocks
