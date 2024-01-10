@@ -9,16 +9,21 @@
   import { onMount } from 'svelte';
   import StandardButton from '../../../StandardButton.svelte';
   import Microbits from '../../../../script/microbit-interfacing/Microbits';
-  import ImageSkeleton from '../../../skeletonloading/ImageSkeleton.svelte';
   import Bowser from 'bowser';
   import transferFirmwareMacOSImage from '../../../../imgs/transfer_firmware_macos.gif';
   import transferFirmwareChromeOSImage from '../../../../imgs/transfer_firmware_chromeos.gif';
   import transferFirmwareWindowsImage from '../../../../imgs/transfer_firmware_windows.gif';
   import DialogHeading from '../../../DialogHeading.svelte';
+  import EscapedChunksFormattedMessage, {
+    linkWithProps,
+  } from '../../../HtmlFormattedMessage.svelte';
+  import HtmlFormattedMessage from '../../../HtmlFormattedMessage.svelte';
 
   export let onConnectBluetoothClick: () => void;
 
-  onMount(() => Microbits.downloadFirmware());
+  let downloadLinkContainer: HTMLElement | undefined;
+
+  onMount(() => downloadLinkContainer!.querySelector('a')!.click());
 
   const browser = Bowser.getParser(window.navigator.userAgent);
   const osName = browser.getOS().name ?? 'unknown';
@@ -51,14 +56,17 @@
       {$t('connectMB.usb.manual.header')}
     </DialogHeading>
     <div class="space-y-5">
-      <p>
-        {$t('connectMB.usb.manual.manualDownload')}
-        <span>
-          <button
-            class="hover:cursor-pointer text-red-500 underline"
-            on:click={() => Microbits.downloadFirmware()}
-            >{$t('connectMB.usb.manual.manualDownloadLink')}</button>
-        </span>
+      <p bind:this={downloadLinkContainer}>
+        <HtmlFormattedMessage
+          id="connectMB.usb.manual.manualDownload"
+          options={{
+            values: {
+              link: linkWithProps({
+                download: 'machine-learning-tool-program.hex',
+                href: Microbits.hexFiles.universal,
+              }),
+            },
+          }} />
       </p>
       <div class="flex align-top gap-5">
         <ol class="w-auto">
