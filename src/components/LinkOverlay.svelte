@@ -26,13 +26,8 @@
 
   export let href: string | undefined = undefined;
   export let path: PathType | undefined = undefined;
-  export let disabled: boolean = false;
 
   function handleClick(e: Event) {
-    if (disabled) {
-      e.preventDefault();
-      return;
-    }
     if (path) {
       e.preventDefault();
       navigate(path);
@@ -42,8 +37,6 @@
 
 <a
   href={href ?? path}
-  role="link"
-  aria-disabled={disabled}
   on:click={handleClick}
   class="overlay outline-none focus-visible:ring-4 focus-visible:ring-offset-1
   focus-visible:ring-ring {$$restProps.class || ''}">

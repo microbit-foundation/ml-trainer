@@ -70,10 +70,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 p-10 gap-5">
         <LinkOverlayContainer>
           <FrontPageContentTile>
-            <LinkOverlay
-              path={Paths.DATA}
-              disabled={!$state.isInputAssigned}
-              class="mb-5">
+            <LinkOverlay path={Paths.DATA} class="mb-5">
               <h3 class="text-center text-2xl font-bold">
                 {$t('content.index.toolProcessCards.data.title')}
               </h3>
@@ -87,10 +84,7 @@
 
         <LinkOverlayContainer>
           <FrontPageContentTile>
-            <LinkOverlay
-              path={Paths.TRAINING}
-              disabled={!$state.isInputAssigned}
-              class="mb-5">
+            <LinkOverlay path={Paths.TRAINING} class="mb-5">
               <h3 class="text-center text-2xl font-bold">
                 {$t('content.index.toolProcessCards.train.title')}
               </h3>
@@ -104,10 +98,7 @@
 
         <LinkOverlayContainer>
           <FrontPageContentTile>
-            <LinkOverlay
-              path={Paths.MODEL}
-              disabled={!$state.isInputAssigned}
-              class="mb-5">
+            <LinkOverlay path={Paths.MODEL} class="mb-5">
               <h3 class="text-center text-2xl font-bold">
                 {$t('content.index.toolProcessCards.model.title')}
               </h3>
