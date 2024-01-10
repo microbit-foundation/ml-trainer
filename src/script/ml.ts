@@ -64,6 +64,13 @@ function createModel(): LayersModel {
   return model;
 }
 
+const updateTrainingProgress = (progress: number) => {
+  state.update(obj => {
+    obj.trainingProgress = progress;
+    return obj;
+  });
+};
+
 export async function trainModel(): Promise<boolean> {
   state.update(obj => {
     obj.isTraining = true;
@@ -116,17 +123,27 @@ export async function trainModel(): Promise<boolean> {
     // See "finishedTraining" function to see how this works
   });
 
+  const totalNumEpochs = get(settings).numEpochs;
   const onTrainEnd = () => finishedTraining();
+  const onEpochEnd = (epoch: number) => {
+    updateTrainingProgress(epoch / totalNumEpochs);
+  };
 
   nn.fit(tensorFeatures, tensorLabels, {
-    epochs: get(settings).numEpochs,
+    epochs: totalNumEpochs,
     batchSize: 16,
     validationSplit: 0.1,
-    callbacks: { onTrainEnd }, // onEpochEnd <-- use this to make loading animation
-  }).catch(err => {
-    trainingStatus.set(TrainingStatus.Failure);
-    console.error('tensorflow training process failed:', err);
-  });
+    callbacks: { onTrainEnd, onEpochEnd }, // onEpochEnd <-- use this to make loading animation
+  })
+    .catch(err => {
+      trainingStatus.set(TrainingStatus.Failure);
+      console.error('tensorflow training process failed:', err);
+    })
+    .then(() => {
+      // Update training progress to complete
+      updateTrainingProgress(1);
+    });
+
   trainingStatus.set(TrainingStatus.Success);
   model.set(nn);
 
