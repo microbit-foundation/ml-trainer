@@ -63,10 +63,6 @@
   }
 </style>
 
-<script>
-  import { t } from '../i18n';
-</script>
-
 <div class="flex justify-center items-center self-center m-auto h-20">
-  <div alt={$t('loading')} class="loader text-secondary" />
+  <div class="loader text-secondary" />
 </div>
