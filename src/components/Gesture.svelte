@@ -178,12 +178,14 @@
     });
   }
 
+  $: isChosenGesture = $chosenGesture === gesture;
+
   // When microbit buttons are pressed, this is called
   // Assess whether settings match with button-clicked.
   // If so, the gesture calls the recording function.
   function triggerButtonsClicked(buttons: { buttonA: 0 | 1; buttonB: 0 | 1 }): void {
     const triggerButton = get(microbitInteraction);
-    if ($chosenGesture !== gesture) {
+    if (!isChosenGesture) {
       return;
     }
     if (
@@ -216,12 +218,16 @@
     }
   }
 
-  // Select gesture when gesture is renamed
-  $: if ($nameBind.trim()) {
+  function selectGesture() {
     chosenGesture.update(chosen => {
       chosen = gesture;
       return chosen;
     });
+  }
+
+  // Select gesture when gesture is renamed
+  $: if ($nameBind.trim()) {
+    selectGesture();
   }
 
   // Make function depend on buttonsPressed store.
@@ -238,6 +244,7 @@
   // Focus on input element when gesture is just added
   function init(el: HTMLElement) {
     el.focus();
+    selectGesture();
   }
 </script>
 
@@ -276,8 +283,12 @@
 </StandardDialog>
 
 <!-- Title of gesture-->
-<GestureTilePart small elevated>
-  <div class="grid grid-cols-5 place-items-center p-2 w-50 h-30 relative">
+<GestureTilePart
+  small
+  elevated
+  selected={isChosenGesture || showAddActionWalkThrough}
+  on:click={selectGesture}>
+  <div class="flex items-center justify-center p-2 w-50 h-30 relative">
     {#if !showAddActionWalkThrough}
       <div class="absolute right-2 top-2">
         <IconButton
@@ -286,7 +297,8 @@
               action: $nameBind,
             },
           })}
-          onClick={removeClicked}>
+          onClick={removeClicked}
+          on:focus={selectGesture}>
           <CloseIcon class="text-xl m-1" />
         </IconButton>
       </div>
@@ -300,7 +312,8 @@
       id="gestureName"
       placeholder={gesturePlaceholderName}
       bind:value={$nameBind}
-      on:keypress={onTitleKeypress} />
+      on:keypress={onTitleKeypress}
+      on:focus={selectGesture} />
   </div>
 </GestureTilePart>
 
@@ -315,32 +328,36 @@
   </div>
 {:else}
   <div class="max-w-max {isGestureNamed || hasRecordings ? 'visible' : 'invisible'}">
-    <GestureTilePart small elevated>
+    <GestureTilePart
+      small
+      elevated
+      selected={isChosenGesture}
+      on:click={selectGesture}
+      on:focus={selectGesture}>
       <div class="h-full flex items-center gap-x-3 p-2">
         <div class="w-33 flex justify-center items-center gap-x-3">
           <IconButton
             ariaLabel={$t(
-              $chosenGesture === gesture
-                ? 'content.data.recordAction'
-                : 'content.data.selectAction',
+              isChosenGesture ? 'content.data.recordAction' : 'content.data.selectAction',
               {
                 values: {
                   action: $nameBind,
                 },
               },
             )}
-            onClick={$chosenGesture === gesture ? countdownStart : selectClicked}
+            onClick={isChosenGesture ? countdownStart : selectClicked}
+            on:focus={selectGesture}
             disabled={!$state.isInputConnected}
             rounded>
             <RecordIcon
-              class="h-20 w-20 {$chosenGesture === gesture
+              class="h-20 w-20 {isChosenGesture
                 ? 'text-red-600'
                 : 'text-neutral-400'} flex justify-center items-center rounded-full" />
           </IconButton>
         </div>
         {#if hasRecordings}
           {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
-            <Recording {recording} onDelete={deleteRecording} />
+            <Recording {recording} onDelete={deleteRecording} on:focus={selectGesture} />
           {/each}
         {/if}
       </div>

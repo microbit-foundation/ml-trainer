@@ -47,7 +47,10 @@
   <RecordingGraph data={recording.data} />
 
   <div class="absolute right-0 top-0 z-2">
-    <IconButton ariaLabel={$t('content.data.deleteRecording')} onClick={deleteClicked}>
+    <IconButton
+      ariaLabel={$t('content.data.deleteRecording')}
+      onClick={deleteClicked}
+      on:focus>
       <CloseIcon class="text-xl m-1" />
     </IconButton>
   </div>

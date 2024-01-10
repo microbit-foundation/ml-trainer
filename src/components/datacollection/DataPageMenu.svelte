@@ -21,6 +21,8 @@
   import MenuItems from '../control-bar/control-bar-items/MenuItems.svelte';
   import MenuItem from '../control-bar/control-bar-items/MenuItem.svelte';
   import MenuTransition from '../MenuTransition.svelte';
+  import IconButton from '../IconButton.svelte';
+  import MoreIcon from 'virtual:icons/mdi/dots-vertical';
 
   export let downloadDisabled = false;
   export let clearDisabled = false;
@@ -50,16 +52,17 @@
   };
 </script>
 
-<div class="relative inline-block">
-  <button
-    use:menu.button
-    on:select={onSelect}
-    class="inline-flex items-center gap-x-1 p-2">
-    {$t('content.data.controlbar.button.menu')}
-    <ArrowDownIcon />
-  </button>
+<div class="relative inline-block leading-none">
+  <IconButton
+    ariaLabel={$t('content.data.controlbar.button.menu')}
+    rounded
+    useAction={menu.button}
+    on:select={onSelect}>
+    <MoreIcon
+      class="h-12 w-12 text-brand-500 flex justify-center items-center rounded-full" />
+  </IconButton>
   <MenuTransition show={$menu.expanded}>
-    <MenuItems {menu}>
+    <MenuItems class="w-max" {menu}>
       <div class="py-2">
         <MenuItem {menu} value="upload">
           <UploadIcon />

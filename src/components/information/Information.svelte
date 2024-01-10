@@ -7,6 +7,7 @@
 <script lang="ts">
   import { getInfoBoxColors } from './InformationComponentUtility';
   import InfoIcon from 'virtual:icons/ri/information-line';
+  import { t } from '../../i18n';
 
   export let underlineIconText = true;
   export let boxOffset: { x: number; y: number } = { x: 0, y: 0 };
@@ -45,6 +46,12 @@
   function closeTooltip(): void {
     isOpen = false;
   }
+
+  function onKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Escape') {
+      isOpen = false;
+    }
+  }
 </script>
 
 <div class={isVisible ? 'visible' : 'invisible'}>
@@ -67,6 +74,9 @@
         on:focusout={closeTooltip}
         on:mouseenter={openTooltip}
         on:mouseleave={closeTooltip}
+        on:keydown={onKeyDown}
+        on:click={openTooltip}
+        aria-label={$t('info.label', { values: { item: titleText } })}
         class="flex items-center cursor-pointer rounded-full outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
         style="color: {colors.iconTextColor}">
         <InfoIcon />

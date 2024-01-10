@@ -47,10 +47,10 @@
   "content.data.recordingDialog.recording": "Recording",
 
   "content.data.controlbar.button.menu": "Data actions",
-  "content.data.controlbar.button.clearData": "Clear data samples",
+  "content.data.controlbar.button.clearData": "Delete all data samples",
   "content.data.controlbar.button.clearData.confirm": "Are you sure you wish to delete all data samples?\nThis cannot be undone.",
-  "content.data.controlbar.button.downloadData": "Download dataset",
-  "content.data.controlbar.button.uploadData": "Upload dataset",
+  "content.data.controlbar.button.downloadData": "Download all data samples",
+  "content.data.controlbar.button.uploadData": "Import data samples",
 
   "content.data.recording.button.cancel": "Cancel recording",
   "content.data.recording.description": "Start action before the countdown finishes",
@@ -212,6 +212,8 @@
   "connectMB.outputMB.different": "Connect another micro:bit",
   "connectMB.outputMB.sameButton": "Same",
   "connectMB.outputMB.otherButton": "Other",
+
+  "info.label": "More information about \"{item}\"",
 
   "languageDialog.title": "Language",
 
