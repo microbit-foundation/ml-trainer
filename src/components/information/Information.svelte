@@ -16,6 +16,7 @@
   //       children, and a component specialised for text. In my opinion (Jon) this should be split up into one general
   //       and one for text (which uses the general one)
   export let iconText: string | undefined = undefined;
+  export let iconTextClass: string | undefined = undefined;
   export let titleText: string | undefined = undefined;
   export let bodyText: string | undefined = undefined;
   export let isVisible: boolean = true;
@@ -55,7 +56,8 @@
     bind:this={domNode}>
     {#if iconText !== undefined}
       <p
-        class="text-white w-auto h-auto mr-0 whitespace-pre-line pr-1"
+        class="text-white w-auto h-auto mr-0 whitespace-pre-line pr-1 {iconTextClass ||
+          ''}"
         class:underline={underlineIconText}
         style="color: {colors.iconTextColor}">
         {iconText}

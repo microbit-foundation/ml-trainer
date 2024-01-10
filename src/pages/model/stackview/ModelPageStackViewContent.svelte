@@ -30,24 +30,29 @@
 <h1 class="sr-only">{$t('content.index.toolProcessCards.model.title')}</h1>
 <div class="flex flex-col h-full bg-backgrounddark">
   <div class="flex justify-center space-x-10 py-5 text-xl border-b-3 border-b-gray-200">
-    <Information
-      underlineIconText={false}
-      isLightTheme={false}
-      iconText={$t('content.model.output.estimatedGesture.iconTitle')}
-      titleText={$t('content.model.output.estimatedGesture.descriptionTitle')}
-      bodyText={$t('content.model.output.estimatedGesture.descriptionBody')} />
-    {#if $bestPrediction && $bestPrediction.confidence.isConfident}
+    <div class="flex space-x-2 justify-center">
+      <Information
+        iconTextClass="font-semibold text-2xl"
+        iconText={$t('content.model.output.estimatedGesture.iconTitle')}
+        underlineIconText={false}
+        isLightTheme={false}
+        titleText={$t('content.model.output.estimatedGesture.descriptionTitle')}
+        bodyText={$t('content.model.output.estimatedGesture.descriptionBody')} />
+    </div>
+    <div class="flex space-x-10 min-w-10rem">
       <p class="font-semibold text-2xl">
-        {$bestPrediction.name}
+        {$bestPrediction && $bestPrediction.confidence.isConfident
+          ? $bestPrediction.name
+          : $t('content.model.output.estimatedGesture.none')}
       </p>
-      <p class="bg-secondary text-white rounded w-15 text-center">
-        {Math.round($bestPrediction.confidence.currentConfidence * 100)}%
-      </p>
-    {:else}
-      <p class="font-semibold text-2xl">
-        {$t('content.model.output.estimatedGesture.none')}
-      </p>
-    {/if}
+      {#if $bestPrediction && $bestPrediction.confidence.isConfident}
+        <p class="bg-secondary text-white rounded w-15 text-center">
+          {Math.round($bestPrediction.confidence.currentConfidence * 100)}%
+        </p>
+      {:else}
+        <p class="text-white rounded w-15 text-center"></p>
+      {/if}
+    </div>
   </div>
   <div class="flex-grow flex-shrink py-2 px-10 h-0 overflow-y-auto">
     <div
