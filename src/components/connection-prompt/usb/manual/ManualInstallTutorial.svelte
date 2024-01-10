@@ -5,19 +5,18 @@
  -->
 
 <script lang="ts">
-  import { t } from '../../../../i18n';
-  import { onMount } from 'svelte';
-  import StandardButton from '../../../StandardButton.svelte';
-  import Microbits from '../../../../script/microbit-interfacing/Microbits';
   import Bowser from 'bowser';
-  import transferFirmwareMacOSImage from '../../../../imgs/transfer_firmware_macos.gif';
+  import { onMount } from 'svelte';
+  import { t } from '../../../../i18n';
   import transferFirmwareChromeOSImage from '../../../../imgs/transfer_firmware_chromeos.gif';
+  import transferFirmwareMacOSImage from '../../../../imgs/transfer_firmware_macos.gif';
   import transferFirmwareWindowsImage from '../../../../imgs/transfer_firmware_windows.gif';
+  import Microbits from '../../../../script/microbit-interfacing/Microbits';
   import DialogHeading from '../../../DialogHeading.svelte';
-  import EscapedChunksFormattedMessage, {
+  import HtmlFormattedMessage, {
     linkWithProps,
   } from '../../../HtmlFormattedMessage.svelte';
-  import HtmlFormattedMessage from '../../../HtmlFormattedMessage.svelte';
+  import StandardButton from '../../../StandardButton.svelte';
 
   export let onConnectBluetoothClick: () => void;
 
