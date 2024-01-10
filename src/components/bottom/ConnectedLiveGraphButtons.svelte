@@ -40,7 +40,7 @@
         size="small">{$t('footer.disconnectButton')}</StandardButton>
     {:else}
       <StandardButton onClick={TypingUtils.emptyFunction} disabled>
-        <img alt={$t('loading')} src={loadingSpinnerImage} style="height:24px" />
+        <LoadingSpinner />
       </StandardButton>
     {/if}
   </div>
