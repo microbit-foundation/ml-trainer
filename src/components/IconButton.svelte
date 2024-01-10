@@ -40,6 +40,7 @@
   class:rounded-md={!rounded}
   aria-label={ariaLabel}
   on:click={onClick}
+  on:focus
   on:select
   use:useAction>
   <slot />

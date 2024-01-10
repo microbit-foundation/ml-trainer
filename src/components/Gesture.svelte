@@ -297,7 +297,8 @@
               action: $nameBind,
             },
           })}
-          onClick={removeClicked}>
+          onClick={removeClicked}
+          on:focus={selectGesture}>
           <CloseIcon class="text-xl m-1" />
         </IconButton>
       </div>
@@ -311,7 +312,8 @@
       id="gestureName"
       placeholder={gesturePlaceholderName}
       bind:value={$nameBind}
-      on:keypress={onTitleKeypress} />
+      on:keypress={onTitleKeypress}
+      on:focus={selectGesture} />
   </div>
 </GestureTilePart>
 
@@ -326,7 +328,12 @@
   </div>
 {:else}
   <div class="max-w-max {isGestureNamed || hasRecordings ? 'visible' : 'invisible'}">
-    <GestureTilePart small elevated selected={isChosenGesture} on:click={selectGesture}>
+    <GestureTilePart
+      small
+      elevated
+      selected={isChosenGesture}
+      on:click={selectGesture}
+      on:focus={selectGesture}>
       <div class="h-full flex items-center gap-x-3 p-2">
         <div class="w-33 flex justify-center items-center gap-x-3">
           <IconButton
@@ -339,6 +346,7 @@
               },
             )}
             onClick={isChosenGesture ? countdownStart : selectClicked}
+            on:focus={selectGesture}
             disabled={!$state.isInputConnected}
             rounded>
             <RecordIcon
@@ -349,7 +357,7 @@
         </div>
         {#if hasRecordings}
           {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
-            <Recording {recording} onDelete={deleteRecording} />
+            <Recording {recording} onDelete={deleteRecording} on:focus={selectGesture} />
           {/each}
         {/if}
       </div>
