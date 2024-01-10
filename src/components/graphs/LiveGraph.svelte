@@ -119,7 +119,7 @@
   }
 </script>
 
-<main class="flex">
+<main class="flex overflow-hidden">
   <canvas bind:this={canvas} height={160} id="smoothie-chart" width={width - 30} />
   <DimensionLabels />
 </main>
