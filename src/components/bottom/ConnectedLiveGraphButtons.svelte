@@ -25,9 +25,7 @@
         <StandardButton onClick={onOutputDisconnectButtonClicked} type="warning"
           >{$t('menu.model.disconnect')}</StandardButton>
       {:else}
-        <StandardButton onClick={TypingUtils.emptyFunction} disabled>
-          <LoadingSpinner />
-        </StandardButton>
+        <StandardButton isLoading />
       {/if}
     {/if}
   {/if}
@@ -39,9 +37,7 @@
         type="secondary"
         size="small">{$t('footer.disconnectButton')}</StandardButton>
     {:else}
-      <StandardButton onClick={TypingUtils.emptyFunction} disabled>
-        <LoadingSpinner />
-      </StandardButton>
+      <StandardButton isLoading />
     {/if}
   </div>
 </div>
