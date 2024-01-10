@@ -74,7 +74,7 @@
     class:cursor-default={disabled}
     on:click={onClick}>
     {#if isLoading}
-      <LoadingSpinner size="5px" loaderClass={classes[type].loadingSpinner} />
+      <LoadingSpinner size="5px" class={classes[type].loadingSpinner} />
     {:else}
       <slot />
     {/if}

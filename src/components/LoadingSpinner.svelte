@@ -62,12 +62,11 @@
 </style>
 
 <script lang="ts">
-  export let loaderClass: string = '';
   export let size: string = '10px';
 </script>
 
 <div class="flex justify-center items-center self-center m-auto">
   <div
-    class="loader text-secondary {loaderClass || ''}"
+    class="loader text-secondary {$$restProps.class || ''}"
     style="font-size: {size}; transform: translateY(-75%)" />
 </div>
