@@ -89,7 +89,6 @@
   "footer.connectButton": "Connect",
   "footer.helpHeader": "Live graph",
   "footer.helpContent": "This graph shows movement data from the microbit’s accelerometer in real time. Try moving your connected micro:bit to see the X, Y and Z axes change.",
-  "footer.reconnecting": "Reconnecting. Please wait",
 
   "helpMenu.label": "Help",
   "helpMenu.helpAndSupport": "Help & support",
