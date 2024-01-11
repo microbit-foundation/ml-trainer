@@ -184,6 +184,9 @@
   // Assess whether settings match with button-clicked.
   // If so, the gesture calls the recording function.
   function triggerButtonsClicked(buttons: { buttonA: 0 | 1; buttonB: 0 | 1 }): void {
+    if (showCountdown || isThisRecording) {
+      return;
+    }
     const triggerButton = get(microbitInteraction);
     if (!isChosenGesture) {
       return;
