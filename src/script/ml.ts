@@ -112,7 +112,8 @@ export async function trainModel() {
     callbacks: {
       onTrainEnd,
       onEpochEnd: (epoch: number) => {
-        updateTrainingProgress(epoch / totalNumEpochs);
+        // epoch only increases up to totalNumEpochs - 1
+        updateTrainingProgress(epoch / (totalNumEpochs - 1));
       },
     },
   }).catch(err => {
@@ -179,9 +180,6 @@ function updateTrainingProgress(progress: number) {
 }
 
 function onTrainEnd() {
-  // Update training progress to complete
-  updateTrainingProgress(1);
-
   // Set state to not-Training and initiate prediction.
   state.update(obj => {
     obj.isTraining = false;
