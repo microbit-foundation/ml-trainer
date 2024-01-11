@@ -112,7 +112,7 @@ export async function trainModel(): Promise<void> {
     callbacks: {
       onTrainEnd,
       onEpochEnd: (epoch: number) => {
-        // epoch only increases up to totalNumEpochs - 1
+        // Epochs indexed at 0
         updateTrainingProgress(epoch / (totalNumEpochs - 1));
       },
     },
