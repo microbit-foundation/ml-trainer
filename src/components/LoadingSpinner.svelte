@@ -18,6 +18,7 @@
     animation: load7 1.8s infinite ease-in-out;
   }
   .loader {
+    font-size: 10px;
     position: relative;
     text-indent: -9999em;
     -webkit-transform: translateZ(0);
@@ -30,6 +31,7 @@
   .loader:after {
     content: '';
     position: absolute;
+    top: 0;
   }
   .loader:before {
     left: -3.5em;
@@ -61,12 +63,6 @@
   }
 </style>
 
-<script lang="ts">
-  export let size: string = '10px';
-</script>
-
-<div class="flex justify-center items-center self-center m-auto">
-  <div
-    class="loader text-secondary {$$restProps.class || ''}"
-    style="font-size: {size}; transform: translateY(-75%)" />
+<div class="flex justify-center items-center self-center m-auto h-20">
+  <div class="loader text-secondary" />
 </div>
