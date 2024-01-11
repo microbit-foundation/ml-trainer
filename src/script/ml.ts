@@ -326,3 +326,17 @@ function tfHandlePrediction(result: Float32Array) {
     }
   }
 }
+
+state.subscribe(({ isInputConnected }) => {
+  if (!isInputConnected) {
+    const gestureData = get(gestures);
+    gestureData.forEach(({ ID }) => {
+      Repositories.getInstance().getModelRepository().setGestureConfidence(ID, 0);
+      gestureConfidences.update(confidenceMap => {
+        confidenceMap[ID] = 0;
+        return confidenceMap;
+      });
+      bestPrediction.set(undefined);
+    });
+  }
+});
