@@ -9,16 +9,15 @@
   import { TrainingStatus, trainingStatus } from '../../script/stores/mlStore';
   import { t } from '../../i18n';
   import StandardDialog from '../../components/dialogs/StandardDialog.svelte';
-  import { slide } from 'svelte/transition';
   import TrainingButton from './TrainingButton.svelte';
   import TabView from '../../views/TabView.svelte';
   import trainModelImage from '../../imgs/TrainModel.svg';
-  import loadingSpinnerImage from '../../imgs/loadingspinner.gif';
   import StandardButton from '../../components/StandardButton.svelte';
   import { Paths, navigate } from '../../router/paths';
   import { trainModel } from '../../script/ml';
   import TrainingStatusSection from '../../components/TrainingStatusSection.svelte';
   import DialogHeading from '../../components/DialogHeading.svelte';
+  import LoadingBar from '../../components/LoadingBar.svelte';
 
   function navigateModelPage(): void {
     navigate(Paths.MODEL);
@@ -82,7 +81,7 @@
       </TrainingStatusSection>
     {:else if $state.isTraining}
       <TrainingStatusSection statusId="content.trainer.training.title">
-        <img alt="" src={loadingSpinnerImage} class="self-center w-100px h-100px" />
+        <LoadingBar progress={$state.trainingProgress} />
       </TrainingStatusSection>
     {:else if $state.isPredicting}
       <TrainingStatusSection statusId="menu.trainer.TrainingFinished">

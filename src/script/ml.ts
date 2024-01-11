@@ -30,9 +30,6 @@ t.subscribe(t => (text = t));
 // Such that prediction continues on with the same settings as during training
 let modelSettings: { axes: AxesType[]; filters: Set<FilterType> };
 
-// Hacky "timer" to pad the training time if needed
-let trainingTimerPromise: Promise<boolean>;
-
 // Add parameter to allow unsubscribing from store, when predicting ends.
 // Prevents memory leak.
 let unsubscribeFromSettings: Unsubscriber | undefined = undefined;
@@ -64,7 +61,7 @@ function createModel(): LayersModel {
   return model;
 }
 
-export async function trainModel(): Promise<boolean> {
+export async function trainModel(): Promise<void> {
   state.update(obj => {
     obj.isTraining = true;
     return obj;
@@ -74,7 +71,7 @@ export async function trainModel(): Promise<boolean> {
       obj.isTraining = false;
       return obj;
     });
-    return false;
+    return;
   }
 
   // Freeze modelSetting untill next training
@@ -105,32 +102,27 @@ export async function trainModel(): Promise<boolean> {
 
   const tensorFeatures = tf.tensor(features);
   const tensorLabels = tf.tensor(labels);
-
   const nn: LayersModel = createModel();
-
-  trainingTimerPromise = new Promise(resolve => {
-    setTimeout(() => {
-      resolve(true);
-    }, 2500);
-    // Promise resolves after 2.5 sec, making training take at least 2.5 sec from users perspective
-    // See "finishedTraining" function to see how this works
-  });
-
-  const onTrainEnd = () => finishedTraining();
+  const totalNumEpochs = get(settings).numEpochs;
 
   nn.fit(tensorFeatures, tensorLabels, {
-    epochs: get(settings).numEpochs,
+    epochs: totalNumEpochs,
     batchSize: 16,
     validationSplit: 0.1,
-    callbacks: { onTrainEnd }, // onEpochEnd <-- use this to make loading animation
+    callbacks: {
+      onTrainEnd,
+      onEpochEnd: (epoch: number) => {
+        // Epochs indexed at 0
+        updateTrainingProgress(epoch / (totalNumEpochs - 1));
+      },
+    },
   }).catch(err => {
     trainingStatus.set(TrainingStatus.Failure);
     console.error('tensorflow training process failed:', err);
   });
+
   trainingStatus.set(TrainingStatus.Success);
   model.set(nn);
-
-  return trainingTimerPromise;
 }
 
 export function isParametersLegal(): boolean {
@@ -180,17 +172,22 @@ export function sufficientGestureData(gestureData: GestureData[], messageUser: b
   return sufficientData;
 }
 
-// Set state to not-Training and initiate prediction.
-function finishedTraining() {
-  // Wait for promise to resolve, to ensure a minimum of 2.5 sec of training from users perspective
-  void trainingTimerPromise.then(() => {
-    state.update(obj => {
-      obj.isTraining = false;
-      obj.hasTrainedBefore = true;
-      return obj;
-    });
-    setupPredictionInterval();
+function updateTrainingProgress(progress: number) {
+  state.update(obj => {
+    obj.trainingProgress = progress;
+    return obj;
   });
+}
+
+function onTrainEnd() {
+  // Set state to not-Training and initiate prediction.
+  state.update(obj => {
+    obj.isTraining = false;
+    obj.hasTrainedBefore = true;
+    obj.trainingProgress = 0;
+    return obj;
+  });
+  setupPredictionInterval();
 }
 
 // makeInput reduces array of x, y and z inputs to a single number array with values.
