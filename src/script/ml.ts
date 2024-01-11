@@ -61,13 +61,6 @@ function createModel(): LayersModel {
   return model;
 }
 
-const updateTrainingProgress = (progress: number) => {
-  state.update(obj => {
-    obj.trainingProgress = progress;
-    return obj;
-  });
-};
-
 export async function trainModel() {
   state.update(obj => {
     obj.isTraining = true;
@@ -117,9 +110,9 @@ export async function trainModel() {
     batchSize: 16,
     validationSplit: 0.1,
     callbacks: {
-      onTrainEnd: finishedTraining,
+      onTrainEnd,
       onEpochEnd: (epoch: number) => {
-        updateTrainingProgress(epoch / (totalNumEpochs - 1));
+        updateTrainingProgress(epoch / totalNumEpochs);
       },
     },
   }).catch(err => {
@@ -178,11 +171,18 @@ export function sufficientGestureData(gestureData: GestureData[], messageUser: b
   return sufficientData;
 }
 
-// Set state to not-Training and initiate prediction.
-function finishedTraining() {
+function updateTrainingProgress(progress: number) {
+  state.update(obj => {
+    obj.trainingProgress = progress;
+    return obj;
+  });
+}
+
+function onTrainEnd() {
   // Update training progress to complete
   updateTrainingProgress(1);
 
+  // Set state to not-Training and initiate prediction.
   state.update(obj => {
     obj.isTraining = false;
     obj.hasTrainedBefore = true;
