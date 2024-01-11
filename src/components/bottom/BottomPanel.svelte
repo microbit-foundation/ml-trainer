@@ -20,15 +20,8 @@
   let isLive3DOpen = false;
 </script>
 
-<div
-  bind:clientWidth={componentWidth}
-  class="h-full w-full bg-backgrounddark"
-  class:bg-gray-300={$state.isInputAssigned && !$state.isInputReady}>
-  <!-- Input microbit is assigned -->
-  <div class="relative w-full h-full bg-white">
-    <div class="absolute w-full h-full">
-      <LiveGraph width={componentWidth - live3dViewSize} />
-    </div>
+<div bind:clientWidth={componentWidth} class="relative w-full h-full bg-white">
+  <div class="relative z-1">
     <div
       class="flex items-center justify-between gap-2 pt-4 px-7 m-0 absolute top-0 left-0 right-0">
       <div class="flex items-center gap-2">
@@ -62,5 +55,8 @@
         </div>
       </BaseDialog>
     {/if}
+  </div>
+  <div class="absolute w-full h-full">
+    <LiveGraph width={componentWidth - live3dViewSize} />
   </div>
 </div>
