@@ -84,7 +84,7 @@
   <h1 class="sr-only">{$t('content.index.toolProcessCards.data.title')}</h1>
 
   {#if !hasSomeData() && !$state.isInputConnected}
-    <div class="h-full flex justify-center items-center">
+    <div class="flex justify-center items-center flex-grow">
       <PleaseConnectFirst />
     </div>
   {:else}
