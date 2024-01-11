@@ -14,7 +14,7 @@ import LoggingDecorator from './LoggingDecorator';
 import TypingUtils from '../TypingUtils';
 import { DeviceRequestStates } from '../stores/connectDialogStore';
 import StaticConfiguration from '../../StaticConfiguration';
-import { Paths, navigate } from '../../router/paths';
+import { Paths, currentPath, navigate } from '../../router/paths';
 import { liveData } from '../stores/Stores';
 
 let text = get(t);
@@ -78,7 +78,9 @@ class InputBehaviour extends LoggingDecorator {
       s.isInputReady = true;
       return s;
     });
-    navigate(Paths.DATA);
+    if (get(currentPath) === Paths.HOME) {
+      navigate(Paths.DATA);
+    }
   }
 
   onAssigned(microbitBluetooth: MicrobitBluetooth, name: string) {

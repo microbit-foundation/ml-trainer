@@ -37,15 +37,11 @@
 
   const playgroundSurveyUrl =
     'https://stage.microbit.org/teach/playground-survey/exploring-machine-learning';
-
-  let connectDialogReference: ConnectDialogContainer;
 </script>
 
 <main class="h-full flex flex-col items-center bg-backgrounddark">
   <h1 class="sr-only">{$t('content.index.title')}</h1>
   <div class="mb-8">
-    <ConnectDialogContainer bind:this={connectDialogReference} />
-
     <div class="flex flex-col items-center justify-center m-10 gap-5">
       <iframe
         class="w-38rem h-auto aspect-video"
