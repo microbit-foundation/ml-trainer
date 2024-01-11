@@ -51,7 +51,7 @@
       <div class="absolute top-81px left-230px">
         <ArrowOne />
       </div>
-      <div class="absolute top-123px left-314px">
+      <div class="absolute top-123px left-256px">
         <ArrowTwo />
       </div>
     </div>

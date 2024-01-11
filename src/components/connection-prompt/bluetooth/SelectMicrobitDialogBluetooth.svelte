@@ -41,8 +41,8 @@
       <div class="absolute top-81px left-230px">
         <ArrowOne />
       </div>
-      <div class="absolute top-123px left-314px">
-        <ArrowTwo />
+      <div class="absolute top-123px left-266px">
+        <ArrowTwo widthReduction={10} />
       </div>
     </div>
   </div>
