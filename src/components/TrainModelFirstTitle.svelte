@@ -20,14 +20,16 @@
   <h1 class="text-2xl font-bold mb-3">
     {$t('content.model.trainModelFirstHeading')}
   </h1>
-  <p class="mb-5">
-    {$t('content.model.trainModelBody')}
-  </p>
-  {#if !sufficientData}
+  <div class="space-y-5">
     <p>
-      {$t('content.model.notEnoughDataInfoBody')}
+      {$t('content.model.trainModelBody')}
     </p>
-  {/if}
+    {#if !sufficientData}
+      <p>
+        {$t('content.model.notEnoughDataInfoBody')}
+      </p>
+    {/if}
+  </div>
   <div class="mt-10 flex gap-5">
     {#if !sufficientData}
       <StandardButton type="primary" onClick={() => navigate(Paths.DATA)}>
