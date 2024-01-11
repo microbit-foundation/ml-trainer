@@ -5,7 +5,7 @@
  -->
 
 <style>
-  /* Adapted from https://projects.lukehaas.me/css-loaders/ */
+  /* Modified from https://github.com/lukehaas/css-loaders */
   .loader,
   .loader:before,
   .loader:after {
