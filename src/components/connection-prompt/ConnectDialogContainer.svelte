@@ -114,6 +114,8 @@
     isOpen={$connectionDialogState.connectionState !== ConnectDialogStates.NONE &&
       !endOfFlow}
     onClose={connectionStateNone}
+    hasCloseButton={$connectionDialogState.connectionState !==
+      ConnectDialogStates.USB_DOWNLOADING}
     dismissOnClickOutside={false}>
     {#if $connectionDialogState.connectionState === ConnectDialogStates.START_RADIO}
       <StartRadioDialog
