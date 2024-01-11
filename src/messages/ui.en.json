@@ -65,8 +65,8 @@
   "content.trainer.retrain.title": "Status: You've collected new data and can retrain the model.",
 
   "content.model.trainModelFirstHeading": "Test model",
-  "content.model.trainModelBody1": "You cannot test the model until it has been trained.",
-  "content.model.trainModelBody2": "You need at least 3 data samples for 2 actions to train a model.",
+  "content.model.trainModelBody": "You cannot test the model until it has been trained.",
+  "content.model.notEnoughDataInfoBody": "You need at least 3 data samples for 2 actions to train a model.",
   "content.model.addData": "Add data",
 
   "content.model.output.estimatedGesture.iconTitle": "Estimated action:",
