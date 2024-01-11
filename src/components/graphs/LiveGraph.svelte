@@ -47,15 +47,7 @@
       fillStyle: '#0000ff07',
     });
     chart.streamTo(<HTMLCanvasElement>canvas, 0);
-    chart.stop();
   });
-
-  // Start and stop chart when microbit connect/disconnect
-  $: {
-    if (chart !== undefined) {
-      chart.start();
-    }
-  }
 
   // Draw on graph to display that users are recording
   // The jagged edges problem is caused by repeating the recordingStarted function.
