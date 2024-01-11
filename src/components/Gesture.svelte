@@ -368,10 +368,12 @@
 {#if isGestureNamed && showWalkThrough && !hasRecordings && !showCountdown && !isThisRecording}
   <!-- Empty div to fill first column of grid  -->
   <div></div>
-  <div class="h-full flex" style="transform: translateX(65px)">
-    <img class="w-15" alt="" src={upCurveArrowImage} />
-    <p class="text-center w-50" style="transform: translateY(20px)">
-      {$t('content.data.addRecordingWalkThrough')}
-    </p>
+  <div class="relative">
+    <div class="flex absolute" style="transform: translateX(65px)">
+      <img class="w-15" alt="" src={upCurveArrowImage} />
+      <p class="text-center w-50" style="transform: translateY(20px)">
+        {$t('content.data.addRecordingWalkThrough')}
+      </p>
+    </div>
   </div>
 {/if}
