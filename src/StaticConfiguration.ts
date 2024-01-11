@@ -27,9 +27,6 @@ class StaticConfiguration {
   public static readonly defaultPinTurnOnState: PinTurnOnState = PinTurnOnState.X_TIME;
   public static readonly pinIOEnabledByDefault: boolean = true;
 
-  // What name should a downloaded hex file have?
-  public static readonly downloadedHexFilename = 'firmware.hex';
-
   // How long may gesture names be?
   public static readonly gestureNameMaxLength = 18;
 

@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+import 'vitest-dom/extend-expect';
+
 // browser mocks
 const setLang = (lang: string) => {
   const localStorageMock = (function () {

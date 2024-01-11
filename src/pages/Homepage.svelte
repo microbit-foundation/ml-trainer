@@ -21,6 +21,9 @@
   import { t } from '../i18n';
   import { startConnectionProcess } from '../script/stores/connectDialogStore';
   import ConnectDialogContainer from '../components/connection-prompt/ConnectDialogContainer.svelte';
+  import HtmlFormattedMessage, {
+    linkWithProps,
+  } from '../components/HtmlFormattedMessage.svelte';
   import LinkOverlayContainer from '../components/LinkOverlayContainer.svelte';
   import LinkOverlay from '../components/LinkOverlay.svelte';
   import { Paths, navigate } from '../router/paths';
@@ -54,12 +57,17 @@
         allowFullScreen>
       </iframe>
       <p>
-        {$t('content.index.toolInfo1')}
-        <a
-          class="text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
-          rel="noopener noreferrer"
-          href={playgroundSurveyUrl}
-          target="_blank">{$t('content.index.toolInfo2')}</a>
+        <HtmlFormattedMessage
+          id="content.index.toolInfo"
+          options={{
+            values: {
+              link: linkWithProps({
+                href: playgroundSurveyUrl,
+                target: '_blank',
+                rel: 'noopener',
+              }),
+            },
+          }} />
       </p>
     </div>
 

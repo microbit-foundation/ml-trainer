@@ -17,10 +17,11 @@
   export let dismissOnClickOutside: boolean = true;
 
   const dialog = createDialog({ label: ariaLabel });
-
+  let finalFocusRef: Element | null;
   // Updating inside and outside component states to minimise prop changes
   // of using svelte-headlessui dialogs
   $: if (isOpen) {
+    finalFocusRef = document.activeElement;
     dialog.open();
   } else {
     dialog.close();
@@ -29,6 +30,9 @@
   dialog.subscribe(({ expanded }) => {
     if (previousExpanded && !expanded) {
       onClose();
+      if (finalFocusRef) {
+        (finalFocusRef as HTMLElement).focus();
+      }
     }
     previousExpanded = expanded;
   });

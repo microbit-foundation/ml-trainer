@@ -96,18 +96,6 @@ class Microbits {
   }
 
   /**
-   * Downloads the universal HEX on the users' computer.
-   */
-  public static downloadFirmware(): void {
-    const a = document.createElement('a');
-    a.href = Microbits.hexFiles.universal;
-    a.download = StaticConfiguration.downloadedHexFilename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-
-  /**
    * Whether the microbit assigned as input is currently connected
    */
   public static isInputConnected(): boolean {
