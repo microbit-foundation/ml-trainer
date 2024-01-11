@@ -61,7 +61,7 @@ function createModel(): LayersModel {
   return model;
 }
 
-export async function trainModel() {
+export async function trainModel(): Promise<void> {
   state.update(obj => {
     obj.isTraining = true;
     return obj;
@@ -71,7 +71,7 @@ export async function trainModel() {
       obj.isTraining = false;
       return obj;
     });
-    return false;
+    return;
   }
 
   // Freeze modelSetting untill next training
