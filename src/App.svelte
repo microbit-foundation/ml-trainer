@@ -20,7 +20,6 @@
   import BluetoothIncompatibilityWarningDialog from './components/BluetoothIncompatibilityWarningDialog.svelte';
   import CookieManager from './script/CookieManager';
   import { DeviceRequestStates } from './script/stores/connectDialogStore';
-  import Environment from './script/Environment';
   import Router from './router/Router.svelte';
   import ControlBar from './components/control-bar/ControlBar.svelte';
   import { t } from './i18n';
@@ -32,6 +31,8 @@
   import { onMount } from 'svelte';
   import { get } from 'svelte/store';
   import ConnectDialogContainer from './components/connection-prompt/ConnectDialogContainer.svelte';
+  import { Paths, navigate } from './router/paths';
+  import HomeIcon from 'virtual:icons/ri/home-2-line';
 
   ConnectionBehaviours.setInputBehaviour(new InputBehaviour());
   ConnectionBehaviours.setOutputBehaviour(new OutputBehaviour());
@@ -74,6 +75,13 @@
             </div>
           </div>
           <div class="flex gap-5">
+            <a
+              class="text-xl p-2 rounded-full outline-none focus-visible:ring-ringBright focus-visible:ring-4 focus-visible:ring-offset-1"
+              href={Paths.HOME}
+              on:click|preventDefault={() => navigate(Paths.HOME)}>
+              <span class="sr-only">{$t('homepage.Link')}</span>
+              <HomeIcon class="text-white" aria-hidden />
+            </a>
             <SettingsMenu />
             <HelpMenu />
           </div>

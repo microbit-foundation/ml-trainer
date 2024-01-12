@@ -55,7 +55,7 @@
     <button
       use:menu.button
       on:select={onSelect}
-      class="inline-flex rounded-full text-xl p-2">
+      class="inline-flex rounded-full text-xl p-2 outline-none focus-visible:ring-ringBright focus-visible:ring-4 focus-visible:ring-offset-1">
       <HelpIcon class="text-white" />
     </button>
     <MenuTransition show={$menu.expanded}>
