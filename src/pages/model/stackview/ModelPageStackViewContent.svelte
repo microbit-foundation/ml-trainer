@@ -39,7 +39,7 @@
         titleText={$t('content.model.output.estimatedGesture.descriptionTitle')}
         bodyText={$t('content.model.output.estimatedGesture.descriptionBody')} />
     </div>
-    <div class="flex space-x-10 min-w-10rem">
+    <div class="flex space-x-10 min-w-340px">
       <p class="font-semibold text-2xl">
         {$bestPrediction && $bestPrediction.confidence.isConfident
           ? $bestPrediction.name
@@ -49,8 +49,6 @@
         <p class="bg-secondary text-white rounded w-15 text-center">
           {Math.round($bestPrediction.confidence.currentConfidence * 100)}%
         </p>
-      {:else}
-        <p class="text-white rounded w-15 text-center"></p>
       {/if}
     </div>
   </div>
