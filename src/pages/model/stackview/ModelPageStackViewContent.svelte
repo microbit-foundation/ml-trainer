@@ -29,8 +29,8 @@
 
 <h1 class="sr-only">{$t('content.index.toolProcessCards.model.title')}</h1>
 <div class="flex flex-col h-full bg-backgrounddark">
-  <div class="flex justify-center space-x-10 py-5 text-xl border-b-3 border-b-gray-200">
-    <div class="flex space-x-2 justify-center">
+  <div class="flex justify-center gap-x-10 py-5 text-xl border-b-3 border-b-gray-200">
+    <div class="flex justify-end basis-1/2">
       <Information
         iconTextClass="font-semibold text-2xl"
         iconText={$t('content.model.output.estimatedGesture.iconTitle')}
@@ -39,7 +39,7 @@
         titleText={$t('content.model.output.estimatedGesture.descriptionTitle')}
         bodyText={$t('content.model.output.estimatedGesture.descriptionBody')} />
     </div>
-    <div class="flex space-x-10 min-w-340px">
+    <div class="flex space-x-10 basis-1/2">
       <p class="font-semibold text-2xl">
         {$bestPrediction
           ? $bestPrediction.name
