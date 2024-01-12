@@ -28,6 +28,9 @@
   "content.index.toolProcessCards.model.title": "Test model",
   "content.index.toolProcessCards.model.description": "Find out if it correctly recognises each action. Add more data to improve the model.",
   "content.index.recordButtonDescription": "\"Record\"-button",
+  "content.index.dataWarning.title": "Warning",
+  "content.index.dataWarning.subtitleOne": "You have existing data that will be lost when you start a new session.",
+  "content.index.dataWarning.subtitleTwo": "Make sure you <link>download all data samples</link> before continuing.",
 
   "content.data.classPlaceholderNewClass": "Name of action",
   "content.data.classHelpHeader": "Action",
@@ -84,7 +87,8 @@
 
   "content.model.output.recognitionPoint": "Recognition Point:",
 
-  "footer.connectButtonNotConnected": "Start",
+  "footer.start": "Start new session",
+  "footer.resume": "Resume session",
   "footer.disconnectButton": "Disconnect",
   "footer.connectButton": "Connect",
   "footer.helpHeader": "Live graph",
