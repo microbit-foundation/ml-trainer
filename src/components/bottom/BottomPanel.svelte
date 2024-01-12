@@ -46,7 +46,7 @@
           freeze={isLive3DOpen} />
       </div>
       <BaseDialog isOpen={isLive3DOpen} onClose={() => (isLive3DOpen = false)}>
-         hardcoded margin-left matches the size of the sidebar 
+        <!-- hardcoded margin-left matches the size of the sidebar -->
         <div
           class="ml-75 border-gray-200 overflow-hidden border border-solid relative bg-white rounded-1 shadow-dark-400 shadow-md flex justify-center"
           style="height: calc(100vh - {live3dViewSize}px); width: calc(100vh - {live3dViewSize}px);">
