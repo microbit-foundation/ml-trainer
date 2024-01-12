@@ -9,10 +9,16 @@
   import TypingUtils from '../../script/TypingUtils';
   import { state } from '../../script/stores/uiStore';
   import StandardButton from '../StandardButton.svelte';
-  import loadingSpinnerImage from '../../imgs/loadingspinner.gif';
+  import Microbits from '../../script/microbit-interfacing/Microbits';
+  import { startConnectionProcess } from '../../script/stores/connectDialogStore';
 
-  export let onOutputDisconnectButtonClicked: () => void;
-  export let onInputDisconnectButtonClicked: () => void;
+  const handleInputDisconnectClick = () => {
+    Microbits.expelInputAndOutput();
+  };
+
+  const handleOutputDisconnectClick = () => {
+    Microbits.expelOutput();
+  };
 </script>
 
 <!-- These are the buttons that are present while the input micro:bit is connected-->
@@ -22,26 +28,23 @@
       <!-- Output is assigned -->
       {#if !$state.isOutputConnected || $state.isOutputReady}
         <!-- Output MB is not in the connection process -->
-        <StandardButton onClick={onOutputDisconnectButtonClicked} type="warning"
-          >{$t('menu.model.disconnect')}</StandardButton>
+        <StandardButton
+          onClick={handleOutputDisconnectClick}
+          type="secondary"
+          size="small">{$t('menu.model.disconnect')}</StandardButton>
       {:else}
-        <StandardButton onClick={TypingUtils.emptyFunction} disabled>
-          <img alt={$t('loading')} src={loadingSpinnerImage} style="height:24px" />
-        </StandardButton>
+        <StandardButton onClick={TypingUtils.emptyFunction} type="primary" size="small"
+          >{$t('menu.model.connect')}</StandardButton>
       {/if}
     {/if}
   {/if}
   <div class="ml-2">
-    {#if !$state.isInputConnected || $state.isInputReady}
-      <!-- Input MB is not in the connection process -->
-      <StandardButton
-        onClick={onInputDisconnectButtonClicked}
-        type="secondary"
-        size="small">{$t('footer.disconnectButton')}</StandardButton>
+    {#if !$state.isInputAssigned}
+      <StandardButton onClick={startConnectionProcess} type="primary" size="small"
+        >{$t('footer.connectButton')}</StandardButton>
     {:else}
-      <StandardButton onClick={TypingUtils.emptyFunction} disabled>
-        <img alt={$t('loading')} src={loadingSpinnerImage} style="height:24px" />
-      </StandardButton>
+      <StandardButton onClick={handleInputDisconnectClick} type="secondary" size="small"
+        >{$t('footer.disconnectButton')}</StandardButton>
     {/if}
   </div>
 </div>

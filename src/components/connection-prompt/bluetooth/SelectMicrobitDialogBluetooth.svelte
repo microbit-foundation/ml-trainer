@@ -9,6 +9,8 @@
   import selectMicrobitImage from '../../../imgs/select-microbit-bluetooth.png';
   import { t } from '../../../i18n';
   import DialogHeading from '../../DialogHeading.svelte';
+  import ArrowOne from '../arrows/ArrowOne.svelte';
+  import ArrowTwo from '../arrows/ArrowTwo.svelte';
 
   export let onBackClick: () => void;
   export let onNextClick: () => void;
@@ -19,7 +21,7 @@
     <DialogHeading>
       {$t('connectMB.webPopup')}
     </DialogHeading>
-    <div class="flex">
+    <div class="flex relative">
       <img
         class="w-418px h-365px flex-shrink-0"
         src={selectMicrobitImage}
@@ -28,10 +30,19 @@
         <h3 class="font-bold text-lg mb-5">
           {$t('connectMB.webPopup.instruction.heading')}:
         </h3>
-        <ol class="list-decimal list-inside">
-          <li>{$t('connectMB.webPopup.instruction1')}</li>
-          <li>{$t('connectMB.webPopup.webBluetooth.instruction2')}</li>
+        <ol class="absolute top-22 left-122 space-y-7">
+          <li><span class="sr-only">1. </span>{$t('connectMB.webPopup.instruction1')}</li>
+          <li>
+            <span class="sr-only">2. </span>
+            {$t('connectMB.webPopup.webBluetooth.instruction2')}
+          </li>
         </ol>
+      </div>
+      <div class="absolute top-81px left-230px">
+        <ArrowOne />
+      </div>
+      <div class="absolute top-123px left-266px">
+        <ArrowTwo widthReduction={10} />
       </div>
     </div>
   </div>

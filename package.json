@@ -19,7 +19,8 @@
     "@iconify-json/mdi": "^1.1.63",
     "@iconify-json/ri": "^1.1.17",
     "@sveltejs/vite-plugin-svelte": "^3.0.1",
-    "@testing-library/svelte": "^4.0.0",
+    "@testing-library/jest-dom": "^6.2.0",
+    "@testing-library/svelte": "^4.0.5",
     "@tsconfig/svelte": "^4.0.1",
     "@types/browser-lang": "^0.1.1",
     "@types/d3": "^7.4.1",
@@ -32,7 +33,7 @@
     "@typescript-eslint/parser": "^5.59.0",
     "eslint": "^8.43.0",
     "eslint-plugin-svelte": "^2.32.1",
-    "jsdom": "^23.0.1",
+    "jsdom": "^23.2.0",
     "prettier": "^3.1.0",
     "prettier-plugin-svelte": "^3.1.2",
     "svelte": "^4.0.0",
@@ -44,7 +45,8 @@
     "unplugin-icons": "^0.18.1",
     "vite": "^5.0.7",
     "vite-plugin-windicss": "^1.9.3",
-    "vitest": "^1.0.4"
+    "vitest": "^1.0.4",
+    "vitest-dom": "^0.1.1"
   },
   "dependencies": {
     "@microsoft/applicationinsights-web": "^3.0.0",

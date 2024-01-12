@@ -19,8 +19,8 @@
   import { DeviceRequestStates } from '../../../script/stores/connectDialogStore';
   import Environment from '../../../script/Environment';
   import StaticConfiguration from '../../../StaticConfiguration';
-  import loadingSpinnerImage from '../../../imgs/loadingspinner.gif';
   import DialogHeading from '../../DialogHeading.svelte';
+  import LoadingSpinner from '../../LoadingSpinner.svelte';
 
   // callbacks
   export let deviceState: DeviceRequestStates;
@@ -84,11 +84,6 @@
     void connectBluetooth();
   }
 
-  function updateMatrix(matrix: boolean[]): void {
-    $patternMatrixState = matrix;
-    attemptedToPairWithInvalidPattern = false;
-  }
-
   onMount(() => {
     // Resets the bluetooth connection prompt for cancelled device requests
     $state.requestDeviceWasCancelled = false;
@@ -115,9 +110,9 @@
     {/if}
     {#if isConnecting}
       <!-- Show spinner while connecting -->
-      <div class="flex flex-col justify-center items-center">
+      <div class="flex flex-col gap-5 justify-center items-center mb-40px">
         <p>{$t('connectMB.bluetooth.connecting')}</p>
-        <img class="w-100px h-100px" alt="" src={loadingSpinnerImage} />
+        <LoadingSpinner />
       </div>
     {/if}
   </div>

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Paths, navigate } from '../../router/paths';
 import Environment from '../Environment';
 import TypingUtils from '../TypingUtils';
 import MBSpecs from './MBSpecs';
@@ -331,7 +330,6 @@ export class MicrobitBluetooth {
   private disconnectEventHandler(manual?: boolean): void {
     if (this.device === undefined) return;
     this.onDisconnect(manual);
-    navigate(Paths.HOME);
   }
 
   /**

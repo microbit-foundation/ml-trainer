@@ -6,9 +6,9 @@
 
 <script lang="ts">
   import { t } from '../../../i18n';
+  import LoadingBar from '../../LoadingBar.svelte';
   export let currentStage: string;
   export let transferProgress: number;
-  $: transferProgressLabel = `${Math.round(transferProgress * 100)}%`;
 </script>
 
 <main>
@@ -27,14 +27,7 @@
     </p>
     <div class="flex justify-center mb-2">
       <div class="flex-1 mr-2">
-        <div class="w-full h-2 bg-gray-200 rounded">
-          <div
-            class="h-2 bg-secondary rounded"
-            style="width: {transferProgress * 100}%;" />
-        </div>
-        <p class="text-left mt-1">
-          {transferProgressLabel}
-        </p>
+        <LoadingBar progress={transferProgress} />
       </div>
     </div>
   </div>

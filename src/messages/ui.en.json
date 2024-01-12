@@ -1,5 +1,5 @@
 {
-  "about.developedInPartnership": "Developed in partnership with Center for Computational Thinking and Design, Aarhus University",
+  "about.developedInPartnership": "Developed in partnership with <link>Center for Computational Thinking and Design, Aarhus University</link>",
   "about.softwareVersions": "Software versions",
   "about.microbitHeartImageAlt": "micro:bit board with the 5 by 5 LED grid showing a heart",
 
@@ -19,8 +19,7 @@
   "alert.recordingsPerGesture": "You need at least three examples per action",
 
   "content.index.title": "machine learning tool",
-  "content.index.toolInfo1": "Use this tool with the",
-  "content.index.toolInfo2": "BBC micro:bit playground survey",
+  "content.index.toolInfo": "Use this tool with the <link>BBC micro:bit playground survey</link>",
   "content.index.toolProcessCards.main.title": "How this tool works",
   "content.index.toolProcessCards.data.title": "Add data",
   "content.index.toolProcessCards.data.description": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping).",
@@ -48,10 +47,10 @@
   "content.data.recordingDialog.recording": "Recording",
 
   "content.data.controlbar.button.menu": "Data actions",
-  "content.data.controlbar.button.clearData": "Clear data samples",
+  "content.data.controlbar.button.clearData": "Delete all data samples",
   "content.data.controlbar.button.clearData.confirm": "Are you sure you wish to delete all data samples?\nThis cannot be undone.",
-  "content.data.controlbar.button.downloadData": "Download dataset",
-  "content.data.controlbar.button.uploadData": "Upload dataset",
+  "content.data.controlbar.button.downloadData": "Download all data samples",
+  "content.data.controlbar.button.uploadData": "Import data samples",
 
   "content.data.recording.button.cancel": "Cancel recording",
   "content.data.recording.description": "Start action before the countdown finishes",
@@ -66,8 +65,8 @@
   "content.trainer.retrain.title": "Status: You've collected new data and can retrain the model.",
 
   "content.model.trainModelFirstHeading": "Test model",
-  "content.model.trainModelBody1": "You cannot test the model until it has been trained.",
-  "content.model.trainModelBody2": "You need at least 3 data samples for 2 actions to train a model.",
+  "content.model.trainModelBody": "You cannot test the model until it has been trained.",
+  "content.model.notEnoughDataInfoBody": "You need at least 3 data samples for 2 actions to train a model.",
   "content.model.addData": "Add data",
 
   "content.model.output.estimatedGesture.iconTitle": "Estimated action",
@@ -87,9 +86,9 @@
 
   "footer.connectButtonNotConnected": "Start",
   "footer.disconnectButton": "Disconnect",
+  "footer.connectButton": "Connect",
   "footer.helpHeader": "Live graph",
   "footer.helpContent": "This graph shows movement data from the microbit’s accelerometer in real time. Try moving your connected micro:bit to see the X, Y and Z axes change.",
-  "footer.reconnecting": "Reconnecting. Please wait",
 
   "helpMenu.label": "Help",
   "helpMenu.helpAndSupport": "Help & support",
@@ -140,8 +139,7 @@
 
   "connectMB.wearingSetup.radioConnection.heading": "Is micro:bit 1 ready to wear?",
   "connectMB.wearingSetup.bluetooth.heading": "Is the micro:bit ready to wear?",
-  "connectMB.wearingSetup.subtitle1": "Watch this video for instructions ",
-  "connectMB.wearingSetup.subtitle2": " on how to attach your micro:bit and battery pack to your flexible micro:bit holder and wearable strap so that it is easy to wear on your wrist.",
+  "connectMB.wearingSetup.subtitle": "<link>Watch this video for instructions</link> on how to attach your micro:bit and battery pack to your flexible micro:bit holder and wearable strap so that it is easy to wear on your wrist.",
   "connectMB.wearingSetup.requirements1": "micro:bit holder",
   "connectMB.wearingSetup.requirements2": "Wearable strap",
 
@@ -200,22 +198,22 @@
   "connectMB.usb.done.body4": "If you do not have a battery for the micro:bit, you can simply keep powering it through the usb cable.",
 
   "connectMB.usb.manual.header": "Transfer file to your micro:bit",
-  "connectMB.usb.manual.manualDownload": "If the file did not automatically download press",
-  "connectMB.usb.manual.manualDownloadLink": "here",
+  "connectMB.usb.manual.manualDownload": "If the file did not automatically download then <link>please download the file here.</link>",
   "connectMB.usb.manual.done": "Done: Connect using Bluetooth",
 
   "connectMB.usb.firmwareBroken.warning": "We detected issues with your micro:bit firmware",
   "connectMB.usb.firmwareBroken.content1": "The version of micro:bit and firmware have known issues, that prevent us from uploading the program to it.",
   "connectMB.usb.firmwareBroken.content2": "To proceed, you will have to transfer manually, or update your micro:bit's firmware.",
   "connectMB.usb.firmwareBroken.content3": "We recommend that you upgrade the firmware of your micro:bit to the latest version to fix this issue.",
-  "connectMB.usb.firmwareBroken.content4": "A guide on how can be found on the ",
-  "connectMB.usb.firmwareBroken.content4.website": "micro:bit foundation's website",
+  "connectMB.usb.firmwareBroken.content4": "A guide can be found on the <link>micro:bit website</link>.",
   "connectMB.usb.firmwareBroken.button.skip": "Skip and transfer manually",
 
   "connectMB.outputMB.same": "Use the same micro:bit",
   "connectMB.outputMB.different": "Connect another micro:bit",
   "connectMB.outputMB.sameButton": "Same",
   "connectMB.outputMB.otherButton": "Other",
+
+  "info.label": "More information about \"{item}\"",
 
   "languageDialog.title": "Language",
 

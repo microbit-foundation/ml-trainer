@@ -47,23 +47,7 @@
       fillStyle: '#0000ff07',
     });
     chart.streamTo(<HTMLCanvasElement>canvas, 0);
-    chart.stop();
   });
-
-  // Start and stop chart when microbit connect/disconnect
-  $: {
-    if (chart !== undefined) {
-      if ($state.isInputReady) {
-        if (!$state.isTraining) {
-          chart.start();
-        } else {
-          chart.stop();
-        }
-      } else {
-        chart.stop();
-      }
-    }
-  }
 
   // Draw on graph to display that users are recording
   // The jagged edges problem is caused by repeating the recordingStarted function.
@@ -119,7 +103,7 @@
   }
 </script>
 
-<main class="flex">
+<div class="flex overflow-hidden">
   <canvas bind:this={canvas} height={160} id="smoothie-chart" width={width - 30} />
   <DimensionLabels />
-</main>
+</div>

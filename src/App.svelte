@@ -31,6 +31,7 @@
   import SettingsMenu from './components/control-bar/control-bar-items/SettingsMenu.svelte';
   import { onMount } from 'svelte';
   import { get } from 'svelte/store';
+  import ConnectDialogContainer from './components/connection-prompt/ConnectDialogContainer.svelte';
 
   ConnectionBehaviours.setInputBehaviour(new InputBehaviour());
   ConnectionBehaviours.setOutputBehaviour(new OutputBehaviour());
@@ -85,3 +86,4 @@
     </main>
   {/if}
 </Router>
+<ConnectDialogContainer />

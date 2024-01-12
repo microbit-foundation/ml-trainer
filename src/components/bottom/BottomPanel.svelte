@@ -7,9 +7,7 @@
 <script lang="ts">
   import { state } from '../../script/stores/uiStore';
   import LiveGraph from '../graphs/LiveGraph.svelte';
-  import { fade } from 'svelte/transition';
   import { t } from '../../i18n';
-  import Microbits from '../../script/microbit-interfacing/Microbits';
   import ConnectedLiveGraphButtons from './ConnectedLiveGraphButtons.svelte';
   import LiveGraphInformationSection from './LiveGraphInformationSection.svelte';
   import BaseDialog from '../dialogs/BaseDialog.svelte';
@@ -20,50 +18,24 @@
   const live3dViewSize = live3dViewVisible ? 160 : 0;
   let componentWidth: number;
   let isLive3DOpen = false;
-
-  const inputDisconnectButtonClicked = () => {
-    Microbits.expelInputAndOutput();
-  };
-
-  const outputDisconnectButtonClicked = () => {
-    Microbits.expelOutput();
-  };
 </script>
 
-<div
-  bind:clientWidth={componentWidth}
-  class="h-full w-full bg-backgrounddark"
-  class:bg-gray-300={$state.isInputAssigned && !$state.isInputReady}>
-  {#if $state.isInputAssigned}
-    <!-- Input microbit is assigned -->
-    <div class="relative w-full h-full bg-white">
-      <div class="absolute w-full h-full">
-        <LiveGraph width={componentWidth - live3dViewSize} />
+<div bind:clientWidth={componentWidth} class="relative w-full h-full bg-white">
+  <div class="relative z-1">
+    <div
+      class="flex items-center justify-between gap-2 pt-4 px-7 m-0 absolute top-0 left-0 right-0">
+      <div class="flex items-center gap-2">
+        <!-- The live text and info box -->
+        <LiveGraphInformationSection />
+        <ConnectedLiveGraphButtons />
       </div>
-      {#if !$state.isInputReady}
-        <!-- Input is not ready, but is assigned (Must be either reconnecting or have lost connection entirely) -->
-        <div
-          class="absolute w-full h-full flex items-center justify-center text-secondarytext">
-          <div class="bg-secondary bg-opacity-80 py-2 px-4 rounded-full" transition:fade>
-            <h1>{$t('footer.reconnecting')}</h1>
-          </div>
-        </div>
-      {/if}
-      <div
-        class="flex items-center justify-between gap-2 pt-4 px-7 m-0 absolute top-0 left-0 right-0">
-        <div class="flex items-center gap-2">
-          <!-- The live text and info box -->
-          <LiveGraphInformationSection />
-          <ConnectedLiveGraphButtons
-            onInputDisconnectButtonClicked={inputDisconnectButtonClicked}
-            onOutputDisconnectButtonClicked={outputDisconnectButtonClicked} />
-        </div>
-        <Information
-          titleText={$t('footer.helpHeader')}
-          bodyText={$t('footer.helpContent')}
-          isLightTheme={false}
-          boxOffset={{ x: 0, y: -150 }} />
-      </div>
+      <Information
+        titleText={$t('footer.helpHeader')}
+        bodyText={$t('footer.helpContent')}
+        isLightTheme={false}
+        boxOffset={{ x: 0, y: -150 }} />
+    </div>
+    {#if live3dViewVisible}
       <div
         class="absolute right-0 cursor-pointer hover:bg-secondary hover:bg-opacity-10 transition"
         on:click={() => (isLive3DOpen = true)}>
@@ -82,6 +54,9 @@
           </div>
         </div>
       </BaseDialog>
-    </div>
-  {/if}
+    {/if}
+  </div>
+  <div class="absolute w-full h-full">
+    <LiveGraph width={componentWidth - live3dViewSize} />
+  </div>
 </div>

@@ -36,6 +36,7 @@ export const state = writable<{
   isTesting: boolean;
   isRecording: boolean;
   isTraining: boolean;
+  trainingProgress: number; // where 1 is 100% complete
   isInputConnected: boolean;
   isOutputConnected: boolean;
   hasTrainedBefore: boolean;
@@ -56,6 +57,7 @@ export const state = writable<{
   isTesting: false,
   isRecording: false,
   isTraining: false,
+  trainingProgress: 0,
   isInputConnected: false,
   isOutputConnected: false,
   hasTrainedBefore: false,

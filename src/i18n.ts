@@ -49,4 +49,6 @@ locale.subscribe(newLocal => {
 await init({
   fallbackLocale: 'en',
   initialLocale: get(persistantLocale),
+  // Needed to format <link> style tags.
+  ignoreTag: false,
 });

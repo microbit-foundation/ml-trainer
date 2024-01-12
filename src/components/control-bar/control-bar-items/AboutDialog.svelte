@@ -12,6 +12,9 @@
   import aarhusLogo from '../../../imgs/aulogo_uk_var2_blue.png';
   import GitHubIcon from 'virtual:icons/ri/github-fill';
   import { t } from '../../../i18n';
+  import HtmlFormattedMessage, {
+    linkWithProps as linkWithProps,
+  } from '../../HtmlFormattedMessage.svelte';
 
   export let onClose: () => void;
   export let isOpen: boolean;
@@ -25,7 +28,17 @@
         <img src={aarhusLogo} alt="Aarhus" />
       </div>
       <p class="text-center">
-        {$t('about.developedInPartnership')}
+        <HtmlFormattedMessage
+          id="about.developedInPartnership"
+          options={{
+            values: {
+              link: linkWithProps({
+                href: 'https://cctd.au.dk/',
+                target: '_blank',
+                rel: 'noopener',
+              }),
+            },
+          }} />
       </p>
       <div class="grid grid-cols-2 gap-5 items-center text-center">
         <img

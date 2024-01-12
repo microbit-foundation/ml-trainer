@@ -6,12 +6,12 @@
 
 <script lang="ts">
   import { t } from '../../../i18n';
-  import StandardButton from '../../StandardButton.svelte';
-  import { state } from '../../../script/stores/uiStore';
   import {
     ConnectDialogStates,
     connectionDialogState,
   } from '../../../script/stores/connectDialogStore';
+  import HtmlFormattedMessage, { linkWithProps } from '../../HtmlFormattedMessage.svelte';
+  import StandardButton from '../../StandardButton.svelte';
 </script>
 
 <main>
@@ -34,11 +34,17 @@
     </p>
 
     <p class="mb-2">
-      {$t('connectMB.usb.firmwareBroken.content4')}
-      <a
-        class="text-link underline"
-        href="https://microbit.org/get-started/user-guide/firmware/"
-        >{$t('connectMB.usb.firmwareBroken.content4.website')}</a>
+      <HtmlFormattedMessage
+        id="connectMB.usb.firmwareBroken.content4"
+        options={{
+          values: {
+            link: linkWithProps({
+              href: 'https://microbit.org/get-started/user-guide/firmware/',
+              target: '_blank',
+              rel: 'noopener',
+            }),
+          },
+        }} />
     </p>
     <StandardButton
       onClick={() => {

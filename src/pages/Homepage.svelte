@@ -12,6 +12,7 @@
 </style>
 
 <script lang="ts">
+  import { state } from '../script/stores/uiStore';
   import trainModelImage from '../imgs/TrainModel.svg';
   import inputDataImage from '../imgs/InputData.svg';
   import testModelImage from '../imgs/TestModel.svg';
@@ -20,6 +21,12 @@
   import { t } from '../i18n';
   import { startConnectionProcess } from '../script/stores/connectDialogStore';
   import ConnectDialogContainer from '../components/connection-prompt/ConnectDialogContainer.svelte';
+  import HtmlFormattedMessage, {
+    linkWithProps,
+  } from '../components/HtmlFormattedMessage.svelte';
+  import LinkOverlayContainer from '../components/LinkOverlayContainer.svelte';
+  import LinkOverlay from '../components/LinkOverlay.svelte';
+  import { Paths, navigate } from '../router/paths';
 
   // Avoid youtube cookie. rel=0 should limit related videos to youtube channel.
   // Once we have translated videos we can try e.g. cc_lang_pref=fr
@@ -30,15 +37,11 @@
 
   const playgroundSurveyUrl =
     'https://stage.microbit.org/teach/playground-survey/exploring-machine-learning';
-
-  let connectDialogReference: ConnectDialogContainer;
 </script>
 
 <main class="h-full flex flex-col items-center bg-backgrounddark">
   <h1 class="sr-only">{$t('content.index.title')}</h1>
   <div class="mb-8">
-    <ConnectDialogContainer bind:this={connectDialogReference} />
-
     <div class="flex flex-col items-center justify-center m-10 gap-5">
       <iframe
         class="w-38rem h-auto aspect-video"
@@ -50,12 +53,17 @@
         allowFullScreen>
       </iframe>
       <p>
-        {$t('content.index.toolInfo1')}
-        <a
-          class="text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
-          rel="noopener noreferrer"
-          href={playgroundSurveyUrl}
-          target="_blank">{$t('content.index.toolInfo2')}</a>
+        <HtmlFormattedMessage
+          id="content.index.toolInfo"
+          options={{
+            values: {
+              link: linkWithProps({
+                href: playgroundSurveyUrl,
+                target: '_blank',
+                rel: 'noopener',
+              }),
+            },
+          }} />
       </p>
     </div>
 
@@ -64,35 +72,47 @@
         {$t('content.index.toolProcessCards.main.title')}
       </h2>
       <div class="grid grid-cols-1 lg:grid-cols-3 p-10 gap-5">
-        <FrontPageContentTile>
-          <h3 class="text-center text-2xl mb-5 font-bold">
-            {$t('content.index.toolProcessCards.data.title')}
-          </h3>
-          <img class="mb-5 tile-img" alt="" src={inputDataImage} />
-          <p class="text-center">
-            {$t('content.index.toolProcessCards.data.description')}
-          </p>
-        </FrontPageContentTile>
+        <LinkOverlayContainer>
+          <FrontPageContentTile>
+            <LinkOverlay path={Paths.DATA} class="mb-5">
+              <h3 class="text-center text-2xl font-bold">
+                {$t('content.index.toolProcessCards.data.title')}
+              </h3>
+            </LinkOverlay>
+            <img class="mb-5 tile-img" alt="" src={inputDataImage} />
+            <p class="text-center">
+              {$t('content.index.toolProcessCards.data.description')}
+            </p>
+          </FrontPageContentTile>
+        </LinkOverlayContainer>
 
-        <FrontPageContentTile>
-          <h3 class="text-center text-2xl mb-5 font-bold">
-            {$t('content.index.toolProcessCards.train.title')}
-          </h3>
-          <img class="mb-5 tile-img" alt="" src={trainModelImage} />
-          <p class="text-center">
-            {$t('content.index.toolProcessCards.train.description')}
-          </p>
-        </FrontPageContentTile>
+        <LinkOverlayContainer>
+          <FrontPageContentTile>
+            <LinkOverlay path={Paths.TRAINING} class="mb-5">
+              <h3 class="text-center text-2xl font-bold">
+                {$t('content.index.toolProcessCards.train.title')}
+              </h3>
+            </LinkOverlay>
+            <img class="mb-5 tile-img" alt="" src={trainModelImage} />
+            <p class="text-center">
+              {$t('content.index.toolProcessCards.train.description')}
+            </p>
+          </FrontPageContentTile>
+        </LinkOverlayContainer>
 
-        <FrontPageContentTile>
-          <h3 class="text-center text-2xl mb-5 font-bold">
-            {$t('content.index.toolProcessCards.model.title')}
-          </h3>
-          <img class="mb-5 tile-img" alt="" src={testModelImage} />
-          <p class="text-center">
-            {$t('content.index.toolProcessCards.model.description')}
-          </p>
-        </FrontPageContentTile>
+        <LinkOverlayContainer>
+          <FrontPageContentTile>
+            <LinkOverlay path={Paths.MODEL} class="mb-5">
+              <h3 class="text-center text-2xl font-bold">
+                {$t('content.index.toolProcessCards.model.title')}
+              </h3>
+            </LinkOverlay>
+            <img class="mb-5 tile-img" alt="" src={testModelImage} />
+            <p class="text-center">
+              {$t('content.index.toolProcessCards.model.description')}
+            </p>
+          </FrontPageContentTile>
+        </LinkOverlayContainer>
       </div>
     </div>
 

@@ -4,14 +4,6 @@
   SPDX-License-Identifier: MIT
  -->
 
-<style>
-  input[type='range'] {
-    writing-mode: bt-lr;
-    appearance: slider-sideways;
-    width: 15rem;
-  }
-</style>
-
 <script lang="ts">
   // IMPORT AND DEFAULTS
   import OutputMatrix from './OutputMatrix.svelte';
@@ -35,6 +27,7 @@
   import rightArrowImage from '../../imgs/right_arrow.svg';
   import rightArrowBlueImage from '../../imgs/right_arrow_blue.svg';
   import blankMicrobitImage from '../../imgs/blank_microbit.svg';
+  import { onMount } from 'svelte';
 
   type TriggerAction = 'turnOn' | 'turnOff' | 'none';
 
@@ -68,7 +61,7 @@
     confidence: number,
     requiredConfidence: number,
   ): TriggerAction => {
-    let isConfident = requiredConfidence <= confidence;
+    let isConfident = requiredConfidence <= Number(confidence.toFixed(2));
     if ((!lastWasTriggered || !$settings.automaticClassification) && isConfident) {
       return 'turnOn';
     }
@@ -185,13 +178,22 @@
   };
 
   let sliderValue = requiredConfidence * 100;
+  let slider: HTMLInputElement;
+  onMount(() => {
+    slider.addEventListener('input', () => {
+      if (Number(slider.value) < 10) {
+        sliderValue = 10;
+      }
+      if (Number(slider.value) > 90) {
+        sliderValue = 90;
+      }
+    });
+  });
   $: {
     gesture.getConfidence().setRequiredConfidence(sliderValue / 100);
   }
 
   let hasLoadedMicrobitImage = false;
-
-  const meterTotalWidth = 15;
 
   $: meterWidthPct = 100 * $gesture.confidence.currentConfidence;
 </script>
@@ -204,46 +206,36 @@
 
 <GestureTilePart elevated={true} class="relative">
   <!-- METER -->
-  <div class="w-90 h-13 relative">
-    <div class="pt-7 pl-5">
-      <div
-        class="h-3 rounded-full bg-gray-200 overflow-hidden"
-        style="width: {meterTotalWidth}rem">
+  <div class="w-90 p-5 space-y-1">
+    <div class="flex items-center gap-x-5">
+      <div class="h-3 relative flex-grow rounded-full bg-gray-200 overflow-hidden">
         <div
-          class="absolute h-3 rounded-full {wasTriggered
-            ? 'bg-secondary'
-            : 'bg-gray-500'}"
-          style="width: {meterWidthPct > 5
-            ? meterWidthPct * meterTotalWidth * 0.01
-            : 1}rem;" />
-        <div />
-        <div class="relative pl-5 grid grid-cols-8">
-          {#each Array(10) as _, index (index)}
-            <div class="bg-white w-0.5 h-5" />
+          class="h-3 rounded-r-full {wasTriggered ? 'bg-secondary' : 'bg-gray-500'}"
+          style="width: {Math.round(meterWidthPct)}%" />
+        <div class="absolute flex justify-evenly top-0 left-0 right-0 z-1">
+          {#each Array(9) as _, index (index)}
+            <div class="bg-white w-0.5 h-3" />
           {/each}
         </div>
       </div>
       <p
-        class="absolute right-5 top-5 {wasTriggered
+        class="{wasTriggered
           ? 'bg-secondary'
           : 'bg-gray-500'} text-white rounded w-15 text-xl text-center">
         {Math.round(meterWidthPct)}%
       </p>
     </div>
-  </div>
-  <!-- RECOGNITION POINT BAR -->
-  <div class="pl-5 pb-5">
-    <p class="text-sm text-gray-500 pl">
+    <!-- RECOGNITION POINT BAR -->
+    <p class="text-sm text-gray-500">
       {$t('content.model.output.recognitionPoint')}
     </p>
     <input
-      class="accent-gray-500"
+      class="accent-gray-500 w-60"
       type="range"
-      name=""
-      min="10"
-      max="90"
-      id=""
-      bind:value={sliderValue} />
+      min="0"
+      max="100"
+      bind:value={sliderValue}
+      bind:this={slider} />
   </div>
   {#if enableOutputGestures}
     <!-- ARROW -->

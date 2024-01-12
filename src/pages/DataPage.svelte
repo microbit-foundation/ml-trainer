@@ -70,28 +70,27 @@
   $: if (!$gestures || $gestures.length === 0) {
     addGesture('');
   }
+
+  let trainingButtonPrimary = false;
+  gestures.subscribe(gestures => {
+    if (gestures.filter(g => g.recordings.length >= 3).length >= 2) {
+      trainingButtonPrimary = true;
+    }
+  });
 </script>
 
 <main class="flex flex-col h-full inline-block w-full bg-backgrounddark">
   <TabView />
   <h1 class="sr-only">{$t('content.index.toolProcessCards.data.title')}</h1>
 
-  <div class="flex justify-end px-10 mt-2">
-    <DataPageMenu
-      clearDisabled={$gestures.length === 0}
-      downloadDisabled={$gestures.length === 0}
-      {onClearGestures}
-      {onDownloadGestures}
-      {onUploadGestures} />
-  </div>
-
   {#if !hasSomeData() && !$state.isInputConnected}
-    <div class="h-full flex justify-center items-center">
+    <div class="flex justify-center items-center flex-grow">
       <PleaseConnectFirst />
     </div>
   {:else}
-    <div class="flex flex-col flex-grow flex-shrink py-2 px-10 h-0 overflow-y-auto">
-      <div class="grid grid-cols-[max-content,1fr] gap-x-7 gap-y-3">
+    <div class="flex flex-col flex-grow">
+      <div
+        class="grid grid-cols-[200px,1fr] gap-x-7 items-center flex-shrink-0 h-13 px-10 z-1 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
         <Information
           isLightTheme={false}
           underlineIconText={false}
@@ -105,21 +104,37 @@
           iconText={$t('content.data.data')}
           titleText={$t('content.data.data')}
           bodyText={$t('content.data.dataDescription')} />
-
-        {#each $gestures as gesture (gesture.ID)}
-          <Gesture
-            showWalkThrough={$gestures.length === 1}
-            gesture={gestures.getGesture(gesture.ID)}
-            onNoMicrobitSelect={() => (isConnectionDialogOpen = true)} />
-        {/each}
       </div>
-
-      <NewGestureButton disabled={!$gestures.every(g => g.name.trim())} />
-      <div class="flex justify-end mt-auto">
-        <TrainingButton onClick={() => navigate(Paths.TRAINING)} />
+      <div
+        class="grid grid-cols-[200px,1fr] auto-rows-max gap-x-7 gap-y-3 py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
+        {#each $gestures as gesture (gesture.ID)}
+          <section class="contents">
+            <Gesture
+              showWalkThrough={$gestures.length === 1}
+              gesture={gestures.getGesture(gesture.ID)}
+              onNoMicrobitSelect={() => (isConnectionDialogOpen = true)} />
+          </section>
+        {/each}
       </div>
     </div>
   {/if}
+  <div
+    class="flex items-center justify-between px-10 py-2 border-b-3 border-t-3 border-gray-200">
+    <NewGestureButton
+      type={!trainingButtonPrimary ? 'primary' : 'secondary'}
+      disabled={!$gestures.every(g => g.name.trim())} />
+    <div class="flex items-center gap-x-2">
+      <TrainingButton
+        type={trainingButtonPrimary ? 'primary' : 'secondary'}
+        onClick={() => navigate(Paths.TRAINING)} />
+      <DataPageMenu
+        clearDisabled={$gestures.length === 0}
+        downloadDisabled={$gestures.length === 0}
+        {onClearGestures}
+        {onDownloadGestures}
+        {onUploadGestures} />
+    </div>
+  </div>
   <div class="h-160px w-full">
     <BottomPanel />
   </div>
