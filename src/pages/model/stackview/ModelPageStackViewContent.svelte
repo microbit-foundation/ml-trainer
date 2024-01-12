@@ -41,11 +41,11 @@
     </div>
     <div class="flex space-x-10 min-w-340px">
       <p class="font-semibold text-2xl">
-        {$bestPrediction && $bestPrediction.confidence.isConfident
+        {$bestPrediction
           ? $bestPrediction.name
           : $t('content.model.output.estimatedGesture.none')}
       </p>
-      {#if $bestPrediction && $bestPrediction.confidence.isConfident}
+      {#if $bestPrediction}
         <p class="bg-secondary text-white rounded w-15 text-center">
           {Math.round($bestPrediction.confidence.currentConfidence * 100)}%
         </p>
