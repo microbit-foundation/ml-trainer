@@ -10,7 +10,7 @@
   import StandardButton from './StandardButton.svelte';
   import TrainingButton from '../pages/training/TrainingButton.svelte';
   import { Paths, navigate } from '../router/paths';
-  import { hasSufficientData } from '../script/stores/uiStore';
+  import { hasSufficientData, state } from '../script/stores/uiStore';
 
   $: sufficientData = hasSufficientData();
 </script>
@@ -20,13 +20,21 @@
   <h1 class="text-2xl font-bold mb-3">
     {$t('content.model.trainModelFirstHeading')}
   </h1>
-  <div class="space-y-5">
-    <p>
-      {$t('content.model.trainModelBody')}
-    </p>
+  <div class="space-y-5 text-center max-w-450px">
     {#if !sufficientData}
       <p>
-        {$t('content.model.notEnoughDataInfoBody')}
+        {$t('content.model.notEnoughDataInfoBody1')}
+      </p>
+      <p>
+        {$t('content.model.notEnoughDataInfoBody2')}
+      </p>
+    {:else if $state.hasTrainedBefore}
+      <p>
+        {$t('content.model.retrainModelBody')}
+      </p>
+    {:else}
+      <p>
+        {$t('content.model.trainModelBody')}
       </p>
     {/if}
   </div>
