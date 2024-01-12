@@ -36,7 +36,7 @@
       iconText={$t('content.model.output.estimatedGesture.iconTitle')}
       titleText={$t('content.model.output.estimatedGesture.descriptionTitle')}
       bodyText={$t('content.model.output.estimatedGesture.descriptionBody')} />
-    {#if $bestPrediction && $bestPrediction.confidence.isConfident}
+    {#if $bestPrediction}
       <p class="font-semibold text-2xl">
         {$bestPrediction.name}
       </p>

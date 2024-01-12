@@ -22,6 +22,7 @@ import * as tf from '@tensorflow/tfjs';
 import { LayersModel, SymbolicTensor, Tensor } from '@tensorflow/tfjs';
 import { gestures } from './stores/Stores';
 import Repositories from './repository/Repositories';
+import { getPrediction } from './getPrediction';
 
 let text: (key: string, vars?: object) => string;
 t.subscribe(t => (text = t));
@@ -293,9 +294,6 @@ export function classify() {
 }
 
 function tfHandlePrediction(result: Float32Array) {
-  let bestConfidence = 0;
-  let bestGestureID: number | undefined = undefined;
-
   const gestureData = get(gestures);
 
   gestureData.forEach(({ ID }, index) => {
@@ -306,25 +304,9 @@ function tfHandlePrediction(result: Float32Array) {
       confidenceMap[ID] = result[index];
       return confidenceMap;
     });
-
-    if (result[index] > bestConfidence) {
-      bestConfidence = result[index];
-      bestGestureID = ID;
-    }
   });
 
-  for (const gesture of get(gestures)) {
-    if (gesture.ID === bestGestureID) {
-      bestPrediction.set({
-        ...gesture,
-        confidence: {
-          currentConfidence: bestConfidence,
-          requiredConfidence: gesture.confidence.requiredConfidence,
-          isConfident: gesture.confidence.isConfident,
-        },
-      });
-    }
-  }
+  bestPrediction.set(getPrediction(get(gestures)));
 }
 
 state.subscribe(({ isInputConnected }) => {
