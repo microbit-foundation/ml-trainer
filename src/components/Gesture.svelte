@@ -310,7 +310,7 @@
     <input
       use:init
       name="gestureName"
-      class="w-40 col-start-2 p-2 col-end-5 transition ease rounded bg-gray-100 placeholder-gray-500 outline-primary"
+      class="w-40 col-start-2 p-2 col-end-5 transition ease rounded bg-gray-100 placeholder-gray-500 outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
       id="gestureName"
       placeholder={gesturePlaceholderName}
       bind:value={$nameBind}
