@@ -230,7 +230,7 @@
       {$t('content.model.output.recognitionPoint')}
     </p>
     <input
-      class="accent-gray-500 w-60"
+      class="accent-gray-500 w-60 outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
       type="range"
       min="0"
       max="100"
