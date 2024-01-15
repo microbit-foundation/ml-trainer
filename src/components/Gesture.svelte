@@ -285,39 +285,37 @@
 </StandardDialog>
 
 <!-- Title of gesture-->
-<GestureTilePart
-  small
-  elevated
-  selected={isChosenGesture || showAddActionWalkThrough}
-  on:click={selectGesture}>
-  <div class="flex items-center justify-center p-2 w-50 h-30 relative">
-    {#if !showAddActionWalkThrough}
-      <div class="absolute right-2 top-2">
-        <IconButton
-          ariaLabel={$t('content.data.deleteAction', {
-            values: {
-              action: $nameBind,
-            },
-          })}
-          onClick={removeClicked}
-          on:focus={selectGesture}>
-          <CloseIcon class="text-xl m-1" />
-        </IconButton>
-      </div>
-    {/if}
-    <label for="gestureName" class="sr-only"
-      >{$t('content.data.addAction.inputLabel')}</label>
-    <input
-      use:init
-      name="gestureName"
-      class="w-40 col-start-2 p-2 col-end-5 transition ease rounded bg-gray-100 placeholder-gray-500 outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
-      id="gestureName"
-      placeholder={gesturePlaceholderName}
-      bind:value={$nameBind}
-      on:keypress={onTitleKeypress}
-      on:focus={selectGesture} />
-  </div>
-</GestureTilePart>
+<div on:click={selectGesture}>
+  <GestureTilePart small elevated selected={isChosenGesture || showAddActionWalkThrough}>
+    <div class="flex items-center justify-center p-2 w-50 h-30 relative">
+      {#if !showAddActionWalkThrough}
+        <div class="absolute right-2 top-2">
+          <IconButton
+            ariaLabel={$t('content.data.deleteAction', {
+              values: {
+                action: $nameBind,
+              },
+            })}
+            onClick={removeClicked}
+            on:focus={selectGesture}>
+            <CloseIcon class="text-xl m-1" />
+          </IconButton>
+        </div>
+      {/if}
+      <label for="gestureName" class="sr-only"
+        >{$t('content.data.addAction.inputLabel')}</label>
+      <input
+        use:init
+        name="gestureName"
+        class="w-40 col-start-2 p-2 col-end-5 transition ease rounded bg-gray-100 placeholder-gray-500 outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
+        id="gestureName"
+        placeholder={gesturePlaceholderName}
+        bind:value={$nameBind}
+        on:keypress={onTitleKeypress}
+        on:focus={selectGesture} />
+    </div>
+  </GestureTilePart>
+</div>
 
 {#if showAddActionWalkThrough}
   <div
@@ -329,13 +327,10 @@
     </p>
   </div>
 {:else}
-  <div class="max-w-max {isGestureNamed || hasRecordings ? 'visible' : 'invisible'}">
-    <GestureTilePart
-      small
-      elevated
-      selected={isChosenGesture}
-      on:click={selectGesture}
-      on:focus={selectGesture}>
+  <div
+    class="max-w-max {isGestureNamed || hasRecordings ? 'visible' : 'invisible'}"
+    on:click={selectGesture}>
+    <GestureTilePart small elevated selected={isChosenGesture} on:focus={selectGesture}>
       <div class="h-full flex items-center gap-x-3 p-2">
         <div class="w-33 flex justify-center items-center gap-x-3">
           <IconButton
@@ -348,7 +343,6 @@
               },
             )}
             onClick={isChosenGesture ? countdownStart : selectClicked}
-            on:focus={selectGesture}
             disabled={!$state.isInputConnected}
             rounded>
             <RecordIcon
