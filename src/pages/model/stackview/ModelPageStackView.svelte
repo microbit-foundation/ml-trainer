@@ -4,13 +4,6 @@
   SPDX-License-Identifier: MIT
  -->
 
-<style>
-  .arrow-filter-color {
-    filter: invert(100%) sepia(100%) saturate(100%) hue-rotate(0deg) brightness(100%)
-      contrast(100%);
-  }
-</style>
-
 <script lang="ts">
   import {
     buttonPressed,

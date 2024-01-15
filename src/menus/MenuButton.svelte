@@ -2,6 +2,8 @@
   (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
  
   SPDX-License-Identifier: MIT
+
+  COMPONENT NOT IN USE
  -->
 
 <style>
@@ -22,6 +24,7 @@
 </script>
 
 <div>
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
     class="border bg-opacity-75 border-solid border-3
            border-opacity-80 min-h-20

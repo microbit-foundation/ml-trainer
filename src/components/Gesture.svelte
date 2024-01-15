@@ -42,7 +42,6 @@
   import StandardButton from './StandardButton.svelte';
   import GestureTilePart from './GestureTilePart.svelte';
   import StaticConfiguration from '../StaticConfiguration';
-  import BaseDialog from './dialogs/BaseDialog.svelte';
   import Gesture from '../script/domain/Gesture';
   import { gestures } from '../script/stores/Stores';
   import greetingEmojiWithArrowImage from '../imgs/greeting-emoji-with-arrow.svg';

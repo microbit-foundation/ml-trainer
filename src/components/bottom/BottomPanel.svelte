@@ -35,6 +35,7 @@
         boxOffset={{ x: 0, y: -150 }} />
     </div>
     {#if live3dViewVisible}
+      <!-- Unused part since live3dViewVisible is always false  -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
         class="absolute right-0 cursor-pointer hover:bg-secondary hover:bg-opacity-10 transition"

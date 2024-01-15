@@ -4,13 +4,6 @@
   SPDX-License-Identifier: MIT
  -->
 
-<style>
-  button:disabled {
-    cursor: default;
-    color: grey;
-  }
-</style>
-
 <script lang="ts">
   import { t } from '../../i18n';
   import { createMenu } from 'svelte-headlessui';
