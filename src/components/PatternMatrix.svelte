@@ -120,7 +120,6 @@
 <main class="buttonGrid select-none" on:mouseleave={mouseLeftDrawingArea}>
   <!-- Draw all 25 boxes -->
   {#each matrix as isOn, i}
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
       class="rounded"
       class:border-3={highlighted[i]}

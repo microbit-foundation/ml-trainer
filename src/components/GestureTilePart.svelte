@@ -12,8 +12,6 @@
   export let selected = false;
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- Not a button as it would cause nesting of buttons -->
 <div
   on:click
   class="{$$restProps.class || ''} rounded-lg bg-backgroundlight border-1 {selected
