@@ -10,7 +10,6 @@
   import { PinTurnOnState } from './PinSelectorUtil';
   import { t } from '../../i18n';
   import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
-  import { currentData } from '../../script/stores/mlStore';
   export let onPinSelect: (pin: MBSpecs.UsableIOPin) => void;
   export let onTurnOnTimeSelect: (turnOnArgs: {
     turnOnState: PinTurnOnState;
@@ -54,6 +53,7 @@
         <!-- These are pins we support, make them selectable and yellow -->
         {#if largePins.includes(currentPin)}
           <!-- Large pins -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
           <div
             on:click={() => {
               onPinSelected(currentPin);
@@ -68,6 +68,7 @@
           </div>
         {:else}
           <!-- Small pins -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
           <div
             on:click={() => {
               onPinSelected(currentPin);

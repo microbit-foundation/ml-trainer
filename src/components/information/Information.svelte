@@ -84,6 +84,7 @@
     </div>
 
     {#if isOpen}
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
         class="fixed z-10 rounded-md p-3 cursor-default"
         style="top: {boxTop}px; left: {boxLeft}px; width: {width}px; background-color:{colors.backgroundColor}"

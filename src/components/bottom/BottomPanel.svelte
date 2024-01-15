@@ -5,7 +5,6 @@
  -->
 
 <script lang="ts">
-  import { state } from '../../script/stores/uiStore';
   import LiveGraph from '../graphs/LiveGraph.svelte';
   import { t } from '../../i18n';
   import ConnectedLiveGraphButtons from './ConnectedLiveGraphButtons.svelte';
@@ -36,6 +35,7 @@
         boxOffset={{ x: 0, y: -150 }} />
     </div>
     {#if live3dViewVisible}
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
         class="absolute right-0 cursor-pointer hover:bg-secondary hover:bg-opacity-10 transition"
         on:click={() => (isLive3DOpen = true)}>

@@ -24,7 +24,6 @@
   import Microbits from '../../../script/microbit-interfacing/Microbits';
   import TrainModelFirstTitle from '../../../components/TrainModelFirstTitle.svelte';
   import ModelPageStackViewContent from './ModelPageStackViewContent.svelte';
-  import PleaseConnectFirst from '../../../components/PleaseConnectFirst.svelte';
   import TabView from '../../../views/TabView.svelte';
 
   // In case of manual classification, variables for evaluation

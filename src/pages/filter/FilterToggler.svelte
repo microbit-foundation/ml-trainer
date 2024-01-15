@@ -61,6 +61,7 @@
     <div class="flex">
       <!-- maxumize button -->
 
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
         class="mr-2 mt-2 cursor-pointer"
         on:click|stopPropagation={() => {
@@ -73,6 +74,7 @@
       </div>
 
       <!-- Disabling button -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
         class="mr-2 mt-2 cursor-pointer"
         on:click|stopPropagation={() => {

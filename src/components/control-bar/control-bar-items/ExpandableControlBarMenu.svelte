@@ -14,6 +14,7 @@
 
 <div class="flex flex-row items-center justify-center">
   <div class="w-4 ml-2 flex justify-center mr-3">
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <i
       class="fa text-xl cursor-pointer"
       class:fa-times={isExpanded}

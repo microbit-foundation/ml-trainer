@@ -45,6 +45,7 @@
 
 <div class="fixed z-10">
   <Transition show={$dialog.expanded}>
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
       class="fixed top-0 left-0 h-screen w-screen flex justify-center items-center bg-black/50 bg-blend-darken"
       use:dialog.modal

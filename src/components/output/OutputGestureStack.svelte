@@ -267,6 +267,7 @@
         loadingColorSecondary="#818181"
         loadingColorPrimary="#4A4A4A"
         onLoaded={() => (hasLoadedMicrobitImage = true)} />
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
         class="bg-black p-0 m-0 absolute top-9 left-12.7"
         class:hidden={!hasLoadedMicrobitImage}

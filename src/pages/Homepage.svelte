@@ -12,7 +12,6 @@
 </style>
 
 <script lang="ts">
-  import { state } from '../script/stores/uiStore';
   import trainModelImage from '../imgs/TrainModel.svg';
   import inputDataImage from '../imgs/InputData.svg';
   import testModelImage from '../imgs/TestModel.svg';
@@ -20,7 +19,6 @@
   import StandardButton from '../components/StandardButton.svelte';
   import { t } from '../i18n';
   import { startConnectionProcess } from '../script/stores/connectDialogStore';
-  import ConnectDialogContainer from '../components/connection-prompt/ConnectDialogContainer.svelte';
   import HtmlFormattedMessage, {
     linkWithProps,
   } from '../components/HtmlFormattedMessage.svelte';
