@@ -21,7 +21,7 @@
     <div class="grid grid-cols-2 gap-5">
       {#each allLanguages as language}
         <button
-          class="flex items-stretch p-3 rounded-xl h-auto border-2 border-gray-200 text-link hover:bg-gray-100"
+          class="flex items-stretch p-3 rounded-xl h-auto border-2 border-gray-200 text-link hover:bg-gray-100 outline-none focus-visible:ring-4 focus-visible:ring-ring"
           on:click={() => {
             $currentLocale = language.id;
             onClose();
