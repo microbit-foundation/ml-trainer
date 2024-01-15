@@ -3,7 +3,6 @@
 
   SPDX-License-Identifier: MIT
 
-  COMPONENT NOT IN USE
  -->
 <script lang="ts">
   import { fade } from 'svelte/transition';
