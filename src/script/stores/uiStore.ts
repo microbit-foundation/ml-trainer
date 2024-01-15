@@ -22,7 +22,7 @@ t.subscribe(t => (text = t));
 
 export const compatibility = writable<CompatibilityStatus>(checkCompatibility());
 
-export const isBluetoothWarningDialogOpen = writable<boolean>(false);
+export const isCompatibilityWarningDialogOpen = writable<boolean>(false);
 
 export enum ModelView {
   TILE,

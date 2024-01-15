@@ -219,9 +219,9 @@
 
   "languageDialog.title": "Language",
 
-  "popup.compatibility.bluetooth.header": "Bluetooth incompatible browser!",
-  "popup.compatibility.bluetooth.explain": "The browser you are currently using does not support Bluetooth.",
-  "popup.compatibility.bluetooth.advice": "Please update the browser or use another one from our supported browsers list below.",
+  "popup.compatibility.header": "This browser is not supported",
+  "popup.compatibility.explain": "Unfortunately, WebUSB and Web Bluetooth are not supported in this browser. You will not be able to stream data from your micro:bit (record data samples and test the model).",
+  "popup.compatibility.advice": "We recommend Google Chrome or Microsoft Edge so you can connect directly to your micro:bit.",
 
   "connectMB.USBCompatibility.transferStep.step1": "Open the location to which the firmware was downloaded. Most commonly found in your download folder.",
   "connectMB.USBCompatibility.transferStep.step2": "Drag the file onto the micro:bit on your computer's file explorer.",

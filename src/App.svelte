@@ -12,15 +12,14 @@
   import PageContentView from './views/PageContentView.svelte';
   import {
     compatibility,
-    isBluetoothWarningDialogOpen,
+    isCompatibilityWarningDialogOpen,
     state,
   } from './script/stores/uiStore';
   import { checkCompatibility } from './script/compatibility/CompatibilityChecker';
   import IncompatiblePlatformView from './views/IncompatiblePlatformView.svelte';
-  import BluetoothIncompatibilityWarningDialog from './components/BluetoothIncompatibilityWarningDialog.svelte';
+  import CompatibilityWarningDialog from './components/CompatibilityWarningDialog.svelte';
   import CookieManager from './script/CookieManager';
   import { DeviceRequestStates } from './script/stores/connectDialogStore';
-  import Environment from './script/Environment';
   import Router from './router/Router.svelte';
   import ControlBar from './components/control-bar/ControlBar.svelte';
   import { t } from './i18n';
@@ -43,8 +42,9 @@
   }
 
   onMount(() => {
+    const { bluetooth, usb } = get(compatibility);
     // Value must switch from false to true after mount to trigger dialog transition
-    isBluetoothWarningDialogOpen.set(!get(compatibility).bluetooth);
+    isCompatibilityWarningDialogOpen.set(!bluetooth && !usb);
   });
 </script>
 
@@ -57,7 +57,7 @@
       <OverlayView />
       <!-- Wait for consent dialog to avoid a clash -->
       {#if $consent}
-        <BluetoothIncompatibilityWarningDialog />
+        <CompatibilityWarningDialog />
       {/if}
 
       <div class="w-full flex flex-col bg-backgrounddark">
