@@ -28,9 +28,9 @@
   "content.index.toolProcessCards.model.title": "Test model",
   "content.index.toolProcessCards.model.description": "Find out if it correctly recognises each action. Add more data to improve the model.",
   "content.index.recordButtonDescription": "\"Record\"-button",
-  "content.index.dataWarning.title": "Warning",
+  "content.index.dataWarning.title": "Existing data samples will be lost",
   "content.index.dataWarning.subtitleOne": "You have existing data that will be lost when you start a new session.",
-  "content.index.dataWarning.subtitleTwo": "Make sure you <link>download all data samples</link> before continuing.",
+  "content.index.dataWarning.subtitleTwo": "To save your data, <link>download all data samples</link> before continuing.",
 
   "content.data.classPlaceholderNewClass": "Name of action",
   "content.data.classHelpHeader": "Action",
