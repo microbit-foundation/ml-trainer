@@ -22,7 +22,7 @@
   export let onDownloadGestures: () => void;
   export let onUploadGestures: () => void;
 
-  const menu = createMenu({ label: $t('dataMenu.label') });
+  const menu = createMenu({ label: $t('content.data.controlbar.button.menu') });
 
   const onSelect = (event: Event) => {
     const { selected } = (event as CustomEvent).detail;
