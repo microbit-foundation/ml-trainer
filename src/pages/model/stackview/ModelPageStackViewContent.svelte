@@ -25,27 +25,36 @@
   function onUserInteraction(): void {
     hasInteracted = true;
   }
+
+  $: prediction = $bestPrediction
+    ? {
+        name: $bestPrediction.name,
+        certainty: `${Math.round($bestPrediction.confidence.currentConfidence * 100)}%`,
+      }
+    : {
+        name: $t('content.model.output.estimatedGesture.none'),
+      };
 </script>
 
 <h1 class="sr-only">{$t('content.index.toolProcessCards.model.title')}</h1>
 <div class="flex flex-col h-full bg-backgrounddark">
   <div class="flex justify-center space-x-10 py-5 text-xl border-b-3 border-b-gray-200">
+    <span class="sr-only" aria-live="polite" aria-atomic="true"
+      >{$t('content.model.output.estimatedGesture.iconTitle')}
+      {prediction.name}
+      {prediction.certainty ? prediction.certainty : ''}</span>
     <Information
       underlineIconText={false}
       isLightTheme={false}
       iconText={$t('content.model.output.estimatedGesture.iconTitle')}
       titleText={$t('content.model.output.estimatedGesture.descriptionTitle')}
       bodyText={$t('content.model.output.estimatedGesture.descriptionBody')} />
-    {#if $bestPrediction}
-      <p class="font-semibold text-2xl">
-        {$bestPrediction.name}
-      </p>
+    <p class="font-semibold text-2xl">
+      {prediction.name}
+    </p>
+    {#if prediction.certainty}
       <p class="bg-secondary text-white rounded w-15 text-center">
-        {Math.round($bestPrediction.confidence.currentConfidence * 100)}%
-      </p>
-    {:else}
-      <p class="font-semibold text-2xl">
-        {$t('content.model.output.estimatedGesture.none')}
+        {prediction.certainty}
       </p>
     {/if}
   </div>
