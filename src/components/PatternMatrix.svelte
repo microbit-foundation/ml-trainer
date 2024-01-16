@@ -117,7 +117,7 @@
 </script>
 
 <!-- PATTERN MATRIX -->
-<main class="buttonGrid select-none" on:mouseleave={mouseLeftDrawingArea}>
+<div class="buttonGrid select-none" on:mouseleave={mouseLeftDrawingArea}>
   <!-- Draw all 25 boxes -->
   {#each matrix as isOn, i}
     <div
@@ -136,4 +136,4 @@
         elementHover(i, e);
       }} />
   {/each}
-</main>
+</div>

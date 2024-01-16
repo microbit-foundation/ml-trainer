@@ -14,19 +14,17 @@
   export let onBackClick: () => void;
 </script>
 
-<main>
-  <div class="w-175">
-    <DialogHeading>
-      {$t('connectMB.connectBattery.heading')}
-    </DialogHeading>
-    <div class="space-y-5">
-      <p>{$t('connectMB.connectBattery.subtitle')}</p>
-      <img src={microbitConnectedImage} alt="" class="w-68 h-229px m-auto" />
-    </div>
+<div class="w-175">
+  <DialogHeading>
+    {$t('connectMB.connectBattery.heading')}
+  </DialogHeading>
+  <div class="space-y-5">
+    <p>{$t('connectMB.connectBattery.subtitle')}</p>
+    <img src={microbitConnectedImage} alt="" class="w-68 h-229px m-auto" />
   </div>
-  <div class="flex justify-end gap-x-5 pt-5">
-    <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
-    <StandardButton type="primary" onClick={onNextClick}
-      >{$t('connectMB.nextButton')}</StandardButton>
-  </div>
-</main>
+</div>
+<div class="flex justify-end gap-x-5 pt-5">
+  <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
+  <StandardButton type="primary" onClick={onNextClick}
+    >{$t('connectMB.nextButton')}</StandardButton>
+</div>

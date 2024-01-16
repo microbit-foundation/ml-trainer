@@ -97,23 +97,21 @@
   });
 </script>
 
-<main>
-  <div class="w-175">
-    <DialogHeading>
-      {$t('connectMB.bluetooth.heading')}
-    </DialogHeading>
-    {#if $state.requestDeviceWasCancelled && !isConnecting}
-      <p class="text-warning">{$t('connectMB.bluetooth.cancelledConnection')}</p>
-    {/if}
-    {#if attemptedToPairWithInvalidPattern}
-      <p class="text-warning">{$t('connectMB.bluetooth.invalidPattern')}</p>
-    {/if}
-    {#if isConnecting}
-      <!-- Show spinner while connecting -->
-      <div class="flex flex-col gap-5 justify-center items-center mb-40px">
-        <p>{$t('connectMB.bluetooth.connecting')}</p>
-        <LoadingSpinner />
-      </div>
-    {/if}
-  </div>
-</main>
+<div class="w-175">
+  <DialogHeading>
+    {$t('connectMB.bluetooth.heading')}
+  </DialogHeading>
+  {#if $state.requestDeviceWasCancelled && !isConnecting}
+    <p class="text-warning">{$t('connectMB.bluetooth.cancelledConnection')}</p>
+  {/if}
+  {#if attemptedToPairWithInvalidPattern}
+    <p class="text-warning">{$t('connectMB.bluetooth.invalidPattern')}</p>
+  {/if}
+  {#if isConnecting}
+    <!-- Show spinner while connecting -->
+    <div class="flex flex-col gap-5 justify-center items-center mb-40px">
+      <p>{$t('connectMB.bluetooth.connecting')}</p>
+      <LoadingSpinner />
+    </div>
+  {/if}
+</div>

@@ -31,7 +31,7 @@
   }
 </script>
 
-<main class="w-175">
+<div class="w-175">
   <DialogHeading>
     {$t('connectMB.pattern.heading')}
   </DialogHeading>
@@ -44,4 +44,4 @@
     <StandardButton type="primary" onClick={onNextClick}
       >{$t('connectMB.nextButton')}</StandardButton>
   </div>
-</main>
+</div>

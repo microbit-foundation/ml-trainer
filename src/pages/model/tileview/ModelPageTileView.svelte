@@ -84,7 +84,7 @@
   $: triggerButtonsClicked($buttonPressed);
 </script>
 
-<main class="h-full flex flex-col pt-4 pl-4">
+<div class="h-full flex flex-col pt-4 pl-4">
   {#if !$state.isPredicting}
     <TrainModelFirstTitle />
   {:else}
@@ -104,4 +104,4 @@
       </div>
     </div>
   {/if}
-</main>
+</div>

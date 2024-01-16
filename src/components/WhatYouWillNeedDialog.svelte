@@ -23,32 +23,30 @@
   export let onNextClick: () => void;
 </script>
 
-<main>
-  <div class="w-175">
-    <DialogHeading>{$t(headingId)}</DialogHeading>
-    {#if subtitleId}
-      <p>{$t(subtitleId)}</p>
-    {/if}
-    <div class="inline-grid grid-cols-{items.length} gap-16 py-13 px-10">
-      {#each items as item}
-        <div class="flex flex-col text-md text-center">
-          <img class="h-25 w-107px" src={item.imgSrc} alt="" />
-          <p class="pt-10 font-bold">
-            {$t(item.titleId)}
-          </p>
-          {#if item.subtitleId}
-            <p>{$t(item.subtitleId)}</p>
-          {/if}
-        </div>
-      {/each}
-    </div>
-
-    <div class="flex justify-between items-center">
-      <StandardButton type="link" onClick={onSwitchClick}>
-        {$t(switchTextId)}
-      </StandardButton>
-      <StandardButton onClick={onNextClick} type="primary"
-        >{$t('connectMB.nextButton')}</StandardButton>
-    </div>
+<div class="w-175">
+  <DialogHeading>{$t(headingId)}</DialogHeading>
+  {#if subtitleId}
+    <p>{$t(subtitleId)}</p>
+  {/if}
+  <div class="inline-grid grid-cols-{items.length} gap-16 py-13 px-10">
+    {#each items as item}
+      <div class="flex flex-col text-md text-center">
+        <img class="h-25 w-107px" src={item.imgSrc} alt="" />
+        <p class="pt-10 font-bold">
+          {$t(item.titleId)}
+        </p>
+        {#if item.subtitleId}
+          <p>{$t(item.subtitleId)}</p>
+        {/if}
+      </div>
+    {/each}
   </div>
-</main>
+
+  <div class="flex justify-between items-center">
+    <StandardButton type="link" onClick={onSwitchClick}>
+      {$t(switchTextId)}
+    </StandardButton>
+    <StandardButton onClick={onNextClick} type="primary"
+      >{$t('connectMB.nextButton')}</StandardButton>
+  </div>
+</div>
