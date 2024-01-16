@@ -308,8 +308,6 @@ class Microbits {
     const connectionBehaviour = ConnectionBehaviours.getInputBehaviour();
 
     const microbitSerial = new MicrobitSerial(Microbits.getLinked(), onInputDisconnect);
-    // Debug:
-    (this as any).serial = microbitSerial;
 
     this.assignedInputMicrobit = microbitSerial;
     this.inputName = name;

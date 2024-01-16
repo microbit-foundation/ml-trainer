@@ -7,7 +7,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { ProcessedPeriodicMessage, processPeriodicMessage } from '../script/microbit-interfacing/serialProtocol';
+import {
+  ProcessedPeriodicMessage,
+  processPeriodicMessage,
+} from '../script/microbit-interfacing/serialProtocol';
 
 describe('processInput', () => {
   it('extracts the micro:bit state from the message', () => {

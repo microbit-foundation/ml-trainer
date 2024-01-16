@@ -10,16 +10,16 @@ export type SplittedMessages = {
 };
 
 export enum MessageTypes {
-  Command = "C",
-  Response = "R",
-  Periodic = "P",
-};
+  Command = 'C',
+  Response = 'R',
+  Periodic = 'P',
+}
 
 export enum CommandTypes {
-  Handshake = "HS",
-  Start = "START",
-  Stop = "STOP",
-};
+  Handshake = 'HS',
+  Start = 'START',
+  Stop = 'STOP',
+}
 
 export type protocolMessage = {
   message: string;
@@ -43,10 +43,14 @@ export type ProcessedPeriodicMessage = {
 const handshakeRegexString = 'R\\[[\\w]*?\\]HS\\[\\]';
 const responseIdRegex = 'R\\[([\\w]*?)\\]';
 
-const periodicMessageRegexString = 'P\\[[\\w]*?\\]AX\\[[\\d-]*?\\]AY\\[[\\d-]*?\\]AZ\\[[\\d-]*?\\]BA\\[[01]\\]BB\\[[01]\\]';
+const periodicMessageRegexString =
+  'P\\[[\\w]*?\\]AX\\[[\\d-]*?\\]AY\\[[\\d-]*?\\]AZ\\[[\\d-]*?\\]BA\\[[01]\\]BB\\[[01]\\]';
 
 const messageRegex = new RegExp(periodicMessageRegexString, 'g');
-const remainingInputAfterMessageRegex = new RegExp(`(?<=${periodicMessageRegexString}).*`, 'g');
+const remainingInputAfterMessageRegex = new RegExp(
+  `(?<=${periodicMessageRegexString}).*`,
+  'g',
+);
 // TODO: This should probably be replaced with a single regex and named groups
 const accelerometerXRegex = /(?<=AX\[)[\d-]+?(?=\])/;
 const accelerometerYRegex = /(?<=AY\[)[\d-]+?(?=\])/;
@@ -61,15 +65,15 @@ export const splitMessages = (message: string): SplittedMessages => {
     return {
       messages: [],
       remainingInput: '',
-    }
+    };
   }
   const messages = message.split('\n');
   let remainingInput = messages.pop() || '';
   return {
     messages,
     remainingInput,
-  }
-}
+  };
+};
 
 // TODO: Returning undefined to follow processPeriodicMessage example
 //      but should it be null or an empty string instead?
@@ -79,9 +83,11 @@ export const processHandshake = (message: string): string | undefined => {
     return undefined;
   }
   return responseIdMatch[1] || undefined;
-}
+};
 
-export const processPeriodicMessage = (message: string): ProcessedPeriodicMessage | undefined => {
+export const processPeriodicMessage = (
+  message: string,
+): ProcessedPeriodicMessage | undefined => {
   const messages = message.match(messageRegex);
 
   if (!messages) {
@@ -102,7 +108,10 @@ export const processPeriodicMessage = (message: string): ProcessedPeriodicMessag
   };
 };
 
-export const generateCommand = (cmdType: CommandTypes, cmdData: string = ''): protocolMessage => {
+export const generateCommand = (
+  cmdType: CommandTypes,
+  cmdData: string = '',
+): protocolMessage => {
   // TODO: Hack! Currently hardcoding the periodic for Accelerometer and Buttons
   if (cmdType === CommandTypes.Start) {
     cmdData = 'AB';
@@ -114,4 +123,4 @@ export const generateCommand = (cmdType: CommandTypes, cmdData: string = ''): pr
   };
   commandId++;
   return msg;
-}
+};
