@@ -9,7 +9,7 @@ import InputBehaviour from '../connection-behaviours/InputBehaviour';
 import MBSpecs from './MBSpecs';
 import { MicrobitConnection } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
-import * as protocol from './serial-message-processing';
+import * as protocol from './serialProtocol';
 
 const writeLine = (message: string) => {
   console.log(message);
@@ -132,6 +132,7 @@ class MicrobitSerial implements MicrobitConnection {
         const processedInput = protocol.processPeriodicMessage(this.unprocessedInput);
         if (processedInput) {
           this.unprocessedInput = processedInput.remainingInput;
+          // FIXME: Debug log, printing the processed data and time between messages.
           let now = Date.now();
           console.log(now - this.t, processedInput.state);
           this.t = now;
