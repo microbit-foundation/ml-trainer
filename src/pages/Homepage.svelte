@@ -42,7 +42,9 @@
   const playgroundSurveyUrl =
     'https://stage.microbit.org/teach/playground-survey/exploring-machine-learning';
 
-  const hasExistingSession = gestures.getGestures().some(g => g.getName());
+  const hasExistingSession = gestures
+    .getGestures()
+    .some(g => g.getName() || g.getRecordings().length);
   let showDataLossWarning = false;
 
   const checkForExistingSession = () => {
