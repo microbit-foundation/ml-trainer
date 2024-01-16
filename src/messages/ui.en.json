@@ -4,6 +4,7 @@
   "about.microbitHeartImageAlt": "micro:bit board with the 5 by 5 LED grid showing a heart",
 
   "actions.close": "Close",
+  "actions.cancel": "Cancel",
 
   "alert.data.classNameLengthAlert": "Action names cannot be longer than {maxLen} characters.",
   "alert.recording.disconnectedDuringRecording": "micro:bit disconnected during recording",
@@ -186,6 +187,7 @@
   "connectMB.bluetooth.heading": "Connect using Bluetooth",
   "connectMB.main.bluetooth.subtitle": "Connect using Bluetooth",
   "connectMB.bluetooth.cancelledConnection": "You cancelled the connection process. Try again, if you wish to proceed.",
+  "connectMB.bluetooth.reconnect": "Try again",
 
   "connectMB.bluetooth.connecting": "Connecting…",
   "connectMB.bluetooth.invalidPattern": "The pattern you drew is invalid",

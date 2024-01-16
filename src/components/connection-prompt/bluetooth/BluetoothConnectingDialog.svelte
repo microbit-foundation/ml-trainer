@@ -21,10 +21,13 @@
   import StaticConfiguration from '../../../StaticConfiguration';
   import DialogHeading from '../../DialogHeading.svelte';
   import LoadingSpinner from '../../LoadingSpinner.svelte';
+  import StandardButton from '../../StandardButton.svelte';
 
   // callbacks
   export let deviceState: DeviceRequestStates;
   export let onBluetoothConnected: () => void;
+  export let onClose: () => void;
+  export let onReconnectBluetooth: () => void;
 
   let isConnecting = false;
 
@@ -103,10 +106,17 @@
       {$t('connectMB.bluetooth.heading')}
     </DialogHeading>
     {#if $state.requestDeviceWasCancelled && !isConnecting}
-      <p class="text-warning">{$t('connectMB.bluetooth.cancelledConnection')}</p>
+      <div class="flex flex-col gap-y-5">
+        <p class="text-red-600">{$t('connectMB.bluetooth.cancelledConnection')}</p>
+        <div class="flex justify-end gap-x-5">
+          <StandardButton onClick={onClose}>{$t('actions.cancel')}</StandardButton>
+          <StandardButton type="primary" onClick={onReconnectBluetooth}
+            >{$t('connectMB.bluetooth.reconnect')}</StandardButton>
+        </div>
+      </div>
     {/if}
     {#if attemptedToPairWithInvalidPattern}
-      <p class="text-warning">{$t('connectMB.bluetooth.invalidPattern')}</p>
+      <p class="text-red-600">{$t('connectMB.bluetooth.invalidPattern')}</p>
     {/if}
     {#if isConnecting}
       <!-- Show spinner while connecting -->
