@@ -38,9 +38,12 @@
 
 <h1 class="sr-only">{$t('content.index.toolProcessCards.model.title')}</h1>
 <div class="flex flex-col h-full bg-backgrounddark">
-  <span class="sr-only" aria-live="polite" aria-atomic="true"
-    >{$t('content.model.output.estimatedGesture.iconTitle')}
-    {prediction.name}</span>
+  <span class="sr-only" aria-live="polite"
+    >{$t('content.model.output.estimatedGesture.label', {
+      values: {
+        action: prediction.name,
+      },
+    })}</span>
   <div class="flex justify-center space-x-10 py-5 text-xl border-b-3 border-b-gray-200">
     <Information
       underlineIconText={false}
