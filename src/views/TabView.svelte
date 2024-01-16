@@ -19,7 +19,7 @@
   };
 </script>
 
-<div class="flex w-full justify-center bg-white border-b-3 border-gray-200">
+<nav class="flex w-full justify-center bg-white border-b-3 border-gray-200">
   <div class="flex">
     {#each get(Menus.getMenuStore()) as menu}
       <a
@@ -37,4 +37,4 @@
       </a>
     {/each}
   </div>
-</div>
+</nav>
