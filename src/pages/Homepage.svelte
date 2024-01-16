@@ -12,6 +12,7 @@
 </style>
 
 <script lang="ts">
+  import { state } from '../script/stores/uiStore';
   import trainModelImage from '../imgs/TrainModel.svg';
   import inputDataImage from '../imgs/InputData.svg';
   import testModelImage from '../imgs/TestModel.svg';
