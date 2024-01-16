@@ -113,7 +113,10 @@
   // Focus the first button in the dialog when the content changes.
   connectionDialogState.subscribe(({ connectionState }) => {
     if (connectionState !== ConnectDialogStates.NONE && !endOfFlow) {
-      (dialogContainer.querySelector('button') as HTMLElement).focus();
+      const button = dialogContainer.querySelector('button');
+      if (button) {
+        button.focus();
+      }
     }
   });
 </script>
