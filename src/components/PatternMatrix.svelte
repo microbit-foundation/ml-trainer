@@ -53,10 +53,30 @@
 </style>
 
 <script lang="ts">
+  import PatternBox from './PatternBox.svelte';
+
   export let onMatrixChange: (matrix: boolean[]) => void;
   export let matrix: boolean[];
 
   let highlighted: boolean[] = new Array<boolean>(25).fill(false);
+  const matrixDimension = 5;
+
+  const transformMatrixToColumns = (m: boolean[]) => {
+    const cols = [];
+    for (let colId = 1; colId <= matrixDimension; colId++) {
+      const remainder = colId === matrixDimension ? 0 : colId;
+      cols.push(m.filter((_c, i) => (i + 1) % matrixDimension === remainder));
+    }
+    return cols;
+  };
+
+  const transformColumnsToMatrix = (cols: boolean[][]) => {
+    let matrix: boolean[] = [];
+    for (let i = 0; i < matrixDimension; i++) {
+      matrix = [...matrix, ...cols.map(c => c[i])];
+    }
+    return matrix;
+  };
 
   /** If bad matrix given to component => reset */
   // This should never happen
@@ -79,6 +99,7 @@
       }
     });
 
+    console.log(transformColumnsToMatrix(transformMatrixToColumns(matrix)));
     onMatrixChange(matrix);
   };
 
@@ -120,14 +141,9 @@
 <div class="buttonGrid select-none" on:mouseleave={mouseLeftDrawingArea}>
   <!-- Draw all 25 boxes -->
   {#each matrix as isOn, i}
-    <div
-      class="rounded"
-      class:border-3={highlighted[i]}
-      class:turnedOn={isOn}
-      class:turnedOff={!isOn}
-      class:bg-secondary={isOn}
-      class:border-secondary={highlighted[i]}
-      class:bg-gray-300={!isOn}
+    <PatternBox
+      {isOn}
+      isHighlighted={highlighted[i]}
       on:mousedown={() => {
         setElement(i, true);
       }}
