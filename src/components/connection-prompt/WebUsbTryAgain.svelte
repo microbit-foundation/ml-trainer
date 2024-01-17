@@ -18,7 +18,7 @@
   <div class="space-y-5">
     <p>{$t('connectMB.usbTryAgain.subtitle')}</p>
     <div class="flex justify-end gap-x-5">
-      <StandardButton onClick={onCancel}>{$t('connectMB.cancel')}</StandardButton>
+      <StandardButton onClick={onCancel}>{$t('actions.cancel')}</StandardButton>
       <StandardButton type="primary" onClick={onTryAgain}
         >{$t('connectMB.tryAgain')}</StandardButton>
     </div>

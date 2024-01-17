@@ -127,7 +127,6 @@
 
   "connectMB.nextButton": "Next",
   "connectMB.backButton": "Back",
-  "connectMB.cancel": "Cancel",
   "connectMB.tryAgain": "Try again",
 
   "connectMB.usbTryAgain.heading": "Connect using WebUSB",
@@ -192,7 +191,6 @@
   "connectMB.bluetooth.heading": "Connect using Bluetooth",
   "connectMB.main.bluetooth.subtitle": "Connect using Bluetooth",
   "connectMB.bluetooth.cancelledConnection": "You didn't choose a micro:bit. Do you want to try again?",
-  "connectMB.bluetooth.reconnect": "Try again",
 
   "connectMB.bluetooth.connecting": "Connecting…",
   "connectMB.bluetooth.invalidPattern": "The pattern you drew is invalid",

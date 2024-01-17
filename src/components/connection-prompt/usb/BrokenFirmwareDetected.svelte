@@ -46,7 +46,7 @@
     </p>
     <div class="flex justify-end gap-x-5">
       <div class="flex justify-end gap-x-5">
-        <StandardButton onClick={onCancel}>{$t('connectMB.cancel')}</StandardButton>
+        <StandardButton onClick={onCancel}>{$t('actions.cancel')}</StandardButton>
         {#if currentStage === 'usb'}
           <StandardButton onClick={onSkip}
             >{$t('connectMB.usb.firmwareBroken.skip')}</StandardButton>
