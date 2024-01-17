@@ -6,36 +6,25 @@
 
 <script lang="ts">
   import { t } from '../../../i18n';
-  import {
-    ConnectDialogStates,
-    connectionDialogState,
-  } from '../../../script/stores/connectDialogStore';
+  import DialogHeading from '../../DialogHeading.svelte';
   import HtmlFormattedMessage, { linkWithProps } from '../../HtmlFormattedMessage.svelte';
   import StandardButton from '../../StandardButton.svelte';
+
+  export let onTryAgain: () => void;
+  export let onSkip: () => void;
+  export let onCancel: () => void;
+  export let currentStage: string;
 </script>
 
-<main>
-  <div class="w-600px text-left">
-    <h1 class="font-bold mb-5 text-center">
-      {$t('connectMB.usb.header')}
-    </h1>
-    <p class="mb-3 mt-2 text-warning font-bold">
-      {$t('connectMB.usb.firmwareBroken.warning')}
-    </p>
+<div class="w-175">
+  <DialogHeading>{$t('connectMB.usb.firmwareBroken.heading')}</DialogHeading>
+  <div class="space-y-5">
     <p>
       {$t('connectMB.usb.firmwareBroken.content1')}
     </p>
-    <p class="mt-2 font-bold">
-      {$t('connectMB.usb.firmwareBroken.content2')}
-    </p>
-
-    <p class="mt-2">
-      {$t('connectMB.usb.firmwareBroken.content3')}
-    </p>
-
-    <p class="mb-2">
+    <p>
       <HtmlFormattedMessage
-        id="connectMB.usb.firmwareBroken.content4"
+        id="connectMB.usb.firmwareBroken.content2"
         options={{
           values: {
             link: linkWithProps({
@@ -46,9 +35,25 @@
           },
         }} />
     </p>
-    <StandardButton
-      onClick={() => {
-        $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
-      }}>{$t('connectMB.usb.firmwareBroken.button.skip')}</StandardButton>
+    <p>
+      <a
+        class="text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
+        href="https://support.microbit.org/support/solutions/articles/19000105428-webusb-troubleshooting"
+        target="_blank"
+        rel="noopener">
+        {$t('connectMB.usb.firmwareBroken.content3')}
+      </a>
+    </p>
+    <div class="flex justify-end gap-x-5">
+      <div class="flex justify-end gap-x-5">
+        <StandardButton onClick={onCancel}>{$t('connectMB.cancel')}</StandardButton>
+        {#if currentStage === 'usb'}
+          <StandardButton onClick={onSkip}
+            >{$t('connectMB.usb.firmwareBroken.skip')}</StandardButton>
+        {/if}
+        <StandardButton type="primary" onClick={onTryAgain}
+          >{$t('connectMB.tryAgain')}</StandardButton>
+      </div>
+    </div>
   </div>
-</main>
+</div>

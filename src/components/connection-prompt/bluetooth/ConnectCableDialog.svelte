@@ -9,6 +9,7 @@
   import { t } from '../../../i18n';
   import connectCableImage from '../../../imgs/connect-cable.gif';
   import DialogHeading from '../../DialogHeading.svelte';
+  import Environment from '../../../script/Environment';
 
   export let onNextClick: () => void;
   export let onBackClick: () => void;
@@ -44,7 +45,7 @@
     </div>
   </div>
   <div class="flex justify-between pt-5">
-    {#if currentStage === 'usb' || currentStage === 'usb1'}
+    {#if currentStage === 'usb' || (currentStage === 'usb1' && Environment.isInDevelopment)}
       <StandardButton type="link" onClick={onSkipClick}
         >{$t('connectMB.connectCable.skip')}</StandardButton>
     {/if}

@@ -126,6 +126,11 @@
 
   "connectMB.nextButton": "Next",
   "connectMB.backButton": "Back",
+  "connectMB.cancel": "Cancel",
+  "connectMB.tryAgain": "Try again",
+
+  "connectMB.usbTryAgain.heading": "Connect using WebUSB",
+  "connectMB.usbTryAgain.subtitle": "You didn't select a micro:bit. Do you want to try again?",
 
   "connectMB.radioStart.heading": "What you will need to get started:",
   "connectMB.radioStart.requirements1": "2 micro:bits",
@@ -210,12 +215,11 @@
   "connectMB.usb.manual.manualDownload": "If the file did not automatically download then <link>please download the file here.</link>",
   "connectMB.usb.manual.done": "Done: Connect using Bluetooth",
 
-  "connectMB.usb.firmwareBroken.warning": "We detected issues with your micro:bit firmware",
-  "connectMB.usb.firmwareBroken.content1": "The version of micro:bit and firmware have known issues, that prevent us from uploading the program to it.",
-  "connectMB.usb.firmwareBroken.content2": "To proceed, you will have to transfer manually, or update your micro:bit's firmware.",
-  "connectMB.usb.firmwareBroken.content3": "We recommend that you upgrade the firmware of your micro:bit to the latest version to fix this issue.",
-  "connectMB.usb.firmwareBroken.content4": "A guide can be found on the <link>micro:bit website</link>.",
-  "connectMB.usb.firmwareBroken.button.skip": "Skip and transfer manually",
+  "connectMB.usb.firmwareBroken.heading": "Firmware update required",
+  "connectMB.usb.firmwareBroken.content1": "Connecting to the micro:bit failed because the firmware on your micro:bit is too old.",
+  "connectMB.usb.firmwareBroken.content2": "You must <link>update your firmware</link> before you can connect to this micro:bit.",
+  "connectMB.usb.firmwareBroken.content3": "Troubleshoot problems with connecting to your micro:bit",
+  "connectMB.usb.firmwareBroken.skip": "Skip and transfer manually",
 
   "connectMB.outputMB.same": "Use the same micro:bit",
   "connectMB.outputMB.different": "Connect another micro:bit",

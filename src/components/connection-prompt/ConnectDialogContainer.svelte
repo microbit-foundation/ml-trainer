@@ -29,6 +29,7 @@
   import SelectMicrobitDialogBluetooth from './bluetooth/SelectMicrobitDialogBluetooth.svelte';
   import MicrobitSerial from '../../script/microbit-interfacing/MicrobitSerial';
   import MicrobitWearingInstructionDialog from './MicrobitWearingInstructionDialog.svelte';
+  import WebUsbTryAgain from './WebUsbTryAgain.svelte';
 
   let endOfFlow = false;
   let currentStage: 'usb' | 'usb1' | 'usb2' = 'usb1'; // "usb" is for the bluetooth connection flow, "usb1" and "usb2" determine the progress in the radio connection flow
@@ -66,7 +67,12 @@
           })
           .catch(() => {
             // Error during flashing process
-            $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
+            if (currentStage === 'usb') {
+              $connectionDialogState.connectionState =
+                ConnectDialogStates.MANUAL_TUTORIAL;
+            } else {
+              $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
+            }
           });
       })
       .catch((e: Error) => {
@@ -75,7 +81,11 @@
           // Edge case, caused by a bad micro:bit firmware
           $connectionDialogState.connectionState = ConnectDialogStates.BAD_FIRMWARE;
         } else {
-          $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
+          if (currentStage === 'usb') {
+            $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
+          } else {
+            $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
+          }
         }
       });
   }
@@ -210,8 +220,13 @@
       <SelectMicrobitDialogUsb
         onBackClick={() =>
           ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)}
-        onLinkError={() =>
-          ($connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL)}
+        onLinkError={() => {
+          if (currentStage === 'usb') {
+            $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
+          } else {
+            $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
+          }
+        }}
         onFound={onFoundUsbDevice} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECT_BATTERY}
       {#if currentStage === 'usb'}
@@ -221,11 +236,13 @@
               ConnectDialogStates.CONNECT_TUTORIAL_USB)}
           onNextClick={() =>
             ($connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH)} />
-      {:else if currentStage === 'usb1' || currentStage === 'usb2'}
+      {:else}
         <ConnectBatteryDialog
-          onBackClick={() =>
-            ($connectionDialogState.connectionState =
-              ConnectDialogStates.CONNECT_TUTORIAL_USB)}
+          onBackClick={() => {
+            $connectionDialogState.connectionState =
+              ConnectDialogStates.CONNECT_TUTORIAL_USB;
+            currentStage = 'usb1';
+          }}
           onNextClick={() => {
             $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE;
             currentStage = 'usb2';
@@ -259,7 +276,13 @@
         }}
         onFoundUsb={onFoundUsbDevice} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.BAD_FIRMWARE}
-      <BrokenFirmwareDetected />
+      <BrokenFirmwareDetected
+        {currentStage}
+        onSkip={() =>
+          ($connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL)}
+        onTryAgain={() =>
+          ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)}
+        onCancel={endFlow} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.USB_DOWNLOADING}
       <DownloadingDialog transferProgress={flashProgress} {currentStage} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.USB_DONE}
@@ -270,6 +293,11 @@
       <ManualInstallTutorial
         onConnectBluetoothClick={() =>
           ($connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH)} />
+    {:else if $connectionDialogState.connectionState === ConnectDialogStates.USB_TRY_AGAIN}
+      <WebUsbTryAgain
+        onCancel={endFlow}
+        onTryAgain={() =>
+          ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)} />
     {/if}
   </StandardDialog>
 </div>
