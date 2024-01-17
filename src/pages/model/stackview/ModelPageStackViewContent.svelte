@@ -39,7 +39,7 @@
 
 <h1 class="sr-only">{$t('content.index.toolProcessCards.model.title')}</h1>
 <div class="flex flex-col h-full bg-backgrounddark">
-  <GestureTilePart elevated class="flex mx-10 my-5 px-6 flex-row">
+  <GestureTilePart elevated class="flex mx-10 mt-5 mb-2 px-6 flex-row">
     <span class="sr-only" aria-live="polite">
       {$t('content.model.output.estimatedGesture.label', {
         values: {
@@ -73,7 +73,7 @@
     <div
       class="grid {enableOutputGestures
         ? 'grid-cols-[240px,360px,177px,146px,1fr]'
-        : 'grid-cols-[240px,max-content]'} gap-x-7 items-center flex-shrink-0 h-10 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
+        : 'grid-cols-[240px,max-content]'} gap-x-7 items-center flex-shrink-0 h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
       <Information
         underlineIconText={false}
         isLightTheme={false}
