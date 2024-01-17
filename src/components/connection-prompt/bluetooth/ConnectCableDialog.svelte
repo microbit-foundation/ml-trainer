@@ -13,7 +13,7 @@
 
   export let onNextClick: () => void;
   export let onBackClick: () => void;
-  export let onSkipClick: () => void;
+  export let onAltOrSkipClick: () => void;
   export let currentStage: string;
 </script>
 
@@ -45,8 +45,12 @@
 </div>
 <div class="flex justify-between pt-5">
   {#if currentStage === 'usb' || (currentStage === 'usb1' && Environment.isInDevelopment)}
-    <StandardButton type="link" onClick={onSkipClick}
+    <StandardButton type="link" onClick={onAltOrSkipClick}
       >{$t('connectMB.connectCable.skip')}</StandardButton>
+  {/if}
+  {#if currentStage === 'usb2'}
+    <StandardButton type="link" onClick={onAltOrSkipClick}
+      >{$t('connectMB.radioStart.switchBluetooth')}</StandardButton>
   {/if}
   <div class="flex gap-x-5 ml-auto">
     <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>

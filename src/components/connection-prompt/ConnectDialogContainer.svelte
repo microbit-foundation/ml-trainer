@@ -180,7 +180,7 @@
       {#if currentStage === 'usb'}
         <ConnectCableDialog
           {currentStage}
-          onSkipClick={() =>
+          onAltOrSkipClick={() =>
             ($connectionDialogState.connectionState =
               ConnectDialogStates.CONNECT_BATTERY)}
           onBackClick={() =>
@@ -191,7 +191,7 @@
       {:else if currentStage === 'usb1'}
         <ConnectCableDialog
           {currentStage}
-          onSkipClick={() => {
+          onAltOrSkipClick={() => {
             $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY;
             currentStage = 'usb2';
           }}
@@ -205,9 +205,10 @@
       {:else if currentStage === 'usb2'}
         <ConnectCableDialog
           {currentStage}
-          onSkipClick={() =>
-            ($connectionDialogState.connectionState =
-              ConnectDialogStates.CONNECTING_MICROBITS)}
+          onAltOrSkipClick={() => {
+            $connectionDialogState.connectionState = ConnectDialogStates.START_BLUETOOTH;
+            currentStage = 'usb';
+          }}
           onBackClick={() => {
             $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY;
             currentStage = 'usb1';
