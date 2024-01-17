@@ -298,6 +298,7 @@
 <div class="flex">
   <div class="flex flex-col justify-evenly mr-4">
     {#each classList as c}
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
         class="py-1 px-4 rounded-md btn transition ease border select-none focusElement"
         style="background-color: {getColorForClass(c.id.toString())};"

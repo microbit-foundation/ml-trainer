@@ -4,20 +4,12 @@
   SPDX-License-Identifier: MIT
  -->
 
-<style>
-  button:disabled {
-    cursor: default;
-    color: grey;
-  }
-</style>
-
 <script lang="ts">
   import { t } from '../../i18n';
   import { createMenu } from 'svelte-headlessui';
   import ClearIcon from 'virtual:icons/ri/delete-bin-2-line';
   import UploadIcon from 'virtual:icons/ri/upload-2-line';
   import DownloadIcon from 'virtual:icons/ri/download-2-line';
-  import ArrowDownIcon from 'virtual:icons/ri/arrow-down-s-line';
   import MenuItems from '../control-bar/control-bar-items/MenuItems.svelte';
   import MenuItem from '../control-bar/control-bar-items/MenuItem.svelte';
   import MenuTransition from '../MenuTransition.svelte';
@@ -30,7 +22,7 @@
   export let onDownloadGestures: () => void;
   export let onUploadGestures: () => void;
 
-  const menu = createMenu({ label: $t('dataMenu.label') });
+  const menu = createMenu({ label: $t('content.data.controlbar.button.menu') });
 
   const onSelect = (event: Event) => {
     const { selected } = (event as CustomEvent).detail;

@@ -101,6 +101,7 @@
 <main class="buttonGrid h-18 w-18 select-none ml-0">
   <!-- Draw all 25 boxes -->
   {#each matrix as button, i}
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
       class="{button ? 'bg-[#FF0000]' : 'bg-gray-300'} rounded-[2px] transition ease"
       class:turnedOn={button}

@@ -47,6 +47,7 @@ export default {
         infotextlight: '#ffffff',
         infotextdark: '#787878',
         ring: 'rgba(66, 153, 255, 0.6)',
+        ringBright: 'rgb(66, 153, 255)',
       },
     },
   },

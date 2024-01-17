@@ -200,8 +200,10 @@
 
 <!-- ACTION TITLE -->
 <GestureTilePart elevated={true}>
-  <div class="items-center h-full flex py-2 px-6 w-60">
-    <h3 class="font-semibold break-words text-2xl">{$gesture.name}</h3>
+  <div class="items-center h-full flex py-2 px-6">
+    <h3 class="w-full font-semibold break-words text-2xl">
+      {$gesture.name}
+    </h3>
   </div></GestureTilePart>
 
 <GestureTilePart elevated={true} class="relative">
@@ -230,7 +232,7 @@
       {$t('content.model.output.recognitionPoint')}
     </p>
     <input
-      class="accent-gray-500 w-60"
+      class="accent-gray-500 w-60 outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
       type="range"
       min="0"
       max="100"
@@ -267,6 +269,7 @@
         loadingColorSecondary="#818181"
         loadingColorPrimary="#4A4A4A"
         onLoaded={() => (hasLoadedMicrobitImage = true)} />
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
         class="bg-black p-0 m-0 absolute top-9 left-12.7"
         class:hidden={!hasLoadedMicrobitImage}

@@ -29,6 +29,7 @@
 <svelte:window on:keydown={handleKeyPress} />
 
 {#if isOpen}
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
     transition:fly
     class="

@@ -20,13 +20,17 @@
   import StandardButton from '../components/StandardButton.svelte';
   import { t } from '../i18n';
   import { startConnectionProcess } from '../script/stores/connectDialogStore';
-  import ConnectDialogContainer from '../components/connection-prompt/ConnectDialogContainer.svelte';
   import HtmlFormattedMessage, {
     linkWithProps,
   } from '../components/HtmlFormattedMessage.svelte';
   import LinkOverlayContainer from '../components/LinkOverlayContainer.svelte';
   import LinkOverlay from '../components/LinkOverlay.svelte';
   import { Paths, navigate } from '../router/paths';
+  import { gestures } from '../script/stores/Stores';
+  import StandardDialog from '../components/dialogs/StandardDialog.svelte';
+  import DialogHeading from '../components/DialogHeading.svelte';
+  import { clearGestures } from '../script/stores/mlStore';
+  import { get } from 'svelte/store';
 
   // Avoid youtube cookie. rel=0 should limit related videos to youtube channel.
   // Once we have translated videos we can try e.g. cc_lang_pref=fr
@@ -37,6 +41,28 @@
 
   const playgroundSurveyUrl =
     'https://stage.microbit.org/teach/playground-survey/exploring-machine-learning';
+
+  const hasExistingSession = gestures
+    .getGestures()
+    .some(g => g.getName() || g.getRecordings().length);
+  let showDataLossWarning = false;
+
+  const checkForExistingSession = () => {
+    if (hasExistingSession) {
+      showDataLossWarning = true;
+    } else {
+      handleNewSession();
+    }
+  };
+  const handleNewSession = () => {
+    clearGestures();
+    if ($state.isInputConnected) {
+      navigate(Paths.DATA);
+    } else {
+      showDataLossWarning = false;
+      startConnectionProcess();
+    }
+  };
 </script>
 
 <main class="h-full flex flex-col items-center bg-backgrounddark">
@@ -116,7 +142,44 @@
       </div>
     </div>
 
-    <StandardButton size="large" type="primary" onClick={startConnectionProcess}
-      >{$t('footer.connectButtonNotConnected')}</StandardButton>
+    <div class="flex items-center justify-center gap-x-5">
+      {#if hasExistingSession}
+        <StandardButton size="large" type="primary" onClick={() => navigate(Paths.DATA)}
+          >{$t('footer.resume')}</StandardButton>
+      {/if}
+      <StandardButton
+        size="large"
+        type={hasExistingSession ? 'secondary' : 'primary'}
+        onClick={checkForExistingSession}>{$t('footer.start')}</StandardButton>
+    </div>
   </div>
 </main>
+
+<StandardDialog
+  isOpen={showDataLossWarning}
+  onClose={() => (showDataLossWarning = false)}>
+  <div class="w-150">
+    <DialogHeading>{$t('content.index.dataWarning.title')}</DialogHeading>
+    <div class="space-y-5">
+      <p>{$t('content.index.dataWarning.subtitleOne')}</p>
+      <p>
+        <HtmlFormattedMessage
+          id="content.index.dataWarning.subtitleTwo"
+          options={{
+            values: {
+              link: linkWithProps({
+                href:
+                  'data:application/json;charset=utf-8,' +
+                  encodeURIComponent(JSON.stringify(get(gestures), null, 2)),
+                download: 'dataset.json',
+              }),
+            },
+          }} />
+      </p>
+      <div class="flex justify-end items-center gap-x-5">
+        <StandardButton onClick={handleNewSession} type="primary"
+          >{$t('footer.start')}</StandardButton>
+      </div>
+    </div>
+  </div>
+</StandardDialog>

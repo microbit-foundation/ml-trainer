@@ -20,8 +20,6 @@
     currentFilter = filter;
     isFilterInspectorDialogOpen = fullScreen;
   };
-
-  const filter: FilterType = Object.values(Filters)[4];
 </script>
 
 <ControlBar>

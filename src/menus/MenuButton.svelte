@@ -22,6 +22,7 @@
 </script>
 
 <div>
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
     class="border bg-opacity-75 border-solid border-3
            border-opacity-80 min-h-20

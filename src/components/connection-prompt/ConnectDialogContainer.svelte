@@ -107,9 +107,21 @@
     endOfFlow = true;
     connectionStateNone();
   }
+
+  let dialogContainer: HTMLElement;
+
+  // Focus the first button in the dialog when the content changes.
+  connectionDialogState.subscribe(({ connectionState }) => {
+    if (connectionState !== ConnectDialogStates.NONE && !endOfFlow) {
+      const button = dialogContainer.querySelector('button');
+      if (button) {
+        button.focus();
+      }
+    }
+  });
 </script>
 
-<main>
+<div bind:this={dialogContainer}>
   <StandardDialog
     isOpen={$connectionDialogState.connectionState !== ConnectDialogStates.NONE &&
       !endOfFlow}
@@ -260,4 +272,4 @@
           ($connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH)} />
     {/if}
   </StandardDialog>
-</main>
+</div>

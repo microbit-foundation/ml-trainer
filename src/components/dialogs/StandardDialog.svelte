@@ -36,15 +36,12 @@
     }
     previousExpanded = expanded;
   });
-
-  const onClickDialog = (e: Event) => {
-    // stop propagation of on:click outside event
-    e.stopPropagation();
-  };
 </script>
 
 <div class="fixed z-10">
   <Transition show={$dialog.expanded}>
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- Keyboard event handler for on:click is implemented as part of svelte-headlessui dialog builder  -->
     <div
       class="fixed top-0 left-0 h-screen w-screen flex justify-center items-center bg-black/50 bg-blend-darken"
       use:dialog.modal
@@ -56,9 +53,10 @@
         leave="transition ease-in duration-75"
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95">
+        <!-- on:click for stopping propogation  -->
         <div
           class="w-min h-min border-gray-200 border border-solid relative bg-white rounded-lg p-8 z-15"
-          on:click={onClickDialog}>
+          on:click|stopPropagation>
           {#if hasCloseButton}
             <div class="absolute right-2 top-2">
               <IconButton ariaLabel={$t('actions.close')} onClick={dialog.close}>

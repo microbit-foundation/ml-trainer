@@ -25,39 +25,46 @@
   function onUserInteraction(): void {
     hasInteracted = true;
   }
+
+  $: prediction = $bestPrediction
+    ? {
+        name: $bestPrediction.name,
+        certainty: `${Math.round($bestPrediction.confidence.currentConfidence * 100)}%`,
+      }
+    : {
+        name: $t('content.model.output.estimatedGesture.none'),
+      };
 </script>
 
 <h1 class="sr-only">{$t('content.index.toolProcessCards.model.title')}</h1>
 <div class="flex flex-col h-full bg-backgrounddark">
-  <div
-    class="px-10 flex justify-start gap-x-10 py-5 text-xl border-b-3 border-b-gray-200">
-    <div class="flex justify-start">
-      <Information
-        iconTextClass="font-semibold text-2xl"
-        iconText={$t('content.model.output.estimatedGesture.iconTitle')}
-        underlineIconText={false}
-        isLightTheme={false}
-        titleText={$t('content.model.output.estimatedGesture.descriptionTitle')}
-        bodyText={$t('content.model.output.estimatedGesture.descriptionBody')} />
-    </div>
-    <div class="flex space-x-10">
-      <p class="font-semibold text-2xl">
-        {$bestPrediction
-          ? $bestPrediction.name
-          : $t('content.model.output.estimatedGesture.none')}
+  <span class="sr-only" aria-live="polite"
+    >{$t('content.model.output.estimatedGesture.label', {
+      values: {
+        action: prediction.name,
+      },
+    })}</span>
+  <div class="flex justify-center space-x-10 py-5 text-xl border-b-3 border-b-gray-200">
+    <Information
+      underlineIconText={false}
+      isLightTheme={false}
+      iconText={$t('content.model.output.estimatedGesture.iconTitle')}
+      titleText={$t('content.model.output.estimatedGesture.descriptionTitle')}
+      bodyText={$t('content.model.output.estimatedGesture.descriptionBody')} />
+    <p class="font-semibold text-2xl">
+      {prediction.name}
+    </p>
+    {#if prediction.certainty}
+      <p class="bg-secondary text-white rounded w-15 text-center">
+        {prediction.certainty}
       </p>
-      {#if $bestPrediction}
-        <p class="bg-secondary text-white rounded w-15 text-center">
-          {Math.round($bestPrediction.confidence.currentConfidence * 100)}%
-        </p>
-      {/if}
-    </div>
+    {/if}
   </div>
   <div class="flex flex-col flex-grow">
     <div
       class="grid {enableOutputGestures
         ? 'grid-cols-[240px,360px,177px,146px,1fr]'
-        : 'grid-cols-[240px,max-content]'} gap-x-7 items-center flex-shrink-0 h-13 px-10 z-1 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
+        : 'grid-cols-[240px,max-content]'} gap-x-7 items-center flex-shrink-0 h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
       <Information
         underlineIconText={false}
         isLightTheme={false}

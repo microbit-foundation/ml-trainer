@@ -28,6 +28,9 @@
   "content.index.toolProcessCards.model.title": "Test model",
   "content.index.toolProcessCards.model.description": "Find out if it correctly recognises each action. Add more data to improve the model.",
   "content.index.recordButtonDescription": "\"Record\"-button",
+  "content.index.dataWarning.title": "Existing data samples will be lost",
+  "content.index.dataWarning.subtitleOne": "You have existing data that will be lost when you start a new session.",
+  "content.index.dataWarning.subtitleTwo": "To save your data, <link>download all data samples</link> before continuing.",
 
   "content.data.classPlaceholderNewClass": "Name of action",
   "content.data.classHelpHeader": "Action",
@@ -62,14 +65,17 @@
   "content.trainer.failure.header": "Training failed",
   "content.trainer.failure.body": "The training did not result in a usable model. The reason for this is most likely the data used for training. If the data samples for different actions are too similar, this can result in issues in the training process.",
   "content.trainer.failure.todo": "Return to the Add data page and change your data.",
-  "content.trainer.retrain.title": "Status: You've collected new data and can retrain the model.",
+  "content.trainer.retrain.title": "Status: Your data samples have changed. You can retrain the model.",
 
   "content.model.trainModelFirstHeading": "Test model",
-  "content.model.trainModelBody": "You cannot test the model until it has been trained.",
-  "content.model.notEnoughDataInfoBody": "You need at least 3 data samples for 2 actions to train a model.",
+  "content.model.notEnoughDataInfoBody1": "You cannot test the model until it has been trained.",
+  "content.model.notEnoughDataInfoBody2": "You need at least 3 data samples for 2 actions to train a model.",
+  "content.model.trainModelBody": "You need to train your model before you can test it.",
+  "content.model.retrainModelBody": "You need to train your model with the current set of data samples before you can test it.",
   "content.model.addData": "Add data",
 
   "content.model.output.estimatedGesture.iconTitle": "Estimated action:",
+  "content.model.output.estimatedGesture.label": "Estimated action: \"{action}\"",
   "content.model.output.estimatedGesture.descriptionTitle": "Estimated action",
   "content.model.output.estimatedGesture.descriptionBody": "This is the action the model thinks you are currently doing.",
   "content.model.output.estimatedGesture.none": "None",
@@ -84,7 +90,8 @@
 
   "content.model.output.recognitionPoint": "Recognition Point:",
 
-  "footer.connectButtonNotConnected": "Start",
+  "footer.start": "Start new session",
+  "footer.resume": "Resume session",
   "footer.disconnectButton": "Disconnect",
   "footer.connectButton": "Connect",
   "footer.helpHeader": "Live graph",
@@ -95,6 +102,8 @@
   "helpMenu.termsOfUse": "Terms of use",
   "helpMenu.cookies": "Cookies",
   "helpMenu.about": "About",
+
+  "homepage.Link": "Home page",
 
   "menu.data.helpHeading": "1. Add data",
 

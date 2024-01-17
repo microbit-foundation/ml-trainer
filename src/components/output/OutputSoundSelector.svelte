@@ -83,6 +83,7 @@
 </script>
 
 <GestureTilePart>
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div class="w-146px h-full cursor-pointer relative" on:click={onToggleSound}>
     <div class="w-full h-full text-center text-80px">
       <i class="fa fa-volume-up absolute text-secondary left-6.5 top-6" />

@@ -4,13 +4,6 @@
   SPDX-License-Identifier: MIT
  -->
 
-<style>
-  .arrow-filter-color {
-    filter: invert(100%) sepia(100%) saturate(100%) hue-rotate(0deg) brightness(100%)
-      contrast(100%);
-  }
-</style>
-
 <script lang="ts">
   import {
     buttonPressed,
@@ -24,7 +17,6 @@
   import Microbits from '../../../script/microbit-interfacing/Microbits';
   import TrainModelFirstTitle from '../../../components/TrainModelFirstTitle.svelte';
   import ModelPageStackViewContent from './ModelPageStackViewContent.svelte';
-  import PleaseConnectFirst from '../../../components/PleaseConnectFirst.svelte';
   import TabView from '../../../views/TabView.svelte';
 
   // In case of manual classification, variables for evaluation

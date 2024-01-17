@@ -13,7 +13,6 @@
 </script>
 
 <div
-  on:click
   class="{$$restProps.class || ''} rounded-lg bg-backgroundlight border-1 {selected
     ? 'border-brand-500'
     : 'border-transparent'}"
