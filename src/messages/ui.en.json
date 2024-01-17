@@ -211,10 +211,6 @@
   "connectMB.usb.done.body3": "If you have a battery for the micro:bit, you can now remove the usb-cable and use the battery instead.",
   "connectMB.usb.done.body4": "If you do not have a battery for the micro:bit, you can simply keep powering it through the usb cable.",
 
-  "connectMB.usb.manual.header": "Transfer file to your micro:bit",
-  "connectMB.usb.manual.manualDownload": "If the file did not automatically download then <link>please download the file here.</link>",
-  "connectMB.usb.manual.done": "Done: Connect using Bluetooth",
-
   "connectMB.usb.firmwareBroken.heading": "Firmware update required",
   "connectMB.usb.firmwareBroken.content1": "Connecting to the micro:bit failed because the firmware on your micro:bit is too old.",
   "connectMB.usb.firmwareBroken.content2": "You must <link>update your firmware</link> before you can connect to this micro:bit.",
@@ -234,10 +230,10 @@
   "popup.compatibility.bluetooth.explain": "The browser you are currently using does not support Bluetooth.",
   "popup.compatibility.bluetooth.advice": "Please update the browser or use another one from our supported browsers list below.",
 
-  "connectMB.USBCompatibility.transferStep.step1": "Open the location to which the firmware was downloaded. Most commonly found in your download folder.",
-  "connectMB.USBCompatibility.transferStep.step2": "Drag the file onto the micro:bit on your computer's file explorer.",
-  "connectMB.USBCompatibility.transferStep.step3": "Once the file has finished transferring, the micro:bit can be connected using Bluetooth.",
-  "connectMB.USBCompatibility.transferStep.altText": "animation of dragging a hex file from the downloads folder onto the micro:bit drive or device listed in the file explorer",
+  "connectMB.transferHex.heading": "Transfer saved hex file to micro:bit",
+  "connectMB.transferHex.manualDownload": "If the file did not automatically download then <link>please download the file here</link>.",
+  "connectMB.transferHex.message": "Drag the hex file from your Downloads folder to the MICROBIT drive.",
+  "connectMB.transferHex.altText": "animation of dragging a hex file from the downloads folder onto the micro:bit drive or device listed in the file explorer",
 
   "compatibility.platform.notSupported": "The tool is not supported on your current platform.",
   "compatibility.platform.notSupported.joinDesktop": "Join us on desktop.",

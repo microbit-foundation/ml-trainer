@@ -294,8 +294,13 @@
           ($connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH)} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.MANUAL_TUTORIAL}
       <ManualInstallTutorial
-        onConnectBluetoothClick={() =>
-          ($connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH)} />
+        onBackClick={() => {
+          $connectionDialogState.connectionState =
+            ConnectDialogStates.CONNECT_TUTORIAL_USB;
+        }}
+        onNextClick={() =>
+          ($connectionDialogState.connectionState =
+            ConnectDialogStates.CONNECT_BATTERY)} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.USB_TRY_AGAIN}
       <WebUsbTryAgain
         onCancel={endFlow}

@@ -18,7 +18,8 @@
   } from '../../../HtmlFormattedMessage.svelte';
   import StandardButton from '../../../StandardButton.svelte';
 
-  export let onConnectBluetoothClick: () => void;
+  export let onNextClick: () => void;
+  export let onBackClick: () => void;
 
   let downloadLinkContainer: HTMLElement | undefined;
 
@@ -36,13 +37,13 @@
   const getImageProps = (os: string): ImageProps => {
     switch (os) {
       case 'Chrome OS':
-        return { src: transferFirmwareChromeOSImage, class: 'w-290px h-133px' };
+        return { src: transferFirmwareChromeOSImage, class: 'h-320px' };
       case 'Windows':
-        return { src: transferFirmwareWindowsImage, class: 'w-290px h-146px' };
+        return { src: transferFirmwareWindowsImage, class: 'h-352px' };
       case 'macOS':
-        return { src: transferFirmwareMacOSImage, class: 'w-290px h-104px' };
+        return { src: transferFirmwareMacOSImage, class: 'h-251px' };
       default:
-        return { src: transferFirmwareMacOSImage, class: 'w-290px h-104px' };
+        return { src: transferFirmwareMacOSImage, class: 'h-251px' };
     }
   };
 
@@ -51,12 +52,12 @@
 
 <div class="w-175">
   <DialogHeading>
-    {$t('connectMB.usb.manual.header')}
+    {$t('connectMB.transferHex.heading')}
   </DialogHeading>
   <div class="space-y-5">
     <p bind:this={downloadLinkContainer}>
       <HtmlFormattedMessage
-        id="connectMB.usb.manual.manualDownload"
+        id="connectMB.transferHex.manualDownload"
         options={{
           values: {
             link: linkWithProps({
@@ -66,20 +67,17 @@
           },
         }} />
     </p>
-    <div class="flex align-top gap-5">
-      <ol class="w-auto">
-        <li>1. {$t('connectMB.USBCompatibility.transferStep.step1')}</li>
-        <li>2. {$t('connectMB.USBCompatibility.transferStep.step2')}</li>
-        <li>3. {$t('connectMB.USBCompatibility.transferStep.step3')}</li>
-      </ol>
-      <img
-        class="{imageProps.class} flex-shrink-0"
-        alt={$t('connectMB.USBCompatibility.transferStep.altText')}
-        src={imageProps.src} />
+    <p>
+      {$t('connectMB.transferHex.message')}
+    </p>
+    <img
+      class="{imageProps.class} w-full flex-shrink-0"
+      alt={$t('connectMB.USBCompatibility.transferStep.altText')}
+      src={imageProps.src} />
+    <div class="flex items-center justify-end gap-x-5">
+      <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
+      <StandardButton type="primary" onClick={onNextClick}
+        >{$t('connectMB.nextButton')}</StandardButton>
     </div>
-  </div>
-  <div class="flex justify-center pt-5">
-    <StandardButton type="primary" onClick={onConnectBluetoothClick}
-      >{$t('connectMB.usb.manual.done')}</StandardButton>
   </div>
 </div>
