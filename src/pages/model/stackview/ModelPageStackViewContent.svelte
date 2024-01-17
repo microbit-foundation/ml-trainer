@@ -56,11 +56,11 @@
       </p>
     </div>
     <div class="flex flex-row justify-end m-auto gap-5">
-      <p
-        class="text-xl bg-secondary text-white rounded w-15 text-center"
-        class:invisible={!prediction.certainty}>
-        {prediction.certainty}
-      </p>
+      {#if prediction.certainty}
+        <p class="text-xl bg-secondary text-white rounded w-15 text-center">
+          {prediction.certainty}
+        </p>
+      {/if}
       <Information
         class="flex justify-center text-2xl"
         underlineIconText={false}
