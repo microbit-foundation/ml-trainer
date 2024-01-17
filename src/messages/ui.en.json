@@ -220,7 +220,7 @@
   "languageDialog.title": "Language",
 
   "popup.compatibility.header": "This browser is not supported",
-  "popup.compatibility.explain": "Unfortunately, WebUSB and Web Bluetooth are not supported in this browser. You will not be able to stream data from your micro:bit (record data samples and test the model).",
+  "popup.compatibility.explain": "Unfortunately, WebUSB and Web Bluetooth are not supported by this browser. This means you cannot connect connect to a micro:bit to record the data samples needed to train a machine learning model.",
   "popup.compatibility.advice": "We recommend Google Chrome or Microsoft Edge so you can connect directly to your micro:bit.",
 
   "connectMB.USBCompatibility.transferStep.step1": "Open the location to which the firmware was downloaded. Most commonly found in your download folder.",
