@@ -265,6 +265,9 @@
         onNextClick={onFoundBluetoothDevice} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.BLUETOOTH_CONNECTING}
       <BluetoothConnectingDialog
+        onClose={connectionStateNone}
+        onReconnectBluetooth={() =>
+          ($connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH)}
         onBluetoothConnected={endFlow}
         deviceState={$connectionDialogState.deviceState} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECTING_MICROBITS}
