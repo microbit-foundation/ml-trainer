@@ -4,7 +4,7 @@
   SPDX-License-Identifier: MIT
  -->
 
-<nav
+<div
   class="min-h-16 px-10 flex w-full items-center justify-between bg-secondary sticky top-0 z-4">
   <slot />
-</nav>
+</div>
