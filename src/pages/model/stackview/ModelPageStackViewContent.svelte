@@ -73,7 +73,7 @@
     <div
       class="grid {enableOutputGestures
         ? 'grid-cols-[240px,360px,177px,146px,1fr]'
-        : 'grid-cols-[240px,max-content]'} gap-x-7 items-center flex-shrink-0 px-10 z-1 sticky top-0 bg-backgrounddark">
+        : 'grid-cols-[240px,max-content]'} gap-x-7 items-center flex-shrink-0 h-10 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
       <Information
         underlineIconText={false}
         isLightTheme={false}
