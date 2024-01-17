@@ -8,47 +8,25 @@
   .buttonGrid {
     display: grid;
     grid-template-columns: repeat(5, 19%);
-    grid-template-rows: repeat(5, 19%);
     gap: 2px 2px;
-    grid-template-areas:
-      '. . . . .'
-      '. . . . .'
-      '. . . . .'
-      '. . . . .'
-      '. . . . .';
+    grid-template-areas: '. . . . .';
     height: 150px;
     width: 150px;
   }
-  .turnedOn {
-    animation: turnOn 0.3s ease;
-  }
 
-  .turnedOff {
-    animation: turnOff 0.3s ease;
-  }
-
-  @keyframes turnOn {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.15);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
-  @keyframes turnOff {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(0.8);
-    }
-    100% {
-      transform: scale(1);
-    }
+  .buttonColumn {
+    display: grid;
+    grid-template-columns: repeat(1, 19%);
+    grid-template-rows: repeat(5, 19%);
+    gap: 2px 2px;
+    grid-template-areas:
+      '.'
+      '.'
+      '.'
+      '.'
+      '.';
+    height: 150px;
+    width: 150px;
   }
 </style>
 
@@ -140,16 +118,20 @@
 <!-- PATTERN MATRIX -->
 <div class="buttonGrid select-none" on:mouseleave={mouseLeftDrawingArea}>
   <!-- Draw all 25 boxes -->
-  {#each matrix as isOn, i}
-    <PatternBox
-      {isOn}
-      isHighlighted={highlighted[i]}
-      on:mousedown={() => {
-        setElement(i, true);
-      }}
-      on:mouseenter={e => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        elementHover(i, e);
-      }} />
+  {#each transformMatrixToColumns(matrix) as column, colIdx}
+    <div class="buttonColumn">
+      {#each column as isOn, rowIdx}
+        <PatternBox
+          {isOn}
+          isHighlighted={highlighted[rowIdx * matrixDimension + colIdx + 1]}
+          on:mousedown={() => {
+            setElement(rowIdx * matrixDimension + colIdx, true);
+          }}
+          on:mouseenter={e => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            elementHover(rowIdx * matrixDimension + colIdx + 1, e);
+          }} />
+      {/each}
+    </div>
   {/each}
 </div>
