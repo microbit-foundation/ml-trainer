@@ -107,7 +107,7 @@
     </DialogHeading>
     {#if $state.requestDeviceWasCancelled && !isConnecting}
       <div class="flex flex-col gap-y-5">
-        <p class="text-red-600">{$t('connectMB.bluetooth.cancelledConnection')}</p>
+        <p>{$t('connectMB.bluetooth.cancelledConnection')}</p>
         <div class="flex justify-end gap-x-5">
           <StandardButton onClick={onClose}>{$t('actions.cancel')}</StandardButton>
           <StandardButton type="primary" onClick={onReconnectBluetooth}

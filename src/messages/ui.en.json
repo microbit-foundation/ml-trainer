@@ -186,7 +186,7 @@
 
   "connectMB.bluetooth.heading": "Connect using Bluetooth",
   "connectMB.main.bluetooth.subtitle": "Connect using Bluetooth",
-  "connectMB.bluetooth.cancelledConnection": "You cancelled the connection process. Try again, if you wish to proceed.",
+  "connectMB.bluetooth.cancelledConnection": "You didn't choose a micro:bit. Do you want to try again?",
   "connectMB.bluetooth.reconnect": "Try again",
 
   "connectMB.bluetooth.connecting": "Connecting…",
