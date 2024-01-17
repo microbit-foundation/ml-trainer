@@ -9,6 +9,7 @@
   import DialogHeading from '../../DialogHeading.svelte';
   import HtmlFormattedMessage, { linkWithProps } from '../../HtmlFormattedMessage.svelte';
   import StandardButton from '../../StandardButton.svelte';
+  import ExternalLinkIcon from 'virtual:icons/ri/external-link-line';
 
   export let onTryAgain: () => void;
   export let onSkip: () => void;
@@ -37,23 +38,22 @@
     </p>
     <p>
       <a
-        class="text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
+        class="inline-flex gap-x-1 items-center text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
         href="https://support.microbit.org/support/solutions/articles/19000105428-webusb-troubleshooting"
         target="_blank"
         rel="noopener">
         {$t('connectMB.usb.firmwareBroken.content3')}
+        <ExternalLinkIcon />
       </a>
     </p>
     <div class="flex justify-end gap-x-5">
-      <div class="flex justify-end gap-x-5">
-        <StandardButton onClick={onCancel}>{$t('actions.cancel')}</StandardButton>
-        {#if currentStage === 'usb'}
-          <StandardButton onClick={onSkip}
-            >{$t('connectMB.usb.firmwareBroken.skip')}</StandardButton>
-        {/if}
-        <StandardButton type="primary" onClick={onTryAgain}
-          >{$t('connectMB.tryAgain')}</StandardButton>
-      </div>
+      <StandardButton onClick={onCancel}>{$t('actions.cancel')}</StandardButton>
+      {#if currentStage === 'usb'}
+        <StandardButton onClick={onSkip}
+          >{$t('connectMB.usb.firmwareBroken.skip')}</StandardButton>
+      {/if}
+      <StandardButton type="primary" onClick={onTryAgain}
+        >{$t('connectMB.tryAgain')}</StandardButton>
     </div>
   </div>
 </div>

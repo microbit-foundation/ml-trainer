@@ -72,7 +72,7 @@
     </p>
     <img
       class="{imageProps.class} w-full flex-shrink-0"
-      alt={$t('connectMB.USBCompatibility.transferStep.altText')}
+      alt={$t('connectMB.transferHex.altText')}
       src={imageProps.src} />
     <div class="flex items-center justify-end gap-x-5">
       <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
