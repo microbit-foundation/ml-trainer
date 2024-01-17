@@ -17,7 +17,6 @@
   //       children, and a component specialised for text. In my opinion (Jon) this should be split up into one general
   //       and one for text (which uses the general one)
   export let iconText: string | undefined = undefined;
-  export let iconTextClass: string | undefined = undefined;
   export let titleText: string | undefined = undefined;
   export let bodyText: string | undefined = undefined;
   export let isVisible: boolean = true;
@@ -55,7 +54,7 @@
   }
 </script>
 
-<div class={isVisible ? 'visible' : 'invisible'}>
+<div class={$$restProps.class || ''} class:invisible={!isVisible}>
   <div
     class="w-auto inline-flex"
     bind:clientWidth={w}
@@ -63,8 +62,7 @@
     bind:this={domNode}>
     {#if iconText !== undefined}
       <p
-        class="text-white w-auto h-auto mr-0 whitespace-pre-line pr-1 {iconTextClass ||
-          ''}"
+        class="text-white w-auto h-auto mr-0 whitespace-pre-line pr-1"
         class:underline={underlineIconText}
         style="color: {colors.iconTextColor}">
         {iconText}

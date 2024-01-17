@@ -13,6 +13,7 @@
   import downArrowImage from '../../../imgs/down_arrow.svg';
   import { bestPrediction } from '../../../script/stores/mlStore';
   import BottomPanel from '../../../components/bottom/BottomPanel.svelte';
+  import GestureTilePart from '../../../components/GestureTilePart.svelte';
 
   // Bool flags to know whether output microbit popup should be show
   let hasClosedPopup = false;
@@ -38,33 +39,41 @@
 
 <h1 class="sr-only">{$t('content.index.toolProcessCards.model.title')}</h1>
 <div class="flex flex-col h-full bg-backgrounddark">
-  <span class="sr-only" aria-live="polite"
-    >{$t('content.model.output.estimatedGesture.label', {
-      values: {
-        action: prediction.name,
-      },
-    })}</span>
-  <div class="flex justify-center space-x-10 py-5 text-xl border-b-3 border-b-gray-200">
-    <Information
-      underlineIconText={false}
-      isLightTheme={false}
-      iconText={$t('content.model.output.estimatedGesture.iconTitle')}
-      titleText={$t('content.model.output.estimatedGesture.descriptionTitle')}
-      bodyText={$t('content.model.output.estimatedGesture.descriptionBody')} />
-    <p class="font-semibold text-2xl">
-      {prediction.name}
-    </p>
-    {#if prediction.certainty}
-      <p class="bg-secondary text-white rounded w-15 text-center">
+  <GestureTilePart elevated class="flex mx-10 my-5 px-6 flex-row">
+    <span class="sr-only" aria-live="polite">
+      {$t('content.model.output.estimatedGesture.label', {
+        values: {
+          action: prediction.name,
+        },
+      })}
+    </span>
+    <div class="flex flex-grow justify-start gap-5 py-5 font-semibold text-2xl">
+      <p class="text-infoicondark">
+        {$t('content.model.output.estimatedGesture.iconTitle')}
+      </p>
+      <p>
+        {prediction.name}
+      </p>
+    </div>
+    <div class="flex flex-row justify-end m-auto gap-5">
+      <p
+        class="text-xl bg-secondary text-white rounded w-15 text-center"
+        class:invisible={!prediction.certainty}>
         {prediction.certainty}
       </p>
-    {/if}
-  </div>
+      <Information
+        class="flex justify-center text-2xl"
+        underlineIconText={false}
+        isLightTheme={false}
+        titleText={$t('content.model.output.estimatedGesture.descriptionTitle')}
+        bodyText={$t('content.model.output.estimatedGesture.descriptionBody')} />
+    </div>
+  </GestureTilePart>
   <div class="flex flex-col flex-grow">
     <div
       class="grid {enableOutputGestures
         ? 'grid-cols-[240px,360px,177px,146px,1fr]'
-        : 'grid-cols-[240px,max-content]'} gap-x-7 items-center flex-shrink-0 h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
+        : 'grid-cols-[240px,max-content]'} gap-x-7 items-center flex-shrink-0 px-10 z-1 sticky top-0 bg-backgrounddark">
       <Information
         underlineIconText={false}
         isLightTheme={false}
