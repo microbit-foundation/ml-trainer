@@ -220,6 +220,25 @@
     }
   }
 
+  function onTitlePaste(event: ClipboardEvent) {
+    const value = event.clipboardData?.getData('text');
+    const maxLength = StaticConfiguration.gestureNameMaxLength;
+    if (value && value.length + $nameBind.length > maxLength) {
+      event.preventDefault();
+      const caret = (event.target as HTMLInputElement).selectionStart ?? 0;
+      const untrimmedValue =
+        $nameBind.substring(0, caret) + value + $nameBind.substring(caret);
+      $nameBind = untrimmedValue.substring(0, maxLength);
+      alertUser(
+        $t('alert.data.classNameLengthAlert', {
+          values: {
+            maxLen: maxLength,
+          },
+        }),
+      );
+    }
+  }
+
   function selectGesture() {
     chosenGesture.update(chosen => {
       chosen = gesture;
@@ -312,6 +331,7 @@
         placeholder={gesturePlaceholderName}
         bind:value={$nameBind}
         on:keypress={onTitleKeypress}
+        on:paste={onTitlePaste}
         on:focus={selectGesture} />
     </div>
   </GestureTilePart>

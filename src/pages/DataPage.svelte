@@ -90,7 +90,7 @@
   {:else}
     <div class="flex flex-col flex-grow">
       <div
-        class="grid grid-cols-[200px,1fr] gap-x-7 items-center flex-shrink-0 h-13 px-10 z-1 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
+        class="grid grid-cols-[200px,1fr] gap-x-7 items-center flex-shrink-0 h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
         <Information
           isLightTheme={false}
           underlineIconText={false}
