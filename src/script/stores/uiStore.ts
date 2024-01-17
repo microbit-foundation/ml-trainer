@@ -136,7 +136,7 @@ export enum MicrobitInteractions {
   AB,
 }
 
-const initialMicrobitInteraction: MicrobitInteractions = MicrobitInteractions.AB;
+const initialMicrobitInteraction: MicrobitInteractions = MicrobitInteractions.B;
 
 export const microbitInteraction = writable<MicrobitInteractions>(
   initialMicrobitInteraction,

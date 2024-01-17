@@ -54,7 +54,7 @@
     <!-- Denies mobile users access to the platform -->
     <IncompatiblePlatformView />
   {:else}
-    <main class="h-full w-full m-0 relative flex">
+    <div class="h-full w-full m-0 relative flex">
       <OverlayView />
       <!-- Wait for consent dialog to avoid a clash -->
       {#if $consent}
@@ -91,7 +91,7 @@
           <PageContentView />
         </div>
       </div>
-    </main>
+    </div>
   {/if}
 </Router>
 <ConnectDialogContainer />

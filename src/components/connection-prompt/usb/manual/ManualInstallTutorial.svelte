@@ -49,39 +49,37 @@
   const imageProps = getImageProps(osName);
 </script>
 
-<main>
-  <div class="w-175">
-    <DialogHeading>
-      {$t('connectMB.usb.manual.header')}
-    </DialogHeading>
-    <div class="space-y-5">
-      <p bind:this={downloadLinkContainer}>
-        <HtmlFormattedMessage
-          id="connectMB.usb.manual.manualDownload"
-          options={{
-            values: {
-              link: linkWithProps({
-                download: 'machine-learning-tool-program.hex',
-                href: Microbits.hexFiles.universal,
-              }),
-            },
-          }} />
-      </p>
-      <div class="flex align-top gap-5">
-        <ol class="w-auto">
-          <li>1. {$t('connectMB.USBCompatibility.transferStep.step1')}</li>
-          <li>2. {$t('connectMB.USBCompatibility.transferStep.step2')}</li>
-          <li>3. {$t('connectMB.USBCompatibility.transferStep.step3')}</li>
-        </ol>
-        <img
-          class="{imageProps.class} flex-shrink-0"
-          alt={$t('connectMB.USBCompatibility.transferStep.altText')}
-          src={imageProps.src} />
-      </div>
-    </div>
-    <div class="flex justify-center pt-5">
-      <StandardButton type="primary" onClick={onConnectBluetoothClick}
-        >{$t('connectMB.usb.manual.done')}</StandardButton>
+<div class="w-175">
+  <DialogHeading>
+    {$t('connectMB.usb.manual.header')}
+  </DialogHeading>
+  <div class="space-y-5">
+    <p bind:this={downloadLinkContainer}>
+      <HtmlFormattedMessage
+        id="connectMB.usb.manual.manualDownload"
+        options={{
+          values: {
+            link: linkWithProps({
+              download: 'machine-learning-tool-program.hex',
+              href: Microbits.hexFiles.universal,
+            }),
+          },
+        }} />
+    </p>
+    <div class="flex align-top gap-5">
+      <ol class="w-auto">
+        <li>1. {$t('connectMB.USBCompatibility.transferStep.step1')}</li>
+        <li>2. {$t('connectMB.USBCompatibility.transferStep.step2')}</li>
+        <li>3. {$t('connectMB.USBCompatibility.transferStep.step3')}</li>
+      </ol>
+      <img
+        class="{imageProps.class} flex-shrink-0"
+        alt={$t('connectMB.USBCompatibility.transferStep.altText')}
+        src={imageProps.src} />
     </div>
   </div>
-</main>
+  <div class="flex justify-center pt-5">
+    <StandardButton type="primary" onClick={onConnectBluetoothClick}
+      >{$t('connectMB.usb.manual.done')}</StandardButton>
+  </div>
+</div>

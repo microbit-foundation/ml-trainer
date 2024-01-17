@@ -98,7 +98,7 @@
   }
 </script>
 
-<main class="buttonGrid h-18 w-18 select-none ml-0">
+<div class="buttonGrid h-18 w-18 select-none ml-0">
   <!-- Draw all 25 boxes -->
   {#each matrix as button, i}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -114,4 +114,4 @@
         elementHover(i, e);
       }} />
   {/each}
-</main>
+</div>

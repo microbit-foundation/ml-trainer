@@ -65,7 +65,7 @@
   };
 </script>
 
-<main class="h-full flex flex-col items-center bg-backgrounddark">
+<div class="h-full flex flex-col items-center bg-backgrounddark">
   <h1 class="sr-only">{$t('content.index.title')}</h1>
   <div class="mb-8">
     <div class="flex flex-col items-center justify-center m-10 gap-5">
@@ -153,7 +153,7 @@
         onClick={checkForExistingSession}>{$t('footer.start')}</StandardButton>
     </div>
   </div>
-</main>
+</div>
 
 <StandardDialog
   isOpen={showDataLossWarning}
