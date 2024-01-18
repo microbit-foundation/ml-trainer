@@ -11,10 +11,11 @@
   export let value: number;
 
   let isFocused = false;
+  const id = `columnInput${colIdx}`;
 </script>
 
 <div>
-  <label for="columnInput" class="sr-only">
+  <label for={id} class="sr-only">
     {$t('connectMB.pattern.inputLabel', {
       values: {
         colNum: colIdx + 1,
@@ -31,8 +32,8 @@
     }}
     class="w-full text-center {isFocused ? 'w-full' : 'w-0'}"
     type="number"
-    id="columnInput"
-    name="columnInput"
+    {id}
+    name={id}
     min="1"
     max="5" />
 </div>
