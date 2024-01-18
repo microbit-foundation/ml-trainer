@@ -68,7 +68,7 @@ describe('Microbit facade tests', () => {
 
   test('Should give correct hex file', () => {
     expect(Microbits.hexFiles[1]).toBe('firmware/ml-microbit-cpp-version-combined.hex');
-    expect(Microbits.hexFiles[2]).toBe('firmware/MICROBIT.hex');
+    expect(Microbits.hexFiles[2]).toBe('firmware/local-sensors.hex');
     expect(Microbits.hexFiles['universal']).toBe('firmware/universal-hex.hex');
   });
 

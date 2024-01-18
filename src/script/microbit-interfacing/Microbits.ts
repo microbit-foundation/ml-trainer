@@ -38,7 +38,10 @@ type UARTMessageType = 'g' | 's';
 class Microbits {
   public static hexFiles: { 1: string; 2: string; universal: string } = {
     1: 'firmware/ml-microbit-cpp-version-combined.hex',
-    2: 'firmware/MICROBIT.hex',
+    // FIXME: Radio bridge hex file that streams its own sensor data (single micro:bit use)
+    //        added here as quick hack to test the radio bridge mode
+    // 2: 'firmware/MICROBIT.hex',
+    2: 'firmware/local-sensors.hex',
     universal: 'firmware/universal-hex.hex',
   };
   private static assignedInputMicrobit: MicrobitConnection | undefined = undefined;
