@@ -12,6 +12,13 @@
 
   let isFocused = false;
   const id = `columnInput${colIdx}`;
+
+  const onFocusIn = () => {
+    isFocused = true;
+  };
+  const onFocusOut = () => {
+    isFocused = false;
+  };
 </script>
 
 <div>
@@ -24,13 +31,9 @@
   <input
     on:change
     {value}
-    on:focusin={() => {
-      isFocused = true;
-    }}
-    on:focusout={() => {
-      isFocused = false;
-    }}
-    class="w-full text-center"
+    on:focusin={onFocusIn}
+    on:focusout={onFocusOut}
+    class="w-full mt-2 text-center outline-none focus-visible:ring-4 focus-visible:ring-ring"
     style="opacity: {isFocused ? 1 : 0}"
     type="number"
     {id}
