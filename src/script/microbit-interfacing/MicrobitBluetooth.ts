@@ -57,6 +57,10 @@ export class MicrobitBluetooth implements MicrobitConnection {
     this.device.addEventListener('gattserverdisconnected', this.dcListener);
   }
 
+  isSameDevice(other: MicrobitConnection): boolean {
+    return other instanceof MicrobitBluetooth && other.device.id === this.device.id;
+  }
+
   /**
    * Adds a listener for the 'gattserverdisconnected' event.
    * @param {Event => void} callback The function to execute.
@@ -87,13 +91,6 @@ export class MicrobitBluetooth implements MicrobitConnection {
     } catch (error) {
       console.error(error);
     }
-  }
-
-  /**
-   * @returns {BluetoothDevice} The BluetoothDevice object of the micro:bit.
-   */
-  public getDevice(): BluetoothDevice {
-    return this.device;
   }
 
   /**

@@ -591,8 +591,7 @@ class Microbits {
     if (!this.isOutputAssigned() || !this.isInputAssigned()) {
       return false;
     }
-    return false;
-    // return this.getInput().getDevice().id == this.getOutput().getDevice().id;
+    return this.getInput().isSameDevice(this.getOutput());
   }
 
   /**

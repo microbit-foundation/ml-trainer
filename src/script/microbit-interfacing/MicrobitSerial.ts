@@ -36,6 +36,13 @@ class MicrobitSerial implements MicrobitConnection {
     private onDisconnect: (manual?: boolean) => void,
   ) {}
 
+  isSameDevice(other: MicrobitConnection): boolean {
+    return (
+      other instanceof MicrobitSerial &&
+      other.usb.getSerialNumber() === this.usb.getSerialNumber()
+    );
+  }
+
   public async listenToInputServices(
     inputBehaviour: InputBehaviour,
     _inputUartHandler: (data: string) => void,
