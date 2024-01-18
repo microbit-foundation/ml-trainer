@@ -30,6 +30,8 @@
   import MicrobitWearingInstructionDialog from './MicrobitWearingInstructionDialog.svelte';
   import WebUsbTryAgain from './WebUsbTryAgain.svelte';
   import Environment from '../../script/Environment';
+  import { onDestroy, onMount } from 'svelte';
+  import { Unsubscriber } from 'svelte/store';
 
   let endOfFlow = false;
   let currentStage: 'usb' | 'usb1' | 'usb2' = 'usb1'; // "usb" is for the bluetooth connection flow, "usb1" and "usb2" determine the progress in the radio connection flow
@@ -142,14 +144,23 @@
   }
 
   let dialogContainer: HTMLElement;
+  let unsubscribe: Unsubscriber;
 
-  // Focus the first button in the dialog when the content changes.
-  connectionDialogState.subscribe(({ connectionState }) => {
-    if (connectionState !== ConnectDialogStates.NONE && !endOfFlow) {
-      const button = dialogContainer.querySelector('button');
-      if (button) {
-        button.focus();
+  onMount(() => {
+    // Focus the first button in the dialog when the content changes.
+    unsubscribe = connectionDialogState.subscribe(({ connectionState }) => {
+      if (connectionState !== ConnectDialogStates.NONE && !endOfFlow) {
+        const button = dialogContainer.querySelector('button');
+        if (button) {
+          button.focus();
+        }
       }
+    });
+  });
+
+  onDestroy(() => {
+    if (unsubscribe) {
+      unsubscribe();
     }
   });
 </script>
