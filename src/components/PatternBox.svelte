@@ -46,7 +46,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- Intentionally not identifying as buttons for sr  -->
 <div
-  class="rounded"
+  class="rounded cursor-pointer"
   class:border-3={isHighlighted}
   class:turnedOn={isOn}
   class:turnedOff={!isOn}
