@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import Microbits from '../script/microbit-interfacing/Microbits';
+import Microbits, { getHexFileUrl } from '../script/microbit-interfacing/Microbits';
 import ConnectionBehaviours from '../script/connection-behaviours/ConnectionBehaviours';
 import OutputBehaviour from '../script/connection-behaviours/OutputBehaviour';
 import InputBehaviour from '../script/connection-behaviours/InputBehaviour';
@@ -67,9 +67,13 @@ describe('Microbit facade tests', () => {
   });
 
   test('Should give correct hex file', () => {
-    expect(Microbits.hexFiles[1]).toBe('firmware/ml-microbit-cpp-version-combined.hex');
-    expect(Microbits.hexFiles[2]).toBe('firmware/local-sensors.hex');
-    expect(Microbits.hexFiles['universal']).toBe('firmware/universal-hex.hex');
+    expect(getHexFileUrl(1, 'bluetooth')).toEqual(
+      'firmware/ml-microbit-cpp-version-combined.hex',
+    );
+    expect(getHexFileUrl(2, 'bluetooth')).toEqual('firmware/MICROBIT.hex');
+    expect(getHexFileUrl(2, 'radio-bridge')).toEqual('firmware/radio-bridge.hex');
+    expect(getHexFileUrl(2, 'radio-sender')).toEqual('firmware/radio-sender.hex');
+    expect(getHexFileUrl(2, 'radio-local')).toEqual('firmware/local-sensors.hex');
   });
 
   test('Input should not be connected before connecting', () => {

@@ -45,7 +45,9 @@
           btPatternInput.set(MBSpecs.Utility.nameToPattern(friendlyName));
         }
 
-        Microbits.flashHexToLinked(progress => {
+        // radio-local is a temporary debug hack
+        const hexForStage = currentStage === 'usb' ? 'bluetooth' : 'radio-local';
+        Microbits.flashHexToLinked(hexForStage, progress => {
           // Flash hex
           // Send users to download screen
           if (

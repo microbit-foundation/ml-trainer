@@ -30,20 +30,32 @@ export enum HexOrigin {
   PROPRIETARY,
 }
 
+type HexType = 'bluetooth' | 'radio-sender' | 'radio-bridge' | 'radio-local';
+
 type UARTMessageType = 'g' | 's';
+
+export const getHexFileUrl = (version: 1 | 2 | 'universal', type: HexType) => {
+  if (type === 'bluetooth') {
+    return {
+      1: 'firmware/ml-microbit-cpp-version-combined.hex',
+      2: 'firmware/MICROBIT.hex',
+      universal: 'firmware/universal-hex.hex',
+    }[version];
+  }
+  if (version !== 2) {
+    throw new Error('Only V2 is supported');
+  }
+  return {
+    'radio-sender': 'firmware/radio-sender.hex',
+    'radio-bridge': 'firmware/radio-bridge.hex',
+    'radio-local': 'firmware/local-sensors.hex',
+  }[type];
+};
 
 /**
  * Entry point for microbit interfaces / Facade pattern
  */
 class Microbits {
-  public static hexFiles: { 1: string; 2: string; universal: string } = {
-    1: 'firmware/ml-microbit-cpp-version-combined.hex',
-    // FIXME: Radio bridge hex file that streams its own sensor data (single micro:bit use)
-    //        added here as quick hack to test the radio bridge mode
-    // 2: 'firmware/MICROBIT.hex',
-    2: 'firmware/local-sensors.hex',
-    universal: 'firmware/universal-hex.hex',
-  };
   private static assignedInputMicrobit: MicrobitConnection | undefined = undefined;
   private static assignedOutputMicrobit: MicrobitBluetooth | undefined = undefined;
   private static inputName: string | undefined = undefined;
@@ -867,12 +879,15 @@ class Microbits {
    * Flashes the appropriate hex file to the micro:bit which is connected via USB
    * @param progressCallback The callback that is fired each time the progress status is updated
    */
-  public static flashHexToLinked(progressCallback: (progress: number) => void) {
+  public static flashHexToLinked(
+    hexType: HexType,
+    progressCallback: (progress: number) => void,
+  ) {
     if (!this.isMicrobitLinked()) {
       throw new Error('Cannot flash to USB, none are connected!');
     }
     const version = this.getLinked().getModelNumber();
-    const hex = this.hexFiles[version]; // Note: For this we CANNOT use the universal hex file (don't know why)
+    const hex = getHexFileUrl(version, hexType); // Note: For this we CANNOT use the universal hex file (don't know why)
     return this.getLinked().flashHex(hex, progressCallback);
   }
 
