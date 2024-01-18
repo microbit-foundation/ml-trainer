@@ -81,61 +81,63 @@
 
 <div class="flex flex-col h-full inline-block w-full bg-backgrounddark">
   <TabView />
-  <h1 class="sr-only">{$t('content.index.toolProcessCards.data.title')}</h1>
+  <main class="contents">
+    <h1 class="sr-only">{$t('content.index.toolProcessCards.data.title')}</h1>
 
-  {#if !hasSomeData() && !$state.isInputConnected}
-    <div class="flex justify-center items-center flex-grow">
-      <PleaseConnectFirst />
-    </div>
-  {:else}
-    <div class="flex flex-col flex-grow">
-      <div
-        class="grid grid-cols-[200px,1fr] gap-x-7 items-center flex-shrink-0 h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
-        <Information
-          isLightTheme={false}
-          underlineIconText={false}
-          iconText={$t('content.data.classification')}
-          titleText={$t('content.data.classHelpHeader')}
-          bodyText={$t('content.data.classHelpBody')} />
-        <Information
-          isVisible={$gestures.some(g => g.name.trim() || g.recordings.length > 0)}
-          isLightTheme={false}
-          underlineIconText={false}
-          iconText={$t('content.data.data')}
-          titleText={$t('content.data.data')}
-          bodyText={$t('content.data.dataDescription')} />
+    {#if !hasSomeData() && !$state.isInputConnected}
+      <div class="flex justify-center items-center flex-grow">
+        <PleaseConnectFirst />
       </div>
-      <div
-        class="grid grid-cols-[200px,1fr] auto-rows-max gap-x-7 gap-y-3 py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
-        {#each $gestures as gesture (gesture.ID)}
-          <section class="contents">
-            <Gesture
-              showWalkThrough={$gestures.length === 1}
-              gesture={gestures.getGesture(gesture.ID)}
-              onNoMicrobitSelect={() => (isConnectionDialogOpen = true)} />
-          </section>
-        {/each}
+    {:else}
+      <div class="flex flex-col flex-grow">
+        <div
+          class="grid grid-cols-[200px,1fr] gap-x-7 items-center flex-shrink-0 h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
+          <Information
+            isLightTheme={false}
+            underlineIconText={false}
+            iconText={$t('content.data.classification')}
+            titleText={$t('content.data.classHelpHeader')}
+            bodyText={$t('content.data.classHelpBody')} />
+          <Information
+            isVisible={$gestures.some(g => g.name.trim() || g.recordings.length > 0)}
+            isLightTheme={false}
+            underlineIconText={false}
+            iconText={$t('content.data.data')}
+            titleText={$t('content.data.data')}
+            bodyText={$t('content.data.dataDescription')} />
+        </div>
+        <div
+          class="grid grid-cols-[200px,1fr] auto-rows-max gap-x-7 gap-y-3 py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
+          {#each $gestures as gesture (gesture.ID)}
+            <section class="contents">
+              <Gesture
+                showWalkThrough={$gestures.length === 1}
+                gesture={gestures.getGesture(gesture.ID)}
+                onNoMicrobitSelect={() => (isConnectionDialogOpen = true)} />
+            </section>
+          {/each}
+        </div>
+      </div>
+    {/if}
+    <div
+      class="flex items-center justify-between px-10 py-2 border-b-3 border-t-3 border-gray-200">
+      <NewGestureButton
+        type={!trainingButtonPrimary ? 'primary' : 'secondary'}
+        disabled={!$gestures.every(g => g.name.trim())} />
+      <div class="flex items-center gap-x-2">
+        <TrainingButton
+          type={trainingButtonPrimary ? 'primary' : 'secondary'}
+          onClick={() => navigate(Paths.TRAINING)} />
+        <DataPageMenu
+          clearDisabled={$gestures.length === 0}
+          downloadDisabled={$gestures.length === 0}
+          {onClearGestures}
+          {onDownloadGestures}
+          {onUploadGestures} />
       </div>
     </div>
-  {/if}
-  <div
-    class="flex items-center justify-between px-10 py-2 border-b-3 border-t-3 border-gray-200">
-    <NewGestureButton
-      type={!trainingButtonPrimary ? 'primary' : 'secondary'}
-      disabled={!$gestures.every(g => g.name.trim())} />
-    <div class="flex items-center gap-x-2">
-      <TrainingButton
-        type={trainingButtonPrimary ? 'primary' : 'secondary'}
-        onClick={() => navigate(Paths.TRAINING)} />
-      <DataPageMenu
-        clearDisabled={$gestures.length === 0}
-        downloadDisabled={$gestures.length === 0}
-        {onClearGestures}
-        {onDownloadGestures}
-        {onUploadGestures} />
+    <div class="h-160px w-full">
+      <BottomPanel />
     </div>
-  </div>
-  <div class="h-160px w-full">
-    <BottomPanel />
-  </div>
+  </main>
 </div>
