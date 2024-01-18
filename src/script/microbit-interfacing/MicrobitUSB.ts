@@ -135,7 +135,7 @@ class MicrobitUSB extends CortexM {
     if (initialBaudRate !== baudRate) {
       await this.serialDAPLink.setSerialBaudrate(baudRate);
     }
-    this.serialPromise = this.serialDAPLink.startSerialRead(10, false);
+    this.serialPromise = this.serialDAPLink.startSerialRead(5, false);
   }
 
   public async serialWrite(data: string): Promise<void> {
