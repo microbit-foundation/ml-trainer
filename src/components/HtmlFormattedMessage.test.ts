@@ -54,7 +54,7 @@ describe('HtmlFormattedMessage', () => {
       id: 'link',
       options: {
         values: {
-          link: chunks => {
+          link: (chunks: string[]) => {
             const link = document.createElement('a');
             Object.assign(link, {
               href: '/',
