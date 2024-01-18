@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-import MicrobitBluetooth from '../microbit-interfacing/MicrobitBluetooth';
 import MBSpecs from '../microbit-interfacing/MBSpecs';
 import type ConnectionBehaviour from './ConnectionBehaviour';
 import Environment from '../Environment';
+import { MicrobitConnection } from '../microbit-interfacing/MicrobitConnection';
 
 /**
  * Used for logging / Decorator pattern
@@ -36,7 +36,7 @@ abstract class LoggingDecorator implements ConnectionBehaviour {
     this.enableLogging && console.log('Microbit identified as makecode HEX');
   }
 
-  onBluetoothConnectionError(error?: unknown): void {
+  onConnectionError(error?: unknown): void {
     this.enableLogging && console.log('An error occured while connecting.', error);
   }
 
@@ -61,7 +61,7 @@ abstract class LoggingDecorator implements ConnectionBehaviour {
     this.enableLogging && console.log('Button change', buttonState, button);
   }
 
-  onAssigned(microbit: MicrobitBluetooth, name: string): void {
+  onAssigned(microbit: MicrobitConnection, name: string): void {
     this.enableLogging && console.log(name, ' was assigned ');
     this.enableLogging && console.log(microbit);
   }

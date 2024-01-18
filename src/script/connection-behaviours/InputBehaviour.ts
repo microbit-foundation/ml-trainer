@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-import type MicrobitBluetooth from '../microbit-interfacing/MicrobitBluetooth';
 import { ModelView, buttonPressed, onCatastrophicError, state } from '../stores/uiStore';
 import { livedata } from '../stores/mlStore';
 import { t } from '../../i18n';
@@ -16,6 +15,7 @@ import { DeviceRequestStates } from '../stores/connectDialogStore';
 import StaticConfiguration from '../../StaticConfiguration';
 import { Paths, currentPath, navigate } from '../../router/paths';
 import { liveData } from '../stores/Stores';
+import { MicrobitConnection } from '../microbit-interfacing/MicrobitConnection';
 
 let text = get(t);
 t.subscribe(t => (text = t));
@@ -30,8 +30,8 @@ class InputBehaviour extends LoggingDecorator {
 
   private reconnectTimeout = setTimeout(TypingUtils.emptyFunction, 0);
 
-  onBluetoothConnectionError(error?: unknown) {
-    super.onBluetoothConnectionError(error);
+  onConnectionError(error?: unknown) {
+    super.onConnectionError(error);
     state.update(s => {
       s.isInputConnected = false;
       s.isInputAssigned = false;
@@ -83,8 +83,8 @@ class InputBehaviour extends LoggingDecorator {
     }
   }
 
-  onAssigned(microbitBluetooth: MicrobitBluetooth, name: string) {
-    super.onAssigned(microbitBluetooth, name);
+  onAssigned(microbit: MicrobitConnection, name: string) {
+    super.onAssigned(microbit, name);
     state.update(s => {
       s.isInputAssigned = true;
       return s;

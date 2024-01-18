@@ -201,7 +201,7 @@
 <!-- ACTION TITLE -->
 <GestureTilePart elevated={true}>
   <div class="items-center h-full flex py-2 px-6">
-    <h3 class="w-full font-semibold break-words text-2xl">
+    <h3 class="w-full break-words text-2xl">
       {$gesture.name}
     </h3>
   </div></GestureTilePart>

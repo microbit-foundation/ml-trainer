@@ -229,9 +229,9 @@
 
   "languageDialog.title": "Language",
 
-  "popup.compatibility.bluetooth.header": "Bluetooth incompatible browser!",
-  "popup.compatibility.bluetooth.explain": "The browser you are currently using does not support Bluetooth.",
-  "popup.compatibility.bluetooth.advice": "Please update the browser or use another one from our supported browsers list below.",
+  "popup.compatibility.header": "This browser is not supported",
+  "popup.compatibility.explain": "Unfortunately, WebUSB and Web Bluetooth are not supported by this browser. This means you cannot connect to a micro:bit to record the data samples needed to train a machine learning model.",
+  "popup.compatibility.advice": "We recommend Google Chrome or Microsoft Edge so you can connect directly to your micro:bit.",
 
   "connectMB.transferHex.heading": "Transfer saved hex file to micro:bit",
   "connectMB.transferHex.manualDownload": "If the file did not automatically download then <link>please download the file here</link>.",

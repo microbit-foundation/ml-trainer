@@ -77,7 +77,9 @@
           btPatternInput.set(MBSpecs.Utility.nameToPattern(friendlyName));
         }
 
-        Microbits.flashHexToLinked(progress => {
+        // radio-local is a temporary debug hack
+        const hexForStage = currentStage === 'usb' ? 'bluetooth' : 'radio-local';
+        Microbits.flashHexToLinked(hexForStage, progress => {
           // Flash hex
           // Send users to download screen
           if (
@@ -122,14 +124,10 @@
 
   function onConnectingSerial(): void {
     endFlow();
-    MicrobitSerial.connect(Microbits.getLinked()).catch(() => {
-      // Errors to consider: microbit is disconnected, some sort of connection error
-    });
-  }
-
-  function connectSame() {
-    Microbits.useInputAsOutput();
-    $connectionDialogState.connectionState = ConnectDialogStates.NONE;
+    Microbits.assignSerialInput('aname');
+    // MicrobitSerial.connect(Microbits.getLinked()).catch(() => {
+    //   // Errors to consider: microbit is disconnected, some sort of connection error
+    // });
   }
 
   function connectionStateNone() {

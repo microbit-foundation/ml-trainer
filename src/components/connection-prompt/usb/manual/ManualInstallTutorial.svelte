@@ -11,7 +11,9 @@
   import transferFirmwareChromeOSImage from '../../../../imgs/transfer_firmware_chromeos.gif';
   import transferFirmwareMacOSImage from '../../../../imgs/transfer_firmware_macos.gif';
   import transferFirmwareWindowsImage from '../../../../imgs/transfer_firmware_windows.gif';
-  import Microbits from '../../../../script/microbit-interfacing/Microbits';
+  import Microbits, {
+    getHexFileUrl,
+  } from '../../../../script/microbit-interfacing/Microbits';
   import DialogHeading from '../../../DialogHeading.svelte';
   import HtmlFormattedMessage, {
     linkWithProps,
@@ -62,7 +64,8 @@
           values: {
             link: linkWithProps({
               download: 'machine-learning-tool-program.hex',
-              href: Microbits.hexFiles.universal,
+              // Only bluetooth mode has this fallback, the radio bridge mode requires working WebUSB.
+              href: getHexFileUrl('universal', 'bluetooth'),
             }),
           },
         }} />

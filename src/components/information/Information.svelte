@@ -54,7 +54,7 @@
   }
 </script>
 
-<div class={isVisible ? 'visible' : 'invisible'}>
+<div class={$$restProps.class || ''} class:invisible={!isVisible}>
   <div
     class="w-auto inline-flex"
     bind:clientWidth={w}
