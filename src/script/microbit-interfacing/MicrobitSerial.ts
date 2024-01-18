@@ -197,8 +197,6 @@ class MicrobitSerial implements MicrobitConnection {
       });
       this.periodicDataPromise = undefined;
     }
-
-    navigate(Paths.HOME);
   }
 
   // TODO: If this is only used externally to stop listening to events and it
