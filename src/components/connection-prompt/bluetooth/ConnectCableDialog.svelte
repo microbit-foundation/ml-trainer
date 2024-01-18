@@ -9,33 +9,23 @@
   import { t } from '../../../i18n';
   import connectCableImage from '../../../imgs/connect-cable.gif';
   import DialogHeading from '../../DialogHeading.svelte';
-  import Environment from '../../../script/Environment';
 
+  export let titleId: string;
+  export let subtitleId: string;
   export let onNextClick: () => void;
   export let onBackClick: () => void;
-  export let onAltOrSkipClick: () => void;
-  export let currentStage: string;
+  export let onSkipClick: (() => void) | undefined = undefined;
+  export let onAltClick: (() => void) | undefined = undefined;
+  export let altClickId: string | undefined = undefined;
 </script>
 
 <div class="w-175">
   <DialogHeading>
-    {#if currentStage === 'usb'}
-      {$t('connectMB.connectCable.heading')}
-    {:else if currentStage === 'usb1'}
-      {$t('connectMB.connectCableMB1.heading')}
-    {:else if currentStage === 'usb2'}
-      {$t('connectMB.connectCableMB2.heading')}
-    {/if}
+    {$t(titleId)}
   </DialogHeading>
   <div class="space-y-5">
     <p>
-      {#if currentStage === 'usb'}
-        {$t('connectMB.connectCable.subtitle')}
-      {:else if currentStage === 'usb1'}
-        {$t('connectMB.connectCableMB1.subtitle')}
-      {:else if currentStage === 'usb2'}
-        {$t('connectMB.connectCableMB2.subtitle')}
-      {/if}
+      {$t(subtitleId)}
     </p>
     <img
       src={connectCableImage}
@@ -44,13 +34,12 @@
   </div>
 </div>
 <div class="flex justify-between pt-5">
-  {#if currentStage === 'usb' || (currentStage === 'usb1' && Environment.isInDevelopment)}
-    <StandardButton type="link" onClick={onAltOrSkipClick}
+  {#if onSkipClick}
+    <StandardButton type="link" onClick={onSkipClick}
       >{$t('connectMB.connectCable.skip')}</StandardButton>
   {/if}
-  {#if currentStage === 'usb2'}
-    <StandardButton type="link" onClick={onAltOrSkipClick}
-      >{$t('connectMB.radioStart.switchBluetooth')}</StandardButton>
+  {#if onAltClick && altClickId}
+    <StandardButton type="link" onClick={onAltClick}>{$t(altClickId)}</StandardButton>
   {/if}
   <div class="flex gap-x-5 ml-auto">
     <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
