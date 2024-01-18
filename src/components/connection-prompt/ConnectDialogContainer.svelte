@@ -99,7 +99,6 @@
             }
           })
           .catch(err => {
-            console.log(err);
             if (currentStage === 'usb') {
               $connectionDialogState.connectionState =
                 ConnectDialogStates.MANUAL_TUTORIAL;
@@ -109,7 +108,6 @@
           });
       })
       .catch(err => {
-        console.log(err);
         if (currentStage === 'usb') {
           $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
         } else {
