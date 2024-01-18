@@ -51,6 +51,7 @@
 </script>
 
 <Router>
+  <div class="sr-only" id="announce-route" aria-live="polite" />
   {#if !checkCompatibility().platformAllowed}
     <!-- Denies mobile users access to the platform -->
     <IncompatiblePlatformView />

@@ -25,7 +25,7 @@
   } from '../components/HtmlFormattedMessage.svelte';
   import LinkOverlayContainer from '../components/LinkOverlayContainer.svelte';
   import LinkOverlay from '../components/LinkOverlay.svelte';
-  import { Paths, navigate } from '../router/paths';
+  import { Paths, currentPath, getTitle, navigate } from '../router/paths';
   import { gestures } from '../script/stores/Stores';
   import StandardDialog from '../components/dialogs/StandardDialog.svelte';
   import DialogHeading from '../components/DialogHeading.svelte';
@@ -64,6 +64,10 @@
     }
   };
 </script>
+
+<svelte:head>
+  <title>{getTitle(Paths.HOME)}</title>
+</svelte:head>
 
 <main class="h-full flex flex-col items-center bg-backgrounddark">
   <h1 class="sr-only">{$t('content.index.title')}</h1>

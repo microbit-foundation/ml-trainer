@@ -13,7 +13,7 @@
   import TabView from '../../views/TabView.svelte';
   import trainModelImage from '../../imgs/TrainModel.svg';
   import StandardButton from '../../components/StandardButton.svelte';
-  import { Paths, navigate } from '../../router/paths';
+  import { Paths, getTitle, navigate } from '../../router/paths';
   import { trainModel } from '../../script/ml';
   import TrainingStatusSection from '../../components/TrainingStatusSection.svelte';
   import DialogHeading from '../../components/DialogHeading.svelte';
@@ -37,6 +37,10 @@
     }
   }
 </script>
+
+<svelte:head>
+  <title>{getTitle(Paths.TRAINING)}</title>
+</svelte:head>
 
 <StandardDialog
   isOpen={isFailedTrainingDialogOpen}

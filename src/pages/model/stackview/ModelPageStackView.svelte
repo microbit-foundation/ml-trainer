@@ -18,6 +18,7 @@
   import TrainModelFirstTitle from '../../../components/TrainModelFirstTitle.svelte';
   import ModelPageStackViewContent from './ModelPageStackViewContent.svelte';
   import TabView from '../../../views/TabView.svelte';
+  import { Paths, getTitle } from '../../../router/paths';
 
   // In case of manual classification, variables for evaluation
   let recordingTime = 0;
@@ -80,6 +81,10 @@
 
   $: triggerButtonsClicked($buttonPressed);
 </script>
+
+<svelte:head>
+  <title>{getTitle(Paths.MODEL)}</title>
+</svelte:head>
 
 <!-- Main pane -->
 <div class="h-full flex flex-col">
