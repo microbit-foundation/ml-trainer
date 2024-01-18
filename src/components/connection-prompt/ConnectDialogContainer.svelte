@@ -33,8 +33,39 @@
 
   let endOfFlow = false;
   let currentStage: 'usb' | 'usb1' | 'usb2' = 'usb1'; // "usb" is for the bluetooth connection flow, "usb1" and "usb2" determine the progress in the radio connection flow
-
+  let reconnectRequired = false;
   let flashProgress = 0;
+
+  const handleWebUSBError = (err: any) => {
+    switch (typeof err) {
+      // Error during flashing process
+      case 'object':
+        // We might get Error objects as Promise rejection arguments
+        if (!err.message && err.promise && err.reason) {
+          err = err.reason;
+        }
+        // This is somewhat fragile but worth it for scenario specific errors.
+        // These messages changed to be prefixed in 2023 so we've relaxed the checks.
+        if (/No valid interfaces found/.test(err.message)) {
+          // This comes from DAPjs's WebUSB open.
+          $connectionDialogState.connectionState = ConnectDialogStates.BAD_FIRMWARE;
+          break;
+        } else if (/No device selected/.test(err.message)) {
+          $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
+
+          break;
+        } else {
+          // Unhandled error. User will need to reconnect their micro:bit
+          $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
+          reconnectRequired = true;
+          break;
+        }
+      default: {
+        $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
+        reconnectRequired = true;
+      }
+    }
+  };
 
   function onFoundUsbDevice() {
     Microbits.getLinkedFriendlyName()
@@ -65,27 +96,22 @@
               onConnectingSerial();
             }
           })
-          .catch(() => {
-            // Error during flashing process
+          .catch(err => {
+            console.log(err);
             if (currentStage === 'usb') {
               $connectionDialogState.connectionState =
                 ConnectDialogStates.MANUAL_TUTORIAL;
             } else {
-              $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
+              handleWebUSBError(err);
             }
           });
       })
-      .catch((e: Error) => {
-        // Couldn't find name. Set to manual transfer progress instead
-        if (e.message.includes('No valid interfaces found')) {
-          // Edge case, caused by a bad micro:bit firmware
-          $connectionDialogState.connectionState = ConnectDialogStates.BAD_FIRMWARE;
+      .catch(err => {
+        console.log(err);
+        if (currentStage === 'usb') {
+          $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
         } else {
-          if (currentStage === 'usb') {
-            $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
-          } else {
-            $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
-          }
+          handleWebUSBError(err);
         }
       });
   }
@@ -110,6 +136,7 @@
     setTimeout(() => {
       $connectionDialogState.connectionState = ConnectDialogStates.NONE;
       endOfFlow = false;
+      reconnectRequired = false;
     }, 200);
   }
 
@@ -304,9 +331,12 @@
             ConnectDialogStates.CONNECT_BATTERY)} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.USB_TRY_AGAIN}
       <WebUsbTryAgain
+        {reconnectRequired}
         onCancel={endFlow}
-        onTryAgain={() =>
-          ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)} />
+        onTryAgain={() => {
+          $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE;
+          reconnectRequired = false;
+        }} />
     {/if}
   </StandardDialog>
 </div>

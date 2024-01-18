@@ -11,12 +11,18 @@
 
   export let onTryAgain: () => void;
   export let onCancel: () => void;
+  export let reconnectRequired: boolean = false;
 </script>
 
 <div class="w-175">
   <DialogHeading>{$t('connectMB.usbTryAgain.heading')}</DialogHeading>
   <div class="space-y-5">
-    <p>{$t('connectMB.usbTryAgain.subtitle')}</p>
+    {#if reconnectRequired}
+      <p>{$t('connectMB.usb.error1')}</p>
+      <p>{$t('connectMB.usb.error2')}</p>
+    {:else}
+      <p>{$t('connectMB.usbTryAgain.subtitle')}</p>
+    {/if}
     <div class="flex justify-end gap-x-5">
       <StandardButton onClick={onCancel}>{$t('actions.cancel')}</StandardButton>
       <StandardButton type="primary" onClick={onTryAgain}

@@ -132,6 +132,9 @@
   "connectMB.usbTryAgain.heading": "Connect using WebUSB",
   "connectMB.usbTryAgain.subtitle": "You didn't select a micro:bit. Do you want to try again?",
 
+  "connectMB.usb.error1": "A WebUSB error occured.",
+  "connectMB.usb.error2": "Please unplug and replug the micro:bit before trying again.",
+
   "connectMB.radioStart.heading": "What you will need to get started:",
   "connectMB.radioStart.requirements1": "2 micro:bits",
   "connectMB.radioStart.requirements2": "Computer",
