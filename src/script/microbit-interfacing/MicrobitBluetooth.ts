@@ -262,7 +262,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
 
         // FIXME: Debug log, printing the processed data and time between messages.
         let now = Date.now();
-        console.log(now - this.t, x,y,z);
+        console.log(now - this.t, x, y, z);
         this.t = now;
 
         onAccelerometerChanged(x, y, z);

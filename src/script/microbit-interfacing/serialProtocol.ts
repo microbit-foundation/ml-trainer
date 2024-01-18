@@ -81,7 +81,6 @@ export const splitMessages = (message: string): SplittedMessages => {
   };
 };
 
-
 export const processHandshake = (message: string): MessageResponse | undefined => {
   const responseIdMatch = message.match(responseIdRegex);
   if (!responseIdMatch) {

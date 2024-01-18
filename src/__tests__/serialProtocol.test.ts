@@ -8,7 +8,7 @@
  */
 
 import {
-  ProcessedPeriodicMessage,
+  MicrobitSensorState,
   processPeriodicMessage,
 } from '../script/microbit-interfacing/serialProtocol';
 
@@ -18,15 +18,12 @@ describe('processInput', () => {
 
     const got = processPeriodicMessage(message);
 
-    const want: ProcessedPeriodicMessage = {
-      remainingInput: '',
-      state: {
-        accelerometerX: 408,
-        accelerometerY: 748,
-        accelerometerZ: -1288,
-        buttonA: 1,
-        buttonB: 1,
-      },
+    const want: MicrobitSensorState = {
+      accelerometerX: 408,
+      accelerometerY: 748,
+      accelerometerZ: -1288,
+      buttonA: 1,
+      buttonB: 1,
     };
     expect(got).toEqual(want);
   });
@@ -38,15 +35,12 @@ describe('processInput', () => {
 
     const got = processPeriodicMessage(message1 + message2 + message3);
 
-    const want: ProcessedPeriodicMessage = {
-      remainingInput: message2 + message3,
-      state: {
-        accelerometerX: 408,
-        accelerometerY: 748,
-        accelerometerZ: -1288,
-        buttonA: 1,
-        buttonB: 1,
-      },
+    const want: MicrobitSensorState = {
+      accelerometerX: 408,
+      accelerometerY: 748,
+      accelerometerZ: -1288,
+      buttonA: 1,
+      buttonB: 1,
     };
     expect(got).toEqual(want);
   });
@@ -57,15 +51,12 @@ describe('processInput', () => {
 
     const got = processPeriodicMessage(message1 + message2);
 
-    const want: ProcessedPeriodicMessage = {
-      remainingInput: message2,
-      state: {
-        accelerometerX: 408,
-        accelerometerY: 748,
-        accelerometerZ: -1288,
-        buttonA: 1,
-        buttonB: 1,
-      },
+    const want: MicrobitSensorState = {
+      accelerometerX: 408,
+      accelerometerY: 748,
+      accelerometerZ: -1288,
+      buttonA: 1,
+      buttonB: 1,
     };
     expect(got).toEqual(want);
   });
