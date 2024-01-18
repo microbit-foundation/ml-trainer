@@ -30,7 +30,8 @@
     on:focusout={() => {
       isFocused = false;
     }}
-    class="w-full text-center {isFocused ? 'w-full' : 'w-0'}"
+    class="w-full text-center"
+    style="opacity: {isFocused ? 1 : 0}"
     type="number"
     {id}
     name={id}
