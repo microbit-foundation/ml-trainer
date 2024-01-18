@@ -18,8 +18,6 @@
   export let onLinkError: () => void;
 
   function onNextClick() {
-    // FIXME: Microbits added to the global scope to be accessible from the browser console for debugging
-    (globalThis as any).mb = Microbits;
     Microbits.linkMicrobit()
       .then(() => onFound())
       .catch((e: Error) => {

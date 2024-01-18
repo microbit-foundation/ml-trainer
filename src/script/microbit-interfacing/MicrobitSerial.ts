@@ -129,13 +129,8 @@ class MicrobitSerial implements MicrobitConnection {
       const { value, done } = await this.reader.read();
       if (value) {
         this.unprocessedInput += value;
-
-        console.log('full', this.unprocessedInput);
-
         let messages = protocol.splitMessages(this.unprocessedInput);
         this.unprocessedInput = messages.remainingInput;
-
-        console.log('extra', this.unprocessedInput);
 
         messages.messages.forEach(msg => {
           const sensorData = protocol.processPeriodicMessage(msg);
