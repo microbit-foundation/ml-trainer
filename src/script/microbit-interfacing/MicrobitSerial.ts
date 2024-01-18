@@ -76,8 +76,8 @@ class MicrobitSerial implements MicrobitConnection {
               // TODO: Not currently looking at the responseId, as we only care
               //      about receiving *any* handshake response
               messages.messages.forEach(msg => {
-                let handshakeResponseId = protocol.processHandshake(msg);
-                if (handshakeResponseId) {
+                let handshakeResponse = protocol.processHandshake(msg);
+                if (handshakeResponse && handshakeResponse.value === protocol.version) {
                   handshakeReceived = true;
                 }
               });
@@ -98,9 +98,9 @@ class MicrobitSerial implements MicrobitConnection {
           });
       });
 
-    // The first message we get out of the micro:bit serial buffer might be
-    // incomplete due to the issue described before. The second message should
-    // be complete, but we leave an extra retry just in case.
+    // The first message we get out of the micro:bit serial buffer will likely
+    // be incomplete due to the issue described before. The second message
+    // should be complete, but we leave an extra retry just in case.
     readHandshakeRetry(3).then(console.log).catch(console.error);
 
     let attempts = 0;
@@ -129,28 +129,39 @@ class MicrobitSerial implements MicrobitConnection {
       const { value, done } = await this.reader.read();
       if (value) {
         this.unprocessedInput += value;
-        const processedInput = protocol.processPeriodicMessage(this.unprocessedInput);
-        if (processedInput) {
-          this.unprocessedInput = processedInput.remainingInput;
-          // FIXME: Debug log, printing the processed data and time between messages.
-          let now = Date.now();
-          console.log(now - this.t, processedInput.state);
-          this.t = now;
-          inputBehaviour.accelerometerChange(
-            processedInput.state.accelerometerX,
-            processedInput.state.accelerometerY,
-            processedInput.state.accelerometerZ,
-          );
-          if (processedInput.state.buttonA !== previousButtonState.A) {
-            previousButtonState.A = processedInput.state.buttonA;
-            inputBehaviour.buttonChange(processedInput.state.buttonA, 'A');
+
+        console.log("full", this.unprocessedInput)
+
+        let messages = protocol.splitMessages(this.unprocessedInput);
+        this.unprocessedInput = messages.remainingInput;
+
+        console.log("extra", this.unprocessedInput)
+
+        messages.messages.forEach(msg => {
+          const sensorData = protocol.processPeriodicMessage(msg);
+          if (sensorData) {
+            // FIXME: Debug log, printing the processed data and time between messages.
+            let now = Date.now();
+            console.log(now - this.t, sensorData);
+            this.t = now;
+
+            inputBehaviour.accelerometerChange(
+              sensorData.accelerometerX,
+              sensorData.accelerometerY,
+              sensorData.accelerometerZ,
+            );
+            if (sensorData.buttonA !== previousButtonState.A) {
+              previousButtonState.A = sensorData.buttonA;
+              inputBehaviour.buttonChange(sensorData.buttonA, 'A');
+            }
+            if (sensorData.buttonB !== previousButtonState.B) {
+              previousButtonState.B = sensorData.buttonB;
+              inputBehaviour.buttonChange(sensorData.buttonB, 'B');
+            }
           }
-          if (processedInput.state.buttonB !== previousButtonState.B) {
-            previousButtonState.B = processedInput.state.buttonB;
-            inputBehaviour.buttonChange(processedInput.state.buttonB, 'B');
-          }
-        }
+        });
       }
+      // TODO: Is this necessary? Will the DAPJs read() function ever return done=true?
       if (done) {
         break;
       }
@@ -195,22 +206,29 @@ class MicrobitSerial implements MicrobitConnection {
     navigate(Paths.HOME);
   }
 
+  // TODO: If this is only used externally to stop listening to events and it
+  //       is always called together with listenToButton() to stop listening
+  //       to those events as well, we should have a "disconnectInputServices()"
+  //       function instead that sends the C[]STOP[] command message
   public async listenToAccelerometer(
     onAccelerometerChanged: (x: number, y: number, z: number) => void,
   ): Promise<void> {}
+
+  public async listenToButton(
+    buttonToListenFor: MBSpecs.Button,
+    onButtonChanged: (state: MBSpecs.ButtonState, button: MBSpecs.Button) => void,
+  ): Promise<void> {}
+
+  // TODO: If "listenToUART()" is used to retrieve specific data or perform
+  //       specific actions on the micro:bit, maybe we should abstract to
+  //       that level so that it's unrelated to UART.
+  public async listenToUART(onDataReceived: (data: string) => void): Promise<void> {}
 
   public async setLEDMatrix(matrix: number[][]): Promise<void>;
 
   public async setLEDMatrix(matrix: boolean[][]): Promise<void>;
 
   public async setLEDMatrix(matrix: unknown[][]): Promise<void> {}
-
-  public async listenToUART(onDataReceived: (data: string) => void): Promise<void> {}
-
-  public async listenToButton(
-    buttonToListenFor: MBSpecs.Button,
-    onButtonChanged: (state: MBSpecs.ButtonState, button: MBSpecs.Button) => void,
-  ): Promise<void> {}
 
   public getVersion(): MBSpecs.MBVersion {
     // TODO: This is currently hardcoded, but can be query via the serial protocol

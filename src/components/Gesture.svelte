@@ -133,6 +133,7 @@
     // Once duration is over (1000ms default), stop recording
     setTimeout(() => {
       unsubscribe();
+      console.log("RECEIVED SAMPLES", get(settings).numSamples, newData.x.length);
       if (get(settings).numSamples <= newData.x.length) {
         if (isThisRecording) {
           const recording = { ID: Date.now(), data: newData } as RecordingData;

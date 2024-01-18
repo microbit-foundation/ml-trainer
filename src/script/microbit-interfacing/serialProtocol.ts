@@ -21,13 +21,19 @@ export enum CommandTypes {
   Stop = 'STOP',
 }
 
-export type protocolMessage = {
+export type ProtocolMessage = {
   message: string;
   messageType: MessageTypes;
   messageId: number;
 };
 
-type MicrobitState = {
+export type MessageResponse = {
+  cmdType: CommandTypes;
+  messageId: number;
+  value: number;
+};
+
+export type MicrobitSensorState = {
   accelerometerX: number;
   accelerometerY: number;
   accelerometerZ: number;
@@ -35,12 +41,11 @@ type MicrobitState = {
   buttonB: number;
 };
 
-export type ProcessedPeriodicMessage = {
-  state: MicrobitState;
-  remainingInput: string;
-};
+// Currently implemented protocol version
+export const version = 1;
 
-const handshakeRegexString = 'R\\[[\\w]*?\\]HS\\[\\]';
+// TODO: Revisit this regexes, they are probably not optimal
+
 const responseIdRegex = 'R\\[([\\w]*?)\\]';
 
 const periodicMessageRegexString =
@@ -57,6 +62,7 @@ const accelerometerYRegex = /(?<=AY\[)[\d-]+?(?=\])/;
 const accelerometerZRegex = /(?<=AZ\[)[\d-]+?(?=\])/;
 const buttonARegex = /(?<=BA\[)[01](?=\])/;
 const buttonBRegex = /(?<=BB\[)[01](?=\])/;
+const handshakeRegex = /(?<=HS\[)[\d]+?(?=\])/;
 
 let commandId = 1;
 
@@ -75,43 +81,47 @@ export const splitMessages = (message: string): SplittedMessages => {
   };
 };
 
-// TODO: Returning undefined to follow processPeriodicMessage example
-//      but should it be null or an empty string instead?
-export const processHandshake = (message: string): string | undefined => {
+
+export const processHandshake = (message: string): MessageResponse | undefined => {
   const responseIdMatch = message.match(responseIdRegex);
   if (!responseIdMatch) {
     return undefined;
   }
-  return responseIdMatch[1] || undefined;
+  let protocolVersion = Number(message.match(handshakeRegex)?.[0]);
+  if (!protocolVersion) {
+    return undefined;
+  }
+  return {
+    messageId: Number(responseIdMatch[1]),
+    cmdType: CommandTypes.Handshake,
+    value: protocolVersion,
+  };
 };
 
 export const processPeriodicMessage = (
   message: string,
-): ProcessedPeriodicMessage | undefined => {
+): MicrobitSensorState | undefined => {
   const messages = message.match(messageRegex);
 
   if (!messages) {
     return undefined;
   }
 
-  // TODO: Sanitise the accelerometer and button values
-
+  // TODO: A regex per value is probably unefficient
+  // Also, we should check all values are valid first, throw away entire message if there is a single invalid value
   return {
-    state: {
-      accelerometerX: Number(message.match(accelerometerXRegex)?.[0]) || 0,
-      accelerometerY: Number(message.match(accelerometerYRegex)?.[0]) || 0,
-      accelerometerZ: Number(message.match(accelerometerZRegex)?.[0]) || 0,
-      buttonA: Number(message.match(buttonARegex)?.[0]) || 0,
-      buttonB: Number(message.match(buttonBRegex)?.[0]) || 0,
-    },
-    remainingInput: (message.match(remainingInputAfterMessageRegex) || []).join(''),
+    accelerometerX: Number(message.match(accelerometerXRegex)?.[0]) || 0,
+    accelerometerY: Number(message.match(accelerometerYRegex)?.[0]) || 0,
+    accelerometerZ: Number(message.match(accelerometerZRegex)?.[0]) || 0,
+    buttonA: Number(message.match(buttonARegex)?.[0]) || 0,
+    buttonB: Number(message.match(buttonBRegex)?.[0]) || 0,
   };
 };
 
 export const generateCommand = (
   cmdType: CommandTypes,
   cmdData: string = '',
-): protocolMessage => {
+): ProtocolMessage => {
   // TODO: Hack! Currently hardcoding the periodic for Accelerometer and Buttons
   if (cmdType === CommandTypes.Start) {
     cmdData = 'AB';

@@ -25,18 +25,18 @@ export interface MicrobitConnection {
     onAccelerometerChanged: (x: number, y: number, z: number) => void,
   ): Promise<void>;
 
+  listenToButton(
+    buttonToListenFor: MBSpecs.Button,
+    onButtonChanged: (state: MBSpecs.ButtonState, button: MBSpecs.Button) => void,
+  ): Promise<void>;
+
+  listenToUART(onDataReceived: (data: string) => void): Promise<void>;
+
   setLEDMatrix(matrix: number[][]): Promise<void>;
 
   setLEDMatrix(matrix: boolean[][]): Promise<void>;
 
   setLEDMatrix(matrix: unknown[][]): Promise<void>;
-
-  listenToUART(onDataReceived: (data: string) => void): Promise<void>;
-
-  listenToButton(
-    buttonToListenFor: MBSpecs.Button,
-    onButtonChanged: (state: MBSpecs.ButtonState, button: MBSpecs.Button) => void,
-  ): Promise<void>;
 
   getVersion(): MBSpecs.MBVersion;
 }
