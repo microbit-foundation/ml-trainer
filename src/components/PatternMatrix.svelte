@@ -79,7 +79,6 @@
       }
     });
 
-    console.log(transformColumnsToMatrix(transformMatrixToColumns(matrix)));
     onMatrixChange(matrix);
   };
 
