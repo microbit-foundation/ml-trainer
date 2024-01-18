@@ -33,6 +33,7 @@
 <script lang="ts">
   import { t } from './../i18n';
   import PatternBox from './PatternBox.svelte';
+  import PatternColumnInput from './PatternColumnInput.svelte';
 
   export let onMatrixChange: (matrix: boolean[]) => void;
   export let matrix: boolean[];
@@ -114,6 +115,21 @@
       setElement(i, true);
     }
   };
+
+  $: matrixColumns = transformMatrixToColumns(matrix);
+
+  const onChangeColumnInput = (e: Event, colIdx: number) => {
+    const target = e.target as HTMLInputElement;
+    const value = parseInt(target.value);
+    const allFalse = Array(matrixDimension).fill(false);
+    const newColumn = allFalse.fill(true, matrixDimension - value);
+    const columns = [
+      ...matrixColumns.slice(0, colIdx),
+      newColumn,
+      ...matrixColumns.slice(colIdx + 1),
+    ];
+    matrix = transformColumnsToMatrix(columns);
+  };
 </script>
 
 <!-- PATTERN MATRIX -->
@@ -121,7 +137,7 @@
 <!-- Opted for number input method for accessible method of filling in the pattern -->
 <div class="buttonGrid select-none" on:mouseleave={mouseLeftDrawingArea}>
   <!-- Draw all 25 boxes -->
-  {#each transformMatrixToColumns(matrix) as column, colIdx}
+  {#each matrixColumns as column, colIdx}
     <div class="buttonColumn">
       {#each column as isOn, rowIdx}
         <PatternBox
@@ -135,22 +151,12 @@
             elementHover(rowIdx * matrixDimension + colIdx + 1, e);
           }} />
       {/each}
-      <div>
-        <label for="columnInput" class="sr-only">
-          {$t('connectMB.pattern.inputLabel', {
-            values: {
-              action: colIdx + 1,
-            },
-          })}</label>
-        <input
-          value={column.filter(c => c).length}
-          class="w-full text-center"
-          type="number"
-          id="columnInput"
-          name="columnInput"
-          min="1"
-          max="5" />
-      </div>
+      <PatternColumnInput
+        {colIdx}
+        on:change={e => {
+          onChangeColumnInput(e, colIdx);
+        }}
+        value={column.filter(c => c).length} />
     </div>
   {/each}
 </div>
