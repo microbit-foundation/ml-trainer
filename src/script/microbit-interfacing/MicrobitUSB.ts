@@ -8,6 +8,7 @@ import { CortexM, DAPLink, WebUSB } from 'dapjs';
 import MBSpecs from './MBSpecs';
 
 const baudRate = 115200;
+const serialDelay = 5;
 
 /**
  * A USB connection to a micro:bit.
@@ -135,7 +136,7 @@ class MicrobitUSB extends CortexM {
     if (initialBaudRate !== baudRate) {
       await this.serialDAPLink.setSerialBaudrate(baudRate);
     }
-    this.serialPromise = this.serialDAPLink.startSerialRead(5, false);
+    this.serialPromise = this.serialDAPLink.startSerialRead(serialDelay, false);
   }
 
   public async serialWrite(data: string): Promise<void> {
