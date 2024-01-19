@@ -47,11 +47,13 @@
 <!-- Intentionally not identifying as buttons for sr  -->
 <div
   class="rounded cursor-pointer"
-  class:border-3={isHighlighted}
+  class:border-3={isHighlighted && !isOn}
+  class:border-secondary={isHighlighted && !isOn}
+  class:border-white={isHighlighted && isOn}
+  style="opacity: {isHighlighted && isOn ? 0.25 : 1}"
   class:turnedOn={isOn}
-  class:turnedOff={!isOn}
   class:bg-secondary={isOn}
-  class:border-secondary={isHighlighted}
+  class:turnedOff={!isOn}
   class:bg-gray-300={!isOn}
   on:mousedown
   on:mouseenter

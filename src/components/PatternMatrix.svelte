@@ -67,7 +67,9 @@
 
   const updateHighlightedColumns = (colIdx: number, rowIdx: number) => {
     const col = matrixColumns[colIdx];
-    const highlightedCol = col.map((isOn, idx) => rowIdx <= idx && !isOn);
+    const highlightedCol = col.map(
+      (isOn, idx) => (!isOn && rowIdx <= idx) || (isOn && rowIdx > idx),
+    );
     highlightedColumns[colIdx] = highlightedCol;
   };
 
