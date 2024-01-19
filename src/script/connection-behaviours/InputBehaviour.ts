@@ -21,7 +21,7 @@ let text = get(t);
 t.subscribe(t => (text = t));
 
 // Temporary debug for time between messages received.
-let timeBinsMs = {
+const zeroBins = () => ({
   '0-20': 0,
   '21-40': 0,
   '41-60': 0,
@@ -31,7 +31,8 @@ let timeBinsMs = {
   '121-140': 0,
   '141-160': 0,
   '>160': 0,
-};
+});
+let timeBinsMs = zeroBins();
 
 let interval: any;
 
@@ -197,17 +198,7 @@ class InputBehaviour extends LoggingDecorator {
       if (!interval) {
         interval = setInterval(() => {
           console.log(timeBinsMs);
-          timeBinsMs = {
-            '0-20': 0,
-            '21-40': 0,
-            '41-60': 0,
-            '61-80': 0,
-            '81-100': 0,
-            '101-120': 0,
-            '121-140': 0,
-            '141-160': 0,
-            '>160': 0,
-          };
+          timeBinsMs = zeroBins();
         }, 10_000);
       }
     }
