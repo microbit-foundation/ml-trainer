@@ -84,9 +84,11 @@
 <!-- Main pane -->
 <div class="h-full flex flex-col">
   <TabView />
-  {#if $state.isPredicting}
-    <ModelPageStackViewContent />
-  {:else}
-    <TrainModelFirstTitle />
-  {/if}
+  <main class="contents">
+    {#if $state.isPredicting}
+      <ModelPageStackViewContent />
+    {:else}
+      <TrainModelFirstTitle />
+    {/if}
+  </main>
 </div>

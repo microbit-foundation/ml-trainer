@@ -22,8 +22,8 @@ t.subscribe(t => (text = t));
 class OutputBehaviour extends LoggingDecorator {
   private reconnectTimeout: NodeJS.Timeout = setTimeout(TypingUtils.emptyFunction, 0);
 
-  onBluetoothConnectionError(error?: unknown) {
-    super.onBluetoothConnectionError(error);
+  onConnectionError(error?: unknown) {
+    super.onConnectionError(error);
     state.update(s => {
       s.isOutputConnected = false;
       s.isOutputAssigned = false;

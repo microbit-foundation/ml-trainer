@@ -34,7 +34,6 @@
     "ignoreDeprecations": "5.0",
     "noFallthroughCasesInSwitch": true,
     "types": [
-      "jest",
       "node",
       "svelte",
       "vitest/globals",

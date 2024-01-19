@@ -6,7 +6,9 @@
 
 import Environment from '../Environment';
 import TypingUtils from '../TypingUtils';
+import InputBehaviour from '../connection-behaviours/InputBehaviour';
 import MBSpecs from './MBSpecs';
+import { MicrobitConnection } from './MicrobitConnection';
 
 /**
  * UART data target. For fixing type compatibility issues.
@@ -18,11 +20,13 @@ type CharacteristicDataTarget = EventTarget & {
 /**
  * The connection to the micro:bit.
  */
-export class MicrobitBluetooth {
+export class MicrobitBluetooth implements MicrobitConnection {
   private readonly device: BluetoothDevice;
 
   private dcListener: OmitThisParameter<(event: Event) => void>;
   private uartListener: (data: string) => void;
+
+  private t = 0;
 
   /**
    * Constructs a bluetooth connection object. Should not be called directly.
@@ -53,6 +57,10 @@ export class MicrobitBluetooth {
     this.device.addEventListener('gattserverdisconnected', this.dcListener);
   }
 
+  isSameDevice(other: MicrobitConnection): boolean {
+    return other instanceof MicrobitBluetooth && other.device.id === this.device.id;
+  }
+
   /**
    * Adds a listener for the 'gattserverdisconnected' event.
    * @param {Event => void} callback The function to execute.
@@ -69,11 +77,20 @@ export class MicrobitBluetooth {
     return this.device.removeEventListener('gattserverdisconnected', callback);
   }
 
-  /**
-   * @returns {BluetoothDevice} The BluetoothDevice object of the micro:bit.
-   */
-  public getDevice(): BluetoothDevice {
-    return this.device;
+  public async listenToInputServices(
+    inputBehaviour: InputBehaviour,
+    inputUartHandler: (data: string) => void,
+  ): Promise<void> {
+    await this.listenToAccelerometer(
+      inputBehaviour.accelerometerChange.bind(inputBehaviour),
+    );
+    await this.listenToButton('A', inputBehaviour.buttonChange.bind(inputBehaviour));
+    await this.listenToButton('B', inputBehaviour.buttonChange.bind(inputBehaviour));
+    try {
+      await this.listenToUART(data => inputUartHandler(data));
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   /**
@@ -124,19 +141,6 @@ export class MicrobitBluetooth {
    */
   public isConnected(): boolean {
     return this.gattServer.connected;
-  }
-
-  /**
-   * @return {BluetoothRemoteGATTServer} The GATT server of the micro:bit.
-   */
-  public getGattServer(): BluetoothRemoteGATTServer {
-    if (!this.isConnected()) {
-      throw new Error(
-        'MicrobitConnection: gatt server is not available until after connection is established',
-      );
-    }
-
-    return this.gattServer;
   }
 
   /**
@@ -252,6 +256,11 @@ export class MicrobitBluetooth {
         const x = target.value.getInt16(0, true);
         const y = target.value.getInt16(2, true);
         const z = target.value.getInt16(4, true);
+
+        // FIXME: Debug log, printing the processed data and time between messages.
+        let now = Date.now();
+        console.log(now - this.t, x, y, z);
+        this.t = now;
 
         onAccelerometerChanged(x, y, z);
       },

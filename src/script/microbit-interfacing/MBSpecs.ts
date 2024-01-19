@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { isatty } from 'tty';
-import MicrobitBluetooth from './MicrobitBluetooth';
-
 /* eslint-disable @typescript-eslint/no-namespace */
 /**
  * References to the Bluetooth Profile UUIDs.
@@ -222,6 +219,7 @@ namespace MBSpecs {
     public static async getModelNumber(
       gattServer: BluetoothRemoteGATTServer,
     ): Promise<MBSpecs.MBVersion> {
+      // TODO: Move this function to Microbit Bluetooth and add it to the MicrobitConnection interface
       try {
         const deviceInfo = await gattServer.getPrimaryService(
           Services.DEVICE_INFO_SERVICE,

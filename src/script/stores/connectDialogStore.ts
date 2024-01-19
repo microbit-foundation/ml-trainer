@@ -31,6 +31,7 @@ export enum ConnectDialogStates {
   USB_START, // Initial usb installation prompt
   USB_DONE, // Installation done prompt
   MANUAL_TUTORIAL, // Prompt with tutorial gif for manual installation (and downloading of program)
+  USB_TRY_AGAIN, // Prompt user to try connecting via WebUSB again
 }
 
 export const connectionDialogState = writable<{

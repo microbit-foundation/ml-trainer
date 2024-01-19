@@ -6,7 +6,7 @@
 
 import { WebUSB } from 'dapjs';
 
-const DEFAULT_SERIAL_DELAY = 100;
+const DEFAULT_SERIAL_DELAY = 20;
 const DAP_WRITE_ABORT = 0x08;
 
 enum AbortMask {

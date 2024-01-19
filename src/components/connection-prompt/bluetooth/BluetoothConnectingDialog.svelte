@@ -26,7 +26,7 @@
   // callbacks
   export let deviceState: DeviceRequestStates;
   export let onBluetoothConnected: () => void;
-  export let onClose: () => void;
+  export let onCancel: () => void;
   export let onReconnectBluetooth: () => void;
 
   let isConnecting = false;
@@ -52,7 +52,7 @@
     let name = MBSpecs.Utility.patternToName($patternMatrixState);
     const connectionResult = () => {
       if (deviceState == DeviceRequestStates.INPUT) {
-        return Microbits.assignInput(name);
+        return Microbits.assignBluetoothInput(name);
       } else {
         return Microbits.assignOutput(name);
       }
@@ -108,9 +108,9 @@
     <div class="flex flex-col gap-y-5">
       <p>{$t('connectMB.bluetooth.cancelledConnection')}</p>
       <div class="flex justify-end gap-x-5">
-        <StandardButton onClick={onClose}>{$t('actions.cancel')}</StandardButton>
+        <StandardButton onClick={onCancel}>{$t('actions.cancel')}</StandardButton>
         <StandardButton type="primary" onClick={onReconnectBluetooth}
-          >{$t('connectMB.bluetooth.reconnect')}</StandardButton>
+          >{$t('connectMB.tryAgain')}</StandardButton>
       </div>
     </div>
   {/if}

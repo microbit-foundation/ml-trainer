@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import Microbits from '../script/microbit-interfacing/Microbits';
+import Microbits, { getHexFileUrl } from '../script/microbit-interfacing/Microbits';
 import ConnectionBehaviours from '../script/connection-behaviours/ConnectionBehaviours';
 import OutputBehaviour from '../script/connection-behaviours/OutputBehaviour';
 import InputBehaviour from '../script/connection-behaviours/InputBehaviour';
@@ -67,9 +67,13 @@ describe('Microbit facade tests', () => {
   });
 
   test('Should give correct hex file', () => {
-    expect(Microbits.hexFiles[1]).toBe('firmware/ml-microbit-cpp-version-combined.hex');
-    expect(Microbits.hexFiles[2]).toBe('firmware/MICROBIT.hex');
-    expect(Microbits.hexFiles['universal']).toBe('firmware/universal-hex.hex');
+    expect(getHexFileUrl(1, 'bluetooth')).toEqual(
+      'firmware/ml-microbit-cpp-version-combined.hex',
+    );
+    expect(getHexFileUrl(2, 'bluetooth')).toEqual('firmware/MICROBIT.hex');
+    expect(getHexFileUrl(2, 'radio-bridge')).toEqual('firmware/radio-bridge.hex');
+    expect(getHexFileUrl(2, 'radio-sender')).toEqual('firmware/radio-sender.hex');
+    expect(getHexFileUrl(2, 'radio-local')).toEqual('firmware/local-sensors.hex');
   });
 
   test('Input should not be connected before connecting', () => {
@@ -77,7 +81,7 @@ describe('Microbit facade tests', () => {
   });
 
   test('Input should be connected after connecting', async () => {
-    const wasConnected = await Microbits.assignInput('vatav');
+    const wasConnected = await Microbits.assignBluetoothInput('vatav');
     expect(wasConnected).toBeTruthy();
     expect(Microbits.isInputAssigned()).toBeTruthy();
     expect(Microbits.isOutputAssigned()).toBeFalsy();
@@ -94,26 +98,8 @@ describe('Microbit facade tests', () => {
     expect(Microbits.isInputAssigned()).toBeFalsy();
   });
 
-  test('Can connect the same microbit to output and input', async () => {
-    const wasConnected = await Microbits.assignInput('vatav');
-    Microbits.useInputAsOutput();
-    expect(wasConnected).toBeTruthy();
-    expect(Microbits.isOutputAssigned()).toBeTruthy();
-    expect(Microbits.isInputAssigned()).toBeTruthy();
-    expect(Microbits.isInputOutputTheSame()).toBeTruthy();
-  });
-
-  test('When same, disconnecting input also disconnects output', async () => {
-    const wasConnected = await Microbits.assignInput('vatav');
-    Microbits.useInputAsOutput();
-    expect(wasConnected).toBeTruthy();
-    Microbits.expelInputAndOutput();
-    expect(Microbits.isOutputAssigned()).toBeFalsy();
-    expect(Microbits.isInputAssigned()).toBeFalsy();
-  });
-
   test('Can get connected input', async () => {
-    await Microbits.assignInput('vatav');
+    await Microbits.assignBluetoothInput('vatav');
     expect(Microbits.getAssignedInput()).toBeDefined();
   });
 
@@ -124,14 +110,14 @@ describe('Microbit facade tests', () => {
 
   test('Should get correct name', async () => {
     await Microbits.assignOutput('vatav');
-    await Microbits.assignInput('vatav');
+    await Microbits.assignBluetoothInput('vatav');
     expect(Microbits.getOutputName()).toBe('vatav');
     expect(Microbits.getInputName()).toBe('vatav');
   });
 
   test('Should get correct version', async () => {
     await Microbits.assignOutput('vatav');
-    await Microbits.assignInput('vatav');
+    await Microbits.assignBluetoothInput('vatav');
     expect(Microbits.getInputVersion()).toBe(2);
     expect(Microbits.getOutputVersion()).toBe(2);
   });
