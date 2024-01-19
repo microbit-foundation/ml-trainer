@@ -57,11 +57,8 @@ class MicrobitSerial implements MicrobitConnection {
             // Request the micro:bit to start sending the periodic messages
             const startCmd = protocol.generateCommand(protocol.CommandTypes.Start);
             await this.usb.serialWrite(startCmd.message);
-            // TODO: Unclear why we need to send this command twice, need to investigate
-            // await this.usb.serialWrite(startCmd.message);
           }
         } else {
-          // Running :)
           const sensorData = protocol.processPeriodicMessage(msg);
           if (sensorData) {
             // FIXME: Debug log, printing the processed data and time between messages.
