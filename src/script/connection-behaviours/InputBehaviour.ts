@@ -22,6 +22,7 @@ t.subscribe(t => (text = t));
 
 // Temporary debug for time between messages received.
 const zeroBins = () => ({
+  total: 0,
   '0-20': 0,
   '21-30': 0,
   '31-40': 0,
@@ -38,6 +39,7 @@ let timeBinsMs = zeroBins();
 let interval: any;
 
 const binTimeInterval = (time: number) => {
+  timeBinsMs['total']++;
   if (time <= 20) {
     timeBinsMs['0-20']++;
   } else if (time <= 30) {
@@ -200,7 +202,7 @@ class InputBehaviour extends LoggingDecorator {
       this.t = now;
       if (!interval) {
         interval = setInterval(() => {
-          console.log(timeBinsMs);
+          console.log('Data rate', timeBinsMs);
           timeBinsMs = zeroBins();
         }, 10_000);
       }
