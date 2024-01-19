@@ -54,4 +54,5 @@
   class:border-secondary={isHighlighted}
   class:bg-gray-300={!isOn}
   on:mousedown
-  on:mouseenter />
+  on:mouseenter
+  on:mouseleave />
