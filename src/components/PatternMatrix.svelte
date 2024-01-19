@@ -84,10 +84,24 @@
     onMatrixChange(matrix);
   };
 
-  const onChangeColumnInput = (e: Event, colIdx: number) => {
-    const target = e.target as HTMLInputElement;
-    const value = parseInt(target.value);
-    updateMatrixColumns(colIdx, matrixDimension - value);
+  const getNewValue = (e: KeyboardEvent) => {
+    if (['ArrowUp', 'ArrowDown'].includes(e.code)) {
+      const target = e.target as HTMLInputElement;
+      const prevValue = parseInt(target.value);
+      return e.code === 'ArrowUp' ? prevValue + 1 : prevValue - 1;
+    }
+    return parseInt(e.code.replace('Digit', ''));
+  };
+
+  const onKeyDownColumnInput = (e: KeyboardEvent, colIdx: number) => {
+    if (e.code === 'Enter') {
+      return;
+    }
+    e.preventDefault();
+    const value = getNewValue(e);
+    if (value < matrixDimension + 1 && value > 0) {
+      updateMatrixColumns(colIdx, matrixDimension - value);
+    }
   };
 </script>
 
@@ -112,8 +126,8 @@
       {/each}
       <PatternColumnInput
         {colIdx}
-        on:change={e => {
-          onChangeColumnInput(e, colIdx);
+        on:keydown={e => {
+          onKeyDownColumnInput(e, colIdx);
         }}
         value={column.filter(c => c).length} />
     </div>

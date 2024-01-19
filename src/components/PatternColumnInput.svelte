@@ -29,8 +29,8 @@
       },
     })}</label>
   <input
-    on:change
     {value}
+    on:keydown
     on:focusin={onFocusIn}
     on:focusout={onFocusOut}
     class="w-full mt-2 text-center outline-none focus-visible:ring-4 focus-visible:ring-ring"
