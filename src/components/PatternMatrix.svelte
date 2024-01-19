@@ -117,6 +117,7 @@
           {isOn}
           isHighlighted={highlightedColumns[colIdx][rowIdx]}
           on:mousedown={() => {
+            clearHighlightedColumns();
             updateMatrixColumns(colIdx, rowIdx);
           }}
           on:mouseenter={() => {
