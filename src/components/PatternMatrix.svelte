@@ -85,16 +85,16 @@
   };
 
   const getNewValue = (e: KeyboardEvent) => {
-    if (['ArrowUp', 'ArrowDown'].includes(e.code)) {
+    if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
       const target = e.target as HTMLInputElement;
       const prevValue = parseInt(target.value);
-      return e.code === 'ArrowUp' ? prevValue + 1 : prevValue - 1;
+      return e.key === 'ArrowUp' ? prevValue + 1 : prevValue - 1;
     }
-    return parseInt(e.code.replace('Digit', ''));
+    return parseInt(e.key);
   };
 
   const onKeyDownColumnInput = (e: KeyboardEvent, colIdx: number) => {
-    if (['Tab', 'Enter'].includes(e.code)) {
+    if (['Tab', 'Enter'].includes(e.key)) {
       return;
     }
     e.preventDefault();
