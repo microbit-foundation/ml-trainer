@@ -31,55 +31,29 @@
 </style>
 
 <script lang="ts">
+  import {
+    generateMatrix,
+    getHighlightedColumns,
+    transformColumnsToMatrix,
+    transformMatrixToColumns,
+    updateMatrixColumns,
+  } from '../script/patternMatrixTransforms';
   import PatternBox from './PatternBox.svelte';
   import PatternColumnInput from './PatternColumnInput.svelte';
 
   export let onMatrixChange: (matrix: boolean[]) => void;
   export let matrix: boolean[];
 
-  let highlightedColumns: boolean[][] = new Array<boolean[]>(5).fill(
-    new Array<boolean>(5).fill(false),
-  );
   const matrixDimension = 5;
-
-  const transformMatrixToColumns = (m: boolean[]) => {
-    const cols = [];
-    for (let colId = 1; colId <= matrixDimension; colId++) {
-      const remainder = colId === matrixDimension ? 0 : colId;
-      cols.push(m.filter((_c, i) => (i + 1) % matrixDimension === remainder));
-    }
-    return cols;
-  };
-
-  const transformColumnsToMatrix = (cols: boolean[][]) => {
-    let matrix: boolean[] = [];
-    for (let i = 0; i < matrixDimension; i++) {
-      matrix = [...matrix, ...cols.map(c => c[i])];
-    }
-    return matrix;
-  };
-
-  $: matrixColumns = transformMatrixToColumns(matrix);
+  let highlightedColumns: boolean[][] = generateMatrix(matrixDimension, false);
+  $: matrixColumns = transformMatrixToColumns(matrix, matrixDimension);
 
   const clearHighlightedColumns = () => {
-    highlightedColumns = highlightedColumns.map(col => col.fill(false));
+    highlightedColumns = generateMatrix(matrixDimension, false);
   };
 
-  const updateHighlightedColumns = (colIdx: number, rowIdx: number) => {
-    const col = matrixColumns[colIdx];
-    const highlightedCol = col.map(
-      (isOn, idx) => (!isOn && rowIdx <= idx) || (isOn && rowIdx > idx),
-    );
-    highlightedColumns[colIdx] = highlightedCol;
-  };
-
-  const updateMatrixColumns = (colIdx: number, rowIdx: number) => {
-    const newCol = Array(matrixDimension).fill(false).fill(true, rowIdx);
-    const columns = [
-      ...matrixColumns.slice(0, colIdx),
-      newCol,
-      ...matrixColumns.slice(colIdx + 1),
-    ];
+  const updateMatrix = (colIdx: number, rowIdx: number) => {
+    const columns = updateMatrixColumns(matrixColumns, { colIdx, rowIdx });
     matrix = transformColumnsToMatrix(columns);
     onMatrixChange(matrix);
   };
@@ -100,7 +74,7 @@
     e.preventDefault();
     const value = getNewValue(e);
     if (value < matrixDimension + 1 && value > 0) {
-      updateMatrixColumns(colIdx, matrixDimension - value);
+      updateMatrix(colIdx, matrixDimension - value);
     }
   };
 </script>
@@ -118,10 +92,10 @@
           isHighlighted={highlightedColumns[colIdx][rowIdx]}
           on:mousedown={() => {
             clearHighlightedColumns();
-            updateMatrixColumns(colIdx, rowIdx);
+            updateMatrix(colIdx, rowIdx);
           }}
           on:mouseenter={() => {
-            updateHighlightedColumns(colIdx, rowIdx);
+            highlightedColumns = getHighlightedColumns(matrixColumns, { colIdx, rowIdx });
           }}
           on:mouseleave={clearHighlightedColumns} />
       {/each}
