@@ -15,12 +15,13 @@
   import HtmlFormattedMessage, {
     linkWithProps as linkWithProps,
   } from '../../HtmlFormattedMessage.svelte';
+  import Dialog from '../../dialogs/MeltDialog.svelte';
 
   export let onClose: () => void;
   export let isOpen: boolean;
 </script>
 
-<StandardDialog {isOpen} {onClose}>
+<Dialog {isOpen} {onClose}>
   <div class="flex flex-col gap-5 w-150 text-black">
     <div class="flex flex-col gap-8">
       <div class="grid grid-cols-2 gap-20 items-center">
@@ -68,4 +69,4 @@
         >{$t('actions.close')}</StandardButton>
     </div>
   </div>
-</StandardDialog>
+</Dialog>
