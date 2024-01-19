@@ -20,8 +20,6 @@ const enum SerialProtocolState {
 }
 
 class MicrobitSerial implements MicrobitConnection {
-  private t = 0;
-
   private serialProtocolState = SerialProtocolState.AwaitingHandshakeResponse;
   private unprocessedInput = '';
 
@@ -61,11 +59,6 @@ class MicrobitSerial implements MicrobitConnection {
         } else {
           const sensorData = protocol.processPeriodicMessage(msg);
           if (sensorData) {
-            // FIXME: Debug log, printing the processed data and time between messages.
-            let now = Date.now();
-            console.log(now - this.t, sensorData);
-            this.t = now;
-
             inputBehaviour.accelerometerChange(
               sensorData.accelerometerX,
               sensorData.accelerometerY,

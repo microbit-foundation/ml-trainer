@@ -26,8 +26,6 @@ export class MicrobitBluetooth implements MicrobitConnection {
   private dcListener: OmitThisParameter<(event: Event) => void>;
   private uartListener: (data: string) => void;
 
-  private t = 0;
-
   /**
    * Constructs a bluetooth connection object. Should not be called directly.
    * Use MicrobitBluetooth.createConnection instead.
@@ -256,12 +254,6 @@ export class MicrobitBluetooth implements MicrobitConnection {
         const x = target.value.getInt16(0, true);
         const y = target.value.getInt16(2, true);
         const z = target.value.getInt16(4, true);
-
-        // FIXME: Debug log, printing the processed data and time between messages.
-        let now = Date.now();
-        console.log(now - this.t, x, y, z);
-        this.t = now;
-
         onAccelerometerChanged(x, y, z);
       },
     );
