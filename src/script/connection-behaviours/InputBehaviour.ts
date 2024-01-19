@@ -21,7 +21,7 @@ let text = get(t);
 t.subscribe(t => (text = t));
 
 // Temporary debug for time between messages received.
-let timeBinsMs: Record<string, number> = {
+let timeBinsMs = {
   '0-20': 0,
   '21-40': 0,
   '41-60': 0,
@@ -37,23 +37,23 @@ let interval: any;
 
 const binTimeInterval = (time: number) => {
   if (time <= 20) {
-    timeBinsMs['0-20'] = timeBinsMs['0-20'] + 1;
+    timeBinsMs['0-20']++;
   } else if (time <= 40) {
-    timeBinsMs['21-40'] = timeBinsMs['21-40'] + 1;
+    timeBinsMs['21-40']++;
   } else if (time <= 60) {
-    timeBinsMs['41-60'] = timeBinsMs['41-60'] + 1;
+    timeBinsMs['41-60']++;
   } else if (time <= 80) {
-    timeBinsMs['61-80'] = timeBinsMs['61-80'] + 1;
+    timeBinsMs['61-80']++;
   } else if (time <= 100) {
-    timeBinsMs['81-100'] = timeBinsMs['81-100'] + 1;
+    timeBinsMs['81-100']++;
   } else if (time <= 120) {
-    timeBinsMs['101-120'] = timeBinsMs['101-120'] + 1;
+    timeBinsMs['101-120']++;
   } else if (time <= 140) {
-    timeBinsMs['121-140'] = timeBinsMs['121-140'] + 1;
+    timeBinsMs['121-140']++;
   } else if (time <= 160) {
-    timeBinsMs['141-160'] = timeBinsMs['141-160'] + 1;
+    timeBinsMs['141-160']++;
   } else {
-    timeBinsMs['>160'] = timeBinsMs['>160'] + 1;
+    timeBinsMs['>160']++;
   }
 };
 
