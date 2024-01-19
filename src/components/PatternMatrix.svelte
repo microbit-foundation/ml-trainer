@@ -31,15 +31,14 @@
 </style>
 
 <script lang="ts">
+  import { t } from './../i18n';
   import PatternBox from './PatternBox.svelte';
   import PatternColumnInput from './PatternColumnInput.svelte';
 
   export let onMatrixChange: (matrix: boolean[]) => void;
   export let matrix: boolean[];
 
-  let highlightedColumns: boolean[][] = new Array<boolean[]>(5).fill(
-    new Array<boolean>(5).fill(false),
-  );
+  let highlighted: boolean[] = new Array<boolean>(25).fill(false);
   const matrixDimension = 5;
 
   const transformMatrixToColumns = (m: boolean[]) => {
@@ -59,54 +58,97 @@
     return matrix;
   };
 
-  $: matrixColumns = transformMatrixToColumns(matrix);
+  /** If bad matrix given to component => reset */
+  // This should never happen
+  if (!(matrix instanceof Array) || matrix.length !== 25) {
+    matrix = new Array<boolean>(25);
+    for (let i = 0; i < 25; i++) {
+      matrix[i] = false;
+    }
+  }
 
-  const clearHighlightedColumns = () => {
-    highlightedColumns = highlightedColumns.map(col => col.fill(false));
-  };
+  const setElement = (i: number, state: boolean): void => {
+    matrix[i] = state;
+    const effectedSquares = getColumnOf(i);
 
-  const updateHighlightedColumns = (colIdx: number, rowIdx: number) => {
-    const col = matrixColumns[colIdx];
-    const highlightedCol = col.map((isOn, idx) => rowIdx <= idx && !isOn);
-    highlightedColumns[colIdx] = highlightedCol;
-  };
+    effectedSquares.forEach(value => {
+      if (value.position <= 0) {
+        matrix[value.index] = state;
+      } else {
+        matrix[value.index] = false;
+      }
+    });
 
-  const updateMatrixColumns = (colIdx: number, rowIdx: number) => {
-    const newCol = Array(matrixDimension).fill(false).fill(true, rowIdx);
-    const columns = [
-      ...matrixColumns.slice(0, colIdx),
-      newCol,
-      ...matrixColumns.slice(colIdx + 1),
-    ];
-    matrix = transformColumnsToMatrix(columns);
     onMatrixChange(matrix);
   };
+
+  type PairingSquare = {
+    index: number;
+    position: number;
+  };
+
+  const getColumnOf = (inx: number): PairingSquare[] => {
+    const result = [];
+    for (let j = inx % 5; j < 25; j += 5) {
+      result.push({ index: j, position: Math.sign(inx - j) });
+    }
+    return result;
+  };
+
+  const mouseLeftDrawingArea = () => {
+    for (let j = 0; j < highlighted.length; j++) {
+      highlighted[j] = false;
+    }
+  };
+
+  const elementHover = (i: number, mouseEvent: MouseEvent | undefined = undefined) => {
+    const affectedColumns = getColumnOf(i);
+    for (let j = 0; j < highlighted.length; j++) {
+      highlighted[j] = false;
+    }
+    affectedColumns.forEach(value => {
+      highlighted[value.index] = value.position <= 0;
+    });
+
+    if (mouseEvent !== undefined && mouseEvent.buttons === 1) {
+      setElement(i, true);
+    }
+  };
+
+  $: matrixColumns = transformMatrixToColumns(matrix);
 
   const onChangeColumnInput = (e: Event, colIdx: number) => {
     const target = e.target as HTMLInputElement;
     const value = parseInt(target.value);
-    updateMatrixColumns(colIdx, matrixDimension - value);
+    const allFalse = Array(matrixDimension).fill(false);
+    const newColumn = allFalse.fill(true, matrixDimension - value);
+    const columns = [
+      ...matrixColumns.slice(0, colIdx),
+      newColumn,
+      ...matrixColumns.slice(colIdx + 1),
+    ];
+    matrix = transformColumnsToMatrix(columns);
   };
 </script>
 
 <!-- PATTERN MATRIX -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- Opted for number input method for accessible method of filling in the pattern -->
-<div class="buttonGrid select-none">
+<div class="buttonGrid select-none" on:mouseleave={mouseLeftDrawingArea}>
   <!-- Draw all 25 boxes -->
   {#each matrixColumns as column, colIdx}
     <div class="buttonColumn">
       {#each column as isOn, rowIdx}
         <PatternBox
           {isOn}
-          isHighlighted={highlightedColumns[colIdx][rowIdx]}
+          isHighlighted={highlighted[rowIdx * matrixDimension + colIdx + 1]}
           on:mousedown={() => {
-            updateMatrixColumns(colIdx, rowIdx);
+            setElement(rowIdx * matrixDimension + colIdx, true);
           }}
-          on:mouseenter={() => {
-            updateHighlightedColumns(colIdx, rowIdx);
-          }}
-          on:mouseleave={clearHighlightedColumns} />
+          on:mouseenter={e => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            elementHover(rowIdx * matrixDimension + colIdx + 1, e);
+          }} />
       {/each}
       <PatternColumnInput
         {colIdx}
