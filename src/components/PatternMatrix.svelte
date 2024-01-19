@@ -94,7 +94,7 @@
   };
 
   const onKeyDownColumnInput = (e: KeyboardEvent, colIdx: number) => {
-    if (e.code === 'Enter') {
+    if (['Tab', 'Enter'].includes(e.code)) {
       return;
     }
     e.preventDefault();
