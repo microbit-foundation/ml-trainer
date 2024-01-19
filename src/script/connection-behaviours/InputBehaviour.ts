@@ -14,7 +14,6 @@ import TypingUtils from '../TypingUtils';
 import { DeviceRequestStates } from '../stores/connectDialogStore';
 import StaticConfiguration from '../../StaticConfiguration';
 import { Paths, currentPath, navigate } from '../../router/paths';
-import { liveData } from '../stores/Stores';
 import { MicrobitConnection } from '../microbit-interfacing/MicrobitConnection';
 
 let text = get(t);
@@ -236,7 +235,6 @@ class InputBehaviour extends LoggingDecorator {
     };
 
     livedata.set(data); // This is the old livedata store
-    liveData.put(data);
   }
 
   buttonChange(buttonState: MBSpecs.ButtonState, button: MBSpecs.Button): void {
