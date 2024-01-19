@@ -7,7 +7,7 @@
 <script lang="ts">
   import { state } from '../../script/stores/uiStore';
   import { currentData, settings } from '../../script/stores/mlStore';
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import { get, type Unsubscriber } from 'svelte/store';
   import { SmoothieChart, TimeSeries } from 'smoothie';
   import DimensionLabels from './DimensionLabels.svelte';
@@ -53,7 +53,6 @@
   // The jagged edges problem is caused by repeating the recordingStarted function.
   // We will simply block the recording from starting, while it's recording
   let blockRecordingStart = false;
-  $: recordingStarted($state.isRecording || $state.isTesting);
 
   // Function to clearly diplay the area in which users are recording
   function recordingStarted(isRecording: boolean): void {
@@ -74,13 +73,15 @@
     }, get(settings).duration);
   }
 
-  // When state changes, update the state of the canvas
-  $: {
-    const isConnected = $state.isInputConnected;
-    updateCanvas(isConnected);
-  }
-
   let unsubscribeFromData: Unsubscriber | undefined;
+
+  const unsubscribeFromState = state.subscribe(
+    ({ isInputConnected, isRecording, isTesting }) => {
+      // When state changes, update the state of the canvas
+      updateCanvas(isInputConnected);
+      recordingStarted(isRecording || isTesting);
+    },
+  );
 
   // If state is connected. Start updating the graph whenever there is new data
   // From the Micro:Bit
@@ -96,11 +97,22 @@
 
       // Else if we're currently subscribed to data. Unsubscribe.
       // This means that the micro:bit has been disconnected
-    } else if (unsubscribeFromData !== undefined) {
+    } else {
+      if (unsubscribeFromData) {
+        unsubscribeFromData();
+        unsubscribeFromData = undefined;
+      }
+    }
+  }
+
+  onDestroy(() => {
+    chart?.stop();
+    unsubscribeFromState();
+    if (unsubscribeFromData) {
       unsubscribeFromData();
       unsubscribeFromData = undefined;
     }
-  }
+  });
 </script>
 
 <div class="flex overflow-hidden">
