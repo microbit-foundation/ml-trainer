@@ -1,3 +1,9 @@
+/**
+ * (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 export const transformMatrixToColumns = <T>(m: T[], matrixDimension: number): T[][] => {
   const cols = [];
   for (let colId = 1; colId <= matrixDimension; colId++) {
