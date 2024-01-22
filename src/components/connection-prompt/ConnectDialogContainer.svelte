@@ -21,7 +21,10 @@
     connectionDialogState,
     DeviceRequestStates,
   } from '../../script/stores/connectDialogStore';
-  import Microbits from '../../script/microbit-interfacing/Microbits';
+  import Microbits, {
+    FlashStage,
+    HexType,
+  } from '../../script/microbit-interfacing/Microbits';
   import { btPatternInput, btPatternOutput } from '../../script/stores/connectionStore';
   import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
   import BrokenFirmwareDetected from './usb/BrokenFirmwareDetected.svelte';
@@ -29,16 +32,30 @@
   import SelectMicrobitDialogBluetooth from './bluetooth/SelectMicrobitDialogBluetooth.svelte';
   import MicrobitWearingInstructionDialog from './MicrobitWearingInstructionDialog.svelte';
   import WebUsbTryAgain from './WebUsbTryAgain.svelte';
-  import Environment from '../../script/Environment';
   import { onDestroy, onMount } from 'svelte';
   import { get, Unsubscriber } from 'svelte/store';
   import { compatibility } from '../../script/stores/uiStore';
+  import { isDevMode } from '../../script/environment';
+  import { flags } from '../../script/flags';
 
   const { bluetooth, usb } = get(compatibility);
   let endOfFlow = false;
-  let currentStage: 'usb' | 'usb1' | 'usb2' = usb ? 'usb1' : 'usb'; // "usb" is for the bluetooth connection flow, "usb1" and "usb2" determine the progress in the radio connection flow
+  let flashStage: FlashStage = usb ? 'bluetooth' : 'radio-sender';
   let reconnectRequired = false;
   let flashProgress = 0;
+
+  const stageToHex = (flashStage: FlashStage): HexType => {
+    if (flashStage === 'bluetooth') {
+      return 'bluetooth';
+    }
+    if (flags.radioLocal) {
+      return 'radio-local';
+    }
+    if (flashStage === 'radio-sender') {
+      return 'radio-sender';
+    }
+    return 'radio-bridge';
+  };
 
   const handleWebUSBError = (err: any) => {
     switch (typeof err) {
@@ -81,8 +98,7 @@
           btPatternInput.set(MBSpecs.Utility.nameToPattern(friendlyName));
         }
 
-        // radio-local is a temporary debug hack
-        const hexForStage = currentStage === 'usb' ? 'bluetooth' : 'radio-local';
+        const hexForStage = stageToHex(flashStage);
         Microbits.flashHexToLinked(hexForStage, progress => {
           // Flash hex
           // Send users to download screen
@@ -95,15 +111,15 @@
         })
           .then(() => {
             // Finished flashing successfully
-            if (currentStage === 'usb' || currentStage === 'usb1') {
+            if (flashStage === 'bluetooth' || flashStage === 'radio-sender') {
               $connectionDialogState.connectionState =
                 ConnectDialogStates.CONNECT_BATTERY;
-            } else if (currentStage === 'usb2') {
+            } else if (flashStage === 'radio-bridge') {
               onConnectingSerial();
             }
           })
           .catch(err => {
-            if (currentStage === 'usb') {
+            if (flashStage === 'bluetooth') {
               $connectionDialogState.connectionState =
                 ConnectDialogStates.MANUAL_TUTORIAL;
             } else {
@@ -112,7 +128,7 @@
           });
       })
       .catch(err => {
-        if (currentStage === 'usb') {
+        if (flashStage === 'bluetooth') {
           $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
         } else {
           handleWebUSBError(err);
@@ -181,36 +197,36 @@
           ? () => {
               $connectionDialogState.connectionState =
                 ConnectDialogStates.START_BLUETOOTH;
-              currentStage = 'usb';
+              flashStage = 'bluetooth';
             }
           : undefined}
         onNextClick={() => {
           $connectionDialogState.connectionState = ConnectDialogStates.WEARING_SETUP;
-          currentStage = 'usb1';
+          flashStage = 'radio-sender';
         }} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.START_BLUETOOTH}
       <StartBluetoothDialog
         onStartRadioClick={usb
           ? () => {
               $connectionDialogState.connectionState = ConnectDialogStates.START_RADIO;
-              currentStage = 'usb1';
+              flashStage = 'radio-sender';
             }
           : undefined}
         onNextClick={() =>
           ($connectionDialogState.connectionState = ConnectDialogStates.WEARING_SETUP)} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.WEARING_SETUP}
-      {#if currentStage === 'usb'}
+      {#if flashStage === 'bluetooth'}
         <MicrobitWearingInstructionDialog
-          {currentStage}
+          {flashStage}
           onBackClick={() =>
             ($connectionDialogState.connectionState =
               ConnectDialogStates.START_BLUETOOTH)}
           onNextClick={() =>
             ($connectionDialogState.connectionState =
               ConnectDialogStates.CONNECT_CABLE)} />
-      {:else if currentStage === 'usb1'}
+      {:else if flashStage === 'radio-sender'}
         <MicrobitWearingInstructionDialog
-          {currentStage}
+          {flashStage}
           onBackClick={() =>
             ($connectionDialogState.connectionState = ConnectDialogStates.START_RADIO)}
           onNextClick={() =>
@@ -218,7 +234,7 @@
               ConnectDialogStates.CONNECT_CABLE)} />
       {/if}
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECT_CABLE}
-      {#if currentStage === 'usb'}
+      {#if flashStage === 'bluetooth'}
         <ConnectCableDialog
           titleId="connectMB.connectCable.heading"
           subtitleId="connectMB.connectCable.subtitle"
@@ -233,15 +249,15 @@
                   ConnectDialogStates.CONNECT_TUTORIAL_USB)
               : ($connectionDialogState.connectionState =
                   ConnectDialogStates.MANUAL_TUTORIAL)} />
-      {:else if currentStage === 'usb1'}
+      {:else if flashStage === 'radio-sender'}
         <ConnectCableDialog
           titleId="connectMB.connectCableMB1.heading"
           subtitleId="connectMB.connectCableMB1.subtitle"
-          onSkipClick={Environment.isInDevelopment
+          onSkipClick={isDevMode
             ? () => {
                 $connectionDialogState.connectionState =
                   ConnectDialogStates.CONNECT_BATTERY;
-                currentStage = 'usb2';
+                flashStage = 'radio-bridge';
               }
             : undefined}
           onBackClick={() =>
@@ -249,9 +265,9 @@
           onNextClick={() => {
             $connectionDialogState.connectionState =
               ConnectDialogStates.CONNECT_TUTORIAL_USB;
-            currentStage = 'usb1';
+            flashStage = 'radio-sender';
           }} />
-      {:else if currentStage === 'usb2'}
+      {:else if flashStage === 'radio-bridge'}
         <ConnectCableDialog
           titleId="connectMB.connectCableMB2.heading"
           subtitleId="connectMB.connectCableMB2.subtitle"
@@ -260,12 +276,12 @@
             ? () => {
                 $connectionDialogState.connectionState =
                   ConnectDialogStates.START_BLUETOOTH;
-                currentStage = 'usb';
+                flashStage = 'bluetooth';
               }
             : undefined}
           onBackClick={() => {
             $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY;
-            currentStage = 'usb1';
+            flashStage = 'radio-sender';
           }}
           onNextClick={() =>
             ($connectionDialogState.connectionState =
@@ -276,7 +292,7 @@
         onBackClick={() =>
           ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)}
         onLinkError={() => {
-          if (currentStage === 'usb') {
+          if (flashStage === 'bluetooth') {
             $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
           } else {
             $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
@@ -284,7 +300,7 @@
         }}
         onFound={onFoundUsbDevice} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECT_BATTERY}
-      {#if currentStage === 'usb'}
+      {#if flashStage === 'bluetooth'}
         <ConnectBatteryDialog
           onBackClick={() =>
             usb
@@ -299,11 +315,11 @@
           onBackClick={() => {
             $connectionDialogState.connectionState =
               ConnectDialogStates.CONNECT_TUTORIAL_USB;
-            currentStage = 'usb1';
+            flashStage = 'radio-sender';
           }}
           onNextClick={() => {
             $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE;
-            currentStage = 'usb2';
+            flashStage = 'radio-bridge';
           }} />
       {/if}
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.BLUETOOTH}
@@ -338,14 +354,14 @@
         onFoundUsb={onFoundUsbDevice} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.BAD_FIRMWARE}
       <BrokenFirmwareDetected
-        {currentStage}
+        {flashStage}
         onSkip={() =>
           ($connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL)}
         onTryAgain={() =>
           ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)}
         onCancel={endFlow} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.USB_DOWNLOADING}
-      <DownloadingDialog transferProgress={flashProgress} {currentStage} />
+      <DownloadingDialog transferProgress={flashProgress} {flashStage} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.USB_DONE}
       <DoneDownloadingDialog
         onConnectBluetoothClick={() =>

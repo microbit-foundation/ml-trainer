@@ -16,11 +16,11 @@
   import type { Writable } from 'svelte/store';
   import Microbits from '../../../script/microbit-interfacing/Microbits';
   import { DeviceRequestStates } from '../../../script/stores/connectDialogStore';
-  import Environment from '../../../script/Environment';
   import StaticConfiguration from '../../../StaticConfiguration';
   import DialogHeading from '../../DialogHeading.svelte';
   import LoadingSpinner from '../../LoadingSpinner.svelte';
   import StandardButton from '../../StandardButton.svelte';
+  import { isDevMode } from '../../../script/environment';
 
   // callbacks
   export let deviceState: DeviceRequestStates;
@@ -57,14 +57,14 @@
     }, interval);
     const connectTimeout = setTimeout(() => {
       clearInterval(timeoutInterval);
-      Environment.isInDevelopment && console.log('Connection timed out');
+      isDevMode && console.log('Connection timed out');
       onCatastrophicError();
     }, StaticConfiguration.connectTimeoutDuration);
 
     void connectionResult().then(didSucceed => {
       clearTimeout(connectTimeout);
       clearInterval(timeoutInterval);
-      Environment.isInDevelopment && console.log('Connection result ', didSucceed);
+      isDevMode && console.log('Connection result ', didSucceed);
       if (didSucceed) {
         onBluetoothConnected();
       } else {

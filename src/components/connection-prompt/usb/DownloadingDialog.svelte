@@ -6,18 +6,19 @@
 
 <script lang="ts">
   import { t } from '../../../i18n';
+  import { FlashStage } from '../../../script/microbit-interfacing/Microbits';
   import LoadingBar from '../../LoadingBar.svelte';
-  export let currentStage: string;
+  export let flashStage: FlashStage;
   export let transferProgress: number;
 </script>
 
 <div class="w-600px text-left">
   <h1 class="font-bold mb-5 text-2xl">
-    {#if currentStage === 'usb'}
+    {#if flashStage === 'bluetooth'}
       {$t('connectMB.usbDownloading.header')}
-    {:else if currentStage === 'usb1'}
+    {:else if flashStage === 'radio-sender'}
       {$t('connectMB.usbDownloadingMB1.header')}
-    {:else if currentStage === 'usb2'}
+    {:else if flashStage === 'radio-bridge'}
       {$t('connectMB.usbDownloadingMB2.header')}
     {/if}
   </h1>

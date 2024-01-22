@@ -11,19 +11,20 @@
   import microbitHolderImage from '../../imgs/microbit_holder.png';
   import DialogHeading from '../DialogHeading.svelte';
   import HtmlFormattedMessage, { linkWithProps } from '../HtmlFormattedMessage.svelte';
+  import { FlashStage } from '../../script/microbit-interfacing/Microbits.ts';
 
   export let onNextClick: () => void;
   export let onBackClick: () => void;
-  export let currentStage: string;
+  export let flashStage: FlashStage;
 
   const instructionsVideoLink = 'https://youtu.be/PC1rzFFhggU?feature=shared&t=63';
 </script>
 
 <div class="w-175">
   <DialogHeading>
-    {#if currentStage === 'usb'}
+    {#if flashStage === 'bluetooth'}
       {$t('connectMB.wearingSetup.bluetooth.heading')}
-    {:else if currentStage === 'usb1'}
+    {:else if flashStage === 'radio-sender'}
       {$t('connectMB.wearingSetup.radioConnection.heading')}
     {/if}
   </DialogHeading>
