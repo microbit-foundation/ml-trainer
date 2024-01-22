@@ -37,6 +37,8 @@
     class:cursor-default={isFocused === false}
     style="opacity: {isFocused ? 1 : 0}"
     type="number"
+    aria-required
+    {...$$restProps}
     {id}
     name={id}
     min="1"

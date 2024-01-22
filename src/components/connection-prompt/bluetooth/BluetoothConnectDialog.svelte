@@ -52,7 +52,10 @@
   <p>{$t('connectMB.pattern.subtitle')}</p>
   <div class="pt-20 pb-10">
     <div class="flex justify-center">
-      <PatternMatrix matrix={$patternMatrixState} onMatrixChange={updateMatrix} />
+      <PatternMatrix
+        matrix={$patternMatrixState}
+        onMatrixChange={updateMatrix}
+        aria-invalid={attemptedToPairWithInvalidPattern} />
     </div>
     <p
       class="mt-15 text-warning text-center {attemptedToPairWithInvalidPattern

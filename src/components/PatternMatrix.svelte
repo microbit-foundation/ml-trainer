@@ -100,6 +100,7 @@
           on:mouseleave={clearHighlightedColumns} />
       {/each}
       <PatternColumnInput
+        {...$$restProps}
         {colIdx}
         on:keydown={e => {
           onKeyDownColumnInput(e, colIdx);
