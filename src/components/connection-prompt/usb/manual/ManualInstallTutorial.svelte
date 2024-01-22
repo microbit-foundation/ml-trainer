@@ -43,7 +43,7 @@
       case 'macOS':
         return { src: transferFirmwareMacOSImage, class: 'h-251px' };
       default:
-        return { src: transferFirmwareMacOSImage, class: 'h-251px' };
+        return { src: transferProgramWindows, class: 'h-390px' };
     }
   };
 
