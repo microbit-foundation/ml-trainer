@@ -52,7 +52,8 @@ describe('SampleRingBuffer', () => {
     b.write(1, 0, 0);
     b.write(0, 1, 0);
     b.write(0, 0, 1);
-    const recordPromise = b.record();
+    const events: number[] = [];
+    const recordPromise = b.record(n => events.push(n));
     b.write(1, 1, 1);
     b.write(1, 1, 1);
     b.write(1, 1, 1);
@@ -63,5 +64,6 @@ describe('SampleRingBuffer', () => {
       y: [1, 1, 1],
       z: [1, 1, 1],
     });
+    expect(events).toEqual([0, 1, 2]);
   });
 });

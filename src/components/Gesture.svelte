@@ -34,7 +34,6 @@
   import RecordIcon from 'virtual:icons/fluent/record-20-regular';
   import CloseIcon from 'virtual:icons/ri/close-line';
   import StandardDialog from './dialogs/StandardDialog.svelte';
-  import LoadingBar from './LoadingBar.svelte';
 
   export let onNoMicrobitSelect: () => void;
   export let gesture: Gesture;

@@ -8,11 +8,9 @@ import { writable, Writable, get, derived } from 'svelte/store';
 import type { MessageFormatter } from '../i18n';
 export const Paths = {
   HOME: '/',
-  PLAYGROUND: 'playground',
   DATA: 'data',
   TRAINING: 'training',
   MODEL: 'model',
-  FILTERS: 'training/filters',
 } as const;
 
 export type PathType = (typeof Paths)[keyof typeof Paths];
