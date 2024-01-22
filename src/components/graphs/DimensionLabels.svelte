@@ -1,15 +1,15 @@
+<!--
+  (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
+  
+  SPDX-License-Identifier: MIT
+ -->
+
 <style>
   .arrowLeft {
     border-width: 10px;
     border-color: rgba(255, 255, 255, 0);
   }
 </style>
-
-<!--
-  (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
- 
-  SPDX-License-Identifier: MIT
- -->
 
 <script lang="ts">
   import { currentData } from '../../script/stores/mlStore';

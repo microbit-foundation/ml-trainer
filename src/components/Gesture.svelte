@@ -32,10 +32,10 @@
   import {
     addRecording,
     chosenGesture,
-    livedata,
     type RecordingData,
     removeRecording,
     settings,
+    prevData,
   } from '../script/stores/mlStore';
   import Recording from './Recording.svelte';
   import { t } from '../i18n';
@@ -56,7 +56,6 @@
   export let showWalkThrough: Boolean = false;
 
   const gesturePlaceholderName = $t('content.data.classPlaceholderNewClass');
-  const recordingDuration = get(settings).duration;
   const countdownInitialValue = 3;
 
   let isThisRecording = false;
@@ -116,35 +115,19 @@
     if (!areActionsAllowed()) {
       return;
     }
-
     $state.isRecording = true;
     isThisRecording = true;
 
-    // New array for data
-    let newData: { x: number[]; y: number[]; z: number[] } = { x: [], y: [], z: [] };
+    const newData = await prevData.record();
+    // TODO: What about disconnection?
+    // alertUser($t('alert.recording.disconnectedDuringRecording'));
 
-    // Set timeout to allow recording in 1s
-    const unsubscribe = livedata.subscribe(data => {
-      newData.x.push(data.accelX);
-      newData.y.push(data.accelY);
-      newData.z.push(data.accelZ);
-    });
-
-    // Once duration is over (1000ms default), stop recording
-    setTimeout(() => {
-      unsubscribe();
-      console.log('RECEIVED SAMPLES', get(settings).numSamples, newData.x.length);
-      if (get(settings).numSamples <= newData.x.length) {
-        if (isThisRecording) {
-          const recording = { ID: Date.now(), data: newData } as RecordingData;
-          addRecording(gesture.getId(), recording);
-        }
-      } else {
-        alertUser($t('alert.recording.disconnectedDuringRecording'));
-      }
-      $state.isRecording = false;
-      isThisRecording = false;
-    }, recordingDuration);
+    if (isThisRecording) {
+      const recording = { ID: Date.now(), data: newData } as RecordingData;
+      addRecording(gesture.getId(), recording);
+    }
+    $state.isRecording = false;
+    isThisRecording = false;
   }
 
   // Delete recording from recordings array

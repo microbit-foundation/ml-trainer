@@ -9,11 +9,11 @@ import {
   bestPrediction,
   gestureConfidences,
   type GestureData,
-  getPrevData,
   model,
   settings,
   TrainingStatus,
   trainingStatus,
+  prevData,
 } from './stores/mlStore';
 import { FilterType, Axes, determineFilter, AxesType } from './datafunctions';
 import { get, type Unsubscriber } from 'svelte/store';
@@ -279,7 +279,7 @@ export function classify() {
   if (!currentState.isInputConnected) return;
 
   // Get formatted version of previous data
-  const data = getPrevData();
+  const data = prevData.toSnapshot();
   if (data === undefined)
     throw new Error('Unsufficient amount of data to make prediction');
   const input: number[] = makeInputs(data);
