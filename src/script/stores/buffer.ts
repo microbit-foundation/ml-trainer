@@ -15,9 +15,11 @@ export class SampleRingBuffer {
   private full = false;
 
   private recordingSnapshotIndex: number = -1;
-  private recordingResolve: ((snapshot: SamplesByAxis) => void) | undefined = undefined;
+  private recordingResolve: ((snapshot: SamplesByAxis) => void) | undefined;
+  private recordingProgressCallback: ((step: number) => void) | undefined;
+  private recordingProgress = 0;
 
-  constructor(private size: number) {
+  constructor(public readonly size: number) {
     this.x = new Array(size);
     this.y = new Array(size);
     this.z = new Array(size);
@@ -32,15 +34,25 @@ export class SampleRingBuffer {
     if (this.last === this.size - 1) {
       this.full = true;
     }
+    if (this.recordingProgressCallback) {
+      this.recordingProgressCallback(this.recordingProgress++);
+    }
     if (this.last === this.recordingSnapshotIndex && this.recordingResolve) {
-      this.recordingResolve(this.toSnapshot()!);
+      const recordingResolve = this.recordingResolve;
+      this.recordingSnapshotIndex = 1;
+      this.recordingResolve = undefined;
+      this.recordingProgressCallback = undefined;
+      this.recordingProgress = 0;
+      recordingResolve(this.toSnapshot()!);
     }
   }
 
-  record(): Promise<SamplesByAxis> {
+  record(progressCallback: (n: number) => void): Promise<SamplesByAxis> {
     this.recordingSnapshotIndex = this.last;
     return new Promise(resolve => {
       this.recordingResolve = resolve;
+      this.recordingProgressCallback = progressCallback;
+      this.recordingProgress = 0;
     });
   }
 

@@ -4,21 +4,6 @@
   SPDX-License-Identifier: MIT
  -->
 
-<style>
-  @keyframes loading-bar {
-    0% {
-      width: 0%;
-    }
-    100% {
-      width: 100%;
-    }
-  }
-
-  .animate-loading-bar {
-    animation: loading-bar 1.8s linear;
-  }
-</style>
-
 <script lang="ts">
   import { get } from 'svelte/store';
   import {
@@ -34,7 +19,6 @@
     chosenGesture,
     type RecordingData,
     removeRecording,
-    settings,
     prevData,
   } from '../script/stores/mlStore';
   import Recording from './Recording.svelte';
@@ -50,6 +34,7 @@
   import RecordIcon from 'virtual:icons/fluent/record-20-regular';
   import CloseIcon from 'virtual:icons/ri/close-line';
   import StandardDialog from './dialogs/StandardDialog.svelte';
+  import LoadingBar from './LoadingBar.svelte';
 
   export let onNoMicrobitSelect: () => void;
   export let gesture: Gesture;
@@ -110,6 +95,8 @@
     }, 450);
   }
 
+  let recordProgress = 0;
+
   // method for recording data point for that specific gesture
   async function recordData(): Promise<void> {
     if (!areActionsAllowed()) {
@@ -118,12 +105,16 @@
     $state.isRecording = true;
     isThisRecording = true;
 
-    const newData = await prevData.record();
+    recordProgress = 0;
+    const data = await prevData.record(n => {
+      recordProgress = n / prevData.size;
+    });
+
     // TODO: What about disconnection?
     // alertUser($t('alert.recording.disconnectedDuringRecording'));
 
     if (isThisRecording) {
-      const recording = { ID: Date.now(), data: newData } as RecordingData;
+      const recording = { ID: Date.now(), data } as RecordingData;
       addRecording(gesture.getId(), recording);
     }
     $state.isRecording = false;
@@ -282,7 +273,8 @@
       <!-- Recording bar to show recording progress -->
       <div class="w-70 h-6 bg-red-200 rounded-full overflow-hidden">
         <div
-          class="h-full bg-red-600 w-0 {isThisRecording ? 'animate-loading-bar' : ''}" />
+          class="h-full bg-red-600"
+          style="width: {(isThisRecording ? recordProgress : 0) * 100 + '%'}" />
       </div>
     </div>
     <StandardButton type="warning" onClick={cancelRecording}
