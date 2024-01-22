@@ -10,9 +10,11 @@
   import usbCableImage from '../../../imgs/stylised-usb-cable.svg';
   import batteryPackImage from '../../../imgs/stylised-battery-pack.svg';
   import WhatYouWillNeedDialog from '../../WhatYouWillNeedDialog.svelte';
+  import { get } from 'svelte/store';
+  import { compatibility } from '../../../script/stores/uiStore';
 
   export let onNextClick: () => void;
-  export let onStartRadioClick: () => void;
+  export let onStartRadioClick: (() => void) | undefined;
 
   const items = [
     {
@@ -34,11 +36,13 @@
       subtitleId: 'connectMB.bluetoothStart.requirements4.subtitle',
     },
   ];
+
+  const { usb } = get(compatibility);
 </script>
 
 <WhatYouWillNeedDialog
   {items}
-  headingId="connectMB.bluetoothStart.heading"
+  headingId={usb ? 'connectMB.bluetoothStart.heading' : 'connectMB.radioStart.heading'}
   subtitleId="connectMB.bluetoothStart.subtitle"
   switchTextId="connectMB.bluetoothStart.switchRadio"
   onSwitchClick={onStartRadioClick}

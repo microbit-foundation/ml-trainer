@@ -5,14 +5,18 @@
  */
 
 import { CortexM, DAPLink, WebUSB } from 'dapjs';
-import { WebUSBSerialDevice } from './WebUSBSerial';
 import MBSpecs from './MBSpecs';
+
+const baudRate = 115200;
+const serialDelay = 5;
 
 /**
  * A USB connection to a micro:bit.
  */
 class MicrobitUSB extends CortexM {
-  protected readonly transport: WebUSB;
+  private readonly transport: WebUSB;
+  private serialPromise: Promise<void> | undefined;
+  private serialDAPLink: DAPLink | undefined;
 
   /**
    * Creates a new MicrobitUSB object.
@@ -122,8 +126,35 @@ class MicrobitUSB extends CortexM {
     return Promise.resolve();
   }
 
-  public get serialPort(): SerialPort {
-    return new WebUSBSerialDevice(this.transport);
+  public async startSerial(callback: (data: string) => void) {
+    await this.transport.open();
+
+    this.serialDAPLink = new DAPLink(this.transport);
+    const initialBaudRate = await this.serialDAPLink.getSerialBaudrate();
+    this.serialDAPLink.addListener(DAPLink.EVENT_SERIAL_DATA, callback);
+    await this.serialDAPLink.connect();
+    if (initialBaudRate !== baudRate) {
+      await this.serialDAPLink.setSerialBaudrate(baudRate);
+    }
+    this.serialPromise = this.serialDAPLink.startSerialRead(serialDelay, false);
+  }
+
+  public async serialWrite(data: string): Promise<void> {
+    return this.serialDAPLink?.serialWrite(data);
+  }
+
+  isSerialConnected(): boolean {
+    return !!this.serialPromise;
+  }
+
+  public async stopSerial() {
+    if (this.serialDAPLink) {
+      this.serialDAPLink.stopSerialRead();
+      await this.serialPromise;
+      this.serialPromise = undefined;
+      await this.serialDAPLink.disconnect();
+      this.serialDAPLink = undefined;
+    }
   }
 }
 

@@ -19,7 +19,7 @@
   export let headingId: string;
   export let subtitleId: string | undefined = undefined;
   export let switchTextId: string;
-  export let onSwitchClick: () => void;
+  export let onSwitchClick: (() => void) | undefined;
   export let onNextClick: () => void;
 </script>
 
@@ -42,10 +42,12 @@
     {/each}
   </div>
 
-  <div class="flex justify-between items-center">
-    <StandardButton type="link" onClick={onSwitchClick}>
-      {$t(switchTextId)}
-    </StandardButton>
+  <div class="flex {onSwitchClick ? 'justify-between' : 'justify-end'} items-center">
+    {#if onSwitchClick}
+      <StandardButton type="link" onClick={onSwitchClick}>
+        {$t(switchTextId)}
+      </StandardButton>
+    {/if}
     <StandardButton onClick={onNextClick} type="primary"
       >{$t('connectMB.nextButton')}</StandardButton>
   </div>

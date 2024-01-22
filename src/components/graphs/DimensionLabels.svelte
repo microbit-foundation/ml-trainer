@@ -12,23 +12,14 @@
  -->
 
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
-  import type { Unsubscriber } from 'svelte/store';
   import { currentData } from '../../script/stores/mlStore';
   import { state } from '../../script/stores/uiStore';
 
-  let unsubscribeFromLiveData: Unsubscriber | undefined = undefined;
-
-  onMount(() => {
-    unsubscribeFromLiveData = currentData.subscribe(data => {
-      const dataInArray = [data.x, data.y, data.z];
-      updateDimensionLabels(dataInArray);
-    });
-  });
-
-  onDestroy(() => {
-    unsubscribeFromLiveData?.();
-  });
+  $: {
+    const data = $currentData;
+    const dataInArray = [data.x, data.y, data.z];
+    updateDimensionLabels(dataInArray);
+  }
 
   let labels = [
     { label: 'x', arrowHeight: 0, labelHeight: 0, color: '#f9808e', id: 0 },

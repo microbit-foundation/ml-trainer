@@ -12,7 +12,7 @@
   import WhatYouWillNeedDialog from '../../WhatYouWillNeedDialog.svelte';
 
   export let onNextClick: () => void;
-  export let onStartBluetoothClick: () => void;
+  export let onStartBluetoothClick: (() => void) | undefined;
 
   const items = [
     {

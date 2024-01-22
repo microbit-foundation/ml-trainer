@@ -30,9 +30,13 @@
   import MicrobitWearingInstructionDialog from './MicrobitWearingInstructionDialog.svelte';
   import WebUsbTryAgain from './WebUsbTryAgain.svelte';
   import Environment from '../../script/Environment';
+  import { onDestroy, onMount } from 'svelte';
+  import { get, Unsubscriber } from 'svelte/store';
+  import { compatibility } from '../../script/stores/uiStore';
 
+  const { bluetooth, usb } = get(compatibility);
   let endOfFlow = false;
-  let currentStage: 'usb' | 'usb1' | 'usb2' = 'usb1'; // "usb" is for the bluetooth connection flow, "usb1" and "usb2" determine the progress in the radio connection flow
+  let currentStage: 'usb' | 'usb1' | 'usb2' = usb ? 'usb1' : 'usb'; // "usb" is for the bluetooth connection flow, "usb1" and "usb2" determine the progress in the radio connection flow
   let reconnectRequired = false;
   let flashProgress = 0;
 
@@ -142,14 +146,23 @@
   }
 
   let dialogContainer: HTMLElement;
+  let unsubscribe: Unsubscriber;
 
-  // Focus the first button in the dialog when the content changes.
-  connectionDialogState.subscribe(({ connectionState }) => {
-    if (connectionState !== ConnectDialogStates.NONE && !endOfFlow) {
-      const button = dialogContainer.querySelector('button');
-      if (button) {
-        button.focus();
+  onMount(() => {
+    // Focus the first button in the dialog when the content changes.
+    unsubscribe = connectionDialogState.subscribe(({ connectionState }) => {
+      if (connectionState !== ConnectDialogStates.NONE && !endOfFlow) {
+        const button = dialogContainer.querySelector('button');
+        if (button) {
+          button.focus();
+        }
       }
+    });
+  });
+
+  onDestroy(() => {
+    if (unsubscribe) {
+      unsubscribe();
     }
   });
 </script>
@@ -164,20 +177,25 @@
     dismissOnClickOutside={false}>
     {#if $connectionDialogState.connectionState === ConnectDialogStates.START_RADIO}
       <StartRadioDialog
-        onStartBluetoothClick={() => {
-          $connectionDialogState.connectionState = ConnectDialogStates.START_BLUETOOTH;
-          currentStage = 'usb';
-        }}
+        onStartBluetoothClick={bluetooth
+          ? () => {
+              $connectionDialogState.connectionState =
+                ConnectDialogStates.START_BLUETOOTH;
+              currentStage = 'usb';
+            }
+          : undefined}
         onNextClick={() => {
           $connectionDialogState.connectionState = ConnectDialogStates.WEARING_SETUP;
           currentStage = 'usb1';
         }} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.START_BLUETOOTH}
       <StartBluetoothDialog
-        onStartRadioClick={() => {
-          $connectionDialogState.connectionState = ConnectDialogStates.START_RADIO;
-          currentStage = 'usb1';
-        }}
+        onStartRadioClick={usb
+          ? () => {
+              $connectionDialogState.connectionState = ConnectDialogStates.START_RADIO;
+              currentStage = 'usb1';
+            }
+          : undefined}
         onNextClick={() =>
           ($connectionDialogState.connectionState = ConnectDialogStates.WEARING_SETUP)} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.WEARING_SETUP}
@@ -210,8 +228,11 @@
           onBackClick={() =>
             ($connectionDialogState.connectionState = ConnectDialogStates.WEARING_SETUP)}
           onNextClick={() =>
-            ($connectionDialogState.connectionState =
-              ConnectDialogStates.CONNECT_TUTORIAL_USB)} />
+            usb
+              ? ($connectionDialogState.connectionState =
+                  ConnectDialogStates.CONNECT_TUTORIAL_USB)
+              : ($connectionDialogState.connectionState =
+                  ConnectDialogStates.MANUAL_TUTORIAL)} />
       {:else if currentStage === 'usb1'}
         <ConnectCableDialog
           titleId="connectMB.connectCableMB1.heading"
@@ -235,10 +256,13 @@
           titleId="connectMB.connectCableMB2.heading"
           subtitleId="connectMB.connectCableMB2.subtitle"
           altClickId="connectMB.radioStart.switchBluetooth"
-          onAltClick={() => {
-            $connectionDialogState.connectionState = ConnectDialogStates.START_BLUETOOTH;
-            currentStage = 'usb';
-          }}
+          onAltClick={bluetooth
+            ? () => {
+                $connectionDialogState.connectionState =
+                  ConnectDialogStates.START_BLUETOOTH;
+                currentStage = 'usb';
+              }
+            : undefined}
           onBackClick={() => {
             $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY;
             currentStage = 'usb1';
@@ -263,8 +287,11 @@
       {#if currentStage === 'usb'}
         <ConnectBatteryDialog
           onBackClick={() =>
-            ($connectionDialogState.connectionState =
-              ConnectDialogStates.CONNECT_TUTORIAL_USB)}
+            usb
+              ? ($connectionDialogState.connectionState =
+                  ConnectDialogStates.CONNECT_TUTORIAL_USB)
+              : ($connectionDialogState.connectionState =
+                  ConnectDialogStates.MANUAL_TUTORIAL)}
           onNextClick={() =>
             ($connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH)} />
       {:else}
@@ -325,10 +352,12 @@
           ($connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH)} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.MANUAL_TUTORIAL}
       <ManualInstallTutorial
-        onBackClick={() => {
-          $connectionDialogState.connectionState =
-            ConnectDialogStates.CONNECT_TUTORIAL_USB;
-        }}
+        onBackClick={() =>
+          usb
+            ? ($connectionDialogState.connectionState =
+                ConnectDialogStates.CONNECT_TUTORIAL_USB)
+            : ($connectionDialogState.connectionState =
+                ConnectDialogStates.CONNECT_CABLE)}
         onNextClick={() =>
           ($connectionDialogState.connectionState =
             ConnectDialogStates.CONNECT_BATTERY)} />

@@ -327,16 +327,10 @@ class Microbits {
     this.assignedInputMicrobit = microbitSerial;
     this.inputName = name;
     connectionBehaviour.onConnected(name);
-    microbitSerial
-      .listenToInputServices(connectionBehaviour, () => {})
-      .then(() => {
-        connectionBehaviour.onReady();
-      })
-      .catch(reason => {
-        console.log(reason);
-      });
-
+    await microbitSerial.listenToInputServices(connectionBehaviour, () => {});
+    connectionBehaviour.onReady();
     connectionBehaviour.onAssigned(this.getInput(), name);
+
     this.inputName = name;
     this.inputVersion = this.getInput().getVersion();
     return true;

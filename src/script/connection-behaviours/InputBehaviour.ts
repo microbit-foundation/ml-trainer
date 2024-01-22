@@ -14,16 +14,65 @@ import TypingUtils from '../TypingUtils';
 import { DeviceRequestStates } from '../stores/connectDialogStore';
 import StaticConfiguration from '../../StaticConfiguration';
 import { Paths, currentPath, navigate } from '../../router/paths';
-import { liveData } from '../stores/Stores';
 import { MicrobitConnection } from '../microbit-interfacing/MicrobitConnection';
 
 let text = get(t);
 t.subscribe(t => (text = t));
 
+// Temporary debug for time between messages received.
+const zeroStats = () => ({
+  totalTime: 0,
+  sampleCount: 0,
+  bins: {
+    '0-10': 0,
+    '11-20': 0,
+    '21-30': 0,
+    '31-40': 0,
+    '41-60': 0,
+    '61-80': 0,
+    '81-100': 0,
+    '101-120': 0,
+    '121-140': 0,
+    '141-160': 0,
+    '>160': 0,
+  },
+});
+
+let stats = zeroStats();
+
+let interval: any;
+
+const binTimeInterval = (time: number) => {
+  if (time <= 10) {
+    stats.bins['0-10']++;
+  } else if (time <= 20) {
+    stats.bins['11-20']++;
+  } else if (time <= 30) {
+    stats.bins['21-30']++;
+  } else if (time <= 40) {
+    stats.bins['31-40']++;
+  } else if (time <= 60) {
+    stats.bins['41-60']++;
+  } else if (time <= 80) {
+    stats.bins['61-80']++;
+  } else if (time <= 100) {
+    stats.bins['81-100']++;
+  } else if (time <= 120) {
+    stats.bins['101-120']++;
+  } else if (time <= 140) {
+    stats.bins['121-140']++;
+  } else if (time <= 160) {
+    stats.bins['141-160']++;
+  } else {
+    stats.bins['>160']++;
+  }
+};
+
 /**
  * Implementation of the input ConnectionBehaviour
  */
 class InputBehaviour extends LoggingDecorator {
+  private t = -1;
   private smoothedAccelX = 0;
   private smoothedAccelY = 0;
   private smoothedAccelZ = 0;
@@ -102,6 +151,9 @@ class InputBehaviour extends LoggingDecorator {
       return s;
     });
     clearTimeout(this.reconnectTimeout);
+    clearInterval(interval);
+    interval = undefined;
+    this.t = -1;
   }
 
   onCancelledBluetoothRequest(): void {
@@ -145,6 +197,25 @@ class InputBehaviour extends LoggingDecorator {
   }
 
   accelerometerChange(x: number, y: number, z: number): void {
+    // FIXME: Debug log, add time between messages received to bins.
+    // Logged every 10 seconds.
+    if (this.t === -1) {
+      this.t = Date.now();
+    } else {
+      let now = Date.now();
+      const changeInterval = now - this.t;
+      binTimeInterval(changeInterval);
+      stats.sampleCount++;
+      stats.totalTime += changeInterval;
+      this.t = now;
+      if (!interval) {
+        interval = setInterval(() => {
+          console.log({ ...stats, mean: stats.totalTime / stats.sampleCount });
+          stats = zeroStats();
+        }, 10_000);
+      }
+    }
+
     super.accelerometerChange(x, y, z);
 
     const accelX = x / 1000.0;
@@ -164,7 +235,6 @@ class InputBehaviour extends LoggingDecorator {
     };
 
     livedata.set(data); // This is the old livedata store
-    liveData.put(data);
   }
 
   buttonChange(buttonState: MBSpecs.ButtonState, button: MBSpecs.Button): void {
