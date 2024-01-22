@@ -33,6 +33,7 @@
   import ConnectDialogContainer from './components/connection-prompt/ConnectDialogContainer.svelte';
   import { Paths, navigate } from './router/paths';
   import HomeIcon from 'virtual:icons/ri/home-2-line';
+  import MeltHelpMenu from './components/control-bar/control-bar-items/MeltHelpMenu.svelte';
 
   ConnectionBehaviours.setInputBehaviour(new InputBehaviour());
   ConnectionBehaviours.setOutputBehaviour(new OutputBehaviour());
@@ -84,7 +85,8 @@
               <HomeIcon class="text-white" aria-hidden />
             </a>
             <SettingsMenu />
-            <HelpMenu />
+            <!-- <HelpMenu /> -->
+            <MeltHelpMenu />
           </div>
         </ControlBar>
 
