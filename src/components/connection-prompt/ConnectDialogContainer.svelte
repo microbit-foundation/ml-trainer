@@ -228,8 +228,11 @@
           onBackClick={() =>
             ($connectionDialogState.connectionState = ConnectDialogStates.WEARING_SETUP)}
           onNextClick={() =>
-            ($connectionDialogState.connectionState =
-              ConnectDialogStates.CONNECT_TUTORIAL_USB)} />
+            usb
+              ? ($connectionDialogState.connectionState =
+                  ConnectDialogStates.CONNECT_TUTORIAL_USB)
+              : ($connectionDialogState.connectionState =
+                  ConnectDialogStates.MANUAL_TUTORIAL)} />
       {:else if currentStage === 'usb1'}
         <ConnectCableDialog
           titleId="connectMB.connectCableMB1.heading"
@@ -284,8 +287,11 @@
       {#if currentStage === 'usb'}
         <ConnectBatteryDialog
           onBackClick={() =>
-            ($connectionDialogState.connectionState =
-              ConnectDialogStates.CONNECT_TUTORIAL_USB)}
+            usb
+              ? ($connectionDialogState.connectionState =
+                  ConnectDialogStates.CONNECT_TUTORIAL_USB)
+              : ($connectionDialogState.connectionState =
+                  ConnectDialogStates.MANUAL_TUTORIAL)}
           onNextClick={() =>
             ($connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH)} />
       {:else}
@@ -346,10 +352,12 @@
           ($connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH)} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.MANUAL_TUTORIAL}
       <ManualInstallTutorial
-        onBackClick={() => {
-          $connectionDialogState.connectionState =
-            ConnectDialogStates.CONNECT_TUTORIAL_USB;
-        }}
+        onBackClick={() =>
+          usb
+            ? ($connectionDialogState.connectionState =
+                ConnectDialogStates.CONNECT_TUTORIAL_USB)
+            : ($connectionDialogState.connectionState =
+                ConnectDialogStates.CONNECT_CABLE)}
         onNextClick={() =>
           ($connectionDialogState.connectionState =
             ConnectDialogStates.CONNECT_BATTERY)} />
