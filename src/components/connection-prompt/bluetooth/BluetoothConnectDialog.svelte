@@ -55,12 +55,13 @@
       <PatternMatrix
         matrix={$patternMatrixState}
         onMatrixChange={updateMatrix}
-        aria-invalid={attemptedToPairWithInvalidPattern} />
+        invalid={attemptedToPairWithInvalidPattern} />
     </div>
     <p
       class="mt-15 text-warning text-center {attemptedToPairWithInvalidPattern
         ? 'visible'
-        : 'invisible'}">
+        : 'invisible'}"
+      role={attemptedToPairWithInvalidPattern ? 'alert' : null}>
       {$t('connectMB.bluetooth.invalidPattern')}
     </p>
   </div>
