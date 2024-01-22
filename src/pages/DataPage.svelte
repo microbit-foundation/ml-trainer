@@ -77,10 +77,12 @@
       trainingButtonPrimary = true;
     }
   });
+
+  $: title = getTitle(Paths.DATA, $t);
 </script>
 
 <svelte:head>
-  <title>{getTitle(Paths.DATA)}</title>
+  <title>{title}</title>
 </svelte:head>
 
 <div class="flex flex-col h-full inline-block w-full bg-backgrounddark">

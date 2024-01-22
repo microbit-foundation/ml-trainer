@@ -52,7 +52,7 @@
   let routeAnnouncementEl: HTMLDivElement | undefined;
   $: {
     if (routeAnnouncementEl) {
-      routeAnnouncementEl.textContent = getTitle($currentPath);
+      routeAnnouncementEl.textContent = getTitle($currentPath, $t);
     }
   }
 </script>

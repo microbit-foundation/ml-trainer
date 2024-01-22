@@ -36,10 +36,12 @@
       trainingStatus.update(() => TrainingStatus.Untrained);
     }
   }
+
+  $: title = getTitle(Paths.TRAINING, $t);
 </script>
 
 <svelte:head>
-  <title>{getTitle(Paths.TRAINING)}</title>
+  <title>{title}</title>
 </svelte:head>
 
 <StandardDialog

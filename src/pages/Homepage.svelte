@@ -63,10 +63,12 @@
       startConnectionProcess();
     }
   };
+
+  $: title = getTitle(Paths.HOME, $t);
 </script>
 
 <svelte:head>
-  <title>{getTitle(Paths.HOME)}</title>
+  <title>{title}</title>
 </svelte:head>
 
 <main class="h-full flex flex-col items-center bg-backgrounddark">

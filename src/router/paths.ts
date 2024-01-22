@@ -4,9 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { t } from 'svelte-i18n';
 import { writable, Writable, get, derived } from 'svelte/store';
-
+import { format } from 'svelte-i18n';
 export const Paths = {
   HOME: '/',
   PLAYGROUND: 'playground',
@@ -28,22 +27,21 @@ export function navigate(path: PathType) {
   currentPathPrivate.set(path);
 }
 
+const messageFormatter = get(format);
 const appName = 'micro:bit machine learning tool';
-let text: (key: string, vars?: object) => string;
-t.subscribe(t => (text = t));
-export const getTitle = (path: PathType) => {
+export const getTitle = (path: PathType, t: typeof messageFormatter) => {
   switch (path) {
     case '/': {
       return appName;
     }
     case 'data': {
-      return `${text('content.index.toolProcessCards.data.title')} | ${appName}`;
+      return `${t('content.index.toolProcessCards.data.title')} | ${appName}`;
     }
     case 'training': {
-      return `${text('content.index.toolProcessCards.train.title')} | ${appName}`;
+      return `${t('content.index.toolProcessCards.train.title')} | ${appName}`;
     }
     case 'model': {
-      return `${text('content.index.toolProcessCards.model.title')} | ${appName}`;
+      return `${t('content.index.toolProcessCards.model.title')} | ${appName}`;
     }
     default:
       return appName;
