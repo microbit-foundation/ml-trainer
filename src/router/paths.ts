@@ -5,7 +5,7 @@
  */
 
 import { writable, Writable, get, derived } from 'svelte/store';
-import { format } from 'svelte-i18n';
+import type { MessageFormatter } from '../i18n';
 export const Paths = {
   HOME: '/',
   PLAYGROUND: 'playground',
@@ -27,9 +27,8 @@ export function navigate(path: PathType) {
   currentPathPrivate.set(path);
 }
 
-const messageFormatter = get(format);
 const appName = 'micro:bit machine learning tool';
-export const getTitle = (path: PathType, t: typeof messageFormatter) => {
+export const getTitle = (path: PathType, t: MessageFormatter) => {
   switch (path) {
     case '/': {
       return appName;

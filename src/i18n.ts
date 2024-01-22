@@ -4,11 +4,32 @@
  * SPDX-License-Identifier: MIT
  */
 
+import browserLang from 'browser-lang';
+import { FormatXMLElementFn } from 'intl-messageformat';
 import { init, locale, register } from 'svelte-i18n';
-export { t } from 'svelte-i18n';
 import { get } from 'svelte/store';
 import { persistantWritable } from './script/stores/storeUtil';
-import browserLang from 'browser-lang';
+export { t } from 'svelte-i18n';
+
+type InterpolationValues =
+  | Record<
+      string,
+      string | number | boolean | Date | FormatXMLElementFn<unknown> | null | undefined
+    >
+  | undefined;
+
+interface MessageObject {
+  id: string;
+  locale?: string;
+  format?: string;
+  default?: string;
+  values?: InterpolationValues;
+}
+// Not exported from svelte-i18n so replicated here.
+export type MessageFormatter = (
+  id: string | MessageObject,
+  options?: Omit<MessageObject, 'id'>,
+) => string;
 
 export const allLanguages = [
   {
