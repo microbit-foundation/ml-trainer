@@ -43,13 +43,12 @@
         'hover:bg-brand-600 hover:border-brand-600 active:bg-brand-700 active:border-brand-700',
     },
     secondary: {
-      base: 'font-bold rounded-4xl bg-white text-brand-700 border-solid border-2 border-brand-500',
+      base: 'font-bold rounded-4xl text-brand-700 border-solid border-2 border-brand-500',
       enabled: 'hover:border-brand-600 active:border-brand-700 active:bg-brand-50',
     },
     warning: {
-      base: 'font-bold rounded-4xl bg-red-600 text-white border-solid border-2 border-red-600',
-      enabled:
-        'hover:bg-red-700 hover:border-red-700 active:bg-red-800 active:border-red-800',
+      base: 'font-bold rounded-4xl text-red-600 border-solid border-2 border-red-600',
+      enabled: 'hover:border-red-700 active:border-red-700 active:bg-red-50',
     },
   };
 </script>
