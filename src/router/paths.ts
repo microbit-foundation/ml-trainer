@@ -49,10 +49,3 @@ export const getTitle = (path: PathType) => {
       return appName;
   }
 };
-
-currentPath.subscribe(path => {
-  const announceRouteEl = document.querySelector('#announce-route');
-  if (announceRouteEl) {
-    announceRouteEl.textContent = getTitle(path);
-  }
-});
