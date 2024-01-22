@@ -55,7 +55,7 @@
       <PatternMatrix matrix={$patternMatrixState} onMatrixChange={updateMatrix} />
     </div>
     <p
-      class="text-warning text-center p-5 {attemptedToPairWithInvalidPattern
+      class="mt-15 text-warning text-center {attemptedToPairWithInvalidPattern
         ? 'visible'
         : 'invisible'}">
       {$t('connectMB.bluetooth.invalidPattern')}
