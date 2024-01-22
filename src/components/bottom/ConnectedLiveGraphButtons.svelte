@@ -30,6 +30,7 @@
         <!-- Output MB is not in the connection process -->
         <StandardButton
           onClick={handleOutputDisconnectClick}
+          class="bg-white"
           type="secondary"
           size="small">{$t('menu.model.disconnect')}</StandardButton>
       {:else}
@@ -43,8 +44,11 @@
       <StandardButton onClick={startConnectionProcess} type="primary" size="small"
         >{$t('footer.connectButton')}</StandardButton>
     {:else}
-      <StandardButton onClick={handleInputDisconnectClick} type="secondary" size="small"
-        >{$t('footer.disconnectButton')}</StandardButton>
+      <StandardButton
+        onClick={handleInputDisconnectClick}
+        class="bg-white"
+        type="secondary"
+        size="small">{$t('footer.disconnectButton')}</StandardButton>
     {/if}
   </div>
 </div>

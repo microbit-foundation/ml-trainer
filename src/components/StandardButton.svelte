@@ -56,7 +56,7 @@
 <div class="grid grid-cols-1 place-items-center">
   <button
     {disabled}
-    class="{classes[type].base} {disabled
+    class="{$$restProps.class || ''} {classes[type].base} {disabled
       ? ''
       : classes[type].enabled} outline-none disabled:opacity-60 {type === 'link'
       ? ''
