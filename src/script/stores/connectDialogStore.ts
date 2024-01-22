@@ -5,7 +5,7 @@
  */
 
 import { get, writable } from 'svelte/store';
-import { state } from './uiStore';
+import { compatibility, state } from './uiStore';
 
 export enum DeviceRequestStates {
   NONE,
@@ -43,11 +43,14 @@ export const connectionDialogState = writable<{
 });
 
 export const startConnectionProcess = (): void => {
+  const { usb } = get(compatibility);
   // Updating the state will cause a popup to appear, from where the connection process will take place
   connectionDialogState.update(s => {
     s.connectionState = get(state).isInputConnected
       ? ConnectDialogStates.START_OUTPUT
-      : ConnectDialogStates.START_RADIO;
+      : usb
+        ? ConnectDialogStates.START_RADIO
+        : ConnectDialogStates.START_BLUETOOTH;
     s.deviceState = get(state).isInputConnected
       ? DeviceRequestStates.OUTPUT
       : DeviceRequestStates.INPUT;
