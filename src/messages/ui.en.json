@@ -197,7 +197,7 @@
   "connectMB.bluetooth.cancelledConnection": "You didn't choose a micro:bit. Do you want to try again?",
 
   "connectMB.bluetooth.connecting": "Connecting…",
-  "connectMB.bluetooth.invalidPattern": "The pattern you drew is invalid",
+  "connectMB.bluetooth.invalidPattern": "The pattern you drew is invalid.",
 
   "disconnectedWarning.input": "Your input micro:bit lost connection, do want to try again?",
   "disconnectedWarning.output": "Your output micro:bit lost connection, do want to try again?",

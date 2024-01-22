@@ -11,6 +11,7 @@
   import {
     btPatternInput,
     btPatternOutput,
+    isInputPatternValid,
   } from '../../../script/stores/connectionStore';
   import type { Writable } from 'svelte/store';
   import StandardButton from '../../StandardButton.svelte';
@@ -25,6 +26,19 @@
     deviceState === DeviceRequestStates.INPUT ? btPatternInput : btPatternOutput;
   let attemptedToPairWithInvalidPattern = false;
 
+  const handleNextClick = () => {
+    if (!isInputPatternValid()) {
+      attemptedToPairWithInvalidPattern = true;
+      return;
+    }
+    onNextClick();
+  };
+
+  const handleBackClick = () => {
+    attemptedToPairWithInvalidPattern = false;
+    onBackClick();
+  };
+
   function updateMatrix(matrix: boolean[]): void {
     $patternMatrixState = matrix;
     attemptedToPairWithInvalidPattern = false;
@@ -36,12 +50,21 @@
     {$t('connectMB.pattern.heading')}
   </DialogHeading>
   <p>{$t('connectMB.pattern.subtitle')}</p>
-  <div class="flex justify-center p-20">
-    <PatternMatrix matrix={$patternMatrixState} onMatrixChange={updateMatrix} />
+  <div class="pt-20 pb-10">
+    <div class="flex justify-center">
+      <PatternMatrix matrix={$patternMatrixState} onMatrixChange={updateMatrix} />
+    </div>
+    <p
+      class="text-warning text-center p-5 {attemptedToPairWithInvalidPattern
+        ? 'visible'
+        : 'invisible'}">
+      {$t('connectMB.bluetooth.invalidPattern')}
+    </p>
   </div>
   <div class="flex justify-end gap-x-5">
-    <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
-    <StandardButton type="primary" onClick={onNextClick}
+    <StandardButton onClick={handleBackClick}
+      >{$t('connectMB.backButton')}</StandardButton>
+    <StandardButton type="primary" onClick={handleNextClick}
       >{$t('connectMB.nextButton')}</StandardButton>
   </div>
 </div>
