@@ -13,7 +13,9 @@
   import TrainingPage from '../pages/training/TrainingPage.svelte';
   import PlaygroundPage from '../pages/PlaygroundPage.svelte';
   import { currentPageComponent } from '../views/currentComponentStore';
-  import { currentPath, navigate, Paths, PathType } from './paths';
+  import { currentPath, isValidPath, navigate, Paths, PathType } from './paths';
+
+  const stripLeadingSlash = (s: string): string => (s.startsWith('/') ? s.slice(1) : s);
 
   function getRoutedComponent(path: PathType) {
     switch (path) {
@@ -44,9 +46,7 @@
 
     if (shouldPushState) {
       const url =
-        window.location.origin +
-        import.meta.env.BASE_URL +
-        (path.startsWith('/') ? path.slice(1) : path);
+        window.location.origin + import.meta.env.BASE_URL + stripLeadingSlash(path);
       history.pushState({ path: path }, '', url);
     }
   };
@@ -68,13 +68,10 @@
   };
 
   const navigateFromUrl = () => {
-    let urlPath = window.location.pathname;
-    if (urlPath.startsWith('/')) {
-      urlPath = urlPath.substring(1, urlPath.length);
-    }
-    let path: PathType = Paths.HOME;
-    if (Object.values(Paths).includes(urlPath as PathType)) {
-      path = urlPath as PathType;
+    const path = stripLeadingSlash(window.location.pathname).slice(
+      stripLeadingSlash(import.meta.env.BASE_URL).length,
+    );
+    if (isValidPath(path)) {
       navigate(path);
     } else {
       history.replaceState({}, '', Paths.HOME);

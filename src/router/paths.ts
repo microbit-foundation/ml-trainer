@@ -17,6 +17,10 @@ export const Paths = {
 
 export type PathType = (typeof Paths)[keyof typeof Paths];
 
+export const isValidPath = (s: string): s is PathType => {
+  return Object.values(Paths).includes(s as PathType);
+};
+
 export const currentPathPrivate: Writable<PathType> = writable(Paths.HOME);
 export const currentPath = derived(currentPathPrivate, path => path);
 
