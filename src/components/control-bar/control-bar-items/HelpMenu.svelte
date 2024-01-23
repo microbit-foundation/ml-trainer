@@ -21,11 +21,16 @@
   const { open } = menu.states;
 
   let isAboutDialogOpen = false;
+  let helpButtonRef: HTMLElement | null;
 
   const openLink = (url: string) => window.open(url, '_blank', 'noopener');
 
   const onAboutClick = () => {
     isAboutDialogOpen = true;
+  };
+  const onAboutDialogClose = () => {
+    isAboutDialogOpen = false;
+    helpButtonRef?.focus();
   };
   const onTermsOfUseClick = () => {
     openLink('https://microbit.org/terms-of-use/');
@@ -36,13 +41,10 @@
 </script>
 
 <div>
-  <AboutDialog
-    isOpen={isAboutDialogOpen}
-    onClose={() => {
-      isAboutDialogOpen = false;
-    }} />
+  <AboutDialog isOpen={isAboutDialogOpen} onClose={onAboutDialogClose} />
   <div class="relative inline-block">
     <button
+      bind:this={helpButtonRef}
       use:melt={$trigger}
       aria-label={$t('helpMenu.label')}
       class="inline-flex rounded-full text-xl p-2 outline-none focus-visible:ring-ringBright focus-visible:ring-4 focus-visible:ring-offset-1">
