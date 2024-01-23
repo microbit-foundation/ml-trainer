@@ -1,6 +1,7 @@
 const {
   createDeploymentDetailsFromOptions,
 } = require('@microbit-foundation/website-deploy-aws-config');
+const posixPath = require('path/posix');
 
 const { s3Config } = createDeploymentDetailsFromOptions({
   production: {
@@ -20,6 +21,9 @@ const { s3Config } = createDeploymentDetailsFromOptions({
 module.exports = {
   deploymentDir: './dist',
   ...s3Config,
+  // We deploy to a fixed path for the nextgen version
+  // See also the base path configuration in vite.config.ts
+  bucketPrefix: posixPath.join(s3Config.bucketPrefix || '', 'thenextgen'),
   region: 'eu-west-1',
   removeNonexistentObjects: true,
   enableS3StaticWebsiteHosting: true,

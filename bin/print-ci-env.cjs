@@ -14,9 +14,8 @@ process.env.STAGE = stage;
 // STAGE must be defined before this is imported
 const { bucketName, bucketPrefix } = require('../deployment.cjs');
 
-// Deploy to a /thenextgen/ suffix.
-// If we actually deploy anything else to ml.microbit.org we'll need to
-// review the deployment process as it likely removes other files
+// Deploy to a /thenextgen/ suffix. See also deployment.cjs as this
+// doesn't actually change the output folder.
 const baseUrl = (!bucketPrefix ? '/' : `/${bucketPrefix}/`) + 'thenextgen/';
 const fullUrl = `https://${bucketName}${baseUrl}`;
 
