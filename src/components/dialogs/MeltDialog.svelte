@@ -14,6 +14,7 @@
   export let createDialogPropsOverride: CreateDialogProps = {};
   export let isOpen: boolean;
   export let onClose: () => void;
+  export let titleId: string | undefined = undefined;
 
   const onOpenChange: CreateDialogProps['onOpenChange'] = ({ curr, next }) => {
     // if dialog is closing
@@ -24,7 +25,7 @@
   };
 
   const {
-    elements: { trigger, overlay, content, title, description, close, portalled },
+    elements: { overlay, content, title, close, portalled },
     states,
   } = createDialog({
     preventScroll: true,
@@ -72,7 +73,14 @@
                 </IconButton>
               </div>
             {/if}
-            <slot />
+            <div class={$$restProps.class || ''}>
+              {#if titleId}
+                <h2 {...$title} use:title class="text-xl font-bold pb-5">
+                  {$t(titleId)}
+                </h2>
+              {/if}
+              <slot />
+            </div>
           </div>
         </Transition>
       </div>
