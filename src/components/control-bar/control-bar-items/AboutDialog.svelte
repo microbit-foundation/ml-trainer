@@ -14,7 +14,7 @@
   import HtmlFormattedMessage, {
     linkWithProps as linkWithProps,
   } from '../../HtmlFormattedMessage.svelte';
-  import Dialog from '../../dialogs/MeltDialog.svelte';
+  import Dialog from '../../dialogs/StandardDialog.svelte';
 
   export let onClose: () => void;
   export let isOpen: boolean;
