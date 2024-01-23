@@ -14,17 +14,7 @@
   import ArrowTwo from '../arrows/ArrowTwo.svelte';
 
   export let onBackClick: () => void;
-  export let onFound: () => void;
-  export let onLinkError: () => void;
-
-  function onNextClick() {
-    Microbits.linkMicrobit()
-      .then(() => onFound())
-      .catch((e: Error) => {
-        console.log(e);
-        onLinkError();
-      });
-  }
+  export let onNextClick: () => void;
 </script>
 
 <div class="w-175">

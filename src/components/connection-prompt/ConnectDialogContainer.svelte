@@ -87,52 +87,69 @@
     }
   };
 
-  function onFoundUsbDevice() {
-    Microbits.getLinkedFriendlyName()
-      .then(friendlyName => {
-        // Find the name of the micro:bit
-        if ($connectionDialogState.deviceState === DeviceRequestStates.OUTPUT) {
-          btPatternOutput.set(MBSpecs.Utility.nameToPattern(friendlyName));
-        } else {
-          btPatternInput.set(MBSpecs.Utility.nameToPattern(friendlyName));
-        }
+  async function tryMicrobitConnection(): Promise<void> {
+    try {
+      await Microbits.linkMicrobit();
+    } catch (err) {
+      if (flashStage === 'bluetooth') {
+        $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
+      } else {
+        $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
+      }
+      return;
+    }
+    const friendlyName = await getMicrobitName();
+    if (!friendlyName) {
+      return;
+    }
+    return flashMicrobit(friendlyName);
+  }
 
-        const hexForStage = stageToHex(flashStage);
-        Microbits.flashHexToLinked(hexForStage, progress => {
-          // Flash hex
-          // Send users to download screen
-          if (
-            $connectionDialogState.connectionState != ConnectDialogStates.USB_DOWNLOADING
-          ) {
-            $connectionDialogState.connectionState = ConnectDialogStates.USB_DOWNLOADING;
-          }
-          flashProgress = progress;
-        })
-          .then(() => {
-            // Finished flashing successfully
-            if (flashStage === 'bluetooth' || flashStage === 'radio-sender') {
-              $connectionDialogState.connectionState =
-                ConnectDialogStates.CONNECT_BATTERY;
-            } else if (flashStage === 'radio-bridge') {
-              onConnectingSerial(friendlyName);
-            }
-          })
-          .catch(err => {
-            if (flashStage === 'bluetooth') {
-              $connectionDialogState.connectionState =
-                ConnectDialogStates.MANUAL_TUTORIAL;
-            } else {
-              handleWebUSBError(err);
-            }
-          });
-      })
-      .catch(err => {
-        if (flashStage === 'bluetooth') {
-          $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
-        } else {
-          handleWebUSBError(err);
+  async function getMicrobitName(): Promise<string | undefined> {
+    try {
+      const friendlyName = await Microbits.getLinkedFriendlyName();
+      // Find the name of the micro:bit
+      if ($connectionDialogState.deviceState === DeviceRequestStates.OUTPUT) {
+        btPatternOutput.set(MBSpecs.Utility.nameToPattern(friendlyName));
+      } else {
+        btPatternInput.set(MBSpecs.Utility.nameToPattern(friendlyName));
+      }
+      return friendlyName;
+    } catch (err) {
+      if (flashStage === 'bluetooth') {
+        $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
+      } else {
+        handleWebUSBError(err);
+      }
+    }
+  }
+
+  async function flashMicrobit(friendlyName: string): Promise<void> {
+    const hexForStage = stageToHex(flashStage);
+    try {
+      await Microbits.flashHexToLinked(hexForStage, progress => {
+        // Flash hex
+        // Send users to download screen
+        if (
+          $connectionDialogState.connectionState != ConnectDialogStates.USB_DOWNLOADING
+        ) {
+          $connectionDialogState.connectionState = ConnectDialogStates.USB_DOWNLOADING;
         }
+        flashProgress = progress;
       });
+      // Finished flashing successfully
+      if (flashStage === 'bluetooth' || flashStage === 'radio-sender') {
+        $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY;
+      } else if (flashStage === 'radio-bridge') {
+        onConnectingSerial(friendlyName);
+      }
+    } catch (err) {
+      if (flashStage === 'bluetooth') {
+        $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
+      } else {
+        handleWebUSBError(err);
+      }
+    }
   }
 
   function onFoundBluetoothDevice(): void {
@@ -291,14 +308,7 @@
       <SelectMicrobitDialogUsb
         onBackClick={() =>
           ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)}
-        onLinkError={() => {
-          if (flashStage === 'bluetooth') {
-            $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
-          } else {
-            $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
-          }
-        }}
-        onFound={onFoundUsbDevice} />
+        onNextClick={tryMicrobitConnection} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECT_BATTERY}
       {#if flashStage === 'bluetooth'}
         <ConnectBatteryDialog

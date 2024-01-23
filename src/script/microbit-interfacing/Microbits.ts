@@ -311,9 +311,11 @@ class Microbits {
       if (manual) {
         if (this.isInputAssigned()) {
           ConnectionBehaviours.getInputBehaviour().onExpelled(manual, true);
+          this.clearAssignedInputReference();
+        }
+        if (this.isOutputAssigned()) {
           ConnectionBehaviours.getOutputBehaviour().onExpelled(manual, true);
           this.clearAssignedOutputReference();
-          this.clearAssignedInputReference();
         }
       } else {
         connectionBehaviour.onDisconnected();
@@ -890,7 +892,7 @@ class Microbits {
     if (!this.isMicrobitLinked()) {
       throw new Error('Cannot get friendly name from USB, none are connected!');
     }
-    return await this.getLinked().getFriendlyName();
+    return this.getLinked().getFriendlyName();
   }
 
   public static getInputOrigin(): HexOrigin {
