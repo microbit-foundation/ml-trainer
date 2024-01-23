@@ -53,8 +53,11 @@ class MicrobitSerial implements MicrobitConnection {
             this.serialProtocolState = SerialProtocolState.Running;
 
             // Request the micro:bit to start sending the periodic messages
-            const startCmd = protocol.generateCommand(protocol.CommandTypes.Start);
-            await this.usb.serialWrite(startCmd.message);
+            const startCmd = protocol.generateCmdStart({
+              accelerometer: true,
+              buttons: true,
+            });
+            await this.usb.serialWrite(startCmd);
           }
         } else {
           const sensorData = protocol.processPeriodicMessage(msg);
@@ -87,9 +90,9 @@ class MicrobitSerial implements MicrobitConnection {
       this.serialProtocolState == SerialProtocolState.AwaitingHandshakeResponse &&
       attempts++ < 20
     ) {
-      const handshakeCmd = protocol.generateCommand(protocol.CommandTypes.Handshake);
-      writeLine(`Sending handshake ${handshakeCmd.message}`);
-      await this.usb.serialWrite(handshakeCmd.message);
+      const handshakeCmd = protocol.generateCmdHandshake();
+      writeLine(`Sending handshake ${handshakeCmd}`);
+      await this.usb.serialWrite(handshakeCmd);
       await new Promise(resolve => setTimeout(resolve, 100));
     }
     if (this.serialProtocolState === SerialProtocolState.AwaitingHandshakeResponse) {
