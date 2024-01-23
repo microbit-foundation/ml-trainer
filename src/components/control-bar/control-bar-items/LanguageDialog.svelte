@@ -18,7 +18,7 @@
   {isOpen}
   {onClose}
   class="flex flex-col gap-5 w-150"
-  titleId="languageDialog.title">
+  heading={$t('languageDialog.title')}>
   <div class="grid grid-cols-2 gap-5">
     {#each allLanguages as language}
       <button

@@ -19,7 +19,7 @@
   isOpen={$isCompatibilityWarningDialogOpen}
   {onClose}
   class="w-175"
-  titleId="popup.compatibility.header">
+  heading={$t('popup.compatibility.header')}>
   <div class="space-y-5">
     <div class="space-y-2">
       <p>{$t('popup.compatibility.explain')}</p>

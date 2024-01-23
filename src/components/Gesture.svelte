@@ -50,6 +50,7 @@
   import RecordIcon from 'virtual:icons/fluent/record-20-regular';
   import CloseIcon from 'virtual:icons/ri/close-line';
   import StandardDialog from './dialogs/StandardDialog.svelte';
+  import MeltDialog from './dialogs/MeltDialog.svelte';
 
   export let onNoMicrobitSelect: () => void;
   export let gesture: Gesture;
@@ -271,38 +272,37 @@
 </script>
 
 <!-- Recording countdown popup -->
-<StandardDialog isOpen={showCountdown || isThisRecording} onClose={cancelRecording}>
-  <div class="flex flex-col items-center gap-8 w-120">
-    <h2 class="text-xl font-bold self-start">
-      {$t('content.data.recordingDialog.title', { values: { action: $nameBind } })}
-    </h2>
-    <div class="flex flex-col space-y-3 self-center items-center justify-center">
-      <div class="flex justify-center">
-        <p class="text-lg px-10 text-center">
-          {$t('content.data.recording.description')}
-        </p>
-      </div>
-      <div class="flex items-center h-100px">
-        {#if countdownValue > 0}
-          <p class="text-8xl text-center font-bold text-brand-500">
-            {countdownValue}
-          </p>
-        {:else}
-          <p class="text-5xl text-center font-bold text-brand-500">
-            {$t('content.data.recordingDialog.recording')}
-          </p>
-        {/if}
-      </div>
-      <!-- Recording bar to show recording progress -->
-      <div class="w-70 h-6 bg-red-200 rounded-full overflow-hidden">
-        <div
-          class="h-full bg-red-600 w-0 {isThisRecording ? 'animate-loading-bar' : ''}" />
-      </div>
+<MeltDialog
+  isOpen={showCountdown || isThisRecording}
+  onClose={cancelRecording}
+  class="flex flex-col items-center gap-8 w-120"
+  headingClass="text-xl font-bold self-start"
+  heading={$t('content.data.recordingDialog.title', { values: { action: $nameBind } })}>
+  <div class="flex flex-col space-y-3 self-center items-center justify-center">
+    <div class="flex justify-center">
+      <p class="text-lg px-10 text-center">
+        {$t('content.data.recording.description')}
+      </p>
     </div>
-    <StandardButton type="warning" onClick={cancelRecording}
-      >{$t('content.data.recording.button.cancel')}</StandardButton>
+    <div class="flex items-center h-100px">
+      {#if countdownValue > 0}
+        <p class="text-8xl text-center font-bold text-brand-500">
+          {countdownValue}
+        </p>
+      {:else}
+        <p class="text-5xl text-center font-bold text-brand-500">
+          {$t('content.data.recordingDialog.recording')}
+        </p>
+      {/if}
+    </div>
+    <!-- Recording bar to show recording progress -->
+    <div class="w-70 h-6 bg-red-200 rounded-full overflow-hidden">
+      <div class="h-full bg-red-600 w-0 {isThisRecording ? 'animate-loading-bar' : ''}" />
+    </div>
   </div>
-</StandardDialog>
+  <StandardButton type="warning" onClick={cancelRecording}
+    >{$t('content.data.recording.button.cancel')}</StandardButton>
+</MeltDialog>
 
 <!-- Title of gesture-->
 <div on:click={selectGesture}>

@@ -14,7 +14,8 @@
   export let createDialogPropsOverride: CreateDialogProps = {};
   export let isOpen: boolean;
   export let onClose: () => void;
-  export let titleId: string | undefined = undefined;
+  export let heading: string | undefined = undefined;
+  export let headingClass: string | undefined = undefined;
 
   const onOpenChange: CreateDialogProps['onOpenChange'] = ({ curr, next }) => {
     // if dialog is closing
@@ -74,9 +75,12 @@
               </div>
             {/if}
             <div class={$$restProps.class || ''}>
-              {#if titleId}
-                <h2 {...$title} use:title class="text-xl font-bold pb-5">
-                  {$t(titleId)}
+              {#if heading}
+                <h2
+                  {...$title}
+                  use:title
+                  class={headingClass || 'text-xl font-bold pb-5'}>
+                  {heading}
                 </h2>
               {/if}
               <slot />
