@@ -8,7 +8,6 @@
   import { hasSufficientData, state } from '../../script/stores/uiStore';
   import { TrainingStatus, trainingStatus } from '../../script/stores/mlStore';
   import { t } from '../../i18n';
-  import StandardDialog from '../../components/dialogs/StandardDialog.svelte';
   import TrainingButton from './TrainingButton.svelte';
   import TabView from '../../views/TabView.svelte';
   import trainModelImage from '../../imgs/TrainModel.svg';
@@ -16,8 +15,8 @@
   import { Paths, navigate } from '../../router/paths';
   import { trainModel } from '../../script/ml';
   import TrainingStatusSection from '../../components/TrainingStatusSection.svelte';
-  import DialogHeading from '../../components/DialogHeading.svelte';
   import LoadingBar from '../../components/LoadingBar.svelte';
+  import MeltDialog from '../../components/dialogs/MeltDialog.svelte';
 
   function navigateModelPage(): void {
     navigate(Paths.MODEL);
@@ -38,23 +37,20 @@
   }
 </script>
 
-<StandardDialog
+<MeltDialog
   isOpen={isFailedTrainingDialogOpen}
-  onClose={() => (isFailedTrainingDialogOpen = false)}>
-  <div class="w-175">
-    <DialogHeading>
-      {$t('content.trainer.failure.header')}
-    </DialogHeading>
-    <div class="space-y-3">
-      <p>
-        {$t('content.trainer.failure.body')}
-      </p>
-      <p class="font-bold">
-        {$t('content.trainer.failure.todo')}
-      </p>
-    </div>
+  onClose={() => (isFailedTrainingDialogOpen = false)}
+  class="w-175"
+  heading={$t('content.trainer.failure.header')}>
+  <div class="space-y-3">
+    <p>
+      {$t('content.trainer.failure.body')}
+    </p>
+    <p class="font-bold">
+      {$t('content.trainer.failure.todo')}
+    </p>
   </div>
-</StandardDialog>
+</MeltDialog>
 
 <div class="flex flex-col items-center pb-5 bg-backgrounddark">
   <TabView />
