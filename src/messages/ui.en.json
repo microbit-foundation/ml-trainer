@@ -42,7 +42,7 @@
   "content.data.addAction": "Add action",
   "content.data.addActionWalkThrough": "Name an action you want the micro:bit to recognise",
   "content.data.addRecordingWalkThrough": "Press to record a data sample or press button B on your micro:bit.",
-  "content.data.dataDescription": "Multiple samples of movement data collected in 1.8 second bursts.",
+  "content.data.dataDescription": "Multiple samples of movement data collected in approximately 2 second bursts.",
   "content.data.selectAction": "Select action \"{action}\"",
   "content.data.recordAction": "Record data for action \"{action}\"",
   "content.data.deleteAction": "Delete action \"{action}\"",
@@ -190,13 +190,14 @@
 
   "connectMB.pattern.heading": "Copy pattern",
   "connectMB.pattern.subtitle": "Copy the pattern displayed on the micro:bit.",
+  "connectMB.pattern.inputLabel": "Number of lit up LED in column {colNum} displayed on micro:bit",
 
   "connectMB.bluetooth.heading": "Connect using Bluetooth",
   "connectMB.main.bluetooth.subtitle": "Connect using Bluetooth",
   "connectMB.bluetooth.cancelledConnection": "You didn't choose a micro:bit. Do you want to try again?",
 
   "connectMB.bluetooth.connecting": "Connecting…",
-  "connectMB.bluetooth.invalidPattern": "The pattern you drew is invalid",
+  "connectMB.bluetooth.invalidPattern": "The pattern you have drawn is invalid.",
 
   "disconnectedWarning.input": "Your input micro:bit lost connection, do want to try again?",
   "disconnectedWarning.output": "Your output micro:bit lost connection, do want to try again?",

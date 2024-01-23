@@ -12,16 +12,15 @@
   import {
     btPatternInput,
     btPatternOutput,
-    isInputPatternValid,
   } from '../../../script/stores/connectionStore';
   import type { Writable } from 'svelte/store';
   import Microbits from '../../../script/microbit-interfacing/Microbits';
   import { DeviceRequestStates } from '../../../script/stores/connectDialogStore';
-  import Environment from '../../../script/Environment';
   import StaticConfiguration from '../../../StaticConfiguration';
   import DialogHeading from '../../DialogHeading.svelte';
   import LoadingSpinner from '../../LoadingSpinner.svelte';
   import StandardButton from '../../StandardButton.svelte';
+  import { isDevMode } from '../../../script/environment';
 
   // callbacks
   export let deviceState: DeviceRequestStates;
@@ -31,18 +30,12 @@
 
   let isConnecting = false;
 
-  let attemptedToPairWithInvalidPattern = false;
-
   let patternMatrixState: Writable<boolean[]> =
     deviceState === DeviceRequestStates.INPUT ? btPatternInput : btPatternOutput;
 
   let timeoutProgress = 0;
 
   const connectBluetooth = () => {
-    if (!isInputPatternValid()) {
-      attemptedToPairWithInvalidPattern = true;
-      return;
-    }
     timeoutProgress = 0;
     if (isConnecting) {
       // Safeguard to prevent trying to connect multiple times at once
@@ -64,14 +57,14 @@
     }, interval);
     const connectTimeout = setTimeout(() => {
       clearInterval(timeoutInterval);
-      Environment.isInDevelopment && console.log('Connection timed out');
+      isDevMode && console.log('Connection timed out');
       onCatastrophicError();
     }, StaticConfiguration.connectTimeoutDuration);
 
     void connectionResult().then(didSucceed => {
       clearTimeout(connectTimeout);
       clearInterval(timeoutInterval);
-      Environment.isInDevelopment && console.log('Connection result ', didSucceed);
+      isDevMode && console.log('Connection result ', didSucceed);
       if (didSucceed) {
         onBluetoothConnected();
       } else {
@@ -113,9 +106,6 @@
           >{$t('connectMB.tryAgain')}</StandardButton>
       </div>
     </div>
-  {/if}
-  {#if attemptedToPairWithInvalidPattern}
-    <p class="text-warning">{$t('connectMB.bluetooth.invalidPattern')}</p>
   {/if}
   {#if isConnecting}
     <!-- Show spinner while connecting -->

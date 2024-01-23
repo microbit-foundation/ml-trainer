@@ -30,7 +30,8 @@ export enum HexOrigin {
   PROPRIETARY,
 }
 
-type HexType = 'bluetooth' | 'radio-sender' | 'radio-bridge' | 'radio-local';
+export type FlashStage = 'bluetooth' | 'radio-sender' | 'radio-bridge';
+export type HexType = 'bluetooth' | 'radio-sender' | 'radio-bridge' | 'radio-local';
 
 type UARTMessageType = 'g' | 's';
 

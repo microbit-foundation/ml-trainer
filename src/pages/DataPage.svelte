@@ -23,7 +23,7 @@
   import TrainingButton from './training/TrainingButton.svelte';
   import DataPageMenu from '../components/datacollection/DataPageMenu.svelte';
   import BottomPanel from '../components/bottom/BottomPanel.svelte';
-  import { Paths, navigate } from '../router/paths';
+  import { Paths, getTitle, navigate } from '../router/paths';
 
   let isConnectionDialogOpen = false;
 
@@ -77,7 +77,13 @@
       trainingButtonPrimary = true;
     }
   });
+
+  $: title = getTitle(Paths.DATA, $t);
 </script>
+
+<svelte:head>
+  <title>{title}</title>
+</svelte:head>
 
 <div class="flex flex-col h-full inline-block w-full bg-backgrounddark">
   <TabView />

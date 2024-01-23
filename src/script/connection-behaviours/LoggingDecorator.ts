@@ -6,14 +6,14 @@
 
 import MBSpecs from '../microbit-interfacing/MBSpecs';
 import type ConnectionBehaviour from './ConnectionBehaviour';
-import Environment from '../Environment';
 import { MicrobitConnection } from '../microbit-interfacing/MicrobitConnection';
+import { isDevMode } from '../environment';
 
 /**
  * Used for logging / Decorator pattern
  */
 abstract class LoggingDecorator implements ConnectionBehaviour {
-  private enableLogging: boolean = Environment.isInDevelopment && true;
+  private enableLogging: boolean = isDevMode && true;
 
   // For preventing spam of accelerometer data
   private logTimer = new Date().getTime();

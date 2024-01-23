@@ -5,7 +5,7 @@
  */
 
 import { writable, Writable, get, derived } from 'svelte/store';
-
+import type { MessageFormatter } from '../i18n';
 export const Paths = {
   HOME: '/',
   PLAYGROUND: 'playground',
@@ -26,3 +26,23 @@ export function navigate(path: PathType) {
   }
   currentPathPrivate.set(path);
 }
+
+const appName = 'micro:bit machine learning tool';
+export const getTitle = (path: PathType, t: MessageFormatter) => {
+  switch (path) {
+    case '/': {
+      return appName;
+    }
+    case 'data': {
+      return `${t('content.index.toolProcessCards.data.title')} | ${appName}`;
+    }
+    case 'training': {
+      return `${t('content.index.toolProcessCards.train.title')} | ${appName}`;
+    }
+    case 'model': {
+      return `${t('content.index.toolProcessCards.model.title')} | ${appName}`;
+    }
+    default:
+      return appName;
+  }
+};

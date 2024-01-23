@@ -14,50 +14,57 @@ import TypingUtils from '../TypingUtils';
 import { DeviceRequestStates } from '../stores/connectDialogStore';
 import StaticConfiguration from '../../StaticConfiguration';
 import { Paths, currentPath, navigate } from '../../router/paths';
-import { liveData } from '../stores/Stores';
 import { MicrobitConnection } from '../microbit-interfacing/MicrobitConnection';
 
 let text = get(t);
 t.subscribe(t => (text = t));
 
 // Temporary debug for time between messages received.
-const zeroBins = () => ({
-  '0-20': 0,
-  '21-30': 0,
-  '31-40': 0,
-  '41-60': 0,
-  '61-80': 0,
-  '81-100': 0,
-  '101-120': 0,
-  '121-140': 0,
-  '141-160': 0,
-  '>160': 0,
+const zeroStats = () => ({
+  totalTime: 0,
+  sampleCount: 0,
+  bins: {
+    '0-10': 0,
+    '11-20': 0,
+    '21-30': 0,
+    '31-40': 0,
+    '41-60': 0,
+    '61-80': 0,
+    '81-100': 0,
+    '101-120': 0,
+    '121-140': 0,
+    '141-160': 0,
+    '>160': 0,
+  },
 });
-let timeBinsMs = zeroBins();
+
+let stats = zeroStats();
 
 let interval: any;
 
 const binTimeInterval = (time: number) => {
-  if (time <= 20) {
-    timeBinsMs['0-20']++;
+  if (time <= 10) {
+    stats.bins['0-10']++;
+  } else if (time <= 20) {
+    stats.bins['11-20']++;
   } else if (time <= 30) {
-    timeBinsMs['21-30']++;
+    stats.bins['21-30']++;
   } else if (time <= 40) {
-    timeBinsMs['31-40']++;
+    stats.bins['31-40']++;
   } else if (time <= 60) {
-    timeBinsMs['41-60']++;
+    stats.bins['41-60']++;
   } else if (time <= 80) {
-    timeBinsMs['61-80']++;
+    stats.bins['61-80']++;
   } else if (time <= 100) {
-    timeBinsMs['81-100']++;
+    stats.bins['81-100']++;
   } else if (time <= 120) {
-    timeBinsMs['101-120']++;
+    stats.bins['101-120']++;
   } else if (time <= 140) {
-    timeBinsMs['121-140']++;
+    stats.bins['121-140']++;
   } else if (time <= 160) {
-    timeBinsMs['141-160']++;
+    stats.bins['141-160']++;
   } else {
-    timeBinsMs['>160']++;
+    stats.bins['>160']++;
   }
 };
 
@@ -196,12 +203,15 @@ class InputBehaviour extends LoggingDecorator {
       this.t = Date.now();
     } else {
       let now = Date.now();
-      binTimeInterval(now - this.t);
+      const changeInterval = now - this.t;
+      binTimeInterval(changeInterval);
+      stats.sampleCount++;
+      stats.totalTime += changeInterval;
       this.t = now;
       if (!interval) {
         interval = setInterval(() => {
-          console.log(timeBinsMs);
-          timeBinsMs = zeroBins();
+          console.log({ ...stats, mean: stats.totalTime / stats.sampleCount });
+          stats = zeroStats();
         }, 10_000);
       }
     }
@@ -225,7 +235,6 @@ class InputBehaviour extends LoggingDecorator {
     };
 
     livedata.set(data); // This is the old livedata store
-    liveData.put(data);
   }
 
   buttonChange(buttonState: MBSpecs.ButtonState, button: MBSpecs.Button): void {

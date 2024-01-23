@@ -31,7 +31,7 @@
   import { onMount } from 'svelte';
   import { get } from 'svelte/store';
   import ConnectDialogContainer from './components/connection-prompt/ConnectDialogContainer.svelte';
-  import { Paths, navigate } from './router/paths';
+  import { Paths, currentPath, getTitle, navigate } from './router/paths';
   import HomeIcon from 'virtual:icons/ri/home-2-line';
   import MeltHelpMenu from './components/control-bar/control-bar-items/MeltHelpMenu.svelte';
 
@@ -49,9 +49,17 @@
     // Value must switch from false to true after mount to trigger dialog transition
     isCompatibilityWarningDialogOpen.set(!bluetooth && !usb);
   });
+
+  let routeAnnouncementEl: HTMLDivElement | undefined;
+  $: {
+    if (routeAnnouncementEl) {
+      routeAnnouncementEl.textContent = getTitle($currentPath, $t);
+    }
+  }
 </script>
 
 <Router>
+  <div class="sr-only" bind:this={routeAnnouncementEl} aria-live="polite" />
   {#if !checkCompatibility().platformAllowed}
     <!-- Denies mobile users access to the platform -->
     <IncompatiblePlatformView />

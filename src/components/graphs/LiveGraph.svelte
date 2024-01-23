@@ -47,6 +47,7 @@
       fillStyle: '#0000ff07',
     });
     chart.streamTo(<HTMLCanvasElement>canvas, 0);
+    return () => chart?.stop();
   });
 
   // Draw on graph to display that users are recording
@@ -74,32 +75,11 @@
     }, get(settings).duration);
   }
 
-  // When state changes, update the state of the canvas
   $: {
-    const isConnected = $state.isInputConnected;
-    updateCanvas(isConnected);
-  }
-
-  let unsubscribeFromData: Unsubscriber | undefined;
-
-  // If state is connected. Start updating the graph whenever there is new data
-  // From the Micro:Bit
-  function updateCanvas(isConnected: boolean) {
-    // TODO: Clean this
-    if (isConnected) {
-      unsubscribeFromData = currentData.subscribe(data => {
-        const t = new Date().getTime();
-        lineX.append(t, data.x, false);
-        lineY.append(t, data.y, false);
-        lineZ.append(t, data.z, false);
-      });
-
-      // Else if we're currently subscribed to data. Unsubscribe.
-      // This means that the micro:bit has been disconnected
-    } else if (unsubscribeFromData !== undefined) {
-      unsubscribeFromData();
-      unsubscribeFromData = undefined;
-    }
+    const t = new Date().getTime();
+    lineX.append(t, $currentData.x, false);
+    lineY.append(t, $currentData.y, false);
+    lineZ.append(t, $currentData.z, false);
   }
 </script>
 

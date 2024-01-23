@@ -9,11 +9,9 @@
   import { onMount } from 'svelte';
   import { t } from '../../../../i18n';
   import transferFirmwareChromeOSImage from '../../../../imgs/transfer_firmware_chromeos.gif';
-  import transferFirmwareMacOSImage from '../../../../imgs/transfer_firmware_macos.gif';
-  import transferFirmwareWindowsImage from '../../../../imgs/transfer_firmware_windows.gif';
-  import Microbits, {
-    getHexFileUrl,
-  } from '../../../../script/microbit-interfacing/Microbits';
+  import transferProgramMacOS from '../../../../imgs/transfer_program_macos.gif';
+  import transferProgramWindows from '../../../../imgs/transfer_program_windows.gif';
+  import { getHexFileUrl } from '../../../../script/microbit-interfacing/Microbits';
   import DialogHeading from '../../../DialogHeading.svelte';
   import HtmlFormattedMessage, {
     linkWithProps,
@@ -41,11 +39,11 @@
       case 'Chrome OS':
         return { src: transferFirmwareChromeOSImage, class: 'h-320px' };
       case 'Windows':
-        return { src: transferFirmwareWindowsImage, class: 'h-352px' };
+        return { src: transferProgramWindows, class: 'h-390px' };
       case 'macOS':
-        return { src: transferFirmwareMacOSImage, class: 'h-251px' };
+        return { src: transferProgramMacOS, class: 'h-387px' };
       default:
-        return { src: transferFirmwareMacOSImage, class: 'h-251px' };
+        return { src: transferProgramWindows, class: 'h-390px' };
     }
   };
 

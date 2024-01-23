@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import Environment from '../Environment';
+import { isDevMode } from '../environment';
 import TypingUtils from '../TypingUtils';
 import InputBehaviour from '../connection-behaviours/InputBehaviour';
 import MBSpecs from './MBSpecs';
@@ -315,11 +315,11 @@ export class MicrobitBluetooth implements MicrobitConnection {
           this.onReconnect?.(this);
         })
         .catch(e => {
-          Environment.isInDevelopment && console.error(e);
+          isDevMode && console.error(e);
           void this.onReconnectFailed();
         });
     } else {
-      Environment.isInDevelopment && console.error('No gatt server found!');
+      isDevMode && console.error('No gatt server found!');
     }
 
     this.disconnectEventHandler(false);
@@ -362,11 +362,11 @@ export class MicrobitBluetooth implements MicrobitConnection {
             resolve(btDevice);
           })
           .catch(e => {
-            Environment.isInDevelopment && console.error(e);
+            isDevMode && console.error(e);
             reject(e);
           });
       } catch (e: unknown) {
-        Environment.isInDevelopment && console.error(e);
+        isDevMode && console.error(e);
         onRequestFailed(e as Error);
         reject(e);
       }
