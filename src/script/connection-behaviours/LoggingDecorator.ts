@@ -62,7 +62,7 @@ abstract class LoggingDecorator implements ConnectionBehaviour {
   }
 
   onAssigned(microbit: MicrobitConnection, name: string): void {
-    this.enableLogging && console.log(name, ' was assigned ');
+    this.enableLogging && console.log(name, 'was assigned ');
     this.enableLogging && console.log(microbit);
   }
 
@@ -71,7 +71,7 @@ abstract class LoggingDecorator implements ConnectionBehaviour {
   }
 
   onConnected(name: string): void {
-    this.enableLogging && console.log(name, ' got connected via bluetooth');
+    this.enableLogging && console.log(name, 'got connected via bluetooth');
   }
 
   onDisconnected(): void {

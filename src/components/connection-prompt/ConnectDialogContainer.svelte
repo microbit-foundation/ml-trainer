@@ -12,9 +12,7 @@
   import SelectMicrobitDialogUsb from './usb/SelectMicrobitDialogUsb.svelte';
   import ConnectBatteryDialog from './bluetooth/ConnectBatteryDialog.svelte';
   import BluetoothConnectDialog from './bluetooth/BluetoothConnectDialog.svelte';
-  import DoneDownloadingDialog from './usb/DoneDownloadingDialog.svelte';
   import DownloadingDialog from './usb/DownloadingDialog.svelte';
-  import FindUsbDialog from './usb/FindUsbDialog.svelte';
   import ManualInstallTutorial from './usb/manual/ManualInstallTutorial.svelte';
   import {
     ConnectDialogStates,
@@ -37,6 +35,7 @@
   import { compatibility } from '../../script/stores/uiStore';
   import { isDevMode } from '../../script/environment';
   import { flags } from '../../script/flags';
+  import ConnectingMicrobits from './radio/ConnectingMicrobits.svelte';
 
   const { bluetooth, usb } = get(compatibility);
   let endOfFlow = false;
@@ -115,7 +114,7 @@
               $connectionDialogState.connectionState =
                 ConnectDialogStates.CONNECT_BATTERY;
             } else if (flashStage === 'radio-bridge') {
-              onConnectingSerial();
+              onConnectingSerial(friendlyName);
             }
           })
           .catch(err => {
@@ -140,9 +139,10 @@
     $connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH_CONNECTING;
   }
 
-  function onConnectingSerial(): void {
+  async function onConnectingSerial(name: string): Promise<void> {
+    $connectionDialogState.connectionState = ConnectDialogStates.CONNECTING_MICROBITS;
+    await Microbits.assignSerialInput(name);
     endFlow();
-    Microbits.assignSerialInput('aname');
     // MicrobitSerial.connect(Microbits.getLinked()).catch(() => {
     //   // Errors to consider: microbit is disconnected, some sort of connection error
     // });
@@ -345,13 +345,7 @@
         onBluetoothConnected={endFlow}
         deviceState={$connectionDialogState.deviceState} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECTING_MICROBITS}
-      CONNECTING_MICROBITS
-    {:else if $connectionDialogState.connectionState === ConnectDialogStates.USB_START}
-      <FindUsbDialog
-        onUsbLinkError={() => {
-          $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
-        }}
-        onFoundUsb={onFoundUsbDevice} />
+      <ConnectingMicrobits />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.BAD_FIRMWARE}
       <BrokenFirmwareDetected
         {flashStage}
@@ -362,10 +356,6 @@
         onCancel={endFlow} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.USB_DOWNLOADING}
       <DownloadingDialog transferProgress={flashProgress} {flashStage} />
-    {:else if $connectionDialogState.connectionState === ConnectDialogStates.USB_DONE}
-      <DoneDownloadingDialog
-        onConnectBluetoothClick={() =>
-          ($connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH)} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.MANUAL_TUTORIAL}
       <ManualInstallTutorial
         onBackClick={() =>

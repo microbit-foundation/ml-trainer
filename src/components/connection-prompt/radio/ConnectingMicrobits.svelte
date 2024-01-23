@@ -5,7 +5,17 @@
  -->
 
 <script lang="ts">
-  // temp
+  import DialogHeading from '../../DialogHeading.svelte';
+  import { t } from '../../../i18n';
+  import LoadingSpinner from '../../LoadingSpinner.svelte';
 </script>
 
-<h1 class="mb-5 font-bold w-150">PLACEHOLDER: CONNECTING MICROBITS</h1>
+<div class="w-175">
+  <DialogHeading>
+    {$t('connectMB.radio.heading')}
+  </DialogHeading>
+  <div class="flex flex-col gap-5 justify-center items-center mb-40px">
+    <p>{$t('connectMB.connecting')}</p>
+    <LoadingSpinner />
+  </div>
+</div>

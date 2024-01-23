@@ -28,8 +28,6 @@ export enum ConnectDialogStates {
   CONNECT_TUTORIAL_BLUETOOTH, // Instructions on how to connect micro:bit when connecting to bluetooth
   BLUETOOTH_CONNECTING, // Downloading BlueTooth prompt
   CONNECT_TUTORIAL_SERIAL, // Instructions how to connect the micro:bit using a serial connection
-  USB_START, // Initial usb installation prompt
-  USB_DONE, // Installation done prompt
   MANUAL_TUTORIAL, // Prompt with tutorial gif for manual installation (and downloading of program)
   USB_TRY_AGAIN, // Prompt user to try connecting via WebUSB again
 }

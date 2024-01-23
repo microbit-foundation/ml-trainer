@@ -45,9 +45,10 @@
   };
 
   const openConnectionPrompt = () => {
-    $connectionDialogState.connectionState = ConnectDialogStates.USB_START;
-    $connectionDialogState.deviceState =
-      targetRole === 'INPUT' ? DeviceRequestStates.INPUT : DeviceRequestStates.OUTPUT;
+    // We don't use ConnectDialogStates.USB_START elsewhere and don't use this component.
+    // $connectionDialogState.connectionState = ConnectDialogStates.USB_START;
+    // $connectionDialogState.deviceState =
+    //   targetRole === 'INPUT' ? DeviceRequestStates.INPUT : DeviceRequestStates.OUTPUT;
   };
 </script>
 

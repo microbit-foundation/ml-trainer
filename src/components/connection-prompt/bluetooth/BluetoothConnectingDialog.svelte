@@ -110,7 +110,7 @@
   {#if isConnecting}
     <!-- Show spinner while connecting -->
     <div class="flex flex-col gap-5 justify-center items-center mb-40px">
-      <p>{$t('connectMB.bluetooth.connecting')}</p>
+      <p>{$t('connectMB.connecting')}</p>
       <LoadingSpinner />
     </div>
   {/if}
