@@ -18,10 +18,24 @@
   export let title: string | undefined = undefined;
   export let titleClass: string | undefined = undefined;
 
-  const onOpenChange: CreateDialogProps['onOpenChange'] = ({ curr, next }) => {
-    // if dialog is closing
+  let finalFocusRef: Element | null;
+
+  const onOpenDialog = () => {
+    finalFocusRef = document.activeElement;
+  };
+
+  const onCloseDialog = () => {
+    if (finalFocusRef) {
+      (finalFocusRef as HTMLElement).focus();
+    }
+    onClose();
+  };
+
+  const onOpenChange: CreateDialogProps['onOpenChange'] = ({ next }) => {
     if (!next) {
-      onClose();
+      onCloseDialog();
+    } else {
+      onOpenDialog();
     }
     return next;
   };
