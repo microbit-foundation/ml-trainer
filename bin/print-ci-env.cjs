@@ -13,10 +13,7 @@ if (ref === 'refs/heads/main') {
 process.env.STAGE = stage;
 // STAGE must be defined before this is imported
 const { bucketName, bucketPrefix } = require('../deployment.cjs');
-
-// Deploy to a /thenextgen/ suffix. See also deployment.cjs as this
-// doesn't actually change the output folder.
-const baseUrl = (!bucketPrefix ? '/' : `/${bucketPrefix}/`) + 'thenextgen/';
+const baseUrl = !bucketPrefix ? '/' : `/${bucketPrefix}/`;
 const fullUrl = `https://${bucketName}${baseUrl}`;
 
 console.log(`STAGE=${stage}`);
