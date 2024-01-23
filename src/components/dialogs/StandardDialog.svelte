@@ -57,6 +57,12 @@
   // Syncing inside and outside component states to minimise prop changes
   const sync = createSync(states);
   $: sync.open(isOpen, v => (isOpen = v));
+
+  $: if (isOpen) {
+    onOpenDialog();
+  } else {
+    onCloseDialog();
+  }
 </script>
 
 <div class="fixed z-10" use:melt={$portalled}>
