@@ -27,9 +27,9 @@
   import LinkOverlay from '../components/LinkOverlay.svelte';
   import { Paths, currentPath, getTitle, navigate } from '../router/paths';
   import { gestures } from '../script/stores/Stores';
+  import StandardDialog from '../components/dialogs/StandardDialog.svelte';
   import { clearGestures } from '../script/stores/mlStore';
   import { get } from 'svelte/store';
-  import StandardDialog from '../components/dialogs/StandardDialog.svelte';
 
   // Avoid youtube cookie. rel=0 should limit related videos to youtube channel.
   // Once we have translated videos we can try e.g. cc_lang_pref=fr

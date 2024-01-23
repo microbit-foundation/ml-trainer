@@ -6,6 +6,7 @@
 
 <script lang="ts">
   import StandardButton from '../../StandardButton.svelte';
+  import StandardDialog from '../../dialogs/StandardDialog.svelte';
   import microbitLogo from '../../../imgs/microbit-logo-black.svg';
   import microbitHeartImage from '../../../imgs/microbit-heart.png';
   import aarhusLogo from '../../../imgs/aulogo_uk_var2_blue.png';
@@ -14,7 +15,6 @@
   import HtmlFormattedMessage, {
     linkWithProps as linkWithProps,
   } from '../../HtmlFormattedMessage.svelte';
-  import StandardDialog from '../../dialogs/StandardDialog.svelte';
 
   export let onClose: () => void;
   export let isOpen: boolean;

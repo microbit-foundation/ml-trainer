@@ -5,6 +5,7 @@
  -->
 
 <script lang="ts">
+  import StandardDialog from '../dialogs/StandardDialog.svelte';
   import StartRadioDialog from './radio/StartRadioDialog.svelte';
   import StartBluetoothDialog from './bluetooth/StartBluetoothDialog.svelte';
   import ConnectCableDialog from './bluetooth/ConnectCableDialog.svelte';
@@ -32,7 +33,6 @@
   import MicrobitWearingInstructionDialog from './MicrobitWearingInstructionDialog.svelte';
   import WebUsbTryAgain from './WebUsbTryAgain.svelte';
   import { onDestroy, onMount } from 'svelte';
-  import StandardDialog from '../dialogs/StandardDialog.svelte';
   import { get, Unsubscriber } from 'svelte/store';
   import { compatibility } from '../../script/stores/uiStore';
   import { isDevMode } from '../../script/environment';
