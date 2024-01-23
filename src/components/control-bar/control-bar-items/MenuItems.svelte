@@ -5,7 +5,7 @@
  -->
 
 <script lang="ts">
-  import { createDropdownMenu } from '@melt-ui/svelte';
+  import { createDropdownMenu, melt } from '@melt-ui/svelte';
   import { scale } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
 
@@ -14,9 +14,7 @@
 </script>
 
 <div
-  use:menuElement
-  {...$menuElement}
-  {...$$restProps}
+  use:melt={$menuElement}
   transition:scale={{
     duration: 200,
     start: 0.5,

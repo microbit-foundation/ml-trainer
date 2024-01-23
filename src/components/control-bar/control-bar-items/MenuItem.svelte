@@ -14,15 +14,14 @@
 </style>
 
 <script lang="ts">
-  import { createDropdownMenu } from '@melt-ui/svelte';
+  import { createDropdownMenu, melt } from '@melt-ui/svelte';
   export let menu: ReturnType<typeof createDropdownMenu>;
   const { item } = menu.elements;
   export let disabled: boolean = false;
 </script>
 
 <div
-  {...$item}
-  use:item
+  use:melt={$item}
   data-disabled={disabled || null}
   on:m-click
   class="group flex gap-2 items-center w-full px-4 py-2 text-neutral-800 item outline-none">

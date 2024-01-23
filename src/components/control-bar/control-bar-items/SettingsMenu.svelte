@@ -11,7 +11,7 @@
   import { t } from '../../../i18n';
   import MenuItems from './MenuItems.svelte';
   import MenuItem from './MenuItem.svelte';
-  import { createDropdownMenu } from '@melt-ui/svelte';
+  import { createDropdownMenu, melt } from '@melt-ui/svelte';
 
   const menu = createDropdownMenu({ forceVisible: true });
   const { trigger } = menu.elements;
@@ -31,8 +31,7 @@
     }} />
   <div class="relative inline-block">
     <button
-      {...$trigger}
-      use:trigger
+      use:melt={$trigger}
       aria-label={$t('settings.label')}
       class="inline-flex rounded-full text-xl p-2 outline-none focus-visible:ring-ringBright focus-visible:ring-4 focus-visible:ring-offset-1">
       <SettingsIcon class="text-white" />

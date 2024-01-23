@@ -5,7 +5,7 @@
  -->
 
 <script lang="ts">
-  import { CreateDialogProps, createDialog, createSync } from '@melt-ui/svelte';
+  import { CreateDialogProps, createDialog, createSync, melt } from '@melt-ui/svelte';
   import CloseIcon from 'virtual:icons/ri/close-line';
   import Transition from 'svelte-transition';
   import { t } from '../../i18n';
@@ -43,15 +43,14 @@
   $: sync.open(isOpen, v => (isOpen = v));
 </script>
 
-<div class="fixed z-10" {...$portalled} use:$portalled.action>
+<div class="fixed z-10" use:melt={$portalled}>
   {#if $open}
     <Transition show={$open}>
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <!-- Keyboard event handler for on:click is implemented as part of svelte-headlessui dialog builder  -->
       <div
         class="fixed top-0 left-0 h-screen w-screen flex justify-center items-center bg-black/50 bg-blend-darken"
-        {...$overlay}
-        use:$overlay.action>
+        use:melt={$overlay}>
         <Transition
           show={$open}
           enter="transition ease-out duration-200"
@@ -61,8 +60,7 @@
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95">
           <div
-            {...$content}
-            use:$content.action
+            use:melt={$content}
             class="w-min h-min border-gray-200 border border-solid relative bg-white rounded-lg p-8 z-15">
             {#if hasCloseButton}
               <div class="absolute right-2 top-2">
@@ -77,8 +75,7 @@
             <div class={$$restProps.class || ''}>
               {#if title}
                 <h2
-                  {...$titleElement}
-                  use:titleElement
+                  use:melt={$titleElement}
                   class={titleClass || 'text-xl font-bold pb-5'}>
                   {title}
                 </h2>

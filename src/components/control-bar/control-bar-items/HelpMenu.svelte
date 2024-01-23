@@ -17,7 +17,7 @@
   import MenuItem from './MenuItem.svelte';
 
   const menu = createDropdownMenu({ forceVisible: true });
-  const { trigger, item } = menu.elements;
+  const { trigger } = menu.elements;
   const { open } = menu.states;
 
   let isAboutDialogOpen = false;
@@ -43,8 +43,7 @@
     }} />
   <div class="relative inline-block">
     <button
-      {...$trigger}
-      use:trigger
+      use:melt={$trigger}
       aria-label={$t('helpMenu.label')}
       class="inline-flex rounded-full text-xl p-2 outline-none focus-visible:ring-ringBright focus-visible:ring-4 focus-visible:ring-offset-1">
       <HelpIcon class="text-white" />
