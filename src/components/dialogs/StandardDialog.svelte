@@ -61,8 +61,6 @@
 
 <div class="fixed z-10" use:melt={$portalled}>
   {#if $open}
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <!-- Keyboard event handler for on:click is implemented as part of svelte-headlessui dialog builder  -->
     <div
       class="fixed top-0 left-0 h-screen w-screen flex justify-center items-center bg-black/50 bg-blend-darken"
       use:melt={$overlay}
