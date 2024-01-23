@@ -9,8 +9,8 @@
   import GlobeIcon from 'virtual:icons/ri/global-line';
   import LanguageDialog from './LanguageDialog.svelte';
   import { t } from '../../../i18n';
-  import MeltMenuItems from './MeltMenuItems.svelte';
-  import MeltMenuItem from './MeltMenuItem.svelte';
+  import MenuItems from './MenuItems.svelte';
+  import MenuItem from './MenuItem.svelte';
   import { createDropdownMenu } from '@melt-ui/svelte';
 
   const menu = createDropdownMenu({ forceVisible: true });
@@ -38,14 +38,14 @@
       <SettingsIcon class="text-white" />
     </button>
     {#if $open}
-      <MeltMenuItems {menu}>
+      <MenuItems {menu}>
         <div class="py-2">
-          <MeltMenuItem {menu} on:m-click={onLanguageClick}>
+          <MenuItem {menu} on:m-click={onLanguageClick}>
             <GlobeIcon />
             {$t('languageDialog.title')}
-          </MeltMenuItem>
+          </MenuItem>
         </div>
-      </MeltMenuItems>
+      </MenuItems>
     {/if}
   </div>
 </div>

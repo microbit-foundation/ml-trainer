@@ -9,8 +9,8 @@
   import ClearIcon from 'virtual:icons/ri/delete-bin-2-line';
   import UploadIcon from 'virtual:icons/ri/upload-2-line';
   import DownloadIcon from 'virtual:icons/ri/download-2-line';
-  import MeltMenuItems from '../control-bar/control-bar-items/MeltMenuItems.svelte';
-  import MeltMenuItem from '../control-bar/control-bar-items/MeltMenuItem.svelte';
+  import MenuItems from '../control-bar/control-bar-items/MenuItems.svelte';
+  import MenuItem from '../control-bar/control-bar-items/MenuItem.svelte';
   import IconButton from '../IconButton.svelte';
   import MoreIcon from 'virtual:icons/mdi/dots-vertical';
   import { createDropdownMenu } from '@melt-ui/svelte';
@@ -36,21 +36,21 @@
       class="h-12 w-12 text-brand-500 flex justify-center items-center rounded-full" />
   </IconButton>
   {#if $open}
-    <MeltMenuItems class="w-max" {menu}>
+    <MenuItems class="w-max" {menu}>
       <div class="py-2">
-        <MeltMenuItem {menu} on:m-click={onUploadGestures}>
+        <MenuItem {menu} on:m-click={onUploadGestures}>
           <UploadIcon />
           {$t('content.data.controlbar.button.uploadData')}
-        </MeltMenuItem>
-        <MeltMenuItem {menu} on:m-click={onDownloadGestures} disabled={downloadDisabled}>
+        </MenuItem>
+        <MenuItem {menu} on:m-click={onDownloadGestures} disabled={downloadDisabled}>
           <DownloadIcon />
           {$t('content.data.controlbar.button.downloadData')}
-        </MeltMenuItem>
-        <MeltMenuItem {menu} on:m-click={onClearGestures} disabled={clearDisabled}>
+        </MenuItem>
+        <MenuItem {menu} on:m-click={onClearGestures} disabled={clearDisabled}>
           <ClearIcon />
           {$t('content.data.controlbar.button.clearData')}
-        </MeltMenuItem>
+        </MenuItem>
       </div>
-    </MeltMenuItems>
+    </MenuItems>
   {/if}
 </div>

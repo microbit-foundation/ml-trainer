@@ -5,7 +5,7 @@
  -->
 
 <script lang="ts">
-  import { createDropdownMenu } from '@melt-ui/svelte';
+  import { createDropdownMenu, melt } from '@melt-ui/svelte';
   import ExternalLinkIcon from 'virtual:icons/ri/external-link-line';
   import HelpIcon from 'virtual:icons/ri/question-line';
   import InfoIcon from 'virtual:icons/ri/information-line';
@@ -13,11 +13,11 @@
   import { manageCookies } from '../../../script/stores/complianceStore';
   import AboutDialog from './AboutDialog.svelte';
   import { t } from '../../../i18n';
-  import MeltMenuItems from './MeltMenuItems.svelte';
-  import MeltMenuItem from './MeltMenuItem.svelte';
+  import MenuItems from './MenuItems.svelte';
+  import MenuItem from './MenuItem.svelte';
 
   const menu = createDropdownMenu({ forceVisible: true });
-  const { trigger } = menu.elements;
+  const { trigger, item } = menu.elements;
   const { open } = menu.states;
 
   let isAboutDialogOpen = false;
@@ -50,30 +50,30 @@
       <HelpIcon class="text-white" />
     </button>
     {#if $open}
-      <MeltMenuItems {menu}>
+      <MenuItems {menu}>
         <div class="py-2">
-          <MeltMenuItem {menu} on:m-click={onHelpAndSupportClick}>
+          <MenuItem {menu} on:m-click={onHelpAndSupportClick}>
             <ExternalLinkIcon />
             {$t('helpMenu.helpAndSupport')}
-          </MeltMenuItem>
+          </MenuItem>
         </div>
         <div class="py-2">
-          <MeltMenuItem {menu} on:m-click={onTermsOfUseClick}>
+          <MenuItem {menu} on:m-click={onTermsOfUseClick}>
             <ExternalLinkIcon />
             {$t('helpMenu.termsOfUse')}
-          </MeltMenuItem>
-          <MeltMenuItem {menu} on:m-click={manageCookies}>
+          </MenuItem>
+          <MenuItem {menu} on:m-click={manageCookies}>
             <CookiesIcon />
             {$t('helpMenu.cookies')}
-          </MeltMenuItem>
+          </MenuItem>
         </div>
         <div class="py-2">
-          <MeltMenuItem {menu} on:m-click={onAboutClick}>
+          <MenuItem {menu} on:m-click={onAboutClick}>
             <InfoIcon />
             {$t('helpMenu.about')}
-          </MeltMenuItem>
+          </MenuItem>
         </div>
-      </MeltMenuItems>
+      </MenuItems>
     {/if}
   </div>
 </div>

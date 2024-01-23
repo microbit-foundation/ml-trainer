@@ -26,8 +26,8 @@
   import { consent } from './script/stores/complianceStore';
   import microbitLogoImage from './imgs/microbit-logo.svg';
   import appNameImage from './imgs/app-name.svg';
-  import MeltHelpMenu from './components/control-bar/control-bar-items/MeltHelpMenu.svelte';
-  import MeltSettingsMenu from './components/control-bar/control-bar-items/MeltSettingsMenu.svelte';
+  import HelpMenu from './components/control-bar/control-bar-items/HelpMenu.svelte';
+  import SettingsMenu from './components/control-bar/control-bar-items/SettingsMenu.svelte';
   import { onMount } from 'svelte';
   import { get } from 'svelte/store';
   import ConnectDialogContainer from './components/connection-prompt/ConnectDialogContainer.svelte';
@@ -91,8 +91,8 @@
               <span class="sr-only">{$t('homepage.Link')}</span>
               <HomeIcon class="text-white" aria-hidden />
             </a>
-            <MeltSettingsMenu />
-            <MeltHelpMenu />
+            <SettingsMenu />
+            <HelpMenu />
           </div>
         </ControlBar>
 
