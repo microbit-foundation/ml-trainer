@@ -18,6 +18,7 @@
     "@bulatdashiev/svelte-slider": "^1.0.3",
     "@iconify-json/mdi": "^1.1.63",
     "@iconify-json/ri": "^1.1.17",
+    "@melt-ui/pp": "^0.3.0",
     "@melt-ui/svelte": "^0.70.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.1",
     "@testing-library/jest-dom": "^6.2.0",

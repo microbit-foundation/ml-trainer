@@ -7,6 +7,7 @@
 import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import WindiCSS from 'vite-plugin-windicss';
+import { preprocessMeltUI, sequence } from '@melt-ui/pp';
 import { sveltePreprocess } from 'svelte-preprocess/dist/autoProcess';
 import Icons from 'unplugin-icons/vite';
 
@@ -14,7 +15,7 @@ export default defineConfig({
   base: process.env.BASE_URL ?? '/',
   plugins: [
     svelte({
-      preprocess: sveltePreprocess({ typescript: true }),
+      preprocess: sequence([sveltePreprocess({ typescript: true }), preprocessMeltUI()]),
 
       onwarn(warning, defaultHandler) {
         if (warning.code.includes('a11y')) return; // Ignores the a11y warnings when compiling. This does not apply to the editor, see comment at bottom for vscode instructions
