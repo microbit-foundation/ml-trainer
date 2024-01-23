@@ -16,6 +16,7 @@
   const menu = createDropdownMenu({ forceVisible: true });
   const { trigger } = menu.elements;
   const { open } = menu.states;
+  let settingsButton: HTMLElement;
 
   let isLanguageDialogOpen = false;
   const onLanguageClick = () => {
@@ -28,9 +29,13 @@
     isOpen={isLanguageDialogOpen}
     onClose={() => {
       isLanguageDialogOpen = false;
+      if (settingsButton) {
+        settingsButton.focus();
+      }
     }} />
   <div class="relative inline-block">
     <button
+      bind:this={settingsButton}
       use:melt={$trigger}
       aria-label={$t('settings.label')}
       class="inline-flex rounded-full text-xl p-2 outline-none focus-visible:ring-ringBright focus-visible:ring-4 focus-visible:ring-offset-1">
