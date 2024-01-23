@@ -27,10 +27,9 @@
   import LinkOverlay from '../components/LinkOverlay.svelte';
   import { Paths, navigate } from '../router/paths';
   import { gestures } from '../script/stores/Stores';
-  import StandardDialog from '../components/dialogs/StandardDialog.svelte';
-  import DialogHeading from '../components/DialogHeading.svelte';
   import { clearGestures } from '../script/stores/mlStore';
   import { get } from 'svelte/store';
+  import MeltDialog from '../components/dialogs/MeltDialog.svelte';
 
   // Avoid youtube cookie. rel=0 should limit related videos to youtube channel.
   // Once we have translated videos we can try e.g. cc_lang_pref=fr
@@ -155,31 +154,30 @@
   </div>
 </main>
 
-<StandardDialog
+<MeltDialog
   isOpen={showDataLossWarning}
-  onClose={() => (showDataLossWarning = false)}>
-  <div class="w-150">
-    <DialogHeading>{$t('content.index.dataWarning.title')}</DialogHeading>
-    <div class="space-y-5">
-      <p>{$t('content.index.dataWarning.subtitleOne')}</p>
-      <p>
-        <HtmlFormattedMessage
-          id="content.index.dataWarning.subtitleTwo"
-          options={{
-            values: {
-              link: linkWithProps({
-                href:
-                  'data:application/json;charset=utf-8,' +
-                  encodeURIComponent(JSON.stringify(get(gestures), null, 2)),
-                download: 'dataset.json',
-              }),
-            },
-          }} />
-      </p>
-      <div class="flex justify-end items-center gap-x-5">
-        <StandardButton onClick={handleNewSession} type="primary"
-          >{$t('footer.start')}</StandardButton>
-      </div>
+  onClose={() => (showDataLossWarning = false)}
+  class="w-150"
+  title={$t('content.index.dataWarning.title')}>
+  <div class="space-y-5">
+    <p>{$t('content.index.dataWarning.subtitleOne')}</p>
+    <p>
+      <HtmlFormattedMessage
+        id="content.index.dataWarning.subtitleTwo"
+        options={{
+          values: {
+            link: linkWithProps({
+              href:
+                'data:application/json;charset=utf-8,' +
+                encodeURIComponent(JSON.stringify(get(gestures), null, 2)),
+              download: 'dataset.json',
+            }),
+          },
+        }} />
+    </p>
+    <div class="flex justify-end items-center gap-x-5">
+      <StandardButton onClick={handleNewSession} type="primary"
+        >{$t('footer.start')}</StandardButton>
     </div>
   </div>
-</StandardDialog>
+</MeltDialog>
