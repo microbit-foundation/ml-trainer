@@ -6,7 +6,7 @@
 
 <script lang="ts">
   import { t } from '../i18n';
-  import MeltDialog from './dialogs/MeltDialog.svelte';
+  import StandardDialog from './dialogs/StandardDialog.svelte';
   import StandardButton from './StandardButton.svelte';
   import { isCompatibilityWarningDialogOpen } from '../script/stores/uiStore';
 
@@ -15,7 +15,7 @@
   };
 </script>
 
-<MeltDialog
+<StandardDialog
   isOpen={$isCompatibilityWarningDialogOpen}
   {onClose}
   class="w-175"
@@ -30,4 +30,4 @@
         >{$t('actions.close')}</StandardButton>
     </div>
   </div>
-</MeltDialog>
+</StandardDialog>

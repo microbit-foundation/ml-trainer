@@ -49,7 +49,7 @@
   import IconButton from './IconButton.svelte';
   import RecordIcon from 'virtual:icons/fluent/record-20-regular';
   import CloseIcon from 'virtual:icons/ri/close-line';
-  import MeltDialog from './dialogs/MeltDialog.svelte';
+  import StandardDialog from './dialogs/StandardDialog.svelte';
 
   export let onNoMicrobitSelect: () => void;
   export let gesture: Gesture;
@@ -271,7 +271,7 @@
 </script>
 
 <!-- Recording countdown popup -->
-<MeltDialog
+<StandardDialog
   isOpen={showCountdown || isThisRecording}
   onClose={cancelRecording}
   class="flex flex-col items-center gap-8 w-120"
@@ -301,7 +301,7 @@
   </div>
   <StandardButton type="warning" onClick={cancelRecording}
     >{$t('content.data.recording.button.cancel')}</StandardButton>
-</MeltDialog>
+</StandardDialog>
 
 <!-- Title of gesture-->
 <div on:click={selectGesture}>

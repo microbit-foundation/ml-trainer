@@ -32,7 +32,7 @@
   import MicrobitWearingInstructionDialog from './MicrobitWearingInstructionDialog.svelte';
   import WebUsbTryAgain from './WebUsbTryAgain.svelte';
   import { onDestroy, onMount } from 'svelte';
-  import MeltDialog from '../dialogs/MeltDialog.svelte';
+  import StandardDialog from '../dialogs/StandardDialog.svelte';
   import { get, Unsubscriber } from 'svelte/store';
   import { compatibility } from '../../script/stores/uiStore';
   import { isDevMode } from '../../script/environment';
@@ -184,7 +184,7 @@
 </script>
 
 <div bind:this={dialogContainer}>
-  <MeltDialog
+  <StandardDialog
     isOpen={$connectionDialogState.connectionState !== ConnectDialogStates.NONE &&
       !endOfFlow}
     onClose={connectionStateNone}
@@ -386,5 +386,5 @@
           reconnectRequired = false;
         }} />
     {/if}
-  </MeltDialog>
+  </StandardDialog>
 </div>

@@ -16,7 +16,7 @@
   import { trainModel } from '../../script/ml';
   import TrainingStatusSection from '../../components/TrainingStatusSection.svelte';
   import LoadingBar from '../../components/LoadingBar.svelte';
-  import MeltDialog from '../../components/dialogs/MeltDialog.svelte';
+  import StandardDialog from '../../components/dialogs/StandardDialog.svelte';
 
   function navigateModelPage(): void {
     navigate(Paths.MODEL);
@@ -43,7 +43,7 @@
   <title>{title}</title>
 </svelte:head>
 
-<MeltDialog
+<StandardDialog
   isOpen={isFailedTrainingDialogOpen}
   onClose={() => (isFailedTrainingDialogOpen = false)}
   class="w-175"
@@ -56,7 +56,7 @@
       {$t('content.trainer.failure.todo')}
     </p>
   </div>
-</MeltDialog>
+</StandardDialog>
 
 <div class="flex flex-col items-center pb-5 bg-backgrounddark">
   <TabView />

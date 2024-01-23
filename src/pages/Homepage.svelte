@@ -29,7 +29,7 @@
   import { gestures } from '../script/stores/Stores';
   import { clearGestures } from '../script/stores/mlStore';
   import { get } from 'svelte/store';
-  import MeltDialog from '../components/dialogs/MeltDialog.svelte';
+  import StandardDialog from '../components/dialogs/StandardDialog.svelte';
 
   // Avoid youtube cookie. rel=0 should limit related videos to youtube channel.
   // Once we have translated videos we can try e.g. cc_lang_pref=fr
@@ -160,7 +160,7 @@
   </div>
 </main>
 
-<MeltDialog
+<StandardDialog
   isOpen={showDataLossWarning}
   onClose={() => (showDataLossWarning = false)}
   class="w-150"
@@ -186,4 +186,4 @@
         >{$t('footer.start')}</StandardButton>
     </div>
   </div>
-</MeltDialog>
+</StandardDialog>

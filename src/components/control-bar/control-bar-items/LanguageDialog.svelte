@@ -8,13 +8,13 @@
   import StandardButton from '../../StandardButton.svelte';
   import { allLanguages, t } from '../../../i18n';
   import { locale as currentLocale } from 'svelte-i18n';
-  import MeltDialog from '../../dialogs/MeltDialog.svelte';
+  import StandardDialog from '../../dialogs/StandardDialog.svelte';
 
   export let onClose: () => void;
   export let isOpen: boolean;
 </script>
 
-<MeltDialog
+<StandardDialog
   {isOpen}
   {onClose}
   class="flex flex-col gap-5 w-150"
@@ -38,4 +38,4 @@
     <StandardButton onClick={onClose} type="primary"
       >{$t('actions.close')}</StandardButton>
   </div>
-</MeltDialog>
+</StandardDialog>
