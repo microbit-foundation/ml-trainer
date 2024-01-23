@@ -5,7 +5,6 @@
  -->
 
 <script lang="ts">
-  import StandardDialog from '../dialogs/StandardDialog.svelte';
   import StartRadioDialog from './radio/StartRadioDialog.svelte';
   import StartBluetoothDialog from './bluetooth/StartBluetoothDialog.svelte';
   import ConnectCableDialog from './bluetooth/ConnectCableDialog.svelte';
@@ -32,6 +31,7 @@
   import Environment from '../../script/Environment';
   import { onDestroy, onMount } from 'svelte';
   import { Unsubscriber } from 'svelte/store';
+  import MeltDialog from '../dialogs/MeltDialog.svelte';
 
   let endOfFlow = false;
   let currentStage: 'usb' | 'usb1' | 'usb2' = 'usb1'; // "usb" is for the bluetooth connection flow, "usb1" and "usb2" determine the progress in the radio connection flow
@@ -166,13 +166,13 @@
 </script>
 
 <div bind:this={dialogContainer}>
-  <StandardDialog
+  <MeltDialog
     isOpen={$connectionDialogState.connectionState !== ConnectDialogStates.NONE &&
       !endOfFlow}
     onClose={connectionStateNone}
     hasCloseButton={$connectionDialogState.connectionState !==
       ConnectDialogStates.USB_DOWNLOADING}
-    dismissOnClickOutside={false}>
+    createDialogPropsOverride={{ closeOnOutsideClick: false, closeOnEscape: false }}>
     {#if $connectionDialogState.connectionState === ConnectDialogStates.START_RADIO}
       <StartRadioDialog
         onStartBluetoothClick={() => {
@@ -352,5 +352,5 @@
           reconnectRequired = false;
         }} />
     {/if}
-  </StandardDialog>
+  </MeltDialog>
 </div>
