@@ -47,7 +47,7 @@
   isOpen={isFailedTrainingDialogOpen}
   onClose={() => (isFailedTrainingDialogOpen = false)}
   class="w-175"
-  heading={$t('content.trainer.failure.header')}>
+  title={$t('content.trainer.failure.header')}>
   <div class="space-y-3">
     <p>
       {$t('content.trainer.failure.body')}

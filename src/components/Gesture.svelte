@@ -275,8 +275,8 @@
   isOpen={showCountdown || isThisRecording}
   onClose={cancelRecording}
   class="flex flex-col items-center gap-8 w-120"
-  headingClass="text-xl font-bold self-start"
-  heading={$t('content.data.recordingDialog.title', { values: { action: $nameBind } })}>
+  titleClass="text-xl font-bold self-start"
+  title={$t('content.data.recordingDialog.title', { values: { action: $nameBind } })}>
   <div class="flex flex-col space-y-3 self-center items-center justify-center">
     <div class="flex justify-center">
       <p class="text-lg px-10 text-center">
