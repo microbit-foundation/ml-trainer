@@ -49,7 +49,7 @@ export const getHexFileUrl = (version: 1 | 2 | 'universal', type: HexType) => {
   return {
     'radio-sender': 'firmware/radio-sender.hex',
     'radio-bridge': 'firmware/radio-bridge.hex',
-    'radio-local': 'firmware/local-sensors.hex',
+    'radio-local': 'firmware/radio-local.hex',
   }[type];
 };
 
