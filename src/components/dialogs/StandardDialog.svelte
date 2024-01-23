@@ -6,8 +6,9 @@
 
 <script lang="ts">
   import { CreateDialogProps, createDialog, createSync, melt } from '@melt-ui/svelte';
+  import { fade, scale } from 'svelte/transition';
+  import { quintOut } from 'svelte/easing';
   import CloseIcon from 'virtual:icons/ri/close-line';
-  import Transition from 'svelte-transition';
   import { t } from '../../i18n';
   import IconButton from '../IconButton.svelte';
   export let hasCloseButton = true;
@@ -29,6 +30,7 @@
     elements: { overlay, content, title: titleElement, close, portalled },
     states,
   } = createDialog({
+    forceVisible: true,
     preventScroll: true,
     closeOnOutsideClick: true,
     closeOnEscape: true,
@@ -45,46 +47,39 @@
 
 <div class="fixed z-10" use:melt={$portalled}>
   {#if $open}
-    <Transition show={$open}>
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <!-- Keyboard event handler for on:click is implemented as part of svelte-headlessui dialog builder  -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- Keyboard event handler for on:click is implemented as part of svelte-headlessui dialog builder  -->
+    <div
+      class="fixed top-0 left-0 h-screen w-screen flex justify-center items-center bg-black/50 bg-blend-darken"
+      use:melt={$overlay}
+      transition:fade={{ duration: 100 }}>
       <div
-        class="fixed top-0 left-0 h-screen w-screen flex justify-center items-center bg-black/50 bg-blend-darken"
-        use:melt={$overlay}>
-        <Transition
-          show={$open}
-          enter="transition ease-out duration-200"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95">
-          <div
-            use:melt={$content}
-            class="w-min h-min border-gray-200 border border-solid relative bg-white rounded-lg p-8 z-15">
-            {#if hasCloseButton}
-              <div class="absolute right-2 top-2">
-                <IconButton
-                  {...$close}
-                  useAction={$close.action}
-                  ariaLabel={$t('actions.close')}>
-                  <CloseIcon class="text-xl m-1" />
-                </IconButton>
-              </div>
-            {/if}
-            <div class={$$restProps.class || ''}>
-              {#if title}
-                <h2
-                  use:melt={$titleElement}
-                  class={titleClass || 'text-xl font-bold pb-5'}>
-                  {title}
-                </h2>
-              {/if}
-              <slot />
-            </div>
+        use:melt={$content}
+        class="w-min h-min border-gray-200 border border-solid relative bg-white rounded-lg p-8 z-15"
+        transition:scale={{
+          duration: 200,
+          start: 0.9,
+          easing: quintOut,
+        }}>
+        {#if hasCloseButton}
+          <div class="absolute right-2 top-2">
+            <IconButton
+              {...$close}
+              useAction={$close.action}
+              ariaLabel={$t('actions.close')}>
+              <CloseIcon class="text-xl m-1" />
+            </IconButton>
           </div>
-        </Transition>
+        {/if}
+        <div class={$$restProps.class || ''}>
+          {#if title}
+            <h2 use:melt={$titleElement} class={titleClass || 'text-xl font-bold pb-5'}>
+              {title}
+            </h2>
+          {/if}
+          <slot />
+        </div>
       </div>
-    </Transition>
+    </div>
   {/if}
 </div>
