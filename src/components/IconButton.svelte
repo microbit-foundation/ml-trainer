@@ -27,6 +27,7 @@
 </script>
 
 <button
+  {...$$restProps}
   {disabled}
   class="{classes[variant].base} {disabled
     ? ''

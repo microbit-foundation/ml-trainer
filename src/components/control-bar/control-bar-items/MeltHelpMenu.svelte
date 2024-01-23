@@ -16,33 +16,22 @@
   import MeltMenuItems from './MeltMenuItems.svelte';
   import MeltMenuItem from './MeltMenuItem.svelte';
 
-  const dropdownMenu = createDropdownMenu({ forceVisible: true });
-  const { trigger } = dropdownMenu.elements;
-  const { open } = dropdownMenu.states;
+  const menu = createDropdownMenu({ forceVisible: true });
+  const { trigger } = menu.elements;
+  const { open } = menu.states;
 
   let isAboutDialogOpen = false;
 
-  const onSelect = (event: Event) => {
-    const target = event.target as HTMLInputElement;
-    const openLink = (url: string) => window.open(url, '_blank', 'noopener');
-    switch (target.value) {
-      case 'about': {
-        isAboutDialogOpen = true;
-        break;
-      }
-      case 'cookies': {
-        manageCookies();
-        break;
-      }
-      case 'terms-of-use': {
-        openLink('https://microbit.org/terms-of-use/');
-        break;
-      }
-      case 'help-and-support': {
-        openLink('https://support.microbit.org/support/home');
-        break;
-      }
-    }
+  const openLink = (url: string) => window.open(url, '_blank', 'noopener');
+
+  const onAboutClick = () => {
+    isAboutDialogOpen = true;
+  };
+  const onTermsOfUseClick = () => {
+    openLink('https://microbit.org/terms-of-use/');
+  };
+  const onHelpAndSupportClick = () => {
+    openLink('https://support.microbit.org/support/home');
   };
 </script>
 
@@ -56,31 +45,30 @@
     <button
       {...$trigger}
       use:trigger
-      on:select={onSelect}
       aria-label={$t('helpMenu.label')}
       class="inline-flex rounded-full text-xl p-2 outline-none focus-visible:ring-ringBright focus-visible:ring-4 focus-visible:ring-offset-1">
       <HelpIcon class="text-white" />
     </button>
     {#if $open}
-      <MeltMenuItems {dropdownMenu}>
+      <MeltMenuItems {menu}>
         <div class="py-2">
-          <MeltMenuItem {dropdownMenu} on:m-click={onSelect} value="help-and-support">
+          <MeltMenuItem {menu} on:m-click={onHelpAndSupportClick}>
             <ExternalLinkIcon />
             {$t('helpMenu.helpAndSupport')}
           </MeltMenuItem>
         </div>
         <div class="py-2">
-          <MeltMenuItem {dropdownMenu} on:m-click={onSelect} value="terms-of-use">
+          <MeltMenuItem {menu} on:m-click={onTermsOfUseClick}>
             <ExternalLinkIcon />
             {$t('helpMenu.termsOfUse')}
           </MeltMenuItem>
-          <MeltMenuItem {dropdownMenu} on:m-click={onSelect} value="cookies">
+          <MeltMenuItem {menu} on:m-click={manageCookies}>
             <CookiesIcon />
             {$t('helpMenu.cookies')}
           </MeltMenuItem>
         </div>
         <div class="py-2">
-          <MeltMenuItem {dropdownMenu} on:m-click={onSelect} value="about">
+          <MeltMenuItem {menu} on:m-click={onAboutClick}>
             <InfoIcon />
             {$t('helpMenu.about')}
           </MeltMenuItem>

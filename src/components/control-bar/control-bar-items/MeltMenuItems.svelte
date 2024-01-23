@@ -9,13 +9,13 @@
   import { scale } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
 
-  export let dropdownMenu: ReturnType<typeof createDropdownMenu>;
-  const { menu } = dropdownMenu.elements;
+  export let menu: ReturnType<typeof createDropdownMenu>;
+  const { menu: menuElement } = menu.elements;
 </script>
 
 <div
-  use:menu
-  {...$menu}
+  use:menuElement
+  {...$menuElement}
   {...$$restProps}
   transition:scale={{
     duration: 200,

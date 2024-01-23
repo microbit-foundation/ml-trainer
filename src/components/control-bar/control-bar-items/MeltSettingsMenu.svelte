@@ -5,20 +5,21 @@
  -->
 
 <script lang="ts">
-  import { createMenu } from 'svelte-headlessui';
   import SettingsIcon from 'virtual:icons/ri/settings-2-line';
   import GlobeIcon from 'virtual:icons/ri/global-line';
-  import MenuTransition from '../../MenuTransition.svelte';
   import LanguageDialog from './LanguageDialog.svelte';
   import { t } from '../../../i18n';
-  import MenuItems from './MenuItems.svelte';
-  import MenuItem from './MenuItem.svelte';
+  import MeltMenuItems from './MeltMenuItems.svelte';
+  import MeltMenuItem from './MeltMenuItem.svelte';
+  import { createDropdownMenu } from '@melt-ui/svelte';
 
-  const menu = createMenu({ label: $t('settings.label') });
+  const menu = createDropdownMenu({ forceVisible: true });
+  const { trigger } = menu.elements;
+  const { open } = menu.states;
+
   let isLanguageDialogOpen = false;
-  const onSelect = (event: Event) => {
+  const onLanguageClick = () => {
     isLanguageDialogOpen = true;
-    menu.set({ selected: null });
   };
 </script>
 
@@ -30,20 +31,21 @@
     }} />
   <div class="relative inline-block">
     <button
-      use:menu.button
-      on:select={onSelect}
+      {...$trigger}
+      use:trigger
+      aria-label={$t('settings.label')}
       class="inline-flex rounded-full text-xl p-2 outline-none focus-visible:ring-ringBright focus-visible:ring-4 focus-visible:ring-offset-1">
       <SettingsIcon class="text-white" />
     </button>
-    <MenuTransition show={$menu.expanded}>
-      <MenuItems {menu}>
+    {#if $open}
+      <MeltMenuItems {menu}>
         <div class="py-2">
-          <MenuItem {menu} value="settings">
+          <MeltMenuItem {menu} on:m-click={onLanguageClick}>
             <GlobeIcon />
             {$t('languageDialog.title')}
-          </MenuItem>
+          </MeltMenuItem>
         </div>
-      </MenuItems>
-    </MenuTransition>
+      </MeltMenuItems>
+    {/if}
   </div>
 </div>
