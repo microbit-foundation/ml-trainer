@@ -9,13 +9,13 @@ export type SplittedMessages = {
   remainingInput: string;
 };
 
-enum MessageTypes {
+const enum MessageTypes {
   Command = 'C',
   Response = 'R',
   Periodic = 'P',
 }
 
-enum CommandTypes {
+export const enum CommandTypes {
   Handshake = 'HS',
   Zstart = 'ZSTART',
   Stop = 'STOP',
@@ -50,9 +50,8 @@ export type MicrobitSensorState = {
 // Currently implemented protocol version
 export const version = 1;
 
-// TODO: Revisit this regexes, they are probably not optimal
-const responseIdRegex = 'R\\[([\\w]*?)\\]';
-const handshakeRegex = /(?<=HS\[)[\d]+?(?=\])/;
+const responseIdRegex = /^R\[([0-9a-fA-F]{1,8})\]/;
+const handshakeRegex = /^HS\[(\d+)\]$/;
 
 let commandId = 1;
 
@@ -71,17 +70,36 @@ export const splitMessages = (message: string): SplittedMessages => {
   };
 };
 
-export const processHandshake = (message: string): MessageResponse | undefined => {
+const processResponseId = (
+  message: string,
+): { response: string; messageId: number } | undefined => {
   const responseIdMatch = message.match(responseIdRegex);
   if (!responseIdMatch) {
     return undefined;
   }
-  let protocolVersion = Number(message.match(handshakeRegex)?.[0]);
-  if (!protocolVersion) {
+  return {
+    messageId: parseInt(responseIdMatch[1], 16),
+    response: message.slice(responseIdMatch[0].length),
+  };
+};
+
+export const processHandshake = (message: string): MessageResponse | undefined => {
+  const responseIdParseResult = processResponseId(message);
+  if (!responseIdParseResult) {
     return undefined;
   }
+  const { messageId, response } = responseIdParseResult;
+  const responseIdMatch = message.match(responseIdRegex);
+  if (!responseIdMatch) {
+    return undefined;
+  }
+  const handshakeMatch = response.match(handshakeRegex);
+  if (!handshakeMatch) {
+    return undefined;
+  }
+  const protocolVersion = parseInt(handshakeMatch[1]);
   return {
-    messageId: Number(responseIdMatch[1]),
+    messageId,
     cmdType: CommandTypes.Handshake,
     value: protocolVersion,
   };
@@ -126,7 +144,7 @@ const generateCommand = (
     messageType: MessageTypes.Command,
     messageId: commandId,
   };
-  commandId++;
+  commandId = (commandId + 1) % 2 ** 32;
   return msg;
 };
 

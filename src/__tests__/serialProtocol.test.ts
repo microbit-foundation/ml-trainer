@@ -11,6 +11,9 @@ import {
   MicrobitSensorState,
   splitMessages,
   processPeriodicMessage,
+  processHandshake,
+  MessageResponse,
+  CommandTypes,
 } from '../script/microbit-interfacing/serialProtocol';
 
 describe('splitMessages', () => {
@@ -139,5 +142,29 @@ describe('processPeriodicMessage', () => {
     const got1 = processPeriodicMessage(message1);
 
     expect(got1).toBeUndefined();
+  });
+});
+
+describe('processHandshake', () => {
+  it('parses valid', () => {
+    const message = 'R[ffffffff]HS[1]';
+
+    const got = processHandshake(message);
+
+    const want: MessageResponse = {
+      cmdType: CommandTypes.Handshake,
+      messageId: 2 ** 32 - 1,
+      value: 1,
+    };
+    expect(got).toEqual(want);
+  });
+
+  it('returns undefined for broken', () => {
+    expect(processHandshake('R[0]R[0]HS[1]')).toBeUndefined();
+    expect(processHandshake('R[0]HS[1]HS[1]')).toBeUndefined();
+    expect(processHandshake('R[0HS[1]')).toBeUndefined();
+    expect(processHandshake('R[0]HS[1')).toBeUndefined();
+    expect(processHandshake('R[0]HS[]')).toBeUndefined();
+    expect(processHandshake('R[]HS[]')).toBeUndefined();
   });
 });
