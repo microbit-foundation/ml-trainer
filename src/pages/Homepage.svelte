@@ -12,7 +12,11 @@
 </style>
 
 <script lang="ts">
-  import { state } from '../script/stores/uiStore';
+  import {
+    compatibility,
+    isCompatibilityWarningDialogOpen,
+    state,
+  } from '../script/stores/uiStore';
   import trainModelImage from '../imgs/TrainModel.svg';
   import inputDataImage from '../imgs/InputData.svg';
   import testModelImage from '../imgs/TestModel.svg';
@@ -25,8 +29,9 @@
   } from '../components/HtmlFormattedMessage.svelte';
   import LinkOverlayContainer from '../components/LinkOverlayContainer.svelte';
   import LinkOverlay from '../components/LinkOverlay.svelte';
-  import { Paths, currentPath, getTitle, navigate } from '../router/paths';
+  import { Paths, getTitle, navigate } from '../router/paths';
   import { gestures } from '../script/stores/Stores';
+  import CompatibilityWarningDialog from '../components/CompatibilityWarningDialog.svelte';
   import StandardDialog from '../components/dialogs/StandardDialog.svelte';
   import DialogHeading from '../components/DialogHeading.svelte';
   import { clearGestures } from '../script/stores/mlStore';
@@ -47,7 +52,16 @@
     .some(g => g.getName() || g.getRecordings().length);
   let showDataLossWarning = false;
 
-  const checkForExistingSession = () => {
+  const { bluetooth, usb } = get(compatibility);
+  const isIncompatible = !bluetooth && !usb;
+
+  const openCompatibityWarningDialog = () => isCompatibilityWarningDialogOpen.set(true);
+
+  const onClickStartNewSession = () => {
+    if (isIncompatible) {
+      openCompatibityWarningDialog();
+      return;
+    }
     if (hasExistingSession) {
       showDataLossWarning = true;
     } else {
@@ -71,6 +85,7 @@
   <title>{title}</title>
 </svelte:head>
 
+<CompatibilityWarningDialog />
 <main class="h-full flex flex-col items-center bg-backgrounddark">
   <h1 class="sr-only">{$t('content.index.title')}</h1>
   <div class="mb-8">
@@ -106,7 +121,11 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 p-10 gap-5">
         <LinkOverlayContainer>
           <FrontPageContentTile>
-            <LinkOverlay path={Paths.DATA} class="mb-5">
+            <LinkOverlay
+              onClickOrHrefOrPath={isIncompatible
+                ? openCompatibityWarningDialog
+                : Paths.DATA}
+              class="mb-5">
               <h3 class="text-center text-2xl font-bold">
                 {$t('content.index.toolProcessCards.data.title')}
               </h3>
@@ -120,7 +139,11 @@
 
         <LinkOverlayContainer>
           <FrontPageContentTile>
-            <LinkOverlay path={Paths.TRAINING} class="mb-5">
+            <LinkOverlay
+              onClickOrHrefOrPath={isIncompatible
+                ? openCompatibityWarningDialog
+                : Paths.TRAINING}
+              class="mb-5">
               <h3 class="text-center text-2xl font-bold">
                 {$t('content.index.toolProcessCards.train.title')}
               </h3>
@@ -134,7 +157,11 @@
 
         <LinkOverlayContainer>
           <FrontPageContentTile>
-            <LinkOverlay path={Paths.MODEL} class="mb-5">
+            <LinkOverlay
+              onClickOrHrefOrPath={isIncompatible
+                ? openCompatibityWarningDialog
+                : Paths.MODEL}
+              class="mb-5">
               <h3 class="text-center text-2xl font-bold">
                 {$t('content.index.toolProcessCards.model.title')}
               </h3>
@@ -156,7 +183,7 @@
       <StandardButton
         size="large"
         type={hasExistingSession ? 'secondary' : 'primary'}
-        onClick={checkForExistingSession}>{$t('footer.start')}</StandardButton>
+        onClick={onClickStartNewSession}>{$t('footer.start')}</StandardButton>
     </div>
   </div>
 </main>

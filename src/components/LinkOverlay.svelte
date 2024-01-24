@@ -22,23 +22,34 @@
 </style>
 
 <script lang="ts">
-  import { PathType, navigate } from '../router/paths';
+  import { PathType, Paths, navigate } from '../router/paths';
+  export let onClickOrHrefOrPath: string | PathType | (() => void);
 
-  export let href: string | undefined = undefined;
-  export let path: PathType | undefined = undefined;
+  const sharedClass = `overlay outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring cursor-pointer ${
+    $$restProps.class || ''
+  }`;
 
-  function handleClick(e: Event) {
-    if (path) {
-      e.preventDefault();
-      navigate(path);
-    }
+  function isPathType(x: string | PathType | (() => void)): x is PathType {
+    return Object.values(Paths).includes(x as PathType);
+  }
+
+  function handleClickPath(e: Event) {
+    e.preventDefault();
+    navigate(onClickOrHrefOrPath as PathType);
   }
 </script>
 
-<a
-  href={href ?? path}
-  on:click={handleClick}
-  class="overlay outline-none focus-visible:ring-4 focus-visible:ring-offset-1
-  focus-visible:ring-ring {$$restProps.class || ''}">
-  <slot />
-</a>
+{#if isPathType(onClickOrHrefOrPath)}
+  <a href={onClickOrHrefOrPath} on:click={handleClickPath} class={sharedClass}>
+    <slot />
+  </a>
+{:else if typeof onClickOrHrefOrPath === 'string'}
+  <a href={onClickOrHrefOrPath} class={sharedClass}>
+    <slot />
+  </a>
+{:else}
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <a on:click={onClickOrHrefOrPath} class={sharedClass}>
+    <slot />
+  </a>
+{/if}
