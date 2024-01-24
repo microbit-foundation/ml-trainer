@@ -40,6 +40,7 @@
   on:click={onClick}
   on:focus
   on:select
-  use:useAction>
+  use:useAction
+  {...$$restProps}>
   <slot />
 </button>
