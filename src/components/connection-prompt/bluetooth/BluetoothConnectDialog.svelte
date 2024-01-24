@@ -58,7 +58,7 @@
         invalid={attemptedToPairWithInvalidPattern} />
     </div>
     <p
-      class="mt-15 text-warning text-center {attemptedToPairWithInvalidPattern
+      class="mt-15 text-red-600 text-center {attemptedToPairWithInvalidPattern
         ? 'visible'
         : 'invisible'}"
       role={attemptedToPairWithInvalidPattern ? 'alert' : null}>

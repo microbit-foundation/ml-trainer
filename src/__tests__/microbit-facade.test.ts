@@ -73,7 +73,7 @@ describe('Microbit facade tests', () => {
     expect(getHexFileUrl(2, 'bluetooth')).toEqual('firmware/MICROBIT.hex');
     expect(getHexFileUrl(2, 'radio-bridge')).toEqual('firmware/radio-bridge.hex');
     expect(getHexFileUrl(2, 'radio-sender')).toEqual('firmware/radio-sender.hex');
-    expect(getHexFileUrl(2, 'radio-local')).toEqual('firmware/local-sensors.hex');
+    expect(getHexFileUrl(2, 'radio-local')).toEqual('firmware/radio-local.hex');
   });
 
   test('Input should not be connected before connecting', () => {

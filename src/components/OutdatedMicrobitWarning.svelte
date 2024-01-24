@@ -45,9 +45,10 @@
   };
 
   const openConnectionPrompt = () => {
-    $connectionDialogState.connectionState = ConnectDialogStates.USB_START;
-    $connectionDialogState.deviceState =
-      targetRole === 'INPUT' ? DeviceRequestStates.INPUT : DeviceRequestStates.OUTPUT;
+    // We don't use ConnectDialogStates.USB_START elsewhere and don't use this component.
+    // $connectionDialogState.connectionState = ConnectDialogStates.USB_START;
+    // $connectionDialogState.deviceState =
+    //   targetRole === 'INPUT' ? DeviceRequestStates.INPUT : DeviceRequestStates.OUTPUT;
   };
 </script>
 
@@ -65,7 +66,7 @@
             style="transform: rotate(45deg);" />
         </button>
       </div>
-      <p class="text-warning font-bold">{$t('popup.outdatedmicrobit.header')}</p>
+      <p class="text-black font-bold">{$t('popup.outdatedmicrobit.header')}</p>
       {#if showMakeCodeUpdateMessage}
         <p>{$t('popup.outdatedmicrobit.text')}</p>
         <p>{$t('popup.outdatedmicrobit.text.mkcd')}</p>

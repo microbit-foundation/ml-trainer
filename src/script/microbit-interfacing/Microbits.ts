@@ -49,7 +49,7 @@ export const getHexFileUrl = (version: 1 | 2 | 'universal', type: HexType) => {
   return {
     'radio-sender': 'firmware/radio-sender.hex',
     'radio-bridge': 'firmware/radio-bridge.hex',
-    'radio-local': 'firmware/local-sensors.hex',
+    'radio-local': 'firmware/radio-local.hex',
   }[type];
 };
 
@@ -215,9 +215,11 @@ class Microbits {
       if (manual) {
         if (this.isInputAssigned()) {
           ConnectionBehaviours.getInputBehaviour().onExpelled(manual, true);
+          this.clearAssignedInputReference();
+        }
+        if (this.isOutputAssigned()) {
           ConnectionBehaviours.getOutputBehaviour().onExpelled(manual, true);
           this.clearAssignedOutputReference();
-          this.clearAssignedInputReference();
         }
       } else {
         connectionBehaviour.onDisconnected();
@@ -266,9 +268,14 @@ class Microbits {
     };
 
     const onInputReconnectFailed = () => {
-      ConnectionBehaviours.getInputBehaviour().onExpelled(false, true);
-      ConnectionBehaviours.getOutputBehaviour().onExpelled(false, true);
-      this.clearAssignedOutputReference();
+      if (this.isInputAssigned()) {
+        ConnectionBehaviours.getInputBehaviour().onExpelled(false, true);
+        this.clearAssignedInputReference();
+      }
+      if (this.isOutputAssigned()) {
+        ConnectionBehaviours.getOutputBehaviour().onExpelled(false, true);
+        this.clearAssignedOutputReference();
+      }
     };
 
     try {
@@ -311,9 +318,11 @@ class Microbits {
       if (manual) {
         if (this.isInputAssigned()) {
           ConnectionBehaviours.getInputBehaviour().onExpelled(manual, true);
+          this.clearAssignedInputReference();
+        }
+        if (this.isOutputAssigned()) {
           ConnectionBehaviours.getOutputBehaviour().onExpelled(manual, true);
           this.clearAssignedOutputReference();
-          this.clearAssignedInputReference();
         }
       } else {
         connectionBehaviour.onDisconnected();
@@ -890,7 +899,7 @@ class Microbits {
     if (!this.isMicrobitLinked()) {
       throw new Error('Cannot get friendly name from USB, none are connected!');
     }
-    return await this.getLinked().getFriendlyName();
+    return this.getLinked().getFriendlyName();
   }
 
   public static getInputOrigin(): HexOrigin {

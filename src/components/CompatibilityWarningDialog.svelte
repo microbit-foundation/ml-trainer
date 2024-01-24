@@ -9,18 +9,20 @@
   import StandardDialog from './dialogs/StandardDialog.svelte';
   import StandardButton from './StandardButton.svelte';
   import { isCompatibilityWarningDialogOpen } from '../script/stores/uiStore';
-  import DialogHeading from './DialogHeading.svelte';
 
   const onClose = () => {
     $isCompatibilityWarningDialogOpen = false;
   };
 </script>
 
-<StandardDialog isOpen={$isCompatibilityWarningDialogOpen} {onClose}>
-  <div class="w-175">
-    <DialogHeading>
-      {$t('popup.compatibility.header')}
-    </DialogHeading>
+<StandardDialog
+  isOpen={$isCompatibilityWarningDialogOpen}
+  {onClose}
+  class="w-175 space-y-5">
+  <svelte:fragment slot="heading">
+    {$t('popup.compatibility.header')}
+  </svelte:fragment>
+  <svelte:fragment slot="body">
     <div class="space-y-5">
       <div class="space-y-2">
         <p>{$t('popup.compatibility.explain')}</p>
@@ -31,5 +33,5 @@
           >{$t('actions.close')}</StandardButton>
       </div>
     </div>
-  </div>
+  </svelte:fragment>
 </StandardDialog>

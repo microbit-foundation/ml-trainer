@@ -5,68 +5,117 @@
  -->
 
 <script lang="ts">
-  import { createDialog } from 'svelte-headlessui';
+  import { CreateDialogProps, createDialog, createSync, melt } from '@melt-ui/svelte';
+  import { fade, scale } from 'svelte/transition';
+  import { quintOut } from 'svelte/easing';
   import CloseIcon from 'virtual:icons/ri/close-line';
-  import Transition from 'svelte-transition';
   import { t } from '../../i18n';
   import IconButton from '../IconButton.svelte';
+  import { onDestroy } from 'svelte';
+
   export let hasCloseButton = true;
+  export let closeOnOutsideClick: boolean = true;
+  export let closeOnEscape: boolean = true;
   export let isOpen: boolean;
   export let onClose: () => void;
-  export let ariaLabel: string | undefined = undefined;
-  export let dismissOnClickOutside: boolean = true;
 
-  const dialog = createDialog({ label: ariaLabel });
   let finalFocusRef: Element | null;
-  // Updating inside and outside component states to minimise prop changes
-  // of using svelte-headlessui dialogs
-  $: if (isOpen) {
+
+  const onOpenDialog = () => {
     finalFocusRef = document.activeElement;
-    dialog.open();
-  } else {
-    dialog.close();
-  }
-  let previousExpanded = false;
-  dialog.subscribe(({ expanded }) => {
-    if (previousExpanded && !expanded) {
-      onClose();
-      if (finalFocusRef) {
-        (finalFocusRef as HTMLElement).focus();
-      }
+  };
+
+  const onCloseDialog = () => {
+    onClose();
+    if (finalFocusRef) {
+      (finalFocusRef as HTMLElement).focus();
     }
-    previousExpanded = expanded;
+  };
+
+  const onOpenChange: CreateDialogProps['onOpenChange'] = ({ next }) => {
+    if (!next) {
+      onCloseDialog();
+    } else {
+      onOpenDialog();
+    }
+    return next;
+  };
+
+  const {
+    elements: { overlay, content, title, close, portalled },
+    states,
+  } = createDialog({
+    forceVisible: true,
+    preventScroll: true,
+    closeOnOutsideClick,
+    closeOnEscape: false,
+    onOpenChange,
   });
+
+  const keyListener = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      onCloseDialog();
+    }
+  };
+
+  $: {
+    if (closeOnEscape) {
+      document.addEventListener('keydown', keyListener);
+    } else {
+      document.removeEventListener('keydown', keyListener);
+    }
+  }
+
+  const { open } = states;
+
+  // Syncing inside and outside component states to minimise prop changes
+  const sync = createSync(states);
+  $: sync.open(isOpen, v => (isOpen = v));
+
+  $: if (isOpen) {
+    onOpenDialog();
+  } else {
+    onCloseDialog();
+  }
+
+  onDestroy(() => document.removeEventListener('keydown', keyListener));
 </script>
 
-<div class="fixed z-10">
-  <Transition show={$dialog.expanded}>
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <!-- Keyboard event handler for on:click is implemented as part of svelte-headlessui dialog builder  -->
+<div class="fixed z-10" use:melt={$portalled}>
+  {#if $open}
     <div
       class="fixed top-0 left-0 h-screen w-screen flex justify-center items-center bg-black/50 bg-blend-darken"
-      use:dialog.modal
-      on:click={dismissOnClickOutside ? dialog.close : undefined}>
-      <Transition
-        enter="transition ease-out duration-200"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95">
-        <!-- on:click for stopping propogation  -->
-        <div
-          class="w-min h-min border-gray-200 border border-solid relative bg-white rounded-lg p-8 z-15"
-          on:click|stopPropagation>
-          {#if hasCloseButton}
-            <div class="absolute right-2 top-2">
-              <IconButton ariaLabel={$t('actions.close')} onClick={dialog.close}>
-                <CloseIcon class="text-xl m-1" />
-              </IconButton>
-            </div>
-          {/if}
-          <slot />
+      use:melt={$overlay}
+      transition:fade={{ duration: 100 }}>
+      <div
+        use:melt={$content}
+        class="w-min h-min border-gray-200 border border-solid relative bg-white rounded-lg p-8 z-15"
+        transition:scale={{
+          duration: 200,
+          start: 0.9,
+          easing: quintOut,
+        }}>
+        {#if hasCloseButton}
+          <div class="absolute right-2 top-2">
+            <IconButton
+              onClick={onCloseDialog}
+              useAction={$close.action}
+              ariaLabel={$t('actions.close')}>
+              <CloseIcon class="text-xl m-1" />
+            </IconButton>
+          </div>
+        {/if}
+        <div class={$$restProps.class || ''}>
+          <h2 use:melt={$title} class="text-xl font-bold">
+            <slot name="heading" />
+          </h2>
+          <slot name="body" />
         </div>
-      </Transition>
+        <!-- Needed for the connection flow dialogs for now -->
+        {#if !$$slots.heading && !$$slots.body}
+          <slot />
+        {/if}
+      </div>
     </div>
-  </Transition>
+  {/if}
 </div>

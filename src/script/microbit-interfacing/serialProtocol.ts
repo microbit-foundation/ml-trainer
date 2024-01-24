@@ -9,15 +9,15 @@ export type SplittedMessages = {
   remainingInput: string;
 };
 
-export enum MessageTypes {
+enum MessageTypes {
   Command = 'C',
   Response = 'R',
   Periodic = 'P',
 }
 
-export enum CommandTypes {
+enum CommandTypes {
   Handshake = 'HS',
-  Start = 'START',
+  Zstart = 'ZSTART',
   Stop = 'STOP',
 }
 
@@ -33,6 +33,12 @@ export type MessageResponse = {
   value: number;
 };
 
+// More sensors are available in the protocol, but we only support these two
+export type MicrobitSensors = {
+  accelerometer: boolean;
+  buttons: boolean;
+};
+
 export type MicrobitSensorState = {
   accelerometerX: number;
   accelerometerY: number;
@@ -45,23 +51,7 @@ export type MicrobitSensorState = {
 export const version = 1;
 
 // TODO: Revisit this regexes, they are probably not optimal
-
 const responseIdRegex = 'R\\[([\\w]*?)\\]';
-
-const periodicMessageRegexString =
-  'P\\[[\\w]*?\\]AX\\[[\\d-]*?\\]AY\\[[\\d-]*?\\]AZ\\[[\\d-]*?\\]BA\\[[01]\\]BB\\[[01]\\]';
-
-const messageRegex = new RegExp(periodicMessageRegexString, 'g');
-const remainingInputAfterMessageRegex = new RegExp(
-  `(?<=${periodicMessageRegexString}).*`,
-  'g',
-);
-// TODO: This should probably be replaced with a single regex and named groups
-const accelerometerXRegex = /(?<=AX\[)[\d-]+?(?=\])/;
-const accelerometerYRegex = /(?<=AY\[)[\d-]+?(?=\])/;
-const accelerometerZRegex = /(?<=AZ\[)[\d-]+?(?=\])/;
-const buttonARegex = /(?<=BA\[)[01](?=\])/;
-const buttonBRegex = /(?<=BB\[)[01](?=\])/;
 const handshakeRegex = /(?<=HS\[)[\d]+?(?=\])/;
 
 let commandId = 1;
@@ -100,31 +90,37 @@ export const processHandshake = (message: string): MessageResponse | undefined =
 export const processPeriodicMessage = (
   message: string,
 ): MicrobitSensorState | undefined => {
-  const messages = message.match(messageRegex);
-
-  if (!messages) {
+  // Basic checks to match the message being a compact periodic message
+  if (message.length !== 13 || message[0] !== MessageTypes.Periodic) {
+    return undefined;
+  }
+  // All characters except the first one should be hex
+  if (!/^[0-9A-Fa-f]+$/.test(message.substring(1))) {
     return undefined;
   }
 
-  // TODO: A regex per value is probably unefficient
-  // Also, we should check all values are valid first, throw away entire message if there is a single invalid value
+  // Only the two Least Significant Bits from the buttons are used
+  const buttons = parseInt(message[12], 16);
+  if (buttons > 3) {
+    return undefined;
+  }
+
   return {
-    accelerometerX: Number(message.match(accelerometerXRegex)?.[0]) || 0,
-    accelerometerY: Number(message.match(accelerometerYRegex)?.[0]) || 0,
-    accelerometerZ: Number(message.match(accelerometerZRegex)?.[0]) || 0,
-    buttonA: Number(message.match(buttonARegex)?.[0]) || 0,
-    buttonB: Number(message.match(buttonBRegex)?.[0]) || 0,
+    // The accelerometer data has been clamped to -2048 to 2047, and an offset
+    // added to make the values positive, so that needs to be reversed
+    accelerometerX: parseInt(message.substring(3, 6), 16) - 2048,
+    accelerometerY: parseInt(message.substring(6, 9), 16) - 2048,
+    accelerometerZ: parseInt(message.substring(9, 12), 16) - 2048,
+    // Button A is the LSB, button B is the next bit
+    buttonA: buttons & 1,
+    buttonB: (buttons >> 1) & 1,
   };
 };
 
-export const generateCommand = (
+const generateCommand = (
   cmdType: CommandTypes,
   cmdData: string = '',
 ): ProtocolMessage => {
-  // TODO: Hack! Currently hardcoding the periodic for Accelerometer and Buttons
-  if (cmdType === CommandTypes.Start) {
-    cmdData = 'AB';
-  }
   let msg = {
     message: `C[${commandId.toString(16).padStart(8, '0')}]${cmdType}[${cmdData}]\n`,
     messageType: MessageTypes.Command,
@@ -132,4 +128,19 @@ export const generateCommand = (
   };
   commandId++;
   return msg;
+};
+
+export const generateCmdHandshake = (): string => {
+  return generateCommand(CommandTypes.Handshake).message;
+};
+
+export const generateCmdStart = (sensors: MicrobitSensors): string => {
+  let cmdData = '';
+  if (sensors.accelerometer) {
+    cmdData += 'A';
+  }
+  if (sensors.buttons) {
+    cmdData += 'B';
+  }
+  return generateCommand(CommandTypes.Zstart, cmdData).message;
 };

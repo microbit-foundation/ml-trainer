@@ -192,11 +192,12 @@
   "connectMB.pattern.subtitle": "Copy the pattern displayed on the micro:bit.",
   "connectMB.pattern.inputLabel": "Number of lit up LED in column {colNum} displayed on micro:bit",
 
-  "connectMB.bluetooth.heading": "Connect using Bluetooth",
-  "connectMB.main.bluetooth.subtitle": "Connect using Bluetooth",
+  "connectMB.bluetooth.heading": "Connect using Web Bluetooth",
+  "connectMB.main.bluetooth.subtitle": "Connect using Web Bluetooth",
   "connectMB.bluetooth.cancelledConnection": "You didn't choose a micro:bit. Do you want to try again?",
 
-  "connectMB.bluetooth.connecting": "Connecting…",
+  "connectMB.radio.heading": "Connecting micro:bits",
+  "connectMB.connecting": "Connecting…",
   "connectMB.bluetooth.invalidPattern": "The pattern you have drawn is invalid.",
 
   "disconnectedWarning.input": "Your input micro:bit lost connection, do want to try again?",

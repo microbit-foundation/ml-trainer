@@ -10,10 +10,6 @@ import { MicrobitConnection } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
 import * as protocol from './serialProtocol';
 
-const writeLine = (message: string) => {
-  console.log(message);
-};
-
 const enum SerialProtocolState {
   AwaitingHandshakeResponse,
   Running,
@@ -53,8 +49,11 @@ class MicrobitSerial implements MicrobitConnection {
             this.serialProtocolState = SerialProtocolState.Running;
 
             // Request the micro:bit to start sending the periodic messages
-            const startCmd = protocol.generateCommand(protocol.CommandTypes.Start);
-            await this.usb.serialWrite(startCmd.message);
+            const startCmd = protocol.generateCmdStart({
+              accelerometer: true,
+              buttons: true,
+            });
+            await this.usb.serialWrite(startCmd);
           }
         } else {
           const sensorData = protocol.processPeriodicMessage(msg);
@@ -87,19 +86,15 @@ class MicrobitSerial implements MicrobitConnection {
       this.serialProtocolState == SerialProtocolState.AwaitingHandshakeResponse &&
       attempts++ < 20
     ) {
-      const handshakeCmd = protocol.generateCommand(protocol.CommandTypes.Handshake);
-      writeLine(`Sending handshake ${handshakeCmd.message}`);
-      await this.usb.serialWrite(handshakeCmd.message);
+      const handshakeCmd = protocol.generateCmdHandshake();
+      console.log(`Sending handshake ${handshakeCmd}`);
+      await this.usb.serialWrite(handshakeCmd);
       await new Promise(resolve => setTimeout(resolve, 100));
     }
     if (this.serialProtocolState === SerialProtocolState.AwaitingHandshakeResponse) {
       throw new Error('Handshake not received');
     }
   }
-
-  public listenForDisconnect(callback: (event: Event) => unknown): void {}
-
-  public removeDisconnectListener(callback: (event: Event) => unknown): void {}
 
   public isConnected(): boolean {
     return this.usb.isSerialConnected();

@@ -271,11 +271,14 @@
 </script>
 
 <!-- Recording countdown popup -->
-<StandardDialog isOpen={showCountdown || isThisRecording} onClose={cancelRecording}>
-  <div class="flex flex-col items-center gap-8 w-120">
-    <h2 class="text-xl font-bold self-start">
-      {$t('content.data.recordingDialog.title', { values: { action: $nameBind } })}
-    </h2>
+<StandardDialog
+  isOpen={showCountdown || isThisRecording}
+  onClose={cancelRecording}
+  class="flex flex-col gap-8 w-120">
+  <svelte:fragment slot="heading">
+    {$t('content.data.recordingDialog.title', { values: { action: $nameBind } })}
+  </svelte:fragment>
+  <svelte:fragment slot="body">
     <div class="flex flex-col space-y-3 self-center items-center justify-center">
       <div class="flex justify-center">
         <p class="text-lg px-10 text-center">
@@ -301,7 +304,7 @@
     </div>
     <StandardButton type="warning" onClick={cancelRecording}
       >{$t('content.data.recording.button.cancel')}</StandardButton>
-  </div>
+  </svelte:fragment>
 </StandardDialog>
 
 <!-- Title of gesture-->

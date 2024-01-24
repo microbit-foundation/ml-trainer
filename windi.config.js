@@ -37,7 +37,6 @@ export default {
         backgroundlight: '#ffffff',
         infolight: '#93c5fd',
         link: '#6c4bc1',
-        warning: '#cd0365',
         disabled: '#8892A3',
         primaryborder: '#E5E7EB',
         infobglight: '#E7E5E4',
