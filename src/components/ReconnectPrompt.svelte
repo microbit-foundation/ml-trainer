@@ -5,7 +5,6 @@
  -->
 
 <script lang="ts">
-  import { horizontalSlide } from '../script/transitions';
   import StandardButton from '../components/StandardButton.svelte';
   import { state } from '../script/stores/uiStore';
   import { t } from '../i18n';
@@ -13,19 +12,21 @@
   import MBSpecs from '../script/microbit-interfacing/MBSpecs';
   import Microbits from '../script/microbit-interfacing/Microbits';
   import { DeviceRequestStates } from '../script/stores/connectDialogStore';
+  import StandardDialog from './dialogs/StandardDialog.svelte';
 
-  let reconnectText: string;
-  let reconnectButtonText: string;
+  export let isOpen: boolean = false;
 
-  state.subscribe(s => {
-    if (s.reconnectState === DeviceRequestStates.INPUT) {
-      reconnectText = $t('disconnectedWarning.input');
-      reconnectButtonText = $t('disconnectedWarning.reconnectButton.input');
-    } else if (s.reconnectState === DeviceRequestStates.OUTPUT) {
-      reconnectText = $t('disconnectedWarning.output');
-      reconnectButtonText = $t('disconnectedWarning.reconnectButton.output');
-    }
-  });
+  const dialogText =
+    $state.reconnectState === DeviceRequestStates.INPUT
+      ? {
+          bodyId: 'disconnectedWarning.input',
+          buttonId: 'disconnectedWarning.reconnectButton.input',
+        }
+      : {
+          bodyId: 'disconnectedWarning.output',
+          buttonId: 'disconnectedWarning.reconnectButton.output',
+        };
+
   // When disconnected by lost connection, offer the option to attempt to reconnect
   let hideReconnectMessageAfterTimeout = false;
   state.subscribe(s => {
@@ -56,23 +57,10 @@
   };
 </script>
 
-<div
-  class="absolute top-8 right-4 bg-white rounded-md p-6 border-1 border-black z-5"
-  transition:horizontalSlide>
-  <div class="w-100">
-    <div class="absolute right-2 top-2 svelte-1rnkjvh">
-      <button
-        class="hover:bg-gray-100 rounded outline-transparent w-8 svelte-1rnkjvh"
-        on:click={() => ($state.offerReconnect = false)}>
-        <i
-          class="fas fa-plus text-lg text-gray-600 hover:text-gray-800 duration-75 svelte-1rnkjvh"
-          style="transform: rotate(45deg);" />
-      </button>
-    </div>
-    <p>{reconnectText}</p>
-    <div class="flex justify-center">
-      <StandardButton onClick={() => reconnect($state.reconnectState)}
-        >{reconnectButtonText}</StandardButton>
-    </div>
+<StandardDialog {isOpen} onClose={() => ($state.offerReconnect = false)} class="w-100">
+  <p>{$t(dialogText.bodyId)}</p>
+  <div class="flex justify-center">
+    <StandardButton type="primary" onClick={() => reconnect($state.reconnectState)}
+      >{$t(dialogText.buttonId)}</StandardButton>
   </div>
-</div>
+</StandardDialog>
