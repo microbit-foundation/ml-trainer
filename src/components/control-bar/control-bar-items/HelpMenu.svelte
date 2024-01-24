@@ -46,7 +46,7 @@
   <div class="relative inline-block">
     <IconButton
       bind:this={helpButtonRef}
-      ariaLabel={$t('settings.label')}
+      ariaLabel={$t('helpMenu.label')}
       rounded
       {...$trigger}
       useAction={trigger}
