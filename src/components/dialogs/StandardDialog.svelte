@@ -11,6 +11,7 @@
   import CloseIcon from 'virtual:icons/ri/close-line';
   import { t } from '../../i18n';
   import IconButton from '../IconButton.svelte';
+  import { onDestroy } from 'svelte';
 
   export let hasCloseButton = true;
   export let closeOnOutsideClick: boolean = true;
@@ -25,10 +26,10 @@
   };
 
   const onCloseDialog = () => {
+    onClose();
     if (finalFocusRef) {
       (finalFocusRef as HTMLElement).focus();
     }
-    onClose();
   };
 
   const onOpenChange: CreateDialogProps['onOpenChange'] = ({ next }) => {
@@ -47,9 +48,23 @@
     forceVisible: true,
     preventScroll: true,
     closeOnOutsideClick,
-    closeOnEscape,
+    closeOnEscape: false,
     onOpenChange,
   });
+
+  const keyListener = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      onCloseDialog();
+    }
+  };
+
+  $: {
+    if (closeOnEscape) {
+      document.addEventListener('keydown', keyListener);
+    } else {
+      document.removeEventListener('keydown', keyListener);
+    }
+  }
 
   const { open } = states;
 
@@ -62,6 +77,8 @@
   } else {
     onCloseDialog();
   }
+
+  onDestroy(() => document.removeEventListener('keydown', keyListener));
 </script>
 
 <div class="fixed z-10" use:melt={$portalled}>
@@ -81,7 +98,7 @@
         {#if hasCloseButton}
           <div class="absolute right-2 top-2">
             <IconButton
-              onClick={onClose}
+              onClick={onCloseDialog}
               useAction={$close.action}
               ariaLabel={$t('actions.close')}>
               <CloseIcon class="text-xl m-1" />
