@@ -9,55 +9,135 @@
 
 import {
   MicrobitSensorState,
+  splitMessages,
   processPeriodicMessage,
 } from '../script/microbit-interfacing/serialProtocol';
 
-describe('processInput', () => {
+describe('splitMessages', () => {
+  it('splits a single message', () => {
+    const message = 'P0E80495C4341\n';
+
+    const got = splitMessages(message);
+
+    expect(got.messages.length).toEqual(1);
+    expect(got.messages[0]).toEqual(message.slice(0, -1));
+    expect(got.remainingInput).toEqual('');
+  });
+
+  it('splits multiple messages', () => {
+    const message1 = 'P21998AEC2F80';
+    const message2 = 'P21FFF000FFF3';
+    const message3 = 'P45000FFF0002';
+
+    const msgs = splitMessages(message1 + '\n' + message2 + '\n' + message3 + '\n');
+
+    expect(msgs.messages.length).toEqual(3);
+    expect(msgs.messages[0]).toEqual(message1);
+    expect(msgs.messages[1]).toEqual(message2);
+    expect(msgs.messages[2]).toEqual(message3);
+    expect(msgs.remainingInput).toEqual('');
+  });
+
+  it('splits multiple messages with extra input', () => {
+    const message1 = 'P188009584343';
+    const message2 = 'P19998AEC2F80';
+    const message3 = 'P201234';
+
+    const msgs = splitMessages(message1 + '\n' + message2 + '\n' + message3);
+
+    expect(msgs.messages.length).toEqual(2);
+    expect(msgs.messages[0]).toEqual(message1);
+    expect(msgs.messages[1]).toEqual(message2);
+    expect(msgs.remainingInput).toEqual(message3);
+  });
+
+  it('processes empty input correctly', () => {
+    const msgs = splitMessages('');
+
+    expect(msgs.messages.length).toEqual(0);
+    expect(msgs.remainingInput).toEqual('');
+  });
+});
+
+describe('processPeriodicMessage', () => {
   it('extracts the micro:bit state from the message', () => {
-    const message = 'P[00000213]AX[408]AY[748]AZ[-1288]BA[1]BB[1]';
+    const message = 'P0E80495C4341';
 
     const got = processPeriodicMessage(message);
 
     const want: MicrobitSensorState = {
-      accelerometerX: 408,
-      accelerometerY: 748,
-      accelerometerZ: -1288,
+      accelerometerX: 4,
+      accelerometerY: 348,
+      accelerometerZ: -972,
       buttonA: 1,
-      buttonB: 1,
+      buttonB: 0,
     };
     expect(got).toEqual(want);
   });
 
-  it('extracts state, and adds other messages to remaining input', () => {
-    const message1 = 'P[213]AX[408]AY[748]AZ[-1288]BA[1]BB[1]';
-    const message2 = 'P[214]AX[-1]AY[133]AZ[84]BA[0]BB[0]';
-    const message3 = 'P[45]AX[894]AY[-95]AZ[31]BA[1]BB[1]';
-
-    const got = processPeriodicMessage(message1 + message2 + message3);
-
-    const want: MicrobitSensorState = {
-      accelerometerX: 408,
-      accelerometerY: 748,
-      accelerometerZ: -1288,
+  it('processes min/max values correctly', () => {
+    const message1 = 'P00FFF000FFF0';
+    const want1: MicrobitSensorState = {
+      accelerometerX: 2047,
+      accelerometerY: -2048,
+      accelerometerZ: 2047,
+      buttonA: 0,
+      buttonB: 0,
+    };
+    const message2 = 'PFF000FFF0003';
+    const want2: MicrobitSensorState = {
+      accelerometerX: -2048,
+      accelerometerY: 2047,
+      accelerometerZ: -2048,
       buttonA: 1,
       buttonB: 1,
     };
-    expect(got).toEqual(want);
+
+    const got1 = processPeriodicMessage(message1);
+    const got2 = processPeriodicMessage(message2);
+
+    expect(got1).toEqual(want1);
+    expect(got2).toEqual(want2);
   });
 
-  it('extracts state, and adds incomplete messages to remaining input', () => {
-    const message1 = 'P[213]AX[408]AY[748]AZ[-1288]BA[1]BB[1]';
-    const message2 = 'P[214]AX[-1]AY[133]A';
+  it('ignores messages that are not periodic', () => {
+    const message1 = 'C001112223334';
+    const message2 = 'R001112223334';
 
-    const got = processPeriodicMessage(message1 + message2);
+    const got1 = processPeriodicMessage(message1);
+    const got2 = processPeriodicMessage(message2);
 
-    const want: MicrobitSensorState = {
-      accelerometerX: 408,
-      accelerometerY: 748,
-      accelerometerZ: -1288,
-      buttonA: 1,
-      buttonB: 1,
-    };
-    expect(got).toEqual(want);
+    expect(got1).toBeUndefined();
+    expect(got2).toBeUndefined();
+  });
+
+  it('ignores wrong length input', () => {
+    const message1 = 'P21998AEC2F8\n';
+    const message2 = 'P21998AEC2F';
+
+    const got1 = processPeriodicMessage(message1);
+    const got2 = processPeriodicMessage(message2);
+
+    expect(got1).toBeUndefined();
+    expect(got2).toBeUndefined();
+  });
+
+  it('detects invalid button values', () => {
+    const message1 = 'P000000000004';
+    const message2 = 'P00000000000F';
+
+    const got1 = processPeriodicMessage(message1);
+    const got2 = processPeriodicMessage(message2);
+
+    expect(got1).toBeUndefined();
+    expect(got2).toBeUndefined();
+  });
+
+  it('detects invalid hex values', () => {
+    const message1 = 'Pz01112223334';
+
+    const got1 = processPeriodicMessage(message1);
+
+    expect(got1).toBeUndefined();
   });
 });
