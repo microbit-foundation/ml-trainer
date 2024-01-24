@@ -12,7 +12,8 @@
   import { t } from '../../i18n';
   import IconButton from '../IconButton.svelte';
   export let hasCloseButton = true;
-  export let createDialogPropsOverride: CreateDialogProps = {};
+  export let closeOnOutsideClick: boolean = true;
+  export let closeOnEscape: boolean = true;
   export let isOpen: boolean;
   export let onClose: () => void;
   export let title: string | undefined = undefined;
@@ -46,10 +47,9 @@
   } = createDialog({
     forceVisible: true,
     preventScroll: true,
-    closeOnOutsideClick: true,
-    closeOnEscape: true,
+    closeOnOutsideClick,
+    closeOnEscape,
     onOpenChange,
-    ...createDialogPropsOverride,
   });
 
   const { open } = states;
