@@ -20,8 +20,8 @@
   export let isOpen: boolean;
 </script>
 
-<StandardDialog {isOpen} {onClose}>
-  <div slot="body" class="flex flex-col gap-5 w-150 text-black">
+<StandardDialog {isOpen} {onClose} class="flex flex-col gap-5 w-150 text-black">
+  <svelte:fragment slot="body">
     <div class="flex flex-col gap-8">
       <div class="grid grid-cols-2 gap-20 items-center">
         <img src={microbitLogo} alt="micro:bit" />
@@ -67,5 +67,5 @@
       <StandardButton onClick={onClose} type="primary"
         >{$t('actions.close')}</StandardButton>
     </div>
-  </div>
+  </svelte:fragment>
 </StandardDialog>

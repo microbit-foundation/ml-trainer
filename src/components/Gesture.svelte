@@ -274,36 +274,37 @@
 <StandardDialog
   isOpen={showCountdown || isThisRecording}
   onClose={cancelRecording}
-  class="flex flex-col items-center gap-8 w-120">
+  class="flex flex-col gap-8 w-120">
   <svelte:fragment slot="heading">
     {$t('content.data.recordingDialog.title', { values: { action: $nameBind } })}
   </svelte:fragment>
-  <div
-    slot="body"
-    class="flex flex-col space-y-3 self-center items-center justify-center">
-    <div class="flex justify-center">
-      <p class="text-lg px-10 text-center">
-        {$t('content.data.recording.description')}
-      </p>
-    </div>
-    <div class="flex items-center h-100px">
-      {#if countdownValue > 0}
-        <p class="text-8xl text-center font-bold text-brand-500">
-          {countdownValue}
+  <svelte:fragment slot="body">
+    <div class="flex flex-col space-y-3 self-center items-center justify-center">
+      <div class="flex justify-center">
+        <p class="text-lg px-10 text-center">
+          {$t('content.data.recording.description')}
         </p>
-      {:else}
-        <p class="text-5xl text-center font-bold text-brand-500">
-          {$t('content.data.recordingDialog.recording')}
-        </p>
-      {/if}
+      </div>
+      <div class="flex items-center h-100px">
+        {#if countdownValue > 0}
+          <p class="text-8xl text-center font-bold text-brand-500">
+            {countdownValue}
+          </p>
+        {:else}
+          <p class="text-5xl text-center font-bold text-brand-500">
+            {$t('content.data.recordingDialog.recording')}
+          </p>
+        {/if}
+      </div>
+      <!-- Recording bar to show recording progress -->
+      <div class="w-70 h-6 bg-red-200 rounded-full overflow-hidden">
+        <div
+          class="h-full bg-red-600 w-0 {isThisRecording ? 'animate-loading-bar' : ''}" />
+      </div>
     </div>
-    <!-- Recording bar to show recording progress -->
-    <div class="w-70 h-6 bg-red-200 rounded-full overflow-hidden">
-      <div class="h-full bg-red-600 w-0 {isThisRecording ? 'animate-loading-bar' : ''}" />
-    </div>
-  </div>
-  <StandardButton type="warning" onClick={cancelRecording}
-    >{$t('content.data.recording.button.cancel')}</StandardButton>
+    <StandardButton type="warning" onClick={cancelRecording}
+      >{$t('content.data.recording.button.cancel')}</StandardButton>
+  </svelte:fragment>
 </StandardDialog>
 
 <!-- Title of gesture-->

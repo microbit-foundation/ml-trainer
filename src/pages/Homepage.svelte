@@ -163,29 +163,31 @@
 <StandardDialog
   isOpen={showDataLossWarning}
   onClose={() => (showDataLossWarning = false)}
-  class="w-150">
+  class="w-150 space-y-5">
   <svelte:fragment slot="heading">
     {$t('content.index.dataWarning.title')}
   </svelte:fragment>
-  <div slot="body" class="space-y-5">
-    <p>{$t('content.index.dataWarning.subtitleOne')}</p>
-    <p>
-      <HtmlFormattedMessage
-        id="content.index.dataWarning.subtitleTwo"
-        options={{
-          values: {
-            link: linkWithProps({
-              href:
-                'data:application/json;charset=utf-8,' +
-                encodeURIComponent(JSON.stringify(get(gestures), null, 2)),
-              download: 'dataset.json',
-            }),
-          },
-        }} />
-    </p>
-    <div class="flex justify-end items-center gap-x-5">
-      <StandardButton onClick={handleNewSession} type="primary"
-        >{$t('footer.start')}</StandardButton>
+  <svelte:fragment slot="body">
+    <div slot="body" class="space-y-5">
+      <p>{$t('content.index.dataWarning.subtitleOne')}</p>
+      <p>
+        <HtmlFormattedMessage
+          id="content.index.dataWarning.subtitleTwo"
+          options={{
+            values: {
+              link: linkWithProps({
+                href:
+                  'data:application/json;charset=utf-8,' +
+                  encodeURIComponent(JSON.stringify(get(gestures), null, 2)),
+                download: 'dataset.json',
+              }),
+            },
+          }} />
+      </p>
+      <div class="flex justify-end items-center gap-x-5">
+        <StandardButton onClick={handleNewSession} type="primary"
+          >{$t('footer.start')}</StandardButton>
+      </div>
     </div>
-  </div>
+  </svelte:fragment>
 </StandardDialog>

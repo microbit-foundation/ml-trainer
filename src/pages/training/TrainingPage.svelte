@@ -46,18 +46,20 @@
 <StandardDialog
   isOpen={isFailedTrainingDialogOpen}
   onClose={() => (isFailedTrainingDialogOpen = false)}
-  class="w-175">
+  class="w-175 space-y-5">
   <svelte:fragment slot="heading">
     {$t('content.trainer.failure.header')}
   </svelte:fragment>
-  <div slot="body" class="space-y-3">
-    <p>
-      {$t('content.trainer.failure.body')}
-    </p>
-    <p class="font-bold">
-      {$t('content.trainer.failure.todo')}
-    </p>
-  </div>
+  <svelte:fragment slot="body">
+    <div class="space-y-3">
+      <p>
+        {$t('content.trainer.failure.body')}
+      </p>
+      <p class="font-bold">
+        {$t('content.trainer.failure.todo')}
+      </p>
+    </div>
+  </svelte:fragment>
 </StandardDialog>
 
 <div class="flex flex-col items-center pb-5 bg-backgrounddark">
