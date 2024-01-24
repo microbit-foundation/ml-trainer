@@ -10,10 +10,6 @@ import MBSpecs from './MBSpecs';
 export interface MicrobitConnection {
   isSameDevice(other: MicrobitConnection): boolean;
 
-  listenForDisconnect(callback: (event: Event) => unknown): void;
-
-  removeDisconnectListener(callback: (event: Event) => unknown): void;
-
   isConnected(): boolean;
 
   disconnect(): void;

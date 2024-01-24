@@ -97,10 +97,6 @@ class MicrobitSerial implements MicrobitConnection {
     }
   }
 
-  public listenForDisconnect(callback: (event: Event) => unknown): void {}
-
-  public removeDisconnectListener(callback: (event: Event) => unknown): void {}
-
   public isConnected(): boolean {
     return this.usb.isSerialConnected();
   }

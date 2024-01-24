@@ -59,22 +59,6 @@ export class MicrobitBluetooth implements MicrobitConnection {
     return other instanceof MicrobitBluetooth && other.device.id === this.device.id;
   }
 
-  /**
-   * Adds a listener for the 'gattserverdisconnected' event.
-   * @param {Event => void} callback The function to execute.
-   */
-  public listenForDisconnect(callback: (event: Event) => unknown): void {
-    return this.device.addEventListener('gattserverdisconnected', callback);
-  }
-
-  /**
-   * Removes a listener for the 'gattserverdisconnected' event.
-   * @param callback
-   */
-  public removeDisconnectListener(callback: (event: Event) => unknown): void {
-    return this.device.removeEventListener('gattserverdisconnected', callback);
-  }
-
   public async listenToInputServices(
     inputBehaviour: InputBehaviour,
     inputUartHandler: (data: string) => void,
@@ -312,11 +296,11 @@ export class MicrobitBluetooth implements MicrobitConnection {
       this.device.gatt
         .connect()
         .then(() => {
-          this.onReconnect?.(this);
+          this.onReconnect(this);
         })
         .catch(e => {
           isDevMode && console.error(e);
-          void this.onReconnectFailed();
+          this.onReconnectFailed();
         });
     } else {
       isDevMode && console.error('No gatt server found!');
