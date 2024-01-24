@@ -21,7 +21,7 @@
 </script>
 
 <StandardDialog {isOpen} {onClose}>
-  <div class="flex flex-col gap-5 w-150 text-black">
+  <div slot="body" class="flex flex-col gap-5 w-150 text-black">
     <div class="flex flex-col gap-8">
       <div class="grid grid-cols-2 gap-20 items-center">
         <img src={microbitLogo} alt="micro:bit" />

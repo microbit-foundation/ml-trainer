@@ -15,12 +15,11 @@
   };
 </script>
 
-<StandardDialog
-  isOpen={$isCompatibilityWarningDialogOpen}
-  {onClose}
-  class="w-175"
-  title={$t('popup.compatibility.header')}>
-  <div class="space-y-5">
+<StandardDialog isOpen={$isCompatibilityWarningDialogOpen} {onClose} class="w-175">
+  <svelte:fragment slot="heading">
+    {$t('popup.compatibility.header')}
+  </svelte:fragment>
+  <div slot="body" class="space-y-5">
     <div class="space-y-2">
       <p>{$t('popup.compatibility.explain')}</p>
       <p>{$t('popup.compatibility.advice')}</p>

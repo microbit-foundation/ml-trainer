@@ -14,12 +14,11 @@
   export let isOpen: boolean;
 </script>
 
-<StandardDialog
-  {isOpen}
-  {onClose}
-  class="flex flex-col gap-5 w-150"
-  title={$t('languageDialog.title')}>
-  <div class="grid grid-cols-2 gap-5">
+<StandardDialog {isOpen} {onClose} class="flex flex-col gap-5 w-150">
+  <svelte:fragment slot="heading">
+    {$t('languageDialog.title')}
+  </svelte:fragment>
+  <div slot="body" class="grid grid-cols-2 gap-5">
     {#each allLanguages as language}
       <button
         class="flex items-stretch p-3 rounded-xl h-auto border-2 border-gray-200 text-link hover:bg-gray-100 outline-none focus-visible:ring-4 focus-visible:ring-ring"

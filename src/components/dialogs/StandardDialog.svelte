@@ -11,13 +11,12 @@
   import CloseIcon from 'virtual:icons/ri/close-line';
   import { t } from '../../i18n';
   import IconButton from '../IconButton.svelte';
+
   export let hasCloseButton = true;
   export let closeOnOutsideClick: boolean = true;
   export let closeOnEscape: boolean = true;
   export let isOpen: boolean;
   export let onClose: () => void;
-  export let title: string | undefined = undefined;
-  export let titleClass: string | undefined = undefined;
 
   let finalFocusRef: Element | null;
 
@@ -42,7 +41,7 @@
   };
 
   const {
-    elements: { overlay, content, title: titleElement, portalled },
+    elements: { overlay, content, title, close, portalled },
     states,
   } = createDialog({
     forceVisible: true,
@@ -81,19 +80,24 @@
         }}>
         {#if hasCloseButton}
           <div class="absolute right-2 top-2">
-            <IconButton onClick={onCloseDialog} ariaLabel={$t('actions.close')}>
+            <IconButton
+              onClick={onClose}
+              useAction={$close.action}
+              ariaLabel={$t('actions.close')}>
               <CloseIcon class="text-xl m-1" />
             </IconButton>
           </div>
         {/if}
         <div class={$$restProps.class || ''}>
-          {#if title}
-            <h2 use:melt={$titleElement} class={titleClass || 'text-xl font-bold pb-5'}>
-              {title}
-            </h2>
-          {/if}
-          <slot />
+          <h2 use:melt={$title} class="text-xl font-bold">
+            <slot name="heading" />
+          </h2>
+          <slot name="body" />
         </div>
+        <!-- Needed for the connection flow dialogs for now -->
+        {#if !$$slots.heading && !$$slots.body}
+          <slot />
+        {/if}
       </div>
     </div>
   {/if}

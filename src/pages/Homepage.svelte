@@ -163,9 +163,11 @@
 <StandardDialog
   isOpen={showDataLossWarning}
   onClose={() => (showDataLossWarning = false)}
-  class="w-150"
-  title={$t('content.index.dataWarning.title')}>
-  <div class="space-y-5">
+  class="w-150">
+  <svelte:fragment slot="heading">
+    {$t('content.index.dataWarning.title')}
+  </svelte:fragment>
+  <div slot="body" class="space-y-5">
     <p>{$t('content.index.dataWarning.subtitleOne')}</p>
     <p>
       <HtmlFormattedMessage

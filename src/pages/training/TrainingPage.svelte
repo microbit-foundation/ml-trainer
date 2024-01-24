@@ -46,9 +46,11 @@
 <StandardDialog
   isOpen={isFailedTrainingDialogOpen}
   onClose={() => (isFailedTrainingDialogOpen = false)}
-  class="w-175"
-  title={$t('content.trainer.failure.header')}>
-  <div class="space-y-3">
+  class="w-175">
+  <svelte:fragment slot="heading">
+    {$t('content.trainer.failure.header')}
+  </svelte:fragment>
+  <div slot="body" class="space-y-3">
     <p>
       {$t('content.trainer.failure.body')}
     </p>
