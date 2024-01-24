@@ -11,12 +11,13 @@
   import { t } from '../../../i18n';
   import MenuItems from './MenuItems.svelte';
   import MenuItem from './MenuItem.svelte';
-  import { createDropdownMenu, melt } from '@melt-ui/svelte';
+  import { createDropdownMenu } from '@melt-ui/svelte';
+  import IconButton from '../../IconButton.svelte';
 
   const menu = createDropdownMenu({ forceVisible: true });
   const { trigger } = menu.elements;
   const { open } = menu.states;
-  let settingsButtonRef: HTMLElement | null;
+  let settingsButtonRef: IconButton | null;
 
   let isLanguageDialogOpen = false;
   const onLanguageClick = () => {
@@ -31,13 +32,15 @@
 <div>
   <LanguageDialog isOpen={isLanguageDialogOpen} onClose={onLanguagDialogClose} />
   <div class="relative inline-block">
-    <button
+    <IconButton
       bind:this={settingsButtonRef}
-      use:melt={$trigger}
-      aria-label={$t('settings.label')}
+      ariaLabel={$t('settings.label')}
+      rounded
+      {...$trigger}
+      useAction={trigger}
       class="inline-flex rounded-full text-xl p-2 outline-none focus-visible:ring-ringBright focus-visible:ring-4 focus-visible:ring-offset-1">
       <SettingsIcon class="text-white" />
-    </button>
+    </IconButton>
     {#if $open}
       <MenuItems {menu}>
         <div class="py-2">

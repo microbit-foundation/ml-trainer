@@ -17,6 +17,11 @@
   export let ariaLabel: string;
   export let rounded: boolean = false;
   export let useAction: Action = () => {};
+  let iconButton: undefined | HTMLElement;
+
+  export const focus = () => {
+    iconButton?.focus();
+  };
 
   const classes = {
     ghost: {
@@ -41,6 +46,7 @@
   on:focus
   on:select
   use:useAction
+  bind:this={iconButton}
   {...$$restProps}>
   <slot />
 </button>
