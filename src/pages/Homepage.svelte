@@ -85,7 +85,6 @@
   <title>{title}</title>
 </svelte:head>
 
-<CompatibilityWarningDialog />
 <main class="h-full flex flex-col items-center bg-backgrounddark">
   <h1 class="sr-only">{$t('content.index.title')}</h1>
   <div class="mb-8">
