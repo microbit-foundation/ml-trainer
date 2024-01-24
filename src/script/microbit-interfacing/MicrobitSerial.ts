@@ -10,10 +10,6 @@ import { MicrobitConnection } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
 import * as protocol from './serialProtocol';
 
-const writeLine = (message: string) => {
-  console.log(message);
-};
-
 const enum SerialProtocolState {
   AwaitingHandshakeResponse,
   Running,
@@ -88,7 +84,7 @@ class MicrobitSerial implements MicrobitConnection {
       attempts++ < 20
     ) {
       const handshakeCmd = protocol.generateCommand(protocol.CommandTypes.Handshake);
-      writeLine(`Sending handshake ${handshakeCmd.message}`);
+      console.log(`Sending handshake ${handshakeCmd.message}`);
       await this.usb.serialWrite(handshakeCmd.message);
       await new Promise(resolve => setTimeout(resolve, 100));
     }
