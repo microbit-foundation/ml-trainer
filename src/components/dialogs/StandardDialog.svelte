@@ -42,7 +42,7 @@
   };
 
   const {
-    elements: { overlay, content, title: titleElement, close, portalled },
+    elements: { overlay, content, title: titleElement, portalled },
     states,
   } = createDialog({
     forceVisible: true,
@@ -81,10 +81,7 @@
         }}>
         {#if hasCloseButton}
           <div class="absolute right-2 top-2">
-            <IconButton
-              {...$close}
-              useAction={$close.action}
-              ariaLabel={$t('actions.close')}>
+            <IconButton onClick={onCloseDialog} ariaLabel={$t('actions.close')}>
               <CloseIcon class="text-xl m-1" />
             </IconButton>
           </div>

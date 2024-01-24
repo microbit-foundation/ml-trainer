@@ -11,7 +11,7 @@
 <script lang="ts">
   import type { Action } from 'svelte/action';
 
-  export let variant: IconButtonVariant = 'ghost';
+  export let type: IconButtonVariant = 'ghost';
   export let onClick: ((e: Event) => void) | undefined = undefined;
   export let disabled = false;
   export let ariaLabel: string;
@@ -29,9 +29,9 @@
 <button
   {...$$restProps}
   {disabled}
-  class="{classes[variant].base} {disabled
+  class="{classes[type].base} {disabled
     ? ''
-    : classes[variant]
+    : classes[type]
         .enabled} leading-0 outline-none disabled:opacity-60 transition-colors duration-200 focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
   class:cursor-pointer={!disabled}
   class:cursor-default={disabled}
