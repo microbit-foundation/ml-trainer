@@ -48,8 +48,7 @@
     <slot />
   </a>
 {:else}
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <a on:click={onClickOrHrefOrPath} class={sharedClass}>
+  <button on:click={onClickOrHrefOrPath} class={sharedClass}>
     <slot />
-  </a>
+  </button>
 {/if}
