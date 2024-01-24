@@ -38,9 +38,9 @@
       enabled: '',
     },
     primary: {
-      base: 'font-bold rounded-4xl bg-brand-500 text-white border-solid border-2 border-brand-500',
+      base: 'font-bold rounded-4xl bg-brand-700 text-white border-solid border-2 border-brand-700',
       enabled:
-        'hover:bg-brand-600 hover:border-brand-600 active:bg-brand-700 active:border-brand-700',
+        'hover:bg-brand-800 hover:border-brand-800 active:bg-brand-900 active:border-brand-900',
     },
     secondary: {
       base: 'font-bold rounded-4xl text-brand-700 border-solid border-2 border-brand-500',
