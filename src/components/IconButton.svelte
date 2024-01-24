@@ -9,16 +9,19 @@
 </script>
 
 <script lang="ts">
+  import type { Action } from 'svelte/action';
+
   export let type: IconButtonVariant = 'ghost';
   export let onClick: ((e: Event) => void) | undefined = undefined;
   export let disabled = false;
   export let ariaLabel: string;
   export let rounded: boolean = false;
-  export let useAction:
-    | ((node: HTMLElement) => {
-        destroy: () => void;
-      })
-    | (() => void) = () => {};
+  export let useAction: Action = () => {};
+  let iconButton: undefined | HTMLElement;
+
+  export const focus = () => {
+    iconButton?.focus();
+  };
 
   const classes = {
     ghost: {
@@ -42,6 +45,8 @@
   on:click={onClick}
   on:focus
   on:select
-  use:useAction>
+  use:useAction
+  bind:this={iconButton}
+  {...$$restProps}>
   <slot />
 </button>

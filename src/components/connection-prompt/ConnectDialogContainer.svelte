@@ -207,7 +207,9 @@
     onClose={connectionStateNone}
     hasCloseButton={$connectionDialogState.connectionState !==
       ConnectDialogStates.USB_DOWNLOADING}
-    dismissOnClickOutside={false}>
+    closeOnOutsideClick={false}
+    closeOnEscape={$connectionDialogState.connectionState !==
+      ConnectDialogStates.USB_DOWNLOADING}>
     {#if $connectionDialogState.connectionState === ConnectDialogStates.START_RADIO}
       <StartRadioDialog
         onStartBluetoothClick={bluetooth

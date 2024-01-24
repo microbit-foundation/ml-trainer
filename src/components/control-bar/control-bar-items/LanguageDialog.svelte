@@ -9,15 +9,16 @@
   import { allLanguages, t } from '../../../i18n';
   import { locale as currentLocale } from 'svelte-i18n';
   import StandardDialog from '../../dialogs/StandardDialog.svelte';
-  import DialogHeading from '../../DialogHeading.svelte';
 
   export let onClose: () => void;
   export let isOpen: boolean;
 </script>
 
-<StandardDialog {isOpen} {onClose}>
-  <div class="flex flex-col gap-5 w-150">
-    <DialogHeading>{$t('languageDialog.title')}</DialogHeading>
+<StandardDialog {isOpen} {onClose} class="flex flex-col gap-5 w-150">
+  <svelte:fragment slot="heading">
+    {$t('languageDialog.title')}
+  </svelte:fragment>
+  <svelte:fragment slot="body">
     <div class="grid grid-cols-2 gap-5">
       {#each allLanguages as language}
         <button
@@ -37,5 +38,5 @@
       <StandardButton onClick={onClose} type="primary"
         >{$t('actions.close')}</StandardButton>
     </div>
-  </div>
+  </svelte:fragment>
 </StandardDialog>

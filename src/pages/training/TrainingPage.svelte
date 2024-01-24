@@ -8,7 +8,6 @@
   import { hasSufficientData, state } from '../../script/stores/uiStore';
   import { TrainingStatus, trainingStatus } from '../../script/stores/mlStore';
   import { t } from '../../i18n';
-  import StandardDialog from '../../components/dialogs/StandardDialog.svelte';
   import TrainingButton from './TrainingButton.svelte';
   import TabView from '../../views/TabView.svelte';
   import trainModelImage from '../../imgs/TrainModel.svg';
@@ -16,8 +15,8 @@
   import { Paths, getTitle, navigate } from '../../router/paths';
   import { trainModel } from '../../script/ml';
   import TrainingStatusSection from '../../components/TrainingStatusSection.svelte';
-  import DialogHeading from '../../components/DialogHeading.svelte';
   import LoadingBar from '../../components/LoadingBar.svelte';
+  import StandardDialog from '../../components/dialogs/StandardDialog.svelte';
 
   function navigateModelPage(): void {
     navigate(Paths.MODEL);
@@ -46,11 +45,12 @@
 
 <StandardDialog
   isOpen={isFailedTrainingDialogOpen}
-  onClose={() => (isFailedTrainingDialogOpen = false)}>
-  <div class="w-175">
-    <DialogHeading>
-      {$t('content.trainer.failure.header')}
-    </DialogHeading>
+  onClose={() => (isFailedTrainingDialogOpen = false)}
+  class="w-175 space-y-5">
+  <svelte:fragment slot="heading">
+    {$t('content.trainer.failure.header')}
+  </svelte:fragment>
+  <svelte:fragment slot="body">
     <div class="space-y-3">
       <p>
         {$t('content.trainer.failure.body')}
@@ -59,7 +59,7 @@
         {$t('content.trainer.failure.todo')}
       </p>
     </div>
-  </div>
+  </svelte:fragment>
 </StandardDialog>
 
 <div class="flex flex-col items-center pb-5 bg-backgrounddark">

@@ -28,7 +28,6 @@
   import { Paths, currentPath, getTitle, navigate } from '../router/paths';
   import { gestures } from '../script/stores/Stores';
   import StandardDialog from '../components/dialogs/StandardDialog.svelte';
-  import DialogHeading from '../components/DialogHeading.svelte';
   import { clearGestures } from '../script/stores/mlStore';
   import { get } from 'svelte/store';
 
@@ -163,10 +162,13 @@
 
 <StandardDialog
   isOpen={showDataLossWarning}
-  onClose={() => (showDataLossWarning = false)}>
-  <div class="w-150">
-    <DialogHeading>{$t('content.index.dataWarning.title')}</DialogHeading>
-    <div class="space-y-5">
+  onClose={() => (showDataLossWarning = false)}
+  class="w-150 space-y-5">
+  <svelte:fragment slot="heading">
+    {$t('content.index.dataWarning.title')}
+  </svelte:fragment>
+  <svelte:fragment slot="body">
+    <div slot="body" class="space-y-5">
       <p>{$t('content.index.dataWarning.subtitleOne')}</p>
       <p>
         <HtmlFormattedMessage
@@ -187,5 +189,5 @@
           >{$t('footer.start')}</StandardButton>
       </div>
     </div>
-  </div>
+  </svelte:fragment>
 </StandardDialog>

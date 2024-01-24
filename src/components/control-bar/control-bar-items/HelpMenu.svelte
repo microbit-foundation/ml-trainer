@@ -5,83 +5,79 @@
  -->
 
 <script lang="ts">
-  import { createMenu } from 'svelte-headlessui';
+  import { createDropdownMenu } from '@melt-ui/svelte';
   import ExternalLinkIcon from 'virtual:icons/ri/external-link-line';
   import HelpIcon from 'virtual:icons/ri/question-line';
   import InfoIcon from 'virtual:icons/ri/information-line';
   import CookiesIcon from 'virtual:icons/mdi/cookie-outline';
-  import MenuTransition from '../../MenuTransition.svelte';
   import { manageCookies } from '../../../script/stores/complianceStore';
   import AboutDialog from './AboutDialog.svelte';
   import { t } from '../../../i18n';
   import MenuItems from './MenuItems.svelte';
   import MenuItem from './MenuItem.svelte';
+  import IconButton from '../../IconButton.svelte';
 
-  const menu = createMenu({ label: $t('helpMenu.label') });
+  const menu = createDropdownMenu({ forceVisible: true });
+  const { trigger } = menu.elements;
+  const { open } = menu.states;
+
   let isAboutDialogOpen = false;
+  let helpButtonRef: IconButton | null;
 
-  const onSelect = (event: Event) => {
-    const { selected } = (event as CustomEvent).detail;
-    const openLink = (url: string) => window.open(url, '_blank', 'noopener');
-    switch (selected) {
-      case 'about': {
-        isAboutDialogOpen = true;
-        break;
-      }
-      case 'cookies': {
-        manageCookies();
-        break;
-      }
-      case 'terms-of-use': {
-        openLink('https://microbit.org/terms-of-use/');
-        break;
-      }
-      case 'help-and-support': {
-        openLink('https://support.microbit.org/support/home');
-        break;
-      }
-    }
-    menu.set({ selected: null });
+  const openLink = (url: string) => window.open(url, '_blank', 'noopener');
+
+  const onAboutClick = () => {
+    isAboutDialogOpen = true;
+  };
+  const onAboutDialogClose = () => {
+    isAboutDialogOpen = false;
+    helpButtonRef?.focus();
+  };
+  const onTermsOfUseClick = () => {
+    openLink('https://microbit.org/terms-of-use/');
+  };
+  const onHelpAndSupportClick = () => {
+    openLink('https://support.microbit.org/support/home');
   };
 </script>
 
 <div>
-  <AboutDialog
-    isOpen={isAboutDialogOpen}
-    onClose={() => {
-      isAboutDialogOpen = false;
-    }} />
+  <AboutDialog isOpen={isAboutDialogOpen} onClose={onAboutDialogClose} />
   <div class="relative inline-block">
-    <button
-      use:menu.button
-      on:select={onSelect}
+    <IconButton
+      bind:this={helpButtonRef}
+      ariaLabel={$t('helpMenu.label')}
+      rounded
+      {...$trigger}
+      useAction={trigger}
       class="inline-flex rounded-full text-xl p-2 outline-none focus-visible:ring-ringBright focus-visible:ring-4 focus-visible:ring-offset-1">
       <HelpIcon class="text-white" />
-    </button>
-    <MenuTransition show={$menu.expanded}>
+    </IconButton>
+    {#if $open}
       <MenuItems {menu}>
         <div class="py-2">
-          <MenuItem {menu} value="help-and-support">
+          <MenuItem {menu} on:m-click={onHelpAndSupportClick}>
             <ExternalLinkIcon />
             {$t('helpMenu.helpAndSupport')}
           </MenuItem>
         </div>
         <div class="py-2">
-          <MenuItem {menu} value="terms-of-use">
+          <MenuItem {menu} on:m-click={onTermsOfUseClick}>
             <ExternalLinkIcon />
             {$t('helpMenu.termsOfUse')}
           </MenuItem>
-          <MenuItem {menu} value="cookies">
+          <MenuItem {menu} on:m-click={manageCookies}>
             <CookiesIcon />
             {$t('helpMenu.cookies')}
           </MenuItem>
         </div>
         <div class="py-2">
-          <MenuItem {menu} value="about">
+          <MenuItem {menu} on:m-click={onAboutClick}>
             <InfoIcon />
             {$t('helpMenu.about')}
           </MenuItem>
         </div>
-      </MenuItems></MenuTransition>
+      </MenuItems>
+    {/if}
   </div>
 </div>
