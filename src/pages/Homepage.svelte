@@ -31,17 +31,10 @@
   import LinkOverlay from '../components/LinkOverlay.svelte';
   import { Paths, getTitle, navigate } from '../router/paths';
   import { gestures } from '../script/stores/Stores';
-  import CompatibilityWarningDialog from '../components/CompatibilityWarningDialog.svelte';
   import StandardDialog from '../components/dialogs/StandardDialog.svelte';
   import { clearGestures } from '../script/stores/mlStore';
   import { get } from 'svelte/store';
-
-  // Avoid youtube cookie. rel=0 should limit related videos to youtube channel.
-  // Once we have translated videos we can try e.g. cc_lang_pref=fr
-  // but we'll need to check our codes match theirs.
-  const introVideoUrl =
-    // TODO: Replace placeholder youtube video id
-    'https://www.youtube-nocookie.com/embed/u2u7UJSRuko?rel=0&cc_load_policy=1';
+  import introVideoPlaceholderImage from '../imgs/video-placeholder.png';
 
   const playgroundSurveyUrl =
     'https://stage.microbit.org/teach/playground-survey/exploring-machine-learning';
@@ -86,15 +79,28 @@
   <h1 class="sr-only">{$t('content.index.title')}</h1>
   <div class="mb-8">
     <div class="flex flex-col items-center justify-center m-10 gap-5">
+      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+      <img
+        src={introVideoPlaceholderImage}
+        alt="Placeholder image for introduction video"
+        on:click={() => alert('This is just a placeholder for the final video')}
+        class="w-38rem h-auto aspect-video"
+        style="aspect-ratio: 16/9" />
+      <!-- Once we have the final video URL
+           Avoid youtube cookie. rel=0 should limit related videos to youtube channel.
+           Once we have translated videos we can try e.g. cc_lang_pref=fr
+           but we'll need to check our codes match theirs.
+
       <iframe
         class="w-38rem h-auto aspect-video"
         style="aspect-ratio: 16/9"
-        title="introduction video"
-        src={introVideoUrl}
+        title={$t('homepage.introVideo')}
+        src="https://www.youtube-nocookie.com/embed/u2u7UJSRuko?rel=0&cc_load_policy=1"
         allow="encrypted-media"
         frameBorder="0"
         allowFullScreen>
       </iframe>
+      -->
       <p>
         <HtmlFormattedMessage
           id="content.index.toolInfo"
