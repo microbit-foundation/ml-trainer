@@ -98,23 +98,25 @@
       }
       return;
     }
-    const friendlyName = await getMicrobitName();
-    if (!friendlyName) {
+    const name = await getMicrobitName();
+    if (!name) {
       return;
     }
-    return flashMicrobit(friendlyName);
+    setBluetoothPattern(name);
+    return flashMicrobit(name);
   }
+
+  const setBluetoothPattern = (name: string) => {
+    if ($connectionDialogState.deviceState === DeviceRequestStates.OUTPUT) {
+      btPatternOutput.set(MBSpecs.Utility.nameToPattern(name));
+    } else {
+      btPatternInput.set(MBSpecs.Utility.nameToPattern(name));
+    }
+  };
 
   async function getMicrobitName(): Promise<string | undefined> {
     try {
-      const friendlyName = await Microbits.getLinkedFriendlyName();
-      // Find the name of the micro:bit
-      if ($connectionDialogState.deviceState === DeviceRequestStates.OUTPUT) {
-        btPatternOutput.set(MBSpecs.Utility.nameToPattern(friendlyName));
-      } else {
-        btPatternInput.set(MBSpecs.Utility.nameToPattern(friendlyName));
-      }
-      return friendlyName;
+      return Microbits.getLinkedFriendlyName();
     } catch (err) {
       if (flashStage === 'bluetooth') {
         $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
@@ -124,7 +126,15 @@
     }
   }
 
-  async function flashMicrobit(friendlyName: string): Promise<void> {
+  const onFlashingSuccess = (name: string) => {
+    if (flashStage === 'bluetooth' || flashStage === 'radio-sender') {
+      $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY;
+    } else if (flashStage === 'radio-bridge') {
+      connectSerial(name);
+    }
+  };
+
+  async function flashMicrobit(name: string): Promise<void> {
     const hexForStage = stageToHex(flashStage);
     try {
       await Microbits.flashHexToLinked(hexForStage, progress => {
@@ -137,12 +147,7 @@
         }
         flashProgress = progress;
       });
-      // Finished flashing successfully
-      if (flashStage === 'bluetooth' || flashStage === 'radio-sender') {
-        $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY;
-      } else if (flashStage === 'radio-bridge') {
-        onConnectingSerial(friendlyName);
-      }
+      onFlashingSuccess(name);
     } catch (err) {
       if (flashStage === 'bluetooth') {
         $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
@@ -156,13 +161,15 @@
     $connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH_CONNECTING;
   }
 
-  async function onConnectingSerial(name: string): Promise<void> {
+  async function connectSerial(name: string): Promise<void> {
     $connectionDialogState.connectionState = ConnectDialogStates.CONNECTING_MICROBITS;
-    await Microbits.assignSerialInput(name);
-    endFlow();
-    // MicrobitSerial.connect(Microbits.getLinked()).catch(() => {
-    //   // Errors to consider: microbit is disconnected, some sort of connection error
-    // });
+    try {
+      await Microbits.assignSerialInput(name);
+      endFlow();
+    } catch (e) {
+      // TODO: Add UI to handle the handshake error.
+      console.error(e);
+    }
   }
 
   function connectionStateNone() {

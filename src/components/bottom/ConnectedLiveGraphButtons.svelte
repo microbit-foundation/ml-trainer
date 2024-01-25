@@ -11,6 +11,9 @@
   import StandardButton from '../StandardButton.svelte';
   import Microbits from '../../script/microbit-interfacing/Microbits';
   import { startConnectionProcess } from '../../script/stores/connectDialogStore';
+  import { DeviceRequestStates } from '../../script/stores/connectDialogStore';
+  import { btPatternInput, btPatternOutput } from '../../script/stores/connectionStore';
+  import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
 
   const handleInputDisconnectClick = () => {
     Microbits.expelInputAndOutput();
@@ -18,6 +21,30 @@
 
   const handleOutputDisconnectClick = () => {
     Microbits.expelOutput();
+  };
+
+  const reconnect = async (connectState: DeviceRequestStates) => {
+    const pairingPattern =
+      connectState === DeviceRequestStates.INPUT ? $btPatternInput : $btPatternOutput;
+    const name = MBSpecs.Utility.patternToName(pairingPattern);
+    let success;
+    if (connectState == DeviceRequestStates.INPUT) {
+      success = await Microbits.assignBluetoothInput(name);
+    } else {
+      success = await Microbits.assignOutput(name);
+    }
+    if (success) {
+      $state.offerReconnect = false;
+    }
+  };
+
+  const handleConnect = () => {
+    if ($state.offerReconnect) {
+      // This needs to be different for WebUSB and Web Bluetooth
+      reconnect($state.reconnectState);
+      return;
+    }
+    startConnectionProcess();
   };
 </script>
 
@@ -41,8 +68,10 @@
   {/if}
   <div class="ml-2">
     {#if !$state.isInputAssigned}
-      <StandardButton onClick={startConnectionProcess} type="primary" size="small"
-        >{$t('footer.connectButton')}</StandardButton>
+      <StandardButton onClick={handleConnect} type="primary" size="small"
+        >{$t(
+          $state.offerReconnect ? 'footer.reconnectButton' : 'footer.connectButton',
+        )}</StandardButton>
     {:else}
       <StandardButton
         onClick={handleInputDisconnectClick}

@@ -95,6 +95,7 @@
   "footer.resume": "Resume session",
   "footer.disconnectButton": "Disconnect",
   "footer.connectButton": "Connect",
+  "footer.reconnectButton": "Reconnect",
   "footer.helpHeader": "Live graph",
   "footer.helpContent": "This graph shows movement data from the microbit’s accelerometer in real time. Try moving your connected micro:bit to see the X, Y and Z axes change.",
 
