@@ -214,10 +214,12 @@ class Microbits {
       }
       if (manual) {
         if (this.isInputAssigned()) {
+          this.isInputReconnecting = false;
           ConnectionBehaviours.getInputBehaviour().onExpelled(manual, true);
           this.clearAssignedInputReference();
         }
         if (this.isOutputAssigned()) {
+          this.isOutputReconnecting = false;
           ConnectionBehaviours.getOutputBehaviour().onExpelled(manual, true);
           this.clearAssignedOutputReference();
         }
@@ -269,10 +271,12 @@ class Microbits {
 
     const onInputReconnectFailed = () => {
       if (this.isInputAssigned()) {
+        this.isInputReconnecting = false;
         ConnectionBehaviours.getInputBehaviour().onExpelled(false, true);
         this.clearAssignedInputReference();
       }
       if (this.isOutputAssigned()) {
+        this.isOutputReconnecting = false;
         ConnectionBehaviours.getOutputBehaviour().onExpelled(false, true);
         this.clearAssignedOutputReference();
       }

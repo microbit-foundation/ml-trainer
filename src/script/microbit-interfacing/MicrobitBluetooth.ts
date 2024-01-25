@@ -135,12 +135,12 @@ export class MicrobitBluetooth implements MicrobitConnection {
   /**
    * Disconnects from the micro:bit.
    */
-  public disconnect(): void {
+  public disconnect(manual: boolean = true): void {
+    this.device.removeEventListener('gattserverdisconnected', this.dcListener);
     if (this.isConnected()) {
-      this.device.removeEventListener('gattserverdisconnected', this.dcListener);
       this.gattServer.disconnect();
-      this.disconnectEventHandler(true);
     }
+    this.disconnectEventHandler(manual);
   }
 
   private uartIncomingMessageHandler(data: string): void {
@@ -305,8 +305,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
     } else {
       isDevMode && console.error('No gatt server found!');
     }
-
-    this.disconnectEventHandler(false);
+    this.disconnect(false);
   }
 
   /**
