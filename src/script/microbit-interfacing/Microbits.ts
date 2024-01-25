@@ -65,6 +65,7 @@ class Microbits {
   private static inputVersion: MBSpecs.MBVersion | undefined;
   private static outputVersion: MBSpecs.MBVersion | undefined;
   private static linkedMicrobit: MicrobitUSB | undefined = undefined;
+  private static linkedBtMicrobit: BluetoothDevice | undefined = undefined;
 
   private static outputIO: BluetoothRemoteGATTCharacteristic | undefined;
   private static outputMatrix: BluetoothRemoteGATTCharacteristic | undefined;
@@ -284,12 +285,14 @@ class Microbits {
     };
 
     try {
-      const request = await MicrobitBluetooth.requestDevice(
-        name,
-        this.onFailedConnection(connectionBehaviour),
-      );
+      if (!this.linkedBtMicrobit) {
+        this.linkedBtMicrobit = await MicrobitBluetooth.requestDevice(
+          name,
+          this.onFailedConnection(connectionBehaviour),
+        );
+      }
       await MicrobitBluetooth.createMicrobitBluetooth(
-        request,
+        this.linkedBtMicrobit,
         onInitialInputConnect,
         onInputDisconnect,
         this.onFailedConnection(connectionBehaviour),
