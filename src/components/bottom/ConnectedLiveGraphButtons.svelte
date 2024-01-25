@@ -23,7 +23,7 @@
     Microbits.expelOutput();
   };
 
-  const reconnect = async (connectState: DeviceRequestStates) => {
+  const reconnectBluetooth = async (connectState: DeviceRequestStates) => {
     const pairingPattern =
       connectState === DeviceRequestStates.INPUT ? $btPatternInput : $btPatternOutput;
     const name = MBSpecs.Utility.patternToName(pairingPattern);
@@ -40,8 +40,8 @@
 
   const handleConnect = () => {
     if ($state.offerReconnect) {
-      // This needs to be different for WebUSB and Web Bluetooth
-      reconnect($state.reconnectState);
+      // TODO: This needs to be different for WebUSB and Web Bluetooth.
+      reconnectBluetooth($state.reconnectState);
       return;
     }
     startConnectionProcess();
