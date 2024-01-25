@@ -23,7 +23,11 @@
     FlashStage,
     HexType,
   } from '../../script/microbit-interfacing/Microbits';
-  import { btPatternInput, btPatternOutput } from '../../script/stores/connectionStore';
+  import {
+    btPatternInput,
+    btPatternOutput,
+    webUsbMicrobitName,
+  } from '../../script/stores/connectionStore';
   import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
   import BrokenFirmwareDetected from './usb/BrokenFirmwareDetected.svelte';
   import BluetoothConnectingDialog from './bluetooth/BluetoothConnectingDialog.svelte';
@@ -136,6 +140,9 @@
 
   async function flashMicrobit(name: string): Promise<void> {
     const hexForStage = stageToHex(flashStage);
+    if (flashStage === 'radio-bridge') {
+      webUsbMicrobitName.set(name);
+    }
     try {
       await Microbits.flashHexToLinked(hexForStage, progress => {
         // Flash hex

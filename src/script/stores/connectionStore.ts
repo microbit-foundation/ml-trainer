@@ -20,6 +20,15 @@ export const btPatternOutput: Writable<boolean[]> = persistantWritable<boolean[]
   Array<boolean>(25).fill(false),
 );
 
+export const webUsbMicrobitName: Writable<string> = persistantWritable<string>(
+  'webUsbMicrobitName',
+  '',
+);
+
+export type ConnectionType = 'WebUSB' | 'WebBluetooth' | 'None';
+export const previousConnection: Writable<ConnectionType> =
+  persistantWritable<ConnectionType>('previousConnection', 'None');
+
 export const isInputPatternValid = () => {
   const pattern = get(btPatternInput);
   return MBSpecs.Utility.isPairingPattermValid(pattern);

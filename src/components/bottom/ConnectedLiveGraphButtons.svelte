@@ -12,7 +12,12 @@
   import Microbits from '../../script/microbit-interfacing/Microbits';
   import { startConnectionProcess } from '../../script/stores/connectDialogStore';
   import { DeviceRequestStates } from '../../script/stores/connectDialogStore';
-  import { btPatternInput, btPatternOutput } from '../../script/stores/connectionStore';
+  import {
+    btPatternInput,
+    btPatternOutput,
+    previousConnection,
+    webUsbMicrobitName,
+  } from '../../script/stores/connectionStore';
   import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
 
   const handleInputDisconnectClick = () => {
@@ -38,11 +43,24 @@
     }
   };
 
+  const reconnectWebUSB = async (connectState: DeviceRequestStates) => {
+    let success;
+    if (connectState == DeviceRequestStates.INPUT) {
+      success = await Microbits.assignSerialInput($webUsbMicrobitName);
+    } else {
+      throw new Error('assignSerialOutput not implemented');
+    }
+    if (success) {
+      $state.offerReconnect = false;
+    }
+  };
+
   const handleConnect = () => {
     if ($state.offerReconnect) {
-      // TODO: This needs to be different for WebUSB and Web Bluetooth.
-      reconnectBluetooth($state.reconnectState);
-      return;
+      if ($previousConnection === 'WebBluetooth') {
+        return reconnectBluetooth($state.reconnectState);
+      }
+      return reconnectWebUSB($state.reconnectState);
     }
     startConnectionProcess();
   };

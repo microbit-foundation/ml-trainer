@@ -18,6 +18,7 @@ import TypingUtils from '../TypingUtils';
 import StaticConfiguration from '../../StaticConfiguration';
 import { MicrobitConnection } from './MicrobitConnection';
 import MicrobitSerial from './MicrobitSerial';
+import { previousConnection } from '../stores/connectionStore';
 
 type QueueElement = {
   service: BluetoothRemoteGATTCharacteristic;
@@ -299,6 +300,7 @@ class Microbits {
       connectionBehaviour.onAssigned(this.getInput(), name);
       this.inputName = name;
       this.inputVersion = this.getInput().getVersion();
+      previousConnection.set('WebBluetooth');
       return true;
     } catch (e) {
       console.error(e);
@@ -347,6 +349,7 @@ class Microbits {
 
     this.inputName = name;
     this.inputVersion = this.getInput().getVersion();
+    previousConnection.set('WebUSB');
     return true;
   }
 
