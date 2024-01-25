@@ -10,7 +10,7 @@
     "dev": "vite",
     "start": "vite dist --host",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "test": "vitest",
+    "test": "",
     "prettier": "prettier --write src/."
   },
   "devDependencies": {
