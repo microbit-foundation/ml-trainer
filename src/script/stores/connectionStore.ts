@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { get, type Writable } from 'svelte/store';
+import { get, writable, type Writable } from 'svelte/store';
 import { persistantWritable } from './storeUtil';
 import MBSpecs from '../microbit-interfacing/MBSpecs';
 // Todo: Rename file to a more appropriate name
@@ -20,14 +20,10 @@ export const btPatternOutput: Writable<boolean[]> = persistantWritable<boolean[]
   Array<boolean>(25).fill(false),
 );
 
-export const webUsbMicrobitName: Writable<string> = persistantWritable<string>(
-  'webUsbMicrobitName',
-  '',
-);
+export const webUsbMicrobitName: Writable<string> = writable('');
 
-export type ConnectionType = 'WebUSB' | 'WebBluetooth' | 'None';
-export const previousConnection: Writable<ConnectionType> =
-  persistantWritable<ConnectionType>('previousConnection', 'None');
+export type ConnectionType = 'WebUSB' | 'WebBluetooth' | undefined;
+export const previousConnection: Writable<ConnectionType> = writable(undefined);
 
 export const isInputPatternValid = () => {
   const pattern = get(btPatternInput);

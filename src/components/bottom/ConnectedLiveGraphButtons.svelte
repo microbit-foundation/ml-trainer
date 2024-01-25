@@ -56,10 +56,10 @@
   };
 
   const handleConnect = () => {
-    if ($state.offerReconnect) {
-      if ($previousConnection === 'WebBluetooth') {
-        return reconnectBluetooth($state.reconnectState);
-      }
+    if ($previousConnection === 'WebBluetooth') {
+      return reconnectBluetooth($state.reconnectState);
+    }
+    if ($previousConnection === 'WebUSB') {
       return reconnectWebUSB($state.reconnectState);
     }
     startConnectionProcess();
@@ -88,7 +88,7 @@
     {#if !$state.isInputAssigned}
       <StandardButton onClick={handleConnect} type="primary" size="small"
         >{$t(
-          $state.offerReconnect ? 'footer.reconnectButton' : 'footer.connectButton',
+          $previousConnection ? 'footer.reconnectButton' : 'footer.connectButton',
         )}</StandardButton>
     {:else}
       <StandardButton
