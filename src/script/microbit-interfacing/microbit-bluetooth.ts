@@ -98,7 +98,7 @@ const connectBluetoothDevice = async (
       gattServer,
       microbitVersion,
     };
-  } catch (e: unknown) {
+  } catch (e) {
     if (device.gatt !== undefined) {
       // In case bluetooth was connected but some other error occurs, disconnect bluetooth to keep consistent state
       device.gatt.disconnect();
@@ -128,29 +128,32 @@ const createDisconnectListener = (
   return () => disconnectListener(device, requestState);
 };
 
-// TODO: implement function.
-const attemptReconnect = () => {
-  // if (this.device.gatt) {
-  //   this.device.gatt
-  //     .connect()
-  //     .then(() => {
-  //       this.onReconnect(this);
-  //     })
-  //     .catch(e => {
-  //       isDevMode && console.error(e);
-  //       this.onReconnectFailed();
-  //     });
-  // } else {
-  //   isDevMode && console.error('No gatt server found!');
-  // }
+const attemptReconnect = async (
+  device: BluetoothDevice,
+  requestState: DeviceRequestStates,
+): Promise<void> => {
+  if (device.gatt) {
+    await connectBluetoothDevice(device, requestState);
+    if (requestState === DeviceRequestStates.INPUT) {
+      await listenToBluetoothInputServices(device.gatt);
+    }
+    stateOnReady(requestState);
+    stateOnAssigned(requestState);
+  } else {
+    throw new Error('No gatt server found!');
+  }
 };
 
 const disconnectListener = async (
   device: BluetoothDevice,
   requestState: DeviceRequestStates,
 ): Promise<void> => {
-  //await attemptReconnect();
-  disconnectBluetoothDevice(device, requestState);
+  try {
+    await attemptReconnect(device, requestState);
+  } catch (e) {
+    isDevMode && console.error(e);
+    disconnectBluetoothDevice(device, requestState);
+  }
 };
 
 // TODO: uncomment and implement missing parts.
