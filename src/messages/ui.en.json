@@ -133,7 +133,7 @@
   "connectMB.usbTryAgain.heading": "Connect using WebUSB",
   "connectMB.usbTryAgain.selectMicrobit": "You didn't select a micro:bit. Do you want to try again?",
   "connectMB.usbTryAgain.closeTabs1": "Another process is connected to this device.",
-  "connectMB.usbTryAgain.closeTabs2": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, ML tool), or unplug and replug the micro:bit before trying again.",
+  "connectMB.usbTryAgain.closeTabs2": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, machine learning tool), or unplug and replug the micro:bit before trying again.",
   "connectMB.usbTryAgain.replugMicrobit1": "A WebUSB error occurred.",
   "connectMB.usbTryAgain.replugMicrobit2": "Please unplug and replug the micro:bit before trying again.",
 
