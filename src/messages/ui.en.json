@@ -200,6 +200,7 @@
   "connectMB.connecting": "Connecting…",
   "connectMB.bluetooth.invalidPattern": "The pattern you have drawn is invalid.",
 
+  "disconnectedWarning.heading": "micro:bit connection lost",
   "disconnectedWarning.input": "Your input micro:bit lost connection, do want to try again?",
   "disconnectedWarning.output": "Your output micro:bit lost connection, do want to try again?",
   "disconnectedWarning.reconnectButton.input": "Reconnect input",

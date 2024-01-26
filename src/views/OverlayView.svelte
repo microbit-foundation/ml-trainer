@@ -70,5 +70,5 @@
       </div>
     </div>
   {/if}
-  <ReconnectPrompt isOpen={$state.offerReconnect && isInputPatternValid()} />
+  <ReconnectPrompt isOpen={true} />
 </div>
