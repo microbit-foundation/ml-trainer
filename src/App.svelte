@@ -33,6 +33,7 @@
   import ConnectDialogContainer from './components/connection-prompt/ConnectDialogContainer.svelte';
   import { Paths, currentPath, getTitle, navigate } from './router/paths';
   import HomeIcon from 'virtual:icons/ri/home-2-line';
+  import ConnectionFlow from './components/connection-prompt/ConnectionFlow.svelte';
 
   ConnectionBehaviours.setInputBehaviour(new InputBehaviour());
   ConnectionBehaviours.setOutputBehaviour(new OutputBehaviour());
@@ -103,4 +104,5 @@
     </div>
   {/if}
 </Router>
-<ConnectDialogContainer />
+<!-- <ConnectDialogContainer /> -->
+<ConnectionFlow />
