@@ -34,17 +34,15 @@
   };
 </script>
 
-<StandardDialog {isOpen} onClose={stopOfferingReconnect} class="w-100">
+<StandardDialog {isOpen} onClose={stopOfferingReconnect} class="w-110">
   <svelte:fragment slot="heading">
     {$t('disconnectedWarning.heading')}
   </svelte:fragment>
-  <svelte:fragment slot="body">
-    <div class="flex flex-col pt-5 gap-5">
-      <p>{$t(dialogText.bodyId)}</p>
-      <div class="flex justify-center">
-        <StandardButton type="primary" onClick={reconnect}
-          >{$t(dialogText.buttonId)}</StandardButton>
-      </div>
+  <div slot="body" class="flex flex-col pt-5 gap-7">
+    <p>{$t(dialogText.bodyId)}</p>
+    <div class="flex justify-center">
+      <StandardButton type="primary" onClick={reconnect}
+        >{$t(dialogText.buttonId)}</StandardButton>
     </div>
-  </svelte:fragment>
+  </div>
 </StandardDialog>
