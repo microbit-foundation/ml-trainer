@@ -30,13 +30,20 @@ interface BluetoothConnection {
 export const startBluetoothConnection = async (
   name: string,
   requestState: DeviceRequestStates,
+  existingDevice: BluetoothDevice | undefined,
 ): Promise<BluetoothConnection> => {
-  const device = await requestBluetoothDevice(name);
-  if (!device) {
-    console.log('temp logging: no Bluetooth device');
-    return {
-      success: false,
-    };
+  let device: BluetoothDevice | undefined;
+  if (!existingDevice) {
+    device = await requestBluetoothDevice(name);
+    if (!device) {
+      // TODO: Handle this or the UI does the right thing already?
+      console.log('temp logging: no Bluetooth device');
+      return {
+        success: false,
+      };
+    }
+  } else {
+    device = existingDevice;
   }
 
   const disconnectListener = createDisconnectListener(device, requestState);

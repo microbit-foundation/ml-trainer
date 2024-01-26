@@ -10,7 +10,10 @@
   import { state } from '../../script/stores/uiStore';
   import StandardButton from '../StandardButton.svelte';
   import Microbits from '../../script/microbit-interfacing/Microbits';
-  import { startConnectionProcess } from '../../script/stores/connectDialogStore';
+  import {
+    DeviceRequestStates,
+    startConnectionProcess,
+  } from '../../script/stores/connectDialogStore';
   import MicrobitsAlt from '../../script/microbit-interfacing/MicrobitsAlt';
 
   const handleInputDisconnectClick = () => {
@@ -19,6 +22,15 @@
 
   const handleOutputDisconnectClick = () => {
     Microbits.expelOutput();
+  };
+
+  const handleInputConnect = () => {
+    const name = MicrobitsAlt.getDeviceName(DeviceRequestStates.INPUT);
+    if (name) {
+      MicrobitsAlt.assignBluetoothInput(name);
+    } else {
+      startConnectionProcess();
+    }
   };
 </script>
 
@@ -42,7 +54,7 @@
   {/if}
   <div class="ml-2">
     {#if !$state.isInputAssigned}
-      <StandardButton onClick={startConnectionProcess} type="primary" size="small"
+      <StandardButton onClick={handleInputConnect} type="primary" size="small"
         >{$t('footer.connectButton')}</StandardButton>
     {:else}
       <StandardButton

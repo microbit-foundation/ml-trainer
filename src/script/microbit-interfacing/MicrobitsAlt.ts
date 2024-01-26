@@ -20,6 +20,7 @@ class MicrobitsAlt {
     const { success, device } = await startBluetoothConnection(
       name,
       DeviceRequestStates.INPUT,
+      this.assignedInputMicrobit,
     );
     if (success && device) {
       this.inputName = name;
@@ -32,6 +33,7 @@ class MicrobitsAlt {
     const { success, device } = await startBluetoothConnection(
       name,
       DeviceRequestStates.OUTPUT,
+      this.assignedOutputMicrobit,
     );
     if (success && device) {
       this.outputName = name;
@@ -61,6 +63,20 @@ class MicrobitsAlt {
   public static async expelInputAndOutput() {
     await this.expelInput();
     await this.expelOuput();
+  }
+
+  public static hasDeviceReference(requestState: DeviceRequestStates) {
+    if (requestState === DeviceRequestStates.INPUT) {
+      return !!this.assignedInputMicrobit;
+    }
+    return !!this.assignedOutputMicrobit;
+  }
+
+  public static getDeviceName(requestState: DeviceRequestStates) {
+    if (requestState === DeviceRequestStates.INPUT) {
+      return this.inputName;
+    }
+    return this.outputName;
   }
 }
 
