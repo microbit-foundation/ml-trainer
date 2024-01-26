@@ -139,6 +139,14 @@ class MicrobitUSB extends CortexM {
     this.serialPromise = this.serialDAPLink.startSerialRead(serialDelay, false);
   }
 
+  public addSerialListener(callback: (data: string) => void) {
+    this.serialDAPLink?.addListener(DAPLink.EVENT_SERIAL_DATA, callback);
+  }
+
+  public removeSerialListener(callback: (data: string) => void) {
+    this.serialDAPLink?.removeListener(DAPLink.EVENT_SERIAL_DATA, callback);
+  }
+
   public async serialWrite(data: string): Promise<void> {
     return this.serialDAPLink?.serialWrite(data);
   }
