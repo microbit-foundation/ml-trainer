@@ -13,7 +13,7 @@ import { MicrobitConnection } from './MicrobitConnection';
 /**
  * UART data target. For fixing type compatibility issues.
  */
-type CharacteristicDataTarget = EventTarget & {
+export type CharacteristicDataTarget = EventTarget & {
   value: DataView;
 };
 

@@ -11,9 +11,10 @@
   import StandardButton from '../StandardButton.svelte';
   import Microbits from '../../script/microbit-interfacing/Microbits';
   import { startConnectionProcess } from '../../script/stores/connectDialogStore';
+  import MicrobitsAlt from '../../script/microbit-interfacing/MicrobitsAlt';
 
   const handleInputDisconnectClick = () => {
-    Microbits.expelInputAndOutput();
+    MicrobitsAlt.expelInputAndOutput();
   };
 
   const handleOutputDisconnectClick = () => {

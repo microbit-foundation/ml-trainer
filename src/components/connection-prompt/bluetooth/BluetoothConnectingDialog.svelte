@@ -21,6 +21,7 @@
   import LoadingSpinner from '../../LoadingSpinner.svelte';
   import StandardButton from '../../StandardButton.svelte';
   import { isDevMode } from '../../../script/environment';
+  import MicrobitsAlt from '../../../script/microbit-interfacing/MicrobitsAlt';
 
   // callbacks
   export let deviceState: DeviceRequestStates;
@@ -45,7 +46,7 @@
     let name = MBSpecs.Utility.patternToName($patternMatrixState);
     const connectionResult = () => {
       if (deviceState == DeviceRequestStates.INPUT) {
-        return Microbits.assignBluetoothInput(name);
+        return MicrobitsAlt.assignBluetoothInput(name);
       } else {
         return Microbits.assignOutput(name);
       }
