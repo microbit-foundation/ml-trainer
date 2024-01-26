@@ -5,6 +5,8 @@
  */
 
 import { livedata } from '../stores/mlStore';
+import { buttonPressed } from '../stores/uiStore';
+import MBSpecs from './MBSpecs';
 import { stateOnIdentifiedAsMakecode } from './state-updaters';
 
 let smoothedAccelX = 0;
@@ -29,6 +31,28 @@ export const onAccelerometerChange = (x: number, y: number, z: number): void => 
   };
 
   livedata.set(data); // This is the old livedata store
+};
+
+export const onButtonChange = (
+  buttonState: MBSpecs.ButtonState,
+  button: MBSpecs.Button,
+): void => {
+  if (buttonState === MBSpecs.ButtonStates.Released) {
+    return;
+  }
+  if (button === 'A') {
+    buttonPressed.update(obj => {
+      obj.buttonA = 1;
+      obj.buttonB = 0;
+      return obj;
+    });
+  } else {
+    buttonPressed.update(obj => {
+      obj.buttonA = 0;
+      obj.buttonB = 1;
+      return obj;
+    });
+  }
 };
 
 // TODO: Outdated version would be useful, but not important now.

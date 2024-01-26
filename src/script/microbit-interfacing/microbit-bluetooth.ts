@@ -8,7 +8,11 @@ import { isDevMode } from '../environment';
 import { DeviceRequestStates } from '../stores/connectDialogStore';
 import MBSpecs from './MBSpecs';
 import { CharacteristicDataTarget } from './MicrobitBluetooth';
-import { onAccelerometerChange, onUARTDataReceived } from './change-listeners';
+import {
+  onAccelerometerChange,
+  onButtonChange,
+  onUARTDataReceived,
+} from './change-listeners';
 import {
   stateOnAssigned,
   stateOnBluetoothConnected,
@@ -156,31 +160,52 @@ const disconnectListener = async (
   }
 };
 
-// TODO: uncomment and implement missing parts.
 const listenToBluetoothInputServices = async (
   gattServer: BluetoothRemoteGATTServer,
 ): Promise<void> => {
-  // if (!this.isInputConnected()) {
-  //   throw new Error('Could not listen to services, no microbit connected!');
-  // }
+  if (!gattServer.connected) {
+    throw new Error('Could not listen to services, no microbit connected!');
+  }
   try {
     await listenToBlueoothAccelerometer(gattServer, onAccelerometerChange);
-  } catch (error) {
-    console.error(error);
-  }
-  // await this.getInput().listenToButton(
-  //   'A',
-  //   connectionBehaviour.buttonChange.bind(connectionBehaviour),
-  // );
-  // await this.getInput().listenToButton(
-  //   'B',
-  //   connectionBehaviour.buttonChange.bind(connectionBehaviour),
-  // );
-  try {
+    await listenToBluetoothButton(gattServer, 'A', onButtonChange);
+    await listenToBluetoothButton(gattServer, 'B', onButtonChange);
     await listenToBluetoothUART(gattServer, onUARTDataReceived);
   } catch (error) {
     console.error(error);
   }
+};
+
+const listenToBluetoothButton = async (
+  gattServer: BluetoothRemoteGATTServer,
+  buttonToListenFor: MBSpecs.Button,
+  onButtonChanged: (state: MBSpecs.ButtonState, button: MBSpecs.Button) => void,
+): Promise<void> => {
+  const buttonService = await gattServer.getPrimaryService(
+    MBSpecs.Services.BUTTON_SERVICE,
+  );
+
+  // Select the correct characteristic to listen to.
+  const UUID =
+    buttonToListenFor === 'A'
+      ? MBSpecs.Characteristics.BUTTON_A
+      : MBSpecs.Characteristics.BUTTON_B;
+  const buttonCharacteristic = await buttonService.getCharacteristic(UUID);
+
+  await buttonCharacteristic.startNotifications();
+
+  buttonCharacteristic.addEventListener('characteristicvaluechanged', (event: Event) => {
+    const target = event.target as CharacteristicDataTarget;
+    const stateId = target.value.getUint8(0);
+    let state = MBSpecs.ButtonStates.Released;
+    if (stateId === 1) {
+      state = MBSpecs.ButtonStates.Pressed;
+    }
+    if (stateId === 2) {
+      state = MBSpecs.ButtonStates.LongPressed;
+    }
+    onButtonChanged(state, buttonToListenFor);
+  });
 };
 
 const listenToBlueoothAccelerometer = async (
