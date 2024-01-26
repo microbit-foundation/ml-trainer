@@ -16,7 +16,7 @@ import {
 import {
   stateOnAssigned,
   stateOnBluetoothConnected,
-  stateOnExpelled,
+  stateOnDisconnected,
   stateOnReady,
 } from './state-updaters';
 
@@ -81,7 +81,7 @@ const requestBluetoothDevice = async (
       ],
     });
   } catch (e) {
-    isDevMode && console.error(e);
+    isDevMode && console.log(e);
   }
 };
 
@@ -121,8 +121,9 @@ const connectBluetoothDevice = async (
 export const disconnectBluetoothDevice = (
   device: BluetoothDevice,
   requestState: DeviceRequestStates,
+  userDisconnect: boolean,
 ) => {
-  stateOnExpelled(requestState);
+  stateOnDisconnected(requestState, userDisconnect);
   const disconnectListener = disconnectListeners.shift();
   if (disconnectListener) {
     device.removeEventListener('gattserverdisconnected', disconnectListener);
@@ -162,8 +163,8 @@ const disconnectListener = async (
   try {
     await attemptReconnect(device, requestState);
   } catch (e) {
-    isDevMode && console.error(e);
-    disconnectBluetoothDevice(device, requestState);
+    isDevMode && console.log(e);
+    disconnectBluetoothDevice(device, requestState, false);
   }
 };
 
@@ -179,7 +180,7 @@ const listenToBluetoothInputServices = async (
     await listenToBluetoothButton(gattServer, 'B', onButtonChange);
     await listenToBluetoothUART(gattServer, onUARTDataReceived);
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 

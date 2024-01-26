@@ -81,49 +81,32 @@ export const stateOnAssigned = (requestState: DeviceRequestStates) => {
   }
 };
 
-export const stateOnExpelled = (requestState: DeviceRequestStates): void => {
+export const stateOnDisconnected = (
+  requestState: DeviceRequestStates,
+  userDisconnect: boolean,
+): void => {
   if (requestState === DeviceRequestStates.INPUT) {
     state.update(s => {
       s.isInputConnected = false;
       s.isInputAssigned = false;
       s.isInputReady = false;
-      // TODO: I want to get rid of this state. We can virtually always offer a reconnect.
-      s.offerReconnect = false;
+      s.offerReconnect = !userDisconnect;
       s.reconnectState = DeviceRequestStates.INPUT;
+      //s.isInputOutdated = false;
       return s;
     });
   } else {
     state.update(s => {
       s.isOutputConnected = false;
-      // TODO: I want to get rid of this state. We can virtually always offer a reconnect.
-      s.offerReconnect = false;
+      s.offerReconnect = !userDisconnect;
       s.isOutputAssigned = false;
       s.isOutputReady = false;
       s.reconnectState = DeviceRequestStates.NONE;
+      //s.isOutputOutdated = false;
       // TODO: Come back to this.
       // if (!bothDisconnected) {
       //   s.reconnectState = DeviceRequestStates.OUTPUT;
       // }
-      return s;
-    });
-  }
-};
-
-export const onDisconnected = (requestState: DeviceRequestStates): void => {
-  if (requestState === DeviceRequestStates.INPUT) {
-    state.update(s => {
-      s.isInputConnected = false;
-      s.offerReconnect = false;
-      s.isInputReady = false;
-      s.reconnectState = DeviceRequestStates.NONE;
-      s.isInputOutdated = false;
-      return s;
-    });
-  } else {
-    state.update(s => {
-      s.isOutputConnected = false;
-      s.isOutputReady = false;
-      s.isOutputOutdated = false;
       return s;
     });
   }

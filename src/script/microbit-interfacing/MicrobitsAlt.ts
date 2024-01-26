@@ -47,6 +47,7 @@ class MicrobitsAlt {
       await disconnectBluetoothDevice(
         this.assignedInputMicrobit,
         DeviceRequestStates.INPUT,
+        true,
       );
     }
   }
@@ -56,6 +57,7 @@ class MicrobitsAlt {
       await disconnectBluetoothDevice(
         this.assignedOutputMicrobit,
         DeviceRequestStates.OUTPUT,
+        true,
       );
     }
   }

@@ -55,7 +55,9 @@
   <div class="ml-2">
     {#if !$state.isInputAssigned}
       <StandardButton onClick={handleInputConnect} type="primary" size="small"
-        >{$t('footer.connectButton')}</StandardButton>
+        >{$t(
+          $state.offerReconnect ? 'footer.reconnectButton' : 'footer.connectButton',
+        )}</StandardButton>
     {:else}
       <StandardButton
         onClick={handleInputDisconnectClick}
