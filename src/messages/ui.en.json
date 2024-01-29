@@ -42,7 +42,7 @@
   "content.data.addActionWalkThrough": "Name an action you want the micro:bit to recognise",
   "content.data.addRecordingWalkThrough": "Press to record a data sample or press button B on your micro:bit.",
   "content.data.dataDescription": "Multiple samples of movement data collected in approximately 2 second bursts.",
-  "content.data.selectAction": "Select action \"{action}\"",
+  "content.data.selectAction": "Select action \"{action}\" and record data",
   "content.data.recordAction": "Record data for action \"{action}\"",
   "content.data.deleteAction": "Delete action \"{action}\"",
   "content.data.deleteRecording": "Delete recording",

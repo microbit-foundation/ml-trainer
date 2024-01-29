@@ -118,8 +118,7 @@
             <section class="contents">
               <Gesture
                 showWalkThrough={$gestures.length === 1}
-                gesture={gestures.getGesture(gesture.ID)}
-                onNoMicrobitSelect={() => (isConnectionDialogOpen = true)} />
+                gesture={gestures.getGesture(gesture.ID)} />
             </section>
           {/each}
         </div>
