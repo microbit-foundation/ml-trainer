@@ -53,10 +53,12 @@
     {/if}
   {/if}
   <div class="ml-2">
-    {#if !$state.isInputAssigned}
+    {#if !$state.isInputConnected}
       <StandardButton onClick={handleInputConnect} type="primary" size="small"
         >{$t(
-          $state.offerReconnect ? 'footer.reconnectButton' : 'footer.connectButton',
+          $state.offerReconnect || $state.isInputAssigned
+            ? 'footer.reconnectButton'
+            : 'footer.connectButton',
         )}</StandardButton>
     {:else}
       <StandardButton

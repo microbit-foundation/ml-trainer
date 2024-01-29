@@ -25,6 +25,9 @@ class MicrobitsAlt {
     if (success && device) {
       this.inputName = name;
       this.assignedInputMicrobit = device;
+    } else {
+      this.inputName = undefined;
+      this.assignedInputMicrobit = undefined;
     }
     return success;
   }
@@ -38,6 +41,9 @@ class MicrobitsAlt {
     if (success && device) {
       this.outputName = name;
       this.assignedOutputMicrobit = device;
+    } else {
+      this.outputName = undefined;
+      this.assignedOutputMicrobit = undefined;
     }
     return success;
   }

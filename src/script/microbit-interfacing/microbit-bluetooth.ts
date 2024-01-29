@@ -17,6 +17,7 @@ import {
   stateOnAssigned,
   stateOnBluetoothConnected,
   stateOnDisconnected,
+  stateOnFailedToConnect,
   stateOnReady,
 } from './state-updaters';
 
@@ -46,6 +47,7 @@ export const startBluetoothConnection = async (
     if (!device) {
       // TODO: Handle this or the UI does the right thing already?
       console.log('temp logging: no Bluetooth device');
+      stateOnFailedToConnect(requestState);
       return {
         success: false,
       };
@@ -57,16 +59,21 @@ export const startBluetoothConnection = async (
   const disconnectListener = createDisconnectListener(device, requestState);
   disconnectListeners[requestState] = disconnectListener;
   device.addEventListener('gattserverdisconnected', disconnectListener);
+  try {
+    const { gattServer } = await connectBluetoothDevice(device, requestState);
 
-  // TODO: This will throw if it fails. Do we need to handle it properly?
-  // At least remove the disconnectListener if it fails.
-  const { gattServer } = await connectBluetoothDevice(device, requestState);
-
-  if (requestState === DeviceRequestStates.INPUT) {
-    await listenToBluetoothInputServices(gattServer);
+    if (requestState === DeviceRequestStates.INPUT) {
+      await listenToBluetoothInputServices(gattServer);
+    }
+    stateOnReady(requestState);
+    stateOnAssigned(requestState);
+  } catch (e) {
+    device.removeEventListener('gattserverdisconnected', disconnectListener);
+    stateOnFailedToConnect(requestState);
+    return {
+      success: false,
+    };
   }
-  stateOnReady(requestState);
-  stateOnAssigned(requestState);
   return {
     success: true,
     device,

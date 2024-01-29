@@ -88,7 +88,8 @@ export const stateOnDisconnected = (
   if (requestState === DeviceRequestStates.INPUT) {
     state.update(s => {
       s.isInputConnected = false;
-      s.isInputAssigned = false;
+      // Hang on to the reference
+      // s.isInputAssigned = false;
       s.isInputReady = false;
       s.offerReconnect = !userDisconnect;
       s.reconnectState = DeviceRequestStates.INPUT;
@@ -99,6 +100,35 @@ export const stateOnDisconnected = (
     state.update(s => {
       s.isOutputConnected = false;
       s.offerReconnect = !userDisconnect;
+      // Hang on to the reference
+      // s.isOutputAssigned = false;
+      s.isOutputReady = false;
+      s.reconnectState = DeviceRequestStates.NONE;
+      //s.isOutputOutdated = false;
+      // TODO: Come back to this.
+      // if (!bothDisconnected) {
+      //   s.reconnectState = DeviceRequestStates.OUTPUT;
+      // }
+      return s;
+    });
+  }
+};
+
+export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
+  if (requestState === DeviceRequestStates.INPUT) {
+    state.update(s => {
+      s.isInputConnected = false;
+      s.isInputAssigned = false;
+      s.isInputReady = false;
+      s.offerReconnect = false;
+      s.reconnectState = DeviceRequestStates.INPUT;
+      //s.isInputOutdated = false;
+      return s;
+    });
+  } else {
+    state.update(s => {
+      s.isOutputConnected = false;
+      s.offerReconnect = false;
       s.isOutputAssigned = false;
       s.isOutputReady = false;
       s.reconnectState = DeviceRequestStates.NONE;
