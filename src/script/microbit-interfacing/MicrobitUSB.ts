@@ -17,6 +17,7 @@ class MicrobitUSB extends CortexM {
   private readonly transport: WebUSB;
   private serialPromise: Promise<void> | undefined;
   private serialDAPLink: DAPLink | undefined;
+  private serialCallback: ((data: string) => void) | undefined;
 
   /**
    * Creates a new MicrobitUSB object.
@@ -129,6 +130,7 @@ class MicrobitUSB extends CortexM {
   public async startSerial(callback: (data: string) => void) {
     await this.transport.open();
 
+    this.serialCallback = callback;
     this.serialDAPLink = new DAPLink(this.transport);
     const initialBaudRate = await this.serialDAPLink.getSerialBaudrate();
     this.serialDAPLink.addListener(DAPLink.EVENT_SERIAL_DATA, callback);
@@ -137,14 +139,6 @@ class MicrobitUSB extends CortexM {
       await this.serialDAPLink.setSerialBaudrate(baudRate);
     }
     this.serialPromise = this.serialDAPLink.startSerialRead(serialDelay, false);
-  }
-
-  public addSerialListener(callback: (data: string) => void) {
-    this.serialDAPLink?.addListener(DAPLink.EVENT_SERIAL_DATA, callback);
-  }
-
-  public removeSerialListener(callback: (data: string) => void) {
-    this.serialDAPLink?.removeListener(DAPLink.EVENT_SERIAL_DATA, callback);
   }
 
   public async serialWrite(data: string): Promise<void> {
@@ -157,6 +151,9 @@ class MicrobitUSB extends CortexM {
 
   public async stopSerial() {
     if (this.serialDAPLink) {
+      if (this.serialCallback) {
+        this.serialDAPLink.removeListener(DAPLink.EVENT_SERIAL_DATA, this.serialCallback);
+      }
       this.serialDAPLink.stopSerialRead();
       await this.serialPromise;
       this.serialPromise = undefined;
