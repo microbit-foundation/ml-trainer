@@ -345,7 +345,9 @@
         <div class="w-33 flex justify-center items-center gap-x-3">
           <IconButton
             ariaLabel={$t(
-              isChosenGesture ? 'content.data.recordAction' : 'content.data.selectAction',
+              isChosenGesture
+                ? 'content.data.recordAction'
+                : 'content.data.selectAndRecordAction',
               {
                 values: {
                   action: $nameBind,
