@@ -6,7 +6,7 @@
 
 <script lang="ts">
   import { t } from '../../../i18n';
-  import { FlashStage } from '../../../script/microbit-interfacing/Microbits';
+  import { FlashStage } from '../../../script/microbit-interfacing/MicrobitsAlt';
   import LoadingBar from '../../LoadingBar.svelte';
   export let flashStage: FlashStage;
   export let transferProgress: number;

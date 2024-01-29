@@ -7,7 +7,6 @@
 <script lang="ts">
   import StandardButton from '../../StandardButton.svelte';
   import { t } from '../../../i18n';
-  import Microbits from '../../../script/microbit-interfacing/Microbits';
   import selectMicrobitImage from '../../../imgs/select-microbit-web-usb.png';
   import DialogHeading from '../../DialogHeading.svelte';
   import ArrowOne from '../arrows/ArrowOne.svelte';

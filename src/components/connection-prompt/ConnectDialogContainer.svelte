@@ -19,10 +19,6 @@
     connectionDialogState,
     DeviceRequestStates,
   } from '../../script/stores/connectDialogStore';
-  import Microbits, {
-    FlashStage,
-    HexType,
-  } from '../../script/microbit-interfacing/Microbits';
   import { btPatternInput, btPatternOutput } from '../../script/stores/connectionStore';
   import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
   import BrokenFirmwareDetected from './usb/BrokenFirmwareDetected.svelte';
@@ -36,6 +32,10 @@
   import { isDevMode } from '../../script/environment';
   import { flags } from '../../script/flags';
   import ConnectingMicrobits from './radio/ConnectingMicrobits.svelte';
+  import Microbits, {
+    FlashStage,
+    HexType,
+  } from '../../script/microbit-interfacing/MicrobitsAlt';
 
   const { bluetooth, usb } = get(compatibility);
   let endOfFlow = false;

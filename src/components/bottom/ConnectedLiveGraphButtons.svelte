@@ -9,25 +9,26 @@
   import TypingUtils from '../../script/TypingUtils';
   import { state } from '../../script/stores/uiStore';
   import StandardButton from '../StandardButton.svelte';
-  import Microbits from '../../script/microbit-interfacing/Microbits';
+  import Microbits from '../../script/microbit-interfacing/MicrobitsAlt';
   import {
     DeviceRequestStates,
     startConnectionProcess,
   } from '../../script/stores/connectDialogStore';
-  import MicrobitsAlt from '../../script/microbit-interfacing/MicrobitsAlt';
 
   const handleInputDisconnectClick = () => {
-    MicrobitsAlt.disconnectInputAndOutput();
+    Microbits.disconnect(DeviceRequestStates.INPUT);
   };
 
   const handleOutputDisconnectClick = () => {
-    Microbits.expelOutput();
+    Microbits.disconnect(DeviceRequestStates.OUTPUT);
   };
 
   const handleInputConnect = () => {
-    const name = MicrobitsAlt.getDeviceName(DeviceRequestStates.INPUT);
+    const name = Microbits.getDeviceName(DeviceRequestStates.INPUT);
     if (name) {
-      MicrobitsAlt.assignBluetoothInput(name);
+      // We need to know if we're WebSerial or Web Bluetooth...
+      // MicrobitsAlt.assignBluetoothInput(name);
+      Microbits.assignSerialInput(name);
     } else {
       startConnectionProcess();
     }

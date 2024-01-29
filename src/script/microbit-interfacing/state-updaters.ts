@@ -15,7 +15,7 @@ import Microbits from './Microbits';
 // TODO: We've lost reconnect and logging timeouts
 // TODO: We've lost logging in general, but most of it was unhelpful.
 
-export const stateOnBluetoothConnected = (requestState: DeviceRequestStates) => {
+export const stateOnConnected = (requestState: DeviceRequestStates) => {
   state.update(s => {
     requestState === DeviceRequestStates.INPUT
       ? (s.isInputConnected = true)

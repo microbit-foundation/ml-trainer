@@ -11,7 +11,7 @@
   import transferFirmwareChromeOSImage from '../../../../imgs/transfer_firmware_chromeos.gif';
   import transferProgramMacOS from '../../../../imgs/transfer_program_macos.gif';
   import transferProgramWindows from '../../../../imgs/transfer_program_windows.gif';
-  import { getHexFileUrl } from '../../../../script/microbit-interfacing/Microbits';
+  import { getHexFileUrl } from '../../../../script/microbit-interfacing/MicrobitsAlt';
   import DialogHeading from '../../../DialogHeading.svelte';
   import HtmlFormattedMessage, {
     linkWithProps,

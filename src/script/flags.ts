@@ -28,7 +28,7 @@ interface FlagMetadata {
 
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
-  { name: 'radioLocal', defaultOnStages: [] },
+  { name: 'radioLocal', defaultOnStages: ['local'] },
 ];
 
 type Flags = Record<Flag, boolean>;

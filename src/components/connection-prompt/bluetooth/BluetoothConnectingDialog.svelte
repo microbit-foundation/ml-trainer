@@ -14,7 +14,7 @@
     btPatternOutput,
   } from '../../../script/stores/connectionStore';
   import type { Writable } from 'svelte/store';
-  import Microbits from '../../../script/microbit-interfacing/Microbits';
+  import Microbits from '../../../script/microbit-interfacing/MicrobitsAlt';
   import { DeviceRequestStates } from '../../../script/stores/connectDialogStore';
   import StaticConfiguration from '../../../StaticConfiguration';
   import DialogHeading from '../../DialogHeading.svelte';
@@ -48,7 +48,7 @@
       if (deviceState == DeviceRequestStates.INPUT) {
         return MicrobitsAlt.assignBluetoothInput(name);
       } else {
-        return Microbits.assignOutput(name);
+        return Microbits.assignBluetoothOuput(name);
       }
     };
 

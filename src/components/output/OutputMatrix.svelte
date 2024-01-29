@@ -55,7 +55,6 @@
   // TODO: Shares a lot with 'PatternMatrix'. Extract 'Matrix' component and reuse
 
   import { type GestureData, updateGestureLEDOutput } from '../../script/stores/mlStore';
-  import microbits from '../../script/microbit-interfacing/Microbits';
   import Microbits from '../../script/microbit-interfacing/Microbits';
 
   // TODO: Generalize such that it becomes ConnectionBehaviour.setMatrixTo() instead
@@ -63,7 +62,7 @@
   //       If the one in 'OutputGesture.svelte' is used why do we have default value here?
   export const trigger = () => {
     if (Microbits.isOutputReady()) {
-      microbits.setOutputMatrix(matrix);
+      Microbits.setOutputMatrix(matrix);
     }
   };
 

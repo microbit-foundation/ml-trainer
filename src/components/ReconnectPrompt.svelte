@@ -11,7 +11,7 @@
   import { t } from '../i18n';
   import { btPatternInput, btPatternOutput } from '../script/stores/connectionStore';
   import MBSpecs from '../script/microbit-interfacing/MBSpecs';
-  import Microbits from '../script/microbit-interfacing/Microbits';
+  import Microbits from '../script/microbit-interfacing/MicrobitsAlt';
   import { DeviceRequestStates } from '../script/stores/connectDialogStore';
 
   let reconnectText: string;
@@ -45,7 +45,7 @@
       if (connectState == DeviceRequestStates.INPUT) {
         return Microbits.assignBluetoothInput(name);
       }
-      return Microbits.assignOutput(name);
+      return Microbits.assignBluetoothOuput(name);
     };
 
     void connect().then(didSucceed => {

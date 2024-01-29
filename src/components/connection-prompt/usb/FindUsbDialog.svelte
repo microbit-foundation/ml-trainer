@@ -7,7 +7,7 @@
 <script lang="ts">
   import StandardButton from '../../StandardButton.svelte';
   import { t } from '../../../i18n';
-  import Microbits from '../../../script/microbit-interfacing/Microbits';
+  import Microbits from '../../../script/microbit-interfacing/MicrobitsAlt';
 
   export let onFoundUsb: () => void;
   export let onUsbLinkError: () => void;

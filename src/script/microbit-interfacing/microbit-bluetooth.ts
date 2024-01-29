@@ -15,7 +15,7 @@ import {
 } from './change-listeners';
 import {
   stateOnAssigned,
-  stateOnBluetoothConnected,
+  stateOnConnected,
   stateOnDisconnected,
   stateOnFailedToConnect,
   stateOnReady,
@@ -45,8 +45,6 @@ export const startBluetoothConnection = async (
   if (!existingDevice) {
     device = await requestBluetoothDevice(name);
     if (!device) {
-      // TODO: Handle this or the UI does the right thing already?
-      console.log('temp logging: no Bluetooth device');
       stateOnFailedToConnect(requestState);
       return {
         success: false,
@@ -63,7 +61,7 @@ export const startBluetoothConnection = async (
     const { gattServer } = await connectBluetoothDevice(device, requestState);
 
     if (requestState === DeviceRequestStates.INPUT) {
-      await listenToBluetoothInputServices(gattServer);
+      await listenToInputServices(gattServer);
     }
     stateOnReady(requestState);
     stateOnAssigned(requestState);
@@ -118,7 +116,7 @@ const connectBluetoothDevice = async (
     const microbitVersion = await MBSpecs.Utility.getModelNumber(gattServer);
     // TODO: This is conditional in the original code. I'm not sure why.
     if (gattServer.connected) {
-      stateOnBluetoothConnected(requestState);
+      stateOnConnected(requestState);
     }
     return {
       gattServer,
@@ -126,7 +124,8 @@ const connectBluetoothDevice = async (
     };
   } catch (e) {
     if (device.gatt !== undefined) {
-      // In case bluetooth was connected but some other error occurs, disconnect bluetooth to keep consistent state
+      // In case bluetooth was connected but some other error occurs.
+      // Disconnect bluetooth to keep consistent state.
       device.gatt.disconnect();
     }
     throw new Error('Failed to establish a connection!');
@@ -163,7 +162,7 @@ const attemptReconnect = async (
   if (device.gatt) {
     await connectBluetoothDevice(device, requestState);
     if (requestState === DeviceRequestStates.INPUT) {
-      await listenToBluetoothInputServices(device.gatt);
+      await listenToInputServices(device.gatt);
     }
     stateOnReady(requestState);
     stateOnAssigned(requestState);
@@ -184,23 +183,23 @@ const disconnectListener = async (
   }
 };
 
-const listenToBluetoothInputServices = async (
+const listenToInputServices = async (
   gattServer: BluetoothRemoteGATTServer,
 ): Promise<void> => {
   if (!gattServer.connected) {
     throw new Error('Could not listen to services, no microbit connected!');
   }
   try {
-    await listenToBlueoothAccelerometer(gattServer, onAccelerometerChange);
-    await listenToBluetoothButton(gattServer, 'A', onButtonChange);
-    await listenToBluetoothButton(gattServer, 'B', onButtonChange);
-    await listenToBluetoothUART(gattServer, onUARTDataReceived);
+    await listenToAccelerometer(gattServer, onAccelerometerChange);
+    await listenToButton(gattServer, 'A', onButtonChange);
+    await listenToButton(gattServer, 'B', onButtonChange);
+    await listenToUART(gattServer, onUARTDataReceived);
   } catch (error) {
     console.log(error);
   }
 };
 
-const listenToBluetoothButton = async (
+const listenToButton = async (
   gattServer: BluetoothRemoteGATTServer,
   buttonToListenFor: MBSpecs.Button,
   onButtonChanged: (state: MBSpecs.ButtonState, button: MBSpecs.Button) => void,
@@ -232,7 +231,7 @@ const listenToBluetoothButton = async (
   });
 };
 
-const listenToBlueoothAccelerometer = async (
+const listenToAccelerometer = async (
   gattServer: BluetoothRemoteGATTServer,
   onAccelerometerChanged: (x: number, y: number, z: number) => void,
 ): Promise<void> => {
@@ -255,7 +254,7 @@ const listenToBlueoothAccelerometer = async (
   );
 };
 
-const listenToBluetoothUART = async (
+const listenToUART = async (
   gattServer: BluetoothRemoteGATTServer,
   onDataReceived: (data: string) => void,
 ): Promise<void> => {

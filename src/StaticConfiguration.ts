@@ -9,7 +9,7 @@
  */
 import { PinTurnOnState } from './components/output/PinSelectorUtil';
 import MBSpecs from './script/microbit-interfacing/MBSpecs';
-import { HexOrigin } from './script/microbit-interfacing/Microbits';
+import { HexOrigin } from './script/microbit-interfacing/MicrobitsAlt';
 
 class StaticConfiguration {
   // in milliseconds, how long should be wait for reconnect before determining something catestrophic happened during the process?
