@@ -95,7 +95,6 @@
         } else {
           recordData();
           showCountdown = false;
-          // countdownIdx = 0;
         }
       }, config.duration);
     }
