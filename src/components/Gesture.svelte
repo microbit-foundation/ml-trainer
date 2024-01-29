@@ -63,10 +63,10 @@
     class?: string;
   }
   const countdownConfigs: CountdownConfig[] = [
-    { value: 3, duration: 500 },
-    { value: 2, duration: 500 },
-    { value: 1, duration: 500 },
-    { value: $t('content.data.recordingDialog.go'), duration: 1000, class: 'text-5xl' },
+    { value: 3, duration: 500, class: 'text-8xl' },
+    { value: 2, duration: 500, class: 'text-8xl' },
+    { value: 1, duration: 500, class: 'text-8xl' },
+    { value: $t('content.data.recordingDialog.go'), duration: 1000, class: 'text-6xl' },
   ];
 
   let isThisRecording = false;
@@ -296,7 +296,7 @@
       <div class="flex items-center h-100px">
         {#if countdownIdx < countdownConfigs.length}
           <p
-            class="text-8xl text-center font-bold text-brand-500 {currCountdownConfig.class ||
+            class="text-center font-bold text-brand-500 {currCountdownConfig.class ||
               ''}">
             {currCountdownConfig.value}
           </p>
