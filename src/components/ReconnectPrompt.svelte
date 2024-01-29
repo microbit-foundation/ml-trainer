@@ -14,7 +14,7 @@
 
   export let isOpen: boolean = false;
 
-$: dialogText =
+  $: dialogText =
     $state.reconnectState === DeviceRequestStates.INPUT
       ? {
           bodyId: 'disconnectedWarning.input',
