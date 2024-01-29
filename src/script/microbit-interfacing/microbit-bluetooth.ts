@@ -20,7 +20,15 @@ import {
   stateOnReady,
 } from './state-updaters';
 
-const disconnectListeners: (() => Promise<void>)[] = [];
+// const disconnectListeners: (() => Promise<void>)[] = [];
+const disconnectListeners: Record<
+  DeviceRequestStates,
+  (() => Promise<void>) | undefined
+> = {
+  [DeviceRequestStates.NONE]: undefined,
+  [DeviceRequestStates.INPUT]: undefined,
+  [DeviceRequestStates.OUTPUT]: undefined,
+};
 
 interface BluetoothConnection {
   device?: BluetoothDevice;
@@ -47,7 +55,7 @@ export const startBluetoothConnection = async (
   }
 
   const disconnectListener = createDisconnectListener(device, requestState);
-  disconnectListeners.push(disconnectListener);
+  disconnectListeners[requestState] = disconnectListener;
   device.addEventListener('gattserverdisconnected', disconnectListener);
 
   // TODO: This will throw if it fails. Do we need to handle it properly?
@@ -124,9 +132,10 @@ export const disconnectBluetoothDevice = (
   userDisconnect: boolean,
 ) => {
   stateOnDisconnected(requestState, userDisconnect);
-  const disconnectListener = disconnectListeners.shift();
+  const disconnectListener = disconnectListeners[requestState];
   if (disconnectListener) {
     device.removeEventListener('gattserverdisconnected', disconnectListener);
+    disconnectListeners[requestState] = undefined;
   }
   device.gatt?.disconnect();
   // TOOD: This is output only, but will need implementing.
