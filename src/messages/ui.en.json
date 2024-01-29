@@ -58,7 +58,6 @@
   "content.data.controlbar.button.uploadData": "Import data samples",
 
   "content.data.recording.button.cancel": "Cancel recording",
-  "content.data.recording.description": "Start action before the countdown finishes",
 
   "content.trainer.header": "Training a model",
   "content.trainer.description": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit machine learning tool to recognise different actions when you move your micro:bit.",

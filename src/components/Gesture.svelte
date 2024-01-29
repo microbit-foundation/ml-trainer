@@ -60,17 +60,19 @@
   interface CountdownConfig {
     value: string | number;
     duration: number;
+    class?: string;
   }
   const countdownConfigs: CountdownConfig[] = [
     { value: 3, duration: 500 },
     { value: 2, duration: 500 },
     { value: 1, duration: 500 },
-    { value: $t('content.data.recordingDialog.go'), duration: 1000 },
+    { value: $t('content.data.recordingDialog.go'), duration: 1000, class: 'text-5xl' },
   ];
 
   let isThisRecording = false;
   let showCountdown = false;
   let countdownIdx = 0;
+  $: currCountdownConfig = countdownConfigs[countdownIdx];
 
   function cancelRecording(): void {
     showCountdown = false;
@@ -291,15 +293,12 @@
   </svelte:fragment>
   <svelte:fragment slot="body">
     <div class="flex flex-col space-y-3 self-center items-center justify-center">
-      <div class="flex justify-center">
-        <p class="text-lg px-10 text-center">
-          {$t('content.data.recording.description')}
-        </p>
-      </div>
       <div class="flex items-center h-100px">
         {#if countdownIdx < countdownConfigs.length}
-          <p class="text-8xl text-center font-bold text-brand-500">
-            {countdownConfigs[countdownIdx].value}
+          <p
+            class="text-8xl text-center font-bold text-brand-500 {currCountdownConfig.class ||
+              ''}">
+            {currCountdownConfig.value}
           </p>
         {:else}
           <p class="text-5xl text-center font-bold text-brand-500">
