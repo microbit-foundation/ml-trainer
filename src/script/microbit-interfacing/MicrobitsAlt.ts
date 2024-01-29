@@ -42,18 +42,17 @@ class MicrobitsAlt {
     return success;
   }
 
-  public static async expelInput() {
-    if (this.assignedInputMicrobit) {
+  public static async disconnect(requestState: DeviceRequestStates) {
+    if (requestState === DeviceRequestStates.INPUT && this.assignedInputMicrobit) {
       await disconnectBluetoothDevice(
         this.assignedInputMicrobit,
         DeviceRequestStates.INPUT,
         true,
       );
-    }
-  }
-
-  public static async expelOuput() {
-    if (this.assignedOutputMicrobit) {
+    } else if (
+      requestState === DeviceRequestStates.OUTPUT &&
+      this.assignedOutputMicrobit
+    ) {
       await disconnectBluetoothDevice(
         this.assignedOutputMicrobit,
         DeviceRequestStates.OUTPUT,
@@ -62,9 +61,9 @@ class MicrobitsAlt {
     }
   }
 
-  public static async expelInputAndOutput() {
-    await this.expelInput();
-    await this.expelOuput();
+  public static async disconnectInputAndOutput() {
+    await this.disconnect(DeviceRequestStates.INPUT);
+    await this.disconnect(DeviceRequestStates.OUTPUT);
   }
 
   public static hasDeviceReference(requestState: DeviceRequestStates) {

@@ -17,7 +17,7 @@
   import MicrobitsAlt from '../../script/microbit-interfacing/MicrobitsAlt';
 
   const handleInputDisconnectClick = () => {
-    MicrobitsAlt.expelInputAndOutput();
+    MicrobitsAlt.disconnectInputAndOutput();
   };
 
   const handleOutputDisconnectClick = () => {
