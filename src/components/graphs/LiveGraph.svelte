@@ -1,9 +1,3 @@
-<!--
-  (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
- 
-  SPDX-License-Identifier: MIT
- -->
-
 <script lang="ts">
   import { state } from '../../script/stores/uiStore';
   import { currentData, settings } from '../../script/stores/mlStore';
@@ -15,7 +9,7 @@
   // Updates width to ensure that the canvas fills the whole screen
   export let width: number;
 
-  var canvas: HTMLCanvasElement | undefined = undefined;
+  var canvas: HTMLCanvasElement | undefined;
   var chart: SmoothieChart | undefined;
   let lineX = new TimeSeries();
   let lineY = new TimeSeries();
@@ -82,6 +76,12 @@
     lineZ.append(t, $currentData.z, false);
   }
 </script>
+
+<!--
+  (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
+ 
+  SPDX-License-Identifier: MIT
+ -->
 
 <div class="flex overflow-hidden">
   <canvas bind:this={canvas} height={160} id="smoothie-chart" width={width - 30} />

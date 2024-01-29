@@ -14,6 +14,7 @@ import MBSpecs from '../microbit-interfacing/MBSpecs';
 import { PersistantGestureData } from '../domain/Gestures';
 import Gesture, { GestureID } from '../domain/Gesture';
 import { gestures } from './Stores';
+import { SampleRingBuffer } from './buffer';
 
 export type RecordingData = {
   ID: number;
@@ -87,14 +88,10 @@ export type SoundData = {
   path: string;
 };
 
-export type LiveData = {
-  //Todo remove this
-  accelX: number;
-  accelY: number;
-  accelZ: number;
-  smoothedAccelX: number;
-  smoothedAccelY: number;
-  smoothedAccelZ: number;
+export type Sample = {
+  x: number;
+  y: number;
+  z: number;
 };
 
 export enum TrainingStatus {
@@ -140,27 +137,11 @@ const initialMLSettings: MlSettings = {
 // Store with ML-Algorithm settings
 export const settings = persistantWritable<MlSettings>('MLSettings', initialMLSettings);
 
-export const livedata = writable<LiveData>({
-  accelX: 0,
-  accelY: 0,
-  accelZ: 0,
-  smoothedAccelX: 0,
-  smoothedAccelY: 0,
-  smoothedAccelZ: 0,
-});
-
-export const currentData = writable<{ x: number; y: number; z: number }>({
+// This is smoothed and is used for the visual displays.
+export const currentData = writable<Sample>({
   x: 0,
   y: 0,
   z: 0,
-});
-
-livedata.subscribe(data => {
-  currentData.set({
-    x: data.smoothedAccelX,
-    y: data.smoothedAccelY,
-    z: data.smoothedAccelZ,
-  });
 });
 
 // Store for current gestures
@@ -230,52 +211,4 @@ export const model = writable<LayersModel>(undefined);
 export const trainingStatus = writable<TrainingStatus>(TrainingStatus.Untrained);
 
 // Stores and manages previous data-elements. Used for classifying current gesture
-// TODO: Only used for 'getPrevData' (which is only used for ml.ts). Do we even want this as global state?
-export const prevData = writable<LiveData[]>(new Array(get(settings).minSamples));
-
-let liveDataIndex = 0;
-livedata.subscribe(data => {
-  prevData.update((prevDataArray: LiveData[]) => {
-    prevDataArray[liveDataIndex] = data;
-    return prevDataArray;
-  });
-  liveDataIndex++;
-  if (liveDataIndex >= get(settings).minSamples) {
-    liveDataIndex = 0;
-  }
-});
-
-// Store for training state. Used to radiate current epoch state (not done presently).
-// TODO: Not used for anything presently (only ever updated). Use or delete
-export const trainingState = writable({
-  percentage: 0,
-  loss: 0,
-  epochs: 0,
-});
-
-// TODO: Only used at one location (ml.ts). Move to ml.ts?
-export function getPrevData(): { x: number[]; y: number[]; z: number[] } | undefined {
-  const data: LiveData[] = get(prevData);
-  const dataLength: number = data.length;
-  // Returns undefined if there has not being collected minSamples data yet
-  if (Object.values(data).length !== data.length) {
-    return undefined;
-  }
-  const x: number[] = new Array<number>(dataLength);
-  const y: number[] = new Array<number>(dataLength);
-  const z: number[] = new Array<number>(dataLength);
-
-  for (let i = 0; i < dataLength; i++) {
-    const oldDataIndex = (i + liveDataIndex) % dataLength;
-    x[i] = data[oldDataIndex].accelX;
-    y[i] = data[oldDataIndex].accelY;
-    z[i] = data[oldDataIndex].accelZ;
-  }
-
-  return { x, y, z };
-}
-
-// // Never used?
-// export const lossGraphStore = writable(undefined);
-// // Never used?
-// export const classificationStore = writable({ lastRecording: undefined, recordingTime: undefined });
+export const prevData = new SampleRingBuffer(get(settings).minSamples);

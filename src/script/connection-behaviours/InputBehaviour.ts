@@ -5,7 +5,7 @@
  */
 
 import { ModelView, buttonPressed, onCatastrophicError, state } from '../stores/uiStore';
-import { livedata } from '../stores/mlStore';
+import { currentData, prevData } from '../stores/mlStore';
 import { t } from '../../i18n';
 import { get } from 'svelte/store';
 import MBSpecs from '../microbit-interfacing/MBSpecs';
@@ -15,9 +15,6 @@ import { DeviceRequestStates } from '../stores/connectDialogStore';
 import StaticConfiguration from '../../StaticConfiguration';
 import { Paths, currentPath, navigate } from '../../router/paths';
 import { MicrobitConnection } from '../microbit-interfacing/MicrobitConnection';
-
-let text = get(t);
-t.subscribe(t => (text = t));
 
 // Temporary debug for time between messages received.
 const zeroStats = () => ({
@@ -224,17 +221,13 @@ class InputBehaviour extends LoggingDecorator {
     this.smoothedAccelX = accelX * 0.25 + this.smoothedAccelX * 0.75;
     this.smoothedAccelY = accelY * 0.25 + this.smoothedAccelY * 0.75;
     this.smoothedAccelZ = accelZ * 0.25 + this.smoothedAccelZ * 0.75;
-
-    const data = {
-      accelX,
-      accelY,
-      accelZ,
-      smoothedAccelX: this.smoothedAccelX,
-      smoothedAccelY: this.smoothedAccelY,
-      smoothedAccelZ: this.smoothedAccelZ,
+    const sample = {
+      x: this.smoothedAccelX,
+      y: this.smoothedAccelY,
+      z: this.smoothedAccelZ,
     };
-
-    livedata.set(data); // This is the old livedata store
+    currentData.set(sample);
+    prevData.write(accelX, accelY, accelZ);
   }
 
   buttonChange(buttonState: MBSpecs.ButtonState, button: MBSpecs.Button): void {

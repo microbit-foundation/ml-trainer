@@ -4,21 +4,6 @@
   SPDX-License-Identifier: MIT
  -->
 
-<style>
-  @keyframes loading-bar {
-    0% {
-      width: 0%;
-    }
-    100% {
-      width: 100%;
-    }
-  }
-
-  .animate-loading-bar {
-    animation: loading-bar 1.8s linear;
-  }
-</style>
-
 <script lang="ts">
   import { get } from 'svelte/store';
   import {
@@ -32,10 +17,9 @@
   import {
     addRecording,
     chosenGesture,
-    livedata,
     type RecordingData,
     removeRecording,
-    settings,
+    prevData,
   } from '../script/stores/mlStore';
   import Recording from './Recording.svelte';
   import { t } from '../i18n';
@@ -56,7 +40,6 @@
   export let showWalkThrough: Boolean = false;
 
   const gesturePlaceholderName = $t('content.data.classPlaceholderNewClass');
-  const recordingDuration = get(settings).duration;
   const countdownInitialValue = 3;
 
   let isThisRecording = false;
@@ -111,40 +94,30 @@
     }, 450);
   }
 
+  let recordProgress = 0;
+
   // method for recording data point for that specific gesture
   async function recordData(): Promise<void> {
     if (!areActionsAllowed()) {
       return;
     }
-
     $state.isRecording = true;
     isThisRecording = true;
 
-    // New array for data
-    let newData: { x: number[]; y: number[]; z: number[] } = { x: [], y: [], z: [] };
-
-    // Set timeout to allow recording in 1s
-    const unsubscribe = livedata.subscribe(data => {
-      newData.x.push(data.accelX);
-      newData.y.push(data.accelY);
-      newData.z.push(data.accelZ);
+    recordProgress = 0;
+    const data = await prevData.record(n => {
+      recordProgress = n / prevData.size;
     });
 
-    // Once duration is over (1000ms default), stop recording
-    setTimeout(() => {
-      unsubscribe();
-      console.log('RECEIVED SAMPLES', get(settings).numSamples, newData.x.length);
-      if (get(settings).numSamples <= newData.x.length) {
-        if (isThisRecording) {
-          const recording = { ID: Date.now(), data: newData } as RecordingData;
-          addRecording(gesture.getId(), recording);
-        }
-      } else {
-        alertUser($t('alert.recording.disconnectedDuringRecording'));
-      }
-      $state.isRecording = false;
-      isThisRecording = false;
-    }, recordingDuration);
+    // TODO: What about disconnection?
+    // alertUser($t('alert.recording.disconnectedDuringRecording'));
+
+    if (isThisRecording) {
+      const recording = { ID: Date.now(), data } as RecordingData;
+      addRecording(gesture.getId(), recording);
+    }
+    $state.isRecording = false;
+    isThisRecording = false;
   }
 
   // Delete recording from recordings array
@@ -299,7 +272,8 @@
       <!-- Recording bar to show recording progress -->
       <div class="w-70 h-6 bg-red-200 rounded-full overflow-hidden">
         <div
-          class="h-full bg-red-600 w-0 {isThisRecording ? 'animate-loading-bar' : ''}" />
+          class="h-full bg-red-600"
+          style="width: {(isThisRecording ? recordProgress : 0) * 100 + '%'}" />
       </div>
     </div>
     <StandardButton type="warning" onClick={cancelRecording}

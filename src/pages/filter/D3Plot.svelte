@@ -13,9 +13,8 @@
     determineFilter,
     getFilterLimits,
   } from '../../script/datafunctions';
-  import { GestureData } from '../../script/stores/mlStore';
+  import { GestureData, prevData } from '../../script/stores/mlStore';
   import { state } from '../../script/stores/uiStore';
-  import { getPrevData } from '../../script/stores/mlStore';
   import { gestures } from '../../script/stores/Stores';
 
   export let filter: FilterType;
@@ -143,7 +142,7 @@
   }
 
   function createLiveData() {
-    const liveData = getPrevData();
+    const liveData = prevData.toSnapshot();
     if (liveData === undefined) return undefined;
     const filteredData: RecordingRepresentation = {
       ID: uniqueLiveDataID,
