@@ -300,7 +300,7 @@ describe('processResponseMessage', () => {
   });
 
   it('throws away messages that are not a response', () => {
-    // First a valid response to stablish a baseline
+    // First a valid response to establish a baseline
     expect(processResponseMessage('R[0]STOP[]')).not.toBeUndefined();
     // Now non-response messages types
     expect(processResponseMessage('C[0]STOP[]')).toBeUndefined();
