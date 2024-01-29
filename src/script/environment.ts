@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+export const appName = 'micro:bit machine learning tool';
+
 // See CI & package.json scripts.
 export const version = import.meta.env.VITE_VERSION || 'local';
 export type Stage = 'local' | 'review' | 'staging' | 'production';

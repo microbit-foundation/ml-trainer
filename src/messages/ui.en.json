@@ -244,7 +244,7 @@
   "connectMB.transferHex.altText": "animation of dragging a hex file from the downloads folder onto the micro:bit drive or device listed in the file explorer",
 
   "compatibility.platform.notSupported": "The tool is not supported on your current platform.",
-  "compatibility.platform.notSupported.joinDesktop": "Join us on desktop.",
+  "compatibility.platform.notSupported.joinDesktop": "Please use Google Chrome or Microsoft Edge on a computer.",
   "compatibility.webgl.notSupported": "WebGL not available. Enable WebGL to see 3D data view.",
 
   "loading": "loading",
