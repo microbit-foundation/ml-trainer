@@ -25,7 +25,7 @@
   import BluetoothConnectingDialog from './bluetooth/BluetoothConnectingDialog.svelte';
   import SelectMicrobitDialogBluetooth from './bluetooth/SelectMicrobitDialogBluetooth.svelte';
   import MicrobitWearingInstructionDialog from './MicrobitWearingInstructionDialog.svelte';
-  import WebUsbTryAgain from './WebUsbTryAgain.svelte';
+  import WebUsbTryAgain, { USBTryAgainType } from './WebUsbTryAgain.svelte';
   import { onDestroy, onMount } from 'svelte';
   import { get, Unsubscriber } from 'svelte/store';
   import { compatibility } from '../../script/stores/uiStore';
@@ -40,7 +40,7 @@
   const { bluetooth, usb } = get(compatibility);
   let endOfFlow = false;
   let flashStage: FlashStage = usb ? 'bluetooth' : 'radio-sender';
-  let reconnectRequired = false;
+  let usbTryAgainType: USBTryAgainType = 'replug microbit';
   let flashProgress = 0;
 
   const stageToHex = (flashStage: FlashStage): HexType => {
@@ -72,18 +72,30 @@
           break;
         } else if (/No device selected/.test(err.message)) {
           $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
-
+          usbTryAgainType = 'select microbit';
+          break;
+        } else if (/Unable to claim interface/.test(err.message)) {
+          $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
+          usbTryAgainType = 'close tabs';
           break;
         } else {
           // Unhandled error. User will need to reconnect their micro:bit
           $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
-          reconnectRequired = true;
+          usbTryAgainType = 'replug microbit';
           break;
         }
       default: {
         $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
-        reconnectRequired = true;
+        usbTryAgainType = 'replug microbit';
       }
+    }
+  };
+
+  const handleConnectionError = (err: any) => {
+    if (flashStage === 'bluetooth') {
+      $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
+    } else {
+      handleWebUSBError(err);
     }
   };
 
@@ -91,11 +103,7 @@
     try {
       await Microbits.linkMicrobit();
     } catch (err) {
-      if (flashStage === 'bluetooth') {
-        $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
-      } else {
-        $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
-      }
+      handleConnectionError(err);
       return;
     }
     const friendlyName = await getMicrobitName();
@@ -116,11 +124,7 @@
       }
       return friendlyName;
     } catch (err) {
-      if (flashStage === 'bluetooth') {
-        $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
-      } else {
-        handleWebUSBError(err);
-      }
+      handleConnectionError(err);
     }
   }
 
@@ -144,11 +148,7 @@
         onConnectingSerial(friendlyName);
       }
     } catch (err) {
-      if (flashStage === 'bluetooth') {
-        $connectionDialogState.connectionState = ConnectDialogStates.MANUAL_TUTORIAL;
-      } else {
-        handleWebUSBError(err);
-      }
+      handleConnectionError(err);
     }
   }
 
@@ -169,7 +169,6 @@
     setTimeout(() => {
       $connectionDialogState.connectionState = ConnectDialogStates.NONE;
       endOfFlow = false;
-      reconnectRequired = false;
     }, 200);
   }
 
@@ -381,11 +380,10 @@
             ConnectDialogStates.CONNECT_BATTERY)} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.USB_TRY_AGAIN}
       <WebUsbTryAgain
-        {reconnectRequired}
+        type={usbTryAgainType}
         onCancel={endFlow}
         onTryAgain={() => {
           $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE;
-          reconnectRequired = false;
         }} />
     {/if}
   </StandardDialog>

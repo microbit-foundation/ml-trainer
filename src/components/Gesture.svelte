@@ -57,35 +57,48 @@
 
   const gesturePlaceholderName = $t('content.data.classPlaceholderNewClass');
   const recordingDuration = get(settings).duration;
-  const countdownInitialValue = 3;
+  interface CountdownConfig {
+    value: string | number;
+    duration: number;
+    class?: string;
+  }
+  const countdownConfigs: CountdownConfig[] = [
+    { value: 3, duration: 500, class: 'text-8xl' },
+    { value: 2, duration: 500, class: 'text-8xl' },
+    { value: 1, duration: 500, class: 'text-8xl' },
+    { value: $t('content.data.recordingDialog.go'), duration: 1000, class: 'text-6xl' },
+  ];
 
   let isThisRecording = false;
   let showCountdown = false;
-  let countdownValue = countdownInitialValue;
-  let countdownInterval: any;
-
-  function cancelCountdown(): void {
-    clearInterval(countdownInterval);
-    showCountdown = false;
-  }
+  let countdownIdx = 0;
+  $: currCountdownConfig = countdownConfigs[countdownIdx];
 
   function cancelRecording(): void {
-    cancelCountdown();
+    showCountdown = false;
     isThisRecording = false;
   }
 
   function countdownStart(): void {
-    countdownValue = countdownInitialValue;
+    countdownIdx = 0;
     showCountdown = true;
-    countdownInterval = setInterval(() => {
-      countdownValue--;
-      if (countdownValue === 0 && showCountdown) {
+    countdown(countdownConfigs[countdownIdx]);
+  }
+
+  function countdown(config: CountdownConfig): void {
+    setTimeout(() => {
+      countdownIdx++;
+      if (!showCountdown) {
+        // recording cancelled
+        return;
+      }
+      if (countdownIdx < countdownConfigs.length) {
+        countdown(countdownConfigs[countdownIdx]);
+      } else {
         recordData();
         showCountdown = false;
-      } else if (!showCountdown) {
-        cancelCountdown();
       }
-    }, 1000);
+    }, config.duration);
   }
 
   const nameBind = gesture.bindName();
@@ -280,15 +293,12 @@
   </svelte:fragment>
   <svelte:fragment slot="body">
     <div class="flex flex-col space-y-3 self-center items-center justify-center">
-      <div class="flex justify-center">
-        <p class="text-lg px-10 text-center">
-          {$t('content.data.recording.description')}
-        </p>
-      </div>
       <div class="flex items-center h-100px">
-        {#if countdownValue > 0}
-          <p class="text-8xl text-center font-bold text-brand-500">
-            {countdownValue}
+        {#if countdownIdx < countdownConfigs.length}
+          <p
+            class="text-center font-bold text-brand-500 {currCountdownConfig.class ||
+              ''}">
+            {currCountdownConfig.value}
           </p>
         {:else}
           <p class="text-5xl text-center font-bold text-brand-500">

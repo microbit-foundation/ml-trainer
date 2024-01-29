@@ -48,6 +48,7 @@
   "content.data.deleteAction": "Delete action \"{action}\"",
   "content.data.deleteRecording": "Delete recording",
   "content.data.recordingDialog.title": "Record data for action \"{action}\"",
+  "content.data.recordingDialog.go": "Go",
   "content.data.recordingDialog.recording": "Recording",
 
   "content.data.controlbar.button.menu": "Data actions",
@@ -57,7 +58,6 @@
   "content.data.controlbar.button.uploadData": "Import data samples",
 
   "content.data.recording.button.cancel": "Cancel recording",
-  "content.data.recording.description": "Start action before the countdown finishes",
 
   "content.trainer.header": "Training a model",
   "content.trainer.description": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit machine learning tool to recognise different actions when you move your micro:bit.",
@@ -132,10 +132,11 @@
   "connectMB.tryAgain": "Try again",
 
   "connectMB.usbTryAgain.heading": "Connect using WebUSB",
-  "connectMB.usbTryAgain.subtitle": "You didn't select a micro:bit. Do you want to try again?",
-
-  "connectMB.usb.error1": "A WebUSB error occured.",
-  "connectMB.usb.error2": "Please unplug and replug the micro:bit before trying again.",
+  "connectMB.usbTryAgain.selectMicrobit": "You didn't select a micro:bit. Do you want to try again?",
+  "connectMB.usbTryAgain.closeTabs1": "Another process is connected to this device.",
+  "connectMB.usbTryAgain.closeTabs2": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, machine learning tool), or unplug and replug the micro:bit before trying again.",
+  "connectMB.usbTryAgain.replugMicrobit1": "A WebUSB error occurred.",
+  "connectMB.usbTryAgain.replugMicrobit2": "Please unplug and replug the micro:bit before trying again.",
 
   "connectMB.radioStart.heading": "What you will need to get started:",
   "connectMB.radioStart.requirements1": "2 micro:bits",
@@ -192,7 +193,7 @@
 
   "connectMB.pattern.heading": "Copy pattern",
   "connectMB.pattern.subtitle": "Copy the pattern displayed on the micro:bit.",
-  "connectMB.pattern.inputLabel": "Number of lit up LED in column {colNum} displayed on micro:bit",
+  "connectMB.pattern.inputLabel": "Number of LEDs lit in column {colNum} on the micro:bit display",
 
   "connectMB.bluetooth.heading": "Connect using Web Bluetooth",
   "connectMB.main.bluetooth.subtitle": "Connect using Web Bluetooth",
@@ -202,6 +203,7 @@
   "connectMB.connecting": "Connecting…",
   "connectMB.bluetooth.invalidPattern": "The pattern you have drawn is invalid.",
 
+  "disconnectedWarning.heading": "micro:bit connection lost",
   "disconnectedWarning.input": "Your input micro:bit lost connection, do want to try again?",
   "disconnectedWarning.output": "Your output micro:bit lost connection, do want to try again?",
   "disconnectedWarning.reconnectButton.input": "Reconnect input",
@@ -243,7 +245,7 @@
   "connectMB.transferHex.altText": "animation of dragging a hex file from the downloads folder onto the micro:bit drive or device listed in the file explorer",
 
   "compatibility.platform.notSupported": "The tool is not supported on your current platform.",
-  "compatibility.platform.notSupported.joinDesktop": "Join us on desktop.",
+  "compatibility.platform.notSupported.joinDesktop": "Please use Google Chrome or Microsoft Edge on a computer.",
   "compatibility.webgl.notSupported": "WebGL not available. Enable WebGL to see 3D data view.",
 
   "loading": "loading",

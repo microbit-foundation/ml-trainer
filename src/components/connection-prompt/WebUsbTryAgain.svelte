@@ -4,6 +4,10 @@
   SPDX-License-Identifier: MIT
  -->
 
+<script lang="ts" context="module">
+  export type USBTryAgainType = 'replug microbit' | 'select microbit' | 'close tabs';
+</script>
+
 <script lang="ts">
   import { t } from '../../i18n';
   import DialogHeading from '../DialogHeading.svelte';
@@ -11,17 +15,20 @@
 
   export let onTryAgain: () => void;
   export let onCancel: () => void;
-  export let reconnectRequired: boolean = false;
+  export let type: USBTryAgainType = 'replug microbit';
 </script>
 
 <div class="w-175">
   <DialogHeading>{$t('connectMB.usbTryAgain.heading')}</DialogHeading>
   <div class="space-y-5">
-    {#if reconnectRequired}
-      <p>{$t('connectMB.usb.error1')}</p>
-      <p>{$t('connectMB.usb.error2')}</p>
+    {#if type === 'select microbit'}
+      <p>{$t('connectMB.usbTryAgain.selectMicrobit')}</p>
+    {:else if type === 'close tabs'}
+      <p>{$t('connectMB.usbTryAgain.closeTabs1')}</p>
+      <p>{$t('connectMB.usbTryAgain.closeTabs2')}</p>
     {:else}
-      <p>{$t('connectMB.usbTryAgain.subtitle')}</p>
+      <p>{$t('connectMB.usbTryAgain.replugMicrobit1')}</p>
+      <p>{$t('connectMB.usbTryAgain.replugMicrobit2')}</p>
     {/if}
     <div class="flex justify-end gap-x-5">
       <StandardButton onClick={onCancel}>{$t('actions.cancel')}</StandardButton>
