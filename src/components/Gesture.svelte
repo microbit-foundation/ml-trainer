@@ -57,35 +57,46 @@
 
   const gesturePlaceholderName = $t('content.data.classPlaceholderNewClass');
   const recordingDuration = get(settings).duration;
-  const countdownInitialValue = 3;
+  interface CountdownConfig {
+    value: string | number;
+    duration: number;
+  }
+  const countdownConfigs: CountdownConfig[] = [
+    { value: 3, duration: 500 },
+    { value: 2, duration: 500 },
+    { value: 1, duration: 500 },
+    { value: $t('content.data.recordingDialog.go'), duration: 1000 },
+  ];
 
   let isThisRecording = false;
   let showCountdown = false;
-  let countdownValue = countdownInitialValue;
-  let countdownInterval: any;
-
-  function cancelCountdown(): void {
-    clearInterval(countdownInterval);
-    showCountdown = false;
-  }
+  let countdownIdx = 0;
 
   function cancelRecording(): void {
-    cancelCountdown();
+    showCountdown = false;
     isThisRecording = false;
   }
 
   function countdownStart(): void {
-    countdownValue = countdownInitialValue;
+    countdownIdx = 0;
     showCountdown = true;
-    countdownInterval = setInterval(() => {
-      countdownValue--;
-      if (countdownValue === 0 && showCountdown) {
+    countdown(countdownConfigs[countdownIdx]);
+  }
+
+  function countdown(config: CountdownConfig): void {
+    setTimeout(() => {
+      countdownIdx++;
+      if (!showCountdown) {
+        // recording cancelled
+        return;
+      }
+      if (countdownIdx < countdownConfigs.length) {
+        countdown(countdownConfigs[countdownIdx]);
+      } else {
         recordData();
         showCountdown = false;
-      } else if (!showCountdown) {
-        cancelCountdown();
       }
-    }, 1000);
+    }, config.duration);
   }
 
   const nameBind = gesture.bindName();
@@ -286,9 +297,9 @@
         </p>
       </div>
       <div class="flex items-center h-100px">
-        {#if countdownValue > 0}
+        {#if countdownIdx < countdownConfigs.length}
           <p class="text-8xl text-center font-bold text-brand-500">
-            {countdownValue}
+            {countdownConfigs[countdownIdx].value}
           </p>
         {:else}
           <p class="text-5xl text-center font-bold text-brand-500">
