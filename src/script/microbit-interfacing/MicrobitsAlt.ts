@@ -95,6 +95,28 @@ class MicrobitsAlt {
     return success;
   }
 
+  public static async reconnect(requestState: DeviceRequestStates) {
+    if (
+      requestState === DeviceRequestStates.INPUT &&
+      this.inputName &&
+      this.assignedInputMicrobit
+    ) {
+      if (this.assignedInputMicrobit instanceof MicrobitUSB) {
+        return this.assignSerialInput(this.inputName);
+      } else {
+        return this.assignBluetoothInput(this.inputName);
+      }
+    }
+    if (
+      requestState === DeviceRequestStates.OUTPUT &&
+      this.outputName &&
+      this.assignedOutputMicrobit
+    ) {
+      return this.assignBluetoothOuput(this.outputName);
+    }
+    throw new Error('Cannot reconnect. There are no previously connected devices.');
+  }
+
   public static async disconnect(requestState: DeviceRequestStates) {
     if (requestState === DeviceRequestStates.INPUT && this.assignedInputMicrobit) {
       if (this.assignedInputMicrobit instanceof MicrobitUSB) {

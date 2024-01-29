@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { isDevMode } from '../environment';
 import { DeviceRequestStates } from '../stores/connectDialogStore';
 import MicrobitUSB from './MicrobitUSB';
 import Microbits from './MicrobitsAlt';
@@ -95,7 +96,7 @@ const listenToInputServices = async (usb: MicrobitUSB): Promise<void> => {
     attempts++ < 20
   ) {
     const handshakeCmd = protocol.generateCmdHandshake();
-    console.log(`Sending handshake ${handshakeCmd}`);
+    isDevMode && console.log(`Sending handshake ${handshakeCmd}`);
     await usb.serialWrite(handshakeCmd);
     await new Promise(resolve => setTimeout(resolve, 100));
   }
@@ -111,7 +112,6 @@ export const disconnectSerial = (
 ): void => {
   // Weirdly this disconnects the CortexM...
   usb.disconnect();
-  // this.unprocessedInput = '';
   usb.stopSerial().catch(e => {
     // It's hard to make disconnect() async so we've left this as a background error for now.
     console.error(e);

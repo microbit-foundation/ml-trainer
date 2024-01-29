@@ -23,13 +23,10 @@
     Microbits.disconnect(DeviceRequestStates.OUTPUT);
   };
 
-  const handleInputConnect = () => {
-    const name = Microbits.getDeviceName(DeviceRequestStates.INPUT);
-    if (name) {
-      // We need to know if we're WebSerial or Web Bluetooth...
-      // MicrobitsAlt.assignBluetoothInput(name);
-      Microbits.assignSerialInput(name);
-    } else {
+  const handleInputConnect = async () => {
+    try {
+      await Microbits.reconnect(DeviceRequestStates.INPUT);
+    } catch (e) {
       startConnectionProcess();
     }
   };
