@@ -33,6 +33,8 @@
   import ConnectDialogContainer from './components/connection-prompt/ConnectDialogContainer.svelte';
   import { Paths, currentPath, getTitle, navigate } from './router/paths';
   import HomeIcon from 'virtual:icons/ri/home-2-line';
+  import sample from './script/samples/sample.json';
+  import { isDevMode } from './script/environment';
 
   ConnectionBehaviours.setInputBehaviour(new InputBehaviour());
   ConnectionBehaviours.setOutputBehaviour(new OutputBehaviour());
@@ -47,6 +49,10 @@
     const { bluetooth, usb } = get(compatibility);
     // Value must switch from false to true after mount to trigger dialog transition
     isCompatibilityWarningDialogOpen.set(!bluetooth && !usb);
+
+    if (isDevMode) {
+      localStorage.setItem('gestureData', JSON.stringify(sample));
+    }
   });
 
   let routeAnnouncementEl: HTMLDivElement | undefined;

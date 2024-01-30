@@ -27,6 +27,9 @@ import { getPrediction } from './getPrediction';
 let text: (key: string, vars?: object) => string;
 t.subscribe(t => (text = t));
 
+const smoothenTrainingData = false;
+const smoothenTestData = false;
+
 // Whenever model is trained, the settings at the time is saved in this variable
 // Such that prediction continues on with the same settings as during training
 let modelSettings: { axes: AxesType[]; filters: Set<FilterType> };
@@ -87,10 +90,15 @@ export async function trainModel(): Promise<void> {
   const labels: Array<number[]> = [];
   const numberofClasses: number = gestureData.length;
 
+  console.log('smoothenTrainingData', smoothenTrainingData);
+
   gestureData.forEach((MLClass, index) => {
     MLClass.recordings.forEach(recording => {
+      const recordingData = smoothenTrainingData
+        ? smoothenInputs(recording.data)
+        : recording.data;
       // prepare features
-      const inputs: number[] = makeInputs(recording.data);
+      const inputs: number[] = makeInputs(recordingData);
       features.push(inputs);
 
       // Prepare labels
@@ -191,10 +199,16 @@ function onTrainEnd() {
   setupPredictionInterval();
 }
 
+interface Sample {
+  x: number[];
+  y: number[];
+  z: number[];
+}
+
 // makeInput reduces array of x, y and z inputs to a single number array with values.
 // Depending on user settings. There will be anywhere between 1-24 parameters in
 
-function makeInputs(sample: { x: number[]; y: number[]; z: number[] }): number[] {
+function makeInputs(sample: Sample): number[] {
   const dataRep: number[] = [];
 
   if (!modelSettings) {
@@ -214,6 +228,22 @@ function makeInputs(sample: { x: number[]; y: number[]; z: number[] }): number[]
   });
 
   return dataRep;
+}
+
+const smoothen = (d: number[]) => {
+  return d.map((v, idx) => {
+    const prevValue = idx === 0 ? 0 : d[idx - 1];
+    return v * 0.25 + prevValue * 0.75;
+  });
+};
+
+// Smoothen data
+function smoothenInputs(sample: Sample): Sample {
+  return {
+    x: smoothen(sample.x),
+    y: smoothen(sample.y),
+    z: smoothen(sample.z),
+  };
 }
 
 // Set the global state. Telling components, that the program is predicting
@@ -282,7 +312,10 @@ export function classify() {
   const data = getPrevData();
   if (data === undefined)
     throw new Error('Unsufficient amount of data to make prediction');
-  const input: number[] = makeInputs(data);
+
+  console.log('smoothenTestData', smoothenTestData);
+  const inputData = smoothenTestData ? smoothenInputs(data) : data;
+  const input: number[] = makeInputs(inputData);
   const inputTensor = tf.tensor([input]);
   const prediction: Tensor = get(model).predict(inputTensor) as Tensor;
   prediction
