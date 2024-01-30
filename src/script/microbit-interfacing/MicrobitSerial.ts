@@ -81,16 +81,16 @@ class MicrobitSerial implements MicrobitConnection {
             previousButtonState.B = sensorData.buttonB;
             inputBehaviour.buttonChange(sensorData.buttonB, 'B');
           }
-        }
-
-        const messageResponse = protocol.processResponseMessage(msg);
-        if (!messageResponse) {
-          return;
-        }
-        const responseResolve = this.responseMap.get(messageResponse.messageId);
-        if (responseResolve) {
-          this.responseMap.delete(messageResponse.messageId);
-          responseResolve(messageResponse);
+        } else {
+          const messageResponse = protocol.processResponseMessage(msg);
+          if (!messageResponse) {
+            return;
+          }
+          const responseResolve = this.responseMap.get(messageResponse.messageId);
+          if (responseResolve) {
+            this.responseMap.delete(messageResponse.messageId);
+            responseResolve(messageResponse);
+          }
         }
       });
     };
