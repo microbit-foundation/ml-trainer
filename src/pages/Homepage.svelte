@@ -37,7 +37,7 @@
   import introVideoPlaceholderImage from '../imgs/video-placeholder.png';
 
   const playgroundSurveyUrl =
-    'https://stage.microbit.org/teach/playground-survey/exploring-machine-learning';
+    'https://microbit.org/teach/playground-survey/exploring-machine-learning/';
 
   $: hasExistingSession = $gestures.some(g => g.name || g.recordings.length);
   let showDataLossWarning = false;

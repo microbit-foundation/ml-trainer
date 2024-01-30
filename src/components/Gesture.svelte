@@ -51,7 +51,6 @@
   import CloseIcon from 'virtual:icons/ri/close-line';
   import StandardDialog from './dialogs/StandardDialog.svelte';
 
-  export let onNoMicrobitSelect: () => void;
   export let gesture: Gesture;
   export let showWalkThrough: Boolean = false;
 
@@ -72,7 +71,6 @@
   let isThisRecording = false;
   let showCountdown = false;
   let countdownIdx = 0;
-  $: currCountdownConfig = countdownConfigs[countdownIdx];
 
   function cancelRecording(): void {
     showCountdown = false;
@@ -80,25 +78,28 @@
   }
 
   function countdownStart(): void {
+    selectGesture();
+
     countdownIdx = 0;
     showCountdown = true;
-    countdown(countdownConfigs[countdownIdx]);
-  }
 
-  function countdown(config: CountdownConfig): void {
-    setTimeout(() => {
-      countdownIdx++;
-      if (!showCountdown) {
-        // recording cancelled
-        return;
-      }
-      if (countdownIdx < countdownConfigs.length) {
-        countdown(countdownConfigs[countdownIdx]);
-      } else {
-        recordData();
-        showCountdown = false;
-      }
-    }, config.duration);
+    function countdown(config: CountdownConfig): void {
+      setTimeout(() => {
+        countdownIdx++;
+        if (!showCountdown) {
+          // recording cancelled
+          return;
+        }
+        if (countdownIdx < countdownConfigs.length) {
+          countdown(countdownConfigs[countdownIdx]);
+        } else {
+          recordData();
+          showCountdown = false;
+        }
+      }, config.duration);
+    }
+
+    countdown(countdownConfigs[countdownIdx]);
   }
 
   const nameBind = gesture.bindName();
@@ -169,26 +170,8 @@
     removeRecording(gesture.getId(), recording.ID);
   }
 
-  // Selecting this gesture for recording. Updates settings accordingly
-  // If gesture is already selected, the selection is removed.
-  // If bluetooth is not connected, open connection prompt by calling callback
-  function selectClicked(): void {
-    if (!$state.isInputConnected) {
-      chosenGesture.update(gesture => {
-        gesture = null;
-        return gesture;
-      });
-      onNoMicrobitSelect();
-      return;
-    }
-    chosenGesture.update(chosen => {
-      if (chosen === gesture) {
-        chosen = null;
-      } else {
-        chosen = gesture;
-      }
-      return chosen;
-    });
+  function selectGesture(): void {
+    $chosenGesture = gesture;
   }
 
   $: isChosenGesture = $chosenGesture === gesture;
@@ -253,18 +236,6 @@
     }
   }
 
-  function selectGesture() {
-    chosenGesture.update(chosen => {
-      chosen = gesture;
-      return chosen;
-    });
-  }
-
-  // Select gesture when gesture is renamed
-  $: if ($nameBind.trim()) {
-    selectGesture();
-  }
-
   // Make function depend on buttonsPressed store.
   let declaring = true;
   $: {
@@ -296,9 +267,9 @@
       <div class="flex items-center h-100px">
         {#if countdownIdx < countdownConfigs.length}
           <p
-            class="text-center font-bold text-brand-500 {currCountdownConfig.class ||
-              ''}">
-            {currCountdownConfig.value}
+            class="text-center font-bold text-brand-500 {countdownConfigs[countdownIdx]
+              .class || ''}">
+            {countdownConfigs[countdownIdx].value}
           </p>
         {:else}
           <p class="text-5xl text-center font-bold text-brand-500">
@@ -318,6 +289,8 @@
 </StandardDialog>
 
 <!-- Title of gesture-->
+<!-- svelte-ignore a11y-no-static-element-interactions 
+     You can instead interact with the button. A better model of row selection would be a good enhancement. -->
 <div on:click={selectGesture}>
   <GestureTilePart small elevated selected={isChosenGesture || showAddActionWalkThrough}>
     <div class="flex items-center justify-center p-2 w-50 h-30 relative">
@@ -361,6 +334,8 @@
     </p>
   </div>
 {:else}
+  <!-- svelte-ignore a11y-no-static-element-interactions 
+        See above -->
   <div
     class="max-w-max {isGestureNamed || hasRecordings ? 'visible' : 'invisible'}"
     on:click={selectGesture}>
@@ -369,14 +344,16 @@
         <div class="w-33 flex justify-center items-center gap-x-3">
           <IconButton
             ariaLabel={$t(
-              isChosenGesture ? 'content.data.recordAction' : 'content.data.selectAction',
+              isChosenGesture
+                ? 'content.data.recordAction'
+                : 'content.data.selectAndRecordAction',
               {
                 values: {
                   action: $nameBind,
                 },
               },
             )}
-            onClick={isChosenGesture ? countdownStart : selectClicked}
+            onClick={countdownStart}
             disabled={!$state.isInputConnected}
             rounded>
             <RecordIcon
