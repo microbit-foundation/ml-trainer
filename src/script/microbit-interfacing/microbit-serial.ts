@@ -114,7 +114,7 @@ export const disconnectSerial = (
   usb.disconnect();
   usb.stopSerial().catch(e => {
     // It's hard to make disconnect() async so we've left this as a background error for now.
-    console.error(e);
+    isDevMode && console.error(e);
   });
   stateOnDisconnected(requestState, userDisconnect);
 };

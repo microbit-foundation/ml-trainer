@@ -4,10 +4,13 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { get, writable } from 'svelte/store';
+import StaticConfiguration from '../../StaticConfiguration';
 import { isDevMode } from '../environment';
 import { DeviceRequestStates } from '../stores/connectDialogStore';
+import { outputting } from '../stores/uiStore';
 import MBSpecs from './MBSpecs';
-import { CharacteristicDataTarget } from './MicrobitBluetooth';
+import { UARTMessageType } from './MicrobitsAlt';
 import {
   onAccelerometerChange,
   onButtonChange,
@@ -21,7 +24,23 @@ import {
   stateOnReady,
 } from './state-updaters';
 
-// const disconnectListeners: (() => Promise<void>)[] = [];
+/**
+ * UART data target. For fixing type compatibility issues.
+ */
+export type CharacteristicDataTarget = EventTarget & {
+  value: DataView;
+};
+
+type QueueElement = {
+  service: BluetoothRemoteGATTCharacteristic;
+  view: DataView;
+};
+
+interface BluetoothConnection {
+  device?: BluetoothDevice;
+  success: boolean;
+}
+
 const disconnectListeners: Record<
   DeviceRequestStates,
   (() => Promise<void>) | undefined
@@ -31,10 +50,13 @@ const disconnectListeners: Record<
   [DeviceRequestStates.OUTPUT]: undefined,
 };
 
-interface BluetoothConnection {
-  device?: BluetoothDevice;
-  success: boolean;
-}
+let bluetoothServiceActionQueue = writable<{
+  busy: boolean;
+  queue: QueueElement[];
+}>({
+  busy: false,
+  queue: [],
+});
 
 export const startBluetoothConnection = async (
   name: string,
@@ -62,6 +84,8 @@ export const startBluetoothConnection = async (
 
     if (requestState === DeviceRequestStates.INPUT) {
       await listenToInputServices(gattServer);
+    } else {
+      await listenToOutputServices(gattServer);
     }
     stateOnReady(requestState);
     stateOnAssigned(requestState);
@@ -94,7 +118,7 @@ const requestBluetoothDevice = async (
       ],
     });
   } catch (e) {
-    isDevMode && console.log(e);
+    isDevMode && console.error('Error logging:', e);
   }
 };
 
@@ -178,7 +202,7 @@ const disconnectListener = async (
   try {
     await attemptReconnect(device, requestState);
   } catch (e) {
-    isDevMode && console.log(e);
+    isDevMode && console.error('Error logging:', e);
     disconnectBluetoothDevice(device, requestState, false);
   }
 };
@@ -194,8 +218,8 @@ const listenToInputServices = async (
     await listenToButton(gattServer, 'A', onButtonChange);
     await listenToButton(gattServer, 'B', onButtonChange);
     await listenToUART(gattServer, onUARTDataReceived);
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    isDevMode && console.error('Error logging:', e);
   }
 };
 
@@ -275,4 +299,189 @@ const listenToUART = async (
     const receivedString = String.fromCharCode.apply(null, receivedData);
     onDataReceived(receivedString);
   });
+};
+
+const noOutputError = () => {
+  throw new Error(
+    'Output microbit is not connected or have not subsribed to services yet',
+  );
+};
+
+interface SendToOutput {
+  sendToOutputUart: (() => void) | ((type: UARTMessageType, value: string) => void);
+  setOutputMatrix: (() => void) | ((matrix: boolean[]) => void);
+  sendToOutputPin:
+    | (() => void)
+    | ((data: { pin: MBSpecs.UsableIOPin; on: boolean }[]) => void);
+  resetIOPins: () => void;
+}
+
+const sendToOutput: SendToOutput = {
+  sendToOutputUart: noOutputError,
+  setOutputMatrix: noOutputError,
+  sendToOutputPin: noOutputError,
+  resetIOPins: noOutputError,
+};
+
+const listenToOutputServices = async (
+  gattServer: BluetoothRemoteGATTServer,
+): Promise<void> => {
+  if (!gattServer.connected) {
+    throw new Error('Could not listen to services, no microbit connected!');
+  }
+  const ioService = await gattServer.getPrimaryService(MBSpecs.Services.IO_SERVICE);
+  const outputIO = await ioService.getCharacteristic(MBSpecs.Characteristics.IO_DATA);
+  const ledService = await gattServer.getPrimaryService(MBSpecs.Services.IO_SERVICE);
+  const outputMatrix = await ledService.getCharacteristic(
+    MBSpecs.Characteristics.LED_MATRIX_STATE,
+  );
+  const uartService = await gattServer.getPrimaryService(MBSpecs.Services.UART_SERVICE);
+  const outputUart = await uartService.getCharacteristic(
+    MBSpecs.Characteristics.UART_DATA_RX,
+  );
+
+  sendToOutput['sendToOutputPin'] = (data: { pin: MBSpecs.UsableIOPin; on: boolean }[]) =>
+    sendToOutputPin(outputIO, data);
+  sendToOutput['resetIOPins'] = () => resetIOPins(outputIO);
+  sendToOutput['setOutputMatrix'] = (matrix: boolean[]) =>
+    setOutputMatrix(outputMatrix, matrix);
+  sendToOutput['sendToOutputUart'] = (type: UARTMessageType, value: string) =>
+    sendToOutputUart(outputUart, type, value);
+
+  try {
+    await listenToUART(gattServer, onUARTDataReceived);
+  } catch (e) {
+    isDevMode && console.error('Error logging:', e);
+  }
+};
+
+const sendIOPinMessage = (
+  outputIO: BluetoothRemoteGATTCharacteristic,
+  data: { pin: MBSpecs.UsableIOPin; on: boolean },
+): void => {
+  const dataView = new DataView(new ArrayBuffer(2));
+  dataView.setInt8(0, data.pin);
+  dataView.setInt8(1, data.on ? 1 : 0);
+  outputting.set({ text: `Turn pin ${data.pin} ${data.on ? 'on' : 'off'}` });
+  addToServiceActionQueue(outputIO, dataView);
+};
+
+const sendToOutputPin = (
+  outputIO: BluetoothRemoteGATTCharacteristic,
+  data: { pin: MBSpecs.UsableIOPin; on: boolean }[],
+): void => {
+  const ioPinMessages = new Map<MBSpecs.UsableIOPin, number>();
+  for (const msg of data) {
+    // Initialise
+    ioPinMessages.set(msg.pin, 0);
+    const currentPinValue: number = ioPinMessages.get(msg.pin)!;
+    const deltaValue = msg.on ? 1 : -1;
+    ioPinMessages.set(msg.pin, Math.max(0, currentPinValue + deltaValue));
+  }
+  for (const [key, value] of ioPinMessages) {
+    sendIOPinMessage(outputIO, { pin: key, on: value !== 0 });
+  }
+};
+
+const resetIOPins = (outputIO: BluetoothRemoteGATTCharacteristic) => {
+  StaticConfiguration.supportedPins.forEach(value => {
+    sendIOPinMessage(outputIO, { pin: value, on: false });
+  });
+};
+
+const subarray = <T>(arr: T[], start: number, end: number): T[] => {
+  const newArr: T[] = [];
+  for (let i = start; i < end; i++) {
+    newArr.push(arr[i]);
+  }
+  return newArr;
+};
+
+const setOutputMatrix = (
+  outputMatrix: BluetoothRemoteGATTCharacteristic,
+  matrix: boolean[],
+): void => {
+  const dataView = new DataView(new ArrayBuffer(5));
+  for (let i = 0; i < 5; i++) {
+    dataView.setUint8(
+      i,
+      subarray(matrix, i * 5, 5 + i * 5).reduce(
+        (byte, bool) => (byte << 1) | (bool ? 1 : 0),
+        0,
+      ),
+    );
+  }
+  addToServiceActionQueue(outputMatrix, dataView);
+};
+
+/**
+ * Sends a message through UART
+ * @param type The type of UART message, i.e 'g' for gesture and 's' for sound
+ * @param value The message
+ */
+const sendToOutputUart = (
+  outputUart: BluetoothRemoteGATTCharacteristic,
+  type: UARTMessageType,
+  value: string,
+): void => {
+  const view = MBSpecs.Utility.messageToDataview(`${type}_${value}`);
+  addToServiceActionQueue(outputUart, view);
+};
+
+const addToServiceActionQueue = (
+  service: BluetoothRemoteGATTCharacteristic,
+  view: DataView,
+) => {
+  bluetoothServiceActionQueue.update(update => {
+    update.queue.push({ service, view });
+    return update;
+  });
+  processServiceActionQueue();
+};
+
+const processServiceActionQueue = () => {
+  if (
+    get(bluetoothServiceActionQueue).busy ||
+    get(bluetoothServiceActionQueue).queue.length == 0
+  )
+    return;
+  get(bluetoothServiceActionQueue).busy = true;
+  const { service, view } = get(bluetoothServiceActionQueue).queue.shift() ?? {
+    service: undefined,
+    view: undefined,
+  };
+  if (service === undefined) {
+    throw new Error(
+      'Could not process the service queue, an element in the queue was not provided with a service to execute on.',
+    );
+  }
+
+  service
+    .writeValue(view)
+    .then(() => {
+      get(bluetoothServiceActionQueue).busy = false;
+      processServiceActionQueue();
+    })
+    .catch(err => {
+      // Catches a characteristic not found error, preventing further output.
+      // Why does this happens is not clear
+      console.error(err);
+      if (err) {
+        if ((err as DOMException).message.includes('GATT Service no longer exists')) {
+          // TODO: This is a bit of a tangled mess.
+          // listenToOutputServices()
+          //   .then(() => {
+          //     console.log('Attempted to fix missing gatt!');
+          //   })
+          //   .catch(() => {
+          //     console.error(
+          //       'Failed to fix missing GATT service issue. Uncharted territory',
+          //     );
+          //   });
+        }
+      }
+
+      get(bluetoothServiceActionQueue).busy = false;
+      processServiceActionQueue();
+    });
 };

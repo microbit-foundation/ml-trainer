@@ -19,6 +19,7 @@ export enum HexOrigin {
 }
 export type FlashStage = 'bluetooth' | 'radio-sender' | 'radio-bridge';
 export type HexType = 'bluetooth' | 'radio-sender' | 'radio-bridge' | 'radio-local';
+export type UARTMessageType = 'g' | 's';
 
 export const getHexFileUrl = (version: 1 | 2 | 'universal', type: HexType) => {
   if (type === 'bluetooth') {
