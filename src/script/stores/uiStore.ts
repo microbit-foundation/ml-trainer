@@ -15,6 +15,7 @@ import CookieManager from '../CookieManager';
 import { isInputPatternValid } from './connectionStore';
 import { gestures } from './Stores';
 import { HexOrigin } from '../microbit-interfacing/Microbits';
+import MBSpecs from '../microbit-interfacing/MBSpecs';
 
 // TODO: Rename? Split up further?
 
@@ -47,11 +48,13 @@ export const state = writable<{
   reconnectState: DeviceRequestStates;
   isInputReady: boolean;
   isInputAssigned: boolean;
-  inputVersion: number;
+  inputHexVersion: number;
+  inputMicrobitVersion: MBSpecs.MBVersion | -1;
   inputOrigin: HexOrigin;
   isOutputAssigned: boolean;
   isOutputReady: boolean;
-  outputVersion: number;
+  outputHexVersion: number;
+  outputMicrobitVersion: MBSpecs.MBVersion | -1;
   outputOrigin: HexOrigin;
   modelView: ModelView;
   isInputOutdated: boolean;
@@ -72,11 +75,13 @@ export const state = writable<{
   reconnectState: DeviceRequestStates.NONE,
   isInputReady: false,
   isInputAssigned: false,
-  inputVersion: -1,
+  inputHexVersion: -1,
+  inputMicrobitVersion: -1,
   inputOrigin: HexOrigin.UNKNOWN,
   isOutputAssigned: false,
   isOutputReady: false,
-  outputVersion: -1,
+  outputHexVersion: -1,
+  outputMicrobitVersion: -1,
   outputOrigin: HexOrigin.UNKNOWN,
   modelView: ModelView.STACK,
   isInputOutdated: false,

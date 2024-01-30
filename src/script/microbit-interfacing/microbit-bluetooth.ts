@@ -80,14 +80,17 @@ export const startBluetoothConnection = async (
   disconnectListeners[requestState] = disconnectListener;
   device.addEventListener('gattserverdisconnected', disconnectListener);
   try {
-    const { gattServer } = await connectBluetoothDevice(device, requestState);
+    const { gattServer, microbitVersion } = await connectBluetoothDevice(
+      device,
+      requestState,
+    );
 
     if (requestState === DeviceRequestStates.INPUT) {
       await listenToInputServices(gattServer);
     } else {
       await listenToOutputServices(gattServer);
     }
-    stateOnAssigned(requestState);
+    stateOnAssigned(requestState, microbitVersion);
     stateOnReady(requestState);
   } catch (e) {
     device.removeEventListener('gattserverdisconnected', disconnectListener);
@@ -184,11 +187,14 @@ const attemptReconnect = async (
   requestState: DeviceRequestStates,
 ): Promise<void> => {
   if (device.gatt) {
-    await connectBluetoothDevice(device, requestState);
+    const { gattServer, microbitVersion } = await connectBluetoothDevice(
+      device,
+      requestState,
+    );
     if (requestState === DeviceRequestStates.INPUT) {
-      await listenToInputServices(device.gatt);
+      await listenToInputServices(gattServer);
     }
-    stateOnAssigned(requestState);
+    stateOnAssigned(requestState, microbitVersion);
     stateOnReady(requestState);
   } else {
     throw new Error('No gatt server found!');

@@ -87,15 +87,20 @@ export const stateOnReady = (requestState: DeviceRequestStates) => {
   }
 };
 
-export const stateOnAssigned = (requestState: DeviceRequestStates) => {
+export const stateOnAssigned = (
+  requestState: DeviceRequestStates,
+  microbitVersion: MBSpecs.MBVersion,
+) => {
   if (requestState === DeviceRequestStates.INPUT) {
     state.update(s => {
       s.isInputAssigned = true;
+      s.inputMicrobitVersion = microbitVersion;
       return s;
     });
   } else {
     state.update(s => {
       s.isOutputAssigned = true;
+      s.inputMicrobitVersion = microbitVersion;
       return s;
     });
   }
@@ -171,12 +176,12 @@ export const stateOnVersionIdentified = (
 ) => {
   if (requestState === DeviceRequestStates.INPUT) {
     state.update(s => {
-      s.inputVersion = value;
+      s.inputHexVersion = value;
       return s;
     });
   } else {
     state.update(s => {
-      s.outputVersion = value;
+      s.outputHexVersion = value;
       return s;
     });
   }

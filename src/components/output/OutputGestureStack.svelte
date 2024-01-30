@@ -137,7 +137,7 @@
       return;
     }
 
-    if ($state.outputVersion === 1) {
+    if ($state.outputMicrobitVersion === 1) {
       const sound = new Audio(selectedSound.path);
       void sound.play();
     } else {
