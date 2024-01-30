@@ -106,29 +106,10 @@
       handleConnectionError(err);
       return;
     }
-    const friendlyName = await getMicrobitName();
-    if (!friendlyName) {
-      return;
-    }
-    return flashMicrobit(friendlyName);
+    return flashMicrobit();
   }
 
-  async function getMicrobitName(): Promise<string | undefined> {
-    try {
-      const friendlyName = await Microbits.getLinkedFriendlyName();
-      // Find the name of the micro:bit
-      if ($connectionDialogState.deviceState === DeviceRequestStates.OUTPUT) {
-        btPatternOutput.set(MBSpecs.Utility.nameToPattern(friendlyName));
-      } else {
-        btPatternInput.set(MBSpecs.Utility.nameToPattern(friendlyName));
-      }
-      return friendlyName;
-    } catch (err) {
-      handleConnectionError(err);
-    }
-  }
-
-  async function flashMicrobit(friendlyName: string): Promise<void> {
+  async function flashMicrobit(): Promise<void> {
     const hexForStage = stageToHex(flashStage);
     try {
       await Microbits.flashHexToLinked(hexForStage, progress => {
@@ -145,7 +126,7 @@
       if (flashStage === 'bluetooth' || flashStage === 'radio-sender') {
         $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY;
       } else if (flashStage === 'radio-bridge') {
-        onConnectingSerial(friendlyName);
+        onConnectingSerial();
       }
     } catch (err) {
       handleConnectionError(err);
@@ -156,9 +137,9 @@
     $connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH_CONNECTING;
   }
 
-  async function onConnectingSerial(name: string): Promise<void> {
+  async function onConnectingSerial(): Promise<void> {
     $connectionDialogState.connectionState = ConnectDialogStates.CONNECTING_MICROBITS;
-    await Microbits.assignSerialInput(name);
+    await Microbits.assignSerialInput();
     endFlow();
     // MicrobitSerial.connect(Microbits.getLinked()).catch(() => {
     //   // Errors to consider: microbit is disconnected, some sort of connection error

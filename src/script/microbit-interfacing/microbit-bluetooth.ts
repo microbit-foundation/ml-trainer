@@ -24,6 +24,13 @@ import {
   stateOnReady,
 } from './state-updaters';
 
+export class MicrobitBluetooth {
+  constructor(
+    public readonly name: string,
+    public readonly device: BluetoothDevice,
+  ) {}
+}
+
 /**
  * UART data target. For fixing type compatibility issues.
  */
@@ -36,10 +43,12 @@ type QueueElement = {
   view: DataView;
 };
 
-interface BluetoothConnection {
-  device?: BluetoothDevice;
-  success: boolean;
-}
+type BluetoothConnectionResult =
+  | {
+      result: MicrobitBluetooth;
+      success: true;
+    }
+  | { success: false };
 
 const disconnectListeners: Record<
   DeviceRequestStates,
@@ -62,7 +71,7 @@ export const startBluetoothConnection = async (
   name: string,
   requestState: DeviceRequestStates,
   existingDevice: BluetoothDevice | undefined,
-): Promise<BluetoothConnection> => {
+): Promise<BluetoothConnectionResult> => {
   let device: BluetoothDevice | undefined;
   if (!existingDevice) {
     device = await requestBluetoothDevice(name);
@@ -101,7 +110,7 @@ export const startBluetoothConnection = async (
   }
   return {
     success: true,
-    device,
+    result: new MicrobitBluetooth(name, device),
   };
 };
 

@@ -13,7 +13,7 @@ const serialDelay = 5;
 /**
  * A USB connection to a micro:bit.
  */
-class MicrobitUSB extends CortexM {
+class MicrobitUSB {
   private readonly transport: WebUSB;
   private serialPromise: Promise<void> | undefined;
   private serialDAPLink: DAPLink | undefined;
@@ -26,9 +26,7 @@ class MicrobitUSB extends CortexM {
    * @protected constructor for internal use.
    */
   protected constructor(protected usbDevice: USBDevice) {
-    const transport: WebUSB = new WebUSB(usbDevice);
-    super(transport);
-    this.transport = transport;
+    this.transport = new WebUSB(usbDevice);
   }
 
   /**
@@ -76,25 +74,19 @@ class MicrobitUSB extends CortexM {
    * @returns {string} The friendly name of the micro:bit.
    */
   public async getFriendlyName(): Promise<string> {
-    let result = '';
-    let err: unknown = undefined;
+    const debug = new CortexM(this.transport);
     try {
-      await this.connect();
+      await debug.connect();
       // Microbit only uses MSB of serial number
-      const serial = await this.readMem32(
+      const serial = await debug.readMem32(
         MBSpecs.USBSpecs.FICR + MBSpecs.USBSpecs.DEVICE_ID_1,
       );
-      result = MBSpecs.Utility.serialNumberToName(serial);
+      return MBSpecs.Utility.serialNumberToName(serial);
     } catch (e: unknown) {
-      console.log(e);
-      err = e;
+      throw new Error('Failed to read name: ' + e);
     } finally {
-      await this.disconnect();
+      await debug.disconnect();
     }
-    if (!result) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(result);
   }
 
   /**

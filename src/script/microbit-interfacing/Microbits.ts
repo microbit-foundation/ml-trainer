@@ -7,6 +7,7 @@
 import { DeviceRequestStates } from '../stores/connectDialogStore';
 import MicrobitUSB from './MicrobitUSB';
 import {
+  MicrobitBluetooth,
   disconnectBluetoothDevice,
   startBluetoothConnection,
 } from './microbit-bluetooth';
@@ -40,106 +41,82 @@ export const getHexFileUrl = (version: 1 | 2 | 'universal', type: HexType) => {
 };
 
 class Microbits {
-  private static assignedInputMicrobit: BluetoothDevice | MicrobitUSB | undefined =
-    undefined;
-  private static assignedOutputMicrobit: BluetoothDevice | MicrobitUSB | undefined =
-    undefined;
-  private static inputName: string | undefined = undefined;
-  private static outputName: string | undefined = undefined;
+  private static inputMicrobit: MicrobitBluetooth | MicrobitUSB | undefined = undefined;
+  private static outputMicrobit: MicrobitBluetooth | undefined = undefined;
+
   private static linkedMicrobit: MicrobitUSB | undefined = undefined;
 
   public static async assignBluetoothInput(name: string): Promise<boolean> {
-    const { success, device } = await startBluetoothConnection(
+    const connectionResult = await startBluetoothConnection(
       name,
       DeviceRequestStates.INPUT,
-      this.assignedInputMicrobit instanceof MicrobitUSB
-        ? undefined
-        : this.assignedInputMicrobit,
+      this.inputMicrobit instanceof MicrobitBluetooth
+        ? this.inputMicrobit.device
+        : undefined,
     );
-    if (success && device) {
-      this.inputName = name;
-      this.assignedInputMicrobit = device;
-    } else {
-      this.inputName = undefined;
-      this.assignedInputMicrobit = undefined;
-    }
-    return success;
+    this.outputMicrobit = connectionResult.success ? connectionResult.result : undefined;
+    return connectionResult.success;
   }
 
-  public static async assignSerialInput(name: string): Promise<boolean> {
-    const { success, device } = await startSerialConnection(DeviceRequestStates.INPUT);
-    if (success && device) {
-      this.inputName = name;
-      this.assignedInputMicrobit = device;
-    } else {
-      this.inputName = undefined;
-      this.assignedInputMicrobit = undefined;
-    }
-    return success;
+  public static async assignSerialInput(): Promise<boolean> {
+    const serialResult = await startSerialConnection(DeviceRequestStates.INPUT);
+    this.inputMicrobit = serialResult.success ? serialResult.result : undefined;
+    return serialResult.success;
   }
 
   public static async assignBluetoothOuput(name: string): Promise<boolean> {
-    const { success, device } = await startBluetoothConnection(
+    const connectionResult = await startBluetoothConnection(
       name,
       DeviceRequestStates.OUTPUT,
-      this.assignedOutputMicrobit instanceof MicrobitUSB
-        ? undefined
-        : this.assignedOutputMicrobit,
+      this.outputMicrobit instanceof MicrobitBluetooth
+        ? this.outputMicrobit.device
+        : undefined,
     );
-    if (success && device) {
-      this.outputName = name;
-      this.assignedOutputMicrobit = device;
-    } else {
-      this.outputName = undefined;
-      this.assignedOutputMicrobit = undefined;
-    }
-    return success;
+    this.outputMicrobit = connectionResult.success ? connectionResult.result : undefined;
+    return connectionResult.success;
   }
 
   public static async reconnect(requestState: DeviceRequestStates) {
-    if (
-      requestState === DeviceRequestStates.INPUT &&
-      this.inputName &&
-      this.assignedInputMicrobit
-    ) {
-      if (this.assignedInputMicrobit instanceof MicrobitUSB) {
-        return this.assignSerialInput(this.inputName);
+    if (requestState === DeviceRequestStates.INPUT && this.inputMicrobit) {
+      // mth: Can we make this nice?
+      if (this.inputMicrobit instanceof MicrobitUSB) {
+        return this.assignSerialInput();
       } else {
-        return this.assignBluetoothInput(this.inputName);
+        return this.assignBluetoothInput(this.inputMicrobit.name);
       }
     }
-    if (
-      requestState === DeviceRequestStates.OUTPUT &&
-      this.outputName &&
-      this.assignedOutputMicrobit
-    ) {
-      return this.assignBluetoothOuput(this.outputName);
+    if (requestState === DeviceRequestStates.OUTPUT && this.outputMicrobit) {
+      return this.assignBluetoothOuput(this.outputMicrobit.name);
     }
     throw new Error('Cannot reconnect. There are no previously connected devices.');
   }
 
-  public static async disconnect(requestState: DeviceRequestStates) {
-    if (requestState === DeviceRequestStates.INPUT && this.assignedInputMicrobit) {
-      if (this.assignedInputMicrobit instanceof MicrobitUSB) {
-        await disconnectSerial(
-          this.assignedInputMicrobit,
-          DeviceRequestStates.INPUT,
-          true,
-        );
+  private static getMicrobit(
+    state: DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT,
+  ): MicrobitUSB | MicrobitBluetooth | undefined {
+    return state === DeviceRequestStates.INPUT ? this.inputMicrobit : this.outputMicrobit;
+  }
+
+  public static async disconnect(
+    requestState: DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT,
+  ) {
+    // mth: aspirational!
+    // this.getMicrobit(requestState)?.disconnect();
+
+    if (requestState === DeviceRequestStates.INPUT && this.inputMicrobit) {
+      if (this.inputMicrobit instanceof MicrobitUSB) {
+        await disconnectSerial(this.inputMicrobit, DeviceRequestStates.INPUT, true);
       } else {
         await disconnectBluetoothDevice(
-          this.assignedInputMicrobit,
+          this.inputMicrobit.device,
           DeviceRequestStates.INPUT,
           true,
         );
       }
-    } else if (
-      requestState === DeviceRequestStates.OUTPUT &&
-      this.assignedOutputMicrobit
-    ) {
-      if (!(this.assignedOutputMicrobit instanceof MicrobitUSB)) {
+    } else if (requestState === DeviceRequestStates.OUTPUT && this.outputMicrobit) {
+      if (!(this.outputMicrobit instanceof MicrobitUSB)) {
         await disconnectBluetoothDevice(
-          this.assignedOutputMicrobit,
+          this.outputMicrobit.device,
           DeviceRequestStates.OUTPUT,
           true,
         );
@@ -152,22 +129,11 @@ class Microbits {
     await this.disconnect(DeviceRequestStates.OUTPUT);
   }
 
-  public static inputIsOutput() {
-    return this.outputName === this.inputName;
-  }
-
   public static hasDeviceReference(requestState: DeviceRequestStates) {
     if (requestState === DeviceRequestStates.INPUT) {
-      return !!this.assignedInputMicrobit;
+      return !!this.inputMicrobit;
     }
-    return !!this.assignedOutputMicrobit;
-  }
-
-  public static getDeviceName(requestState: DeviceRequestStates) {
-    if (requestState === DeviceRequestStates.INPUT) {
-      return this.inputName;
-    }
-    return this.outputName;
+    return !!this.outputMicrobit;
   }
 
   /**

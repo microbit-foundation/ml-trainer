@@ -23,7 +23,16 @@ const enum SerialProtocolState {
   Running,
 }
 
-export const startSerialConnection = async (requestState: DeviceRequestStates) => {
+type SerialConnectionResult =
+  | {
+      result: MicrobitUSB;
+      success: true;
+    }
+  | { success: false };
+
+export const startSerialConnection = async (
+  requestState: DeviceRequestStates,
+): Promise<SerialConnectionResult> => {
   const usb = Microbits.getLinked();
   try {
     await listenToInputServices(usb);
@@ -39,7 +48,7 @@ export const startSerialConnection = async (requestState: DeviceRequestStates) =
   stateOnReady(requestState);
   return {
     success: true,
-    device: usb,
+    result: usb,
   };
 };
 
@@ -110,9 +119,7 @@ export const disconnectSerial = (
   requestState: DeviceRequestStates,
   userDisconnect: boolean,
 ): void => {
-  // Weirdly this disconnects the CortexM...
-  usb.disconnect();
-  usb.stopSerial().catch(e => {
+  usb.disconnectInputServices().catch(e => {
     // It's hard to make disconnect() async so we've left this as a background error for now.
     isDevMode && console.error(e);
   });

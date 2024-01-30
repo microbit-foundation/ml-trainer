@@ -32,7 +32,8 @@
   };
 
   const expelMicrobit = () => {
-    if (Microbits.inputIsOutput()) {
+    // Disabled as we don't use this UI and have broken this check
+    if (false /*Microbits.inputIsOutput()*/) {
       Microbits.disconnectInputAndOutput();
     } else {
       if (targetRole === 'INPUT') {
