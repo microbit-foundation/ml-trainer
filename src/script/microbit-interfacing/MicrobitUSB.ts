@@ -17,6 +17,7 @@ class MicrobitUSB {
   private readonly transport: WebUSB;
   private serialPromise: Promise<void> | undefined;
   private serialDAPLink: DAPLink | undefined;
+  private serialCallback: ((data: string) => void) | undefined;
 
   /**
    * Creates a new MicrobitUSB object.
@@ -121,6 +122,7 @@ class MicrobitUSB {
   public async startSerial(callback: (data: string) => void) {
     await this.transport.open();
 
+    this.serialCallback = callback;
     this.serialDAPLink = new DAPLink(this.transport);
     const initialBaudRate = await this.serialDAPLink.getSerialBaudrate();
     this.serialDAPLink.addListener(DAPLink.EVENT_SERIAL_DATA, callback);
@@ -141,6 +143,9 @@ class MicrobitUSB {
 
   public async stopSerial() {
     if (this.serialDAPLink) {
+      if (this.serialCallback) {
+        this.serialDAPLink.removeListener(DAPLink.EVENT_SERIAL_DATA, this.serialCallback);
+      }
       this.serialDAPLink.stopSerialRead();
       await this.serialPromise;
       this.serialPromise = undefined;
