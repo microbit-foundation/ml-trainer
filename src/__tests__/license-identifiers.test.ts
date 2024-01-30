@@ -14,6 +14,7 @@ import * as path from 'path';
 const ignoredFiles: RegExp[] = [
   /^\.DS_Store$/,
   /^ui.[a-z-]+.json$/,
+  /^sample.json$/,
   /\.(gif|svg|png|jpg|jpeg)$/,
   /^README.md$/,
 ];
