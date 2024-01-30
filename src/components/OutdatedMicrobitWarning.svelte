@@ -7,17 +7,21 @@
 <script lang="ts">
   import StaticConfiguration from '../StaticConfiguration';
   import { t } from '../i18n';
-  import Microbits, { HexOrigin } from '../script/microbit-interfacing/Microbits';
+  import Microbits, { HexOrigin } from '../script/microbit-interfacing/MicrobitsAlt';
+  import { DeviceRequestStates } from '../script/stores/connectDialogStore';
+  import { state } from '../script/stores/uiStore';
   import { horizontalSlide } from '../script/transitions';
   import StandardButton from './StandardButton.svelte';
   let hasBeenClosed = false;
   export let targetRole: 'INPUT' | 'OUTPUT';
   let showMakeCodeUpdateMessage =
-    targetRole === 'INPUT' ? Microbits.isInputMakecode() : Microbits.isOutputMakecode();
+    targetRole === 'INPUT'
+      ? $state.inputOrigin === HexOrigin.MAKECODE
+      : $state.outputOrigin === HexOrigin.MAKECODE;
 
   const updateNowHasBeenClicked = () => {
     let microbitOrigin =
-      targetRole === 'INPUT' ? Microbits.getInputOrigin() : Microbits.getOutputOrigin();
+      targetRole === 'INPUT' ? $state.inputOrigin : $state.outputOrigin;
     expelMicrobit();
     if (microbitOrigin === HexOrigin.PROPRIETARY) {
       openConnectionPrompt();
@@ -28,13 +32,13 @@
   };
 
   const expelMicrobit = () => {
-    if (Microbits.isInputOutputTheSame()) {
-      Microbits.expelInputAndOutput();
+    if (Microbits.inputIsOutput()) {
+      Microbits.disconnectInputAndOutput();
     } else {
       if (targetRole === 'INPUT') {
-        Microbits.expelInput();
+        Microbits.disconnect(DeviceRequestStates.INPUT);
       } else {
-        Microbits.expelOutput();
+        Microbits.disconnect(DeviceRequestStates.OUTPUT);
       }
     }
   };

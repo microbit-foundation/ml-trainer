@@ -152,6 +152,10 @@ class MicrobitsAlt {
     await this.disconnect(DeviceRequestStates.OUTPUT);
   }
 
+  public static inputIsOutput() {
+    return this.outputName === this.inputName;
+  }
+
   public static hasDeviceReference(requestState: DeviceRequestStates) {
     if (requestState === DeviceRequestStates.INPUT) {
       return !!this.assignedInputMicrobit;
