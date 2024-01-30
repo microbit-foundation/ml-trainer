@@ -13,8 +13,7 @@ import StaticConfiguration from '../../StaticConfiguration';
 import { sendToOutput } from './microbit-bluetooth';
 import { HexOrigin } from './Microbits';
 
-// TODO: We've lost reconnect and logging timeouts
-// TODO: We've lost logging in general, but most of it was unhelpful.
+// TODO: We've lost logging, but most of it was unhelpful.
 
 export const stateOnConnected = (requestState: DeviceRequestStates) => {
   state.update(s => {
@@ -63,7 +62,6 @@ export const stateOnIdentifiedAsProprietary = (
 
 export const stateOnReady = (requestState: DeviceRequestStates) => {
   if (requestState === DeviceRequestStates.INPUT) {
-    // clearTimeout(this.reconnectTimeout);
     state.update(s => {
       s.isInputReady = true;
       return s;
@@ -83,7 +81,6 @@ export const stateOnReady = (requestState: DeviceRequestStates) => {
       s.isOutputReady = true;
       return s;
     });
-    //clearTimeout(this.reconnectTimeout);
   }
 };
 
@@ -116,27 +113,22 @@ export const stateOnDisconnected = (
   if (requestState === DeviceRequestStates.INPUT) {
     state.update(s => {
       s.isInputConnected = false;
-      // Hang on to the reference
-      // s.isInputAssigned = false;
       s.isInputReady = false;
       s.offerReconnect = !userDisconnect;
       s.reconnectState = DeviceRequestStates.INPUT;
-      //s.isInputOutdated = false;
+      s.isInputOutdated = false;
       return s;
     });
   } else {
     state.update(s => {
       s.isOutputConnected = false;
       s.offerReconnect = !userDisconnect;
-      // Hang on to the reference
-      // s.isOutputAssigned = false;
       s.isOutputReady = false;
       s.reconnectState = DeviceRequestStates.NONE;
-      //s.isOutputOutdated = false;
-      // TODO: Come back to this.
-      // if (!bothDisconnected) {
-      //   s.reconnectState = DeviceRequestStates.OUTPUT;
-      // }
+      s.isOutputOutdated = false;
+      if (!s.isInputConnected) {
+        s.reconnectState = DeviceRequestStates.OUTPUT;
+      }
       return s;
     });
   }
@@ -149,8 +141,8 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
       s.isInputAssigned = false;
       s.isInputReady = false;
       s.offerReconnect = false;
-      s.reconnectState = DeviceRequestStates.INPUT;
-      //s.isInputOutdated = false;
+      s.reconnectState = DeviceRequestStates.NONE;
+      s.isInputOutdated = false;
       return s;
     });
   } else {
@@ -160,11 +152,7 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
       s.isOutputAssigned = false;
       s.isOutputReady = false;
       s.reconnectState = DeviceRequestStates.NONE;
-      //s.isOutputOutdated = false;
-      // TODO: Come back to this.
-      // if (!bothDisconnected) {
-      //   s.reconnectState = DeviceRequestStates.OUTPUT;
-      // }
+      s.isOutputOutdated = false;
       return s;
     });
   }
