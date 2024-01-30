@@ -28,6 +28,9 @@ describe('Initialization tests', () => {
       navigator: {
         languages: ['cy', 'en'],
       },
+      location: {
+        search: '',
+      },
     }));
     const i18n = await import('../i18n');
     const getText = get(i18n.t);
@@ -42,6 +45,9 @@ describe('Initialization tests', () => {
       navigator: {
         languages: ['random-language'],
       },
+      location: {
+        search: '',
+      },
     }));
     const i18n = await import('../i18n');
     const getText = get(i18n.t);
@@ -49,5 +55,22 @@ describe('Initialization tests', () => {
     const translatedText = getText('alert.isRecording');
 
     expect(translatedText).toBe('You are currently recording!');
+  });
+
+  test('Language is set to welsh when it is defined query string', async () => {
+    windowSpy.mockImplementation(() => ({
+      navigator: {
+        languages: ['some languages'],
+      },
+      location: {
+        search: '?l=cy',
+      },
+    }));
+    const i18n = await import('../i18n');
+    const getText = get(i18n.t);
+
+    const translatedText = getText('alert.isRecording');
+
+    expect(translatedText).toBe("Rydych chi'n recordio ar hyn o bryd!");
   });
 });
