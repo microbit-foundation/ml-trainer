@@ -6,7 +6,7 @@
 
 import browserLang from 'browser-lang';
 import { FormatXMLElementFn } from 'intl-messageformat';
-import { init, locale, register } from 'svelte-i18n';
+import { getLocaleFromQueryString, init, locale, register } from 'svelte-i18n';
 import { get } from 'svelte/store';
 import { persistantWritable } from './script/stores/storeUtil';
 export { t } from 'svelte-i18n';
@@ -69,7 +69,7 @@ locale.subscribe(newLocal => {
 
 await init({
   fallbackLocale: 'en',
-  initialLocale: get(persistantLocale),
+  initialLocale: getLocaleFromQueryString('l') || get(persistantLocale),
   // Needed to format <link> style tags.
   ignoreTag: false,
 });
