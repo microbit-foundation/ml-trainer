@@ -27,8 +27,8 @@ import { getPrediction } from './getPrediction';
 let text: (key: string, vars?: object) => string;
 t.subscribe(t => (text = t));
 
-const smoothenTrainingData = false;
-const smoothenTestData = false;
+const smoothenTrainingData = true;
+const smoothenTestData = true;
 
 // Whenever model is trained, the settings at the time is saved in this variable
 // Such that prediction continues on with the same settings as during training
@@ -238,7 +238,7 @@ const smoothen = (d: number[]) => {
 };
 
 // Smoothen data
-function smoothenInputs(sample: Sample): Sample {
+export function smoothenInputs(sample: Sample): Sample {
   return {
     x: smoothen(sample.x),
     y: smoothen(sample.y),

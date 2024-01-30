@@ -11,6 +11,7 @@
   import IconButton from './IconButton.svelte';
   import { t } from '../i18n';
   import CloseIcon from 'virtual:icons/ri/close-line';
+  import { smoothenInputs } from '../script/ml';
 
   // get recording from mother prop
   export let recording: RecordingData;
@@ -44,7 +45,7 @@
         " />
   {/if}
 
-  <RecordingGraph data={recording.data} />
+  <RecordingGraph data={smoothenInputs(recording.data)} />
 
   <div class="absolute right-0 top-0 z-2">
     <IconButton
