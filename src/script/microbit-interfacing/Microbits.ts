@@ -31,7 +31,12 @@ export enum HexOrigin {
 }
 
 export type FlashStage = 'bluetooth' | 'radio-sender' | 'radio-bridge';
-export type HexType = 'bluetooth' | 'radio-sender' | 'radio-bridge' | 'radio-local';
+export type HexType =
+  | 'bluetooth'
+  | 'radio-sender'
+  | 'radio-bridge'
+  | 'radio-local'
+  | 'radio-sender-dev';
 
 type UARTMessageType = 'g' | 's';
 
@@ -47,6 +52,7 @@ export const getHexFileUrl = (version: 1 | 2 | 'universal', type: HexType) => {
     throw new Error('Only V2 is supported');
   }
   return {
+    'radio-sender-dev': 'firmware/radio-sender-dev.hex',
     'radio-sender': 'firmware/radio-sender.hex',
     'radio-bridge': 'firmware/radio-bridge.hex',
     'radio-local': 'firmware/radio-local.hex',
