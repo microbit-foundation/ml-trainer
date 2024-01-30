@@ -32,7 +32,7 @@
     }, 450);
   }
 
-  const smoothenRecordingGraph = false;
+  const smoothenRecordingGraph = true;
   console.log('smoothenRecordingGraph', smoothenRecordingGraph);
   const data = smoothenRecordingGraph ? smoothenInputs(recording.data) : recording.data;
 </script>
