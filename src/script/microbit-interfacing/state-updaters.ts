@@ -94,11 +94,11 @@ export const stateOnAssigned = (requestState: DeviceRequestStates) => {
       return s;
     });
   } else {
+    state.update(s => {
+      s.isOutputAssigned = true;
+      return s;
+    });
   }
-  state.update(s => {
-    s.isOutputAssigned = true;
-    return s;
-  });
   if (get(currentPath) === Paths.HOME) {
     navigate(Paths.DATA);
   }

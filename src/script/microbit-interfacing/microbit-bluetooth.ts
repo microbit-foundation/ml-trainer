@@ -8,7 +8,7 @@ import { get, writable } from 'svelte/store';
 import StaticConfiguration from '../../StaticConfiguration';
 import { isDevMode } from '../environment';
 import { DeviceRequestStates } from '../stores/connectDialogStore';
-import { outputting } from '../stores/uiStore';
+import { outputting, state } from '../stores/uiStore';
 import MBSpecs from './MBSpecs';
 import { UARTMessageType } from './Microbits';
 import {
@@ -87,8 +87,8 @@ export const startBluetoothConnection = async (
     } else {
       await listenToOutputServices(gattServer);
     }
-    stateOnReady(requestState);
     stateOnAssigned(requestState);
+    stateOnReady(requestState);
   } catch (e) {
     device.removeEventListener('gattserverdisconnected', disconnectListener);
     stateOnFailedToConnect(requestState);
@@ -188,8 +188,8 @@ const attemptReconnect = async (
     if (requestState === DeviceRequestStates.INPUT) {
       await listenToInputServices(device.gatt);
     }
-    stateOnReady(requestState);
     stateOnAssigned(requestState);
+    stateOnReady(requestState);
   } else {
     throw new Error('No gatt server found!');
   }
@@ -303,10 +303,13 @@ const listenToUART = async (
   });
 };
 
-const noOutputError = () => {
-  throw new Error(
-    'Output microbit is not connected or have not subsribed to services yet',
-  );
+const outputNotReady = (resetPins: boolean = false) => {
+  // Reset pins being called before output ready previous bug from existing code.
+  if (!resetPins) {
+    isDevMode &&
+      console.error('Attempted to access output device services without output ready');
+  }
+  return;
 };
 
 interface SendToOutput {
@@ -319,10 +322,10 @@ interface SendToOutput {
 }
 
 export const sendToOutput: SendToOutput = {
-  sendToOutputUart: noOutputError,
-  setOutputMatrix: noOutputError,
-  sendToOutputPin: noOutputError,
-  resetIOPins: noOutputError,
+  sendToOutputUart: outputNotReady,
+  setOutputMatrix: outputNotReady,
+  sendToOutputPin: outputNotReady,
+  resetIOPins: () => outputNotReady(true),
 };
 
 const listenToOutputServices = async (
