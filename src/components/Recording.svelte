@@ -31,6 +31,10 @@
       onDelete(recording);
     }, 450);
   }
+
+  const smoothenRecordingGraph = false;
+  console.log('smoothenRecordingGraph', smoothenRecordingGraph);
+  const data = smoothenRecordingGraph ? smoothenInputs(recording.data) : recording.data;
 </script>
 
 <div class="h-full w-40 relative">
@@ -45,7 +49,7 @@
         " />
   {/if}
 
-  <RecordingGraph data={smoothenInputs(recording.data)} />
+  <RecordingGraph {data} />
 
   <div class="absolute right-0 top-0 z-2">
     <IconButton
