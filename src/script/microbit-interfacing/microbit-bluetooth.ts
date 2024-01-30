@@ -169,6 +169,7 @@ export const disconnectBluetoothDevice = (
   }
   device.gatt?.disconnect();
   clearBluetoothServiceActionQueue();
+  clearOutputFunctions();
 };
 
 const createDisconnectListener = (
@@ -362,6 +363,13 @@ const listenToOutputServices = async (
   } catch (e) {
     isDevMode && console.error('Error logging:', e);
   }
+};
+
+const clearOutputFunctions = () => {
+  sendToOutput['sendToOutputUart'] = outputNotReady;
+  sendToOutput['setOutputMatrix'] = outputNotReady;
+  sendToOutput['sendToOutputPin'] = outputNotReady;
+  sendToOutput['resetIOPins'] = () => outputNotReady(true);
 };
 
 const sendIOPinMessage = (
