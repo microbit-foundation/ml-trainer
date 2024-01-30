@@ -34,9 +34,9 @@ export const startSerialConnection = async (requestState: DeviceRequestStates) =
     };
   }
   // TODO: Begs the question as to whether these need to be different.
-  stateOnReady(requestState);
-  stateOnAssigned(requestState);
+  stateOnAssigned(requestState, usb.getModelNumber());
   stateOnConnected(requestState);
+  stateOnReady(requestState);
   return {
     success: true,
     device: usb,

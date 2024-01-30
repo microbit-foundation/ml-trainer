@@ -141,10 +141,7 @@ const connectBluetoothDevice = async (
   try {
     const gattServer = await device.gatt.connect();
     const microbitVersion = await MBSpecs.Utility.getModelNumber(gattServer);
-    // TODO: This is conditional in the original code. I'm not sure why.
-    if (gattServer.connected) {
-      stateOnConnected(requestState);
-    }
+    stateOnConnected(requestState);
     return {
       gattServer,
       microbitVersion,
@@ -171,8 +168,7 @@ export const disconnectBluetoothDevice = (
     disconnectListeners[requestState] = undefined;
   }
   device.gatt?.disconnect();
-  // TOOD: This is output only, but will need implementing.
-  // this.clearBluetoothServiceActionQueue();
+  clearBluetoothServiceActionQueue();
 };
 
 const createDisconnectListener = (
@@ -497,4 +493,8 @@ const processServiceActionQueue = () => {
       get(bluetoothServiceActionQueue).busy = false;
       processServiceActionQueue();
     });
+};
+
+const clearBluetoothServiceActionQueue = () => {
+  bluetoothServiceActionQueue.set({ busy: false, queue: [] });
 };

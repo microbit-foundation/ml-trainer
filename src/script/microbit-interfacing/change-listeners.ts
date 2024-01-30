@@ -60,8 +60,6 @@ export const onButtonChange = (
   }
 };
 
-// TODO: Outdated version would be useful, but not important now.
-// Most of this is just console logging for the sake of it.
 export const onUARTDataReceived = (
   requestState: DeviceRequestStates,
   data: string,
@@ -75,6 +73,8 @@ export const onUARTDataReceived = (
   if (data.includes('vi_')) {
     const version = parseInt(data.substring(3));
     stateOnVersionIdentified(requestState, version);
+    // TODO: Use this to show outdated program dialog?
+
     // this.inputBuildVersion = version;
     // if (this.isInputOutputTheSame()) {
     //   clearTimeout(this.outputVersionIdentificationTimeout);
@@ -86,5 +86,4 @@ export const onUARTDataReceived = (
     //   connectionBehaviour.onIdentifiedAsOutdated();
     // }
   }
-  //connectionBehaviour.onUartMessageReceived(data);
 };
