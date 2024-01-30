@@ -8,7 +8,11 @@ import { DeviceRequestStates } from '../stores/connectDialogStore';
 import { livedata } from '../stores/mlStore';
 import { buttonPressed } from '../stores/uiStore';
 import MBSpecs from './MBSpecs';
-import { stateOnIdentifiedAsMakecode, stateOnVersionIdentified } from './state-updaters';
+import {
+  stateOnIdentifiedAsMakecode,
+  stateOnIdentifiedAsProprietary,
+  stateOnVersionIdentified,
+} from './state-updaters';
 
 let smoothedAccelX = 0;
 let smoothedAccelY = 0;
@@ -63,12 +67,10 @@ export const onUARTDataReceived = (
   data: string,
 ): void => {
   if (data === 'id_mkcd') {
-    // this.inputOrigin = HexOrigin.MAKECODE;
-    stateOnIdentifiedAsMakecode();
+    stateOnIdentifiedAsMakecode(requestState);
   }
   if (data === 'id_prop') {
-    // this.inputOrigin = HexOrigin.PROPRIETARY;
-    // stateOnIdentifiedAsProprietary();
+    stateOnIdentifiedAsProprietary(requestState);
   }
   if (data.includes('vi_')) {
     const version = parseInt(data.substring(3));

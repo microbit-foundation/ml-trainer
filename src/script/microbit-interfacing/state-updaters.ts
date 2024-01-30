@@ -11,6 +11,7 @@ import { Paths, currentPath, navigate } from '../../router/paths';
 import MBSpecs from './MBSpecs';
 import StaticConfiguration from '../../StaticConfiguration';
 import { sendToOutput } from './microbit-bluetooth';
+import { HexOrigin } from './MicrobitsAlt';
 
 // TODO: We've lost reconnect and logging timeouts
 // TODO: We've lost logging in general, but most of it was unhelpful.
@@ -26,11 +27,38 @@ export const stateOnConnected = (requestState: DeviceRequestStates) => {
   });
 };
 
-export const stateOnIdentifiedAsMakecode = (): void => {
-  state.update(s => {
-    s.modelView = ModelView.TILE;
-    return s;
-  });
+export const stateOnIdentifiedAsMakecode = (requestState: DeviceRequestStates): void => {
+  if (requestState === DeviceRequestStates.INPUT) {
+    state.update(s => {
+      s.inputOrigin = HexOrigin.MAKECODE;
+      s.modelView = ModelView.TILE;
+      return s;
+    });
+  } else {
+    state.update(s => {
+      s.outputOrigin = HexOrigin.MAKECODE;
+      s.modelView = ModelView.TILE;
+      return s;
+    });
+  }
+};
+
+export const stateOnIdentifiedAsProprietary = (
+  requestState: DeviceRequestStates,
+): void => {
+  if (requestState === DeviceRequestStates.INPUT) {
+    state.update(s => {
+      s.inputOrigin = HexOrigin.PROPRIETARY;
+      s.modelView = ModelView.STACK;
+      return s;
+    });
+  } else {
+    state.update(s => {
+      s.outputOrigin = HexOrigin.PROPRIETARY;
+      s.modelView = ModelView.STACK;
+      return s;
+    });
+  }
 };
 
 export const stateOnReady = (requestState: DeviceRequestStates) => {
