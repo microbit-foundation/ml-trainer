@@ -230,11 +230,15 @@ function makeInputs(sample: Sample): number[] {
   return dataRep;
 }
 
-const smoothen = (d: number[]) => {
-  return d.map((v, idx) => {
-    const prevValue = idx === 0 ? 0 : d[idx - 1];
-    return v * 0.25 + prevValue * 0.75;
+const smoothen = (d: number[]): number[] => {
+  const newData: number[] = [];
+  let prevValue = 0;
+  d.forEach(v => {
+    const newValue = v * 0.25 + prevValue * 0.75;
+    newData.push(newValue);
+    prevValue = newValue;
   });
+  return newData;
 };
 
 // Smoothen data
