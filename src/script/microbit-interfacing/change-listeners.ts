@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { DeviceRequestStates } from '../stores/connectDialogStore';
 import { livedata } from '../stores/mlStore';
 import { buttonPressed } from '../stores/uiStore';
 import MBSpecs from './MBSpecs';
-import { stateOnIdentifiedAsMakecode } from './state-updaters';
+import { stateOnIdentifiedAsMakecode, stateOnVersionIdentified } from './state-updaters';
 
 let smoothedAccelX = 0;
 let smoothedAccelY = 0;
@@ -57,7 +58,10 @@ export const onButtonChange = (
 
 // TODO: Outdated version would be useful, but not important now.
 // Most of this is just console logging for the sake of it.
-export const onUARTDataReceived = (data: string): void => {
+export const onUARTDataReceived = (
+  requestState: DeviceRequestStates,
+  data: string,
+): void => {
   if (data === 'id_mkcd') {
     // this.inputOrigin = HexOrigin.MAKECODE;
     stateOnIdentifiedAsMakecode();
@@ -67,7 +71,8 @@ export const onUARTDataReceived = (data: string): void => {
     // stateOnIdentifiedAsProprietary();
   }
   if (data.includes('vi_')) {
-    // const version = parseInt(data.substring(3));
+    const version = parseInt(data.substring(3));
+    stateOnVersionIdentified(requestState, version);
     // this.inputBuildVersion = version;
     // if (this.isInputOutputTheSame()) {
     //   clearTimeout(this.outputVersionIdentificationTimeout);

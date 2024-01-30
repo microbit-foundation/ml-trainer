@@ -10,7 +10,7 @@ import { ModelView, state } from '../stores/uiStore';
 import { Paths, currentPath, navigate } from '../../router/paths';
 import MBSpecs from './MBSpecs';
 import StaticConfiguration from '../../StaticConfiguration';
-import Microbits from './Microbits';
+import { sendToOutput } from './microbit-bluetooth';
 
 // TODO: We've lost reconnect and logging timeouts
 // TODO: We've lost logging in general, but most of it was unhelpful.
@@ -50,13 +50,8 @@ export const stateOnReady = (requestState: DeviceRequestStates) => {
       const argument = { pin: pin, on: false };
       pinResetArguments.push(argument);
     });
-    Microbits.sendToOutputPin(pinResetArguments);
-
+    sendToOutput['sendToOutputPin'](pinResetArguments);
     state.update(s => {
-      if (Microbits.isInputOutputTheSame()) {
-        s.modelView = Microbits.isOutputMakecode() ? ModelView.TILE : s.modelView;
-      }
-
       s.isOutputReady = true;
       return s;
     });
@@ -137,6 +132,23 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
       // if (!bothDisconnected) {
       //   s.reconnectState = DeviceRequestStates.OUTPUT;
       // }
+      return s;
+    });
+  }
+};
+
+export const stateOnVersionIdentified = (
+  requestState: DeviceRequestStates,
+  value: number,
+) => {
+  if (requestState === DeviceRequestStates.INPUT) {
+    state.update(s => {
+      s.inputVersion = value;
+      return s;
+    });
+  } else {
+    state.update(s => {
+      s.outputVersion = value;
       return s;
     });
   }

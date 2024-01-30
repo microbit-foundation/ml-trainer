@@ -14,12 +14,12 @@
   import { get } from 'svelte/store';
   import { onMount } from 'svelte';
   import { classify } from '../../../script/ml';
-  import Microbits from '../../../script/microbit-interfacing/Microbits';
   import TrainModelFirstTitle from '../../../components/TrainModelFirstTitle.svelte';
   import ModelPageStackViewContent from './ModelPageStackViewContent.svelte';
   import TabView from '../../../views/TabView.svelte';
   import { Paths, getTitle } from '../../../router/paths';
   import { t } from 'svelte-i18n';
+  import { sendToOutput } from '../../../script/microbit-interfacing/microbit-bluetooth';
 
   // In case of manual classification, variables for evaluation
   let recordingTime = 0;
@@ -77,7 +77,7 @@
   let firstMount = true;
   onMount(() => {
     firstMount = false;
-    Microbits.resetIOPins();
+    sendToOutput['resetIOPins']();
   });
 
   $: triggerButtonsClicked($buttonPressed);

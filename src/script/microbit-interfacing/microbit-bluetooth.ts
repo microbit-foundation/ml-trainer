@@ -217,7 +217,9 @@ const listenToInputServices = async (
     await listenToAccelerometer(gattServer, onAccelerometerChange);
     await listenToButton(gattServer, 'A', onButtonChange);
     await listenToButton(gattServer, 'B', onButtonChange);
-    await listenToUART(gattServer, onUARTDataReceived);
+    await listenToUART(gattServer, data =>
+      onUARTDataReceived(DeviceRequestStates.INPUT, data),
+    );
   } catch (e) {
     isDevMode && console.error('Error logging:', e);
   }
@@ -316,7 +318,7 @@ interface SendToOutput {
   resetIOPins: () => void;
 }
 
-const sendToOutput: SendToOutput = {
+export const sendToOutput: SendToOutput = {
   sendToOutputUart: noOutputError,
   setOutputMatrix: noOutputError,
   sendToOutputPin: noOutputError,
@@ -349,7 +351,9 @@ const listenToOutputServices = async (
     sendToOutputUart(outputUart, type, value);
 
   try {
-    await listenToUART(gattServer, onUARTDataReceived);
+    await listenToUART(gattServer, data =>
+      onUARTDataReceived(DeviceRequestStates.OUTPUT, data),
+    );
   } catch (e) {
     isDevMode && console.error('Error logging:', e);
   }

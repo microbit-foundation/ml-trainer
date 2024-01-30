@@ -15,8 +15,8 @@
   import { settings } from '../../../script/stores/mlStore';
   import { classify } from '../../../script/ml';
   import { onMount } from 'svelte';
-  import Microbits from '../../../script/microbit-interfacing/Microbits';
   import ModelPageTileViewTiles from './ModelPageTileViewTiles.svelte';
+  import { sendToOutput } from '../../../script/microbit-interfacing/microbit-bluetooth';
 
   // In case of manual classification, variables for evaluation
   let recordingTime = 0;
@@ -78,7 +78,7 @@
   let firstMount = true;
   onMount(() => {
     firstMount = false;
-    Microbits.resetIOPins();
+    sendToOutput['resetIOPins']();
   });
 
   $: triggerButtonsClicked($buttonPressed);

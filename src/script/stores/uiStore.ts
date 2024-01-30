@@ -46,8 +46,10 @@ export const state = writable<{
   reconnectState: DeviceRequestStates;
   isInputReady: boolean;
   isInputAssigned: boolean;
+  inputVersion: number;
   isOutputAssigned: boolean;
   isOutputReady: boolean;
+  outputVersion: number;
   modelView: ModelView;
   isInputOutdated: boolean;
   isOutputOutdated: boolean;
@@ -67,8 +69,10 @@ export const state = writable<{
   reconnectState: DeviceRequestStates.NONE,
   isInputReady: false,
   isInputAssigned: false,
+  inputVersion: -1,
   isOutputAssigned: false,
   isOutputReady: false,
+  outputVersion: -1,
   modelView: ModelView.STACK,
   isInputOutdated: false,
   isOutputOutdated: false,

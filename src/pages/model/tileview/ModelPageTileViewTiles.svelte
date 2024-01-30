@@ -14,10 +14,10 @@
   } from '../../../script/stores/uiStore';
   import { settings } from '../../../script/stores/mlStore';
   import { classify } from '../../../script/ml';
-  import Microbits from '../../../script/microbit-interfacing/Microbits';
   import MediaQuery from '../../../components/MediaQuery.svelte';
   import { gestures } from '../../../script/stores/Stores';
   import OutputGesture from '../../../components/output/OutputGesture.svelte';
+  import { sendToOutput } from '../../../script/microbit-interfacing/microbit-bluetooth';
 
   // In case of manual classification, variables for evaluation
   let recordingTime = 0;
@@ -79,7 +79,7 @@
   let firstMount = true;
   onMount(() => {
     firstMount = false;
-    Microbits.resetIOPins();
+    sendToOutput['resetIOPins']();
   });
 
   $: triggerButtonsClicked($buttonPressed);
