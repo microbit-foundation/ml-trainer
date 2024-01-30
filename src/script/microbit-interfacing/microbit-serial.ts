@@ -7,7 +7,7 @@
 import { isDevMode } from '../environment';
 import { DeviceRequestStates } from '../stores/connectDialogStore';
 import MicrobitUSB from './MicrobitUSB';
-import Microbits from './MicrobitsAlt';
+import Microbits from './Microbits';
 import { onAccelerometerChange, onButtonChange } from './change-listeners';
 import * as protocol from './serialProtocol';
 import {

@@ -14,14 +14,14 @@
     btPatternOutput,
   } from '../../../script/stores/connectionStore';
   import type { Writable } from 'svelte/store';
-  import Microbits from '../../../script/microbit-interfacing/MicrobitsAlt';
+  import Microbits from '../../../script/microbit-interfacing/Microbits';
   import { DeviceRequestStates } from '../../../script/stores/connectDialogStore';
   import StaticConfiguration from '../../../StaticConfiguration';
   import DialogHeading from '../../DialogHeading.svelte';
   import LoadingSpinner from '../../LoadingSpinner.svelte';
   import StandardButton from '../../StandardButton.svelte';
   import { isDevMode } from '../../../script/environment';
-  import MicrobitsAlt from '../../../script/microbit-interfacing/MicrobitsAlt';
+  import MicrobitsAlt from '../../../script/microbit-interfacing/Microbits';
 
   // callbacks
   export let deviceState: DeviceRequestStates;

@@ -14,7 +14,7 @@ import { DeviceRequestStates } from './connectDialogStore';
 import CookieManager from '../CookieManager';
 import { isInputPatternValid } from './connectionStore';
 import { gestures } from './Stores';
-import { HexOrigin } from '../microbit-interfacing/MicrobitsAlt';
+import { HexOrigin } from '../microbit-interfacing/Microbits';
 
 // TODO: Rename? Split up further?
 

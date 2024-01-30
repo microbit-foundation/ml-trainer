@@ -10,7 +10,7 @@ import { isDevMode } from '../environment';
 import { DeviceRequestStates } from '../stores/connectDialogStore';
 import { outputting } from '../stores/uiStore';
 import MBSpecs from './MBSpecs';
-import { UARTMessageType } from './MicrobitsAlt';
+import { UARTMessageType } from './Microbits';
 import {
   onAccelerometerChange,
   onButtonChange,

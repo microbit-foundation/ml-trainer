@@ -11,7 +11,7 @@ import { Paths, currentPath, navigate } from '../../router/paths';
 import MBSpecs from './MBSpecs';
 import StaticConfiguration from '../../StaticConfiguration';
 import { sendToOutput } from './microbit-bluetooth';
-import { HexOrigin } from './MicrobitsAlt';
+import { HexOrigin } from './Microbits';
 
 // TODO: We've lost reconnect and logging timeouts
 // TODO: We've lost logging in general, but most of it was unhelpful.

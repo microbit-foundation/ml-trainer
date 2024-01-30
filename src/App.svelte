@@ -5,9 +5,6 @@
  -->
 
 <script lang="ts">
-  import ConnectionBehaviours from './script/connection-behaviours/ConnectionBehaviours';
-  import InputBehaviour from './script/connection-behaviours/InputBehaviour';
-  import OutputBehaviour from './script/connection-behaviours/OutputBehaviour';
   import OverlayView from './views/OverlayView.svelte';
   import PageContentView from './views/PageContentView.svelte';
   import {
@@ -33,9 +30,6 @@
   import ConnectDialogContainer from './components/connection-prompt/ConnectDialogContainer.svelte';
   import { Paths, currentPath, getTitle, navigate } from './router/paths';
   import HomeIcon from 'virtual:icons/ri/home-2-line';
-
-  ConnectionBehaviours.setInputBehaviour(new InputBehaviour());
-  ConnectionBehaviours.setOutputBehaviour(new OutputBehaviour());
 
   if (CookieManager.isReconnectFlagSet()) {
     $state.offerReconnect = true;

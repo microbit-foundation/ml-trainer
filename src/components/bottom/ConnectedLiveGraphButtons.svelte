@@ -9,7 +9,7 @@
   import TypingUtils from '../../script/TypingUtils';
   import { state } from '../../script/stores/uiStore';
   import StandardButton from '../StandardButton.svelte';
-  import Microbits from '../../script/microbit-interfacing/MicrobitsAlt';
+  import Microbits from '../../script/microbit-interfacing/Microbits';
   import {
     DeviceRequestStates,
     startConnectionProcess,

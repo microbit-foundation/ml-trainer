@@ -11,7 +11,7 @@
   import { DeviceRequestStates } from '../script/stores/connectDialogStore';
   import StandardDialog from './dialogs/StandardDialog.svelte';
   import { startConnectionProcess } from '../script/stores/connectDialogStore';
-  import MicrobitsAlt from '../script/microbit-interfacing/MicrobitsAlt';
+  import MicrobitsAlt from '../script/microbit-interfacing/Microbits';
 
   export let isOpen: boolean = false;
 

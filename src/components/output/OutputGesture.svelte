@@ -9,7 +9,7 @@
   import OutputGestureTile from './OutputGestureTile.svelte';
   import { sendToOutput } from '../../script/microbit-interfacing/microbit-bluetooth';
   import { state } from '../../script/stores/uiStore';
-  import { HexOrigin } from '../../script/microbit-interfacing/MicrobitsAlt';
+  import { HexOrigin } from '../../script/microbit-interfacing/Microbits';
 
   export let gesture: Gesture;
   let wasTriggered = false;

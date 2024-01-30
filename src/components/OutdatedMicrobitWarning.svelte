@@ -7,7 +7,7 @@
 <script lang="ts">
   import StaticConfiguration from '../StaticConfiguration';
   import { t } from '../i18n';
-  import Microbits, { HexOrigin } from '../script/microbit-interfacing/MicrobitsAlt';
+  import Microbits, { HexOrigin } from '../script/microbit-interfacing/Microbits';
   import { DeviceRequestStates } from '../script/stores/connectDialogStore';
   import { state } from '../script/stores/uiStore';
   import { horizontalSlide } from '../script/transitions';

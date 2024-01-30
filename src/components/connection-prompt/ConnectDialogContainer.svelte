@@ -35,7 +35,7 @@
   import Microbits, {
     FlashStage,
     HexType,
-  } from '../../script/microbit-interfacing/MicrobitsAlt';
+  } from '../../script/microbit-interfacing/Microbits';
 
   const { bluetooth, usb } = get(compatibility);
   let endOfFlow = false;

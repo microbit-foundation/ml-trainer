@@ -6,7 +6,7 @@
 
 <script lang="ts">
   import { t } from '../../../i18n';
-  import { FlashStage } from '../../../script/microbit-interfacing/MicrobitsAlt';
+  import { FlashStage } from '../../../script/microbit-interfacing/Microbits';
   import DialogHeading from '../../DialogHeading.svelte';
   import HtmlFormattedMessage, { linkWithProps } from '../../HtmlFormattedMessage.svelte';
   import StandardButton from '../../StandardButton.svelte';
