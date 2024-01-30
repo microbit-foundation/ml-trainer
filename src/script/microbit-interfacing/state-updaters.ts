@@ -124,9 +124,8 @@ export const stateOnDisconnected = (
       s.isOutputConnected = false;
       s.offerReconnect = !userDisconnect;
       s.isOutputReady = false;
-      s.reconnectState = DeviceRequestStates.NONE;
       s.isOutputOutdated = false;
-      if (!s.isInputConnected) {
+      if (s.isInputConnected) {
         s.reconnectState = DeviceRequestStates.OUTPUT;
       }
       return s;
