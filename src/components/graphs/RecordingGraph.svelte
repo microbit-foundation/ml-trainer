@@ -145,8 +145,8 @@
           },
           y: {
             type: 'linear',
-            min: -2.5,
-            max: 2.5,
+            min: -5,
+            max: 5,
             grid: {
               drawTicks: false,
               display: false,
