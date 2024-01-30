@@ -11,7 +11,7 @@
   import { DeviceRequestStates } from '../script/stores/connectDialogStore';
   import StandardDialog from './dialogs/StandardDialog.svelte';
   import { startConnectionProcess } from '../script/stores/connectDialogStore';
-  import MicrobitsAlt from '../script/microbit-interfacing/Microbits';
+  import Microbits from '../script/microbit-interfacing/Microbits';
 
   export let isOpen: boolean = false;
 
@@ -31,7 +31,7 @@
   };
   const reconnect = async () => {
     try {
-      await MicrobitsAlt.reconnect($state.reconnectState);
+      await Microbits.reconnect($state.reconnectState);
     } catch (e) {
       startConnectionProcess();
     } finally {
