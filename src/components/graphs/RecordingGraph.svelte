@@ -17,6 +17,7 @@
     PointElement,
   } from 'chart.js';
   import RecordingInspector from '../3d-inspector/RecordingInspector.svelte';
+  import { SmoothieChart, TimeSeries } from 'smoothie';
 
   export let data: { x: number[]; y: number[]; z: number[] };
 
@@ -213,15 +214,38 @@
 
   let canvas: HTMLCanvasElement;
   onMount(() => {
-    Chart.unregister(...registerables);
-    Chart.register([LinearScale, LineController, PointElement, LineElement]);
-    const chart = new Chart(
-      canvas.getContext('2d') ?? new HTMLCanvasElement(),
-      getConfig(),
-    );
-    return () => {
-      chart.destroy();
-    };
+    // Create the chart
+    var chart = new SmoothieChart({
+      maxValue: 2.3,
+      minValue: -2,
+      scaleSmoothing: 1,
+      millisPerPixel: 10,
+      grid: {
+        fillStyle: '#ffffff00',
+        strokeStyle: '#ffffff00',
+        millisPerLine: 3000,
+        borderVisible: false,
+      },
+      interpolation: 'linear',
+    });
+    var timeSeries = new TimeSeries();
+    chart.addTimeSeries(timeSeries, { lineWidth: 2, strokeStyle: '#00ff00' });
+
+    // Build some sample data
+    var endTime = Date.now();
+    var myvalues = [0.5, 1, 0.5, 1];
+    for (var i = 0; i < 24; i++) {
+      timeSeries.append(new Date(endTime - i * 500).getTime(), myvalues[i]);
+    }
+
+    // Render it
+    if (canvas) {
+      // Hack to set this.canvas as canvas in smoothie
+      chart.streamTo(<HTMLCanvasElement>canvas, 0);
+      chart.stop();
+
+      chart.render(<HTMLCanvasElement>canvas, endTime);
+    }
   });
 </script>
 
@@ -237,7 +261,7 @@
       </p>
     {/if}
 
-    <canvas bind:this={canvas} />
+    <canvas bind:this={canvas} width={158} height={100} />
   </div>
   {#if enableInspector}
     <RecordingInspector
