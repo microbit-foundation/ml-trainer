@@ -54,10 +54,12 @@ export const allLanguages = [
 register('en', () => import('./messages/ui.en.json'));
 register('cy', () => import('./messages/ui.cy.json'));
 
-const initialLocale = browserLang({
-  languages: allLanguages.map(l => l.id),
-  fallback: 'en',
-});
+const initialLocale =
+  getLocaleFromQueryString('l') ||
+  browserLang({
+    languages: allLanguages.map(l => l.id),
+    fallback: 'en',
+  });
 
 const persistantLocale = persistantWritable('lang', initialLocale);
 
@@ -69,7 +71,7 @@ locale.subscribe(newLocal => {
 
 await init({
   fallbackLocale: 'en',
-  initialLocale: getLocaleFromQueryString('l') || get(persistantLocale),
+  initialLocale: get(persistantLocale),
   // Needed to format <link> style tags.
   ignoreTag: false,
 });
