@@ -10,6 +10,7 @@
   import { state } from '../script/stores/uiStore';
   import StandardButton from './StandardButton.svelte';
   import StandardDialog from './dialogs/StandardDialog.svelte';
+  import ExternalLinkIcon from 'virtual:icons/ri/external-link-line';
 
   export let isOpen: boolean = false;
   export let type: 'generic' | 'bluetooth' | 'bridge' | 'remote' = 'generic';
@@ -101,6 +102,16 @@
       <p>{$t('disconnectedWarning.input')}</p>
     {/if}
     <div class="flex justify-end gap-x-5">
+      {#if type !== 'generic'}
+        <a
+          class="inline-flex mr-auto gap-x-1 items-center text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
+          href=""
+          target="_blank"
+          rel="noopener">
+          {$t('connectMB.troubleshooting')}
+          <ExternalLinkIcon />
+        </a>
+      {/if}
       <StandardButton onClick={stopOfferingReconnect}
         >{$t('actions.cancel')}</StandardButton>
       <StandardButton type="primary" onClick={reconnect}

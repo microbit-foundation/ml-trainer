@@ -42,7 +42,7 @@
   headingId={reconnectFailed
     ? 'reconnectFailed.radioHeading'
     : 'connectMB.radioStart.heading'}
-  additionalText={reconnectFailed ? 'reconnectFailed.subtitle' : ''}
+  {reconnectFailed}
   switchTextId="connectMB.radioStart.switchBluetooth"
   onSwitchClick={onStartBluetoothClick}
   {onNextClick} />

@@ -8,6 +8,7 @@
   import { t } from '../i18n';
   import DialogHeading from './DialogHeading.svelte';
   import StandardButton from './StandardButton.svelte';
+  import ExternalLinkIcon from 'virtual:icons/ri/external-link-line';
 
   interface Item {
     imgSrc: string;
@@ -17,7 +18,7 @@
 
   export let items: Item[];
   export let headingId: string;
-  export let additionalText: string;
+  export let reconnectFailed: boolean;
   export let subtitleId: string | undefined = undefined;
   export let switchTextId: string;
   export let onSwitchClick: (() => void) | undefined;
@@ -27,8 +28,18 @@
 <div class="w-175">
   <DialogHeading>{$t(headingId)}</DialogHeading>
   <div class="space-y-2">
-    {#if additionalText}
-      <p>{$t(additionalText)}</p>
+    {#if reconnectFailed}
+      <p>
+        {$t('reconnectFailed.subtitle')}
+        <a
+          class="text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
+          href=""
+          target="_blank"
+          rel="noopener">
+          {$t('connectMB.troubleshoot')}
+          <ExternalLinkIcon class="inline transform -translate-y-0.25" />
+        </a>
+      </p>
     {/if}
     {#if subtitleId}
       <p>{$t(subtitleId)}</p>

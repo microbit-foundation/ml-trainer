@@ -48,7 +48,7 @@
     : usb
       ? 'connectMB.bluetoothStart.heading'
       : 'connectMB.radioStart.heading'}
-  additionalText={reconnectFailed ? 'reconnectFailed.subtitle' : ''}
+  {reconnectFailed}
   subtitleId="connectMB.bluetoothStart.subtitle"
   switchTextId="connectMB.bluetoothStart.switchRadio"
   onSwitchClick={onStartRadioClick}
