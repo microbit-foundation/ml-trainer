@@ -6,7 +6,7 @@
 
 import browserLang from 'browser-lang';
 import { FormatXMLElementFn } from 'intl-messageformat';
-import { init, locale, register } from 'svelte-i18n';
+import { getLocaleFromQueryString, init, locale, register } from 'svelte-i18n';
 import { get } from 'svelte/store';
 import { persistantWritable } from './script/stores/storeUtil';
 export { t } from 'svelte-i18n';
@@ -54,10 +54,12 @@ export const allLanguages = [
 register('en', () => import('./messages/ui.en.json'));
 register('cy', () => import('./messages/ui.cy.json'));
 
-const initialLocale = browserLang({
-  languages: allLanguages.map(l => l.id),
-  fallback: 'en',
-});
+const initialLocale =
+  getLocaleFromQueryString('l') ||
+  browserLang({
+    languages: allLanguages.map(l => l.id),
+    fallback: 'en',
+  });
 
 const persistantLocale = persistantWritable('lang', initialLocale);
 

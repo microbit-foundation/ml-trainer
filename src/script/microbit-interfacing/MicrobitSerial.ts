@@ -10,19 +10,28 @@ import { MicrobitConnection } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
 import * as protocol from './serialProtocol';
 
-const enum SerialProtocolState {
-  AwaitingHandshakeResponse,
-  Running,
-}
-
 class MicrobitSerial implements MicrobitConnection {
-  private serialProtocolState = SerialProtocolState.AwaitingHandshakeResponse;
-  private unprocessedInput = '';
+  // TODO: The radio frequency should be randomly generated once per session.
+  //       If we want a session to be restored (e.g. from local storage) and
+  //       the previously flashed micro:bits to continue working without
+  //       reflashing we need to store and retrieve this value somehow.
+  // FIXME: Setting this to the hex files default value for now, as we need
+  //        to configure the radio frequency for both micro:bits after they
+  //        are flashed, not just the radio bridge.
+  private static sessionRadioFrequency = 42;
+  private responseMap = new Map<
+    number,
+    (value: protocol.MessageResponse | PromiseLike<protocol.MessageResponse>) => void
+  >();
 
   constructor(
     private usb: MicrobitUSB,
     private onDisconnect: (manual?: boolean) => void,
-  ) {}
+  ) {
+    if (MicrobitSerial.sessionRadioFrequency === -1) {
+      MicrobitSerial.sessionRadioFrequency = protocol.generateRandomRadioFrequency();
+    }
+  }
 
   isSameDevice(other: MicrobitConnection): boolean {
     return (
@@ -31,68 +40,124 @@ class MicrobitSerial implements MicrobitConnection {
     );
   }
 
+  private async sendCmdWaitResponse(
+    cmd: protocol.MessageCmd,
+  ): Promise<protocol.MessageResponse> {
+    const responsePromise = new Promise<protocol.MessageResponse>((resolve, reject) => {
+      this.responseMap.set(cmd.messageId, resolve);
+      setTimeout(() => {
+        this.responseMap.delete(cmd.messageId);
+        reject(new Error('...'));
+      }, 1_000);
+    });
+    await this.usb.serialWrite(cmd.message);
+    return responsePromise;
+  }
+
   public async listenToInputServices(
     inputBehaviour: InputBehaviour,
     _inputUartHandler: (data: string) => void,
   ): Promise<void> {
-    this.serialProtocolState = SerialProtocolState.AwaitingHandshakeResponse;
-
+    let unprocessedData = '';
     let previousButtonState = { A: 0, B: 0 };
-    await this.usb.startSerial(data => {
-      this.unprocessedInput += data;
-      let messages = protocol.splitMessages(this.unprocessedInput);
-      this.unprocessedInput = messages.remainingInput;
-      messages.messages.forEach(async msg => {
-        if (this.serialProtocolState === SerialProtocolState.AwaitingHandshakeResponse) {
-          let handshakeResponse = protocol.processHandshake(msg);
-          if (handshakeResponse && handshakeResponse.value === protocol.version) {
-            this.serialProtocolState = SerialProtocolState.Running;
 
-            // Request the micro:bit to start sending the periodic messages
-            const startCmd = protocol.generateCmdStart({
-              accelerometer: true,
-              buttons: true,
-            });
-            await this.usb.serialWrite(startCmd);
+    const processMessage = (data: string) => {
+      const messages = protocol.splitMessages(unprocessedData + data);
+      unprocessedData = messages.remainingInput;
+      messages.messages.forEach(async msg => {
+        // Messages are either periodic sensor data or command/response
+        const sensorData = protocol.processPeriodicMessage(msg);
+        if (sensorData) {
+          inputBehaviour.accelerometerChange(
+            sensorData.accelerometerX,
+            sensorData.accelerometerY,
+            sensorData.accelerometerZ,
+          );
+          if (sensorData.buttonA !== previousButtonState.A) {
+            previousButtonState.A = sensorData.buttonA;
+            inputBehaviour.buttonChange(sensorData.buttonA, 'A');
+          }
+          if (sensorData.buttonB !== previousButtonState.B) {
+            previousButtonState.B = sensorData.buttonB;
+            inputBehaviour.buttonChange(sensorData.buttonB, 'B');
           }
         } else {
-          const sensorData = protocol.processPeriodicMessage(msg);
-          if (sensorData) {
-            inputBehaviour.accelerometerChange(
-              sensorData.accelerometerX,
-              sensorData.accelerometerY,
-              sensorData.accelerometerZ,
-            );
-            if (sensorData.buttonA !== previousButtonState.A) {
-              previousButtonState.A = sensorData.buttonA;
-              inputBehaviour.buttonChange(sensorData.buttonA, 'A');
-            }
-            if (sensorData.buttonB !== previousButtonState.B) {
-              previousButtonState.B = sensorData.buttonB;
-              inputBehaviour.buttonChange(sensorData.buttonB, 'B');
-            }
+          const messageResponse = protocol.processResponseMessage(msg);
+          if (!messageResponse) {
+            return;
+          }
+          const responseResolve = this.responseMap.get(messageResponse.messageId);
+          if (responseResolve) {
+            this.responseMap.delete(messageResponse.messageId);
+            responseResolve(messageResponse);
           }
         }
       });
-    });
+    };
+    await this.usb.startSerial(processMessage);
+    try {
+      await this.handshake();
 
+      // Set the radio frequency to a value unique to this session
+      const radioFreqCommand = protocol.generateCmdRadioFrequency(
+        MicrobitSerial.sessionRadioFrequency,
+      );
+      const radioFreqResponse = await this.sendCmdWaitResponse(radioFreqCommand);
+      if (radioFreqResponse.value !== MicrobitSerial.sessionRadioFrequency) {
+        throw new Error(
+          `Failed to set radio frequency. Expected ${MicrobitSerial.sessionRadioFrequency}, got ${radioFreqResponse.value}`,
+        );
+      }
+
+      // Request the micro:bit to start sending the periodic messages
+      const startCmd = protocol.generateCmdStart({
+        accelerometer: true,
+        buttons: true,
+      });
+      await this.usb.serialWrite(startCmd.message);
+    } catch (e) {
+      this.usb.stopSerial();
+      throw e;
+    }
+  }
+
+  private async handshake(): Promise<void> {
     // There is an issue where we cannot read data out from the micro:bit serial
     // buffer until the buffer has been filled.
     // As a workaround we can spam the micro:bit with handshake messages until
     // enough responses have been queued in the buffer to fill it and the data
     // starts to flow.
-    let attempts = 0;
-    while (
-      this.serialProtocolState == SerialProtocolState.AwaitingHandshakeResponse &&
-      attempts++ < 20
-    ) {
-      const handshakeCmd = protocol.generateCmdHandshake();
-      console.log(`Sending handshake ${handshakeCmd}`);
-      await this.usb.serialWrite(handshakeCmd);
-      await new Promise(resolve => setTimeout(resolve, 100));
-    }
-    if (this.serialProtocolState === SerialProtocolState.AwaitingHandshakeResponse) {
-      throw new Error('Handshake not received');
+    const handshakeResult = await new Promise<protocol.MessageResponse>(
+      async (resolve, reject) => {
+        const attempts = 20;
+        let attemptCounter = 0;
+        let failureCounter = 0;
+        let resolved = false;
+        while (attemptCounter < 20 && !resolved) {
+          attemptCounter++;
+          this.sendCmdWaitResponse(protocol.generateCmdHandshake())
+            .then(value => {
+              if (!resolved) {
+                resolved = true;
+                resolve(value);
+              }
+            })
+            .catch(() => {
+              // We expect some to time out, likely well after the handshake is completed.
+              if (!resolved) {
+                if (++failureCounter === attempts) {
+                  reject(new Error('Handshake not completed'));
+                }
+              }
+            });
+          await new Promise(resolve => setTimeout(resolve, 100));
+        }
+      },
+    );
+    if (handshakeResult.value !== protocol.version) {
+      throw new Error(
+        `Handshake failed. Unexpected protocol version ${protocol.version}`,
+      );
     }
   }
 
@@ -104,7 +169,6 @@ class MicrobitSerial implements MicrobitConnection {
     // Weirdly this disconnects the CortexM...
     this.usb.disconnect();
     this.onDisconnect(true);
-    this.unprocessedInput = '';
     this.usb.stopSerial().catch(e => {
       // It's hard to make disconnect() async so we've left this as a background error for now.
       console.error(e);
