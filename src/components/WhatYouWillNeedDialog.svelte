@@ -17,6 +17,7 @@
 
   export let items: Item[];
   export let headingId: string;
+  export let additionalText: string;
   export let subtitleId: string | undefined = undefined;
   export let switchTextId: string;
   export let onSwitchClick: (() => void) | undefined;
@@ -25,9 +26,14 @@
 
 <div class="w-175">
   <DialogHeading>{$t(headingId)}</DialogHeading>
-  {#if subtitleId}
-    <p>{$t(subtitleId)}</p>
-  {/if}
+  <div class="space-y-2">
+    {#if additionalText}
+      <p>{$t(additionalText)}</p>
+    {/if}
+    {#if subtitleId}
+      <p>{$t(subtitleId)}</p>
+    {/if}
+  </div>
   <div class="inline-grid grid-cols-{items.length} gap-16 py-13 px-10">
     {#each items as item}
       <div class="flex flex-col text-md text-center">

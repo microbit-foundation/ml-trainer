@@ -30,7 +30,6 @@
   import { fade } from 'svelte/transition';
   import { message, state } from '../script/stores/uiStore';
   import ReconnectPrompt from '../components/ReconnectPrompt.svelte';
-  import OutdatedMicrobitWarning from '../components/OutdatedMicrobitWarning.svelte';
   import { isInputPatternValid } from '../script/stores/connectionStore';
 
   // Helps show error messages on top of page

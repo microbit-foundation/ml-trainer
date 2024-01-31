@@ -5,25 +5,15 @@
  -->
 
 <script lang="ts">
-  import StandardButton from '../components/StandardButton.svelte';
-  import { state } from '../script/stores/uiStore';
   import { t } from '../i18n';
-  import { DeviceRequestStates } from '../script/stores/connectDialogStore';
-  import StandardDialog from './dialogs/StandardDialog.svelte';
   import { startConnectionProcess } from '../script/stores/connectDialogStore';
+  import { state } from '../script/stores/uiStore';
+  import StandardButton from './StandardButton.svelte';
+  import StandardDialog from './dialogs/StandardDialog.svelte';
 
   export let isOpen: boolean = false;
-
-  $: dialogText =
-    $state.reconnectState === DeviceRequestStates.INPUT
-      ? {
-          bodyId: 'disconnectedWarning.input',
-          buttonId: 'disconnectedWarning.reconnectButton.input',
-        }
-      : {
-          bodyId: 'disconnectedWarning.output',
-          buttonId: 'disconnectedWarning.reconnectButton.output',
-        };
+  export let type: 'generic' | 'bluetooth' | 'bridge' | 'remote' = 'generic';
+  export let trigger: 'automatic' | 'user' = 'automatic';
 
   const stopOfferingReconnect = () => {
     $state.offerReconnect = false;
@@ -32,17 +22,89 @@
     startConnectionProcess();
     stopOfferingReconnect();
   };
+
+  const content = {
+    heading: '',
+    subtitle: '',
+    listHeading: '',
+    bulletOne: '',
+    bulletTwo: '',
+  };
+
+  const textIdPrefix =
+    trigger === 'automatic' ? 'disconnectedWarning' : 'reconnectFailed';
+
+  switch (type) {
+    case 'bluetooth': {
+      content.heading =
+        trigger === 'automatic'
+          ? `disconnectedWarning.bluetoothHeading`
+          : 'reconnectFailed.bluetoothHeading';
+      content.subtitle =
+        trigger === 'automatic'
+          ? `disconnectedWarning.bluetooth1`
+          : 'reconnectFailed.bluetooth1';
+      content.listHeading = 'disconnectedWarning.bluetooth2';
+      content.bulletOne = 'disconnectedWarning.bluetooth3';
+      content.bulletTwo = 'disconnectedWarning.bluetooth4';
+      break;
+    }
+    case 'bridge': {
+      content.heading =
+        trigger === 'automatic'
+          ? `disconnectedWarning.bridgeHeading`
+          : 'reconnectFailed.bridgeHeading';
+      content.subtitle =
+        trigger === 'automatic'
+          ? `disconnectedWarning.bridge1`
+          : 'reconnectFailed.bridge1';
+      content.listHeading = 'connectMB.usbTryAgain.replugMicrobit2';
+      content.bulletOne = 'connectMB.usbTryAgain.replugMicrobit3';
+      content.bulletTwo = 'connectMB.usbTryAgain.replugMicrobit4';
+      break;
+    }
+    case 'remote': {
+      content.heading =
+        trigger === 'automatic'
+          ? `disconnectedWarning.remoteHeading`
+          : 'reconnectFailed.remoteHeading';
+      content.subtitle =
+        trigger === 'automatic'
+          ? `disconnectedWarning.remote1`
+          : 'reconnectFailed.remote1';
+      content.listHeading = 'disconnectedWarning.bluetooth2';
+      content.bulletOne = 'disconnectedWarning.bluetooth3';
+      content.bulletTwo = 'disconnectedWarning.bluetooth4';
+      break;
+    }
+    default: {
+      content.heading = `${textIdPrefix}.bluetoothHeading`;
+    }
+  }
 </script>
 
-<StandardDialog {isOpen} onClose={stopOfferingReconnect} class="w-110">
+<StandardDialog {isOpen} onClose={stopOfferingReconnect} class="w-150 space-y-5">
   <svelte:fragment slot="heading">
-    {$t('disconnectedWarning.heading')}
+    {$t(content.heading)}
   </svelte:fragment>
-  <div slot="body" class="flex flex-col pt-5 gap-7">
-    <p>{$t(dialogText.bodyId)}</p>
-    <div class="flex justify-center">
+  <svelte:fragment slot="body">
+    {#if type !== 'generic'}
+      <p>{$t(content.subtitle)}</p>
+      <div>
+        <p>{$t(content.listHeading)}</p>
+        <ul class="list-disc pl-10">
+          <li>{$t(content.bulletOne)}</li>
+          <li>{$t(content.bulletTwo)}</li>
+        </ul>
+      </div>
+    {:else}
+      <p>{$t('disconnectedWarning.input')}</p>
+    {/if}
+    <div class="flex justify-end gap-x-5">
+      <StandardButton onClick={stopOfferingReconnect}
+        >{$t('actions.cancel')}</StandardButton>
       <StandardButton type="primary" onClick={reconnect}
-        >{$t(dialogText.buttonId)}</StandardButton>
+        >{$t('disconnectedWarning.reconnectButton')}</StandardButton>
     </div>
-  </div>
+  </svelte:fragment>
 </StandardDialog>

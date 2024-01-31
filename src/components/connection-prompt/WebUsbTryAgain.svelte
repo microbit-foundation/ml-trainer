@@ -28,7 +28,15 @@
       <p>{$t('connectMB.usbTryAgain.closeTabs2')}</p>
     {:else}
       <p>{$t('connectMB.usbTryAgain.replugMicrobit1')}</p>
-      <p>{$t('connectMB.usbTryAgain.replugMicrobit2')}</p>
+
+      <div>
+        <p>{$t('connectMB.usbTryAgain.replugMicrobit2')}</p>
+        <ul class="list-disc pl-10">
+          <li><p>{$t('connectMB.usbTryAgain.replugMicrobit3')}</p></li>
+          <li><p>{$t('connectMB.usbTryAgain.replugMicrobit4')}</p></li>
+        </ul>
+      </div>
+      <ul></ul>
     {/if}
     <div class="flex justify-end gap-x-5">
       <StandardButton onClick={onCancel}>{$t('actions.cancel')}</StandardButton>
