@@ -71,9 +71,9 @@ describe('Microbit facade tests', () => {
       'firmware/ml-microbit-cpp-version-combined.hex',
     );
     expect(getHexFileUrl(2, 'bluetooth')).toEqual('firmware/MICROBIT.hex');
-    expect(getHexFileUrl(2, 'radio-bridge')).toEqual('firmware/radio-bridge.hex');
-    expect(getHexFileUrl(2, 'radio-sender')).toEqual('firmware/radio-sender.hex');
-    expect(getHexFileUrl(2, 'radio-local')).toEqual('firmware/radio-local.hex');
+    expect(getHexFileUrl(2, 'radio-bridge')).toMatch(/^firmware\/radio-bridge-v.*\.hex$/);
+    expect(getHexFileUrl(2, 'radio-sender')).toMatch(/^firmware\/radio-remote-v.*\.hex$/);
+    expect(getHexFileUrl(2, 'radio-local')).toMatch(/^firmware\/local-sensors-v.*\.hex$/);
   });
 
   test('Input should not be connected before connecting', () => {
