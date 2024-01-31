@@ -84,7 +84,10 @@
   }
 </script>
 
-<StandardDialog {isOpen} onClose={stopOfferingReconnect} class="w-150 space-y-5">
+<StandardDialog
+  {isOpen}
+  onClose={stopOfferingReconnect}
+  class="{type === 'generic' ? 'w-110' : 'w-150'} space-y-5">
   <svelte:fragment slot="heading">
     {$t(content.heading)}
   </svelte:fragment>

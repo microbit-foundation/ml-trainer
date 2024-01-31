@@ -213,7 +213,7 @@
   "reconnectFailed.bridge1": "The connection to the micro:bit connected to your computer could not be re-established.",
   "reconnectFailed.subtitle": "Follow these instructions to restart the connection process.",
 
-  "disconnectedWarning.input": "Your micro:bit lost connection, do you want to try again",
+  "disconnectedWarning.input": "Your micro:bit lost connection, do you want to try again?",
 
   "disconnectedWarning.bluetoothHeading": "micro:bit connection lost",
   "disconnectedWarning.bluetooth1": "The connection to the micro:bit has been lost.",
