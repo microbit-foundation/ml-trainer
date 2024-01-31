@@ -52,10 +52,10 @@ export const getHexFileUrl = (version: 1 | 2 | 'universal', type: HexType) => {
     throw new Error('Only V2 is supported');
   }
   return {
-    'radio-sender-dev': 'firmware/radio-sender-dev.hex',
-    'radio-sender': 'firmware/radio-sender.hex',
-    'radio-bridge': 'firmware/radio-bridge.hex',
-    'radio-local': 'firmware/radio-local.hex',
+    'radio-sender-dev': 'firmware/radio-remote-v0.1.0-dev.hex',
+    'radio-sender': 'firmware/radio-remote-v0.1.0.hex',
+    'radio-bridge': 'firmware/radio-bridge-v0.1.0.hex',
+    'radio-local': 'firmware/local-sensors-v0.1.0.hex',
   }[type];
 };
 
