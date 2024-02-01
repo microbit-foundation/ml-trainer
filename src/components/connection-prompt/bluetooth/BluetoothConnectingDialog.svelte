@@ -47,7 +47,7 @@
       if (deviceState == DeviceRequestStates.INPUT) {
         return Microbits.assignBluetoothInput(name);
       } else {
-        return Microbits.assignBluetoothOuput(name);
+        return Microbits.assignBluetoothOutput(name);
       }
     };
 

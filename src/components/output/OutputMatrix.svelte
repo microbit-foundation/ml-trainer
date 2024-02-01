@@ -52,10 +52,11 @@
 </style>
 
 <script lang="ts">
+  import Microbits from '../../script/microbit-interfacing/Microbits';
+
   // TODO: Shares a lot with 'PatternMatrix'. Extract 'Matrix' component and reuse
 
   import { type GestureData, updateGestureLEDOutput } from '../../script/stores/mlStore';
-  import { sendToOutput } from '../../script/microbit-interfacing/microbit-bluetooth';
   import { state } from '../../script/stores/uiStore';
 
   // TODO: Generalize such that it becomes ConnectionBehaviour.setMatrixTo() instead
@@ -63,7 +64,7 @@
   //       If the one in 'OutputGesture.svelte' is used why do we have default value here?
   export const trigger = () => {
     if ($state.isOutputReady) {
-      sendToOutput['setOutputMatrix'](matrix);
+      Microbits.getOutputMicrobit().setLeds(matrix);
     }
   };
 

@@ -7,9 +7,8 @@
   import Gesture from '../../script/domain/Gesture';
   import OutputGestureStack from './OutputGestureStack.svelte';
   import OutputGestureTile from './OutputGestureTile.svelte';
-  import { sendToOutput } from '../../script/microbit-interfacing/microbit-bluetooth';
   import { state } from '../../script/stores/uiStore';
-  import { HexOrigin } from '../../script/microbit-interfacing/Microbits';
+  import Microbits, { HexOrigin } from '../../script/microbit-interfacing/Microbits';
 
   export let gesture: Gesture;
   let wasTriggered = false;
@@ -31,7 +30,7 @@
   const wasTurnedOff = () => {};
   const wasTurnedOn = () => {
     if ($state.outputOrigin === HexOrigin.MAKECODE) {
-      sendToOutput['sendToOutputUart']('g', $gesture.name);
+      Microbits.getOutputMicrobit().sendToOutputUart('g', $gesture.name);
       return;
     }
   };

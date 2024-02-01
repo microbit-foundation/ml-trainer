@@ -10,8 +10,7 @@ import { ModelView, state } from '../stores/uiStore';
 import { Paths, currentPath, navigate } from '../../router/paths';
 import MBSpecs from './MBSpecs';
 import StaticConfiguration from '../../StaticConfiguration';
-import { sendToOutput } from './microbit-bluetooth';
-import { HexOrigin } from './Microbits';
+import Microbits, { HexOrigin } from './Microbits';
 
 // TODO: We've lost logging, but most of it was unhelpful.
 
@@ -70,13 +69,7 @@ export const stateOnReady = (requestState: DeviceRequestStates) => {
       navigate(Paths.DATA);
     }
   } else {
-    // Reset any output pins currently active.
-    const pinResetArguments: { pin: MBSpecs.UsableIOPin; on: boolean }[] = [];
-    StaticConfiguration.supportedPins.forEach(pin => {
-      const argument = { pin: pin, on: false };
-      pinResetArguments.push(argument);
-    });
-    sendToOutput['sendToOutputPin'](pinResetArguments);
+    Microbits.getOutputMicrobit().resetPins();
     state.update(s => {
       s.isOutputReady = true;
       return s;

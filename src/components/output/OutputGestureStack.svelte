@@ -27,7 +27,7 @@
   import rightArrowBlueImage from '../../imgs/right_arrow_blue.svg';
   import blankMicrobitImage from '../../imgs/blank_microbit.svg';
   import { onMount } from 'svelte';
-  import { sendToOutput } from '../../script/microbit-interfacing/microbit-bluetooth';
+  import Microbits from '../../script/microbit-interfacing/Microbits';
 
   type TriggerAction = 'turnOn' | 'turnOff' | 'none';
 
@@ -110,16 +110,16 @@
 
     const isOnTimer = turnOnState === PinTurnOnState.X_TIME;
     if (on) {
-      sendToOutput['sendToOutputPin']([{ pin: selectedPin, on: true }]);
+      Microbits.getOutputMicrobit().setPins(selectedPin, true);
       // If pin is on timer, set timeout to turn off again
       if (isOnTimer) {
         setTimeout(() => {
-          sendToOutput['sendToOutputPin']([{ pin: selectedPin, on: false }]);
+          Microbits.getOutputMicrobit().setPins(selectedPin, false);
         }, turnOnTime);
       }
     } else if (!isOnTimer) {
       // else if on === false and the pin is not on a timer, turn it off
-      sendToOutput['sendToOutputPin']([{ pin: selectedPin, on: false }]);
+      Microbits.getOutputMicrobit().setPins(selectedPin, on);
     }
   }
 
@@ -141,7 +141,8 @@
       const sound = new Audio(selectedSound.path);
       void sound.play();
     } else {
-      sendToOutput['sendToOutputUart']('s', selectedSound.id);
+      // mth: Can we encapsulate the todo below? Remove uart related methods in favour of sound related ones.
+      Microbits.getOutputMicrobit().sendToOutputUart('s', selectedSound.id);
       // TODO: sendLegacySoundMessage
       // void Microbits.sendUARTSoundMessageToOutput(selectedSound.id);
     }
@@ -175,7 +176,7 @@
   };
 
   const refreshAfterChange = () => {
-    sendToOutput['resetIOPins']();
+    Microbits.getOutputMicrobit().resetPins();
     setOutputPin(false);
   };
 

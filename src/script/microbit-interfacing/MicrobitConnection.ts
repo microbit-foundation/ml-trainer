@@ -4,18 +4,17 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { CortexM, DAPLink, WebUSB } from 'dapjs';
-import MBSpecs from './MBSpecs';
-
-const baudRate = 115200;
-const serialDelay = 5;
+import { DeviceRequestStates } from '../stores/connectDialogStore';
 
 /**
- * A USB connection to a micro:bit.
+ * A connection to a micro:bit.
  */
 interface MicrobitConnection {
-  listenToInputServices(): Promise<void>;
-  disconnectInputServices(): Promise<void>;
+  connect(...states: DeviceRequestStates[]): Promise<void>;
+
+  reconnect(): Promise<void>;
+
+  disconnect(userDisconnect: boolean): Promise<void>;
 }
 
 export default MicrobitConnection;

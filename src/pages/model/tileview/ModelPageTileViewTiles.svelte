@@ -17,7 +17,7 @@
   import MediaQuery from '../../../components/MediaQuery.svelte';
   import { gestures } from '../../../script/stores/Stores';
   import OutputGesture from '../../../components/output/OutputGesture.svelte';
-  import { sendToOutput } from '../../../script/microbit-interfacing/microbit-bluetooth';
+  import Microbits from '../../../script/microbit-interfacing/Microbits';
 
   // In case of manual classification, variables for evaluation
   let recordingTime = 0;
@@ -79,7 +79,7 @@
   let firstMount = true;
   onMount(() => {
     firstMount = false;
-    sendToOutput['resetIOPins']();
+    Microbits.getOutputMicrobit().resetPins();
   });
 
   $: triggerButtonsClicked($buttonPressed);

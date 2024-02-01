@@ -5,13 +5,10 @@
  */
 
 import { DeviceRequestStates } from '../stores/connectDialogStore';
+import MicrobitConnection from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
-import {
-  MicrobitBluetooth,
-  disconnectBluetoothDevice,
-  startBluetoothConnection,
-} from './microbit-bluetooth';
-import { disconnectSerial, startSerialConnection } from './microbit-serial';
+import { MicrobitBluetooth, startBluetoothConnection } from './microbit-bluetooth';
+import { MicrobitSerial, startSerialConnection } from './microbit-serial';
 
 export enum HexOrigin {
   UNKNOWN,
@@ -41,89 +38,71 @@ export const getHexFileUrl = (version: 1 | 2 | 'universal', type: HexType) => {
 };
 
 class Microbits {
-  private static inputMicrobit: MicrobitBluetooth | MicrobitUSB | undefined = undefined;
+  private static inputMicrobit: MicrobitConnection | undefined = undefined;
   private static outputMicrobit: MicrobitBluetooth | undefined = undefined;
 
   private static linkedMicrobit: MicrobitUSB | undefined = undefined;
 
+  public static getOutputMicrobit(): MicrobitBluetooth {
+    if (!this.outputMicrobit) {
+      throw new Error('No output micro:bit!');
+    }
+    return this.outputMicrobit;
+  }
+
   public static async assignBluetoothInput(name: string): Promise<boolean> {
-    const connectionResult = await startBluetoothConnection(
-      name,
-      DeviceRequestStates.INPUT,
-      this.inputMicrobit instanceof MicrobitBluetooth
-        ? this.inputMicrobit.device
-        : undefined,
-    );
-    this.outputMicrobit = connectionResult.success ? connectionResult.result : undefined;
-    return connectionResult.success;
+    this.inputMicrobit = await startBluetoothConnection(name, DeviceRequestStates.INPUT);
+    return !!this.inputMicrobit;
   }
 
   public static async assignSerialInput(): Promise<boolean> {
-    const serialResult = await startSerialConnection(DeviceRequestStates.INPUT);
-    this.inputMicrobit = serialResult.success ? serialResult.result : undefined;
-    return serialResult.success;
+    this.inputMicrobit = await startSerialConnection(DeviceRequestStates.INPUT);
+    return !!this.inputMicrobit;
   }
 
-  public static async assignBluetoothOuput(name: string): Promise<boolean> {
-    const connectionResult = await startBluetoothConnection(
-      name,
-      DeviceRequestStates.OUTPUT,
-      this.outputMicrobit instanceof MicrobitBluetooth
-        ? this.outputMicrobit.device
-        : undefined,
-    );
-    this.outputMicrobit = connectionResult.success ? connectionResult.result : undefined;
-    return connectionResult.success;
+  public static async assignBluetoothOutput(name: string): Promise<boolean> {
+    // If it's the input micro:bit then grab the input micro:bit reference
+    // use it as the output micro:bit and connect it in that mode too.
+    if (
+      this.inputMicrobit instanceof MicrobitBluetooth &&
+      this.inputMicrobit.name === name
+    ) {
+      await this.inputMicrobit.connect(DeviceRequestStates.OUTPUT);
+      this.outputMicrobit = this.inputMicrobit;
+      return true;
+    } else {
+      this.outputMicrobit = await startBluetoothConnection(
+        name,
+        DeviceRequestStates.OUTPUT,
+      );
+      return !!this.outputMicrobit;
+    }
   }
 
   public static async reconnect(requestState: DeviceRequestStates) {
     if (requestState === DeviceRequestStates.INPUT && this.inputMicrobit) {
-      // mth: Can we make this nice?
-      if (this.inputMicrobit instanceof MicrobitUSB) {
-        return this.assignSerialInput();
-      } else {
-        return this.assignBluetoothInput(this.inputMicrobit.name);
-      }
+      await this.inputMicrobit.reconnect();
     }
     if (requestState === DeviceRequestStates.OUTPUT && this.outputMicrobit) {
-      return this.assignBluetoothOuput(this.outputMicrobit.name);
+      await this.outputMicrobit.reconnect();
     }
-    throw new Error('Cannot reconnect. There are no previously connected devices.');
   }
 
   private static getMicrobit(
     state: DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT,
-  ): MicrobitUSB | MicrobitBluetooth | undefined {
+  ): MicrobitConnection | undefined {
     return state === DeviceRequestStates.INPUT ? this.inputMicrobit : this.outputMicrobit;
   }
 
   public static async disconnect(
     requestState: DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT,
   ) {
-    // mth: aspirational!
-    // this.getMicrobit(requestState)?.disconnect();
-
-    if (requestState === DeviceRequestStates.INPUT && this.inputMicrobit) {
-      if (this.inputMicrobit instanceof MicrobitUSB) {
-        await disconnectSerial(this.inputMicrobit, DeviceRequestStates.INPUT, true);
-      } else {
-        await disconnectBluetoothDevice(
-          this.inputMicrobit.device,
-          DeviceRequestStates.INPUT,
-          true,
-        );
-      }
-    } else if (requestState === DeviceRequestStates.OUTPUT && this.outputMicrobit) {
-      if (!(this.outputMicrobit instanceof MicrobitUSB)) {
-        await disconnectBluetoothDevice(
-          this.outputMicrobit.device,
-          DeviceRequestStates.OUTPUT,
-          true,
-        );
-      }
-    }
+    // This isn't right as it will disconnect a shared micro:bit
+    // We need to stop using it as the X micro:bit, perhaps? But what's the UI level intent?
+    return this.getMicrobit(requestState)?.disconnect(true);
   }
 
+  // Can we kill this?
   public static async disconnectInputAndOutput() {
     await this.disconnect(DeviceRequestStates.INPUT);
     await this.disconnect(DeviceRequestStates.OUTPUT);

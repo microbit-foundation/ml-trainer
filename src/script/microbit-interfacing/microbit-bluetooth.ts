@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { get, writable } from 'svelte/store';
 import StaticConfiguration from '../../StaticConfiguration';
 import { isDevMode } from '../environment';
 import { DeviceRequestStates } from '../stores/connectDialogStore';
-import { outputting, state } from '../stores/uiStore';
+import { outputting } from '../stores/uiStore';
 import MBSpecs from './MBSpecs';
+import MicrobitConnection from './MicrobitConnection';
 import { UARTMessageType } from './Microbits';
 import {
   onAccelerometerChange,
@@ -24,13 +24,6 @@ import {
   stateOnReady,
 } from './state-updaters';
 
-export class MicrobitBluetooth {
-  constructor(
-    public readonly name: string,
-    public readonly device: BluetoothDevice,
-  ) {}
-}
-
 /**
  * UART data target. For fixing type compatibility issues.
  */
@@ -38,85 +31,314 @@ export type CharacteristicDataTarget = EventTarget & {
   value: DataView;
 };
 
-type QueueElement = {
-  service: BluetoothRemoteGATTCharacteristic;
-  view: DataView;
+type OutputCharacteristics = {
+  io: BluetoothRemoteGATTCharacteristic;
+  matrix: BluetoothRemoteGATTCharacteristic;
+  uart: BluetoothRemoteGATTCharacteristic;
 };
 
-type BluetoothConnectionResult =
-  | {
-      result: MicrobitBluetooth;
-      success: true;
+export class MicrobitBluetooth implements MicrobitConnection {
+  // Available after successful connect
+  microbitVersion: MBSpecs.MBVersion | undefined;
+  inUseAs: Set<DeviceRequestStates> = new Set();
+
+  private outputCharacteristics: OutputCharacteristics | undefined;
+
+  private actionQueue: {
+    busy: boolean;
+    queue: Array<(outputCharacteristics: OutputCharacteristics) => Promise<void>>;
+  } = {
+    busy: false,
+    queue: [],
+  };
+
+  constructor(
+    public readonly name: string,
+    public readonly device: BluetoothDevice,
+  ) {
+    device.addEventListener('gattserverdisconnected', this.handleDisconnectEvent);
+  }
+
+  async connect(...states: DeviceRequestStates[]): Promise<void> {
+    if (this.device.gatt === undefined) {
+      throw new Error('BluetoothRemoteGATTServer for microbit device is undefined');
     }
-  | { success: false };
+    try {
+      const gattServer = await this.device.gatt.connect();
+      const microbitVersion = await MBSpecs.Utility.getModelNumber(gattServer);
+      this.microbitVersion = microbitVersion;
+      states.forEach(stateOnConnected);
+      if (states.includes(DeviceRequestStates.INPUT)) {
+        await this.listenToInputServices();
+      }
+      if (states.includes(DeviceRequestStates.OUTPUT)) {
+        await this.listenToOutputServices();
+      }
+      states.forEach(s => stateOnAssigned(s, microbitVersion));
+      states.forEach(s => stateOnReady(s));
+    } catch (e) {
+      if (this.device.gatt !== undefined) {
+        // In case bluetooth was connected but some other error occurs.
+        // Disconnect bluetooth to keep consistent state.
+        this.device.gatt.disconnect();
+      }
+      throw new Error('Failed to establish a connection!');
+    }
+  }
 
-const disconnectListeners: Record<
-  DeviceRequestStates,
-  (() => Promise<void>) | undefined
-> = {
-  [DeviceRequestStates.NONE]: undefined,
-  [DeviceRequestStates.INPUT]: undefined,
-  [DeviceRequestStates.OUTPUT]: undefined,
-};
+  async disconnect(userDisconnect: boolean): Promise<void> {
+    this.actionQueue = { busy: false, queue: [] };
 
-let bluetoothServiceActionQueue = writable<{
-  busy: boolean;
-  queue: QueueElement[];
-}>({
-  busy: false,
-  queue: [],
-});
+    this.inUseAs.forEach(value => stateOnDisconnected(value, userDisconnect));
+    this.device.removeEventListener('gattserverdisconnected', this.handleDisconnectEvent);
+    this.device.gatt?.disconnect();
+  }
+
+  async reconnect(): Promise<void> {
+    const as = Array.from(this.inUseAs);
+    await this.disconnect(false);
+    await this.connect(...as);
+  }
+
+  // Hmm
+  handleDisconnectEvent = async (): Promise<void> => {
+    try {
+      await this.connect(...this.inUseAs);
+    } catch (e) {
+      isDevMode && console.error('Error logging:', e);
+      this.disconnect(false);
+    }
+  };
+
+  private assertGattServer(): BluetoothRemoteGATTServer {
+    if (!this.device.gatt?.connected) {
+      throw new Error('Could not listen to services, no microbit connected!');
+    }
+    return this.device.gatt;
+  }
+
+  private async listenToInputServices(): Promise<void> {
+    await this.listenToAccelerometer();
+    await this.listenToButton('A');
+    await this.listenToButton('B');
+
+    // Duplicated beween input and output!
+    await this.listenToUART();
+  }
+
+  private async listenToButton(buttonToListenFor: MBSpecs.Button): Promise<void> {
+    const gattServer = this.assertGattServer();
+    const buttonService = await gattServer.getPrimaryService(
+      MBSpecs.Services.BUTTON_SERVICE,
+    );
+
+    // Select the correct characteristic to listen to.
+    const uuid =
+      buttonToListenFor === 'A'
+        ? MBSpecs.Characteristics.BUTTON_A
+        : MBSpecs.Characteristics.BUTTON_B;
+    const buttonCharacteristic = await buttonService.getCharacteristic(uuid);
+
+    await buttonCharacteristic.startNotifications();
+
+    buttonCharacteristic.addEventListener(
+      'characteristicvaluechanged',
+      (event: Event) => {
+        const target = event.target as CharacteristicDataTarget;
+        const stateId = target.value.getUint8(0);
+        let state = MBSpecs.ButtonStates.Released;
+        if (stateId === 1) {
+          state = MBSpecs.ButtonStates.Pressed;
+        }
+        if (stateId === 2) {
+          state = MBSpecs.ButtonStates.LongPressed;
+        }
+        onButtonChange(state, buttonToListenFor);
+      },
+    );
+  }
+
+  private async listenToAccelerometer(): Promise<void> {
+    const gattServer = this.assertGattServer();
+    const accelerometerService = await gattServer.getPrimaryService(
+      MBSpecs.Services.ACCEL_SERVICE,
+    );
+    const accelerometerCharacteristic = await accelerometerService.getCharacteristic(
+      MBSpecs.Characteristics.ACCEL_DATA,
+    );
+    await accelerometerCharacteristic.startNotifications();
+    accelerometerCharacteristic.addEventListener(
+      'characteristicvaluechanged',
+      (event: Event) => {
+        const target = event.target as CharacteristicDataTarget;
+        const x = target.value.getInt16(0, true);
+        const y = target.value.getInt16(2, true);
+        const z = target.value.getInt16(4, true);
+        onAccelerometerChange(x, y, z);
+      },
+    );
+  }
+
+  private async listenToUART(): Promise<void> {
+    const gattServer = this.assertGattServer();
+    const uartService = await gattServer.getPrimaryService(MBSpecs.Services.UART_SERVICE);
+    const uartTXCharacteristic = await uartService.getCharacteristic(
+      MBSpecs.Characteristics.UART_DATA_TX,
+    );
+    await uartTXCharacteristic.startNotifications();
+    uartTXCharacteristic.addEventListener(
+      'characteristicvaluechanged',
+      (event: Event) => {
+        // Convert the data to a string.
+        const receivedData: number[] = [];
+        const target = event.target as CharacteristicDataTarget;
+        for (let i = 0; i < target.value.byteLength; i += 1) {
+          receivedData[i] = target.value.getUint8(i);
+        }
+        const receivedString = String.fromCharCode.apply(null, receivedData);
+        // Hmm...
+        this.inUseAs.forEach(state => onUARTDataReceived(state, receivedString));
+      },
+    );
+  }
+
+  private async listenToOutputServices(): Promise<void> {
+    const gattServer = this.assertGattServer();
+    if (!gattServer.connected) {
+      throw new Error('Could not listen to services, no microbit connected!');
+    }
+    const ioService = await gattServer.getPrimaryService(MBSpecs.Services.IO_SERVICE);
+    const io = await ioService.getCharacteristic(MBSpecs.Characteristics.IO_DATA);
+    const ledService = await gattServer.getPrimaryService(MBSpecs.Services.IO_SERVICE);
+    const matrix = await ledService.getCharacteristic(
+      MBSpecs.Characteristics.LED_MATRIX_STATE,
+    );
+    const uartService = await gattServer.getPrimaryService(MBSpecs.Services.UART_SERVICE);
+    const uart = await uartService.getCharacteristic(
+      MBSpecs.Characteristics.UART_DATA_RX,
+    );
+    this.outputCharacteristics = {
+      io,
+      matrix,
+      uart,
+    };
+
+    // mth: We do this twice if we're the input and output micro:bit but that doesn't make sense.
+    await this.listenToUART();
+  }
+
+  private setPinInternal = (pin: MBSpecs.UsableIOPin, on: boolean): void => {
+    this.queueAction(outputCharacteristics => {
+      const dataView = new DataView(new ArrayBuffer(2));
+      dataView.setInt8(0, pin);
+      dataView.setInt8(1, on ? 1 : 0);
+      outputting.set({ text: `Turn pin ${pin} ${on ? 'on' : 'off'}` });
+      return outputCharacteristics.io.writeValue(dataView);
+    });
+  };
+
+  // Counter tracking the pin state. Incremented when we turn it on
+  // and decremented when we turn it off. This avoids us turning off
+  // pins that others have turned on (i.e. we bias towards enabling
+  // pins).
+  private pinStateCounters = new Map<MBSpecs.UsableIOPin, number>();
+
+  setPins(pin: MBSpecs.UsableIOPin, on: boolean): void {
+    let stateCounter = this.pinStateCounters.get(pin) ?? 0;
+    stateCounter = stateCounter + (on ? 1 : -1);
+    // Has it transitioned to off or on?
+    const changed = stateCounter === 0 || stateCounter === 1;
+    this.pinStateCounters.set(pin, Math.max(0, stateCounter));
+    if (changed) {
+      this.setPinInternal(pin, on);
+    }
+  }
+
+  resetPins = () => {
+    this.pinStateCounters = new Map();
+    StaticConfiguration.supportedPins.forEach(value => {
+      this.setPinInternal(value, false);
+    });
+  };
+
+  setLeds = (matrix: boolean[]): void => {
+    this.queueAction(outputCharacteristics => {
+      const dataView = new DataView(new ArrayBuffer(5));
+      for (let i = 0; i < 5; i++) {
+        dataView.setUint8(
+          i,
+          matrix
+            .slice(i * 5, 5 + i * 5)
+            .reduce((byte, bool) => (byte << 1) | (bool ? 1 : 0), 0),
+        );
+      }
+      return outputCharacteristics.matrix.writeValue(dataView);
+    });
+  };
+
+  /**
+   * Sends a message through UART
+   * @param type The type of UART message, i.e 'g' for gesture and 's' for sound
+   * @param value The message
+   */
+  sendToOutputUart = (type: UARTMessageType, value: string): void => {
+    this.queueAction(outputCharacteristics => {
+      const view = MBSpecs.Utility.messageToDataview(`${type}_${value}`);
+      return outputCharacteristics.uart.writeValue(view);
+    });
+  };
+
+  queueAction = (
+    action: (outputCharacteristics: OutputCharacteristics) => Promise<void>,
+  ) => {
+    this.actionQueue.queue.push(action);
+    this.processActionQueue();
+  };
+
+  processActionQueue = () => {
+    if (!this.outputCharacteristics) {
+      // We've become disconnected before processing all actions.
+      this.actionQueue = {
+        busy: false,
+        queue: [],
+      };
+      return;
+    }
+    if (this.actionQueue.busy) {
+      return;
+    }
+    const action = this.actionQueue.queue.pop();
+    this.actionQueue.busy = !!action;
+    if (action) {
+      action(this.outputCharacteristics).then(
+        () => this.processActionQueue(),
+        // Do we want to keep going if we hit errors?
+        // What did it do previously?
+        () => this.processActionQueue(),
+      );
+    }
+  };
+}
 
 export const startBluetoothConnection = async (
   name: string,
   requestState: DeviceRequestStates,
-  existingDevice: BluetoothDevice | undefined,
-): Promise<BluetoothConnectionResult> => {
-  let device: BluetoothDevice | undefined;
-  if (!existingDevice) {
-    device = await requestBluetoothDevice(name);
-    if (!device) {
-      stateOnFailedToConnect(requestState);
-      return {
-        success: false,
-      };
-    }
-  } else {
-    device = existingDevice;
-  }
-
-  const disconnectListener = createDisconnectListener(device, requestState);
-  disconnectListeners[requestState] = disconnectListener;
-  device.addEventListener('gattserverdisconnected', disconnectListener);
-  try {
-    const { gattServer, microbitVersion } = await connectBluetoothDevice(
-      device,
-      requestState,
-    );
-
-    if (requestState === DeviceRequestStates.INPUT) {
-      await listenToInputServices(gattServer);
-    } else {
-      await listenToOutputServices(gattServer);
-    }
-    stateOnAssigned(requestState, microbitVersion);
-    stateOnReady(requestState);
-  } catch (e) {
-    device.removeEventListener('gattserverdisconnected', disconnectListener);
+): Promise<MicrobitBluetooth | undefined> => {
+  const device = await requestDevice(name);
+  if (!device) {
     stateOnFailedToConnect(requestState);
-    return {
-      success: false,
-    };
+    return undefined;
   }
-  return {
-    success: true,
-    result: new MicrobitBluetooth(name, device),
-  };
+  try {
+    const bluetooth = new MicrobitBluetooth(name, device);
+    await bluetooth.connect(requestState);
+    return bluetooth;
+  } catch (e) {
+    return undefined;
+  }
 };
 
-const requestBluetoothDevice = async (
-  name: string,
-): Promise<BluetoothDevice | undefined> => {
+const requestDevice = async (name: string): Promise<BluetoothDevice | undefined> => {
   try {
     return navigator.bluetooth.requestDevice({
       filters: [{ namePrefix: `BBC micro:bit [${name}]` }],
@@ -131,387 +353,6 @@ const requestBluetoothDevice = async (
     });
   } catch (e) {
     isDevMode && console.error('Error logging:', e);
+    return undefined;
   }
-};
-
-interface ConnectBluetoothDeviceReturn {
-  gattServer: BluetoothRemoteGATTServer;
-  microbitVersion: MBSpecs.MBVersion;
-}
-
-const connectBluetoothDevice = async (
-  device: BluetoothDevice,
-  requestState: DeviceRequestStates,
-): Promise<ConnectBluetoothDeviceReturn> => {
-  if (device.gatt === undefined) {
-    console.warn('Missing gatt server on microbit device:', device);
-    throw new Error('BluetoothRemoteGATTServer for microbit device is undefined');
-  }
-  try {
-    const gattServer = await device.gatt.connect();
-    const microbitVersion = await MBSpecs.Utility.getModelNumber(gattServer);
-    stateOnConnected(requestState);
-    return {
-      gattServer,
-      microbitVersion,
-    };
-  } catch (e) {
-    if (device.gatt !== undefined) {
-      // In case bluetooth was connected but some other error occurs.
-      // Disconnect bluetooth to keep consistent state.
-      device.gatt.disconnect();
-    }
-    throw new Error('Failed to establish a connection!');
-  }
-};
-
-export const disconnectBluetoothDevice = (
-  device: BluetoothDevice,
-  requestState: DeviceRequestStates,
-  userDisconnect: boolean,
-) => {
-  stateOnDisconnected(requestState, userDisconnect);
-  const disconnectListener = disconnectListeners[requestState];
-  if (disconnectListener) {
-    device.removeEventListener('gattserverdisconnected', disconnectListener);
-    disconnectListeners[requestState] = undefined;
-  }
-  device.gatt?.disconnect();
-  clearBluetoothServiceActionQueue();
-  clearOutputFunctions();
-};
-
-const createDisconnectListener = (
-  device: BluetoothDevice,
-  requestState: DeviceRequestStates,
-) => {
-  return () => disconnectListener(device, requestState);
-};
-
-const attemptReconnect = async (
-  device: BluetoothDevice,
-  requestState: DeviceRequestStates,
-): Promise<void> => {
-  if (device.gatt) {
-    const { gattServer, microbitVersion } = await connectBluetoothDevice(
-      device,
-      requestState,
-    );
-    if (requestState === DeviceRequestStates.INPUT) {
-      await listenToInputServices(gattServer);
-    }
-    stateOnAssigned(requestState, microbitVersion);
-    stateOnReady(requestState);
-  } else {
-    throw new Error('No gatt server found!');
-  }
-};
-
-const disconnectListener = async (
-  device: BluetoothDevice,
-  requestState: DeviceRequestStates,
-): Promise<void> => {
-  try {
-    await attemptReconnect(device, requestState);
-  } catch (e) {
-    isDevMode && console.error('Error logging:', e);
-    disconnectBluetoothDevice(device, requestState, false);
-  }
-};
-
-const listenToInputServices = async (
-  gattServer: BluetoothRemoteGATTServer,
-): Promise<void> => {
-  if (!gattServer.connected) {
-    throw new Error('Could not listen to services, no microbit connected!');
-  }
-  try {
-    await listenToAccelerometer(gattServer, onAccelerometerChange);
-    await listenToButton(gattServer, 'A', onButtonChange);
-    await listenToButton(gattServer, 'B', onButtonChange);
-    await listenToUART(gattServer, data =>
-      onUARTDataReceived(DeviceRequestStates.INPUT, data),
-    );
-  } catch (e) {
-    isDevMode && console.error('Error logging:', e);
-  }
-};
-
-const listenToButton = async (
-  gattServer: BluetoothRemoteGATTServer,
-  buttonToListenFor: MBSpecs.Button,
-  onButtonChanged: (state: MBSpecs.ButtonState, button: MBSpecs.Button) => void,
-): Promise<void> => {
-  const buttonService = await gattServer.getPrimaryService(
-    MBSpecs.Services.BUTTON_SERVICE,
-  );
-
-  // Select the correct characteristic to listen to.
-  const UUID =
-    buttonToListenFor === 'A'
-      ? MBSpecs.Characteristics.BUTTON_A
-      : MBSpecs.Characteristics.BUTTON_B;
-  const buttonCharacteristic = await buttonService.getCharacteristic(UUID);
-
-  await buttonCharacteristic.startNotifications();
-
-  buttonCharacteristic.addEventListener('characteristicvaluechanged', (event: Event) => {
-    const target = event.target as CharacteristicDataTarget;
-    const stateId = target.value.getUint8(0);
-    let state = MBSpecs.ButtonStates.Released;
-    if (stateId === 1) {
-      state = MBSpecs.ButtonStates.Pressed;
-    }
-    if (stateId === 2) {
-      state = MBSpecs.ButtonStates.LongPressed;
-    }
-    onButtonChanged(state, buttonToListenFor);
-  });
-};
-
-const listenToAccelerometer = async (
-  gattServer: BluetoothRemoteGATTServer,
-  onAccelerometerChanged: (x: number, y: number, z: number) => void,
-): Promise<void> => {
-  const accelerometerService = await gattServer.getPrimaryService(
-    MBSpecs.Services.ACCEL_SERVICE,
-  );
-  const accelerometerCharacteristic = await accelerometerService.getCharacteristic(
-    MBSpecs.Characteristics.ACCEL_DATA,
-  );
-  await accelerometerCharacteristic.startNotifications();
-  accelerometerCharacteristic.addEventListener(
-    'characteristicvaluechanged',
-    (event: Event) => {
-      const target = event.target as CharacteristicDataTarget;
-      const x = target.value.getInt16(0, true);
-      const y = target.value.getInt16(2, true);
-      const z = target.value.getInt16(4, true);
-      onAccelerometerChanged(x, y, z);
-    },
-  );
-};
-
-const listenToUART = async (
-  gattServer: BluetoothRemoteGATTServer,
-  onDataReceived: (data: string) => void,
-): Promise<void> => {
-  const uartService = await gattServer.getPrimaryService(MBSpecs.Services.UART_SERVICE);
-  const uartTXCharacteristic = await uartService.getCharacteristic(
-    MBSpecs.Characteristics.UART_DATA_TX,
-  );
-
-  await uartTXCharacteristic.startNotifications();
-
-  uartTXCharacteristic.addEventListener('characteristicvaluechanged', (event: Event) => {
-    // Convert the data to a string.
-    const receivedData: number[] = [];
-    const target = event.target as CharacteristicDataTarget;
-    for (let i = 0; i < target.value.byteLength; i += 1) {
-      receivedData[i] = target.value.getUint8(i);
-    }
-    const receivedString = String.fromCharCode.apply(null, receivedData);
-    onDataReceived(receivedString);
-  });
-};
-
-const outputNotReady = (resetPins: boolean = false) => {
-  // Reset pins being called before output ready previous bug from existing code.
-  if (!resetPins) {
-    isDevMode &&
-      console.error('Attempted to access output device services without output ready');
-  }
-  return;
-};
-
-interface SendToOutput {
-  sendToOutputUart: (() => void) | ((type: UARTMessageType, value: string) => void);
-  setOutputMatrix: (() => void) | ((matrix: boolean[]) => void);
-  sendToOutputPin:
-    | (() => void)
-    | ((data: { pin: MBSpecs.UsableIOPin; on: boolean }[]) => void);
-  resetIOPins: () => void;
-}
-
-export const sendToOutput: SendToOutput = {
-  sendToOutputUart: outputNotReady,
-  setOutputMatrix: outputNotReady,
-  sendToOutputPin: outputNotReady,
-  resetIOPins: () => outputNotReady(true),
-};
-
-const listenToOutputServices = async (
-  gattServer: BluetoothRemoteGATTServer,
-): Promise<void> => {
-  if (!gattServer.connected) {
-    throw new Error('Could not listen to services, no microbit connected!');
-  }
-  const ioService = await gattServer.getPrimaryService(MBSpecs.Services.IO_SERVICE);
-  const outputIO = await ioService.getCharacteristic(MBSpecs.Characteristics.IO_DATA);
-  const ledService = await gattServer.getPrimaryService(MBSpecs.Services.IO_SERVICE);
-  const outputMatrix = await ledService.getCharacteristic(
-    MBSpecs.Characteristics.LED_MATRIX_STATE,
-  );
-  const uartService = await gattServer.getPrimaryService(MBSpecs.Services.UART_SERVICE);
-  const outputUart = await uartService.getCharacteristic(
-    MBSpecs.Characteristics.UART_DATA_RX,
-  );
-
-  sendToOutput['sendToOutputPin'] = (data: { pin: MBSpecs.UsableIOPin; on: boolean }[]) =>
-    sendToOutputPin(outputIO, data);
-  sendToOutput['resetIOPins'] = () => resetIOPins(outputIO);
-  sendToOutput['setOutputMatrix'] = (matrix: boolean[]) =>
-    setOutputMatrix(outputMatrix, matrix);
-  sendToOutput['sendToOutputUart'] = (type: UARTMessageType, value: string) =>
-    sendToOutputUart(outputUart, type, value);
-
-  try {
-    await listenToUART(gattServer, data =>
-      onUARTDataReceived(DeviceRequestStates.OUTPUT, data),
-    );
-  } catch (e) {
-    isDevMode && console.error('Error logging:', e);
-  }
-};
-
-const clearOutputFunctions = () => {
-  sendToOutput['sendToOutputUart'] = outputNotReady;
-  sendToOutput['setOutputMatrix'] = outputNotReady;
-  sendToOutput['sendToOutputPin'] = outputNotReady;
-  sendToOutput['resetIOPins'] = () => outputNotReady(true);
-};
-
-const sendIOPinMessage = (
-  outputIO: BluetoothRemoteGATTCharacteristic,
-  data: { pin: MBSpecs.UsableIOPin; on: boolean },
-): void => {
-  const dataView = new DataView(new ArrayBuffer(2));
-  dataView.setInt8(0, data.pin);
-  dataView.setInt8(1, data.on ? 1 : 0);
-  outputting.set({ text: `Turn pin ${data.pin} ${data.on ? 'on' : 'off'}` });
-  addToServiceActionQueue(outputIO, dataView);
-};
-
-const sendToOutputPin = (
-  outputIO: BluetoothRemoteGATTCharacteristic,
-  data: { pin: MBSpecs.UsableIOPin; on: boolean }[],
-): void => {
-  const ioPinMessages = new Map<MBSpecs.UsableIOPin, number>();
-  for (const msg of data) {
-    // Initialise
-    ioPinMessages.set(msg.pin, 0);
-    const currentPinValue: number = ioPinMessages.get(msg.pin)!;
-    const deltaValue = msg.on ? 1 : -1;
-    ioPinMessages.set(msg.pin, Math.max(0, currentPinValue + deltaValue));
-  }
-  for (const [key, value] of ioPinMessages) {
-    sendIOPinMessage(outputIO, { pin: key, on: value !== 0 });
-  }
-};
-
-const resetIOPins = (outputIO: BluetoothRemoteGATTCharacteristic) => {
-  StaticConfiguration.supportedPins.forEach(value => {
-    sendIOPinMessage(outputIO, { pin: value, on: false });
-  });
-};
-
-const subarray = <T>(arr: T[], start: number, end: number): T[] => {
-  const newArr: T[] = [];
-  for (let i = start; i < end; i++) {
-    newArr.push(arr[i]);
-  }
-  return newArr;
-};
-
-const setOutputMatrix = (
-  outputMatrix: BluetoothRemoteGATTCharacteristic,
-  matrix: boolean[],
-): void => {
-  const dataView = new DataView(new ArrayBuffer(5));
-  for (let i = 0; i < 5; i++) {
-    dataView.setUint8(
-      i,
-      subarray(matrix, i * 5, 5 + i * 5).reduce(
-        (byte, bool) => (byte << 1) | (bool ? 1 : 0),
-        0,
-      ),
-    );
-  }
-  addToServiceActionQueue(outputMatrix, dataView);
-};
-
-/**
- * Sends a message through UART
- * @param type The type of UART message, i.e 'g' for gesture and 's' for sound
- * @param value The message
- */
-const sendToOutputUart = (
-  outputUart: BluetoothRemoteGATTCharacteristic,
-  type: UARTMessageType,
-  value: string,
-): void => {
-  const view = MBSpecs.Utility.messageToDataview(`${type}_${value}`);
-  addToServiceActionQueue(outputUart, view);
-};
-
-const addToServiceActionQueue = (
-  service: BluetoothRemoteGATTCharacteristic,
-  view: DataView,
-) => {
-  bluetoothServiceActionQueue.update(update => {
-    update.queue.push({ service, view });
-    return update;
-  });
-  processServiceActionQueue();
-};
-
-const processServiceActionQueue = () => {
-  if (
-    get(bluetoothServiceActionQueue).busy ||
-    get(bluetoothServiceActionQueue).queue.length == 0
-  )
-    return;
-  get(bluetoothServiceActionQueue).busy = true;
-  const { service, view } = get(bluetoothServiceActionQueue).queue.shift() ?? {
-    service: undefined,
-    view: undefined,
-  };
-  if (service === undefined) {
-    throw new Error(
-      'Could not process the service queue, an element in the queue was not provided with a service to execute on.',
-    );
-  }
-
-  service
-    .writeValue(view)
-    .then(() => {
-      get(bluetoothServiceActionQueue).busy = false;
-      processServiceActionQueue();
-    })
-    .catch(err => {
-      // Catches a characteristic not found error, preventing further output.
-      // Why does this happens is not clear
-      console.error(err);
-      if (err) {
-        if ((err as DOMException).message.includes('GATT Service no longer exists')) {
-          // TODO: This is a bit of a tangled mess.
-          // listenToOutputServices()
-          //   .then(() => {
-          //     console.log('Attempted to fix missing gatt!');
-          //   })
-          //   .catch(() => {
-          //     console.error(
-          //       'Failed to fix missing GATT service issue. Uncharted territory',
-          //     );
-          //   });
-        }
-      }
-
-      get(bluetoothServiceActionQueue).busy = false;
-      processServiceActionQueue();
-    });
-};
-
-const clearBluetoothServiceActionQueue = () => {
-  bluetoothServiceActionQueue.set({ busy: false, queue: [] });
 };
