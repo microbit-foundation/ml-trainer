@@ -44,6 +44,9 @@ export class MicrobitBluetooth implements MicrobitConnection {
 
   private outputCharacteristics: OutputCharacteristics | undefined;
 
+  // Used to avoid automatic reconnection for user triggered disconnects.
+  private duringUserDisconnect: boolean = false;
+
   private actionQueue: {
     busy: boolean;
     queue: Array<(outputCharacteristics: OutputCharacteristics) => Promise<void>>;
@@ -57,6 +60,11 @@ export class MicrobitBluetooth implements MicrobitConnection {
     public readonly device: BluetoothDevice,
   ) {
     device.addEventListener('gattserverdisconnected', this.handleDisconnectEvent);
+  }
+
+  // mth: Let's use this when we no longer care about this micro:bit at all.
+  dispose() {
+    this.device.removeEventListener('gattserverdisconnected', this.handleDisconnectEvent);
   }
 
   async connect(...states: DeviceRequestStates[]): Promise<void> {
@@ -91,23 +99,29 @@ export class MicrobitBluetooth implements MicrobitConnection {
     this.actionQueue = { busy: false, queue: [] };
 
     this.inUseAs.forEach(value => stateOnDisconnected(value, userDisconnect));
-    this.device.removeEventListener('gattserverdisconnected', this.handleDisconnectEvent);
-    this.device.gatt?.disconnect();
+    this.duringUserDisconnect = true;
+    try {
+      this.device.gatt?.disconnect();
+    } finally {
+      this.duringUserDisconnect = false;
+    }
   }
 
   async reconnect(): Promise<void> {
     const as = Array.from(this.inUseAs);
-    await this.disconnect(false);
+    await this.disconnect(true);
     await this.connect(...as);
   }
 
   // Hmm
   handleDisconnectEvent = async (): Promise<void> => {
     try {
-      await this.connect(...this.inUseAs);
+      if (!this.duringUserDisconnect) {
+        this.inUseAs.forEach(s => stateOnDisconnected(s, false));
+        await this.connect(...this.inUseAs);
+      }
     } catch (e) {
-      isDevMode && console.error('Error logging:', e);
-      this.disconnect(false);
+      // This is a best effort reconnection; UI state will have been updated.
     }
   };
 
