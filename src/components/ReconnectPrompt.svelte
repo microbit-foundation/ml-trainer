@@ -24,64 +24,64 @@
     stopOfferingReconnect();
   };
 
-  const content = {
-    heading: '',
-    subtitle: '',
-    listHeading: '',
-    bulletOne: '',
-    bulletTwo: '',
-  };
-
-  const textIdPrefix =
-    trigger === 'automatic' ? 'disconnectedWarning' : 'reconnectFailed';
-
-  switch (type) {
-    case 'bluetooth': {
-      content.heading =
-        trigger === 'automatic'
-          ? `disconnectedWarning.bluetoothHeading`
-          : 'reconnectFailed.bluetoothHeading';
-      content.subtitle =
-        trigger === 'automatic'
-          ? `disconnectedWarning.bluetooth1`
-          : 'reconnectFailed.bluetooth1';
-      content.listHeading = 'disconnectedWarning.bluetooth2';
-      content.bulletOne = 'disconnectedWarning.bluetooth3';
-      content.bulletTwo = 'disconnectedWarning.bluetooth4';
-      break;
+  const content = (() => {
+    switch (type) {
+      case 'bluetooth': {
+        return {
+          heading:
+            trigger === 'automatic'
+              ? `disconnectedWarning.bluetoothHeading`
+              : 'reconnectFailed.bluetoothHeading',
+          subtitle:
+            trigger === 'automatic'
+              ? `disconnectedWarning.bluetooth1`
+              : 'reconnectFailed.bluetooth1',
+          listHeading: 'disconnectedWarning.bluetooth2',
+          bulletOne: 'disconnectedWarning.bluetooth3',
+          bulletTwo: 'disconnectedWarning.bluetooth4',
+        };
+      }
+      case 'bridge': {
+        return {
+          heading:
+            trigger === 'automatic'
+              ? `disconnectedWarning.bridgeHeading`
+              : 'reconnectFailed.bridgeHeading',
+          subtitle:
+            trigger === 'automatic'
+              ? `disconnectedWarning.bridge1`
+              : 'reconnectFailed.bridge1',
+          listHeading: 'connectMB.usbTryAgain.replugMicrobit2',
+          bulletOne: 'connectMB.usbTryAgain.replugMicrobit3',
+          bulletTwo: 'connectMB.usbTryAgain.replugMicrobit4',
+        };
+      }
+      case 'remote': {
+        return {
+          heading:
+            trigger === 'automatic'
+              ? `disconnectedWarning.remoteHeading`
+              : 'reconnectFailed.remoteHeading',
+          subtitle:
+            trigger === 'automatic'
+              ? `disconnectedWarning.remote1`
+              : 'reconnectFailed.remote1',
+          listHeading: 'disconnectedWarning.bluetooth2',
+          bulletOne: 'disconnectedWarning.bluetooth3',
+          bulletTwo: 'disconnectedWarning.bluetooth4',
+        };
+      }
+      default: {
+        return {
+          heading: 'disconnectedWarning}.bluetoothHeading',
+          subtitle: '',
+          listHeading: '',
+          bulletOne: '',
+          bulletTwo: '',
+        };
+      }
     }
-    case 'bridge': {
-      content.heading =
-        trigger === 'automatic'
-          ? `disconnectedWarning.bridgeHeading`
-          : 'reconnectFailed.bridgeHeading';
-      content.subtitle =
-        trigger === 'automatic'
-          ? `disconnectedWarning.bridge1`
-          : 'reconnectFailed.bridge1';
-      content.listHeading = 'connectMB.usbTryAgain.replugMicrobit2';
-      content.bulletOne = 'connectMB.usbTryAgain.replugMicrobit3';
-      content.bulletTwo = 'connectMB.usbTryAgain.replugMicrobit4';
-      break;
-    }
-    case 'remote': {
-      content.heading =
-        trigger === 'automatic'
-          ? `disconnectedWarning.remoteHeading`
-          : 'reconnectFailed.remoteHeading';
-      content.subtitle =
-        trigger === 'automatic'
-          ? `disconnectedWarning.remote1`
-          : 'reconnectFailed.remote1';
-      content.listHeading = 'disconnectedWarning.bluetooth2';
-      content.bulletOne = 'disconnectedWarning.bluetooth3';
-      content.bulletTwo = 'disconnectedWarning.bluetooth4';
-      break;
-    }
-    default: {
-      content.heading = `${textIdPrefix}.bluetoothHeading`;
-    }
-  }
+  })();
 </script>
 
 <StandardDialog
