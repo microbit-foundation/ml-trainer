@@ -141,10 +141,7 @@
       const sound = new Audio(selectedSound.path);
       void sound.play();
     } else {
-      // mth: Can we encapsulate the todo below? Remove uart related methods in favour of sound related ones.
       Microbits.getOutputMicrobit().sendToOutputUart('s', selectedSound.id);
-      // TODO: sendLegacySoundMessage
-      // void Microbits.sendUARTSoundMessageToOutput(selectedSound.id);
     }
   }
 
