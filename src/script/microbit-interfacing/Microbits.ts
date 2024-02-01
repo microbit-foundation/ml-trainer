@@ -4,11 +4,15 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { DeviceRequestStates } from '../stores/connectDialogStore';
+import {
+  DeviceRequestStates,
+  startConnectionProcess,
+} from '../stores/connectDialogStore';
 import MicrobitConnection from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
 import { MicrobitBluetooth, startBluetoothConnection } from './microbit-bluetooth';
 import { startSerialConnection } from './microbit-serial';
+import { stateOnStopOfferingReconnect } from './state-updaters';
 
 export enum HexOrigin {
   UNKNOWN,
@@ -79,19 +83,16 @@ class Microbits {
     }
   }
 
-  public static async reconnect(requestState: DeviceRequestStates) {
-    if (requestState === DeviceRequestStates.INPUT && this.inputMicrobit) {
-      await this.inputMicrobit.reconnect();
+  public static async reconnect(
+    requestState: DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT,
+  ) {
+    try {
+      await this.getMicrobit(requestState)?.reconnect();
+    } catch (e) {
+      startConnectionProcess();
+    } finally {
+      stateOnStopOfferingReconnect();
     }
-    if (requestState === DeviceRequestStates.OUTPUT && this.outputMicrobit) {
-      await this.outputMicrobit.reconnect();
-    }
-  }
-
-  private static getMicrobit(
-    state: DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT,
-  ): MicrobitConnection | undefined {
-    return state === DeviceRequestStates.INPUT ? this.inputMicrobit : this.outputMicrobit;
   }
 
   public static async disconnect(
@@ -102,7 +103,12 @@ class Microbits {
     return this.getMicrobit(requestState)?.disconnect(true);
   }
 
-  // Can we kill this?
+  private static getMicrobit(
+    state: DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT,
+  ): MicrobitConnection | undefined {
+    return state === DeviceRequestStates.INPUT ? this.inputMicrobit : this.outputMicrobit;
+  }
+
   public static async disconnectInputAndOutput() {
     await this.disconnect(DeviceRequestStates.INPUT);
     await this.disconnect(DeviceRequestStates.OUTPUT);

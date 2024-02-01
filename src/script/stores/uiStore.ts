@@ -5,17 +5,17 @@
  */
 
 import { get, writable } from 'svelte/store';
-import {
-  type CompatibilityStatus,
-  checkCompatibility,
-} from '../compatibility/CompatibilityChecker';
 import { t } from '../../i18n';
-import { DeviceRequestStates } from './connectDialogStore';
 import CookieManager from '../CookieManager';
-import { isInputPatternValid } from './connectionStore';
-import { gestures } from './Stores';
-import { HexOrigin } from '../microbit-interfacing/Microbits';
+import {
+  checkCompatibility,
+  type CompatibilityStatus,
+} from '../compatibility/CompatibilityChecker';
 import MBSpecs from '../microbit-interfacing/MBSpecs';
+import { HexOrigin } from '../microbit-interfacing/Microbits';
+import { gestures } from './Stores';
+import { DeviceRequestStates } from './connectDialogStore';
+import { isInputPatternValid } from './connectionStore';
 
 // TODO: Rename? Split up further?
 

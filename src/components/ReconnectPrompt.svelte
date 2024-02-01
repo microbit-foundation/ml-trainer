@@ -6,12 +6,12 @@
 
 <script lang="ts">
   import StandardButton from '../components/StandardButton.svelte';
-  import { state } from '../script/stores/uiStore';
   import { t } from '../i18n';
-  import { DeviceRequestStates } from '../script/stores/connectDialogStore';
-  import StandardDialog from './dialogs/StandardDialog.svelte';
-  import { startConnectionProcess } from '../script/stores/connectDialogStore';
   import Microbits from '../script/microbit-interfacing/Microbits';
+  import { stateOnStopOfferingReconnect } from '../script/microbit-interfacing/state-updaters';
+  import { DeviceRequestStates } from '../script/stores/connectDialogStore';
+  import { state } from '../script/stores/uiStore';
+  import StandardDialog from './dialogs/StandardDialog.svelte';
 
   export let isOpen: boolean = false;
 
@@ -26,21 +26,14 @@
           buttonId: 'disconnectedWarning.reconnectButton.output',
         };
 
-  const stopOfferingReconnect = () => {
-    $state.offerReconnect = false;
-  };
   const reconnect = async () => {
-    try {
-      await Microbits.reconnect($state.reconnectState);
-    } catch (e) {
-      startConnectionProcess();
-    } finally {
-      stopOfferingReconnect();
+    if ($state.reconnectState !== DeviceRequestStates.NONE) {
+      return Microbits.reconnect($state.reconnectState);
     }
   };
 </script>
 
-<StandardDialog {isOpen} onClose={stopOfferingReconnect} class="w-110">
+<StandardDialog {isOpen} onClose={stateOnStopOfferingReconnect} class="w-110">
   <svelte:fragment slot="heading">
     {$t('disconnectedWarning.heading')}
   </svelte:fragment>

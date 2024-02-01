@@ -150,6 +150,13 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
   }
 };
 
+export const stateOnStopOfferingReconnect = () => {
+  state.update(s => {
+    s.offerReconnect = false;
+    return s;
+  });
+};
+
 export const stateOnVersionIdentified = (
   requestState: DeviceRequestStates,
   value: number,
