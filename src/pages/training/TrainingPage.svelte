@@ -6,7 +6,7 @@
 
 <script lang="ts">
   import { hasSufficientData, state } from '../../script/stores/uiStore';
-  import { TrainingStatus, trainingStatus } from '../../script/stores/mlStore';
+  import { trainingStatus } from '../../script/stores/mlStore';
   import { t } from '../../i18n';
   import TrainingButton from './TrainingButton.svelte';
   import TabView from '../../views/TabView.svelte';
@@ -17,6 +17,7 @@
   import TrainingStatusSection from '../../components/TrainingStatusSection.svelte';
   import LoadingBar from '../../components/LoadingBar.svelte';
   import StandardDialog from '../../components/dialogs/StandardDialog.svelte';
+  import { TrainingStatus } from '../../script/domain/Model';
 
   function navigateModelPage(): void {
     navigate(Paths.MODEL);

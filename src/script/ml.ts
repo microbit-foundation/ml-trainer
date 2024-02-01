@@ -12,7 +12,6 @@ import {
   getPrevData,
   model,
   settings,
-  TrainingStatus,
   trainingStatus,
 } from './stores/mlStore';
 import { FilterType, Axes, determineFilter, AxesType } from './datafunctions';
@@ -23,6 +22,7 @@ import { LayersModel, SymbolicTensor, Tensor } from '@tensorflow/tfjs';
 import { gestures } from './stores/Stores';
 import Repositories from './repository/Repositories';
 import { getPrediction } from './getPrediction';
+import { TrainingStatus } from './domain/Model';
 
 let text: (key: string, vars?: object) => string;
 t.subscribe(t => (text = t));

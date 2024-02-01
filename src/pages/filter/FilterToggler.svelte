@@ -7,7 +7,8 @@
 <script lang="ts">
   import Information from '../../components/information/Information.svelte';
   import { FilterType, determineFilter } from '../../script/datafunctions';
-  import { settings, trainingStatus, TrainingStatus } from '../../script/stores/mlStore';
+  import { TrainingStatus } from '../../script/domain/Model';
+  import { settings, trainingStatus } from '../../script/stores/mlStore';
   import D3Plot from './D3Plot.svelte';
 
   export let filter: FilterType;

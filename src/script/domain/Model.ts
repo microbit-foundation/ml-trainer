@@ -11,10 +11,16 @@ import {
   get,
   writable,
 } from 'svelte/store';
-import { TrainingStatus } from '../stores/mlStore';
-import MLModel from './MLModel';
 import { TrainerConsumer } from '../repository/ClassifierRepository';
+import MLModel from './MLModel';
 import ModelTrainer from './ModelTrainer';
+
+export enum TrainingStatus {
+  Untrained,
+  InProgress,
+  Success,
+  Failure,
+}
 
 export enum ModelType {
   LAYERS,

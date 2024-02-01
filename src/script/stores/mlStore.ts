@@ -14,6 +14,7 @@ import MBSpecs from '../microbit-interfacing/MBSpecs';
 import { PersistantGestureData } from '../domain/Gestures';
 import Gesture, { GestureID } from '../domain/Gesture';
 import { gestures } from './Stores';
+import { TrainingStatus } from '../domain/Model';
 
 export type RecordingData = {
   ID: number;
@@ -96,13 +97,6 @@ export type LiveData = {
   smoothedAccelY: number;
   smoothedAccelZ: number;
 };
-
-export enum TrainingStatus {
-  Untrained,
-  InProgress,
-  Success,
-  Failure,
-}
 
 type MlSettings = {
   duration: number; // Duration of recording
