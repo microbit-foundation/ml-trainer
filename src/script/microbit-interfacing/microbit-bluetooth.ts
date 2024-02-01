@@ -243,7 +243,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
   // pins).
   private pinStateCounters = new Map<MBSpecs.UsableIOPin, number>();
 
-  setPins(pin: MBSpecs.UsableIOPin, on: boolean): void {
+  setPin(pin: MBSpecs.UsableIOPin, on: boolean): void {
     let stateCounter = this.pinStateCounters.get(pin) ?? 0;
     stateCounter = stateCounter + (on ? 1 : -1);
     // Has it transitioned to off or on?

@@ -8,7 +8,7 @@ import { DeviceRequestStates } from '../stores/connectDialogStore';
 import MicrobitConnection from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
 import { MicrobitBluetooth, startBluetoothConnection } from './microbit-bluetooth';
-import { MicrobitSerial, startSerialConnection } from './microbit-serial';
+import { startSerialConnection } from './microbit-serial';
 
 export enum HexOrigin {
   UNKNOWN,
