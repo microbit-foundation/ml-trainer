@@ -19,77 +19,30 @@ import {
 } from './state-updaters';
 
 export class MicrobitSerial implements MicrobitConnection {
+  private responseMap = new Map<
+    number,
+    (value: protocol.MessageResponse | PromiseLike<protocol.MessageResponse>) => void
+  >();
+
+  // TODO: The radio frequency should be randomly generated once per session.
+  //       If we want a session to be restored (e.g. from local storage) and
+  //       the previously flashed micro:bits to continue working without
+  //       reflashing we need to store and retrieve this value somehow.
+  // FIXME: Setting this to the hex files default value for now, as we need
+  //        to configure the radio frequency for both micro:bits after they
+  //        are flashed, not just the radio bridge.
+  private sessionRadioFrequency = 42;
+
   constructor(private usb: MicrobitUSB) {}
 
   async connect(...states: DeviceRequestStates[]): Promise<void> {
     let unprocessedData = '';
     let previousButtonState = { A: 0, B: 0 };
-    // TODO: The radio frequency should be randomly generated once per session.
-    //       If we want a session to be restored (e.g. from local storage) and
-    //       the previously flashed micro:bits to continue working without
-    //       reflashing we need to store and retrieve this value somehow.
-    // FIXME: Setting this to the hex files default value for now, as we need
-    //        to configure the radio frequency for both micro:bits after they
-    //        are flashed, not just the radio bridge.
-    let sessionRadioFrequency = 42;
-    const responseMap = new Map<
-      number,
-      (value: protocol.MessageResponse | PromiseLike<protocol.MessageResponse>) => void
-    >();
-    const sendCmdWaitResponse = async (
-      cmd: protocol.MessageCmd,
-    ): Promise<protocol.MessageResponse> => {
-      const responsePromise = new Promise<protocol.MessageResponse>((resolve, reject) => {
-        responseMap.set(cmd.messageId, resolve);
-        setTimeout(() => {
-          responseMap.delete(cmd.messageId);
-          reject(new Error(`Timeout waiting for response ${cmd.messageId}`));
-        }, 1_000);
-      });
-      await this.usb.serialWrite(cmd.message);
-      return responsePromise;
-    };
 
-    const handshake = async (): Promise<void> => {
-      // There is an issue where we cannot read data out from the micro:bit serial
-      // buffer until the buffer has been filled.
-      // As a workaround we can spam the micro:bit with handshake messages until
-      // enough responses have been queued in the buffer to fill it and the data
-      // starts to flow.
-      const handshakeResult = await new Promise<protocol.MessageResponse>(
-        async (resolve, reject) => {
-          const attempts = 20;
-          let attemptCounter = 0;
-          let failureCounter = 0;
-          let resolved = false;
-          while (attemptCounter < 20 && !resolved) {
-            attemptCounter++;
-            sendCmdWaitResponse(protocol.generateCmdHandshake())
-              .then(value => {
-                if (!resolved) {
-                  resolved = true;
-                  resolve(value);
-                }
-              })
-              .catch(() => {
-                // We expect some to time out, likely well after the handshake is completed.
-                if (!resolved) {
-                  if (++failureCounter === attempts) {
-                    reject(new Error('Handshake not completed'));
-                  }
-                }
-              });
-            await new Promise(resolve => setTimeout(resolve, 100));
-          }
-        },
-      );
-      if (handshakeResult.value !== protocol.version) {
-        throw new Error(
-          `Handshake failed. Unexpected protocol version ${protocol.version}`,
-        );
-      }
+    const handleError = (e: unknown) => {
+      console.error(e);
+      void this.disconnect(false);
     };
-
     const processMessage = (data: string) => {
       const messages = protocol.splitMessages(unprocessedData + data);
       unprocessedData = messages.remainingInput;
@@ -115,24 +68,27 @@ export class MicrobitSerial implements MicrobitConnection {
           if (!messageResponse) {
             return;
           }
-          const responseResolve = responseMap.get(messageResponse.messageId);
+          const responseResolve = this.responseMap.get(messageResponse.messageId);
           if (responseResolve) {
-            responseMap.delete(messageResponse.messageId);
+            this.responseMap.delete(messageResponse.messageId);
             responseResolve(messageResponse);
           }
         }
       });
     };
-    await this.usb.startSerial(processMessage);
     try {
-      await handshake();
+      await this.usb.startSerial(processMessage, handleError);
+      await this.handshake();
+      stateOnConnected(DeviceRequestStates.INPUT);
 
       // Set the radio frequency to a value unique to this session
-      const radioFreqCommand = protocol.generateCmdRadioFrequency(sessionRadioFrequency);
-      const radioFreqResponse = await sendCmdWaitResponse(radioFreqCommand);
-      if (radioFreqResponse.value !== sessionRadioFrequency) {
+      const radioFreqCommand = protocol.generateCmdRadioFrequency(
+        this.sessionRadioFrequency,
+      );
+      const radioFreqResponse = await this.sendCmdWaitResponse(radioFreqCommand);
+      if (radioFreqResponse.value !== this.sessionRadioFrequency) {
         throw new Error(
-          `Failed to set radio frequency. Expected ${sessionRadioFrequency}, got ${radioFreqResponse.value}`,
+          `Failed to set radio frequency. Expected ${this.sessionRadioFrequency}, got ${radioFreqResponse.value}`,
         );
       }
 
@@ -144,15 +100,21 @@ export class MicrobitSerial implements MicrobitConnection {
           buttons: true,
         });
         await this.usb.serialWrite(startCmd.message);
+        await this.sendCmdWaitResponse(startCmd);
       }
+
+      stateOnAssigned(DeviceRequestStates.INPUT, this.usb.getModelNumber());
+      stateOnReady(DeviceRequestStates.INPUT);
     } catch (e) {
-      this.usb.stopSerial();
+      stateOnFailedToConnect(DeviceRequestStates.INPUT);
+      await this.usb.stopSerial();
       throw e;
     }
   }
 
   async disconnect(userDisconnect: boolean): Promise<void> {
     // We might want to send command to stop streaming here?
+    this.responseMap.clear();
     await this.usb.stopSerial();
     stateOnDisconnected(DeviceRequestStates.INPUT, userDisconnect);
   }
@@ -160,6 +122,60 @@ export class MicrobitSerial implements MicrobitConnection {
   async reconnect(): Promise<void> {
     await this.disconnect(false);
     await this.connect(DeviceRequestStates.INPUT);
+  }
+
+  private async sendCmdWaitResponse(
+    cmd: protocol.MessageCmd,
+  ): Promise<protocol.MessageResponse> {
+    const responsePromise = new Promise<protocol.MessageResponse>((resolve, reject) => {
+      this.responseMap.set(cmd.messageId, resolve);
+      setTimeout(() => {
+        this.responseMap.delete(cmd.messageId);
+        reject(new Error(`Timeout waiting for response ${cmd.messageId}`));
+      }, 1_000);
+    });
+    await this.usb.serialWrite(cmd.message);
+    return responsePromise;
+  }
+
+  private async handshake(): Promise<void> {
+    // There is an issue where we cannot read data out from the micro:bit serial
+    // buffer until the buffer has been filled.
+    // As a workaround we can spam the micro:bit with handshake messages until
+    // enough responses have been queued in the buffer to fill it and the data
+    // starts to flow.
+    const handshakeResult = await new Promise<protocol.MessageResponse>(
+      async (resolve, reject) => {
+        const attempts = 20;
+        let attemptCounter = 0;
+        let failureCounter = 0;
+        let resolved = false;
+        while (attemptCounter < 20 && !resolved) {
+          attemptCounter++;
+          this.sendCmdWaitResponse(protocol.generateCmdHandshake())
+            .then(value => {
+              if (!resolved) {
+                resolved = true;
+                resolve(value);
+              }
+            })
+            .catch(() => {
+              // We expect some to time out, likely well after the handshake is completed.
+              if (!resolved) {
+                if (++failureCounter === attempts) {
+                  reject(new Error('Handshake not completed'));
+                }
+              }
+            });
+          await new Promise(resolve => setTimeout(resolve, 100));
+        }
+      },
+    );
+    if (handshakeResult.value !== protocol.version) {
+      throw new Error(
+        `Handshake failed. Unexpected protocol version ${protocol.version}`,
+      );
+    }
   }
 }
 
@@ -170,13 +186,8 @@ export const startSerialConnection = async (
   try {
     const serial = new MicrobitSerial(usb);
     await serial.connect(requestState);
-    // This is the same as bluetooth!
-    stateOnAssigned(requestState, usb.getModelNumber());
-    stateOnConnected(requestState);
-    stateOnReady(requestState);
     return serial;
   } catch (e) {
-    stateOnFailedToConnect(requestState);
     return undefined;
   }
 };

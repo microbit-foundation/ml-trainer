@@ -82,6 +82,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
         // Disconnect bluetooth to keep consistent state.
         this.device.gatt.disconnect();
       }
+      states.forEach(s => stateOnFailedToConnect(s));
       throw new Error('Failed to establish a connection!');
     }
   }
@@ -326,7 +327,6 @@ export const startBluetoothConnection = async (
 ): Promise<MicrobitBluetooth | undefined> => {
   const device = await requestDevice(name);
   if (!device) {
-    stateOnFailedToConnect(requestState);
     return undefined;
   }
   try {

@@ -17,7 +17,12 @@ class MicrobitUSB {
   private readonly transport: WebUSB;
   private serialPromise: Promise<void> | undefined;
   private serialDAPLink: DAPLink | undefined;
-  private serialCallback: ((data: string) => void) | undefined;
+  private serialCallbacks:
+    | {
+        data: (data: string) => void;
+        error: (e: unknown) => void;
+      }
+    | undefined;
 
   /**
    * Creates a new MicrobitUSB object.
@@ -119,18 +124,26 @@ class MicrobitUSB {
     return Promise.resolve();
   }
 
-  public async startSerial(callback: (data: string) => void) {
+  public async startSerial(
+    dataCallback: (data: string) => void,
+    errorCallback: (e: unknown) => void,
+  ) {
     await this.transport.open();
 
-    this.serialCallback = callback;
+    this.serialCallbacks = { data: dataCallback, error: errorCallback };
     this.serialDAPLink = new DAPLink(this.transport);
     const initialBaudRate = await this.serialDAPLink.getSerialBaudrate();
-    this.serialDAPLink.addListener(DAPLink.EVENT_SERIAL_DATA, callback);
+    this.serialDAPLink.addListener(DAPLink.EVENT_SERIAL_DATA, dataCallback);
     await this.serialDAPLink.connect();
     if (initialBaudRate !== baudRate) {
       await this.serialDAPLink.setSerialBaudrate(baudRate);
     }
-    this.serialPromise = this.serialDAPLink.startSerialRead(serialDelay, false);
+    this.serialPromise = this.serialDAPLink
+      .startSerialRead(serialDelay, false)
+      .catch(e => {
+        // Indirect so we can remove the callback as part of disconnect
+        this.serialCallbacks?.error(e);
+      });
   }
 
   public async serialWrite(data: string): Promise<void> {
@@ -143,13 +156,26 @@ class MicrobitUSB {
 
   public async stopSerial() {
     if (this.serialDAPLink) {
-      if (this.serialCallback) {
-        this.serialDAPLink.removeListener(DAPLink.EVENT_SERIAL_DATA, this.serialCallback);
+      if (this.serialCallbacks) {
+        this.serialDAPLink.removeListener(
+          DAPLink.EVENT_SERIAL_DATA,
+          this.serialCallbacks.data,
+        );
+        this.serialCallbacks = undefined;
       }
       this.serialDAPLink.stopSerialRead();
-      await this.serialPromise;
+      try {
+        await this.serialPromise;
+      } catch (e) {
+        // Errors from here will be handled by the error callback
+        // in normal operation or can be ignored during disconnect.
+      }
       this.serialPromise = undefined;
-      await this.serialDAPLink.disconnect();
+      try {
+        await this.serialDAPLink.disconnect();
+      } catch (e) {
+        // If the micro:bit has gone away then this will fail.
+      }
       this.serialDAPLink = undefined;
     }
   }
