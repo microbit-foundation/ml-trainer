@@ -5,11 +5,11 @@
  -->
 
 <script lang="ts">
-  import { state } from '../../script/stores/uiStore';
-  import { currentData, settings } from '../../script/stores/mlStore';
-  import { onMount } from 'svelte';
-  import { get, type Unsubscriber } from 'svelte/store';
   import { SmoothieChart, TimeSeries } from 'smoothie';
+  import { onMount } from 'svelte';
+  import { get } from 'svelte/store';
+  import { currentData, settings } from '../../script/stores/mlStore';
+  import { state } from '../../script/stores/uiStore';
   import DimensionLabels from './DimensionLabels.svelte';
 
   // Updates width to ensure that the canvas fills the whole screen
@@ -49,6 +49,14 @@
     chart.streamTo(<HTMLCanvasElement>canvas, 0);
     return () => chart?.stop();
   });
+
+  $: {
+    if ($state.isInputConnected) {
+      chart?.start();
+    } else {
+      chart?.stop();
+    }
+  }
 
   // Draw on graph to display that users are recording
   // The jagged edges problem is caused by repeating the recordingStarted function.

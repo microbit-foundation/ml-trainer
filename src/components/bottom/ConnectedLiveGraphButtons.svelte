@@ -24,9 +24,13 @@
   };
 
   const handleInputConnect = async () => {
-    try {
-      await Microbits.reconnect(DeviceRequestStates.INPUT);
-    } catch (e) {
+    if ($state.offerReconnect) {
+      try {
+        await Microbits.reconnect(DeviceRequestStates.INPUT);
+      } catch (e) {
+        startConnectionProcess();
+      }
+    } else {
       startConnectionProcess();
     }
   };
