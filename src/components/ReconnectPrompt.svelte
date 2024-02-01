@@ -73,7 +73,7 @@
       }
       default: {
         return {
-          heading: 'disconnectedWarning}.bluetoothHeading',
+          heading: 'disconnectedWarning.bluetoothHeading',
           subtitle: '',
           listHeading: '',
           bulletOne: '',
