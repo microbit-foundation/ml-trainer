@@ -34,7 +34,6 @@
   import StandardDialog from '../components/dialogs/StandardDialog.svelte';
   import { clearGestures } from '../script/stores/mlStore';
   import { get } from 'svelte/store';
-  import introVideoPlaceholderImage from '../imgs/video-placeholder.png';
 
   const playgroundSurveyUrl =
     'https://microbit.org/teach/playground-survey/exploring-machine-learning/';
