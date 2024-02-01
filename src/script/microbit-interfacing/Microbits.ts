@@ -10,8 +10,8 @@ import {
 } from '../stores/connectDialogStore';
 import MicrobitConnection from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
-import { MicrobitBluetooth, startBluetoothConnection } from './microbit-bluetooth';
-import { startSerialConnection } from './microbit-serial';
+import { MicrobitBluetooth, startBluetoothConnection } from './MicrobitBluetooth';
+import { startSerialConnection } from './MicrobitSerial';
 import { stateOnStopOfferingReconnect } from './state-updaters';
 
 export enum HexOrigin {
