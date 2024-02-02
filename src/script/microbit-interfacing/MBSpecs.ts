@@ -212,43 +212,6 @@ namespace MBSpecs {
     ];
 
     /**
-     * Fetches the model number of the micro:bit.
-     * @param {BluetoothRemoteGATTServer} gattServer The GATT server to read from.
-     * @return {Promise<number>} The model number of the micro:bit. 1 for the original, 2 for the new.
-     */
-    public static async getModelNumber(
-      gattServer: BluetoothRemoteGATTServer,
-    ): Promise<MBSpecs.MBVersion> {
-      // TODO: Move this function to Microbit Bluetooth and add it to the MicrobitConnection interface
-      try {
-        const deviceInfo = await gattServer.getPrimaryService(
-          Services.DEVICE_INFO_SERVICE,
-        );
-
-        // TODO: Next line has been observed to fail. Proper error handling needed.
-        const modelNumber = await deviceInfo.getCharacteristic(
-          Characteristics.MODEL_NUMBER,
-        );
-
-        // Read the value and convert it to UTF-8 (as specified in the Bluetooth specification).
-        const modelNumberValue = await modelNumber.readValue();
-        const decodedModelNumber = new TextDecoder().decode(modelNumberValue);
-
-        // The model number either reads "BBC micro:bit" or "BBC micro:bit V2.0". Still unsure if those are the only cases.
-        if (decodedModelNumber.toLowerCase() === 'BBC micro:bit'.toLowerCase()) {
-          return 1;
-        }
-        if (decodedModelNumber.toLowerCase().includes('BBC micro:bit v2'.toLowerCase())) {
-          return 2;
-        }
-      } catch (e) {
-        console.log(e);
-      }
-      // Something went wrong
-      throw new Error('Could not read model number');
-    }
-
-    /**
      * Converts a micro:bit serial number to it's corresponding friendly name
      * @param {number} serialNo The serial number of the micro:bit
      * @returns {string} the name of the micro:bit.
