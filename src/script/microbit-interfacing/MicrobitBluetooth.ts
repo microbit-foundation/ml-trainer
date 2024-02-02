@@ -131,7 +131,12 @@ export class MicrobitBluetooth implements MicrobitConnection {
       try {
         const gattConnectResult = await Promise.race([
           this.gattConnectPromise,
-          new Promise<'timeout'>(resolve => setTimeout(() => resolve('timeout'), 15_000)),
+          new Promise<'timeout'>(resolve =>
+            setTimeout(
+              () => resolve('timeout'),
+              StaticConfiguration.connectTimeoutDuration,
+            ),
+          ),
         ]);
         if (gattConnectResult === 'timeout') {
           logMessage('Bluetooth GATT server connect timeout');
