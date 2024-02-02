@@ -110,16 +110,16 @@
 
     const isOnTimer = turnOnState === PinTurnOnState.X_TIME;
     if (on) {
-      Microbits.getOutputMicrobit().setPin(selectedPin, true);
+      Microbits.getOutputMicrobit()?.setPin(selectedPin, true);
       // If pin is on timer, set timeout to turn off again
       if (isOnTimer) {
         setTimeout(() => {
-          Microbits.getOutputMicrobit().setPin(selectedPin, false);
+          Microbits.getOutputMicrobit()?.setPin(selectedPin, false);
         }, turnOnTime);
       }
     } else if (!isOnTimer) {
       // else if on === false and the pin is not on a timer, turn it off
-      Microbits.getOutputMicrobit().setPin(selectedPin, on);
+      Microbits.getOutputMicrobit()?.setPin(selectedPin, on);
     }
   }
 
@@ -141,7 +141,7 @@
       const sound = new Audio(selectedSound.path);
       void sound.play();
     } else {
-      Microbits.getOutputMicrobit().sendToOutputUart('s', selectedSound.id);
+      Microbits.getOutputMicrobit()?.sendToOutputUart('s', selectedSound.id);
     }
   }
 
@@ -173,7 +173,7 @@
   };
 
   const refreshAfterChange = () => {
-    Microbits.getOutputMicrobit().resetPins();
+    Microbits.getOutputMicrobit()?.resetPins();
     setOutputPin(false);
   };
 

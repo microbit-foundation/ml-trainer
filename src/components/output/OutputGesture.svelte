@@ -30,7 +30,7 @@
   const wasTurnedOff = () => {};
   const wasTurnedOn = () => {
     if ($state.outputOrigin === HexOrigin.MAKECODE) {
-      Microbits.getOutputMicrobit().sendToOutputUart('g', $gesture.name);
+      Microbits.getOutputMicrobit()?.sendToOutputUart('g', $gesture.name);
       return;
     }
   };

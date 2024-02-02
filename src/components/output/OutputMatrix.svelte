@@ -57,15 +57,9 @@
   // TODO: Shares a lot with 'PatternMatrix'. Extract 'Matrix' component and reuse
 
   import { type GestureData, updateGestureLEDOutput } from '../../script/stores/mlStore';
-  import { state } from '../../script/stores/uiStore';
 
-  // TODO: Generalize such that it becomes ConnectionBehaviour.setMatrixTo() instead
-  // TODO: Which is used. The function defined here. Or the one in 'OutputGesture.svelte'
-  //       If the one in 'OutputGesture.svelte' is used why do we have default value here?
   export const trigger = () => {
-    if ($state.isOutputReady) {
-      Microbits.getOutputMicrobit().setLeds(matrix);
-    }
+    Microbits.getOutputMicrobit()?.setLeds(matrix);
   };
 
   export let gesture: GestureData;

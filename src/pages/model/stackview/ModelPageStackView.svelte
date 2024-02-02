@@ -77,7 +77,7 @@
   let firstMount = true;
   onMount(() => {
     firstMount = false;
-    Microbits.getOutputMicrobit().resetPins();
+    Microbits.getOutputMicrobit()?.resetPins();
   });
 
   $: triggerButtonsClicked($buttonPressed);
