@@ -39,14 +39,13 @@ type OutputCharacteristics = {
 };
 
 export class MicrobitBluetooth implements MicrobitConnection {
-  // Available after successful connect
-  microbitVersion: MBSpecs.MBVersion | undefined;
   inUseAs: Set<DeviceRequestStates> = new Set();
 
   private outputCharacteristics: OutputCharacteristics | undefined;
 
-  // Used to avoid automatic reconnection for user triggered disconnects.
-  private duringExplicitDisconnect: boolean = false;
+  // Used to avoid automatic reconnection during user triggered connect/disconnect
+  // or reconnection itself.
+  private duringExplicitConnectDisconnect: number = 0;
 
   // On ChromeOS and Mac there's no timeout and no clear way to abort
   // device.gatt.connect(), so we accept that sometimes we'll still
@@ -57,7 +56,8 @@ export class MicrobitBluetooth implements MicrobitConnection {
   //
   // On Windows it times out after 7s.
   // https://bugs.chromium.org/p/chromium/issues/detail?id=684073
-  private gattConnectPromise: Promise<unknown> | undefined;
+  private gattConnectPromise: Promise<MBSpecs.MBVersion | undefined> | undefined;
+  private disconnectPromise: Promise<unknown> | undefined;
   private connecting = false;
 
   private actionQueue: {
@@ -75,35 +75,42 @@ export class MicrobitBluetooth implements MicrobitConnection {
     device.addEventListener('gattserverdisconnected', this.handleDisconnectEvent);
   }
 
-  // mth: Let's use this when we no longer care about this micro:bit at all.
-  dispose() {
-    this.device.removeEventListener('gattserverdisconnected', this.handleDisconnectEvent);
-  }
-
   async connect(...states: DeviceRequestStates[]): Promise<void> {
     logMessage('Bluetooth connect', states);
+    if (this.duringExplicitConnectDisconnect) {
+      logMessage('Skipping connect attempt when one is already in progress');
+      return;
+    }
+    this.duringExplicitConnectDisconnect++;
     if (this.device.gatt === undefined) {
       throw new Error('BluetoothRemoteGATTServer for micro:bit device is undefined');
     }
     try {
-      // mth: We need to move this state somewhere global (per device) or make sure we reuse these objects (better?)
-      if (this.gattConnectPromise) {
-        logMessage('Bluetooth GATT connect reusing existing pending promise');
-      } else {
-        logMessage('Bluetooth GATT server connecting');
-        this.gattConnectPromise = this.device.gatt
+      // A previous connect might have completed in the background as a device was replugged etc.
+      await this.disconnectPromise;
+      this.gattConnectPromise =
+        this.gattConnectPromise ??
+        this.device.gatt
           .connect()
-          .then(() => {
+          .then(async () => {
+            // We always do this even if we might immediately disconnect as disconnecting
+            // without using services causes getPrimaryService calls to hang on subsequent
+            // reconnect - probably a device-side issue.
+            const modelNumber = await this.getModelNumber();
             // This connection could be arbitrarily later when our manual timeout may have passed.
             // Do we still want to be connected?
             if (!this.connecting) {
               logMessage(
                 'Bluetooth GATT server connect after timeout, triggering disconnect',
               );
-              void this.disconnect(false);
+              this.disconnectPromise = (async () => {
+                await this.disconnect(false);
+                this.disconnectPromise = undefined;
+              })();
             } else {
               logMessage('Bluetooth GATT server connected when connecting');
             }
+            return modelNumber;
           })
           .catch(e => {
             if (this.connecting) {
@@ -111,15 +118,16 @@ export class MicrobitBluetooth implements MicrobitConnection {
               throw e;
             } else {
               logError('Bluetooth GATT server connect error after our timeout', e);
+              return undefined;
             }
           })
           .finally(() => {
             console.log('Bluetooth GATT server promise field cleared');
             this.gattConnectPromise = undefined;
           });
-      }
 
       this.connecting = true;
+      let microbitVersion: MBSpecs.MBVersion | undefined;
       try {
         const gattConnectResult = await Promise.race([
           this.gattConnectPromise,
@@ -129,15 +137,13 @@ export class MicrobitBluetooth implements MicrobitConnection {
           logMessage('Bluetooth GATT server connect timeout');
           throw new Error('Bluetooth GATT server connect timeout');
         }
+        microbitVersion = gattConnectResult;
       } finally {
         this.connecting = false;
       }
 
       logMessage('Bluetooth GATT server connected', this.device.gatt.connected);
-      const microbitVersion = await MBSpecs.Utility.getModelNumber(
-        this.assertGattServer(),
-      );
-      this.microbitVersion = microbitVersion;
+
       states.forEach(stateOnConnected);
       if (states.includes(DeviceRequestStates.INPUT)) {
         await this.listenToInputServices();
@@ -146,13 +152,15 @@ export class MicrobitBluetooth implements MicrobitConnection {
         await this.listenToOutputServices();
       }
       states.forEach(s => this.inUseAs.add(s));
-      states.forEach(s => stateOnAssigned(s, microbitVersion));
+      states.forEach(s => stateOnAssigned(s, microbitVersion!));
       states.forEach(s => stateOnReady(s));
     } catch (e) {
       logError('Bluetooth connect error', e);
       await this.disconnect(false);
       states.forEach(s => stateOnFailedToConnect(s));
       throw new Error('Failed to establish a connection!');
+    } finally {
+      this.duringExplicitConnectDisconnect--;
     }
   }
 
@@ -161,7 +169,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
       `Bluetooth disconnect ${userTriggered ? '(user triggered)' : '(programmatic)'}`,
     );
     this.actionQueue = { busy: false, queue: [] };
-    this.duringExplicitDisconnect = true;
+    this.duringExplicitConnectDisconnect++;
     try {
       if (this.device.gatt?.connected) {
         this.device.gatt?.disconnect();
@@ -170,7 +178,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
       logError('Bluetooth GATT disconnect error (ignored)', e);
       // We might have already lost the connection.
     } finally {
-      this.duringExplicitDisconnect = false;
+      this.duringExplicitConnectDisconnect--;
     }
 
     this.inUseAs.forEach(value => stateOnDisconnected(value, userTriggered));
@@ -181,13 +189,12 @@ export class MicrobitBluetooth implements MicrobitConnection {
       `Bluetooth reconnect ${userTriggered ? '(user triggered)' : '(programmatic)'}`,
     );
     const as = Array.from(this.inUseAs);
-    await this.disconnect(userTriggered);
     await this.connect(...as);
   }
 
   handleDisconnectEvent = async (): Promise<void> => {
     try {
-      if (!this.duringExplicitDisconnect) {
+      if (!this.duringExplicitConnectDisconnect) {
         logMessage('Bluetooth GATT disconnected... automatically trying reconnect');
         await this.reconnect(false);
       } else {
@@ -211,8 +218,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
     await this.listenToButton('A');
     await this.listenToButton('B');
 
-    // Duplicated beween input and output!
-    await this.listenToUART();
+    await this.listenToUART(DeviceRequestStates.INPUT);
   }
 
   private async listenToButton(buttonToListenFor: MBSpecs.Button): Promise<void> {
@@ -268,7 +274,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
     );
   }
 
-  private async listenToUART(): Promise<void> {
+  private async listenToUART(state: DeviceRequestStates): Promise<void> {
     const gattServer = this.assertGattServer();
     const uartService = await gattServer.getPrimaryService(MBSpecs.Services.UART_SERVICE);
     const uartTXCharacteristic = await uartService.getCharacteristic(
@@ -285,8 +291,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
           receivedData[i] = target.value.getUint8(i);
         }
         const receivedString = String.fromCharCode.apply(null, receivedData);
-        // Hmm...
-        this.inUseAs.forEach(state => onUARTDataReceived(state, receivedString));
+        onUARTDataReceived(state, receivedString);
       },
     );
   }
@@ -311,9 +316,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
       matrix,
       uart,
     };
-
-    // mth: We do this twice if we're the input and output micro:bit but that doesn't make sense.
-    await this.listenToUART();
+    await this.listenToUART(DeviceRequestStates.OUTPUT);
   }
 
   private setPinInternal = (pin: MBSpecs.UsableIOPin, on: boolean): void => {
@@ -413,6 +416,37 @@ export class MicrobitBluetooth implements MicrobitConnection {
         });
     }
   };
+
+  /**
+   * Fetches the model number of the micro:bit.
+   * @param {BluetoothRemoteGATTServer} gattServer The GATT server to read from.
+   * @return {Promise<number>} The model number of the micro:bit. 1 for the original, 2 for the new.
+   */
+  private async getModelNumber(): Promise<MBSpecs.MBVersion> {
+    this.assertGattServer();
+    try {
+      const deviceInfo = await this.assertGattServer().getPrimaryService(
+        MBSpecs.Services.DEVICE_INFO_SERVICE,
+      );
+      const modelNumber = await deviceInfo.getCharacteristic(
+        MBSpecs.Characteristics.MODEL_NUMBER,
+      );
+      // Read the value and convert it to UTF-8 (as specified in the Bluetooth specification).
+      const modelNumberValue = await modelNumber.readValue();
+      const decodedModelNumber = new TextDecoder().decode(modelNumberValue);
+      // The model number either reads "BBC micro:bit" or "BBC micro:bit V2.0". Still unsure if those are the only cases.
+      if (decodedModelNumber.toLowerCase() === 'BBC micro:bit'.toLowerCase()) {
+        return 1;
+      }
+      if (decodedModelNumber.toLowerCase().includes('BBC micro:bit v2'.toLowerCase())) {
+        return 2;
+      }
+      throw new Error(`Unexpected model number ${decodedModelNumber}`);
+    } catch (e) {
+      logError('Could not read model number', e);
+      throw new Error('Could not read model number');
+    }
+  }
 }
 
 export const startBluetoothConnection = async (
