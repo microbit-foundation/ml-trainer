@@ -12,9 +12,9 @@ import { DeviceRequestStates } from '../stores/connectDialogStore';
 interface MicrobitConnection {
   connect(...states: DeviceRequestStates[]): Promise<void>;
 
-  reconnect(): Promise<void>;
+  reconnect(userTriggered: boolean): Promise<void>;
 
-  disconnect(userDisconnect: boolean): Promise<void>;
+  disconnect(userTriggered: boolean): Promise<void>;
 }
 
 export default MicrobitConnection;

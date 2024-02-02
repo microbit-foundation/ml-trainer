@@ -87,7 +87,7 @@ class Microbits {
     requestState: DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT,
   ) {
     try {
-      await this.getMicrobit(requestState)?.reconnect();
+      await this.getMicrobit(requestState)?.reconnect(true);
     } catch (e) {
       startConnectionProcess();
     } finally {

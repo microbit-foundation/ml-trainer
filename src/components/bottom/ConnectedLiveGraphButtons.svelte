@@ -24,7 +24,7 @@
   };
 
   const handleInputConnect = async () => {
-    if ($state.offerReconnect) {
+    if ($state.offerReconnect || $state.isInputAssigned) {
       try {
         await Microbits.reconnect(DeviceRequestStates.INPUT);
       } catch (e) {

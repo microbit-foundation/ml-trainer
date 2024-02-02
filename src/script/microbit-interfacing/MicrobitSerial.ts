@@ -119,8 +119,8 @@ export class MicrobitSerial implements MicrobitConnection {
     stateOnDisconnected(DeviceRequestStates.INPUT, userDisconnect);
   }
 
-  async reconnect(): Promise<void> {
-    await this.disconnect(false);
+  async reconnect(userTriggered: boolean): Promise<void> {
+    await this.disconnect(userTriggered);
     await this.connect(DeviceRequestStates.INPUT);
   }
 
