@@ -36,6 +36,7 @@
     FlashStage,
     HexType,
   } from '../../script/microbit-interfacing/Microbits';
+  import MicrobitUSB from '../../script/microbit-interfacing/MicrobitUSB';
 
   const { bluetooth, usb } = get(compatibility);
   let endOfFlow = false;
@@ -100,19 +101,21 @@
   };
 
   async function tryMicrobitConnection(): Promise<void> {
+    let usb: MicrobitUSB | undefined;
     try {
-      await Microbits.linkMicrobit();
+      usb = await MicrobitUSB.requestConnection();
     } catch (err) {
       handleConnectionError(err);
       return;
     }
-    return flashMicrobit();
+    return flashMicrobit(usb);
   }
 
-  async function flashMicrobit(): Promise<void> {
+  async function flashMicrobit(usb: MicrobitUSB): Promise<void> {
+    const name = await usb.getFriendlyName();
     const hexForStage = stageToHex(flashStage);
     try {
-      await Microbits.flashHexToLinked(hexForStage, progress => {
+      await usb.flashHex(hexForStage, progress => {
         // Flash hex
         // Send users to download screen
         if (
@@ -124,9 +127,12 @@
       });
       // Finished flashing successfully
       if (flashStage === 'bluetooth' || flashStage === 'radio-sender') {
+        if (flashStage === 'bluetooth') {
+          $btPatternInput = MBSpecs.Utility.nameToPattern(name);
+        }
         $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY;
       } else if (flashStage === 'radio-bridge') {
-        onConnectingSerial();
+        onConnectingSerial(usb);
       }
     } catch (err) {
       handleConnectionError(err);
@@ -137,13 +143,10 @@
     $connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH_CONNECTING;
   }
 
-  async function onConnectingSerial(): Promise<void> {
+  async function onConnectingSerial(usb: MicrobitUSB): Promise<void> {
     $connectionDialogState.connectionState = ConnectDialogStates.CONNECTING_MICROBITS;
-    await Microbits.assignSerialInput();
+    await Microbits.assignSerialInput(usb);
     endFlow();
-    // MicrobitSerial.connect(Microbits.getLinked()).catch(() => {
-    //   // Errors to consider: microbit is disconnected, some sort of connection error
-    // });
   }
 
   function connectionStateNone() {

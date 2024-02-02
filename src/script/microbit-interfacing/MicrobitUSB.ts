@@ -6,6 +6,7 @@
 
 import { CortexM, DAPLink, WebUSB } from 'dapjs';
 import MBSpecs from './MBSpecs';
+import { HexType, getHexFileUrl } from './Microbits';
 
 const baudRate = 115200;
 const serialDelay = 5;
@@ -101,9 +102,11 @@ class MicrobitUSB {
    * @param {(progress: number) => void} progressCallback A callback for progress.
    */
   public async flashHex(
-    hex: string,
+    hexType: HexType,
     progressCallback: (progress: number) => void,
   ): Promise<void> {
+    const version = this.getModelNumber();
+    const hex = getHexFileUrl(version, hexType);
     const hexFile: Response = await fetch(hex);
     const buffer: ArrayBuffer = await hexFile.arrayBuffer();
 

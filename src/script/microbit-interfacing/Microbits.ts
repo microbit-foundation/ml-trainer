@@ -45,8 +45,6 @@ class Microbits {
   private static inputMicrobit: MicrobitConnection | undefined = undefined;
   private static outputMicrobit: MicrobitBluetooth | undefined = undefined;
 
-  private static linkedMicrobit: MicrobitUSB | undefined = undefined;
-
   public static getOutputMicrobit(): MicrobitBluetooth {
     if (!this.outputMicrobit) {
       throw new Error('No output micro:bit!');
@@ -59,8 +57,8 @@ class Microbits {
     return !!this.inputMicrobit;
   }
 
-  public static async assignSerialInput(): Promise<boolean> {
-    this.inputMicrobit = await startSerialConnection(DeviceRequestStates.INPUT);
+  public static async assignSerialInput(usb: MicrobitUSB): Promise<boolean> {
+    this.inputMicrobit = await startSerialConnection(usb, DeviceRequestStates.INPUT);
     return !!this.inputMicrobit;
   }
 
@@ -119,47 +117,6 @@ class Microbits {
       return !!this.inputMicrobit;
     }
     return !!this.outputMicrobit;
-  }
-
-  /**
-   * Attempts to create a connection to a USB-connected microbit
-   */
-  public static async linkMicrobit(): Promise<void> {
-    this.linkedMicrobit = await MicrobitUSB.requestConnection();
-  }
-
-  /**
-   * Gets the microbit connected through USB.
-   * @returns The USB-Connected microbit
-   */
-  public static getLinked(): MicrobitUSB {
-    if (!this.linkedMicrobit) {
-      throw new Error('No microbit has been linked!');
-    }
-    return this.linkedMicrobit;
-  }
-
-  public static async getLinkedFriendlyName(): Promise<string> {
-    if (!this.linkedMicrobit) {
-      throw new Error('Cannot get friendly name from USB, none are connected!');
-    }
-    return this.linkedMicrobit.getFriendlyName();
-  }
-
-  /**
-   * Flashes the appropriate hex file to the micro:bit which is connected via USB
-   * @param progressCallback The callback that is fired each time the progress status is updated
-   */
-  public static flashHexToLinked(
-    hexType: HexType,
-    progressCallback: (progress: number) => void,
-  ): Promise<void> {
-    if (!this.linkedMicrobit) {
-      throw new Error('Cannot flash to USB, none are connected!');
-    }
-    const version = this.linkedMicrobit.getModelNumber();
-    const hex = getHexFileUrl(version, hexType); // Note: For this we CANNOT use the universal hex file (don't know why)
-    return this.linkedMicrobit.flashHex(hex, progressCallback);
   }
 }
 

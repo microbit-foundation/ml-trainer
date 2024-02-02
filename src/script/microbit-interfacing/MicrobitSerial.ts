@@ -180,9 +180,9 @@ export class MicrobitSerial implements MicrobitConnection {
 }
 
 export const startSerialConnection = async (
+  usb: MicrobitUSB,
   requestState: DeviceRequestStates,
 ): Promise<MicrobitSerial | undefined> => {
-  const usb = Microbits.getLinked();
   try {
     const serial = new MicrobitSerial(usb);
     await serial.connect(requestState);
