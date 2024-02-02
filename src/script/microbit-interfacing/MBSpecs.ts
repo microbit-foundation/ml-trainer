@@ -219,7 +219,6 @@ namespace MBSpecs {
     public static async getModelNumber(
       gattServer: BluetoothRemoteGATTServer,
     ): Promise<MBSpecs.MBVersion> {
-      debugger;
       // TODO: Move this function to Microbit Bluetooth and add it to the MicrobitConnection interface
       try {
         const deviceInfo = await gattServer.getPrimaryService(
