@@ -69,7 +69,8 @@ export const stateOnReady = (requestState: DeviceRequestStates) => {
       navigate(Paths.DATA);
     }
   } else {
-    Microbits.getOutputMicrobit().resetPins();
+    // TODO: We don't have an output micro:bit yet, so this throws.
+    // Microbits.getOutputMicrobit().resetPins();
     state.update(s => {
       s.isOutputReady = true;
       return s;

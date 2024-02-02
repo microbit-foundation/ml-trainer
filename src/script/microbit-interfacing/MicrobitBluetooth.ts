@@ -298,7 +298,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
     }
     const ioService = await gattServer.getPrimaryService(MBSpecs.Services.IO_SERVICE);
     const io = await ioService.getCharacteristic(MBSpecs.Characteristics.IO_DATA);
-    const ledService = await gattServer.getPrimaryService(MBSpecs.Services.IO_SERVICE);
+    const ledService = await gattServer.getPrimaryService(MBSpecs.Services.LED_SERVICE);
     const matrix = await ledService.getCharacteristic(
       MBSpecs.Characteristics.LED_MATRIX_STATE,
     );
@@ -396,15 +396,21 @@ export class MicrobitBluetooth implements MicrobitConnection {
     if (this.actionQueue.busy) {
       return;
     }
-    const action = this.actionQueue.queue.pop();
-    this.actionQueue.busy = !!action;
+    const action = this.actionQueue.queue.shift();
     if (action) {
-      action(this.outputCharacteristics).then(
-        () => this.processActionQueue(),
-        // Do we want to keep going if we hit errors?
-        // What did it do previously?
-        () => this.processActionQueue(),
-      );
+      this.actionQueue.busy = true;
+      action(this.outputCharacteristics)
+        .then(() => {
+          this.actionQueue.busy = false;
+          this.processActionQueue();
+        })
+        .catch(e => {
+          logError('Error processing action queue', e);
+          // Do we want to keep going if we hit errors?
+          // What did it do previously?
+          this.actionQueue.busy = false;
+          this.processActionQueue();
+        });
     }
   };
 }
