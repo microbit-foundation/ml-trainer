@@ -47,6 +47,7 @@
       fillStyle: '#0000ff07',
     });
     chart.streamTo(<HTMLCanvasElement>canvas, 0);
+    chart.render();
     return () => chart?.stop();
   });
 
