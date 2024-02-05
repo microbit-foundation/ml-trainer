@@ -24,7 +24,7 @@
   <DialogHeading>
     {#if flashStage === 'bluetooth'}
       {$t('connectMB.wearingSetup.bluetooth.heading')}
-    {:else if flashStage === 'radio-sender'}
+    {:else if flashStage === 'radio-remote'}
       {$t('connectMB.wearingSetup.radioConnection.heading')}
     {/if}
   </DialogHeading>

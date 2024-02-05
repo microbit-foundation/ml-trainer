@@ -16,7 +16,7 @@
   <h1 class="font-bold mb-5 text-2xl">
     {#if flashStage === 'bluetooth'}
       {$t('connectMB.usbDownloading.header')}
-    {:else if flashStage === 'radio-sender'}
+    {:else if flashStage === 'radio-remote'}
       {$t('connectMB.usbDownloadingMB1.header')}
     {:else if flashStage === 'radio-bridge'}
       {$t('connectMB.usbDownloadingMB2.header')}
