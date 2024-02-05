@@ -456,6 +456,8 @@ export class MicrobitBluetooth implements MicrobitConnection {
   }
 }
 
+const deviceIdToConnection: Map<string, MicrobitBluetooth> = new Map();
+
 export const startBluetoothConnection = async (
   name: string,
   requestState: DeviceRequestStates,
@@ -465,7 +467,11 @@ export const startBluetoothConnection = async (
     return undefined;
   }
   try {
-    const bluetooth = new MicrobitBluetooth(name, device);
+    // Reuse our connection objects for the same device as they
+    // track the GATT connect promise that never resolves.
+    const bluetooth =
+      deviceIdToConnection.get(device.id) ?? new MicrobitBluetooth(name, device);
+    deviceIdToConnection.set(device.id, bluetooth);
     await bluetooth.connect(requestState);
     return bluetooth;
   } catch (e) {
