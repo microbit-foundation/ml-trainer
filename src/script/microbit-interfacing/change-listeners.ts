@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { DeviceRequestStates } from '../stores/connectDialogStore';
 import { livedata } from '../stores/mlStore';
 import { buttonPressed } from '../stores/uiStore';
 import MBSpecs from './MBSpecs';
+import { DeviceRequestStates } from './MicrobitConnection';
 import {
   stateOnIdentifiedAsMakecode,
   stateOnIdentifiedAsProprietary,

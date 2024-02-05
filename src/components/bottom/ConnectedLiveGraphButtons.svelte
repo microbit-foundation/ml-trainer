@@ -10,10 +10,8 @@
   import { state } from '../../script/stores/uiStore';
   import StandardButton from '../StandardButton.svelte';
   import Microbits from '../../script/microbit-interfacing/Microbits';
-  import {
-    DeviceRequestStates,
-    startConnectionProcess,
-  } from '../../script/stores/connectDialogStore';
+  import { startConnectionProcess } from '../../script/stores/connectDialogStore';
+  import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
 
   const handleInputDisconnectClick = () => {
     Microbits.disconnect(DeviceRequestStates.INPUT);

@@ -4,7 +4,11 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { DeviceRequestStates } from '../stores/connectDialogStore';
+export enum DeviceRequestStates {
+  NONE,
+  INPUT,
+  OUTPUT,
+}
 
 /**
  * A connection to a micro:bit.

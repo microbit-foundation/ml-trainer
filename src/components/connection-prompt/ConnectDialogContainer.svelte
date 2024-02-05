@@ -17,7 +17,6 @@
   import {
     ConnectDialogStates,
     connectionDialogState,
-    DeviceRequestStates,
   } from '../../script/stores/connectDialogStore';
   import { btPatternInput, btPatternOutput } from '../../script/stores/connectionStore';
   import MBSpecs from '../../script/microbit-interfacing/MBSpecs';

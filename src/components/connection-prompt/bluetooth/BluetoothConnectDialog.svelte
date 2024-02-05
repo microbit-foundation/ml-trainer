@@ -7,7 +7,6 @@
 <script lang="ts">
   import PatternMatrix from '../../PatternMatrix.svelte';
   import { t } from '../../../i18n';
-  import { DeviceRequestStates } from '../../../script/stores/connectDialogStore';
   import {
     btPatternInput,
     btPatternOutput,
@@ -16,6 +15,7 @@
   import type { Writable } from 'svelte/store';
   import StandardButton from '../../StandardButton.svelte';
   import DialogHeading from '../../DialogHeading.svelte';
+  import { DeviceRequestStates } from '../../../script/microbit-interfacing/MicrobitConnection';
 
   // callbacks
   export let deviceState: DeviceRequestStates;

@@ -4,11 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-import {
-  DeviceRequestStates,
-  startConnectionProcess,
-} from '../stores/connectDialogStore';
-import MicrobitConnection from './MicrobitConnection';
+import { startConnectionProcess } from '../stores/connectDialogStore';
+import MicrobitConnection, { DeviceRequestStates } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
 import { MicrobitBluetooth, startBluetoothConnection } from './MicrobitBluetooth';
 import { startSerialConnection } from './MicrobitSerial';

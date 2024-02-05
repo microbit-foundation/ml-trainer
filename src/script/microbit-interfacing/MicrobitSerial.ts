@@ -4,10 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { DeviceRequestStates } from '../stores/connectDialogStore';
-import MicrobitConnection from './MicrobitConnection';
+import MicrobitConnection, { DeviceRequestStates } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
-import Microbits from './Microbits';
 import { onAccelerometerChange, onButtonChange } from './change-listeners';
 import * as protocol from './serialProtocol';
 import {

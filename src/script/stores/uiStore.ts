@@ -13,9 +13,9 @@ import {
 } from '../compatibility/CompatibilityChecker';
 import MBSpecs from '../microbit-interfacing/MBSpecs';
 import { gestures } from './Stores';
-import { DeviceRequestStates } from './connectDialogStore';
 import { isInputPatternValid } from './connectionStore';
 import { HexOrigin } from '../../StaticConfiguration';
+import { DeviceRequestStates } from '../microbit-interfacing/MicrobitConnection';
 
 // TODO: Rename? Split up further?
 

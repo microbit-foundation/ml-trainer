@@ -6,11 +6,10 @@
 
 import StaticConfiguration from '../../StaticConfiguration';
 import { isDevMode } from '../environment';
-import { DeviceRequestStates } from '../stores/connectDialogStore';
 import { outputting } from '../stores/uiStore';
 import { logError, logMessage } from '../utils/logging';
 import MBSpecs from './MBSpecs';
-import MicrobitConnection from './MicrobitConnection';
+import MicrobitConnection, { DeviceRequestStates } from './MicrobitConnection';
 import { UARTMessageType } from './Microbits';
 import {
   onAccelerometerChange,

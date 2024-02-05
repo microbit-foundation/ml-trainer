@@ -8,7 +8,8 @@
   import OutputGestureStack from './OutputGestureStack.svelte';
   import OutputGestureTile from './OutputGestureTile.svelte';
   import { state } from '../../script/stores/uiStore';
-  import Microbits, { HexOrigin } from '../../script/microbit-interfacing/Microbits';
+  import Microbits from '../../script/microbit-interfacing/Microbits';
+  import { HexOrigin } from '../../StaticConfiguration';
 
   export let gesture: Gesture;
   let wasTriggered = false;

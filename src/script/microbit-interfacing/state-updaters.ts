@@ -5,12 +5,12 @@
  */
 
 import { get } from 'svelte/store';
-import { DeviceRequestStates } from '../stores/connectDialogStore';
 import { ModelView, state } from '../stores/uiStore';
 import { Paths, currentPath, navigate } from '../../router/paths';
 import MBSpecs from './MBSpecs';
 import { HexOrigin } from '../../StaticConfiguration';
 import Microbits from './Microbits';
+import { DeviceRequestStates } from './MicrobitConnection';
 
 // TODO: We've lost logging, but most of it was unhelpful.
 

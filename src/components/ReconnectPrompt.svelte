@@ -10,9 +10,9 @@
   import { t } from '../i18n';
   import Microbits from '../script/microbit-interfacing/Microbits';
   import { stateOnStopOfferingReconnect } from '../script/microbit-interfacing/state-updaters';
-  import { DeviceRequestStates } from '../script/stores/connectDialogStore';
   import { state } from '../script/stores/uiStore';
   import StandardDialog from './dialogs/StandardDialog.svelte';
+  import { DeviceRequestStates } from '../script/microbit-interfacing/MicrobitConnection';
 
   export let isOpen: boolean = false;
   export let type: 'generic' | 'bluetooth' | 'bridge' | 'remote' = 'generic';

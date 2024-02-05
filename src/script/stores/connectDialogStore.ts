@@ -6,12 +6,8 @@
 
 import { get, writable } from 'svelte/store';
 import { compatibility, state } from './uiStore';
+import { DeviceRequestStates } from '../microbit-interfacing/MicrobitConnection';
 
-export enum DeviceRequestStates {
-  NONE,
-  INPUT,
-  OUTPUT,
-}
 export enum ConnectDialogStates {
   NONE, // No connection in progress -> Dialog box closed
   START_RADIO, // Initial box. Main prompt is to connect via radio however includes choice to connect via bluetooth
