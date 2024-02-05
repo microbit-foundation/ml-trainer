@@ -9,7 +9,12 @@
  */
 import { PinTurnOnState } from './components/output/PinSelectorUtil';
 import MBSpecs from './script/microbit-interfacing/MBSpecs';
-import { HexOrigin } from './script/microbit-interfacing/Microbits';
+
+export enum HexOrigin {
+  UNKNOWN,
+  MAKECODE,
+  PROPRIETARY,
+}
 
 class StaticConfiguration {
   public static readonly connectTimeoutDuration: number = 10000;

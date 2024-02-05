@@ -9,8 +9,8 @@ import { DeviceRequestStates } from '../stores/connectDialogStore';
 import { ModelView, state } from '../stores/uiStore';
 import { Paths, currentPath, navigate } from '../../router/paths';
 import MBSpecs from './MBSpecs';
-import StaticConfiguration from '../../StaticConfiguration';
-import Microbits, { HexOrigin } from './Microbits';
+import { HexOrigin } from '../../StaticConfiguration';
+import Microbits from './Microbits';
 
 // TODO: We've lost logging, but most of it was unhelpful.
 

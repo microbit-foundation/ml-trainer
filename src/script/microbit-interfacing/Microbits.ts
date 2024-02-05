@@ -14,11 +14,6 @@ import { MicrobitBluetooth, startBluetoothConnection } from './MicrobitBluetooth
 import { startSerialConnection } from './MicrobitSerial';
 import { stateOnStopOfferingReconnect } from './state-updaters';
 
-export enum HexOrigin {
-  UNKNOWN,
-  MAKECODE,
-  PROPRIETARY,
-}
 export type FlashStage = 'bluetooth' | 'radio-sender' | 'radio-bridge';
 export type HexType =
   | 'bluetooth'

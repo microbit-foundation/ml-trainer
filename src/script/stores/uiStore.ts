@@ -12,10 +12,10 @@ import {
   type CompatibilityStatus,
 } from '../compatibility/CompatibilityChecker';
 import MBSpecs from '../microbit-interfacing/MBSpecs';
-import { HexOrigin } from '../microbit-interfacing/Microbits';
 import { gestures } from './Stores';
 import { DeviceRequestStates } from './connectDialogStore';
 import { isInputPatternValid } from './connectionStore';
+import { HexOrigin } from '../../StaticConfiguration';
 
 // TODO: Rename? Split up further?
 
