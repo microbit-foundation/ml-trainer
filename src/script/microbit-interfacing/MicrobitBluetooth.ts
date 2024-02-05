@@ -487,7 +487,7 @@ const requestDevice = async (name: string): Promise<BluetoothDevice | undefined>
       ],
     });
   } catch (e) {
-    isDevMode && console.error('Error logging:', e);
+    logError('Bluetooth request device failed/cancelled', e);
     return undefined;
   }
 };

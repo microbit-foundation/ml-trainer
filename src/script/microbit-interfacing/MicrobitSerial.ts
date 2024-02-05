@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { logError } from '../utils/logging';
 import MicrobitConnection, { DeviceRequestStates } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
 import { onAccelerometerChange, onButtonChange } from './change-listeners';
@@ -104,6 +105,7 @@ export class MicrobitSerial implements MicrobitConnection {
       stateOnAssigned(DeviceRequestStates.INPUT, this.usb.getModelNumber());
       stateOnReady(DeviceRequestStates.INPUT);
     } catch (e) {
+      logError('Failed to initialise serial protocol', e);
       stateOnFailedToConnect(DeviceRequestStates.INPUT);
       await this.usb.stopSerial();
       throw e;

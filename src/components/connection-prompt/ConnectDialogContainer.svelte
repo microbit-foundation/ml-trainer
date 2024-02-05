@@ -111,9 +111,9 @@
   }
 
   async function flashMicrobit(usb: MicrobitUSB): Promise<void> {
-    const name = await usb.getFriendlyName();
-    const hexForStage = stageToHex(flashStage);
     try {
+      const name = await usb.getFriendlyName();
+      const hexForStage = stageToHex(flashStage);
       await usb.flashHex(hexForStage, progress => {
         // Flash hex
         // Send users to download screen

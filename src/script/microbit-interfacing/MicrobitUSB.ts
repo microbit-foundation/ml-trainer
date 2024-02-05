@@ -7,6 +7,7 @@
 import { CortexM, DAPLink, WebUSB } from 'dapjs';
 import MBSpecs from './MBSpecs';
 import { HexType, getHexFileUrl } from './Microbits';
+import { logError } from '../utils/logging';
 
 const baudRate = 115200;
 const serialDelay = 5;
@@ -54,8 +55,8 @@ class MicrobitUSB {
       const device: USBDevice = await navigator.usb.requestDevice(requestOptions);
       return new MicrobitUSB(device);
     } catch (e) {
-      console.log(e);
-      return Promise.reject(e);
+      logError('USB request device failed/cancelled', e);
+      throw e;
     }
   }
 
@@ -90,6 +91,7 @@ class MicrobitUSB {
       );
       return MBSpecs.Utility.serialNumberToName(serial);
     } catch (e: unknown) {
+      logError('USB failed to read name', e);
       throw new Error('Failed to read name: ' + e);
     } finally {
       await debug.disconnect();
@@ -120,11 +122,10 @@ class MicrobitUSB {
       await target.connect();
       await target.flash(buffer);
       await target.disconnect();
-    } catch (error) {
-      console.log(error);
-      return Promise.reject(error);
+    } catch (e) {
+      logError('Failed to flash hex', e);
+      throw e;
     }
-    return Promise.resolve();
   }
 
   public async startSerial(
