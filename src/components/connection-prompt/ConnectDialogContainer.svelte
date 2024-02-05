@@ -39,7 +39,7 @@
 
   const { bluetooth, usb } = get(compatibility);
   let endOfFlow = false;
-  let flashStage: FlashStage = usb ? 'bluetooth' : 'radio-sender';
+  let flashStage: FlashStage = usb ? 'bluetooth' : 'radio-remote';
   let usbTryAgainType: USBTryAgainType = 'replug microbit';
   let flashProgress = 0;
 
@@ -50,8 +50,8 @@
     if (flags.radioLocal) {
       return 'radio-local';
     }
-    if (flashStage === 'radio-sender') {
-      return flags.radioRemoteDev ? 'radio-sender-dev' : 'radio-sender';
+    if (flashStage === 'radio-remote') {
+      return flags.radioRemoteDev ? 'radio-remote-dev' : 'radio-remote';
     }
     return 'radio-bridge';
   };
@@ -125,7 +125,7 @@
         flashProgress = progress;
       });
       // Finished flashing successfully
-      if (flashStage === 'bluetooth' || flashStage === 'radio-sender') {
+      if (flashStage === 'bluetooth' || flashStage === 'radio-remote') {
         if (flashStage === 'bluetooth') {
           $btPatternInput = MBSpecs.Utility.nameToPattern(name);
         }
@@ -203,14 +203,14 @@
           : undefined}
         onNextClick={() => {
           $connectionDialogState.connectionState = ConnectDialogStates.WEARING_SETUP;
-          flashStage = 'radio-sender';
+          flashStage = 'radio-remote';
         }} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.START_BLUETOOTH}
       <StartBluetoothDialog
         onStartRadioClick={usb
           ? () => {
               $connectionDialogState.connectionState = ConnectDialogStates.START_RADIO;
-              flashStage = 'radio-sender';
+              flashStage = 'radio-remote';
             }
           : undefined}
         onNextClick={() =>
@@ -225,7 +225,7 @@
           onNextClick={() =>
             ($connectionDialogState.connectionState =
               ConnectDialogStates.CONNECT_CABLE)} />
-      {:else if flashStage === 'radio-sender'}
+      {:else if flashStage === 'radio-remote'}
         <MicrobitWearingInstructionDialog
           {flashStage}
           onBackClick={() =>
@@ -250,7 +250,7 @@
                   ConnectDialogStates.CONNECT_TUTORIAL_USB)
               : ($connectionDialogState.connectionState =
                   ConnectDialogStates.MANUAL_TUTORIAL)} />
-      {:else if flashStage === 'radio-sender'}
+      {:else if flashStage === 'radio-remote'}
         <ConnectCableDialog
           titleId="connectMB.connectCableMB1.heading"
           subtitleId="connectMB.connectCableMB1.subtitle"
@@ -266,7 +266,7 @@
           onNextClick={() => {
             $connectionDialogState.connectionState =
               ConnectDialogStates.CONNECT_TUTORIAL_USB;
-            flashStage = 'radio-sender';
+            flashStage = 'radio-remote';
           }} />
       {:else if flashStage === 'radio-bridge'}
         <ConnectCableDialog
@@ -282,7 +282,7 @@
             : undefined}
           onBackClick={() => {
             $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY;
-            flashStage = 'radio-sender';
+            flashStage = 'radio-remote';
           }}
           onNextClick={() =>
             ($connectionDialogState.connectionState =
@@ -309,7 +309,7 @@
           onBackClick={() => {
             $connectionDialogState.connectionState =
               ConnectDialogStates.CONNECT_TUTORIAL_USB;
-            flashStage = 'radio-sender';
+            flashStage = 'radio-remote';
           }}
           onNextClick={() => {
             $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE;

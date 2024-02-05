@@ -17,7 +17,8 @@ import { Stage, stage as stageFromEnvironment } from './environment';
  */
 export type Flag =
   /**
-   * Changes radio bridge hexes to one that acts as a sender and receiver for radio bridge testing.
+   * Changes radio bridge hexes to a bridge hex that uses local data rather than communicating with a remote.
+   * There's no need to flash micro:bit one in this scenario (as they're the same).
    */
   | 'radioLocal'
   /**

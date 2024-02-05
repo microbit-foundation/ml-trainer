@@ -9,13 +9,13 @@ import MicrobitUSB from './MicrobitUSB';
 import { MicrobitBluetooth, startBluetoothConnection } from './MicrobitBluetooth';
 import { startSerialConnection } from './MicrobitSerial';
 
-export type FlashStage = 'bluetooth' | 'radio-sender' | 'radio-bridge';
+export type FlashStage = 'bluetooth' | 'radio-remote' | 'radio-bridge';
 export type HexType =
   | 'bluetooth'
-  | 'radio-sender'
+  | 'radio-remote'
   | 'radio-bridge'
   | 'radio-local'
-  | 'radio-sender-dev';
+  | 'radio-remote-dev';
 
 export type UARTMessageType = 'g' | 's';
 
@@ -31,8 +31,8 @@ export const getHexFileUrl = (version: 1 | 2 | 'universal', type: HexType) => {
     throw new Error('Only V2 is supported');
   }
   return {
-    'radio-sender-dev': 'firmware/radio-remote-v0.1.0-dev.hex',
-    'radio-sender': 'firmware/radio-remote-v0.1.0.hex',
+    'radio-remote-dev': 'firmware/radio-remote-v0.1.0-dev.hex',
+    'radio-remote': 'firmware/radio-remote-v0.1.0.hex',
     'radio-bridge': 'firmware/radio-bridge-v0.1.0.hex',
     'radio-local': 'firmware/local-sensors-v0.1.0.hex',
   }[type];
