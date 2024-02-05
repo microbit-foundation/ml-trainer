@@ -59,7 +59,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
   private disconnectPromise: Promise<unknown> | undefined;
   private connecting = false;
 
-  private actionQueue: {
+  private outputWriteQueue: {
     busy: boolean;
     queue: Array<(outputCharacteristics: OutputCharacteristics) => Promise<void>>;
   } = {
@@ -198,7 +198,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
   }
 
   handleDisconnectEvent = async (): Promise<void> => {
-    this.actionQueue = { busy: false, queue: [] };
+    this.outputWriteQueue = { busy: false, queue: [] };
 
     try {
       if (!this.duringExplicitConnectDisconnect) {
@@ -390,35 +390,35 @@ export class MicrobitBluetooth implements MicrobitConnection {
   queueAction = (
     action: (outputCharacteristics: OutputCharacteristics) => Promise<void>,
   ) => {
-    this.actionQueue.queue.push(action);
+    this.outputWriteQueue.queue.push(action);
     this.processActionQueue();
   };
 
   processActionQueue = () => {
     if (!this.outputCharacteristics) {
       // We've become disconnected before processing all actions.
-      this.actionQueue = {
+      this.outputWriteQueue = {
         busy: false,
         queue: [],
       };
       return;
     }
-    if (this.actionQueue.busy) {
+    if (this.outputWriteQueue.busy) {
       return;
     }
-    const action = this.actionQueue.queue.shift();
+    const action = this.outputWriteQueue.queue.shift();
     if (action) {
-      this.actionQueue.busy = true;
+      this.outputWriteQueue.busy = true;
       action(this.outputCharacteristics)
         .then(() => {
-          this.actionQueue.busy = false;
+          this.outputWriteQueue.busy = false;
           this.processActionQueue();
         })
         .catch(e => {
           logError('Error processing action queue', e);
           // Do we want to keep going if we hit errors?
           // What did it do previously?
-          this.actionQueue.busy = false;
+          this.outputWriteQueue.busy = false;
           this.processActionQueue();
         });
     }
