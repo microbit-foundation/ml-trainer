@@ -4,12 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { startConnectionProcess } from '../stores/connectDialogStore';
 import MicrobitConnection, { DeviceRequestStates } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
 import { MicrobitBluetooth, startBluetoothConnection } from './MicrobitBluetooth';
 import { startSerialConnection } from './MicrobitSerial';
-import { stateOnStopOfferingReconnect } from './state-updaters';
 
 export type FlashStage = 'bluetooth' | 'radio-sender' | 'radio-bridge';
 export type HexType =
@@ -80,13 +78,7 @@ class Microbits {
   public static async reconnect(
     requestState: DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT,
   ) {
-    try {
-      await this.getMicrobit(requestState)?.reconnect();
-    } catch (e) {
-      startConnectionProcess();
-    } finally {
-      stateOnStopOfferingReconnect();
-    }
+    return this.getMicrobit(requestState)?.reconnect();
   }
 
   public static async disconnect(

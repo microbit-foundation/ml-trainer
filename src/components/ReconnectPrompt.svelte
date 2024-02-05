@@ -13,6 +13,7 @@
   import { state } from '../script/stores/uiStore';
   import StandardDialog from './dialogs/StandardDialog.svelte';
   import { DeviceRequestStates } from '../script/microbit-interfacing/MicrobitConnection';
+  import { startConnectionProcess } from '../script/stores/connectDialogStore';
 
   export let isOpen: boolean = false;
   export let type: 'generic' | 'bluetooth' | 'bridge' | 'remote' = 'generic';
@@ -20,7 +21,13 @@
 
   const reconnect = async () => {
     if ($state.reconnectState !== DeviceRequestStates.NONE) {
-      return Microbits.reconnect($state.reconnectState);
+      try {
+        await Microbits.reconnect($state.reconnectState);
+      } catch (e) {
+        startConnectionProcess();
+      } finally {
+        stateOnStopOfferingReconnect();
+      }
     }
   };
 
