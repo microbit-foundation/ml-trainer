@@ -103,7 +103,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
                 'Bluetooth GATT server connect after timeout, triggering disconnect',
               );
               this.disconnectPromise = (async () => {
-                await this.disconnect(false);
+                await this.disconnectInternal(false);
                 this.disconnectPromise = undefined;
               })();
             } else {
@@ -160,7 +160,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
       states.forEach(s => stateOnReady(s));
     } catch (e) {
       logError('Bluetooth connect error', e);
-      await this.disconnect(false);
+      await this.disconnectInternal(false);
       states.forEach(s => stateOnFailedToConnect(s));
       throw new Error('Failed to establish a connection!');
     } finally {
@@ -168,11 +168,14 @@ export class MicrobitBluetooth implements MicrobitConnection {
     }
   }
 
-  async disconnect(userTriggered: boolean): Promise<void> {
+  async disconnect(): Promise<void> {
+    return this.disconnectInternal(true);
+  }
+
+  private async disconnectInternal(userTriggered: boolean): Promise<void> {
     logMessage(
       `Bluetooth disconnect ${userTriggered ? '(user triggered)' : '(programmatic)'}`,
     );
-    this.actionQueue = { busy: false, queue: [] };
     this.duringExplicitConnectDisconnect++;
     try {
       if (this.device.gatt?.connected) {
@@ -188,19 +191,19 @@ export class MicrobitBluetooth implements MicrobitConnection {
     this.inUseAs.forEach(value => stateOnDisconnected(value, userTriggered));
   }
 
-  async reconnect(userTriggered: boolean): Promise<void> {
-    logMessage(
-      `Bluetooth reconnect ${userTriggered ? '(user triggered)' : '(programmatic)'}`,
-    );
+  async reconnect(): Promise<void> {
+    logMessage('Bluetooth reconnect');
     const as = Array.from(this.inUseAs);
     await this.connect(...as);
   }
 
   handleDisconnectEvent = async (): Promise<void> => {
+    this.actionQueue = { busy: false, queue: [] };
+
     try {
       if (!this.duringExplicitConnectDisconnect) {
         logMessage('Bluetooth GATT disconnected... automatically trying reconnect');
-        await this.reconnect(false);
+        await this.reconnect();
       } else {
         logMessage('Bluetooth GATT disconnect ignored during explicit disconnect');
       }

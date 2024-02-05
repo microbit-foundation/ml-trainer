@@ -81,7 +81,7 @@ class Microbits {
     requestState: DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT,
   ) {
     try {
-      await this.getMicrobit(requestState)?.reconnect(true);
+      await this.getMicrobit(requestState)?.reconnect();
     } catch (e) {
       startConnectionProcess();
     } finally {
@@ -92,9 +92,9 @@ class Microbits {
   public static async disconnect(
     requestState: DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT,
   ) {
-    // This isn't right as it will disconnect a shared micro:bit
-    // We need to stop using it as the X micro:bit, perhaps? But what's the UI level intent?
-    return this.getMicrobit(requestState)?.disconnect(true);
+    // For now disconnect disconnects as input and output if the same device
+    // is both.
+    return this.getMicrobit(requestState)?.disconnect();
   }
 
   private static getMicrobit(

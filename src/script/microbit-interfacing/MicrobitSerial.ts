@@ -39,7 +39,7 @@ export class MicrobitSerial implements MicrobitConnection {
 
     const handleError = (e: unknown) => {
       console.error(e);
-      void this.disconnect(false);
+      void this.disconnectInternal(false);
     };
     const processMessage = (data: string) => {
       const messages = protocol.splitMessages(unprocessedData + data);
@@ -110,15 +110,18 @@ export class MicrobitSerial implements MicrobitConnection {
     }
   }
 
-  async disconnect(userDisconnect: boolean): Promise<void> {
+  async disconnect(): Promise<void> {
+    return this.disconnectInternal(true);
+  }
+
+  private async disconnectInternal(userDisconnect: boolean): Promise<void> {
     // We might want to send command to stop streaming here?
     this.responseMap.clear();
     await this.usb.stopSerial();
     stateOnDisconnected(DeviceRequestStates.INPUT, userDisconnect);
   }
 
-  async reconnect(userTriggered: boolean): Promise<void> {
-    await this.disconnect(userTriggered);
+  async reconnect(): Promise<void> {
     await this.connect(DeviceRequestStates.INPUT);
   }
 
