@@ -15,6 +15,7 @@
 
   export let onNextClick: () => void;
   export let onStartRadioClick: (() => void) | undefined;
+  export let reconnectFailed: boolean = false;
 
   const items = [
     {
@@ -42,7 +43,12 @@
 
 <WhatYouWillNeedDialog
   {items}
-  headingId={usb ? 'connectMB.bluetoothStart.heading' : 'connectMB.radioStart.heading'}
+  headingId={reconnectFailed
+    ? 'reconnectFailed.bluetoothHeading'
+    : usb
+      ? 'connectMB.bluetoothStart.heading'
+      : 'connectMB.radioStart.heading'}
+  {reconnectFailed}
   subtitleId="connectMB.bluetoothStart.subtitle"
   switchTextId="connectMB.bluetoothStart.switchRadio"
   onSwitchClick={onStartRadioClick}

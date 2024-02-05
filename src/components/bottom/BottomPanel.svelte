@@ -27,6 +27,11 @@
         <!-- The live text and info box -->
         <LiveGraphInformationSection />
         <ConnectedLiveGraphButtons />
+        {#if false}
+          <div>
+            <p class="font-bold">{$t('connectMB.reconnecting')}</p>
+          </div>
+        {/if}
       </div>
       <Information
         titleText={$t('footer.helpHeader')}

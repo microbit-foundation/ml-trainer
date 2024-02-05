@@ -17,9 +17,13 @@ import { Stage, stage as stageFromEnvironment } from './environment';
  */
 export type Flag =
   /**
-   * Flashes a hex that acts as a sender and receiver for radio bridge testing.
+   * Changes radio bridge hexes to one that acts as a sender and receiver for radio bridge testing.
    */
-  'radioLocal';
+  | 'radioLocal'
+  /**
+   * Changes the remote radio bridge hex to one that uses button A to stop sending data.
+   */
+  | 'radioRemoteDev';
 
 interface FlagMetadata {
   defaultOnStages: Stage[];
@@ -29,6 +33,7 @@ interface FlagMetadata {
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
   { name: 'radioLocal', defaultOnStages: [] },
+  { name: 'radioRemoteDev', defaultOnStages: [] },
 ];
 
 type Flags = Record<Flag, boolean>;

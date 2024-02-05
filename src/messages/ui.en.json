@@ -135,7 +135,9 @@
   "connectMB.usbTryAgain.closeTabs1": "Another process is connected to this device.",
   "connectMB.usbTryAgain.closeTabs2": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, machine learning tool), or unplug and replug the micro:bit before trying again.",
   "connectMB.usbTryAgain.replugMicrobit1": "A WebUSB error occurred.",
-  "connectMB.usbTryAgain.replugMicrobit2": "Please unplug and replug the micro:bit before trying again.",
+  "connectMB.usbTryAgain.replugMicrobit2": "Please:",
+  "connectMB.usbTryAgain.replugMicrobit3": "check that this micro:bit does not have a battery pack connected",
+  "connectMB.usbTryAgain.replugMicrobit4": "unplug and replug the USB cable",
 
   "connectMB.radioStart.heading": "What you will need to get started:",
   "connectMB.radioStart.requirements1": "2 micro:bits",
@@ -187,7 +189,7 @@
   "connectMB.usbDownloading.header": "Downloading program to micro:bit",
   "connectMB.usbDownloading.subtitle": "Please wait. Downloading program to micro:bit.",
 
-  "connectMB.connectBattery.heading": "Connect battery pack",
+  "connectMB.connectBattery.heading": "Connect battery pack and disconnect USB",
   "connectMB.connectBattery.subtitle": "Disconnect the micro:bit from the computer and connect the battery pack.",
 
   "connectMB.pattern.heading": "Copy pattern",
@@ -200,15 +202,45 @@
 
   "connectMB.radio.heading": "Connecting micro:bits",
   "connectMB.connecting": "Connecting…",
+  "connectMB.reconnecting": "Reconnecting…",
   "connectMB.bluetooth.invalidPattern": "The pattern you have drawn is invalid.",
 
-  "disconnectedWarning.heading": "micro:bit connection lost",
-  "disconnectedWarning.input": "Your input micro:bit lost connection, do want to try again?",
-  "disconnectedWarning.output": "Your output micro:bit lost connection, do want to try again?",
-  "disconnectedWarning.reconnectButton.input": "Reconnect input",
-  "disconnectedWarning.reconnectButton.output": "Reconnect output",
+  "reconnectFailed.radioHeading": "Failed to reconnect to micro:bits",
+  "reconnectFailed.bluetoothHeading": "Failed to reconnect to micro:bit",
+  "reconnectFailed.bluetooth1": "The connection to the micro:bit could not be re-established.",
+  "reconnectFailed.remoteHeading": "Failed to reconnect to micro:bit 1",
+  "reconnectFailed.remote1": "The connection to the micro:bit you are wearing could not be re-established.",
+  "reconnectFailed.bridgeHeading": "Failed to reconnect to micro:bit 2",
+  "reconnectFailed.bridge1": "The connection to the micro:bit connected to your computer could not be re-established.",
+  "reconnectFailed.subtitle": "Follow these instructions to restart the connection process.",
+
+  "disconnectedWarning.input": "Your micro:bit lost connection, do you want to try again?",
+
+  "disconnectedWarning.bluetoothHeading": "micro:bit connection lost",
+  "disconnectedWarning.bluetooth1": "The connection to the micro:bit has been lost.",
+  "disconnectedWarning.bluetooth2": "Please check that the micro:bit:",
+  "disconnectedWarning.bluetooth3": "is powered on (the red light on the back of the micro:bit should be on)",
+  "disconnectedWarning.bluetooth4": "is close to the computer",
+
+  "disconnectedWarning.remoteHeading": "micro:bit 1 connection lost",
+  "disconnectedWarning.remote1": "The connection to the micro:bit you are wearing has been lost.",
+
+  "disconnectedWarning.bridgeHeading": "micro:bit 2 connection lost",
+  "disconnectedWarning.bridge1": "The connection to the micro:bit connected to your computer has been lost.",
+
+  "disconnectedWarning.reconnectButton": "Reconnect",
 
   "connectMB.output.header": "A micro:bit is already connected",
+
+  "performanceWarning.heading": "Low quality connection",
+  "performanceWarning.content1": "The quality of data being received from your micro:bit is low. This could be due to a connection issue.",
+  "performanceWarning.content2": "Do you want to restart the connection process to try to improve performance?",
+  "performanceWarning.troubleshoot": "Troubleshoot problems with connection quality",
+  "performanceWarning.ignore": "Don't show this again",
+  "performanceWarning.nextButton": "Next",
+
+  "connectMB.troubleshoot": "Troubleshoot problems with connecting to your micro:bit",
+  "connectMB.troubleshooting": "Troubleshooting",
 
   "connectMB.usb.body1": "Connect your micro:bit using a USB-cable and click 'Next'",
   "connectMB.usb.body2": "Click 'Find USB unit' and select 'BBC micro:bit CMSIS-DAP' or 'DAPLink CMSIS-DAP' from the popup that appears",

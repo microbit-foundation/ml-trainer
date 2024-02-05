@@ -52,7 +52,7 @@
       return 'radio-local';
     }
     if (flashStage === 'radio-sender') {
-      return 'radio-sender';
+      return flags.radioRemoteDev ? 'radio-sender-dev' : 'radio-sender';
     }
     return 'radio-bridge';
   };
