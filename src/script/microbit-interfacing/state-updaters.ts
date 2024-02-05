@@ -12,8 +12,6 @@ import { HexOrigin } from '../../StaticConfiguration';
 import Microbits from './Microbits';
 import { DeviceRequestStates } from './MicrobitConnection';
 
-// TODO: We've lost logging, but most of it was unhelpful.
-
 export const stateOnConnected = (requestState: DeviceRequestStates) => {
   state.update(s => {
     requestState === DeviceRequestStates.INPUT
