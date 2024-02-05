@@ -25,7 +25,7 @@ export class MicrobitSerial implements MicrobitConnection {
 
   constructor(
     private usb: MicrobitUSB,
-    private sessionRadioFrequency: number,
+    private remoteDeviceId: number,
   ) {}
 
   async connect(...states: DeviceRequestStates[]): Promise<void> {
@@ -34,7 +34,7 @@ export class MicrobitSerial implements MicrobitConnection {
     let previousButtonState = { A: 0, B: 0 };
 
     const handleError = (e: unknown) => {
-      console.error(e);
+      logError('Serial error', e);
       void this.disconnectInternal(false);
     };
     const processMessage = (data: string) => {
@@ -75,14 +75,13 @@ export class MicrobitSerial implements MicrobitConnection {
       await this.handshake();
       stateOnConnected(DeviceRequestStates.INPUT);
 
-      logMessage(`Serial: using radio frequency ${this.sessionRadioFrequency}`);
-      const radioFreqCommand = protocol.generateCmdRadioFrequency(
-        this.sessionRadioFrequency,
-      );
+      logMessage(`Serial: using remote device id ${this.remoteDeviceId}`);
+      // TODO: replace this command with one that sends the device id
+      const radioFreqCommand = protocol.generateCmdRadioFrequency(42);
       const radioFreqResponse = await this.sendCmdWaitResponse(radioFreqCommand);
-      if (radioFreqResponse.value !== this.sessionRadioFrequency) {
+      if (radioFreqResponse.value !== this.remoteDeviceId) {
         throw new Error(
-          `Failed to set radio frequency. Expected ${this.sessionRadioFrequency}, got ${radioFreqResponse.value}`,
+          `Failed to set radio frequency. Expected ${this.remoteDeviceId}, got ${radioFreqResponse.value}`,
         );
       }
 
@@ -181,10 +180,10 @@ export class MicrobitSerial implements MicrobitConnection {
 export const startSerialConnection = async (
   usb: MicrobitUSB,
   requestState: DeviceRequestStates,
-  radioFrequency: number,
+  remoteDeviceId: number,
 ): Promise<MicrobitSerial | undefined> => {
   try {
-    const serial = new MicrobitSerial(usb, radioFrequency);
+    const serial = new MicrobitSerial(usb, remoteDeviceId);
     await serial.connect(requestState);
     return serial;
   } catch (e) {

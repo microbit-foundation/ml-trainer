@@ -19,9 +19,9 @@
     connectionDialogState,
   } from '../../script/stores/connectDialogStore';
   import {
+    radioBridgeRemoteDeviceId,
     btPatternInput,
     btPatternOutput,
-    radioBridgeFrequency,
   } from '../../script/stores/connectionStore';
   import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
   import BrokenFirmwareDetected from './usb/BrokenFirmwareDetected.svelte';
@@ -137,8 +137,7 @@
         );
       }
       if (flashStage === 'radio-remote') {
-        // TODO: check max value, add constant etc.
-        $radioBridgeFrequency = 42; // deviceId % 83;
+        $radioBridgeRemoteDeviceId = deviceId;
       }
 
       // Next UI state:
@@ -158,7 +157,10 @@
 
   async function onConnectingSerial(usb: MicrobitUSB): Promise<void> {
     $connectionDialogState.connectionState = ConnectDialogStates.CONNECTING_MICROBITS;
-    await Microbits.assignSerialInput(usb, $radioBridgeFrequency);
+    if ($radioBridgeRemoteDeviceId === -1) {
+      throw new Error('Radio bridge device id not set');
+    }
+    await Microbits.assignSerialInput(usb, $radioBridgeRemoteDeviceId);
     endFlow();
   }
 

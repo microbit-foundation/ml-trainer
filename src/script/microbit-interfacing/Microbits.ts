@@ -53,12 +53,12 @@ class Microbits {
 
   public static async assignSerialInput(
     usb: MicrobitUSB,
-    radioFrequency: number,
+    remoteDeviceId: number,
   ): Promise<boolean> {
     this.inputMicrobit = await startSerialConnection(
       usb,
       DeviceRequestStates.INPUT,
-      radioFrequency,
+      remoteDeviceId,
     );
     return !!this.inputMicrobit;
   }

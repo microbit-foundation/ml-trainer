@@ -21,8 +21,8 @@ export const btPatternOutput = persistantWritable<boolean[]>(
   Array<boolean>(25).fill(false),
 );
 
-export const radioBridgeFrequency = persistantWritable<number>(
-  'radioBridgeFrequency',
+export const radioBridgeRemoteDeviceId = persistantWritable<number>(
+  'radioBridgeRemoteDeviceId',
   -1,
 );
 
