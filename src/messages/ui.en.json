@@ -197,7 +197,6 @@
   "connectMB.pattern.inputLabel": "Number of LEDs lit in column {colNum} on the micro:bit display",
 
   "connectMB.bluetooth.heading": "Connect using Web Bluetooth",
-  "connectMB.main.bluetooth.subtitle": "Connect using Web Bluetooth",
   "connectMB.bluetooth.cancelledConnection": "You didn't choose a micro:bit. Do you want to try again?",
 
   "connectMB.radio.heading": "Connecting micro:bits",
@@ -241,15 +240,6 @@
 
   "connectMB.troubleshoot": "Troubleshoot problems with connecting to your micro:bit",
   "connectMB.troubleshooting": "Troubleshooting",
-
-  "connectMB.usb.body1": "Connect your micro:bit using a USB-cable and click 'Next'",
-  "connectMB.usb.body2": "Click 'Find USB unit' and select 'BBC micro:bit CMSIS-DAP' or 'DAPLink CMSIS-DAP' from the popup that appears",
-  "connectMB.usb.button1": "Next",
-  "connectMB.usb.button2": "Find USB unit",
-  "connectMB.usb.done.body1": "Done - the program has been downloaded.",
-  "connectMB.usb.done.body2": "You can now connect through Bluetooth.",
-  "connectMB.usb.done.body3": "If you have a battery for the micro:bit, you can now remove the usb-cable and use the battery instead.",
-  "connectMB.usb.done.body4": "If you do not have a battery for the micro:bit, you can simply keep powering it through the usb cable.",
 
   "connectMB.usb.firmwareBroken.heading": "Firmware update required",
   "connectMB.usb.firmwareBroken.content1": "Connecting to the micro:bit failed because the firmware on your micro:bit is too old.",

@@ -70,10 +70,17 @@ const filesIncludesExpression = (files: string[], expect: string): boolean => {
 test(
   'All translations should be used',
   () => {
+    const allowedUnused = [
+      // We have some strings we plan to reinstate
+      /^popup.outdatedmicrobit/,
+    ];
     const translationKeys = Object.getOwnPropertyNames(en);
     const flatten = flattenDirectory('./src/');
     for (let i = 0; i < translationKeys.length; i++) {
       const translationKey = translationKeys[i];
+      if (allowedUnused.some(regexp => regexp.test(translationKey))) {
+        continue;
+      }
       expect(
         filesIncludesExpression(flatten, translationKey),
         "unused translation --> '" +
