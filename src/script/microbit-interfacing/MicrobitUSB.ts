@@ -61,13 +61,6 @@ class MicrobitUSB {
   }
 
   /**
-   * Returns the USB serial number of the device
-   */
-  public getSerialNumber(): string {
-    return this.usbDevice.serialNumber!.toString();
-  }
-
-  /**
    * Uses the serial number from dapjs to determine the model number of the board.
    * Read more: https://support.microbit.org/support/solutions/articles/19000035697-what-are-the-usb-vid-pid-numbers-for-micro-bit
    * @returns The hardware model of the micro:bit. Either 1 or 2.
@@ -79,17 +72,14 @@ class MicrobitUSB {
   }
 
   /**
-   * @returns {string} The friendly name of the micro:bit.
+   * @returns {string} The device ID of the micro:bit from FICR.
    */
-  public async getFriendlyName(): Promise<string> {
+  public async getDeviceId(): Promise<number> {
     const debug = new CortexM(this.transport);
     try {
       await debug.connect();
       // Microbit only uses MSB of serial number
-      const serial = await debug.readMem32(
-        MBSpecs.USBSpecs.FICR + MBSpecs.USBSpecs.DEVICE_ID_1,
-      );
-      return MBSpecs.Utility.serialNumberToName(serial);
+      return await debug.readMem32(MBSpecs.USBSpecs.FICR + MBSpecs.USBSpecs.DEVICE_ID_1);
     } catch (e: unknown) {
       logError('USB failed to read name', e);
       throw new Error('Failed to read name: ' + e);

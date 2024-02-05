@@ -18,7 +18,11 @@
     ConnectDialogStates,
     connectionDialogState,
   } from '../../script/stores/connectDialogStore';
-  import { btPatternInput, btPatternOutput } from '../../script/stores/connectionStore';
+  import {
+    btPatternInput,
+    btPatternOutput,
+    radioBridgeFrequency,
+  } from '../../script/stores/connectionStore';
   import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
   import BrokenFirmwareDetected from './usb/BrokenFirmwareDetected.svelte';
   import BluetoothConnectingDialog from './bluetooth/BluetoothConnectingDialog.svelte';
@@ -112,7 +116,7 @@
 
   async function flashMicrobit(usb: MicrobitUSB): Promise<void> {
     try {
-      const name = await usb.getFriendlyName();
+      const deviceId = await usb.getDeviceId();
       const hexForStage = stageToHex(flashStage);
       await usb.flashHex(hexForStage, progress => {
         // Flash hex
@@ -124,11 +128,21 @@
         }
         flashProgress = progress;
       });
-      // Finished flashing successfully
+
+      // Store radio/bluetooth details. Radio is essential to pass to micro:bit 2.
+      // Bluetooth saves the user from entering the pattern.
+      if (flashStage === 'bluetooth') {
+        $btPatternInput = MBSpecs.Utility.nameToPattern(
+          MBSpecs.Utility.serialNumberToName(deviceId),
+        );
+      }
+      if (flashStage === 'radio-sender') {
+        // TODO: check max value, add constant etc.
+        $radioBridgeFrequency = 42; // deviceId % 83;
+      }
+
+      // Next UI state:
       if (flashStage === 'bluetooth' || flashStage === 'radio-sender') {
-        if (flashStage === 'bluetooth') {
-          $btPatternInput = MBSpecs.Utility.nameToPattern(name);
-        }
         $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY;
       } else if (flashStage === 'radio-bridge') {
         onConnectingSerial(usb);
@@ -144,7 +158,7 @@
 
   async function onConnectingSerial(usb: MicrobitUSB): Promise<void> {
     $connectionDialogState.connectionState = ConnectDialogStates.CONNECTING_MICROBITS;
-    await Microbits.assignSerialInput(usb);
+    await Microbits.assignSerialInput(usb, $radioBridgeFrequency);
     endFlow();
   }
 

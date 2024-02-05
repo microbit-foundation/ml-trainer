@@ -26,12 +26,6 @@ describe('Microbit USB connection tests', () => {
     });
   });
 
-  test('Can connect read serial', async () => {
-    const mockUsbDevice = new MockUSBDevice().withSerialNumber('123test').build();
-    const connection = new TestableMicrobitUSB(mockUsbDevice);
-    expect(connection.getSerialNumber()).toBe('123test');
-  });
-
   test('Serial number 9900 should be a version 1', async () => {
     const mockUsbDevice = new MockUSBDevice().withSerialNumber('9900serno').build();
     const connection = new TestableMicrobitUSB(mockUsbDevice);

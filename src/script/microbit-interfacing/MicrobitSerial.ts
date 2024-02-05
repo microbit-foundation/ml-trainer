@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { logError } from '../utils/logging';
+import { logError, logMessage } from '../utils/logging';
 import MicrobitConnection, { DeviceRequestStates } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
 import { onAccelerometerChange, onButtonChange } from './change-listeners';
@@ -23,18 +23,13 @@ export class MicrobitSerial implements MicrobitConnection {
     (value: protocol.MessageResponse | PromiseLike<protocol.MessageResponse>) => void
   >();
 
-  // TODO: The radio frequency should be randomly generated once per session.
-  //       If we want a session to be restored (e.g. from local storage) and
-  //       the previously flashed micro:bits to continue working without
-  //       reflashing we need to store and retrieve this value somehow.
-  // FIXME: Setting this to the hex files default value for now, as we need
-  //        to configure the radio frequency for both micro:bits after they
-  //        are flashed, not just the radio bridge.
-  private sessionRadioFrequency = 42;
-
-  constructor(private usb: MicrobitUSB) {}
+  constructor(
+    private usb: MicrobitUSB,
+    private sessionRadioFrequency: number,
+  ) {}
 
   async connect(...states: DeviceRequestStates[]): Promise<void> {
+    logMessage('Serial connect');
     let unprocessedData = '';
     let previousButtonState = { A: 0, B: 0 };
 
@@ -80,7 +75,7 @@ export class MicrobitSerial implements MicrobitConnection {
       await this.handshake();
       stateOnConnected(DeviceRequestStates.INPUT);
 
-      // Set the radio frequency to a value unique to this session
+      logMessage(`Serial: using radio frequency ${this.sessionRadioFrequency}`);
       const radioFreqCommand = protocol.generateCmdRadioFrequency(
         this.sessionRadioFrequency,
       );
@@ -147,6 +142,7 @@ export class MicrobitSerial implements MicrobitConnection {
     // As a workaround we can spam the micro:bit with handshake messages until
     // enough responses have been queued in the buffer to fill it and the data
     // starts to flow.
+    logMessage('Serial handshake');
     const handshakeResult = await new Promise<protocol.MessageResponse>(
       async (resolve, reject) => {
         const attempts = 20;
@@ -185,9 +181,10 @@ export class MicrobitSerial implements MicrobitConnection {
 export const startSerialConnection = async (
   usb: MicrobitUSB,
   requestState: DeviceRequestStates,
+  radioFrequency: number,
 ): Promise<MicrobitSerial | undefined> => {
   try {
-    const serial = new MicrobitSerial(usb);
+    const serial = new MicrobitSerial(usb, radioFrequency);
     await serial.connect(requestState);
     return serial;
   } catch (e) {
