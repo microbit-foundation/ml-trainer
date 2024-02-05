@@ -118,7 +118,7 @@
       <StandardButton onClick={stateOnStopOfferingReconnect}
         >{$t('actions.cancel')}</StandardButton>
       <StandardButton type="primary" onClick={reconnect}
-        >{$t('disconnectedWarning.reconnectButton')}</StandardButton>
+        >{$t('actions.reconnect')}</StandardButton>
     </div>
   </svelte:fragment>
 </StandardDialog>

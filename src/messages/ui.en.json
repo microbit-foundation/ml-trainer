@@ -5,6 +5,7 @@
 
   "actions.close": "Close",
   "actions.cancel": "Cancel",
+  "actions.reconnect": "Reconnect",
 
   "alert.data.classNameLengthAlert": "Action names cannot be longer than {maxLen} characters.",
   "alert.recording.disconnectedDuringRecording": "micro:bit disconnected during recording",
@@ -94,7 +95,6 @@
   "footer.resume": "Resume session",
   "footer.disconnectButton": "Disconnect",
   "footer.connectButton": "Connect",
-  "footer.reconnectButton": "Reconnect",
   "footer.helpHeader": "Live graph",
   "footer.helpContent": "This graph shows movement data from the microbit’s accelerometer in real time. Try moving your connected micro:bit to see the X, Y and Z axes change.",
 
@@ -226,8 +226,6 @@
 
   "disconnectedWarning.bridgeHeading": "micro:bit 2 connection lost",
   "disconnectedWarning.bridge1": "The connection to the micro:bit connected to your computer has been lost.",
-
-  "disconnectedWarning.reconnectButton": "Reconnect",
 
   "connectMB.output.header": "A micro:bit is already connected",
 

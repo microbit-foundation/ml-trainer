@@ -57,7 +57,7 @@
       <StandardButton onClick={handleInputConnect} type="primary" size="small"
         >{$t(
           $state.offerReconnect || $state.isInputAssigned
-            ? 'footer.reconnectButton'
+            ? 'actions.reconnect'
             : 'footer.connectButton',
         )}</StandardButton>
     {:else}
