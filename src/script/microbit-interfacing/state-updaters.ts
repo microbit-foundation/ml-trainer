@@ -24,6 +24,7 @@ export const stateOnConnected = (requestState: DeviceRequestStates) => {
       // This is set on disconnect.
       connectionType: 'none',
       reconnectFailed: false,
+      reconnecting: false,
     };
     return s;
   });
@@ -114,7 +115,7 @@ export const stateOnDisconnected = (
       s.isInputReady = false;
       s.showReconnectHelp = !userDisconnect;
       s.reconnectState = {
-        connecting: false,
+        reconnecting: false,
         reconnectFailed: false,
         connectionType: connectionType,
         inUseAs: s.reconnectState.inUseAs.add(DeviceRequestStates.INPUT),
@@ -129,9 +130,8 @@ export const stateOnDisconnected = (
       s.isOutputReady = false;
       s.isOutputOutdated = false;
       s.reconnectState = {
-        connecting: false,
+        reconnecting: false,
         reconnectFailed: false,
-
         connectionType: connectionType,
         inUseAs: s.reconnectState.inUseAs.add(DeviceRequestStates.OUTPUT),
       };
@@ -149,7 +149,7 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
       s.showReconnectHelp = false;
       s.reconnectState = {
         ...s.reconnectState,
-        connecting: false,
+        reconnecting: false,
         reconnectFailed: true,
         inUseAs: new Set(),
       };
@@ -164,7 +164,7 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
       s.isOutputReady = false;
       s.reconnectState = {
         ...s.reconnectState,
-        connecting: false,
+        reconnecting: false,
         reconnectFailed: true,
         inUseAs: new Set(),
       };
@@ -196,4 +196,15 @@ export const stateOnVersionIdentified = (
       return s;
     });
   }
+};
+
+export const stateOnReconnectionAttempt = () => {
+  state.update(s => {
+    s.showReconnectHelp = false;
+    s.reconnectState = {
+      ...s.reconnectState,
+      reconnecting: true,
+    };
+    return s;
+  });
 };

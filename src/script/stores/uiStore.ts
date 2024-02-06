@@ -36,7 +36,7 @@ export type ConnectionType = 'none' | 'bluetooth' | 'bridge' | 'remote';
 interface ReconnectState {
   connectionType: ConnectionType;
   inUseAs: Set<DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT>;
-  connecting: boolean;
+  reconnecting: boolean;
   reconnectFailed: boolean;
 }
 
@@ -82,7 +82,7 @@ export const state = writable<{
   reconnectState: {
     connectionType: 'none',
     inUseAs: new Set(),
-    connecting: false,
+    reconnecting: false,
     reconnectFailed: false,
   },
   isInputReady: false,

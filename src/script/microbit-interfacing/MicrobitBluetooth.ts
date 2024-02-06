@@ -20,6 +20,7 @@ import {
   stateOnConnected,
   stateOnDisconnected,
   stateOnReady,
+  stateOnReconnectionAttempt,
 } from './state-updaters';
 
 /**
@@ -200,6 +201,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
     try {
       if (!this.duringExplicitConnectDisconnect) {
         logMessage('Bluetooth GATT disconnected... automatically trying reconnect');
+        stateOnReconnectionAttempt();
         await this.reconnect();
       } else {
         logMessage('Bluetooth GATT disconnect ignored during explicit disconnect');

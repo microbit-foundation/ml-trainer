@@ -13,7 +13,6 @@ import {
   stateOnAssigned,
   stateOnConnected,
   stateOnDisconnected,
-  stateOnFailedToConnect,
   stateOnReady,
 } from './state-updaters';
 

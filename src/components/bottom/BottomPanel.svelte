@@ -12,6 +12,7 @@
   import BaseDialog from '../dialogs/BaseDialog.svelte';
   import View3DLive from '../3d-inspector/View3DLive.svelte';
   import Information from '../information/Information.svelte';
+  import { state } from '../../script/stores/uiStore';
 
   const live3dViewVisible = false;
   const live3dViewSize = live3dViewVisible ? 160 : 0;
@@ -23,12 +24,12 @@
   <div class="relative z-1">
     <div
       class="flex items-center justify-between gap-2 pt-4 px-7 m-0 absolute top-0 left-0 right-0">
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-4">
         <!-- The live text and info box -->
         <LiveGraphInformationSection />
         <ConnectedLiveGraphButtons />
-        {#if false}
-          <div>
+        {#if $state.reconnectState.reconnecting && $state.isInputConnected}
+          <div class="py-1px bg-white rounded-4xl">
             <p class="font-bold">{$t('connectMB.reconnecting')}</p>
           </div>
         {/if}
