@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { CortexM } from 'dapjs';
 import { logError, logMessage } from '../utils/logging';
 import MicrobitConnection, { DeviceRequestStates } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
@@ -16,6 +17,7 @@ import {
   stateOnFailedToConnect,
   stateOnReady,
 } from './state-updaters';
+import { isDevMode } from '../environment';
 
 export class MicrobitSerial implements MicrobitConnection {
   private responseMap = new Map<
@@ -96,7 +98,7 @@ export class MicrobitSerial implements MicrobitConnection {
       // Check for connection lost
       if (this.connectionCheckIntervalId === undefined) {
         this.connectionCheckIntervalId = setInterval(async () => {
-          const allowedTimeWithoutMessageInMs = 10000;
+          const allowedTimeWithoutMessageInMs = isDevMode ? 2000 : 10000;
           if (
             this.lastReceivedMessageTimestamp &&
             Date.now() - this.lastReceivedMessageTimestamp > allowedTimeWithoutMessageInMs
@@ -167,6 +169,8 @@ export class MicrobitSerial implements MicrobitConnection {
     try {
       this.stopConnectionCheck();
       logMessage('Serial disconnected... automatically trying to reconnect');
+      await this.usb.softwareReset();
+      await this.usb.stopSerial();
       await this.reconnect();
     } catch (e) {
       logError('Serial connect triggered by disconnect listener failed', e);
