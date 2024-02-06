@@ -50,7 +50,7 @@ export const state = writable<{
   isOutputConnected: boolean;
   hasTrainedBefore: boolean;
   isPredicting: boolean;
-  showReconnectHelp: boolean;
+  showReconnectHelp: 'userTriggered' | boolean;
   reconnectState: ReconnectState;
   isInputReady: boolean;
   inputHexVersion: number;

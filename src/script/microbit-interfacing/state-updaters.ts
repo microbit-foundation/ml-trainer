@@ -169,9 +169,9 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
   }
 };
 
-export const stateOnShowReconnectHelp = () => {
+export const stateOnShowReconnectHelp = (userTriggered: boolean = false) => {
   state.update(s => {
-    s.showReconnectHelp = true;
+    s.showReconnectHelp = userTriggered ? 'userTriggered' : true;
     return s;
   });
 };

@@ -69,5 +69,5 @@
       </div>
     </div>
   {/if}
-  <ReconnectPrompt isOpen={$state.showReconnectHelp} />
+  <ReconnectPrompt isOpen={!!$state.showReconnectHelp} />
 </div>

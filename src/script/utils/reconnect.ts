@@ -49,7 +49,7 @@ export const reconnect = async (finalAttempt: boolean = false) => {
         s.connectionState = ConnectDialogStates.NONE;
         return s;
       });
-      stateOnShowReconnectHelp();
+      stateOnShowReconnectHelp(true);
     }
   } finally {
     state.update(s => {
