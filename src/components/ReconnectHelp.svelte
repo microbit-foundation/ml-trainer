@@ -58,7 +58,7 @@
       }
       default: {
         return {
-          heading: 'disconnectedWarning.bluetoothHeading',
+          heading: '',
           subtitle: '',
           listHeading: '',
           bulletOne: '',
