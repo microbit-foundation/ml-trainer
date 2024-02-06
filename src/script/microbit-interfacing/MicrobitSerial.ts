@@ -31,6 +31,8 @@ export class MicrobitSerial implements MicrobitConnection {
   //        to configure the radio frequency for both micro:bits after they
   //        are flashed, not just the radio bridge.
   private sessionRadioFrequency = 42;
+  private connectionCheckIntervalId: ReturnType<typeof setInterval> | undefined;
+  private lastReceivedMessageTimestamp: number | undefined;
 
   constructor(private usb: MicrobitUSB) {}
 
@@ -46,6 +48,8 @@ export class MicrobitSerial implements MicrobitConnection {
       const messages = protocol.splitMessages(unprocessedData + data);
       unprocessedData = messages.remainingInput;
       messages.messages.forEach(async msg => {
+        this.lastReceivedMessageTimestamp = Date.now();
+
         // Messages are either periodic sensor data or command/response
         const sensorData = protocol.processPeriodicMessage(msg);
         if (sensorData) {
@@ -80,6 +84,20 @@ export class MicrobitSerial implements MicrobitConnection {
       await this.handshake();
       stateOnConnected(DeviceRequestStates.INPUT);
 
+      // Check for connection lost
+      if (this.connectionCheckIntervalId === undefined) {
+        this.connectionCheckIntervalId = setInterval(() => {
+          const allowedTimeWithoutMessageInMs = 10000;
+          if (
+            this.lastReceivedMessageTimestamp &&
+            Date.now() - this.lastReceivedMessageTimestamp > allowedTimeWithoutMessageInMs
+          ) {
+            // TODO: Replace with connection lost expected behaviour
+            console.log('CONNECTION LOST');
+          }
+        }, 1000);
+      }
+
       // Set the radio frequency to a value unique to this session
       const radioFreqCommand = protocol.generateCmdRadioFrequency(
         this.sessionRadioFrequency,
@@ -113,7 +131,14 @@ export class MicrobitSerial implements MicrobitConnection {
   }
 
   async disconnect(): Promise<void> {
+    this.stopConnectionCheck();
     return this.disconnectInternal(true);
+  }
+
+  private stopConnectionCheck() {
+    clearInterval(this.connectionCheckIntervalId);
+    this.connectionCheckIntervalId = undefined;
+    this.lastReceivedMessageTimestamp = undefined;
   }
 
   private async disconnectInternal(userDisconnect: boolean): Promise<void> {
