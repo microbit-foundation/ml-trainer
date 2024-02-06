@@ -169,7 +169,14 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
   }
 };
 
-export const stateOnStopOfferingReconnect = () => {
+export const stateOnShowReconnectHelp = () => {
+  state.update(s => {
+    s.showReconnectHelp = true;
+    return s;
+  });
+};
+
+export const stateOnHideReconnectHelp = () => {
   state.update(s => {
     s.showReconnectHelp = false;
     return s;

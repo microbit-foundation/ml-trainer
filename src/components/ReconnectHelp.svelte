@@ -8,10 +8,10 @@
   import ExternalLinkIcon from 'virtual:icons/ri/external-link-line';
   import StandardButton from './StandardButton.svelte';
   import { t } from '../i18n';
-  import { stateOnStopOfferingReconnect } from '../script/microbit-interfacing/state-updaters';
   import { state } from '../script/stores/uiStore';
   import { reconnect } from '../script/utils/reconnect';
   import StandardDialog from './dialogs/StandardDialog.svelte';
+  import { stateOnHideReconnectHelp } from '../script/microbit-interfacing/state-updaters';
 
   export let isOpen: boolean = false;
 
@@ -70,7 +70,7 @@
 </script>
 
 {#if $state.reconnectState.connectionType !== 'none'}
-  <StandardDialog {isOpen} onClose={stateOnStopOfferingReconnect} class="w-150 space-y-5">
+  <StandardDialog {isOpen} onClose={stateOnHideReconnectHelp} class="w-150 space-y-5">
     <svelte:fragment slot="heading">
       {$t(content.heading)}
     </svelte:fragment>
@@ -93,9 +93,9 @@
           {$t('connectMB.troubleshooting')}
           <ExternalLinkIcon />
         </a>
-        <StandardButton onClick={stateOnStopOfferingReconnect}
+        <StandardButton onClick={stateOnHideReconnectHelp}
           >{$t('actions.cancel')}</StandardButton>
-        <StandardButton type="primary" onClick={reconnect}
+        <StandardButton type="primary" onClick={() => reconnect(true)}
           >{$t('actions.reconnect')}</StandardButton>
       </div>
     </svelte:fragment>

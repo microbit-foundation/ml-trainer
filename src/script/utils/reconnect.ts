@@ -15,9 +15,10 @@ import Microbits from '../microbit-interfacing/Microbits';
 import {
   stateOnFailedToConnect,
   stateOnReconnectionAttempt,
+  stateOnShowReconnectHelp,
 } from '../microbit-interfacing/state-updaters';
 
-export const reconnect = async () => {
+export const reconnect = async (finalAttempt: boolean = false) => {
   stateOnReconnectionAttempt();
   const { reconnectState } = get(state);
   if (get(state).reconnectState.connectionType === 'bluetooth') {
@@ -40,8 +41,16 @@ export const reconnect = async () => {
       return s;
     });
   } catch (e) {
-    reconnectState.inUseAs.forEach(s => stateOnFailedToConnect(s));
-    startConnectionProcess();
+    if (finalAttempt) {
+      reconnectState.inUseAs.forEach(s => stateOnFailedToConnect(s));
+      startConnectionProcess();
+    } else {
+      connectionDialogState.update(s => {
+        s.connectionState = ConnectDialogStates.NONE;
+        return s;
+      });
+      stateOnShowReconnectHelp();
+    }
   } finally {
     state.update(s => {
       s.reconnectState = {
