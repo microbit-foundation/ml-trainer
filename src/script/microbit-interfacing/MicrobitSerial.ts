@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { logError } from '../utils/logging';
+import { logError, logMessage } from '../utils/logging';
 import MicrobitConnection, { DeviceRequestStates } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
 import { onAccelerometerChange, onButtonChange } from './change-listeners';
@@ -23,6 +23,9 @@ export class MicrobitSerial implements MicrobitConnection {
     (value: protocol.MessageResponse | PromiseLike<protocol.MessageResponse>) => void
   >();
 
+  // Used to avoid concurrent connect attempts
+  private isConnecting: boolean = false;
+
   // TODO: The radio frequency should be randomly generated once per session.
   //       If we want a session to be restored (e.g. from local storage) and
   //       the previously flashed micro:bits to continue working without
@@ -37,6 +40,12 @@ export class MicrobitSerial implements MicrobitConnection {
   constructor(private usb: MicrobitUSB) {}
 
   async connect(...states: DeviceRequestStates[]): Promise<void> {
+    logMessage('Serial connect', states);
+    if (this.isConnecting) {
+      logMessage('Skipping connect attempt when one is already in progress');
+      return;
+    }
+    this.isConnecting = true;
     let unprocessedData = '';
     let previousButtonState = { A: 0, B: 0 };
 
@@ -86,14 +95,13 @@ export class MicrobitSerial implements MicrobitConnection {
 
       // Check for connection lost
       if (this.connectionCheckIntervalId === undefined) {
-        this.connectionCheckIntervalId = setInterval(() => {
+        this.connectionCheckIntervalId = setInterval(async () => {
           const allowedTimeWithoutMessageInMs = 10000;
           if (
             this.lastReceivedMessageTimestamp &&
             Date.now() - this.lastReceivedMessageTimestamp > allowedTimeWithoutMessageInMs
           ) {
-            // TODO: Replace with connection lost expected behaviour
-            console.log('CONNECTION LOST');
+            await this.handleReconnect();
           }
         }, 1000);
       }
@@ -127,6 +135,8 @@ export class MicrobitSerial implements MicrobitConnection {
       stateOnFailedToConnect(DeviceRequestStates.INPUT);
       await this.usb.stopSerial();
       throw e;
+    } finally {
+      this.isConnecting = false;
     }
   }
 
@@ -148,7 +158,26 @@ export class MicrobitSerial implements MicrobitConnection {
     stateOnDisconnected(DeviceRequestStates.INPUT, userDisconnect);
   }
 
+  async handleReconnect(): Promise<void> {
+    if (this.isConnecting) {
+      logMessage('Serial disconnect ignored... reconnect already in progress');
+      return;
+    }
+    this.isConnecting = true;
+    this.stopConnectionCheck();
+    try {
+      logMessage('Serial disconnected... automatically trying reconnect');
+      await this.reconnect();
+    } catch (e) {
+      logError('Serial connect triggered by disconnect listener failed', e);
+      stateOnDisconnected(DeviceRequestStates.INPUT, true);
+    } finally {
+      this.isConnecting = false;
+    }
+  }
+
   async reconnect(): Promise<void> {
+    logMessage('Serial reconnect');
     await this.connect(DeviceRequestStates.INPUT);
   }
 
