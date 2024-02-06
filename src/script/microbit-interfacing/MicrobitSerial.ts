@@ -166,11 +166,10 @@ export class MicrobitSerial implements MicrobitConnection {
     }
     try {
       this.stopConnectionCheck();
-      logMessage('Serial disconnected... automatically trying reconnect');
+      logMessage('Serial disconnected... automatically trying to reconnect');
       await this.reconnect();
     } catch (e) {
       logError('Serial connect triggered by disconnect listener failed', e);
-      stateOnDisconnected(DeviceRequestStates.INPUT, true);
     } finally {
       this.isConnecting = false;
     }
