@@ -103,14 +103,14 @@ export const stateOnAssigned = (
 
 export const stateOnDisconnected = (
   requestState: DeviceRequestStates,
-  userDisconnect: boolean,
+  showReconnectHelp: boolean,
   connectionType: ConnectionType,
 ): void => {
   if (requestState === DeviceRequestStates.INPUT) {
     state.update(s => {
       s.isInputConnected = false;
       s.isInputReady = false;
-      s.showReconnectHelp = !userDisconnect;
+      s.showReconnectHelp = showReconnectHelp;
       s.reconnectState = {
         reconnecting: false,
         reconnectFailed: false,
@@ -123,7 +123,7 @@ export const stateOnDisconnected = (
   } else {
     state.update(s => {
       s.isOutputConnected = false;
-      s.showReconnectHelp = !userDisconnect;
+      s.showReconnectHelp = showReconnectHelp;
       s.isOutputReady = false;
       s.isOutputOutdated = false;
       s.reconnectState = {
