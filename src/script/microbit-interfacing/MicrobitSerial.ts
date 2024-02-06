@@ -130,6 +130,7 @@ export class MicrobitSerial implements MicrobitConnection {
 
       stateOnAssigned(DeviceRequestStates.INPUT, this.usb.getModelNumber());
       stateOnReady(DeviceRequestStates.INPUT);
+      logMessage('Serial successfully connected');
     } catch (e) {
       logError('Failed to initialise serial protocol', e);
       stateOnFailedToConnect(DeviceRequestStates.INPUT);
@@ -163,9 +164,8 @@ export class MicrobitSerial implements MicrobitConnection {
       logMessage('Serial disconnect ignored... reconnect already in progress');
       return;
     }
-    this.isConnecting = true;
-    this.stopConnectionCheck();
     try {
+      this.stopConnectionCheck();
       logMessage('Serial disconnected... automatically trying reconnect');
       await this.reconnect();
     } catch (e) {
