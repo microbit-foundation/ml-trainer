@@ -10,10 +10,10 @@
   import usbCableImage from '../../../imgs/stylised-usb-cable.svg';
   import batteryPackImage from '../../../imgs/stylised-battery-pack.svg';
   import WhatYouWillNeedDialog from '../../WhatYouWillNeedDialog.svelte';
+  import { state } from '../../../script/stores/uiStore';
 
   export let onNextClick: () => void;
   export let onStartBluetoothClick: (() => void) | undefined;
-  export let reconnectFailed: boolean = false;
 
   const items = [
     {
@@ -39,10 +39,9 @@
 
 <WhatYouWillNeedDialog
   {items}
-  headingId={reconnectFailed
+  headingId={$state.reconnectState.reconnectFailed
     ? 'reconnectFailed.radioHeading'
     : 'connectMB.radioStart.heading'}
-  {reconnectFailed}
   switchTextId="connectMB.radioStart.switchBluetooth"
   onSwitchClick={onStartBluetoothClick}
   {onNextClick} />

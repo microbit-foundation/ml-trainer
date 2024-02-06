@@ -5,7 +5,7 @@
  */
 
 import { get } from 'svelte/store';
-import { ModelView, state } from '../stores/uiStore';
+import { ConnectionType, ModelView, state } from '../stores/uiStore';
 import { Paths, currentPath, navigate } from '../../router/paths';
 import MBSpecs from './MBSpecs';
 import { HexOrigin } from '../../StaticConfiguration';
@@ -18,7 +18,13 @@ export const stateOnConnected = (requestState: DeviceRequestStates) => {
       ? (s.isInputConnected = true)
       : (s.isOutputConnected = true);
     s.isRequestingDevice = DeviceRequestStates.NONE;
-    s.offerReconnect = false;
+    s.showReconnectHelp = false;
+    s.reconnectState = {
+      ...s.reconnectState,
+      // This is set on disconnect.
+      connectionType: 'none',
+      reconnectFailed: false,
+    };
     return s;
   });
 };
@@ -100,25 +106,35 @@ export const stateOnAssigned = (
 export const stateOnDisconnected = (
   requestState: DeviceRequestStates,
   userDisconnect: boolean,
+  connectionType: ConnectionType,
 ): void => {
   if (requestState === DeviceRequestStates.INPUT) {
     state.update(s => {
       s.isInputConnected = false;
       s.isInputReady = false;
-      s.offerReconnect = !userDisconnect;
-      s.reconnectState = DeviceRequestStates.INPUT;
+      s.showReconnectHelp = !userDisconnect;
+      s.reconnectState = {
+        connecting: false,
+        reconnectFailed: false,
+        connectionType: connectionType,
+        inUseAs: s.reconnectState.inUseAs.add(DeviceRequestStates.INPUT),
+      };
       s.isInputOutdated = false;
       return s;
     });
   } else {
     state.update(s => {
       s.isOutputConnected = false;
-      s.offerReconnect = !userDisconnect;
+      s.showReconnectHelp = !userDisconnect;
       s.isOutputReady = false;
       s.isOutputOutdated = false;
-      if (s.isInputConnected) {
-        s.reconnectState = DeviceRequestStates.OUTPUT;
-      }
+      s.reconnectState = {
+        connecting: false,
+        reconnectFailed: false,
+
+        connectionType: connectionType,
+        inUseAs: s.reconnectState.inUseAs.add(DeviceRequestStates.OUTPUT),
+      };
       return s;
     });
   }
@@ -130,18 +146,28 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
       s.isInputConnected = false;
       s.isInputAssigned = false;
       s.isInputReady = false;
-      s.offerReconnect = false;
-      s.reconnectState = DeviceRequestStates.NONE;
+      s.showReconnectHelp = false;
+      s.reconnectState = {
+        ...s.reconnectState,
+        connecting: false,
+        reconnectFailed: true,
+        inUseAs: new Set(),
+      };
       s.isInputOutdated = false;
       return s;
     });
   } else {
     state.update(s => {
       s.isOutputConnected = false;
-      s.offerReconnect = false;
+      s.showReconnectHelp = false;
       s.isOutputAssigned = false;
       s.isOutputReady = false;
-      s.reconnectState = DeviceRequestStates.NONE;
+      s.reconnectState = {
+        ...s.reconnectState,
+        connecting: false,
+        reconnectFailed: true,
+        inUseAs: new Set(),
+      };
       s.isOutputOutdated = false;
       return s;
     });
@@ -150,7 +176,7 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
 
 export const stateOnStopOfferingReconnect = () => {
   state.update(s => {
-    s.offerReconnect = false;
+    s.showReconnectHelp = false;
     return s;
   });
 };

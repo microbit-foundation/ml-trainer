@@ -39,14 +39,22 @@ export const connectionDialogState = writable<{
 
 export const startConnectionProcess = (): void => {
   const { usb } = get(compatibility);
+  const { isInputConnected, reconnectState } = get(state);
   // Updating the state will cause a popup to appear, from where the connection process will take place
+
+  let initialInputDialogState = ConnectDialogStates.START_RADIO;
+  if (reconnectState.connectionType === 'none') {
+    if (!usb) {
+      initialInputDialogState = ConnectDialogStates.START_BLUETOOTH;
+    }
+  } else if (reconnectState.connectionType === 'bluetooth') {
+    initialInputDialogState = ConnectDialogStates.START_BLUETOOTH;
+  }
   connectionDialogState.update(s => {
-    s.connectionState = get(state).isInputConnected
+    s.connectionState = isInputConnected
       ? ConnectDialogStates.START_OUTPUT
-      : usb
-        ? ConnectDialogStates.START_RADIO
-        : ConnectDialogStates.START_BLUETOOTH;
-    s.deviceState = get(state).isInputConnected
+      : initialInputDialogState;
+    s.deviceState = isInputConnected
       ? DeviceRequestStates.OUTPUT
       : DeviceRequestStates.INPUT;
     return s;

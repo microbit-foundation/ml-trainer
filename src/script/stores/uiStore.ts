@@ -31,6 +31,15 @@ export enum ModelView {
   STACK,
 }
 
+export type ConnectionType = 'none' | 'bluetooth' | 'bridge' | 'remote';
+
+interface ReconnectState {
+  connectionType: ConnectionType;
+  inUseAs: Set<DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT>;
+  connecting: boolean;
+  reconnectFailed: boolean;
+}
+
 // Store current state to prevent error prone actions
 export const state = writable<{
   isRequestingDevice: DeviceRequestStates;
@@ -43,8 +52,8 @@ export const state = writable<{
   isOutputConnected: boolean;
   hasTrainedBefore: boolean;
   isPredicting: boolean;
-  offerReconnect: boolean;
-  reconnectState: DeviceRequestStates;
+  showReconnectHelp: boolean;
+  reconnectState: ReconnectState;
   isInputReady: boolean;
   isInputAssigned: boolean;
   inputHexVersion: number;
@@ -69,8 +78,13 @@ export const state = writable<{
   isOutputConnected: false,
   hasTrainedBefore: false,
   isPredicting: false,
-  offerReconnect: false,
-  reconnectState: DeviceRequestStates.NONE,
+  showReconnectHelp: false,
+  reconnectState: {
+    connectionType: 'none',
+    inUseAs: new Set(),
+    connecting: false,
+    reconnectFailed: false,
+  },
   isInputReady: false,
   isInputAssigned: false,
   inputHexVersion: -1,

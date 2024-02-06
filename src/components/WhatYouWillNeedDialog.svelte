@@ -6,6 +6,7 @@
 
 <script lang="ts">
   import { t } from '../i18n';
+  import { state } from '../script/stores/uiStore';
   import DialogHeading from './DialogHeading.svelte';
   import StandardButton from './StandardButton.svelte';
   import ExternalLinkIcon from 'virtual:icons/ri/external-link-line';
@@ -18,7 +19,6 @@
 
   export let items: Item[];
   export let headingId: string;
-  export let reconnectFailed: boolean;
   export let subtitleId: string | undefined = undefined;
   export let switchTextId: string;
   export let onSwitchClick: (() => void) | undefined;
@@ -28,7 +28,7 @@
 <div class="w-175">
   <DialogHeading>{$t(headingId)}</DialogHeading>
   <div class="space-y-2">
-    {#if reconnectFailed}
+    {#if $state.reconnectState.reconnectFailed}
       <p>
         {$t('reconnectFailed.subtitle')}
         <a

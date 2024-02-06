@@ -106,8 +106,7 @@ export class MicrobitSerial implements MicrobitConnection {
       stateOnReady(DeviceRequestStates.INPUT);
     } catch (e) {
       logError('Failed to initialise serial protocol', e);
-      stateOnFailedToConnect(DeviceRequestStates.INPUT);
-      await this.usb.stopSerial();
+      await this.disconnectInternal(false);
       throw e;
     }
   }
@@ -120,7 +119,7 @@ export class MicrobitSerial implements MicrobitConnection {
     // We might want to send command to stop streaming here?
     this.responseMap.clear();
     await this.usb.stopSerial();
-    stateOnDisconnected(DeviceRequestStates.INPUT, userDisconnect);
+    stateOnDisconnected(DeviceRequestStates.INPUT, userDisconnect, 'bridge');
   }
 
   async reconnect(): Promise<void> {

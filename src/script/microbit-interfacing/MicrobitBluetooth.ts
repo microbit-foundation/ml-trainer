@@ -5,7 +5,6 @@
  */
 
 import StaticConfiguration from '../../StaticConfiguration';
-import { isDevMode } from '../environment';
 import { outputting } from '../stores/uiStore';
 import { logError, logMessage } from '../utils/logging';
 import MBSpecs from './MBSpecs';
@@ -20,7 +19,6 @@ import {
   stateOnAssigned,
   stateOnConnected,
   stateOnDisconnected,
-  stateOnFailedToConnect,
   stateOnReady,
 } from './state-updaters';
 
@@ -161,7 +159,6 @@ export class MicrobitBluetooth implements MicrobitConnection {
     } catch (e) {
       logError('Bluetooth connect error', e);
       await this.disconnectInternal(false);
-      states.forEach(s => stateOnFailedToConnect(s));
       throw new Error('Failed to establish a connection!');
     } finally {
       this.duringExplicitConnectDisconnect--;
@@ -188,7 +185,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
       this.duringExplicitConnectDisconnect--;
     }
 
-    this.inUseAs.forEach(value => stateOnDisconnected(value, userTriggered));
+    this.inUseAs.forEach(value => stateOnDisconnected(value, userTriggered, 'bluetooth'));
   }
 
   async reconnect(): Promise<void> {
@@ -209,7 +206,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
       }
     } catch (e) {
       logError('Bluetooth connect triggered by disconnect listener failed', e);
-      this.inUseAs.forEach(s => stateOnDisconnected(s, false));
+      this.inUseAs.forEach(s => stateOnDisconnected(s, false, 'bluetooth'));
     }
   };
 

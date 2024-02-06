@@ -12,6 +12,7 @@
   import Microbits from '../../script/microbit-interfacing/Microbits';
   import { startConnectionProcess } from '../../script/stores/connectDialogStore';
   import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
+  import { reconnect } from '../../script/utils/reconnect';
 
   const handleInputDisconnectClick = () => {
     Microbits.disconnect(DeviceRequestStates.INPUT);
@@ -22,16 +23,16 @@
   };
 
   const handleInputConnect = async () => {
-    if ($state.offerReconnect || $state.isInputAssigned) {
-      try {
-        await Microbits.reconnect(DeviceRequestStates.INPUT);
-      } catch (e) {
-        startConnectionProcess();
-      }
+    if ($state.showReconnectHelp || $state.isInputAssigned) {
+      reconnect();
     } else {
       startConnectionProcess();
     }
   };
+  $: {
+    console.log('input assigned', $state.isInputAssigned);
+    console.log('offer reconnect', $state.showReconnectHelp);
+  }
 </script>
 
 <!-- These are the buttons that are present while the input micro:bit is connected-->
@@ -56,7 +57,7 @@
     {#if !$state.isInputConnected}
       <StandardButton onClick={handleInputConnect} type="primary" size="small"
         >{$t(
-          $state.offerReconnect || $state.isInputAssigned
+          $state.showReconnectHelp || $state.isInputAssigned
             ? 'actions.reconnect'
             : 'footer.connectButton',
         )}</StandardButton>

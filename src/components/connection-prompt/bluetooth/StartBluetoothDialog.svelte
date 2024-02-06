@@ -11,11 +11,10 @@
   import batteryPackImage from '../../../imgs/stylised-battery-pack.svg';
   import WhatYouWillNeedDialog from '../../WhatYouWillNeedDialog.svelte';
   import { get } from 'svelte/store';
-  import { compatibility } from '../../../script/stores/uiStore';
+  import { compatibility, state } from '../../../script/stores/uiStore';
 
   export let onNextClick: () => void;
   export let onStartRadioClick: (() => void) | undefined;
-  export let reconnectFailed: boolean = false;
 
   const items = [
     {
@@ -43,12 +42,11 @@
 
 <WhatYouWillNeedDialog
   {items}
-  headingId={reconnectFailed
+  headingId={$state.reconnectState.reconnectFailed
     ? 'reconnectFailed.bluetoothHeading'
     : usb
       ? 'connectMB.bluetoothStart.heading'
       : 'connectMB.radioStart.heading'}
-  {reconnectFailed}
   subtitleId="connectMB.bluetoothStart.subtitle"
   switchTextId="connectMB.bluetoothStart.switchRadio"
   onSwitchClick={onStartRadioClick}
