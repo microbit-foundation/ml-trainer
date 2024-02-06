@@ -23,7 +23,7 @@
   };
 
   const handleInputConnect = async () => {
-    if ($state.showReconnectHelp || $state.isInputAssigned) {
+    if ($state.showReconnectHelp || Microbits.getInputMicrobit()) {
       reconnect();
     } else {
       startConnectionProcess();
@@ -33,7 +33,7 @@
 
 <!-- These are the buttons that are present while the input micro:bit is connected-->
 {#if $state.isPredicting || $state.isTraining || $state.isOutputConnected}
-  {#if $state.isOutputAssigned}
+  {#if Microbits.getOutputMicrobit()}
     <!-- Output is assigned -->
     {#if !$state.isOutputConnected || $state.isOutputReady}
       <!-- Output MB is not in the connection process -->
@@ -55,7 +55,7 @@
     disabled={$state.reconnectState.reconnecting}
     size="small"
     >{$t(
-      $state.showReconnectHelp || $state.isInputAssigned
+      $state.showReconnectHelp || Microbits.getInputMicrobit()
         ? 'actions.reconnect'
         : 'footer.connectButton',
     )}</StandardButton>

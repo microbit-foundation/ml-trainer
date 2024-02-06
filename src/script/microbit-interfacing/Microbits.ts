@@ -42,6 +42,10 @@ class Microbits {
   private static inputMicrobit: MicrobitConnection | undefined = undefined;
   private static outputMicrobit: MicrobitBluetooth | undefined = undefined;
 
+  public static getInputMicrobit(): MicrobitConnection | undefined {
+    return this.inputMicrobit;
+  }
+
   public static getOutputMicrobit(): MicrobitBluetooth | undefined {
     return this.outputMicrobit;
   }

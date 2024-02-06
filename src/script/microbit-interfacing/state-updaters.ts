@@ -17,7 +17,6 @@ export const stateOnConnected = (requestState: DeviceRequestStates) => {
     requestState === DeviceRequestStates.INPUT
       ? (s.isInputConnected = true)
       : (s.isOutputConnected = true);
-    s.isRequestingDevice = DeviceRequestStates.NONE;
     s.showReconnectHelp = false;
     s.reconnectState = {
       ...s.reconnectState,
@@ -88,13 +87,11 @@ export const stateOnAssigned = (
 ) => {
   if (requestState === DeviceRequestStates.INPUT) {
     state.update(s => {
-      s.isInputAssigned = true;
       s.inputMicrobitVersion = microbitVersion;
       return s;
     });
   } else {
     state.update(s => {
-      s.isOutputAssigned = true;
       s.inputMicrobitVersion = microbitVersion;
       return s;
     });
@@ -144,7 +141,6 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
   if (requestState === DeviceRequestStates.INPUT) {
     state.update(s => {
       s.isInputConnected = false;
-      s.isInputAssigned = false;
       s.isInputReady = false;
       s.showReconnectHelp = false;
       s.reconnectState = {
@@ -160,7 +156,6 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
     state.update(s => {
       s.isOutputConnected = false;
       s.showReconnectHelp = false;
-      s.isOutputAssigned = false;
       s.isOutputReady = false;
       s.reconnectState = {
         ...s.reconnectState,

@@ -42,8 +42,6 @@ interface ReconnectState {
 
 // Store current state to prevent error prone actions
 export const state = writable<{
-  isRequestingDevice: DeviceRequestStates;
-  isFlashingDevice: boolean;
   isTesting: boolean;
   isRecording: boolean;
   isTraining: boolean;
@@ -55,11 +53,9 @@ export const state = writable<{
   showReconnectHelp: boolean;
   reconnectState: ReconnectState;
   isInputReady: boolean;
-  isInputAssigned: boolean;
   inputHexVersion: number;
   inputMicrobitVersion: MBSpecs.MBVersion | -1;
   inputOrigin: HexOrigin;
-  isOutputAssigned: boolean;
   isOutputReady: boolean;
   outputHexVersion: number;
   outputMicrobitVersion: MBSpecs.MBVersion | -1;
@@ -68,8 +64,6 @@ export const state = writable<{
   isInputOutdated: boolean;
   isOutputOutdated: boolean;
 }>({
-  isRequestingDevice: DeviceRequestStates.NONE,
-  isFlashingDevice: false,
   isTesting: false,
   isRecording: false,
   isTraining: false,
@@ -86,11 +80,9 @@ export const state = writable<{
     reconnectFailed: false,
   },
   isInputReady: false,
-  isInputAssigned: false,
   inputHexVersion: -1,
   inputMicrobitVersion: -1,
   inputOrigin: HexOrigin.UNKNOWN,
-  isOutputAssigned: false,
   isOutputReady: false,
   outputHexVersion: -1,
   outputMicrobitVersion: -1,

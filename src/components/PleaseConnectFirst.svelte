@@ -6,13 +6,15 @@
 
 <script lang="ts">
   import { t } from '../i18n';
+  import { DeviceRequestStates } from '../script/microbit-interfacing/MicrobitConnection';
+  import Microbits from '../script/microbit-interfacing/Microbits';
   import { startConnectionProcess } from '../script/stores/connectDialogStore';
   import { state } from '../script/stores/uiStore';
   import { reconnect } from '../script/utils/reconnect';
   import StandardButton from './StandardButton.svelte';
 
   const handleInputConnect = async () => {
-    if ($state.showReconnectHelp || $state.isInputAssigned) {
+    if ($state.showReconnectHelp || Microbits.getInputMicrobit()) {
       reconnect();
     } else {
       startConnectionProcess();
@@ -33,7 +35,7 @@
     disabled={$state.reconnectState.reconnecting}
     onClick={handleInputConnect}
     >{$t(
-      $state.showReconnectHelp || $state.isInputAssigned
+      $state.showReconnectHelp || Microbits.getInputMicrobit()
         ? 'actions.reconnect'
         : 'footer.connectButton',
     )}</StandardButton>
