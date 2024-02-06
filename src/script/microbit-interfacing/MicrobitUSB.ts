@@ -104,18 +104,11 @@ class MicrobitUSB {
    * Drawn from https://github.com/mmoskal/dapjs/blob/a32f11f54e9e76a9c61896ddd425c1cb1a29c143/src/cortex/cortex.ts#L347
    */
   public async softwareReset(): Promise<void> {
-    console.log('software reset');
     const cortexM = new CortexM(this.transport);
-    console.log(
-      'write',
-      CortexSpecialReg.NVIC_AIRCR,
-      CortexSpecialReg.NVIC_AIRCR_VECTKEY | CortexSpecialReg.NVIC_AIRCR_SYSRESETREQ,
-    );
     await cortexM.writeMem32(
       CortexSpecialReg.NVIC_AIRCR,
       CortexSpecialReg.NVIC_AIRCR_VECTKEY | CortexSpecialReg.NVIC_AIRCR_SYSRESETREQ,
     );
-    console.log('wait for the system to come out of reset');
 
     // wait for the system to come out of reset
     let dhcsr = await cortexM.readMem32(CortexSpecialReg.DHCSR);

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { CortexM } from 'dapjs';
 import { logError, logMessage } from '../utils/logging';
 import MicrobitConnection, { DeviceRequestStates } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
