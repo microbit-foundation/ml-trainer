@@ -184,9 +184,10 @@ export class MicrobitBluetooth implements MicrobitConnection {
       // We might have already lost the connection.
     } finally {
       this.duringExplicitConnectDisconnect--;
+      this.inUseAs.forEach(value =>
+        stateOnDisconnected(value, userTriggered, 'bluetooth'),
+      );
     }
-
-    this.inUseAs.forEach(value => stateOnDisconnected(value, userTriggered, 'bluetooth'));
   }
 
   async reconnect(): Promise<void> {
