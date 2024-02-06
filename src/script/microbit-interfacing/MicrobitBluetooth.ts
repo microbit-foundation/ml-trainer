@@ -159,7 +159,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
       states.forEach(s => stateOnReady(s));
     } catch (e) {
       logError('Bluetooth connect error', e);
-      await this.disconnectInternal(true);
+      await this.disconnectInternal(false);
       throw new Error('Failed to establish a connection!');
     } finally {
       this.duringExplicitConnectDisconnect--;
@@ -167,11 +167,13 @@ export class MicrobitBluetooth implements MicrobitConnection {
   }
 
   async disconnect(): Promise<void> {
-    return this.disconnectInternal(false);
+    return this.disconnectInternal(true);
   }
 
-  private async disconnectInternal(showReconnectHelp: boolean): Promise<void> {
-    logMessage(`Bluetooth disconnect. Show reconnect help prompt: ${showReconnectHelp}`);
+  private async disconnectInternal(userTriggered: boolean): Promise<void> {
+    logMessage(
+      `Bluetooth disconnect ${userTriggered ? '(user triggered)' : '(programmatic)'}`,
+    );
     this.duringExplicitConnectDisconnect++;
     try {
       if (this.device.gatt?.connected) {
@@ -184,9 +186,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
       this.duringExplicitConnectDisconnect--;
     }
 
-    this.inUseAs.forEach(value =>
-      stateOnDisconnected(value, showReconnectHelp, 'bluetooth'),
-    );
+    this.inUseAs.forEach(value => stateOnDisconnected(value, userTriggered, 'bluetooth'));
   }
 
   async reconnect(): Promise<void> {
@@ -208,7 +208,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
       }
     } catch (e) {
       logError('Bluetooth connect triggered by disconnect listener failed', e);
-      this.inUseAs.forEach(s => stateOnDisconnected(s, true, 'bluetooth'));
+      this.inUseAs.forEach(s => stateOnDisconnected(s, false, 'bluetooth'));
     }
   };
 
