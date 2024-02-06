@@ -6,14 +6,12 @@
 
 import { get, writable } from 'svelte/store';
 import { t } from '../../i18n';
-import CookieManager from '../CookieManager';
 import {
   checkCompatibility,
   type CompatibilityStatus,
 } from '../compatibility/CompatibilityChecker';
 import MBSpecs from '../microbit-interfacing/MBSpecs';
 import { gestures } from './Stores';
-import { isInputPatternValid } from './connectionStore';
 import { HexOrigin } from '../../StaticConfiguration';
 import { DeviceRequestStates } from '../microbit-interfacing/MicrobitConnection';
 
