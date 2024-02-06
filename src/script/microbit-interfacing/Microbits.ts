@@ -110,6 +110,16 @@ class Microbits {
     }
     return !!this.outputMicrobit;
   }
+
+  public static async dispose(
+    requestState: DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT,
+  ) {
+    if (requestState === DeviceRequestStates.INPUT) {
+      this.inputMicrobit = undefined;
+    } else {
+      this.outputMicrobit = undefined;
+    }
+  }
 }
 
 export default Microbits;

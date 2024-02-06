@@ -42,6 +42,7 @@ export const reconnect = async (finalAttempt: boolean = false) => {
     });
   } catch (e) {
     if (finalAttempt) {
+      reconnectState.inUseAs.forEach(s => Microbits.dispose(s));
       reconnectState.inUseAs.forEach(s => stateOnFailedToConnect(s));
       startConnectionProcess();
     } else {
