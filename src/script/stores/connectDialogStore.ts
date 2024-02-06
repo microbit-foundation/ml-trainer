@@ -26,6 +26,7 @@ export enum ConnectDialogStates {
   CONNECT_TUTORIAL_SERIAL, // Instructions how to connect the micro:bit using a serial connection
   MANUAL_TUTORIAL, // Prompt with tutorial gif for manual installation (and downloading of program)
   USB_TRY_AGAIN, // Prompt user to try connecting via WebUSB again
+  BLUETOOTH_TRY_AGAIN, // Prompt user to try connecting via WebBluetooth again
 }
 
 export const connectionDialogState = writable<{

@@ -14,7 +14,7 @@
   <DialogHeading>
     {$t('connectMB.radio.heading')}
   </DialogHeading>
-  <div class="flex flex-col gap-5 justify-center items-center mb-40px">
+  <div class="flex flex-col gap-5 justify-center items-center py-3">
     <p>{$t('connectMB.connecting')}</p>
     <LoadingSpinner />
   </div>
