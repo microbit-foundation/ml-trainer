@@ -44,7 +44,6 @@ export const state = writable<{
   hasTrainedBefore: boolean;
   isPredicting: boolean;
   offerReconnect: boolean;
-  requestDeviceWasCancelled: boolean;
   reconnectState: DeviceRequestStates;
   isInputReady: boolean;
   isInputAssigned: boolean;
@@ -71,7 +70,6 @@ export const state = writable<{
   hasTrainedBefore: false,
   isPredicting: false,
   offerReconnect: false,
-  requestDeviceWasCancelled: false,
   reconnectState: DeviceRequestStates.NONE,
   isInputReady: false,
   isInputAssigned: false,
@@ -155,15 +153,3 @@ const initialMicrobitInteraction: MicrobitInteractions = MicrobitInteractions.B;
 export const microbitInteraction = writable<MicrobitInteractions>(
   initialMicrobitInteraction,
 );
-
-/**
- * Workaround for an unrecoverable reconnect failure due to a bug in chrome/chromium
- * Refresh the page is the only known solution
- */
-export const onCatastrophicError = () => {
-  // Set flag to offer reconnect when page reloads
-  if (isInputPatternValid()) {
-    CookieManager.setReconnectFlag();
-  }
-  location.reload();
-};
