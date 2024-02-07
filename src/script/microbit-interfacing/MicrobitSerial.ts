@@ -39,7 +39,6 @@ export class MicrobitSerial implements MicrobitConnection {
   private sessionRadioFrequency = 42;
   private connectionCheckIntervalId: ReturnType<typeof setInterval> | undefined;
   private lastReceivedMessageTimestamp: number | undefined;
-  private onPeriodicMessageRecieved: (() => void) | undefined;
 
   constructor(private usb: MicrobitUSB) {}
 
@@ -53,10 +52,11 @@ export class MicrobitSerial implements MicrobitConnection {
     let unprocessedData = '';
     let previousButtonState = { A: 0, B: 0 };
 
+    let onPeriodicMessageRecieved: (() => void) | undefined;
     const periodicMessagePromise = new Promise<void>((resolve, reject) => {
-      this.onPeriodicMessageRecieved = resolve;
+      onPeriodicMessageRecieved = resolve;
       setTimeout(() => {
-        this.onPeriodicMessageRecieved = undefined;
+        onPeriodicMessageRecieved = undefined;
         reject(new Error('Failed to receive data from remote micro:bit'));
       }, 500);
     });
@@ -75,9 +75,9 @@ export class MicrobitSerial implements MicrobitConnection {
         const sensorData = protocol.processPeriodicMessage(msg);
         if (sensorData) {
           stateOnReconnected();
-          if (this.onPeriodicMessageRecieved) {
-            this.onPeriodicMessageRecieved();
-            this.onPeriodicMessageRecieved = undefined;
+          if (onPeriodicMessageRecieved) {
+            onPeriodicMessageRecieved();
+            onPeriodicMessageRecieved = undefined;
           }
           onAccelerometerChange(
             sensorData.accelerometerX,
