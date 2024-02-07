@@ -120,7 +120,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
             }
           })
           .finally(() => {
-            console.log('Bluetooth GATT server promise field cleared');
+            logMessage('Bluetooth GATT server promise field cleared');
             this.gattConnectPromise = undefined;
           });
 
