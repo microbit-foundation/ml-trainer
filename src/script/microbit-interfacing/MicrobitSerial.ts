@@ -39,6 +39,7 @@ export class MicrobitSerial implements MicrobitConnection {
   private sessionRadioFrequency = 42;
   private connectionCheckIntervalId: ReturnType<typeof setInterval> | undefined;
   private lastReceivedMessageTimestamp: number | undefined;
+  private isReconnect: boolean = false;
 
   constructor(private usb: MicrobitUSB) {}
 
@@ -148,7 +149,15 @@ export class MicrobitSerial implements MicrobitConnection {
           }, 500);
         });
         await this.sendCmdWaitResponse(startCmd);
-        await periodicMessagePromise;
+        if (this.isReconnect) {
+          await periodicMessagePromise;
+        } else {
+          periodicMessagePromise.catch(async e => {
+            logError('Failed to initialise serial protocol', e);
+            await this.disconnectInternal(false, 'remote');
+            this.isConnecting = false;
+          });
+        }
       }
 
       stateOnAssigned(DeviceRequestStates.INPUT, this.usb.getModelNumber());
@@ -209,6 +218,7 @@ export class MicrobitSerial implements MicrobitConnection {
 
   async reconnect(): Promise<void> {
     logMessage('Serial reconnect');
+    this.isReconnect = true;
     await this.connect(DeviceRequestStates.INPUT);
   }
 
