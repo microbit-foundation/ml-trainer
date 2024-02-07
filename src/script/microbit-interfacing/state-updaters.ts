@@ -210,3 +210,13 @@ export const stateOnReconnectionAttempt = () => {
     return s;
   });
 };
+
+export const stateOnReconnected = () => {
+  state.update(s => {
+    s.reconnectState = {
+      ...s.reconnectState,
+      reconnecting: false,
+    };
+    return s;
+  });
+};

@@ -21,7 +21,7 @@ import {
 export const reconnect = async (finalAttempt: boolean = false) => {
   stateOnReconnectionAttempt();
   const { reconnectState } = get(state);
-  if (get(state).reconnectState.connectionType === 'bluetooth') {
+  if (reconnectState.connectionType === 'bluetooth') {
     connectionDialogState.update(s => {
       s.connectionState = ConnectDialogStates.BLUETOOTH_CONNECTING;
       return s;

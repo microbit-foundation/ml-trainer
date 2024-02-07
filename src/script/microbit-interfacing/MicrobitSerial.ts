@@ -14,8 +14,11 @@ import {
   stateOnConnected,
   stateOnDisconnected,
   stateOnReady,
+  stateOnReconnected,
+  stateOnReconnectionAttempt,
 } from './state-updaters';
 import StaticConfiguration from '../../StaticConfiguration';
+import { ConnectionType } from '../stores/uiStore';
 
 export class MicrobitSerial implements MicrobitConnection {
   private responseMap = new Map<
@@ -36,6 +39,7 @@ export class MicrobitSerial implements MicrobitConnection {
   private sessionRadioFrequency = 42;
   private connectionCheckIntervalId: ReturnType<typeof setInterval> | undefined;
   private lastReceivedMessageTimestamp: number | undefined;
+  private onPeriodicMessageRecieved: (() => void) | undefined;
 
   constructor(private usb: MicrobitUSB) {}
 
@@ -49,9 +53,17 @@ export class MicrobitSerial implements MicrobitConnection {
     let unprocessedData = '';
     let previousButtonState = { A: 0, B: 0 };
 
+    const periodicMessagePromise = new Promise<void>((resolve, reject) => {
+      this.onPeriodicMessageRecieved = resolve;
+      setTimeout(() => {
+        this.onPeriodicMessageRecieved = undefined;
+        reject(new Error('Failed to receive data from remote micro:bit'));
+      }, 500);
+    });
+
     const handleError = (e: unknown) => {
       console.error(e);
-      void this.disconnectInternal(false);
+      void this.disconnectInternal(false, 'bridge');
     };
     const processMessage = (data: string) => {
       const messages = protocol.splitMessages(unprocessedData + data);
@@ -62,6 +74,11 @@ export class MicrobitSerial implements MicrobitConnection {
         // Messages are either periodic sensor data or command/response
         const sensorData = protocol.processPeriodicMessage(msg);
         if (sensorData) {
+          stateOnReconnected();
+          if (this.onPeriodicMessageRecieved) {
+            this.onPeriodicMessageRecieved();
+            this.onPeriodicMessageRecieved = undefined;
+          }
           onAccelerometerChange(
             sensorData.accelerometerX,
             sensorData.accelerometerY,
@@ -93,20 +110,19 @@ export class MicrobitSerial implements MicrobitConnection {
       await this.handshake();
       stateOnConnected(DeviceRequestStates.INPUT);
 
-      // Check for USB being unplugged
-      navigator.usb.addEventListener('disconnect', () => {
-        logMessage('USB disconnected');
-        this.stopConnectionCheck();
-      });
-
       // Check for connection lost
       if (this.connectionCheckIntervalId === undefined) {
         this.connectionCheckIntervalId = setInterval(async () => {
-          const allowedTimeWithoutMessageInMs =
-            StaticConfiguration.connectTimeoutDuration;
           if (
             this.lastReceivedMessageTimestamp &&
-            Date.now() - this.lastReceivedMessageTimestamp > allowedTimeWithoutMessageInMs
+            Date.now() - this.lastReceivedMessageTimestamp > 1_000
+          ) {
+            stateOnReconnectionAttempt();
+          }
+          if (
+            this.lastReceivedMessageTimestamp &&
+            Date.now() - this.lastReceivedMessageTimestamp >
+              StaticConfiguration.connectTimeoutDuration
           ) {
             await this.handleReconnect();
           }
@@ -133,6 +149,7 @@ export class MicrobitSerial implements MicrobitConnection {
         });
         await this.usb.serialWrite(startCmd.message);
         await this.sendCmdWaitResponse(startCmd);
+        await periodicMessagePromise;
       }
 
       stateOnAssigned(DeviceRequestStates.INPUT, this.usb.getModelNumber());
@@ -140,7 +157,11 @@ export class MicrobitSerial implements MicrobitConnection {
       logMessage('Serial successfully connected');
     } catch (e) {
       logError('Failed to initialise serial protocol', e);
-      await this.disconnectInternal(false);
+      let reconnectHelp: ConnectionType = 'remote';
+      if (typeof e === 'string' && e.includes('Handshake')) {
+        reconnectHelp = 'bridge';
+      }
+      await this.disconnectInternal(false, reconnectHelp);
       throw e;
     } finally {
       this.isConnecting = false;
@@ -148,8 +169,7 @@ export class MicrobitSerial implements MicrobitConnection {
   }
 
   async disconnect(): Promise<void> {
-    this.stopConnectionCheck();
-    return this.disconnectInternal(true);
+    return this.disconnectInternal(true, 'bridge');
   }
 
   private stopConnectionCheck() {
@@ -158,11 +178,15 @@ export class MicrobitSerial implements MicrobitConnection {
     this.lastReceivedMessageTimestamp = undefined;
   }
 
-  private async disconnectInternal(userDisconnect: boolean): Promise<void> {
+  private async disconnectInternal(
+    userDisconnect: boolean,
+    reconnectHelp: ConnectionType,
+  ): Promise<void> {
+    this.stopConnectionCheck();
     // We might want to send command to stop streaming here?
     this.responseMap.clear();
     await this.usb.stopSerial();
-    stateOnDisconnected(DeviceRequestStates.INPUT, userDisconnect, 'bridge');
+    stateOnDisconnected(DeviceRequestStates.INPUT, userDisconnect, reconnectHelp);
   }
 
   async handleReconnect(): Promise<void> {
@@ -173,8 +197,9 @@ export class MicrobitSerial implements MicrobitConnection {
     try {
       this.stopConnectionCheck();
       logMessage('Serial disconnected... automatically trying to reconnect');
-      await this.usb.softwareReset();
+      this.responseMap.clear();
       await this.usb.stopSerial();
+      await this.usb.softwareReset();
       await this.reconnect();
     } catch (e) {
       logError('Serial connect triggered by disconnect listener failed', e);
