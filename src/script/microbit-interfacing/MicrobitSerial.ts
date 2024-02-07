@@ -51,15 +51,7 @@ export class MicrobitSerial implements MicrobitConnection {
     this.isConnecting = true;
     let unprocessedData = '';
     let previousButtonState = { A: 0, B: 0 };
-
     let onPeriodicMessageRecieved: (() => void) | undefined;
-    const periodicMessagePromise = new Promise<void>((resolve, reject) => {
-      onPeriodicMessageRecieved = resolve;
-      setTimeout(() => {
-        onPeriodicMessageRecieved = undefined;
-        reject(new Error('Failed to receive data from remote micro:bit'));
-      }, 500);
-    });
 
     const handleError = (e: unknown) => {
       console.error(e);
@@ -148,6 +140,13 @@ export class MicrobitSerial implements MicrobitConnection {
           buttons: true,
         });
         await this.usb.serialWrite(startCmd.message);
+        const periodicMessagePromise = new Promise<void>((resolve, reject) => {
+          onPeriodicMessageRecieved = resolve;
+          setTimeout(() => {
+            onPeriodicMessageRecieved = undefined;
+            reject(new Error('Failed to receive data from remote micro:bit'));
+          }, 500);
+        });
         await this.sendCmdWaitResponse(startCmd);
         await periodicMessagePromise;
       }
