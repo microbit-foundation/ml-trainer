@@ -27,7 +27,7 @@
   import WebUsbTryAgain, { USBTryAgainType } from './WebUsbTryAgain.svelte';
   import { onDestroy, onMount } from 'svelte';
   import { get, Unsubscriber } from 'svelte/store';
-  import { compatibility } from '../../script/stores/uiStore';
+  import { compatibility, state } from '../../script/stores/uiStore';
   import { isDevMode } from '../../script/environment';
   import { flags } from '../../script/flags';
   import ConnectingMicrobits from './radio/ConnectingMicrobits.svelte';
@@ -164,6 +164,9 @@
   function connectionStateNone() {
     setTimeout(() => {
       $connectionDialogState.connectionState = ConnectDialogStates.NONE;
+      // If the user closes the dialog while it shows information relating
+      // to reconnection failure reset state to starting conditions.
+      $state.reconnectState = { ...$state.reconnectState, reconnectFailed: false };
       endOfFlow = false;
     }, 200);
   }
