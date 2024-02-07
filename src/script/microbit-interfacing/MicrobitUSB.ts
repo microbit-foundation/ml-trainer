@@ -105,6 +105,7 @@ class MicrobitUSB {
    */
   public async softwareReset(): Promise<void> {
     const cortexM = new CortexM(this.transport);
+    await cortexM.connect();
     await cortexM.writeMem32(
       CortexSpecialReg.NVIC_AIRCR,
       CortexSpecialReg.NVIC_AIRCR_VECTKEY | CortexSpecialReg.NVIC_AIRCR_SYSRESETREQ,
@@ -116,6 +117,7 @@ class MicrobitUSB {
     while ((dhcsr & CortexSpecialReg.S_RESET_ST) !== 0) {
       dhcsr = await cortexM.readMem32(CortexSpecialReg.DHCSR);
     }
+    await cortexM.disconnect();
   }
 
   /**
