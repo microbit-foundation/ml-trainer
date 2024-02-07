@@ -122,7 +122,7 @@ export const processResponseMessage = (message: string): MessageResponse | undef
     case ResponseTypes.HardwareVersion:
     case ResponseTypes.Error:
       value = Number(value);
-      if (isNaN(value) || value < 0) {
+      if (isNaN(value) || value < 0 || value > 0xffffffff) {
         return undefined;
       }
       break;

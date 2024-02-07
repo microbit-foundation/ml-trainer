@@ -304,6 +304,19 @@ describe('processResponseMessage', () => {
     });
   });
 
+  it('processes valid Error response', () => {
+    const message = 'R[1234]ERROR[1]';
+
+    const got = processResponseMessage(message);
+
+    expect(got).toEqual({
+      message: message,
+      messageId: 0x1234,
+      type: 'ERROR',
+      value: 1,
+    });
+  });
+
   it('throws away messages that are not a response', () => {
     // First a valid response to stablish a baseline
     expect(processResponseMessage('R[0]STOP[]')).not.toBeUndefined();
@@ -331,7 +344,9 @@ describe('processResponseMessage', () => {
   it('throws away response messages with invalid number values', () => {
     // First valid messages to stablish a baseline
     expect(processResponseMessage('R[0]RF[10000]')).not.toBeUndefined();
+    expect(processResponseMessage('R[0]RMBID[4294967295]')).not.toBeUndefined();
     // Now invalid values
+    expect(processResponseMessage('R[0]RMBID[4294967296]')).toBeUndefined();
     expect(processResponseMessage('R[0]RF[-1]')).toBeUndefined();
     expect(processResponseMessage('R[0]RF[1-2]')).toBeUndefined();
     expect(processResponseMessage('R[0]RF[1,2]')).toBeUndefined();
