@@ -76,12 +76,11 @@ export class MicrobitSerial implements MicrobitConnection {
       stateOnConnected(DeviceRequestStates.INPUT);
 
       logMessage(`Serial: using remote device id ${this.remoteDeviceId}`);
-      // TODO: replace this command with one that sends the device id
-      const radioFreqCommand = protocol.generateCmdRadioFrequency(42);
-      const radioFreqResponse = await this.sendCmdWaitResponse(radioFreqCommand);
-      if (radioFreqResponse.value !== this.remoteDeviceId) {
+      const remoteMbIdCommand = protocol.generateCmdRemoteMbId(this.remoteDeviceId);
+      const remoteMbIdResponse = await this.sendCmdWaitResponse(remoteMbIdCommand);
+      if (remoteMbIdResponse.value !== this.remoteDeviceId) {
         throw new Error(
-          `Failed to set radio frequency. Expected ${this.remoteDeviceId}, got ${radioFreqResponse.value}`,
+          `Failed to set remote micro:bit ID. Expected ${this.remoteDeviceId}, got ${remoteMbIdResponse.value}`,
         );
       }
 
@@ -92,7 +91,6 @@ export class MicrobitSerial implements MicrobitConnection {
           accelerometer: true,
           buttons: true,
         });
-        await this.usb.serialWrite(startCmd.message);
         await this.sendCmdWaitResponse(startCmd);
       }
 

@@ -18,6 +18,7 @@ enum MessageTypes {
 export enum CommandTypes {
   Handshake = 'HS',
   RadioFrequency = 'RF',
+  RemoteMbId = 'RMBID',
   SoftwareVersion = 'SWVER',
   HardwareVersion = 'HWVER',
   Zstart = 'ZSTART',
@@ -110,9 +111,10 @@ export const processResponseMessage = (message: string): MessageResponse | undef
     // Commands with numeric values
     case CommandTypes.Handshake:
     case CommandTypes.RadioFrequency:
+    case CommandTypes.RemoteMbId:
     case CommandTypes.HardwareVersion:
       value = Number(value);
-      if (isNaN(value)) {
+      if (isNaN(value) || value < 0) {
         return undefined;
       }
       break;
@@ -196,6 +198,10 @@ export const generateCmdStart = (sensors: MicrobitSensors): MessageCmd => {
 
 export const generateCmdRadioFrequency = (frequency: number): MessageCmd => {
   return generateCommand(CommandTypes.RadioFrequency, frequency.toString());
+};
+
+export const generateCmdRemoteMbId = (remoteMicrobitId: number): MessageCmd => {
+  return generateCommand(CommandTypes.RemoteMbId, remoteMicrobitId.toString());
 };
 
 export const generateRandomRadioFrequency = (): number => {
