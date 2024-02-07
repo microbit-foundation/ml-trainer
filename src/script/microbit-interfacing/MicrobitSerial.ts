@@ -16,7 +16,7 @@ import {
   stateOnFailedToConnect,
   stateOnReady,
 } from './state-updaters';
-import { isDevMode } from '../environment';
+import StaticConfiguration from '../../StaticConfiguration';
 
 export class MicrobitSerial implements MicrobitConnection {
   private responseMap = new Map<
@@ -97,7 +97,8 @@ export class MicrobitSerial implements MicrobitConnection {
       // Check for connection lost
       if (this.connectionCheckIntervalId === undefined) {
         this.connectionCheckIntervalId = setInterval(async () => {
-          const allowedTimeWithoutMessageInMs = isDevMode ? 2000 : 10000;
+          const allowedTimeWithoutMessageInMs =
+            StaticConfiguration.connectTimeoutDuration;
           if (
             this.lastReceivedMessageTimestamp &&
             Date.now() - this.lastReceivedMessageTimestamp > allowedTimeWithoutMessageInMs
