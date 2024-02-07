@@ -102,7 +102,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
                 'Bluetooth GATT server connect after timeout, triggering disconnect',
               );
               this.disconnectPromise = (async () => {
-                await this.disconnectInternal(false);
+                await this.disconnectInternal(false, false);
                 this.disconnectPromise = undefined;
               })();
             } else {
@@ -170,7 +170,10 @@ export class MicrobitBluetooth implements MicrobitConnection {
     return this.disconnectInternal(true);
   }
 
-  private async disconnectInternal(userTriggered: boolean): Promise<void> {
+  private async disconnectInternal(
+    userTriggered: boolean,
+    updateState: boolean = true,
+  ): Promise<void> {
     logMessage(
       `Bluetooth disconnect ${userTriggered ? '(user triggered)' : '(programmatic)'}`,
     );
@@ -184,6 +187,8 @@ export class MicrobitBluetooth implements MicrobitConnection {
       // We might have already lost the connection.
     } finally {
       this.duringExplicitConnectDisconnect--;
+    }
+    if (updateState) {
       this.inUseAs.forEach(value =>
         stateOnDisconnected(value, userTriggered, 'bluetooth'),
       );
