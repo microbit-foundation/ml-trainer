@@ -22,11 +22,11 @@
           heading:
             $state.showReconnectHelp === 'userTriggered'
               ? 'reconnectFailed.bluetoothHeading'
-              : `disconnectedWarning.bluetoothHeading`,
+              : 'disconnectedWarning.bluetoothHeading',
           subtitle:
             $state.showReconnectHelp === 'userTriggered'
               ? 'reconnectFailed.bluetooth1'
-              : `disconnectedWarning.bluetooth1`,
+              : 'disconnectedWarning.bluetooth1',
           listHeading: 'disconnectedWarning.bluetooth2',
           bulletOne: 'disconnectedWarning.bluetooth3',
           bulletTwo: 'disconnectedWarning.bluetooth4',
@@ -37,11 +37,11 @@
           heading:
             $state.showReconnectHelp === 'userTriggered'
               ? 'reconnectFailed.bridgeHeading'
-              : `disconnectedWarning.bridgeHeading`,
+              : 'disconnectedWarning.bridgeHeading',
           subtitle:
             $state.showReconnectHelp === 'userTriggered'
               ? 'reconnectFailed.bridge1'
-              : `disconnectedWarning.bridge1`,
+              : 'disconnectedWarning.bridge1',
           listHeading: 'connectMB.usbTryAgain.replugMicrobit2',
           bulletOne: 'connectMB.usbTryAgain.replugMicrobit3',
           bulletTwo: 'connectMB.usbTryAgain.replugMicrobit4',
@@ -52,11 +52,11 @@
           heading:
             $state.showReconnectHelp === 'userTriggered'
               ? 'reconnectFailed.remoteHeading'
-              : `disconnectedWarning.remoteHeading`,
+              : 'disconnectedWarning.remoteHeading',
           subtitle:
             $state.showReconnectHelp === 'userTriggered'
               ? 'reconnectFailed.remote1'
-              : `disconnectedWarning.remote1`,
+              : 'disconnectedWarning.remote1',
           listHeading: 'disconnectedWarning.bluetooth2',
           bulletOne: 'disconnectedWarning.bluetooth3',
           bulletTwo: 'disconnectedWarning.bluetooth4',
