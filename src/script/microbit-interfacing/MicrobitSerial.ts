@@ -16,6 +16,7 @@ import {
   stateOnFailedToConnect,
   stateOnReady,
 } from './state-updaters';
+import StaticConfiguration from '../../StaticConfiguration';
 
 export class MicrobitSerial implements MicrobitConnection {
   private responseMap = new Map<
@@ -23,13 +24,24 @@ export class MicrobitSerial implements MicrobitConnection {
     (value: protocol.MessageResponse | PromiseLike<protocol.MessageResponse>) => void
   >();
 
+  // To avoid concurrent connect attempts
+  private isConnecting: boolean = false;
+
+  private connectionCheckIntervalId: ReturnType<typeof setInterval> | undefined;
+  private lastReceivedMessageTimestamp: number | undefined;
+
   constructor(
     private usb: MicrobitUSB,
     private remoteDeviceId: number,
   ) {}
 
   async connect(...states: DeviceRequestStates[]): Promise<void> {
-    logMessage('Serial connect');
+    logMessage('Serial connect', states);
+    if (this.isConnecting) {
+      logMessage('Skipping connect attempt when one is already in progress');
+      return;
+    }
+    this.isConnecting = true;
     let unprocessedData = '';
     let previousButtonState = { A: 0, B: 0 };
 
@@ -41,6 +53,8 @@ export class MicrobitSerial implements MicrobitConnection {
       const messages = protocol.splitMessages(unprocessedData + data);
       unprocessedData = messages.remainingInput;
       messages.messages.forEach(async msg => {
+        this.lastReceivedMessageTimestamp = Date.now();
+
         // Messages are either periodic sensor data or command/response
         const sensorData = protocol.processPeriodicMessage(msg);
         if (sensorData) {
@@ -75,6 +89,26 @@ export class MicrobitSerial implements MicrobitConnection {
       await this.handshake();
       stateOnConnected(DeviceRequestStates.INPUT);
 
+      // Check for USB being unplugged
+      navigator.usb.addEventListener('disconnect', () => {
+        logMessage('USB disconnected');
+        this.stopConnectionCheck();
+      });
+
+      // Check for connection lost
+      if (this.connectionCheckIntervalId === undefined) {
+        this.connectionCheckIntervalId = setInterval(async () => {
+          const allowedTimeWithoutMessageInMs =
+            StaticConfiguration.connectTimeoutDuration;
+          if (
+            this.lastReceivedMessageTimestamp &&
+            Date.now() - this.lastReceivedMessageTimestamp > allowedTimeWithoutMessageInMs
+          ) {
+            await this.handleReconnect();
+          }
+        }, 1000);
+      }
+
       logMessage(`Serial: using remote device id ${this.remoteDeviceId}`);
       const remoteMbIdCommand = protocol.generateCmdRemoteMbId(this.remoteDeviceId);
       const remoteMbIdResponse = await this.sendCmdWaitResponse(remoteMbIdCommand);
@@ -104,16 +138,26 @@ export class MicrobitSerial implements MicrobitConnection {
 
       stateOnAssigned(DeviceRequestStates.INPUT, this.usb.getModelNumber());
       stateOnReady(DeviceRequestStates.INPUT);
+      logMessage('Serial successfully connected');
     } catch (e) {
       logError('Failed to initialise serial protocol', e);
       stateOnFailedToConnect(DeviceRequestStates.INPUT);
       await this.usb.stopSerial();
       throw e;
+    } finally {
+      this.isConnecting = false;
     }
   }
 
   async disconnect(): Promise<void> {
+    this.stopConnectionCheck();
     return this.disconnectInternal(true);
+  }
+
+  private stopConnectionCheck() {
+    clearInterval(this.connectionCheckIntervalId);
+    this.connectionCheckIntervalId = undefined;
+    this.lastReceivedMessageTimestamp = undefined;
   }
 
   private async disconnectInternal(userDisconnect: boolean): Promise<void> {
@@ -123,7 +167,26 @@ export class MicrobitSerial implements MicrobitConnection {
     stateOnDisconnected(DeviceRequestStates.INPUT, userDisconnect);
   }
 
+  async handleReconnect(): Promise<void> {
+    if (this.isConnecting) {
+      logMessage('Serial disconnect ignored... reconnect already in progress');
+      return;
+    }
+    try {
+      this.stopConnectionCheck();
+      logMessage('Serial disconnected... automatically trying to reconnect');
+      await this.usb.softwareReset();
+      await this.usb.stopSerial();
+      await this.reconnect();
+    } catch (e) {
+      logError('Serial connect triggered by disconnect listener failed', e);
+    } finally {
+      this.isConnecting = false;
+    }
+  }
+
   async reconnect(): Promise<void> {
+    logMessage('Serial reconnect');
     await this.connect(DeviceRequestStates.INPUT);
   }
 
