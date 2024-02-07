@@ -8,6 +8,7 @@ import { CortexM, DAPLink, WebUSB } from 'dapjs';
 import MBSpecs from './MBSpecs';
 import { HexType, getHexFileUrl } from './Microbits';
 import { logError } from '../utils/logging';
+import { CortexSpecialReg } from './constants';
 
 const baudRate = 115200;
 const serialDelay = 5;
@@ -96,6 +97,27 @@ class MicrobitUSB {
     } finally {
       await debug.disconnect();
     }
+  }
+
+  /**
+   * Resets the micro:bit in software by writing to NVIC_AIRCR.
+   * Drawn from https://github.com/mmoskal/dapjs/blob/a32f11f54e9e76a9c61896ddd425c1cb1a29c143/src/cortex/cortex.ts#L347
+   */
+  public async softwareReset(): Promise<void> {
+    const cortexM = new CortexM(this.transport);
+    await cortexM.connect();
+    await cortexM.writeMem32(
+      CortexSpecialReg.NVIC_AIRCR,
+      CortexSpecialReg.NVIC_AIRCR_VECTKEY | CortexSpecialReg.NVIC_AIRCR_SYSRESETREQ,
+    );
+
+    // wait for the system to come out of reset
+    let dhcsr = await cortexM.readMem32(CortexSpecialReg.DHCSR);
+
+    while ((dhcsr & CortexSpecialReg.S_RESET_ST) !== 0) {
+      dhcsr = await cortexM.readMem32(CortexSpecialReg.DHCSR);
+    }
+    await cortexM.disconnect();
   }
 
   /**

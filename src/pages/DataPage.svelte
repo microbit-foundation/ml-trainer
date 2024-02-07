@@ -72,11 +72,11 @@
   }
 
   let trainingButtonPrimary = false;
-  gestures.subscribe(gestures => {
-    if (gestures.filter(g => g.recordings.length >= 3).length >= 2) {
+  $: {
+    if ($gestures.filter(g => g.recordings.length >= 3).length >= 2) {
       trainingButtonPrimary = true;
     }
-  });
+  }
 
   $: title = getTitle(Paths.DATA, $t);
 </script>
