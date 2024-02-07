@@ -31,10 +31,10 @@ export const getHexFileUrl = (version: 1 | 2 | 'universal', type: HexType) => {
     throw new Error('Only V2 is supported');
   }
   return {
-    'radio-remote-dev': 'firmware/radio-remote-v0.1.0-dev.hex',
-    'radio-remote': 'firmware/radio-remote-v0.1.0.hex',
-    'radio-bridge': 'firmware/radio-bridge-v0.1.0.hex',
-    'radio-local': 'firmware/local-sensors-v0.1.0.hex',
+    'radio-remote-dev': 'firmware/radio-remote-v0.2.0-dev.hex',
+    'radio-remote': 'firmware/radio-remote-v0.2.0.hex',
+    'radio-bridge': 'firmware/radio-bridge-v0.2.0.hex',
+    'radio-local': 'firmware/local-sensors-v0.2.0.hex',
   }[type];
 };
 
