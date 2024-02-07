@@ -24,7 +24,7 @@ export class MicrobitSerial implements MicrobitConnection {
     (value: protocol.MessageResponse | PromiseLike<protocol.MessageResponse>) => void
   >();
 
-  // Used to avoid concurrent connect attempts
+  // To avoid concurrent connect attempts
   private isConnecting: boolean = false;
 
   // TODO: The radio frequency should be randomly generated once per session.
@@ -93,6 +93,12 @@ export class MicrobitSerial implements MicrobitConnection {
       await this.usb.startSerial(processMessage, handleError);
       await this.handshake();
       stateOnConnected(DeviceRequestStates.INPUT);
+
+      // Check for USB being unplugged
+      navigator.usb.addEventListener('disconnect', () => {
+        logMessage('USB disconnected');
+        this.stopConnectionCheck();
+      });
 
       // Check for connection lost
       if (this.connectionCheckIntervalId === undefined) {
