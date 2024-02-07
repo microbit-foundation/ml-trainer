@@ -78,7 +78,10 @@ export class MicrobitSerial implements MicrobitConnection {
       logMessage(`Serial: using remote device id ${this.remoteDeviceId}`);
       const remoteMbIdCommand = protocol.generateCmdRemoteMbId(this.remoteDeviceId);
       const remoteMbIdResponse = await this.sendCmdWaitResponse(remoteMbIdCommand);
-      if (remoteMbIdResponse.value !== this.remoteDeviceId) {
+      if (
+        remoteMbIdResponse.type === protocol.ResponseTypes.Error ||
+        remoteMbIdResponse.value !== this.remoteDeviceId
+      ) {
         throw new Error(
           `Failed to set remote micro:bit ID. Expected ${this.remoteDeviceId}, got ${remoteMbIdResponse.value}`,
         );
@@ -91,7 +94,12 @@ export class MicrobitSerial implements MicrobitConnection {
           accelerometer: true,
           buttons: true,
         });
-        await this.sendCmdWaitResponse(startCmd);
+        const startCmdResponse = await this.sendCmdWaitResponse(startCmd);
+        if (startCmdResponse.type === protocol.ResponseTypes.Error) {
+          throw new Error(
+            `Failed to start streaming sensors data. Error response received: ${startCmdResponse.message}`,
+          );
+        }
       }
 
       stateOnAssigned(DeviceRequestStates.INPUT, this.usb.getModelNumber());

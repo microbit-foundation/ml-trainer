@@ -191,13 +191,13 @@ describe('processResponseMessage', () => {
     expect(got1).toEqual({
       message: message1,
       messageId: 0,
-      cmdType: 'HS',
+      type: 'HS',
       value: 1,
     });
     expect(got2).toEqual({
       message: message2,
       messageId: 0x1122aabb,
-      cmdType: 'HS',
+      type: 'HS',
       value: 255,
     });
   });
@@ -210,7 +210,7 @@ describe('processResponseMessage', () => {
     expect(got).toEqual({
       message: message,
       messageId: 0x1234,
-      cmdType: 'RF',
+      type: 'RF',
       value: 42,
     });
   });
@@ -223,7 +223,7 @@ describe('processResponseMessage', () => {
     expect(got).toEqual({
       message: message,
       messageId: 0x1234,
-      cmdType: 'RMBID',
+      type: 'RMBID',
       value: 4294967295,
     });
   });
@@ -240,19 +240,19 @@ describe('processResponseMessage', () => {
     expect(got1).toEqual({
       message: message1,
       messageId: 0x1234,
-      cmdType: 'SWVER',
+      type: 'SWVER',
       value: '0.0.0',
     });
     expect(got2).toEqual({
       message: message2,
       messageId: 0x1234,
-      cmdType: 'SWVER',
+      type: 'SWVER',
       value: '99.99.99',
     });
     expect(got3).toEqual({
       message: message3,
       messageId: 0x1234,
-      cmdType: 'SWVER',
+      type: 'SWVER',
       value: '1.2.3',
     });
   });
@@ -267,13 +267,13 @@ describe('processResponseMessage', () => {
     expect(got1).toEqual({
       message: message1,
       messageId: 0x1234,
-      cmdType: 'HWVER',
+      type: 'HWVER',
       value: 0,
     });
     expect(got2).toEqual({
       message: message2,
       messageId: 0x1234,
-      cmdType: 'HWVER',
+      type: 'HWVER',
       value: 9999,
     });
   });
@@ -286,7 +286,7 @@ describe('processResponseMessage', () => {
     expect(got).toEqual({
       message: message,
       messageId: 0x1234,
-      cmdType: 'ZSTART',
+      type: 'ZSTART',
       value: '',
     });
   });
@@ -299,7 +299,7 @@ describe('processResponseMessage', () => {
     expect(got).toEqual({
       message: message,
       messageId: 0x1234,
-      cmdType: 'STOP',
+      type: 'STOP',
       value: '',
     });
   });
