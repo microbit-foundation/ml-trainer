@@ -57,9 +57,10 @@
         </StandardButton>
       {/if}
       {#if $state.reconnectState.reconnectFailed}
+        <!-- TODO: actual support URL -->
         <a
           class="place-self-start text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
-          href=""
+          href="https://support.microbit.org"
           target="_blank"
           rel="noopener">
           {$t('connectMB.troubleshoot')}
