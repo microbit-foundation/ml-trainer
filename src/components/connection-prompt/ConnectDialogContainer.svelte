@@ -83,10 +83,6 @@
           $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
           usbTryAgainType = 'close tabs';
           break;
-        } else if (/Only V2 is supported/.test(err.message)) {
-          $connectionDialogState.connectionState =
-            ConnectDialogStates.MICROBIT_UNSUPPORTED;
-          break;
         } else {
           // Unhandled error. User will need to reconnect their micro:bit
           $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
@@ -116,12 +112,19 @@
     } catch (err) {
       return handleConnectionError(err);
     }
+    // Check micro:bit version compatibility
+    const version = usb.getModelNumber();
+    if (version !== 2) {
+      $connectionDialogState.connectionState = ConnectDialogStates.MICROBIT_UNSUPPORTED;
+      return;
+    }
     return flashMicrobit(usb);
   }
 
   async function flashMicrobit(usb: MicrobitUSB): Promise<void> {
     try {
       const deviceId = await usb.getDeviceId();
+
       const hexForStage = stageToHex(flashStage);
       await usb.flashHex(hexForStage, progress => {
         // Flash hex
