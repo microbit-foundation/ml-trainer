@@ -10,9 +10,9 @@ import { appName } from '../script/environment';
 export const Paths = {
   HOME: '/',
   PLAYGROUND: 'playground',
-  DATA: 'data',
-  TRAINING: 'training',
-  MODEL: 'model',
+  DATA: 'add-data',
+  TRAINING: 'train-model',
+  MODEL: 'test-model',
   FILTERS: 'training/filters',
 } as const;
 
@@ -34,16 +34,16 @@ export function navigate(path: PathType) {
 
 export const getTitle = (path: PathType, t: MessageFormatter) => {
   switch (path) {
-    case '/': {
+    case Paths.HOME: {
       return appName;
     }
-    case 'data': {
+    case Paths.DATA: {
       return `${t('content.index.toolProcessCards.data.title')} | ${appName}`;
     }
-    case 'training': {
+    case Paths.TRAINING: {
       return `${t('content.index.toolProcessCards.train.title')} | ${appName}`;
     }
-    case 'model': {
+    case Paths.MODEL: {
       return `${t('content.index.toolProcessCards.model.title')} | ${appName}`;
     }
     default:
