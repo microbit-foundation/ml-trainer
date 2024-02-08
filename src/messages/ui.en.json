@@ -139,6 +139,10 @@
   "connectMB.usbTryAgain.replugMicrobit3": "check that this micro:bit does not have a battery pack connected",
   "connectMB.usbTryAgain.replugMicrobit4": "unplug and replug the USB cable",
 
+  "connectMB.unsupportedMicrobit.header": "micro:bit V1 is not supported for connecting two micro:bits",
+  "connectMB.unsupportedMicrobit.explain": "Unfortunately, we currently only support using micro:bit V2 for connecting two micro:bits.",
+  "connectMB.unsupportedMicrobit.advice": "We recommend only connecting one micro:bit if you only have micro:bit V1 accessible.",
+
   "connectMB.radioStart.heading": "What you will need to get started:",
   "connectMB.radioStart.requirements1": "2 micro:bits",
   "connectMB.radioStart.requirements2": "Computer",

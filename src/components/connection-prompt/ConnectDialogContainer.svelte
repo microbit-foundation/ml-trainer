@@ -40,6 +40,7 @@
   import DownloadingDialog from './usb/DownloadingDialog.svelte';
   import SelectMicrobitDialogUsb from './usb/SelectMicrobitDialogUsb.svelte';
   import ManualInstallTutorial from './usb/manual/ManualInstallTutorial.svelte';
+  import UnsupportedMicrobitWarningDialog from '../UnsupportedMicrobitWarningDialog.svelte';
 
   const { bluetooth, usb } = get(compatibility);
   let endOfFlow = false;
@@ -61,6 +62,7 @@
   };
 
   const handleWebUSBError = (err: any) => {
+    console.log(err);
     switch (typeof err) {
       // Error during flashing process
       case 'object':
@@ -81,6 +83,10 @@
         } else if (/Unable to claim interface/.test(err.message)) {
           $connectionDialogState.connectionState = ConnectDialogStates.USB_TRY_AGAIN;
           usbTryAgainType = 'close tabs';
+          break;
+        } else if (/Only V2 is supported/.test(err.message)) {
+          $connectionDialogState.connectionState =
+            ConnectDialogStates.MICROBIT_UNSUPPORTED;
           break;
         } else {
           // Unhandled error. User will need to reconnect their micro:bit
@@ -403,6 +409,8 @@
         onTryAgain={() => {
           $connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH;
         }} />
+    {:else if $connectionDialogState.connectionState === ConnectDialogStates.MICROBIT_UNSUPPORTED}
+      <UnsupportedMicrobitWarningDialog onClose={endFlow} />
     {/if}
   </StandardDialog>
 </div>
