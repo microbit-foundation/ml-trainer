@@ -7,33 +7,34 @@
 <script lang="ts">
   import { t } from '../i18n';
   import DialogHeading from './DialogHeading.svelte';
-  import HtmlFormattedMessage from './HtmlFormattedMessage.svelte';
   import HtmlFormattedMessage, { linkWithProps } from './HtmlFormattedMessage.svelte';
   import StandardButton from './StandardButton.svelte';
 
   export let onClose: () => void;
   export let onStartBluetoothClick: () => void;
 
-  const
+  const linkWithPropsForMicrobitVersionSupport = linkWithProps({
+    href: 'https://support.microbit.org/support/solutions/articles/19000119162',
+    target: '_blank',
+    rel: 'noopener',
+  });
 </script>
 
 <div class="w-175">
   <DialogHeading>{$t('connectMB.unsupportedMicrobit.header')}</DialogHeading>
   <div class="space-y-5">
     <div class="space-y-2">
-      <p>{$t('connectMB.unsupportedMicrobit.explain')}</p>
       <p>
         <HtmlFormattedMessage
-          id={$t('connectMB.unsupportedMicrobit.advice1')}
+          id={$t('connectMB.unsupportedMicrobit.explain')}
           options={{
             values: {
-              link: linkWithProps({
-                href: 'https://support.microbit.org/support/solutions/articles/19000119162',
-                target: '_blank',
-                rel: 'noopener',
-              }),
+              link: linkWithPropsForMicrobitVersionSupport,
             },
           }} />
+      </p>
+      <p>
+        {$t('connectMB.unsupportedMicrobit.advice1')}
         <a
           role="button"
           tabindex="0"
@@ -44,11 +45,7 @@
           id={$t('connectMB.unsupportedMicrobit.advice3')}
           options={{
             values: {
-              link: linkWithProps({
-                href: 'https://support.microbit.org/support/solutions/articles/19000119162',
-                target: '_blank',
-                rel: 'noopener',
-              }),
+              link: linkWithPropsForMicrobitVersionSupport,
             },
           }} />
       </p>

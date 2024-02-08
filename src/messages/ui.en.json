@@ -140,10 +140,10 @@
   "connectMB.usbTryAgain.replugMicrobit4": "unplug and replug the USB cable",
 
   "connectMB.unsupportedMicrobit.header": "micro:bit V1 is not supported for connecting two micro:bits",
-  "connectMB.unsupportedMicrobit.explain": "Unfortunately, we only support using micro:bit V2 when connecting two micro:bits. You have connected a <link>micro:bit V1.</link>",
+  "connectMB.unsupportedMicrobit.explain": "Unfortunately, we only support using micro:bit V2 when connecting two micro:bits. You have connected a <link>micro:bit V1</link>.",
   "connectMB.unsupportedMicrobit.advice1": "If your computer supports Web Bluetooth then you can use the ",
   "connectMB.unsupportedMicrobit.advice2": "alternative method that uses one micro:bit",
-  "connectMB.unsupportedMicrobit.advice3": " with your <link>micro:bit V1.</link>",
+  "connectMB.unsupportedMicrobit.advice3": " with your <link>micro:bit V1</link>.",
 
   "connectMB.radioStart.heading": "What you will need to get started:",
   "connectMB.radioStart.requirements1": "2 micro:bits",
