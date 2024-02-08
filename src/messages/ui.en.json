@@ -141,7 +141,9 @@
 
   "connectMB.unsupportedMicrobit.header": "micro:bit V1 is not supported for connecting two micro:bits",
   "connectMB.unsupportedMicrobit.explain": "Unfortunately, we only support using micro:bit V2 when connecting two micro:bits.",
-  "connectMB.unsupportedMicrobit.advice": "If your computer supports Web Bluetooth then you can use the <link>alternative method that uses one micro:bit</link> with your micro:bit V1.",
+  "connectMB.unsupportedMicrobit.advice1": "If your computer supports Web Bluetooth then you can use the ",
+  "connectMB.unsupportedMicrobit.advice2": "alternative method that uses one micro:bit",
+  "connectMB.unsupportedMicrobit.advice3": " with your micro:bit V1.",
 
   "connectMB.radioStart.heading": "What you will need to get started:",
   "connectMB.radioStart.requirements1": "2 micro:bits",

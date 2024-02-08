@@ -20,15 +20,14 @@
     <div class="space-y-2">
       <p>{$t('connectMB.unsupportedMicrobit.explain')}</p>
       <p>
-        <HtmlFormattedMessage
-          id="connectMB.unsupportedMicrobit.advice"
-          options={{
-            values: {
-              link: linkWithProps({
-                onclick: onStartBluetoothClick,
-              }),
-            },
-          }} />
+        {$t('connectMB.unsupportedMicrobit.advice1')}
+        <a
+          role="button"
+          tabindex="0"
+          class="text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring cursor-pointer"
+          on:click={onStartBluetoothClick}
+          >{$t('connectMB.unsupportedMicrobit.advice2')}</a>
+        {$t('connectMB.unsupportedMicrobit.advice3')}
       </p>
     </div>
     <div class="flex justify-end">
