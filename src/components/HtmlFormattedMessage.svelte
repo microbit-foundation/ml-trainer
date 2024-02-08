@@ -13,17 +13,24 @@
  -->
 
 <script lang="ts" context="module">
+  interface Options {
+    className?: string;
+    tag?: string;
+  }
   export const linkWithProps =
-    (props: Partial<HTMLAnchorElement>) => (chunks: string[]) => {
+    (props: Partial<HTMLAnchorElement>, options: Options = {}) =>
+    (chunks: string[]) => {
       {
-        const a = document.createElement('a');
-        Object.assign(a, {
+        const tag = options.tag ?? 'a';
+        const element = document.createElement(tag);
+        Object.assign(element, {
           className:
-            'text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring',
+            'text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring ' +
+            (options.className ?? ''),
           innerText: chunks.join(''),
           ...props,
         });
-        return a;
+        return element;
       }
     };
 </script>

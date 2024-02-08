@@ -18,6 +18,24 @@
     target: '_blank',
     rel: 'noopener',
   });
+  const linkToBluetoothFlowId = 'link-to-bluetooth';
+  const linkToBluetoothFlow = linkWithProps(
+    {
+      id: linkToBluetoothFlowId,
+    },
+    { tag: 'button' },
+  );
+  // The elements in translated strings don't support Svelte event handlers
+  // so we wire it up ourselves.
+  const wireLinkToBluetoothFlow = (node: Element) => {
+    const link = node.querySelector('#' + linkToBluetoothFlowId);
+    link?.addEventListener('click', onStartBluetoothClick);
+    return {
+      destroy() {
+        link?.removeEventListener('click', onStartBluetoothClick);
+      },
+    };
+  };
 </script>
 
 <div class="w-175">
@@ -33,19 +51,14 @@
             },
           }} />
       </p>
-      <p>
-        {$t('connectMB.unsupportedMicrobit.advice1')}
-        <a
-          role="button"
-          tabindex="0"
-          class="text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring cursor-pointer"
-          on:click={onStartBluetoothClick}
-          >{$t('connectMB.unsupportedMicrobit.advice2')}</a>
+      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+      <p use:wireLinkToBluetoothFlow>
         <HtmlFormattedMessage
-          id={$t('connectMB.unsupportedMicrobit.advice3')}
+          id={$t('connectMB.unsupportedMicrobit.advice')}
           options={{
             values: {
-              link: linkWithPropsForMicrobitVersionSupport,
+              link1: linkToBluetoothFlow,
+              link2: linkWithPropsForMicrobitVersionSupport,
             },
           }} />
       </p>
