@@ -62,7 +62,6 @@
   };
 
   const handleWebUSBError = (err: any) => {
-    console.log(err);
     switch (typeof err) {
       // Error during flashing process
       case 'object':
