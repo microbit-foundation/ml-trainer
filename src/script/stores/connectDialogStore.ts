@@ -27,6 +27,7 @@ export enum ConnectDialogStates {
   MANUAL_TUTORIAL, // Prompt with tutorial gif for manual installation (and downloading of program)
   USB_TRY_AGAIN, // Prompt user to try connecting via WebUSB again
   BLUETOOTH_TRY_AGAIN, // Prompt user to try connecting via WebBluetooth again
+  BROWSER_DIALOG, // Awaiting user interaction with browser dialog
 }
 
 export const connectionDialogState = writable<{

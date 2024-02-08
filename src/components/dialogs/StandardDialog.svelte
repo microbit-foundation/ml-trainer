@@ -18,6 +18,7 @@
   export let closeOnEscape: boolean = true;
   export let isOpen: boolean;
   export let onClose: () => void;
+  export let hideContent: boolean = false;
 
   let finalFocusRef: Element | null;
 
@@ -90,6 +91,7 @@
       <div
         use:melt={$content}
         class="w-min h-min border-gray-200 border border-solid relative bg-white rounded-lg p-8 z-15"
+        class:hidden={hideContent}
         transition:scale={{
           duration: 200,
           start: 0.9,
