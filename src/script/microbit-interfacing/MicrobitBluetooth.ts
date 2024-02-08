@@ -5,7 +5,6 @@
  */
 
 import StaticConfiguration from '../../StaticConfiguration';
-import { isDevMode } from '../environment';
 import { outputting } from '../stores/uiStore';
 import { logError, logMessage } from '../utils/logging';
 import MBSpecs from './MBSpecs';
@@ -20,8 +19,8 @@ import {
   stateOnAssigned,
   stateOnConnected,
   stateOnDisconnected,
-  stateOnFailedToConnect,
   stateOnReady,
+  stateOnReconnectionAttempt,
 } from './state-updaters';
 
 /**
@@ -103,7 +102,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
                 'Bluetooth GATT server connect after timeout, triggering disconnect',
               );
               this.disconnectPromise = (async () => {
-                await this.disconnectInternal(false);
+                await this.disconnectInternal(false, false);
                 this.disconnectPromise = undefined;
               })();
             } else {
@@ -121,7 +120,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
             }
           })
           .finally(() => {
-            console.log('Bluetooth GATT server promise field cleared');
+            logMessage('Bluetooth GATT server promise field cleared');
             this.gattConnectPromise = undefined;
           });
 
@@ -161,7 +160,6 @@ export class MicrobitBluetooth implements MicrobitConnection {
     } catch (e) {
       logError('Bluetooth connect error', e);
       await this.disconnectInternal(false);
-      states.forEach(s => stateOnFailedToConnect(s));
       throw new Error('Failed to establish a connection!');
     } finally {
       this.duringExplicitConnectDisconnect--;
@@ -172,7 +170,10 @@ export class MicrobitBluetooth implements MicrobitConnection {
     return this.disconnectInternal(true);
   }
 
-  private async disconnectInternal(userTriggered: boolean): Promise<void> {
+  private async disconnectInternal(
+    userTriggered: boolean,
+    updateState: boolean = true,
+  ): Promise<void> {
     logMessage(
       `Bluetooth disconnect ${userTriggered ? '(user triggered)' : '(programmatic)'}`,
     );
@@ -187,8 +188,11 @@ export class MicrobitBluetooth implements MicrobitConnection {
     } finally {
       this.duringExplicitConnectDisconnect--;
     }
-
-    this.inUseAs.forEach(value => stateOnDisconnected(value, userTriggered));
+    if (updateState) {
+      this.inUseAs.forEach(value =>
+        stateOnDisconnected(value, userTriggered, 'bluetooth'),
+      );
+    }
   }
 
   async reconnect(): Promise<void> {
@@ -203,13 +207,14 @@ export class MicrobitBluetooth implements MicrobitConnection {
     try {
       if (!this.duringExplicitConnectDisconnect) {
         logMessage('Bluetooth GATT disconnected... automatically trying reconnect');
+        stateOnReconnectionAttempt();
         await this.reconnect();
       } else {
         logMessage('Bluetooth GATT disconnect ignored during explicit disconnect');
       }
     } catch (e) {
       logError('Bluetooth connect triggered by disconnect listener failed', e);
-      this.inUseAs.forEach(s => stateOnDisconnected(s, false));
+      this.inUseAs.forEach(s => stateOnDisconnected(s, false, 'bluetooth'));
     }
   };
 

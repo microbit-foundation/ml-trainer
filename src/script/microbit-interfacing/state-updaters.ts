@@ -5,7 +5,7 @@
  */
 
 import { get } from 'svelte/store';
-import { ModelView, state } from '../stores/uiStore';
+import { ConnectionType, ModelView, state } from '../stores/uiStore';
 import { Paths, currentPath, navigate } from '../../router/paths';
 import MBSpecs from './MBSpecs';
 import { HexOrigin } from '../../StaticConfiguration';
@@ -17,8 +17,14 @@ export const stateOnConnected = (requestState: DeviceRequestStates) => {
     requestState === DeviceRequestStates.INPUT
       ? (s.isInputConnected = true)
       : (s.isOutputConnected = true);
-    s.isRequestingDevice = DeviceRequestStates.NONE;
-    s.offerReconnect = false;
+    s.showReconnectHelp = false;
+    s.reconnectState = {
+      ...s.reconnectState,
+      // This is set on disconnect.
+      connectionType: 'none',
+      reconnectFailed: false,
+      reconnecting: false,
+    };
     return s;
   });
 };
@@ -81,13 +87,11 @@ export const stateOnAssigned = (
 ) => {
   if (requestState === DeviceRequestStates.INPUT) {
     state.update(s => {
-      s.isInputAssigned = true;
       s.inputMicrobitVersion = microbitVersion;
       return s;
     });
   } else {
     state.update(s => {
-      s.isOutputAssigned = true;
       s.inputMicrobitVersion = microbitVersion;
       return s;
     });
@@ -100,25 +104,34 @@ export const stateOnAssigned = (
 export const stateOnDisconnected = (
   requestState: DeviceRequestStates,
   userDisconnect: boolean,
+  connectionType: ConnectionType,
 ): void => {
   if (requestState === DeviceRequestStates.INPUT) {
     state.update(s => {
       s.isInputConnected = false;
       s.isInputReady = false;
-      s.offerReconnect = !userDisconnect;
-      s.reconnectState = DeviceRequestStates.INPUT;
+      s.showReconnectHelp = !userDisconnect;
+      s.reconnectState = {
+        reconnecting: false,
+        reconnectFailed: false,
+        connectionType: connectionType,
+        inUseAs: s.reconnectState.inUseAs.add(DeviceRequestStates.INPUT),
+      };
       s.isInputOutdated = false;
       return s;
     });
   } else {
     state.update(s => {
       s.isOutputConnected = false;
-      s.offerReconnect = !userDisconnect;
+      s.showReconnectHelp = !userDisconnect;
       s.isOutputReady = false;
       s.isOutputOutdated = false;
-      if (s.isInputConnected) {
-        s.reconnectState = DeviceRequestStates.OUTPUT;
-      }
+      s.reconnectState = {
+        reconnecting: false,
+        reconnectFailed: false,
+        connectionType: connectionType,
+        inUseAs: s.reconnectState.inUseAs.add(DeviceRequestStates.OUTPUT),
+      };
       return s;
     });
   }
@@ -128,29 +141,44 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
   if (requestState === DeviceRequestStates.INPUT) {
     state.update(s => {
       s.isInputConnected = false;
-      s.isInputAssigned = false;
       s.isInputReady = false;
-      s.offerReconnect = false;
-      s.reconnectState = DeviceRequestStates.NONE;
+      s.showReconnectHelp = false;
+      s.reconnectState = {
+        ...s.reconnectState,
+        reconnecting: false,
+        reconnectFailed: true,
+        inUseAs: new Set(),
+      };
       s.isInputOutdated = false;
       return s;
     });
   } else {
     state.update(s => {
       s.isOutputConnected = false;
-      s.offerReconnect = false;
-      s.isOutputAssigned = false;
+      s.showReconnectHelp = false;
       s.isOutputReady = false;
-      s.reconnectState = DeviceRequestStates.NONE;
+      s.reconnectState = {
+        ...s.reconnectState,
+        reconnecting: false,
+        reconnectFailed: true,
+        inUseAs: new Set(),
+      };
       s.isOutputOutdated = false;
       return s;
     });
   }
 };
 
-export const stateOnStopOfferingReconnect = () => {
+export const stateOnShowReconnectHelp = (userTriggered: boolean = false) => {
   state.update(s => {
-    s.offerReconnect = false;
+    s.showReconnectHelp = userTriggered ? 'userTriggered' : true;
+    return s;
+  });
+};
+
+export const stateOnHideReconnectHelp = () => {
+  state.update(s => {
+    s.showReconnectHelp = false;
     return s;
   });
 };
@@ -170,4 +198,25 @@ export const stateOnVersionIdentified = (
       return s;
     });
   }
+};
+
+export const stateOnReconnectionAttempt = () => {
+  state.update(s => {
+    s.showReconnectHelp = false;
+    s.reconnectState = {
+      ...s.reconnectState,
+      reconnecting: true,
+    };
+    return s;
+  });
+};
+
+export const stateOnReconnected = () => {
+  state.update(s => {
+    s.reconnectState = {
+      ...s.reconnectState,
+      reconnecting: false,
+    };
+    return s;
+  });
 };

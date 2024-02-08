@@ -133,7 +133,7 @@
     if (selectedSound === undefined) {
       return;
     }
-    if (!$state.isOutputAssigned) {
+    if (!Microbits.getOutputMicrobit()) {
       return;
     }
 

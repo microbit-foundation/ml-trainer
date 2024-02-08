@@ -10,8 +10,8 @@
   .loader:before,
   .loader:after {
     border-radius: 50%;
-    width: 2.5em;
-    height: 2.5em;
+    width: 25px;
+    height: 25px;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
     -webkit-animation: load7 1.8s infinite ease-in-out;
@@ -19,7 +19,8 @@
   }
   .loader {
     font-size: 10px;
-    position: relative;
+    position: absolute;
+    top: -25px;
     text-indent: -9999em;
     -webkit-transform: translateZ(0);
     -ms-transform: translateZ(0);
@@ -63,6 +64,6 @@
   }
 </style>
 
-<div class="flex justify-center items-center self-center m-auto h-20">
+<div class="flex justify-center h-25px w-full relative">
   <div class="loader text-secondary" />
 </div>

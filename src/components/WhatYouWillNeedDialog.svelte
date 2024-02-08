@@ -6,6 +6,7 @@
 
 <script lang="ts">
   import { t } from '../i18n';
+  import { state } from '../script/stores/uiStore';
   import DialogHeading from './DialogHeading.svelte';
   import StandardButton from './StandardButton.svelte';
   import ExternalLinkIcon from 'virtual:icons/ri/external-link-line';
@@ -18,7 +19,6 @@
 
   export let items: Item[];
   export let headingId: string;
-  export let reconnectFailed: boolean;
   export let subtitleId: string | undefined = undefined;
   export let switchTextId: string;
   export let onSwitchClick: (() => void) | undefined;
@@ -27,24 +27,14 @@
 
 <div class="w-175">
   <DialogHeading>{$t(headingId)}</DialogHeading>
-  <div class="space-y-2">
-    {#if reconnectFailed}
-      <p>
-        {$t('reconnectFailed.subtitle')}
-        <a
-          class="text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
-          href=""
-          target="_blank"
-          rel="noopener">
-          {$t('connectMB.troubleshoot')}
-          <ExternalLinkIcon class="inline transform -translate-y-0.25" />
-        </a>
-      </p>
+  <p>
+    {#if $state.reconnectState.reconnectFailed}
+      <span>{$t('reconnectFailed.subtitle')}</span>
     {/if}
     {#if subtitleId}
-      <p>{$t(subtitleId)}</p>
+      {$t(subtitleId)}
     {/if}
-  </div>
+  </p>
   <div class="inline-grid grid-cols-{items.length} gap-16 py-13 px-10">
     {#each items as item}
       <div class="flex flex-col text-md text-center">
@@ -60,11 +50,23 @@
   </div>
 
   <div class="flex {onSwitchClick ? 'justify-between' : 'justify-end'} items-center">
-    {#if onSwitchClick}
-      <StandardButton type="link" onClick={onSwitchClick}>
-        {$t(switchTextId)}
-      </StandardButton>
-    {/if}
+    <div>
+      {#if onSwitchClick}
+        <StandardButton class="place-self-start" type="link" onClick={onSwitchClick}>
+          {$t(switchTextId)}
+        </StandardButton>
+      {/if}
+      {#if $state.reconnectState.reconnectFailed}
+        <a
+          class="place-self-start text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
+          href=""
+          target="_blank"
+          rel="noopener">
+          {$t('connectMB.troubleshoot')}
+          <ExternalLinkIcon class="inline transform -translate-y-0.25" />
+        </a>
+      {/if}
+    </div>
     <StandardButton onClick={onNextClick} type="primary"
       >{$t('connectMB.nextButton')}</StandardButton>
   </div>

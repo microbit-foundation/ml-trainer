@@ -5,41 +5,41 @@
  -->
 
 <script lang="ts">
-  import StandardDialog from '../dialogs/StandardDialog.svelte';
-  import StartRadioDialog from './radio/StartRadioDialog.svelte';
-  import StartBluetoothDialog from './bluetooth/StartBluetoothDialog.svelte';
-  import ConnectCableDialog from './bluetooth/ConnectCableDialog.svelte';
-  import SelectMicrobitDialogUsb from './usb/SelectMicrobitDialogUsb.svelte';
-  import ConnectBatteryDialog from './bluetooth/ConnectBatteryDialog.svelte';
-  import BluetoothConnectDialog from './bluetooth/BluetoothConnectDialog.svelte';
-  import DownloadingDialog from './usb/DownloadingDialog.svelte';
-  import ManualInstallTutorial from './usb/manual/ManualInstallTutorial.svelte';
+  import { onDestroy, onMount } from 'svelte';
+  import { Unsubscriber, get } from 'svelte/store';
+  import { isDevMode } from '../../script/environment';
+  import { flags } from '../../script/flags';
+  import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
+  import MicrobitUSB from '../../script/microbit-interfacing/MicrobitUSB';
+  import Microbits, {
+    FlashStage,
+    HexType,
+  } from '../../script/microbit-interfacing/Microbits';
   import {
     ConnectDialogStates,
     connectionDialogState,
   } from '../../script/stores/connectDialogStore';
   import {
-    radioBridgeRemoteDeviceId,
     btPatternInput,
-    btPatternOutput,
+    radioBridgeRemoteDeviceId,
   } from '../../script/stores/connectionStore';
-  import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
-  import BrokenFirmwareDetected from './usb/BrokenFirmwareDetected.svelte';
-  import BluetoothConnectingDialog from './bluetooth/BluetoothConnectingDialog.svelte';
-  import SelectMicrobitDialogBluetooth from './bluetooth/SelectMicrobitDialogBluetooth.svelte';
+  import { compatibility, state } from '../../script/stores/uiStore';
+  import StandardDialog from '../dialogs/StandardDialog.svelte';
   import MicrobitWearingInstructionDialog from './MicrobitWearingInstructionDialog.svelte';
+  import WebBluetoothTryAgain from './WebBluetoothTryAgain.svelte';
   import WebUsbTryAgain, { USBTryAgainType } from './WebUsbTryAgain.svelte';
-  import { onDestroy, onMount } from 'svelte';
-  import { get, Unsubscriber } from 'svelte/store';
-  import { compatibility } from '../../script/stores/uiStore';
-  import { isDevMode } from '../../script/environment';
-  import { flags } from '../../script/flags';
+  import BluetoothConnectDialog from './bluetooth/BluetoothConnectDialog.svelte';
+  import BluetoothConnectingDialog from './bluetooth/BluetoothConnectingDialog.svelte';
+  import ConnectBatteryDialog from './bluetooth/ConnectBatteryDialog.svelte';
+  import ConnectCableDialog from './bluetooth/ConnectCableDialog.svelte';
+  import SelectMicrobitDialogBluetooth from './bluetooth/SelectMicrobitDialogBluetooth.svelte';
+  import StartBluetoothDialog from './bluetooth/StartBluetoothDialog.svelte';
   import ConnectingMicrobits from './radio/ConnectingMicrobits.svelte';
-  import Microbits, {
-    FlashStage,
-    HexType,
-  } from '../../script/microbit-interfacing/Microbits';
-  import MicrobitUSB from '../../script/microbit-interfacing/MicrobitUSB';
+  import StartRadioDialog from './radio/StartRadioDialog.svelte';
+  import BrokenFirmwareDetected from './usb/BrokenFirmwareDetected.svelte';
+  import DownloadingDialog from './usb/DownloadingDialog.svelte';
+  import SelectMicrobitDialogUsb from './usb/SelectMicrobitDialogUsb.svelte';
+  import ManualInstallTutorial from './usb/manual/ManualInstallTutorial.svelte';
 
   const { bluetooth, usb } = get(compatibility);
   let endOfFlow = false;
@@ -103,7 +103,7 @@
     }
   };
 
-  async function tryMicrobitConnection(): Promise<void> {
+  async function tryMicrobitUSBConnection(): Promise<void> {
     let usb: MicrobitUSB | undefined;
     try {
       usb = await MicrobitUSB.requestConnection();
@@ -151,9 +151,21 @@
     }
   }
 
-  function onFoundBluetoothDevice(): void {
+  const tryMicrobitBluetoothConnection = async () => {
     $connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH_CONNECTING;
-  }
+    try {
+      const success = await Microbits.assignBluetoothInput(
+        MBSpecs.Utility.patternToName($btPatternInput),
+      );
+      if (success) {
+        endFlow();
+      } else {
+        $connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH_TRY_AGAIN;
+      }
+    } catch (e) {
+      $connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH_TRY_AGAIN;
+    }
+  };
 
   async function onConnectingSerial(usb: MicrobitUSB): Promise<void> {
     $connectionDialogState.connectionState = ConnectDialogStates.CONNECTING_MICROBITS;
@@ -167,6 +179,9 @@
   function connectionStateNone() {
     setTimeout(() => {
       $connectionDialogState.connectionState = ConnectDialogStates.NONE;
+      // If the user closes the dialog while it shows information relating
+      // to reconnection failure reset state to starting conditions.
+      $state.reconnectState = { ...$state.reconnectState, reconnectFailed: false };
       endOfFlow = false;
     }, 200);
   }
@@ -204,10 +219,13 @@
       !endOfFlow}
     onClose={connectionStateNone}
     hasCloseButton={$connectionDialogState.connectionState !==
-      ConnectDialogStates.USB_DOWNLOADING}
+      ConnectDialogStates.USB_DOWNLOADING &&
+      $connectionDialogState.connectionState !== ConnectDialogStates.BLUETOOTH_CONNECTING}
     closeOnOutsideClick={false}
     closeOnEscape={$connectionDialogState.connectionState !==
-      ConnectDialogStates.USB_DOWNLOADING}>
+      ConnectDialogStates.USB_DOWNLOADING &&
+      $connectionDialogState.connectionState !==
+        ConnectDialogStates.BLUETOOTH_CONNECTING}>
     {#if $connectionDialogState.connectionState === ConnectDialogStates.START_RADIO}
       <StartRadioDialog
         onStartBluetoothClick={bluetooth
@@ -308,7 +326,7 @@
       <SelectMicrobitDialogUsb
         onBackClick={() =>
           ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)}
-        onNextClick={tryMicrobitConnection} />
+        onNextClick={tryMicrobitUSBConnection} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECT_BATTERY}
       {#if flashStage === 'bluetooth'}
         <ConnectBatteryDialog
@@ -346,14 +364,9 @@
       <SelectMicrobitDialogBluetooth
         onBackClick={() =>
           ($connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH)}
-        onNextClick={onFoundBluetoothDevice} />
+        onNextClick={tryMicrobitBluetoothConnection} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.BLUETOOTH_CONNECTING}
-      <BluetoothConnectingDialog
-        onCancel={endFlow}
-        onReconnectBluetooth={() =>
-          ($connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH)}
-        onBluetoothConnected={endFlow}
-        deviceState={$connectionDialogState.deviceState} />
+      <BluetoothConnectingDialog />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECTING_MICROBITS}
       <ConnectingMicrobits />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.BAD_FIRMWARE}
@@ -383,6 +396,12 @@
         onCancel={endFlow}
         onTryAgain={() => {
           $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE;
+        }} />
+    {:else if $connectionDialogState.connectionState === ConnectDialogStates.BLUETOOTH_TRY_AGAIN}
+      <WebBluetoothTryAgain
+        onCancel={endFlow}
+        onTryAgain={() => {
+          $connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH;
         }} />
     {/if}
   </StandardDialog>

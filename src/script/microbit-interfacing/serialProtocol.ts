@@ -204,6 +204,10 @@ export const generateCmdStart = (sensors: MicrobitSensors): MessageCmd => {
   return generateCommand(CommandTypes.Zstart, cmdData);
 };
 
+export const generateCmdStop = (): MessageCmd => {
+  return generateCommand(CommandTypes.Stop);
+};
+
 export const generateCmdRadioFrequency = (frequency: number): MessageCmd => {
   if (frequency < 0 || frequency > 83) {
     throw new Error('Radio frequency out of range');

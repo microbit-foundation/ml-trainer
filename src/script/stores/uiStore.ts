@@ -6,14 +6,12 @@
 
 import { get, writable } from 'svelte/store';
 import { t } from '../../i18n';
-import CookieManager from '../CookieManager';
 import {
   checkCompatibility,
   type CompatibilityStatus,
 } from '../compatibility/CompatibilityChecker';
 import MBSpecs from '../microbit-interfacing/MBSpecs';
 import { gestures } from './Stores';
-import { isInputPatternValid } from './connectionStore';
 import { HexOrigin } from '../../StaticConfiguration';
 import { DeviceRequestStates } from '../microbit-interfacing/MicrobitConnection';
 
@@ -31,10 +29,17 @@ export enum ModelView {
   STACK,
 }
 
+export type ConnectionType = 'none' | 'bluetooth' | 'bridge' | 'remote';
+
+interface ReconnectState {
+  connectionType: ConnectionType;
+  inUseAs: Set<DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT>;
+  reconnecting: boolean;
+  reconnectFailed: boolean;
+}
+
 // Store current state to prevent error prone actions
 export const state = writable<{
-  isRequestingDevice: DeviceRequestStates;
-  isFlashingDevice: boolean;
   isTesting: boolean;
   isRecording: boolean;
   isTraining: boolean;
@@ -43,15 +48,12 @@ export const state = writable<{
   isOutputConnected: boolean;
   hasTrainedBefore: boolean;
   isPredicting: boolean;
-  offerReconnect: boolean;
-  requestDeviceWasCancelled: boolean;
-  reconnectState: DeviceRequestStates;
+  showReconnectHelp: 'userTriggered' | boolean;
+  reconnectState: ReconnectState;
   isInputReady: boolean;
-  isInputAssigned: boolean;
   inputHexVersion: number;
   inputMicrobitVersion: MBSpecs.MBVersion | -1;
   inputOrigin: HexOrigin;
-  isOutputAssigned: boolean;
   isOutputReady: boolean;
   outputHexVersion: number;
   outputMicrobitVersion: MBSpecs.MBVersion | -1;
@@ -60,8 +62,6 @@ export const state = writable<{
   isInputOutdated: boolean;
   isOutputOutdated: boolean;
 }>({
-  isRequestingDevice: DeviceRequestStates.NONE,
-  isFlashingDevice: false,
   isTesting: false,
   isRecording: false,
   isTraining: false,
@@ -70,15 +70,17 @@ export const state = writable<{
   isOutputConnected: false,
   hasTrainedBefore: false,
   isPredicting: false,
-  offerReconnect: false,
-  requestDeviceWasCancelled: false,
-  reconnectState: DeviceRequestStates.NONE,
+  showReconnectHelp: false,
+  reconnectState: {
+    connectionType: 'none',
+    inUseAs: new Set(),
+    reconnecting: false,
+    reconnectFailed: false,
+  },
   isInputReady: false,
-  isInputAssigned: false,
   inputHexVersion: -1,
   inputMicrobitVersion: -1,
   inputOrigin: HexOrigin.UNKNOWN,
-  isOutputAssigned: false,
   isOutputReady: false,
   outputHexVersion: -1,
   outputMicrobitVersion: -1,
@@ -155,15 +157,3 @@ const initialMicrobitInteraction: MicrobitInteractions = MicrobitInteractions.B;
 export const microbitInteraction = writable<MicrobitInteractions>(
   initialMicrobitInteraction,
 );
-
-/**
- * Workaround for an unrecoverable reconnect failure due to a bug in chrome/chromium
- * Refresh the page is the only known solution
- */
-export const onCatastrophicError = () => {
-  // Set flag to offer reconnect when page reloads
-  if (isInputPatternValid()) {
-    CookieManager.setReconnectFlag();
-  }
-  location.reload();
-};

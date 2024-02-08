@@ -26,6 +26,7 @@ export enum ConnectDialogStates {
   CONNECT_TUTORIAL_SERIAL, // Instructions how to connect the micro:bit using a serial connection
   MANUAL_TUTORIAL, // Prompt with tutorial gif for manual installation (and downloading of program)
   USB_TRY_AGAIN, // Prompt user to try connecting via WebUSB again
+  BLUETOOTH_TRY_AGAIN, // Prompt user to try connecting via WebBluetooth again
 }
 
 export const connectionDialogState = writable<{
@@ -38,14 +39,22 @@ export const connectionDialogState = writable<{
 
 export const startConnectionProcess = (): void => {
   const { usb } = get(compatibility);
+  const { isInputConnected, reconnectState } = get(state);
   // Updating the state will cause a popup to appear, from where the connection process will take place
+
+  let initialInputDialogState = ConnectDialogStates.START_RADIO;
+  if (reconnectState.connectionType === 'none') {
+    if (!usb) {
+      initialInputDialogState = ConnectDialogStates.START_BLUETOOTH;
+    }
+  } else if (reconnectState.connectionType === 'bluetooth') {
+    initialInputDialogState = ConnectDialogStates.START_BLUETOOTH;
+  }
   connectionDialogState.update(s => {
-    s.connectionState = get(state).isInputConnected
+    s.connectionState = isInputConnected
       ? ConnectDialogStates.START_OUTPUT
-      : usb
-        ? ConnectDialogStates.START_RADIO
-        : ConnectDialogStates.START_BLUETOOTH;
-    s.deviceState = get(state).isInputConnected
+      : initialInputDialogState;
+    s.deviceState = isInputConnected
       ? DeviceRequestStates.OUTPUT
       : DeviceRequestStates.INPUT;
     return s;

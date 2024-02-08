@@ -42,6 +42,10 @@ class Microbits {
   private static inputMicrobit: MicrobitConnection | undefined = undefined;
   private static outputMicrobit: MicrobitBluetooth | undefined = undefined;
 
+  public static getInputMicrobit(): MicrobitConnection | undefined {
+    return this.inputMicrobit;
+  }
+
   public static getOutputMicrobit(): MicrobitBluetooth | undefined {
     return this.outputMicrobit;
   }
@@ -112,6 +116,16 @@ class Microbits {
       return !!this.inputMicrobit;
     }
     return !!this.outputMicrobit;
+  }
+
+  public static async dispose(
+    requestState: DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT,
+  ) {
+    if (requestState === DeviceRequestStates.INPUT) {
+      this.inputMicrobit = undefined;
+    } else {
+      this.outputMicrobit = undefined;
+    }
   }
 }
 
