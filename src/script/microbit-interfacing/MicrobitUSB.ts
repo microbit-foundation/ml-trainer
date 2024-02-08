@@ -5,9 +5,8 @@
  */
 
 import { CortexM, DAPLink, WebUSB } from 'dapjs';
-import MBSpecs from './MBSpecs';
-import { HexType, getHexFileUrl } from './Microbits';
 import { logError } from '../utils/logging';
+import MBSpecs from './MBSpecs';
 import { CortexSpecialReg } from './constants';
 
 const baudRate = 115200;
