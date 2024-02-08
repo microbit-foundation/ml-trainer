@@ -109,12 +109,12 @@
   };
 
   async function tryMicrobitUSBConnection(): Promise<void> {
+    $connectionDialogState.connectionState = ConnectDialogStates.BROWSER_DIALOG;
     let usb: MicrobitUSB | undefined;
     try {
       usb = await MicrobitUSB.requestConnection();
     } catch (err) {
-      handleConnectionError(err);
-      return;
+      return handleConnectionError(err);
     }
     return flashMicrobit(usb);
   }
@@ -220,6 +220,8 @@
 
 <div bind:this={dialogContainer}>
   <StandardDialog
+    hideContent={$connectionDialogState.connectionState ===
+      ConnectDialogStates.BROWSER_DIALOG}
     isOpen={$connectionDialogState.connectionState !== ConnectDialogStates.NONE &&
       !endOfFlow}
     onClose={connectionStateNone}

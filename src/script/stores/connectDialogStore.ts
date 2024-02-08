@@ -28,6 +28,7 @@ export enum ConnectDialogStates {
   USB_TRY_AGAIN, // Prompt user to try connecting via WebUSB again
   BLUETOOTH_TRY_AGAIN, // Prompt user to try connecting via WebBluetooth again
   MICROBIT_UNSUPPORTED, // Warn user that micro:bit V1 is not supported
+  BROWSER_DIALOG, // Awaiting user interaction with browser dialog
 }
 
 export const connectionDialogState = writable<{
