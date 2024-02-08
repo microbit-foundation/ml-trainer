@@ -19,7 +19,10 @@ export type HexType =
 
 export type UARTMessageType = 'g' | 's';
 
-export const getHexFileUrl = (version: 1 | 2 | 'universal', type: HexType) => {
+export const getHexFileUrl = (
+  version: 1 | 2 | 'universal',
+  type: HexType,
+): string | undefined => {
   if (type === 'bluetooth') {
     return {
       1: 'firmware/ml-microbit-cpp-version-combined.hex',
@@ -28,7 +31,7 @@ export const getHexFileUrl = (version: 1 | 2 | 'universal', type: HexType) => {
     }[version];
   }
   if (version !== 2) {
-    throw new Error('Only V2 is supported');
+    return undefined;
   }
   return {
     'radio-remote-dev': 'firmware/radio-remote-v0.2.0-dev.hex',

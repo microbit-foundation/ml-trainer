@@ -14,6 +14,7 @@
   import Microbits, {
     FlashStage,
     HexType,
+    getHexFileUrl,
   } from '../../script/microbit-interfacing/Microbits';
   import {
     ConnectDialogStates,
@@ -112,21 +113,20 @@
     } catch (err) {
       return handleConnectionError(err);
     }
-    // Check micro:bit version compatibility
-    const version = usb.getModelNumber();
-    if (version !== 2) {
-      $connectionDialogState.connectionState = ConnectDialogStates.MICROBIT_UNSUPPORTED;
-      return;
-    }
     return flashMicrobit(usb);
   }
 
   async function flashMicrobit(usb: MicrobitUSB): Promise<void> {
     try {
       const deviceId = await usb.getDeviceId();
-
       const hexForStage = stageToHex(flashStage);
-      await usb.flashHex(hexForStage, progress => {
+      const hexUrl = getHexFileUrl(usb.getModelNumber(), hexForStage);
+      if (hexUrl === undefined) {
+        $connectionDialogState.connectionState = ConnectDialogStates.MICROBIT_UNSUPPORTED;
+        return;
+      }
+
+      await usb.flashHex(hexUrl, progress => {
         // Flash hex
         // Send users to download screen
         if (
