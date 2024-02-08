@@ -191,7 +191,11 @@ export class MicrobitSerial implements MicrobitConnection {
     reconnectHelp: ConnectionType,
   ): Promise<void> {
     this.stopConnectionCheck();
-    // We might want to send command to stop streaming here?
+    try {
+      await this.sendCmdWaitResponse(protocol.generateCmdStop());
+    } catch (e) {
+      // If this fails the remote micro:bit has already gone away.
+    }
     this.responseMap.clear();
     await this.usb.stopSerial();
     stateOnDisconnected(DeviceRequestStates.INPUT, userDisconnect, reconnectHelp);

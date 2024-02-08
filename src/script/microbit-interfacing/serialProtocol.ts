@@ -194,6 +194,10 @@ export const generateCmdStart = (sensors: MicrobitSensors): MessageCmd => {
   return generateCommand(CommandTypes.Zstart, cmdData);
 };
 
+export const generateCmdStop = (): MessageCmd => {
+  return generateCommand(CommandTypes.Stop);
+};
+
 export const generateCmdRadioFrequency = (frequency: number): MessageCmd => {
   return generateCommand(CommandTypes.RadioFrequency, frequency.toString());
 };
