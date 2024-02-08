@@ -7,9 +7,11 @@
 <script lang="ts">
   import { t } from '../i18n';
   import DialogHeading from './DialogHeading.svelte';
+  import HtmlFormattedMessage, { linkWithProps } from './HtmlFormattedMessage.svelte';
   import StandardButton from './StandardButton.svelte';
 
   export let onClose: () => void;
+  export let onStartBluetoothClick: () => void;
 </script>
 
 <div class="w-175">
@@ -17,7 +19,17 @@
   <div class="space-y-5">
     <div class="space-y-2">
       <p>{$t('connectMB.unsupportedMicrobit.explain')}</p>
-      <p>{$t('connectMB.unsupportedMicrobit.advice')}</p>
+      <p>
+        <HtmlFormattedMessage
+          id="connectMB.unsupportedMicrobit.advice"
+          options={{
+            values: {
+              link: linkWithProps({
+                onclick: onStartBluetoothClick,
+              }),
+            },
+          }} />
+      </p>
     </div>
     <div class="flex justify-end">
       <StandardButton onClick={onClose} type="primary"

@@ -410,7 +410,11 @@
           $connectionDialogState.connectionState = ConnectDialogStates.BLUETOOTH;
         }} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.MICROBIT_UNSUPPORTED}
-      <UnsupportedMicrobitWarningDialog onClose={endFlow} />
+      <UnsupportedMicrobitWarningDialog
+        onStartBluetoothClick={() => {
+          $connectionDialogState.connectionState = ConnectDialogStates.START_BLUETOOTH;
+        }}
+        onClose={endFlow} />
     {/if}
   </StandardDialog>
 </div>
