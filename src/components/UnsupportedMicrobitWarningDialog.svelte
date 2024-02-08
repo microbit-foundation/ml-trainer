@@ -7,11 +7,14 @@
 <script lang="ts">
   import { t } from '../i18n';
   import DialogHeading from './DialogHeading.svelte';
+  import HtmlFormattedMessage from './HtmlFormattedMessage.svelte';
   import HtmlFormattedMessage, { linkWithProps } from './HtmlFormattedMessage.svelte';
   import StandardButton from './StandardButton.svelte';
 
   export let onClose: () => void;
   export let onStartBluetoothClick: () => void;
+
+  const
 </script>
 
 <div class="w-175">
@@ -20,14 +23,34 @@
     <div class="space-y-2">
       <p>{$t('connectMB.unsupportedMicrobit.explain')}</p>
       <p>
-        {$t('connectMB.unsupportedMicrobit.advice1')}
+        <HtmlFormattedMessage
+          id={$t('connectMB.unsupportedMicrobit.advice1')}
+          options={{
+            values: {
+              link: linkWithProps({
+                href: 'https://support.microbit.org/support/solutions/articles/19000119162',
+                target: '_blank',
+                rel: 'noopener',
+              }),
+            },
+          }} />
         <a
           role="button"
           tabindex="0"
           class="text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring cursor-pointer"
           on:click={onStartBluetoothClick}
           >{$t('connectMB.unsupportedMicrobit.advice2')}</a>
-        {$t('connectMB.unsupportedMicrobit.advice3')}
+        <HtmlFormattedMessage
+          id={$t('connectMB.unsupportedMicrobit.advice3')}
+          options={{
+            values: {
+              link: linkWithProps({
+                href: 'https://support.microbit.org/support/solutions/articles/19000119162',
+                target: '_blank',
+                rel: 'noopener',
+              }),
+            },
+          }} />
       </p>
     </div>
     <div class="flex justify-end">
