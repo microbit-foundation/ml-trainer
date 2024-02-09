@@ -77,6 +77,10 @@ export class MicrobitBluetooth implements MicrobitConnection {
     logMessage('Bluetooth connect', states);
     if (this.duringExplicitConnectDisconnect) {
       logMessage('Skipping connect attempt when one is already in progress');
+      // Wait for the gattConnectPromise while showing a "connecting" dialog.
+      // If the user clicks disconnect while the automatic reconnect is in progress,
+      // then clicks reconnect, we need to wait rather than return immediately.
+      await this.gattConnectPromise;
       return;
     }
     this.duringExplicitConnectDisconnect++;
