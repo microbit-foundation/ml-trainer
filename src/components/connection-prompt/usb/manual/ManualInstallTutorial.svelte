@@ -8,7 +8,7 @@
   import Bowser from 'bowser';
   import { onMount } from 'svelte';
   import { t } from '../../../../i18n';
-  import transferFirmwareChromeOSImage from '../../../../imgs/transfer_firmware_chromeos.gif';
+  import transferProgramChromeOS from '../../../../imgs/transfer_program_chromeos.gif';
   import transferProgramMacOS from '../../../../imgs/transfer_program_macos.gif';
   import transferProgramWindows from '../../../../imgs/transfer_program_windows.gif';
   import { getHexFileUrl } from '../../../../script/microbit-interfacing/Microbits';
@@ -37,7 +37,7 @@
   const getImageProps = (os: string): ImageProps => {
     switch (os) {
       case 'Chrome OS':
-        return { src: transferFirmwareChromeOSImage, class: 'h-320px' };
+        return { src: transferProgramChromeOS, class: 'h-320px' };
       case 'Windows':
         return { src: transferProgramWindows, class: 'h-390px' };
       case 'macOS':
