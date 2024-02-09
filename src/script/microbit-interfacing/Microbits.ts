@@ -34,10 +34,10 @@ export const getHexFileUrl = (
     return undefined;
   }
   return {
-    'radio-remote-dev': 'firmware/radio-remote-v0.2.0-dev.hex',
-    'radio-remote': 'firmware/radio-remote-v0.2.0.hex',
-    'radio-bridge': 'firmware/radio-bridge-v0.2.0.hex',
-    'radio-local': 'firmware/local-sensors-v0.2.0.hex',
+    'radio-remote-dev': 'firmware/radio-remote-v0.2.1-dev.hex',
+    'radio-remote': 'firmware/radio-remote-v0.2.1.hex',
+    'radio-bridge': 'firmware/radio-bridge-v0.2.1.hex',
+    'radio-local': 'firmware/local-sensors-v0.2.1.hex',
   }[type];
 };
 
