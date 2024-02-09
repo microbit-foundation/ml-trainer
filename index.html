@@ -3,39 +3,45 @@
 
   SPDX-License-Identifier: MIT
  -->
-<!DOCTYPE html>
-<html lang="en" style="height: 100%;">
+<!doctype html>
+<html lang="en" style="height: 100%">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
 
     <title>micro:bit machine learning tool</title>
+    <meta
+      property="og:title"
+      content="machine learning tool - BBC micro:bit - the next gen" />
+    <link rel="canonical" href="%VITE_FULL_URL%" />
+    <meta property="og:url" content="%VITE_FULL_URL%" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@microbit_edu" />
+    <meta
+      name="description"
+      content="Use our free machine learning tool as part of BBC micro:bit - the next gen's playground survey investigation. Explore machine learning, by training a computer model with your own data, then testing it to see if it works." />
+    <meta
+      property="og:description"
+      content="Use your own movement data to train a computer model - part of our playground survey" />
+    <meta property="og:image" content="%VITE_FULL_URL%social.jpg" />
 
     <link rel="icon" type="image/png" href="/imgs/favicon.png" />
     <link rel="stylesheet" href="/css/global.css" />
     <link rel="stylesheet" href="/css/all.min.css" />
 
-    <script
-      src="https://shared-assets.microbit.org/common/v1/common.js"
-      async
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://shared-assets.microbit.org/common/v1/main.css"
-    />
+    <script src="https://shared-assets.microbit.org/common/v1/common.js" async></script>
+    <link rel="stylesheet" href="https://shared-assets.microbit.org/common/v1/main.css" />
     <script>
       // GA config itself is via the common assets config depending on consent.
       window.dataLayer = window.dataLayer || [];
       window.gtag =
         window.gtag ||
-        function() {
+        function () {
           window.dataLayer.push(arguments);
         };
     </script>
     <script type="module" src="/src/main.ts"></script>
   </head>
 
-  <body style="overscroll-behavior-y: none; height: 100%;">
-
-  </body>
+  <body style="overscroll-behavior-y: none; height: 100%"></body>
 </html>
