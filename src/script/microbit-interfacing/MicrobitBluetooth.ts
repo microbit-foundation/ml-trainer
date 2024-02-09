@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import Bowser from 'bowser';
 import StaticConfiguration from '../../StaticConfiguration';
 import { outputting } from '../stores/uiStore';
 import { logError, logMessage } from '../utils/logging';
@@ -22,6 +23,9 @@ import {
   stateOnReady,
   stateOnReconnectionAttempt,
 } from './state-updaters';
+
+const browser = Bowser.getParser(window.navigator.userAgent);
+const isWindowsOS = browser.getOSName() === 'Windows';
 
 /**
  * UART data target. For fixing type compatibility issues.
@@ -57,6 +61,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
   private gattConnectPromise: Promise<MBSpecs.MBVersion | undefined> | undefined;
   private disconnectPromise: Promise<unknown> | undefined;
   private connecting = false;
+  private reconnectReadyPromise: Promise<void> | undefined;
 
   private outputWriteQueue: {
     busy: boolean;
@@ -192,6 +197,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
     } finally {
       this.duringExplicitConnectDisconnect--;
     }
+    this.reconnectReadyPromise = new Promise(resolve => setTimeout(resolve, 3_500));
     if (updateState) {
       this.inUseAs.forEach(value =>
         stateOnDisconnected(value, userTriggered, 'bluetooth'),
@@ -202,6 +208,13 @@ export class MicrobitBluetooth implements MicrobitConnection {
   async reconnect(): Promise<void> {
     logMessage('Bluetooth reconnect');
     const as = Array.from(this.inUseAs);
+    if (isWindowsOS) {
+      // On Windows, the micro:bit can take around 3 seconds to respond to gatt.disconnect().
+      // Attempting to reconnect before the micro:bit has responded results in another
+      // gattserverdisconnected event being fired. We then fail to get primaryService on a
+      // disconnected GATT server.
+      await this.reconnectReadyPromise;
+    }
     await this.connect(...as);
   }
 
