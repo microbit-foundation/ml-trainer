@@ -20,6 +20,9 @@ import {
 import StaticConfiguration from '../../StaticConfiguration';
 import { ConnectionType } from '../stores/uiStore';
 
+class BridgeError extends Error {}
+class RemoteError extends Error {}
+
 export class MicrobitSerial implements MicrobitConnection {
   private responseMap = new Map<
     number,
@@ -124,7 +127,7 @@ export class MicrobitSerial implements MicrobitConnection {
         remoteMbIdResponse.type === protocol.ResponseTypes.Error ||
         remoteMbIdResponse.value !== this.remoteDeviceId
       ) {
-        throw new Error(
+        throw new BridgeError(
           `Failed to set remote micro:bit ID. Expected ${this.remoteDeviceId}, got ${remoteMbIdResponse.value}`,
         );
       }
@@ -146,7 +149,7 @@ export class MicrobitSerial implements MicrobitConnection {
 
         const startCmdResponse = await this.sendCmdWaitResponse(startCmd);
         if (startCmdResponse.type === protocol.ResponseTypes.Error) {
-          throw new Error(
+          throw new RemoteError(
             `Failed to start streaming sensors data. Error response received: ${startCmdResponse.message}`,
           );
         }
@@ -167,10 +170,7 @@ export class MicrobitSerial implements MicrobitConnection {
       logMessage('Serial successfully connected');
     } catch (e) {
       logError('Failed to initialise serial protocol', e);
-      let reconnectHelp: ConnectionType = 'remote';
-      if (typeof e === 'string' && e.includes('Handshake')) {
-        reconnectHelp = 'bridge';
-      }
+      const reconnectHelp = e instanceof BridgeError ? 'bridge' : 'remote';
       await this.disconnectInternal(false, reconnectHelp);
       throw e;
     } finally {
@@ -272,7 +272,7 @@ export class MicrobitSerial implements MicrobitConnection {
               // We expect some to time out, likely well after the handshake is completed.
               if (!resolved) {
                 if (++failureCounter === attempts) {
-                  reject(new Error('Handshake not completed'));
+                  reject(new BridgeError('Handshake not completed'));
                 }
               }
             });
@@ -281,7 +281,7 @@ export class MicrobitSerial implements MicrobitConnection {
       },
     );
     if (handshakeResult.value !== protocol.version) {
-      throw new Error(
+      throw new BridgeError(
         `Handshake failed. Unexpected protocol version ${protocol.version}`,
       );
     }
