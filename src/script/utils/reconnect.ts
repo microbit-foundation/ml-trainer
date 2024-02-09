@@ -15,7 +15,7 @@ import Microbits from '../microbit-interfacing/Microbits';
 import {
   stateOnFailedToConnect,
   stateOnReconnectionAttempt,
-  stateOnShowReconnectHelp,
+  stateOnShowConnectHelp,
 } from '../microbit-interfacing/state-updaters';
 
 export const reconnect = async (finalAttempt: boolean = false) => {
@@ -50,7 +50,7 @@ export const reconnect = async (finalAttempt: boolean = false) => {
         s.connectionState = ConnectDialogStates.NONE;
         return s;
       });
-      stateOnShowReconnectHelp(true);
+      stateOnShowConnectHelp(true);
     }
   } finally {
     state.update(s => {

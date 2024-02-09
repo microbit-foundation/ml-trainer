@@ -29,6 +29,8 @@ export enum ModelView {
   STACK,
 }
 
+export type ConnectHelp = 'autoReconnect' | 'userReconnect' | 'connect' | false;
+
 export type ConnectionType = 'none' | 'bluetooth' | 'bridge' | 'remote';
 
 interface ReconnectState {
@@ -48,7 +50,7 @@ export const state = writable<{
   isOutputConnected: boolean;
   hasTrainedBefore: boolean;
   isPredicting: boolean;
-  showReconnectHelp: 'userTriggered' | boolean;
+  showConnectHelp: ConnectHelp;
   reconnectState: ReconnectState;
   isInputReady: boolean;
   inputHexVersion: number;
@@ -70,7 +72,7 @@ export const state = writable<{
   isOutputConnected: false,
   hasTrainedBefore: false,
   isPredicting: false,
-  showReconnectHelp: false,
+  showConnectHelp: false,
   reconnectState: {
     connectionType: 'none',
     inUseAs: new Set(),

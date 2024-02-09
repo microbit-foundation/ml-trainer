@@ -11,7 +11,8 @@
   import { state } from '../script/stores/uiStore';
   import { reconnect } from '../script/utils/reconnect';
   import StandardDialog from './dialogs/StandardDialog.svelte';
-  import { stateOnHideReconnectHelp } from '../script/microbit-interfacing/state-updaters';
+  import { stateOnHideConnectHelp } from '../script/microbit-interfacing/state-updaters';
+  import { startConnectionProcess } from '../script/stores/connectDialogStore';
 
   export let isOpen: boolean = false;
 
@@ -20,13 +21,17 @@
       case 'bluetooth': {
         return {
           heading:
-            $state.showReconnectHelp === 'userTriggered'
-              ? 'reconnectFailed.bluetoothHeading'
-              : 'disconnectedWarning.bluetoothHeading',
+            $state.showConnectHelp === 'connect'
+              ? 'connectFailed.bluetoothHeading'
+              : $state.showConnectHelp === 'userReconnect'
+                ? 'reconnectFailed.bluetoothHeading'
+                : 'disconnectedWarning.bluetoothHeading',
           subtitle:
-            $state.showReconnectHelp === 'userTriggered'
-              ? 'reconnectFailed.bluetooth1'
-              : 'disconnectedWarning.bluetooth1',
+            $state.showConnectHelp === 'connect'
+              ? 'connectFailed.bluetooth1'
+              : $state.showConnectHelp === 'userReconnect'
+                ? 'reconnectFailed.bluetooth1'
+                : 'disconnectedWarning.bluetooth1',
           listHeading: 'disconnectedWarning.bluetooth2',
           bulletOne: 'disconnectedWarning.bluetooth3',
           bulletTwo: 'disconnectedWarning.bluetooth4',
@@ -35,13 +40,17 @@
       case 'bridge': {
         return {
           heading:
-            $state.showReconnectHelp === 'userTriggered'
-              ? 'reconnectFailed.bridgeHeading'
-              : 'disconnectedWarning.bridgeHeading',
+            $state.showConnectHelp === 'connect'
+              ? 'connectFailed.bridgeHeading'
+              : $state.showConnectHelp === 'userReconnect'
+                ? 'reconnectFailed.bridgeHeading'
+                : 'disconnectedWarning.bridgeHeading',
           subtitle:
-            $state.showReconnectHelp === 'userTriggered'
-              ? 'reconnectFailed.bridge1'
-              : 'disconnectedWarning.bridge1',
+            $state.showConnectHelp === 'connect'
+              ? 'connectFailed.bridge1'
+              : $state.showConnectHelp === 'userReconnect'
+                ? 'reconnectFailed.bridge1'
+                : 'disconnectedWarning.bridge1',
           listHeading: 'connectMB.usbTryAgain.replugMicrobit2',
           bulletOne: 'connectMB.usbTryAgain.replugMicrobit3',
           bulletTwo: 'connectMB.usbTryAgain.replugMicrobit4',
@@ -50,13 +59,17 @@
       case 'remote': {
         return {
           heading:
-            $state.showReconnectHelp === 'userTriggered'
-              ? 'reconnectFailed.remoteHeading'
-              : 'disconnectedWarning.remoteHeading',
+            $state.showConnectHelp === 'connect'
+              ? 'connectFailed.remoteHeading'
+              : $state.showConnectHelp === 'userReconnect'
+                ? 'reconnectFailed.remoteHeading'
+                : 'disconnectedWarning.remoteHeading',
           subtitle:
-            $state.showReconnectHelp === 'userTriggered'
-              ? 'reconnectFailed.remote1'
-              : 'disconnectedWarning.remote1',
+            $state.showConnectHelp === 'connect'
+              ? 'connectFailed.remote1'
+              : $state.showConnectHelp === 'userReconnect'
+                ? 'reconnectFailed.remote1'
+                : 'disconnectedWarning.remote1',
           listHeading: 'disconnectedWarning.bluetooth2',
           bulletOne: 'disconnectedWarning.bluetooth3',
           bulletTwo: 'disconnectedWarning.bluetooth4',
@@ -73,10 +86,19 @@
       }
     }
   })();
+
+  const handleReconnect = () => {
+    if ($state.showConnectHelp === 'connect') {
+      stateOnHideConnectHelp();
+      startConnectionProcess();
+    } else {
+      reconnect(true);
+    }
+  };
 </script>
 
 {#if $state.reconnectState.connectionType !== 'none'}
-  <StandardDialog {isOpen} onClose={stateOnHideReconnectHelp} class="w-150 space-y-5">
+  <StandardDialog {isOpen} onClose={stateOnHideConnectHelp} class="w-150 space-y-5">
     <svelte:fragment slot="heading">
       {$t(content.heading)}
     </svelte:fragment>
@@ -100,10 +122,14 @@
           {$t('connectMB.troubleshooting')}
           <ExternalLinkIcon />
         </a>
-        <StandardButton onClick={stateOnHideReconnectHelp}
+        <StandardButton onClick={stateOnHideConnectHelp}
           >{$t('actions.cancel')}</StandardButton>
-        <StandardButton type="primary" onClick={() => reconnect(true)}
-          >{$t('actions.reconnect')}</StandardButton>
+        <StandardButton type="primary" onClick={handleReconnect}
+          >{$t(
+            $state.showConnectHelp === 'connect'
+              ? 'footer.connectButton'
+              : 'actions.reconnect',
+          )}</StandardButton>
       </div>
     </svelte:fragment>
   </StandardDialog>

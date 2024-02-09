@@ -23,7 +23,7 @@
   };
 
   const handleInputConnect = async () => {
-    if ($state.showReconnectHelp || Microbits.getInputMicrobit()) {
+    if ($state.showConnectHelp || Microbits.getInputMicrobit()) {
       reconnect();
     } else {
       startConnectionProcess();
@@ -55,7 +55,7 @@
     disabled={$state.reconnectState.reconnecting}
     size="small"
     >{$t(
-      $state.showReconnectHelp || Microbits.getInputMicrobit()
+      $state.showConnectHelp || Microbits.getInputMicrobit()
         ? 'actions.reconnect'
         : 'footer.connectButton',
     )}</StandardButton>

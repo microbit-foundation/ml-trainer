@@ -61,6 +61,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
   private gattConnectPromise: Promise<MBSpecs.MBVersion | undefined> | undefined;
   private disconnectPromise: Promise<unknown> | undefined;
   private connecting = false;
+  private isReconnect = false;
   private reconnectReadyPromise: Promise<void> | undefined;
 
   private outputWriteQueue: {
@@ -200,13 +201,18 @@ export class MicrobitBluetooth implements MicrobitConnection {
     this.reconnectReadyPromise = new Promise(resolve => setTimeout(resolve, 3_500));
     if (updateState) {
       this.inUseAs.forEach(value =>
-        stateOnDisconnected(value, userTriggered, 'bluetooth'),
+        stateOnDisconnected(
+          value,
+          this.isReconnect ? (userTriggered ? false : 'autoReconnect') : 'connect',
+          'bluetooth',
+        ),
       );
     }
   }
 
   async reconnect(): Promise<void> {
     logMessage('Bluetooth reconnect');
+    this.isReconnect = true;
     const as = Array.from(this.inUseAs);
     if (isWindowsOS) {
       // On Windows, the micro:bit can take around 3 seconds to respond to gatt.disconnect().

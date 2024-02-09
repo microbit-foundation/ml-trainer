@@ -5,7 +5,7 @@
  */
 
 import { get } from 'svelte/store';
-import { ConnectionType, ModelView, state } from '../stores/uiStore';
+import { ConnectHelp, ConnectionType, ModelView, state } from '../stores/uiStore';
 import { Paths, currentPath, navigate } from '../../router/paths';
 import MBSpecs from './MBSpecs';
 import { HexOrigin } from '../../StaticConfiguration';
@@ -17,7 +17,7 @@ export const stateOnConnected = (requestState: DeviceRequestStates) => {
     requestState === DeviceRequestStates.INPUT
       ? (s.isInputConnected = true)
       : (s.isOutputConnected = true);
-    s.showReconnectHelp = false;
+    s.showConnectHelp = false;
     s.reconnectState = {
       ...s.reconnectState,
       // This is set on disconnect.
@@ -103,14 +103,14 @@ export const stateOnAssigned = (
 
 export const stateOnDisconnected = (
   requestState: DeviceRequestStates,
-  userDisconnect: boolean,
+  connectHelp: ConnectHelp,
   connectionType: ConnectionType,
 ): void => {
   if (requestState === DeviceRequestStates.INPUT) {
     state.update(s => {
       s.isInputConnected = false;
       s.isInputReady = false;
-      s.showReconnectHelp = !userDisconnect;
+      s.showConnectHelp = connectHelp;
       s.reconnectState = {
         reconnecting: false,
         reconnectFailed: false,
@@ -123,7 +123,7 @@ export const stateOnDisconnected = (
   } else {
     state.update(s => {
       s.isOutputConnected = false;
-      s.showReconnectHelp = !userDisconnect;
+      s.showConnectHelp = connectHelp;
       s.isOutputReady = false;
       s.isOutputOutdated = false;
       s.reconnectState = {
@@ -142,7 +142,7 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
     state.update(s => {
       s.isInputConnected = false;
       s.isInputReady = false;
-      s.showReconnectHelp = false;
+      s.showConnectHelp = false;
       s.reconnectState = {
         ...s.reconnectState,
         reconnecting: false,
@@ -155,7 +155,7 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
   } else {
     state.update(s => {
       s.isOutputConnected = false;
-      s.showReconnectHelp = false;
+      s.showConnectHelp = false;
       s.isOutputReady = false;
       s.reconnectState = {
         ...s.reconnectState,
@@ -169,16 +169,16 @@ export const stateOnFailedToConnect = (requestState: DeviceRequestStates) => {
   }
 };
 
-export const stateOnShowReconnectHelp = (userTriggered: boolean = false) => {
+export const stateOnShowConnectHelp = (userTriggered: boolean = false) => {
   state.update(s => {
-    s.showReconnectHelp = userTriggered ? 'userTriggered' : true;
+    s.showConnectHelp = userTriggered ? 'userReconnect' : 'autoReconnect';
     return s;
   });
 };
 
-export const stateOnHideReconnectHelp = () => {
+export const stateOnHideConnectHelp = () => {
   state.update(s => {
-    s.showReconnectHelp = false;
+    s.showConnectHelp = false;
     return s;
   });
 };
@@ -202,7 +202,7 @@ export const stateOnVersionIdentified = (
 
 export const stateOnReconnectionAttempt = () => {
   state.update(s => {
-    s.showReconnectHelp = false;
+    s.showConnectHelp = false;
     s.reconnectState = {
       ...s.reconnectState,
       reconnecting: true,

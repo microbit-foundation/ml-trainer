@@ -200,7 +200,11 @@ export class MicrobitSerial implements MicrobitConnection {
     }
     this.responseMap.clear();
     await this.usb.stopSerial();
-    stateOnDisconnected(DeviceRequestStates.INPUT, userDisconnect, reconnectHelp);
+    stateOnDisconnected(
+      DeviceRequestStates.INPUT,
+      this.isReconnect ? (userDisconnect ? false : 'autoReconnect') : 'connect',
+      reconnectHelp,
+    );
   }
 
   async handleReconnect(): Promise<void> {
