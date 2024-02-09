@@ -238,7 +238,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
       }
     } catch (e) {
       logError('Bluetooth connect triggered by disconnect listener failed', e);
-      this.inUseAs.forEach(s => stateOnDisconnected(s, false, 'bluetooth'));
+      this.inUseAs.forEach(s => stateOnDisconnected(s, 'autoReconnect', 'bluetooth'));
     }
   };
 
