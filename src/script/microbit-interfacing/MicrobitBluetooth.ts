@@ -204,7 +204,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
       this.inUseAs.forEach(value =>
         stateOnDisconnected(
           value,
-          this.isReconnect ? (userTriggered ? false : 'autoReconnect') : 'connect',
+          userTriggered ? false : this.isReconnect ? 'autoReconnect' : 'connect',
           'bluetooth',
         ),
       );
