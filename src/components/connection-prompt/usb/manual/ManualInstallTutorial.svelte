@@ -37,7 +37,7 @@
   const getImageProps = (os: string): ImageProps => {
     switch (os) {
       case 'Chrome OS':
-        return { src: transferProgramChromeOS, class: 'h-320px' };
+        return { src: transferProgramChromeOS, class: 'h-324px' };
       case 'Windows':
         return { src: transferProgramWindows, class: 'h-390px' };
       case 'macOS':
