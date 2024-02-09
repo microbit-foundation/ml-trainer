@@ -26,6 +26,13 @@ export const radioBridgeRemoteDeviceId = persistantWritable<number>(
   -1,
 );
 
+// Show the select micro:bit dialog for Bluetooth pairing on page load.
+// The previous attempt to requestDevice failed.
+export const btSelectMicrobitDialogOnLoad = persistantWritable<boolean>(
+  'btSelectMicrobitDialogOnLoad',
+  false,
+);
+
 export const isInputPatternValid = () => {
   const pattern = get(btPatternInput);
   return MBSpecs.Utility.isPairingPattermValid(pattern);

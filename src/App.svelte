@@ -27,11 +27,22 @@
   import ConnectDialogContainer from './components/connection-prompt/ConnectDialogContainer.svelte';
   import { Paths, currentPath, getTitle, navigate } from './router/paths';
   import HomeIcon from 'virtual:icons/ri/home-2-line';
+  import { btSelectMicrobitDialogOnLoad } from './script/stores/connectionStore';
+  import {
+    ConnectDialogStates,
+    connectionDialogState,
+  } from './script/stores/connectDialogStore';
 
   onMount(() => {
     const { bluetooth, usb } = get(compatibility);
     // Value must switch from false to true after mount to trigger dialog transition
     isCompatibilityWarningDialogOpen.set(!bluetooth && !usb);
+
+    if ($btSelectMicrobitDialogOnLoad) {
+      $connectionDialogState.connectionState =
+        ConnectDialogStates.CONNECT_TUTORIAL_BLUETOOTH;
+      $btSelectMicrobitDialogOnLoad = false;
+    }
   });
 
   let routeAnnouncementEl: HTMLDivElement | undefined;

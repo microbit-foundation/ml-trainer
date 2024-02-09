@@ -33,8 +33,9 @@
     }
   };
 
-  const onOpenChange: CreateDialogProps['onOpenChange'] = ({ next }) => {
-    if (!next) {
+  const onOpenChange: CreateDialogProps['onOpenChange'] = ({ curr, next }) => {
+    // Use curr so we don't call onCloseDialog() on page load.
+    if (curr && !next) {
       onCloseDialog();
     } else {
       onOpenDialog();
@@ -73,9 +74,13 @@
   const sync = createSync(states);
   $: sync.open(isOpen, v => (isOpen = v));
 
+  let prevOpen: boolean;
   $: if (isOpen) {
     onOpenDialog();
-  } else {
+    prevOpen = isOpen;
+  } else if (prevOpen && !isOpen) {
+    // Use prevOpen so we don't call onCloseDialog() on page load.
+    prevOpen = isOpen;
     onCloseDialog();
   }
 

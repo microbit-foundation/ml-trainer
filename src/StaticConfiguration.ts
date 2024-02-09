@@ -18,6 +18,7 @@ export enum HexOrigin {
 
 class StaticConfiguration {
   public static readonly connectTimeoutDuration: number = 10000;
+  public static readonly requestDeviceTimeoutDuration: number = 30000;
 
   // After how long should we consider the connection lost if ping was not able to conclude?
   public static readonly connectionLostTimeoutDuration: number = 3000;

@@ -23,6 +23,7 @@ import {
   stateOnReady,
   stateOnReconnectionAttempt,
 } from './state-updaters';
+import { btSelectMicrobitDialogOnLoad } from '../stores/connectionStore';
 
 const browser = Bowser.getParser(window.navigator.userAgent);
 const isWindowsOS = browser.getOSName() === 'Windows';
@@ -509,17 +510,31 @@ export const startBluetoothConnection = async (
 
 const requestDevice = async (name: string): Promise<BluetoothDevice | undefined> => {
   try {
-    return navigator.bluetooth.requestDevice({
-      filters: [{ namePrefix: `BBC micro:bit [${name}]` }],
-      optionalServices: [
-        MBSpecs.Services.UART_SERVICE,
-        MBSpecs.Services.ACCEL_SERVICE,
-        MBSpecs.Services.DEVICE_INFO_SERVICE,
-        MBSpecs.Services.LED_SERVICE,
-        MBSpecs.Services.IO_SERVICE,
-        MBSpecs.Services.BUTTON_SERVICE,
-      ],
-    });
+    const result = await Promise.race([
+      navigator.bluetooth.requestDevice({
+        filters: [{ namePrefix: `BBC micro:bit [${name}]` }],
+        optionalServices: [
+          MBSpecs.Services.UART_SERVICE,
+          MBSpecs.Services.ACCEL_SERVICE,
+          MBSpecs.Services.DEVICE_INFO_SERVICE,
+          MBSpecs.Services.LED_SERVICE,
+          MBSpecs.Services.IO_SERVICE,
+          MBSpecs.Services.BUTTON_SERVICE,
+        ],
+      }),
+      new Promise<'timeout'>(resolve =>
+        setTimeout(
+          () => resolve('timeout'),
+          StaticConfiguration.requestDeviceTimeoutDuration,
+        ),
+      ),
+    ]);
+    if (result === 'timeout') {
+      btSelectMicrobitDialogOnLoad.set(true);
+      window.location.reload();
+      return undefined;
+    }
+    return result;
   } catch (e) {
     logError('Bluetooth request device failed/cancelled', e);
     return undefined;
