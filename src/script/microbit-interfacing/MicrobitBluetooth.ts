@@ -510,6 +510,7 @@ export const startBluetoothConnection = async (
 
 const requestDevice = async (name: string): Promise<BluetoothDevice | undefined> => {
   try {
+    // In some situations the Chrome device prompt simply doesn't appear so we time this out after 30 seconds and reload the page
     const result = await Promise.race([
       navigator.bluetooth.requestDevice({
         filters: [{ namePrefix: `BBC micro:bit [${name}]` }],
