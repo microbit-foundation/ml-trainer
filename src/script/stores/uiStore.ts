@@ -20,7 +20,7 @@ import { DeviceRequestStates } from '../microbit-interfacing/MicrobitConnection'
 let text: (key: string, vars?: object) => string;
 t.subscribe(t => (text = t));
 
-export const compatibility = writable<CompatibilityStatus>(checkCompatibility());
+export const compatibility = writable<CompatibilityStatus>(await checkCompatibility());
 
 export const isCompatibilityWarningDialogOpen = writable<boolean>(false);
 
