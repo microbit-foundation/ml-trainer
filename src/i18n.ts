@@ -69,7 +69,7 @@ locale.subscribe(newLocal => {
   }
 });
 
-await init({
+init({
   fallbackLocale: 'en',
   initialLocale: get(persistantLocale),
   // Needed to format <link> style tags.
