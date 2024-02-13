@@ -64,6 +64,8 @@ export class MicrobitBluetooth implements MicrobitConnection {
   private connecting = false;
   private isReconnect = false;
   private reconnectReadyPromise: Promise<void> | undefined;
+  // Whether this is the final reconnection attempt.
+  private finalAttempt = false;
 
   private outputWriteQueue: {
     busy: boolean;
@@ -173,6 +175,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
       await this.disconnectInternal(false);
       throw new Error('Failed to establish a connection!');
     } finally {
+      this.finalAttempt = false;
       this.duringExplicitConnectDisconnect--;
     }
   }
@@ -204,14 +207,19 @@ export class MicrobitBluetooth implements MicrobitConnection {
       this.inUseAs.forEach(value =>
         stateOnDisconnected(
           value,
-          userTriggered ? false : this.isReconnect ? 'autoReconnect' : 'connect',
+          userTriggered || this.finalAttempt
+            ? false
+            : this.isReconnect
+              ? 'autoReconnect'
+              : 'connect',
           'bluetooth',
         ),
       );
     }
   }
 
-  async reconnect(): Promise<void> {
+  async reconnect(finalAttempt: boolean = false): Promise<void> {
+    this.finalAttempt = finalAttempt;
     logMessage('Bluetooth reconnect');
     this.isReconnect = true;
     const as = Array.from(this.inUseAs);

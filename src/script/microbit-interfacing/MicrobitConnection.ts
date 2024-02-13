@@ -16,7 +16,7 @@ export enum DeviceRequestStates {
 interface MicrobitConnection {
   connect(...states: DeviceRequestStates[]): Promise<void>;
 
-  reconnect(): Promise<void>;
+  reconnect(finalAttempt: boolean): Promise<void>;
 
   disconnect(): Promise<void>;
 }

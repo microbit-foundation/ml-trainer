@@ -91,8 +91,9 @@ class Microbits {
 
   public static async reconnect(
     requestState: DeviceRequestStates.INPUT | DeviceRequestStates.OUTPUT,
+    finalAttempt: boolean = false,
   ) {
-    return this.getMicrobit(requestState)?.reconnect();
+    return this.getMicrobit(requestState)?.reconnect(finalAttempt);
   }
 
   public static async disconnect(

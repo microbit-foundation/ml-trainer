@@ -34,7 +34,7 @@ export const reconnect = async (finalAttempt: boolean = false) => {
   }
   try {
     for (const inUseAs of reconnectState.inUseAs.values()) {
-      await Microbits.reconnect(inUseAs);
+      await Microbits.reconnect(inUseAs, finalAttempt);
     }
     connectionDialogState.update(s => {
       s.connectionState = ConnectDialogStates.NONE;

@@ -35,6 +35,8 @@ export class MicrobitSerial implements MicrobitConnection {
   private connectionCheckIntervalId: ReturnType<typeof setInterval> | undefined;
   private lastReceivedMessageTimestamp: number | undefined;
   private isReconnect: boolean = false;
+  // Whether this is the final reconnection attempt.
+  private finalAttempt = false;
 
   constructor(
     private usb: MicrobitUSB,
@@ -174,6 +176,7 @@ export class MicrobitSerial implements MicrobitConnection {
       await this.disconnectInternal(false, reconnectHelp);
       throw e;
     } finally {
+      this.finalAttempt = false;
       this.isConnecting = false;
     }
   }
@@ -202,7 +205,11 @@ export class MicrobitSerial implements MicrobitConnection {
     await this.usb.stopSerial();
     stateOnDisconnected(
       DeviceRequestStates.INPUT,
-      userDisconnect ? false : this.isReconnect ? 'autoReconnect' : 'connect',
+      userDisconnect || this.finalAttempt
+        ? false
+        : this.isReconnect
+          ? 'autoReconnect'
+          : 'connect',
       reconnectHelp,
     );
   }
@@ -226,7 +233,8 @@ export class MicrobitSerial implements MicrobitConnection {
     }
   }
 
-  async reconnect(): Promise<void> {
+  async reconnect(finalAttempt: boolean = false): Promise<void> {
+    this.finalAttempt = finalAttempt;
     logMessage('Serial reconnect');
     this.isReconnect = true;
     await this.connect(DeviceRequestStates.INPUT);
