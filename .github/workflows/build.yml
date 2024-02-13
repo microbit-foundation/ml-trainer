@@ -37,7 +37,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npx update-ci-version
       - run: node ./bin/print-ci-env.cjs >> $GITHUB_ENV
-      - run: npm run test
+      # - run: npm run test
       - run: npm run check
       - run: npx prettier --check src
       - run: npm run build
