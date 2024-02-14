@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { logError, logMessage } from '../utils/logging';
+import { logError, logEvent, logMessage } from '../utils/logging';
 import MicrobitConnection, { DeviceRequestStates } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
 import { onAccelerometerChange, onButtonChange } from './change-listeners';
@@ -42,7 +42,11 @@ export class MicrobitSerial implements MicrobitConnection {
   ) {}
 
   async connect(...states: DeviceRequestStates[]): Promise<void> {
-    logMessage('Serial connect', states);
+    logEvent({
+      type: this.isReconnect ? 'Reconnect' : 'Connect',
+      action: 'Serial connect start',
+      states,
+    });
     if (this.isConnecting) {
       logMessage('Skipping connect attempt when one is already in progress');
       return;
@@ -167,9 +171,18 @@ export class MicrobitSerial implements MicrobitConnection {
 
       stateOnAssigned(DeviceRequestStates.INPUT, this.usb.getModelNumber());
       stateOnReady(DeviceRequestStates.INPUT);
-      logMessage('Serial successfully connected');
+      logEvent({
+        type: this.isReconnect ? 'Reconnect' : 'Connect',
+        action: 'Serial connect success',
+        states,
+      });
     } catch (e) {
       logError('Failed to initialise serial protocol', e);
+      logEvent({
+        type: this.isReconnect ? 'Reconnect' : 'Connect',
+        action: 'Serial connect failed',
+        states,
+      });
       const reconnectHelp = e instanceof BridgeError ? 'bridge' : 'remote';
       await this.disconnectInternal(false, reconnectHelp);
       throw e;

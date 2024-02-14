@@ -10,6 +10,7 @@
   import { t } from '../i18n';
   import StandardButton, { ButtonVariant } from './StandardButton.svelte';
   import AddIcon from 'virtual:icons/ri/add-line';
+  import { logEvent } from '../script/utils/logging';
 
   export let type: ButtonVariant = 'primary';
   export let disabled: boolean = false;
@@ -17,6 +18,7 @@
   function onClick() {
     if (areActionsAllowed(false)) {
       addGesture('');
+      logEvent({ type: 'Data', action: 'Add action' });
     }
   }
 </script>

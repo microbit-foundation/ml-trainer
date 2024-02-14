@@ -50,6 +50,7 @@
   import RecordIcon from 'virtual:icons/fluent/record-20-regular';
   import CloseIcon from 'virtual:icons/ri/close-line';
   import StandardDialog from './dialogs/StandardDialog.svelte';
+  import { logEvent, logMessage } from '../script/utils/logging';
 
   export let gesture: Gesture;
   export let showWalkThrough: Boolean = false;
@@ -147,11 +148,12 @@
     // Once duration is over (1000ms default), stop recording
     setTimeout(() => {
       unsubscribe();
-      console.log('RECEIVED SAMPLES', get(settings).numSamples, newData.x.length);
+      logMessage('RECEIVED SAMPLES', get(settings).numSamples, newData.x.length);
       if (get(settings).numSamples <= newData.x.length) {
         if (isThisRecording) {
           const recording = { ID: Date.now(), data: newData } as RecordingData;
           addRecording(gesture.getId(), recording);
+          logEvent({ type: 'Data', action: 'Add recording' });
         }
       } else {
         alertUser($t('alert.recording.disconnectedDuringRecording'));

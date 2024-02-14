@@ -7,7 +7,7 @@
 import Bowser from 'bowser';
 import StaticConfiguration from '../../StaticConfiguration';
 import { outputting } from '../stores/uiStore';
-import { logError, logMessage } from '../utils/logging';
+import { logError, logEvent, logMessage } from '../utils/logging';
 import MBSpecs from './MBSpecs';
 import MicrobitConnection, { DeviceRequestStates } from './MicrobitConnection';
 import { UARTMessageType } from './Microbits';
@@ -81,7 +81,11 @@ export class MicrobitBluetooth implements MicrobitConnection {
   }
 
   async connect(...states: DeviceRequestStates[]): Promise<void> {
-    logMessage('Bluetooth connect', states);
+    logEvent({
+      type: this.isReconnect ? 'Reconnect' : 'Connect',
+      action: 'Bluetooth connect start',
+      states,
+    });
     if (this.duringExplicitConnectDisconnect) {
       logMessage('Skipping connect attempt when one is already in progress');
       // Wait for the gattConnectPromise while showing a "connecting" dialog.
@@ -168,8 +172,18 @@ export class MicrobitBluetooth implements MicrobitConnection {
       states.forEach(s => this.inUseAs.add(s));
       states.forEach(s => stateOnAssigned(s, microbitVersion!));
       states.forEach(s => stateOnReady(s));
+      logEvent({
+        type: this.isReconnect ? 'Reconnect' : 'Connect',
+        action: 'Bluetooth connect success',
+        states,
+      });
     } catch (e) {
       logError('Bluetooth connect error', e);
+      logEvent({
+        type: this.isReconnect ? 'Reconnect' : 'Connect',
+        action: 'Bluetooth connect failed',
+        states,
+      });
       await this.disconnectInternal(false);
       throw new Error('Failed to establish a connection!');
     } finally {
