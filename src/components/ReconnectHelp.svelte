@@ -113,10 +113,9 @@
       </div>
 
       <div class="flex justify-end gap-x-5">
-        <!-- TODO: actual support URL -->
         <a
           class="inline-flex mr-auto gap-x-1 items-center text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
-          href="https://support.microbit.org"
+          href="https://support.microbit.org/a/solutions/articles/19000157495"
           target="_blank"
           rel="noopener">
           {$t('connectMB.troubleshooting')}
