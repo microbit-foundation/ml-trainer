@@ -33,6 +33,7 @@
   import { gestures } from '../script/stores/Stores';
   import StandardDialog from '../components/dialogs/StandardDialog.svelte';
   import { clearGestures } from '../script/stores/mlStore';
+  import { locale as currentLocale } from 'svelte-i18n';
   import { get } from 'svelte/store';
 
   const playgroundSurveyUrl =
@@ -78,15 +79,12 @@
   <h1 class="sr-only">{$t('content.index.title')}</h1>
   <div class="mb-8">
     <div class="flex flex-col items-center justify-center m-10 gap-5">
-      <!-- Avoid youtube cookie. rel=0 should limit related videos to youtube channel.
-           Once we have translated videos we can try e.g. cc_lang_pref=fr
-           but we'll need to check our codes match theirs.
-      -->
+      <!-- Avoid youtube cookie. rel=0 should limit related videos to youtube channel.-->
       <iframe
         class="w-38rem h-auto aspect-video"
         style="aspect-ratio: 16/9"
         title={$t('homepage.introVideo')}
-        src="https://www.youtube-nocookie.com/embed/ZhUtuuQemFc?rel=0&cc_load_policy=1"
+        src={`https://www.youtube-nocookie.com/embed/ZhUtuuQemFc?rel=0&cc_lang_pref=${$currentLocale}&cc_load_policy=1`}
         allow="encrypted-media"
         frameBorder="0"
         allowFullScreen>
