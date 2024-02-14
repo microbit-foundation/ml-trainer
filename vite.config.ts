@@ -31,7 +31,7 @@ export default defineConfig({
     'import.meta.env.VITE_APP_VERSION': JSON.stringify(process.env.npm_package_version),
   },
   build: {
-    target: 'es2017',
+    target: 'esnext',
     rollupOptions: {
       input: 'index.html',
     },
