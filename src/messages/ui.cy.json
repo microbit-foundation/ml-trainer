@@ -84,6 +84,7 @@
   "footer.helpContent": "Mae’r graff hwn yn dangos data symudiad o fesurydd cyflymu y micro:bit mewn amser real. Rhowch gynnig ar symud eich micro:bit cysylltiedig i weld yr echelinau X, Y a Z yn newid.",
   "helpMenu.label": "Cymorth",
   "helpMenu.helpAndSupport": "Cymorth a chefnogaeth",
+  "helpMenu.privacyPolicy": "Polisi preifatrwydd",
   "helpMenu.termsOfUse": "Telerau defnyddio",
   "helpMenu.cookies": "Cwcis",
   "helpMenu.about": "Gwybodaeth",
