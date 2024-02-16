@@ -36,8 +36,10 @@
   import { locale as currentLocale } from 'svelte-i18n';
   import { get } from 'svelte/store';
 
-  const playgroundSurveyUrl =
-    'https://microbit.org/teach/playground-survey/exploring-machine-learning/';
+  const playgroundSurveyUrlByLang: Record<string, string> = {
+    en: 'https://microbit.org/teach/playground-survey/exploring-machine-learning/',
+    cy: 'https://microbit.org/cy/teach/playground-survey/exploring-machine-learning/',
+  };
 
   $: hasExistingSession = $gestures.some(g => g.name || g.recordings.length);
   let showDataLossWarning = false;
@@ -69,6 +71,9 @@
   };
 
   $: title = getTitle(Paths.HOME, $t);
+  $: playgroundSurveyUrl =
+    ($currentLocale ? playgroundSurveyUrlByLang[$currentLocale] : undefined) ??
+    playgroundSurveyUrlByLang.en;
 </script>
 
 <svelte:head>
