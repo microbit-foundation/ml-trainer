@@ -6,14 +6,20 @@
 
 <script lang="ts">
   import { t } from '../i18n';
-  import { DeviceRequestStates } from '../script/microbit-interfacing/MicrobitConnection';
   import Microbits from '../script/microbit-interfacing/Microbits';
   import { startConnectionProcess } from '../script/stores/connectDialogStore';
-  import { state } from '../script/stores/uiStore';
+  import {
+    compatibility,
+    isCompatibilityWarningDialogOpen,
+    state,
+  } from '../script/stores/uiStore';
   import { reconnect } from '../script/utils/reconnect';
   import StandardButton from './StandardButton.svelte';
 
   const handleInputConnect = async () => {
+    if (!$compatibility.bluetooth && !$compatibility.usb) {
+      return isCompatibilityWarningDialogOpen.set(true);
+    }
     if ($state.showConnectHelp || Microbits.getInputMicrobit()) {
       reconnect();
     } else {
