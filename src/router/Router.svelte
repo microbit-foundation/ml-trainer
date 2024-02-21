@@ -74,7 +74,8 @@
     if (isValidPath(path)) {
       navigate(path);
     } else {
-      history.replaceState({}, '', Paths.HOME);
+      const url = window.location.origin + import.meta.env.BASE_URL;
+      history.replaceState({ path: Paths.HOME }, '', url);
     }
   };
   navigateFromUrl();
