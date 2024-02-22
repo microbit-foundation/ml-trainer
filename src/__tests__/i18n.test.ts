@@ -32,8 +32,8 @@ describe('Initialization tests', () => {
         search: '',
       },
     }));
-    const { t } = await import('../i18n');
-    await new Promise(res => setTimeout(res, 20));
+    const { t, waitLocale } = await import('../i18n');
+    await waitLocale();
     const getText = get(t);
 
     const translatedText = getText('alert.isRecording');
@@ -49,8 +49,8 @@ describe('Initialization tests', () => {
         search: '',
       },
     }));
-    const { t } = await import('../i18n');
-    await new Promise(res => setTimeout(res, 20));
+    const { t, waitLocale } = await import('../i18n');
+    await waitLocale();
     const getText = get(t);
 
     const translatedText = getText('alert.isRecording');
@@ -66,8 +66,8 @@ describe('Initialization tests', () => {
         search: '?l=cy',
       },
     }));
-    const { t } = await import('../i18n');
-    await new Promise(res => setTimeout(res, 20));
+    const { t, waitLocale } = await import('../i18n');
+    await waitLocale();
     const getText = get(t);
 
     const translatedText = getText('alert.isRecording');

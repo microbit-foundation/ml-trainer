@@ -9,7 +9,8 @@ import { FormatXMLElementFn } from 'intl-messageformat';
 import { getLocaleFromQueryString, init, locale, register } from 'svelte-i18n';
 import { get } from 'svelte/store';
 import { persistantWritable } from './script/stores/storeUtil';
-export { t } from 'svelte-i18n';
+// waitLocale is exported for testing.
+export { t, waitLocale } from 'svelte-i18n';
 
 type InterpolationValues =
   | Record<
