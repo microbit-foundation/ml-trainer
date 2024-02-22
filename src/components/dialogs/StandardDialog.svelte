@@ -37,7 +37,7 @@
     // Use curr so we don't call onCloseDialog() on page load.
     if (curr && !next) {
       onCloseDialog();
-    } else {
+    } else if (!curr && next) {
       onOpenDialog();
     }
     return next;
@@ -55,7 +55,7 @@
   });
 
   const keyListener = (event: KeyboardEvent) => {
-    if (event.key === 'Escape') {
+    if (event.key === 'Escape' && isOpen) {
       onCloseDialog();
     }
   };
@@ -75,7 +75,7 @@
   $: sync.open(isOpen, v => (isOpen = v));
 
   let prevOpen: boolean;
-  $: if (isOpen) {
+  $: if (!prevOpen && isOpen) {
     onOpenDialog();
     prevOpen = isOpen;
   } else if (prevOpen && !isOpen) {
