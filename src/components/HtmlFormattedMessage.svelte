@@ -63,7 +63,7 @@
 
   export let options: Options | undefined = undefined;
 
-  const adaptedOptions = {
+  $: adaptedOptions = {
     ...options,
     values: Object.fromEntries(
       Object.entries(options?.values ?? {}).map(([k, v]) => {

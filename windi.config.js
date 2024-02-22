@@ -15,18 +15,22 @@ export default {
       },
       colors: {
         brand: {
-          50: '#d4eaf7', // 80% tint
-          100: '#95caeb', // 50% tint
-          200: '#6ab4e2', // 30% tint
-          300: '#55a9de', // 20% tint
-          400: '#3f9fda', // 10% tint
-          // Brand color
-          500: '#2a94d6',
-          600: '#2685c1', // 10% shade
-          700: '#2276ab', // 20% shade
-          800: '#1d6896', // 30% shade
-          900: '#154a6b', // 50% shade
-          //950: '#081e2b', // 80% shade, too dark
+          // Produced with using the hue from the brand blue at 400 but adjusting 500
+          // to be an acceptable button background color with white text at all sizes
+          // (WCGA AA 4.5)
+          // https://huetone.ardov.me/
+          50: '#edf7ff',
+          100: '#c1e1fb',
+          200: '#94ccf6',
+          300: '#62b3ed',
+          // Brand colour, but too light for white
+          400: '#2a94d6',
+          // 4.5 contrast with white
+          500: '#007dbc',
+          600: '#0071aa',
+          700: '#16567e',
+          800: '#1d4662',
+          900: '#023a5a',
         },
         primary: '#2a94d6',
         primarytext: '#000000',

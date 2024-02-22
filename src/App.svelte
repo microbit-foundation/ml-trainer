@@ -11,7 +11,6 @@
     compatibility,
     isCompatibilityWarningDialogOpen,
   } from './script/stores/uiStore';
-  import { checkCompatibility } from './script/compatibility/CompatibilityChecker';
   import IncompatiblePlatformView from './views/IncompatiblePlatformView.svelte';
   import CompatibilityWarningDialog from './components/CompatibilityWarningDialog.svelte';
   import Router from './router/Router.svelte';
@@ -23,7 +22,6 @@
   import HelpMenu from './components/control-bar/control-bar-items/HelpMenu.svelte';
   import SettingsMenu from './components/control-bar/control-bar-items/SettingsMenu.svelte';
   import { onMount } from 'svelte';
-  import { get } from 'svelte/store';
   import ConnectDialogContainer from './components/connection-prompt/ConnectDialogContainer.svelte';
   import { Paths, currentPath, getTitle, navigate } from './router/paths';
   import HomeIcon from 'virtual:icons/ri/home-2-line';
@@ -35,7 +33,7 @@
   import { isLoading } from 'svelte-i18n';
 
   onMount(() => {
-    const { bluetooth, usb } = get(compatibility);
+    const { bluetooth, usb } = $compatibility;
     // Value must switch from false to true after mount to trigger dialog transition
     isCompatibilityWarningDialogOpen.set(!bluetooth && !usb);
 
@@ -57,7 +55,7 @@
 {#if !$isLoading}
   <Router>
     <div class="sr-only" bind:this={routeAnnouncementEl} aria-live="polite" />
-    {#if !checkCompatibility().platformAllowed}
+    {#if !$compatibility.platformAllowed}
       <!-- Denies mobile users access to the platform -->
       <IncompatiblePlatformView />
     {:else}
@@ -67,7 +65,6 @@
         {#if $consent}
           <CompatibilityWarningDialog />
         {/if}
-
         <div class="w-full flex flex-col bg-backgrounddark">
           <ControlBar>
             <div class="flex items-center divide-x h-full">

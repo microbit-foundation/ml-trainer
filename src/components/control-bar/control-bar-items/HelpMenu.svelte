@@ -36,6 +36,9 @@
   const onTermsOfUseClick = () => {
     openLink('https://microbit.org/terms-of-use/');
   };
+  const onPrivacyPolicyClick = () => {
+    openLink('https://microbit.org/privacy/#the-playground-survey');
+  };
   const onHelpAndSupportClick = () => {
     openLink('https://support.microbit.org/support/home');
   };
@@ -65,6 +68,10 @@
           <MenuItem {menu} on:m-click={onTermsOfUseClick}>
             <ExternalLinkIcon />
             {$t('helpMenu.termsOfUse')}
+          </MenuItem>
+          <MenuItem {menu} on:m-click={onPrivacyPolicyClick}>
+            <ExternalLinkIcon />
+            {$t('helpMenu.privacyPolicy')}
           </MenuItem>
           <MenuItem {menu} on:m-click={manageCookies}>
             <CookiesIcon />

@@ -7,7 +7,11 @@
 <script lang="ts">
   import { t } from '../../i18n';
   import TypingUtils from '../../script/TypingUtils';
-  import { state } from '../../script/stores/uiStore';
+  import {
+    compatibility,
+    isCompatibilityWarningDialogOpen,
+    state,
+  } from '../../script/stores/uiStore';
   import StandardButton from '../StandardButton.svelte';
   import Microbits from '../../script/microbit-interfacing/Microbits';
   import { startConnectionProcess } from '../../script/stores/connectDialogStore';
@@ -23,6 +27,9 @@
   };
 
   const handleInputConnect = async () => {
+    if (!$compatibility.bluetooth && !$compatibility.usb) {
+      return isCompatibilityWarningDialogOpen.set(true);
+    }
     if ($state.showConnectHelp || Microbits.getInputMicrobit()) {
       reconnect();
     } else {

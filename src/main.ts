@@ -8,7 +8,7 @@ import App from './App.svelte';
 import 'virtual:windi.css';
 
 const app = new App({
-  target: document.body,
+  target: document.getElementById('root')!,
 });
 
 export default app;

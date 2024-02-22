@@ -23,6 +23,7 @@ import { gestures } from './stores/Stores';
 import Repositories from './repository/Repositories';
 import { getPrediction } from './getPrediction';
 import { TrainingStatus } from './domain/Model';
+import { logEvent } from './utils/logging';
 
 let text: (key: string, vars?: object) => string;
 t.subscribe(t => (text = t));
@@ -124,6 +125,19 @@ export async function trainModel(): Promise<void> {
 
   trainingStatus.set(TrainingStatus.Success);
   model.set(nn);
+  logEvent({ type: 'Data', action: 'Train model', ...getNumberOfActionsAndRecordings() });
+}
+
+function getNumberOfActionsAndRecordings() {
+  const gestureData = get(gestures);
+  let numRecordings = 0;
+  gestureData.forEach(g => {
+    numRecordings += g.recordings.length;
+  });
+  return {
+    numActions: gestureData.length,
+    numRecordings,
+  };
 }
 
 export function isParametersLegal(): boolean {
