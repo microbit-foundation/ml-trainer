@@ -15,7 +15,7 @@ export type CompatibilityStatus = {
   webGL: boolean;
 };
 
-export async function checkCompatibility(): Promise<CompatibilityStatus> {
+export function checkCompatibility(): CompatibilityStatus {
   if (localStorage.getItem('isTesting')) {
     return { bluetooth: true, usb: true, platformAllowed: true, webGL: true };
   }
@@ -37,10 +37,9 @@ export async function checkCompatibility(): Promise<CompatibilityStatus> {
     platformType = 'desktop';
   }
   const isPlatformAllowed = isDevMode || !nonAllowedPlatforms.includes(platformType);
-  const bluetooth = navigator.bluetooth && (await navigator.bluetooth.getAvailability());
 
   return {
-    bluetooth,
+    bluetooth: !!navigator.bluetooth,
     usb: !!navigator.usb,
     platformAllowed: isPlatformAllowed,
     webGL: webGL,

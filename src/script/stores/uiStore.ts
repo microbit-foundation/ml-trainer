@@ -14,13 +14,26 @@ import MBSpecs from '../microbit-interfacing/MBSpecs';
 import { gestures } from './Stores';
 import { HexOrigin } from '../../StaticConfiguration';
 import { DeviceRequestStates } from '../microbit-interfacing/MicrobitConnection';
+import { logError } from '../utils/logging';
 
 // TODO: Rename? Split up further?
 
 let text: (key: string, vars?: object) => string;
 t.subscribe(t => (text = t));
 
-export const compatibility = writable<CompatibilityStatus>(await checkCompatibility());
+const compatibilityResult = checkCompatibility();
+export const compatibility = writable<CompatibilityStatus>(compatibilityResult);
+if (compatibilityResult.bluetooth) {
+  navigator.bluetooth
+    .getAvailability()
+    .then(bluetoothAvailable => {
+      compatibility.update(s => {
+        s.bluetooth = s.bluetooth && bluetoothAvailable;
+        return s;
+      });
+    })
+    .catch(e => logError('Failed to get Bluetooth availability', e));
+}
 
 export const isCompatibilityWarningDialogOpen = writable<boolean>(false);
 
