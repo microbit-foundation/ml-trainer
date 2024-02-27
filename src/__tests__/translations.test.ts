@@ -6,7 +6,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import da from './../messages/ui.da.json';
 import en from './../messages/ui.en.json';
 
 // We're moving translations to Crowdin so expect the English to be the only

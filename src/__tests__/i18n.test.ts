@@ -23,7 +23,8 @@ describe('Initialization tests', () => {
     vitest.resetModules();
   });
 
-  test('Language is set to welsh when it is the preferred browser option', async () => {
+  // Welsh disabled for now
+  test.skip('Language is set to welsh when it is the preferred browser option', async () => {
     windowSpy.mockImplementation(() => ({
       navigator: {
         languages: ['cy', 'en'],
@@ -57,7 +58,8 @@ describe('Initialization tests', () => {
     expect(translatedText).toBe('You are currently recording!');
   });
 
-  test('Language is set to welsh when it is defined query string', async () => {
+  // Welsh disabled for now
+  test.skip('Language is set to welsh when it is defined query string', async () => {
     windowSpy.mockImplementation(() => ({
       navigator: {
         languages: ['some languages'],
