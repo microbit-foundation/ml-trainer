@@ -21,8 +21,8 @@ const { s3Config } = createDeploymentDetailsFromOptions({
 module.exports = {
   deploymentDir: './dist',
   ...s3Config,
-  // We deploy to a fixed path for the nextgen version
-  bucketPrefix: posixPath.join(s3Config.bucketPrefix || '', 'prototype'),
+  // For non-review versions deploy to the prototype URL
+  bucketPrefix: s3Config.bucketPrefix ?? 'v/prototype',
   region: 'eu-west-1',
   removeNonexistentObjects: true,
   enableS3StaticWebsiteHosting: true,
