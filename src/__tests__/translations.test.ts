@@ -7,6 +7,8 @@
  * SPDX-License-Identifier: MIT
  */
 import en from './../messages/ui.en.json';
+// TODO: actually import the right one!
+const da = en;
 
 // We're moving translations to Crowdin so expect the English to be the only
 // updated language for now
