@@ -1,6 +1,6 @@
 {
   "name": "ml-machine",
-  "version": "1.0.0",
+  "version": "0.6.0-local",
   "author": "Center for Computational Thinking and Design at Aarhus University",
   "private": true,
   "type": "module",

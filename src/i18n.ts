@@ -38,14 +38,13 @@ export const allLanguages = [
     name: 'English',
     enName: 'English',
   },
-  // There are no Welsh translations yet but enabled to demo the language feature
-  {
+  // Welsh translations disabled on this branch. Danish has never worked in this fork.
+  /*{
     id: 'cy',
     name: 'Cymraeg',
     enName: 'Welsh',
   },
-  // Disabled for now as this fork doesn't have full Danish translations
-  /*{
+  {
     id: 'da',
     name: 'Dansk',
     enName: 'Danish',
@@ -53,7 +52,6 @@ export const allLanguages = [
 ];
 
 register('en', () => import('./messages/ui.en.json'));
-register('cy', () => import('./messages/ui.cy.json'));
 
 const initialLocale =
   getLocaleFromQueryString('l') ||
