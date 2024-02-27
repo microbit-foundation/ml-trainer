@@ -8,5 +8,5 @@ jobs:
     steps:
       - uses: microbit-foundation/action-pr-url-template@v0.1.2
         with:
-          uri-template: 'https://review-ml.microbit.org/{branch}/thenextgen/'
+          uri-template: 'https://review-ml.microbit.org/{branch}/prototype/'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
