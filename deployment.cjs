@@ -22,7 +22,7 @@ module.exports = {
   deploymentDir: './dist',
   ...s3Config,
   // We deploy to a fixed path for the nextgen version
-  bucketPrefix: posixPath.join(s3Config.bucketPrefix || '', 'thenextgen'),
+  bucketPrefix: posixPath.join(s3Config.bucketPrefix || '', 'prototype'),
   region: 'eu-west-1',
   removeNonexistentObjects: true,
   enableS3StaticWebsiteHosting: true,

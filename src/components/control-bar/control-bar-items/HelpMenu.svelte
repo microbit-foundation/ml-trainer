@@ -37,7 +37,7 @@
     openLink('https://microbit.org/terms-of-use/');
   };
   const onPrivacyPolicyClick = () => {
-    openLink('https://microbit.org/privacy/#the-playground-survey');
+    openLink('https://microbit.org/privacy/');
   };
   const onHelpAndSupportClick = () => {
     openLink('https://support.microbit.org/support/home');
