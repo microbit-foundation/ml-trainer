@@ -77,12 +77,13 @@
       <div class="h-full w-full m-0 relative flex">
         <OverlayView />
         <!-- Wait for consent dialog to avoid a clash -->
-        {#if $consent && isRedirectToNextGenDialogOpen}
+        {#if $consent}
+          <CompatibilityWarningDialog />
+        {/if}
+        {#if $consent && !$isCompatibilityWarningDialogOpen}
           <RedirectToNextGenDialog
             isOpen={isRedirectToNextGenDialogOpen}
             onClose={closeRedirectToNextGenDialog} />
-        {:else if $consent}
-          <CompatibilityWarningDialog />
         {/if}
         <div class="w-full flex flex-col bg-backgrounddark">
           <ControlBar>

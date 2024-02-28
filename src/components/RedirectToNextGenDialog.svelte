@@ -22,10 +22,10 @@
       <p>{$t('popup.redirectToNextGen.explain')}</p>
       <div class="flex flex-col justify-end space-y-5">
         <a href="https://ml.microbit.org">
-          <StandardButton type="primary" size="normal"
+          <StandardButton type="primary" size="normal" class="w-sm"
             >{$t('popup.redirectToNextGen.button.redirect')}</StandardButton>
         </a>
-        <StandardButton onClick={onClose} type="secondary" size="normal"
+        <StandardButton onClick={onClose} type="secondary" size="normal" class="w-sm"
           >{$t('popup.redirectToNextGen.button.stay')}</StandardButton>
       </div>
     </div>
