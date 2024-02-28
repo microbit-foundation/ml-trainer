@@ -19,7 +19,6 @@
 
   export let items: Item[];
   export let headingId: string;
-  export let subtitleId: string | undefined = undefined;
   export let switchTextId: string;
   export let onSwitchClick: (() => void) | undefined;
   export let onNextClick: () => void;
@@ -30,9 +29,6 @@
   <p>
     {#if $state.reconnectState.reconnectFailed}
       <span>{$t('reconnectFailed.subtitle')}</span>
-    {/if}
-    {#if subtitleId}
-      {$t(subtitleId)}
     {/if}
   </p>
   <div class="inline-grid grid-cols-{items.length} gap-16 py-13 px-10">

@@ -47,7 +47,6 @@
     : usb
       ? 'connectMB.bluetoothStart.heading'
       : 'connectMB.radioStart.heading'}
-  subtitleId="connectMB.bluetoothStart.subtitle"
   switchTextId="connectMB.bluetoothStart.switchRadio"
   onSwitchClick={onStartRadioClick}
   {onNextClick} />
