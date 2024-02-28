@@ -5,6 +5,7 @@
  */
 
 import { writable } from 'svelte/store';
+import { tryLocalStorageGet, tryLocalStorageSet } from '../../utils/local-storage';
 
 // Integrates the Micro:bit Educational Foundation common cookie consent dialog/analytics.
 // Not suitable for other deployments.
@@ -73,6 +74,14 @@ export function manageCookies() {
 }
 
 export const consent = writable<CookieConsent | undefined>(undefined);
+
+export const setAsSeenRedirectDialog = () => {
+  tryLocalStorageSet('seenRedirectDilaog', 'true');
+};
+
+export const hasSeenRedirectDialog = () => {
+  return tryLocalStorageGet('seenRedirectDilaog') === 'true';
+};
 
 const w = window as any;
 const updateListener = (event: CustomEvent<CookieConsent>) => {

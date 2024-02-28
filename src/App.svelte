@@ -17,7 +17,7 @@
   import Router from './router/Router.svelte';
   import ControlBar from './components/control-bar/ControlBar.svelte';
   import { t } from './i18n';
-  import { consent } from './script/stores/complianceStore';
+  import { consent, hasSeenRedirectDialog } from './script/stores/complianceStore';
   import microbitLogoImage from './imgs/microbit-logo.svg';
   import appNameImage from './imgs/app-name.svg';
   import HelpMenu from './components/control-bar/control-bar-items/HelpMenu.svelte';
@@ -40,8 +40,8 @@
     (async () => {
       const { country } = await fetchCachedBrowserInfo($consent);
       // Show redirect dialog if user's location is UK or Jersey
-      isRedirectToNextGenDialogOpen = country === 'GB' || country === 'JE';
-      isRedirectToNextGenDialogOpen = true;
+      isRedirectToNextGenDialogOpen =
+        (country === 'GB' || country === 'JE') && !hasSeenRedirectDialog();
     })();
 
     const { bluetooth, usb } = $compatibility;
