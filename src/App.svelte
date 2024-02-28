@@ -39,7 +39,8 @@
     // Before or after compatibility (Ask Lucy)
     (async () => {
       const { country } = await fetchCachedBrowserInfo($consent);
-      isRedirectToNextGenDialogOpen = country === 'GB';
+      // Show redirect dialog if user's location is UK or Jersey
+      isRedirectToNextGenDialogOpen = country === 'GB' || country === 'JE';
       isRedirectToNextGenDialogOpen = true;
     })();
 
