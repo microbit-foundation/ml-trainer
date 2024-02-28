@@ -36,7 +36,6 @@
   let isRedirectToNextGenDialogOpen: boolean = false;
 
   onMount(() => {
-    // Before or after compatibility (Ask Lucy)
     (async () => {
       const { country } = await fetchCachedBrowserInfo($consent);
       // Show redirect dialog if user's location is UK or Jersey
