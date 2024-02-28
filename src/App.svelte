@@ -31,6 +31,7 @@
     connectionDialogState,
   } from './script/stores/connectDialogStore';
   import { isLoading } from 'svelte-i18n';
+  import PrototypeVersionWarning from './components/PrototypeVersionWarning.svelte';
 
   onMount(() => {
     const { bluetooth, usb } = $compatibility;
@@ -90,6 +91,7 @@
               <HelpMenu />
             </div>
           </ControlBar>
+          <PrototypeVersionWarning />
 
           <div class="relative flex-1 flex-row">
             <PageContentView />

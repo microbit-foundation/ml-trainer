@@ -282,5 +282,6 @@
   "arrowIconRight.altText": "arrow pointing right",
   "arrowIconDown.altText": "arrow pointing down",
 
-  "settings.label": "Settings"
+  "settings.label": "Settings",
+  "prototype.warning": "This is a prototype version - it will change…"
 }
