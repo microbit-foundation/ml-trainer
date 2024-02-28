@@ -24,7 +24,13 @@
   };
 </script>
 
-<StandardDialog {isOpen} hasCloseButton={false} class="w-100 space-y-5" {onClose}>
+<StandardDialog
+  {isOpen}
+  hasCloseButton={false}
+  closeOnOutsideClick={false}
+  closeOnEscape={false}
+  class="w-100 space-y-5"
+  {onClose}>
   <svelte:fragment slot="heading">
     {$t('popup.redirectToNextGen.header')}
   </svelte:fragment>
