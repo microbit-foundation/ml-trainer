@@ -29,9 +29,9 @@
     {$t('popup.redirectToNextGen.header')}
   </svelte:fragment>
   <svelte:fragment slot="body">
-    <div class="space-y-5">
+    <div class="space-y-8">
       <p>{$t('popup.redirectToNextGen.explain')}</p>
-      <div class="flex flex-col justify-end space-y-5">
+      <div class="flex flex-col justify-end space-y-3">
         <StandardButton
           type="primary"
           size="normal"

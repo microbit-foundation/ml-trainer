@@ -40,7 +40,6 @@
       const { country } = await fetchCachedBrowserInfo($consent);
       // Show redirect dialog if user's location is UK or Jersey
       isPotentiallyNextGenUser = country === 'GB' || country === 'JE';
-      isPotentiallyNextGenUser = true;
     })();
 
     const { bluetooth, usb } = $compatibility;
