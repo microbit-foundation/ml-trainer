@@ -284,6 +284,11 @@
   "popup.outdatedmicrobit.button.update": "Update now",
   "popup.outdatedmicrobit.button.update.mkcd": "Open MakeCode",
 
+  "popup.redirectToNextGen.header": "Are you a UK Primary School teacher?",
+  "popup.redirectToNextGen.explain": "If you are a UK primary school teacher taking part in the BBC micro:bit the next gen campaign. Please use the version of this tool designed for this campaign.",
+  "popup.redirectToNextGen.button.redirect": "I'm a UK Primary School teacher",
+  "popup.redirectToNextGen.button.stay": "I'm not a UK Primary School teacher",
+
   "arrowIconRight.altText": "arrow pointing right",
   "arrowIconDown.altText": "arrow pointing down",
 

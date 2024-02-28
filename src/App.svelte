@@ -13,6 +13,7 @@
   } from './script/stores/uiStore';
   import IncompatiblePlatformView from './views/IncompatiblePlatformView.svelte';
   import CompatibilityWarningDialog from './components/CompatibilityWarningDialog.svelte';
+  import RedirectToNextGenDialog from './components/RedirectToNextGenDialog.svelte';
   import Router from './router/Router.svelte';
   import ControlBar from './components/control-bar/ControlBar.svelte';
   import { t } from './i18n';
@@ -32,11 +33,15 @@
   } from './script/stores/connectDialogStore';
   import { isLoading } from 'svelte-i18n';
   import { fetchCachedBrowserInfo } from './utils/api';
+  let isRedirectToNextGenDialogOpen: boolean = false;
 
-  onMount(async () => {
-    const { country } = await fetchCachedBrowserInfo($consent);
-    // Used to later redirect users to their respective locations
-    const isUkUser = country === 'GB';
+  onMount(() => {
+    // Before or after compatibility (Ask Lucy)
+    (async () => {
+      const { country } = await fetchCachedBrowserInfo($consent);
+      isRedirectToNextGenDialogOpen = country === 'GB';
+      isRedirectToNextGenDialogOpen = true;
+    })();
 
     const { bluetooth, usb } = $compatibility;
     // Value must switch from false to true after mount to trigger dialog transition
@@ -55,6 +60,10 @@
       routeAnnouncementEl.textContent = getTitle($currentPath, $t);
     }
   }
+
+  const closeRedirectToNextGenDialog = () => {
+    isRedirectToNextGenDialogOpen = false;
+  };
 </script>
 
 {#if !$isLoading}
@@ -67,7 +76,11 @@
       <div class="h-full w-full m-0 relative flex">
         <OverlayView />
         <!-- Wait for consent dialog to avoid a clash -->
-        {#if $consent}
+        {#if $consent && isRedirectToNextGenDialogOpen}
+          <RedirectToNextGenDialog
+            isOpen={isRedirectToNextGenDialogOpen}
+            onClose={closeRedirectToNextGenDialog} />
+        {:else if $consent}
           <CompatibilityWarningDialog />
         {/if}
         <div class="w-full flex flex-col bg-backgrounddark">

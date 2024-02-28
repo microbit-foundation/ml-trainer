@@ -1,3 +1,9 @@
+/**
+ * (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 export const tryLocalStorageSet = (key: string, value: string): void => {
   try {
     localStorage.setItem(key, value);
