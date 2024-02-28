@@ -31,8 +31,13 @@
     connectionDialogState,
   } from './script/stores/connectDialogStore';
   import { isLoading } from 'svelte-i18n';
+  import { fetchCachedBrowserInfo } from './utils/api';
 
-  onMount(() => {
+  onMount(async () => {
+    const { country } = await fetchCachedBrowserInfo($consent);
+    // Used to later redirect users to their respective locations
+    const isUkUser = country === 'GB';
+
     const { bluetooth, usb } = $compatibility;
     // Value must switch from false to true after mount to trigger dialog transition
     isCompatibilityWarningDialogOpen.set(!bluetooth && !usb);
