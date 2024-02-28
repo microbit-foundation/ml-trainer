@@ -6,6 +6,7 @@
 
 <script lang="ts">
   import { t } from '../i18n';
+  import { compatibility } from '../script/stores/uiStore';
   import DialogHeading from './DialogHeading.svelte';
   import HtmlFormattedMessage, { linkWithProps } from './HtmlFormattedMessage.svelte';
   import StandardButton from './StandardButton.svelte';
@@ -18,24 +19,12 @@
     target: '_blank',
     rel: 'noopener',
   });
-  const linkToBluetoothFlowId = 'link-to-bluetooth';
-  const linkToBluetoothFlow = linkWithProps(
-    {
-      id: linkToBluetoothFlowId,
-    },
-    { tag: 'button' },
-  );
-  // The elements in translated strings don't support Svelte event handlers
-  // so we wire it up ourselves.
-  const wireLinkToBluetoothFlow = (node: Element) => {
-    const link = node.querySelector('#' + linkToBluetoothFlowId);
-    link?.addEventListener('click', onStartBluetoothClick);
-    return {
-      destroy() {
-        link?.removeEventListener('click', onStartBluetoothClick);
-      },
-    };
-  };
+  const linkWithPropsForMicrobitBluetoothSupport = linkWithProps({
+    href: 'https://support.microbit.org/support/home',
+    target: '_blank',
+    rel: 'noopener',
+  });
+  const { bluetooth } = $compatibility;
 </script>
 
 <div class="w-175">
@@ -51,21 +40,30 @@
             },
           }} />
       </p>
-      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-      <p use:wireLinkToBluetoothFlow>
-        <HtmlFormattedMessage
-          id={$t('connectMB.unsupportedMicrobit.advice')}
-          options={{
-            values: {
-              link1: linkToBluetoothFlow,
-              link2: linkWithPropsForMicrobitVersionSupport,
-            },
-          }} />
-      </p>
+      {#if bluetooth}
+        <p>
+          {$t('connectMB.unsupportedMicrobit.withBluetooth')}
+        </p>
+      {:else}
+        <p>
+          <HtmlFormattedMessage
+            id={$t('connectMB.unsupportedMicrobit.withoutBluetooth')}
+            options={{
+              values: {
+                link: linkWithPropsForMicrobitBluetoothSupport,
+              },
+            }} />
+        </p>
+      {/if}
     </div>
     <div class="flex justify-end">
-      <StandardButton onClick={onClose} type="primary"
-        >{$t('actions.close')}</StandardButton>
+      {#if bluetooth}
+        <StandardButton onClick={onStartBluetoothClick} type="primary"
+          >{$t('connectMB.unsupportedMicrobit.ctaWithBluetooth')}</StandardButton>
+      {:else}
+        <StandardButton onClick={onClose} type="primary"
+          >{$t('actions.close')}</StandardButton>
+      {/if}
     </div>
   </div>
 </div>
