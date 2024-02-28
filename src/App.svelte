@@ -17,7 +17,7 @@
   import Router from './router/Router.svelte';
   import ControlBar from './components/control-bar/ControlBar.svelte';
   import { t } from './i18n';
-  import { consent, hasSeenRedirectDialog } from './script/stores/complianceStore';
+  import { consent } from './script/stores/complianceStore';
   import microbitLogoImage from './imgs/microbit-logo.svg';
   import appNameImage from './imgs/app-name.svg';
   import HelpMenu from './components/control-bar/control-bar-items/HelpMenu.svelte';
@@ -33,14 +33,14 @@
   } from './script/stores/connectDialogStore';
   import { isLoading } from 'svelte-i18n';
   import { fetchCachedBrowserInfo } from './utils/api';
-  let isRedirectToNextGenDialogOpen: boolean = false;
+  let isPotentiallyNextGenUser: boolean = false;
 
   onMount(() => {
     (async () => {
       const { country } = await fetchCachedBrowserInfo($consent);
       // Show redirect dialog if user's location is UK or Jersey
-      isRedirectToNextGenDialogOpen =
-        (country === 'GB' || country === 'JE') && !hasSeenRedirectDialog();
+      isPotentiallyNextGenUser = country === 'GB' || country === 'JE';
+      isPotentiallyNextGenUser = true;
     })();
 
     const { bluetooth, usb } = $compatibility;
@@ -60,10 +60,6 @@
       routeAnnouncementEl.textContent = getTitle($currentPath, $t);
     }
   }
-
-  const closeRedirectToNextGenDialog = () => {
-    isRedirectToNextGenDialogOpen = false;
-  };
 </script>
 
 {#if !$isLoading}
@@ -79,10 +75,8 @@
         {#if $consent}
           <CompatibilityWarningDialog />
         {/if}
-        {#if $consent && !$isCompatibilityWarningDialogOpen}
-          <RedirectToNextGenDialog
-            isOpen={isRedirectToNextGenDialogOpen}
-            onClose={closeRedirectToNextGenDialog} />
+        {#if $consent && !$isCompatibilityWarningDialogOpen && isPotentiallyNextGenUser}
+          <RedirectToNextGenDialog />
         {/if}
         <div class="w-full flex flex-col bg-backgrounddark">
           <ControlBar>

@@ -6,27 +6,25 @@
 
 <script lang="ts">
   import { t } from '../i18n';
-  import { setAsSeenRedirectDialog } from '../script/stores/complianceStore';
+  import {
+    hasSeenRedirectDialog,
+    setAsSeenRedirectDialog,
+  } from '../script/stores/complianceStore';
   import StandardDialog from './dialogs/StandardDialog.svelte';
   import StandardButton from './StandardButton.svelte';
 
-  export let isOpen: boolean;
-  export let onClose: () => void;
+  let isOpen = !hasSeenRedirectDialog();
   const redirectToNextGen = () => {
     setAsSeenRedirectDialog();
-    window.location.href = 'https://www.ml.microbit.org';
+    window.location.href = 'https://ml.microbit.org';
   };
-  const onButtonClose = () => {
+  const onClose = () => {
     setAsSeenRedirectDialog();
-    onClose();
+    isOpen = false;
   };
 </script>
 
-<StandardDialog
-  hasCloseButton={false}
-  {isOpen}
-  class="w-100 space-y-5"
-  onClose={onButtonClose}>
+<StandardDialog {isOpen} hasCloseButton={false} class="w-100 space-y-5" {onClose}>
   <svelte:fragment slot="heading">
     {$t('popup.redirectToNextGen.header')}
   </svelte:fragment>
@@ -40,11 +38,8 @@
           class="w-sm"
           onClick={redirectToNextGen}
           >{$t('popup.redirectToNextGen.button.redirect')}</StandardButton>
-        <StandardButton
-          onClick={onButtonClose}
-          type="secondary"
-          size="normal"
-          class="w-sm">{$t('popup.redirectToNextGen.button.stay')}</StandardButton>
+        <StandardButton onClick={onClose} type="secondary" size="normal" class="w-sm"
+          >{$t('popup.redirectToNextGen.button.stay')}</StandardButton>
       </div>
     </div>
   </svelte:fragment>
