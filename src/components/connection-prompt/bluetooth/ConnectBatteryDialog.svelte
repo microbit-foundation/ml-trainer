@@ -6,6 +6,7 @@
 
 <script lang="ts">
   import StandardButton from '../../StandardButton.svelte';
+  import ExternalLinkIcon from 'virtual:icons/ri/external-link-line';
   import { t } from '../../../i18n';
   import microbitConnectedImage from '../../../imgs/stylised-microbit-connected.svg';
   import DialogHeading from '../../DialogHeading.svelte';
@@ -21,6 +22,14 @@
   <div class="space-y-5">
     <p>{$t('connectMB.connectBattery.subtitle')}</p>
     <img src={microbitConnectedImage} alt="" class="w-68 h-229px m-auto" />
+    <a
+      class="inline-flex mr-auto gap-x-1 items-center text-link outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
+      href="https://support.microbit.org/support/home"
+      target="_blank"
+      rel="noopener">
+      {$t('connectMB.connectBattery.link')}
+      <ExternalLinkIcon />
+    </a>
   </div>
 </div>
 <div class="flex justify-end gap-x-5 pt-5">

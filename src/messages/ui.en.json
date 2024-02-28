@@ -190,6 +190,7 @@
 
   "connectMB.connectBattery.heading": "Connect battery pack and disconnect USB",
   "connectMB.connectBattery.subtitle": "Disconnect the micro:bit from the computer and connect the battery pack.",
+  "connectMB.connectBattery.link": "Ideas for connecting your micro:bit to your wrist or an object",
 
   "connectMB.pattern.heading": "Copy pattern",
   "connectMB.pattern.subtitle": "Copy the pattern displayed on the micro:bit.",
