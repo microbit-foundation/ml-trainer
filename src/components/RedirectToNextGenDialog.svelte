@@ -6,12 +6,19 @@
 
 <script lang="ts">
   import { t } from '../i18n';
-  import {
-    hasSeenRedirectDialog,
-    setAsSeenRedirectDialog,
-  } from '../script/stores/complianceStore';
+  import { tryLocalStorageGet, tryLocalStorageSet } from '../script/utils/local-storage';
   import StandardDialog from './dialogs/StandardDialog.svelte';
   import StandardButton from './StandardButton.svelte';
+
+  const seenRedirectDialogKey = 'seenRedirectDialog';
+  const seenRedirectDialogValue = 'true';
+
+  const setAsSeenRedirectDialog = () => {
+    tryLocalStorageSet(seenRedirectDialogKey, seenRedirectDialogValue);
+  };
+
+  const hasSeenRedirectDialog = () =>
+    tryLocalStorageGet(seenRedirectDialogKey) === seenRedirectDialogValue;
 
   let isOpen = !hasSeenRedirectDialog();
   const redirectToNextGen = () => {
