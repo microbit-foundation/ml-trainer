@@ -1,3 +1,5 @@
+import { logError } from './logging';
+
 /**
  * (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
  *
@@ -28,7 +30,7 @@ export const fetchBrowserInfo = async (): Promise<BrowserInfo> => {
       return json;
     }
   } catch (e) {
-    // Fall through. Would be nice to have Sentry integration here.
+    logError('Failed to fetch browser info', e);
   }
   return {};
 };
