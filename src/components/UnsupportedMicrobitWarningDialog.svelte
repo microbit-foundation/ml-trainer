@@ -20,6 +20,7 @@
     rel: 'noopener',
   });
   const linkWithPropsForMicrobitBluetoothSupport = linkWithProps({
+    // TODO: Replace with real support link.
     href: 'https://support.microbit.org/support/home',
     target: '_blank',
     rel: 'noopener',

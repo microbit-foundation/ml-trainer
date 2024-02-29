@@ -44,10 +44,8 @@ export const startConnectionProcess = (): void => {
   // Updating the state will cause a popup to appear, from where the connection process will take place
 
   let initialInputDialogState = ConnectDialogStates.START_BLUETOOTH;
-  if (reconnectState.connectionType === 'none') {
-    if (!bluetooth) {
-      initialInputDialogState = ConnectDialogStates.START_RADIO;
-    }
+  if (reconnectState.connectionType === 'none' && !bluetooth) {
+    initialInputDialogState = ConnectDialogStates.START_RADIO;
   } else if (reconnectState.connectionType !== 'bluetooth') {
     initialInputDialogState = ConnectDialogStates.START_RADIO;
   }

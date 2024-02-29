@@ -190,7 +190,7 @@
 
   "connectMB.connectBattery.heading": "Connect battery pack and disconnect USB",
   "connectMB.connectBattery.subtitle": "Disconnect the micro:bit from the computer and connect the battery pack.",
-  "connectMB.connectBattery.link": "Ideas for connecting your micro:bit to your wrist or an object",
+  "connectMB.connectBattery.link": "You can attach the micro:bit to your wrist or an object",
 
   "connectMB.pattern.heading": "Copy pattern",
   "connectMB.pattern.subtitle": "Copy the pattern displayed on the micro:bit.",
@@ -284,5 +284,5 @@
   "arrowIconDown.altText": "arrow pointing down",
 
   "settings.label": "Settings",
-  "prototype.warning": "This is a prototype version - it will change…"
+  "prototype.warning": "This is a prototype version and is subject to change without notice"
 }
