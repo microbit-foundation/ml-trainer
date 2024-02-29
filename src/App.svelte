@@ -5,35 +5,46 @@
  -->
 
 <script lang="ts">
-  import OverlayView from './views/OverlayView.svelte';
-  import PageContentView from './views/PageContentView.svelte';
-  import {
-    compatibility,
-    isCompatibilityWarningDialogOpen,
-  } from './script/stores/uiStore';
-  import IncompatiblePlatformView from './views/IncompatiblePlatformView.svelte';
+  import { onMount } from 'svelte';
+  import { isLoading } from 'svelte-i18n';
+  import { get } from 'svelte/store';
+  import HomeIcon from 'virtual:icons/ri/home-2-line';
+  import AppVersionRedirectDialog from './components/AppVersionRedirectDialog.svelte';
   import CompatibilityWarningDialog from './components/CompatibilityWarningDialog.svelte';
-  import Router from './router/Router.svelte';
+  import PrototypeVersionWarning from './components/PrototypeVersionWarning.svelte';
+  import ConnectDialogContainer from './components/connection-prompt/ConnectDialogContainer.svelte';
   import ControlBar from './components/control-bar/ControlBar.svelte';
-  import { t } from './i18n';
-  import { consent } from './script/stores/complianceStore';
-  import microbitLogoImage from './imgs/microbit-logo.svg';
-  import appNameImage from './imgs/app-name.svg';
   import HelpMenu from './components/control-bar/control-bar-items/HelpMenu.svelte';
   import SettingsMenu from './components/control-bar/control-bar-items/SettingsMenu.svelte';
-  import { onMount } from 'svelte';
-  import ConnectDialogContainer from './components/connection-prompt/ConnectDialogContainer.svelte';
+  import { t } from './i18n';
+  import appNameImage from './imgs/app-name.svg';
+  import microbitLogoImage from './imgs/microbit-logo.svg';
+  import Router from './router/Router.svelte';
   import { Paths, currentPath, getTitle, navigate } from './router/paths';
-  import HomeIcon from 'virtual:icons/ri/home-2-line';
-  import { btSelectMicrobitDialogOnLoad } from './script/stores/connectionStore';
+  import { consent } from './script/stores/complianceStore';
   import {
     ConnectDialogStates,
     connectionDialogState,
   } from './script/stores/connectDialogStore';
-  import { isLoading } from 'svelte-i18n';
-  import PrototypeVersionWarning from './components/PrototypeVersionWarning.svelte';
+  import { btSelectMicrobitDialogOnLoad } from './script/stores/connectionStore';
+  import {
+    compatibility,
+    hasSeenAppVersionRedirectDialog,
+    isCompatibilityWarningDialogOpen,
+  } from './script/stores/uiStore';
+  import { fetchBrowserInfo } from './script/utils/api';
+  import IncompatiblePlatformView from './views/IncompatiblePlatformView.svelte';
+  import OverlayView from './views/OverlayView.svelte';
+  import PageContentView from './views/PageContentView.svelte';
 
-  onMount(() => {
+  let isPotentiallyNextGenUser: boolean = false;
+  onMount(async () => {
+    if (!get(hasSeenAppVersionRedirectDialog)) {
+      const { country } = await fetchBrowserInfo();
+      const nextGenAvailableCountries = ['GB', 'JE', 'IM', 'GG'];
+      isPotentiallyNextGenUser = !!country && nextGenAvailableCountries.includes(country);
+    }
+
     const { bluetooth, usb } = $compatibility;
     // Value must switch from false to true after mount to trigger dialog transition
     isCompatibilityWarningDialogOpen.set(!bluetooth && !usb);
@@ -65,6 +76,9 @@
         <!-- Wait for consent dialog to avoid a clash -->
         {#if $consent}
           <CompatibilityWarningDialog />
+        {/if}
+        {#if $consent && !$isCompatibilityWarningDialogOpen && isPotentiallyNextGenUser}
+          <AppVersionRedirectDialog />
         {/if}
         <div class="w-full flex flex-col bg-backgrounddark">
           <ControlBar>
