@@ -13,7 +13,7 @@
   } from './script/stores/uiStore';
   import IncompatiblePlatformView from './views/IncompatiblePlatformView.svelte';
   import CompatibilityWarningDialog from './components/CompatibilityWarningDialog.svelte';
-  import RedirectToNextGenDialog from './components/RedirectToNextGenDialog.svelte';
+  import RedirectToOtherVersionDialog from './components/RedirectToOtherVersionDialog.svelte';
   import Router from './router/Router.svelte';
   import ControlBar from './components/control-bar/ControlBar.svelte';
   import { t } from './i18n';
@@ -73,7 +73,7 @@
           <CompatibilityWarningDialog />
         {/if}
         {#if $consent && !$isCompatibilityWarningDialogOpen && isPotentiallyNextGenUser}
-          <RedirectToNextGenDialog />
+          <RedirectToOtherVersionDialog />
         {/if}
         <div class="w-full flex flex-col bg-backgrounddark">
           <ControlBar>

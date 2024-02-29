@@ -15,6 +15,7 @@ import { gestures } from './Stores';
 import { HexOrigin } from '../../StaticConfiguration';
 import { DeviceRequestStates } from '../microbit-interfacing/MicrobitConnection';
 import { logError } from '../utils/logging';
+import { persistantWritable } from './storeUtil';
 
 // TODO: Rename? Split up further?
 
@@ -36,6 +37,11 @@ if (compatibilityResult.bluetooth) {
 }
 
 export const isCompatibilityWarningDialogOpen = writable<boolean>(false);
+
+export const hasSeenRedirectToOtherVersionDialog = persistantWritable<boolean>(
+  'hasSeenRedirectToOtherVersionDialog',
+  false,
+);
 
 export enum ModelView {
   TILE,

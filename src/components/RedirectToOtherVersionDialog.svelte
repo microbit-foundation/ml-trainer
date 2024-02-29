@@ -5,28 +5,21 @@
  -->
 
 <script lang="ts">
+  import { get } from 'svelte/store';
   import { t } from '../i18n';
-  import { tryLocalStorageGet, tryLocalStorageSet } from '../script/utils/local-storage';
+  import { hasSeenRedirectToOtherVersionDialog } from '../script/stores/uiStore';
   import StandardDialog from './dialogs/StandardDialog.svelte';
   import StandardButton from './StandardButton.svelte';
 
-  const seenRedirectDialogKey = 'seenRedirectDialog';
-  const seenRedirectDialogValue = 'true';
+  let isOpen = !get(hasSeenRedirectToOtherVersionDialog);
 
-  const setAsSeenRedirectDialog = () => {
-    tryLocalStorageSet(seenRedirectDialogKey, seenRedirectDialogValue);
-  };
-
-  const hasSeenRedirectDialog = () =>
-    tryLocalStorageGet(seenRedirectDialogKey) === seenRedirectDialogValue;
-
-  let isOpen = !hasSeenRedirectDialog();
-  const redirectToNextGen = () => {
-    setAsSeenRedirectDialog();
+  const redirectToOtherVersion = () => {
+    hasSeenRedirectToOtherVersionDialog.set(true);
     window.location.href = 'https://ml.microbit.org';
   };
+
   const onClose = () => {
-    setAsSeenRedirectDialog();
+    hasSeenRedirectToOtherVersionDialog.set(true);
     isOpen = false;
   };
 </script>
@@ -39,20 +32,20 @@
   class="w-100 space-y-5"
   {onClose}>
   <svelte:fragment slot="heading">
-    {$t('popup.redirectToNextGen.header')}
+    {$t('popup.redirectToOtherVersion.header')}
   </svelte:fragment>
   <svelte:fragment slot="body">
     <div class="space-y-8">
-      <p>{$t('popup.redirectToNextGen.explain')}</p>
+      <p>{$t('popup.redirectToOtherVersion.explain')}</p>
       <div class="flex flex-col justify-end space-y-3">
         <StandardButton
           type="primary"
           size="normal"
           class="w-sm"
-          onClick={redirectToNextGen}
-          >{$t('popup.redirectToNextGen.button.redirect')}</StandardButton>
+          onClick={redirectToOtherVersion}
+          >{$t('popup.redirectToOtherVersion.button.redirect')}</StandardButton>
         <StandardButton onClick={onClose} type="secondary" size="normal" class="w-sm"
-          >{$t('popup.redirectToNextGen.button.stay')}</StandardButton>
+          >{$t('popup.redirectToOtherVersion.button.stay')}</StandardButton>
       </div>
     </div>
   </svelte:fragment>

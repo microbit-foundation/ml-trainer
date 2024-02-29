@@ -284,10 +284,10 @@
   "popup.outdatedmicrobit.button.update": "Update now",
   "popup.outdatedmicrobit.button.update.mkcd": "Open MakeCode",
 
-  "popup.redirectToNextGen.header": "Are you a UK primary school teacher?",
-  "popup.redirectToNextGen.explain": "If you are a UK primary school teacher, you will be redirected to the version of this tool designed for the UK's BBC micro:bit playground survey.",
-  "popup.redirectToNextGen.button.redirect": "I'm a UK primary school teacher",
-  "popup.redirectToNextGen.button.stay": "I'm not a UK primary school teacher",
+  "popup.redirectToOtherVersion.header": "Are you a UK primary school teacher?",
+  "popup.redirectToOtherVersion.explain": "If you are a UK primary school teacher, you will be redirected to the version of this tool designed for the UK's BBC micro:bit playground survey.",
+  "popup.redirectToOtherVersion.button.redirect": "I'm a UK primary school teacher",
+  "popup.redirectToOtherVersion.button.stay": "I'm not a UK primary school teacher",
 
   "arrowIconRight.altText": "arrow pointing right",
   "arrowIconDown.altText": "arrow pointing down",
