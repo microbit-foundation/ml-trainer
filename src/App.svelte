@@ -36,7 +36,7 @@
   import { fetchBrowserInfo } from './script/utils/api';
   import { get } from 'svelte/store';
 
-  let isPotentiallyNextGenUser: boolean = false;
+  let isPotentiallyNextGenUser: boolean = true;
   onMount(async () => {
     if (!get(hasSeenAppVersionRedirectDialog)) {
       const { country } = await fetchBrowserInfo();
@@ -76,7 +76,7 @@
         {#if $consent}
           <CompatibilityWarningDialog />
         {/if}
-        {#if $consent && !$isCompatibilityWarningDialogOpen && isPotentiallyNextGenUser}
+        {#if $consent && !$isCompatibilityWarningDialogOpen && !isPotentiallyNextGenUser}
           <AppVersionRedirectDialog />
         {/if}
         <div class="w-full flex flex-col bg-backgrounddark">

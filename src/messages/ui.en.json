@@ -286,9 +286,9 @@
   "popup.outdatedmicrobit.button.update.mkcd": "Open MakeCode",
 
   "popup.appVersionRedirect.header": "Are you a UK* primary school teacher?",
-  "popup.appVersionRedirect.explain": "If you are a UK* primary school teacher, you will be redirected to the version of this tool designed for the UK's BBC micro:bit playground survey.",
-  "popup.appVersionRedirect.button.redirect": "I'm a UK primary school teacher",
-  "popup.appVersionRedirect.button.stay": "I'm not a UK primary school teacher",
+  "popup.appVersionRedirect.explain": "If you are not a UK* primary school teacher, you will be redirected to our prototype version of this tool. This version is only for the UK's BBC micro:bit playground survey.",
+  "popup.appVersionRedirect.button.redirect": "I'm not a UK primary school teacher",
+  "popup.appVersionRedirect.button.stay": "I'm a UK primary school teacher",
   "popup.appVersionRedirect.uk": "*includes crown dependencies Jersey, Guernsey and the Isle of Man",
 
   "arrowIconRight.altText": "arrow pointing right",
