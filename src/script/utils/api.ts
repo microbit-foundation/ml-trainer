@@ -20,7 +20,7 @@ const isBrowserInfo = (v: unknown): v is BrowserInfo => {
  */
 export const fetchBrowserInfo = async (): Promise<BrowserInfo> => {
   try {
-    // Note this API is not yet available on branch deployments.
+    // Note this API is not available if you're running locally without configuring API_PROXY in .env
     const response = await fetch('/api/v1/browser/info');
     if (!response.ok) {
       return {};
