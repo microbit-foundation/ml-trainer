@@ -14,7 +14,7 @@ import MBSpecs from '../microbit-interfacing/MBSpecs';
 import { gestures } from './Stores';
 import { HexOrigin } from '../../StaticConfiguration';
 import { DeviceRequestStates } from '../microbit-interfacing/MicrobitConnection';
-import { logError } from '../utils/logging';
+import { logError, logEvent } from '../utils/logging';
 
 // TODO: Rename? Split up further?
 
@@ -28,6 +28,11 @@ if (compatibilityResult.bluetooth) {
     .getAvailability()
     .then(bluetoothAvailable => {
       compatibility.update(s => {
+        logEvent({
+          type: 'Device',
+          action: 'Bluetooth available',
+          value: s.bluetooth && bluetoothAvailable ? 1 : 0,
+        });
         s.bluetooth = s.bluetooth && bluetoothAvailable;
         return s;
       });
