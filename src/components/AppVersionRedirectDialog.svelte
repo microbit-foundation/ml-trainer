@@ -14,7 +14,7 @@
 
   const appVersionRedirect = () => {
     hasSeenAppVersionRedirectDialog.set(true);
-    window.location.href = 'https://ml.microbit.org';
+    window.location.href = 'https://ml.microbit.org/thenextgen/';
   };
 
   const onClose = () => {
