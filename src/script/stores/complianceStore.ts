@@ -5,7 +5,7 @@
  */
 
 import { writable } from 'svelte/store';
-import { tryLocalStorageGet, tryLocalStorageSet } from '../../utils/local-storage';
+import { tryLocalStorageGet, tryLocalStorageSet } from '../utils/local-storage';
 
 // Integrates the Micro:bit Educational Foundation common cookie consent dialog/analytics.
 // Not suitable for other deployments.

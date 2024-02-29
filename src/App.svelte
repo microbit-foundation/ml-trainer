@@ -32,12 +32,12 @@
     connectionDialogState,
   } from './script/stores/connectDialogStore';
   import { isLoading } from 'svelte-i18n';
-  import { fetchCachedBrowserInfo } from './utils/api';
+  import { fetchBrowserInfo } from './script/utils/api';
   let isPotentiallyNextGenUser: boolean = false;
 
   onMount(() => {
     (async () => {
-      const { country } = await fetchCachedBrowserInfo($consent);
+      const { country } = await fetchBrowserInfo();
       // Show redirect dialog if user's location is UK or Jersey
       isPotentiallyNextGenUser = country === 'GB' || country === 'JE';
     })();
