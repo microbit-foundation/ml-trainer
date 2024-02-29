@@ -75,12 +75,15 @@ export function manageCookies() {
 
 export const consent = writable<CookieConsent | undefined>(undefined);
 
+const seenRedirectDialogKey = 'seenRedirectDialog';
+const seenRedirectDialogValue = 'true';
+
 export const setAsSeenRedirectDialog = () => {
-  tryLocalStorageSet('seenRedirectDilaog', 'true');
+  tryLocalStorageSet(seenRedirectDialogKey, seenRedirectDialogValue);
 };
 
 export const hasSeenRedirectDialog = () => {
-  return tryLocalStorageGet('seenRedirectDilaog') === 'true';
+  return tryLocalStorageGet(seenRedirectDialogKey) === seenRedirectDialogValue;
 };
 
 const w = window as any;
