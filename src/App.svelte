@@ -34,11 +34,12 @@
   import { isLoading } from 'svelte-i18n';
   import { fetchBrowserInfo } from './script/utils/api';
   let isPotentiallyNextGenUser: boolean = false;
+  const nextGenAvailableCountries = ['GB', 'JE', 'IM', 'GG'];
 
   onMount(async () => {
     const { country } = await fetchBrowserInfo();
     // Show redirect dialog if user's location is UK or Jersey
-    isPotentiallyNextGenUser = country === 'GB' || country === 'JE';
+    isPotentiallyNextGenUser = !!country && nextGenAvailableCountries.includes(country);
 
     const { bluetooth, usb } = $compatibility;
     // Value must switch from false to true after mount to trigger dialog transition
