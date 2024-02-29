@@ -14,6 +14,7 @@ import MBSpecs from '../microbit-interfacing/MBSpecs';
 import { gestures } from './Stores';
 import { HexOrigin } from '../../StaticConfiguration';
 import { DeviceRequestStates } from '../microbit-interfacing/MicrobitConnection';
+import { persistantWritable } from './storeUtil';
 import { logError, logEvent } from '../utils/logging';
 
 // TODO: Rename? Split up further?
@@ -41,6 +42,11 @@ if (compatibilityResult.bluetooth) {
 }
 
 export const isCompatibilityWarningDialogOpen = writable<boolean>(false);
+
+export const hasSeenAppVersionRedirectDialog = persistantWritable<boolean>(
+  'hasSeenAppVersionRedirectDialog',
+  false,
+);
 
 export enum ModelView {
   TILE,
