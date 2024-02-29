@@ -5,13 +5,12 @@
  -->
 
 <script lang="ts">
-  import { get } from 'svelte/store';
   import { t } from '../i18n';
   import { hasSeenRedirectToOtherVersionDialog } from '../script/stores/uiStore';
   import StandardDialog from './dialogs/StandardDialog.svelte';
   import StandardButton from './StandardButton.svelte';
 
-  let isOpen = !get(hasSeenRedirectToOtherVersionDialog);
+  let isOpen = true;
 
   const redirectToOtherVersion = () => {
     hasSeenRedirectToOtherVersionDialog.set(true);
