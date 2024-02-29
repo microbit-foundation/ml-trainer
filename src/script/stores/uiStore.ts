@@ -38,8 +38,8 @@ if (compatibilityResult.bluetooth) {
 
 export const isCompatibilityWarningDialogOpen = writable<boolean>(false);
 
-export const hasSeenRedirectToOtherVersionDialog = persistantWritable<boolean>(
-  'hasSeenRedirectToOtherVersionDialog',
+export const hasSeenAppVersionRedirectDialog = persistantWritable<boolean>(
+  'hasSeenAppVersionRedirectDialog',
   false,
 );
 

@@ -6,19 +6,19 @@
 
 <script lang="ts">
   import { t } from '../i18n';
-  import { hasSeenRedirectToOtherVersionDialog } from '../script/stores/uiStore';
+  import { hasSeenAppVersionRedirectDialog } from '../script/stores/uiStore';
   import StandardDialog from './dialogs/StandardDialog.svelte';
   import StandardButton from './StandardButton.svelte';
 
   let isOpen = true;
 
-  const redirectToOtherVersion = () => {
-    hasSeenRedirectToOtherVersionDialog.set(true);
+  const appVersionRedirect = () => {
+    hasSeenAppVersionRedirectDialog.set(true);
     window.location.href = 'https://ml.microbit.org';
   };
 
   const onClose = () => {
-    hasSeenRedirectToOtherVersionDialog.set(true);
+    hasSeenAppVersionRedirectDialog.set(true);
     isOpen = false;
   };
 </script>
@@ -31,22 +31,22 @@
   class="w-110 space-y-5"
   {onClose}>
   <svelte:fragment slot="heading">
-    {$t('popup.redirectToOtherVersion.header')}
+    {$t('popup.appVersionRedirect.header')}
   </svelte:fragment>
   <svelte:fragment slot="body">
     <div class="space-y-8">
-      <p>{$t('popup.redirectToOtherVersion.explain')}</p>
+      <p>{$t('popup.appVersionRedirect.explain')}</p>
       <div class="flex flex-col justify-end space-y-3">
         <StandardButton
           type="primary"
           size="normal"
           class="w-sm"
-          onClick={redirectToOtherVersion}
-          >{$t('popup.redirectToOtherVersion.button.redirect')}</StandardButton>
+          onClick={appVersionRedirect}
+          >{$t('popup.appVersionRedirect.button.redirect')}</StandardButton>
         <StandardButton onClick={onClose} type="secondary" size="normal" class="w-sm"
-          >{$t('popup.redirectToOtherVersion.button.stay')}</StandardButton>
+          >{$t('popup.appVersionRedirect.button.stay')}</StandardButton>
       </div>
-      <p class="text-sm">{$t('popup.redirectToOtherVersion.uk')}</p>
+      <p class="text-sm">{$t('popup.appVersionRedirect.uk')}</p>
     </div>
   </svelte:fragment>
 </StandardDialog>

@@ -9,12 +9,12 @@
   import PageContentView from './views/PageContentView.svelte';
   import {
     compatibility,
-    hasSeenRedirectToOtherVersionDialog,
+    hasSeenAppVersionRedirectDialog,
     isCompatibilityWarningDialogOpen,
   } from './script/stores/uiStore';
   import IncompatiblePlatformView from './views/IncompatiblePlatformView.svelte';
   import CompatibilityWarningDialog from './components/CompatibilityWarningDialog.svelte';
-  import RedirectToOtherVersionDialog from './components/RedirectToOtherVersionDialog.svelte';
+  import AppVersionRedirectDialog from './components/AppVersionRedirectDialog.svelte';
   import Router from './router/Router.svelte';
   import ControlBar from './components/control-bar/ControlBar.svelte';
   import { t } from './i18n';
@@ -37,12 +37,10 @@
   import { get } from 'svelte/store';
 
   let isPotentiallyNextGenUser: boolean = false;
-  const nextGenAvailableCountries = ['GB', 'JE', 'IM', 'GG'];
-
   onMount(async () => {
-    if (!get(hasSeenRedirectToOtherVersionDialog)) {
+    if (!get(hasSeenAppVersionRedirectDialog)) {
       const { country } = await fetchBrowserInfo();
-      // Show redirect dialog if user's location is UK or Jersey
+      const nextGenAvailableCountries = ['GB', 'JE', 'IM', 'GG'];
       isPotentiallyNextGenUser = !!country && nextGenAvailableCountries.includes(country);
     }
 
@@ -79,7 +77,7 @@
           <CompatibilityWarningDialog />
         {/if}
         {#if $consent && !$isCompatibilityWarningDialogOpen && isPotentiallyNextGenUser}
-          <RedirectToOtherVersionDialog />
+          <AppVersionRedirectDialog />
         {/if}
         <div class="w-full flex flex-col bg-backgrounddark">
           <ControlBar>
