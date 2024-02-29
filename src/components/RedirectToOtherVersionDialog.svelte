@@ -29,7 +29,7 @@
   hasCloseButton={false}
   closeOnOutsideClick={false}
   closeOnEscape={false}
-  class="w-100 space-y-5"
+  class="w-110 space-y-5"
   {onClose}>
   <svelte:fragment slot="heading">
     {$t('popup.redirectToOtherVersion.header')}
@@ -47,6 +47,7 @@
         <StandardButton onClick={onClose} type="secondary" size="normal" class="w-sm"
           >{$t('popup.redirectToOtherVersion.button.stay')}</StandardButton>
       </div>
+      <p class="text-sm">{$t('popup.redirectToOtherVersion.uk')}</p>
     </div>
   </svelte:fragment>
 </StandardDialog>
