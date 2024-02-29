@@ -36,12 +36,12 @@
   import { fetchBrowserInfo } from './script/utils/api';
   import { get } from 'svelte/store';
 
-  let isPotentiallyNextGenUser: boolean = true;
+  let isPotentiallyNonNextGenUser: boolean = false;
   onMount(async () => {
     if (!get(hasSeenAppVersionRedirectDialog)) {
       const { country } = await fetchBrowserInfo();
       const nextGenAvailableCountries = ['GB', 'JE', 'IM', 'GG'];
-      isPotentiallyNextGenUser = !!country && nextGenAvailableCountries.includes(country);
+      isPotentiallyNonNextGenUser = !nextGenAvailableCountries.includes(country || '');
     }
 
     const { bluetooth, usb } = $compatibility;
@@ -76,7 +76,7 @@
         {#if $consent}
           <CompatibilityWarningDialog />
         {/if}
-        {#if $consent && !$isCompatibilityWarningDialogOpen && !isPotentiallyNextGenUser}
+        {#if $consent && !$isCompatibilityWarningDialogOpen && isPotentiallyNonNextGenUser}
           <AppVersionRedirectDialog />
         {/if}
         <div class="w-full flex flex-col bg-backgrounddark">
