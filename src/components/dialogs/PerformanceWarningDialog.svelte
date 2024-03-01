@@ -6,8 +6,8 @@
 
 <script lang="ts">
   import { t } from 'svelte-i18n';
-  import StandardButton from './StandardButton.svelte';
-  import StandardDialog from './dialogs/StandardDialog.svelte';
+  import StandardButton from '../StandardButton.svelte';
+  import StandardDialog from './StandardDialog.svelte';
   import ExternalLinkIcon from 'virtual:icons/ri/external-link-line';
 
   export let isOpen: boolean = false;

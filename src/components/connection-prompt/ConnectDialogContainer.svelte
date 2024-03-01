@@ -40,7 +40,7 @@
   import DownloadingDialog from './usb/DownloadingDialog.svelte';
   import SelectMicrobitDialogUsb from './usb/SelectMicrobitDialogUsb.svelte';
   import ManualInstallTutorial from './usb/manual/ManualInstallTutorial.svelte';
-  import UnsupportedMicrobitWarningDialog from '../UnsupportedMicrobitWarningDialog.svelte';
+  import UnsupportedMicrobitWarningDialog from '../dialogs/UnsupportedMicrobitWarningDialog.svelte';
 
   const { bluetooth, usb } = get(compatibility);
   let endOfFlow = false;

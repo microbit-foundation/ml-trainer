@@ -5,10 +5,10 @@
  -->
 
 <script lang="ts">
-  import { t } from '../i18n';
-  import { state } from '../script/stores/uiStore';
-  import DialogHeading from './DialogHeading.svelte';
-  import StandardButton from './StandardButton.svelte';
+  import { t } from '../../i18n';
+  import { state } from '../../script/stores/uiStore';
+  import DialogHeading from '../DialogHeading.svelte';
+  import StandardButton from '../StandardButton.svelte';
   import ExternalLinkIcon from 'virtual:icons/ri/external-link-line';
 
   interface Item {

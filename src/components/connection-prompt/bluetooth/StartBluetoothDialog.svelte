@@ -9,7 +9,7 @@
   import computerImage from '../../../imgs/stylised_computer.svg';
   import usbCableImage from '../../../imgs/stylised-usb-cable.svg';
   import batteryPackImage from '../../../imgs/stylised-battery-pack.svg';
-  import WhatYouWillNeedDialog from '../../WhatYouWillNeedDialog.svelte';
+  import WhatYouWillNeedDialog from '../WhatYouWillNeedDialog.svelte';
   import { get } from 'svelte/store';
   import { compatibility, state } from '../../../script/stores/uiStore';
 

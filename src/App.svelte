@@ -9,8 +9,8 @@
   import { isLoading } from 'svelte-i18n';
   import { get } from 'svelte/store';
   import HomeIcon from 'virtual:icons/ri/home-2-line';
-  import AppVersionRedirectDialog from './components/AppVersionRedirectDialog.svelte';
-  import CompatibilityWarningDialog from './components/CompatibilityWarningDialog.svelte';
+  import AppVersionRedirectDialog from './components/dialogs/AppVersionRedirectDialog.svelte';
+  import CompatibilityWarningDialog from './components/dialogs/CompatibilityWarningDialog.svelte';
   import PrototypeVersionWarning from './components/PrototypeVersionWarning.svelte';
   import ConnectDialogContainer from './components/connection-prompt/ConnectDialogContainer.svelte';
   import ControlBar from './components/control-bar/ControlBar.svelte';

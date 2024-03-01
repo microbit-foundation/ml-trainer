@@ -5,10 +5,10 @@
  -->
 
 <script lang="ts">
-  import { t } from '../i18n';
-  import { hasSeenAppVersionRedirectDialog } from '../script/stores/uiStore';
-  import StandardDialog from './dialogs/StandardDialog.svelte';
-  import StandardButton from './StandardButton.svelte';
+  import { t } from '../../i18n';
+  import { hasSeenAppVersionRedirectDialog } from '../../script/stores/uiStore';
+  import StandardDialog from './StandardDialog.svelte';
+  import StandardButton from '../StandardButton.svelte';
 
   let isOpen = true;
 

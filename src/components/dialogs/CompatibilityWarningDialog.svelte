@@ -5,10 +5,10 @@
  -->
 
 <script lang="ts">
-  import { t } from '../i18n';
-  import StandardDialog from './dialogs/StandardDialog.svelte';
-  import StandardButton from './StandardButton.svelte';
-  import { isCompatibilityWarningDialogOpen } from '../script/stores/uiStore';
+  import { t } from '../../i18n';
+  import StandardDialog from './StandardDialog.svelte';
+  import StandardButton from '../StandardButton.svelte';
+  import { isCompatibilityWarningDialogOpen } from '../../script/stores/uiStore';
 
   const onClose = () => {
     $isCompatibilityWarningDialogOpen = false;
