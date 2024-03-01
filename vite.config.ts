@@ -44,7 +44,7 @@ export default defineConfig(({ mode }) => {
     },
     server: commonEnv.API_PROXY
       ? {
-          port: 5172,
+          port: 5173,
           proxy: {
             '/api/v1': {
               target: commonEnv.API_PROXY,
