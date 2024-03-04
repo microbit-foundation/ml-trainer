@@ -268,6 +268,7 @@ function setupPredictionInterval(): void {
   });
 }
 
+let previouslyConnected = false;
 // Classify data
 export function classify() {
   // Get currentState to check whether the prediction has been interrupted by other processes
@@ -290,21 +291,28 @@ export function classify() {
     return;
   }
 
-  if (!currentState.isInputConnected) return;
-
-  // Get formatted version of previous data
-  const data = getPrevData();
-  if (data === undefined)
-    throw new Error('Unsufficient amount of data to make prediction');
-  const input: number[] = makeInputs(data);
-  const inputTensor = tf.tensor([input]);
-  const prediction: Tensor = get(model).predict(inputTensor) as Tensor;
-  prediction
-    .data()
-    .then(data => {
-      tfHandlePrediction(data as Float32Array);
-    })
-    .catch(err => console.error('Prediction error:', err));
+  if (currentState.isInputConnected) {
+    // Get formatted version of previous data
+    const data = getPrevData();
+    if (data === undefined)
+      if (previouslyConnected) {
+        throw new Error('Insufficient amount of data to make prediction');
+      } else {
+        // If we have connected a micro:bit while on the test model page
+        // insufficient data is expected.
+        return;
+      }
+    const input: number[] = makeInputs(data);
+    const inputTensor = tf.tensor([input]);
+    const prediction: Tensor = get(model).predict(inputTensor) as Tensor;
+    prediction
+      .data()
+      .then(data => {
+        tfHandlePrediction(data as Float32Array);
+      })
+      .catch(err => console.error('Prediction error:', err));
+  }
+  previouslyConnected = currentState.isInputConnected;
 }
 
 function tfHandlePrediction(result: Float32Array) {
