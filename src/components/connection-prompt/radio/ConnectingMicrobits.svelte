@@ -7,7 +7,7 @@
 <script lang="ts">
   import DialogHeading from '../../DialogHeading.svelte';
   import { t } from '../../../i18n';
-  import LoadingSpinner from '../../LoadingSpinner.svelte';
+  import LoadingAnimation from '../../LoadingBlobs.svelte';
 </script>
 
 <div class="w-175">
@@ -16,6 +16,6 @@
   </DialogHeading>
   <div class="flex flex-col gap-5 justify-center items-center py-3">
     <p>{$t('connectMB.connecting')}</p>
-    <LoadingSpinner />
+    <LoadingAnimation />
   </div>
 </div>

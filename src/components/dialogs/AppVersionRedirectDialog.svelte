@@ -10,7 +10,7 @@
   import StandardDialog from './StandardDialog.svelte';
   import StandardButton from '../StandardButton.svelte';
 
-  let isOpen = true;
+  export let isOpen: boolean;
 
   const appVersionRedirect = () => {
     hasSeenAppVersionRedirectDialog.set(true);

@@ -48,6 +48,11 @@ export const hasSeenAppVersionRedirectDialog = persistantWritable<boolean>(
   false,
 );
 
+export const hasSeenSignUpDialog = persistantWritable<boolean>(
+  'hasSeenSignUpDialog',
+  false,
+);
+
 export enum ModelView {
   TILE,
   STACK,

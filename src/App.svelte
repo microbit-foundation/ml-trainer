@@ -30,12 +30,14 @@
   import {
     compatibility,
     hasSeenAppVersionRedirectDialog,
+    hasSeenSignUpDialog,
     isCompatibilityWarningDialogOpen,
   } from './script/stores/uiStore';
   import { fetchBrowserInfo } from './script/utils/api';
   import IncompatiblePlatformView from './views/IncompatiblePlatformView.svelte';
   import OverlayView from './views/OverlayView.svelte';
   import PageContentView from './views/PageContentView.svelte';
+  import SignUpDialog from './components/dialogs/SignUpDialog.svelte';
 
   let isPotentiallyNextGenUser: boolean = false;
   onMount(async () => {
@@ -62,6 +64,18 @@
       routeAnnouncementEl.textContent = getTitle($currentPath, $t);
     }
   }
+
+  $: showVersionRedirectDialog = !!(
+    $consent &&
+    !$isCompatibilityWarningDialogOpen &&
+    isPotentiallyNextGenUser
+  );
+  $: showSignUpDialog = !!(
+    $consent &&
+    !$isCompatibilityWarningDialogOpen &&
+    !$hasSeenSignUpDialog &&
+    !isPotentiallyNextGenUser
+  );
 </script>
 
 {#if !$isLoading}
@@ -77,9 +91,8 @@
         {#if $consent}
           <CompatibilityWarningDialog />
         {/if}
-        {#if $consent && !$isCompatibilityWarningDialogOpen && isPotentiallyNextGenUser}
-          <AppVersionRedirectDialog />
-        {/if}
+        <AppVersionRedirectDialog isOpen={showVersionRedirectDialog} />
+        <SignUpDialog isOpen={showSignUpDialog} />
         <div class="w-full flex flex-col bg-backgrounddark">
           <ControlBar>
             <div class="flex items-center divide-x h-full">

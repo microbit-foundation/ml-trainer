@@ -290,5 +290,13 @@
   "arrowIconDown.altText": "arrow pointing down",
 
   "settings.label": "Settings",
-  "prototype.warning": "This is a prototype version and is subject to change without notice"
+  "prototype.warning": "This is a prototype version and is subject to change without notice",
+
+  "sign-up.title": "Join our prototype testing community",
+  "sign-up.content": "Some text TBC",
+  "sign-up.email-label": "Email",
+  "sign-up.error": "Something went wrong. Please try again or <link>contact us</link>.",
+  "sign-up.invalid": "Please enter a valid email address",
+  "sign-up.sign-up-action": "Sign up",
+  "sign-up.skip-action": "Skip"
 }
