@@ -42,11 +42,13 @@ export const startConnectionProcess = (): void => {
   const { bluetooth } = get(compatibility);
   const { isInputConnected, reconnectState } = get(state);
   // Updating the state will cause a popup to appear, from where the connection process will take place
-
   let initialInputDialogState = ConnectDialogStates.START_BLUETOOTH;
   if (reconnectState.connectionType === 'none' && !bluetooth) {
     initialInputDialogState = ConnectDialogStates.START_RADIO;
-  } else if (reconnectState.connectionType !== 'bluetooth') {
+  } else if (
+    reconnectState.connectionType === 'bridge' ||
+    reconnectState.connectionType === 'remote'
+  ) {
     initialInputDialogState = ConnectDialogStates.START_RADIO;
   }
   connectionDialogState.update(s => {
