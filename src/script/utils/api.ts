@@ -38,7 +38,7 @@ export const fetchBrowserInfo = async (): Promise<BrowserInfo> => {
 export const signUp = async (email: string): Promise<boolean> => {
   try {
     // Note this API is not available if you're running locally without configuring API_PROXY in .env
-    const response = await fetch('/api/v1/subscriptions/ml-sign-up', {
+    const response = await fetch('/api/v1/newsletters/ml-prototype/subscribe', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
