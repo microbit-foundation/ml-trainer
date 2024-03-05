@@ -47,10 +47,6 @@
       isPotentiallyNextGenUser = !!country && nextGenAvailableCountries.includes(country);
     }
 
-    const { bluetooth, usb } = $compatibility;
-    // Value must switch from false to true after mount to trigger dialog transition
-    isCompatibilityWarningDialogOpen.set(!bluetooth && !usb);
-
     if ($btSelectMicrobitDialogOnLoad) {
       $connectionDialogState.connectionState =
         ConnectDialogStates.CONNECT_TUTORIAL_BLUETOOTH;
@@ -65,16 +61,15 @@
     }
   }
 
+  $isCompatibilityWarningDialogOpen = !$compatibility.bluetooth && !$compatibility.usb;
   $: showVersionRedirectDialog = !!(
-    $consent &&
-    !$isCompatibilityWarningDialogOpen &&
-    isPotentiallyNextGenUser
+    !$isCompatibilityWarningDialogOpen && isPotentiallyNextGenUser
   );
   $: showSignUpDialog = !!(
-    $consent &&
     !$isCompatibilityWarningDialogOpen &&
     !$hasSeenSignUpDialog &&
-    !isPotentiallyNextGenUser
+    (!isPotentiallyNextGenUser ||
+      (isPotentiallyNextGenUser && $hasSeenAppVersionRedirectDialog))
   );
 </script>
 
@@ -90,9 +85,9 @@
         <!-- Wait for consent dialog to avoid a clash -->
         {#if $consent}
           <CompatibilityWarningDialog />
+          <AppVersionRedirectDialog isOpen={showVersionRedirectDialog} />
+          <SignUpDialog isOpen={showSignUpDialog} />
         {/if}
-        <AppVersionRedirectDialog isOpen={showVersionRedirectDialog} />
-        <SignUpDialog isOpen={showSignUpDialog} />
         <div class="w-full flex flex-col bg-backgrounddark">
           <ControlBar>
             <div class="flex items-center divide-x h-full">
