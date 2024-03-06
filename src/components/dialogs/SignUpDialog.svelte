@@ -49,10 +49,10 @@
   <svelte:fragment slot="heading">{$t('sign-up.title')}</svelte:fragment>
   <svelte:fragment slot="body">
     <div class="space-y-3">
-      <div class="flex items-start space-x-5">
-        <p>{$t('sign-up.content')}</p>
+      <div class="flex items-center space-x-5">
         <HammerIcon
           class="h-12 w-12 text-gray-800 flex-shrink-0 leading-0 transform rotate-45" />
+        <p>{$t('sign-up.content')}</p>
       </div>
       <form class="space-y-2" on:submit={handleSignup} novalidate>
         <label class="font-bold" for="email">
@@ -93,8 +93,9 @@
         {/if}
       </form>
     </div>
-    <div class="flex items-center justify-end gap-x-5">
-      <StandardButton onClick={onClose}>{$t('sign-up.skip-action')}</StandardButton>
+    <div class="flex items-center justify-between">
+      <StandardButton type="link" onClick={onClose}
+        >{$t('sign-up.skip-action')}</StandardButton>
       <StandardButton
         class="relative"
         type="primary"
