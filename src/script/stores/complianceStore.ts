@@ -57,6 +57,22 @@ const config = {
       name: 'lang',
       purpose: 'Stores your chosen language',
     },
+    {
+      type: 'local',
+      domain,
+      category: 'essential',
+      name: 'hasSeenSignUpDialog',
+      purpose:
+        'Used to ensure that the testing community sign up dialog is only shown once',
+    },
+    {
+      type: 'local',
+      domain,
+      category: 'essential',
+      name: 'hasSeenAppVersionRedirectDialog',
+      purpose:
+        'Used to ensure that the UK primary school teacher dialog is only shown once',
+    },
     // Some of the Svelte stores use local storage, this needs investigating
   ],
 };
