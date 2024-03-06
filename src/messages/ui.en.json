@@ -292,8 +292,8 @@
   "settings.label": "Settings",
   "prototype.warning": "This is a prototype version and is subject to change without notice",
 
-  "sign-up.title": "Join our prototype testing community",
-  "sign-up.content": "Some text TBC",
+  "sign-up.title": "Join our testing community",
+  "sign-up.content": "Welcome to our prototype of the micro:bit machine learning tool. We’d love you to try it out and give us your feedback. Please enter your email so we can keep you updated as it evolves.",
   "sign-up.email-label": "Email",
   "sign-up.error": "Something went wrong. Please try again or <link>contact us</link>.",
   "sign-up.invalid": "Please enter a valid email address",

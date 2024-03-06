@@ -12,6 +12,7 @@
   import { signUp as signUpApi } from '../../script/utils/api';
   import HtmlFormattedMessage, { linkWithProps } from '../HtmlFormattedMessage.svelte';
   import LoadingAnimation from '../LoadingSpinner.svelte';
+  import HammerIcon from 'virtual:icons/ri/hammer-line';
 
   export let isOpen: boolean;
   let email = '';
@@ -48,7 +49,11 @@
   <svelte:fragment slot="heading">{$t('sign-up.title')}</svelte:fragment>
   <svelte:fragment slot="body">
     <div class="space-y-3">
-      <p>{$t('sign-up.content')}</p>
+      <div class="flex items-start space-x-5">
+        <p>{$t('sign-up.content')}</p>
+        <HammerIcon
+          class="h-12 w-12 text-gray-800 flex-shrink-0 leading-0 transform rotate-45" />
+      </div>
       <form class="space-y-2" on:submit={handleSignup} novalidate>
         <label class="font-bold" for="email">
           {$t('sign-up.email-label')} <span class="text-red-600" aria-hidden>*</span>
