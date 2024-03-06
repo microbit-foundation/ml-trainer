@@ -10,7 +10,7 @@
 </script>
 
 <div
-  class="bg-red-600 text-white px-10 py-2 space-x-5 flex items-center sticky top-16 z-5">
+  class="bg-gray-800 text-white px-10 py-2 space-x-5 flex items-center justify-center sticky top-16 z-5">
   <WarningIcon class="text-white text-2xl" />
   <p class="font-bold">{$t('prototype.warning')}</p>
 </div>
