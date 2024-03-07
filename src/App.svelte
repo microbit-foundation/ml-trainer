@@ -40,12 +40,14 @@
   import SignUpDialog from './components/dialogs/SignUpDialog.svelte';
 
   let isPotentiallyNextGenUser: boolean = false;
+  let asyncResolved = false;
   onMount(async () => {
     if (!get(hasSeenAppVersionRedirectDialog)) {
       const { country } = await fetchBrowserInfo();
       const nextGenAvailableCountries = ['GB', 'JE', 'IM', 'GG'];
       isPotentiallyNextGenUser = !!country && nextGenAvailableCountries.includes(country);
     }
+    asyncResolved = true;
 
     if ($btSelectMicrobitDialogOnLoad) {
       $connectionDialogState.connectionState =
@@ -68,6 +70,7 @@
   $: showSignUpDialog = !!(
     !$isCompatibilityWarningDialogOpen &&
     !$hasSeenSignUpDialog &&
+    asyncResolved &&
     (!isPotentiallyNextGenUser ||
       (isPotentiallyNextGenUser && $hasSeenAppVersionRedirectDialog))
   );
