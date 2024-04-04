@@ -6,8 +6,8 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "vite build",
-    "dev": "vite",
+    "build": "VITE_VERSION=$npm_package_version vite build",
+    "dev": "VITE_VERSION=$npm_package_version vite",
     "start": "vite dist --host",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "test": "vitest",
