@@ -3,16 +3,11 @@
 
   SPDX-License-Identifier: MIT
  -->
-<style>
-  h2 {
-    font-size: 1.5rem;
-    line-height: 2rem;
-    font-weight: bold;
-  }
-</style>
 
 <script lang="ts">
   import ResourcePageLayout from '../components/ResourcePageLayout.svelte';
+  import dataRecordedImage from '../imgs/data_recorded.png';
+  import microbitXYXImage from '../imgs/microbit_xyz_arrows.png';
 </script>
 
 <ResourcePageLayout title="Introducing the micro:bit machine learning tool">
@@ -51,6 +46,7 @@
     The BBC micro:bit has a built-in accelerometer, a movement sensor also found in phones
     and fitness trackers. It measures movement in three dimensions: x, y and z.
   </p>
+  <img class="w-xs" src={microbitXYXImage} />
   <div>
     <p>Looking at the front of the micro:bit:</p>
     <ul class="list-disc list-inside">
@@ -72,7 +68,7 @@
     Students label each set of actions so the computer knows which sets of data represent
     which kinds of movement.
   </p>
-  <!-- Insert image -->
+  <img src={dataRecordedImage} />
   <p>
     Students then use the data they have collected to train and test a machine learning
     model running in the web browser.

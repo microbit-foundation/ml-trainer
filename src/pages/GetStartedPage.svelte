@@ -3,21 +3,13 @@
 
   SPDX-License-Identifier: MIT
  -->
-<style>
-  h2 {
-    font-size: 1.5rem;
-    line-height: 2rem;
-    font-weight: bold;
-  }
-  h3 {
-    font-size: 1.2rem;
-    line-height: 2rem;
-    font-weight: bold;
-  }
-</style>
 
 <script lang="ts">
   import ResourcePageLayout from '../components/ResourcePageLayout.svelte';
+  import addDataImage from '../imgs/add_data.png';
+  import microbitXYXImage from '../imgs/microbit_xyz_arrows.png';
+  import testModelImage from '../imgs/test_model.png';
+  import trainModelImage from '../imgs/train_model.png';
 </script>
 
 <ResourcePageLayout title="Get started">
@@ -57,6 +49,7 @@
     Each coloured line represents a different direction, or dimension, you're moving the
     micro:bit in.
   </p>
+  <img class="w-xs" src={microbitXYXImage} />
   <div>
     <p>Looking at the front of the micro:bit:</p>
     <ul class="list-disc list-inside">
@@ -70,7 +63,8 @@
     There are three steps to teaching the computer how to use this data to recognise
     different movements you make.
   </p>
-  <h2>Step 1: add data</h2>
+  <h2>Step 1: Add data</h2>
+  <img src={addDataImage} />
   <p>
     Choose at least two different movements, or <b>actions</b>, to train the machine
     learning tool to recognise. Waving and clapping are good actions to start with.
@@ -82,13 +76,16 @@
     <li>Collect at least three samples of your first action.</li>
     <li>Collect at least three samples of one other action, for example 'clap'.</li>
   </ul>
-  <h2>Step 2: train the model</h2>
+  <h2>Step 2: Train the model</h2>
   <p>
     The machine learning tool analyses your samples of data and makes a set of
     mathematical rules to allow it to estimate which physical action you make. These rules
     make up the machine learning model.
   </p>
-  <h2>Step 3: test the model</h2>
+  <img src={trainModelImage} />
+  <h2>Step 3: Test the model</h2>
+  <p>This screen shows which action the model estimates that you're making.</p>
+  <img src={testModelImage} />
   <p>
     The percentage number is how certain the model is that you're making an action. High
     numbers mean the model is very sure you're making that action. Lower numbers mean it
