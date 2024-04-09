@@ -6,8 +6,7 @@
 
 <style>
   .tile-img {
-    width: 300px;
-    height: 178.72px;
+    width: 200px;
   }
 </style>
 
@@ -20,6 +19,7 @@
   import trainModelImage from '../imgs/TrainModel.svg';
   import inputDataImage from '../imgs/InputData.svg';
   import testModelImage from '../imgs/TestModel.svg';
+  import resourceImage from '../imgs/collecting_clap_data.png';
   import FrontPageContentTile from '../components/FrontPageContentTile.svelte';
   import StandardButton from '../components/StandardButton.svelte';
   import { t } from '../i18n';
@@ -65,6 +65,40 @@
   };
 
   $: title = getTitle(Paths.HOME, $t);
+
+  const steps = [
+    {
+      titleId: 'content.index.toolProcessCards.data.title',
+      path: Paths.DATA,
+      imgSrc: inputDataImage,
+      descriptionId: 'content.index.toolProcessCards.data.description',
+    },
+    {
+      titleId: 'content.index.toolProcessCards.train.title',
+      path: Paths.TRAINING,
+      imgSrc: trainModelImage,
+      descriptionId: 'content.index.toolProcessCards.train.description',
+    },
+    {
+      titleId: 'content.index.toolProcessCards.model.title',
+      path: Paths.MODEL,
+      imgSrc: testModelImage,
+      descriptionId: 'content.index.toolProcessCards.model.description',
+    },
+  ];
+
+  const resources = [
+    {
+      title: 'Introducing the micro:bit machine learning tool',
+      path: Paths.INTRODUCING_TOOL,
+      imgSrc: resourceImage,
+    },
+    {
+      title: 'Get started',
+      path: Paths.GET_STARTED,
+      imgSrc: resourceImage,
+    },
+  ];
 </script>
 
 <svelte:head>
@@ -73,99 +107,56 @@
 
 <main class="h-full flex flex-col items-center bg-backgrounddark">
   <h1 class="sr-only">{$t('content.index.title')}</h1>
-  <div class="mb-8">
-    <div class="flex flex-col items-center justify-center m-10 gap-5">
-      <h1 class="text-4xl font-bold">micro:bit machine learning tool</h1>
-      <p class="text-xl">
-        Introduce students to machine learning concepts through physical movement and data
-      </p>
-    </div>
-
-    <div class="flex flex-col flex-wrap items-center max-w-325">
-      <h2 class="text-3xl px-10 lg:self-start font-bold">
-        {$t('content.index.toolProcessCards.main.title')}
-      </h2>
-      <div class="grid grid-cols-1 lg:grid-cols-3 p-10 gap-5">
-        <LinkOverlayContainer>
-          <FrontPageContentTile>
-            <LinkOverlay
-              onClickOrHrefOrPath={isIncompatible
-                ? openCompatibityWarningDialog
-                : Paths.DATA}
-              class="mb-5">
-              <h3 class="text-center text-2xl font-bold">
-                {$t('content.index.toolProcessCards.data.title')}
-              </h3>
-            </LinkOverlay>
-            <img class="mb-5 tile-img" alt="" src={inputDataImage} />
-            <p class="text-center">
-              {$t('content.index.toolProcessCards.data.description')}
-            </p>
-          </FrontPageContentTile>
-        </LinkOverlayContainer>
-
-        <LinkOverlayContainer>
-          <FrontPageContentTile>
-            <LinkOverlay
-              onClickOrHrefOrPath={isIncompatible
-                ? openCompatibityWarningDialog
-                : Paths.TRAINING}
-              class="mb-5">
-              <h3 class="text-center text-2xl font-bold">
-                {$t('content.index.toolProcessCards.train.title')}
-              </h3>
-            </LinkOverlay>
-            <img class="mb-5 tile-img" alt="" src={trainModelImage} />
-            <p class="text-center">
-              {$t('content.index.toolProcessCards.train.description')}
-            </p>
-          </FrontPageContentTile>
-        </LinkOverlayContainer>
-
-        <LinkOverlayContainer>
-          <FrontPageContentTile>
-            <LinkOverlay
-              onClickOrHrefOrPath={isIncompatible
-                ? openCompatibityWarningDialog
-                : Paths.MODEL}
-              class="mb-5">
-              <h3 class="text-center text-2xl font-bold">
-                {$t('content.index.toolProcessCards.model.title')}
-              </h3>
-            </LinkOverlay>
-            <img class="mb-5 tile-img" alt="" src={testModelImage} />
-            <p class="text-center">
-              {$t('content.index.toolProcessCards.model.description')}
-            </p>
-          </FrontPageContentTile>
-        </LinkOverlayContainer>
+  <div class="flex flex-col mb-8 gap-5">
+    <div class="flex flex-col items-center justify-center m-10 gap-10">
+      <div class="flex flex-col items-center justify-center gap-5">
+        <h1 class="text-4xl font-bold">micro:bit machine learning tool</h1>
+        <p class="text-xl">
+          Introduce students to machine learning concepts through physical movement and
+          data
+        </p>
+      </div>
+      <div class="flex flex-col flex-wrap items-center max-w-325">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          {#each steps as step, idx}
+            <LinkOverlayContainer>
+              <FrontPageContentTile>
+                <LinkOverlay
+                  onClickOrHrefOrPath={isIncompatible
+                    ? openCompatibityWarningDialog
+                    : step.path}
+                  class="mb-5">
+                  <h3 class="text-center text-2xl font-bold">
+                    {idx + 1}. {$t(step.titleId)}
+                  </h3>
+                </LinkOverlay>
+                <img class="mb-5 tile-img" alt="" src={step.imgSrc} />
+                <p class="text-center">
+                  {$t(step.descriptionId)}
+                </p>
+              </FrontPageContentTile>
+            </LinkOverlayContainer>
+          {/each}
+        </div>
       </div>
     </div>
 
     <div class="flex flex-col flex-wrap items-center max-w-325">
       <h2 class="text-3xl px-10 lg:self-start font-bold">Resources</h2>
       <div class="grid grid-cols-1 lg:grid-cols-3 p-10 gap-5">
-        <LinkOverlayContainer>
-          <FrontPageContentTile>
-            <img class="mb-5 tile-img" alt="" src={inputDataImage} />
-
-            <LinkOverlay onClickOrHrefOrPath={Paths.INTRODUCING_TOOL} class="mb-5">
-              <h3 class="text-center text-xl font-bold">
-                Introducing the micro:bit machine learning tool
-              </h3>
-            </LinkOverlay>
-          </FrontPageContentTile>
-        </LinkOverlayContainer>
-
-        <LinkOverlayContainer>
-          <FrontPageContentTile>
-            <img class="mb-5 tile-img" alt="" src={inputDataImage} />
-
-            <LinkOverlay onClickOrHrefOrPath={Paths.GET_STARTED} class="mb-5">
-              <h3 class="text-center text-xl font-bold">Get started</h3>
-            </LinkOverlay>
-          </FrontPageContentTile>
-        </LinkOverlayContainer>
+        {#each resources as resource}
+          <LinkOverlayContainer>
+            <div
+              class="flex flex-col flex-wrap items-center border-gray-200 border border-solid bg-white rounded-xl shadow-md max-w-88 h-full">
+              <img class="w-full rounded-t-xl" alt="" src={resource.imgSrc} />
+              <LinkOverlay onClickOrHrefOrPath={resource.path}>
+                <h3 class="text-center text-lg font-bold m-3">
+                  {resource.title}
+                </h3>
+              </LinkOverlay>
+            </div>
+          </LinkOverlayContainer>
+        {/each}
       </div>
     </div>
 
