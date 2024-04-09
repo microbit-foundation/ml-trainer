@@ -33,7 +33,6 @@
   import { gestures } from '../script/stores/Stores';
   import StandardDialog from '../components/dialogs/StandardDialog.svelte';
   import { clearGestures } from '../script/stores/mlStore';
-  import { locale as currentLocale } from 'svelte-i18n';
   import { get } from 'svelte/store';
 
   $: hasExistingSession = $gestures.some(g => g.name || g.recordings.length);
@@ -76,16 +75,10 @@
   <h1 class="sr-only">{$t('content.index.title')}</h1>
   <div class="mb-8">
     <div class="flex flex-col items-center justify-center m-10 gap-5">
-      <!-- Avoid youtube cookie. rel=0 should limit related videos to youtube channel.-->
-      <iframe
-        class="w-38rem h-auto aspect-video"
-        style="aspect-ratio: 16/9"
-        title={$t('homepage.introVideo')}
-        src={`https://www.youtube-nocookie.com/embed/ZhUtuuQemFc?rel=0&cc_lang_pref=${$currentLocale}&cc_load_policy=1`}
-        allow="encrypted-media"
-        frameBorder="0"
-        allowFullScreen>
-      </iframe>
+      <h1 class="text-4xl font-bold">micro:bit machine learning tool</h1>
+      <p class="text-xl">
+        Introduce students to machine learning concepts through physical movement and data
+      </p>
     </div>
 
     <div class="flex flex-col flex-wrap items-center max-w-325">
@@ -144,6 +137,33 @@
             <p class="text-center">
               {$t('content.index.toolProcessCards.model.description')}
             </p>
+          </FrontPageContentTile>
+        </LinkOverlayContainer>
+      </div>
+    </div>
+
+    <div class="flex flex-col flex-wrap items-center max-w-325">
+      <h2 class="text-3xl px-10 lg:self-start font-bold">Resources</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-3 p-10 gap-5">
+        <LinkOverlayContainer>
+          <FrontPageContentTile>
+            <img class="mb-5 tile-img" alt="" src={inputDataImage} />
+
+            <LinkOverlay onClickOrHrefOrPath={Paths.INTRODUCING_TOOL} class="mb-5">
+              <h3 class="text-center text-xl font-bold">
+                Introducing the micro:bit machine learning tool
+              </h3>
+            </LinkOverlay>
+          </FrontPageContentTile>
+        </LinkOverlayContainer>
+
+        <LinkOverlayContainer>
+          <FrontPageContentTile>
+            <img class="mb-5 tile-img" alt="" src={inputDataImage} />
+
+            <LinkOverlay onClickOrHrefOrPath={Paths.GET_STARTED} class="mb-5">
+              <h3 class="text-center text-xl font-bold">Get started</h3>
+            </LinkOverlay>
           </FrontPageContentTile>
         </LinkOverlayContainer>
       </div>

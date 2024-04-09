@@ -1,0 +1,106 @@
+<!--
+  (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
+
+  SPDX-License-Identifier: MIT
+ -->
+<style>
+  h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: bold;
+  }
+  h3 {
+    font-size: 1.2rem;
+    line-height: 2rem;
+    font-weight: bold;
+  }
+</style>
+
+<script lang="ts">
+  import ResourcePageLayout from '../components/ResourcePageLayout.svelte';
+</script>
+
+<ResourcePageLayout title="Get started">
+  <h2>Get connected</h2>
+  <p>
+    To start using the micro:bit machine learning tool, you need to connect a micro:bit to
+    the <b>micro:bit machine learning tool</b> web page on your computer.
+  </p>
+  <p>There are two options for connecting the micro:bit.</p>
+  <h3>Option 1: Bluetooth, one micro:bit</h3>
+  <p>Use the first option uses a Bluetooth wireless connection.</p>
+  <p>Click on 'Start new session' and follow the instructions on screen.</p>
+  <h3>Option 2: USB, two micro:bits</h3>
+  <p>
+    If you can't use Bluetooth on your computer, the second option uses a USB connection
+    instead.
+  </p>
+  <p>
+    Click on 'Start new session', then 'Connect using USB instead' and follow the
+    instructions on screen.
+  </p>
+  <p>
+    The USB option uses two micro:bits. The first micro:bit senses movement. It sends
+    movement data using radio to a second micro:bit connected to your computer with a USB
+    cable.
+  </p>
+  <h2>Now you're connected</h2>
+  <p>
+    Once the micro:bit sensing movement is connected, you'll see a happy face on its LED
+    display.
+  </p>
+  <p>
+    As you move the micro:bit, you see live movement data from its accelerometer sensor in
+    a graph at the bottom of the screen.
+  </p>
+  <p>
+    Each coloured line represents a different direction, or dimension, you're moving the
+    micro:bit in.
+  </p>
+  <div>
+    <p>Looking at the front of the micro:bit:</p>
+    <ul class="list-disc list-inside">
+      <li>x shows movement left and right</li>
+      <li>y shows movement up and down</li>
+      <li>z shows movement from front to back.</li>
+    </ul>
+  </div>
+  <p>This data is how the machine learning tool understands how you move.</p>
+  <p>
+    There are three steps to teaching the computer how to use this data to recognise
+    different movements you make.
+  </p>
+  <h2>Step 1: add data</h2>
+  <p>
+    Choose at least two different movements, or <b>actions</b>, to train the machine
+    learning tool to recognise. Waving and clapping are good actions to start with.
+  </p>
+  <ul class="list-disc list-inside">
+    <li>Name your first action, for example 'wave'.</li>
+    <li>Start moving the micro:bit, making the action.</li>
+    <li>Click the red button to collect a sample of data.</li>
+    <li>Collect at least three samples of your first action.</li>
+    <li>Collect at least three samples of one other action, for example 'clap'.</li>
+  </ul>
+  <h2>Step 2: train the model</h2>
+  <p>
+    The machine learning tool analyses your samples of data and makes a set of
+    mathematical rules to allow it to estimate which physical action you make. These rules
+    make up the machine learning model.
+  </p>
+  <h2>Step 3: test the model</h2>
+  <p>
+    The percentage number is how certain the model is that you're making an action. High
+    numbers mean the model is very sure you're making that action. Lower numbers mean it
+    is less sure.
+  </p>
+  <p>
+    Make each of your actions to test the model. If you see low certainty numbers, the
+    model may need more data samples. If it has got the estimated action <b>wrong</b>,
+    you'll also need to add more data.
+  </p>
+  <p>
+    You can now go back to step 1 to collect more data to make your machine learning model
+    more reliable, or recognise other kinds of movement.
+  </p>
+</ResourcePageLayout>

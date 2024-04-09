@@ -7,11 +7,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import DataPage from '../pages/DataPage.svelte';
-  import Homepage from '../pages/Homepage.svelte';
-  import ModelPage from '../pages/model/ModelPage.svelte';
   import FilterPage from '../pages/filter/FilterPage.svelte';
-  import TrainingPage from '../pages/training/TrainingPage.svelte';
+  import GetStartedPage from '../pages/GetStartedPage.svelte';
+  import Homepage from '../pages/Homepage.svelte';
+  import IntroducingToolPage from '../pages/IntroducingToolPage.svelte';
+  import ModelPage from '../pages/model/ModelPage.svelte';
   import PlaygroundPage from '../pages/PlaygroundPage.svelte';
+  import TrainingPage from '../pages/training/TrainingPage.svelte';
   import { currentPageComponent } from '../views/currentComponentStore';
   import { currentPath, isValidPath, navigate, Paths, PathType } from './paths';
 
@@ -21,6 +23,10 @@
     switch (path) {
       case Paths.HOME:
         return Homepage;
+      case Paths.INTRODUCING_TOOL:
+        return IntroducingToolPage;
+      case Paths.GET_STARTED:
+        return GetStartedPage;
       case Paths.PLAYGROUND:
         return PlaygroundPage;
       case Paths.DATA:

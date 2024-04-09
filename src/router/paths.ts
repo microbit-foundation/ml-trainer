@@ -10,6 +10,8 @@ import { appName } from '../script/environment';
 export const Paths = {
   HOME: '/',
   PLAYGROUND: 'playground',
+  INTRODUCING_TOOL: 'resources/introducing-the-microbit-machine-learning-tool',
+  GET_STARTED: 'resources/get-started',
   DATA: 'add-data',
   TRAINING: 'train-model',
   MODEL: 'test-model',
