@@ -37,16 +37,24 @@
 
 <script lang="ts">
   import ChevronArror from 'virtual:icons/ri/arrow-drop-right-line';
-  import { Paths } from '../router/paths';
+  import { Paths, navigate } from '../router/paths';
 
   export let title: string;
+
+  const handleBreadcrumbClick = (e: Event) => {
+    e.preventDefault();
+    navigate(Paths.HOME);
+  };
 </script>
 
 <main class="h-full flex flex-col items-center bg-backgrounddark">
   <div class="flex flex-col max-w-1084px lg:w-3/4 md:w-4/5 p-10 gap-5">
     <div class="flex flex-col gap-5">
       <div class="flex flex-row">
-        <a href={Paths.HOME} class="text-lg hover:underline">Home</a>
+        <a
+          class="text-lg hover:underline"
+          href={Paths.HOME}
+          on:click={handleBreadcrumbClick}>Home</a>
         <ChevronArror class="h-full text-2xl" />
         <p class="text-lg">
           {title}
