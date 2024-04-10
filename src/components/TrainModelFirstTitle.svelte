@@ -6,7 +6,7 @@
 
 <script lang="ts">
   import { t } from '../i18n';
-  import testModelImage from '../imgs/TestModel.svg';
+  import testModelImage from '../imgs/test_model_black.svg';
   import StandardButton from './StandardButton.svelte';
   import TrainingButton from '../pages/training/TrainingButton.svelte';
   import { Paths, navigate } from '../router/paths';

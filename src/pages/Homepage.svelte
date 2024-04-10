@@ -11,29 +11,29 @@
 </style>
 
 <script lang="ts">
+  import { get } from 'svelte/store';
+  import HtmlFormattedMessage, {
+    linkWithProps,
+  } from '../components/HtmlFormattedMessage.svelte';
+  import LinkOverlay from '../components/LinkOverlay.svelte';
+  import LinkOverlayContainer from '../components/LinkOverlayContainer.svelte';
+  import StandardButton from '../components/StandardButton.svelte';
+  import StandardDialog from '../components/dialogs/StandardDialog.svelte';
+  import { t } from '../i18n';
+  import addDataImage from '../imgs/add_data.svg';
+  import resourceImage from '../imgs/collecting_clap_data.png';
+  import testModelImage from '../imgs/test_model_blue.svg';
+  import trainModelImage from '../imgs/train_model_blue.svg';
+  import { Paths, getTitle, navigate } from '../router/paths';
+  import { gestures } from '../script/stores/Stores';
+  import { startConnectionProcess } from '../script/stores/connectDialogStore';
+  import { clearGestures } from '../script/stores/mlStore';
   import {
     compatibility,
     isCompatibilityWarningDialogOpen,
     state,
   } from '../script/stores/uiStore';
-  import trainModelImage from '../imgs/TrainModel.svg';
-  import inputDataImage from '../imgs/InputData.svg';
-  import testModelImage from '../imgs/TestModel.svg';
-  import resourceImage from '../imgs/collecting_clap_data.png';
   import FrontPageContentTile from '../components/FrontPageContentTile.svelte';
-  import StandardButton from '../components/StandardButton.svelte';
-  import { t } from '../i18n';
-  import { startConnectionProcess } from '../script/stores/connectDialogStore';
-  import HtmlFormattedMessage, {
-    linkWithProps,
-  } from '../components/HtmlFormattedMessage.svelte';
-  import LinkOverlayContainer from '../components/LinkOverlayContainer.svelte';
-  import LinkOverlay from '../components/LinkOverlay.svelte';
-  import { Paths, getTitle, navigate } from '../router/paths';
-  import { gestures } from '../script/stores/Stores';
-  import StandardDialog from '../components/dialogs/StandardDialog.svelte';
-  import { clearGestures } from '../script/stores/mlStore';
-  import { get } from 'svelte/store';
 
   $: hasExistingSession = $gestures.some(g => g.name || g.recordings.length);
   let showDataLossWarning = false;
@@ -70,7 +70,7 @@
     {
       titleId: 'content.index.toolProcessCards.data.title',
       path: Paths.DATA,
-      imgSrc: inputDataImage,
+      imgSrc: addDataImage,
       descriptionId: 'content.index.toolProcessCards.data.description',
     },
     {
@@ -116,26 +116,19 @@
           data
         </p>
       </div>
-      <div class="flex flex-col flex-wrap items-center max-w-325">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <div class="flex flex-col flex-wrap items-center max-w-325 w-full">
+        <div
+          class="flex flex-col lg:flex-row items-center justify-between w-full px-10 gap-5">
           {#each steps as step, idx}
-            <LinkOverlayContainer>
-              <FrontPageContentTile>
-                <LinkOverlay
-                  onClickOrHrefOrPath={isIncompatible
-                    ? openCompatibityWarningDialog
-                    : step.path}
-                  class="mb-5">
-                  <h3 class="text-center text-2xl font-bold">
-                    {idx + 1}. {$t(step.titleId)}
-                  </h3>
-                </LinkOverlay>
-                <img class="mb-5 tile-img" alt="" src={step.imgSrc} />
-                <p class="text-center">
-                  {$t(step.descriptionId)}
-                </p>
-              </FrontPageContentTile>
-            </LinkOverlayContainer>
+            <div class="flex flex-col flex-wrap items-center sp max-w-70">
+              <h3 class="text-center text-2xl font-bold mb-5">
+                {idx + 1}. {$t(step.titleId)}
+              </h3>
+              <img class="mb-5 tile-img" alt="" src={step.imgSrc} />
+              <p class="text-center">
+                {$t(step.descriptionId)}
+              </p>
+            </div>
           {/each}
         </div>
       </div>
@@ -146,15 +139,14 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 p-10 gap-5">
         {#each resources as resource}
           <LinkOverlayContainer>
-            <div
-              class="flex flex-col flex-wrap items-center border-gray-200 border border-solid bg-white rounded-xl shadow-md max-w-88 h-full">
+            <FrontPageContentTile>
               <img class="w-full rounded-t-xl" alt="" src={resource.imgSrc} />
               <LinkOverlay onClickOrHrefOrPath={resource.path}>
-                <h3 class="text-center text-lg font-bold m-3">
+                <h3 class="text-lg font-bold m-3">
                   {resource.title}
                 </h3>
               </LinkOverlay>
-            </div>
+            </FrontPageContentTile>
           </LinkOverlayContainer>
         {/each}
       </div>

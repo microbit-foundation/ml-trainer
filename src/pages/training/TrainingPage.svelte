@@ -10,7 +10,7 @@
   import { t } from '../../i18n';
   import TrainingButton from './TrainingButton.svelte';
   import TabView from '../../views/TabView.svelte';
-  import trainModelImage from '../../imgs/TrainModel.svg';
+  import trainModelImage from '../../imgs/train_model_black.svg';
   import StandardButton from '../../components/StandardButton.svelte';
   import { Paths, getTitle, navigate } from '../../router/paths';
   import { trainModel } from '../../script/ml';
