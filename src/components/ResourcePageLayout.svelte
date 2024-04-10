@@ -37,11 +37,13 @@
 
 <script lang="ts">
   import ChevronArror from 'virtual:icons/ri/arrow-drop-right-line';
+  import { t } from '../i18n';
   import { Paths, navigate } from '../router/paths';
   import StartResumeActions from './StartResumeActions.svelte';
 
   export let title: string;
   export let videoId: string;
+  export let videoTitleId: string;
 
   const handleBreadcrumbClick = (e: Event) => {
     e.preventDefault();
@@ -68,6 +70,7 @@
       <iframe
         class="lg:w-3/4 md:w-full h-auto aspect-video"
         style="aspect-ratio: 16/9"
+        title={$t(videoTitleId)}
         src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0`}
         allow="encrypted-media"
         frameBorder="0"

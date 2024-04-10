@@ -21,7 +21,6 @@
   "alert.recordingsPerGesture": "You need at least three examples per action",
 
   "content.index.title": "machine learning tool",
-  "content.index.toolProcessCards.main.title": "How this tool works",
   "content.index.toolProcessCards.data.title": "Add data",
   "content.index.toolProcessCards.data.description": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping).",
   "content.index.toolProcessCards.train.title": "Train model",
@@ -105,7 +104,9 @@
   "helpMenu.about": "About",
 
   "homepage.Link": "Home page",
-  "homepage.introVideo": "introduction video",
+
+  "resources.introduction.video": "introduction video",
+  "resources.getStarted.video": "get started video",
 
   "menu.data.helpHeading": "1. Add data",
 

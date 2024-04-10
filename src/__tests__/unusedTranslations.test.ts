@@ -67,7 +67,7 @@ const filesIncludesExpression = (files: string[], expect: string): boolean => {
   return false;
 };
 
-test.skip(
+test(
   'All translations should be used',
   () => {
     const allowedUnused = [

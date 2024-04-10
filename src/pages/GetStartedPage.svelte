@@ -12,7 +12,10 @@
   import trainModelImage from '../imgs/train_model.png';
 </script>
 
-<ResourcePageLayout title="Get started" videoId="ZhUtuuQemFc">
+<ResourcePageLayout
+  title="Get started"
+  videoId="ZhUtuuQemFc"
+  videoTitleId="resources.getStarted.video">
   <h2>Get connected</h2>
   <p>
     To start using the micro:bit machine learning tool, you need to connect a micro:bit to

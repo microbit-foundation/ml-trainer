@@ -12,7 +12,8 @@
 
 <ResourcePageLayout
   title="Introducing the micro:bit machine learning tool"
-  videoId="ZhUtuuQemFc">
+  videoId="ZhUtuuQemFc"
+  videoTitleId="resources.introduction.video">
   <p>
     The <strong>micro:bit machine learning tool</strong> introduces students to machine learning
     (ML) concepts through physical movement and data, a topic familiar from mathematics and
