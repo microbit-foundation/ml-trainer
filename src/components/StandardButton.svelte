@@ -21,11 +21,10 @@
 
 <script lang="ts" context="module">
   export type ButtonVariant = 'secondary' | 'primary' | 'warning' | 'link';
+  export type ButtonSize = 'small' | 'normal' | 'large';
 </script>
 
 <script lang="ts">
-  type ButtonSize = 'small' | 'normal' | 'large';
-
   export let type: ButtonVariant = 'secondary';
   export let onClick: ((e: Event) => void) | undefined = undefined;
   export let disabled = false;

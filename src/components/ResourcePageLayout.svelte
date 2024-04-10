@@ -38,8 +38,10 @@
 <script lang="ts">
   import ChevronArror from 'virtual:icons/ri/arrow-drop-right-line';
   import { Paths, navigate } from '../router/paths';
+  import StartResumeActions from './StartResumeActions.svelte';
 
   export let title: string;
+  export let videoId: string;
 
   const handleBreadcrumbClick = (e: Event) => {
     e.preventDefault();
@@ -62,20 +64,20 @@
       </div>
       <h1 class="text-4xl font-bold">{title}</h1>
     </div>
-    <!-- TODO: Add video -->
-    <!-- <div class="flex flex-col items-center justify-center gap-5">
+    <div class="flex flex-col items-center justify-center gap-5">
       <iframe
         class="lg:w-3/4 md:w-full h-auto aspect-video"
         style="aspect-ratio: 16/9"
-        src={`https://www.youtube-nocookie.com/embed/ZhUtuuQemFc?rel=0`}
+        src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0`}
         allow="encrypted-media"
         frameBorder="0"
         allowFullScreen>
       </iframe>
-    </div> -->
+    </div>
     <div class="w-full bg-backgroundlight p-30px rounded-lg shadow-xl">
       <div class="flex flex-col lg:max-w-3/4 slot">
         <slot />
+        <StartResumeActions class="mt-8" />
       </div>
     </div>
   </div>
