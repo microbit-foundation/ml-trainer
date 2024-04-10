@@ -16,7 +16,7 @@
   <h2>Get connected</h2>
   <p>
     To start using the micro:bit machine learning tool, you need to connect a micro:bit to
-    the <b>micro:bit machine learning tool</b> web page on your computer.
+    the <strong>micro:bit machine learning tool</strong> web page on your computer.
   </p>
   <p>There are two options for connecting the micro:bit.</p>
   <h3>Option 1: Bluetooth, one micro:bit</h3>
@@ -66,8 +66,9 @@
   <h2>Step 1: Add data</h2>
   <img src={addDataImage} />
   <p>
-    Choose at least two different movements, or <b>actions</b>, to train the machine
-    learning tool to recognise. Waving and clapping are good actions to start with.
+    Choose at least two different movements, or <strong>actions</strong>, to train the
+    machine learning tool to recognise. Waving and clapping are good actions to start
+    with.
   </p>
   <ul class="list-disc list-inside">
     <li>Name your first action, for example 'wave'.</li>
@@ -93,8 +94,9 @@
   </p>
   <p>
     Make each of your actions to test the model. If you see low certainty numbers, the
-    model may need more data samples. If it has got the estimated action <b>wrong</b>,
-    you'll also need to add more data.
+    model may need more data samples. If it has got the estimated action <strong
+      >wrong</strong
+    >, you'll also need to add more data.
   </p>
   <p>
     You can now go back to step 1 to collect more data to make your machine learning model

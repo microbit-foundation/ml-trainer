@@ -12,8 +12,9 @@
 
 <ResourcePageLayout title="Introducing the micro:bit machine learning tool">
   <p>
-    The <b>micro:bit machine learning tool</b> introduces students to machine learning (ML)
-    concepts through physical movement and data, a topic familiar from mathematics and science.
+    The <strong>micro:bit machine learning tool</strong> introduces students to machine learning
+    (ML) concepts through physical movement and data, a topic familiar from mathematics and
+    science.
   </p>
   <p>
     It allows students to quickly teach a computer to tell the difference between
@@ -26,8 +27,9 @@
   </p>
   <p>
     The computer learns to recognise different movements by analysing the data samples,
-    and creating a set of rules called a <b>model</b>. This process of collecting and
-    labelling data to build a model is called <b>training</b> a machine learning model.
+    and creating a set of rules called a <strong>model</strong>. This process of
+    collecting and labelling data to build a model is called <strong>training</strong> a machine
+    learning model.
   </p>
   <p>
     Students then test and improve the model. This enables learning about the importance
@@ -89,27 +91,27 @@
   </p>
   <h2>Glossary</h2>
   <p>
-    <b>Artificial intelligence:</b> the ability of computer software designed by people to
-    perform tasks that usually need human intelligence.
+    <strong>Artificial intelligence:</strong> the ability of computer software designed by
+    people to perform tasks that usually need human intelligence.
   </p>
-  <p><b>Data:</b> information collected for use elsewhere.</p>
+  <p><strong>Data:</strong> information collected for use elsewhere.</p>
   <p>
-    <b>Machine learning:</b> the application of AI technology where computer software is designed
-    to perform a task quickly and reliably, having been trained by examples of data provided
-    by humans. This training process can be described as 'learning' and this is why we use
-    the term 'machine learning'.
-  </p>
-  <p>
-    <b>Machine learning model:</b> a set of rules developed by a machine learning system to
-    categorise data.
+    <strong>Machine learning:</strong> the application of AI technology where computer software
+    is designed to perform a task quickly and reliably, having been trained by examples of
+    data provided by humans. This training process can be described as 'learning' and this
+    is why we use the term 'machine learning'.
   </p>
   <p>
-    <b>Training a machine learning model:</b> providing samples of data categorised and labelled
-    by humans to help machine learning software to build a model.
+    <strong>Machine learning model:</strong> a set of rules developed by a machine learning
+    system to categorise data.
   </p>
   <p>
-    <b>Testing a machine learning model:</b> evaluating a machine learning model against labelled
-    or known data to see if it is correctly categorising that labelled or known data. If it
-    is not correct, it may need further training data.
+    <strong>Training a machine learning model:</strong> providing samples of data categorised
+    and labelled by humans to help machine learning software to build a model.
+  </p>
+  <p>
+    <strong>Testing a machine learning model:</strong> evaluating a machine learning model
+    against labelled or known data to see if it is correctly categorising that labelled or
+    known data. If it is not correct, it may need further training data.
   </p>
 </ResourcePageLayout>
