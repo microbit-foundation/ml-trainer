@@ -12,7 +12,7 @@
 
 <ResourcePageLayout
   title="Introducing the micro:bit machine learning tool"
-  videoId="ZhUtuuQemFc"
+  videoId="EArs-Xa7-Ag"
   videoTitleId="resources.introduction.video">
   <p>
     The <strong>micro:bit machine learning tool</strong> introduces students to machine learning

@@ -14,7 +14,7 @@
 
 <ResourcePageLayout
   title="Get started"
-  videoId="ZhUtuuQemFc"
+  videoId="EArs-Xa7-Ag"
   videoTitleId="resources.getStarted.video">
   <h2>Get connected</h2>
   <p>
