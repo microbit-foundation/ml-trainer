@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="Group_311"
+   data-name="Group 311"
+   width="173.082"
+   height="120"
+   viewBox="0 0 173.082 120"
+   version="1.1"
+   sodipodi:docname="stylised_computer_w_bluetooth_2.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.69375"
+     inkscape:cx="108.04428"
+     inkscape:cy="10.332103"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Group_310" />
+  <defs
+     id="defs1">
+    <clipPath
+       id="clip-path">
+      <rect
+         id="Rectangle_466"
+         data-name="Rectangle 466"
+         width="173.082"
+         height="120"
+         fill="none" />
+    </clipPath>
+  </defs>
+  <g
+     id="Group_310"
+     data-name="Group 310"
+     clip-path="url(#clip-path)">
+    <path
+       id="Path_813"
+       data-name="Path 813"
+       d="M143.059,4a4,4,0,0,1,4,4V97.666H26.023V8a4,4,0,0,1,4-4Zm0-4H30.023a8.024,8.024,0,0,0-8,8v93.666H151.059V8a8.024,8.024,0,0,0-8-8" />
+    <path
+       id="Path_814"
+       data-name="Path 814"
+       d="M169.082,101.871V112a4,4,0,0,1-4,4H8a4,4,0,0,1-4-4V101.871Zm0-4H4a4,4,0,0,0-4,4V112a8,8,0,0,0,8,8H165.082a8,8,0,0,0,8-8V101.871a4,4,0,0,0-4-4" />
+    <g
+       id="g1"
+       transform="translate(23.58252)">
+      <path
+         id="Path_815"
+         data-name="Path 815"
+         d="M 78.146,44.261 A 5.961,5.961 0 1 1 72.187,38.3 5.961,5.961 0 0 1 78.146,44.261 Z"
+         fill="none"
+         stroke="#48ac34"
+         stroke-miterlimit="10"
+         stroke-width="3" />
+      <path
+         id="Path_816"
+         data-name="Path 816"
+         d="M 92.157,74.846 A 5.96,5.96 0 1 1 86.2,68.885 5.961,5.961 0 0 1 92.157,74.846 Z"
+         fill="none"
+         stroke="#48ac34"
+         stroke-miterlimit="10"
+         stroke-width="3" />
+      <rect
+         id="Rectangle_465"
+         data-name="Rectangle 465"
+         width="10.96"
+         height="10.959"
+         transform="translate(94.743,35.757)"
+         fill="none"
+         stroke="#48ac34"
+         stroke-linejoin="round"
+         stroke-width="3"
+         x="0"
+         y="0" />
+      <path
+         id="Path_817"
+         data-name="Path 817"
+         d="m 78.458,28.675 7.752,-7.747 7.748,7.75"
+         fill="none"
+         stroke="#48ac34"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         stroke-width="3" />
+      <line
+         id="Line_86"
+         data-name="Line 86"
+         x1="0.011"
+         y2="43.834"
+         transform="translate(86.198,24.286)"
+         fill="none"
+         stroke="#48ac34"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         stroke-width="3"
+         y1="0"
+         x2="0" />
+      <path
+         id="Path_818"
+         data-name="Path 818"
+         d="m 72.184,50.22 v 5.289 a 3.179,3.179 0 0 0 3.178,3.18 h 21.424 a 3.179,3.179 0 0 0 3.18,-3.178 v -8.544"
+         fill="none"
+         stroke="#48ac34"
+         stroke-linejoin="round"
+         stroke-width="3" />
+    </g>
+  </g>
+  <g
+     id="g2"
+     transform="matrix(2.1380472,0,0,2.1380472,-39.97737,-33.995127)">
+    <path
+       id="Path_821"
+       data-name="Path 821"
+       d="m 39.646949,35.537907 14.328988,10.80167 -7.299643,5.442328 0.0038,-8.65333 0.0057,-13.20134 7.294901,5.44786 -14.506025,10.432578"
+       fill="none"
+       stroke="#48ac34"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       stroke-width="3"
+       style="stroke-width:1.10898;stroke-dasharray:none"
+       sodipodi:nodetypes="ccccccc" />
+  </g>
+</svg>

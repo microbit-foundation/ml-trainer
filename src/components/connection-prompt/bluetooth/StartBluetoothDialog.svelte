@@ -5,13 +5,12 @@
  -->
 
 <script lang="ts">
-  import microbitImage from '../../../imgs/stylised-microbit-black.svg';
-  import computerImage from '../../../imgs/stylised_computer.svg';
-  import usbCableImage from '../../../imgs/stylised-usb-cable.svg';
   import batteryPackImage from '../../../imgs/stylised-battery-pack.svg';
+  import microbitImage from '../../../imgs/stylised-microbit-black.svg';
+  import usbCableImage from '../../../imgs/stylised-usb-cable.svg';
+  import computerImage from '../../../imgs/stylised_computer_w_bluetooth.svg';
+  import { state } from '../../../script/stores/uiStore';
   import WhatYouWillNeedDialog from '../WhatYouWillNeedDialog.svelte';
-  import { get } from 'svelte/store';
-  import { compatibility, state } from '../../../script/stores/uiStore';
 
   export let onNextClick: () => void;
   export let onStartRadioClick: (() => void) | undefined;
@@ -36,17 +35,13 @@
       subtitleId: 'connectMB.bluetoothStart.requirements4.subtitle',
     },
   ];
-
-  const { usb } = get(compatibility);
 </script>
 
 <WhatYouWillNeedDialog
   {items}
   headingId={$state.reconnectState.reconnectFailed
     ? 'reconnectFailed.bluetoothHeading'
-    : usb
-      ? 'connectMB.bluetoothStart.heading'
-      : 'connectMB.radioStart.heading'}
+    : 'connectMB.bluetoothStart.heading'}
   switchTextId="connectMB.bluetoothStart.switchRadio"
   onSwitchClick={onStartRadioClick}
   {onNextClick} />
