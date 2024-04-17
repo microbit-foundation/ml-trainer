@@ -22,22 +22,22 @@
     the <strong>micro:bit machine learning tool</strong> web page on your computer.
   </p>
   <p>There are two options for connecting the micro:bit.</p>
-  <h3>Option 1: Bluetooth, one micro:bit</h3>
-  <p>Use the first option uses a Bluetooth wireless connection.</p>
+  <h3>Option 1: Web Bluetooth</h3>
+  <p>The first option uses a Web Bluetooth wireless connection.</p>
   <p>Click on 'Start new session' and follow the instructions on screen.</p>
-  <h3>Option 2: USB, two micro:bits</h3>
+  <h3>Option 2: micro:bit radio</h3>
   <p>
-    If you can't use Bluetooth on your computer, the second option uses a USB connection
-    instead.
+    If you can't use Bluetooth on your computer, the second option uses a micro:bit radio
+    connection instead.
   </p>
   <p>
-    Click on 'Start new session', then 'Connect using USB instead' and follow the
-    instructions on screen.
+    Click on 'Start new session', then 'Connect using micro:bit radio instead' and follow
+    the instructions on screen.
   </p>
   <p>
-    The USB option uses two micro:bits. The first micro:bit senses movement. It sends
-    movement data using radio to a second micro:bit connected to your computer with a USB
-    cable.
+    The micro:bit radio option uses two micro:bits. The first micro:bit senses movement.
+    It sends movement data using radio to a second micro:bit connected to your computer
+    with a USB cable.
   </p>
   <h2>Now you're connected</h2>
   <p>
