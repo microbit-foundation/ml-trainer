@@ -78,7 +78,7 @@
       </iframe>
     </div>
     <div class="w-full bg-backgroundlight p-30px rounded-lg shadow-xl">
-      <div class="flex flex-col lg:max-w-3/4 slot">
+      <div class="flex flex-col lg:max-w-3/4 prose">
         <slot />
         <StartResumeActions class="mt-8" />
       </div>

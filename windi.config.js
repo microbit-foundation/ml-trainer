@@ -5,10 +5,22 @@
  */
 
 //Ml-Machine colors
+import typography from 'windicss/plugin/typography';
 
 export default {
   theme: {
+    plugins: [typography()],
     extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            color: 'red',
+            h2: {
+              color: 'red',
+            },
+          },
+        },
+      },
       fontFamily: {
         sans: ['Helvetica', 'Arial', 'sans-serif'],
         serif: ['serif'],
