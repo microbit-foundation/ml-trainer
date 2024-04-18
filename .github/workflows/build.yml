@@ -24,7 +24,7 @@ jobs:
       REVIEW_CLOUDFRONT_DISTRIBUTION_ID: E3KUGPF02I4CJ4
       VITE_FOUNDATION_BUILD: ${{ github.repository_owner == 'microbit-foundation' }}
       # Not really secret but worth keeping out the repo to prevent unintended use
-      VITE_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      VITE_SENTRY_DSN: ${{ secrets.NEXTGEN_SENTRY_DSN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
