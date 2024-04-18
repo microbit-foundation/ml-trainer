@@ -17,7 +17,8 @@
   import StartResumeActions from '../components/StartResumeActions.svelte';
   import { t } from '../i18n';
   import addDataImage from '../imgs/add_data.svg';
-  import resourceImage from '../imgs/collecting_clap_data.png';
+  import resourceGetStartedImage from '../imgs/resource-get-started.jpg';
+  import resourceIntroducingToolImage from '../imgs/resource-introducing-tool.jpg';
   import testModelImage from '../imgs/test_model_blue.svg';
   import trainModelImage from '../imgs/train_model_blue.svg';
   import { Paths, getTitle } from '../router/paths';
@@ -49,12 +50,12 @@
     {
       title: 'Introducing the micro:bit machine learning tool',
       path: Paths.INTRODUCING_TOOL,
-      imgSrc: resourceImage,
+      imgSrc: resourceIntroducingToolImage,
     },
     {
       title: 'Get started',
       path: Paths.GET_STARTED,
-      imgSrc: resourceImage,
+      imgSrc: resourceGetStartedImage,
     },
   ];
 </script>
