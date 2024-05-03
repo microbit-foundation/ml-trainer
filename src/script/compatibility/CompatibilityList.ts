@@ -9,8 +9,6 @@ import Bowser from 'bowser';
 
 // REFERENCES FOR VALUES = https://github.com/lancedikson/bowser/blob/master/src/constants.js
 
-export const nonAllowedPlatforms = ['mobile', 'tablet', 'tv'];
-
 export interface SemVer {
   majorVersion: number | string;
   minorVersion: number | string;

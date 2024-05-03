@@ -5,8 +5,6 @@
  */
 
 import Bowser from 'bowser';
-import { nonAllowedPlatforms } from './CompatibilityList';
-import { isDevMode } from '../environment';
 
 export type CompatibilityStatus = {
   bluetooth: boolean;
@@ -36,12 +34,10 @@ export function checkCompatibility(): CompatibilityStatus {
   if (platformType == undefined) {
     platformType = 'desktop';
   }
-  const isPlatformAllowed = isDevMode || !nonAllowedPlatforms.includes(platformType);
-
   return {
     bluetooth: !!navigator.bluetooth,
     usb: !!navigator.usb,
-    platformAllowed: isPlatformAllowed,
+    platformAllowed: true,
     webGL: webGL,
   };
 }

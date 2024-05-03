@@ -16,6 +16,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.23.5",
     "@bulatdashiev/svelte-slider": "^1.0.3",
+    "@capacitor/cli": "^6.0.0",
     "@iconify-json/mdi": "^1.1.63",
     "@iconify-json/ri": "^1.1.17",
     "@melt-ui/pp": "^0.3.0",
@@ -51,6 +52,9 @@
     "vitest-dom": "^0.1.1"
   },
   "dependencies": {
+    "@capacitor-community/bluetooth-le": "^6.0.0-0",
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
     "@microsoft/applicationinsights-web": "^3.0.0",
     "@sentry/svelte": "^7.100.1",
     "@tensorflow/tfjs": "^4.4.0",
