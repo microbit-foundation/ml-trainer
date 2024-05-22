@@ -27,6 +27,8 @@
   "content.index.toolProcessCards.train.description": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",
   "content.index.toolProcessCards.model.title": "Test model",
   "content.index.toolProcessCards.model.description": "Find out if it correctly recognises each action. Add more data to improve the model.",
+  "content.index.toolProcessCards.output.title": "Use model",
+  "content.index.toolProcessCards.output.description": "Code your output micro:bit to react based on the recognised action using the model you created.",
   "content.index.dataWarning.title": "Existing data samples will be lost",
   "content.index.dataWarning.subtitleOne": "You have existing data that will be lost when you start a new session.",
   "content.index.dataWarning.subtitleTwo": "To save your data, <link>download all data samples</link> before continuing.",
@@ -89,6 +91,9 @@
 
   "content.model.output.recognitionPoint": "Recognition Point:",
 
+  "content.output.header": "Use model",
+  "content.output.description": "Use the model you created to program your output micro:bit to react based on the recognised action.",
+
   "footer.start": "Start new session",
   "footer.resume": "Resume session",
   "footer.disconnectButton": "Disconnect",
@@ -126,6 +131,8 @@
   "menu.model.noModel": "No model",
   "menu.model.disconnect": "Disconnect output micro:bit",
   "menu.model.connectInputMicrobit": "Connect micro:bit",
+
+  "menu.output.helpHeading": "4. Use model",
 
   "connectMB.nextButton": "Next",
   "connectMB.backButton": "Back",

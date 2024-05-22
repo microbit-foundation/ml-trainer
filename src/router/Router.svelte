@@ -14,6 +14,7 @@
   import ModelPage from '../pages/model/ModelPage.svelte';
   import PlaygroundPage from '../pages/PlaygroundPage.svelte';
   import TrainingPage from '../pages/training/TrainingPage.svelte';
+  import OutputPage from '../pages/OutputPage.svelte';
   import { currentPageComponent } from '../views/currentComponentStore';
   import { currentPath, isValidPath, navigate, Paths, PathType } from './paths';
 
@@ -35,6 +36,8 @@
         return TrainingPage;
       case Paths.MODEL:
         return ModelPage;
+      case Paths.OUTPUT:
+        return OutputPage;
       case Paths.FILTERS:
         return FilterPage;
     }
