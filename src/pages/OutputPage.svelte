@@ -52,15 +52,15 @@
     <p class="text-center leading-relaxed w-150">
       {$t('content.output.description')}
     </p>
-    <!-- <CodeView class="w-full h-full" /> -->
+    <CodeView code={makeCodeProjectWithExtension} />
     <div
       class="flex flex-col flex-1 justify-center items-center text-center max-w-300 w-full h-full">
-      <ReactAdapter
+      <!-- <ReactAdapter
         el={MakeCodeEditor}
         style={{ height: '100%' }}
         initialCode={makeCodeProjectWithExtension}
         parentframedownload
-        class="w-full h-full" />
+        class="w-full h-full" /> -->
     </div>
   </main>
 </div>
