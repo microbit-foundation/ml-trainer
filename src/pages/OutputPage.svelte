@@ -10,20 +10,35 @@
   import ReactAdapter from '../components/utils/ReactAdapter.svelte';
   import { t } from '../i18n';
   import { Paths, getTitle } from '../router/paths';
-  import { TrainingStatus } from '../script/domain/Model';
-  import { trainingStatus } from '../script/stores/mlStore';
   import TabView from '../views/TabView.svelte';
+  import { generateMakeCodeMain } from '../script/generateMakeCodeMain';
+  import { gestures } from '../script/stores/Stores';
 
-  let isFailedTrainingDialogOpen = false;
+  $: title = getTitle(Paths.OUTPUT, $t);
 
-  $: {
-    if ($trainingStatus === TrainingStatus.Failure) {
-      isFailedTrainingDialogOpen = true;
-      trainingStatus.update(() => TrainingStatus.Untrained);
-    }
-  }
-
-  $: title = getTitle(Paths.TRAINING, $t);
+  const gs = gestures.getGestures()
+  const maints = generateMakeCodeMain(gs.map(g => g.getName()))
+  
+  export const makeCodeProjectWithExtension = {
+  text: {
+    'main.ts': maints,
+    'README.md': ' ',
+    "pxt.json": `{
+      "name": "Untitled",
+      "description": "",
+      "dependencies": {
+          "core": "*",
+          "microphone": "*",
+          "mkcd-ml-machine": "github:r59q/mkcd-ml-machine#8c2614dc997c8c2634d5e51ce758d25acd9e986e"
+      },
+      "files": [
+          "main.blocks",
+          "main.ts",
+          "README.md"
+      ],
+      "preferredEditor": "blocksprj"
+    }`
+  }}
 </script>
 
 <svelte:head>
@@ -43,6 +58,8 @@
       <ReactAdapter
         el={MakeCodeEditor}
         style={{ height: '100%' }}
+        initialCode={makeCodeProjectWithExtension}
+        parentframedownload
         class="w-full h-full" />
     </div>
   </main>
