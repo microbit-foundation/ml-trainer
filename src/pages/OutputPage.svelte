@@ -5,14 +5,14 @@
  -->
 
 <script lang="ts">
+  import { MakeCodeEditor } from '@microbit-foundation/react-editor-embed';
+  import CodeView from '../components/CodeView.svelte';
   import ReactAdapter from '../components/utils/ReactAdapter.svelte';
   import { t } from '../i18n';
-  import { Paths, getTitle, navigate } from '../router/paths';
+  import { Paths, getTitle } from '../router/paths';
   import { TrainingStatus } from '../script/domain/Model';
   import { trainingStatus } from '../script/stores/mlStore';
-  import { hasSufficientData } from '../script/stores/uiStore';
   import TabView from '../views/TabView.svelte';
-  import { MakeCodeEditor } from '@microbit-foundation/react-editor-embed';
 
   let isFailedTrainingDialogOpen = false;
 
@@ -37,6 +37,7 @@
     <p class="text-center leading-relaxed w-150">
       {$t('content.output.description')}
     </p>
+    <!-- <CodeView class="w-full h-full" /> -->
     <div
       class="flex flex-col flex-1 justify-center items-center text-center max-w-300 w-full h-full">
       <ReactAdapter
