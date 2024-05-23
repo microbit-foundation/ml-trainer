@@ -57,7 +57,6 @@
     { version: 'default' },
     blocks,
   );
-  console.log(element);
 
   onMount(() => {
     root = createRoot(container);
