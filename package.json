@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@microbit-foundation/react-code-view": "^5.0.0",
-    "@microbit-foundation/react-editor-embed": "^1.0.0",
+    "@microbit-foundation/react-editor-embed": "github:microbit-foundation/react-editor-embed#overwrite-download",
     "@microsoft/applicationinsights-web": "^3.0.0",
     "@sentry/svelte": "^7.100.1",
     "@tensorflow/tfjs": "^4.4.0",
