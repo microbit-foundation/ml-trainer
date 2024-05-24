@@ -93,7 +93,7 @@
 
   "content.output.header": "Use model",
   "content.output.description": "Use the model to program your output micro:bit to react to the recognised action.",
-  "content.output.codeEditor.button.edit": "Edit",
+  "content.output.button.program": "Program micro:bit",
 
   "footer.start": "Start new session",
   "footer.resume": "Resume session",

@@ -10,11 +10,8 @@
     createMakeCodeRenderBlocks,
   } from '@microbit-foundation/react-code-view';
   import { onDestroy, onMount } from 'svelte';
-  import { t } from '../i18n';
-  import StandardButton from './StandardButton.svelte';
   export let options = {};
   export let code: object;
-  export let onEdit: () => void;
 
   const { initialize, renderBlocks, dispose } = createMakeCodeRenderBlocks(options);
   let hasInitialized = false;
@@ -53,8 +50,6 @@
         width={renderBlocksResp.width}
         height={renderBlocksResp.height} />
     </div>
-    <StandardButton onClick={onEdit} class="my-5"
-      >{$t('content.output.codeEditor.button.edit')}</StandardButton>
   {:catch error}
     <p>System error: {error.message}.</p>
   {/await}

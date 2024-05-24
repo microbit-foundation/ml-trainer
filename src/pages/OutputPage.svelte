@@ -5,12 +5,15 @@
  -->
 
 <script lang="ts">
-  import CodeArea from '../components/CodeArea.svelte';
+  import CodeArea from '../components/CodeView.svelte';
+    import StandardButton from '../components/StandardButton.svelte';
   import EditCodeDialog from '../components/dialogs/EditCodeDialog.svelte';
   import { t } from '../i18n';
   import { Paths, getTitle } from '../router/paths';
   import { generateMakeCodeMain } from '../script/generateMakeCodeMain';
   import { gestures } from '../script/stores/Stores';
+  import { startConnectionProcess } from '../script/stores/connectDialogStore';
+    import { state } from '../script/stores/uiStore';
   import TabView from '../views/TabView.svelte';
 
   $: title = getTitle(Paths.OUTPUT, $t);
@@ -48,8 +51,13 @@
   }
 
   const handleDownload = (hexData: string) => {
-    console.log("hexData", hexData)
-    // TODO: Do something with this hex
+    // TODO: To remove, for development purposes
+    // Faking though input is connected
+    state.update(obj => {
+      obj.isInputConnected = true;
+      return obj;
+    });
+    startConnectionProcess()
   }
 </script>
 
@@ -64,7 +72,9 @@
     <p class="text-center leading-relaxed w-150">
       {$t('content.output.description')}
     </p>
-    <CodeArea code={makeCodeProject} onEdit={handleEdit} />
+    <CodeArea code={makeCodeProject} />
+    <StandardButton onClick={handleEdit} class="my-5" type="primary"
+    >{$t('content.output.button.program')}</StandardButton>
     <EditCodeDialog
       code={makeCodeProject}
       isOpen={isCodeEditorOpen}
