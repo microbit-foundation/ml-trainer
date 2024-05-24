@@ -13,6 +13,7 @@
   export let isOpen: boolean;
   export let onClose: () => void;
   export let onCodeChange: (newCode: object) => void
+  export let onDownload: (hexData: string) => void
 </script>
 
 <FullScreenDialog {isOpen} {onClose} class="w-full h-full space-y-5">
@@ -25,6 +26,7 @@
         parentframedownload
         class="w-full h-full"
         onCodeChange={onCodeChange}
+        onDownload={onDownload}
         />
     </div>
   </svelte:fragment>

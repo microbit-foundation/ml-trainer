@@ -44,8 +44,11 @@
     isCodeEditorOpen = false;
   };
   const handleCodeChange = (code: object) => {
-    console.log("Code Changed!", code)
     makeCodeProject = code
+  }
+
+  const handleDownload = (hexData: string) => {
+    console.log("hexData", hexData)
   }
 </script>
 
@@ -65,6 +68,7 @@
       code={makeCodeProject}
       isOpen={isCodeEditorOpen}
       onClose={handleEditDialogClose}
-      onCodeChange={handleCodeChange} />
+      onCodeChange={handleCodeChange} 
+      onDownload={handleDownload}/>
   </main>
 </div>
