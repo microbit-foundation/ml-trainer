@@ -4,7 +4,7 @@
   SPDX-License-Identifier: MIT
  -->
 
- <!-- Mostly a duplication between StandardDialog.svelte -->
+<!-- Mostly a duplication between StandardDialog.svelte -->
 <script lang="ts">
   import { CreateDialogProps, createDialog, createSync, melt } from '@melt-ui/svelte';
   import { fade, scale } from 'svelte/transition';
@@ -13,6 +13,7 @@
   import { t } from '../../i18n';
   import IconButton from '../IconButton.svelte';
   import { onDestroy } from 'svelte';
+  import StandardButton from '../StandardButton.svelte';
 
   export let hasCloseButton = true;
   export let closeOnOutsideClick: boolean = true;
@@ -96,7 +97,7 @@
       transition:fade={{ duration: 100 }}>
       <div
         use:melt={$content}
-        class="w-full h-full border-gray-200 border border-solid relative bg-white rounded-lg p-8 z-15"
+        class="w-full h-full relative bg-white z-15"
         class:hidden={hideContent}
         transition:scale={{
           duration: 200,
@@ -104,19 +105,17 @@
           easing: quintOut,
         }}>
         {#if hasCloseButton}
-          <div class="absolute right-2 top-2">
-            <IconButton
+          <div class="absolute px-3 py-2">
+            <StandardButton
+              class="bg-white"
               onClick={onCloseDialog}
               useAction={$close.action}
               ariaLabel={$t('actions.close')}>
-              <CloseIcon class="text-xl m-1" />
-            </IconButton>
+              {'<- Back'}
+            </StandardButton>
           </div>
         {/if}
         <div class={$$restProps.class || ''}>
-          <h2 use:melt={$title} class="text-xl font-bold">
-            <slot name="heading" />
-          </h2>
           <slot name="body" />
         </div>
       </div>

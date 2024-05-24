@@ -49,6 +49,7 @@
 
   const handleDownload = (hexData: string) => {
     console.log("hexData", hexData)
+    // TODO: Do something with this hex
   }
 </script>
 
