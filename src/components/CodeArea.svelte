@@ -6,11 +6,11 @@
 
 <script lang="ts">
   import {
-    createMakeCodeRenderBlocks,
     BlockLayout,
+    createMakeCodeRenderBlocks,
   } from '@microbit-foundation/react-code-view';
-  import { t } from '../i18n';
   import { onDestroy, onMount } from 'svelte';
+  import { t } from '../i18n';
   import StandardButton from './StandardButton.svelte';
   export let options = {};
   export let code: object;
@@ -42,10 +42,10 @@
   });
 </script>
 
-{#await renderBlocksPromise}
-  <p>Loading ...</p>
-{:then renderBlocksResp}
-  <div class="mx-20 my-5">
+<div class="mx-20 my-5">
+  {#await renderBlocksPromise}
+    <p>Loading ...</p>
+  {:then renderBlocksResp}
     <div class="w-full bg-white p-5 rounded-lg">
       <img
         alt={code === undefined || typeof code === 'string' ? code : code.text['main.ts']}
@@ -53,9 +53,9 @@
         width={renderBlocksResp.width}
         height={renderBlocksResp.height} />
     </div>
-  </div>
-  <StandardButton onClick={onEdit}
-    >{$t('content.output.codeEditor.button.edit')}</StandardButton>
-{:catch error}
-  <p>System error: {error.message}.</p>
-{/await}
+    <StandardButton onClick={onEdit} class="my-5"
+      >{$t('content.output.codeEditor.button.edit')}</StandardButton>
+  {:catch error}
+    <p>System error: {error.message}.</p>
+  {/await}
+</div>
