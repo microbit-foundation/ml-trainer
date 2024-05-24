@@ -5,9 +5,8 @@
  -->
 
 <script lang="ts">
-  import { MakeCodeEditor } from '@microbit-foundation/react-editor-embed';
-  import CodeView from '../components/CodeView.svelte';
-  import ReactAdapter from '../components/utils/ReactAdapter.svelte';
+  import CodeArea from '../components/CodeArea.svelte';
+  import EditCodeDialog from '../components/dialogs/EditCodeDialog.svelte';
   import { t } from '../i18n';
   import { Paths, getTitle } from '../router/paths';
   import { generateMakeCodeMain } from '../script/generateMakeCodeMain';
@@ -15,27 +14,39 @@
   import TabView from '../views/TabView.svelte';
 
   $: title = getTitle(Paths.OUTPUT, $t);
+  const gs = gestures.getGestures();
 
-  const gs = gestures.getGestures()
-
-  const main = generateMakeCodeMain(gs.map(g => g.getName()))
-  const makeCodeProjectText = {
+  const main = generateMakeCodeMain(gs.map(g => g.getName()));
+  let makeCodeProject: object = {
     text: {
       'main.ts': main['main.ts'],
+      'main.blocks': main['main.blocks'],
       'README.md': ' ',
       'pxt.json': JSON.stringify({
-        name: "Untitled",
-        description: "",
+        name: 'Untitled',
+        description: '',
         dependencies: {
-          "core": "*",
-          "microphone": "*",
-          "mkcd-ml-machine": "github:r59q/mkcd-ml-machine#8c2614dc997c8c2634d5e51ce758d25acd9e986e"
+          core: '*',
+          microphone: '*',
+          'mkcd-ml-machine':
+            'github:r59q/mkcd-ml-machine#8c2614dc997c8c2634d5e51ce758d25acd9e986e',
         },
-        files: ["main.blocks", "main.ts", "README.md" ],
-      })
-    }
-  }
+        files: ['main.blocks', 'main.ts', 'README.md'],
+      }),
+    },
+  };
 
+  let isCodeEditorOpen = false;
+  const handleEdit = () => {
+    isCodeEditorOpen = true;
+  };
+  const handleEditDialogClose = () => {
+    isCodeEditorOpen = false;
+  };
+  const handleCodeChange = (code: object) => {
+    console.log("Code Changed!", code)
+    makeCodeProject = code
+  }
 </script>
 
 <svelte:head>
@@ -49,16 +60,11 @@
     <p class="text-center leading-relaxed w-150">
       {$t('content.output.description')}
     </p>
-    <CodeView code={makeCodeProjectText} />
-    <div
-      class="flex flex-col flex-1 justify-center items-center text-center max-w-300 w-full h-full">
-      <ReactAdapter
-        el={MakeCodeEditor}
-        style={{ height: '100%' }}
-        initialCode={makeCodeProjectText}
-        parentframedownload
-        class="w-full h-full"
-      />
-    </div>
+    <CodeArea code={makeCodeProject} onEdit={handleEdit} />
+    <EditCodeDialog
+      code={makeCodeProject}
+      isOpen={isCodeEditorOpen}
+      onClose={handleEditDialogClose}
+      onCodeChange={handleCodeChange} />
   </main>
 </div>
