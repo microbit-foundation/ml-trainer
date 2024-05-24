@@ -3,7 +3,8 @@
   import { createRoot } from 'react-dom/client';
   import { onDestroy, onMount } from 'svelte';
 
-  // copied from https://pandemicode.dev/using-react-within-your-svelte-applications-3b1f2a75aefc
+  // Based on https://pandemicode.dev/using-react-within-your-svelte-applications-3b1f2a75aefc
+  // TODO: Probably not what we want to do in terms of using React in Svelte.
 
   let container;
   let root;

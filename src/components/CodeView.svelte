@@ -6,17 +6,22 @@
 
 <script>
   import {
-      createMakeCodeRenderBlocks
+      createMakeCodeRenderBlocks, 
+      BlockLayout
   } from '@microbit-foundation/react-code-view';
   import { onMount } from 'svelte';
   export let options = {}
   export let code
 
+  // TODO: iFrame rendered in createMakeCodeRenderBlocks should only be created 
+  // one time. We don't want it being set up everytime we refresh the page.
+  
   const {initialize, renderBlocks, dispose} = createMakeCodeRenderBlocks(options)
   const render = async() => {
       await initialize()
       return renderBlocks({
-        code: code
+        code: code,
+        options: { layout: BlockLayout.Flow }
       });
     }
   
