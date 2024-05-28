@@ -41,7 +41,8 @@
   import SelectMicrobitDialogUsb from './usb/SelectMicrobitDialogUsb.svelte';
   import ManualInstallTutorial from './usb/manual/ManualInstallTutorial.svelte';
   import UnsupportedMicrobitWarningDialog from '../dialogs/UnsupportedMicrobitWarningDialog.svelte';
-    import ConnectSameDialog from './ConnectSameDialog.svelte';
+  import ConnectSameDialog from './ConnectSameDialog.svelte';
+  import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
 
   const { bluetooth, usb } = get(compatibility);
   let endOfFlow = false;
@@ -116,17 +117,48 @@
     return flashMicrobit(usb);
   }
 
+  const getInputHexBuffer = async (
+    usb: MicrobitUSB,
+  ): Promise<ArrayBuffer | undefined> => {
+    const hexForStage = stageToHex(flashStage);
+    const hexUrl = getHexFileUrl(usb.getModelNumber(), hexForStage);
+    if (hexUrl === undefined) {
+      return;
+    }
+    const hexFile = await fetch(hexUrl);
+    return hexFile.arrayBuffer();
+  };
+
+  const getOutputHexBuffer = async (): Promise<ArrayBuffer | undefined> => {
+    // TODO: Need to check if hex is supported for device model number
+    if (!$state.outputHex) {
+      // TODO: Handle scenario for hex data downloaded from MakeCode is invalid
+      return;
+    }
+    const hexFile = await fetch(
+      'data:text/plain;charset=utf-8,' +
+        // TODO: Handle when output hex is undefined
+        encodeURIComponent($state.outputHex || ''),
+    );
+    return hexFile.arrayBuffer();
+  };
+
   async function flashMicrobit(usb: MicrobitUSB): Promise<void> {
     try {
       const deviceId = await usb.getDeviceId();
-      const hexForStage = stageToHex(flashStage);
-      const hexUrl = getHexFileUrl(usb.getModelNumber(), hexForStage);
-      if (hexUrl === undefined) {
+
+      const hexBuffer =
+        $connectionDialogState.deviceState == DeviceRequestStates.OUTPUT
+          ? // TODO: Somehow causing flashing error
+            await getOutputHexBuffer()
+          : await getInputHexBuffer(usb);
+
+      if (hexBuffer === undefined) {
         $connectionDialogState.connectionState = ConnectDialogStates.MICROBIT_UNSUPPORTED;
         return;
       }
 
-      await usb.flashHex(hexUrl, progress => {
+      await usb.flashHex(hexBuffer, progress => {
         // Flash hex
         // Send users to download screen
         if (
@@ -155,6 +187,7 @@
         onConnectingSerial(usb);
       }
     } catch (err) {
+      console.error(err);
       handleConnectionError(err);
     }
   }
@@ -242,7 +275,8 @@
           // TODO: Connect same micro:bit as output flow
         }}
         onConnectDifferentClick={() =>
-          ($connectionDialogState.connectionState = ConnectDialogStates.START_BLUETOOTH)} />
+          ($connectionDialogState.connectionState =
+            ConnectDialogStates.START_BLUETOOTH)} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.START_RADIO}
       <StartRadioDialog
         onStartBluetoothClick={bluetooth
@@ -387,8 +421,8 @@
             : ($connectionDialogState.connectionState =
                 ConnectDialogStates.CONNECT_CABLE)}
         onNextClick={() =>
-          ($connectionDialogState.connectionState =
-            ConnectDialogStates.CONNECT_BATTERY)} />
+          ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY)}
+        deviceState={$connectionDialogState.deviceState} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.USB_TRY_AGAIN}
       <WebUsbTryAgain
         type={usbTryAgainType}

@@ -17,9 +17,12 @@
     linkWithProps,
   } from '../../../HtmlFormattedMessage.svelte';
   import StandardButton from '../../../StandardButton.svelte';
+  import { DeviceRequestStates } from '../../../../script/microbit-interfacing/MicrobitConnection';
+  import { state } from '../../../../script/stores/uiStore';
 
   export let onNextClick: () => void;
   export let onBackClick: () => void;
+  export let deviceState: DeviceRequestStates;
 
   let downloadLinkContainer: HTMLElement | undefined;
 
@@ -60,11 +63,21 @@
         id="connectMB.transferHex.manualDownload"
         options={{
           values: {
-            link: linkWithProps({
-              download: 'machine-learning-tool-program.hex',
-              // Only bluetooth mode has this fallback, the radio bridge mode requires working WebUSB.
-              href: getHexFileUrl('universal', 'bluetooth'),
-            }),
+            link: linkWithProps(
+              deviceState === DeviceRequestStates.OUTPUT
+                ? {
+                    download: 'output-program.hex',
+                    href:
+                      'data:text/plain;charset=utf-8,' +
+                      // TODO: Handle when output hex is undefined
+                      encodeURIComponent($state.outputHex || ''),
+                  }
+                : {
+                    download: 'machine-learning-tool-program.hex',
+                    // Only bluetooth mode has this fallback, the radio bridge mode requires working WebUSB.
+                    href: getHexFileUrl('universal', 'bluetooth'),
+                  },
+            ),
           },
         }} />
     </p>

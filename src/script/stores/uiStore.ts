@@ -86,6 +86,7 @@ export const state = writable<{
   inputMicrobitVersion: MBSpecs.MBVersion | -1;
   inputOrigin: HexOrigin;
   isOutputReady: boolean;
+  outputHex: string | undefined;
   outputHexVersion: number;
   outputMicrobitVersion: MBSpecs.MBVersion | -1;
   outputOrigin: HexOrigin;
@@ -113,6 +114,7 @@ export const state = writable<{
   inputMicrobitVersion: -1,
   inputOrigin: HexOrigin.UNKNOWN,
   isOutputReady: false,
+  outputHex: undefined,
   outputHexVersion: -1,
   outputMicrobitVersion: -1,
   outputOrigin: HexOrigin.UNKNOWN,
