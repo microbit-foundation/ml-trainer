@@ -234,6 +234,7 @@
 
   let dialogContainer: HTMLElement;
   let unsubscribe: Unsubscriber;
+  $: isOutputMicrobit = $connectionDialogState.deviceState === DeviceRequestStates.OUTPUT;
 
   onMount(() => {
     // Focus the first button in the dialog when the content changes.
@@ -292,22 +293,31 @@
         }} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.START_BLUETOOTH}
       <StartBluetoothDialog
-        onStartRadioClick={usb
+        onStartRadioClick={usb && !isOutputMicrobit
           ? () => {
               $connectionDialogState.connectionState = ConnectDialogStates.START_RADIO;
               flashStage = 'radio-remote';
             }
           : undefined}
         onNextClick={() =>
-          ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)} />
+          ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)}
+        onBackClick={isOutputMicrobit
+          ? () => {
+              $connectionDialogState.connectionState = ConnectDialogStates.START_OUTPUT;
+            }
+          : undefined} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECT_CABLE}
       {#if flashStage === 'bluetooth'}
         <ConnectCableDialog
           titleId="connectMB.connectCable.heading"
-          subtitleId="connectMB.connectCable.subtitle"
-          onSkipClick={() =>
-            ($connectionDialogState.connectionState =
-              ConnectDialogStates.CONNECT_BATTERY)}
+          subtitleId={isOutputMicrobit
+            ? 'connectMB.connectCable.output.subtitle'
+            : 'connectMB.connectCable.subtitle'}
+          onSkipClick={isOutputMicrobit
+            ? undefined
+            : () =>
+                ($connectionDialogState.connectionState =
+                  ConnectDialogStates.CONNECT_BATTERY)}
           onBackClick={() =>
             ($connectionDialogState.connectionState =
               ConnectDialogStates.START_BLUETOOTH)}

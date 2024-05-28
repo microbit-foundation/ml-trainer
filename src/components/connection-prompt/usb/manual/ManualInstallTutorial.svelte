@@ -10,6 +10,7 @@
   import { t } from '../../../../i18n';
   import transferProgramChromeOS from '../../../../imgs/transfer_program_chromeos.gif';
   import transferProgramMacOS from '../../../../imgs/transfer_program_macos.gif';
+  import transferOutputProgram from '../../../../imgs/transfer_output.gif';
   import transferProgramWindows from '../../../../imgs/transfer_program_windows.gif';
   import { getHexFileUrl } from '../../../../script/microbit-interfacing/Microbits';
   import DialogHeading from '../../../DialogHeading.svelte';
@@ -38,6 +39,10 @@
 
   // See https://github.com/lancedikson/bowser/blob/master/src/constants.js
   const getImageProps = (os: string): ImageProps => {
+    if (deviceState === DeviceRequestStates.OUTPUT) {
+      // TODO: Change gif depending on os
+      return { src: transferOutputProgram, class: 'h-400px' };
+    }
     switch (os) {
       case 'Chrome OS':
         return { src: transferProgramChromeOS, class: 'h-324px' };

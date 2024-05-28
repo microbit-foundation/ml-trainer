@@ -180,6 +180,7 @@
 
   "connectMB.connectCable.heading": "Connect USB cable to micro:bit",
   "connectMB.connectCable.subtitle": "Connect the micro:bit to this computer with a USB cable so that the machine learning tool program can be downloaded to it.",
+  "connectMB.connectCable.output.subtitle": "Connect the micro:bit to this computer with a USB cable so that your micro:bit program can be downloaded to it.",
 
   "connectMB.connectCable.altText": "animation showing a USB cable being connected to the top of a micro:bit",
   "connectMB.connectCable.skip": "Skip: program already downloaded?",
