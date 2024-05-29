@@ -33,6 +33,17 @@ const generateRandomLedPattern = () => {
 };
 
 export const generateMakeCodeMainTs = (configs: OnGestureRecognisedConfig[]) => {
+  return `basic.showLeds(IconNames.Heart)
+    ${configs.map(
+      ({ name, ledPattern }: OnGestureRecognisedConfig) => `
+    machineLearningPoc.onActionEstimated("${name}", function () {
+      basic.showLeds(\`${ledPattern}\`)
+    })`,
+    ).join(`
+    `)}`;
+};
+
+export const generateMakeCodeMainMLMachineTs = (configs: OnGestureRecognisedConfig[]) => {
   return `MLMachine.showPairingPattern()
     ${configs.map(
       ({ name, ledPattern }: OnGestureRecognisedConfig) => `
@@ -43,6 +54,89 @@ export const generateMakeCodeMainTs = (configs: OnGestureRecognisedConfig[]) => 
     `)}`;
 };
 
+export const generateMakeCodeMainBlocksXml = (configs: OnGestureRecognisedConfig[]) => {
+  const onStartPos = { x: 0, y: 0 };
+  return `
+    <xml xmlns="https://developers.google.com/blockly/xml">
+      <block type="pxt-on-start" x="${onStartPos.x}" y="${onStartPos.y}">
+        <statement name="HANDLER">
+          <block type=\"basic_show_icon\"><field name=\"i\">IconNames.Heart</field></block>        
+        </statement>
+      </block>
+
+      ${configs.map((c, idx) =>
+        onGestureRecognisedBlock({
+          x: onStartPos.x + 300,
+          y: onStartPos.y + idx * 400,
+          ...c,
+        }),
+      ).join(`
+      `)}
+    </xml>`;
+};
+
+const onGestureRecognisedBlock = ({
+  x,
+  y,
+  name,
+  ledPattern,
+}: OnGestureRecognisedBlock) => `
+  <block type=\"machineLearningPoc_onActionEstimated\" x=\"${x}\" y=\"${y}\">
+    <field name=\"NAME\">MlAction.${name}</field>
+    <statement name="HANDLER">
+      <block type="device_show_leds">
+        <field name="LEDS">\`${ledPattern}\`</field>
+      </block>
+    </statement>
+  </block>
+`;
+
+export const generateMakeCodeMainBlocksMLMachineXml = (
+  configs: OnGestureRecognisedConfig[],
+) => {
+  const onStartPos = { x: 0, y: 0 };
+  return `
+    <xml xmlns="https://developers.google.com/blockly/xml">
+      <block type="pxt-on-start" x="${onStartPos.x}" y="${onStartPos.y}">
+        <statement name="HANDLER">
+          <block type="MLMachine_showPairingPattern"></block>
+        </statement>
+      </block>
+
+      ${configs.map((c, idx) =>
+        onGestureRecognisedBlockMLMachine({
+          x: onStartPos.x + 300,
+          y: onStartPos.y + idx * 400,
+          ...c,
+        }),
+      ).join(`
+      `)}
+    </xml>`;
+};
+
+interface OnGestureRecognisedBlock extends OnGestureRecognisedConfig {
+  x: number;
+  y: number;
+}
+
+const onGestureRecognisedBlockMLMachine = ({
+  x,
+  y,
+  name,
+  ledPattern,
+}: OnGestureRecognisedBlock) => `
+  <block type="MLMachine_onGestureRecognized" x="${x}" y="${y}">
+  <value name="gesture">
+    <shadow type="text"><field name="TEXT">${name}</field></shadow>
+  </value>
+  <statement name="HANDLER">
+    <block type="device_show_leds">
+      <field name="LEDS">\`${ledPattern}\`</field>
+    </block>
+  </statement>
+  </block>
+`;
+
 const createActionEnum = (actions: string[]) => {
   let code = '';
   actions.forEach((action, idx) => {
@@ -51,6 +145,7 @@ const createActionEnum = (actions: string[]) => {
   return code;
 };
 
+// TODO: Throwing errors
 const getModelAsHexString = () => {
   const m = get(model);
   const result = compileModel(m, {});
@@ -73,54 +168,10 @@ export const generateWorkaroundTs = (configs: OnGestureRecognisedConfig[]) => {
       }
   
       actions = ${JSON.stringify(actions)};
-      modelBlob = hex\`${getModelAsHexString()}\`;
+      // modelBlob = hex\`getModelAsHexString()\`;
       simulatorRegister();
   }
   
   // Auto-generated. Do not edit. Really.
   `;
 };
-
-export const generateMakeCodeMainBlocksXml = (configs: OnGestureRecognisedConfig[]) => {
-  const onStartPos = { x: 0, y: 0 };
-  return `
-    <xml xmlns="https://developers.google.com/blockly/xml">
-      <block type="pxt-on-start" x="${onStartPos.x}" y="${onStartPos.y}">
-        <statement name="HANDLER">
-          <block type="MLMachine_showPairingPattern"></block>
-        </statement>
-      </block>
-
-      ${configs.map((c, idx) =>
-        onGestureRecognisedBlock({
-          x: onStartPos.x + 300,
-          y: onStartPos.y + idx * 400,
-          ...c,
-        }),
-      ).join(`
-      `)}
-    </xml>`;
-};
-
-interface OnGestureRecognisedBlock extends OnGestureRecognisedConfig {
-  x: number;
-  y: number;
-}
-
-const onGestureRecognisedBlock = ({
-  x,
-  y,
-  name,
-  ledPattern,
-}: OnGestureRecognisedBlock) => `
-  <block type="MLMachine_onGestureRecognized" x="${x}" y="${y}">
-  <value name="gesture">
-    <shadow type="text"><field name="TEXT">${name}</field></shadow>
-  </value>
-  <statement name="HANDLER">
-    <block type="device_show_leds">
-      <field name="LEDS">\`${ledPattern}\`</field>
-    </block>
-  </statement>
-  </block>
-`;

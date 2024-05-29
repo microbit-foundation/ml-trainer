@@ -7,11 +7,12 @@
 <script lang="ts">
   import {
     BlockLayout,
+    MakeCodeProject,
     createMakeCodeRenderBlocks,
   } from '@microbit-foundation/react-code-view';
   import { onDestroy, onMount } from 'svelte';
   export let options = {};
-  export let code: object;
+  export let code: MakeCodeProject;
 
   const { initialize, renderBlocks, dispose } = createMakeCodeRenderBlocks(options);
   let hasInitialized = false;

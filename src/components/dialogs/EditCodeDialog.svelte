@@ -8,12 +8,13 @@
   import { MakeCodeEditor } from '@microbit-foundation/react-editor-embed';
   import ReactAdapter from '../utils/ReactAdapter.svelte';
   import FullScreenDialog from './FullScreenDialog.svelte';
+  import { MakeCodeProject } from '@microbit-foundation/react-code-view';
 
   export let code: object;
   export let isOpen: boolean;
   export let onClose: () => void;
-  export let onCodeChange: (newCode: object) => void
-  export let onDownload: (hexData: string) => void
+  export let onCodeChange: (newCode: MakeCodeProject) => void;
+  export let onDownload: (hexData: string) => void;
 </script>
 
 <FullScreenDialog {isOpen} {onClose} class="w-full h-full space-y-5">
@@ -25,9 +26,8 @@
         initialCode={code}
         parentframedownload
         class="w-full h-full"
-        onCodeChange={onCodeChange}
-        onDownload={onDownload}
-        />
+        {onCodeChange}
+        {onDownload} />
     </div>
   </svelte:fragment>
 </FullScreenDialog>

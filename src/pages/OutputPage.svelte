@@ -5,6 +5,7 @@
  -->
 
 <script lang="ts">
+  import { MakeCodeProject } from '@microbit-foundation/react-code-view';
   import CodeArea from '../components/CodeView.svelte';
   import StandardButton from '../components/StandardButton.svelte';
   import EditCodeDialog from '../components/dialogs/EditCodeDialog.svelte';
@@ -20,7 +21,7 @@
   const gs = gestures.getGestures();
 
   const mainFiles = generateMakeCodeMain(gs.map(g => g.getName()));
-  let makeCodeProject: object = {
+  let makeCodeProject: MakeCodeProject = {
     text: {
       ...mainFiles,
       'README.md': ' ',
@@ -47,7 +48,7 @@
   const handleEditDialogClose = () => {
     isCodeEditorOpen = false;
   };
-  const handleCodeChange = (code: object) => {
+  const handleCodeChange = (code: MakeCodeProject) => {
     makeCodeProject = code;
   };
 
