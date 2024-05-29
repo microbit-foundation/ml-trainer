@@ -108,7 +108,7 @@
         {#if hasCloseButton}
           <div class="absolute px-3 py-2">
             <StandardButton
-              class="bg-white"
+              style="background-color: #3454d1; color: white; border-color: #3454d1"
               onClick={onCloseDialog}
               useAction={$close.action}
               ariaLabel={$t('actions.close')}>
