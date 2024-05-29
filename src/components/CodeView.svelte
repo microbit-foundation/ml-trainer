@@ -14,18 +14,20 @@
   export let options = {};
   export let code: MakeCodeProject;
 
-  const { initialize, renderBlocks, dispose } = createMakeCodeRenderBlocks(options);
-  let hasInitialized = false;
+  const makeCodeRef = createMakeCodeRenderBlocks(options);
+  let firstInitDone = false;
 
   const render = async () => {
-    if (!hasInitialized) {
+    if (!firstInitDone) {
       // First time initialisation
-      await initialize();
-      hasInitialized = true;
+      console.log('code view initialise');
+      makeCodeRef.initialize();
+      firstInitDone = true;
     }
-    return renderBlocks({
+    console.log('code view render blocks');
+    return makeCodeRef.renderBlocks({
       code: code,
-      options: { layout: BlockLayout.Flow },
+      options: { layout: BlockLayout.Clean },
     });
   };
 
@@ -36,7 +38,7 @@
   });
 
   onDestroy(() => {
-    dispose();
+    makeCodeRef.dispose();
   });
 </script>
 
@@ -52,6 +54,6 @@
         height={renderBlocksResp.height} />
     </div>
   {:catch error}
-    <p>System error: {error.message}.</p>
+    <p>System error: {error}.</p>
   {/await}
 </div>
