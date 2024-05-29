@@ -1,3 +1,7 @@
+import { compileModel } from 'ml4f';
+import { model } from './stores/mlStore';
+import { get } from 'svelte/store';
+
 interface OnGestureRecognisedConfig {
   name: string;
   ledPattern: string;
@@ -12,6 +16,7 @@ export const generateMakeCodeMain = (names: string[]) => {
   return {
     'main.blocks': generateMakeCodeMainBlocksXml(configs),
     'main.ts': generateMakeCodeMainTs(configs),
+    'workaround.ts': generateWorkaroundTs(configs),
   };
 };
 
@@ -36,6 +41,44 @@ export const generateMakeCodeMainTs = (configs: OnGestureRecognisedConfig[]) => 
     })`,
     ).join(`
     `)}`;
+};
+
+const createActionEnum = (actions: string[]) => {
+  let code = '';
+  actions.forEach((action, idx) => {
+    code += `    ${action} = ${idx},${idx === actions.length - 1 ? '' : '\n'}`;
+  });
+  return code;
+};
+
+const getModelAsHexString = () => {
+  const m = get(model);
+  const result = compileModel(m, {});
+  return Array.from(result.machineCode, i => i.toString(16).padStart(2, '0')).join('');
+};
+
+export const generateWorkaroundTs = (configs: OnGestureRecognisedConfig[]) => {
+  const actions = configs.map(c => c.name);
+
+  return `// Auto-generated. Do not edit.
+  enum MlAction {
+  ${createActionEnum(actions)}
+  }
+  
+  namespace machineLearningPoc {
+      //% block="on|%NAME|action estimated"
+      //% icon="\uf192" blockGap=8
+      export function onActionEstimated(action: MlAction, body: () => void): void {
+        eventHandlers[action] = body;
+      }
+  
+      actions = ${JSON.stringify(actions)};
+      modelBlob = hex\`${getModelAsHexString()}\`;
+      simulatorRegister();
+  }
+  
+  // Auto-generated. Do not edit. Really.
+  `;
 };
 
 export const generateMakeCodeMainBlocksXml = (configs: OnGestureRecognisedConfig[]) => {

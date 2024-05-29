@@ -19,11 +19,10 @@
   $: title = getTitle(Paths.OUTPUT, $t);
   const gs = gestures.getGestures();
 
-  const main = generateMakeCodeMain(gs.map(g => g.getName()));
+  const mainFiles = generateMakeCodeMain(gs.map(g => g.getName()));
   let makeCodeProject: object = {
     text: {
-      'main.ts': main['main.ts'],
-      'main.blocks': main['main.blocks'],
+      ...mainFiles,
       'README.md': ' ',
       'pxt.json': JSON.stringify({
         name: 'Untitled',
@@ -33,8 +32,10 @@
           microphone: '*',
           'mkcd-ml-machine':
             'github:r59q/mkcd-ml-machine#8c2614dc997c8c2634d5e51ce758d25acd9e986e',
+          'Machine Learning POC':
+            'github:microbit-foundation/pxt-ml-extension-poc#v0.1.23',
         },
-        files: ['main.blocks', 'main.ts', 'README.md'],
+        files: [...Object.keys(mainFiles), 'README.md'],
       }),
     },
   };
