@@ -15,6 +15,7 @@
     FlashStage,
     HexType,
     getHexFileUrl,
+    getHexStrForVersion,
   } from '../../script/microbit-interfacing/Microbits';
   import {
     ConnectDialogStates,
@@ -129,18 +130,13 @@
     return hexFile.arrayBuffer();
   };
 
-  const getOutputHexBuffer = async (): Promise<ArrayBuffer | undefined> => {
-    // TODO: Need to check if hex is supported for device model number
+  const getOutputHexBuffer = (usb: MicrobitUSB): ArrayBuffer | undefined => {
     if (!$state.outputHex) {
       // TODO: Handle scenario for hex data downloaded from MakeCode is invalid
       return;
     }
-    const hexFile = await fetch(
-      'data:text/plain;charset=utf-8,' +
-        // TODO: Handle when output hex is undefined
-        encodeURIComponent($state.outputHex || ''),
-    );
-    return hexFile.arrayBuffer();
+    const hexStr = getHexStrForVersion($state.outputHex, usb.getModelNumber());
+    return new TextEncoder().encode(hexStr);
   };
 
   async function flashMicrobit(usb: MicrobitUSB): Promise<void> {
@@ -149,8 +145,7 @@
 
       const hexBuffer =
         $connectionDialogState.deviceState == DeviceRequestStates.OUTPUT
-          ? // TODO: Somehow causing flashing error
-            await getOutputHexBuffer()
+          ? getOutputHexBuffer(usb)
           : await getInputHexBuffer(usb);
 
       if (hexBuffer === undefined) {
