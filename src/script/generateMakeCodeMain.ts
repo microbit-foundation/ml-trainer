@@ -43,17 +43,6 @@ export const generateMakeCodeMainTs = (configs: OnGestureRecognisedConfig[]) => 
     `)}`;
 };
 
-export const generateMakeCodeMainMLMachineTs = (configs: OnGestureRecognisedConfig[]) => {
-  return `MLMachine.showPairingPattern()
-    ${configs.map(
-      ({ name, ledPattern }: OnGestureRecognisedConfig) => `
-    MLMachine.onGestureRecognized("${name}", function () {
-      basic.showLeds(\`${ledPattern}\`)
-    })`,
-    ).join(`
-    `)}`;
-};
-
 export const generateMakeCodeMainBlocksXml = (configs: OnGestureRecognisedConfig[]) => {
   const onStartPos = { x: 0, y: 0 };
   return `
@@ -91,51 +80,10 @@ const onGestureRecognisedBlock = ({
   </block>
 `;
 
-export const generateMakeCodeMainBlocksMLMachineXml = (
-  configs: OnGestureRecognisedConfig[],
-) => {
-  const onStartPos = { x: 0, y: 0 };
-  return `
-    <xml xmlns="https://developers.google.com/blockly/xml">
-      <block type="pxt-on-start" x="${onStartPos.x}" y="${onStartPos.y}">
-        <statement name="HANDLER">
-          <block type="MLMachine_showPairingPattern"></block>
-        </statement>
-      </block>
-
-      ${configs.map((c, idx) =>
-        onGestureRecognisedBlockMLMachine({
-          x: onStartPos.x + 300,
-          y: onStartPos.y + idx * 400,
-          ...c,
-        }),
-      ).join(`
-      `)}
-    </xml>`;
-};
-
 interface OnGestureRecognisedBlock extends OnGestureRecognisedConfig {
   x: number;
   y: number;
 }
-
-const onGestureRecognisedBlockMLMachine = ({
-  x,
-  y,
-  name,
-  ledPattern,
-}: OnGestureRecognisedBlock) => `
-  <block type="MLMachine_onGestureRecognized" x="${x}" y="${y}">
-  <value name="gesture">
-    <shadow type="text"><field name="TEXT">${name}</field></shadow>
-  </value>
-  <statement name="HANDLER">
-    <block type="device_show_leds">
-      <field name="LEDS">\`${ledPattern}\`</field>
-    </block>
-  </statement>
-  </block>
-`;
 
 const createActionEnum = (actions: string[]) => {
   let code = '';
