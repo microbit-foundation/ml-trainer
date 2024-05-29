@@ -69,10 +69,10 @@
   "content.trainer.retrain.title": "Status: Your data samples have changed. You can retrain the model.",
 
   "content.model.trainModelFirstHeading": "Test model",
-  "content.model.notEnoughDataInfoBody1": "You cannot test the model until it has been trained.",
+  "content.model.notEnoughDataInfoBody1": "You cannot test or use the model until it has been trained.",
   "content.model.notEnoughDataInfoBody2": "You need at least 3 data samples for 2 actions to train a model.",
-  "content.model.trainModelBody": "You need to train your model before you can test it.",
-  "content.model.retrainModelBody": "You need to train your model with the current set of data samples before you can test it.",
+  "content.model.trainModelBody": "You need to train your model before you can test or use it.",
+  "content.model.retrainModelBody": "You need to train your model with the current set of data samples before you can test or use it.",
   "content.model.addData": "Add data",
 
   "content.model.output.estimatedGesture.iconTitle": "Estimated action:",
