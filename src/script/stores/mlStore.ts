@@ -64,8 +64,13 @@ export function clearGestures() {
   gestures.clearGestures();
 }
 
+export function getNewMatrix() {
+  return new Array(25).fill(false);
+}
+
 export type GestureData = {
   name: string;
+  matrix: boolean[];
   ID: GestureID;
   recordings: RecordingData[];
   output: GestureOutput;
@@ -211,6 +216,10 @@ export function updateGesturePinOutput(
 
 export function updateGestureLEDOutput(gestureID: number, matrix: boolean[]) {
   gestures.getGesture(gestureID).setLEDOutput(matrix);
+}
+
+export function updateGestureMatrix(gestureID: number, matrix: boolean[]) {
+  gestures.getGesture(gestureID).setMatrix(matrix);
 }
 
 export const gestureConfidences = writable<{ [id: string]: number }>({});

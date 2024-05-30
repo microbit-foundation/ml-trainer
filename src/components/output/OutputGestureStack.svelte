@@ -6,7 +6,6 @@
 
 <script lang="ts">
   // IMPORT AND DEFAULTS
-  import OutputMatrix from './OutputMatrix.svelte';
   import {
     settings,
     updateGestureSoundOutput,
@@ -28,6 +27,7 @@
   import blankMicrobitImage from '../../imgs/blank_microbit.svg';
   import { onMount } from 'svelte';
   import Microbits from '../../script/microbit-interfacing/Microbits';
+  import LedMatrix from './LedMatrix.svelte';
 
   type TriggerAction = 'turnOn' | 'turnOff' | 'none';
 
@@ -200,10 +200,9 @@
 
 <!-- ACTION TITLE -->
 <GestureTilePart elevated={true}>
-  <div class="items-center h-full flex py-2 px-6">
-    <h3 class="w-full break-words text-2xl">
-      {$gesture.name}
-    </h3>
+  <div class="items-center h-full flex py-2 px-6 flex-col gap-1">
+    <LedMatrix mode="input" editable={false} gesture={$gesture} />
+    <h3 class="w-full break-words">{$gesture.name}</h3>
   </div></GestureTilePart>
 
 <GestureTilePart elevated={true} class="relative">
@@ -274,7 +273,7 @@
         class="bg-black p-0 m-0 absolute top-9 left-12.7"
         class:hidden={!hasLoadedMicrobitImage}
         on:click={onUserInteraction}>
-        <OutputMatrix bind:trigger={triggerFunctions[0]} gesture={$gesture} />
+        <LedMatrix bind:trigger={triggerFunctions[0]} gesture={$gesture} />
       </div>
     </div>
   </div>
