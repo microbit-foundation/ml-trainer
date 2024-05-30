@@ -8,11 +8,7 @@ interface OnGestureRecognisedConfig {
 }
 
 // TODO: Can possibly write a test for this
-export const generateMakeCodeMain = (names: string[]) => {
-  const configs = names.map(name => ({
-    name,
-    ledPattern: generateRandomLedPattern(),
-  }));
+export const generateMakeCodeMain = (configs: OnGestureRecognisedConfig[]) => {
   return {
     'main.blocks': generateMakeCodeMainBlocksXml(configs),
     'main.ts': generateMakeCodeMainTs(configs),
@@ -20,7 +16,7 @@ export const generateMakeCodeMain = (names: string[]) => {
   };
 };
 
-const generateRandomLedPattern = () => {
+export const generateRandomLedPattern = () => {
   const genRandomLedRow = () =>
     Array.from({ length: 5 }, () => (Math.floor(Math.random() * 2) == 0 ? '#' : '.'));
   const newLine = `

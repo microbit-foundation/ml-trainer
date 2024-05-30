@@ -27,7 +27,7 @@
     console.log('code view render blocks');
     return makeCodeRef.renderBlocks({
       code: code,
-      options: { layout: BlockLayout.Clean },
+      options: { layout: BlockLayout.Flow },
     });
   };
 
