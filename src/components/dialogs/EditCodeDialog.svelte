@@ -26,6 +26,7 @@
         initialCode={code}
         parentframedownload
         class="w-full h-full"
+        baseUrl="http://localhost:3000"
         {onCodeChange}
         {onDownload} />
     </div>
