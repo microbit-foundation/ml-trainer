@@ -112,7 +112,7 @@ export const generateWorkaroundTs = (configs: OnGestureRecognisedConfig[]) => {
       }
   
       actions = ${JSON.stringify(actions)};
-      // modelBlob = hex\`${getModelAsHexString()}\`;
+      modelBlob = hex\`${getModelAsHexString()}\`;
       simulatorRegister();
   }
   

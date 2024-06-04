@@ -15,6 +15,7 @@
   export let onClose: () => void;
   export let onCodeChange: (newCode: MakeCodeProject) => void;
   export let onDownload: (hexData: string) => void;
+
 </script>
 
 <FullScreenDialog {isOpen} {onClose} class="w-full h-full space-y-5">
@@ -24,9 +25,9 @@
         el={MakeCodeEditor}
         style={{ height: '100%' }}
         initialCode={code}
-        parentframedownload
+        queryParams={{ "parentframedownload": "1" }}
         class="w-full h-full"
-        baseUrl="https://95c07087.pxt-microbit.pages.dev"
+        baseUrl='https://add-extension.pxt-microbit.pages.dev/'
         {onCodeChange}
         {onDownload} />
     </div>
