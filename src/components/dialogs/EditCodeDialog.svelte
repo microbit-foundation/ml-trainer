@@ -26,7 +26,7 @@
         initialCode={code}
         parentframedownload
         class="w-full h-full"
-        baseUrl="http://localhost:3000"
+        baseUrl="https://95c07087.pxt-microbit.pages.dev"
         {onCodeChange}
         {onDownload} />
     </div>

@@ -36,8 +36,7 @@
         dependencies: {
           core: '*',
           microphone: '*',
-          'Machine Learning POC':
-            'github:microbit-foundation/pxt-ml-extension-poc#v0.1.23',
+          'machine-learning-poc': '*'
         },
         files: [...Object.keys(mainFiles), 'README.md'],
       }),
