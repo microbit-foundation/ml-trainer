@@ -36,6 +36,7 @@
         dependencies: {
           core: '*',
           microphone: '*',
+          radio: '*', // needed for compiling
           'machine-learning-poc': '*'
         },
         files: [...Object.keys(mainFiles), 'README.md'],
