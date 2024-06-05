@@ -277,10 +277,9 @@
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.INPUT_NOT_CONNECTED}
       <InputNotConnectedDialog
         onConnectInput={() => {
-              $connectionDialogState.connectionState =
-                ConnectDialogStates.START_BLUETOOTH;
-              flashStage = 'bluetooth';
-            }}
+          $connectionDialogState.connectionState = ConnectDialogStates.START_BLUETOOTH;
+          flashStage = 'bluetooth';
+        }}
         onCancel={endFlow} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.START_RADIO}
       <StartRadioDialog

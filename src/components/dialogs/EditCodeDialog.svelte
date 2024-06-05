@@ -16,7 +16,6 @@
   export let onClose: () => void;
   export let onCodeChange: (newCode: MakeCodeProject) => void;
   export let onDownload: (hexData: string) => void;
-
 </script>
 
 <FullScreenDialog {isOpen} {onClose} class="w-full h-full space-y-5">
@@ -26,7 +25,7 @@
         el={MakeCodeEditor}
         style={{ height: '100%' }}
         initialCode={code}
-        queryParams={{ "parentframedownload": "1" }}
+        queryParams={{ parentframedownload: '1' }}
         class="w-full h-full"
         {baseUrl}
         {onCodeChange}
