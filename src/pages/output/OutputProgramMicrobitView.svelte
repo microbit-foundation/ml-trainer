@@ -6,7 +6,7 @@
 
 <script lang="ts">
   import { MakeCodeProject } from '@microbit-foundation/react-code-view';
-  import CodeArea from '../../components/CodeView.svelte';
+  import CodeView from '../../components/CodeView.svelte';
   import StandardButton from '../../components/StandardButton.svelte';
   import EditCodeDialog from '../../components/dialogs/EditCodeDialog.svelte';
   import { t } from '../../i18n';
@@ -44,6 +44,21 @@
     },
   };
 
+  const updateDepsForCodeView = (pxt: string): string => {
+    const newPxt = JSON.parse(pxt)
+    newPxt.dependencies['Machine Learning POC'] = "github:microbit-foundation/pxt-ml-extension-poc#v0.3.2"
+    return JSON.stringify(newPxt)
+  }
+
+  // The code view component is not using the static MakeCode so it can't reference
+  // the bundled ML extension and needs to be fetched from github instead.
+  $: makeCodeProjectForCodeView = {
+      text: {
+        ...makeCodeProject.text,
+        'pxt.json': updateDepsForCodeView(makeCodeProject.text['pxt.json'])
+      },
+    }
+
   let isCodeEditorOpen = false;
   const handleEdit = () => {
     isCodeEditorOpen = true;
@@ -71,7 +86,7 @@
 <p class="text-center leading-relaxed w-150">
   {$t('content.output.description')}
 </p>
-<CodeArea code={makeCodeProject} />
+<CodeView code={makeCodeProjectForCodeView} />
 <StandardButton onClick={handleEdit} class="my-5" type="primary"
   >{$t('content.output.button.program')}</StandardButton>
 <EditCodeDialog
@@ -80,4 +95,4 @@
   onClose={handleEditDialogClose}
   onCodeChange={handleCodeChange}
   onDownload={handleDownload}
-  baseUrl='https://add-extension.pxt-microbit.pages.dev/' />
+  baseUrl='https://ml-poc-e2e.pxt-microbit.pages.dev/' />

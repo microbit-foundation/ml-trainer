@@ -12,7 +12,7 @@ export const generateMakeCodeMain = (configs: OnGestureRecognisedConfig[]) => {
   return {
     'main.blocks': generateMakeCodeMainBlocksXml(configs),
     'main.ts': generateMakeCodeMainTs(configs),
-    'workaround.ts': generateWorkaroundTs(configs),
+    'Machine_Learning_POC.ts': generateWorkaroundTs(configs),
   };
 };
 
@@ -29,14 +29,11 @@ export const generateRandomLedPattern = () => {
 };
 
 export const generateMakeCodeMainTs = (configs: OnGestureRecognisedConfig[]) => {
-  return `basic.showLeds(IconNames.Heart)
-    ${configs.map(
-      ({ name, ledPattern }: OnGestureRecognisedConfig) => `
-    machineLearningPoc.onActionEstimated("${name}", function () {
-      basic.showLeds(\`${ledPattern}\`)
-    })`,
-    ).join(`
-    `)}`;
+  return `basic.showIcon(IconNames.Heart)
+  ${configs.map(({ name, ledPattern }: OnGestureRecognisedConfig) => `
+mlrunner.onMlEvent(MlRunnerLabels.${name}, function () {
+  basic.showLeds(\`${ledPattern}\`)
+})`,).join(`\n    `)}`;
 };
 
 export const generateMakeCodeMainBlocksXml = (configs: OnGestureRecognisedConfig[]) => {
@@ -66,8 +63,8 @@ const onGestureRecognisedBlock = ({
   name,
   ledPattern,
 }: OnGestureRecognisedBlock) => `
-  <block type=\"machineLearningPoc_onActionEstimated\" x=\"${x}\" y=\"${y}\">
-    <field name=\"NAME\">MlAction.${name}</field>
+  <block type=\"mlrunner_on_ml_event\" x=\"${x}\" y=\"${y}\">
+    <field name=\"value\">MlRunnerLabels.${name}</field>
     <statement name="HANDLER">
       <block type="device_show_leds">
         <field name="LEDS">\`${ledPattern}\`</field>
@@ -84,7 +81,10 @@ interface OnGestureRecognisedBlock extends OnGestureRecognisedConfig {
 const createActionEnum = (actions: string[]) => {
   let code = '';
   actions.forEach((action, idx) => {
-    code += `    ${action} = ${idx},${idx === actions.length - 1 ? '' : '\n'}`;
+    code += `
+    //% block="${action}"
+    ${action} = ${idx},
+    `;
   });
   return code;
 };
@@ -100,22 +100,17 @@ export const generateWorkaroundTs = (configs: OnGestureRecognisedConfig[]) => {
   const actions = configs.map(c => c.name);
 
   return `// Auto-generated. Do not edit.
-  enum MlAction {
-  ${createActionEnum(actions)}
+  enum MlRunnerLabels {${createActionEnum(actions)}}
+  
+  actions = ${JSON.stringify(actions)}
+
+  getModelBlob = (): Buffer =>  {
+    const result = hex\`${getModelAsHexString()}\`;
+    return result
   }
   
-  namespace machineLearningPoc {
-      //% block="on|%NAME|action estimated"
-      //% icon="\uf192" blockGap=8
-      export function onActionEstimated(action: MlAction, body: () => void): void {
-        eventHandlers[action] = body;
-      }
-  
-      actions = ${JSON.stringify(actions)};
-      modelBlob = hex\`${getModelAsHexString()}\`;
-      simulatorRegister();
-  }
-  
+  mlrunner.simulatorSendData()
+
   // Auto-generated. Do not edit. Really.
   `;
 };
