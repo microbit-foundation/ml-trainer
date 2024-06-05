@@ -416,8 +416,11 @@
                 ConnectDialogStates.CONNECT_TUTORIAL_USB)
             : ($connectionDialogState.connectionState =
                 ConnectDialogStates.CONNECT_CABLE)}
-        onNextClick={() =>
-          ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY)}
+        onNextClick={isOutputMicrobit
+          ? undefined
+          : () =>
+              ($connectionDialogState.connectionState =
+                ConnectDialogStates.CONNECT_BATTERY)}
         deviceState={$connectionDialogState.deviceState} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.USB_TRY_AGAIN}
       <WebUsbTryAgain

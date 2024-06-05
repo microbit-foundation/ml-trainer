@@ -21,7 +21,7 @@
   import { DeviceRequestStates } from '../../../../script/microbit-interfacing/MicrobitConnection';
   import { state } from '../../../../script/stores/uiStore';
 
-  export let onNextClick: () => void;
+  export let onNextClick: (() => void) | undefined;
   export let onBackClick: () => void;
   export let deviceState: DeviceRequestStates;
 
@@ -95,8 +95,10 @@
       src={imageProps.src} />
     <div class="flex items-center justify-end gap-x-5">
       <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
-      <StandardButton type="primary" onClick={onNextClick}
-        >{$t('connectMB.nextButton')}</StandardButton>
+      {#if onNextClick}
+        <StandardButton type="primary" onClick={onNextClick}
+          >{$t('connectMB.nextButton')}</StandardButton>
+      {/if}
     </div>
   </div>
 </div>
