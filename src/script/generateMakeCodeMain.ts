@@ -4,11 +4,60 @@ import { get } from 'svelte/store';
 
 interface OnGestureRecognisedConfig {
   name: string;
-  ledPattern: string;
+  iconName: string;
 }
 
+const iconNames: string[] = [
+  'Heart',
+  'SmallHeart',
+  'Yes',
+  'No',
+  'Happy',
+  'Sad',
+  'Confused',
+  'Angry',
+  'Asleep',
+  'Surprised',
+  'Silly',
+  'Fabulous',
+  'Meh',
+  'TShirt',
+  'Rollerskate',
+  'Duck',
+  'House',
+  'Tortoise',
+  'Butterfly',
+  'StickFigure',
+  'Ghost',
+  'Sword',
+  'Giraffe',
+  'Skull',
+  'Umbrella',
+  'Snake',
+  'Rabbit',
+  'Cow',
+  'QuarterNote',
+  'EigthNote',
+  'EighthNote',
+  'Pitchfork',
+  'Target',
+  'Triangle',
+  'LeftTriangle',
+  'Chessboard',
+  'Diamond',
+  'SmallDiamond',
+  'Square',
+  'SmallSquare',
+  'Scissors',
+];
+
 // TODO: Can possibly write a test for this
-export const generateMakeCodeMain = (configs: OnGestureRecognisedConfig[]) => {
+export const generateMakeCodeMain = (actionNames: string[]) => {
+  const configs = actionNames.map((name, idx) => ({
+    name,
+    iconName: iconNames[idx % iconNames.length],
+  }));
+
   return {
     'main.blocks': generateMakeCodeMainBlocksXml(configs),
     'main.ts': generateMakeCodeMainTs(configs),
@@ -16,25 +65,23 @@ export const generateMakeCodeMain = (configs: OnGestureRecognisedConfig[]) => {
   };
 };
 
-export const generateRandomLedPattern = () => {
-  const genRandomLedRow = () =>
-    Array.from({ length: 5 }, () => (Math.floor(Math.random() * 2) == 0 ? '#' : '.'));
-  const newLine = `
-        `;
-  return (
-    newLine +
-    Array.from({ length: 5 }, () => genRandomLedRow().join(' ')).join(newLine) +
-    newLine
-  );
+export const generateMakeCodeMainTs = (configs: OnGestureRecognisedConfig[]) => {
+  return `basic.showIcon(IconNames.${onStartIcon})
+  ${configs
+    .map(
+      ({ name, iconName }: OnGestureRecognisedConfig) => `
+mlrunner.onMlEvent(MlRunnerLabels.${name}, function () {
+  basic.showIcon(IconNames.${iconName})
+})`,
+    )
+    .join(`\n    `)}`;
 };
 
-export const generateMakeCodeMainTs = (configs: OnGestureRecognisedConfig[]) => {
-  return `basic.showIcon(IconNames.Heart)
-  ${configs.map(({ name, ledPattern }: OnGestureRecognisedConfig) => `
-mlrunner.onMlEvent(MlRunnerLabels.${name}, function () {
-  basic.showLeds(\`${ledPattern}\`)
-})`,).join(`\n    `)}`;
-};
+const getShowIconBlock = (iconName: string) => {
+  return `<block type=\"basic_show_icon\"><field name=\"i\">IconNames.${iconName}</field></block>`
+}
+
+const onStartIcon = "Square"
 
 export const generateMakeCodeMainBlocksXml = (configs: OnGestureRecognisedConfig[]) => {
   const onStartPos = { x: 0, y: 0 };
@@ -42,14 +89,14 @@ export const generateMakeCodeMainBlocksXml = (configs: OnGestureRecognisedConfig
     <xml xmlns="https://developers.google.com/blockly/xml">
       <block type="pxt-on-start" x="${onStartPos.x}" y="${onStartPos.y}">
         <statement name="HANDLER">
-          <block type=\"basic_show_icon\"><field name=\"i\">IconNames.Heart</field></block>        
+          ${getShowIconBlock(onStartIcon)}       
         </statement>
       </block>
 
       ${configs.map((c, idx) =>
         onGestureRecognisedBlock({
           x: onStartPos.x + 300,
-          y: onStartPos.y + idx * 400,
+          y: onStartPos.y + idx * 200,
           ...c,
         }),
       ).join(`
@@ -61,14 +108,12 @@ const onGestureRecognisedBlock = ({
   x,
   y,
   name,
-  ledPattern,
+  iconName,
 }: OnGestureRecognisedBlock) => `
   <block type=\"mlrunner_on_ml_event\" x=\"${x}\" y=\"${y}\">
     <field name=\"value\">MlRunnerLabels.${name}</field>
     <statement name="HANDLER">
-      <block type="device_show_leds">
-        <field name="LEDS">\`${ledPattern}\`</field>
-      </block>
+      ${getShowIconBlock(iconName)}       
     </statement>
   </block>
 `;

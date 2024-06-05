@@ -10,23 +10,15 @@
   import StandardButton from '../../components/StandardButton.svelte';
   import EditCodeDialog from '../../components/dialogs/EditCodeDialog.svelte';
   import { t } from '../../i18n';
-  import {
-    generateMakeCodeMain,
-    generateRandomLedPattern,
-  } from '../../script/generateMakeCodeMain';
+  import { generateMakeCodeMain } from '../../script/generateMakeCodeMain';
   import { gestures } from '../../script/stores/Stores';
   import { startConnectionProcess } from '../../script/stores/connectDialogStore';
   import { state } from '../../script/stores/uiStore';
 
   const gs = gestures.getGestures();
 
-  const gestureOutputConfigs = gs.map(g => ({
-    name: g.getName(),
-    ledPattern: generateRandomLedPattern(),
-  }));
-
-  const mainFiles = generateMakeCodeMain(gestureOutputConfigs);
-  let makeCodeProject: MakeCodeProject = {
+  const mainFiles = generateMakeCodeMain(gs.map((g) => (g.getName())))
+  let makeCodeProject: MakeCodeProject = $state.makeCodeProject ?? {
     text: {
       ...mainFiles,
       'README.md': ' ',
@@ -68,6 +60,10 @@
   };
   const handleCodeChange = (code: MakeCodeProject) => {
     makeCodeProject = code;
+    state.update(obj => {
+      obj.makeCodeProject = code;
+      return obj;
+    });
   };
 
   const handleDownload = (hexData: string) => {
