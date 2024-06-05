@@ -269,8 +269,8 @@
     {#if $connectionDialogState.connectionState === ConnectDialogStates.START_OUTPUT}
       <ConnectSameDialog
         onConnectSameClick={() => {
-          ($connectionDialogState.connectionState =
-            ConnectDialogStates.CONNECT_CABLE)}}
+          $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE;
+        }}
         onConnectDifferentClick={() => {
           // TODO: Different micro:bit user flow
         }} />
