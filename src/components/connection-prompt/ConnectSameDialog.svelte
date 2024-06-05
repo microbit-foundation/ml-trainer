@@ -12,36 +12,36 @@
   export let onConnectDifferentClick: () => void;
 </script>
 
-<main>
-  <div class="text-center mb-5 font-bold text-lg">
-    <h1>
-      {$t('connectMB.output.header')}
+<div class="text-center mb-5 font-bold text-lg">
+  <h1>
+    {$t('connectMB.output.header')}
+  </h1>
+</div>
+<div class="grid grid-cols-2 w-600px text-center">
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- 
+    TODO: Implement same micro:bit output flow
+    Button is temporarily disabled 
+  -->
+  <div
+    class="mr-2 border-gray-200 border border-solid rounded-lg p-6 shadow-lg opacity-50"
+    >
+    <h1 class="font-bold mb-6">
+      {$t('connectMB.outputMB.same')}
     </h1>
-  </div>
-  <div class="grid grid-cols-2 w-600px text-center">
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <!-- 
-      TODO: Implement same micro:bit output flow
-      Button is temporarily disabled 
-    -->
-    <div
-      class="mr-2 border-gray-200 border border-solid rounded-lg p-6 shadow-lg opacity-50"
-      >
-      <h1 class="font-bold mb-6">
-        {$t('connectMB.outputMB.same')}
-      </h1>
 
-      <StandardButton disabled>{$t('connectMB.outputMB.sameButton')}</StandardButton>
-    </div>
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div
-      class="hover:cursor-pointer ml-2 border-gray-200 border border-solid rounded-lg p-6 shadow-lg"
-      on:click={onConnectDifferentClick}>
-      <h1 class="font-bold mb-6">
-        {$t('connectMB.outputMB.different')}
-      </h1>
-
-      <StandardButton>{$t('connectMB.outputMB.otherButton')}</StandardButton>
-    </div>
+    <StandardButton disabled>{$t('connectMB.outputMB.sameButton')}</StandardButton>
   </div>
-</main>
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div
+    class="hover:cursor-pointer ml-2 border-gray-200 border border-solid rounded-lg p-6 shadow-lg"
+    on:click={onConnectDifferentClick}>
+    <h1 class="font-bold mb-6">
+      {$t('connectMB.outputMB.different')}
+    </h1>
+
+    <StandardButton>{$t('connectMB.outputMB.otherButton')}</StandardButton>
+  </div>
+</div>
+

@@ -28,6 +28,7 @@ export enum ConnectDialogStates {
   BLUETOOTH_TRY_AGAIN, // Prompt user to try connecting via WebBluetooth again
   MICROBIT_UNSUPPORTED, // Warn user that micro:bit V1 is not supported
   BROWSER_DIALOG, // Awaiting user interaction with browser dialog
+  INPUT_NOT_CONNECTED, // Input micro:bit is not connected so output micro:bit cannot be connected yet
 }
 
 export const connectionDialogState = writable<{
@@ -40,7 +41,7 @@ export const connectionDialogState = writable<{
 
 export const startConnectionProcess = (): void => {
   const { bluetooth } = get(compatibility);
-  const { isInputConnected, reconnectState } = get(state);
+  const { isInputConnected, reconnectState, outputHex } = get(state);
   // Updating the state will cause a popup to appear, from where the connection process will take place
   let initialInputDialogState = ConnectDialogStates.START_BLUETOOTH;
   if (reconnectState.connectionType === 'none' && !bluetooth) {
@@ -52,12 +53,15 @@ export const startConnectionProcess = (): void => {
     initialInputDialogState = ConnectDialogStates.START_RADIO;
   }
   connectionDialogState.update(s => {
-    s.connectionState = isInputConnected
-      ? ConnectDialogStates.START_OUTPUT
-      : initialInputDialogState;
-    s.deviceState = isInputConnected
-      ? DeviceRequestStates.OUTPUT
-      : DeviceRequestStates.INPUT;
+    if (isInputConnected) {
+      s.connectionState = ConnectDialogStates.START_OUTPUT
+      s.deviceState = DeviceRequestStates.OUTPUT
+    } else {
+      s.connectionState = outputHex 
+        ? ConnectDialogStates.INPUT_NOT_CONNECTED 
+        : initialInputDialogState;
+      s.deviceState = DeviceRequestStates.INPUT;
+    }
     return s;
   });
 };

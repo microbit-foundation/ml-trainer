@@ -241,6 +241,10 @@
   "disconnectedWarning.bridgeHeading": "micro:bit 2 connection lost",
   "disconnectedWarning.bridge1": "The connection to the micro:bit connected to your computer has been lost.",
 
+  "connectMB.inputNotConnected.header": "Connect input micro:bit",
+  "connectMB.inputNotConnected.description": "You didn't connect an input micro:bit. Do you want to connect one now?",
+  "connectMB.inputNotConnected.connect": "Connect",
+
   "connectMB.output.header": "A micro:bit is already connected",
 
   "performanceWarning.heading": "Low quality connection",

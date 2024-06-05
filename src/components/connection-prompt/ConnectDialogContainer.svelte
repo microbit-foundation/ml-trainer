@@ -43,6 +43,7 @@
   import ManualInstallTutorial from './usb/manual/ManualInstallTutorial.svelte';
   import UnsupportedMicrobitWarningDialog from '../dialogs/UnsupportedMicrobitWarningDialog.svelte';
   import ConnectSameDialog from './ConnectSameDialog.svelte';
+  import InputNotConnectedDialog from './InputNotConnectedDialog.svelte';
   import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
 
   const { bluetooth, usb } = get(compatibility);
@@ -273,6 +274,14 @@
         onConnectDifferentClick={() =>
           ($connectionDialogState.connectionState =
             ConnectDialogStates.START_BLUETOOTH)} />
+    {:else if $connectionDialogState.connectionState === ConnectDialogStates.INPUT_NOT_CONNECTED}
+      <InputNotConnectedDialog
+        onConnectInput={() => {
+              $connectionDialogState.connectionState =
+                ConnectDialogStates.START_BLUETOOTH;
+              flashStage = 'bluetooth';
+            }}
+        onCancel={endFlow} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.START_RADIO}
       <StartRadioDialog
         onStartBluetoothClick={bluetooth

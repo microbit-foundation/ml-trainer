@@ -71,11 +71,8 @@
   };
 
   const handleDownload = (hexData: string) => {
-    // TODO: To remove, for development purposes
-    // Faking though input is connected
     state.update(obj => {
       obj.outputHex = hexData;
-      obj.isInputConnected = true;
       return obj;
     });
     startConnectionProcess();
