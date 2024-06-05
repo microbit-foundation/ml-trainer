@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Center for Computational Thinking and Design at Aarhus University and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { compileModel } from 'ml4f';
 import { model } from './stores/mlStore';
 import { get } from 'svelte/store';
@@ -30,10 +35,14 @@ export const generateRandomLedPattern = () => {
 
 export const generateMakeCodeMainTs = (configs: OnGestureRecognisedConfig[]) => {
   return `basic.showIcon(IconNames.Heart)
-  ${configs.map(({ name, ledPattern }: OnGestureRecognisedConfig) => `
+  ${configs
+    .map(
+      ({ name, ledPattern }: OnGestureRecognisedConfig) => `
 mlrunner.onMlEvent(MlRunnerLabels.${name}, function () {
   basic.showLeds(\`${ledPattern}\`)
-})`,).join(`\n    `)}`;
+})`,
+    )
+    .join(`\n    `)}`;
 };
 
 export const generateMakeCodeMainBlocksXml = (configs: OnGestureRecognisedConfig[]) => {
