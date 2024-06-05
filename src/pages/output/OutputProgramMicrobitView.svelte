@@ -79,4 +79,5 @@
   isOpen={isCodeEditorOpen}
   onClose={handleEditDialogClose}
   onCodeChange={handleCodeChange}
-  onDownload={handleDownload} />
+  onDownload={handleDownload}
+  baseUrl='https://add-extension.pxt-microbit.pages.dev/' />

@@ -10,6 +10,7 @@
   import FullScreenDialog from './FullScreenDialog.svelte';
   import { MakeCodeProject } from '@microbit-foundation/react-code-view';
 
+  export let baseUrl: string;
   export let code: object;
   export let isOpen: boolean;
   export let onClose: () => void;
@@ -27,7 +28,7 @@
         initialCode={code}
         queryParams={{ "parentframedownload": "1" }}
         class="w-full h-full"
-        baseUrl='https://add-extension.pxt-microbit.pages.dev/'
+        {baseUrl}
         {onCodeChange}
         {onDownload} />
     </div>
