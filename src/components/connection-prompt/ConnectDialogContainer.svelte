@@ -269,11 +269,11 @@
     {#if $connectionDialogState.connectionState === ConnectDialogStates.START_OUTPUT}
       <ConnectSameDialog
         onConnectSameClick={() => {
-          // TODO: Connect same micro:bit as output flow
-        }}
-        onConnectDifferentClick={() =>
           ($connectionDialogState.connectionState =
-            ConnectDialogStates.START_BLUETOOTH)} />
+            ConnectDialogStates.CONNECT_CABLE)}}
+        onConnectDifferentClick={() => {
+          // TODO: Different micro:bit user flow
+        }} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.INPUT_NOT_CONNECTED}
       <InputNotConnectedDialog
         onConnectInput={() => {

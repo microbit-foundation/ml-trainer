@@ -19,27 +19,27 @@
 </div>
 <div class="grid grid-cols-2 w-600px text-center">
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <!-- 
-    TODO: Implement same micro:bit output flow
-    Button is temporarily disabled 
-  -->
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div
-    class="mr-2 border-gray-200 border border-solid rounded-lg p-6 shadow-lg opacity-50">
+    class="hover:cursor-pointer mr-2 border-gray-200 border border-solid rounded-lg p-6 shadow-lg "
+    on:click={onConnectSameClick}
+    >
     <h1 class="font-bold mb-6">
       {$t('connectMB.outputMB.same')}
     </h1>
 
-    <StandardButton disabled>{$t('connectMB.outputMB.sameButton')}</StandardButton>
+    <StandardButton>{$t('connectMB.outputMB.sameButton')}</StandardButton>
   </div>
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- 
+    TODO: Implement different micro:bit output flow
+    Button is temporarily disabled 
+  -->
   <div
-    class="hover:cursor-pointer ml-2 border-gray-200 border border-solid rounded-lg p-6 shadow-lg"
-    on:click={onConnectDifferentClick}>
+    class="ml-2 border-gray-200 border border-solid rounded-lg p-6 shadow-lg opacity-50">
     <h1 class="font-bold mb-6">
       {$t('connectMB.outputMB.different')}
     </h1>
 
-    <StandardButton>{$t('connectMB.outputMB.otherButton')}</StandardButton>
+    <StandardButton disabled>{$t('connectMB.outputMB.otherButton')}</StandardButton>
   </div>
 </div>
