@@ -1,55 +1,12 @@
 import { compileModel } from 'ml4f';
 import { model } from './stores/mlStore';
 import { get } from 'svelte/store';
-
+import { generateBlob } from 'ml-header-generator';
+import { iconNames } from './iconNames';
 interface OnGestureRecognisedConfig {
   name: string;
   iconName: string;
 }
-
-const iconNames: string[] = [
-  'Heart',
-  'SmallHeart',
-  'Yes',
-  'No',
-  'Happy',
-  'Sad',
-  'Confused',
-  'Angry',
-  'Asleep',
-  'Surprised',
-  'Silly',
-  'Fabulous',
-  'Meh',
-  'TShirt',
-  'Rollerskate',
-  'Duck',
-  'House',
-  'Tortoise',
-  'Butterfly',
-  'StickFigure',
-  'Ghost',
-  'Sword',
-  'Giraffe',
-  'Skull',
-  'Umbrella',
-  'Snake',
-  'Rabbit',
-  'Cow',
-  'QuarterNote',
-  'EigthNote',
-  'EighthNote',
-  'Pitchfork',
-  'Target',
-  'Triangle',
-  'LeftTriangle',
-  'Chessboard',
-  'Diamond',
-  'SmallDiamond',
-  'Square',
-  'SmallSquare',
-  'Scissors',
-];
 
 // TODO: Can possibly write a test for this
 export const generateMakeCodeMain = (actionNames: string[]) => {
@@ -61,16 +18,16 @@ export const generateMakeCodeMain = (actionNames: string[]) => {
   return {
     'main.blocks': generateMakeCodeMainBlocksXml(configs),
     'main.ts': generateMakeCodeMainTs(configs),
-    'Machine_Learning_POC.ts': generateWorkaroundTs(configs),
+    'Machine_Learning_POC.ts': generateCustomTs(configs),
   };
 };
 
 export const generateMakeCodeMainTs = (configs: OnGestureRecognisedConfig[]) => {
-  return `basic.showIcon(IconNames.${onStartIcon})
+  return `
   ${configs
     .map(
       ({ name, iconName }: OnGestureRecognisedConfig) => `
-mlrunner.onMlEvent(MlRunnerLabels.${name}, function () {
+      mlrunner.Action.${name}.onEvent(function () {
   basic.showIcon(IconNames.${iconName})
 })`,
     )
@@ -78,21 +35,13 @@ mlrunner.onMlEvent(MlRunnerLabels.${name}, function () {
 };
 
 const getShowIconBlock = (iconName: string) => {
-  return `<block type=\"basic_show_icon\"><field name=\"i\">IconNames.${iconName}</field></block>`
-}
-
-const onStartIcon = "Square"
+  return `<block type=\"basic_show_icon\"><field name=\"i\">IconNames.${iconName}</field></block>`;
+};
 
 export const generateMakeCodeMainBlocksXml = (configs: OnGestureRecognisedConfig[]) => {
   const onStartPos = { x: 0, y: 0 };
   return `
     <xml xmlns="https://developers.google.com/blockly/xml">
-      <block type="pxt-on-start" x="${onStartPos.x}" y="${onStartPos.y}">
-        <statement name="HANDLER">
-          ${getShowIconBlock(onStartIcon)}       
-        </statement>
-      </block>
-
       ${configs.map((c, idx) =>
         onGestureRecognisedBlock({
           x: onStartPos.x + 300,
@@ -104,14 +53,9 @@ export const generateMakeCodeMainBlocksXml = (configs: OnGestureRecognisedConfig
     </xml>`;
 };
 
-const onGestureRecognisedBlock = ({
-  x,
-  y,
-  name,
-  iconName,
-}: OnGestureRecognisedBlock) => `
+const onGestureRecognisedBlock = ({ x, y, name, iconName }: OnGestureRecognisedBlock) => `
   <block type=\"mlrunner_on_ml_event\" x=\"${x}\" y=\"${y}\">
-    <field name=\"value\">MlRunnerLabels.${name}</field>
+    <field name=\"this\">mlrunner.Action.${name}</field>
     <statement name="HANDLER">
       ${getShowIconBlock(iconName)}       
     </statement>
@@ -123,39 +67,52 @@ interface OnGestureRecognisedBlock extends OnGestureRecognisedConfig {
   y: number;
 }
 
-const createActionEnum = (actions: string[]) => {
+const createMlEvents = (actions: string[]) => {
   let code = '';
   actions.forEach((action, idx) => {
-    code += `
-    //% block="${action}"
-    ${action} = ${idx},
-    `;
+    code += `    //% fixedInstance\n`;
+    code += `    export const ${action} = new MlEvent(${idx + 2}, "${action}");\n`;
   });
   return code;
 };
 
-// TODO: Throwing errors
-const getModelAsHexString = () => {
+const arrayBufferToHexString = (input: Uint8Array): string =>
+  Array.from(input, i => i.toString(16).padStart(2, '0'))
+    .join('')
+    .toUpperCase();
+
+const getModelHexString = (actionNames: string[]) => {
+  const customHeaderBlob = generateBlob({
+    samples_period: 25,
+    samples_length: 80,
+    sample_dimensions: 3,
+    labels: actionNames,
+  });
+  const headerHexString = arrayBufferToHexString(new Uint8Array(customHeaderBlob));
   const m = get(model);
-  const result = compileModel(m, {});
-  return Array.from(result.machineCode, i => i.toString(16).padStart(2, '0')).join('');
+  const { machineCode } = compileModel(m, {});
+  const modelHexString = arrayBufferToHexString(machineCode);
+  return headerHexString + modelHexString;
 };
 
-export const generateWorkaroundTs = (configs: OnGestureRecognisedConfig[]) => {
+export const generateCustomTs = (configs: OnGestureRecognisedConfig[]) => {
   const actions = configs.map(c => c.name);
 
   return `// Auto-generated. Do not edit.
-  enum MlRunnerLabels {${createActionEnum(actions)}}
-  
-  actions = ${JSON.stringify(actions)}
-
-  getModelBlob = (): Buffer =>  {
-    const result = hex\`${getModelAsHexString()}\`;
-    return result
+  namespace mlrunner {
+    export namespace Action {
+  ${createMlEvents(actions)}
+      actions = [None,${actions.toString()}];
+    }
   }
   
-  mlrunner.simulatorSendData()
-
+  getModelBlob = (): Buffer =>  {
+    const result = hex\`${getModelHexString(actions)}\`;
+    return result;
+  }
+  
+  mlrunner.simulatorSendData();
+  
   // Auto-generated. Do not edit. Really.
   `;
 };

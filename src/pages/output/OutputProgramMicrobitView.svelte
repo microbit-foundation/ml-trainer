@@ -38,7 +38,7 @@
 
   const updateDepsForCodeView = (pxt: string): string => {
     const newPxt = JSON.parse(pxt)
-    newPxt.dependencies['Machine Learning POC'] = "github:microbit-foundation/pxt-ml-extension-poc#v0.3.2"
+    newPxt.dependencies['Machine Learning POC'] = "github:microbit-foundation/pxt-ml-extension-poc#v0.3.3"
     return JSON.stringify(newPxt)
   }
 
@@ -68,6 +68,7 @@
 
   const handleDownload = (hexData: string) => {
     state.update(obj => {
+      obj.isInputConnected=true
       obj.outputHex = hexData;
       return obj;
     });
