@@ -29,7 +29,7 @@
           core: '*',
           microphone: '*',
           radio: '*', // needed for compiling
-          'machine-learning-poc': '*'
+          'machine-learning-poc': '*',
         },
         files: [...Object.keys(mainFiles), 'README.md'],
       }),
@@ -37,19 +37,20 @@
   };
 
   const updateDepsForCodeView = (pxt: string): string => {
-    const newPxt = JSON.parse(pxt)
-    newPxt.dependencies['Machine Learning POC'] = "github:microbit-foundation/pxt-ml-extension-poc#v0.3.3"
-    return JSON.stringify(newPxt)
-  }
+    const newPxt = JSON.parse(pxt);
+    newPxt.dependencies['Machine Learning POC'] =
+      'github:microbit-foundation/pxt-ml-extension-poc#v0.3.2';
+    return JSON.stringify(newPxt);
+  };
 
   // The code view component is not using the static MakeCode so it can't reference
   // the bundled ML extension and needs to be fetched from github instead.
   $: makeCodeProjectForCodeView = {
-      text: {
-        ...makeCodeProject.text,
-        'pxt.json': updateDepsForCodeView(makeCodeProject.text['pxt.json'])
-      },
-    }
+    text: {
+      ...makeCodeProject.text,
+      'pxt.json': updateDepsForCodeView(makeCodeProject.text['pxt.json']),
+    },
+  };
 
   let isCodeEditorOpen = false;
   const handleEdit = () => {
@@ -89,4 +90,4 @@
   onClose={handleEditDialogClose}
   onCodeChange={handleCodeChange}
   onDownload={handleDownload}
-  baseUrl='https://ml-poc-e2e.pxt-microbit.pages.dev/' />
+  baseUrl="https://ml-poc-e2e.pxt-microbit.pages.dev/" />

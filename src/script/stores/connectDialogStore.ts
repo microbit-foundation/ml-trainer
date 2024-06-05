@@ -54,11 +54,11 @@ export const startConnectionProcess = (): void => {
   }
   connectionDialogState.update(s => {
     if (isInputConnected) {
-      s.connectionState = ConnectDialogStates.START_OUTPUT
-      s.deviceState = DeviceRequestStates.OUTPUT
+      s.connectionState = ConnectDialogStates.START_OUTPUT;
+      s.deviceState = DeviceRequestStates.OUTPUT;
     } else {
-      s.connectionState = outputHex 
-        ? ConnectDialogStates.INPUT_NOT_CONNECTED 
+      s.connectionState = outputHex
+        ? ConnectDialogStates.INPUT_NOT_CONNECTED
         : initialInputDialogState;
       s.deviceState = DeviceRequestStates.INPUT;
     }
