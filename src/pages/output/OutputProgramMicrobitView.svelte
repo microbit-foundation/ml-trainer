@@ -39,7 +39,7 @@
   const updateDepsForCodeView = (pxt: string): string => {
     const newPxt = JSON.parse(pxt);
     newPxt.dependencies['Machine Learning POC'] =
-      'github:microbit-foundation/pxt-ml-extension-poc#v0.3.2';
+      'github:microbit-foundation/pxt-ml-extension-poc#v0.3.5';
     return JSON.stringify(newPxt);
   };
 
