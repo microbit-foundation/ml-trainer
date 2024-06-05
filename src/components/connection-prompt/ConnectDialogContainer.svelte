@@ -42,8 +42,6 @@
   import SelectMicrobitDialogUsb from './usb/SelectMicrobitDialogUsb.svelte';
   import ManualInstallTutorial from './usb/manual/ManualInstallTutorial.svelte';
   import UnsupportedMicrobitWarningDialog from '../dialogs/UnsupportedMicrobitWarningDialog.svelte';
-  import ConnectSameDialog from './ConnectSameDialog.svelte';
-  import InputNotConnectedDialog from './InputNotConnectedDialog.svelte';
   import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
 
   const { bluetooth, usb } = get(compatibility);
@@ -177,7 +175,9 @@
       }
 
       // Next UI state:
-      if (flashStage === 'bluetooth' || flashStage === 'radio-remote') {
+      if (isOutputMicrobit) {
+        endFlow();
+      } else if (flashStage === 'bluetooth' || flashStage === 'radio-remote') {
         $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY;
       } else if (flashStage === 'radio-bridge') {
         onConnectingSerial(usb);
@@ -266,22 +266,7 @@
       ConnectDialogStates.USB_DOWNLOADING &&
       $connectionDialogState.connectionState !==
         ConnectDialogStates.BLUETOOTH_CONNECTING}>
-    {#if $connectionDialogState.connectionState === ConnectDialogStates.START_OUTPUT}
-      <ConnectSameDialog
-        onConnectSameClick={() => {
-          $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE;
-        }}
-        onConnectDifferentClick={() => {
-          // TODO: Different micro:bit user flow
-        }} />
-    {:else if $connectionDialogState.connectionState === ConnectDialogStates.INPUT_NOT_CONNECTED}
-      <InputNotConnectedDialog
-        onConnectInput={() => {
-          $connectionDialogState.connectionState = ConnectDialogStates.START_BLUETOOTH;
-          flashStage = 'bluetooth';
-        }}
-        onCancel={endFlow} />
-    {:else if $connectionDialogState.connectionState === ConnectDialogStates.START_RADIO}
+    {#if $connectionDialogState.connectionState === ConnectDialogStates.START_RADIO}
       <StartRadioDialog
         onStartBluetoothClick={bluetooth
           ? () => {
@@ -296,19 +281,15 @@
         }} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.START_BLUETOOTH}
       <StartBluetoothDialog
-        onStartRadioClick={usb && !isOutputMicrobit
-          ? () => {
-              $connectionDialogState.connectionState = ConnectDialogStates.START_RADIO;
-              flashStage = 'radio-remote';
-            }
-          : undefined}
+        onStartRadioClick={() => {
+          $connectionDialogState.connectionState = ConnectDialogStates.START_RADIO;
+          flashStage = 'radio-remote';
+        }}
         onNextClick={() =>
           ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)}
-        onBackClick={isOutputMicrobit
-          ? () => {
-              $connectionDialogState.connectionState = ConnectDialogStates.START_OUTPUT;
-            }
-          : undefined} />
+        onBackClick={() => {
+          $connectionDialogState.connectionState = ConnectDialogStates.START_OUTPUT;
+        }} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECT_CABLE}
       {#if flashStage === 'bluetooth'}
         <ConnectCableDialog
@@ -321,9 +302,11 @@
             : () =>
                 ($connectionDialogState.connectionState =
                   ConnectDialogStates.CONNECT_BATTERY)}
-          onBackClick={() =>
-            ($connectionDialogState.connectionState =
-              ConnectDialogStates.START_BLUETOOTH)}
+          onBackClick={isOutputMicrobit
+            ? undefined
+            : () =>
+                ($connectionDialogState.connectionState =
+                  ConnectDialogStates.START_BLUETOOTH)}
           onNextClick={() =>
             usb
               ? ($connectionDialogState.connectionState =

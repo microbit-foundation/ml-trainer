@@ -12,8 +12,12 @@
   import { t } from '../../i18n';
   import { generateMakeCodeMain } from '../../script/generateMakeCodeMain';
   import { gestures } from '../../script/stores/Stores';
-  import { startConnectionProcess } from '../../script/stores/connectDialogStore';
+  import {
+    ConnectDialogStates,
+    connectionDialogState,
+  } from '../../script/stores/connectDialogStore';
   import { state } from '../../script/stores/uiStore';
+  import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
 
   const gs = gestures.getGestures();
 
@@ -69,11 +73,14 @@
 
   const handleDownload = (hexData: string) => {
     state.update(obj => {
-      obj.isInputConnected = true;
       obj.outputHex = hexData;
       return obj;
     });
-    startConnectionProcess();
+    connectionDialogState.update(s => {
+      s.connectionState = ConnectDialogStates.CONNECT_CABLE;
+      s.deviceState = DeviceRequestStates.OUTPUT;
+      return s;
+    });
   };
 </script>
 
