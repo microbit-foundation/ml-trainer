@@ -17,7 +17,7 @@
 
   const gs = gestures.getGestures();
 
-  const mainFiles = generateMakeCodeMain(gs.map((g) => (g.getName())))
+  const mainFiles = generateMakeCodeMain(gs.map(g => g.getName()));
   let makeCodeProject: MakeCodeProject = $state.makeCodeProject ?? {
     text: {
       ...mainFiles,
@@ -69,7 +69,7 @@
 
   const handleDownload = (hexData: string) => {
     state.update(obj => {
-      obj.isInputConnected=true
+      obj.isInputConnected = true;
       obj.outputHex = hexData;
       return obj;
     });
