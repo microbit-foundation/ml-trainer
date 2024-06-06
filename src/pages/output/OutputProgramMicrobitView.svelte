@@ -18,7 +18,7 @@
   } from '../../script/stores/connectDialogStore';
   import { state } from '../../script/stores/uiStore';
   import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
-  import { replaceUpdatedActionsWithNone } from '../../script/makecode/reconcileMakeCodeProject';
+  import { replaceUpdatedActionsWithNone } from '../../script/makecode/replaceUpdatedActionsWithNone';
 
   const gs = gestures.getGestures();
   const gestureNames = gs.map(g => g.getName());
