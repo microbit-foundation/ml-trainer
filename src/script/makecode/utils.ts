@@ -12,6 +12,22 @@ export const filenames = {
   customTs: 'Machine_Learning_POC.ts',
 };
 
+export const isEmpty = (o: object) => {
+  return Object.keys(o).length === 0;
+};
+
+export const pxt = {
+  name: 'Untitled',
+  description: '',
+  dependencies: {
+    core: '*',
+    microphone: '*',
+    radio: '*', // needed for compiling
+    'Machine Learning POC': 'github:microbit-foundation/pxt-ml-extension-poc#v0.3.5',
+  },
+  files: [...Object.values(filenames), 'README.md'],
+};
+
 export const iconNames: string[] = [
   'Heart',
   'SmallHeart',

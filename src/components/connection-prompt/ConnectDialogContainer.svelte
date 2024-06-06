@@ -287,9 +287,7 @@
         }}
         onNextClick={() =>
           ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)}
-        onBackClick={() => {
-          $connectionDialogState.connectionState = ConnectDialogStates.START_OUTPUT;
-        }} />
+        onBackClick={undefined} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECT_CABLE}
       {#if flashStage === 'bluetooth'}
         <ConnectCableDialog

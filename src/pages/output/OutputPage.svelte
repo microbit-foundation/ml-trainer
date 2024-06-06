@@ -6,11 +6,13 @@
 
 <script lang="ts">
   import OutputProgramMicrobitView from './OutputProgramMicrobitView.svelte';
-  import { state } from '../../script/stores/uiStore';
+  import { makeCodeProject, state } from '../../script/stores/uiStore';
   import { t } from '../../i18n';
   import TabView from '../../views/TabView.svelte';
   import { Paths, getTitle } from '../../router/paths';
   import TrainModelFirstTitle from '../../components/TrainModelFirstTitle.svelte';
+  import { get } from 'svelte/store';
+  import { isEmpty } from '../../script/makecode/utils';
 
   $: title = getTitle(Paths.OUTPUT, $t);
 </script>
@@ -22,7 +24,7 @@
 <div class="flex flex-col items-center pb-5 bg-backgrounddark h-full">
   <TabView />
   <main class="flex flex-col w-full h-full text-center items-center">
-    {#if $state.isPredicting}
+    {#if $state.isPredicting || !isEmpty(get(makeCodeProject))}
       <OutputProgramMicrobitView />
     {:else}
       <TrainModelFirstTitle headingId="content.output.header" />

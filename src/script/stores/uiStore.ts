@@ -44,6 +44,15 @@ if (compatibilityResult.bluetooth) {
 
 export const isCompatibilityWarningDialogOpen = writable<boolean>(false);
 
+export const makeCodeProject = persistantWritable<MakeCodeProject | {}>(
+  'makeCodeProject',
+  {},
+);
+
+export const clearMakeCodeProject = () => {
+  makeCodeProject.set({});
+};
+
 export const hasSeenAppVersionRedirectDialog = persistantWritable<boolean>(
   'hasSeenAppVersionRedirectDialog',
   false,
@@ -87,7 +96,6 @@ export const state = writable<{
   inputMicrobitVersion: MBSpecs.MBVersion | -1;
   inputOrigin: HexOrigin;
   isOutputReady: boolean;
-  makeCodeProject: MakeCodeProject | undefined;
   outputHex: string | undefined;
   outputHexVersion: number;
   outputMicrobitVersion: MBSpecs.MBVersion | -1;
@@ -116,7 +124,6 @@ export const state = writable<{
   inputMicrobitVersion: -1,
   inputOrigin: HexOrigin.UNKNOWN,
   isOutputReady: false,
-  makeCodeProject: undefined,
   outputHex: undefined,
   outputHexVersion: -1,
   outputMicrobitVersion: -1,

@@ -10,41 +10,72 @@
   import StandardButton from '../../components/StandardButton.svelte';
   import EditCodeDialog from '../../components/dialogs/EditCodeDialog.svelte';
   import { t } from '../../i18n';
-  import { generateMakeCodeMain } from '../../script/makecode/generateMakeCodeMain';
+  import {
+    generateMakeCodeMainBlocksXml,
+    generateMakeCodeMainTs,
+  } from '../../script/makecode/generateMainTsAndBlocks';
   import { gestures } from '../../script/stores/Stores';
+  import { get } from 'svelte/store';
   import {
     ConnectDialogStates,
     connectionDialogState,
   } from '../../script/stores/connectDialogStore';
-  import { state } from '../../script/stores/uiStore';
+  import { makeCodeProject, state } from '../../script/stores/uiStore';
   import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
-  import { replaceUpdatedActionsWithNone } from '../../script/makecode/replaceUpdatedActionsWithNone';
+  import {
+    generateCustomTs,
+    getModelHexString,
+  } from '../../script/makecode/generateCustomTs';
+  import { filenames, iconNames, isEmpty, pxt } from '../../script/makecode/utils';
+  import { model as modelStore } from '../../script/stores/mlStore';
+  import { LayersModel } from '@tensorflow/tfjs';
+
+  const getSavedModelHexString = (p: MakeCodeProject): string => {
+    const customTs = p.text[filenames.customTs];
+    const hexString = customTs.split(' ').find(s => s.startsWith('hex`'));
+    return hexString!.replace('hex`', '').replace('`;', '');
+  };
+
+  const updateCustomTs = (
+    project: MakeCodeProject,
+    gestureNames: string[],
+    model: LayersModel,
+  ) => {
+    const modelHexStr = model
+      ? getModelHexString(gestureNames, model)
+      : getSavedModelHexString(savedProject as MakeCodeProject);
+    return {
+      ...project.text,
+      // Keep custom ts updated as gesture and model is updated by user
+      [filenames.customTs]: generateCustomTs(gestureNames, modelHexStr),
+    };
+  };
+
+  const generateDefaultProjectText = (gestureNames: string[], model: LayersModel) => {
+    const modelHexStr = getModelHexString(gestureNames, model);
+    const actionConfigs = gestureNames.map((name, idx) => ({
+      name,
+      iconName: iconNames[idx % iconNames.length],
+    }));
+    return {
+      [filenames.mainBlocks]: generateMakeCodeMainBlocksXml(actionConfigs),
+      [filenames.mainTs]: generateMakeCodeMainTs(actionConfigs),
+      [filenames.customTs]: generateCustomTs(gestureNames, modelHexStr),
+      'README.md': ' ',
+      'pxt.json': JSON.stringify(pxt),
+    };
+  };
 
   const gs = gestures.getGestures();
   const gestureNames = gs.map(g => g.getName());
+  const model = get(modelStore);
+  const savedProject = get(makeCodeProject);
 
-  const mainFiles = generateMakeCodeMain(gestureNames);
-
-  let makeCodeProject: MakeCodeProject = $state.makeCodeProject
-    ? replaceUpdatedActionsWithNone($state.makeCodeProject, gestureNames)
-    : {
-        text: {
-          ...mainFiles,
-          'README.md': ' ',
-          'pxt.json': JSON.stringify({
-            name: 'Untitled',
-            description: '',
-            dependencies: {
-              core: '*',
-              microphone: '*',
-              radio: '*', // needed for compiling
-              'Machine Learning POC':
-                'github:microbit-foundation/pxt-ml-extension-poc#v0.3.5',
-            },
-            files: [...Object.keys(mainFiles), 'README.md'],
-          }),
-        },
-      };
+  let project: MakeCodeProject = {
+    text: isEmpty(savedProject)
+      ? generateDefaultProjectText(gestureNames, model)
+      : updateCustomTs(savedProject as MakeCodeProject, gestureNames, model),
+  };
 
   let isCodeEditorOpen = false;
   const handleEdit = () => {
@@ -54,11 +85,8 @@
     isCodeEditorOpen = false;
   };
   const handleCodeChange = (code: MakeCodeProject) => {
-    makeCodeProject = code;
-    state.update(obj => {
-      obj.makeCodeProject = code;
-      return obj;
-    });
+    project = code;
+    $makeCodeProject = code;
   };
 
   const handleDownload = (hexData: string) => {
@@ -78,11 +106,11 @@
 <p class="text-center leading-relaxed w-150">
   {$t('content.output.description')}
 </p>
-<CodeView code={makeCodeProject} />
+<CodeView code={project} />
 <StandardButton onClick={handleEdit} class="my-5" type="primary"
   >{$t('content.output.button.program')}</StandardButton>
 <EditCodeDialog
-  code={makeCodeProject}
+  code={project}
   isOpen={isCodeEditorOpen}
   onClose={handleEditDialogClose}
   onCodeChange={handleCodeChange}
