@@ -22,7 +22,7 @@
   const gs = gestures.getGestures();
 
   const mainFiles = generateMakeCodeMain(gs.map(g => g.getName()));
-  let makeCodeProject: MakeCodeProject = $state.makeCodeProject ?? {
+  let makeCodeProject: MakeCodeProject = {
     text: {
       ...mainFiles,
       'README.md': ' ',
@@ -65,10 +65,6 @@
   };
   const handleCodeChange = (code: MakeCodeProject) => {
     makeCodeProject = code;
-    state.update(obj => {
-      obj.makeCodeProject = code;
-      return obj;
-    });
   };
 
   const handleDownload = (hexData: string) => {
