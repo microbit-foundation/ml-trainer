@@ -11,7 +11,6 @@
 </style>
 
 <script lang="ts">
-  import { createPopover, createSync, melt } from '@melt-ui/svelte';
   import FrontPageContentTile from '../components/FrontPageContentTile.svelte';
   import LinkOverlay from '../components/LinkOverlay.svelte';
   import LinkOverlayContainer from '../components/LinkOverlayContainer.svelte';
@@ -23,9 +22,6 @@
   import testModelImage from '../imgs/test_model_blue.svg';
   import trainModelImage from '../imgs/train_model_blue.svg';
   import { Paths, getTitle } from '../router/paths';
-  import StandardButton from '../components/StandardButton.svelte';
-  import StandardDialog from '../components/dialogs/StandardDialog.svelte';
-  import IconButton from '../components/IconButton.svelte';
 
   $: title = getTitle(Paths.HOME, $t);
 
@@ -62,11 +58,6 @@
       imgSrc: resourceGetStartedImage,
     },
   ];
-
-  const {
-    elements: { trigger, content, arrow, close },
-    states: { open },
-  } = createPopover({});
 </script>
 
 <svelte:head>
@@ -122,13 +113,4 @@
 
     <StartResumeActions class="justify-center" buttonSize="large" />
   </div>
-
-  <IconButton ariaLabel="" useAction={trigger}>popover btn</IconButton>
-  {#if $open}
-    <div use:content class="bg-red-500">
-      <div use:arrow />
-      <p>I am open</p>
-      <button class="close" use:close> close </button>
-    </div>
-  {/if}
 </main>
