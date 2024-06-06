@@ -16,6 +16,7 @@ import { HexOrigin } from '../../StaticConfiguration';
 import { DeviceRequestStates } from '../microbit-interfacing/MicrobitConnection';
 import { persistantWritable } from './storeUtil';
 import { logError, logEvent } from '../utils/logging';
+import { MakeCodeProject } from '@microbit-foundation/react-editor-embed';
 
 // TODO: Rename? Split up further?
 
@@ -86,6 +87,7 @@ export const state = writable<{
   inputMicrobitVersion: MBSpecs.MBVersion | -1;
   inputOrigin: HexOrigin;
   isOutputReady: boolean;
+  makeCodeProject: MakeCodeProject | undefined;
   outputHex: string | undefined;
   outputHexVersion: number;
   outputMicrobitVersion: MBSpecs.MBVersion | -1;
@@ -114,6 +116,7 @@ export const state = writable<{
   inputMicrobitVersion: -1,
   inputOrigin: HexOrigin.UNKNOWN,
   isOutputReady: false,
+  makeCodeProject: undefined,
   outputHex: undefined,
   outputHexVersion: -1,
   outputMicrobitVersion: -1,
