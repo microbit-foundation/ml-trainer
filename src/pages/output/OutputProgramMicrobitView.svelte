@@ -10,7 +10,7 @@
   import StandardButton from '../../components/StandardButton.svelte';
   import EditCodeDialog from '../../components/dialogs/EditCodeDialog.svelte';
   import { t } from '../../i18n';
-  import { generateMakeCodeMain } from '../../script/generateMakeCodeMain';
+  import { generateMakeCodeMain } from '../../script/makecode/generateMakeCodeMain';
   import { gestures } from '../../script/stores/Stores';
   import {
     ConnectDialogStates,
@@ -18,28 +18,33 @@
   } from '../../script/stores/connectDialogStore';
   import { state } from '../../script/stores/uiStore';
   import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
+  import { replaceUpdatedActionsWithNone } from '../../script/makecode/reconcileMakeCodeProject';
 
   const gs = gestures.getGestures();
+  const gestureNames = gs.map(g => g.getName());
 
-  const mainFiles = generateMakeCodeMain(gs.map(g => g.getName()));
-  let makeCodeProject: MakeCodeProject = $state.makeCodeProject ?? {
-    text: {
-      ...mainFiles,
-      'README.md': ' ',
-      'pxt.json': JSON.stringify({
-        name: 'Untitled',
-        description: '',
-        dependencies: {
-          core: '*',
-          microphone: '*',
-          radio: '*', // needed for compiling
-          'Machine Learning POC':
-            'github:microbit-foundation/pxt-ml-extension-poc#v0.3.5',
+  const mainFiles = generateMakeCodeMain(gestureNames);
+
+  let makeCodeProject: MakeCodeProject = $state.makeCodeProject
+    ? replaceUpdatedActionsWithNone($state.makeCodeProject, gestureNames)
+    : {
+        text: {
+          ...mainFiles,
+          'README.md': ' ',
+          'pxt.json': JSON.stringify({
+            name: 'Untitled',
+            description: '',
+            dependencies: {
+              core: '*',
+              microphone: '*',
+              radio: '*', // needed for compiling
+              'Machine Learning POC':
+                'github:microbit-foundation/pxt-ml-extension-poc#v0.3.5',
+            },
+            files: [...Object.keys(mainFiles), 'README.md'],
+          }),
         },
-        files: [...Object.keys(mainFiles), 'README.md'],
-      }),
-    },
-  };
+      };
 
   let isCodeEditorOpen = false;
   const handleEdit = () => {

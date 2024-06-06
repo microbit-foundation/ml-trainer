@@ -4,6 +4,14 @@
  * SPDX-License-Identifier: MIT
  */
 
+export const actionLabel = (name: string) => `mlrunner.Action.${name}`;
+
+export const filenames = {
+  mainTs: 'main.ts',
+  mainBlocks: 'main.blocks',
+  customTs: 'Machine_Learning_POC.ts',
+};
+
 export const iconNames: string[] = [
   'Heart',
   'SmallHeart',
