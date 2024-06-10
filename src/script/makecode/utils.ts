@@ -10,6 +10,7 @@ export const filenames = {
   mainTs: 'main.ts',
   mainBlocks: 'main.blocks',
   customTs: 'Machine_Learning_POC.ts',
+  customJson: 'Machine_Learning_POC.json',
 };
 
 export const isEmpty = (o: object) => {

@@ -24,24 +24,28 @@
   import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
   import {
     generateCustomTs,
-    getModelHexString,
-  } from '../../script/makecode/generateCustomTs';
+    generateCustomJson,
+  } from '../../script/makecode/generateCustomTsAndJson';
   import { filenames, iconNames, isEmpty, pxt } from '../../script/makecode/utils';
   import { model as modelStore } from '../../script/stores/mlStore';
+  import Gesture from '../../script/domain/Gesture';
+  import { LayersModel } from '@tensorflow/tfjs';
 
   const updateCustomTs = (
     project: MakeCodeProject,
-    gestureNames: string[],
-    modelHexStr: string,
+    gs: Gesture[],
+    model: LayersModel,
   ) => {
     return {
       ...project.text,
       // Keep custom ts updated as gesture and model is updated by user
-      [filenames.customTs]: generateCustomTs(gestureNames, modelHexStr),
+      [filenames.customTs]: generateCustomTs(gs, model),
+      [filenames.customJson]: generateCustomJson(gs),
     };
   };
 
-  const generateDefaultProjectText = (gestureNames: string[], modelHexStr: string) => {
+  const generateDefaultProjectText = (gs: Gesture[], model: LayersModel) => {
+    const gestureNames = gs.map(g => g.getName());
     const actionConfigs = gestureNames.map((name, idx) => ({
       name,
       iconName: iconNames[idx % iconNames.length],
@@ -49,22 +53,21 @@
     return {
       [filenames.mainBlocks]: generateMakeCodeMainBlocksXml(actionConfigs),
       [filenames.mainTs]: generateMakeCodeMainTs(actionConfigs),
-      [filenames.customTs]: generateCustomTs(gestureNames, modelHexStr),
+      [filenames.customTs]: generateCustomTs(gs, model),
+      [filenames.customJson]: generateCustomJson(gs),
       'README.md': ' ',
       'pxt.json': JSON.stringify(pxt),
     };
   };
 
   const gs = gestures.getGestures();
-  const gestureNames = gs.map(g => g.getName());
   const model = get(modelStore);
   const savedProject = get(makeCodeProject);
-  const modelHexStr = getModelHexString(gestureNames, model);
 
   let project: MakeCodeProject = {
     text: isEmpty(savedProject)
-      ? generateDefaultProjectText(gestureNames, modelHexStr)
-      : updateCustomTs(savedProject as MakeCodeProject, gestureNames, modelHexStr),
+      ? generateDefaultProjectText(gs, model)
+      : updateCustomTs(savedProject as MakeCodeProject, gs, model),
   };
 
   let isCodeEditorOpen = false;

@@ -6,6 +6,7 @@
 import { compileModel } from 'ml4f';
 import { generateBlob } from 'ml-header-generator';
 import { LayersModel } from '@tensorflow/tfjs';
+import Gesture from '../domain/Gesture';
 
 const createMlEvents = (actions: string[]) => {
   let code = '';
@@ -34,7 +35,9 @@ export const getModelHexString = (actionNames: string[], m: LayersModel) => {
   return headerHexString + modelHexString;
 };
 
-export const generateCustomTs = (actions: string[], modelHexString: string) => {
+export const generateCustomTs = (gs: Gesture[], model: LayersModel) => {
+  const actions = gs.map(g => g.getName());
+
   return `// Auto-generated. Do not edit.
   namespace mlrunner {
     export namespace Action {
@@ -44,7 +47,7 @@ export const generateCustomTs = (actions: string[], modelHexString: string) => {
   }
   
   getModelBlob = (): Buffer =>  {
-    const result = hex\`${modelHexString}\`;
+    const result = hex\`${getModelHexString(actions, model)}\`;
     return result;
   }
   
@@ -52,4 +55,15 @@ export const generateCustomTs = (actions: string[], modelHexString: string) => {
   
   // Auto-generated. Do not edit. Really.
   `;
+};
+
+export const generateCustomJson = (gs: Gesture[]) => {
+  return JSON.stringify(
+    gs.map(g => ({
+      ID: g.getId(),
+      name: g.getName(),
+      numRecordings: g.getRecordings().length,
+      requiredConfidence: g.getConfidence().getRequiredConfidence(),
+    })),
+  );
 };
