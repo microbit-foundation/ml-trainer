@@ -28,22 +28,12 @@
   } from '../../script/makecode/generateCustomTs';
   import { filenames, iconNames, isEmpty, pxt } from '../../script/makecode/utils';
   import { model as modelStore } from '../../script/stores/mlStore';
-  import { LayersModel } from '@tensorflow/tfjs';
-
-  const getSavedModelHexString = (p: MakeCodeProject): string => {
-    const customTs = p.text[filenames.customTs];
-    const hexString = customTs.split(' ').find(s => s.startsWith('hex`'));
-    return hexString!.replace('hex`', '').replace('`;', '');
-  };
 
   const updateCustomTs = (
     project: MakeCodeProject,
     gestureNames: string[],
-    model: LayersModel,
+    modelHexStr: string,
   ) => {
-    const modelHexStr = model
-      ? getModelHexString(gestureNames, model)
-      : getSavedModelHexString(savedProject as MakeCodeProject);
     return {
       ...project.text,
       // Keep custom ts updated as gesture and model is updated by user
@@ -51,8 +41,7 @@
     };
   };
 
-  const generateDefaultProjectText = (gestureNames: string[], model: LayersModel) => {
-    const modelHexStr = getModelHexString(gestureNames, model);
+  const generateDefaultProjectText = (gestureNames: string[], modelHexStr: string) => {
     const actionConfigs = gestureNames.map((name, idx) => ({
       name,
       iconName: iconNames[idx % iconNames.length],
@@ -70,11 +59,12 @@
   const gestureNames = gs.map(g => g.getName());
   const model = get(modelStore);
   const savedProject = get(makeCodeProject);
+  const modelHexStr = getModelHexString(gestureNames, model);
 
   let project: MakeCodeProject = {
     text: isEmpty(savedProject)
-      ? generateDefaultProjectText(gestureNames, model)
-      : updateCustomTs(savedProject as MakeCodeProject, gestureNames, model),
+      ? generateDefaultProjectText(gestureNames, modelHexStr)
+      : updateCustomTs(savedProject as MakeCodeProject, gestureNames, modelHexStr),
   };
 
   let isCodeEditorOpen = false;
