@@ -12,14 +12,14 @@ import {
   get,
   writable,
 } from 'svelte/store';
+import GestureRepository from '../repository/GestureRepository';
 import {
   GestureData,
   GestureOutput,
   RecordingData,
-  getNewMatrix,
+  getNewNumberMatrix,
 } from '../stores/mlStore';
 import Gesture, { GestureID } from './Gesture';
-import GestureRepository from '../repository/GestureRepository';
 
 export type PersistantGestureData = {
   name: string;
@@ -68,7 +68,7 @@ class Gestures implements Readable<GestureData[]> {
     return this.addGestureFromPersistedData({
       ID: newId,
       name: name,
-      matrix: getNewMatrix(),
+      matrix: getNewNumberMatrix(),
       recordings: [],
       output: {}, //TODO: ADD DEFAULT VALUES HERE
     });

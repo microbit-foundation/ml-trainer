@@ -97,7 +97,7 @@
     {:else}
       <div class="flex flex-col flex-grow">
         <div
-          class="grid grid-cols-[210px,1fr] gap-x-7 items-center flex-shrink-0 h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
+          class="grid grid-cols-[292px,1fr] gap-x-7 items-center flex-shrink-0 h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
           <Information
             isLightTheme={false}
             underlineIconText={false}
@@ -113,7 +113,7 @@
             bodyText={$t('content.data.dataDescription')} />
         </div>
         <div
-          class="grid grid-cols-[210px,1fr] auto-rows-max gap-x-7 gap-y-3 py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
+          class="grid grid-cols-[292px,1fr] auto-rows-max gap-x-7 gap-y-3 py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
           {#each $gestures as gesture (gesture.ID)}
             <section class="contents">
               <Gesture
