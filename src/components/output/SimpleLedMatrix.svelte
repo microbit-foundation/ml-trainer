@@ -21,10 +21,11 @@
 
 <script lang="ts">
   export let matrix: boolean[];
+  export let ariaLabel: string | undefined = undefined;
   export let brandColor: boolean = false;
 </script>
 
-<div class="buttonGrid h-18 w-18 select-none ml-0">
+<div class="buttonGrid h-18 w-18 select-none ml-0" role="img" aria-label={ariaLabel}>
   <!-- Draw all 25 boxes -->
   {#each matrix as button}
     <div

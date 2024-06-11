@@ -55,7 +55,7 @@
   import StandardDialog from './dialogs/StandardDialog.svelte';
   import { logEvent, logMessage } from '../script/utils/logging';
   import LedMatrix from './output/LedMatrix.svelte';
-  import { createPopover, createSync } from '@melt-ui/svelte';
+  import { createPopover } from '@melt-ui/svelte';
   import { matrixImages } from '../script/utils/matrixImages';
   import SimpleLedMatrix from './output/SimpleLedMatrix.svelte';
 
@@ -67,14 +67,65 @@
   interface CountdownConfig {
     value: string | number;
     duration: number;
-    class?: string;
+    ledPattern: boolean[];
   }
+
+  const T = true;
+  const F = false;
   const countdownConfigs: CountdownConfig[] = [
-    { value: 3, duration: 500, class: 'text-8xl' },
-    { value: 2, duration: 500, class: 'text-8xl' },
-    { value: 1, duration: 500, class: 'text-8xl' },
-    { value: $t('content.data.recordingDialog.go'), duration: 1000, class: 'text-6xl' },
+    {
+      value: 3,
+      duration: 500,
+      ledPattern: [
+        [T, T, T, T, F],
+        [F, F, F, T, F],
+        [F, F, T, F, F],
+        [T, F, F, T, F],
+        [F, T, T, F, F],
+      ].flat(),
+    },
+    {
+      value: 2,
+      duration: 500,
+      ledPattern: [
+        [T, T, T, F, F],
+        [F, F, F, T, F],
+        [F, T, T, F, F],
+        [T, F, F, F, F],
+        [T, T, T, T, F],
+      ].flat(),
+    },
+    {
+      value: 1,
+      duration: 500,
+      ledPattern: [
+        [F, F, T, F, F],
+        [F, T, T, F, F],
+        [F, F, T, F, F],
+        [F, F, T, F, F],
+        [F, T, T, T, F],
+      ].flat(),
+    },
+    {
+      value: $t('content.data.recordingDialog.go'),
+      duration: 1000,
+      ledPattern: [
+        [T, T, T, T, T],
+        [T, F, F, F, T],
+        [T, F, F, F, T],
+        [T, F, F, F, T],
+        [T, T, T, T, T],
+      ].flat(),
+    },
   ];
+
+  const recordingLedPattern = [
+    [F, F, F, F, F],
+    [F, T, T, T, F],
+    [F, T, T, T, F],
+    [F, T, T, T, F],
+    [F, F, F, F, F],
+  ].flat();
 
   let isThisRecording = false;
   let showCountdown = false;
@@ -283,15 +334,15 @@
     <div class="flex flex-col space-y-3 self-center items-center justify-center">
       <div class="flex items-center h-100px">
         {#if countdownIdx < countdownConfigs.length}
-          <p
-            class="text-center font-bold text-brand-500 {countdownConfigs[countdownIdx]
-              .class || ''}">
-            {countdownConfigs[countdownIdx].value}
-          </p>
+          <SimpleLedMatrix
+            matrix={countdownConfigs[countdownIdx].ledPattern}
+            ariaLabel={`${countdownConfigs[countdownIdx].value}`}
+            brandColor />
         {:else}
-          <p class="text-5xl text-center font-bold text-brand-500">
-            {$t('content.data.recordingDialog.recording')}
-          </p>
+          <SimpleLedMatrix
+            matrix={recordingLedPattern}
+            ariaLabel={$t('content.data.recordingDialog.recording')}
+            brandColor />
         {/if}
       </div>
       <!-- Recording bar to show recording progress -->
