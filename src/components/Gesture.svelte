@@ -336,11 +336,13 @@
         {#if countdownIdx < countdownConfigs.length}
           <SimpleLedMatrix
             matrix={countdownConfigs[countdownIdx].ledPattern}
-            ariaLabel={`${countdownConfigs[countdownIdx].value}`} />
+            ariaLabel={`${countdownConfigs[countdownIdx].value}`}
+            brandColor />
         {:else}
           <SimpleLedMatrix
             matrix={recordingLedPattern}
-            ariaLabel={$t('content.data.recordingDialog.recording')} />
+            ariaLabel={$t('content.data.recordingDialog.recording')}
+            brandColor />
         {/if}
       </div>
       <!-- Recording bar to show recording progress -->
