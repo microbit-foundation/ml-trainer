@@ -37,6 +37,7 @@ export function loadDatasetFromFile(file: File) {
       const gestureData: PersistantGestureData[] = JSON.parse(
         contents,
       ) as PersistantGestureData[];
+      updateToUntrainedState();
       gestures.importFrom(gestureData);
     }
   };
