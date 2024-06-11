@@ -8,6 +8,7 @@
   import { t } from '../../i18n';
   import ClearIcon from 'virtual:icons/ri/delete-bin-2-line';
   import UploadIcon from 'virtual:icons/ri/upload-2-line';
+  import CollectIcon from 'virtual:icons/ri/clipboard-line';
   import DownloadIcon from 'virtual:icons/ri/download-2-line';
   import MenuItems from '../control-bar/control-bar-items/MenuItems.svelte';
   import MenuItem from '../control-bar/control-bar-items/MenuItem.svelte';
@@ -20,6 +21,7 @@
   export let onClearGestures: () => void;
   export let onDownloadGestures: () => void;
   export let onUploadGestures: () => void;
+  export let onCollectDataInField: () => void;
 
   const menu = createDropdownMenu({ forceVisible: true });
   const { trigger } = menu.elements;
@@ -38,6 +40,10 @@
   {#if $open}
     <MenuItems class="w-max" {menu}>
       <div class="py-2">
+        <MenuItem {menu} on:m-click={onCollectDataInField}>
+          <CollectIcon />
+          {$t('content.data.controlbar.button.collectDataInField')}
+        </MenuItem>
         <MenuItem {menu} on:m-click={onUploadGestures}>
           <UploadIcon />
           {$t('content.data.controlbar.button.uploadData')}

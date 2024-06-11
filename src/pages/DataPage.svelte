@@ -24,8 +24,8 @@
   import DataPageMenu from '../components/datacollection/DataPageMenu.svelte';
   import BottomPanel from '../components/bottom/BottomPanel.svelte';
   import { Paths, getTitle, navigate } from '../router/paths';
-
-  let isConnectionDialogOpen = false;
+  import StandardDialog from '../components/dialogs/StandardDialog.svelte';
+  import StandardButton from '../components/StandardButton.svelte';
 
   $: hasSomeData = (): boolean => {
     if ($gestures.length === 0) {
@@ -38,6 +38,14 @@
     if (confirm($t('content.data.controlbar.button.clearData.confirm'))) {
       clearGestures();
     }
+  };
+
+  let collectDataInFieldDialogIsOpen = false;
+  const onCollectDataInField = () => {
+    collectDataInFieldDialogIsOpen = true;
+  };
+  const onCloseCollectDataInFieldDialog = () => {
+    collectDataInFieldDialogIsOpen = false;
   };
 
   const onDownloadGestures = () => {
@@ -84,6 +92,21 @@
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
+
+<!-- Recording countdown popup -->
+<StandardDialog
+  isOpen={collectDataInFieldDialogIsOpen}
+  onClose={onCloseCollectDataInFieldDialog}
+  class="flex flex-col gap-8 w-120">
+  <svelte:fragment slot="heading">Collect data in the field</svelte:fragment>
+  <svelte:fragment slot="body">
+    <div class="flex flex-col space-y-3 self-center items-center justify-center">
+      <div class="flex items-center h-100px"></div>
+    </div>
+    <StandardButton type="primary" onClick={onCloseCollectDataInFieldDialog}
+      >Okay</StandardButton>
+  </svelte:fragment>
+</StandardDialog>
 
 <div class="flex flex-col h-full inline-block w-full bg-backgrounddark">
   <TabView />
@@ -138,7 +161,8 @@
           downloadDisabled={$gestures.length === 0}
           {onClearGestures}
           {onDownloadGestures}
-          {onUploadGestures} />
+          {onUploadGestures}
+          {onCollectDataInField} />
       </div>
     </div>
     <div class="h-160px w-full">
