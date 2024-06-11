@@ -22,13 +22,18 @@
 <script lang="ts">
   export let matrix: boolean[];
   export let ariaLabel: string | undefined = undefined;
+  export let brandColor: boolean = false;
 </script>
 
 <div class="buttonGrid h-18 w-18 select-none ml-0" role="img" aria-label={ariaLabel}>
   <!-- Draw all 25 boxes -->
   {#each matrix as button}
     <div
-      class="{button ? 'bg-[#FF0000]' : 'bg-gray-300'} rounded-[2px]"
+      class="{button
+        ? brandColor
+          ? 'bg-brand-400'
+          : 'bg-[#FF0000]'
+        : 'bg-gray-300'} rounded-[2px]"
       class:turnedOn={button}
       class:turnedOff={!button} />
   {/each}

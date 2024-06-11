@@ -8,7 +8,7 @@
  */
 
 import { getPrediction } from '../script/getPrediction';
-import { GestureData, getNewMatrix } from '../script/stores/mlStore';
+import { GestureData, getNewBlankMatrix } from '../script/stores/mlStore';
 
 interface GestureConfig {
   name: string;
@@ -19,7 +19,7 @@ interface GestureConfig {
 const createGesture = (g: GestureConfig): GestureData => ({
   name: g.name,
   ID: 1,
-  matrix: getNewMatrix(),
+  matrix: getNewBlankMatrix(),
   recordings: [],
   output: {},
   confidence: {

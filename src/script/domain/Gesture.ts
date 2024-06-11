@@ -9,7 +9,7 @@ import {
   GestureOutput,
   RecordingData,
   SoundData,
-  getNewMatrix,
+  getNewBlankMatrix,
 } from '../stores/mlStore';
 import { PersistantGestureData } from './Gestures';
 import { PinTurnOnState } from '../../components/output/PinSelectorUtil';
@@ -130,7 +130,7 @@ class Gesture implements Readable<GestureData> {
       const confidenceData = stores[1];
       const derivedData: GestureData = {
         ID: peristantData.ID,
-        matrix: peristantData.matrix ?? getNewMatrix(),
+        matrix: peristantData.matrix ?? getNewBlankMatrix(),
         name: peristantData.name,
         recordings: peristantData.recordings,
         output: peristantData.output,

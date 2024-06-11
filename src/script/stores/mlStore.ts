@@ -15,6 +15,7 @@ import { PersistantGestureData } from '../domain/Gestures';
 import Gesture, { GestureID } from '../domain/Gesture';
 import { gestures } from './Stores';
 import { TrainingStatus } from '../domain/Model';
+import { matrixNumbers } from '../utils/matrixImages';
 
 export type RecordingData = {
   ID: number;
@@ -64,8 +65,25 @@ export function clearGestures() {
   gestures.clearGestures();
 }
 
-export function getNewMatrix() {
+export function getNewBlankMatrix() {
   return new Array(25).fill(false);
+}
+
+export function getNewNumberMatrix() {
+  const g = gestures.getGestures();
+  const numGestures = g.length;
+  if (numGestures > 9) {
+    return matrixNumbers.get((numGestures + 1) % 9);
+  } else {
+    let i = numGestures + 1;
+    while (true) {
+      if (g.find(g => g.getMatrix().toString() === matrixNumbers.get(i)?.toString())) {
+        i++;
+      } else {
+        return matrixNumbers.get(i);
+      }
+    }
+  }
 }
 
 export type GestureData = {

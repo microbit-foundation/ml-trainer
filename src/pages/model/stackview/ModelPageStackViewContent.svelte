@@ -72,8 +72,8 @@
   <div class="flex flex-col flex-grow">
     <div
       class="grid {enableOutputGestures
-        ? 'grid-cols-[240px,360px,177px,146px,1fr]'
-        : 'grid-cols-[240px,max-content]'} gap-x-7 items-center flex-shrink-0 h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
+        ? 'grid-cols-[292px,360px,177px,146px,1fr]'
+        : 'grid-cols-[292px,max-content]'} gap-x-7 items-center flex-shrink-0 h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
       <Information
         underlineIconText={false}
         isLightTheme={false}
@@ -106,8 +106,8 @@
     </div>
     <div
       class="grid {enableOutputGestures
-        ? 'grid-cols-[210px,360px,177px,146px,max-content]'
-        : 'grid-cols-[210px,max-content]'} auto-rows-max gap-x-7 gap-y-3 py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
+        ? 'grid-cols-[292px,360px,177px,146px,max-content]'
+        : 'grid-cols-[292px,max-content]'} auto-rows-max gap-x-7 gap-y-3 py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
       <!-- Display all gestures and their output capabilities -->
       {#each gestures.getGestures() as gesture}
         <section class="contents">

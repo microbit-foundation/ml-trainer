@@ -59,13 +59,14 @@
   import {
     type GestureData,
     updateGestureLEDOutput,
-    getNewMatrix,
+    getNewBlankMatrix,
     updateGestureMatrix,
   } from '../../script/stores/mlStore';
 
   type Mode = 'input' | 'output';
   export let mode: Mode = 'output';
   export let editable: boolean = true;
+  export let brandColor: boolean = false;
 
   export const trigger = () => {
     Microbits.getOutputMicrobit()?.setLeds(matrix);
@@ -75,8 +76,8 @@
 
   $: matrix =
     mode === 'output'
-      ? gesture.output?.matrix ?? getNewMatrix()
-      : gesture.matrix ?? getNewMatrix();
+      ? gesture.output?.matrix ?? getNewBlankMatrix()
+      : gesture.matrix ?? getNewBlankMatrix();
 
   // Variable for saving the current type-of-click
   // This helps when users drag to draw on the 5x5 grid
@@ -115,7 +116,11 @@
   {#each matrix as button, i}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
-      class="{button ? 'bg-[#FF0000]' : 'bg-gray-300'} rounded-[2px] transition ease"
+      class="{button
+        ? brandColor
+          ? 'bg-brand-400'
+          : 'bg-[#FF0000]'
+        : 'bg-gray-300'} rounded-[2px] transition ease"
       class:turnedOn={button}
       class:turnedOff={!button}
       class:cursor-pointer={editable}

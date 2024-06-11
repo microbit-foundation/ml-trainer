@@ -199,11 +199,14 @@
 </script>
 
 <!-- ACTION TITLE -->
-<GestureTilePart elevated={true}>
-  <div class="items-center h-full flex py-2 px-6 flex-col gap-1">
-    <LedMatrix mode="input" editable={false} gesture={$gesture} />
-    <h3 class="w-full break-words">{$gesture.name}</h3>
-  </div></GestureTilePart>
+<GestureTilePart small elevated={true}>
+  <div class="flex items-center justify-center w-full h-full relative gap-5 px-2">
+    <div class="flex items-center gap-1">
+      <LedMatrix mode="input" editable={false} gesture={$gesture} brandColor />
+    </div>
+    <h3 class="w-full break-words truncate">{$gesture.name}</h3>
+  </div>
+</GestureTilePart>
 
 <GestureTilePart elevated={true} class="relative">
   <!-- METER -->

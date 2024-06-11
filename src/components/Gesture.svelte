@@ -260,7 +260,7 @@
       return;
     }
 
-    if (editableName.length >= StaticConfiguration.gestureNameMaxLength) {
+    if ($nameBind.length >= StaticConfiguration.gestureNameMaxLength) {
       event.preventDefault();
       alertUser(
         $t('alert.data.classNameLengthAlert', {
@@ -276,12 +276,12 @@
   function handleActionNamePaste(event: ClipboardEvent) {
     const value = event.clipboardData?.getData('text');
     const maxLength = StaticConfiguration.gestureNameMaxLength;
-    if (value && value.length + editableName.length > maxLength) {
+    if (value && value.length + $nameBind.length > maxLength) {
       event.preventDefault();
       const caret = (event.target as HTMLInputElement).selectionStart ?? 0;
       const untrimmedValue =
-        editableName.substring(0, caret) + value + editableName.substring(caret);
-      editableName = untrimmedValue.substring(0, maxLength);
+        $nameBind.substring(0, caret) + value + $nameBind.substring(caret);
+      $nameBind = untrimmedValue.substring(0, maxLength);
       alertUser(
         $t('alert.data.classNameLengthAlert', {
           values: {
@@ -309,25 +309,6 @@
     selectGesture();
   }
 
-  $: editableName = $nameBind ?? gesturePlaceholderName;
-  let isActionNameDialogOpen = false;
-
-  function onActionNameDialogOpen() {
-    editableName = $nameBind ?? gesturePlaceholderName;
-    isActionNameDialogOpen = true;
-  }
-  function onActionNameDialogClose() {
-    isActionNameDialogOpen = false;
-  }
-  function onActionNameEditSave() {
-    $nameBind = editableName;
-    onActionNameDialogClose();
-  }
-  function onActionSubmit(event: SubmitEvent) {
-    event.preventDefault();
-    onActionNameEditSave();
-  }
-
   const {
     elements: { trigger, content, arrow },
     states,
@@ -340,36 +321,6 @@
     states.open.set(false);
   }
 </script>
-
-<!-- Edit action name dialog -->
-<StandardDialog
-  isOpen={isActionNameDialogOpen}
-  onClose={onActionNameDialogClose}
-  class="w-100 space-y-5">
-  <svelte:fragment slot="heading">Edit action name</svelte:fragment>
-  <svelte:fragment slot="body">
-    <form on:submit={onActionSubmit}>
-      <label for="gestureName" class="sr-only"
-        >{$t('content.data.addAction.inputLabel')}</label>
-      <input
-        use:init
-        name="gestureName"
-        class="w-full col-start-2 p-2 col-end-5 transition ease rounded bg-gray-100 placeholder-gray-500 outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
-        id="gestureName"
-        placeholder={gesturePlaceholderName}
-        bind:value={editableName}
-        on:keypress={handleActionNameKeypress}
-        on:paste={handleActionNamePaste} />
-    </form>
-
-    <div class="flex gap-x-3 justify-end">
-      <StandardButton size="normal" onClick={onActionNameDialogClose}
-        >Cancel</StandardButton>
-      <StandardButton size="normal" type="primary" onClick={onActionNameEditSave}
-        >Confirm</StandardButton>
-    </div>
-  </svelte:fragment>
-</StandardDialog>
 
 <!-- Recording countdown popup -->
 <StandardDialog
@@ -408,10 +359,9 @@
      You can instead interact with the button. A better model of row selection would be a good enhancement. -->
 <div on:click={selectGesture}>
   <GestureTilePart small elevated selected={isChosenGesture || showAddActionWalkThrough}>
-    <div
-      class="flex items-center justify-center w-full h-full p-2 relative flex-col gap-1">
+    <div class="flex items-center justify-center w-full h-full relative gap-2 px-2">
       {#if !showAddActionWalkThrough}
-        <div class="absolute right-2 top-2">
+        <div class="absolute right-1 top-1">
           <IconButton
             ariaLabel={$t('content.data.deleteAction', {
               values: {
@@ -424,32 +374,40 @@
           </IconButton>
         </div>
       {/if}
-      <div class="flex items-end gap-2">
-        <LedMatrix mode="input" gesture={$gesture} />
+      <div class="flex items-center gap-1">
+        <LedMatrix mode="input" gesture={$gesture} brandColor />
         <IconButton ariaLabel="Change image" {...$trigger} useAction={trigger}>
           <ArrowDownIcon class="text-xl m-1" />
         </IconButton>
       </div>
       {#if states.open}
-        <div class="bg-white shadow-md rounded-xl p-5 z-10" {...$content} use:content>
+        <div class="bg-white shadow-md rounded-xl p-4 z-10" {...$content} use:content>
           <div {...$arrow} use:arrow />
-          <div class="grid grid-cols-5 gap-5 h-100 overflow-y-auto">
+          <div class="grid grid-cols-5 gap-4 h-100 overflow-y-auto">
             {#each Object.values(matrixImages) as image}
-              <IconButton
-                ariaLabel="Select image"
-                onClick={() => handleImageSelection($gesture.ID, image)}>
-                <SimpleLedMatrix matrix={image} />
-              </IconButton>
+              <div class="m-1">
+                <IconButton
+                  ariaLabel="Select image"
+                  onClick={() => handleImageSelection($gesture.ID, image)}>
+                  <SimpleLedMatrix matrix={image} brandColor />
+                </IconButton>
+              </div>
             {/each}
           </div>
         </div>
       {/if}
-      <div class="flex gap-x-3 px-3 pr-0 w-full items-center justify-between">
-        <h3 class="w-full truncate">{$nameBind}</h3>
-        <IconButton ariaLabel="Edit action name" onClick={onActionNameDialogOpen}>
-          <EditIcon class="text-xl m-1" />
-        </IconButton>
-      </div>
+      <label for="gestureName" class="sr-only"
+        >{$t('content.data.addAction.inputLabel')}</label>
+      <input
+        use:init
+        name="gestureName"
+        class="w-40 col-start-2 p-2 col-end-5 transition ease rounded bg-gray-100 placeholder-gray-500 outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
+        id="gestureName"
+        placeholder={gesturePlaceholderName}
+        bind:value={$nameBind}
+        on:keypress={handleActionNameKeypress}
+        on:paste={handleActionNamePaste}
+        on:focus={selectGesture} />
     </div>
   </GestureTilePart>
 </div>
