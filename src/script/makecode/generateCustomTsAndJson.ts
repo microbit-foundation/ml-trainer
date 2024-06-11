@@ -22,32 +22,31 @@ const arrayBufferToHexString = (input: Uint8Array): string =>
     .join('')
     .toUpperCase();
 
-export const getModelHexString = (actionNames: string[], m: LayersModel) => {
+export const generateCustomTs = (gs: Gesture[], m: LayersModel) => {
   const customHeaderBlob = generateBlob({
     samples_period: 25,
     samples_length: 80,
     sample_dimensions: 3,
-    labels: actionNames,
+    actions: gs.map(g => ({
+      label: g.getName(),
+      threshold: g.getConfidence().getRequiredConfidence(),
+    })),
   });
   const headerHexString = arrayBufferToHexString(new Uint8Array(customHeaderBlob));
   const { machineCode } = compileModel(m, {});
   const modelHexString = arrayBufferToHexString(machineCode);
-  return headerHexString + modelHexString;
-};
-
-export const generateCustomTs = (gs: Gesture[], model: LayersModel) => {
-  const actions = gs.map(g => g.getName());
+  const actionLabels = gs.map(g => g.getName());
 
   return `// Auto-generated. Do not edit.
   namespace mlrunner {
     export namespace Action {
-  ${createMlEvents(actions)}
-      actions = [None,${actions.toString()}];
+  ${createMlEvents(actionLabels)}
+      actions = [None,${actionLabels.toString()}];
     }
   }
   
   getModelBlob = (): Buffer =>  {
-    const result = hex\`${getModelHexString(actions, model)}\`;
+    const result = hex\`${headerHexString + modelHexString}\`;
     return result;
   }
   
