@@ -14,6 +14,7 @@
   import IconButton from '../IconButton.svelte';
   import MoreIcon from 'virtual:icons/mdi/dots-vertical';
   import { createDropdownMenu } from '@melt-ui/svelte';
+  import Microbits from '../../script/microbit-interfacing/Microbits';
 
   export let downloadDisabled = false;
   export let clearDisabled = false;
@@ -24,6 +25,10 @@
   const menu = createDropdownMenu({ forceVisible: true });
   const { trigger } = menu.elements;
   const { open } = menu.states;
+
+  const importDataFromLog = () => {
+    Microbits.getInputMicrobit()?.getLogData();
+  };
 </script>
 
 <div class="relative inline-block leading-none">
@@ -49,6 +54,10 @@
         <MenuItem {menu} on:m-click={onClearGestures} disabled={clearDisabled}>
           <ClearIcon />
           {$t('content.data.controlbar.button.clearData')}
+        </MenuItem>
+        <MenuItem {menu} on:m-click={importDataFromLog}>
+          <UploadIcon />
+          Import from data log
         </MenuItem>
       </div>
     </MenuItems>

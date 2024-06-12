@@ -87,7 +87,46 @@ int main()
 {
     // Initialise the micro:bit runtime.
     uBit.init();
-    
+
+    // Add basic data logging to test utility service.
+    uBit.log.setTimeStamp(TimeStampFormat::Seconds);
+    bool logging = false;
+    bool loop = true;
+    while (loop)
+    {
+        if (uBit.buttonA.wasPressed())
+        {
+            uBit.display.scroll("L");
+            logging = true;
+        }
+        if (uBit.buttonB.wasPressed())
+        {
+            uBit.display.scroll("C");
+            logging = false;
+            uBit.log.clear(false);
+            loop = false;
+        }
+        if (uBit.logo.wasPressed()) {
+            logging = false;
+            loop = false;
+        }
+        if (uBit.log.isFull())
+        {
+            uBit.display.scroll("F");
+            logging = false;
+            loop = false;
+        }
+        if (logging)
+        {
+            uBit.log.beginRow();
+            uBit.log.logData("x", uBit.accelerometer.getX());
+            uBit.log.logData("y", uBit.accelerometer.getY());
+            uBit.log.logData("z", uBit.accelerometer.getZ());
+            uBit.log.endRow();
+            uBit.sleep(250);
+        }
+    }
+
     // Add listeners for events
     uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_CONNECTED, onConnected);
     uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_DISCONNECTED, onDisconnected);

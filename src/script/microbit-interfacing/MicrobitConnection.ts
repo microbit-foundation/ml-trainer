@@ -19,6 +19,8 @@ interface MicrobitConnection {
   reconnect(finalAttempt: boolean): Promise<void>;
 
   disconnect(): Promise<void>;
+
+  getLogData(): void;
 }
 
 export default MicrobitConnection;

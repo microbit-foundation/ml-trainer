@@ -253,6 +253,9 @@ export class MicrobitSerial implements MicrobitConnection {
     await this.connect(DeviceRequestStates.INPUT);
   }
 
+  // Stub.
+  getLogData = (): void => {};
+
   private async sendCmdWaitResponse(
     cmd: protocol.MessageCmd,
   ): Promise<protocol.MessageResponse> {
