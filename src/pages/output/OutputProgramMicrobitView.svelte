@@ -81,6 +81,12 @@
     project = code;
     $makeCodeProject = code;
   };
+  const handleResetToDefault = () => {
+    $makeCodeProject = {};
+    project = {
+      text: generateDefaultProjectText(gs, model),
+    };
+  };
 
   const handleDownload = (hexData: string) => {
     state.update(obj => {
@@ -100,8 +106,12 @@
   {$t('content.output.description')}
 </p>
 <CodeView code={project} />
-<StandardButton onClick={handleEdit} class="my-5" type="primary"
-  >{$t('content.output.button.program')}</StandardButton>
+<div class="flex flex-row my-5 gap-5">
+  <StandardButton onClick={handleEdit} type="primary"
+    >{$t('content.output.button.program')}</StandardButton>
+  <StandardButton onClick={handleResetToDefault} type="secondary"
+    >{$t('content.output.button.resetToDefault')}</StandardButton>
+</div>
 <EditCodeDialog
   code={project}
   isOpen={isCodeEditorOpen}
