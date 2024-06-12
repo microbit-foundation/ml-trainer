@@ -14,7 +14,7 @@
 
 MicroBit uBit;
 
-typedef __uint8_t uint8_t ;
+typedef __uint8_t uint8_t;
 
 // Services
 MicroBitAccelerometerService *accel;
@@ -25,13 +25,14 @@ MicroBitButtonService *btn;
 
 // State
 int connected = 0;
+int isCollectFieldDataMode = 1;
 
 // Manually increase this build number each build. Used by the application to determine what capabilities the firmware has.
 int buildNumber = 1;
 
 /**
  * @brief Sends a message with UART
- * 
+ *
  * @param s The message
  */
 void sendString(ManagedString s)
@@ -62,7 +63,7 @@ void onConnected(MicroBitEvent)
 void onDisconnected(MicroBitEvent)
 {
     connected = 0; // Set the connected flag
-    
+
     printSmiley(SAD_SMILEY);
 
     uBit.sleep(2000);
@@ -76,18 +77,19 @@ void onDelim(MicroBitEvent)
 {
     int beat = 200;
     ManagedString r = uart->readUntil("#");
-    ManagedString prefix = r.substring(0,2);
-    if (prefix == "s_") { // Will be request to play sound
-        ManagedString soundNo = r.substring(2,1);
+    ManagedString prefix = r.substring(0, 2);
+    if (prefix == "s_")
+    { // Will be request to play sound
+        ManagedString soundNo = r.substring(2, 1);
         playSound(getSound(soundNo), beat);
     }
 }
 
-int main()
+/**
+ * @brief Bluetooth connect and
+ */
+void connectAndCollectData()
 {
-    // Initialise the micro:bit runtime.
-    uBit.init();
-    
     // Add listeners for events
     uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_CONNECTED, onConnected);
     uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_DISCONNECTED, onDisconnected);
@@ -107,11 +109,28 @@ int main()
     printSmiley(GLAD_SMILEY);
 
     uBit.sleep(400);
-    if (!connected) {
+    if (!connected)
+    {
         printPairPatternAnimated();
     }
-    if (connected) {
+    if (connected)
+    {
         printSmiley(GLAD_SMILEY);
+    }
+}
+
+int main()
+{
+    // Initialise the micro:bit runtime.
+    uBit.init();
+
+    if (isCollectFieldDataMode)
+    {
+        collectFieldData();
+    }
+    else
+    {
+        connectAndCollectData();
     }
     release_fiber();
 }
