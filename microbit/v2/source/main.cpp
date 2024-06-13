@@ -124,13 +124,32 @@ int main()
     // Initialise the micro:bit runtime.
     uBit.init();
 
-    if (isCollectFieldDataMode)
+    // Add listeners for events
+    uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_CONNECTED, onConnected);
+    uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_DISCONNECTED, onDisconnected);
+    uBit.messageBus.listen(MICROBIT_ID_BLE_UART, MICROBIT_UART_S_EVT_DELIM_MATCH, onDelim);
+
+    uBit.bleManager.setTransmitPower(7);
+
+    // Initialise the micro:bit services.
+    uart = new MicroBitUARTService(*uBit.ble, 32, 32);
+    led = new MicroBitLEDService(*uBit.ble, uBit.display);
+    io = new MicroBitIOPinService(*uBit.ble, uBit.io);
+    btn = new MicroBitButtonService(*uBit.ble);
+    accel = new MicroBitAccelerometerService(*uBit.ble, uBit.accelerometer);
+
+    uart->eventOn("#");
+
+    collectFieldData();
+
+    uBit.sleep(400);
+    if (!connected)
     {
-        collectFieldData();
+        printPairPatternAnimated();
     }
-    else
+    if (connected)
     {
-        connectAndCollectData();
+        printSmiley(GLAD_SMILEY);
     }
     release_fiber();
 }
