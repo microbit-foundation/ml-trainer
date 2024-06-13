@@ -76,13 +76,6 @@ ManagedString getAndShowCurrentAction(const Action *actions, int actionId, int n
     return ManagedString(a.name);
 }
 
-void logActionData(const ManagedString actionData)
-{
-    uBit.log.beginRow();
-    uBit.log.logString(actionData);
-    uBit.log.endRow();
-}
-
 int getNumActions()
 {
     uint32_t csvLen = uBit.log.getDataLength(DataFormat::CSV);
@@ -108,14 +101,6 @@ int getNumActions()
 
 void collectFieldData()
 {
-    bool isLogging = false;
-    int numSamples = 0;
-
-    // Logging action data to first row
-    // name of action1, led pattern1; name of action2...
-    // TODO: To be replaced
-    logActionData(ManagedString("still,0000000000111110000000000;shake,0000010101010100000000000;\n"));
-
     // Parse actions from first row of data log
     uint32_t csvLen = uBit.log.getDataLength(DataFormat::CSV);
     int numActions = getNumActions();
@@ -149,10 +134,18 @@ void collectFieldData()
         }
     }
 
+    bool looping = true;
+    bool isLogging = false;
+    int numSamples = 0;
     int actionId = 0;
+
     ManagedString currAction = getAndShowCurrentAction(actions, actionId, numActions);
-    while (1)
+    while (looping)
     {
+        if (uBit.logo.wasPressed())
+        {
+            looping = false;
+        }
         if (uBit.log.isFull())
         {
             uBit.display.scroll("F");

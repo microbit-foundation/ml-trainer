@@ -85,42 +85,29 @@ void onDelim(MicroBitEvent)
     }
 }
 
-/**
- * @brief Bluetooth connect and
- */
-void connectAndCollectData()
+void logActionDataIfEmptyLog(const ManagedString actionData)
 {
-    // Add listeners for events
-    uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_CONNECTED, onConnected);
-    uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_DISCONNECTED, onDisconnected);
-    uBit.messageBus.listen(MICROBIT_ID_BLE_UART, MICROBIT_UART_S_EVT_DELIM_MATCH, onDelim);
-
-    uBit.bleManager.setTransmitPower(7);
-
-    // Initialise the micro:bit services.
-    uart = new MicroBitUARTService(*uBit.ble, 32, 32);
-    led = new MicroBitLEDService(*uBit.ble, uBit.display);
-    io = new MicroBitIOPinService(*uBit.ble, uBit.io);
-    btn = new MicroBitButtonService(*uBit.ble);
-    accel = new MicroBitAccelerometerService(*uBit.ble, uBit.accelerometer);
-
-    uart->eventOn("#");
-
-    printSmiley(GLAD_SMILEY);
-
-    uBit.sleep(400);
-    if (!connected)
+    uint32_t csvLen = uBit.log.getDataLength(DataFormat::CSV);
+    if (!csvLen)
     {
-        printPairPatternAnimated();
-    }
-    if (connected)
-    {
-        printSmiley(GLAD_SMILEY);
+        uBit.log.beginRow();
+        uBit.log.logString(actionData);
+        uBit.log.endRow();
     }
 }
 
 int main()
 {
+    // Logging action data to first row
+    // name of action1, led pattern1; name of action2...
+    // TODO: To be replaced
+    logActionDataIfEmptyLog(ManagedString("still,0000000000111110000000000;shake,0000010101010100000000000;\n"));
+
+    if (isCollectFieldDataMode)
+    {
+        collectFieldData();
+    }
+
     // Initialise the micro:bit runtime.
     uBit.init();
 
@@ -140,7 +127,7 @@ int main()
 
     uart->eventOn("#");
 
-    collectFieldData();
+    printSmiley(GLAD_SMILEY);
 
     uBit.sleep(400);
     if (!connected)
