@@ -25,7 +25,7 @@ MicroBitButtonService *btn;
 
 // State
 int connected = 0;
-int isCollectFieldDataMode = 1;
+int isCollectFieldDataMode = 0;
 
 // Manually increase this build number each build. Used by the application to determine what capabilities the firmware has.
 int buildNumber = 1;
@@ -82,6 +82,11 @@ void onDelim(MicroBitEvent)
     { // Will be request to play sound
         ManagedString soundNo = r.substring(2, 1);
         playSound(getSound(soundNo), beat);
+    }
+    if (prefix == "d_")
+    { // Will be request to play sound
+        ManagedString actionData = r.substring(2, 1);
+        uBit.display.scroll(actionData);
     }
 }
 

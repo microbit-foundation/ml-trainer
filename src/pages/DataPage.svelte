@@ -26,6 +26,7 @@
   import { Paths, getTitle, navigate } from '../router/paths';
   import StandardDialog from '../components/dialogs/StandardDialog.svelte';
   import StandardButton from '../components/StandardButton.svelte';
+  import Microbits from '../script/microbit-interfacing/Microbits';
 
   $: hasSomeData = (): boolean => {
     if ($gestures.length === 0) {
@@ -46,6 +47,16 @@
   };
   const onCloseCollectDataInFieldDialog = () => {
     collectDataInFieldDialogIsOpen = false;
+  };
+
+  const onSwitchToFieldMode = () => {
+    if (Microbits.getInputMicrobit() === undefined) {
+      console.log('No input micro:bit?!');
+    }
+    Microbits.getInputMicrobit()?.sendToInputUart(
+      'd',
+      'still,0000000000111110000000000;shake,0000010101010100000000000;\n',
+    );
   };
 
   const onDownloadGestures = () => {
@@ -101,10 +112,17 @@
   <svelte:fragment slot="heading">Collect data in the field</svelte:fragment>
   <svelte:fragment slot="body">
     <div class="flex flex-col space-y-3 self-center items-center justify-center">
-      <div class="flex items-center h-100px"></div>
+      <div class="flex items-center h-100px">
+        Button A and B to switch action. Button A+B to start collecting data. Logo to
+        switch back to bluetooth mode. Reset button to switch back to logging mode.
+      </div>
     </div>
-    <StandardButton type="primary" onClick={onCloseCollectDataInFieldDialog}
-      >Okay</StandardButton>
+    <div class="flex flex-row space-x-3 self-center items-center justify-center">
+      <StandardButton type="primary" onClick={onSwitchToFieldMode}
+        >Switch to field mode</StandardButton>
+      <StandardButton type="secondary" onClick={onCloseCollectDataInFieldDialog}
+        >Cancel</StandardButton>
+    </div>
   </svelte:fragment>
 </StandardDialog>
 

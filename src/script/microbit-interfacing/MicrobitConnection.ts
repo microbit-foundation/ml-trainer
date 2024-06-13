@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { UARTMessageType } from './Microbits';
+
 export enum DeviceRequestStates {
   NONE,
   INPUT,
@@ -21,6 +23,8 @@ interface MicrobitConnection {
   disconnect(): Promise<void>;
 
   getLogData(): void;
+
+  sendToInputUart(type: UARTMessageType, value: string): void;
 }
 
 export default MicrobitConnection;
