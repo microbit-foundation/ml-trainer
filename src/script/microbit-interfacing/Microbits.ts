@@ -17,7 +17,7 @@ export type HexType =
   | 'radio-local'
   | 'radio-remote-dev';
 
-export type UARTMessageType = 'g' | 's' | 'd';
+export type UARTMessageType = 'g' | 's' | 'f';
 
 export const getHexFileUrl = (
   version: 1 | 2 | 'universal',

@@ -292,11 +292,12 @@ export class MicrobitBluetooth implements MicrobitConnection {
     await this.listenToAccelerometer();
     await this.listenToButton('A');
     await this.listenToButton('B');
-    const uartTXCharacteristic = await this.listenToUART(DeviceRequestStates.INPUT);
-    const utilityServiceCharacteristic = await this.listenToUtilityService();
+    await this.listenToUART(DeviceRequestStates.INPUT);
+    const uart = await this.getUartSendingDataCharacteristic();
+    const utilityCtrl = await this.listenToUtilityService();
     this.inputCharacteristics = {
-      utilityCtrl: utilityServiceCharacteristic,
-      uart: uartTXCharacteristic,
+      utilityCtrl,
+      uart,
     };
   }
 
@@ -374,9 +375,16 @@ export class MicrobitBluetooth implements MicrobitConnection {
     );
   }
 
-  private async listenToUART(
-    state: DeviceRequestStates,
-  ): Promise<BluetoothRemoteGATTCharacteristic> {
+  private async getUartSendingDataCharacteristic(): Promise<BluetoothRemoteGATTCharacteristic> {
+    const gattServer = this.assertGattServer();
+    const uartService = await gattServer.getPrimaryService(MBSpecs.Services.UART_SERVICE);
+    const uart = await uartService.getCharacteristic(
+      MBSpecs.Characteristics.UART_DATA_RX,
+    );
+    return uart;
+  }
+
+  private async listenToUART(state: DeviceRequestStates): Promise<void> {
     const gattServer = this.assertGattServer();
     const uartService = await gattServer.getPrimaryService(MBSpecs.Services.UART_SERVICE);
     const uartTXCharacteristic = await uartService.getCharacteristic(
@@ -396,7 +404,6 @@ export class MicrobitBluetooth implements MicrobitConnection {
         onUARTDataReceived(state, receivedString);
       },
     );
-    return uartTXCharacteristic;
   }
 
   private async listenToOutputServices(): Promise<void> {
@@ -410,10 +417,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
     const matrix = await ledService.getCharacteristic(
       MBSpecs.Characteristics.LED_MATRIX_STATE,
     );
-    const uartService = await gattServer.getPrimaryService(MBSpecs.Services.UART_SERVICE);
-    const uart = await uartService.getCharacteristic(
-      MBSpecs.Characteristics.UART_DATA_RX,
-    );
+    const uart = await this.getUartSendingDataCharacteristic();
     this.outputCharacteristics = {
       io,
       matrix,
@@ -476,7 +480,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
   };
 
   /**
-   * Sends a message through UART
+   * Sends a message to output micro:bit through UART
    * @param type The type of UART message, i.e 'g' for gesture and 's' for sound
    * @param value The message
    */
@@ -488,12 +492,13 @@ export class MicrobitBluetooth implements MicrobitConnection {
   };
 
   /**
-   * Sends a message through UART
+   * Sends a message to input micro:bit through UART
    * @param type The type of UART message, i.e 'g' for gesture and 's' for sound
    * @param value The message
    */
   sendToInputUart = (type: UARTMessageType, value: string): void => {
     this.queueInputAction(inputCharacteristics => {
+      console.log('message to dataview', `${type}_${value}`);
       const view = MBSpecs.Utility.messageToDataview(`${type}_${value}`);
       return inputCharacteristics.uart.writeValue(view);
     });
@@ -563,10 +568,10 @@ export class MicrobitBluetooth implements MicrobitConnection {
     }
     const action = this.inputWriteQueue.queue.shift();
     if (action) {
-      console.log('processInputQueue action');
       this.inputWriteQueue.busy = true;
       action(this.inputCharacteristics)
         .then(() => {
+          console.log('action success');
           this.inputWriteQueue.busy = false;
           this.processInputActionQueue();
         })

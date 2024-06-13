@@ -25,7 +25,7 @@ MicroBitButtonService *btn;
 
 // State
 int connected = 0;
-int isCollectFieldDataMode = 0;
+bool isCollectFieldDataMode = false;
 
 // Manually increase this build number each build. Used by the application to determine what capabilities the firmware has.
 int buildNumber = 1;
@@ -71,6 +71,20 @@ void onDisconnected(MicroBitEvent)
 }
 
 /**
+ * @brief Log action data in first row
+ */
+void logActionDataIfEmptyLog(const ManagedString actionData)
+{
+    uint32_t csvLen = uBit.log.getDataLength(DataFormat::CSV);
+    if (!csvLen)
+    {
+        uBit.log.beginRow();
+        uBit.log.logString(actionData);
+        uBit.log.endRow();
+    }
+}
+
+/**
  * @brief Handler for incoming UART messages.
  */
 void onDelim(MicroBitEvent)
@@ -83,31 +97,18 @@ void onDelim(MicroBitEvent)
         ManagedString soundNo = r.substring(2, 1);
         playSound(getSound(soundNo), beat);
     }
-    if (prefix == "d_")
-    { // Will be request to play sound
-        ManagedString actionData = r.substring(2, 1);
-        uBit.display.scroll(actionData);
-    }
-}
-
-void logActionDataIfEmptyLog(const ManagedString actionData)
-{
-    uint32_t csvLen = uBit.log.getDataLength(DataFormat::CSV);
-    if (!csvLen)
-    {
-        uBit.log.beginRow();
-        uBit.log.logString(actionData);
-        uBit.log.endRow();
+    if (prefix == "f_")
+    { // Collect field data
+        // TODO: Get action data from uart message
+        logActionDataIfEmptyLog(ManagedString("still,0000000000111110000000000;shake,0000010101010100000000000;\n"));
+        ManagedString data = r.substring(2, 1);
+        uBit.display.scroll(data);
+        // collectFieldData();
     }
 }
 
 int main()
 {
-    // Logging action data to first row
-    // name of action1, led pattern1; name of action2...
-    // TODO: To be replaced
-    logActionDataIfEmptyLog(ManagedString("still,0000000000111110000000000;shake,0000010101010100000000000;\n"));
-
     if (isCollectFieldDataMode)
     {
         collectFieldData();

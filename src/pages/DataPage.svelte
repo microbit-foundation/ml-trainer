@@ -53,10 +53,8 @@
     if (Microbits.getInputMicrobit() === undefined) {
       console.log('No input micro:bit?!');
     }
-    Microbits.getInputMicrobit()?.sendToInputUart(
-      'd',
-      'still,0000000000111110000000000;shake,0000010101010100000000000;\n',
-    );
+    // TODO: To send actiond data
+    Microbits.getInputMicrobit()?.sendToInputUart('f', 'XXX');
   };
 
   const onDownloadGestures = () => {
