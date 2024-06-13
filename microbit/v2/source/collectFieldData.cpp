@@ -21,26 +21,8 @@ const char *const RECORDING = "\
     000,070,070,070,000\n\
     000,000,000,000,000\n";
 
-const char *const STILL = "\
-    000,000,000,000,000\n\
-    000,000,000,000,000\n\
-    070,070,070,070,070\n\
-    000,000,000,000,000\n\
-    000,000,000,000,000\n";
-
-const char *const SHAKE = "\
-    000,000,000,000,000\n\
-    000,070,000,070,000\n\
-    070,000,070,000,070\n\
-    000,000,000,000,000\n\
-    000,000,000,000,000\n";
-
-// actionId 0 means still
-// actionId 1 means shake
-int actionId = 0;
-
-// Number of samples per recording
-int sampleSize = 80;
+int sampleSize = 80;        // Number of samples per recording
+int encodedLedSize = 5 * 5; // LED screen size
 
 /**
  * @brief Prints LED pattern
@@ -65,25 +47,110 @@ void countdown()
     printLed(RECORDING);
 }
 
-ManagedString refreshAction()
+class Action
 {
-    if (actionId % 2 == 0)
+public:
+    ManagedString name;
+    ManagedString led;
+};
+
+void printEncodedLed(const ManagedString encodedLed)
+{
+    char led[] = "000,000,000,000,000\n000,000,000,000,000\n000,000,000,000,000\n000,000,000,000,000\n000,000,000,000,000\n";
+    for (int i = 0; i < encodedLedSize; i++)
     {
-        printLed(STILL);
-        return ManagedString("still");
+        // if led is on, change from 000 -> 070
+        if (encodedLed.toCharArray()[i] == '1')
+        {
+            led[i * 4 + 1] = '7';
+        }
     }
-    else
+    printLed(led);
+}
+
+ManagedString getAndShowCurrentAction(const Action *actions, int actionId, int numActions)
+{
+    int id = abs(actionId % numActions);
+    Action a = actions[id];
+    printEncodedLed(a.led);
+    return ManagedString(a.name);
+}
+
+void logActionData(const ManagedString actionData)
+{
+    uBit.log.beginRow();
+    uBit.log.logString(actionData);
+    uBit.log.endRow();
+}
+
+int getNumActions()
+{
+    uint32_t csvLen = uBit.log.getDataLength(DataFormat::CSV);
+    int numActions = 0;
+    if (csvLen)
     {
-        printLed(SHAKE);
-        return ManagedString("shake");
+        for (size_t i = 0; i < csvLen; i++)
+        {
+            char csv_char;
+            uBit.log.readData(&csv_char, i, 1, DataFormat::CSV, csvLen);
+            if (csv_char == ';')
+            {
+                numActions++;
+            }
+            if (csv_char == '\n')
+            {
+                break;
+            }
+        }
     }
+    return numActions;
 }
 
 void collectFieldData()
 {
     bool isLogging = false;
     int numSamples = 0;
-    ManagedString currAction = refreshAction();
+
+    // Logging action data to first row
+    // name of action1, led pattern1; name of action2...
+    // TODO: To be replaced
+    logActionData(ManagedString("still,0000000000111110000000000;shake,0000010101010100000000000;\n"));
+
+    // Parse actions from first row of data log
+    uint32_t csvLen = uBit.log.getDataLength(DataFormat::CSV);
+    int numActions = getNumActions();
+    Action actions[numActions];
+    int idx = 0;
+    int startSegmentIdx = 0;
+    for (size_t i = 0; i < csvLen; i++)
+    {
+        char csv_char;
+        uBit.log.readData(&csv_char, i, 1, DataFormat::CSV, csvLen);
+        if (csv_char == ';')
+        {
+            // Get action name
+            int nameSize = i - startSegmentIdx - encodedLedSize - 1;
+            char name[nameSize];
+            uBit.log.readData(name, startSegmentIdx, nameSize, DataFormat::CSV, csvLen);
+
+            // Get led
+            char encodedLed[encodedLedSize];
+            uBit.log.readData(encodedLed, i - encodedLedSize, encodedLedSize, DataFormat::CSV, csvLen);
+
+            actions[idx].name = name;
+            actions[idx].led = encodedLed;
+
+            idx++;
+            startSegmentIdx = i + 1;
+        }
+        if (csv_char == '\n')
+        {
+            break;
+        }
+    }
+
+    int actionId = 0;
+    ManagedString currAction = getAndShowCurrentAction(actions, actionId, numActions);
     while (1)
     {
         if (uBit.log.isFull())
@@ -94,12 +161,12 @@ void collectFieldData()
         if (uBit.buttonA.wasPressed() && !isLogging)
         {
             actionId++;
-            currAction = refreshAction();
+            currAction = getAndShowCurrentAction(actions, actionId, numActions);
         }
         if (uBit.buttonB.wasPressed() && !isLogging)
         {
             actionId--;
-            currAction = refreshAction();
+            currAction = getAndShowCurrentAction(actions, actionId, numActions);
         }
         if (uBit.buttonAB.wasPressed() && !isLogging)
         { // Start recording sample
@@ -127,7 +194,7 @@ void collectFieldData()
             numSamples = 0;
             isLogging = false;
             uBit.audio.soundExpressions.playAsync("010230849100001000000100000000012800000100240000000000000000000000000000");
-            refreshAction();
+            getAndShowCurrentAction(actions, actionId, numActions);
         }
     }
 }
