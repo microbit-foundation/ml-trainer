@@ -106,18 +106,19 @@
   const LZMA = (window as any).LZMA ?? lzma.LZMA;
 
   const handleExport = () => {
+    const pxtMicrobitVersion = 'v6.0.28';
     const compressed = LZMA.compress(
       JSON.stringify({
         meta: {
-          // PXT version specified and may need updating
+          // pxt and pxt/microbit versions are specified and may need updating
           cloudId: 'pxt/microbit',
           targetVersions: {
-            branch: 'v5.0.12',
-            tag: 'v5.0.12',
+            branch: pxtMicrobitVersion,
+            tag: pxtMicrobitVersion,
             commits:
-              'https://github.com/microsoft/pxt-microbit/commits/97491d6832cccab6b5bdc05b58e4c6b5dcc18cdd',
-            target: '5.0.12',
-            pxt: '8.0.7',
+              'https://github.com/microsoft/pxt-microbit/commit/9d308fa3c282191768670a6558e4df8af2d715cf',
+            target: pxtMicrobitVersion,
+            pxt: '9.0.19',
           },
           editor: 'blocksprj',
           name: 'some name',
