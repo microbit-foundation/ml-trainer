@@ -30,6 +30,7 @@
   import { model as modelStore } from '../../script/stores/mlStore';
   import Gesture from '../../script/domain/Gesture';
   import { LayersModel } from '@tensorflow/tfjs';
+  import lzma from 'lzma/src/lzma_worker';
 
   const updateCustomTs = (
     project: MakeCodeProject,
@@ -100,32 +101,35 @@
     });
   };
 
+  // LZMA isn't a proper module.
+  // When bundled it assigns to window. At dev time it works via the above import.
+  const LZMA = (window as any).LZMA ?? lzma.LZMA;
+
   const handleExport = () => {
-    const element = document.createElement('a');
-    element.setAttribute(
-      'href',
-      'data:application/json;charset=utf-8,' +
-        encodeURIComponent(
-          JSON.stringify({
-            meta: {
-              // Requires updating for micro:bit pxt version
-              cloudId: 'pxt/microbit',
-              targetVersions: {
-                branch: 'v5.0.12',
-                tag: 'v5.0.12',
-                commits:
-                  'https://github.com/microsoft/pxt-microbit/commits/97491d6832cccab6b5bdc05b58e4c6b5dcc18cdd',
-                target: '5.0.12',
-                pxt: '8.0.7',
-              },
-              editor: 'blocksprj',
-              name: 'some name',
-            },
-            source: project.text,
-          }),
-        ),
+    const compressed = LZMA.compress(
+      JSON.stringify({
+        meta: {
+          // PXT version specified and may need updating
+          cloudId: 'pxt/microbit',
+          targetVersions: {
+            branch: 'v5.0.12',
+            tag: 'v5.0.12',
+            commits:
+              'https://github.com/microsoft/pxt-microbit/commits/97491d6832cccab6b5bdc05b58e4c6b5dcc18cdd',
+            target: '5.0.12',
+            pxt: '8.0.7',
+          },
+          editor: 'blocksprj',
+          name: 'some name',
+        },
+        source: project.text,
+      }),
+      1,
     );
-    element.setAttribute('download', 'project');
+    const element = document.createElement('a');
+    const file = new Blob([new Uint8Array(compressed)], { type: 'application/x-lmza' });
+    element.href = URL.createObjectURL(file);
+    element.setAttribute('download', 'project.mkcd');
     element.style.display = 'none';
     document.body.appendChild(element);
     element.click();
