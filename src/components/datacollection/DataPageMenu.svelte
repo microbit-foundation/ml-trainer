@@ -16,6 +16,9 @@
   import MoreIcon from 'virtual:icons/mdi/dots-vertical';
   import { createDropdownMenu } from '@melt-ui/svelte';
   import Microbits from '../../script/microbit-interfacing/Microbits';
+  import StandardDialog from '../dialogs/StandardDialog.svelte';
+  import LoadingAnimation from '../LoadingBlobs.svelte';
+  import StandardButton from '../StandardButton.svelte';
 
   export let downloadDisabled = false;
   export let clearDisabled = false;
@@ -28,10 +31,43 @@
   const { trigger } = menu.elements;
   const { open } = menu.states;
 
-  const importDataFromLog = () => {
-    Microbits.getInputMicrobit()?.getLogData();
+  let showLoadingDialog = false;
+  let logError = '';
+
+  const importDataFromLog = async () => {
+    try {
+      showLoadingDialog = true;
+      await Microbits.getInputMicrobit()?.getLogData();
+      showLoadingDialog = false;
+    } catch (err) {
+      logError = err as string;
+    }
   };
 </script>
+
+<StandardDialog
+  isOpen={showLoadingDialog}
+  onClose={() => {}}
+  closeOnEscape={false}
+  closeOnOutsideClick={false}
+  class="w-150 space-y-5">
+  <svelte:fragment slot="heading">Reading data log</svelte:fragment>
+  <svelte:fragment slot="body">
+    {#if !logError}
+      <div class="flex flex-col gap-5 justify-center items-center py-3">
+        <p>Transfering data...</p>
+        <LoadingAnimation />
+      </div>
+    {:else}
+      <p>Something went wrong.</p>
+      <p>{logError}</p>
+      <div class="flex items-center justify-end">
+        <StandardButton type="primary" onClick={() => (showLoadingDialog = false)}
+          >Close</StandardButton>
+      </div>
+    {/if}
+  </svelte:fragment>
+</StandardDialog>
 
 <div class="relative inline-block leading-none">
   <IconButton

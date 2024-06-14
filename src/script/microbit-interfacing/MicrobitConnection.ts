@@ -22,7 +22,7 @@ interface MicrobitConnection {
 
   disconnect(): Promise<void>;
 
-  getLogData(): void;
+  getLogData(): Promise<void>;
 
   sendToInputUart(type: UARTMessageType, value: string): void;
 }

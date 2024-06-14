@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { importGestureData } from '../stores/mlStore';
+import { transformCsvToGestureData } from './validate-log-data';
+
 enum RequestType {
   RequestTypeNone,
   RequestTypeLogLength,
@@ -44,7 +47,8 @@ export class LogDataProcessor implements ILogDataProcessor {
     this.requestWrite = requestWrite;
   }
 
-  getLogData = () => {
+  getLogData = (): void => {
+    this.data = null;
     const view = this.createLogLengthDataView();
     this.requestWrite(view);
   };
@@ -74,9 +78,6 @@ export class LogDataProcessor implements ILogDataProcessor {
   };
 
   private createLogReadDataView = (): DataView => {
-    if (!this.length) {
-      throw new Error('Missing log length. Cannot retrieve log data.');
-    }
     this.batchReceived = 0;
     this.batchLength = this.length - this.received;
     if (this.batchLength > 19 * this.batch) {
@@ -116,6 +117,11 @@ export class LogDataProcessor implements ILogDataProcessor {
     }
     // Is there a better way to do this?
     const logLength = new DataView(data).getUint32(0, true);
+
+    if (!logLength) {
+      throw new Error('Missing log length. Cannot retrieve log data.');
+    }
+
     this.length = logLength;
     this.index = 0;
     this.received = 0;
@@ -124,7 +130,7 @@ export class LogDataProcessor implements ILogDataProcessor {
     this.requestWrite(view);
   }
 
-  private logReadProcess(data: ArrayBuffer, dataLength: number): void {
+  private logReadProcess(data: ArrayBuffer, dataLength: number): boolean | undefined {
     if (dataLength < 1) {
       throw new Error('No data in response');
     }
@@ -144,9 +150,13 @@ export class LogDataProcessor implements ILogDataProcessor {
       this.index += this.batchReceived;
 
       if (this.received === this.length) {
+        // Data log read is finished.
         const dataAsCsv = new TextDecoder().decode(this.data);
-        console.log('Imported log data:');
-        console.log(dataAsCsv);
+        const importedData = transformCsvToGestureData(dataAsCsv);
+        // This is a rash step of just overwriting without a user prompt.
+        importGestureData(importedData);
+        // Return success to caller.
+        return true;
       }
 
       const view = this.createLogReadDataView();
@@ -154,7 +164,7 @@ export class LogDataProcessor implements ILogDataProcessor {
     }
   }
 
-  processReply(reply: DataView): void {
+  processReply(reply: DataView): boolean | undefined {
     const replyLength = reply.byteLength;
 
     if (!length) {
@@ -191,8 +201,7 @@ export class LogDataProcessor implements ILogDataProcessor {
         break;
       }
       case RequestType.RequestTypeLogRead: {
-        this.logReadProcess(data, dataLength);
-        break;
+        return this.logReadProcess(data, dataLength);
       }
       case RequestType.RequestTypeNone: {
         break;
