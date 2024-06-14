@@ -26,7 +26,7 @@ const compatibilityResult = checkCompatibility();
 export const compatibility = writable<CompatibilityStatus>(compatibilityResult);
 if (compatibilityResult.bluetooth) {
   navigator.bluetooth
-    .getAvailability()
+    ?.getAvailability()
     .then(bluetoothAvailable => {
       compatibility.update(s => {
         logEvent({

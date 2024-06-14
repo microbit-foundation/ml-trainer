@@ -37,8 +37,7 @@ export function loadDatasetFromFile(file: File) {
       const gestureData: PersistantGestureData[] = JSON.parse(
         contents,
       ) as PersistantGestureData[];
-      updateToUntrainedState();
-      gestures.importFrom(gestureData);
+      importGestureData(gestureData);
     }
   };
   reader.readAsText(file as Blob);
@@ -173,6 +172,11 @@ function updateToUntrainedState() {
 export function addGesture(name: string): void {
   updateToUntrainedState();
   gestures.createGesture(name);
+}
+
+export function importGestureData(gestureData: PersistantGestureData[]) {
+  updateToUntrainedState();
+  gestures.importFrom(gestureData);
 }
 
 // Delete this, maybe? updateToUntrainedState

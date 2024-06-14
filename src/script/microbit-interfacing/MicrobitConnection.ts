@@ -20,7 +20,7 @@ interface MicrobitConnection {
 
   disconnect(): Promise<void>;
 
-  getLogData(): void;
+  getLogData(): Promise<void>;
 }
 
 export default MicrobitConnection;

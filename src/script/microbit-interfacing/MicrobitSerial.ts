@@ -254,7 +254,9 @@ export class MicrobitSerial implements MicrobitConnection {
   }
 
   // Stub.
-  getLogData = (): void => {};
+  getLogData = (): Promise<void> => {
+    return Promise.reject('Not implemented');
+  };
 
   private async sendCmdWaitResponse(
     cmd: protocol.MessageCmd,

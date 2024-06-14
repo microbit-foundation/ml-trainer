@@ -90,6 +90,10 @@ export class MicrobitBluetooth implements MicrobitConnection {
     queue: [],
   };
 
+  private logReadResponse: Promise<void> | undefined;
+  private logReadResponseResolve: (() => void) | undefined;
+  private logReadResponseReject: ((reason?: any) => void) | undefined;
+
   constructor(
     public readonly name: string,
     public readonly device: BluetoothDevice,
@@ -314,7 +318,16 @@ export class MicrobitBluetooth implements MicrobitConnection {
     utilityServiceCharacteristic.addEventListener('characteristicvaluechanged', event => {
       const target = event.target as CharacteristicDataTarget;
       const reply = target.value;
-      this.logDataProcessor!.processReply(reply);
+      try {
+        const result = this.logDataProcessor!.processReply(reply);
+        if (result && this.logReadResponseResolve) {
+          this.logReadResponseResolve();
+        }
+      } catch (err) {
+        if (this.logReadResponseReject) {
+          this.logReadResponseReject(err);
+        }
+      }
     });
   }
 
@@ -416,8 +429,13 @@ export class MicrobitBluetooth implements MicrobitConnection {
     await this.listenToUART(DeviceRequestStates.OUTPUT);
   }
 
-  getLogData(): void {
+  getLogData(): Promise<void> {
+    this.logReadResponse = new Promise((res, rej) => {
+      this.logReadResponseResolve = res;
+      this.logReadResponseReject = rej;
+    });
     this.logDataProcessor?.getLogData();
+    return this.logReadResponse;
   }
 
   private setPinInternal = (pin: MBSpecs.UsableIOPin, on: boolean): void => {
