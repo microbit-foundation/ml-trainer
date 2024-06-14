@@ -99,6 +99,38 @@
       return s;
     });
   };
+
+  const handleExport = () => {
+    const element = document.createElement('a');
+    element.setAttribute(
+      'href',
+      'data:application/json;charset=utf-8,' +
+        encodeURIComponent(
+          JSON.stringify({
+            meta: {
+              // Requires updating for micro:bit pxt version
+              cloudId: 'pxt/microbit',
+              targetVersions: {
+                branch: 'v5.0.12',
+                tag: 'v5.0.12',
+                commits:
+                  'https://github.com/microsoft/pxt-microbit/commits/97491d6832cccab6b5bdc05b58e4c6b5dcc18cdd',
+                target: '5.0.12',
+                pxt: '8.0.7',
+              },
+              editor: 'blocksprj',
+              name: 'some name',
+            },
+            source: project.text,
+          }),
+        ),
+    );
+    element.setAttribute('download', 'project');
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
 </script>
 
 <h1 class="text-2xl font-bold pb-3 pt-10">{$t('content.output.header')}</h1>
@@ -111,6 +143,8 @@
     >{$t('content.output.button.program')}</StandardButton>
   <StandardButton onClick={handleResetToDefault} type="secondary"
     >{$t('content.output.button.resetToDefault')}</StandardButton>
+  <StandardButton onClick={handleExport} type="secondary"
+    >{$t('content.output.button.export')}</StandardButton>
 </div>
 <EditCodeDialog
   code={project}
