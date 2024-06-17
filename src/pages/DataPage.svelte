@@ -5,30 +5,27 @@
  -->
 
 <script lang="ts">
+  import { onMount } from 'svelte';
   import GestureComponent from '../components/Gesture.svelte';
-  import { state } from '../script/stores/uiStore';
+  import NewGestureButton from '../components/NewGestureButton.svelte';
+  import PleaseConnectFirst from '../components/PleaseConnectFirst.svelte';
+  import BottomPanel from '../components/bottom/BottomPanel.svelte';
+  import DataPageMenu from '../components/datacollection/DataPageMenu.svelte';
+  import CollectDataInFieldDialog from '../components/dialogs/CollectDataInFieldDialog.svelte';
+  import Information from '../components/information/Information.svelte';
+  import { t } from '../i18n';
+  import { Paths, getTitle, navigate } from '../router/paths';
+  import Microbits from '../script/microbit-interfacing/Microbits';
+  import { gestures } from '../script/stores/Stores';
   import {
     addGesture,
     clearGestures,
     downloadDataset,
     loadDatasetFromFile,
   } from '../script/stores/mlStore';
-  import { t } from '../i18n';
-  import NewGestureButton from '../components/NewGestureButton.svelte';
-  import PleaseConnectFirst from '../components/PleaseConnectFirst.svelte';
-  import Information from '../components/information/Information.svelte';
-  import { onMount } from 'svelte';
+  import { state } from '../script/stores/uiStore';
   import TabView from '../views/TabView.svelte';
-  import { gestures } from '../script/stores/Stores';
   import TrainingButton from './training/TrainingButton.svelte';
-  import DataPageMenu from '../components/datacollection/DataPageMenu.svelte';
-  import BottomPanel from '../components/bottom/BottomPanel.svelte';
-  import { Paths, getTitle, navigate } from '../router/paths';
-  import StandardDialog from '../components/dialogs/StandardDialog.svelte';
-  import StandardButton from '../components/StandardButton.svelte';
-  import Microbits from '../script/microbit-interfacing/Microbits';
-  import MicrobitConnection from '../script/microbit-interfacing/MicrobitConnection';
-  import Gesture from '../script/domain/Gesture';
 
   $: hasSomeData = (): boolean => {
     if ($gestures.length === 0) {
@@ -51,46 +48,12 @@
     collectDataInFieldDialogIsOpen = false;
   };
 
-  const encodeMatrix = (matrix: boolean[]) => {
-    const binaryStr = matrix.map(b => (b ? 1 : 0)).join('');
-    return binaryStr;
-    const hexadecimal = parseInt(binaryStr, 2).toString(16);
-    return hexadecimal;
-  };
-
-  const splitIntoChunks = (a: string, chunkSize: number) => {
-    const result = [];
-    for (let i = 0; i < a.length; i += chunkSize) {
-      result.push(a.slice(i, i + chunkSize));
-    }
-    return result;
-  };
-
   $: cannotCollectDataInField =
     Microbits.getInputMicrobit() === undefined ||
     $gestures.length < 2 ||
     // there is a led matrix with no led turned on
     $gestures.map(g => g.matrix.every(led => led === false)).includes(true) ||
     !$state.isInputConnected;
-
-  const sendGestureDataToMicrobit = (mconn: MicrobitConnection, gs: Gesture[]) => {
-    const message = gs
-      .map(g => `${g.getName()},${encodeMatrix(g.getMatrix())}`)
-      .join(';');
-    splitIntoChunks(message, 17).forEach(c => mconn.sendToInputUart('f', c));
-    // Signal end of message
-    mconn.sendToInputUart('f', 'end');
-  };
-
-  const onSwitchToFieldMode = () => {
-    const inputMicrobit = Microbits.getInputMicrobit();
-    if (inputMicrobit === undefined) {
-      console.log('No input micro:bit?!');
-      return;
-    }
-    const gs = gestures.getGestures();
-    sendGestureDataToMicrobit(inputMicrobit, gs);
-  };
 
   const onDownloadGestures = () => {
     downloadDataset();
@@ -138,47 +101,10 @@
 </svelte:head>
 
 <!-- Collect data in field dialog -->
-<StandardDialog
-  isOpen={collectDataInFieldDialogIsOpen && !cannotCollectDataInField}
+<CollectDataInFieldDialog
+  isOpen={collectDataInFieldDialogIsOpen}
   onClose={onCloseCollectDataInFieldDialog}
-  class="flex flex-col gap-8 w-120">
-  <svelte:fragment slot="heading">Collect data in the field</svelte:fragment>
-  <svelte:fragment slot="body">
-    <div class="flex flex-col space-y-3 self-center items-center justify-center">
-      <div class="flex items-center h-100px">
-        Button A and B to switch action. Button A+B to start collecting data. Logo to
-        switch back to bluetooth mode. Reset button to switch back to logging mode.
-      </div>
-    </div>
-    <div class="flex flex-row space-x-3 self-center items-center justify-center">
-      <StandardButton type="primary" onClick={onSwitchToFieldMode}
-        >Switch to field mode</StandardButton>
-      <StandardButton type="secondary" onClick={onCloseCollectDataInFieldDialog}
-        >Cancel</StandardButton>
-    </div>
-  </svelte:fragment>
-</StandardDialog>
-
-<!-- Unable to collect data in field dialog -->
-<StandardDialog
-  isOpen={collectDataInFieldDialogIsOpen && cannotCollectDataInField}
-  onClose={onCloseCollectDataInFieldDialog}
-  class="flex flex-col gap-8 w-120">
-  <svelte:fragment slot="heading">Unable to collect data in the field</svelte:fragment>
-  <svelte:fragment slot="body">
-    <div class="flex flex-col space-y-3 self-center items-left justify-left">
-      <div class="flex flex-col items-left h-100px">
-        Please ensure that:
-        <li>your micro:bit is connected with the tool.</li>
-        <li>at least two gestures are defined with LED patterns.</li>
-      </div>
-    </div>
-    <div class="flex flex-row space-x-3 self-center items-center justify-center">
-      <StandardButton type="secondary" onClick={onCloseCollectDataInFieldDialog}
-        >Okay</StandardButton>
-    </div>
-  </svelte:fragment>
-</StandardDialog>
+  status={cannotCollectDataInField ? 'not ready' : 'ready'} />
 
 <div class="flex flex-col h-full inline-block w-full bg-backgrounddark">
   <TabView />

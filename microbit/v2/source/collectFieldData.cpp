@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 #include "MicroBit.h"
+#include "utilities.h"
+#include "smileys.h"
 
 extern MicroBit uBit;
 
@@ -23,6 +25,13 @@ const char *const RECORDING = "\
 
 int sampleSize = 80;        // Number of samples per recording
 int encodedLedSize = 5 * 5; // LED screen size
+
+class Action
+{
+public:
+    ManagedString name;
+    ManagedString led;
+};
 
 /**
  * @brief Prints LED pattern
@@ -46,13 +55,6 @@ void countdown()
     uBit.audio.soundExpressions.playAsync("002373041050001000392300001023010802050005000000000000000000000000000000");
     printLed(RECORDING);
 }
-
-class Action
-{
-public:
-    ManagedString name;
-    ManagedString led;
-};
 
 void printEncodedLed(const ManagedString encodedLed)
 {
@@ -145,6 +147,7 @@ void collectFieldData()
         if (uBit.logo.wasPressed())
         {
             looping = false;
+            printSmiley(GLAD_SMILEY);
         }
         if (uBit.log.isFull())
         {

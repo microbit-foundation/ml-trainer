@@ -25,7 +25,6 @@ MicroBitButtonService *btn;
 
 // State
 int connected = 0;
-bool isCollectFieldDataMode = false;
 
 // Manually increase this build number each build. Used by the application to determine what capabilities the firmware has.
 int buildNumber = 1;
@@ -70,7 +69,7 @@ void onDisconnected(MicroBitEvent)
     printPairPattern();
 }
 
-ManagedString actionData = ManagedString("");
+ManagedString actionStr = ManagedString("");
 
 /**
  * @brief Log action data in first row
@@ -81,7 +80,7 @@ void logActionDataIfEmptyLog()
     if (!csvLen)
     {
         uBit.log.beginRow();
-        uBit.log.logString(actionData + ManagedString(";\n"));
+        uBit.log.logString(actionStr + ManagedString(";\n"));
         uBit.log.endRow();
     }
 }
@@ -106,20 +105,20 @@ void onDelim(MicroBitEvent)
         { // End of message signalled
             uBit.log.clear(false);
             logActionDataIfEmptyLog();
+            uart->send(ManagedString("f_start"));
+
+            // wait for message to send before collect field data mode
+            uBit.sleep(1000);
             collectFieldData();
+            uBit.sleep(5000);
             return;
         }
-        actionData = actionData + data;
+        actionStr = actionStr + data;
     }
 }
 
 int main()
 {
-    if (isCollectFieldDataMode)
-    {
-        collectFieldData();
-    }
-
     // Initialise the micro:bit runtime.
     uBit.init();
 

@@ -5,7 +5,7 @@
  */
 
 import { livedata } from '../stores/mlStore';
-import { buttonPressed } from '../stores/uiStore';
+import { buttonPressed, isFieldDataCollectionMode } from '../stores/uiStore';
 import MBSpecs from './MBSpecs';
 import { DeviceRequestStates } from './MicrobitConnection';
 import {
@@ -64,11 +64,16 @@ export const onUARTDataReceived = (
   requestState: DeviceRequestStates,
   data: string,
 ): void => {
+  console.log('uart received!!', data);
   if (data === 'id_mkcd') {
     stateOnIdentifiedAsMakecode(requestState);
   }
   if (data === 'id_prop') {
     stateOnIdentifiedAsProprietary(requestState);
+  }
+  if (data === 'f_start') {
+    console.log('isFieldDataCollectionMode.update(_ => true)');
+    isFieldDataCollectionMode.update(_ => true);
   }
   if (data.includes('vi_')) {
     const version = parseInt(data.substring(3));

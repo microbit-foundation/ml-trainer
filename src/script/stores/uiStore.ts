@@ -177,6 +177,8 @@ export const buttonPressed = writable<{ buttonA: 0 | 1; buttonB: 0 | 1 }>({
   buttonB: 0,
 });
 
+export const isFieldDataCollectionMode = writable<boolean>(false);
+
 export enum MicrobitInteractions {
   A,
   B,
