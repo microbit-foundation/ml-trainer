@@ -49,12 +49,35 @@
     collectDataInFieldDialogIsOpen = false;
   };
 
+  const encodeMatrix = (matrix: boolean[]) => {
+    const binaryStr = matrix.map(b => (b ? 1 : 0)).join('');
+    return binaryStr;
+    const hexadecimal = parseInt(binaryStr, 2).toString(16);
+    return hexadecimal;
+  };
+
+  const splitIntoChunks = (a: string, chunkSize: number) => {
+    const result = [];
+    for (let i = 0; i < a.length; i += chunkSize) {
+      result.push(a.slice(i, i + chunkSize));
+    }
+    return result;
+  };
+
   const onSwitchToFieldMode = () => {
     if (Microbits.getInputMicrobit() === undefined) {
       console.log('No input micro:bit?!');
     }
-    // TODO: To send actiond data
-    Microbits.getInputMicrobit()?.sendToInputUart('f', 'XXX');
+    const gs = gestures.getGestures();
+    const message = gs
+      .map(g => `${g.getName()},${encodeMatrix(g.getMatrix())}`)
+      .join(';');
+    const msgSize = 17; // 20 char subtracted by prefix ('f_') and null terminated string
+    const chunks = splitIntoChunks(message, msgSize);
+    chunks.forEach(c => {
+      Microbits.getInputMicrobit()?.sendToInputUart('f', c);
+    });
+    Microbits.getInputMicrobit()?.sendToInputUart('f', 'end');
   };
 
   const onDownloadGestures = () => {

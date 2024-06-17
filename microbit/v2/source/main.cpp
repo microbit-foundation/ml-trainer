@@ -70,16 +70,18 @@ void onDisconnected(MicroBitEvent)
     printPairPattern();
 }
 
+ManagedString actionData = ManagedString("");
+
 /**
  * @brief Log action data in first row
  */
-void logActionDataIfEmptyLog(const ManagedString actionData)
+void logActionDataIfEmptyLog()
 {
     uint32_t csvLen = uBit.log.getDataLength(DataFormat::CSV);
     if (!csvLen)
     {
         uBit.log.beginRow();
-        uBit.log.logString(actionData);
+        uBit.log.logString(actionData + ManagedString(";\n"));
         uBit.log.endRow();
     }
 }
@@ -99,11 +101,16 @@ void onDelim(MicroBitEvent)
     }
     if (prefix == "f_")
     { // Collect field data
-        // TODO: Get action data from uart message
-        logActionDataIfEmptyLog(ManagedString("still,0000000000111110000000000;shake,0000010101010100000000000;\n"));
-        ManagedString data = r.substring(2, 1);
-        uBit.display.scroll(data);
-        // collectFieldData();
+        ManagedString data = r.substring(2, r.length() - 2);
+        if (r.substring(2, 3) == "end")
+        {
+            logActionDataIfEmptyLog();
+            collectFieldData();
+        }
+        else
+        {
+            actionData = actionData + data;
+        }
     }
 }
 
