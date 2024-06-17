@@ -100,17 +100,16 @@ void onDelim(MicroBitEvent)
         playSound(getSound(soundNo), beat);
     }
     if (prefix == "f_")
-    { // Collect field data
+    {
         ManagedString data = r.substring(2, r.length() - 2);
         if (r.substring(2, 3) == "end")
-        {
+        { // End of message signalled
+            uBit.log.clear(false);
             logActionDataIfEmptyLog();
             collectFieldData();
+            return;
         }
-        else
-        {
-            actionData = actionData + data;
-        }
+        actionData = actionData + data;
     }
 }
 

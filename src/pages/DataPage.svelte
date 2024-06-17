@@ -5,7 +5,7 @@
  -->
 
 <script lang="ts">
-  import Gesture from '../components/Gesture.svelte';
+  import GestureComponent from '../components/Gesture.svelte';
   import { state } from '../script/stores/uiStore';
   import {
     addGesture,
@@ -27,6 +27,8 @@
   import StandardDialog from '../components/dialogs/StandardDialog.svelte';
   import StandardButton from '../components/StandardButton.svelte';
   import Microbits from '../script/microbit-interfacing/Microbits';
+  import MicrobitConnection from '../script/microbit-interfacing/MicrobitConnection';
+  import Gesture from '../script/domain/Gesture';
 
   $: hasSomeData = (): boolean => {
     if ($gestures.length === 0) {
@@ -64,20 +66,30 @@
     return result;
   };
 
-  const onSwitchToFieldMode = () => {
-    if (Microbits.getInputMicrobit() === undefined) {
-      console.log('No input micro:bit?!');
-    }
-    const gs = gestures.getGestures();
+  $: cannotCollectDataInField =
+    Microbits.getInputMicrobit() === undefined ||
+    $gestures.length < 2 ||
+    // there is a led matrix with no led turned on
+    $gestures.map(g => g.matrix.every(led => led === false)).includes(true) ||
+    !$state.isInputConnected;
+
+  const sendGestureDataToMicrobit = (mconn: MicrobitConnection, gs: Gesture[]) => {
     const message = gs
       .map(g => `${g.getName()},${encodeMatrix(g.getMatrix())}`)
       .join(';');
-    const msgSize = 17; // 20 char subtracted by prefix ('f_') and null terminated string
-    const chunks = splitIntoChunks(message, msgSize);
-    chunks.forEach(c => {
-      Microbits.getInputMicrobit()?.sendToInputUart('f', c);
-    });
-    Microbits.getInputMicrobit()?.sendToInputUart('f', 'end');
+    splitIntoChunks(message, 17).forEach(c => mconn.sendToInputUart('f', c));
+    // Signal end of message
+    mconn.sendToInputUart('f', 'end');
+  };
+
+  const onSwitchToFieldMode = () => {
+    const inputMicrobit = Microbits.getInputMicrobit();
+    if (inputMicrobit === undefined) {
+      console.log('No input micro:bit?!');
+      return;
+    }
+    const gs = gestures.getGestures();
+    sendGestureDataToMicrobit(inputMicrobit, gs);
   };
 
   const onDownloadGestures = () => {
@@ -125,9 +137,9 @@
   <title>{title}</title>
 </svelte:head>
 
-<!-- Recording countdown popup -->
+<!-- Collect data in field dialog -->
 <StandardDialog
-  isOpen={collectDataInFieldDialogIsOpen}
+  isOpen={collectDataInFieldDialogIsOpen && !cannotCollectDataInField}
   onClose={onCloseCollectDataInFieldDialog}
   class="flex flex-col gap-8 w-120">
   <svelte:fragment slot="heading">Collect data in the field</svelte:fragment>
@@ -143,6 +155,27 @@
         >Switch to field mode</StandardButton>
       <StandardButton type="secondary" onClick={onCloseCollectDataInFieldDialog}
         >Cancel</StandardButton>
+    </div>
+  </svelte:fragment>
+</StandardDialog>
+
+<!-- Unable to collect data in field dialog -->
+<StandardDialog
+  isOpen={collectDataInFieldDialogIsOpen && cannotCollectDataInField}
+  onClose={onCloseCollectDataInFieldDialog}
+  class="flex flex-col gap-8 w-120">
+  <svelte:fragment slot="heading">Unable to collect data in the field</svelte:fragment>
+  <svelte:fragment slot="body">
+    <div class="flex flex-col space-y-3 self-center items-left justify-left">
+      <div class="flex flex-col items-left h-100px">
+        Please ensure that:
+        <li>your micro:bit is connected with the tool.</li>
+        <li>at least two gestures are defined with LED patterns.</li>
+      </div>
+    </div>
+    <div class="flex flex-row space-x-3 self-center items-center justify-center">
+      <StandardButton type="secondary" onClick={onCloseCollectDataInFieldDialog}
+        >Okay</StandardButton>
     </div>
   </svelte:fragment>
 </StandardDialog>
@@ -178,7 +211,7 @@
           class="grid grid-cols-[292px,1fr] auto-rows-max gap-x-7 gap-y-3 py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
           {#each $gestures as gesture (gesture.ID)}
             <section class="contents">
-              <Gesture
+              <GestureComponent
                 showWalkThrough={$gestures.length === 1}
                 gesture={gestures.getGesture(gesture.ID)} />
             </section>
