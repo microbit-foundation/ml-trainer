@@ -9,7 +9,9 @@
 
 <script lang="ts">
   import Gesture from '../../script/domain/Gesture';
-  import MicrobitConnection from '../../script/microbit-interfacing/MicrobitConnection';
+  import MicrobitConnection, {
+    DeviceRequestStates,
+  } from '../../script/microbit-interfacing/MicrobitConnection';
   import Microbits from '../../script/microbit-interfacing/Microbits';
   import { gestures } from '../../script/stores/Stores';
   import { isFieldDataCollectionMode } from '../../script/stores/uiStore';
@@ -59,7 +61,7 @@
   };
 
   $: if ($isFieldDataCollectionMode === true) {
-    Microbits.getInputMicrobit()?.disconnect();
+    Microbits.disconnect(DeviceRequestStates.INPUT);
     isLoading = false;
   }
 </script>
@@ -90,7 +92,7 @@
 
 <!-- Unable to collect data in field dialog -->
 <StandardDialog
-  isOpen={isOpen && status !== 'ready'}
+  isOpen={isOpen && status === 'not ready'}
   {onClose}
   class="flex flex-col gap-8 w-120">
   <svelte:fragment slot="heading">Unable to collect data in the field</svelte:fragment>
