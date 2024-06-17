@@ -64,16 +64,24 @@ export const onUARTDataReceived = (
   requestState: DeviceRequestStates,
   data: string,
 ): void => {
-  console.log('uart received!!', data);
   if (data === 'id_mkcd') {
     stateOnIdentifiedAsMakecode(requestState);
   }
   if (data === 'id_prop') {
     stateOnIdentifiedAsProprietary(requestState);
   }
-  if (data === 'f_start') {
-    console.log('isFieldDataCollectionMode.update(_ => true)');
-    isFieldDataCollectionMode.update(_ => true);
+  if (data.includes('f_')) {
+    isFieldDataCollectionMode.update(_ => {
+      switch (data) {
+        case 'f_start':
+          return true;
+        case 'f_stopped':
+          return false;
+        default:
+          console.warn('Unrecognised uart message');
+          return false;
+      }
+    });
   }
   if (data.includes('vi_')) {
     const version = parseInt(data.substring(3));

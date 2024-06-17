@@ -9,12 +9,11 @@
 
 <script lang="ts">
   import Gesture from '../../script/domain/Gesture';
-  import MicrobitConnection, {
-    DeviceRequestStates,
-  } from '../../script/microbit-interfacing/MicrobitConnection';
+  import MicrobitConnection from '../../script/microbit-interfacing/MicrobitConnection';
   import Microbits from '../../script/microbit-interfacing/Microbits';
   import { gestures } from '../../script/stores/Stores';
   import { isFieldDataCollectionMode } from '../../script/stores/uiStore';
+  import LoadingSpinner from '../LoadingSpinner.svelte';
   import StandardButton from '../StandardButton.svelte';
   import StandardDialog from './StandardDialog.svelte';
 
@@ -61,7 +60,6 @@
   };
 
   $: if ($isFieldDataCollectionMode === true) {
-    Microbits.disconnect(DeviceRequestStates.INPUT);
     isLoading = false;
   }
 </script>
@@ -84,8 +82,12 @@
       </div>
     </div>
     <div class="flex flex-row space-x-3 self-center items-center justify-center">
-      <StandardButton type="primary" onClick={startCollectDataInField}
-        >Start field data collection</StandardButton>
+      <StandardButton
+        type="primary"
+        onClick={startCollectDataInField}
+        disabled={$isFieldDataCollectionMode || isLoading}>
+        Start field data collection
+      </StandardButton>
     </div>
   </svelte:fragment>
 </StandardDialog>

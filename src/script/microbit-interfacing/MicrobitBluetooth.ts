@@ -516,7 +516,6 @@ export class MicrobitBluetooth implements MicrobitConnection {
    */
   sendToInputUart = (type: UARTMessageType, value: string): void => {
     this.queueInputAction(inputCharacteristics => {
-      console.log('message to dataview', `${type}_${value}`);
       const view = MBSpecs.Utility.messageToDataview(`${type}_${value}`);
       return inputCharacteristics.uart.writeValue(view);
     });
@@ -589,7 +588,6 @@ export class MicrobitBluetooth implements MicrobitConnection {
       this.inputWriteQueue.busy = true;
       action(this.inputCharacteristics)
         .then(() => {
-          console.log('action success');
           this.inputWriteQueue.busy = false;
           this.processInputActionQueue();
         })

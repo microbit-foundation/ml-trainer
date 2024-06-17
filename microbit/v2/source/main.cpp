@@ -102,7 +102,7 @@ void onDelim(MicroBitEvent)
     {
         ManagedString data = r.substring(2, r.length() - 2);
         if (r.substring(2, 3) == "end")
-        { // End of message signalled
+        {
             uBit.log.clear(false);
             logActionDataIfEmptyLog();
             uart->send(ManagedString("f_start"));
@@ -110,7 +110,7 @@ void onDelim(MicroBitEvent)
             // wait for message to send before collect field data mode
             uBit.sleep(1000);
             collectFieldData();
-            uBit.sleep(5000);
+            uart->send(ManagedString("f_stopped"));
             return;
         }
         actionStr = actionStr + data;
