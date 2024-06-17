@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-
 import { alertUser, state } from './stores/uiStore';
 import {
   bestPrediction,
@@ -39,7 +38,8 @@ let unsubscribeFromSettings: Unsubscriber | undefined = undefined;
 // Variable for accessing the predictionInterval
 let predictionInterval: NodeJS.Timeout | undefined = undefined;
 
-function createModel(): LayersModel {
+// Exported for testing.
+export function createModel(): LayersModel {
   const gestureData = get(gestures);
   const numberOfClasses: number = gestureData.length;
   const inputShape = [
@@ -63,7 +63,7 @@ function createModel(): LayersModel {
   return model;
 }
 
-export async function trainModel(): Promise<void> {
+export async function trainModel(): Promise<tf.LayersModel | void> {
   state.update(obj => {
     obj.isTraining = true;
     return obj;
@@ -107,25 +107,24 @@ export async function trainModel(): Promise<void> {
   const nn: LayersModel = createModel();
   const totalNumEpochs = get(settings).numEpochs;
 
-  nn.fit(tensorFeatures, tensorLabels, {
-    epochs: totalNumEpochs,
-    batchSize: 16,
-    validationSplit: 0.1,
-    callbacks: {
-      onTrainEnd,
-      onEpochEnd: (epoch: number) => {
-        // Epochs indexed at 0
-        updateTrainingProgress(epoch / (totalNumEpochs - 1));
+  try {
+    await nn.fit(tensorFeatures, tensorLabels, {
+      epochs: totalNumEpochs,
+      batchSize: 16,
+      validationSplit: 0.1,
+      callbacks: {
+        onTrainEnd,
+        onEpochEnd: (epoch: number) => {
+          // Epochs indexed at 0
+          updateTrainingProgress(epoch / (totalNumEpochs - 1));
+        },
       },
-    },
-  }).catch(err => {
+    });
+  } catch (err) {
     trainingStatus.set(TrainingStatus.Failure);
     console.error('tensorflow training process failed:', err);
-  });
-
-  trainingStatus.set(TrainingStatus.Success);
-  model.set(nn);
-  logEvent({ type: 'Data', action: 'Train model', ...getNumberOfActionsAndRecordings() });
+  }
+  return nn;
 }
 
 function getNumberOfActionsAndRecordings() {

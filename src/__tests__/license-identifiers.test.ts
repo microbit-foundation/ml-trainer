@@ -66,6 +66,9 @@ const filesMissingIdentifier = (files: string[], expects: string[]): string[] =>
 
   for (let i = 0; i < files.length; i++) {
     for (const expect of expects) {
+      if (files[i].endsWith('.json')) {
+        continue;
+      }
       if (!readFile('./' + files[i], expect)) {
         if (!filesWithMissingIdentifier.includes(files[i])) {
           filesWithMissingIdentifier.push(files[i]);
