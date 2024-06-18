@@ -59,7 +59,7 @@
     sendGestureDataToMicrobit(inputMicrobit, gs);
   };
 
-  $: if ($isFieldDataCollectionMode === true) {
+  $: if ($isFieldDataCollectionMode) {
     isLoading = false;
   }
 </script>

@@ -136,6 +136,11 @@ void collectFieldData()
         }
     }
 
+    // Reset buttons was pressed so that prev button presses are ignored
+    uBit.buttonA.wasPressed();
+    uBit.buttonB.wasPressed();
+    uBit.buttonAB.wasPressed();
+
     bool looping = true;
     bool isLogging = false;
     int numSamples = 0;
