@@ -83,6 +83,8 @@ void logActionDataIfEmptyLog()
         uBit.log.logString(actionStr + ManagedString(";\n"));
         uBit.log.endRow();
     }
+    // Reset action str for next time
+    actionStr = ManagedString("");
 }
 
 /**
@@ -103,13 +105,16 @@ void onDelim(MicroBitEvent)
         ManagedString data = r.substring(2, r.length() - 2);
         if (r.substring(2, 3) == "end")
         {
-            uBit.log.clear(false);
+            uBit.log.clear(true);
+            printSmiley(GLAD_SMILEY);
             logActionDataIfEmptyLog();
             uart->send(ManagedString("f_start"));
 
             // wait for message to send before collect field data mode
             uBit.sleep(1000);
             collectFieldData();
+
+            // after collecting field data
             uart->send(ManagedString("f_stopped"));
             return;
         }

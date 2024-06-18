@@ -144,36 +144,18 @@ void collectFieldData()
     ManagedString currAction = getAndShowCurrentAction(actions, actionId, numActions);
     while (looping)
     {
-        if (uBit.logo.wasPressed())
-        {
-            looping = false;
-            printSmiley(GLAD_SMILEY);
-        }
         if (uBit.log.isFull())
         {
             uBit.display.scroll("F");
             isLogging = false;
+            return;
         }
-        if (uBit.buttonA.wasPressed() && !isLogging)
-        {
-            actionId++;
-            currAction = getAndShowCurrentAction(actions, actionId, numActions);
-        }
-        if (uBit.buttonB.wasPressed() && !isLogging)
-        {
-            actionId--;
-            currAction = getAndShowCurrentAction(actions, actionId, numActions);
-        }
-        if (uBit.buttonAB.wasPressed() && !isLogging)
-        { // Start recording sample
+        if (numSamples == sampleSize)
+        { // End of recording sample
             numSamples = 0;
-            countdown();
-            uBit.log.beginRow();
-            uBit.log.logData("x", "action");
-            uBit.log.logData("y", currAction);
-            uBit.log.logData("z", "");
-            uBit.log.endRow();
-            isLogging = true;
+            isLogging = false;
+            uBit.audio.soundExpressions.playAsync("010230849100001000000100000000012800000100240000000000000000000000000000");
+            getAndShowCurrentAction(actions, actionId, numActions);
         }
         if (isLogging)
         {
@@ -185,12 +167,32 @@ void collectFieldData()
             uBit.sleep(20);
             numSamples++;
         }
-        if (numSamples == sampleSize)
-        { // End of recording sample
+        else if (uBit.buttonA.wasPressed())
+        {
+            actionId++;
+            currAction = getAndShowCurrentAction(actions, actionId, numActions);
+        }
+        else if (uBit.buttonB.wasPressed())
+        {
+            actionId--;
+            currAction = getAndShowCurrentAction(actions, actionId, numActions);
+        }
+        else if (uBit.buttonAB.wasPressed())
+        { // Start recording sample
             numSamples = 0;
-            isLogging = false;
-            uBit.audio.soundExpressions.playAsync("010230849100001000000100000000012800000100240000000000000000000000000000");
-            getAndShowCurrentAction(actions, actionId, numActions);
+            countdown();
+            uBit.log.beginRow();
+            uBit.log.logData("x", "action");
+            uBit.log.logData("y", currAction);
+            uBit.log.logData("z", "");
+            uBit.log.endRow();
+            isLogging = true;
+        }
+        else if (uBit.logo.wasPressed())
+        {
+            looping = false;
+            printSmiley(GLAD_SMILEY);
+            return;
         }
     }
 }

@@ -86,7 +86,11 @@
         type="primary"
         onClick={startCollectDataInField}
         disabled={$isFieldDataCollectionMode || isLoading}>
-        Start field data collection
+        {#if isLoading}
+          <LoadingSpinner />
+        {:else}
+          Start field data collection
+        {/if}
       </StandardButton>
     </div>
   </svelte:fragment>
