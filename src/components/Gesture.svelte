@@ -244,7 +244,7 @@
     if (showCountdown || isThisRecording) {
       return;
     }
-    if (isFieldDataCollectionMode) {
+    if ($isFieldDataCollectionMode) {
       return;
     }
     const triggerButton = get(microbitInteraction);
