@@ -24,6 +24,7 @@ import {
   stateOnReconnectionAttempt,
 } from './state-updaters';
 import { btSelectMicrobitDialogOnLoad } from '../stores/connectionStore';
+import { LogDataProcessor, RequestFormat } from './LogDataProcessor';
 
 const browser = Bowser.getParser(window.navigator.userAgent);
 const isWindowsOS = browser.getOSName() === 'Windows';
@@ -41,10 +42,17 @@ type OutputCharacteristics = {
   uart: BluetoothRemoteGATTCharacteristic;
 };
 
+type InputCharacteristics = {
+  uart: BluetoothRemoteGATTCharacteristic;
+  utilityCtrl: BluetoothRemoteGATTCharacteristic;
+};
+
 export class MicrobitBluetooth implements MicrobitConnection {
   inUseAs: Set<DeviceRequestStates> = new Set();
 
   private outputCharacteristics: OutputCharacteristics | undefined;
+  private inputCharacteristics: InputCharacteristics | undefined;
+  private logDataProcessor: LogDataProcessor | undefined;
 
   // Used to avoid automatic reconnection during user triggered connect/disconnect
   // or reconnection itself.
@@ -74,6 +82,18 @@ export class MicrobitBluetooth implements MicrobitConnection {
     busy: false,
     queue: [],
   };
+
+  private inputWriteQueue: {
+    busy: boolean;
+    queue: Array<(inputCharacteristics: InputCharacteristics) => Promise<void>>;
+  } = {
+    busy: false,
+    queue: [],
+  };
+
+  private logReadResponse: Promise<void> | undefined;
+  private logReadResponseResolve: (() => void) | undefined;
+  private logReadResponseReject: ((reason?: any) => void) | undefined;
 
   constructor(
     public readonly name: string,
@@ -249,6 +269,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
 
   handleDisconnectEvent = async (): Promise<void> => {
     this.outputWriteQueue = { busy: false, queue: [] };
+    this.inputWriteQueue = { busy: false, queue: [] };
 
     try {
       if (!this.duringExplicitConnectDisconnect) {
@@ -275,8 +296,43 @@ export class MicrobitBluetooth implements MicrobitConnection {
     await this.listenToAccelerometer();
     await this.listenToButton('A');
     await this.listenToButton('B');
-
     await this.listenToUART(DeviceRequestStates.INPUT);
+    const uart = await this.getUartSendingDataCharacteristic();
+    const utilityCtrl = await this.listenToUtilityService();
+    this.inputCharacteristics = {
+      utilityCtrl,
+      uart,
+    };
+  }
+
+  private async listenToUtilityService(): Promise<BluetoothRemoteGATTCharacteristic> {
+    const gattServer = this.assertGattServer();
+    const utilityService = await gattServer.getPrimaryService(
+      MBSpecs.Services.UTILITY_SERVICE,
+    );
+    const utilityServiceCharacteristic = await utilityService.getCharacteristic(
+      MBSpecs.Characteristics.UTILITY_CTRL,
+    );
+    this.logDataProcessor = new LogDataProcessor(
+      RequestFormat.RequestLogCSV,
+      this.sendToUtilityCtrl,
+    );
+    await utilityServiceCharacteristic.startNotifications();
+    utilityServiceCharacteristic.addEventListener('characteristicvaluechanged', event => {
+      const target = event.target as CharacteristicDataTarget;
+      const reply = target.value;
+      try {
+        const result = this.logDataProcessor!.processReply(reply);
+        if (result && this.logReadResponseResolve) {
+          this.logReadResponseResolve();
+        }
+      } catch (err) {
+        if (this.logReadResponseReject) {
+          this.logReadResponseReject(err);
+        }
+      }
+    });
+    return utilityServiceCharacteristic;
   }
 
   private async listenToButton(buttonToListenFor: MBSpecs.Button): Promise<void> {
@@ -332,6 +388,15 @@ export class MicrobitBluetooth implements MicrobitConnection {
     );
   }
 
+  private async getUartSendingDataCharacteristic(): Promise<BluetoothRemoteGATTCharacteristic> {
+    const gattServer = this.assertGattServer();
+    const uartService = await gattServer.getPrimaryService(MBSpecs.Services.UART_SERVICE);
+    const uart = await uartService.getCharacteristic(
+      MBSpecs.Characteristics.UART_DATA_RX,
+    );
+    return uart;
+  }
+
   private async listenToUART(state: DeviceRequestStates): Promise<void> {
     const gattServer = this.assertGattServer();
     const uartService = await gattServer.getPrimaryService(MBSpecs.Services.UART_SERVICE);
@@ -365,10 +430,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
     const matrix = await ledService.getCharacteristic(
       MBSpecs.Characteristics.LED_MATRIX_STATE,
     );
-    const uartService = await gattServer.getPrimaryService(MBSpecs.Services.UART_SERVICE);
-    const uart = await uartService.getCharacteristic(
-      MBSpecs.Characteristics.UART_DATA_RX,
-    );
+    const uart = await this.getUartSendingDataCharacteristic();
     this.outputCharacteristics = {
       io,
       matrix,
@@ -377,8 +439,17 @@ export class MicrobitBluetooth implements MicrobitConnection {
     await this.listenToUART(DeviceRequestStates.OUTPUT);
   }
 
+  getLogData(): Promise<void> {
+    this.logReadResponse = new Promise((res, rej) => {
+      this.logReadResponseResolve = res;
+      this.logReadResponseReject = rej;
+    });
+    this.logDataProcessor?.getLogData();
+    return this.logReadResponse;
+  }
+
   private setPinInternal = (pin: MBSpecs.UsableIOPin, on: boolean): void => {
-    this.queueAction(outputCharacteristics => {
+    this.queueOutputAction(outputCharacteristics => {
       const dataView = new DataView(new ArrayBuffer(2));
       dataView.setInt8(0, pin);
       dataView.setInt8(1, on ? 1 : 0);
@@ -412,7 +483,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
   };
 
   setLeds = (matrix: boolean[]): void => {
-    this.queueAction(outputCharacteristics => {
+    this.queueOutputAction(outputCharacteristics => {
       const dataView = new DataView(new ArrayBuffer(5));
       for (let i = 0; i < 5; i++) {
         dataView.setUint8(
@@ -427,25 +498,50 @@ export class MicrobitBluetooth implements MicrobitConnection {
   };
 
   /**
-   * Sends a message through UART
+   * Sends a message to output micro:bit through UART
    * @param type The type of UART message, i.e 'g' for gesture and 's' for sound
    * @param value The message
    */
   sendToOutputUart = (type: UARTMessageType, value: string): void => {
-    this.queueAction(outputCharacteristics => {
+    this.queueOutputAction(outputCharacteristics => {
       const view = MBSpecs.Utility.messageToDataview(`${type}_${value}`);
       return outputCharacteristics.uart.writeValue(view);
     });
   };
 
-  queueAction = (
+  /**
+   * Sends a message to input micro:bit through UART
+   * @param type The type of UART message, i.e 'g' for gesture and 's' for sound
+   * @param value The message
+   */
+  sendToInputUart = (type: UARTMessageType, value: string): void => {
+    this.queueInputAction(inputCharacteristics => {
+      const view = MBSpecs.Utility.messageToDataview(`${type}_${value}`);
+      return inputCharacteristics.uart.writeValue(view);
+    });
+  };
+
+  private sendToUtilityCtrl = (view: DataView): void => {
+    this.queueInputAction(inputCharacteristics => {
+      return inputCharacteristics.utilityCtrl.writeValueWithResponse(view);
+    });
+  };
+
+  queueOutputAction = (
     action: (outputCharacteristics: OutputCharacteristics) => Promise<void>,
   ) => {
     this.outputWriteQueue.queue.push(action);
-    this.processActionQueue();
+    this.processOutputActionQueue();
   };
 
-  processActionQueue = () => {
+  queueInputAction = (
+    action: (inputCharacteristics: InputCharacteristics) => Promise<void>,
+  ) => {
+    this.inputWriteQueue.queue.push(action);
+    this.processInputActionQueue();
+  };
+
+  processOutputActionQueue = () => {
     if (!this.outputCharacteristics) {
       // We've become disconnected before processing all actions.
       this.outputWriteQueue = {
@@ -463,14 +559,44 @@ export class MicrobitBluetooth implements MicrobitConnection {
       action(this.outputCharacteristics)
         .then(() => {
           this.outputWriteQueue.busy = false;
-          this.processActionQueue();
+          this.processOutputActionQueue();
         })
         .catch(e => {
           logError('Error processing action queue', e);
           // Do we want to keep going if we hit errors?
           // What did it do previously?
           this.outputWriteQueue.busy = false;
-          this.processActionQueue();
+          this.processOutputActionQueue();
+        });
+    }
+  };
+
+  processInputActionQueue = () => {
+    if (!this.inputCharacteristics) {
+      // We've become disconnected before processing all actions.
+      this.inputWriteQueue = {
+        busy: false,
+        queue: [],
+      };
+      return;
+    }
+    if (this.inputWriteQueue.busy) {
+      return;
+    }
+    const action = this.inputWriteQueue.queue.shift();
+    if (action) {
+      this.inputWriteQueue.busy = true;
+      action(this.inputCharacteristics)
+        .then(() => {
+          this.inputWriteQueue.busy = false;
+          this.processInputActionQueue();
+        })
+        .catch(e => {
+          logError('Error processing action queue', e);
+          // Do we want to keep going if we hit errors?
+          // What did it do previously?
+          this.inputWriteQueue.busy = false;
+          this.processInputActionQueue();
         });
     }
   };
@@ -543,6 +669,7 @@ const requestDevice = async (name: string): Promise<BluetoothDevice | undefined>
           MBSpecs.Services.LED_SERVICE,
           MBSpecs.Services.IO_SERVICE,
           MBSpecs.Services.BUTTON_SERVICE,
+          MBSpecs.Services.UTILITY_SERVICE,
         ],
       }),
       new Promise<'timeout'>(resolve =>

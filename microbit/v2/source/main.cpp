@@ -14,7 +14,7 @@
 
 MicroBit uBit;
 
-typedef __uint8_t uint8_t ;
+typedef __uint8_t uint8_t;
 
 // Services
 MicroBitAccelerometerService *accel;
@@ -25,13 +25,14 @@ MicroBitButtonService *btn;
 
 // State
 int connected = 0;
+bool testCollectFieldDataMode = false; // for debugging collect in the field mode
 
 // Manually increase this build number each build. Used by the application to determine what capabilities the firmware has.
 int buildNumber = 1;
 
 /**
  * @brief Sends a message with UART
- * 
+ *
  * @param s The message
  */
 void sendString(ManagedString s)
@@ -62,11 +63,29 @@ void onConnected(MicroBitEvent)
 void onDisconnected(MicroBitEvent)
 {
     connected = 0; // Set the connected flag
-    
+
     printSmiley(SAD_SMILEY);
 
     uBit.sleep(2000);
     printPairPattern();
+}
+
+ManagedString actionStr = ManagedString("");
+
+/**
+ * @brief Log action data in first row
+ */
+void logActionDataIfEmptyLog()
+{
+    uint32_t csvLen = uBit.log.getDataLength(DataFormat::CSV);
+    if (!csvLen)
+    {
+        uBit.log.beginRow();
+        uBit.log.logString(actionStr + ManagedString(";\n"));
+        uBit.log.endRow();
+    }
+    // Reset action str for next time
+    actionStr = ManagedString("");
 }
 
 /**
@@ -76,10 +95,28 @@ void onDelim(MicroBitEvent)
 {
     int beat = 200;
     ManagedString r = uart->readUntil("#");
-    ManagedString prefix = r.substring(0,2);
-    if (prefix == "s_") { // Will be request to play sound
-        ManagedString soundNo = r.substring(2,1);
+    ManagedString prefix = r.substring(0, 2);
+    if (prefix == "s_")
+    { // Will be request to play sound
+        ManagedString soundNo = r.substring(2, 1);
         playSound(getSound(soundNo), beat);
+    }
+    if (prefix == "f_")
+    {
+        ManagedString data = r.substring(2, r.length() - 2);
+        if (r.substring(2, 3) == "end")
+        {
+            uBit.log.clear(true);
+            printSmiley(GLAD_SMILEY);
+            logActionDataIfEmptyLog();
+            uart->send(ManagedString("f_start"));
+
+            // wait for message to send before collect field data mode
+            uBit.sleep(1000);
+            collectFieldData();
+            return;
+        }
+        actionStr = actionStr + data;
     }
 }
 
@@ -87,7 +124,7 @@ int main()
 {
     // Initialise the micro:bit runtime.
     uBit.init();
-    
+
     // Add listeners for events
     uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_CONNECTED, onConnected);
     uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_DISCONNECTED, onDisconnected);
@@ -107,11 +144,22 @@ int main()
     printSmiley(GLAD_SMILEY);
 
     uBit.sleep(400);
-    if (!connected) {
+    if (!connected)
+    {
         printPairPatternAnimated();
     }
-    if (connected) {
+    if (connected)
+    {
         printSmiley(GLAD_SMILEY);
     }
+
+    if (testCollectFieldDataMode)
+    {
+        uBit.log.beginRow();
+        uBit.log.logString(ManagedString("still,0000000000111110000000000;wave,0000010101010100000000000;\n"));
+        uBit.log.endRow();
+        collectFieldData();
+    }
+
     release_fiber();
 }

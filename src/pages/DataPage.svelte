@@ -5,27 +5,27 @@
  -->
 
 <script lang="ts">
-  import Gesture from '../components/Gesture.svelte';
-  import { state } from '../script/stores/uiStore';
+  import { onMount } from 'svelte';
+  import GestureComponent from '../components/Gesture.svelte';
+  import NewGestureButton from '../components/NewGestureButton.svelte';
+  import PleaseConnectFirst from '../components/PleaseConnectFirst.svelte';
+  import BottomPanel from '../components/bottom/BottomPanel.svelte';
+  import DataPageMenu from '../components/datacollection/DataPageMenu.svelte';
+  import CollectDataInFieldDialog from '../components/dialogs/CollectDataInFieldDialog.svelte';
+  import Information from '../components/information/Information.svelte';
+  import { t } from '../i18n';
+  import { Paths, getTitle, navigate } from '../router/paths';
+  import Microbits from '../script/microbit-interfacing/Microbits';
+  import { gestures } from '../script/stores/Stores';
   import {
     addGesture,
     clearGestures,
     downloadDataset,
     loadDatasetFromFile,
   } from '../script/stores/mlStore';
-  import { t } from '../i18n';
-  import NewGestureButton from '../components/NewGestureButton.svelte';
-  import PleaseConnectFirst from '../components/PleaseConnectFirst.svelte';
-  import Information from '../components/information/Information.svelte';
-  import { onMount } from 'svelte';
+  import { state } from '../script/stores/uiStore';
   import TabView from '../views/TabView.svelte';
-  import { gestures } from '../script/stores/Stores';
   import TrainingButton from './training/TrainingButton.svelte';
-  import DataPageMenu from '../components/datacollection/DataPageMenu.svelte';
-  import BottomPanel from '../components/bottom/BottomPanel.svelte';
-  import { Paths, getTitle, navigate } from '../router/paths';
-
-  let isConnectionDialogOpen = false;
 
   $: hasSomeData = (): boolean => {
     if ($gestures.length === 0) {
@@ -39,6 +39,21 @@
       clearGestures();
     }
   };
+
+  let collectDataInFieldDialogIsOpen = false;
+  const onCollectDataInField = () => {
+    collectDataInFieldDialogIsOpen = true;
+  };
+  const onCloseCollectDataInFieldDialog = () => {
+    collectDataInFieldDialogIsOpen = false;
+  };
+
+  $: cannotCollectDataInField =
+    Microbits.getInputMicrobit() === undefined ||
+    $gestures.length < 2 ||
+    // there is a led matrix with no led turned on
+    $gestures.map(g => g.matrix.every(led => led === false)).includes(true) ||
+    !$state.isInputConnected;
 
   const onDownloadGestures = () => {
     downloadDataset();
@@ -85,6 +100,12 @@
   <title>{title}</title>
 </svelte:head>
 
+<!-- Collect data in field dialog -->
+<CollectDataInFieldDialog
+  isOpen={collectDataInFieldDialogIsOpen}
+  onClose={onCloseCollectDataInFieldDialog}
+  status={cannotCollectDataInField ? 'not ready' : 'ready'} />
+
 <div class="flex flex-col h-full inline-block w-full bg-backgrounddark">
   <TabView />
   <main class="contents">
@@ -116,7 +137,7 @@
           class="grid grid-cols-[292px,1fr] auto-rows-max gap-x-7 gap-y-3 py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
           {#each $gestures as gesture (gesture.ID)}
             <section class="contents">
-              <Gesture
+              <GestureComponent
                 showWalkThrough={$gestures.length === 1}
                 gesture={gestures.getGesture(gesture.ID)} />
             </section>
@@ -138,7 +159,8 @@
           downloadDisabled={$gestures.length === 0}
           {onClearGestures}
           {onDownloadGestures}
-          {onUploadGestures} />
+          {onUploadGestures}
+          {onCollectDataInField} />
       </div>
     </div>
     <div class="h-160px w-full">

@@ -28,6 +28,7 @@
     state,
     microbitInteraction,
     MicrobitInteractions,
+    isFieldDataCollectionMode,
   } from '../script/stores/uiStore';
   import {
     addRecording,
@@ -241,6 +242,9 @@
   // If so, the gesture calls the recording function.
   function triggerButtonsClicked(buttons: { buttonA: 0 | 1; buttonB: 0 | 1 }): void {
     if (showCountdown || isThisRecording) {
+      return;
+    }
+    if ($isFieldDataCollectionMode) {
       return;
     }
     const triggerButton = get(microbitInteraction);
