@@ -51,6 +51,7 @@
     "vitest-dom": "^0.1.1"
   },
   "dependencies": {
+    "@microbit-foundation/ml-header-generator": "^0.3.8",
     "@microbit-foundation/react-code-view": "^5.0.0-dev.35",
     "@microbit-foundation/react-editor-embed": "^1.0.0-overwrite.download.44",
     "@microbit/microbit-universal-hex": "^0.2.2",
