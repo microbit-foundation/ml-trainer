@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { compileModel } from 'ml4f';
-import { generateBlob } from 'ml-header-generator';
+import { generateBlob } from '@microbit-foundation/ml-header-generator';
 import { LayersModel } from '@tensorflow/tfjs';
 import Gesture from '../domain/Gesture';
 

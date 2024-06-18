@@ -51,6 +51,7 @@
     "vitest-dom": "^0.1.1"
   },
   "dependencies": {
+    "@microbit-foundation/ml-header-generator": "^0.3.8",
     "@microbit-foundation/react-code-view": "^5.0.0-dev.35",
     "@microbit-foundation/react-editor-embed": "^1.0.0-overwrite.download.44",
     "@microbit/microbit-universal-hex": "^0.2.2",
@@ -65,7 +66,6 @@
     "d3": "^7.8.5",
     "dapjs": "^2.3.0",
     "js-cookie": "^3.0.4",
-    "ml-header-generator": "file:ml-header-generator-0.1.0.tgz",
     "ml4f": "git://github.com/microsoft/ml4f#v1.10.1",
     "postcss": "^8.4.23",
     "react": "^18.3.1",
