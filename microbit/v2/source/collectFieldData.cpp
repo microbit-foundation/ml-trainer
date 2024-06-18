@@ -142,7 +142,6 @@ void collectFieldData()
     uBit.buttonA.wasPressed();
     uBit.buttonB.wasPressed();
     uBit.buttonAB.wasPressed();
-    uBit.logo.wasPressed();
 
     bool looping = true;
     bool isLogging = false;
@@ -165,6 +164,13 @@ void collectFieldData()
             uBit.audio.soundExpressions.playAsync("010230849100001000000100000000012800000100240000000000000000000000000000");
             getAndShowCurrentAction(actions, actionId, numActions);
         }
+        if (uBit.buttonAB.wasPressed())
+        {
+            looping = false;
+            printSmiley(GLAD_SMILEY);
+            uart->send(ManagedString("f_stopped"));
+            return;
+        }
         if (isLogging)
         {
             uBit.log.beginRow();
@@ -182,11 +188,6 @@ void collectFieldData()
         }
         else if (uBit.buttonB.wasPressed())
         {
-            actionId--;
-            currAction = getAndShowCurrentAction(actions, actionId, numActions);
-        }
-        else if (uBit.buttonAB.wasPressed())
-        { // Start recording sample
             numSamples = 0;
             countdown();
             uBit.log.beginRow();
@@ -195,13 +196,6 @@ void collectFieldData()
             uBit.log.logData("z", "");
             uBit.log.endRow();
             isLogging = true;
-        }
-        else if (uBit.logo.wasPressed())
-        {
-            looping = false;
-            printSmiley(GLAD_SMILEY);
-            uart->send(ManagedString("f_stopped"));
-            return;
         }
     }
 }

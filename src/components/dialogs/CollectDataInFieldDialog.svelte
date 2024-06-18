@@ -74,11 +74,9 @@
     <div class="flex flex-col space-y-3 self-center items-center justify-center">
       <div class="flex flex-col items-left h-100px">
         To collect data:
-        <li>Press button A or B to page through the actions.</li>
-        <li>Press button A and B to record gesture.</li>
-        <li>
-          Press the micro:bit logo and reconnect micro:bit to get log from the field.
-        </li>
+        <li>Press button A to page through the actions.</li>
+        <li>Press button B to record gesture.</li>
+        <li>Press button A+B to stop field data collection and reconnect micro:bit.</li>
       </div>
     </div>
     <div class="flex flex-row space-x-3 self-center items-center justify-center">

@@ -25,6 +25,7 @@ MicroBitButtonService *btn;
 
 // State
 int connected = 0;
+bool testCollectFieldDataMode = false; // for debugging collect in the field mode
 
 // Manually increase this build number each build. Used by the application to determine what capabilities the firmware has.
 int buildNumber = 1;
@@ -151,5 +152,14 @@ int main()
     {
         printSmiley(GLAD_SMILEY);
     }
+
+    if (testCollectFieldDataMode)
+    {
+        uBit.log.beginRow();
+        uBit.log.logString(ManagedString("still,0000000000111110000000000;wave,0000010101010100000000000;\n"));
+        uBit.log.endRow();
+        collectFieldData();
+    }
+
     release_fiber();
 }
