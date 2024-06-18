@@ -207,7 +207,8 @@ function onTrainEnd() {
 // makeInput reduces array of x, y and z inputs to a single number array with values.
 // Depending on user settings. There will be anywhere between 1-24 parameters in
 
-function makeInputs(sample: { x: number[]; y: number[]; z: number[] }): number[] {
+// Exported for testing.
+export function makeInputs(sample: { x: number[]; y: number[]; z: number[] }): number[] {
   const dataRep: number[] = [];
 
   if (!modelSettings) {
