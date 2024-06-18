@@ -113,9 +113,6 @@ void onDelim(MicroBitEvent)
             // wait for message to send before collect field data mode
             uBit.sleep(1000);
             collectFieldData();
-
-            // after collecting field data
-            uart->send(ManagedString("f_stopped"));
             return;
         }
         actionStr = actionStr + data;

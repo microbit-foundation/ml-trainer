@@ -3,11 +3,13 @@
  *
  * SPDX-License-Identifier: MIT
  */
+#include "MicroBitUARTService.h"
 #include "MicroBit.h"
 #include "utilities.h"
 #include "smileys.h"
 
 extern MicroBit uBit;
+extern MicroBitUARTService *uart;
 
 const char *const GO = "\
     070,070,070,070,070\n\
@@ -197,6 +199,7 @@ void collectFieldData()
         {
             looping = false;
             printSmiley(GLAD_SMILEY);
+            uart->send(ManagedString("f_stopped"));
             return;
         }
     }
