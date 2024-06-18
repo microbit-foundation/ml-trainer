@@ -12,7 +12,7 @@
   import BaseDialog from '../dialogs/BaseDialog.svelte';
   import View3DLive from '../3d-inspector/View3DLive.svelte';
   import Information from '../information/Information.svelte';
-  import { state } from '../../script/stores/uiStore';
+  import { isFieldDataCollectionMode, state } from '../../script/stores/uiStore';
 
   const live3dViewVisible = false;
   const live3dViewSize = live3dViewVisible ? 160 : 0;
@@ -64,6 +64,12 @@
     {/if}
   </div>
   <div class="absolute w-full h-full">
-    <LiveGraph width={componentWidth - live3dViewSize} />
+    {#if $isFieldDataCollectionMode}
+      <div class="flex flex-col w-full h-full justify-center align-middle items-center">
+        Unavailable whilst collecting data in the field
+      </div>
+    {:else}
+      <LiveGraph width={componentWidth - live3dViewSize} />
+    {/if}
   </div>
 </div>

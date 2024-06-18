@@ -15,6 +15,7 @@ import { PersistantGestureData } from '../domain/Gestures';
 import Gesture, { GestureID } from '../domain/Gesture';
 import { gestures } from './Stores';
 import { TrainingStatus } from '../domain/Model';
+import { matrixNumbers } from '../utils/matrixImages';
 
 export type RecordingData = {
   ID: number;
@@ -37,8 +38,7 @@ export function loadDatasetFromFile(file: File) {
       const gestureData: PersistantGestureData[] = JSON.parse(
         contents,
       ) as PersistantGestureData[];
-      updateToUntrainedState();
-      gestures.importFrom(gestureData);
+      importGestureData(gestureData);
     }
   };
   reader.readAsText(file as Blob);
@@ -65,8 +65,30 @@ export function clearGestures() {
   gestures.clearGestures();
 }
 
+export function getNewBlankMatrix() {
+  return new Array(25).fill(false);
+}
+
+export function getNewNumberMatrix() {
+  const g = gestures.getGestures();
+  const numGestures = g.length;
+  if (numGestures > 9) {
+    return matrixNumbers.get((numGestures + 1) % 9);
+  } else {
+    let i = numGestures + 1;
+    while (true) {
+      if (g.find(g => g.getMatrix().toString() === matrixNumbers.get(i)?.toString())) {
+        i++;
+      } else {
+        return matrixNumbers.get(i);
+      }
+    }
+  }
+}
+
 export type GestureData = {
   name: string;
+  matrix: boolean[];
   ID: GestureID;
   recordings: RecordingData[];
   output: GestureOutput;
@@ -175,6 +197,11 @@ export function addGesture(name: string): void {
   gestures.createGesture(name);
 }
 
+export function importGestureData(gestureData: PersistantGestureData[]) {
+  updateToUntrainedState();
+  gestures.importFrom(gestureData);
+}
+
 // Delete this, maybe? updateToUntrainedState
 export function removeGesture(gesture: GestureData) {
   updateToUntrainedState();
@@ -212,6 +239,10 @@ export function updateGesturePinOutput(
 
 export function updateGestureLEDOutput(gestureID: number, matrix: boolean[]) {
   gestures.getGesture(gestureID).setLEDOutput(matrix);
+}
+
+export function updateGestureMatrix(gestureID: number, matrix: boolean[]) {
+  gestures.getGesture(gestureID).setMatrix(matrix);
 }
 
 export const gestureConfidences = writable<{ [id: string]: number }>({});

@@ -56,7 +56,17 @@
 
   // TODO: Shares a lot with 'PatternMatrix'. Extract 'Matrix' component and reuse
 
-  import { type GestureData, updateGestureLEDOutput } from '../../script/stores/mlStore';
+  import {
+    type GestureData,
+    updateGestureLEDOutput,
+    getNewBlankMatrix,
+    updateGestureMatrix,
+  } from '../../script/stores/mlStore';
+
+  type Mode = 'input' | 'output';
+  export let mode: Mode = 'output';
+  export let editable: boolean = true;
+  export let brandColor: boolean = false;
 
   export const trigger = () => {
     Microbits.getOutputMicrobit()?.setLeds(matrix);
@@ -64,10 +74,10 @@
 
   export let gesture: GestureData;
 
-  let matrix = gesture.output?.matrix ?? new Array<boolean>(25).fill(false);
-
-  // Save matrix to output
-  // $: gesture.output.matrix = matrix;
+  $: matrix =
+    mode === 'output'
+      ? gesture.output?.matrix ?? getNewBlankMatrix()
+      : gesture.matrix ?? getNewBlankMatrix();
 
   // Variable for saving the current type-of-click
   // This helps when users drag to draw on the 5x5 grid
@@ -76,20 +86,28 @@
   // When clicked. Use setElementTo to remember what elements
   // Should be set to
   function elementClick(i: number) {
-    setElementTo = !matrix[i];
-    matrix[i] = setElementTo;
-    updateGestureLEDOutput(gesture.ID, matrix);
+    if (editable) {
+      setElementTo = !matrix[i];
+      matrix[i] = setElementTo;
+      mode === 'output'
+        ? updateGestureLEDOutput(gesture.ID, matrix)
+        : updateGestureMatrix(gesture.ID, matrix);
+    }
   }
 
   // When user hovers over a box. If user is clicking:
   // Set that matrix to true/false depending on last
   // click
   function elementHover(i: number, e: MouseEvent) {
-    if (e.buttons !== 1) {
-      return;
+    if (editable) {
+      if (e.buttons !== 1) {
+        return;
+      }
+      matrix[i] = setElementTo;
+      mode === 'output'
+        ? updateGestureLEDOutput(gesture.ID, matrix)
+        : updateGestureMatrix(gesture.ID, matrix);
     }
-    matrix[i] = setElementTo;
-    updateGestureLEDOutput(gesture.ID, matrix);
   }
 </script>
 
@@ -98,9 +116,14 @@
   {#each matrix as button, i}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
-      class="{button ? 'bg-[#FF0000]' : 'bg-gray-300'} rounded-[2px] transition ease"
+      class="{button
+        ? brandColor
+          ? 'bg-brand-400'
+          : 'bg-[#FF0000]'
+        : 'bg-gray-300'} rounded-[2px] transition ease"
       class:turnedOn={button}
       class:turnedOff={!button}
+      class:cursor-pointer={editable}
       on:mousedown={() => {
         elementClick(i);
       }}

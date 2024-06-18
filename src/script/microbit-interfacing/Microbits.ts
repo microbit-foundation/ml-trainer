@@ -18,8 +18,9 @@ export type HexType =
   | 'radio-local'
   | 'radio-remote-dev';
 
-export type UARTMessageType = 'g' | 's';
 export type HexVersion = 1 | 2 | 'universal';
+// g - gesture, s - sound, f - field collection
+export type UARTMessageType = 'g' | 's' | 'f';
 
 export const getHexStrForVersion = (hexStr: string, version: HexVersion) => {
   if (isUniversalHex(hexStr)) {

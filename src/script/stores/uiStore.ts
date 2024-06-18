@@ -27,7 +27,7 @@ const compatibilityResult = checkCompatibility();
 export const compatibility = writable<CompatibilityStatus>(compatibilityResult);
 if (compatibilityResult.bluetooth) {
   navigator.bluetooth
-    .getAvailability()
+    ?.getAvailability()
     .then(bluetoothAvailable => {
       compatibility.update(s => {
         logEvent({
@@ -188,6 +188,8 @@ export const buttonPressed = writable<{ buttonA: 0 | 1; buttonB: 0 | 1 }>({
   buttonA: 0,
   buttonB: 0,
 });
+
+export const isFieldDataCollectionMode = writable<boolean>(false);
 
 export enum MicrobitInteractions {
   A,
