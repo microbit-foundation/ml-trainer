@@ -13,7 +13,7 @@ import * as path from 'path';
 // Place files you wish to ignore by name in here
 const ignoredFiles: RegExp[] = [
   /^\.DS_Store$/,
-  /^ui.[a-z-]+.json$/,
+  /^.+\.json$/,
   /\.(gif|svg|png|jpg|jpeg)$/,
   /^README.md$/,
 ];
@@ -66,9 +66,6 @@ const filesMissingIdentifier = (files: string[], expects: string[]): string[] =>
 
   for (let i = 0; i < files.length; i++) {
     for (const expect of expects) {
-      if (files[i].endsWith('.json')) {
-        continue;
-      }
       if (!readFile('./' + files[i], expect)) {
         if (!filesWithMissingIdentifier.includes(files[i])) {
           filesWithMissingIdentifier.push(files[i]);
