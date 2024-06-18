@@ -30,6 +30,7 @@
   import { model as modelStore } from '../../script/stores/mlStore';
   import Gesture from '../../script/domain/Gesture';
   import { LayersModel } from '@tensorflow/tfjs';
+  import lzma from 'lzma/src/lzma_worker';
 
   const updateCustomTs = (
     project: MakeCodeProject,
@@ -99,6 +100,42 @@
       return s;
     });
   };
+
+  // LZMA isn't a proper module.
+  // When bundled it assigns to window. At dev time it works via the above import.
+  const LZMA = (window as any).LZMA ?? lzma.LZMA;
+
+  const handleExport = () => {
+    const pxtMicrobitVersion = 'v6.0.28';
+    const compressed = LZMA.compress(
+      JSON.stringify({
+        meta: {
+          // pxt and pxt/microbit versions are specified and may need updating
+          cloudId: 'pxt/microbit',
+          targetVersions: {
+            branch: pxtMicrobitVersion,
+            tag: pxtMicrobitVersion,
+            commits:
+              'https://github.com/microsoft/pxt-microbit/commit/9d308fa3c282191768670a6558e4df8af2d715cf',
+            target: pxtMicrobitVersion,
+            pxt: '9.0.19',
+          },
+          editor: 'blocksprj',
+          name: 'some name',
+        },
+        source: project.text,
+      }),
+      1,
+    );
+    const element = document.createElement('a');
+    const file = new Blob([new Uint8Array(compressed)], { type: 'application/x-lmza' });
+    element.href = URL.createObjectURL(file);
+    element.setAttribute('download', 'project.mkcd');
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
 </script>
 
 <h1 class="text-2xl font-bold pb-3 pt-10">{$t('content.output.header')}</h1>
@@ -111,6 +148,8 @@
     >{$t('content.output.button.program')}</StandardButton>
   <StandardButton onClick={handleResetToDefault} type="secondary"
     >{$t('content.output.button.resetToDefault')}</StandardButton>
+  <StandardButton onClick={handleExport} type="secondary"
+    >{$t('content.output.button.export')}</StandardButton>
 </div>
 <EditCodeDialog
   code={project}
