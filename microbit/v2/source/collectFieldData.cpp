@@ -126,7 +126,7 @@ void collectFieldData()
             char encodedLed[encodedLedSize];
             uBit.log.readData(encodedLed, i - encodedLedSize, encodedLedSize, DataFormat::CSV, csvLen);
 
-            actions[idx].name = name;
+            actions[idx].name = ManagedString(name).substring(0, nameSize);
             actions[idx].led = encodedLed;
 
             idx++;
@@ -142,6 +142,7 @@ void collectFieldData()
     uBit.buttonA.wasPressed();
     uBit.buttonB.wasPressed();
     uBit.buttonAB.wasPressed();
+    uBit.logo.wasPressed();
 
     bool looping = true;
     bool isLogging = false;
