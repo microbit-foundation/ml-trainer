@@ -27,6 +27,8 @@
   "content.index.toolProcessCards.train.description": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",
   "content.index.toolProcessCards.model.title": "Test model",
   "content.index.toolProcessCards.model.description": "Find out if it correctly recognises each action. Add more data to improve the model.",
+  "content.index.toolProcessCards.output.title": "Use model",
+  "content.index.toolProcessCards.output.description": "Code your output micro:bit to react based on the recognised action using the model you created.",
   "content.index.dataWarning.title": "Existing data samples will be lost",
   "content.index.dataWarning.subtitleOne": "You have existing data that will be lost when you start a new session.",
   "content.index.dataWarning.subtitleTwo": "To save your data, <link>download all data samples</link> before continuing.",
@@ -67,10 +69,10 @@
   "content.trainer.retrain.title": "Status: Your data samples have changed. You can retrain the model.",
 
   "content.model.trainModelFirstHeading": "Test model",
-  "content.model.notEnoughDataInfoBody1": "You cannot test the model until it has been trained.",
+  "content.model.notEnoughDataInfoBody1": "You cannot test or use the model until it has been trained.",
   "content.model.notEnoughDataInfoBody2": "You need at least 3 data samples for 2 actions to train a model.",
-  "content.model.trainModelBody": "You need to train your model before you can test it.",
-  "content.model.retrainModelBody": "You need to train your model with the current set of data samples before you can test it.",
+  "content.model.trainModelBody": "You need to train your model before you can test or use it.",
+  "content.model.retrainModelBody": "You need to train your model with the current set of data samples before you can test or use it.",
   "content.model.addData": "Add data",
 
   "content.model.output.estimatedGesture.iconTitle": "Estimated action:",
@@ -88,6 +90,12 @@
   "content.model.output.certainty.descriptionBody": "How confident the model is that you are currently doing each action.",
 
   "content.model.output.recognitionPoint": "Recognition Point:",
+
+  "content.output.header": "Use model",
+  "content.output.description": "Use the model to program your output micro:bit to react to the recognised action.",
+  "content.output.button.program": "Program micro:bit",
+  "content.output.button.resetToDefault": "Reset to default",
+  "content.output.button.export": "Export for MakeCode",
 
   "footer.start": "Start new session",
   "footer.resume": "Resume session",
@@ -126,6 +134,8 @@
   "menu.model.noModel": "No model",
   "menu.model.disconnect": "Disconnect output micro:bit",
   "menu.model.connectInputMicrobit": "Connect micro:bit",
+
+  "menu.output.helpHeading": "4. Use model",
 
   "connectMB.nextButton": "Next",
   "connectMB.backButton": "Back",
@@ -172,6 +182,7 @@
 
   "connectMB.connectCable.heading": "Connect USB cable to micro:bit",
   "connectMB.connectCable.subtitle": "Connect the micro:bit to this computer with a USB cable so that the machine learning tool program can be downloaded to it.",
+  "connectMB.connectCable.output.subtitle": "Connect the micro:bit to this computer with a USB cable so that your micro:bit program can be downloaded to it.",
 
   "connectMB.connectCable.altText": "animation showing a USB cable being connected to the top of a micro:bit",
   "connectMB.connectCable.skip": "Skip: program already downloaded?",

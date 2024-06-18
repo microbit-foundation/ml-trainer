@@ -8,6 +8,7 @@ import MicrobitConnection, { DeviceRequestStates } from './MicrobitConnection';
 import MicrobitUSB from './MicrobitUSB';
 import { MicrobitBluetooth, startBluetoothConnection } from './MicrobitBluetooth';
 import { startSerialConnection } from './MicrobitSerial';
+import { isUniversalHex, separateUniversalHex } from '@microbit/microbit-universal-hex';
 
 export type FlashStage = 'bluetooth' | 'radio-remote' | 'radio-bridge';
 export type HexType =
@@ -18,11 +19,39 @@ export type HexType =
   | 'radio-remote-dev';
 
 export type UARTMessageType = 'g' | 's';
+export type HexVersion = 1 | 2 | 'universal';
 
-export const getHexFileUrl = (
-  version: 1 | 2 | 'universal',
-  type: HexType,
-): string | undefined => {
+export const getHexStrForVersion = (hexStr: string, version: HexVersion) => {
+  if (isUniversalHex(hexStr)) {
+    let hexV1: string | null = null;
+    let hexV2: string | null = null;
+    let separatedBinaries = separateUniversalHex(hexStr);
+    separatedBinaries.forEach(hexObj => {
+      if (hexObj.boardId === 0x9900 || hexObj.boardId === 0x9901) {
+        hexV1 = hexObj.hex;
+      } else if (
+        hexObj.boardId === 0x9903 ||
+        hexObj.boardId === 0x9904 ||
+        hexObj.boardId === 0x9905 ||
+        hexObj.boardId === 0x9906
+      ) {
+        hexV2 = hexObj.hex;
+      }
+    });
+    if (!hexV1 || !hexV2) {
+      throw new Error('Could not find parts of universal hex');
+    }
+    return {
+      1: hexV1,
+      2: hexV2,
+      universal: hexStr,
+    }[version];
+  }
+  // Not a universal hex, no splitting needed
+  return hexStr;
+};
+
+export const getHexFileUrl = (version: HexVersion, type: HexType): string | undefined => {
   if (type === 'bluetooth') {
     return {
       1: 'firmware/ml-microbit-cpp-version-combined.hex',

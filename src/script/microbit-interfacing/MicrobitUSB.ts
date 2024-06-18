@@ -110,16 +110,14 @@ class MicrobitUSB {
   }
 
   /**
-   * Flashes a .hex file to the micro:bit.
-   * @param {string} url The hex file to flash. (As a link)
+   * Flashes array buffer to the micro:bit.
+   * @param {buffer: ArrayBuffer} buffer Hex buffer to flash
    * @param {(progress: number) => void} progressCallback A callback for progress.
    */
   public async flashHex(
-    url: string,
+    buffer: ArrayBuffer,
     progressCallback: (progress: number) => void,
   ): Promise<void> {
-    const hexFile = await fetch(url);
-    const buffer = await hexFile.arrayBuffer();
     const target = new DAPLink(this.transport);
 
     target.on(DAPLink.EVENT_PROGRESS, (progress: number) => {
