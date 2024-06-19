@@ -6,8 +6,10 @@
 <script lang="ts">
   import { MakeCodeProject } from '@microbit-foundation/react-editor-embed';
   import { LayersModel } from '@tensorflow/tfjs';
+  import lzma from 'lzma/src/lzma_worker';
   import { get } from 'svelte/store';
   import { fade } from 'svelte/transition';
+  import StandardButton from '../../../components/StandardButton.svelte';
   import BottomPanel from '../../../components/bottom/BottomPanel.svelte';
   import Information from '../../../components/information/Information.svelte';
   import OutputGesture from '../../../components/output/OutputGesture.svelte';
@@ -23,6 +25,13 @@
   import { model as modelStore } from '../../../script/stores/mlStore';
   import { makeCodeProject, state } from '../../../script/stores/uiStore';
   import { t } from './../../../i18n';
+  import EditCodeDialog from '../../../components/dialogs/EditCodeDialog.svelte';
+  import {
+    ConnectDialogStates,
+    connectionDialogState,
+  } from '../../../script/stores/connectDialogStore';
+  import { DeviceRequestStates } from '../../../script/microbit-interfacing/MicrobitConnection';
+  import CodeView from '../../../components/CodeView.svelte';
 
   // Bool flags to know whether output microbit popup should be show
   let hasClosedPopup = false;
@@ -50,14 +59,9 @@
   };
 
   const generateDefaultProjectText = (gs: Gesture[], model: LayersModel) => {
-    const gestureNames = gs.map(g => g.getName());
-    const actionConfigs = gestureNames.map((name, idx) => ({
-      name,
-      iconName: iconNames[idx % iconNames.length],
-    }));
     return {
-      [filenames.mainBlocks]: generateMakeCodeOutputMain(actionConfigs, 'blocks'),
-      [filenames.mainTs]: generateMakeCodeOutputMain(actionConfigs, 'javascript'),
+      [filenames.mainBlocks]: generateMakeCodeOutputMain(gs, 'blocks'),
+      [filenames.mainTs]: generateMakeCodeOutputMain(gs, 'javascript'),
       [filenames.customTs]: generateCustomTs(gs, model),
       [filenames.customJson]: generateCustomJson(gs),
       'README.md': ' ',
@@ -74,7 +78,84 @@
       ? generateDefaultProjectText(gs, model)
       : updateCustomTs(savedProject as MakeCodeProject, gs, model),
   };
+
+  let isCodeEditorOpen = false;
+  const handleEdit = () => {
+    isCodeEditorOpen = true;
+  };
+  const handleEditDialogClose = () => {
+    isCodeEditorOpen = false;
+  };
+
+  // LZMA isn't a proper module.
+  // When bundled it assigns to window. At dev time it works via the above import.
+  const LZMA = (window as any).LZMA ?? lzma.LZMA;
+
+  const handleExport = () => {
+    const pxtMicrobitVersion = 'v6.0.28';
+    const compressed = LZMA.compress(
+      JSON.stringify({
+        meta: {
+          // pxt and pxt/microbit versions are specified and may need updating
+          cloudId: 'pxt/microbit',
+          targetVersions: {
+            branch: pxtMicrobitVersion,
+            tag: pxtMicrobitVersion,
+            commits:
+              'https://github.com/microsoft/pxt-microbit/commit/9d308fa3c282191768670a6558e4df8af2d715cf',
+            target: pxtMicrobitVersion,
+            pxt: '9.0.19',
+          },
+          editor: 'blocksprj',
+          name: 'some name',
+        },
+        source: project.text,
+      }),
+      1,
+    );
+    const element = document.createElement('a');
+    const file = new Blob([new Uint8Array(compressed)], { type: 'application/x-lmza' });
+    element.href = URL.createObjectURL(file);
+    element.setAttribute('download', 'project.mkcd');
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+
+  let showDefaultView = isEmpty(savedProject);
+  const handleCodeChange = (code: MakeCodeProject) => {
+    project = code;
+    $makeCodeProject = code;
+    showDefaultView = false;
+  };
+  const handleResetToDefault = () => {
+    $makeCodeProject = {};
+    project = {
+      text: generateDefaultProjectText(gs, model),
+    };
+    showDefaultView = true;
+  };
+  const handleDownload = (hexData: string) => {
+    state.update(obj => {
+      obj.outputHex = hexData;
+      return obj;
+    });
+    connectionDialogState.update(s => {
+      s.connectionState = ConnectDialogStates.CONNECT_CABLE;
+      s.deviceState = DeviceRequestStates.OUTPUT;
+      return s;
+    });
+  };
 </script>
+
+<EditCodeDialog
+  code={project}
+  isOpen={isCodeEditorOpen}
+  onClose={handleEditDialogClose}
+  onCodeChange={handleCodeChange}
+  onDownload={handleDownload}
+  baseUrl="https://pxt-microbit.pages.dev/" />
 
 <h1 class="sr-only">{$t('content.index.toolProcessCards.model.title')}</h1>
 <div class="flex flex-col h-full bg-backgrounddark">
@@ -82,7 +163,7 @@
     <div
       class="grid {enableOutputGestures
         ? 'grid-cols-[292px,360px,177px,146px,1fr]'
-        : 'grid-cols-[292px,max-content]'} gap-x-7 items-center flex-shrink-0 h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
+        : 'grid-cols-[292px,360px,30px,165px,max-content]'} gap-x-7 items-center flex-shrink-0 h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
       <Information
         underlineIconText={false}
         isLightTheme={false}
@@ -95,6 +176,21 @@
         iconText={$t('content.model.output.certainty.iconTitle')}
         titleText={$t('content.model.output.certainty.descriptionTitle')}
         bodyText={$t('content.model.output.certainty.descriptionBody')} />
+      <div></div>
+      <Information
+        underlineIconText={false}
+        isLightTheme={false}
+        iconText="Output"
+        titleText="Output"
+        bodyText="What the micro:bit will do when each action is detected." />
+      <div class="flex flex-row w-full gap-x-2">
+        <StandardButton size="small" onClick={handleEdit} type="secondary"
+          >Edit in MakeCode</StandardButton>
+        <StandardButton size="small" onClick={handleResetToDefault} type="secondary"
+          >Reset to default</StandardButton>
+        <StandardButton size="small" onClick={handleExport} type="secondary"
+          >Export</StandardButton>
+      </div>
       {#if enableOutputGestures}
         <Information
           isLightTheme={false}
@@ -113,16 +209,36 @@
           bodyText={$t('content.model.output.pin.descriptionBody')} />
       {/if}
     </div>
-    <div
-      class="grid {enableOutputGestures
-        ? 'grid-cols-[292px,360px,177px,146px,max-content]'
-        : 'grid-cols-[292px,360px,30px,max-content]'} auto-rows-max gap-x-7 gap-y-3 py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
-      <!-- Display all gestures and their output capabilities -->
-      {#each gestures.getGestures() as gesture}
-        <section class="contents">
-          <OutputGesture variant="stack" {gesture} {onUserInteraction} {project} />
-        </section>
-      {/each}
+    <div class="flex flex-row">
+      <div>
+        <div
+          class="grid {enableOutputGestures
+            ? 'grid-cols-[292px,360px,177px,146px,max-content]'
+            : `grid-cols-[292px,360px,30px${
+                showDefaultView ? ',max-content]' : ']'
+              }`} gap-x-7 gap-y-3 py-2 px-10 overflow-y-auto">
+          <!-- Display all gestures and their output capabilities -->
+          {#each gestures.getGestures() as gesture}
+            <section class="contents">
+              <OutputGesture
+                variant="stack"
+                {gesture}
+                {onUserInteraction}
+                {project}
+                showOutput={showDefaultView} />
+            </section>
+          {/each}
+        </div>
+      </div>
+      {#if !showDefaultView}
+        <div class="flex-grow">
+          <div class="mr-5 my-5">
+            <div class="w-full bg-white p-5 rounded-lg">
+              <CodeView code={project} />
+            </div>
+          </div>
+        </div>
+      {/if}
     </div>
     {#if !$state.isOutputConnected && !hasClosedPopup && hasInteracted}
       <div transition:fade class="grid grid-cols-5 absolute bottom-5 w-full min-w-729px">

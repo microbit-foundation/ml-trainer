@@ -14,6 +14,7 @@
 
   export let gesture: Gesture;
   export let project: MakeCodeProject;
+  export let showOutput: boolean = true;
   let wasTriggered = false;
 
   $: {
@@ -45,7 +46,7 @@
 </script>
 
 {#if variant === 'stack'}
-  <OutputGestureStack {gesture} {onUserInteraction} {project} />
+  <OutputGestureStack {gesture} {onUserInteraction} {project} {showOutput} />
 {/if}
 
 {#if variant === 'tile'}

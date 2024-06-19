@@ -18,7 +18,7 @@
     generateCustomJson,
     generateCustomTs,
   } from '../../script/makecode/generateCustomTsAndJson';
-  import { generateMakeCodeOutputMain } from '../../script/makecode/generateMain';
+  import { generateMakeCodeOutputMainDep } from '../../script/makecode/generateMain';
   import { filenames, iconNames, isEmpty, pxt } from '../../script/makecode/utils';
   import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
   import { gestures } from '../../script/stores/Stores';
@@ -49,8 +49,8 @@
       iconName: iconNames[idx % iconNames.length],
     }));
     return {
-      [filenames.mainBlocks]: generateMakeCodeOutputMain(actionConfigs, 'blocks'),
-      [filenames.mainTs]: generateMakeCodeOutputMain(actionConfigs, 'javascript'),
+      [filenames.mainBlocks]: generateMakeCodeOutputMainDep(actionConfigs, 'blocks'),
+      [filenames.mainTs]: generateMakeCodeOutputMainDep(actionConfigs, 'javascript'),
       [filenames.customTs]: generateCustomTs(gs, model),
       [filenames.customJson]: generateCustomJson(gs),
       'README.md': ' ',
@@ -145,12 +145,11 @@
   </div>
 </div>
 <div class="flex flex-row my-5 gap-5">
-  <StandardButton onClick={handleEdit} type="primary"
-    >{$t('content.output.button.program')}</StandardButton>
+  <StandardButton onClick={handleEdit} type="primary">Edit in MakeCode</StandardButton>
   <StandardButton onClick={handleResetToDefault} type="secondary"
-    >{$t('content.output.button.resetToDefault')}</StandardButton>
+    >Reset to default</StandardButton>
   <StandardButton onClick={handleExport} type="secondary"
-    >{$t('content.output.button.export')}</StandardButton>
+    >Export for MakeCode</StandardButton>
 </div>
 <EditCodeDialog
   code={project}

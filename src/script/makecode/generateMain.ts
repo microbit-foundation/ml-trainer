@@ -1,3 +1,7 @@
+import Gesture from '../domain/Gesture';
+import { matrixImages } from '../utils/matrixImages';
+import { getKeyByValue } from './utils';
+
 /**
  * (c) 2024, Center for Computational Thinking and Design at Aarhus University and contributors
  *
@@ -8,6 +12,19 @@ interface OnGestureRecognisedConfig {
   iconName?: string;
   led?: boolean[];
 }
+
+const getIconNameOrLed = (m: boolean[]) => {
+  const name = getKeyByValue(matrixImages, m);
+  if (!name) {
+    return { led: m };
+  }
+  return { iconName: name };
+};
+
+export const getMakeCodeGestureConfig = (gesture: Gesture) => ({
+  name: gesture.getName(),
+  ...getIconNameOrLed(gesture.getMatrix()),
+});
 
 const actionLabel = (name: string) => `mlrunner.Action.${name}`;
 interface BlockPos {
@@ -75,14 +92,11 @@ const onMLEventChildren = (
   return '';
 };
 
-export const generateMakeCodeOutputMain = (
-  configs: OnGestureRecognisedConfig[],
-  lang: Language,
-) => {
+export const generateMakeCodeOutputMain = (gs: Gesture[], lang: Language) => {
+  const configs = gs.map(g => getMakeCodeGestureConfig(g));
   const s = statements[lang];
   const initPos = { x: 0, y: 0 };
   return s.wrapper(`
-  ${s.onMLEvent('None', s.clearDisplay(), initPos)}
   ${configs
     .map((c, idx) =>
       s.onMLEvent(c.name, onMLEventChildren(s, c), {
@@ -93,12 +107,20 @@ export const generateMakeCodeOutputMain = (
     .join('\n')}  `);
 };
 
-export const generateMakeCodeOutputGestureMain = (
-  config: OnGestureRecognisedConfig,
+// TODO: Used in OutputProgramMicrobitView. May not be needed anymore
+export const generateMakeCodeOutputMainDep = (
+  configs: OnGestureRecognisedConfig[],
   lang: Language,
 ) => {
   const s = statements[lang];
-  return s.wrapper(
-    s.onMLEvent(config.name, onMLEventChildren(s, config), { x: 0, y: 0 }),
-  );
+  const initPos = { x: 0, y: 0 };
+  return s.wrapper(`
+  ${configs
+    .map((c, idx) =>
+      s.onMLEvent(c.name, onMLEventChildren(s, c), {
+        x: initPos.x + 300,
+        y: initPos.y + idx * 200,
+      }),
+    )
+    .join('\n')}  `);
 };
