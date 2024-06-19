@@ -202,9 +202,14 @@
 <GestureTilePart small elevated={true}>
   <div class="flex items-center justify-center w-full h-full relative gap-5 px-2">
     <div class="flex items-center gap-1">
-      <LedMatrix mode="input" editable={false} gesture={$gesture} brandColor />
+      <LedMatrix
+        class="w-22 h-22"
+        mode="input"
+        editable={false}
+        gesture={$gesture}
+        variant={wasTriggered ? 'highlighted' : 'muted'} />
     </div>
-    <h3 class="w-full break-words truncate">{$gesture.name}</h3>
+    <h3 class="w-full break-words truncate text-2xl">{$gesture.name}</h3>
   </div>
 </GestureTilePart>
 

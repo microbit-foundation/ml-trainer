@@ -64,9 +64,16 @@
   } from '../../script/stores/mlStore';
 
   type Mode = 'input' | 'output';
+  type Variant = 'brand' | 'highlighted' | 'muted';
   export let mode: Mode = 'output';
   export let editable: boolean = true;
-  export let brandColor: boolean = false;
+  export let variant: Variant = 'brand';
+
+  const activeButtonVariations = {
+    brand: 'bg-brand-400',
+    highlighted: 'bg-secondary',
+    muted: 'bg-gray-500',
+  };
 
   export const trigger = () => {
     Microbits.getOutputMicrobit()?.setLeds(matrix);
@@ -111,15 +118,13 @@
   }
 </script>
 
-<div class="buttonGrid h-18 w-18 select-none ml-0">
+<div class="buttonGrid h-18 w-18 select-none ml-0 {$$restProps.class || ''}">
   <!-- Draw all 25 boxes -->
   {#each matrix as button, i}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
       class="{button
-        ? brandColor
-          ? 'bg-brand-400'
-          : 'bg-[#FF0000]'
+        ? activeButtonVariations[variant]
         : 'bg-gray-300'} rounded-[2px] transition ease"
       class:turnedOn={button}
       class:turnedOff={!button}

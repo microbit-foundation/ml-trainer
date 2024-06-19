@@ -381,7 +381,7 @@
         </div>
       {/if}
       <div class="flex items-center gap-1">
-        <LedMatrix mode="input" gesture={$gesture} brandColor />
+        <LedMatrix mode="input" gesture={$gesture} />
         <IconButton ariaLabel="Change image" {...$trigger} useAction={trigger}>
           <ArrowDownIcon class="text-xl m-1" />
         </IconButton>
