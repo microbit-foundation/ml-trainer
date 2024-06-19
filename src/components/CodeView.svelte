@@ -11,8 +11,10 @@
     createMakeCodeRenderBlocks,
   } from '@microbit-foundation/react-code-view';
   import { onDestroy, onMount } from 'svelte';
+
   export let options = {};
   export let code: MakeCodeProject;
+  export let scale: number = 1;
 
   const makeCodeRef = createMakeCodeRenderBlocks(options);
   let firstInitDone = false;
@@ -20,7 +22,6 @@
   const render = async () => {
     if (!firstInitDone) {
       // First time initialisation
-      console.log('code view initialise');
       makeCodeRef.initialize();
       firstInitDone = true;
     }
@@ -42,18 +43,14 @@
   });
 </script>
 
-<div class="mx-20 my-5">
-  {#await renderBlocksPromise}
-    <p>Loading ...</p>
-  {:then renderBlocksResp}
-    <div class="w-full bg-white p-5 rounded-lg">
-      <img
-        alt={code === undefined || typeof code === 'string' ? code : code.text['main.ts']}
-        src={renderBlocksResp.uri}
-        width={renderBlocksResp.width}
-        height={renderBlocksResp.height} />
-    </div>
-  {:catch error}
-    <p>System error: {error}.</p>
-  {/await}
-</div>
+{#await renderBlocksPromise}
+  <p>Loading ...</p>
+{:then renderBlocksResp}
+  <img
+    alt={code === undefined || typeof code === 'string' ? code : code.text['main.ts']}
+    src={renderBlocksResp.uri}
+    width={renderBlocksResp.width ? scale * renderBlocksResp.width : undefined}
+    height={renderBlocksResp.height} />
+{:catch error}
+  <p>System error: {error}.</p>
+{/await}

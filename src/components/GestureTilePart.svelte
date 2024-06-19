@@ -13,9 +13,9 @@
 </script>
 
 <div
-  class="{$$restProps.class || ''} rounded-lg bg-backgroundlight border-1 {selected
+  class="rounded-lg bg-backgroundlight border-1 {selected
     ? 'border-brand-500'
-    : 'border-transparent'}"
+    : 'border-transparent'} {$$restProps.class || ''}"
   class:h-30={small}
   class:shadow-md={elevated}
   class:ml-2={ml && small}

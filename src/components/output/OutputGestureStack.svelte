@@ -25,17 +25,25 @@
   import rightArrowImage from '../../imgs/right_arrow.svg';
   import rightArrowBlueImage from '../../imgs/right_arrow_blue.svg';
   import blankMicrobitImage from '../../imgs/blank_microbit.svg';
+  import RightArrowIcon from 'virtual:icons/ri/arrow-right-line';
   import { onMount } from 'svelte';
   import Microbits from '../../script/microbit-interfacing/Microbits';
   import LedMatrix from './LedMatrix.svelte';
+  import CodeView from '../CodeView.svelte';
+  import { MakeCodeProject } from '@microbit-foundation/react-editor-embed';
+  import { filenames, getKeyByValue, iconNames } from '../../script/makecode/utils';
+  import { generateMakeCodeOutputGestureMain } from '../../script/makecode/generateMain';
+  import { matrixImages } from '../../script/utils/matrixImages';
 
   type TriggerAction = 'turnOn' | 'turnOff' | 'none';
 
   // Variables for component
   export let gesture: Gesture;
+  export let project: MakeCodeProject;
   export let onUserInteraction: () => void = () => {
     return;
   };
+
   let wasTriggered = false;
   let triggerFunctions: (() => void)[] = [];
   let selectedSound: SoundData | undefined = $gesture.output.sound;
@@ -196,6 +204,33 @@
   let hasLoadedMicrobitImage = false;
 
   $: meterWidthPct = 100 * $gesture.confidence.currentConfidence;
+
+  const getIconNameOrLed = (m: boolean[]) => {
+    const name = getKeyByValue(matrixImages, m);
+    if (!name) {
+      return { led: m };
+    }
+    return { iconName: name };
+  };
+
+  const gestureMakeCodeConfig = {
+    name: gesture.getName(),
+    ...getIconNameOrLed(gesture.getMatrix()),
+  };
+
+  const gestureProject = {
+    text: {
+      ...project.text,
+      [filenames.mainTs]: generateMakeCodeOutputGestureMain(
+        gestureMakeCodeConfig,
+        'javascript',
+      ),
+      [filenames.mainBlocks]: generateMakeCodeOutputGestureMain(
+        gestureMakeCodeConfig,
+        'blocks',
+      ),
+    },
+  };
 </script>
 
 <!-- ACTION TITLE -->
@@ -261,6 +296,25 @@
         width={30} />
     </div>
   {/if}
+</GestureTilePart>
+
+<!-- ARROW -->
+<GestureTilePart class="relative bg-transparent">
+  <div class="flex flex-col justify-center h-full">
+    <RightArrowIcon class="text-4xl text-gray-500" aria-hidden />
+  </div>
+</GestureTilePart>
+
+<!-- MAKECODE -->
+<GestureTilePart elevated={true}>
+  <div
+    class="flex flex-col justify-center h-full w-full align-center text-center mx-auto">
+    <div class="mx-5">
+      <CodeView
+        code={gestureProject}
+        scale={gestureMakeCodeConfig.iconName ? 0.7 : 0.32} />
+    </div>
+  </div>
 </GestureTilePart>
 
 {#if enableOutputGestures}

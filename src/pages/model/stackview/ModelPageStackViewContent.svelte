@@ -4,16 +4,25 @@
   SPDX-License-Identifier: MIT
  -->
 <script lang="ts">
+  import { MakeCodeProject } from '@microbit-foundation/react-editor-embed';
+  import { LayersModel } from '@tensorflow/tfjs';
+  import { get } from 'svelte/store';
   import { fade } from 'svelte/transition';
+  import BottomPanel from '../../../components/bottom/BottomPanel.svelte';
   import Information from '../../../components/information/Information.svelte';
   import OutputGesture from '../../../components/output/OutputGesture.svelte';
-  import { gestures } from '../../../script/stores/Stores';
-  import { state } from '../../../script/stores/uiStore';
-  import { t } from './../../../i18n';
   import downArrowImage from '../../../imgs/down_arrow.svg';
-  import { bestPrediction } from '../../../script/stores/mlStore';
-  import BottomPanel from '../../../components/bottom/BottomPanel.svelte';
-  import GestureTilePart from '../../../components/GestureTilePart.svelte';
+  import Gesture from '../../../script/domain/Gesture';
+  import {
+    generateCustomJson,
+    generateCustomTs,
+  } from '../../../script/makecode/generateCustomTsAndJson';
+  import { generateMakeCodeOutputMain } from '../../../script/makecode/generateMain';
+  import { filenames, iconNames, isEmpty, pxt } from '../../../script/makecode/utils';
+  import { gestures } from '../../../script/stores/Stores';
+  import { model as modelStore } from '../../../script/stores/mlStore';
+  import { makeCodeProject, state } from '../../../script/stores/uiStore';
+  import { t } from './../../../i18n';
 
   // Bool flags to know whether output microbit popup should be show
   let hasClosedPopup = false;
@@ -27,48 +36,48 @@
     hasInteracted = true;
   }
 
-  $: prediction = $bestPrediction
-    ? {
-        name: $bestPrediction.name,
-        certainty: `${Math.round($bestPrediction.confidence.currentConfidence * 100)}%`,
-      }
-    : {
-        name: $t('content.model.output.estimatedGesture.none'),
-      };
+  const updateCustomTs = (
+    project: MakeCodeProject,
+    gs: Gesture[],
+    model: LayersModel,
+  ) => {
+    return {
+      ...project.text,
+      // Keep custom ts updated as gesture and model is updated by user
+      [filenames.customTs]: generateCustomTs(gs, model),
+      [filenames.customJson]: generateCustomJson(gs),
+    };
+  };
+
+  const generateDefaultProjectText = (gs: Gesture[], model: LayersModel) => {
+    const gestureNames = gs.map(g => g.getName());
+    const actionConfigs = gestureNames.map((name, idx) => ({
+      name,
+      iconName: iconNames[idx % iconNames.length],
+    }));
+    return {
+      [filenames.mainBlocks]: generateMakeCodeOutputMain(actionConfigs, 'blocks'),
+      [filenames.mainTs]: generateMakeCodeOutputMain(actionConfigs, 'javascript'),
+      [filenames.customTs]: generateCustomTs(gs, model),
+      [filenames.customJson]: generateCustomJson(gs),
+      'README.md': ' ',
+      'pxt.json': JSON.stringify(pxt),
+    };
+  };
+
+  const gs = gestures.getGestures();
+  const model = get(modelStore);
+  const savedProject = get(makeCodeProject);
+
+  let project: MakeCodeProject = {
+    text: isEmpty(savedProject)
+      ? generateDefaultProjectText(gs, model)
+      : updateCustomTs(savedProject as MakeCodeProject, gs, model),
+  };
 </script>
 
 <h1 class="sr-only">{$t('content.index.toolProcessCards.model.title')}</h1>
 <div class="flex flex-col h-full bg-backgrounddark">
-  <GestureTilePart elevated class="flex mx-10 mt-5 mb-2 px-6 flex-row">
-    <span class="sr-only" aria-live="polite">
-      {$t('content.model.output.estimatedGesture.label', {
-        values: {
-          action: prediction.name,
-        },
-      })}
-    </span>
-    <div class="flex flex-grow justify-start gap-5 py-5 font-semibold text-2xl">
-      <p class="text-infoicondark">
-        {$t('content.model.output.estimatedGesture.iconTitle')}
-      </p>
-      <p>
-        {prediction.name}
-      </p>
-    </div>
-    <div class="flex flex-row justify-end m-auto gap-5">
-      {#if prediction.certainty}
-        <p class="text-xl bg-secondary text-white rounded w-15 text-center">
-          {prediction.certainty}
-        </p>
-      {/if}
-      <Information
-        class="flex justify-center text-2xl"
-        underlineIconText={false}
-        isLightTheme={false}
-        titleText={$t('content.model.output.estimatedGesture.descriptionTitle')}
-        bodyText={$t('content.model.output.estimatedGesture.descriptionBody')} />
-    </div>
-  </GestureTilePart>
   <div class="flex flex-col flex-grow">
     <div
       class="grid {enableOutputGestures
@@ -107,11 +116,11 @@
     <div
       class="grid {enableOutputGestures
         ? 'grid-cols-[292px,360px,177px,146px,max-content]'
-        : 'grid-cols-[292px,max-content]'} auto-rows-max gap-x-7 gap-y-3 py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
+        : 'grid-cols-[292px,360px,30px,max-content]'} auto-rows-max gap-x-7 gap-y-3 py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
       <!-- Display all gestures and their output capabilities -->
       {#each gestures.getGestures() as gesture}
         <section class="contents">
-          <OutputGesture variant="stack" {gesture} {onUserInteraction} />
+          <OutputGesture variant="stack" {gesture} {onUserInteraction} {project} />
         </section>
       {/each}
     </div>

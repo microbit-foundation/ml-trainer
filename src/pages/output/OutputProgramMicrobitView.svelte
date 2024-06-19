@@ -6,31 +6,28 @@
 
 <script lang="ts">
   import { MakeCodeProject } from '@microbit-foundation/react-code-view';
+  import { LayersModel } from '@tensorflow/tfjs';
+  import lzma from 'lzma/src/lzma_worker';
+  import { get } from 'svelte/store';
   import CodeView from '../../components/CodeView.svelte';
   import StandardButton from '../../components/StandardButton.svelte';
   import EditCodeDialog from '../../components/dialogs/EditCodeDialog.svelte';
   import { t } from '../../i18n';
+  import Gesture from '../../script/domain/Gesture';
   import {
-    generateMakeCodeMainBlocksXml,
-    generateMakeCodeMainTs,
-  } from '../../script/makecode/generateMainTsAndBlocks';
+    generateCustomJson,
+    generateCustomTs,
+  } from '../../script/makecode/generateCustomTsAndJson';
+  import { generateMakeCodeOutputMain } from '../../script/makecode/generateMain';
+  import { filenames, iconNames, isEmpty, pxt } from '../../script/makecode/utils';
+  import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
   import { gestures } from '../../script/stores/Stores';
-  import { get } from 'svelte/store';
   import {
     ConnectDialogStates,
     connectionDialogState,
   } from '../../script/stores/connectDialogStore';
-  import { makeCodeProject, state } from '../../script/stores/uiStore';
-  import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
-  import {
-    generateCustomTs,
-    generateCustomJson,
-  } from '../../script/makecode/generateCustomTsAndJson';
-  import { filenames, iconNames, isEmpty, pxt } from '../../script/makecode/utils';
   import { model as modelStore } from '../../script/stores/mlStore';
-  import Gesture from '../../script/domain/Gesture';
-  import { LayersModel } from '@tensorflow/tfjs';
-  import lzma from 'lzma/src/lzma_worker';
+  import { makeCodeProject, state } from '../../script/stores/uiStore';
 
   const updateCustomTs = (
     project: MakeCodeProject,
@@ -52,8 +49,8 @@
       iconName: iconNames[idx % iconNames.length],
     }));
     return {
-      [filenames.mainBlocks]: generateMakeCodeMainBlocksXml(actionConfigs),
-      [filenames.mainTs]: generateMakeCodeMainTs(actionConfigs),
+      [filenames.mainBlocks]: generateMakeCodeOutputMain(actionConfigs, 'blocks'),
+      [filenames.mainTs]: generateMakeCodeOutputMain(actionConfigs, 'javascript'),
       [filenames.customTs]: generateCustomTs(gs, model),
       [filenames.customJson]: generateCustomJson(gs),
       'README.md': ' ',
@@ -142,7 +139,11 @@
 <p class="text-center leading-relaxed w-150">
   {$t('content.output.description')}
 </p>
-<CodeView code={project} />
+<div class="mx-20 my-5">
+  <div class="w-full bg-white p-5 rounded-lg">
+    <CodeView code={project} />
+  </div>
+</div>
 <div class="flex flex-row my-5 gap-5">
   <StandardButton onClick={handleEdit} type="primary"
     >{$t('content.output.button.program')}</StandardButton>

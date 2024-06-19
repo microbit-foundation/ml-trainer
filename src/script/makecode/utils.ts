@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-export const actionLabel = (name: string) => `mlrunner.Action.${name}`;
-
 export const filenames = {
   mainTs: 'main.ts',
   mainBlocks: 'main.blocks',
@@ -27,6 +25,12 @@ export const pxt = {
     'Machine Learning POC': 'github:microbit-foundation/pxt-ml-extension-poc#v0.3.6',
   },
   files: [...Object.values(filenames), 'README.md'],
+};
+
+export const getKeyByValue = (object: Record<string, any>, value: any) => {
+  return Object.keys(object).find(
+    key => JSON.stringify(object[key]) === JSON.stringify(value),
+  );
 };
 
 export const iconNames: string[] = [
