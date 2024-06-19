@@ -26,10 +26,6 @@ class Menus {
       title: 'menu.model.helpHeading',
       navigationPath: Paths.MODEL,
     },
-    {
-      title: 'menu.output.helpHeading',
-      navigationPath: Paths.OUTPUT,
-    },
   ]);
 
   public static getMenuStore() {
