@@ -13,7 +13,7 @@
   import { MakeCodeProject } from '@microbit-foundation/react-editor-embed';
 
   export let gesture: Gesture;
-  export let project: MakeCodeProject;
+  export let project: MakeCodeProject = { text: {} };
   export let showOutput: boolean = true;
   let wasTriggered = false;
 
