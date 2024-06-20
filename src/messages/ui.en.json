@@ -27,8 +27,6 @@
   "content.index.toolProcessCards.train.description": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",
   "content.index.toolProcessCards.model.title": "Test model",
   "content.index.toolProcessCards.model.description": "Find out if it correctly recognises each action. Add more data to improve the model.",
-  "content.index.toolProcessCards.output.title": "Use model",
-  "content.index.toolProcessCards.output.description": "Code your output micro:bit to react based on the recognised action using the model you created.",
   "content.index.dataWarning.title": "Existing data samples will be lost",
   "content.index.dataWarning.subtitleOne": "You have existing data that will be lost when you start a new session.",
   "content.index.dataWarning.subtitleTwo": "To save your data, <link>download all data samples</link> before continuing.",
