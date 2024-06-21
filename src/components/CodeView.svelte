@@ -15,6 +15,7 @@
   export let options = {};
   export let code: MakeCodeProject;
   export let scale: number = 1;
+  export let width: number | undefined = undefined;
 
   const makeCodeRef = createMakeCodeRenderBlocks(options);
   let firstInitDone = false;
@@ -49,7 +50,7 @@
   <img
     alt={code === undefined || typeof code === 'string' ? code : code.text['main.ts']}
     src={renderBlocksResp.uri}
-    width={renderBlocksResp.width ? scale * renderBlocksResp.width : undefined}
+    width={renderBlocksResp.width ? width ?? scale * renderBlocksResp.width : undefined}
     height={renderBlocksResp.height} />
 {:catch error}
   <p>System error: {error}.</p>

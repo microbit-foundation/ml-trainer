@@ -32,6 +32,7 @@
   } from '../../../script/stores/connectDialogStore';
   import { DeviceRequestStates } from '../../../script/microbit-interfacing/MicrobitConnection';
   import CodeView from '../../../components/CodeView.svelte';
+  import GestureTilePart from '../../../components/GestureTilePart.svelte';
 
   // Bool flags to know whether output microbit popup should be show
   let hasClosedPopup = false;
@@ -163,7 +164,7 @@
     <div
       class="grid {enableOutputGestures
         ? 'grid-cols-[292px,360px,177px,146px,1fr]'
-        : 'grid-cols-[292px,360px,30px,165px,max-content]'} gap-x-7 items-center flex-shrink-0 h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
+        : 'grid-cols-[292px,360px,30px,auto]'} auto-cols-max gap-x-7 items-center h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
       <Information
         underlineIconText={false}
         isLightTheme={false}
@@ -176,20 +177,23 @@
         iconText={$t('content.model.output.certainty.iconTitle')}
         titleText={$t('content.model.output.certainty.descriptionTitle')}
         bodyText={$t('content.model.output.certainty.descriptionBody')} />
+      <!-- Empty div to fill up arrow column -->
       <div></div>
-      <Information
-        underlineIconText={false}
-        isLightTheme={false}
-        iconText="Output"
-        titleText="Output"
-        bodyText="What the micro:bit will do when each action is detected." />
-      <div class="flex flex-row w-full gap-x-2">
-        <StandardButton size="small" onClick={handleEdit} type="secondary"
-          >Edit in MakeCode</StandardButton>
-        <StandardButton size="small" onClick={handleResetToDefault} type="secondary"
-          >Reset to default</StandardButton>
-        <StandardButton size="small" onClick={handleExport} type="secondary"
-          >Export</StandardButton>
+      <div class="flex flex-row items-center justify-between">
+        <Information
+          underlineIconText={false}
+          isLightTheme={false}
+          iconText="Output"
+          titleText="Output"
+          bodyText="What the micro:bit will do when each action is detected." />
+        <div class="flex flex-row gap-x-2">
+          <StandardButton size="small" onClick={handleEdit} type="secondary"
+            >Edit in MakeCode</StandardButton>
+          <StandardButton size="small" onClick={handleResetToDefault} type="secondary"
+            >Reset to default</StandardButton>
+          <StandardButton size="small" onClick={handleExport} type="secondary"
+            >Export</StandardButton>
+        </div>
       </div>
       {#if enableOutputGestures}
         <Information
@@ -209,34 +213,32 @@
           bodyText={$t('content.model.output.pin.descriptionBody')} />
       {/if}
     </div>
-    <div class="flex flex-row">
-      <div>
-        <div
-          class="grid {enableOutputGestures
-            ? 'grid-cols-[292px,360px,177px,146px,max-content]'
-            : `grid-cols-[292px,360px,30px${
-                showDefaultView ? ',max-content]' : ']'
-              }`} gap-x-7 gap-y-3 py-2 px-10 overflow-y-auto">
-          <!-- Display all gestures and their output capabilities -->
-          {#each gestures.getGestures() as gesture}
-            <section class="contents">
-              <OutputGesture
-                variant="stack"
-                {gesture}
-                {onUserInteraction}
-                {project}
-                showOutput={showDefaultView} />
-            </section>
-          {/each}
-        </div>
+    <div class="flex flex-row w-full py-2 px-10 flex-grow flex-shrink overflow-y-auto">
+      <div
+        class="grid {enableOutputGestures
+          ? 'grid-cols-[292px,360px,177px,146px,max-content]'
+          : `grid-cols-[292px,360px,30px${
+              showDefaultView ? ',auto]' : ',auto]'
+            }`} gap-x-7 gap-y-3 pb-2">
+        <!-- Display all gestures and their output capabilities -->
+        {#each gestures.getGestures() as gesture}
+          <section class="contents">
+            <OutputGesture
+              variant="stack"
+              {gesture}
+              {onUserInteraction}
+              {project}
+              showOutput={showDefaultView} />
+          </section>
+        {/each}
       </div>
       {#if !showDefaultView}
-        <div class="flex-grow">
-          <div class="mr-5 my-5">
-            <div class="w-full bg-white p-5 rounded-lg">
-              <CodeView code={project} />
-            </div>
-          </div>
+        <div class="pb-2 flex-grow">
+          <GestureTilePart
+            elevated={true}
+            class="flex-grow flex flex-col h-full justify-center py-2 px-5 ">
+            <CodeView code={project} width={500} />
+          </GestureTilePart>
         </div>
       {/if}
     </div>

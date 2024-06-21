@@ -284,23 +284,23 @@
 
 <!-- ARROW -->
 <GestureTilePart class="relative bg-transparent">
-  <div class="flex flex-col justify-center h-full">
+  <div class="flex flex-col justify-center items-center h-full">
     <RightArrowIcon class="text-4xl text-gray-500" aria-hidden />
   </div>
 </GestureTilePart>
 
 <!-- MAKECODE -->
 {#if showOutput}
-  <GestureTilePart elevated={true}>
-    <div
-      class="flex flex-col justify-center h-full w-full align-center text-center mx-auto">
-      <div class="mx-5">
-        <CodeView
-          code={gestureProject}
-          scale={getMakeCodeGestureConfig(gesture).iconName ? 0.7 : 0.32} />
-      </div>
+  <GestureTilePart elevated={true} class="w-70 flex flex-col justify-center">
+    <div class="mx-5">
+      <CodeView
+        code={gestureProject}
+        scale={getMakeCodeGestureConfig(gesture).iconName ? 0.7 : 0.32} />
     </div>
   </GestureTilePart>
+{:else}
+  <!-- Empty div to fill up grid column -->
+  <div></div>
 {/if}
 
 {#if enableOutputGestures}
