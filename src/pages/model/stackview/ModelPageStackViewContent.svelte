@@ -216,34 +216,37 @@
       {/if}
     </div>
     <div
-      class="flex flex-row w-full h-full py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
-      <div
-        class="grid {enableOutputGestures
-          ? 'grid-cols-[292px,360px,177px,146px,max-content]'
-          : `grid-cols-[292px,360px,30px${
-              showDefaultView ? ',auto]' : ',auto]'
-            }`} gap-x-7 gap-y-3 pb-2">
-        <!-- Display all gestures and their output capabilities -->
-        {#each gestures.getGestures() as gesture}
-          <section class="contents">
-            <OutputGesture
-              variant="stack"
-              {gesture}
-              {onUserInteraction}
-              {project}
-              showOutput={showDefaultView} />
-          </section>
-        {/each}
-      </div>
-      {#if !showDefaultView}
-        <div class="pb-2 flex-grow">
-          <GestureTilePart
-            elevated={true}
-            class="flex-grow flex flex-col h-full justify-center py-2 px-5 ">
-            <CodeView code={project} width={500} />
-          </GestureTilePart>
+      class="flex flex-col w-full h-full py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
+      <div class="flex flex-row">
+        <div
+          class="grid {enableOutputGestures
+            ? 'grid-cols-[292px,360px,177px,146px,max-content]'
+            : `grid-cols-[292px,360px,30px${
+                showDefaultView ? ',auto]' : ',auto]'
+              }`} gap-x-7 gap-y-3 pb-2"
+          style="height: fit-content">
+          <!-- Display all gestures and their output capabilities -->
+          {#each gestures.getGestures() as gesture}
+            <section class="contents">
+              <OutputGesture
+                variant="stack"
+                {gesture}
+                {onUserInteraction}
+                {project}
+                showOutput={showDefaultView} />
+            </section>
+          {/each}
         </div>
-      {/if}
+        {#if !showDefaultView}
+          <div class="pb-2 flex-grow">
+            <GestureTilePart
+              elevated={true}
+              class="flex-grow flex flex-col h-full justify-center py-2 px-5 ">
+              <CodeView code={project} />
+            </GestureTilePart>
+          </div>
+        {/if}
+      </div>
     </div>
     {#if !$state.isOutputConnected && !hasClosedPopup && hasInteracted}
       <div transition:fade class="grid grid-cols-5 absolute bottom-5 w-full min-w-729px">
