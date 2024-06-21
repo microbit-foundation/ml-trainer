@@ -100,8 +100,8 @@ export const generateMakeCodeOutputMain = (gs: Gesture[], lang: Language) => {
   ${configs
     .map((c, idx) =>
       s.onMLEvent(c.name, onMLEventChildren(s, c), {
-        x: initPos.x + 300,
-        y: initPos.y + idx * 200,
+        x: initPos.x,
+        y: initPos.y + idx * 350,
       }),
     )
     .join('\n')}  `);

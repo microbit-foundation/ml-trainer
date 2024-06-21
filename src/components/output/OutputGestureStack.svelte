@@ -208,7 +208,7 @@
 
   $: meterWidthPct = 100 * $gesture.confidence.currentConfidence;
 
-  const gestureProject = {
+  $: gestureProject = {
     text: {
       ...project.text,
       [filenames.mainTs]: generateMakeCodeOutputMain([gesture], 'javascript'),

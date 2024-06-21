@@ -22,6 +22,7 @@
 
   const render = async () => {
     if (!firstInitDone) {
+      console.log('code view initialise');
       // First time initialisation
       makeCodeRef.initialize();
       firstInitDone = true;

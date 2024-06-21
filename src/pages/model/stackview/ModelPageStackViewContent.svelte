@@ -187,10 +187,12 @@
           titleText="Output"
           bodyText="What the micro:bit will do when each action is detected." />
         <div class="flex flex-row gap-x-2">
+          {#if !showDefaultView}
+            <StandardButton size="small" onClick={handleResetToDefault} type="secondary"
+              >Reset to default</StandardButton>
+          {/if}
           <StandardButton size="small" onClick={handleEdit} type="secondary"
             >Edit in MakeCode</StandardButton>
-          <StandardButton size="small" onClick={handleResetToDefault} type="secondary"
-            >Reset to default</StandardButton>
           <StandardButton size="small" onClick={handleExport} type="secondary"
             >Export</StandardButton>
         </div>
@@ -213,7 +215,7 @@
           bodyText={$t('content.model.output.pin.descriptionBody')} />
       {/if}
     </div>
-    <div class="flex flex-row w-full py-2 px-10 flex-grow flex-shrink overflow-y-auto">
+    <div class="flex flex-row w-full py-2 px-10 flex-shrink overflow-y-auto">
       <div
         class="grid {enableOutputGestures
           ? 'grid-cols-[292px,360px,177px,146px,max-content]'
