@@ -20,7 +20,7 @@
     generateCustomTs,
   } from '../../../script/makecode/generateCustomTsAndJson';
   import { generateMakeCodeOutputMain } from '../../../script/makecode/generateMain';
-  import { filenames, iconNames, isEmpty, pxt } from '../../../script/makecode/utils';
+  import { filenames, isEmpty, pxt } from '../../../script/makecode/utils';
   import { gestures } from '../../../script/stores/Stores';
   import { model as modelStore } from '../../../script/stores/mlStore';
   import { makeCodeProject, state } from '../../../script/stores/uiStore';
