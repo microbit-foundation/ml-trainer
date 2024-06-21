@@ -164,7 +164,7 @@
     <div
       class="grid {enableOutputGestures
         ? 'grid-cols-[292px,360px,177px,146px,1fr]'
-        : 'grid-cols-[292px,360px,30px,auto]'} auto-cols-max gap-x-7 items-center h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
+        : 'grid-cols-[292px,360px,30px,auto]'} gap-x-7 items-center h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
       <Information
         underlineIconText={false}
         isLightTheme={false}
@@ -215,7 +215,8 @@
           bodyText={$t('content.model.output.pin.descriptionBody')} />
       {/if}
     </div>
-    <div class="flex flex-row w-full py-2 px-10 flex-shrink overflow-y-auto">
+    <div
+      class="flex flex-row w-full h-full py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
       <div
         class="grid {enableOutputGestures
           ? 'grid-cols-[292px,360px,177px,146px,max-content]'
