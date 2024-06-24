@@ -201,6 +201,8 @@ function onTrainEnd() {
     obj.trainingProgress = 0;
     return obj;
   });
+  trainingStatus.set(TrainingStatus.Success);
+  logEvent({ type: 'Data', action: 'Train model', ...getNumberOfActionsAndRecordings() });
   setupPredictionInterval();
 }
 
