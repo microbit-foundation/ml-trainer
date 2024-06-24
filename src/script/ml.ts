@@ -120,6 +120,7 @@ export async function trainModel(): Promise<tf.LayersModel | void> {
         },
       },
     });
+    model.set(nn);
   } catch (err) {
     trainingStatus.set(TrainingStatus.Failure);
     console.error('tensorflow training process failed:', err);
