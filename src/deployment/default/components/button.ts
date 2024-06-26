@@ -27,14 +27,15 @@ const Button: StyleConfig = {
     },
     secondary: () => ({
       borderWidth: "2px",
-      borderColor: "black",
-      color: "black",
+      borderColor: "brand.500",
+      color: "brand.700",
       bg: "transparent",
       _hover: {
-        bg: "blackAlpha.50",
+        borderColor: "brand.600",
       },
       _active: {
-        bg: "blackAlpha.100",
+        bg: "brand.50",
+        borderColor: "brand.700",
       },
     }),
     ghost: () => ({
@@ -49,15 +50,16 @@ const Button: StyleConfig = {
     }),
     primary: () => ({
       color: "white",
-      bg: "black",
+      bg: "brand.500",
       _hover: {
-        bg: "blackAlpha.800",
+        bg: "brand.600",
         _disabled: {
-          bg: "black",
+          bg: "brand.500",
+          opacity: 0.6
         },
       },
       _active: {
-        bg: "blackAlpha.700",
+        bg: "brand.700",
       },
     }),
     toolbar: () => ({

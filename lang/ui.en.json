@@ -731,6 +731,10 @@
     "defaultMessage": "Start new session",
     "description": ""
   },
+  "get-started-resource-title": {
+    "defaultMessage": "Get started",
+    "description": "Title of a resource"
+  },
   "help-label": {
     "defaultMessage": "Help",
     "description": "Help icon aria label"
@@ -739,6 +743,14 @@
     "defaultMessage": "Help & support",
     "description": "Link or menu item link to support site"
   },
+  "homepage-subtitle": {
+    "defaultMessage": "Introduce students to machine learning concepts through physical movement and data",
+    "description": "Subtitle of machine learning tool home page"
+  },
+  "homepage-title": {
+    "defaultMessage": "micro:bit machine learning tool",
+    "description": "Title of machine learning tool home page"
+  },
   "homepage.Link": {
     "defaultMessage": "Home page",
     "description": ""
@@ -746,6 +758,10 @@
   "info.label": {
     "defaultMessage": "More information about \"{item}\"",
     "description": ""
+  },
+  "introducing-microbit-resource-title": {
+    "defaultMessage": "Introducing the micro:bit machine learning tool",
+    "description": "Title of a resource"
   },
   "language": {
     "defaultMessage": "Language",
@@ -950,6 +966,10 @@
   "reload-action": {
     "defaultMessage": "Click to reload the page",
     "description": "Reload page button text"
+  },
+  "resources": {
+    "defaultMessage": "Resources",
+    "description": "Title of resources section"
   },
   "resources.getStarted.video": {
     "defaultMessage": "get started video",

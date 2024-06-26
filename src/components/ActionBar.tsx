@@ -1,13 +1,11 @@
 import { BoxProps, HStack } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import { headerHeight } from "../theme/constants/dimensions";
-import { brandGrey } from "../theme/constants/colors";
 
 export type ToolbarVariant = "full-screen" | "primary";
 
 const styles = {
-  primary: { bgColor: "green.500", h: headerHeight, minH: headerHeight },
-  "full-screen": { bgColor: brandGrey, h: "4rem" },
+  primary: { bgColor: "green.500", h: "64px", minH: "64px" },
+  "full-screen": { bgColor: "brand.500", h: "4rem" },
 };
 
 export interface ActionBarProps extends BoxProps {

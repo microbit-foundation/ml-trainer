@@ -1,6 +1,6 @@
 import {
   Link as RouterLink,
-  type LinkProps as RouterLinkProps,
+  LinkProps as RouterLinkProps,
 } from "react-router-dom";
 import { chakra } from "@chakra-ui/react";
 import { Ref, forwardRef } from "react";

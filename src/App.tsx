@@ -22,8 +22,9 @@ export interface ProviderLayoutProps {
   children: ReactNode;
 }
 
-// TODO: logging
-// const logging = deployment.logging;
+// TODO: Use for logging provider
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const logging = deployment.logging;
 
 const Providers = ({ children }: ProviderLayoutProps) => {
   const deployment = useDeployment();

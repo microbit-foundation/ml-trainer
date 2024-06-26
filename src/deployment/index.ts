@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ReactNode, useContext } from "react";
-// import { Logging } from "../logging/logging";
+import { Logging } from "../logging/logging";
 
 export type DeploymentConfigFactory = (
   env: Record<string, string>
@@ -12,6 +12,7 @@ export type DeploymentConfigFactory = (
 
 // This is configured via a vite alias, defaulting to ./default
 import { default as df } from "theme-package";
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const deploymentFactory: DeploymentConfigFactory = df;
 export const deployment = deploymentFactory(import.meta.env);
 
@@ -40,6 +41,7 @@ export interface DeploymentConfig {
     manageCookies: (() => void) | undefined;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   chakraTheme: any;
 
   supportLink?: string;
@@ -48,7 +50,7 @@ export interface DeploymentConfig {
   privacyPolicyLink?: string;
   translationLink?: string;
 
-  // logging: Logging;
+  logging: Logging;
 }
 
 export const useDeployment = (): DeploymentConfig => {

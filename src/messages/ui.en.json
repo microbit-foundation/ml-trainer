@@ -1241,6 +1241,12 @@
       "value": "Start new session"
     }
   ],
+  "get-started-resource-title": [
+    {
+      "type": 0,
+      "value": "Get started"
+    }
+  ],
   "help-label": [
     {
       "type": 0,
@@ -1251,6 +1257,18 @@
     {
       "type": 0,
       "value": "Help & support"
+    }
+  ],
+  "homepage-subtitle": [
+    {
+      "type": 0,
+      "value": "Introduce students to machine learning concepts through physical movement and data"
+    }
+  ],
+  "homepage-title": [
+    {
+      "type": 0,
+      "value": "micro:bit machine learning tool"
     }
   ],
   "homepage.Link": [
@@ -1271,6 +1289,12 @@
     {
       "type": 0,
       "value": "\""
+    }
+  ],
+  "introducing-microbit-resource-title": [
+    {
+      "type": 0,
+      "value": "Introducing the micro:bit machine learning tool"
     }
   ],
   "language": [
@@ -1577,6 +1601,12 @@
     {
       "type": 0,
       "value": "Click to reload the page"
+    }
+  ],
+  "resources": [
+    {
+      "type": 0,
+      "value": "Resources"
     }
   ],
   "resources.getStarted.video": [

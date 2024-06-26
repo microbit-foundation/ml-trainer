@@ -10,7 +10,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useEffect, useRef } from "react";
-import { RiMenuLine } from "react-icons/ri";
+import { RiHome2Line, RiMenuLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
 import { APP_NAME } from "../constants";
 import ActionBar from "./ActionBar";
@@ -18,6 +18,7 @@ import AppLogo from "./AppLogo";
 import HelpMenu from "./HelpMenu";
 import LanguageMenuItem from "./LanguageMenuItem";
 import SettingsMenu from "./SettingsMenu";
+import PrototypeVersionWarning from "./PrototypeVersionWarning";
 
 interface DefaultPageLayoutProps {
   titleId: string;
@@ -51,11 +52,20 @@ const DefaultPageLayout = ({
         bgColor="whitesmoke"
       >
         <ActionBar
+          position="sticky"
+          top={0}
           itemsLeft={<AppLogo name="machine learning tool" />}
           itemsRight={
             <>
               <HStack spacing={3} hideBelow={layoutBreakpointOverride || "lg"}>
                 {toolbarItemsRight}
+                <IconButton
+                  icon={<RiHome2Line size={24} color="white" />}
+                  aria-label={intl.formatMessage({ id: "homepage.Link" })}
+                  variant="plain"
+                  size="lg"
+                  fontSize="xl"
+                />
                 <SettingsMenu />
                 <HelpMenu appName={APP_NAME} mode="nextgen" cookies />
               </HStack>
@@ -83,6 +93,7 @@ const DefaultPageLayout = ({
             </>
           }
         />
+        <PrototypeVersionWarning />
         <Flex flexGrow={1} flexDir="column">
           {children}
         </Flex>
