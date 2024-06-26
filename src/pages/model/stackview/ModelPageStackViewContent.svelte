@@ -74,7 +74,7 @@
   const model = get(modelStore);
   const savedProject = get(makeCodeProject);
 
-  let project: MakeCodeProject = {
+  $: project = {
     text: isEmpty(savedProject)
       ? generateDefaultProjectText(gs, model)
       : updateCustomTs(savedProject as MakeCodeProject, gs, model),
