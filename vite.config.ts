@@ -4,11 +4,18 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
+import fs from "node:fs";
+import path from "node:path";
+import { UserConfig, defineConfig, loadEnv } from "vite";
 import svgr from "vite-plugin-svgr";
 
-export default defineConfig(({ mode }) => {
+// Support optionally pulling in external branding if the module is installed.
+const theme = "TODO: theme package";
+const external = `node_modules/${theme}`;
+const internal = "src/deployment/default";
+
+export default defineConfig(({ mode }): UserConfig => {
   const commonEnv = loadEnv(mode, process.cwd(), "");
 
   return {
@@ -43,6 +50,13 @@ export default defineConfig(({ mode }) => {
           // threads disabled for now due to https://github.com/vitest-dev/vitest/issues/1982
           singleThread: true,
         },
+      },
+    },
+    resolve: {
+      alias: {
+        "theme-package": fs.existsSync(external)
+          ? theme
+          : path.resolve(__dirname, internal),
       },
     },
   };

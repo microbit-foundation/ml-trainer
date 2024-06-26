@@ -9,24 +9,28 @@ import {
   ScrollRestoration,
   createBrowserRouter,
 } from "react-router-dom";
-import { ConsentProvider } from "./compliance";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
 import NotFound from "./components/NotFound";
 import TranslationProvider from "./messages/TranslationProvider";
 import SettingsProvider from "./settings";
-import theme from "./theme/theme";
 import HomePage from "./pages/HomePage";
 import { createHomePageUrl } from "./urls";
+import { deployment, useDeployment } from "./deployment";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
 }
 
+// TODO: logging
+// const logging = deployment.logging;
+
 const Providers = ({ children }: ProviderLayoutProps) => {
+  const deployment = useDeployment();
+  const { ConsentProvider } = deployment.compliance
   return (
     <React.StrictMode>
-      <ChakraProvider theme={theme}>
+      <ChakraProvider theme={deployment.chakraTheme}>
         <ConsentProvider>
           <SettingsProvider>
             <TranslationProvider>
