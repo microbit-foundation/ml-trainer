@@ -11,7 +11,7 @@
       "value": "micro:bit board showing a heart on the LED display"
     }
   ],
-  "about.developedInPartnership": [
+  "about-dialog-title": [
     {
       "type": 0,
       "value": "Developed in partnership with "
@@ -25,12 +25,6 @@
       ],
       "type": 8,
       "value": "link"
-    }
-  ],
-  "actions.cancel": [
-    {
-      "type": 0,
-      "value": "Cancel"
     }
   ],
   "actions.reconnect": [
@@ -127,6 +121,18 @@
       "value": "arrow pointing right"
     }
   ],
+  "back-action": [
+    {
+      "type": 0,
+      "value": "Back"
+    }
+  ],
+  "cancel-action": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "close-action": [
     {
       "type": 0,
@@ -185,12 +191,6 @@
     {
       "type": 0,
       "value": "Failed to connect to micro:bit 1"
-    }
-  ],
-  "connectMB.backButton": [
-    {
-      "type": 0,
-      "value": "Back"
     }
   ],
   "connectMB.bluetooth.cancelledConnection": [
@@ -1253,12 +1253,6 @@
       "value": "Help & support"
     }
   ],
-  "helpMenu.cookies": [
-    {
-      "type": 0,
-      "value": "Cookies"
-    }
-  ],
   "homepage.Link": [
     {
       "type": 0,
@@ -1289,6 +1283,12 @@
     {
       "type": 0,
       "value": "loading"
+    }
+  ],
+  "main-menu": [
+    {
+      "type": 0,
+      "value": "Main menu"
     }
   ],
   "menu.data.helpHeading": [
@@ -1379,6 +1379,18 @@
     {
       "type": 0,
       "value": "Train model"
+    }
+  ],
+  "not-found": [
+    {
+      "type": 0,
+      "value": "Machine learning tool home page"
+    }
+  ],
+  "not-found-title": [
+    {
+      "type": 0,
+      "value": "Page not found"
     }
   ],
   "performanceWarning.content1": [
@@ -1561,6 +1573,12 @@
       "value": "Follow these instructions to restart the connection process."
     }
   ],
+  "reload-action": [
+    {
+      "type": 0,
+      "value": "Click to reload the page"
+    }
+  ],
   "resources.getStarted.video": [
     {
       "type": 0,
@@ -1577,6 +1595,12 @@
     {
       "type": 0,
       "value": "Settings actions menu"
+    }
+  ],
+  "sign-up-action": [
+    {
+      "type": 0,
+      "value": "Sign up"
     }
   ],
   "sign-up.content": [
@@ -1615,12 +1639,6 @@
     {
       "type": 0,
       "value": "Please enter a valid email address"
-    }
-  ],
-  "sign-up.sign-up-action": [
-    {
-      "type": 0,
-      "value": "Sign up"
     }
   ],
   "sign-up.skip-action": [

@@ -7,13 +7,9 @@
     "defaultMessage": "micro:bit board showing a heart on the LED display",
     "description": "Alt text for image in about dialog"
   },
-  "about.developedInPartnership": {
+  "about-dialog-title": {
     "defaultMessage": "Developed in partnership with <link>Center for Computational Thinking and Design, Aarhus University</link>",
-    "description": ""
-  },
-  "actions.cancel": {
-    "defaultMessage": "Cancel",
-    "description": ""
+    "description": "Title of about dialog"
   },
   "actions.reconnect": {
     "defaultMessage": "Reconnect",
@@ -67,6 +63,14 @@
     "defaultMessage": "arrow pointing right",
     "description": ""
   },
+  "back-action": {
+    "defaultMessage": "Back",
+    "description": "Back button text"
+  },
+  "cancel-action": {
+    "defaultMessage": "Cancel",
+    "description": "Cancel button text"
+  },
   "close-action": {
     "defaultMessage": "Close",
     "description": "Close button text or label"
@@ -105,10 +109,6 @@
   },
   "connectFailed.remoteHeading": {
     "defaultMessage": "Failed to connect to micro:bit 1",
-    "description": ""
-  },
-  "connectMB.backButton": {
-    "defaultMessage": "Back",
     "description": ""
   },
   "connectMB.bluetooth.cancelledConnection": {
@@ -739,10 +739,6 @@
     "defaultMessage": "Help & support",
     "description": "Link or menu item link to support site"
   },
-  "helpMenu.cookies": {
-    "defaultMessage": "Cookies",
-    "description": ""
-  },
   "homepage.Link": {
     "defaultMessage": "Home page",
     "description": ""
@@ -758,6 +754,10 @@
   "loading": {
     "defaultMessage": "loading",
     "description": ""
+  },
+  "main-menu": {
+    "defaultMessage": "Main menu",
+    "description": "Main menu label"
   },
   "menu.data.helpHeading": {
     "defaultMessage": "1. Add data",
@@ -818,6 +818,14 @@
   "menu.trainer.trainModelButton": {
     "defaultMessage": "Train model",
     "description": ""
+  },
+  "not-found": {
+    "defaultMessage": "Machine learning tool home page",
+    "description": "Page not found link text"
+  },
+  "not-found-title": {
+    "defaultMessage": "Page not found",
+    "description": "Page not found page title"
   },
   "performanceWarning.content1": {
     "defaultMessage": "The quality of data being received from your micro:bit is low. This could be due to a connection issue.",
@@ -939,6 +947,10 @@
     "defaultMessage": "Follow these instructions to restart the connection process.",
     "description": ""
   },
+  "reload-action": {
+    "defaultMessage": "Click to reload the page",
+    "description": "Reload page button text"
+  },
   "resources.getStarted.video": {
     "defaultMessage": "get started video",
     "description": ""
@@ -950,6 +962,10 @@
   "settings-menu-action": {
     "defaultMessage": "Settings actions menu",
     "description": "Label for settings actions menu button"
+  },
+  "sign-up-action": {
+    "defaultMessage": "Sign up",
+    "description": "Sign up button text"
   },
   "sign-up.content": {
     "defaultMessage": "Welcome to our prototype of the micro:bit machine learning tool. We’d love you to try it out and give us your feedback. Please enter your email so we can keep you updated as it evolves.",
@@ -965,10 +981,6 @@
   },
   "sign-up.invalid": {
     "defaultMessage": "Please enter a valid email address",
-    "description": ""
-  },
-  "sign-up.sign-up-action": {
-    "defaultMessage": "Sign up",
     "description": ""
   },
   "sign-up.skip-action": {
