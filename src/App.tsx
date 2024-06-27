@@ -15,8 +15,9 @@ import NotFound from "./components/NotFound";
 import TranslationProvider from "./messages/TranslationProvider";
 import SettingsProvider from "./settings";
 import HomePage from "./pages/HomePage";
-import { createHomePageUrl } from "./urls";
+import { createHomePageUrl, createStepPageUrl } from "./urls";
 import { deployment, useDeployment } from "./deployment";
+import { stepsConfig } from "./steps-config";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -28,7 +29,7 @@ const logging = deployment.logging;
 
 const Providers = ({ children }: ProviderLayoutProps) => {
   const deployment = useDeployment();
-  const { ConsentProvider } = deployment.compliance
+  const { ConsentProvider } = deployment.compliance;
   return (
     <React.StrictMode>
       <ChakraProvider theme={deployment.chakraTheme}>
@@ -69,6 +70,12 @@ const createRouter = () => {
           path: createHomePageUrl(),
           element: <HomePage />,
         },
+        ...stepsConfig.map((step) => {
+          return {
+            path: createStepPageUrl(step.id),
+            element: <step.pageElement />,
+          };
+        }),
         {
           path: "*",
           element: <NotFound />,

@@ -15,6 +15,14 @@
     "defaultMessage": "Reconnect",
     "description": ""
   },
+  "add-data-intro-description": {
+    "defaultMessage": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping).",
+    "description": "Add data step home page description"
+  },
+  "add-data-title": {
+    "defaultMessage": "Add data",
+    "description": "Add data step title"
+  },
   "alert.data.classNameLengthAlert": {
     "defaultMessage": "Action names cannot be longer than {maxLen} characters.",
     "description": ""
@@ -531,30 +539,6 @@
     "defaultMessage": "machine learning tool",
     "description": ""
   },
-  "content.index.toolProcessCards.data.description": {
-    "defaultMessage": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping).",
-    "description": ""
-  },
-  "content.index.toolProcessCards.data.title": {
-    "defaultMessage": "Add data",
-    "description": ""
-  },
-  "content.index.toolProcessCards.model.description": {
-    "defaultMessage": "Find out if it correctly recognises each action. Add more data to improve the model.",
-    "description": ""
-  },
-  "content.index.toolProcessCards.model.title": {
-    "defaultMessage": "Test model",
-    "description": ""
-  },
-  "content.index.toolProcessCards.train.description": {
-    "defaultMessage": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",
-    "description": ""
-  },
-  "content.index.toolProcessCards.train.title": {
-    "defaultMessage": "Train model",
-    "description": ""
-  },
   "content.model.addData": {
     "defaultMessage": "Add data",
     "description": ""
@@ -775,20 +759,12 @@
     "defaultMessage": "Main menu",
     "description": "Main menu label"
   },
-  "menu.data.helpHeading": {
-    "defaultMessage": "1. Add data",
-    "description": ""
-  },
   "menu.model.connectInputMicrobit": {
     "defaultMessage": "Connect micro:bit",
     "description": ""
   },
   "menu.model.disconnect": {
     "defaultMessage": "Disconnect output micro:bit",
-    "description": ""
-  },
-  "menu.model.helpHeading": {
-    "defaultMessage": "3. Test model",
     "description": ""
   },
   "menu.model.noModel": {
@@ -805,10 +781,6 @@
   },
   "menu.trainer.addMoreDataButton": {
     "defaultMessage": "Add more data",
-    "description": ""
-  },
-  "menu.trainer.helpHeading": {
-    "defaultMessage": "2. Train model",
     "description": ""
   },
   "menu.trainer.notConnected1": {
@@ -1022,5 +994,21 @@
   "terms": {
     "defaultMessage": "Terms of use",
     "description": "Link or menu item link to view terms of use"
+  },
+  "test-model-intro-description": {
+    "defaultMessage": "Find out if it correctly recognises each action. Add more data to improve the model.",
+    "description": "Test model step home page description"
+  },
+  "test-model-title": {
+    "defaultMessage": "Test model",
+    "description": "Test model step title"
+  },
+  "train-model-intro-description": {
+    "defaultMessage": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",
+    "description": "Train model step home page description"
+  },
+  "train-model-title": {
+    "defaultMessage": "Train model",
+    "description": "Train model step title"
   }
 }

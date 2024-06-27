@@ -33,6 +33,18 @@
       "value": "Reconnect"
     }
   ],
+  "add-data-intro-description": [
+    {
+      "type": 0,
+      "value": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping)."
+    }
+  ],
+  "add-data-title": [
+    {
+      "type": 0,
+      "value": "Add data"
+    }
+  ],
   "alert.data.classNameLengthAlert": [
     {
       "type": 0,
@@ -933,42 +945,6 @@
       "value": "machine learning tool"
     }
   ],
-  "content.index.toolProcessCards.data.description": [
-    {
-      "type": 0,
-      "value": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping)."
-    }
-  ],
-  "content.index.toolProcessCards.data.title": [
-    {
-      "type": 0,
-      "value": "Add data"
-    }
-  ],
-  "content.index.toolProcessCards.model.description": [
-    {
-      "type": 0,
-      "value": "Find out if it correctly recognises each action. Add more data to improve the model."
-    }
-  ],
-  "content.index.toolProcessCards.model.title": [
-    {
-      "type": 0,
-      "value": "Test model"
-    }
-  ],
-  "content.index.toolProcessCards.train.description": [
-    {
-      "type": 0,
-      "value": "Ask the computer to use your training samples to train the machine learning model to recognise different actions."
-    }
-  ],
-  "content.index.toolProcessCards.train.title": [
-    {
-      "type": 0,
-      "value": "Train model"
-    }
-  ],
   "content.model.addData": [
     {
       "type": 0,
@@ -1713,6 +1689,30 @@
     {
       "type": 0,
       "value": "Terms of use"
+    }
+  ],
+  "test-model-intro-description": [
+    {
+      "type": 0,
+      "value": "Find out if it correctly recognises each action. Add more data to improve the model."
+    }
+  ],
+  "test-model-title": [
+    {
+      "type": 0,
+      "value": "Test model"
+    }
+  ],
+  "train-model-intro-description": [
+    {
+      "type": 0,
+      "value": "Ask the computer to use your training samples to train the machine learning model to recognise different actions."
+    }
+  ],
+  "train-model-title": [
+    {
+      "type": 0,
+      "value": "Train model"
     }
   ]
 }

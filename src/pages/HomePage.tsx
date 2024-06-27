@@ -1,13 +1,11 @@
-import { Heading, Stack, Text, VStack, Image, Grid } from "@chakra-ui/react";
-import DefaultPageLayout from "../components/DefaultPageLayout";
-import addDataImage from "../images/add_data.svg";
-import resourceGetStartedImage from "../images/resource-get-started.jpg";
-import resourceIntroducingToolImage from "../images/resource-introducing-tool.jpg";
-import testModelImage from "../images/test_model_blue.svg";
-import trainModelImage from "../images/train_model_blue.svg";
+import { Grid, Heading, Image, Stack, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
+import DefaultPageLayout from "../components/DefaultPageLayout";
 import ResourceCard from "../components/ResourceCard";
 import StartResumeActions from "../components/StartResumeActions";
+import resourceGetStartedImage from "../images/resource-get-started.jpg";
+import resourceIntroducingToolImage from "../images/resource-introducing-tool.jpg";
+import { stepsConfig } from "../steps-config";
 
 export const Paths = {
   HOME: "/",
@@ -19,27 +17,6 @@ export const Paths = {
   MODEL: "test-model",
   FILTERS: "training/filters",
 } as const;
-
-const steps = [
-  {
-    titleId: "content.index.toolProcessCards.data.title",
-    path: Paths.DATA,
-    imgSrc: addDataImage,
-    descriptionId: "content.index.toolProcessCards.data.description",
-  },
-  {
-    titleId: "content.index.toolProcessCards.train.title",
-    path: Paths.TRAINING,
-    imgSrc: trainModelImage,
-    descriptionId: "content.index.toolProcessCards.train.description",
-  },
-  {
-    titleId: "content.index.toolProcessCards.model.title",
-    path: Paths.MODEL,
-    imgSrc: testModelImage,
-    descriptionId: "content.index.toolProcessCards.model.description",
-  },
-];
 
 const resources = [
   {
@@ -76,12 +53,16 @@ const HomePage = () => {
             px={10}
             gap={5}
           >
-            {steps.map(({ titleId, imgSrc, descriptionId }, idx) => (
+            {stepsConfig.map(({ id, imgSrc }, idx) => (
               <Step
-                key={idx}
-                title={`${idx + 1}. ${intl.formatMessage({ id: titleId })}`}
+                key={id}
+                title={`${idx + 1}. ${intl.formatMessage({
+                  id: `${id}-title`,
+                })}`}
                 imgSrc={imgSrc}
-                description={intl.formatMessage({ id: descriptionId })}
+                description={intl.formatMessage({
+                  id: `${id}-intro-description`,
+                })}
               />
             ))}
           </Stack>
