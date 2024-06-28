@@ -169,6 +169,12 @@
       "value": "WebGL not available. Enable WebGL to see 3D data view."
     }
   ],
+  "connect-help-alt": [
+    {
+      "type": 0,
+      "value": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2"
+    }
+  ],
   "connectFailed.bluetooth1": [
     {
       "type": 0,
@@ -1291,12 +1297,6 @@
       "value": "Main menu"
     }
   ],
-  "menu.data.helpHeading": [
-    {
-      "type": 0,
-      "value": "1. Add data"
-    }
-  ],
   "menu.model.connectInputMicrobit": [
     {
       "type": 0,
@@ -1307,12 +1307,6 @@
     {
       "type": 0,
       "value": "Disconnect output micro:bit"
-    }
-  ],
-  "menu.model.helpHeading": [
-    {
-      "type": 0,
-      "value": "3. Test model"
     }
   ],
   "menu.model.noModel": [
@@ -1337,12 +1331,6 @@
     {
       "type": 0,
       "value": "Add more data"
-    }
-  ],
-  "menu.trainer.helpHeading": [
-    {
-      "type": 0,
-      "value": "2. Train model"
     }
   ],
   "menu.trainer.notConnected1": [

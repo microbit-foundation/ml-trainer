@@ -95,6 +95,10 @@
     "defaultMessage": "WebGL not available. Enable WebGL to see 3D data view.",
     "description": ""
   },
+  "connect-help-alt": {
+    "defaultMessage": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2",
+    "description": "Alt text for image in connect help dialog"
+  },
   "connectFailed.bluetooth1": {
     "defaultMessage": "The connection to the micro:bit could not be established.",
     "description": ""

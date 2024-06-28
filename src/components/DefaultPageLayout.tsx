@@ -19,6 +19,7 @@ import HelpMenu from "./HelpMenu";
 import LanguageMenuItem from "./LanguageMenuItem";
 import SettingsMenu from "./SettingsMenu";
 import PrototypeVersionWarning from "./PrototypeVersionWarning";
+import ConnectionDialogs from "./ConnectionDialogs";
 
 interface DefaultPageLayoutProps {
   titleId: string;
@@ -44,6 +45,7 @@ const DefaultPageLayout = ({
 
   return (
     <>
+      <ConnectionDialogs />
       <VStack
         minH="100dvh"
         w="100%"

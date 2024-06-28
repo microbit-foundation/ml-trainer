@@ -25,6 +25,12 @@ const Button: StyleConfig = {
         },
       };
     },
+    link: () => ({
+      borderWidth: "0",
+      color: "purple.500",
+      fontWeight: "normal",
+      bg: "transparent",
+    }),
     secondary: () => ({
       borderWidth: "2px",
       borderColor: "brand.500",
@@ -55,7 +61,7 @@ const Button: StyleConfig = {
         bg: "brand.600",
         _disabled: {
           bg: "brand.500",
-          opacity: 0.6
+          opacity: 0.6,
         },
       },
       _active: {
