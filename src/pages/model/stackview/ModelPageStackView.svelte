@@ -90,7 +90,7 @@
 </svelte:head>
 
 <!-- Main pane -->
-<div class="h-full flex flex-col">
+<div class="h-full flex flex-col inline-block">
   <TabView />
   <main class="contents">
     {#if $state.isPredicting}

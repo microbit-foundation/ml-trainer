@@ -10,8 +10,11 @@
   import { state } from '../../script/stores/uiStore';
   import Microbits from '../../script/microbit-interfacing/Microbits';
   import { HexOrigin } from '../../StaticConfiguration';
+  import { MakeCodeProject } from '@microbit-foundation/react-editor-embed';
 
   export let gesture: Gesture;
+  export let project: MakeCodeProject = { text: {} };
+  export let showOutput: boolean = true;
   let wasTriggered = false;
 
   $: {
@@ -43,7 +46,7 @@
 </script>
 
 {#if variant === 'stack'}
-  <OutputGestureStack {gesture} {onUserInteraction} />
+  <OutputGestureStack {gesture} {onUserInteraction} {project} {showOutput} />
 {/if}
 
 {#if variant === 'tile'}

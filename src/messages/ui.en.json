@@ -94,9 +94,6 @@
 
   "content.output.header": "Use model",
   "content.output.description": "Use the model to program your output micro:bit to react to the recognised action.",
-  "content.output.button.program": "Program micro:bit",
-  "content.output.button.resetToDefault": "Reset to default",
-  "content.output.button.export": "Export for MakeCode",
 
   "footer.start": "Start new session",
   "footer.resume": "Resume session",

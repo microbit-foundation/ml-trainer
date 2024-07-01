@@ -44,12 +44,6 @@
       imgSrc: testModelImage,
       descriptionId: 'content.index.toolProcessCards.model.description',
     },
-    {
-      titleId: 'content.index.toolProcessCards.output.title',
-      path: Paths.OUTPUT,
-      imgSrc: testModelImage,
-      descriptionId: 'content.index.toolProcessCards.output.description',
-    },
   ];
 
   const resources = [

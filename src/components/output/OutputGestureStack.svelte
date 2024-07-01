@@ -6,36 +6,47 @@
 
 <script lang="ts">
   // IMPORT AND DEFAULTS
-  import {
-    settings,
-    updateGestureSoundOutput,
-    type SoundData,
-    updateGesturePinOutput,
-  } from '../../script/stores/mlStore';
-  import { t } from '../../i18n';
-  import OutputSoundSelector from './OutputSoundSelector.svelte';
-  import ImageSkeleton from '../skeletonloading/ImageSkeleton.svelte';
-  import GestureTilePart from '../GestureTilePart.svelte';
-  import PinSelector from './PinSelector.svelte';
-  import { state } from '../../script/stores/uiStore';
+  import { MakeCodeProject } from '@microbit-foundation/react-editor-embed';
+  import { onMount } from 'svelte';
+  import RightArrowIcon from 'virtual:icons/ri/arrow-right-line';
   import StaticConfiguration from '../../StaticConfiguration';
-  import { PinTurnOnState } from './PinSelectorUtil';
-  import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
-  import Gesture from '../../script/domain/Gesture';
+  import { t } from '../../i18n';
+  import blankMicrobitImage from '../../imgs/blank_microbit.svg';
   import rightArrowImage from '../../imgs/right_arrow.svg';
   import rightArrowBlueImage from '../../imgs/right_arrow_blue.svg';
-  import blankMicrobitImage from '../../imgs/blank_microbit.svg';
-  import { onMount } from 'svelte';
+  import Gesture from '../../script/domain/Gesture';
+  import {
+    generateMakeCodeOutputMain,
+    getMakeCodeGestureConfig,
+  } from '../../script/makecode/generateMain';
+  import { filenames } from '../../script/makecode/utils';
+  import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
   import Microbits from '../../script/microbit-interfacing/Microbits';
+  import {
+    settings,
+    updateGesturePinOutput,
+    updateGestureSoundOutput,
+    type SoundData,
+  } from '../../script/stores/mlStore';
+  import { state } from '../../script/stores/uiStore';
+  import CodeView from '../CodeView.svelte';
+  import GestureTilePart from '../GestureTilePart.svelte';
+  import ImageSkeleton from '../skeletonloading/ImageSkeleton.svelte';
   import LedMatrix from './LedMatrix.svelte';
+  import OutputSoundSelector from './OutputSoundSelector.svelte';
+  import PinSelector from './PinSelector.svelte';
+  import { PinTurnOnState } from './PinSelectorUtil';
 
   type TriggerAction = 'turnOn' | 'turnOff' | 'none';
 
   // Variables for component
   export let gesture: Gesture;
+  export let project: MakeCodeProject;
   export let onUserInteraction: () => void = () => {
     return;
   };
+  export let showOutput: boolean = true;
+
   let wasTriggered = false;
   let triggerFunctions: (() => void)[] = [];
   let selectedSound: SoundData | undefined = $gesture.output.sound;
@@ -196,15 +207,28 @@
   let hasLoadedMicrobitImage = false;
 
   $: meterWidthPct = 100 * $gesture.confidence.currentConfidence;
+
+  $: gestureProject = {
+    text: {
+      ...project.text,
+      [filenames.mainTs]: generateMakeCodeOutputMain([gesture], 'javascript'),
+      [filenames.mainBlocks]: generateMakeCodeOutputMain([gesture], 'blocks'),
+    },
+  };
 </script>
 
 <!-- ACTION TITLE -->
 <GestureTilePart small elevated={true}>
   <div class="flex items-center justify-center w-full h-full relative gap-5 px-2">
     <div class="flex items-center gap-1">
-      <LedMatrix mode="input" editable={false} gesture={$gesture} brandColor />
+      <LedMatrix
+        class="w-22 h-22"
+        mode="input"
+        editable={false}
+        gesture={$gesture}
+        variant={wasTriggered ? 'highlighted' : 'muted'} />
     </div>
-    <h3 class="w-full break-words truncate">{$gesture.name}</h3>
+    <h3 class="w-full break-words truncate text-2xl">{$gesture.name}</h3>
   </div>
 </GestureTilePart>
 
@@ -257,6 +281,27 @@
     </div>
   {/if}
 </GestureTilePart>
+
+<!-- ARROW -->
+<GestureTilePart class="relative bg-transparent">
+  <div class="flex flex-col justify-center items-center h-full">
+    <RightArrowIcon class="text-4xl text-gray-500" aria-hidden />
+  </div>
+</GestureTilePart>
+
+<!-- MAKECODE -->
+{#if showOutput}
+  <GestureTilePart elevated={true} class="w-70 flex flex-col justify-center">
+    <div class="mx-5">
+      <CodeView
+        code={gestureProject}
+        scale={getMakeCodeGestureConfig(gesture).iconName ? 0.7 : 0.32} />
+    </div>
+  </GestureTilePart>
+{:else}
+  <!-- Empty div to fill up grid column -->
+  <div></div>
+{/if}
 
 {#if enableOutputGestures}
   <!-- OUTPUT SETTINGS -->
