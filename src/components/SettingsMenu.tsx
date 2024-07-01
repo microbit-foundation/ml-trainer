@@ -3,7 +3,6 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  ThemeTypings,
 } from "@chakra-ui/react";
 import { RiSettings2Line } from "react-icons/ri";
 import { useIntl } from "react-intl";
@@ -11,7 +10,7 @@ import LanguageMenuItem from "./LanguageMenuItem";
 import { useRef } from "react";
 
 interface SettingsMenuProps {
-  variant?: ThemeTypings["components"]["Menu"]["variants"];
+  variant?: string 
 }
 
 /**

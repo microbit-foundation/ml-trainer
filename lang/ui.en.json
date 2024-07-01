@@ -7,17 +7,21 @@
     "defaultMessage": "micro:bit board showing a heart on the LED display",
     "description": "Alt text for image in about dialog"
   },
-  "about.developedInPartnership": {
+  "about-dialog-title": {
     "defaultMessage": "Developed in partnership with <link>Center for Computational Thinking and Design, Aarhus University</link>",
-    "description": ""
-  },
-  "actions.cancel": {
-    "defaultMessage": "Cancel",
-    "description": ""
+    "description": "Title of about dialog"
   },
   "actions.reconnect": {
     "defaultMessage": "Reconnect",
     "description": ""
+  },
+  "add-data-intro-description": {
+    "defaultMessage": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping).",
+    "description": "Add data step home page description"
+  },
+  "add-data-title": {
+    "defaultMessage": "Add data",
+    "description": "Add data step title"
   },
   "alert.data.classNameLengthAlert": {
     "defaultMessage": "Action names cannot be longer than {maxLen} characters.",
@@ -67,6 +71,14 @@
     "defaultMessage": "arrow pointing right",
     "description": ""
   },
+  "back-action": {
+    "defaultMessage": "Back",
+    "description": "Back button text"
+  },
+  "cancel-action": {
+    "defaultMessage": "Cancel",
+    "description": "Cancel button text"
+  },
   "close-action": {
     "defaultMessage": "Close",
     "description": "Close button text or label"
@@ -82,6 +94,10 @@
   "compatibility.webgl.notSupported": {
     "defaultMessage": "WebGL not available. Enable WebGL to see 3D data view.",
     "description": ""
+  },
+  "connect-help-alt": {
+    "defaultMessage": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2",
+    "description": "Alt text for image in connect help dialog"
   },
   "connectFailed.bluetooth1": {
     "defaultMessage": "The connection to the micro:bit could not be established.",
@@ -105,10 +121,6 @@
   },
   "connectFailed.remoteHeading": {
     "defaultMessage": "Failed to connect to micro:bit 1",
-    "description": ""
-  },
-  "connectMB.backButton": {
-    "defaultMessage": "Back",
     "description": ""
   },
   "connectMB.bluetooth.cancelledConnection": {
@@ -531,30 +543,6 @@
     "defaultMessage": "machine learning tool",
     "description": ""
   },
-  "content.index.toolProcessCards.data.description": {
-    "defaultMessage": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping).",
-    "description": ""
-  },
-  "content.index.toolProcessCards.data.title": {
-    "defaultMessage": "Add data",
-    "description": ""
-  },
-  "content.index.toolProcessCards.model.description": {
-    "defaultMessage": "Find out if it correctly recognises each action. Add more data to improve the model.",
-    "description": ""
-  },
-  "content.index.toolProcessCards.model.title": {
-    "defaultMessage": "Test model",
-    "description": ""
-  },
-  "content.index.toolProcessCards.train.description": {
-    "defaultMessage": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",
-    "description": ""
-  },
-  "content.index.toolProcessCards.train.title": {
-    "defaultMessage": "Train model",
-    "description": ""
-  },
   "content.model.addData": {
     "defaultMessage": "Add data",
     "description": ""
@@ -731,6 +719,10 @@
     "defaultMessage": "Start new session",
     "description": ""
   },
+  "get-started-resource-title": {
+    "defaultMessage": "Get started",
+    "description": "Title of a resource"
+  },
   "help-label": {
     "defaultMessage": "Help",
     "description": "Help icon aria label"
@@ -739,9 +731,13 @@
     "defaultMessage": "Help & support",
     "description": "Link or menu item link to support site"
   },
-  "helpMenu.cookies": {
-    "defaultMessage": "Cookies",
-    "description": ""
+  "homepage-subtitle": {
+    "defaultMessage": "Introduce students to machine learning concepts through physical movement and data",
+    "description": "Subtitle of machine learning tool home page"
+  },
+  "homepage-title": {
+    "defaultMessage": "micro:bit machine learning tool",
+    "description": "Title of machine learning tool home page"
   },
   "homepage.Link": {
     "defaultMessage": "Home page",
@@ -751,6 +747,10 @@
     "defaultMessage": "More information about \"{item}\"",
     "description": ""
   },
+  "introducing-microbit-resource-title": {
+    "defaultMessage": "Introducing the micro:bit machine learning tool",
+    "description": "Title of a resource"
+  },
   "language": {
     "defaultMessage": "Language",
     "description": "Language option text"
@@ -759,9 +759,9 @@
     "defaultMessage": "loading",
     "description": ""
   },
-  "menu.data.helpHeading": {
-    "defaultMessage": "1. Add data",
-    "description": ""
+  "main-menu": {
+    "defaultMessage": "Main menu",
+    "description": "Main menu label"
   },
   "menu.model.connectInputMicrobit": {
     "defaultMessage": "Connect micro:bit",
@@ -769,10 +769,6 @@
   },
   "menu.model.disconnect": {
     "defaultMessage": "Disconnect output micro:bit",
-    "description": ""
-  },
-  "menu.model.helpHeading": {
-    "defaultMessage": "3. Test model",
     "description": ""
   },
   "menu.model.noModel": {
@@ -789,10 +785,6 @@
   },
   "menu.trainer.addMoreDataButton": {
     "defaultMessage": "Add more data",
-    "description": ""
-  },
-  "menu.trainer.helpHeading": {
-    "defaultMessage": "2. Train model",
     "description": ""
   },
   "menu.trainer.notConnected1": {
@@ -818,6 +810,14 @@
   "menu.trainer.trainModelButton": {
     "defaultMessage": "Train model",
     "description": ""
+  },
+  "not-found": {
+    "defaultMessage": "Machine learning tool home page",
+    "description": "Page not found link text"
+  },
+  "not-found-title": {
+    "defaultMessage": "Page not found",
+    "description": "Page not found page title"
   },
   "performanceWarning.content1": {
     "defaultMessage": "The quality of data being received from your micro:bit is low. This could be due to a connection issue.",
@@ -939,6 +939,14 @@
     "defaultMessage": "Follow these instructions to restart the connection process.",
     "description": ""
   },
+  "reload-action": {
+    "defaultMessage": "Click to reload the page",
+    "description": "Reload page button text"
+  },
+  "resources": {
+    "defaultMessage": "Resources",
+    "description": "Title of resources section"
+  },
   "resources.getStarted.video": {
     "defaultMessage": "get started video",
     "description": ""
@@ -950,6 +958,10 @@
   "settings-menu-action": {
     "defaultMessage": "Settings actions menu",
     "description": "Label for settings actions menu button"
+  },
+  "sign-up-action": {
+    "defaultMessage": "Sign up",
+    "description": "Sign up button text"
   },
   "sign-up.content": {
     "defaultMessage": "Welcome to our prototype of the micro:bit machine learning tool. We’d love you to try it out and give us your feedback. Please enter your email so we can keep you updated as it evolves.",
@@ -965,10 +977,6 @@
   },
   "sign-up.invalid": {
     "defaultMessage": "Please enter a valid email address",
-    "description": ""
-  },
-  "sign-up.sign-up-action": {
-    "defaultMessage": "Sign up",
     "description": ""
   },
   "sign-up.skip-action": {
@@ -990,5 +998,21 @@
   "terms": {
     "defaultMessage": "Terms of use",
     "description": "Link or menu item link to view terms of use"
+  },
+  "test-model-intro-description": {
+    "defaultMessage": "Find out if it correctly recognises each action. Add more data to improve the model.",
+    "description": "Test model step home page description"
+  },
+  "test-model-title": {
+    "defaultMessage": "Test model",
+    "description": "Test model step title"
+  },
+  "train-model-intro-description": {
+    "defaultMessage": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",
+    "description": "Train model step home page description"
+  },
+  "train-model-title": {
+    "defaultMessage": "Train model",
+    "description": "Train model step title"
   }
 }

@@ -11,7 +11,7 @@
       "value": "micro:bit board showing a heart on the LED display"
     }
   ],
-  "about.developedInPartnership": [
+  "about-dialog-title": [
     {
       "type": 0,
       "value": "Developed in partnership with "
@@ -27,16 +27,22 @@
       "value": "link"
     }
   ],
-  "actions.cancel": [
-    {
-      "type": 0,
-      "value": "Cancel"
-    }
-  ],
   "actions.reconnect": [
     {
       "type": 0,
       "value": "Reconnect"
+    }
+  ],
+  "add-data-intro-description": [
+    {
+      "type": 0,
+      "value": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping)."
+    }
+  ],
+  "add-data-title": [
+    {
+      "type": 0,
+      "value": "Add data"
     }
   ],
   "alert.data.classNameLengthAlert": [
@@ -127,6 +133,18 @@
       "value": "arrow pointing right"
     }
   ],
+  "back-action": [
+    {
+      "type": 0,
+      "value": "Back"
+    }
+  ],
+  "cancel-action": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "close-action": [
     {
       "type": 0,
@@ -149,6 +167,12 @@
     {
       "type": 0,
       "value": "WebGL not available. Enable WebGL to see 3D data view."
+    }
+  ],
+  "connect-help-alt": [
+    {
+      "type": 0,
+      "value": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2"
     }
   ],
   "connectFailed.bluetooth1": [
@@ -185,12 +209,6 @@
     {
       "type": 0,
       "value": "Failed to connect to micro:bit 1"
-    }
-  ],
-  "connectMB.backButton": [
-    {
-      "type": 0,
-      "value": "Back"
     }
   ],
   "connectMB.bluetooth.cancelledConnection": [
@@ -933,42 +951,6 @@
       "value": "machine learning tool"
     }
   ],
-  "content.index.toolProcessCards.data.description": [
-    {
-      "type": 0,
-      "value": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping)."
-    }
-  ],
-  "content.index.toolProcessCards.data.title": [
-    {
-      "type": 0,
-      "value": "Add data"
-    }
-  ],
-  "content.index.toolProcessCards.model.description": [
-    {
-      "type": 0,
-      "value": "Find out if it correctly recognises each action. Add more data to improve the model."
-    }
-  ],
-  "content.index.toolProcessCards.model.title": [
-    {
-      "type": 0,
-      "value": "Test model"
-    }
-  ],
-  "content.index.toolProcessCards.train.description": [
-    {
-      "type": 0,
-      "value": "Ask the computer to use your training samples to train the machine learning model to recognise different actions."
-    }
-  ],
-  "content.index.toolProcessCards.train.title": [
-    {
-      "type": 0,
-      "value": "Train model"
-    }
-  ],
   "content.model.addData": [
     {
       "type": 0,
@@ -1241,6 +1223,12 @@
       "value": "Start new session"
     }
   ],
+  "get-started-resource-title": [
+    {
+      "type": 0,
+      "value": "Get started"
+    }
+  ],
   "help-label": [
     {
       "type": 0,
@@ -1253,10 +1241,16 @@
       "value": "Help & support"
     }
   ],
-  "helpMenu.cookies": [
+  "homepage-subtitle": [
     {
       "type": 0,
-      "value": "Cookies"
+      "value": "Introduce students to machine learning concepts through physical movement and data"
+    }
+  ],
+  "homepage-title": [
+    {
+      "type": 0,
+      "value": "micro:bit machine learning tool"
     }
   ],
   "homepage.Link": [
@@ -1279,6 +1273,12 @@
       "value": "\""
     }
   ],
+  "introducing-microbit-resource-title": [
+    {
+      "type": 0,
+      "value": "Introducing the micro:bit machine learning tool"
+    }
+  ],
   "language": [
     {
       "type": 0,
@@ -1291,10 +1291,10 @@
       "value": "loading"
     }
   ],
-  "menu.data.helpHeading": [
+  "main-menu": [
     {
       "type": 0,
-      "value": "1. Add data"
+      "value": "Main menu"
     }
   ],
   "menu.model.connectInputMicrobit": [
@@ -1307,12 +1307,6 @@
     {
       "type": 0,
       "value": "Disconnect output micro:bit"
-    }
-  ],
-  "menu.model.helpHeading": [
-    {
-      "type": 0,
-      "value": "3. Test model"
     }
   ],
   "menu.model.noModel": [
@@ -1337,12 +1331,6 @@
     {
       "type": 0,
       "value": "Add more data"
-    }
-  ],
-  "menu.trainer.helpHeading": [
-    {
-      "type": 0,
-      "value": "2. Train model"
     }
   ],
   "menu.trainer.notConnected1": [
@@ -1379,6 +1367,18 @@
     {
       "type": 0,
       "value": "Train model"
+    }
+  ],
+  "not-found": [
+    {
+      "type": 0,
+      "value": "Machine learning tool home page"
+    }
+  ],
+  "not-found-title": [
+    {
+      "type": 0,
+      "value": "Page not found"
     }
   ],
   "performanceWarning.content1": [
@@ -1561,6 +1561,18 @@
       "value": "Follow these instructions to restart the connection process."
     }
   ],
+  "reload-action": [
+    {
+      "type": 0,
+      "value": "Click to reload the page"
+    }
+  ],
+  "resources": [
+    {
+      "type": 0,
+      "value": "Resources"
+    }
+  ],
   "resources.getStarted.video": [
     {
       "type": 0,
@@ -1577,6 +1589,12 @@
     {
       "type": 0,
       "value": "Settings actions menu"
+    }
+  ],
+  "sign-up-action": [
+    {
+      "type": 0,
+      "value": "Sign up"
     }
   ],
   "sign-up.content": [
@@ -1615,12 +1633,6 @@
     {
       "type": 0,
       "value": "Please enter a valid email address"
-    }
-  ],
-  "sign-up.sign-up-action": [
-    {
-      "type": 0,
-      "value": "Sign up"
     }
   ],
   "sign-up.skip-action": [
@@ -1665,6 +1677,30 @@
     {
       "type": 0,
       "value": "Terms of use"
+    }
+  ],
+  "test-model-intro-description": [
+    {
+      "type": 0,
+      "value": "Find out if it correctly recognises each action. Add more data to improve the model."
+    }
+  ],
+  "test-model-title": [
+    {
+      "type": 0,
+      "value": "Test model"
+    }
+  ],
+  "train-model-intro-description": [
+    {
+      "type": 0,
+      "value": "Ask the computer to use your training samples to train the machine learning model to recognise different actions."
+    }
+  ],
+  "train-model-title": [
+    {
+      "type": 0,
+      "value": "Train model"
     }
   ]
 }
