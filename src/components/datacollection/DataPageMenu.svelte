@@ -3,6 +3,13 @@
 
   SPDX-License-Identifier: MIT
  -->
+<style>
+  .data-table tr * {
+    border: 1px solid;
+    border-color: gray;
+    padding: 8px;
+  }
+</style>
 
 <script lang="ts">
   import { t } from '../../i18n';
@@ -14,11 +21,13 @@
   import MenuItem from '../control-bar/control-bar-items/MenuItem.svelte';
   import IconButton from '../IconButton.svelte';
   import MoreIcon from 'virtual:icons/mdi/dots-vertical';
-  import { createDropdownMenu } from '@melt-ui/svelte';
+  import { createDropdownMenu, melt } from '@melt-ui/svelte';
   import Microbits from '../../script/microbit-interfacing/Microbits';
   import StandardDialog from '../dialogs/StandardDialog.svelte';
   import LoadingAnimation from '../LoadingBlobs.svelte';
   import StandardButton from '../StandardButton.svelte';
+  import { PersistantGestureData } from '../../script/domain/Gestures';
+  import { importGestureData, appendGestureData } from '../../script/stores/mlStore';
 
   export let downloadDisabled = false;
   export let clearDisabled = false;
@@ -28,20 +37,44 @@
   export let onCollectDataInField: () => void;
 
   const menu = createDropdownMenu({ forceVisible: true });
-  const { trigger } = menu.elements;
+  const { trigger, separator } = menu.elements;
   const { open } = menu.states;
 
   let showLoadingDialog = false;
   let logError = '';
 
+  let showImportDataDialog = false;
+  let importedData: PersistantGestureData[] = [];
+
   const importDataFromLog = async () => {
     try {
       showLoadingDialog = true;
-      await Microbits.getInputMicrobit()?.getLogData();
-      showLoadingDialog = false;
+      const data = await Microbits.getInputMicrobit()?.getLogData();
+      if (data) {
+        importedData = data;
+        showLoadingDialog = false;
+        showImportDataDialog = true;
+      } else {
+        throw new Error('Data log is empty');
+      }
     } catch (err) {
       logError = err as string;
     }
+  };
+
+  const closeImportDataDialog = () => {
+    importedData = [];
+    showImportDataDialog = false;
+  };
+
+  const overwriteExistingRecordings = () => {
+    importGestureData(importedData);
+    closeImportDataDialog();
+  };
+
+  const addToExistingRecordings = () => {
+    appendGestureData(importedData);
+    closeImportDataDialog();
   };
 </script>
 
@@ -69,6 +102,40 @@
   </svelte:fragment>
 </StandardDialog>
 
+<StandardDialog isOpen={showImportDataDialog} onClose={() => {}} class="w-150 space-y-5">
+  <svelte:fragment slot="heading">Imported data</svelte:fragment>
+  <svelte:fragment slot="body">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Action name</th>
+          <th>Number of recordings</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each importedData as gesture}
+          <tr>
+            <td>
+              {gesture.name}
+            </td>
+            <td>
+              {gesture.recordings.length}
+            </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+
+    <p>Do you want to add to or overwrite your existing action data?</p>
+    <div class="flex items-center justify-end gap-x-5">
+      <StandardButton type="secondary" onClick={overwriteExistingRecordings}
+        >Overwrite</StandardButton>
+      <StandardButton type="primary" onClick={addToExistingRecordings}
+        >Add</StandardButton>
+    </div>
+  </svelte:fragment>
+</StandardDialog>
+
 <div class="relative inline-block leading-none">
   <IconButton
     ariaLabel={$t('content.data.controlbar.button.menu')}
@@ -85,6 +152,11 @@
           <CollectIcon />
           {$t('content.data.controlbar.button.collectDataInField')}
         </MenuItem>
+        <MenuItem {menu} on:m-click={importDataFromLog}>
+          <UploadIcon />
+          Import from data log
+        </MenuItem>
+        <div class="m-5px h-1px bg-gray-300" use:separator {...$separator}></div>
         <MenuItem {menu} on:m-click={onUploadGestures}>
           <UploadIcon />
           {$t('content.data.controlbar.button.uploadData')}
@@ -96,10 +168,6 @@
         <MenuItem {menu} on:m-click={onClearGestures} disabled={clearDisabled}>
           <ClearIcon />
           {$t('content.data.controlbar.button.clearData')}
-        </MenuItem>
-        <MenuItem {menu} on:m-click={importDataFromLog}>
-          <UploadIcon />
-          Import from data log
         </MenuItem>
       </div>
     </MenuItems>

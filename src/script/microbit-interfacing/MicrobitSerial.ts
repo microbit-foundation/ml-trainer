@@ -20,6 +20,7 @@ import {
 import StaticConfiguration from '../../StaticConfiguration';
 import { ConnectionType } from '../stores/uiStore';
 import { UARTMessageType } from './Microbits';
+import { PersistantGestureData } from '../domain/Gestures';
 
 class BridgeError extends Error {}
 class RemoteError extends Error {}
@@ -255,7 +256,7 @@ export class MicrobitSerial implements MicrobitConnection {
   }
 
   // Stub.
-  getLogData = (): Promise<void> => {
+  getLogData = (): Promise<PersistantGestureData[]> => {
     return Promise.reject('Not implemented');
   };
   sendToInputUart = (_type: UARTMessageType, _value: string): void => {};

@@ -15,6 +15,7 @@ import {
   writable,
 } from 'svelte/store';
 import ClassifierRepository from './ClassifierRepository';
+import { getNewNumberMatrix } from '../stores/mlStore';
 
 class GestureRepository implements Readable<Gesture[]> {
   private readonly LOCAL_STORAGE_KEY = 'gestureData';
@@ -46,6 +47,9 @@ class GestureRepository implements Readable<Gesture[]> {
   }
 
   public addGesture(gestureData: PersistantGestureData): Gesture {
+    if (!gestureData.matrix) {
+      gestureData.matrix = getNewNumberMatrix();
+    }
     const gesture = this.buildGesture(gestureData);
     GestureRepository.gestureStore.update(arr => {
       arr.push(gesture);

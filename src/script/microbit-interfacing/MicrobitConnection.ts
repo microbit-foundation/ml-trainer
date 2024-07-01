@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { PersistantGestureData } from '../domain/Gestures';
 import { UARTMessageType } from './Microbits';
 
 export enum DeviceRequestStates {
@@ -22,7 +23,7 @@ interface MicrobitConnection {
 
   disconnect(): Promise<void>;
 
-  getLogData(): Promise<void>;
+  getLogData(): Promise<PersistantGestureData[]>;
 
   sendToInputUart(type: UARTMessageType, value: string): void;
 }
