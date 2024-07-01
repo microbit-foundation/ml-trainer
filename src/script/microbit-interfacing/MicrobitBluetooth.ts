@@ -25,6 +25,7 @@ import {
 } from './state-updaters';
 import { btSelectMicrobitDialogOnLoad } from '../stores/connectionStore';
 import { LogDataProcessor, RequestFormat } from './LogDataProcessor';
+import { PersistantGestureData } from '../domain/Gestures';
 
 const browser = Bowser.getParser(window.navigator.userAgent);
 const isWindowsOS = browser.getOSName() === 'Windows';
@@ -91,8 +92,8 @@ export class MicrobitBluetooth implements MicrobitConnection {
     queue: [],
   };
 
-  private logReadResponse: Promise<void> | undefined;
-  private logReadResponseResolve: (() => void) | undefined;
+  private logReadResponse: Promise<PersistantGestureData[]> | undefined;
+  private logReadResponseResolve: ((data: PersistantGestureData[]) => void) | undefined;
   private logReadResponseReject: ((reason?: any) => void) | undefined;
 
   constructor(
@@ -324,7 +325,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
       try {
         const result = this.logDataProcessor!.processReply(reply);
         if (result && this.logReadResponseResolve) {
-          this.logReadResponseResolve();
+          this.logReadResponseResolve(result);
         }
       } catch (err) {
         if (this.logReadResponseReject) {
@@ -439,7 +440,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
     await this.listenToUART(DeviceRequestStates.OUTPUT);
   }
 
-  getLogData(): Promise<void> {
+  getLogData(): Promise<PersistantGestureData[]> {
     this.logReadResponse = new Promise((res, rej) => {
       this.logReadResponseResolve = res;
       this.logReadResponseReject = rej;

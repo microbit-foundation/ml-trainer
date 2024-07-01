@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { PersistantGestureData } from '../domain/Gestures';
 import { importGestureData } from '../stores/mlStore';
 import { transformCsvToGestureData } from './validate-log-data';
 
@@ -130,7 +131,10 @@ export class LogDataProcessor implements ILogDataProcessor {
     this.requestWrite(view);
   }
 
-  private logReadProcess(data: ArrayBuffer, dataLength: number): boolean | undefined {
+  private logReadProcess(
+    data: ArrayBuffer,
+    dataLength: number,
+  ): PersistantGestureData[] | undefined {
     if (dataLength < 1) {
       throw new Error('No data in response');
     }
@@ -153,10 +157,7 @@ export class LogDataProcessor implements ILogDataProcessor {
         // Data log read is finished.
         const dataAsCsv = new TextDecoder().decode(this.data);
         const importedData = transformCsvToGestureData(dataAsCsv);
-        // This is a rash step of just overwriting without a user prompt.
-        importGestureData(importedData);
-        // Return success to caller.
-        return true;
+        return importedData;
       }
 
       const view = this.createLogReadDataView();
@@ -164,7 +165,7 @@ export class LogDataProcessor implements ILogDataProcessor {
     }
   }
 
-  processReply(reply: DataView): boolean | undefined {
+  processReply(reply: DataView): PersistantGestureData[] | undefined {
     const replyLength = reply.byteLength;
 
     if (!length) {

@@ -69,18 +69,18 @@ export function getNewBlankMatrix() {
   return new Array(25).fill(false);
 }
 
-export function getNewNumberMatrix() {
+export function getNewNumberMatrix(): boolean[] {
   const g = gestures.getGestures();
   const numGestures = g.length;
   if (numGestures > 9) {
-    return matrixNumbers.get((numGestures + 1) % 9);
+    return matrixNumbers.get((numGestures + 1) % 9)!;
   } else {
     let i = numGestures + 1;
     while (true) {
       if (g.find(g => g.getMatrix().toString() === matrixNumbers.get(i)?.toString())) {
         i++;
       } else {
-        return matrixNumbers.get(i);
+        return matrixNumbers.get(i)!;
       }
     }
   }
@@ -200,6 +200,26 @@ export function addGesture(name: string): void {
 export function importGestureData(gestureData: PersistantGestureData[]) {
   updateToUntrainedState();
   gestures.importFrom(gestureData);
+}
+
+export function appendGestureData(gestureData: PersistantGestureData[]) {
+  updateToUntrainedState();
+  gestureData.forEach(importedGesture => {
+    const gestureToAppendTo = gestures
+      .getGestures()
+      .find(g => g.getName() === importedGesture.name);
+    if (!gestureToAppendTo) {
+      const newGesture = gestures.createGesture(importedGesture.name);
+      newGesture.setMatrix(importedGesture.matrix || getNewNumberMatrix());
+      importedGesture.recordings.forEach(recording => {
+        newGesture.addRecording(recording);
+      });
+    } else {
+      importedGesture.recordings.forEach(recording => {
+        gestureToAppendTo.addRecording(recording);
+      });
+    }
+  });
 }
 
 // Delete this, maybe? updateToUntrainedState
