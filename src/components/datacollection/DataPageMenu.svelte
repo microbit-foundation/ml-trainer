@@ -14,7 +14,7 @@
   import MenuItem from '../control-bar/control-bar-items/MenuItem.svelte';
   import IconButton from '../IconButton.svelte';
   import MoreIcon from 'virtual:icons/mdi/dots-vertical';
-  import { createDropdownMenu } from '@melt-ui/svelte';
+  import { createDropdownMenu, melt } from '@melt-ui/svelte';
   import Microbits from '../../script/microbit-interfacing/Microbits';
   import StandardDialog from '../dialogs/StandardDialog.svelte';
   import LoadingAnimation from '../LoadingBlobs.svelte';
@@ -28,7 +28,7 @@
   export let onCollectDataInField: () => void;
 
   const menu = createDropdownMenu({ forceVisible: true });
-  const { trigger } = menu.elements;
+  const { trigger, separator } = menu.elements;
   const { open } = menu.states;
 
   let showLoadingDialog = false;
@@ -85,6 +85,11 @@
           <CollectIcon />
           {$t('content.data.controlbar.button.collectDataInField')}
         </MenuItem>
+        <MenuItem {menu} on:m-click={importDataFromLog}>
+          <UploadIcon />
+          Import from data log
+        </MenuItem>
+        <div class="m-5px h-1px bg-gray-300" use:separator {...$separator}></div>
         <MenuItem {menu} on:m-click={onUploadGestures}>
           <UploadIcon />
           {$t('content.data.controlbar.button.uploadData')}
@@ -96,10 +101,6 @@
         <MenuItem {menu} on:m-click={onClearGestures} disabled={clearDisabled}>
           <ClearIcon />
           {$t('content.data.controlbar.button.clearData')}
-        </MenuItem>
-        <MenuItem {menu} on:m-click={importDataFromLog}>
-          <UploadIcon />
-          Import from data log
         </MenuItem>
       </div>
     </MenuItems>
