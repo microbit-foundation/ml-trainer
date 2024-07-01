@@ -13,13 +13,18 @@ interface ActionMetaData {
 }
 
 export const transformCsvToGestureData = (csv: string): PersistantGestureData[] => {
-  const rawData = validateLogData(csv);
+  const { rawData, actionMetaData } = validateLogData(csv);
   const gestures: PersistantGestureData[] = [];
-  processRawData(rawData, gestures);
+  processRawData(actionMetaData, rawData, gestures);
   return gestures;
 };
 
-export const validateLogData = (csv: string) => {
+export const validateLogData = (
+  csv: string,
+): {
+  rawData: string[][];
+  actionMetaData: ActionMetaData[];
+} => {
   const rows = csvToRows(csv);
   if (!rows) {
     throw new Error('Log data invalid');
@@ -28,12 +33,16 @@ export const validateLogData = (csv: string) => {
   const actionMetaData = parseHeader(header);
   validateDataLabels(rows[1]);
   const rawData = rows.slice(2);
-  return rawData;
+  return { actionMetaData, rawData };
 };
 
 let inc = 1;
 
-const processRawData = (rawData: string[][], gestures: PersistantGestureData[]): void => {
+const processRawData = (
+  actionMetaData: ActionMetaData[],
+  rawData: string[][],
+  gestures: PersistantGestureData[],
+): void => {
   const maybeSaveRecording = () => {
     if (recordingLength >= 80 && actionName) {
       // Save current recording, start new recording.
@@ -50,6 +59,7 @@ const processRawData = (rawData: string[][], gestures: PersistantGestureData[]):
           recordings: [gestureRecording],
           output: {},
           name: actionName,
+          matrix: actionMetaData.find(a => a.name === actionName)?.matrix,
         };
         inc++;
         gestures.push(gesture);
@@ -122,9 +132,26 @@ const logRecordingToGestureRecording = (logRecording: string[][]): RecordingData
   return gestureRecording;
 };
 
-// TODO
+const bitValuesToBooleanArray = (bitValues: string): boolean[] => {
+  return bitValues.split('').map(v => Boolean(parseInt(v)));
+};
+
 const parseHeader = (header: string[]): ActionMetaData[] => {
-  return [];
+  const parts: string[] = [];
+  header.forEach(part => {
+    parts.push(...part.split(';').filter(Boolean));
+  });
+  if (parts.length % 2 !== 0) {
+    throw new Error('Number of action names and action matrices is not equal');
+  }
+  const actionMetaData: ActionMetaData[] = [];
+  for (let i = 0; i < parts.length; i += 2) {
+    actionMetaData.push({
+      name: parts[i],
+      matrix: bitValuesToBooleanArray(parts[i + 1]),
+    });
+  }
+  return actionMetaData;
 };
 
 const validateDataLabels = (dataLabels: string[]) => {
