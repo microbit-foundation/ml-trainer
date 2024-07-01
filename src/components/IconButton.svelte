@@ -10,8 +10,18 @@
 
 <script lang="ts">
   import type { Action } from 'svelte/action';
+  import type { HTMLButtonAttributes } from 'svelte/elements';
 
-  export let type: IconButtonVariant = 'ghost';
+  interface $$Props extends HTMLButtonAttributes {
+    variant?: IconButtonVariant;
+    onClick?: (e: Event) => void;
+    ariaLabel: string;
+    rounded?: boolean;
+    useAction?: Action;
+    disabled?: boolean;
+  }
+
+  export let variant: IconButtonVariant = 'ghost';
   export let onClick: ((e: Event) => void) | undefined = undefined;
   export let disabled = false;
   export let ariaLabel: string;
@@ -33,9 +43,9 @@
 
 <button
   {disabled}
-  class="{classes[type].base} {disabled
+  class="{classes[variant].base} {disabled
     ? ''
-    : classes[type]
+    : classes[variant]
         .enabled} leading-0 outline-none disabled:opacity-60 transition-colors duration-200 focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-ring"
   class:cursor-pointer={!disabled}
   class:cursor-default={disabled}

@@ -10,7 +10,7 @@ import {
   ConnectDialogStates,
   startConnectionProcess,
 } from '../stores/connectDialogStore';
-import { state } from '../stores/uiStore';
+import { isFieldDataCollectionMode, state } from '../stores/uiStore';
 import Microbits from '../microbit-interfacing/Microbits';
 import {
   stateOnFailedToConnect,
@@ -53,6 +53,10 @@ export const reconnect = async (finalAttempt: boolean = false) => {
       stateOnShowConnectHelp(true);
     }
   } finally {
+    // TODO: Not ideal in that it assumes field collection mode will be off on
+    // micro:bit as well when micro:bit reconnects. This is not necessarily the case.
+    isFieldDataCollectionMode.update(_ => false);
+
     state.update(s => {
       s.reconnectState = {
         ...s.reconnectState,

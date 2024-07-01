@@ -16,6 +16,7 @@ import { HexOrigin } from '../../StaticConfiguration';
 import { DeviceRequestStates } from '../microbit-interfacing/MicrobitConnection';
 import { persistantWritable } from './storeUtil';
 import { logError, logEvent } from '../utils/logging';
+import { MakeCodeProject } from '@microbit-foundation/react-editor-embed';
 
 // TODO: Rename? Split up further?
 
@@ -42,6 +43,15 @@ if (compatibilityResult.bluetooth) {
 }
 
 export const isCompatibilityWarningDialogOpen = writable<boolean>(false);
+
+export const makeCodeProject = persistantWritable<MakeCodeProject | {}>(
+  'makeCodeProject',
+  {},
+);
+
+export const clearMakeCodeProject = () => {
+  makeCodeProject.set({});
+};
 
 export const hasSeenAppVersionRedirectDialog = persistantWritable<boolean>(
   'hasSeenAppVersionRedirectDialog',
@@ -86,6 +96,7 @@ export const state = writable<{
   inputMicrobitVersion: MBSpecs.MBVersion | -1;
   inputOrigin: HexOrigin;
   isOutputReady: boolean;
+  outputHex: string | undefined;
   outputHexVersion: number;
   outputMicrobitVersion: MBSpecs.MBVersion | -1;
   outputOrigin: HexOrigin;
@@ -113,6 +124,7 @@ export const state = writable<{
   inputMicrobitVersion: -1,
   inputOrigin: HexOrigin.UNKNOWN,
   isOutputReady: false,
+  outputHex: undefined,
   outputHexVersion: -1,
   outputMicrobitVersion: -1,
   outputOrigin: HexOrigin.UNKNOWN,
@@ -176,6 +188,8 @@ export const buttonPressed = writable<{ buttonA: 0 | 1; buttonB: 0 | 1 }>({
   buttonA: 0,
   buttonB: 0,
 });
+
+export const isFieldDataCollectionMode = writable<boolean>(false);
 
 export enum MicrobitInteractions {
   A,

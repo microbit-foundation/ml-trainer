@@ -41,6 +41,7 @@ export function persistantWritable<T>(key: string, initValue: T): Writable<T> {
   initValue = useStored
     ? (storedObject as { version: number; value: T }).value
     : initValue;
+
   const store: Writable<T> = writable(initValue);
   store.subscribe(val =>
     localStorage.setItem(

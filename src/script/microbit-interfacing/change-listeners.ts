@@ -5,7 +5,7 @@
  */
 
 import { livedata } from '../stores/mlStore';
-import { buttonPressed } from '../stores/uiStore';
+import { buttonPressed, isFieldDataCollectionMode } from '../stores/uiStore';
 import MBSpecs from './MBSpecs';
 import { DeviceRequestStates } from './MicrobitConnection';
 import {
@@ -69,6 +69,19 @@ export const onUARTDataReceived = (
   }
   if (data === 'id_prop') {
     stateOnIdentifiedAsProprietary(requestState);
+  }
+  if (data.includes('f_')) {
+    isFieldDataCollectionMode.update(_ => {
+      switch (data) {
+        case 'f_start':
+          return true;
+        case 'f_stopped':
+          return false;
+        default:
+          console.warn('Unrecognised uart message');
+          return false;
+      }
+    });
   }
   if (data.includes('vi_')) {
     const version = parseInt(data.substring(3));

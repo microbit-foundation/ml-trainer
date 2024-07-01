@@ -38,6 +38,10 @@ namespace MBSpecs {
      * Service for buttons on the micro:bit.
      */
     export const BUTTON_SERVICE = 'e95d9882-251d-470a-a062-fa1922dfa9a8';
+    /**
+     * Service for Bluetooth utility on the micro:bit.
+     */
+    export const UTILITY_SERVICE = 'e95d0001-251d-470a-a062-fa1922dfa9a8';
   }
 
   /**
@@ -89,6 +93,11 @@ namespace MBSpecs {
      * Used for sending data to the micro:bit.
      */
     export const UART_DATA_RX = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
+    /**
+     * The UUID of the micro:bit's UTILITY CTRL characteristic.
+     * Used for reading log data from the micro:bit.
+     */
+    export const UTILITY_CTRL = 'e95d0002-251d-470a-a062-fa1922dfa9a8';
   }
 
   export namespace USBSpecs {

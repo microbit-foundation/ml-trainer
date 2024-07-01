@@ -15,6 +15,7 @@
     FlashStage,
     HexType,
     getHexFileUrl,
+    getHexStrForVersion,
   } from '../../script/microbit-interfacing/Microbits';
   import {
     ConnectDialogStates,
@@ -41,6 +42,7 @@
   import SelectMicrobitDialogUsb from './usb/SelectMicrobitDialogUsb.svelte';
   import ManualInstallTutorial from './usb/manual/ManualInstallTutorial.svelte';
   import UnsupportedMicrobitWarningDialog from '../dialogs/UnsupportedMicrobitWarningDialog.svelte';
+  import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
 
   const { bluetooth, usb } = get(compatibility);
   let endOfFlow = false;
@@ -115,17 +117,42 @@
     return flashMicrobit(usb);
   }
 
+  const getInputHexBuffer = async (
+    usb: MicrobitUSB,
+  ): Promise<ArrayBuffer | undefined> => {
+    const hexForStage = stageToHex(flashStage);
+    const hexUrl = getHexFileUrl(usb.getModelNumber(), hexForStage);
+    if (hexUrl === undefined) {
+      return;
+    }
+    const hexFile = await fetch(hexUrl);
+    return hexFile.arrayBuffer();
+  };
+
+  const getOutputHexBuffer = (usb: MicrobitUSB): ArrayBuffer | undefined => {
+    if (!$state.outputHex) {
+      // TODO: Handle scenario for hex data downloaded from MakeCode is invalid
+      return;
+    }
+    const hexStr = getHexStrForVersion($state.outputHex, usb.getModelNumber());
+    return new TextEncoder().encode(hexStr);
+  };
+
   async function flashMicrobit(usb: MicrobitUSB): Promise<void> {
     try {
       const deviceId = await usb.getDeviceId();
-      const hexForStage = stageToHex(flashStage);
-      const hexUrl = getHexFileUrl(usb.getModelNumber(), hexForStage);
-      if (hexUrl === undefined) {
+
+      const hexBuffer =
+        $connectionDialogState.deviceState == DeviceRequestStates.OUTPUT
+          ? getOutputHexBuffer(usb)
+          : await getInputHexBuffer(usb);
+
+      if (hexBuffer === undefined) {
         $connectionDialogState.connectionState = ConnectDialogStates.MICROBIT_UNSUPPORTED;
         return;
       }
 
-      await usb.flashHex(hexUrl, progress => {
+      await usb.flashHex(hexBuffer, progress => {
         // Flash hex
         // Send users to download screen
         if (
@@ -148,12 +175,15 @@
       }
 
       // Next UI state:
-      if (flashStage === 'bluetooth' || flashStage === 'radio-remote') {
+      if (isOutputMicrobit) {
+        endFlow();
+      } else if (flashStage === 'bluetooth' || flashStage === 'radio-remote') {
         $connectionDialogState.connectionState = ConnectDialogStates.CONNECT_BATTERY;
       } else if (flashStage === 'radio-bridge') {
         onConnectingSerial(usb);
       }
     } catch (err) {
+      console.error(err);
       handleConnectionError(err);
     }
   }
@@ -200,6 +230,7 @@
 
   let dialogContainer: HTMLElement;
   let unsubscribe: Unsubscriber;
+  $: isOutputMicrobit = $connectionDialogState.deviceState === DeviceRequestStates.OUTPUT;
 
   onMount(() => {
     // Focus the first button in the dialog when the content changes.
@@ -250,25 +281,30 @@
         }} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.START_BLUETOOTH}
       <StartBluetoothDialog
-        onStartRadioClick={usb
-          ? () => {
-              $connectionDialogState.connectionState = ConnectDialogStates.START_RADIO;
-              flashStage = 'radio-remote';
-            }
-          : undefined}
+        onStartRadioClick={() => {
+          $connectionDialogState.connectionState = ConnectDialogStates.START_RADIO;
+          flashStage = 'radio-remote';
+        }}
         onNextClick={() =>
-          ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)} />
+          ($connectionDialogState.connectionState = ConnectDialogStates.CONNECT_CABLE)}
+        onBackClick={undefined} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.CONNECT_CABLE}
       {#if flashStage === 'bluetooth'}
         <ConnectCableDialog
           titleId="connectMB.connectCable.heading"
-          subtitleId="connectMB.connectCable.subtitle"
-          onSkipClick={() =>
-            ($connectionDialogState.connectionState =
-              ConnectDialogStates.CONNECT_BATTERY)}
-          onBackClick={() =>
-            ($connectionDialogState.connectionState =
-              ConnectDialogStates.START_BLUETOOTH)}
+          subtitleId={isOutputMicrobit
+            ? 'connectMB.connectCable.output.subtitle'
+            : 'connectMB.connectCable.subtitle'}
+          onSkipClick={isOutputMicrobit
+            ? undefined
+            : () =>
+                ($connectionDialogState.connectionState =
+                  ConnectDialogStates.CONNECT_BATTERY)}
+          onBackClick={isOutputMicrobit
+            ? undefined
+            : () =>
+                ($connectionDialogState.connectionState =
+                  ConnectDialogStates.START_BLUETOOTH)}
           onNextClick={() =>
             usb
               ? ($connectionDialogState.connectionState =
@@ -378,9 +414,12 @@
                 ConnectDialogStates.CONNECT_TUTORIAL_USB)
             : ($connectionDialogState.connectionState =
                 ConnectDialogStates.CONNECT_CABLE)}
-        onNextClick={() =>
-          ($connectionDialogState.connectionState =
-            ConnectDialogStates.CONNECT_BATTERY)} />
+        onNextClick={isOutputMicrobit
+          ? undefined
+          : () =>
+              ($connectionDialogState.connectionState =
+                ConnectDialogStates.CONNECT_BATTERY)}
+        deviceState={$connectionDialogState.deviceState} />
     {:else if $connectionDialogState.connectionState === ConnectDialogStates.USB_TRY_AGAIN}
       <WebUsbTryAgain
         type={usbTryAgainType}

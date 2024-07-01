@@ -19,6 +19,8 @@ import {
 } from './state-updaters';
 import StaticConfiguration from '../../StaticConfiguration';
 import { ConnectionType } from '../stores/uiStore';
+import { UARTMessageType } from './Microbits';
+import { PersistantGestureData } from '../domain/Gestures';
 
 class BridgeError extends Error {}
 class RemoteError extends Error {}
@@ -252,6 +254,12 @@ export class MicrobitSerial implements MicrobitConnection {
     this.isReconnect = true;
     await this.connect(DeviceRequestStates.INPUT);
   }
+
+  // Stub.
+  getLogData = (): Promise<PersistantGestureData[]> => {
+    return Promise.reject('Not implemented');
+  };
+  sendToInputUart = (_type: UARTMessageType, _value: string): void => {};
 
   private async sendCmdWaitResponse(
     cmd: protocol.MessageCmd,

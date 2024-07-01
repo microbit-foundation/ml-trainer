@@ -28,6 +28,7 @@
     state,
     microbitInteraction,
     MicrobitInteractions,
+    isFieldDataCollectionMode,
   } from '../script/stores/uiStore';
   import {
     addRecording,
@@ -36,6 +37,7 @@
     type RecordingData,
     removeRecording,
     settings,
+    updateGestureMatrix,
   } from '../script/stores/mlStore';
   import Recording from './Recording.svelte';
   import { t } from '../i18n';
@@ -49,8 +51,14 @@
   import IconButton from './IconButton.svelte';
   import RecordIcon from 'virtual:icons/fluent/record-20-regular';
   import CloseIcon from 'virtual:icons/ri/close-line';
+  import ArrowDownIcon from 'virtual:icons/ri/arrow-down-s-fill';
+  import EditIcon from 'virtual:icons/ri/edit-2-line';
   import StandardDialog from './dialogs/StandardDialog.svelte';
   import { logEvent, logMessage } from '../script/utils/logging';
+  import LedMatrix from './output/LedMatrix.svelte';
+  import { createPopover } from '@melt-ui/svelte';
+  import { matrixImages } from '../script/utils/matrixImages';
+  import SimpleLedMatrix from './output/SimpleLedMatrix.svelte';
 
   export let gesture: Gesture;
   export let showWalkThrough: Boolean = false;
@@ -60,14 +68,65 @@
   interface CountdownConfig {
     value: string | number;
     duration: number;
-    class?: string;
+    ledPattern: boolean[];
   }
+
+  const T = true;
+  const F = false;
   const countdownConfigs: CountdownConfig[] = [
-    { value: 3, duration: 500, class: 'text-8xl' },
-    { value: 2, duration: 500, class: 'text-8xl' },
-    { value: 1, duration: 500, class: 'text-8xl' },
-    { value: $t('content.data.recordingDialog.go'), duration: 1000, class: 'text-6xl' },
+    {
+      value: 3,
+      duration: 500,
+      ledPattern: [
+        [T, T, T, T, F],
+        [F, F, F, T, F],
+        [F, F, T, F, F],
+        [T, F, F, T, F],
+        [F, T, T, F, F],
+      ].flat(),
+    },
+    {
+      value: 2,
+      duration: 500,
+      ledPattern: [
+        [T, T, T, F, F],
+        [F, F, F, T, F],
+        [F, T, T, F, F],
+        [T, F, F, F, F],
+        [T, T, T, T, F],
+      ].flat(),
+    },
+    {
+      value: 1,
+      duration: 500,
+      ledPattern: [
+        [F, F, T, F, F],
+        [F, T, T, F, F],
+        [F, F, T, F, F],
+        [F, F, T, F, F],
+        [F, T, T, T, F],
+      ].flat(),
+    },
+    {
+      value: $t('content.data.recordingDialog.go'),
+      duration: 1000,
+      ledPattern: [
+        [T, T, T, T, T],
+        [T, F, F, F, T],
+        [T, F, F, F, T],
+        [T, F, F, F, T],
+        [T, T, T, T, T],
+      ].flat(),
+    },
   ];
+
+  const recordingLedPattern = [
+    [F, F, F, F, F],
+    [F, T, T, T, F],
+    [F, T, T, T, F],
+    [F, T, T, T, F],
+    [F, F, F, F, F],
+  ].flat();
 
   let isThisRecording = false;
   let showCountdown = false;
@@ -185,6 +244,9 @@
     if (showCountdown || isThisRecording) {
       return;
     }
+    if ($isFieldDataCollectionMode) {
+      return;
+    }
     const triggerButton = get(microbitInteraction);
     if (!isChosenGesture) {
       return;
@@ -197,13 +259,9 @@
       countdownStart();
   }
 
-  function onTitleKeypress(event: KeyboardEvent) {
+  function handleActionNameKeypress(event: KeyboardEvent) {
     if (event.code === 'Enter') {
-      event.preventDefault();
-      if (event.target instanceof HTMLElement) {
-        event.target.blur();
-      }
-      return true;
+      return;
     }
 
     if ($nameBind.length >= StaticConfiguration.gestureNameMaxLength) {
@@ -219,7 +277,7 @@
     }
   }
 
-  function onTitlePaste(event: ClipboardEvent) {
+  function handleActionNamePaste(event: ClipboardEvent) {
     const value = event.clipboardData?.getData('text');
     const maxLength = StaticConfiguration.gestureNameMaxLength;
     if (value && value.length + $nameBind.length > maxLength) {
@@ -254,6 +312,18 @@
     el.focus();
     selectGesture();
   }
+
+  const {
+    elements: { trigger, content, arrow },
+    states,
+  } = createPopover({
+    preventScroll: true,
+  });
+
+  function handleImageSelection(gestureId: number, image: boolean[]) {
+    updateGestureMatrix(gestureId, image);
+    states.open.set(false);
+  }
 </script>
 
 <!-- Recording countdown popup -->
@@ -268,15 +338,15 @@
     <div class="flex flex-col space-y-3 self-center items-center justify-center">
       <div class="flex items-center h-100px">
         {#if countdownIdx < countdownConfigs.length}
-          <p
-            class="text-center font-bold text-brand-500 {countdownConfigs[countdownIdx]
-              .class || ''}">
-            {countdownConfigs[countdownIdx].value}
-          </p>
+          <SimpleLedMatrix
+            matrix={countdownConfigs[countdownIdx].ledPattern}
+            ariaLabel={`${countdownConfigs[countdownIdx].value}`}
+            brandColor />
         {:else}
-          <p class="text-5xl text-center font-bold text-brand-500">
-            {$t('content.data.recordingDialog.recording')}
-          </p>
+          <SimpleLedMatrix
+            matrix={recordingLedPattern}
+            ariaLabel={$t('content.data.recordingDialog.recording')}
+            brandColor />
         {/if}
       </div>
       <!-- Recording bar to show recording progress -->
@@ -295,9 +365,9 @@
      You can instead interact with the button. A better model of row selection would be a good enhancement. -->
 <div on:click={selectGesture}>
   <GestureTilePart small elevated selected={isChosenGesture || showAddActionWalkThrough}>
-    <div class="flex items-center justify-center p-2 w-50 h-30 relative">
+    <div class="flex items-center justify-center w-full h-full relative gap-2 px-2">
       {#if !showAddActionWalkThrough}
-        <div class="absolute right-2 top-2">
+        <div class="absolute right-1 top-1">
           <IconButton
             ariaLabel={$t('content.data.deleteAction', {
               values: {
@@ -310,6 +380,28 @@
           </IconButton>
         </div>
       {/if}
+      <div class="flex items-center gap-1">
+        <LedMatrix mode="input" gesture={$gesture} brandColor />
+        <IconButton ariaLabel="Change image" {...$trigger} useAction={trigger}>
+          <ArrowDownIcon class="text-xl m-1" />
+        </IconButton>
+      </div>
+      {#if states.open}
+        <div class="bg-white shadow-md rounded-xl p-4 z-10" {...$content} use:content>
+          <div {...$arrow} use:arrow />
+          <div class="grid grid-cols-5 gap-4 h-100 overflow-y-auto">
+            {#each Object.values(matrixImages) as image}
+              <div class="m-1">
+                <IconButton
+                  ariaLabel="Select image"
+                  onClick={() => handleImageSelection($gesture.ID, image)}>
+                  <SimpleLedMatrix matrix={image} brandColor />
+                </IconButton>
+              </div>
+            {/each}
+          </div>
+        </div>
+      {/if}
       <label for="gestureName" class="sr-only"
         >{$t('content.data.addAction.inputLabel')}</label>
       <input
@@ -319,8 +411,8 @@
         id="gestureName"
         placeholder={gesturePlaceholderName}
         bind:value={$nameBind}
-        on:keypress={onTitleKeypress}
-        on:paste={onTitlePaste}
+        on:keypress={handleActionNameKeypress}
+        on:paste={handleActionNamePaste}
         on:focus={selectGesture} />
     </div>
   </GestureTilePart>

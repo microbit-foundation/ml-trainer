@@ -73,6 +73,13 @@ const config = {
       purpose:
         'Used to ensure that the UK primary school teacher dialog is only shown once',
     },
+    {
+      type: 'local',
+      domain,
+      category: 'essential',
+      name: 'makeCodeProject',
+      purpose: 'Used to save MakeCode project',
+    },
     // Some of the Svelte stores use local storage, this needs investigating
   ],
 };

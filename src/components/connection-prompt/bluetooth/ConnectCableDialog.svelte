@@ -13,7 +13,7 @@
   export let titleId: string;
   export let subtitleId: string;
   export let onNextClick: () => void;
-  export let onBackClick: () => void;
+  export let onBackClick: (() => void) | undefined = undefined;
   export let onSkipClick: (() => void) | undefined = undefined;
   export let onAltClick: (() => void) | undefined = undefined;
   export let altClickId: string | undefined = undefined;
@@ -42,7 +42,9 @@
     <StandardButton type="link" onClick={onAltClick}>{$t(altClickId)}</StandardButton>
   {/if}
   <div class="flex gap-x-5 ml-auto">
-    <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
+    {#if onBackClick}
+      <StandardButton onClick={onBackClick}>{$t('connectMB.backButton')}</StandardButton>
+    {/if}
     <StandardButton type="primary" onClick={onNextClick}
       >{$t('connectMB.nextButton')}</StandardButton>
   </div>

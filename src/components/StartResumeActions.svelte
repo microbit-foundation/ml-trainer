@@ -17,6 +17,7 @@
   import { startConnectionProcess } from '../script/stores/connectDialogStore';
   import { clearGestures } from '../script/stores/mlStore';
   import {
+    clearMakeCodeProject,
     compatibility,
     isCompatibilityWarningDialogOpen,
     state,
@@ -45,6 +46,7 @@
 
   const handleNewSession = () => {
     clearGestures();
+    clearMakeCodeProject();
     if ($state.isInputConnected) {
       navigate(Paths.DATA);
     } else {

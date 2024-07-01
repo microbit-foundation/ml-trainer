@@ -6,7 +6,8 @@
 #ifndef UTILITIES_H_INCLUDED
 #define UTILITIES_H_INCLUDED
 
-enum Note {
+enum Note
+{
     C = 262,
     CSharp = 277,
     D = 294,
@@ -57,7 +58,7 @@ enum Note {
     B5 = 988,
 };
 
-Note * getSound(ManagedString soundNo);
+Note *getSound(ManagedString soundNo);
 
 void playNote(Note note, int time);
 
@@ -65,10 +66,12 @@ void playSound(Note notes[], int beat);
 
 void blink();
 
-void printSmiley(const char * smiley);
+void printSmiley(const char *smiley);
 
 void printPairPatternAnimated();
 
 void printPairPattern();
+
+void collectFieldData();
 
 #endif

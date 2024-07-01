@@ -44,4 +44,5 @@
     : 'connectMB.radioStart.heading'}
   switchTextId="connectMB.radioStart.switchBluetooth"
   onSwitchClick={onStartBluetoothClick}
-  {onNextClick} />
+  {onNextClick}
+  onBackClick={undefined} />

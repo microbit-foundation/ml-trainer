@@ -14,6 +14,7 @@
 
   export let onNextClick: () => void;
   export let onStartRadioClick: (() => void) | undefined;
+  export let onBackClick: (() => void) | undefined;
 
   const items = [
     {
@@ -44,4 +45,5 @@
     : 'connectMB.bluetoothStart.heading'}
   switchTextId="connectMB.bluetoothStart.switchRadio"
   onSwitchClick={onStartRadioClick}
-  {onNextClick} />
+  {onNextClick}
+  {onBackClick} />

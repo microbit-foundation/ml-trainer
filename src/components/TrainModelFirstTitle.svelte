@@ -12,13 +12,14 @@
   import { Paths, navigate } from '../router/paths';
   import { hasSufficientData, state } from '../script/stores/uiStore';
 
+  export let headingId = 'content.model.trainModelFirstHeading';
   $: sufficientData = hasSufficientData();
 </script>
 
 <div class="flex flex-col items-center bg-backgrounddark pb-10">
   <img class="pt-10 opacity-40 w-350px h-249px" src={testModelImage} alt="" />
   <h1 class="text-2xl font-bold mb-3">
-    {$t('content.model.trainModelFirstHeading')}
+    {$t(headingId)}
   </h1>
   <div class="space-y-5 text-center max-w-450px">
     {#if !sufficientData}
