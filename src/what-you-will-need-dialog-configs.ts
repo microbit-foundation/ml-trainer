@@ -1,5 +1,5 @@
 import { WhatYouWillNeedDialogProps } from "./components/WhatYouWillNeedDialog";
-import { ConnectionType } from "./connection-dialogs";
+import { ConnectionType } from "./connection-flow";
 import batteryPackImage from "./images/stylised-battery-pack.svg";
 import microbitImage from "./images/stylised-microbit-black.svg";
 import twoMicrobitsImage from "./images/stylised-two-microbits-black.svg";

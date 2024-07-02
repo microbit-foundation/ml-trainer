@@ -37,7 +37,13 @@ const ConnectContainerDialog = ({
   children,
 }: ConnectContainerDialogProps) => {
   return (
-    <Modal motionPreset="none" isOpen={isOpen} onClose={onClose} size="3xl">
+    <Modal
+      closeOnOverlayClick={false}
+      motionPreset="none"
+      isOpen={isOpen}
+      onClose={onClose}
+      size="3xl"
+    >
       <ModalOverlay>
         <ModalContent p={8}>
           <ModalBody>

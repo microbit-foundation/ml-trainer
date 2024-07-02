@@ -18,6 +18,7 @@ import HomePage from "./pages/HomePage";
 import { createHomePageUrl, createStepPageUrl } from "./urls";
 import { deployment, useDeployment } from "./deployment";
 import { stepsConfig } from "./steps-config";
+import { LoggingProvider } from "./logging/logging-hooks";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -33,13 +34,15 @@ const Providers = ({ children }: ProviderLayoutProps) => {
   return (
     <React.StrictMode>
       <ChakraProvider theme={deployment.chakraTheme}>
-        <ConsentProvider>
-          <SettingsProvider>
-            <TranslationProvider>
-              <ErrorBoundary>{children}</ErrorBoundary>
-            </TranslationProvider>
-          </SettingsProvider>
-        </ConsentProvider>
+        <LoggingProvider value={logging}>
+          <ConsentProvider>
+            <SettingsProvider>
+              <TranslationProvider>
+                <ErrorBoundary>{children}</ErrorBoundary>
+              </TranslationProvider>
+            </SettingsProvider>
+          </ConsentProvider>
+        </LoggingProvider>
       </ChakraProvider>
     </React.StrictMode>
   );

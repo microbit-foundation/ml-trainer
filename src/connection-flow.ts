@@ -5,11 +5,14 @@ export enum ConnectionDialogStage {
   ConnectCable,
   WebUsbFlashingTutorial,
   ManualFlashingTutorial,
-  UsbDownloading, //TODO
   ConnectBattery,
-  ConnectingMicrobits,
   EnterBluetoothPattern,
   ConnectBluetooth,
+
+  // Stages that are not user-controlled
+  WebUsbChooseMicrobit,
+  ConnectingMicrobits,
+  FlashingInProgress,
 }
 
 export enum ConnectionType {
@@ -24,12 +27,25 @@ export type ConnectionDialogState = {
   isUsbSupported: boolean;
 };
 
-export enum ConnectionDialogEvent {
+export enum ConnectionEvent {
+  // User triggered events
   Switch,
   Next,
   Back,
   SkipFlashing,
+
+  // WebUsbFlashing events
+  WebUsbChooseMicrobit,
+  FlashingInProgress,
+  FlashingComplete,
+
+  // WebUsbFlashing failure events
+  TryAgainReplugMicrobit,
+  TryAgainCloseTabs,
+  TryAgainSelectMicrobit,
   InstructManualFlashing,
+  BadFirmware,
+  MicrobitUnsupported,
 }
 
 type StageAndType = Pick<ConnectionDialogState, "stage" | "type">;
@@ -37,9 +53,11 @@ type StageAndType = Pick<ConnectionDialogState, "stage" | "type">;
 const getStageAndTypeOrder = (state: ConnectionDialogState): StageAndType[] => {
   if (state.type === ConnectionType.Bluetooth) {
     // Bluetooth
-    const flashingTutorialStage = state.isUsbSupported
-      ? ConnectionDialogStage.WebUsbFlashingTutorial
-      : ConnectionDialogStage.ManualFlashingTutorial;
+    const flashingTutorialStage =
+      !state.isUsbSupported ||
+      state.stage === ConnectionDialogStage.ManualFlashingTutorial
+        ? ConnectionDialogStage.ManualFlashingTutorial
+        : ConnectionDialogStage.WebUsbFlashingTutorial;
 
     return [
       ConnectionDialogStage.Start,
@@ -59,7 +77,6 @@ const getStageAndTypeOrder = (state: ConnectionDialogState): StageAndType[] => {
     { stage: ConnectionDialogStage.ConnectBattery, type: RadioRemote },
     { stage: ConnectionDialogStage.ConnectCable, type: RadioBridge },
     { stage: ConnectionDialogStage.WebUsbFlashingTutorial, type: RadioBridge },
-    { stage: ConnectionDialogStage.ConnectingMicrobits, type: RadioBridge },
   ];
 };
 
@@ -98,23 +115,37 @@ const getPrevStageState = (state: ConnectionDialogState) => {
 
 export const connectionDialogReducer: Reducer<
   ConnectionDialogState,
-  ConnectionDialogEvent
+  ConnectionEvent
 > = (state, event) => {
   const isBluetooth = state.type === ConnectionType.Bluetooth;
-  if (event === ConnectionDialogEvent.Switch) {
-    return {
-      ...state,
-      type: isBluetooth ? ConnectionType.RadioRemote : ConnectionType.Bluetooth,
-    };
-  }
-  if (event === ConnectionDialogEvent.Next) {
-    return getNextStageState(state);
-  }
-  if (event === ConnectionDialogEvent.Back) {
-    return getPrevStageState(state);
-  }
-  if (event === ConnectionDialogEvent.SkipFlashing) {
-    return { ...state, stage: ConnectionDialogStage.ConnectBattery };
+  switch (event) {
+    case ConnectionEvent.Switch: {
+      return {
+        ...state,
+        type: isBluetooth
+          ? ConnectionType.RadioRemote
+          : ConnectionType.Bluetooth,
+      };
+    }
+    case ConnectionEvent.Next: {
+      return getNextStageState(state);
+    }
+    case ConnectionEvent.Back: {
+      return getPrevStageState(state);
+    }
+    case ConnectionEvent.FlashingComplete:
+    case ConnectionEvent.SkipFlashing: {
+      return { ...state, stage: ConnectionDialogStage.ConnectBattery };
+    }
+    case ConnectionEvent.FlashingInProgress: {
+      return { ...state, stage: ConnectionDialogStage.FlashingInProgress };
+    }
+    case ConnectionEvent.InstructManualFlashing: {
+      return { ...state, stage: ConnectionDialogStage.ManualFlashingTutorial };
+    }
+    case ConnectionEvent.WebUsbChooseMicrobit: {
+      return { ...state, stage: ConnectionDialogStage.WebUsbChooseMicrobit };
+    }
   }
   return state;
 };
