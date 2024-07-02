@@ -38,6 +38,10 @@ namespace MBSpecs {
      * Service for buttons on the micro:bit.
      */
     export const BUTTON_SERVICE = 'e95d9882-251d-470a-a062-fa1922dfa9a8';
+    /**
+     * The micro:bits magnetometer service.
+     */
+    export const MAGNETOMETER_SERVICE = 'e95df2d8-251d-470a-a062-fa1922dfa9a8';
   }
 
   /**
@@ -89,6 +93,10 @@ namespace MBSpecs {
      * Used for sending data to the micro:bit.
      */
     export const UART_DATA_RX = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
+    /**
+     * The magnetometer data characteristic.
+     */
+    export const MAGNETOMETER_DATA = 'e95dfb11-251d-470a-a062-fa1922dfa9a8';
   }
 
   export namespace USBSpecs {

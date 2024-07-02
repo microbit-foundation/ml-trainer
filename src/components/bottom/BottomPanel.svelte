@@ -13,6 +13,7 @@
   import View3DLive from '../3d-inspector/View3DLive.svelte';
   import Information from '../information/Information.svelte';
   import { state } from '../../script/stores/uiStore';
+  import SensorSelector from './SensorSelector.svelte';
 
   const live3dViewVisible = false;
   const live3dViewSize = live3dViewVisible ? 160 : 0;
@@ -27,6 +28,7 @@
       <div class="flex items-center gap-4">
         <!-- The live text and info box -->
         <LiveGraphInformationSection />
+        <SensorSelector />
         <ConnectedLiveGraphButtons />
         {#if $state.reconnectState.reconnecting && $state.isInputConnected}
           <div class="py-1px bg-white rounded-4xl">

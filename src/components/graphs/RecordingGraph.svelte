@@ -17,11 +17,12 @@
     PointElement,
   } from 'chart.js';
   import RecordingInspector from '../3d-inspector/RecordingInspector.svelte';
-  import { smoothenXYZData } from '../../script/smoothenXYZData';
+  import { smoothXYZData } from '../../script/smoothenXYZData';
+  import { graphRange } from './graph-utils';
 
   export let data: { x: number[]; y: number[]; z: number[] };
 
-  const smoothData = smoothenXYZData(data);
+  const smoothedData = smoothXYZData(data);
   let verticalLineX = NaN;
   let hoverIndex = NaN;
   let modalPosition = { x: 0, y: 0 };
@@ -36,9 +37,9 @@
       return { x: 0, y: 0, z: 0 };
     }
     return {
-      x: smoothData.x[index],
-      y: smoothData.y[index],
-      z: smoothData.z[index],
+      x: smoothedData.x[index],
+      y: smoothedData.y[index],
+      z: smoothedData.z[index],
     };
   };
 
@@ -88,10 +89,10 @@
     const x: { x: number; y: number }[] = [];
     const y: { x: number; y: number }[] = [];
     const z: { x: number; y: number }[] = [];
-    for (let i = 1; i < smoothData.x.length; i++) {
-      x.push({ x: i, y: smoothData.x[i - 1] });
-      y.push({ x: i, y: smoothData.y[i - 1] });
-      z.push({ x: i, y: smoothData.z[i - 1] });
+    for (let i = 1; i < smoothedData.x.length; i++) {
+      x.push({ x: i, y: smoothedData.x[i - 1] });
+      y.push({ x: i, y: smoothedData.y[i - 1] });
+      z.push({ x: i, y: smoothedData.z[i - 1] });
     }
     return {
       type: 'line',
@@ -135,7 +136,7 @@
           x: {
             type: 'linear',
             min: 0,
-            max: smoothData.x.length,
+            max: smoothedData.x.length,
             grid: {
               drawTicks: false,
               display: false,
@@ -147,8 +148,8 @@
           },
           y: {
             type: 'linear',
-            min: -2.5,
-            max: 2.5,
+            min: graphRange.min,
+            max: graphRange.max,
             grid: {
               drawTicks: false,
               display: false,

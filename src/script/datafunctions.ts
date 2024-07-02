@@ -16,6 +16,7 @@ export const Filters = {
   ACC: 'acc',
   ZCR: 'zcr',
   RMS: 'rms',
+  GRAD: 'grad',
 } as const;
 
 export type FilterType = (typeof Filters)[keyof typeof Filters];
@@ -186,6 +187,97 @@ class PeaksFilter implements FilterStrategy {
   }
 }
 
+interface Gradient {
+  start: number;
+  end: number;
+  yDiff: number;
+  vector: number;
+}
+
+class GradientFilter implements FilterStrategy {
+  private getMovingAverage = (data: number[]): number[] => {
+    const numSamplesToAverage = 6;
+    const smoothed: number[] = [];
+    for (let i = 0; i <= data.length - numSamplesToAverage; i++) {
+      const x =
+        data.slice(i, i + numSamplesToAverage).reduce((a, b) => a + b) /
+        numSamplesToAverage;
+      smoothed.push(x);
+    }
+    return smoothed;
+  };
+
+  private getGradients = (data: number[]): Gradient[] => {
+    const smoothedData = this.getMovingAverage(data);
+    let start = 0;
+    let sampleVector: number | undefined;
+    const gradients: Gradient[] = [];
+    for (let i = 0; i < smoothedData.length - 1; i++) {
+      const sampleDiff = smoothedData[i + 1] - smoothedData[i];
+      const currentVector = Math.sign(sampleDiff) * Math.sqrt(2 ** 2 + sampleDiff ** 2);
+      if (sampleVector === undefined) {
+        sampleVector = currentVector;
+      } else {
+        if (
+          Math.sign(sampleVector) !== Math.sign(currentVector) &&
+          Math.sign(currentVector) !== 0
+        ) {
+          const end = i;
+          const yDiff = smoothedData[end] - smoothedData[start];
+          const vector = Math.sign(yDiff) * Math.sqrt((end - start) ** 2 + yDiff ** 2);
+          gradients.push({
+            start,
+            end,
+            yDiff,
+            vector,
+          });
+          start = end;
+        }
+        sampleVector = currentVector;
+      }
+    }
+    return gradients;
+  };
+
+  private getFirstSignificantVector = (data: number[]): number => {
+    const gradients = this.getGradients(data);
+    const vectors = gradients.map(g => Math.abs(g.vector));
+    const vectorMean = mean(vectors);
+    const vectorStdDev = stddev(vectors);
+    const yDiffs = gradients.map(g => Math.abs(g.yDiff));
+    const yDiffMean = yDiffs.reduce((a, b) => a + b, 0) / yDiffs.length;
+    const yDiffStdDev = Math.sqrt(
+      yDiffs.reduce((a, b) => a + Math.pow(b - yDiffMean, 2), 0) / yDiffs.length,
+    );
+    const range = 2; // Data is scaled to -1..1
+    for (let i = 0; i < vectors.length; i++) {
+      if (
+        vectors[i] > vectorMean + vectorStdDev &&
+        yDiffs[i] > yDiffMean + yDiffStdDev &&
+        yDiffs[i] > range / 10
+      ) {
+        return gradients[i].vector;
+      }
+    }
+    return 0;
+  };
+
+  computeOutput(data: number[]): number {
+    return this.getFirstSignificantVector(data);
+  }
+
+  getOutputShape() {
+    return 1;
+  }
+
+  getText() {
+    return {
+      name: 'Gradient analysis',
+      description: 'Experimental',
+    };
+  }
+}
+
 function mean(a: number[]): number {
   return a.reduce((acc, val) => acc + val) / a.length;
 }
@@ -216,6 +308,8 @@ export function determineFilter(filter: FilterType): FilterStrategy {
       return new ZeroCrossingRateFilter();
     case Filters.RMS:
       return new RootMeanSquareFilter();
+    case Filters.GRAD:
+      return new GradientFilter();
     default:
       throw new Error('Filter not found');
   }

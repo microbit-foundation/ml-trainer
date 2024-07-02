@@ -62,6 +62,7 @@ export function downloadDataset() {
 
 // Delete this function!
 export function clearGestures() {
+  updateToUntrainedState();
   gestures.clearGestures();
 }
 
@@ -91,13 +92,18 @@ export type SoundData = {
 
 export type LiveData = {
   //Todo remove this
-  accelX: number;
-  accelY: number;
-  accelZ: number;
-  smoothedAccelX: number;
-  smoothedAccelY: number;
-  smoothedAccelZ: number;
+  x: number;
+  y: number;
+  z: number;
+  smoothedX: number;
+  smoothedY: number;
+  smoothedZ: number;
 };
+
+export enum DataSource {
+  ACCELEROMETER,
+  MAGNETOMETER,
+}
 
 type MlSettings = {
   duration: number; // Duration of recording
@@ -109,6 +115,7 @@ type MlSettings = {
   learningRate: number;
   includedAxes: AxesType[];
   includedFilters: Set<FilterType>;
+  dataSource: DataSource;
 };
 
 const initialMLSettings: MlSettings = {
@@ -117,8 +124,8 @@ const initialMLSettings: MlSettings = {
   minSamples: 80,
   automaticClassification: true,
   updatesPrSecond: 4,
-  numEpochs: 80,
-  learningRate: 0.5,
+  numEpochs: 160,
+  learningRate: 0.1,
   includedAxes: [Axes.X, Axes.Y, Axes.Z],
   includedFilters: new Set<FilterType>([
     Filters.MAX,
@@ -130,18 +137,29 @@ const initialMLSettings: MlSettings = {
     Filters.ZCR,
     Filters.RMS,
   ]),
+  dataSource: DataSource.ACCELEROMETER,
 };
 
 // Store with ML-Algorithm settings
 export const settings = persistantWritable<MlSettings>('MLSettings', initialMLSettings);
 
+// Hack required to change the initial settings when
+// they are already in local storage.
+settings.update(obj => {
+  // Add new filter for magnetometer data.
+  obj.includedFilters.add(Filters.GRAD);
+  obj.numEpochs = 160;
+  obj.learningRate = 0.1;
+  return obj;
+});
+
 export const livedata = writable<LiveData>({
-  accelX: 0,
-  accelY: 0,
-  accelZ: 0,
-  smoothedAccelX: 0,
-  smoothedAccelY: 0,
-  smoothedAccelZ: 0,
+  x: 0,
+  y: 0,
+  z: 0,
+  smoothedX: 0,
+  smoothedY: 0,
+  smoothedZ: 0,
 });
 
 export const currentData = writable<{ x: number; y: number; z: number }>({
@@ -152,9 +170,9 @@ export const currentData = writable<{ x: number; y: number; z: number }>({
 
 livedata.subscribe(data => {
   currentData.set({
-    x: data.smoothedAccelX,
-    y: data.smoothedAccelY,
-    z: data.smoothedAccelZ,
+    x: data.smoothedX,
+    y: data.smoothedY,
+    z: data.smoothedZ,
   });
 });
 
@@ -262,9 +280,9 @@ export function getPrevData(): { x: number[]; y: number[]; z: number[] } | undef
 
   for (let i = 0; i < dataLength; i++) {
     const oldDataIndex = (i + liveDataIndex) % dataLength;
-    x[i] = data[oldDataIndex].accelX;
-    y[i] = data[oldDataIndex].accelY;
-    z[i] = data[oldDataIndex].accelZ;
+    x[i] = data[oldDataIndex].x;
+    y[i] = data[oldDataIndex].y;
+    z[i] = data[oldDataIndex].z;
   }
 
   return { x, y, z };

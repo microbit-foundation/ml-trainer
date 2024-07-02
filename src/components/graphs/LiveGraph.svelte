@@ -11,6 +11,7 @@
   import { currentData, settings } from '../../script/stores/mlStore';
   import { state } from '../../script/stores/uiStore';
   import DimensionLabels from './DimensionLabels.svelte';
+  import { graphRange } from './graph-utils';
 
   // Updates width to ensure that the canvas fills the whole screen
   export let width: number;
@@ -26,8 +27,8 @@
   // On mount draw smoothieChart
   onMount(() => {
     chart = new SmoothieChart({
-      maxValue: 2.3,
-      minValue: -2,
+      maxValue: graphRange.max,
+      minValue: graphRange.min,
       millisPerPixel: 7,
       grid: {
         fillStyle: '#ffffff00',
@@ -72,14 +73,14 @@
     }
 
     // Set start line
-    recordLines.append(new Date().getTime() - 1, -2, false);
-    recordLines.append(new Date().getTime(), 2.3, false);
+    recordLines.append(new Date().getTime() - 1, graphRange.min, false);
+    recordLines.append(new Date().getTime(), graphRange.max, false);
 
     // Wait a second and set end line
     blockRecordingStart = true;
     setTimeout(() => {
-      recordLines.append(new Date().getTime() - 1, 2.3, false);
-      recordLines.append(new Date().getTime(), -2, false);
+      recordLines.append(new Date().getTime() - 1, graphRange.max, false);
+      recordLines.append(new Date().getTime(), graphRange.min, false);
       blockRecordingStart = false;
     }, get(settings).duration);
   }

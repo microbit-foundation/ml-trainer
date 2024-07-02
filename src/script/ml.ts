@@ -56,7 +56,7 @@ export function createModel(): LayersModel {
 
   model.compile({
     loss: 'categoricalCrossentropy',
-    optimizer: tf.train.sgd(0.1),
+    optimizer: tf.train.sgd(get(settings).learningRate),
     metrics: ['accuracy'],
   });
 
@@ -105,7 +105,7 @@ export async function trainModel(): Promise<tf.LayersModel | void> {
   const tensorFeatures = tf.tensor(features);
   const tensorLabels = tf.tensor(labels);
   const nn: LayersModel = createModel();
-  const totalNumEpochs = 160;
+  const totalNumEpochs = get(settings).numEpochs;
 
   try {
     await nn.fit(tensorFeatures, tensorLabels, {

@@ -14,6 +14,7 @@
 <script lang="ts">
   import { currentData } from '../../script/stores/mlStore';
   import { state } from '../../script/stores/uiStore';
+  import { graphRange } from './graph-utils';
 
   $: {
     const data = $currentData;
@@ -27,9 +28,20 @@
     { label: 'z', arrowHeight: 0, labelHeight: 0, color: '#808ef9', id: 2 },
   ];
 
-  function updateDimensionLabels(axes: number[]) {
+  function scale(value: number) {
+    const newMin = (10 / (graphRange.max + Math.abs(graphRange.min))) * 0.3;
+    const newMax = 10 - newMin;
+    const existingMin = 1;
+    const existingMax = -1;
+    return (
+      ((newMax - newMin) * (value - existingMin)) / (existingMax - existingMin) + newMin
+    );
+  }
+
+  function updateDimensionLabels(data: number[]) {
     for (let i = 0; i < 3; i++) {
-      labels[i].arrowHeight = (2.1 - axes[labels[i].id]) * 2.32;
+      const value = data[labels[i].id];
+      labels[i].arrowHeight = scale(value);
     }
     fixOverlappingLabels();
   }
@@ -81,11 +93,11 @@
       <div
         class="absolute arrowLeft -m-3.5"
         style="transform: translateY({dimension.arrowHeight +
-          0.75}rem) scale(1, 0.75); border-right-color: {dimension.color};" />
+          10 / 16 / 2}rem) scale(1, 0.75); border-right-color: {dimension.color};" />
       <p
         class="absolute ml-3 text-xl"
         style="transform: translateY({dimension.labelHeight -
-          0.5}rem); color: {dimension.color};">
+          1.75 / 2}rem); color: {dimension.color};">
         {dimension.label}
       </p>
     {/each}

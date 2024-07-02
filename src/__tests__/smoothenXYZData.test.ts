@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { smoothenXYZData } from '../script/smoothenXYZData';
+import { smoothXYZData } from '../script/smoothenXYZData';
 
 describe('smoothenXYZData', () => {
   test('smoothen empty data', () => {
@@ -16,7 +16,7 @@ describe('smoothenXYZData', () => {
       y: [],
       z: [],
     };
-    expect(smoothenXYZData(xyz)).toEqual(xyz);
+    expect(smoothXYZData(xyz)).toEqual(xyz);
   });
   test('smoothen xyz data', () => {
     const xyz = {
@@ -24,11 +24,11 @@ describe('smoothenXYZData', () => {
       y: [4, 4, 12, 10, 10],
       z: [8, 8, 24, 20, 20],
     };
-    const smoothXYZData = {
+    const smoothedXYZData = {
       x: [1, 1, 1, 1, 1],
       y: [4, 4, 6, 7, 7.75],
       z: [8, 8, 12, 14, 15.5],
     };
-    expect(smoothenXYZData(xyz)).toEqual(smoothXYZData);
+    expect(smoothXYZData(xyz)).toEqual(smoothedXYZData);
   });
 });

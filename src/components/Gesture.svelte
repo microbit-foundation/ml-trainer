@@ -140,9 +140,9 @@
 
     // Set timeout to allow recording in 1s
     const unsubscribe = livedata.subscribe(data => {
-      newData.x.push(data.accelX);
-      newData.y.push(data.accelY);
-      newData.z.push(data.accelZ);
+      newData.x.push(data.x);
+      newData.y.push(data.y);
+      newData.z.push(data.z);
     });
 
     // Once duration is over (1000ms default), stop recording

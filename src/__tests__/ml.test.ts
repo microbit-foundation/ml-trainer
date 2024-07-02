@@ -87,7 +87,6 @@ describe('Model tests', () => {
 
   test('returns correct results on testing data', async () => {
     const { tensorFlowResultAccuracy } = getModelResults(testdataShakeStill);
-    console.log(tensorFlowResultAccuracy);
     // The model thinks one sample of still is circle.
     // 14 samples; 1.0 / 14 = 0.0714; 0.0714 * 13 correct inferences = 0.9286
     expect(parseFloat(tensorFlowResultAccuracy)).toBeGreaterThan(0.9);
