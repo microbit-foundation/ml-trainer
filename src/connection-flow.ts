@@ -7,10 +7,11 @@ export enum ConnectionDialogStage {
   ManualFlashingTutorial,
   ConnectBattery,
   EnterBluetoothPattern,
-  ConnectBluetooth,
+  ConnectBluetoothTutorial,
 
   // Stages that are not user-controlled
   WebUsbChooseMicrobit,
+  ConnectingBluetooth,
   ConnectingMicrobits,
   FlashingInProgress,
 }
@@ -34,18 +35,21 @@ export enum ConnectionEvent {
   Back,
   SkipFlashing,
 
-  // WebUsbFlashing events
+  // Web USB Flashing events
   WebUsbChooseMicrobit,
   FlashingInProgress,
   FlashingComplete,
 
-  // WebUsbFlashing failure events
+  // Web USB Flashing failure events
   TryAgainReplugMicrobit,
   TryAgainCloseTabs,
   TryAgainSelectMicrobit,
   InstructManualFlashing,
   BadFirmware,
   MicrobitUnsupported,
+
+  // Bluetooth connection events
+  ConnectingBluetooth,
 }
 
 type StageAndType = Pick<ConnectionDialogState, "stage" | "type">;
@@ -65,7 +69,7 @@ const getStageAndTypeOrder = (state: ConnectionDialogState): StageAndType[] => {
       flashingTutorialStage,
       ConnectionDialogStage.ConnectBattery,
       ConnectionDialogStage.EnterBluetoothPattern,
-      ConnectionDialogStage.ConnectBluetooth,
+      ConnectionDialogStage.ConnectBluetoothTutorial,
     ].map((stage) => ({ stage, type: state.type }));
   }
   // Radio
@@ -84,7 +88,7 @@ const getItemIdx = (item: object, arr: object[]) => {
   return arr.map((a) => JSON.stringify(a)).indexOf(JSON.stringify(item));
 };
 
-const getRelativeStageAndType = (
+const getNextStageAndType = (
   state: ConnectionDialogState,
   step: number
 ): StageAndType => {
@@ -97,20 +101,6 @@ const getRelativeStageAndType = (
     return curr;
   }
   return order[newIdx];
-};
-
-const getNextStageState = (state: ConnectionDialogState) => {
-  return {
-    ...state,
-    ...getRelativeStageAndType(state, 1),
-  };
-};
-
-const getPrevStageState = (state: ConnectionDialogState) => {
-  return {
-    ...state,
-    ...getRelativeStageAndType(state, -1),
-  };
 };
 
 export const connectionDialogReducer: Reducer<
@@ -128,10 +118,10 @@ export const connectionDialogReducer: Reducer<
       };
     }
     case ConnectionEvent.Next: {
-      return getNextStageState(state);
+      return { ...state, ...getNextStageAndType(state, 1) };
     }
     case ConnectionEvent.Back: {
-      return getPrevStageState(state);
+      return { ...state, ...getNextStageAndType(state, -1) };
     }
     case ConnectionEvent.FlashingComplete:
     case ConnectionEvent.SkipFlashing: {

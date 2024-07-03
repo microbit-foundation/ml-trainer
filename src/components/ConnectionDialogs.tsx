@@ -1,7 +1,6 @@
 import { useDisclosure } from "@chakra-ui/react";
 import { useReducer, useState } from "react";
 import {
-  UserTriggeredEvent,
   ConnectionDialogStage,
   ConnectionType,
   connectionDialogReducer,
@@ -123,6 +122,10 @@ const ConnectionDialogs = () => {
     dispatch(ConnectionEvent.FlashingComplete);
   }
 
+  const requestConnectBluetooth = async () => {
+    dispatch(ConnectionEvent.ConnectingBluetooth);
+  };
+
   // TODO: Flag reconnect failed
   const reconnectFailed = false;
   const onSwitchTypeClick = () => dispatch(ConnectionEvent.Switch);
@@ -206,7 +209,7 @@ const ConnectionDialogs = () => {
         />
       );
     }
-    case ConnectionDialogStage.ConnectBluetooth: {
+    case ConnectionDialogStage.ConnectBluetoothTutorial: {
       return (
         <SelectMicrobitBluetoothDialog
           {...dialogCommonProps}
