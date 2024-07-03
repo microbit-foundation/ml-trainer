@@ -29,7 +29,7 @@ const ConnectionDialogs = () => {
   const [isBluetoothSupported, isUsbSupported] = [true, true];
   const [flashProgress, setFlashProgress] = useState<number>(0);
   const [state, dispatch] = useReducer(connectionDialogReducer, {
-    stage: ConnStage.MicrobitUnsupported,
+    stage: ConnStage.Start,
     // TODO: Check compatability first
     type: isBluetoothSupported
       ? ConnectionType.Bluetooth

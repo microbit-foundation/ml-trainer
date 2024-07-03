@@ -17,6 +17,7 @@ import {
   transformMatrixToColumns,
   updateMatrixColumns,
 } from "../patternMatrixTransforms";
+import React from "react";
 
 interface BluetoothPatternInputProps {
   pattern: boolean[];
@@ -65,7 +66,7 @@ const BluetoothPatternInput = ({
       gap={1}
     >
       {matrixColumns.map((cells, colIdx) => (
-        <>
+        <React.Fragment key={colIdx}>
           {cells.map((c, rowIdx) => (
             <GridItem
               colSpan={1}
@@ -88,7 +89,7 @@ const BluetoothPatternInput = ({
               />
             </GridItem>
           ))}
-          <GridItem>
+          <GridItem key={`col-${colIdx}-pattern-input`}>
             <PatternColumnInput
               isInvalid={invalid}
               onChange={columnInputOnChange(colIdx)}
@@ -96,7 +97,7 @@ const BluetoothPatternInput = ({
               value={cells.filter((c) => c).length}
             />
           </GridItem>
-        </>
+        </React.Fragment>
       ))}
     </Grid>
   );

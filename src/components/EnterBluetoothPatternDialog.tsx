@@ -38,7 +38,7 @@ const EnterBluetoothPatternDialog = ({
       setShowInvalid(true);
       return;
     }
-    onNextClick();
+    onNextClick && onNextClick();
   }, [bluetoothPattern, onNextClick]);
 
   const handleBackClick = useCallback(() => {
