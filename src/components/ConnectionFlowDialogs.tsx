@@ -1,5 +1,5 @@
 import { useDisclosure } from "@chakra-ui/react";
-import { useReducer, useState } from "react";
+import { useCallback, useReducer, useState } from "react";
 import {
   ConnStage,
   ConnectionType,
@@ -18,6 +18,7 @@ import { getHexFileUrl } from "../device/get-hex-file";
 import DownloadingDialog from "./DownloadingDialog";
 import LoadingDialog from "./LoadingDialog";
 import TryAgainDialog from "./TryAgainDialog";
+import BrokenFirmwareDialog from "./BrokenFirmwareDialog";
 
 const ConnectionDialogs = () => {
   // Check compatability
@@ -149,11 +150,15 @@ const ConnectionDialogs = () => {
 
   // TODO: Flag reconnect failed
   const reconnectFailed = false;
-  const onSwitchTypeClick = () => dispatch(ConnEvent.Switch);
-  const onBackClick = () => dispatch(ConnEvent.Back);
-  const onNextClick = () => dispatch(ConnEvent.Next);
-  const onSkip = () => dispatch(ConnEvent.SkipFlashing);
-  const onTryAgain = () => dispatch(ConnEvent.TryAgain);
+  const onSwitchTypeClick = useCallback(() => dispatch(ConnEvent.Switch), []);
+  const onBackClick = useCallback(() => dispatch(ConnEvent.Back), []);
+  const onNextClick = useCallback(() => dispatch(ConnEvent.Next), []);
+  const onSkip = useCallback(() => dispatch(ConnEvent.SkipFlashing), []);
+  const onTryAgain = useCallback(() => dispatch(ConnEvent.TryAgain), []);
+  const onInstructManualFlashing = useCallback(
+    () => dispatch(ConnEvent.InstructManualFlashing),
+    []
+  );
 
   switch (state.stage) {
     case ConnStage.Start: {
@@ -259,6 +264,16 @@ const ConnectionDialogs = () => {
           isOpen={isOpen}
           onTryAgain={onTryAgain}
           type={state.stage}
+        />
+      );
+    }
+    case ConnStage.BadFirmware: {
+      return (
+        <BrokenFirmwareDialog
+          onClose={onClose}
+          isOpen={isOpen}
+          onSkip={onInstructManualFlashing}
+          onTryAgain={onTryAgain}
         />
       );
     }
