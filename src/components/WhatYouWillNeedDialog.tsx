@@ -82,10 +82,11 @@ const WhatYouWillNeedDialog = ({
     [ConnectionType.RadioRemote]: whatYouWillNeedRadioConfig,
     [ConnectionType.RadioBridge]: whatYouWillNeedRadioConfig,
   };
-  const { items, headingId, reconnectHeadingId } = configs[type];
+  const { items, headingId, reconnectHeadingId, linkTextId } = configs[type];
   return (
     <ConnectContainerDialog
       {...props}
+      linkTextId={linkTextId}
       headingId={reconnect ? reconnectHeadingId : headingId}
     >
       {reconnect && (

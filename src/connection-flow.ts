@@ -43,6 +43,7 @@ export enum ConnEvent {
   Back,
   SkipFlashing,
   TryAgain,
+  GoToBluetoothStart,
 
   // Web USB Flashing events
   WebUsbChooseMicrobit,
@@ -124,6 +125,9 @@ export const connectionDialogReducer: Reducer<ConnState, ConnEvent> = (
       ...state,
       type: isBluetooth ? ConnectionType.RadioRemote : ConnectionType.Bluetooth,
     };
+  }
+  if (event === ConnEvent.GoToBluetoothStart) {
+    return { ...state, stage: ConnStage.Start, type: ConnectionType.Bluetooth };
   }
   if (event === ConnEvent.Next) {
     return { ...state, ...getNextStageAndType(state, 1) };

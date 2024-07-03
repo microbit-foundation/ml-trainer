@@ -20,6 +20,7 @@ import SelectMicrobitBluetoothDialog from "./SelectMicrobitBluetoothDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import TryAgainDialog from "./TryAgainDialog";
 import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
+import UnsupportedMicrobitDialog from "./UnsupportedMicrobitDialog";
 
 const ConnectionDialogs = () => {
   // Check compatability
@@ -28,7 +29,7 @@ const ConnectionDialogs = () => {
   const [isBluetoothSupported, isUsbSupported] = [true, true];
   const [flashProgress, setFlashProgress] = useState<number>(0);
   const [state, dispatch] = useReducer(connectionDialogReducer, {
-    stage: ConnStage.Start,
+    stage: ConnStage.MicrobitUnsupported,
     // TODO: Check compatability first
     type: isBluetoothSupported
       ? ConnectionType.Bluetooth
@@ -156,6 +157,10 @@ const ConnectionDialogs = () => {
   const onNextClick = useCallback(() => dispatch(ConnEvent.Next), []);
   const onSkip = useCallback(() => dispatch(ConnEvent.SkipFlashing), []);
   const onTryAgain = useCallback(() => dispatch(ConnEvent.TryAgain), []);
+  const onStartBluetooth = useCallback(
+    () => dispatch(ConnEvent.GoToBluetoothStart),
+    []
+  );
   const onInstructManualFlashing = useCallback(
     () => dispatch(ConnEvent.InstructManualFlashing),
     []
@@ -284,6 +289,15 @@ const ConnectionDialogs = () => {
           isOpen={isOpen}
           onSkip={onInstructManualFlashing}
           onTryAgain={onTryAgain}
+        />
+      );
+    }
+    case ConnStage.MicrobitUnsupported: {
+      return (
+        <UnsupportedMicrobitDialog
+          onClose={onClose}
+          isOpen={isOpen}
+          onStartBluetoothClick={onStartBluetooth}
         />
       );
     }
