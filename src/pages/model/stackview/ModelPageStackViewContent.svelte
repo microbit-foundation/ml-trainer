@@ -33,6 +33,7 @@
   import { DeviceRequestStates } from '../../../script/microbit-interfacing/MicrobitConnection';
   import CodeView from '../../../components/CodeView.svelte';
   import GestureTilePart from '../../../components/GestureTilePart.svelte';
+  import Microbits from '../../../script/microbit-interfacing/Microbits';
 
   // Bool flags to know whether output microbit popup should be show
   let hasClosedPopup = false;
@@ -138,6 +139,9 @@
     showDefaultView = true;
   };
   const handleDownload = (hexData: string) => {
+    // TODO: Only disconnect input micro:bit if user chooses this device.
+    Microbits.disconnect(DeviceRequestStates.INPUT);
+    Microbits.dispose(DeviceRequestStates.INPUT);
     state.update(obj => {
       obj.outputHex = hexData;
       return obj;

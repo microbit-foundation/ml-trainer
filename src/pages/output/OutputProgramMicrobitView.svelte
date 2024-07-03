@@ -28,6 +28,7 @@
   } from '../../script/stores/connectDialogStore';
   import { model as modelStore } from '../../script/stores/mlStore';
   import { makeCodeProject, state } from '../../script/stores/uiStore';
+  import Microbits from '../../script/microbit-interfacing/Microbits';
 
   const updateCustomTs = (
     project: MakeCodeProject,
@@ -87,6 +88,9 @@
   };
 
   const handleDownload = (hexData: string) => {
+    // TODO: Only disconnect input micro:bit if user chooses this device.
+    Microbits.disconnect(DeviceRequestStates.INPUT);
+    Microbits.dispose(DeviceRequestStates.INPUT);
     state.update(obj => {
       obj.outputHex = hexData;
       return obj;
