@@ -17,7 +17,7 @@ import { useLogging } from "../logging/logging-hooks";
 import MicrobitWebUSBConnection from "../device/microbit-usb";
 import { getHexFileUrl } from "../device/get-hex-file";
 import DownloadingDialog from "./DownloadingDialog";
-import ConnectingBluetoothDialog from "./ConnectingBluetoothDialog";
+import LoadingDialog from "./LoadingDialog";
 
 const ConnectionDialogs = () => {
   // Check compatability
@@ -80,6 +80,9 @@ const ConnectionDialogs = () => {
       const device = new MicrobitWebUSBConnection(logging);
       await device.connect();
       await flashMicrobit(device);
+      if (state.type === ConnectionType.RadioBridge) {
+        connectMicrobitsSerial();
+      }
     } catch (e) {
       logging.error(
         `USB request device failed/cancelled: ${JSON.stringify(e)}`
@@ -122,6 +125,14 @@ const ConnectionDialogs = () => {
     // Next UI state:
     dispatch(ConnectionEvent.FlashingComplete);
   }
+
+  const connectMicrobitsSerial = () => {
+    dispatch(ConnectionEvent.ConnectingMicrobits);
+    // TODO: Replace with real connecting logic
+    setTimeout(() => {
+      onClose();
+    }, 5000);
+  };
 
   const connectBluetooth = () => {
     dispatch(ConnectionEvent.ConnectingBluetooth);
@@ -247,7 +258,17 @@ const ConnectionDialogs = () => {
       );
     }
     case ConnectionDialogStage.ConnectingBluetooth: {
-      return <ConnectingBluetoothDialog isOpen={isOpen} />;
+      return (
+        <LoadingDialog
+          isOpen={isOpen}
+          headingId="connectMB.bluetooth.heading"
+        />
+      );
+    }
+    case ConnectionDialogStage.ConnectingMicrobits: {
+      return (
+        <LoadingDialog isOpen={isOpen} headingId="connectMB.radio.heading" />
+      );
     }
   }
 };

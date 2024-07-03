@@ -53,6 +53,9 @@ export enum ConnectionEvent {
 
   // Bluetooth connection failure event
   TryAgainBluetoothConnect,
+
+  // Connecting microbits for radio connection
+  ConnectingMicrobits,
 }
 
 type StageAndType = Pick<ConnectionDialogState, "stage" | "type">;
@@ -126,7 +129,12 @@ export const connectionDialogReducer: Reducer<
     case ConnectionEvent.Back: {
       return { ...state, ...getNextStageAndType(state, -1) };
     }
-    case ConnectionEvent.FlashingComplete:
+    case ConnectionEvent.FlashingComplete: {
+      if (state.type === ConnectionType.RadioRemote) {
+        return { ...state, stage: ConnectionDialogStage.ConnectBattery };
+      }
+      return { ...state, stage: ConnectionDialogStage.ConnectingMicrobits };
+    }
     case ConnectionEvent.SkipFlashing: {
       return { ...state, stage: ConnectionDialogStage.ConnectBattery };
     }
@@ -141,6 +149,9 @@ export const connectionDialogReducer: Reducer<
     }
     case ConnectionEvent.ConnectingBluetooth: {
       return { ...state, stage: ConnectionDialogStage.ConnectingBluetooth };
+    }
+    case ConnectionEvent.ConnectingMicrobits: {
+      return { ...state, stage: ConnectionDialogStage.ConnectingMicrobits };
     }
   }
   return state;

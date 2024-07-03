@@ -10,13 +10,12 @@ import {
 import { FormattedMessage } from "react-intl";
 import LoadingAnimation from "./LoadingAnimation";
 
-export interface ConnectingBluetoothDialogProps {
+export interface LoadingDialogProps {
+  headingId: string;
   isOpen: boolean;
 }
 
-const ConnectingBluetoothDialog = ({
-  isOpen,
-}: ConnectingBluetoothDialogProps) => {
+const LoadingDialog = ({ headingId, isOpen }: LoadingDialogProps) => {
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -30,7 +29,7 @@ const ConnectingBluetoothDialog = ({
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
               <Heading as="h1" fontWeight="bold" fontSize="2xl">
-                <FormattedMessage id="connectMB.bluetooth.heading" />
+                <FormattedMessage id={headingId} />
               </Heading>
               <VStack gap={5}>
                 <Text>
@@ -46,4 +45,4 @@ const ConnectingBluetoothDialog = ({
   );
 };
 
-export default ConnectingBluetoothDialog;
+export default LoadingDialog;
