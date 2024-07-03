@@ -69,9 +69,11 @@ const ConnectContainerDialog = ({
                   <FormattedMessage id="back-action" />
                 </Button>
               )}
-              <Button onClick={onNextClick} variant="primary" size="lg">
-                <FormattedMessage id="connectMB.nextButton" />
-              </Button>
+              {onNextClick && (
+                <Button onClick={onNextClick} variant="primary" size="lg">
+                  <FormattedMessage id="connectMB.nextButton" />
+                </Button>
+              )}
             </HStack>
           </ModalFooter>
         </ModalContent>

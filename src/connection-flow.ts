@@ -71,7 +71,7 @@ type StageAndType = Pick<ConnState, "stage" | "type">;
 
 const getStageAndTypeOrder = (state: ConnState): StageAndType[] => {
   if (state.type === ConnectionType.Bluetooth) {
-    // Bluetooth
+    // Only bluetooth mode has this fallback, the radio bridge mode requires working WebUSB.
     const flashingTutorialStage =
       !state.isUsbSupported || state.stage === ConnStage.ManualFlashingTutorial
         ? ConnStage.ManualFlashingTutorial

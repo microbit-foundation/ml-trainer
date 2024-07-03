@@ -1,24 +1,25 @@
 import { useDisclosure } from "@chakra-ui/react";
 import { useCallback, useReducer, useState } from "react";
 import {
+  ConnEvent,
   ConnStage,
   ConnectionType,
   connectionDialogReducer,
-  ConnEvent,
 } from "../connection-flow";
-import ConnectCableDialog from "./ConnectCableDialog";
-import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
-import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
-import ConnectBatteryDialog from "./ConnectBatteryDialog";
-import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
-import SelectMicrobitBluetoothDialog from "./SelectMicrobitBluetoothDialog";
-import { useLogging } from "../logging/logging-hooks";
-import MicrobitWebUSBConnection from "../device/microbit-usb";
 import { getHexFileUrl } from "../device/get-hex-file";
-import DownloadingDialog from "./DownloadingDialog";
-import LoadingDialog from "./LoadingDialog";
-import TryAgainDialog from "./TryAgainDialog";
+import MicrobitWebUSBConnection from "../device/microbit-usb";
+import { useLogging } from "../logging/logging-hooks";
 import BrokenFirmwareDialog from "./BrokenFirmwareDialog";
+import ConnectBatteryDialog from "./ConnectBatteryDialog";
+import ConnectCableDialog from "./ConnectCableDialog";
+import DownloadingDialog from "./DownloadingDialog";
+import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
+import LoadingDialog from "./LoadingDialog";
+import ManualFlashingDialog from "./ManualFlashingDialog";
+import SelectMicrobitBluetoothDialog from "./SelectMicrobitBluetoothDialog";
+import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
+import TryAgainDialog from "./TryAgainDialog";
+import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
 
 const ConnectionDialogs = () => {
   // Check compatability
@@ -193,6 +194,15 @@ const ConnectionDialogs = () => {
           {...dialogCommonProps}
           onBackClick={onBackClick}
           onNextClick={requestUSBConnectionAndFlash}
+        />
+      );
+    }
+    case ConnStage.ManualFlashingTutorial: {
+      return (
+        <ManualFlashingDialog
+          {...dialogCommonProps}
+          onNextClick={onNextClick}
+          onBackClick={onBackClick}
         />
       );
     }
