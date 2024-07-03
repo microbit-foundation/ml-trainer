@@ -48,8 +48,11 @@ export enum ConnectionEvent {
   BadFirmware,
   MicrobitUnsupported,
 
-  // Bluetooth connection events
+  // Bluetooth connection event
   ConnectingBluetooth,
+
+  // Bluetooth connection failure event
+  TryAgainBluetoothConnect,
 }
 
 type StageAndType = Pick<ConnectionDialogState, "stage" | "type">;
@@ -135,6 +138,9 @@ export const connectionDialogReducer: Reducer<
     }
     case ConnectionEvent.WebUsbChooseMicrobit: {
       return { ...state, stage: ConnectionDialogStage.WebUsbChooseMicrobit };
+    }
+    case ConnectionEvent.ConnectingBluetooth: {
+      return { ...state, stage: ConnectionDialogStage.ConnectingBluetooth };
     }
   }
   return state;

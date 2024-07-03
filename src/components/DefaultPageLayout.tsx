@@ -19,7 +19,7 @@ import HelpMenu from "./HelpMenu";
 import LanguageMenuItem from "./LanguageMenuItem";
 import SettingsMenu from "./SettingsMenu";
 import PrototypeVersionWarning from "./PrototypeVersionWarning";
-import ConnectionDialogs from "./ConnectionDialogs";
+import ConnectionDialogs from "./ConnectionFlowDialogs";
 
 interface DefaultPageLayoutProps {
   titleId: string;

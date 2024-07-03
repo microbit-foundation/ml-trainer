@@ -17,6 +17,7 @@ import { useLogging } from "../logging/logging-hooks";
 import MicrobitWebUSBConnection from "../device/microbit-usb";
 import { getHexFileUrl } from "../device/get-hex-file";
 import DownloadingDialog from "./DownloadingDialog";
+import ConnectingBluetoothDialog from "./ConnectingBluetoothDialog";
 
 const ConnectionDialogs = () => {
   // Check compatability
@@ -25,7 +26,7 @@ const ConnectionDialogs = () => {
   const [isBluetoothSupported, isUsbSupported] = [true, true];
   const [flashProgress, setFlashProgress] = useState<number>(0);
   const [state, dispatch] = useReducer(connectionDialogReducer, {
-    stage: ConnectionDialogStage.EnterBluetoothPattern,
+    stage: ConnectionDialogStage.Start,
     // TODO: Check compatability first
     type: isBluetoothSupported
       ? ConnectionType.Bluetooth
@@ -105,6 +106,7 @@ const ConnectionDialogs = () => {
       setFlashProgress(progress * 100);
     });
 
+    // TODO:
     // Store radio/bluetooth details. Radio is essential to pass to micro:bit 2.
     // Bluetooth saves the user from entering the pattern.
     // const deviceId = usb.getDeviceId();
@@ -118,12 +120,20 @@ const ConnectionDialogs = () => {
     // }
 
     // Next UI state:
-    console.log("progress done");
     dispatch(ConnectionEvent.FlashingComplete);
   }
 
-  const requestConnectBluetooth = async () => {
+  const connectBluetooth = () => {
     dispatch(ConnectionEvent.ConnectingBluetooth);
+    // TODO: Replace with real connecting logic
+    const isSuccess = true;
+    setTimeout(() => {
+      if (isSuccess) {
+        onClose();
+      } else {
+        dispatch(ConnectionEvent.TryAgainBluetoothConnect);
+      }
+    }, 5000);
   };
 
   // TODO: Flag reconnect failed
@@ -214,7 +224,7 @@ const ConnectionDialogs = () => {
         <SelectMicrobitBluetoothDialog
           {...dialogCommonProps}
           onBackClick={onBackClick}
-          onNextClick={onNextClick}
+          onNextClick={connectBluetooth}
         />
       );
     }
@@ -235,6 +245,9 @@ const ConnectionDialogs = () => {
           progress={flashProgress}
         />
       );
+    }
+    case ConnectionDialogStage.ConnectingBluetooth: {
+      return <ConnectingBluetoothDialog isOpen={isOpen} />;
     }
   }
 };

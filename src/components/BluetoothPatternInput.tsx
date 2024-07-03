@@ -62,7 +62,7 @@ const BluetoothPatternInput = ({
     <Grid
       templateColumns="repeat(5, 35px)"
       templateRows="repeat(6, 35px)"
-      gap={2}
+      gap={1}
     >
       {matrixColumns.map((cells, colIdx) => (
         <>
@@ -123,7 +123,7 @@ const PatternBox = ({
       w="100%"
       h="100%"
       as="div"
-      borderRadius={2}
+      borderRadius={5}
       _hover={{ cursor: "pointer" }}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
