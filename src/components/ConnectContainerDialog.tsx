@@ -21,7 +21,7 @@ export interface ConnectContainerDialogProps {
   headingId: string;
   onLinkClick?: () => void;
   linkTextId?: string;
-  onNextClick: () => void;
+  onNextClick?: () => void;
   children: ReactNode;
   onBackClick?: () => void;
 }
