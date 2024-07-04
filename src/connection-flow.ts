@@ -70,25 +70,82 @@ export enum ConnEvent {
 
 type StageAndType = Pick<ConnState, "stage" | "type">;
 
-const getStageAndTypeOrder = (state: ConnState): StageAndType[] => {
-  if (state.type === ConnectionType.Bluetooth) {
-    // Only bluetooth mode has this fallback, the radio bridge mode requires working WebUSB.
-    const flashingTutorialStage =
-      !state.isUsbSupported || state.stage === ConnStage.ManualFlashingTutorial
-        ? ConnStage.ManualFlashingTutorial
-        : ConnStage.WebUsbFlashingTutorial;
-
-    return [
-      ConnStage.Start,
-      ConnStage.ConnectCable,
-      flashingTutorialStage,
-      ConnStage.ConnectBattery,
-      ConnStage.EnterBluetoothPattern,
-      ConnStage.ConnectBluetoothTutorial,
-    ].map((stage) => ({ stage, type: state.type }));
+export const connectionDialogReducer: Reducer<ConnState, ConnEvent> = (
+  state,
+  event
+) => {
+  switch (event) {
+    case ConnEvent.Switch: {
+      return {
+        ...state,
+        type:
+          state.type === ConnectionType.Bluetooth
+            ? ConnectionType.RadioRemote
+            : ConnectionType.Bluetooth,
+      };
+    }
+    case ConnEvent.GoToBluetoothStart: {
+      return {
+        ...state,
+        stage: ConnStage.Start,
+        type: ConnectionType.Bluetooth,
+      };
+    }
+    case ConnEvent.Next: {
+      return { ...state, ...getNextStageAndType(state, 1) };
+    }
+    case ConnEvent.Back: {
+      return { ...state, ...getNextStageAndType(state, -1) };
+    }
+    case ConnEvent.FlashingComplete: {
+      return {
+        ...state,
+        stage:
+          state.type === ConnectionType.RadioRemote
+            ? ConnStage.ConnectBattery
+            : ConnStage.ConnectingMicrobits,
+      };
+    }
+    case ConnEvent.TryAgain: {
+      return {
+        ...state,
+        stage:
+          state.stage === ConnStage.TryAgainBluetoothConnect
+            ? ConnStage.ConnectBluetoothTutorial
+            : ConnStage.ConnectCable,
+      };
+    }
   }
-  // Radio
-  const { RadioRemote, RadioBridge } = ConnectionType;
+  if (eventToNewStage[event]) {
+    return { ...state, stage: eventToNewStage[event] };
+  }
+  return state;
+};
+
+const eventToNewStage: Record<number, ConnStage> = {
+  [ConnEvent.SkipFlashing]: ConnStage.ConnectBattery,
+  [ConnEvent.FlashingInProgress]: ConnStage.FlashingInProgress,
+  [ConnEvent.InstructManualFlashing]: ConnStage.ManualFlashingTutorial,
+  [ConnEvent.WebUsbChooseMicrobit]: ConnStage.WebUsbChooseMicrobit,
+  [ConnEvent.ConnectingBluetooth]: ConnStage.ConnectingBluetooth,
+  [ConnEvent.ConnectingMicrobits]: ConnStage.ConnectingMicrobits,
+};
+
+const getStageAndTypeOrder = (state: ConnState): StageAndType[] => {
+  const { RadioRemote, RadioBridge, Bluetooth } = ConnectionType;
+  if (state.type === ConnectionType.Bluetooth) {
+    return [
+      { stage: ConnStage.Start, type: Bluetooth },
+      { stage: ConnStage.ConnectCable, type: Bluetooth },
+      // Only bluetooth mode has this fallback, the radio bridge mode requires working WebUSB.
+      !state.isUsbSupported || state.stage === ConnStage.ManualFlashingTutorial
+        ? { stage: ConnStage.ManualFlashingTutorial, type: Bluetooth }
+        : { stage: ConnStage.WebUsbFlashingTutorial, type: Bluetooth },
+      { stage: ConnStage.ConnectBattery, type: Bluetooth },
+      { stage: ConnStage.EnterBluetoothPattern, type: Bluetooth },
+      { stage: ConnStage.ConnectBluetoothTutorial, type: Bluetooth },
+    ];
+  }
   return [
     { stage: ConnStage.Start, type: RadioRemote },
     { stage: ConnStage.ConnectCable, type: RadioRemote },
@@ -113,50 +170,4 @@ const getNextStageAndType = (state: ConnState, step: number): StageAndType => {
     return curr;
   }
   return order[newIdx];
-};
-
-export const connectionDialogReducer: Reducer<ConnState, ConnEvent> = (
-  state,
-  event
-) => {
-  const isBluetooth = state.type === ConnectionType.Bluetooth;
-  if (event === ConnEvent.Switch) {
-    return {
-      ...state,
-      type: isBluetooth ? ConnectionType.RadioRemote : ConnectionType.Bluetooth,
-    };
-  }
-  if (event === ConnEvent.GoToBluetoothStart) {
-    return { ...state, stage: ConnStage.Start, type: ConnectionType.Bluetooth };
-  }
-  if (event === ConnEvent.Next) {
-    return { ...state, ...getNextStageAndType(state, 1) };
-  }
-  if (event === ConnEvent.Back) {
-    return { ...state, ...getNextStageAndType(state, -1) };
-  }
-  if (event === ConnEvent.FlashingComplete) {
-    if (state.type === ConnectionType.RadioRemote) {
-      return { ...state, stage: ConnStage.ConnectBattery };
-    }
-    return { ...state, stage: ConnStage.ConnectingMicrobits };
-  }
-  if (event === ConnEvent.TryAgain) {
-    if (state.stage === ConnStage.TryAgainBluetoothConnect) {
-      return { ...state, stage: ConnStage.ConnectBluetoothTutorial };
-    }
-    return { ...state, stage: ConnStage.ConnectCable };
-  }
-  const eventToNewStage: Record<number, ConnStage> = {
-    [ConnEvent.SkipFlashing]: ConnStage.ConnectBattery,
-    [ConnEvent.FlashingInProgress]: ConnStage.FlashingInProgress,
-    [ConnEvent.InstructManualFlashing]: ConnStage.ManualFlashingTutorial,
-    [ConnEvent.WebUsbChooseMicrobit]: ConnStage.WebUsbChooseMicrobit,
-    [ConnEvent.ConnectingBluetooth]: ConnStage.ConnectingBluetooth,
-    [ConnEvent.ConnectingMicrobits]: ConnStage.ConnectingMicrobits,
-  };
-  if (eventToNewStage[event]) {
-    return { ...state, stage: eventToNewStage[event] };
-  }
-  return state;
 };
