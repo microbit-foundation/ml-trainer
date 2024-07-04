@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Event, Logging } from "../../logging/logging";
+import { Logging } from "../../logging/logging";
 
 export class NullLogging implements Logging {
-  event(_event: Event): void {}
-  error(_e: any): void {}
-  log(_e: any): void {}
+  event(): void {}
+  error(): void {}
+  log(): void {}
 }

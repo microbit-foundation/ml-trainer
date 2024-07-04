@@ -87,6 +87,7 @@ export class DAPWrapper {
     });
 
     const serialInfo = this.boardSerialInfo;
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     this.logging.log(`Detected board ID ${serialInfo.id}`);
 
     if (
@@ -96,6 +97,7 @@ export class DAPWrapper {
       this.loggedBoardSerialInfo = this.boardSerialInfo;
       this.logging.event({
         type: "WebUSB-info",
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         message: "board-id/" + this.boardSerialInfo.id,
       });
       this.logging.event({
@@ -129,6 +131,7 @@ export class DAPWrapper {
   async disconnectAsync(): Promise<void> {
     if (
       this.device.opened &&
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
       (this.transport as any).interfaceNumber !== undefined
     ) {
       return this.daplink.disconnect();
@@ -267,7 +270,9 @@ export class DAPWrapper {
       await this.cortexM.writeAP(ApReg.TAR, addr);
 
       await this.writeRegRepeat(apReg(ApReg.DRW, DapVal.WRITE), words);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (e.dapWait) {
         // Retry after a delay if required.
         this.logging.log(`Transfer wait, write block`);
@@ -302,14 +307,14 @@ export class DAPWrapper {
 
   // Writes a block of data to micro:bit RAM at a specified address.
   async writeBlockAsync(address: number, data: Uint32Array): Promise<void> {
-    let payloadSize = this.transport.packetSize - 8;
+    const payloadSize = this.transport.packetSize - 8;
     if (data.buffer.byteLength > payloadSize) {
       let start = 0;
       let end = payloadSize;
 
       // Split write up into smaller writes whose data can each be held in a single packet.
       while (start !== end) {
-        let temp = new Uint32Array(data.buffer.slice(start, end));
+        const temp = new Uint32Array(data.buffer.slice(start, end));
         await this.writeBlockCore(address + start, temp);
 
         start = end;

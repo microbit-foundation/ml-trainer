@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * (c) 2021, Micro:bit Educational Foundation and contributors
  *

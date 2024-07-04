@@ -45,6 +45,7 @@ export default defineConfig(({ mode }): UserConfig => {
       : undefined,
     test: {
       globals: true,
+      environment: "jsdom",
       poolOptions: {
         threads: {
           // threads disabled for now due to https://github.com/vitest-dev/vitest/issues/1982

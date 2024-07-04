@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { ChakraProvider } from "@chakra-ui/react";
 import React, { ReactNode, useMemo } from "react";
 import {
@@ -25,7 +23,6 @@ export interface ProviderLayoutProps {
 }
 
 // TODO: Use for logging provider
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const logging = deployment.logging;
 
 const Providers = ({ children }: ProviderLayoutProps) => {
