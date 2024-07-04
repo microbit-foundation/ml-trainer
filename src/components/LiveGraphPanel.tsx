@@ -3,11 +3,10 @@ import { MdBolt } from "react-icons/md";
 import { FormattedMessage } from "react-intl";
 import InfoToolTip from "./InfoToolTip";
 import LiveGraph from "./LiveGraph";
-import { useConnections } from "../connections";
 
 const LiveGraphPanel = () => {
-  const { inputConnection } = useConnections();
-  const isConnected = inputConnection.connectionStatus === "connected";
+  // TODO: replace with hook
+  const isConnected = true;
   return (
     <HStack position="relative" h={160} width="100%" bgColor="white">
       <HStack
