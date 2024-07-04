@@ -54,6 +54,7 @@
     "@microsoft/applicationinsights-web": "^3.0.0",
     "@sentry/svelte": "^7.100.1",
     "@tensorflow/tfjs": "^4.4.0",
+    "@tensorflow/tfjs-vis": "^1.5.1",
     "@types/w3c-web-serial": "^1.0.6",
     "@types/w3c-web-usb": "^1.0.6",
     "bowser": "^2.11.0",

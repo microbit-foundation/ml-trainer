@@ -5,20 +5,22 @@
  -->
 
 <script lang="ts">
-  import { fade } from 'svelte/transition';
+  import CloseIcon from 'virtual:icons/ri/close-line';
+  import { t } from '../i18n';
   import type { RecordingData } from '../script/stores/mlStore';
+  import Fingerprint from './Fingerprint.svelte';
   import RecordingGraph from './graphs/RecordingGraph.svelte';
   import IconButton from './IconButton.svelte';
-  import { t } from '../i18n';
-  import CloseIcon from 'virtual:icons/ri/close-line';
 
   // get recording from mother prop
   export let recording: RecordingData;
+  export let gestureName: string;
   export let onDelete: (recording: RecordingData) => void;
 </script>
 
-<div class="h-full w-40 relative">
+<div class="h-full flex flex-col w-40 relative overflow-hidden">
   <RecordingGraph data={recording.data} />
+  <Fingerprint {gestureName} recordingData={recording} />
 
   <div class="absolute right-0 top-0 z-2">
     <IconButton

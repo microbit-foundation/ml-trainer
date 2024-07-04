@@ -8,14 +8,22 @@
  */
 
 import * as tf from '@tensorflow/tfjs';
-import { makeInputs, trainModel } from '../script/ml';
+import { ModelSettings, makeInputs, trainModel } from '../script/ml';
 import { gestures } from '../script/stores/Stores';
 import gestureData from './fixtures/gesture-data.json';
 import gestureDataBadLabels from './fixtures/gesture-data-bad-labels.json';
 import testdataShakeStill from './fixtures/test-data-shake-still.json';
 import { PersistantGestureData } from '../script/domain/Gestures';
+import { get } from 'svelte/store';
+import { settings } from '../script/stores/mlStore';
 
 let tensorFlowModel: tf.LayersModel | void;
+const mlSettings = get(settings);
+const modelSettings = {
+  axes: mlSettings.includedAxes,
+  filters: mlSettings.includedFilters,
+};
+
 beforeAll(async () => {
   // No webgl in tests running in node.
   tf.setBackend('cpu');
@@ -34,7 +42,7 @@ const getModelResults = (data: PersistantGestureData[]) => {
   const numActions = data.length;
   data.forEach((action, index) => {
     action.recordings.forEach(recording => {
-      x.push(makeInputs(recording.data));
+      x.push(makeInputs(modelSettings, recording.data));
       const label = new Array(numActions);
       label.fill(0, 0, numActions);
       label[index] = 1;

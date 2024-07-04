@@ -34,12 +34,18 @@ export function clamp(value: number, min: number, max: number): number {
 
 interface FilterStrategy {
   computeOutput(data: number[]): number;
+  computeNormalizedOutput(data: number[]): number;
   getText(): { name: string; description: string };
 }
 
 class MeanFilter implements FilterStrategy {
+  constructor(private filterType: FilterType) {}
   computeOutput(data: number[]): number {
     return data.reduce((a, b) => a + b) / data.length;
+  }
+  computeNormalizedOutput(data: number[]): number {
+    const result = this.computeOutput(data);
+    return normalizeFilterResult(result, this.filterType);
   }
   getText() {
     return {
@@ -50,9 +56,14 @@ class MeanFilter implements FilterStrategy {
 }
 
 class SDFilter implements FilterStrategy {
+  constructor(private filterType: FilterType) {}
   computeOutput(data: number[]): number {
     const mean = data.reduce((a, b) => a + b) / data.length;
     return Math.sqrt(data.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / data.length);
+  }
+  computeNormalizedOutput(data: number[]): number {
+    const result = this.computeOutput(data);
+    return normalizeFilterResult(result, this.filterType);
   }
   getText() {
     return {
@@ -63,9 +74,14 @@ class SDFilter implements FilterStrategy {
 }
 
 class RootMeanSquareFilter implements FilterStrategy {
+  constructor(private filterType: FilterType) {}
   computeOutput(data: number[]): number {
     const res = Math.sqrt(data.reduce((a, b) => a + Math.pow(b, 2), 0) / data.length);
     return res;
+  }
+  computeNormalizedOutput(data: number[]): number {
+    const result = this.computeOutput(data);
+    return normalizeFilterResult(result, this.filterType);
   }
   getText() {
     return {
@@ -76,6 +92,7 @@ class RootMeanSquareFilter implements FilterStrategy {
 }
 
 class ZeroCrossingRateFilter implements FilterStrategy {
+  constructor(private filterType: FilterType) {}
   computeOutput(data: number[]): number {
     let count = 0;
     for (let i = 1; i < data.length; i++) {
@@ -84,6 +101,10 @@ class ZeroCrossingRateFilter implements FilterStrategy {
       }
     }
     return count / (data.length - 1);
+  }
+  computeNormalizedOutput(data: number[]): number {
+    const result = this.computeOutput(data);
+    return normalizeFilterResult(result, this.filterType);
   }
   getText() {
     return {
@@ -94,8 +115,13 @@ class ZeroCrossingRateFilter implements FilterStrategy {
 }
 
 class TotalAccFilter implements FilterStrategy {
+  constructor(private filterType: FilterType) {}
   computeOutput(data: number[]): number {
     return data.reduce((a, b) => a + Math.abs(b));
+  }
+  computeNormalizedOutput(data: number[]): number {
+    const result = this.computeOutput(data);
+    return normalizeFilterResult(result, this.filterType);
   }
   getText() {
     return {
@@ -106,8 +132,13 @@ class TotalAccFilter implements FilterStrategy {
 }
 
 class MaxFilter implements FilterStrategy {
+  constructor(private filterType: FilterType) {}
   computeOutput(data: number[]): number {
     return Math.max(...data);
+  }
+  computeNormalizedOutput(data: number[]): number {
+    const result = this.computeOutput(data);
+    return normalizeFilterResult(result, this.filterType);
   }
   getText() {
     return {
@@ -118,8 +149,13 @@ class MaxFilter implements FilterStrategy {
 }
 
 class MinFilter implements FilterStrategy {
+  constructor(private filterType: FilterType) {}
   computeOutput(data: number[]): number {
     return Math.min(...data);
+  }
+  computeNormalizedOutput(data: number[]): number {
+    const result = this.computeOutput(data);
+    return normalizeFilterResult(result, this.filterType);
   }
   getText() {
     return {
@@ -130,6 +166,7 @@ class MinFilter implements FilterStrategy {
 }
 
 class PeaksFilter implements FilterStrategy {
+  constructor(private filterType: FilterType) {}
   computeOutput(data: number[]): number {
     const lag = 5;
     const threshold = 3.5;
@@ -178,6 +215,10 @@ class PeaksFilter implements FilterStrategy {
     }
     return peaksCounter;
   }
+  computeNormalizedOutput(data: number[]): number {
+    const result = this.computeOutput(data);
+    return normalizeFilterResult(result, this.filterType);
+  }
   getText() {
     return {
       name: get(t)('content.filters.peaks.title'),
@@ -201,25 +242,36 @@ function stddev(arr: number[]): number {
 export function determineFilter(filter: FilterType): FilterStrategy {
   switch (filter) {
     case Filters.MAX:
-      return new MaxFilter();
+      return new MaxFilter(filter);
     case Filters.MIN:
-      return new MinFilter();
+      return new MinFilter(filter);
     case Filters.STD:
-      return new SDFilter();
+      return new SDFilter(filter);
     case Filters.PEAKS:
-      return new PeaksFilter();
+      return new PeaksFilter(filter);
     case Filters.ACC:
-      return new TotalAccFilter();
+      return new TotalAccFilter(filter);
     case Filters.MEAN:
-      return new MeanFilter();
+      return new MeanFilter(filter);
     case Filters.ZCR:
-      return new ZeroCrossingRateFilter();
+      return new ZeroCrossingRateFilter(filter);
     case Filters.RMS:
-      return new RootMeanSquareFilter();
+      return new RootMeanSquareFilter(filter);
     default:
       throw new Error('Filter not found');
   }
 }
+
+const normalizeFilterResult = (value: number, filter: FilterType) => {
+  const { min, max } = getFilterLimits(filter);
+  const newMin = 0;
+  const newMax = 1;
+  const existingMin = min;
+  const existingMax = max;
+  return (
+    ((newMax - newMin) * (value - existingMin)) / (existingMax - existingMin) + newMin
+  );
+};
 
 export function getFilterLimits(filter: FilterType): { min: number; max: number } {
   switch (filter) {

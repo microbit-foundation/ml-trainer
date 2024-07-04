@@ -19,6 +19,10 @@ class Menus {
       navigationPath: Paths.DATA,
     },
     {
+      title: '1.5. Process data',
+      navigationPath: Paths.PROCESS,
+    },
+    {
       title: 'menu.trainer.helpHeading',
       navigationPath: Paths.TRAINING,
     },

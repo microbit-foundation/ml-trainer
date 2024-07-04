@@ -27,9 +27,14 @@ import { logEvent } from './utils/logging';
 let text: (key: string, vars?: object) => string;
 t.subscribe(t => (text = t));
 
+export interface ModelSettings {
+  axes: AxesType[];
+  filters: Set<FilterType>;
+}
+
 // Whenever model is trained, the settings at the time is saved in this variable
 // Such that prediction continues on with the same settings as during training
-let modelSettings: { axes: AxesType[]; filters: Set<FilterType> };
+let modelSettings: ModelSettings;
 
 // Add parameter to allow unsubscribing from store, when predicting ends.
 // Prevents memory leak.
@@ -91,7 +96,7 @@ export async function trainModel(): Promise<tf.LayersModel | void> {
   gestureData.forEach((MLClass, index) => {
     MLClass.recordings.forEach(recording => {
       // prepare features
-      const inputs: number[] = makeInputs(recording.data);
+      const inputs: number[] = makeInputs(modelSettings, recording.data);
       features.push(inputs);
 
       // Prepare labels
@@ -209,9 +214,12 @@ function onTrainEnd() {
 
 // makeInput reduces array of x, y and z inputs to a single number array with values.
 // Depending on user settings. There will be anywhere between 1-24 parameters in
-
 // Exported for testing.
-export function makeInputs(sample: { x: number[]; y: number[]; z: number[] }): number[] {
+export function makeInputs(
+  modelSettings: ModelSettings,
+  sample: { x: number[]; y: number[]; z: number[] },
+  filterFunction: 'computeOutput' | 'computeNormalizedOutput' = 'computeOutput',
+): number[] {
   const dataRep: number[] = [];
 
   if (!modelSettings) {
@@ -223,13 +231,12 @@ export function makeInputs(sample: { x: number[]; y: number[]; z: number[] }): n
   modelSettings.filters.forEach(filter => {
     const filterOutput = determineFilter(filter);
     if (modelSettings.axes.includes(Axes.X))
-      dataRep.push(filterOutput.computeOutput(sample.x));
+      dataRep.push(filterOutput[filterFunction](sample.x));
     if (modelSettings.axes.includes(Axes.Y))
-      dataRep.push(filterOutput.computeOutput(sample.y));
+      dataRep.push(filterOutput[filterFunction](sample.y));
     if (modelSettings.axes.includes(Axes.Z))
-      dataRep.push(filterOutput.computeOutput(sample.z));
+      dataRep.push(filterOutput[filterFunction](sample.z));
   });
-
   return dataRep;
 }
 
@@ -305,7 +312,7 @@ export function classify() {
         // insufficient data is expected.
         return;
       }
-    const input: number[] = makeInputs(data);
+    const input: number[] = makeInputs(modelSettings, data);
     const inputTensor = tf.tensor([input]);
     const prediction: Tensor = get(model).predict(inputTensor) as Tensor;
     prediction

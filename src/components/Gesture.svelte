@@ -366,7 +366,11 @@
         </div>
         {#if hasRecordings}
           {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
-            <Recording {recording} onDelete={deleteRecording} on:focus={selectGesture} />
+            <Recording
+              gestureName={$nameBind}
+              {recording}
+              onDelete={deleteRecording}
+              on:focus={selectGesture} />
           {/each}
         {/if}
       </div>
