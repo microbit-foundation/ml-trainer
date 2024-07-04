@@ -36,7 +36,7 @@ const HomePage = () => {
 
   return (
     <DefaultPageLayout titleId="content.index.title">
-      <VStack m={10} gap={10} maxW="75rem" mx="auto">
+      <VStack gap={10} maxW="75rem" m="auto" p={10}>
         <VStack justifyItems="center" justify="center" gap={5}>
           <Heading as="h1" fontSize="4xl" fontWeight="bold">
             <FormattedMessage id="homepage-title" />

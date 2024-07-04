@@ -1,8 +1,10 @@
 import { Flex, HStack, IconButton, VStack } from "@chakra-ui/react";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useCallback, useEffect } from "react";
 import { RiHome2Line } from "react-icons/ri";
 import { useIntl } from "react-intl";
+import { useNavigate } from "react-router";
 import { TOOL_NAME } from "../constants";
+import { createHomePageUrl } from "../urls";
 import ActionBar from "./ActionBar";
 import AppLogo from "./AppLogo";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
@@ -22,10 +24,15 @@ const DefaultPageLayout = ({
   toolbarItemsRight,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = intl.formatMessage({ id: titleId });
   }, [intl, titleId]);
+
+  const handleHomeClick = useCallback(() => {
+    navigate(createHomePageUrl());
+  }, [navigate]);
 
   return (
     <>
@@ -46,6 +53,7 @@ const DefaultPageLayout = ({
             <HStack spacing={3}>
               {toolbarItemsRight}
               <IconButton
+                onClick={handleHomeClick}
                 icon={<RiHome2Line size={24} color="white" />}
                 aria-label={intl.formatMessage({ id: "homepage.Link" })}
                 variant="plain"
