@@ -38,6 +38,7 @@ const DefaultPageLayout = ({
         bgColor="whitesmoke"
       >
         <ActionBar
+          zIndex={2}
           position="sticky"
           top={0}
           itemsLeft={<AppLogo name={TOOL_NAME} />}
