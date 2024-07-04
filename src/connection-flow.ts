@@ -174,7 +174,7 @@ const getNextStageAndType = (state: ConnState, step: number): StageAndType => {
   const order = getStageAndTypeOrder(state);
   const curr = { stage: state.stage, type: state.type };
   const currIdx = getStageAndTypeIdx(curr, order);
-  const newIdx = (currIdx as number) + step;
+  const newIdx = currIdx! + step;
   // If impossible step stage, stick to current step
   if (newIdx === order.length || newIdx < 0) {
     return curr;
