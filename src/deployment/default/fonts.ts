@@ -1,5 +1,5 @@
 const fonts = {
-  heading: "GT Walsheim, sans-serif",
+  heading: "Helvetica Now, sans-serif",
   body: "Helvetica Now, sans-serif",
 };
 
