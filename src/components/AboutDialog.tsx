@@ -10,6 +10,7 @@ import {
   Box,
   Button,
   HStack,
+  Icon,
   Image,
   Link,
   ModalCloseButton,
@@ -21,10 +22,11 @@ import {
   Text,
   Tr,
   VStack,
+  VisuallyHidden,
   useClipboard,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import { RiFileCopy2Line } from "react-icons/ri";
+import { RiFileCopy2Line, RiGithubFill } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import aarhusLogo from "../images/aulogo_uk_var2_blue.png";
 import microbitHeartImage from "../images/microbit-heart.png";
@@ -50,6 +52,7 @@ const AboutDialog = ({
     {
       name: `micro:bit ${appName}`,
       value: import.meta.env.VITE_VERSION,
+      href: "https://github.com/microbit-foundation/ml-trainer",
     },
   ];
 
@@ -71,11 +74,11 @@ const AboutDialog = ({
           <ModalBody>
             <ModalCloseButton />
             <VStack spacing={8} pl={5} pr={5} pt={5}>
-              <HStack justifyContent="center" gap={5}>
-                <MicrobitLogo fill="#000" alt="micro:bit" />
-                <Image src={aarhusLogo} height="40px" />
+              <HStack justifyContent="center" gap={8}>
+                <MicrobitLogo fill="#000" alt="micro:bit" height={55} />
+                <Image src={aarhusLogo} h="55px" />
               </HStack>
-              <Text fontSize="xl" textAlign="center">
+              <Text textAlign="center">
                 <FormattedMessage
                   id="about-dialog-title"
                   values={{
@@ -113,6 +116,22 @@ const AboutDialog = ({
                         <Tr key={v.name}>
                           <Td>{v.name}</Td>
                           <Td>{v.value}</Td>
+                          <Td padding={0}>
+                            {/* Move padding so we get a reasonable click target. */}
+                            <Link
+                              display="block"
+                              pl={4}
+                              pr={4}
+                              pt={2}
+                              pb={2}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              href={v.href}
+                            >
+                              <Icon as={RiGithubFill} />
+                              <VisuallyHidden>GitHub</VisuallyHidden>
+                            </Link>
+                          </Td>
                         </Tr>
                       ))}
                     </Tbody>
