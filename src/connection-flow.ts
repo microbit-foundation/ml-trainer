@@ -158,15 +158,23 @@ const getStageAndTypeOrder = (state: ConnState): StageAndType[] => {
   ];
 };
 
-const getItemIdx = (item: object, arr: object[]) => {
-  return arr.map((a) => JSON.stringify(a)).indexOf(JSON.stringify(item));
+const getStageAndTypeIdx = (
+  { stage, type }: StageAndType,
+  order: StageAndType[]
+) => {
+  for (let idx = 0; idx < order.length; idx++) {
+    const step = order[idx];
+    if (step.stage === stage && step.type === type) {
+      return idx;
+    }
+  }
 };
 
 const getNextStageAndType = (state: ConnState, step: number): StageAndType => {
   const order = getStageAndTypeOrder(state);
   const curr = { stage: state.stage, type: state.type };
-  const currIdx = getItemIdx(curr, order);
-  const newIdx = currIdx + step;
+  const currIdx = getStageAndTypeIdx(curr, order);
+  const newIdx = (currIdx as number) + step;
   // If impossible step stage, stick to current step
   if (newIdx === order.length || newIdx < 0) {
     return curr;
