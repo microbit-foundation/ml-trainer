@@ -1,9 +1,9 @@
-import { As, Divider, Heading, HStack } from "@chakra-ui/react";
+import { As, Divider, HStack, Image } from "@chakra-ui/react";
+import AppNameLogo from "../images/app-name.svg";
 import MicrobitLogo from "./MicrobitLogo";
 
 const AppLogo = ({
   color = "#FFF",
-  name,
   as,
 }: {
   color?: string;
@@ -26,17 +26,7 @@ const AppLogo = ({
       h="33px"
       borderWidth="1px"
     />
-    <HStack color={color} spacing={2.5}>
-      <Heading
-        as="span"
-        fontWeight="normal"
-        fontSize="26px"
-        letterSpacing=".833px"
-        whiteSpace="nowrap"
-      >
-        {name}
-      </Heading>
-    </HStack>
+    <Image src={AppNameLogo} alt="micro:bit" h="25px" />
   </HStack>
 );
 
