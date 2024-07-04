@@ -6,7 +6,7 @@ import LiveGraph from "./LiveGraph";
 
 const LiveGraphPanel = () => {
   // TODO: replace with hook
-  const isConnected = true;
+  const isConnected = false;
   return (
     <HStack position="relative" h={160} width="100%" bgColor="white">
       <HStack
