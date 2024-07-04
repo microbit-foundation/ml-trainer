@@ -12,11 +12,14 @@
     "dev": "cross-env VITE_VERSION=$npm_package_version vite",
     "invalidate": "invalidate-cloudfront-distribution",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "postinstall": "npm run theme",
     "preview": "vite preview",
     "start": "vite dev",
     "test": "vitest",
     "test:e2e": "playwright test --headed",
     "test:e2e:headless": "playwright test",
+    "theme:watch": "chakra-cli tokens src/deployment/default/theme.ts --watch",
+    "theme": "chakra-cli tokens src/deployment/default/theme.ts",
     "i18n:compile": "node bin/tidy-lang.cjs && formatjs compile-folder --ast lang src/messages"
   },
   "devDependencies": {
