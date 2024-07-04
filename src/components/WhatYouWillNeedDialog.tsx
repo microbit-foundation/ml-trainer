@@ -98,7 +98,7 @@ const WhatYouWillNeedDialog = ({
         width="100%"
         templateColumns={`repeat(${items.length}, 1fr)`}
         gap={16}
-        py="50px"
+        py="30px"
       >
         {items.map(({ imgSrc, titleId, subtitleId }) => {
           return (

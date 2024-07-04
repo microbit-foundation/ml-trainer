@@ -63,7 +63,7 @@ const ConnectCableDialog = ({
       {...props}
       onLinkClick={linkConfig[onLink]}
     >
-      <VStack gap={10}>
+      <VStack gap={5}>
         <Text width="100%">
           <FormattedMessage id={subtitleId} />
         </Text>

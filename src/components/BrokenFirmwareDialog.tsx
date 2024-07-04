@@ -36,6 +36,7 @@ const BrokenFirmwareDialog = ({
       isOpen={isOpen}
       onClose={onClose}
       size="3xl"
+      isCentered
     >
       <ModalOverlay>
         <ModalContent p={8}>
@@ -87,7 +88,7 @@ const BrokenFirmwareDialog = ({
               </VStack>
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent="end">
+          <ModalFooter justifyContent="end" p={0}>
             <HStack gap={5}>
               <Button onClick={onClose} variant="secondary" size="lg">
                 <FormattedMessage id="cancel-action" />

@@ -43,6 +43,7 @@ const ConnectContainerDialog = ({
       isOpen={isOpen}
       onClose={onClose}
       size="3xl"
+      isCentered
     >
       <ModalOverlay>
         <ModalContent p={8}>
@@ -57,6 +58,7 @@ const ConnectContainerDialog = ({
           </ModalBody>
           <ModalFooter
             justifyContent={onLinkClick && linkTextId ? "space-between" : "end"}
+            p={0}
           >
             {onLinkClick && linkTextId && (
               <Button onClick={onLinkClick} variant="link" size="lg">

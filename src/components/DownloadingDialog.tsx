@@ -28,6 +28,7 @@ const DownloadingDialog = ({
       isOpen={isOpen}
       onClose={() => {}}
       size="3xl"
+      isCentered
     >
       <ModalOverlay>
         <ModalContent p={8}>
