@@ -75,7 +75,7 @@ const AboutDialog = ({
                 <MicrobitLogo fill="#000" alt="micro:bit" />
                 <Image src={aarhusLogo} height="40px" />
               </HStack>
-              <Text fontSize="xl" fontFamily="GT Walsheim" textAlign="center">
+              <Text fontSize="xl" textAlign="center">
                 <FormattedMessage
                   id="about-dialog-title"
                   values={{
@@ -116,11 +116,7 @@ const AboutDialog = ({
                         </Tr>
                       ))}
                     </Tbody>
-                    <TableCaption
-                      color="gray.800"
-                      placement="top"
-                      fontFamily="Helvetica Now"
-                    >
+                    <TableCaption color="gray.800" placement="top">
                       <FormattedMessage id="software-versions" />
                     </TableCaption>
                   </Table>
