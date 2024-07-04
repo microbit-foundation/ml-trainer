@@ -1,1 +1,1 @@
-export const APP_NAME = "micro:bit machine learning";
+export const TOOL_NAME = "machine learning tool";

@@ -2,7 +2,7 @@ import { Flex, HStack, IconButton, VStack } from "@chakra-ui/react";
 import { ReactNode, useEffect } from "react";
 import { RiHome2Line } from "react-icons/ri";
 import { useIntl } from "react-intl";
-import { APP_NAME } from "../constants";
+import { TOOL_NAME } from "../constants";
 import ActionBar from "./ActionBar";
 import AppLogo from "./AppLogo";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
@@ -40,7 +40,7 @@ const DefaultPageLayout = ({
         <ActionBar
           position="sticky"
           top={0}
-          itemsLeft={<AppLogo name="machine learning tool" />}
+          itemsLeft={<AppLogo name={TOOL_NAME} />}
           itemsRight={
             <HStack spacing={3}>
               {toolbarItemsRight}
@@ -52,7 +52,7 @@ const DefaultPageLayout = ({
                 fontSize="xl"
               />
               <SettingsMenu />
-              <HelpMenu appName={APP_NAME} mode="nextgen" cookies />
+              <HelpMenu appName={TOOL_NAME} mode="nextgen" cookies />
             </HStack>
           }
         />

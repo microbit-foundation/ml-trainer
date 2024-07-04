@@ -9,7 +9,7 @@ import {
   AspectRatio,
   Box,
   Button,
-  Center,
+  HStack,
   Image,
   Link,
   ModalCloseButton,
@@ -20,14 +20,15 @@ import {
   Td,
   Text,
   Tr,
-  useClipboard,
   VStack,
+  useClipboard,
 } from "@chakra-ui/react";
-import { RiFileCopy2Line } from "react-icons/ri";
-import AppLogo from "./AppLogo";
-import microbitHeartImage from "../images/microbit-heart.png";
-import { FormattedMessage, useIntl } from "react-intl";
 import { ReactNode } from "react";
+import { RiFileCopy2Line } from "react-icons/ri";
+import { FormattedMessage, useIntl } from "react-intl";
+import aarhusLogo from "../images/aulogo_uk_var2_blue.png";
+import microbitHeartImage from "../images/microbit-heart.png";
+import MicrobitLogo from "./MicrobitLogo";
 
 interface AboutDialogProps {
   appName: string;
@@ -70,10 +71,11 @@ const AboutDialog = ({
           <ModalBody>
             <ModalCloseButton />
             <VStack spacing={8} pl={5} pr={5} pt={5}>
-              <Center>
-                <AppLogo color="#000" as="h2" name={appName} />
-              </Center>
-              <Text fontSize="xl" fontFamily="GT Walsheim">
+              <HStack justifyContent="center" gap={5}>
+                <MicrobitLogo fill="#000" alt="micro:bit" />
+                <Image src={aarhusLogo} height="40px" />
+              </HStack>
+              <Text fontSize="xl" fontFamily="GT Walsheim" textAlign="center">
                 <FormattedMessage
                   id="about-dialog-title"
                   values={{
