@@ -1,0 +1,60 @@
+@font-face {
+  font-family: "GT Walsheim";
+  src: url("./gt-walsheim-bold.eot");
+  src: url("./gt-walsheim-bold.eot?#iefix") format("embedded-opentype"),
+    url("./gt-walsheim-bold.woff2") format("woff2"),
+    url("./gt-walsheim-bold.woff") format("woff"),
+    url("./gt-walsheim-bold.ttf") format("truetype"),
+    url("./gt-walsheim-bold.svg#gt_walsheimbold") format("svg");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GT Walsheim";
+  src: url("./GTWalsheim_gdi.eot");
+  src: url("./GTWalsheim_gdi.eot?#iefix") format("embedded-opentype"),
+    url("./GTWalsheim_gdi.woff2") format("woff2"),
+    url("./GTWalsheim_gdi.woff") format("woff"),
+    url("./GTWalsheim_gdi.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Now Light";
+  src: url("./HelveticaNowTextW05-Light.eot?#iefix");
+  src: url("./HelveticaNowTextW05-Light.eot?#iefix") format("eot"),
+    url("./HelveticaNowTextW05-Light.woff2") format("woff2"),
+    url("./HelveticaNowTextW05-Light.woff") format("woff"),
+    url("./HelveticaNowTextW05-Light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Now";
+  src: url("./HelveticaNowTextW05-Regular.eot?#iefix");
+  src: url("./HelveticaNowTextW05-Regular.eot?#iefix") format("eot"),
+    url("./HelveticaNowTextW05-Regular.woff2") format("woff2"),
+    url("./HelveticaNowTextW05-Regular.woff") format("woff"),
+    url("./HelveticaNowTextW05-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Now";
+  src: url("./HelveticaNowTextW05-Bold.eot?#iefix");
+  src: url("./HelveticaNowTextW05-Bold.eot?#iefix") format("eot"),
+    url("./HelveticaNowTextW05-Bold.woff2") format("woff2"),
+    url("./HelveticaNowTextW05-Bold.woff") format("woff"),
+    url("./HelveticaNowTextW05-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}

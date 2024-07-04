@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import "./styles/fonts/fonts.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import React, { ReactNode, useMemo } from "react";
 import {
