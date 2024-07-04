@@ -14,7 +14,7 @@ const PrototypeVersionWarning = () => {
       justifyContent="center"
       position="sticky"
       top={16}
-      zIndex={5}
+      zIndex={1}
     >
       <RiErrorWarningLine size={24} color="white" />
       <Text fontWeight="bold">
