@@ -1,6 +1,6 @@
 const MicrobitLogo = ({
   alt,
-  fill = "#fff"
+  fill = "#fff",
 }: {
   alt: string;
   fill?: string;
@@ -14,7 +14,7 @@ const MicrobitLogo = ({
     viewBox="0 0 166.8 40"
     style={{
       width: "auto",
-      height: 40
+      height: 40,
     }}
   >
     <title>{alt}</title>

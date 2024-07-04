@@ -6,7 +6,7 @@ describe("flags", () => {
 
     const flags = flagsForParams("production", params);
 
-    expect(Object.values(flags).every(x => !x)).toEqual(true);
+    expect(Object.values(flags).every((x) => !x)).toEqual(true);
   });
 
   it("enables by stage", () => {
@@ -32,19 +32,19 @@ describe("flags", () => {
   it("enable everything", () => {
     const params = new URLSearchParams([["flag", "*"]]);
     const flags = flagsForParams("production", params);
-    expect(Object.values(flags).every(x => x)).toEqual(true);
+    expect(Object.values(flags).every((x) => x)).toEqual(true);
   });
 
   it("enable nothing", () => {
     const params = new URLSearchParams([["flag", "none"]]);
     const flags = flagsForParams("review", params);
-    expect(Object.values(flags).every(x => !x)).toEqual(true);
+    expect(Object.values(flags).every((x) => !x)).toEqual(true);
   });
 
   it("can combine none with specific enabled flags in review", () => {
     const params = new URLSearchParams([
       ["flag", "none"],
-      ["flag", "exampleOptInB"]
+      ["flag", "exampleOptInB"],
     ]);
 
     const flags = flagsForParams("review", params);

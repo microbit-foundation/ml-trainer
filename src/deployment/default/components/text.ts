@@ -1,15 +1,15 @@
 const Text = {
   sizes: {
     sm: {
-      fontSize: "sm"
+      fontSize: "sm",
     },
     md: {
-      fontSize: "md"
-    }
+      fontSize: "md",
+    },
   },
   defaultProps: {
-    size: "md"
-  }
+    size: "md",
+  },
 };
 
 export default Text;

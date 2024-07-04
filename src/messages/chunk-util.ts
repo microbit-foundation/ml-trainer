@@ -1,5 +1,5 @@
 const defaultWaiter = (waitTime: number): Promise<void> =>
-  new Promise(resolve => setTimeout(resolve, waitTime));
+  new Promise((resolve) => setTimeout(resolve, waitTime));
 
 export const retryAsyncLoad = async <T>(
   load: () => Promise<T>,
