@@ -23,7 +23,7 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
 
   return (
     <ConnectContainerDialog headingId="connectMB.webPopup" {...props}>
-      <Box position="relative" width={"100%"} alignSelf={""}>
+      <Box position="relative" width="100%">
         <Image
           height={375}
           width={418}
