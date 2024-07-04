@@ -9,7 +9,7 @@ import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
 import { getHexFileUrl } from "../device/get-hex-file";
-import { ConnectionType } from "../connection-flow";
+import { ConnType } from "../connection-flow";
 
 interface ImageProps {
   src: string;
@@ -51,7 +51,7 @@ const ManualFlashingDialog = ({ ...props }: ManualFlashingDialogProps) => {
 
   const handleDownload = useCallback(() => {
     download(
-      getHexFileUrl("universal", ConnectionType.Bluetooth)!,
+      getHexFileUrl("universal", ConnType.Bluetooth)!,
       "machine-learning-tool-program.hex"
     );
   }, []);

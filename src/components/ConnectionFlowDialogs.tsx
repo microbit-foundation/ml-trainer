@@ -1,11 +1,7 @@
 import { useDisclosure } from "@chakra-ui/react";
-import { useCallback, useReducer, useState } from "react";
-import {
-  ConnEvent,
-  ConnStage,
-  ConnectionType,
-  connectionDialogReducer,
-} from "../connection-flow";
+import { useCallback, useEffect, useState } from "react";
+import { ConnEvent, ConnStage, ConnType } from "../connection-flow";
+import { useConnectionFlow } from "../connections";
 import { getHexFileUrl } from "../device/get-hex-file";
 import MicrobitWebUSBConnection from "../device/microbit-usb";
 import { useLogging } from "../logging/logging-hooks";
@@ -19,28 +15,26 @@ import ManualFlashingDialog from "./ManualFlashingDialog";
 import SelectMicrobitBluetoothDialog from "./SelectMicrobitBluetoothDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import TryAgainDialog from "./TryAgainDialog";
-import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
 import UnsupportedMicrobitDialog from "./UnsupportedMicrobitDialog";
+import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
 
 const ConnectionDialogs = () => {
   // Check compatability
   const logging = useLogging();
 
   const [isBluetoothSupported, isUsbSupported] = [true, true];
+  const { state, dispatch } = useConnectionFlow();
   const [flashProgress, setFlashProgress] = useState<number>(0);
-  const [state, dispatch] = useReducer(connectionDialogReducer, {
-    stage: ConnStage.Start,
-    // TODO: Check compatability first
-    type: isBluetoothSupported
-      ? ConnectionType.Bluetooth
-      : ConnectionType.RadioBridge,
-    isUsbSupported,
-  });
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
-  const dialogCommonProps = { isOpen, onClose };
+  const { isOpen, onClose: onCloseDialog, onOpen } = useDisclosure();
+
+  useEffect(() => {
+    if (state.stage === ConnStage.Start) {
+      onOpen();
+    }
+  }, [onOpen, state]);
 
   const handleWebUsbError = (err: unknown) => {
-    if (state.type === ConnectionType.Bluetooth) {
+    if (state.type === ConnType.Bluetooth) {
       return dispatch(ConnEvent.InstructManualFlashing);
     }
     // We might get Error objects as Promise rejection arguments
@@ -83,7 +77,7 @@ const ConnectionDialogs = () => {
       const device = new MicrobitWebUSBConnection(logging);
       await device.connect();
       await flashMicrobit(device);
-      if (state.type === ConnectionType.RadioBridge) {
+      if (state.type === ConnType.RadioBridge) {
         connectMicrobitsSerial();
       }
     } catch (e) {
@@ -152,19 +146,33 @@ const ConnectionDialogs = () => {
 
   // TODO: Flag reconnect failed
   const reconnectFailed = false;
-  const onSwitchTypeClick = useCallback(() => dispatch(ConnEvent.Switch), []);
-  const onBackClick = useCallback(() => dispatch(ConnEvent.Back), []);
-  const onNextClick = useCallback(() => dispatch(ConnEvent.Next), []);
-  const onSkip = useCallback(() => dispatch(ConnEvent.SkipFlashing), []);
-  const onTryAgain = useCallback(() => dispatch(ConnEvent.TryAgain), []);
+  const onSwitchTypeClick = useCallback(
+    () => dispatch(ConnEvent.Switch),
+    [dispatch]
+  );
+  const onBackClick = useCallback(() => dispatch(ConnEvent.Back), [dispatch]);
+  const onNextClick = useCallback(() => dispatch(ConnEvent.Next), [dispatch]);
+  const onSkip = useCallback(
+    () => dispatch(ConnEvent.SkipFlashing),
+    [dispatch]
+  );
+  const onTryAgain = useCallback(
+    () => dispatch(ConnEvent.TryAgain),
+    [dispatch]
+  );
   const onStartBluetooth = useCallback(
     () => dispatch(ConnEvent.GoToBluetoothStart),
-    []
+    [dispatch]
   );
   const onInstructManualFlashing = useCallback(
     () => dispatch(ConnEvent.InstructManualFlashing),
-    []
+    [dispatch]
   );
+  const onClose = useCallback(() => {
+    dispatch(ConnEvent.Close);
+    onCloseDialog();
+  }, [dispatch, onCloseDialog]);
+  const dialogCommonProps = { isOpen, onClose };
 
   switch (state.stage) {
     case ConnStage.Start: {
@@ -244,9 +252,9 @@ const ConnectionDialogs = () => {
     }
     case ConnStage.FlashingInProgress: {
       const headingIdVariations = {
-        [ConnectionType.Bluetooth]: "connectMB.usbDownloading.header",
-        [ConnectionType.RadioRemote]: "connectMB.usbDownloadingMB1.header",
-        [ConnectionType.RadioBridge]: "connectMB.usbDownloadingMB2.header",
+        [ConnType.Bluetooth]: "connectMB.usbDownloading.header",
+        [ConnType.RadioRemote]: "connectMB.usbDownloadingMB1.header",
+        [ConnType.RadioBridge]: "connectMB.usbDownloadingMB2.header",
       };
       return (
         <DownloadingDialog

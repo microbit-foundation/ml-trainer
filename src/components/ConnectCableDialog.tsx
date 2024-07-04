@@ -4,7 +4,7 @@ import connectCableImage from "../images/connect-cable.gif";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
-import { ConnectionType } from "../connection-flow";
+import { ConnType } from "../connection-flow";
 
 enum LinkType {
   Switch,
@@ -18,19 +18,19 @@ interface Config {
   onLink: LinkType;
 }
 
-const configs: Record<ConnectionType, Config> = {
-  [ConnectionType.Bluetooth]: {
+const configs: Record<ConnType, Config> = {
+  [ConnType.Bluetooth]: {
     headingId: "connectMB.connectCable.heading",
     subtitleId: "connectMB.connectCable.subtitle",
     linkTextId: "connectMB.connectCable.skip",
     onLink: LinkType.Skip,
   },
-  [ConnectionType.RadioRemote]: {
+  [ConnType.RadioRemote]: {
     headingId: "connectMB.connectCableMB1.heading",
     subtitleId: "connectMB.connectCableMB1.subtitle",
     onLink: LinkType.None,
   },
-  [ConnectionType.RadioBridge]: {
+  [ConnType.RadioBridge]: {
     headingId: "connectMB.connectCableMB2.heading",
     subtitleId: "connectMB.connectCableMB2.subtitle",
     linkTextId: "connectMB.radioStart.switchBluetooth",
@@ -40,7 +40,7 @@ const configs: Record<ConnectionType, Config> = {
 
 export interface ConnectCableDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
-  type: ConnectionType;
+  type: ConnType;
   onSkip: () => void;
   onSwitch: () => void;
 }

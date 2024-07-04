@@ -3,15 +3,19 @@ import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
 import { createStepPageUrl } from "../urls";
+import { useConnectionFlow } from "../connections";
+import { ConnEvent } from "../connection-flow";
 
 const StartResumeActions = () => {
   // TODO hasExistingSession to check local storage
   const hasExistingSession = true;
   const navigate = useNavigate();
+  const { dispatch } = useConnectionFlow();
 
   const handleNewSession = useCallback(() => {
     navigate(createStepPageUrl("add-data"));
-  }, [navigate]);
+    dispatch(ConnEvent.Start);
+  }, [dispatch, navigate]);
   return (
     <HStack w="100%" justifyContent="center" gap={5}>
       {hasExistingSession && (

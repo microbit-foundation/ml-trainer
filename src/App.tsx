@@ -17,6 +17,7 @@ import { createHomePageUrl, createStepPageUrl } from "./urls";
 import { deployment, useDeployment } from "./deployment";
 import { stepsConfig } from "./steps-config";
 import { LoggingProvider } from "./logging/logging-hooks";
+import { ConnectionFlowProvider } from "./connections";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -34,9 +35,11 @@ const Providers = ({ children }: ProviderLayoutProps) => {
         <LoggingProvider value={logging}>
           <ConsentProvider>
             <SettingsProvider>
-              <TranslationProvider>
-                <ErrorBoundary>{children}</ErrorBoundary>
-              </TranslationProvider>
+              <ConnectionFlowProvider>
+                <TranslationProvider>
+                  <ErrorBoundary>{children}</ErrorBoundary>
+                </TranslationProvider>
+              </ConnectionFlowProvider>
             </SettingsProvider>
           </ConsentProvider>
         </LoggingProvider>

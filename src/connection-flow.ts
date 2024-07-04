@@ -1,6 +1,7 @@
 import { Reducer } from "react";
 
 export enum ConnStage {
+  None,
   Start,
   ConnectCable,
   WebUsbFlashingTutorial,
@@ -24,7 +25,7 @@ export enum ConnStage {
   MicrobitUnsupported,
 }
 
-export enum ConnectionType {
+export enum ConnType {
   Bluetooth,
   RadioBridge,
   RadioRemote,
@@ -32,18 +33,20 @@ export enum ConnectionType {
 
 export type ConnState = {
   stage: ConnStage;
-  type: ConnectionType;
+  type: ConnType;
   isUsbSupported: boolean;
 };
 
 export enum ConnEvent {
   // User triggered events
+  Start,
   Switch,
   Next,
   Back,
   SkipFlashing,
   TryAgain,
   GoToBluetoothStart,
+  Close,
 
   // Web USB Flashing events
   WebUsbChooseMicrobit,
@@ -75,38 +78,49 @@ export const connectionDialogReducer: Reducer<ConnState, ConnEvent> = (
   event
 ) => {
   switch (event) {
-    case ConnEvent.Switch: {
+    case ConnEvent.Start:
+      return { ...state, stage: ConnStage.Start };
+    case ConnEvent.Close:
+      return { ...state, stage: ConnStage.None };
+    case ConnEvent.SkipFlashing:
+      return { ...state, stage: ConnStage.ConnectBattery };
+    case ConnEvent.FlashingInProgress:
+      return { ...state, stage: ConnStage.FlashingInProgress };
+    case ConnEvent.InstructManualFlashing:
+      return { ...state, stage: ConnStage.ManualFlashingTutorial };
+    case ConnEvent.WebUsbChooseMicrobit:
+      return { ...state, stage: ConnStage.WebUsbChooseMicrobit };
+    case ConnEvent.ConnectingBluetooth:
+      return { ...state, stage: ConnStage.ConnectingBluetooth };
+    case ConnEvent.ConnectingMicrobits:
+      return { ...state, stage: ConnStage.ConnectingMicrobits };
+    case ConnEvent.Next:
+      return { ...state, ...getNextStageAndType(state, 1) };
+    case ConnEvent.Back:
+      return { ...state, ...getNextStageAndType(state, -1) };
+    case ConnEvent.Switch:
       return {
         ...state,
         type:
-          state.type === ConnectionType.Bluetooth
-            ? ConnectionType.RadioRemote
-            : ConnectionType.Bluetooth,
+          state.type === ConnType.Bluetooth
+            ? ConnType.RadioRemote
+            : ConnType.Bluetooth,
       };
-    }
-    case ConnEvent.GoToBluetoothStart: {
+    case ConnEvent.GoToBluetoothStart:
       return {
         ...state,
         stage: ConnStage.Start,
-        type: ConnectionType.Bluetooth,
+        type: ConnType.Bluetooth,
       };
-    }
-    case ConnEvent.Next: {
-      return { ...state, ...getNextStageAndType(state, 1) };
-    }
-    case ConnEvent.Back: {
-      return { ...state, ...getNextStageAndType(state, -1) };
-    }
-    case ConnEvent.FlashingComplete: {
+    case ConnEvent.FlashingComplete:
       return {
         ...state,
         stage:
-          state.type === ConnectionType.RadioRemote
+          state.type === ConnType.RadioRemote
             ? ConnStage.ConnectBattery
             : ConnStage.ConnectingMicrobits,
       };
-    }
-    case ConnEvent.TryAgain: {
+    case ConnEvent.TryAgain:
       return {
         ...state,
         stage:
@@ -114,26 +128,14 @@ export const connectionDialogReducer: Reducer<ConnState, ConnEvent> = (
             ? ConnStage.ConnectBluetoothTutorial
             : ConnStage.ConnectCable,
       };
-    }
+    default:
+      return state;
   }
-  if (eventToNewStage[event]) {
-    return { ...state, stage: eventToNewStage[event] };
-  }
-  return state;
-};
-
-const eventToNewStage: Record<number, ConnStage> = {
-  [ConnEvent.SkipFlashing]: ConnStage.ConnectBattery,
-  [ConnEvent.FlashingInProgress]: ConnStage.FlashingInProgress,
-  [ConnEvent.InstructManualFlashing]: ConnStage.ManualFlashingTutorial,
-  [ConnEvent.WebUsbChooseMicrobit]: ConnStage.WebUsbChooseMicrobit,
-  [ConnEvent.ConnectingBluetooth]: ConnStage.ConnectingBluetooth,
-  [ConnEvent.ConnectingMicrobits]: ConnStage.ConnectingMicrobits,
 };
 
 const getStageAndTypeOrder = (state: ConnState): StageAndType[] => {
-  const { RadioRemote, RadioBridge, Bluetooth } = ConnectionType;
-  if (state.type === ConnectionType.Bluetooth) {
+  const { RadioRemote, RadioBridge, Bluetooth } = ConnType;
+  if (state.type === ConnType.Bluetooth) {
     return [
       { stage: ConnStage.Start, type: Bluetooth },
       { stage: ConnStage.ConnectCable, type: Bluetooth },
