@@ -15,19 +15,26 @@
   // get recording from mother prop
   export let recording: RecordingData;
   export let gestureName: string;
-  export let onDelete: (recording: RecordingData) => void;
+  export let showFingerprint: boolean = false;
+  export let onDelete: ((recording: RecordingData) => void) | undefined = undefined;
 </script>
 
-<div class="h-full flex flex-col w-40 relative overflow-hidden">
+<div class="h-full flex flex-col w-40 relative overflow-hidden gap-2">
   <RecordingGraph data={recording.data} />
-  <Fingerprint {gestureName} recordingData={recording} />
+  {#if showFingerprint}
+    <div class="flex-grow">
+      <Fingerprint {gestureName} recordingData={recording} height="half" />
+    </div>
+  {/if}
 
-  <div class="absolute right-0 top-0 z-2">
-    <IconButton
-      ariaLabel={$t('content.data.deleteRecording')}
-      onClick={() => onDelete(recording)}
-      on:focus>
-      <CloseIcon class="text-xl m-1" />
-    </IconButton>
-  </div>
+  {#if onDelete}
+    <div class="absolute right-0 top-0 z-2">
+      <IconButton
+        ariaLabel={$t('content.data.deleteRecording')}
+        onClick={() => onDelete && onDelete(recording)}
+        on:focus>
+        <CloseIcon class="text-xl m-1" />
+      </IconButton>
+    </div>
+  {/if}
 </div>

@@ -13,7 +13,10 @@
   import View3DLive from '../3d-inspector/View3DLive.svelte';
   import Information from '../information/Information.svelte';
   import { state } from '../../script/stores/uiStore';
+  import Fingerprint from '../Fingerprint.svelte';
+  import LiveFingerprint from './LiveFingerprint.svelte';
 
+  export let showFingerprint: boolean = false;
   const live3dViewVisible = false;
   const live3dViewSize = live3dViewVisible ? 160 : 0;
   let componentWidth: number;
@@ -63,7 +66,11 @@
       </BaseDialog>
     {/if}
   </div>
-  <div class="absolute w-full h-full">
-    <LiveGraph width={componentWidth - live3dViewSize} />
+  <div class="absolute w-full h-full overflow-hidden">
+    {#if showFingerprint}
+      <LiveFingerprint width={componentWidth} />
+    {:else}
+      <LiveGraph width={componentWidth - live3dViewSize} />
+    {/if}
   </div>
 </div>

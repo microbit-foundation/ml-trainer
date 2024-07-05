@@ -7,14 +7,21 @@
 <script lang="ts">
   import * as tfvis from '@tensorflow/tfjs-vis';
   import { onMount } from 'svelte';
-  import { gestures } from '../script/stores/Stores';
   import { get } from 'svelte/store';
-  import { getPrevData, settings } from '../script/stores/mlStore';
-  import { makeInputs, ModelSettings } from '../script/ml';
-  import TabView from '../views/TabView.svelte';
-  import { state } from '../script/stores/uiStore';
   import BottomPanel from '../components/bottom/BottomPanel.svelte';
+  import GestureTilePart from '../components/GestureTilePart.svelte';
+  import Information from '../components/information/Information.svelte';
   import LoadingAnimation from '../components/LoadingBlobs.svelte';
+  import PleaseConnectFirst from '../components/PleaseConnectFirst.svelte';
+  import Recording from '../components/Recording.svelte';
+  import { t } from '../i18n';
+  import { makeInputs, ModelSettings } from '../script/ml';
+  import { getPrevData, settings } from '../script/stores/mlStore';
+  import { gestures } from '../script/stores/Stores';
+  import { state } from '../script/stores/uiStore';
+  import TabView from '../views/TabView.svelte';
+  import Fingerprint from '../components/Fingerprint.svelte';
+  import AverageFingerprint from '../components/AverageFingerprint.svelte';
 
   let surfaceAll: undefined | tfvis.Drawable;
   let surfaceCurrent: undefined | tfvis.Drawable;
@@ -96,42 +103,83 @@
       window.removeEventListener('resize', renderAllDataHeatmap);
     };
   });
+
+  $: hasSomeData = (): boolean => {
+    if ($gestures.length === 0) {
+      return false;
+    }
+    return $gestures.some(gesture => gesture.recordings.length > 0);
+  };
 </script>
 
 <div class="flex flex-col h-full inline-block w-full bg-backgrounddark">
   <TabView />
   <main class="contents">
     <h1 class="sr-only">Process data</h1>
-    <div class="flex flex-col flex-grow items-center h-0 overflow-y-auto">
-      <div class="p-5 flex-grow flex flex-col gap-5 w-3/4">
-        <div class="flex flex-col gap-2">
-          <h2 class="font-semibold">All recordings</h2>
-          <p>The mean of the filters applied to all recordings for each action</p>
-          <div class="bg-white p-5 rounded-lg w-full">
-            <div bind:this={surfaceAll}></div>
-          </div>
+
+    {#if !hasSomeData() && !$state.isInputConnected}
+      <div class="flex justify-center items-center flex-grow">
+        <PleaseConnectFirst />
+      </div>
+    {:else}
+      <div class="flex flex-col flex-grow">
+        <div
+          class="grid grid-cols-[200px,1fr] gap-x-7 items-center flex-shrink-0 h-13 px-10 z-3 border-b-3 border-gray-200 sticky top-0 bg-backgrounddark">
+          <Information
+            isLightTheme={false}
+            underlineIconText={false}
+            iconText={$t('content.data.classification')}
+            titleText={$t('content.data.classHelpHeader')}
+            bodyText={$t('content.data.classHelpBody')} />
+          <Information
+            isVisible={$gestures.some(g => g.name.trim() || g.recordings.length > 0)}
+            isLightTheme={false}
+            underlineIconText={false}
+            iconText={$t('content.data.data')}
+            titleText={$t('content.data.data')}
+            bodyText={$t('content.data.dataDescription')} />
         </div>
-        <div class="flex flex-col gap-2">
-          <h2 class="font-semibold">Current action</h2>
-          <p>Filters applied to the live data</p>
-          <div class="bg-white p-5 min-h-160px rounded-lg w-full">
-            {#if $state.isInputConnected && prevData}
-              <div bind:this={surfaceCurrent}></div>
-            {:else if $state.isInputConnected && !prevData}
-              <div class="flex justify-center items-center h-full">
-                <LoadingAnimation />
+        <div
+          class="grid grid-cols-[200px,1fr] auto-rows-max gap-x-7 gap-y-3 py-2 px-10 flex-grow flex-shrink h-0 overflow-y-auto">
+          {#each $gestures as gesture (gesture.ID)}
+            <section class="contents">
+              <GestureTilePart small elevated>
+                <div class="flex items-center px-6 w-50 h-30 relative">
+                  <h3>
+                    {gesture.name}
+                  </h3>
+                </div>
+              </GestureTilePart>
+              <div
+                class="max-w-max {gesture.name && gesture.recordings.length
+                  ? 'visible'
+                  : 'invisible'}">
+                <GestureTilePart small elevated>
+                  <div class="h-full flex items-center gap-x-3 p-2">
+                    <div
+                      class="w-40 flex flex-col justify-center items-center gap-x-3 overflow-hidden">
+                      <AverageFingerprint {gesture} />
+                    </div>
+                    {#if gesture.recordings.length}
+                      {#each gesture.recordings as recording (String(gesture.ID) + String(recording.ID))}
+                        <div class="h-full flex flex-col w-40 relative overflow-hidden">
+                          <Fingerprint
+                            gestureName={gesture.name}
+                            recordingData={recording}
+                            height="full" />
+                        </div>
+                      {/each}
+                    {/if}
+                  </div>
+                </GestureTilePart>
               </div>
-            {:else}
-              <div class="flex justify-center items-center h-full">
-                <p>Connect your micro:bit view live data</p>
-              </div>
-            {/if}
-          </div>
+            </section>
+          {/each}
         </div>
       </div>
-    </div>
+    {/if}
     <div class="h-160px w-full">
-      <BottomPanel />
+      <BottomPanel showFingerprint />
     </div>
   </main>
 </div>
