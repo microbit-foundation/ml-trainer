@@ -20,14 +20,18 @@
 </style>
 
 <script lang="ts">
-  export let matrix: boolean[];
+  export let matrix: boolean[] | undefined = undefined;
   export let ariaLabel: string | undefined = undefined;
-  export let brandColor: boolean = false;
+  export let brandColor: boolean = true;
+  export let dimension: number = 18;
 </script>
 
-<div class="buttonGrid h-18 w-18 select-none ml-0" role="img" aria-label={ariaLabel}>
+<div
+  class="buttonGrid h-{dimension} w-{dimension} select-none ml-0"
+  role="img"
+  aria-label={ariaLabel}>
   <!-- Draw all 25 boxes -->
-  {#each matrix as button}
+  {#each matrix ?? new Array(25).fill(false) as button}
     <div
       class="{button
         ? brandColor
