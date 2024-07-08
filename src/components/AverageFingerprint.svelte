@@ -5,16 +5,12 @@
  -->
 
 <script lang="ts">
-  import * as tfvis from '@tensorflow/tfjs-vis';
-  import { onMount } from 'svelte';
   import { get } from 'svelte/store';
   import { makeInputs, ModelSettings } from '../script/ml';
   import { GestureData, settings } from '../script/stores/mlStore';
-  import { gestures } from '../script/stores/Stores';
   import Fingerprint from './Fingerprint.svelte';
 
   export let gesture: GestureData;
-  let surface: undefined | tfvis.Drawable;
 
   const filters = Array.from(get(settings).includedFilters);
 
@@ -46,8 +42,9 @@
   };
 </script>
 
-<Fingerprint
-  gestureName={`${gesture.name} average`}
-  recordingData={undefined}
-  averagedData={getFingerprintData()}
-  height="full" />
+<div class="h-full overflow-hidden">
+  <Fingerprint
+    gestureName={`${gesture.name} average`}
+    recordingData={undefined}
+    averagedData={getFingerprintData()} />
+</div>

@@ -14,7 +14,6 @@
 
   // Updates width to ensure that the canvas fills the whole screen
   export let width: number;
-  export let halfHeight: boolean = false;
 
   var canvas: HTMLCanvasElement | undefined = undefined;
   var chart: SmoothieChart | undefined;
@@ -28,7 +27,7 @@
   onMount(() => {
     chart = new SmoothieChart({
       maxValue: 2.3,
-      minValue: -2.3,
+      minValue: -2,
       millisPerPixel: 7,
       grid: {
         fillStyle: '#ffffff00',
@@ -49,7 +48,20 @@
     });
     chart.streamTo(<HTMLCanvasElement>canvas, 0);
     chart.render();
-    return () => chart?.stop();
+
+    const resizeChart = () => {
+      window.requestAnimationFrame(() => {
+        if (chart && canvas && !$state.isInputConnected) {
+          canvas.width = width - 30;
+          chart.render();
+        }
+      });
+    };
+    window.addEventListener('resize', resizeChart);
+    return () => {
+      chart?.stop();
+      window.removeEventListener('resize', resizeChart);
+    };
   });
 
   $: {
@@ -73,14 +85,14 @@
     }
 
     // Set start line
-    recordLines.append(new Date().getTime() - 1, -2.3, false);
+    recordLines.append(new Date().getTime() - 1, -2, false);
     recordLines.append(new Date().getTime(), 2.3, false);
 
     // Wait a second and set end line
     blockRecordingStart = true;
     setTimeout(() => {
       recordLines.append(new Date().getTime() - 1, 2.3, false);
-      recordLines.append(new Date().getTime(), -2.3, false);
+      recordLines.append(new Date().getTime(), -2, false);
       blockRecordingStart = false;
     }, get(settings).duration);
   }
@@ -93,11 +105,7 @@
   }
 </script>
 
-<div class="flex flex-grow h-full w-full overflow-hidden">
-  <canvas
-    bind:this={canvas}
-    height={halfHeight ? 80 : 160}
-    id="smoothie-chart"
-    width={width - 30} />
-  <DimensionLabels {halfHeight} />
+<div class="flex overflow-hidden">
+  <canvas bind:this={canvas} height={160} id="smoothie-chart" width={width - 30} />
+  <DimensionLabels />
 </div>

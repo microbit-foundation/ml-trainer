@@ -164,12 +164,12 @@
   }
 
   // Delete recording from recordings array
-  function deleteRecording(recording: RecordingData) {
+  function deleteRecording(gestureId: number, recording: RecordingData) {
     if (!areActionsAllowed(false)) {
       return;
     }
     $state.isPredicting = false;
-    removeRecording(gesture.getId(), recording.ID);
+    removeRecording(gestureId, recording.ID);
   }
 
   function selectGesture(): void {
@@ -367,6 +367,7 @@
         {#if hasRecordings}
           {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
             <Recording
+              gestureId={$gesture.ID}
               gestureName={$nameBind}
               {recording}
               onDelete={deleteRecording}

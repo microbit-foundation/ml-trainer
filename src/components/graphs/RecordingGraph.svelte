@@ -20,6 +20,7 @@
   import { smoothenXYZData } from '../../script/smoothenXYZData';
 
   export let data: { x: number[]; y: number[]; z: number[] };
+  export let showBorder: boolean;
 
   const smoothData = smoothenXYZData(data);
   let verticalLineX = NaN;
@@ -229,7 +230,10 @@
 
 <div
   bind:this={htmlElement}
-  class="h-full w-full relative rounded-md border-1 border-neutral-300">
+  class="h-full w-full relative bg-white z-1"
+  class:rounded-md={showBorder}
+  class:border-1={showBorder}
+  class:border-neutral-300={showBorder}>
   <div class="z-1 h-full w-full absolute">
     {#if enableInspector && !isNaN(hoverIndex)}
       <p

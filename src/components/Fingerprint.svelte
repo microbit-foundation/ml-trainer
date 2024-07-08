@@ -14,7 +14,6 @@
   export let recordingData: RecordingData | undefined;
   export let gestureName: string;
   export let averagedData: number[] = [];
-  export let height: 'small' | 'half' | 'full' = 'small';
 
   let surface: undefined | tfvis.Drawable;
 
@@ -36,17 +35,16 @@
 
   const chartData = {
     values: recordingData ? [getProcessedData()] : [averagedData],
-    xTickLabels: filtersLabels,
-    yTickLabels: [gestureName],
+    xTickLabels: [gestureName],
+    yTickLabels: filtersLabels,
   };
 
   onMount(() => {
     if (surface) {
       tfvis.render.heatmap(surface, chartData, {
         colorMap: 'viridis',
-        height: height === 'small' ? 29 : height === 'half' ? 60 : 111,
-        width: 204,
-        rowMajor: true,
+        height: 109,
+        width: 80,
         domain: [0, 1],
         fontSize: 0,
       });
@@ -54,16 +52,15 @@
   });
 </script>
 
-<div
-  class="relative w-full"
-  class:h-11px={height === 'small'}
-  class:h-42px={height === 'half'}
-  class:h-102px={height === 'full'}>
+<div class="relative w-40px" class:h-full={!recordingData}>
   <div
-    class="absolute w-full -bottom-9px top-0 -left-8px"
-    class:h-11px={height === 'small'}
-    class:h-42px={height === 'half'}
-    class:h-102px={height === 'full'}>
+    class="absolute h-full w-full -left-10px right-0 -bottom-1px"
+    class:top-1px={!recordingData}
+    class:top-0={recordingData}>
     <div bind:this={surface}></div>
   </div>
+  {#if !recordingData}
+    <div class="absolute bg-white h-full w-20px left-34px top-0 bottom-0" />
+    <div class="absolute bg-white h-8px w-40px left-0 -bottom-7px" />
+  {/if}
 </div>

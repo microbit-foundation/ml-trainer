@@ -15,26 +15,33 @@
   // get recording from mother prop
   export let recording: RecordingData;
   export let gestureName: string;
+  export let gestureId: number;
   export let showFingerprint: boolean = false;
-  export let onDelete: ((recording: RecordingData) => void) | undefined = undefined;
+  export let onDelete: (gestureId: number, recording: RecordingData) => void;
+  export let fullWidth: boolean = false;
 </script>
 
-<div class="h-full flex flex-col w-40 relative overflow-hidden gap-2">
-  <RecordingGraph data={recording.data} />
+<div
+  class="h-full flex w-40 relative overflow-hidden"
+  class:w-40={!fullWidth}
+  class:w-full={fullWidth}
+  class:rounded-md={showFingerprint}
+  class:border-1={showFingerprint}
+  class:border-neutral-300={showFingerprint}>
+  <RecordingGraph data={recording.data} showBorder={!showFingerprint} />
   {#if showFingerprint}
-    <div class="flex-grow">
-      <Fingerprint {gestureName} recordingData={recording} height="half" />
-    </div>
+    <Fingerprint {gestureName} recordingData={recording} />
   {/if}
 
-  {#if onDelete}
-    <div class="absolute right-0 top-0 z-2">
-      <IconButton
-        ariaLabel={$t('content.data.deleteRecording')}
-        onClick={() => onDelete && onDelete(recording)}
-        on:focus>
-        <CloseIcon class="text-xl m-1" />
-      </IconButton>
-    </div>
-  {/if}
+  <div
+    class="absolute top-0 z-2"
+    class:right-0={!showFingerprint}
+    class:right-34px={showFingerprint}>
+    <IconButton
+      ariaLabel={$t('content.data.deleteRecording')}
+      onClick={() => onDelete(gestureId, recording)}
+      on:focus>
+      <CloseIcon class="text-xl m-1" />
+    </IconButton>
+  </div>
 </div>

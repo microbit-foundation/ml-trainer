@@ -16,9 +16,14 @@
   import Recording from '../components/Recording.svelte';
   import { t } from '../i18n';
   import { makeInputs, ModelSettings } from '../script/ml';
-  import { getPrevData, settings } from '../script/stores/mlStore';
+  import {
+    getPrevData,
+    RecordingData,
+    removeRecording,
+    settings,
+  } from '../script/stores/mlStore';
   import { gestures } from '../script/stores/Stores';
-  import { state } from '../script/stores/uiStore';
+  import { areActionsAllowed, state } from '../script/stores/uiStore';
   import TabView from '../views/TabView.svelte';
   import Fingerprint from '../components/Fingerprint.svelte';
   import AverageFingerprint from '../components/AverageFingerprint.svelte';
@@ -104,6 +109,15 @@
     };
   });
 
+  // Delete recording from recordings array
+  function deleteRecording(gestureId: number, recording: RecordingData) {
+    if (!areActionsAllowed(false)) {
+      return;
+    }
+    $state.isPredicting = false;
+    removeRecording(gestureId, recording.ID);
+  }
+
   $: hasSomeData = (): boolean => {
     if ($gestures.length === 0) {
       return false;
@@ -144,10 +158,12 @@
           {#each $gestures as gesture (gesture.ID)}
             <section class="contents">
               <GestureTilePart small elevated>
-                <div class="flex items-center px-6 w-50 h-30 relative">
+                <div
+                  class="flex items-center justify-between py-2 px-6 w-50 h-30 relative">
                   <h3>
                     {gesture.name}
                   </h3>
+                  <AverageFingerprint {gesture} />
                 </div>
               </GestureTilePart>
               <div
@@ -156,18 +172,16 @@
                   : 'invisible'}">
                 <GestureTilePart small elevated>
                   <div class="h-full flex items-center gap-x-3 p-2">
-                    <div
-                      class="w-40 flex justify-center items-center gap-x-3 overflow-hidden">
-                      <AverageFingerprint {gesture} />
-                    </div>
                     {#if gesture.recordings.length}
                       {#each gesture.recordings as recording (String(gesture.ID) + String(recording.ID))}
-                        <div class="h-full flex flex-col w-40 relative overflow-hidden">
+                        <div class="h-full flex flex-col w-48 relative overflow-hidden">
                           <Recording
+                            gestureId={gesture.ID}
                             gestureName={gesture.name}
-                            showFingerprint
                             {recording}
-                            onDelete={undefined} />
+                            fullWidth={true}
+                            showFingerprint
+                            onDelete={deleteRecording} />
                         </div>
                       {/each}
                     {/if}

@@ -5,16 +5,16 @@
  -->
 
 <script lang="ts">
-  import LiveGraph from '../graphs/LiveGraph.svelte';
+  import { onMount } from 'svelte';
   import { t } from '../../i18n';
-  import ConnectedLiveGraphButtons from './ConnectedLiveGraphButtons.svelte';
-  import LiveGraphInformationSection from './LiveGraphInformationSection.svelte';
-  import BaseDialog from '../dialogs/BaseDialog.svelte';
-  import View3DLive from '../3d-inspector/View3DLive.svelte';
-  import Information from '../information/Information.svelte';
   import { state } from '../../script/stores/uiStore';
-  import Fingerprint from '../Fingerprint.svelte';
+  import View3DLive from '../3d-inspector/View3DLive.svelte';
+  import BaseDialog from '../dialogs/BaseDialog.svelte';
+  import LiveGraph from '../graphs/LiveGraph.svelte';
+  import Information from '../information/Information.svelte';
+  import ConnectedLiveGraphButtons from './ConnectedLiveGraphButtons.svelte';
   import LiveFingerprint from './LiveFingerprint.svelte';
+  import LiveGraphInformationSection from './LiveGraphInformationSection.svelte';
 
   export let showFingerprint: boolean = false;
   const live3dViewVisible = false;
@@ -26,7 +26,9 @@
 <div bind:clientWidth={componentWidth} class="relative w-full h-full bg-white">
   <div class="relative z-1">
     <div
-      class="flex items-center justify-between gap-2 pt-4 px-7 m-0 absolute top-0 left-0 right-0">
+      class="flex items-center justify-between gap-2 pt-4 px-7 m-0 absolute top-0 left-0"
+      class:right-0={!showFingerprint}
+      class:right-80px={showFingerprint}>
       <div class="flex items-center gap-4">
         <!-- The live text and info box -->
         <LiveGraphInformationSection />
@@ -66,13 +68,11 @@
       </BaseDialog>
     {/if}
   </div>
-  <div
-    class="absolute w-full h-full overflow-hidden"
-    class:flex={showFingerprint}
-    class:flex-col={showFingerprint}>
-    <LiveGraph width={componentWidth - live3dViewSize} halfHeight={showFingerprint} />
+  <div class="absolute w-full h-full overflow-hidden" class:flex={showFingerprint}>
+    <!-- <div class="bg-red-200" style={`width: ${componentWidth}px`}></div> -->
+    <LiveGraph width={componentWidth - live3dViewSize - (showFingerprint ? 80 : 0)} />
     {#if showFingerprint}
-      <LiveFingerprint width={componentWidth} />
+      <LiveFingerprint />
     {/if}
   </div>
 </div>

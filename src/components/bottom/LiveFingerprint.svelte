@@ -10,8 +10,8 @@
   import { get } from 'svelte/store';
   import { makeInputs, ModelSettings } from '../../script/ml';
   import { getPrevData, settings } from '../../script/stores/mlStore';
+  import { state } from '../../script/stores/uiStore';
 
-  export let width: number;
   let surface: undefined | tfvis.Drawable;
   $: prevData = getPrevData();
   const filters = Array.from(get(settings).includedFilters);
@@ -39,14 +39,13 @@
           : disconnectedData;
         const currentData = {
           values: [currentGestureData],
-          xTickLabels: filtersLabels,
-          yTickLabels: ['Live'],
+          xTickLabels: ['Live'],
+          yTickLabels: filtersLabels,
         };
         tfvis.render.heatmap(surface, currentData, {
           colorMap: 'viridis',
-          height: 89,
-          width: width + 44,
-          rowMajor: true,
+          height: 166,
+          width: 160,
           domain: [0, 1],
           fontSize: 0,
         });
@@ -58,8 +57,8 @@
   });
 </script>
 
-<div class="relative w-full h-full flex-grow">
-  <div class="absolute h-full w-full top-0 -left-8px">
+<div class="relative w-20 h-full z-0">
+  <div class="absolute h-full w-full top-0 -left-10px right-0 bottom-0">
     <div bind:this={surface}></div>
   </div>
 </div>

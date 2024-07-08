@@ -15,8 +15,6 @@
   import { currentData } from '../../script/stores/mlStore';
   import { state } from '../../script/stores/uiStore';
 
-  export let halfHeight: boolean = false;
-  const heightValue = halfHeight ? 5 : 10;
   $: {
     const data = $currentData;
     const dataInArray = [data.x, data.y, data.z];
@@ -29,20 +27,9 @@
     { label: 'z', arrowHeight: 0, labelHeight: 0, color: '#808ef9', id: 2 },
   ];
 
-  function scale(value: number) {
-    const newMin = (heightValue / (2.3 + Math.abs(-2.3))) * 0.3;
-    const newMax = heightValue - newMin;
-    const existingMin = 2;
-    const existingMax = -2;
-    return (
-      ((newMax - newMin) * (value - existingMin)) / (existingMax - existingMin) + newMin
-    );
-  }
-
-  function updateDimensionLabels(data: number[]) {
+  function updateDimensionLabels(axes: number[]) {
     for (let i = 0; i < 3; i++) {
-      const value = data[labels[i].id];
-      labels[i].arrowHeight = scale(value);
+      labels[i].arrowHeight = (2.1 - axes[labels[i].id]) * 2.32;
     }
     fixOverlappingLabels();
   }
@@ -88,21 +75,19 @@
   }
 </script>
 
-{#if $state.isInputConnected}
-  <div class="w-6 relative" class:h-40={!halfHeight} class:h-20={halfHeight}>
+<div class="h-40 w-6 relative z-10 bg-white">
+  {#if $state.isInputConnected}
     {#each labels as dimension}
       <div
         class="absolute arrowLeft -m-3.5"
         style="transform: translateY({dimension.arrowHeight +
-          heightValue /
-            16 /
-            2}rem) scale(1, 0.75); border-right-color: {dimension.color};" />
+          0.75}rem) scale(1, 0.75); border-right-color: {dimension.color};" />
       <p
         class="absolute ml-3 text-xl"
         style="transform: translateY({dimension.labelHeight -
-          1.75 / 2}rem); color: {dimension.color};">
+          0.5}rem); color: {dimension.color};">
         {dimension.label}
       </p>
     {/each}
-  </div>
-{/if}
+  {/if}
+</div>
