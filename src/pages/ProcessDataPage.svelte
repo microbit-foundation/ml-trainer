@@ -27,6 +27,7 @@
   import TabView from '../views/TabView.svelte';
   import Fingerprint from '../components/Fingerprint.svelte';
   import AverageFingerprint from '../components/AverageFingerprint.svelte';
+  import StandardButton from '../components/StandardButton.svelte';
 
   let surfaceAll: undefined | tfvis.Drawable;
   let surfaceCurrent: undefined | tfvis.Drawable;
@@ -124,6 +125,14 @@
     }
     return $gestures.some(gesture => gesture.recordings.length > 0);
   };
+
+  let showProcessedData = false;
+  const processData = () => {
+    showProcessedData = true;
+  };
+  const hideProcessedData = () => {
+    showProcessedData = false;
+  };
 </script>
 
 <div class="flex flex-col h-full inline-block w-full bg-backgrounddark">
@@ -163,7 +172,11 @@
                   <h3>
                     {gesture.name}
                   </h3>
-                  <AverageFingerprint {gesture} />
+                  <div
+                    class="transition-all duration-1000 h-full w-0"
+                    class:w-30px={showProcessedData}>
+                    <AverageFingerprint {gesture} />
+                  </div>
                 </div>
               </GestureTilePart>
               <div
@@ -174,13 +187,16 @@
                   <div class="h-full flex items-center gap-x-3 p-2">
                     {#if gesture.recordings.length}
                       {#each gesture.recordings as recording (String(gesture.ID) + String(recording.ID))}
-                        <div class="h-full flex flex-col w-48 relative overflow-hidden">
+                        <div
+                          class="h-full flex flex-col w-40 relative overflow-hidden transition-all duration-1000"
+                          class:w-48={showProcessedData}>
                           <Recording
                             gestureId={gesture.ID}
                             gestureName={gesture.name}
                             {recording}
                             fullWidth={true}
                             showFingerprint
+                            {showProcessedData}
                             onDelete={deleteRecording} />
                         </div>
                       {/each}
@@ -193,6 +209,10 @@
         </div>
       </div>
     {/if}
+    <div
+      class="flex items-center justify-end px-10 py-2 border-b-3 border-t-3 border-gray-200">
+      <StandardButton type="primary" onClick={processData}>Process data</StandardButton>
+    </div>
     <div class="h-160px w-full">
       <BottomPanel showFingerprint />
     </div>

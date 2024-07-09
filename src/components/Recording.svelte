@@ -19,6 +19,7 @@
   export let showFingerprint: boolean = false;
   export let onDelete: (gestureId: number, recording: RecordingData) => void;
   export let fullWidth: boolean = false;
+  export let showProcessedData: boolean = false;
 </script>
 
 <div
@@ -30,13 +31,12 @@
   class:border-neutral-300={showFingerprint}>
   <RecordingGraph data={recording.data} showBorder={!showFingerprint} />
   {#if showFingerprint}
-    <Fingerprint {gestureName} recordingData={recording} />
+    <div class="transition-all duration-1000 w-0" class:w-30px={showProcessedData}>
+      <Fingerprint {gestureName} recordingData={recording} />
+    </div>
   {/if}
 
-  <div
-    class="absolute top-0 z-2"
-    class:right-0={!showFingerprint}
-    class:right-34px={showFingerprint}>
+  <div class="absolute top-0 z-2 left-0">
     <IconButton
       ariaLabel={$t('content.data.deleteRecording')}
       onClick={() => onDelete(gestureId, recording)}
