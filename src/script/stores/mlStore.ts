@@ -34,9 +34,24 @@ export function loadDatasetFromFile(file: File) {
     const contents = e.target.result;
     if (typeof contents === 'string') {
       // TODO: fix the following really unsafe parsing and casting
-      const gestureData: PersistantGestureData[] = JSON.parse(
-        contents,
-      ) as PersistantGestureData[];
+      const parsedData = JSON.parse(contents);
+      let gestureData: PersistantGestureData[];
+      if (parsedData.gestureData) {
+        gestureData = parsedData.gestureData;
+        const dataSource = parsedData.dataSource;
+        if (dataSource) {
+          settings.update(obj => {
+            obj.dataSource = dataSource;
+            return obj;
+          });
+        }
+      } else {
+        settings.update(obj => {
+          obj.dataSource = DataSource.ACCELEROMETER;
+          return obj;
+        });
+        gestureData = parsedData;
+      }
       updateToUntrainedState();
       gestures.importFrom(gestureData);
     }
@@ -46,10 +61,15 @@ export function loadDatasetFromFile(file: File) {
 
 export function downloadDataset() {
   const element = document.createElement('a');
+  const data = {
+    gestureData: get(gestures),
+    filters: Array.from(get(settings).includedFilters),
+    dataSource: get(settings).dataSource,
+  };
   element.setAttribute(
     'href',
     'data:application/json;charset=utf-8,' +
-      encodeURIComponent(JSON.stringify(get(gestures), null, 2)),
+      encodeURIComponent(JSON.stringify(data, null, 2)),
   );
   element.setAttribute('download', 'dataset');
 
@@ -136,6 +156,7 @@ const initialMLSettings: MlSettings = {
     Filters.ACC,
     Filters.ZCR,
     Filters.RMS,
+    Filters.GRAD,
   ]),
   dataSource: DataSource.ACCELEROMETER,
 };
@@ -144,7 +165,8 @@ const initialMLSettings: MlSettings = {
 export const settings = persistantWritable<MlSettings>('MLSettings', initialMLSettings);
 
 // Hack required to change the initial settings when
-// they are already in local storage.
+// they are already in local storage without wiping everything.
+// See persistVersion in storeUtil.ts.
 settings.update(obj => {
   // Add new filter for magnetometer data.
   obj.includedFilters.add(Filters.GRAD);

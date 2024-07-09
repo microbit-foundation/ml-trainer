@@ -5,20 +5,20 @@
  -->
 
 <script lang="ts">
-  import { onMount } from 'svelte';
   import {
     Chart,
-    registerables,
     ChartConfiguration,
     ChartTypeRegistry,
     LineController,
     LineElement,
     LinearScale,
     PointElement,
+    registerables,
   } from 'chart.js';
-  import RecordingInspector from '../3d-inspector/RecordingInspector.svelte';
+  import { onMount } from 'svelte';
   import { smoothXYZData } from '../../script/smoothenXYZData';
-  import { graphRange } from './graph-utils';
+  import RecordingInspector from '../3d-inspector/RecordingInspector.svelte';
+  import { recordingGraphRange } from './graph-utils';
 
   export let data: { x: number[]; y: number[]; z: number[] };
 
@@ -148,8 +148,8 @@
           },
           y: {
             type: 'linear',
-            min: graphRange.min,
-            max: graphRange.max,
+            min: recordingGraphRange.min,
+            max: recordingGraphRange.max,
             grid: {
               drawTicks: false,
               display: false,

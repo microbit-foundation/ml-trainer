@@ -14,7 +14,7 @@
 <script lang="ts">
   import { currentData } from '../../script/stores/mlStore';
   import { state } from '../../script/stores/uiStore';
-  import { graphRange } from './graph-utils';
+  import { liveGraphRange } from './graph-utils';
 
   $: {
     const data = $currentData;
@@ -29,10 +29,10 @@
   ];
 
   function scale(value: number) {
-    const newMin = (10 / (graphRange.max + Math.abs(graphRange.min))) * 0.3;
+    const newMin = (10 / (liveGraphRange.max + Math.abs(liveGraphRange.min))) * 0.3;
     const newMax = 10 - newMin;
-    const existingMin = 1;
-    const existingMax = -1;
+    const existingMin = 2;
+    const existingMax = -2;
     return (
       ((newMax - newMin) * (value - existingMin)) / (existingMax - existingMin) + newMin
     );

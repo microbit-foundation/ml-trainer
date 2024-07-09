@@ -89,10 +89,15 @@
   };
 
   const getDefaultSelected = () => {
-    const value = get(settings).dataSource;
+    const value = $settings.dataSource;
     const defaultOption = options.find(option => option.value === value);
     return defaultOption;
   };
+
+  $: {
+    programaticChange = true;
+    selected.set(options.find(o => o.value === $settings.dataSource));
+  }
 
   const {
     elements: { trigger, menu, option, label },

@@ -6,7 +6,7 @@
 
 import { get } from 'svelte/store';
 import { DataSource, livedata, settings } from '../stores/mlStore';
-import { buttonPressed } from '../stores/uiStore';
+import { buttonPressed, state } from '../stores/uiStore';
 import MBSpecs from './MBSpecs';
 import { DeviceRequestStates } from './MicrobitConnection';
 import {
@@ -16,8 +16,8 @@ import {
 } from './state-updaters';
 
 export const scaleAcc = (value: number) => {
-  const newMax = 1;
-  const newMin = -1;
+  const newMax = 2;
+  const newMin = -2;
   const currentMax = 2000;
   const currentMin = -2000;
   return ((newMax - newMin) * (value - currentMin)) / (currentMax - currentMin) + newMin;
@@ -52,8 +52,8 @@ export const onAccelerometerChange = (x: number, y: number, z: number): void => 
 };
 
 export const scaleMag = (value: number) => {
-  const newMax = 1;
-  const newMin = -1;
+  const newMax = 2;
+  const newMin = -2;
   const currentMax = Math.sqrt(2 ** 15);
   const currentMin = Math.sqrt(2 ** 15) * -1;
   return ((newMax - newMin) * (value - currentMin)) / (currentMax - currentMin) + newMin;
