@@ -40,13 +40,13 @@ export function loadDatasetFromFile(file: File) {
         gestureData = parsedData.gestureData;
         const dataSource = parsedData.dataSource;
         if (dataSource) {
-          settings.update(obj => {
+          persistentSettings.update(obj => {
             obj.dataSource = dataSource;
             return obj;
           });
         }
       } else {
-        settings.update(obj => {
+        persistentSettings.update(obj => {
           obj.dataSource = DataSource.ACCELEROMETER;
           return obj;
         });
@@ -64,7 +64,7 @@ export function downloadDataset() {
   const data = {
     gestureData: get(gestures),
     filters: Array.from(get(settings).includedFilters),
-    dataSource: get(settings).dataSource,
+    dataSource: get(persistentSettings).dataSource,
   };
   element.setAttribute(
     'href',
@@ -135,7 +135,6 @@ type MlSettings = {
   learningRate: number;
   includedAxes: AxesType[];
   includedFilters: Set<FilterType>;
-  dataSource: DataSource;
 };
 
 const initialMLSettings: MlSettings = {
@@ -158,8 +157,20 @@ const initialMLSettings: MlSettings = {
     Filters.RMS,
     Filters.GRAD,
   ]),
+};
+
+interface PersistentSettings {
+  dataSource: DataSource;
+}
+
+const initialPersistentSettings: PersistentSettings = {
   dataSource: DataSource.ACCELEROMETER,
 };
+
+export const persistentSettings = persistantWritable<PersistentSettings>(
+  'persistentSettings',
+  initialPersistentSettings,
+);
 
 // Store with ML-Algorithm settings
 export const settings = writable<MlSettings>(initialMLSettings);

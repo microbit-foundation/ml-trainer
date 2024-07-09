@@ -5,8 +5,8 @@
  */
 
 import { get } from 'svelte/store';
-import { DataSource, livedata, settings } from '../stores/mlStore';
-import { buttonPressed, state } from '../stores/uiStore';
+import { DataSource, livedata, persistentSettings } from '../stores/mlStore';
+import { buttonPressed } from '../stores/uiStore';
 import MBSpecs from './MBSpecs';
 import { DeviceRequestStates } from './MicrobitConnection';
 import {
@@ -28,7 +28,7 @@ let smoothedAccelY = 0;
 let smoothedAccelZ = 0;
 
 export const onAccelerometerChange = (x: number, y: number, z: number): void => {
-  if (get(settings).dataSource !== DataSource.ACCELEROMETER) {
+  if (get(persistentSettings).dataSource !== DataSource.ACCELEROMETER) {
     return;
   }
 
@@ -66,7 +66,7 @@ let smoothedMagY = 0;
 let smoothedMagZ = 0;
 
 export const onMagnetometerChange = (x: number, y: number, z: number): void => {
-  if (get(settings).dataSource !== DataSource.MAGNETOMETER) {
+  if (get(persistentSettings).dataSource !== DataSource.MAGNETOMETER) {
     return;
   }
 

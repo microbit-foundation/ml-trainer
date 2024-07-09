@@ -6,11 +6,14 @@
 
 <script lang="ts">
   import { createSelect, CreateSelectProps, melt } from '@melt-ui/svelte';
-  import { get } from 'svelte/store';
   import { fade } from 'svelte/transition';
   import ArrowDownIcon from 'virtual:icons/ri/arrow-down-s-line';
   import { t } from '../../i18n';
-  import { clearGestures, DataSource, settings } from '../../script/stores/mlStore';
+  import {
+    clearGestures,
+    DataSource,
+    persistentSettings,
+  } from '../../script/stores/mlStore';
   import StandardDialog from '../dialogs/StandardDialog.svelte';
   import StandardButton from '../StandardButton.svelte';
   import { gestures } from '../../script/stores/Stores';
@@ -70,7 +73,7 @@
       showWarningDialog = true;
       changeSensorPromise.then(result => {
         if (result) {
-          settings.update(obj => {
+          persistentSettings.update(obj => {
             obj.dataSource = next.value;
             return obj;
           });
@@ -80,7 +83,7 @@
         }
       });
     } else {
-      settings.update(obj => {
+      persistentSettings.update(obj => {
         obj.dataSource = next.value;
         return obj;
       });
@@ -89,14 +92,14 @@
   };
 
   const getDefaultSelected = () => {
-    const value = $settings.dataSource;
+    const value = $persistentSettings.dataSource;
     const defaultOption = options.find(option => option.value === value);
     return defaultOption;
   };
 
   $: {
     programaticChange = true;
-    selected.set(options.find(o => o.value === $settings.dataSource));
+    selected.set(options.find(o => o.value === $persistentSettings.dataSource));
   }
 
   const {
