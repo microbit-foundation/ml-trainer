@@ -63,8 +63,6 @@ export function createModel(): LayersModel {
   return model;
 }
 
-let prevLoss: number;
-
 export async function trainModel(): Promise<tf.LayersModel | void> {
   state.update(obj => {
     obj.isTraining = true;
@@ -110,29 +108,25 @@ export async function trainModel(): Promise<tf.LayersModel | void> {
   const totalNumEpochs = 160;
 
   try {
-    await nn.fit(tensorFeatures, tensorLabels, {
+    const history = await nn.fit(tensorFeatures, tensorLabels, {
       epochs: totalNumEpochs,
       batchSize: 16,
       validationSplit: 0.1,
       callbacks: [
+        tf.callbacks.earlyStopping({ monitor: 'loss', patience: 3, verbose: 1 }),
         new tf.CustomCallback({ onTrainEnd }),
         new tf.CustomCallback({
           onEpochEnd(epoch, logs) {
             // Epochs indexed at 0
             updateTrainingProgress(epoch / (totalNumEpochs - 1));
             if (logs) {
-              if (prevLoss && logs.loss && logs.acc) {
-                if (logs.loss >= prevLoss && logs.acc === 1) {
-                  // Prevent overfitting.
-                  nn.stopTraining;
-                }
-              }
-              prevLoss = logs.loss;
+              console.log(logs);
             }
           },
         }),
       ],
     });
+    console.log(history);
     model.set(nn);
   } catch (err) {
     trainingStatus.set(TrainingStatus.Failure);
