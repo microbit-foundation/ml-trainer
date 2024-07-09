@@ -10,7 +10,7 @@ interface XYZData {
   z: number[];
 }
 
-const smoothen = (d: number[]): number[] => {
+const smoothAxisData = (d: number[]): number[] => {
   if (d.length === 0) {
     return d;
   }
@@ -25,10 +25,10 @@ const smoothen = (d: number[]): number[] => {
 };
 
 // Smoothen data
-export function smoothenXYZData(d: XYZData): XYZData {
+export function smoothXYZData(d: XYZData): XYZData {
   return {
-    x: smoothen(d.x),
-    y: smoothen(d.y),
-    z: smoothen(d.z),
+    x: smoothAxisData(d.x),
+    y: smoothAxisData(d.y),
+    z: smoothAxisData(d.z),
   };
 }

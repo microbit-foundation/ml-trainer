@@ -53,10 +53,9 @@ export function createModel(): LayersModel {
     .dense({ units: numberOfClasses, activation: 'softmax' })
     .apply(dense) as SymbolicTensor;
   const model = tf.model({ inputs: input, outputs: softmax });
-
   model.compile({
     loss: 'categoricalCrossentropy',
-    optimizer: tf.train.sgd(0.5),
+    optimizer: tf.train.sgd(get(settings).learningRate),
     metrics: ['accuracy'],
   });
 
@@ -112,13 +111,16 @@ export async function trainModel(): Promise<tf.LayersModel | void> {
       epochs: totalNumEpochs,
       batchSize: 16,
       validationSplit: 0.1,
-      callbacks: {
-        onTrainEnd,
-        onEpochEnd: (epoch: number) => {
-          // Epochs indexed at 0
-          updateTrainingProgress(epoch / (totalNumEpochs - 1));
-        },
-      },
+
+      callbacks: [
+        new tf.CustomCallback({ onTrainEnd }),
+        new tf.CustomCallback({
+          onEpochEnd(epoch) {
+            // Epochs indexed at 0
+            updateTrainingProgress(epoch / (totalNumEpochs - 1));
+          },
+        }),
+      ],
     });
     model.set(nn);
   } catch (err) {

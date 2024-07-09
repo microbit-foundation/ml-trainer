@@ -34,9 +34,24 @@ export function loadDatasetFromFile(file: File) {
     const contents = e.target.result;
     if (typeof contents === 'string') {
       // TODO: fix the following really unsafe parsing and casting
-      const gestureData: PersistantGestureData[] = JSON.parse(
-        contents,
-      ) as PersistantGestureData[];
+      const parsedData = JSON.parse(contents);
+      let gestureData: PersistantGestureData[];
+      if (parsedData.gestureData) {
+        gestureData = parsedData.gestureData;
+        const dataSource = parsedData.dataSource;
+        if (dataSource) {
+          persistentSettings.update(obj => {
+            obj.dataSource = dataSource;
+            return obj;
+          });
+        }
+      } else {
+        persistentSettings.update(obj => {
+          obj.dataSource = DataSource.ACCELEROMETER;
+          return obj;
+        });
+        gestureData = parsedData;
+      }
       updateToUntrainedState();
       gestures.importFrom(gestureData);
     }
@@ -46,10 +61,15 @@ export function loadDatasetFromFile(file: File) {
 
 export function downloadDataset() {
   const element = document.createElement('a');
+  const data = {
+    gestureData: get(gestures),
+    filters: Array.from(get(settings).includedFilters),
+    dataSource: get(persistentSettings).dataSource,
+  };
   element.setAttribute(
     'href',
     'data:application/json;charset=utf-8,' +
-      encodeURIComponent(JSON.stringify(get(gestures), null, 2)),
+      encodeURIComponent(JSON.stringify(data, null, 2)),
   );
   element.setAttribute('download', 'dataset');
 
@@ -62,6 +82,7 @@ export function downloadDataset() {
 
 // Delete this function!
 export function clearGestures() {
+  updateToUntrainedState();
   gestures.clearGestures();
 }
 
@@ -91,13 +112,18 @@ export type SoundData = {
 
 export type LiveData = {
   //Todo remove this
-  accelX: number;
-  accelY: number;
-  accelZ: number;
-  smoothedAccelX: number;
-  smoothedAccelY: number;
-  smoothedAccelZ: number;
+  x: number;
+  y: number;
+  z: number;
+  smoothedX: number;
+  smoothedY: number;
+  smoothedZ: number;
 };
+
+export enum DataSource {
+  ACCELEROMETER,
+  MAGNETOMETER,
+}
 
 type MlSettings = {
   duration: number; // Duration of recording
@@ -117,8 +143,8 @@ const initialMLSettings: MlSettings = {
   minSamples: 80,
   automaticClassification: true,
   updatesPrSecond: 4,
-  numEpochs: 80,
-  learningRate: 0.5,
+  numEpochs: 160,
+  learningRate: 0.1,
   includedAxes: [Axes.X, Axes.Y, Axes.Z],
   includedFilters: new Set<FilterType>([
     Filters.MAX,
@@ -129,19 +155,33 @@ const initialMLSettings: MlSettings = {
     Filters.ACC,
     Filters.ZCR,
     Filters.RMS,
+    Filters.GRAD,
   ]),
 };
 
+interface PersistentSettings {
+  dataSource: DataSource;
+}
+
+const initialPersistentSettings: PersistentSettings = {
+  dataSource: DataSource.ACCELEROMETER,
+};
+
+export const persistentSettings = persistantWritable<PersistentSettings>(
+  'persistentSettings',
+  initialPersistentSettings,
+);
+
 // Store with ML-Algorithm settings
-export const settings = persistantWritable<MlSettings>('MLSettings', initialMLSettings);
+export const settings = writable<MlSettings>(initialMLSettings);
 
 export const livedata = writable<LiveData>({
-  accelX: 0,
-  accelY: 0,
-  accelZ: 0,
-  smoothedAccelX: 0,
-  smoothedAccelY: 0,
-  smoothedAccelZ: 0,
+  x: 0,
+  y: 0,
+  z: 0,
+  smoothedX: 0,
+  smoothedY: 0,
+  smoothedZ: 0,
 });
 
 export const currentData = writable<{ x: number; y: number; z: number }>({
@@ -152,9 +192,9 @@ export const currentData = writable<{ x: number; y: number; z: number }>({
 
 livedata.subscribe(data => {
   currentData.set({
-    x: data.smoothedAccelX,
-    y: data.smoothedAccelY,
-    z: data.smoothedAccelZ,
+    x: data.smoothedX,
+    y: data.smoothedY,
+    z: data.smoothedZ,
   });
 });
 
@@ -262,9 +302,9 @@ export function getPrevData(): { x: number[]; y: number[]; z: number[] } | undef
 
   for (let i = 0; i < dataLength; i++) {
     const oldDataIndex = (i + liveDataIndex) % dataLength;
-    x[i] = data[oldDataIndex].accelX;
-    y[i] = data[oldDataIndex].accelY;
-    z[i] = data[oldDataIndex].accelZ;
+    x[i] = data[oldDataIndex].x;
+    y[i] = data[oldDataIndex].y;
+    z[i] = data[oldDataIndex].z;
   }
 
   return { x, y, z };

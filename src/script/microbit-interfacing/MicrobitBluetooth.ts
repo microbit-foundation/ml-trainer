@@ -14,6 +14,7 @@ import { UARTMessageType } from './Microbits';
 import {
   onAccelerometerChange,
   onButtonChange,
+  onMagnetometerChange,
   onUARTDataReceived,
 } from './change-listeners';
 import {
@@ -273,6 +274,7 @@ export class MicrobitBluetooth implements MicrobitConnection {
 
   private async listenToInputServices(): Promise<void> {
     await this.listenToAccelerometer();
+    await this.listenToMagnetometer();
     await this.listenToButton('A');
     await this.listenToButton('B');
 
@@ -328,6 +330,27 @@ export class MicrobitBluetooth implements MicrobitConnection {
         const y = target.value.getInt16(2, true);
         const z = target.value.getInt16(4, true);
         onAccelerometerChange(x, y, z);
+      },
+    );
+  }
+
+  private async listenToMagnetometer(): Promise<void> {
+    const gattServer = this.assertGattServer();
+    const magnetometerService = await gattServer.getPrimaryService(
+      MBSpecs.Services.MAGNETOMETER_SERVICE,
+    );
+    const magnetometerCharacteristic = await magnetometerService.getCharacteristic(
+      MBSpecs.Characteristics.MAGNETOMETER_DATA,
+    );
+    await magnetometerCharacteristic.startNotifications();
+    magnetometerCharacteristic.addEventListener(
+      'characteristicvaluechanged',
+      (event: Event) => {
+        const target = event.target as CharacteristicDataTarget;
+        const x = target.value.getInt16(0, true);
+        const y = target.value.getInt16(2, true);
+        const z = target.value.getInt16(4, true);
+        onMagnetometerChange(x, y, z);
       },
     );
   }
@@ -543,6 +566,7 @@ const requestDevice = async (name: string): Promise<BluetoothDevice | undefined>
           MBSpecs.Services.LED_SERVICE,
           MBSpecs.Services.IO_SERVICE,
           MBSpecs.Services.BUTTON_SERVICE,
+          MBSpecs.Services.MAGNETOMETER_SERVICE,
         ],
       }),
       new Promise<'timeout'>(resolve =>
