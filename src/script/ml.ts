@@ -121,8 +121,8 @@ export async function trainModel(): Promise<tf.LayersModel | void> {
             // Epochs indexed at 0
             updateTrainingProgress(epoch / (totalNumEpochs - 1));
             if (logs) {
-              if (prevLoss && logs.loss && logs.accuracy) {
-                if (logs.loss >= prevLoss && logs.accuracy === 1) {
+              if (prevLoss && logs.loss && logs.acc) {
+                if (logs.loss >= prevLoss && logs.acc === 1) {
                   // Prevent overfitting.
                   nn.stopTraining;
                 }
