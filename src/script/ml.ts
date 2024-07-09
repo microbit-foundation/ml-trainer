@@ -53,7 +53,6 @@ export function createModel(): LayersModel {
     .dense({ units: numberOfClasses, activation: 'softmax' })
     .apply(dense) as SymbolicTensor;
   const model = tf.model({ inputs: input, outputs: softmax });
-
   model.compile({
     loss: 'categoricalCrossentropy',
     optimizer: tf.train.sgd(get(settings).learningRate),

@@ -162,18 +162,7 @@ const initialMLSettings: MlSettings = {
 };
 
 // Store with ML-Algorithm settings
-export const settings = persistantWritable<MlSettings>('MLSettings', initialMLSettings);
-
-// Hack required to change the initial settings when
-// they are already in local storage without wiping everything.
-// See persistVersion in storeUtil.ts.
-settings.update(obj => {
-  // Add new filter for magnetometer data.
-  obj.includedFilters.add(Filters.GRAD);
-  obj.numEpochs = 160;
-  obj.learningRate = 0.1;
-  return obj;
-});
+export const settings = writable<MlSettings>(initialMLSettings);
 
 export const livedata = writable<LiveData>({
   x: 0,
