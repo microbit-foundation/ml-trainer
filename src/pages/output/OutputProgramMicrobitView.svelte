@@ -31,6 +31,7 @@
   import Gesture from '../../script/domain/Gesture';
   import { LayersModel } from '@tensorflow/tfjs';
   import lzma from 'lzma/src/lzma_worker';
+  import Microbits from '../../script/microbit-interfacing/Microbits';
 
   const updateCustomTs = (
     project: MakeCodeProject,
@@ -90,6 +91,9 @@
   };
 
   const handleDownload = (hexData: string) => {
+    // TODO: Only disconnect input micro:bit if user chooses this device.
+    Microbits.disconnect(DeviceRequestStates.INPUT);
+    Microbits.dispose(DeviceRequestStates.INPUT);
     state.update(obj => {
       obj.outputHex = hexData;
       return obj;
