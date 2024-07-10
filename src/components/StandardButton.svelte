@@ -63,6 +63,7 @@
     class:shadow-md={shadows}
     class:cursor-pointer={!disabled}
     class:cursor-default={disabled}
+    style={$$restProps.style || ''}
     on:click={onClick}>
     <slot />
   </button>

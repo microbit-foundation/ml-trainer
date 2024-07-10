@@ -92,6 +92,7 @@ class GestureRepository implements Readable<Gesture[]> {
     return {
       ID: gesture.getId(),
       name: gesture.getName(),
+      matrix: gesture.getMatrix(),
       recordings: gesture.getRecordings(),
       output: gesture.getOutput(),
     };

@@ -7,7 +7,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { t } from '../../i18n';
-  import { state } from '../../script/stores/uiStore';
   import View3DLive from '../3d-inspector/View3DLive.svelte';
   import BaseDialog from '../dialogs/BaseDialog.svelte';
   import LiveGraph from '../graphs/LiveGraph.svelte';
@@ -15,6 +14,7 @@
   import ConnectedLiveGraphButtons from './ConnectedLiveGraphButtons.svelte';
   import LiveFingerprint from './LiveFingerprint.svelte';
   import LiveGraphInformationSection from './LiveGraphInformationSection.svelte';
+  import { isFieldDataCollectionMode, state } from '../../script/stores/uiStore';
 
   export let showFingerprint: boolean = false;
   const live3dViewVisible = false;
@@ -24,11 +24,11 @@
 </script>
 
 <div bind:clientWidth={componentWidth} class="relative w-full h-full bg-white">
-  <div class="relative z-1">
+  <div class="relative z-2">
     <div
       class="flex items-center justify-between gap-2 pt-4 px-7 m-0 absolute top-0 left-0"
       class:right-0={!showFingerprint}
-      class:right-80px={showFingerprint}>
+      class:right-240px={showFingerprint}>
       <div class="flex items-center gap-4">
         <!-- The live text and info box -->
         <LiveGraphInformationSection />
@@ -69,10 +69,15 @@
     {/if}
   </div>
   <div class="absolute w-full h-full overflow-hidden" class:flex={showFingerprint}>
-    <!-- <div class="bg-red-200" style={`width: ${componentWidth}px`}></div> -->
-    <LiveGraph width={componentWidth - live3dViewSize - (showFingerprint ? 80 : 0)} />
-    {#if showFingerprint}
-      <LiveFingerprint />
+    {#if $isFieldDataCollectionMode}
+      <div class="flex flex-col w-full h-full justify-center align-middle items-center">
+        Unavailable whilst collecting data in the field
+      </div>
+    {:else}
+      <LiveGraph width={componentWidth - live3dViewSize - (showFingerprint ? 80 : 0)} />
+      {#if showFingerprint}
+        <LiveFingerprint />
+      {/if}
     {/if}
   </div>
 </div>

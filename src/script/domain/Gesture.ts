@@ -4,7 +4,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { Readable, Subscriber, Unsubscriber, Writable, derived, get } from 'svelte/store';
-import { GestureData, GestureOutput, RecordingData, SoundData } from '../stores/mlStore';
+import {
+  GestureData,
+  GestureOutput,
+  RecordingData,
+  SoundData,
+  getNewBlankMatrix,
+} from '../stores/mlStore';
 import { PersistantGestureData } from './Gestures';
 import { PinTurnOnState } from '../../components/output/PinSelectorUtil';
 import MBSpecs from '../microbit-interfacing/MBSpecs';
@@ -53,6 +59,10 @@ class Gesture implements Readable<GestureData> {
     return get(this.store).name;
   }
 
+  public getMatrix(): boolean[] {
+    return get(this.store).matrix;
+  }
+
   public addRecording(recording: RecordingData) {
     this.persistedData.update(newVal => {
       newVal.recordings = [recording, ...newVal.recordings];
@@ -94,6 +104,13 @@ class Gesture implements Readable<GestureData> {
     });
   }
 
+  public setMatrix(matrix: boolean[]) {
+    this.persistedData.update(newVal => {
+      newVal.matrix = matrix;
+      return newVal;
+    });
+  }
+
   public bindName(): BindableValue<string> {
     const setter = (val: string) => this.setName(val);
     const bindable = new BindableValue(
@@ -113,6 +130,7 @@ class Gesture implements Readable<GestureData> {
       const confidenceData = stores[1];
       const derivedData: GestureData = {
         ID: peristantData.ID,
+        matrix: peristantData.matrix ?? getNewBlankMatrix(),
         name: peristantData.name,
         recordings: peristantData.recordings,
         output: peristantData.output,

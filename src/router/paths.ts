@@ -16,6 +16,7 @@ export const Paths = {
   TRAINING: 'train-model',
   PROCESS: 'process-data',
   MODEL: 'test-model',
+  OUTPUT: 'use-model',
   FILTERS: 'training/filters',
 } as const;
 
@@ -50,6 +51,9 @@ export const getTitle = (path: PathType, t: MessageFormatter) => {
       return `Process data | ${appName}`;
     }
     case Paths.MODEL: {
+      return `${t('content.index.toolProcessCards.model.title')} | ${appName}`;
+    }
+    case Paths.OUTPUT: {
       return `${t('content.index.toolProcessCards.model.title')} | ${appName}`;
     }
     default:

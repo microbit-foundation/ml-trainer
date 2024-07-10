@@ -8,9 +8,16 @@
   import { SmoothieChart, TimeSeries } from 'smoothie';
   import { onMount } from 'svelte';
   import { get } from 'svelte/store';
-  import { currentData, settings } from '../../script/stores/mlStore';
+  import {
+    currentData,
+    settings,
+    bestPrediction,
+    GestureData,
+  } from '../../script/stores/mlStore';
   import { state } from '../../script/stores/uiStore';
   import DimensionLabels from './DimensionLabels.svelte';
+  import SimpleLedMatrix from '../output/SimpleLedMatrix.svelte';
+  import { gestures } from '../../script/stores/Stores';
 
   // Updates width to ensure that the canvas fills the whole screen
   export let width: number;
@@ -22,6 +29,11 @@
   let lineZ = new TimeSeries();
   let recordLines = new TimeSeries();
   const lineWidth = 2;
+
+  // Create time series for each gesture
+  const gestureLines: Record<string, TimeSeries> = gestures
+    .getGestures()
+    .reduce((acc, g) => ({ ...acc, [g.getName()]: new TimeSeries() }), {});
 
   // On mount draw smoothieChart
   onMount(() => {
@@ -46,6 +58,13 @@
       strokeStyle: '#4040ff44',
       fillStyle: '#0000ff07',
     });
+    for (const [, line] of Object.entries(gestureLines)) {
+      chart.addTimeSeries(line, {
+        lineWidth: 3,
+        strokeStyle: '#4040ff44',
+        fillStyle: '#0000ff07',
+      });
+    }
     chart.streamTo(<HTMLCanvasElement>canvas, 0);
     chart.render();
 
@@ -83,18 +102,55 @@
     if (!isRecording || blockRecordingStart) {
       return;
     }
-
     // Set start line
-    recordLines.append(new Date().getTime() - 1, -2, false);
-    recordLines.append(new Date().getTime(), 2.3, false);
+    markPeriodStart(recordLines);
 
     // Wait a second and set end line
     blockRecordingStart = true;
     setTimeout(() => {
-      recordLines.append(new Date().getTime() - 1, 2.3, false);
-      recordLines.append(new Date().getTime(), -2, false);
+      markPeriodEnd(recordLines);
       blockRecordingStart = false;
     }, get(settings).duration);
+  }
+
+  const markPeriodStart = (lines: TimeSeries) => {
+    lines.append(new Date().getTime() - 1, -2, false);
+    lines.append(new Date().getTime(), 2.3, false);
+  };
+
+  const markPeriodEnd = (lines: TimeSeries) => {
+    lines.append(new Date().getTime() - 1, 2.3, false);
+    lines.append(new Date().getTime(), -2, false);
+  };
+
+  // Draw on graph to display that predicted periods
+  const markGestureLines = (
+    lastGestureName: undefined | string,
+    currGestureName: undefined | string,
+  ) => {
+    if (lastGestureName === currGestureName) {
+      return;
+    }
+    if (!lastGestureName && currGestureName) {
+      markPeriodStart(gestureLines[currGestureName]);
+    }
+    if (lastGestureName && !currGestureName) {
+      markPeriodEnd(gestureLines[lastGestureName]);
+    }
+    if (lastGestureName && currGestureName) {
+      markPeriodEnd(gestureLines[lastGestureName]);
+      markPeriodStart(gestureLines[currGestureName]);
+    }
+  };
+
+  let lastPrediction: GestureData | undefined = undefined;
+  let ledMatrix: boolean[] | undefined;
+  $: {
+    markGestureLines(lastPrediction?.name, $bestPrediction?.name);
+    lastPrediction = $bestPrediction;
+
+    // Display predicted gesture led matrix
+    ledMatrix = $bestPrediction ? $bestPrediction.matrix : undefined;
   }
 
   $: {
@@ -106,6 +162,9 @@
 </script>
 
 <div class="flex overflow-hidden">
-  <canvas bind:this={canvas} height={160} id="smoothie-chart" width={width - 30} />
+  <canvas bind:this={canvas} height={160} id="smoothie-chart" width={width - 220} />
   <DimensionLabels />
+  <div class="flex flex-col justify-center p-5 bg-white relative z-1">
+    <SimpleLedMatrix dimension={30} matrix={ledMatrix} />
+  </div>
 </div>

@@ -75,7 +75,7 @@
   }
 </script>
 
-<div class="h-40 w-6 relative z-10 bg-white">
+<div class="h-40 w-6 relative z-1 bg-white">
   {#if $state.isInputConnected}
     {#each labels as dimension}
       <div

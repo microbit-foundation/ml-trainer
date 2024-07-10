@@ -51,13 +51,14 @@ export function createModel(): LayersModel {
     get(settings).includedFilters.size * get(settings).includedAxes.length,
   ];
 
-  const input = tf.input({ shape: inputShape });
-  const normalizer = tf.layers.batchNormalization().apply(input);
-  const dense = tf.layers.dense({ units: 16, activation: 'relu' }).apply(normalizer);
-  const softmax = tf.layers
-    .dense({ units: numberOfClasses, activation: 'softmax' })
-    .apply(dense) as SymbolicTensor;
-  const model = tf.model({ inputs: input, outputs: softmax });
+  const model = new tf.Sequential({
+    layers: [
+      tf.layers.inputLayer({ inputShape }),
+      tf.layers.batchNormalization(),
+      tf.layers.dense({ units: 16, activation: 'relu' }),
+      tf.layers.dense({ units: numberOfClasses, activation: 'softmax' }),
+    ],
+  });
 
   model.compile({
     loss: 'categoricalCrossentropy',

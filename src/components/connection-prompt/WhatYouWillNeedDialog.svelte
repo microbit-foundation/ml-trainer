@@ -22,6 +22,7 @@
   export let switchTextId: string;
   export let onSwitchClick: (() => void) | undefined;
   export let onNextClick: () => void;
+  export let onBackClick: (() => void) | undefined;
 </script>
 
 <div class="w-175">
@@ -63,7 +64,13 @@
         </a>
       {/if}
     </div>
-    <StandardButton onClick={onNextClick} type="primary"
-      >{$t('connectMB.nextButton')}</StandardButton>
+    <div class="flex justify-end gap-x-5 pt-5">
+      {#if onBackClick}
+        <StandardButton onClick={onBackClick}
+          >{$t('connectMB.backButton')}</StandardButton>
+      {/if}
+      <StandardButton onClick={onNextClick} type="primary"
+        >{$t('connectMB.nextButton')}</StandardButton>
+    </div>
   </div>
 </div>
