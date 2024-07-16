@@ -17,6 +17,18 @@ const createMlEvents = (actions: string[]) => {
   return code;
 };
 
+const createEventListeners = (numActions: number) => {
+  // Includes `None`.
+  const totalActions = numActions + 1;
+  let code = '';
+  for (let i = 1; i <= totalActions; i++) {
+    code += `    control.onEvent(MlRunnerIds.MlRunnerInference, ${i}, () => {\n`;
+    code += `      prevAction = ${i};\n`;
+    code += `    });${i === totalActions ? '' : '\n'}`;
+  }
+  return code;
+};
+
 const arrayBufferToHexString = (input: Uint8Array): string =>
   Array.from(input, i => i.toString(16).padStart(2, '0'))
     .join('')
@@ -38,22 +50,25 @@ export const generateCustomTs = (gs: Gesture[], m: LayersModel) => {
   const actionLabels = gs.map(g => g.getName());
 
   return `// Auto-generated. Do not edit.
-  namespace mlrunner {
-    export namespace Action {
-  ${createMlEvents(actionLabels)}
-      actions = [None,${actionLabels.toString()}];
-    }
+namespace mlrunner {
+  export namespace Action {
+${createMlEvents(actionLabels)}
+    actions = [None,${actionLabels.toString()}];
+
+${createEventListeners(actionLabels.length)}
   }
-  
-  getModelBlob = (): Buffer =>  {
-    const result = hex\`${headerHexString + modelHexString}\`;
-    return result;
-  }
-  
-  mlrunner.simulatorSendData();
-  
-  // Auto-generated. Do not edit. Really.
-  `;
+}
+
+
+getModelBlob = (): Buffer => {
+  const result = hex\`${headerHexString + modelHexString}\`;
+  return result;
+};
+
+mlrunner.simulatorSendData();
+
+// Auto-generated. Do not edit. Really.
+`;
 };
 
 export const generateCustomJson = (gs: Gesture[]) => {
