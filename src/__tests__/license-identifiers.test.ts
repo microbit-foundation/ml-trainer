@@ -13,7 +13,7 @@ import * as path from 'path';
 // Place files you wish to ignore by name in here
 const ignoredFiles: RegExp[] = [
   /^\.DS_Store$/,
-  /^ui.[a-z-]+.json$/,
+  /^.+\.json$/,
   /\.(gif|svg|png|jpg|jpeg)$/,
   /^README.md$/,
 ];

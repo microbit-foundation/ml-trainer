@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-
 import { alertUser, state } from './stores/uiStore';
 import {
   bestPrediction,
@@ -39,7 +38,8 @@ let unsubscribeFromSettings: Unsubscriber | undefined = undefined;
 // Variable for accessing the predictionInterval
 let predictionInterval: NodeJS.Timeout | undefined = undefined;
 
-function createModel(): LayersModel {
+// Exported for testing.
+export function createModel(): LayersModel {
   const gestureData = get(gestures);
   const numberOfClasses: number = gestureData.length;
   const inputShape = [
@@ -57,14 +57,16 @@ function createModel(): LayersModel {
 
   model.compile({
     loss: 'categoricalCrossentropy',
-    optimizer: tf.train.sgd(0.5),
+    optimizer: tf.train.sgd(0.1),
     metrics: ['accuracy'],
   });
 
   return model;
 }
 
-export async function trainModel(): Promise<void> {
+let prevLoss: number;
+
+export async function trainModel(): Promise<tf.LayersModel | void> {
   state.update(obj => {
     obj.isTraining = true;
     return obj;
@@ -106,27 +108,38 @@ export async function trainModel(): Promise<void> {
   const tensorFeatures = tf.tensor(features);
   const tensorLabels = tf.tensor(labels);
   const nn: LayersModel = createModel();
-  const totalNumEpochs = get(settings).numEpochs;
+  const totalNumEpochs = 160;
 
-  nn.fit(tensorFeatures, tensorLabels, {
-    epochs: totalNumEpochs,
-    batchSize: 16,
-    validationSplit: 0.1,
-    callbacks: {
-      onTrainEnd,
-      onEpochEnd: (epoch: number) => {
-        // Epochs indexed at 0
-        updateTrainingProgress(epoch / (totalNumEpochs - 1));
-      },
-    },
-  }).catch(err => {
+  try {
+    await nn.fit(tensorFeatures, tensorLabels, {
+      epochs: totalNumEpochs,
+      batchSize: 16,
+      validationSplit: 0.1,
+      callbacks: [
+        new tf.CustomCallback({ onTrainEnd }),
+        new tf.CustomCallback({
+          onEpochEnd(epoch, logs) {
+            // Epochs indexed at 0
+            updateTrainingProgress(epoch / (totalNumEpochs - 1));
+            if (logs) {
+              if (prevLoss && logs.loss && logs.acc) {
+                if (logs.loss >= prevLoss && logs.acc === 1) {
+                  // Prevent overfitting.
+                  nn.stopTraining;
+                }
+              }
+              prevLoss = logs.loss;
+            }
+          },
+        }),
+      ],
+    });
+    model.set(nn);
+  } catch (err) {
     trainingStatus.set(TrainingStatus.Failure);
     console.error('tensorflow training process failed:', err);
-  });
-
-  trainingStatus.set(TrainingStatus.Success);
-  model.set(nn);
-  logEvent({ type: 'Data', action: 'Train model', ...getNumberOfActionsAndRecordings() });
+  }
+  return nn;
 }
 
 function getNumberOfActionsAndRecordings() {
@@ -203,13 +216,16 @@ function onTrainEnd() {
     obj.trainingProgress = 0;
     return obj;
   });
+  trainingStatus.set(TrainingStatus.Success);
+  logEvent({ type: 'Data', action: 'Train model', ...getNumberOfActionsAndRecordings() });
   setupPredictionInterval();
 }
 
 // makeInput reduces array of x, y and z inputs to a single number array with values.
 // Depending on user settings. There will be anywhere between 1-24 parameters in
 
-function makeInputs(sample: { x: number[]; y: number[]; z: number[] }): number[] {
+// Exported for testing.
+export function makeInputs(sample: { x: number[]; y: number[]; z: number[] }): number[] {
   const dataRep: number[] = [];
 
   if (!modelSettings) {
