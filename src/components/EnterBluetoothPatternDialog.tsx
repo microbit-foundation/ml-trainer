@@ -6,32 +6,22 @@ import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
 
-const isPatternValid = (pattern: boolean[]) => {
-  for (let col = 0; col < 5; col++) {
-    let isAnyHighlighted = false;
-    for (let row = 0; row < 5; row++) {
-      if (pattern[row * 5 + col]) {
-        isAnyHighlighted = true;
-      }
-    }
-    if (!isAnyHighlighted) {
-      return false;
-    }
-  }
-  return true;
-};
+export type BluetoothPattern = boolean[];
+
 export interface EnterBluetoothPatternDialogProps
-  extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {}
+  extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
+  setBluetoothPattern: (pattern: BluetoothPattern) => void;
+  bluetoothPattern: BluetoothPattern;
+}
 
 const EnterBluetoothPatternDialog = ({
   onNextClick,
   onBackClick,
+  setBluetoothPattern,
+  bluetoothPattern,
   ...props
 }: EnterBluetoothPatternDialogProps) => {
   const [showInvalid, setShowInvalid] = useState<boolean>(false);
-  const [bluetoothPattern, setBluetoothPattern] = useState<boolean[]>(
-    Array(25).fill(false)
-  );
 
   const handleNextClick = useCallback(() => {
     if (!isPatternValid(bluetoothPattern)) {
@@ -46,10 +36,13 @@ const EnterBluetoothPatternDialog = ({
     onBackClick && onBackClick();
   }, [onBackClick]);
 
-  const handlePatternChange = useCallback((newPattern: boolean[]) => {
-    setBluetoothPattern(newPattern);
-    setShowInvalid(false);
-  }, []);
+  const handlePatternChange = useCallback(
+    (newPattern: boolean[]) => {
+      setBluetoothPattern(newPattern);
+      setShowInvalid(false);
+    },
+    [setBluetoothPattern]
+  );
 
   return (
     <ConnectContainerDialog
@@ -75,6 +68,21 @@ const EnterBluetoothPatternDialog = ({
       </VStack>
     </ConnectContainerDialog>
   );
+};
+
+const isPatternValid = (pattern: boolean[]) => {
+  for (let col = 0; col < 5; col++) {
+    let isAnyHighlighted = false;
+    for (let row = 0; row < 5; row++) {
+      if (pattern[row * 5 + col]) {
+        isAnyHighlighted = true;
+      }
+    }
+    if (!isAnyHighlighted) {
+      return false;
+    }
+  }
+  return true;
 };
 
 export default EnterBluetoothPatternDialog;

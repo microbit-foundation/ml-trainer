@@ -12,7 +12,7 @@ import {
   transformColumnsToMatrix,
   transformMatrixToColumns,
   updateMatrixColumns,
-} from "./patternMatrixTransforms";
+} from "./bt-pattern-matrix-utils";
 
 describe("transformMatrixToColumns", () => {
   test("2 x 2", () => {

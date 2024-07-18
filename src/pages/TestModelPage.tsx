@@ -4,15 +4,15 @@ import TabView from "../components/TabView";
 import TestModelGridView from "../components/TestModelGridView";
 import TrainModelFirstView from "../components/TrainModelFirstView";
 import { testModelConfig } from "../pages-config";
-import { Stage, useStatus } from "../status-hook";
+import { MlStage, useMlStatus } from "../ml-status-hooks";
 
 const TestModelPage = () => {
-  const [{ stage }] = useStatus();
+  const [{ stage }] = useMlStatus();
 
   return (
     <DefaultPageLayout titleId={`${testModelConfig.id}-title`}>
       <TabView activeStep={testModelConfig.id} />
-      {stage === Stage.TrainingComplete ? (
+      {stage === MlStage.TrainingComplete ? (
         <>
           <TestModelGridView />
           <LiveGraphPanel />

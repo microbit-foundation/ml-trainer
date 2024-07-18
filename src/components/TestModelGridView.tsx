@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import { useGestureData } from "../gestures-hooks";
-import { useMlActions } from "../ml-actions";
+import { useMlActions } from "../ml-hooks";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";

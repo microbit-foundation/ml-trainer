@@ -2,33 +2,40 @@ import { Button, HStack, StackProps, useDisclosure } from "@chakra-ui/react";
 import { useCallback, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
-import { ConnEvent } from "../connection-flow";
-import { useConnectionFlow } from "../connections";
+import { useConnections } from "../connections-hooks";
 import { useGestureActions } from "../gestures-hooks";
 import { createStepPageUrl } from "../urls";
 import StartOverWarningDialog from "./StartOverWarningDialog";
+import { useConnectionStage } from "../connection-stage-hooks";
 
 const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
-  const actions = useGestureActions();
-  const hasExistingSession = useMemo(() => actions.hasGestures(), [actions]);
+  const gestureActions = useGestureActions();
+  const hasExistingSession = useMemo(
+    () => gestureActions.hasGestures(),
+    [gestureActions]
+  );
   const startOverWarningDialogDisclosure = useDisclosure();
   const navigate = useNavigate();
-  const { dispatch } = useConnectionFlow();
-  // TODO: check input connected
-  const isInputConnected = true;
+  const { actions: connectionStageActions } = useConnectionStage();
+  const { isInputConnected } = useConnections();
 
   const handleNavigateToAddData = useCallback(() => {
     navigate(createStepPageUrl("add-data"));
   }, [navigate]);
 
   const handleStartNewSession = useCallback(() => {
-    actions.deleteAllGestures();
+    gestureActions.deleteAllGestures();
     if (isInputConnected) {
       handleNavigateToAddData();
     } else {
-      dispatch(ConnEvent.Start);
+      connectionStageActions.start();
     }
-  }, [actions, dispatch, handleNavigateToAddData, isInputConnected]);
+  }, [
+    gestureActions,
+    connectionStageActions,
+    handleNavigateToAddData,
+    isInputConnected,
+  ]);
 
   const onClickStartNewSession = useCallback(() => {
     if (hasExistingSession) {

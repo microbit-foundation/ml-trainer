@@ -9,7 +9,7 @@ import twoMicrobitsImage from "../images/stylised-two-microbits-black.svg";
 import usbCableImage from "../images/stylised-usb-cable.svg";
 import computerImage from "../images/stylised_computer.svg";
 import computerBluetoothImage from "../images/stylised_computer_w_bluetooth.svg";
-import { ConnType } from "../connection-flow";
+import { ConnectionFlowType } from "../connection-stage-hooks";
 
 const whatYouWillNeedRadioConfig = {
   headingId: "connectMB.radioStart.heading",
@@ -69,7 +69,7 @@ export interface WhatYouWillNeedDialogProps
     "children" | "onBack" | "headingId"
   > {
   reconnect: boolean;
-  type: ConnType;
+  type: ConnectionFlowType;
 }
 
 const WhatYouWillNeedDialog = ({
@@ -78,9 +78,9 @@ const WhatYouWillNeedDialog = ({
   ...props
 }: WhatYouWillNeedDialogProps) => {
   const configs = {
-    [ConnType.Bluetooth]: whatYouWillNeedBluetoothConfig,
-    [ConnType.RadioRemote]: whatYouWillNeedRadioConfig,
-    [ConnType.RadioBridge]: whatYouWillNeedRadioConfig,
+    [ConnectionFlowType.Bluetooth]: whatYouWillNeedBluetoothConfig,
+    [ConnectionFlowType.RadioRemote]: whatYouWillNeedRadioConfig,
+    [ConnectionFlowType.RadioBridge]: whatYouWillNeedRadioConfig,
   };
   const { items, headingId, reconnectHeadingId, linkTextId } = configs[type];
   return (

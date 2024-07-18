@@ -10,15 +10,15 @@ import {
 import { ReactNode, useCallback, useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
-import { useMlActions } from "../ml-actions";
-import { Stage, useStatus } from "../status-hook";
+import { useMlActions } from "../ml-hooks";
+import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { createStepPageUrl } from "../urls";
 import TrainingButton from "./TrainingButton";
 import TrainingErrorDialog from "./TrainingErrorDialog";
 
 const TrainingStatusView = () => {
   const navigate = useNavigate();
-  const [status] = useStatus();
+  const [status] = useMlStatus();
   const actions = useMlActions();
   const trainErrorDialog = useDisclosure();
 
@@ -35,13 +35,13 @@ const TrainingStatusView = () => {
   }, [actions]);
 
   useEffect(() => {
-    if (status.stage === Stage.TrainingError) {
+    if (status.stage === MlStage.TrainingError) {
       trainErrorDialog.onOpen();
     }
   }, [trainErrorDialog, status.stage]);
 
   switch (status.stage) {
-    case Stage.InsufficientData:
+    case MlStage.InsufficientData:
       return (
         <TrainingStatusSection statusId="menu.trainer.notEnoughDataHeader1">
           <Text mt={-5}>
@@ -52,8 +52,8 @@ const TrainingStatusView = () => {
           </Button>
         </TrainingStatusSection>
       );
-    case Stage.TrainingError:
-    case Stage.NotTrained:
+    case MlStage.TrainingError:
+    case MlStage.NotTrained:
       return (
         <>
           <TrainingErrorDialog
@@ -65,7 +65,7 @@ const TrainingStatusView = () => {
           </TrainingStatusSection>
         </>
       );
-    case Stage.TrainingInProgress:
+    case MlStage.TrainingInProgress:
       return (
         <TrainingStatusSection statusId="content.trainer.training.title">
           <Progress
@@ -76,7 +76,7 @@ const TrainingStatusView = () => {
           />
         </TrainingStatusSection>
       );
-    case Stage.TrainingComplete:
+    case MlStage.TrainingComplete:
       return (
         <TrainingStatusSection statusId="menu.trainer.TrainingFinished">
           <HStack gap={10}>
@@ -89,7 +89,7 @@ const TrainingStatusView = () => {
           </HStack>
         </TrainingStatusSection>
       );
-    case Stage.RetrainingNeeded:
+    case MlStage.RetrainingNeeded:
       return (
         <TrainingStatusSection statusId="content.trainer.retrain.title">
           <TrainingButton onClick={handleTrain} />

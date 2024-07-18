@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
 import testModelImage from "../images/test_model_black.svg";
 import { StepId } from "../pages-config";
-import { Stage, useStatus } from "../status-hook";
+import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { createStepPageUrl } from "../urls";
 import TrainingButton from "./TrainingButton";
 
@@ -13,9 +13,9 @@ interface TrainModelFirstViewConfig {
   navigateToStep: StepId;
 }
 
-const getConfig = (status: Stage): TrainModelFirstViewConfig => {
+const getConfig = (status: MlStage): TrainModelFirstViewConfig => {
   switch (status) {
-    case Stage.InsufficientData:
+    case MlStage.InsufficientData:
       return {
         textIds: [
           "content.model.notEnoughDataInfoBody1",
@@ -23,7 +23,7 @@ const getConfig = (status: Stage): TrainModelFirstViewConfig => {
         ],
         navigateToStep: "add-data",
       };
-    case Stage.RetrainingNeeded:
+    case MlStage.RetrainingNeeded:
       return {
         textIds: ["content.model.retrainModelBody"],
         navigateToStep: "train-model",
@@ -38,7 +38,7 @@ const getConfig = (status: Stage): TrainModelFirstViewConfig => {
 
 const TrainModelFirstView = () => {
   const navigate = useNavigate();
-  const [{ stage }] = useStatus();
+  const [{ stage }] = useMlStatus();
 
   const navigateToDataPage = useCallback(() => {
     navigate(createStepPageUrl("add-data"));

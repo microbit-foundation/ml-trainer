@@ -14,6 +14,7 @@ import RecordIcon from "../images/record-icon.svg?react";
 import RecordingGraph from "./RecordingGraph";
 import RecordingDialog from "./RecordingDialog";
 import { useCallback, useRef } from "react";
+import { useConnections } from "../connections-hooks";
 
 interface DataRecordingGridItemProps {
   data: GestureData;
@@ -30,8 +31,7 @@ const DataRecordingGridItem = ({
   const { isOpen, onClose, onOpen: onStartRecording } = useDisclosure();
   const closeRecordingDialogFocusRef = useRef(null);
   const actions = useGestureActions();
-  // TODO: Replace with checking if micro:bit is connected
-  const isConnected = true;
+  const { isInputConnected } = useConnections();
 
   const handleDeleteRecording = useCallback(
     (idx: number) => {
@@ -74,7 +74,7 @@ const DataRecordingGridItem = ({
                   { id: "content.data.recordAction" },
                   { action: data.name }
                 )}
-                isDisabled={!isConnected}
+                isDisabled={!isInputConnected}
                 icon={
                   <Icon
                     as={RecordIcon}

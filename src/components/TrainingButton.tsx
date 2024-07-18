@@ -1,15 +1,16 @@
 import { Button, ButtonProps } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import { Stage, useStatus } from "../status-hook";
+import { MlStage, useMlStatus } from "../ml-status-hooks";
 
 const TrainingButton = (props: ButtonProps) => {
-  const [{ stage }] = useStatus();
+  const [{ stage }] = useMlStatus();
 
   return (
     <Button
       variant="primary"
       isDisabled={
-        stage === Stage.TrainingInProgress || stage === Stage.InsufficientData
+        stage === MlStage.TrainingInProgress ||
+        stage === MlStage.InsufficientData
       }
       {...props}
     >

@@ -2,12 +2,10 @@ import { HStack } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
 import { useEffect, useRef, useState } from "react";
 import { SmoothieChart, TimeSeries } from "smoothie";
+import { useConnections } from "../connections-hooks";
 
 const LiveGraph = () => {
-  // Updates width to ensure that the canvas fills the whole screen
-  //   export let width: number;
-
-  const connected = false;
+  const { isInputConnected } = useConnections();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -60,12 +58,12 @@ const LiveGraph = () => {
   }, []);
 
   useEffect(() => {
-    if (connected) {
+    if (isInputConnected) {
       chart?.start();
     } else {
       chart?.stop();
     }
-  }, [chart, connected]);
+  }, [chart, isInputConnected]);
 
   // TODO Recording logic
   return (

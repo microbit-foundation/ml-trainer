@@ -21,22 +21,25 @@ import LiveGraphPanel from "../components/LiveGraphPanel";
 import TabView from "../components/TabView";
 import TrainingButton from "../components/TrainingButton";
 import UploadDataSamplesMenuItem from "../components/UploadDataSamplesMenuItem";
-import { useGestureActions, useGestureData } from "../gestures-hooks";
+import {
+  hasSufficientDataForTraining,
+  useGestureActions,
+  useGestureData,
+} from "../gestures-hooks";
 import { addDataConfig } from "../pages-config";
-import { Stage, useStatus } from "../status-hook";
 import { createStepPageUrl } from "../urls";
 
 const AddDataPage = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const [{ stage }] = useStatus();
-  const hasInsufficientData = useMemo(
-    () => stage === Stage.InsufficientData,
-    [stage]
-  );
   const [gestures] = useGestureData();
   const actions = useGestureActions();
   const isInputConnected = true;
+
+  const hasSufficientData = useMemo(
+    () => hasSufficientDataForTraining(gestures.data),
+    [gestures.data]
+  );
 
   const noStoredData = useMemo<boolean>(() => {
     const gestureData = gestures.data;
@@ -78,7 +81,7 @@ const AddDataPage = () => {
           alignItems="center"
         >
           <Button
-            variant={hasInsufficientData ? "primary" : "secondary"}
+            variant={hasSufficientData ? "secondary" : "primary"}
             leftIcon={<RiAddLine />}
             onClick={handleAddNewGesture}
             isDisabled={
@@ -91,7 +94,7 @@ const AddDataPage = () => {
           <HStack gap={2} alignItems="center">
             <TrainingButton
               onClick={navigateToTrainModelPage}
-              variant={hasInsufficientData ? "secondary" : "primary"}
+              variant={hasSufficientData ? "primary" : "secondary"}
             />
             <Menu>
               <MenuButton

@@ -1,23 +1,25 @@
 import { Button, HStack, Portal, Text } from "@chakra-ui/react";
+import { useCallback, useRef } from "react";
 import { MdBolt } from "react-icons/md";
 import { FormattedMessage } from "react-intl";
+import { useConnections } from "../connections-hooks";
 import InfoToolTip from "./InfoToolTip";
 import LiveGraph from "./LiveGraph";
-import { useCallback, useRef } from "react";
-import { useConnectionFlow } from "../connections";
-import { ConnEvent } from "../connection-flow";
+import { useConnectionStage } from "../connection-stage-hooks";
 
 const LiveGraphPanel = () => {
-  const { dispatch } = useConnectionFlow();
+  const { actions } = useConnectionStage();
+  const { isInputConnected } = useConnections();
   const parentPortalRef = useRef(null);
 
-  // TODO: replace with hook
-  const isConnected = false;
+  const handleDisconnect = useCallback(() => {
+    actions.disconnect();
+  }, [actions]);
 
   const handleConnect = useCallback(() => {
     // TODO: Handle incompatibility dialog and reconnection
-    dispatch(ConnEvent.Start);
-  }, [dispatch]);
+    actions.start();
+  }, [actions]);
   return (
     <HStack
       position="relative"
@@ -38,8 +40,8 @@ const LiveGraphPanel = () => {
         >
           <HStack gap={4}>
             <LiveIndicator />
-            {isConnected ? (
-              <Button variant="primary" size="sm">
+            {isInputConnected ? (
+              <Button variant="primary" size="sm" onClick={handleDisconnect}>
                 <FormattedMessage id="footer.disconnectButton" />
               </Button>
             ) : (
