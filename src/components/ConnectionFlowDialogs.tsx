@@ -2,8 +2,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import { ConnEvent, ConnStage, ConnType } from "../connection-flow";
 import { useConnectionFlow } from "../connections";
-import { getHexFileUrl } from "../device/get-hex-file";
-import MicrobitWebUSBConnection from "../device/microbit-usb";
+import { getFlashDataSource } from "../device/get-hex-file";
 import { useLogging } from "../logging/logging-hooks";
 import BrokenFirmwareDialog from "./BrokenFirmwareDialog";
 import ConnectBatteryDialog from "./ConnectBatteryDialog";
@@ -18,6 +17,10 @@ import TryAgainDialog from "./TryAgainDialog";
 import UnsupportedMicrobitDialog from "./UnsupportedMicrobitDialog";
 import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
 import WebUsbBluetoothUnsupportedDialog from "./WebUsbBluetoothUnsupportedDialog";
+import {
+  FlashDataError,
+  MicrobitWebUSBConnection,
+} from "@microbit/microbit-connection";
 
 const ConnectionDialogs = () => {
   // Check compatability
@@ -77,9 +80,48 @@ const ConnectionDialogs = () => {
   const requestUSBConnectionAndFlash = async () => {
     dispatch(ConnEvent.WebUsbChooseMicrobit);
     try {
-      const device = new MicrobitWebUSBConnection(logging);
-      await device.connect();
-      await flashMicrobit(device);
+      const flashDataSource = getFlashDataSource(state.type);
+      const device = new MicrobitWebUSBConnection({ logging });
+      await device.initialize();
+      try {
+        await device.flash(flashDataSource, {
+          partial: true,
+          progress: (progress) => {
+            if (state.stage !== ConnStage.FlashingInProgress) {
+              dispatch(ConnEvent.FlashingInProgress);
+            }
+            setFlashProgress(progress === undefined ? 100 : progress * 100);
+          },
+        });
+      } catch (e) {
+        if (e instanceof FlashDataError) {
+          dispatch(ConnEvent.MicrobitUnsupported);
+          return;
+        } else {
+          throw e;
+        }
+      }
+
+      // For now at least.
+      await device.disconnect();
+      device.dispose();
+
+      // TODO:
+      // Store radio/bluetooth details. Radio is essential to pass to micro:bit 2.
+      // Bluetooth saves the user from entering the pattern.
+      // const deviceId = usb.getDeviceId();
+      // if (flashStage === "bluetooth") {
+      //   $btPatternInput = MBSpecs.Utility.nameToPattern(
+      //     MBSpecs.Utility.serialNumberToName(deviceId)
+      //   );
+      // }
+      // if (flashStage === "radio-remote") {
+      //   $radioBridgeRemoteDeviceId = deviceId;
+      // }
+
+      // Next UI state:
+      dispatch(ConnEvent.FlashingComplete);
+
       if (state.type === ConnType.RadioBridge) {
         connectMicrobitsSerial();
       }
@@ -90,41 +132,6 @@ const ConnectionDialogs = () => {
       handleWebUsbError(e);
     }
   };
-
-  async function flashMicrobit(usb: MicrobitWebUSBConnection): Promise<void> {
-    const deviceVersion = usb.getBoardVersion();
-    const hexUrl = deviceVersion
-      ? getHexFileUrl(deviceVersion, state.type)
-      : deviceVersion;
-
-    if (!hexUrl) {
-      dispatch(ConnEvent.MicrobitUnsupported);
-      return;
-    }
-
-    await usb.flashHex(hexUrl, (progress) => {
-      if (state.stage !== ConnStage.FlashingInProgress) {
-        dispatch(ConnEvent.FlashingInProgress);
-      }
-      setFlashProgress(progress * 100);
-    });
-
-    // TODO:
-    // Store radio/bluetooth details. Radio is essential to pass to micro:bit 2.
-    // Bluetooth saves the user from entering the pattern.
-    // const deviceId = usb.getDeviceId();
-    // if (flashStage === "bluetooth") {
-    //   $btPatternInput = MBSpecs.Utility.nameToPattern(
-    //     MBSpecs.Utility.serialNumberToName(deviceId)
-    //   );
-    // }
-    // if (flashStage === "radio-remote") {
-    //   $radioBridgeRemoteDeviceId = deviceId;
-    // }
-
-    // Next UI state:
-    dispatch(ConnEvent.FlashingComplete);
-  }
 
   const connectMicrobitsSerial = () => {
     dispatch(ConnEvent.ConnectingMicrobits);

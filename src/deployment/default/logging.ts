@@ -7,7 +7,14 @@
 import { Logging } from "../../logging/logging";
 
 export class NullLogging implements Logging {
-  event(): void {}
-  error(): void {}
-  log(): void {}
+  event(e: any): void {
+    console.log(e);
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  error(e: any): void {
+    console.error(e);
+  }
+  log(e: any): void {
+    console.log(e);
+  }
 }
