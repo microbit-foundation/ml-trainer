@@ -61,12 +61,14 @@ export function createModel(): LayersModel {
 
   model.compile({
     loss: 'categoricalCrossentropy',
-    optimizer: tf.train.sgd(0.5),
+    optimizer: tf.train.sgd(0.1),
     metrics: ['accuracy'],
   });
 
   return model;
 }
+
+let prevLoss: number;
 
 export async function trainModel(): Promise<tf.LayersModel | void> {
   state.update(obj => {
@@ -110,20 +112,31 @@ export async function trainModel(): Promise<tf.LayersModel | void> {
   const tensorFeatures = tf.tensor(features);
   const tensorLabels = tf.tensor(labels);
   const nn: LayersModel = createModel();
-  const totalNumEpochs = get(settings).numEpochs;
+  const totalNumEpochs = 160;
 
   try {
     await nn.fit(tensorFeatures, tensorLabels, {
       epochs: totalNumEpochs,
       batchSize: 16,
       validationSplit: 0.1,
-      callbacks: {
-        onTrainEnd,
-        onEpochEnd: (epoch: number) => {
-          // Epochs indexed at 0
-          updateTrainingProgress(epoch / (totalNumEpochs - 1));
-        },
-      },
+      callbacks: [
+        new tf.CustomCallback({ onTrainEnd }),
+        new tf.CustomCallback({
+          onEpochEnd(epoch, logs) {
+            // Epochs indexed at 0
+            updateTrainingProgress(epoch / (totalNumEpochs - 1));
+            if (logs) {
+              if (prevLoss && logs.loss && logs.acc) {
+                if (logs.loss >= prevLoss && logs.acc === 1) {
+                  // Prevent overfitting.
+                  nn.stopTraining;
+                }
+              }
+              prevLoss = logs.loss;
+            }
+          },
+        }),
+      ],
     });
     model.set(nn);
   } catch (err) {
