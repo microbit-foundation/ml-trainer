@@ -75,8 +75,8 @@
   }
 </script>
 
-{#if $state.isInputConnected}
-  <div class="h-40 w-6 relative">
+<div class="h-40 w-6 relative z-10 bg-white">
+  {#if $state.isInputConnected}
     {#each labels as dimension}
       <div
         class="absolute arrowLeft -m-3.5"
@@ -89,5 +89,5 @@
         {dimension.label}
       </p>
     {/each}
-  </div>
-{/if}
+  {/if}
+</div>

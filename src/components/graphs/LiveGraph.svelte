@@ -48,7 +48,20 @@
     });
     chart.streamTo(<HTMLCanvasElement>canvas, 0);
     chart.render();
-    return () => chart?.stop();
+
+    const resizeChart = () => {
+      window.requestAnimationFrame(() => {
+        if (chart && canvas && !$state.isInputConnected) {
+          canvas.width = width - 30;
+          chart.render();
+        }
+      });
+    };
+    window.addEventListener('resize', resizeChart);
+    return () => {
+      chart?.stop();
+      window.removeEventListener('resize', resizeChart);
+    };
   });
 
   $: {

@@ -13,7 +13,8 @@
 </script>
 
 <div
-  class="{$$restProps.class || ''} rounded-lg bg-backgroundlight border-1 {selected
+  class="{$$restProps.class ||
+    ''} overflow-hidden rounded-lg bg-backgroundlight border-1 {selected
     ? 'border-brand-500'
     : 'border-transparent'}"
   class:h-30={small}

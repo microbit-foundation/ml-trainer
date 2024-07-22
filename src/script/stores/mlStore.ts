@@ -117,8 +117,8 @@ const initialMLSettings: MlSettings = {
   minSamples: 80,
   automaticClassification: true,
   updatesPrSecond: 4,
-  numEpochs: 80,
-  learningRate: 0.5,
+  numEpochs: 160,
+  learningRate: 0.1,
   includedAxes: [Axes.X, Axes.Y, Axes.Z],
   includedFilters: new Set<FilterType>([
     Filters.MAX,

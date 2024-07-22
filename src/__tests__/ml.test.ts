@@ -8,21 +8,25 @@
  */
 
 import * as tf from '@tensorflow/tfjs';
-import { makeInputs, trainModel } from '../script/ml';
+import { ModelSettings, makeInputs, trainModel } from '../script/ml';
 import { gestures } from '../script/stores/Stores';
 import gestureData from './fixtures/gesture-data.json';
 import gestureDataBadLabels from './fixtures/gesture-data-bad-labels.json';
 import testdataShakeStill from './fixtures/test-data-shake-still.json';
 import { PersistantGestureData } from '../script/domain/Gestures';
+import { get } from 'svelte/store';
+import { settings } from '../script/stores/mlStore';
 
 let tensorFlowModel: tf.LayersModel | void;
+const mlSettings = get(settings);
+const modelSettings = {
+  axes: mlSettings.includedAxes,
+  filters: mlSettings.includedFilters,
+};
+
 beforeAll(async () => {
   // No webgl in tests running in node.
   tf.setBackend('cpu');
-
-  // This creates determinism in the model training step.
-  const randomSpy = vi.spyOn(Math, 'random');
-  randomSpy.mockImplementation(() => 0.5);
 
   gestures.importFrom(gestureData);
   tensorFlowModel = await trainModel();
@@ -34,7 +38,7 @@ const getModelResults = (data: PersistantGestureData[]) => {
   const numActions = data.length;
   data.forEach((action, index) => {
     action.recordings.forEach(recording => {
-      x.push(makeInputs(recording.data));
+      x.push(makeInputs(modelSettings, recording.data));
       const label = new Array(numActions);
       label.fill(0, 0, numActions);
       label[index] = 1;
@@ -91,8 +95,8 @@ describe('Model tests', () => {
 
   test('returns correct results on testing data', async () => {
     const { tensorFlowResultAccuracy } = getModelResults(testdataShakeStill);
-    // The model thinks two samples of still are circle.
-    // 14 samples; 1.0 / 14 = 0.0714; 0.0714 * 12 correct inferences = 0.8571
-    expect(parseFloat(tensorFlowResultAccuracy)).toBeGreaterThan(0.85);
+    // The model thinks one sample of still is circle.
+    // 14 samples; 1.0 / 14 = 0.0714; 0.0714 * 13 correct inferences = 0.9286
+    expect(parseFloat(tensorFlowResultAccuracy)).toBeGreaterThan(0.9);
   });
 });
