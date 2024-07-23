@@ -31,6 +31,10 @@ export enum ConnectResult {
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
+// Should remove this and use the connection library type
+// in the next release.
+export type TempButtonEvent = { state: number };
+
 export class ConnectActions {
   private usb: MicrobitWebUSBConnection;
   private bluetooth: MicrobitWebBluetoothConnection;
@@ -134,13 +138,23 @@ export class ConnectActions {
   addAccelerometerListener = (
     listener: (e: AccelerometerDataEvent) => void
   ) => {
-    if (this.bluetooth instanceof MicrobitWebBluetoothConnection) {
-      this.bluetooth?.addEventListener("accelerometerdatachanged", listener);
-    } else {
-      throw new Error(
-        "`getAccelerometerData` is not supported on `MicrobitWebUSBConnection`"
-      );
-    }
+    this.bluetooth?.addEventListener("accelerometerdatachanged", listener);
+  };
+
+  addButtonListener = (
+    button: "A" | "B",
+    listener: (e: TempButtonEvent) => void
+  ) => {
+    const type = button === "A" ? "buttonachanged" : "buttonbchanged";
+    this.bluetooth?.addEventListener(type, listener);
+  };
+
+  removeButtonListener = (
+    button: "A" | "B",
+    listener: (e: TempButtonEvent) => void
+  ) => {
+    const type = button === "A" ? "buttonachanged" : "buttonbchanged";
+    this.bluetooth?.removeEventListener(type, listener);
   };
 
   // TODO: Replace with real disconnect logic

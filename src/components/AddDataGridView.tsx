@@ -1,9 +1,12 @@
-import { Grid, GridProps } from "@chakra-ui/react";
-import { useMemo, useState } from "react";
-import { useGestureData } from "../gestures-hooks";
+import { Grid, GridProps, useDisclosure } from "@chakra-ui/react";
+import { useEffect, useMemo, useState } from "react";
+import { GestureData, useGestureData } from "../gestures-hooks";
 import AddDataGridRow from "./AddDataGridRow";
 import AddDataGridWalkThrough from "./AddDataGridWalkThrough";
 import HeadingGrid from "./HeadingGrid";
+import RecordingDialog from "./RecordingDialog";
+import { useConnectActions } from "../connect-actions-hooks";
+import { TempButtonEvent } from "../connect-actions";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "200px 1fr",
@@ -26,16 +29,41 @@ const headings = [
 
 const AddDataGridView = () => {
   const [gestures] = useGestureData();
-  const [selected, setSelected] = useState<number>(0);
+  const [selectedGesture, setSelectedGesture] = useState<GestureData>(
+    gestures.data[0]
+  );
   const showWalkThrough = useMemo<boolean>(
     () =>
       gestures.data.length === 0 ||
       (gestures.data.length === 1 && gestures.data[0].recordings.length === 0),
     [gestures.data]
   );
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const connection = useConnectActions();
+
+  useEffect(() => {
+    const listener = (e: TempButtonEvent) => {
+      if (!isOpen) {
+        if (e.state) {
+          onOpen();
+        }
+      }
+    };
+    connection.addButtonListener("B", listener);
+    return () => {
+      connection.removeButtonListener("B", listener);
+    };
+  }, [connection, isOpen, onOpen]);
 
   return (
     <>
+      <RecordingDialog
+        gestureId={selectedGesture.ID}
+        isOpen={isOpen}
+        onClose={onClose}
+        actionName={selectedGesture.name}
+      />
       <HeadingGrid
         position="sticky"
         top={0}
@@ -53,12 +81,13 @@ const AddDataGridView = () => {
         {showWalkThrough ? (
           <AddDataGridWalkThrough gesture={gestures.data[0]} />
         ) : (
-          gestures.data.map((g, idx) => (
+          gestures.data.map((g) => (
             <AddDataGridRow
               key={g.ID}
               gesture={g}
-              selected={selected === idx}
-              onSelectRow={() => setSelected(idx)}
+              selected={selectedGesture.ID === g.ID}
+              onSelectRow={() => setSelectedGesture(g)}
+              startRecording={onOpen}
             />
           ))
         )}

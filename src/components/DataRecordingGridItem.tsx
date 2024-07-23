@@ -6,29 +6,28 @@ import {
   HStack,
   Icon,
   IconButton,
-  useDisclosure,
 } from "@chakra-ui/react";
+import { useCallback, useRef } from "react";
 import { useIntl } from "react-intl";
+import { useConnectionStage } from "../connection-stage-hooks";
 import { GestureData, useGestureActions } from "../gestures-hooks";
 import RecordIcon from "../images/record-icon.svg?react";
 import RecordingGraph from "./RecordingGraph";
-import RecordingDialog from "./RecordingDialog";
-import { useCallback, useRef } from "react";
-import { useConnectionStage } from "../connection-stage-hooks";
 
 interface DataRecordingGridItemProps {
   data: GestureData;
   selected: boolean;
   onSelectRow?: () => void;
+  startRecording: () => void;
 }
 
 const DataRecordingGridItem = ({
   data,
   selected,
   onSelectRow,
+  startRecording,
 }: DataRecordingGridItemProps) => {
   const intl = useIntl();
-  const { isOpen, onClose, onOpen: onStartRecording } = useDisclosure();
   const closeRecordingDialogFocusRef = useRef(null);
   const actions = useGestureActions();
   const { isConnected } = useConnectionStage();
@@ -42,13 +41,6 @@ const DataRecordingGridItem = ({
 
   return (
     <>
-      <RecordingDialog
-        gestureId={data.ID}
-        isOpen={isOpen}
-        onClose={onClose}
-        actionName={data.name}
-        finalFocusRef={closeRecordingDialogFocusRef}
-      />
       <GridItem>
         <Card
           onClick={onSelectRow}
@@ -67,7 +59,7 @@ const DataRecordingGridItem = ({
                 height="fit-content"
                 width="fit-content"
                 rounded="full"
-                onClick={onStartRecording}
+                onClick={startRecording}
                 variant="ghost"
                 _hover={{ backgroundColor: "transparent" }}
                 aria-label={intl.formatMessage(
