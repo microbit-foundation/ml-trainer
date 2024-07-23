@@ -8,9 +8,13 @@ import { FormattedMessage } from "react-intl";
 
 interface AddDataGridWalkThrough {
   gesture: GestureData;
+  startRecording: () => void;
 }
 
-const AddDataGridWalkThrough = ({ gesture }: AddDataGridWalkThrough) => {
+const AddDataGridWalkThrough = ({
+  gesture,
+  startRecording,
+}: AddDataGridWalkThrough) => {
   return (
     <>
       <GestureNameGridItem
@@ -30,7 +34,11 @@ const AddDataGridWalkThrough = ({ gesture }: AddDataGridWalkThrough) => {
         </GridItem>
       ) : (
         <>
-          <DataRecordingGridItem data={gesture} selected={true} />
+          <DataRecordingGridItem
+            data={gesture}
+            selected={true}
+            startRecording={startRecording}
+          />
           {/* Empty grid item to fill first column of grid */}
           <GridItem />
           <GridItem h="120px">
