@@ -79,7 +79,10 @@ const AddDataGridView = () => {
         h={0}
       >
         {showWalkThrough ? (
-          <AddDataGridWalkThrough gesture={gestures.data[0]} />
+          <AddDataGridWalkThrough
+            gesture={gestures.data[0]}
+            startRecording={onOpen}
+          />
         ) : (
           gestures.data.map((g) => (
             <AddDataGridRow
