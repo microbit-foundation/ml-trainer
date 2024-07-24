@@ -1,7 +1,9 @@
 import {
   AccelerometerDataEvent,
+  ButtonEvent,
   ConnectionStatus as DeviceConnectionStatus,
   DeviceError,
+  MicrobitRadioBridgeConnection,
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
 } from "@microbit/microbit-connection";
@@ -29,24 +31,13 @@ export enum ConnectResult {
   AutomaticConnectFailed,
 }
 
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-
-// Should remove this and use the connection library type
-// in the next release.
-export type TempButtonEvent = { state: number };
-
 export class ConnectActions {
-  private usb: MicrobitWebUSBConnection;
-  private bluetooth: MicrobitWebBluetoothConnection;
-
   constructor(
     private logging: Logging,
-    usb: MicrobitWebUSBConnection,
-    bluetooth: MicrobitWebBluetoothConnection
-  ) {
-    this.usb = usb;
-    this.bluetooth = bluetooth;
-  }
+    private usb: MicrobitWebUSBConnection,
+    private bluetooth: MicrobitWebBluetoothConnection,
+    private radioBridge: MicrobitRadioBridgeConnection
+  ) {}
 
   requestUSBConnectionAndFlash = async (
     hexType: ConnectionFlowType,
@@ -114,21 +105,25 @@ export class ConnectActions {
     return ConnectAndFlashResult.Failed;
   };
 
-  // TODO: Replace with real connecting logic
   connectMicrobitsSerial = async (deviceId: number): Promise<ConnectResult> => {
-    await delay(5000);
-
-    // TODO: Use deviceId to assign to connect microbits
     if (!deviceId) {
       return ConnectResult.ManualConnectFailed;
     }
-    return ConnectResult.Success;
+    this.radioBridge.setRemoteDeviceId(deviceId);
+    const status = await this.radioBridge.connect();
+    if (status === DeviceConnectionStatus.CONNECTED) {
+      return ConnectResult.Success;
+    }
+    return ConnectResult.ManualConnectFailed;
   };
 
   connectBluetooth = async (
     name: string | undefined
   ): Promise<ConnectResult> => {
-    await this.bluetooth.connect({ name });
+    if (name) {
+      this.bluetooth.setNameFilter(name);
+    }
+    await this.bluetooth.connect();
     if (this.bluetooth.status === DeviceConnectionStatus.CONNECTED) {
       return ConnectResult.Success;
     }
@@ -138,29 +133,31 @@ export class ConnectActions {
   addAccelerometerListener = (
     listener: (e: AccelerometerDataEvent) => void
   ) => {
-    this.bluetooth?.addEventListener("accelerometerdatachanged", listener);
+    this.bluetooth.addEventListener("accelerometerdatachanged", listener);
+    this.radioBridge.addEventListener("accelerometerdatachanged", listener);
   };
 
   removeAccelerometerListener = (
     listener: (e: AccelerometerDataEvent) => void
   ) => {
-    this.bluetooth?.removeEventListener("accelerometerdatachanged", listener);
+    this.bluetooth.removeEventListener("accelerometerdatachanged", listener);
+    this.radioBridge.addEventListener("accelerometerdatachanged", listener);
   };
 
   addButtonListener = (
     button: "A" | "B",
-    listener: (e: TempButtonEvent) => void
+    listener: (e: ButtonEvent) => void
   ) => {
     const type = button === "A" ? "buttonachanged" : "buttonbchanged";
-    this.bluetooth?.addEventListener(type, listener);
+    this.bluetooth.addEventListener(type, listener);
   };
 
   removeButtonListener = (
     button: "A" | "B",
-    listener: (e: TempButtonEvent) => void
+    listener: (e: ButtonEvent) => void
   ) => {
     const type = button === "A" ? "buttonachanged" : "buttonbchanged";
-    this.bluetooth?.removeEventListener(type, listener);
+    this.bluetooth.removeEventListener(type, listener);
   };
 
   // TODO: Replace with real disconnect logic
