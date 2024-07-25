@@ -64,6 +64,7 @@ const ConnectContainerDialog = ({
               <Button onClick={onLinkClick} variant="link" size="lg">
                 <FormattedMessage id={linkTextId} />
               </Button>
+              // TODO: Add reconnect link
             )}
             <HStack gap={5}>
               {onBackClick && (

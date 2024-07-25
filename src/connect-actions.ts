@@ -1,11 +1,12 @@
 import {
   AccelerometerDataEvent,
+  ConnectionStatusEvent,
   ConnectionStatus as DeviceConnectionStatus,
   DeviceError,
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
 } from "@microbit/microbit-connection";
-import { ConnectionFlowType } from "./connection-stage-hooks";
+import { ConnectionFlowType, ConnectionType } from "./connection-stage-hooks";
 import { getFlashDataSource } from "./device/get-hex-file";
 import { Logging } from "./logging/logging";
 
@@ -87,7 +88,7 @@ export class ConnectActions {
     try {
       await this.usb.flash(data, {
         partial: true,
-        progress: (v) => progress(v ?? 100),
+        progress: (v: number | undefined) => progress(v ?? 100),
       });
       return ConnectAndFlashResult.Success;
     } catch (e) {
@@ -128,8 +129,8 @@ export class ConnectActions {
   connectBluetooth = async (
     name: string | undefined
   ): Promise<ConnectResult> => {
-    await this.bluetooth.connect({ name });
-    if (this.bluetooth.status === DeviceConnectionStatus.CONNECTED) {
+    const status = await this.bluetooth.connect({ name });
+    if (status === DeviceConnectionStatus.CONNECTED) {
       return ConnectResult.Success;
     }
     return ConnectResult.ManualConnectFailed;
@@ -163,8 +164,25 @@ export class ConnectActions {
     this.bluetooth?.removeEventListener(type, listener);
   };
 
-  // TODO: Replace with real disconnect logic
   disconnect = async () => {
     await this.bluetooth.disconnect();
+  };
+
+  addStatusListener = (
+    type: ConnectionType,
+    listener: (e: ConnectionStatusEvent) => void
+  ) => {
+    if (type === "bluetooth") {
+      this.bluetooth?.addEventListener("status", listener);
+    }
+  };
+
+  removeStatusListener = (
+    type: ConnectionType,
+    listener: (e: ConnectionStatusEvent) => void
+  ) => {
+    if (type === "bluetooth") {
+      this.bluetooth?.removeEventListener("status", listener);
+    }
   };
 }

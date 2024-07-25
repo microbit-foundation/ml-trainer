@@ -75,7 +75,7 @@ const WhatYouWillNeedDialog = ({
       }`}
       headingId={
         reconnect
-          ? `connectMB.${type}Start.heading`
+          ? `reconnectFailed.${type}Heading`
           : `connectMB.${type}Start.heading`
       }
     >

@@ -8,7 +8,7 @@ import {
 } from "react";
 import { useNavigate } from "react-router";
 import { ConnectActions } from "./connect-actions";
-import { useConnectActions } from "./connect-actions-hooks";
+import { useConnectActions, useConnectStatus } from "./connect-actions-hooks";
 import { ConnectionStageActions } from "./connection-stage-actions";
 import { useStorage } from "./hooks/use-storage";
 
@@ -24,6 +24,10 @@ export enum ConnectionStatus {
   Connected = "Connected",
   Disconnected = "Disconnected",
   Reconnecting = "Reconnecting",
+  FailedToConnect = "FailedToConnect",
+  FailedToReconnectManually = "FailedToReconnectManually",
+  FailedToReconnectAutomatically = "FailedToReconnectAutomatically",
+  FailedToReconnectTwice = "FailedToReconnectTwice",
 }
 
 export type ConnectionType = "bluetooth" | "radio";
@@ -154,9 +158,11 @@ export const useConnectionStage = (): {
     );
   }, [connectActions, navigate, stage, setStage]);
 
+  const status = useConnectStatus(actions.handleConnectionStatus);
+
   const isConnected = useMemo(
-    () => stage.status === ConnectionStatus.Connected,
-    [stage.status]
+    () => status === ConnectionStatus.Connected,
+    [status]
   );
 
   return {

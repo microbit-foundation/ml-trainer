@@ -8,16 +8,18 @@ import {
 } from "../connection-stage-hooks";
 import InfoToolTip from "./InfoToolTip";
 import LiveGraph from "./LiveGraph";
+import { useConnectStatus } from "../connect-actions-hooks";
 
 const LiveGraphPanel = () => {
   const { actions } = useConnectionStage();
-  const { stage } = useConnectionStage();
+  const status = useConnectStatus();
   const parentPortalRef = useRef(null);
 
   const connectBtnConfig = useMemo(
     () =>
-      stage.status === ConnectionStatus.None ||
-      stage.status === ConnectionStatus.Connecting
+      status === ConnectionStatus.None ||
+      status === ConnectionStatus.Connecting ||
+      status === ConnectionStatus.FailedToReconnectTwice
         ? {
             textId: "footer.connectButton",
             onClick: actions.start,
@@ -26,7 +28,7 @@ const LiveGraphPanel = () => {
             textId: "actions.reconnect",
             onClick: actions.reconnect,
           },
-    [actions.reconnect, actions.start, stage]
+    [actions.reconnect, actions.start, status]
   );
 
   return (
@@ -49,7 +51,7 @@ const LiveGraphPanel = () => {
         >
           <HStack gap={4}>
             <LiveIndicator />
-            {stage.status === ConnectionStatus.Connected ? (
+            {status === ConnectionStatus.Connected ? (
               <Button variant="primary" size="sm" onClick={actions.disconnect}>
                 <FormattedMessage id="footer.disconnectButton" />
               </Button>
@@ -58,15 +60,15 @@ const LiveGraphPanel = () => {
                 variant="primary"
                 size="sm"
                 isDisabled={
-                  stage.status === ConnectionStatus.Reconnecting ||
-                  stage.status === ConnectionStatus.Connecting
+                  status === ConnectionStatus.Reconnecting ||
+                  status === ConnectionStatus.Connecting
                 }
                 onClick={connectBtnConfig.onClick}
               >
                 <FormattedMessage id={connectBtnConfig.textId} />
               </Button>
             )}
-            {stage.status === ConnectionStatus.Reconnecting && (
+            {status === ConnectionStatus.Reconnecting && (
               <Text rounded="4xl" bg="white" py="1px" fontWeight="bold">
                 <FormattedMessage id="connectMB.reconnecting" />
               </Text>
