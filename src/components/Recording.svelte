@@ -31,8 +31,8 @@
   class:border-neutral-300={showFingerprint}>
   <RecordingGraph data={recording.data} showBorder={!showFingerprint} />
   {#if showFingerprint}
-    <div class="transition-all duration-1000 w-0" class:w-30px={showProcessedData}>
-      <Fingerprint {gestureName} recordingData={recording} />
+    <div class="transition-all duration-1000 w-0" class:w-160px={showProcessedData}>
+      <Fingerprint recordingData={recording} />
     </div>
   {/if}
 

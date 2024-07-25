@@ -23,11 +23,23 @@
   };
 
   const filtersLabels: string[] = [];
-  filters.forEach(filter => {
-    filtersLabels.push(`${filter}-x`, `${filter}-y`, `${filter}-z`);
+  modelSettings.filters.forEach(filter => {
+    filtersLabels.push(filter);
   });
 
-  const disconnectedData = new Array(filtersLabels.length).fill(0);
+  const disconnectedData: number[][] = [];
+  for (let i = 0; i < filters.length * 3; i += 3) {
+    disconnectedData.push([0, 0, 0]);
+  }
+
+  const getProcessedData = (prevData: { x: number[]; y: number[]; z: number[] }) => {
+    const result = [];
+    const singleArr = makeInputs(modelSettings, prevData, 'computeNormalizedOutput');
+    for (let i = 0; i < singleArr.length; i += 3) {
+      result.push(singleArr.slice(i, i + 3));
+    }
+    return result;
+  };
 
   onMount(() => {
     const interval = setInterval(() => {
@@ -35,17 +47,17 @@
 
       if (surface) {
         const currentGestureData = prevData
-          ? makeInputs(modelSettings, prevData, 'computeNormalizedOutput')
+          ? getProcessedData(prevData)
           : disconnectedData;
         const currentData = {
-          values: [currentGestureData],
-          xTickLabels: ['Live'],
-          yTickLabels: filtersLabels,
+          values: currentGestureData,
+          xTickLabels: filtersLabels,
+          yTickLabels: ['x', 'y', 'z'],
         };
         tfvis.render.heatmap(surface, currentData, {
           colorMap: 'viridis',
           height: 166,
-          width: 160,
+          width: 216,
           domain: [0, 1],
           fontSize: 0,
         });
@@ -57,7 +69,7 @@
   });
 </script>
 
-<div class="relative w-20 h-full z-0">
+<div class="relative w-40 h-full z-0">
   <div class="absolute h-full w-full top-0 -left-10px right-0 bottom-0">
     <div bind:this={surface}></div>
   </div>

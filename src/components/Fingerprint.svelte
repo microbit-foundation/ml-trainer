@@ -11,9 +11,7 @@
   import { makeInputs, ModelSettings } from '../script/ml';
   import { RecordingData, settings } from '../script/stores/mlStore';
 
-  export let recordingData: RecordingData | undefined;
-  export let gestureName: string;
-  export let averagedData: number[] = [];
+  export let recordingData: RecordingData;
 
   let surface: undefined | tfvis.Drawable;
 
@@ -25,18 +23,26 @@
 
   const filtersLabels: string[] = [];
   modelSettings.filters.forEach(filter => {
-    filtersLabels.push(`${filter}-x`, `${filter}-y`, `${filter}-z`);
+    filtersLabels.push(filter);
   });
 
-  const getProcessedData = () =>
-    recordingData
-      ? makeInputs(modelSettings, recordingData.data, 'computeNormalizedOutput')
-      : [];
+  const getProcessedData = () => {
+    const result = [];
+    const singleArr = makeInputs(
+      modelSettings,
+      recordingData.data,
+      'computeNormalizedOutput',
+    );
+    for (let i = 0; i < singleArr.length; i += 3) {
+      result.push(singleArr.slice(i, i + 3));
+    }
+    return result;
+  };
 
   const chartData = {
-    values: recordingData ? [getProcessedData()] : [averagedData],
-    xTickLabels: [gestureName],
-    yTickLabels: filtersLabels,
+    values: getProcessedData(),
+    xTickLabels: filtersLabels,
+    yTickLabels: ['x', 'y', 'z'],
   };
 
   onMount(() => {
@@ -44,7 +50,7 @@
       tfvis.render.heatmap(surface, chartData, {
         colorMap: 'viridis',
         height: 109,
-        width: 80,
+        width: 206,
         domain: [0, 1],
         fontSize: 0,
       });
@@ -52,7 +58,7 @@
   });
 </script>
 
-<div class="relative w-40px" class:h-full={!recordingData}>
+<div class="relative w-160px" class:h-full={!recordingData}>
   <div
     class="absolute h-full w-full -left-10px right-0 -bottom-1px"
     class:top-1px={!recordingData}

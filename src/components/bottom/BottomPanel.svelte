@@ -28,7 +28,7 @@
     <div
       class="flex items-center justify-between gap-2 pt-4 px-7 m-0 absolute top-0 left-0"
       class:right-0={!showFingerprint}
-      class:right-80px={showFingerprint}>
+      class:right-160px={showFingerprint}>
       <div class="flex items-center gap-4">
         <!-- The live text and info box -->
         <LiveGraphInformationSection />
@@ -69,8 +69,7 @@
     {/if}
   </div>
   <div class="absolute w-full h-full overflow-hidden" class:flex={showFingerprint}>
-    <!-- <div class="bg-red-200" style={`width: ${componentWidth}px`}></div> -->
-    <LiveGraph width={componentWidth - live3dViewSize - (showFingerprint ? 80 : 0)} />
+    <LiveGraph width={componentWidth - live3dViewSize - (showFingerprint ? 160 : 0)} />
     {#if showFingerprint}
       <LiveFingerprint />
     {/if}

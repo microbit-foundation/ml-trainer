@@ -11,9 +11,9 @@
   import BottomPanel from '../components/bottom/BottomPanel.svelte';
   import GestureTilePart from '../components/GestureTilePart.svelte';
   import Information from '../components/information/Information.svelte';
-  import LoadingAnimation from '../components/LoadingBlobs.svelte';
   import PleaseConnectFirst from '../components/PleaseConnectFirst.svelte';
   import Recording from '../components/Recording.svelte';
+  import StandardButton from '../components/StandardButton.svelte';
   import { t } from '../i18n';
   import { makeInputs, ModelSettings } from '../script/ml';
   import {
@@ -25,9 +25,6 @@
   import { gestures } from '../script/stores/Stores';
   import { areActionsAllowed, state } from '../script/stores/uiStore';
   import TabView from '../views/TabView.svelte';
-  import Fingerprint from '../components/Fingerprint.svelte';
-  import AverageFingerprint from '../components/AverageFingerprint.svelte';
-  import StandardButton from '../components/StandardButton.svelte';
 
   let surfaceAll: undefined | tfvis.Drawable;
   let surfaceCurrent: undefined | tfvis.Drawable;
@@ -172,11 +169,6 @@
                   <h3>
                     {gesture.name}
                   </h3>
-                  <div
-                    class="transition-all duration-1000 h-full w-0"
-                    class:w-30px={showProcessedData}>
-                    <AverageFingerprint {gesture} />
-                  </div>
                 </div>
               </GestureTilePart>
               <div
@@ -189,7 +181,7 @@
                       {#each gesture.recordings as recording (String(gesture.ID) + String(recording.ID))}
                         <div
                           class="h-full flex flex-col w-40 relative overflow-hidden transition-all duration-1000"
-                          class:w-48={showProcessedData}>
+                          class:w-80={showProcessedData}>
                           <Recording
                             gestureId={gesture.ID}
                             gestureName={gesture.name}
