@@ -129,7 +129,10 @@ export class ConnectActions {
   connectBluetooth = async (
     name: string | undefined
   ): Promise<ConnectResult> => {
-    const status = await this.bluetooth.connect({ name });
+    if (name !== undefined) {
+      this.bluetooth.setNameFilter(name);
+    }
+    const status = await this.bluetooth.connect();
     if (status === DeviceConnectionStatus.CONNECTED) {
       return ConnectResult.Success;
     }
