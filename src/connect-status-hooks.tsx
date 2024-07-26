@@ -6,7 +6,6 @@ import {
   MutableRefObject,
   ReactNode,
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -88,15 +87,7 @@ export const useSetConnectStatus = (): ((status: ConnectionStatus) => void) => {
   }
   const [, setStatus] = connectStatusContextValue;
 
-  const set = useCallback(
-    (s: ConnectionStatus) => {
-      console.log(s);
-      setStatus(s);
-    },
-    [setStatus]
-  );
-
-  return set;
+  return setStatus;
 };
 
 export const useConnectStatus = (
@@ -111,13 +102,6 @@ export const useConnectStatus = (
   const prevDeviceStatus = useRef<DeviceConnectionStatus | null>(null);
   const hasAttempedReconnect = useRef<boolean>(false);
 
-  const set = useCallback(
-    (s: ConnectionStatus) => {
-      console.log(s);
-      setStatus(s);
-    },
-    [setStatus]
-  );
   useEffect(() => {
     const listener = ({ status: deviceStatus }: ConnectionStatusEvent) => {
       const newStatus = getNextConnectionStatus(
@@ -136,7 +120,7 @@ export const useConnectStatus = (
     return () => {
       connectActions.removeStatusListener(listener);
     };
-  }, [connectActions, handleStatus, set, setStatus, status]);
+  }, [connectActions, handleStatus, setStatus, status]);
 
   return status;
 };
