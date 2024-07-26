@@ -11,27 +11,16 @@ import { ConnectActions } from "./connect-actions";
 import { useConnectActions } from "./connect-actions-hooks";
 import { ConnectionStageActions } from "./connection-stage-actions";
 import { useStorage } from "./hooks/use-storage";
-import { useConnectStatus, useSetConnectStatus } from "./connect-status-hooks";
+import {
+  ConnectionStatus,
+  useConnectStatus,
+  useSetConnectStatus,
+} from "./connect-status-hooks";
 
 export enum ConnectionFlowType {
   Bluetooth = "bluetooth",
   RadioBridge = "bridge",
   RadioRemote = "remote",
-}
-
-export enum ConnectionStatus {
-  // Initial / restarted connection state
-  NotConnected = "NotConnected",
-  ChoosingDevice = "ChoosingDevice",
-  Connecting = "Connecting",
-  Connected = "Connected",
-  // Have connected / attempted connection previously
-  Disconnected = "Disconnected",
-  Reconnecting = "Reconnecting",
-  FailedToConnect = "FailedToConnect",
-  FailedToReconnectManually = "FailedToReconnectManually",
-  FailedToReconnectAutomatically = "FailedToReconnectAutomatically",
-  FailedToReconnectTwice = "FailedToReconnectTwice",
 }
 
 export type ConnectionType = "bluetooth" | "radio";

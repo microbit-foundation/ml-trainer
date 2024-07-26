@@ -13,7 +13,52 @@ import {
   useState,
 } from "react";
 import { useConnectActions } from "./connect-actions-hooks";
-import { ConnectionStatus } from "./connection-stage-hooks";
+
+export enum ConnectionStatus {
+  /**
+   * Represents the initial connection status.
+   */
+  NotConnected = "NotConnected",
+  /**
+   * The user is choosing bluetooth device.
+   * Used for determining when user has not selected a device.
+   */
+  ChoosingBluetoothDevice = "ChoosingDevice",
+  /**
+   * Connecting occurs for the initial connection.
+   */
+  Connecting = "Connecting",
+  /**
+   * Connected.
+   */
+  Connected = "Connected",
+  /**
+   * Reconnecting occurs for the subsequent connections after the initial one.
+   */
+  Reconnecting = "Reconnecting",
+  /**
+   * Disconnected. The disconnection is triggered by the user.
+   */
+  Disconnected = "Disconnected",
+  /**
+   * Failure to establish initial connection triggered by the user.
+   */
+  FailedToConnect = "FailedToConnect",
+  /**
+   * Failure to reconnect triggered by the user.
+   */
+  FailedToReconnect = "FailedToReconnect",
+  /**
+   *  Connection lost. Auto-reconnect was attempted, but failed.
+   */
+  ConnectionLost = "ConnectionLost",
+  /**
+   * A subsequent failure to reconnect after a reconnection failure.
+   * The initial reconnection failure may have been triggered automatically
+   * or by the user (ConnectionLost or FailedToReconnect).
+   */
+  FailedToReconnectTwice = "FailedToReconnectTwice",
+}
 
 type ConnectStatusContextValue = [
   ConnectionStatus,
@@ -123,19 +168,19 @@ const getNextConnectionStatus = (
     prevDeviceStatus === DeviceConnectionStatus.CONNECTING
   ) {
     hasAttempedReconnect.current = true;
-    return ConnectionStatus.FailedToReconnectManually;
+    return ConnectionStatus.FailedToReconnect;
   }
   if (
     deviceStatus === DeviceConnectionStatus.DISCONNECTED &&
     prevDeviceStatus === DeviceConnectionStatus.RECONNECTING
   ) {
     hasAttempedReconnect.current = true;
-    return ConnectionStatus.FailedToReconnectAutomatically;
+    return ConnectionStatus.ConnectionLost;
   }
   if (
     (status === ConnectionStatus.Connecting &&
       deviceStatus === DeviceConnectionStatus.DISCONNECTED) ||
-    (status === ConnectionStatus.ChoosingDevice &&
+    (status === ConnectionStatus.ChoosingBluetoothDevice &&
       deviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE)
   ) {
     return ConnectionStatus.FailedToConnect;
@@ -147,7 +192,7 @@ const getNextConnectionStatus = (
     deviceStatus === DeviceConnectionStatus.RECONNECTING ||
     deviceStatus === DeviceConnectionStatus.CONNECTING
   ) {
-    return status === ConnectionStatus.ChoosingDevice ||
+    return status === ConnectionStatus.ChoosingBluetoothDevice ||
       status === ConnectionStatus.FailedToConnect
       ? ConnectionStatus.Connecting
       : ConnectionStatus.Reconnecting;

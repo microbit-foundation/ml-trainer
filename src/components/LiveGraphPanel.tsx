@@ -2,13 +2,10 @@ import { Button, HStack, Portal, Text } from "@chakra-ui/react";
 import { useMemo, useRef } from "react";
 import { MdBolt } from "react-icons/md";
 import { FormattedMessage } from "react-intl";
-import {
-  ConnectionStatus,
-  useConnectionStage,
-} from "../connection-stage-hooks";
+import { useConnectionStage } from "../connection-stage-hooks";
 import InfoToolTip from "./InfoToolTip";
 import LiveGraph from "./LiveGraph";
-import { useConnectStatus } from "../connect-status-hooks";
+import { ConnectionStatus, useConnectStatus } from "../connect-status-hooks";
 
 const LiveGraphPanel = () => {
   const { actions } = useConnectionStage();
@@ -19,7 +16,7 @@ const LiveGraphPanel = () => {
     () =>
       status === ConnectionStatus.NotConnected ||
       status === ConnectionStatus.Connecting ||
-      status === ConnectionStatus.ChoosingDevice ||
+      status === ConnectionStatus.ChoosingBluetoothDevice ||
       status === ConnectionStatus.FailedToConnect ||
       status === ConnectionStatus.FailedToReconnectTwice
         ? {

@@ -10,10 +10,10 @@ import {
   ConnectionFlowStep,
   ConnectionFlowType,
   ConnectionStage,
-  ConnectionStatus,
   ConnectionType,
 } from "./connection-stage-hooks";
 import { createStepPageUrl } from "./urls";
+import { ConnectionStatus } from "./connect-status-hooks";
 
 type FlowStage = Pick<ConnectionStage, "flowStep" | "flowType">;
 
@@ -140,7 +140,7 @@ export class ConnectionStageActions {
   connectBluetooth = async (clearDevice: boolean = true) => {
     this.setStage(this.getConnectingStage("bluetooth"));
     if (clearDevice) {
-      this.setStatus(ConnectionStatus.ChoosingDevice);
+      this.setStatus(ConnectionStatus.ChoosingBluetoothDevice);
     }
     await this.actions.connectBluetooth(
       this.stage.bluetoothMicrobitName,
@@ -205,10 +205,10 @@ export class ConnectionStageActions {
       case ConnectionStatus.FailedToReconnectTwice: {
         return this.setFlowStep(ConnectionFlowStep.ReconnectFailedTwice);
       }
-      case ConnectionStatus.FailedToReconnectManually: {
+      case ConnectionStatus.FailedToReconnect: {
         return this.setFlowStep(ConnectionFlowStep.ReconnectManualFail);
       }
-      case ConnectionStatus.FailedToReconnectAutomatically: {
+      case ConnectionStatus.ConnectionLost: {
         return this.setFlowStep(ConnectionFlowStep.ReconnectAutoFail);
       }
       case ConnectionStatus.Reconnecting: {
