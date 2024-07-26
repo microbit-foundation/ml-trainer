@@ -1,4 +1,4 @@
-import { Image, Text, VStack } from "@chakra-ui/react";
+import { Button, Image, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import connectCableImage from "../images/connect-cable.gif";
 import ConnectContainerDialog, {
@@ -51,7 +51,7 @@ const ConnectCableDialog = ({
   onSwitch,
   ...props
 }: ConnectCableDialogProps) => {
-  const { subtitleId, onLink, ...typeProps } = configs[type];
+  const { subtitleId, onLink, linkTextId, headingId } = configs[type];
   const linkConfig = {
     [LinkType.None]: undefined,
     [LinkType.Skip]: onSkip,
@@ -59,9 +59,13 @@ const ConnectCableDialog = ({
   };
   return (
     <ConnectContainerDialog
-      {...typeProps}
+      headingId={headingId}
       {...props}
-      onLinkClick={linkConfig[onLink]}
+      footerLeft={
+        <Button onClick={linkConfig[onLink]} variant="link" size="lg">
+          <FormattedMessage id={linkTextId} />
+        </Button>
+      }
     >
       <VStack gap={5}>
         <Text width="100%">

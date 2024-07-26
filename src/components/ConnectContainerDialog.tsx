@@ -19,8 +19,7 @@ export interface ConnectContainerDialogProps {
   isOpen: boolean;
   onClose: () => void;
   headingId: string;
-  onLinkClick?: () => void;
-  linkTextId?: string;
+  footerLeft?: ReactNode;
   onNextClick?: () => void;
   children: ReactNode;
   onBackClick?: () => void;
@@ -30,8 +29,7 @@ const ConnectContainerDialog = ({
   isOpen,
   onClose,
   headingId,
-  onLinkClick,
-  linkTextId,
+  footerLeft,
   onNextClick,
   onBackClick,
   children,
@@ -57,15 +55,10 @@ const ConnectContainerDialog = ({
             </VStack>
           </ModalBody>
           <ModalFooter
-            justifyContent={onLinkClick && linkTextId ? "space-between" : "end"}
+            justifyContent={footerLeft ? "space-between" : "end"}
             p={0}
           >
-            {onLinkClick && linkTextId && (
-              <Button onClick={onLinkClick} variant="link" size="lg">
-                <FormattedMessage id={linkTextId} />
-              </Button>
-              // TODO: Add reconnect link
-            )}
+            {footerLeft && footerLeft}
             <HStack gap={5}>
               {onBackClick && (
                 <Button onClick={onBackClick} variant="secondary" size="lg">

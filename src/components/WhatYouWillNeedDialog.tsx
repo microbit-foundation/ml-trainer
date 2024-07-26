@@ -1,4 +1,4 @@
-import { Grid, GridItem, Image, Text, VStack } from "@chakra-ui/react";
+import { Button, Grid, GridItem, Image, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import batteryPackImage from "../images/stylised-battery-pack.svg";
 import microbitImage from "../images/stylised-microbit-black.svg";
@@ -9,6 +9,7 @@ import computerBluetoothImage from "../images/stylised_computer_w_bluetooth.svg"
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
+import ExternalLink from "./ExternalLink";
 
 const itemsConfig = {
   radio: [
@@ -60,23 +61,41 @@ export interface WhatYouWillNeedDialogProps
   > {
   reconnect: boolean;
   type: "radio" | "bluetooth";
+  onLinkClick: (() => void) | undefined;
 }
 
 const WhatYouWillNeedDialog = ({
   reconnect,
   type,
+  onLinkClick,
   ...props
 }: WhatYouWillNeedDialogProps) => {
   return (
     <ConnectContainerDialog
       {...props}
-      linkTextId={`connectMB.${type}Start.switch${
-        type === "bluetooth" ? "Radio" : "Bluetooth"
-      }`}
       headingId={
         reconnect
           ? `reconnectFailed.${type}Heading`
           : `connectMB.${type}Start.heading`
+      }
+      footerLeft={
+        <VStack alignItems="start">
+          {onLinkClick && (
+            <Button onClick={onLinkClick} variant="link" size="lg">
+              <FormattedMessage
+                id={`connectMB.${type}Start.switch${
+                  type === "bluetooth" ? "Radio" : "Bluetooth"
+                }`}
+              />
+            </Button>
+          )}
+          {reconnect && (
+            <ExternalLink
+              href="https://support.microbit.org/a/solutions/articles/19000157495"
+              textId="connectMB.troubleshoot"
+            />
+          )}
+        </VStack>
       }
     >
       {reconnect && (
