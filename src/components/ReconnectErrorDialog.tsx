@@ -26,8 +26,8 @@ interface ReconnectErrorDialogProps {
   onReconnect: () => void;
   flowType: ConnectionFlowType;
   errorStep:
-    | ConnectionFlowStep.ReconnectManualFail
-    | ConnectionFlowStep.ReconnectAutoFail;
+    | ConnectionFlowStep.ReconnectFailed
+    | ConnectionFlowStep.ConnectionLost;
 }
 
 const contentConfig = {
@@ -55,8 +55,8 @@ const contentConfig = {
 };
 
 const errorTextIdPrefixConfig = {
-  [ConnectionFlowStep.ReconnectAutoFail]: "disconnectedWarning",
-  [ConnectionFlowStep.ReconnectManualFail]: "reconnectFailed",
+  [ConnectionFlowStep.ConnectionLost]: "disconnectedWarning",
+  [ConnectionFlowStep.ReconnectFailed]: "reconnectFailed",
 };
 
 const ReconnectErrorDialog = ({

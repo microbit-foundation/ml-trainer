@@ -51,8 +51,8 @@ export enum ConnectionFlowStep {
   MicrobitUnsupported = "MicrobitUnsupported",
   WebUsbBluetoothUnsupported = "WebUsbBluetoothUnsupported",
 
-  ReconnectAutoFail = "ReconnectAutoFail",
-  ReconnectManualFail = "ReconnectManualFail",
+  ConnectionLost = "ConnectionLoss",
+  ReconnectFailed = "ReconnectFailed",
   ReconnectFailedTwice = "ReconnectFailedTwice",
 }
 

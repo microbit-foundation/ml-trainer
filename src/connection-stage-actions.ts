@@ -206,10 +206,10 @@ export class ConnectionStageActions {
         return this.setFlowStep(ConnectionFlowStep.ReconnectFailedTwice);
       }
       case ConnectionStatus.FailedToReconnect: {
-        return this.setFlowStep(ConnectionFlowStep.ReconnectManualFail);
+        return this.setFlowStep(ConnectionFlowStep.ReconnectFailed);
       }
       case ConnectionStatus.ConnectionLost: {
-        return this.setFlowStep(ConnectionFlowStep.ReconnectAutoFail);
+        return this.setFlowStep(ConnectionFlowStep.ConnectionLost);
       }
       case ConnectionStatus.Reconnecting: {
         return this.setStage(this.getConnectingStage("bluetooth"));
