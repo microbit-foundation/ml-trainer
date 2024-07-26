@@ -127,8 +127,12 @@ export class ConnectActions {
   };
 
   connectBluetooth = async (
-    name: string | undefined
+    name: string | undefined,
+    clearDevice: boolean
   ): Promise<ConnectResult> => {
+    if (clearDevice) {
+      await this.bluetooth.clearDevice();
+    }
     if (name !== undefined) {
       this.bluetooth.setNameFilter(name);
     }

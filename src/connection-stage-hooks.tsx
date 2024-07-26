@@ -8,9 +8,10 @@ import {
 } from "react";
 import { useNavigate } from "react-router";
 import { ConnectActions } from "./connect-actions";
-import { useConnectActions, useConnectStatus } from "./connect-actions-hooks";
+import { useConnectActions } from "./connect-actions-hooks";
 import { ConnectionStageActions } from "./connection-stage-actions";
 import { useStorage } from "./hooks/use-storage";
+import { useConnectStatus, useSetConnectStatus } from "./connect-status-hooks";
 
 export enum ConnectionFlowType {
   Bluetooth = "bluetooth",
@@ -19,9 +20,12 @@ export enum ConnectionFlowType {
 }
 
 export enum ConnectionStatus {
-  None = "None", // Have not been connected before
+  // Initial / restarted connection state
+  NotConnected = "NotConnected",
+  ChoosingDevice = "ChoosingDevice",
   Connecting = "Connecting",
   Connected = "Connected",
+  // Have connected / attempted connection previously
   Disconnected = "Disconnected",
   Reconnecting = "Reconnecting",
   FailedToConnect = "FailedToConnect",
@@ -102,7 +106,7 @@ const getInitialConnectionStageValue = (
   flowStep: ConnectionFlowStep.None,
   flowType: ConnectionFlowType.Bluetooth,
   reconnectFailStreak: 0,
-  status: ConnectionStatus.None,
+  status: ConnectionStatus.NotConnected,
   bluetoothMicrobitName: microbitName,
   connType: "bluetooth",
   isWebBluetoothSupported: true,
@@ -148,15 +152,17 @@ export const useConnectionStage = (): {
   const [stage, setStage] = connectionStageContextValue;
   const navigate = useNavigate();
   const connectActions = useConnectActions();
+  const setStatus = useSetConnectStatus();
 
   const actions = useMemo(() => {
     return new ConnectionStageActions(
       connectActions,
       navigate,
       stage,
-      setStage
+      setStage,
+      setStatus
     );
-  }, [connectActions, navigate, stage, setStage]);
+  }, [connectActions, navigate, stage, setStage, setStatus]);
 
   const status = useConnectStatus(actions.handleConnectionStatus);
 

@@ -8,7 +8,7 @@ import {
 } from "../connection-stage-hooks";
 import InfoToolTip from "./InfoToolTip";
 import LiveGraph from "./LiveGraph";
-import { useConnectStatus } from "../connect-actions-hooks";
+import { useConnectStatus } from "../connect-status-hooks";
 
 const LiveGraphPanel = () => {
   const { actions } = useConnectionStage();
@@ -17,8 +17,10 @@ const LiveGraphPanel = () => {
 
   const connectBtnConfig = useMemo(
     () =>
-      status === ConnectionStatus.None ||
+      status === ConnectionStatus.NotConnected ||
       status === ConnectionStatus.Connecting ||
+      status === ConnectionStatus.ChoosingDevice ||
+      status === ConnectionStatus.FailedToConnect ||
       status === ConnectionStatus.FailedToReconnectTwice
         ? {
             textId: "footer.connectButton",

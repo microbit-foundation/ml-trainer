@@ -22,10 +22,12 @@ export class ConnectionStageActions {
     private actions: ConnectActions,
     private navigate: NavigateFunction,
     private stage: ConnectionStage,
-    private setStage: (stage: ConnectionStage) => void
+    private setStage: (stage: ConnectionStage) => void,
+    private setStatus: (status: ConnectionStatus) => void
   ) {}
 
-  start = () =>
+  start = () => {
+    this.setStatus(ConnectionStatus.NotConnected);
     this.setStage({
       ...this.stage,
       flowType:
@@ -37,6 +39,7 @@ export class ConnectionStageActions {
           ? ConnectionFlowStep.WebUsbBluetoothUnsupported
           : ConnectionFlowStep.Start,
     });
+  };
 
   setFlowStep = (step: ConnectionFlowStep) => {
     this.setStage({ ...this.stage, flowStep: step });
@@ -134,9 +137,15 @@ export class ConnectionStageActions {
     });
   };
 
-  connectBluetooth = async () => {
+  connectBluetooth = async (clearDevice: boolean = true) => {
     this.setStage(this.getConnectingStage("bluetooth"));
-    await this.actions.connectBluetooth(this.stage.bluetoothMicrobitName);
+    if (clearDevice) {
+      this.setStatus(ConnectionStatus.ChoosingDevice);
+    }
+    await this.actions.connectBluetooth(
+      this.stage.bluetoothMicrobitName,
+      clearDevice
+    );
   };
 
   connectMicrobits = async () => {
@@ -171,7 +180,6 @@ export class ConnectionStageActions {
   private handleConnectFail = () => {
     this.setStage({
       ...this.stage,
-      status: ConnectionStatus.Disconnected,
       flowStep:
         this.stage.flowType === ConnectionFlowType.Bluetooth
           ? ConnectionFlowStep.TryAgainBluetoothConnect
@@ -198,7 +206,7 @@ export class ConnectionStageActions {
   };
 
   handleConnectionStatus = (status: ConnectionStatus) => {
-    console.log("handleConnectionStatus", status);
+    console.log(status);
     switch (status) {
       case ConnectionStatus.Connected: {
         return this.onConnected();
@@ -237,7 +245,7 @@ export class ConnectionStageActions {
 
   reconnect = async () => {
     if (this.stage.connType === "bluetooth") {
-      await this.connectBluetooth();
+      await this.connectBluetooth(false);
     } else {
       this.setStage(this.getConnectingStage("radio"));
       await this.connectMicrobits();
