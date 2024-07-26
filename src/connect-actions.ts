@@ -8,7 +8,7 @@ import {
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
 } from "@microbit/microbit-connection";
-import { ConnectionFlowType, ConnectionType } from "./connection-stage-hooks";
+import { ConnectionFlowType } from "./connection-stage-hooks";
 import { getFlashDataSource } from "./device/get-hex-file";
 import { Logging } from "./logging/logging";
 
