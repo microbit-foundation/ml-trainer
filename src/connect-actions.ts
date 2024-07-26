@@ -150,6 +150,7 @@ export class ConnectActions {
   ) => {
     const type = button === "A" ? "buttonachanged" : "buttonbchanged";
     this.bluetooth.addEventListener(type, listener);
+    this.radioBridge.addEventListener(type, listener);
   };
 
   removeButtonListener = (
@@ -158,6 +159,7 @@ export class ConnectActions {
   ) => {
     const type = button === "A" ? "buttonachanged" : "buttonbchanged";
     this.bluetooth.removeEventListener(type, listener);
+    this.radioBridge.removeEventListener(type, listener);
   };
 
   // TODO: Replace with real disconnect logic
