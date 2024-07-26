@@ -162,7 +162,6 @@ export class ConnectActions {
     this.radioBridge.removeEventListener(type, listener);
   };
 
-  // TODO: Replace with real disconnect logic
   disconnect = async () => {
     await this.bluetooth.disconnect();
     await this.radioBridge.disconnect();
