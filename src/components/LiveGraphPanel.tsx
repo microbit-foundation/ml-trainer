@@ -16,7 +16,7 @@ const LiveGraphPanel = () => {
     () =>
       status === ConnectionStatus.NotConnected ||
       status === ConnectionStatus.Connecting ||
-      status === ConnectionStatus.ChoosingBluetoothDevice ||
+      status === ConnectionStatus.ChoosingDevice ||
       status === ConnectionStatus.FailedToConnect ||
       status === ConnectionStatus.FailedToReconnectTwice
         ? {

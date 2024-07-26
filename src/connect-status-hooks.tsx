@@ -20,10 +20,10 @@ export enum ConnectionStatus {
    */
   NotConnected = "NotConnected",
   /**
-   * The user is choosing bluetooth device.
+   * The user is choosing device.
    * Used for determining when user has not selected a device.
    */
-  ChoosingBluetoothDevice = "ChoosingDevice",
+  ChoosingDevice = "ChoosingDevice",
   /**
    * Connecting occurs for the initial connection.
    */
@@ -137,9 +137,9 @@ export const useConnectStatus = (
         setStatus(newStatus);
       }
     };
-    connectActions.addStatusListener("bluetooth", listener);
+    connectActions.addStatusListener(listener);
     return () => {
-      connectActions.removeStatusListener("bluetooth", listener);
+      connectActions.removeStatusListener(listener);
     };
   }, [connectActions, handleStatus, set, setStatus, status]);
 
@@ -180,7 +180,7 @@ const getNextConnectionStatus = (
   if (
     (status === ConnectionStatus.Connecting &&
       deviceStatus === DeviceConnectionStatus.DISCONNECTED) ||
-    (status === ConnectionStatus.ChoosingBluetoothDevice &&
+    (status === ConnectionStatus.ChoosingDevice &&
       deviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE)
   ) {
     return ConnectionStatus.FailedToConnect;
@@ -192,7 +192,7 @@ const getNextConnectionStatus = (
     deviceStatus === DeviceConnectionStatus.RECONNECTING ||
     deviceStatus === DeviceConnectionStatus.CONNECTING
   ) {
-    return status === ConnectionStatus.ChoosingBluetoothDevice ||
+    return status === ConnectionStatus.ChoosingDevice ||
       status === ConnectionStatus.FailedToConnect
       ? ConnectionStatus.Connecting
       : ConnectionStatus.Reconnecting;

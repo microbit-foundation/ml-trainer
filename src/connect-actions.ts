@@ -121,18 +121,14 @@ export class ConnectActions {
   connectBluetooth = async (
     name: string | undefined,
     clearDevice: boolean
-  ): Promise<ConnectResult> => {
+  ): Promise<void> => {
     if (clearDevice) {
       await this.bluetooth.clearDevice();
     }
     if (name) {
       this.bluetooth.setNameFilter(name);
     }
-    const status = await this.bluetooth.connect();
-    if (status === DeviceConnectionStatus.CONNECTED) {
-      return ConnectResult.Success;
-    }
-    return ConnectResult.ManualConnectFailed;
+    await this.bluetooth.connect();
   };
 
   addAccelerometerListener = (
@@ -172,21 +168,11 @@ export class ConnectActions {
     await this.radioBridge.disconnect();
   };
 
-  addStatusListener = (
-    type: ConnectionType,
-    listener: (e: ConnectionStatusEvent) => void
-  ) => {
-    if (type === "bluetooth") {
-      this.bluetooth?.addEventListener("status", listener);
-    }
+  addStatusListener = (listener: (e: ConnectionStatusEvent) => void) => {
+    this.bluetooth?.addEventListener("status", listener);
   };
 
-  removeStatusListener = (
-    type: ConnectionType,
-    listener: (e: ConnectionStatusEvent) => void
-  ) => {
-    if (type === "bluetooth") {
-      this.bluetooth?.removeEventListener("status", listener);
-    }
+  removeStatusListener = (listener: (e: ConnectionStatusEvent) => void) => {
+    this.bluetooth?.removeEventListener("status", listener);
   };
 }
