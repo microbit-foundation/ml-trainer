@@ -139,9 +139,6 @@ export class ConnectionStageActions {
 
   connectBluetooth = async (clearDevice: boolean = true) => {
     this.setStage(this.getConnectingStage("bluetooth"));
-    if (clearDevice) {
-      this.setStatus(ConnectionStatus.ChoosingDevice);
-    }
     await this.actions.connectBluetooth(
       this.stage.bluetoothMicrobitName,
       clearDevice

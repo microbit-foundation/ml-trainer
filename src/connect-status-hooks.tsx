@@ -20,11 +20,6 @@ export enum ConnectionStatus {
    */
   NotConnected = "NotConnected",
   /**
-   * The user is choosing device.
-   * Used for determining when user has not selected a device.
-   */
-  ChoosingDevice = "ChoosingDevice",
-  /**
    * Connecting occurs for the initial connection.
    */
   Connecting = "Connecting",
@@ -180,8 +175,9 @@ const getNextConnectionStatus = (
   if (
     (status === ConnectionStatus.Connecting &&
       deviceStatus === DeviceConnectionStatus.DISCONNECTED) ||
-    (status === ConnectionStatus.ChoosingDevice &&
-      deviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE)
+    // If user does not select a device
+    (deviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE &&
+      prevDeviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE)
   ) {
     return ConnectionStatus.FailedToConnect;
   }
@@ -192,7 +188,7 @@ const getNextConnectionStatus = (
     deviceStatus === DeviceConnectionStatus.RECONNECTING ||
     deviceStatus === DeviceConnectionStatus.CONNECTING
   ) {
-    return status === ConnectionStatus.ChoosingDevice ||
+    return status === ConnectionStatus.NotConnected ||
       status === ConnectionStatus.FailedToConnect
       ? ConnectionStatus.Connecting
       : ConnectionStatus.Reconnecting;
