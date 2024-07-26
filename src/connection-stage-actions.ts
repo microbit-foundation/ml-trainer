@@ -178,21 +178,15 @@ export class ConnectionStageActions {
   };
 
   private handleConnectFail = () => {
-    this.setStage({
-      ...this.stage,
-      flowStep:
-        this.stage.flowType === ConnectionFlowType.Bluetooth
-          ? ConnectionFlowStep.TryAgainBluetoothConnect
-          : ConnectionFlowStep.TryAgainReplugMicrobit,
-    });
+    this.setFlowStep(
+      this.stage.flowType === ConnectionFlowType.Bluetooth
+        ? ConnectionFlowStep.TryAgainBluetoothConnect
+        : ConnectionFlowStep.TryAgainReplugMicrobit
+    );
   };
 
   private onConnected = () => {
-    this.setStage({
-      ...this.stage,
-      flowStep: ConnectionFlowStep.None,
-      reconnectFailStreak: 0,
-    });
+    this.setFlowStep(ConnectionFlowStep.None);
     this.navigate(createStepPageUrl("add-data"));
   };
 
@@ -201,7 +195,6 @@ export class ConnectionStageActions {
   };
 
   handleConnectionStatus = (status: ConnectionStatus) => {
-    console.log(status);
     switch (status) {
       case ConnectionStatus.Connected: {
         return this.onConnected();
@@ -210,29 +203,16 @@ export class ConnectionStageActions {
         return this.handleConnectFail();
       }
       case ConnectionStatus.FailedToReconnectTwice: {
-        return this.setStage({
-          ...this.stage,
-          flowStep: ConnectionFlowStep.ReconnectFailedTwice,
-        });
+        return this.setFlowStep(ConnectionFlowStep.ReconnectFailedTwice);
       }
       case ConnectionStatus.FailedToReconnectManually: {
-        return this.setStage({
-          ...this.stage,
-          flowStep: ConnectionFlowStep.ReconnectManualFail,
-        });
+        return this.setFlowStep(ConnectionFlowStep.ReconnectManualFail);
       }
       case ConnectionStatus.FailedToReconnectAutomatically: {
-        return this.setStage({
-          ...this.stage,
-          flowStep: ConnectionFlowStep.ReconnectAutoFail,
-        });
+        return this.setFlowStep(ConnectionFlowStep.ReconnectAutoFail);
       }
       case ConnectionStatus.Reconnecting: {
         return this.setStage(this.getConnectingStage("bluetooth"));
-      }
-      case ConnectionStatus.Connecting: {
-        // Handled in connectingBluetooth for bluetooth and onFlashSuccess for radio
-        return;
       }
     }
     return;

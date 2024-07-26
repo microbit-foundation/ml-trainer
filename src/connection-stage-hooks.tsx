@@ -71,9 +71,6 @@ export interface ConnectionStage {
   // For connection flow
   flowStep: ConnectionFlowStep;
   flowType: ConnectionFlowType;
-  // Number of times there have been consecutive reconnect fails
-  // for determining which reconnection dialog to show
-  reconnectFailStreak: number;
 
   // Compatibility
   isWebBluetoothSupported: boolean;
@@ -104,7 +101,6 @@ const getInitialConnectionStageValue = (
 ): ConnectionStage => ({
   flowStep: ConnectionFlowStep.None,
   flowType: ConnectionFlowType.Bluetooth,
-  reconnectFailStreak: 0,
   bluetoothMicrobitName: microbitName,
   connType: "bluetooth",
   isWebBluetoothSupported: true,
