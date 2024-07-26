@@ -141,7 +141,7 @@ export class ConnectActions {
     listener: (e: AccelerometerDataEvent) => void
   ) => {
     this.bluetooth.removeEventListener("accelerometerdatachanged", listener);
-    this.radioBridge.addEventListener("accelerometerdatachanged", listener);
+    this.radioBridge.removeEventListener("accelerometerdatachanged", listener);
   };
 
   addButtonListener = (
