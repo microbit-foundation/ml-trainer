@@ -191,7 +191,6 @@ export class ConnectionStageActions {
     this.setStage({
       ...this.stage,
       flowStep: ConnectionFlowStep.None,
-      status: ConnectionStatus.Connected,
       reconnectFailStreak: 0,
     });
     this.navigate(createStepPageUrl("add-data"));
@@ -199,10 +198,6 @@ export class ConnectionStageActions {
 
   disconnect = async () => {
     await this.actions.disconnect();
-    this.setStage({
-      ...this.stage,
-      status: ConnectionStatus.Disconnected,
-    });
   };
 
   handleConnectionStatus = (status: ConnectionStatus) => {

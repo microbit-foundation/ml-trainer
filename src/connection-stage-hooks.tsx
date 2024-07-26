@@ -80,7 +80,6 @@ export interface ConnectionStage {
   isWebUsbSupported: boolean;
 
   // Connection state
-  status: ConnectionStatus;
   connType: "bluetooth" | "radio";
   bluetoothDeviceId?: number;
   bluetoothMicrobitName?: string;
@@ -106,7 +105,6 @@ const getInitialConnectionStageValue = (
   flowStep: ConnectionFlowStep.None,
   flowType: ConnectionFlowType.Bluetooth,
   reconnectFailStreak: 0,
-  status: ConnectionStatus.NotConnected,
   bluetoothMicrobitName: microbitName,
   connType: "bluetooth",
   isWebBluetoothSupported: true,
