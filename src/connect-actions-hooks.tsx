@@ -1,4 +1,5 @@
 import {
+  MicrobitRadioBridgeConnection,
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
 } from "@microbit/microbit-connection";
@@ -16,6 +17,7 @@ import { useLogging } from "./logging/logging-hooks";
 interface ConnectContextValue {
   usb: MicrobitWebUSBConnection;
   bluetooth: MicrobitWebBluetoothConnection;
+  radioBridge: MicrobitRadioBridgeConnection;
 }
 
 const ConnectContext = createContext<ConnectContextValue | null>(null);
@@ -27,21 +29,30 @@ interface ConnectProviderProps {
 export const ConnectProvider = ({ children }: ConnectProviderProps) => {
   const usb = useMemo(() => new MicrobitWebUSBConnection(), []);
   const bluetooth = useMemo(() => new MicrobitWebBluetoothConnection(), []);
+  const logging = useLogging();
+  const radioBridge = useMemo(
+    () =>
+      new MicrobitRadioBridgeConnection(usb, {
+        logging,
+      }),
+    [logging, usb]
+  );
   const isInitialized = useRef<boolean>(false);
 
   useEffect(() => {
     const initialize = async () => {
       await usb.initialize();
       await bluetooth.initialize();
+      await radioBridge.initialize();
     };
     if (!isInitialized.current) {
       void initialize();
       isInitialized.current = true;
     }
-  }, [bluetooth, usb]);
+  }, [bluetooth, radioBridge, usb]);
 
   return (
-    <ConnectContext.Provider value={{ usb, bluetooth }}>
+    <ConnectContext.Provider value={{ usb, bluetooth, radioBridge }}>
       {children}
     </ConnectContext.Provider>
   );
@@ -52,12 +63,12 @@ export const useConnectActions = (): ConnectActions => {
   if (!connectContextValue) {
     throw new Error("Missing provider");
   }
-  const { usb, bluetooth } = connectContextValue;
+  const { usb, bluetooth, radioBridge } = connectContextValue;
   const logging = useLogging();
 
   const connectActions = useMemo(
-    () => new ConnectActions(logging, usb, bluetooth),
-    [bluetooth, logging, usb]
+    () => new ConnectActions(logging, usb, bluetooth, radioBridge),
+    [bluetooth, logging, radioBridge, usb]
   );
 
   return connectActions;

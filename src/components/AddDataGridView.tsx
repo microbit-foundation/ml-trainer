@@ -6,7 +6,7 @@ import AddDataGridWalkThrough from "./AddDataGridWalkThrough";
 import HeadingGrid from "./HeadingGrid";
 import RecordingDialog from "./RecordingDialog";
 import { useConnectActions } from "../connect-actions-hooks";
-import { TempButtonEvent } from "../connect-actions";
+import { ButtonEvent } from "@microbit/microbit-connection";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "200px 1fr",
@@ -43,7 +43,7 @@ const AddDataGridView = () => {
   const connection = useConnectActions();
 
   useEffect(() => {
-    const listener = (e: TempButtonEvent) => {
+    const listener = (e: ButtonEvent) => {
       if (!isOpen) {
         if (e.state) {
           onOpen();
