@@ -1,6 +1,6 @@
 import Gesture from '../domain/Gesture';
 import { matrixImages } from '../utils/matrixImages';
-import { getKeyByValue } from './utils';
+import { getKeyByValue, varFromActionLabel } from './utils';
 
 /**
  * (c) 2024, Center for Computational Thinking and Design at Aarhus University and contributors
@@ -26,7 +26,7 @@ export const getMakeCodeGestureConfig = (gesture: Gesture) => ({
   ...getIconNameOrLed(gesture.getMatrix()),
 });
 
-const actionLabel = (name: string) => `mlrunner.Action.${name}`;
+const actionLabel = (name: string) => `mlrunner.Action.${varFromActionLabel(name)}`;
 interface BlockPos {
   x: number;
   y: number;

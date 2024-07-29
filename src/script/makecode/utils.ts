@@ -4,6 +4,14 @@
  * SPDX-License-Identifier: MIT
  */
 
+import upperFirst from 'lodash.upperfirst';
+import camelCase from 'lodash.camelcase';
+
+export const varFromActionLabel = (actionLabel: string): string => {
+  return upperFirst(camelCase(actionLabel));
+};
+
+
 export const filenames = {
   mainTs: 'main.ts',
   mainBlocks: 'main.blocks',
@@ -22,7 +30,7 @@ export const pxt = {
     core: '*',
     microphone: '*',
     radio: '*', // needed for compiling
-    'Machine Learning POC': 'github:microbit-foundation/pxt-ml-extension-poc#v0.3.10',
+    'Machine Learning POC': 'github:microbit-foundation/pxt-ml-extension-poc#action-duration',
   },
   files: [...Object.values(filenames), 'README.md'],
 };

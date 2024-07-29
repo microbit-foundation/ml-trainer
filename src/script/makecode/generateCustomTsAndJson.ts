@@ -7,23 +7,24 @@ import { compileModel } from 'ml4f';
 import { generateBlob } from '@microbit-foundation/ml-header-generator';
 import { LayersModel } from '@tensorflow/tfjs';
 import Gesture from '../domain/Gesture';
+import { varFromActionLabel } from './utils';
 
 const createMlEvents = (actions: string[]) => {
   let code = '';
   actions.forEach((action, idx) => {
     code += `    //% fixedInstance\n`;
-    code += `    export const ${action} = new MlEvent(${idx + 2}, "${action}");\n`;
+    code += `    export const ${varFromActionLabel(action)} = new MlEvent(${idx + 2}, "${action}");\n`;
   });
   return code;
 };
 
-const createEventListeners = (numActions: number) => {
-  // Includes `None`.
-  const totalActions = numActions + 1;
+const createEventListeners = (actions: string[]) => {
+  actions.unshift("None")
+  const totalActions = actions.length;
   let code = '';
-  for (let i = 1; i <= totalActions; i++) {
-    code += `    control.onEvent(MlRunnerIds.MlRunnerInference, ${i}, () => {\n`;
-    code += `      prevAction = ${i};\n`;
+  for (let i = 0; i < totalActions; i++) {
+    code += `    control.onEvent(MlRunnerIds.MlRunnerInference, ${i + 1}, () => {\n`;
+    code += `      maybeUpdateActionStats(${varFromActionLabel(actions[i])});\n`;
     code += `    });${i === totalActions ? '' : '\n'}`;
   }
   return code;
@@ -53,9 +54,11 @@ export const generateCustomTs = (gs: Gesture[], m: LayersModel) => {
 namespace mlrunner {
   export namespace Action {
 ${createMlEvents(actionLabels)}
-    actions = [None,${actionLabels.toString()}];
+    actions = [None,${actionLabels
+      .map((actionLabel) => varFromActionLabel(actionLabel))
+      .toString()}];
 
-${createEventListeners(actionLabels.length)}
+${createEventListeners(actionLabels)}
   }
 }
 
