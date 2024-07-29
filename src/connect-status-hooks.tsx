@@ -144,6 +144,15 @@ const getNextConnectionStatus = (
     return ConnectionStatus.Connected;
   }
   if (
+    (status === ConnectionStatus.Connecting &&
+      deviceStatus === DeviceConnectionStatus.DISCONNECTED) ||
+    // If user does not select a device
+    (deviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE &&
+      prevDeviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE)
+  ) {
+    return ConnectionStatus.FailedToConnect;
+  }
+  if (
     hasAttempedReconnect.current &&
     deviceStatus === DeviceConnectionStatus.DISCONNECTED &&
     prevDeviceStatus === DeviceConnectionStatus.CONNECTING
@@ -163,15 +172,6 @@ const getNextConnectionStatus = (
   ) {
     hasAttempedReconnect.current = true;
     return ConnectionStatus.ConnectionLost;
-  }
-  if (
-    (status === ConnectionStatus.Connecting &&
-      deviceStatus === DeviceConnectionStatus.DISCONNECTED) ||
-    // If user does not select a device
-    (deviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE &&
-      prevDeviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE)
-  ) {
-    return ConnectionStatus.FailedToConnect;
   }
   if (deviceStatus === DeviceConnectionStatus.DISCONNECTED) {
     return ConnectionStatus.Disconnected;
