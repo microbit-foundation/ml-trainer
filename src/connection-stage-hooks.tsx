@@ -150,11 +150,7 @@ export const useConnectionStage = (): {
   }, [connectActions, navigate, stage, setStage, setStatus]);
 
   const status = useConnectStatus(actions.handleConnectionStatus);
-
-  const isConnected = useMemo(
-    () => status === ConnectionStatus.Connected,
-    [status]
-  );
+  const isConnected = status === ConnectionStatus.Connected;
 
   return {
     stage,
