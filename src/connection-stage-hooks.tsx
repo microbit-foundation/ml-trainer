@@ -71,6 +71,7 @@ export interface ConnectionStage {
   bluetoothMicrobitName?: string;
   radioBridgeDeviceId?: number;
   radioRemoteDeviceId?: number;
+  hasFailedToReconnectTwice: boolean;
 }
 
 type ConnectionStageContextValue = [
@@ -94,6 +95,7 @@ const getInitialConnectionStageValue = (
   connType: "bluetooth",
   isWebBluetoothSupported: true,
   isWebUsbSupported: true,
+  hasFailedToReconnectTwice: false,
 });
 
 export const ConnectionStageProvider = ({

@@ -131,6 +131,14 @@ const getNextConnectionStatus = (
   prevDeviceStatus: DeviceConnectionStatus | null,
   hasAttempedReconnect: MutableRefObject<boolean>
 ) => {
+  if (
+    // Disconnection happens for newly started / restarted
+    // connection flows when clearing device
+    deviceStatus === DeviceConnectionStatus.DISCONNECTED &&
+    status === ConnectionStatus.NotConnected
+  ) {
+    return ConnectionStatus.NotConnected;
+  }
   if (deviceStatus === DeviceConnectionStatus.CONNECTED) {
     hasAttempedReconnect.current = false;
     return ConnectionStatus.Connected;

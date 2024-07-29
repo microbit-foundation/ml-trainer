@@ -12,22 +12,20 @@ const LiveGraphPanel = () => {
   const status = useConnectStatus();
   const parentPortalRef = useRef(null);
 
-  const connectBtnConfig = useMemo(
-    () =>
-      status === ConnectionStatus.NotConnected ||
+  const connectBtnConfig = useMemo(() => {
+    return status === ConnectionStatus.NotConnected ||
       status === ConnectionStatus.Connecting ||
       status === ConnectionStatus.FailedToConnect ||
       status === ConnectionStatus.FailedToReconnectTwice
-        ? {
-            textId: "footer.connectButton",
-            onClick: actions.start,
-          }
-        : {
-            textId: "actions.reconnect",
-            onClick: actions.reconnect,
-          },
-    [actions.reconnect, actions.start, status]
-  );
+      ? {
+          textId: "footer.connectButton",
+          onClick: actions.start,
+        }
+      : {
+          textId: "actions.reconnect",
+          onClick: actions.reconnect,
+        };
+  }, [actions.reconnect, actions.start, status]);
 
   return (
     <HStack
