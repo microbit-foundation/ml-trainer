@@ -169,10 +169,10 @@ export class ConnectActions {
   };
 
   addStatusListener = (listener: (e: ConnectionStatusEvent) => void) => {
-    this.bluetooth?.addEventListener("status", listener);
+    this.bluetooth.addEventListener("status", listener);
   };
 
   removeStatusListener = (listener: (e: ConnectionStatusEvent) => void) => {
-    this.bluetooth?.removeEventListener("status", listener);
+    this.bluetooth.removeEventListener("status", listener);
   };
 }
