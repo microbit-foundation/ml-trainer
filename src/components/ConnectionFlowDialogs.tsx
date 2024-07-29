@@ -235,7 +235,6 @@ const ConnectionDialogs = () => {
     case ConnectionFlowStep.WebUsbBluetoothUnsupported: {
       return <WebUsbBluetoothUnsupportedDialog {...dialogCommonProps} />;
     }
-    // TODO: Reconnect dialogs
     case ConnectionFlowStep.ReconnectFailed:
     case ConnectionFlowStep.ConnectionLost: {
       return (
