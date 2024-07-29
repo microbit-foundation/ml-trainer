@@ -13,13 +13,15 @@ const createMlEvents = (actions: string[]) => {
   let code = '';
   actions.forEach((action, idx) => {
     code += `    //% fixedInstance\n`;
-    code += `    export const ${varFromActionLabel(action)} = new MlEvent(${idx + 2}, "${action}");\n`;
+    code += `    export const ${varFromActionLabel(action)} = new MlEvent(${
+      idx + 2
+    }, "${action}");\n`;
   });
   return code;
 };
 
 const createEventListeners = (actions: string[]) => {
-  actions.unshift("None")
+  actions.unshift('None');
   const totalActions = actions.length;
   let code = '';
   for (let i = 0; i < totalActions; i++) {
@@ -55,7 +57,7 @@ namespace mlrunner {
   export namespace Action {
 ${createMlEvents(actionLabels)}
     actions = [None,${actionLabels
-      .map((actionLabel) => varFromActionLabel(actionLabel))
+      .map(actionLabel => varFromActionLabel(actionLabel))
       .toString()}];
 
 ${createEventListeners(actionLabels)}
