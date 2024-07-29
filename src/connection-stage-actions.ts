@@ -84,7 +84,7 @@ export class ConnectionStageActions {
       }
       case ConnectionFlowType.RadioBridge: {
         newStage = {
-          ...this.getConnectingStage("bluetooth"),
+          ...this.getConnectingStage("radio"),
           radioBridgeDeviceId: deviceId,
         };
         break;
