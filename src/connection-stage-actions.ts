@@ -170,6 +170,11 @@ export class ConnectionStageActions {
 
   private handleConnectResult = (result: ConnectResult) => {
     if (result === ConnectResult.Success) {
+      // TODO: Remove forced set status and listen to status event
+      // from connection library instead for radio
+      if (this.stage.connType === "radio") {
+        this.setStatus(ConnectionStatus.Connected);
+      }
       return this.onConnected();
     }
     this.handleConnectFail();

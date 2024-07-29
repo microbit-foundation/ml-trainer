@@ -62,9 +62,11 @@ const ConnectCableDialog = ({
       headingId={headingId}
       {...props}
       footerLeft={
-        <Button onClick={linkConfig[onLink]} variant="link" size="lg">
-          <FormattedMessage id={linkTextId} />
-        </Button>
+        linkTextId && (
+          <Button onClick={linkConfig[onLink]} variant="link" size="lg">
+            <FormattedMessage id={linkTextId} />
+          </Button>
+        )
       }
     >
       <VStack gap={5}>
