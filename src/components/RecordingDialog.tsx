@@ -193,6 +193,7 @@ interface RecordingOptions {
 
 interface InProgressRecording extends RecordingOptions {
   data: XYZData;
+  startTimeMillis: number;
 }
 
 interface RecordingDataSource {
@@ -201,10 +202,6 @@ interface RecordingDataSource {
 }
 
 const useRecordingDataSource = (): RecordingDataSource => {
-  // TODO: what happens if you disconnect during a recording?
-  // I think we need an error state... even if you start to reconnect it's
-  // an issue due to the gap
-  // Or we use a similar time cross-check to ensure a sane data rate.
   const ref = useRef<InProgressRecording | undefined>();
   const connectActions = useConnectActions();
   useEffect(() => {
@@ -216,15 +213,10 @@ const useRecordingDataSource = (): RecordingDataSource => {
         ref.current.data.x.push(x / 1000);
         ref.current.data.y.push(y / 1000);
         ref.current.data.z.push(z / 1000);
-        const sampleCount = ref.current.data.x.length;
-        if (sampleCount === mlSettings.numSamples) {
-          ref.current.onProgress(100);
-          ref.current.onDone(ref.current.data);
-          ref.current = undefined;
-        } else {
-          const percentage = (sampleCount / mlSettings.numSamples) * 100;
-          ref.current.onProgress(percentage);
-        }
+        const percentage =
+          ((Date.now() - ref.current.startTimeMillis) / mlSettings.duration) *
+          100;
+        ref.current.onProgress(percentage);
       }
     };
     connectActions.addAccelerometerListener(listener);
@@ -235,9 +227,24 @@ const useRecordingDataSource = (): RecordingDataSource => {
 
   return useMemo(
     () => ({
+      timeout: undefined as ReturnType<typeof setTimeout> | undefined,
+
       startRecording(options: RecordingOptions) {
+        this.timeout = setTimeout(() => {
+          if (ref.current) {
+            const sampleCount = ref.current.data.x.length;
+            if (sampleCount < mlSettings.minSamples) {
+              // TODO: this is an error case without UX
+            }
+            ref.current.onProgress(100);
+            ref.current.onDone(ref.current.data);
+            ref.current = undefined;
+          }
+        }, mlSettings.duration);
+
         ref.current = {
           data: { x: [], y: [], z: [] },
+          startTimeMillis: Date.now(),
           ...options,
         };
       },
