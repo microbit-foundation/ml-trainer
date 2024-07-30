@@ -12,11 +12,11 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { AccelerometerDataEvent } from "../../../connection/build/accelerometer";
 import { useConnectActions } from "../connect-actions-hooks";
 import { GestureData, useGestureActions, XYZData } from "../gestures-hooks";
 import { mlSettings } from "../ml";
 import { MlStage, useMlStatus } from "../ml-status-hooks";
+import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 
 interface CountdownStage {
   value: string | number;
