@@ -147,14 +147,13 @@ export class ConnectionStageActions {
   };
 
   connectMicrobits = async () => {
-    if (this.stage.connType === "radio" && this.stage.radioRemoteDeviceId) {
-      const result = await this.actions.connectMicrobitsSerial(
-        this.stage.radioRemoteDeviceId
-      );
-      this.handleConnectResult(result);
-    } else {
-      this.setFlowStep(ConnectionFlowStep.TryAgainReplugMicrobit);
+    if (!this.stage.radioRemoteDeviceId) {
+      throw new Error("Radio bridge device id not set");
     }
+    const result = await this.actions.connectMicrobitsSerial(
+      this.stage.radioRemoteDeviceId
+    );
+    this.handleConnectResult(result);
   };
 
   private getConnectingStage = (connType: ConnectionType) => {
