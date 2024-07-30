@@ -8,6 +8,7 @@ import {
   ModalOverlay,
   Progress,
   Text,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -44,6 +45,7 @@ const RecordingDialog = ({
   gestureId,
 }: RecordingDialogProps) => {
   const intl = useIntl();
+  const toast = useToast();
   const actions = useGestureActions();
   const recordingDataSource = useRecordingDataSource();
   const [, setStatus] = useMlStatus();
@@ -104,6 +106,19 @@ const RecordingDialog = ({
                 { ID: Date.now(), data },
               ]);
               handleCleanup();
+            },
+            onError() {
+              handleCleanup();
+
+              toast({
+                position: "top",
+                duration: 5_000,
+                title: intl.formatMessage({
+                  id: "alert.recording.disconnectedDuringRecording",
+                }),
+                variant: "subtle",
+                status: "error",
+              });
             },
             onProgress: setProgress,
           });
@@ -193,6 +208,7 @@ const RecordingDialog = ({
 
 interface RecordingOptions {
   onDone: (data: XYZData) => void;
+  onError: () => void;
   onProgress: (percentage: number) => void;
 }
 
@@ -239,11 +255,13 @@ const useRecordingDataSource = (): RecordingDataSource => {
           if (ref.current) {
             const sampleCount = ref.current.data.x.length;
             if (sampleCount < mlSettings.minSamples) {
-              // TODO: this is an error case without UX
+              ref.current.onError();
+              ref.current = undefined;
+            } else {
+              ref.current.onProgress(100);
+              ref.current.onDone(ref.current.data);
+              ref.current = undefined;
             }
-            ref.current.onProgress(100);
-            ref.current.onDone(ref.current.data);
-            ref.current = undefined;
           }
         }, mlSettings.duration);
 
