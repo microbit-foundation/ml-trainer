@@ -60,19 +60,13 @@ const ConnectionDialogs = () => {
     [actions]
   );
 
-  const onFlashSuccess = useCallback(
-    async (newStage: ConnectionStage) => {
-      // Inferring microbit name saves the user from entering the pattern
-      // for bluetooth connection flow
-      if (newStage.bluetoothMicrobitName) {
-        setMicrobitName(newStage.bluetoothMicrobitName);
-      }
-      if (newStage.flowType === ConnectionFlowType.RadioBridge) {
-        await actions.connectMicrobits();
-      }
-    },
-    [actions]
-  );
+  const onFlashSuccess = useCallback((newStage: ConnectionStage) => {
+    // Inferring microbit name saves the user from entering the pattern
+    // for bluetooth connection flow
+    if (newStage.bluetoothMicrobitName) {
+      setMicrobitName(newStage.bluetoothMicrobitName);
+    }
+  }, []);
 
   async function connectAndFlash(): Promise<void> {
     await actions.connectAndflashMicrobit(progressCallback, onFlashSuccess);

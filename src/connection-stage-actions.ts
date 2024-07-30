@@ -4,7 +4,6 @@ import {
   ConnectActions,
   ConnectAndFlashFailResult,
   ConnectAndFlashResult,
-  ConnectResult,
 } from "./connect-actions";
 import {
   ConnectionFlowStep,
@@ -60,10 +59,10 @@ export class ConnectionStageActions {
       return this.handleConnectAndFlashFail(result);
     }
 
-    this.onFlashSuccess(deviceId, onSuccess);
+    await this.onFlashSuccess(deviceId, onSuccess);
   };
 
-  private onFlashSuccess = (
+  private onFlashSuccess = async (
     deviceId: number,
     onSuccess: (stage: ConnectionStage) => void
   ) => {
@@ -83,11 +82,10 @@ export class ConnectionStageActions {
         break;
       }
       case ConnectionFlowType.RadioBridge: {
-        newStage = {
-          ...this.getConnectingStage("radio"),
+        await this.connectMicrobits({
           radioBridgeDeviceId: deviceId,
-        };
-        break;
+        });
+        return;
       }
       case ConnectionFlowType.RadioRemote: {
         newStage = {
@@ -146,14 +144,16 @@ export class ConnectionStageActions {
     );
   };
 
-  connectMicrobits = async () => {
-    if (!this.stage.radioRemoteDeviceId) {
+  connectMicrobits = async (partialStage?: Partial<ConnectionStage>) => {
+    const newStage = {
+      ...this.getConnectingStage("radio"),
+      ...(partialStage || {}),
+    };
+    this.setStage(newStage);
+    if (!newStage.radioRemoteDeviceId) {
       throw new Error("Radio bridge device id not set");
     }
-    const result = await this.actions.connectMicrobitsSerial(
-      this.stage.radioRemoteDeviceId
-    );
-    this.handleConnectResult(result);
+    await this.actions.connectMicrobitsSerial(newStage.radioRemoteDeviceId);
   };
 
   private getConnectingStage = (connType: ConnectionType) => {
@@ -165,18 +165,6 @@ export class ConnectionStageActions {
           ? ConnectionFlowStep.ConnectingBluetooth
           : ConnectionFlowStep.ConnectingMicrobits,
     };
-  };
-
-  private handleConnectResult = (result: ConnectResult) => {
-    if (result === ConnectResult.Success) {
-      // TODO: Remove forced set status and listen to status event
-      // from connection library instead for radio
-      if (this.stage.connType === "radio") {
-        this.setStatus(ConnectionStatus.Connected);
-      }
-      return this.onConnected();
-    }
-    this.handleConnectFail();
   };
 
   private handleConnectFail = () => {
@@ -196,7 +184,10 @@ export class ConnectionStageActions {
     await this.actions.disconnect();
   };
 
-  handleConnectionStatus = (status: ConnectionStatus) => {
+  handleConnectionStatus = (
+    status: ConnectionStatus,
+    flowType: ConnectionFlowType
+  ) => {
     switch (status) {
       case ConnectionStatus.Connected: {
         return this.onConnected();
@@ -212,13 +203,19 @@ export class ConnectionStageActions {
         });
       }
       case ConnectionStatus.FailedToReconnect: {
-        return this.setFlowStep(ConnectionFlowStep.ReconnectFailed);
+        return this.setFlowStage({
+          flowStep: ConnectionFlowStep.ReconnectFailed,
+          flowType,
+        });
       }
       case ConnectionStatus.ConnectionLost: {
-        return this.setFlowStep(ConnectionFlowStep.ConnectionLost);
+        return this.setFlowStage({
+          flowStep: ConnectionFlowStep.ConnectionLost,
+          flowType,
+        });
       }
       case ConnectionStatus.Reconnecting: {
-        return this.setStage(this.getConnectingStage("bluetooth"));
+        return this.setStage(this.getConnectingStage(this.stage.connType));
       }
     }
     return;
@@ -228,7 +225,6 @@ export class ConnectionStageActions {
     if (this.stage.connType === "bluetooth") {
       await this.connectBluetooth(false);
     } else {
-      this.setStage(this.getConnectingStage("radio"));
       await this.connectMicrobits();
     }
   };
@@ -263,18 +259,16 @@ export class ConnectionStageActions {
     return radioFlow();
   };
 
+  private setFlowStage = (flowStage: FlowStage) => {
+    this.setStage({ ...this.stage, ...flowStage });
+  };
+
   onNextClick = () => {
-    this.setStage({
-      ...this.stage,
-      ...getNextStage(this.stage, 1, this.getStagesOrder()),
-    });
+    this.setFlowStage(getNextStage(this.stage, 1, this.getStagesOrder()));
   };
 
   onBackClick = () => {
-    this.setStage({
-      ...this.stage,
-      ...getNextStage(this.stage, -1, this.getStagesOrder()),
-    });
+    this.setFlowStage(getNextStage(this.stage, -1, this.getStagesOrder()));
   };
 
   onTryAgain = () => {
