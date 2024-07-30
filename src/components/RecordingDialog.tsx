@@ -75,7 +75,8 @@ const RecordingDialog = ({
 
   const handleOnClose = useCallback(() => {
     recordingDataSource.cancelRecording();
-  }, [recordingDataSource]);
+    handleCleanup();
+  }, [handleCleanup, recordingDataSource]);
 
   useEffect(() => {
     if (isOpen) {
@@ -104,7 +105,6 @@ const RecordingDialog = ({
               ]);
               handleCleanup();
             },
-            onCancel: handleCleanup,
             onProgress: setProgress,
           });
         }
@@ -193,7 +193,6 @@ const RecordingDialog = ({
 
 interface RecordingOptions {
   onDone: (data: XYZData) => void;
-  onCancel: () => void;
   onProgress: (percentage: number) => void;
 }
 
@@ -256,7 +255,6 @@ const useRecordingDataSource = (): RecordingDataSource => {
       },
       cancelRecording() {
         clearTimeout(this.timeout);
-        ref.current?.onCancel();
         ref.current = undefined;
       },
     }),
