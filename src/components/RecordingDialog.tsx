@@ -139,6 +139,8 @@ const RecordingDialog = ({
     gestureId,
     handleOnClose,
     handleCleanup,
+    toast,
+    intl,
   ]);
 
   return (
