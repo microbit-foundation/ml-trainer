@@ -6,19 +6,19 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
+  Progress,
   Text,
   VStack,
-  Box,
 } from "@chakra-ui/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { GestureData, useGestureActions } from "../gestures-hooks";
-import gestureData from "../test-fixtures/gesture-data.json";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
+import { AccelerometerDataEvent } from "../../../connection/build/accelerometer";
+import { useConnectActions } from "../connect-actions-hooks";
+import { GestureData, useGestureActions, XYZData } from "../gestures-hooks";
 import { mlSettings } from "../ml";
+import { MlStage, useMlStatus } from "../ml-status-hooks";
 
-interface CountdownConfig {
+interface CountdownStage {
   value: string | number;
   duration: number;
   fontSize?: string;
@@ -45,13 +45,12 @@ const RecordingDialog = ({
 }: RecordingDialogProps) => {
   const intl = useIntl();
   const actions = useGestureActions();
+  const recordingDataSource = useRecordingDataSource();
   const [, setStatus] = useMlStatus();
   const [recordingStatus, setRecordingStatus] = useState<RecordingStatus>(
     RecordingStatus.None
   );
-  const [countdownIdx, setIsCountdownIdx] = useState<number>(0);
-
-  const countdownConfigs: CountdownConfig[] = useMemo(
+  const countdownStages: CountdownStage[] = useMemo(
     () => [
       { value: 3, duration: 500, fontSize: "8xl" },
       { value: 2, duration: 500, fontSize: "8xl" },
@@ -64,52 +63,69 @@ const RecordingDialog = ({
     ],
     [intl]
   );
+  const [countdownStageIndex, setCountdownStageIndex] = useState<number>(0);
 
-  const handleOnClose = useCallback(() => {
+  const handleCleanup = useCallback(() => {
     setRecordingStatus(RecordingStatus.None);
     setStatus({ stage: MlStage.NotTrained });
-    setIsCountdownIdx(0);
+    setCountdownStageIndex(0);
+    setProgress(0);
     onClose();
   }, [onClose, setStatus]);
+
+  const handleOnClose = useCallback(() => {
+    recordingDataSource.cancelRecording();
+    handleCleanup();
+  }, [handleCleanup, recordingDataSource]);
 
   useEffect(() => {
     if (isOpen) {
       // When dialog is opened, restart countdown
       setRecordingStatus(RecordingStatus.Countdown);
-      setIsCountdownIdx(0);
+      setCountdownStageIndex(0);
     }
   }, [isOpen]);
 
+  const [progress, setProgress] = useState(0);
   useEffect(() => {
     if (recordingStatus === RecordingStatus.Countdown) {
-      const config = countdownConfigs[countdownIdx];
+      const config = countdownStages[countdownStageIndex];
 
-      setTimeout(() => {
-        if (countdownIdx < countdownConfigs.length - 1) {
-          setIsCountdownIdx(countdownIdx + 1);
+      const timeout = setTimeout(() => {
+        if (countdownStageIndex < countdownStages.length - 1) {
+          setCountdownStageIndex(countdownStageIndex + 1);
           return;
         } else {
           setRecordingStatus(RecordingStatus.Recording);
           setStatus({ stage: MlStage.RecordingData });
+          recordingDataSource.startRecording({
+            onDone(data) {
+              actions.addGestureRecordings(gestureId, [
+                { ID: Date.now(), data },
+              ]);
+              handleCleanup();
+            },
+            onCancel: handleCleanup,
+            onProgress: setProgress,
+          });
         }
       }, config.duration);
+      return () => {
+        clearTimeout(timeout);
+      };
     }
-  }, [countdownConfigs, isOpen, recordingStatus, countdownIdx, setStatus]);
-
-  useEffect(() => {
-    if (recordingStatus === RecordingStatus.Recording) {
-      setTimeout(() => {
-        if (recordingStatus === RecordingStatus.Recording) {
-          // TODO: Record samples
-          // Stubbing of recording of gesture
-          actions.addGestureRecordings(gestureId, [
-            (gestureData as GestureData[])[0].recordings[0],
-          ]);
-          handleOnClose();
-        }
-      }, mlSettings.duration);
-    }
-  }, [actions, gestureId, handleOnClose, recordingStatus]);
+  }, [
+    countdownStages,
+    isOpen,
+    recordingStatus,
+    countdownStageIndex,
+    setStatus,
+    recordingDataSource,
+    actions,
+    gestureId,
+    handleOnClose,
+    handleCleanup,
+  ]);
 
   return (
     <Modal
@@ -143,36 +159,16 @@ const RecordingDialog = ({
                   </Text>
                 ) : (
                   <Text
-                    fontSize={countdownConfigs[countdownIdx].fontSize}
+                    fontSize={countdownStages[countdownStageIndex].fontSize}
                     textAlign="center"
                     fontWeight="bold"
                     color="brand.500"
                   >
-                    {countdownConfigs[countdownIdx].value}
+                    {countdownStages[countdownStageIndex].value}
                   </Text>
                 )}
               </VStack>
-              <Box
-                alignSelf="center"
-                w="280px"
-                h="24px"
-                bgColor="red.200"
-                rounded="full"
-                overflow="hidden"
-              >
-                <Box
-                  as={motion.div}
-                  height="100%"
-                  width={0}
-                  bg="red.500"
-                  animate={
-                    recordingStatus === RecordingStatus.Recording
-                      ? { width: [0, 280] }
-                      : undefined
-                  }
-                  transition="1.5s linear"
-                />
-              </Box>
+              <Progress alignSelf="center" w="280px" value={progress} />
               <Button
                 variant="warning"
                 width="fit-content"
@@ -186,6 +182,71 @@ const RecordingDialog = ({
         </ModalContent>
       </ModalOverlay>
     </Modal>
+  );
+};
+
+interface RecordingOptions {
+  onDone: (data: XYZData) => void;
+  onCancel: () => void;
+  onProgress: (percentage: number) => void;
+}
+
+interface InProgressRecording extends RecordingOptions {
+  data: XYZData;
+}
+
+interface RecordingDataSource {
+  startRecording(options: RecordingOptions): void;
+  cancelRecording(): void;
+}
+
+const useRecordingDataSource = (): RecordingDataSource => {
+  // TODO: what happens if you disconnect during a recording?
+  // I think we need an error state... even if you start to reconnect it's
+  // an issue due to the gap
+  // Or we use a similar time cross-check to ensure a sane data rate.
+  const ref = useRef<InProgressRecording | undefined>();
+  const connectActions = useConnectActions();
+  useEffect(() => {
+    const listener = (e: AccelerometerDataEvent) => {
+      const {
+        data: { x, y, z },
+      } = e;
+      if (ref.current) {
+        ref.current.data.x.push(x / 1000);
+        ref.current.data.y.push(y / 1000);
+        ref.current.data.z.push(z / 1000);
+        const sampleCount = ref.current.data.x.length;
+        if (sampleCount === mlSettings.numSamples) {
+          ref.current.onProgress(100);
+          ref.current.onDone(ref.current.data);
+          ref.current = undefined;
+        } else {
+          const percentage = (sampleCount / mlSettings.numSamples) * 100;
+          ref.current.onProgress(percentage);
+        }
+      }
+    };
+    connectActions.addAccelerometerListener(listener);
+    return () => {
+      connectActions.removeAccelerometerListener(listener);
+    };
+  }, [connectActions]);
+
+  return useMemo(
+    () => ({
+      startRecording(options: RecordingOptions) {
+        ref.current = {
+          data: { x: [], y: [], z: [] },
+          ...options,
+        };
+      },
+      cancelRecording() {
+        ref.current?.onCancel();
+        ref.current = undefined;
+      },
+    }),
+    []
   );
 };
 
