@@ -75,8 +75,7 @@ const RecordingDialog = ({
 
   const handleOnClose = useCallback(() => {
     recordingDataSource.cancelRecording();
-    handleCleanup();
-  }, [handleCleanup, recordingDataSource]);
+  }, [recordingDataSource]);
 
   useEffect(() => {
     if (isOpen) {
@@ -91,7 +90,7 @@ const RecordingDialog = ({
     if (recordingStatus === RecordingStatus.Countdown) {
       const config = countdownStages[countdownStageIndex];
 
-      const timeout = setTimeout(() => {
+      const countdownTimeout = setTimeout(() => {
         if (countdownStageIndex < countdownStages.length - 1) {
           setCountdownStageIndex(countdownStageIndex + 1);
           return;
@@ -111,7 +110,7 @@ const RecordingDialog = ({
         }
       }, config.duration);
       return () => {
-        clearTimeout(timeout);
+        clearTimeout(countdownTimeout);
       };
     }
   }, [
@@ -168,7 +167,14 @@ const RecordingDialog = ({
                   </Text>
                 )}
               </VStack>
-              <Progress alignSelf="center" w="280px" value={progress} />
+              <Progress
+                alignSelf="center"
+                w="280px"
+                h="24px"
+                colorScheme="red"
+                borderRadius="xl"
+                value={progress}
+              />
               <Button
                 variant="warning"
                 width="fit-content"
@@ -249,6 +255,7 @@ const useRecordingDataSource = (): RecordingDataSource => {
         };
       },
       cancelRecording() {
+        clearTimeout(this.timeout);
         ref.current?.onCancel();
         ref.current = undefined;
       },
