@@ -5,6 +5,7 @@ import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
 import { ConnectionFlowType } from "../connection-stage-hooks";
+import { stage } from "../environment";
 
 enum LinkType {
   Switch,
@@ -28,7 +29,14 @@ const configs: Record<ConnectionFlowType, Config> = {
   [ConnectionFlowType.RadioRemote]: {
     headingId: "connectMB.connectCableMB1.heading",
     subtitleId: "connectMB.connectCableMB1.subtitle",
-    onLink: LinkType.None,
+    ...(stage === "local"
+      ? {
+          linkTextId: "connectMB.connectCable.skip",
+          onLink: LinkType.Skip,
+        }
+      : {
+          onLink: LinkType.None,
+        }),
   },
   [ConnectionFlowType.RadioBridge]: {
     headingId: "connectMB.connectCableMB2.heading",
