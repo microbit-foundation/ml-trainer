@@ -44,7 +44,7 @@ const AddDataPage = () => {
 
   const noStoredData = useMemo<boolean>(() => {
     const gestureData = gestures.data;
-    return (
+    return !(
       gestureData.length !== 0 &&
       gestureData.some((g) => g.recordings.length > 0)
     );
