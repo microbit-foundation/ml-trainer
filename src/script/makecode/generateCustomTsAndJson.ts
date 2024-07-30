@@ -12,8 +12,8 @@ import { varFromActionLabel } from './utils';
 const createMlEvents = (actions: string[]) => {
   let code = '';
   actions.forEach((action, idx) => {
-    code += `    //% fixedInstance\n`;
-    code += `    export const ${varFromActionLabel(action)} = new MlEvent(${
+    code += `  //% fixedInstance\n`;
+    code += `  export const ${varFromActionLabel(action)} = new MlEvent(${
       idx + 2
     }, "${action}");\n`;
   });
@@ -25,9 +25,9 @@ const createEventListeners = (actions: string[]) => {
   const totalActions = actions.length;
   let code = '';
   for (let i = 0; i < totalActions; i++) {
-    code += `    control.onEvent(MlRunnerIds.MlRunnerInference, ${i + 1}, () => {\n`;
-    code += `      maybeUpdateActionStats(${varFromActionLabel(actions[i])});\n`;
-    code += `    });${i === totalActions ? '' : '\n'}`;
+    code += `  control.onEvent(MlRunnerIds.MlRunnerInference, ${i + 1}, () => {\n`;
+    code += `    maybeUpdateActionStats(${varFromActionLabel(actions[i])});\n`;
+    code += `  });${i === totalActions ? '' : '\n'}`;
   }
   return code;
 };
@@ -53,19 +53,18 @@ export const generateCustomTs = (gs: Gesture[], m: LayersModel) => {
   const actionLabels = gs.map(g => g.getName());
 
   return `// Auto-generated. Do not edit.
-namespace mlrunner {
-  export namespace Action {
+//% blockNamespace=mlrunner
+namespace mlactions {
 ${createMlEvents(actionLabels)}
     actions = [None,${actionLabels
       .map(actionLabel => varFromActionLabel(actionLabel))
       .toString()}];
 
 ${createEventListeners(actionLabels)}
-  }
 }
 
 
-getModelBlob = (): Buffer => {
+mlrunner.getModelBlob = (): Buffer => {
   const result = hex\`${headerHexString + modelHexString}\`;
   return result;
 };

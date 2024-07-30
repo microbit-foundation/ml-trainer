@@ -26,7 +26,7 @@ export const getMakeCodeGestureConfig = (gesture: Gesture) => ({
   ...getIconNameOrLed(gesture.getMatrix()),
 });
 
-const actionLabel = (name: string) => `mlrunner.Action.${varFromActionLabel(name)}`;
+const actionLabel = (name: string) => `mlactions.${varFromActionLabel(name)}`;
 interface BlockPos {
   x: number;
   y: number;
@@ -34,7 +34,7 @@ interface BlockPos {
 
 const onMLEventBlock = (name: string, children: string, pos: BlockPos) => `
   <block type=\"mlrunner_on_ml_event\" x=\"${pos.x}\" y=\"${pos.y}\">
-    <field name=\"this\">${actionLabel(name)}</field>
+    <field name=\"action\">${actionLabel(name)}</field>
     <statement name="HANDLER">
       ${children}       
     </statement>
@@ -58,7 +58,7 @@ const statements: Record<Language, LanguageStatements> = {
     showIcon: iconName => `basic.showIcon(IconNames.${iconName})`,
     clearDisplay: () => 'basic.clearScreen()',
     onMLEvent: (name, children, _pos) => {
-      return `${actionLabel(name)}.onEvent(function () {${children}})`;
+      return `mlactions.onStart(${actionLabel(name)}, function () {${children}})`;
     },
   },
   blocks: {
