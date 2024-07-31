@@ -160,7 +160,10 @@ export const useConnectionStage = (): {
     );
   }, [connectActions, navigate, stage, setStage, setStatus]);
 
-  const status = useConnectStatus(actions.handleConnectionStatus);
+  const status = useConnectStatus(
+    stage.connType,
+    actions.handleConnectionStatus
+  );
   const isConnected = status === ConnectionStatus.Connected;
 
   return {

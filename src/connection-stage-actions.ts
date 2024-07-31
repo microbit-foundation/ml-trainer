@@ -248,15 +248,13 @@ export class ConnectionStageActions {
   };
 
   private getStagesOrder = () => {
-    if (this.stage.flowType === ConnectionFlowType.Bluetooth) {
-      return bluetoothFlow({
-        isManualFlashing:
-          !this.stage.isWebUsbSupported ||
-          this.stage.flowStep === ConnectionFlowStep.ManualFlashingTutorial,
-        isRestartAgain: this.stage.hasFailedToReconnectTwice,
-      });
-    }
-    return radioFlow();
+    const isRestartAgain = this.stage.hasFailedToReconnectTwice;
+    const isManualFlashing =
+      !this.stage.isWebUsbSupported ||
+      this.stage.flowStep === ConnectionFlowStep.ManualFlashingTutorial;
+    return this.stage.flowType === ConnectionFlowType.Bluetooth
+      ? bluetoothFlow({ isManualFlashing, isRestartAgain })
+      : radioFlow({ isRestartAgain });
   };
 
   private setFlowStage = (flowStage: FlowStage) => {
@@ -318,9 +316,11 @@ const bluetoothFlow = ({
   },
 ];
 
-const radioFlow = () => [
+const radioFlow = ({ isRestartAgain }: { isRestartAgain: boolean }) => [
   {
-    flowStep: ConnectionFlowStep.Start,
+    flowStep: isRestartAgain
+      ? ConnectionFlowStep.ReconnectFailedTwice
+      : ConnectionFlowStep.Start,
     flowType: ConnectionFlowType.RadioRemote,
   },
   {
