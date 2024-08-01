@@ -216,7 +216,7 @@ export class ConnectionStageActions {
         });
       }
       case ConnectionStatus.Reconnecting: {
-        return this.setStage(this.getConnectingStage(this.stage.connType));
+        return;
       }
     }
     return;
