@@ -39,7 +39,6 @@ export const getNextConnectionState = ({
     if (currConnType !== "radio") {
       return undefined;
     }
-    console.log(type, deviceStatus, prevDeviceStatus, currStatus);
 
     if (
       !hasAttempedReconnect &&
@@ -115,10 +114,7 @@ export const getNextConnectionState = ({
     setHasAttemptedReconnect(true);
     return { status: ConnectionStatus.ConnectionLost, flowType };
   }
-  if (
-    deviceStatus === DeviceConnectionStatus.DISCONNECTED &&
-    prevDeviceStatus !== DeviceConnectionStatus.DISCONNECTED
-  ) {
+  if (deviceStatus === DeviceConnectionStatus.DISCONNECTED) {
     return { status: ConnectionStatus.Disconnected, flowType };
   }
   if (
