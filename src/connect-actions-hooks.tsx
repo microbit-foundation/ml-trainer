@@ -29,11 +29,13 @@ interface ConnectProviderProps {
 export const ConnectProvider = ({ children }: ConnectProviderProps) => {
   const usb = useMemo(() => new MicrobitWebUSBConnection(), []);
   const bluetooth = useMemo(() => new MicrobitWebBluetoothConnection(), []);
-  // TODO: Reinstate logging
-  // const logging = useLogging();
+  const logging = useLogging();
   const radioBridge = useMemo(
-    () => new MicrobitRadioBridgeConnection(usb),
-    [usb]
+    () =>
+      new MicrobitRadioBridgeConnection(usb, {
+        logging,
+      }),
+    [logging, usb]
   );
   const isInitialized = useRef<boolean>(false);
 
