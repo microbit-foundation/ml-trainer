@@ -142,10 +142,14 @@ const applyThresholds = (
         confidences[gesture.ID] -
         (gesture.requiredConfidence ?? mlSettings.defaultRequiredConfidence),
     }))
-    .sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+    .sort((left, right) => {
+      const a = left.thresholdDelta;
+      const b = right.thresholdDelta;
+      return a < b ? -1 : a > b ? 1 : 0;
+    });
 
   const prediction = thresholded[thresholded.length - 1];
-  prediction.thresholdDelta >= 0 ? prediction.gesture : undefined;
+  return prediction.thresholdDelta >= 0 ? prediction.gesture : undefined;
 };
 
 export default TestModelGridView;

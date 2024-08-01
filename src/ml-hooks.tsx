@@ -37,7 +37,6 @@ export const usePrediction = () => {
     }
     const buffer = new BufferedData(150);
     const listener = (e: AccelerometerDataEvent) => {
-      console.log(e);
       buffer.addSample(e.data, Date.now());
     };
     connection.addAccelerometerListener(listener);
