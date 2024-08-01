@@ -34,6 +34,7 @@ const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
     if (hasExistingSession) {
       startOverWarningDialogDisclosure.onOpen();
     } else {
+      startOverWarningDialogDisclosure.onClose();
       handleStartNewSession();
     }
   }, [
