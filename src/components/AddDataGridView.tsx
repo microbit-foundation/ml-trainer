@@ -1,6 +1,6 @@
 import { Grid, GridProps, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useMemo, useState } from "react";
-import { GestureData, useGestureData } from "../gestures-hooks";
+import { useGestureData } from "../gestures-hooks";
 import AddDataGridRow from "./AddDataGridRow";
 import AddDataGridWalkThrough from "./AddDataGridWalkThrough";
 import HeadingGrid from "./HeadingGrid";
