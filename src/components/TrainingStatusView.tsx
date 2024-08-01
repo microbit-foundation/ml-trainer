@@ -7,7 +7,7 @@ import {
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
-import { ReactNode, useCallback, useEffect } from "react";
+import { ReactNode, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
 import { useMlActions } from "../ml-hooks";
@@ -31,14 +31,10 @@ const TrainingStatusView = () => {
   }, [navigate]);
 
   const handleTrain = useCallback(async () => {
-    await actions.trainModel();
-  }, [actions]);
-
-  useEffect(() => {
-    if (status.stage === MlStage.TrainingError) {
+    if ((await actions.trainModel()).error) {
       trainErrorDialog.onOpen();
     }
-  }, [trainErrorDialog, status.stage]);
+  }, [actions, trainErrorDialog]);
 
   switch (status.stage) {
     case MlStage.InsufficientData:

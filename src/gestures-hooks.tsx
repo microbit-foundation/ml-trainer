@@ -13,29 +13,14 @@ interface RecordingData {
   data: XYZData;
 }
 
-interface StoredGestureData {
+export interface Gesture {
   name: string;
   ID: number;
+  threshold?: number;
+}
+
+export interface GestureData extends Gesture {
   recordings: RecordingData[];
-}
-export interface GestureData extends StoredGestureData {
-  // Confidence is added after a successful training and predicting of data
-  confidence?: {
-    currentConfidence?: number; // from 0-1
-    requiredConfidence: number; // from 0-1
-  };
-}
-
-// Used for getPredicted in MlActions hook
-export interface ConfidentGestureData extends StoredGestureData {
-  confidence: {
-    currentConfidence: number; // from 0-1
-    requiredConfidence: number; // from 0-1
-  };
-}
-
-interface StoredGestureContextState {
-  data: StoredGestureData[];
 }
 
 export interface GestureContextState {
@@ -122,17 +107,14 @@ const initialGestureContextState: GestureContextState = {
 };
 
 export const GesturesProvider = ({ children }: { children: ReactNode }) => {
-  // Only name, ID, and recordings of gesture data are stored in local storage
-  // so two separate states (one stored and the other not) are used to store
-  // gesture data and are kept in sync by this provider.
-  const [storedState, setStoredState] = useStorage<StoredGestureContextState>(
+  const [storedState, setStoredState] = useStorage<GestureContextState>(
     "local",
     "gestures",
     initialGestureContextState,
     isValidStoredGestureData
   );
   const [state, setState] = useState<GestureContextState>({
-    data: storedState.data as GestureData[],
+    data: storedState.data,
   });
   const setStates = (newState: GestureContextState) => {
     setStoredState({
@@ -214,6 +196,13 @@ class GestureActions {
   setGestureName = (id: GestureData["ID"], name: string) => {
     const newGestures = this.gestureState.data.map((g) => {
       return id !== g.ID ? g : { ...g, name };
+    });
+    this.setGestures(newGestures, false);
+  };
+
+  setGestureThreshold = (id: GestureData["ID"], value: number) => {
+    const newGestures = this.gestureState.data.map((g) => {
+      return id !== g.ID ? g : { ...g, threshold: value };
     });
     this.setGestures(newGestures, false);
   };

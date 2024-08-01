@@ -7,13 +7,19 @@ import {
   Text,
   VisuallyHidden,
 } from "@chakra-ui/react";
-import React, { useMemo } from "react";
-import { useGestureData } from "../gestures-hooks";
-import { useMlActions } from "../ml-hooks";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+import {
+  Gesture,
+  GestureContextState,
+  useGestureActions,
+  useGestureData,
+} from "../gestures-hooks";
+import { Confidences, mlSettings } from "../ml";
+import { usePrediction } from "../ml-hooks";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
-import { FormattedMessage, useIntl } from "react-intl";
 import InfoToolTip from "./InfoToolTip";
 import PercentageDisplay from "./PercentageDisplay";
 
@@ -39,17 +45,15 @@ const headings = [
 const TestModelGridView = () => {
   const intl = useIntl();
   const [gestures] = useGestureData();
-  const actions = useMlActions();
-  const predicted = useMemo(() => {
-    const predictedGesture = actions.getPredicted();
-    return (
-      predictedGesture || {
-        name: intl.formatMessage({
-          id: "content.model.output.estimatedGesture.none",
-        }),
-      }
-    );
-  }, [actions, intl]);
+  const { setGestureThreshold } = useGestureActions();
+
+  const confidences = usePrediction();
+  const prediction = applyThresholds(gestures, confidences);
+  const predicationLabel =
+    prediction?.name ??
+    intl.formatMessage({
+      id: "content.model.output.estimatedGesture.none",
+    });
 
   return (
     <>
@@ -63,19 +67,19 @@ const TestModelGridView = () => {
             <VisuallyHidden aria-live="polite">
               <FormattedMessage
                 id="content.model.output.estimatedGesture.label"
-                values={{ action: predicted.name }}
+                values={{ action: predicationLabel }}
               />
             </VisuallyHidden>
             <HStack fontWeight="semibold" gap={5} flexGrow={1}>
               <Text fontSize="2xl" color="gray.600">
                 <FormattedMessage id="content.model.output.estimatedGesture.iconTitle" />
               </Text>
-              <Text fontSize="2xl">{predicted.name}</Text>
+              <Text fontSize="2xl">{predicationLabel}</Text>
             </HStack>
             <HStack justifyContent="flex-end">
-              {"confidence" in predicted && (
+              {prediction && confidences && (
                 <PercentageDisplay
-                  value={predicted.confidence.currentConfidence}
+                  value={confidences[prediction.ID]}
                   colorScheme="green.500"
                 />
               )}
@@ -100,21 +104,46 @@ const TestModelGridView = () => {
         flexGrow={1}
         h={0}
       >
-        {gestures.data.map(({ ID, name, confidence }, idx) => (
-          <React.Fragment key={idx}>
-            <GestureNameGridItem id={ID} name={name} readOnly={true} />
-            <CertaintyThresholdGridItem
-              onThresholdChange={(val) =>
-                actions.updateGestureRequiredConfidence(ID, val)
-              }
-              {...confidence}
-              isTriggered={"ID" in predicted && predicted.ID === ID}
-            />
-          </React.Fragment>
-        ))}
+        {gestures.data.map(({ ID, name, threshold }, idx) => {
+          return (
+            <React.Fragment key={idx}>
+              <GestureNameGridItem id={ID} name={name} readOnly={true} />
+              <CertaintyThresholdGridItem
+                onThresholdChange={(val) => setGestureThreshold(ID, val)}
+                currentConfidence={confidences?.[ID]}
+                requiredConfidence={
+                  threshold ?? mlSettings.defaultRequiredConfidence
+                }
+                isTriggered={prediction?.ID === ID}
+              />
+            </React.Fragment>
+          );
+        })}
       </Grid>
     </>
   );
+};
+
+const applyThresholds = (
+  gestureData: GestureContextState,
+  confidences: Confidences | undefined
+): Gesture | undefined => {
+  if (!confidences) {
+    return undefined;
+  }
+
+  // If more than one meet the threshold pick the highest
+  const thresholded = gestureData.data
+    .map((gesture) => ({
+      gesture,
+      thresholdDelta:
+        confidences[gesture.ID] -
+        (gesture.threshold ?? mlSettings.defaultRequiredConfidence),
+    }))
+    .sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+
+  const prediction = thresholded[thresholded.length - 1];
+  prediction.thresholdDelta >= 0 ? prediction.gesture : undefined;
 };
 
 export default TestModelGridView;
