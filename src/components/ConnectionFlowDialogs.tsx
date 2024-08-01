@@ -13,7 +13,7 @@ import DownloadingDialog from "./DownloadingDialog";
 import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import LoadingDialog from "./LoadingDialog";
 import ManualFlashingDialog from "./ManualFlashingDialog";
-import ConnectErrorDialog from "./ReconnectErrorDialog";
+import ConnectErrorDialog from "./ConnectErrorDialog";
 import SelectMicrobitBluetoothDialog from "./SelectMicrobitBluetoothDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import TryAgainDialog from "./TryAgainDialog";

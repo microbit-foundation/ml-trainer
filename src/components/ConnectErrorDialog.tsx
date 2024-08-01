@@ -64,7 +64,7 @@ const errorTextIdPrefixConfig = {
 const ConnectErrorDialog = ({
   isOpen,
   onClose,
-  onConnect: onReconnect,
+  onConnect,
   flowType,
   errorStep,
 }: ConnectErrorDialogProps) => {
@@ -115,7 +115,7 @@ const ConnectErrorDialog = ({
               <Button onClick={onClose} variant="secondary" size="lg">
                 <FormattedMessage id="cancel-action" />
               </Button>
-              <Button onClick={onReconnect} variant="primary" size="lg">
+              <Button onClick={onConnect} variant="primary" size="lg">
                 <FormattedMessage id="actions.reconnect" />
               </Button>
             </HStack>
