@@ -22,19 +22,25 @@ const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
   }, [navigate]);
 
   const handleStartNewSession = useCallback(() => {
+    startOverWarningDialogDisclosure.onClose();
     gestureActions.deleteAllGestures();
     if (isConnected) {
       handleNavigateToAddData();
     } else {
       connStageActions.start();
     }
-  }, [gestureActions, connStageActions, handleNavigateToAddData, isConnected]);
+  }, [
+    startOverWarningDialogDisclosure,
+    gestureActions,
+    isConnected,
+    handleNavigateToAddData,
+    connStageActions,
+  ]);
 
   const onClickStartNewSession = useCallback(() => {
     if (hasExistingSession) {
       startOverWarningDialogDisclosure.onOpen();
     } else {
-      startOverWarningDialogDisclosure.onClose();
       handleStartNewSession();
     }
   }, [
