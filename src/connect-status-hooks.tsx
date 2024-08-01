@@ -111,7 +111,6 @@ export const useConnectStatus = (
   const prevDeviceStatus = useRef<DeviceConnectionStatus | null>(null);
   const [hasAttempedReconnect, setHasAttemptedReconnect] =
     useState<boolean>(false);
-  const [hasRadioConnected, setHasRadioConnected] = useState<boolean>(false);
 
   useEffect(() => {
     const listener: StatusListener = ({ status: deviceStatus, type }) => {
@@ -123,8 +122,6 @@ export const useConnectStatus = (
         type,
         hasAttempedReconnect,
         setHasAttemptedReconnect,
-        hasRadioConnected,
-        setHasRadioConnected,
       });
       prevDeviceStatus.current = deviceStatus;
       if (nextState) {
@@ -142,7 +139,6 @@ export const useConnectStatus = (
     currConnType,
     handleStatus,
     hasAttempedReconnect,
-    hasRadioConnected,
     setConnectionStatus,
   ]);
 

@@ -198,6 +198,7 @@ export class ConnectionStageActions {
       case ConnectionStatus.FailedToReconnectTwice: {
         return this.setStage({
           ...this.stage,
+          flowType,
           hasFailedToReconnectTwice: true,
           flowStep: ConnectionFlowStep.ReconnectFailedTwice,
         });

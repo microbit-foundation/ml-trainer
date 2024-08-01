@@ -1,10 +1,9 @@
-import { MutableRefObject } from "react";
 import { StatusListenerType } from "./connect-actions";
 import { ConnectionStatus } from "./connect-status-hooks";
 import { ConnectionFlowType, ConnectionType } from "./connection-stage-hooks";
 import { ConnectionStatus as DeviceConnectionStatus } from "@microbit/microbit-connection";
 
-export interface ConnectionState {
+export interface GetNextConnectionStateInput {
   currConnType: ConnectionType;
   currStatus: ConnectionStatus;
   deviceStatus: DeviceConnectionStatus;
@@ -12,9 +11,11 @@ export interface ConnectionState {
   type: StatusListenerType;
   hasAttempedReconnect: boolean;
   setHasAttemptedReconnect: (val: boolean) => void;
-  hasRadioConnected: boolean;
-  setHasRadioConnected: (val: boolean) => void;
 }
+
+export type NextConnectionState =
+  | { status: ConnectionStatus; flowType: ConnectionFlowType }
+  | undefined;
 
 export const getNextConnectionState = ({
   currConnType,
@@ -24,12 +25,7 @@ export const getNextConnectionState = ({
   type,
   hasAttempedReconnect,
   setHasAttemptedReconnect,
-  hasRadioConnected,
-  setHasRadioConnected,
-}: ConnectionState):
-  | { status: ConnectionStatus; flowType: ConnectionFlowType }
-  | undefined => {
-  console.log(type, deviceStatus, hasRadioConnected);
+}: GetNextConnectionStateInput): NextConnectionState => {
   const flowType =
     type === "usb"
       ? ConnectionFlowType.RadioBridge
@@ -43,16 +39,19 @@ export const getNextConnectionState = ({
     if (currConnType !== "radio") {
       return undefined;
     }
+    console.log(type, deviceStatus, prevDeviceStatus, currStatus);
+
     if (
       !hasAttempedReconnect &&
-      deviceStatus === DeviceConnectionStatus.DISCONNECTED &&
-      prevDeviceStatus === DeviceConnectionStatus.CONNECTED
+      currStatus === ConnectionStatus.Connected &&
+      deviceStatus === DeviceConnectionStatus.DISCONNECTED
     ) {
       setHasAttemptedReconnect(true);
       return { status: ConnectionStatus.ConnectionLost, flowType };
     }
     if (
       !hasAttempedReconnect &&
+      currStatus !== ConnectionStatus.Connected &&
       deviceStatus === DeviceConnectionStatus.DISCONNECTED
     ) {
       setHasAttemptedReconnect(true);
@@ -62,16 +61,12 @@ export const getNextConnectionState = ({
       hasAttempedReconnect &&
       deviceStatus === DeviceConnectionStatus.DISCONNECTED
     ) {
-      return { status: ConnectionStatus.FailedToReconnectTwice, flowType };
+      return {
+        status: ConnectionStatus.FailedToReconnectTwice,
+        flowType: ConnectionFlowType.RadioRemote,
+      };
     }
     return undefined;
-  }
-
-  if (
-    type === "radioRemote" &&
-    deviceStatus === DeviceConnectionStatus.DISCONNECTED
-  ) {
-    setHasRadioConnected(false);
   }
   if (
     // Disconnection happens for newly started / restarted
@@ -83,9 +78,6 @@ export const getNextConnectionState = ({
   }
   if (deviceStatus === DeviceConnectionStatus.CONNECTED) {
     setHasAttemptedReconnect(false);
-    if (type === "radioRemote") {
-      setHasRadioConnected(true);
-    }
     return { status: ConnectionStatus.Connected, flowType };
   }
   if (
