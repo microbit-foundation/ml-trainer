@@ -30,7 +30,7 @@ const headings = [
 const AddDataGridView = () => {
   const [gestures] = useGestureData();
   const [selectedGestureIdx, setSelectedGestureIdx] = useState<number>(0);
-  const selectedGesture = gestures.data[selectedGestureIdx];
+  const selectedGesture = gestures.data[selectedGestureIdx] ?? gestures.data[0];
   const showWalkThrough = useMemo<boolean>(
     () =>
       gestures.data.length === 0 ||
