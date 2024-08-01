@@ -2,7 +2,6 @@ import { ConnectionStatus as DeviceConnectionStatus } from "@microbit/microbit-c
 import {
   ReactNode,
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -73,16 +72,8 @@ export const ConnectStatusProvider = ({
   const connectStatusContextValue = useState<ConnectionStatus>(
     ConnectionStatus.NotConnected
   );
-
-  const set = useCallback(
-    (s: ConnectionStatus) => {
-      console.log(s);
-      connectStatusContextValue[1](s);
-    },
-    [connectStatusContextValue]
-  );
   return (
-    <ConnectStatusContext.Provider value={[connectStatusContextValue[0], set]}>
+    <ConnectStatusContext.Provider value={connectStatusContextValue}>
       {children}
     </ConnectStatusContext.Provider>
   );
