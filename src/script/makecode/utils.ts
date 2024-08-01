@@ -4,11 +4,31 @@
  * SPDX-License-Identifier: MIT
  */
 
-import upperFirst from 'lodash.upperfirst';
 import camelCase from 'lodash.camelcase';
+import upperFirst from 'lodash.upperfirst';
+
+const dropLeadingNumbers = (input: string): string => {
+  let result = input;
+  for (let i = 0; i < result.length; i++) {
+    if (/\d/.test(input[i])) {
+      result = input.substring(i + 1);
+    } else {
+      break;
+    }
+  }
+  if (!result) {
+    throw new Error('Action name does not contain any valid characters');
+  }
+  return result;
+};
 
 export const varFromActionLabel = (actionLabel: string): string => {
-  return upperFirst(camelCase(actionLabel));
+  // https://github.com/microsoft/pxt/blob/16f161c3a5478addf45269315e4f1ea2f9e7ad53/pxtlib/util.ts#L188-L191
+  const sanitized = actionLabel
+    .replace(/[()\\\/.,?*^:<>!;'#$%^&|"@+=«»°{}\[\]¾½¼³²¦¬¤¢£~­¯¸`±\x00-\x1F]/g, '')
+    .trim();
+  const withoutLeadingNumbers = dropLeadingNumbers(sanitized);
+  return upperFirst(camelCase(withoutLeadingNumbers));
 };
 
 export const filenames = {
@@ -29,7 +49,8 @@ export const pxt = {
     core: '*',
     microphone: '*',
     radio: '*', // needed for compiling
-    'Machine Learning POC': 'github:microbit-foundation/pxt-ml-extension-poc#js-api',
+    'Machine Learning POC':
+      'github:microbit-foundation/pxt-ml-extension-poc#c8b69999d6c55fc34702e03bf5d3b91ed49f1a4c',
   },
   files: [...Object.values(filenames), 'README.md'],
 };

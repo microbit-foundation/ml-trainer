@@ -12,22 +12,22 @@ import { varFromActionLabel } from './utils';
 const createMlEvents = (actions: string[]) => {
   let code = '';
   actions.forEach((action, idx) => {
-    code += `  //% fixedInstance\n`;
-    code += `  export const ${varFromActionLabel(action)} = new MlEvent(${
-      idx + 2
-    }, "${action}");\n`;
+    const stringValue = JSON.stringify(action);
+    const varName = varFromActionLabel(action);
+    code += `  //% fixedInstance block=${stringValue}\n`;
+    code += `  export const ${varName} = new MlEvent(${idx + 2}, ${stringValue});\n`;
   });
   return code;
 };
 
 const createEventListeners = (actions: string[]) => {
-  actions.unshift('None');
+  actions.unshift('unknown');
   const totalActions = actions.length;
   let code = '';
   for (let i = 0; i < totalActions; i++) {
     code += `  control.onEvent(MlRunnerIds.MlRunnerInference, ${i + 1}, () => {\n`;
-    code += `    maybeUpdateActionStats(${varFromActionLabel(actions[i])});\n`;
-    code += `  });${i === totalActions ? '' : '\n'}`;
+    code += `    maybeUpdateActionStats(action.${varFromActionLabel(actions[i])});\n`;
+    code += `  });\n`;
   }
   return code;
 };
@@ -53,23 +53,23 @@ export const generateCustomTs = (gs: Gesture[], m: LayersModel) => {
   const actionLabels = gs.map(g => g.getName());
 
   return `// Auto-generated. Do not edit.
-//% blockNamespace=mlrunner
-namespace mlactions {
-${createMlEvents(actionLabels)}
-    actions = [None,${actionLabels
-      .map(actionLabel => varFromActionLabel(actionLabel))
-      .toString()}];
-
+namespace ml {
+  export namespace action {
+    ${createMlEvents(actionLabels)}
+    }
+    
+  actions = [action.Unknown,${actionLabels.map(
+    actionLabel => `action.${varFromActionLabel(actionLabel)}`,
+  )}];
+    
 ${createEventListeners(actionLabels)}
+  getModelBlob = (): Buffer => {
+    const result = hex\`${headerHexString + modelHexString}\`;
+    return result;
+  };
+
+  simulatorSendData();
 }
-
-
-mlrunner.getModelBlob = (): Buffer => {
-  const result = hex\`${headerHexString + modelHexString}\`;
-  return result;
-};
-
-mlrunner.simulatorSendData();
 
 // Auto-generated. Do not edit. Really.
 `;
