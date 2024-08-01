@@ -1,4 +1,4 @@
-import { AccelerometerData } from "../../connection/build/accelerometer";
+import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 import { XYZData } from "./gestures-hooks";
 
 interface TimedXYZ {
@@ -15,7 +15,7 @@ export class BufferedData {
     this.buffer = new RingBuffer<TimedXYZ>(size);
   }
 
-  addSample(data: AccelerometerData, timestamp: number) {
+  addSample(data: AccelerometerDataEvent["data"], timestamp: number) {
     this.buffer.add({ ...data, timestamp });
   }
 
