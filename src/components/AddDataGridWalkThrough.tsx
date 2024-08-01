@@ -1,28 +1,20 @@
 import { GridItem, VStack, Image, Text, HStack } from "@chakra-ui/react";
-import { GestureData, useGestureData } from "../gestures-hooks";
+import { GestureData } from "../gestures-hooks";
 import greetingEmojiWithArrowImage from "../images/greeting-emoji-with-arrow.svg";
 import upCurveArrowImage from "../images/curve-arrow-up.svg";
 import GestureNameGridItem from "./GestureNameGridItem";
 import DataRecordingGridItem from "./DataRecordingGridItem";
 import { FormattedMessage } from "react-intl";
-import { useEffect } from "react";
 
 interface AddDataGridWalkThrough {
   gesture: GestureData;
   startRecording: () => void;
-  setSelectedGesture: (g: GestureData) => void;
 }
 
 const AddDataGridWalkThrough = ({
   gesture,
   startRecording,
-  setSelectedGesture,
 }: AddDataGridWalkThrough) => {
-  const [gestures] = useGestureData();
-  useEffect(() => {
-    // Keep selectedGesture up to date with gesture name changes
-    setSelectedGesture(gestures.data[0]);
-  }, [gestures, setSelectedGesture]);
   return (
     <>
       <GestureNameGridItem
