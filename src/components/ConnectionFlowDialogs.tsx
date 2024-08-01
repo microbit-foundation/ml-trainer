@@ -13,7 +13,7 @@ import DownloadingDialog from "./DownloadingDialog";
 import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import LoadingDialog from "./LoadingDialog";
 import ManualFlashingDialog from "./ManualFlashingDialog";
-import ReconnectErrorDialog from "./ReconnectErrorDialog";
+import ConnectErrorDialog from "./ReconnectErrorDialog";
 import SelectMicrobitBluetoothDialog from "./SelectMicrobitBluetoothDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import TryAgainDialog from "./TryAgainDialog";
@@ -202,7 +202,6 @@ const ConnectionDialogs = () => {
         <LoadingDialog isOpen={isOpen} headingId="connectMB.radio.heading" />
       );
     }
-    case ConnectionFlowStep.TryAgainBluetoothConnect:
     case ConnectionFlowStep.TryAgainReplugMicrobit:
     case ConnectionFlowStep.TryAgainSelectMicrobit:
     case ConnectionFlowStep.TryAgainCloseTabs: {
@@ -235,12 +234,13 @@ const ConnectionDialogs = () => {
     case ConnectionFlowStep.WebUsbBluetoothUnsupported: {
       return <WebUsbBluetoothUnsupportedDialog {...dialogCommonProps} />;
     }
+    case ConnectionFlowStep.ConnectFailed:
     case ConnectionFlowStep.ReconnectFailed:
     case ConnectionFlowStep.ConnectionLost: {
       return (
-        <ReconnectErrorDialog
+        <ConnectErrorDialog
           {...dialogCommonProps}
-          onReconnect={actions.reconnect}
+          onConnect={actions.reconnect}
           flowType={stage.flowType}
           errorStep={stage.flowStep}
         />

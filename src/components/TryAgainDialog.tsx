@@ -72,7 +72,7 @@ const configs = {
     headingId: "connectMB.usbTryAgain.heading",
     children: <OneLineContent textId="connectMB.usbTryAgain.selectMicrobit" />,
   },
-  [ConnectionFlowStep.TryAgainBluetoothConnect]: {
+  [ConnectionFlowStep.ConnectFailed]: {
     headingId: "connectMB.bluetooth.heading",
     children: (
       <OneLineContent textId="connectMB.bluetooth.cancelledConnection" />
@@ -88,7 +88,7 @@ interface TryAgainWebUsbDialogProps {
     | ConnectionFlowStep.TryAgainReplugMicrobit
     | ConnectionFlowStep.TryAgainCloseTabs
     | ConnectionFlowStep.TryAgainSelectMicrobit
-    | ConnectionFlowStep.TryAgainBluetoothConnect;
+    | ConnectionFlowStep.ConnectFailed;
 }
 
 const TryAgainWebUsbDialog = ({

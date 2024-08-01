@@ -35,6 +35,10 @@ export enum ConnectionStatus {
    */
   Disconnected = "Disconnected",
   /**
+   * Failure to select a device by the user.
+   */
+  FailedToSelectDevice = "FailedToSelectDevice",
+  /**
    * Failure to establish initial connection triggered by the user.
    */
   FailedToConnect = "FailedToConnect",
@@ -144,13 +148,16 @@ const getNextConnectionStatus = (
     return ConnectionStatus.Connected;
   }
   if (
-    (status === ConnectionStatus.Connecting &&
-      deviceStatus === DeviceConnectionStatus.DISCONNECTED) ||
-    // If user does not select a device
-    (deviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE &&
-      prevDeviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE)
+    status === ConnectionStatus.Connecting &&
+    deviceStatus === DeviceConnectionStatus.DISCONNECTED
   ) {
     return ConnectionStatus.FailedToConnect;
+  }
+  if (
+    deviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE &&
+    prevDeviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE
+  ) {
+    return ConnectionStatus.FailedToSelectDevice;
   }
   if (
     hasAttempedReconnect.current &&

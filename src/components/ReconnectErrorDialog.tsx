@@ -20,12 +20,13 @@ import {
 } from "../connection-stage-hooks";
 import ExternalLink from "./ExternalLink";
 
-interface ReconnectErrorDialogProps {
+interface ConnectErrorDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onReconnect: () => void;
+  onConnect: () => void;
   flowType: ConnectionFlowType;
   errorStep:
+    | ConnectionFlowStep.ConnectFailed
     | ConnectionFlowStep.ReconnectFailed
     | ConnectionFlowStep.ConnectionLost;
 }
@@ -57,15 +58,16 @@ const contentConfig = {
 const errorTextIdPrefixConfig = {
   [ConnectionFlowStep.ConnectionLost]: "disconnectedWarning",
   [ConnectionFlowStep.ReconnectFailed]: "reconnectFailed",
+  [ConnectionFlowStep.ConnectFailed]: "connectFailed",
 };
 
-const ReconnectErrorDialog = ({
+const ConnectErrorDialog = ({
   isOpen,
   onClose,
-  onReconnect,
+  onConnect: onReconnect,
   flowType,
   errorStep,
-}: ReconnectErrorDialogProps) => {
+}: ConnectErrorDialogProps) => {
   const errorTextIdPrefix = errorTextIdPrefixConfig[errorStep];
   return (
     <Modal
@@ -124,4 +126,4 @@ const ReconnectErrorDialog = ({
   );
 };
 
-export default ReconnectErrorDialog;
+export default ConnectErrorDialog;

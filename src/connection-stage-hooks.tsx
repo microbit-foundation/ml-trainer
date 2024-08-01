@@ -46,7 +46,7 @@ export enum ConnectionFlowStep {
   TryAgainReplugMicrobit = "TryAgainReplugMicrobit",
   TryAgainCloseTabs = "TryAgainCloseTabs",
   TryAgainSelectMicrobit = "TryAgainSelectMicrobit",
-  TryAgainBluetoothConnect = "TryAgainBluetoothConnect",
+  ConnectFailed = "TryAgainBluetoothConnect",
   BadFirmware = "BadFirmware",
   MicrobitUnsupported = "MicrobitUnsupported",
   WebUsbBluetoothUnsupported = "WebUsbBluetoothUnsupported",
