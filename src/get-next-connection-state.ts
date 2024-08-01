@@ -69,7 +69,7 @@ export const getNextConnectionState = ({
   }
   if (
     // Disconnection happens for newly started / restarted
-    // connection flows when clearing device
+    // bluetooth connection flows when clearing device
     deviceStatus === DeviceConnectionStatus.DISCONNECTED &&
     currStatus === ConnectionStatus.NotConnected
   ) {

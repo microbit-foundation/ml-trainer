@@ -5,11 +5,10 @@ import { FormattedMessage } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";
 import InfoToolTip from "./InfoToolTip";
 import LiveGraph from "./LiveGraph";
-import { ConnectionStatus, useConnectStatus } from "../connect-status-hooks";
+import { ConnectionStatus } from "../connect-status-hooks";
 
 const LiveGraphPanel = () => {
-  const { actions } = useConnectionStage();
-  const status = useConnectStatus();
+  const { actions, status } = useConnectionStage();
   const parentPortalRef = useRef(null);
 
   const connectBtnConfig = useMemo(() => {

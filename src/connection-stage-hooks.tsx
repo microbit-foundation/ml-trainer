@@ -136,6 +136,7 @@ export const ConnectionStageProvider = ({
 };
 
 export const useConnectionStage = (): {
+  status: ConnectionStatus;
   stage: ConnectionStage;
   actions: ConnectionStageActions;
   isConnected: boolean;
@@ -167,6 +168,7 @@ export const useConnectionStage = (): {
   const isConnected = status === ConnectionStatus.Connected;
 
   return {
+    status,
     stage,
     actions,
     isConnected,
