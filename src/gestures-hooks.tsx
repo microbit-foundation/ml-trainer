@@ -16,7 +16,7 @@ interface RecordingData {
 export interface Gesture {
   name: string;
   ID: number;
-  threshold?: number;
+  requiredConfidence?: number;
 }
 
 export interface GestureData extends Gesture {
@@ -200,9 +200,9 @@ class GestureActions {
     this.setGestures(newGestures, false);
   };
 
-  setGestureThreshold = (id: GestureData["ID"], value: number) => {
+  setRequiredConfidence = (id: GestureData["ID"], value: number) => {
     const newGestures = this.gestureState.data.map((g) => {
-      return id !== g.ID ? g : { ...g, threshold: value };
+      return id !== g.ID ? g : { ...g, requiredConfidence: value };
     });
     this.setGestures(newGestures, false);
   };

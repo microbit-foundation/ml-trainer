@@ -45,7 +45,7 @@ const headings = [
 const TestModelGridView = () => {
   const intl = useIntl();
   const [gestures] = useGestureData();
-  const { setGestureThreshold } = useGestureActions();
+  const { setRequiredConfidence } = useGestureActions();
 
   const confidences = usePrediction();
   const prediction = applyThresholds(gestures, confidences);
@@ -104,21 +104,23 @@ const TestModelGridView = () => {
         flexGrow={1}
         h={0}
       >
-        {gestures.data.map(({ ID, name, threshold }, idx) => {
-          return (
-            <React.Fragment key={idx}>
-              <GestureNameGridItem id={ID} name={name} readOnly={true} />
-              <CertaintyThresholdGridItem
-                onThresholdChange={(val) => setGestureThreshold(ID, val)}
-                currentConfidence={confidences?.[ID]}
-                requiredConfidence={
-                  threshold ?? mlSettings.defaultRequiredConfidence
-                }
-                isTriggered={prediction?.ID === ID}
-              />
-            </React.Fragment>
-          );
-        })}
+        {gestures.data.map(
+          ({ ID, name, requiredConfidence: threshold }, idx) => {
+            return (
+              <React.Fragment key={idx}>
+                <GestureNameGridItem id={ID} name={name} readOnly={true} />
+                <CertaintyThresholdGridItem
+                  onThresholdChange={(val) => setRequiredConfidence(ID, val)}
+                  currentConfidence={confidences?.[ID]}
+                  requiredConfidence={
+                    threshold ?? mlSettings.defaultRequiredConfidence
+                  }
+                  isTriggered={prediction?.ID === ID}
+                />
+              </React.Fragment>
+            );
+          }
+        )}
       </Grid>
     </>
   );
@@ -138,7 +140,7 @@ const applyThresholds = (
       gesture,
       thresholdDelta:
         confidences[gesture.ID] -
-        (gesture.threshold ?? mlSettings.defaultRequiredConfidence),
+        (gesture.requiredConfidence ?? mlSettings.defaultRequiredConfidence),
     }))
     .sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
 
