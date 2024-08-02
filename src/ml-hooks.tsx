@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useGestureData } from "./gestures-hooks";
 import { useLogging } from "./logging/logging-hooks";
 import { MlStage, useMlStatus } from "./ml-status-hooks";
@@ -22,6 +22,7 @@ export const useMlActions = () => {
 };
 
 export const usePrediction = () => {
+  const buffer = useBufferedData();
   const logging = useLogging();
   const [status] = useMlStatus();
   const connectStatus = useConnectStatus();
@@ -35,11 +36,6 @@ export const usePrediction = () => {
     ) {
       return;
     }
-    const buffer = new BufferedData(150);
-    const listener = (e: AccelerometerDataEvent) => {
-      buffer.addSample(e.data, Date.now());
-    };
-    connection.addAccelerometerListener(listener);
     const runPrediction = async () => {
       const startTime = Date.now() - mlSettings.duration;
       const input = {
@@ -62,9 +58,34 @@ export const usePrediction = () => {
     );
     return () => {
       clearInterval(interval);
-      connection.removeAccelerometerListener(listener);
     };
-  }, [connection, gestureData.data, logging, status, connectStatus]);
+  }, [connection, gestureData.data, logging, status, connectStatus, buffer]);
 
   return confidences;
+};
+
+export const useBufferedData = (): BufferedData => {
+  const connectStatus = useConnectStatus();
+  const connection = useConnectActions();
+  const bufferRef = useRef<BufferedData>();
+  const getBuffer = () => {
+    if (bufferRef.current) {
+      return bufferRef.current;
+    }
+    bufferRef.current = new BufferedData(mlSettings.numSamples * 2);
+    return bufferRef.current;
+  };
+  useEffect(() => {
+    if (connectStatus !== ConnectionStatus.Connected) {
+      return;
+    }
+    const listener = (e: AccelerometerDataEvent) => {
+      getBuffer().addSample(e.data, Date.now());
+    };
+    connection.addAccelerometerListener(listener);
+    return () => {
+      connection.removeAccelerometerListener(listener);
+    };
+  }, [connection, connectStatus]);
+  return getBuffer();
 };
