@@ -57,6 +57,7 @@ export const usePrediction = () => {
       1000 / mlSettings.updatesPrSecond
     );
     return () => {
+      setConfidences(undefined);
       clearInterval(interval);
     };
   }, [connection, gestureData.data, logging, status, connectStatus, buffer]);
@@ -85,6 +86,7 @@ export const useBufferedData = (): BufferedData => {
     connection.addAccelerometerListener(listener);
     return () => {
       connection.removeAccelerometerListener(listener);
+      getBuffer().clear();
     };
   }, [connection, connectStatus]);
   return getBuffer();
