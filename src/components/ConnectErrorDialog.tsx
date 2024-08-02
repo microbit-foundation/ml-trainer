@@ -20,12 +20,13 @@ import {
 } from "../connection-stage-hooks";
 import ExternalLink from "./ExternalLink";
 
-interface ReconnectErrorDialogProps {
+interface ConnectErrorDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onReconnect: () => void;
+  onConnect: () => void;
   flowType: ConnectionFlowType;
   errorStep:
+    | ConnectionFlowStep.ConnectFailed
     | ConnectionFlowStep.ReconnectFailed
     | ConnectionFlowStep.ConnectionLost;
 }
@@ -57,15 +58,16 @@ const contentConfig = {
 const errorTextIdPrefixConfig = {
   [ConnectionFlowStep.ConnectionLost]: "disconnectedWarning",
   [ConnectionFlowStep.ReconnectFailed]: "reconnectFailed",
+  [ConnectionFlowStep.ConnectFailed]: "connectFailed",
 };
 
 const ReconnectErrorDialog = ({
   isOpen,
   onClose,
-  onReconnect,
+  onConnect,
   flowType,
   errorStep,
-}: ReconnectErrorDialogProps) => {
+}: ConnectErrorDialogProps) => {
   const errorTextIdPrefix = errorTextIdPrefixConfig[errorStep];
   return (
     <Modal
@@ -113,8 +115,14 @@ const ReconnectErrorDialog = ({
               <Button onClick={onClose} variant="secondary" size="lg">
                 <FormattedMessage id="cancel-action" />
               </Button>
-              <Button onClick={onReconnect} variant="primary" size="lg">
-                <FormattedMessage id="actions.reconnect" />
+              <Button onClick={onConnect} variant="primary" size="lg">
+                <FormattedMessage
+                  id={
+                    errorStep === ConnectionFlowStep.ConnectFailed
+                      ? "footer.connectButton"
+                      : "actions.reconnect"
+                  }
+                />
               </Button>
             </HStack>
           </ModalFooter>

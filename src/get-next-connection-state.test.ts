@@ -24,24 +24,34 @@ type Input = Pick<
 const testGetNextConnectionState = ({
   input,
   initialHasAttemptedReconnect,
+  initialOnFirstConnectAttempt,
   expectedNextConnectionState,
   expectedHasAttemptedReconnect,
+  expectedOnFirstConnectAttempt,
 }: {
   input: Input;
   initialHasAttemptedReconnect: boolean;
   expectedNextConnectionState: NextConnectionState;
   expectedHasAttemptedReconnect: boolean;
+  initialOnFirstConnectAttempt: boolean;
+  expectedOnFirstConnectAttempt: boolean;
 }) => {
   let hasAttempedReconnect = initialHasAttemptedReconnect;
+  let onFirstConnectAttempt = initialOnFirstConnectAttempt;
   const result = getNextConnectionState({
     ...input,
     hasAttempedReconnect,
+    onFirstConnectAttempt,
+    setOnFirstConnectAttempt: (val: boolean) => {
+      onFirstConnectAttempt = val;
+    },
     setHasAttemptedReconnect: (val: boolean) => {
       hasAttempedReconnect = val;
     },
   });
   expect(result).toEqual(expectedNextConnectionState);
   expect(hasAttempedReconnect).toEqual(expectedHasAttemptedReconnect);
+  expect(onFirstConnectAttempt).toEqual(expectedOnFirstConnectAttempt);
 };
 
 describe("getNextConnectionState for radio connection", () => {
@@ -54,6 +64,8 @@ describe("getNextConnectionState for radio connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.NO_AUTHORIZED_DEVICE,
         type: "usb",
       },
+      initialOnFirstConnectAttempt: true,
+      expectedOnFirstConnectAttempt: true,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: undefined,
@@ -68,6 +80,8 @@ describe("getNextConnectionState for radio connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.NO_AUTHORIZED_DEVICE,
         type: "radioRemote",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: true,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
@@ -85,6 +99,8 @@ describe("getNextConnectionState for radio connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "radioRemote",
       },
+      initialOnFirstConnectAttempt: true,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
@@ -102,6 +118,8 @@ describe("getNextConnectionState for radio connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "radioRemote",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: true,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
@@ -119,6 +137,8 @@ describe("getNextConnectionState for radio connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTED,
         type: "radioRemote",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
@@ -136,6 +156,8 @@ describe("getNextConnectionState for radio connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "radioRemote",
       },
+      initialOnFirstConnectAttempt: true,
+      expectedOnFirstConnectAttempt: true,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
@@ -153,6 +175,8 @@ describe("getNextConnectionState for radio connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.DISCONNECTED,
         type: "radioRemote",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
@@ -170,6 +194,8 @@ describe("getNextConnectionState for radio connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTED,
         type: "radioRemote",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
@@ -187,6 +213,8 @@ describe("getNextConnectionState for radio connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.NO_AUTHORIZED_DEVICE,
         type: "usb",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
@@ -204,6 +232,8 @@ describe("getNextConnectionState for radio connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "usb",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
@@ -221,6 +251,8 @@ describe("getNextConnectionState for radio connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.DISCONNECTED,
         type: "usb",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: true,
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
@@ -238,6 +270,8 @@ describe("getNextConnectionState for radio connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.RECONNECTING,
         type: "radioRemote",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
@@ -255,6 +289,8 @@ describe("getNextConnectionState for radio connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "radioRemote",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
@@ -272,6 +308,8 @@ describe("getNextConnectionState for radio connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "radioRemote",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: true,
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
@@ -292,6 +330,8 @@ describe("getNextConnectionState for bluetooth connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.NO_AUTHORIZED_DEVICE,
         type: "bluetooth",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: true,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
@@ -309,6 +349,8 @@ describe("getNextConnectionState for bluetooth connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "bluetooth",
       },
+      initialOnFirstConnectAttempt: true,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
@@ -326,6 +368,8 @@ describe("getNextConnectionState for bluetooth connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "bluetooth",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
@@ -343,10 +387,31 @@ describe("getNextConnectionState for bluetooth connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTED,
         type: "bluetooth",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.Disconnected,
+        flowType: ConnectionFlowType.Bluetooth,
+      },
+    });
+  });
+  test("bluetooth did not select device", () => {
+    testGetNextConnectionState({
+      input: {
+        currConnType: "bluetooth",
+        currStatus: ConnectionStatus.NotConnected,
+        deviceStatus: DeviceConnectionStatus.NO_AUTHORIZED_DEVICE,
+        prevDeviceStatus: DeviceConnectionStatus.NO_AUTHORIZED_DEVICE,
+        type: "bluetooth",
+      },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
+      initialHasAttemptedReconnect: false,
+      expectedHasAttemptedReconnect: false,
+      expectedNextConnectionState: {
+        status: ConnectionStatus.FailedToSelectBluetoothDevice,
         flowType: ConnectionFlowType.Bluetooth,
       },
     });
@@ -360,6 +425,8 @@ describe("getNextConnectionState for bluetooth connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "bluetooth",
       },
+      initialOnFirstConnectAttempt: true,
+      expectedOnFirstConnectAttempt: true,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
@@ -377,6 +444,8 @@ describe("getNextConnectionState for bluetooth connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.DISCONNECTED,
         type: "bluetooth",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
@@ -394,6 +463,8 @@ describe("getNextConnectionState for bluetooth connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTED,
         type: "bluetooth",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
@@ -411,6 +482,8 @@ describe("getNextConnectionState for bluetooth connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.RECONNECTING,
         type: "bluetooth",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
@@ -428,6 +501,8 @@ describe("getNextConnectionState for bluetooth connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "bluetooth",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
@@ -445,6 +520,8 @@ describe("getNextConnectionState for bluetooth connection", () => {
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "bluetooth",
       },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: true,
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {

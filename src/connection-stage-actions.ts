@@ -114,7 +114,9 @@ export class ConnectionStageActions {
       case ConnectAndFlashResult.ErrorBadFirmware:
         return this.setFlowStep(ConnectionFlowStep.BadFirmware);
       case ConnectAndFlashResult.ErrorNoDeviceSelected:
-        return this.setFlowStep(ConnectionFlowStep.TryAgainSelectMicrobit);
+        return this.setFlowStep(
+          ConnectionFlowStep.TryAgainWebUsbSelectMicrobit
+        );
       case ConnectAndFlashResult.ErrorUnableToClaimInterface:
         return this.setFlowStep(ConnectionFlowStep.TryAgainCloseTabs);
       default:
@@ -168,11 +170,7 @@ export class ConnectionStageActions {
   };
 
   private handleConnectFail = () => {
-    this.setFlowStep(
-      this.stage.flowType === ConnectionFlowType.Bluetooth
-        ? ConnectionFlowStep.TryAgainBluetoothConnect
-        : ConnectionFlowStep.TryAgainReplugMicrobit
-    );
+    this.setFlowStep(ConnectionFlowStep.ConnectFailed);
   };
 
   private onConnected = () => {
@@ -191,6 +189,11 @@ export class ConnectionStageActions {
     switch (status) {
       case ConnectionStatus.Connected: {
         return this.onConnected();
+      }
+      case ConnectionStatus.FailedToSelectBluetoothDevice: {
+        return this.setFlowStep(
+          ConnectionFlowStep.TryAgainBluetoothSelectMicrobit
+        );
       }
       case ConnectionStatus.FailedToConnect: {
         return this.handleConnectFail();
@@ -269,7 +272,7 @@ export class ConnectionStageActions {
 
   onTryAgain = () => {
     this.setFlowStep(
-      this.stage.flowStep === ConnectionFlowStep.TryAgainBluetoothConnect
+      this.stage.flowStep === ConnectionFlowStep.TryAgainBluetoothSelectMicrobit
         ? ConnectionFlowStep.EnterBluetoothPattern
         : ConnectionFlowStep.ConnectCable
     );

@@ -11,6 +11,8 @@ export interface GetNextConnectionStateInput {
   type: StatusListenerType;
   hasAttempedReconnect: boolean;
   setHasAttemptedReconnect: (val: boolean) => void;
+  onFirstConnectAttempt: boolean;
+  setOnFirstConnectAttempt: (val: boolean) => void;
 }
 
 export type NextConnectionState =
@@ -25,7 +27,10 @@ export const getNextConnectionState = ({
   type,
   hasAttempedReconnect,
   setHasAttemptedReconnect,
+  onFirstConnectAttempt,
+  setOnFirstConnectAttempt,
 }: GetNextConnectionStateInput): NextConnectionState => {
+  console.log(type, currStatus, deviceStatus, prevDeviceStatus);
   const flowType =
     type === "usb"
       ? ConnectionFlowType.RadioBridge
@@ -36,10 +41,9 @@ export const getNextConnectionState = ({
   // We are using usb status to infer the radio bridge device status.
   if (type === "usb") {
     // Ignore USB status updates when radio connection is not established.
-    if (currConnType !== "radio") {
+    if (currConnType !== "radio" || onFirstConnectAttempt) {
       return undefined;
     }
-
     if (
       !hasAttempedReconnect &&
       currStatus === ConnectionStatus.Connected &&
@@ -76,10 +80,12 @@ export const getNextConnectionState = ({
     return { status: ConnectionStatus.NotConnected, flowType };
   }
   if (deviceStatus === DeviceConnectionStatus.CONNECTED) {
+    setOnFirstConnectAttempt(false);
     setHasAttemptedReconnect(false);
     return { status: ConnectionStatus.Connected, flowType };
   }
   if (
+    onFirstConnectAttempt &&
     currStatus === ConnectionStatus.Connecting &&
     deviceStatus === DeviceConnectionStatus.DISCONNECTED
   ) {
@@ -91,7 +97,7 @@ export const getNextConnectionState = ({
     deviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE &&
     prevDeviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE
   ) {
-    return { status: ConnectionStatus.FailedToConnect, flowType };
+    return { status: ConnectionStatus.FailedToSelectBluetoothDevice, flowType };
   }
   if (
     hasAttempedReconnect &&
@@ -121,6 +127,9 @@ export const getNextConnectionState = ({
     const hasStartedOver =
       currStatus === ConnectionStatus.NotConnected ||
       currStatus === ConnectionStatus.FailedToConnect;
+    if (hasStartedOver) {
+      setOnFirstConnectAttempt(true);
+    }
     const newStatus = hasStartedOver
       ? ConnectionStatus.Connecting
       : ConnectionStatus.ReconnectingExplicitly;

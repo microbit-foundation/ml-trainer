@@ -39,6 +39,10 @@ export enum ConnectionStatus {
    */
   Disconnected = "Disconnected",
   /**
+   * Failure to select a device by the user.
+   */
+  FailedToSelectBluetoothDevice = "FailedToSelectDevice",
+  /**
    * Failure to establish initial connection triggered by the user.
    */
   FailedToConnect = "FailedToConnect",
@@ -107,6 +111,8 @@ export const useConnectStatus = (
   const prevDeviceStatus = useRef<DeviceConnectionStatus | null>(null);
   const [hasAttempedReconnect, setHasAttemptedReconnect] =
     useState<boolean>(false);
+  const [onFirstConnectAttempt, setOnFirstConnectAttempt] =
+    useState<boolean>(true);
 
   useEffect(() => {
     const listener: StatusListener = ({ status: deviceStatus, type }) => {
@@ -118,6 +124,8 @@ export const useConnectStatus = (
         type,
         hasAttempedReconnect,
         setHasAttemptedReconnect,
+        onFirstConnectAttempt,
+        setOnFirstConnectAttempt,
       });
       prevDeviceStatus.current = deviceStatus;
       if (nextState) {
@@ -135,6 +143,7 @@ export const useConnectStatus = (
     currConnType,
     handleStatus,
     hasAttempedReconnect,
+    onFirstConnectAttempt,
     setConnectionStatus,
   ]);
 

@@ -68,11 +68,11 @@ const configs = {
     headingId: "connectMB.usbTryAgain.heading",
     children: <CloseTabsContent />,
   },
-  [ConnectionFlowStep.TryAgainSelectMicrobit]: {
+  [ConnectionFlowStep.TryAgainWebUsbSelectMicrobit]: {
     headingId: "connectMB.usbTryAgain.heading",
     children: <OneLineContent textId="connectMB.usbTryAgain.selectMicrobit" />,
   },
-  [ConnectionFlowStep.TryAgainBluetoothConnect]: {
+  [ConnectionFlowStep.TryAgainBluetoothSelectMicrobit]: {
     headingId: "connectMB.bluetooth.heading",
     children: (
       <OneLineContent textId="connectMB.bluetooth.cancelledConnection" />
@@ -80,23 +80,23 @@ const configs = {
   },
 };
 
-interface TryAgainWebUsbDialogProps {
+interface TryAgainDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onTryAgain: () => void;
   type:
     | ConnectionFlowStep.TryAgainReplugMicrobit
     | ConnectionFlowStep.TryAgainCloseTabs
-    | ConnectionFlowStep.TryAgainSelectMicrobit
-    | ConnectionFlowStep.TryAgainBluetoothConnect;
+    | ConnectionFlowStep.TryAgainWebUsbSelectMicrobit
+    | ConnectionFlowStep.TryAgainBluetoothSelectMicrobit;
 }
 
-const TryAgainWebUsbDialog = ({
+const TryAgainDialog = ({
   type,
   isOpen,
   onClose,
   onTryAgain,
-}: TryAgainWebUsbDialogProps) => {
+}: TryAgainDialogProps) => {
   const config = configs[type];
   return (
     <Modal
@@ -135,4 +135,4 @@ const TryAgainWebUsbDialog = ({
   );
 };
 
-export default TryAgainWebUsbDialog;
+export default TryAgainDialog;
