@@ -81,7 +81,13 @@ export const useBufferedData = (): BufferedData => {
       return;
     }
     const listener = (e: AccelerometerDataEvent) => {
-      getBuffer().addSample(e.data, Date.now());
+      const { x, y, z } = e.data;
+      const sample = {
+        x: x / 1000,
+        y: y / 1000,
+        z: z / 1000,
+      };
+      getBuffer().addSample(sample, Date.now());
     };
     connection.addAccelerometerListener(listener);
     return () => {

@@ -1,4 +1,3 @@
-import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 import { XYZData } from "./gestures-hooks";
 
 interface TimedXYZ {
@@ -15,7 +14,7 @@ export class BufferedData {
     this.buffer = new RingBuffer<TimedXYZ>(size);
   }
 
-  addSample(data: AccelerometerDataEvent["data"], timestamp: number) {
+  addSample(data: { x: number; y: number; z: number }, timestamp: number) {
     this.buffer.add({ ...data, timestamp });
   }
 
@@ -33,9 +32,9 @@ export class BufferedData {
     }
 
     for (let i = start + 1; i < ordered.length; ++i) {
-      result.x.push(ordered[i].x / 1000);
-      result.y.push(ordered[i].y / 1000);
-      result.z.push(ordered[i].z / 1000);
+      result.x.push(ordered[i].x);
+      result.y.push(ordered[i].y);
+      result.z.push(ordered[i].z);
     }
     return result;
   }
