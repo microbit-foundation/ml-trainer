@@ -80,6 +80,43 @@ describe("BufferedData", () => {
     });
   });
 
+  it("copes when full/wrapping 2", () => {
+    const buffer = new BufferedData(3);
+    buffer.addSample({ x: 0, y: 0, z: 0 }, 0);
+    buffer.addSample({ x: 1, y: 0, z: 0 }, 10);
+    buffer.addSample({ x: 2, y: 0, z: 0 }, 20);
+    buffer.addSample({ x: 3, y: 0, z: 0 }, 30);
+    buffer.addSample({ x: 4, y: 0, z: 0 }, 40);
+    expect(buffer.getSamples(40)).toEqual({
+      x: [4],
+      y: [0],
+      z: [0],
+    });
+    expect(buffer.getSamples(30)).toEqual({
+      x: [3, 4],
+      y: [0, 0],
+      z: [0, 0],
+    });
+    expect(buffer.getSamples(20)).toEqual({
+      x: [2, 3, 4],
+      y: [0, 0, 0],
+      z: [0, 0, 0],
+    });
+    expect(buffer.getSamples(10)).toEqual({
+      x: [2, 3, 4],
+      y: [0, 0, 0],
+      z: [0, 0, 0],
+    });
+
+    buffer.addSample({ x: 5, y: 0, z: 0 }, 50);
+    buffer.addSample({ x: 6, y: 0, z: 0 }, 60);
+    expect(buffer.getSamples(10)).toEqual({
+      x: [4, 5, 6],
+      y: [0, 0, 0],
+      z: [0, 0, 0],
+    });
+  });
+
   it("returns nothing when it has nothing since start time", () => {
     const buffer = new BufferedData(3);
     buffer.addSample({ x: 0, y: 0, z: 0 }, 0);

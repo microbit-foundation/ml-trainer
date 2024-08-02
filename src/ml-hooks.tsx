@@ -41,9 +41,10 @@ export const usePrediction = () => {
     };
     connection.addAccelerometerListener(listener);
     const runPrediction = async () => {
+      const startTime = Date.now() - mlSettings.duration;
       const input = {
         model: status.model,
-        data: buffer.getSamples(Date.now() - mlSettings.duration),
+        data: buffer.getSamples(startTime),
         classificationIds: gestureData.data.map((d) => d.ID),
       };
       if (input.data.x.length > mlSettings.minSamples) {
@@ -63,14 +64,7 @@ export const usePrediction = () => {
       clearInterval(interval);
       connection.removeAccelerometerListener(listener);
     };
-  }, [
-    connection,
-    gestureData.data,
-    logging,
-    confidences,
-    status,
-    connectStatus,
-  ]);
+  }, [connection, gestureData.data, logging, status, connectStatus]);
 
   return confidences;
 };
