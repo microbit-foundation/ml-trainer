@@ -10,7 +10,6 @@ interface TimedXYZ {
 
 export class BufferedData {
   private buffer: RingBuffer<TimedXYZ>;
-  private lastTimestamp: number = 0;
 
   constructor(size: number) {
     this.buffer = new RingBuffer<TimedXYZ>(size);
@@ -18,8 +17,6 @@ export class BufferedData {
 
   addSample(data: AccelerometerDataEvent["data"], timestamp: number) {
     this.buffer.add({ ...data, timestamp });
-    console.log(timestamp - this.lastTimestamp);
-    this.lastTimestamp = timestamp;
   }
 
   getSamples(startTimeMillis: number): XYZData {
@@ -36,9 +33,9 @@ export class BufferedData {
     }
 
     for (let i = start + 1; i < ordered.length; ++i) {
-      result.x.push(ordered[i].x);
-      result.y.push(ordered[i].y);
-      result.z.push(ordered[i].z);
+      result.x.push(ordered[i].x / 1000);
+      result.y.push(ordered[i].y / 1000);
+      result.z.push(ordered[i].z / 1000);
     }
     return result;
   }
