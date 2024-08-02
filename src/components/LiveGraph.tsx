@@ -7,6 +7,7 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { mlSettings } from "../ml";
+import { ConnectionStatus } from "../connect-status-hooks";
 
 const smoothenDataPoint = (curr: number, next: number) => {
   // TODO: Factor out so that recording graph can do the same
@@ -15,7 +16,7 @@ const smoothenDataPoint = (curr: number, next: number) => {
 };
 
 const LiveGraph = () => {
-  const { isConnected } = useConnectionStage();
+  const { isConnected, status } = useConnectionStage();
   const [{ stage }] = useMlStatus();
   const connectActions = useConnectActions();
 
@@ -70,12 +71,12 @@ const LiveGraph = () => {
   }, [lineX, lineY, lineZ, recordLines]);
 
   useEffect(() => {
-    if (isConnected) {
+    if (isConnected || status === ConnectionStatus.ReconnectingAutomatically) {
       chart?.start();
     } else {
       chart?.stop();
     }
-  }, [chart, isConnected]);
+  }, [chart, isConnected, status]);
 
   // Draw on graph to display that users are recording
   const [isRecording, setIsRecording] = useState<boolean>(false);

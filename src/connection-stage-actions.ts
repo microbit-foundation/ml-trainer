@@ -215,9 +215,6 @@ export class ConnectionStageActions {
           flowType,
         });
       }
-      case ConnectionStatus.Reconnecting: {
-        return;
-      }
     }
     return;
   };

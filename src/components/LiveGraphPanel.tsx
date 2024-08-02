@@ -10,7 +10,9 @@ import { ConnectionStatus } from "../connect-status-hooks";
 const LiveGraphPanel = () => {
   const { actions, status } = useConnectionStage();
   const parentPortalRef = useRef(null);
-
+  const isReconnecting =
+    status === ConnectionStatus.ReconnectingAutomatically ||
+    status === ConnectionStatus.ReconnectingExplicitly;
   const connectBtnConfig = useMemo(() => {
     return status === ConnectionStatus.NotConnected ||
       status === ConnectionStatus.Connecting ||
@@ -55,15 +57,14 @@ const LiveGraphPanel = () => {
                 variant="primary"
                 size="sm"
                 isDisabled={
-                  status === ConnectionStatus.Reconnecting ||
-                  status === ConnectionStatus.Connecting
+                  isReconnecting || status === ConnectionStatus.Connecting
                 }
                 onClick={connectBtnConfig.onClick}
               >
                 <FormattedMessage id={connectBtnConfig.textId} />
               </Button>
             )}
-            {status === ConnectionStatus.Reconnecting && (
+            {isReconnecting && (
               <Text rounded="4xl" bg="white" py="1px" fontWeight="bold">
                 <FormattedMessage id="connectMB.reconnecting" />
               </Text>

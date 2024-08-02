@@ -117,16 +117,17 @@ export const getNextConnectionState = ({
   if (deviceStatus === DeviceConnectionStatus.DISCONNECTED) {
     return { status: ConnectionStatus.Disconnected, flowType };
   }
-  if (
-    deviceStatus === DeviceConnectionStatus.RECONNECTING ||
-    deviceStatus === DeviceConnectionStatus.CONNECTING
-  ) {
-    const newStatus =
+  if (deviceStatus === DeviceConnectionStatus.CONNECTING) {
+    const hasStartedOver =
       currStatus === ConnectionStatus.NotConnected ||
-      currStatus === ConnectionStatus.FailedToConnect
-        ? ConnectionStatus.Connecting
-        : ConnectionStatus.Reconnecting;
+      currStatus === ConnectionStatus.FailedToConnect;
+    const newStatus = hasStartedOver
+      ? ConnectionStatus.Connecting
+      : ConnectionStatus.ReconnectingExplicitly;
     return { status: newStatus, flowType };
+  }
+  if (deviceStatus === DeviceConnectionStatus.RECONNECTING) {
+    return { status: ConnectionStatus.ReconnectingAutomatically, flowType };
   }
   return undefined;
 };

@@ -144,7 +144,7 @@ describe("getNextConnectionState for radio connection", () => {
       },
     });
   });
-  test("radio reconnecting", () => {
+  test("radio reconnecting explicitly", () => {
     testGetNextConnectionState({
       input: {
         currConnType: "radio",
@@ -156,7 +156,24 @@ describe("getNextConnectionState for radio connection", () => {
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
-        status: ConnectionStatus.Reconnecting,
+        status: ConnectionStatus.ReconnectingExplicitly,
+        flowType: ConnectionFlowType.RadioRemote,
+      },
+    });
+  });
+  test("radio reconnecting automatically", () => {
+    testGetNextConnectionState({
+      input: {
+        currConnType: "radio",
+        currStatus: ConnectionStatus.Connected,
+        deviceStatus: DeviceConnectionStatus.RECONNECTING,
+        prevDeviceStatus: DeviceConnectionStatus.CONNECTED,
+        type: "radioRemote",
+      },
+      initialHasAttemptedReconnect: false,
+      expectedHasAttemptedReconnect: false,
+      expectedNextConnectionState: {
+        status: ConnectionStatus.ReconnectingAutomatically,
         flowType: ConnectionFlowType.RadioRemote,
       },
     });
@@ -216,7 +233,7 @@ describe("getNextConnectionState for radio connection", () => {
     testGetNextConnectionState({
       input: {
         currConnType: "radio",
-        currStatus: ConnectionStatus.Reconnecting,
+        currStatus: ConnectionStatus.ReconnectingExplicitly,
         deviceStatus: DeviceConnectionStatus.DISCONNECTED,
         prevDeviceStatus: DeviceConnectionStatus.RECONNECTING,
         type: "radioRemote",
@@ -233,7 +250,7 @@ describe("getNextConnectionState for radio connection", () => {
     testGetNextConnectionState({
       input: {
         currConnType: "radio",
-        currStatus: ConnectionStatus.Reconnecting,
+        currStatus: ConnectionStatus.ReconnectingExplicitly,
         deviceStatus: DeviceConnectionStatus.DISCONNECTED,
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "radioRemote",
@@ -250,7 +267,7 @@ describe("getNextConnectionState for radio connection", () => {
     testGetNextConnectionState({
       input: {
         currConnType: "radio",
-        currStatus: ConnectionStatus.Reconnecting,
+        currStatus: ConnectionStatus.ReconnectingExplicitly,
         deviceStatus: DeviceConnectionStatus.DISCONNECTED,
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "radioRemote",
@@ -351,7 +368,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       },
     });
   });
-  test("bluetooth reconnecting", () => {
+  test("bluetooth reconnecting explicitly", () => {
     testGetNextConnectionState({
       input: {
         currConnType: "bluetooth",
@@ -363,7 +380,24 @@ describe("getNextConnectionState for bluetooth connection", () => {
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
-        status: ConnectionStatus.Reconnecting,
+        status: ConnectionStatus.ReconnectingExplicitly,
+        flowType: ConnectionFlowType.Bluetooth,
+      },
+    });
+  });
+  test("bluetooth reconnecting automatically", () => {
+    testGetNextConnectionState({
+      input: {
+        currConnType: "bluetooth",
+        currStatus: ConnectionStatus.Connected,
+        deviceStatus: DeviceConnectionStatus.RECONNECTING,
+        prevDeviceStatus: DeviceConnectionStatus.CONNECTED,
+        type: "bluetooth",
+      },
+      initialHasAttemptedReconnect: false,
+      expectedHasAttemptedReconnect: false,
+      expectedNextConnectionState: {
+        status: ConnectionStatus.ReconnectingAutomatically,
         flowType: ConnectionFlowType.Bluetooth,
       },
     });
@@ -389,7 +423,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
     testGetNextConnectionState({
       input: {
         currConnType: "bluetooth",
-        currStatus: ConnectionStatus.Reconnecting,
+        currStatus: ConnectionStatus.ReconnectingExplicitly,
         deviceStatus: DeviceConnectionStatus.DISCONNECTED,
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "bluetooth",
@@ -406,7 +440,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
     testGetNextConnectionState({
       input: {
         currConnType: "bluetooth",
-        currStatus: ConnectionStatus.Reconnecting,
+        currStatus: ConnectionStatus.ReconnectingExplicitly,
         deviceStatus: DeviceConnectionStatus.DISCONNECTED,
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "bluetooth",

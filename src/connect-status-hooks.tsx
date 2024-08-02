@@ -26,9 +26,14 @@ export enum ConnectionStatus {
    */
   Connected = "Connected",
   /**
-   * Reconnecting occurs for the subsequent connections after the initial one.
+   * Reconnecting explicitly occurs when a reconnection is triggered by the user.
    */
-  Reconnecting = "Reconnecting",
+  ReconnectingExplicitly = "ReconnectingExplicitly",
+  /**
+   * Reconnecting automatically occurs when a reconnection is triggered automatically.
+   * This happens before a connection lost is declared.
+   */
+  ReconnectingAutomatically = "ReconnectingAutomatically",
   /**
    * Disconnected. The disconnection is triggered by the user.
    */
