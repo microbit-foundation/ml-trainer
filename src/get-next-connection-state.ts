@@ -30,7 +30,6 @@ export const getNextConnectionState = ({
   onFirstConnectAttempt,
   setOnFirstConnectAttempt,
 }: GetNextConnectionStateInput): NextConnectionState => {
-  console.log(type, currStatus, deviceStatus, prevDeviceStatus);
   const flowType =
     type === "usb"
       ? ConnectionFlowType.RadioBridge
