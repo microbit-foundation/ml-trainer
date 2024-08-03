@@ -28,6 +28,16 @@ export const usePrediction = () => {
   const connection = useConnectActions();
   const [confidences, setConfidences] = useState<Confidences | undefined>();
   const [gestureData] = useGestureData();
+
+  // Avoid re-renders due to threshold changes which update gestureData.
+  // We could consider storing them elsewhere, perhaps with the model.
+  const classificationIdsRecalculated = gestureData.data.map((d) => d.ID);
+  const classificationIdsKey = JSON.stringify(classificationIdsRecalculated);
+  const classificationIds: number[] = useMemo(
+    () => JSON.parse(classificationIdsKey) as number[],
+    [classificationIdsKey]
+  );
+
   useEffect(() => {
     if (
       status.stage !== MlStage.TrainingComplete ||
@@ -40,7 +50,7 @@ export const usePrediction = () => {
       const input = {
         model: status.model,
         data: buffer.getSamples(startTime),
-        classificationIds: gestureData.data.map((d) => d.ID),
+        classificationIds,
       };
       if (input.data.x.length > mlSettings.minSamples) {
         const predictionResult = await predict(input);
@@ -59,7 +69,7 @@ export const usePrediction = () => {
       setConfidences(undefined);
       clearInterval(interval);
     };
-  }, [connection, gestureData.data, logging, status, connectStatus, buffer]);
+  }, [connection, classificationIds, logging, status, connectStatus, buffer]);
 
   return confidences;
 };
