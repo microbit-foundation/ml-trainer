@@ -1,24 +1,39 @@
 import { XYZData } from "./gestures-hooks";
 
-interface TimedXYZ {
+export interface TimedXYZ {
   x: number;
   y: number;
   z: number;
   timestamp: number;
 }
 
+type SampleListener = (v: TimedXYZ) => void;
+
 export class BufferedData {
   private buffer: RingBuffer<TimedXYZ>;
+  private listeners = new Set<SampleListener>();
 
   constructor(size: number) {
     this.buffer = new RingBuffer<TimedXYZ>(size);
   }
 
-  addSample(data: { x: number; y: number; z: number }, timestamp: number) {
-    this.buffer.add({ ...data, timestamp });
+  addListener(listener: SampleListener): void {
+    this.listeners.add(listener);
   }
 
-  getSamples(startTimeMillis: number): XYZData {
+  removeListener(listener: SampleListener): void {
+    this.listeners.delete(listener);
+  }
+
+  addSample(data: { x: number; y: number; z: number }, timestamp: number) {
+    const sample = { ...data, timestamp };
+    this.buffer.add(sample);
+    if (this.listeners.size) {
+      this.listeners.forEach((l) => l(sample));
+    }
+  }
+
+  getSamples(startTimeMillis: number, endTimeMillis: number = -1): XYZData {
     const ordered = this.buffer.toArray();
     const result: XYZData = { x: [], y: [], z: [] };
     // Go backwards until we have `duration` of samples
@@ -32,9 +47,11 @@ export class BufferedData {
     }
 
     for (let i = start + 1; i < ordered.length; ++i) {
-      result.x.push(ordered[i].x);
-      result.y.push(ordered[i].y);
-      result.z.push(ordered[i].z);
+      if (endTimeMillis === -1 || ordered[i].timestamp < endTimeMillis) {
+        result.x.push(ordered[i].x);
+        result.y.push(ordered[i].y);
+        result.z.push(ordered[i].z);
+      }
     }
     return result;
   }

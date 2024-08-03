@@ -13,11 +13,11 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useConnectActions } from "../connect-actions-hooks";
+import { TimedXYZ } from "../buffered-data";
+import { useBufferedData } from "../buffered-data-hooks";
 import { GestureData, useGestureActions, XYZData } from "../gestures-hooks";
 import { mlSettings } from "../ml";
 import { MlStage, useMlStatus } from "../ml-status-hooks";
-import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 
 interface CountdownStage {
   value: string | number;
@@ -215,7 +215,6 @@ interface RecordingOptions {
 }
 
 interface InProgressRecording extends RecordingOptions {
-  data: XYZData;
   startTimeMillis: number;
 }
 
@@ -226,27 +225,22 @@ interface RecordingDataSource {
 
 const useRecordingDataSource = (): RecordingDataSource => {
   const ref = useRef<InProgressRecording | undefined>();
-  const connectActions = useConnectActions();
+  const bufferedData = useBufferedData();
   useEffect(() => {
-    const listener = (e: AccelerometerDataEvent) => {
-      const {
-        data: { x, y, z },
-      } = e;
+    const listener = (sample: TimedXYZ) => {
       if (ref.current) {
-        ref.current.data.x.push(x / 1000);
-        ref.current.data.y.push(y / 1000);
-        ref.current.data.z.push(z / 1000);
         const percentage =
-          ((Date.now() - ref.current.startTimeMillis) / mlSettings.duration) *
+          ((sample.timestamp - ref.current.startTimeMillis) /
+            mlSettings.duration) *
           100;
         ref.current.onProgress(percentage);
       }
     };
-    connectActions.addAccelerometerListener(listener);
+    bufferedData.addListener(listener);
     return () => {
-      connectActions.removeAccelerometerListener(listener);
+      bufferedData.removeListener(listener);
     };
-  }, [connectActions]);
+  }, [bufferedData]);
 
   return useMemo(
     () => ({
@@ -255,20 +249,23 @@ const useRecordingDataSource = (): RecordingDataSource => {
       startRecording(options: RecordingOptions) {
         this.timeout = setTimeout(() => {
           if (ref.current) {
-            const sampleCount = ref.current.data.x.length;
+            const data = bufferedData.getSamples(
+              ref.current.startTimeMillis,
+              ref.current.startTimeMillis + mlSettings.duration
+            );
+            const sampleCount = data.x.length;
             if (sampleCount < mlSettings.minSamples) {
               ref.current.onError();
               ref.current = undefined;
             } else {
               ref.current.onProgress(100);
-              ref.current.onDone(ref.current.data);
+              ref.current.onDone(data);
               ref.current = undefined;
             }
           }
         }, mlSettings.duration);
 
         ref.current = {
-          data: { x: [], y: [], z: [] },
           startTimeMillis: Date.now(),
           ...options,
         };
@@ -278,7 +275,7 @@ const useRecordingDataSource = (): RecordingDataSource => {
         ref.current = undefined;
       },
     }),
-    []
+    [bufferedData]
   );
 };
 
