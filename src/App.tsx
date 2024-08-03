@@ -26,6 +26,7 @@ import { MlStatusProvider } from "./ml-status-hooks";
 import { ConnectionStageProvider } from "./connection-stage-hooks";
 import { ConnectProvider } from "./connect-actions-hooks";
 import { ConnectStatusProvider } from "./connect-status-hooks";
+import { BufferedDataProvider } from "./buffered-data-hooks";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -46,11 +47,13 @@ const Providers = ({ children }: ProviderLayoutProps) => {
                 <MlStatusProvider>
                   <ConnectStatusProvider>
                     <ConnectProvider>
-                      <ConnectionStageProvider>
-                        <TranslationProvider>
-                          <ErrorBoundary>{children}</ErrorBoundary>
-                        </TranslationProvider>
-                      </ConnectionStageProvider>
+                      <BufferedDataProvider>
+                        <ConnectionStageProvider>
+                          <TranslationProvider>
+                            <ErrorBoundary>{children}</ErrorBoundary>
+                          </TranslationProvider>
+                        </ConnectionStageProvider>
+                      </BufferedDataProvider>
                     </ConnectProvider>
                   </ConnectStatusProvider>
                 </MlStatusProvider>

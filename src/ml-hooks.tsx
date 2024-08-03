@@ -1,13 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useBufferedData } from "./buffered-data-hooks";
+import { useConnectActions } from "./connect-actions-hooks";
+import { ConnectionStatus, useConnectStatus } from "./connect-status-hooks";
 import { useGestureData } from "./gestures-hooks";
 import { useLogging } from "./logging/logging-hooks";
-import { MlStage, useMlStatus } from "./ml-status-hooks";
-import { MlActions } from "./ml-actions";
-import { BufferedData } from "./buffered-data";
-import { useConnectActions } from "./connect-actions-hooks";
-import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 import { Confidences, mlSettings, predict } from "./ml";
-import { ConnectionStatus, useConnectStatus } from "./connect-status-hooks";
+import { MlActions } from "./ml-actions";
+import { MlStage, useMlStatus } from "./ml-status-hooks";
 
 export const useMlActions = () => {
   const [gestures] = useGestureData();
@@ -63,37 +62,4 @@ export const usePrediction = () => {
   }, [connection, gestureData.data, logging, status, connectStatus, buffer]);
 
   return confidences;
-};
-
-export const useBufferedData = (): BufferedData => {
-  const connectStatus = useConnectStatus();
-  const connection = useConnectActions();
-  const bufferRef = useRef<BufferedData>();
-  const getBuffer = () => {
-    if (bufferRef.current) {
-      return bufferRef.current;
-    }
-    bufferRef.current = new BufferedData(mlSettings.numSamples * 2);
-    return bufferRef.current;
-  };
-  useEffect(() => {
-    if (connectStatus !== ConnectionStatus.Connected) {
-      return;
-    }
-    const listener = (e: AccelerometerDataEvent) => {
-      const { x, y, z } = e.data;
-      const sample = {
-        x: x / 1000,
-        y: y / 1000,
-        z: z / 1000,
-      };
-      getBuffer().addSample(sample, Date.now());
-    };
-    connection.addAccelerometerListener(listener);
-    return () => {
-      connection.removeAccelerometerListener(listener);
-      getBuffer().clear();
-    };
-  }, [connection, connectStatus]);
-  return getBuffer();
 };
