@@ -29,7 +29,7 @@ export const useBufferedData = (): BufferedData => {
 };
 
 const useBufferedDataInternal = (): BufferedData => {
-  const connectStatus = useConnectStatus();
+  const [connectStatus] = useConnectStatus();
   const connection = useConnectActions();
   const bufferRef = useRef<BufferedData>();
   const getBuffer = () => {

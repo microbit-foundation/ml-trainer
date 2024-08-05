@@ -14,7 +14,7 @@ import { useStorage } from "./hooks/use-storage";
 import {
   ConnectionStatus,
   useConnectStatus,
-  useSetConnectStatus,
+  useConnectStatusUpdater,
 } from "./connect-status-hooks";
 
 export enum ConnectionFlowType {
@@ -150,7 +150,7 @@ export const useConnectionStage = (): {
   const [stage, setStage] = connectionStageContextValue;
   const navigate = useNavigate();
   const connectActions = useConnectActions();
-  const setStatus = useSetConnectStatus();
+  const [, setStatus] = useConnectStatus();
 
   const actions = useMemo(() => {
     return new ConnectionStageActions(
@@ -162,7 +162,7 @@ export const useConnectionStage = (): {
     );
   }, [connectActions, navigate, stage, setStage, setStatus]);
 
-  const status = useConnectStatus(
+  const status = useConnectStatusUpdater(
     stage.connType,
     actions.handleConnectionStatus
   );

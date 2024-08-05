@@ -88,25 +88,22 @@ export const ConnectStatusProvider = ({
   );
 };
 
-export const useSetConnectStatus = (): ((status: ConnectionStatus) => void) => {
+export const useConnectStatus = (): [
+  ConnectionStatus,
+  (status: ConnectionStatus) => void
+] => {
   const connectStatusContextValue = useContext(ConnectStatusContext);
   if (!connectStatusContextValue) {
     throw new Error("Missing provider");
   }
-  const [, setStatus] = connectStatusContextValue;
-
-  return setStatus;
+  return connectStatusContextValue;
 };
 
-export const useConnectStatus = (
+export const useConnectStatusUpdater = (
   currConnType: ConnectionType,
   handleStatus: (status: ConnectionStatus, type: ConnectionFlowType) => void
 ): ConnectionStatus => {
-  const connectStatusContextValue = useContext(ConnectStatusContext);
-  if (!connectStatusContextValue) {
-    throw new Error("Missing provider");
-  }
-  const [connectionStatus, setConnectionStatus] = connectStatusContextValue;
+  const [connectionStatus, setConnectionStatus] = useConnectStatus();
   const connectActions = useConnectActions();
   const prevDeviceStatus = useRef<DeviceConnectionStatus | null>(null);
   const [hasAttempedReconnect, setHasAttemptedReconnect] =
