@@ -55,7 +55,6 @@ const useBufferedDataInternal = (): BufferedData => {
     connection.addAccelerometerListener(listener);
     return () => {
       connection.removeAccelerometerListener(listener);
-      getBuffer().clear();
     };
   }, [connection, connectStatus]);
   return getBuffer();

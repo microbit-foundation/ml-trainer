@@ -55,10 +55,6 @@ export class BufferedData {
     }
     return result;
   }
-
-  clear() {
-    this.buffer.clear();
-  }
 }
 
 export class RingBuffer<T> {
@@ -86,10 +82,5 @@ export class RingBuffer<T> {
       return this.buffer.slice(0, this.size);
     }
     return this.buffer.slice(this.pos).concat(this.buffer.slice(0, this.pos));
-  }
-
-  clear() {
-    this.pos = 0;
-    this.size = 0;
   }
 }
