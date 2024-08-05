@@ -39,30 +39,24 @@ export const getNextConnectionState = ({
 
   // We are using usb status to infer the radio bridge device status.
   if (type === "usb") {
-    // Ignore USB status updates when radio connection is not established.
-    if (currConnType !== "radio" || onFirstConnectAttempt) {
+    // Ignore USB status updates when radio connection is not established or is disconnected.
+    if (
+      currConnType !== "radio" ||
+      onFirstConnectAttempt ||
+      deviceStatus !== DeviceConnectionStatus.DISCONNECTED ||
+      currStatus === ConnectionStatus.Disconnected
+    ) {
       return undefined;
     }
-    if (
-      !hasAttempedReconnect &&
-      currStatus === ConnectionStatus.Connected &&
-      deviceStatus === DeviceConnectionStatus.DISCONNECTED
-    ) {
+    if (!hasAttempedReconnect && currStatus === ConnectionStatus.Connected) {
       setHasAttemptedReconnect(true);
       return { status: ConnectionStatus.ConnectionLost, flowType };
     }
-    if (
-      !hasAttempedReconnect &&
-      currStatus !== ConnectionStatus.Connected &&
-      deviceStatus === DeviceConnectionStatus.DISCONNECTED
-    ) {
+    if (!hasAttempedReconnect && currStatus !== ConnectionStatus.Connected) {
       setHasAttemptedReconnect(true);
       return { status: ConnectionStatus.FailedToReconnect, flowType };
     }
-    if (
-      hasAttempedReconnect &&
-      deviceStatus === DeviceConnectionStatus.DISCONNECTED
-    ) {
+    if (hasAttempedReconnect) {
       return {
         status: ConnectionStatus.FailedToReconnectTwice,
         flowType: ConnectionFlowType.RadioRemote,
