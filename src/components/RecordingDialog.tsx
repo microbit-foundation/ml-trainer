@@ -6,19 +6,20 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
+  Progress,
   Text,
+  useToast,
   VStack,
-  Box,
 } from "@chakra-ui/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { GestureData, useGestureActions } from "../gestures-hooks";
-import gestureData from "../test-fixtures/gesture-data.json";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
+import { TimedXYZ } from "../buffered-data";
+import { useBufferedData } from "../buffered-data-hooks";
+import { GestureData, useGestureActions, XYZData } from "../gestures-hooks";
 import { mlSettings } from "../ml";
+import { MlStage, useMlStatus } from "../ml-status-hooks";
 
-interface CountdownConfig {
+interface CountdownStage {
   value: string | number;
   duration: number;
   fontSize?: string;
@@ -44,14 +45,14 @@ const RecordingDialog = ({
   gestureId,
 }: RecordingDialogProps) => {
   const intl = useIntl();
+  const toast = useToast();
   const actions = useGestureActions();
+  const recordingDataSource = useRecordingDataSource();
   const [, setStatus] = useMlStatus();
   const [recordingStatus, setRecordingStatus] = useState<RecordingStatus>(
     RecordingStatus.None
   );
-  const [countdownIdx, setIsCountdownIdx] = useState<number>(0);
-
-  const countdownConfigs: CountdownConfig[] = useMemo(
+  const countdownStages: CountdownStage[] = useMemo(
     () => [
       { value: 3, duration: 500, fontSize: "8xl" },
       { value: 2, duration: 500, fontSize: "8xl" },
@@ -64,52 +65,83 @@ const RecordingDialog = ({
     ],
     [intl]
   );
+  const [countdownStageIndex, setCountdownStageIndex] = useState<number>(0);
 
-  const handleOnClose = useCallback(() => {
+  const handleCleanup = useCallback(() => {
     setRecordingStatus(RecordingStatus.None);
     setStatus({ stage: MlStage.NotTrained });
-    setIsCountdownIdx(0);
+    setCountdownStageIndex(0);
+    setProgress(0);
     onClose();
   }, [onClose, setStatus]);
+
+  const handleOnClose = useCallback(() => {
+    recordingDataSource.cancelRecording();
+    handleCleanup();
+  }, [handleCleanup, recordingDataSource]);
 
   useEffect(() => {
     if (isOpen) {
       // When dialog is opened, restart countdown
       setRecordingStatus(RecordingStatus.Countdown);
-      setIsCountdownIdx(0);
+      setCountdownStageIndex(0);
     }
   }, [isOpen]);
 
+  const [progress, setProgress] = useState(0);
   useEffect(() => {
     if (recordingStatus === RecordingStatus.Countdown) {
-      const config = countdownConfigs[countdownIdx];
+      const config = countdownStages[countdownStageIndex];
 
-      setTimeout(() => {
-        if (countdownIdx < countdownConfigs.length - 1) {
-          setIsCountdownIdx(countdownIdx + 1);
+      const countdownTimeout = setTimeout(() => {
+        if (countdownStageIndex < countdownStages.length - 1) {
+          setCountdownStageIndex(countdownStageIndex + 1);
           return;
         } else {
           setRecordingStatus(RecordingStatus.Recording);
           setStatus({ stage: MlStage.RecordingData });
+          recordingDataSource.startRecording({
+            onDone(data) {
+              actions.addGestureRecordings(gestureId, [
+                { ID: Date.now(), data },
+              ]);
+              handleCleanup();
+            },
+            onError() {
+              handleCleanup();
+
+              toast({
+                position: "top",
+                duration: 5_000,
+                title: intl.formatMessage({
+                  id: "alert.recording.disconnectedDuringRecording",
+                }),
+                variant: "subtle",
+                status: "error",
+              });
+            },
+            onProgress: setProgress,
+          });
         }
       }, config.duration);
+      return () => {
+        clearTimeout(countdownTimeout);
+      };
     }
-  }, [countdownConfigs, isOpen, recordingStatus, countdownIdx, setStatus]);
-
-  useEffect(() => {
-    if (recordingStatus === RecordingStatus.Recording) {
-      setTimeout(() => {
-        if (recordingStatus === RecordingStatus.Recording) {
-          // TODO: Record samples
-          // Stubbing of recording of gesture
-          actions.addGestureRecordings(gestureId, [
-            (gestureData as GestureData[])[0].recordings[0],
-          ]);
-          handleOnClose();
-        }
-      }, mlSettings.duration);
-    }
-  }, [actions, gestureId, handleOnClose, recordingStatus]);
+  }, [
+    countdownStages,
+    isOpen,
+    recordingStatus,
+    countdownStageIndex,
+    setStatus,
+    recordingDataSource,
+    actions,
+    gestureId,
+    handleOnClose,
+    handleCleanup,
+    toast,
+    intl,
+  ]);
 
   return (
     <Modal
@@ -143,36 +175,23 @@ const RecordingDialog = ({
                   </Text>
                 ) : (
                   <Text
-                    fontSize={countdownConfigs[countdownIdx].fontSize}
+                    fontSize={countdownStages[countdownStageIndex].fontSize}
                     textAlign="center"
                     fontWeight="bold"
                     color="brand.500"
                   >
-                    {countdownConfigs[countdownIdx].value}
+                    {countdownStages[countdownStageIndex].value}
                   </Text>
                 )}
               </VStack>
-              <Box
+              <Progress
                 alignSelf="center"
                 w="280px"
                 h="24px"
-                bgColor="red.200"
-                rounded="full"
-                overflow="hidden"
-              >
-                <Box
-                  as={motion.div}
-                  height="100%"
-                  width={0}
-                  bg="red.500"
-                  animate={
-                    recordingStatus === RecordingStatus.Recording
-                      ? { width: [0, 280] }
-                      : undefined
-                  }
-                  transition="1.5s linear"
-                />
-              </Box>
+                colorScheme="red"
+                borderRadius="xl"
+                value={progress}
+              />
               <Button
                 variant="warning"
                 width="fit-content"
@@ -186,6 +205,77 @@ const RecordingDialog = ({
         </ModalContent>
       </ModalOverlay>
     </Modal>
+  );
+};
+
+interface RecordingOptions {
+  onDone: (data: XYZData) => void;
+  onError: () => void;
+  onProgress: (percentage: number) => void;
+}
+
+interface InProgressRecording extends RecordingOptions {
+  startTimeMillis: number;
+}
+
+interface RecordingDataSource {
+  startRecording(options: RecordingOptions): void;
+  cancelRecording(): void;
+}
+
+const useRecordingDataSource = (): RecordingDataSource => {
+  const ref = useRef<InProgressRecording | undefined>();
+  const bufferedData = useBufferedData();
+  useEffect(() => {
+    const listener = (sample: TimedXYZ) => {
+      if (ref.current) {
+        const percentage =
+          ((sample.timestamp - ref.current.startTimeMillis) /
+            mlSettings.duration) *
+          100;
+        ref.current.onProgress(percentage);
+      }
+    };
+    bufferedData.addListener(listener);
+    return () => {
+      bufferedData.removeListener(listener);
+    };
+  }, [bufferedData]);
+
+  return useMemo(
+    () => ({
+      timeout: undefined as ReturnType<typeof setTimeout> | undefined,
+
+      startRecording(options: RecordingOptions) {
+        this.timeout = setTimeout(() => {
+          if (ref.current) {
+            const data = bufferedData.getSamples(
+              ref.current.startTimeMillis,
+              ref.current.startTimeMillis + mlSettings.duration
+            );
+            const sampleCount = data.x.length;
+            if (sampleCount < mlSettings.minSamples) {
+              ref.current.onError();
+              ref.current = undefined;
+            } else {
+              ref.current.onProgress(100);
+              ref.current.onDone(data);
+              ref.current = undefined;
+            }
+          }
+        }, mlSettings.duration);
+
+        ref.current = {
+          startTimeMillis: Date.now(),
+          ...options,
+        };
+      },
+      cancelRecording() {
+        clearTimeout(this.timeout);
+        ref.current = undefined;
+      },
+    }),
+    [bufferedData]
   );
 };
 

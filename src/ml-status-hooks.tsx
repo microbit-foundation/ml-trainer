@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import { hasSufficientDataForTraining, useGestureData } from "./gestures-hooks";
+import { LayersModel } from "@tensorflow/tfjs";
 
 export enum MlStage {
   RecordingData,
@@ -23,7 +24,19 @@ export type MlStatus =
       progressValue: number;
     }
   | {
-      stage: Exclude<MlStage, MlStage.TrainingInProgress>;
+      stage: MlStage.TrainingComplete;
+      model: LayersModel;
+    }
+  | {
+      stage: MlStage.RetrainingNeeded;
+    }
+  | {
+      stage: Exclude<
+        MlStage,
+        | MlStage.TrainingInProgress
+        | MlStage.TrainingComplete
+        | MlStage.RetrainingNeeded
+      >;
     };
 
 interface MlStatusState {

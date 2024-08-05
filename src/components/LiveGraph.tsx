@@ -82,15 +82,19 @@ const LiveGraph = () => {
   const [isRecording, setIsRecording] = useState<boolean>(false);
   useEffect(() => {
     if (stage === MlStage.RecordingData && !isRecording) {
-      // Set the start recording line
-      recordLines.append(new Date().getTime() - 1, -2, false);
-      recordLines.append(new Date().getTime(), 2.3, false);
-      setIsRecording(true);
+      {
+        // Set the start recording line
+        const now = new Date().getTime();
+        recordLines.append(now - 1, -2, false);
+        recordLines.append(now, 2.3, false);
+        setIsRecording(true);
+      }
 
       setTimeout(() => {
         // Set the end recording line
-        recordLines.append(new Date().getTime() - 1, 2.3, false);
-        recordLines.append(new Date().getTime(), -2, false);
+        const now = new Date().getTime();
+        recordLines.append(now - 1, 2.3, false);
+        recordLines.append(now, -2, false);
         setIsRecording(false);
       }, mlSettings.duration);
     }

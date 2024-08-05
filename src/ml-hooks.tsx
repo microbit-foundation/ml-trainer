@@ -1,27 +1,75 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useBufferedData } from "./buffered-data-hooks";
+import { useConnectActions } from "./connect-actions-hooks";
+import { ConnectionStatus, useConnectStatus } from "./connect-status-hooks";
 import { useGestureData } from "./gestures-hooks";
 import { useLogging } from "./logging/logging-hooks";
-import { useMlStatus } from "./ml-status-hooks";
+import { Confidences, mlSettings, predict } from "./ml";
 import { MlActions } from "./ml-actions";
-import { useConnectionStage } from "./connection-stage-hooks";
+import { MlStage, useMlStatus } from "./ml-status-hooks";
 
 export const useMlActions = () => {
-  const [gestures, setGestures] = useGestureData();
-  const [status, setStatus] = useMlStatus();
+  const [gestures] = useGestureData();
+  const [, setStatus] = useMlStatus();
   const logger = useLogging();
-  const { isConnected } = useConnectionStage();
 
   const actions = useMemo<MlActions>(
-    () =>
-      new MlActions(
-        logger,
-        isConnected,
-        gestures,
-        setGestures,
-        status,
-        setStatus
-      ),
-    [gestures, isConnected, logger, setGestures, setStatus, status]
+    () => new MlActions(logger, gestures, setStatus),
+    [gestures, logger, setStatus]
   );
   return actions;
+};
+
+export const usePrediction = () => {
+  const buffer = useBufferedData();
+  const logging = useLogging();
+  const [status] = useMlStatus();
+  const connectStatus = useConnectStatus();
+  const connection = useConnectActions();
+  const [confidences, setConfidences] = useState<Confidences | undefined>();
+  const [gestureData] = useGestureData();
+
+  // Avoid re-renders due to threshold changes which update gestureData.
+  // We could consider storing them elsewhere, perhaps with the model.
+  const classificationIdsRecalculated = gestureData.data.map((d) => d.ID);
+  const classificationIdsKey = JSON.stringify(classificationIdsRecalculated);
+  const classificationIds: number[] = useMemo(
+    () => JSON.parse(classificationIdsKey) as number[],
+    [classificationIdsKey]
+  );
+
+  useEffect(() => {
+    if (
+      status.stage !== MlStage.TrainingComplete ||
+      connectStatus !== ConnectionStatus.Connected
+    ) {
+      return;
+    }
+    const runPrediction = async () => {
+      const startTime = Date.now() - mlSettings.duration;
+      const input = {
+        model: status.model,
+        data: buffer.getSamples(startTime),
+        classificationIds,
+      };
+      if (input.data.x.length > mlSettings.minSamples) {
+        const predictionResult = await predict(input);
+        if (predictionResult.error) {
+          logging.error(predictionResult.detail);
+        } else {
+          setConfidences(predictionResult.confidences);
+        }
+      }
+    };
+    const interval = setInterval(
+      runPrediction,
+      1000 / mlSettings.updatesPrSecond
+    );
+    return () => {
+      setConfidences(undefined);
+      clearInterval(interval);
+    };
+  }, [connection, classificationIds, logging, status, connectStatus, buffer]);
+
+  return confidences;
 };

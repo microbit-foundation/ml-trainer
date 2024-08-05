@@ -14,6 +14,7 @@ export const mlSettings = {
   numSamples: 80, // number of samples in one recording (when recording samples)
   minSamples: 80, // minimum number of samples for reliable detection (when detecting gestures)
   updatesPrSecond: 4, // Times algorithm predicts data pr second
+  defaultRequiredConfidence: 0.8, // Default threshold
   numEpochs: 80, // Number of epochs for ML
   learningRate: 0.5,
   includedAxes: [Axes.X, Axes.Y, Axes.Z],
@@ -31,39 +32,37 @@ export const mlSettings = {
 
 interface TrainModelInput {
   data: GestureData[];
-  onTrainEnd?: () => void;
-  onTraining?: (progress: number) => void;
-  onError?: () => void;
+  onProgress?: (progress: number) => void;
 }
+
+export type TrainingResult =
+  | { error: false; model: tf.LayersModel }
+  | { error: true };
 
 export const trainModel = async ({
   data,
-  onTrainEnd,
-  onTraining,
-  onError,
-}: TrainModelInput): Promise<tf.LayersModel | void> => {
+  onProgress,
+}: TrainModelInput): Promise<TrainingResult> => {
   const { features, labels } = prepareFeaturesAndLabels(data);
-  const nn: tf.LayersModel = createModel(data);
+  const model: tf.LayersModel = createModel(data);
   const totalNumEpochs = mlSettings.numEpochs;
 
   try {
-    await nn.fit(tf.tensor(features), tf.tensor(labels), {
+    await model.fit(tf.tensor(features), tf.tensor(labels), {
       epochs: totalNumEpochs,
       batchSize: 16,
       validationSplit: 0.1,
       callbacks: {
-        onTrainEnd,
         onEpochEnd: (epoch: number) => {
           // Epochs indexed at 0
-          onTraining && onTraining(epoch / (totalNumEpochs - 1));
+          onProgress && onProgress(epoch / (totalNumEpochs - 1));
         },
       },
     });
   } catch (err) {
-    onError && onError();
-    console.error("tensorflow training process failed:", err);
+    return { error: true };
   }
-  return nn;
+  return { error: false, model };
 };
 
 // Exported for testing
@@ -131,21 +130,28 @@ interface PredictInput {
 
 export type Confidences = Record<GestureData["ID"], number>;
 
+export type PredictionResult =
+  | { error: true; detail: unknown }
+  | { error: false; confidences: Confidences };
+
 // For predicting
 export const predict = async ({
   model,
   data,
   classificationIds,
-}: PredictInput): Promise<Confidences | void> => {
+}: PredictInput): Promise<PredictionResult> => {
   const input = applyFilters(data);
   const prediction = model.predict(tf.tensor([input])) as tf.Tensor;
   try {
     const confidences = (await prediction.data()) as Float32Array;
-    return classificationIds.reduce(
-      (acc, id, idx) => ({ ...acc, [id]: confidences[idx] }),
-      {}
-    );
+    return {
+      error: false,
+      confidences: classificationIds.reduce(
+        (acc, id, idx) => ({ ...acc, [id]: confidences[idx] }),
+        {}
+      ),
+    };
   } catch (e) {
-    console.error("Prediction error:", e);
+    return { error: true, detail: e };
   }
 };

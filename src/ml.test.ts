@@ -10,12 +10,12 @@
 import * as tf from "@tensorflow/tfjs";
 import { vi } from "vitest";
 import { GestureData } from "./gestures-hooks";
-import { prepareFeaturesAndLabels, trainModel } from "./ml";
+import { prepareFeaturesAndLabels, TrainingResult, trainModel } from "./ml";
 import gestureDataBadLabels from "./test-fixtures/gesture-data-bad-labels.json";
 import gestureData from "./test-fixtures/gesture-data.json";
 import testdataShakeStill from "./test-fixtures/test-data-shake-still.json";
 
-let tensorFlowModel: tf.LayersModel | void;
+let trainingResult: TrainingResult;
 beforeAll(async () => {
   // No webgl in tests running in node.
   await tf.setBackend("cpu");
@@ -24,17 +24,17 @@ beforeAll(async () => {
   const randomSpy = vi.spyOn(Math, "random");
   randomSpy.mockImplementation(() => 0.5);
 
-  tensorFlowModel = await trainModel({ data: gestureData });
+  trainingResult = await trainModel({ data: gestureData });
 });
 
 const getModelResults = (data: GestureData[]) => {
   const { features, labels } = prepareFeaturesAndLabels(data);
 
-  if (!tensorFlowModel) {
+  if (trainingResult.error) {
     throw Error("No model returned");
   }
 
-  const tensorFlowResult = tensorFlowModel.evaluate(
+  const tensorFlowResult = trainingResult.model.evaluate(
     tf.tensor(features),
     tf.tensor(labels)
   );
@@ -42,7 +42,7 @@ const getModelResults = (data: GestureData[]) => {
     .dataSync()[0]
     .toFixed(4);
   const tensorflowPredictionResult = (
-    tensorFlowModel.predict(tf.tensor(features)) as tf.Tensor
+    trainingResult.model.predict(tf.tensor(features)) as tf.Tensor
   ).dataSync();
   return {
     tensorFlowResultAccuracy,

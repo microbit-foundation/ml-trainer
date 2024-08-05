@@ -1,6 +1,6 @@
 import { Grid, GridProps, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useMemo, useState } from "react";
-import { GestureData, useGestureData } from "../gestures-hooks";
+import { useGestureData } from "../gestures-hooks";
 import AddDataGridRow from "./AddDataGridRow";
 import AddDataGridWalkThrough from "./AddDataGridWalkThrough";
 import HeadingGrid from "./HeadingGrid";
@@ -29,9 +29,8 @@ const headings = [
 
 const AddDataGridView = () => {
   const [gestures] = useGestureData();
-  const [selectedGesture, setSelectedGesture] = useState<GestureData>(
-    gestures.data[0]
-  );
+  const [selectedGestureIdx, setSelectedGestureIdx] = useState<number>(0);
+  const selectedGesture = gestures.data[selectedGestureIdx] ?? gestures.data[0];
   const showWalkThrough = useMemo<boolean>(
     () =>
       gestures.data.length === 0 ||
@@ -84,12 +83,12 @@ const AddDataGridView = () => {
             startRecording={onOpen}
           />
         ) : (
-          gestures.data.map((g) => (
+          gestures.data.map((g, idx) => (
             <AddDataGridRow
               key={g.ID}
               gesture={g}
               selected={selectedGesture.ID === g.ID}
-              onSelectRow={() => setSelectedGesture(g)}
+              onSelectRow={() => setSelectedGestureIdx(idx)}
               startRecording={onOpen}
             />
           ))
