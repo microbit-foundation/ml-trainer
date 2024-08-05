@@ -44,7 +44,11 @@ export const getNextConnectionState = ({
       currConnType !== "radio" ||
       onFirstConnectAttempt ||
       deviceStatus !== DeviceConnectionStatus.DISCONNECTED ||
-      currStatus === ConnectionStatus.Disconnected
+      currStatus === ConnectionStatus.Disconnected ||
+      // Serial connection gets intentionally disconnected before doing
+      // reconnect attempt.
+      currStatus === ConnectionStatus.ReconnectingAutomatically ||
+      currStatus === ConnectionStatus.ReconnectingExplicitly
     ) {
       return undefined;
     }
@@ -101,14 +105,15 @@ export const getNextConnectionState = ({
   }
   if (
     deviceStatus === DeviceConnectionStatus.DISCONNECTED &&
-    prevDeviceStatus === DeviceConnectionStatus.CONNECTING
+    (prevDeviceStatus === DeviceConnectionStatus.CONNECTING ||
+      prevDeviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE)
   ) {
     setHasAttemptedReconnect(true);
     return { status: ConnectionStatus.FailedToReconnect, flowType };
   }
   if (
     deviceStatus === DeviceConnectionStatus.DISCONNECTED &&
-    prevDeviceStatus === DeviceConnectionStatus.RECONNECTING
+    currStatus === ConnectionStatus.ReconnectingAutomatically
   ) {
     setHasAttemptedReconnect(true);
     return { status: ConnectionStatus.ConnectionLost, flowType };

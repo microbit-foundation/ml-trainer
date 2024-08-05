@@ -227,7 +227,7 @@ describe("getNextConnectionState for radio connection", () => {
     testGetNextConnectionState({
       input: {
         currConnType: "radio",
-        currStatus: ConnectionStatus.Disconnected,
+        currStatus: ConnectionStatus.Connecting,
         deviceStatus: DeviceConnectionStatus.DISCONNECTED,
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "usb",
@@ -265,7 +265,7 @@ describe("getNextConnectionState for radio connection", () => {
     testGetNextConnectionState({
       input: {
         currConnType: "radio",
-        currStatus: ConnectionStatus.ReconnectingExplicitly,
+        currStatus: ConnectionStatus.ReconnectingAutomatically,
         deviceStatus: DeviceConnectionStatus.DISCONNECTED,
         prevDeviceStatus: DeviceConnectionStatus.RECONNECTING,
         type: "radioRemote",
@@ -477,7 +477,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
     testGetNextConnectionState({
       input: {
         currConnType: "bluetooth",
-        currStatus: ConnectionStatus.Connected,
+        currStatus: ConnectionStatus.ReconnectingAutomatically,
         deviceStatus: DeviceConnectionStatus.DISCONNECTED,
         prevDeviceStatus: DeviceConnectionStatus.RECONNECTING,
         type: "bluetooth",
