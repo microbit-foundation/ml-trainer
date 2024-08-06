@@ -11,9 +11,9 @@ export const getHexFileUrl = (
 ): string | undefined => {
   if (type === ConnectionFlowType.Bluetooth) {
     return {
-      V1: "firmware/ml-microbit-cpp-version-combined.hex",
-      V2: "firmware/MICROBIT.hex",
-      universal: "firmware/universal-hex.hex",
+      V1: "firmware/microbit-ML-bluetooth-input-v1.hex",
+      V2: "firmware/microbit-ML-bluetooth-input-v2.hex",
+      universal: "firmware/microbit-ML-bluetooth-input.hex",
     }[version];
   }
   if (version !== "V2") {
