@@ -18,8 +18,17 @@
     generateCustomJson,
     generateCustomTs,
   } from '../../script/makecode/generateCustomTsAndJson';
-  import { generateMakeCodeOutputMainDep } from '../../script/makecode/generateMain';
-  import { filenames, iconNames, isEmpty, pxt } from '../../script/makecode/utils';
+  import {
+    generateMakeCodeOutputMainDep,
+    OnGestureRecognisedConfig,
+  } from '../../script/makecode/generateMain';
+  import {
+    actionNamesFromLabels,
+    filenames,
+    iconNames,
+    isEmpty,
+    pxt,
+  } from '../../script/makecode/utils';
   import { DeviceRequestStates } from '../../script/microbit-interfacing/MicrobitConnection';
   import { gestures } from '../../script/stores/Stores';
   import {
@@ -44,9 +53,9 @@
   };
 
   const generateDefaultProjectText = (gs: Gesture[], model: LayersModel) => {
-    const gestureNames = gs.map(g => g.getName());
-    const actionConfigs = gestureNames.map((name, idx) => ({
-      name,
+    const actionNames = actionNamesFromLabels(gs.map(g => g.getName()));
+    const actionConfigs: OnGestureRecognisedConfig[] = actionNames.map((an, idx) => ({
+      name: an.actionVar,
       iconName: iconNames[idx % iconNames.length],
     }));
     return {

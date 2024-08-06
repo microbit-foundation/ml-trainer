@@ -7,26 +7,28 @@ import { compileModel } from 'ml4f';
 import { generateBlob } from '@microbit-foundation/ml-header-generator';
 import { LayersModel } from '@tensorflow/tfjs';
 import Gesture from '../domain/Gesture';
-import { varFromActionLabel } from './utils';
+import { ActionName, actionNamesFromLabels } from './utils';
 
-const createMlEvents = (actions: string[]) => {
+const createMlEvents = (actionNames: ActionName[]) => {
   let code = '';
-  actions.forEach((action, idx) => {
-    const stringValue = JSON.stringify(action);
-    const varName = varFromActionLabel(action);
+  actionNames.forEach((an, idx) => {
+    const stringValue = JSON.stringify(an.actionLabel);
     code += `  //% fixedInstance block=${stringValue}\n`;
-    code += `  export const ${varName} = new MlEvent(${idx + 2}, ${stringValue});\n`;
+    code += `  export const ${an.actionVar} = new MlEvent(${idx + 2}, ${stringValue});\n`;
   });
   return code;
 };
 
-const createEventListeners = (actions: string[]) => {
-  actions.unshift('unknown');
-  const totalActions = actions.length;
+const createEventListeners = (actionNames: ActionName[]) => {
+  actionNames.unshift({
+    actionLabel: 'unknown',
+    actionVar: 'Unknown',
+  });
+  const totalActions = actionNames.length;
   let code = '';
   for (let i = 0; i < totalActions; i++) {
     code += `  control.onEvent(MlRunnerIds.MlRunnerInference, ${i + 1}, () => {\n`;
-    code += `    maybeUpdateActionStats(action.${varFromActionLabel(actions[i])});\n`;
+    code += `    maybeUpdateEventStats(event.${actionNames[i].actionVar});\n`;
     code += `  });\n`;
   }
   return code;
@@ -50,19 +52,17 @@ export const generateCustomTs = (gs: Gesture[], m: LayersModel) => {
   const headerHexString = arrayBufferToHexString(new Uint8Array(customHeaderBlob));
   const { machineCode } = compileModel(m, {});
   const modelHexString = arrayBufferToHexString(machineCode);
-  const actionLabels = gs.map(g => g.getName());
+  const actionNames = actionNamesFromLabels(gs.map(g => g.getName()));
 
   return `// Auto-generated. Do not edit.
 namespace ml {
-  export namespace action {
-    ${createMlEvents(actionLabels)}
+  export namespace event {
+    ${createMlEvents(actionNames)}
     }
     
-  actions = [action.Unknown,${actionLabels.map(
-    actionLabel => `action.${varFromActionLabel(actionLabel)}`,
-  )}];
+  events = [event.Unknown,${actionNames.map(an => `event.${an.actionVar}`)}];
     
-${createEventListeners(actionLabels)}
+${createEventListeners(actionNames)}
   getModelBlob = (): Buffer => {
     const result = hex\`${headerHexString + modelHexString}\`;
     return result;

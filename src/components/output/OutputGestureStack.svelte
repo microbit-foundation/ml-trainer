@@ -17,7 +17,7 @@
   import Gesture from '../../script/domain/Gesture';
   import {
     generateMakeCodeOutputMain,
-    getMakeCodeGestureConfig,
+    getIconNameOrLed,
   } from '../../script/makecode/generateMain';
   import { filenames } from '../../script/makecode/utils';
   import MBSpecs from '../../script/microbit-interfacing/MBSpecs';
@@ -36,6 +36,7 @@
   import OutputSoundSelector from './OutputSoundSelector.svelte';
   import PinSelector from './PinSelector.svelte';
   import { PinTurnOnState } from './PinSelectorUtil';
+  import { gestures } from '../../script/stores/Stores';
 
   type TriggerAction = 'turnOn' | 'turnOff' | 'none';
 
@@ -208,11 +209,12 @@
 
   $: meterWidthPct = 100 * $gesture.confidence.currentConfidence;
 
+  $: gs = gestures.getGestures();
   $: gestureProject = {
     text: {
       ...project.text,
-      [filenames.mainTs]: generateMakeCodeOutputMain([gesture], 'javascript'),
-      [filenames.mainBlocks]: generateMakeCodeOutputMain([gesture], 'blocks'),
+      [filenames.mainTs]: generateMakeCodeOutputMain(gs, 'javascript', gesture.getId()),
+      [filenames.mainBlocks]: generateMakeCodeOutputMain(gs, 'blocks', gesture.getId()),
     },
   };
 </script>
@@ -295,7 +297,7 @@
     <div class="mx-5">
       <CodeView
         code={gestureProject}
-        scale={getMakeCodeGestureConfig(gesture).iconName ? 0.7 : 0.32} />
+        scale={getIconNameOrLed($gesture.matrix).iconName ? 0.7 : 0.32} />
     </div>
   </GestureTilePart>
 {:else}

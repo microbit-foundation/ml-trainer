@@ -1,4 +1,7 @@
 /**
+ * @vitest-environment jsdom
+ */
+/**
  * (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
  *
  * SPDX-License-Identifier: MIT
@@ -7,28 +10,36 @@
 import camelCase from 'lodash.camelcase';
 import upperFirst from 'lodash.upperfirst';
 
-const dropLeadingNumbers = (input: string): string => {
-  let result = input;
-  for (let i = 0; i < result.length; i++) {
-    if (/\d/.test(input[i])) {
-      result = input.substring(i + 1);
-    } else {
-      break;
-    }
-  }
-  if (!result) {
-    throw new Error('Action name does not contain any valid characters');
-  }
-  return result;
-};
+export interface ActionName {
+  actionLabel: string;
+  actionVar: string;
+}
 
-export const varFromActionLabel = (actionLabel: string): string => {
-  // https://github.com/microsoft/pxt/blob/16f161c3a5478addf45269315e4f1ea2f9e7ad53/pxtlib/util.ts#L188-L191
-  const sanitized = actionLabel
-    .replace(/[()\\\/.,?*^:<>!;'#$%^&|"@+=«»°{}\[\]¾½¼³²¦¬¤¢£~­¯¸`±\x00-\x1F]/g, '')
+const sanitizeActionVar = (input: string) =>
+  input
+    .replace(/[^\p{L}\p{N}_$\s]/gu, '')
+    .replace(/^(\s|\p{N})+/gu, '')
     .trim();
-  const withoutLeadingNumbers = dropLeadingNumbers(sanitized);
-  return upperFirst(camelCase(withoutLeadingNumbers));
+
+const sanitizeActionLabel = (input: string) => input.replace(/"/g, "'");
+
+export const actionNamesFromLabels = (actionLabels: string[]): ActionName[] => {
+  const actionNames: ActionName[] = [];
+  actionLabels.forEach((actionLabel, i) => {
+    const sanitizedLabel = sanitizeActionVar(actionLabel);
+    let actionVar = upperFirst(camelCase(sanitizedLabel));
+    if (!actionVar) {
+      actionVar = `Event`;
+    }
+    while (actionNames.map(an => an.actionVar).includes(actionVar)) {
+      actionVar += i;
+    }
+    actionNames.push({
+      actionLabel: sanitizeActionLabel(actionLabel),
+      actionVar,
+    });
+  });
+  return actionNames;
 };
 
 export const filenames = {
@@ -50,7 +61,7 @@ export const pxt = {
     microphone: '*',
     radio: '*', // needed for compiling
     'Machine Learning POC':
-      'github:microbit-foundation/pxt-ml-extension-poc#44205665e2674f449d916ffed44aa27953082867',
+      'github:microbit-foundation/pxt-ml-extension-poc#b5f4fcb5379c1501e8e80d96cf6cdedcdcab6c7d',
   },
   files: [...Object.values(filenames), 'README.md'],
 };

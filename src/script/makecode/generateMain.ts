@@ -1,19 +1,19 @@
 import Gesture from '../domain/Gesture';
 import { matrixImages } from '../utils/matrixImages';
-import { getKeyByValue, varFromActionLabel } from './utils';
+import { ActionName, actionNamesFromLabels, getKeyByValue } from './utils';
 
 /**
  * (c) 2024, Center for Computational Thinking and Design at Aarhus University and contributors
  *
  * SPDX-License-Identifier: MIT
  */
-interface OnGestureRecognisedConfig {
+export interface OnGestureRecognisedConfig {
   name: string;
   iconName?: string;
   led?: boolean[];
 }
 
-const getIconNameOrLed = (m: boolean[]) => {
+export const getIconNameOrLed = (m: boolean[]) => {
   const name = getKeyByValue(matrixImages, m);
   if (!name) {
     return { led: m };
@@ -21,12 +21,16 @@ const getIconNameOrLed = (m: boolean[]) => {
   return { iconName: name };
 };
 
-export const getMakeCodeGestureConfig = (gesture: Gesture) => ({
-  name: gesture.getName(),
-  ...getIconNameOrLed(gesture.getMatrix()),
+export const getMakeCodeGestureConfig = (
+  gestureId: number,
+  actionVar: string,
+  ledMatrix: boolean[],
+) => ({
+  gestureId,
+  name: actionVar,
+  ...getIconNameOrLed(ledMatrix),
 });
 
-const actionLabel = (name: string) => `ml.action.${varFromActionLabel(name)}`;
 interface BlockPos {
   x: number;
   y: number;
@@ -34,7 +38,7 @@ interface BlockPos {
 
 const onMLEventBlock = (name: string, children: string, pos: BlockPos) => `
   <block type=\"mlrunner_on_ml_event\" x=\"${pos.x}\" y=\"${pos.y}\">
-    <field name=\"mlClass\">${actionLabel(name)}</field>
+    <field name=\"event\">ml.event.${name}</field>
     <statement name="HANDLER">
       ${children}       
     </statement>
@@ -58,7 +62,7 @@ const statements: Record<Language, LanguageStatements> = {
     showIcon: iconName => `basic.showIcon(IconNames.${iconName})`,
     clearDisplay: () => 'basic.clearScreen()',
     onMLEvent: (name, children, _pos) => {
-      return `ml.onDetected(${actionLabel(name)}, function () {${children}})`;
+      return `ml.onStart(ml.event.${name}, function () {${children}})`;
     },
   },
   blocks: {
@@ -92,8 +96,18 @@ const onMLEventChildren = (
   return '';
 };
 
-export const generateMakeCodeOutputMain = (gs: Gesture[], lang: Language) => {
-  const configs = gs.map(g => getMakeCodeGestureConfig(g));
+export const generateMakeCodeOutputMain = (
+  gs: Gesture[],
+  lang: Language,
+  gestureIdRender?: number,
+) => {
+  const actionNames = actionNamesFromLabels(gs.map(g => g.getName()));
+  const configs = gs
+    .map((g, idx) =>
+      getMakeCodeGestureConfig(g.getId(), actionNames[idx].actionVar, g.getMatrix()),
+    )
+    .filter(c => (gestureIdRender ? c.gestureId === gestureIdRender : false));
+
   const s = statements[lang];
   const initPos = { x: 0, y: 0 };
   return s.wrapper(`
