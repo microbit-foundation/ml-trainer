@@ -218,6 +218,10 @@ export class ConnectionStageActions {
           flowType,
         });
       }
+      case ConnectionStatus.ReconnectingAutomatically: {
+        // Don't show dialogs when reconnecting automatically
+        return this.setFlowStep(ConnectionFlowStep.None);
+      }
     }
     return;
   };

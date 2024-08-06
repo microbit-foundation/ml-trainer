@@ -105,6 +105,7 @@ export const useConnectStatusUpdater = (
 ): ConnectionStatus => {
   const [connectionStatus, setConnectionStatus] = useConnectStatus();
   const connectActions = useConnectActions();
+  const isBrowserTabVisible = useBrowserTabVisibility();
   const prevDeviceStatus = useRef<DeviceConnectionStatus | null>(null);
   const [hasAttempedReconnect, setHasAttemptedReconnect] =
     useState<boolean>(false);
@@ -112,6 +113,11 @@ export const useConnectStatusUpdater = (
     useState<boolean>(true);
 
   useEffect(() => {
+    if (!isBrowserTabVisible) {
+      // Handles scenario where user hides browser tab
+      setConnectionStatus(ConnectionStatus.ReconnectingAutomatically);
+      return;
+    }
     const listener: StatusListener = ({ status: deviceStatus, type }) => {
       const nextState = getNextConnectionState({
         currConnType,
@@ -140,9 +146,24 @@ export const useConnectStatusUpdater = (
     currConnType,
     handleStatus,
     hasAttempedReconnect,
+    isBrowserTabVisible,
     onFirstConnectAttempt,
     setConnectionStatus,
   ]);
 
   return connectionStatus;
+};
+
+const useBrowserTabVisibility = (): boolean => {
+  const [visible, setVisible] = useState<boolean>(true);
+
+  useEffect(() => {
+    const listener = () => setVisible(!document.hidden);
+    document.addEventListener("visibilitychange", listener, false);
+    return () => {
+      document.removeEventListener("visibilitychange", listener);
+    };
+  }, []);
+
+  return visible;
 };
