@@ -58,6 +58,7 @@ export const getNextConnectionState = ({
       // If bridge micro:bit causes radio bridge reconnect to fail twice
       hasAttempedReconnect
     ) {
+      setHasAttemptedReconnect(false);
       return {
         status: ConnectionStatus.FailedToReconnectTwice,
         flowType: ConnectionFlowType.RadioRemote,
@@ -111,6 +112,7 @@ export const getNextConnectionState = ({
     deviceStatus === DeviceConnectionStatus.DISCONNECTED &&
     prevDeviceStatus === DeviceConnectionStatus.CONNECTING
   ) {
+    setHasAttemptedReconnect(false);
     return { status: ConnectionStatus.FailedToReconnectTwice, flowType };
   }
   if (
