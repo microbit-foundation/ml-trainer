@@ -141,10 +141,7 @@ describe("getNextConnectionState for radio connection", () => {
       expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
-      expectedNextConnectionState: {
-        status: ConnectionStatus.Disconnected,
-        flowType: ConnectionFlowType.RadioRemote,
-      },
+      expectedNextConnectionState: undefined,
     });
   });
   test("radio connect fail", () => {
@@ -391,10 +388,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
-      expectedNextConnectionState: {
-        status: ConnectionStatus.Disconnected,
-        flowType: ConnectionFlowType.Bluetooth,
-      },
+      expectedNextConnectionState: undefined,
     });
   });
   test("bluetooth did not select device", () => {

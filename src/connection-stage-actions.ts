@@ -179,6 +179,7 @@ export class ConnectionStageActions {
   };
 
   disconnect = async () => {
+    this.setStatus(ConnectionStatus.Disconnected);
     await this.actions.disconnect();
   };
 

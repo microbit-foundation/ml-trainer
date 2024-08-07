@@ -30,6 +30,12 @@ export const getNextConnectionState = ({
   onFirstConnectAttempt,
   setOnFirstConnectAttempt,
 }: GetNextConnectionStateInput): NextConnectionState => {
+if (currStatus === ConnectionStatus.Disconnected) {
+    // Do not update connection status when user explicitly disconnected connection
+    // until user reconnects explicitly
+    return undefined;
+  }
+  console.log(type, deviceStatus, prevDeviceStatus);
   const flowType =
     type === "usb"
       ? ConnectionFlowType.RadioBridge
@@ -46,7 +52,6 @@ export const getNextConnectionState = ({
       currConnType !== "radio" ||
       onFirstConnectAttempt ||
       deviceStatus !== DeviceConnectionStatus.DISCONNECTED ||
-      currStatus === ConnectionStatus.Disconnected ||
       // Ignore usb status when reconnecting.
       // Serial connection gets intentionally disconnected before reconnect.
       currStatus === ConnectionStatus.ReconnectingAutomatically ||
@@ -109,8 +114,7 @@ export const getNextConnectionState = ({
   if (
     // If fails to reconnect twice.
     hasAttempedReconnect &&
-    deviceStatus === DeviceConnectionStatus.DISCONNECTED &&
-    prevDeviceStatus === DeviceConnectionStatus.CONNECTING
+    deviceStatus === DeviceConnectionStatus.DISCONNECTED
   ) {
     setHasAttemptedReconnect(false);
     return { status: ConnectionStatus.FailedToReconnectTwice, flowType };
@@ -131,12 +135,6 @@ export const getNextConnectionState = ({
   ) {
     setHasAttemptedReconnect(true);
     return { status: ConnectionStatus.ConnectionLost, flowType };
-  }
-  if (
-    // If disconnected by user.
-    deviceStatus === DeviceConnectionStatus.DISCONNECTED
-  ) {
-    return { status: ConnectionStatus.Disconnected, flowType };
   }
   const hasStartedOver =
     currStatus === ConnectionStatus.NotConnected ||
