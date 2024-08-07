@@ -28,8 +28,11 @@ interface ConnectProviderProps {
 
 export const ConnectProvider = ({ children }: ConnectProviderProps) => {
   const usb = useMemo(() => new MicrobitWebUSBConnection(), []);
-  const bluetooth = useMemo(() => new MicrobitWebBluetoothConnection(), []);
   const logging = useLogging();
+  const bluetooth = useMemo(
+    () => new MicrobitWebBluetoothConnection({ logging }),
+    [logging]
+  );
   const radioBridge = useMemo(
     () =>
       new MicrobitRadioBridgeConnection(usb, {
