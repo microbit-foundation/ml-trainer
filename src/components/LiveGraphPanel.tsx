@@ -17,7 +17,8 @@ const LiveGraphPanel = () => {
     return status === ConnectionStatus.NotConnected ||
       status === ConnectionStatus.Connecting ||
       status === ConnectionStatus.FailedToConnect ||
-      status === ConnectionStatus.FailedToReconnectTwice
+      status === ConnectionStatus.FailedToReconnectTwice ||
+      status === ConnectionStatus.FailedToSelectBluetoothDevice
       ? {
           textId: "footer.connectButton",
           onClick: actions.start,
