@@ -136,7 +136,8 @@ export const useConnectStatusUpdater = (
         setConnectionStatus(nextState.status);
       }
     };
-    connectActions.addStatusListener(listener);
+    connectActions.removeStatusListener();
+    connectActions.addStatusListener(listener, currConnType);
     return () => {
       connectActions.removeStatusListener();
     };

@@ -8,7 +8,7 @@ import {
   MicrobitWebUSBConnection,
   ConnectionStatus as DeviceConnectionStatus,
 } from "@microbit/microbit-connection";
-import { ConnectionFlowType } from "./connection-stage-hooks";
+import { ConnectionFlowType, ConnectionType } from "./connection-stage-hooks";
 import { getFlashDataSource } from "./device/get-hex-file";
 import { Logging } from "./logging/logging";
 
@@ -179,21 +179,27 @@ export class ConnectActions {
     await this.radioBridge.disconnect();
   };
 
-  private prepareStatusListeners = (listener: StatusListener) => {
-    const listeners: StatusListeners = {
+  private prepareStatusListeners = (
+    listener: StatusListener
+  ): StatusListeners => {
+    return {
       bluetooth: (e) => listener({ status: e.status, type: "bluetooth" }),
       radioBridge: (e) => listener({ status: e.status, type: "radioRemote" }),
       usb: (e) => listener({ status: e.status, type: "usb" }),
     };
-    this.statusListeners = listeners;
-    return listeners;
   };
 
-  addStatusListener = (listener: StatusListener) => {
+  addStatusListener = (listener: StatusListener, connType: ConnectionType) => {
     const listeners = this.prepareStatusListeners(listener);
-    this.bluetooth.addEventListener("status", listeners.bluetooth);
-    this.radioBridge.addEventListener("status", listeners.radioBridge);
-    this.usb.addEventListener("status", listeners.usb);
+    if (connType === "bluetooth") {
+      this.bluetooth.addEventListener("status", listeners.bluetooth);
+      this.statusListeners.bluetooth = listeners.bluetooth;
+    } else {
+      this.radioBridge.addEventListener("status", listeners.radioBridge);
+      this.statusListeners.radioBridge = listeners.radioBridge;
+      this.usb.addEventListener("status", listeners.usb);
+      this.statusListeners.usb = listeners.usb;
+    }
   };
 
   removeStatusListener = () => {
