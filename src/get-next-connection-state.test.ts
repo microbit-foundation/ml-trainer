@@ -113,7 +113,7 @@ describe("getNextConnectionState for radio connection", () => {
     testGetNextConnectionState({
       input: {
         currConnType: "radio",
-        currStatus: ConnectionStatus.Disconnected,
+        currStatus: ConnectionStatus.Connecting,
         deviceStatus: DeviceConnectionStatus.CONNECTED,
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "radioRemote",
@@ -176,10 +176,7 @@ describe("getNextConnectionState for radio connection", () => {
       expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
-      expectedNextConnectionState: {
-        status: ConnectionStatus.ReconnectingExplicitly,
-        flowType: ConnectionFlowType.RadioRemote,
-      },
+      expectedNextConnectionState: undefined,
     });
   });
   test("radio reconnecting automatically", () => {
@@ -360,7 +357,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
     testGetNextConnectionState({
       input: {
         currConnType: "bluetooth",
-        currStatus: ConnectionStatus.Disconnected,
+        currStatus: ConnectionStatus.Connecting,
         deviceStatus: DeviceConnectionStatus.CONNECTED,
         prevDeviceStatus: DeviceConnectionStatus.CONNECTING,
         type: "bluetooth",
@@ -442,10 +439,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
-      expectedNextConnectionState: {
-        status: ConnectionStatus.ReconnectingExplicitly,
-        flowType: ConnectionFlowType.Bluetooth,
-      },
+      expectedNextConnectionState: undefined,
     });
   });
   test("bluetooth reconnecting automatically", () => {

@@ -30,7 +30,7 @@ export const getNextConnectionState = ({
   onFirstConnectAttempt,
   setOnFirstConnectAttempt,
 }: GetNextConnectionStateInput): NextConnectionState => {
-if (currStatus === ConnectionStatus.Disconnected) {
+  if (currStatus === ConnectionStatus.Disconnected) {
     // Do not update connection status when user explicitly disconnected connection
     // until user reconnects explicitly
     return undefined;
@@ -146,12 +146,6 @@ if (currStatus === ConnectionStatus.Disconnected) {
   ) {
     setOnFirstConnectAttempt(true);
     return { status: ConnectionStatus.Connecting, flowType };
-  }
-  if (
-    // If reconnecting explicitly by user.
-    deviceStatus === DeviceConnectionStatus.CONNECTING
-  ) {
-    return { status: ConnectionStatus.ReconnectingExplicitly, flowType };
   }
   if (
     // If reconnecting automatically.

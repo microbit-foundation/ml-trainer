@@ -228,6 +228,7 @@ export class ConnectionStageActions {
   };
 
   reconnect = async () => {
+    this.setStatus(ConnectionStatus.ReconnectingExplicitly);
     if (this.stage.connType === "bluetooth") {
       await this.connectBluetooth(false);
     } else {
