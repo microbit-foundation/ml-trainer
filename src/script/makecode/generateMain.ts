@@ -106,7 +106,7 @@ export const generateMakeCodeOutputMain = (
     .map((g, idx) =>
       getMakeCodeGestureConfig(g.getId(), actionNames[idx].actionVar, g.getMatrix()),
     )
-    .filter(c => (gestureIdRender ? c.gestureId === gestureIdRender : false));
+    .filter(c => (gestureIdRender ? c.gestureId === gestureIdRender : true));
 
   const s = statements[lang];
   const initPos = { x: 0, y: 0 };
