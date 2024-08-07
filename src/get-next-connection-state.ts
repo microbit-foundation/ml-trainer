@@ -35,7 +35,6 @@ export const getNextConnectionState = ({
     // until user reconnects explicitly
     return undefined;
   }
-  console.log(type, deviceStatus, prevDeviceStatus);
   const flowType =
     type === "usb"
       ? ConnectionFlowType.RadioBridge
