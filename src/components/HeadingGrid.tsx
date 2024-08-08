@@ -28,8 +28,8 @@ const HeadingGrid = ({ headings, children, ...props }: HeadingGridProps) => {
         return idx < headings.length - 1 ? (
           <GridColumnHeadingItem {...props} key={idx} />
         ) : (
-          <HStack justifyContent="space-between">
-            <GridColumnHeadingItem {...props} key={idx} />
+          <HStack justifyContent="space-between" key={idx}>
+            <GridColumnHeadingItem {...props} />
             {children}
           </HStack>
         );

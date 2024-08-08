@@ -62,7 +62,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@microbit-foundation/react-code-view": "^5.0.0-dev.35",
-    "@microbit-foundation/react-editor-embed": "^1.0.0-overwrite.download.46",
+    "@microbit-foundation/react-editor-embed": "^1.0.0-overwrite.download.44",
     "@microbit/microbit-connection": "^0.0.0-alpha.18",
     "@tensorflow/tfjs": "^4.4.0",
     "@types/w3c-web-serial": "^1.0.6",

@@ -21,15 +21,8 @@ const CodeViewGridItem = ({ project }: CodeViewGridItemProps) => {
         width="fit-content"
         justifyContent="center"
       >
-        <Box
-          // There's an override="auto" on the blocks rendering that it would be nice to remove.
-          width="300px"
-          py={2}
-          px={2}
-          overflow="hidden"
-        >
+        <Box width="300px" py={2} px={2} overflow="hidden">
           <MakeCodeBlocksRendering
-            // className={styles.makecode}
             code={project}
             layout={BlockLayout.Clean}
             loaderCmp={
