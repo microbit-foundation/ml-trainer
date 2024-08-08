@@ -33,10 +33,10 @@ const getImageProps = (os: string): ImageProps => {
 export interface ManualFlashingDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {}
 
-const download = (data: string, filename: string) => {
+const download = (fileUrl: string, filename: string) => {
   const a = document.createElement("a");
   a.download = filename;
-  a.href = URL.createObjectURL(new Blob([data], { type: "text/csv" }));
+  a.href = fileUrl;
   a.click();
   a.remove();
 };
@@ -50,10 +50,8 @@ const ManualFlashingDialog = ({ ...props }: ManualFlashingDialogProps) => {
   const imageProps = getImageProps(osName);
 
   const handleDownload = useCallback(() => {
-    download(
-      getHexFileUrl("universal", ConnectionFlowType.Bluetooth)!,
-      "machine-learning-tool-program.hex"
-    );
+    const hexFileUrl = getHexFileUrl("universal", ConnectionFlowType.Bluetooth);
+    download(hexFileUrl!, "machine-learning-tool-program.hex");
   }, []);
 
   useEffect(() => {
