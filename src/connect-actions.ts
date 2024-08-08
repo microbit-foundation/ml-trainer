@@ -51,12 +51,19 @@ export class ConnectActions {
     radioBridge: () => {},
     usb: () => {},
   };
+  isWebBluetoothSupported: boolean;
+  isWebUsbSupported: boolean;
   constructor(
     private logging: Logging,
     private usb: MicrobitWebUSBConnection,
     private bluetooth: MicrobitWebBluetoothConnection,
     private radioBridge: MicrobitRadioBridgeConnection
-  ) {}
+  ) {
+    this.isWebBluetoothSupported =
+      bluetooth.status !== DeviceConnectionStatus.NOT_SUPPORTED;
+    this.isWebUsbSupported =
+      usb.status !== DeviceConnectionStatus.NOT_SUPPORTED;
+  }
 
   requestUSBConnectionAndFlash = async (
     hexType: ConnectionFlowType,

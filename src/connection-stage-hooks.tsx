@@ -93,15 +93,19 @@ interface StoredConnectionConfig {
 }
 
 const getInitialConnectionStageValue = (
-  config: StoredConnectionConfig
+  config: StoredConnectionConfig,
+  isWebBluetoothSupported: boolean,
+  isWebUsbSupported: boolean
 ): ConnectionStage => ({
   flowStep: ConnectionFlowStep.None,
-  flowType: ConnectionFlowType.Bluetooth,
+  flowType: isWebBluetoothSupported
+    ? ConnectionFlowType.Bluetooth
+    : ConnectionFlowType.RadioRemote,
   bluetoothMicrobitName: config.bluetoothMicrobitName,
   radioRemoteDeviceId: config.radioRemoteDeviceId,
-  connType: "bluetooth",
-  isWebBluetoothSupported: true,
-  isWebUsbSupported: true,
+  connType: isWebBluetoothSupported ? "bluetooth" : "radio",
+  isWebBluetoothSupported,
+  isWebUsbSupported,
   hasFailedToReconnectTwice: false,
 });
 
@@ -113,8 +117,13 @@ export const ConnectionStageProvider = ({
     "connectionConfig",
     { bluetoothMicrobitName: undefined, radioRemoteDeviceId: undefined }
   );
+  const connectActions = useConnectActions();
   const [connectionStage, setConnStage] = useState<ConnectionStage>(
-    getInitialConnectionStageValue(config)
+    getInitialConnectionStageValue(
+      config,
+      connectActions.isWebBluetoothSupported,
+      connectActions.isWebUsbSupported
+    )
   );
   const setConnectionStage = useCallback(
     (connStage: ConnectionStage) => {
