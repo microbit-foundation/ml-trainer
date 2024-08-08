@@ -8,7 +8,9 @@ import {
 } from "../connection-stage-hooks";
 import BrokenFirmwareDialog from "./BrokenFirmwareDialog";
 import ConnectBatteryDialog from "./ConnectBatteryDialog";
-import ConnectCableDialog from "./ConnectCableDialog";
+import ConnectCableDialog, {
+  getConnectionCableDialogConfig,
+} from "./ConnectCableDialog";
 import DownloadingDialog from "./DownloadingDialog";
 import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import LoadingDialog from "./LoadingDialog";
@@ -104,15 +106,16 @@ const ConnectionDialogs = () => {
       );
     }
     case ConnectionFlowStep.ConnectCable: {
-      const commonProps = {
-        onBackClick: actions.onBackClick,
-        onNextClick: actions.onNextClick,
-        ...dialogCommonProps,
-      };
+      const config = getConnectionCableDialogConfig(
+        stage.flowType,
+        stage.isWebBluetoothSupported
+      );
       return (
         <ConnectCableDialog
-          {...commonProps}
-          type={stage.flowType}
+          {...dialogCommonProps}
+          onBackClick={actions.onBackClick}
+          onNextClick={actions.onNextClick}
+          config={config}
           onSkip={onSkip}
           onSwitch={actions.switchFlowType}
         />

@@ -7,71 +7,77 @@ import ConnectContainerDialog, {
 import { ConnectionFlowType } from "../connection-stage-hooks";
 import { stage } from "../environment";
 
-enum LinkType {
-  Switch,
-  Skip,
-  None,
-}
+type LinkType = "switch" | "skip" | "none";
 interface Config {
   headingId: string;
   subtitleId: string;
   linkTextId?: string;
-  onLink: LinkType;
+  linkType?: LinkType;
 }
 
-const configs: Record<ConnectionFlowType, Config> = {
-  [ConnectionFlowType.Bluetooth]: {
-    headingId: "connectMB.connectCable.heading",
-    subtitleId: "connectMB.connectCable.subtitle",
-    linkTextId: "connectMB.connectCable.skip",
-    onLink: LinkType.Skip,
-  },
-  [ConnectionFlowType.RadioRemote]: {
-    headingId: "connectMB.connectCableMB1.heading",
-    subtitleId: "connectMB.connectCableMB1.subtitle",
-    ...(stage === "local"
-      ? {
-          linkTextId: "connectMB.connectCable.skip",
-          onLink: LinkType.Skip,
-        }
-      : {
-          onLink: LinkType.None,
-        }),
-  },
-  [ConnectionFlowType.RadioBridge]: {
-    headingId: "connectMB.connectCableMB2.heading",
-    subtitleId: "connectMB.connectCableMB2.subtitle",
-    linkTextId: "connectMB.radioStart.switchBluetooth",
-    onLink: LinkType.Switch,
-  },
+export const getConnectionCableDialogConfig = (
+  flowType: ConnectionFlowType,
+  isWebBluetoothSupported: boolean
+): Config => {
+  switch (flowType) {
+    case ConnectionFlowType.Bluetooth:
+      return {
+        headingId: "connectMB.connectCable.heading",
+        subtitleId: "connectMB.connectCable.subtitle",
+        linkTextId: "connectMB.connectCable.skip",
+        linkType: "skip",
+      };
+    case ConnectionFlowType.RadioRemote:
+      return {
+        headingId: "connectMB.connectCableMB1.heading",
+        subtitleId: "connectMB.connectCableMB1.subtitle",
+        ...(stage === "local"
+          ? {
+              linkTextId: "connectMB.connectCable.skip",
+              linkType: "skip",
+            }
+          : {}),
+      };
+    case ConnectionFlowType.RadioBridge:
+      return {
+        headingId: "connectMB.connectCableMB2.heading",
+        subtitleId: "connectMB.connectCableMB2.subtitle",
+        ...(isWebBluetoothSupported
+          ? {
+              linkTextId: "connectMB.radioStart.switchBluetooth",
+              linkType: "switch",
+            }
+          : {}),
+      };
+  }
 };
 
 export interface ConnectCableDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
-  type: ConnectionFlowType;
+  config: Config;
   onSkip: () => void;
   onSwitch: () => void;
 }
 
 const ConnectCableDialog = ({
-  type,
+  config,
   onSkip,
   onSwitch,
   ...props
 }: ConnectCableDialogProps) => {
-  const { subtitleId, onLink, linkTextId, headingId } = configs[type];
-  const linkConfig = {
-    [LinkType.None]: undefined,
-    [LinkType.Skip]: onSkip,
-    [LinkType.Switch]: onSwitch,
-  };
+  const { subtitleId, linkType, linkTextId, headingId } = config;
   return (
     <ConnectContainerDialog
       headingId={headingId}
       {...props}
       footerLeft={
-        linkTextId && (
-          <Button onClick={linkConfig[onLink]} variant="link" size="lg">
+        linkTextId &&
+        linkType && (
+          <Button
+            onClick={linkType === "skip" ? onSkip : onSwitch}
+            variant="link"
+            size="lg"
+          >
             <FormattedMessage id={linkTextId} />
           </Button>
         )
