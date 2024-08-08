@@ -130,6 +130,7 @@ const TestModelGridView = () => {
         </VisuallyHidden>
         <HeadingGrid {...gridCommonProps} headings={headings}>
           <HStack>
+            {/* TODO: Reset to default action */}
             <Button variant="secondary" size="sm">
               <FormattedMessage id="reset-to-default-action" />
             </Button>

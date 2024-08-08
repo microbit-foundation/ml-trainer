@@ -23,13 +23,14 @@ const Editor = ({
   style,
   initialCode,
   version,
-
   ...editorProps
 }: EditorProps) => {
   const [{ languageId }] = useSettings();
 
   return (
     <MakeCodeEditor
+      // TODO: To remove baseUrl and use real pxt-microbit
+      baseUrl="https://pxt-microbit.pages.dev/"
       controllerId={controllerId}
       hideMenu
       style={style}
