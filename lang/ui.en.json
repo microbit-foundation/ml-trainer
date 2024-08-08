@@ -599,6 +599,14 @@
     "defaultMessage": "None",
     "description": ""
   },
+  "content.model.output.output.descriptionBody": {
+    "defaultMessage": "What the micro:bit will do when each action is detected.",
+    "description": ""
+  },
+  "content.model.output.output.descriptionTitle": {
+    "defaultMessage": "Output",
+    "description": ""
+  },
   "content.model.output.recognitionPoint": {
     "defaultMessage": "Recognition Point:",
     "description": ""

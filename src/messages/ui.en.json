@@ -1043,6 +1043,18 @@
       "value": "None"
     }
   ],
+  "content.model.output.output.descriptionBody": [
+    {
+      "type": 0,
+      "value": "What the micro:bit will do when each action is detected."
+    }
+  ],
+  "content.model.output.output.descriptionTitle": [
+    {
+      "type": 0,
+      "value": "Output"
+    }
+  ],
   "content.model.output.recognitionPoint": [
     {
       "type": 0,

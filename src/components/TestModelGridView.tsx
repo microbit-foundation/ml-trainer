@@ -1,10 +1,8 @@
 import {
-  Card,
-  CardBody,
   Grid,
   GridProps,
-  HStack,
-  Text,
+  Icon,
+  VStack,
   VisuallyHidden,
 } from "@chakra-ui/react";
 import React from "react";
@@ -20,11 +18,10 @@ import { usePrediction } from "../ml-hooks";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
-import InfoToolTip from "./InfoToolTip";
-import PercentageDisplay from "./PercentageDisplay";
+import { RiArrowRightLine } from "react-icons/ri";
 
 const gridCommonProps: Partial<GridProps> = {
-  gridTemplateColumns: "200px 1fr",
+  gridTemplateColumns: "200px 360px 40px 1fr",
   gap: 3,
   px: 10,
   py: 2,
@@ -39,6 +36,11 @@ const headings = [
   {
     titleId: "content.model.output.certainty.descriptionTitle",
     descriptionId: "content.model.output.certainty.descriptionBody",
+  },
+  {},
+  {
+    titleId: "content.model.output.output.descriptionTitle",
+    descriptionId: "content.model.output.output.descriptionBody",
   },
 ];
 
@@ -57,45 +59,13 @@ const TestModelGridView = () => {
 
   return (
     <>
-      <HStack w="full" px={10} justifyContent="center">
-        <Card mt={5} mb={2} w="full">
-          <CardBody
-            flexDirection="row"
-            display="flex"
-            justifyContent="space-between"
-          >
-            <VisuallyHidden aria-live="polite">
-              <FormattedMessage
-                id="content.model.output.estimatedGesture.label"
-                values={{ action: predicationLabel }}
-              />
-            </VisuallyHidden>
-            <HStack fontWeight="semibold" gap={5} flexGrow={1}>
-              <Text fontSize="2xl" color="gray.600">
-                <FormattedMessage id="content.model.output.estimatedGesture.iconTitle" />
-              </Text>
-              <Text fontSize="2xl">{predicationLabel}</Text>
-            </HStack>
-            <HStack justifyContent="flex-end">
-              {prediction && confidences && (
-                <PercentageDisplay
-                  value={confidences[prediction.ID]}
-                  colorScheme="green.500"
-                />
-              )}
-              <InfoToolTip
-                titleId="content.model.output.estimatedGesture.descriptionTitle"
-                descriptionId="content.model.output.estimatedGesture.descriptionBody"
-              />
-            </HStack>
-          </CardBody>
-        </Card>
-      </HStack>
-      <HeadingGrid
-        {...gridCommonProps}
-        borderTopWidth={0}
-        headings={headings}
-      />
+      <VisuallyHidden aria-live="polite">
+        <FormattedMessage
+          id="content.model.output.estimatedGesture.label"
+          values={{ action: predicationLabel }}
+        />
+      </VisuallyHidden>
+      <HeadingGrid {...gridCommonProps} headings={headings} />
       <Grid
         {...gridCommonProps}
         alignItems="start"
@@ -117,6 +87,9 @@ const TestModelGridView = () => {
                   }
                   isTriggered={prediction?.ID === ID}
                 />
+                <VStack justifyContent="center" h="full">
+                  <Icon as={RiArrowRightLine} boxSize={10} color="gray.600" />
+                </VStack>
               </React.Fragment>
             );
           }

@@ -1,8 +1,11 @@
 import { Grid, GridItem, GridProps, HStack, Text } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import InfoToolTip, { InfoToolTipProps } from "./InfoToolTip";
+import InfoToolTip from "./InfoToolTip";
 
-type GridColumnHeadingItemProps = InfoToolTipProps;
+interface GridColumnHeadingItemProps {
+  titleId?: string;
+  descriptionId?: string;
+}
 
 interface HeadingGridProps extends Omit<GridProps, "children"> {
   headings: GridColumnHeadingItemProps[];
@@ -29,12 +32,17 @@ const HeadingGrid = ({ headings, ...props }: HeadingGridProps) => {
 const GridColumnHeadingItem = (props: GridColumnHeadingItemProps) => {
   return (
     <GridItem>
-      <HStack opacity={0.7}>
-        <Text>
-          <FormattedMessage id={props.titleId} />
-        </Text>
-        <InfoToolTip {...props}></InfoToolTip>
-      </HStack>
+      {props.titleId && props.descriptionId && (
+        <HStack opacity={0.7}>
+          <Text>
+            <FormattedMessage id={props.titleId} />
+          </Text>
+          <InfoToolTip
+            titleId={props.titleId}
+            descriptionId={props.descriptionId}
+          ></InfoToolTip>
+        </HStack>
+      )}
     </GridItem>
   );
 };
