@@ -34,6 +34,8 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
       - uses: microbit-foundation/npm-package-versioner-action@v1
       - run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm install --no-save @microbit-foundation/website-deploy-aws@0.6 @microbit-foundation/website-deploy-aws-config@0.9
         if: github.repository_owner == 'microbit-foundation'
         env:
