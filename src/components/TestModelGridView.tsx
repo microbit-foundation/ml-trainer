@@ -6,8 +6,9 @@ import {
   Icon,
   VStack,
   VisuallyHidden,
+  useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   Gesture,
@@ -24,6 +25,8 @@ import { RiArrowRightLine } from "react-icons/ri";
 import CodeViewGridItem from "./CodeViewGridItem";
 import { MakeCodeRenderBlocksProvider } from "@microbit-foundation/react-code-view";
 import { getMakeCodeLang, useSettings } from "../settings";
+import EditCodeDialog from "./EditCodeDialog";
+import FullScreenBackButton from "./FullScreenBackButton";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "200px 360px 40px 1fr",
@@ -82,6 +85,7 @@ const placeholderProject = {
 
 const TestModelGridView = () => {
   const intl = useIntl();
+  const editCodeDialogDisclosure = useDisclosure();
   const [gestures] = useGestureData();
   const { setRequiredConfidence } = useGestureActions();
 
@@ -95,61 +99,81 @@ const TestModelGridView = () => {
 
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
+  const handleCodeChange = useCallback(() => {
+    // TODO: Update code change
+  }, []);
   return (
-    <MakeCodeRenderBlocksProvider
-      key={makeCodeLang}
-      options={{
-        version: undefined,
-        lang: makeCodeLang,
-      }}
-    >
-      <VisuallyHidden aria-live="polite">
-        <FormattedMessage
-          id="content.model.output.estimatedGesture.label"
-          values={{ action: predicationLabel }}
-        />
-      </VisuallyHidden>
-      <HeadingGrid {...gridCommonProps} headings={headings}>
-        <HStack>
-          <Button variant="secondary" size="sm">
-            <FormattedMessage id="reset-to-default-action" />
-          </Button>
-          <Button variant="secondary" size="sm">
-            <FormattedMessage id="edit-in-makecode-action" />
-          </Button>
-        </HStack>
-      </HeadingGrid>
-      <Grid
-        {...gridCommonProps}
-        alignItems="start"
-        autoRows="max-content"
-        overflow="auto"
-        flexGrow={1}
-        h={0}
+    <>
+      <EditCodeDialog
+        code={placeholderProject}
+        editorVersion={undefined}
+        isOpen={editCodeDialogDisclosure.isOpen}
+        onChange={handleCodeChange}
+        toolbarItemsLeft={
+          <FullScreenBackButton onClick={editCodeDialogDisclosure.onClose}>
+            <FormattedMessage id="back-action" />
+          </FullScreenBackButton>
+        }
+      />
+      <MakeCodeRenderBlocksProvider
+        key={makeCodeLang}
+        options={{
+          version: undefined,
+          lang: makeCodeLang,
+        }}
       >
-        {gestures.data.map(
-          ({ ID, name, requiredConfidence: threshold }, idx) => {
-            return (
-              <React.Fragment key={idx}>
-                <GestureNameGridItem id={ID} name={name} readOnly={true} />
-                <CertaintyThresholdGridItem
-                  onThresholdChange={(val) => setRequiredConfidence(ID, val)}
-                  currentConfidence={confidences?.[ID]}
-                  requiredConfidence={
-                    threshold ?? mlSettings.defaultRequiredConfidence
-                  }
-                  isTriggered={prediction?.ID === ID}
-                />
-                <VStack justifyContent="center" h="full">
-                  <Icon as={RiArrowRightLine} boxSize={10} color="gray.600" />
-                </VStack>
-                <CodeViewGridItem project={placeholderProject} />
-              </React.Fragment>
-            );
-          }
-        )}
-      </Grid>
-    </MakeCodeRenderBlocksProvider>
+        <VisuallyHidden aria-live="polite">
+          <FormattedMessage
+            id="content.model.output.estimatedGesture.label"
+            values={{ action: predicationLabel }}
+          />
+        </VisuallyHidden>
+        <HeadingGrid {...gridCommonProps} headings={headings}>
+          <HStack>
+            <Button variant="secondary" size="sm">
+              <FormattedMessage id="reset-to-default-action" />
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={editCodeDialogDisclosure.onOpen}
+            >
+              <FormattedMessage id="edit-in-makecode-action" />
+            </Button>
+          </HStack>
+        </HeadingGrid>
+        <Grid
+          {...gridCommonProps}
+          alignItems="start"
+          autoRows="max-content"
+          overflow="auto"
+          flexGrow={1}
+          h={0}
+        >
+          {gestures.data.map(
+            ({ ID, name, requiredConfidence: threshold }, idx) => {
+              return (
+                <React.Fragment key={idx}>
+                  <GestureNameGridItem id={ID} name={name} readOnly={true} />
+                  <CertaintyThresholdGridItem
+                    onThresholdChange={(val) => setRequiredConfidence(ID, val)}
+                    currentConfidence={confidences?.[ID]}
+                    requiredConfidence={
+                      threshold ?? mlSettings.defaultRequiredConfidence
+                    }
+                    isTriggered={prediction?.ID === ID}
+                  />
+                  <VStack justifyContent="center" h="full">
+                    <Icon as={RiArrowRightLine} boxSize={10} color="gray.600" />
+                  </VStack>
+                  <CodeViewGridItem project={placeholderProject} />
+                </React.Fragment>
+              );
+            }
+          )}
+        </Grid>
+      </MakeCodeRenderBlocksProvider>
+    </>
   );
 };
 

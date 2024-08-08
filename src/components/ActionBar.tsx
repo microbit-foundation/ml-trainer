@@ -5,7 +5,7 @@ export type ToolbarVariant = "full-screen" | "primary";
 
 const styles = {
   primary: { bgColor: "green.500", h: "64px", minH: "64px" },
-  "full-screen": { bgColor: "brand.500", h: "4rem" },
+  "full-screen": { bgColor: "gray.500", h: "4rem" },
 };
 
 export interface ActionBarProps extends BoxProps {
