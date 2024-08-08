@@ -1,6 +1,8 @@
 import {
+  Button,
   Grid,
   GridProps,
+  HStack,
   Icon,
   VStack,
   VisuallyHidden,
@@ -107,7 +109,16 @@ const TestModelGridView = () => {
           values={{ action: predicationLabel }}
         />
       </VisuallyHidden>
-      <HeadingGrid {...gridCommonProps} headings={headings} />
+      <HeadingGrid {...gridCommonProps} headings={headings}>
+        <HStack>
+          <Button variant="secondary" size="sm">
+            <FormattedMessage id="reset-to-default-action" />
+          </Button>
+          <Button variant="secondary" size="sm">
+            <FormattedMessage id="edit-in-makecode-action" />
+          </Button>
+        </HStack>
+      </HeadingGrid>
       <Grid
         {...gridCommonProps}
         alignItems="start"

@@ -1199,6 +1199,12 @@
       "value": "micro:bit 1 connection lost"
     }
   ],
+  "edit-in-makecode-action": [
+    {
+      "type": 0,
+      "value": "Edit in MakeCode"
+    }
+  ],
   "footer.connectButton": [
     {
       "type": 0,
@@ -1577,6 +1583,12 @@
     {
       "type": 0,
       "value": "Click to reload the page"
+    }
+  ],
+  "reset-to-default-action": [
+    {
+      "type": 0,
+      "value": "Reset to default"
     }
   ],
   "resources": [

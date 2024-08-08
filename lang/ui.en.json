@@ -703,6 +703,10 @@
     "defaultMessage": "micro:bit 1 connection lost",
     "description": ""
   },
+  "edit-in-makecode-action": {
+    "defaultMessage": "Edit in MakeCode",
+    "description": "Edit in MakeCode button text"
+  },
   "footer.connectButton": {
     "defaultMessage": "Connect",
     "description": ""
@@ -950,6 +954,10 @@
   "reload-action": {
     "defaultMessage": "Click to reload the page",
     "description": "Reload page button text"
+  },
+  "reset-to-default-action": {
+    "defaultMessage": "Reset to default",
+    "description": "Reset to default button text"
   },
   "resources": {
     "defaultMessage": "Resources",
