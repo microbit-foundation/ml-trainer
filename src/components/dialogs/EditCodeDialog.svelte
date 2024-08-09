@@ -16,7 +16,6 @@
   export let onClose: () => void;
   export let onCodeChange: (newCode: MakeCodeProject) => void;
   export let onDownload: (download: { name: string; hex: string }) => void;
-  export let onSave: undefined | ((save: { name: string; hex: string }) => void);
 
   const handleSave = (save: { name: string; hex: string }) => {
     const blob = new Blob([save.hex], {type: "application/octet-stream"});
