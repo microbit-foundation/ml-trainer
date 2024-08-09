@@ -32,7 +32,8 @@ const Editor = ({
       // TODO: To remove baseUrl and use real pxt-microbit
       baseUrl="https://pxt-microbit.pages.dev/"
       controllerId={controllerId}
-      hideMenu
+      // TODO: Create full toolbar so that menu can be hidden
+      // hideMenu
       style={style}
       initialCode={initialCode}
       version={version}

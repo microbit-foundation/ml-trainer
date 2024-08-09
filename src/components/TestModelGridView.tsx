@@ -8,7 +8,9 @@ import {
   VisuallyHidden,
   useDisclosure,
 } from "@chakra-ui/react";
+import { MakeCodeRenderBlocksProvider } from "@microbit-foundation/react-code-view";
 import React, { useCallback } from "react";
+import { RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   Gesture,
@@ -16,19 +18,16 @@ import {
   useGestureActions,
   useGestureData,
 } from "../gestures-hooks";
+import { useMakeCodeProject } from "../makecode-project-hooks";
 import { Confidences, mlSettings } from "../ml";
 import { usePrediction } from "../ml-hooks";
-import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
-import GestureNameGridItem from "./GestureNameGridItem";
-import HeadingGrid from "./HeadingGrid";
-import { RiArrowRightLine } from "react-icons/ri";
-import CodeViewGridItem from "./CodeViewGridItem";
-import { MakeCodeRenderBlocksProvider } from "@microbit-foundation/react-code-view";
 import { getMakeCodeLang, useSettings } from "../settings";
+import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
+import CodeViewGridItem from "./CodeViewGridItem";
 import EditCodeDialog from "./EditCodeDialog";
 import FullScreenBackButton from "./FullScreenBackButton";
-import { generateDefaultProject } from "../makecode/generate-default-project";
-import { TrainingCompleteMlStatus, useMlStatus } from "../ml-status-hooks";
+import GestureNameGridItem from "./GestureNameGridItem";
+import HeadingGrid from "./HeadingGrid";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "200px 360px 40px 1fr",
@@ -54,43 +53,14 @@ const headings = [
   },
 ];
 
-const placeholderProject = {
-  header: {
-    target: "microbit",
-    targetVersion: "3.0.17",
-    name: "Untitled",
-    meta: {},
-    editor: "blocksprj",
-    pubId: "",
-    pubCurrent: false,
-    _rev: null,
-    id: "8dd48233-0ebb-4426-7b6d-9af3a1a887f0",
-    recentUse: 1601371026,
-    modificationTime: 1601371026,
-    blobId: null,
-    blobVersion: null,
-    blobCurrent: false,
-    isDeleted: false,
-    githubCurrent: false,
-    saveId: null,
-  },
-  text: {
-    "main.blocks":
-      '<xml xmlns="https://developers.google.com/blockly/xml"><block type="pxt-on-start" x="0" y="0"><statement name="HANDLER"><block type="playMelody"><value name="melody"><shadow type="melody_editor"><field name="melody">"C5 B A G F E D C "</field></shadow></value><value name="tempo"><shadow type="math_number_minmax"><mutation min="40" max="500" label="Tempo" precision="0"/><field name="SLIDER">120</field></shadow></value></block></statement></block></xml>',
-    "main.ts": 'music.playMelody("C5 B A G F E D C ", 120)\n',
-    "README.md": " ",
-    "pxt.json":
-      '{\n    "name": "Untitled",\n    "description": "",\n    "dependencies": {\n        "core": "*",\n        "radio": "*"\n    },\n    "files": [\n        "main.blocks",\n        "main.ts",\n        "README.md"\n    ],\n    "preferredEditor": "blocksprj"\n}\n',
-    ".simstate.json": "{}",
-  },
-};
-
 const TestModelGridView = () => {
   const intl = useIntl();
   const editCodeDialogDisclosure = useDisclosure();
   const [gestures] = useGestureData();
-  const [status] = useMlStatus();
   const { setRequiredConfidence } = useGestureActions();
+
+  const { defaultProject: project, createGestureDefaultProject } =
+    useMakeCodeProject(gestures.data);
 
   const confidences = usePrediction();
   const prediction = applyThresholds(gestures, confidences);
@@ -102,10 +72,6 @@ const TestModelGridView = () => {
 
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
-  const project = generateDefaultProject(
-    gestures.data,
-    (status as TrainingCompleteMlStatus).model
-  );
   const handleCodeChange = useCallback(() => {
     // TODO: Update code change
   }, []);
@@ -158,27 +124,29 @@ const TestModelGridView = () => {
           flexGrow={1}
           h={0}
         >
-          {gestures.data.map(
-            ({ ID, name, requiredConfidence: threshold }, idx) => {
-              return (
-                <React.Fragment key={idx}>
-                  <GestureNameGridItem id={ID} name={name} readOnly={true} />
-                  <CertaintyThresholdGridItem
-                    onThresholdChange={(val) => setRequiredConfidence(ID, val)}
-                    currentConfidence={confidences?.[ID]}
-                    requiredConfidence={
-                      threshold ?? mlSettings.defaultRequiredConfidence
-                    }
-                    isTriggered={prediction?.ID === ID}
-                  />
-                  <VStack justifyContent="center" h="full">
-                    <Icon as={RiArrowRightLine} boxSize={10} color="gray.600" />
-                  </VStack>
-                  <CodeViewGridItem project={placeholderProject} />
-                </React.Fragment>
-              );
-            }
-          )}
+          {gestures.data.map((gesture, idx) => {
+            const { ID, name, requiredConfidence: threshold } = gesture;
+            return (
+              <React.Fragment key={idx}>
+                <GestureNameGridItem id={ID} name={name} readOnly={true} />
+                <CertaintyThresholdGridItem
+                  onThresholdChange={(val) => setRequiredConfidence(ID, val)}
+                  currentConfidence={confidences?.[ID]}
+                  requiredConfidence={
+                    threshold ?? mlSettings.defaultRequiredConfidence
+                  }
+                  isTriggered={prediction?.ID === ID}
+                />
+                <VStack justifyContent="center" h="full">
+                  <Icon as={RiArrowRightLine} boxSize={10} color="gray.600" />
+                </VStack>
+                <CodeViewGridItem
+                  // TODO: To memoize operation. Maybe create a TestModelGridRow component
+                  project={createGestureDefaultProject(gesture)}
+                />
+              </React.Fragment>
+            );
+          })}
         </Grid>
       </MakeCodeRenderBlocksProvider>
     </>

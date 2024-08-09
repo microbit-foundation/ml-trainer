@@ -1,6 +1,6 @@
 import { Gesture } from "./temp";
 import { actionNamesFromLabels } from "./utils";
-
+import upperFirst from "lodash.upperfirst";
 /**
  * (c) 2024, Center for Computational Thinking and Design at Aarhus University and contributors
  *
@@ -8,19 +8,8 @@ import { actionNamesFromLabels } from "./utils";
  */
 export interface OnGestureRecognisedConfig {
   name: string;
-  iconName?: string;
-  led?: boolean[];
+  iconName: string;
 }
-
-export const getMakeCodeGestureConfig = (
-  gestureId: number,
-  actionVar: string,
-  icon: string
-) => ({
-  gestureId,
-  name: actionVar,
-  iconName: icon,
-});
 
 interface BlockPos {
   x: number;
@@ -28,8 +17,8 @@ interface BlockPos {
 }
 
 const onMLEventBlock = (name: string, children: string, pos: BlockPos) => `
-  <block type=\"mlrunner_on_ml_event\" x=\"${pos.x}\" y=\"${pos.y}\">
-    <field name=\"event\">ml.event.${name}</field>
+  <block type="mlrunner_on_ml_event" x="${pos.x}" y="${pos.y}">
+    <field name="event">ml.event.${name}</field>
     <statement name="HANDLER">
       ${children}       
     </statement>
@@ -62,7 +51,7 @@ const statements: Record<Language, LanguageStatements> = {
     showLeds: (ledPattern) =>
       `<block type="device_show_leds"><field name="LEDS">\`${ledPattern}\`</field></block>`,
     showIcon: (iconName) =>
-      `<block type=\"basic_show_icon\"><field name=\"i\">IconNames.${iconName}</field></block>`,
+      `<block type="basic_show_icon"><field name="i">IconNames.${iconName}</field></block>`,
     clearDisplay: () => `<block type="device_clear_display"></block>`,
     onMLEvent: onMLEventBlock,
   },
@@ -70,35 +59,24 @@ const statements: Record<Language, LanguageStatements> = {
 
 const onMLEventChildren = (
   s: LanguageStatements,
-  { iconName, led }: OnGestureRecognisedConfig
+  { iconName }: OnGestureRecognisedConfig
 ) => {
   if (iconName) {
     return s.showIcon(iconName);
   }
-  if (led) {
-    const ledPattern = led
-      .map((b, idx) => {
-        const isNewLine = (idx + 1) % 5 === 0;
-        return `${b ? "#" : "."}  ${isNewLine ? "\n" : ""}`;
-      })
-      .join(" ");
-    return s.showLeds(ledPattern);
-  }
   return "";
 };
 
-export const generateMainScript = (
-  gs: Gesture[],
-  lang: Language,
-  gestureIdRender?: number
-) => {
+const getMakeCodeGestureConfigs = (gs: Gesture[]) => {
   const actionNames = actionNamesFromLabels(gs.map((g) => g.name));
-  const configs = gs
-    .map((g, idx) =>
-      getMakeCodeGestureConfig(g.ID, actionNames[idx].actionVar, g.icon)
-    )
-    .filter((c) => (gestureIdRender ? c.gestureId === gestureIdRender : true));
+  return gs.map((g, idx) => ({
+    name: actionNames[idx].actionVar,
+    iconName: upperFirst(g.icon),
+  }));
+};
 
+export const generateMainScript = (gs: Gesture[], lang: Language) => {
+  const configs = getMakeCodeGestureConfigs(gs);
   const s = statements[lang];
   const initPos = { x: 0, y: 0 };
   return s.wrapper(`
@@ -107,24 +85,6 @@ export const generateMainScript = (
       s.onMLEvent(c.name, onMLEventChildren(s, c), {
         x: initPos.x,
         y: initPos.y + idx * 350,
-      })
-    )
-    .join("\n")}  `);
-};
-
-// TODO: Used in OutputProgramMicrobitView. May not be needed anymore
-export const generateMakeCodeOutputMainDep = (
-  configs: OnGestureRecognisedConfig[],
-  lang: Language
-) => {
-  const s = statements[lang];
-  const initPos = { x: 0, y: 0 };
-  return s.wrapper(`
-  ${configs
-    .map((c, idx) =>
-      s.onMLEvent(c.name, onMLEventChildren(s, c), {
-        x: initPos.x + 300,
-        y: initPos.y + idx * 200,
       })
     )
     .join("\n")}  `);

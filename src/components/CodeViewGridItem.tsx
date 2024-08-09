@@ -17,11 +17,12 @@ const CodeViewGridItem = ({ project }: CodeViewGridItemProps) => {
         h="120px"
         display="flex"
         borderColor="brand.500"
-        minW="300px"
+        minW="400px"
         width="fit-content"
         justifyContent="center"
       >
-        <Box width="300px" py={2} px={2} overflow="hidden">
+        {/* TODO: Change width of block depending on block size and cope with longer action names */}
+        <Box width="150px" py={2} px={2} overflow="hidden">
           <MakeCodeBlocksRendering
             code={project}
             layout={BlockLayout.Clean}
