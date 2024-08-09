@@ -61,7 +61,7 @@ export const pxt = {
     microphone: '*',
     radio: '*', // needed for compiling
     'Machine Learning POC':
-      'github:microbit-foundation/pxt-ml-extension-poc#b5f4fcb5379c1501e8e80d96cf6cdedcdcab6c7d',
+      'github:microbit-foundation/pxt-ml-extension-poc#02ab65bed47884963a46f30d1cbbe27930533bdb',
   },
   files: [...Object.values(filenames), 'README.md'],
 };
