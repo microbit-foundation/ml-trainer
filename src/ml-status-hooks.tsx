@@ -18,15 +18,17 @@ export enum MlStage {
   RetrainingNeeded,
 }
 
+export interface TrainingCompleteMlStatus {
+  stage: MlStage.TrainingComplete;
+  model: LayersModel;
+}
+
 export type MlStatus =
   | {
       stage: MlStage.TrainingInProgress;
       progressValue: number;
     }
-  | {
-      stage: MlStage.TrainingComplete;
-      model: LayersModel;
-    }
+  | TrainingCompleteMlStatus
   | {
       stage: MlStage.RetrainingNeeded;
     }

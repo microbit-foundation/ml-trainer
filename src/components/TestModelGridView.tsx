@@ -27,6 +27,8 @@ import { MakeCodeRenderBlocksProvider } from "@microbit-foundation/react-code-vi
 import { getMakeCodeLang, useSettings } from "../settings";
 import EditCodeDialog from "./EditCodeDialog";
 import FullScreenBackButton from "./FullScreenBackButton";
+import { generateDefaultProject } from "../makecode/generate-default-project";
+import { TrainingCompleteMlStatus, useMlStatus } from "../ml-status-hooks";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "200px 360px 40px 1fr",
@@ -87,6 +89,7 @@ const TestModelGridView = () => {
   const intl = useIntl();
   const editCodeDialogDisclosure = useDisclosure();
   const [gestures] = useGestureData();
+  const [status] = useMlStatus();
   const { setRequiredConfidence } = useGestureActions();
 
   const confidences = usePrediction();
@@ -99,13 +102,17 @@ const TestModelGridView = () => {
 
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
+  const project = generateDefaultProject(
+    gestures.data,
+    (status as TrainingCompleteMlStatus).model
+  );
   const handleCodeChange = useCallback(() => {
     // TODO: Update code change
   }, []);
   return (
     <>
       <EditCodeDialog
-        code={placeholderProject}
+        code={project}
         editorVersion={undefined}
         isOpen={editCodeDialogDisclosure.isOpen}
         onChange={handleCodeChange}
