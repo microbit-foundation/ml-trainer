@@ -7,7 +7,6 @@ import {
 } from "@chakra-ui/react";
 import { EditorProject } from "@microbit-foundation/react-editor-embed";
 import { ReactNode } from "react";
-import ActionBar from "./ActionBar";
 import Editor from "./Editor";
 
 interface EditCodeDialogProps {
@@ -16,18 +15,21 @@ interface EditCodeDialogProps {
   toolbarItemsRight?: ReactNode;
   editorVersion: string | undefined;
   code: EditorProject;
+  onBack: () => void;
+  onDownload: (download: { name: string; hex: string }) => void;
+  onSave: (save: { name: string; hex: string }) => void;
   onChange: (code: EditorProject) => void;
   extraToolbars?: ReactNode;
 }
 
 const EditCodeDialog = ({
-  toolbarItemsRight,
-  toolbarItemsLeft,
   editorVersion,
   code,
   isOpen,
   onChange,
-  extraToolbars,
+  onBack,
+  onDownload,
+  onSave,
 }: EditCodeDialogProps) => {
   return (
     <Modal
@@ -46,18 +48,15 @@ const EditCodeDialog = ({
             flexDir="column"
             justifyContent="stretch"
           >
-            <ActionBar
-              itemsLeft={toolbarItemsLeft}
-              variant="full-screen"
-              itemsRight={toolbarItemsRight}
-            />
-            {extraToolbars}
             <Flex flexGrow="1" flexDir="column" w="100%" bgColor="white">
               <Editor
                 style={{ flexGrow: 1 }}
                 version={editorVersion}
                 initialCode={code}
                 onCodeChange={onChange}
+                onBack={onBack}
+                onDownload={onDownload}
+                onSave={onSave}
               />
             </Flex>
           </ModalBody>

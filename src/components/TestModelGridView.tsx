@@ -1,22 +1,18 @@
 import {
-  Box,
   Button,
-  Card,
   Grid,
   GridProps,
   HStack,
   Icon,
-  SkeletonText,
   VStack,
   VisuallyHidden,
   useDisclosure,
 } from "@chakra-ui/react";
 import {
-  BlockLayout,
-  MakeCodeBlocksRendering,
   MakeCodeProject,
   MakeCodeRenderBlocksProvider,
 } from "@microbit-foundation/react-code-view";
+import { EditorProject } from "@microbit-foundation/react-editor-embed";
 import React, { useCallback } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -26,17 +22,15 @@ import {
   useGestureActions,
   useGestureData,
 } from "../gestures-hooks";
-import { useMakeCodeProject } from "../user-projects-hooks";
 import { Confidences, mlSettings } from "../ml";
 import { usePrediction } from "../ml-hooks";
 import { getMakeCodeLang, useSettings } from "../settings";
+import { useMakeCodeProject } from "../user-projects-hooks";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
 import CodeViewGridItem from "./CodeViewGridItem";
 import EditCodeDialog from "./EditCodeDialog";
-import FullScreenBackButton from "./FullScreenBackButton";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
-import { EditorProject } from "@microbit-foundation/react-editor-embed";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "200px 360px 40px auto",
@@ -68,7 +62,7 @@ const TestModelGridView = () => {
   const [gestures] = useGestureData();
   const { setRequiredConfidence } = useGestureActions();
 
-  const { hasStoredProject, project, setProject, createGestureDefaultProject } =
+  const { project, setProject, createGestureDefaultProject } =
     useMakeCodeProject(gestures.data);
 
   const confidences = usePrediction();
@@ -95,11 +89,13 @@ const TestModelGridView = () => {
         editorVersion={undefined}
         isOpen={editCodeDialogDisclosure.isOpen}
         onChange={handleCodeChange}
-        toolbarItemsLeft={
-          <FullScreenBackButton onClick={editCodeDialogDisclosure.onClose}>
-            <FormattedMessage id="back-action" />
-          </FullScreenBackButton>
-        }
+        onBack={editCodeDialogDisclosure.onClose}
+        onDownload={({ name, hex }) => {
+          console.log("download!", name, hex);
+        }}
+        onSave={({ name, hex }) => {
+          console.log("save!", name, hex);
+        }}
       />
       <MakeCodeRenderBlocksProvider
         key={makeCodeLang}

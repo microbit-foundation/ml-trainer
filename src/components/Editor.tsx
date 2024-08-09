@@ -8,10 +8,13 @@ import React from "react";
 import { Subject } from "rxjs";
 import { getMakeCodeLang, useSettings } from "../settings";
 
-const controllerId = "MicrobitClassroom";
+const controllerId = "MicrobitMachineLearningTool";
 
 interface EditorProps {
+  onBack?: () => void;
   onCodeChange?: (code: EditorProject) => void;
+  onDownload?: (download: { name: string; hex: string }) => void;
+  onSave?: (save: { name: string; hex: string }) => void;
   initialCode: EditorProject;
   version: string | undefined;
   style?: React.CSSProperties;
@@ -26,14 +29,12 @@ const Editor = ({
   ...editorProps
 }: EditorProps) => {
   const [{ languageId }] = useSettings();
-
   return (
     <MakeCodeEditor
       // TODO: To remove baseUrl and use real pxt-microbit
-      baseUrl="https://pxt-microbit.pages.dev/"
+      baseUrl="https://ml-tool.pxt-microbit.pages.dev/"
       controllerId={controllerId}
-      // TODO: Create full toolbar so that menu can be hidden
-      // hideMenu
+      controller={2}
       style={style}
       initialCode={initialCode}
       version={version}
