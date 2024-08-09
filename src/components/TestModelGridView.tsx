@@ -1,14 +1,22 @@
 import {
+  Box,
   Button,
+  Card,
   Grid,
   GridProps,
   HStack,
   Icon,
+  SkeletonText,
   VStack,
   VisuallyHidden,
   useDisclosure,
 } from "@chakra-ui/react";
-import { MakeCodeRenderBlocksProvider } from "@microbit-foundation/react-code-view";
+import {
+  BlockLayout,
+  MakeCodeBlocksRendering,
+  MakeCodeProject,
+  MakeCodeRenderBlocksProvider,
+} from "@microbit-foundation/react-code-view";
 import React, { useCallback } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -18,7 +26,7 @@ import {
   useGestureActions,
   useGestureData,
 } from "../gestures-hooks";
-import { useMakeCodeProject } from "../makecode-project-hooks";
+import { useMakeCodeProject } from "../user-projects-hooks";
 import { Confidences, mlSettings } from "../ml";
 import { usePrediction } from "../ml-hooks";
 import { getMakeCodeLang, useSettings } from "../settings";
@@ -28,9 +36,10 @@ import EditCodeDialog from "./EditCodeDialog";
 import FullScreenBackButton from "./FullScreenBackButton";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
+import { EditorProject } from "@microbit-foundation/react-editor-embed";
 
 const gridCommonProps: Partial<GridProps> = {
-  gridTemplateColumns: "200px 360px 40px 1fr",
+  gridTemplateColumns: "200px 360px 40px auto",
   gap: 3,
   px: 10,
   py: 2,
@@ -59,7 +68,7 @@ const TestModelGridView = () => {
   const [gestures] = useGestureData();
   const { setRequiredConfidence } = useGestureActions();
 
-  const { defaultProject: project, createGestureDefaultProject } =
+  const { hasStoredProject, project, setProject, createGestureDefaultProject } =
     useMakeCodeProject(gestures.data);
 
   const confidences = usePrediction();
@@ -72,9 +81,13 @@ const TestModelGridView = () => {
 
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
-  const handleCodeChange = useCallback(() => {
-    // TODO: Update code change
-  }, []);
+
+  const handleCodeChange = useCallback(
+    (code: EditorProject) => {
+      setProject(code as MakeCodeProject);
+    },
+    [setProject]
+  );
   return (
     <>
       <EditCodeDialog

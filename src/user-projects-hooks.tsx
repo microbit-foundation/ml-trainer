@@ -6,7 +6,48 @@ import {
   generateCustomTs,
 } from "./makecode/generate-custom-scripts";
 import { TrainingCompleteMlStatus, useMlStatus } from "./ml-status-hooks";
-import { useCallback, useMemo } from "react";
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+} from "react";
+import { MakeCodeProject } from "@microbit-foundation/react-code-view";
+import { useStorage } from "./hooks/use-storage";
+interface UserProjectsContextState {
+  makeCode?: MakeCodeProject;
+}
+
+type UserProjectsContextValue = [
+  UserProjectsContextState,
+  (userProjects: UserProjectsContextState) => void
+];
+
+const UserProjectsContext = createContext<UserProjectsContextValue | undefined>(
+  undefined
+);
+
+export const UserProjectsProvider = ({ children }: { children: ReactNode }) => {
+  const userProjectsContextValue = useStorage<UserProjectsContextState>(
+    "local",
+    "gestures",
+    { makeCode: undefined }
+  );
+  return (
+    <UserProjectsContext.Provider value={userProjectsContextValue}>
+      {children}
+    </UserProjectsContext.Provider>
+  );
+};
+
+const useUserProjects = (): UserProjectsContextValue => {
+  const userProjects = useContext(UserProjectsContext);
+  if (!userProjects) {
+    throw new Error("Missing provider");
+  }
+  return userProjects;
+};
 
 enum ProjectFilenames {
   MainTs = "main.ts",
@@ -31,6 +72,7 @@ const pxt = {
 };
 
 export const useMakeCodeProject = (gestures: GestureData[]) => {
+  const [userProjects, setUserProjects] = useUserProjects();
   const [status] = useMlStatus();
   const model = (status as TrainingCompleteMlStatus).model;
 
@@ -46,7 +88,6 @@ export const useMakeCodeProject = (gestures: GestureData[]) => {
       [ProjectFilenames.PxtJson]: JSON.stringify(pxt),
     };
   }, [gestures, model]);
-  const defaultProject = { text: defaultProjectText };
 
   const createGestureDefaultProject = useCallback(
     (gesture: GestureData) => {
@@ -62,8 +103,18 @@ export const useMakeCodeProject = (gestures: GestureData[]) => {
     },
     [defaultProjectText]
   );
+
+  const setProject = useCallback(
+    (project: MakeCodeProject) => {
+      setUserProjects({ makeCode: project });
+    },
+    [setUserProjects]
+  );
+
   return {
-    defaultProject,
+    hasStoredProject: userProjects !== undefined,
+    project: userProjects.makeCode ?? { text: defaultProjectText },
+    setProject,
     createGestureDefaultProject,
   };
 };
