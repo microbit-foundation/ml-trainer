@@ -1,18 +1,22 @@
 import {
   Card,
   CardBody,
-  CardHeader,
   CloseButton,
   GridItem,
+  HStack,
   Input,
   useToast,
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { useGestureActions } from "../gestures-hooks";
+import { MakeCodeIcon } from "../utils/makecode-icons";
+import LedIcon from "./LedIcon";
+import LedIconPicker from "./LedIconPicker";
 
 interface GestureNameGridItemProps {
   name: string;
+  icon: MakeCodeIcon;
   onCloseClick?: () => void;
   onSelectRow?: () => void;
   id: number;
@@ -24,6 +28,7 @@ const gestureNameMaxLength = 18;
 
 const GestureNameGridItem = ({
   name,
+  icon,
   onCloseClick,
   onSelectRow,
   id,
@@ -58,6 +63,13 @@ const GestureNameGridItem = ({
     [actions, id, intl, toast]
   );
 
+  const handleIconSelected = useCallback(
+    (icon: MakeCodeIcon) => {
+      actions.setGestureIcon(id, icon);
+    },
+    [actions, id]
+  );
+
   return (
     <GridItem>
       <Card
@@ -67,41 +79,43 @@ const GestureNameGridItem = ({
         borderColor="brand.500"
         borderWidth={selected ? 1 : 0}
         onClick={onSelectRow}
+        position="relative"
       >
-        {!readOnly && (
-          <CardHeader p={0} display="flex" justifyContent="end" h="24px">
-            {onCloseClick && (
-              <CloseButton
-                onClick={onCloseClick}
-                size="sm"
-                aria-label={intl.formatMessage(
-                  { id: "content.data.deleteAction" },
-                  { action: name }
-                )}
-              />
+        {!readOnly && onCloseClick && (
+          <CloseButton
+            position="absolute"
+            right={1}
+            top={1}
+            onClick={onCloseClick}
+            size="sm"
+            borderRadius="sm"
+            aria-label={intl.formatMessage(
+              { id: "content.data.deleteAction" },
+              { action: name }
             )}
-          </CardHeader>
-        )}
-        <CardBody
-          pt={readOnly ? undefined : 0}
-          pr={2}
-          pl={2}
-          alignContent="center"
-        >
-          <Input
-            isTruncated
-            readOnly={readOnly}
-            defaultValue={name}
-            borderWidth={0}
-            {...(readOnly
-              ? { bgColor: "transparent", size: "lg" }
-              : { bgColor: "gray.25", size: "sm" })}
-            _placeholder={{ opacity: 0.8, color: "gray.900" }}
-            placeholder={intl.formatMessage({
-              id: "content.data.classPlaceholderNewClass",
-            })}
-            onChange={onChange}
           />
+        )}
+        <CardBody p={0} alignContent="center">
+          <HStack>
+            <HStack>
+              <LedIcon icon={icon} />;
+              <LedIconPicker onIconSelected={handleIconSelected} />
+            </HStack>
+            <Input
+              isTruncated
+              readOnly={readOnly}
+              defaultValue={name}
+              borderWidth={0}
+              {...(readOnly
+                ? { bgColor: "transparent", size: "lg" }
+                : { bgColor: "gray.25", size: "sm" })}
+              _placeholder={{ opacity: 0.8, color: "gray.900" }}
+              placeholder={intl.formatMessage({
+                id: "content.data.classPlaceholderNewClass",
+              })}
+              onChange={onChange}
+            />
+          </HStack>
         </CardBody>
       </Card>
     </GridItem>

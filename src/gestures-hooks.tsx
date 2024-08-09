@@ -1,7 +1,8 @@
-import { ReactNode, createContext, useContext, useMemo, useState } from "react";
+import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 import { useStorage } from "./hooks/use-storage";
 import { MlStage, MlStatus, useMlStatus } from "./ml-status-hooks";
 import { isArray } from "./utils";
+import { defaultIcons, MakeCodeIcon } from "./utils/makecode-icons";
 export interface XYZData {
   x: number[];
   y: number[];
@@ -16,6 +17,7 @@ interface RecordingData {
 export interface Gesture {
   name: string;
   ID: number;
+  icon: MakeCodeIcon;
   requiredConfidence?: number;
 }
 
@@ -96,21 +98,11 @@ export const useGestureData = (): GestureContextValue => {
   return gestureData;
 };
 
-const generateNewGesture = (): GestureData => ({
-  name: "",
-  recordings: [],
-  ID: Date.now(),
-});
-
-const initialGestureContextState: GestureContextState = {
-  data: [generateNewGesture()],
-};
-
 export const GesturesProvider = ({ children }: { children: ReactNode }) => {
   const [storedState, setStoredState] = useStorage<GestureContextState>(
     "local",
     "gestures",
-    initialGestureContextState,
+    { data: [] },
     isValidStoredGestureData
   );
   const [state, setState] = useState<GestureContextState>({
@@ -119,10 +111,11 @@ export const GesturesProvider = ({ children }: { children: ReactNode }) => {
   const setStates = (newState: GestureContextState) => {
     setStoredState({
       ...newState,
-      data: newState.data.map(({ name, recordings, ID }) => ({
+      data: newState.data.map(({ name, recordings, ID, icon }) => ({
         name,
         recordings,
         ID,
+        icon,
       })),
     });
     setState(newState);
@@ -151,7 +144,36 @@ class GestureActions {
     private setGestureState: (gestureData: GestureContextState) => void,
     private status: MlStatus,
     private setStatus: (status: MlStatus) => void
-  ) {}
+  ) {
+    // Initialize with at least one gesture for walkthrough.
+    if (!this.gestureState.data.length) {
+      this.setGestures([], false);
+    }
+  }
+
+  private getDefaultIcon = (iconsInUse?: MakeCodeIcon[]): MakeCodeIcon => {
+    if (!iconsInUse) {
+      iconsInUse = this.gestureState.data.map((g) => g.icon);
+    }
+    const useableIcons: MakeCodeIcon[] = [];
+    for (const icon of defaultIcons) {
+      if (!iconsInUse.includes(icon)) {
+        useableIcons.push(icon);
+      }
+    }
+    if (!useableIcons.length) {
+      // Better than throwing an error.
+      return "Heart";
+    }
+    return useableIcons[0];
+  };
+
+  private generateNewGesture = (): GestureData => ({
+    name: "",
+    recordings: [],
+    ID: Date.now(),
+    icon: this.getDefaultIcon(),
+  });
 
   hasGestures = (): boolean => {
     return (
@@ -161,11 +183,31 @@ class GestureActions {
     );
   };
 
+  importGestures = (gestures: Partial<GestureData>[]) => {
+    const validGestures: GestureData[] = [];
+    const importedGestureIcons: MakeCodeIcon[] = gestures
+      .map((g) => g.icon as MakeCodeIcon)
+      .filter(Boolean);
+    gestures.forEach((g) => {
+      if (g.ID && g.name !== undefined && Array.isArray(g.recordings)) {
+        if (!g.icon) {
+          g.icon = this.getDefaultIcon([
+            ...validGestures.map((g) => g.icon),
+            ...importedGestureIcons,
+          ]);
+        }
+        validGestures.push(g as GestureData);
+      }
+    });
+    this.setGestures(validGestures);
+  };
+
   setGestures = (gestures: GestureData[], isRetrainNeeded: boolean = true) => {
+    this.setGestureState({ data: [] });
     const data =
       // Always have at least one gesture for walk through
-      gestures.length === 0 ? initialGestureContextState.data : gestures;
-    this.setGestureState({ ...this.gestureState, data });
+      gestures.length === 0 ? [this.generateNewGesture()] : gestures;
+    this.setGestureState({ data });
 
     // Update training status
     const newTrainingStatus = !hasSufficientDataForTraining(data)
@@ -179,7 +221,7 @@ class GestureActions {
   };
 
   addNewGesture = () => {
-    this.setGestures([...this.gestureState.data, generateNewGesture()]);
+    this.setGestures([...this.gestureState.data, this.generateNewGesture()]);
   };
 
   addGestureRecordings = (id: GestureData["ID"], recs: RecordingData[]) => {
@@ -196,6 +238,13 @@ class GestureActions {
   setGestureName = (id: GestureData["ID"], name: string) => {
     const newGestures = this.gestureState.data.map((g) => {
       return id !== g.ID ? g : { ...g, name };
+    });
+    this.setGestures(newGestures, false);
+  };
+
+  setGestureIcon = (id: GestureData["ID"], icon: MakeCodeIcon) => {
+    const newGestures = this.gestureState.data.map((g) => {
+      return id !== g.ID ? g : { ...g, icon };
     });
     this.setGestures(newGestures, false);
   };
