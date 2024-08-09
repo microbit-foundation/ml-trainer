@@ -9,13 +9,8 @@
   import { CreateDialogProps, createDialog, createSync, melt } from '@melt-ui/svelte';
   import { fade, scale } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
-  import CloseIcon from 'virtual:icons/ri/close-line';
-  import { t } from '../../i18n';
-  import IconButton from '../IconButton.svelte';
   import { onDestroy } from 'svelte';
-  import StandardButton from '../StandardButton.svelte';
 
-  export let hasCloseButton = true;
   export let closeOnOutsideClick: boolean = true;
   export let closeOnEscape: boolean = true;
   export let isOpen: boolean;
@@ -105,17 +100,6 @@
           start: 0.9,
           easing: quintOut,
         }}>
-        {#if hasCloseButton}
-          <div class="absolute px-3 py-2">
-            <StandardButton
-              style="background-color: #3454d1; color: white; border-color: #3454d1"
-              onClick={onCloseDialog}
-              useAction={$close.action}
-              ariaLabel={$t('actions.close')}>
-              {'<- Back'}
-            </StandardButton>
-          </div>
-        {/if}
         <div class={$$restProps.class || ''}>
           <slot name="body" />
         </div>

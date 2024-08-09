@@ -96,12 +96,12 @@
     };
   };
 
-  const handleDownload = (hexData: string) => {
+  const handleDownload = (download: { name: string; hex: string }) => {
     // TODO: Only disconnect input micro:bit if user chooses this device.
     Microbits.disconnect(DeviceRequestStates.INPUT);
     Microbits.dispose(DeviceRequestStates.INPUT);
     state.update(obj => {
-      obj.outputHex = hexData;
+      obj.outputHex = download.hex;
       return obj;
     });
     connectionDialogState.update(s => {
@@ -170,4 +170,4 @@
   onClose={handleEditDialogClose}
   onCodeChange={handleCodeChange}
   onDownload={handleDownload}
-  baseUrl="https://pxt-microbit.pages.dev/" />
+  baseUrl="https://ml-tool.pxt-microbit.pages.dev/" />

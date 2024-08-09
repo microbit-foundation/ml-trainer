@@ -15,7 +15,17 @@
   export let isOpen: boolean;
   export let onClose: () => void;
   export let onCodeChange: (newCode: MakeCodeProject) => void;
-  export let onDownload: (hexData: string) => void;
+  export let onDownload: (download: { name: string; hex: string }) => void;
+  export let onSave: undefined | ((save: { name: string; hex: string }) => void);
+
+  const handleSave = (save: { name: string; hex: string }) => {
+    const blob = new Blob([save.hex], {type: "application/octet-stream"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${save.name}.hex`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
 </script>
 
 <FullScreenDialog {isOpen} {onClose} class="w-full h-full space-y-5">
@@ -25,8 +35,10 @@
         el={MakeCodeEditor}
         style={{ height: '100%' }}
         initialCode={code}
-        queryParams={{ parentframedownload: '1' }}
+        controller={2}
+        onBack={onClose}
         class="w-full h-full"
+        onSave={handleSave}
         {baseUrl}
         {onCodeChange}
         {onDownload} />
