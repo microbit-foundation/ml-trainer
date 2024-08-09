@@ -18,13 +18,13 @@
   export let onDownload: (download: { name: string; hex: string }) => void;
 
   const handleSave = (save: { name: string; hex: string }) => {
-    const blob = new Blob([save.hex], {type: "application/octet-stream"});
-    const a = document.createElement("a");
+    const blob = new Blob([save.hex], { type: 'application/octet-stream' });
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = `${save.name}.hex`;
     a.click();
     URL.revokeObjectURL(a.href);
-  }
+  };
 </script>
 
 <FullScreenDialog {isOpen} {onClose} class="w-full h-full space-y-5">
