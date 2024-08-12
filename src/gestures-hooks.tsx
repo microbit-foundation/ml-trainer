@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import { createContext, ReactNode, useContext, useMemo } from "react";
 import { useStorage } from "./hooks/use-storage";
 import { MlStage, MlStatus, useMlStatus } from "./ml-status-hooks";
 import { isArray } from "./utils";
@@ -99,29 +99,14 @@ export const useGestureData = (): GestureContextValue => {
 };
 
 export const GesturesProvider = ({ children }: { children: ReactNode }) => {
-  const [storedState, setStoredState] = useStorage<GestureContextState>(
+  const [state, setState] = useStorage<GestureContextState>(
     "local",
     "gestures",
     { data: [] },
     isValidStoredGestureData
   );
-  const [state, setState] = useState<GestureContextState>({
-    data: storedState.data,
-  });
-  const setStates = (newState: GestureContextState) => {
-    setStoredState({
-      ...newState,
-      data: newState.data.map(({ name, recordings, ID, icon }) => ({
-        name,
-        recordings,
-        ID,
-        icon,
-      })),
-    });
-    setState(newState);
-  };
   return (
-    <GestureContext.Provider value={[state, setStates]}>
+    <GestureContext.Provider value={[state, setState]}>
       {children}
     </GestureContext.Provider>
   );
@@ -203,7 +188,6 @@ class GestureActions {
   };
 
   setGestures = (gestures: GestureData[], isRetrainNeeded: boolean = true) => {
-    this.setGestureState({ data: [] });
     const data =
       // Always have at least one gesture for walk through
       gestures.length === 0 ? [this.generateNewGesture()] : gestures;

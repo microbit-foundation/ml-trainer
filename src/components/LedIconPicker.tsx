@@ -7,7 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@chakra-ui/react";
-import { memo, useCallback } from "react";
+import { useCallback } from "react";
 import { RiArrowDropDownFill } from "react-icons/ri";
 import { MakeCodeIcon, makecodeIcons } from "../utils/icons";
 import LedIcon from "./LedIcon";
@@ -64,4 +64,4 @@ const LedIconPicker = ({ onIconSelected }: LedIconPicker) => {
   );
 };
 
-export default memo(LedIconPicker, () => true);
+export default LedIconPicker;

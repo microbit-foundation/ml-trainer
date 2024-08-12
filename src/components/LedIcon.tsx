@@ -1,5 +1,5 @@
 import { AspectRatio, Box, HStack, keyframes, VStack } from "@chakra-ui/react";
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 import { icons, LedIconType } from "../utils/icons";
 
 interface LedIconProps {
@@ -106,4 +106,4 @@ const LedIconRow = ({
   );
 };
 
-export default LedIcon;
+export default memo(LedIcon);
