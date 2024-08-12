@@ -8,8 +8,7 @@ import transferProgramWindows from "../images/transfer_program_windows.gif";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
-import { getHexFileUrl } from "../device/get-hex-file";
-import { ConnectionFlowType } from "../connection-stage-hooks";
+import { HexType, getHexFileUrl } from "../device/get-hex-file";
 
 interface ImageProps {
   src: string;
@@ -51,7 +50,7 @@ const ManualFlashingDialog = ({ ...props }: ManualFlashingDialogProps) => {
 
   const handleDownload = useCallback(() => {
     download(
-      getHexFileUrl("universal", ConnectionFlowType.Bluetooth)!,
+      getHexFileUrl("universal", HexType.Bluetooth)!,
       "machine-learning-tool-program.hex"
     );
   }, []);

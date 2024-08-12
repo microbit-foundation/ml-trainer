@@ -27,7 +27,7 @@ const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
     if (isConnected) {
       handleNavigateToAddData();
     } else {
-      connStageActions.start();
+      connStageActions.startConnect();
     }
   }, [
     startOverWarningDialogDisclosure,

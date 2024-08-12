@@ -21,13 +21,13 @@ const LiveGraphPanel = () => {
       status === ConnectionStatus.FailedToSelectBluetoothDevice
       ? {
           textId: "footer.connectButton",
-          onClick: actions.start,
+          onClick: actions.startConnect,
         }
       : {
           textId: "actions.reconnect",
           onClick: actions.reconnect,
         };
-  }, [actions.reconnect, actions.start, status]);
+  }, [actions.reconnect, actions.startConnect, status]);
 
   return (
     <HStack

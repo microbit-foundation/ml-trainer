@@ -9,7 +9,7 @@ const ConnectFirstView = () => {
   const { actions } = useConnectionStage();
 
   const handleConnect = useCallback(() => {
-    actions.start();
+    actions.startConnect();
   }, [actions]);
 
   return (

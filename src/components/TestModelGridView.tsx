@@ -31,6 +31,7 @@ import CodeViewGridItem from "./CodeViewGridItem";
 import EditCodeDialog from "./EditCodeDialog";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
+import { useConnectionStage } from "../connection-stage-hooks";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "200px 360px 40px auto",
@@ -61,6 +62,7 @@ const TestModelGridView = () => {
   const editCodeDialogDisclosure = useDisclosure();
   const [gestures] = useGestureData();
   const { setRequiredConfidence } = useGestureActions();
+  const { actions } = useConnectionStage();
 
   const { project, setProject, createGestureDefaultProject } =
     useMakeCodeProject(gestures.data);
@@ -82,6 +84,22 @@ const TestModelGridView = () => {
     },
     [setProject]
   );
+
+  const handleSave = useCallback((save: { name: string; hex: string }) => {
+    const blob = new Blob([save.hex], { type: "application/octet-stream" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${save.name}.hex`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }, []);
+
+  const handleDownload = useCallback(
+    (download: { name: string; hex: string }) => {
+      actions.startDownloadUserProjectHex(download.hex);
+    },
+    [actions]
+  );
   return (
     <>
       <EditCodeDialog
@@ -90,12 +108,8 @@ const TestModelGridView = () => {
         isOpen={editCodeDialogDisclosure.isOpen}
         onChange={handleCodeChange}
         onBack={editCodeDialogDisclosure.onClose}
-        onDownload={({ name, hex }) => {
-          console.log("download!", name, hex);
-        }}
-        onSave={({ name, hex }) => {
-          console.log("save!", name, hex);
-        }}
+        onDownload={handleDownload}
+        onSave={handleSave}
       />
       <MakeCodeRenderBlocksProvider
         key={makeCodeLang}

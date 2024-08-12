@@ -13,6 +13,7 @@ import {
 } from "./connection-stage-hooks";
 import { createStepPageUrl } from "./urls";
 import { ConnectionStatus } from "./connect-status-hooks";
+import { HexType } from "./device/get-hex-file";
 
 type FlowStage = Pick<ConnectionStage, "flowStep" | "flowType">;
 
@@ -25,7 +26,7 @@ export class ConnectionStageActions {
     private setStatus: (status: ConnectionStatus) => void
   ) {}
 
-  start = () => {
+  startConnect = () => {
     this.setStatus(ConnectionStatus.NotConnected);
     this.setStage({
       ...this.stage,
@@ -41,6 +42,12 @@ export class ConnectionStageActions {
     });
   };
 
+  startDownloadUserProjectHex = (hex: string) => {
+    //TODO: Set out for output flow and store hex
+    // TODO: Only disconnect input micro:bit if user chooses this device.
+    console.log(hex);
+  };
+
   setFlowStep = (step: ConnectionFlowStep) => {
     this.setStage({ ...this.stage, flowStep: step });
   };
@@ -50,9 +57,15 @@ export class ConnectionStageActions {
     onSuccess: (stage: ConnectionStage) => void
   ) => {
     this.setFlowStep(ConnectionFlowStep.WebUsbChooseMicrobit);
+    const flowTypeToHexType: Record<ConnectionFlowType, HexType> = {
+      [ConnectionFlowType.Bluetooth]: HexType.Bluetooth,
+      [ConnectionFlowType.RadioBridge]: HexType.RadioBridge,
+      [ConnectionFlowType.RadioRemote]: HexType.RadioRemote,
+    };
+    const hexType = flowTypeToHexType[this.stage.flowType];
     const { result, deviceId } =
       await this.actions.requestUSBConnectionAndFlash(
-        this.stage.flowType,
+        hexType,
         progressCallback
       );
     if (result !== ConnectAndFlashResult.Success) {
