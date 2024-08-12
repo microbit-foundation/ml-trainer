@@ -10,6 +10,7 @@ import {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import { ConnectActions } from "./connect-actions";
 import { useLogging } from "./logging/logging-hooks";
@@ -27,36 +28,31 @@ interface ConnectProviderProps {
 }
 
 export const ConnectProvider = ({ children }: ConnectProviderProps) => {
-  const usb = useMemo(() => new MicrobitWebUSBConnection(), []);
-  const logging = useLogging();
-  const bluetooth = useMemo(
-    () => new MicrobitWebBluetoothConnection({ logging }),
-    [logging]
-  );
-  const radioBridge = useMemo(
-    () =>
-      new MicrobitRadioBridgeConnection(usb, {
-        logging,
-      }),
-    [logging, usb]
-  );
-  const isInitialized = useRef<boolean>(false);
+  const usb = useRef(new MicrobitWebUSBConnection()).current;
+  const logging = useRef(useLogging()).current;
+  const bluetooth = useRef(
+    new MicrobitWebBluetoothConnection({ logging })
+  ).current;
+  const radioBridge = useRef(
+    new MicrobitRadioBridgeConnection(usb, { logging })
+  ).current;
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   useEffect(() => {
     const initialize = async () => {
       await usb.initialize();
       await bluetooth.initialize();
       await radioBridge.initialize();
+      setIsInitialized(true);
     };
-    if (!isInitialized.current) {
+    if (!isInitialized) {
       void initialize();
-      isInitialized.current = true;
     }
-  }, [bluetooth, radioBridge, usb]);
+  }, [bluetooth, isInitialized, radioBridge, usb]);
 
   return (
     <ConnectContext.Provider value={{ usb, bluetooth, radioBridge }}>
-      {children}
+      {isInitialized ? children : <></>}
     </ConnectContext.Provider>
   );
 };

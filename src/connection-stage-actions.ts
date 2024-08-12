@@ -28,15 +28,15 @@ export class ConnectionStageActions {
 
   startConnect = () => {
     this.setStatus(ConnectionStatus.NotConnected);
+    const { isWebBluetoothSupported, isWebUsbSupported } = this.stage;
     this.setStage({
       ...this.stage,
       hasFailedToReconnectTwice: false,
-      flowType:
-        this.stage.flowType === ConnectionFlowType.RadioBridge
-          ? ConnectionFlowType.RadioRemote
-          : ConnectionFlowType.Bluetooth,
+      flowType: !isWebBluetoothSupported
+        ? ConnectionFlowType.RadioRemote
+        : ConnectionFlowType.Bluetooth,
       flowStep:
-        !this.stage.isWebBluetoothSupported && !this.stage.isWebUsbSupported
+        !isWebBluetoothSupported && !isWebUsbSupported
           ? ConnectionFlowStep.WebUsbBluetoothUnsupported
           : ConnectionFlowStep.Start,
     });

@@ -26,7 +26,6 @@ const ResourceCard = ({ id, imgSrc }: ResourceCardProps) => {
       borderRadius="10px"
       overflow="hidden"
       maxW="22rem"
-      h="100%"
       boxShadow="0 0 12px 0 rgba(0,0,0,.1)"
     >
       <AspectRatio w="100%" ratio={16 / 9} position="relative">
