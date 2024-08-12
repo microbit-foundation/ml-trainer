@@ -105,14 +105,14 @@ export const useMakeCodeProject = (gestures: GestureData[]) => {
   );
 
   const setProject = useCallback(
-    (project: MakeCodeProject) => {
+    (project: MakeCodeProject | undefined) => {
       setUserProjects({ makeCode: project });
     },
     [setUserProjects]
   );
 
   return {
-    hasStoredProject: userProjects !== undefined,
+    hasStoredProject: userProjects.makeCode !== undefined,
     project: userProjects.makeCode ?? { text: defaultProjectText },
     setProject,
     createGestureDefaultProject,

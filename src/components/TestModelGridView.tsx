@@ -1,6 +1,7 @@
 import {
   Button,
   Grid,
+  GridItem,
   GridProps,
   HStack,
   Icon,
@@ -32,11 +33,11 @@ import EditCodeDialog from "./EditCodeDialog";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
 import { useConnectionStage } from "../connection-stage-hooks";
+import CodeViewCard from "./CodeViewCard";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "200px 360px 40px auto",
   gap: 3,
-  px: 10,
   py: 2,
   w: "100%",
 };
@@ -64,7 +65,7 @@ const TestModelGridView = () => {
   const { setRequiredConfidence } = useGestureActions();
   const { actions } = useConnectionStage();
 
-  const { project, setProject, createGestureDefaultProject } =
+  const { hasStoredProject, project, setProject, createGestureDefaultProject } =
     useMakeCodeProject(gestures.data);
 
   const confidences = usePrediction();
@@ -84,6 +85,11 @@ const TestModelGridView = () => {
     },
     [setProject]
   );
+
+  const handleResetProject = useCallback(() => {
+    // Clear stored project
+    setProject(undefined);
+  }, [setProject]);
 
   const handleSave = useCallback((save: { name: string; hex: string }) => {
     const blob = new Blob([save.hex], { type: "application/octet-stream" });
@@ -124,10 +130,9 @@ const TestModelGridView = () => {
             values={{ action: predicationLabel }}
           />
         </VisuallyHidden>
-        <HeadingGrid {...gridCommonProps} headings={headings}>
+        <HeadingGrid {...gridCommonProps} px={10} headings={headings}>
           <HStack>
-            {/* TODO: Reset to default action */}
-            <Button variant="secondary" size="sm">
+            <Button variant="secondary" size="sm" onClick={handleResetProject}>
               <FormattedMessage id="reset-to-default-action" />
             </Button>
             <Button
@@ -139,38 +144,61 @@ const TestModelGridView = () => {
             </Button>
           </HStack>
         </HeadingGrid>
-        <Grid
-          {...gridCommonProps}
-          alignItems="start"
-          autoRows="max-content"
-          overflow="auto"
-          flexGrow={1}
+        <VStack
+          px={10}
+          w="full"
           h={0}
+          justifyContent="start"
+          flexGrow={1}
+          alignItems="start"
+          overflow="auto"
+          flexShrink={1}
         >
-          {gestures.data.map((gesture, idx) => {
-            const { ID, name, requiredConfidence: threshold } = gesture;
-            return (
-              <React.Fragment key={idx}>
-                <GestureNameGridItem id={ID} name={name} readOnly={true} />
-                <CertaintyThresholdGridItem
-                  onThresholdChange={(val) => setRequiredConfidence(ID, val)}
-                  currentConfidence={confidences?.[ID]}
-                  requiredConfidence={
-                    threshold ?? mlSettings.defaultRequiredConfidence
-                  }
-                  isTriggered={prediction?.ID === ID}
-                />
-                <VStack justifyContent="center" h="full">
-                  <Icon as={RiArrowRightLine} boxSize={10} color="gray.600" />
-                </VStack>
-                <CodeViewGridItem
-                  // TODO: To memoize operation. Maybe create a TestModelGridRow component
-                  project={createGestureDefaultProject(gesture)}
-                />
-              </React.Fragment>
-            );
-          })}
-        </Grid>
+          <HStack gap={0} h="min-content" w="full">
+            <Grid
+              {...gridCommonProps}
+              {...(hasStoredProject ? { w: "fit-content", pr: 0 } : {})}
+              autoRows="max-content"
+              h="fit-content"
+              alignSelf="start"
+            >
+              {gestures.data.map((gesture, idx) => {
+                const { ID, name, requiredConfidence: threshold } = gesture;
+                return (
+                  <React.Fragment key={idx}>
+                    <GestureNameGridItem id={ID} name={name} readOnly={true} />
+                    <CertaintyThresholdGridItem
+                      onThresholdChange={(val) =>
+                        setRequiredConfidence(ID, val)
+                      }
+                      currentConfidence={confidences?.[ID]}
+                      requiredConfidence={
+                        threshold ?? mlSettings.defaultRequiredConfidence
+                      }
+                      isTriggered={prediction?.ID === ID}
+                    />
+                    <VStack justifyContent="center" h="full">
+                      <Icon
+                        as={RiArrowRightLine}
+                        boxSize={10}
+                        color="gray.600"
+                      />
+                    </VStack>
+                    {hasStoredProject ? (
+                      // Empty div to fill up grid cell
+                      <GridItem></GridItem>
+                    ) : (
+                      <CodeViewGridItem
+                        project={createGestureDefaultProject(gesture)}
+                      />
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </Grid>
+            {hasStoredProject && <CodeViewCard project={project} />}
+          </HStack>
+        </VStack>
       </MakeCodeRenderBlocksProvider>
     </>
   );
