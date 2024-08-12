@@ -15,6 +15,11 @@ import gestureDataBadLabels from "./test-fixtures/gesture-data-bad-labels.json";
 import gestureData from "./test-fixtures/gesture-data.json";
 import testdataShakeStill from "./test-fixtures/test-data-shake-still.json";
 
+const fixUpTestData = (data: Partial<GestureData>[]): GestureData[] => {
+  data.forEach((action) => (action.icon = "Heart"));
+  return data as GestureData[];
+};
+
 let trainingResult: TrainingResult;
 beforeAll(async () => {
   // No webgl in tests running in node.
@@ -24,7 +29,7 @@ beforeAll(async () => {
   const randomSpy = vi.spyOn(Math, "random");
   randomSpy.mockImplementation(() => 0.5);
 
-  trainingResult = await trainModel({ data: gestureData });
+  trainingResult = await trainModel({ data: fixUpTestData(gestureData) });
 });
 
 const getModelResults = (data: GestureData[]) => {
@@ -54,7 +59,7 @@ const getModelResults = (data: GestureData[]) => {
 describe("Model tests", () => {
   test("returns acceptable results on training data", () => {
     const { tensorFlowResultAccuracy, tensorflowPredictionResult, labels } =
-      getModelResults(gestureData);
+      getModelResults(fixUpTestData(gestureData));
     const d = labels[0].length; // dimensions
     for (let i = 0, j = 0; i < tensorflowPredictionResult.length; i += d, j++) {
       const result = tensorflowPredictionResult.slice(i, i + d);
@@ -69,7 +74,7 @@ describe("Model tests", () => {
   // Training data is shake, still, circle. This data is still, circle, shake.
   test("returns incorrect results on wrongly labelled training data", () => {
     const { tensorFlowResultAccuracy, tensorflowPredictionResult, labels } =
-      getModelResults(gestureDataBadLabels);
+      getModelResults(fixUpTestData(gestureDataBadLabels));
     const d = labels[0].length; // dimensions
     for (let i = 0, j = 0; i < tensorflowPredictionResult.length; i += d, j++) {
       const result = tensorflowPredictionResult.slice(i, i + d);
@@ -81,7 +86,9 @@ describe("Model tests", () => {
   });
 
   test("returns correct results on testing data", () => {
-    const { tensorFlowResultAccuracy } = getModelResults(testdataShakeStill);
+    const { tensorFlowResultAccuracy } = getModelResults(
+      fixUpTestData(testdataShakeStill)
+    );
     // The model thinks two samples of still are circle.
     // 14 samples; 1.0 / 14 = 0.0714; 0.0714 * 12 correct inferences = 0.8571
     expect(parseFloat(tensorFlowResultAccuracy)).toBeGreaterThan(0.85);

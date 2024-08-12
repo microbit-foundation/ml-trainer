@@ -105,10 +105,15 @@ const TestModelGridView = () => {
         h={0}
       >
         {gestures.data.map(
-          ({ ID, name, requiredConfidence: threshold }, idx) => {
+          ({ ID, name, icon, requiredConfidence: threshold }, idx) => {
             return (
               <React.Fragment key={idx}>
-                <GestureNameGridItem id={ID} name={name} readOnly={true} />
+                <GestureNameGridItem
+                  id={ID}
+                  name={name}
+                  icon={icon}
+                  readOnly={true}
+                />
                 <CertaintyThresholdGridItem
                   onThresholdChange={(val) => setRequiredConfidence(ID, val)}
                   currentConfidence={confidences?.[ID]}
