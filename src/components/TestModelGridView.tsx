@@ -11,7 +11,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useGestureActions, useGestureData } from "../gestures-hooks";
 import { mlSettings } from "../ml";
-import { usePrediction } from "../ml-hooks";
+import { getPredictedGesture, usePrediction } from "../ml-hooks";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
@@ -41,7 +41,8 @@ const TestModelGridView = () => {
   const intl = useIntl();
   const [gestures] = useGestureData();
   const { setRequiredConfidence } = useGestureActions();
-  const { confidences, predictedGesture } = usePrediction();
+  const confidences = usePrediction();
+  const predictedGesture = getPredictedGesture(gestures, confidences);
   const predicationLabel =
     predictedGesture?.name ??
     intl.formatMessage({

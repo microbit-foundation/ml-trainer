@@ -4,10 +4,11 @@ import { MdBolt } from "react-icons/md";
 import { FormattedMessage } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { usePrediction } from "../ml-hooks";
+import { getPredictedGesture, usePrediction } from "../ml-hooks";
 import InfoToolTip from "./InfoToolTip";
 import LedIcon from "./LedIcon";
 import LiveGraph from "./LiveGraph";
+import { useGestureData } from "../gestures-hooks";
 
 interface LiveGraphPanelProps {
   isTestModelPage?: boolean;
@@ -35,7 +36,9 @@ const LiveGraphPanel = ({ isTestModelPage = false }: LiveGraphPanelProps) => {
         };
   }, [actions.reconnect, actions.start, status]);
 
-  const { predictedGesture } = usePrediction();
+  const confidences = usePrediction();
+  const [gestures] = useGestureData();
+  const predictedGesture = getPredictedGesture(gestures, confidences);
 
   return (
     <HStack
