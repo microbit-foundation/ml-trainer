@@ -9,12 +9,25 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
+import { ConnectionFlowType } from "../connection-stage-hooks";
 
 export interface DownloadingDialogProps {
   isOpen: boolean;
   headingId: string;
   progress: number;
 }
+
+export const getHeadingId = (flowType: ConnectionFlowType) => {
+  switch (flowType) {
+    case ConnectionFlowType.DownloadProject:
+    case ConnectionFlowType.ConnectBluetooth:
+      return "connectMB.usbDownloading.header";
+    case ConnectionFlowType.ConnectRadioRemote:
+      return "connectMB.usbDownloadingMB1.header";
+    case ConnectionFlowType.ConnectRadioBridge:
+      return "connectMB.usbDownloadingMB2.header";
+  }
+};
 
 const DownloadingDialog = ({
   isOpen,

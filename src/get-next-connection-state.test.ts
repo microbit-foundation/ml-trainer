@@ -86,7 +86,7 @@ describe("getNextConnectionState for radio connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.Connecting,
-        flowType: ConnectionFlowType.RadioRemote,
+        flowType: ConnectionFlowType.ConnectRadioRemote,
       },
     });
   });
@@ -105,7 +105,7 @@ describe("getNextConnectionState for radio connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.Connected,
-        flowType: ConnectionFlowType.RadioRemote,
+        flowType: ConnectionFlowType.ConnectRadioRemote,
       },
     });
   });
@@ -124,7 +124,7 @@ describe("getNextConnectionState for radio connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.Connected,
-        flowType: ConnectionFlowType.RadioRemote,
+        flowType: ConnectionFlowType.ConnectRadioRemote,
       },
     });
   });
@@ -159,7 +159,7 @@ describe("getNextConnectionState for radio connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToConnect,
-        flowType: ConnectionFlowType.RadioRemote,
+        flowType: ConnectionFlowType.ConnectRadioRemote,
       },
     });
   });
@@ -194,7 +194,7 @@ describe("getNextConnectionState for radio connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.ReconnectingAutomatically,
-        flowType: ConnectionFlowType.RadioRemote,
+        flowType: ConnectionFlowType.ConnectRadioRemote,
       },
     });
   });
@@ -213,7 +213,7 @@ describe("getNextConnectionState for radio connection", () => {
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.ConnectionLost,
-        flowType: ConnectionFlowType.RadioBridge,
+        flowType: ConnectionFlowType.ConnectRadioBridge,
       },
     });
   });
@@ -232,7 +232,7 @@ describe("getNextConnectionState for radio connection", () => {
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToReconnect,
-        flowType: ConnectionFlowType.RadioBridge,
+        flowType: ConnectionFlowType.ConnectRadioBridge,
       },
     });
   });
@@ -251,7 +251,7 @@ describe("getNextConnectionState for radio connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToReconnectTwice,
-        flowType: ConnectionFlowType.RadioRemote,
+        flowType: ConnectionFlowType.ConnectRadioRemote,
       },
     });
   });
@@ -270,7 +270,7 @@ describe("getNextConnectionState for radio connection", () => {
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.ConnectionLost,
-        flowType: ConnectionFlowType.RadioRemote,
+        flowType: ConnectionFlowType.ConnectRadioRemote,
       },
     });
   });
@@ -289,7 +289,7 @@ describe("getNextConnectionState for radio connection", () => {
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToReconnect,
-        flowType: ConnectionFlowType.RadioRemote,
+        flowType: ConnectionFlowType.ConnectRadioRemote,
       },
     });
   });
@@ -308,7 +308,7 @@ describe("getNextConnectionState for radio connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToReconnectTwice,
-        flowType: ConnectionFlowType.RadioRemote,
+        flowType: ConnectionFlowType.ConnectRadioRemote,
       },
     });
   });
@@ -330,7 +330,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.Connecting,
-        flowType: ConnectionFlowType.Bluetooth,
+        flowType: ConnectionFlowType.ConnectBluetooth,
       },
     });
   });
@@ -349,7 +349,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.Connected,
-        flowType: ConnectionFlowType.Bluetooth,
+        flowType: ConnectionFlowType.ConnectBluetooth,
       },
     });
   });
@@ -368,7 +368,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.Connected,
-        flowType: ConnectionFlowType.Bluetooth,
+        flowType: ConnectionFlowType.ConnectBluetooth,
       },
     });
   });
@@ -403,7 +403,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToSelectBluetoothDevice,
-        flowType: ConnectionFlowType.Bluetooth,
+        flowType: ConnectionFlowType.ConnectBluetooth,
       },
     });
   });
@@ -422,7 +422,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToConnect,
-        flowType: ConnectionFlowType.Bluetooth,
+        flowType: ConnectionFlowType.ConnectBluetooth,
       },
     });
   });
@@ -457,7 +457,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.ReconnectingAutomatically,
-        flowType: ConnectionFlowType.Bluetooth,
+        flowType: ConnectionFlowType.ConnectBluetooth,
       },
     });
   });
@@ -476,7 +476,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.ConnectionLost,
-        flowType: ConnectionFlowType.Bluetooth,
+        flowType: ConnectionFlowType.ConnectBluetooth,
       },
     });
   });
@@ -495,7 +495,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToReconnect,
-        flowType: ConnectionFlowType.Bluetooth,
+        flowType: ConnectionFlowType.ConnectBluetooth,
       },
     });
   });
@@ -514,7 +514,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToReconnectTwice,
-        flowType: ConnectionFlowType.Bluetooth,
+        flowType: ConnectionFlowType.ConnectBluetooth,
       },
     });
   });

@@ -33,9 +33,9 @@ export const getHexFileUrl = (
   }[type];
 };
 
-export const getFlashDataSource = (hex: string): FlashDataSource => {
+export const getFlashDataSource = (hex: HexType): FlashDataSource => {
   return async (boardVersion: BoardVersion) => {
-    const url = getHexFileUrl(boardVersion, hex as HexType);
+    const url = getHexFileUrl(boardVersion, hex);
     if (!url) {
       throw new FlashDataError("No hex for board version");
     }

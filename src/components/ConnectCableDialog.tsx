@@ -20,14 +20,19 @@ export const getConnectionCableDialogConfig = (
   isWebBluetoothSupported: boolean
 ): Config => {
   switch (flowType) {
-    case ConnectionFlowType.Bluetooth:
+    case ConnectionFlowType.DownloadProject:
+      return {
+        headingId: "connectMB.connectCable.heading",
+        subtitleId: "connectMB.connectCable.subtitle",
+      };
+    case ConnectionFlowType.ConnectBluetooth:
       return {
         headingId: "connectMB.connectCable.heading",
         subtitleId: "connectMB.connectCable.subtitle",
         linkTextId: "connectMB.connectCable.skip",
         linkType: "skip",
       };
-    case ConnectionFlowType.RadioRemote:
+    case ConnectionFlowType.ConnectRadioRemote:
       return {
         headingId: "connectMB.connectCableMB1.heading",
         subtitleId: "connectMB.connectCableMB1.subtitle",
@@ -38,7 +43,7 @@ export const getConnectionCableDialogConfig = (
             }
           : {}),
       };
-    case ConnectionFlowType.RadioBridge:
+    case ConnectionFlowType.ConnectRadioBridge:
       return {
         headingId: "connectMB.connectCableMB2.heading",
         subtitleId: "connectMB.connectCableMB2.subtitle",

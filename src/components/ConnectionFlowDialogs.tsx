@@ -11,7 +11,7 @@ import ConnectBatteryDialog from "./ConnectBatteryDialog";
 import ConnectCableDialog, {
   getConnectionCableDialogConfig,
 } from "./ConnectCableDialog";
-import DownloadingDialog from "./DownloadingDialog";
+import DownloadingDialog, { getHeadingId } from "./DownloadingDialog";
 import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import LoadingDialog from "./LoadingDialog";
 import ManualFlashingDialog from "./ManualFlashingDialog";
@@ -90,7 +90,7 @@ const ConnectionDialogs = () => {
       return (
         <WhatYouWillNeedDialog
           type={
-            stage.flowType === ConnectionFlowType.Bluetooth
+            stage.flowType === ConnectionFlowType.ConnectBluetooth
               ? "bluetooth"
               : "radio"
           }
@@ -173,14 +173,9 @@ const ConnectionDialogs = () => {
       return <></>;
     }
     case ConnectionFlowStep.FlashingInProgress: {
-      const headingIdVariations = {
-        [ConnectionFlowType.Bluetooth]: "connectMB.usbDownloading.header",
-        [ConnectionFlowType.RadioRemote]: "connectMB.usbDownloadingMB1.header",
-        [ConnectionFlowType.RadioBridge]: "connectMB.usbDownloadingMB2.header",
-      };
       return (
         <DownloadingDialog
-          headingId={headingIdVariations[stage.flowType]}
+          headingId={getHeadingId(stage.flowType)}
           isOpen={isOpen}
           progress={flashProgress}
         />

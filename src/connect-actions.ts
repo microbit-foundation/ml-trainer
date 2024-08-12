@@ -7,9 +7,10 @@ import {
   MicrobitRadioBridgeConnection,
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
+  createUniversalHexFlashDataSource,
 } from "@microbit/microbit-connection";
 import { ConnectionType } from "./connection-stage-hooks";
-import { getFlashDataSource } from "./device/get-hex-file";
+import { HexType, getFlashDataSource } from "./device/get-hex-file";
 import { Logging } from "./logging/logging";
 
 export enum ConnectAndFlashResult {
@@ -96,7 +97,9 @@ export class ConnectActions {
     if (!this.usb) {
       return ConnectAndFlashResult.Failed;
     }
-    const data = getFlashDataSource(hex);
+    const data = Object.values(HexType).includes(hex as HexType)
+      ? getFlashDataSource(hex as HexType)
+      : createUniversalHexFlashDataSource(hex);
 
     if (!data) {
       return ConnectAndFlashResult.ErrorMicrobitUnsupported;

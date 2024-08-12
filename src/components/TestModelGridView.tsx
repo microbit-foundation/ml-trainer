@@ -101,8 +101,8 @@ const TestModelGridView = () => {
   }, []);
 
   const handleDownload = useCallback(
-    (download: { name: string; hex: string }) => {
-      actions.startDownloadUserProjectHex(download.hex);
+    async (download: { name: string; hex: string }) => {
+      await actions.startDownloadUserProjectHex(download.hex);
     },
     [actions]
   );

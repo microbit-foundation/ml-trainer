@@ -18,10 +18,16 @@ import {
 } from "./connect-status-hooks";
 
 export enum ConnectionFlowType {
-  Bluetooth = "bluetooth",
-  RadioBridge = "bridge",
-  RadioRemote = "remote",
+  ConnectBluetooth = "ConnectBluetooth",
+  ConnectRadioBridge = "ConnectRadioBridge",
+  ConnectRadioRemote = "ConnectRadioRemote",
+  DownloadProject = "DownloadProject",
 }
+
+export type InputConnectionFlowType =
+  | ConnectionFlowType.ConnectBluetooth
+  | ConnectionFlowType.ConnectRadioBridge
+  | ConnectionFlowType.ConnectRadioRemote;
 
 export type ConnectionType = "bluetooth" | "radio";
 
@@ -73,6 +79,9 @@ export interface ConnectionStage {
   radioBridgeDeviceId?: number;
   radioRemoteDeviceId?: number;
   hasFailedToReconnectTwice: boolean;
+
+  // User Project
+  makeCodeHex?: string;
 }
 
 type ConnectionStageContextValue = [
@@ -99,8 +108,8 @@ const getInitialConnectionStageValue = (
 ): ConnectionStage => ({
   flowStep: ConnectionFlowStep.None,
   flowType: isWebBluetoothSupported
-    ? ConnectionFlowType.Bluetooth
-    : ConnectionFlowType.RadioRemote,
+    ? ConnectionFlowType.ConnectBluetooth
+    : ConnectionFlowType.ConnectRadioRemote,
   bluetoothMicrobitName: config.bluetoothMicrobitName,
   radioRemoteDeviceId: config.radioRemoteDeviceId,
   connType: isWebBluetoothSupported ? "bluetooth" : "radio",

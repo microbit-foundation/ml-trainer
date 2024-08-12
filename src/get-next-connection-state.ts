@@ -37,10 +37,10 @@ export const getNextConnectionState = ({
   }
   const flowType =
     type === "usb"
-      ? ConnectionFlowType.RadioBridge
+      ? ConnectionFlowType.ConnectRadioBridge
       : type === "radioRemote"
-      ? ConnectionFlowType.RadioRemote
-      : ConnectionFlowType.Bluetooth;
+      ? ConnectionFlowType.ConnectRadioRemote
+      : ConnectionFlowType.ConnectBluetooth;
 
   // We use usb status to infer the radio bridge device status for handling error.
   if (type === "usb") {
@@ -65,7 +65,7 @@ export const getNextConnectionState = ({
       setHasAttemptedReconnect(false);
       return {
         status: ConnectionStatus.FailedToReconnectTwice,
-        flowType: ConnectionFlowType.RadioRemote,
+        flowType: ConnectionFlowType.ConnectRadioRemote,
       };
     }
     // If bridge micro:bit causes radio bridge reconnect to fail

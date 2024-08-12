@@ -33,8 +33,8 @@ export class ConnectionStageActions {
       ...this.stage,
       hasFailedToReconnectTwice: false,
       flowType: !isWebBluetoothSupported
-        ? ConnectionFlowType.RadioRemote
-        : ConnectionFlowType.Bluetooth,
+        ? ConnectionFlowType.ConnectRadioRemote
+        : ConnectionFlowType.ConnectBluetooth,
       flowStep:
         !isWebBluetoothSupported && !isWebUsbSupported
           ? ConnectionFlowStep.WebUsbBluetoothUnsupported
@@ -42,10 +42,18 @@ export class ConnectionStageActions {
     });
   };
 
-  startDownloadUserProjectHex = (hex: string) => {
-    //TODO: Set out for output flow and store hex
+  startDownloadUserProjectHex = async (hex: string) => {
     // TODO: Only disconnect input micro:bit if user chooses this device.
-    console.log(hex);
+    await this.actions.disconnect();
+    this.actions.removeStatusListener();
+    this.setStatus(ConnectionStatus.NotConnected);
+
+    this.setStage({
+      ...this.stage,
+      makeCodeHex: hex,
+      flowType: ConnectionFlowType.DownloadProject,
+      flowStep: ConnectionFlowStep.ConnectCable,
+    });
   };
 
   setFlowStep = (step: ConnectionFlowStep) => {
@@ -57,12 +65,7 @@ export class ConnectionStageActions {
     onSuccess: (stage: ConnectionStage) => void
   ) => {
     this.setFlowStep(ConnectionFlowStep.WebUsbChooseMicrobit);
-    const flowTypeToHexType: Record<ConnectionFlowType, HexType> = {
-      [ConnectionFlowType.Bluetooth]: HexType.Bluetooth,
-      [ConnectionFlowType.RadioBridge]: HexType.RadioBridge,
-      [ConnectionFlowType.RadioRemote]: HexType.RadioRemote,
-    };
-    const hexType = flowTypeToHexType[this.stage.flowType];
+    const hexType = this.getHex();
     const { result, deviceId } =
       await this.actions.requestUSBConnectionAndFlash(
         hexType,
@@ -75,6 +78,16 @@ export class ConnectionStageActions {
     await this.onFlashSuccess(deviceId, onSuccess);
   };
 
+  private getHex = () => {
+    return this.stage.flowType === ConnectionFlowType.DownloadProject
+      ? this.stage.makeCodeHex!
+      : {
+          [ConnectionFlowType.ConnectBluetooth]: HexType.Bluetooth,
+          [ConnectionFlowType.ConnectRadioBridge]: HexType.RadioBridge,
+          [ConnectionFlowType.ConnectRadioRemote]: HexType.RadioRemote,
+        }[this.stage.flowType];
+  };
+
   private onFlashSuccess = async (
     deviceId: number,
     onSuccess: (stage: ConnectionStage) => void
@@ -83,7 +96,10 @@ export class ConnectionStageActions {
     // Store radio/bluetooth details. Radio is essential to pass to micro:bit 2.
     // Bluetooth saves the user from entering the pattern.
     switch (this.stage.flowType) {
-      case ConnectionFlowType.Bluetooth: {
+      case ConnectionFlowType.DownloadProject: {
+        return this.setFlowStep(ConnectionFlowStep.None);
+      }
+      case ConnectionFlowType.ConnectBluetooth: {
         const microbitName = deviceIdToMicrobitName(deviceId);
         newStage = {
           ...this.stage,
@@ -94,13 +110,13 @@ export class ConnectionStageActions {
         };
         break;
       }
-      case ConnectionFlowType.RadioBridge: {
+      case ConnectionFlowType.ConnectRadioBridge: {
         await this.connectMicrobits({
           radioBridgeDeviceId: deviceId,
         });
         return;
       }
-      case ConnectionFlowType.RadioRemote: {
+      case ConnectionFlowType.ConnectRadioRemote: {
         newStage = {
           ...this.stage,
           connType: "radio",
@@ -115,7 +131,10 @@ export class ConnectionStageActions {
   };
 
   private handleConnectAndFlashFail = (result: ConnectAndFlashFailResult) => {
-    if (this.stage.flowType === ConnectionFlowType.Bluetooth) {
+    if (
+      this.stage.flowType === ConnectionFlowType.ConnectBluetooth ||
+      this.stage.flowType === ConnectionFlowType.DownloadProject
+    ) {
       return this.setFlowStep(ConnectionFlowStep.ManualFlashingTutorial);
     }
 
@@ -253,9 +272,9 @@ export class ConnectionStageActions {
     this.setStage({
       ...this.stage,
       flowType:
-        this.stage.flowType === ConnectionFlowType.Bluetooth
-          ? ConnectionFlowType.RadioRemote
-          : ConnectionFlowType.Bluetooth,
+        this.stage.flowType === ConnectionFlowType.ConnectBluetooth
+          ? ConnectionFlowType.ConnectRadioRemote
+          : ConnectionFlowType.ConnectBluetooth,
     });
   };
 
@@ -263,7 +282,7 @@ export class ConnectionStageActions {
     this.setStage({
       ...this.stage,
       flowStep: ConnectionFlowStep.Start,
-      flowType: ConnectionFlowType.Bluetooth,
+      flowType: ConnectionFlowType.ConnectBluetooth,
     });
   };
 
@@ -272,9 +291,15 @@ export class ConnectionStageActions {
     const isManualFlashing =
       !this.stage.isWebUsbSupported ||
       this.stage.flowStep === ConnectionFlowStep.ManualFlashingTutorial;
-    return this.stage.flowType === ConnectionFlowType.Bluetooth
-      ? bluetoothFlow({ isManualFlashing, isRestartAgain })
-      : radioFlow({ isRestartAgain });
+
+    switch (this.stage.flowType) {
+      case ConnectionFlowType.DownloadProject:
+        return downloadProjectFlow({ isManualFlashing });
+      case ConnectionFlowType.ConnectBluetooth:
+        return bluetoothFlow({ isManualFlashing, isRestartAgain });
+      default:
+        return radioFlow({ isRestartAgain });
+    }
   };
 
   private setFlowStage = (flowStage: FlowStage) => {
@@ -309,30 +334,30 @@ const bluetoothFlow = ({
     flowStep: isRestartAgain
       ? ConnectionFlowStep.ReconnectFailedTwice
       : ConnectionFlowStep.Start,
-    flowType: ConnectionFlowType.Bluetooth,
+    flowType: ConnectionFlowType.ConnectBluetooth,
   },
   {
     flowStep: ConnectionFlowStep.ConnectCable,
-    flowType: ConnectionFlowType.Bluetooth,
+    flowType: ConnectionFlowType.ConnectBluetooth,
   },
   // Only bluetooth mode has this fallback, the radio bridge mode requires working WebUSB.
   {
     flowStep: isManualFlashing
       ? ConnectionFlowStep.ManualFlashingTutorial
       : ConnectionFlowStep.WebUsbFlashingTutorial,
-    flowType: ConnectionFlowType.Bluetooth,
+    flowType: ConnectionFlowType.ConnectBluetooth,
   },
   {
     flowStep: ConnectionFlowStep.ConnectBattery,
-    flowType: ConnectionFlowType.Bluetooth,
+    flowType: ConnectionFlowType.ConnectBluetooth,
   },
   {
     flowStep: ConnectionFlowStep.EnterBluetoothPattern,
-    flowType: ConnectionFlowType.Bluetooth,
+    flowType: ConnectionFlowType.ConnectBluetooth,
   },
   {
     flowStep: ConnectionFlowStep.ConnectBluetoothTutorial,
-    flowType: ConnectionFlowType.Bluetooth,
+    flowType: ConnectionFlowType.ConnectBluetooth,
   },
 ];
 
@@ -341,27 +366,44 @@ const radioFlow = ({ isRestartAgain }: { isRestartAgain: boolean }) => [
     flowStep: isRestartAgain
       ? ConnectionFlowStep.ReconnectFailedTwice
       : ConnectionFlowStep.Start,
-    flowType: ConnectionFlowType.RadioRemote,
+    flowType: ConnectionFlowType.ConnectRadioRemote,
   },
   {
     flowStep: ConnectionFlowStep.ConnectCable,
-    flowType: ConnectionFlowType.RadioRemote,
+    flowType: ConnectionFlowType.ConnectRadioRemote,
   },
   {
     flowStep: ConnectionFlowStep.WebUsbFlashingTutorial,
-    flowType: ConnectionFlowType.RadioRemote,
+    flowType: ConnectionFlowType.ConnectRadioRemote,
   },
   {
     flowStep: ConnectionFlowStep.ConnectBattery,
-    flowType: ConnectionFlowType.RadioRemote,
+    flowType: ConnectionFlowType.ConnectRadioRemote,
   },
   {
     flowStep: ConnectionFlowStep.ConnectCable,
-    flowType: ConnectionFlowType.RadioBridge,
+    flowType: ConnectionFlowType.ConnectRadioBridge,
   },
   {
     flowStep: ConnectionFlowStep.WebUsbFlashingTutorial,
-    flowType: ConnectionFlowType.RadioBridge,
+    flowType: ConnectionFlowType.ConnectRadioBridge,
+  },
+];
+
+const downloadProjectFlow = ({
+  isManualFlashing,
+}: {
+  isManualFlashing: boolean;
+}) => [
+  {
+    flowStep: ConnectionFlowStep.ConnectCable,
+    flowType: ConnectionFlowType.DownloadProject,
+  },
+  {
+    flowStep: isManualFlashing
+      ? ConnectionFlowStep.ManualFlashingTutorial
+      : ConnectionFlowStep.WebUsbFlashingTutorial,
+    flowType: ConnectionFlowType.DownloadProject,
   },
 ];
 

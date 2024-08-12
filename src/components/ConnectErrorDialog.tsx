@@ -32,21 +32,21 @@ interface ConnectErrorDialogProps {
 }
 
 const contentConfig = {
-  bluetooth: {
+  [ConnectionFlowType.ConnectBluetooth]: {
     listHeading: "disconnectedWarning.bluetooth2",
     bullets: [
       "disconnectedWarning.bluetooth3",
       "disconnectedWarning.bluetooth4",
     ],
   },
-  bridge: {
+  [ConnectionFlowType.ConnectRadioBridge]: {
     listHeading: "connectMB.usbTryAgain.replugMicrobit2",
     bullets: [
       "connectMB.usbTryAgain.replugMicrobit3",
       "connectMB.usbTryAgain.replugMicrobit4",
     ],
   },
-  remote: {
+  [ConnectionFlowType.ConnectRadioRemote]: {
     listHeading: "disconnectedWarning.bluetooth2",
     bullets: [
       "disconnectedWarning.bluetooth3",
@@ -69,6 +69,10 @@ const ReconnectErrorDialog = ({
   errorStep,
 }: ConnectErrorDialogProps) => {
   const errorTextIdPrefix = errorTextIdPrefixConfig[errorStep];
+  if (flowType === ConnectionFlowType.DownloadProject) {
+    // This flow type should not use this dialog
+    return <></>;
+  }
   return (
     <Modal
       motionPreset="none"
