@@ -41,7 +41,16 @@ export const makecodeIcons = {
   Target: "0010001110110110111000100",
 };
 
+export const Off = "0000000000000000000000000";
+
 export type MakeCodeIcon = keyof typeof makecodeIcons;
+
+export const icons = {
+  ...makecodeIcons,
+  off: Off,
+};
+
+export type LedIconType = keyof typeof icons;
 
 export const defaultIcons: MakeCodeIcon[] = [
   "House",

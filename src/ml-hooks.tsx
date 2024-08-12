@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useBufferedData } from "./buffered-data-hooks";
 import { useConnectActions } from "./connect-actions-hooks";
 import { ConnectionStatus, useConnectStatus } from "./connect-status-hooks";
-import { useGestureData } from "./gestures-hooks";
+import { Gesture, useGestureData } from "./gestures-hooks";
 import { useLogging } from "./logging/logging-hooks";
 import { Confidences, mlSettings, predict } from "./ml";
 import { MlActions } from "./ml-actions";
@@ -27,6 +27,9 @@ export const usePrediction = () => {
   const [connectStatus] = useConnectStatus();
   const connection = useConnectActions();
   const [confidences, setConfidences] = useState<Confidences | undefined>();
+  const [predictedGesture, setPredictedGesture] = useState<
+    Gesture | undefined
+  >();
   const [gestureData] = useGestureData();
 
   // Avoid re-renders due to threshold changes which update gestureData.
@@ -58,6 +61,25 @@ export const usePrediction = () => {
           logging.error(predictionResult.detail);
         } else {
           setConfidences(predictionResult.confidences);
+          // If more than one meet the threshold pick the highest
+          const thresholded = gestureData.data
+            .map((gesture) => ({
+              gesture,
+              thresholdDelta:
+                predictionResult.confidences[gesture.ID] -
+                (gesture.requiredConfidence ??
+                  mlSettings.defaultRequiredConfidence),
+            }))
+            .sort((left, right) => {
+              const a = left.thresholdDelta;
+              const b = right.thresholdDelta;
+              return a < b ? -1 : a > b ? 1 : 0;
+            });
+
+          const prediction = thresholded[thresholded.length - 1];
+          setPredictedGesture(
+            prediction.thresholdDelta >= 0 ? prediction.gesture : undefined
+          );
         }
       }
     };
@@ -69,7 +91,15 @@ export const usePrediction = () => {
       setConfidences(undefined);
       clearInterval(interval);
     };
-  }, [connection, classificationIds, logging, status, connectStatus, buffer]);
+  }, [
+    connection,
+    classificationIds,
+    logging,
+    status,
+    connectStatus,
+    buffer,
+    gestureData.data,
+  ]);
 
-  return confidences;
+  return { predictedGesture, confidences };
 };

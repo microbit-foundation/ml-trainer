@@ -1,29 +1,39 @@
 import { AspectRatio, Box, HStack, keyframes, VStack } from "@chakra-ui/react";
-import { MakeCodeIcon, makecodeIcons } from "../utils/makecode-icons";
+import { useCallback } from "react";
+import { icons, LedIconType } from "../utils/icons";
 
 interface LedIconProps {
-  icon: MakeCodeIcon;
+  icon: LedIconType;
+  isTestModelPage?: boolean;
+  isTriggered?: boolean;
+  size?: string | number;
 }
 
-const LedIcon = ({ icon }: LedIconProps) => {
-  const iconData = makecodeIcons[icon];
+const LedIcon = ({
+  icon,
+  isTestModelPage,
+  isTriggered,
+  size = 20,
+}: LedIconProps) => {
+  const iconData = icons[icon];
   return (
-    <AspectRatio width={20} ratio={1}>
-      <VStack w={20} h={20} spacing={0.5}>
+    <AspectRatio width={size} height={size} ratio={1}>
+      <VStack w="100%" h="100%" spacing={0.5}>
         {Array.from(Array(5)).map((_, idx) => {
           const start = idx * 5;
           return (
-            <LedIconRow key={idx} data={iconData.substring(start, start + 5)} />
+            <LedIconRow
+              key={idx}
+              data={iconData.substring(start, start + 5)}
+              isTestModelPage={!!isTestModelPage}
+              isTriggered={!!isTriggered}
+            />
           );
         })}
       </VStack>
     </AspectRatio>
   );
 };
-
-interface LedIconRowProps {
-  data: string;
-}
 
 const turnOn = keyframes`  
   0% {
@@ -49,18 +59,42 @@ const turnOff = keyframes`
   }
 `;
 
-const LedIconRow = ({ data }: LedIconRowProps) => {
+interface LedIconRowProps {
+  data: string;
+  isTestModelPage: boolean;
+  isTriggered: boolean;
+}
+
+const LedIconRow = ({
+  data,
+  isTestModelPage,
+  isTriggered,
+}: LedIconRowProps) => {
   const turnOnAnimation = `${turnOn} 200ms ease`;
   const turnOffAnimation = `${turnOff} 200ms ease`;
-
+  const getBgColor = useCallback(
+    (isOn: boolean) => {
+      if (!isOn) {
+        return "gray.200";
+      }
+      if (isTestModelPage && isTriggered) {
+        return "green.500";
+      }
+      if (isTestModelPage && !isTriggered) {
+        return "gray.600";
+      }
+      return "brand.500";
+    },
+    [isTriggered, isTestModelPage]
+  );
   return (
-    <HStack w="100%" h={4} spacing={0.5}>
+    <HStack w="100%" h="100%" spacing={0.5}>
       {Array.from(Array(5)).map((_, idx) => (
         <Box
           h="100%"
           w="100%"
           key={idx}
-          bg={data[idx] === "1" ? "brand.500" : "gray.200"}
+          bg={getBgColor(data[idx] === "1")}
           borderRadius="sm"
           transitionTimingFunction="ease"
           transitionProperty="background-color"

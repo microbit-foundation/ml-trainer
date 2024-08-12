@@ -23,7 +23,9 @@ const PercentageMeter = ({
       position="relative"
     >
       <HStack
-        w={`${value * 100}%`}
+        style={{
+          width: `${value * 100}%`,
+        }}
         h={height}
         rounded="full"
         bgColor={colorScheme}

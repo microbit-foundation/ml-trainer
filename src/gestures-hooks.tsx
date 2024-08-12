@@ -2,7 +2,7 @@ import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 import { useStorage } from "./hooks/use-storage";
 import { MlStage, MlStatus, useMlStatus } from "./ml-status-hooks";
 import { isArray } from "./utils";
-import { defaultIcons, MakeCodeIcon } from "./utils/makecode-icons";
+import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 export interface XYZData {
   x: number[];
   y: number[];
@@ -243,8 +243,14 @@ class GestureActions {
   };
 
   setGestureIcon = (id: GestureData["ID"], icon: MakeCodeIcon) => {
+    const currentIcon = this.gestureState.data.find((g) => g.ID === id)?.icon;
     const newGestures = this.gestureState.data.map((g) => {
-      return id !== g.ID ? g : { ...g, icon };
+      if (g.ID === id) {
+        g.icon = icon;
+      } else if (g.ID !== id && g.icon === icon && currentIcon) {
+        g.icon = currentIcon;
+      }
+      return g;
     });
     this.setGestures(newGestures, false);
   };

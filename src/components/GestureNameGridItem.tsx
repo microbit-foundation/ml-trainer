@@ -10,7 +10,7 @@ import {
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { useGestureActions } from "../gestures-hooks";
-import { MakeCodeIcon } from "../utils/makecode-icons";
+import { MakeCodeIcon } from "../utils/icons";
 import LedIcon from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";
 
@@ -22,6 +22,7 @@ interface GestureNameGridItemProps {
   id: number;
   selected?: boolean;
   readOnly: boolean;
+  isTriggered?: boolean;
 }
 
 const gestureNameMaxLength = 18;
@@ -34,6 +35,7 @@ const GestureNameGridItem = ({
   id,
   selected = false,
   readOnly = false,
+  isTriggered = false,
 }: GestureNameGridItemProps) => {
   const intl = useIntl();
   const toast = useToast();
@@ -98,8 +100,15 @@ const GestureNameGridItem = ({
         <CardBody p={0} alignContent="center">
           <HStack>
             <HStack>
-              <LedIcon icon={icon} />;
-              <LedIconPicker onIconSelected={handleIconSelected} />
+              <LedIcon
+                icon={icon}
+                isTestModelPage={readOnly}
+                isTriggered={isTriggered}
+              />
+              ;
+              {!readOnly && (
+                <LedIconPicker onIconSelected={handleIconSelected} />
+              )}
             </HStack>
             <Input
               isTruncated

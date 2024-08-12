@@ -10,10 +10,10 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { FormattedMessage, useIntl } from "react-intl";
-import PercentageMeter from "./PercentageMeter";
-import PercentageDisplay from "./PercentageDisplay";
 import { useCallback, useMemo } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+import PercentageDisplay from "./PercentageDisplay";
+import PercentageMeter from "./PercentageMeter";
 
 interface CertaintyThresholdGridItemProps {
   requiredConfidence?: number;

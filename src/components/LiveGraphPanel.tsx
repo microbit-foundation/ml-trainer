@@ -1,13 +1,19 @@
-import { Button, HStack, Portal, Text } from "@chakra-ui/react";
+import { Box, Button, HStack, Portal, Text } from "@chakra-ui/react";
 import { useMemo, useRef } from "react";
 import { MdBolt } from "react-icons/md";
 import { FormattedMessage } from "react-intl";
-import { useConnectionStage } from "../connection-stage-hooks";
-import InfoToolTip from "./InfoToolTip";
-import LiveGraph from "./LiveGraph";
 import { ConnectionStatus } from "../connect-status-hooks";
+import { useConnectionStage } from "../connection-stage-hooks";
+import { usePrediction } from "../ml-hooks";
+import InfoToolTip from "./InfoToolTip";
+import LedIcon from "./LedIcon";
+import LiveGraph from "./LiveGraph";
 
-const LiveGraphPanel = () => {
+interface LiveGraphPanelProps {
+  isTestModelPage?: boolean;
+}
+
+const LiveGraphPanel = ({ isTestModelPage = false }: LiveGraphPanelProps) => {
   const { actions, status } = useConnectionStage();
   const parentPortalRef = useRef(null);
   const isReconnecting =
@@ -29,6 +35,8 @@ const LiveGraphPanel = () => {
         };
   }, [actions.reconnect, actions.start, status]);
 
+  const { predictedGesture } = usePrediction();
+
   return (
     <HStack
       position="relative"
@@ -46,6 +54,7 @@ const LiveGraphPanel = () => {
           right={0}
           px={7}
           py={4}
+          w={`calc(100% - ${isTestModelPage ? "160px" : "0"})`}
         >
           <HStack gap={4}>
             <LiveIndicator />
@@ -77,8 +86,18 @@ const LiveGraphPanel = () => {
           />
         </HStack>
       </Portal>
-      <HStack position="absolute" width="100%" height="100%">
+      <HStack position="absolute" width="100%" height="100%" spacing={0}>
         <LiveGraph />
+        {isTestModelPage && (
+          <Box px={5}>
+            <LedIcon
+              icon={predictedGesture?.icon ?? "off"}
+              size="120px"
+              isTestModelPage={true}
+              isTriggered={true}
+            />
+          </Box>
+        )}
       </HStack>
     </HStack>
   );
