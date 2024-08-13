@@ -113,7 +113,7 @@ const GestureNameGridItem = ({
             <Input
               isTruncated
               readOnly={readOnly}
-              defaultValue={name}
+              value={name}
               borderWidth={0}
               {...(readOnly
                 ? { bgColor: "transparent", size: "lg" }
