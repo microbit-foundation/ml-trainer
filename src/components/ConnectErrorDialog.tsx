@@ -69,6 +69,12 @@ const ReconnectErrorDialog = ({
   errorStep,
 }: ConnectErrorDialogProps) => {
   const errorTextIdPrefix = errorTextIdPrefixConfig[errorStep];
+  const flowTypeText = {
+    [ConnectionFlowType.ConnectBluetooth]: "bluetooth",
+    [ConnectionFlowType.ConnectRadioBridge]: "bridge",
+    [ConnectionFlowType.ConnectRadioRemote]: "remote",
+    [ConnectionFlowType.DownloadProject]: undefined,
+  }[flowType];
   if (flowType === ConnectionFlowType.DownloadProject) {
     // This flow type should not use this dialog
     return <></>;
@@ -88,12 +94,14 @@ const ReconnectErrorDialog = ({
             <VStack width="100%" alignItems="left" gap={5}>
               <Heading as="h2" fontSize="xl" fontWeight="bold">
                 <FormattedMessage
-                  id={`${errorTextIdPrefix}.${flowType}Heading`}
+                  id={`${errorTextIdPrefix}.${flowTypeText}Heading`}
                 />
               </Heading>
               <VStack gap={3} textAlign="left" w="100%">
                 <Text w="100%">
-                  <FormattedMessage id={`${errorTextIdPrefix}.${flowType}1`} />
+                  <FormattedMessage
+                    id={`${errorTextIdPrefix}.${flowTypeText}1`}
+                  />
                 </Text>
                 <Text w="100%">
                   <FormattedMessage id={contentConfig[flowType].listHeading} />
