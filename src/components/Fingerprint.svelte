@@ -5,17 +5,22 @@
  -->
 
 <script lang="ts">
-  import * as tfvis from '@tensorflow/tfjs-vis';
+  import {
+    ArcElement,
+    Chart,
+    DoughnutController,
+    LineElement,
+    PointElement,
+    registerables,
+  } from 'chart.js';
   import { onMount } from 'svelte';
   import { get } from 'svelte/store';
   import { makeInputs, ModelSettings } from '../script/ml';
   import { RecordingData, settings } from '../script/stores/mlStore';
+  import { calculateColor } from '../script/utils/gradient-calculator';
 
   export let recordingData: RecordingData | undefined;
   export let gestureName: string;
-  export let averagedData: number[] = [];
-
-  let surface: undefined | tfvis.Drawable;
 
   const mlSettings = get(settings);
   const modelSettings: ModelSettings = {
@@ -33,34 +38,35 @@
       ? makeInputs(modelSettings, recordingData.data, 'computeNormalizedOutput')
       : [];
 
-  const chartData = {
-    values: recordingData ? [getProcessedData()] : [averagedData],
-    xTickLabels: [gestureName],
-    yTickLabels: filtersLabels,
-  };
+  const data = getProcessedData();
 
+  let canvas: HTMLCanvasElement;
   onMount(() => {
-    if (surface) {
-      tfvis.render.heatmap(surface, chartData, {
-        colorMap: 'viridis',
-        height: 109,
-        width: 80,
-        domain: [0, 1],
-        fontSize: 0,
-      });
-    }
+    Chart.unregister(...registerables);
+    Chart.register([DoughnutController, ArcElement, PointElement, LineElement]);
+    const chart = new Chart(canvas.getContext('2d') ?? new HTMLCanvasElement(), {
+      type: 'doughnut',
+      data: {
+        labels: filtersLabels,
+        datasets: [
+          {
+            label: `${gestureName} recording`,
+            data: [...Array(24).keys()].map(_v => 1),
+            backgroundColor: data.map(v => calculateColor(v)),
+          },
+        ],
+      },
+      options: {
+        events: [],
+        animation: false,
+        responsive: false,
+        maintainAspectRatio: false,
+      },
+    });
+    return () => {
+      chart.destroy();
+    };
   });
 </script>
 
-<div class="relative w-40px" class:h-full={!recordingData}>
-  <div
-    class="absolute h-full w-full -left-10px right-0 -bottom-1px"
-    class:top-1px={!recordingData}
-    class:top-0={recordingData}>
-    <div bind:this={surface}></div>
-  </div>
-  {#if !recordingData}
-    <div class="absolute bg-white h-full w-20px left-34px top-0 bottom-0" />
-    <div class="absolute bg-white h-8px w-40px left-0 -bottom-7px" />
-  {/if}
-</div>
+<canvas class="w-100px h-100px" bind:this={canvas} />

@@ -5,12 +5,21 @@
  -->
 
 <script lang="ts">
+  import {
+    ArcElement,
+    Chart,
+    DoughnutController,
+    LineElement,
+    PointElement,
+    registerables,
+  } from 'chart.js';
   import * as tfvis from '@tensorflow/tfjs-vis';
   import { onMount } from 'svelte';
   import { get } from 'svelte/store';
   import { makeInputs, ModelSettings } from '../../script/ml';
   import { getPrevData, settings } from '../../script/stores/mlStore';
   import { state } from '../../script/stores/uiStore';
+  import { calculateColor } from '../../script/utils/gradient-calculator';
 
   let surface: undefined | tfvis.Drawable;
   $: prevData = getPrevData();
@@ -29,36 +38,54 @@
 
   const disconnectedData = new Array(filtersLabels.length).fill(0);
 
+  let canvas: HTMLCanvasElement;
+
   onMount(() => {
+    Chart.unregister(...registerables);
+    Chart.register([DoughnutController, ArcElement, PointElement, LineElement]);
+    const chart = new Chart(canvas.getContext('2d') ?? new HTMLCanvasElement(), {
+      type: 'doughnut',
+      data: {
+        labels: filtersLabels,
+        datasets: [
+          {
+            label: `Live`,
+            data: [...Array(24).keys()].map(_v => 1),
+            backgroundColor: disconnectedData.map(v => calculateColor(v)),
+          },
+        ],
+      },
+      options: {
+        events: [],
+        animation: false,
+        responsive: false,
+        maintainAspectRatio: false,
+      },
+    });
+
     const interval = setInterval(() => {
       prevData = getPrevData();
-
-      if (surface) {
-        const currentGestureData = prevData
-          ? makeInputs(modelSettings, prevData, 'computeNormalizedOutput')
-          : disconnectedData;
-        const currentData = {
-          values: [currentGestureData],
-          xTickLabels: ['Live'],
-          yTickLabels: filtersLabels,
-        };
-        tfvis.render.heatmap(surface, currentData, {
-          colorMap: 'viridis',
-          height: 166,
-          width: 160,
-          domain: [0, 1],
-          fontSize: 0,
-        });
-      }
-    });
+      const currentGestureData = prevData
+        ? makeInputs(modelSettings, prevData, 'computeNormalizedOutput')
+        : disconnectedData;
+      chart.data.datasets = [
+        {
+          label: `Live`,
+          data: [...Array(24).keys()].map(_v => 1),
+          backgroundColor: currentGestureData.map(v => calculateColor(v)),
+        },
+      ];
+      console.log(chart);
+      chart.update();
+      console.log('render');
+    }, 100);
     return () => {
       clearInterval(interval);
+      chart?.destroy();
     };
   });
 </script>
 
-<div class="relative w-20 h-full z-0">
-  <div class="absolute h-full w-full top-0 -left-10px right-0 bottom-0">
-    <div bind:this={surface}></div>
-  </div>
+<div class="h-160px w-160px flex justify-center items-center">
+  <canvas class="w-140px h-140px" bind:this={canvas} />
 </div>

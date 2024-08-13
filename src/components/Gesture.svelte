@@ -369,7 +369,7 @@
           {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
             <div
               class="h-full flex flex-col w-40 relative overflow-hidden transition-all duration-1000"
-              class:w-48={showFingerprint}>
+              class:w-260px={showFingerprint}>
               <Recording
                 gestureId={$gesture.ID}
                 gestureName={$nameBind}
