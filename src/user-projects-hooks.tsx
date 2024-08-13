@@ -89,21 +89,6 @@ export const useMakeCodeProject = (gestures: GestureData[]) => {
     };
   }, [gestures, model]);
 
-  const createGestureDefaultProject = useCallback(
-    (gesture: GestureData) => {
-      // TODO: To remove this operation and get icon from gesture instead
-      const gs = addIconToGestures([gesture]);
-      return {
-        text: {
-          ...defaultProjectText,
-          [ProjectFilenames.MainTs]: generateMainScript(gs, "javascript"),
-          [ProjectFilenames.MainBlocks]: generateMainScript(gs, "blocks"),
-        },
-      };
-    },
-    [defaultProjectText]
-  );
-
   const setProject = useCallback(
     (project: MakeCodeProject | undefined) => {
       setUserProjects({ makeCode: project });
@@ -115,6 +100,5 @@ export const useMakeCodeProject = (gestures: GestureData[]) => {
     hasStoredProject: userProjects.makeCode !== undefined,
     project: userProjects.makeCode ?? { text: defaultProjectText },
     setProject,
-    createGestureDefaultProject,
   };
 };

@@ -1,5 +1,4 @@
-import { Button, Image } from "@chakra-ui/react";
-import test from "./../images/test.svg";
+import { Button } from "@chakra-ui/react";
 import {
   BlockLayout,
   MakeCodeProject,
@@ -7,7 +6,8 @@ import {
 } from "@microbit-foundation/react-code-view";
 import { useCallback } from "react";
 
-// Non-user-facing component to log SVG of MakeCode block for development purposes
+// Non-user-facing component for development purposes
+// to log SVG of MakeCode block
 
 const GetMakeCodeCodeViewSvgButton = ({
   code: project,
@@ -22,12 +22,7 @@ const GetMakeCodeCodeViewSvgButton = ({
     });
     console.log(result.svg);
   }, [project, renderBlocks]);
-  return (
-    <>
-      <Image src={test} />
-      <Button onClick={handleOnClick}>Get svg</Button>
-    </>
-  );
+  return <Button onClick={handleOnClick}>Get svg</Button>;
 };
 
 export default GetMakeCodeCodeViewSvgButton;
