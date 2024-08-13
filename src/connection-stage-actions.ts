@@ -1,4 +1,3 @@
-import { NavigateFunction } from "react-router";
 import { deviceIdToMicrobitName } from "./bt-pattern-utils";
 import {
   ConnectActions,
@@ -11,7 +10,6 @@ import {
   ConnectionStage,
   ConnectionType,
 } from "./connection-stage-hooks";
-import { createStepPageUrl } from "./urls";
 import { ConnectionStatus } from "./connect-status-hooks";
 import { HexType } from "./device/get-hex-file";
 
@@ -20,7 +18,6 @@ type FlowStage = Pick<ConnectionStage, "flowStep" | "flowType">;
 export class ConnectionStageActions {
   constructor(
     private actions: ConnectActions,
-    private navigate: NavigateFunction,
     private stage: ConnectionStage,
     private setStage: (stage: ConnectionStage) => void,
     private setStatus: (status: ConnectionStatus) => void
@@ -207,7 +204,6 @@ export class ConnectionStageActions {
 
   private onConnected = () => {
     this.setFlowStep(ConnectionFlowStep.None);
-    this.navigate(createStepPageUrl("add-data"));
   };
 
   disconnect = async () => {

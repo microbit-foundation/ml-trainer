@@ -6,7 +6,6 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useNavigate } from "react-router";
 import { ConnectActions } from "./connect-actions";
 import { useConnectActions } from "./connect-actions-hooks";
 import { ConnectionStageActions } from "./connection-stage-actions";
@@ -166,19 +165,17 @@ export const useConnectionStage = (): {
     throw new Error("Missing provider");
   }
   const [stage, setStage] = connectionStageContextValue;
-  const navigate = useNavigate();
   const connectActions = useConnectActions();
   const [, setStatus] = useConnectStatus();
 
   const actions = useMemo(() => {
     return new ConnectionStageActions(
       connectActions,
-      navigate,
       stage,
       setStage,
       setStatus
     );
-  }, [connectActions, navigate, stage, setStage, setStatus]);
+  }, [connectActions, stage, setStage, setStatus]);
 
   const status = useConnectStatusUpdater(
     stage.connType,
