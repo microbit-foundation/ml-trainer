@@ -16,7 +16,6 @@
   import TrainingPage from '../pages/training/TrainingPage.svelte';
   import { currentPageComponent } from '../views/currentComponentStore';
   import { currentPath, isValidPath, navigate, Paths, PathType } from './paths';
-  import FingerprintPage from '../pages/ProcessDataPage.svelte';
 
   const stripLeadingSlash = (s: string): string => (s.startsWith('/') ? s.slice(1) : s);
 
@@ -34,8 +33,6 @@
         return DataPage;
       case Paths.TRAINING:
         return TrainingPage;
-      case Paths.PROCESS:
-        return FingerprintPage;
       case Paths.MODEL:
         return ModelPage;
       case Paths.FILTERS:

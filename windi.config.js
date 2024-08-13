@@ -52,6 +52,7 @@ export default {
         ring: 'rgba(66, 153, 255, 0.6)',
         ringBright: 'rgb(66, 153, 255)',
       },
+
     },
   },
 };

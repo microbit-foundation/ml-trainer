@@ -53,7 +53,8 @@
   import { logEvent, logMessage } from '../script/utils/logging';
 
   export let gesture: Gesture;
-  export let showWalkThrough: Boolean = false;
+  export let showWalkThrough: boolean = false;
+  export let showFingerprint: boolean;
 
   const gesturePlaceholderName = $t('content.data.classPlaceholderNewClass');
   const recordingDuration = get(settings).duration;
@@ -366,12 +367,19 @@
         </div>
         {#if hasRecordings}
           {#each $gesture.recordings as recording (String($gesture.ID) + String(recording.ID))}
-            <Recording
-              gestureId={$gesture.ID}
-              gestureName={$nameBind}
-              {recording}
-              onDelete={deleteRecording}
-              on:focus={selectGesture} />
+            <div
+              class="h-full flex flex-col w-40 relative overflow-hidden transition-all duration-1000"
+              class:w-48={showFingerprint}>
+              <Recording
+                gestureId={$gesture.ID}
+                gestureName={$nameBind}
+                {recording}
+                onDelete={deleteRecording}
+                on:focus={selectGesture}
+                showProcessedData={showFingerprint}
+                showFingerprint
+                fullWidth={true} />
+            </div>
           {/each}
         {/if}
       </div>

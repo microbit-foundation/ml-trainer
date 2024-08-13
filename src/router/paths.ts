@@ -14,7 +14,6 @@ export const Paths = {
   GET_STARTED: 'resources/get-started',
   DATA: 'add-data',
   TRAINING: 'train-model',
-  PROCESS: 'process-data',
   MODEL: 'test-model',
   FILTERS: 'training/filters',
 } as const;
@@ -45,9 +44,6 @@ export const getTitle = (path: PathType, t: MessageFormatter) => {
     }
     case Paths.TRAINING: {
       return `${t('content.index.toolProcessCards.train.title')} | ${appName}`;
-    }
-    case Paths.PROCESS: {
-      return `Process data | ${appName}`;
     }
     case Paths.MODEL: {
       return `${t('content.index.toolProcessCards.model.title')} | ${appName}`;
