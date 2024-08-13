@@ -8,6 +8,7 @@ import { generateBlob } from "@microbit-foundation/ml-header-generator";
 import { ActionName, actionNamesFromLabels } from "./utils";
 import { Gesture } from "./temp";
 import { LayersModel } from "@tensorflow/tfjs";
+import { mlSettings } from "../ml";
 
 const createMlEvents = (actionNames: ActionName[]) => {
   let code = "";
@@ -50,7 +51,7 @@ export const generateCustomTs = (gs: Gesture[], m: LayersModel) => {
     sample_dimensions: 3,
     actions: gs.map((g) => ({
       label: g.name,
-      threshold: g.requiredConfidence!,
+      threshold: g.requiredConfidence ?? mlSettings.defaultRequiredConfidence,
     })),
   });
   const headerHexString = arrayBufferToHexString(
