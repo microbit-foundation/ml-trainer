@@ -90,7 +90,7 @@ const CodeViewDefaultBlock = ({ gestureName }: CodeViewDefaultBlockProps) => {
               fill="#2b64c3"
               d={` m 0,0  m 0,4 a 4 4 0 0,1 4,-4  h ${onMlStartBlockWidth} a 4 4 0 0,1 4,4  v 4  V 8  V 43  V 47 a 4 4 0 0,1 -4,4  H 64  c -2,0  -3,1  -4,2  l -4,4  c -1,1  -2,2  -4,2  h -12  c -2,0  -3,-1  -4,-2  l -4,-4  c -1,-1  -2,-2  -4,-2  h -8 a 4 4 0 0,0 -4,4  v 54 a 4 4 0 0,0 4,4  h 8  c 2,0  3,1  4,2  l 4,4  c 1,1  2,2  4,2  h 12  c 2,0  3,-1  4,-2  l 4,-4  c 1,-1  2,-2  4,-2  H ${
                 onMlStartBlockWidth + 4
-              } a 4 4 0 0,1 4,4  V 121  V 141 a 4 4 0 0,1 -4,4  h -${onMlStartBlockWidth} a 4 4 0 0,1 -4,-4 z&#10;`}
+              } a 4 4 0 0,1 4,4  V 121  V 141 a 4 4 0 0,1 -4,4  h -${onMlStartBlockWidth} a 4 4 0 0,1 -4,-4`}
             />
             <g
               data-id="bgaoB$G*o8*PP5srv4Q)"
