@@ -132,7 +132,7 @@ class GestureActions {
   ) {
     // Initialize with at least one gesture for walkthrough.
     if (!this.gestureState.data.length) {
-      this.setGestures([], false);
+      this.setGestureState({ data: [this.generateNewGesture()] });
     }
   }
 
