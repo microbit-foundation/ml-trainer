@@ -132,11 +132,20 @@ class GestureActions {
   ) {
     // Initialize with at least one gesture for walkthrough.
     if (!this.gestureState.data.length) {
-      this.setGestureState({ data: [this.generateNewGesture()] });
+      this.setGestureState({ data: [this.generateNewGesture(true)] });
     }
   }
 
-  private getDefaultIcon = (iconsInUse?: MakeCodeIcon[]): MakeCodeIcon => {
+  private getDefaultIcon = ({
+    isFirstGesture,
+    iconsInUse,
+  }: {
+    isFirstGesture?: boolean;
+    iconsInUse?: MakeCodeIcon[];
+  }): MakeCodeIcon => {
+    if (isFirstGesture) {
+      return defaultIcons[0];
+    }
     if (!iconsInUse) {
       iconsInUse = this.gestureState.data.map((g) => g.icon);
     }
@@ -153,11 +162,13 @@ class GestureActions {
     return useableIcons[0];
   };
 
-  private generateNewGesture = (): GestureData => ({
+  private generateNewGesture = (
+    isFirstGesture: boolean = false
+  ): GestureData => ({
     name: "",
     recordings: [],
     ID: Date.now(),
-    icon: this.getDefaultIcon(),
+    icon: this.getDefaultIcon({ isFirstGesture }),
   });
 
   hasGestures = (): boolean => {
@@ -176,10 +187,12 @@ class GestureActions {
     gestures.forEach((g) => {
       if (g.ID && g.name !== undefined && Array.isArray(g.recordings)) {
         if (!g.icon) {
-          g.icon = this.getDefaultIcon([
-            ...validGestures.map((g) => g.icon),
-            ...importedGestureIcons,
-          ]);
+          g.icon = this.getDefaultIcon({
+            iconsInUse: [
+              ...validGestures.map((g) => g.icon),
+              ...importedGestureIcons,
+            ],
+          });
         }
         validGestures.push(g as GestureData);
       }
@@ -190,7 +203,7 @@ class GestureActions {
   setGestures = (gestures: GestureData[], isRetrainNeeded: boolean = true) => {
     const data =
       // Always have at least one gesture for walk through
-      gestures.length === 0 ? [this.generateNewGesture()] : gestures;
+      gestures.length === 0 ? [this.generateNewGesture(true)] : gestures;
     this.setGestureState({ data });
 
     // Update training status
