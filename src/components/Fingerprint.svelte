@@ -53,10 +53,12 @@
             label: `${gestureName} recording`,
             data: [...Array(24).keys()].map(_v => 1),
             backgroundColor: data.map(v => calculateColor(v)),
+            borderWidth: 0,
           },
         ],
       },
       options: {
+        // cutout: '40%',
         events: [],
         animation: false,
         responsive: false,
