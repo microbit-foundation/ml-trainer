@@ -1,23 +1,24 @@
+import { MakeCodeIcon, makecodeIcons } from "../utils/icons";
 interface CodeViewDefaultBlockProps {
   gestureName: string;
-  icon: string;
+  icon: MakeCodeIcon;
 }
 
-const CodeViewDefaultBlock = ({ gestureName }: CodeViewDefaultBlockProps) => {
-  // Work out ledPattern from icon
-  const ledPattern = "0101011111111110111000100";
+const CodeViewDefaultBlock = ({
+  gestureName,
+  icon,
+}: CodeViewDefaultBlockProps) => {
+  const ledPattern = makecodeIcons[icon];
   const gestureNameTextBoxWidth = getGestureNameTextBoxWidth(gestureName);
   const dropdownArrowXPos = gestureNameTextBoxWidth - 20;
-  const svgWidth = gestureNameTextBoxWidth + 100;
   const onMlStartBlockWidth = gestureNameTextBoxWidth + 120;
   const startTextXPos = onMlStartBlockWidth - 50;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
-      width={`${svgWidth}`}
-      height="145"
-      viewBox={`0 0 ${2 * svgWidth} 145`}
+      height="100"
+      viewBox={`0 0 550 145`}
       className="pxt-renderer classNameic-theme"
     >
       <defs>

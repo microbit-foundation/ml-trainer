@@ -1,4 +1,4 @@
-import { Gesture } from "./temp";
+import { Gesture } from "../gestures-hooks";
 import { actionNamesFromLabels } from "./utils";
 import upperFirst from "lodash.upperfirst";
 /**

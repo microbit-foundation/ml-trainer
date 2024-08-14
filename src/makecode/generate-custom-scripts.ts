@@ -6,9 +6,9 @@
 import { compileModel } from "ml4f";
 import { generateBlob } from "@microbit-foundation/ml-header-generator";
 import { ActionName, actionNamesFromLabels } from "./utils";
-import { Gesture } from "./temp";
 import { LayersModel } from "@tensorflow/tfjs";
 import { mlSettings } from "../ml";
+import { GestureData } from "../gestures-hooks";
 
 const createMlEvents = (actionNames: ActionName[]) => {
   let code = "";
@@ -44,7 +44,7 @@ const arrayBufferToHexString = (input: Uint8Array): string =>
     .join("")
     .toUpperCase();
 
-export const generateCustomTs = (gs: Gesture[], m: LayersModel) => {
+export const generateCustomTs = (gs: GestureData[], m: LayersModel) => {
   const customHeaderBlob = generateBlob({
     samples_period: 25,
     samples_length: 80,
@@ -84,7 +84,7 @@ ${createEventListeners(actionNames)}
 `;
 };
 
-export const generateCustomJson = (gs: Gesture[]) => {
+export const generateCustomJson = (gs: GestureData[]) => {
   return JSON.stringify(
     gs.map((g) => ({
       ID: g.ID,

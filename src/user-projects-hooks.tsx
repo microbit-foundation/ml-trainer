@@ -1,5 +1,4 @@
 import { GestureData } from "./gestures-hooks";
-import { addIconToGestures } from "./makecode/temp";
 import { generateMainScript } from "./makecode/generate-main-scripts";
 import {
   generateCustomJson,
@@ -66,7 +65,7 @@ const pxt = {
     microphone: "*",
     radio: "*", // needed for compiling
     "Machine Learning POC":
-      "github:microbit-foundation/pxt-ml-extension-poc#02ab65bed47884963a46f30d1cbbe27930533bdb",
+      "github:microbit-foundation/pxt-ml-extension-poc#9f843b8f94d0cc5e6c5ec0d020463fb080caf724",
   },
   files: Object.values(ProjectFilenames),
 };
@@ -77,13 +76,11 @@ export const useMakeCodeProject = (gestures: GestureData[]) => {
   const model = (status as TrainingCompleteMlStatus).model;
 
   const defaultProjectText = useMemo(() => {
-    // TODO: To remove this operation and get icon from gesture instead
-    const gs = addIconToGestures(gestures);
     return {
-      [ProjectFilenames.MainTs]: generateMainScript(gs, "javascript"),
-      [ProjectFilenames.MainBlocks]: generateMainScript(gs, "blocks"),
-      [ProjectFilenames.CustomTs]: generateCustomTs(gs, model),
-      [ProjectFilenames.CustomJson]: generateCustomJson(gs),
+      [ProjectFilenames.MainTs]: generateMainScript(gestures, "javascript"),
+      [ProjectFilenames.MainBlocks]: generateMainScript(gestures, "blocks"),
+      [ProjectFilenames.CustomTs]: generateCustomTs(gestures, model),
+      [ProjectFilenames.CustomJson]: generateCustomJson(gestures),
       [ProjectFilenames.ReadMe]: "",
       [ProjectFilenames.PxtJson]: JSON.stringify(pxt),
     };

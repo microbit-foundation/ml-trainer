@@ -195,7 +195,10 @@ const TestModelGridView = () => {
                       // Empty div to fill up grid cell
                       <GridItem></GridItem>
                     ) : (
-                      <CodeViewGridItem gestureName={gesture.name} />
+                      <CodeViewGridItem
+                        gestureName={gesture.name}
+                        icon={gesture.icon}
+                      />
                     )}
                   </React.Fragment>
                 );
