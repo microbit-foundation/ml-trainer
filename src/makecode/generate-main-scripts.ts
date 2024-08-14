@@ -1,6 +1,5 @@
 import { Gesture } from "../gestures-hooks";
 import { actionNamesFromLabels } from "./utils";
-import upperFirst from "lodash.upperfirst";
 /**
  * (c) 2024, Center for Computational Thinking and Design at Aarhus University and contributors
  *
@@ -61,17 +60,14 @@ const onMLEventChildren = (
   s: LanguageStatements,
   { iconName }: OnGestureRecognisedConfig
 ) => {
-  if (iconName) {
-    return s.showIcon(iconName);
-  }
-  return "";
+  return iconName ? s.showIcon(iconName) : "";
 };
 
 const getMakeCodeGestureConfigs = (gs: Gesture[]) => {
   const actionNames = actionNamesFromLabels(gs.map((g) => g.name));
   return gs.map((g, idx) => ({
     name: actionNames[idx].actionVar,
-    iconName: upperFirst(g.icon),
+    iconName: g.icon,
   }));
 };
 
