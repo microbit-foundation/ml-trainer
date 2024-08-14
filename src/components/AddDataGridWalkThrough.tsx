@@ -20,6 +20,7 @@ const AddDataGridWalkThrough = ({
       <GestureNameGridItem
         id={gesture.ID}
         name={gesture.name}
+        icon={gesture.icon}
         selected={true}
         readOnly={false}
       />

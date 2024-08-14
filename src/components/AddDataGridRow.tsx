@@ -37,6 +37,7 @@ const AddDataGridRow = ({
       <GestureNameGridItem
         id={gesture.ID}
         name={gesture.name}
+        icon={gesture.icon}
         onCloseClick={handleDeleteDataItem}
         onSelectRow={onSelectRow}
         selected={selected}

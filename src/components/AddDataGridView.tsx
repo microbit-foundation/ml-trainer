@@ -9,7 +9,7 @@ import { useConnectActions } from "../connect-actions-hooks";
 import { ButtonEvent } from "@microbit/microbit-connection";
 
 const gridCommonProps: Partial<GridProps> = {
-  gridTemplateColumns: "200px 1fr",
+  gridTemplateColumns: "290px 1fr",
   gap: 3,
   px: 10,
   py: 2,

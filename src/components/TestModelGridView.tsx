@@ -17,23 +17,18 @@ import { EditorProject } from "@microbit-foundation/react-editor-embed";
 import React, { useCallback } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import {
-  Gesture,
-  GestureContextState,
-  useGestureActions,
-  useGestureData,
-} from "../gestures-hooks";
-import { Confidences, mlSettings } from "../ml";
-import { usePrediction } from "../ml-hooks";
+import { useConnectionStage } from "../connection-stage-hooks";
+import { useGestureActions, useGestureData } from "../gestures-hooks";
+import { mlSettings } from "../ml";
+import { getPredictedGesture, usePrediction } from "../ml-hooks";
 import { getMakeCodeLang, useSettings } from "../settings";
 import { useMakeCodeProject } from "../user-projects-hooks";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
+import CodeViewCard from "./CodeViewCard";
 import CodeViewGridItem from "./CodeViewGridItem";
 import EditCodeDialog from "./EditCodeDialog";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
-import { useConnectionStage } from "../connection-stage-hooks";
-import CodeViewCard from "./CodeViewCard";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "200px 360px 40px auto",
@@ -70,9 +65,9 @@ const TestModelGridView = () => {
   );
 
   const confidences = usePrediction();
-  const prediction = applyThresholds(gestures, confidences);
+  const predictedGesture = getPredictedGesture(gestures, confidences);
   const predicationLabel =
-    prediction?.name ??
+    predictedGesture?.name ??
     intl.formatMessage({
       id: "content.model.output.estimatedGesture.none",
     });
@@ -164,10 +159,20 @@ const TestModelGridView = () => {
               alignSelf="start"
             >
               {gestures.data.map((gesture, idx) => {
-                const { ID, name, requiredConfidence: threshold } = gesture;
+                const {
+                  ID,
+                  name,
+                  icon,
+                  requiredConfidence: threshold,
+                } = gesture;
                 return (
                   <React.Fragment key={idx}>
-                    <GestureNameGridItem id={ID} name={name} readOnly={true} />
+                    <GestureNameGridItem
+                      id={ID}
+                      name={name}
+                      icon={icon}
+                      readOnly={true}
+                    />
                     <CertaintyThresholdGridItem
                       onThresholdChange={(val) =>
                         setRequiredConfidence(ID, val)
@@ -176,7 +181,7 @@ const TestModelGridView = () => {
                       requiredConfidence={
                         threshold ?? mlSettings.defaultRequiredConfidence
                       }
-                      isTriggered={prediction?.ID === ID}
+                      isTriggered={predictedGesture?.ID === ID}
                     />
                     <VStack justifyContent="center" h="full">
                       <Icon
@@ -201,32 +206,6 @@ const TestModelGridView = () => {
       </MakeCodeRenderBlocksProvider>
     </>
   );
-};
-
-const applyThresholds = (
-  gestureData: GestureContextState,
-  confidences: Confidences | undefined
-): Gesture | undefined => {
-  if (!confidences) {
-    return undefined;
-  }
-
-  // If more than one meet the threshold pick the highest
-  const thresholded = gestureData.data
-    .map((gesture) => ({
-      gesture,
-      thresholdDelta:
-        confidences[gesture.ID] -
-        (gesture.requiredConfidence ?? mlSettings.defaultRequiredConfidence),
-    }))
-    .sort((left, right) => {
-      const a = left.thresholdDelta;
-      const b = right.thresholdDelta;
-      return a < b ? -1 : a > b ? 1 : 0;
-    });
-
-  const prediction = thresholded[thresholded.length - 1];
-  return prediction.thresholdDelta >= 0 ? prediction.gesture : undefined;
 };
 
 export default TestModelGridView;

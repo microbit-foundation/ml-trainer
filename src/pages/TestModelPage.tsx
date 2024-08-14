@@ -15,7 +15,7 @@ const TestModelPage = () => {
       {stage === MlStage.TrainingComplete ? (
         <>
           <TestModelGridView />
-          <LiveGraphPanel />
+          <LiveGraphPanel isTestModelPage={true} />
         </>
       ) : (
         <TrainModelFirstView />
