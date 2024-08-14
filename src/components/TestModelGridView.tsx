@@ -46,6 +46,7 @@ const headings = [
     titleId: "content.model.output.certainty.descriptionTitle",
     descriptionId: "content.model.output.certainty.descriptionBody",
   },
+  // Empty heading for arrow column
   {},
   {
     titleId: "content.model.output.output.descriptionTitle",
