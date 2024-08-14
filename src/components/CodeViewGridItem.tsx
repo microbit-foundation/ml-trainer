@@ -10,6 +10,7 @@ const CodeViewGridItem = ({ gestureName }: CodeViewGridItemProps) => {
     <GridItem>
       <Card
         py={3}
+        px={5}
         h="120px"
         display="flex"
         borderColor="brand.500"

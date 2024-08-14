@@ -17,7 +17,7 @@ const CodeViewDefaultBlock = ({ gestureName }: CodeViewDefaultBlockProps) => {
       version="1.1"
       width={`${svgWidth}`}
       height="145"
-      viewBox={`0 0 ${svgWidth} 145`}
+      viewBox={`0 0 ${2 * svgWidth} 145`}
       className="pxt-renderer classNameic-theme"
     >
       <defs>
