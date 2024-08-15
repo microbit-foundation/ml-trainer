@@ -115,6 +115,7 @@ const GestureNameGridItem = ({
               readOnly={readOnly}
               value={name}
               borderWidth={0}
+              maxLength={18}
               {...(readOnly
                 ? { bgColor: "transparent", size: "lg" }
                 : { bgColor: "gray.25", size: "sm" })}
