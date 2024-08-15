@@ -158,21 +158,20 @@ const LiveGraph = () => {
           {labelConfigs.map((config, idx) => (
             <React.Fragment key={idx}>
               <Box
-                ml={-5}
+                ml={-7}
                 transform={`translateY(${config.arrowHeight - 0.55}rem)`}
                 color={config.color}
                 position="absolute"
                 w="fit-content"
               >
-                <Icon as={RiArrowDropLeftFill} boxSize={10} />
+                <Icon as={RiArrowDropLeftFill} boxSize={12} />
               </Box>
               <Text
-                pl={1}
+                ml={1}
                 fontSize="xl"
-                fontWeight="bold"
                 position="absolute"
                 color={config.color}
-                transform={`translateY(${config.labelHeight - 0.4}rem)`}
+                transform={`translateY(${config.labelHeight - 0.1}rem)`}
                 w="fit-content"
               >
                 {config.label}
