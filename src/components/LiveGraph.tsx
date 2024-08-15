@@ -153,7 +153,7 @@ const LiveGraph = () => {
         id="smoothie-chart"
         width={width - 30}
       />
-      {true && (
+      {isConnected && (
         <Box w={10} h={40} position="relative">
           {labelConfigs.map((config, idx) => (
             <React.Fragment key={idx}>
