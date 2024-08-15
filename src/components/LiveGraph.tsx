@@ -1,4 +1,4 @@
-import { HStack } from "@chakra-ui/react";
+import { Box, HStack, Icon, Text } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { SmoothieChart, TimeSeries } from "smoothie";
@@ -8,6 +8,15 @@ import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { mlSettings } from "../ml";
 import { ConnectionStatus } from "../connect-status-hooks";
+import { RiArrowDropLeftFill } from "react-icons/ri";
+import React from "react";
+import { LabelConfig, getUpdatedLabelConfig } from "../live-graph-label-config";
+
+const initialLabelConfigs: LabelConfig[] = [
+  { label: "x", arrowHeight: 0, labelHeight: 0, color: "#f9808e", id: 0 },
+  { label: "y", arrowHeight: 0, labelHeight: 0, color: "#80f98e", id: 1 },
+  { label: "z", arrowHeight: 0, labelHeight: 0, color: "#808ef9", id: 2 },
+];
 
 const smoothenDataPoint = (curr: number, next: number) => {
   // TODO: Factor out so that recording graph can do the same
@@ -100,6 +109,9 @@ const LiveGraph = () => {
     }
   }, [isRecording, recordLines, stage]);
 
+  const [labelConfigs, setLabelConfigs] =
+    useState<LabelConfig[]>(initialLabelConfigs);
+
   const dataRef = useRef<{ x: number; y: number; z: number }>({
     x: 0,
     y: 0,
@@ -117,6 +129,8 @@ const LiveGraph = () => {
       lineX.append(t, dataRef.current.x, false);
       lineY.append(t, dataRef.current.y, false);
       lineZ.append(t, dataRef.current.z, false);
+
+      setLabelConfigs(getUpdatedLabelConfig(labelConfigs, dataRef.current));
     };
     if (isConnected) {
       connectActions.addAccelerometerListener(listener);
@@ -124,9 +138,8 @@ const LiveGraph = () => {
     return () => {
       connectActions.removeAccelerometerListener(listener);
     };
-  }, [connectActions, isConnected, lineX, lineY, lineZ]);
+  }, [connectActions, isConnected, labelConfigs, lineX, lineY, lineZ]);
 
-  // TODO Recording logic
   return (
     <HStack
       ref={liveGraphContainerRef}
@@ -140,6 +153,31 @@ const LiveGraph = () => {
         id="smoothie-chart"
         width={width - 30}
       />
+      {isConnected && (
+        <Box w={10} h={40} position="relative">
+          {labelConfigs.map((config, idx) => (
+            <React.Fragment key={idx}>
+              <Box
+                ml={-5}
+                transform={`translateY(${config.arrowHeight - 0.55}rem)`}
+                color={config.color}
+                position="absolute"
+                w="fit-content"
+              >
+                <Icon as={RiArrowDropLeftFill} boxSize={8} />
+              </Box>
+              <Text
+                position="absolute"
+                color={config.color}
+                transform={`translateY(${config.labelHeight - 0.4}rem)`}
+                w="fit-content"
+              >
+                {config.label}
+              </Text>
+            </React.Fragment>
+          ))}
+        </Box>
+      )}
     </HStack>
   );
 };
