@@ -36,7 +36,7 @@ const LedIconPicker = ({ onIconSelected }: LedIconPicker) => {
               aria-label="Pick icon"
               size="sm"
             >
-              <RiArrowDropDownFill size="lg" />
+              <RiArrowDropDownFill size={32} />
             </IconButton>
           </PopoverTrigger>
           <PopoverContent w="100%" height="300px" overflowY="auto">
