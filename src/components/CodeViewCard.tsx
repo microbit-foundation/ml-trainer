@@ -26,12 +26,7 @@ const CodeViewCard = ({ project }: CodeViewCardProps) => {
           code={project}
           layout={BlockLayout.Flow}
           loaderCmp={
-            <SkeletonText
-              w="full"
-              noOfLines={3}
-              spacing="5"
-              skeletonHeight="2"
-            />
+            <SkeletonText w="xs" noOfLines={5} spacing="5" skeletonHeight="2" />
           }
         />
       </Card>
