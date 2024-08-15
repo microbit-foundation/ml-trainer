@@ -153,7 +153,7 @@ const LiveGraph = () => {
         id="smoothie-chart"
         width={width - 30}
       />
-      {isConnected && (
+      {true && (
         <Box w={10} h={40} position="relative">
           {labelConfigs.map((config, idx) => (
             <React.Fragment key={idx}>
@@ -164,9 +164,12 @@ const LiveGraph = () => {
                 position="absolute"
                 w="fit-content"
               >
-                <Icon as={RiArrowDropLeftFill} boxSize={8} />
+                <Icon as={RiArrowDropLeftFill} boxSize={10} />
               </Box>
               <Text
+                pl={1}
+                fontSize="xl"
+                fontWeight="bold"
                 position="absolute"
                 color={config.color}
                 transform={`translateY(${config.labelHeight - 0.4}rem)`}
