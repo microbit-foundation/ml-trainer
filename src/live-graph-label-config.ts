@@ -1,3 +1,5 @@
+const maxDistance = 1.1;
+
 type Dimension = "x" | "y" | "z";
 export interface LabelConfig {
   label: Dimension;
@@ -30,16 +32,14 @@ const fixOverlappingLabels = (labels: LabelConfig[]) => {
   const height1 = labels[1].arrowHeight;
   const height2 = labels[2].arrowHeight;
 
-  const MAX_DISTANCE = 1.1;
   const maxDistanceBetweenAll = height2 - height0;
 
-  // If all notes are too close
-  if (maxDistanceBetweenAll < MAX_DISTANCE * 2) {
-    // Find middle and place labels around them
+  // If all the labels are too close, we find the middle and position the labels around it.
+  if (maxDistanceBetweenAll < maxDistance * 2) {
     const middle = maxDistanceBetweenAll / 2 + height0;
-    labels[0].labelHeight = middle - MAX_DISTANCE;
+    labels[0].labelHeight = middle - maxDistance;
     labels[1].labelHeight = middle;
-    labels[2].labelHeight = middle + MAX_DISTANCE;
+    labels[2].labelHeight = middle + maxDistance;
     return;
   }
 
@@ -47,17 +47,17 @@ const fixOverlappingLabels = (labels: LabelConfig[]) => {
   labels[1].labelHeight = height1;
   labels[2].labelHeight = height2;
 
-  // If a pair are too close.
+  // If a pair of labels are too close, we find the middle and position both labels around it.
   for (let i = 0; i < 2; i++) {
     const diff = labels[i + 1].labelHeight - labels[i].labelHeight;
-    if (diff > MAX_DISTANCE) continue;
+    if (diff > maxDistance) continue;
 
-    // Find middle and place labels around middle
     const middle = diff / 2 + labels[i].labelHeight;
-    labels[i + 1].labelHeight = middle + MAX_DISTANCE / 2;
-    labels[i].labelHeight = middle - MAX_DISTANCE / 2;
+    labels[i + 1].labelHeight = middle + maxDistance / 2;
+    labels[i].labelHeight = middle - maxDistance / 2;
 
-    break; // Only one will be close to the other. Otherwise all were too close
+    // Only one of the labels will be close to the other, otherwise all are too close.
+    break;
   }
   return labels;
 };
