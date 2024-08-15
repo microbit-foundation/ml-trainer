@@ -22,18 +22,6 @@ export const allLanguages: Language[] = [
     enName: "English",
     makeCode: true,
   },
-  {
-    id: "ja",
-    name: "日本語",
-    enName: "Japanese",
-    makeCode: true,
-  },
-  {
-    id: "ko",
-    name: "한국어",
-    enName: "Korean",
-    makeCode: true,
-  },
 ];
 
 export const getMakeCodeLang = (languageId: string): string =>
