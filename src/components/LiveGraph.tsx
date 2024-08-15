@@ -140,6 +140,8 @@ const LiveGraph = () => {
     };
   }, [connectActions, isConnected, labelConfigs, lineX, lineY, lineZ]);
 
+  const arrowHeightTransformAdjustValue = 1;
+
   return (
     <HStack
       ref={liveGraphContainerRef}
@@ -159,7 +161,9 @@ const LiveGraph = () => {
             <React.Fragment key={idx}>
               <Box
                 ml={-7}
-                transform={`translateY(${config.arrowHeight - 0.55}rem)`}
+                transform={`translateY(${
+                  config.arrowHeight - arrowHeightTransformAdjustValue
+                }rem)`}
                 color={config.color}
                 position="absolute"
                 w="fit-content"
@@ -171,7 +175,9 @@ const LiveGraph = () => {
                 fontSize="xl"
                 position="absolute"
                 color={config.color}
-                transform={`translateY(${config.labelHeight - 0.1}rem)`}
+                transform={`translateY(${
+                  config.labelHeight - arrowHeightTransformAdjustValue + 0.45
+                }rem)`}
                 w="fit-content"
               >
                 {config.label}
