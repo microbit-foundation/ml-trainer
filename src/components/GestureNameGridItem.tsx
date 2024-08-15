@@ -44,7 +44,7 @@ const GestureNameGridItem = ({
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
-      const name = e.target.value.trim();
+      const name = e.target.value;
       // Validate gesture name length
       if (name.length >= gestureNameMaxLength && !toast.isActive(toastId)) {
         toast({
