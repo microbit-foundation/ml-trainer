@@ -14,22 +14,23 @@ const ActionBar = ({
   ...rest
 }: ActionBarProps) => {
   return (
-    <>
-      <HStack
-        px={5}
-        alignItems="center"
-        justifyContent="space-between"
-        {...rest}
-      >
-        <HStack flex={`${itemsCenter ? 1 : 4} 0`} justifyContent="flex-start">
-          {itemsLeft}
-        </HStack>
-        {itemsCenter && <HStack justifyContent="center">{itemsCenter}</HStack>}
-        <HStack flex="1 0" justifyContent="flex-end">
-          {itemsRight}
-        </HStack>
+    <HStack
+      px={5}
+      alignItems="center"
+      justifyContent="space-between"
+      bgColor="green.500"
+      h="64px"
+      minH="64px"
+      {...rest}
+    >
+      <HStack flex={`${itemsCenter ? 1 : 4} 0`} justifyContent="flex-start">
+        {itemsLeft}
       </HStack>
-    </>
+      {itemsCenter && <HStack justifyContent="center">{itemsCenter}</HStack>}
+      <HStack flex="1 0" justifyContent="flex-end">
+        {itemsRight}
+      </HStack>
+    </HStack>
   );
 };
 
