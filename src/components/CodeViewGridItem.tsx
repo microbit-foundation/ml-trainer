@@ -40,7 +40,7 @@ const CodeViewGridItem = ({ project, gestureName }: CodeViewGridItemProps) => {
               />
             }
           />
-        </Box>{" "}
+        </Box>
       </Card>
     </GridItem>
   );
