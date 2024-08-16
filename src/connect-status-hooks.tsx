@@ -41,7 +41,7 @@ export enum ConnectionStatus {
   /**
    * Failure to select a device by the user.
    */
-  FailedToSelectBluetoothDevice = "FailedToSelectDevice",
+  FailedToSelectBluetoothDevice = "FailedToSelectBluetoothDevice",
   /**
    * Failure to establish initial connection triggered by the user.
    */

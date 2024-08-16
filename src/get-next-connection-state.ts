@@ -77,6 +77,15 @@ export const getNextConnectionState = ({
     return { status, flowType };
   }
 
+  const hasStartedOver =
+    currStatus === ConnectionStatus.NotConnected ||
+    currStatus === ConnectionStatus.FailedToConnect;
+
+  if (hasStartedOver) {
+    setHasAttemptedReconnect(false);
+    setOnFirstConnectAttempt(true);
+  }
+
   if (
     // If user starts or restarts connection flow.
     // Disconnection happens for newly started / restarted
@@ -112,6 +121,7 @@ export const getNextConnectionState = ({
   }
   if (
     // If fails to reconnect twice.
+    !onFirstConnectAttempt &&
     hasAttempedReconnect &&
     deviceStatus === DeviceConnectionStatus.DISCONNECTED
   ) {
@@ -120,6 +130,7 @@ export const getNextConnectionState = ({
   }
   if (
     // If fails to reconnect by user.
+    !onFirstConnectAttempt &&
     deviceStatus === DeviceConnectionStatus.DISCONNECTED &&
     (prevDeviceStatus === DeviceConnectionStatus.CONNECTING ||
       prevDeviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE)
@@ -135,19 +146,16 @@ export const getNextConnectionState = ({
     setHasAttemptedReconnect(true);
     return { status: ConnectionStatus.ConnectionLost, flowType };
   }
-  const hasStartedOver =
-    currStatus === ConnectionStatus.NotConnected ||
-    currStatus === ConnectionStatus.FailedToConnect;
   if (
     // If connecting.
     deviceStatus === DeviceConnectionStatus.CONNECTING &&
     hasStartedOver
   ) {
-    setOnFirstConnectAttempt(true);
     return { status: ConnectionStatus.Connecting, flowType };
   }
   if (
     // If reconnecting automatically.
+    !onFirstConnectAttempt &&
     deviceStatus === DeviceConnectionStatus.RECONNECTING
   ) {
     return { status: ConnectionStatus.ReconnectingAutomatically, flowType };

@@ -398,7 +398,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
         type: "bluetooth",
       },
       initialOnFirstConnectAttempt: false,
-      expectedOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: true,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
