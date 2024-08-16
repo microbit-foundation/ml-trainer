@@ -6,20 +6,16 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import { EditorProject } from "@microbit-foundation/react-editor-embed";
-import { ReactNode } from "react";
 import Editor from "./Editor";
 
 interface EditCodeDialogProps {
   isOpen: boolean;
-  toolbarItemsLeft?: ReactNode;
-  toolbarItemsRight?: ReactNode;
   editorVersion: string | undefined;
   code: EditorProject;
   onBack: () => void;
   onDownload: (download: { name: string; hex: string }) => void;
   onSave: (save: { name: string; hex: string }) => void;
   onChange: (code: EditorProject) => void;
-  extraToolbars?: ReactNode;
 }
 
 const EditCodeDialog = ({
