@@ -62,12 +62,9 @@ export class ConnectionStageActions {
     onSuccess: (stage: ConnectionStage) => void
   ) => {
     this.setFlowStep(ConnectionFlowStep.WebUsbChooseMicrobit);
-    const hexType = this.getHex();
+    const hex = this.getHexStringOrType();
     const { result, deviceId } =
-      await this.actions.requestUSBConnectionAndFlash(
-        hexType,
-        progressCallback
-      );
+      await this.actions.requestUSBConnectionAndFlash(hex, progressCallback);
     if (result !== ConnectAndFlashResult.Success) {
       return this.handleConnectAndFlashFail(result);
     }
@@ -75,7 +72,7 @@ export class ConnectionStageActions {
     await this.onFlashSuccess(deviceId, onSuccess);
   };
 
-  private getHex = () => {
+  private getHexStringOrType = () => {
     return this.stage.flowType === ConnectionFlowType.DownloadProject
       ? this.stage.makeCodeHex!
       : {

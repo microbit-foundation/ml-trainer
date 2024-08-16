@@ -67,7 +67,7 @@ export class ConnectActions {
   }
 
   requestUSBConnectionAndFlash = async (
-    hex: string,
+    hex: string | HexType,
     progressCallback: (progress: number) => void
   ): Promise<
     | { result: ConnectAndFlashResult.Success; deviceId: number }
@@ -91,7 +91,7 @@ export class ConnectActions {
   };
 
   private flashMicrobit = async (
-    hex: string,
+    hex: string | HexType,
     progress: (progress: number) => void
   ): Promise<ConnectAndFlashResult> => {
     if (!this.usb) {
