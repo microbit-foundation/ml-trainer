@@ -97,10 +97,9 @@ export class ConnectActions {
     if (!this.usb) {
       return ConnectAndFlashResult.Failed;
     }
-    const data =
-      hex in HexType
-        ? getFlashDataSource(hex as HexType)
-        : createUniversalHexFlashDataSource(hex);
+    const data = Object.values(HexType).includes(hex as HexType)
+      ? getFlashDataSource(hex as HexType)
+      : createUniversalHexFlashDataSource(hex);
 
     if (!data) {
       return ConnectAndFlashResult.ErrorMicrobitUnsupported;
