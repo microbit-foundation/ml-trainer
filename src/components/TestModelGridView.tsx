@@ -173,6 +173,7 @@ const TestModelGridView = () => {
                       name={name}
                       icon={icon}
                       readOnly={true}
+                      isTriggered={predictedGesture?.ID === ID}
                     />
                     <CertaintyThresholdGridItem
                       onThresholdChange={(val) =>
