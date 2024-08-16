@@ -1,11 +1,8 @@
 import {
-  ActionListenerSubject,
   EditorProject,
   MakeCodeEditor,
-  ResponseEmitterSubject,
 } from "@microbit-foundation/react-editor-embed";
 import React from "react";
-import { Subject } from "rxjs";
 import { getMakeCodeLang, useSettings } from "../settings";
 
 const controllerId = "MicrobitMachineLearningTool";
@@ -18,8 +15,6 @@ interface EditorProps {
   initialCode: EditorProject;
   version: string | undefined;
   style?: React.CSSProperties;
-  eventTrigger?: Subject<ActionListenerSubject>;
-  eventEmitter?: Subject<ResponseEmitterSubject>;
 }
 
 const Editor = ({
