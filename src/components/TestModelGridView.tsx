@@ -61,9 +61,12 @@ const TestModelGridView = () => {
   const { setRequiredConfidence } = useGestureActions();
   const { actions } = useConnectionStage();
 
-  const { hasStoredProject, userProject, setUserProject } = useMakeCodeProject(
-    gestures.data
-  );
+  const {
+    hasStoredProject,
+    userProject,
+    setUserProject,
+    createGestureDefaultProject,
+  } = useMakeCodeProject(gestures.data);
 
   const confidences = usePrediction();
   const predictedGesture = getPredictedGesture(gestures, confidences);
@@ -198,7 +201,7 @@ const TestModelGridView = () => {
                     ) : (
                       <CodeViewGridItem
                         gestureName={gesture.name}
-                        icon={gesture.icon}
+                        project={createGestureDefaultProject(gesture)}
                       />
                     )}
                   </React.Fragment>

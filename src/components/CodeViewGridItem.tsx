@@ -1,13 +1,16 @@
-import { Card, GridItem } from "@chakra-ui/react";
-import CodeViewDefaultBlock from "./CodeViewDefaultBlock";
-import { MakeCodeIcon } from "../utils/icons";
+import { Box, Card, GridItem, SkeletonText } from "@chakra-ui/react";
+import {
+  BlockLayout,
+  MakeCodeBlocksRendering,
+  MakeCodeProject,
+} from "@microbit-foundation/react-code-view";
 
 interface CodeViewGridItemProps {
+  project: MakeCodeProject;
   gestureName: string;
-  icon: MakeCodeIcon;
 }
 
-const CodeViewGridItem = ({ gestureName, icon }: CodeViewGridItemProps) => {
+const CodeViewGridItem = ({ project, gestureName }: CodeViewGridItemProps) => {
   return (
     <GridItem>
       <Card
@@ -19,7 +22,25 @@ const CodeViewGridItem = ({ gestureName, icon }: CodeViewGridItemProps) => {
         width="fit-content"
         justifyContent="center"
       >
-        <CodeViewDefaultBlock gestureName={gestureName} icon={icon} />
+        <Box
+          width={`${120 + gestureName.length * 5}px`}
+          py={2}
+          px={2}
+          overflow="hidden"
+        >
+          <MakeCodeBlocksRendering
+            code={project}
+            layout={BlockLayout.Clean}
+            loaderCmp={
+              <SkeletonText
+                w="full"
+                noOfLines={3}
+                spacing="5"
+                skeletonHeight="2"
+              />
+            }
+          />
+        </Box>{" "}
       </Card>
     </GridItem>
   );

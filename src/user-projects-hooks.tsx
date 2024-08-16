@@ -86,6 +86,20 @@ export const useMakeCodeProject = (gestures: GestureData[]) => {
     };
   }, [gestures, model]);
 
+  const createGestureDefaultProject = useCallback(
+    (gesture: GestureData) => {
+      const gs = [gesture];
+      return {
+        text: {
+          ...defaultProjectText,
+          [ProjectFilenames.MainTs]: generateMainScript(gs, "javascript"),
+          [ProjectFilenames.MainBlocks]: generateMainScript(gs, "blocks"),
+        },
+      };
+    },
+    [defaultProjectText]
+  );
+
   const setProject = useCallback(
     (project: MakeCodeProject | undefined) => {
       setUserProjects({ makeCode: project });
@@ -95,6 +109,7 @@ export const useMakeCodeProject = (gestures: GestureData[]) => {
 
   return {
     hasStoredProject: userProjects.makeCode !== undefined,
+    createGestureDefaultProject,
     userProject: userProjects.makeCode ?? { text: defaultProjectText },
     setUserProject: setProject,
   };
