@@ -61,7 +61,7 @@ const TestModelGridView = () => {
   const { setRequiredConfidence } = useGestureActions();
   const { actions } = useConnectionStage();
 
-  const { hasStoredProject, project, setProject } = useMakeCodeProject(
+  const { hasStoredProject, userProject, setUserProject } = useMakeCodeProject(
     gestures.data
   );
 
@@ -78,15 +78,15 @@ const TestModelGridView = () => {
 
   const handleCodeChange = useCallback(
     (code: EditorProject) => {
-      setProject(code as MakeCodeProject);
+      setUserProject(code as MakeCodeProject);
     },
-    [setProject]
+    [setUserProject]
   );
 
   const handleResetProject = useCallback(() => {
     // Clear stored project
-    setProject(undefined);
-  }, [setProject]);
+    setUserProject(undefined);
+  }, [setUserProject]);
 
   const handleSave = useCallback((save: { name: string; hex: string }) => {
     const blob = new Blob([save.hex], { type: "application/octet-stream" });
@@ -106,7 +106,7 @@ const TestModelGridView = () => {
   return (
     <>
       <EditCodeDialog
-        code={project}
+        code={userProject}
         editorVersion={undefined}
         isOpen={editCodeDialogDisclosure.isOpen}
         onChange={handleCodeChange}
@@ -205,7 +205,7 @@ const TestModelGridView = () => {
                 );
               })}
             </Grid>
-            {hasStoredProject && <CodeViewCard project={project} />}
+            {hasStoredProject && <CodeViewCard project={userProject} />}
           </HStack>
         </VStack>
       </MakeCodeRenderBlocksProvider>

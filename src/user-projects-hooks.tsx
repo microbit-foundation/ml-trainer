@@ -95,7 +95,7 @@ export const useMakeCodeProject = (gestures: GestureData[]) => {
 
   return {
     hasStoredProject: userProjects.makeCode !== undefined,
-    project: userProjects.makeCode ?? { text: defaultProjectText },
-    setProject,
+    userProject: userProjects.makeCode ?? { text: defaultProjectText },
+    setUserProject: setProject,
   };
 };
