@@ -1,7 +1,6 @@
 import {
   Button,
   Grid,
-  GridItem,
   GridProps,
   HStack,
   Icon,
@@ -61,12 +60,8 @@ const TestModelGridView = () => {
   const { setRequiredConfidence } = useGestureActions();
   const { actions } = useConnectionStage();
 
-  const {
-    hasStoredProject,
-    userProject,
-    setUserProject,
-    createGestureDefaultProject,
-  } = useMakeCodeProject(gestures.data);
+  const { hasStoredProject, userProject, setUserProject } =
+    useMakeCodeProject();
 
   const confidences = usePrediction();
   const predictedGesture = getPredictedGesture(gestures, confidences);
@@ -195,15 +190,10 @@ const TestModelGridView = () => {
                         color="gray.600"
                       />
                     </VStack>
-                    {hasStoredProject ? (
-                      // Empty div to fill up grid cell
-                      <GridItem></GridItem>
-                    ) : (
-                      <CodeViewGridItem
-                        gestureName={gesture.name}
-                        project={createGestureDefaultProject(gesture)}
-                      />
-                    )}
+                    <CodeViewGridItem
+                      gesture={gesture}
+                      hasStoredProject={hasStoredProject}
+                    />
                   </React.Fragment>
                 );
               })}

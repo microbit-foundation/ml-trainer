@@ -4,6 +4,7 @@ import {
   MakeCodeBlocksRendering,
   MakeCodeProject,
 } from "@microbit-foundation/react-code-view";
+import { memo } from "react";
 
 interface CodeViewCardProps {
   project: MakeCodeProject;
@@ -34,4 +35,4 @@ const CodeViewCard = ({ project }: CodeViewCardProps) => {
   );
 };
 
-export default CodeViewCard;
+export default memo(CodeViewCard);

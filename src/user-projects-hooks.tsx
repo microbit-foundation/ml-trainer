@@ -1,4 +1,4 @@
-import { GestureData } from "./gestures-hooks";
+import { GestureData, useGestureData } from "./gestures-hooks";
 import { generateMainScript } from "./makecode/generate-main-scripts";
 import {
   generateCustomJson,
@@ -70,10 +70,12 @@ const pxt = {
   files: Object.values(ProjectFilenames),
 };
 
-export const useMakeCodeProject = (gestures: GestureData[]) => {
+export const useMakeCodeProject = () => {
+  const [gestureData] = useGestureData();
   const [userProjects, setUserProjects] = useUserProjects();
   const [status] = useMlStatus();
   const model = (status as TrainingCompleteMlStatus).model;
+  const gestures = gestureData.data;
 
   const defaultProjectText = useMemo(() => {
     return {
@@ -107,10 +109,20 @@ export const useMakeCodeProject = (gestures: GestureData[]) => {
     [setUserProjects]
   );
 
+  const userProject = useMemo(
+    () => userProjects.makeCode ?? { text: defaultProjectText },
+    [defaultProjectText, userProjects.makeCode]
+  );
+
+  const hasStoredProject = useMemo(
+    () => userProjects.makeCode !== undefined,
+    [userProjects.makeCode]
+  );
+
   return {
-    hasStoredProject: userProjects.makeCode !== undefined,
+    hasStoredProject,
     createGestureDefaultProject,
-    userProject: userProjects.makeCode ?? { text: defaultProjectText },
+    userProject,
     setUserProject: setProject,
   };
 };
