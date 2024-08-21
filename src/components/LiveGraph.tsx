@@ -164,6 +164,8 @@ const LiveGraph = () => {
                 color={config.color}
                 position="absolute"
                 w="fit-content"
+                // Use inline style attribute to avoid style tags being
+                // constantly appended to the <head/> element.
                 style={{
                   transform: `translateY(${
                     config.arrowHeight - arrowHeightTransformAdjustValue
@@ -178,6 +180,8 @@ const LiveGraph = () => {
                 position="absolute"
                 color={config.color}
                 w="fit-content"
+                // Use inline style attribute to avoid style tags being
+                // constantly appended to the <head/> element.
                 style={{
                   transform: `translateY(${
                     config.labelHeight - arrowHeightTransformAdjustValue + 0.45
