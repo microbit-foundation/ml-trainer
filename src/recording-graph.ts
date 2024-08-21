@@ -79,7 +79,8 @@ export const getConfig = ({
       ],
     },
     options: {
-      responsive: true,
+      animation: false,
+      responsive: false,
       maintainAspectRatio: false,
 
       interaction: {

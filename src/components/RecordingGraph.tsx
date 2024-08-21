@@ -30,15 +30,18 @@ const RecordingGraph = ({ data }: RecordingGraphProps) => {
     };
   }, [data]);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
   return (
     <Box
+      ref={containerRef}
       borderRadius="md"
       borderWidth={1}
-      borderColor="gray.20"
+      borderColor="gray.200"
       width="100%"
       height="100%"
     >
-      <canvas ref={canvasRef} />
+      <canvas width="158px" height="95px" ref={canvasRef} />
     </Box>
   );
 };
