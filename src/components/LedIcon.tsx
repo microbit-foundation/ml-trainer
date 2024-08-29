@@ -4,17 +4,11 @@ import { icons, LedIconType } from "../utils/icons";
 
 interface LedIconProps {
   icon: LedIconType;
-  isTestModelPage?: boolean;
   isTriggered?: boolean;
   size?: string | number;
 }
 
-const LedIcon = ({
-  icon,
-  isTestModelPage,
-  isTriggered,
-  size = 20,
-}: LedIconProps) => {
+const LedIcon = ({ icon, isTriggered, size = 20 }: LedIconProps) => {
   const iconData = icons[icon];
   return (
     <AspectRatio width={size} height={size} ratio={1}>
@@ -25,8 +19,7 @@ const LedIcon = ({
             <LedIconRow
               key={idx}
               data={iconData.substring(start, start + 5)}
-              isTestModelPage={!!isTestModelPage}
-              isTriggered={!!isTriggered}
+              isTriggered={isTriggered}
             />
           );
         })}
@@ -61,15 +54,10 @@ const turnOff = keyframes`
 
 interface LedIconRowProps {
   data: string;
-  isTestModelPage: boolean;
-  isTriggered: boolean;
+  isTriggered?: boolean;
 }
 
-const LedIconRow = ({
-  data,
-  isTestModelPage,
-  isTriggered,
-}: LedIconRowProps) => {
+const LedIconRow = ({ data, isTriggered }: LedIconRowProps) => {
   const turnOnAnimation = `${turnOn} 200ms ease`;
   const turnOffAnimation = `${turnOff} 200ms ease`;
   const getBgColor = useCallback(
@@ -77,15 +65,15 @@ const LedIconRow = ({
       if (!isOn) {
         return "gray.200";
       }
-      if (isTestModelPage && isTriggered) {
+      if (typeof isTriggered === "boolean" && isTriggered) {
         return "green.500";
       }
-      if (isTestModelPage && !isTriggered) {
+      if (typeof isTriggered === "boolean" && !isTriggered) {
         return "gray.600";
       }
       return "brand.500";
     },
-    [isTriggered, isTestModelPage]
+    [isTriggered]
   );
   return (
     <HStack w="100%" h="100%" spacing={0.5}>

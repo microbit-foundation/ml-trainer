@@ -12,10 +12,9 @@ import React, { useCallback } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useEditCodeDialog } from "../hooks/use-edit-code-dialog";
-import { useGestureActions, useGestures } from "../hooks/use-gestures";
-import { getPredictedGesture, usePrediction } from "../hooks/use-ml-actions";
+import { Gesture, useGestureActions, useGestures } from "../hooks/use-gestures";
 import { useProject } from "../hooks/use-project";
-import { mlSettings } from "../ml";
+import { Confidences, mlSettings } from "../ml";
 import { getMakeCodeLang, useSettings } from "../settings";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
 import CodeViewCard from "./CodeViewCard";
@@ -47,15 +46,21 @@ const headings = [
   },
 ];
 
-const TestModelGridView = () => {
+interface TestModelGridViewProps {
+  predictedGesture: Gesture | undefined;
+  confidences: Confidences | undefined;
+}
+
+const TestModelGridView = ({
+  confidences,
+  predictedGesture,
+}: TestModelGridViewProps) => {
   const intl = useIntl();
   const [gestures] = useGestures();
   const { setRequiredConfidence } = useGestureActions();
   const { project, resetProject, projectEdited } = useProject();
   const { onOpen } = useEditCodeDialog();
 
-  const confidences = usePrediction();
-  const predictedGesture = getPredictedGesture(gestures, confidences);
   const predicationLabel =
     predictedGesture?.name ??
     intl.formatMessage({
@@ -119,6 +124,9 @@ const TestModelGridView = () => {
                   icon,
                   requiredConfidence: threshold,
                 } = gesture;
+                const isTriggered = predictedGesture
+                  ? predictedGesture.ID === ID
+                  : false;
                 return (
                   <React.Fragment key={idx}>
                     <GestureNameGridItem
@@ -126,7 +134,7 @@ const TestModelGridView = () => {
                       name={name}
                       icon={icon}
                       readOnly={true}
-                      isTriggered={predictedGesture?.ID === ID}
+                      isTriggered={isTriggered}
                     />
                     <CertaintyThresholdGridItem
                       onThresholdChange={(val) =>
@@ -136,7 +144,7 @@ const TestModelGridView = () => {
                       requiredConfidence={
                         threshold ?? mlSettings.defaultRequiredConfidence
                       }
-                      isTriggered={predictedGesture?.ID === ID}
+                      isTriggered={isTriggered}
                     />
                     <VStack justifyContent="center" h="full">
                       <Icon
