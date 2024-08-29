@@ -131,6 +131,10 @@ class GestureActions {
     if (!this.gestures.length) {
       this.setGestures([this.generateNewGesture(true)]);
     }
+    // If icon is missing from stored data, generate default icons.
+    if (this.gestures.some((g) => !g.icon)) {
+      this.validateAndSetGestures(this.gestures);
+    }
   }
 
   private getDefaultIcon = ({
@@ -174,7 +178,7 @@ class GestureActions {
     );
   };
 
-  importGestures = (gestures: Partial<Gesture>[]) => {
+  validateAndSetGestures = (gestures: Partial<Gesture>[]) => {
     const validGestures: Gesture[] = [];
     const importedGestureIcons: MakeCodeIcon[] = gestures
       .map((g) => g.icon as MakeCodeIcon)

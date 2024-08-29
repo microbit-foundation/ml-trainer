@@ -38,7 +38,9 @@ const UploadDataSamplesMenuItem = () => {
         throw new Error("Expected to be called with at least one file");
       }
       const gestures = await readFileAsText(files[0]);
-      actions.importGestures(JSON.parse(gestures) as Partial<Gesture>[]);
+      actions.validateAndSetGestures(
+        JSON.parse(gestures) as Partial<Gesture>[]
+      );
     },
     [actions]
   );
