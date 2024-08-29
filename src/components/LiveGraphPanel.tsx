@@ -4,17 +4,20 @@ import { MdBolt } from "react-icons/md";
 import { FormattedMessage } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { getPredictedGesture, usePrediction } from "../ml-hooks";
 import InfoToolTip from "./InfoToolTip";
 import LedIcon from "./LedIcon";
 import LiveGraph from "./LiveGraph";
-import { useGestureData } from "../gestures-hooks";
+import { Gesture } from "../gestures-hooks";
 
 interface LiveGraphPanelProps {
-  isTestModelPage?: boolean;
+  predictedGesture?: Gesture | undefined;
+  showPredictedGesture?: boolean;
 }
 
-const LiveGraphPanel = ({ isTestModelPage = false }: LiveGraphPanelProps) => {
+const LiveGraphPanel = ({
+  showPredictedGesture,
+  predictedGesture,
+}: LiveGraphPanelProps) => {
   const { actions, status } = useConnectionStage();
   const parentPortalRef = useRef(null);
   const isReconnecting =
@@ -36,10 +39,6 @@ const LiveGraphPanel = ({ isTestModelPage = false }: LiveGraphPanelProps) => {
         };
   }, [actions.reconnect, actions.startConnect, status]);
 
-  const confidences = usePrediction();
-  const [gestures] = useGestureData();
-  const predictedGesture = getPredictedGesture(gestures, confidences);
-
   return (
     <HStack
       position="relative"
@@ -57,7 +56,7 @@ const LiveGraphPanel = ({ isTestModelPage = false }: LiveGraphPanelProps) => {
           right={0}
           px={7}
           py={4}
-          w={`calc(100% - ${isTestModelPage ? "160px" : "0"})`}
+          w={`calc(100% - ${showPredictedGesture ? "160px" : "0"})`}
         >
           <HStack gap={4}>
             <LiveIndicator />
@@ -91,13 +90,12 @@ const LiveGraphPanel = ({ isTestModelPage = false }: LiveGraphPanelProps) => {
       </Portal>
       <HStack position="absolute" width="100%" height="100%" spacing={0}>
         <LiveGraph />
-        {isTestModelPage && (
+        {showPredictedGesture && (
           <Box px={5}>
             <LedIcon
               icon={predictedGesture?.icon ?? "off"}
               size="120px"
-              isTestModelPage={true}
-              isTriggered={true}
+              isTriggered
             />
           </Box>
         )}

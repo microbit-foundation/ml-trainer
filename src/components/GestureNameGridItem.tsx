@@ -35,7 +35,7 @@ const GestureNameGridItem = ({
   id,
   selected = false,
   readOnly = false,
-  isTriggered = false,
+  isTriggered = undefined,
 }: GestureNameGridItemProps) => {
   const intl = useIntl();
   const toast = useToast();
@@ -100,12 +100,7 @@ const GestureNameGridItem = ({
         <CardBody p={0} alignContent="center">
           <HStack>
             <HStack>
-              <LedIcon
-                icon={icon}
-                isTestModelPage={readOnly}
-                isTriggered={isTriggered}
-              />
-              ;
+              <LedIcon icon={icon} isTriggered={isTriggered} />;
               {!readOnly && (
                 <LedIconPicker onIconSelected={handleIconSelected} />
               )}

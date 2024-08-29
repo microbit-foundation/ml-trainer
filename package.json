@@ -66,7 +66,7 @@
     "@microbit-foundation/ml-header-generator": "^0.3.8",
     "@microbit-foundation/react-code-view": "^5.0.2",
     "@microbit-foundation/react-editor-embed": "^1.0.0-controller.mode.47",
-    "@microbit/microbit-connection": "^0.0.0-alpha.18",
+    "@microbit/microbit-connection": "^0.0.0-alpha.19",
     "@tensorflow/tfjs": "^4.20.0",
     "@types/w3c-web-serial": "^1.0.6",
     "@types/w3c-web-usb": "^1.0.6",
