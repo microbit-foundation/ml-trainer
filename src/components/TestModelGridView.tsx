@@ -17,8 +17,9 @@ import React, { useCallback } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { Gesture, useGestureActions, useGestureData } from "../gestures-hooks";
-import { Confidences, mlSettings } from "../ml";
+import { useGestureActions, useGestureData } from "../gestures-hooks";
+import { mlSettings } from "../ml";
+import { PredictionResult } from "../ml-hooks";
 import { getMakeCodeLang, useSettings } from "../settings";
 import { useMakeCodeProject } from "../user-projects-hooks";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
@@ -53,14 +54,11 @@ const headings = [
 ];
 
 interface TestModelGridViewProps {
-  predictedGesture: Gesture | undefined;
-  confidences: Confidences | undefined;
+  prediction: PredictionResult | undefined;
 }
 
-const TestModelGridView = ({
-  confidences,
-  predictedGesture,
-}: TestModelGridViewProps) => {
+const TestModelGridView = ({ prediction }: TestModelGridViewProps) => {
+  const { detected, confidences } = prediction ?? {};
   const intl = useIntl();
   const editCodeDialogDisclosure = useDisclosure();
   const [gestures] = useGestureData();
@@ -70,8 +68,8 @@ const TestModelGridView = ({
   const { hasStoredProject, userProject, setUserProject } =
     useMakeCodeProject();
 
-  const predicationLabel =
-    predictedGesture?.name ??
+  const detectedLabel =
+    detected?.name ??
     intl.formatMessage({
       id: "content.model.output.estimatedGesture.none",
     });
@@ -127,7 +125,7 @@ const TestModelGridView = ({
         <VisuallyHidden aria-live="polite">
           <FormattedMessage
             id="content.model.output.estimatedGesture.label"
-            values={{ action: predicationLabel }}
+            values={{ action: detectedLabel }}
           />
         </VisuallyHidden>
         <HeadingGrid {...gridCommonProps} px={10} headings={headings}>
@@ -169,9 +167,7 @@ const TestModelGridView = ({
                   icon,
                   requiredConfidence: threshold,
                 } = gesture;
-                const isTriggered = predictedGesture
-                  ? predictedGesture.ID === ID
-                  : false;
+                const isTriggered = detected ? detected.ID === ID : false;
                 return (
                   <React.Fragment key={idx}>
                     <GestureNameGridItem

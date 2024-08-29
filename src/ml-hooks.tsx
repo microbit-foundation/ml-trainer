@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useBufferedData } from "./buffered-data-hooks";
 import { useConnectActions } from "./connect-actions-hooks";
 import { ConnectionStatus, useConnectStatus } from "./connect-status-hooks";
@@ -20,24 +20,25 @@ export const useMlActions = () => {
   return actions;
 };
 
+export interface PredictionResult {
+  confidences: Confidences;
+  detected: Gesture | undefined;
+}
+
 export const usePrediction = () => {
   const buffer = useBufferedData();
   const logging = useLogging();
   const [status] = useMlStatus();
   const [connectStatus] = useConnectStatus();
   const connection = useConnectActions();
-  const [confidences, setConfidences] = useState<Confidences | undefined>();
+  const [prediction, setPrediction] = useState<PredictionResult | undefined>();
   const [gestureData] = useGestureData();
 
-  // Avoid re-renders due to threshold changes which update gestureData.
-  // We could consider storing them elsewhere, perhaps with the model.
-  const classificationIdsRecalculated = gestureData.data.map((d) => d.ID);
-  const classificationIdsKey = JSON.stringify(classificationIdsRecalculated);
-  const classificationIds: number[] = useMemo(
-    () => JSON.parse(classificationIdsKey) as number[],
-    [classificationIdsKey]
-  );
-
+  // Use a ref to prevent restarting the effect every time thesholds change.
+  // We only use the ref's value during the setInterval callback not render.
+  // We can avoid this by storing the thresolds separately in state, even if we unify them when serializing them.
+  const gestureDataRef = useRef(gestureData);
+  gestureDataRef.current = gestureData;
   useEffect(() => {
     if (
       status.stage !== MlStage.TrainingComplete ||
@@ -50,14 +51,27 @@ export const usePrediction = () => {
       const input = {
         model: status.model,
         data: buffer.getSamples(startTime),
-        classificationIds,
+        classificationIds: gestureDataRef.current.data.map((g) => g.ID),
       };
       if (input.data.x.length > mlSettings.minSamples) {
-        const predictionResult = await predict(input);
-        if (predictionResult.error) {
-          logging.error(predictionResult.detail);
+        const result = await predict(input);
+        if (result.error) {
+          logging.error(result.detail);
         } else {
-          setConfidences(predictionResult.confidences);
+          const { confidences } = result;
+          const detected = getDetectedGesture(
+            gestureDataRef.current,
+            result.confidences
+          );
+          if (detected) {
+            connection.setIcon(detected.icon).catch((e) => logging.error(e));
+          } else {
+            connection.clearIcon().catch((e) => logging.error(e));
+          }
+          setPrediction({
+            detected,
+            confidences,
+          });
         }
       }
     };
@@ -66,15 +80,16 @@ export const usePrediction = () => {
       1000 / mlSettings.updatesPrSecond
     );
     return () => {
-      setConfidences(undefined);
+      connection.resetIcon().catch((e) => logging.error(e));
+      setPrediction(undefined);
       clearInterval(interval);
     };
-  }, [connection, classificationIds, logging, status, connectStatus, buffer]);
+  }, [connection, logging, status, connectStatus, buffer]);
 
-  return confidences;
+  return prediction;
 };
 
-export const getPredictedGesture = (
+export const getDetectedGesture = (
   gestureData: GestureContextState,
   confidences: Confidences | undefined
 ): Gesture | undefined => {

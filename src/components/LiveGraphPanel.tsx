@@ -10,13 +10,13 @@ import LiveGraph from "./LiveGraph";
 import { Gesture } from "../gestures-hooks";
 
 interface LiveGraphPanelProps {
-  predictedGesture?: Gesture | undefined;
+  detected?: Gesture | undefined;
   showPredictedGesture?: boolean;
 }
 
 const LiveGraphPanel = ({
   showPredictedGesture,
-  predictedGesture,
+  detected,
 }: LiveGraphPanelProps) => {
   const { actions, status } = useConnectionStage();
   const parentPortalRef = useRef(null);
@@ -92,11 +92,7 @@ const LiveGraphPanel = ({
         <LiveGraph />
         {showPredictedGesture && (
           <Box px={5}>
-            <LedIcon
-              icon={predictedGesture?.icon ?? "off"}
-              size="120px"
-              isTriggered
-            />
+            <LedIcon icon={detected?.icon ?? "off"} size="120px" isTriggered />
           </Box>
         )}
       </HStack>

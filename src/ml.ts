@@ -130,7 +130,7 @@ interface PredictInput {
 
 export type Confidences = Record<GestureData["ID"], number>;
 
-export type PredictionResult =
+export type ConfidencesResult =
   | { error: true; detail: unknown }
   | { error: false; confidences: Confidences };
 
@@ -139,7 +139,7 @@ export const predict = async ({
   model,
   data,
   classificationIds,
-}: PredictInput): Promise<PredictionResult> => {
+}: PredictInput): Promise<ConfidencesResult> => {
   const input = applyFilters(data);
   const prediction = model.predict(tf.tensor([input])) as tf.Tensor;
   try {
