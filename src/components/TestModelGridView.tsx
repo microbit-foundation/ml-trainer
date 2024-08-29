@@ -6,26 +6,20 @@ import {
   Icon,
   VStack,
   VisuallyHidden,
-  useDisclosure,
 } from "@chakra-ui/react";
-import {
-  MakeCodeProject,
-  MakeCodeRenderBlocksProvider,
-} from "@microbit-foundation/react-code-view";
-import { EditorProject } from "@microbit-foundation/react-editor-embed";
+import { MakeCodeRenderBlocksProvider } from "@microbit-foundation/react-code-view";
 import React, { useCallback } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useConnectionStage } from "../connection-stage-hooks";
-import { useGestureActions, useGestureData } from "../gestures-hooks";
+import { useEditCodeDialog } from "../hooks/use-edit-code-dialog";
+import { useGestureActions, useGestures } from "../hooks/use-gestures";
+import { getPredictedGesture, usePrediction } from "../hooks/use-ml-actions";
+import { useProject } from "../hooks/use-project";
 import { mlSettings } from "../ml";
-import { getPredictedGesture, usePrediction } from "../ml-hooks";
 import { getMakeCodeLang, useSettings } from "../settings";
-import { useMakeCodeProject } from "../user-projects-hooks";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
 import CodeViewCard from "./CodeViewCard";
 import CodeViewGridItem from "./CodeViewGridItem";
-import EditCodeDialog from "./EditCodeDialog";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
 
@@ -55,13 +49,10 @@ const headings = [
 
 const TestModelGridView = () => {
   const intl = useIntl();
-  const editCodeDialogDisclosure = useDisclosure();
-  const [gestures] = useGestureData();
+  const [gestures] = useGestures();
   const { setRequiredConfidence } = useGestureActions();
-  const { actions } = useConnectionStage();
-
-  const { hasStoredProject, userProject, setUserProject } =
-    useMakeCodeProject();
+  const { project, resetProject, projectEdited } = useProject();
+  const { onOpen } = useEditCodeDialog();
 
   const confidences = usePrediction();
   const predictedGesture = getPredictedGesture(gestures, confidences);
@@ -74,44 +65,12 @@ const TestModelGridView = () => {
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
 
-  const handleCodeChange = useCallback(
-    (code: EditorProject) => {
-      setUserProject(code as MakeCodeProject);
-    },
-    [setUserProject]
-  );
-
   const handleResetProject = useCallback(() => {
-    // Clear stored project
-    setUserProject(undefined);
-  }, [setUserProject]);
+    resetProject();
+  }, [resetProject]);
 
-  const handleSave = useCallback((save: { name: string; hex: string }) => {
-    const blob = new Blob([save.hex], { type: "application/octet-stream" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `${save.name}.hex`;
-    a.click();
-    URL.revokeObjectURL(a.href);
-  }, []);
-
-  const handleDownload = useCallback(
-    async (download: { name: string; hex: string }) => {
-      await actions.startDownloadUserProjectHex(download.hex);
-    },
-    [actions]
-  );
   return (
     <>
-      <EditCodeDialog
-        code={userProject}
-        editorVersion={undefined}
-        isOpen={editCodeDialogDisclosure.isOpen}
-        onChange={handleCodeChange}
-        onBack={editCodeDialogDisclosure.onClose}
-        onDownload={handleDownload}
-        onSave={handleSave}
-      />
       <MakeCodeRenderBlocksProvider
         key={makeCodeLang}
         options={{
@@ -130,11 +89,7 @@ const TestModelGridView = () => {
             <Button variant="secondary" size="sm" onClick={handleResetProject}>
               <FormattedMessage id="reset-to-default-action" />
             </Button>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={editCodeDialogDisclosure.onOpen}
-            >
+            <Button variant="secondary" size="sm" onClick={onOpen}>
               <FormattedMessage id="edit-in-makecode-action" />
             </Button>
           </HStack>
@@ -152,12 +107,12 @@ const TestModelGridView = () => {
           <HStack gap={0} h="min-content" w="full">
             <Grid
               {...gridCommonProps}
-              {...(hasStoredProject ? { w: "fit-content", pr: 0 } : {})}
+              {...(projectEdited ? { w: "fit-content", pr: 0 } : {})}
               autoRows="max-content"
               h="fit-content"
               alignSelf="start"
             >
-              {gestures.data.map((gesture, idx) => {
+              {gestures.map((gesture, idx) => {
                 const {
                   ID,
                   name,
@@ -192,13 +147,13 @@ const TestModelGridView = () => {
                     </VStack>
                     <CodeViewGridItem
                       gesture={gesture}
-                      hasStoredProject={hasStoredProject}
+                      projectEdited={projectEdited}
                     />
                   </React.Fragment>
                 );
               })}
             </Grid>
-            {hasStoredProject && <CodeViewCard project={userProject} />}
+            {projectEdited && <CodeViewCard project={project} />}
           </HStack>
         </VStack>
       </MakeCodeRenderBlocksProvider>

@@ -10,12 +10,12 @@ import {
 import { useCallback, useRef } from "react";
 import { useIntl } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { GestureData, useGestureActions } from "../gestures-hooks";
+import { Gesture, useGestureActions } from "../hooks/use-gestures";
 import RecordIcon from "../images/record-icon.svg?react";
 import RecordingGraph from "./RecordingGraph";
 
 interface DataRecordingGridItemProps {
-  data: GestureData;
+  data: Gesture;
   selected: boolean;
   onSelectRow?: () => void;
   startRecording: () => void;

@@ -1,5 +1,5 @@
 import * as tf from "@tensorflow/tfjs";
-import { GestureData, XYZData } from "./gestures-hooks";
+import { Gesture, XYZData } from "./hooks/use-gestures";
 import { Filter, mlFilters } from "./mlFilters";
 import { SymbolicTensor } from "@tensorflow/tfjs";
 
@@ -31,7 +31,7 @@ export const mlSettings = {
 };
 
 interface TrainModelInput {
-  data: GestureData[];
+  data: Gesture[];
   onProgress?: (progress: number) => void;
 }
 
@@ -67,13 +67,13 @@ export const trainModel = async ({
 
 // Exported for testing
 export const prepareFeaturesAndLabels = (
-  gestureData: GestureData[]
+  gestures: Gesture[]
 ): { features: number[][]; labels: number[][] } => {
   const features: number[][] = [];
   const labels: number[][] = [];
-  const numGestures = gestureData.length;
+  const numGestures = gestures.length;
 
-  gestureData.forEach((gesture, index) => {
+  gestures.forEach((gesture, index) => {
     gesture.recordings.forEach((recording) => {
       // Prepare features
       features.push(applyFilters(recording.data));
@@ -88,8 +88,8 @@ export const prepareFeaturesAndLabels = (
   return { features, labels };
 };
 
-const createModel = (gestureData: GestureData[]): tf.LayersModel => {
-  const numberOfClasses: number = gestureData.length;
+const createModel = (gestures: Gesture[]): tf.LayersModel => {
+  const numberOfClasses: number = gestures.length;
   const inputShape = [
     mlSettings.includedFilters.size * mlSettings.includedAxes.length,
   ];
@@ -128,7 +128,7 @@ interface PredictInput {
   classificationIds: number[];
 }
 
-export type Confidences = Record<GestureData["ID"], number>;
+export type Confidences = Record<Gesture["ID"], number>;
 
 export type PredictionResult =
   | { error: true; detail: unknown }

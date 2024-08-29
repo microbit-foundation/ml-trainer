@@ -4,10 +4,11 @@ import {
   MakeCodeBlocksRendering,
   MakeCodeProject,
 } from "@microbit-foundation/react-code-view";
+import { EditorProject } from "@microbit-foundation/react-editor-embed";
 import { memo } from "react";
 
 interface CodeViewCardProps {
-  project: MakeCodeProject;
+  project: EditorProject;
 }
 
 const CodeViewCard = ({ project }: CodeViewCardProps) => {
@@ -24,7 +25,7 @@ const CodeViewCard = ({ project }: CodeViewCardProps) => {
     >
       <Card w="full" h="full" p={5} objectFit="contain">
         <MakeCodeBlocksRendering
-          code={project}
+          code={project as MakeCodeProject}
           layout={BlockLayout.Flow}
           loaderCmp={
             <SkeletonText w="xs" noOfLines={5} spacing="5" skeletonHeight="2" />

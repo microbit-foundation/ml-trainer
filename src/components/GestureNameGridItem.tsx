@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
-import { useGestureActions } from "../gestures-hooks";
+import { useGestureActions } from "../hooks/use-gestures";
 import { MakeCodeIcon } from "../utils/icons";
 import LedIcon from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";

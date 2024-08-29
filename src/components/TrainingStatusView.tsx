@@ -10,11 +10,11 @@ import {
 import { ReactNode, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
-import { useMlActions } from "../ml-hooks";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { createStepPageUrl } from "../urls";
 import TrainingButton from "./TrainingButton";
 import TrainingErrorDialog from "./TrainingErrorDialog";
+import { MlStage, useMlStatus } from "../hooks/use-ml-status";
+import { useMlActions } from "../hooks/use-ml-actions";
 
 const TrainingStatusView = () => {
   const navigate = useNavigate();

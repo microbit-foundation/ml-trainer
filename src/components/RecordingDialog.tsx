@@ -15,9 +15,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { TimedXYZ } from "../buffered-data";
 import { useBufferedData } from "../buffered-data-hooks";
-import { GestureData, useGestureActions, XYZData } from "../gestures-hooks";
+import { Gesture, useGestureActions, XYZData } from "../hooks/use-gestures";
 import { mlSettings } from "../ml";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
+import { MlStage, useMlStatus } from "../hooks/use-ml-status";
 
 interface CountdownStage {
   value: string | number;
@@ -29,7 +29,7 @@ export interface RecordingDialogProps {
   isOpen: boolean;
   onClose: () => void;
   actionName: string;
-  gestureId: GestureData["ID"];
+  gestureId: Gesture["ID"];
 }
 
 enum RecordingStatus {

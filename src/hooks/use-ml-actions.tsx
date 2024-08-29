@@ -1,21 +1,23 @@
 import { useEffect, useMemo, useState } from "react";
-import { useBufferedData } from "./buffered-data-hooks";
-import { useConnectActions } from "./connect-actions-hooks";
-import { ConnectionStatus, useConnectStatus } from "./connect-status-hooks";
-import { Gesture, GestureContextState, useGestureData } from "./gestures-hooks";
-import { useLogging } from "./logging/logging-hooks";
-import { Confidences, mlSettings, predict } from "./ml";
-import { MlActions } from "./ml-actions";
-import { MlStage, useMlStatus } from "./ml-status-hooks";
+import { useBufferedData } from "../buffered-data-hooks";
+import { useConnectActions } from "../connect-actions-hooks";
+import { ConnectionStatus, useConnectStatus } from "../connect-status-hooks";
+import { Gesture, useGestures } from "./use-gestures";
+import { useLogging } from "../logging/logging-hooks";
+import { Confidences, mlSettings, predict } from "../ml";
+import { MlActions } from "../ml-actions";
+import { MlStage, useMlStatus } from "./use-ml-status";
+import { useProject } from "./use-project";
 
 export const useMlActions = () => {
-  const [gestures] = useGestureData();
+  const [gestures] = useGestures();
   const [, setStatus] = useMlStatus();
+  const { updateProject } = useProject();
   const logger = useLogging();
 
   const actions = useMemo<MlActions>(
-    () => new MlActions(logger, gestures, setStatus),
-    [gestures, logger, setStatus]
+    () => new MlActions(logger, gestures, setStatus, updateProject),
+    [gestures, logger, setStatus, updateProject]
   );
   return actions;
 };
@@ -27,11 +29,11 @@ export const usePrediction = () => {
   const [connectStatus] = useConnectStatus();
   const connection = useConnectActions();
   const [confidences, setConfidences] = useState<Confidences | undefined>();
-  const [gestureData] = useGestureData();
+  const [gestures] = useGestures();
 
-  // Avoid re-renders due to threshold changes which update gestureData.
+  // Avoid re-renders due to threshold changes which update gestures.
   // We could consider storing them elsewhere, perhaps with the model.
-  const classificationIdsRecalculated = gestureData.data.map((d) => d.ID);
+  const classificationIdsRecalculated = gestures.map((d) => d.ID);
   const classificationIdsKey = JSON.stringify(classificationIdsRecalculated);
   const classificationIds: number[] = useMemo(
     () => JSON.parse(classificationIdsKey) as number[],
@@ -75,7 +77,7 @@ export const usePrediction = () => {
 };
 
 export const getPredictedGesture = (
-  gestureData: GestureContextState,
+  gestures: Gesture[],
   confidences: Confidences | undefined
 ): Gesture | undefined => {
   if (!confidences) {
@@ -83,7 +85,7 @@ export const getPredictedGesture = (
   }
 
   // If more than one meet the threshold pick the highest
-  const thresholded = gestureData.data
+  const thresholded = gestures
     .map((gesture) => ({
       gesture,
       thresholdDelta:

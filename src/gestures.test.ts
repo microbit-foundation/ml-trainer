@@ -1,17 +1,17 @@
-import { isValidStoredGestureData } from "./gestures-hooks";
+import { isValidGestureData } from "./hooks/use-gestures";
 
 describe("isValidStoredGestureData", () => {
   it("checks data", () => {
-    expect(isValidStoredGestureData({})).toEqual(false);
-    expect(isValidStoredGestureData({ data: [] })).toEqual(true);
-    expect(isValidStoredGestureData({ data: 123 })).toEqual(false);
-    expect(isValidStoredGestureData({ data: {} })).toEqual(false);
+    expect(isValidGestureData({})).toEqual(false);
+    expect(isValidGestureData({ data: [] })).toEqual(true);
+    expect(isValidGestureData({ data: 123 })).toEqual(false);
+    expect(isValidGestureData({ data: {} })).toEqual(false);
   });
   it("checks data properties", () => {
-    expect(isValidStoredGestureData({ data: [{ invalid: 3 }] })).toEqual(false);
-    expect(isValidStoredGestureData({ data: [{ name: 3 }] })).toEqual(false);
+    expect(isValidGestureData({ data: [{ invalid: 3 }] })).toEqual(false);
+    expect(isValidGestureData({ data: [{ name: 3 }] })).toEqual(false);
     expect(
-      isValidStoredGestureData({
+      isValidGestureData({
         data: [{ ID: 0, name: "some name", recordings: [] }],
       })
     ).toEqual(true);
@@ -20,21 +20,19 @@ describe("isValidStoredGestureData", () => {
     const generateData = (recordings: unknown) => ({
       data: [{ ID: 0, name: "some name", recordings }],
     });
-    expect(isValidStoredGestureData(generateData({}))).toEqual(false);
-    expect(isValidStoredGestureData(generateData([]))).toEqual(true);
+    expect(isValidGestureData(generateData({}))).toEqual(false);
+    expect(isValidGestureData(generateData([]))).toEqual(true);
+    expect(isValidGestureData(generateData([{ ID: 0, data: [] }]))).toEqual(
+      false
+    );
+    expect(isValidGestureData(generateData([{ ID: 0, data: {} }]))).toEqual(
+      false
+    );
     expect(
-      isValidStoredGestureData(generateData([{ ID: 0, data: [] }]))
+      isValidGestureData(generateData([{ ID: 0, data: { x: 0, y: 0, z: 0 } }]))
     ).toEqual(false);
     expect(
-      isValidStoredGestureData(generateData([{ ID: 0, data: {} }]))
-    ).toEqual(false);
-    expect(
-      isValidStoredGestureData(
-        generateData([{ ID: 0, data: { x: 0, y: 0, z: 0 } }])
-      )
-    ).toEqual(false);
-    expect(
-      isValidStoredGestureData(
+      isValidGestureData(
         generateData([{ ID: 0, data: { x: [], y: [], z: [] } }])
       )
     ).toEqual(true);

@@ -2,7 +2,7 @@ import { Input, MenuItem } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
 import { RiUpload2Line } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import { GestureData, useGestureActions } from "../gestures-hooks";
+import { Gesture, useGestureActions } from "../hooks/use-gestures";
 
 /**
  * Reads file as text via a FileReader.
@@ -37,8 +37,8 @@ const UploadDataSamplesMenuItem = () => {
       if (files.length === 0) {
         throw new Error("Expected to be called with at least one file");
       }
-      const gestureData = await readFileAsText(files[0]);
-      actions.importGestures(JSON.parse(gestureData) as Partial<GestureData>[]);
+      const gestures = await readFileAsText(files[0]);
+      actions.importGestures(JSON.parse(gestures) as Partial<Gesture>[]);
     },
     [actions]
   );

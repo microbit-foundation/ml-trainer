@@ -1,4 +1,4 @@
-import { XYZData } from "./gestures-hooks";
+import { XYZData } from "./hooks/use-gestures";
 
 export interface TimedXYZ {
   x: number;

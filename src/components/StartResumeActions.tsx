@@ -2,7 +2,7 @@ import { Button, HStack, StackProps, useDisclosure } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
-import { useGestureActions } from "../gestures-hooks";
+import { useGestureActions } from "../hooks/use-gestures";
 import { createStepPageUrl } from "../urls";
 import StartOverWarningDialog from "./StartOverWarningDialog";
 import { useConnectionStage } from "../connection-stage-hooks";

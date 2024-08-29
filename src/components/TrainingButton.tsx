@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
+import { MlStage, useMlStatus } from "../hooks/use-ml-status";
 
 const TrainingButton = (props: ButtonProps) => {
   const [{ stage }] = useMlStatus();

@@ -9,15 +9,15 @@
 
 import * as tf from "@tensorflow/tfjs";
 import { vi } from "vitest";
-import { GestureData } from "./gestures-hooks";
+import { Gesture } from "./hooks/use-gestures";
 import { prepareFeaturesAndLabels, TrainingResult, trainModel } from "./ml";
 import gestureDataBadLabels from "./test-fixtures/gesture-data-bad-labels.json";
 import gestureData from "./test-fixtures/gesture-data.json";
 import testdataShakeStill from "./test-fixtures/test-data-shake-still.json";
 
-const fixUpTestData = (data: Partial<GestureData>[]): GestureData[] => {
+const fixUpTestData = (data: Partial<Gesture>[]): Gesture[] => {
   data.forEach((action) => (action.icon = "Heart"));
-  return data as GestureData[];
+  return data as Gesture[];
 };
 
 let trainingResult: TrainingResult;
@@ -32,7 +32,7 @@ beforeAll(async () => {
   trainingResult = await trainModel({ data: fixUpTestData(gestureData) });
 });
 
-const getModelResults = (data: GestureData[]) => {
+const getModelResults = (data: Gesture[]) => {
   const { features, labels } = prepareFeaturesAndLabels(data);
 
   if (trainingResult.error) {

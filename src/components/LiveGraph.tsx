@@ -5,12 +5,12 @@ import { SmoothieChart, TimeSeries } from "smoothie";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { AccelerometerDataEvent } from "@microbit/microbit-connection";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { mlSettings } from "../ml";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { RiArrowDropLeftFill } from "react-icons/ri";
 import React from "react";
 import { LabelConfig, getUpdatedLabelConfig } from "../live-graph-label-config";
+import { MlStage, useMlStatus } from "../hooks/use-ml-status";
 
 const initialLabelConfigs: LabelConfig[] = [
   { label: "x", arrowHeight: 0, labelHeight: 0, color: "#f9808e", id: 0 },

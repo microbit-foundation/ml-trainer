@@ -24,8 +24,8 @@ import UploadDataSamplesMenuItem from "../components/UploadDataSamplesMenuItem";
 import {
   hasSufficientDataForTraining,
   useGestureActions,
-  useGestureData,
-} from "../gestures-hooks";
+  useGestures,
+} from "../hooks/use-gestures";
 import { addDataConfig } from "../pages-config";
 import { createStepPageUrl } from "../urls";
 import { useConnectionStage } from "../connection-stage-hooks";
@@ -34,22 +34,20 @@ import { ConnectionStatus } from "../connect-status-hooks";
 const AddDataPage = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const [gestures] = useGestureData();
+  const [gestures] = useGestures();
   const actions = useGestureActions();
   const { isConnected, status } = useConnectionStage();
 
   const hasSufficientData = useMemo(
-    () => hasSufficientDataForTraining(gestures.data),
-    [gestures.data]
+    () => hasSufficientDataForTraining(gestures),
+    [gestures]
   );
 
   const noStoredData = useMemo<boolean>(() => {
-    const gestureData = gestures.data;
     return !(
-      gestureData.length !== 0 &&
-      gestureData.some((g) => g.recordings.length > 0)
+      gestures.length !== 0 && gestures.some((g) => g.recordings.length > 0)
     );
-  }, [gestures.data]);
+  }, [gestures]);
 
   const handleAddNewGesture = useCallback(() => {
     actions.addNewGesture();
@@ -89,7 +87,7 @@ const AddDataPage = () => {
             leftIcon={<RiAddLine />}
             onClick={handleAddNewGesture}
             isDisabled={
-              !isConnected || gestures.data.some((g) => g.name.length === 0)
+              !isConnected || gestures.some((g) => g.name.length === 0)
             }
           >
             <FormattedMessage id="content.data.addAction" />

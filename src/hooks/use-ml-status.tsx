@@ -1,3 +1,4 @@
+import { LayersModel } from "@tensorflow/tfjs";
 import {
   ReactNode,
   createContext,
@@ -5,8 +6,7 @@ import {
   useContext,
   useState,
 } from "react";
-import { hasSufficientDataForTraining, useGestureData } from "./gestures-hooks";
-import { LayersModel } from "@tensorflow/tfjs";
+import { hasSufficientDataForTraining, useGestures } from "./use-gestures";
 
 export enum MlStage {
   RecordingData,
@@ -53,10 +53,10 @@ const MlStatusContext = createContext<MlStatusContextValue | undefined>(
 );
 
 export const MlStatusProvider = ({ children }: { children: ReactNode }) => {
-  const [gestureState] = useGestureData();
+  const [gestures] = useGestures();
   const statusContextValue = useState<MlStatusState>({
     status: {
-      stage: hasSufficientDataForTraining(gestureState.data)
+      stage: hasSufficientDataForTraining(gestures)
         ? MlStage.NotTrained
         : MlStage.InsufficientData,
     },

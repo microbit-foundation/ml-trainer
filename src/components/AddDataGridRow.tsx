@@ -1,12 +1,12 @@
 import { GridItem } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
-import { GestureData, useGestureActions } from "../gestures-hooks";
+import { Gesture, useGestureActions } from "../hooks/use-gestures";
 import DataRecordingGridItem from "./DataRecordingGridItem";
 import GestureNameGridItem from "./GestureNameGridItem";
 
 interface AddDataGridRowProps {
-  gesture: GestureData;
+  gesture: Gesture;
   selected: boolean;
   onSelectRow: () => void;
   startRecording: () => void;

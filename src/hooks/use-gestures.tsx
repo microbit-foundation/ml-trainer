@@ -1,8 +1,15 @@
 import { createContext, ReactNode, useContext, useMemo } from "react";
-import { useStorage } from "./hooks/use-storage";
-import { MlStage, MlStatus, useMlStatus } from "./ml-status-hooks";
-import { isArray } from "./utils";
-import { defaultIcons, MakeCodeIcon } from "./utils/icons";
+import { useStorage } from "./use-storage";
+import {
+  MlStage,
+  MlStatus,
+  TrainingCompleteMlStatus,
+  useMlStatus,
+} from "./use-ml-status";
+import { isArray } from "../utils/validators";
+import { defaultIcons, MakeCodeIcon } from "../utils/icons";
+import { useProject } from "./use-project";
+import { LayersModel } from "@tensorflow/tfjs";
 export interface XYZData {
   x: number[];
   y: number[];
@@ -18,38 +25,18 @@ export interface Gesture {
   name: string;
   ID: number;
   icon: MakeCodeIcon;
+  recordings: RecordingData[];
   requiredConfidence?: number;
 }
 
-export interface GestureData extends Gesture {
-  recordings: RecordingData[];
-}
-
-export interface GestureContextState {
-  data: GestureData[];
-}
-
-type GestureContextValue = [
-  GestureContextState,
-  (gestureData: GestureContextState) => void
-];
+type GestureContext = [Gesture[], (gestures: Gesture[]) => void];
 
 // Exported for testing
-export const isValidStoredGestureData = (
-  v: unknown
-): v is GestureContextState => {
-  if (typeof v !== "object") {
+export const isValidGestureData = (v: unknown): v is Gesture[] => {
+  if (!isArray(v)) {
     return false;
   }
-  const valueObject = v as object;
-  if (!("data" in valueObject)) {
-    return false;
-  }
-  const data = valueObject.data;
-  if (!isArray(data)) {
-    return false;
-  }
-  const array = data as unknown[];
+  const array = v as unknown[];
   for (const item of array) {
     if (typeof item !== "object" || item === null) {
       return false;
@@ -86,24 +73,22 @@ export const isValidStoredGestureData = (
   return true;
 };
 
-const GestureContext = createContext<GestureContextValue | undefined>(
-  undefined
-);
+const GestureContext = createContext<GestureContext | undefined>(undefined);
 
-export const useGestureData = (): GestureContextValue => {
-  const gestureData = useContext(GestureContext);
-  if (!gestureData) {
+export const useGestures = (): GestureContext => {
+  const gestures = useContext(GestureContext);
+  if (!gestures) {
     throw new Error("Missing provider");
   }
-  return gestureData;
+  return gestures;
 };
 
 export const GesturesProvider = ({ children }: { children: ReactNode }) => {
-  const [state, setState] = useStorage<GestureContextState>(
+  const [state, setState] = useStorage<Gesture[]>(
     "local",
     "gestures",
-    { data: [] },
-    isValidStoredGestureData
+    [],
+    isValidGestureData
   );
   return (
     <GestureContext.Provider value={[state, setState]}>
@@ -113,11 +98,19 @@ export const GesturesProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const useGestureActions = () => {
-  const [gestures, setGestures] = useGestureData();
+  const [gestures, setGestures] = useGestures();
   const [status, setStatus] = useMlStatus();
+  const { updateProject } = useProject();
   const actions = useMemo<GestureActions>(
-    () => new GestureActions(gestures, setGestures, status, setStatus),
-    [gestures, setGestures, setStatus, status]
+    () =>
+      new GestureActions(
+        gestures,
+        setGestures,
+        status,
+        setStatus,
+        updateProject
+      ),
+    [gestures, setGestures, setStatus, status, updateProject]
   );
 
   return actions;
@@ -125,14 +118,18 @@ export const useGestureActions = () => {
 
 class GestureActions {
   constructor(
-    private gestureState: GestureContextState,
-    private setGestureState: (gestureData: GestureContextState) => void,
+    private gestures: Gesture[],
+    private setGestures: (gestures: Gesture[]) => void,
     private status: MlStatus,
-    private setStatus: (status: MlStatus) => void
+    private setStatus: (status: MlStatus) => void,
+    private updateProject: (
+      gestures: Gesture[],
+      model: LayersModel | undefined
+    ) => void
   ) {
     // Initialize with at least one gesture for walkthrough.
-    if (!this.gestureState.data.length) {
-      this.setGestureState({ data: [this.generateNewGesture(true)] });
+    if (!this.gestures.length) {
+      this.setGestures([this.generateNewGesture(true)]);
     }
   }
 
@@ -147,7 +144,7 @@ class GestureActions {
       return defaultIcons[0];
     }
     if (!iconsInUse) {
-      iconsInUse = this.gestureState.data.map((g) => g.icon);
+      iconsInUse = this.gestures.map((g) => g.icon);
     }
     const useableIcons: MakeCodeIcon[] = [];
     for (const icon of defaultIcons) {
@@ -162,9 +159,7 @@ class GestureActions {
     return useableIcons[0];
   };
 
-  private generateNewGesture = (
-    isFirstGesture: boolean = false
-  ): GestureData => ({
+  private generateNewGesture = (isFirstGesture: boolean = false): Gesture => ({
     name: "",
     recordings: [],
     ID: Date.now(),
@@ -173,14 +168,14 @@ class GestureActions {
 
   hasGestures = (): boolean => {
     return (
-      this.gestureState.data.length > 0 &&
-      (this.gestureState.data[0].name.length > 0 ||
-        this.gestureState.data[0].recordings.length > 0)
+      this.gestures.length > 0 &&
+      (this.gestures[0].name.length > 0 ||
+        this.gestures[0].recordings.length > 0)
     );
   };
 
-  importGestures = (gestures: Partial<GestureData>[]) => {
-    const validGestures: GestureData[] = [];
+  importGestures = (gestures: Partial<Gesture>[]) => {
+    const validGestures: Gesture[] = [];
     const importedGestureIcons: MakeCodeIcon[] = gestures
       .map((g) => g.icon as MakeCodeIcon)
       .filter(Boolean);
@@ -194,17 +189,20 @@ class GestureActions {
             ],
           });
         }
-        validGestures.push(g as GestureData);
+        validGestures.push(g as Gesture);
       }
     });
-    this.setGestures(validGestures);
+    this.setGesturesInternal(validGestures);
   };
 
-  setGestures = (gestures: GestureData[], isRetrainNeeded: boolean = true) => {
+  private setGesturesInternal = (
+    gestures: Gesture[],
+    isRetrainNeeded: boolean = true
+  ) => {
     const data =
       // Always have at least one gesture for walk through
       gestures.length === 0 ? [this.generateNewGesture(true)] : gestures;
-    this.setGestureState({ data });
+    this.setGestures(data);
 
     // Update training status
     const newTrainingStatus = !hasSufficientDataForTraining(data)
@@ -215,33 +213,37 @@ class GestureActions {
       : this.status;
 
     this.setStatus(newTrainingStatus);
+    this.updateProject(
+      data,
+      (newTrainingStatus as TrainingCompleteMlStatus).model
+    );
   };
 
   addNewGesture = () => {
-    this.setGestures([...this.gestureState.data, this.generateNewGesture()]);
+    this.setGesturesInternal([...this.gestures, this.generateNewGesture()]);
   };
 
-  addGestureRecordings = (id: GestureData["ID"], recs: RecordingData[]) => {
-    const newGestures = this.gestureState.data.map((g) => {
+  addGestureRecordings = (id: Gesture["ID"], recs: RecordingData[]) => {
+    const newGestures = this.gestures.map((g) => {
       return id !== g.ID ? g : { ...g, recordings: [...recs, ...g.recordings] };
     });
-    this.setGestures(newGestures);
+    this.setGesturesInternal(newGestures);
   };
 
-  deleteGesture = (id: GestureData["ID"]) => {
-    this.setGestures(this.gestureState.data.filter((g) => g.ID !== id));
+  deleteGesture = (id: Gesture["ID"]) => {
+    this.setGesturesInternal(this.gestures.filter((g) => g.ID !== id));
   };
 
-  setGestureName = (id: GestureData["ID"], name: string) => {
-    const newGestures = this.gestureState.data.map((g) => {
+  setGestureName = (id: Gesture["ID"], name: string) => {
+    const newGestures = this.gestures.map((g) => {
       return id !== g.ID ? g : { ...g, name };
     });
-    this.setGestures(newGestures, false);
+    this.setGesturesInternal(newGestures, false);
   };
 
-  setGestureIcon = (id: GestureData["ID"], icon: MakeCodeIcon) => {
-    const currentIcon = this.gestureState.data.find((g) => g.ID === id)?.icon;
-    const newGestures = this.gestureState.data.map((g) => {
+  setGestureIcon = (id: Gesture["ID"], icon: MakeCodeIcon) => {
+    const currentIcon = this.gestures.find((g) => g.ID === id)?.icon;
+    const newGestures = this.gestures.map((g) => {
       if (g.ID === id) {
         g.icon = icon;
       } else if (g.ID !== id && g.icon === icon && currentIcon) {
@@ -249,32 +251,29 @@ class GestureActions {
       }
       return g;
     });
-    this.setGestures(newGestures, false);
+    this.setGesturesInternal(newGestures, false);
   };
 
-  setRequiredConfidence = (id: GestureData["ID"], value: number) => {
-    const newGestures = this.gestureState.data.map((g) => {
+  setRequiredConfidence = (id: Gesture["ID"], value: number) => {
+    const newGestures = this.gestures.map((g) => {
       return id !== g.ID ? g : { ...g, requiredConfidence: value };
     });
-    this.setGestures(newGestures, false);
+    this.setGesturesInternal(newGestures, false);
   };
 
-  deleteGestureRecording = (
-    gestureId: GestureData["ID"],
-    recordingIdx: number
-  ) => {
-    const newGestures = this.gestureState.data.map((g) => {
+  deleteGestureRecording = (gestureId: Gesture["ID"], recordingIdx: number) => {
+    const newGestures = this.gestures.map((g) => {
       if (gestureId !== g.ID) {
         return g;
       }
       const recordings = g.recordings.filter((_r, i) => i !== recordingIdx);
       return { ...g, recordings };
     });
-    this.setGestures(newGestures);
+    this.setGesturesInternal(newGestures);
   };
 
   deleteAllGestures = () => {
-    this.setGestures([]);
+    this.setGesturesInternal([]);
   };
 
   downloadDataset = () => {
@@ -282,7 +281,7 @@ class GestureActions {
     a.setAttribute(
       "href",
       "data:application/json;charset=utf-8," +
-        encodeURIComponent(JSON.stringify(this.gestureState.data, null, 2))
+        encodeURIComponent(JSON.stringify(this.gestures, null, 2))
     );
     a.setAttribute("download", "dataset");
     a.style.display = "none";
@@ -290,9 +289,7 @@ class GestureActions {
   };
 }
 
-export const hasSufficientDataForTraining = (
-  gestures: GestureData[]
-): boolean => {
+export const hasSufficientDataForTraining = (gestures: Gesture[]): boolean => {
   return (
     gestures.length >= 2 && gestures.every((g) => g.recordings.length >= 3)
   );

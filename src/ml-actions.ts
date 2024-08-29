@@ -1,24 +1,29 @@
-import { GestureContextState } from "./gestures-hooks";
+import { Gesture } from "./hooks/use-gestures";
 import { Logging } from "./logging/logging";
 import { TrainingResult, trainModel } from "./ml";
-import { MlStage, MlStatus } from "./ml-status-hooks";
+import { MlStage, MlStatus } from "./hooks/use-ml-status";
+import { LayersModel } from "@tensorflow/tfjs";
 
 export class MlActions {
   constructor(
     private logger: Logging,
-    private gestureState: GestureContextState,
-    private setStatus: (status: MlStatus) => void
+    private gestures: Gesture[],
+    private setStatus: (status: MlStatus) => void,
+    private updateProject: (gestures: Gesture[], model: LayersModel) => void
   ) {}
 
   trainModel = async (): Promise<TrainingResult> => {
     this.setStatus({ stage: MlStage.TrainingInProgress, progressValue: 0 });
-    const { data } = this.gestureState;
     const detail = {
-      numActions: data.length,
-      numRecordings: data.reduce((acc, d) => d.recordings.length + acc, 0),
+      numActions: this.gestures.length,
+      numRecordings: this.gestures.reduce(
+        (acc, d) => d.recordings.length + acc,
+        0
+      ),
     };
+
     const trainingResult = await trainModel({
-      data,
+      data: this.gestures,
       onProgress: (progressValue) =>
         this.setStatus({ stage: MlStage.TrainingInProgress, progressValue }),
     });
@@ -40,6 +45,7 @@ export class MlActions {
         stage: MlStage.TrainingComplete,
         model: trainingResult.model,
       });
+      this.updateProject(this.gestures, trainingResult.model);
     }
 
     return trainingResult;

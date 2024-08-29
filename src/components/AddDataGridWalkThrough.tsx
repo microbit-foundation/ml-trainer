@@ -1,5 +1,5 @@
 import { GridItem, VStack, Image, Text, HStack } from "@chakra-ui/react";
-import { GestureData } from "../gestures-hooks";
+import { Gesture } from "../hooks/use-gestures";
 import greetingEmojiWithArrowImage from "../images/greeting-emoji-with-arrow.svg";
 import upCurveArrowImage from "../images/curve-arrow-up.svg";
 import GestureNameGridItem from "./GestureNameGridItem";
@@ -7,7 +7,7 @@ import DataRecordingGridItem from "./DataRecordingGridItem";
 import { FormattedMessage } from "react-intl";
 
 interface AddDataGridWalkThrough {
-  gesture: GestureData;
+  gesture: Gesture;
   startRecording: () => void;
 }
 

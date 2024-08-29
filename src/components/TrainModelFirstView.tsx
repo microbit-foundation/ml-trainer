@@ -4,9 +4,9 @@ import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
 import testModelImage from "../images/test_model_black.svg";
 import { StepId } from "../pages-config";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { createStepPageUrl } from "../urls";
 import TrainingButton from "./TrainingButton";
+import { MlStage, useMlStatus } from "../hooks/use-ml-status";
 
 interface TrainModelFirstViewConfig {
   textIds: string[];

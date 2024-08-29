@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { ReactNode, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
-import { useGestureActions } from "../gestures-hooks";
+import { useGestureActions } from "../hooks/use-gestures";
 
 interface StartOverWardningDialogProps {
   isOpen: boolean;

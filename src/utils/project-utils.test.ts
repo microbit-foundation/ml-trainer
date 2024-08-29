@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { ActionName, actionNamesFromLabels } from "./utils";
+import { ActionName, actionNamesFromLabels } from "./project-utils";
 
 describe("test actionNamesFromLabels", () => {
   it("removes numbers from start of identifiers", () => {

@@ -8,7 +8,7 @@ import {
   registerables,
 } from "chart.js";
 import { useEffect, useRef } from "react";
-import { XYZData } from "../gestures-hooks";
+import { XYZData } from "../hooks/use-gestures";
 import { getConfig as getRecordingChartConfig } from "../recording-graph";
 
 interface RecordingGraphProps {

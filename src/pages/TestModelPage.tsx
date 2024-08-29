@@ -3,8 +3,8 @@ import LiveGraphPanel from "../components/LiveGraphPanel";
 import TabView from "../components/TabView";
 import TestModelGridView from "../components/TestModelGridView";
 import TrainModelFirstView from "../components/TrainModelFirstView";
+import { MlStage, useMlStatus } from "../hooks/use-ml-status";
 import { testModelConfig } from "../pages-config";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
 
 const TestModelPage = () => {
   const [{ stage }] = useMlStatus();

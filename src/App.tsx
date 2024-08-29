@@ -2,32 +2,34 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import React, { ReactNode, useMemo } from "react";
 import {
+  createBrowserRouter,
   Outlet,
   RouterProvider,
   ScrollRestoration,
-  createBrowserRouter,
 } from "react-router-dom";
+import { BufferedDataProvider } from "./buffered-data-hooks";
+import EditCodeDialog from "./components/EditCodeDialog";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
 import NotFound from "./components/NotFound";
+import { ConnectProvider } from "./connect-actions-hooks";
+import { ConnectStatusProvider } from "./connect-status-hooks";
+import { ConnectionStageProvider } from "./connection-stage-hooks";
+import { deployment, useDeployment } from "./deployment";
+import { GesturesProvider } from "./hooks/use-gestures";
+import EditCodeDialogProvider from "./hooks/use-edit-code-dialog";
+import { LoggingProvider } from "./logging/logging-hooks";
 import TranslationProvider from "./messages/TranslationProvider";
-import SettingsProvider from "./settings";
+import { resourcesConfig, stepsConfig } from "./pages-config";
 import HomePage from "./pages/HomePage";
+import SettingsProvider from "./settings";
 import {
   createHomePageUrl,
   createResourcePageUrl,
   createStepPageUrl,
 } from "./urls";
-import { deployment, useDeployment } from "./deployment";
-import { resourcesConfig, stepsConfig } from "./pages-config";
-import { LoggingProvider } from "./logging/logging-hooks";
-import { GesturesProvider } from "./gestures-hooks";
-import { MlStatusProvider } from "./ml-status-hooks";
-import { ConnectionStageProvider } from "./connection-stage-hooks";
-import { ConnectProvider } from "./connect-actions-hooks";
-import { ConnectStatusProvider } from "./connect-status-hooks";
-import { BufferedDataProvider } from "./buffered-data-hooks";
-import { UserProjectsProvider } from "./user-projects-hooks";
+import { ProjectProvider } from "./hooks/use-project";
+import { MlStatusProvider } from "./hooks/use-ml-status";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -45,21 +47,23 @@ const Providers = ({ children }: ProviderLayoutProps) => {
           <ConsentProvider>
             <SettingsProvider>
               <GesturesProvider>
-                <UserProjectsProvider>
+                <EditCodeDialogProvider>
                   <MlStatusProvider>
-                    <ConnectStatusProvider>
-                      <ConnectProvider>
-                        <BufferedDataProvider>
-                          <ConnectionStageProvider>
-                            <TranslationProvider>
-                              <ErrorBoundary>{children}</ErrorBoundary>
-                            </TranslationProvider>
-                          </ConnectionStageProvider>
-                        </BufferedDataProvider>
-                      </ConnectProvider>
-                    </ConnectStatusProvider>
+                    <ProjectProvider>
+                      <ConnectStatusProvider>
+                        <ConnectProvider>
+                          <BufferedDataProvider>
+                            <ConnectionStageProvider>
+                              <TranslationProvider>
+                                <ErrorBoundary>{children}</ErrorBoundary>
+                              </TranslationProvider>
+                            </ConnectionStageProvider>
+                          </BufferedDataProvider>
+                        </ConnectProvider>
+                      </ConnectStatusProvider>
+                    </ProjectProvider>
                   </MlStatusProvider>
-                </UserProjectsProvider>
+                </EditCodeDialogProvider>
               </GesturesProvider>
             </SettingsProvider>
           </ConsentProvider>
@@ -75,6 +79,7 @@ const Layout = () => {
     <ErrorBoundary>
       <ScrollRestoration />
       <Outlet />
+      <EditCodeDialog />
     </ErrorBoundary>
   );
 };
