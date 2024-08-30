@@ -16,7 +16,7 @@ interface BlockPos {
 }
 
 const onMLEventBlock = (name: string, children: string, pos: BlockPos) => `
-  <block type="mlrunner_on_ml_event" x="${pos.x}" y="${pos.y}">
+  <block type="ml_on_event_start" x="${pos.x}" y="${pos.y}">
     <field name="event">ml.event.${name}</field>
     <statement name="HANDLER">
       ${children}       
@@ -63,16 +63,21 @@ const onMLEventChildren = (
   return iconName ? s.showIcon(iconName) : "";
 };
 
-const getMakeCodeGestureConfigs = (gs: Gesture[]) => {
+export const generateMainScript = (
+  gs: Gesture[],
+  lang: Language,
+  gestureToRenderAsBlock?: Gesture
+) => {
   const actionNames = actionNamesFromLabels(gs.map((g) => g.name));
-  return gs.map((g, idx) => ({
-    name: actionNames[idx].actionVar,
-    iconName: g.icon,
-  }));
-};
-
-export const generateMainScript = (gs: Gesture[], lang: Language) => {
-  const configs = getMakeCodeGestureConfigs(gs);
+  const configs = gs
+    .map((g, idx) => ({
+      id: g.ID,
+      name: actionNames[idx].actionVar,
+      iconName: g.icon,
+    }))
+    .filter((c) =>
+      gestureToRenderAsBlock ? c.id === gestureToRenderAsBlock.ID : true
+    );
   const s = statements[lang];
   const initPos = { x: 0, y: 0 };
   return s.wrapper(`

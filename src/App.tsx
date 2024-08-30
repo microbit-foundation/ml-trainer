@@ -27,7 +27,9 @@ import { ConnectionStageProvider } from "./connection-stage-hooks";
 import { ConnectProvider } from "./connect-actions-hooks";
 import { ConnectStatusProvider } from "./connect-status-hooks";
 import { BufferedDataProvider } from "./buffered-data-hooks";
-import { UserProjectsProvider } from "./user-projects-hooks";
+import EditCodeDialogProvider from "./hooks/use-edit-code-dialog";
+import EditCodeDialog from "./components/EditCodeDialog";
+import { ProjectProvider } from "./user-projects-hooks";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -45,21 +47,23 @@ const Providers = ({ children }: ProviderLayoutProps) => {
           <ConsentProvider>
             <SettingsProvider>
               <GesturesProvider>
-                <UserProjectsProvider>
-                  <MlStatusProvider>
-                    <ConnectStatusProvider>
-                      <ConnectProvider>
-                        <BufferedDataProvider>
-                          <ConnectionStageProvider>
-                            <TranslationProvider>
-                              <ErrorBoundary>{children}</ErrorBoundary>
-                            </TranslationProvider>
-                          </ConnectionStageProvider>
-                        </BufferedDataProvider>
-                      </ConnectProvider>
-                    </ConnectStatusProvider>
-                  </MlStatusProvider>
-                </UserProjectsProvider>
+                <MlStatusProvider>
+                  <ProjectProvider>
+                    <EditCodeDialogProvider>
+                      <ConnectStatusProvider>
+                        <ConnectProvider>
+                          <BufferedDataProvider>
+                            <ConnectionStageProvider>
+                              <TranslationProvider>
+                                <ErrorBoundary>{children}</ErrorBoundary>
+                              </TranslationProvider>
+                            </ConnectionStageProvider>
+                          </BufferedDataProvider>
+                        </ConnectProvider>
+                      </ConnectStatusProvider>
+                    </EditCodeDialogProvider>
+                  </ProjectProvider>
+                </MlStatusProvider>
               </GesturesProvider>
             </SettingsProvider>
           </ConsentProvider>
@@ -75,6 +79,7 @@ const Layout = () => {
     <ErrorBoundary>
       <ScrollRestoration />
       <Outlet />
+      <EditCodeDialog />
     </ErrorBoundary>
   );
 };

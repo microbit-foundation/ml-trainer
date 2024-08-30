@@ -7,9 +7,11 @@ import { createStepPageUrl } from "../urls";
 import StartOverWarningDialog from "./StartOverWarningDialog";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
+import { useProject } from "../user-projects-hooks";
 
 const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
   const gestureActions = useGestureActions();
+  const { resetProject } = useProject();
   const hasExistingSession = useMemo(
     () => gestureActions.hasGestures(),
     [gestureActions]
@@ -31,6 +33,7 @@ const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
   const handleStartNewSession = useCallback(() => {
     startOverWarningDialogDisclosure.onClose();
     gestureActions.deleteAllGestures();
+    resetProject();
     if (isConnected) {
       handleNavigateToAddData();
     } else {
@@ -40,6 +43,7 @@ const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
   }, [
     startOverWarningDialogDisclosure,
     gestureActions,
+    resetProject,
     isConnected,
     handleNavigateToAddData,
     connStageActions,

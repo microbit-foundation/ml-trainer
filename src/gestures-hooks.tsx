@@ -1,8 +1,15 @@
 import { createContext, ReactNode, useContext, useMemo } from "react";
 import { useStorage } from "./hooks/use-storage";
-import { MlStage, MlStatus, useMlStatus } from "./ml-status-hooks";
+import {
+  MlStage,
+  MlStatus,
+  TrainingCompleteMlStatus,
+  useMlStatus,
+} from "./ml-status-hooks";
 import { isArray } from "./utils";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
+import { useProject } from "./user-projects-hooks";
+import { LayersModel } from "@tensorflow/tfjs";
 export interface XYZData {
   x: number[];
   y: number[];
@@ -115,9 +122,17 @@ export const GesturesProvider = ({ children }: { children: ReactNode }) => {
 export const useGestureActions = () => {
   const [gestures, setGestures] = useGestureData();
   const [status, setStatus] = useMlStatus();
+  const { updateProject } = useProject();
   const actions = useMemo<GestureActions>(
-    () => new GestureActions(gestures, setGestures, status, setStatus),
-    [gestures, setGestures, setStatus, status]
+    () =>
+      new GestureActions(
+        gestures,
+        setGestures,
+        status,
+        setStatus,
+        updateProject
+      ),
+    [gestures, setGestures, setStatus, status, updateProject]
   );
 
   return actions;
@@ -128,7 +143,11 @@ class GestureActions {
     private gestureState: GestureContextState,
     private setGestureState: (gestureData: GestureContextState) => void,
     private status: MlStatus,
-    private setStatus: (status: MlStatus) => void
+    private setStatus: (status: MlStatus) => void,
+    private updateProject: (
+      gestures: GestureData[],
+      model: LayersModel | undefined
+    ) => void
   ) {
     // Initialize with at least one gesture for walkthrough.
     if (!this.gestureState.data.length) {
@@ -219,6 +238,10 @@ class GestureActions {
       : this.status;
 
     this.setStatus(newTrainingStatus);
+    this.updateProject(
+      data,
+      (newTrainingStatus as TrainingCompleteMlStatus).model
+    );
   };
 
   addNewGesture = () => {

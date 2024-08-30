@@ -4,22 +4,29 @@ import {
   MakeCodeBlocksRendering,
 } from "@microbit-foundation/react-code-view";
 import { memo, useMemo } from "react";
-import { GestureData } from "../gestures-hooks";
-import { useMakeCodeProject } from "../user-projects-hooks";
+import { GestureData, useGestureData } from "../gestures-hooks";
+import { generateProject } from "../makecode/utils";
+import { TrainingCompleteMlStatus, useMlStatus } from "../ml-status-hooks";
 
 interface CodeViewGridItemProps {
   gesture: GestureData;
-  hasStoredProject: boolean;
+  projectEdited: boolean;
 }
 
 const CodeViewGridItem = ({
   gesture,
-  hasStoredProject,
+  projectEdited,
 }: CodeViewGridItemProps) => {
-  const { createGestureDefaultProject } = useMakeCodeProject();
+  const [status] = useMlStatus();
+  const [gestures] = useGestureData();
   const project = useMemo(
-    () => createGestureDefaultProject(gesture),
-    [createGestureDefaultProject, gesture]
+    () =>
+      generateProject(
+        gestures.data,
+        (status as TrainingCompleteMlStatus).model,
+        gesture
+      ),
+    [gesture, gestures, status]
   );
   const width = useMemo(
     () => `${120 + gesture.name.length * 5}px`,
@@ -27,7 +34,7 @@ const CodeViewGridItem = ({
   );
   return (
     <GridItem>
-      {!hasStoredProject && (
+      {!projectEdited && (
         <Card
           px={5}
           h="120px"
