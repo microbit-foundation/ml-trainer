@@ -1,9 +1,11 @@
 import {
+  ActionListenerSubject,
   EditorProject,
   MakeCodeEditor,
 } from "@microbit-foundation/react-editor-embed";
 import React from "react";
 import { getMakeCodeLang, useSettings } from "../settings";
+import { Subject } from "rxjs";
 
 const controllerId = "MicrobitMachineLearningTool";
 
@@ -17,12 +19,14 @@ interface EditorProps {
   getWriter?: (writeFn: any) => void;
   version: string | undefined;
   style?: React.CSSProperties;
+  actionListener?: Subject<ActionListenerSubject>;
 }
 
 const Editor = ({
   style,
   initialCode,
   version,
+  actionListener,
   ...editorProps
 }: EditorProps) => {
   const [{ languageId }] = useSettings();
@@ -36,6 +40,7 @@ const Editor = ({
       initialCode={initialCode}
       version={version}
       lang={getMakeCodeLang(languageId)}
+      actionListener={actionListener}
       {...editorProps}
     />
   );

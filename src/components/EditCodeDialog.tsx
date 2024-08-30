@@ -7,8 +7,13 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import { MakeCodeProject } from "@microbit-foundation/react-code-view";
-import { EditorProject } from "@microbit-foundation/react-editor-embed";
-import { memo, useCallback, useRef } from "react";
+import {
+  ActionListenerSubject,
+  CommonEditorMessageAction,
+  EditorProject,
+} from "@microbit-foundation/react-editor-embed";
+import { memo, useCallback, useEffect, useMemo, useRef } from "react";
+import { Subject } from "rxjs";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { useEditCodeDialog } from "../hooks/use-edit-code-dialog";
 import { useProject } from "../user-projects-hooks";
@@ -45,6 +50,16 @@ const EditCodeDialog = () => {
     [actions]
   );
 
+  const eventTrigger = useMemo(() => new Subject<ActionListenerSubject>(), []);
+
+  useEffect(() => {
+    if (isOpen) {
+      eventTrigger?.next({
+        action: CommonEditorMessageAction.restartsimulator,
+      });
+    }
+  }, [eventTrigger, isOpen]);
+
   return (
     <>
       <Box ref={ref} display={isOpen ? "block" : "none"} />
@@ -78,6 +93,7 @@ const EditCodeDialog = () => {
                   onBack={onClose}
                   onDownload={handleDownload}
                   onSave={handleSave}
+                  actionListener={eventTrigger}
                 />
               </Flex>
             </ModalBody>

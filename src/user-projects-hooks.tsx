@@ -1,14 +1,15 @@
+import { usePrevious } from "@chakra-ui/react";
 import { MakeCodeProject } from "@microbit-foundation/react-code-view";
-import { LayersModel } from "@tensorflow/tfjs";
 import {
   MutableRefObject,
   ReactNode,
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useRef,
 } from "react";
-import { GestureData, useGestureData } from "./gestures-hooks";
+import { useGestureData } from "./gestures-hooks";
 import { useStorage } from "./hooks/use-storage";
 import { generateCustomFiles, generateProject } from "./makecode/utils";
 import { TrainingCompleteMlStatus, useMlStatus } from "./ml-status-hooks";
@@ -20,11 +21,8 @@ interface StoredProject {
 
 interface ProjectContext extends StoredProject {
   writeProject: (project: MakeCodeProject) => void;
+  updateProject: () => void;
   resetProject: () => void;
-  updateProject: (
-    gestures: GestureData[],
-    model: LayersModel | undefined
-  ) => void;
   editorWrite: MutableRefObject<
     ((payload: MakeCodeProject) => void) | undefined
   >;
@@ -58,35 +56,60 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     ((payload: MakeCodeProject) => void) | undefined
   > = useRef();
 
-  const updateProject = useCallback(
-    (gestures: GestureData[], model: LayersModel | undefined) => {
-      if (!projectEdited) {
-        const newProject = generateProject(gestures, model);
-        setProject({
-          project: newProject,
-          projectEdited,
-        });
-        if (editorWrite.current) {
-          editorWrite.current(newProject);
-        }
-      } else {
-        const updatedProject = {
-          text: {
-            ...project.text,
-            ...generateCustomFiles(gestures, model),
-          },
-        };
-        setProject({
-          project: updatedProject,
-          projectEdited,
-        });
-        if (editorWrite.current) {
-          editorWrite.current(updatedProject);
-        }
-      }
-    },
-    [project, projectEdited, setProject]
+  const prevGestureData = usePrevious(gestureData);
+  const prevModelDefined = usePrevious(
+    !!(status as TrainingCompleteMlStatus).model
   );
+
+  const updateProject = useCallback(() => {
+    const gestures = gestureData.data;
+    const model = (status as TrainingCompleteMlStatus).model;
+    if (!projectEdited) {
+      const newProject = generateProject(gestures, model);
+      setProject({
+        project: newProject,
+        projectEdited,
+      });
+      if (editorWrite.current) {
+        editorWrite.current(newProject);
+      }
+    } else {
+      const updatedProject = {
+        text: {
+          ...project.text,
+          ...generateCustomFiles(gestures, model),
+        },
+      };
+      setProject({
+        project: updatedProject,
+        projectEdited,
+      });
+      if (editorWrite.current) {
+        editorWrite.current(updatedProject);
+      }
+    }
+  }, [gestureData.data, project.text, projectEdited, setProject, status]);
+
+  useEffect(() => {
+    const modelDefined = !!(status as TrainingCompleteMlStatus).model;
+    if (
+      JSON.stringify(prevGestureData?.data) ===
+        JSON.stringify(gestureData.data) &&
+      modelDefined === prevModelDefined
+    ) {
+      return;
+    }
+    updateProject();
+  }, [
+    gestureData.data,
+    prevGestureData,
+    prevModelDefined,
+    project.text,
+    projectEdited,
+    setProject,
+    status,
+    updateProject,
+  ]);
 
   const resetProject = useCallback(() => {
     const newProject = generateProject(
