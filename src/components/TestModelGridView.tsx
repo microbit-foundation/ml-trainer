@@ -11,16 +11,17 @@ import { MakeCodeRenderBlocksProvider } from "@microbit-foundation/react-code-vi
 import React, { useCallback } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useEditCodeDialog } from "../hooks/use-edit-code-dialog";
-import { Gesture, useGestureActions, useGestures } from "../hooks/use-gestures";
-import { useProject } from "../hooks/use-project";
-import { Confidences, mlSettings } from "../ml";
+import { mlSettings } from "../ml";
 import { getMakeCodeLang, useSettings } from "../settings";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
 import CodeViewCard from "./CodeViewCard";
 import CodeViewGridItem from "./CodeViewGridItem";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
+import { useGestureActions, useGestures } from "../hooks/use-gestures";
+import { PredictionResult } from "../hooks/use-ml-actions";
+import { useProject } from "../hooks/use-project";
+import { useEditCodeDialog } from "../hooks/use-edit-code-dialog";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 360px 40px auto",
@@ -47,22 +48,19 @@ const headings = [
 ];
 
 interface TestModelGridViewProps {
-  predictedGesture: Gesture | undefined;
-  confidences: Confidences | undefined;
+  prediction: PredictionResult | undefined;
 }
 
-const TestModelGridView = ({
-  confidences,
-  predictedGesture,
-}: TestModelGridViewProps) => {
+const TestModelGridView = ({ prediction }: TestModelGridViewProps) => {
+  const { detected, confidences } = prediction ?? {};
   const intl = useIntl();
   const [gestures] = useGestures();
   const { setRequiredConfidence } = useGestureActions();
   const { project, resetProject, projectEdited } = useProject();
   const { onOpen } = useEditCodeDialog();
 
-  const predicationLabel =
-    predictedGesture?.name ??
+  const detectedLabel =
+    detected?.name ??
     intl.formatMessage({
       id: "content.model.output.estimatedGesture.none",
     });
@@ -86,7 +84,7 @@ const TestModelGridView = ({
         <VisuallyHidden aria-live="polite">
           <FormattedMessage
             id="content.model.output.estimatedGesture.label"
-            values={{ action: predicationLabel }}
+            values={{ action: detectedLabel }}
           />
         </VisuallyHidden>
         <HeadingGrid {...gridCommonProps} px={10} headings={headings}>
@@ -124,9 +122,7 @@ const TestModelGridView = ({
                   icon,
                   requiredConfidence: threshold,
                 } = gesture;
-                const isTriggered = predictedGesture
-                  ? predictedGesture.ID === ID
-                  : false;
+                const isTriggered = detected ? detected.ID === ID : false;
                 return (
                   <React.Fragment key={idx}>
                     <GestureNameGridItem
