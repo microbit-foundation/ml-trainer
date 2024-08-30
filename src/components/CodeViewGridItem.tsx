@@ -4,7 +4,7 @@ import {
   MakeCodeBlocksRendering,
 } from "@microbit-foundation/react-code-view";
 import { memo, useMemo } from "react";
-import { Gesture } from "../hooks/use-gestures";
+import { Gesture, useGestures } from "../hooks/use-gestures";
 import { TrainingCompleteMlStatus, useMlStatus } from "../hooks/use-ml-status";
 import { generateProject } from "../utils/project-utils";
 
@@ -18,10 +18,15 @@ const CodeViewGridItem = ({
   projectEdited,
 }: CodeViewGridItemProps) => {
   const [status] = useMlStatus();
+  const [gestures] = useGestures();
   const project = useMemo(
     () =>
-      generateProject([gesture], (status as TrainingCompleteMlStatus).model),
-    [gesture, status]
+      generateProject(
+        gestures,
+        (status as TrainingCompleteMlStatus).model,
+        gesture
+      ),
+    [gesture, gestures, status]
   );
   const width = useMemo(
     () => `${120 + gesture.name.length * 5}px`,
