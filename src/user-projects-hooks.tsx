@@ -1,5 +1,6 @@
 import { usePrevious } from "@chakra-ui/react";
 import { MakeCodeProject } from "@microbit-foundation/react-code-view";
+import debounce from "lodash.debounce";
 import {
   MutableRefObject,
   ReactNode,
@@ -7,6 +8,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
 } from "react";
 import { useGestureData } from "./gestures-hooks";
@@ -61,6 +63,20 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     !!(status as TrainingCompleteMlStatus).model
   );
 
+  const debouncedEditorUpdate = useMemo(
+    () =>
+      debounce(
+        (
+          writer: (payload: MakeCodeProject) => void,
+          project: MakeCodeProject
+        ) => {
+          writer(project);
+        },
+        300
+      ),
+    []
+  );
+
   const updateProject = useCallback(() => {
     const gestures = gestureData.data;
     const model = (status as TrainingCompleteMlStatus).model;
@@ -71,7 +87,7 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
         projectEdited,
       });
       if (editorWrite.current) {
-        editorWrite.current(newProject);
+        debouncedEditorUpdate(editorWrite.current, newProject);
       }
     } else {
       const updatedProject = {
@@ -85,10 +101,17 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
         projectEdited,
       });
       if (editorWrite.current) {
-        editorWrite.current(updatedProject);
+        debouncedEditorUpdate(editorWrite.current, updatedProject);
       }
     }
-  }, [gestureData.data, project.text, projectEdited, setProject, status]);
+  }, [
+    debouncedEditorUpdate,
+    gestureData.data,
+    project.text,
+    projectEdited,
+    setProject,
+    status,
+  ]);
 
   useEffect(() => {
     const modelDefined = !!(status as TrainingCompleteMlStatus).model;
