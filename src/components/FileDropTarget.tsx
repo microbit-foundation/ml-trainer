@@ -3,12 +3,12 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, BoxProps, Center } from "@chakra-ui/layout";
+import { Box, Center } from "@chakra-ui/layout";
 import { ReactNode, useCallback, useState } from "react";
 import { RiFolderOpenLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
 
-interface FileDropTargetProps extends BoxProps {
+interface FileDropTargetProps {
   children: ReactNode;
   onFileDrop: (files: File[]) => void;
 }
@@ -16,11 +16,7 @@ interface FileDropTargetProps extends BoxProps {
 /**
  * An area that handles multiple dropped files.
  */
-const FileDropTarget = ({
-  children,
-  onFileDrop,
-  ...props
-}: FileDropTargetProps) => {
+const FileDropTarget = ({ children, onFileDrop }: FileDropTargetProps) => {
   const [dragOver, setDragOver] = useState(false);
 
   const handleDrop = useCallback(
@@ -48,12 +44,7 @@ const FileDropTarget = ({
   }, []);
   const intl = useIntl();
   return (
-    <Box
-      {...props}
-      onDragOver={handleDragOver}
-      position="relative"
-      height="100%"
-    >
+    <Box onDragOver={handleDragOver} position="relative" height="100%">
       {dragOver && (
         <Center
           onDrop={handleDrop}

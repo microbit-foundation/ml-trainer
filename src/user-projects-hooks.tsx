@@ -55,7 +55,7 @@ export const useProject = (): ProjectContext => {
 };
 
 export const ProjectProvider = ({ children }: { children: ReactNode }) => {
-  const [gestureData] = useGestureData();
+  const [gestures] = useGestureData();
   const gestureActions = useGestureActions();
   const [status] = useMlStatus();
   const [{ project, projectEdited }, setProject] = useStorage<StoredProject>(
@@ -63,7 +63,7 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     "project",
     {
       project: generateProject(
-        gestureData.data,
+        gestures,
         (status as TrainingCompleteMlStatus).model
       ),
       projectEdited: false,
@@ -73,7 +73,7 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     ((payload: MakeCodeProject) => void) | undefined
   > = useRef();
 
-  const prevGestureData = usePrevious(gestureData);
+  const prevGestureData = usePrevious(gestures);
   const prevModelDefined = usePrevious(
     !!(status as TrainingCompleteMlStatus).model
   );
@@ -93,7 +93,6 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const updateProject = useCallback(() => {
-    const gestures = gestureData.data;
     const model = (status as TrainingCompleteMlStatus).model;
     if (!projectEdited) {
       const newProject = generateProject(gestures, model);
@@ -121,8 +120,8 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [
     debouncedEditorUpdate,
-    gestureData.data,
-    project,
+    gestures,
+    project.text,
     projectEdited,
     setProject,
     status,
@@ -131,27 +130,23 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const modelDefined = !!(status as TrainingCompleteMlStatus).model;
     if (
-      JSON.stringify(prevGestureData?.data) ===
-        JSON.stringify(gestureData.data) &&
+      prevGestureData?.lastModified === gestures.lastModified &&
       modelDefined === prevModelDefined
     ) {
       return;
     }
     updateProject();
   }, [
-    gestureData.data,
-    prevGestureData,
+    gestures.lastModified,
+    prevGestureData?.lastModified,
     prevModelDefined,
-    project.text,
-    projectEdited,
-    setProject,
     status,
     updateProject,
   ]);
 
   const resetProject = useCallback(() => {
     const newProject = generateProject(
-      gestureData.data,
+      gestures,
       (status as TrainingCompleteMlStatus).model
     );
     setProject({
@@ -161,7 +156,7 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     if (editorWrite.current) {
       editorWrite.current(newProject);
     }
-  }, [gestureData.data, setProject, status]);
+  }, [gestures, setProject, status]);
 
   const writeProject = useCallback(
     (code: MakeCodeProject) => {

@@ -12,7 +12,7 @@ interface ProjectDropTargetProps extends BoxProps {
   children: React.ReactElement;
 }
 
-const ProjectDropTarget = ({ children, ...props }: ProjectDropTargetProps) => {
+const ProjectDropTarget = ({ children }: ProjectDropTargetProps) => {
   const { loadProject } = useProject();
   const handleDrop = useCallback(
     (files: File[]) => {
@@ -20,15 +20,7 @@ const ProjectDropTarget = ({ children, ...props }: ProjectDropTargetProps) => {
     },
     [loadProject]
   );
-  return (
-    <FileDropTarget
-      {...props}
-      data-testid="project-drop-target"
-      onFileDrop={handleDrop}
-    >
-      {children}
-    </FileDropTarget>
-  );
+  return <FileDropTarget onFileDrop={handleDrop}>{children}</FileDropTarget>;
 };
 
 export default ProjectDropTarget;

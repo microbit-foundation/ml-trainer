@@ -13,7 +13,12 @@ import {
 } from "@microbit-foundation/react-editor-embed";
 import { memo, useCallback, useEffect, useRef } from "react";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { GestureData, useGestureActions } from "../gestures-hooks";
+import {
+  GestureContextState,
+  GestureData,
+  useGestureActions,
+  useGestureData,
+} from "../gestures-hooks";
 import { useEditCodeDialog } from "../hooks/use-edit-code-dialog";
 import { filenames } from "../makecode/utils";
 import { useProject } from "../user-projects-hooks";
@@ -31,12 +36,23 @@ const EditCodeDialog = () => {
   } = useProject();
   const { isOpen, onClose } = useEditCodeDialog();
   const { actions } = useConnectionStage();
+  const [gestures] = useGestureData();
   const gestureActions = useGestureActions();
 
   const handleCodeChange = useCallback(
     (code: EditorProject) => {
       if (isOpen) {
-        writeProject(code as MakeCodeProject);
+        const project = code as MakeCodeProject;
+        writeProject(project);
+        const gestureData = project.text[filenames.datasetJson];
+        if (gestureData) {
+          const parsedGestureData = JSON.parse(
+            gestureData
+          ) as GestureContextState;
+          if (parsedGestureData.lastModified !== gestures.lastModified) {
+            gestureActions.validateAndSetGestures(parsedGestureData.data);
+          }
+        }
       }
       // TODO: Test this code after switching to new react-editor-embed version.
       if (projectIOState === "importing") {
@@ -50,7 +66,14 @@ const EditCodeDialog = () => {
         setProjectIOState("inactive");
       }
     },
-    [gestureActions, isOpen, projectIOState, setProjectIOState, writeProject]
+    [
+      gestureActions,
+      gestures.lastModified,
+      isOpen,
+      projectIOState,
+      setProjectIOState,
+      writeProject,
+    ]
   );
 
   const handleSave = useCallback((save: { name: string; hex: string }) => {

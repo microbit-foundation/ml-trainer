@@ -27,6 +27,7 @@ export interface GestureData extends Gesture {
 
 export interface GestureContextState {
   data: GestureData[];
+  lastModified: number;
 }
 
 type GestureContextValue = [
@@ -102,7 +103,7 @@ export const GesturesProvider = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useStorage<GestureContextState>(
     "local",
     "gestures",
-    { data: [] },
+    { data: [], lastModified: Date.now() },
     isValidStoredGestureData
   );
   return (
@@ -132,7 +133,10 @@ class GestureActions {
   ) {
     // Initialize with at least one gesture for walkthrough.
     if (!this.gestureState.data.length) {
-      this.setGestureState({ data: [this.generateNewGesture(true)] });
+      this.setGestureState({
+        data: [this.generateNewGesture(true)],
+        lastModified: Date.now(),
+      });
     }
     // If icon is missing from stored data, generate default icons.
     if (this.gestureState.data.some((g) => !g.icon)) {
@@ -208,7 +212,7 @@ class GestureActions {
     const data =
       // Always have at least one gesture for walk through
       gestures.length === 0 ? [this.generateNewGesture(true)] : gestures;
-    this.setGestureState({ data });
+    this.setGestureState({ data, lastModified: Date.now() });
 
     // Update training status
     const newTrainingStatus = !hasSufficientDataForTraining(data)

@@ -22,7 +22,7 @@ const CodeViewGridItem = ({
   const project = useMemo(
     () =>
       generateProject(
-        gestures.data,
+        gestures,
         (status as TrainingCompleteMlStatus).model,
         gesture
       ),
