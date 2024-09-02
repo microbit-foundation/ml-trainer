@@ -8,30 +8,47 @@ import {
 } from "@chakra-ui/react";
 import { MakeCodeProject } from "@microbit-foundation/react-code-view";
 import {
-  ActionListenerSubject,
   CommonEditorMessageAction,
   EditorProject,
 } from "@microbit-foundation/react-editor-embed";
-import { memo, useCallback, useEffect, useMemo, useRef } from "react";
-import { Subject } from "rxjs";
+import { memo, useCallback, useEffect, useRef } from "react";
 import { useConnectionStage } from "../connection-stage-hooks";
+import { GestureData, useGestureActions } from "../gestures-hooks";
 import { useEditCodeDialog } from "../hooks/use-edit-code-dialog";
+import { filenames } from "../makecode/utils";
 import { useProject } from "../user-projects-hooks";
 import Editor from "./Editor";
 
 const EditCodeDialog = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const { project, writeProject, editorWrite } = useProject();
+  const {
+    project,
+    writeProject,
+    editorWrite,
+    editorEventTrigger,
+    projectIOState,
+    setProjectIOState,
+  } = useProject();
   const { isOpen, onClose } = useEditCodeDialog();
   const { actions } = useConnectionStage();
+  const gestureActions = useGestureActions();
 
   const handleCodeChange = useCallback(
     (code: EditorProject) => {
       if (isOpen) {
         writeProject(code as MakeCodeProject);
       }
+      if (projectIOState === "importing") {
+        const gestureData = (code as MakeCodeProject).text[
+          filenames.datasetJson
+        ];
+        gestureActions.validateAndSetGestures(
+          JSON.parse(gestureData) as Partial<GestureData>[]
+        );
+        setProjectIOState("inactive");
+      }
     },
-    [isOpen, writeProject]
+    [gestureActions, isOpen, projectIOState, setProjectIOState, writeProject]
   );
 
   const handleSave = useCallback((save: { name: string; hex: string }) => {
@@ -45,20 +62,24 @@ const EditCodeDialog = () => {
 
   const handleDownload = useCallback(
     async (download: { name: string; hex: string }) => {
-      await actions.startDownloadUserProjectHex(download.hex);
+      if (isOpen) {
+        await actions.startDownloadUserProjectHex(download.hex);
+      }
+      if (projectIOState === "downloading") {
+        handleSave(download);
+        setProjectIOState("inactive");
+      }
     },
-    [actions]
+    [actions, handleSave, isOpen, projectIOState, setProjectIOState]
   );
-
-  const eventTrigger = useMemo(() => new Subject<ActionListenerSubject>(), []);
 
   useEffect(() => {
     if (isOpen) {
-      eventTrigger?.next({
+      editorEventTrigger?.next({
         action: CommonEditorMessageAction.restartsimulator,
       });
     }
-  }, [eventTrigger, isOpen]);
+  }, [editorEventTrigger, isOpen]);
 
   return (
     <>
@@ -93,7 +114,7 @@ const EditCodeDialog = () => {
                   onBack={onClose}
                   onDownload={handleDownload}
                   onSave={handleSave}
-                  actionListener={eventTrigger}
+                  eventTrigger={editorEventTrigger}
                 />
               </Flex>
             </ModalBody>

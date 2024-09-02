@@ -479,6 +479,10 @@
     "defaultMessage": "Download all data samples",
     "description": ""
   },
+  "content.data.controlbar.button.downloadHex": {
+    "defaultMessage": "Download hex file",
+    "description": ""
+  },
   "content.data.controlbar.button.menu": {
     "defaultMessage": "Data actions",
     "description": ""

@@ -10,16 +10,21 @@ import {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import { useGestureData } from "./gestures-hooks";
 import { useStorage } from "./hooks/use-storage";
 import { generateCustomFiles, generateProject } from "./makecode/utils";
 import { TrainingCompleteMlStatus, useMlStatus } from "./ml-status-hooks";
+import { ActionListenerSubject } from "@microbit-foundation/react-editor-embed";
+import { Subject } from "rxjs";
 
 interface StoredProject {
   project: MakeCodeProject;
   projectEdited: boolean;
 }
+
+export type ProjectIOState = "downloading" | "importing" | "inactive";
 
 interface ProjectContext extends StoredProject {
   writeProject: (project: MakeCodeProject) => void;
@@ -28,6 +33,9 @@ interface ProjectContext extends StoredProject {
   editorWrite: MutableRefObject<
     ((payload: MakeCodeProject) => void) | undefined
   >;
+  editorEventTrigger: Subject<ActionListenerSubject>;
+  projectIOState: ProjectIOState;
+  setProjectIOState: (value: ProjectIOState) => void;
 }
 
 const ProjectContext = createContext<ProjectContext | undefined>(undefined);
@@ -155,6 +163,14 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     [setProject]
   );
 
+  const editorEventTrigger = useMemo(
+    () => new Subject<ActionListenerSubject>(),
+    []
+  );
+
+  const [projectIOState, setProjectIOState] =
+    useState<ProjectIOState>("inactive");
+
   const value = {
     project,
     projectEdited,
@@ -162,6 +178,9 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     updateProject,
     resetProject,
     editorWrite,
+    editorEventTrigger,
+    projectIOState,
+    setProjectIOState,
   };
 
   return (

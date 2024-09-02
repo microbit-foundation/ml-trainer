@@ -30,6 +30,7 @@ import { addDataConfig } from "../pages-config";
 import { createStepPageUrl } from "../urls";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
+import { useProject } from "../user-projects-hooks";
 
 const AddDataPage = () => {
   const intl = useIntl();
@@ -37,6 +38,7 @@ const AddDataPage = () => {
   const [gestures] = useGestureData();
   const actions = useGestureActions();
   const { isConnected, status } = useConnectionStage();
+  const { editorEventTrigger, setProjectIOState } = useProject();
 
   const hasSufficientData = useMemo(
     () => hasSufficientDataForTraining(gestures.data),
@@ -58,6 +60,13 @@ const AddDataPage = () => {
   const handleDatasetDownload = useCallback(() => {
     actions.downloadDataset();
   }, [actions]);
+
+  const handleDownloadHex = useCallback(() => {
+    setProjectIOState("downloading");
+    editorEventTrigger?.next({
+      action: "compile",
+    });
+  }, [editorEventTrigger, setProjectIOState]);
 
   const navigateToTrainModelPage = useCallback(() => {
     navigate(createStepPageUrl("train-model"));
@@ -116,6 +125,12 @@ const AddDataPage = () => {
                   onClick={handleDatasetDownload}
                 >
                   <FormattedMessage id="content.data.controlbar.button.downloadData" />
+                </MenuItem>
+                <MenuItem
+                  icon={<RiDownload2Line />}
+                  onClick={handleDownloadHex}
+                >
+                  <FormattedMessage id="content.data.controlbar.button.downloadHex" />
                 </MenuItem>
                 <MenuItem
                   icon={<RiDeleteBin2Line />}

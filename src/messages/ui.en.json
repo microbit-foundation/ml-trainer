@@ -809,6 +809,12 @@
       "value": "Download all data samples"
     }
   ],
+  "content.data.controlbar.button.downloadHex": [
+    {
+      "type": 0,
+      "value": "Download hex file"
+    }
+  ],
   "content.data.controlbar.button.menu": [
     {
       "type": 0,

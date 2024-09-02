@@ -85,12 +85,5 @@ ${createEventListeners(actionNames)}
 };
 
 export const generateCustomJson = (gs: GestureData[]) => {
-  return JSON.stringify(
-    gs.map((g) => ({
-      ID: g.ID,
-      name: g.name,
-      numRecordings: g.recordings.length,
-      requiredConfidence: g.requiredConfidence,
-    }))
-  );
+  return JSON.stringify(gs, null, 2);
 };

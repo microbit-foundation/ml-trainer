@@ -19,14 +19,14 @@ interface EditorProps {
   getWriter?: (writeFn: any) => void;
   version: string | undefined;
   style?: React.CSSProperties;
-  actionListener?: Subject<ActionListenerSubject>;
+  eventTrigger?: Subject<ActionListenerSubject>;
 }
 
 const Editor = ({
   style,
   initialCode,
   version,
-  actionListener,
+  eventTrigger,
   ...editorProps
 }: EditorProps) => {
   const [{ languageId }] = useSettings();
@@ -40,7 +40,7 @@ const Editor = ({
       initialCode={initialCode}
       version={version}
       lang={getMakeCodeLang(languageId)}
-      actionListener={actionListener}
+      actionListener={eventTrigger}
       {...editorProps}
     />
   );
