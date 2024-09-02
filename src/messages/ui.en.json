@@ -42,7 +42,7 @@
   "add-data-title": [
     {
       "type": 0,
-      "value": "Add data"
+      "value": "Data"
     }
   ],
   "alert.data.classNameLengthAlert": [
@@ -1712,7 +1712,7 @@
   "test-model-title": [
     {
       "type": 0,
-      "value": "Test model"
+      "value": "Model"
     }
   ],
   "train-model-intro-description": [

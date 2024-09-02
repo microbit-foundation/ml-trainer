@@ -20,8 +20,8 @@
     "description": "Add data step home page description"
   },
   "add-data-title": {
-    "defaultMessage": "Add data",
-    "description": "Add data step title"
+    "defaultMessage": "Data",
+    "description": "Add data tab page title"
   },
   "alert.data.classNameLengthAlert": {
     "defaultMessage": "Action names cannot be longer than {maxLen} characters.",
@@ -1020,8 +1020,8 @@
     "description": "Test model step home page description"
   },
   "test-model-title": {
-    "defaultMessage": "Test model",
-    "description": "Test model step title"
+    "defaultMessage": "Model",
+    "description": "Test model tab page title"
   },
   "train-model-intro-description": {
     "defaultMessage": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",

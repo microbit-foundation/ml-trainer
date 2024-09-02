@@ -19,7 +19,7 @@ import {
   createStepPageUrl,
 } from "./urls";
 import { deployment, useDeployment } from "./deployment";
-import { resourcesConfig, stepsConfig } from "./pages-config";
+import { resourcesConfig, tabConfigs } from "./pages-config";
 import { LoggingProvider } from "./logging/logging-hooks";
 import { GesturesProvider } from "./gestures-hooks";
 import { MlStatusProvider } from "./ml-status-hooks";
@@ -94,7 +94,7 @@ const createRouter = () => {
           path: createHomePageUrl(),
           element: <HomePage />,
         },
-        ...stepsConfig.map((step) => {
+        ...tabConfigs.map((step) => {
           return {
             path: createStepPageUrl(step.id),
             element: <step.pageElement />,

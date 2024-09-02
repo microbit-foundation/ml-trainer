@@ -1,44 +1,36 @@
-import addDataImage from "./images/add_data.svg";
-import testModelImage from "./images/test_model_blue.svg";
-import trainModelImage from "./images/train_model_blue.svg";
 import resourceGetStartedImage from "./images/resource-get-started.jpg";
 import resourceIntroducingToolImage from "./images/resource-introducing-tool.jpg";
 import AddDataPage from "./pages/AddDataPage";
-import TestModelPage from "./pages/TestModelPage";
-import TrainModelPage from "./pages/TrainModelPage";
 import GetStartedResourcePage from "./pages/GetStartedResourcePage";
 import IntroducingToolResourcePage from "./pages/IntroducingToolResourcePage";
+import TestModelPage from "./pages/TestModelPage";
 
 export type StepId = "add-data" | "train-model" | "test-model";
 
-export interface StepConfig {
+export interface TabConfig {
   id: StepId;
-  imgSrc: string;
   pageElement: () => JSX.Element;
 }
 
-export const addDataConfig: StepConfig = {
+export const addDataConfig: TabConfig = {
   id: "add-data",
-  imgSrc: addDataImage,
   pageElement: AddDataPage,
 };
 
-export const trainModelConfig: StepConfig = {
-  id: "train-model",
-  imgSrc: trainModelImage,
-  pageElement: TrainModelPage,
-};
-
-export const testModelConfig: StepConfig = {
+export const testModelConfig: TabConfig = {
   id: "test-model",
-  imgSrc: testModelImage,
   pageElement: TestModelPage,
 };
 
-export const stepsConfig: StepConfig[] = [
-  addDataConfig,
-  trainModelConfig,
-  testModelConfig,
+export const tabConfigs: TabConfig[] = [
+  {
+    id: "add-data",
+    pageElement: AddDataPage,
+  },
+  {
+    id: "test-model",
+    pageElement: TestModelPage,
+  },
 ];
 
 export type ResourceId =

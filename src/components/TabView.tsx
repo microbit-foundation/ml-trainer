@@ -1,6 +1,6 @@
 import { Tab, TabIndicator, TabList, Tabs, VStack } from "@chakra-ui/react";
 import { useIntl } from "react-intl";
-import { StepId, stepsConfig } from "../pages-config";
+import { StepId, tabConfigs } from "../pages-config";
 import { createStepPageUrl } from "../urls";
 import { useNavigate } from "react-router";
 
@@ -10,7 +10,7 @@ interface TabViewProps {
 const TabView = ({ activeStep }: TabViewProps) => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const activeIndex = stepsConfig.findIndex((s) => s.id === activeStep);
+  const activeIndex = tabConfigs.findIndex((s) => s.id === activeStep);
   return (
     <VStack justifyContent="center" w="100%" bgColor="white">
       <Tabs
@@ -20,7 +20,7 @@ const TabView = ({ activeStep }: TabViewProps) => {
         bgColor="white"
       >
         <TabList>
-          {stepsConfig.map((step, idx) => (
+          {tabConfigs.map((step) => (
             <Tab
               onClick={() => navigate(createStepPageUrl(step.id))}
               key={step.id}
@@ -30,7 +30,7 @@ const TabView = ({ activeStep }: TabViewProps) => {
               opacity={0.55}
               _selected={{ opacity: 1 }}
             >
-              {`${idx + 1}. ${intl.formatMessage({ id: `${step.id}-title` })}`}
+              {intl.formatMessage({ id: `${step.id}-title` })}
             </Tab>
           ))}
         </TabList>
