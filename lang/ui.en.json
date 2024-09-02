@@ -628,7 +628,7 @@
     "description": ""
   },
   "content.trainer.enoughdata.title": {
-    "defaultMessage": "Status: You've collected enough data to train the model.",
+    "defaultMessage": "You've collected enough data to train the model.",
     "description": ""
   },
   "content.trainer.failure.body": {
@@ -652,7 +652,7 @@
     "description": ""
   },
   "content.trainer.training.title": {
-    "defaultMessage": "Status: Training the model in progress.",
+    "defaultMessage": "Training the model in progress.",
     "description": ""
   },
   "cookies-action": {
@@ -808,7 +808,7 @@
     "description": ""
   },
   "menu.trainer.notEnoughDataHeader1": {
-    "defaultMessage": "Status: You don't have enough data.",
+    "defaultMessage": "You don't have enough data.",
     "description": ""
   },
   "menu.trainer.notEnoughDataInfoBody": {
@@ -1029,6 +1029,6 @@
   },
   "train-model-title": {
     "defaultMessage": "Train model",
-    "description": "Train model step title"
+    "description": "Train model dialog title"
   }
 }

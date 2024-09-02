@@ -13,7 +13,6 @@ import { useCallback, useMemo } from "react";
 import { MdMoreVert } from "react-icons/md";
 import { RiAddLine, RiDeleteBin2Line, RiDownload2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useNavigate } from "react-router";
 import AddDataGridView from "../components/AddDataGridView";
 import ConnectFirstView from "../components/ConnectFirstView";
 import DefaultPageLayout from "../components/DefaultPageLayout";
@@ -27,15 +26,15 @@ import {
   useGestureData,
 } from "../gestures-hooks";
 import { addDataConfig } from "../pages-config";
-import { createStepPageUrl } from "../urls";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
+import { useTrainModelDialogs } from "../ml-status-hooks";
 
 const AddDataPage = () => {
   const intl = useIntl();
-  const navigate = useNavigate();
   const [gestures] = useGestureData();
   const actions = useGestureActions();
+  const { onOpen: onOpenTrainModelDialog } = useTrainModelDialogs();
   const { isConnected, status } = useConnectionStage();
 
   const hasSufficientData = useMemo(
@@ -58,10 +57,6 @@ const AddDataPage = () => {
   const handleDatasetDownload = useCallback(() => {
     actions.downloadDataset();
   }, [actions]);
-
-  const navigateToTrainModelPage = useCallback(() => {
-    navigate(createStepPageUrl("train-model"));
-  }, [navigate]);
 
   return (
     <DefaultPageLayout titleId={`${addDataConfig.id}-title`}>
@@ -96,7 +91,7 @@ const AddDataPage = () => {
           </Button>
           <HStack gap={2} alignItems="center">
             <TrainingButton
-              onClick={navigateToTrainModelPage}
+              onClick={onOpenTrainModelDialog}
               variant={hasSufficientData ? "primary" : "secondary"}
             />
             <Menu>

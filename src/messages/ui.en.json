@@ -1088,7 +1088,7 @@
   "content.trainer.enoughdata.title": [
     {
       "type": 0,
-      "value": "Status: You've collected enough data to train the model."
+      "value": "You've collected enough data to train the model."
     }
   ],
   "content.trainer.failure.body": [
@@ -1124,7 +1124,7 @@
   "content.trainer.training.title": [
     {
       "type": 0,
-      "value": "Status: Training the model in progress."
+      "value": "Training the model in progress."
     }
   ],
   "cookies-action": [
@@ -1366,7 +1366,7 @@
   "menu.trainer.notEnoughDataHeader1": [
     {
       "type": 0,
-      "value": "Status: You don't have enough data."
+      "value": "You don't have enough data."
     }
   ],
   "menu.trainer.notEnoughDataInfoBody": [

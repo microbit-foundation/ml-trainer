@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
 import testModelImage from "../images/test_model_black.svg";
 import { StepId } from "../pages-config";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
+import { MlStage, useMlStatus, useTrainModelDialogs } from "../ml-status-hooks";
 import { createStepPageUrl } from "../urls";
 import TrainingButton from "./TrainingButton";
 
@@ -39,13 +39,10 @@ const getConfig = (status: MlStage): TrainModelFirstViewConfig => {
 const TrainModelFirstView = () => {
   const navigate = useNavigate();
   const [{ stage }] = useMlStatus();
+  const { onOpen: onOpenTrainModelDialog } = useTrainModelDialogs();
 
   const navigateToDataPage = useCallback(() => {
     navigate(createStepPageUrl("add-data"));
-  }, [navigate]);
-
-  const navigateToTrainModelPage = useCallback(() => {
-    navigate(createStepPageUrl("train-model"));
   }, [navigate]);
 
   const config = getConfig(stage);
@@ -76,7 +73,7 @@ const TrainModelFirstView = () => {
           <FormattedMessage id="content.model.addData" />
         </Button>
       ) : (
-        <TrainingButton onClick={navigateToTrainModelPage} />
+        <TrainingButton onClick={onOpenTrainModelDialog} />
       )}
     </VStack>
   );
