@@ -7,9 +7,10 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { MdMoreVert } from "react-icons/md";
 import { RiAddLine, RiDeleteBin2Line, RiDownload2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -31,6 +32,7 @@ import { createStepPageUrl } from "../urls";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useProject } from "../user-projects-hooks";
+import SaveHexDialog from "../components/SaveHexDialog";
 
 const AddDataPage = () => {
   const intl = useIntl();
@@ -38,7 +40,8 @@ const AddDataPage = () => {
   const [gestures] = useGestureData();
   const actions = useGestureActions();
   const { isConnected, status } = useConnectionStage();
-  const { editorEventTrigger, setProjectIOState } = useProject();
+  const { editorEventTrigger, projectIOState, setProjectIOState } =
+    useProject();
 
   const hasSufficientData = useMemo(
     () => hasSufficientDataForTraining(gestures.data),
@@ -61,90 +64,104 @@ const AddDataPage = () => {
     actions.downloadDataset();
   }, [actions]);
 
+  const saveHexDisclosure = useDisclosure();
   const handleDownloadHex = useCallback(() => {
+    saveHexDisclosure.onOpen();
     setProjectIOState("downloading");
     editorEventTrigger?.next({
       action: "compile",
     });
-  }, [editorEventTrigger, setProjectIOState]);
+  }, [editorEventTrigger, saveHexDisclosure, setProjectIOState]);
+
+  useEffect(() => {
+    if (projectIOState !== "downloading") {
+      saveHexDisclosure.onClose();
+    }
+  }, [projectIOState, saveHexDisclosure]);
 
   const navigateToTrainModelPage = useCallback(() => {
     navigate(createStepPageUrl("train-model"));
   }, [navigate]);
 
   return (
-    <DefaultPageLayout titleId={`${addDataConfig.id}-title`}>
-      <TabView activeStep={addDataConfig.id} />
-      {noStoredData &&
-      !isConnected &&
-      status !== ConnectionStatus.ReconnectingAutomatically ? (
-        <ConnectFirstView />
-      ) : (
-        <AddDataGridView />
-      )}
-      <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
-        <HStack
-          justifyContent="space-between"
-          px={10}
-          py={2}
-          w="full"
-          borderBottomWidth={3}
-          borderTopWidth={3}
-          borderColor="gray.200"
-          alignItems="center"
-        >
-          <Button
-            variant={hasSufficientData ? "secondary" : "primary"}
-            leftIcon={<RiAddLine />}
-            onClick={handleAddNewGesture}
-            isDisabled={
-              !isConnected || gestures.data.some((g) => g.name.length === 0)
-            }
+    <>
+      <SaveHexDialog
+        isOpen={saveHexDisclosure.isOpen}
+        onClose={saveHexDisclosure.onClose}
+      />
+      <DefaultPageLayout titleId={`${addDataConfig.id}-title`}>
+        <TabView activeStep={addDataConfig.id} />
+        {noStoredData &&
+        !isConnected &&
+        status !== ConnectionStatus.ReconnectingAutomatically ? (
+          <ConnectFirstView />
+        ) : (
+          <AddDataGridView />
+        )}
+        <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
+          <HStack
+            justifyContent="space-between"
+            px={10}
+            py={2}
+            w="full"
+            borderBottomWidth={3}
+            borderTopWidth={3}
+            borderColor="gray.200"
+            alignItems="center"
           >
-            <FormattedMessage id="content.data.addAction" />
-          </Button>
-          <HStack gap={2} alignItems="center">
-            <TrainingButton
-              onClick={navigateToTrainModelPage}
-              variant={hasSufficientData ? "primary" : "secondary"}
-            />
-            <Menu>
-              <MenuButton
-                as={IconButton}
-                aria-label={intl.formatMessage({
-                  id: "content.data.controlbar.button.menu",
-                })}
-                variant="ghost"
-                icon={<Icon as={MdMoreVert} boxSize={10} color="brand.500" />}
-                isRound
+            <Button
+              variant={hasSufficientData ? "secondary" : "primary"}
+              leftIcon={<RiAddLine />}
+              onClick={handleAddNewGesture}
+              isDisabled={
+                !isConnected || gestures.data.some((g) => g.name.length === 0)
+              }
+            >
+              <FormattedMessage id="content.data.addAction" />
+            </Button>
+            <HStack gap={2} alignItems="center">
+              <TrainingButton
+                onClick={navigateToTrainModelPage}
+                variant={hasSufficientData ? "primary" : "secondary"}
               />
-              <MenuList>
-                <UploadDataSamplesMenuItem />
-                <MenuItem
-                  icon={<RiDownload2Line />}
-                  onClick={handleDatasetDownload}
-                >
-                  <FormattedMessage id="content.data.controlbar.button.downloadData" />
-                </MenuItem>
-                <MenuItem
-                  icon={<RiDownload2Line />}
-                  onClick={handleDownloadHex}
-                >
-                  <FormattedMessage id="content.data.controlbar.button.downloadHex" />
-                </MenuItem>
-                <MenuItem
-                  icon={<RiDeleteBin2Line />}
-                  onClick={actions.deleteAllGestures}
-                >
-                  <FormattedMessage id="content.data.controlbar.button.clearData" />
-                </MenuItem>
-              </MenuList>
-            </Menu>
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  aria-label={intl.formatMessage({
+                    id: "content.data.controlbar.button.menu",
+                  })}
+                  variant="ghost"
+                  icon={<Icon as={MdMoreVert} boxSize={10} color="brand.500" />}
+                  isRound
+                />
+                <MenuList>
+                  <UploadDataSamplesMenuItem />
+                  <MenuItem
+                    icon={<RiDownload2Line />}
+                    onClick={handleDatasetDownload}
+                  >
+                    <FormattedMessage id="content.data.controlbar.button.downloadData" />
+                  </MenuItem>
+                  <MenuItem
+                    icon={<RiDownload2Line />}
+                    onClick={handleDownloadHex}
+                  >
+                    <FormattedMessage id="content.data.controlbar.button.downloadHex" />
+                  </MenuItem>
+                  <MenuItem
+                    icon={<RiDeleteBin2Line />}
+                    onClick={actions.deleteAllGestures}
+                  >
+                    <FormattedMessage id="content.data.controlbar.button.clearData" />
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </HStack>
           </HStack>
-        </HStack>
-        <LiveGraphPanel />
-      </VStack>
-    </DefaultPageLayout>
+          <LiveGraphPanel />
+        </VStack>
+      </DefaultPageLayout>
+    </>
   );
 };
 

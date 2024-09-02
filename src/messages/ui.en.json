@@ -1621,6 +1621,30 @@
       "value": "introduction video"
     }
   ],
+  "save-hex-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Saving MakeCode hex file"
+    }
+  ],
+  "save-hex-dialog-message1": [
+    {
+      "type": 0,
+      "value": "This file contains your MakeCode project and gesture data, including your recordings."
+    }
+  ],
+  "save-hex-dialog-message2": [
+    {
+      "type": 0,
+      "value": "It can be re-opened in the micro:bit ML Tool where you can continue to add gestures and recordings as well as edit the MakeCode project."
+    }
+  ],
+  "save-hex-dialog-message3": [
+    {
+      "type": 0,
+      "value": "It can also be re-opened in MakeCode where you can edit the code only."
+    }
+  ],
   "settings-menu-action": [
     {
       "type": 0,
