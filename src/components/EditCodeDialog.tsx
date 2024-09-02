@@ -38,6 +38,7 @@ const EditCodeDialog = () => {
       if (isOpen) {
         writeProject(code as MakeCodeProject);
       }
+      // TODO: Test this code after switching to new react-editor-embed version.
       if (projectIOState === "importing") {
         const gestureData = (code as MakeCodeProject).text[
           filenames.datasetJson
@@ -45,6 +46,7 @@ const EditCodeDialog = () => {
         gestureActions.validateAndSetGestures(
           JSON.parse(gestureData) as Partial<GestureData>[]
         );
+        writeProject(code as MakeCodeProject);
         setProjectIOState("inactive");
       }
     },

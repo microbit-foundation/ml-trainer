@@ -30,6 +30,7 @@ import { BufferedDataProvider } from "./buffered-data-hooks";
 import EditCodeDialogProvider from "./hooks/use-edit-code-dialog";
 import EditCodeDialog from "./components/EditCodeDialog";
 import { ProjectProvider } from "./user-projects-hooks";
+import ProjectDropTarget from "./components/ProjectDropTarget";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -55,7 +56,9 @@ const Providers = ({ children }: ProviderLayoutProps) => {
                           <BufferedDataProvider>
                             <ConnectionStageProvider>
                               <TranslationProvider>
-                                <ErrorBoundary>{children}</ErrorBoundary>
+                                <ProjectDropTarget>
+                                  <ErrorBoundary>{children}</ErrorBoundary>
+                                </ProjectDropTarget>
                               </TranslationProvider>
                             </ConnectionStageProvider>
                           </BufferedDataProvider>

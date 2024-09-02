@@ -835,6 +835,10 @@
     "defaultMessage": "Page not found",
     "description": "Page not found page title"
   },
+  "open-file-dropped": {
+    "defaultMessage": "Open file when dropped",
+    "description": "Aria label for file drop target"
+  },
   "performanceWarning.content1": {
     "defaultMessage": "The quality of data being received from your micro:bit is low. This could be due to a connection issue.",
     "description": ""

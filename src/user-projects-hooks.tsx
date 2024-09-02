@@ -12,12 +12,17 @@ import {
   useRef,
   useState,
 } from "react";
-import { useGestureData } from "./gestures-hooks";
+import {
+  GestureData,
+  useGestureActions,
+  useGestureData,
+} from "./gestures-hooks";
 import { useStorage } from "./hooks/use-storage";
 import { generateCustomFiles, generateProject } from "./makecode/utils";
 import { TrainingCompleteMlStatus, useMlStatus } from "./ml-status-hooks";
 import { ActionListenerSubject } from "@microbit-foundation/react-editor-embed";
 import { Subject } from "rxjs";
+import { getLowercaseFileExtension, readFileAsText } from "./utils/fs-util";
 
 interface StoredProject {
   project: MakeCodeProject;
@@ -30,6 +35,7 @@ interface ProjectContext extends StoredProject {
   writeProject: (project: MakeCodeProject) => void;
   updateProject: () => void;
   resetProject: () => void;
+  loadProject: (files: File[]) => void;
   editorWrite: MutableRefObject<
     ((payload: MakeCodeProject) => void) | undefined
   >;
@@ -50,6 +56,7 @@ export const useProject = (): ProjectContext => {
 
 export const ProjectProvider = ({ children }: { children: ReactNode }) => {
   const [gestureData] = useGestureData();
+  const gestureActions = useGestureActions();
   const [status] = useMlStatus();
   const [{ project, projectEdited }, setProject] = useStorage<StoredProject>(
     "local",
@@ -115,7 +122,7 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
   }, [
     debouncedEditorUpdate,
     gestureData.data,
-    project.text,
+    project,
     projectEdited,
     setProject,
     status,
@@ -171,12 +178,45 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
   const [projectIOState, setProjectIOState] =
     useState<ProjectIOState>("inactive");
 
+  const loadProject = useCallback(
+    async (files: File[]): Promise<void> => {
+      if (files.length !== 1) {
+        throw new Error("Expected to be called with one file");
+      }
+
+      const file = files[0];
+
+      const fileExtension = getLowercaseFileExtension(file.name);
+
+      if (fileExtension === "json") {
+        const gestureData = await readFileAsText(files[0]);
+        gestureActions.validateAndSetGestures(
+          JSON.parse(gestureData) as Partial<GestureData>[]
+        );
+      }
+
+      if (fileExtension === "hex") {
+        setProjectIOState("importing");
+        // TODO: Use the code below to import a hex into MakeCode with the
+        // new version of react-editor-embed.
+        // const hex = await readFileAsText(file);
+        // editorEventTrigger?.next({
+        //   type: "importfile",
+        //   filename: file.name,
+        //   parts: hex,
+        // });
+      }
+    },
+    [gestureActions]
+  );
+
   const value = {
     project,
     projectEdited,
     writeProject,
     updateProject,
     resetProject,
+    loadProject,
     editorWrite,
     editorEventTrigger,
     projectIOState,

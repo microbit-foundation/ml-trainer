@@ -3,26 +3,7 @@ import { useCallback, useRef } from "react";
 import { RiUpload2Line } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { GestureData, useGestureActions } from "../gestures-hooks";
-
-/**
- * Reads file as text via a FileReader.
- *
- * @param file A file (e.g. from a file input or drop operation).
- * @returns The a promise of text from that file.
- */
-const readFileAsText = async (file: File): Promise<string> => {
-  const reader = new FileReader();
-  return new Promise((resolve, reject) => {
-    reader.onload = (e: ProgressEvent<FileReader>) => {
-      resolve(e.target!.result as string);
-    };
-    reader.onerror = (e: ProgressEvent<FileReader>) => {
-      const error = e.target?.error || new Error("Error reading file as text");
-      reject(error);
-    };
-    reader.readAsText(file);
-  });
-};
+import { readFileAsText } from "../utils/fs-util";
 
 const UploadDataSamplesMenuItem = () => {
   const actions = useGestureActions();
