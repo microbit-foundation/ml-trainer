@@ -1124,7 +1124,7 @@
   "content.trainer.training.title": [
     {
       "type": 0,
-      "value": "Training the model in progress."
+      "value": "Training model..."
     }
   ],
   "cookies-action": [

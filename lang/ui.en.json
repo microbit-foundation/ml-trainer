@@ -652,7 +652,7 @@
     "description": ""
   },
   "content.trainer.training.title": {
-    "defaultMessage": "Training the model in progress.",
+    "defaultMessage": "Training model...",
     "description": ""
   },
   "cookies-action": {
