@@ -711,6 +711,22 @@
     "defaultMessage": "micro:bit 1 connection lost",
     "description": ""
   },
+  "download-project-another-microbit-option": {
+    "defaultMessage": "Different micro:bit",
+    "description": "Download project different micro:bit option"
+  },
+  "download-project-choose-microbit-subtitle": {
+    "defaultMessage": "Downloading your project on to the same micro:bit will disconnect the micro:bit.",
+    "description": "Download project choose micro:bit dialog subtitle"
+  },
+  "download-project-choose-microbit-title": {
+    "defaultMessage": "Which micro:bit do you want to download your project on to?",
+    "description": "Download project choose micro:bit dialog title"
+  },
+  "download-project-same-microbit-option": {
+    "defaultMessage": "Same micro:bit",
+    "description": "Download project same micro:bit option"
+  },
   "edit-in-makecode-action": {
     "defaultMessage": "Edit in MakeCode",
     "description": "Edit in MakeCode button text"

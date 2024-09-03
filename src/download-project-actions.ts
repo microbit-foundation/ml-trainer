@@ -1,4 +1,5 @@
 import { ConnectActions, ConnectAndFlashResult } from "./connect-actions";
+import { ConnectionStatus } from "./connect-status-hooks";
 import { ConnectionStageActions } from "./connection-stage-actions";
 import {
   DownloadProjectStage,
@@ -11,17 +12,28 @@ export class DownloadProjectActions {
     private setStage: (stage: DownloadProjectStage) => void,
     private connectActions: ConnectActions,
     private connectionStageActions: ConnectionStageActions,
-    private setFlashingProgress: (progress: number) => void
+    private setFlashingProgress: (progress: number) => void,
+    private connectionStatus: ConnectionStatus
   ) {}
 
-  start = async (download: { name: string; hex: string }) => {
-    // TODO: Only disconnect input micro:bit if user chooses this device.
-    await this.connectionStageActions.disconnectInputMicrobit();
+  start = (download: { name: string; hex: string }) => {
     this.setStage({
-      step: DownloadProjectStep.ConnectCable,
+      step:
+        this.connectionStatus === ConnectionStatus.Connected
+          ? DownloadProjectStep.ChooseSameOrAnotherMicrobit
+          : DownloadProjectStep.ConnectCable,
       projectHex: download.hex,
       projectName: download.name,
     });
+  };
+
+  onChosenSameMicrobit = async () => {
+    await this.connectionStageActions.disconnectInputMicrobit();
+    this.setStep(DownloadProjectStep.ConnectCable);
+  };
+
+  onChosenDifferentMicrobit = () => {
+    this.setStep(DownloadProjectStep.ConnectCable);
   };
 
   connectAndFlashMicrobit = async () => {

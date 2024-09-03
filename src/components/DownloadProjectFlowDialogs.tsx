@@ -6,11 +6,22 @@ import ConnectCableDialog from "./ConnectCableDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import DownloadingDialog from "./DownloadingDialog";
 import ManualFlashingDialog from "./ManualFlashingDialog";
+import DownloadProjectChooseMicrobitDialog from "./DownloadProjectChooseMicrobitDialog";
 
 const DownloadProjectFlowDialogs = () => {
   const { stage, actions, flashProgress } = useDownloadProject();
 
   switch (stage.step) {
+    case DownloadProjectStep.ChooseSameOrAnotherMicrobit: {
+      return (
+        <DownloadProjectChooseMicrobitDialog
+          isOpen={true}
+          onClose={actions.close}
+          onDifferentMicrobitClick={actions.onChosenDifferentMicrobit}
+          onSameMicrobitClick={actions.onChosenSameMicrobit}
+        />
+      );
+    }
     case DownloadProjectStep.ConnectCable: {
       return (
         <ConnectCableDialog

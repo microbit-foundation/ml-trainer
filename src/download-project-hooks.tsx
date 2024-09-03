@@ -5,6 +5,7 @@ import { useConnectionStage } from "./connection-stage-hooks";
 
 export enum DownloadProjectStep {
   None = "None",
+  ChooseSameOrAnotherMicrobit = "ChooseSameOrAnotherMicrobit",
   ConnectCable = "ConnectCable",
   WebUsbFlashingTutorial = "WebUsbFlashingTutorial",
   WebUsbChooseMicrobit = "WebUsbChooseMicrobit",
@@ -47,7 +48,8 @@ export const useDownloadProject = () => {
     throw new Error("Missing provider");
   }
   const connectActions = useConnectActions();
-  const { actions: connectionStageActions } = useConnectionStage();
+  const { actions: connectionStageActions, status: connectionStatus } =
+    useConnectionStage();
   const [stage, setStage] = downloadProjectContextValue;
   const [flashProgress, setFlashProgress] = useState<number>(0);
   const actions = new DownloadProjectActions(
@@ -55,7 +57,8 @@ export const useDownloadProject = () => {
     setStage,
     connectActions,
     connectionStageActions,
-    setFlashProgress
+    setFlashProgress,
+    connectionStatus
   );
   return { stage, actions, flashProgress };
 };

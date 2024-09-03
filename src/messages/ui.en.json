@@ -1211,6 +1211,30 @@
       "value": "micro:bit 1 connection lost"
     }
   ],
+  "download-project-another-microbit-option": [
+    {
+      "type": 0,
+      "value": "Different micro:bit"
+    }
+  ],
+  "download-project-choose-microbit-subtitle": [
+    {
+      "type": 0,
+      "value": "Downloading your project on to the same micro:bit will disconnect the micro:bit."
+    }
+  ],
+  "download-project-choose-microbit-title": [
+    {
+      "type": 0,
+      "value": "Which micro:bit do you want to download your project on to?"
+    }
+  ],
+  "download-project-same-microbit-option": [
+    {
+      "type": 0,
+      "value": "Same micro:bit"
+    }
+  ],
   "edit-in-makecode-action": [
     {
       "type": 0,
