@@ -19,7 +19,12 @@ const AddDataGridWalkThrough = ({
       {gesture.name.length === 0 ? (
         <GridItem h="120px">
           <VStack m={0} p={2} w={200} transform="translate(-30px, 40px)">
-            <Image width="120px" src={greetingEmojiWithArrowImage} alt="" />
+            <Image
+              w="120px"
+              h="103px"
+              src={greetingEmojiWithArrowImage}
+              alt=""
+            />
             <Text textAlign="center">
               <FormattedMessage id="content.data.addActionWalkThrough" />
             </Text>
@@ -35,9 +40,9 @@ const AddDataGridWalkThrough = ({
           {/* Empty grid item to fill first column of grid */}
           <GridItem />
           <GridItem h="120px">
-            <HStack m={0} p={2} w={300} transform="translateX(65px)">
-              <Image width="100px" src={upCurveArrowImage} alt="" />
-              <Text textAlign="center">
+            <HStack m={0} p={2} transform="translateX(65px)">
+              <Image w="60px" h="93px" src={upCurveArrowImage} alt="" />
+              <Text w={200} textAlign="center">
                 <FormattedMessage id="content.data.addRecordingWalkThrough" />
               </Text>
             </HStack>
