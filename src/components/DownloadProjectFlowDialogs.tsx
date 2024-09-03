@@ -17,7 +17,7 @@ const DownloadProjectFlowDialogs = () => {
       return (
         <DownloadProjectIntroDialog
           onClose={actions.close}
-          onNext={actions.next}
+          onNext={actions.onIntroductionNext}
         />
       );
     }
