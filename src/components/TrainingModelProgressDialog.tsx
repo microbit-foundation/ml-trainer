@@ -24,7 +24,7 @@ const TrainingModelProgressDialog = ({
       motionPreset="none"
       isOpen={isOpen}
       onClose={() => {}}
-      size="3xl"
+      size="2xl"
       isCentered
     >
       <ModalOverlay>
