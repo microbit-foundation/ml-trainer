@@ -5,6 +5,7 @@ import { useConnectionStage } from "./connection-stage-hooks";
 
 export enum DownloadProjectStep {
   None = "None",
+  Introduction = "Introduction",
   ChooseSameOrAnotherMicrobit = "ChooseSameOrAnotherMicrobit",
   ConnectCable = "ConnectCable",
   WebUsbFlashingTutorial = "WebUsbFlashingTutorial",

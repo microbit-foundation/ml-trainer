@@ -1211,6 +1211,12 @@
       "value": "micro:bit 1 connection lost"
     }
   ],
+  "download-action": [
+    {
+      "type": 0,
+      "value": "Download"
+    }
+  ],
   "download-project-another-microbit-option": [
     {
       "type": 0,
@@ -1227,6 +1233,18 @@
     {
       "type": 0,
       "value": "Which micro:bit do you want to use?"
+    }
+  ],
+  "download-project-intro-description": [
+    {
+      "type": 0,
+      "value": "Your project includes the model you created using the machine learning tool. This means that you can run your model and project on the micro:bit independently from the tool."
+    }
+  ],
+  "download-project-intro-title": [
+    {
+      "type": 0,
+      "value": "Download your machine learning MakeCode project"
     }
   ],
   "download-project-same-microbit-option": [

@@ -18,13 +18,18 @@ export class DownloadProjectActions {
 
   start = (download: { name: string; hex: string }) => {
     this.setStage({
-      step:
-        this.connectionStatus === ConnectionStatus.Connected
-          ? DownloadProjectStep.ChooseSameOrAnotherMicrobit
-          : DownloadProjectStep.ConnectCable,
+      step: DownloadProjectStep.Introduction,
       projectHex: download.hex,
       projectName: download.name,
     });
+  };
+
+  onIntroductionNext = () => {
+    this.setStep(
+      this.connectionStatus === ConnectionStatus.Connected
+        ? DownloadProjectStep.ChooseSameOrAnotherMicrobit
+        : DownloadProjectStep.ConnectCable
+    );
   };
 
   onChosenSameMicrobit = async () => {
@@ -74,6 +79,8 @@ export class DownloadProjectActions {
   };
 
   private downloadProjectStepOrder = (currStep: DownloadProjectStep) => [
+    DownloadProjectStep.Introduction,
+    DownloadProjectStep.ChooseSameOrAnotherMicrobit,
     DownloadProjectStep.ConnectCable,
     currStep === DownloadProjectStep.ManualFlashingTutorial
       ? DownloadProjectStep.ManualFlashingTutorial

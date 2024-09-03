@@ -7,11 +7,20 @@ import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import DownloadingDialog from "./DownloadingDialog";
 import ManualFlashingDialog from "./ManualFlashingDialog";
 import DownloadProjectChooseMicrobitDialog from "./DownloadProjectChooseMicrobitDialog";
+import DownloadProjectIntroDialog from "./DownloadProjectIntroDialog";
 
 const DownloadProjectFlowDialogs = () => {
   const { stage, actions, flashProgress } = useDownloadProject();
 
   switch (stage.step) {
+    case DownloadProjectStep.Introduction: {
+      return (
+        <DownloadProjectIntroDialog
+          onClose={actions.close}
+          onNext={actions.next}
+        />
+      );
+    }
     case DownloadProjectStep.ChooseSameOrAnotherMicrobit: {
       return (
         <DownloadProjectChooseMicrobitDialog
