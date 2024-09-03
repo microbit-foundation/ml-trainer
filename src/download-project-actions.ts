@@ -11,7 +11,7 @@ export class DownloadProjectActions {
     private setStage: (stage: DownloadProjectStage) => void,
     private connectActions: ConnectActions,
     private connectionStageActions: ConnectionStageActions,
-    private progressCallback: (progress: number) => void
+    private setFlashingProgress: (progress: number) => void
   ) {}
 
   start = async (download: { name: string; hex: string }) => {
@@ -31,13 +31,20 @@ export class DownloadProjectActions {
     }
     const { result } = await this.connectActions.requestUSBConnectionAndFlash(
       this.stage.projectHex,
-      this.progressCallback
+      this.flashingProgressCallback
     );
     this.setStep(
       result === ConnectAndFlashResult.Success
         ? DownloadProjectStep.None
         : DownloadProjectStep.ManualFlashingTutorial
     );
+  };
+
+  private flashingProgressCallback = (progress: number) => {
+    if (this.stage.step !== DownloadProjectStep.FlashingInProgress) {
+      this.setStep(DownloadProjectStep.FlashingInProgress);
+    }
+    this.setFlashingProgress(progress);
   };
 
   close = () => this.setStep(DownloadProjectStep.None);
