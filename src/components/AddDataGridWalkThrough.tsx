@@ -1,10 +1,9 @@
-import { GridItem, VStack, Image, Text, HStack } from "@chakra-ui/react";
-import { GestureData } from "../gestures-hooks";
-import greetingEmojiWithArrowImage from "../images/greeting-emoji-with-arrow.svg";
-import upCurveArrowImage from "../images/curve-arrow-up.svg";
-import GestureNameGridItem from "./GestureNameGridItem";
-import DataRecordingGridItem from "./DataRecordingGridItem";
+import { GridItem, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
+import { GestureData } from "../gestures-hooks";
+import upCurveArrowImage from "../images/curve-arrow-up.svg";
+import greetingEmojiWithArrowImage from "../images/greeting-emoji-with-arrow.svg";
+import DataRecordingGridItem from "./DataRecordingGridItem";
 
 interface AddDataGridWalkThrough {
   gesture: GestureData;
@@ -17,13 +16,6 @@ const AddDataGridWalkThrough = ({
 }: AddDataGridWalkThrough) => {
   return (
     <>
-      <GestureNameGridItem
-        id={gesture.ID}
-        name={gesture.name}
-        icon={gesture.icon}
-        selected={true}
-        readOnly={false}
-      />
       {gesture.name.length === 0 ? (
         <GridItem h="120px">
           <VStack m={0} p={2} w={200} transform="translate(-30px, 40px)">

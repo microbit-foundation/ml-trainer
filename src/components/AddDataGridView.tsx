@@ -1,12 +1,11 @@
 import { Grid, GridProps, useDisclosure } from "@chakra-ui/react";
+import { ButtonEvent } from "@microbit/microbit-connection";
 import { useEffect, useMemo, useState } from "react";
+import { useConnectActions } from "../connect-actions-hooks";
 import { useGestureData } from "../gestures-hooks";
 import AddDataGridRow from "./AddDataGridRow";
-import AddDataGridWalkThrough from "./AddDataGridWalkThrough";
 import HeadingGrid from "./HeadingGrid";
 import RecordingDialog from "./RecordingDialog";
-import { useConnectActions } from "../connect-actions-hooks";
-import { ButtonEvent } from "@microbit/microbit-connection";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -77,22 +76,16 @@ const AddDataGridView = () => {
         flexGrow={1}
         h={0}
       >
-        {showWalkThrough ? (
-          <AddDataGridWalkThrough
-            gesture={gestures.data[0]}
+        {gestures.data.map((g, idx) => (
+          <AddDataGridRow
+            key={g.ID}
+            gesture={g}
+            selected={selectedGesture.ID === g.ID}
+            onSelectRow={() => setSelectedGestureIdx(idx)}
             startRecording={onOpen}
+            showWalkThrough={showWalkThrough}
           />
-        ) : (
-          gestures.data.map((g, idx) => (
-            <AddDataGridRow
-              key={g.ID}
-              gesture={g}
-              selected={selectedGesture.ID === g.ID}
-              onSelectRow={() => setSelectedGestureIdx(idx)}
-              startRecording={onOpen}
-            />
-          ))
-        )}
+        ))}
       </Grid>
     </>
   );
