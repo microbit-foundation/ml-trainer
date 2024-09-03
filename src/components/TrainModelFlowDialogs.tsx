@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTrainModelDialogs } from "../ml-status-hooks";
-import TrainModelIntroDialog from "./TrainModelDialog";
-import TrainingStatusDialog from "./TrainingStatusView";
+import TrainModelIntroDialog from "./TrainModelIntroDialog";
+import TrainingStatusDialog from "./TrainingStatusDialog";
 
 type TrainModelDialogStage = "none" | "intro" | "training initiated";
 

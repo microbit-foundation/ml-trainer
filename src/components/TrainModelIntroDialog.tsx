@@ -17,11 +17,11 @@ import { useTrainModelDialogs } from "../ml-status-hooks";
 import TrainingButton from "./TrainingButton";
 import { useCallback, useState } from "react";
 
-interface TrainModelDialogProps {
+interface TrainModelIntroDialogProps {
   onNext: (isSkipIntro: boolean) => void;
 }
 
-const TrainModelIntroDialog = ({ onNext }: TrainModelDialogProps) => {
+const TrainModelIntroDialog = ({ onNext }: TrainModelIntroDialogProps) => {
   const { onClose, isSkipIntro: defaultIsSkipIntro } = useTrainModelDialogs();
   const [skip, setSkip] = useState<boolean>(defaultIsSkipIntro);
   const handleOnNext = useCallback(() => onNext(skip), [onNext, skip]);
