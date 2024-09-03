@@ -1,6 +1,7 @@
 import {
   Checkbox,
   Heading,
+  HStack,
   Image,
   Modal,
   ModalBody,
@@ -43,22 +44,14 @@ const TrainModelIntroDialog = ({ onNext }: TrainModelIntroDialogProps) => {
               <Heading as="h1" fontWeight="bold" fontSize="2xl">
                 <FormattedMessage id="content.trainer.header" />
               </Heading>
-              <VStack flexGrow={1} alignItems="center" gap={10}>
-                <VStack gap={0}>
-                  <Image
-                    src={trainModelImage}
-                    opacity={0.4}
-                    w="350px"
-                    h="200px"
-                    alt=""
-                  />
-                  <VStack gap={5}>
-                    <Text textAlign="center">
-                      <FormattedMessage id="content.trainer.description" />
-                    </Text>
-                  </VStack>
+              <HStack gap={5}>
+                <Image src={trainModelImage} opacity={0.4} w="180px" alt="" />
+                <VStack gap={5}>
+                  <Text textAlign="left">
+                    <FormattedMessage id="content.trainer.description" />
+                  </Text>
                 </VStack>
-              </VStack>
+              </HStack>
             </VStack>
           </ModalBody>
           <ModalFooter justifyContent="space-between" px={0} pb={0}>
