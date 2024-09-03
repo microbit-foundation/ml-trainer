@@ -809,12 +809,6 @@
       "value": "Download all data samples"
     }
   ],
-  "content.data.controlbar.button.downloadHex": [
-    {
-      "type": 0,
-      "value": "Download hex file"
-    }
-  ],
   "content.data.controlbar.button.menu": [
     {
       "type": 0,
@@ -1643,6 +1637,12 @@
     {
       "type": 0,
       "value": "It can also be re-opened in MakeCode where you can edit the code only."
+    }
+  ],
+  "save-project-hex": [
+    {
+      "type": 0,
+      "value": "Save project hex"
     }
   ],
   "settings-menu-action": [

@@ -479,10 +479,6 @@
     "defaultMessage": "Download all data samples",
     "description": ""
   },
-  "content.data.controlbar.button.downloadHex": {
-    "defaultMessage": "Download hex file",
-    "description": ""
-  },
   "content.data.controlbar.button.menu": {
     "defaultMessage": "Data actions",
     "description": ""
@@ -994,6 +990,10 @@
   "save-hex-dialog-message3": {
     "defaultMessage": "It can also be re-opened in MakeCode where you can edit the code only.",
     "description": "Text in the dialog shown when saving a hex file"
+  },
+  "save-project-hex": {
+    "defaultMessage": "Save project hex",
+    "description": ""
   },
   "settings-menu-action": {
     "defaultMessage": "Settings actions menu",
