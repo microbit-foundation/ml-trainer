@@ -6,6 +6,7 @@ import { createStepPageUrl } from "../urls";
 import InsufficientDataDialog from "./InsufficientDataDialog";
 import TrainingErrorDialog from "./TrainingErrorDialog";
 import TrainingModelProgressDialog from "./TrainingModelProgressDialog";
+import { TabId } from "../pages-config";
 
 interface TrainingStatusDialogProps {
   onClose: () => void;
@@ -21,15 +22,15 @@ const TrainingStatusDialog = ({ onClose }: TrainingStatusDialogProps) => {
   }, [actions]);
 
   useEffect(() => {
-    if (status.stage === MlStage.TrainingComplete) {
-      onClose();
-      navigate(createStepPageUrl("test-model"));
-    }
     if (
       status.stage === MlStage.NotTrained ||
       status.stage === MlStage.RetrainingNeeded
     ) {
       void handleTrain();
+    }
+    if (status.stage === MlStage.TrainingComplete) {
+      onClose();
+      navigate(createStepPageUrl(TabId.Model));
     }
   }, [handleTrain, navigate, onClose, status.stage]);
 

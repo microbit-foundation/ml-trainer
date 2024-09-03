@@ -20,8 +20,8 @@
     "description": "Add data step home page description"
   },
   "add-data-title": {
-    "defaultMessage": "Data",
-    "description": "Add data tab page title"
+    "defaultMessage": "Add data",
+    "description": "Add data step title"
   },
   "alert.data.classNameLengthAlert": {
     "defaultMessage": "Action names cannot be longer than {maxLen} characters.",
@@ -667,6 +667,10 @@
     "defaultMessage": "Copy",
     "description": "Copy button text"
   },
+  "data-title": {
+    "defaultMessage": "Data",
+    "description": "Data tab page title"
+  },
   "disconnectedWarning.bluetooth1": {
     "defaultMessage": "The connection to the micro:bit has been lost.",
     "description": ""
@@ -822,6 +826,10 @@
   "menu.trainer.trainModelButton": {
     "defaultMessage": "Train model",
     "description": ""
+  },
+  "model-title": {
+    "defaultMessage": "Model",
+    "description": "Model tab page title"
   },
   "not-found": {
     "defaultMessage": "Machine learning tool home page",
@@ -1020,8 +1028,8 @@
     "description": "Test model step home page description"
   },
   "test-model-title": {
-    "defaultMessage": "Model",
-    "description": "Test model tab page title"
+    "defaultMessage": "Test model",
+    "description": "Test model step title"
   },
   "train-model-intro-description": {
     "defaultMessage": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",
@@ -1029,6 +1037,6 @@
   },
   "train-model-title": {
     "defaultMessage": "Train model",
-    "description": "Train model dialog title"
+    "description": "Train model step title"
   }
 }

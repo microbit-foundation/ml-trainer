@@ -7,6 +7,7 @@ import { createStepPageUrl } from "../urls";
 import StartOverWarningDialog from "./StartOverWarningDialog";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
+import { TabId } from "../pages-config";
 
 const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
   const gestureActions = useGestureActions();
@@ -25,7 +26,7 @@ const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
   } = useConnectionStage();
 
   const handleNavigateToAddData = useCallback(() => {
-    navigate(createStepPageUrl("add-data"));
+    navigate(createStepPageUrl(TabId.Data));
   }, [navigate]);
 
   const handleStartNewSession = useCallback(() => {

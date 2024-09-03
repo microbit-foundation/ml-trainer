@@ -3,14 +3,14 @@ import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
 import testModelImage from "../images/test_model_black.svg";
-import { StepId } from "../pages-config";
+import { TabId } from "../pages-config";
 import { MlStage, useMlStatus, useTrainModelDialogs } from "../ml-status-hooks";
 import { createStepPageUrl } from "../urls";
 import TrainingButton from "./TrainingButton";
 
 interface TrainModelFirstViewConfig {
   textIds: string[];
-  navigateToStep: StepId;
+  navigateToStep?: TabId;
 }
 
 const getConfig = (status: MlStage): TrainModelFirstViewConfig => {
@@ -21,17 +21,15 @@ const getConfig = (status: MlStage): TrainModelFirstViewConfig => {
           "content.model.notEnoughDataInfoBody1",
           "content.model.notEnoughDataInfoBody2",
         ],
-        navigateToStep: "add-data",
+        navigateToStep: TabId.Data,
       };
     case MlStage.RetrainingNeeded:
       return {
         textIds: ["content.model.retrainModelBody"],
-        navigateToStep: "train-model",
       };
     default:
       return {
         textIds: ["content.model.trainModelBody"],
-        navigateToStep: "train-model",
       };
   }
 };
@@ -42,7 +40,7 @@ const TrainModelFirstView = () => {
   const { onOpen: onOpenTrainModelDialog } = useTrainModelDialogs();
 
   const navigateToDataPage = useCallback(() => {
-    navigate(createStepPageUrl("add-data"));
+    navigate(createStepPageUrl(TabId.Data));
   }, [navigate]);
 
   const config = getConfig(stage);
@@ -68,7 +66,7 @@ const TrainModelFirstView = () => {
           ))}
         </VStack>
       </VStack>
-      {config.navigateToStep === "add-data" ? (
+      {config.navigateToStep === TabId.Data ? (
         <Button variant="primary" onClick={navigateToDataPage}>
           <FormattedMessage id="content.model.addData" />
         </Button>

@@ -8,14 +8,14 @@ import ResourceCard from "../components/ResourceCard";
 import StartResumeActions from "../components/StartResumeActions";
 import { resourcesConfig } from "../pages-config";
 
-export type StepId = "add-data" | "train-model" | "test-model";
+type StepId = "add-data" | "train-model" | "test-model";
 
-export interface StepConfig {
+interface StepConfig {
   id: StepId;
   imgSrc: string;
 }
 
-export const stepsConfig: StepConfig[] = [
+const stepsConfig: StepConfig[] = [
   {
     id: "add-data",
     imgSrc: addDataImage,

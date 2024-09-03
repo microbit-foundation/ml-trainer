@@ -1,34 +1,19 @@
-import { useCallback, useEffect, useState } from "react";
-import { useTrainModelDialogs } from "../ml-status-hooks";
+import {
+  TrainModelDialogStage,
+  useTrainModelDialogs,
+} from "../ml-status-hooks";
 import TrainModelIntroDialog from "./TrainModelIntroDialog";
 import TrainingStatusDialog from "./TrainingStatusDialog";
 
-type TrainModelDialogStage = "none" | "intro" | "training initiated";
-
 const TrainModelFlowDialogs = () => {
-  const { isOpen, isSkipIntro, setSkipIntro, onClose } = useTrainModelDialogs();
-  const [stage, setStage] = useState<TrainModelDialogStage>(
-    !isOpen ? "none" : isSkipIntro ? "training initiated" : "intro"
-  );
-
-  useEffect(() => {
-    setStage(!isOpen ? "none" : isSkipIntro ? "training initiated" : "intro");
-  }, [isOpen, isSkipIntro]);
-
-  const onTrain = useCallback(
-    (isSkipIntro: boolean) => {
-      setSkipIntro(isSkipIntro);
-      setStage("training initiated");
-    },
-    [setSkipIntro]
-  );
+  const { stage, onIntroNext, onClose } = useTrainModelDialogs();
 
   switch (stage) {
-    case "none":
+    case TrainModelDialogStage.Closed:
       return <></>;
-    case "intro":
-      return <TrainModelIntroDialog onNext={onTrain} />;
-    case "training initiated":
+    case TrainModelDialogStage.ShowingIntroduction:
+      return <TrainModelIntroDialog onNext={onIntroNext} />;
+    case TrainModelDialogStage.ShowingTrainingStatus:
       return <TrainingStatusDialog onClose={onClose} />;
   }
 };

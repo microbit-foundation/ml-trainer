@@ -42,7 +42,7 @@
   "add-data-title": [
     {
       "type": 0,
-      "value": "Data"
+      "value": "Add data"
     }
   ],
   "alert.data.classNameLengthAlert": [
@@ -1145,6 +1145,12 @@
       "value": "Copy"
     }
   ],
+  "data-title": [
+    {
+      "type": 0,
+      "value": "Data"
+    }
+  ],
   "disconnectedWarning.bluetooth1": [
     {
       "type": 0,
@@ -1385,6 +1391,12 @@
     {
       "type": 0,
       "value": "Train model"
+    }
+  ],
+  "model-title": [
+    {
+      "type": 0,
+      "value": "Model"
     }
   ],
   "not-found": [
@@ -1712,7 +1724,7 @@
   "test-model-title": [
     {
       "type": 0,
-      "value": "Model"
+      "value": "Test model"
     }
   ],
   "train-model-intro-description": [

@@ -5,30 +5,33 @@ import GetStartedResourcePage from "./pages/GetStartedResourcePage";
 import IntroducingToolResourcePage from "./pages/IntroducingToolResourcePage";
 import TestModelPage from "./pages/TestModelPage";
 
-export type StepId = "add-data" | "train-model" | "test-model";
+export enum TabId {
+  Data = "data",
+  Model = "model",
+}
 
 export interface TabConfig {
-  id: StepId;
+  id: TabId;
   pageElement: () => JSX.Element;
 }
 
 export const addDataConfig: TabConfig = {
-  id: "add-data",
+  id: TabId.Data,
   pageElement: AddDataPage,
 };
 
 export const testModelConfig: TabConfig = {
-  id: "test-model",
+  id: TabId.Model,
   pageElement: TestModelPage,
 };
 
 export const tabConfigs: TabConfig[] = [
   {
-    id: "add-data",
+    id: TabId.Data,
     pageElement: AddDataPage,
   },
   {
-    id: "test-model",
+    id: TabId.Model,
     pageElement: TestModelPage,
   },
 ];

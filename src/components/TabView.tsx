@@ -1,11 +1,11 @@
 import { Tab, TabIndicator, TabList, Tabs, VStack } from "@chakra-ui/react";
 import { useIntl } from "react-intl";
-import { StepId, tabConfigs } from "../pages-config";
+import { TabId, tabConfigs } from "../pages-config";
 import { createStepPageUrl } from "../urls";
 import { useNavigate } from "react-router";
 
 interface TabViewProps {
-  activeStep: StepId;
+  activeStep: TabId;
 }
 const TabView = ({ activeStep }: TabViewProps) => {
   const intl = useIntl();

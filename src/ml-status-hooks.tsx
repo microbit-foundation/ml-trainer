@@ -36,11 +36,17 @@ export type MlStatus =
       >;
     };
 
+export enum TrainModelDialogStage {
+  Closed = "closed",
+  ShowingIntroduction = "showing introduction",
+  ShowingTrainingStatus = "showing training status",
+}
+
 interface MlStatusState {
-  status: MlStatus;
-  isTrainModelDialogOpen: boolean;
-  skipTrainModelIntro: boolean;
+  mlStatus: MlStatus;
   hasTrainedBefore: boolean;
+  trainModelDialog: TrainModelDialogStage;
+  skipTrainModelIntro: boolean;
 }
 
 type MlStatusContextValue = [MlStatusState, (status: MlStatusState) => void];
@@ -52,13 +58,13 @@ const MlStatusContext = createContext<MlStatusContextValue | undefined>(
 export const MlStatusProvider = ({ children }: { children: ReactNode }) => {
   const [gestureState] = useGestureData();
   const statusContextValue = useState<MlStatusState>({
-    status: {
+    mlStatus: {
       stage: hasSufficientDataForTraining(gestureState.data)
         ? MlStage.NotTrained
         : MlStage.InsufficientData,
     },
     skipTrainModelIntro: false,
-    isTrainModelDialogOpen: false,
+    trainModelDialog: TrainModelDialogStage.Closed,
     hasTrainedBefore: false,
   });
   return (
@@ -89,37 +95,46 @@ export const useMlStatus = (): [MlStatus, (status: MlStatus) => void] => {
           ? ({ stage: MlStage.RetrainingNeeded } as const)
           : s;
 
-      setState({ ...state, status, hasTrainedBefore });
+      setState({ ...state, mlStatus: status, hasTrainedBefore });
     },
     [setState, state]
   );
 
-  return [state.status, setStatus];
+  return [state.mlStatus, setStatus];
 };
 
 export const useTrainModelDialogs = () => {
   const [state, setState] = useStatusContextValue();
 
   const onClose = useCallback(() => {
-    setState({ ...state, isTrainModelDialogOpen: false });
+    setState({ ...state, trainModelDialog: TrainModelDialogStage.Closed });
   }, [setState, state]);
 
   const onOpen = useCallback(() => {
-    setState({ ...state, isTrainModelDialogOpen: true });
+    setState({
+      ...state,
+      trainModelDialog: state.skipTrainModelIntro
+        ? TrainModelDialogStage.ShowingTrainingStatus
+        : TrainModelDialogStage.ShowingIntroduction,
+    });
   }, [setState, state]);
 
-  const setSkipIntro = useCallback(
-    (skipTrainModelIntro: boolean) => {
-      setState({ ...state, skipTrainModelIntro });
+  const onIntroNext = useCallback(
+    (isSkipIntro: boolean) => {
+      setState({
+        ...state,
+        skipTrainModelIntro: isSkipIntro,
+        trainModelDialog: TrainModelDialogStage.ShowingTrainingStatus,
+      });
     },
     [setState, state]
   );
 
   return {
-    isOpen: state.isTrainModelDialogOpen,
+    stage: state.trainModelDialog,
+    isSkipIntro: state.skipTrainModelIntro,
+    onIntroNext,
     onClose,
     onOpen,
-    setSkipIntro,
-    isSkipIntro: state.skipTrainModelIntro,
   };
 };
