@@ -58,7 +58,7 @@ export const useMlStatus = () => {
   return mlState;
 };
 
-const modelUrl = "indexeddb://micro:bit-ml-tool-model";
+export const modelUrl = "indexeddb://micro:bit-ml-tool-model";
 
 export const MlStatusProvider = ({ children }: { children: ReactNode }) => {
   const [gestureState] = useGestureData();
