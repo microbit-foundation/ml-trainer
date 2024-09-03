@@ -31,6 +31,10 @@
     "defaultMessage": "Are you sure you want to delete the action \"{action}\"?",
     "description": ""
   },
+  "alert.deleteGestureConfirmHeading": {
+    "defaultMessage": "Confirm delete action",
+    "description": ""
+  },
   "alert.isNotConnected": {
     "defaultMessage": "Your micro:bit should be connected!",
     "description": ""
@@ -94,6 +98,10 @@
   "compatibility.webgl.notSupported": {
     "defaultMessage": "WebGL not available. Enable WebGL to see 3D data view.",
     "description": ""
+  },
+  "confirm-action": {
+    "defaultMessage": "Confirm",
+    "description": "Confirm button text"
   },
   "connect-help-alt": {
     "defaultMessage": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2",

@@ -73,6 +73,12 @@
       "value": "\"?"
     }
   ],
+  "alert.deleteGestureConfirmHeading": [
+    {
+      "type": 0,
+      "value": "Confirm delete action"
+    }
+  ],
   "alert.isNotConnected": [
     {
       "type": 0,
@@ -167,6 +173,12 @@
     {
       "type": 0,
       "value": "WebGL not available. Enable WebGL to see 3D data view."
+    }
+  ],
+  "confirm-action": [
+    {
+      "type": 0,
+      "value": "Confirm"
     }
   ],
   "connect-help-alt": [
