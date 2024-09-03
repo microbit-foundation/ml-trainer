@@ -716,11 +716,11 @@
     "description": "Download project different micro:bit option"
   },
   "download-project-choose-microbit-subtitle": {
-    "defaultMessage": "Downloading your project on to the same micro:bit will disconnect the micro:bit.",
+    "defaultMessage": "Downloading your project on to the same micro:bit will disconnect the micro:bit from the tool. You will need to reconnect the micro:bit if you want to change the model.",
     "description": "Download project choose micro:bit dialog subtitle"
   },
   "download-project-choose-microbit-title": {
-    "defaultMessage": "Which micro:bit do you want to download your project on to?",
+    "defaultMessage": "Which micro:bit do you want to use?",
     "description": "Download project choose micro:bit dialog title"
   },
   "download-project-same-microbit-option": {

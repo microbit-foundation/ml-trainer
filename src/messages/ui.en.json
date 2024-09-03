@@ -1220,13 +1220,13 @@
   "download-project-choose-microbit-subtitle": [
     {
       "type": 0,
-      "value": "Downloading your project on to the same micro:bit will disconnect the micro:bit."
+      "value": "Downloading your project on to the same micro:bit will disconnect the micro:bit from the tool. You will need to reconnect the micro:bit if you want to change the model."
     }
   ],
   "download-project-choose-microbit-title": [
     {
       "type": 0,
-      "value": "Which micro:bit do you want to download your project on to?"
+      "value": "Which micro:bit do you want to use?"
     }
   ],
   "download-project-same-microbit-option": [
