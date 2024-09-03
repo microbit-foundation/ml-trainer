@@ -73,12 +73,7 @@ const ReconnectErrorDialog = ({
     [ConnectionFlowType.ConnectBluetooth]: "bluetooth",
     [ConnectionFlowType.ConnectRadioBridge]: "bridge",
     [ConnectionFlowType.ConnectRadioRemote]: "remote",
-    [ConnectionFlowType.DownloadProject]: undefined,
   }[flowType];
-  if (flowType === ConnectionFlowType.DownloadProject) {
-    // This flow type should not use this dialog
-    return <></>;
-  }
   return (
     <Modal
       motionPreset="none"
