@@ -28,6 +28,7 @@ import { ConnectProvider } from "./connect-actions-hooks";
 import { ConnectStatusProvider } from "./connect-status-hooks";
 import { BufferedDataProvider } from "./buffered-data-hooks";
 import { UserProjectsProvider } from "./user-projects-hooks";
+import { DownloadProjectContextProvider } from "./download-project-hooks";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -51,9 +52,11 @@ const Providers = ({ children }: ProviderLayoutProps) => {
                       <ConnectProvider>
                         <BufferedDataProvider>
                           <ConnectionStageProvider>
-                            <TranslationProvider>
-                              <ErrorBoundary>{children}</ErrorBoundary>
-                            </TranslationProvider>
+                            <DownloadProjectContextProvider>
+                              <TranslationProvider>
+                                <ErrorBoundary>{children}</ErrorBoundary>
+                              </TranslationProvider>
+                            </DownloadProjectContextProvider>
                           </ConnectionStageProvider>
                         </BufferedDataProvider>
                       </ConnectProvider>

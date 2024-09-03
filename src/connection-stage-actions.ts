@@ -39,18 +39,10 @@ export class ConnectionStageActions {
     });
   };
 
-  startDownloadUserProjectHex = async (hex: string) => {
-    // TODO: Only disconnect input micro:bit if user chooses this device.
+  disconnectInputMicrobit = async () => {
     await this.actions.disconnect();
     this.actions.removeStatusListener();
     this.setStatus(ConnectionStatus.NotConnected);
-
-    this.setStage({
-      ...this.stage,
-      makeCodeHex: hex,
-      flowType: ConnectionFlowType.DownloadProject,
-      flowStep: ConnectionFlowStep.ConnectCable,
-    });
   };
 
   setFlowStep = (step: ConnectionFlowStep) => {

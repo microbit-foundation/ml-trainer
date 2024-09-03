@@ -183,6 +183,10 @@
     "defaultMessage": "animation showing a USB cable being connected to the top of a micro:bit",
     "description": ""
   },
+  "connectMB.connectCable.downloadProject.subtitle": {
+    "defaultMessage": "Connect a micro:bit to this computer with a USB cable to download your machine learning MakeCode program to it.",
+    "description": ""
+  },
   "connectMB.connectCable.heading": {
     "defaultMessage": "Connect USB cable to micro:bit",
     "description": ""
@@ -628,7 +632,7 @@
     "description": ""
   },
   "content.trainer.enoughdata.title": {
-    "defaultMessage": "Status: You've collected enough data to train the model.",
+    "defaultMessage": "You've collected enough data to train the model.",
     "description": ""
   },
   "content.trainer.failure.body": {
@@ -652,7 +656,7 @@
     "description": ""
   },
   "content.trainer.training.title": {
-    "defaultMessage": "Status: Training the model in progress.",
+    "defaultMessage": "Training model...",
     "description": ""
   },
   "cookies-action": {
@@ -666,6 +670,10 @@
   "copy-action": {
     "defaultMessage": "Copy",
     "description": "Copy button text"
+  },
+  "data-title": {
+    "defaultMessage": "Data",
+    "description": "Data tab page title"
   },
   "disconnectedWarning.bluetooth1": {
     "defaultMessage": "The connection to the micro:bit has been lost.",
@@ -808,7 +816,7 @@
     "description": ""
   },
   "menu.trainer.notEnoughDataHeader1": {
-    "defaultMessage": "Status: You don't have enough data.",
+    "defaultMessage": "You don't have enough data.",
     "description": ""
   },
   "menu.trainer.notEnoughDataInfoBody": {
@@ -822,6 +830,10 @@
   "menu.trainer.trainModelButton": {
     "defaultMessage": "Train model",
     "description": ""
+  },
+  "model-title": {
+    "defaultMessage": "Model",
+    "description": "Model tab page title"
   },
   "not-found": {
     "defaultMessage": "Machine learning tool home page",

@@ -16,7 +16,6 @@ import { EditorProject } from "@microbit-foundation/react-editor-embed";
 import React, { useCallback } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useConnectionStage } from "../connection-stage-hooks";
 import { useGestureActions, useGestureData } from "../gestures-hooks";
 import { mlSettings } from "../ml";
 import { PredictionResult } from "../ml-hooks";
@@ -28,6 +27,8 @@ import CodeViewGridItem from "./CodeViewGridItem";
 import EditCodeDialog from "./EditCodeDialog";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
+import DownloadProjectFlowDialogs from "./DownloadProjectFlowDialogs";
+import { useDownloadProject } from "../download-project-hooks";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 360px 40px auto",
@@ -63,7 +64,7 @@ const TestModelGridView = ({ prediction }: TestModelGridViewProps) => {
   const editCodeDialogDisclosure = useDisclosure();
   const [gestures] = useGestureData();
   const { setRequiredConfidence } = useGestureActions();
-  const { actions } = useConnectionStage();
+  const { actions: downloadProjectActions } = useDownloadProject();
 
   const { hasStoredProject, userProject, setUserProject } =
     useMakeCodeProject();
@@ -99,13 +100,14 @@ const TestModelGridView = ({ prediction }: TestModelGridViewProps) => {
   }, []);
 
   const handleDownload = useCallback(
-    async (download: { name: string; hex: string }) => {
-      await actions.startDownloadUserProjectHex(download.hex);
+    (download: { name: string; hex: string }) => {
+      downloadProjectActions.start(download);
     },
-    [actions]
+    [downloadProjectActions]
   );
   return (
     <>
+      <DownloadProjectFlowDialogs />
       <EditCodeDialog
         code={userProject}
         editorVersion={undefined}

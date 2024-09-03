@@ -66,7 +66,6 @@ const ManualFlashingDialog = ({ ...props }: ManualFlashingDialogProps) => {
     >
       <VStack gap={5} width="100%">
         <Text alignSelf="left" width="100%">
-          <FormattedMessage id="connectMB.connectBattery.subtitle" />{" "}
           <FormattedMessage
             id="connectMB.transferHex.manualDownload"
             values={{

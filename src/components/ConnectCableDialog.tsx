@@ -60,8 +60,8 @@ export const getConnectionCableDialogConfig = (
 export interface ConnectCableDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
   config: Config;
-  onSkip: () => void;
-  onSwitch: () => void;
+  onSkip?: () => void;
+  onSwitch?: () => void;
 }
 
 const ConnectCableDialog = ({
@@ -77,7 +77,9 @@ const ConnectCableDialog = ({
       {...props}
       footerLeft={
         linkTextId &&
-        linkType && (
+        linkType &&
+        onSkip &&
+        onSwitch && (
           <Button
             onClick={linkType === "skip" ? onSkip : onSwitch}
             variant="link"
