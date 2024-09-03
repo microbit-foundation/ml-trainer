@@ -20,11 +20,6 @@ export const getConnectionCableDialogConfig = (
   isWebBluetoothSupported: boolean
 ): Config => {
   switch (flowType) {
-    case ConnectionFlowType.DownloadProject:
-      return {
-        headingId: "connectMB.connectCable.heading",
-        subtitleId: "connectMB.connectCable.subtitle",
-      };
     case ConnectionFlowType.ConnectBluetooth:
       return {
         headingId: "connectMB.connectCable.heading",

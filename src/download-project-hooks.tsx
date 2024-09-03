@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { DownloadProjectActions } from "./download-project-actions";
 import { useConnectActions } from "./connect-actions-hooks";
+import { useConnectionStage } from "./connection-stage-hooks";
 
 export enum DownloadProjectStep {
   None = "None",
@@ -46,12 +47,14 @@ export const useDownloadProject = () => {
     throw new Error("Missing provider");
   }
   const connectActions = useConnectActions();
+  const { actions: connectionStageActions } = useConnectionStage();
   const [stage, setStage] = downloadProjectContextValue;
   const [flashProgress, setFlashProgress] = useState<number>(0);
   const actions = new DownloadProjectActions(
     stage,
     setStage,
     connectActions,
+    connectionStageActions,
     setFlashProgress
   );
   return { stage, actions, flashProgress };

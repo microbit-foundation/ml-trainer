@@ -19,7 +19,6 @@ export interface DownloadingDialogProps {
 
 export const getHeadingId = (flowType: ConnectionFlowType) => {
   switch (flowType) {
-    case ConnectionFlowType.DownloadProject:
     case ConnectionFlowType.ConnectBluetooth:
       return "connectMB.usbDownloading.header";
     case ConnectionFlowType.ConnectRadioRemote:

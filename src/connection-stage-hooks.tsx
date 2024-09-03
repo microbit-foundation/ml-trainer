@@ -20,7 +20,6 @@ export enum ConnectionFlowType {
   ConnectBluetooth = "ConnectBluetooth",
   ConnectRadioBridge = "ConnectRadioBridge",
   ConnectRadioRemote = "ConnectRadioRemote",
-  DownloadProject = "DownloadProject",
 }
 
 export type InputConnectionFlowType =
