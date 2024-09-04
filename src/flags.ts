@@ -14,7 +14,12 @@ export type Flag =
   /**
    * Flag to add a prototype warning. Enabled for staging site and production stages.
    */
-  "prototypeWarning";
+  | "prototypeWarning"
+  /**
+   * Example flags used for testing.
+   */
+  | "exampleOptInA"
+  | "exampleOptInB";
 
 interface FlagMetadata {
   defaultOnStages: Stage[];
@@ -24,6 +29,8 @@ interface FlagMetadata {
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
   { name: "prototypeWarning", defaultOnStages: ["staging", "production"] },
+  { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
+  { name: "exampleOptInB", defaultOnStages: [] },
 ];
 
 type Flags = Record<Flag, boolean>;
