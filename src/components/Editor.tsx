@@ -4,8 +4,9 @@ import {
   MakeCodeEditor,
 } from "@microbit-foundation/react-editor-embed";
 import React from "react";
-import { getMakeCodeLang, useSettings } from "../settings";
 import { Subject } from "rxjs";
+import { getMakeCodeLang, useSettings } from "../settings";
+import { useProject } from "../user-projects-hooks";
 
 const controllerId = "MicrobitMachineLearningTool";
 
@@ -30,6 +31,8 @@ const Editor = ({
   ...editorProps
 }: EditorProps) => {
   const [{ languageId }] = useSettings();
+  const { editorEventEmitter } = useProject();
+
   return (
     <MakeCodeEditor
       // TODO: To remove baseUrl and use real pxt-microbit
@@ -41,6 +44,7 @@ const Editor = ({
       version={version}
       lang={getMakeCodeLang(languageId)}
       actionListener={eventTrigger}
+      responseEmitter={editorEventEmitter}
       {...editorProps}
     />
   );

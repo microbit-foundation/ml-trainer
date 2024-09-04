@@ -1,5 +1,10 @@
 import { usePrevious } from "@chakra-ui/react";
 import { MakeCodeProject } from "@microbit-foundation/react-code-view";
+import {
+  ActionListenerSubject,
+  CommonEditorMessageAction,
+  ResponseEmitterSubject,
+} from "@microbit-foundation/react-editor-embed";
 import debounce from "lodash.debounce";
 import {
   MutableRefObject,
@@ -12,6 +17,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { Subject } from "rxjs";
 import {
   GestureData,
   useGestureActions,
@@ -20,13 +26,22 @@ import {
 import { useStorage } from "./hooks/use-storage";
 import { generateCustomFiles, generateProject } from "./makecode/utils";
 import { TrainingCompleteMlStatus, useMlStatus } from "./ml-status-hooks";
-import { ActionListenerSubject } from "@microbit-foundation/react-editor-embed";
-import { Subject } from "rxjs";
 import { getLowercaseFileExtension, readFileAsText } from "./utils/fs-util";
 
 interface StoredProject {
   project: MakeCodeProject;
   projectEdited: boolean;
+}
+
+interface EditorMessage {
+  data: {
+    action?: string;
+    project?: MakeCodeProject;
+  };
+}
+
+interface FullMakeCodeProject extends MakeCodeProject {
+  header: Record<string, unknown>;
 }
 
 export type ProjectIOState = "downloading" | "importing" | "inactive";
@@ -40,6 +55,7 @@ interface ProjectContext extends StoredProject {
     ((payload: MakeCodeProject) => void) | undefined
   >;
   editorEventTrigger: Subject<ActionListenerSubject>;
+  editorEventEmitter: Subject<ResponseEmitterSubject>;
   projectIOState: ProjectIOState;
   setProjectIOState: (value: ProjectIOState) => void;
 }
@@ -95,7 +111,13 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
   const updateProject = useCallback(() => {
     const model = (status as TrainingCompleteMlStatus).model;
     if (!projectEdited) {
-      const newProject = generateProject(gestures, model);
+      const newProject = {
+        ...project,
+        text: {
+          ...project.text,
+          ...generateProject(gestures, model).text,
+        },
+      };
       setProject({
         project: newProject,
         projectEdited,
@@ -105,6 +127,7 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
       }
     } else {
       const updatedProject = {
+        ...project,
         text: {
           ...project.text,
           ...generateCustomFiles(gestures, model),
@@ -121,7 +144,7 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
   }, [
     debouncedEditorUpdate,
     gestures,
-    project.text,
+    project,
     projectEdited,
     setProject,
     status,
@@ -145,10 +168,14 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
   ]);
 
   const resetProject = useCallback(() => {
-    const newProject = generateProject(
-      gestures,
-      (status as TrainingCompleteMlStatus).model
-    );
+    const newProject = {
+      ...project,
+      text: {
+        ...project.text,
+        ...generateProject(gestures, (status as TrainingCompleteMlStatus).model)
+          .text,
+      },
+    };
     setProject({
       project: newProject,
       projectEdited: false,
@@ -156,7 +183,7 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     if (editorWrite.current) {
       editorWrite.current(newProject);
     }
-  }, [gestures, setProject, status]);
+  }, [gestures, project, setProject, status]);
 
   const writeProject = useCallback(
     (code: MakeCodeProject) => {
@@ -169,6 +196,55 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     () => new Subject<ActionListenerSubject>(),
     []
   );
+  const editorEventEmitter = useMemo(
+    () => new Subject<ResponseEmitterSubject>(),
+    []
+  );
+
+  useEffect(() => {
+    const listener = (resp: ResponseEmitterSubject) => {
+      const msg = resp as EditorMessage;
+      if (
+        msg.data.action === CommonEditorMessageAction.workspacesave &&
+        !(project as FullMakeCodeProject).header
+      ) {
+        // Get the header provided by MakeCode on first workspacesave if we don't already have one.
+        // This is a work around for https://github.com/microsoft/pxt-microbit/issues/5896.
+        if (msg.data.project) {
+          const newProject = {
+            ...project,
+            text: {
+              ...project.text,
+              ...generateProject(
+                gestures,
+                (status as TrainingCompleteMlStatus).model
+              ).text,
+            },
+          };
+          if (editorWrite.current) {
+            editorWrite.current(newProject);
+          }
+          setProject({
+            project: newProject,
+            projectEdited: false,
+          });
+        }
+      }
+    };
+    editorEventEmitter.subscribe(listener);
+    return () => {
+      // TODO: This explodes. Why?
+      // editorEventEmitter.unsubscribe();
+    };
+  }, [
+    editorEventEmitter,
+    editorEventTrigger,
+    gestures,
+    project,
+    setProject,
+    status,
+    writeProject,
+  ]);
 
   const [projectIOState, setProjectIOState] =
     useState<ProjectIOState>("inactive");
@@ -214,6 +290,7 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     loadProject,
     editorWrite,
     editorEventTrigger,
+    editorEventEmitter,
     projectIOState,
     setProjectIOState,
   };

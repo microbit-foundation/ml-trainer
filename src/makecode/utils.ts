@@ -28,6 +28,7 @@ const pxt = {
     "Machine Learning": "github:microbit-foundation/pxt-microbit-ml#v0.4.0",
   },
   files: Object.values(filenames),
+  preferredEditor: "blocksprj",
 };
 
 export const generateProject = (

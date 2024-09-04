@@ -7,11 +7,8 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import { MakeCodeProject } from "@microbit-foundation/react-code-view";
-import {
-  CommonEditorMessageAction,
-  EditorProject,
-} from "@microbit-foundation/react-editor-embed";
-import { memo, useCallback, useEffect, useRef } from "react";
+import { EditorProject } from "@microbit-foundation/react-editor-embed";
+import { memo, useCallback, useRef } from "react";
 import { useConnectionStage } from "../connection-stage-hooks";
 import {
   GestureContextState,
@@ -98,17 +95,13 @@ const EditCodeDialog = () => {
     [actions, handleSave, isOpen, projectIOState, setProjectIOState]
   );
 
-  useEffect(() => {
-    if (isOpen) {
-      editorEventTrigger?.next({
-        action: CommonEditorMessageAction.restartsimulator,
-      });
-    }
-  }, [editorEventTrigger, isOpen]);
-
   return (
     <>
-      <Box ref={ref} display={isOpen ? "block" : "none"} />
+      <Box
+        ref={ref}
+        transform={isOpen ? undefined : "translate(-150vw, -150vh)"}
+        visibility={isOpen ? "visible" : "hidden"}
+      />
       <Modal
         size="full"
         isOpen={true}
