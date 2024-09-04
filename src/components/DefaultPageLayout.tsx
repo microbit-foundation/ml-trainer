@@ -1,7 +1,7 @@
-import { Flex, HStack, IconButton, VStack } from "@chakra-ui/react";
+import { Flex, HStack, IconButton, Text, VStack } from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect } from "react";
 import { RiHome2Line } from "react-icons/ri";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { TOOL_NAME } from "../constants";
 import { createHomePageUrl } from "../urls";
@@ -50,6 +50,11 @@ const DefaultPageLayout = ({
           zIndex={2}
           position="sticky"
           top={0}
+          itemsCenter={
+            <Text color="white" fontSize="xl" fontWeight="bold">
+              <FormattedMessage id={titleId} />
+            </Text>
+          }
           itemsLeft={<AppLogo name={TOOL_NAME} />}
           itemsRight={
             <HStack spacing={3}>

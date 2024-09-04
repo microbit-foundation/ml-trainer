@@ -17,20 +17,19 @@ import AddDataGridView from "../components/AddDataGridView";
 import ConnectFirstView from "../components/ConnectFirstView";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
-import TabView from "../components/TabView";
 import TrainingButton from "../components/TrainingButton";
 import UploadDataSamplesMenuItem from "../components/UploadDataSamplesMenuItem";
+import { ConnectionStatus } from "../connect-status-hooks";
+import { useConnectionStage } from "../connection-stage-hooks";
 import {
   hasSufficientDataForTraining,
   useGestureActions,
   useGestureData,
 } from "../gestures-hooks";
-import { addDataConfig } from "../pages-config";
-import { useConnectionStage } from "../connection-stage-hooks";
-import { ConnectionStatus } from "../connect-status-hooks";
 import { useTrainModelDialogs } from "../ml-status-hooks";
+import { addDataConfig } from "../pages-config";
 
-const AddDataPage = () => {
+const DataSamplesPage = () => {
   const intl = useIntl();
   const [gestures] = useGestureData();
   const actions = useGestureActions();
@@ -60,7 +59,6 @@ const AddDataPage = () => {
 
   return (
     <DefaultPageLayout titleId={`${addDataConfig.id}-title`}>
-      <TabView activeStep={addDataConfig.id} />
       {noStoredData &&
       !isConnected &&
       status !== ConnectionStatus.ReconnectingAutomatically ? (
@@ -79,21 +77,17 @@ const AddDataPage = () => {
           borderColor="gray.200"
           alignItems="center"
         >
-          <Button
-            variant={hasSufficientData ? "secondary" : "primary"}
-            leftIcon={<RiAddLine />}
-            onClick={handleAddNewGesture}
-            isDisabled={
-              !isConnected || gestures.data.some((g) => g.name.length === 0)
-            }
-          >
-            <FormattedMessage id="content.data.addAction" />
-          </Button>
           <HStack gap={2} alignItems="center">
-            <TrainingButton
-              onClick={onOpenTrainModelDialog}
-              variant={hasSufficientData ? "primary" : "secondary"}
-            />
+            <Button
+              variant={hasSufficientData ? "secondary" : "primary"}
+              leftIcon={<RiAddLine />}
+              onClick={handleAddNewGesture}
+              isDisabled={
+                !isConnected || gestures.data.some((g) => g.name.length === 0)
+              }
+            >
+              <FormattedMessage id="content.data.addAction" />
+            </Button>
             <Menu>
               <MenuButton
                 as={IconButton}
@@ -121,6 +115,10 @@ const AddDataPage = () => {
               </MenuList>
             </Menu>
           </HStack>
+          <TrainingButton
+            onClick={onOpenTrainModelDialog}
+            variant={hasSufficientData ? "primary" : "secondary"}
+          />
         </HStack>
         <LiveGraphPanel />
       </VStack>
@@ -128,4 +126,4 @@ const AddDataPage = () => {
   );
 };
 
-export default AddDataPage;
+export default DataSamplesPage;

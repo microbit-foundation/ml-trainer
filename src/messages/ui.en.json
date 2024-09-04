@@ -1145,10 +1145,10 @@
       "value": "Copy"
     }
   ],
-  "data-title": [
+  "data-samples-title": [
     {
       "type": 0,
-      "value": "Data"
+      "value": "Data samples"
     }
   ],
   "disconnectedWarning.bluetooth1": [
@@ -1397,6 +1397,12 @@
     {
       "type": 0,
       "value": "Model"
+    }
+  ],
+  "more-add-action-options": [
+    {
+      "type": 0,
+      "value": "More add action options"
     }
   ],
   "not-found": [

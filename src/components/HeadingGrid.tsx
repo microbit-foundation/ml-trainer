@@ -1,19 +1,17 @@
 import { Grid, GridItem, GridProps, HStack, Text } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import InfoToolTip from "./InfoToolTip";
-import { ReactNode } from "react";
 
 interface GridColumnHeadingItemProps {
   titleId?: string;
   descriptionId?: string;
 }
 
-interface HeadingGridProps extends Omit<GridProps, "children"> {
+interface HeadingGridProps extends GridProps {
   headings: GridColumnHeadingItemProps[];
-  children?: ReactNode;
 }
 
-const HeadingGrid = ({ headings, children, ...props }: HeadingGridProps) => {
+const HeadingGrid = ({ headings, ...props }: HeadingGridProps) => {
   return (
     <Grid
       flexShrink={0}
@@ -24,16 +22,9 @@ const HeadingGrid = ({ headings, children, ...props }: HeadingGridProps) => {
       borderColor="gray.200"
       {...props}
     >
-      {headings.map((props, idx) => {
-        return idx < headings.length - 1 ? (
-          <GridColumnHeadingItem {...props} key={idx} />
-        ) : (
-          <HStack justifyContent="space-between" key={idx}>
-            <GridColumnHeadingItem {...props} />
-            {children}
-          </HStack>
-        );
-      })}
+      {headings.map((props, idx) => (
+        <GridColumnHeadingItem {...props} key={idx} />
+      ))}
     </Grid>
   );
 };

@@ -1,12 +1,12 @@
 import resourceGetStartedImage from "./images/resource-get-started.jpg";
 import resourceIntroducingToolImage from "./images/resource-introducing-tool.jpg";
-import AddDataPage from "./pages/AddDataPage";
+import DataSamplesPage from "./pages/DataSamplesPage";
 import GetStartedResourcePage from "./pages/GetStartedResourcePage";
 import IntroducingToolResourcePage from "./pages/IntroducingToolResourcePage";
-import TestModelPage from "./pages/TestModelPage";
+import ModelPage from "./pages/ModelPage";
 
 export enum TabId {
-  Data = "data",
+  Data = "data-samples",
   Model = "model",
 }
 
@@ -17,22 +17,22 @@ export interface TabConfig {
 
 export const addDataConfig: TabConfig = {
   id: TabId.Data,
-  pageElement: AddDataPage,
+  pageElement: DataSamplesPage,
 };
 
 export const testModelConfig: TabConfig = {
   id: TabId.Model,
-  pageElement: TestModelPage,
+  pageElement: ModelPage,
 };
 
 export const tabConfigs: TabConfig[] = [
   {
     id: TabId.Data,
-    pageElement: AddDataPage,
+    pageElement: DataSamplesPage,
   },
   {
     id: TabId.Model,
-    pageElement: TestModelPage,
+    pageElement: ModelPage,
   },
 ];
 

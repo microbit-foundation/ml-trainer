@@ -667,9 +667,9 @@
     "defaultMessage": "Copy",
     "description": "Copy button text"
   },
-  "data-title": {
-    "defaultMessage": "Data",
-    "description": "Data tab page title"
+  "data-samples-title": {
+    "defaultMessage": "Data samples",
+    "description": "Data samples page title"
   },
   "disconnectedWarning.bluetooth1": {
     "defaultMessage": "The connection to the micro:bit has been lost.",
@@ -829,7 +829,11 @@
   },
   "model-title": {
     "defaultMessage": "Model",
-    "description": "Model tab page title"
+    "description": "Model page title"
+  },
+  "more-edit-in-makecode-options": {
+    "defaultMessage": "More edit in MakeCode options",
+    "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
   },
   "not-found": {
     "defaultMessage": "Machine learning tool home page",
