@@ -87,6 +87,9 @@ export const actionNamesFromLabels = (actionLabels: string[]): ActionName[] => {
   const actionNames: ActionName[] = [];
   actionLabels.forEach((actionLabel, i) => {
     let sanitizedLabel = sanitizeActionLabel(actionLabel);
+    if (!sanitizedLabel) {
+      sanitizedLabel = `Event`;
+    }
     while (actionNames.map((an) => an.actionLabel).includes(sanitizedLabel)) {
       sanitizedLabel += i;
     }
