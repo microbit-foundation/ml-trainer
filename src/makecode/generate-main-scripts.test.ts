@@ -14,7 +14,7 @@ describe("test generateMainScripts", () => {
   it("generates xml blocks", () => {
     const expected = `<xml xmlns="https://developers.google.com/blockly/xml">
   
-  <block type="mlrunner_on_ml_event" x="0" y="0">
+  <block type="ml_on_event_start" x="0" y="0">
     <field name="event">ml.event.Name</field>
     <statement name="HANDLER">
       <block type="basic_show_icon"><field name="i">IconNames.Heart</field></block>       
