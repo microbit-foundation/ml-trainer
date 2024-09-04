@@ -11,7 +11,7 @@ import ConnectionDialogs from "./ConnectionFlowDialogs";
 import HelpMenu from "./HelpMenu";
 import PrototypeVersionWarning from "./PrototypeVersionWarning";
 import SettingsMenu from "./SettingsMenu";
-import { stage } from "../environment";
+import { flags } from "../flags";
 
 interface DefaultPageLayoutProps {
   titleId: string;
@@ -66,9 +66,7 @@ const DefaultPageLayout = ({
             </HStack>
           }
         />
-        {(stage === "staging" || stage === "production") && (
-          <PrototypeVersionWarning />
-        )}
+        {flags.prototypeWarning && <PrototypeVersionWarning />}
         <Flex flexGrow={1} flexDir="column">
           {children}
         </Flex>
