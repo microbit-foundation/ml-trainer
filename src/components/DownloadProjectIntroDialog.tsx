@@ -1,29 +1,36 @@
 import {
-  Image,
+  Button,
+  Checkbox,
+  Heading,
   HStack,
-  Text,
-  VStack,
+  Image,
   Modal,
-  ModalOverlay,
-  ModalContent,
   ModalBody,
   ModalCloseButton,
-  Heading,
+  ModalContent,
   ModalFooter,
-  Button,
+  ModalOverlay,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
-import testModelImage from "../images/test_model_black.svg";
+import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { DownloadProjectStage } from "../download-project-hooks";
+import testModelImage from "../images/test_model_black.svg";
 
 export interface DownloadProjectIntroDialogProps {
   onClose: () => void;
-  onNext: () => void;
+  onNext: (stage: Partial<DownloadProjectStage>) => void;
 }
 
 const DownloadProjectIntroDialog = ({
   onClose,
   onNext,
 }: DownloadProjectIntroDialogProps) => {
+  const [skipIntro, setSkipIntro] = useState<boolean>(false);
+  const handleOnNext = useCallback(() => {
+    onNext({ skipIntro });
+  }, [onNext, skipIntro]);
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -51,8 +58,14 @@ const DownloadProjectIntroDialog = ({
               </HStack>
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent="right" px={0} pb={0}>
-            <Button variant="primary" onClick={onNext}>
+          <ModalFooter justifyContent="space-between" px={0} pb={0}>
+            <Checkbox
+              isChecked={skipIntro}
+              onChange={(e) => setSkipIntro(e.target.checked)}
+            >
+              <FormattedMessage id="dont-show-this-again-option" />
+            </Checkbox>
+            <Button variant="primary" onClick={handleOnNext}>
               <FormattedMessage id="download-action" />
             </Button>
           </ModalFooter>

@@ -18,6 +18,7 @@ export interface DownloadProjectStage {
   step: DownloadProjectStep;
   projectHex?: string;
   projectName?: string;
+  skipIntro: boolean;
 }
 
 type DownloadProjectContextValue = [
@@ -35,6 +36,7 @@ export const DownloadProjectContextProvider = ({
 }) => {
   const downloadProjectContextValue = useState<DownloadProjectStage>({
     step: DownloadProjectStep.None,
+    skipIntro: false,
   });
   return (
     <DownloadProjectContext.Provider value={downloadProjectContextValue}>

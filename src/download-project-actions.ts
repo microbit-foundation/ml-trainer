@@ -17,24 +17,37 @@ export class DownloadProjectActions {
   ) {}
 
   start = (download: { name: string; hex: string }) => {
-    this.setStage({
-      step: DownloadProjectStep.Introduction,
+    const projectInfo = {
       projectHex: download.hex,
       projectName: download.name,
+    };
+    if (this.stage.skipIntro) {
+      return this.onIntroNext(projectInfo);
+    }
+    this.updateStage({
+      step: DownloadProjectStep.Introduction,
+      ...projectInfo,
     });
   };
 
-  onIntroductionNext = async () => {
+  onIntroNext = async (newStage: Partial<DownloadProjectStage> = {}) => {
     if (this.connectionStatus === ConnectionStatus.Connected) {
-      return this.setStep(DownloadProjectStep.ChooseSameOrAnotherMicrobit);
+      return this.updateStage({
+        ...newStage,
+        step: DownloadProjectStep.ChooseSameOrAnotherMicrobit,
+      });
     }
     const deviceId = this.connectActions.getUsbDeviceId();
     if (deviceId) {
       // Can flash directly without choosing device.
       return await this.connectAndFlashMicrobit();
     }
-    this.setStep(DownloadProjectStep.ConnectCable);
+    this.updateStage({ ...newStage, step: DownloadProjectStep.ConnectCable });
   };
+
+  onSkipIntro = (skipIntro: boolean) => this.updateStage({ skipIntro });
+
+  onBackToIntro = () => this.setStep(DownloadProjectStep.Introduction);
 
   onChosenSameMicrobit = async () => {
     // Disconnect input micro:bit to not trigger connection lost warning.
@@ -86,13 +99,15 @@ export class DownloadProjectActions {
   };
 
   private downloadProjectStepOrder = (currStep: DownloadProjectStep) => [
-    DownloadProjectStep.Introduction,
-    DownloadProjectStep.ChooseSameOrAnotherMicrobit,
     DownloadProjectStep.ConnectCable,
     currStep === DownloadProjectStep.ManualFlashingTutorial
       ? DownloadProjectStep.ManualFlashingTutorial
       : DownloadProjectStep.WebUsbFlashingTutorial,
   ];
+
+  private updateStage = (partialStage: Partial<DownloadProjectStage>) => {
+    this.setStage({ ...this.stage, ...partialStage } as DownloadProjectStage);
+  };
 
   private setStep = (step: DownloadProjectStep) =>
     this.setStage({ ...this.stage, step });

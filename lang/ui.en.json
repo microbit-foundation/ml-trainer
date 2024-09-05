@@ -711,6 +711,10 @@
     "defaultMessage": "micro:bit 1 connection lost",
     "description": ""
   },
+  "dont-show-this-again-option": {
+    "defaultMessage": "Don't show this again",
+    "description": ""
+  },
   "download-action": {
     "defaultMessage": "Download",
     "description": "Download button text"
@@ -881,10 +885,6 @@
   },
   "performanceWarning.heading": {
     "defaultMessage": "Low quality connection",
-    "description": ""
-  },
-  "performanceWarning.ignore": {
-    "defaultMessage": "Don't show this again",
     "description": ""
   },
   "performanceWarning.nextButton": {

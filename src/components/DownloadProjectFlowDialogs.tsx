@@ -17,7 +17,7 @@ const DownloadProjectFlowDialogs = () => {
       return (
         <DownloadProjectIntroDialog
           onClose={actions.close}
-          onNext={actions.onIntroductionNext}
+          onNext={actions.onIntroNext}
         />
       );
     }
@@ -36,6 +36,7 @@ const DownloadProjectFlowDialogs = () => {
         <ConnectCableDialog
           isOpen={true}
           onClose={actions.close}
+          onBackClick={stage.skipIntro ? undefined : actions.onBackToIntro}
           onNextClick={actions.next}
           config={{
             headingId: "connectMB.connectCable.heading",
