@@ -63,7 +63,7 @@ const onMLEventChildren = (
   return iconName ? s.showIcon(iconName) : "";
 };
 
-export const generateMainScript = (
+export const getMainScript = (
   gs: Gesture[],
   lang: Language,
   gestureToRenderAsBlock?: Gesture

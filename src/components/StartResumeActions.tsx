@@ -1,3 +1,4 @@
+import * as tf from "@tensorflow/tfjs";
 import { Button, HStack, StackProps, useDisclosure } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -8,6 +9,7 @@ import StartOverWarningDialog from "./StartOverWarningDialog";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useProject } from "../user-projects-hooks";
+import { modelUrl } from "../ml-status-hooks";
 
 const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
   const gestureActions = useGestureActions();
@@ -32,6 +34,9 @@ const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
 
   const handleStartNewSession = useCallback(() => {
     startOverWarningDialogDisclosure.onClose();
+    tf.io.removeModel(modelUrl).catch(() => {
+      // Throws if there is no model to remove.
+    });
     gestureActions.deleteAllGestures();
     resetProject();
     if (isConnected) {
