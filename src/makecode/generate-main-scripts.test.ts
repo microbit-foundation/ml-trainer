@@ -8,7 +8,7 @@
  */
 
 import { Gesture } from "../gestures-hooks";
-import { generateMainScript } from "./generate-main-scripts";
+import { getMainScript } from "./generate-main-scripts";
 
 describe("test generateMainScripts", () => {
   it("generates xml blocks", () => {
@@ -22,13 +22,13 @@ describe("test generateMainScripts", () => {
   </block>
   </xml>`;
     const gs: Gesture[] = [{ name: "name", icon: "Heart", ID: 12 }];
-    expect(generateMainScript(gs, "blocks")).toEqual(expected);
+    expect(getMainScript(gs, "blocks")).toEqual(expected);
   });
 
   it("generates js", () => {
     const expected =
       " ml.onStart(ml.event.Name, function () {basic.showIcon(IconNames.Heart)})";
     const gs: Gesture[] = [{ name: "name", icon: "Heart", ID: 12 }];
-    expect(generateMainScript(gs, "javascript")).toContain(expected);
+    expect(getMainScript(gs, "javascript")).toContain(expected);
   });
 });

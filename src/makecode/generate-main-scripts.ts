@@ -71,7 +71,7 @@ const getMakeCodeGestureConfigs = (gs: Gesture[]) => {
   }));
 };
 
-export const generateMainScript = (gs: Gesture[], lang: Language) => {
+export const getMainScript = (gs: Gesture[], lang: Language) => {
   const configs = getMakeCodeGestureConfigs(gs);
   const s = statements[lang];
   const initPos = { x: 0, y: 0 };
