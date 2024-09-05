@@ -18,7 +18,8 @@ import {
   RiDownload2Line,
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import AddDataGridView from "../components/AddDataGridView";
+import { useNavigate } from "react-router";
+import DataSampleGridView from "../components/DataSampleGridView";
 import ConnectFirstView from "../components/ConnectFirstView";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
@@ -32,9 +33,8 @@ import {
   useGestureData,
 } from "../gestures-hooks";
 import { MlStage, useMlStatus, useTrainModelDialogs } from "../ml-status-hooks";
-import { addDataConfig, TabId } from "../pages-config";
-import { useNavigate } from "react-router";
-import { createStepPageUrl } from "../urls";
+import { SessionPageId } from "../pages-config";
+import { createSessionPageUrl } from "../urls";
 
 const DataSamplesPage = () => {
   const intl = useIntl();
@@ -59,17 +59,20 @@ const DataSamplesPage = () => {
   }, [gestures.data]);
 
   const handleNavigateToModel = useCallback(() => {
-    navigate(createStepPageUrl(TabId.Model));
+    navigate(createSessionPageUrl(SessionPageId.Model));
   }, [navigate]);
 
   return (
-    <DefaultPageLayout titleId={`${addDataConfig.id}-title`} showPageTitle>
+    <DefaultPageLayout
+      titleId={`${SessionPageId.DataSamples}-title`}
+      showPageTitle
+    >
       {noStoredData &&
       !isConnected &&
       status !== ConnectionStatus.ReconnectingAutomatically ? (
         <ConnectFirstView />
       ) : (
-        <AddDataGridView />
+        <DataSampleGridView />
       )}
       <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
         <HStack

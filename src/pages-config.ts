@@ -5,33 +5,23 @@ import GetStartedResourcePage from "./pages/GetStartedResourcePage";
 import IntroducingToolResourcePage from "./pages/IntroducingToolResourcePage";
 import ModelPage from "./pages/ModelPage";
 
-export enum TabId {
-  Data = "data-samples",
+export enum SessionPageId {
+  DataSamples = "data-samples",
   Model = "model",
 }
 
-export interface TabConfig {
-  id: TabId;
+export interface SessionPageConfig {
+  id: SessionPageId;
   pageElement: () => JSX.Element;
 }
 
-export const addDataConfig: TabConfig = {
-  id: TabId.Data,
-  pageElement: DataSamplesPage,
-};
-
-export const testModelConfig: TabConfig = {
-  id: TabId.Model,
-  pageElement: ModelPage,
-};
-
-export const tabConfigs: TabConfig[] = [
+export const sessionPageConfigs: SessionPageConfig[] = [
   {
-    id: TabId.Data,
+    id: SessionPageId.DataSamples,
     pageElement: DataSamplesPage,
   },
   {
-    id: TabId.Model,
+    id: SessionPageId.Model,
     pageElement: ModelPage,
   },
 ];

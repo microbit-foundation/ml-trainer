@@ -7,18 +7,18 @@ import DefaultPageLayout from "../components/DefaultPageLayout";
 import ModelGridView from "../components/ModelGridView";
 import TrainModelFirstView from "../components/TrainModelFirstView";
 import { MlStage, useMlStatus } from "../ml-status-hooks";
-import { TabId, testModelConfig } from "../pages-config";
-import { createStepPageUrl } from "../urls";
+import { SessionPageId } from "../pages-config";
+import { createSessionPageUrl } from "../urls";
 
-const TestModelPage = () => {
+const ModelPage = () => {
   const navigate = useNavigate();
   const [{ stage }] = useMlStatus();
   const handleOnBack = useCallback(() => {
-    navigate(createStepPageUrl(TabId.Data));
+    navigate(createSessionPageUrl(SessionPageId.DataSamples));
   }, [navigate]);
   return (
     <DefaultPageLayout
-      titleId={`${testModelConfig.id}-title`}
+      titleId={`${SessionPageId.Model}-title`}
       showPageTitle
       toolbarItemsLeft={
         <Button
@@ -43,4 +43,4 @@ const TestModelPage = () => {
   );
 };
 
-export default TestModelPage;
+export default ModelPage;

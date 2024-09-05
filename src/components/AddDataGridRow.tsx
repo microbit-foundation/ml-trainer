@@ -14,7 +14,7 @@ interface AddDataGridRowProps {
   showWalkThrough: boolean;
 }
 
-const AddDataGridRow = ({
+const DataSampleGridRow = ({
   gesture,
   selected,
   onSelectRow,
@@ -70,4 +70,4 @@ const AddDataGridRow = ({
   );
 };
 
-export default AddDataGridRow;
+export default DataSampleGridRow;

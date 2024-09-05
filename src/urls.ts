@@ -1,4 +1,4 @@
-import { ResourceId, TabId } from "./pages-config";
+import { ResourceId, SessionPageId } from "./pages-config";
 
 export const basepath = import.meta.env.BASE_URL ?? "/";
 
@@ -8,7 +8,8 @@ if (!basepath.endsWith("/")) {
 
 export const createHomePageUrl = () => `${basepath}`;
 
-export const createStepPageUrl = (stepId: TabId) => `${basepath}${stepId}`;
+export const createSessionPageUrl = (pageId: SessionPageId) =>
+  `${basepath}${pageId}`;
 
 export const createResourcePageUrl = (resourceId: ResourceId) =>
   `${basepath}resources/${resourceId}`;

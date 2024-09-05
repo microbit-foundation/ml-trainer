@@ -2,11 +2,11 @@ import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useMlActions } from "../ml-hooks";
 import { MlStage, useMlStatus } from "../ml-status-hooks";
-import { createStepPageUrl } from "../urls";
+import { createSessionPageUrl } from "../urls";
 import InsufficientDataDialog from "./InsufficientDataDialog";
 import TrainingErrorDialog from "./TrainingErrorDialog";
 import TrainingModelProgressDialog from "./TrainingModelProgressDialog";
-import { TabId } from "../pages-config";
+import { SessionPageId } from "../pages-config";
 
 interface TrainingStatusDialogProps {
   onClose: () => void;
@@ -30,7 +30,7 @@ const TrainingStatusDialog = ({ onClose }: TrainingStatusDialogProps) => {
     }
     if (status.stage === MlStage.TrainingComplete) {
       onClose();
-      navigate(createStepPageUrl(TabId.Model));
+      navigate(createSessionPageUrl(SessionPageId.Model));
     }
   }, [handleTrain, navigate, onClose, status.stage]);
 
