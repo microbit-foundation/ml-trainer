@@ -17,7 +17,6 @@ const HeadingGrid = ({ headings, ...props }: HeadingGridProps) => {
       flexShrink={0}
       h="3.25rem"
       alignItems="center"
-      borderTopWidth={3}
       borderBottomWidth={3}
       borderColor="gray.200"
       {...props}
