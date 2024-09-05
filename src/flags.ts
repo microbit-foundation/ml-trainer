@@ -11,8 +11,15 @@ import { Stage, stage as stageFromEnvironment } from "./environment";
  * A union of the flag names (alphabetical order).
  */
 export type Flag =
-  // Example flags used for testing.
-  "exampleOptInA" | "exampleOptInB";
+  /**
+   * Flag to add a prototype warning. Enabled for staging site and production stages.
+   */
+  | "prototypeWarning"
+  /**
+   * Example flags used for testing.
+   */
+  | "exampleOptInA"
+  | "exampleOptInB";
 
 interface FlagMetadata {
   defaultOnStages: Stage[];
@@ -21,6 +28,7 @@ interface FlagMetadata {
 
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
+  { name: "prototypeWarning", defaultOnStages: ["staging", "production"] },
   { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
   { name: "exampleOptInB", defaultOnStages: [] },
 ];
