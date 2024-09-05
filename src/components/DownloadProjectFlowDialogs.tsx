@@ -8,9 +8,14 @@ import DownloadingDialog from "./DownloadingDialog";
 import ManualFlashingDialog from "./ManualFlashingDialog";
 import DownloadProjectChooseMicrobitDialog from "./DownloadProjectChooseMicrobitDialog";
 import DownloadProjectIntroDialog from "./DownloadProjectIntroDialog";
+import { useCallback } from "react";
 
 const DownloadProjectFlowDialogs = () => {
   const { stage, actions, flashProgress } = useDownloadProject();
+
+  const handleDownloadProject = useCallback(async () => {
+    await actions.connectAndFlashMicrobit(stage);
+  }, [actions, stage]);
 
   switch (stage.step) {
     case DownloadProjectStep.Introduction: {
@@ -51,7 +56,7 @@ const DownloadProjectFlowDialogs = () => {
           isOpen={true}
           onClose={actions.close}
           onBackClick={actions.back}
-          onNextClick={actions.connectAndFlashMicrobit}
+          onNextClick={handleDownloadProject}
         />
       );
     }

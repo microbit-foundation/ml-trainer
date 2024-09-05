@@ -30,19 +30,23 @@ export class DownloadProjectActions {
     });
   };
 
-  onIntroNext = async (newStage: Partial<DownloadProjectStage> = {}) => {
+  onIntroNext = async (partialNewStage: Partial<DownloadProjectStage> = {}) => {
     if (this.connectionStatus === ConnectionStatus.Connected) {
       return this.updateStage({
-        ...newStage,
+        ...partialNewStage,
         step: DownloadProjectStep.ChooseSameOrAnotherMicrobit,
       });
     }
     const deviceId = this.connectActions.getUsbDeviceId();
     if (deviceId) {
+      const newStage = { ...this.stage, ...partialNewStage };
       // Can flash directly without choosing device.
-      return await this.connectAndFlashMicrobit();
+      return await this.connectAndFlashMicrobit(newStage);
     }
-    this.updateStage({ ...newStage, step: DownloadProjectStep.ConnectCable });
+    this.updateStage({
+      ...partialNewStage,
+      step: DownloadProjectStep.ConnectCable,
+    });
   };
 
   onSkipIntro = (skipIntro: boolean) => this.updateStage({ skipIntro });
@@ -61,20 +65,22 @@ export class DownloadProjectActions {
     this.setStep(DownloadProjectStep.ConnectCable);
   };
 
-  connectAndFlashMicrobit = async () => {
-    this.setStep(DownloadProjectStep.WebUsbChooseMicrobit);
-    if (!this.stage.projectHex) {
-      throw new Error("Project hex not set!");
+  connectAndFlashMicrobit = async (stage: DownloadProjectStage) => {
+    if (!stage.projectHex || !stage.projectName) {
+      throw new Error("Project hex/name is not set!");
     }
+    this.setStage({ ...stage, step: DownloadProjectStep.WebUsbChooseMicrobit });
     const { result } = await this.connectActions.requestUSBConnectionAndFlash(
-      this.stage.projectHex,
+      stage.projectHex,
       this.flashingProgressCallback
     );
-    this.setStep(
-      result === ConnectAndFlashResult.Success
-        ? DownloadProjectStep.None
-        : DownloadProjectStep.ManualFlashingTutorial
-    );
+    this.setStage({
+      ...stage,
+      step:
+        result === ConnectAndFlashResult.Success
+          ? DownloadProjectStep.None
+          : DownloadProjectStep.ManualFlashingTutorial,
+    });
   };
 
   private flashingProgressCallback = (progress: number) => {
