@@ -11,7 +11,12 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useMemo } from "react";
 import { MdMoreVert } from "react-icons/md";
-import { RiAddLine, RiDeleteBin2Line, RiDownload2Line } from "react-icons/ri";
+import {
+  RiAddLine,
+  RiArrowRightLine,
+  RiDeleteBin2Line,
+  RiDownload2Line,
+} from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import AddDataGridView from "../components/AddDataGridView";
 import ConnectFirstView from "../components/ConnectFirstView";
@@ -26,12 +31,16 @@ import {
   useGestureActions,
   useGestureData,
 } from "../gestures-hooks";
-import { useTrainModelDialogs } from "../ml-status-hooks";
-import { addDataConfig } from "../pages-config";
+import { MlStage, useMlStatus, useTrainModelDialogs } from "../ml-status-hooks";
+import { addDataConfig, TabId } from "../pages-config";
+import { useNavigate } from "react-router";
+import { createStepPageUrl } from "../urls";
 
 const DataSamplesPage = () => {
   const intl = useIntl();
   const [gestures] = useGestureData();
+  const [{ stage }] = useMlStatus();
+  const navigate = useNavigate();
   const actions = useGestureActions();
   const { onOpen: onOpenTrainModelDialog } = useTrainModelDialogs();
   const { isConnected, status } = useConnectionStage();
@@ -49,13 +58,9 @@ const DataSamplesPage = () => {
     );
   }, [gestures.data]);
 
-  const handleAddNewGesture = useCallback(() => {
-    actions.addNewGesture();
-  }, [actions]);
-
-  const handleDatasetDownload = useCallback(() => {
-    actions.downloadDataset();
-  }, [actions]);
+  const handleNavigateToModel = useCallback(() => {
+    navigate(createStepPageUrl(TabId.Model));
+  }, [navigate]);
 
   return (
     <DefaultPageLayout titleId={`${addDataConfig.id}-title`}>
@@ -81,7 +86,7 @@ const DataSamplesPage = () => {
             <Button
               variant={hasSufficientData ? "secondary" : "primary"}
               leftIcon={<RiAddLine />}
-              onClick={handleAddNewGesture}
+              onClick={actions.addNewGesture}
               isDisabled={
                 !isConnected || gestures.data.some((g) => g.name.length === 0)
               }
@@ -102,7 +107,7 @@ const DataSamplesPage = () => {
                 <UploadDataSamplesMenuItem />
                 <MenuItem
                   icon={<RiDownload2Line />}
-                  onClick={handleDatasetDownload}
+                  onClick={actions.downloadDataset}
                 >
                   <FormattedMessage id="content.data.controlbar.button.downloadData" />
                 </MenuItem>
@@ -115,10 +120,20 @@ const DataSamplesPage = () => {
               </MenuList>
             </Menu>
           </HStack>
-          <TrainingButton
-            onClick={onOpenTrainModelDialog}
-            variant={hasSufficientData ? "primary" : "secondary"}
-          />
+          {stage === MlStage.TrainingComplete ? (
+            <Button
+              onClick={handleNavigateToModel}
+              variant="primary"
+              rightIcon={<RiArrowRightLine />}
+            >
+              <FormattedMessage id="model-title" />
+            </Button>
+          ) : (
+            <TrainingButton
+              onClick={onOpenTrainModelDialog}
+              variant={hasSufficientData ? "primary" : "secondary"}
+            />
+          )}
         </HStack>
         <LiveGraphPanel />
       </VStack>
