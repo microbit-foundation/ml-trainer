@@ -69,11 +69,10 @@ const RecordingDialog = ({
 
   const handleCleanup = useCallback(() => {
     setRecordingStatus(RecordingStatus.None);
-    setStatus({ stage: MlStage.NotTrained });
     setCountdownStageIndex(0);
     setProgress(0);
     onClose();
-  }, [onClose, setStatus]);
+  }, [onClose]);
 
   const handleOnClose = useCallback(() => {
     recordingDataSource.cancelRecording();
