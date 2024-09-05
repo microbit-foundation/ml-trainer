@@ -63,7 +63,7 @@ const DataSamplesPage = () => {
   }, [navigate]);
 
   return (
-    <DefaultPageLayout titleId={`${addDataConfig.id}-title`}>
+    <DefaultPageLayout titleId={`${addDataConfig.id}-title`} showPageTitle>
       {noStoredData &&
       !isConnected &&
       status !== ConnectionStatus.ReconnectingAutomatically ? (

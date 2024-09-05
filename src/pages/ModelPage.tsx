@@ -19,6 +19,7 @@ const TestModelPage = () => {
   return (
     <DefaultPageLayout
       titleId={`${testModelConfig.id}-title`}
+      showPageTitle
       toolbarItemsLeft={
         <Button
           size="lg"

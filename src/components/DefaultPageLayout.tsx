@@ -18,6 +18,7 @@ interface DefaultPageLayoutProps {
   children: ReactNode;
   toolbarItemsRight?: ReactNode;
   toolbarItemsLeft?: ReactNode;
+  showPageTitle?: boolean;
 }
 
 const DefaultPageLayout = ({
@@ -25,6 +26,7 @@ const DefaultPageLayout = ({
   children,
   toolbarItemsRight,
   toolbarItemsLeft,
+  showPageTitle = false,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
   const navigate = useNavigate();
@@ -53,9 +55,13 @@ const DefaultPageLayout = ({
           position="sticky"
           top={0}
           itemsCenter={
-            <Text color="white" fontSize="xl" fontWeight="bold">
-              <FormattedMessage id={titleId} />
-            </Text>
+            <>
+              {showPageTitle && (
+                <Text color="white" fontSize="xl" fontWeight="bold">
+                  <FormattedMessage id={titleId} />
+                </Text>
+              )}
+            </>
           }
           itemsLeft={toolbarItemsLeft || <AppLogo name={TOOL_NAME} />}
           itemsRight={
