@@ -1,11 +1,10 @@
 import { Button } from "@chakra-ui/react";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
 import BackArrow from "../components/BackArrow";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import ModelGridView from "../components/ModelGridView";
-import TrainModelFirstView from "../components/TrainModelFirstView";
 import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { SessionPageId } from "../pages-config";
 import { createSessionPageUrl } from "../urls";
@@ -13,10 +12,17 @@ import { createSessionPageUrl } from "../urls";
 const ModelPage = () => {
   const navigate = useNavigate();
   const [{ stage }] = useMlStatus();
-  const handleOnBack = useCallback(() => {
+
+  const navigateToDataSamples = useCallback(() => {
     navigate(createSessionPageUrl(SessionPageId.DataSamples));
   }, [navigate]);
-  return (
+
+  useEffect(() => {
+    if (stage !== MlStage.TrainingComplete) {
+      navigateToDataSamples();
+    }
+  });
+  return stage === MlStage.TrainingComplete ? (
     <DefaultPageLayout
       titleId={`${SessionPageId.Model}-title`}
       showPageTitle
@@ -26,7 +32,7 @@ const ModelPage = () => {
           leftIcon={<BackArrow color="white" />}
           variant="plain"
           color="white"
-          onClick={handleOnBack}
+          onClick={navigateToDataSamples}
           pr={3}
           pl={3}
         >
@@ -34,12 +40,10 @@ const ModelPage = () => {
         </Button>
       }
     >
-      {stage === MlStage.TrainingComplete ? (
-        <ModelGridView />
-      ) : (
-        <TrainModelFirstView />
-      )}
+      <ModelGridView />
     </DefaultPageLayout>
+  ) : (
+    <></>
   );
 };
 
