@@ -59,7 +59,7 @@ const TrainModelIntroDialog = ({ onNext }: TrainModelIntroDialogProps) => {
               isChecked={skip}
               onChange={(e) => setSkip(e.target.checked)}
             >
-              Don't show this again
+              <FormattedMessage id="dont-show-again" />
             </Checkbox>
             <TrainingButton onClick={handleOnNext} />
           </ModalFooter>

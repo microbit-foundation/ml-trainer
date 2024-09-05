@@ -1211,6 +1211,12 @@
       "value": "micro:bit 1 connection lost"
     }
   ],
+  "dont-show-again": [
+    {
+      "type": 0,
+      "value": "Don't show this again"
+    }
+  ],
   "edit-in-makecode-action": [
     {
       "type": 0,
@@ -1439,12 +1445,6 @@
     {
       "type": 0,
       "value": "Low quality connection"
-    }
-  ],
-  "performanceWarning.ignore": [
-    {
-      "type": 0,
-      "value": "Don't show this again"
     }
   ],
   "performanceWarning.nextButton": [
