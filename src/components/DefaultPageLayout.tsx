@@ -17,12 +17,14 @@ interface DefaultPageLayoutProps {
   titleId: string;
   children: ReactNode;
   toolbarItemsRight?: ReactNode;
+  toolbarItemsLeft?: ReactNode;
 }
 
 const DefaultPageLayout = ({
   titleId,
   children,
   toolbarItemsRight,
+  toolbarItemsLeft,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
   const navigate = useNavigate();
@@ -55,7 +57,7 @@ const DefaultPageLayout = ({
               <FormattedMessage id={titleId} />
             </Text>
           }
-          itemsLeft={<AppLogo name={TOOL_NAME} />}
+          itemsLeft={toolbarItemsLeft || <AppLogo name={TOOL_NAME} />}
           itemsRight={
             <HStack spacing={3}>
               {toolbarItemsRight}
