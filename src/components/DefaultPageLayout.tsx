@@ -1,4 +1,4 @@
-import { Flex, HStack, IconButton, Text, VStack } from "@chakra-ui/react";
+import { Flex, Heading, HStack, IconButton, VStack } from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect } from "react";
 import { RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -58,9 +58,9 @@ const DefaultPageLayout = ({
           itemsCenter={
             <>
               {showPageTitle && (
-                <Text color="white" fontSize="xl" fontWeight="bold">
+                <Heading size="md" fontWeight="normal" color="white">
                   <FormattedMessage id={titleId} />
-                </Text>
+                </Heading>
               )}
             </>
           }
