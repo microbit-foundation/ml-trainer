@@ -140,6 +140,10 @@ export class ConnectActions {
     await this.radioBridge.connect();
   };
 
+  getUsbDeviceId = () => {
+    return this.usb.getDeviceId();
+  };
+
   clearUsbDevice = async () => {
     await this.usb.clearDevice();
   };

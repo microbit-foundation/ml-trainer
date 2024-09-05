@@ -24,12 +24,16 @@ export class DownloadProjectActions {
     });
   };
 
-  onIntroductionNext = () => {
-    this.setStep(
-      this.connectionStatus === ConnectionStatus.Connected
-        ? DownloadProjectStep.ChooseSameOrAnotherMicrobit
-        : DownloadProjectStep.ConnectCable
-    );
+  onIntroductionNext = async () => {
+    if (this.connectionStatus === ConnectionStatus.Connected) {
+      return this.setStep(DownloadProjectStep.ChooseSameOrAnotherMicrobit);
+    }
+    const deviceId = this.connectActions.getUsbDeviceId();
+    if (deviceId) {
+      // Can flash directly without choosing device.
+      return await this.connectAndFlashMicrobit();
+    }
+    this.setStep(DownloadProjectStep.ConnectCable);
   };
 
   onChosenSameMicrobit = async () => {
