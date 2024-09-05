@@ -33,11 +33,14 @@ export class DownloadProjectActions {
   };
 
   onChosenSameMicrobit = async () => {
+    // Disconnect input micro:bit to not trigger connection lost warning.
     await this.connectionStageActions.disconnectInputMicrobit();
     this.setStep(DownloadProjectStep.ConnectCable);
   };
 
-  onChosenDifferentMicrobit = () => {
+  onChosenDifferentMicrobit = async () => {
+    // Forget usb device so that user can select a different usb device.
+    await this.connectActions.clearUsbDevice();
     this.setStep(DownloadProjectStep.ConnectCable);
   };
 

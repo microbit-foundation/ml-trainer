@@ -140,6 +140,10 @@ export class ConnectActions {
     await this.radioBridge.connect();
   };
 
+  clearUsbDevice = async () => {
+    await this.usb.clearDevice();
+  };
+
   connectBluetooth = async (
     name: string | undefined,
     clearDevice: boolean
