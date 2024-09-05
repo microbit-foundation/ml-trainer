@@ -1211,7 +1211,7 @@
       "value": "micro:bit 1 connection lost"
     }
   ],
-  "dont-show-this-again-option": [
+  "dont-show-again": [
     {
       "type": 0,
       "value": "Don't show this again"

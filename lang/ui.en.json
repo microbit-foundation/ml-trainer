@@ -711,9 +711,9 @@
     "defaultMessage": "micro:bit 1 connection lost",
     "description": ""
   },
-  "dont-show-this-again-option": {
+  "dont-show-again": {
     "defaultMessage": "Don't show this again",
-    "description": ""
+    "description": "Text to never show a dialog again"
   },
   "download-action": {
     "defaultMessage": "Download",

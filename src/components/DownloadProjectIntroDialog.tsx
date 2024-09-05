@@ -63,7 +63,7 @@ const DownloadProjectIntroDialog = ({
               isChecked={skipIntro}
               onChange={(e) => setSkipIntro(e.target.checked)}
             >
-              <FormattedMessage id="dont-show-this-again-option" />
+              <FormattedMessage id="dont-show-again" />
             </Checkbox>
             <Button variant="primary" onClick={handleOnNext}>
               <FormattedMessage id="download-action" />
