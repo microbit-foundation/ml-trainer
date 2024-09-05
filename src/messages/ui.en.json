@@ -139,6 +139,12 @@
       "value": "Back"
     }
   ],
+  "back-to-data-samples-action": [
+    {
+      "type": 0,
+      "value": "Back to data samples"
+    }
+  ],
   "cancel-action": [
     {
       "type": 0,
@@ -1399,10 +1405,10 @@
       "value": "Model"
     }
   ],
-  "more-add-action-options": [
+  "more-edit-in-makecode-options": [
     {
       "type": 0,
-      "value": "More add action options"
+      "value": "More edit in MakeCode options"
     }
   ],
   "not-found": [

@@ -36,7 +36,7 @@ const ModelPage = () => {
           pr={3}
           pl={3}
         >
-          <FormattedMessage id="back-action" />
+          <FormattedMessage id="back-to-data-samples-action" />
         </Button>
       }
     >

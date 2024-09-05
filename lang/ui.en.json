@@ -75,6 +75,10 @@
     "defaultMessage": "Back",
     "description": "Back button text"
   },
+  "back-to-data-samples-action": {
+    "defaultMessage": "Back to data samples",
+    "description": "Back button text"
+  },
   "cancel-action": {
     "defaultMessage": "Cancel",
     "description": "Cancel button text"
