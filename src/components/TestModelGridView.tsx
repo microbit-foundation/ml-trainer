@@ -227,6 +227,7 @@ const TestModelGridView = () => {
                   <MenuItem
                     icon={<RiDeleteBin2Line />}
                     onClick={handleResetProject}
+                    isDisabled={!hasStoredProject}
                   >
                     <FormattedMessage id="reset-to-default-action" />
                   </MenuItem>
