@@ -6,16 +6,17 @@ import {
   ConnectionStage,
   useConnectionStage,
 } from "../connection-stage-hooks";
+import { getHexFileUrl, HexType } from "../device/get-hex-file";
 import BrokenFirmwareDialog from "./BrokenFirmwareDialog";
 import ConnectBatteryDialog from "./ConnectBatteryDialog";
 import ConnectCableDialog, {
   getConnectionCableDialogConfig,
 } from "./ConnectCableDialog";
+import ConnectErrorDialog from "./ConnectErrorDialog";
 import DownloadingDialog, { getHeadingId } from "./DownloadingDialog";
 import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import LoadingDialog from "./LoadingDialog";
 import ManualFlashingDialog from "./ManualFlashingDialog";
-import ConnectErrorDialog from "./ConnectErrorDialog";
 import SelectMicrobitBluetoothDialog from "./SelectMicrobitBluetoothDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import TryAgainDialog from "./TryAgainDialog";
@@ -130,10 +131,16 @@ const ConnectionDialogs = () => {
         />
       );
     }
+    // Only bluetooth mode has this fallback, the radio bridge mode requires working WebUSB.
     case ConnectionFlowStep.ManualFlashingTutorial: {
       return (
         <ManualFlashingDialog
           {...dialogCommonProps}
+          hexFile={{
+            type: "url",
+            source: getHexFileUrl("universal", HexType.Bluetooth)!,
+            name: "machine-learning-tool-program.hex",
+          }}
           onNextClick={actions.onNextClick}
           onBackClick={actions.onBackClick}
         />

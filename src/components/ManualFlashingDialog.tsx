@@ -8,7 +8,6 @@ import transferProgramWindows from "../images/transfer_program_windows.gif";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
-import { HexType, getHexFileUrl } from "../device/get-hex-file";
 
 interface ImageProps {
   src: string;
@@ -29,10 +28,25 @@ const getImageProps = (os: string): ImageProps => {
   }
 };
 
-export interface ManualFlashingDialogProps
-  extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {}
+interface HexFile {
+  type: "url" | "data";
+  source: string;
+  name: string;
+}
 
-const download = (fileUrl: string, filename: string) => {
+export interface ManualFlashingDialogProps
+  extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
+  hexFile: HexFile;
+}
+
+const download = (hexFile: HexFile) => {
+  if (hexFile.type === "url") {
+    return downloadFileUrl(hexFile.source, hexFile.name);
+  }
+  downloadHex(hexFile.source, hexFile.name);
+};
+
+const downloadFileUrl = (fileUrl: string, filename: string) => {
   const a = document.createElement("a");
   a.download = filename;
   a.href = fileUrl;
@@ -40,8 +54,22 @@ const download = (fileUrl: string, filename: string) => {
   a.remove();
 };
 
-// Only bluetooth mode has this fallback, the radio bridge mode requires working WebUSB.
-const ManualFlashingDialog = ({ ...props }: ManualFlashingDialogProps) => {
+const downloadHex = (hex: string, filename: string) => {
+  const a = document.createElement("a");
+  a.setAttribute(
+    "href",
+    "data:application/text;charset=utf-8," + encodeURIComponent(hex)
+  );
+  a.setAttribute("download", filename);
+  a.style.display = "none";
+  a.click();
+  a.remove();
+};
+
+const ManualFlashingDialog = ({
+  hexFile,
+  ...props
+}: ManualFlashingDialogProps) => {
   const intl = useIntl();
   const browser = Bowser.getParser(window.navigator.userAgent);
   const osName = browser.getOS().name ?? "unknown";
@@ -49,11 +77,8 @@ const ManualFlashingDialog = ({ ...props }: ManualFlashingDialogProps) => {
   const imageProps = getImageProps(osName);
 
   const handleDownload = useCallback(() => {
-    download(
-      getHexFileUrl("universal", HexType.Bluetooth)!,
-      "machine-learning-tool-program.hex"
-    );
-  }, []);
+    download(hexFile);
+  }, [hexFile]);
 
   useEffect(() => {
     handleDownload();

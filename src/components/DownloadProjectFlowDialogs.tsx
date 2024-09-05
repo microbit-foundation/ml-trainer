@@ -64,8 +64,16 @@ const DownloadProjectFlowDialogs = () => {
       );
     }
     case DownloadProjectStep.ManualFlashingTutorial: {
+      if (!stage.projectHex || !stage.projectName) {
+        throw new Error("Project hex and name is needed for manual flashing!");
+      }
       return (
         <ManualFlashingDialog
+          hexFile={{
+            type: "data",
+            source: stage.projectHex,
+            name: stage.projectName + ".hex",
+          }}
           isOpen={true}
           onClose={actions.close}
           onBackClick={actions.back}
