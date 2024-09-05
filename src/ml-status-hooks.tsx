@@ -1,12 +1,15 @@
+import * as tf from "@tensorflow/tfjs";
+import { LayersModel } from "@tensorflow/tfjs";
 import {
   ReactNode,
   createContext,
   useCallback,
   useContext,
+  useEffect,
+  useRef,
   useState,
 } from "react";
 import { hasSufficientDataForTraining, useGestureData } from "./gestures-hooks";
-import { LayersModel } from "@tensorflow/tfjs";
 
 export enum MlStage {
   RecordingData = "RecordingData",
@@ -36,105 +39,73 @@ export type MlStatus =
       >;
     };
 
-export enum TrainModelDialogStage {
-  Closed = "closed",
-  ShowingIntroduction = "showing introduction",
-  ShowingTrainingStatus = "showing training status",
-}
-
-interface MlStatusState {
-  mlStatus: MlStatus;
-  hasTrainedBefore: boolean;
-  trainModelDialog: TrainModelDialogStage;
-  skipTrainModelIntro: boolean;
-}
-
-type MlStatusContextValue = [MlStatusState, (status: MlStatusState) => void];
+type MlStatusContextValue = [MlStatus, (status: MlStatus) => void];
 
 const MlStatusContext = createContext<MlStatusContextValue | undefined>(
   undefined
 );
 
+export const useMlStatus = () => {
+  const mlState = useContext(MlStatusContext);
+  if (!mlState) {
+    throw new Error("Missing provider");
+  }
+  return mlState;
+};
+
+export const modelUrl = "indexeddb://micro:bit-ml-tool-model";
+
 export const MlStatusProvider = ({ children }: { children: ReactNode }) => {
   const [gestureState] = useGestureData();
-  const statusContextValue = useState<MlStatusState>({
-    mlStatus: {
-      stage: hasSufficientDataForTraining(gestureState.data)
-        ? MlStage.NotTrained
-        : MlStage.InsufficientData,
-    },
-    skipTrainModelIntro: false,
-    trainModelDialog: TrainModelDialogStage.Closed,
-    hasTrainedBefore: false,
+  const [mlState, setMlState] = useState<MlStatus>({
+    stage: hasSufficientDataForTraining(gestureState.data)
+      ? MlStage.NotTrained
+      : MlStage.InsufficientData,
   });
+
+  const hasTrainedBefore = useRef(false);
+
+  const setStatus = useCallback((s: MlStatus) => {
+    setMlState((prevState) => ({ ...prevState }));
+    if (s.stage === MlStage.TrainingComplete) {
+      s.model.save(modelUrl).catch(() => {
+        // IndexedDB not available?
+      });
+    } else {
+      tf.io.removeModel(modelUrl).catch(() => {
+        // Throws if there is no model to remove.
+      });
+    }
+
+    hasTrainedBefore.current =
+      s.stage === MlStage.TrainingComplete || hasTrainedBefore.current;
+
+    // Update to retrain instead of not trained if has trained before
+    const status =
+      hasTrainedBefore.current && s.stage === MlStage.NotTrained
+        ? ({ stage: MlStage.RetrainingNeeded } as const)
+        : s;
+
+    setMlState(status);
+  }, []);
+
+  useEffect(() => {
+    tf.loadLayersModel(modelUrl)
+      .then((model) => {
+        setMlState({
+          stage: MlStage.TrainingComplete,
+          model,
+        });
+        hasTrainedBefore.current = true;
+      })
+      .catch(() => {
+        // Throws if there is no model to load.
+      });
+  }, []);
+
   return (
-    <MlStatusContext.Provider value={statusContextValue}>
+    <MlStatusContext.Provider value={[mlState, setStatus]}>
       {children}
     </MlStatusContext.Provider>
   );
-};
-
-const useStatusContextValue = (): MlStatusContextValue => {
-  const statusContextValue = useContext(MlStatusContext);
-  if (!statusContextValue) {
-    throw new Error("Missing provider");
-  }
-  return statusContextValue;
-};
-
-export const useMlStatus = (): [MlStatus, (status: MlStatus) => void] => {
-  const [state, setState] = useStatusContextValue();
-  const setStatus = useCallback(
-    (s: MlStatus) => {
-      const hasTrainedBefore =
-        s.stage === MlStage.TrainingComplete || state.hasTrainedBefore;
-
-      // Update to retrain instead of not trained if has trained before
-      const status =
-        hasTrainedBefore && s.stage === MlStage.NotTrained
-          ? ({ stage: MlStage.RetrainingNeeded } as const)
-          : s;
-
-      setState({ ...state, mlStatus: status, hasTrainedBefore });
-    },
-    [setState, state]
-  );
-
-  return [state.mlStatus, setStatus];
-};
-
-export const useTrainModelDialogs = () => {
-  const [state, setState] = useStatusContextValue();
-
-  const onClose = useCallback(() => {
-    setState({ ...state, trainModelDialog: TrainModelDialogStage.Closed });
-  }, [setState, state]);
-
-  const onOpen = useCallback(() => {
-    setState({
-      ...state,
-      trainModelDialog: state.skipTrainModelIntro
-        ? TrainModelDialogStage.ShowingTrainingStatus
-        : TrainModelDialogStage.ShowingIntroduction,
-    });
-  }, [setState, state]);
-
-  const onIntroNext = useCallback(
-    (isSkipIntro: boolean) => {
-      setState({
-        ...state,
-        skipTrainModelIntro: isSkipIntro,
-        trainModelDialog: TrainModelDialogStage.ShowingTrainingStatus,
-      });
-    },
-    [setState, state]
-  );
-
-  return {
-    stage: state.trainModelDialog,
-    isSkipIntro: state.skipTrainModelIntro,
-    onIntroNext,
-    onClose,
-    onOpen,
-  };
 };
