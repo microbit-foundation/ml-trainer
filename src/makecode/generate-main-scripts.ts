@@ -16,7 +16,7 @@ interface BlockPos {
 }
 
 const onMLEventBlock = (name: string, children: string, pos: BlockPos) => `
-  <block type="mlrunner_on_ml_event" x="${pos.x}" y="${pos.y}">
+  <block type="ml_on_event_start" x="${pos.x}" y="${pos.y}">
     <field name="event">ml.event.${name}</field>
     <statement name="HANDLER">
       ${children}       
@@ -71,7 +71,7 @@ const getMakeCodeGestureConfigs = (gs: Gesture[]) => {
   }));
 };
 
-export const generateMainScript = (gs: Gesture[], lang: Language) => {
+export const getMainScript = (gs: Gesture[], lang: Language) => {
   const configs = getMakeCodeGestureConfigs(gs);
   const s = statements[lang];
   const initPos = { x: 0, y: 0 };
