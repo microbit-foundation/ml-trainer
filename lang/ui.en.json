@@ -547,18 +547,6 @@
     "defaultMessage": "machine learning tool",
     "description": ""
   },
-  "content.model.addData": {
-    "defaultMessage": "Add data",
-    "description": ""
-  },
-  "content.model.notEnoughDataInfoBody1": {
-    "defaultMessage": "You cannot test the model until it has been trained.",
-    "description": ""
-  },
-  "content.model.notEnoughDataInfoBody2": {
-    "defaultMessage": "You need at least 3 data samples for 2 actions to train a model.",
-    "description": ""
-  },
   "content.model.output.action.descriptionBody": {
     "defaultMessage": "The type of movement you want the machine learning tool to recognise e.g. ‘wave’ or ‘clap’.",
     "description": ""
@@ -615,24 +603,8 @@
     "defaultMessage": "Recognition Point:",
     "description": ""
   },
-  "content.model.retrainModelBody": {
-    "defaultMessage": "You need to train your model with the current set of data samples before you can test it.",
-    "description": ""
-  },
-  "content.model.trainModelBody": {
-    "defaultMessage": "You need to train your model before you can test it.",
-    "description": ""
-  },
-  "content.model.trainModelFirstHeading": {
-    "defaultMessage": "Test model",
-    "description": ""
-  },
   "content.trainer.description": {
     "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit machine learning tool to recognise different actions when you move your micro:bit.",
-    "description": ""
-  },
-  "content.trainer.enoughdata.title": {
-    "defaultMessage": "You've collected enough data to train the model.",
     "description": ""
   },
   "content.trainer.failure.body": {
