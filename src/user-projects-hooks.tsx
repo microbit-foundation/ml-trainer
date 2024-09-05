@@ -201,8 +201,15 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     []
   );
 
+  // Used to prevent two calls inside useEffect while running
+  // locally with React StrictMode.
+  const ignore = useRef(false);
   useEffect(() => {
+    let headerSet = false;
     const listener = (resp: ResponseEmitterSubject) => {
+      if (headerSet) {
+        return;
+      }
       const msg = resp as EditorMessage;
       if (
         msg.data.action === CommonEditorMessageAction.workspacesave &&
@@ -211,28 +218,32 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
         // Get the header provided by MakeCode on first workspacesave if we don't already have one.
         // This is a work around for https://github.com/microsoft/pxt-microbit/issues/5896.
         if (msg.data.project) {
+          headerSet = true;
           const newProject = {
-            ...project,
+            ...msg.data.project,
             text: {
-              ...project.text,
+              ...msg.data.project.text,
               ...generateProject(
                 gestures,
                 (status as TrainingCompleteMlStatus).model
               ).text,
             },
           };
-          if (editorWrite.current) {
-            editorWrite.current(newProject);
-          }
           setProject({
             project: newProject,
             projectEdited: false,
           });
+          if (editorWrite.current) {
+            editorWrite.current(newProject);
+          }
         }
       }
     };
-    editorEventEmitter.subscribe(listener);
+    if (!ignore.current) {
+      editorEventEmitter.subscribe(listener);
+    }
     return () => {
+      ignore.current = true;
       // TODO: This explodes. Why?
       // editorEventEmitter.unsubscribe();
     };
