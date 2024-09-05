@@ -100,8 +100,8 @@ const TestModelGridView = ({ prediction }: TestModelGridViewProps) => {
   }, []);
 
   const handleDownload = useCallback(
-    (download: { name: string; hex: string }) => {
-      downloadProjectActions.start(download);
+    async (download: { name: string; hex: string }) => {
+      await downloadProjectActions.start(download);
     },
     [downloadProjectActions]
   );
