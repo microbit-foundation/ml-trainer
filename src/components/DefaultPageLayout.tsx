@@ -4,6 +4,7 @@ import { RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { TOOL_NAME } from "../constants";
+import { flags } from "../flags";
 import { createHomePageUrl } from "../urls";
 import ActionBar from "./ActionBar";
 import AppLogo from "./AppLogo";
@@ -80,7 +81,7 @@ const DefaultPageLayout = ({
             </HStack>
           }
         />
-        <PrototypeVersionWarning />
+        {flags.prototypeWarning && <PrototypeVersionWarning />}
         <Flex flexGrow={1} flexDir="column">
           {children}
         </Flex>

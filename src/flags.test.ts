@@ -1,12 +1,16 @@
 import { flagsForParams } from "./flags";
 
 describe("flags", () => {
-  it("enables nothing in production", () => {
+  it("enables nothing in production except prototypeWarning flag", () => {
     const params = new URLSearchParams([]);
 
     const flags = flagsForParams("production", params);
 
-    expect(Object.values(flags).every((x) => !x)).toEqual(true);
+    expect(
+      Object.entries(flags).every(
+        ([flag, status]) => !status || (flag === "prototypeWarning" && status)
+      )
+    ).toEqual(true);
   });
 
   it("enables by stage", () => {
@@ -20,7 +24,7 @@ describe("flags", () => {
   it("enable specific flag", () => {
     const params = new URLSearchParams([["flag", "exampleOptInA"]]);
 
-    const flags = flagsForParams("production", params);
+    const flags = flagsForParams("local", params);
 
     expect(
       Object.entries(flags).every(
