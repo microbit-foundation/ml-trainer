@@ -2,6 +2,7 @@ import { GridItem } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { GestureData, useGestureActions } from "../gestures-hooks";
+import AddDataGridWalkThrough from "./AddDataGridWalkThrough";
 import DataRecordingGridItem from "./DataRecordingGridItem";
 import GestureNameGridItem from "./GestureNameGridItem";
 
@@ -10,6 +11,7 @@ interface AddDataGridRowProps {
   selected: boolean;
   onSelectRow: () => void;
   startRecording: () => void;
+  showWalkThrough: boolean;
 }
 
 const AddDataGridRow = ({
@@ -17,6 +19,7 @@ const AddDataGridRow = ({
   selected,
   onSelectRow,
   startRecording,
+  showWalkThrough,
 }: AddDataGridRowProps) => {
   const intl = useIntl();
   const actions = useGestureActions();
@@ -43,16 +46,25 @@ const AddDataGridRow = ({
         selected={selected}
         readOnly={false}
       />
-      {gesture.name.length > 0 || gesture.recordings.length > 0 ? (
-        <DataRecordingGridItem
-          data={gesture}
-          selected={selected}
-          onSelectRow={onSelectRow}
+      {showWalkThrough ? (
+        <AddDataGridWalkThrough
+          gesture={gesture}
           startRecording={startRecording}
         />
       ) : (
-        // Empty grid item to fill column space
-        <GridItem />
+        <>
+          {gesture.name.length > 0 || gesture.recordings.length > 0 ? (
+            <DataRecordingGridItem
+              data={gesture}
+              selected={selected}
+              onSelectRow={onSelectRow}
+              startRecording={startRecording}
+            />
+          ) : (
+            // Empty grid item to fill column space
+            <GridItem />
+          )}
+        </>
       )}
     </>
   );
