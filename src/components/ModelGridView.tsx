@@ -60,7 +60,7 @@ const headings = [
   },
 ];
 
-const TestModelGridView = () => {
+const ModelGridView = () => {
   const prediction = usePrediction();
   const { detected, confidences } = prediction ?? {};
   const intl = useIntl();
@@ -242,4 +242,4 @@ const TestModelGridView = () => {
   );
 };
 
-export default TestModelGridView;
+export default ModelGridView;

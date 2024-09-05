@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
 import BackArrow from "../components/BackArrow";
 import DefaultPageLayout from "../components/DefaultPageLayout";
-import TestModelGridView from "../components/TestModelGridView";
+import ModelGridView from "../components/ModelGridView";
 import TrainModelFirstView from "../components/TrainModelFirstView";
 import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { TabId, testModelConfig } from "../pages-config";
@@ -34,7 +34,7 @@ const TestModelPage = () => {
       }
     >
       {stage === MlStage.TrainingComplete ? (
-        <TestModelGridView />
+        <ModelGridView />
       ) : (
         <TrainModelFirstView />
       )}
