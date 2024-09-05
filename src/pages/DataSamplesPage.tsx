@@ -32,9 +32,10 @@ import {
   useGestureActions,
   useGestureData,
 } from "../gestures-hooks";
-import { MlStage, useMlStatus, useTrainModelDialogs } from "../ml-status-hooks";
+import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { SessionPageId } from "../pages-config";
 import { createSessionPageUrl } from "../urls";
+import { useTrainModelDialog } from "../train-model-dialog-hooks";
 
 const DataSamplesPage = () => {
   const intl = useIntl();
@@ -42,7 +43,7 @@ const DataSamplesPage = () => {
   const [{ stage }] = useMlStatus();
   const navigate = useNavigate();
   const actions = useGestureActions();
-  const { onOpen: onOpenTrainModelDialog } = useTrainModelDialogs();
+  const { onOpen: onOpenTrainModelDialog } = useTrainModelDialog();
   const { isConnected, status } = useConnectionStage();
 
   const hasSufficientData = useMemo(

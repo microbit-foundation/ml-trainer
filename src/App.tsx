@@ -28,6 +28,7 @@ import { ConnectProvider } from "./connect-actions-hooks";
 import { ConnectStatusProvider } from "./connect-status-hooks";
 import { BufferedDataProvider } from "./buffered-data-hooks";
 import { UserProjectsProvider } from "./user-projects-hooks";
+import { TrainModelDialogProvider } from "./train-model-dialog-hooks";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -44,23 +45,25 @@ const Providers = ({ children }: ProviderLayoutProps) => {
         <LoggingProvider value={logging}>
           <ConsentProvider>
             <SettingsProvider>
-              <GesturesProvider>
-                <UserProjectsProvider>
-                  <MlStatusProvider>
-                    <ConnectStatusProvider>
-                      <ConnectProvider>
-                        <BufferedDataProvider>
-                          <ConnectionStageProvider>
-                            <TranslationProvider>
-                              <ErrorBoundary>{children}</ErrorBoundary>
-                            </TranslationProvider>
-                          </ConnectionStageProvider>
-                        </BufferedDataProvider>
-                      </ConnectProvider>
-                    </ConnectStatusProvider>
-                  </MlStatusProvider>
-                </UserProjectsProvider>
-              </GesturesProvider>
+              <TrainModelDialogProvider>
+                <GesturesProvider>
+                  <UserProjectsProvider>
+                    <MlStatusProvider>
+                      <ConnectStatusProvider>
+                        <ConnectProvider>
+                          <BufferedDataProvider>
+                            <ConnectionStageProvider>
+                              <TranslationProvider>
+                                <ErrorBoundary>{children}</ErrorBoundary>
+                              </TranslationProvider>
+                            </ConnectionStageProvider>
+                          </BufferedDataProvider>
+                        </ConnectProvider>
+                      </ConnectStatusProvider>
+                    </MlStatusProvider>
+                  </UserProjectsProvider>
+                </GesturesProvider>
+              </TrainModelDialogProvider>
             </SettingsProvider>
           </ConsentProvider>
         </LoggingProvider>

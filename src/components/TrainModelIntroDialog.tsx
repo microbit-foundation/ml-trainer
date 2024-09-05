@@ -12,18 +12,18 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import trainModelImage from "../images/train_model_black.svg";
-import { useTrainModelDialogs } from "../ml-status-hooks";
+import { useTrainModelDialog } from "../train-model-dialog-hooks";
 import TrainingButton from "./TrainingButton";
-import { useCallback, useState } from "react";
 
 interface TrainModelIntroDialogProps {
   onNext: (isSkipIntro: boolean) => void;
 }
 
 const TrainModelIntroDialog = ({ onNext }: TrainModelIntroDialogProps) => {
-  const { onClose, isSkipIntro: defaultIsSkipIntro } = useTrainModelDialogs();
+  const { onClose, isSkipIntro: defaultIsSkipIntro } = useTrainModelDialog();
   const [skip, setSkip] = useState<boolean>(defaultIsSkipIntro);
   const handleOnNext = useCallback(() => onNext(skip), [onNext, skip]);
 
