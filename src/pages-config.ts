@@ -7,7 +7,7 @@ import ModelPage from "./pages/ModelPage";
 
 export enum SessionPageId {
   DataSamples = "data-samples",
-  Model = "model",
+  TestingModel = "testing-model",
 }
 
 export interface SessionPageConfig {
@@ -21,7 +21,7 @@ export const sessionPageConfigs: SessionPageConfig[] = [
     pageElement: DataSamplesPage,
   },
   {
-    id: SessionPageId.Model,
+    id: SessionPageId.TestingModel,
     pageElement: ModelPage,
   },
 ];

@@ -30,7 +30,7 @@ const TrainingStatusDialog = ({ onClose }: TrainingStatusDialogProps) => {
     }
     if (status.stage === MlStage.TrainingComplete) {
       onClose();
-      navigate(createSessionPageUrl(SessionPageId.Model));
+      navigate(createSessionPageUrl(SessionPageId.TestingModel));
     }
   }, [handleTrain, navigate, onClose, status.stage]);
 

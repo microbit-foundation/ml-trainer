@@ -1351,22 +1351,10 @@
       "value": "You need at least 3 data samples for 2 actions to train the model."
     }
   ],
-  "menu.trainer.testModelButton": [
-    {
-      "type": 0,
-      "value": "Test model"
-    }
-  ],
   "menu.trainer.trainModelButton": [
     {
       "type": 0,
       "value": "Train model"
-    }
-  ],
-  "model-title": [
-    {
-      "type": 0,
-      "value": "Model"
     }
   ],
   "more-edit-in-makecode-options": [
@@ -1695,6 +1683,12 @@
     {
       "type": 0,
       "value": "Test model"
+    }
+  ],
+  "testing-model-title": [
+    {
+      "type": 0,
+      "value": "Testing model"
     }
   ],
   "train-model-intro-description": [

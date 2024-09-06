@@ -799,17 +799,9 @@
     "defaultMessage": "You need at least 3 data samples for 2 actions to train the model.",
     "description": ""
   },
-  "menu.trainer.testModelButton": {
-    "defaultMessage": "Test model",
-    "description": ""
-  },
   "menu.trainer.trainModelButton": {
     "defaultMessage": "Train model",
     "description": ""
-  },
-  "model-title": {
-    "defaultMessage": "Model",
-    "description": "Model page title"
   },
   "more-edit-in-makecode-options": {
     "defaultMessage": "More edit in MakeCode options",
@@ -1010,6 +1002,10 @@
   "test-model-title": {
     "defaultMessage": "Test model",
     "description": "Test model step title"
+  },
+  "testing-model-title": {
+    "defaultMessage": "Testing model",
+    "description": "Testing model page title"
   },
   "train-model-intro-description": {
     "defaultMessage": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",

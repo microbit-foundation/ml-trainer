@@ -24,7 +24,7 @@ const ModelPage = () => {
   });
   return stage === MlStage.TrainingComplete ? (
     <DefaultPageLayout
-      titleId={`${SessionPageId.Model}-title`}
+      titleId={`${SessionPageId.TestingModel}-title`}
       showPageTitle
       toolbarItemsLeft={
         <Button

@@ -60,7 +60,7 @@ const DataSamplesPage = () => {
   }, [gestures.data]);
 
   const handleNavigateToModel = useCallback(() => {
-    navigate(createSessionPageUrl(SessionPageId.Model));
+    navigate(createSessionPageUrl(SessionPageId.TestingModel));
   }, [navigate]);
 
   return (
@@ -130,7 +130,7 @@ const DataSamplesPage = () => {
               variant="primary"
               rightIcon={<RiArrowRightLine />}
             >
-              <FormattedMessage id="model-title" />
+              <FormattedMessage id={`${SessionPageId.TestingModel}-title`} />
             </Button>
           ) : (
             <TrainingButton
