@@ -8,7 +8,10 @@ const TrainingButton = (props: ButtonProps) => {
   return (
     <Button
       variant="primary"
-      isDisabled={stage === MlStage.TrainingComplete}
+      isDisabled={
+        stage === MlStage.TrainingInProgress ||
+        stage === MlStage.InsufficientData
+      }
       {...props}
     >
       <FormattedMessage id="menu.trainer.trainModelButton" />
