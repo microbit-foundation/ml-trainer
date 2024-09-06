@@ -4,12 +4,12 @@ import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
 import BackArrow from "../components/BackArrow";
 import DefaultPageLayout from "../components/DefaultPageLayout";
-import ModelGridView from "../components/ModelGridView";
+import TestingModelGridView from "../components/TestingModelGridView";
 import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { SessionPageId } from "../pages-config";
 import { createSessionPageUrl } from "../urls";
 
-const ModelPage = () => {
+const TestingModelPage = () => {
   const navigate = useNavigate();
   const [{ stage }] = useMlStatus();
 
@@ -40,11 +40,11 @@ const ModelPage = () => {
         </Button>
       }
     >
-      <ModelGridView />
+      <TestingModelGridView />
     </DefaultPageLayout>
   ) : (
     <></>
   );
 };
 
-export default ModelPage;
+export default TestingModelPage;

@@ -3,7 +3,7 @@ import resourceIntroducingToolImage from "./images/resource-introducing-tool.jpg
 import DataSamplesPage from "./pages/DataSamplesPage";
 import GetStartedResourcePage from "./pages/GetStartedResourcePage";
 import IntroducingToolResourcePage from "./pages/IntroducingToolResourcePage";
-import ModelPage from "./pages/ModelPage";
+import TestingModelPage from "./pages/TestingModelPage";
 
 export enum SessionPageId {
   DataSamples = "data-samples",
@@ -22,7 +22,7 @@ export const sessionPageConfigs: SessionPageConfig[] = [
   },
   {
     id: SessionPageId.TestingModel,
-    pageElement: ModelPage,
+    pageElement: TestingModelPage,
   },
 ];
 
