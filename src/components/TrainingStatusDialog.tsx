@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 import { useMlActions } from "../ml-hooks";
 import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { createSessionPageUrl } from "../urls";
-import InsufficientDataDialog from "./InsufficientDataDialog";
 import TrainingErrorDialog from "./TrainingErrorDialog";
 import TrainingModelProgressDialog from "./TrainingModelProgressDialog";
 import { SessionPageId } from "../pages-config";
@@ -32,8 +31,6 @@ const TrainingStatusDialog = ({ onClose }: TrainingStatusDialogProps) => {
   }, [handleTrain, navigate, onClose, status.stage]);
 
   switch (status.stage) {
-    case MlStage.InsufficientData:
-      return <InsufficientDataDialog onClose={onClose} />;
     case MlStage.TrainingError:
       return <TrainingErrorDialog isOpen={true} onClose={onClose} />;
     case MlStage.TrainingInProgress:

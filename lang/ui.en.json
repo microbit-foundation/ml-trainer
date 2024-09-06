@@ -775,10 +775,6 @@
     "defaultMessage": "Status: Your model is trained.",
     "description": ""
   },
-  "menu.trainer.addDataButton": {
-    "defaultMessage": "Add data",
-    "description": ""
-  },
   "menu.trainer.addMoreDataButton": {
     "defaultMessage": "Add more data",
     "description": ""
@@ -789,14 +785,6 @@
   },
   "menu.trainer.notConnected2": {
     "defaultMessage": " Select the ‘Connect’ button to connect a micro:bit.",
-    "description": ""
-  },
-  "menu.trainer.notEnoughDataHeader1": {
-    "defaultMessage": "You don't have enough data.",
-    "description": ""
-  },
-  "menu.trainer.notEnoughDataInfoBody": {
-    "defaultMessage": "You need at least 3 data samples for 2 actions to train the model.",
     "description": ""
   },
   "menu.trainer.trainModelButton": {
