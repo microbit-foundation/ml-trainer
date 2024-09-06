@@ -14,11 +14,21 @@ export enum DownloadProjectStep {
   ManualFlashingTutorial = "ManualFlashingTutorial",
 }
 
+export enum MicrobitToFlash {
+  // No micro:bit is connected.
+  Default = "default",
+  // Same as the connected micro:bit.
+  Same = "same",
+  // Different from the connected micro:bit.
+  Different = "different",
+}
+
 export interface DownloadProjectStage {
   step: DownloadProjectStep;
   projectHex?: string;
   projectName?: string;
   skipIntro: boolean;
+  microbitToFlash: MicrobitToFlash;
 }
 
 type DownloadProjectContextValue = [
@@ -36,6 +46,7 @@ export const DownloadProjectContextProvider = ({
 }) => {
   const downloadProjectContextValue = useState<DownloadProjectStage>({
     step: DownloadProjectStep.None,
+    microbitToFlash: MicrobitToFlash.Default,
     skipIntro: false,
   });
   return (

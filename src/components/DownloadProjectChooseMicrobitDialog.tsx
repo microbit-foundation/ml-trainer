@@ -1,16 +1,8 @@
 import {
   Box,
-  Button,
-  Heading,
   HStack,
   Icon,
   Image,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalOverlay,
   Text,
   useRadio,
   useRadioGroup,
@@ -22,24 +14,32 @@ import { RiCheckboxBlankLine, RiCheckboxFill } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import microbitImage from "../images/stylised-microbit-black.svg";
 import twoMicrobitsImage from "../images/stylised-two-microbits-black.svg";
+import ConnectContainerDialog, {
+  ConnectContainerDialogProps,
+} from "./ConnectContainerDialog";
+import { MicrobitToFlash, useDownloadProject } from "../download-project-hooks";
 
-export interface DownloadProjectChooseMicrobitDialogProps {
-  onClose: () => void;
+export interface DownloadProjectChooseMicrobitDialogProps
+  extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
   onSameMicrobitClick: () => void;
   onDifferentMicrobitClick: () => void;
 }
 
-type DeviceOption = "same" | "different";
+type MicrobitOption = MicrobitToFlash.Same | MicrobitToFlash.Different;
 
 const DownloadProjectChooseMicrobitDialog = ({
   onSameMicrobitClick,
   onDifferentMicrobitClick,
-  onClose,
+  ...props
 }: DownloadProjectChooseMicrobitDialogProps) => {
-  const defaultValue = "same";
-  const [selected, setSelected] = useState<DeviceOption>(defaultValue);
+  const { stage } = useDownloadProject();
+  const defaultValue =
+    stage.microbitToFlash === MicrobitToFlash.Default
+      ? MicrobitToFlash.Same
+      : stage.microbitToFlash;
+  const [selected, setSelected] = useState<MicrobitOption>(defaultValue);
   const handleOptionChange = useCallback(
-    (opt: DeviceOption) => setSelected(opt),
+    (opt: MicrobitOption) => setSelected(opt),
     []
   );
   const { getRootProps, getRadioProps } = useRadioGroup({
@@ -50,76 +50,54 @@ const DownloadProjectChooseMicrobitDialog = ({
   const group = getRootProps();
   const radioCardOptions: Omit<RadioCardProps, "isSelected">[] = [
     {
-      id: "same",
+      id: MicrobitToFlash.Same,
       imgSrc: microbitImage,
     },
     {
-      id: "different",
+      id: MicrobitToFlash.Different,
       imgSrc: twoMicrobitsImage,
     },
   ];
   return (
-    <Modal
-      closeOnOverlayClick={false}
-      motionPreset="none"
-      isOpen={true}
-      onClose={onClose}
-      size="3xl"
-      isCentered
+    <ConnectContainerDialog
+      {...props}
+      onNextClick={
+        selected === MicrobitToFlash.Same
+          ? onSameMicrobitClick
+          : onDifferentMicrobitClick
+      }
+      headingId="download-project-intro-title"
     >
-      <ModalOverlay>
-        <ModalContent p={8}>
-          <ModalBody>
-            <ModalCloseButton />
-            <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h1" fontWeight="bold" fontSize="2xl">
-                <FormattedMessage id="download-project-intro-title" />
-              </Heading>
-              <VStack gap={5} w="full">
-                <Text textAlign="left" w="full">
-                  <FormattedMessage id="download-project-choose-microbit-subtitle" />
-                </Text>
-                <HStack
-                  gap={5}
-                  w="full"
-                  justifyContent="space-evenly"
-                  {...group}
-                >
-                  {radioCardOptions.map((config) => {
-                    const radio = getRadioProps({ value: config.id });
-                    return (
-                      <RadioCard
-                        key={config.id}
-                        {...radio}
-                        {...config}
-                        isSelected={selected === config.id}
-                      />
-                    );
-                  })}
-                </HStack>
-              </VStack>
-            </VStack>
-          </ModalBody>
-          <ModalFooter justifyContent="right" px={0} pb={0}>
-            <Button
-              variant="primary"
-              onClick={
-                selected === "same"
-                  ? onSameMicrobitClick
-                  : onDifferentMicrobitClick
-              }
-            >
-              <FormattedMessage id="connectMB.nextButton" />
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
-    </Modal>
+      <VStack gap={5} w="full">
+        <Text textAlign="left" w="full">
+          <FormattedMessage id="download-project-choose-microbit-subtitle" />
+        </Text>
+        <HStack
+          gap={5}
+          w="full"
+          justifyContent="space-evenly"
+          {...group}
+          mb={3}
+        >
+          {radioCardOptions.map((config) => {
+            const radio = getRadioProps({ value: config.id });
+            return (
+              <RadioCard
+                key={config.id}
+                {...radio}
+                {...config}
+                isSelected={selected === config.id}
+              />
+            );
+          })}
+        </HStack>
+      </VStack>
+    </ConnectContainerDialog>
   );
 };
 
 interface RadioCardProps extends UseRadioProps {
-  id: string;
+  id: MicrobitOption;
   imgSrc: string;
   isSelected: boolean;
 }

@@ -29,10 +29,11 @@ const DownloadProjectFlowDialogs = () => {
     case DownloadProjectStep.ChooseSameOrAnotherMicrobit: {
       return (
         <DownloadProjectChooseMicrobitDialog
-          isOpen={true}
+          onBackClick={actions.getOnBack()}
           onClose={actions.close}
           onDifferentMicrobitClick={actions.onChosenDifferentMicrobit}
           onSameMicrobitClick={actions.onChosenSameMicrobit}
+          isOpen={true}
         />
       );
     }
@@ -41,8 +42,8 @@ const DownloadProjectFlowDialogs = () => {
         <ConnectCableDialog
           isOpen={true}
           onClose={actions.close}
-          onBackClick={stage.skipIntro ? undefined : actions.onBackToIntro}
-          onNextClick={actions.next}
+          onBackClick={actions.getOnBack()}
+          onNextClick={actions.getOnNext()}
           config={{
             headingId: "connectMB.connectCable.heading",
             subtitleId: "connectMB.connectCable.downloadProject.subtitle",
@@ -55,7 +56,7 @@ const DownloadProjectFlowDialogs = () => {
         <SelectMicrobitUsbDialog
           isOpen={true}
           onClose={actions.close}
-          onBackClick={actions.back}
+          onBackClick={actions.getOnBack()}
           onNextClick={handleDownloadProject}
         />
       );
@@ -82,7 +83,6 @@ const DownloadProjectFlowDialogs = () => {
           }}
           isOpen={true}
           onClose={actions.close}
-          onBackClick={actions.back}
         />
       );
     }

@@ -4,6 +4,7 @@ import { ConnectionStageActions } from "./connection-stage-actions";
 import {
   DownloadProjectStage,
   DownloadProjectStep,
+  MicrobitToFlash,
 } from "./download-project-hooks";
 
 export class DownloadProjectActions {
@@ -45,7 +46,7 @@ export class DownloadProjectActions {
     }
     this.updateStage({
       ...partialNewStage,
-      step: DownloadProjectStep.ChooseSameOrAnotherMicrobit,
+      step: DownloadProjectStep.ConnectCable,
     });
   };
 
@@ -53,19 +54,29 @@ export class DownloadProjectActions {
 
   onBackToIntro = () => this.setStep(DownloadProjectStep.Introduction);
 
-  onChosenSameMicrobit = async () => {
-    // Disconnect input micro:bit to not trigger connection lost warning.
-    await this.connectionStageActions.disconnectInputMicrobit();
-    this.setStep(DownloadProjectStep.ConnectCable);
+  onChosenSameMicrobit = () => {
+    this.updateStage({
+      step: DownloadProjectStep.ConnectCable,
+      microbitToFlash: MicrobitToFlash.Same,
+    });
   };
 
-  onChosenDifferentMicrobit = async () => {
-    // Forget usb device so that user can select a different usb device.
-    await this.connectActions.clearUsbDevice();
-    this.setStep(DownloadProjectStep.ConnectCable);
+  onChosenDifferentMicrobit = () => {
+    this.updateStage({
+      step: DownloadProjectStep.ConnectCable,
+      microbitToFlash: MicrobitToFlash.Different,
+    });
   };
 
   connectAndFlashMicrobit = async (stage: DownloadProjectStage) => {
+    if (stage.microbitToFlash === MicrobitToFlash.Same) {
+      // Disconnect input micro:bit to not trigger connection lost warning.
+      await this.connectionStageActions.disconnectInputMicrobit();
+    }
+    if (stage.microbitToFlash === MicrobitToFlash.Different) {
+      // Forget usb device so that user can select a different usb device.
+      await this.connectActions.clearUsbDevice();
+    }
     if (!stage.projectHex || !stage.projectName) {
       throw new Error("Project hex/name is not set!");
     }
@@ -91,22 +102,32 @@ export class DownloadProjectActions {
   };
 
   close = () => this.setStep(DownloadProjectStep.None);
-  next = () => this.setStep(this.getNextStep(1));
-  back = () => this.setStep(this.getNextStep(-1));
+  getOnNext = () => this.getOnNextIfPossible(1);
+  getOnBack = () => this.getOnNextIfPossible(-1);
+
+  private getOnNextIfPossible = (inc: number) =>
+    this.getNextStep(inc)
+      ? () => this.setStep(this.getNextStep(inc))
+      : undefined;
 
   private getNextStep = (inc: number): DownloadProjectStep => {
-    const orderedSteps = this.downloadProjectStepOrder(this.stage.step);
+    const orderedSteps = this.downloadProjectStepOrder();
     const currIdx = orderedSteps.indexOf(this.stage.step);
     const nextIdx = currIdx + inc;
     if (currIdx < 0 || nextIdx < 0 || nextIdx === orderedSteps.length) {
-      throw new Error("Impossible step");
+      undefined;
     }
     return orderedSteps[nextIdx];
   };
 
-  private downloadProjectStepOrder = (currStep: DownloadProjectStep) => [
+  private downloadProjectStepOrder = () => [
+    ...(this.stage.skipIntro ? [] : [DownloadProjectStep.Introduction]),
+    ...(this.stage.step === DownloadProjectStep.ChooseSameOrAnotherMicrobit ||
+    this.stage.microbitToFlash !== MicrobitToFlash.Default
+      ? [DownloadProjectStep.ChooseSameOrAnotherMicrobit]
+      : []),
     DownloadProjectStep.ConnectCable,
-    currStep === DownloadProjectStep.ManualFlashingTutorial
+    this.stage.step === DownloadProjectStep.ManualFlashingTutorial
       ? DownloadProjectStep.ManualFlashingTutorial
       : DownloadProjectStep.WebUsbFlashingTutorial,
   ];
