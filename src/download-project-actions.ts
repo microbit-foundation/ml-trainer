@@ -45,7 +45,7 @@ export class DownloadProjectActions {
     }
     this.updateStage({
       ...partialNewStage,
-      step: DownloadProjectStep.ConnectCable,
+      step: DownloadProjectStep.ChooseSameOrAnotherMicrobit,
     });
   };
 

@@ -695,10 +695,6 @@
     "defaultMessage": "Download",
     "description": "Download button text"
   },
-  "download-project-another-microbit-option": {
-    "defaultMessage": "Different micro:bit",
-    "description": "Download project different micro:bit option"
-  },
   "download-project-choose-microbit-subtitle": {
     "defaultMessage": "Downloading your project on to the same micro:bit will disconnect the micro:bit from the tool. You will need to reconnect the micro:bit if you want to record more data samples.",
     "description": "Download project choose micro:bit dialog subtitle"
@@ -706,6 +702,10 @@
   "download-project-choose-microbit-title": {
     "defaultMessage": "Which micro:bit do you want to use?",
     "description": "Download project choose micro:bit dialog title"
+  },
+  "download-project-different-microbit-option": {
+    "defaultMessage": "Different micro:bit",
+    "description": "Download project different micro:bit option"
   },
   "download-project-intro-description": {
     "defaultMessage": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to the micro:bit machine learning tool.",

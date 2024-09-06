@@ -1187,12 +1187,6 @@
       "value": "Download"
     }
   ],
-  "download-project-another-microbit-option": [
-    {
-      "type": 0,
-      "value": "Different micro:bit"
-    }
-  ],
   "download-project-choose-microbit-subtitle": [
     {
       "type": 0,
@@ -1203,6 +1197,12 @@
     {
       "type": 0,
       "value": "Which micro:bit do you want to use?"
+    }
+  ],
+  "download-project-different-microbit-option": [
+    {
+      "type": 0,
+      "value": "Different micro:bit"
     }
   ],
   "download-project-intro-description": [
@@ -1363,12 +1363,6 @@
       "value": "Status: Your model is trained."
     }
   ],
-  "menu.trainer.addDataButton": [
-    {
-      "type": 0,
-      "value": "Add data"
-    }
-  ],
   "menu.trainer.addMoreDataButton": [
     {
       "type": 0,
@@ -1385,18 +1379,6 @@
     {
       "type": 0,
       "value": " Select the ‘Connect’ button to connect a micro:bit."
-    }
-  ],
-  "menu.trainer.notEnoughDataHeader1": [
-    {
-      "type": 0,
-      "value": "You don't have enough data."
-    }
-  ],
-  "menu.trainer.notEnoughDataInfoBody": [
-    {
-      "type": 0,
-      "value": "You need at least 3 data samples for 2 actions to train the model."
     }
   ],
   "menu.trainer.trainModelButton": [
