@@ -1232,7 +1232,7 @@
   "download-project-choose-microbit-subtitle": [
     {
       "type": 0,
-      "value": "Downloading your project on to the same micro:bit will disconnect the micro:bit from the tool. You will need to reconnect the micro:bit if you want to change the model."
+      "value": "Downloading your project on to the same micro:bit will disconnect the micro:bit from the tool. You will need to reconnect the micro:bit if you want to record more data samples."
     }
   ],
   "download-project-choose-microbit-title": [
@@ -1244,7 +1244,7 @@
   "download-project-intro-description": [
     {
       "type": 0,
-      "value": "Your project includes the model you created using the machine learning tool. This means that you can run your model and project on the micro:bit independently from the tool."
+      "value": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to the micro:bit machine learning tool."
     }
   ],
   "download-project-intro-title": [
