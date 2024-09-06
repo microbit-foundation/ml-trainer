@@ -22,10 +22,7 @@ const TrainingStatusDialog = ({ onClose }: TrainingStatusDialogProps) => {
   }, [actions]);
 
   useEffect(() => {
-    if (
-      status.stage === MlStage.NotTrained ||
-      status.stage === MlStage.RetrainingNeeded
-    ) {
+    if (status.stage === MlStage.NotTrained) {
       void handleTrain();
     }
     if (status.stage === MlStage.TrainingComplete) {

@@ -6,7 +6,6 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import { hasSufficientDataForTraining, useGestureData } from "./gestures-hooks";
@@ -18,7 +17,6 @@ export enum MlStage {
   TrainingInProgress = "TrainingInProgress",
   TrainingComplete = "TrainingComplete",
   TrainingError = "TrainingError",
-  RetrainingNeeded = "RetrainingNeeded",
 }
 
 export interface TrainingCompleteMlStatus {
@@ -63,8 +61,6 @@ export const MlStatusProvider = ({ children }: { children: ReactNode }) => {
       : MlStage.InsufficientData,
   });
 
-  const hasTrainedBefore = useRef(false);
-
   const setStatus = useCallback((s: MlStatus) => {
     setMlState((prevState) => ({ ...prevState }));
     if (s.stage === MlStage.TrainingComplete) {
@@ -76,17 +72,7 @@ export const MlStatusProvider = ({ children }: { children: ReactNode }) => {
         // Throws if there is no model to remove.
       });
     }
-
-    hasTrainedBefore.current =
-      s.stage === MlStage.TrainingComplete || hasTrainedBefore.current;
-
-    // Update to retrain instead of not trained if has trained before
-    const status =
-      hasTrainedBefore.current && s.stage === MlStage.NotTrained
-        ? ({ stage: MlStage.RetrainingNeeded } as const)
-        : s;
-
-    setMlState(status);
+    setMlState(s);
   }, []);
 
   useEffect(() => {
@@ -96,7 +82,6 @@ export const MlStatusProvider = ({ children }: { children: ReactNode }) => {
           stage: MlStage.TrainingComplete,
           model,
         });
-        hasTrainedBefore.current = true;
       })
       .catch(() => {
         // Throws if there is no model to load.
