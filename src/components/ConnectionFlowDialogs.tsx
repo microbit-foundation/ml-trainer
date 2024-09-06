@@ -23,8 +23,13 @@ import TryAgainDialog from "./TryAgainDialog";
 import UnsupportedMicrobitDialog from "./UnsupportedMicrobitDialog";
 import WebUsbBluetoothUnsupportedDialog from "./WebUsbBluetoothUnsupportedDialog";
 import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
+import {
+  DownloadProjectStep,
+  useDownloadProject,
+} from "../download-project-hooks";
 
 const ConnectionDialogs = () => {
+  const { stage: downloadProjectFlowStage } = useDownloadProject();
   const { stage, actions } = useConnectionStage();
   const [flashProgress, setFlashProgress] = useState<number>(0);
   const { isOpen, onClose: onCloseDialog, onOpen } = useDisclosure();
@@ -85,6 +90,10 @@ const ConnectionDialogs = () => {
 
   const dialogCommonProps = { isOpen, onClose };
 
+  if (downloadProjectFlowStage.step !== DownloadProjectStep.None) {
+    // Hide connection flow dialogs when download project flow dialogs are shown.
+    return <></>;
+  }
   switch (stage.flowStep) {
     case ConnectionFlowStep.ReconnectFailedTwice:
     case ConnectionFlowStep.Start: {
