@@ -1,9 +1,14 @@
 import {
   Button,
+  ButtonGroup,
   Grid,
   GridProps,
   HStack,
   Icon,
+  Menu,
+  MenuItem,
+  MenuList,
+  Portal,
   VStack,
   VisuallyHidden,
   useDisclosure,
@@ -14,11 +19,11 @@ import {
 } from "@microbit-foundation/react-code-view";
 import { EditorProject } from "@microbit-foundation/react-editor-embed";
 import React, { useCallback } from "react";
-import { RiArrowRightLine } from "react-icons/ri";
+import { RiArrowRightLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useGestureActions, useGestureData } from "../gestures-hooks";
 import { mlSettings } from "../ml";
-import { PredictionResult } from "../ml-hooks";
+import { usePrediction } from "../ml-hooks";
 import { getMakeCodeLang, useSettings } from "../settings";
 import { useMakeCodeProject } from "../user-projects-hooks";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
@@ -29,6 +34,8 @@ import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
 import DownloadProjectFlowDialogs from "./DownloadProjectFlowDialogs";
 import { useDownloadProject } from "../download-project-hooks";
+import LiveGraphPanel from "./LiveGraphPanel";
+import MoreMenuButton from "./MoreMenuButton";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 360px 40px auto",
@@ -54,11 +61,8 @@ const headings = [
   },
 ];
 
-interface TestModelGridViewProps {
-  prediction: PredictionResult | undefined;
-}
-
-const TestModelGridView = ({ prediction }: TestModelGridViewProps) => {
+const TestingModelGridView = () => {
+  const prediction = usePrediction();
   const { detected, confidences } = prediction ?? {};
   const intl = useIntl();
   const editCodeDialogDisclosure = useDisclosure();
@@ -130,20 +134,7 @@ const TestModelGridView = ({ prediction }: TestModelGridViewProps) => {
             values={{ action: detectedLabel }}
           />
         </VisuallyHidden>
-        <HeadingGrid {...gridCommonProps} px={10} headings={headings}>
-          <HStack>
-            <Button variant="secondary" size="sm" onClick={handleResetProject}>
-              <FormattedMessage id="reset-to-default-action" />
-            </Button>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={editCodeDialogDisclosure.onOpen}
-            >
-              <FormattedMessage id="edit-in-makecode-action" />
-            </Button>
-          </HStack>
-        </HeadingGrid>
+        <HeadingGrid {...gridCommonProps} px={10} headings={headings} />
         <VStack
           px={10}
           w="full"
@@ -208,8 +199,49 @@ const TestModelGridView = ({ prediction }: TestModelGridViewProps) => {
           </HStack>
         </VStack>
       </MakeCodeRenderBlocksProvider>
+      <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
+        <HStack
+          justifyContent="right"
+          px={10}
+          py={2}
+          w="full"
+          borderBottomWidth={3}
+          borderTopWidth={3}
+          borderColor="gray.200"
+          alignItems="center"
+        >
+          <Menu>
+            <ButtonGroup isAttached>
+              <Button
+                variant="primary"
+                onClick={editCodeDialogDisclosure.onOpen}
+              >
+                <FormattedMessage id="edit-in-makecode-action" />
+              </Button>
+              <MoreMenuButton
+                variant="primary"
+                aria-label={intl.formatMessage({
+                  id: "more-edit-in-makecode-options",
+                })}
+              />
+              <Portal>
+                <MenuList>
+                  <MenuItem
+                    icon={<RiDeleteBin2Line />}
+                    onClick={handleResetProject}
+                    isDisabled={!hasStoredProject}
+                  >
+                    <FormattedMessage id="reset-to-default-action" />
+                  </MenuItem>
+                </MenuList>
+              </Portal>
+            </ButtonGroup>
+          </Menu>
+        </HStack>
+        <LiveGraphPanel detected={prediction?.detected} showPredictedGesture />
+      </VStack>
     </>
   );
 };
 
-export default TestModelGridView;
+export default TestingModelGridView;

@@ -139,6 +139,12 @@
       "value": "Back"
     }
   ],
+  "back-to-data-samples-action": [
+    {
+      "type": 0,
+      "value": "Back to data samples"
+    }
+  ],
   "cancel-action": [
     {
       "type": 0,
@@ -957,24 +963,6 @@
       "value": "machine learning tool"
     }
   ],
-  "content.model.addData": [
-    {
-      "type": 0,
-      "value": "Add data"
-    }
-  ],
-  "content.model.notEnoughDataInfoBody1": [
-    {
-      "type": 0,
-      "value": "You cannot test the model until it has been trained."
-    }
-  ],
-  "content.model.notEnoughDataInfoBody2": [
-    {
-      "type": 0,
-      "value": "You need at least 3 data samples for 2 actions to train a model."
-    }
-  ],
   "content.model.output.action.descriptionBody": [
     {
       "type": 0,
@@ -1067,34 +1055,10 @@
       "value": "Recognition Point:"
     }
   ],
-  "content.model.retrainModelBody": [
-    {
-      "type": 0,
-      "value": "You need to train your model with the current set of data samples before you can test it."
-    }
-  ],
-  "content.model.trainModelBody": [
-    {
-      "type": 0,
-      "value": "You need to train your model before you can test it."
-    }
-  ],
-  "content.model.trainModelFirstHeading": [
-    {
-      "type": 0,
-      "value": "Test model"
-    }
-  ],
   "content.trainer.description": [
     {
       "type": 0,
       "value": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit machine learning tool to recognise different actions when you move your micro:bit."
-    }
-  ],
-  "content.trainer.enoughdata.title": [
-    {
-      "type": 0,
-      "value": "You've collected enough data to train the model."
     }
   ],
   "content.trainer.failure.body": [
@@ -1151,10 +1115,10 @@
       "value": "Copy"
     }
   ],
-  "data-title": [
+  "data-samples-title": [
     {
       "type": 0,
-      "value": "Data"
+      "value": "Data samples"
     }
   ],
   "disconnectedWarning.bluetooth1": [
@@ -1435,22 +1399,16 @@
       "value": "You need at least 3 data samples for 2 actions to train the model."
     }
   ],
-  "menu.trainer.testModelButton": [
-    {
-      "type": 0,
-      "value": "Test model"
-    }
-  ],
   "menu.trainer.trainModelButton": [
     {
       "type": 0,
       "value": "Train model"
     }
   ],
-  "model-title": [
+  "more-edit-in-makecode-options": [
     {
       "type": 0,
-      "value": "Model"
+      "value": "More edit in MakeCode options"
     }
   ],
   "not-found": [
@@ -1773,6 +1731,12 @@
     {
       "type": 0,
       "value": "Test model"
+    }
+  ],
+  "testing-model-title": [
+    {
+      "type": 0,
+      "value": "Testing model"
     }
   ],
   "train-model-intro-description": [

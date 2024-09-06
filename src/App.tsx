@@ -16,10 +16,10 @@ import HomePage from "./pages/HomePage";
 import {
   createHomePageUrl,
   createResourcePageUrl,
-  createStepPageUrl,
+  createSessionPageUrl,
 } from "./urls";
 import { deployment, useDeployment } from "./deployment";
-import { resourcesConfig, stepsConfig } from "./pages-config";
+import { resourcesConfig, sessionPageConfigs } from "./pages-config";
 import { LoggingProvider } from "./logging/logging-hooks";
 import { GesturesProvider } from "./gestures-hooks";
 import { MlStatusProvider } from "./ml-status-hooks";
@@ -28,6 +28,7 @@ import { ConnectProvider } from "./connect-actions-hooks";
 import { ConnectStatusProvider } from "./connect-status-hooks";
 import { BufferedDataProvider } from "./buffered-data-hooks";
 import { UserProjectsProvider } from "./user-projects-hooks";
+import { TrainModelDialogProvider } from "./train-model-dialog-hooks";
 import { DownloadProjectContextProvider } from "./download-project-hooks";
 
 export interface ProviderLayoutProps {
@@ -45,25 +46,27 @@ const Providers = ({ children }: ProviderLayoutProps) => {
         <LoggingProvider value={logging}>
           <ConsentProvider>
             <SettingsProvider>
-              <GesturesProvider>
-                <UserProjectsProvider>
-                  <MlStatusProvider>
-                    <ConnectStatusProvider>
-                      <ConnectProvider>
-                        <BufferedDataProvider>
-                          <ConnectionStageProvider>
-                            <DownloadProjectContextProvider>
-                              <TranslationProvider>
-                                <ErrorBoundary>{children}</ErrorBoundary>
-                              </TranslationProvider>
-                            </DownloadProjectContextProvider>
-                          </ConnectionStageProvider>
-                        </BufferedDataProvider>
-                      </ConnectProvider>
-                    </ConnectStatusProvider>
-                  </MlStatusProvider>
-                </UserProjectsProvider>
-              </GesturesProvider>
+              <TrainModelDialogProvider>
+                <GesturesProvider>
+                  <UserProjectsProvider>
+                    <MlStatusProvider>
+                      <ConnectStatusProvider>
+                        <ConnectProvider>
+                          <BufferedDataProvider>
+                            <ConnectionStageProvider>
+                              <DownloadProjectContextProvider>
+                                <TranslationProvider>
+                                  <ErrorBoundary>{children}</ErrorBoundary>
+                                </TranslationProvider>
+                              </DownloadProjectContextProvider>
+                            </ConnectionStageProvider>
+                          </BufferedDataProvider>
+                        </ConnectProvider>
+                      </ConnectStatusProvider>
+                    </MlStatusProvider>
+                  </UserProjectsProvider>
+                </GesturesProvider>
+              </TrainModelDialogProvider>
             </SettingsProvider>
           </ConsentProvider>
         </LoggingProvider>
@@ -97,10 +100,10 @@ const createRouter = () => {
           path: createHomePageUrl(),
           element: <HomePage />,
         },
-        ...stepsConfig.map((step) => {
+        ...sessionPageConfigs.map((config) => {
           return {
-            path: createStepPageUrl(step.id),
-            element: <step.pageElement />,
+            path: createSessionPageUrl(config.id),
+            element: <config.pageElement />,
           };
         }),
         ...resourcesConfig.map((resource) => {

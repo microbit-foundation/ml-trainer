@@ -4,10 +4,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
 import { useGestureActions } from "../gestures-hooks";
-import { createStepPageUrl } from "../urls";
+import { createSessionPageUrl } from "../urls";
 import StartOverWarningDialog from "./StartOverWarningDialog";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
+import { SessionPageId } from "../pages-config";
 import { modelUrl } from "../ml-status-hooks";
 
 const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
@@ -27,7 +28,7 @@ const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
   } = useConnectionStage();
 
   const handleNavigateToAddData = useCallback(() => {
-    navigate(createStepPageUrl("add-data"));
+    navigate(createSessionPageUrl(SessionPageId.DataSamples));
   }, [navigate]);
 
   const handleStartNewSession = useCallback(() => {
