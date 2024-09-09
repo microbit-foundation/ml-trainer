@@ -83,6 +83,7 @@ const DownloadProjectFlowDialogs = () => {
           }}
           isOpen={true}
           onClose={actions.close}
+          closeIsPrimaryAction={true}
         />
       );
     }

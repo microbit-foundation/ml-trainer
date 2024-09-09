@@ -1,4 +1,4 @@
-import { Image, Text, VStack } from "@chakra-ui/react";
+import { Button, Image, Text, VStack } from "@chakra-ui/react";
 import Bowser from "bowser";
 import { ReactNode, useCallback, useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -37,6 +37,7 @@ interface HexFile {
 export interface ManualFlashingDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
   hexFile: HexFile;
+  closeIsPrimaryAction?: boolean;
 }
 
 const download = (hexFile: HexFile) => {
@@ -68,6 +69,7 @@ const downloadHex = (hex: string, filename: string) => {
 
 const ManualFlashingDialog = ({
   hexFile,
+  closeIsPrimaryAction,
   ...props
 }: ManualFlashingDialogProps) => {
   const intl = useIntl();
@@ -87,6 +89,13 @@ const ManualFlashingDialog = ({
   return (
     <ConnectContainerDialog
       headingId="connectMB.transferHex.heading"
+      additionalActions={
+        closeIsPrimaryAction ? (
+          <Button onClick={props.onClose} variant="primary" size="lg">
+            <FormattedMessage id="close-action" />
+          </Button>
+        ) : undefined
+      }
       {...props}
     >
       <VStack gap={5} width="100%">

@@ -23,6 +23,7 @@ export interface ConnectContainerDialogProps {
   onNextClick?: () => void;
   children: ReactNode;
   onBackClick?: () => void;
+  additionalActions?: ReactNode;
 }
 
 const ConnectContainerDialog = ({
@@ -32,6 +33,7 @@ const ConnectContainerDialog = ({
   footerLeft,
   onNextClick,
   onBackClick,
+  additionalActions,
   children,
 }: ConnectContainerDialogProps) => {
   return (
@@ -65,6 +67,7 @@ const ConnectContainerDialog = ({
                   <FormattedMessage id="back-action" />
                 </Button>
               )}
+              {additionalActions && additionalActions}
               {onNextClick && (
                 <Button onClick={onNextClick} variant="primary" size="lg">
                   <FormattedMessage id="connectMB.nextButton" />
