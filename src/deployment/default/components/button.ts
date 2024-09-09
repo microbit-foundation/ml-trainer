@@ -40,7 +40,7 @@ const Button: StyleConfig = {
         borderColor: "brand.600",
       },
       _active: {
-        bg: "brand.500",
+        bg: "brand.50",
         borderColor: "brand.700",
       },
     }),
