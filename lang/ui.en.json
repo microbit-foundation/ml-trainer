@@ -75,6 +75,10 @@
     "defaultMessage": "Back",
     "description": "Back button text"
   },
+  "back-to-data-samples-action": {
+    "defaultMessage": "Back to data samples",
+    "description": "Back button text"
+  },
   "cancel-action": {
     "defaultMessage": "Cancel",
     "description": "Cancel button text"
@@ -543,18 +547,6 @@
     "defaultMessage": "machine learning tool",
     "description": ""
   },
-  "content.model.addData": {
-    "defaultMessage": "Add data",
-    "description": ""
-  },
-  "content.model.notEnoughDataInfoBody1": {
-    "defaultMessage": "You cannot test the model until it has been trained.",
-    "description": ""
-  },
-  "content.model.notEnoughDataInfoBody2": {
-    "defaultMessage": "You need at least 3 data samples for 2 actions to train a model.",
-    "description": ""
-  },
   "content.model.output.action.descriptionBody": {
     "defaultMessage": "The type of movement you want the machine learning tool to recognise e.g. ‘wave’ or ‘clap’.",
     "description": ""
@@ -611,24 +603,8 @@
     "defaultMessage": "Recognition Point:",
     "description": ""
   },
-  "content.model.retrainModelBody": {
-    "defaultMessage": "You need to train your model with the current set of data samples before you can test it.",
-    "description": ""
-  },
-  "content.model.trainModelBody": {
-    "defaultMessage": "You need to train your model before you can test it.",
-    "description": ""
-  },
-  "content.model.trainModelFirstHeading": {
-    "defaultMessage": "Test model",
-    "description": ""
-  },
   "content.trainer.description": {
     "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit machine learning tool to recognise different actions when you move your micro:bit.",
-    "description": ""
-  },
-  "content.trainer.enoughdata.title": {
-    "defaultMessage": "Status: You've collected enough data to train the model.",
     "description": ""
   },
   "content.trainer.failure.body": {
@@ -652,7 +628,7 @@
     "description": ""
   },
   "content.trainer.training.title": {
-    "defaultMessage": "Status: Training the model in progress.",
+    "defaultMessage": "Training model...",
     "description": ""
   },
   "cookies-action": {
@@ -666,6 +642,10 @@
   "copy-action": {
     "defaultMessage": "Copy",
     "description": "Copy button text"
+  },
+  "data-samples-title": {
+    "defaultMessage": "Data samples",
+    "description": "Data samples page title"
   },
   "disconnectedWarning.bluetooth1": {
     "defaultMessage": "The connection to the micro:bit has been lost.",
@@ -702,6 +682,10 @@
   "disconnectedWarning.remoteHeading": {
     "defaultMessage": "micro:bit 1 connection lost",
     "description": ""
+  },
+  "dont-show-again": {
+    "defaultMessage": "Don't show this again",
+    "description": "Text to never show a dialog again"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "Edit in MakeCode",
@@ -791,10 +775,6 @@
     "defaultMessage": "Status: Your model is trained.",
     "description": ""
   },
-  "menu.trainer.addDataButton": {
-    "defaultMessage": "Add data",
-    "description": ""
-  },
   "menu.trainer.addMoreDataButton": {
     "defaultMessage": "Add more data",
     "description": ""
@@ -807,21 +787,13 @@
     "defaultMessage": " Select the ‘Connect’ button to connect a micro:bit.",
     "description": ""
   },
-  "menu.trainer.notEnoughDataHeader1": {
-    "defaultMessage": "Status: You don't have enough data.",
-    "description": ""
-  },
-  "menu.trainer.notEnoughDataInfoBody": {
-    "defaultMessage": "You need at least 3 data samples for 2 actions to train the model.",
-    "description": ""
-  },
-  "menu.trainer.testModelButton": {
-    "defaultMessage": "Test model",
-    "description": ""
-  },
   "menu.trainer.trainModelButton": {
     "defaultMessage": "Train model",
     "description": ""
+  },
+  "more-edit-in-makecode-options": {
+    "defaultMessage": "More edit in MakeCode options",
+    "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
   },
   "not-found": {
     "defaultMessage": "Machine learning tool home page",
@@ -845,10 +817,6 @@
   },
   "performanceWarning.heading": {
     "defaultMessage": "Low quality connection",
-    "description": ""
-  },
-  "performanceWarning.ignore": {
-    "defaultMessage": "Don't show this again",
     "description": ""
   },
   "performanceWarning.nextButton": {
@@ -1046,6 +1014,10 @@
   "test-model-title": {
     "defaultMessage": "Test model",
     "description": "Test model step title"
+  },
+  "testing-model-title": {
+    "defaultMessage": "Testing model",
+    "description": "Testing model page title"
   },
   "train-model-intro-description": {
     "defaultMessage": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",

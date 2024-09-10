@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ChakraProvider } from "@chakra-ui/react";
+import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
 import React, { ReactNode, useMemo, useRef } from "react";
 import {
   Outlet,
@@ -7,31 +8,31 @@ import {
   ScrollRestoration,
   createBrowserRouter,
 } from "react-router-dom";
+import { BufferedDataProvider } from "./buffered-data-hooks";
+import EditCodeDialog from "./components/EditCodeDialog";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
 import NotFound from "./components/NotFound";
+import ProjectDropTarget from "./components/ProjectDropTarget";
+import { ConnectProvider } from "./connect-actions-hooks";
+import { ConnectStatusProvider } from "./connect-status-hooks";
+import { ConnectionStageProvider } from "./connection-stage-hooks";
+import { deployment, useDeployment } from "./deployment";
+import { GesturesProvider } from "./gestures-hooks";
+import EditCodeDialogProvider from "./hooks/use-edit-code-dialog";
+import { LoggingProvider } from "./logging/logging-hooks";
 import TranslationProvider from "./messages/TranslationProvider";
-import SettingsProvider from "./settings";
+import { MlStatusProvider } from "./ml-status-hooks";
+import { resourcesConfig, sessionPageConfigs } from "./pages-config";
 import HomePage from "./pages/HomePage";
+import SettingsProvider from "./settings";
+import { TrainModelDialogProvider } from "./train-model-dialog-hooks";
 import {
   createHomePageUrl,
   createResourcePageUrl,
-  createStepPageUrl,
+  createSessionPageUrl,
 } from "./urls";
-import { deployment, useDeployment } from "./deployment";
-import { resourcesConfig, stepsConfig } from "./pages-config";
-import { LoggingProvider } from "./logging/logging-hooks";
-import { GesturesProvider } from "./gestures-hooks";
-import { MlStatusProvider } from "./ml-status-hooks";
-import { ConnectionStageProvider } from "./connection-stage-hooks";
-import { ConnectProvider } from "./connect-actions-hooks";
-import { ConnectStatusProvider } from "./connect-status-hooks";
-import { BufferedDataProvider } from "./buffered-data-hooks";
-import EditCodeDialogProvider from "./hooks/use-edit-code-dialog";
-import EditCodeDialog from "./components/EditCodeDialog";
 import { ProjectProvider } from "./user-projects-hooks";
-import ProjectDropTarget from "./components/ProjectDropTarget";
-import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -49,30 +50,32 @@ const Providers = ({ children }: ProviderLayoutProps) => {
         <LoggingProvider value={logging}>
           <ConsentProvider>
             <SettingsProvider>
-              <GesturesProvider>
-                <MlStatusProvider>
-                  <ProjectProvider driverRef={driverRef}>
-                    <EditCodeDialogProvider>
-                      <ConnectStatusProvider>
-                        <ConnectProvider>
-                          <BufferedDataProvider>
-                            <ConnectionStageProvider>
-                              <TranslationProvider>
-                                <ProjectDropTarget>
-                                  <ErrorBoundary>
-                                    <EditCodeDialog ref={driverRef} />
-                                    {children}
-                                  </ErrorBoundary>
-                                </ProjectDropTarget>
-                              </TranslationProvider>
-                            </ConnectionStageProvider>
-                          </BufferedDataProvider>
-                        </ConnectProvider>
-                      </ConnectStatusProvider>
-                    </EditCodeDialogProvider>
-                  </ProjectProvider>
-                </MlStatusProvider>
-              </GesturesProvider>
+              <TrainModelDialogProvider>
+                <GesturesProvider>
+                  <MlStatusProvider>
+                    <ProjectProvider driverRef={driverRef}>
+                      <EditCodeDialogProvider>
+                        <ConnectStatusProvider>
+                          <ConnectProvider>
+                            <BufferedDataProvider>
+                              <ConnectionStageProvider>
+                                <TranslationProvider>
+                                  <ProjectDropTarget>
+                                    <ErrorBoundary>
+                                      <EditCodeDialog ref={driverRef} />
+                                      {children}
+                                    </ErrorBoundary>
+                                  </ProjectDropTarget>
+                                </TranslationProvider>
+                              </ConnectionStageProvider>
+                            </BufferedDataProvider>
+                          </ConnectProvider>
+                        </ConnectStatusProvider>
+                      </EditCodeDialogProvider>
+                    </ProjectProvider>
+                  </MlStatusProvider>
+                </GesturesProvider>
+              </TrainModelDialogProvider>
             </SettingsProvider>
           </ConsentProvider>
         </LoggingProvider>
@@ -106,10 +109,10 @@ const createRouter = () => {
           path: createHomePageUrl(),
           element: <HomePage />,
         },
-        ...stepsConfig.map((step) => {
+        ...sessionPageConfigs.map((config) => {
           return {
-            path: createStepPageUrl(step.id),
-            element: <step.pageElement />,
+            path: createSessionPageUrl(config.id),
+            element: <config.pageElement />,
           };
         }),
         ...resourcesConfig.map((resource) => {

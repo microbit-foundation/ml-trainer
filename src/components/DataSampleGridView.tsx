@@ -3,7 +3,7 @@ import { ButtonEvent } from "@microbit/microbit-connection";
 import { useEffect, useMemo, useState } from "react";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useGestureData } from "../gestures-hooks";
-import AddDataGridRow from "./AddDataGridRow";
+import DataSampleGridRow from "./AddDataGridRow";
 import HeadingGrid from "./HeadingGrid";
 import RecordingDialog from "./RecordingDialog";
 
@@ -26,7 +26,7 @@ const headings = [
   },
 ];
 
-const AddDataGridView = () => {
+const DataSamplesGridView = () => {
   const [gestures] = useGestureData();
   const [selectedGestureIdx, setSelectedGestureIdx] = useState<number>(0);
   const selectedGesture = gestures.data[selectedGestureIdx] ?? gestures.data[0];
@@ -77,7 +77,7 @@ const AddDataGridView = () => {
         h={0}
       >
         {gestures.data.map((g, idx) => (
-          <AddDataGridRow
+          <DataSampleGridRow
             key={g.ID}
             gesture={g}
             selected={selectedGesture.ID === g.ID}
@@ -91,4 +91,4 @@ const AddDataGridView = () => {
   );
 };
 
-export default AddDataGridView;
+export default DataSamplesGridView;

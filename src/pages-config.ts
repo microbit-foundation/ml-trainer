@@ -1,44 +1,29 @@
-import addDataImage from "./images/add_data.svg";
-import testModelImage from "./images/test_model_blue.svg";
-import trainModelImage from "./images/train_model_blue.svg";
 import resourceGetStartedImage from "./images/resource-get-started.jpg";
 import resourceIntroducingToolImage from "./images/resource-introducing-tool.jpg";
-import AddDataPage from "./pages/AddDataPage";
-import TestModelPage from "./pages/TestModelPage";
-import TrainModelPage from "./pages/TrainModelPage";
+import DataSamplesPage from "./pages/DataSamplesPage";
 import GetStartedResourcePage from "./pages/GetStartedResourcePage";
 import IntroducingToolResourcePage from "./pages/IntroducingToolResourcePage";
+import TestingModelPage from "./pages/TestingModelPage";
 
-export type StepId = "add-data" | "train-model" | "test-model";
+export enum SessionPageId {
+  DataSamples = "data-samples",
+  TestingModel = "testing-model",
+}
 
-export interface StepConfig {
-  id: StepId;
-  imgSrc: string;
+export interface SessionPageConfig {
+  id: SessionPageId;
   pageElement: () => JSX.Element;
 }
 
-export const addDataConfig: StepConfig = {
-  id: "add-data",
-  imgSrc: addDataImage,
-  pageElement: AddDataPage,
-};
-
-export const trainModelConfig: StepConfig = {
-  id: "train-model",
-  imgSrc: trainModelImage,
-  pageElement: TrainModelPage,
-};
-
-export const testModelConfig: StepConfig = {
-  id: "test-model",
-  imgSrc: testModelImage,
-  pageElement: TestModelPage,
-};
-
-export const stepsConfig: StepConfig[] = [
-  addDataConfig,
-  trainModelConfig,
-  testModelConfig,
+export const sessionPageConfigs: SessionPageConfig[] = [
+  {
+    id: SessionPageId.DataSamples,
+    pageElement: DataSamplesPage,
+  },
+  {
+    id: SessionPageId.TestingModel,
+    pageElement: TestingModelPage,
+  },
 ];
 
 export type ResourceId =
