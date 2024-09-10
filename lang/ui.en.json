@@ -948,11 +948,11 @@
     "description": "Label for action that saves the project as a file the user downloads"
   },
   "save-hex-dialog-heading": {
-    "defaultMessage": "Saving MakeCode hex file",
+    "defaultMessage": "Save project as a hex file",
     "description": "Heading for the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message1": {
-    "defaultMessage": "This download contains your actions, data samples and your MakeCode project. Open it in the micro:bit machine learning tool to continue working.",
+    "defaultMessage": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit machine learning tool to continue working.",
     "description": "Text in the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message2": {

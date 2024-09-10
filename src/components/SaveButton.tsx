@@ -3,38 +3,59 @@ import { useCallback, useEffect } from "react";
 import { RiDownload2Line } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { useProject } from "../user-projects-hooks";
-import SaveHexDialog from "./SaveHexDialog";
+import SaveExplainerDialog from "./SaveExpainerDialog";
+import SaveProgressDialog from "./SaveProgressDialog";
+import { useSettings } from "../settings";
 
 const SaveButton = () => {
   const { projectIOState, setProjectIOState, downloadHex } = useProject();
-  const saveHexDisclosure = useDisclosure();
-  const handleDownloadHex = useCallback(async () => {
-    saveHexDisclosure.onOpen();
+  const [settings] = useSettings();
+  const preSaveDialogDisclosure = useDisclosure();
+  const saveProgressDisclosure = useDisclosure();
+
+  const handleSave = useCallback(async () => {
     // This state is reset in the editor's onDownload callback when the hex is actually saved.
-    setProjectIOState("downloading");
+    setProjectIOState("saving");
+    preSaveDialogDisclosure.onClose();
+    saveProgressDisclosure.onOpen();
     try {
       await downloadHex();
     } catch (e) {
       setProjectIOState("inactive");
     }
-  }, [downloadHex, saveHexDisclosure, setProjectIOState]);
+  }, [
+    downloadHex,
+    preSaveDialogDisclosure,
+    saveProgressDisclosure,
+    setProjectIOState,
+  ]);
+
+  const handleSaveClick = useCallback(() => {
+    if (settings.showPreSaveHelp) {
+      preSaveDialogDisclosure.onOpen();
+    } else {
+      void handleSave();
+    }
+  }, [handleSave, preSaveDialogDisclosure, settings.showPreSaveHelp]);
 
   useEffect(() => {
-    if (projectIOState !== "downloading") {
-      saveHexDisclosure.onClose();
+    if (projectIOState !== "saving") {
+      saveProgressDisclosure.onClose();
     }
-  }, [projectIOState, saveHexDisclosure]);
+  }, [projectIOState, saveProgressDisclosure]);
 
   return (
     <>
-      <SaveHexDialog
-        isOpen={saveHexDisclosure.isOpen}
-        onClose={saveHexDisclosure.onClose}
+      <SaveExplainerDialog
+        isOpen={preSaveDialogDisclosure.isOpen}
+        onClose={preSaveDialogDisclosure.onClose}
+        onSave={handleSave}
       />
+      <SaveProgressDialog isOpen={saveProgressDisclosure.isOpen} />
       <Button
         variant="toolbar"
         leftIcon={<RiDownload2Line />}
-        onClick={handleDownloadHex}
+        onClick={handleSaveClick}
       >
         <FormattedMessage id="save-action" />
       </Button>

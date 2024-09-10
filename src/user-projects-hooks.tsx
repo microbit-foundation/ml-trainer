@@ -26,7 +26,7 @@ interface StoredProject {
   projectEdited: boolean;
 }
 
-export type ProjectIOState = "downloading" | "importing" | "inactive";
+export type ProjectIOState = "saving" | "importing" | "inactive";
 
 interface ProjectContext extends StoredProject {
   writeProject: (project: Project) => void;

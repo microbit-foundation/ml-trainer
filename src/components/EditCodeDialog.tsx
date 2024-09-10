@@ -80,7 +80,7 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
         if (isOpen) {
           await actions.startDownloadUserProjectHex(download.hex);
         }
-        if (projectIOState === "downloading") {
+        if (projectIOState === "saving") {
           handleSave(download);
           setProjectIOState("inactive");
         }

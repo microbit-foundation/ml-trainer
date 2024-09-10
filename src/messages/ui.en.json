@@ -1576,13 +1576,13 @@
   "save-hex-dialog-heading": [
     {
       "type": 0,
-      "value": "Saving MakeCode hex file"
+      "value": "Save project as a hex file"
     }
   ],
   "save-hex-dialog-message1": [
     {
       "type": 0,
-      "value": "This download contains your actions, data samples and your MakeCode project. Open it in the micro:bit machine learning tool to continue working."
+      "value": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit machine learning tool to continue working."
     }
   ],
   "save-hex-dialog-message2": [

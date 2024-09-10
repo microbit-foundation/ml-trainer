@@ -1,23 +1,40 @@
 import {
+  Button,
+  Checkbox,
   Heading,
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Progress,
   Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
+import { useSettings } from "../settings";
+import { ChangeEvent, useCallback } from "react";
 
-interface SaveHexDialogProps {
+interface SaveExplainerDialogProps {
   isOpen: boolean;
   onClose: () => void;
+  onSave: () => void;
 }
 
-const SaveHexDialog = ({ isOpen, onClose }: SaveHexDialogProps) => {
+const SaveExplainerDialog = ({
+  isOpen,
+  onClose,
+  onSave,
+}: SaveExplainerDialogProps) => {
+  const [settings, setSettings] = useSettings();
+  const skip = settings.showPreSaveHelp;
+  const handleChangeSkip = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setSettings({ ...settings, showPreSaveHelp: e.currentTarget.checked });
+    },
+    [setSettings, settings]
+  );
   return (
     <Modal
       size="xl"
@@ -44,13 +61,20 @@ const SaveHexDialog = ({ isOpen, onClose }: SaveHexDialogProps) => {
                   <FormattedMessage id="save-hex-dialog-message2" />
                 </Text>
               </VStack>
-              <Progress colorScheme="green" isIndeterminate rounded="md" />
             </Stack>
           </ModalBody>
+          <ModalFooter justifyContent="space-between" px={0} pb={0}>
+            <Checkbox isChecked={skip} onChange={handleChangeSkip}>
+              <FormattedMessage id="dont-show-again" />
+            </Checkbox>
+            <Button size="lg" variant="primary" onClick={onSave}>
+              <FormattedMessage id="save-action" />
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </ModalOverlay>
     </Modal>
   );
 };
 
-export default SaveHexDialog;
+export default SaveExplainerDialog;
