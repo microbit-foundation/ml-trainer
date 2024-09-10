@@ -1,4 +1,9 @@
-import { ConnectActions, ConnectAndFlashResult } from "./connect-actions";
+import { MicrobitWebUSBConnection } from "@microbit/microbit-connection";
+import {
+  ConnectActions,
+  ConnectAndFlashResult,
+  ConnectionAndFlashOptions,
+} from "./connect-actions";
 import { ConnectionStatus } from "./connect-status-hooks";
 import { ConnectionStageActions } from "./connection-stage-actions";
 import {
@@ -69,13 +74,20 @@ export class DownloadProjectActions {
   };
 
   connectAndFlashMicrobit = async (stage: DownloadProjectStage) => {
+    let connectionAndFlashOptions: ConnectionAndFlashOptions | undefined;
     if (stage.microbitToFlash === MicrobitToFlash.Same) {
       // Disconnect input micro:bit to not trigger connection lost warning.
       await this.connectionStageActions.disconnectInputMicrobit();
     }
     if (stage.microbitToFlash === MicrobitToFlash.Different) {
-      // Forget usb device so that user can select a different usb device.
-      await this.connectActions.clearUsbDevice();
+      // Use a temporary USB connection to flash the MakeCode program.
+      // Disconnect the input micro:bit if the user selects this device from the
+      // list by mistake.
+      connectionAndFlashOptions = {
+        temporaryUsbConnection: new MicrobitWebUSBConnection(),
+        callbackIfDeviceIsSame:
+          this.connectionStageActions.disconnectInputMicrobit,
+      };
     }
     if (!stage.projectHex || !stage.projectName) {
       throw new Error("Project hex/name is not set!");
@@ -83,7 +95,8 @@ export class DownloadProjectActions {
     this.setStage({ ...stage, step: DownloadProjectStep.WebUsbChooseMicrobit });
     const { result } = await this.connectActions.requestUSBConnectionAndFlash(
       stage.projectHex,
-      this.flashingProgressCallback
+      this.flashingProgressCallback,
+      connectionAndFlashOptions
     );
     this.setStage({
       ...stage,
