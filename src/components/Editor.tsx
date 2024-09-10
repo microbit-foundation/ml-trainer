@@ -5,7 +5,7 @@ import {
 } from "@microbit/makecode-embed/react";
 import React, { forwardRef, useCallback } from "react";
 import { getMakeCodeLang, useSettings } from "../settings";
-import { EditorWorkspaceSaveRequest } from "../../../makecode-embed/dist/vanilla/pxt";
+import { EditorWorkspaceSaveRequest } from "@microbit/makecode-embed/react";
 
 const controllerId = "MicrobitMachineLearningTool";
 
