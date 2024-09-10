@@ -7,7 +7,7 @@ import {
   VStack,
   VisuallyHidden,
 } from "@chakra-ui/react";
-import { MakeCodeRenderBlocksProvider } from "@microbit-foundation/react-code-view";
+import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
 import React, { useCallback } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ChakraProvider } from "@chakra-ui/react";
-import React, { ReactNode, useMemo } from "react";
+import React, { ReactNode, useMemo, useRef } from "react";
 import {
   Outlet,
   RouterProvider,
@@ -31,6 +31,7 @@ import EditCodeDialogProvider from "./hooks/use-edit-code-dialog";
 import EditCodeDialog from "./components/EditCodeDialog";
 import { ProjectProvider } from "./user-projects-hooks";
 import ProjectDropTarget from "./components/ProjectDropTarget";
+import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -41,6 +42,7 @@ const logging = deployment.logging;
 const Providers = ({ children }: ProviderLayoutProps) => {
   const deployment = useDeployment();
   const { ConsentProvider } = deployment.compliance;
+  const driverRef = useRef<MakeCodeFrameDriver>(null);
   return (
     <React.StrictMode>
       <ChakraProvider theme={deployment.chakraTheme}>
@@ -49,7 +51,7 @@ const Providers = ({ children }: ProviderLayoutProps) => {
             <SettingsProvider>
               <GesturesProvider>
                 <MlStatusProvider>
-                  <ProjectProvider>
+                  <ProjectProvider driverRef={driverRef}>
                     <EditCodeDialogProvider>
                       <ConnectStatusProvider>
                         <ConnectProvider>
@@ -57,7 +59,10 @@ const Providers = ({ children }: ProviderLayoutProps) => {
                             <ConnectionStageProvider>
                               <TranslationProvider>
                                 <ProjectDropTarget>
-                                  <ErrorBoundary>{children}</ErrorBoundary>
+                                  <ErrorBoundary>
+                                    <EditCodeDialog ref={driverRef} />
+                                    {children}
+                                  </ErrorBoundary>
                                 </ProjectDropTarget>
                               </TranslationProvider>
                             </ConnectionStageProvider>
@@ -82,7 +87,6 @@ const Layout = () => {
     <ErrorBoundary>
       <ScrollRestoration />
       <Outlet />
-      <EditCodeDialog />
     </ErrorBoundary>
   );
 };

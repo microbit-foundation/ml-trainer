@@ -2,20 +2,18 @@ import { MenuItem, useDisclosure } from "@chakra-ui/react";
 import { useCallback, useEffect } from "react";
 import { RiDownload2Line } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import SaveHexDialog from "./SaveHexDialog";
 import { useProject } from "../user-projects-hooks";
+import SaveHexDialog from "./SaveHexDialog";
 
 const SaveProjectMenuItem = () => {
-  const { editorEventTrigger, projectIOState, setProjectIOState } =
-    useProject();
+  const { projectIOState, setProjectIOState } = useProject();
   const saveHexDisclosure = useDisclosure();
   const handleDownloadHex = useCallback(() => {
     saveHexDisclosure.onOpen();
     setProjectIOState("downloading");
-    editorEventTrigger?.next({
-      action: "compile",
-    });
-  }, [editorEventTrigger, saveHexDisclosure, setProjectIOState]);
+
+    // TODO: Call compile on the driver
+  }, [saveHexDisclosure, setProjectIOState]);
 
   useEffect(() => {
     if (projectIOState !== "downloading") {

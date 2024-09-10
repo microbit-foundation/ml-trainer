@@ -2,7 +2,7 @@ import { Box, Card, GridItem, SkeletonText } from "@chakra-ui/react";
 import {
   BlockLayout,
   MakeCodeBlocksRendering,
-} from "@microbit-foundation/react-code-view";
+} from "@microbit/makecode-embed/react";
 import { memo, useMemo } from "react";
 import { GestureData, useGestureData } from "../gestures-hooks";
 import { generateProject } from "../makecode/utils";

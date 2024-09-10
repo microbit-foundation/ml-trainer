@@ -2,12 +2,12 @@ import { Card, SkeletonText, VStack } from "@chakra-ui/react";
 import {
   BlockLayout,
   MakeCodeBlocksRendering,
-  MakeCodeProject,
-} from "@microbit-foundation/react-code-view";
+  Project,
+} from "@microbit/makecode-embed/react";
 import { memo } from "react";
 
 interface CodeViewCardProps {
-  project: MakeCodeProject;
+  project: Project;
 }
 
 const CodeViewCard = ({ project }: CodeViewCardProps) => {

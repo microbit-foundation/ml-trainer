@@ -1,53 +1,53 @@
 import {
-  ActionListenerSubject,
-  EditorProject,
-  MakeCodeEditor,
-} from "@microbit-foundation/react-editor-embed";
-import React from "react";
-import { Subject } from "rxjs";
+  MakeCodeFrame,
+  MakeCodeFrameDriver,
+  Project,
+} from "@microbit/makecode-embed/react";
+import React, { forwardRef, useCallback } from "react";
 import { getMakeCodeLang, useSettings } from "../settings";
-import { useProject } from "../user-projects-hooks";
+import { EditorWorkspaceSaveRequest } from "../../../makecode-embed/dist/vanilla/pxt";
 
 const controllerId = "MicrobitMachineLearningTool";
 
 interface EditorProps {
   onBack?: () => void;
-  onCodeChange?: (code: EditorProject) => void;
+  onCodeChange?: (code: Project) => void;
   onDownload?: (download: { name: string; hex: string }) => void;
   onSave?: (save: { name: string; hex: string }) => void;
-  initialCode: EditorProject;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getWriter?: (writeFn: any) => void;
+  initialCode: Project;
   version: string | undefined;
   style?: React.CSSProperties;
-  eventTrigger?: Subject<ActionListenerSubject>;
 }
 
-const Editor = ({
-  style,
-  initialCode,
-  version,
-  eventTrigger,
-  ...editorProps
-}: EditorProps) => {
+const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
+  props,
+  ref
+) {
+  const { style, initialCode, version, onCodeChange, ...editorProps } = props;
+  const initialProjects = useCallback(() => {
+    return Promise.resolve([initialCode]);
+  }, [initialCode]);
+  const handleCodeChange = useCallback(
+    (e: EditorWorkspaceSaveRequest) => onCodeChange?.(e.project),
+    [onCodeChange]
+  );
   const [{ languageId }] = useSettings();
-  const { editorEventEmitter } = useProject();
-
   return (
-    <MakeCodeEditor
-      // TODO: To remove baseUrl and use real pxt-microbit
+    <MakeCodeFrame
+      ref={ref}
+      // TODO: Remove baseUrl and use the default once our sim extension is live there
       baseUrl="https://ml-tool.pxt-microbit.pages.dev/"
       controllerId={controllerId}
       controller={2}
       style={style}
-      initialCode={initialCode}
+      initialProjects={initialProjects}
       version={version}
       lang={getMakeCodeLang(languageId)}
-      actionListener={eventTrigger}
-      responseEmitter={editorEventEmitter}
+      onWorkspaceSave={handleCodeChange}
+      loading="eager"
       {...editorProps}
     />
   );
-};
+});
 
 export default Editor;
