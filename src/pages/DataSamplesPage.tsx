@@ -36,6 +36,7 @@ import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { SessionPageId } from "../pages-config";
 import { useTrainModelDialog } from "../train-model-dialog-hooks";
 import { createSessionPageUrl } from "../urls";
+import SaveButton from "../components/SaveButton";
 
 const DataSamplesPage = () => {
   const intl = useIntl();
@@ -66,6 +67,7 @@ const DataSamplesPage = () => {
   return (
     <DefaultPageLayout
       titleId={`${SessionPageId.DataSamples}-title`}
+      toolbarItemsRight={<SaveButton key="save" />}
       showPageTitle
     >
       {noStoredData &&

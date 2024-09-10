@@ -943,25 +943,21 @@
     "defaultMessage": "introduction video",
     "description": ""
   },
+  "save-action": {
+    "defaultMessage": "Save",
+    "description": "Label for action that saves the project as a file the user downloads"
+  },
   "save-hex-dialog-heading": {
     "defaultMessage": "Saving MakeCode hex file",
     "description": "Heading for the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message1": {
-    "defaultMessage": "This file contains your actions and data samples and the MakeCode code.",
+    "defaultMessage": "This download contains your actions, data samples and your MakeCode project. Open it in the micro:bit machine learning tool to continue working.",
     "description": "Text in the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message2": {
-    "defaultMessage": "Open it in the micro:bit machine learning tool to continue working on the project.",
+    "defaultMessage": "You can also open it with Microsoft MakeCode if you don't need to change the actions and data samples.",
     "description": "Text in the dialog shown when saving a hex file"
-  },
-  "save-hex-dialog-message3": {
-    "defaultMessage": "It can also be opened in Microsoft MakeCode where you can edit the code but not the actions or data samples.",
-    "description": "Text in the dialog shown when saving a hex file"
-  },
-  "save-project-hex": {
-    "defaultMessage": "Save project hex",
-    "description": ""
   },
   "settings-menu-action": {
     "defaultMessage": "Settings actions menu",

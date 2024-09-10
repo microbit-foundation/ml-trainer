@@ -2,7 +2,6 @@ import {
   IconButton,
   Menu,
   MenuButton,
-  MenuDivider,
   MenuList,
   ThemeTypings,
 } from "@chakra-ui/react";
@@ -10,7 +9,6 @@ import { useRef } from "react";
 import { RiSettings2Line } from "react-icons/ri";
 import { useIntl } from "react-intl";
 import LanguageMenuItem from "./LanguageMenuItem";
-import SaveProjectMenuItem from "./SaveProjectMenuItem";
 
 interface SettingsMenuProps {
   variant?: ThemeTypings["components"]["Menu"]["variants"];
@@ -47,8 +45,6 @@ const SettingsMenu = ({ variant = "plain", ...rest }: SettingsMenuProps) => {
           }}
         />
         <MenuList zIndex={2}>
-          <SaveProjectMenuItem />
-          <MenuDivider />
           <LanguageMenuItem finalFocusRef={settingsMenuRef} />
         </MenuList>
       </Menu>

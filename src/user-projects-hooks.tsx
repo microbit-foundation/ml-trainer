@@ -35,6 +35,7 @@ interface ProjectContext extends StoredProject {
   loadProject: (files: File[]) => void;
   projectIOState: ProjectIOState;
   setProjectIOState: (value: ProjectIOState) => void;
+  downloadHex: () => Promise<void>;
 }
 
 const ProjectContext = createContext<ProjectContext | undefined>(undefined);
@@ -193,18 +194,24 @@ export const ProjectProvider = ({
     [driverRef, gestureActions]
   );
 
+  const downloadHex = useCallback(async (): Promise<void> => {
+    await driverRef.current!.compile();
+  }, [driverRef]);
+
   const value = useMemo(
     () => ({
+      downloadHex,
+      loadProject,
       project,
       projectEdited,
-      writeProject,
-      updateProject,
-      resetProject,
-      loadProject,
       projectIOState,
+      resetProject,
       setProjectIOState,
+      updateProject,
+      writeProject,
     }),
     [
+      downloadHex,
       loadProject,
       project,
       projectEdited,

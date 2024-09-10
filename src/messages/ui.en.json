@@ -1567,6 +1567,12 @@
       "value": "introduction video"
     }
   ],
+  "save-action": [
+    {
+      "type": 0,
+      "value": "Save"
+    }
+  ],
   "save-hex-dialog-heading": [
     {
       "type": 0,
@@ -1576,25 +1582,13 @@
   "save-hex-dialog-message1": [
     {
       "type": 0,
-      "value": "This file contains your actions and data samples and the MakeCode code."
+      "value": "This download contains your actions, data samples and your MakeCode project. Open it in the micro:bit machine learning tool to continue working."
     }
   ],
   "save-hex-dialog-message2": [
     {
       "type": 0,
-      "value": "Open it in the micro:bit machine learning tool to continue working on the project."
-    }
-  ],
-  "save-hex-dialog-message3": [
-    {
-      "type": 0,
-      "value": "It can also be opened in Microsoft MakeCode where you can edit the code but not the actions or data samples."
-    }
-  ],
-  "save-project-hex": [
-    {
-      "type": 0,
-      "value": "Save project hex"
+      "value": "You can also open it with Microsoft MakeCode if you don't need to change the actions and data samples."
     }
   ],
   "settings-menu-action": [

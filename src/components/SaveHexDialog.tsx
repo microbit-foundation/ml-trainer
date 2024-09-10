@@ -43,9 +43,6 @@ const SaveHexDialog = ({ isOpen, onClose }: SaveHexDialogProps) => {
                 <Text>
                   <FormattedMessage id="save-hex-dialog-message2" />
                 </Text>
-                <Text>
-                  <FormattedMessage id="save-hex-dialog-message3" />
-                </Text>
               </VStack>
               <Progress colorScheme="green" isIndeterminate rounded="md" />
             </Stack>

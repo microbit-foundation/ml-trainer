@@ -8,6 +8,7 @@ import TestingModelGridView from "../components/TestingModelGridView";
 import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { SessionPageId } from "../pages-config";
 import { createSessionPageUrl } from "../urls";
+import SaveButton from "../components/SaveButton";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ const TestingModelPage = () => {
           <FormattedMessage id="back-to-data-samples-action" />
         </Button>
       }
+      toolbarItemsRight={<SaveButton />}
     >
       <TestingModelGridView />
     </DefaultPageLayout>
