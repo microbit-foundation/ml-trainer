@@ -948,15 +948,15 @@
     "description": "Heading for the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message1": {
-    "defaultMessage": "This file contains your MakeCode project and gesture data, including your recordings.",
+    "defaultMessage": "This file contains your actions and data samples and the MakeCode code.",
     "description": "Text in the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message2": {
-    "defaultMessage": "It can be re-opened in the micro:bit ML Tool where you can continue to add gestures and recordings as well as edit the MakeCode project.",
+    "defaultMessage": "Open it in the micro:bit machine learning tool to continue working on the project.",
     "description": "Text in the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message3": {
-    "defaultMessage": "It can also be re-opened in MakeCode where you can edit the code only.",
+    "defaultMessage": "It can also be opened in Microsoft MakeCode where you can edit the code but not the actions or data samples.",
     "description": "Text in the dialog shown when saving a hex file"
   },
   "save-project-hex": {

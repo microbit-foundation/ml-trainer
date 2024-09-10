@@ -1315,12 +1315,6 @@
       "value": "Status: Your model is trained."
     }
   ],
-  "menu.trainer.addDataButton": [
-    {
-      "type": 0,
-      "value": "Add data"
-    }
-  ],
   "menu.trainer.addMoreDataButton": [
     {
       "type": 0,
@@ -1337,18 +1331,6 @@
     {
       "type": 0,
       "value": " Select the ‘Connect’ button to connect a micro:bit."
-    }
-  ],
-  "menu.trainer.notEnoughDataHeader1": [
-    {
-      "type": 0,
-      "value": "You don't have enough data."
-    }
-  ],
-  "menu.trainer.notEnoughDataInfoBody": [
-    {
-      "type": 0,
-      "value": "You need at least 3 data samples for 2 actions to train the model."
     }
   ],
   "menu.trainer.trainModelButton": [
@@ -1594,19 +1576,19 @@
   "save-hex-dialog-message1": [
     {
       "type": 0,
-      "value": "This file contains your MakeCode project and gesture data, including your recordings."
+      "value": "This file contains your actions and data samples and the MakeCode code."
     }
   ],
   "save-hex-dialog-message2": [
     {
       "type": 0,
-      "value": "It can be re-opened in the micro:bit ML Tool where you can continue to add gestures and recordings as well as edit the MakeCode project."
+      "value": "Open it in the micro:bit machine learning tool to continue working on the project."
     }
   ],
   "save-hex-dialog-message3": [
     {
       "type": 0,
-      "value": "It can also be re-opened in MakeCode where you can edit the code only."
+      "value": "It can also be opened in Microsoft MakeCode where you can edit the code but not the actions or data samples."
     }
   ],
   "save-project-hex": [
