@@ -213,6 +213,8 @@ export const ProjectProvider = ({
           (JSON.parse(gestureData) as GestureContextState).data
         );
         setProject({ project, projectEdited: true });
+
+        // TODO: navigate to data samples as you could be on the home page, model page etc.
       }
     },
     [driverRef, gestureActions, setProject, waitForNextWorkspaceSave]
@@ -229,12 +231,17 @@ export const ProjectProvider = ({
 
   const onWorkspaceSave = useCallback(
     (event: EditorWorkspaceSaveRequest) => {
-      const { project } = event;
+      const { project: newProject } = event;
       if (waitingForWorkspaceSave.current) {
         waitingForWorkspaceSave.current(event.project);
       } else if (makecodeDisclosure.isOpen) {
         // Could be a blocks edit but could also be a hex load inside of MakeCode
         // We can probably distinguish these in future by looking at the header id
+
+        const newProjectHeaderId = newProject.header?.id;
+        const oldProjectHeaderId = project.header?.id;
+        console.log({ newProjectHeaderId, oldProjectHeaderId });
+
         setProject({ project, projectEdited: true });
         const gestureData = project.text![filenames.datasetJson];
         if (gestureData) {
@@ -251,6 +258,7 @@ export const ProjectProvider = ({
       gestureActions,
       gestures.lastModified,
       makecodeDisclosure.isOpen,
+      project,
       setProject,
     ]
   );
