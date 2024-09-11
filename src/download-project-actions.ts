@@ -118,6 +118,12 @@ export class DownloadProjectActions {
       // Disconnect the input micro:bit if the user selects this device from the
       // list by mistake.
       const temporaryUsbConnection = new MicrobitWebUSBConnection();
+      const connectedDevice = this.connectActions.getUsbDevice();
+      if (connectedDevice) {
+        temporaryUsbConnection.setRequestDeviceExclusionFilters([
+          { serialNumber: connectedDevice.serialNumber },
+        ]);
+      }
       connectionAndFlashOptions = {
         temporaryUsbConnection,
         callbackIfDeviceIsSame:
@@ -146,7 +152,7 @@ export class DownloadProjectActions {
     this.updateStage({
       usbDevice:
         connectionAndFlashOptions?.temporaryUsbConnection ??
-        this.connectActions.getUsbDevice(),
+        this.connectActions.getUsbConnection(),
       step:
         result === ConnectAndFlashResult.Success
           ? DownloadProjectStep.None

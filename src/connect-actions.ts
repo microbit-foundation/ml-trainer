@@ -170,8 +170,12 @@ export class ConnectActions {
     return this.usb.status === ConnectionStatus.CONNECTED;
   };
 
-  getUsbDevice = () => {
+  getUsbConnection = () => {
     return this.usb;
+  };
+
+  getUsbDevice = () => {
+    return this.usb.getDevice();
   };
 
   clearUsbDevice = async () => {
