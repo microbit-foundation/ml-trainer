@@ -62,21 +62,15 @@ export class DownloadProjectActions {
     });
   };
 
-  onIntroNext = async (partialNewStage: Partial<DownloadProjectStage> = {}) => {
-    if (this.connectionStatus === ConnectionStatus.Connected) {
+  onIntroNext = (partialNewStage: Partial<DownloadProjectStage> = {}) => {
+    // If we've connected to a micro:bit in the session, we make the user
+    // choose a device even if the connection has been lost since.
+    // This makes reconnect easier if the user has two micro:bits.
+    if (this.connectionStatus !== ConnectionStatus.NotConnected) {
       return this.updateStage({
         ...partialNewStage,
         step: DownloadProjectStep.ChooseSameOrAnotherMicrobit,
       });
-    }
-    // TODO: Is the right behaviour?
-    // Maybe the user should choose a device if they have previously
-    // connected to one, even if it isn't connected right now.
-    const deviceId = this.connectActions.getUsbDeviceId();
-    if (deviceId) {
-      const newStage = { ...this.stage, ...partialNewStage };
-      // Can flash directly without choosing device.
-      return await this.connectAndFlashMicrobit(newStage);
     }
     this.updateStage({
       ...partialNewStage,
