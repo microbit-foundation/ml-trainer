@@ -1,6 +1,7 @@
 import {
   AccelerometerDataEvent,
   ButtonEvent,
+  ConnectionStatus,
   ConnectionStatusEvent,
   ConnectionStatus as DeviceConnectionStatus,
   DeviceError,
@@ -163,6 +164,14 @@ export class ConnectActions {
 
   getUsbDeviceId = () => {
     return this.usb.getDeviceId();
+  };
+
+  isUsbDeviceConnected = () => {
+    return this.usb.status === ConnectionStatus.CONNECTED;
+  };
+
+  getUsbDevice = () => {
+    return this.usb;
   };
 
   clearUsbDevice = async () => {

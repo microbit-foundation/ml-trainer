@@ -1,4 +1,7 @@
-import { MicrobitWebUSBConnection } from "@microbit/microbit-connection";
+import {
+  MicrobitWebUSBConnection,
+  ConnectionStatus as UsbConnectionStatus,
+} from "@microbit/microbit-connection";
 import {
   ConnectActions,
   ConnectAndFlashResult,
@@ -22,7 +25,30 @@ export class DownloadProjectActions {
     private connectionStatus: ConnectionStatus
   ) {}
 
-  start = (download: { name: string; hex: string }) => {
+  clearMakeCodeUsbDevice = () => {
+    this.setStage({ ...this.stage, usbDevice: undefined });
+  };
+
+  start = async (download: { name: string; hex: string }) => {
+    if (this.stage.usbDevice) {
+      if (this.stage.usbDevice.status === UsbConnectionStatus.CONNECTED) {
+        const newStage: DownloadProjectStage = {
+          ...this.stage,
+          step: DownloadProjectStep.FlashingInProgress,
+          projectHex: download.hex,
+          projectName: download.name,
+        };
+        this.setStage(newStage);
+        return this.flashMicrobit(newStage, {
+          temporaryUsbConnection: this.stage.usbDevice,
+        });
+      }
+      return this.updateStage({
+        projectHex: download.hex,
+        projectName: download.name,
+        step: DownloadProjectStep.ConnectCable,
+      });
+    }
     const projectInfo = {
       projectHex: download.hex,
       projectName: download.name,
@@ -43,6 +69,9 @@ export class DownloadProjectActions {
         step: DownloadProjectStep.ChooseSameOrAnotherMicrobit,
       });
     }
+    // TODO: Is the right behaviour?
+    // Maybe the user should choose a device if they have previously
+    // connected to one, even if it isn't connected right now.
     const deviceId = this.connectActions.getUsbDeviceId();
     if (deviceId) {
       const newStage = { ...this.stage, ...partialNewStage };
@@ -59,7 +88,12 @@ export class DownloadProjectActions {
 
   onBackToIntro = () => this.setStep(DownloadProjectStep.Introduction);
 
-  onChosenSameMicrobit = () => {
+  onChosenSameMicrobit = async () => {
+    if (this.connectActions.isUsbDeviceConnected()) {
+      const newStage = { ...this.stage, microbitToFlash: MicrobitToFlash.Same };
+      // Can flash directly without choosing device.
+      return this.connectAndFlashMicrobit(newStage);
+    }
     this.updateStage({
       step: DownloadProjectStep.ConnectCable,
       microbitToFlash: MicrobitToFlash.Same,
@@ -83,8 +117,9 @@ export class DownloadProjectActions {
       // Use a temporary USB connection to flash the MakeCode program.
       // Disconnect the input micro:bit if the user selects this device from the
       // list by mistake.
+      const temporaryUsbConnection = new MicrobitWebUSBConnection();
       connectionAndFlashOptions = {
-        temporaryUsbConnection: new MicrobitWebUSBConnection(),
+        temporaryUsbConnection,
         callbackIfDeviceIsSame:
           this.connectionStageActions.disconnectInputMicrobit,
       };
@@ -92,19 +127,32 @@ export class DownloadProjectActions {
     if (!stage.projectHex || !stage.projectName) {
       throw new Error("Project hex/name is not set!");
     }
-    this.setStage({ ...stage, step: DownloadProjectStep.WebUsbChooseMicrobit });
+    this.updateStage({ step: DownloadProjectStep.WebUsbChooseMicrobit });
+    await this.flashMicrobit(stage, connectionAndFlashOptions);
+  };
+
+  flashMicrobit = async (
+    stage: DownloadProjectStage,
+    connectionAndFlashOptions?: ConnectionAndFlashOptions
+  ) => {
+    if (!stage.projectHex || !stage.projectName) {
+      throw new Error("Project hex/name is not set!");
+    }
     const { result } = await this.connectActions.requestUSBConnectionAndFlash(
       stage.projectHex,
       this.flashingProgressCallback,
       connectionAndFlashOptions
     );
-    this.setStage({
-      ...stage,
+    this.updateStage({
+      usbDevice:
+        connectionAndFlashOptions?.temporaryUsbConnection ??
+        this.connectActions.getUsbDevice(),
       step:
         result === ConnectAndFlashResult.Success
           ? DownloadProjectStep.None
           : DownloadProjectStep.ManualFlashingTutorial,
     });
+    this.setFlashingProgress(0);
   };
 
   private flashingProgressCallback = (progress: number) => {

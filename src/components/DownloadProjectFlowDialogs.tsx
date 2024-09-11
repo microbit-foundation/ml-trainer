@@ -1,18 +1,27 @@
+import { useCallback } from "react";
+import { DownloadProjectActions } from "../download-project-actions";
 import {
+  DownloadProjectStage,
   DownloadProjectStep,
-  useDownloadProject,
 } from "../download-project-hooks";
 import ConnectCableDialog from "./ConnectCableDialog";
-import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import DownloadingDialog from "./DownloadingDialog";
-import ManualFlashingDialog from "./ManualFlashingDialog";
 import DownloadProjectChooseMicrobitDialog from "./DownloadProjectChooseMicrobitDialog";
 import DownloadProjectIntroDialog from "./DownloadProjectIntroDialog";
-import { useCallback } from "react";
+import ManualFlashingDialog from "./ManualFlashingDialog";
+import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 
-const DownloadProjectFlowDialogs = () => {
-  const { stage, actions, flashProgress } = useDownloadProject();
+interface DownloadProjectFlowDialogsProps {
+  stage: DownloadProjectStage;
+  actions: DownloadProjectActions;
+  flashProgress: number;
+}
 
+const DownloadProjectFlowDialogs = ({
+  stage,
+  actions,
+  flashProgress,
+}: DownloadProjectFlowDialogsProps) => {
   const handleDownloadProject = useCallback(async () => {
     await actions.connectAndFlashMicrobit(stage);
   }, [actions, stage]);
@@ -34,6 +43,7 @@ const DownloadProjectFlowDialogs = () => {
           onDifferentMicrobitClick={actions.onChosenDifferentMicrobit}
           onSameMicrobitClick={actions.onChosenSameMicrobit}
           isOpen={true}
+          stage={stage}
         />
       );
     }

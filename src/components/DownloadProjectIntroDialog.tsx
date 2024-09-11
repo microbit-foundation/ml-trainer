@@ -65,9 +65,14 @@ const DownloadProjectIntroDialog = ({
             >
               <FormattedMessage id="dont-show-again" />
             </Checkbox>
-            <Button variant="primary" onClick={handleOnNext}>
-              <FormattedMessage id="download-action" />
-            </Button>
+            <HStack gap={5}>
+              <Button variant="secondary" onClick={onClose} size="lg">
+                <FormattedMessage id="cancel-action" />
+              </Button>
+              <Button variant="primary" onClick={handleOnNext} size="lg">
+                <FormattedMessage id="connectMB.nextButton" />
+              </Button>
+            </HStack>
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>

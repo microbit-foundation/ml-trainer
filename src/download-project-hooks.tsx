@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext, useState } from "react";
 import { DownloadProjectActions } from "./download-project-actions";
 import { useConnectActions } from "./connect-actions-hooks";
 import { useConnectionStage } from "./connection-stage-hooks";
+import { MicrobitWebUSBConnection } from "@microbit/microbit-connection";
 
 export enum DownloadProjectStep {
   None = "None",
@@ -29,6 +30,10 @@ export interface DownloadProjectStage {
   projectName?: string;
   skipIntro: boolean;
   microbitToFlash: MicrobitToFlash;
+  // The micro:bit used to flash the MakeCode hex.
+  // We remember your choice for easy code iteration for as
+  // long as the MakeCode editor is open.
+  usbDevice: MicrobitWebUSBConnection | undefined;
 }
 
 type DownloadProjectContextValue = [
@@ -47,6 +52,7 @@ export const DownloadProjectContextProvider = ({
   const downloadProjectContextValue = useState<DownloadProjectStage>({
     step: DownloadProjectStep.None,
     microbitToFlash: MicrobitToFlash.Default,
+    usbDevice: undefined,
     skipIntro: false,
   });
   return (

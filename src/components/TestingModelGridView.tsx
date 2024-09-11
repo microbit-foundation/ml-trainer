@@ -21,6 +21,7 @@ import { EditorProject } from "@microbit-foundation/react-editor-embed";
 import React, { useCallback } from "react";
 import { RiArrowRightLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useDownloadProject } from "../download-project-hooks";
 import { useGestureActions, useGestureData } from "../gestures-hooks";
 import { mlSettings } from "../ml";
 import { usePrediction } from "../ml-hooks";
@@ -29,11 +30,10 @@ import { useMakeCodeProject } from "../user-projects-hooks";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
 import CodeViewCard from "./CodeViewCard";
 import CodeViewGridItem from "./CodeViewGridItem";
+import DownloadProjectFlowDialogs from "./DownloadProjectFlowDialogs";
 import EditCodeDialog from "./EditCodeDialog";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
-import DownloadProjectFlowDialogs from "./DownloadProjectFlowDialogs";
-import { useDownloadProject } from "../download-project-hooks";
 import LiveGraphPanel from "./LiveGraphPanel";
 import MoreMenuButton from "./MoreMenuButton";
 
@@ -68,7 +68,13 @@ const TestingModelGridView = () => {
   const editCodeDialogDisclosure = useDisclosure();
   const [gestures] = useGestureData();
   const { setRequiredConfidence } = useGestureActions();
-  const { actions: downloadProjectActions } = useDownloadProject();
+  // This hook can only be called in one place due to its local state.
+  // See flashProgress state.
+  const {
+    actions: downloadProjectActions,
+    stage,
+    flashProgress,
+  } = useDownloadProject();
 
   const { hasStoredProject, userProject, setUserProject } =
     useMakeCodeProject();
@@ -109,15 +115,24 @@ const TestingModelGridView = () => {
     },
     [downloadProjectActions]
   );
+
+  const handleMakeCodeClose = useCallback(() => {
+    editCodeDialogDisclosure.onClose();
+    downloadProjectActions.clearMakeCodeUsbDevice();
+  }, [downloadProjectActions, editCodeDialogDisclosure]);
   return (
     <>
-      <DownloadProjectFlowDialogs />
+      <DownloadProjectFlowDialogs
+        actions={downloadProjectActions}
+        stage={stage}
+        flashProgress={flashProgress}
+      />
       <EditCodeDialog
         code={userProject}
         editorVersion={undefined}
         isOpen={editCodeDialogDisclosure.isOpen}
         onChange={handleCodeChange}
-        onBack={editCodeDialogDisclosure.onClose}
+        onBack={handleMakeCodeClose}
         onDownload={handleDownload}
         onSave={handleSave}
       />
