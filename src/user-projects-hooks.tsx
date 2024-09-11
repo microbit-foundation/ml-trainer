@@ -142,33 +142,20 @@ export const ProjectProvider = ({
       return;
     }
 
-    if (!projectEdited) {
-      const newProject = {
-        ...project,
-        text: {
-          ...project.text,
-          ...generateProject(gestures, model).text,
-        },
-      };
-      setProject({
-        project: newProject,
-        projectEdited,
-      });
-      debouncedEditorUpdate(newProject);
-    } else {
-      const updatedProject = {
-        ...project,
-        text: {
-          ...project.text,
-          ...generateCustomFiles(gestures, model),
-        },
-      };
-      setProject({
-        project: updatedProject,
-        projectEdited,
-      });
-      debouncedEditorUpdate(updatedProject);
-    }
+    const updatedProject = {
+      ...project,
+      text: {
+        ...project.text,
+        ...(projectEdited
+          ? generateCustomFiles(gestures, model)
+          : generateProject(gestures, model).text),
+      },
+    };
+    setProject({
+      project: updatedProject,
+      projectEdited,
+    });
+    debouncedEditorUpdate(updatedProject);
   }, [
     debouncedEditorUpdate,
     gestures,
