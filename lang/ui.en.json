@@ -628,8 +628,8 @@
     "description": ""
   },
   "content.trainer.training.title": {
-    "defaultMessage": "Training model...",
-    "description": ""
+    "defaultMessage": "Training model…",
+    "description": "Progress title"
   },
   "cookies-action": {
     "defaultMessage": "Cookies",
@@ -958,6 +958,18 @@
   "save-hex-dialog-message2": {
     "defaultMessage": "You can also open it with Microsoft MakeCode if you don't need to change the actions and data samples.",
     "description": "Text in the dialog shown when saving a hex file"
+  },
+  "saving-description": {
+    "defaultMessage": "Your download will be ready soon.",
+    "description": "Saving progress dialog text"
+  },
+  "saving-title": {
+    "defaultMessage": "Saving…",
+    "description": "Saving progress title"
+  },
+  "saving-toast-title": {
+    "defaultMessage": "Your hex file has been downloaded",
+    "description": "Notification after a hex file has been downloaded"
   },
   "settings-menu-action": {
     "defaultMessage": "Settings actions menu",

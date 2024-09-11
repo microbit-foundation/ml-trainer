@@ -1088,7 +1088,7 @@
   "content.trainer.training.title": [
     {
       "type": 0,
-      "value": "Training model..."
+      "value": "Training model…"
     }
   ],
   "cookies-action": [
@@ -1589,6 +1589,24 @@
     {
       "type": 0,
       "value": "You can also open it with Microsoft MakeCode if you don't need to change the actions and data samples."
+    }
+  ],
+  "saving-description": [
+    {
+      "type": 0,
+      "value": "Your download will be ready soon."
+    }
+  ],
+  "saving-title": [
+    {
+      "type": 0,
+      "value": "Saving…"
+    }
+  ],
+  "saving-toast-title": [
+    {
+      "type": 0,
+      "value": "Your hex file has been downloaded"
     }
   ],
   "settings-menu-action": [

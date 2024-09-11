@@ -16,22 +16,18 @@ import { FormattedMessage } from "react-intl";
 import { useSettings } from "../settings";
 import { ChangeEvent, useCallback } from "react";
 
-interface SaveExplainerDialogProps {
+interface SaveHelpDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: () => void;
 }
 
-const SaveExplainerDialog = ({
-  isOpen,
-  onClose,
-  onSave,
-}: SaveExplainerDialogProps) => {
+const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
   const [settings, setSettings] = useSettings();
-  const skip = settings.showPreSaveHelp;
+  const skip = !settings.showPreSaveHelp;
   const handleChangeSkip = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      setSettings({ ...settings, showPreSaveHelp: e.currentTarget.checked });
+      setSettings({ ...settings, showPreSaveHelp: !e.currentTarget.checked });
     },
     [setSettings, settings]
   );
@@ -77,4 +73,4 @@ const SaveExplainerDialog = ({
   );
 };
 
-export default SaveExplainerDialog;
+export default SaveHelpDialog;

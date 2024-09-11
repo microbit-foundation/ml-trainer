@@ -53,12 +53,12 @@ const Providers = ({ children }: ProviderLayoutProps) => {
               <TrainModelDialogProvider>
                 <GesturesProvider>
                   <MlStatusProvider>
-                    <ProjectProvider driverRef={driverRef}>
-                      <EditCodeDialogProvider>
-                        <ConnectStatusProvider>
-                          <ConnectProvider>
-                            <BufferedDataProvider>
-                              <ConnectionStageProvider>
+                    <EditCodeDialogProvider>
+                      <ConnectStatusProvider>
+                        <ConnectProvider>
+                          <BufferedDataProvider>
+                            <ConnectionStageProvider>
+                              <ProjectProvider driverRef={driverRef}>
                                 <TranslationProvider>
                                   <ProjectDropTarget>
                                     <ErrorBoundary>
@@ -67,12 +67,12 @@ const Providers = ({ children }: ProviderLayoutProps) => {
                                     </ErrorBoundary>
                                   </ProjectDropTarget>
                                 </TranslationProvider>
-                              </ConnectionStageProvider>
-                            </BufferedDataProvider>
-                          </ConnectProvider>
-                        </ConnectStatusProvider>
-                      </EditCodeDialogProvider>
-                    </ProjectProvider>
+                              </ProjectProvider>
+                            </ConnectionStageProvider>
+                          </BufferedDataProvider>
+                        </ConnectProvider>
+                      </ConnectStatusProvider>
+                    </EditCodeDialogProvider>
                   </MlStatusProvider>
                 </GesturesProvider>
               </TrainModelDialogProvider>

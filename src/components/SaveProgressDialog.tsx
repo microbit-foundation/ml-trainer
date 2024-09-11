@@ -29,9 +29,11 @@ const SaveProgressDialog = ({ isOpen }: SavingDialogProps) => {
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
               <Heading as="h1" fontWeight="bold" fontSize="2xl">
-                Saving...
+                <FormattedMessage id="saving-title" />
               </Heading>
-              <Text>Hmm there's nothing good to say here.</Text>
+              <Text>
+                <FormattedMessage id="saving-description" />
+              </Text>
               <Progress colorScheme="green" isIndeterminate rounded="md" />
             </VStack>
           </ModalBody>
