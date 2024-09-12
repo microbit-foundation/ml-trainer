@@ -12,7 +12,6 @@ import ConnectionDialogs from "./ConnectionFlowDialogs";
 import HelpMenu from "./HelpMenu";
 import PrototypeVersionWarning from "./PrototypeVersionWarning";
 import SettingsMenu from "./SettingsMenu";
-import TrainModelFlowDialogs from "./TrainModelFlowDialogs";
 
 interface DefaultPageLayoutProps {
   titleId: string;
@@ -43,7 +42,6 @@ const DefaultPageLayout = ({
   return (
     <>
       <ConnectionDialogs />
-      <TrainModelFlowDialogs />
       <VStack
         minH="100dvh"
         w="100%"

@@ -40,7 +40,12 @@ const AddDataGridWalkThrough = ({
           {/* Empty grid item to fill first column of grid */}
           <GridItem />
           <GridItem h="120px">
-            <HStack m={0} p={2} transform="translateX(65px)">
+            <HStack
+              m={0}
+              p={2}
+              transform="translateX(65px)"
+              w="calc(100% - 65px)"
+            >
               <Image w="60px" h="93px" src={upCurveArrowImage} alt="" />
               <Text w={200} textAlign="center">
                 <FormattedMessage id="content.data.addRecordingWalkThrough" />

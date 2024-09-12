@@ -15,17 +15,21 @@ import {
 import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import trainModelImage from "../images/train_model_black.svg";
-import { useTrainModelDialog } from "../train-model-dialog-hooks";
 import TrainingButton from "./TrainingButton";
 
 interface TrainModelIntroDialogProps {
-  onNext: (isSkipIntro: boolean) => void;
+  onClose: () => void;
+  onNext: (skipIntro: boolean) => void;
 }
 
-const TrainModelIntroDialog = ({ onNext }: TrainModelIntroDialogProps) => {
-  const { onClose, isSkipIntro: defaultIsSkipIntro } = useTrainModelDialog();
-  const [skip, setSkip] = useState<boolean>(defaultIsSkipIntro);
-  const handleOnNext = useCallback(() => onNext(skip), [onNext, skip]);
+const TrainModelIntroDialog = ({
+  onClose,
+  onNext,
+}: TrainModelIntroDialogProps) => {
+  const [skip, setSkip] = useState<boolean>(false);
+  const handleNext = useCallback(() => {
+    onNext(skip);
+  }, [onNext, skip]);
 
   return (
     <Modal
@@ -61,7 +65,7 @@ const TrainModelIntroDialog = ({ onNext }: TrainModelIntroDialogProps) => {
             >
               <FormattedMessage id="dont-show-again" />
             </Checkbox>
-            <TrainingButton onClick={handleOnNext} />
+            <TrainingButton onClick={handleNext} />
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>
