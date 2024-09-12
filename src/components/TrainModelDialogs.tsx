@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import TrainModelIntroDialog from "./TrainModelIntroDialog";
 import TrainingStatusDialog from "./TrainingStatusDialog";
 import { useStorage } from "../hooks/use-storage";
+import InsufficientDataDialog from "./InsufficientDataDialog";
 
 enum TrainingStage {
   INSUFFICIENT_DATA,
@@ -16,16 +17,21 @@ interface TrainingSettings {
 interface TrainModelDialogsProps {
   isOpen: boolean;
   onClose: () => void;
+  hasSufficientData: boolean;
 }
 
-const TrainModelDialogs = ({ isOpen, onClose }: TrainModelDialogsProps) => {
+const TrainModelDialogs = ({
+  isOpen,
+  onClose,
+  hasSufficientData,
+}: TrainModelDialogsProps) => {
   const [trainingSettings, setTrainingSettings] = useStorage<TrainingSettings>(
     "session",
     "trainingSettings",
     { skipIntro: false }
   );
   const [trainingStage, setTrainingStage] = useState<TrainingStage>(
-    TrainingStage.INTRO
+    hasSufficientData ? TrainingStage.INTRO : TrainingStage.INSUFFICIENT_DATA
   );
 
   const handleNext = useCallback(
@@ -40,6 +46,14 @@ const TrainModelDialogs = ({ isOpen, onClose }: TrainModelDialogsProps) => {
     [setTrainingSettings]
   );
 
+  useEffect(() => {
+    if (hasSufficientData) {
+      setTrainingStage(TrainingStage.INTRO);
+    } else {
+      setTrainingStage(TrainingStage.INSUFFICIENT_DATA);
+    }
+  }, [hasSufficientData]);
+
   if (!isOpen) {
     return;
   }
@@ -50,7 +64,7 @@ const TrainModelDialogs = ({ isOpen, onClose }: TrainModelDialogsProps) => {
       }
       return <TrainModelIntroDialog onClose={onClose} onNext={handleNext} />;
     case TrainingStage.INSUFFICIENT_DATA:
-      return <TrainingStatusDialog onClose={onClose} />;
+      return <InsufficientDataDialog onClose={onClose} />;
     case TrainingStage.TRAINING_STATUS:
       return <TrainingStatusDialog onClose={onClose} />;
   }

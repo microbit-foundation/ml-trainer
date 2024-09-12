@@ -743,6 +743,14 @@
     "defaultMessage": "More information about \"{item}\"",
     "description": ""
   },
+  "insufficient-data-body": {
+    "defaultMessage": "You need at least 3 data samples for 2 actions to train the model.",
+    "description": "Insufficient data modal content"
+  },
+  "insufficient-data-title": {
+    "defaultMessage": "You don't have enough data.",
+    "description": "Insufficient data modal title"
+  },
   "introducing-the-microbit-machine-learning-tool-title": {
     "defaultMessage": "Introducing the micro:bit machine learning tool",
     "description": "Title of a resource"
@@ -974,6 +982,10 @@
   "software-versions": {
     "defaultMessage": "Software versions",
     "description": "Software versions text"
+  },
+  "start-training-action": {
+    "defaultMessage": "Start training",
+    "description": "Start training button text"
   },
   "support-request": {
     "defaultMessage": "Please consider <link>raising a support request</link>.",

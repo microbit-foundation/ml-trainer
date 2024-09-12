@@ -1267,6 +1267,18 @@
       "value": "\""
     }
   ],
+  "insufficient-data-body": [
+    {
+      "type": 0,
+      "value": "You need at least 3 data samples for 2 actions to train the model."
+    }
+  ],
+  "insufficient-data-title": [
+    {
+      "type": 0,
+      "value": "You don't have enough data."
+    }
+  ],
   "introducing-the-microbit-machine-learning-tool-title": [
     {
       "type": 0,
@@ -1315,12 +1327,6 @@
       "value": "Status: Your model is trained."
     }
   ],
-  "menu.trainer.addDataButton": [
-    {
-      "type": 0,
-      "value": "Add data"
-    }
-  ],
   "menu.trainer.addMoreDataButton": [
     {
       "type": 0,
@@ -1337,18 +1343,6 @@
     {
       "type": 0,
       "value": " Select the ‘Connect’ button to connect a micro:bit."
-    }
-  ],
-  "menu.trainer.notEnoughDataHeader1": [
-    {
-      "type": 0,
-      "value": "You don't have enough data."
-    }
-  ],
-  "menu.trainer.notEnoughDataInfoBody": [
-    {
-      "type": 0,
-      "value": "You need at least 3 data samples for 2 actions to train the model."
     }
   ],
   "menu.trainer.trainModelButton": [
@@ -1645,6 +1639,12 @@
     {
       "type": 0,
       "value": "Software versions"
+    }
+  ],
+  "start-training-action": [
+    {
+      "type": 0,
+      "value": "Start training"
     }
   ],
   "support-request": [

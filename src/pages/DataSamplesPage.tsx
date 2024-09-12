@@ -69,6 +69,7 @@ const DataSamplesPage = () => {
       <TrainModelDialogs
         isOpen={trainModelDisclosure.isOpen}
         onClose={trainModelDisclosure.onClose}
+        hasSufficientData={hasSufficientData}
       />
       <DefaultPageLayout
         titleId={`${SessionPageId.DataSamples}-title`}
@@ -139,10 +140,7 @@ const DataSamplesPage = () => {
                 <FormattedMessage id={`${SessionPageId.TestingModel}-title`} />
               </Button>
             ) : (
-              <TrainingButton
-                onClick={trainModelDisclosure.onOpen}
-                variant={hasSufficientData ? "primary" : "secondary"}
-              />
+              <TrainingButton onClick={trainModelDisclosure.onOpen} />
             )}
           </HStack>
           <LiveGraphPanel />

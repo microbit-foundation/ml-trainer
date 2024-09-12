@@ -1,5 +1,5 @@
 import {
-  Checkbox,
+  Button,
   Heading,
   HStack,
   Image,
@@ -12,25 +12,14 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import trainModelImage from "../images/train_model_black.svg";
-import TrainingButton from "./TrainingButton";
 
-interface TrainModelIntroDialogProps {
+export interface InsufficientDataDialogProps {
   onClose: () => void;
-  onNext: (skipIntro: boolean) => void;
 }
 
-const TrainModelIntroDialog = ({
-  onClose,
-  onNext,
-}: TrainModelIntroDialogProps) => {
-  const [skip, setSkip] = useState<boolean>(false);
-  const handleNext = useCallback(() => {
-    onNext(skip);
-  }, [onNext, skip]);
-
+const InsufficientDataDialog = ({ onClose }: InsufficientDataDialogProps) => {
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -46,7 +35,7 @@ const TrainModelIntroDialog = ({
             <ModalCloseButton />
             <VStack width="100%" alignItems="left" gap={5}>
               <Heading as="h1" fontWeight="bold" fontSize="2xl">
-                <FormattedMessage id="content.trainer.header" />
+                <FormattedMessage id="insufficient-data-title" />
               </Heading>
               <HStack gap={5}>
                 <Image
@@ -59,23 +48,16 @@ const TrainModelIntroDialog = ({
                 />
                 <VStack gap={5}>
                   <Text textAlign="left">
-                    <FormattedMessage id="content.trainer.description" />
+                    <FormattedMessage id="insufficient-data-body" />
                   </Text>
                 </VStack>
               </HStack>
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent="space-between" px={0} pb={0}>
-            <Checkbox
-              isChecked={skip}
-              onChange={(e) => setSkip(e.target.checked)}
-            >
-              <FormattedMessage id="dont-show-again" />
-            </Checkbox>
-            <TrainingButton
-              onClick={handleNext}
-              textId="start-training-action"
-            />
+          <ModalFooter justifyContent="flex-end" px={0} pb={0}>
+            <Button variant="primary" onClick={onClose}>
+              <FormattedMessage id="close-action" />
+            </Button>
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>
@@ -83,4 +65,4 @@ const TrainModelIntroDialog = ({
   );
 };
 
-export default TrainModelIntroDialog;
+export default InsufficientDataDialog;
