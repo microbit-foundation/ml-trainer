@@ -2,11 +2,13 @@ import { Input, MenuItem } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
 import { RiUpload2Line } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import { GestureData, useGestureActions } from "../gestures-hooks";
+import { GestureData } from "../gestures-hooks";
 import { readFileAsText } from "../utils/fs-util";
+import { useAppStore } from "../store";
 
 const UploadDataSamplesMenuItem = () => {
-  const actions = useGestureActions();
+  const validateAndSetGestures = useAppStore((s) => s.validateAndSetGestures);
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChooseFile = useCallback(() => {
@@ -19,11 +21,9 @@ const UploadDataSamplesMenuItem = () => {
         throw new Error("Expected to be called with at least one file");
       }
       const gestureData = await readFileAsText(files[0]);
-      actions.validateAndSetGestures(
-        JSON.parse(gestureData) as Partial<GestureData>[]
-      );
+      validateAndSetGestures(JSON.parse(gestureData) as Partial<GestureData>[]);
     },
-    [actions]
+    [validateAndSetGestures]
   );
 
   const handleOpenFile = useCallback(

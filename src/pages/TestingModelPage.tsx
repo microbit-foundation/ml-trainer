@@ -5,14 +5,15 @@ import { useNavigate } from "react-router";
 import BackArrow from "../components/BackArrow";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import TestingModelGridView from "../components/TestingModelGridView";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
+import { MlStage } from "../ml-status-hooks";
 import { SessionPageId } from "../pages-config";
 import { createSessionPageUrl } from "../urls";
 import SaveButton from "../components/SaveButton";
+import { useAppStore } from "../store";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
-  const [{ stage }] = useMlStatus();
+  const { stage } = useAppStore((s) => s.mlStatus);
 
   const navigateToDataSamples = useCallback(() => {
     navigate(createSessionPageUrl(SessionPageId.DataSamples));

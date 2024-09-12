@@ -1,34 +1,32 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useMlActions } from "../ml-hooks";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
+import { MlStage } from "../ml-status-hooks";
 import { createSessionPageUrl } from "../urls";
 import TrainingErrorDialog from "./TrainingErrorDialog";
 import TrainingModelProgressDialog from "./TrainingModelProgressDialog";
 import { SessionPageId } from "../pages-config";
+import { useAppStore } from "../store";
 
 interface TrainingStatusDialogProps {
   onClose: () => void;
 }
 
 const TrainingStatusDialog = ({ onClose }: TrainingStatusDialogProps) => {
-  const [status] = useMlStatus();
-  const actions = useMlActions();
+  const status = useAppStore((s) => s.mlStatus);
+  const trainModel = useAppStore((s) => s.trainModel);
   const navigate = useNavigate();
 
-  const handleTrain = useCallback(async () => {
-    await actions.trainModel();
-  }, [actions]);
-
+  // TODO: What is this doing triggering training?
+  // Let's remove this!
   useEffect(() => {
     if (status.stage === MlStage.NotTrained) {
-      void handleTrain();
+      void trainModel();
     }
     if (status.stage === MlStage.TrainingComplete) {
       onClose();
       navigate(createSessionPageUrl(SessionPageId.TestingModel));
     }
-  }, [handleTrain, navigate, onClose, status.stage]);
+  }, [navigate, onClose, status.stage, trainModel]);
 
   switch (status.stage) {
     case MlStage.TrainingError:

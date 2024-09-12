@@ -17,23 +17,13 @@ import {
   useRef,
 } from "react";
 import { useConnectionStage } from "./connection-stage-hooks";
-import {
-  GestureContextState,
-  GestureData,
-  useGestureActions,
-  useGestureData,
-} from "./gestures-hooks";
-import { useStorage } from "./hooks/use-storage";
+import { GestureContextState, GestureData } from "./gestures-hooks";
 import {
   filenames,
   generateCustomFiles,
   generateProject,
 } from "./makecode/utils";
-import {
-  MlStage,
-  TrainingCompleteMlStatus,
-  useMlStatus,
-} from "./ml-status-hooks";
+import { MlStage, TrainingCompleteMlStatus } from "./ml-status-hooks";
 import { getLowercaseFileExtension, readFileAsText } from "./utils/fs-util";
 import { useAppStore } from "./store";
 
@@ -102,25 +92,6 @@ export const ProjectProvider = ({
     });
   }, []);
 
-  const [gestures] = useGestureData();
-  const gestureActions = useGestureActions();
-  const [status] = useMlStatus();
-  const [{ project, projectEdited }, setProject] = useStorage<StoredProject>(
-    "local",
-    "project",
-    {
-      project: generateProject(
-        gestures,
-        (status as TrainingCompleteMlStatus).model
-      ),
-      projectEdited: false,
-    }
-  );
-  const prevGestureData = usePrevious(gestures);
-  const prevModelDefined = usePrevious(
-    !!(status as TrainingCompleteMlStatus).model
-  );
-
   const debouncedEditorUpdate = useMemo(
     () =>
       debounce((project: Project) => {
@@ -158,14 +129,11 @@ export const ProjectProvider = ({
     debouncedEditorUpdate(updatedProject);
   }, [
     debouncedEditorUpdate,
-    gestures,
-    gestures.lastModified,
     prevGestureData?.lastModified,
     prevModelDefined,
     project,
     projectEdited,
-    setProject,
-    status,
+    resetProject,
   ]);
 
   const resetProject = useCallback(() => {
@@ -248,13 +216,13 @@ export const ProjectProvider = ({
           const parsedGestureData = JSON.parse(
             gestureData
           ) as GestureContextState;
-          if (parsedGestureData.lastModified !== gestures.lastModified) {
+          if (parsedGestureData.lastModified !== get().gesturesLastModified) {
             gestureActions.validateAndSetGestures(parsedGestureData.data);
           }
         }
       }
     },
-    [gestureActions, gestures.lastModified, isMakeCodeOpen, project, setProject]
+    [isMakeCodeOpen, project, setProject]
   );
 
   const onSave = useCallback((save: { name: string; hex: string }) => {
@@ -295,8 +263,6 @@ export const ProjectProvider = ({
     }),
     [
       loadProject,
-      project,
-      projectEdited,
       resetProject,
       saveProjectHex,
       onSave,

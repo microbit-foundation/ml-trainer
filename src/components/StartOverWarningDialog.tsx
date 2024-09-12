@@ -11,9 +11,9 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { ReactNode, useCallback } from "react";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
-import { useGestureActions } from "../gestures-hooks";
+import { useAppStore } from "../store";
 
 interface StartOverWardningDialogProps {
   isOpen: boolean;
@@ -26,10 +26,7 @@ const StartOverWarningDialog = ({
   onClose,
   onStart,
 }: StartOverWardningDialogProps) => {
-  const actions = useGestureActions();
-  const handleDatasetDownload = useCallback(() => {
-    actions.downloadDataset();
-  }, [actions]);
+  const downloadDataset = useAppStore((s) => s.downloadDataset);
   return (
     <Modal
       motionPreset="none"
@@ -57,7 +54,7 @@ const StartOverWarningDialog = ({
                       link: (chunks: ReactNode) => (
                         <Link
                           color="purple.500"
-                          onClick={handleDatasetDownload}
+                          onClick={downloadDataset}
                           target="_blank"
                           rel="noopener"
                         >

@@ -1,10 +1,11 @@
 import { GridItem } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
-import { GestureData, useGestureActions } from "../gestures-hooks";
+import { GestureData } from "../gestures-hooks";
 import AddDataGridWalkThrough from "./AddDataGridWalkThrough";
 import DataRecordingGridItem from "./DataRecordingGridItem";
 import GestureNameGridItem from "./GestureNameGridItem";
+import { useAppStore } from "../store";
 
 interface AddDataGridRowProps {
   gesture: GestureData;
@@ -22,7 +23,7 @@ const DataSampleGridRow = ({
   showWalkThrough,
 }: AddDataGridRowProps) => {
   const intl = useIntl();
-  const actions = useGestureActions();
+  const deleteGesture = useAppStore((s) => s.deleteGesture);
 
   const handleDeleteDataItem = useCallback(() => {
     const confirmationText = intl.formatMessage(
@@ -32,8 +33,8 @@ const DataSampleGridRow = ({
     if (!window.confirm(confirmationText)) {
       return;
     }
-    actions.deleteGesture(gesture.ID);
-  }, [actions, gesture.ID, gesture.name, intl]);
+    deleteGesture(gesture.ID);
+  }, [deleteGesture, gesture.ID, gesture.name, intl]);
 
   return (
     <>

@@ -16,10 +16,10 @@ import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
 import React, { useCallback } from "react";
 import { RiArrowRightLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useGestureActions, useGestureData } from "../gestures-hooks";
 import { mlSettings } from "../ml";
 import { usePrediction } from "../ml-hooks";
 import { getMakeCodeLang, useSettings } from "../settings";
+import { useAppStore } from "../store";
 import { useProject } from "../user-projects-hooks";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
 import CodeViewCard from "./CodeViewCard";
@@ -28,7 +28,6 @@ import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
 import LiveGraphPanel from "./LiveGraphPanel";
 import MoreMenuButton from "./MoreMenuButton";
-import { useAppStore } from "../store";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 360px 40px auto",
@@ -58,8 +57,8 @@ const TestingModelGridView = () => {
   const prediction = usePrediction();
   const { detected, confidences } = prediction ?? {};
   const intl = useIntl();
-  const [gestures] = useGestureData();
-  const { setRequiredConfidence } = useGestureActions();
+  const gestures = useAppStore((s) => s.gestures);
+  const setRequiredConfidence = useAppStore((s) => s.setRequiredConfidence);
   const { project, resetProject, projectEdited } = useProject();
   const openMakeCode = useAppStore((s) => s.openMakeCode);
 
@@ -110,7 +109,7 @@ const TestingModelGridView = () => {
               h="fit-content"
               alignSelf="start"
             >
-              {gestures.data.map((gesture, idx) => {
+              {gestures.map((gesture, idx) => {
                 const {
                   ID,
                   name,

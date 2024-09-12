@@ -9,10 +9,10 @@ import {
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
-import { useGestureActions } from "../gestures-hooks";
 import { MakeCodeIcon } from "../utils/icons";
 import LedIcon from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";
+import { useAppStore } from "../store";
 
 interface GestureNameGridItemProps {
   name: string;
@@ -40,7 +40,8 @@ const GestureNameGridItem = ({
   const intl = useIntl();
   const toast = useToast();
   const toastId = "name-too-long-toast";
-  const actions = useGestureActions();
+  const setGestureName = useAppStore((s) => s.setGestureName);
+  const setGestureIcon = useAppStore((s) => s.setGestureIcon);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
@@ -60,16 +61,16 @@ const GestureNameGridItem = ({
         });
         return;
       }
-      actions.setGestureName(id, name);
+      setGestureName(id, name);
     },
-    [actions, id, intl, toast]
+    [id, intl, setGestureName, toast]
   );
 
   const handleIconSelected = useCallback(
     (icon: MakeCodeIcon) => {
-      actions.setGestureIcon(id, icon);
+      setGestureIcon(id, icon);
     },
-    [actions, id]
+    [id, setGestureIcon]
   );
 
   return (

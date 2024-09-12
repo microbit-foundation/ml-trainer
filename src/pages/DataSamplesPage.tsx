@@ -9,7 +9,7 @@ import {
   MenuList,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { MdMoreVert } from "react-icons/md";
 import {
   RiAddLine,
@@ -27,38 +27,36 @@ import TrainingButton from "../components/TrainingButton";
 import UploadDataSamplesMenuItem from "../components/UploadDataSamplesMenuItem";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
-import {
-  hasSufficientDataForTraining,
-  useGestureActions,
-  useGestureData,
-} from "../gestures-hooks";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { SessionPageId } from "../pages-config";
 import { useTrainModelDialog } from "../train-model-dialog-hooks";
 import { createSessionPageUrl } from "../urls";
 import SaveButton from "../components/SaveButton";
+import {
+  useAppStore,
+  useHasSufficientDataForTrainig as useHasSufficientDataForTraining,
+} from "../store";
+import { MlStage } from "../ml-status-hooks";
 
 const DataSamplesPage = () => {
   const intl = useIntl();
-  const [gestures] = useGestureData();
-  const [{ stage }] = useMlStatus();
+  const gestures = useAppStore((s) => s.gestures);
+  const addNewGesture = useAppStore((s) => s.addNewGesture);
+  const downloadDataSet = useAppStore((s) => s.downloadDataset);
+  const deleteAllGestures = useAppStore((s) => s.deleteAllGestures);
+  const { stage } = useAppStore((s) => s.mlStatus);
+
   const navigate = useNavigate();
-  const actions = useGestureActions();
   const { onOpen: onOpenTrainModelDialog } = useTrainModelDialog();
   const { isConnected, status } = useConnectionStage();
 
-  const hasSufficientData = useMemo(
-    () => hasSufficientDataForTraining(gestures.data),
-    [gestures.data]
-  );
-
-  const noStoredData = useMemo<boolean>(() => {
-    const gestureData = gestures.data;
-    return !(
-      gestureData.length !== 0 &&
-      gestureData.some((g) => g.recordings.length > 0)
-    );
-  }, [gestures.data]);
+  const hasSufficientData = useHasSufficientDataForTraining();
+  const hasAnyRecordings = gestures.some((g) => g.recordings.length > 0);
+  const isAddNewGestureDisabled =
+    !isConnected || gestures.some((g) => g.name.length === 0);
+  const showConnectFirstView =
+    !hasAnyRecordings &&
+    !isConnected &&
+    status !== ConnectionStatus.ReconnectingAutomatically;
 
   const handleNavigateToModel = useCallback(() => {
     navigate(createSessionPageUrl(SessionPageId.TestingModel));
@@ -70,13 +68,7 @@ const DataSamplesPage = () => {
       toolbarItemsRight={<SaveButton key="save" />}
       showPageTitle
     >
-      {noStoredData &&
-      !isConnected &&
-      status !== ConnectionStatus.ReconnectingAutomatically ? (
-        <ConnectFirstView />
-      ) : (
-        <DataSampleGridView />
-      )}
+      {showConnectFirstView ? <ConnectFirstView /> : <DataSampleGridView />}
       <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
         <HStack
           justifyContent="space-between"
@@ -92,10 +84,8 @@ const DataSamplesPage = () => {
             <Button
               variant={hasSufficientData ? "secondary" : "primary"}
               leftIcon={<RiAddLine />}
-              onClick={actions.addNewGesture}
-              isDisabled={
-                !isConnected || gestures.data.some((g) => g.name.length === 0)
-              }
+              onClick={addNewGesture}
+              isDisabled={isAddNewGestureDisabled}
             >
               <FormattedMessage id="content.data.addAction" />
             </Button>
@@ -111,15 +101,12 @@ const DataSamplesPage = () => {
               />
               <MenuList>
                 <UploadDataSamplesMenuItem />
-                <MenuItem
-                  icon={<RiDownload2Line />}
-                  onClick={actions.downloadDataset}
-                >
+                <MenuItem icon={<RiDownload2Line />} onClick={downloadDataSet}>
                   <FormattedMessage id="content.data.controlbar.button.downloadData" />
                 </MenuItem>
                 <MenuItem
                   icon={<RiDeleteBin2Line />}
-                  onClick={actions.deleteAllGestures}
+                  onClick={deleteAllGestures}
                 >
                   <FormattedMessage id="content.data.controlbar.button.clearData" />
                 </MenuItem>

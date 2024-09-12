@@ -10,9 +10,10 @@ import {
 import { useCallback, useRef } from "react";
 import { useIntl } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { GestureData, useGestureActions } from "../gestures-hooks";
+import { GestureData } from "../gestures-hooks";
 import RecordIcon from "../images/record-icon.svg?react";
 import RecordingGraph from "./RecordingGraph";
+import { useAppStore } from "../store";
 
 interface DataRecordingGridItemProps {
   data: GestureData;
@@ -28,15 +29,15 @@ const DataRecordingGridItem = ({
   startRecording,
 }: DataRecordingGridItemProps) => {
   const intl = useIntl();
+  const deleteGestureRecording = useAppStore((s) => s.deleteGestureRecording);
   const closeRecordingDialogFocusRef = useRef(null);
-  const actions = useGestureActions();
   const { isConnected } = useConnectionStage();
 
   const handleDeleteRecording = useCallback(
     (idx: number) => {
-      actions.deleteGestureRecording(data.ID, idx);
+      deleteGestureRecording(data.ID, idx);
     },
-    [actions, data.ID]
+    [data.ID, deleteGestureRecording]
   );
 
   return (

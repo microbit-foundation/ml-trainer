@@ -1,24 +1,17 @@
-import * as tf from "@tensorflow/tfjs";
 import { Button, HStack, StackProps, useDisclosure } from "@chakra-ui/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
-import { useGestureActions } from "../gestures-hooks";
 import { createSessionPageUrl } from "../urls";
 import StartOverWarningDialog from "./StartOverWarningDialog";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
-import { useProject } from "../user-projects-hooks";
 import { SessionPageId } from "../pages-config";
-import { modelUrl } from "../ml-status-hooks";
+import { useAppStore, useHasGestures } from "../store";
 
 const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
-  const gestureActions = useGestureActions();
-  const { resetProject } = useProject();
-  const hasExistingSession = useMemo(
-    () => gestureActions.hasGestures(),
-    [gestureActions]
-  );
+  const newSession = useAppStore((s) => s.newSession);
+  const hasExistingSession = useHasGestures();
   const [hasConnectFlowStarted, setHasConnectFlowStarted] =
     useState<boolean>(false);
   const startOverWarningDialogDisclosure = useDisclosure();
@@ -35,11 +28,7 @@ const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
 
   const handleStartNewSession = useCallback(() => {
     startOverWarningDialogDisclosure.onClose();
-    tf.io.removeModel(modelUrl).catch(() => {
-      // Throws if there is no model to remove.
-    });
-    gestureActions.deleteAllGestures();
-    resetProject();
+    newSession();
     if (isConnected) {
       handleNavigateToAddData();
     } else {
@@ -48,8 +37,7 @@ const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
     }
   }, [
     startOverWarningDialogDisclosure,
-    gestureActions,
-    resetProject,
+    newSession,
     isConnected,
     handleNavigateToAddData,
     connStageActions,
