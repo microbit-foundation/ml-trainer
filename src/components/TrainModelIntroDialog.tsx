@@ -49,7 +49,13 @@ const TrainModelIntroDialog = ({
                 <FormattedMessage id="content.trainer.header" />
               </Heading>
               <HStack gap={5}>
-                <Image src={trainModelImage} opacity={0.4} w="180px" alt="" />
+                <Image
+                  src={trainModelImage}
+                  opacity={0.4}
+                  w="180px"
+                  h="107px"
+                  alt=""
+                />
                 <VStack gap={5}>
                   <Text textAlign="left">
                     <FormattedMessage id="content.trainer.description" />
