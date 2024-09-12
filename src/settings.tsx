@@ -40,6 +40,7 @@ export const getLanguageFromQuery = (): string => {
 
 export const defaultSettings: Settings = {
   languageId: getLanguageFromQuery(),
+  showTestModelHelp: true,
 };
 
 export const isValidSettingsObject = (value: unknown): value is Settings => {
@@ -58,6 +59,7 @@ export const isValidSettingsObject = (value: unknown): value is Settings => {
 
 export interface Settings {
   languageId: string;
+  showTestModelHelp: boolean;
 }
 
 type SettingsContextValue = [Settings, (settings: Settings) => void];
