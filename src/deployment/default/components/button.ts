@@ -138,6 +138,13 @@ const Button: StyleConfig = {
         bg: "gray.100",
       },
     }),
+    "secondary-disabled": () => ({
+      borderWidth: "2px",
+      borderColor: "brand.500",
+      color: "brand.700",
+      bg: "transparent",
+      opacity: "0.4",
+    }),
   },
 };
 

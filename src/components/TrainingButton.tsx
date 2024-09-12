@@ -2,19 +2,22 @@ import { Button, ButtonProps } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import { MlStage, useMlStatus } from "../ml-status-hooks";
 
-const TrainingButton = (props: ButtonProps) => {
+interface TrainingButtonProps extends ButtonProps {
+  textId?: string;
+}
+
+const TrainingButton = ({ textId, ...rest }: TrainingButtonProps) => {
   const [{ stage }] = useMlStatus();
 
   return (
     <Button
-      variant="primary"
-      isDisabled={
-        stage === MlStage.TrainingInProgress ||
-        stage === MlStage.InsufficientData
+      variant={
+        stage === MlStage.InsufficientData ? "secondary-disabled" : "primary"
       }
-      {...props}
+      isDisabled={stage === MlStage.TrainingInProgress}
+      {...rest}
     >
-      <FormattedMessage id="menu.trainer.trainModelButton" />
+      <FormattedMessage id={textId ?? "menu.trainer.trainModelButton"} />
     </Button>
   );
 };
