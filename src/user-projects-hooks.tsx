@@ -42,8 +42,6 @@ interface StoredProject {
   projectEdited: boolean;
 }
 
-export type ProjectIOState = "saving" | "importing" | "inactive";
-
 interface ProjectContext extends StoredProject {
   resetProject: () => void;
   loadProject: (files: File[]) => void;
