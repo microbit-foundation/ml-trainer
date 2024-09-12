@@ -8,15 +8,15 @@ import {
 } from "@chakra-ui/react";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
 import { forwardRef, memo, useRef } from "react";
-import { useEditCodeDialog } from "../hooks/use-edit-code-dialog";
 import Editor from "./Editor";
+import { useAppStore } from "../store";
 
 interface EditCodeDialogProps {}
 
 const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
   function EditCodeDialog(_, ref) {
     const containerRef = useRef<HTMLDivElement>(null);
-    const { isOpen } = useEditCodeDialog();
+    const isOpen = useAppStore((s) => s.isMakeCodeOpen);
     return (
       <>
         <Box

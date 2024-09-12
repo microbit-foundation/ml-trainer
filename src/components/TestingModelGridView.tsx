@@ -17,7 +17,6 @@ import React, { useCallback } from "react";
 import { RiArrowRightLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useGestureActions, useGestureData } from "../gestures-hooks";
-import { useEditCodeDialog } from "../hooks/use-edit-code-dialog";
 import { mlSettings } from "../ml";
 import { usePrediction } from "../ml-hooks";
 import { getMakeCodeLang, useSettings } from "../settings";
@@ -29,6 +28,7 @@ import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
 import LiveGraphPanel from "./LiveGraphPanel";
 import MoreMenuButton from "./MoreMenuButton";
+import { useAppStore } from "../store";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 360px 40px auto",
@@ -61,7 +61,7 @@ const TestingModelGridView = () => {
   const [gestures] = useGestureData();
   const { setRequiredConfidence } = useGestureActions();
   const { project, resetProject, projectEdited } = useProject();
-  const { onOpen } = useEditCodeDialog();
+  const openMakeCode = useAppStore((s) => s.openMakeCode);
 
   const detectedLabel =
     detected?.name ??
@@ -169,7 +169,7 @@ const TestingModelGridView = () => {
         >
           <Menu>
             <ButtonGroup isAttached>
-              <Button variant="primary" onClick={onOpen}>
+              <Button variant="primary" onClick={openMakeCode}>
                 <FormattedMessage id="edit-in-makecode-action" />
               </Button>
               <MoreMenuButton

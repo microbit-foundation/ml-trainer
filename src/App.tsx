@@ -19,7 +19,6 @@ import { ConnectStatusProvider } from "./connect-status-hooks";
 import { ConnectionStageProvider } from "./connection-stage-hooks";
 import { deployment, useDeployment } from "./deployment";
 import { GesturesProvider } from "./gestures-hooks";
-import EditCodeDialogProvider from "./hooks/use-edit-code-dialog";
 import { LoggingProvider } from "./logging/logging-hooks";
 import TranslationProvider from "./messages/TranslationProvider";
 import { MlStatusProvider } from "./ml-status-hooks";
@@ -53,26 +52,24 @@ const Providers = ({ children }: ProviderLayoutProps) => {
               <TrainModelDialogProvider>
                 <GesturesProvider>
                   <MlStatusProvider>
-                    <EditCodeDialogProvider>
-                      <ConnectStatusProvider>
-                        <ConnectProvider>
-                          <BufferedDataProvider>
-                            <ConnectionStageProvider>
-                              <ProjectProvider driverRef={driverRef}>
-                                <TranslationProvider>
-                                  <ProjectDropTarget>
-                                    <ErrorBoundary>
-                                      <EditCodeDialog ref={driverRef} />
-                                      {children}
-                                    </ErrorBoundary>
-                                  </ProjectDropTarget>
-                                </TranslationProvider>
-                              </ProjectProvider>
-                            </ConnectionStageProvider>
-                          </BufferedDataProvider>
-                        </ConnectProvider>
-                      </ConnectStatusProvider>
-                    </EditCodeDialogProvider>
+                    <ConnectStatusProvider>
+                      <ConnectProvider>
+                        <BufferedDataProvider>
+                          <ConnectionStageProvider>
+                            <ProjectProvider driverRef={driverRef}>
+                              <TranslationProvider>
+                                <ProjectDropTarget>
+                                  <ErrorBoundary>
+                                    <EditCodeDialog ref={driverRef} />
+                                    {children}
+                                  </ErrorBoundary>
+                                </ProjectDropTarget>
+                              </TranslationProvider>
+                            </ProjectProvider>
+                          </ConnectionStageProvider>
+                        </BufferedDataProvider>
+                      </ConnectProvider>
+                    </ConnectStatusProvider>
                   </MlStatusProvider>
                 </GesturesProvider>
               </TrainModelDialogProvider>

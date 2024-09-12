@@ -35,7 +35,7 @@ import {
   useMlStatus,
 } from "./ml-status-hooks";
 import { getLowercaseFileExtension, readFileAsText } from "./utils/fs-util";
-import { useEditCodeDialog } from "./hooks/use-edit-code-dialog";
+import { useAppStore } from "./store";
 
 interface StoredProject {
   project: Project;
@@ -71,6 +71,9 @@ export const ProjectProvider = ({
   driverRef,
   children,
 }: ProjectProviderProps) => {
+  const isMakeCodeOpen = useAppStore((s) => s.isMakeCodeOpen);
+  const onBack = useAppStore((s) => s.closeMakeCode);
+
   // We use this to track when we need special handling of an event from MakeCode
   const waitingForWorkspaceSave = useRef<
     undefined | ((project: Project) => void)
@@ -99,7 +102,6 @@ export const ProjectProvider = ({
     });
   }, []);
 
-  const makecodeDisclosure = useEditCodeDialog();
   const [gestures] = useGestureData();
   const gestureActions = useGestureActions();
   const [status] = useMlStatus();
@@ -232,7 +234,7 @@ export const ProjectProvider = ({
       const { project: newProject } = event;
       if (waitingForWorkspaceSave.current) {
         waitingForWorkspaceSave.current(event.project);
-      } else if (makecodeDisclosure.isOpen) {
+      } else if (isMakeCodeOpen) {
         // Could be a blocks edit but could also be a hex load inside of MakeCode
         // We can probably distinguish these in future by looking at the header id
 
@@ -252,13 +254,7 @@ export const ProjectProvider = ({
         }
       }
     },
-    [
-      gestureActions,
-      gestures.lastModified,
-      makecodeDisclosure.isOpen,
-      project,
-      setProject,
-    ]
+    [gestureActions, gestures.lastModified, isMakeCodeOpen, project, setProject]
   );
 
   const onSave = useCallback((save: { name: string; hex: string }) => {
@@ -282,10 +278,6 @@ export const ProjectProvider = ({
     },
     [actions]
   );
-
-  const onBack = useCallback(() => {
-    makecodeDisclosure.onClose?.();
-  }, [makecodeDisclosure]);
 
   const value = useMemo(
     () => ({
