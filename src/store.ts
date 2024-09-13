@@ -94,6 +94,7 @@ export const useAppStore = create<Store>()(
 
         newSession() {
           get().deleteAllGestures();
+          get().resetProject();
         },
 
         openEditor() {
