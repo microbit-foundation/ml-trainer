@@ -59,7 +59,7 @@ export interface Store {
   recordingStopped(): void;
   newSession(): void;
 
-  trainModel(): void;
+  trainModel(): Promise<MlStatus>;
 
   project: Project;
   // false if we're sure the user hasn't changed the project, otherwise true
@@ -154,10 +154,6 @@ export const useAppStore = create<Store>()((set, get) => ({
   },
 
   setGestures(gestures: GestureData[], isRetrainNeeded: boolean = true) {
-    tf.io.removeModel(modelUrl).catch(() => {
-      // Throws if there is no model to remove.
-    });
-
     set(({ mlStatus: previousMlStatus }) => {
       gestures =
         // Always have at least one gesture for walk through
@@ -271,23 +267,17 @@ export const useAppStore = create<Store>()((set, get) => ({
         set({ mlStatus: { stage: MlStage.TrainingInProgress, progressValue } }),
     });
 
-    if (trainingResult.error) {
-      set({ mlStatus: { stage: MlStage.TrainingError } });
-    } else {
-      const newStatus = {
-        stage: MlStage.TrainingComplete,
-        model: trainingResult.model,
-      } as const;
-      set({
-        mlStatus: newStatus,
-        ...updateProject(get(), gestures, gesturesLastModified, newStatus),
-      });
-      // TODO: maybe move to middleware?
-      trainingResult.model.save(modelUrl).catch(() => {
-        // IndexedDB not available?
-      });
-      return trainingResult;
-    }
+    const newStatus = trainingResult.error
+      ? { stage: MlStage.TrainingError as const }
+      : ({
+          stage: MlStage.TrainingComplete as const,
+          model: trainingResult.model,
+        } as const);
+    set({
+      mlStatus: newStatus,
+      ...updateProject(get(), gestures, gesturesLastModified, newStatus),
+    });
+    return newStatus;
   },
 
   resetProject(): void {
@@ -322,18 +312,22 @@ export const useAppStore = create<Store>()((set, get) => ({
       projectEdited: true,
       appEditNeedsFlushToEditor: FlushType.Immediate,
     });
-    // This needs to update the gestures.
+    // We will update the gestures via the editorChange call which will have a new header.
   },
   editorChange(newProject: Project) {
     set(({ project: previousProject }) => {
       const previousHeader = previousProject?.header?.id;
       const newHeader = newProject.header?.id;
-      if (previousHeader !== newHeader) {
+      // Ignore the initial header change when we get assigned one.
+      if (previousHeader && previousHeader !== newHeader) {
+        console.log("Detected header change!");
         // MakeCode has loaded a new hex, update our state to match:
         const datasetString = newProject.text?.[filenames.datasetJson];
         const dataset = datasetString
           ? (JSON.parse(datasetString) as GestureContextState)
           : { data: [], lastModified: Date.now() };
+        // This will cause another write to MakeCode but that's OK as it gives us
+        // a chance to validate/update the project
         get().validateAndSetGestures(dataset.data);
       } else {
         // This is just a user edit which we record.
@@ -350,6 +344,29 @@ export const useAppStore = create<Store>()((set, get) => ({
     });
   },
 }));
+
+// Sync the model with IndexDB. Perhaps this could be middleware instead.
+// We still need to revisit the initial load along with other persistence.
+useAppStore.subscribe((state, prevState) => {
+  if (
+    state.mlStatus !== prevState.mlStatus &&
+    state.mlStatus.stage !== MlStage.TrainingInProgress
+  ) {
+    const model =
+      state.mlStatus.stage === MlStage.TrainingComplete
+        ? state.mlStatus.model
+        : undefined;
+    if (model) {
+      model.save(modelUrl).catch(() => {
+        // IndexedDB not available?
+      });
+    } else {
+      tf.io.removeModel(modelUrl).catch(() => {
+        // No IndexedDB/no model.
+      });
+    }
+  }
+});
 
 const updateProject = (
   store: Store,

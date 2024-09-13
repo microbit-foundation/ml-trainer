@@ -16,17 +16,14 @@ import {
   useRef,
 } from "react";
 import { useConnectionStage } from "./connection-stage-hooks";
-import { FlushType, useAppStore } from "./store";
+import { useAppStore } from "./store";
 import { getLowercaseFileExtension, readFileAsText } from "./utils/fs-util";
 
-interface StoredProject {
+interface ProjectContext {
   project: Project;
   projectEdited: boolean;
-}
-
-interface ProjectContext extends StoredProject {
   resetProject: () => void;
-  loadProject: (files: File[]) => void;
+  loadProject: (file: File) => void;
   saveProjectHex: () => Promise<void>;
   editorCallbacks: Pick<
     MakeCodeFrameProps,
@@ -101,11 +98,13 @@ export const ProjectProvider = ({
   useEffect(() => {
     // We set this when we make changes to the project in the app rather than via MakeCode
     if (appEditNeedsFlushToEditor) {
-      if (appEditNeedsFlushToEditor === FlushType.Debounced) {
-        debouncedEditorUpdate(project);
-      } else {
-        void driverRef.current?.importProject({ project });
-      }
+      const flushToEditor = async () => {
+        console.log("Unloading project");
+        await driverRef.current?.unloadProject();
+        console.log("Opening project");
+        await driverRef.current?.openHeader(project.header!.id);
+      };
+      void flushToEditor();
       projectFlushedToEditor();
     }
   }, [
@@ -121,20 +120,16 @@ export const ProjectProvider = ({
   const loadDataset = useAppStore((s) => s.loadDataset);
 
   const loadProject = useCallback(
-    async (files: File[]): Promise<void> => {
-      if (files.length !== 1) {
-        throw new Error("Expected to be called with one file");
-      }
-      const file = files[0];
+    async (file: File): Promise<void> => {
       const fileExtension = getLowercaseFileExtension(file.name);
       if (fileExtension === "json") {
-        const gestureData = await readFileAsText(files[0]);
+        const gestureData = await readFileAsText(file);
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         loadDataset(JSON.parse(gestureData));
       } else if (fileExtension === "hex") {
         driverRef.current!.importFile({
           filename: file.name,
-          parts: [await readFileAsText(files[0])],
+          parts: [await readFileAsText(file)],
         });
         const project = await waitForNextWorkspaceSave();
         loadProjectState(project);
@@ -172,7 +167,6 @@ export const ProjectProvider = ({
   }, []);
 
   const { actions } = useConnectionStage();
-
   const onDownload = useCallback(
     // Handles the event we get from MakeCode to say a hex needs downloading to the micro:bit.
     async (download: { name: string; hex: string }) => {

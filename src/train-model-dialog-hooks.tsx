@@ -5,6 +5,11 @@ import {
   useContext,
   useState,
 } from "react";
+import { useNavigate } from "react-router";
+import { MlStage } from "./ml-status-hooks";
+import { SessionPageId } from "./pages-config";
+import { useAppStore } from "./store";
+import { createSessionPageUrl } from "./urls";
 
 export enum TrainModelDialogStage {
   Closed = "closed",
@@ -44,6 +49,7 @@ export const TrainModelDialogProvider = ({
 };
 
 export const useTrainModelDialog = () => {
+  const trainModel = useAppStore((s) => s.trainModel);
   const dialogContextValue = useContext(TrainModelDialogStateContext);
   if (!dialogContextValue) {
     throw new Error("Missing provider");
@@ -63,15 +69,25 @@ export const useTrainModelDialog = () => {
     });
   }, [setState, state]);
 
+  const navigate = useNavigate();
+
   const onIntroNext = useCallback(
-    (isSkipIntro: boolean) => {
+    async (isSkipIntro: boolean) => {
       setState({
         ...state,
         skipIntro: isSkipIntro,
         stage: TrainModelDialogStage.ShowingTrainingStatus,
       });
+      const result = await trainModel();
+      if (result.stage === MlStage.TrainingComplete) {
+        setState({
+          ...state,
+          stage: TrainModelDialogStage.Closed,
+        });
+        navigate(createSessionPageUrl(SessionPageId.TestingModel));
+      }
     },
-    [setState, state]
+    [navigate, setState, state, trainModel]
   );
 
   return {

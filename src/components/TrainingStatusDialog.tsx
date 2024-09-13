@@ -1,11 +1,7 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
 import { MlStage } from "../ml-status-hooks";
-import { createSessionPageUrl } from "../urls";
+import { useAppStore } from "../store";
 import TrainingErrorDialog from "./TrainingErrorDialog";
 import TrainingModelProgressDialog from "./TrainingModelProgressDialog";
-import { SessionPageId } from "../pages-config";
-import { useAppStore } from "../store";
 
 interface TrainingStatusDialogProps {
   onClose: () => void;
@@ -13,20 +9,6 @@ interface TrainingStatusDialogProps {
 
 const TrainingStatusDialog = ({ onClose }: TrainingStatusDialogProps) => {
   const status = useAppStore((s) => s.mlStatus);
-  const trainModel = useAppStore((s) => s.trainModel);
-  const navigate = useNavigate();
-
-  // TODO: What is this doing triggering training?
-  // Let's remove this!
-  useEffect(() => {
-    if (status.stage === MlStage.NotTrained) {
-      void trainModel();
-    }
-    if (status.stage === MlStage.TrainingComplete) {
-      onClose();
-      navigate(createSessionPageUrl(SessionPageId.TestingModel));
-    }
-  }, [navigate, onClose, status.stage, trainModel]);
 
   switch (status.stage) {
     case MlStage.TrainingError:

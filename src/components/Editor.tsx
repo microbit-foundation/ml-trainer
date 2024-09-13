@@ -32,6 +32,7 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
       initialProjects={initialProjects}
       lang={getMakeCodeLang(languageId)}
       loading="eager"
+      onWorkspaceSync={() => console.log("sync!")}
       {...editorCallbacks}
       {...props}
     />
