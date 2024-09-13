@@ -1,4 +1,4 @@
-import { Gesture } from "../gestures-hooks";
+import { Gesture } from "../model";
 import { actionNamesFromLabels } from "./utils";
 /**
  * (c) 2024, Center for Computational Thinking and Design at Aarhus University and contributors

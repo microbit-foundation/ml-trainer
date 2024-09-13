@@ -28,14 +28,14 @@ import UploadDataSamplesMenuItem from "../components/UploadDataSamplesMenuItem";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { SessionPageId } from "../pages-config";
-import { useTrainModelDialog } from "../train-model-dialog-hooks";
+import { useTrainModelDialog } from "../hooks/train-model-dialog-hooks";
 import { createSessionPageUrl } from "../urls";
 import SaveButton from "../components/SaveButton";
 import {
   useAppStore,
   useHasSufficientDataForTrainig as useHasSufficientDataForTraining,
 } from "../store";
-import { MlStage } from "../ml-status-hooks";
+import { MlStage } from "../model";
 
 const DataSamplesPage = () => {
   const intl = useIntl();

@@ -8,7 +8,7 @@ import { generateBlob } from "@microbit-foundation/ml-header-generator";
 import { ActionName, actionNamesFromLabels } from "./utils";
 import { LayersModel } from "@tensorflow/tfjs";
 import { mlSettings } from "../ml";
-import { DatasetEditorJsonFormat, GestureData } from "../gestures-hooks";
+import { DatasetEditorJsonFormat, GestureData } from "../model";
 
 const createMlEvents = (actionNames: ActionName[]) => {
   let code = "";

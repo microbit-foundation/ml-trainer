@@ -1,4 +1,4 @@
-import { isDatasetUserFileFormat } from "./gestures-hooks";
+import { isDatasetUserFileFormat } from "./model";
 
 describe("isValidStoredGestureData", () => {
   it("checks data", () => {

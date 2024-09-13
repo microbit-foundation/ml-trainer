@@ -1,18 +1,14 @@
 import { Project } from "@microbit/makecode-embed/react";
 import * as tf from "@tensorflow/tfjs";
 import { create } from "zustand";
-import {
-  DatasetEditorJsonFormat,
-  GestureData,
-  RecordingData,
-} from "./gestures-hooks";
+import { DatasetEditorJsonFormat, GestureData, RecordingData } from "./model";
 import {
   filenames,
   generateCustomFiles,
   generateProject,
 } from "./makecode/utils";
 import { trainModel } from "./ml";
-import { MlStage, MlStatus } from "./ml-status-hooks";
+import { MlStage, MlStatus } from "./model";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { devtools, persist } from "zustand/middleware";
 import { flags } from "./flags";

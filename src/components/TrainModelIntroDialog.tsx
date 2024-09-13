@@ -15,7 +15,7 @@ import {
 import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import trainModelImage from "../images/train_model_black.svg";
-import { useTrainModelDialog } from "../train-model-dialog-hooks";
+import { useTrainModelDialog } from "../hooks/train-model-dialog-hooks";
 import TrainingButton from "./TrainingButton";
 
 interface TrainModelIntroDialogProps {

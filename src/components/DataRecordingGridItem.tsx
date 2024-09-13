@@ -10,7 +10,7 @@ import {
 import { useCallback, useRef } from "react";
 import { useIntl } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { GestureData } from "../gestures-hooks";
+import { GestureData } from "../model";
 import RecordIcon from "../images/record-icon.svg?react";
 import RecordingGraph from "./RecordingGraph";
 import { useAppStore } from "../store";

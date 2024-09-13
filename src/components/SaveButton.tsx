@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { RiDownload2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useSettings } from "../settings";
-import { useProject } from "../user-projects-hooks";
+import { useProject } from "../hooks/project-hooks";
 import SaveHelpDialog from "./SaveHelpDialog";
 import SaveProgressDialog from "./SaveProgressDialog";
 

@@ -1,7 +1,7 @@
 import {
   TrainModelDialogStage,
   useTrainModelDialog,
-} from "../train-model-dialog-hooks";
+} from "../hooks/train-model-dialog-hooks";
 import TrainModelIntroDialog from "./TrainModelIntroDialog";
 import TrainingStatusDialog from "./TrainingStatusDialog";
 

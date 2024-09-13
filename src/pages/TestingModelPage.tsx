@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import BackArrow from "../components/BackArrow";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import TestingModelGridView from "../components/TestingModelGridView";
-import { MlStage } from "../ml-status-hooks";
+import { MlStage } from "../model";
 import { SessionPageId } from "../pages-config";
 import { createSessionPageUrl } from "../urls";
 import SaveButton from "../components/SaveButton";

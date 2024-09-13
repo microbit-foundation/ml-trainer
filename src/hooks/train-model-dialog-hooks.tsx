@@ -6,10 +6,10 @@ import {
   useState,
 } from "react";
 import { useNavigate } from "react-router";
-import { MlStage } from "./ml-status-hooks";
-import { SessionPageId } from "./pages-config";
-import { useAppStore } from "./store";
-import { createSessionPageUrl } from "./urls";
+import { MlStage } from "../model";
+import { SessionPageId } from "../pages-config";
+import { useAppStore } from "../store";
+import { createSessionPageUrl } from "../urls";
 
 export enum TrainModelDialogStage {
   Closed = "closed",

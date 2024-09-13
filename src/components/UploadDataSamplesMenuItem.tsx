@@ -2,7 +2,7 @@ import { Input, MenuItem } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
 import { RiUpload2Line } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import { GestureData } from "../gestures-hooks";
+import { GestureData } from "../model";
 import { readFileAsText } from "../utils/fs-util";
 import { useAppStore } from "../store";
 

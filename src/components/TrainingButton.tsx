@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import { MlStage } from "../ml-status-hooks";
+import { MlStage } from "../model";
 import { useAppStore } from "../store";
 
 const TrainingButton = (props: ButtonProps) => {

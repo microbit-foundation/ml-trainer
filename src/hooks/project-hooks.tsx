@@ -15,10 +15,10 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { useConnectionStage } from "./connection-stage-hooks";
-import { FlushType, useAppStore } from "./store";
-import { getLowercaseFileExtension, readFileAsText } from "./utils/fs-util";
-import { isDatasetUserFileFormat } from "./gestures-hooks";
+import { useConnectionStage } from "../connection-stage-hooks";
+import { FlushType, useAppStore } from "../store";
+import { getLowercaseFileExtension, readFileAsText } from "../utils/fs-util";
+import { isDatasetUserFileFormat } from "../model";
 
 interface ProjectContext {
   project: Project;

@@ -1,7 +1,7 @@
 import { GridItem } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
-import { GestureData } from "../gestures-hooks";
+import { GestureData } from "../model";
 import AddDataGridWalkThrough from "./AddDataGridWalkThrough";
 import DataRecordingGridItem from "./DataRecordingGridItem";
 import GestureNameGridItem from "./GestureNameGridItem";

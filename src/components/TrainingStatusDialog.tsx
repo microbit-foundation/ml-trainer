@@ -1,4 +1,4 @@
-import { MlStage } from "../ml-status-hooks";
+import { MlStage } from "../model";
 import { useAppStore } from "../store";
 import TrainingErrorDialog from "./TrainingErrorDialog";
 import TrainingModelProgressDialog from "./TrainingModelProgressDialog";

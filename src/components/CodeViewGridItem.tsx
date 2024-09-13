@@ -4,9 +4,9 @@ import {
   MakeCodeBlocksRendering,
 } from "@microbit/makecode-embed/react";
 import { memo, useMemo } from "react";
-import { GestureData } from "../gestures-hooks";
+import { GestureData } from "../model";
 import { generateProject } from "../makecode/utils";
-import { TrainingCompleteMlStatus } from "../ml-status-hooks";
+import { TrainingCompleteMlStatus } from "../model";
 import { useAppStore } from "../store";
 
 interface CodeViewGridItemProps {

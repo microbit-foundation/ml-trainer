@@ -4,7 +4,7 @@ import {
 } from "@microbit/makecode-embed/react";
 import React, { forwardRef, useCallback } from "react";
 import { getMakeCodeLang, useSettings } from "../settings";
-import { useProject } from "../user-projects-hooks";
+import { useProject } from "../hooks/project-hooks";
 
 const controllerId = "MicrobitMachineLearningTool";
 

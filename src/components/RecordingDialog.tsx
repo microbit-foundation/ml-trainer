@@ -15,8 +15,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { TimedXYZ } from "../buffered-data";
 import { useBufferedData } from "../buffered-data-hooks";
-import { GestureData, XYZData } from "../gestures-hooks";
 import { mlSettings } from "../ml";
+import { GestureData, XYZData } from "../model";
 import { useAppStore } from "../store";
 
 interface CountdownStage {

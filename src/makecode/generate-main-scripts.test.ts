@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Gesture } from "../gestures-hooks";
+import { Gesture } from "../model";
 import { getMainScript } from "./generate-main-scripts";
 
 describe("test generateMainScripts", () => {

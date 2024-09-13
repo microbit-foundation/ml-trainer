@@ -23,13 +23,13 @@ import TranslationProvider from "./messages/TranslationProvider";
 import { resourcesConfig, sessionPageConfigs } from "./pages-config";
 import HomePage from "./pages/HomePage";
 import SettingsProvider from "./settings";
-import { TrainModelDialogProvider } from "./train-model-dialog-hooks";
+import { TrainModelDialogProvider } from "./hooks/train-model-dialog-hooks";
 import {
   createHomePageUrl,
   createResourcePageUrl,
   createSessionPageUrl,
 } from "./urls";
-import { ProjectProvider } from "./user-projects-hooks";
+import { ProjectProvider } from "./hooks/project-hooks";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
