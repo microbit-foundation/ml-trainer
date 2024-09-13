@@ -18,6 +18,7 @@ import {
 import { useConnectionStage } from "./connection-stage-hooks";
 import { FlushType, useAppStore } from "./store";
 import { getLowercaseFileExtension, readFileAsText } from "./utils/fs-util";
+import { isDatasetUserFileFormat } from "./gestures-hooks";
 
 interface ProjectContext {
   project: Project;
@@ -119,9 +120,13 @@ export const ProjectProvider = ({
     async (file: File): Promise<void> => {
       const fileExtension = getLowercaseFileExtension(file.name);
       if (fileExtension === "json") {
-        const gestureData = await readFileAsText(file);
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        loadDataset(JSON.parse(gestureData));
+        const gestureDataString = await readFileAsText(file);
+        const gestureData = JSON.parse(gestureDataString) as unknown;
+        if (isDatasetUserFileFormat(gestureData)) {
+          loadDataset(gestureData);
+        } else {
+          // TODO: complain to the user!
+        }
       } else if (fileExtension === "hex") {
         driverRef.current!.importFile({
           filename: file.name,

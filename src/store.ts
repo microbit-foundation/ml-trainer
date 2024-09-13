@@ -2,7 +2,7 @@ import { Project } from "@microbit/makecode-embed/react";
 import * as tf from "@tensorflow/tfjs";
 import { create } from "zustand";
 import {
-  GestureContextState,
+  DatasetEditorJsonFormat,
   GestureData,
   RecordingData,
 } from "./gestures-hooks";
@@ -386,7 +386,7 @@ export const useAppStore = create<Store>()(
               // MakeCode has loaded a new hex, update our state to match:
               const datasetString = newProject.text?.[filenames.datasetJson];
               const dataset = datasetString
-                ? (JSON.parse(datasetString) as GestureContextState)
+                ? (JSON.parse(datasetString) as DatasetEditorJsonFormat)
                 : { data: [], lastModified: Date.now() };
               // This will cause another write to MakeCode but that's OK as it gives us
               // a chance to validate/update the project

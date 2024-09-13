@@ -1,4 +1,3 @@
-import { isArray } from "./utils";
 import { MakeCodeIcon } from "./utils/icons";
 
 export interface XYZData {
@@ -23,27 +22,21 @@ export interface GestureData extends Gesture {
   recordings: RecordingData[];
 }
 
-export interface GestureContextState {
+export interface DatasetEditorJsonFormat {
   data: GestureData[];
   lastModified: number;
 }
 
+export type DatasetUserFileFormat = GestureData[];
+
 // Exported for testing
-export const isValidStoredGestureData = (
+export const isDatasetUserFileFormat = (
   v: unknown
-): v is GestureContextState => {
-  if (typeof v !== "object") {
+): v is DatasetUserFileFormat => {
+  if (!Array.isArray(v)) {
     return false;
   }
-  const valueObject = v as object;
-  if (!("data" in valueObject)) {
-    return false;
-  }
-  const data = valueObject.data;
-  if (!isArray(data)) {
-    return false;
-  }
-  const array = data as unknown[];
+  const array = v as unknown[];
   for (const item of array) {
     if (typeof item !== "object" || item === null) {
       return false;
@@ -52,7 +45,7 @@ export const isValidStoredGestureData = (
       !("name" in item) ||
       !("ID" in item) ||
       !("recordings" in item) ||
-      !isArray(item.recordings)
+      !Array.isArray(item.recordings)
     ) {
       return false;
     }
@@ -61,7 +54,7 @@ export const isValidStoredGestureData = (
       if (typeof rec !== "object" || rec === null) {
         return false;
       }
-      if (!("data" in rec) || !("ID" in rec) || isArray(rec.data)) {
+      if (!("data" in rec) || !("ID" in rec) || Array.isArray(rec.data)) {
         return false;
       }
       const xyzData = rec.data as object;
@@ -69,9 +62,9 @@ export const isValidStoredGestureData = (
         !("x" in xyzData) ||
         !("y" in xyzData) ||
         !("z" in xyzData) ||
-        !isArray(xyzData.x) ||
-        !isArray(xyzData.y) ||
-        !isArray(xyzData.z)
+        !Array.isArray(xyzData.x) ||
+        !Array.isArray(xyzData.y) ||
+        !Array.isArray(xyzData.z)
       ) {
         return false;
       }
