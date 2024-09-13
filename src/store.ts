@@ -308,34 +308,43 @@ export const useAppStore = create<Store>()((set, get) => ({
   loadProject(project: Project) {
     set({
       project,
-      // We assume the project is edited. Potentially we could inspect/diff it.
       projectEdited: true,
       appEditNeedsFlushToEditor: FlushType.Immediate,
     });
     // We will update the gestures via the editorChange call which will have a new header.
   },
   editorChange(newProject: Project) {
-    set(({ project: previousProject }) => {
+    set(({ project: previousProject, isEditorOpen }) => {
       const previousHeader = previousProject?.header?.id;
       const newHeader = newProject.header?.id;
       // Ignore the initial header change when we get assigned one.
-      if (previousHeader && previousHeader !== newHeader) {
-        console.log("Detected header change!");
-        // MakeCode has loaded a new hex, update our state to match:
-        const datasetString = newProject.text?.[filenames.datasetJson];
-        const dataset = datasetString
-          ? (JSON.parse(datasetString) as GestureContextState)
-          : { data: [], lastModified: Date.now() };
-        // This will cause another write to MakeCode but that's OK as it gives us
-        // a chance to validate/update the project
-        get().validateAndSetGestures(dataset.data);
-      } else {
-        // This is just a user edit which we record.
+      if (previousHeader !== newHeader) {
+        if (!previousHeader) {
+          // This is the first time MakeCode has loaded the project and it will assign a header.
+          return { project: newProject };
+        } else {
+          console.log("Detected header change!");
+          // MakeCode has loaded a new hex, update our state to match:
+          const datasetString = newProject.text?.[filenames.datasetJson];
+          const dataset = datasetString
+            ? (JSON.parse(datasetString) as GestureContextState)
+            : { data: [], lastModified: Date.now() };
+          // This will cause another write to MakeCode but that's OK as it gives us
+          // a chance to validate/update the project
+          get().validateAndSetGestures(dataset.data);
+          return {
+            project: newProject,
+            // New project loaded externally so we can't know whether its edited.
+            projectEdited: true,
+          };
+        }
+      } else if (isEditorOpen) {
+        return {
+          project: newProject,
+          projectEdited: true,
+        };
       }
-      return {
-        project: newProject,
-        projectEdited: true,
-      };
+      return {};
     });
   },
   projectFlushedToEditor() {
@@ -348,6 +357,8 @@ export const useAppStore = create<Store>()((set, get) => ({
 // Sync the model with IndexDB. Perhaps this could be middleware instead.
 // We still need to revisit the initial load along with other persistence.
 useAppStore.subscribe((state, prevState) => {
+  // console.log({ state });
+
   if (
     state.mlStatus !== prevState.mlStatus &&
     state.mlStatus.stage !== MlStage.TrainingInProgress

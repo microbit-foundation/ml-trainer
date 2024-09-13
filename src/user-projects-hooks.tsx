@@ -16,7 +16,7 @@ import {
   useRef,
 } from "react";
 import { useConnectionStage } from "./connection-stage-hooks";
-import { useAppStore } from "./store";
+import { FlushType, useAppStore } from "./store";
 import { getLowercaseFileExtension, readFileAsText } from "./utils/fs-util";
 
 interface ProjectContext {
@@ -80,15 +80,10 @@ export const ProjectProvider = ({
     });
   }, []);
 
-  const debouncedEditorUpdate = useMemo(
-    () =>
-      debounce((project: Project) => {
-        // TODO: consider logging if this fails?
-        void driverRef.current?.importProject({ project });
-      }, 300),
-    [driverRef]
+  const debouncedFlushToEditor = useMemo(
+    () => debounce(flushToEditor, 300),
+    []
   );
-
   const project = useAppStore((s) => s.project);
   const projectEdited = useAppStore((s) => s.projectEdited);
   const appEditNeedsFlushToEditor = useAppStore(
@@ -97,18 +92,19 @@ export const ProjectProvider = ({
   const projectFlushedToEditor = useAppStore((s) => s.projectFlushedToEditor);
   useEffect(() => {
     // We set this when we make changes to the project in the app rather than via MakeCode
-    if (appEditNeedsFlushToEditor) {
-      const flushToEditor = async () => {
-        console.log("Unloading project");
-        await driverRef.current?.unloadProject();
-        console.log("Opening project");
-        await driverRef.current?.openHeader(project.header!.id);
+    if (appEditNeedsFlushToEditor !== undefined) {
+      const flushAsync = async () => {
+        if (appEditNeedsFlushToEditor === FlushType.Debounced) {
+          await debouncedFlushToEditor(driverRef, project);
+        } else {
+          await flushToEditor(driverRef, project);
+        }
       };
-      void flushToEditor();
+      void flushAsync();
       projectFlushedToEditor();
     }
   }, [
-    debouncedEditorUpdate,
+    debouncedFlushToEditor,
     appEditNeedsFlushToEditor,
     projectFlushedToEditor,
     project,
@@ -219,4 +215,14 @@ const triggerBrowserDownload = (save: { name: string; hex: string }) => {
   a.download = `${save.name}.hex`;
   a.click();
   URL.revokeObjectURL(a.href);
+};
+
+const flushToEditor = async (
+  driverRef: RefObject<MakeCodeFrameDriver>,
+  project: Project
+) => {
+  // This causes MakeCode to redo the workspacesync process so it will
+  // see an updated copy of the project.
+  await driverRef.current?.unloadProject();
+  await driverRef.current?.openHeader(project.header!.id);
 };
