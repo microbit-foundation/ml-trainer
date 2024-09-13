@@ -14,7 +14,7 @@ import {
 import { trainModel } from "./ml";
 import { MlStage, MlStatus } from "./ml-status-hooks";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 import { flags } from "./flags";
 
 export const modelUrl = "indexeddb://micro:bit-ml-tool-model";
@@ -82,339 +82,385 @@ export interface Store {
 // TODO: persistence
 export const useAppStore = create<Store>()(
   devtools(
-    (set, get) => ({
-      gestures: [],
-      gesturesLastModified: Date.now(),
-      isRecording: false,
-      project: generateProject(
-        { data: [], lastModified: Date.now() },
-        undefined
-      ),
-      projectEdited: false,
-      mlStatus: { stage: MlStage.InsufficientData } as const,
-      isEditorOpen: false,
-      appEditNeedsFlushToEditor: undefined,
+    persist(
+      (set, get) => ({
+        gestures: [],
+        gesturesLastModified: Date.now(),
+        isRecording: false,
+        project: generateProject(
+          { data: [], lastModified: Date.now() },
+          undefined
+        ),
+        projectEdited: false,
+        mlStatus: { stage: MlStage.InsufficientData } as const,
+        isEditorOpen: false,
+        appEditNeedsFlushToEditor: undefined,
 
-      newSession() {
-        get().deleteAllGestures();
-      },
+        newSession() {
+          get().deleteAllGestures();
+        },
 
-      openEditor() {
-        set({ isEditorOpen: true }, false, "openEditor");
-      },
+        openEditor() {
+          set({ isEditorOpen: true }, false, "openEditor");
+        },
 
-      closeEditor() {
-        set({ isEditorOpen: false }, false, "closeEditor");
-      },
+        closeEditor() {
+          set({ isEditorOpen: false }, false, "closeEditor");
+        },
 
-      recordingStarted() {
-        set({ isRecording: true }, false, "recordingStarted");
-      },
-      recordingStopped() {
-        set({ isRecording: false }, false, "recordingStopped");
-      },
+        recordingStarted() {
+          set({ isRecording: true }, false, "recordingStarted");
+        },
+        recordingStopped() {
+          set({ isRecording: false }, false, "recordingStopped");
+        },
 
-      getDefaultIcon({ isFirstGesture, existingGestures }) {
-        if (isFirstGesture) {
-          return defaultIcons[0];
-        }
-        const iconsInUse = existingGestures.map((g) => g.icon);
-        const useableIcons: MakeCodeIcon[] = [];
-        for (const icon of defaultIcons) {
-          if (!iconsInUse.includes(icon)) {
-            useableIcons.push(icon);
+        getDefaultIcon({ isFirstGesture, existingGestures }) {
+          if (isFirstGesture) {
+            return defaultIcons[0];
           }
-        }
-        if (!useableIcons.length) {
-          // Better than throwing an error.
-          return "Heart";
-        }
-        return useableIcons[0];
-      },
-
-      generateNewGesture(isFirstGesture: boolean = false): GestureData {
-        return {
-          name: "",
-          recordings: [],
-          ID: Date.now(),
-          icon: get().getDefaultIcon({
-            isFirstGesture,
-            existingGestures: get().gestures,
-          }),
-        };
-      },
-
-      validateAndSetGestures(gestures: Partial<GestureData>[]) {
-        const validGestures: GestureData[] = [];
-        gestures.forEach((g) => {
-          if (g.ID && g.name !== undefined && Array.isArray(g.recordings)) {
-            if (!g.icon) {
-              g.icon = get().getDefaultIcon({
-                existingGestures: [...validGestures, ...gestures],
-                isFirstGesture: false,
-              });
+          const iconsInUse = existingGestures.map((g) => g.icon);
+          const useableIcons: MakeCodeIcon[] = [];
+          for (const icon of defaultIcons) {
+            if (!iconsInUse.includes(icon)) {
+              useableIcons.push(icon);
             }
-            validGestures.push(g as GestureData);
           }
-        });
-        get().setGestures(validGestures);
-      },
-
-      setGestures(gestures: GestureData[], isRetrainNeeded: boolean = true) {
-        set(
-          ({ mlStatus: previousMlStatus }) => {
-            gestures =
-              // Always have at least one gesture for walk through
-              gestures.length === 0
-                ? [get().generateNewGesture(true)]
-                : gestures;
-
-            const mlStatus = !hasSufficientDataForTraining(gestures)
-              ? { stage: MlStage.InsufficientData as const }
-              : isRetrainNeeded ||
-                previousMlStatus.stage === MlStage.InsufficientData
-              ? // Updating status to retrain status is in status hook
-                { stage: MlStage.NotTrained as const }
-              : previousMlStatus;
-
-            const gesturesLastModified = Date.now();
-            return {
-              gestures,
-              gesturesLastModified,
-              mlStatus,
-              ...updateProject(get(), gestures, gesturesLastModified, mlStatus),
-            };
-          },
-          false,
-          "setGestures"
-        );
-      },
-
-      addNewGesture() {
-        const { gestures, setGestures } = get();
-        setGestures([...gestures, get().generateNewGesture()]);
-      },
-
-      addGestureRecordings(id: GestureData["ID"], recs: RecordingData[]) {
-        const { gestures, setGestures } = get();
-        const newGestures = gestures.map((g) => {
-          return id !== g.ID
-            ? g
-            : { ...g, recordings: [...recs, ...g.recordings] };
-        });
-        setGestures(newGestures);
-      },
-
-      deleteGesture(id: GestureData["ID"]) {
-        const { gestures, setGestures } = get();
-        setGestures(gestures.filter((g) => g.ID !== id));
-      },
-
-      setGestureName(id: GestureData["ID"], name: string) {
-        const { gestures, setGestures } = get();
-        const newGestures = gestures.map((g) => {
-          return id !== g.ID ? g : { ...g, name };
-        });
-        setGestures(newGestures, false);
-      },
-
-      setGestureIcon(id: GestureData["ID"], icon: MakeCodeIcon) {
-        const { gestures, setGestures } = get();
-        const currentIcon = gestures.find((g) => g.ID === id)?.icon;
-        const newGestures = gestures.map((g) => {
-          if (g.ID === id) {
-            g.icon = icon;
-          } else if (g.ID !== id && g.icon === icon && currentIcon) {
-            g.icon = currentIcon;
+          if (!useableIcons.length) {
+            // Better than throwing an error.
+            return "Heart";
           }
-          return g;
-        });
-        setGestures(newGestures, false);
-      },
+          return useableIcons[0];
+        },
 
-      setRequiredConfidence(id: GestureData["ID"], value: number) {
-        const { gestures, setGestures } = get();
-        const newGestures = gestures.map((g) => {
-          return id !== g.ID ? g : { ...g, requiredConfidence: value };
-        });
-        setGestures(newGestures, false);
-      },
+        generateNewGesture(isFirstGesture: boolean = false): GestureData {
+          return {
+            name: "",
+            recordings: [],
+            ID: Date.now(),
+            icon: get().getDefaultIcon({
+              isFirstGesture,
+              existingGestures: get().gestures,
+            }),
+          };
+        },
 
-      deleteGestureRecording(
-        gestureId: GestureData["ID"],
-        recordingIdx: number
-      ) {
-        const { gestures, setGestures } = get();
-        const newGestures = gestures.map((g) => {
-          if (gestureId !== g.ID) {
+        validateAndSetGestures(gestures: Partial<GestureData>[]) {
+          const validGestures: GestureData[] = [];
+          gestures.forEach((g) => {
+            if (g.ID && g.name !== undefined && Array.isArray(g.recordings)) {
+              if (!g.icon) {
+                g.icon = get().getDefaultIcon({
+                  existingGestures: [...validGestures, ...gestures],
+                  isFirstGesture: false,
+                });
+              }
+              validGestures.push(g as GestureData);
+            }
+          });
+          get().setGestures(validGestures);
+        },
+
+        setGestures(gestures: GestureData[], isRetrainNeeded: boolean = true) {
+          set(
+            ({ mlStatus: previousMlStatus }) => {
+              gestures =
+                // Always have at least one gesture for walk through
+                gestures.length === 0
+                  ? [get().generateNewGesture(true)]
+                  : gestures;
+
+              const mlStatus = !hasSufficientDataForTraining(gestures)
+                ? { stage: MlStage.InsufficientData as const }
+                : isRetrainNeeded ||
+                  previousMlStatus.stage === MlStage.InsufficientData
+                ? // Updating status to retrain status is in status hook
+                  { stage: MlStage.NotTrained as const }
+                : previousMlStatus;
+
+              const gesturesLastModified = Date.now();
+              return {
+                gestures,
+                gesturesLastModified,
+                mlStatus,
+                ...updateProject(
+                  get(),
+                  gestures,
+                  gesturesLastModified,
+                  mlStatus
+                ),
+              };
+            },
+            false,
+            "setGestures"
+          );
+        },
+
+        addNewGesture() {
+          const { gestures, setGestures } = get();
+          setGestures([...gestures, get().generateNewGesture()]);
+        },
+
+        addGestureRecordings(id: GestureData["ID"], recs: RecordingData[]) {
+          const { gestures, setGestures } = get();
+          const newGestures = gestures.map((g) => {
+            return id !== g.ID
+              ? g
+              : { ...g, recordings: [...recs, ...g.recordings] };
+          });
+          setGestures(newGestures);
+        },
+
+        deleteGesture(id: GestureData["ID"]) {
+          const { gestures, setGestures } = get();
+          setGestures(gestures.filter((g) => g.ID !== id));
+        },
+
+        setGestureName(id: GestureData["ID"], name: string) {
+          const { gestures, setGestures } = get();
+          const newGestures = gestures.map((g) => {
+            return id !== g.ID ? g : { ...g, name };
+          });
+          setGestures(newGestures, false);
+        },
+
+        setGestureIcon(id: GestureData["ID"], icon: MakeCodeIcon) {
+          const { gestures, setGestures } = get();
+          const currentIcon = gestures.find((g) => g.ID === id)?.icon;
+          const newGestures = gestures.map((g) => {
+            if (g.ID === id) {
+              g.icon = icon;
+            } else if (g.ID !== id && g.icon === icon && currentIcon) {
+              g.icon = currentIcon;
+            }
             return g;
-          }
-          const recordings = g.recordings.filter((_r, i) => i !== recordingIdx);
-          return { ...g, recordings };
-        });
-        setGestures(newGestures);
-      },
+          });
+          setGestures(newGestures, false);
+        },
 
-      deleteAllGestures() {
-        get().setGestures([]);
-      },
+        setRequiredConfidence(id: GestureData["ID"], value: number) {
+          const { gestures, setGestures } = get();
+          const newGestures = gestures.map((g) => {
+            return id !== g.ID ? g : { ...g, requiredConfidence: value };
+          });
+          setGestures(newGestures, false);
+        },
 
-      downloadDataset() {
-        const { gestures } = get();
-        const a = document.createElement("a");
-        a.setAttribute(
-          "href",
-          "data:application/json;charset=utf-8," +
-            encodeURIComponent(JSON.stringify(gestures, null, 2))
-        );
-        a.setAttribute("download", "dataset");
-        a.style.display = "none";
-        a.click();
-      },
+        deleteGestureRecording(
+          gestureId: GestureData["ID"],
+          recordingIdx: number
+        ) {
+          const { gestures, setGestures } = get();
+          const newGestures = gestures.map((g) => {
+            if (gestureId !== g.ID) {
+              return g;
+            }
+            const recordings = g.recordings.filter(
+              (_r, i) => i !== recordingIdx
+            );
+            return { ...g, recordings };
+          });
+          setGestures(newGestures);
+        },
 
-      loadDataset(gestures: GestureData[]) {
-        get().validateAndSetGestures(gestures);
-      },
+        deleteAllGestures() {
+          get().setGestures([]);
+        },
 
-      async trainModel() {
-        const { gestures, gesturesLastModified } = get();
-        const actionName = "trainModel";
-        set(
-          {
-            mlStatus: { stage: MlStage.TrainingInProgress, progressValue: 0 },
-          },
-          false,
-          actionName
-        );
-        const trainingResult = await trainModel({
-          data: gestures,
-          onProgress: (progressValue) =>
-            set(
-              {
-                mlStatus: { stage: MlStage.TrainingInProgress, progressValue },
-              },
-              false,
-              actionName
-            ),
-        });
+        downloadDataset() {
+          const { gestures } = get();
+          const a = document.createElement("a");
+          a.setAttribute(
+            "href",
+            "data:application/json;charset=utf-8," +
+              encodeURIComponent(JSON.stringify(gestures, null, 2))
+          );
+          a.setAttribute("download", "dataset");
+          a.style.display = "none";
+          a.click();
+        },
 
-        const newStatus = trainingResult.error
-          ? { stage: MlStage.TrainingError as const }
-          : ({
-              stage: MlStage.TrainingComplete as const,
-              model: trainingResult.model,
-            } as const);
-        set(
-          {
-            mlStatus: newStatus,
-            ...updateProject(get(), gestures, gesturesLastModified, newStatus),
-          },
-          false,
-          actionName
-        );
-        return newStatus;
-      },
+        loadDataset(gestures: GestureData[]) {
+          get().validateAndSetGestures(gestures);
+        },
 
-      resetProject(): void {
-        const {
-          project: previousProject,
-          gestures,
-          gesturesLastModified,
-          mlStatus,
-        } = get();
-        const newProject = {
-          ...previousProject,
-          text: {
-            ...previousProject.text,
-            ...generateProject(
-              { data: gestures, lastModified: gesturesLastModified },
-              mlStatus.stage === MlStage.TrainingComplete
-                ? mlStatus.model
-                : undefined
-            ).text,
-          },
-        };
-        set(
-          {
-            project: newProject,
-            projectEdited: false,
-            appEditNeedsFlushToEditor: FlushType.Immediate,
-          },
-          false,
-          "resetProject"
-        );
-      },
-      loadProject(project: Project) {
-        set(
-          {
-            project,
-            projectEdited: true,
-            appEditNeedsFlushToEditor: FlushType.Immediate,
-          },
-          false,
-          "loadProject"
-        );
-        // We will update the gestures via the editorChange call which will have a new header.
-      },
-      editorChange(newProject: Project) {
-        const actionName = "editorChange";
-        const { project: previousProject, isEditorOpen } = get();
-        const previousHeader = previousProject?.header?.id;
-        const newHeader = newProject.header?.id;
-        // Ignore the initial header change when we get assigned one.
-        if (previousHeader !== newHeader) {
-          if (!previousHeader) {
-            // This is the first time MakeCode has loaded the project and it will assign a header.
-            return set({ project: newProject }, false, actionName);
-          } else {
-            // MakeCode has loaded a new hex, update our state to match:
-            const datasetString = newProject.text?.[filenames.datasetJson];
-            const dataset = datasetString
-              ? (JSON.parse(datasetString) as GestureContextState)
-              : { data: [], lastModified: Date.now() };
-            // This will cause another write to MakeCode but that's OK as it gives us
-            // a chance to validate/update the project
-            get().validateAndSetGestures(dataset.data);
+        async trainModel() {
+          const { gestures, gesturesLastModified } = get();
+          const actionName = "trainModel";
+          set(
+            {
+              mlStatus: { stage: MlStage.TrainingInProgress, progressValue: 0 },
+            },
+            false,
+            actionName
+          );
+          const trainingResult = await trainModel({
+            data: gestures,
+            onProgress: (progressValue) =>
+              set(
+                {
+                  mlStatus: {
+                    stage: MlStage.TrainingInProgress,
+                    progressValue,
+                  },
+                },
+                false,
+                actionName
+              ),
+          });
+
+          const newStatus = trainingResult.error
+            ? { stage: MlStage.TrainingError as const }
+            : ({
+                stage: MlStage.TrainingComplete as const,
+                model: trainingResult.model,
+              } as const);
+          set(
+            {
+              mlStatus: newStatus,
+              ...updateProject(
+                get(),
+                gestures,
+                gesturesLastModified,
+                newStatus
+              ),
+            },
+            false,
+            actionName
+          );
+          return newStatus;
+        },
+
+        resetProject(): void {
+          const {
+            project: previousProject,
+            gestures,
+            gesturesLastModified,
+            mlStatus,
+          } = get();
+          const newProject = {
+            ...previousProject,
+            text: {
+              ...previousProject.text,
+              ...generateProject(
+                { data: gestures, lastModified: gesturesLastModified },
+                mlStatus.stage === MlStage.TrainingComplete
+                  ? mlStatus.model
+                  : undefined
+              ).text,
+            },
+          };
+          set(
+            {
+              project: newProject,
+              projectEdited: false,
+              appEditNeedsFlushToEditor: FlushType.Immediate,
+            },
+            false,
+            "resetProject"
+          );
+        },
+        loadProject(project: Project) {
+          set(
+            {
+              project,
+              projectEdited: true,
+              appEditNeedsFlushToEditor: FlushType.Immediate,
+            },
+            false,
+            "loadProject"
+          );
+          // We will update the gestures via the editorChange call which will have a new header.
+        },
+        editorChange(newProject: Project) {
+          const actionName = "editorChange";
+          const { project: previousProject, isEditorOpen } = get();
+          const previousHeader = previousProject?.header?.id;
+          const newHeader = newProject.header?.id;
+          // Ignore the initial header change when we get assigned one.
+          if (previousHeader !== newHeader) {
+            if (!previousHeader) {
+              // This is the first time MakeCode has loaded the project and it will assign a header.
+              return set({ project: newProject }, false, actionName);
+            } else {
+              // MakeCode has loaded a new hex, update our state to match:
+              const datasetString = newProject.text?.[filenames.datasetJson];
+              const dataset = datasetString
+                ? (JSON.parse(datasetString) as GestureContextState)
+                : { data: [], lastModified: Date.now() };
+              // This will cause another write to MakeCode but that's OK as it gives us
+              // a chance to validate/update the project
+              get().validateAndSetGestures(dataset.data);
+              set(
+                {
+                  project: newProject,
+                  // New project loaded externally so we can't know whether its edited.
+                  projectEdited: true,
+                },
+                false,
+                actionName
+              );
+            }
+          } else if (isEditorOpen) {
             set(
               {
                 project: newProject,
-                // New project loaded externally so we can't know whether its edited.
                 projectEdited: true,
               },
               false,
               actionName
             );
           }
-        } else if (isEditorOpen) {
+        },
+        projectFlushedToEditor() {
           set(
             {
-              project: newProject,
-              projectEdited: true,
+              appEditNeedsFlushToEditor: undefined,
             },
             false,
-            actionName
+            "projectFlushedToEditor"
           );
-        }
-      },
-      projectFlushedToEditor() {
-        set(
-          {
-            appEditNeedsFlushToEditor: undefined,
-          },
-          false,
-          "projectFlushedToEditor"
-        );
-      },
-    }),
+        },
+      }),
+      {
+        name: "ml",
+        partialize: ({
+          gestures,
+          gesturesLastModified,
+          project,
+          projectEdited,
+          mlStatus,
+        }) => ({
+          gestures,
+          gesturesLastModified,
+          project,
+          projectEdited,
+          mlStatus,
+        }),
+      }
+    ),
     { enabled: flags.devtools }
   )
 );
 
-// Sync the model with IndexDB. Perhaps this could be middleware instead.
-// We still need to revisit the initial load along with other persistence.
-useAppStore.subscribe((state, prevState) => {
-  // console.log({ state });
+// TODO: would be good to load this safely with UI states that wait for it
+tf.loadLayersModel(modelUrl)
+  .then((model) => {
+    if (model) {
+      useAppStore.setState(
+        {
+          mlStatus: { stage: MlStage.TrainingComplete, model },
+        },
+        false,
+        "loadModel"
+      );
+    }
+  })
+  .catch(() => {
+    // This happens if there's no model.
+  });
 
+useAppStore.subscribe((state, prevState) => {
   if (
     state.mlStatus !== prevState.mlStatus &&
     state.mlStatus.stage !== MlStage.TrainingInProgress
