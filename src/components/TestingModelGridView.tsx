@@ -13,7 +13,7 @@ import {
   VisuallyHidden,
 } from "@chakra-ui/react";
 import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
-import React, { useCallback } from "react";
+import React from "react";
 import { RiArrowRightLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { mlSettings } from "../ml";
@@ -70,10 +70,6 @@ const TestingModelGridView = () => {
 
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
-
-  const handleResetProject = useCallback(() => {
-    resetProject();
-  }, [resetProject]);
 
   return (
     <>
@@ -181,7 +177,7 @@ const TestingModelGridView = () => {
                 <MenuList>
                   <MenuItem
                     icon={<RiDeleteBin2Line />}
-                    onClick={handleResetProject}
+                    onClick={resetProject}
                     isDisabled={!projectEdited}
                   >
                     <FormattedMessage id="reset-to-default-action" />
