@@ -16,7 +16,7 @@ interface EditCodeDialogProps {}
 const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
   function EditCodeDialog(_, ref) {
     const containerRef = useRef<HTMLDivElement>(null);
-    const isOpen = useAppStore((s) => s.isMakeCodeOpen);
+    const isOpen = useAppStore((s) => s.isEditorOpen);
     return (
       <>
         <Box

@@ -1,13 +1,26 @@
-import * as tf from "@tensorflow/tfjs";
 import { Project } from "@microbit/makecode-embed/react";
-import { GestureData, RecordingData } from "./gestures-hooks";
-import { MlStage, MlStatus } from "./ml-status-hooks";
+import * as tf from "@tensorflow/tfjs";
 import { create } from "zustand";
-import { generateProject } from "./makecode/utils";
-import { defaultIcons, MakeCodeIcon } from "./utils/icons";
+import {
+  GestureContextState,
+  GestureData,
+  RecordingData,
+} from "./gestures-hooks";
+import {
+  filenames,
+  generateCustomFiles,
+  generateProject,
+} from "./makecode/utils";
 import { trainModel } from "./ml";
+import { MlStage, MlStatus } from "./ml-status-hooks";
+import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 
 export const modelUrl = "indexeddb://micro:bit-ml-tool-model";
+
+export const enum FlushType {
+  Immediate,
+  Debounced,
+}
 
 export interface Store {
   gestures: GestureData[];
@@ -15,8 +28,8 @@ export interface Store {
   isRecording: boolean;
 
   getDefaultIcon(options: {
-    isFirstGesture?: boolean;
-    iconsInUse?: MakeCodeIcon[];
+    isFirstGesture: boolean;
+    existingGestures: { icon?: MakeCodeIcon }[];
   }): MakeCodeIcon;
   generateNewGesture(isFirstGesture?: boolean): GestureData;
   validateAndSetGestures(gestures: Partial<GestureData>[]): void;
@@ -33,21 +46,35 @@ export interface Store {
   ): void;
   deleteAllGestures(): void;
   downloadDataset(): void;
-
-  project: Project;
-  // false if we're sure the user hasn't changed the project, otherwise true
-  projectEdited: boolean;
+  loadDataset(gestures: GestureData[]): void;
 
   mlStatus: MlStatus;
 
-  isMakeCodeOpen: boolean;
-  openMakeCode(): void;
-  closeMakeCode(): void;
+  isEditorOpen: boolean;
+  appEditNeedsFlushToEditor: FlushType | undefined;
+
+  openEditor(): void;
+  closeEditor(): void;
   recordingStarted(): void;
   recordingStopped(): void;
   newSession(): void;
 
   trainModel(): void;
+
+  project: Project;
+  // false if we're sure the user hasn't changed the project, otherwise true
+  projectEdited: boolean;
+
+  /**
+   * Resets the project.
+   */
+  resetProject: () => void;
+
+  loadProject: (project: Project) => void;
+
+  editorChange: (project: Project) => void;
+
+  projectFlushedToEditor(): void;
 }
 
 // TODO: persistence
@@ -57,19 +84,20 @@ export const useAppStore = create<Store>()((set, get) => ({
   isRecording: false,
   project: generateProject({ data: [], lastModified: Date.now() }, undefined),
   projectEdited: false,
-  mlStatus: { stage: MlStage.InsufficientData },
-  isMakeCodeOpen: false,
+  mlStatus: { stage: MlStage.InsufficientData } as const,
+  isEditorOpen: false,
+  appEditNeedsFlushToEditor: undefined,
 
   newSession() {
     get().deleteAllGestures();
   },
 
-  openMakeCode() {
-    set({ isMakeCodeOpen: true });
+  openEditor() {
+    set({ isEditorOpen: true });
   },
 
-  closeMakeCode() {
-    set({ isMakeCodeOpen: false });
+  closeEditor() {
+    set({ isEditorOpen: false });
   },
 
   recordingStarted() {
@@ -79,19 +107,11 @@ export const useAppStore = create<Store>()((set, get) => ({
     set({ isRecording: false });
   },
 
-  getDefaultIcon({
-    isFirstGesture,
-    iconsInUse,
-  }: {
-    isFirstGesture?: boolean;
-    iconsInUse?: MakeCodeIcon[];
-  }): MakeCodeIcon {
+  getDefaultIcon({ isFirstGesture, existingGestures }) {
     if (isFirstGesture) {
       return defaultIcons[0];
     }
-    if (!iconsInUse) {
-      iconsInUse = get().gestures.map((g) => g.icon);
-    }
+    const iconsInUse = existingGestures.map((g) => g.icon);
     const useableIcons: MakeCodeIcon[] = [];
     for (const icon of defaultIcons) {
       if (!iconsInUse.includes(icon)) {
@@ -110,23 +130,21 @@ export const useAppStore = create<Store>()((set, get) => ({
       name: "",
       recordings: [],
       ID: Date.now(),
-      icon: get().getDefaultIcon({ isFirstGesture }),
+      icon: get().getDefaultIcon({
+        isFirstGesture,
+        existingGestures: get().gestures,
+      }),
     };
   },
 
   validateAndSetGestures(gestures: Partial<GestureData>[]) {
     const validGestures: GestureData[] = [];
-    const importedGestureIcons: MakeCodeIcon[] = gestures
-      .map((g) => g.icon as MakeCodeIcon)
-      .filter(Boolean);
     gestures.forEach((g) => {
       if (g.ID && g.name !== undefined && Array.isArray(g.recordings)) {
         if (!g.icon) {
-          g.icon = this.getDefaultIcon({
-            iconsInUse: [
-              ...validGestures.map((g) => g.icon),
-              ...importedGestureIcons,
-            ],
+          g.icon = get().getDefaultIcon({
+            existingGestures: [...validGestures, ...gestures],
+            isFirstGesture: false,
           });
         }
         validGestures.push(g as GestureData);
@@ -152,10 +170,12 @@ export const useAppStore = create<Store>()((set, get) => ({
           { stage: MlStage.NotTrained as const }
         : previousMlStatus;
 
+      const gesturesLastModified = Date.now();
       return {
         gestures,
-        gesturesLastModified: Date.now(),
+        gesturesLastModified,
         mlStatus,
+        ...updateProject(get(), gestures, gesturesLastModified, mlStatus),
       };
     });
   },
@@ -237,8 +257,13 @@ export const useAppStore = create<Store>()((set, get) => ({
     a.click();
   },
 
+  loadDataset(gestures: GestureData[]) {
+    get().validateAndSetGestures(gestures);
+  },
+
   async trainModel() {
-    const { gestures } = get();
+    const { gestures, gesturesLastModified } = get();
+
     set({ mlStatus: { stage: MlStage.TrainingInProgress, progressValue: 0 } });
     const trainingResult = await trainModel({
       data: gestures,
@@ -249,11 +274,13 @@ export const useAppStore = create<Store>()((set, get) => ({
     if (trainingResult.error) {
       set({ mlStatus: { stage: MlStage.TrainingError } });
     } else {
+      const newStatus = {
+        stage: MlStage.TrainingComplete,
+        model: trainingResult.model,
+      } as const;
       set({
-        mlStatus: {
-          stage: MlStage.TrainingComplete,
-          model: trainingResult.model,
-        },
+        mlStatus: newStatus,
+        ...updateProject(get(), gestures, gesturesLastModified, newStatus),
       });
       // TODO: maybe move to middleware?
       trainingResult.model.save(modelUrl).catch(() => {
@@ -262,13 +289,99 @@ export const useAppStore = create<Store>()((set, get) => ({
       return trainingResult;
     }
   },
+
+  resetProject(): void {
+    const {
+      project: previousProject,
+      gestures,
+      gesturesLastModified,
+      mlStatus,
+    } = get();
+    const newProject = {
+      ...previousProject,
+      text: {
+        ...previousProject.text,
+        ...generateProject(
+          { data: gestures, lastModified: gesturesLastModified },
+          mlStatus.stage === MlStage.TrainingComplete
+            ? mlStatus.model
+            : undefined
+        ).text,
+      },
+    };
+    set({
+      project: newProject,
+      projectEdited: false,
+      appEditNeedsFlushToEditor: FlushType.Immediate,
+    });
+  },
+  loadProject(project: Project) {
+    set({
+      project,
+      // We assume the project is edited. Potentially we could inspect/diff it.
+      projectEdited: true,
+      appEditNeedsFlushToEditor: FlushType.Immediate,
+    });
+    // This needs to update the gestures.
+  },
+  editorChange(newProject: Project) {
+    set(({ project: previousProject }) => {
+      const previousHeader = previousProject?.header?.id;
+      const newHeader = newProject.header?.id;
+      if (previousHeader !== newHeader) {
+        // MakeCode has loaded a new hex, update our state to match:
+        const datasetString = newProject.text?.[filenames.datasetJson];
+        const dataset = datasetString
+          ? (JSON.parse(datasetString) as GestureContextState)
+          : { data: [], lastModified: Date.now() };
+        get().validateAndSetGestures(dataset.data);
+      } else {
+        // This is just a user edit which we record.
+      }
+      return {
+        project: newProject,
+        projectEdited: true,
+      };
+    });
+  },
+  projectFlushedToEditor() {
+    set({
+      appEditNeedsFlushToEditor: undefined,
+    });
+  },
 }));
+
+const updateProject = (
+  store: Store,
+  gestures: GestureData[],
+  gesturesLastModified: number,
+  status: MlStatus
+): Partial<Store> => {
+  const { project: previousProject, projectEdited } = store;
+  const model =
+    status.stage === MlStage.TrainingComplete ? status.model : undefined;
+  const gestureData = { data: gestures, lastModified: gesturesLastModified };
+  const updatedProject = {
+    ...previousProject,
+    text: {
+      ...previousProject.text,
+      ...(projectEdited
+        ? generateCustomFiles(gestureData, model)
+        : generateProject(gestureData, model).text),
+    },
+  };
+  return {
+    project: updatedProject,
+    projectEdited,
+    appEditNeedsFlushToEditor: FlushType.Debounced,
+  };
+};
 
 export const useHasGestures = () => {
   const gestures = useAppStore((s) => s.gestures);
   return (
     (gestures.length > 0 && gestures[0].name.length > 0) ||
-    gestures[0].recordings.length > 0
+    gestures[0]?.recordings.length > 0
   );
 };
 

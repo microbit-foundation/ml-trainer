@@ -1,4 +1,3 @@
-import { usePrevious } from "@chakra-ui/react";
 import {
   EditorWorkspaceSaveRequest,
   MakeCodeFrameDriver,
@@ -17,15 +16,8 @@ import {
   useRef,
 } from "react";
 import { useConnectionStage } from "./connection-stage-hooks";
-import { GestureContextState, GestureData } from "./gestures-hooks";
-import {
-  filenames,
-  generateCustomFiles,
-  generateProject,
-} from "./makecode/utils";
-import { MlStage, TrainingCompleteMlStatus } from "./ml-status-hooks";
+import { FlushType, useAppStore } from "./store";
 import { getLowercaseFileExtension, readFileAsText } from "./utils/fs-util";
-import { useAppStore } from "./store";
 
 interface StoredProject {
   project: Project;
@@ -61,8 +53,7 @@ export const ProjectProvider = ({
   driverRef,
   children,
 }: ProjectProviderProps) => {
-  const isMakeCodeOpen = useAppStore((s) => s.isMakeCodeOpen);
-  const onBack = useAppStore((s) => s.closeMakeCode);
+  const onBack = useAppStore((s) => s.closeEditor);
 
   // We use this to track when we need special handling of an event from MakeCode
   const waitingForWorkspaceSave = useRef<
@@ -101,91 +92,55 @@ export const ProjectProvider = ({
     [driverRef]
   );
 
-  // TODO: can we adjust state management so it happens more directly in respose to gesture changes?
+  const project = useAppStore((s) => s.project);
+  const projectEdited = useAppStore((s) => s.projectEdited);
+  const appEditNeedsFlushToEditor = useAppStore(
+    (s) => s.appEditNeedsFlushToEditor
+  );
+  const projectFlushedToEditor = useAppStore((s) => s.projectFlushedToEditor);
   useEffect(() => {
-    const model =
-      status.stage === MlStage.TrainingComplete ? status.model : undefined;
-    const modelDefined = !!model;
-    if (
-      prevGestureData?.lastModified === gestures.lastModified &&
-      modelDefined === prevModelDefined
-    ) {
-      return;
+    // We set this when we make changes to the project in the app rather than via MakeCode
+    if (appEditNeedsFlushToEditor) {
+      if (appEditNeedsFlushToEditor === FlushType.Debounced) {
+        debouncedEditorUpdate(project);
+      } else {
+        void driverRef.current?.importProject({ project });
+      }
+      projectFlushedToEditor();
     }
-
-    const updatedProject = {
-      ...project,
-      text: {
-        ...project.text,
-        ...(projectEdited
-          ? generateCustomFiles(gestures, model)
-          : generateProject(gestures, model).text),
-      },
-    };
-    setProject({
-      project: updatedProject,
-      projectEdited,
-    });
-    debouncedEditorUpdate(updatedProject);
   }, [
     debouncedEditorUpdate,
-    prevGestureData?.lastModified,
-    prevModelDefined,
+    appEditNeedsFlushToEditor,
+    projectFlushedToEditor,
     project,
-    projectEdited,
-    resetProject,
+    driverRef,
   ]);
 
-  const resetProject = useCallback(() => {
-    const newProject = {
-      ...project,
-      text: {
-        ...project.text,
-        ...generateProject(gestures, (status as TrainingCompleteMlStatus).model)
-          .text,
-      },
-    };
-    setProject({
-      project: newProject,
-      projectEdited: false,
-    });
-    void driverRef.current?.importProject({ project: newProject });
-  }, [driverRef, gestures, project, setProject, status]);
+  const resetProject = useAppStore((s) => s.resetProject);
+  const loadProjectState = useAppStore((s) => s.loadProject);
+  const loadDataset = useAppStore((s) => s.loadDataset);
 
   const loadProject = useCallback(
     async (files: File[]): Promise<void> => {
       if (files.length !== 1) {
         throw new Error("Expected to be called with one file");
       }
-
       const file = files[0];
-
       const fileExtension = getLowercaseFileExtension(file.name);
-
       if (fileExtension === "json") {
         const gestureData = await readFileAsText(files[0]);
-        gestureActions.validateAndSetGestures(
-          JSON.parse(gestureData) as Partial<GestureData>[]
-        );
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        loadDataset(JSON.parse(gestureData));
       } else if (fileExtension === "hex") {
         driverRef.current!.importFile({
           filename: file.name,
           parts: [await readFileAsText(files[0])],
         });
         const project = await waitForNextWorkspaceSave();
-        const gestureData = project.text![filenames.datasetJson];
-        // TODO: validation? this could be any old MakeCode project
-        // so we need to load the gestures and perform an update on the project
-        // ... we have to assume the user has edited the projet.
-        gestureActions.validateAndSetGestures(
-          (JSON.parse(gestureData) as GestureContextState).data
-        );
-        setProject({ project, projectEdited: true });
-
-        // TODO: navigate to data samples as you could be on the home page, model page etc.
+        loadProjectState(project);
       }
     },
-    [driverRef, gestureActions, setProject, waitForNextWorkspaceSave]
+    [driverRef, loadDataset, loadProjectState, waitForNextWorkspaceSave]
   );
 
   const saveProjectHex = useCallback(async (): Promise<void> => {
@@ -197,32 +152,16 @@ export const ProjectProvider = ({
 
   // These are event handlers for MakeCode
 
+  const editorChange = useAppStore((s) => s.editorChange);
   const onWorkspaceSave = useCallback(
     (event: EditorWorkspaceSaveRequest) => {
-      const { project: newProject } = event;
       if (waitingForWorkspaceSave.current) {
         waitingForWorkspaceSave.current(event.project);
-      } else if (isMakeCodeOpen) {
-        // Could be a blocks edit but could also be a hex load inside of MakeCode
-        // We can probably distinguish these in future by looking at the header id
-
-        const newProjectHeaderId = newProject.header?.id;
-        const oldProjectHeaderId = project.header?.id;
-        console.log({ newProjectHeaderId, oldProjectHeaderId });
-
-        setProject({ project, projectEdited: true });
-        const gestureData = project.text![filenames.datasetJson];
-        if (gestureData) {
-          const parsedGestureData = JSON.parse(
-            gestureData
-          ) as GestureContextState;
-          if (parsedGestureData.lastModified !== get().gesturesLastModified) {
-            gestureActions.validateAndSetGestures(parsedGestureData.data);
-          }
-        }
+      } else {
+        editorChange(event.project);
       }
     },
-    [isMakeCodeOpen, project, setProject]
+    [editorChange]
   );
 
   const onSave = useCallback((save: { name: string; hex: string }) => {
@@ -263,6 +202,8 @@ export const ProjectProvider = ({
     }),
     [
       loadProject,
+      project,
+      projectEdited,
       resetProject,
       saveProjectHex,
       onSave,

@@ -60,7 +60,7 @@ const TestingModelGridView = () => {
   const gestures = useAppStore((s) => s.gestures);
   const setRequiredConfidence = useAppStore((s) => s.setRequiredConfidence);
   const { project, resetProject, projectEdited } = useProject();
-  const openMakeCode = useAppStore((s) => s.openMakeCode);
+  const openMakeCode = useAppStore((s) => s.openEditor);
 
   const detectedLabel =
     detected?.name ??
