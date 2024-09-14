@@ -2,8 +2,8 @@ import { Button, useDisclosure, useToast } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { RiDownload2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useSettings } from "../settings";
 import { useProject } from "../hooks/project-hooks";
+import { useSettings } from "../store";
 import SaveHelpDialog from "./SaveHelpDialog";
 import SaveProgressDialog from "./SaveProgressDialog";
 

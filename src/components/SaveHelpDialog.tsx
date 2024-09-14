@@ -13,7 +13,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import { useSettings } from "../settings";
+import { useSettings } from "../store";
 import { ChangeEvent, useCallback } from "react";
 
 interface SaveHelpDialogProps {
@@ -27,9 +27,9 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
   const skip = !settings.showPreSaveHelp;
   const handleChangeSkip = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      setSettings({ ...settings, showPreSaveHelp: !e.currentTarget.checked });
+      setSettings({ showPreSaveHelp: !e.currentTarget.checked });
     },
-    [setSettings, settings]
+    [setSettings]
   );
   return (
     <Modal

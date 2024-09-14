@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useBufferedData } from "../buffered-data-hooks";
 import { useConnectActions } from "../connect-actions-hooks";
-import { ConnectionStatus, useConnectStatus } from "../connect-status-hooks";
+import { useConnectStatus } from "../connect-status-hooks";
 import { Gesture } from "../model";
 import { useLogging } from "../logging/logging-hooks";
 import { Confidences, mlSettings, predict } from "../ml";
 import { useAppStore } from "../store";
-import { MlStage } from "../model";
 
 export interface PredictionResult {
   confidences: Confidences;
@@ -20,7 +19,7 @@ export const usePrediction = () => {
   const connection = useConnectActions();
   const [prediction, setPrediction] = useState<PredictionResult | undefined>();
   const gestureData = useAppStore((s) => s.gestures);
-  const status = useAppStore((s) => s.mlStatus);
+  const model = useAppStore((s) => s.model);
 
   // Use a ref to prevent restarting the effect every time thesholds change.
   // We only use the ref's value during the setInterval callback not render.
@@ -28,16 +27,13 @@ export const usePrediction = () => {
   const gestureDataRef = useRef(gestureData);
   gestureDataRef.current = gestureData;
   useEffect(() => {
-    if (
-      status.stage !== MlStage.TrainingComplete ||
-      connectStatus !== ConnectionStatus.Connected
-    ) {
+    if (!model) {
       return;
     }
     const runPrediction = async () => {
       const startTime = Date.now() - mlSettings.duration;
       const input = {
-        model: status.model,
+        model,
         data: buffer.getSamples(startTime),
         classificationIds: gestureDataRef.current.map((g) => g.ID),
       };
@@ -72,7 +68,7 @@ export const usePrediction = () => {
       setPrediction(undefined);
       clearInterval(interval);
     };
-  }, [connection, logging, status, connectStatus, buffer]);
+  }, [connection, logging, connectStatus, buffer, model]);
 
   return prediction;
 };

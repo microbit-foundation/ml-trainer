@@ -26,7 +26,6 @@ const smoothenDataPoint = (curr: number, next: number) => {
 
 const LiveGraph = () => {
   const { isConnected, status } = useConnectionStage();
-  const { stage } = useAppStore((s) => s.mlStatus);
   const connectActions = useConnectActions();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -109,7 +108,7 @@ const LiveGraph = () => {
         setIsTimingRecording(false);
       }, mlSettings.duration);
     }
-  }, [isTimingRecording, recordLines, isRecording, stage]);
+  }, [isTimingRecording, recordLines, isRecording]);
 
   const [labelConfigs, setLabelConfigs] =
     useState<LabelConfig[]>(initialLabelConfigs);

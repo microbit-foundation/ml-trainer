@@ -28,14 +28,12 @@ import UploadDataSamplesMenuItem from "../components/UploadDataSamplesMenuItem";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { SessionPageId } from "../pages-config";
-import { useTrainModelDialog } from "../hooks/train-model-dialog-hooks";
 import { createSessionPageUrl } from "../urls";
 import SaveButton from "../components/SaveButton";
 import {
   useAppStore,
-  useHasSufficientDataForTrainig as useHasSufficientDataForTraining,
+  useHasSufficientDataForTraining as useHasSufficientDataForTraining,
 } from "../store";
-import { MlStage } from "../model";
 
 const DataSamplesPage = () => {
   const intl = useIntl();
@@ -43,10 +41,10 @@ const DataSamplesPage = () => {
   const addNewGesture = useAppStore((s) => s.addNewGesture);
   const downloadDataSet = useAppStore((s) => s.downloadDataset);
   const deleteAllGestures = useAppStore((s) => s.deleteAllGestures);
-  const { stage } = useAppStore((s) => s.mlStatus);
+  const model = useAppStore((s) => s.model);
 
   const navigate = useNavigate();
-  const { onOpen: onOpenTrainModelDialog } = useTrainModelDialog();
+  const trainModelFlowStart = useAppStore((s) => s.trainModelFlowStart);
   const { isConnected, status } = useConnectionStage();
 
   const hasSufficientData = useHasSufficientDataForTraining();
@@ -113,7 +111,7 @@ const DataSamplesPage = () => {
               </MenuList>
             </Menu>
           </HStack>
-          {stage === MlStage.TrainingComplete ? (
+          {model ? (
             <Button
               onClick={handleNavigateToModel}
               variant="primary"
@@ -123,7 +121,7 @@ const DataSamplesPage = () => {
             </Button>
           ) : (
             <TrainingButton
-              onClick={onOpenTrainModelDialog}
+              onClick={trainModelFlowStart}
               variant={hasSufficientData ? "primary" : "secondary"}
             />
           )}

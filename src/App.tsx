@@ -22,8 +22,6 @@ import { LoggingProvider } from "./logging/logging-hooks";
 import TranslationProvider from "./messages/TranslationProvider";
 import { resourcesConfig, sessionPageConfigs } from "./pages-config";
 import HomePage from "./pages/HomePage";
-import SettingsProvider from "./settings";
-import { TrainModelDialogProvider } from "./hooks/train-model-dialog-hooks";
 import {
   createHomePageUrl,
   createResourcePageUrl,
@@ -46,28 +44,24 @@ const Providers = ({ children }: ProviderLayoutProps) => {
       <ChakraProvider theme={deployment.chakraTheme}>
         <LoggingProvider value={logging}>
           <ConsentProvider>
-            <SettingsProvider>
-              <TrainModelDialogProvider>
-                <ConnectStatusProvider>
-                  <ConnectProvider>
-                    <BufferedDataProvider>
-                      <ConnectionStageProvider>
-                        <ProjectProvider driverRef={driverRef}>
-                          <TranslationProvider>
-                            <ProjectDropTarget>
-                              <ErrorBoundary>
-                                <EditCodeDialog ref={driverRef} />
-                                {children}
-                              </ErrorBoundary>
-                            </ProjectDropTarget>
-                          </TranslationProvider>
-                        </ProjectProvider>
-                      </ConnectionStageProvider>
-                    </BufferedDataProvider>
-                  </ConnectProvider>
-                </ConnectStatusProvider>
-              </TrainModelDialogProvider>
-            </SettingsProvider>
+            <ConnectStatusProvider>
+              <ConnectProvider>
+                <BufferedDataProvider>
+                  <ConnectionStageProvider>
+                    <ProjectProvider driverRef={driverRef}>
+                      <TranslationProvider>
+                        <ProjectDropTarget>
+                          <ErrorBoundary>
+                            <EditCodeDialog ref={driverRef} />
+                            {children}
+                          </ErrorBoundary>
+                        </ProjectDropTarget>
+                      </TranslationProvider>
+                    </ProjectProvider>
+                  </ConnectionStageProvider>
+                </BufferedDataProvider>
+              </ConnectProvider>
+            </ConnectStatusProvider>
           </ConsentProvider>
         </LoggingProvider>
       </ChakraProvider>

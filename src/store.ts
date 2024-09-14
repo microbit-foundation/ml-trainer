@@ -1,17 +1,23 @@
 import { Project } from "@microbit/makecode-embed/react";
 import * as tf from "@tensorflow/tfjs";
 import { create } from "zustand";
-import { DatasetEditorJsonFormat, GestureData, RecordingData } from "./model";
+import {
+  DatasetEditorJsonFormat,
+  GestureData,
+  RecordingData,
+  TrainModelDialogStage,
+} from "./model";
 import {
   filenames,
   generateCustomFiles,
   generateProject,
 } from "./makecode/utils";
 import { trainModel } from "./ml";
-import { MlStage, MlStatus } from "./model";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { devtools, persist } from "zustand/middleware";
 import { flags } from "./flags";
+import { defaultSettings, Settings } from "./settings";
+import { useShallow } from "zustand/react/shallow";
 
 export const modelUrl = "indexeddb://micro:bit-ml-tool-model";
 
@@ -46,7 +52,8 @@ export interface Store {
   downloadDataset(): void;
   loadDataset(gestures: GestureData[]): void;
 
-  mlStatus: MlStatus;
+  modelStatus: "none" | "loading" | "ready";
+  model: tf.LayersModel | undefined;
 
   isEditorOpen: boolean;
   appEditNeedsFlushToEditor: FlushType | undefined;
@@ -57,11 +64,14 @@ export interface Store {
   recordingStopped(): void;
   newSession(): void;
 
-  trainModel(): Promise<MlStatus>;
+  trainModel(): Promise<boolean>;
 
   project: Project;
   // false if we're sure the user hasn't changed the project, otherwise true
   projectEdited: boolean;
+
+  settings: Settings;
+  setSettings(update: Partial<Settings>): void;
 
   /**
    * Resets the project.
@@ -73,9 +83,13 @@ export interface Store {
   editorChange: (project: Project) => void;
 
   projectFlushedToEditor(): void;
+
+  trainModelProgress: number;
+  trainModelDialogStage: TrainModelDialogStage;
+  trainModelFlowStart: () => Promise<void>;
+  closeTrainModelDialogs: () => void;
 }
 
-// TODO: persistence
 export const useAppStore = create<Store>()(
   devtools(
     persist(
@@ -88,9 +102,27 @@ export const useAppStore = create<Store>()(
           undefined
         ),
         projectEdited: false,
-        mlStatus: { stage: MlStage.InsufficientData } as const,
+        settings: defaultSettings,
+        modelStatus: "none",
+        model: undefined,
         isEditorOpen: false,
         appEditNeedsFlushToEditor: undefined,
+        // This dialog flow spans two pages
+        trainModelDialogStage: TrainModelDialogStage.Closed,
+        trainModelProgress: 0,
+
+        setSettings(update: Partial<Settings>) {
+          set(
+            ({ settings }) => ({
+              settings: {
+                ...settings,
+                ...update,
+              },
+            }),
+            false,
+            "setSettings"
+          );
+        },
 
         newSession() {
           get().deleteAllGestures();
@@ -160,31 +192,26 @@ export const useAppStore = create<Store>()(
 
         setGestures(gestures: GestureData[], isRetrainNeeded: boolean = true) {
           set(
-            ({ mlStatus: previousMlStatus }) => {
+            ({ model, modelStatus }) => {
               gestures =
                 // Always have at least one gesture for walk through
                 gestures.length === 0
                   ? [get().generateNewGesture(true)]
                   : gestures;
 
-              const mlStatus = !hasSufficientDataForTraining(gestures)
-                ? { stage: MlStage.InsufficientData as const }
-                : isRetrainNeeded ||
-                  previousMlStatus.stage === MlStage.InsufficientData
-                ? // Updating status to retrain status is in status hook
-                  { stage: MlStage.NotTrained as const }
-                : previousMlStatus;
-
+              const modelUpdates = isRetrainNeeded
+                ? { model: undefined, modelStatus: "none" as const }
+                : { model, modelStatus };
               const gesturesLastModified = Date.now();
               return {
                 gestures,
                 gesturesLastModified,
-                mlStatus,
+                ...modelUpdates,
                 ...updateProject(
                   get(),
                   gestures,
                   gesturesLastModified,
-                  mlStatus
+                  modelUpdates.model
                 ),
               };
             },
@@ -281,51 +308,49 @@ export const useAppStore = create<Store>()(
           get().validateAndSetGestures(gestures);
         },
 
+        closeTrainModelDialogs() {
+          set({
+            trainModelDialogStage: TrainModelDialogStage.Closed,
+          });
+        },
+
+        async trainModelFlowStart() {
+          if (get().settings.showPreTrainHelp) {
+            set({
+              // TODO: this should respect the settings which should be in the state
+              trainModelDialogStage: TrainModelDialogStage.ShowingIntroduction,
+            });
+          } else {
+            await get().trainModel();
+          }
+        },
+
         async trainModel() {
           const { gestures, gesturesLastModified } = get();
           const actionName = "trainModel";
-          set(
-            {
-              mlStatus: { stage: MlStage.TrainingInProgress, progressValue: 0 },
-            },
-            false,
-            actionName
-          );
+          set({
+            trainModelDialogStage: TrainModelDialogStage.TrainingInProgress,
+            trainModelProgress: 0,
+          });
           const trainingResult = await trainModel({
             data: gestures,
-            onProgress: (progressValue) =>
-              set(
-                {
-                  mlStatus: {
-                    stage: MlStage.TrainingInProgress,
-                    progressValue,
-                  },
-                },
-                false,
-                actionName
-              ),
+            onProgress: (trainModelProgress) =>
+              set({ trainModelProgress }, false, "trainModelProgress"),
           });
-
-          const newStatus = trainingResult.error
-            ? { stage: MlStage.TrainingError as const }
-            : ({
-                stage: MlStage.TrainingComplete as const,
-                model: trainingResult.model,
-              } as const);
+          const model = trainingResult.error ? undefined : trainingResult.model;
           set(
             {
-              mlStatus: newStatus,
-              ...updateProject(
-                get(),
-                gestures,
-                gesturesLastModified,
-                newStatus
-              ),
+              modelStatus: "ready",
+              model,
+              trainModelDialogStage: model
+                ? TrainModelDialogStage.Closed
+                : TrainModelDialogStage.TrainingError,
+              ...updateProject(get(), gestures, gesturesLastModified, model),
             },
             false,
             actionName
           );
-          return newStatus;
+          return !trainingResult.error;
         },
 
         resetProject(): void {
@@ -333,7 +358,7 @@ export const useAppStore = create<Store>()(
             project: previousProject,
             gestures,
             gesturesLastModified,
-            mlStatus,
+            model,
           } = get();
           const newProject = {
             ...previousProject,
@@ -341,9 +366,7 @@ export const useAppStore = create<Store>()(
               ...previousProject.text,
               ...generateProject(
                 { data: gestures, lastModified: gesturesLastModified },
-                mlStatus.stage === MlStage.TrainingComplete
-                  ? mlStatus.model
-                  : undefined
+                model
               ).text,
             },
           };
@@ -426,13 +449,14 @@ export const useAppStore = create<Store>()(
           gesturesLastModified,
           project,
           projectEdited,
-          mlStatus,
+          modelStatus,
         }) => ({
           gestures,
           gesturesLastModified,
           project,
           projectEdited,
-          mlStatus,
+          modelStatus,
+          // The model itself is in IndexDB
         }),
       }
     ),
@@ -440,17 +464,10 @@ export const useAppStore = create<Store>()(
   )
 );
 
-// TODO: would be good to load this safely with UI states that wait for it
 tf.loadLayersModel(modelUrl)
   .then((model) => {
     if (model) {
-      useAppStore.setState(
-        {
-          mlStatus: { stage: MlStage.TrainingComplete, model },
-        },
-        false,
-        "loadModel"
-      );
+      useAppStore.setState({ model }, false, "loadModel");
     }
   })
   .catch(() => {
@@ -458,21 +475,16 @@ tf.loadLayersModel(modelUrl)
   });
 
 useAppStore.subscribe((state, prevState) => {
-  if (
-    state.mlStatus !== prevState.mlStatus &&
-    state.mlStatus.stage !== MlStage.TrainingInProgress
-  ) {
-    const model =
-      state.mlStatus.stage === MlStage.TrainingComplete
-        ? state.mlStatus.model
-        : undefined;
-    if (model) {
-      model.save(modelUrl).catch(() => {
-        // IndexedDB not available?
-      });
-    } else {
+  const { model: newModel } = state;
+  const { model: previousModel } = prevState;
+  if (newModel !== previousModel) {
+    if (!newModel) {
       tf.io.removeModel(modelUrl).catch(() => {
         // No IndexedDB/no model.
+      });
+    } else {
+      newModel.save(modelUrl).catch(() => {
+        // IndexedDB not available?
       });
     }
   }
@@ -482,11 +494,9 @@ const updateProject = (
   store: Store,
   gestures: GestureData[],
   gesturesLastModified: number,
-  status: MlStatus
+  model: tf.LayersModel | undefined
 ): Partial<Store> => {
   const { project: previousProject, projectEdited } = store;
-  const model =
-    status.stage === MlStage.TrainingComplete ? status.model : undefined;
   const gestureData = { data: gestures, lastModified: gesturesLastModified };
   const updatedProject = {
     ...previousProject,
@@ -518,7 +528,7 @@ const hasSufficientDataForTraining = (gestures: GestureData[]): boolean => {
   );
 };
 
-export const useHasSufficientDataForTrainig = (): boolean => {
+export const useHasSufficientDataForTraining = (): boolean => {
   const gestures = useAppStore((s) => s.gestures);
   return hasSufficientDataForTraining(gestures);
 };
@@ -528,4 +538,10 @@ export const useHasNoStoredData = (): boolean => {
   return !(
     gestures.length !== 0 && gestures.some((g) => g.recordings.length > 0)
   );
+};
+
+type UseSettingsReturn = [Settings, (settings: Partial<Settings>) => void];
+
+export const useSettings = (): UseSettingsReturn => {
+  return useAppStore(useShallow((s) => [s.settings, s.setSettings]));
 };

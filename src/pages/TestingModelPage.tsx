@@ -5,7 +5,6 @@ import { useNavigate } from "react-router";
 import BackArrow from "../components/BackArrow";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import TestingModelGridView from "../components/TestingModelGridView";
-import { MlStage } from "../model";
 import { SessionPageId } from "../pages-config";
 import { createSessionPageUrl } from "../urls";
 import SaveButton from "../components/SaveButton";
@@ -13,18 +12,19 @@ import { useAppStore } from "../store";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
-  const { stage } = useAppStore((s) => s.mlStatus);
+  const model = useAppStore((s) => s.model);
 
   const navigateToDataSamples = useCallback(() => {
     navigate(createSessionPageUrl(SessionPageId.DataSamples));
   }, [navigate]);
 
   useEffect(() => {
-    if (stage !== MlStage.TrainingComplete) {
+    if (!model) {
       navigateToDataSamples();
     }
-  });
-  return stage === MlStage.TrainingComplete ? (
+  }, [model, navigateToDataSamples]);
+
+  return model ? (
     <DefaultPageLayout
       titleId={`${SessionPageId.TestingModel}-title`}
       showPageTitle

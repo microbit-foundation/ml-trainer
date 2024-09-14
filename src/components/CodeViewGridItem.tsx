@@ -4,9 +4,8 @@ import {
   MakeCodeBlocksRendering,
 } from "@microbit/makecode-embed/react";
 import { memo, useMemo } from "react";
-import { GestureData } from "../model";
 import { generateProject } from "../makecode/utils";
-import { TrainingCompleteMlStatus } from "../model";
+import { GestureData } from "../model";
 import { useAppStore } from "../store";
 
 interface CodeViewGridItemProps {
@@ -18,18 +17,17 @@ const CodeViewGridItem = ({
   gesture,
   projectEdited,
 }: CodeViewGridItemProps) => {
-  const status = useAppStore((s) => s.mlStatus);
+  const model = useAppStore((s) => s.model);
   const gestures = useAppStore((s) => s.gestures);
   const gesturesLastModified = useAppStore((s) => s.gesturesLastModified);
-
   const project = useMemo(
     () =>
       generateProject(
         { data: gestures, lastModified: gesturesLastModified },
-        (status as TrainingCompleteMlStatus).model,
+        model,
         gesture
       ),
-    [gesture, gestures, gesturesLastModified, status]
+    [gesture, gestures, gesturesLastModified, model]
   );
   const width = useMemo(
     () => `${120 + gesture.name.length * 5}px`,

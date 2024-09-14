@@ -15,7 +15,8 @@ import {
 import { HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
-import { Language, supportedLanguages, useSettings } from "../settings";
+import { Language, supportedLanguages } from "../settings";
+import { useSettings } from "../store";
 
 interface LanguageDialogProps {
   isOpen: boolean;
@@ -34,13 +35,10 @@ export const LanguageDialog = ({
   const [settings, setSettings] = useSettings();
   const handleChooseLanguage = useCallback(
     (languageId: string) => {
-      setSettings({
-        ...settings,
-        languageId,
-      });
+      setSettings({ languageId });
       onClose();
     },
-    [settings, setSettings, onClose]
+    [setSettings, onClose]
   );
   const hasPreviewLanguages = supportedLanguages.some((l) => l.preview);
   return (
