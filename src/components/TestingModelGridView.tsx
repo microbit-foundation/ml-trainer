@@ -59,8 +59,7 @@ const TestingModelGridView = () => {
   const intl = useIntl();
   const gestures = useAppStore((s) => s.gestures);
   const setRequiredConfidence = useAppStore((s) => s.setRequiredConfidence);
-  const { project, resetProject, projectEdited } = useProject();
-  const openMakeCode = useAppStore((s) => s.openEditor);
+  const { openEditor, project, resetProject, projectEdited } = useProject();
 
   const detectedLabel =
     detected?.name ??
@@ -164,7 +163,7 @@ const TestingModelGridView = () => {
         >
           <Menu>
             <ButtonGroup isAttached>
-              <Button variant="primary" onClick={openMakeCode}>
+              <Button variant="primary" onClick={openEditor}>
                 <FormattedMessage id="edit-in-makecode-action" />
               </Button>
               <MoreMenuButton

@@ -32,7 +32,7 @@ export const LanguageDialog = ({
   onClose,
   finalFocusRef,
 }: LanguageDialogProps) => {
-  const [settings, setSettings] = useSettings();
+  const [, setSettings] = useSettings();
   const handleChooseLanguage = useCallback(
     (languageId: string) => {
       setSettings({ languageId });

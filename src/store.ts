@@ -56,9 +56,8 @@ export interface Store {
 
   isEditorOpen: boolean;
   appEditNeedsFlushToEditor: FlushType | undefined;
+  setEditorOpen(open: boolean): void;
 
-  openEditor(): void;
-  closeEditor(): void;
   recordingStarted(): void;
   recordingStopped(): void;
   newSession(): void;
@@ -127,12 +126,8 @@ export const useAppStore = create<Store>()(
           get().resetProject();
         },
 
-        openEditor() {
-          set({ isEditorOpen: true }, false, "openEditor");
-        },
-
-        closeEditor() {
-          set({ isEditorOpen: false }, false, "closeEditor");
+        setEditorOpen(open: boolean) {
+          set({ isEditorOpen: open }, false, "setEditorOpen");
         },
 
         recordingStarted() {

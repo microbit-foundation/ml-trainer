@@ -23,6 +23,7 @@ import { isDatasetUserFileFormat } from "../model";
 import { PromiseQueue } from "../utils/promise-queue";
 
 interface ProjectContext {
+  openEditor(): Promise<void>;
   project: Project;
   projectEdited: boolean;
   resetProject: () => void;
@@ -58,24 +59,24 @@ class EditorFlushHandler {
     >
   ) {}
   flushImmediate = async (headerId: string) => {
-    await this.queue.add(() => this.driver.current!.unloadProject());
-    console.log("unloaded");
-    const done = new Promise<void>((resolve) => {
-      this.editorContentLoadedCallbackRef.current = resolve;
+    await this.queue.add(async () => {
+      await this.driver.current!.unloadProject();
+      const done = new Promise<void>((resolve) => {
+        this.editorContentLoadedCallbackRef.current = resolve;
+      });
+      await this.driver.current!.openHeader(headerId);
+      await done;
     });
-    await this.queue.add(() => this.driver.current!.openHeader(headerId));
-    console.log("opened");
-    await this.queue.add(() => done);
-    console.log("done");
   };
   flushDebounced = debounce(this.flushImmediate, 300);
+  afterCurrent = (action: () => Promise<void>) => this.queue.add(action);
 }
 
 export const ProjectProvider = ({
   driverRef,
   children,
 }: ProjectProviderProps) => {
-  const onBack = useAppStore((s) => s.closeEditor);
+  const setEditorOpen = useAppStore((s) => s.setEditorOpen);
 
   // We use this to track when we need special handling of an event from MakeCode
   const waitingForEditorContentLoaded = useRef<undefined | (() => void)>(
@@ -135,6 +136,14 @@ export const ProjectProvider = ({
     }
   }, [appEditNeedsFlushToEditor, projectFlushedToEditor, project, driverRef]);
 
+  const openEditor = useCallback(() => {
+    return editorFlushHandler.current.afterCurrent(() => {
+      console.log("Opening MakeCode");
+      setEditorOpen(true);
+      return Promise.resolve();
+    });
+  }, [setEditorOpen]);
+
   const resetProject = useAppStore((s) => s.resetProject);
   const loadProjectState = useAppStore((s) => s.loadProject);
   const loadDataset = useAppStore((s) => s.loadDataset);
@@ -183,6 +192,8 @@ export const ProjectProvider = ({
     [editorChange]
   );
 
+  const onBack = useCallback(() => setEditorOpen(false), [setEditorOpen]);
+
   const onSave = useCallback((save: { name: string; hex: string }) => {
     // Handles the event we get from MakeCode to say a hex needs saving to disk.
     // In practice this is via "Download" ... "Save as file"
@@ -212,6 +223,7 @@ export const ProjectProvider = ({
   const value = useMemo(
     () => ({
       loadProject,
+      openEditor,
       project,
       projectEdited,
       resetProject,
@@ -226,15 +238,16 @@ export const ProjectProvider = ({
     }),
     [
       loadProject,
+      onBack,
+      onDownload,
+      onEditorContentLoaded,
+      onSave,
+      onWorkspaceSave,
+      openEditor,
       project,
       projectEdited,
       resetProject,
       saveProjectHex,
-      onSave,
-      onWorkspaceSave,
-      onDownload,
-      onBack,
-      onEditorContentLoaded,
     ]
   );
 
