@@ -6,6 +6,7 @@ import {
 } from "@microbit/makecode-embed/react";
 import debounce from "lodash.debounce";
 import {
+  MutableRefObject,
   ReactNode,
   RefObject,
   createContext,
@@ -19,6 +20,7 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import { FlushType, useAppStore } from "../store";
 import { getLowercaseFileExtension, readFileAsText } from "../utils/fs-util";
 import { isDatasetUserFileFormat } from "../model";
+import { PromiseQueue } from "../utils/promise-queue";
 
 interface ProjectContext {
   project: Project;
@@ -47,11 +49,38 @@ interface ProjectProviderProps {
   children: ReactNode;
 }
 
+class EditorFlushHandler {
+  constructor(
+    private queue: PromiseQueue,
+    private driver: RefObject<MakeCodeFrameDriver>,
+    private editorContentLoadedCallbackRef: MutableRefObject<
+      undefined | (() => void)
+    >
+  ) {}
+  flushImmediate = async (headerId: string) => {
+    await this.queue.add(() => this.driver.current!.unloadProject());
+    console.log("unloaded");
+    const done = new Promise<void>((resolve) => {
+      this.editorContentLoadedCallbackRef.current = resolve;
+    });
+    await this.queue.add(() => this.driver.current!.openHeader(headerId));
+    console.log("opened");
+    await this.queue.add(() => done);
+    console.log("done");
+  };
+  flushDebounced = debounce(this.flushImmediate, 300);
+}
+
 export const ProjectProvider = ({
   driverRef,
   children,
 }: ProjectProviderProps) => {
   const onBack = useAppStore((s) => s.closeEditor);
+
+  // We use this to track when we need special handling of an event from MakeCode
+  const waitingForEditorContentLoaded = useRef<undefined | (() => void)>(
+    undefined
+  );
 
   // We use this to track when we need special handling of an event from MakeCode
   const waitingForWorkspaceSave = useRef<
@@ -81,9 +110,12 @@ export const ProjectProvider = ({
     });
   }, []);
 
-  const debouncedFlushToEditor = useMemo(
-    () => debounce(flushToEditor, 300),
-    []
+  const editorFlushHandler = useRef(
+    new EditorFlushHandler(
+      new PromiseQueue(),
+      driverRef,
+      waitingForEditorContentLoaded
+    )
   );
   const project = useAppStore((s) => s.project);
   const projectEdited = useAppStore((s) => s.projectEdited);
@@ -94,23 +126,14 @@ export const ProjectProvider = ({
   useEffect(() => {
     // We set this when we make changes to the project in the app rather than via MakeCode
     if (appEditNeedsFlushToEditor !== undefined) {
-      const flushAsync = async () => {
-        if (appEditNeedsFlushToEditor === FlushType.Debounced) {
-          await debouncedFlushToEditor(driverRef, project);
-        } else {
-          await flushToEditor(driverRef, project);
-        }
-      };
-      void flushAsync();
+      if (appEditNeedsFlushToEditor === FlushType.Debounced) {
+        void editorFlushHandler.current.flushDebounced(project.header!.id);
+      } else {
+        void editorFlushHandler.current.flushImmediate(project.header!.id);
+      }
       projectFlushedToEditor();
     }
-  }, [
-    debouncedFlushToEditor,
-    appEditNeedsFlushToEditor,
-    projectFlushedToEditor,
-    project,
-    driverRef,
-  ]);
+  }, [appEditNeedsFlushToEditor, projectFlushedToEditor, project, driverRef]);
 
   const resetProject = useAppStore((s) => s.resetProject);
   const loadProjectState = useAppStore((s) => s.loadProject);
@@ -167,6 +190,11 @@ export const ProjectProvider = ({
     triggerBrowserDownload(save);
   }, []);
 
+  const onEditorContentLoaded = useCallback(() => {
+    waitingForEditorContentLoaded.current?.();
+    waitingForEditorContentLoaded.current = undefined;
+  }, []);
+
   const { actions } = useConnectionStage();
   const onDownload = useCallback(
     // Handles the event we get from MakeCode to say a hex needs downloading to the micro:bit.
@@ -193,6 +221,7 @@ export const ProjectProvider = ({
         onWorkspaceSave,
         onDownload,
         onBack,
+        onEditorContentLoaded,
       },
     }),
     [
@@ -205,6 +234,7 @@ export const ProjectProvider = ({
       onWorkspaceSave,
       onDownload,
       onBack,
+      onEditorContentLoaded,
     ]
   );
 
@@ -220,14 +250,4 @@ const triggerBrowserDownload = (save: { name: string; hex: string }) => {
   a.download = `${save.name}.hex`;
   a.click();
   URL.revokeObjectURL(a.href);
-};
-
-const flushToEditor = async (
-  driverRef: RefObject<MakeCodeFrameDriver>,
-  project: Project
-) => {
-  // This causes MakeCode to redo the workspacesync process so it will
-  // see an updated copy of the project.
-  await driverRef.current?.unloadProject();
-  await driverRef.current?.openHeader(project.header!.id);
 };
