@@ -52,7 +52,6 @@ export interface Store {
   downloadDataset(): void;
   loadDataset(gestures: GestureData[]): void;
 
-  modelStatus: "none" | "loading" | "ready";
   model: tf.LayersModel | undefined;
 
   isEditorOpen: boolean;
@@ -103,7 +102,6 @@ export const useAppStore = create<Store>()(
         ),
         projectEdited: false,
         settings: defaultSettings,
-        modelStatus: "none",
         model: undefined,
         isEditorOpen: false,
         appEditNeedsFlushToEditor: undefined,
@@ -192,7 +190,7 @@ export const useAppStore = create<Store>()(
 
         setGestures(gestures: GestureData[], isRetrainNeeded: boolean = true) {
           set(
-            ({ model, modelStatus }) => {
+            ({ model }) => {
               gestures =
                 // Always have at least one gesture for walk through
                 gestures.length === 0
@@ -200,8 +198,8 @@ export const useAppStore = create<Store>()(
                   : gestures;
 
               const modelUpdates = isRetrainNeeded
-                ? { model: undefined, modelStatus: "none" as const }
-                : { model, modelStatus };
+                ? { model: undefined }
+                : { model };
               const gesturesLastModified = Date.now();
               return {
                 gestures,
@@ -340,7 +338,6 @@ export const useAppStore = create<Store>()(
           const model = trainingResult.error ? undefined : trainingResult.model;
           set(
             {
-              modelStatus: "ready",
               model,
               trainModelDialogStage: model
                 ? TrainModelDialogStage.Closed
@@ -449,13 +446,11 @@ export const useAppStore = create<Store>()(
           gesturesLastModified,
           project,
           projectEdited,
-          modelStatus,
         }) => ({
           gestures,
           gesturesLastModified,
           project,
           projectEdited,
-          modelStatus,
           // The model itself is in IndexDB
         }),
       }
