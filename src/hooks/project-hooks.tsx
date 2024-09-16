@@ -58,13 +58,13 @@ class EditorFlushHandler {
       undefined | (() => void)
     >
   ) {}
-  flushImmediate = async (headerId: string) => {
+  flushImmediate = async (project: Project) => {
     await this.queue.add(async () => {
       await this.driver.current!.unloadProject();
       const done = new Promise<void>((resolve) => {
         this.editorContentLoadedCallbackRef.current = resolve;
       });
-      await this.driver.current!.openHeader(headerId);
+      await this.driver.current!.openHeader(project.header!.id);
       await done;
     });
   };
@@ -128,9 +128,9 @@ export const ProjectProvider = ({
     // We set this when we make changes to the project in the app rather than via MakeCode
     if (appEditNeedsFlushToEditor !== undefined) {
       if (appEditNeedsFlushToEditor === FlushType.Debounced) {
-        void editorFlushHandler.current.flushDebounced(project.header!.id);
+        void editorFlushHandler.current.flushDebounced(project);
       } else {
-        void editorFlushHandler.current.flushImmediate(project.header!.id);
+        void editorFlushHandler.current.flushImmediate(project);
       }
       projectFlushedToEditor();
     }
