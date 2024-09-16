@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/require-await */
 import { describe, expect, it } from "vitest";
 import { PromiseQueue } from "./promise-queue.js";
 
@@ -5,11 +6,11 @@ describe("PromiseQueue", () => {
   it("waits for previous items", async () => {
     const sequence: number[] = [];
     const queue = new PromiseQueue();
-    queue.add(async () => {
+    void queue.add(async () => {
       expect(sequence).toEqual([]);
       sequence.push(1);
     });
-    queue.add(async () => {
+    void queue.add(async () => {
       expect(sequence).toEqual([1]);
       sequence.push(2);
     });
@@ -18,7 +19,7 @@ describe("PromiseQueue", () => {
         expect(sequence).toEqual([1, 2]);
         sequence.push(3);
         return 3;
-      }),
+      })
     ).toEqual(3);
     expect(sequence).toEqual([1, 2, 3]);
   });
@@ -43,13 +44,13 @@ describe("PromiseQueue", () => {
     const queue = new PromiseQueue();
     const rejected: Promise<unknown>[] = [];
     const p1 = queue.add(
-      () => new Promise((resolve) => setTimeout(resolve, 1000)),
+      () => new Promise((resolve) => setTimeout(resolve, 1000))
     );
     const p2 = queue.add(
-      () => new Promise((resolve) => setTimeout(resolve, 1000)),
+      () => new Promise((resolve) => setTimeout(resolve, 1000))
     );
     const p3 = queue.add(
-      () => new Promise((resolve) => setTimeout(resolve, 1000)),
+      () => new Promise((resolve) => setTimeout(resolve, 1000))
     );
     p1.catch(() => rejected.push(p1));
     p2.catch(() => rejected.push(p2));

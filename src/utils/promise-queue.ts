@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface QueueEntry<T> {
   action: () => Promise<T>;
   resolve: (v: T) => void;
