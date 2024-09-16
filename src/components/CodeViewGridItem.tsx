@@ -19,15 +19,9 @@ const CodeViewGridItem = ({
 }: CodeViewGridItemProps) => {
   const model = useAppStore((s) => s.model);
   const gestures = useAppStore((s) => s.gestures);
-  const gesturesLastModified = useAppStore((s) => s.version);
   const project = useMemo(
-    () =>
-      generateProject(
-        { data: gestures, version: gesturesLastModified },
-        model,
-        gesture
-      ),
-    [gesture, gestures, gesturesLastModified, model]
+    () => generateProject({ data: gestures }, model, gesture),
+    [gesture, gestures, model]
   );
   const width = useMemo(
     () => `${120 + gesture.name.length * 5}px`,

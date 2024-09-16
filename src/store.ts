@@ -23,13 +23,6 @@ import { useShallow } from "zustand/react/shallow";
 export const modelUrl = "indexeddb://micro:bit-ml-tool-model";
 
 export interface Store {
-  /**
-   * UUID for the currently open project.
-   * This should match the id field in dataset.json in the MakeCode project if they are the same project.
-   *
-   * We update this before save.
-   */
-  version: string;
   gestures: GestureData[];
   isRecording: boolean;
 
@@ -58,6 +51,7 @@ export interface Store {
 
   isEditorOpen: boolean;
   appEditNeedsFlushToEditor: boolean;
+  changedHeaderExpected: boolean;
   setEditorOpen(open: boolean): void;
 
   recordingStarted(): void;
@@ -82,6 +76,7 @@ export interface Store {
 
   editorChange: (project: Project) => void;
 
+  expectChangedHeader(): void;
   projectFlushedToEditor(): void;
 
   trainModelProgress: number;
@@ -90,13 +85,11 @@ export interface Store {
   closeTrainModelDialogs: () => void;
 }
 
-const initialId = uuid4();
 export const useAppStore = create<Store>()(
   devtools(
     persist(
       (set, get) => ({
         gestures: [],
-        version: initialId,
         isRecording: false,
         project: {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -121,13 +114,14 @@ export const useAppStore = create<Store>()(
             saveId: null,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any,
-          ...generateProject({ data: [], version: initialId }, undefined),
+          ...generateProject({ data: [] }, undefined),
         },
         projectEdited: false,
         settings: defaultSettings,
         model: undefined,
         isEditorOpen: false,
         appEditNeedsFlushToEditor: false,
+        changedHeaderExpected: false,
         // This dialog flow spans two pages
         trainModelDialogStage: TrainModelDialogStage.Closed,
         trainModelProgress: 0,
@@ -371,20 +365,12 @@ export const useAppStore = create<Store>()(
         },
 
         resetProject(): void {
-          const {
-            project: previousProject,
-            gestures,
-            version: gesturesLastModified,
-            model,
-          } = get();
+          const { project: previousProject, gestures, model } = get();
           const newProject = {
             ...previousProject,
             text: {
               ...previousProject.text,
-              ...generateProject(
-                { data: gestures, version: gesturesLastModified },
-                model
-              ).text,
+              ...generateProject({ data: gestures }, model).text,
             },
           };
           set(
@@ -419,40 +405,47 @@ export const useAppStore = create<Store>()(
         },
         editorChange(newProject: Project) {
           const actionName = "editorChange";
-          const {
-            project: previousProject,
-            projectEdited,
-            version: id,
-            isEditorOpen,
-          } = get();
-          // This could be a user edit, a spurious change from MakeCode or the user loading a new hex while inside MakeCode
-          const datasetString = newProject.text?.[filenames.datasetJson];
-          const dataset = datasetString
-            ? (JSON.parse(datasetString) as DatasetEditorJsonFormat)
-            : { data: [], id: uuid4() };
-          if (dataset.version !== id) {
-            // It's a new project. Thanks user. We'll update our state.
-            // This will cause another write to MakeCode but that's OK as it gives us
-            // a chance to validate/update the project
-            set(
-              {
+          set(({ project: prevProject, isEditorOpen, expectChangedHeader }) => {
+            const newProjectHeader = newProject.header!.id;
+            const previousProjectHeader = prevProject.header!.id;
+            console.log(newProjectHeader, previousProjectHeader);
+
+            if (
+              newProjectHeader !== previousProjectHeader &&
+              !expectChangedHeader
+            ) {
+              // It's a new project. Thanks user. We'll update our state.
+              // This will cause another write to MakeCode but that's OK as it gives us
+              // a chance to validate/update the project
+              const datasetString = newProject.text?.[filenames.datasetJson];
+              const dataset = datasetString
+                ? (JSON.parse(datasetString) as DatasetEditorJsonFormat)
+                : { data: [], version: uuid4() };
+
+              // TODO!
+              get().validateAndSetGestures(dataset.data);
+
+              return {
                 project: newProject,
                 // New project loaded externally so we can't know whether its edited.
                 projectEdited: true,
-                version: dataset.version,
-              },
-              false,
-              actionName
-            );
-            get().validateAndSetGestures(dataset.data);
-          } else if (isEditorOpen) {
-            set({ project: newProject }, false, actionName);
-          }
+                changedHeaderExpected: false,
+              };
+            } else if (isEditorOpen) {
+              return {
+                project: newProject,
+                changedHeaderExpected: false,
+              };
+            }
+          });
+        },
+        expectChangedHeader() {
+          set({ changedHeaderExpected: true });
         },
         projectFlushedToEditor() {
           set(
             {
-              appEditNeedsFlushToEditor: undefined,
+              appEditNeedsFlushToEditor: false,
             },
             false,
             "projectFlushedToEditor"
@@ -461,15 +454,8 @@ export const useAppStore = create<Store>()(
       }),
       {
         name: "ml",
-        partialize: ({
+        partialize: ({ gestures, project, projectEdited, settings }) => ({
           gestures,
-          version: id,
-          project,
-          projectEdited,
-          settings,
-        }) => ({
-          gestures,
-          id,
           project,
           projectEdited,
           settings,
@@ -514,12 +500,7 @@ const updateProject = (
 ): Partial<Store> => {
   const { project: previousProject, projectEdited } = store;
 
-  const datasetFile = previousProject.text?.[filenames.datasetJson];
-  const id = datasetFile
-    ? (JSON.parse(datasetFile) as DatasetEditorJsonFormat).version
-    : uuid4();
-
-  const gestureData = { data: gestures, id: id };
+  const gestureData = { data: gestures };
   const updatedProject = {
     ...previousProject,
     text: {
@@ -566,11 +547,4 @@ type UseSettingsReturn = [Settings, (settings: Partial<Settings>) => void];
 
 export const useSettings = (): UseSettingsReturn => {
   return useAppStore(useShallow((s) => [s.settings, s.setSettings]));
-};
-
-const isSameProject = (p1: Project, p2: Project) => {
-  // We use a very loose definition as this is just to decide if we're OK rewriting it.
-  const main1 = p1.text?.[filenames.mainTs];
-  const main2 = p2.text?.[filenames.mainTs];
-  return main1 === main2;
 };

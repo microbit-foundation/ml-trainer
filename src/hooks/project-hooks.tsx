@@ -4,9 +4,7 @@ import {
   MakeCodeFrameProps,
   Project,
 } from "@microbit/makecode-embed/react";
-import debounce from "lodash.debounce";
 import {
-  MutableRefObject,
   ReactNode,
   RefObject,
   createContext,
@@ -19,7 +17,6 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import { isDatasetUserFileFormat } from "../model";
 import { useAppStore } from "../store";
 import { getLowercaseFileExtension, readFileAsText } from "../utils/fs-util";
-import { PromiseQueue } from "../utils/promise-queue";
 
 interface ProjectContext {
   openEditor(): Promise<void>;
@@ -47,27 +44,6 @@ export const useProject = (): ProjectContext => {
 interface ProjectProviderProps {
   driverRef: RefObject<MakeCodeFrameDriver>;
   children: ReactNode;
-}
-
-class EditorFlushHandler {
-  constructor(
-    private queue: PromiseQueue,
-    private driver: RefObject<MakeCodeFrameDriver>,
-    private editorContentLoadedCallbackRef: MutableRefObject<
-      undefined | (() => void)
-    >
-  ) {}
-  flushImmediate = async (project: Project) => {
-    await this.queue.add(async () => {
-      const done = new Promise<void>((resolve) => {
-        this.editorContentLoadedCallbackRef.current = resolve;
-      });
-      await this.driver.current!.importProject({ project });
-      await done;
-    });
-  };
-  flushDebounced = debounce(this.flushImmediate, 300);
-  afterCurrent = (action: () => Promise<void>) => this.queue.add(action);
 }
 
 export const ProjectProvider = ({
@@ -109,15 +85,9 @@ export const ProjectProvider = ({
     });
   }, []);
 
-  const editorFlushHandler = useRef(
-    new EditorFlushHandler(
-      new PromiseQueue(),
-      driverRef,
-      waitingForEditorContentLoaded
-    )
-  );
   const project = useAppStore((s) => s.project);
   const projectEdited = useAppStore((s) => s.projectEdited);
+  const expectChangedHeader = useAppStore((s) => s.expectChangedHeader);
   const projectFlushedToEditor = useAppStore((s) => s.projectFlushedToEditor);
   const appEditNeedsFlushToEditor = useAppStore(
     (s) => s.appEditNeedsFlushToEditor
@@ -125,12 +95,19 @@ export const ProjectProvider = ({
   const doAfterMakeCodeUpdate = useCallback(
     async (action: () => Promise<void>) => {
       if (appEditNeedsFlushToEditor) {
-        await editorFlushHandler.current.flushImmediate(project);
+        expectChangedHeader();
+        await driverRef.current!.importProject({ project });
         projectFlushedToEditor();
       }
-      return editorFlushHandler.current.afterCurrent(action);
+      return action();
     },
-    [appEditNeedsFlushToEditor, project, projectFlushedToEditor]
+    [
+      appEditNeedsFlushToEditor,
+      driverRef,
+      expectChangedHeader,
+      project,
+      projectFlushedToEditor,
+    ]
   );
   const openEditor = useCallback(async () => {
     await doAfterMakeCodeUpdate(() => {
@@ -166,9 +143,7 @@ export const ProjectProvider = ({
     [driverRef, loadDataset, loadProjectState, waitForNextWorkspaceSave]
   );
 
-  const updateVersion = useAppStore((s) => s.updateVersion());
   const saveProjectHex = useCallback(async (): Promise<void> => {
-    updateVersion();
     await doAfterMakeCodeUpdate(async () => {
       const downloadPromise = waitForNextDownload();
       await driverRef.current!.compile();
