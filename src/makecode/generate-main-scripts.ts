@@ -36,7 +36,7 @@ interface LanguageStatements {
 
 const statements: Record<Language, LanguageStatements> = {
   javascript: {
-    wrapper: (children) => children,
+    wrapper: (children) => children + "\n",
     showLeds: (ledPattern) => `basic.showLeds(\`${ledPattern}\`)`,
     showIcon: (iconName) => `basic.showIcon(IconNames.${iconName})`,
     clearDisplay: () => "basic.clearScreen()",
@@ -46,7 +46,7 @@ const statements: Record<Language, LanguageStatements> = {
   },
   blocks: {
     wrapper: (children) =>
-      `<xml xmlns="https://developers.google.com/blockly/xml">${children}</xml>`,
+      `<xml xmlns="https://developers.google.com/blockly/xml"><variables></variables>${children}</xml>`,
     showLeds: (ledPattern) =>
       `<block type="device_show_leds"><field name="LEDS">\`${ledPattern}\`</field></block>`,
     showIcon: (iconName) =>
@@ -80,13 +80,14 @@ export const getMainScript = (
     );
   const s = statements[lang];
   const initPos = { x: 0, y: 0 };
-  return s.wrapper(`
-  ${configs
-    .map((c, idx) =>
-      s.onMLEvent(c.name, onMLEventChildren(s, c), {
-        x: initPos.x,
-        y: initPos.y + idx * 350,
-      })
-    )
-    .join("\n")}  `);
+  return s.wrapper(
+    configs
+      .map((c, idx) =>
+        s.onMLEvent(c.name, onMLEventChildren(s, c), {
+          x: initPos.x,
+          y: initPos.y + idx * 350,
+        })
+      )
+      .join("\n")
+  );
 };
