@@ -4,6 +4,7 @@ import * as tf from "@tensorflow/tfjs";
 import { create } from "zustand";
 import {
   DatasetEditorJsonFormat,
+  Gesture,
   GestureData,
   RecordingData,
   TrainModelDialogStage,
@@ -22,17 +23,33 @@ import { useShallow } from "zustand/react/shallow";
 
 export const modelUrl = "indexeddb://micro:bit-ml-tool-model";
 
+const updateProject = (
+  project: Project,
+  projectEdited: boolean,
+  gestures: GestureData[],
+  model: tf.LayersModel | undefined
+): Partial<Store> => {
+  const gestureData = { data: gestures };
+  const updatedProject = {
+    ...project,
+    text: {
+      ...project.text,
+      ...(projectEdited
+        ? generateCustomFiles(gestureData, model)
+        : generateProject(gestureData, model).text),
+    },
+  };
+  return {
+    project: updatedProject,
+    projectEdited,
+    appEditNeedsFlushToEditor: true,
+  };
+};
+
 export interface Store {
   gestures: GestureData[];
   isRecording: boolean;
 
-  getDefaultIcon(options: {
-    isFirstGesture: boolean;
-    existingGestures: { icon?: MakeCodeIcon }[];
-  }): MakeCodeIcon;
-  generateNewGesture(isFirstGesture?: boolean): GestureData;
-  validateAndSetGestures(gestures: Partial<GestureData>[]): void;
-  setGestures(gestures: GestureData[], isRetrainNeeded?: boolean): void;
   addNewGesture(): void;
   addGestureRecordings(id: GestureData["ID"], recs: RecordingData[]): void;
   deleteGesture(id: GestureData["ID"]): void;
@@ -163,144 +180,120 @@ export const useAppStore = create<Store>()(
           set({ isRecording: false }, false, "recordingStopped");
         },
 
-        getDefaultIcon({ isFirstGesture, existingGestures }) {
-          if (isFirstGesture) {
-            return defaultIcons[0];
-          }
-          const iconsInUse = existingGestures.map((g) => g.icon);
-          const useableIcons: MakeCodeIcon[] = [];
-          for (const icon of defaultIcons) {
-            if (!iconsInUse.includes(icon)) {
-              useableIcons.push(icon);
-            }
-          }
-          if (!useableIcons.length) {
-            // Better than throwing an error.
-            return "Heart";
-          }
-          return useableIcons[0];
-        },
-
-        generateNewGesture(isFirstGesture: boolean = false): GestureData {
-          return {
-            name: "",
-            recordings: [],
-            ID: Date.now(),
-            icon: get().getDefaultIcon({
-              isFirstGesture,
-              existingGestures: get().gestures,
-            }),
-          };
-        },
-
-        validateAndSetGestures(gestures: Partial<GestureData>[]) {
-          const validGestures: GestureData[] = [];
-          gestures.forEach((g) => {
-            if (g.ID && g.name !== undefined && Array.isArray(g.recordings)) {
-              if (!g.icon) {
-                g.icon = get().getDefaultIcon({
-                  existingGestures: [...validGestures, ...gestures],
-                  isFirstGesture: false,
-                });
-              }
-              validGestures.push(g as GestureData);
-            }
-          });
-          get().setGestures(validGestures);
-        },
-
-        setGestures(gestures: GestureData[], isRetrainNeeded: boolean = true) {
-          set(
-            ({ model }) => {
-              gestures =
-                // Always have at least one gesture for walk through
-                gestures.length === 0
-                  ? [get().generateNewGesture(true)]
-                  : gestures;
-
-              const modelUpdates = isRetrainNeeded
-                ? { model: undefined }
-                : { model };
-              return {
-                gestures,
-                ...modelUpdates,
-                ...updateProject(get(), gestures, modelUpdates.model),
-              };
-            },
-            false,
-            "setGestures"
-          );
-        },
-
         addNewGesture() {
-          const { gestures, setGestures } = get();
-          setGestures([...gestures, get().generateNewGesture()]);
+          return set(({ project, projectEdited, gestures }) => {
+            const newGestures = [
+              ...gestures,
+              {
+                icon: gestureIcon({
+                  isFirstGesture: gestures.length === 0,
+                  existingGestures: gestures,
+                }),
+                ID: Date.now(),
+                name: "",
+                recordings: [],
+              },
+            ];
+            return {
+              gestures: newGestures,
+              model: undefined,
+              ...updateProject(project, projectEdited, newGestures, undefined),
+            };
+          });
         },
 
         addGestureRecordings(id: GestureData["ID"], recs: RecordingData[]) {
-          const { gestures, setGestures } = get();
-          const newGestures = gestures.map((g) => {
-            return id !== g.ID
-              ? g
-              : { ...g, recordings: [...recs, ...g.recordings] };
-          });
-          setGestures(newGestures);
+          return set(({ gestures }) => ({
+            gestures: gestures.map((g) => {
+              if (g.ID === id) {
+                return { ...g, recordings: [...recs, ...g.recordings] };
+              }
+              return g;
+            }),
+            model: undefined,
+          }));
         },
 
         deleteGesture(id: GestureData["ID"]) {
-          const { gestures, setGestures } = get();
-          setGestures(gestures.filter((g) => g.ID !== id));
+          return set(({ project, projectEdited, gestures }) => {
+            const newGestures = gestures.filter((g) => g.ID !== id);
+            return {
+              gestures: newGestures,
+              model: undefined,
+              ...updateProject(project, projectEdited, newGestures, undefined),
+            };
+          });
         },
 
         setGestureName(id: GestureData["ID"], name: string) {
-          const { gestures, setGestures } = get();
-          const newGestures = gestures.map((g) => {
-            return id !== g.ID ? g : { ...g, name };
+          return set(({ project, projectEdited, gestures, model }) => {
+            const newGestures = gestures.map((g) =>
+              id !== g.ID ? g : { ...g, name }
+            );
+            return {
+              gestures: newGestures,
+              ...updateProject(project, projectEdited, newGestures, model),
+            };
           });
-          setGestures(newGestures, false);
         },
 
         setGestureIcon(id: GestureData["ID"], icon: MakeCodeIcon) {
-          const { gestures, setGestures } = get();
-          const currentIcon = gestures.find((g) => g.ID === id)?.icon;
-          const newGestures = gestures.map((g) => {
-            if (g.ID === id) {
-              g.icon = icon;
-            } else if (g.ID !== id && g.icon === icon && currentIcon) {
-              g.icon = currentIcon;
-            }
-            return g;
+          return set(({ project, projectEdited, gestures, model }) => {
+            const newGestures = gestures.map((g) => {
+              if (g.ID === id) {
+                g.icon = icon;
+              } else if (g.ID !== id && g.icon === icon && currentIcon) {
+                g.icon = currentIcon;
+              }
+              return g;
+            });
+            // TODO: check this
+            const currentIcon = gestures.find((g) => g.ID === id)?.icon;
+            return {
+              gestures: newGestures,
+              ...updateProject(project, projectEdited, newGestures, model),
+            };
           });
-          setGestures(newGestures, false);
         },
 
         setRequiredConfidence(id: GestureData["ID"], value: number) {
-          const { gestures, setGestures } = get();
-          const newGestures = gestures.map((g) => {
-            return id !== g.ID ? g : { ...g, requiredConfidence: value };
+          return set(({ project, projectEdited, gestures, model }) => {
+            const newGestures = gestures.map((g) =>
+              id !== g.ID ? g : { ...g, requiredConfidence: value }
+            );
+            return {
+              gestures: newGestures,
+              ...updateProject(project, projectEdited, newGestures, model),
+            };
           });
-          setGestures(newGestures, false);
         },
 
-        deleteGestureRecording(
-          gestureId: GestureData["ID"],
-          recordingIdx: number
-        ) {
-          const { gestures, setGestures } = get();
-          const newGestures = gestures.map((g) => {
-            if (gestureId !== g.ID) {
-              return g;
-            }
-            const recordings = g.recordings.filter(
-              (_r, i) => i !== recordingIdx
-            );
-            return { ...g, recordings };
+        deleteGestureRecording(id: GestureData["ID"], recordingIdx: number) {
+          return set(({ project, projectEdited, gestures }) => {
+            const newGestures = gestures.map((g) => {
+              if (id !== g.ID) {
+                return g;
+              }
+              const recordings = g.recordings.filter(
+                (_r, i) => i !== recordingIdx
+              );
+              return { ...g, recordings };
+            });
+
+            return {
+              gestures: newGestures,
+              model: undefined,
+              ...updateProject(project, projectEdited, newGestures, undefined),
+            };
           });
-          setGestures(newGestures);
         },
 
         deleteAllGestures() {
-          get().setGestures([]);
+          return set(({ project, projectEdited }) => ({
+            gestures: [],
+            model: undefined,
+            ...updateProject(project, projectEdited, [], undefined),
+          }));
         },
 
         downloadDataset() {
@@ -316,8 +309,25 @@ export const useAppStore = create<Store>()(
           a.click();
         },
 
-        loadDataset(gestures: GestureData[]) {
-          get().validateAndSetGestures(gestures);
+        loadDataset(newGestures: GestureData[]) {
+          set(({ project, projectEdited }) => {
+            return {
+              gestures: (() => {
+                const copy = newGestures.map((g) => ({ ...g }));
+                for (const g of copy) {
+                  if (!g.icon) {
+                    g.icon = gestureIcon({
+                      isFirstGesture: false,
+                      existingGestures: copy,
+                    });
+                  }
+                }
+                return copy;
+              })(),
+              model: undefined,
+              ...updateProject(project, projectEdited, newGestures, undefined),
+            };
+          });
         },
 
         closeTrainModelDialogs() {
@@ -351,13 +361,13 @@ export const useAppStore = create<Store>()(
           });
           const model = trainingResult.error ? undefined : trainingResult.model;
           set(
-            {
+            ({ project, projectEdited }) => ({
               model,
               trainModelDialogStage: model
                 ? TrainModelDialogStage.Closed
                 : TrainModelDialogStage.TrainingError,
-              ...updateProject(get(), gestures, model),
-            },
+              ...updateProject(project, projectEdited, gestures, model),
+            }),
             false,
             actionName
           );
@@ -384,60 +394,68 @@ export const useAppStore = create<Store>()(
           );
         },
         loadProject(newProject: Project) {
-          set(
-            {
-              project: newProject,
-              projectEdited: true,
-              appEditNeedsFlushToEditor: true,
-            },
-            false,
-            "loadProject"
-          );
-
           // MakeCode has loaded a new hex, update our state to match:
           const datasetString = newProject.text?.[filenames.datasetJson];
           const dataset = datasetString
             ? (JSON.parse(datasetString) as DatasetEditorJsonFormat)
             : { data: [], lastModified: Date.now() };
-          // This will cause another write to MakeCode eventually, but that's OK as it gives us
-          // a chance to validate/update the project
-          get().validateAndSetGestures(dataset.data);
+
+          set(
+            {
+              project: newProject,
+              projectEdited: true,
+              appEditNeedsFlushToEditor: true,
+              gestures: dataset.data,
+              model: undefined,
+            },
+            false,
+            "loadProject"
+          );
         },
         editorChange(newProject: Project) {
           const actionName = "editorChange";
-          set(({ project: prevProject, isEditorOpen, expectChangedHeader }) => {
-            const newProjectHeader = newProject.header!.id;
-            const previousProjectHeader = prevProject.header!.id;
-            console.log(newProjectHeader, previousProjectHeader);
+          set(
+            (state) => {
+              const {
+                project: prevProject,
+                isEditorOpen,
+                expectChangedHeader,
+              } = state;
+              const newProjectHeader = newProject.header!.id;
+              const previousProjectHeader = prevProject.header!.id;
+              console.log(newProjectHeader, previousProjectHeader);
 
-            if (
-              newProjectHeader !== previousProjectHeader &&
-              !expectChangedHeader
-            ) {
-              // It's a new project. Thanks user. We'll update our state.
-              // This will cause another write to MakeCode but that's OK as it gives us
-              // a chance to validate/update the project
-              const datasetString = newProject.text?.[filenames.datasetJson];
-              const dataset = datasetString
-                ? (JSON.parse(datasetString) as DatasetEditorJsonFormat)
-                : { data: [], version: uuid4() };
+              if (
+                newProjectHeader !== previousProjectHeader &&
+                !expectChangedHeader
+              ) {
+                // It's a new project. Thanks user. We'll update our state.
+                // This will cause another write to MakeCode but that's OK as it gives us
+                // a chance to validate/update the project
+                const datasetString = newProject.text?.[filenames.datasetJson];
+                const dataset = datasetString
+                  ? (JSON.parse(datasetString) as DatasetEditorJsonFormat)
+                  : { data: [], version: uuid4() };
 
-              // TODO!
-              get().validateAndSetGestures(dataset.data);
-
-              return {
-                project: newProject,
-                // New project loaded externally so we can't know whether its edited.
-                projectEdited: true,
-                changedHeaderExpected: false,
-              };
-            } else if (isEditorOpen) {
-              return {
-                project: newProject,
-                changedHeaderExpected: false,
-              };
-            }
-          });
+                return {
+                  project: newProject,
+                  // New project loaded externally so we can't know whether its edited.
+                  projectEdited: true,
+                  changedHeaderExpected: false,
+                  gestures: dataset.data,
+                  model: undefined,
+                };
+              } else if (isEditorOpen) {
+                return {
+                  project: newProject,
+                  changedHeaderExpected: false,
+                };
+              }
+              return state;
+            },
+            false,
+            actionName
+          );
         },
         expectChangedHeader() {
           set({ changedHeaderExpected: true });
@@ -493,30 +511,6 @@ useAppStore.subscribe((state, prevState) => {
   }
 });
 
-const updateProject = (
-  store: Store,
-  gestures: GestureData[],
-  model: tf.LayersModel | undefined
-): Partial<Store> => {
-  const { project: previousProject, projectEdited } = store;
-
-  const gestureData = { data: gestures };
-  const updatedProject = {
-    ...previousProject,
-    text: {
-      ...previousProject.text,
-      ...(projectEdited
-        ? generateCustomFiles(gestureData, model)
-        : generateProject(gestureData, model).text),
-    },
-  };
-  return {
-    project: updatedProject,
-    projectEdited,
-    appEditNeedsFlushToEditor: true,
-  };
-};
-
 export const useHasGestures = () => {
   const gestures = useAppStore((s) => s.gestures);
   return (
@@ -547,4 +541,28 @@ type UseSettingsReturn = [Settings, (settings: Partial<Settings>) => void];
 
 export const useSettings = (): UseSettingsReturn => {
   return useAppStore(useShallow((s) => [s.settings, s.setSettings]));
+};
+
+const gestureIcon = ({
+  isFirstGesture,
+  existingGestures,
+}: {
+  isFirstGesture: boolean;
+  existingGestures: Gesture[];
+}) => {
+  if (isFirstGesture) {
+    return defaultIcons[0];
+  }
+  const iconsInUse = existingGestures.map((g) => g.icon);
+  const useableIcons: MakeCodeIcon[] = [];
+  for (const icon of defaultIcons) {
+    if (!iconsInUse.includes(icon)) {
+      useableIcons.push(icon);
+    }
+  }
+  if (!useableIcons.length) {
+    // Better than throwing an error.
+    return "Heart";
+  }
+  return useableIcons[0];
 };

@@ -2,12 +2,12 @@ import { Input, MenuItem } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
 import { RiUpload2Line } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import { GestureData } from "../model";
-import { readFileAsText } from "../utils/fs-util";
+import { isDatasetUserFileFormat } from "../model";
 import { useAppStore } from "../store";
+import { readFileAsText } from "../utils/fs-util";
 
 const UploadDataSamplesMenuItem = () => {
-  const validateAndSetGestures = useAppStore((s) => s.validateAndSetGestures);
+  const loadDataset = useAppStore((s) => s.loadDataset);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -21,9 +21,14 @@ const UploadDataSamplesMenuItem = () => {
         throw new Error("Expected to be called with at least one file");
       }
       const gestureData = await readFileAsText(files[0]);
-      validateAndSetGestures(JSON.parse(gestureData) as Partial<GestureData>[]);
+      const json = JSON.parse(gestureData) as unknown;
+      if (isDatasetUserFileFormat(json)) {
+        loadDataset(json);
+      } else {
+        // TODO: notify user, also JSON parse error
+      }
     },
-    [validateAndSetGestures]
+    [loadDataset]
   );
 
   const handleOpenFile = useCallback(
