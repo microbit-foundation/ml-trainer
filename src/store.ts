@@ -423,8 +423,6 @@ export const useAppStore = create<Store>()(
               } = state;
               const newProjectHeader = newProject.header!.id;
               const previousProjectHeader = prevProject.header!.id;
-              console.log(newProjectHeader, previousProjectHeader);
-
               if (
                 newProjectHeader !== previousProjectHeader &&
                 !expectChangedHeader
@@ -435,7 +433,7 @@ export const useAppStore = create<Store>()(
                 const datasetString = newProject.text?.[filenames.datasetJson];
                 const dataset = datasetString
                   ? (JSON.parse(datasetString) as DatasetEditorJsonFormat)
-                  : { data: [], version: uuid4() };
+                  : { data: [] };
 
                 return {
                   project: newProject,
