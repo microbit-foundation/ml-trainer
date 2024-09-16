@@ -19,11 +19,11 @@ const CodeViewGridItem = ({
 }: CodeViewGridItemProps) => {
   const model = useAppStore((s) => s.model);
   const gestures = useAppStore((s) => s.gestures);
-  const gesturesLastModified = useAppStore((s) => s.gesturesLastModified);
+  const gesturesLastModified = useAppStore((s) => s.version);
   const project = useMemo(
     () =>
       generateProject(
-        { data: gestures, lastModified: gesturesLastModified },
+        { data: gestures, version: gesturesLastModified },
         model,
         gesture
       ),

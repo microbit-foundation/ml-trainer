@@ -12,14 +12,13 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useRef,
 } from "react";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { FlushType, useAppStore } from "../store";
-import { getLowercaseFileExtension, readFileAsText } from "../utils/fs-util";
 import { isDatasetUserFileFormat } from "../model";
+import { useAppStore } from "../store";
+import { getLowercaseFileExtension, readFileAsText } from "../utils/fs-util";
 import { PromiseQueue } from "../utils/promise-queue";
 
 interface ProjectContext {
@@ -60,11 +59,10 @@ class EditorFlushHandler {
   ) {}
   flushImmediate = async (project: Project) => {
     await this.queue.add(async () => {
-      await this.driver.current!.unloadProject();
       const done = new Promise<void>((resolve) => {
         this.editorContentLoadedCallbackRef.current = resolve;
       });
-      await this.driver.current!.openHeader(project.header!.id);
+      await this.driver.current!.importProject({ project });
       await done;
     });
   };
@@ -120,29 +118,26 @@ export const ProjectProvider = ({
   );
   const project = useAppStore((s) => s.project);
   const projectEdited = useAppStore((s) => s.projectEdited);
+  const projectFlushedToEditor = useAppStore((s) => s.projectFlushedToEditor);
   const appEditNeedsFlushToEditor = useAppStore(
     (s) => s.appEditNeedsFlushToEditor
   );
-  const projectFlushedToEditor = useAppStore((s) => s.projectFlushedToEditor);
-  useEffect(() => {
-    // We set this when we make changes to the project in the app rather than via MakeCode
-    if (appEditNeedsFlushToEditor !== undefined) {
-      if (appEditNeedsFlushToEditor === FlushType.Debounced) {
-        void editorFlushHandler.current.flushDebounced(project);
-      } else {
-        void editorFlushHandler.current.flushImmediate(project);
+  const doAfterMakeCodeUpdate = useCallback(
+    async (action: () => Promise<void>) => {
+      if (appEditNeedsFlushToEditor) {
+        await editorFlushHandler.current.flushImmediate(project);
+        projectFlushedToEditor();
       }
-      projectFlushedToEditor();
-    }
-  }, [appEditNeedsFlushToEditor, projectFlushedToEditor, project, driverRef]);
-
-  const openEditor = useCallback(() => {
-    return editorFlushHandler.current.afterCurrent(() => {
-      console.log("Opening MakeCode");
+      return editorFlushHandler.current.afterCurrent(action);
+    },
+    [appEditNeedsFlushToEditor, project, projectFlushedToEditor]
+  );
+  const openEditor = useCallback(async () => {
+    await doAfterMakeCodeUpdate(() => {
       setEditorOpen(true);
       return Promise.resolve();
     });
-  }, [setEditorOpen]);
+  }, [doAfterMakeCodeUpdate, setEditorOpen]);
 
   const resetProject = useAppStore((s) => s.resetProject);
   const loadProjectState = useAppStore((s) => s.loadProject);
@@ -171,12 +166,16 @@ export const ProjectProvider = ({
     [driverRef, loadDataset, loadProjectState, waitForNextWorkspaceSave]
   );
 
+  const updateVersion = useAppStore((s) => s.updateVersion());
   const saveProjectHex = useCallback(async (): Promise<void> => {
-    const downloadPromise = waitForNextDownload();
-    await driverRef.current!.compile();
-    const download = await downloadPromise;
-    triggerBrowserDownload(download);
-  }, [driverRef, waitForNextDownload]);
+    updateVersion();
+    await doAfterMakeCodeUpdate(async () => {
+      const downloadPromise = waitForNextDownload();
+      await driverRef.current!.compile();
+      const download = await downloadPromise;
+      triggerBrowserDownload(download);
+    });
+  }, [doAfterMakeCodeUpdate, driverRef, waitForNextDownload]);
 
   // These are event handlers for MakeCode
 

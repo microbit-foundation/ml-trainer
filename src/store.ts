@@ -1,3 +1,4 @@
+import uuid4 from "uuid4";
 import { Project } from "@microbit/makecode-embed/react";
 import * as tf from "@tensorflow/tfjs";
 import { create } from "zustand";
@@ -21,14 +22,15 @@ import { useShallow } from "zustand/react/shallow";
 
 export const modelUrl = "indexeddb://micro:bit-ml-tool-model";
 
-export const enum FlushType {
-  Immediate,
-  Debounced,
-}
-
 export interface Store {
+  /**
+   * UUID for the currently open project.
+   * This should match the id field in dataset.json in the MakeCode project if they are the same project.
+   *
+   * We update this before save.
+   */
+  version: string;
   gestures: GestureData[];
-  gesturesLastModified: number;
   isRecording: boolean;
 
   getDefaultIcon(options: {
@@ -55,7 +57,7 @@ export interface Store {
   model: tf.LayersModel | undefined;
 
   isEditorOpen: boolean;
-  appEditNeedsFlushToEditor: FlushType | undefined;
+  appEditNeedsFlushToEditor: boolean;
   setEditorOpen(open: boolean): void;
 
   recordingStarted(): void;
@@ -88,22 +90,44 @@ export interface Store {
   closeTrainModelDialogs: () => void;
 }
 
+const initialId = uuid4();
 export const useAppStore = create<Store>()(
   devtools(
     persist(
       (set, get) => ({
         gestures: [],
-        gesturesLastModified: Date.now(),
+        version: initialId,
         isRecording: false,
-        project: generateProject(
-          { data: [], lastModified: Date.now() },
-          undefined
-        ),
+        project: {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          header: {
+            target: "microbit",
+            targetVersion: "7.1.2",
+            name: "Untitled",
+            meta: {},
+            editor: "blocksprj",
+            pubId: "",
+            pubCurrent: false,
+            _rev: null,
+            id: "45a3216b-e997-456c-bd4b-6550ddb81c4e",
+            recentUse: 1726493314,
+            modificationTime: 1726493314,
+            cloudUserId: null,
+            cloudCurrent: false,
+            cloudVersion: null,
+            cloudLastSyncTime: 0,
+            isDeleted: false,
+            githubCurrent: false,
+            saveId: null,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } as any,
+          ...generateProject({ data: [], version: initialId }, undefined),
+        },
         projectEdited: false,
         settings: defaultSettings,
         model: undefined,
         isEditorOpen: false,
-        appEditNeedsFlushToEditor: undefined,
+        appEditNeedsFlushToEditor: false,
         // This dialog flow spans two pages
         trainModelDialogStage: TrainModelDialogStage.Closed,
         trainModelProgress: 0,
@@ -127,7 +151,15 @@ export const useAppStore = create<Store>()(
         },
 
         setEditorOpen(open: boolean) {
-          set({ isEditorOpen: open }, false, "setEditorOpen");
+          set(
+            {
+              isEditorOpen: open,
+              // We just assume its been edited as spurious changes from MakeCode happen that we can't identify
+              projectEdited: true,
+            },
+            false,
+            "setEditorOpen"
+          );
         },
 
         recordingStarted() {
@@ -195,17 +227,10 @@ export const useAppStore = create<Store>()(
               const modelUpdates = isRetrainNeeded
                 ? { model: undefined }
                 : { model };
-              const gesturesLastModified = Date.now();
               return {
                 gestures,
-                gesturesLastModified,
                 ...modelUpdates,
-                ...updateProject(
-                  get(),
-                  gestures,
-                  gesturesLastModified,
-                  modelUpdates.model
-                ),
+                ...updateProject(get(), gestures, modelUpdates.model),
               };
             },
             false,
@@ -319,7 +344,7 @@ export const useAppStore = create<Store>()(
         },
 
         async trainModel() {
-          const { gestures, gesturesLastModified } = get();
+          const { gestures } = get();
           const actionName = "trainModel";
           set({
             trainModelDialogStage: TrainModelDialogStage.TrainingInProgress,
@@ -337,7 +362,7 @@ export const useAppStore = create<Store>()(
               trainModelDialogStage: model
                 ? TrainModelDialogStage.Closed
                 : TrainModelDialogStage.TrainingError,
-              ...updateProject(get(), gestures, gesturesLastModified, model),
+              ...updateProject(get(), gestures, model),
             },
             false,
             actionName
@@ -349,7 +374,7 @@ export const useAppStore = create<Store>()(
           const {
             project: previousProject,
             gestures,
-            gesturesLastModified,
+            version: gesturesLastModified,
             model,
           } = get();
           const newProject = {
@@ -357,7 +382,7 @@ export const useAppStore = create<Store>()(
             text: {
               ...previousProject.text,
               ...generateProject(
-                { data: gestures, lastModified: gesturesLastModified },
+                { data: gestures, version: gesturesLastModified },
                 model
               ).text,
             },
@@ -366,62 +391,62 @@ export const useAppStore = create<Store>()(
             {
               project: newProject,
               projectEdited: false,
-              appEditNeedsFlushToEditor: FlushType.Immediate,
+              appEditNeedsFlushToEditor: true,
             },
             false,
             "resetProject"
           );
         },
-        loadProject(project: Project) {
+        loadProject(newProject: Project) {
           set(
             {
-              project,
+              project: newProject,
               projectEdited: true,
-              appEditNeedsFlushToEditor: FlushType.Immediate,
+              appEditNeedsFlushToEditor: true,
             },
             false,
             "loadProject"
           );
-          // We will update the gestures via the editorChange call which will have a new header.
+
+          // MakeCode has loaded a new hex, update our state to match:
+          const datasetString = newProject.text?.[filenames.datasetJson];
+          const dataset = datasetString
+            ? (JSON.parse(datasetString) as DatasetEditorJsonFormat)
+            : { data: [], lastModified: Date.now() };
+          // This will cause another write to MakeCode eventually, but that's OK as it gives us
+          // a chance to validate/update the project
+          get().validateAndSetGestures(dataset.data);
         },
         editorChange(newProject: Project) {
           const actionName = "editorChange";
-          const { project: previousProject, isEditorOpen } = get();
-          const previousHeader = previousProject?.header?.id;
-          const newHeader = newProject.header?.id;
-          // Ignore the initial header change when we get assigned one.
-          if (previousHeader !== newHeader) {
-            if (!previousHeader) {
-              // This is the first time MakeCode has loaded the project and it will assign a header.
-              return set({ project: newProject }, false, actionName);
-            } else {
-              // MakeCode has loaded a new hex, update our state to match:
-              const datasetString = newProject.text?.[filenames.datasetJson];
-              const dataset = datasetString
-                ? (JSON.parse(datasetString) as DatasetEditorJsonFormat)
-                : { data: [], lastModified: Date.now() };
-              // This will cause another write to MakeCode but that's OK as it gives us
-              // a chance to validate/update the project
-              get().validateAndSetGestures(dataset.data);
-              set(
-                {
-                  project: newProject,
-                  // New project loaded externally so we can't know whether its edited.
-                  projectEdited: true,
-                },
-                false,
-                actionName
-              );
-            }
-          } else if (isEditorOpen) {
+          const {
+            project: previousProject,
+            projectEdited,
+            version: id,
+            isEditorOpen,
+          } = get();
+          // This could be a user edit, a spurious change from MakeCode or the user loading a new hex while inside MakeCode
+          const datasetString = newProject.text?.[filenames.datasetJson];
+          const dataset = datasetString
+            ? (JSON.parse(datasetString) as DatasetEditorJsonFormat)
+            : { data: [], id: uuid4() };
+          if (dataset.version !== id) {
+            // It's a new project. Thanks user. We'll update our state.
+            // This will cause another write to MakeCode but that's OK as it gives us
+            // a chance to validate/update the project
             set(
               {
                 project: newProject,
+                // New project loaded externally so we can't know whether its edited.
                 projectEdited: true,
+                version: dataset.version,
               },
               false,
               actionName
             );
+            get().validateAndSetGestures(dataset.data);
+          } else if (isEditorOpen) {
+            set({ project: newProject }, false, actionName);
           }
         },
         projectFlushedToEditor() {
@@ -438,14 +463,16 @@ export const useAppStore = create<Store>()(
         name: "ml",
         partialize: ({
           gestures,
-          gesturesLastModified,
+          version: id,
           project,
           projectEdited,
+          settings,
         }) => ({
           gestures,
-          gesturesLastModified,
+          id,
           project,
           projectEdited,
+          settings,
           // The model itself is in IndexDB
         }),
       }
@@ -483,11 +510,16 @@ useAppStore.subscribe((state, prevState) => {
 const updateProject = (
   store: Store,
   gestures: GestureData[],
-  gesturesLastModified: number,
   model: tf.LayersModel | undefined
 ): Partial<Store> => {
   const { project: previousProject, projectEdited } = store;
-  const gestureData = { data: gestures, lastModified: gesturesLastModified };
+
+  const datasetFile = previousProject.text?.[filenames.datasetJson];
+  const id = datasetFile
+    ? (JSON.parse(datasetFile) as DatasetEditorJsonFormat).version
+    : uuid4();
+
+  const gestureData = { data: gestures, id: id };
   const updatedProject = {
     ...previousProject,
     text: {
@@ -500,7 +532,7 @@ const updateProject = (
   return {
     project: updatedProject,
     projectEdited,
-    appEditNeedsFlushToEditor: FlushType.Debounced,
+    appEditNeedsFlushToEditor: true,
   };
 };
 
@@ -534,4 +566,11 @@ type UseSettingsReturn = [Settings, (settings: Partial<Settings>) => void];
 
 export const useSettings = (): UseSettingsReturn => {
   return useAppStore(useShallow((s) => [s.settings, s.setSettings]));
+};
+
+const isSameProject = (p1: Project, p2: Project) => {
+  // We use a very loose definition as this is just to decide if we're OK rewriting it.
+  const main1 = p1.text?.[filenames.mainTs];
+  const main2 = p2.text?.[filenames.mainTs];
+  return main1 === main2;
 };

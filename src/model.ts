@@ -24,7 +24,10 @@ export interface GestureData extends Gesture {
 
 export interface DatasetEditorJsonFormat {
   data: GestureData[];
-  lastModified: number;
+  /**
+   * A UUID version updated before save.
+   */
+  version: string;
 }
 
 export type DatasetUserFileFormat = GestureData[];
