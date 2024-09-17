@@ -45,6 +45,13 @@ const updateProject = (
   };
 };
 
+const generateFirstGesture = () => ({
+  icon: defaultIcons[0],
+  ID: Date.now(),
+  name: "",
+  recordings: [],
+});
+
 export interface Store {
   gestures: GestureData[];
   isRecording: boolean;
@@ -103,7 +110,7 @@ export const useAppStore = create<Store>()(
   devtools(
     persist(
       (set, get) => ({
-        gestures: [],
+        gestures: [generateFirstGesture()],
         isRecording: false,
         project: {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -215,7 +222,10 @@ export const useAppStore = create<Store>()(
           return set(({ project, projectEdited, gestures }) => {
             const newGestures = gestures.filter((g) => g.ID !== id);
             return {
-              gestures: newGestures,
+              gestures:
+                newGestures.length === 0
+                  ? [generateFirstGesture()]
+                  : newGestures,
               model: undefined,
               ...updateProject(project, projectEdited, newGestures, undefined),
             };
@@ -287,7 +297,7 @@ export const useAppStore = create<Store>()(
 
         deleteAllGestures() {
           return set(({ project, projectEdited }) => ({
-            gestures: [],
+            gestures: [generateFirstGesture()],
             model: undefined,
             ...updateProject(project, projectEdited, [], undefined),
           }));
