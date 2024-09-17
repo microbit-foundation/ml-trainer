@@ -5,24 +5,26 @@ import { useNavigate } from "react-router";
 import BackArrow from "../components/BackArrow";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import TestingModelGridView from "../components/TestingModelGridView";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { SessionPageId } from "../pages-config";
 import { createSessionPageUrl } from "../urls";
+import SaveButton from "../components/SaveButton";
+import { useStore } from "../store";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
-  const [{ stage }] = useMlStatus();
+  const model = useStore((s) => s.model);
 
   const navigateToDataSamples = useCallback(() => {
     navigate(createSessionPageUrl(SessionPageId.DataSamples));
   }, [navigate]);
 
   useEffect(() => {
-    if (stage !== MlStage.TrainingComplete) {
+    if (!model) {
       navigateToDataSamples();
     }
-  });
-  return stage === MlStage.TrainingComplete ? (
+  }, [model, navigateToDataSamples]);
+
+  return model ? (
     <DefaultPageLayout
       titleId={`${SessionPageId.TestingModel}-title`}
       showPageTitle
@@ -39,6 +41,7 @@ const TestingModelPage = () => {
           <FormattedMessage id="back-to-data-samples-action" />
         </Button>
       }
+      toolbarItemsRight={<SaveButton />}
     >
       <TestingModelGridView />
     </DefaultPageLayout>

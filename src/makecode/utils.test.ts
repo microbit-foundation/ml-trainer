@@ -45,15 +45,15 @@ describe("test actionNamesFromLabels", () => {
   it("copes with empty strings", () => {
     const expected: ActionName[] = [
       {
-        actionLabel: "",
+        actionLabel: "Event",
         actionVar: "Event",
       },
       {
-        actionLabel: "",
+        actionLabel: "Event1",
         actionVar: "Event1",
       },
       {
-        actionLabel: "",
+        actionLabel: "Event2",
         actionVar: "Event2",
       },
     ];
@@ -79,15 +79,15 @@ describe("test actionNamesFromLabels", () => {
         actionVar: "Hello",
       },
       {
-        actionLabel: "hello-",
+        actionLabel: "hello1",
         actionVar: "Hello1",
       },
       {
-        actionLabel: "hello--",
+        actionLabel: "hello2",
         actionVar: "Hello2",
       },
     ];
-    const userDefined = ["hello", "hello-", "hello--"];
+    const userDefined = ["hello", "hello", "hello"];
     expect(actionNamesFromLabels(userDefined)).toEqual(expected);
   });
 

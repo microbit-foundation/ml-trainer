@@ -9,7 +9,7 @@
 
 import * as tf from "@tensorflow/tfjs";
 import { vi } from "vitest";
-import { GestureData } from "./gestures-hooks";
+import { GestureData } from "./model";
 import { prepareFeaturesAndLabels, TrainingResult, trainModel } from "./ml";
 import gestureDataBadLabels from "./test-fixtures/gesture-data-bad-labels.json";
 import gestureData from "./test-fixtures/gesture-data.json";

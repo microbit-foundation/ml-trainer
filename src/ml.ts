@@ -1,5 +1,5 @@
 import * as tf from "@tensorflow/tfjs";
-import { GestureData, XYZData } from "./gestures-hooks";
+import { GestureData, XYZData } from "./model";
 import { Filter, mlFilters } from "./mlFilters";
 import { SymbolicTensor } from "@tensorflow/tfjs";
 

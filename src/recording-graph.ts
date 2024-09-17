@@ -5,7 +5,7 @@
  */
 
 import { ChartConfiguration, ChartTypeRegistry } from "chart.js";
-import { XYZData } from "./gestures-hooks";
+import { XYZData } from "./model";
 
 const smoothen = (d: number[]): number[] => {
   if (d.length === 0) {

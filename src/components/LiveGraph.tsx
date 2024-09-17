@@ -5,12 +5,12 @@ import { SmoothieChart, TimeSeries } from "smoothie";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { AccelerometerDataEvent } from "@microbit/microbit-connection";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { mlSettings } from "../ml";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { RiArrowDropLeftFill } from "react-icons/ri";
 import React from "react";
 import { LabelConfig, getUpdatedLabelConfig } from "../live-graph-label-config";
+import { useStore } from "../store";
 
 const initialLabelConfigs: LabelConfig[] = [
   { label: "x", arrowHeight: 0, labelHeight: 0, color: "#f9808e", id: 0 },
@@ -26,7 +26,6 @@ const smoothenDataPoint = (curr: number, next: number) => {
 
 const LiveGraph = () => {
   const { isConnected, status } = useConnectionStage();
-  const [{ stage }] = useMlStatus();
   const connectActions = useConnectActions();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -88,15 +87,17 @@ const LiveGraph = () => {
   }, [chart, isConnected, status]);
 
   // Draw on graph to display that users are recording
-  const [isRecording, setIsRecording] = useState<boolean>(false);
+  // Ideally we'd do this without timing the recording again!
+  const [isTimingRecording, setIsTimingRecording] = useState<boolean>(false);
+  const isRecording = useStore((s) => s.isRecording);
   useEffect(() => {
-    if (stage === MlStage.RecordingData && !isRecording) {
+    if (isRecording && !isTimingRecording) {
       {
         // Set the start recording line
         const now = new Date().getTime();
         recordLines.append(now - 1, -2, false);
         recordLines.append(now, 2.3, false);
-        setIsRecording(true);
+        setIsTimingRecording(true);
       }
 
       setTimeout(() => {
@@ -104,10 +105,10 @@ const LiveGraph = () => {
         const now = new Date().getTime();
         recordLines.append(now - 1, 2.3, false);
         recordLines.append(now, -2, false);
-        setIsRecording(false);
+        setIsTimingRecording(false);
       }, mlSettings.duration);
     }
-  }, [isRecording, recordLines, stage]);
+  }, [isTimingRecording, recordLines, isRecording]);
 
   const [labelConfigs, setLabelConfigs] =
     useState<LabelConfig[]>(initialLabelConfigs);

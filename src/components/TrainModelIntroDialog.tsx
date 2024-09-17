@@ -1,4 +1,5 @@
 import {
+  Button,
   Checkbox,
   Heading,
   HStack,
@@ -15,11 +16,10 @@ import {
 import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import trainModelImage from "../images/train_model_black.svg";
-import TrainingButton from "./TrainingButton";
 
 interface TrainModelIntroDialogProps {
+  onNext: (isSkipNextTime: boolean) => void;
   onClose: () => void;
-  onNext: (skipIntro: boolean) => void;
 }
 
 const TrainModelIntroDialog = ({
@@ -27,9 +27,7 @@ const TrainModelIntroDialog = ({
   onNext,
 }: TrainModelIntroDialogProps) => {
   const [skip, setSkip] = useState<boolean>(false);
-  const handleNext = useCallback(() => {
-    onNext(skip);
-  }, [onNext, skip]);
+  const handleNext = useCallback(() => onNext(skip), [onNext, skip]);
 
   return (
     <Modal
@@ -72,10 +70,9 @@ const TrainModelIntroDialog = ({
             >
               <FormattedMessage id="dont-show-again" />
             </Checkbox>
-            <TrainingButton
-              onClick={handleNext}
-              textId="start-training-action"
-            />
+            <Button onClick={handleNext} variant="primary">
+              <FormattedMessage id="start-training-action" />
+            </Button>
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>
