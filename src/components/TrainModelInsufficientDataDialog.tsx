@@ -14,20 +14,20 @@ import {
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import trainModelImage from "../images/train_model_black.svg";
+import { ComponentProps } from "react";
 
-export interface InsufficientDataDialogProps {
-  onClose: () => void;
-}
-
-const InsufficientDataDialog = ({ onClose }: InsufficientDataDialogProps) => {
+const TrainModelInsufficientDataDialog = ({
+  onClose,
+  ...rest
+}: Omit<ComponentProps<typeof Modal>, "children">) => {
   return (
     <Modal
       closeOnOverlayClick={false}
       motionPreset="none"
-      isOpen={true}
-      onClose={onClose}
       size="2xl"
       isCentered
+      onClose={onClose}
+      {...rest}
     >
       <ModalOverlay>
         <ModalContent p={8}>
@@ -65,4 +65,4 @@ const InsufficientDataDialog = ({ onClose }: InsufficientDataDialogProps) => {
   );
 };
 
-export default InsufficientDataDialog;
+export default TrainModelInsufficientDataDialog;

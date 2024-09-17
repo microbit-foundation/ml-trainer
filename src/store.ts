@@ -364,7 +364,7 @@ export const useStore = create<Store>()(
             });
           } else if (showPreTrainHelp) {
             set({
-              trainModelDialogStage: TrainModelDialogStage.ShowingIntroduction,
+              trainModelDialogStage: TrainModelDialogStage.Help,
             });
           } else {
             await trainModel();

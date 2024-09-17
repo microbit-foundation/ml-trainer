@@ -6,10 +6,10 @@ import { useStore, useSettings } from "../store";
 import { createSessionPageUrl } from "../urls";
 import TrainingErrorDialog from "./TrainingErrorDialog";
 import TrainingModelProgressDialog from "./TrainingModelProgressDialog";
-import TrainModelIntroDialog from "./TrainModelIntroDialog";
-import InsufficientDataDialog from "./InsufficientDataDialog";
+import TrainModelIntroDialog from "./TrainModelHelpDialog";
+import TrainModelInsufficientDataDialog from "./TrainModelInsufficientDataDialog";
 
-const TrainModelFlowDialogs = () => {
+const TrainModelDialogs = () => {
   const stage = useStore((s) => s.trainModelDialogStage);
   const closeTrainModelDialogs = useStore((s) => s.closeTrainModelDialogs);
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const TrainModelFlowDialogs = () => {
   const trainModelProgress = useStore((s) => s.trainModelProgress);
   const [, setSettings] = useSettings();
 
-  const handleIntroNext = useCallback(
+  const handleHelpNext = useCallback(
     async (isSkipNextTime: boolean) => {
       setSettings({ showPreTrainHelp: !isSkipNextTime });
       const result = await trainModel();
@@ -27,31 +27,27 @@ const TrainModelFlowDialogs = () => {
     },
     [navigate, setSettings, trainModel]
   );
-
-  switch (stage) {
-    case TrainModelDialogStage.Closed:
-      return null;
-    case TrainModelDialogStage.InsufficientData:
-      return <InsufficientDataDialog onClose={closeTrainModelDialogs} />;
-    case TrainModelDialogStage.ShowingIntroduction:
-      return (
-        <TrainModelIntroDialog
-          onNext={handleIntroNext}
-          onClose={closeTrainModelDialogs}
-        />
-      );
-    case TrainModelDialogStage.TrainingError:
-      return (
-        <TrainingErrorDialog isOpen={true} onClose={closeTrainModelDialogs} />
-      );
-    case TrainModelDialogStage.TrainingInProgress:
-      return (
-        <TrainingModelProgressDialog
-          isOpen={true}
-          progress={trainModelProgress * 100}
-        />
-      );
-  }
+  return (
+    <>
+      <TrainModelInsufficientDataDialog
+        isOpen={stage === TrainModelDialogStage.InsufficientData}
+        onClose={closeTrainModelDialogs}
+      />
+      <TrainModelIntroDialog
+        isOpen={stage === TrainModelDialogStage.Help}
+        onNext={handleHelpNext}
+        onClose={closeTrainModelDialogs}
+      />
+      <TrainingErrorDialog
+        isOpen={stage === TrainModelDialogStage.TrainingError}
+        onClose={closeTrainModelDialogs}
+      />
+      <TrainingModelProgressDialog
+        isOpen={stage === TrainModelDialogStage.TrainingInProgress}
+        progress={trainModelProgress * 100}
+      />
+    </>
+  );
 };
 
-export default TrainModelFlowDialogs;
+export default TrainModelDialogs;

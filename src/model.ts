@@ -75,7 +75,7 @@ export const isDatasetUserFileFormat = (
 export const enum TrainModelDialogStage {
   Closed,
   InsufficientData,
-  ShowingIntroduction,
+  Help,
   TrainingError,
   TrainingInProgress,
 }

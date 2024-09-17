@@ -13,19 +13,19 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useState } from "react";
+import { ComponentProps, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import trainModelImage from "../images/train_model_black.svg";
 
-interface TrainModelIntroDialogProps {
+interface TrainModelHelpDialogProps
+  extends Omit<ComponentProps<typeof Modal>, "children"> {
   onNext: (isSkipNextTime: boolean) => void;
-  onClose: () => void;
 }
 
 const TrainModelIntroDialog = ({
-  onClose,
   onNext,
-}: TrainModelIntroDialogProps) => {
+  ...props
+}: TrainModelHelpDialogProps) => {
   const [skip, setSkip] = useState<boolean>(false);
   const handleNext = useCallback(() => onNext(skip), [onNext, skip]);
 
@@ -33,10 +33,9 @@ const TrainModelIntroDialog = ({
     <Modal
       closeOnOverlayClick={false}
       motionPreset="none"
-      isOpen={true}
-      onClose={onClose}
       size="2xl"
       isCentered
+      {...props}
     >
       <ModalOverlay>
         <ModalContent p={8}>
