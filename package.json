@@ -73,13 +73,9 @@
     "@types/w3c-web-usb": "^1.0.6",
     "@vitejs/plugin-react": "^4.3.1",
     "bowser": "^2.11.0",
-    "browser-lang": "^0.2.1",
     "chart.js": "^4.2.1",
-    "d3": "^7.8.5",
     "framer-motion": "^10.2.4",
-    "js-cookie": "^3.0.4",
     "lodash.camelcase": "^4.3.0",
-    "lodash.debounce": "^4.0.8",
     "lodash.upperfirst": "^4.3.1",
     "ml4f": "git://github.com/microsoft/ml4f#v1.10.1",
     "postcss": "^8.4.23",
@@ -90,8 +86,6 @@
     "react-router": "^6.24.0",
     "react-router-dom": "^6.24.0",
     "smoothie": "^1.36.1",
-    "three": "^0.152.2",
-    "uuid4": "^2.0.3",
     "zustand": "^4.5.5"
   }
 }
