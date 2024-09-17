@@ -30,7 +30,6 @@ export const readFileAsText = async (file: File): Promise<string> => {
 };
 
 export const triggerBrowserDownload = (save: { name: string; hex: string }) => {
-  debugger;
   const blob = new Blob([save.hex], { type: "application/octet-stream" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);

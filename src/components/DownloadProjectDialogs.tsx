@@ -16,45 +16,64 @@ const DownloadProjectDialogs = () => {
     await actions.connectAndFlashMicrobit(stage);
   }, [actions, stage]);
 
-  return (
-    <>
-      <DownloadProjectHelpDialog
-        isOpen={stage.step === DownloadProjectStep.Help}
-        onClose={actions.close}
-        onNext={actions.onHelpNext}
-      />
-      <DownloadProjectChooseMicrobitDialog
-        isOpen={stage.step === DownloadProjectStep.ChooseSameOrAnotherMicrobit}
-        onBackClick={actions.getOnBack()}
-        onClose={actions.close}
-        onDifferentMicrobitClick={actions.onChosenDifferentMicrobit}
-        onSameMicrobitClick={actions.onChosenSameMicrobit}
-        stage={stage}
-      />
-      <ConnectCableDialog
-        isOpen={stage.step === DownloadProjectStep.ConnectCable}
-        onClose={actions.close}
-        onBackClick={actions.getOnBack()}
-        onNextClick={actions.getOnNext()}
-        config={{
-          headingId: "connectMB.connectCable.heading",
-          subtitleId: "connectMB.connectCable.downloadProject.subtitle",
-        }}
-      />
-      <SelectMicrobitUsbDialog
-        isOpen={stage.step === DownloadProjectStep.WebUsbFlashingTutorial}
-        onClose={actions.close}
-        onBackClick={actions.getOnBack()}
-        onNextClick={handleDownloadProject}
-      />
-      <DownloadingDialog
-        isOpen={stage.step === DownloadProjectStep.FlashingInProgress}
-        headingId="connectMB.usbDownloading.header"
-        progress={stage.flashProgress * 100}
-      />
-      {stage.project && (
+  switch (stage.step) {
+    case DownloadProjectStep.Help:
+      return (
+        <DownloadProjectHelpDialog
+          isOpen
+          onClose={actions.close}
+          onNext={actions.onHelpNext}
+        />
+      );
+    case DownloadProjectStep.ChooseSameOrAnotherMicrobit:
+      return (
+        <DownloadProjectChooseMicrobitDialog
+          isOpen
+          onBackClick={actions.getOnBack()}
+          onClose={actions.close}
+          onDifferentMicrobitClick={actions.onChosenDifferentMicrobit}
+          onSameMicrobitClick={actions.onChosenSameMicrobit}
+          stage={stage}
+        />
+      );
+    case DownloadProjectStep.ConnectCable:
+      return (
+        <ConnectCableDialog
+          isOpen
+          onClose={actions.close}
+          onBackClick={actions.getOnBack()}
+          onNextClick={actions.getOnNext()}
+          config={{
+            headingId: "connectMB.connectCable.heading",
+            subtitleId: "connectMB.connectCable.downloadProject.subtitle",
+          }}
+        />
+      );
+    case DownloadProjectStep.WebUsbFlashingTutorial:
+      return (
+        <SelectMicrobitUsbDialog
+          isOpen
+          onClose={actions.close}
+          onBackClick={actions.getOnBack()}
+          onNextClick={handleDownloadProject}
+        />
+      );
+    case DownloadProjectStep.FlashingInProgress:
+      return (
+        <DownloadingDialog
+          isOpen
+          headingId="connectMB.usbDownloading.header"
+          progress={stage.flashProgress * 100}
+        />
+      );
+    case DownloadProjectStep.ManualFlashingTutorial:
+      if (!stage.project) {
+        throw new Error("Project expected");
+      }
+      // This triggers the download on first render (!)
+      return (
         <ManualFlashingDialog
-          isOpen={stage.step === DownloadProjectStep.ManualFlashingTutorial}
+          isOpen
           hexFile={{
             type: "data",
             source: stage.project.hex,
@@ -63,9 +82,9 @@ const DownloadProjectDialogs = () => {
           onClose={actions.close}
           closeIsPrimaryAction={true}
         />
-      )}
-    </>
-  );
+      );
+  }
+  return <></>;
 };
 
 export default DownloadProjectDialogs;

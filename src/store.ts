@@ -181,11 +181,15 @@ export const useStore = create<Store>()(
 
         setEditorOpen(open: boolean) {
           set(
-            {
+            ({ downloadStage }) => ({
               isEditorOpen: open,
               // We just assume its been edited as spurious changes from MakeCode happen that we can't identify
               projectEdited: true,
-            },
+              downloadStage: {
+                ...downloadStage,
+                usbDevice: undefined,
+              },
+            }),
             false,
             "setEditorOpen"
           );
