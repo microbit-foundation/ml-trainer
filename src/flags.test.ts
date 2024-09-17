@@ -25,12 +25,8 @@ describe("flags", () => {
     const params = new URLSearchParams([["flag", "exampleOptInA"]]);
 
     const flags = flagsForParams("local", params);
-
-    expect(
-      Object.entries(flags).every(
-        ([flag, status]) => (flag === "exampleOptInA") === status
-      )
-    ).toEqual(true);
+    expect(flags.exampleOptInA).toEqual(true);
+    expect(flags.exampleOptInB).toEqual(false);
   });
 
   it("enable everything", () => {

@@ -1,9 +1,34 @@
 import { Grid, Heading, Image, Stack, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
+import addDataImage from "../images/add_data.svg";
+import testModelImage from "../images/test_model_blue.svg";
+import trainModelImage from "../images/train_model_blue.svg";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import ResourceCard from "../components/ResourceCard";
 import StartResumeActions from "../components/StartResumeActions";
-import { resourcesConfig, stepsConfig } from "../pages-config";
+import { resourcesConfig } from "../pages-config";
+
+type StepId = "add-data" | "train-model" | "test-model";
+
+interface StepConfig {
+  id: StepId;
+  imgSrc: string;
+}
+
+const stepsConfig: StepConfig[] = [
+  {
+    id: "add-data",
+    imgSrc: addDataImage,
+  },
+  {
+    id: "train-model",
+    imgSrc: trainModelImage,
+  },
+  {
+    id: "test-model",
+    imgSrc: testModelImage,
+  },
+];
 
 const HomePage = () => {
   const intl = useIntl();

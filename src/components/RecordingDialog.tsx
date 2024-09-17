@@ -15,9 +15,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { TimedXYZ } from "../buffered-data";
 import { useBufferedData } from "../buffered-data-hooks";
-import { GestureData, useGestureActions, XYZData } from "../gestures-hooks";
 import { mlSettings } from "../ml";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
+import { GestureData, XYZData } from "../model";
+import { useStore } from "../store";
 
 interface CountdownStage {
   value: string | number;
@@ -46,9 +46,10 @@ const RecordingDialog = ({
 }: RecordingDialogProps) => {
   const intl = useIntl();
   const toast = useToast();
-  const actions = useGestureActions();
+  const recordingStarted = useStore((s) => s.recordingStarted);
+  const recordingStopped = useStore((s) => s.recordingStopped);
+  const addGestureRecordings = useStore((s) => s.addGestureRecordings);
   const recordingDataSource = useRecordingDataSource();
-  const [, setStatus] = useMlStatus();
   const [recordingStatus, setRecordingStatus] = useState<RecordingStatus>(
     RecordingStatus.None
   );
@@ -68,12 +69,12 @@ const RecordingDialog = ({
   const [countdownStageIndex, setCountdownStageIndex] = useState<number>(0);
 
   const handleCleanup = useCallback(() => {
+    recordingStopped();
     setRecordingStatus(RecordingStatus.None);
-    setStatus({ stage: MlStage.NotTrained });
     setCountdownStageIndex(0);
     setProgress(0);
     onClose();
-  }, [onClose, setStatus]);
+  }, [onClose, recordingStopped]);
 
   const handleOnClose = useCallback(() => {
     recordingDataSource.cancelRecording();
@@ -99,12 +100,10 @@ const RecordingDialog = ({
           return;
         } else {
           setRecordingStatus(RecordingStatus.Recording);
-          setStatus({ stage: MlStage.RecordingData });
+          recordingStarted();
           recordingDataSource.startRecording({
             onDone(data) {
-              actions.addGestureRecordings(gestureId, [
-                { ID: Date.now(), data },
-              ]);
+              addGestureRecordings(gestureId, [{ ID: Date.now(), data }]);
               handleCleanup();
             },
             onError() {
@@ -133,14 +132,14 @@ const RecordingDialog = ({
     isOpen,
     recordingStatus,
     countdownStageIndex,
-    setStatus,
     recordingDataSource,
-    actions,
     gestureId,
     handleOnClose,
     handleCleanup,
     toast,
     intl,
+    recordingStarted,
+    addGestureRecordings,
   ]);
 
   return (

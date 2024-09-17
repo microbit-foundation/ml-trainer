@@ -1,6 +1,6 @@
 import { GridItem, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import { GestureData } from "../gestures-hooks";
+import { GestureData } from "../model";
 import upCurveArrowImage from "../images/curve-arrow-up.svg";
 import greetingEmojiWithArrowImage from "../images/greeting-emoji-with-arrow.svg";
 import DataRecordingGridItem from "./DataRecordingGridItem";

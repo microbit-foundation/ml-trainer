@@ -7,7 +7,7 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import InfoToolTip from "./InfoToolTip";
 import LedIcon from "./LedIcon";
 import LiveGraph from "./LiveGraph";
-import { Gesture } from "../gestures-hooks";
+import { Gesture } from "../model";
 
 interface LiveGraphPanelProps {
   detected?: Gesture | undefined;
@@ -61,7 +61,12 @@ const LiveGraphPanel = ({
           <HStack gap={4}>
             <LiveIndicator />
             {status === ConnectionStatus.Connected ? (
-              <Button variant="primary" size="sm" onClick={actions.disconnect}>
+              <Button
+                backgroundColor="white"
+                variant="secondary"
+                size="sm"
+                onClick={actions.disconnect}
+              >
                 <FormattedMessage id="footer.disconnectButton" />
               </Button>
             ) : (

@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { createContext, ReactNode, useContext } from "react";
-import { useStorage } from "./hooks/use-storage";
 import { stage } from "./environment";
 
 export interface Language {
@@ -40,52 +35,12 @@ export const getLanguageFromQuery = (): string => {
 
 export const defaultSettings: Settings = {
   languageId: getLanguageFromQuery(),
-};
-
-export const isValidSettingsObject = (value: unknown): value is Settings => {
-  if (typeof value !== "object") {
-    return false;
-  }
-  const object = value as any;
-  if (
-    object.languageId &&
-    !supportedLanguages.find((x) => x.id === object.languageId)
-  ) {
-    return false;
-  }
-  return true;
+  showPreSaveHelp: true,
+  showPreTrainHelp: true,
 };
 
 export interface Settings {
   languageId: string;
+  showPreSaveHelp: boolean;
+  showPreTrainHelp: boolean;
 }
-
-type SettingsContextValue = [Settings, (settings: Settings) => void];
-
-const SettingsContext = createContext<SettingsContextValue | undefined>(
-  undefined
-);
-
-export const useSettings = (): SettingsContextValue => {
-  const settings = useContext(SettingsContext);
-  if (!settings) {
-    throw new Error("Missing provider");
-  }
-  return settings;
-};
-
-const SettingsProvider = ({ children }: { children: ReactNode }) => {
-  const settings = useStorage<Settings>(
-    "local",
-    "settings",
-    defaultSettings,
-    isValidSettingsObject
-  );
-  return (
-    <SettingsContext.Provider value={settings}>
-      {children}
-    </SettingsContext.Provider>
-  );
-};
-
-export default SettingsProvider;

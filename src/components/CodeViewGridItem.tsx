@@ -2,24 +2,26 @@ import { Box, Card, GridItem, SkeletonText } from "@chakra-ui/react";
 import {
   BlockLayout,
   MakeCodeBlocksRendering,
-} from "@microbit-foundation/react-code-view";
+} from "@microbit/makecode-embed/react";
 import { memo, useMemo } from "react";
-import { GestureData } from "../gestures-hooks";
-import { useMakeCodeProject } from "../user-projects-hooks";
+import { generateProject } from "../makecode/utils";
+import { GestureData } from "../model";
+import { useStore } from "../store";
 
 interface CodeViewGridItemProps {
   gesture: GestureData;
-  hasStoredProject: boolean;
+  projectEdited: boolean;
 }
 
 const CodeViewGridItem = ({
   gesture,
-  hasStoredProject,
+  projectEdited,
 }: CodeViewGridItemProps) => {
-  const { createGestureDefaultProject } = useMakeCodeProject();
+  const model = useStore((s) => s.model);
+  const gestures = useStore((s) => s.gestures);
   const project = useMemo(
-    () => createGestureDefaultProject(gesture),
-    [createGestureDefaultProject, gesture]
+    () => generateProject({ data: gestures }, model, gesture),
+    [gesture, gestures, model]
   );
   const width = useMemo(
     () => `${120 + gesture.name.length * 5}px`,
@@ -27,7 +29,7 @@ const CodeViewGridItem = ({
   );
   return (
     <GridItem>
-      {!hasStoredProject && (
+      {!projectEdited && (
         <Card
           px={5}
           h="120px"

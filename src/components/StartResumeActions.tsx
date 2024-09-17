@@ -1,19 +1,17 @@
 import { Button, HStack, StackProps, useDisclosure } from "@chakra-ui/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
-import { useGestureActions } from "../gestures-hooks";
-import { createStepPageUrl } from "../urls";
+import { createSessionPageUrl } from "../urls";
 import StartOverWarningDialog from "./StartOverWarningDialog";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
+import { SessionPageId } from "../pages-config";
+import { useStore, useHasGestures } from "../store";
 
 const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
-  const gestureActions = useGestureActions();
-  const hasExistingSession = useMemo(
-    () => gestureActions.hasGestures(),
-    [gestureActions]
-  );
+  const newSession = useStore((s) => s.newSession);
+  const hasExistingSession = useHasGestures();
   const [hasConnectFlowStarted, setHasConnectFlowStarted] =
     useState<boolean>(false);
   const startOverWarningDialogDisclosure = useDisclosure();
@@ -25,12 +23,12 @@ const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
   } = useConnectionStage();
 
   const handleNavigateToAddData = useCallback(() => {
-    navigate(createStepPageUrl("add-data"));
+    navigate(createSessionPageUrl(SessionPageId.DataSamples));
   }, [navigate]);
 
   const handleStartNewSession = useCallback(() => {
     startOverWarningDialogDisclosure.onClose();
-    gestureActions.deleteAllGestures();
+    newSession();
     if (isConnected) {
       handleNavigateToAddData();
     } else {
@@ -39,7 +37,7 @@ const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
     }
   }, [
     startOverWarningDialogDisclosure,
-    gestureActions,
+    newSession,
     isConnected,
     handleNavigateToAddData,
     connStageActions,

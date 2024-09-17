@@ -1,19 +1,13 @@
 import { Button, ButtonProps } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
+import { useStore, useHasSufficientDataForTraining } from "../store";
 
 const TrainingButton = (props: ButtonProps) => {
-  const [{ stage }] = useMlStatus();
-
+  const hasSufficientData = useHasSufficientDataForTraining();
+  const model = useStore((s) => s.model);
+  const isEnabled = hasSufficientData && !model;
   return (
-    <Button
-      variant="primary"
-      isDisabled={
-        stage === MlStage.TrainingInProgress ||
-        stage === MlStage.InsufficientData
-      }
-      {...props}
-    >
+    <Button variant="primary" isDisabled={!isEnabled} {...props}>
       <FormattedMessage id="menu.trainer.trainModelButton" />
     </Button>
   );

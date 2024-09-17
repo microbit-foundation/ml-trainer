@@ -1,4 +1,4 @@
-import { Gesture } from "../gestures-hooks";
+import { Gesture } from "../model";
 import { actionNamesFromLabels } from "./utils";
 /**
  * (c) 2024, Center for Computational Thinking and Design at Aarhus University and contributors
@@ -16,7 +16,7 @@ interface BlockPos {
 }
 
 const onMLEventBlock = (name: string, children: string, pos: BlockPos) => `
-  <block type="mlrunner_on_ml_event" x="${pos.x}" y="${pos.y}">
+  <block type="ml_on_event_start" x="${pos.x}" y="${pos.y}">
     <field name="event">ml.event.${name}</field>
     <statement name="HANDLER">
       ${children}       
@@ -36,7 +36,7 @@ interface LanguageStatements {
 
 const statements: Record<Language, LanguageStatements> = {
   javascript: {
-    wrapper: (children) => children,
+    wrapper: (children) => children + "\n",
     showLeds: (ledPattern) => `basic.showLeds(\`${ledPattern}\`)`,
     showIcon: (iconName) => `basic.showIcon(IconNames.${iconName})`,
     clearDisplay: () => "basic.clearScreen()",
@@ -46,7 +46,7 @@ const statements: Record<Language, LanguageStatements> = {
   },
   blocks: {
     wrapper: (children) =>
-      `<xml xmlns="https://developers.google.com/blockly/xml">${children}</xml>`,
+      `<xml xmlns="https://developers.google.com/blockly/xml"><variables></variables>${children}</xml>`,
     showLeds: (ledPattern) =>
       `<block type="device_show_leds"><field name="LEDS">\`${ledPattern}\`</field></block>`,
     showIcon: (iconName) =>
@@ -63,25 +63,31 @@ const onMLEventChildren = (
   return iconName ? s.showIcon(iconName) : "";
 };
 
-const getMakeCodeGestureConfigs = (gs: Gesture[]) => {
+export const getMainScript = (
+  gs: Gesture[],
+  lang: Language,
+  gestureToRenderAsBlock?: Gesture
+) => {
   const actionNames = actionNamesFromLabels(gs.map((g) => g.name));
-  return gs.map((g, idx) => ({
-    name: actionNames[idx].actionVar,
-    iconName: g.icon,
-  }));
-};
-
-export const generateMainScript = (gs: Gesture[], lang: Language) => {
-  const configs = getMakeCodeGestureConfigs(gs);
+  const configs = gs
+    .map((g, idx) => ({
+      id: g.ID,
+      name: actionNames[idx].actionVar,
+      iconName: g.icon,
+    }))
+    .filter((c) =>
+      gestureToRenderAsBlock ? c.id === gestureToRenderAsBlock.ID : true
+    );
   const s = statements[lang];
   const initPos = { x: 0, y: 0 };
-  return s.wrapper(`
-  ${configs
-    .map((c, idx) =>
-      s.onMLEvent(c.name, onMLEventChildren(s, c), {
-        x: initPos.x,
-        y: initPos.y + idx * 350,
-      })
-    )
-    .join("\n")}  `);
+  return s.wrapper(
+    configs
+      .map((c, idx) =>
+        s.onMLEvent(c.name, onMLEventChildren(s, c), {
+          x: initPos.x,
+          y: initPos.y + idx * 350,
+        })
+      )
+      .join("\n")
+  );
 };

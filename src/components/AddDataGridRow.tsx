@@ -1,6 +1,7 @@
 import { GridItem, Text, useDisclosure } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { GestureData, useGestureActions } from "../gestures-hooks";
+import { GestureData } from "../model";
+import { useStore } from "../store";
 import AddDataGridWalkThrough from "./AddDataGridWalkThrough";
 import { ConfirmDialog } from "./ConfirmDialog";
 import DataRecordingGridItem from "./DataRecordingGridItem";
@@ -14,7 +15,7 @@ interface AddDataGridRowProps {
   showWalkThrough: boolean;
 }
 
-const AddDataGridRow = ({
+const DataSampleGridRow = ({
   gesture,
   selected,
   onSelectRow,
@@ -22,12 +23,12 @@ const AddDataGridRow = ({
   showWalkThrough,
 }: AddDataGridRowProps) => {
   const intl = useIntl();
-  const actions = useGestureActions();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const deleteConfirmDisclosure = useDisclosure();
+  const deleteGesture = useStore((s) => s.deleteGesture);
   return (
     <>
       <ConfirmDialog
-        isOpen={isOpen}
+        isOpen={deleteConfirmDisclosure.isOpen}
         heading={intl.formatMessage({
           id: "alert.deleteGestureConfirmHeading",
         })}
@@ -41,14 +42,14 @@ const AddDataGridRow = ({
             />
           </Text>
         }
-        onConfirm={() => actions.deleteGesture(gesture.ID)}
-        onCancel={onClose}
+        onConfirm={() => deleteGesture(gesture.ID)}
+        onCancel={deleteConfirmDisclosure.onClose}
       />
       <GestureNameGridItem
         id={gesture.ID}
         name={gesture.name}
         icon={gesture.icon}
-        onDeleteAction={onOpen}
+        onDeleteAction={deleteConfirmDisclosure.onOpen}
         onSelectRow={onSelectRow}
         selected={selected}
         readOnly={false}
@@ -77,4 +78,4 @@ const AddDataGridRow = ({
   );
 };
 
-export default AddDataGridRow;
+export default DataSampleGridRow;

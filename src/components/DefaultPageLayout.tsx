@@ -1,9 +1,10 @@
-import { Flex, HStack, IconButton, VStack } from "@chakra-ui/react";
+import { Flex, Heading, HStack, IconButton, VStack } from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect } from "react";
 import { RiHome2Line } from "react-icons/ri";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { TOOL_NAME } from "../constants";
+import { flags } from "../flags";
 import { createHomePageUrl } from "../urls";
 import ActionBar from "./ActionBar";
 import AppLogo from "./AppLogo";
@@ -11,18 +12,22 @@ import ConnectionDialogs from "./ConnectionFlowDialogs";
 import HelpMenu from "./HelpMenu";
 import PrototypeVersionWarning from "./PrototypeVersionWarning";
 import SettingsMenu from "./SettingsMenu";
-import { flags } from "../flags";
+import TrainModelFlowDialogs from "./TrainModelFlowDialogs";
 
 interface DefaultPageLayoutProps {
   titleId: string;
   children: ReactNode;
   toolbarItemsRight?: ReactNode;
+  toolbarItemsLeft?: ReactNode;
+  showPageTitle?: boolean;
 }
 
 const DefaultPageLayout = ({
   titleId,
   children,
   toolbarItemsRight,
+  toolbarItemsLeft,
+  showPageTitle = false,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
   const navigate = useNavigate();
@@ -38,6 +43,7 @@ const DefaultPageLayout = ({
   return (
     <>
       <ConnectionDialogs />
+      <TrainModelFlowDialogs />
       <VStack
         minH="100dvh"
         w="100%"
@@ -49,7 +55,16 @@ const DefaultPageLayout = ({
           zIndex={2}
           position="sticky"
           top={0}
-          itemsLeft={<AppLogo name={TOOL_NAME} />}
+          itemsCenter={
+            <>
+              {showPageTitle && (
+                <Heading size="md" fontWeight="normal" color="white">
+                  <FormattedMessage id={titleId} />
+                </Heading>
+              )}
+            </>
+          }
+          itemsLeft={toolbarItemsLeft || <AppLogo name={TOOL_NAME} />}
           itemsRight={
             <HStack spacing={3}>
               {toolbarItemsRight}

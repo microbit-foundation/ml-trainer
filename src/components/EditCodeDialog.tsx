@@ -1,65 +1,62 @@
 import {
+  Box,
   Flex,
   Modal,
   ModalBody,
   ModalContent,
   ModalOverlay,
 } from "@chakra-ui/react";
-import { EditorProject } from "@microbit-foundation/react-editor-embed";
+import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
+import { forwardRef, memo, useRef } from "react";
 import Editor from "./Editor";
+import { useStore } from "../store";
 
-interface EditCodeDialogProps {
-  isOpen: boolean;
-  editorVersion: string | undefined;
-  code: EditorProject;
-  onBack: () => void;
-  onDownload: (download: { name: string; hex: string }) => void;
-  onSave: (save: { name: string; hex: string }) => void;
-  onChange: (code: EditorProject) => void;
-}
+interface EditCodeDialogProps {}
 
-const EditCodeDialog = ({
-  editorVersion,
-  code,
-  isOpen,
-  onChange,
-  onBack,
-  onDownload,
-  onSave,
-}: EditCodeDialogProps) => {
-  return (
-    <Modal
-      size="full"
-      isOpen={isOpen}
-      onClose={() => {}}
-      closeOnEsc={false}
-      blockScrollOnMount={false}
-    >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalBody
-            p={0}
-            display="flex"
-            alignItems="stretch"
-            flexDir="column"
-            justifyContent="stretch"
-          >
-            <Flex flexGrow="1" flexDir="column" w="100%" bgColor="white">
-              <Editor
-                style={{ flexGrow: 1 }}
-                version={editorVersion}
-                initialCode={code}
-                onCodeChange={onChange}
-                onBack={onBack}
-                onDownload={onDownload}
-                onSave={onSave}
-              />
-            </Flex>
-          </ModalBody>
-        </ModalContent>
-      </ModalOverlay>
-    </Modal>
-  );
-};
+const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
+  function EditCodeDialog(_, ref) {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const isOpen = useStore((s) => s.isEditorOpen);
+    return (
+      <>
+        <Box
+          ref={containerRef}
+          transform={isOpen ? undefined : "translate(-150vw, -150vh)"}
+          visibility={isOpen ? "visible" : "hidden"}
+        />
+        <Modal
+          size="full"
+          isOpen={true}
+          onClose={() => {}}
+          closeOnEsc={false}
+          blockScrollOnMount={false}
+          portalProps={{
+            containerRef: containerRef,
+          }}
+        >
+          <ModalOverlay>
+            <ModalContent>
+              <ModalBody
+                p={0}
+                display="flex"
+                alignItems="stretch"
+                flexDir="column"
+                justifyContent="stretch"
+              >
+                <Flex flexGrow="1" flexDir="column" w="100%" bgColor="white">
+                  <Editor
+                    ref={ref}
+                    style={{ flexGrow: 1 }}
+                    version={undefined}
+                  />
+                </Flex>
+              </ModalBody>
+            </ModalContent>
+          </ModalOverlay>
+        </Modal>
+      </>
+    );
+  }
+);
 
-export default EditCodeDialog;
+export default memo(EditCodeDialog);

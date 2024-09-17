@@ -1,42 +1,42 @@
 import {
-  EditorProject,
-  MakeCodeEditor,
-} from "@microbit-foundation/react-editor-embed";
-import React from "react";
-import { getMakeCodeLang, useSettings } from "../settings";
+  MakeCodeFrame,
+  MakeCodeFrameDriver,
+} from "@microbit/makecode-embed/react";
+import React, { forwardRef, useCallback } from "react";
+import { getMakeCodeLang } from "../settings";
+import { useProject } from "../hooks/project-hooks";
+import { useSettings } from "../store";
 
 const controllerId = "MicrobitMachineLearningTool";
 
 interface EditorProps {
-  onBack?: () => void;
-  onCodeChange?: (code: EditorProject) => void;
-  onDownload?: (download: { name: string; hex: string }) => void;
-  onSave?: (save: { name: string; hex: string }) => void;
-  initialCode: EditorProject;
   version: string | undefined;
   style?: React.CSSProperties;
 }
 
-const Editor = ({
-  style,
-  initialCode,
-  version,
-  ...editorProps
-}: EditorProps) => {
+const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
+  props,
+  ref
+) {
+  const { project, editorCallbacks } = useProject();
+  const initialProjects = useCallback(() => {
+    return Promise.resolve([project]);
+  }, [project]);
   const [{ languageId }] = useSettings();
   return (
-    <MakeCodeEditor
-      // TODO: To remove baseUrl and use real pxt-microbit
+    <MakeCodeFrame
+      ref={ref}
+      // TODO: Remove baseUrl and use the default once our sim extension is live there
       baseUrl="https://ml-tool.pxt-microbit.pages.dev/"
       controllerId={controllerId}
       controller={2}
-      style={style}
-      initialCode={initialCode}
-      version={version}
+      initialProjects={initialProjects}
       lang={getMakeCodeLang(languageId)}
-      {...editorProps}
+      loading="eager"
+      {...editorCallbacks}
+      {...props}
     />
   );
-};
+});
 
 export default Editor;
