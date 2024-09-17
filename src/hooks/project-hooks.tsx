@@ -57,18 +57,6 @@ export const ProjectProvider = ({
     undefined
   );
 
-  // We use this to track when we need special handling of an event from MakeCode
-  const waitingForWorkspaceSave = useRef<
-    undefined | ((project: Project) => void)
-  >(undefined);
-  const waitForNextWorkspaceSave = useCallback(() => {
-    return new Promise<Project>((resolve) => {
-      waitingForWorkspaceSave.current = (project) => {
-        resolve(project);
-        waitingForWorkspaceSave.current = undefined;
-      };
-    });
-  }, []);
   // We use this to track when we're expecting a native app save from MakeCode
   const waitingForDownload = useRef<
     undefined | ((download: { hex: string; name: string }) => void)
@@ -117,7 +105,6 @@ export const ProjectProvider = ({
   }, [doAfterMakeCodeUpdate, setEditorOpen]);
 
   const resetProject = useAppStore((s) => s.resetProject);
-  const loadProjectState = useAppStore((s) => s.loadProject);
   const loadDataset = useAppStore((s) => s.loadDataset);
 
   const loadProject = useCallback(
@@ -136,11 +123,9 @@ export const ProjectProvider = ({
           filename: file.name,
           parts: [await readFileAsText(file)],
         });
-        const project = await waitForNextWorkspaceSave();
-        loadProjectState(project);
       }
     },
-    [driverRef, loadDataset, loadProjectState, waitForNextWorkspaceSave]
+    [driverRef, loadDataset]
   );
 
   const saveProjectHex = useCallback(async (): Promise<void> => {
@@ -157,11 +142,7 @@ export const ProjectProvider = ({
   const editorChange = useAppStore((s) => s.editorChange);
   const onWorkspaceSave = useCallback(
     (event: EditorWorkspaceSaveRequest) => {
-      if (waitingForWorkspaceSave.current) {
-        waitingForWorkspaceSave.current(event.project);
-      } else {
-        editorChange(event.project);
-      }
+      editorChange(event.project);
     },
     [editorChange]
   );

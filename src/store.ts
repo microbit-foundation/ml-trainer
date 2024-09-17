@@ -1,4 +1,3 @@
-import uuid4 from "uuid4";
 import { Project } from "@microbit/makecode-embed/react";
 import * as tf from "@tensorflow/tfjs";
 import { create } from "zustand";
@@ -88,8 +87,6 @@ export interface Store {
    * Resets the project.
    */
   resetProject: () => void;
-
-  loadProject: (project: Project) => void;
 
   editorChange: (project: Project) => void;
 
@@ -393,25 +390,6 @@ export const useAppStore = create<Store>()(
             "resetProject"
           );
         },
-        loadProject(newProject: Project) {
-          // MakeCode has loaded a new hex, update our state to match:
-          const datasetString = newProject.text?.[filenames.datasetJson];
-          const dataset = datasetString
-            ? (JSON.parse(datasetString) as DatasetEditorJsonFormat)
-            : { data: [], lastModified: Date.now() };
-
-          set(
-            {
-              project: newProject,
-              projectEdited: true,
-              appEditNeedsFlushToEditor: true,
-              gestures: dataset.data,
-              model: undefined,
-            },
-            false,
-            "loadProject"
-          );
-        },
         editorChange(newProject: Project) {
           const actionName = "editorChange";
           set(
@@ -423,15 +401,16 @@ export const useAppStore = create<Store>()(
               } = state;
               const newProjectHeader = newProject.header!.id;
               const previousProjectHeader = prevProject.header!.id;
-              console.log({
-                newProjectHeader,
-                previousProjectHeader,
-                changedHeaderExpected,
-              });
-              if (
-                newProjectHeader !== previousProjectHeader &&
-                !changedHeaderExpected
-              ) {
+              if (newProjectHeader !== previousProjectHeader) {
+                if (changedHeaderExpected) {
+                  return {
+                    changedHeaderExpected: false,
+                    project: newProject,
+                  };
+                }
+                console.log(
+                  "Detected new project in MakeCode, loading gestures"
+                );
                 // It's a new project. Thanks user. We'll update our state.
                 // This will cause another write to MakeCode but that's OK as it gives us
                 // a chance to validate/update the project
@@ -444,14 +423,12 @@ export const useAppStore = create<Store>()(
                   project: newProject,
                   // New project loaded externally so we can't know whether its edited.
                   projectEdited: true,
-                  changedHeaderExpected: false,
                   gestures: dataset.data,
                   model: undefined,
                 };
               } else if (isEditorOpen) {
                 return {
                   project: newProject,
-                  changedHeaderExpected: false,
                 };
               }
               return state;
