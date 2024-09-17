@@ -246,16 +246,17 @@ export const useAppStore = create<Store>()(
 
         setGestureIcon(id: GestureData["ID"], icon: MakeCodeIcon) {
           return set(({ project, projectEdited, gestures, model }) => {
+            // If we're changing the `id` gesture to use an icon that's already in use
+            // then we update the gesture that's using it to use the `id` gesture's current icon
+            const currentIcon = gestures.find((g) => g.ID === id)?.icon;
             const newGestures = gestures.map((g) => {
               if (g.ID === id) {
-                g.icon = icon;
+                return { ...g, icon };
               } else if (g.ID !== id && g.icon === icon && currentIcon) {
-                g.icon = currentIcon;
+                return { ...g, icon: currentIcon };
               }
               return g;
             });
-            // TODO: check this
-            const currentIcon = gestures.find((g) => g.ID === id)?.icon;
             return {
               gestures: newGestures,
               ...updateProject(project, projectEdited, newGestures, model),
