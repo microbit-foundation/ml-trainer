@@ -11,27 +11,19 @@ import {
   Portal,
   VStack,
   VisuallyHidden,
-  useDisclosure,
 } from "@chakra-ui/react";
-import {
-  MakeCodeProject,
-  MakeCodeRenderBlocksProvider,
-} from "@microbit-foundation/react-code-view";
-import { EditorProject } from "@microbit-foundation/react-editor-embed";
-import React, { useCallback } from "react";
+import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
+import React from "react";
 import { RiArrowRightLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useDownloadProject } from "../download-project-hooks";
-import { useGestureActions, useGestureData } from "../gestures-hooks";
 import { mlSettings } from "../ml";
-import { usePrediction } from "../ml-hooks";
-import { getMakeCodeLang, useSettings } from "../settings";
-import { useMakeCodeProject } from "../user-projects-hooks";
+import { usePrediction } from "../hooks/ml-hooks";
+import { getMakeCodeLang } from "../settings";
+import { useStore, useSettings } from "../store";
+import { useProject } from "../hooks/project-hooks";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
 import CodeViewCard from "./CodeViewCard";
 import CodeViewGridItem from "./CodeViewGridItem";
-import DownloadProjectFlowDialogs from "./DownloadProjectFlowDialogs";
-import EditCodeDialog from "./EditCodeDialog";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
 import LiveGraphPanel from "./LiveGraphPanel";
@@ -65,19 +57,9 @@ const TestingModelGridView = () => {
   const prediction = usePrediction();
   const { detected, confidences } = prediction ?? {};
   const intl = useIntl();
-  const editCodeDialogDisclosure = useDisclosure();
-  const [gestures] = useGestureData();
-  const { setRequiredConfidence } = useGestureActions();
-  // This hook can only be called in one place due to its local state.
-  // See flashProgress state.
-  const {
-    actions: downloadProjectActions,
-    stage,
-    flashProgress,
-  } = useDownloadProject();
-
-  const { hasStoredProject, userProject, setUserProject } =
-    useMakeCodeProject();
+  const gestures = useStore((s) => s.gestures);
+  const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
+  const { openEditor, project, resetProject, projectEdited } = useProject();
 
   const detectedLabel =
     detected?.name ??
@@ -88,54 +70,8 @@ const TestingModelGridView = () => {
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
 
-  const handleCodeChange = useCallback(
-    (code: EditorProject) => {
-      setUserProject(code as MakeCodeProject);
-    },
-    [setUserProject]
-  );
-
-  const handleResetProject = useCallback(() => {
-    // Clear stored project
-    setUserProject(undefined);
-  }, [setUserProject]);
-
-  const handleSave = useCallback((save: { name: string; hex: string }) => {
-    const blob = new Blob([save.hex], { type: "application/octet-stream" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `${save.name}.hex`;
-    a.click();
-    URL.revokeObjectURL(a.href);
-  }, []);
-
-  const handleDownload = useCallback(
-    async (download: { name: string; hex: string }) => {
-      await downloadProjectActions.start(download);
-    },
-    [downloadProjectActions]
-  );
-
-  const handleMakeCodeClose = useCallback(() => {
-    editCodeDialogDisclosure.onClose();
-    downloadProjectActions.clearMakeCodeUsbDevice();
-  }, [downloadProjectActions, editCodeDialogDisclosure]);
   return (
     <>
-      <DownloadProjectFlowDialogs
-        actions={downloadProjectActions}
-        stage={stage}
-        flashProgress={flashProgress}
-      />
-      <EditCodeDialog
-        code={userProject}
-        editorVersion={undefined}
-        isOpen={editCodeDialogDisclosure.isOpen}
-        onChange={handleCodeChange}
-        onBack={handleMakeCodeClose}
-        onDownload={handleDownload}
-        onSave={handleSave}
-      />
       <MakeCodeRenderBlocksProvider
         key={makeCodeLang}
         options={{
@@ -163,12 +99,12 @@ const TestingModelGridView = () => {
           <HStack gap={0} h="min-content" w="full">
             <Grid
               {...gridCommonProps}
-              {...(hasStoredProject ? { w: "fit-content", pr: 0 } : {})}
+              {...(projectEdited ? { w: "fit-content", pr: 0 } : {})}
               autoRows="max-content"
               h="fit-content"
               alignSelf="start"
             >
-              {gestures.data.map((gesture, idx) => {
+              {gestures.map((gesture, idx) => {
                 const {
                   ID,
                   name,
@@ -204,13 +140,13 @@ const TestingModelGridView = () => {
                     </VStack>
                     <CodeViewGridItem
                       gesture={gesture}
-                      hasStoredProject={hasStoredProject}
+                      projectEdited={projectEdited}
                     />
                   </React.Fragment>
                 );
               })}
             </Grid>
-            {hasStoredProject && <CodeViewCard project={userProject} />}
+            {projectEdited && <CodeViewCard project={project} />}
           </HStack>
         </VStack>
       </MakeCodeRenderBlocksProvider>
@@ -227,10 +163,7 @@ const TestingModelGridView = () => {
         >
           <Menu>
             <ButtonGroup isAttached>
-              <Button
-                variant="primary"
-                onClick={editCodeDialogDisclosure.onOpen}
-              >
+              <Button variant="primary" onClick={openEditor}>
                 <FormattedMessage id="edit-in-makecode-action" />
               </Button>
               <MoreMenuButton
@@ -243,8 +176,8 @@ const TestingModelGridView = () => {
                 <MenuList>
                   <MenuItem
                     icon={<RiDeleteBin2Line />}
-                    onClick={handleResetProject}
-                    isDisabled={!hasStoredProject}
+                    onClick={resetProject}
+                    isDisabled={!projectEdited}
                   >
                     <FormattedMessage id="reset-to-default-action" />
                   </MenuItem>

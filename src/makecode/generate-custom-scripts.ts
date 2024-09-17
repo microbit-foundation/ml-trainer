@@ -8,7 +8,7 @@ import { generateBlob } from "@microbit-foundation/ml-header-generator";
 import { ActionName, actionNamesFromLabels } from "./utils";
 import { LayersModel } from "@tensorflow/tfjs";
 import { mlSettings } from "../ml";
-import { GestureData } from "../gestures-hooks";
+import { DatasetEditorJsonFormat, GestureData } from "../model";
 
 const createMlEvents = (actionNames: ActionName[]) => {
   let code = "";
@@ -84,13 +84,6 @@ ${createEventListeners(actionNames)}
 `;
 };
 
-export const getDataJson = (gs: GestureData[]) => {
-  return JSON.stringify(
-    gs.map((g) => ({
-      ID: g.ID,
-      name: g.name,
-      numRecordings: g.recordings.length,
-      requiredConfidence: g.requiredConfidence,
-    }))
-  );
+export const getDatasetJson = (gs: DatasetEditorJsonFormat) => {
+  return JSON.stringify(gs, null, 2);
 };

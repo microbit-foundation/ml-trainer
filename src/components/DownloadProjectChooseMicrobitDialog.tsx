@@ -12,15 +12,12 @@ import {
 import { useCallback, useState } from "react";
 import { RiCheckboxBlankLine, RiCheckboxFill } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import {
-  DownloadProjectStage,
-  MicrobitToFlash,
-} from "../download-project-hooks";
 import microbitImage from "../images/stylised-microbit-black.svg";
 import twoMicrobitsImage from "../images/stylised-two-microbits-black.svg";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
+import { DownloadProjectStage, MicrobitToFlash } from "../model";
 
 export interface DownloadProjectChooseMicrobitDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {

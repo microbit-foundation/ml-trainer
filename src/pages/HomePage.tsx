@@ -1,4 +1,12 @@
-import { Grid, Heading, Image, Stack, Text, VStack } from "@chakra-ui/react";
+import {
+  AspectRatio,
+  Grid,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import addDataImage from "../images/add_data.svg";
 import testModelImage from "../images/test_model_blue.svg";
@@ -108,7 +116,9 @@ const Step = ({ title, imgSrc, description }: StepProps) => (
     <Heading as="h3" textAlign="center" fontSize="2xl" fontWeight="bold">
       {title}
     </Heading>
-    <Image src={imgSrc} alt="" />
+    <AspectRatio ratio={288 / 172} width="full">
+      <Image src={imgSrc} alt="" />
+    </AspectRatio>
     <Text textAlign="center">{description}</Text>
   </VStack>
 );

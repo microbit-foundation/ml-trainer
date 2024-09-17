@@ -9,15 +9,15 @@ import {
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
-import { useGestureActions } from "../gestures-hooks";
 import { MakeCodeIcon } from "../utils/icons";
 import LedIcon from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";
+import { useStore } from "../store";
 
 interface GestureNameGridItemProps {
   name: string;
   icon: MakeCodeIcon;
-  onCloseClick?: () => void;
+  onDeleteAction?: () => void;
   onSelectRow?: () => void;
   id: number;
   selected?: boolean;
@@ -30,7 +30,7 @@ const gestureNameMaxLength = 18;
 const GestureNameGridItem = ({
   name,
   icon,
-  onCloseClick,
+  onDeleteAction,
   onSelectRow,
   id,
   selected = false,
@@ -40,7 +40,8 @@ const GestureNameGridItem = ({
   const intl = useIntl();
   const toast = useToast();
   const toastId = "name-too-long-toast";
-  const actions = useGestureActions();
+  const setGestureName = useStore((s) => s.setGestureName);
+  const setGestureIcon = useStore((s) => s.setGestureIcon);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
@@ -60,16 +61,16 @@ const GestureNameGridItem = ({
         });
         return;
       }
-      actions.setGestureName(id, name);
+      setGestureName(id, name);
     },
-    [actions, id, intl, toast]
+    [id, intl, setGestureName, toast]
   );
 
   const handleIconSelected = useCallback(
     (icon: MakeCodeIcon) => {
-      actions.setGestureIcon(id, icon);
+      setGestureIcon(id, icon);
     },
-    [actions, id]
+    [id, setGestureIcon]
   );
 
   return (
@@ -83,12 +84,12 @@ const GestureNameGridItem = ({
         onClick={onSelectRow}
         position="relative"
       >
-        {!readOnly && onCloseClick && (
+        {!readOnly && onDeleteAction && (
           <CloseButton
             position="absolute"
             right={1}
             top={1}
-            onClick={onCloseClick}
+            onClick={onDeleteAction}
             size="sm"
             borderRadius="sm"
             aria-label={intl.formatMessage(

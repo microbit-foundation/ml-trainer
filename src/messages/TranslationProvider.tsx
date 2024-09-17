@@ -1,4 +1,4 @@
-import { useSettings } from "../settings";
+import { useSettings } from "../store";
 import { IntlProvider, MessageFormatElement } from "react-intl";
 import { ReactNode, useEffect, useState } from "react";
 import { retryAsyncLoad } from "./chunk-util";

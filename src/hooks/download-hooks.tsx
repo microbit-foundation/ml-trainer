@@ -2,26 +2,32 @@ import {
   MicrobitWebUSBConnection,
   ConnectionStatus as UsbConnectionStatus,
 } from "@microbit/microbit-connection";
+import { useMemo } from "react";
 import {
   ConnectActions,
   ConnectAndFlashResult,
   ConnectionAndFlashOptions,
-} from "./connect-actions";
-import { ConnectionStatus } from "./connect-status-hooks";
-import { ConnectionStageActions } from "./connection-stage-actions";
+} from "../connect-actions";
+import { useConnectActions } from "../connect-actions-hooks";
+import { ConnectionStatus } from "../connect-status-hooks";
+import { ConnectionStageActions } from "../connection-stage-actions";
+import { useConnectionStage } from "../connection-stage-hooks";
 import {
   DownloadProjectStage,
   DownloadProjectStep,
   MicrobitToFlash,
-} from "./download-project-hooks";
+} from "../model";
+import { Settings } from "../settings";
+import { useSettings, useStore } from "../store";
 
 export class DownloadProjectActions {
   constructor(
     private stage: DownloadProjectStage,
     private setStage: (stage: DownloadProjectStage) => void,
+    private settings: Settings,
+    private setSettings: (settings: Partial<Settings>) => void,
     private connectActions: ConnectActions,
     private connectionStageActions: ConnectionStageActions,
-    private setFlashingProgress: (progress: number) => void,
     private connectionStatus: ConnectionStatus
   ) {}
 
@@ -32,55 +38,51 @@ export class DownloadProjectActions {
   start = async (download: { name: string; hex: string }) => {
     if (this.stage.usbDevice) {
       if (this.stage.usbDevice.status === UsbConnectionStatus.CONNECTED) {
-        const newStage: DownloadProjectStage = {
+        const newStage = {
           ...this.stage,
           step: DownloadProjectStep.FlashingInProgress,
-          projectHex: download.hex,
-          projectName: download.name,
+          project: download,
         };
         this.setStage(newStage);
         return this.flashMicrobit(newStage, {
           temporaryUsbConnection: this.stage.usbDevice,
         });
       }
+      if (!this.settings.showPreDownloadHelp) {
+        this.updateStage({ project: download });
+        return this.onHelpNext(true);
+      }
       return this.updateStage({
-        projectHex: download.hex,
-        projectName: download.name,
+        project: download,
         step: DownloadProjectStep.ConnectCable,
       });
     }
-    const projectInfo = {
-      projectHex: download.hex,
-      projectName: download.name,
-    };
-    if (this.stage.skipIntro) {
-      return this.onIntroNext(projectInfo);
-    }
     this.updateStage({
-      step: DownloadProjectStep.Introduction,
-      ...projectInfo,
+      step: DownloadProjectStep.Help,
+      project: download,
     });
   };
 
-  onIntroNext = (partialNewStage: Partial<DownloadProjectStage> = {}) => {
+  onHelpNext = (isSkipNextTime: boolean) => {
+    this.setSettings({ showPreDownloadHelp: !isSkipNextTime });
+
     // If we've connected to a micro:bit in the session, we make the user
     // choose a device even if the connection has been lost since.
     // This makes reconnect easier if the user has two micro:bits.
     if (this.connectionStatus !== ConnectionStatus.NotConnected) {
       return this.updateStage({
-        ...partialNewStage,
         step: DownloadProjectStep.ChooseSameOrAnotherMicrobit,
       });
     }
     this.updateStage({
-      ...partialNewStage,
       step: DownloadProjectStep.ConnectCable,
     });
   };
 
-  onSkipIntro = (skipIntro: boolean) => this.updateStage({ skipIntro });
+  onSkipIntro = (skipIntro: boolean) =>
+    this.setSettings({ showPreDownloadHelp: !skipIntro });
 
-  onBackToIntro = () => this.setStep(DownloadProjectStep.Introduction);
+  onBackToIntro = () => this.setStep(DownloadProjectStep.Help);
 
   onChosenSameMicrobit = async () => {
     if (this.connectActions.isUsbDeviceConnected()) {
@@ -124,7 +126,7 @@ export class DownloadProjectActions {
           this.connectionStageActions.disconnectInputMicrobit,
       };
     }
-    if (!stage.projectHex || !stage.projectName) {
+    if (!stage.project) {
       throw new Error("Project hex/name is not set!");
     }
     this.updateStage({ step: DownloadProjectStep.WebUsbChooseMicrobit });
@@ -135,11 +137,11 @@ export class DownloadProjectActions {
     stage: DownloadProjectStage,
     connectionAndFlashOptions?: ConnectionAndFlashOptions
   ) => {
-    if (!stage.projectHex || !stage.projectName) {
+    if (!stage.project) {
       throw new Error("Project hex/name is not set!");
     }
     const { result } = await this.connectActions.requestUSBConnectionAndFlash(
-      stage.projectHex,
+      stage.project.hex,
       this.flashingProgressCallback,
       connectionAndFlashOptions
     );
@@ -151,15 +153,16 @@ export class DownloadProjectActions {
         result === ConnectAndFlashResult.Success
           ? DownloadProjectStep.None
           : DownloadProjectStep.ManualFlashingTutorial,
+      flashProgress: 0,
     });
-    this.setFlashingProgress(0);
   };
 
   private flashingProgressCallback = (progress: number) => {
-    if (this.stage.step !== DownloadProjectStep.FlashingInProgress) {
-      this.setStep(DownloadProjectStep.FlashingInProgress);
-    }
-    this.setFlashingProgress(progress);
+    this.setStage({
+      ...this.stage,
+      step: DownloadProjectStep.FlashingInProgress,
+      flashProgress: progress,
+    });
   };
 
   close = () => this.setStep(DownloadProjectStep.None);
@@ -182,7 +185,7 @@ export class DownloadProjectActions {
   };
 
   private downloadProjectStepOrder = () => [
-    ...(this.stage.skipIntro ? [] : [DownloadProjectStep.Introduction]),
+    ...(this.settings.showPreDownloadHelp ? [DownloadProjectStep.Help] : []),
     ...(this.stage.step === DownloadProjectStep.ChooseSameOrAnotherMicrobit ||
     this.stage.microbitToFlash !== MicrobitToFlash.Default
       ? [DownloadProjectStep.ChooseSameOrAnotherMicrobit]
@@ -200,3 +203,33 @@ export class DownloadProjectActions {
   private setStep = (step: DownloadProjectStep) =>
     this.setStage({ ...this.stage, step });
 }
+
+export const useDownloadActions = (): DownloadProjectActions => {
+  const stage = useStore((s) => s.downloadStage);
+  const setStage = useStore((s) => s.setDownloadStage);
+  const [settings, setSettings] = useSettings();
+  const connectActions = useConnectActions();
+  const { actions: connectionStageActions, status: connectionStatus } =
+    useConnectionStage();
+  return useMemo(
+    () =>
+      new DownloadProjectActions(
+        stage,
+        setStage,
+        settings,
+        setSettings,
+        connectActions,
+        connectionStageActions,
+        connectionStatus
+      ),
+    [
+      connectActions,
+      connectionStageActions,
+      connectionStatus,
+      setSettings,
+      setStage,
+      settings,
+      stage,
+    ]
+  );
+};

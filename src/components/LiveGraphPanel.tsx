@@ -7,7 +7,7 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import InfoToolTip from "./InfoToolTip";
 import LedIcon from "./LedIcon";
 import LiveGraph from "./LiveGraph";
-import { Gesture } from "../gestures-hooks";
+import { Gesture } from "../model";
 
 interface LiveGraphPanelProps {
   detected?: Gesture | undefined;

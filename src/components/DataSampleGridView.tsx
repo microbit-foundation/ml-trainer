@@ -2,10 +2,10 @@ import { Grid, GridProps, useDisclosure } from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
 import { useEffect, useMemo, useState } from "react";
 import { useConnectActions } from "../connect-actions-hooks";
-import { useGestureData } from "../gestures-hooks";
 import DataSampleGridRow from "./AddDataGridRow";
 import HeadingGrid from "./HeadingGrid";
 import RecordingDialog from "./RecordingDialog";
+import { useStore } from "../store";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -27,14 +27,14 @@ const headings = [
 ];
 
 const DataSamplesGridView = () => {
-  const [gestures] = useGestureData();
+  const gestures = useStore((s) => s.gestures);
   const [selectedGestureIdx, setSelectedGestureIdx] = useState<number>(0);
-  const selectedGesture = gestures.data[selectedGestureIdx] ?? gestures.data[0];
+  const selectedGesture = gestures[selectedGestureIdx] ?? gestures[0];
   const showWalkThrough = useMemo<boolean>(
     () =>
-      gestures.data.length === 0 ||
-      (gestures.data.length === 1 && gestures.data[0].recordings.length === 0),
-    [gestures.data]
+      gestures.length === 0 ||
+      (gestures.length === 1 && gestures[0].recordings.length === 0),
+    [gestures]
   );
   const { isOpen, onClose, onOpen } = useDisclosure();
 
@@ -76,7 +76,7 @@ const DataSamplesGridView = () => {
         flexGrow={1}
         h={0}
       >
-        {gestures.data.map((g, idx) => (
+        {gestures.map((g, idx) => (
           <DataSampleGridRow
             key={g.ID}
             gesture={g}

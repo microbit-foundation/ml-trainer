@@ -31,6 +31,10 @@
     "defaultMessage": "Are you sure you want to delete the action \"{action}\"?",
     "description": ""
   },
+  "alert.deleteGestureConfirmHeading": {
+    "defaultMessage": "Confirm delete action",
+    "description": ""
+  },
   "alert.isNotConnected": {
     "defaultMessage": "Your micro:bit should be connected!",
     "description": ""
@@ -98,6 +102,10 @@
   "compatibility.webgl.notSupported": {
     "defaultMessage": "WebGL not available. Enable WebGL to see 3D data view.",
     "description": ""
+  },
+  "confirm-action": {
+    "defaultMessage": "Confirm",
+    "description": "Confirm button text"
   },
   "connect-help-alt": {
     "defaultMessage": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2",
@@ -632,8 +640,8 @@
     "description": ""
   },
   "content.trainer.training.title": {
-    "defaultMessage": "Training model...",
-    "description": ""
+    "defaultMessage": "Training model…",
+    "description": "Progress title"
   },
   "cookies-action": {
     "defaultMessage": "Cookies",
@@ -775,6 +783,14 @@
     "defaultMessage": "More information about \"{item}\"",
     "description": ""
   },
+  "insufficient-data-body": {
+    "defaultMessage": "You need at least 3 data samples for 2 actions to train the model.",
+    "description": "Insufficient data modal content"
+  },
+  "insufficient-data-title": {
+    "defaultMessage": "You don't have enough data",
+    "description": "Insufficient data modal title"
+  },
   "introducing-the-microbit-machine-learning-tool-title": {
     "defaultMessage": "Introducing the micro:bit machine learning tool",
     "description": "Title of a resource"
@@ -834,6 +850,10 @@
   "not-found-title": {
     "defaultMessage": "Page not found",
     "description": "Page not found page title"
+  },
+  "open-file-dropped": {
+    "defaultMessage": "Open file when dropped",
+    "description": "Aria label for file drop target"
   },
   "performanceWarning.content1": {
     "defaultMessage": "The quality of data being received from your micro:bit is low. This could be due to a connection issue.",
@@ -971,6 +991,34 @@
     "defaultMessage": "introduction video",
     "description": ""
   },
+  "save-action": {
+    "defaultMessage": "Save",
+    "description": "Label for action that saves the project as a file the user downloads"
+  },
+  "save-hex-dialog-heading": {
+    "defaultMessage": "Save project as a hex file",
+    "description": "Heading for the dialog shown when saving a hex file"
+  },
+  "save-hex-dialog-message1": {
+    "defaultMessage": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit machine learning tool to continue working.",
+    "description": "Text in the dialog shown when saving a hex file"
+  },
+  "save-hex-dialog-message2": {
+    "defaultMessage": "You can also open it with Microsoft MakeCode if you don't need to change the actions and data samples.",
+    "description": "Text in the dialog shown when saving a hex file"
+  },
+  "saving-description": {
+    "defaultMessage": "Your download will be ready soon.",
+    "description": "Saving progress dialog text"
+  },
+  "saving-title": {
+    "defaultMessage": "Saving…",
+    "description": "Saving progress title"
+  },
+  "saving-toast-title": {
+    "defaultMessage": "Your hex file has been downloaded",
+    "description": "Notification after a hex file has been downloaded"
+  },
   "settings-menu-action": {
     "defaultMessage": "Settings actions menu",
     "description": "Label for settings actions menu button"
@@ -1006,6 +1054,10 @@
   "software-versions": {
     "defaultMessage": "Software versions",
     "description": "Software versions text"
+  },
+  "start-training-action": {
+    "defaultMessage": "Start training",
+    "description": "Start training button text"
   },
   "support-request": {
     "defaultMessage": "Please consider <link>raising a support request</link>.",

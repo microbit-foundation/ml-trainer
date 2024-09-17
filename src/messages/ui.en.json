@@ -73,6 +73,12 @@
       "value": "\"?"
     }
   ],
+  "alert.deleteGestureConfirmHeading": [
+    {
+      "type": 0,
+      "value": "Confirm delete action"
+    }
+  ],
   "alert.isNotConnected": [
     {
       "type": 0,
@@ -173,6 +179,12 @@
     {
       "type": 0,
       "value": "WebGL not available. Enable WebGL to see 3D data view."
+    }
+  ],
+  "confirm-action": [
+    {
+      "type": 0,
+      "value": "Confirm"
     }
   ],
   "connect-help-alt": [
@@ -1094,7 +1106,7 @@
   "content.trainer.training.title": [
     {
       "type": 0,
-      "value": "Training model..."
+      "value": "Training model…"
     }
   ],
   "cookies-action": [
@@ -1315,6 +1327,18 @@
       "value": "\""
     }
   ],
+  "insufficient-data-body": [
+    {
+      "type": 0,
+      "value": "You need at least 3 data samples for 2 actions to train the model."
+    }
+  ],
+  "insufficient-data-title": [
+    {
+      "type": 0,
+      "value": "You don't have enough data"
+    }
+  ],
   "introducing-the-microbit-machine-learning-tool-title": [
     {
       "type": 0,
@@ -1403,6 +1427,12 @@
     {
       "type": 0,
       "value": "Page not found"
+    }
+  ],
+  "open-file-dropped": [
+    {
+      "type": 0,
+      "value": "Open file when dropped"
     }
   ],
   "performanceWarning.content1": [
@@ -1609,6 +1639,48 @@
       "value": "introduction video"
     }
   ],
+  "save-action": [
+    {
+      "type": 0,
+      "value": "Save"
+    }
+  ],
+  "save-hex-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Save project as a hex file"
+    }
+  ],
+  "save-hex-dialog-message1": [
+    {
+      "type": 0,
+      "value": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit machine learning tool to continue working."
+    }
+  ],
+  "save-hex-dialog-message2": [
+    {
+      "type": 0,
+      "value": "You can also open it with Microsoft MakeCode if you don't need to change the actions and data samples."
+    }
+  ],
+  "saving-description": [
+    {
+      "type": 0,
+      "value": "Your download will be ready soon."
+    }
+  ],
+  "saving-title": [
+    {
+      "type": 0,
+      "value": "Saving…"
+    }
+  ],
+  "saving-toast-title": [
+    {
+      "type": 0,
+      "value": "Your hex file has been downloaded"
+    }
+  ],
   "settings-menu-action": [
     {
       "type": 0,
@@ -1675,6 +1747,12 @@
     {
       "type": 0,
       "value": "Software versions"
+    }
+  ],
+  "start-training-action": [
+    {
+      "type": 0,
+      "value": "Start training"
     }
   ],
   "support-request": [

@@ -40,7 +40,7 @@ const Button: StyleConfig = {
         borderColor: "brand.600",
       },
       _active: {
-        bg: "brand.500",
+        bg: "brand.50",
         borderColor: "brand.700",
       },
     }),
@@ -137,6 +137,13 @@ const Button: StyleConfig = {
         color: "green.600",
         bg: "gray.100",
       },
+    }),
+    "secondary-disabled": () => ({
+      borderWidth: "2px",
+      borderColor: "brand.500",
+      color: "brand.700",
+      bg: "transparent",
+      opacity: "0.4",
     }),
   },
 };

@@ -1,35 +1,33 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ChakraProvider } from "@chakra-ui/react";
-import React, { ReactNode, useMemo } from "react";
+import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
+import React, { ReactNode, useMemo, useRef } from "react";
 import {
   Outlet,
   RouterProvider,
   ScrollRestoration,
   createBrowserRouter,
 } from "react-router-dom";
+import { BufferedDataProvider } from "./buffered-data-hooks";
+import EditCodeDialog from "./components/EditCodeDialog";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
 import NotFound from "./components/NotFound";
+import ProjectDropTarget from "./components/ProjectDropTarget";
+import { ConnectProvider } from "./connect-actions-hooks";
+import { ConnectStatusProvider } from "./connect-status-hooks";
+import { ConnectionStageProvider } from "./connection-stage-hooks";
+import { deployment, useDeployment } from "./deployment";
+import { ProjectProvider } from "./hooks/project-hooks";
+import { LoggingProvider } from "./logging/logging-hooks";
 import TranslationProvider from "./messages/TranslationProvider";
-import SettingsProvider from "./settings";
+import { resourcesConfig, sessionPageConfigs } from "./pages-config";
 import HomePage from "./pages/HomePage";
 import {
   createHomePageUrl,
   createResourcePageUrl,
   createSessionPageUrl,
 } from "./urls";
-import { deployment, useDeployment } from "./deployment";
-import { resourcesConfig, sessionPageConfigs } from "./pages-config";
-import { LoggingProvider } from "./logging/logging-hooks";
-import { GesturesProvider } from "./gestures-hooks";
-import { MlStatusProvider } from "./ml-status-hooks";
-import { ConnectionStageProvider } from "./connection-stage-hooks";
-import { ConnectProvider } from "./connect-actions-hooks";
-import { ConnectStatusProvider } from "./connect-status-hooks";
-import { BufferedDataProvider } from "./buffered-data-hooks";
-import { UserProjectsProvider } from "./user-projects-hooks";
-import { TrainModelDialogProvider } from "./train-model-dialog-hooks";
-import { DownloadProjectContextProvider } from "./download-project-hooks";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -40,34 +38,30 @@ const logging = deployment.logging;
 const Providers = ({ children }: ProviderLayoutProps) => {
   const deployment = useDeployment();
   const { ConsentProvider } = deployment.compliance;
+  const driverRef = useRef<MakeCodeFrameDriver>(null);
   return (
     <React.StrictMode>
       <ChakraProvider theme={deployment.chakraTheme}>
         <LoggingProvider value={logging}>
           <ConsentProvider>
-            <SettingsProvider>
-              <TrainModelDialogProvider>
-                <GesturesProvider>
-                  <UserProjectsProvider>
-                    <MlStatusProvider>
-                      <ConnectStatusProvider>
-                        <ConnectProvider>
-                          <BufferedDataProvider>
-                            <ConnectionStageProvider>
-                              <DownloadProjectContextProvider>
-                                <TranslationProvider>
-                                  <ErrorBoundary>{children}</ErrorBoundary>
-                                </TranslationProvider>
-                              </DownloadProjectContextProvider>
-                            </ConnectionStageProvider>
-                          </BufferedDataProvider>
-                        </ConnectProvider>
-                      </ConnectStatusProvider>
-                    </MlStatusProvider>
-                  </UserProjectsProvider>
-                </GesturesProvider>
-              </TrainModelDialogProvider>
-            </SettingsProvider>
+            <ConnectStatusProvider>
+              <ConnectProvider>
+                <BufferedDataProvider>
+                  <ConnectionStageProvider>
+                    <ProjectProvider driverRef={driverRef}>
+                      <TranslationProvider>
+                        <ProjectDropTarget>
+                          <ErrorBoundary>
+                            <EditCodeDialog ref={driverRef} />
+                            {children}
+                          </ErrorBoundary>
+                        </ProjectDropTarget>
+                      </TranslationProvider>
+                    </ProjectProvider>
+                  </ConnectionStageProvider>
+                </BufferedDataProvider>
+              </ConnectProvider>
+            </ConnectStatusProvider>
           </ConsentProvider>
         </LoggingProvider>
       </ChakraProvider>

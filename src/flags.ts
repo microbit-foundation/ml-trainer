@@ -12,6 +12,10 @@ import { Stage, stage as stageFromEnvironment } from "./environment";
  */
 export type Flag =
   /**
+   * Flag to enable redux/zustand dev tools.
+   */
+  | "devtools"
+  /**
    * Flag to add a prototype warning. Enabled for staging site and production stages.
    */
   | "prototypeWarning"
@@ -28,6 +32,7 @@ interface FlagMetadata {
 
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
+  { name: "devtools", defaultOnStages: ["local"] },
   { name: "prototypeWarning", defaultOnStages: ["staging", "production"] },
   { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
   { name: "exampleOptInB", defaultOnStages: [] },

@@ -9,7 +9,7 @@ import {
   MenuList,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { MdMoreVert } from "react-icons/md";
 import {
   RiAddLine,
@@ -19,45 +19,41 @@ import {
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import DataSampleGridView from "../components/DataSampleGridView";
 import ConnectFirstView from "../components/ConnectFirstView";
+import DataSampleGridView from "../components/DataSampleGridView";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
-import TrainingButton from "../components/TrainingButton";
 import UploadDataSamplesMenuItem from "../components/UploadDataSamplesMenuItem";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
-import {
-  hasSufficientDataForTraining,
-  useGestureActions,
-  useGestureData,
-} from "../gestures-hooks";
-import { MlStage, useMlStatus } from "../ml-status-hooks";
 import { SessionPageId } from "../pages-config";
 import { createSessionPageUrl } from "../urls";
-import { useTrainModelDialog } from "../train-model-dialog-hooks";
+import SaveButton from "../components/SaveButton";
+import {
+  useStore,
+  useHasSufficientDataForTraining as useHasSufficientDataForTraining,
+} from "../store";
 
 const DataSamplesPage = () => {
   const intl = useIntl();
-  const [gestures] = useGestureData();
-  const [{ stage }] = useMlStatus();
+  const gestures = useStore((s) => s.gestures);
+  const addNewGesture = useStore((s) => s.addNewGesture);
+  const downloadDataSet = useStore((s) => s.downloadDataset);
+  const deleteAllGestures = useStore((s) => s.deleteAllGestures);
+  const model = useStore((s) => s.model);
+
   const navigate = useNavigate();
-  const actions = useGestureActions();
-  const { onOpen: onOpenTrainModelDialog } = useTrainModelDialog();
+  const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
   const { isConnected, status } = useConnectionStage();
 
-  const hasSufficientData = useMemo(
-    () => hasSufficientDataForTraining(gestures.data),
-    [gestures.data]
-  );
-
-  const noStoredData = useMemo<boolean>(() => {
-    const gestureData = gestures.data;
-    return !(
-      gestureData.length !== 0 &&
-      gestureData.some((g) => g.recordings.length > 0)
-    );
-  }, [gestures.data]);
+  const hasSufficientData = useHasSufficientDataForTraining();
+  const hasAnyRecordings = gestures.some((g) => g.recordings.length > 0);
+  const isAddNewGestureDisabled =
+    !isConnected || gestures.some((g) => g.name.length === 0);
+  const showConnectFirstView =
+    !hasAnyRecordings &&
+    !isConnected &&
+    status !== ConnectionStatus.ReconnectingAutomatically;
 
   const handleNavigateToModel = useCallback(() => {
     navigate(createSessionPageUrl(SessionPageId.TestingModel));
@@ -66,15 +62,10 @@ const DataSamplesPage = () => {
   return (
     <DefaultPageLayout
       titleId={`${SessionPageId.DataSamples}-title`}
+      toolbarItemsRight={<SaveButton key="save" />}
       showPageTitle
     >
-      {noStoredData &&
-      !isConnected &&
-      status !== ConnectionStatus.ReconnectingAutomatically ? (
-        <ConnectFirstView />
-      ) : (
-        <DataSampleGridView />
-      )}
+      {showConnectFirstView ? <ConnectFirstView /> : <DataSampleGridView />}
       <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
         <HStack
           justifyContent="space-between"
@@ -90,10 +81,8 @@ const DataSamplesPage = () => {
             <Button
               variant={hasSufficientData ? "secondary" : "primary"}
               leftIcon={<RiAddLine />}
-              onClick={actions.addNewGesture}
-              isDisabled={
-                !isConnected || gestures.data.some((g) => g.name.length === 0)
-              }
+              onClick={addNewGesture}
+              isDisabled={isAddNewGestureDisabled}
             >
               <FormattedMessage id="content.data.addAction" />
             </Button>
@@ -109,22 +98,19 @@ const DataSamplesPage = () => {
               />
               <MenuList>
                 <UploadDataSamplesMenuItem />
-                <MenuItem
-                  icon={<RiDownload2Line />}
-                  onClick={actions.downloadDataset}
-                >
+                <MenuItem icon={<RiDownload2Line />} onClick={downloadDataSet}>
                   <FormattedMessage id="content.data.controlbar.button.downloadData" />
                 </MenuItem>
                 <MenuItem
                   icon={<RiDeleteBin2Line />}
-                  onClick={actions.deleteAllGestures}
+                  onClick={deleteAllGestures}
                 >
                   <FormattedMessage id="content.data.controlbar.button.clearData" />
                 </MenuItem>
               </MenuList>
             </Menu>
           </HStack>
-          {stage === MlStage.TrainingComplete ? (
+          {model ? (
             <Button
               onClick={handleNavigateToModel}
               variant="primary"
@@ -133,10 +119,12 @@ const DataSamplesPage = () => {
               <FormattedMessage id={`${SessionPageId.TestingModel}-title`} />
             </Button>
           ) : (
-            <TrainingButton
-              onClick={onOpenTrainModelDialog}
-              variant={hasSufficientData ? "primary" : "secondary"}
-            />
+            <Button
+              onClick={trainModelFlowStart}
+              variant={hasSufficientData ? "primary" : "secondary-disabled"}
+            >
+              <FormattedMessage id={"menu.trainer.trainModelButton"} />
+            </Button>
           )}
         </HStack>
         <LiveGraphPanel />
