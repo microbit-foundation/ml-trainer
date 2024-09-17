@@ -2,18 +2,18 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router";
 import { TrainModelDialogStage } from "../model";
 import { SessionPageId } from "../pages-config";
-import { useAppStore, useSettings } from "../store";
+import { useStore, useSettings } from "../store";
 import { createSessionPageUrl } from "../urls";
 import TrainingErrorDialog from "./TrainingErrorDialog";
 import TrainingModelProgressDialog from "./TrainingModelProgressDialog";
 import TrainModelIntroDialog from "./TrainModelIntroDialog";
 
 const TrainModelFlowDialogs = () => {
-  const stage = useAppStore((s) => s.trainModelDialogStage);
-  const closeTrainModelDialogs = useAppStore((s) => s.closeTrainModelDialogs);
+  const stage = useStore((s) => s.trainModelDialogStage);
+  const closeTrainModelDialogs = useStore((s) => s.closeTrainModelDialogs);
   const navigate = useNavigate();
-  const trainModel = useAppStore((s) => s.trainModel);
-  const trainModelProgress = useAppStore((s) => s.trainModelProgress);
+  const trainModel = useStore((s) => s.trainModel);
+  const trainModelProgress = useStore((s) => s.trainModelProgress);
   const [, setSettings] = useSettings();
 
   const handleIntroNext = useCallback(

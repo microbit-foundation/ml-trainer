@@ -31,20 +31,20 @@ import { SessionPageId } from "../pages-config";
 import { createSessionPageUrl } from "../urls";
 import SaveButton from "../components/SaveButton";
 import {
-  useAppStore,
+  useStore,
   useHasSufficientDataForTraining as useHasSufficientDataForTraining,
 } from "../store";
 
 const DataSamplesPage = () => {
   const intl = useIntl();
-  const gestures = useAppStore((s) => s.gestures);
-  const addNewGesture = useAppStore((s) => s.addNewGesture);
-  const downloadDataSet = useAppStore((s) => s.downloadDataset);
-  const deleteAllGestures = useAppStore((s) => s.deleteAllGestures);
-  const model = useAppStore((s) => s.model);
+  const gestures = useStore((s) => s.gestures);
+  const addNewGesture = useStore((s) => s.addNewGesture);
+  const downloadDataSet = useStore((s) => s.downloadDataset);
+  const deleteAllGestures = useStore((s) => s.deleteAllGestures);
+  const model = useStore((s) => s.model);
 
   const navigate = useNavigate();
-  const trainModelFlowStart = useAppStore((s) => s.trainModelFlowStart);
+  const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
   const { isConnected, status } = useConnectionStage();
 
   const hasSufficientData = useHasSufficientDataForTraining();

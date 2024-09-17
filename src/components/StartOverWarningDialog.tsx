@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
-import { useAppStore } from "../store";
+import { useStore } from "../store";
 
 interface StartOverWardningDialogProps {
   isOpen: boolean;
@@ -26,7 +26,7 @@ const StartOverWarningDialog = ({
   onClose,
   onStart,
 }: StartOverWardningDialogProps) => {
-  const downloadDataset = useAppStore((s) => s.downloadDataset);
+  const downloadDataset = useStore((s) => s.downloadDataset);
   return (
     <Modal
       motionPreset="none"

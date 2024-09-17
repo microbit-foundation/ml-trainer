@@ -8,11 +8,11 @@ import TestingModelGridView from "../components/TestingModelGridView";
 import { SessionPageId } from "../pages-config";
 import { createSessionPageUrl } from "../urls";
 import SaveButton from "../components/SaveButton";
-import { useAppStore } from "../store";
+import { useStore } from "../store";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
-  const model = useAppStore((s) => s.model);
+  const model = useStore((s) => s.model);
 
   const navigateToDataSamples = useCallback(() => {
     navigate(createSessionPageUrl(SessionPageId.DataSamples));

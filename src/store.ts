@@ -52,10 +52,26 @@ const generateFirstGesture = () => ({
   recordings: [],
 });
 
-export interface Store {
+export interface State {
   gestures: GestureData[];
+  model: tf.LayersModel | undefined;
+
   isRecording: boolean;
 
+  project: Project;
+  // false if we're sure the user hasn't changed the project, otherwise true
+  projectEdited: boolean;
+  changedHeaderExpected: boolean;
+  appEditNeedsFlushToEditor: boolean;
+  isEditorOpen: boolean;
+
+  settings: Settings;
+
+  trainModelProgress: number;
+  trainModelDialogStage: TrainModelDialogStage;
+}
+
+export interface Actions {
   addNewGesture(): void;
   addGestureRecordings(id: GestureData["ID"], recs: RecordingData[]): void;
   deleteGesture(id: GestureData["ID"]): void;
@@ -69,44 +85,36 @@ export interface Store {
   deleteAllGestures(): void;
   downloadDataset(): void;
   loadDataset(gestures: GestureData[]): void;
-
-  model: tf.LayersModel | undefined;
-
-  isEditorOpen: boolean;
-  appEditNeedsFlushToEditor: boolean;
-  changedHeaderExpected: boolean;
   setEditorOpen(open: boolean): void;
-
   recordingStarted(): void;
   recordingStopped(): void;
   newSession(): void;
-
   trainModel(): Promise<boolean>;
-
-  project: Project;
-  // false if we're sure the user hasn't changed the project, otherwise true
-  projectEdited: boolean;
-
-  settings: Settings;
   setSettings(update: Partial<Settings>): void;
-
   /**
    * Resets the project.
    */
   resetProject: () => void;
-
-  editorChange: (project: Project) => void;
-
-  expectChangedHeader(): void;
-  projectFlushedToEditor(): void;
-
-  trainModelProgress: number;
-  trainModelDialogStage: TrainModelDialogStage;
   trainModelFlowStart: () => Promise<void>;
   closeTrainModelDialogs: () => void;
+
+  /**
+   * Used by project hooks for MakeCode integration.
+   */
+  editorChange: (project: Project) => void;
+  /**
+   * Used by project hooks for MakeCode integration.
+   */
+  expectChangedHeader(): void;
+  /**
+   * Used by project hooks for MakeCode integration.
+   */
+  projectFlushedToEditor(): void;
 }
 
-export const useAppStore = create<Store>()(
+type Store = State & Actions;
+
+export const useStore = create<Store>()(
   devtools(
     persist(
       (set, get) => ({
@@ -479,14 +487,14 @@ export const useAppStore = create<Store>()(
 tf.loadLayersModel(modelUrl)
   .then((model) => {
     if (model) {
-      useAppStore.setState({ model }, false, "loadModel");
+      useStore.setState({ model }, false, "loadModel");
     }
   })
   .catch(() => {
     // This happens if there's no model.
   });
 
-useAppStore.subscribe((state, prevState) => {
+useStore.subscribe((state, prevState) => {
   const { model: newModel } = state;
   const { model: previousModel } = prevState;
   if (newModel !== previousModel) {
@@ -503,7 +511,7 @@ useAppStore.subscribe((state, prevState) => {
 });
 
 export const useHasGestures = () => {
-  const gestures = useAppStore((s) => s.gestures);
+  const gestures = useStore((s) => s.gestures);
   return (
     (gestures.length > 0 && gestures[0].name.length > 0) ||
     gestures[0]?.recordings.length > 0
@@ -517,12 +525,12 @@ const hasSufficientDataForTraining = (gestures: GestureData[]): boolean => {
 };
 
 export const useHasSufficientDataForTraining = (): boolean => {
-  const gestures = useAppStore((s) => s.gestures);
+  const gestures = useStore((s) => s.gestures);
   return hasSufficientDataForTraining(gestures);
 };
 
 export const useHasNoStoredData = (): boolean => {
-  const gestures = useAppStore((s) => s.gestures);
+  const gestures = useStore((s) => s.gestures);
   return !(
     gestures.length !== 0 && gestures.some((g) => g.recordings.length > 0)
   );
@@ -531,7 +539,7 @@ export const useHasNoStoredData = (): boolean => {
 type UseSettingsReturn = [Settings, (settings: Partial<Settings>) => void];
 
 export const useSettings = (): UseSettingsReturn => {
-  return useAppStore(useShallow((s) => [s.settings, s.setSettings]));
+  return useStore(useShallow((s) => [s.settings, s.setSettings]));
 };
 
 const gestureIcon = ({

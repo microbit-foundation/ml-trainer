@@ -17,7 +17,7 @@ import { TimedXYZ } from "../buffered-data";
 import { useBufferedData } from "../buffered-data-hooks";
 import { mlSettings } from "../ml";
 import { GestureData, XYZData } from "../model";
-import { useAppStore } from "../store";
+import { useStore } from "../store";
 
 interface CountdownStage {
   value: string | number;
@@ -46,9 +46,9 @@ const RecordingDialog = ({
 }: RecordingDialogProps) => {
   const intl = useIntl();
   const toast = useToast();
-  const recordingStarted = useAppStore((s) => s.recordingStarted);
-  const recordingStopped = useAppStore((s) => s.recordingStopped);
-  const addGestureRecordings = useAppStore((s) => s.addGestureRecordings);
+  const recordingStarted = useStore((s) => s.recordingStarted);
+  const recordingStopped = useStore((s) => s.recordingStopped);
+  const addGestureRecordings = useStore((s) => s.addGestureRecordings);
   const recordingDataSource = useRecordingDataSource();
   const [recordingStatus, setRecordingStatus] = useState<RecordingStatus>(
     RecordingStatus.None

@@ -7,10 +7,10 @@ import StartOverWarningDialog from "./StartOverWarningDialog";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { SessionPageId } from "../pages-config";
-import { useAppStore, useHasGestures } from "../store";
+import { useStore, useHasGestures } from "../store";
 
 const StartResumeActions = ({ ...props }: Partial<StackProps>) => {
-  const newSession = useAppStore((s) => s.newSession);
+  const newSession = useStore((s) => s.newSession);
   const hasExistingSession = useHasGestures();
   const [hasConnectFlowStarted, setHasConnectFlowStarted] =
     useState<boolean>(false);

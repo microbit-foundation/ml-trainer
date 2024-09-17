@@ -5,7 +5,7 @@ import { useConnectActions } from "../connect-actions-hooks";
 import DataSampleGridRow from "./AddDataGridRow";
 import HeadingGrid from "./HeadingGrid";
 import RecordingDialog from "./RecordingDialog";
-import { useAppStore } from "../store";
+import { useStore } from "../store";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -27,7 +27,7 @@ const headings = [
 ];
 
 const DataSamplesGridView = () => {
-  const gestures = useAppStore((s) => s.gestures);
+  const gestures = useStore((s) => s.gestures);
   const [selectedGestureIdx, setSelectedGestureIdx] = useState<number>(0);
   const selectedGesture = gestures[selectedGestureIdx] ?? gestures[0];
   const showWalkThrough = useMemo<boolean>(

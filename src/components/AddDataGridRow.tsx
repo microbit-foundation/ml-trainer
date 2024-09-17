@@ -5,7 +5,7 @@ import { GestureData } from "../model";
 import AddDataGridWalkThrough from "./AddDataGridWalkThrough";
 import DataRecordingGridItem from "./DataRecordingGridItem";
 import GestureNameGridItem from "./GestureNameGridItem";
-import { useAppStore } from "../store";
+import { useStore } from "../store";
 
 interface AddDataGridRowProps {
   gesture: GestureData;
@@ -23,7 +23,7 @@ const DataSampleGridRow = ({
   showWalkThrough,
 }: AddDataGridRowProps) => {
   const intl = useIntl();
-  const deleteGesture = useAppStore((s) => s.deleteGesture);
+  const deleteGesture = useStore((s) => s.deleteGesture);
 
   const handleDeleteDataItem = useCallback(() => {
     const confirmationText = intl.formatMessage(

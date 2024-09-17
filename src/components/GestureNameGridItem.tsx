@@ -12,7 +12,7 @@ import { useIntl } from "react-intl";
 import { MakeCodeIcon } from "../utils/icons";
 import LedIcon from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";
-import { useAppStore } from "../store";
+import { useStore } from "../store";
 
 interface GestureNameGridItemProps {
   name: string;
@@ -40,8 +40,8 @@ const GestureNameGridItem = ({
   const intl = useIntl();
   const toast = useToast();
   const toastId = "name-too-long-toast";
-  const setGestureName = useAppStore((s) => s.setGestureName);
-  const setGestureIcon = useAppStore((s) => s.setGestureIcon);
+  const setGestureName = useStore((s) => s.setGestureName);
+  const setGestureIcon = useStore((s) => s.setGestureIcon);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {

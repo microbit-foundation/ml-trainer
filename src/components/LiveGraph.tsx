@@ -10,7 +10,7 @@ import { ConnectionStatus } from "../connect-status-hooks";
 import { RiArrowDropLeftFill } from "react-icons/ri";
 import React from "react";
 import { LabelConfig, getUpdatedLabelConfig } from "../live-graph-label-config";
-import { useAppStore } from "../store";
+import { useStore } from "../store";
 
 const initialLabelConfigs: LabelConfig[] = [
   { label: "x", arrowHeight: 0, labelHeight: 0, color: "#f9808e", id: 0 },
@@ -89,7 +89,7 @@ const LiveGraph = () => {
   // Draw on graph to display that users are recording
   // Ideally we'd do this without timing the recording again!
   const [isTimingRecording, setIsTimingRecording] = useState<boolean>(false);
-  const isRecording = useAppStore((s) => s.isRecording);
+  const isRecording = useStore((s) => s.isRecording);
   useEffect(() => {
     if (isRecording && !isTimingRecording) {
       {

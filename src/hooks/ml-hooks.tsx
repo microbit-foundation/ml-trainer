@@ -5,7 +5,7 @@ import { useConnectStatus } from "../connect-status-hooks";
 import { Gesture } from "../model";
 import { useLogging } from "../logging/logging-hooks";
 import { Confidences, mlSettings, predict } from "../ml";
-import { useAppStore } from "../store";
+import { useStore } from "../store";
 
 export interface PredictionResult {
   confidences: Confidences;
@@ -18,8 +18,8 @@ export const usePrediction = () => {
   const [connectStatus] = useConnectStatus();
   const connection = useConnectActions();
   const [prediction, setPrediction] = useState<PredictionResult | undefined>();
-  const gestureData = useAppStore((s) => s.gestures);
-  const model = useAppStore((s) => s.model);
+  const gestureData = useStore((s) => s.gestures);
+  const model = useStore((s) => s.model);
 
   // Use a ref to prevent restarting the effect every time thesholds change.
   // We only use the ref's value during the setInterval callback not render.

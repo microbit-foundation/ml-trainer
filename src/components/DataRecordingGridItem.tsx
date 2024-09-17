@@ -13,7 +13,7 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import { GestureData } from "../model";
 import RecordIcon from "../images/record-icon.svg?react";
 import RecordingGraph from "./RecordingGraph";
-import { useAppStore } from "../store";
+import { useStore } from "../store";
 
 interface DataRecordingGridItemProps {
   data: GestureData;
@@ -29,7 +29,7 @@ const DataRecordingGridItem = ({
   startRecording,
 }: DataRecordingGridItemProps) => {
   const intl = useIntl();
-  const deleteGestureRecording = useAppStore((s) => s.deleteGestureRecording);
+  const deleteGestureRecording = useStore((s) => s.deleteGestureRecording);
   const closeRecordingDialogFocusRef = useRef(null);
   const { isConnected } = useConnectionStage();
 

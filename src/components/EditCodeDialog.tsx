@@ -9,14 +9,14 @@ import {
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
 import { forwardRef, memo, useRef } from "react";
 import Editor from "./Editor";
-import { useAppStore } from "../store";
+import { useStore } from "../store";
 
 interface EditCodeDialogProps {}
 
 const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
   function EditCodeDialog(_, ref) {
     const containerRef = useRef<HTMLDivElement>(null);
-    const isOpen = useAppStore((s) => s.isEditorOpen);
+    const isOpen = useStore((s) => s.isEditorOpen);
     return (
       <>
         <Box

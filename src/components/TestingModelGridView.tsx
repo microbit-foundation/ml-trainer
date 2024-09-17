@@ -19,7 +19,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { mlSettings } from "../ml";
 import { usePrediction } from "../hooks/ml-hooks";
 import { getMakeCodeLang } from "../settings";
-import { useAppStore, useSettings } from "../store";
+import { useStore, useSettings } from "../store";
 import { useProject } from "../hooks/project-hooks";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
 import CodeViewCard from "./CodeViewCard";
@@ -57,8 +57,8 @@ const TestingModelGridView = () => {
   const prediction = usePrediction();
   const { detected, confidences } = prediction ?? {};
   const intl = useIntl();
-  const gestures = useAppStore((s) => s.gestures);
-  const setRequiredConfidence = useAppStore((s) => s.setRequiredConfidence);
+  const gestures = useStore((s) => s.gestures);
+  const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { openEditor, project, resetProject, projectEdited } = useProject();
 
   const detectedLabel =

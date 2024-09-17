@@ -6,7 +6,7 @@ import {
 import { memo, useMemo } from "react";
 import { generateProject } from "../makecode/utils";
 import { GestureData } from "../model";
-import { useAppStore } from "../store";
+import { useStore } from "../store";
 
 interface CodeViewGridItemProps {
   gesture: GestureData;
@@ -17,8 +17,8 @@ const CodeViewGridItem = ({
   gesture,
   projectEdited,
 }: CodeViewGridItemProps) => {
-  const model = useAppStore((s) => s.model);
-  const gestures = useAppStore((s) => s.gestures);
+  const model = useStore((s) => s.model);
+  const gestures = useStore((s) => s.gestures);
   const project = useMemo(
     () => generateProject({ data: gestures }, model, gesture),
     [gesture, gestures, model]

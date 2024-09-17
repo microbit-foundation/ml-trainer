@@ -15,7 +15,7 @@ import {
 } from "react";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { isDatasetUserFileFormat } from "../model";
-import { useAppStore } from "../store";
+import { useStore } from "../store";
 import { getLowercaseFileExtension, readFileAsText } from "../utils/fs-util";
 
 interface ProjectContext {
@@ -50,7 +50,7 @@ export const ProjectProvider = ({
   driverRef,
   children,
 }: ProjectProviderProps) => {
-  const setEditorOpen = useAppStore((s) => s.setEditorOpen);
+  const setEditorOpen = useStore((s) => s.setEditorOpen);
 
   // We use this to track when we need special handling of an event from MakeCode
   const waitingForEditorContentLoaded = useRef<undefined | (() => void)>(
@@ -73,11 +73,11 @@ export const ProjectProvider = ({
     });
   }, []);
 
-  const project = useAppStore((s) => s.project);
-  const projectEdited = useAppStore((s) => s.projectEdited);
-  const expectChangedHeader = useAppStore((s) => s.expectChangedHeader);
-  const projectFlushedToEditor = useAppStore((s) => s.projectFlushedToEditor);
-  const appEditNeedsFlushToEditor = useAppStore(
+  const project = useStore((s) => s.project);
+  const projectEdited = useStore((s) => s.projectEdited);
+  const expectChangedHeader = useStore((s) => s.expectChangedHeader);
+  const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
+  const appEditNeedsFlushToEditor = useStore(
     (s) => s.appEditNeedsFlushToEditor
   );
   const doAfterMakeCodeUpdate = useCallback(
@@ -104,8 +104,8 @@ export const ProjectProvider = ({
     });
   }, [doAfterMakeCodeUpdate, setEditorOpen]);
 
-  const resetProject = useAppStore((s) => s.resetProject);
-  const loadDataset = useAppStore((s) => s.loadDataset);
+  const resetProject = useStore((s) => s.resetProject);
+  const loadDataset = useStore((s) => s.loadDataset);
 
   const loadProject = useCallback(
     async (file: File): Promise<void> => {
@@ -139,7 +139,7 @@ export const ProjectProvider = ({
 
   // These are event handlers for MakeCode
 
-  const editorChange = useAppStore((s) => s.editorChange);
+  const editorChange = useStore((s) => s.editorChange);
   const onWorkspaceSave = useCallback(
     (event: EditorWorkspaceSaveRequest) => {
       editorChange(event.project);
