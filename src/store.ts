@@ -419,13 +419,18 @@ export const useAppStore = create<Store>()(
               const {
                 project: prevProject,
                 isEditorOpen,
-                expectChangedHeader,
+                changedHeaderExpected,
               } = state;
               const newProjectHeader = newProject.header!.id;
               const previousProjectHeader = prevProject.header!.id;
+              console.log({
+                newProjectHeader,
+                previousProjectHeader,
+                changedHeaderExpected,
+              });
               if (
                 newProjectHeader !== previousProjectHeader &&
-                !expectChangedHeader
+                !changedHeaderExpected
               ) {
                 // It's a new project. Thanks user. We'll update our state.
                 // This will cause another write to MakeCode but that's OK as it gives us
