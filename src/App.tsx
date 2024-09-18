@@ -38,7 +38,6 @@ const logging = deployment.logging;
 const Providers = ({ children }: ProviderLayoutProps) => {
   const deployment = useDeployment();
   const { ConsentProvider } = deployment.compliance;
-  const driverRef = useRef<MakeCodeFrameDriver>(null);
   return (
     <React.StrictMode>
       <ChakraProvider theme={deployment.chakraTheme}>
@@ -47,18 +46,7 @@ const Providers = ({ children }: ProviderLayoutProps) => {
             <ConnectStatusProvider>
               <ConnectProvider>
                 <BufferedDataProvider>
-                  <ConnectionStageProvider>
-                    <ProjectProvider driverRef={driverRef}>
-                      <TranslationProvider>
-                        <ProjectDropTarget>
-                          <ErrorBoundary>
-                            <EditCodeDialog ref={driverRef} />
-                            {children}
-                          </ErrorBoundary>
-                        </ProjectDropTarget>
-                      </TranslationProvider>
-                    </ProjectProvider>
-                  </ConnectionStageProvider>
+                  <ConnectionStageProvider>{children}</ConnectionStageProvider>
                 </BufferedDataProvider>
               </ConnectProvider>
             </ConnectStatusProvider>
@@ -70,11 +58,19 @@ const Providers = ({ children }: ProviderLayoutProps) => {
 };
 
 const Layout = () => {
+  const driverRef = useRef<MakeCodeFrameDriver>(null);
   return (
     // We use this even though we have errorElement as this does logging.
     <ErrorBoundary>
-      <ScrollRestoration />
-      <Outlet />
+      <ProjectProvider driverRef={driverRef}>
+        <TranslationProvider>
+          <ProjectDropTarget>
+            <EditCodeDialog ref={driverRef} />
+            <ScrollRestoration />
+            <Outlet />
+          </ProjectDropTarget>
+        </TranslationProvider>
+      </ProjectProvider>
     </ErrorBoundary>
   );
 };

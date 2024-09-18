@@ -9,7 +9,7 @@ import FileDropTarget from "./FileDropTarget";
 import { useProject } from "../hooks/project-hooks";
 
 interface ProjectDropTargetProps extends BoxProps {
-  children: React.ReactElement;
+  children: React.ReactNode;
 }
 
 const ProjectDropTarget = ({ children }: ProjectDropTargetProps) => {
