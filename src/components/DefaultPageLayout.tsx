@@ -1,11 +1,18 @@
-import { Flex, Heading, HStack, IconButton, VStack } from "@chakra-ui/react";
+import {
+  Flex,
+  Heading,
+  HStack,
+  IconButton,
+  useToast,
+  VStack,
+} from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect } from "react";
 import { RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { TOOL_NAME } from "../constants";
 import { flags } from "../flags";
-import { createHomePageUrl } from "../urls";
+import { createHomePageUrl, createSessionPageUrl } from "../urls";
 import ActionBar from "./ActionBar";
 import AppLogo from "./AppLogo";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
@@ -15,6 +22,7 @@ import SettingsMenu from "./SettingsMenu";
 import TrainModelDialogs from "./TrainModelFlowDialogs";
 import DownloadProjectDialogs from "./DownloadProjectDialogs";
 import { useStore } from "../store";
+import { SessionPageId } from "../pages-config";
 
 interface DefaultPageLayoutProps {
   titleId: string;
@@ -38,6 +46,27 @@ const DefaultPageLayout = ({
   useEffect(() => {
     document.title = intl.formatMessage({ id: titleId });
   }, [intl, titleId]);
+
+  const toast = useToast();
+  useEffect(() => {
+    return useStore.subscribe(
+      (
+        { projectLoadTimestamp },
+        { projectLoadTimestamp: prevProjectLoadTimestamp }
+      ) => {
+        if (projectLoadTimestamp > prevProjectLoadTimestamp) {
+          // Side effects of loading a project, which MakeCode notifies us of.
+          navigate(createSessionPageUrl(SessionPageId.DataSamples));
+          toast({
+            position: "top",
+            duration: 5_000,
+            title: intl.formatMessage({ id: "project-loaded" }),
+            status: "info",
+          });
+        }
+      }
+    );
+  }, [intl, navigate, toast]);
 
   const handleHomeClick = useCallback(() => {
     navigate(createHomePageUrl());

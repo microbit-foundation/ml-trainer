@@ -935,6 +935,10 @@
     "defaultMessage": "Privacy policy",
     "description": "Link to view privacy policy"
   },
+  "project-loaded": {
+    "defaultMessage": "Project loaded",
+    "description": "Toast when a new project is loaded"
+  },
   "prototype.warning": {
     "defaultMessage": "This is a prototype version and is subject to change without notice",
     "description": ""

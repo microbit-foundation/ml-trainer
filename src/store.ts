@@ -64,6 +64,11 @@ export interface State {
   isRecording: boolean;
 
   project: Project;
+  /**
+   * We use this for the UI to tell when we've switched new project,
+   * e.g. to show a toast.
+   */
+  projectLoadTimestamp: number;
   // false if we're sure the user hasn't changed the project, otherwise true
   projectEdited: boolean;
   changedHeaderExpected: boolean;
@@ -147,6 +152,7 @@ export const useStore = create<Store>()(
           } as any,
           ...generateProject({ data: [] }, undefined),
         },
+        projectLoadTimestamp: 0,
         downloadStage: {
           step: DownloadProjectStep.None,
           microbitToFlash: MicrobitToFlash.Default,
@@ -428,6 +434,7 @@ export const useStore = create<Store>()(
             "resetProject"
           );
         },
+
         editorChange(newProject: Project) {
           const actionName = "editorChange";
           set(
@@ -459,10 +466,12 @@ export const useStore = create<Store>()(
 
                 return {
                   project: newProject,
+                  projectLoadTimestamp: Date.now(),
                   // New project loaded externally so we can't know whether its edited.
                   projectEdited: true,
                   gestures: dataset.data,
                   model: undefined,
+                  isEditorOpen: false,
                 };
               } else if (isEditorOpen) {
                 return {

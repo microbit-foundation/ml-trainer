@@ -1555,6 +1555,12 @@
       "value": "Privacy policy"
     }
   ],
+  "project-loaded": [
+    {
+      "type": 0,
+      "value": "Project loaded"
+    }
+  ],
   "prototype.warning": [
     {
       "type": 0,
