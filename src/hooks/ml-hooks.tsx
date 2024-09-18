@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { useBufferedData } from "../buffered-data-hooks";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectStatus } from "../connect-status-hooks";
-import { Gesture } from "../model";
 import { useLogging } from "../logging/logging-hooks";
 import { Confidences, mlSettings, predict } from "../ml";
+import { Gesture } from "../model";
 import { useStore } from "../store";
 
 export interface PredictionResult {
@@ -47,11 +47,6 @@ export const usePrediction = () => {
             gestureDataRef.current,
             result.confidences
           );
-          if (detected) {
-            connection.setIcon(detected.icon).catch((e) => logging.error(e));
-          } else {
-            connection.clearIcon().catch((e) => logging.error(e));
-          }
           setPrediction({
             detected,
             confidences,
@@ -64,7 +59,6 @@ export const usePrediction = () => {
       1000 / mlSettings.updatesPrSecond
     );
     return () => {
-      connection.resetIcon().catch((e) => logging.error(e));
       setPrediction(undefined);
       clearInterval(interval);
     };

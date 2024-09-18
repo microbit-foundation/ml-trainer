@@ -12,7 +12,6 @@ import {
 import { ConnectionType } from "./connection-stage-hooks";
 import { HexType, getFlashDataSource } from "./device/get-hex-file";
 import { Logging } from "./logging/logging";
-import { MakeCodeIcon, iconToLedMatrix } from "./utils/icons";
 
 export enum ConnectAndFlashResult {
   Success = "Success",
@@ -183,25 +182,6 @@ export class ConnectActions {
     const type = button === "A" ? "buttonachanged" : "buttonbchanged";
     this.bluetooth.removeEventListener(type, listener);
     this.radioBridge.removeEventListener(type, listener);
-  };
-
-  setIcon = async (icon: MakeCodeIcon): Promise<void> => {
-    await this.bluetooth.setLedMatrix(iconToLedMatrix(icon));
-  };
-
-  resetIcon = async (): Promise<void> => {
-    // Assuming this succeeds we should be back in the connected state.
-    await this.setIcon("Happy");
-  };
-
-  clearIcon = async (): Promise<void> => {
-    await this.bluetooth.setLedMatrix([
-      [false, false, false, false, false],
-      [false, false, false, false, false],
-      [false, false, false, false, false],
-      [false, false, false, false, false],
-      [false, false, false, false, false],
-    ]);
   };
 
   disconnect = async () => {

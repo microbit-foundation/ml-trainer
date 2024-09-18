@@ -1,5 +1,3 @@
-import { MicrobitWebBluetoothConnection } from "@microbit/microbit-connection";
-
 export const makecodeIcons = {
   Heart: "0101011111111110111000100",
   SmallHeart: "0000001010011100010000000",
@@ -66,14 +64,3 @@ export const defaultIcons: MakeCodeIcon[] = [
   "EighthNote",
   "Pitchfork",
 ];
-
-// TODO: export this from the connection lib or give up and use boolean[][]
-export type LedMatrix = Parameters<
-  MicrobitWebBluetoothConnection["setLedMatrix"]
->[0];
-
-export const iconToLedMatrix = (icon: MakeCodeIcon): LedMatrix => {
-  return makecodeIcons[icon]
-    .match(/.{5}/g)!
-    .map((r) => r.split("").map((d) => d !== "0")) as LedMatrix;
-};
