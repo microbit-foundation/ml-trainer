@@ -67,7 +67,7 @@ const ConnectContainerDialog = ({
                   <FormattedMessage id="back-action" />
                 </Button>
               )}
-              {additionalActions && additionalActions}
+              {additionalActions}
               {onNextClick && (
                 <Button onClick={onNextClick} variant="primary" size="lg">
                   <FormattedMessage id="connectMB.nextButton" />
