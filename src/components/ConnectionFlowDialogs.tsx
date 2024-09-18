@@ -85,9 +85,6 @@ const ConnectionDialogs = () => {
 
   const dialogCommonProps = { isOpen, onClose };
 
-  // TODO: Use EditCodeDialog state to prevent standard connection flow
-  // dialogs from being displayed over MakeCode, whether or not a MakeCode
-  // download is in progress.
   switch (stage.flowStep) {
     case ConnectionFlowStep.ReconnectFailedTwice:
     case ConnectionFlowStep.Start: {

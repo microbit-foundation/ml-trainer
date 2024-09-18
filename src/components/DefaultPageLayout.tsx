@@ -14,6 +14,7 @@ import PrototypeVersionWarning from "./PrototypeVersionWarning";
 import SettingsMenu from "./SettingsMenu";
 import TrainModelDialogs from "./TrainModelFlowDialogs";
 import DownloadProjectDialogs from "./DownloadProjectDialogs";
+import { useStore } from "../store";
 
 interface DefaultPageLayoutProps {
   titleId: string;
@@ -32,6 +33,7 @@ const DefaultPageLayout = ({
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const isEditorOpen = useStore((s) => s.isEditorOpen);
 
   useEffect(() => {
     document.title = intl.formatMessage({ id: titleId });
@@ -43,8 +45,13 @@ const DefaultPageLayout = ({
 
   return (
     <>
-      <ConnectionDialogs />
-      <TrainModelDialogs />
+      {/* Suppress connection and train dialogs when MakeCode editor is open */}
+      {!isEditorOpen && (
+        <>
+          <ConnectionDialogs />
+          <TrainModelDialogs />
+        </>
+      )}
       <DownloadProjectDialogs />
       <VStack
         minH="100dvh"
