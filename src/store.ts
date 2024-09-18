@@ -16,12 +16,13 @@ import {
   DownloadProjectStep,
   Gesture,
   GestureData,
+  HexData,
   MicrobitToFlash,
   RecordingData,
   TrainModelDialogStage,
 } from "./model";
 import { defaultSettings, Settings } from "./settings";
-import { triggerBrowserDownload } from "./utils/fs-util";
+import { downloadHex } from "./utils/fs-util";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 
 export const modelUrl = "indexeddb://micro:bit-ml-tool-model";
@@ -107,7 +108,7 @@ export interface Actions {
    * Remainer are used by project hooks for MakeCode integration.
    */
   editorChange(project: Project): void;
-  editorSave(project: { hex: string; name: string }): void;
+  editorSave(project: HexData): void;
   setChangedHeaderExpected(): void;
   projectFlushedToEditor(): void;
   setDownloadStage(stage: DownloadProjectStage): void;
@@ -477,11 +478,10 @@ export const useStore = create<Store>()(
         setDownloadStage(downloadStage: DownloadProjectStage) {
           set({ downloadStage });
         },
-        editorSave(project: { hex: string; name: string }) {
-          console.log("editorSave");
+        editorSave(project: HexData) {
           // TODO: We'd like to trigger the same UI as we do for the "Save"
           // buttob but with this project rather than poking MakeCode.
-          triggerBrowserDownload(project);
+          downloadHex(project);
         },
         setChangedHeaderExpected() {
           set({ changedHeaderExpected: true });

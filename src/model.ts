@@ -73,6 +73,26 @@ export const isDatasetUserFileFormat = (
   return true;
 };
 
+export interface HexData {
+  /**
+   * Hex data.
+   */
+  hex: string;
+  /**
+   * Filename without the .hex extension.
+   */
+  name: string;
+}
+
+export interface HexUrl {
+  url: string;
+
+  /**
+   * Filename without the .hex extension.
+   */
+  name: string;
+}
+
 export const enum TrainModelDialogStage {
   Closed,
   InsufficientData,
@@ -105,10 +125,7 @@ export interface DownloadProjectStage {
   step: DownloadProjectStep;
   microbitToFlash: MicrobitToFlash;
   flashProgress: number;
-  project?: {
-    hex: string;
-    name: string;
-  };
+  project?: HexData;
   // The micro:bit used to flash the hex.  We remember your choice for easy code
   // iteration for as long as the editor is open.
   usbDevice?: MicrobitWebUSBConnection;

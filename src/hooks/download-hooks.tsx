@@ -15,10 +15,12 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import {
   DownloadProjectStage,
   DownloadProjectStep,
+  HexData,
   MicrobitToFlash,
 } from "../model";
 import { Settings } from "../settings";
 import { useSettings, useStore } from "../store";
+import { downloadHex } from "../utils/fs-util";
 
 export class DownloadProjectActions {
   constructor(
@@ -35,7 +37,7 @@ export class DownloadProjectActions {
     this.setStage({ ...this.stage, usbDevice: undefined });
   };
 
-  start = async (download: { name: string; hex: string }) => {
+  start = async (download: HexData) => {
     if (this.stage.usbDevice) {
       if (this.stage.usbDevice.status === UsbConnectionStatus.CONNECTED) {
         const newStage = {
@@ -145,7 +147,7 @@ export class DownloadProjectActions {
       this.flashingProgressCallback,
       connectionAndFlashOptions
     );
-    this.updateStage({
+    const newStage = {
       usbDevice:
         connectionAndFlashOptions?.temporaryUsbConnection ??
         this.connectActions.getUsbConnection(),
@@ -154,7 +156,11 @@ export class DownloadProjectActions {
           ? DownloadProjectStep.None
           : DownloadProjectStep.ManualFlashingTutorial,
       flashProgress: 0,
-    });
+    };
+    this.updateStage(newStage);
+    if (newStage.step === DownloadProjectStep.ManualFlashingTutorial) {
+      downloadHex(stage.project);
+    }
   };
 
   private flashingProgressCallback = (progress: number) => {

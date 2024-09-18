@@ -70,15 +70,10 @@ const DownloadProjectDialogs = () => {
       if (!stage.project) {
         throw new Error("Project expected");
       }
-      // This triggers the download on first render (!)
       return (
         <ManualFlashingDialog
           isOpen
-          hexFile={{
-            type: "data",
-            source: stage.project.hex,
-            name: stage.project.name + ".hex",
-          }}
+          hex={stage.project}
           onClose={actions.close}
           closeIsPrimaryAction={true}
         />

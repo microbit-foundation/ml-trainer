@@ -6,7 +6,6 @@ import {
   ConnectionStage,
   useConnectionStage,
 } from "../connection-stage-hooks";
-import { getHexFileUrl, HexType } from "../device/get-hex-file";
 import BrokenFirmwareDialog from "./BrokenFirmwareDialog";
 import ConnectBatteryDialog from "./ConnectBatteryDialog";
 import ConnectCableDialog, {
@@ -23,6 +22,7 @@ import TryAgainDialog from "./TryAgainDialog";
 import UnsupportedMicrobitDialog from "./UnsupportedMicrobitDialog";
 import WebUsbBluetoothUnsupportedDialog from "./WebUsbBluetoothUnsupportedDialog";
 import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
+import { bluetoothUniversalHex } from "../connection-stage-actions";
 
 const ConnectionDialogs = () => {
   const { stage, actions } = useConnectionStage();
@@ -139,11 +139,7 @@ const ConnectionDialogs = () => {
       return (
         <ManualFlashingDialog
           {...dialogCommonProps}
-          hexFile={{
-            type: "url",
-            source: getHexFileUrl("universal", HexType.Bluetooth)!,
-            name: "machine-learning-tool-program.hex",
-          }}
+          hex={bluetoothUniversalHex}
           onNextClick={actions.onNextClick}
           onBackClick={actions.onBackClick}
         />

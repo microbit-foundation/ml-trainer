@@ -1,6 +1,6 @@
 import { Button, Image, Text, VStack } from "@chakra-ui/react";
 import Bowser from "bowser";
-import { ReactNode, useCallback, useEffect } from "react";
+import { ReactNode, useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import transferProgramChromeOS from "../images/transfer_program_chromeos.gif";
 import transferProgramMacOS from "../images/transfer_program_macos.gif";
@@ -8,6 +8,8 @@ import transferProgramWindows from "../images/transfer_program_windows.gif";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
+import { HexData, HexUrl } from "../model";
+import { downloadHex } from "../utils/fs-util";
 
 interface ImageProps {
   src: string;
@@ -28,47 +30,14 @@ const getImageProps = (os: string): ImageProps => {
   }
 };
 
-interface HexFile {
-  type: "url" | "data";
-  source: string;
-  name: string;
-}
-
 export interface ManualFlashingDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
-  hexFile: HexFile;
+  hex: HexData | HexUrl;
   closeIsPrimaryAction?: boolean;
 }
 
-const download = (hexFile: HexFile) => {
-  if (hexFile.type === "url") {
-    return downloadFileUrl(hexFile.source, hexFile.name);
-  }
-  downloadHex(hexFile.source, hexFile.name);
-};
-
-const downloadFileUrl = (fileUrl: string, filename: string) => {
-  const a = document.createElement("a");
-  a.download = filename;
-  a.href = fileUrl;
-  a.click();
-  a.remove();
-};
-
-const downloadHex = (hex: string, filename: string) => {
-  const a = document.createElement("a");
-  a.setAttribute(
-    "href",
-    "data:application/text;charset=utf-8," + encodeURIComponent(hex)
-  );
-  a.setAttribute("download", filename);
-  a.style.display = "none";
-  a.click();
-  a.remove();
-};
-
 const ManualFlashingDialog = ({
-  hexFile,
+  hex,
   closeIsPrimaryAction,
   ...props
 }: ManualFlashingDialogProps) => {
@@ -79,12 +48,8 @@ const ManualFlashingDialog = ({
   const imageProps = getImageProps(osName);
 
   const handleDownload = useCallback(() => {
-    download(hexFile);
-  }, [hexFile]);
-
-  useEffect(() => {
-    handleDownload();
-  }, [handleDownload]);
+    downloadHex(hex);
+  }, [hex]);
 
   return (
     <ConnectContainerDialog

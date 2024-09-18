@@ -13,12 +13,12 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { isDatasetUserFileFormat } from "../model";
+import { HexData, isDatasetUserFileFormat } from "../model";
 import { useStore } from "../store";
 import {
+  downloadHex,
   getLowercaseFileExtension,
   readFileAsText,
-  triggerBrowserDownload,
 } from "../utils/fs-util";
 import { useDownloadActions } from "./download-hooks";
 
@@ -132,11 +132,10 @@ export const ProjectProvider = ({
   const onSave = useStore((s) => s.editorSave);
   const downloadActions = useDownloadActions();
   const onDownload = useCallback(
-    (download: { hex: string; name: string }) => {
-      console.log("onDownload", saveNextDownloadRef.current);
+    (download: HexData) => {
       if (saveNextDownloadRef.current) {
         saveNextDownloadRef.current = false;
-        triggerBrowserDownload(download);
+        downloadHex(download);
       } else {
         void downloadActions.start(download);
       }

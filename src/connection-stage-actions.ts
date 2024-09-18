@@ -4,16 +4,23 @@ import {
   ConnectAndFlashFailResult,
   ConnectAndFlashResult,
 } from "./connect-actions";
+import { ConnectionStatus } from "./connect-status-hooks";
 import {
   ConnectionFlowStep,
   ConnectionFlowType,
   ConnectionStage,
   ConnectionType,
 } from "./connection-stage-hooks";
-import { ConnectionStatus } from "./connect-status-hooks";
-import { HexType } from "./device/get-hex-file";
+import { getHexFileUrl, HexType } from "./device/get-hex-file";
+import { HexUrl } from "./model";
+import { downloadHex } from "./utils/fs-util";
 
 type FlowStage = Pick<ConnectionStage, "flowStep" | "flowType">;
+
+export const bluetoothUniversalHex: HexUrl = {
+  url: getHexFileUrl("universal", HexType.Bluetooth)!,
+  name: "machine-learning-tool-program",
+};
 
 export class ConnectionStageActions {
   constructor(
@@ -113,6 +120,7 @@ export class ConnectionStageActions {
 
   private handleConnectAndFlashFail = (result: ConnectAndFlashFailResult) => {
     if (this.stage.flowType === ConnectionFlowType.ConnectBluetooth) {
+      downloadHex(bluetoothUniversalHex);
       return this.setFlowStep(ConnectionFlowStep.ManualFlashingTutorial);
     }
 
