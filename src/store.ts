@@ -12,11 +12,10 @@ import {
 import { trainModel } from "./ml";
 import {
   DatasetEditorJsonFormat,
-  DownloadState as DownloadState,
+  DownloadState,
   DownloadStep,
   Gesture,
   GestureData,
-  HexData,
   MicrobitToFlash,
   RecordingData,
   SaveState,
@@ -24,7 +23,6 @@ import {
   TrainModelDialogStage,
 } from "./model";
 import { defaultSettings, Settings } from "./settings";
-import { downloadHex } from "./utils/fs-util";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 
 export const modelUrl = "indexeddb://micro:bit-ml-tool-model";
