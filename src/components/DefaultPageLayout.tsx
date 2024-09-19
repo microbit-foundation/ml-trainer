@@ -20,9 +20,10 @@ import HelpMenu from "./HelpMenu";
 import PrototypeVersionWarning from "./PrototypeVersionWarning";
 import SettingsMenu from "./SettingsMenu";
 import TrainModelDialogs from "./TrainModelFlowDialogs";
-import DownloadProjectDialogs from "./DownloadProjectDialogs";
+import DownloadDialogs from "./DownloadDialogs";
 import { useStore } from "../store";
 import { SessionPageId } from "../pages-config";
+import SaveDialogs from "./SaveDialogs";
 
 interface DefaultPageLayoutProps {
   titleId: string;
@@ -81,7 +82,8 @@ const DefaultPageLayout = ({
           <TrainModelDialogs />
         </>
       )}
-      <DownloadProjectDialogs />
+      <DownloadDialogs />
+      <SaveDialogs />
       <VStack
         minH="100dvh"
         w="100%"

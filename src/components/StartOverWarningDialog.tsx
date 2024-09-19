@@ -26,7 +26,7 @@ const StartOverWarningDialog = ({
   onClose,
   onStart,
 }: StartOverWardningDialogProps) => {
-  const { saveProjectHex } = useProject();
+  const { saveHex } = useProject();
   return (
     <Modal
       motionPreset="none"
@@ -54,7 +54,7 @@ const StartOverWarningDialog = ({
                       link: (chunks: ReactNode) => (
                         <Link
                           color="purple.500"
-                          onClick={saveProjectHex}
+                          onClick={saveHex}
                           target="_blank"
                           rel="noopener"
                         >

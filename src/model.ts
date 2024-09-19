@@ -101,7 +101,7 @@ export const enum TrainModelDialogStage {
   TrainingInProgress,
 }
 
-export enum DownloadProjectStep {
+export enum DownloadStep {
   None = "None",
   Help = "Introduction",
   ChooseSameOrAnotherMicrobit = "ChooseSameOrAnotherMicrobit",
@@ -121,12 +121,27 @@ export enum MicrobitToFlash {
   Different = "different",
 }
 
-export interface DownloadProjectStage {
-  step: DownloadProjectStep;
+export interface DownloadState {
+  step: DownloadStep;
   microbitToFlash: MicrobitToFlash;
   flashProgress: number;
-  project?: HexData;
+  hex?: HexData;
   // The micro:bit used to flash the hex.  We remember your choice for easy code
   // iteration for as long as the editor is open.
   usbDevice?: MicrobitWebUSBConnection;
+}
+
+export interface SaveState {
+  step: SaveStep;
+  hex?: HexData;
+}
+
+export enum SaveStep {
+  None = "none",
+  PreSaveHelp = "help",
+  /**
+   * We only show this state if we initiated the save and need to wait for the editor.
+   * Otherwise we already have the project data in the state and save it directly.
+   */
+  SaveProgress = "progress",
 }

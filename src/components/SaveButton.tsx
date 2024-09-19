@@ -1,64 +1,31 @@
-import { Button, useDisclosure, useToast } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { RiDownload2Line } from "react-icons/ri";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { useProject } from "../hooks/project-hooks";
-import { useSettings } from "../store";
-import SaveHelpDialog from "./SaveHelpDialog";
-import SaveProgressDialog from "./SaveProgressDialog";
+import { SaveStep } from "../model";
+import { useSettings, useStore } from "../store";
 
 const SaveButton = () => {
-  const { saveProjectHex } = useProject();
+  const setSave = useStore((s) => s.setSave);
+  const { saveHex } = useProject();
   const [settings] = useSettings();
-  const preSaveDialogDisclosure = useDisclosure();
-  const saveProgressDisclosure = useDisclosure();
-  const intl = useIntl();
-  const toast = useToast();
 
-  const handleSave = useCallback(async () => {
-    preSaveDialogDisclosure.onClose();
-    saveProgressDisclosure.onOpen();
-    await saveProjectHex();
-    saveProgressDisclosure.onClose();
-    toast({
-      id: "save-complete",
-      position: "top",
-      duration: 5_000,
-      title: intl.formatMessage({ id: "saving-toast-title" }),
-      status: "info",
-    });
-  }, [
-    preSaveDialogDisclosure,
-    saveProgressDisclosure,
-    saveProjectHex,
-    toast,
-    intl,
-  ]);
-
-  const handleSaveClick = useCallback(() => {
+  const handleSave = useCallback(() => {
     if (settings.showPreSaveHelp) {
-      preSaveDialogDisclosure.onOpen();
+      setSave({ step: SaveStep.PreSaveHelp });
     } else {
-      void handleSave();
+      void saveHex();
     }
-  }, [handleSave, preSaveDialogDisclosure, settings.showPreSaveHelp]);
-
+  }, [saveHex, setSave, settings.showPreSaveHelp]);
   return (
-    <>
-      <SaveHelpDialog
-        isOpen={preSaveDialogDisclosure.isOpen}
-        onClose={preSaveDialogDisclosure.onClose}
-        onSave={handleSave}
-      />
-      <SaveProgressDialog isOpen={saveProgressDisclosure.isOpen} />
-      <Button
-        variant="toolbar"
-        leftIcon={<RiDownload2Line />}
-        onClick={handleSaveClick}
-      >
-        <FormattedMessage id="save-action" />
-      </Button>
-    </>
+    <Button
+      variant="toolbar"
+      leftIcon={<RiDownload2Line />}
+      onClick={handleSave}
+    >
+      <FormattedMessage id="save-action" />
+    </Button>
   );
 };
 

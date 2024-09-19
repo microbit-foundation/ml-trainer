@@ -11,7 +11,7 @@ import {
 import { FormattedMessage } from "react-intl";
 import { ConnectionFlowType } from "../connection-stage-hooks";
 
-export interface DownloadingDialogProps {
+export interface DownloadProgressDialogProps {
   isOpen: boolean;
   headingId: string;
   progress: number;
@@ -28,11 +28,11 @@ export const getHeadingId = (flowType: ConnectionFlowType) => {
   }
 };
 
-const DownloadingDialog = ({
+const DownloadProgressDialog = ({
   isOpen,
   headingId,
   progress,
-}: DownloadingDialogProps) => {
+}: DownloadProgressDialogProps) => {
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -66,4 +66,4 @@ const DownloadingDialog = ({
   );
 };
 
-export default DownloadingDialog;
+export default DownloadProgressDialog;

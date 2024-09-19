@@ -44,24 +44,24 @@ const Providers = ({ children }: ProviderLayoutProps) => {
       <ChakraProvider theme={deployment.chakraTheme}>
         <LoggingProvider value={logging}>
           <ConsentProvider>
-            <ConnectStatusProvider>
-              <ConnectProvider>
-                <BufferedDataProvider>
-                  <ConnectionStageProvider>
-                    <ProjectProvider driverRef={driverRef}>
-                      <TranslationProvider>
+            <TranslationProvider>
+              <ConnectStatusProvider>
+                <ConnectProvider>
+                  <BufferedDataProvider>
+                    <ConnectionStageProvider>
+                      <ProjectProvider driverRef={driverRef}>
                         <ProjectDropTarget>
                           <ErrorBoundary>
                             <EditCodeDialog ref={driverRef} />
                             {children}
                           </ErrorBoundary>
                         </ProjectDropTarget>
-                      </TranslationProvider>
-                    </ProjectProvider>
-                  </ConnectionStageProvider>
-                </BufferedDataProvider>
-              </ConnectProvider>
-            </ConnectStatusProvider>
+                      </ProjectProvider>
+                    </ConnectionStageProvider>
+                  </BufferedDataProvider>
+                </ConnectProvider>
+              </ConnectStatusProvider>
+            </TranslationProvider>
           </ConsentProvider>
         </LoggingProvider>
       </ChakraProvider>

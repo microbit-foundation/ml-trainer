@@ -17,16 +17,16 @@ import { ComponentProps, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import testModelImage from "../images/test_model_black.svg";
 
-export interface DownloadProjectIntroDialogProps
+export interface DownloadHelpDialogProps
   extends Omit<ComponentProps<typeof Modal>, "children"> {
   onNext: (isSkipNextTime: boolean) => void;
 }
 
-const DownloadProjectHelpDialog = ({
+const DownloadHelpDialog = ({
   onClose,
   onNext,
   ...rest
-}: DownloadProjectIntroDialogProps) => {
+}: DownloadHelpDialogProps) => {
   const [isSkipNextTime, setSkipNextTime] = useState<boolean>(false);
   const handleOnNext = useCallback(() => {
     onNext(isSkipNextTime);
@@ -80,4 +80,4 @@ const DownloadProjectHelpDialog = ({
   );
 };
 
-export default DownloadProjectHelpDialog;
+export default DownloadHelpDialog;
