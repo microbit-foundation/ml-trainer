@@ -11,7 +11,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import { ReactNode, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { useProject } from "../hooks/project-hooks";
 
@@ -27,6 +27,9 @@ const StartOverWarningDialog = ({
   onStart,
 }: StartOverWardningDialogProps) => {
   const { saveHex } = useProject();
+  const handleSaveHex = useCallback(async () => {
+    await saveHex();
+  }, [saveHex]);
   return (
     <Modal
       motionPreset="none"
@@ -54,7 +57,7 @@ const StartOverWarningDialog = ({
                       link: (chunks: ReactNode) => (
                         <Link
                           color="purple.500"
-                          onClick={saveHex}
+                          onClick={handleSaveHex}
                           target="_blank"
                           rel="noopener"
                         >
