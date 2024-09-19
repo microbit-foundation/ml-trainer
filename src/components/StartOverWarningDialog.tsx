@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
-import { useStore } from "../store";
+import { useProject } from "../hooks/project-hooks";
 
 interface StartOverWardningDialogProps {
   isOpen: boolean;
@@ -26,7 +26,7 @@ const StartOverWarningDialog = ({
   onClose,
   onStart,
 }: StartOverWardningDialogProps) => {
-  const downloadDataset = useStore((s) => s.downloadDataset);
+  const { saveProjectHex } = useProject();
   return (
     <Modal
       motionPreset="none"
@@ -54,7 +54,7 @@ const StartOverWarningDialog = ({
                       link: (chunks: ReactNode) => (
                         <Link
                           color="purple.500"
-                          onClick={downloadDataset}
+                          onClick={saveProjectHex}
                           target="_blank"
                           rel="noopener"
                         >

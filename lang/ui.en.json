@@ -544,15 +544,15 @@
     "description": ""
   },
   "content.index.dataWarning.subtitleOne": {
-    "defaultMessage": "You have existing data that will be lost when you start a new session.",
+    "defaultMessage": "You have existing data samples and code that will be lost when you start a new session.",
     "description": ""
   },
   "content.index.dataWarning.subtitleTwo": {
-    "defaultMessage": "To save your data, <link>download all data samples</link> before continuing.",
+    "defaultMessage": "To save your work, <link>download a hex file</link> containing your data samples and code before continuing.",
     "description": ""
   },
   "content.index.dataWarning.title": {
-    "defaultMessage": "Existing data samples will be lost",
+    "defaultMessage": "Existing data samples and code will be lost",
     "description": ""
   },
   "content.index.title": {
