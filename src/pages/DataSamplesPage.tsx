@@ -16,6 +16,7 @@ import {
   RiArrowRightLine,
   RiDeleteBin2Line,
   RiDownload2Line,
+  RiUpload2Line,
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
@@ -23,16 +24,12 @@ import ConnectFirstView from "../components/ConnectFirstView";
 import DataSampleGridView from "../components/DataSampleGridView";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
-import UploadDataSamplesMenuItem from "../components/UploadDataSamplesMenuItem";
+import LoadProjectMenuItem from "../components/LoadProjectMenuItem";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { SessionPageId } from "../pages-config";
+import { useHasSufficientDataForTraining, useStore } from "../store";
 import { createSessionPageUrl } from "../urls";
-import SaveButton from "../components/SaveButton";
-import {
-  useStore,
-  useHasSufficientDataForTraining as useHasSufficientDataForTraining,
-} from "../store";
 
 const DataSamplesPage = () => {
   const intl = useIntl();
@@ -62,7 +59,6 @@ const DataSamplesPage = () => {
   return (
     <DefaultPageLayout
       titleId={`${SessionPageId.DataSamples}-title`}
-      toolbarItemsRight={<SaveButton key="save" />}
       showPageTitle
     >
       {showConnectFirstView ? <ConnectFirstView /> : <DataSampleGridView />}
@@ -97,7 +93,9 @@ const DataSamplesPage = () => {
                 isRound
               />
               <MenuList>
-                <UploadDataSamplesMenuItem />
+                <LoadProjectMenuItem icon={<RiUpload2Line />} accept=".json">
+                  <FormattedMessage id="content.data.controlbar.button.uploadData" />
+                </LoadProjectMenuItem>
                 <MenuItem icon={<RiDownload2Line />} onClick={downloadDataSet}>
                   <FormattedMessage id="content.data.controlbar.button.downloadData" />
                 </MenuItem>

@@ -21,7 +21,7 @@ import { useSettings } from "../store";
 interface LanguageDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  finalFocusRef: React.RefObject<HTMLButtonElement>;
+  finalFocusRef?: React.RefObject<HTMLButtonElement>;
 }
 
 /**

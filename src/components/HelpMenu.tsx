@@ -23,20 +23,13 @@ import { manageCookies } from "../compliance";
 interface HelpMenuProps {
   isMobile?: boolean;
   appName: string;
-  mode: "default" | "nextgen";
   cookies?: boolean;
 }
 
 /**
  * A help button that triggers a drop-down menu with actions.
  */
-const HelpMenu = ({
-  isMobile,
-  appName,
-  mode,
-  cookies,
-  ...rest
-}: HelpMenuProps) => {
+const HelpMenu = ({ isMobile, appName, cookies, ...rest }: HelpMenuProps) => {
   const aboutDialogDisclosure = useDisclosure();
   const intl = useIntl();
   const MenuButtonRef = useRef(null);
@@ -88,11 +81,7 @@ const HelpMenu = ({
             </MenuItem>
             <MenuItem
               as="a"
-              href={
-                mode === "default"
-                  ? "https://microbit.org/privacy/"
-                  : "https://microbit.org/privacy/#the-playground-survey"
-              }
+              href="https://microbit.org/privacy/"
               target="_blank"
               rel="noopener"
               icon={<RiExternalLinkLine />}

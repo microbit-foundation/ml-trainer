@@ -1,10 +1,20 @@
-import { Input, MenuItem } from "@chakra-ui/react";
+import { Input, MenuItem, MenuItemProps } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
-import { RiUpload2Line } from "react-icons/ri";
-import { FormattedMessage } from "react-intl";
 import { useProject } from "../hooks/project-hooks";
 
-const UploadDataSamplesMenuItem = () => {
+interface LoadProjectMenuItemProps extends MenuItemProps {
+  /**
+   *
+   * File input tag accept attribute.
+   * A project can be opened from .json or .hex file.
+   */
+  accept?: ".json" | ".hex";
+}
+
+const LoadProjectMenuItem = ({
+  accept,
+  ...props
+}: LoadProjectMenuItemProps) => {
   const { loadProject } = useProject();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -38,14 +48,12 @@ const UploadDataSamplesMenuItem = () => {
 
   return (
     <>
-      <MenuItem icon={<RiUpload2Line />} onClick={handleChooseFile}>
-        <FormattedMessage id="content.data.controlbar.button.uploadData" />
-      </MenuItem>
+      <MenuItem {...props} onClick={handleChooseFile} />
       <Input
         type="file"
         display="none"
         multiple={false}
-        accept=".json"
+        accept={accept}
         onChange={handleOpenFile}
         ref={inputRef}
       />
@@ -53,4 +61,4 @@ const UploadDataSamplesMenuItem = () => {
   );
 };
 
-export default UploadDataSamplesMenuItem;
+export default LoadProjectMenuItem;

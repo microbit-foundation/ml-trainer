@@ -6,9 +6,8 @@ import BackArrow from "../components/BackArrow";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import TestingModelGridView from "../components/TestingModelGridView";
 import { SessionPageId } from "../pages-config";
-import { createSessionPageUrl } from "../urls";
-import SaveButton from "../components/SaveButton";
 import { useStore } from "../store";
+import { createSessionPageUrl } from "../urls";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
@@ -41,7 +40,6 @@ const TestingModelPage = () => {
           <FormattedMessage id="back-to-data-samples-action" />
         </Button>
       }
-      toolbarItemsRight={<SaveButton />}
     >
       <TestingModelGridView />
     </DefaultPageLayout>

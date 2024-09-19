@@ -4,7 +4,7 @@ import { IoMdGlobe } from "react-icons/io";
 import { LanguageDialog } from "./LanguageDialog";
 
 interface LanguageMenuItemProps {
-  finalFocusRef: React.RefObject<HTMLButtonElement>;
+  finalFocusRef?: React.RefObject<HTMLButtonElement>;
 }
 
 const LanguageMenuItem = ({ finalFocusRef }: LanguageMenuItemProps) => {

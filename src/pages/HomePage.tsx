@@ -42,7 +42,11 @@ const HomePage = () => {
   const intl = useIntl();
 
   return (
-    <DefaultPageLayout titleId="content.index.title">
+    <DefaultPageLayout
+      titleId="content.index.title"
+      showHomeButton={false}
+      showSaveButton={false}
+    >
       <VStack
         gap={10}
         maxW="75rem"

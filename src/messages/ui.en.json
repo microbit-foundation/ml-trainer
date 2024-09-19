@@ -1295,6 +1295,12 @@
       "value": "Help & support"
     }
   ],
+  "home-action": [
+    {
+      "type": 0,
+      "value": "Home"
+    }
+  ],
   "homepage-subtitle": [
     {
       "type": 0,

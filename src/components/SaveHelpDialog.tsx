@@ -4,6 +4,7 @@ import {
   Heading,
   Modal,
   ModalBody,
+  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -48,6 +49,7 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
             </Heading>
           </ModalHeader>
           <ModalBody>
+            <ModalCloseButton />
             <Stack gap={5}>
               <VStack gap={3}>
                 <Text>

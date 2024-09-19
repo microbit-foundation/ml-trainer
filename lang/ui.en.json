@@ -767,6 +767,10 @@
     "defaultMessage": "Help & support",
     "description": "Link or menu item link to support site"
   },
+  "home-action": {
+    "defaultMessage": "Home",
+    "description": "Home button text"
+  },
   "homepage-subtitle": {
     "defaultMessage": "Introduce students to machine learning concepts through physical movement and data",
     "description": "Subtitle of machine learning tool home page"
