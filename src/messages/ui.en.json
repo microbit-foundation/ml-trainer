@@ -1429,6 +1429,12 @@
       "value": "Page not found"
     }
   ],
+  "open-file-action": [
+    {
+      "type": 0,
+      "value": "Open…"
+    }
+  ],
   "open-file-dropped": [
     {
       "type": 0,

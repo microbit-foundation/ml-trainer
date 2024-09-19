@@ -851,6 +851,10 @@
     "defaultMessage": "Page not found",
     "description": "Page not found page title"
   },
+  "open-file-action": {
+    "defaultMessage": "Open…",
+    "description": "Open file button text"
+  },
   "open-file-dropped": {
     "defaultMessage": "Open file when dropped",
     "description": "Aria label for file drop target"

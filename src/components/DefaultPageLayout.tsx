@@ -23,6 +23,7 @@ import TrainModelDialogs from "./TrainModelFlowDialogs";
 import DownloadProjectDialogs from "./DownloadProjectDialogs";
 import { useStore } from "../store";
 import { SessionPageId } from "../pages-config";
+import OpenButton from "./OpenButton";
 
 interface DefaultPageLayoutProps {
   titleId: string;
@@ -106,6 +107,7 @@ const DefaultPageLayout = ({
           itemsRight={
             <HStack spacing={3}>
               {toolbarItemsRight}
+              <OpenButton />
               <IconButton
                 onClick={handleHomeClick}
                 icon={<RiHome2Line size={24} color="white" />}
