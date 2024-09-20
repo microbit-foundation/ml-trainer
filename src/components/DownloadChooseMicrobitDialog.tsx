@@ -17,23 +17,23 @@ import twoMicrobitsImage from "../images/stylised-two-microbits-black.svg";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
-import { DownloadProjectStage, MicrobitToFlash } from "../model";
+import { DownloadState, MicrobitToFlash } from "../model";
 
-export interface DownloadProjectChooseMicrobitDialogProps
+export interface DownloadChooseMicrobitDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
   onSameMicrobitClick: () => void;
   onDifferentMicrobitClick: () => void;
-  stage: DownloadProjectStage;
+  stage: DownloadState;
 }
 
 type MicrobitOption = MicrobitToFlash.Same | MicrobitToFlash.Different;
 
-const DownloadProjectChooseMicrobitDialog = ({
+const DownloadChooseMicrobitDialog = ({
   onSameMicrobitClick,
   onDifferentMicrobitClick,
   stage,
   ...props
-}: DownloadProjectChooseMicrobitDialogProps) => {
+}: DownloadChooseMicrobitDialogProps) => {
   const defaultValue =
     stage.microbitToFlash === MicrobitToFlash.Default
       ? MicrobitToFlash.Same
@@ -153,4 +153,4 @@ const RadioCard = ({ id, imgSrc, isSelected, ...props }: RadioCardProps) => {
   );
 };
 
-export default DownloadProjectChooseMicrobitDialog;
+export default DownloadChooseMicrobitDialog;

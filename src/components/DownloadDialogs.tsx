@@ -1,33 +1,33 @@
 import { useCallback } from "react";
 import ConnectCableDialog from "./ConnectCableDialog";
-import DownloadingDialog from "./DownloadingDialog";
-import DownloadProjectChooseMicrobitDialog from "./DownloadProjectChooseMicrobitDialog";
-import DownloadProjectHelpDialog from "./DownloadProjectHelpDialog";
+import DownloadProgressDialog from "./DownloadProgressDialog";
+import DownloadChooseMicrobitDialog from "./DownloadChooseMicrobitDialog";
+import DownloadHelpDialog from "./DownloadHelpDialog";
 import ManualFlashingDialog from "./ManualFlashingDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
-import { DownloadProjectStep } from "../model";
+import { DownloadStep as DownloadStep } from "../model";
 import { useDownloadActions } from "../hooks/download-hooks";
 import { useStore } from "../store";
 
-const DownloadProjectDialogs = () => {
+const DownloadDialogs = () => {
   const actions = useDownloadActions();
-  const stage = useStore((s) => s.downloadStage);
+  const stage = useStore((s) => s.download);
   const handleDownloadProject = useCallback(async () => {
     await actions.connectAndFlashMicrobit(stage);
   }, [actions, stage]);
 
   switch (stage.step) {
-    case DownloadProjectStep.Help:
+    case DownloadStep.Help:
       return (
-        <DownloadProjectHelpDialog
+        <DownloadHelpDialog
           isOpen
           onClose={actions.close}
           onNext={actions.onHelpNext}
         />
       );
-    case DownloadProjectStep.ChooseSameOrAnotherMicrobit:
+    case DownloadStep.ChooseSameOrAnotherMicrobit:
       return (
-        <DownloadProjectChooseMicrobitDialog
+        <DownloadChooseMicrobitDialog
           isOpen
           onBackClick={actions.getOnBack()}
           onClose={actions.close}
@@ -36,7 +36,7 @@ const DownloadProjectDialogs = () => {
           stage={stage}
         />
       );
-    case DownloadProjectStep.ConnectCable:
+    case DownloadStep.ConnectCable:
       return (
         <ConnectCableDialog
           isOpen
@@ -49,7 +49,7 @@ const DownloadProjectDialogs = () => {
           }}
         />
       );
-    case DownloadProjectStep.WebUsbFlashingTutorial:
+    case DownloadStep.WebUsbFlashingTutorial:
       return (
         <SelectMicrobitUsbDialog
           isOpen
@@ -58,22 +58,22 @@ const DownloadProjectDialogs = () => {
           onNextClick={handleDownloadProject}
         />
       );
-    case DownloadProjectStep.FlashingInProgress:
+    case DownloadStep.FlashingInProgress:
       return (
-        <DownloadingDialog
+        <DownloadProgressDialog
           isOpen
           headingId="connectMB.usbDownloading.header"
           progress={stage.flashProgress * 100}
         />
       );
-    case DownloadProjectStep.ManualFlashingTutorial:
-      if (!stage.project) {
+    case DownloadStep.ManualFlashingTutorial:
+      if (!stage.hex) {
         throw new Error("Project expected");
       }
       return (
         <ManualFlashingDialog
           isOpen
-          hex={stage.project}
+          hex={stage.hex}
           onClose={actions.close}
           closeIsPrimaryAction={true}
         />
@@ -82,4 +82,4 @@ const DownloadProjectDialogs = () => {
   return <></>;
 };
 
-export default DownloadProjectDialogs;
+export default DownloadDialogs;

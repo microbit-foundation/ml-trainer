@@ -1,3 +1,4 @@
+import { useToast } from "@chakra-ui/react";
 import {
   EditorWorkspaceSaveRequest,
   MakeCodeFrameDriver,
@@ -5,15 +6,16 @@ import {
   Project,
 } from "@microbit/makecode-embed/react";
 import {
+  createContext,
   ReactNode,
   RefObject,
-  createContext,
   useCallback,
   useContext,
   useMemo,
   useRef,
 } from "react";
-import { HexData, isDatasetUserFileFormat } from "../model";
+import { useIntl } from "react-intl";
+import { HexData, isDatasetUserFileFormat, SaveStep } from "../model";
 import { useStore } from "../store";
 import {
   downloadHex,
@@ -27,8 +29,19 @@ interface ProjectContext {
   project: Project;
   projectEdited: boolean;
   resetProject: () => void;
-  loadProject: (file: File) => void;
-  saveProjectHex: () => Promise<void>;
+  loadFile: (file: File) => void;
+  /**
+   * Called to request a save.
+   *
+   * Pass a project if we already have the content to download. Otherwise it will
+   * be requested from the editor.
+   *
+   * The save is not necessarily complete when this returns as we may be waiting
+   * on MakeCode or a dialog flow. The progress will be reflected in the `save`
+   * state field.
+   */
+  saveHex: (hex?: HexData) => Promise<void>;
+
   editorCallbacks: Pick<
     MakeCodeFrameProps,
     "onDownload" | "onWorkspaceSave" | "onSave" | "onBack"
@@ -54,6 +67,8 @@ export const ProjectProvider = ({
   driverRef,
   children,
 }: ProjectProviderProps) => {
+  const intl = useIntl();
+  const toast = useToast();
   const setEditorOpen = useStore((s) => s.setEditorOpen);
   const project = useStore((s) => s.project);
   const projectEdited = useStore((s) => s.projectEdited);
@@ -62,7 +77,7 @@ export const ProjectProvider = ({
   const appEditNeedsFlushToEditor = useStore(
     (s) => s.appEditNeedsFlushToEditor
   );
-  const doAfterMakeCodeUpdate = useCallback(
+  const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
       if (appEditNeedsFlushToEditor) {
         expectChangedHeader();
@@ -80,16 +95,16 @@ export const ProjectProvider = ({
     ]
   );
   const openEditor = useCallback(async () => {
-    await doAfterMakeCodeUpdate(() => {
+    await doAfterEditorUpdate(() => {
       setEditorOpen(true);
       return Promise.resolve();
     });
-  }, [doAfterMakeCodeUpdate, setEditorOpen]);
+  }, [doAfterEditorUpdate, setEditorOpen]);
 
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
 
-  const loadProject = useCallback(
+  const loadFile = useCallback(
     async (file: File): Promise<void> => {
       const fileExtension = getLowercaseFileExtension(file.name);
       if (fileExtension === "json") {
@@ -110,13 +125,56 @@ export const ProjectProvider = ({
     [driverRef, loadDataset]
   );
 
+  const setSave = useStore((s) => s.setSave);
+  const save = useStore((s) => s.save);
+  const settings = useStore((s) => s.settings);
   const saveNextDownloadRef = useRef(false);
-  const saveProjectHex = useCallback(async (): Promise<void> => {
-    await doAfterMakeCodeUpdate(async () => {
-      saveNextDownloadRef.current = true;
-      await driverRef.current!.compile();
-    });
-  }, [doAfterMakeCodeUpdate, driverRef]);
+  const saveHex = useCallback(
+    async (hex?: HexData): Promise<void> => {
+      const { step } = save;
+      if (hex) {
+        if (settings.showPreSaveHelp && step === SaveStep.None) {
+          // All we do is trigger the help and remember the project.
+          setSave({
+            step: SaveStep.PreSaveHelp,
+            hex: hex,
+          });
+        } else {
+          // We can just go ahead and download. Either the project came from
+          // the editor or via the dialog flow.
+          downloadHex(hex);
+          setSave({
+            step: SaveStep.None,
+          });
+          toast({
+            id: "save-complete",
+            position: "top",
+            duration: 5_000,
+            title: intl.formatMessage({ id: "saving-toast-title" }),
+            status: "info",
+          });
+        }
+      } else {
+        // We need to request something to save.
+        setSave({
+          step: SaveStep.SaveProgress,
+        });
+        await doAfterEditorUpdate(async () => {
+          saveNextDownloadRef.current = true;
+          await driverRef.current!.compile();
+        });
+      }
+    },
+    [
+      doAfterEditorUpdate,
+      driverRef,
+      intl,
+      save,
+      setSave,
+      settings.showPreSaveHelp,
+      toast,
+    ]
+  );
 
   // These are event handlers for MakeCode
 
@@ -129,27 +187,27 @@ export const ProjectProvider = ({
   );
 
   const onBack = useCallback(() => setEditorOpen(false), [setEditorOpen]);
-  const onSave = useStore((s) => s.editorSave);
+  const onSave = saveHex;
   const downloadActions = useDownloadActions();
   const onDownload = useCallback(
     (download: HexData) => {
       if (saveNextDownloadRef.current) {
         saveNextDownloadRef.current = false;
-        downloadHex(download);
+        void saveHex(download);
       } else {
         void downloadActions.start(download);
       }
     },
-    [downloadActions]
+    [downloadActions, saveHex]
   );
   const value = useMemo(
     () => ({
-      loadProject,
+      loadFile,
       openEditor,
       project,
       projectEdited,
       resetProject,
-      saveProjectHex,
+      saveHex,
       editorCallbacks: {
         onSave,
         onWorkspaceSave,
@@ -158,7 +216,7 @@ export const ProjectProvider = ({
       },
     }),
     [
-      loadProject,
+      loadFile,
       onBack,
       onDownload,
       onSave,
@@ -167,7 +225,7 @@ export const ProjectProvider = ({
       project,
       projectEdited,
       resetProject,
-      saveProjectHex,
+      saveHex,
     ]
   );
 

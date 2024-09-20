@@ -13,14 +13,14 @@ interface ProjectDropTargetProps extends BoxProps {
 }
 
 const ProjectDropTarget = ({ children }: ProjectDropTargetProps) => {
-  const { loadProject } = useProject();
+  const { loadFile } = useProject();
   const handleDrop = useCallback(
     (files: File[]) => {
       if (files.length === 1) {
-        loadProject(files[0]);
+        loadFile(files[0]);
       }
     },
-    [loadProject]
+    [loadFile]
   );
   return <FileDropTarget onFileDrop={handleDrop}>{children}</FileDropTarget>;
 };

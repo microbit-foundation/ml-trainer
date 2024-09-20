@@ -12,17 +12,17 @@ import {
 import { trainModel } from "./ml";
 import {
   DatasetEditorJsonFormat,
-  DownloadProjectStage,
-  DownloadProjectStep,
+  DownloadState,
+  DownloadStep,
   Gesture,
   GestureData,
-  HexData,
   MicrobitToFlash,
   RecordingData,
+  SaveState,
+  SaveStep,
   TrainModelDialogStage,
 } from "./model";
 import { defaultSettings, Settings } from "./settings";
-import { downloadHex } from "./utils/fs-util";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 
 export const modelUrl = "indexeddb://micro:bit-ml-tool-model";
@@ -74,7 +74,9 @@ export interface State {
   changedHeaderExpected: boolean;
   appEditNeedsFlushToEditor: boolean;
   isEditorOpen: boolean;
-  downloadStage: DownloadProjectStage;
+
+  download: DownloadState;
+  save: SaveState;
 
   settings: Settings;
 
@@ -113,10 +115,11 @@ export interface Actions {
    * Remainer are used by project hooks for MakeCode integration.
    */
   editorChange(project: Project): void;
-  editorSave(project: HexData): void;
   setChangedHeaderExpected(): void;
   projectFlushedToEditor(): void;
-  setDownloadStage(stage: DownloadProjectStage): void;
+
+  setDownload(state: DownloadState): void;
+  setSave(state: SaveState): void;
 }
 
 type Store = State & Actions;
@@ -153,10 +156,13 @@ export const useStore = create<Store>()(
           ...generateProject({ data: [] }, undefined),
         },
         projectLoadTimestamp: 0,
-        downloadStage: {
-          step: DownloadProjectStep.None,
+        download: {
+          step: DownloadStep.None,
           microbitToFlash: MicrobitToFlash.Default,
           flashProgress: 0,
+        },
+        save: {
+          step: SaveStep.None,
         },
         projectEdited: false,
         settings: defaultSettings,
@@ -188,12 +194,12 @@ export const useStore = create<Store>()(
 
         setEditorOpen(open: boolean) {
           set(
-            ({ downloadStage }) => ({
+            ({ download }) => ({
               isEditorOpen: open,
               // We just assume its been edited as spurious changes from MakeCode happen that we can't identify
               projectEdited: true,
-              downloadStage: {
-                ...downloadStage,
+              download: {
+                ...download,
                 usbDevice: undefined,
               },
             }),
@@ -484,13 +490,11 @@ export const useStore = create<Store>()(
             actionName
           );
         },
-        setDownloadStage(downloadStage: DownloadProjectStage) {
-          set({ downloadStage });
+        setDownload(download: DownloadState) {
+          set({ download });
         },
-        editorSave(project: HexData) {
-          // TODO: We'd like to trigger the same UI as we do for the "Save"
-          // buttob but with this project rather than poking MakeCode.
-          downloadHex(project);
+        setSave(save: SaveState) {
+          set({ save });
         },
         setChangedHeaderExpected() {
           set({ changedHeaderExpected: true });

@@ -7,7 +7,6 @@ import {
   IconButton,
   MenuDivider,
   MenuItem,
-  useDisclosure,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -17,24 +16,24 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { TOOL_NAME } from "../constants";
 import { flags } from "../flags";
+import { useProject } from "../hooks/project-hooks";
+import { SaveStep } from "../model";
 import { SessionPageId } from "../pages-config";
 import { useSettings, useStore } from "../store";
 import { createHomePageUrl, createSessionPageUrl } from "../urls";
 import ActionBar from "./ActionBar";
 import AppLogo from "./AppLogo";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
-import DownloadProjectDialogs from "./DownloadProjectDialogs";
+import DownloadDialogs from "./DownloadDialogs";
 import HelpMenu from "./HelpMenu";
 import LanguageMenuItem from "./LanguageMenuItem";
 import LoadProjectMenuItem from "./LoadProjectMenuItem";
 import OpenButton from "./OpenButton";
 import PrototypeVersionWarning from "./PrototypeVersionWarning";
+import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
 import TrainModelDialogs from "./TrainModelFlowDialogs";
-import { useProject } from "../hooks/project-hooks";
-import SaveHelpDialog from "./SaveHelpDialog";
-import SaveProgressDialog from "./SaveProgressDialog";
 
 interface DefaultPageLayoutProps {
   titleId: string;
@@ -56,10 +55,8 @@ const DefaultPageLayout = ({
   const intl = useIntl();
   const navigate = useNavigate();
   const isEditorOpen = useStore((s) => s.isEditorOpen);
-  const { saveProjectHex } = useProject();
+  const { saveHex } = useProject();
   const [settings] = useSettings();
-  const preSaveDialogDisclosure = useDisclosure();
-  const saveProgressDisclosure = useDisclosure();
   const toast = useToast();
 
   useEffect(() => {
@@ -90,33 +87,14 @@ const DefaultPageLayout = ({
     navigate(createHomePageUrl());
   }, [navigate]);
 
-  const handleSave = useCallback(async () => {
-    preSaveDialogDisclosure.onClose();
-    saveProgressDisclosure.onOpen();
-    await saveProjectHex();
-    saveProgressDisclosure.onClose();
-    toast({
-      id: "save-complete",
-      position: "top",
-      duration: 5_000,
-      title: intl.formatMessage({ id: "saving-toast-title" }),
-      status: "info",
-    });
-  }, [
-    preSaveDialogDisclosure,
-    saveProgressDisclosure,
-    saveProjectHex,
-    toast,
-    intl,
-  ]);
-
-  const handleSaveClick = useCallback(() => {
+  const setSave = useStore((s) => s.setSave);
+  const handleSave = useCallback(() => {
     if (settings.showPreSaveHelp) {
-      preSaveDialogDisclosure.onOpen();
+      setSave({ step: SaveStep.PreSaveHelp });
     } else {
-      void handleSave();
+      void saveHex();
     }
-  }, [handleSave, preSaveDialogDisclosure, settings.showPreSaveHelp]);
+  }, [saveHex, setSave, settings.showPreSaveHelp]);
 
   return (
     <>
@@ -125,15 +103,10 @@ const DefaultPageLayout = ({
         <>
           <ConnectionDialogs />
           <TrainModelDialogs />
-          <SaveHelpDialog
-            isOpen={preSaveDialogDisclosure.isOpen}
-            onClose={preSaveDialogDisclosure.onClose}
-            onSave={handleSave}
-          />
-          <SaveProgressDialog isOpen={saveProgressDisclosure.isOpen} />
         </>
       )}
-      <DownloadProjectDialogs />
+      <DownloadDialogs />
+      <SaveDialogs />
       <VStack
         minH="100dvh"
         w="100%"
@@ -162,7 +135,7 @@ const DefaultPageLayout = ({
                   <Button
                     variant="toolbar"
                     leftIcon={<RiDownload2Line />}
-                    onClick={handleSaveClick}
+                    onClick={handleSave}
                   >
                     <FormattedMessage id="save-action" />
                   </Button>
@@ -188,7 +161,7 @@ const DefaultPageLayout = ({
               >
                 {showSaveButton && (
                   <MenuItem
-                    onClick={handleSaveClick}
+                    onClick={handleSave}
                     icon={<Icon h={5} w={5} as={RiDownload2Line} />}
                   >
                     <FormattedMessage id="save-action" />

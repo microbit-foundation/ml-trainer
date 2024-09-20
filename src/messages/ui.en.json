@@ -940,19 +940,19 @@
   "content.index.dataWarning.subtitleOne": [
     {
       "type": 0,
-      "value": "You have existing data that will be lost when you start a new session."
+      "value": "You have existing data samples and code that will be lost when you start a new session."
     }
   ],
   "content.index.dataWarning.subtitleTwo": [
     {
       "type": 0,
-      "value": "To save your data, "
+      "value": "To save your work, "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "download all data samples"
+          "value": "download a hex file"
         }
       ],
       "type": 8,
@@ -960,13 +960,13 @@
     },
     {
       "type": 0,
-      "value": " before continuing."
+      "value": " containing your data samples and code before continuing."
     }
   ],
   "content.index.dataWarning.title": [
     {
       "type": 0,
-      "value": "Existing data samples will be lost"
+      "value": "Existing data samples and code will be lost"
     }
   ],
   "content.index.title": [

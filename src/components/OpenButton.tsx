@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { useProject } from "../hooks/project-hooks";
 
 const OpenButton = () => {
-  const { loadProject } = useProject();
+  const { loadFile } = useProject();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChooseFile = useCallback(() => {
@@ -15,10 +15,10 @@ const OpenButton = () => {
   const onOpen = useCallback(
     (files: File[]) => {
       if (files.length === 1) {
-        loadProject(files[0]);
+        loadFile(files[0]);
       }
     },
-    [loadProject]
+    [loadFile]
   );
 
   const handleOpenFile = useCallback(

@@ -12,7 +12,7 @@ import ConnectCableDialog, {
   getConnectionCableDialogConfig,
 } from "./ConnectCableDialog";
 import ConnectErrorDialog from "./ConnectErrorDialog";
-import DownloadingDialog, { getHeadingId } from "./DownloadingDialog";
+import DownloadProgressDialog, { getHeadingId } from "./DownloadProgressDialog";
 import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import LoadingDialog from "./LoadingDialog";
 import ManualFlashingDialog from "./ManualFlashingDialog";
@@ -177,7 +177,7 @@ const ConnectionDialogs = () => {
     }
     case ConnectionFlowStep.FlashingInProgress: {
       return (
-        <DownloadingDialog
+        <DownloadProgressDialog
           headingId={getHeadingId(stage.flowType)}
           isOpen={isOpen}
           progress={flashProgress}
