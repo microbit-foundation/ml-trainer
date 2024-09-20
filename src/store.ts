@@ -1,5 +1,6 @@
 import { Project } from "@microbit/makecode-embed/react";
 import * as tf from "@tensorflow/tfjs";
+import { CallBackProps, STATUS } from "react-joyride";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
@@ -110,6 +111,12 @@ export interface Actions {
   trainModel(): Promise<boolean>;
   setSettings(update: Partial<Settings>): void;
   setGuidedTour: (state: GuidedTour) => void;
+
+  /**
+   * Handle joyride guided tour callback.
+   */
+  guidedTourCallback: (data: CallBackProps) => void;
+
   /**
    * Resets the project.
    */
@@ -243,15 +250,23 @@ export const useStore = create<Store>()(
         },
 
         addGestureRecordings(id: GestureData["ID"], recs: RecordingData[]) {
-          return set(({ gestures }) => ({
-            gestures: gestures.map((g) => {
+          return set(({ gestures }) => {
+            const updatedGestures = gestures.map((g) => {
               if (g.ID === id) {
                 return { ...g, recordings: [...recs, ...g.recordings] };
               }
               return g;
-            }),
-            model: undefined,
-          }));
+            });
+            return {
+              gestures: updatedGestures,
+              model: undefined,
+              guidedTour:
+                updatedGestures.length === 1 &&
+                updatedGestures[0].recordings.length === 1
+                  ? GuidedTour.CollectDataToTrainModel
+                  : GuidedTour.None,
+            };
+          });
         },
 
         deleteGesture(id: GestureData["ID"]) {
@@ -516,6 +531,13 @@ export const useStore = create<Store>()(
 
         setGuidedTour(guidedTour: GuidedTour) {
           set({ guidedTour });
+        },
+
+        guidedTourCallback({ status }: CallBackProps) {
+          if (STATUS.FINISHED === status || STATUS.SKIPPED === status) {
+            // We need to set state to None to be able to restart tour.
+            set({ guidedTour: GuidedTour.None });
+          }
         },
       }),
       {

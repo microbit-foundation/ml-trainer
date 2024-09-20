@@ -79,6 +79,8 @@ const DataSamplesPage = () => {
         >
           <HStack gap={2} alignItems="center">
             <Button
+              // ID for spotlighting component in guided tour.
+              id="add-action"
               variant={hasSufficientData ? "secondary" : "primary"}
               leftIcon={<RiAddLine />}
               onClick={addNewGesture}
@@ -122,6 +124,8 @@ const DataSamplesPage = () => {
             </Button>
           ) : (
             <Button
+              // ID for spotlighting component in guided tour.
+              id="train-model"
               onClick={trainModelFlowStart}
               variant={hasSufficientData ? "primary" : "secondary-disabled"}
             >

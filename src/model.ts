@@ -149,6 +149,6 @@ export enum SaveStep {
 export enum GuidedTour {
   None = "none",
   DataSamplesPage = "data samples page",
-  HowToTrainModel = "HowToTrainModel",
+  CollectDataToTrainModel = "collect data to train model",
   HowToTestModel = "HowToTestModel",
 }

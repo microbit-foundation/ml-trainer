@@ -13,9 +13,11 @@ import {
 import { ReactNode, useCallback, useEffect } from "react";
 import { RiDownload2Line, RiFolderOpenLine, RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
+import Joyride from "react-joyride";
 import { useNavigate } from "react-router";
 import { TOOL_NAME } from "../constants";
 import { flags } from "../flags";
+import { guidedTourSteps } from "../guided-tour-steps";
 import { useProject } from "../hooks/project-hooks";
 import { GuidedTour, SaveStep } from "../model";
 import { SessionPageId } from "../pages-config";
@@ -25,6 +27,7 @@ import ActionBar from "./ActionBar";
 import AppLogo from "./AppLogo";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
 import DownloadDialogs from "./DownloadDialogs";
+import GuidedTooltip from "./GuidedTooltip";
 import HelpMenu from "./HelpMenu";
 import LanguageMenuItem from "./LanguageMenuItem";
 import LoadProjectMenuItem from "./LoadProjectMenuItem";
@@ -34,10 +37,6 @@ import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
 import TrainModelDialogs from "./TrainModelFlowDialogs";
-import Joyride from "react-joyride";
-import GuidedTooltip from "./GuidedTooltip";
-import HiddenBeacon from "./HiddenBeacon";
-import { guidedTourSteps } from "../guided-tour-steps";
 
 interface DefaultPageLayoutProps {
   titleId: string;
@@ -62,6 +61,7 @@ const DefaultPageLayout = ({
   const navigate = useNavigate();
   const isEditorOpen = useStore((s) => s.isEditorOpen);
   const guidedTour = useStore((s) => s.guidedTour);
+  const guidedTourCallback = useStore((s) => s.guidedTourCallback);
 
   const { saveHex } = useProject();
   const [settings] = useSettings();
@@ -118,9 +118,9 @@ const DefaultPageLayout = ({
       <Joyride
         steps={guidedTourSteps[guidedTour]}
         run={guidedTour !== GuidedTour.None}
+        callback={guidedTourCallback}
         continuous
         tooltipComponent={GuidedTooltip}
-        beaconComponent={HiddenBeacon}
       />
       <VStack
         minH="100dvh"
