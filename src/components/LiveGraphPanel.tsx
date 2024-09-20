@@ -46,6 +46,8 @@ const LiveGraphPanel = ({
       width="100%"
       bgColor="white"
       ref={parentPortalRef}
+      // Used for guided tour
+      id="live-graph"
     >
       <Portal containerRef={parentPortalRef}>
         <HStack

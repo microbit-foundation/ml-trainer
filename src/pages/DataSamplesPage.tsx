@@ -30,6 +30,8 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import { SessionPageId } from "../pages-config";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { createSessionPageUrl } from "../urls";
+import Joyride from "react-joyride";
+import GuidedTooltip from "../components/GuidedTooltip";
 
 const DataSamplesPage = () => {
   const intl = useIntl();
@@ -56,6 +58,26 @@ const DataSamplesPage = () => {
     navigate(createSessionPageUrl(SessionPageId.TestingModel));
   }, [navigate]);
 
+  const steps = [
+    {
+      target: "body",
+      title: "Welcome!",
+      content: "How to collect data samples",
+      placement: "center" as const,
+    },
+    {
+      target: "#live-graph",
+      title: "Live graph",
+      content: "This shows live accelerometer data from the micro:bit.",
+      spotlightPadding: 0,
+    },
+    {
+      target: "#data-samples-table",
+      title: "Collect data samples for actions",
+      content: "Follow the prompts to collect data samples for an action.",
+    },
+  ];
+
   return (
     <DefaultPageLayout
       titleId={`${SessionPageId.DataSamples}-title`}
@@ -63,7 +85,10 @@ const DataSamplesPage = () => {
       showHomeButton
       showSaveButton
     >
-      {showConnectFirstView ? <ConnectFirstView /> : <DataSampleGridView />}
+      <Joyride steps={steps} continuous tooltipComponent={GuidedTooltip} />
+      <VStack flexGrow={1} id="data-samples-table">
+        {showConnectFirstView ? <ConnectFirstView /> : <DataSampleGridView />}
+      </VStack>
       <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
         <HStack
           justifyContent="space-between"
