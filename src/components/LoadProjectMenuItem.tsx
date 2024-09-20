@@ -15,7 +15,7 @@ const LoadProjectMenuItem = ({
   accept,
   ...props
 }: LoadProjectMenuItemProps) => {
-  const { loadProject } = useProject();
+  const { loadFile } = useProject();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChooseFile = useCallback(() => {
@@ -25,10 +25,10 @@ const LoadProjectMenuItem = ({
   const onOpen = useCallback(
     (files: File[]) => {
       if (files.length === 1) {
-        loadProject(files[0]);
+        loadFile(files[0]);
       }
     },
-    [loadProject]
+    [loadFile]
   );
 
   const handleOpenFile = useCallback(
