@@ -27,6 +27,8 @@ const TestingModelPage = () => {
     <DefaultPageLayout
       titleId={`${SessionPageId.TestingModel}-title`}
       showPageTitle
+      showHomeButton
+      showSaveButton
       toolbarItemsLeft={
         <Button
           size="lg"

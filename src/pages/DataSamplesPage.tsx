@@ -60,6 +60,8 @@ const DataSamplesPage = () => {
     <DefaultPageLayout
       titleId={`${SessionPageId.DataSamples}-title`}
       showPageTitle
+      showHomeButton
+      showSaveButton
     >
       {showConnectFirstView ? <ConnectFirstView /> : <DataSampleGridView />}
       <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">

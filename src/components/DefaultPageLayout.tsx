@@ -42,6 +42,7 @@ interface DefaultPageLayoutProps {
   showPageTitle?: boolean;
   showHomeButton?: boolean;
   showSaveButton?: boolean;
+  showOpenButton?: boolean;
 }
 
 const DefaultPageLayout = ({
@@ -49,8 +50,9 @@ const DefaultPageLayout = ({
   children,
   toolbarItemsLeft,
   showPageTitle = false,
-  showHomeButton = true,
-  showSaveButton = true,
+  showHomeButton = false,
+  showSaveButton = false,
+  showOpenButton = false,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
   const navigate = useNavigate();
@@ -131,6 +133,7 @@ const DefaultPageLayout = ({
           itemsRight={
             <>
               <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
+                {showOpenButton && <OpenButton />}
                 {showSaveButton && (
                   <Button
                     variant="toolbar"
@@ -140,7 +143,6 @@ const DefaultPageLayout = ({
                     <FormattedMessage id="save-action" />
                   </Button>
                 )}
-                <OpenButton />
                 {showHomeButton && (
                   <IconButton
                     onClick={handleHomeClick}
@@ -159,6 +161,14 @@ const DefaultPageLayout = ({
                 variant="plain"
                 label={intl.formatMessage({ id: "main-menu" })}
               >
+                {showOpenButton && (
+                  <LoadProjectMenuItem
+                    icon={<Icon h={5} w={5} as={RiFolderOpenLine} />}
+                    accept=".hex"
+                  >
+                    <FormattedMessage id="open-file-action" />
+                  </LoadProjectMenuItem>
+                )}
                 {showSaveButton && (
                   <MenuItem
                     onClick={handleSave}
@@ -167,24 +177,15 @@ const DefaultPageLayout = ({
                     <FormattedMessage id="save-action" />
                   </MenuItem>
                 )}
-                <LoadProjectMenuItem
-                  icon={<Icon h={5} w={5} as={RiFolderOpenLine} />}
-                  accept=".hex"
-                >
-                  <FormattedMessage id="open-file-action" />
-                </LoadProjectMenuItem>
-                {showHomeButton && (
-                  <>
-                    <MenuDivider />
-                    <MenuItem
-                      onClick={handleHomeClick}
-                      icon={<Icon h={5} w={5} as={RiHome2Line} />}
-                    >
-                      <FormattedMessage id="home-action" />
-                    </MenuItem>
-                  </>
-                )}
                 <MenuDivider />
+                {showHomeButton && (
+                  <MenuItem
+                    onClick={handleHomeClick}
+                    icon={<Icon h={5} w={5} as={RiHome2Line} />}
+                  >
+                    <FormattedMessage id="home-action" />
+                  </MenuItem>
+                )}
                 <LanguageMenuItem />
               </ToolbarMenu>
             </>
