@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router";
-import { TrainModelDialogStage } from "../model";
+import { GuidedTour, TrainModelDialogStage } from "../model";
 import { SessionPageId } from "../pages-config";
 import { useStore, useSettings } from "../store";
 import { createSessionPageUrl } from "../urls";
@@ -12,6 +12,7 @@ import TrainModelInsufficientDataDialog from "./TrainModelInsufficientDataDialog
 const TrainModelDialogs = () => {
   const stage = useStore((s) => s.trainModelDialogStage);
   const closeTrainModelDialogs = useStore((s) => s.closeTrainModelDialogs);
+  const setGuidedTour = useStore((s) => s.setGuidedTour);
   const navigate = useNavigate();
   const trainModel = useStore((s) => s.trainModel);
   const trainModelProgress = useStore((s) => s.trainModelProgress);
@@ -23,9 +24,10 @@ const TrainModelDialogs = () => {
       const result = await trainModel();
       if (result) {
         navigate(createSessionPageUrl(SessionPageId.TestingModel));
+        setGuidedTour(GuidedTour.TestModelPage);
       }
     },
-    [navigate, setSettings, trainModel]
+    [navigate, setGuidedTour, setSettings, trainModel]
   );
   return (
     <>

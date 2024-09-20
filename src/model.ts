@@ -150,5 +150,5 @@ export enum GuidedTour {
   None = "none",
   DataSamplesPage = "data samples page",
   CollectDataToTrainModel = "collect data to train model",
-  HowToTestModel = "HowToTestModel",
+  TestModelPage = "test model page",
 }

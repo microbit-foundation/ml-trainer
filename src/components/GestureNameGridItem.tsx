@@ -83,6 +83,8 @@ const GestureNameGridItem = ({
         borderWidth={selected ? 1 : 0}
         onClick={onSelectRow}
         position="relative"
+        // Classname for spotlighting component in guided tour.
+        className="action-name-card"
       >
         {!readOnly && onDeleteAction && (
           <CloseButton

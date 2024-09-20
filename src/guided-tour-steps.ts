@@ -56,9 +56,44 @@ const trainModelTourSteps: Step[] = [
   },
 ];
 
+const testModelPageTourSteps: Step[] = [
+  {
+    title: "You have a trained model!",
+    content: "Learn how to test your model with a connected micro:bit.",
+    target: "body",
+    placement: "center" as const,
+    disableBeacon: true,
+  },
+  {
+    title: "Look out for the estimated action",
+    content:
+      "The action with the green icon indicates that it is the estimated action.",
+    target: ".action-name-card",
+    disableBeacon: true,
+  },
+  {
+    title: "Adjust the recognition point",
+    content: "Move the slider to adjust the recognition point.",
+    target: ".certainty-threshold",
+    disableBeacon: true,
+  },
+  {
+    title: "View your MakeCode project",
+    content: "See what you can do.",
+    target: ".code-view",
+    disableBeacon: true,
+  },
+  {
+    title: "Edit your project in MakeCode",
+    content: "Click here to customise your machine learning micro:bit project.",
+    target: "#edit-in-makecode",
+    disableBeacon: true,
+  },
+];
+
 export const guidedTourSteps: Record<GuidedTour, Step[]> = {
   [GuidedTour.None]: [],
   [GuidedTour.DataSamplesPage]: dataSamplesPageTourSteps,
   [GuidedTour.CollectDataToTrainModel]: trainModelTourSteps,
-  [GuidedTour.HowToTestModel]: dataSamplesPageTourSteps,
+  [GuidedTour.TestModelPage]: testModelPageTourSteps,
 };

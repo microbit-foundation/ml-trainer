@@ -163,7 +163,12 @@ const TestingModelGridView = () => {
         >
           <Menu>
             <ButtonGroup isAttached>
-              <Button variant="primary" onClick={openEditor}>
+              <Button
+                variant="primary"
+                onClick={openEditor}
+                // ID for spotlighting component in guided tour.
+                id="edit-in-makecode"
+              >
                 <FormattedMessage id="edit-in-makecode-action" />
               </Button>
               <MoreMenuButton

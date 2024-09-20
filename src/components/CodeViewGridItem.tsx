@@ -38,6 +38,8 @@ const CodeViewGridItem = ({
           minW="400px"
           width="fit-content"
           justifyContent="center"
+          // Classname for spotlighting component in guided tour.
+          className="code-view"
         >
           <Box width={width} py={2} px={2} overflow="hidden">
             <MakeCodeBlocksRendering
