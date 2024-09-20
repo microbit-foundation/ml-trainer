@@ -19,13 +19,10 @@ import {
   RiUpload2Line,
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import Joyride from "react-joyride";
 import { useNavigate } from "react-router";
 import ConnectFirstView from "../components/ConnectFirstView";
 import DataSampleGridView from "../components/DataSampleGridView";
 import DefaultPageLayout from "../components/DefaultPageLayout";
-import GuidedTooltip from "../components/GuidedTooltip";
-import HiddenBeacon from "../components/HiddenBeacon";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import LoadProjectMenuItem from "../components/LoadProjectMenuItem";
 import { ConnectionStatus } from "../connect-status-hooks";
@@ -59,27 +56,6 @@ const DataSamplesPage = () => {
     navigate(createSessionPageUrl(SessionPageId.TestingModel));
   }, [navigate]);
 
-  const steps = [
-    {
-      target: "body",
-      title: "Welcome!",
-      content: "How to collect data samples",
-      placement: "center" as const,
-    },
-    {
-      target: "#live-graph",
-      title: "Live graph",
-      content: "This shows live accelerometer data from the micro:bit.",
-      spotlightPadding: 0,
-    },
-    {
-      target: "#data-samples-table",
-      title: "Collect data samples for actions",
-      content: "Follow the prompts to collect data samples for an action.",
-      spotlightPadding: 0,
-    },
-  ];
-
   return (
     <DefaultPageLayout
       titleId={`${SessionPageId.DataSamples}-title`}
@@ -87,12 +63,6 @@ const DataSamplesPage = () => {
       showHomeButton
       showSaveButton
     >
-      <Joyride
-        steps={steps}
-        continuous
-        tooltipComponent={GuidedTooltip}
-        beaconComponent={HiddenBeacon}
-      />
       <VStack flexGrow={1} id="data-samples-table">
         {showConnectFirstView ? <ConnectFirstView /> : <DataSampleGridView />}
       </VStack>

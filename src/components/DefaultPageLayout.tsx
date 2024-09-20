@@ -17,7 +17,7 @@ import { useNavigate } from "react-router";
 import { TOOL_NAME } from "../constants";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
-import { SaveStep } from "../model";
+import { GuidedTour, SaveStep } from "../model";
 import { SessionPageId } from "../pages-config";
 import { useSettings, useStore } from "../store";
 import { createHomePageUrl, createSessionPageUrl } from "../urls";
@@ -34,6 +34,10 @@ import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
 import TrainModelDialogs from "./TrainModelFlowDialogs";
+import Joyride from "react-joyride";
+import GuidedTooltip from "./GuidedTooltip";
+import HiddenBeacon from "./HiddenBeacon";
+import { guidedTourSteps } from "../guided-tour-steps";
 
 interface DefaultPageLayoutProps {
   titleId: string;
@@ -57,6 +61,8 @@ const DefaultPageLayout = ({
   const intl = useIntl();
   const navigate = useNavigate();
   const isEditorOpen = useStore((s) => s.isEditorOpen);
+  const guidedTour = useStore((s) => s.guidedTour);
+
   const { saveHex } = useProject();
   const [settings] = useSettings();
   const toast = useToast();
@@ -109,6 +115,13 @@ const DefaultPageLayout = ({
       )}
       <DownloadDialogs />
       <SaveDialogs />
+      <Joyride
+        steps={guidedTourSteps[guidedTour]}
+        run={guidedTour !== GuidedTour.None}
+        continuous
+        tooltipComponent={GuidedTooltip}
+        beaconComponent={HiddenBeacon}
+      />
       <VStack
         minH="100dvh"
         w="100%"

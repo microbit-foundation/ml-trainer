@@ -145,3 +145,10 @@ export enum SaveStep {
    */
   SaveProgress = "progress",
 }
+
+export enum GuidedTour {
+  None = "none",
+  DataSamplesPage = "data samples page",
+  HowToTrainModel = "HowToTrainModel",
+  HowToTestModel = "HowToTestModel",
+}

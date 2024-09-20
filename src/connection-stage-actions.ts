@@ -12,7 +12,7 @@ import {
   ConnectionType,
 } from "./connection-stage-hooks";
 import { getHexFileUrl, HexType } from "./device/get-hex-file";
-import { HexUrl } from "./model";
+import { GuidedTour, HexUrl } from "./model";
 import { downloadHex } from "./utils/fs-util";
 
 type FlowStage = Pick<ConnectionStage, "flowStep" | "flowType">;
@@ -27,7 +27,8 @@ export class ConnectionStageActions {
     private actions: ConnectActions,
     private stage: ConnectionStage,
     private setStage: (stage: ConnectionStage) => void,
-    private setStatus: (status: ConnectionStatus) => void
+    private setStatus: (status: ConnectionStatus) => void,
+    private setGuidedTourSteps: (state: GuidedTour) => void
   ) {}
 
   startConnect = () => {
@@ -193,6 +194,7 @@ export class ConnectionStageActions {
 
   private onConnected = () => {
     this.setFlowStep(ConnectionFlowStep.None);
+    this.setGuidedTourSteps(GuidedTour.DataSamplesPage);
   };
 
   disconnect = async () => {

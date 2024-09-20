@@ -16,6 +16,7 @@ import {
   DownloadStep,
   Gesture,
   GestureData,
+  GuidedTour,
   MicrobitToFlash,
   RecordingData,
   SaveState,
@@ -82,6 +83,8 @@ export interface State {
 
   trainModelProgress: number;
   trainModelDialogStage: TrainModelDialogStage;
+
+  guidedTour: GuidedTour;
 }
 
 export interface Actions {
@@ -106,6 +109,7 @@ export interface Actions {
   closeTrainModelDialogs: () => void;
   trainModel(): Promise<boolean>;
   setSettings(update: Partial<Settings>): void;
+  setGuidedTour: (state: GuidedTour) => void;
   /**
    * Resets the project.
    */
@@ -173,6 +177,7 @@ export const useStore = create<Store>()(
         // This dialog flow spans two pages
         trainModelDialogStage: TrainModelDialogStage.Closed,
         trainModelProgress: 0,
+        guidedTour: GuidedTour.None,
 
         setSettings(update: Partial<Settings>) {
           set(
@@ -507,6 +512,10 @@ export const useStore = create<Store>()(
             false,
             "projectFlushedToEditor"
           );
+        },
+
+        setGuidedTour(guidedTour: GuidedTour) {
+          set({ guidedTour });
         },
       }),
       {
