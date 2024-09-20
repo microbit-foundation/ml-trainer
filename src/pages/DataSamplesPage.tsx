@@ -19,10 +19,13 @@ import {
   RiUpload2Line,
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
+import Joyride from "react-joyride";
 import { useNavigate } from "react-router";
 import ConnectFirstView from "../components/ConnectFirstView";
 import DataSampleGridView from "../components/DataSampleGridView";
 import DefaultPageLayout from "../components/DefaultPageLayout";
+import GuidedTooltip from "../components/GuidedTooltip";
+import HiddenBeacon from "../components/HiddenBeacon";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import LoadProjectMenuItem from "../components/LoadProjectMenuItem";
 import { ConnectionStatus } from "../connect-status-hooks";
@@ -30,8 +33,6 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import { SessionPageId } from "../pages-config";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { createSessionPageUrl } from "../urls";
-import Joyride from "react-joyride";
-import GuidedTooltip from "../components/GuidedTooltip";
 
 const DataSamplesPage = () => {
   const intl = useIntl();
@@ -75,6 +76,7 @@ const DataSamplesPage = () => {
       target: "#data-samples-table",
       title: "Collect data samples for actions",
       content: "Follow the prompts to collect data samples for an action.",
+      spotlightPadding: 0,
     },
   ];
 
@@ -85,7 +87,12 @@ const DataSamplesPage = () => {
       showHomeButton
       showSaveButton
     >
-      <Joyride steps={steps} continuous tooltipComponent={GuidedTooltip} />
+      <Joyride
+        steps={steps}
+        continuous
+        tooltipComponent={GuidedTooltip}
+        beaconComponent={HiddenBeacon}
+      />
       <VStack flexGrow={1} id="data-samples-table">
         {showConnectFirstView ? <ConnectFirstView /> : <DataSampleGridView />}
       </VStack>
