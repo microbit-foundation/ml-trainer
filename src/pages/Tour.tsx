@@ -70,7 +70,7 @@ const Tour = () => {
   const popperProps = getPopperProps();
   const contentProps = enabled ? popperProps : { ref: popperProps.ref };
   return (
-    <Modal key={step.selector} isOpen={isOpen} onClose={tourCancel}>
+    <Modal isOpen={isOpen} onClose={tourCancel}>
       <ModalContent {...contentProps} motionProps={{}} boxShadow="none">
         {step.selector && (
           <Box
@@ -88,7 +88,11 @@ const Tour = () => {
             />
           </Box>
         )}
-        <TourOverlay referenceRef={ourRef} padding={step.spotlightPadding} />
+        <TourOverlay
+          key={step.selector}
+          referenceRef={ourRef}
+          padding={step.spotlightPadding}
+        />
         <ModalHeader>{step.title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>{step.content}</ModalBody>
