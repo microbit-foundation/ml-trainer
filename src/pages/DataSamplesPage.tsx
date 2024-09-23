@@ -30,7 +30,6 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import { SessionPageId } from "../pages-config";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { createSessionPageUrl } from "../urls";
-import { TourId } from "../model";
 
 const DataSamplesPage = () => {
   const intl = useIntl();
@@ -53,11 +52,9 @@ const DataSamplesPage = () => {
     !isConnected &&
     status !== ConnectionStatus.ReconnectingAutomatically;
 
-  const tourStart = useStore((s) => s.tourStart);
   const handleNavigateToModel = useCallback(() => {
     navigate(createSessionPageUrl(SessionPageId.TestingModel));
-    tourStart(TourId.TestModelPage);
-  }, [navigate, tourStart]);
+  }, [navigate]);
 
   return (
     <DefaultPageLayout
