@@ -30,6 +30,7 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import { SessionPageId } from "../pages-config";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { createSessionPageUrl } from "../urls";
+import { TourId } from "../model";
 
 const DataSamplesPage = () => {
   const intl = useIntl();
@@ -52,9 +53,11 @@ const DataSamplesPage = () => {
     !isConnected &&
     status !== ConnectionStatus.ReconnectingAutomatically;
 
+  const tourStart = useStore((s) => s.tourStart);
   const handleNavigateToModel = useCallback(() => {
     navigate(createSessionPageUrl(SessionPageId.TestingModel));
-  }, [navigate]);
+    tourStart(TourId.TestModelPage);
+  }, [navigate, tourStart]);
 
   return (
     <DefaultPageLayout
@@ -63,7 +66,9 @@ const DataSamplesPage = () => {
       showHomeButton
       showSaveButton
     >
-      {showConnectFirstView ? <ConnectFirstView /> : <DataSampleGridView />}
+      <VStack flexGrow={1} id="data-samples-table">
+        {showConnectFirstView ? <ConnectFirstView /> : <DataSampleGridView />}
+      </VStack>
       <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
         <HStack
           justifyContent="space-between"
@@ -77,6 +82,8 @@ const DataSamplesPage = () => {
         >
           <HStack gap={2} alignItems="center">
             <Button
+              // ID for spotlighting component in guided tour.
+              id="add-action"
               variant={hasSufficientData ? "secondary" : "primary"}
               leftIcon={<RiAddLine />}
               onClick={addNewGesture}
@@ -120,6 +127,8 @@ const DataSamplesPage = () => {
             </Button>
           ) : (
             <Button
+              // ID for spotlighting component in guided tour.
+              id="train-model"
               onClick={trainModelFlowStart}
               variant={hasSufficientData ? "primary" : "secondary-disabled"}
             >

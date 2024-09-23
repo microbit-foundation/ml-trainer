@@ -22,7 +22,14 @@ const CodeViewCard = ({ project }: CodeViewCardProps) => {
       borderColor="brand.500"
       justifyContent="center"
     >
-      <Card w="full" h="full" p={5} objectFit="contain">
+      <Card
+        w="full"
+        h="full"
+        p={5}
+        objectFit="contain"
+        // Classname for spotlighting component in guided tour.
+        className="code-view"
+      >
         <MakeCodeBlocksRendering
           code={project}
           layout={BlockLayout.Flow}

@@ -1,6 +1,5 @@
 import {
   AspectRatio,
-  Button,
   Grid,
   Heading,
   Image,
@@ -90,7 +89,6 @@ const HomePage = () => {
         >
           <FormattedMessage id="resources" />
         </Heading>
-        <Button className="foof">Open</Button>
         <Grid
           templateColumns={{ base: "repeat(1, 1fr)", lg: "repeat(3, 1fr)" }}
           px={10}

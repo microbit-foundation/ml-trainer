@@ -19,6 +19,7 @@ import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
 import { SaveStep } from "../model";
 import { SessionPageId } from "../pages-config";
+import Tour from "../pages/Tour";
 import { useSettings, useStore } from "../store";
 import { createHomePageUrl, createSessionPageUrl } from "../urls";
 import ActionBar from "./ActionBar";
@@ -34,7 +35,6 @@ import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
 import TrainModelDialogs from "./TrainModelFlowDialogs";
-import Tour from "../pages/Tour";
 
 interface DefaultPageLayoutProps {
   titleId: string;
@@ -58,6 +58,7 @@ const DefaultPageLayout = ({
   const intl = useIntl();
   const navigate = useNavigate();
   const isEditorOpen = useStore((s) => s.isEditorOpen);
+
   const { saveHex } = useProject();
   const [settings] = useSettings();
   const toast = useToast();

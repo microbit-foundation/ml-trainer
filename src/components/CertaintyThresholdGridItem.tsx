@@ -50,6 +50,8 @@ const CertaintyThresholdGridItem = ({
         width="fit-content"
         borderWidth={1}
         borderColor="transparent"
+        // Classname for spotlighting component in guided tour.
+        className="certainty-threshold"
       >
         <CardBody
           display="flex"

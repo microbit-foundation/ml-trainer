@@ -20,6 +20,8 @@ import {
   RecordingData,
   SaveState,
   SaveStep,
+  TourId,
+  TourState,
   TrainModelDialogStage,
 } from "./model";
 import { defaultSettings, Settings } from "./settings";
@@ -82,6 +84,8 @@ export interface State {
 
   trainModelProgress: number;
   trainModelDialogStage: TrainModelDialogStage;
+
+  tourState?: TourState;
 }
 
 export interface Actions {
@@ -106,6 +110,7 @@ export interface Actions {
   closeTrainModelDialogs: () => void;
   trainModel(): Promise<boolean>;
   setSettings(update: Partial<Settings>): void;
+
   /**
    * Resets the project.
    */
@@ -120,6 +125,12 @@ export interface Actions {
 
   setDownload(state: DownloadState): void;
   setSave(state: SaveState): void;
+
+  tourStart(tourId: TourId): void;
+  tourNext(): void;
+  tourBack(): void;
+  tourCancel(): void;
+  tourComplete(id: TourId): void;
 }
 
 type Store = State & Actions;
@@ -238,15 +249,23 @@ export const useStore = create<Store>()(
         },
 
         addGestureRecordings(id: GestureData["ID"], recs: RecordingData[]) {
-          return set(({ gestures }) => ({
-            gestures: gestures.map((g) => {
+          return set(({ gestures }) => {
+            const updatedGestures = gestures.map((g) => {
               if (g.ID === id) {
                 return { ...g, recordings: [...recs, ...g.recordings] };
               }
               return g;
-            }),
-            model: undefined,
-          }));
+            });
+            return {
+              gestures: updatedGestures,
+              model: undefined,
+              tourState:
+                updatedGestures.length === 1 &&
+                updatedGestures[0].recordings.length === 1
+                  ? { id: TourId.CollectDataToTrainModel, index: 0 }
+                  : undefined,
+            };
+          });
         },
 
         deleteGesture(id: GestureData["ID"]) {
@@ -508,6 +527,39 @@ export const useStore = create<Store>()(
             "projectFlushedToEditor"
           );
         },
+        tourStart(tourId: TourId) {
+          set({ tourState: { id: tourId, index: 0 } });
+        },
+        tourNext() {
+          set(({ tourState }) => {
+            if (!tourState) {
+              throw new Error("No tour");
+            }
+            return { tourState: { ...tourState, index: tourState.index + 1 } };
+          });
+        },
+        tourBack() {
+          set(({ tourState }) => {
+            if (!tourState) {
+              throw new Error("No tour");
+            }
+            return { tourState: { ...tourState, index: tourState.index - 1 } };
+          });
+        },
+        tourComplete(tourId: TourId) {
+          set(({ settings }) => ({
+            tourState: undefined,
+            settings: {
+              ...settings,
+              toursCompleted: Array.from(
+                new Set([...settings.toursCompleted, tourId])
+              ),
+            },
+          }));
+        },
+        tourCancel() {
+          set({ tourState: undefined });
+        },
       }),
       {
         name: "ml",
@@ -518,6 +570,19 @@ export const useStore = create<Store>()(
           settings,
           // The model itself is in IndexDB
         }),
+        merge(persistedStateUnknown, currentState) {
+          // The zustand default merge does no validation either.
+          const persistedState = persistedStateUnknown as Store;
+          return {
+            ...currentState,
+            ...persistedState,
+            settings: {
+              ...defaultSettings,
+              ...currentState.settings,
+              ...persistedState.settings,
+            },
+          };
+        },
       }
     ),
     { enabled: flags.devtools }

@@ -145,3 +145,21 @@ export enum SaveStep {
    */
   SaveProgress = "progress",
 }
+
+export interface TourStep {
+  selector?: string;
+  title: string;
+  content: string;
+  spotlightPadding?: number;
+}
+
+export interface TourState {
+  id: TourId;
+  index: number;
+}
+
+export enum TourId {
+  DataSamplesPage = "dataSamplesPage",
+  CollectDataToTrainModel = "collectDataToTrainModel",
+  TestModelPage = "testModelPage",
+}

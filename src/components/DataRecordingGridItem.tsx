@@ -20,6 +20,9 @@ interface DataRecordingGridItemProps {
   selected: boolean;
   onSelectRow?: () => void;
   startRecording: () => void;
+
+  // For guided tour.
+  cardId?: string;
 }
 
 const DataRecordingGridItem = ({
@@ -56,6 +59,8 @@ const DataRecordingGridItem = ({
           <CardBody display="flex" flexDirection="row" p={1} gap={3}>
             <HStack w="8.25rem" justifyContent="center">
               <IconButton
+                // Classname for spotlighting component in guided tour.
+                className="record-button"
                 ref={closeRecordingDialogFocusRef}
                 height="fit-content"
                 width="fit-content"
