@@ -49,9 +49,7 @@ const TourOverlay = ({ referenceRef, padding = 0 }: TourOverlayProps) => {
             width="100%"
             x={0}
             y={0}
-          >
-            <animate attributeName="opacity" dur="0.2s" values="0;1" />
-          </rect>
+          />
         </g>
       </Box>
     </Portal>
