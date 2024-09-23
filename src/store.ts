@@ -249,7 +249,7 @@ export const useStore = create<Store>()(
         },
 
         addGestureRecordings(id: GestureData["ID"], recs: RecordingData[]) {
-          return set(({ gestures }) => {
+          return set(({ gestures, settings: { toursCompleted } }) => {
             const updatedGestures = gestures.map((g) => {
               if (g.ID === id) {
                 return { ...g, recordings: [...recs, ...g.recordings] };
@@ -260,6 +260,7 @@ export const useStore = create<Store>()(
               gestures: updatedGestures,
               model: undefined,
               tourState:
+                !toursCompleted.includes(TourId.CollectDataToTrainModel) &&
                 updatedGestures.length === 1 &&
                 updatedGestures[0].recordings.length === 1
                   ? { id: TourId.CollectDataToTrainModel, index: 0 }
@@ -528,7 +529,12 @@ export const useStore = create<Store>()(
           );
         },
         tourStart(tourId: TourId) {
-          set({ tourState: { id: tourId, index: 0 } });
+          set((state) => {
+            if (!state.settings.toursCompleted.includes(tourId)) {
+              return { tourState: { id: tourId, index: 0 } };
+            }
+            return state;
+          });
         },
         tourNext() {
           set(({ tourState }) => {
