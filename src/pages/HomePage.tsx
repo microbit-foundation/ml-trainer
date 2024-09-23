@@ -1,24 +1,13 @@
 import {
   AspectRatio,
-  Box,
   Button,
   Grid,
   Heading,
   Image,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
   Stack,
   Text,
-  useDisclosure,
-  useMergeRefs,
-  usePopper,
   VStack,
 } from "@chakra-ui/react";
-import { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import ResourceCard from "../components/ResourceCard";
@@ -27,8 +16,6 @@ import addDataImage from "../images/add_data.svg";
 import testModelImage from "../images/test_model_blue.svg";
 import trainModelImage from "../images/train_model_blue.svg";
 import { resourcesConfig } from "../pages-config";
-import TourModalArrow from "./TourModalArrow";
-import TourOverlay from "./TourOverlay";
 
 type StepId = "add-data" | "train-model" | "test-model";
 
@@ -54,18 +41,6 @@ const stepsConfig: StepConfig[] = [
 
 const HomePage = () => {
   const intl = useIntl();
-  const d = useDisclosure();
-  const r = useRef<HTMLElement>(null);
-  const {
-    referenceRef,
-    getPopperProps,
-    getReferenceProps,
-    getArrowProps,
-    getArrowInnerProps,
-  } = usePopper({
-    enabled: d.isOpen,
-  });
-  const mR = useMergeRefs(r, referenceRef);
   return (
     <DefaultPageLayout titleId="content.index.title" showOpenButton>
       <VStack
@@ -75,30 +50,6 @@ const HomePage = () => {
         p={10}
         justifyContent="flex-start"
       >
-        <Box>
-          <Modal isOpen={d.isOpen} onClose={d.onClose}>
-            <ModalContent
-              {...getPopperProps()}
-              motionProps={{}}
-              boxShadow="none"
-            >
-              <TourModalArrow
-                outer={getArrowProps()}
-                inner={getArrowInnerProps()}
-              />
-              <TourOverlay referenceRef={r} />
-              <ModalHeader>Modal Title</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>Hi</ModalBody>
-
-              <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={d.onClose}>
-                  Close
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
-        </Box>
         <VStack justifyItems="center" justify="center" gap={5}>
           <Heading as="h1" fontSize="4xl" fontWeight="bold">
             <FormattedMessage id="homepage-title" />
@@ -139,16 +90,7 @@ const HomePage = () => {
         >
           <FormattedMessage id="resources" />
         </Heading>
-        <Button
-          onClick={() => {
-            d.onOpen();
-          }}
-          {...getReferenceProps()}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
-          ref={mR as any}
-        >
-          Open
-        </Button>
+        <Button className="foof">Open</Button>
         <Grid
           templateColumns={{ base: "repeat(1, 1fr)", lg: "repeat(3, 1fr)" }}
           px={10}

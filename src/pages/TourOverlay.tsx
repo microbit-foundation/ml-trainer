@@ -1,8 +1,8 @@
 import { Box, Portal, useModalContext, useToken } from "@chakra-ui/react";
-import { RefObject, useLayoutEffect, useState } from "react";
+import { MutableRefObject, RefObject, useLayoutEffect, useState } from "react";
 
 interface TourOverlayProps {
-  referenceRef: RefObject<HTMLElement>;
+  referenceRef: MutableRefObject<HTMLElement | undefined>;
   padding?: number;
 }
 
@@ -65,7 +65,7 @@ interface Rect {
   y: number;
 }
 
-const useRects = (ref: RefObject<HTMLElement>): Rect[] => {
+const useRects = (ref: RefObject<HTMLElement | undefined>): Rect[] => {
   const [rects, setRects] = useState<Rect[]>([]);
   useLayoutEffect(() => {
     const resizeObserver = new ResizeObserver(() => {

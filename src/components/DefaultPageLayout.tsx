@@ -34,6 +34,7 @@ import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
 import TrainModelDialogs from "./TrainModelFlowDialogs";
+import Tour from "../pages/Tour";
 
 interface DefaultPageLayoutProps {
   titleId: string;
@@ -109,6 +110,7 @@ const DefaultPageLayout = ({
       )}
       <DownloadDialogs />
       <SaveDialogs />
+      <Tour />
       <VStack
         minH="100dvh"
         w="100%"
