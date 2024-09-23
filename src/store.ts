@@ -577,6 +577,7 @@ export const useStore = create<Store>()(
             ...currentState,
             ...persistedState,
             settings: {
+              // Make sure we have any new settings defaulted
               ...defaultSettings,
               ...currentState.settings,
               ...persistedState.settings,
