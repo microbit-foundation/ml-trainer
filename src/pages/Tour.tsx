@@ -37,6 +37,7 @@ const Tour = () => {
     update,
   } = usePopper({
     enabled,
+    arrowPadding: 50,
   });
   const ourRef = useRef<HTMLElement>();
 
@@ -70,7 +71,7 @@ const Tour = () => {
   const popperProps = getPopperProps();
   const contentProps = enabled ? popperProps : { ref: popperProps.ref };
   return (
-    <Modal key={step.selector} isOpen={isOpen} onClose={tourCancel}>
+    <Modal key={step.selector} isOpen={isOpen} onClose={tourCancel} isCentered>
       <ModalContent {...contentProps} motionProps={{}} boxShadow="none">
         {step.selector && (
           <Box
@@ -88,10 +89,15 @@ const Tour = () => {
             />
           </Box>
         )}
-        <TourOverlay referenceRef={ourRef} padding={step.spotlightPadding} />
+        <TourOverlay
+          referenceRef={ourRef}
+          padding={step.spotlightPadding ?? 5}
+        />
         <ModalHeader>{step.title}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>{step.content}</ModalBody>
+        <ModalBody>
+          <Text maxW="md">{step.content}</Text>
+        </ModalBody>
         <ModalFooter>
           <HStack justifyContent="space-between" p={0} w="full">
             <Text>
