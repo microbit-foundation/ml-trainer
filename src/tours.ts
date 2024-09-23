@@ -1,6 +1,9 @@
 import { TourId, TourStep } from "./model";
 
+// If you complete a tour then we don't show it again.
 export const tours: Record<TourId, TourStep[]> = {
+  // Launched when you connect a micro:bit when you have no recordings.
+  // If you import data without connecting a micro:bit you're on your own for now.
   [TourId.DataSamplesPage]: [
     {
       title: "You’ve connected a micro:bit!",
@@ -22,6 +25,7 @@ export const tours: Record<TourId, TourStep[]> = {
       spotlightPadding: 0,
     },
   ],
+  // Launched after recording your first recording.
   [TourId.CollectDataToTrainModel]: [
     {
       title: "You’ve recorded your first sample!",
@@ -47,6 +51,9 @@ export const tours: Record<TourId, TourStep[]> = {
         "When you have collected all your data samples you can train the model. You can come back to collect more data to improve your model.",
     },
   ],
+  // Launched after training a model
+  // If you haven't connected a micro:bit this session then it'll
+  // be a bit weird but we just go with it for now.
   [TourId.TestModelPage]: [
     {
       title: "You’ve trained a model!",
