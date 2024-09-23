@@ -88,13 +88,15 @@ const useRects = (ref: RefObject<HTMLElement | undefined>): Rect[] => {
 const M = (x: number, y: number) => `M ${x} ${y}`;
 const h = (x: number) => `h ${x}`;
 const v = (y: number) => `v ${y}`;
+const a = (r: number, x: number, y: number) => `a${r},${r} 0 0 1 ${x},${y}`;
 
 const createClipPath = (overlay: Rect, cutOut: Rect, padding: number) => {
+  const cornerRadius = 5;
   const paddedCutOut = {
-    x: cutOut.x - padding,
+    x: cutOut.x - padding + cornerRadius,
     y: cutOut.y - padding,
-    width: cutOut.width + padding * 2,
-    height: cutOut.height + padding * 2,
+    width: cutOut.width + padding * 2 - cornerRadius * 2,
+    height: cutOut.height + padding * 2 - cornerRadius * 2,
   };
   return [
     M(0, 0),
@@ -104,9 +106,13 @@ const createClipPath = (overlay: Rect, cutOut: Rect, padding: number) => {
     "z",
     M(paddedCutOut.x, paddedCutOut.y),
     h(paddedCutOut.width),
+    a(cornerRadius, cornerRadius, cornerRadius),
     v(paddedCutOut.height),
+    a(cornerRadius, -cornerRadius, cornerRadius),
     h(-paddedCutOut.width),
-    "z",
+    a(cornerRadius, -cornerRadius, -cornerRadius),
+    v(-paddedCutOut.height),
+    a(cornerRadius, cornerRadius, -cornerRadius),
   ].join(" ");
 };
 
