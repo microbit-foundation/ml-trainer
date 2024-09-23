@@ -37,7 +37,6 @@ const Tour = () => {
     update,
   } = usePopper({
     enabled,
-    arrowPadding: 50,
   });
   const ourRef = useRef<HTMLElement>();
 
@@ -89,10 +88,7 @@ const Tour = () => {
             />
           </Box>
         )}
-        <TourOverlay
-          referenceRef={ourRef}
-          padding={step.spotlightPadding ?? 5}
-        />
+        <TourOverlay referenceRef={ourRef} padding={step.spotlightPadding} />
         <ModalHeader>{step.title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
