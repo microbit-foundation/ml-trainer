@@ -18,6 +18,9 @@ import { useStore } from "../store";
 import { tours } from "../tours";
 import TourOverlay from "./TourOverlay";
 
+// Default distance or margin between the reference and popper.
+const gutterDefault = 8;
+
 const Tour = () => {
   const tourState = useStore((s) => s.tourState);
   const steps = tourState ? tours[tourState.id] : undefined;
@@ -29,6 +32,7 @@ const Tour = () => {
   const tourCancel = useStore((s) => s.tourCancel);
   const isOpen = !!tourState;
   const enabled = isOpen && !!step?.selector;
+  const spotlightPadding = step?.spotlightPadding ?? 5;
   const {
     getArrowProps,
     getArrowInnerProps,
@@ -37,6 +41,7 @@ const Tour = () => {
     update,
   } = usePopper({
     enabled,
+    gutter: gutterDefault + spotlightPadding,
   });
   const ourRef = useRef<HTMLElement>();
 
@@ -88,7 +93,7 @@ const Tour = () => {
             />
           </Box>
         )}
-        <TourOverlay referenceRef={ourRef} padding={step.spotlightPadding} />
+        <TourOverlay referenceRef={ourRef} padding={spotlightPadding} />
         <ModalHeader>{step.title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
