@@ -73,9 +73,9 @@ export const tours: Record<TourId, TourStep[]> = {
       selector: ".certainty-threshold",
     },
     {
-      title: "Use your model on the micro:bit",
+      title: "MakeCode blocks",
       content:
-        "This MakeCode block shows the icon for an action when it is detected by the model.",
+        "This MakeCode code shows the icon for action when it is detected by the model.",
       selector: ".code-view",
     },
     {
