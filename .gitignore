@@ -17,3 +17,5 @@
 .env.*
 
 /src/.DS_Store
+/playwright-report/
+/test-results/
