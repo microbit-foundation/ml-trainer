@@ -5,7 +5,7 @@ test.describe("home page", () => {
     await homePage.goto();
   });
 
-  test("stub", async ({ homePage }) => {
+  test("stub", ({ homePage }) => {
     homePage.expectOnHomePage();
   });
 });
