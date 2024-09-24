@@ -16,7 +16,7 @@ export class HomePage {
     const response = await this.page.goto(this.url);
     await this.page.evaluate(
       (flags) => localStorage.setItem("flags", flags.join(",")),
-      flags,
+      flags
     );
     return response;
   }
@@ -24,5 +24,4 @@ export class HomePage {
   expectOnHomePage() {
     expect(this.page.url()).toEqual(this.url);
   }
-
 }

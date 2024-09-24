@@ -1,7 +1,5 @@
 import { type Page } from "@playwright/test";
-import {
-  Navbar,
-} from "./shared";
+import { Navbar } from "./shared";
 
 export class TestModelPage {
   public readonly navbar: Navbar;
@@ -9,5 +7,4 @@ export class TestModelPage {
   constructor(public readonly page: Page) {
     this.navbar = new Navbar(page);
   }
-
 }
