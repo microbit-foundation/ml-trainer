@@ -69,7 +69,7 @@ const DataSamplesPage = () => {
       showHomeButton
       showSaveButton
     >
-      <VStack flexGrow={1} className={tourElClassname.dataSamplesTable}>
+      <VStack flexGrow={1}>
         {showConnectFirstView ? <ConnectFirstView /> : <DataSampleGridView />}
       </VStack>
       <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">

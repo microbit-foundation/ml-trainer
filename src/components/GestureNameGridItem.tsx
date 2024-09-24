@@ -84,7 +84,10 @@ const GestureNameGridItem = ({
         borderWidth={selected ? 1 : 0}
         onClick={onSelectRow}
         position="relative"
-        className={tourElClassname.estimatedAction}
+        className={[
+          tourElClassname.estimatedAction,
+          tourElClassname.dataSamplesActionCard,
+        ].join(" ")}
       >
         {!readOnly && onDeleteAction && (
           <CloseButton

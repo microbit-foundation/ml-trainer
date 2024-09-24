@@ -53,11 +53,11 @@ const DataRecordingGridItem = ({
           width="fit-content"
           borderColor={selected ? "brand.500" : "transparent"}
           borderWidth={1}
+          className={tourElClassname.recordDataSamplesCard}
         >
           <CardBody display="flex" flexDirection="row" p={1} gap={3}>
             <HStack w="8.25rem" justifyContent="center">
               <IconButton
-                className={tourElClassname.recordButton}
                 ref={closeRecordingDialogFocusRef}
                 height="fit-content"
                 width="fit-content"

@@ -2,8 +2,8 @@ import { TourId, TourStep } from "./model";
 
 export const tourElClassname = {
   liveGraph: "live-graph",
-  dataSamplesTable: "data-samples-table",
-  recordButton: "record-button",
+  dataSamplesActionCard: "data-samples-action-card",
+  recordDataSamplesCard: "record-data-samples-card",
   addActionButton: "add-action-button",
   trainModelButton: "train-model-button",
   estimatedAction: "estimated-action",
@@ -32,11 +32,10 @@ export const tours: Record<TourId, TourStep[]> = {
       spotlightPadding: 0,
     },
     {
-      selector: classSelector(tourElClassname.dataSamplesTable),
+      selector: classSelector(tourElClassname.dataSamplesActionCard),
       title: "Actions and data samples",
       content:
         "An action is the type of movement you want the machine learning tool to recognise e.g. ‘wave’ or ‘clap’. Name your first action start recording samples.",
-      spotlightPadding: 0,
     },
   ],
   // Launched after recording your first recording.
@@ -47,7 +46,7 @@ export const tours: Record<TourId, TourStep[]> = {
         "To train the machine learning model you need at least 3 data samples for 2 different actions.",
     },
     {
-      selector: classSelector(tourElClassname.recordButton),
+      selector: classSelector(tourElClassname.recordDataSamplesCard),
       title: "Collect more recordings",
       content:
         "Record more samples for this action. You need at least two more. Collecting more samples should result in a better model.",
