@@ -129,7 +129,6 @@ export interface Actions {
   tourStart(tourId: TourId): void;
   tourNext(): void;
   tourBack(): void;
-  tourCancel(): void;
   tourComplete(id: TourId): void;
 }
 
@@ -562,9 +561,6 @@ export const useStore = create<Store>()(
               ),
             },
           }));
-        },
-        tourCancel() {
-          set({ tourState: undefined });
         },
       }),
       {

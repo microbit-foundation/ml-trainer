@@ -1063,6 +1063,10 @@
     "defaultMessage": "Join our testing community",
     "description": ""
   },
+  "skip-tour-action": {
+    "defaultMessage": "Skip tour",
+    "description": "Skip tour button text"
+  },
   "software-versions": {
     "defaultMessage": "Software versions",
     "description": "Software versions text"

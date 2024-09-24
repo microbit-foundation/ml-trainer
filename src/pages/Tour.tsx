@@ -4,7 +4,6 @@ import {
   HStack,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -13,7 +12,7 @@ import {
   useToken,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useStore } from "../store";
 import { tours } from "../tours";
 import TourOverlay from "./TourOverlay";
@@ -22,6 +21,7 @@ import TourOverlay from "./TourOverlay";
 const gutterDefault = 8;
 
 const Tour = () => {
+  const intl = useIntl();
   const tourState = useStore((s) => s.tourState);
   const steps = tourState ? tours[tourState.id] : undefined;
   const step = tourState && steps ? steps[tourState.index] : undefined;
@@ -29,7 +29,6 @@ const Tour = () => {
   const tourNext = useStore((s) => s.tourNext);
   const tourBack = useStore((s) => s.tourBack);
   const tourComplete = useStore((s) => s.tourComplete);
-  const tourCancel = useStore((s) => s.tourCancel);
   const isOpen = !!tourState;
   const enabled = isOpen && !!step?.selector;
   const spotlightPadding = step?.spotlightPadding ?? 5;
@@ -75,7 +74,13 @@ const Tour = () => {
   const popperProps = getPopperProps();
   const contentProps = enabled ? popperProps : { ref: popperProps.ref };
   return (
-    <Modal key={step.selector} isOpen={isOpen} onClose={tourCancel} isCentered>
+    <Modal
+      closeOnOverlayClick={false}
+      key={step.selector}
+      isOpen={isOpen}
+      onClose={() => {}}
+      isCentered
+    >
       <ModalContent {...contentProps} motionProps={{}} boxShadow="none">
         {step.selector && (
           <Box
@@ -95,15 +100,14 @@ const Tour = () => {
         )}
         <TourOverlay referenceRef={ourRef} padding={spotlightPadding} />
         <ModalHeader>{step.title}</ModalHeader>
-        <ModalCloseButton />
         <ModalBody>
           <Text maxW="md">{step.content}</Text>
         </ModalBody>
         <ModalFooter>
           <HStack justifyContent="space-between" p={0} w="full">
-            <Text>
-              Step {index + 1} of {steps.length}
-            </Text>
+            <Button onClick={handleTourComplete} variant="link">
+              <FormattedMessage id="skip-tour-action" />
+            </Button>
             <HStack gap={2}>
               {hasBack && (
                 <Button variant="secondary" size="sm" onClick={tourBack}>
@@ -120,7 +124,8 @@ const Tour = () => {
                 </Button>
               ) : (
                 <Button variant="primary" size="sm" onClick={tourNext}>
-                  <FormattedMessage id="connectMB.nextButton" />
+                  {intl.formatMessage({ id: "connectMB.nextButton" })} (
+                  {index + 1}/{steps.length})
                 </Button>
               )}
             </HStack>

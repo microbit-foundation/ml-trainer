@@ -1761,6 +1761,12 @@
       "value": "Join our testing community"
     }
   ],
+  "skip-tour-action": [
+    {
+      "type": 0,
+      "value": "Skip tour"
+    }
+  ],
   "software-versions": [
     {
       "type": 0,
