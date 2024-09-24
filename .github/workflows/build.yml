@@ -44,7 +44,7 @@ jobs:
       - run: npm run ci
       - name: Run Playwright tests
         if: env.STAGE == 'REVIEW' || env.STAGE == 'STAGING'
-        uses: docker://mcr.microsoft.com/playwright:v1.44.0-jammy
+        uses: docker://mcr.microsoft.com/playwright:v1.45.0-jammy
         with:
           args: npx playwright test
       - name: Store reports
