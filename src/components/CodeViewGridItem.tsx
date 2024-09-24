@@ -7,6 +7,7 @@ import { memo, useMemo } from "react";
 import { generateProject } from "../makecode/utils";
 import { GestureData } from "../model";
 import { useStore } from "../store";
+import { tourElClassname } from "../tours";
 
 interface CodeViewGridItemProps {
   gesture: GestureData;
@@ -38,8 +39,7 @@ const CodeViewGridItem = ({
           minW="400px"
           width="fit-content"
           justifyContent="center"
-          // Classname for spotlighting component in guided tour.
-          className="code-view"
+          className={tourElClassname.makeCodeCodeView}
         >
           <Box width={width} py={2} px={2} overflow="hidden">
             <MakeCodeBlocksRendering

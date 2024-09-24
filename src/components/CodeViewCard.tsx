@@ -5,6 +5,7 @@ import {
   Project,
 } from "@microbit/makecode-embed/react";
 import { memo } from "react";
+import { tourElClassname } from "../tours";
 
 interface CodeViewCardProps {
   project: Project;
@@ -27,8 +28,7 @@ const CodeViewCard = ({ project }: CodeViewCardProps) => {
         h="full"
         p={5}
         objectFit="contain"
-        // Classname for spotlighting component in guided tour.
-        className="code-view"
+        className={tourElClassname.makeCodeCodeView}
       >
         <MakeCodeBlocksRendering
           code={project}

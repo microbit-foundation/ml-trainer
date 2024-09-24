@@ -29,6 +29,7 @@ import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { SessionPageId } from "../pages-config";
 import { useHasSufficientDataForTraining, useStore } from "../store";
+import { tourElClassname } from "../tours";
 import { createSessionPageUrl } from "../urls";
 
 const DataSamplesPage = () => {
@@ -60,7 +61,7 @@ const DataSamplesPage = () => {
       showHomeButton
       showSaveButton
     >
-      <VStack flexGrow={1} id="data-samples-table">
+      <VStack flexGrow={1} className={tourElClassname.dataSamplesTable}>
         {showConnectFirstView ? <ConnectFirstView /> : <DataSampleGridView />}
       </VStack>
       <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
@@ -76,8 +77,7 @@ const DataSamplesPage = () => {
         >
           <HStack gap={2} alignItems="center">
             <Button
-              // ID for spotlighting component in guided tour.
-              id="add-action"
+              className={tourElClassname.addActionButton}
               variant={hasSufficientData ? "secondary" : "primary"}
               leftIcon={<RiAddLine />}
               onClick={addNewGesture}
@@ -121,8 +121,7 @@ const DataSamplesPage = () => {
             </Button>
           ) : (
             <Button
-              // ID for spotlighting component in guided tour.
-              id="train-model"
+              className={tourElClassname.trainModelButton}
               onClick={trainModelFlowStart}
               variant={hasSufficientData ? "primary" : "secondary-disabled"}
             >

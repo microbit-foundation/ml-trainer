@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { tourElClassname } from "../tours";
 import PercentageDisplay from "./PercentageDisplay";
 import PercentageMeter from "./PercentageMeter";
 
@@ -50,8 +51,7 @@ const CertaintyThresholdGridItem = ({
         width="fit-content"
         borderWidth={1}
         borderColor="transparent"
-        // Classname for spotlighting component in guided tour.
-        className="certainty-threshold"
+        className={tourElClassname.certaintyThreshold}
       >
         <CardBody
           display="flex"

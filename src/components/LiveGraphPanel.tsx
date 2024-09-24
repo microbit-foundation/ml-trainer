@@ -4,10 +4,11 @@ import { MdBolt } from "react-icons/md";
 import { FormattedMessage } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
+import { Gesture } from "../model";
+import { tourElClassname } from "../tours";
 import InfoToolTip from "./InfoToolTip";
 import LedIcon from "./LedIcon";
 import LiveGraph from "./LiveGraph";
-import { Gesture } from "../model";
 
 interface LiveGraphPanelProps {
   detected?: Gesture | undefined;
@@ -46,8 +47,7 @@ const LiveGraphPanel = ({
       width="100%"
       bgColor="white"
       ref={parentPortalRef}
-      // Used for guided tour
-      id="live-graph"
+      className={tourElClassname.liveGraph}
     >
       <Portal containerRef={parentPortalRef}>
         <HStack

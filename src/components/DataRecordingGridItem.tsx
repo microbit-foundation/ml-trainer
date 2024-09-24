@@ -10,10 +10,11 @@ import {
 import { useCallback, useRef } from "react";
 import { useIntl } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { GestureData } from "../model";
 import RecordIcon from "../images/record-icon.svg?react";
-import RecordingGraph from "./RecordingGraph";
+import { GestureData } from "../model";
 import { useStore } from "../store";
+import { tourElClassname } from "../tours";
+import RecordingGraph from "./RecordingGraph";
 
 interface DataRecordingGridItemProps {
   data: GestureData;
@@ -56,8 +57,7 @@ const DataRecordingGridItem = ({
           <CardBody display="flex" flexDirection="row" p={1} gap={3}>
             <HStack w="8.25rem" justifyContent="center">
               <IconButton
-                // Classname for spotlighting component in guided tour.
-                className="record-button"
+                className={tourElClassname.recordButton}
                 ref={closeRecordingDialogFocusRef}
                 height="fit-content"
                 width="fit-content"
