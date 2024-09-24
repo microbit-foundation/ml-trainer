@@ -20,9 +20,6 @@ interface DataRecordingGridItemProps {
   selected: boolean;
   onSelectRow?: () => void;
   startRecording: () => void;
-
-  // For guided tour.
-  cardId?: string;
 }
 
 const DataRecordingGridItem = ({
