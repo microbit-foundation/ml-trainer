@@ -20,12 +20,10 @@ import {
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import ConnectFirstView from "../components/ConnectFirstView";
 import DataSampleGridView from "../components/DataSampleGridView";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import LoadProjectMenuItem from "../components/LoadProjectMenuItem";
-import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { SessionPageId } from "../pages-config";
 import { useHasSufficientDataForTraining, useStore } from "../store";
@@ -41,21 +39,11 @@ const DataSamplesPage = () => {
 
   const navigate = useNavigate();
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
-  const { isConnected, status } = useConnectionStage();
+  const { isConnected } = useConnectionStage();
 
   const hasSufficientData = useHasSufficientDataForTraining();
   const isAddNewGestureDisabled =
     !isConnected || gestures.some((g) => g.name.length === 0);
-
-  const hasNoData =
-    gestures.length === 1 &&
-    gestures[0].name.length === 0 &&
-    gestures[0].recordings.length === 0;
-
-  const showConnectFirstView =
-    hasNoData &&
-    !isConnected &&
-    status !== ConnectionStatus.ReconnectingAutomatically;
 
   const handleNavigateToModel = useCallback(() => {
     navigate(createSessionPageUrl(SessionPageId.TestingModel));
@@ -68,7 +56,7 @@ const DataSamplesPage = () => {
       showHomeButton
       showSaveButton
     >
-      {showConnectFirstView ? <ConnectFirstView /> : <DataSampleGridView />}
+      <DataSampleGridView />
       <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
         <HStack
           justifyContent="space-between"
