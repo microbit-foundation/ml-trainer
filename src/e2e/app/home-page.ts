@@ -8,7 +8,7 @@ export class HomePage {
   constructor(public readonly page: Page) {
     this.url = `http://localhost:5173${
       process.env.CI ? process.env.BASE_URL : "/"
-    }thenextgen`;
+    }`;
     this.navbar = new Navbar(page);
   }
 
