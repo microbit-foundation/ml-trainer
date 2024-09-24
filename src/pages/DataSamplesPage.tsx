@@ -46,8 +46,16 @@ const DataSamplesPage = () => {
   const hasSufficientData = useHasSufficientDataForTraining();
   const isAddNewGestureDisabled =
     !isConnected || gestures.some((g) => g.name.length === 0);
+
+  const hasNoData =
+    gestures.length === 1 &&
+    gestures[0].name.length === 0 &&
+    gestures[0].recordings.length === 0;
+
   const showConnectFirstView =
-    !isConnected && status !== ConnectionStatus.ReconnectingAutomatically;
+    hasNoData &&
+    !isConnected &&
+    status !== ConnectionStatus.ReconnectingAutomatically;
 
   const handleNavigateToModel = useCallback(() => {
     navigate(createSessionPageUrl(SessionPageId.TestingModel));
