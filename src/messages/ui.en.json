@@ -453,6 +453,12 @@
       "value": "2 micro:bits"
     }
   ],
+  "connectMB.radioStart.requirements1.subtitle": [
+    {
+      "type": 0,
+      "value": "V2 only"
+    }
+  ],
   "connectMB.radioStart.requirements2": [
     {
       "type": 0,

@@ -279,6 +279,10 @@
     "defaultMessage": "2 micro:bits",
     "description": ""
   },
+  "connectMB.radioStart.requirements1.subtitle": {
+    "defaultMessage": "V2 only",
+    "description": ""
+  },
   "connectMB.radioStart.requirements2": {
     "defaultMessage": "Computer",
     "description": ""
