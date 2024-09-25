@@ -559,10 +559,6 @@
     "defaultMessage": "Existing data samples and code will be lost",
     "description": ""
   },
-  "content.index.title": {
-    "defaultMessage": "AI creator",
-    "description": ""
-  },
   "content.model.output.action.descriptionBody": {
     "defaultMessage": "The type of movement you want the AI creator to recognise e.g. ‘wave’ or ‘clap’.",
     "description": ""
