@@ -91,17 +91,17 @@ const CertaintyThresholdGridItem = ({
               w={`${barWidth}px`}
             >
               <SliderMark
-                display="none"
+                display="none" // Overriden by the class on hover
                 className={markClass}
-                value={sliderValue}
-                fontSize="xs"
-                textAlign="center"
-                mt={-9}
-                borderRadius="sm"
-                ml={-2}
                 bg="gray.600"
+                borderRadius="sm"
                 color="white"
+                fontSize="xs"
+                ml={-2}
+                mt={-9}
                 padding="2px 4px"
+                textAlign="center"
+                value={sliderValue}
                 zIndex={2}
               >
                 {sliderValue.toFixed(0)}%
