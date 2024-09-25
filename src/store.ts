@@ -25,7 +25,7 @@ import {
 import { defaultSettings, Settings } from "./settings";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 
-export const modelUrl = "indexeddb://micro:bit-ml-tool-model";
+export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
 const updateProject = (
   project: Project,

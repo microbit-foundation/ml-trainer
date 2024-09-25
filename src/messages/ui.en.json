@@ -340,7 +340,7 @@
   "connectMB.connectCable.subtitle": [
     {
       "type": 0,
-      "value": "Connect the micro:bit to this computer with a USB cable so that the machine learning tool program can be downloaded to it."
+      "value": "Connect the micro:bit to this computer with a USB cable so that the AI creator program can be downloaded to it."
     }
   ],
   "connectMB.connectCableMB1.heading": [
@@ -352,7 +352,7 @@
   "connectMB.connectCableMB1.subtitle": [
     {
       "type": 0,
-      "value": "Connect micro:bit 1 to this computer with a USB cable so that the machine learning tool program can be downloaded to it. This is the micro:bit you will use to collect data samples."
+      "value": "Connect micro:bit 1 to this computer with a USB cable so that the AI creator program can be downloaded to it. This is the micro:bit you will use to collect data samples."
     }
   ],
   "connectMB.connectCableMB2.heading": [
@@ -692,7 +692,7 @@
   "connectMB.usbTryAgain.closeTabs2": [
     {
       "type": 0,
-      "value": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, machine learning tool), or unplug and replug the micro:bit before trying again."
+      "value": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, AI creator), or unplug and replug the micro:bit before trying again."
     }
   ],
   "connectMB.usbTryAgain.heading": [
@@ -800,7 +800,7 @@
   "content.data.classHelpBody": [
     {
       "type": 0,
-      "value": "The type of movement you want the machine learning tool to recognise e.g. 'wave' or 'clap'. "
+      "value": "The type of movement you want the AI creator to recognise e.g. 'wave' or 'clap'. "
     }
   ],
   "content.data.classHelpHeader": [
@@ -978,13 +978,13 @@
   "content.index.title": [
     {
       "type": 0,
-      "value": "machine learning tool"
+      "value": "AI creator"
     }
   ],
   "content.model.output.action.descriptionBody": [
     {
       "type": 0,
-      "value": "The type of movement you want the machine learning tool to recognise e.g. ‘wave’ or ‘clap’."
+      "value": "The type of movement you want the AI creator to recognise e.g. ‘wave’ or ‘clap’."
     }
   ],
   "content.model.output.action.descriptionTitle": [
@@ -1076,7 +1076,7 @@
   "content.trainer.description": [
     {
       "type": 0,
-      "value": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit machine learning tool to recognise different actions when you move your micro:bit."
+      "value": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit AI creator to recognise different actions when you move your micro:bit."
     }
   ],
   "content.trainer.failure.body": [
@@ -1226,7 +1226,7 @@
   "download-project-intro-description": [
     {
       "type": 0,
-      "value": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to the micro:bit machine learning tool."
+      "value": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to the micro:bit AI creator."
     }
   ],
   "download-project-intro-title": [
@@ -1316,7 +1316,7 @@
   "homepage-title": [
     {
       "type": 0,
-      "value": "micro:bit machine learning tool"
+      "value": "micro:bit AI creator"
     }
   ],
   "homepage.Link": [
@@ -1354,7 +1354,7 @@
   "introducing-the-microbit-machine-learning-tool-title": [
     {
       "type": 0,
-      "value": "Introducing the micro:bit machine learning tool"
+      "value": "Introducing the micro:bit AI creator"
     }
   ],
   "language": [
@@ -1432,7 +1432,7 @@
   "not-found": [
     {
       "type": 0,
-      "value": "Machine learning tool home page"
+      "value": "AI creator home page"
     }
   ],
   "not-found-title": [
@@ -1552,7 +1552,7 @@
   "popup.outdatedmicrobit.header": [
     {
       "type": 0,
-      "value": "Your micro:bit has an outdated machine learning tool program"
+      "value": "Your micro:bit has an outdated AI creator program"
     }
   ],
   "popup.outdatedmicrobit.text": [
@@ -1678,7 +1678,7 @@
   "save-hex-dialog-message1": [
     {
       "type": 0,
-      "value": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit machine learning tool to continue working."
+      "value": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit AI creator to continue working."
     }
   ],
   "save-hex-dialog-message2": [
@@ -1720,7 +1720,7 @@
   "sign-up.content": [
     {
       "type": 0,
-      "value": "Welcome to our prototype of the micro:bit machine learning tool. We’d love you to try it out and give us your feedback. Please enter your email so we can keep you updated as it evolves."
+      "value": "Welcome to our prototype of the micro:bit AI creator. We’d love you to try it out and give us your feedback. Please enter your email so we can keep you updated as it evolves."
     }
   ],
   "sign-up.email-label": [

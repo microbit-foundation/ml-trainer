@@ -18,9 +18,8 @@ const GetStartedResourcePage = () => {
     <ResourcePageLayout id={id} videoId={videoId} videoTitleId={videoTitleId}>
       <Heading as="h2">Get connected</Heading>
       <Text>
-        To start using the micro:bit machine learning tool, you need to connect
-        a micro:bit to the <strong>micro:bit machine learning tool</strong> web
-        page on your computer.
+        To start using the micro:bit AI creator, you need to connect a micro:bit
+        to the <strong>micro:bit AI creator</strong> web page on your computer.
       </Text>
       <Text>There are two options for connecting the micro:bit.</Text>
       <Heading as="h3">Option 1: Web Bluetooth</Heading>
@@ -64,9 +63,7 @@ const GetStartedResourcePage = () => {
           <ListItem>z shows movement from front to back.</ListItem>
         </UnorderedList>
       </div>
-      <Text>
-        This data is how the machine learning tool understands how you move.
-      </Text>
+      <Text>This data is how the AI creator understands how you move.</Text>
       <Text>
         There are three steps to teaching the computer how to use this data to
         recognise different movements you make.
@@ -75,8 +72,8 @@ const GetStartedResourcePage = () => {
       <img src={addDataImage} />
       <Text>
         Choose at least two different movements, or <strong>actions</strong>, to
-        train the machine learning tool to recognise. Waving and clapping are
-        good actions to start with.
+        train the AI creator to recognise. Waving and clapping are good actions
+        to start with.
       </Text>
       <UnorderedList>
         <ListItem>Name your first action, for example 'wave'.</ListItem>
@@ -92,8 +89,8 @@ const GetStartedResourcePage = () => {
       </UnorderedList>
       <h2>Step 2: Train the model</h2>
       <Text>
-        The machine learning tool analyses your samples of data and makes a set
-        of mathematical rules to allow it to estimate which physical action you
+        The AI creator analyses your samples of data and makes a set of
+        mathematical rules to allow it to estimate which physical action you
         make. These rules make up the machine learning model.
       </Text>
       <Image src={trainModelImage} />
