@@ -26,9 +26,7 @@ export const sessionPageConfigs: SessionPageConfig[] = [
   },
 ];
 
-export type ResourceId =
-  | "introducing-the-microbit-machine-learning-tool"
-  | "get-started";
+export type ResourceId = "introducing-the-microbit-ai-creator" | "get-started";
 
 export interface ResourceConfig {
   id: ResourceId;
@@ -47,7 +45,7 @@ export const getStartedResouceConfig: ResourceConfig = {
 };
 
 export const introducingToolResouceConfig: ResourceConfig = {
-  id: "introducing-the-microbit-machine-learning-tool",
+  id: "introducing-the-microbit-ai-creator",
   imgSrc: resourceIntroducingToolImage,
   pageElement: IntroducingToolResourcePage,
   videoId: "EArs-Xa7-Ag",
