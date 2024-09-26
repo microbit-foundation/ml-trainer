@@ -1,30 +1,12 @@
-import {
-  Button,
-  HStack,
-  Icon,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, HStack, VStack } from "@chakra-ui/react";
 import { useCallback } from "react";
-import { MdMoreVert } from "react-icons/md";
-import {
-  RiAddLine,
-  RiArrowRightLine,
-  RiDeleteBin2Line,
-  RiDownload2Line,
-  RiUpload2Line,
-} from "react-icons/ri";
-import { FormattedMessage, useIntl } from "react-intl";
+import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
+import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
 import ConnectFirstView from "../components/ConnectFirstView";
 import DataSampleGridView from "../components/DataSampleGridView";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
-import LoadProjectMenuItem from "../components/LoadProjectMenuItem";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { SessionPageId } from "../pages-config";
@@ -32,11 +14,8 @@ import { useHasSufficientDataForTraining, useStore } from "../store";
 import { createSessionPageUrl } from "../urls";
 
 const DataSamplesPage = () => {
-  const intl = useIntl();
   const gestures = useStore((s) => s.gestures);
   const addNewGesture = useStore((s) => s.addNewGesture);
-  const downloadDataSet = useStore((s) => s.downloadDataset);
-  const deleteAllGestures = useStore((s) => s.deleteAllGestures);
   const model = useStore((s) => s.model);
 
   const navigate = useNavigate();
@@ -89,31 +68,6 @@ const DataSamplesPage = () => {
             >
               <FormattedMessage id="content.data.addAction" />
             </Button>
-            <Menu>
-              <MenuButton
-                as={IconButton}
-                aria-label={intl.formatMessage({
-                  id: "content.data.controlbar.button.menu",
-                })}
-                variant="ghost"
-                icon={<Icon as={MdMoreVert} boxSize={10} color="brand.500" />}
-                isRound
-              />
-              <MenuList>
-                <LoadProjectMenuItem icon={<RiUpload2Line />} accept=".json">
-                  <FormattedMessage id="content.data.controlbar.button.uploadData" />
-                </LoadProjectMenuItem>
-                <MenuItem icon={<RiDownload2Line />} onClick={downloadDataSet}>
-                  <FormattedMessage id="content.data.controlbar.button.downloadData" />
-                </MenuItem>
-                <MenuItem
-                  icon={<RiDeleteBin2Line />}
-                  onClick={deleteAllGestures}
-                >
-                  <FormattedMessage id="content.data.controlbar.button.clearData" />
-                </MenuItem>
-              </MenuList>
-            </Menu>
           </HStack>
           {model ? (
             <Button

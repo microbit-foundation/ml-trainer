@@ -3,19 +3,20 @@ import { ButtonEvent } from "@microbit/microbit-connection";
 import { useEffect, useMemo, useState } from "react";
 import { useConnectActions } from "../connect-actions-hooks";
 import DataSampleGridRow from "./AddDataGridRow";
-import HeadingGrid from "./HeadingGrid";
+import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
 import RecordingDialog from "./RecordingDialog";
 import { useStore } from "../store";
+import DataSamplesMenu from "./DataSamplesMenu";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
   gap: 3,
   px: 10,
-  py: 2,
+  mb: 2,
   w: "100%",
 };
 
-const headings = [
+const headings: GridColumnHeadingItemProps[] = [
   {
     titleId: "content.data.classification",
     descriptionId: "content.data.classHelpBody",
@@ -23,6 +24,7 @@ const headings = [
   {
     titleId: "content.data.data",
     descriptionId: "content.data.dataDescription",
+    itemsRight: <DataSamplesMenu />,
   },
 ];
 
