@@ -25,7 +25,7 @@ const getImageProps = (os: string): ImageProps => {
     case "Windows":
       return { src: transferProgramWindows, height: 362 };
     case "macOS":
-      return { src: transferProgramMacOS, height: 379 };
+      return { src: transferProgramMacOS, height: 347 };
     default:
       return { src: transferProgramWindows, height: 392 };
   }
