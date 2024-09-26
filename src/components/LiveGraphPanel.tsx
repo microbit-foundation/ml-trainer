@@ -1,18 +1,20 @@
-import { Box, Button, HStack, Portal, Text } from "@chakra-ui/react";
+import { Button, HStack, Portal, Text, VStack } from "@chakra-ui/react";
 import { useMemo, useRef } from "react";
 import { MdBolt } from "react-icons/md";
 import { FormattedMessage } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
+import { Gesture } from "../model";
 import InfoToolTip from "./InfoToolTip";
 import LedIcon from "./LedIcon";
 import LiveGraph from "./LiveGraph";
-import { Gesture } from "../model";
 
 interface LiveGraphPanelProps {
   detected?: Gesture | undefined;
   showPredictedGesture?: boolean;
 }
+
+const predictedGestureDisplayWidth = 180;
 
 const LiveGraphPanel = ({
   showPredictedGesture,
@@ -49,17 +51,25 @@ const LiveGraphPanel = ({
     >
       <Portal containerRef={parentPortalRef}>
         <HStack
-          justifyContent="space-between"
           position="absolute"
           top={0}
           left={0}
           right={0}
           px={7}
           py={4}
-          w={`calc(100% - ${showPredictedGesture ? "160px" : "0"})`}
+          w={`calc(100% - ${
+            showPredictedGesture ? `${predictedGestureDisplayWidth}px` : "0"
+          })`}
         >
           <HStack gap={4}>
-            <LiveIndicator />
+            <HStack gap={2}>
+              <InfoToolTip
+                titleId="footer.helpHeader"
+                descriptionId="footer.helpContent"
+              />
+              <MdBolt size={24} />
+              <Text fontWeight="bold">LIVE</Text>
+            </HStack>
             {status === ConnectionStatus.Connected ? (
               <Button
                 backgroundColor="white"
@@ -87,29 +97,40 @@ const LiveGraphPanel = ({
               </Text>
             )}
           </HStack>
-          <InfoToolTip
-            titleId="footer.helpHeader"
-            descriptionId="footer.helpContent"
-          />
         </HStack>
       </Portal>
       <HStack position="absolute" width="100%" height="100%" spacing={0}>
         <LiveGraph />
         {showPredictedGesture && (
-          <Box px={5}>
-            <LedIcon icon={detected?.icon ?? "off"} size="120px" isTriggered />
-          </Box>
+          <HStack
+            justifyContent="left"
+            alignItems="start"
+            w={`${predictedGestureDisplayWidth}px`}
+          >
+            <VStack pt={0.8}>
+              <InfoToolTip
+                titleId="content.model.output.estimatedGesture.descriptionTitle"
+                descriptionId="content.model.output.estimatedGesture.descriptionBody"
+              />
+            </VStack>
+            <VStack alignItems="left" gap={1}>
+              <VStack gap={0}>
+                <Text size="sm">
+                  <FormattedMessage id="content.model.output.estimatedGesture.iconTitle" />
+                </Text>
+                <Text isTruncated w="110px">
+                  {detected?.name ?? (
+                    <FormattedMessage id="content.model.output.estimatedGesture.none" />
+                  )}
+                </Text>
+              </VStack>
+              <LedIcon icon={detected?.icon ?? "off"} size="80px" isTriggered />
+            </VStack>
+          </HStack>
         )}
       </HStack>
     </HStack>
   );
 };
-
-const LiveIndicator = () => (
-  <HStack gap={2}>
-    <MdBolt size={24} />
-    <Text fontWeight="bold">LIVE</Text>
-  </HStack>
-);
 
 export default LiveGraphPanel;
