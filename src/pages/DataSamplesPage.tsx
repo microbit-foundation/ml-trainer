@@ -24,7 +24,6 @@ import DataSampleGridView from "../components/DataSampleGridView";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import LoadProjectMenuItem from "../components/LoadProjectMenuItem";
-import { useConnectionStage } from "../connection-stage-hooks";
 import { SessionPageId } from "../pages-config";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { createSessionPageUrl } from "../urls";
@@ -39,11 +38,9 @@ const DataSamplesPage = () => {
 
   const navigate = useNavigate();
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
-  const { isConnected } = useConnectionStage();
 
   const hasSufficientData = useHasSufficientDataForTraining();
-  const isAddNewGestureDisabled =
-    !isConnected || gestures.some((g) => g.name.length === 0);
+  const isAddNewGestureDisabled = gestures.some((g) => g.name.length === 0);
 
   const handleNavigateToModel = useCallback(() => {
     navigate(createSessionPageUrl(SessionPageId.TestingModel));
