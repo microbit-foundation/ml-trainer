@@ -688,7 +688,7 @@
     "description": ""
   },
   "disconnectedWarning.remote1": {
-    "defaultMessage": "The connection to the wireless micro:bit has been lost.",
+    "defaultMessage": "The connection to the data sample connection micro:bit has been lost.",
     "description": ""
   },
   "disconnectedWarning.remoteHeading": {
@@ -948,7 +948,7 @@
     "description": ""
   },
   "reconnectFailed.remote1": {
-    "defaultMessage": "The connection to the wireless micro:bit could not be re-established.",
+    "defaultMessage": "The connection to the data sample collection micro:bit could not be re-established.",
     "description": ""
   },
   "reconnectFailed.remoteHeading": {
