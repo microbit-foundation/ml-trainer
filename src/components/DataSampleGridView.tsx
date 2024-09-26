@@ -6,6 +6,8 @@ import DataSampleGridRow from "./AddDataGridRow";
 import HeadingGrid from "./HeadingGrid";
 import RecordingDialog from "./RecordingDialog";
 import { useStore } from "../store";
+import ConnectToRecordDialog from "./ConnectToRecordDialog";
+import { useConnectionStage } from "../connection-stage-hooks";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -37,8 +39,10 @@ const DataSamplesGridView = () => {
     [gestures]
   );
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const connectToRecordDialogDisclosure = useDisclosure();
 
   const connection = useConnectActions();
+  const { isConnected } = useConnectionStage();
 
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
@@ -62,6 +66,10 @@ const DataSamplesGridView = () => {
         onClose={onClose}
         actionName={selectedGesture.name}
       />
+      <ConnectToRecordDialog
+        isOpen={connectToRecordDialogDisclosure.isOpen}
+        onClose={connectToRecordDialogDisclosure.onClose}
+      />
       <HeadingGrid
         position="sticky"
         top={0}
@@ -82,7 +90,9 @@ const DataSamplesGridView = () => {
             gesture={g}
             selected={selectedGesture.ID === g.ID}
             onSelectRow={() => setSelectedGestureIdx(idx)}
-            startRecording={onOpen}
+            onRecord={
+              isConnected ? onOpen : connectToRecordDialogDisclosure.onOpen
+            }
             showWalkThrough={showWalkThrough}
           />
         ))}

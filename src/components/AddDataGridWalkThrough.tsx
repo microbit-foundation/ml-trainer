@@ -7,12 +7,12 @@ import DataRecordingGridItem from "./DataRecordingGridItem";
 
 interface AddDataGridWalkThrough {
   gesture: GestureData;
-  startRecording: () => void;
+  onRecord: () => void;
 }
 
 const AddDataGridWalkThrough = ({
   gesture,
-  startRecording,
+  onRecord,
 }: AddDataGridWalkThrough) => {
   return (
     <>
@@ -35,7 +35,7 @@ const AddDataGridWalkThrough = ({
           <DataRecordingGridItem
             data={gesture}
             selected={true}
-            startRecording={startRecording}
+            onRecord={onRecord}
           />
           {/* Empty grid item to fill first column of grid */}
           <GridItem />

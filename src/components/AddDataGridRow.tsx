@@ -11,7 +11,7 @@ interface AddDataGridRowProps {
   gesture: GestureData;
   selected: boolean;
   onSelectRow: () => void;
-  startRecording: () => void;
+  onRecord: () => void;
   showWalkThrough: boolean;
 }
 
@@ -19,7 +19,7 @@ const DataSampleGridRow = ({
   gesture,
   selected,
   onSelectRow,
-  startRecording,
+  onRecord,
   showWalkThrough,
 }: AddDataGridRowProps) => {
   const intl = useIntl();
@@ -55,10 +55,7 @@ const DataSampleGridRow = ({
         readOnly={false}
       />
       {showWalkThrough ? (
-        <AddDataGridWalkThrough
-          gesture={gesture}
-          startRecording={startRecording}
-        />
+        <AddDataGridWalkThrough gesture={gesture} onRecord={onRecord} />
       ) : (
         <>
           {gesture.name.length > 0 || gesture.recordings.length > 0 ? (
@@ -66,7 +63,7 @@ const DataSampleGridRow = ({
               data={gesture}
               selected={selected}
               onSelectRow={onSelectRow}
-              startRecording={startRecording}
+              onRecord={onRecord}
             />
           ) : (
             // Empty grid item to fill column space

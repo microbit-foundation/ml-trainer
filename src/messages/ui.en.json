@@ -193,6 +193,18 @@
       "value": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2"
     }
   ],
+  "connect-to-record-body": [
+    {
+      "type": 0,
+      "value": "Connect a micro:bit to record a data sample."
+    }
+  ],
+  "connect-to-record-title": [
+    {
+      "type": 0,
+      "value": "You don't have a micro:bit connected"
+    }
+  ],
   "connectFailed.bluetooth1": [
     {
       "type": 0,

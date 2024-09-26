@@ -111,6 +111,14 @@
     "defaultMessage": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2",
     "description": "Alt text for image in connect help dialog"
   },
+  "connect-to-record-body": {
+    "defaultMessage": "Connect a micro:bit to record a data sample.",
+    "description": "Insufficient data modal content"
+  },
+  "connect-to-record-title": {
+    "defaultMessage": "You don't have a micro:bit connected",
+    "description": "Connect to record modal title"
+  },
   "connectFailed.bluetooth1": {
     "defaultMessage": "The connection to the micro:bit could not be established.",
     "description": ""
