@@ -8,6 +8,7 @@ import react from "@vitejs/plugin-react";
 import fs from "node:fs";
 import path from "node:path";
 import { UserConfig, defineConfig, loadEnv } from "vite";
+import { configDefaults } from "vitest/config";
 import svgr from "vite-plugin-svgr";
 
 // Support optionally pulling in external branding if the module is installed.
@@ -46,6 +47,7 @@ export default defineConfig(({ mode }): UserConfig => {
     test: {
       globals: true,
       environment: "jsdom",
+      exclude: [...configDefaults.exclude, "**/e2e/**"],
       poolOptions: {
         threads: {
           // threads disabled for now due to https://github.com/vitest-dev/vitest/issues/1982

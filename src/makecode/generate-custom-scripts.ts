@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { compileModel } from "ml4f";
-import { generateBlob } from "@microbit-foundation/ml-header-generator";
+import { generateBlob } from "@microbit/ml-header-generator";
 import { ActionName, actionNamesFromLabels } from "./utils";
 import { LayersModel } from "@tensorflow/tfjs";
 import { mlSettings } from "../ml";

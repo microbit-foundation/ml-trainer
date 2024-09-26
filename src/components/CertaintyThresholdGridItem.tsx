@@ -5,6 +5,7 @@ import {
   HStack,
   Slider,
   SliderFilledTrack,
+  SliderMark,
   SliderThumb,
   SliderTrack,
   Text,
@@ -15,6 +16,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { tourElClassname } from "../tours";
 import PercentageDisplay from "./PercentageDisplay";
 import PercentageMeter from "./PercentageMeter";
+
+const markClass = "CertaintyThresholdGridItem--mark";
 
 interface CertaintyThresholdGridItemProps {
   requiredConfidence?: number;
@@ -40,6 +43,7 @@ const CertaintyThresholdGridItem = ({
     (val: number) => onThresholdChange(val * 0.01),
     [onThresholdChange]
   );
+  const sliderValue = requiredConfidence * 100;
   return (
     <GridItem>
       <Card
@@ -80,9 +84,30 @@ const CertaintyThresholdGridItem = ({
               aria-label={intl.formatMessage({
                 id: "content.model.output.recognitionPoint",
               })}
-              defaultValue={requiredConfidence * 100}
+              _focusWithin={{
+                [`.${markClass}`]: {
+                  display: "block",
+                },
+              }}
+              value={sliderValue}
               w={`${barWidth}px`}
             >
+              <SliderMark
+                display="none" // Overriden by the class on hover
+                className={markClass}
+                bg="gray.600"
+                borderRadius="sm"
+                color="white"
+                fontSize="xs"
+                ml={-2}
+                mt={-9}
+                padding="2px 4px"
+                textAlign="center"
+                value={sliderValue}
+                zIndex={2}
+              >
+                {sliderValue.toFixed(0)}%
+              </SliderMark>
               <SliderTrack h="8px" rounded="full">
                 <SliderFilledTrack bg="gray.600" />
               </SliderTrack>

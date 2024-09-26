@@ -16,6 +16,7 @@ interface ImageProps {
   height: number;
 }
 
+// TODO: Update ChromeOS and Windows transfer program gif for the data collection program
 // See https://github.com/lancedikson/bowser/blob/master/src/constants.js
 const getImageProps = (os: string): ImageProps => {
   switch (os) {
@@ -24,7 +25,7 @@ const getImageProps = (os: string): ImageProps => {
     case "Windows":
       return { src: transferProgramWindows, height: 362 };
     case "macOS":
-      return { src: transferProgramMacOS, height: 360 };
+      return { src: transferProgramMacOS, height: 347 };
     default:
       return { src: transferProgramWindows, height: 392 };
   }

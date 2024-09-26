@@ -16,7 +16,7 @@
     "description": ""
   },
   "add-data-intro-description": {
-    "defaultMessage": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping).",
+    "defaultMessage": "Add samples of the actions you would like your model to recognise (e.g. ‘waving’ and ‘clapping’).",
     "description": "Add data step home page description"
   },
   "add-data-title": {
@@ -124,15 +124,15 @@
     "description": ""
   },
   "connectFailed.bridgeHeading": {
-    "defaultMessage": "Failed to connect to micro:bit 2",
+    "defaultMessage": "Failed to connect to radio link micro:bit",
     "description": ""
   },
   "connectFailed.remote1": {
-    "defaultMessage": "The connection to the wireless micro:bit could not be established.",
+    "defaultMessage": "The connection to the data collection micro:bit could not be established.",
     "description": ""
   },
   "connectFailed.remoteHeading": {
-    "defaultMessage": "Failed to connect to micro:bit 1",
+    "defaultMessage": "Failed to connect to data collection micro:bit",
     "description": ""
   },
   "connectMB.bluetooth.cancelledConnection": {
@@ -208,7 +208,7 @@
     "description": ""
   },
   "connectMB.connectCable.subtitle": {
-    "defaultMessage": "Connect the micro:bit to this computer with a USB cable so that the machine learning tool program can be downloaded to it.",
+    "defaultMessage": "Connect the micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it.",
     "description": ""
   },
   "connectMB.connectCableMB1.heading": {
@@ -216,7 +216,7 @@
     "description": ""
   },
   "connectMB.connectCableMB1.subtitle": {
-    "defaultMessage": "Connect micro:bit 1 to this computer with a USB cable so that the machine learning tool program can be downloaded to it. This is the micro:bit you will use to collect data samples.",
+    "defaultMessage": "Connect the first micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it. This is the micro:bit you will use to collect data samples.",
     "description": ""
   },
   "connectMB.connectCableMB2.heading": {
@@ -224,7 +224,7 @@
     "description": ""
   },
   "connectMB.connectCableMB2.subtitle": {
-    "defaultMessage": "Connect a second micro:bit to this computer with a USB cable.",
+    "defaultMessage": "Connect a second micro:bit to this computer with a USB cable so that the radio link program can be downloaded to it. This radio link micro:bit will communicate with the data collection micro:bit.",
     "description": ""
   },
   "connectMB.connecting": {
@@ -277,6 +277,10 @@
   },
   "connectMB.radioStart.requirements1": {
     "defaultMessage": "2 micro:bits",
+    "description": ""
+  },
+  "connectMB.radioStart.requirements1.subtitle": {
+    "defaultMessage": "V2 only",
     "description": ""
   },
   "connectMB.radioStart.requirements2": {
@@ -384,11 +388,11 @@
     "description": ""
   },
   "connectMB.usbDownloadingMB1.header": {
-    "defaultMessage": "Downloading program to micro:bit 1",
+    "defaultMessage": "Downloading the data collection program",
     "description": ""
   },
   "connectMB.usbDownloadingMB2.header": {
-    "defaultMessage": "Downloading program to micro:bit 2",
+    "defaultMessage": "Downloading the radio link program",
     "description": ""
   },
   "connectMB.usbTryAgain.closeTabs1": {
@@ -396,7 +400,7 @@
     "description": ""
   },
   "connectMB.usbTryAgain.closeTabs2": {
-    "defaultMessage": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, machine learning tool), or unplug and replug the micro:bit before trying again.",
+    "defaultMessage": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, AI creator), or unplug and replug the micro:bit before trying again.",
     "description": ""
   },
   "connectMB.usbTryAgain.heading": {
@@ -468,7 +472,7 @@
     "description": ""
   },
   "content.data.classHelpBody": {
-    "defaultMessage": "The type of movement you want the machine learning tool to recognise e.g. 'wave' or 'clap'. ",
+    "defaultMessage": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": ""
   },
   "content.data.classHelpHeader": {
@@ -555,12 +559,8 @@
     "defaultMessage": "Existing data samples and code will be lost",
     "description": ""
   },
-  "content.index.title": {
-    "defaultMessage": "machine learning tool",
-    "description": ""
-  },
   "content.model.output.action.descriptionBody": {
-    "defaultMessage": "The type of movement you want the machine learning tool to recognise e.g. ‘wave’ or ‘clap’.",
+    "defaultMessage": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": ""
   },
   "content.model.output.action.descriptionTitle": {
@@ -616,7 +616,7 @@
     "description": ""
   },
   "content.trainer.description": {
-    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit machine learning tool to recognise different actions when you move your micro:bit.",
+    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit AI creator to recognise different actions when you move your micro:bit.",
     "description": ""
   },
   "content.trainer.failure.body": {
@@ -684,15 +684,15 @@
     "description": ""
   },
   "disconnectedWarning.bridgeHeading": {
-    "defaultMessage": "micro:bit 2 connection lost",
+    "defaultMessage": "radio link micro:bit connection lost",
     "description": ""
   },
   "disconnectedWarning.remote1": {
-    "defaultMessage": "The connection to the wireless micro:bit has been lost.",
+    "defaultMessage": "The connection to the data connection micro:bit has been lost.",
     "description": ""
   },
   "disconnectedWarning.remoteHeading": {
-    "defaultMessage": "micro:bit 1 connection lost",
+    "defaultMessage": "data collection micro:bit connection lost",
     "description": ""
   },
   "dont-show-again": {
@@ -716,7 +716,7 @@
     "description": "Download project different micro:bit option"
   },
   "download-project-intro-description": {
-    "defaultMessage": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to the micro:bit machine learning tool.",
+    "defaultMessage": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to the micro:bit AI creator.",
     "description": "Download project intro dialog description"
   },
   "download-project-intro-title": {
@@ -740,7 +740,7 @@
     "description": ""
   },
   "footer.helpContent": {
-    "defaultMessage": "This graph shows movement data from the microbit’s accelerometer in real time. Try moving your connected micro:bit to see the X, Y and Z axes change.",
+    "defaultMessage": "This graph shows movement data from the micro:bit’s accelerometer in real time. Try moving your connected micro:bit to see the X, Y and Z axes change.",
     "description": ""
   },
   "footer.helpHeader": {
@@ -773,11 +773,11 @@
   },
   "homepage-subtitle": {
     "defaultMessage": "Introduce students to machine learning concepts through physical movement and data",
-    "description": "Subtitle of machine learning tool home page"
+    "description": "Subtitle of micro:bit AI creator home page"
   },
   "homepage-title": {
-    "defaultMessage": "micro:bit machine learning tool",
-    "description": "Title of machine learning tool home page"
+    "defaultMessage": "micro:bit AI creator",
+    "description": "Title of micro:bit AI creator home page"
   },
   "homepage.Link": {
     "defaultMessage": "Home page",
@@ -795,8 +795,8 @@
     "defaultMessage": "You don't have enough data",
     "description": "Insufficient data modal title"
   },
-  "introducing-the-microbit-machine-learning-tool-title": {
-    "defaultMessage": "Introducing the micro:bit machine learning tool",
+  "introducing-the-microbit-ai-creator-title": {
+    "defaultMessage": "Introducing the micro:bit AI creator",
     "description": "Title of a resource"
   },
   "language": {
@@ -848,7 +848,7 @@
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
   },
   "not-found": {
-    "defaultMessage": "Machine learning tool home page",
+    "defaultMessage": "micro:bit AI creator home page",
     "description": "Page not found link text"
   },
   "not-found-title": {
@@ -915,30 +915,6 @@
     "defaultMessage": "This browser is not supported",
     "description": ""
   },
-  "popup.outdatedmicrobit.button.later": {
-    "defaultMessage": "Later",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.button.update": {
-    "defaultMessage": "Update now",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.button.update.mkcd": {
-    "defaultMessage": "Open MakeCode",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.header": {
-    "defaultMessage": "Your micro:bit has an outdated machine learning tool program",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.text": {
-    "defaultMessage": "We strongly recommend that you update it now, as some features may not work as expected.",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.text.mkcd": {
-    "defaultMessage": "Open the newest MakeCode template to use the updated extension.",
-    "description": ""
-  },
   "privacy": {
     "defaultMessage": "Privacy policy",
     "description": "Link to view privacy policy"
@@ -964,7 +940,7 @@
     "description": ""
   },
   "reconnectFailed.bridgeHeading": {
-    "defaultMessage": "Failed to reconnect to micro:bit 2",
+    "defaultMessage": "Failed to reconnect to radio link micro:bit",
     "description": ""
   },
   "reconnectFailed.radioHeading": {
@@ -972,11 +948,11 @@
     "description": ""
   },
   "reconnectFailed.remote1": {
-    "defaultMessage": "The connection to the wireless micro:bit could not be re-established.",
+    "defaultMessage": "The connection to the data collection micro:bit could not be re-established.",
     "description": ""
   },
   "reconnectFailed.remoteHeading": {
-    "defaultMessage": "Failed to reconnect to micro:bit 1",
+    "defaultMessage": "Failed to reconnect to data collection micro:bit",
     "description": ""
   },
   "reconnectFailed.subtitle": {
@@ -1012,7 +988,7 @@
     "description": "Heading for the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message1": {
-    "defaultMessage": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit machine learning tool to continue working.",
+    "defaultMessage": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit AI creator to continue working.",
     "description": "Text in the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message2": {
@@ -1040,7 +1016,7 @@
     "description": "Sign up button text"
   },
   "sign-up.content": {
-    "defaultMessage": "Welcome to our prototype of the micro:bit machine learning tool. We’d love you to try it out and give us your feedback. Please enter your email so we can keep you updated as it evolves.",
+    "defaultMessage": "Welcome to our prototype of the micro:bit AI creator. We’d love you to try it out and give us your feedback. Please enter your email so we can keep you updated as it evolves.",
     "description": ""
   },
   "sign-up.email-label": {

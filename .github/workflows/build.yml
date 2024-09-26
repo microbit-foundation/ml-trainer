@@ -5,7 +5,7 @@ on:
     types: [created]
   push:
     branches:
-      - '**'
+      - "**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ startsWith(github.ref, 'refs/tags/v') && 'release' || github.ref }}
@@ -30,8 +30,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-          cache: 'npm'
-          registry-url: 'https://npm.pkg.github.com'
+          cache: "npm"
+          registry-url: "https://npm.pkg.github.com"
       - uses: microbit-foundation/npm-package-versioner-action@v1
       - run: npm ci
         env:
@@ -42,6 +42,18 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: node ./bin/print-ci-env.cjs >> $GITHUB_ENV
       - run: npm run ci
+      - name: Run Playwright tests
+        if: env.STAGE == 'REVIEW' || env.STAGE == 'STAGING'
+        uses: docker://mcr.microsoft.com/playwright:v1.45.0-jammy
+        with:
+          args: npx playwright test
+      - name: Store reports
+        if: (env.STAGE == 'REVIEW' || env.STAGE == 'STAGING') && failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 3
       - run: npx website-deploy-aws
         if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || success())
         env:

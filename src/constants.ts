@@ -1,1 +1,1 @@
-export const TOOL_NAME = "machine learning tool";
+export const TOOL_NAME = "AI creator";

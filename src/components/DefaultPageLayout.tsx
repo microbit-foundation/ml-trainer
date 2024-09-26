@@ -37,7 +37,7 @@ import ToolbarMenu from "./ToolbarMenu";
 import TrainModelDialogs from "./TrainModelFlowDialogs";
 
 interface DefaultPageLayoutProps {
-  titleId: string;
+  titleId?: string;
   children: ReactNode;
   toolbarItemsLeft?: ReactNode;
   showPageTitle?: boolean;
@@ -65,7 +65,10 @@ const DefaultPageLayout = ({
   const toast = useToast();
 
   useEffect(() => {
-    document.title = intl.formatMessage({ id: titleId });
+    const appName = `micro:bit ${TOOL_NAME}`;
+    document.title = titleId
+      ? `${intl.formatMessage({ id: titleId })} | ${appName}`
+      : appName;
   }, [intl, titleId]);
 
   useEffect(() => {
