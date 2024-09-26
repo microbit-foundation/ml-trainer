@@ -20,22 +20,22 @@ export const tours: Record<TourId, TourStep[]> = {
   // If you import data without connecting a micro:bit you're on your own for now.
   [TourId.DataSamplesPage]: [
     {
-      title: "You’ve connected a micro:bit!",
+      title: "Your data collection micro:bit is connected!",
       content:
-        "Use the Data Samples page to record samples of movement data to train a machine learning model to recognise different actions.",
+        "Now you can start collecting data samples to train a machine learning (ML) model to recognise different movements.",
     },
     {
       selector: classSelector(tourElClassname.liveGraph),
-      title: "Live graph",
+      title: "Live data graph",
       content:
-        "The live graph shows movement data from the micro:bit’s accelerometer. Move the micro:bit to see the graph react.",
+        "The graph shows movement data from the micro:bit’s accelerometer. Move your data collection micro:bit and see how the graph changes.",
       spotlightPadding: 0,
     },
     {
       selector: classSelector(tourElClassname.dataSamplesActionCard),
-      title: "Actions and data samples",
+      title: "Actions",
       content:
-        "An action is the type of movement you want the machine learning tool to recognise e.g. ‘wave’ or ‘clap’. Name your first action start recording samples.",
+        "An action is the type of movement you want the machine learning tool to recognise e.g. ‘waving’ or ‘clapping’. Decide what your first action will be, name it and then start recording data samples.",
     },
   ],
   // Launched after recording your first recording.
@@ -47,21 +47,21 @@ export const tours: Record<TourId, TourStep[]> = {
     },
     {
       selector: classSelector(tourElClassname.recordDataSamplesCard),
-      title: "Collect more recordings",
+      title: "Collect more data samples",
       content:
-        "Record more samples for this action. You need at least two more. Collecting more samples should result in a better model.",
+        "Record more samples for this action. Collecting more samples should result in a better machine learning model.",
     },
     {
       selector: classSelector(tourElClassname.addActionButton),
       title: "Add more actions",
       content:
-        "You need at least 2 actions each with 3 data samples to train the model.",
+        "Decide what your other actions will be and what you will name them. You need at least 2 actions with 3 data samples to train the model. Your data samples are only stored on your computer, they do not get sent to anyone else.",
     },
     {
       selector: classSelector(tourElClassname.trainModelButton),
       title: "Train model",
       content:
-        "When you have collected all your data samples you can train the model. You can come back to collect more data to improve your model.",
+        "When you have collected enough data samples you can train the machine learning model. You can come back later to remove or add more data and re-train to make the model more reliable.",
     },
   ],
   // Launched after training a model
@@ -69,32 +69,32 @@ export const tours: Record<TourId, TourStep[]> = {
   // be a bit weird but we just go with it for now.
   [TourId.TestModelPage]: [
     {
-      title: "You’ve trained a model!",
+      title: "You’ve trained an ML model!",
       content:
-        "Use this page to test your model. Try each action and see if the model can detect it.",
+        "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model detect each action?",
     },
     {
       title: "Estimated action",
       content:
-        "The action the model thinks you are currently doing is shown in green.",
+        "The action the model estimates you are currently doing is shown above the micro:bit icon for that action.",
       selector: classSelector(tourElClassname.estimatedAction),
     },
     {
-      title: "Adjust the recognition point",
+      title: "Certainty and recognition point",
       content:
-        "The meter shows how confident the model is that you are doing the action. Move the slider to adjust the recognition point.",
+        "The meter shows how confident the model is that you are doing each action. Move the slider to adjust the recognition point, or threshold.",
       selector: classSelector(tourElClassname.certaintyThreshold),
     },
     {
-      title: "MakeCode blocks",
+      title: "Microsoft MakeCode blocks",
       content:
-        "This MakeCode code shows the icon for action when it is detected by the model.",
+        "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit.",
       selector: classSelector(tourElClassname.makeCodeCodeView),
     },
     {
-      title: "Microsoft MakeCode",
+      title: "Edit in MakeCode",
       content:
-        "Use MakeCode to download the program to your micro:bit. Use the blocks to write your own program that uses the machine learning model.",
+        "Open your project in MakeCode to download the program and your machine learning model to a micro:bit. You can add more blocks to create your own programs using your model.",
       selector: classSelector(tourElClassname.editInMakeCodeButton),
     },
   ],
