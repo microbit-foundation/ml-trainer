@@ -27,7 +27,8 @@ export class ConnectionStageActions {
     private actions: ConnectActions,
     private stage: ConnectionStage,
     private setStage: (stage: ConnectionStage) => void,
-    private setStatus: (status: ConnectionStatus) => void
+    private setStatus: (status: ConnectionStatus) => void,
+    private dataCollectionMicrobitConnected: () => void
   ) {}
 
   startConnect = () => {
@@ -193,6 +194,7 @@ export class ConnectionStageActions {
 
   private onConnected = () => {
     this.setFlowStep(ConnectionFlowStep.None);
+    this.dataCollectionMicrobitConnected();
   };
 
   disconnect = async () => {

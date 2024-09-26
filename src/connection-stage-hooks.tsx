@@ -15,6 +15,7 @@ import {
   useConnectStatus,
   useConnectStatusUpdater,
 } from "./connect-status-hooks";
+import { useStore } from "./store";
 
 export enum ConnectionFlowType {
   ConnectBluetooth = "ConnectBluetooth",
@@ -165,6 +166,9 @@ export const useConnectionStage = (): {
   }
   const [stage, setStage] = connectionStageContextValue;
   const connectActions = useConnectActions();
+  const dataCollectionMicrobitConnected = useStore(
+    (s) => s.dataCollectionMicrobitConnected
+  );
   const [, setStatus] = useConnectStatus();
 
   const actions = useMemo(() => {
@@ -172,9 +176,16 @@ export const useConnectionStage = (): {
       connectActions,
       stage,
       setStage,
-      setStatus
+      setStatus,
+      dataCollectionMicrobitConnected
     );
-  }, [connectActions, stage, setStage, setStatus]);
+  }, [
+    connectActions,
+    stage,
+    setStage,
+    setStatus,
+    dataCollectionMicrobitConnected,
+  ]);
 
   const status = useConnectStatusUpdater(
     stage.connType,

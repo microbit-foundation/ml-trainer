@@ -5,6 +5,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Portal,
 } from "@chakra-ui/react";
 import { MdMoreVert } from "react-icons/md";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -31,17 +32,19 @@ const DataSamplesMenu = () => {
         icon={<Icon as={MdMoreVert} boxSize={10} color="brand.500" />}
         isRound
       />
-      <MenuList>
-        <LoadProjectMenuItem icon={<RiUpload2Line />} accept=".json">
-          <FormattedMessage id="content.data.controlbar.button.uploadData" />
-        </LoadProjectMenuItem>
-        <MenuItem icon={<RiDownload2Line />} onClick={downloadDataSet}>
-          <FormattedMessage id="content.data.controlbar.button.downloadData" />
-        </MenuItem>
-        <MenuItem icon={<RiDeleteBin2Line />} onClick={deleteAllGestures}>
-          <FormattedMessage id="content.data.controlbar.button.clearData" />
-        </MenuItem>
-      </MenuList>
+      <Portal>
+        <MenuList>
+          <LoadProjectMenuItem icon={<RiUpload2Line />} accept=".json">
+            <FormattedMessage id="content.data.controlbar.button.uploadData" />
+          </LoadProjectMenuItem>
+          <MenuItem icon={<RiDownload2Line />} onClick={downloadDataSet}>
+            <FormattedMessage id="content.data.controlbar.button.downloadData" />
+          </MenuItem>
+          <MenuItem icon={<RiDeleteBin2Line />} onClick={deleteAllGestures}>
+            <FormattedMessage id="content.data.controlbar.button.clearData" />
+          </MenuItem>
+        </MenuList>
+      </Portal>
     </Menu>
   );
 };

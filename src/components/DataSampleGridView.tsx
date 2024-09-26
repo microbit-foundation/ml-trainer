@@ -10,15 +10,14 @@ import { ButtonEvent } from "@microbit/microbit-connection";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { useHasGestures, useStore } from "../store";
+import { GestureData } from "../model";
+import { useStore } from "../store";
 import DataSampleGridRow from "./AddDataGridRow";
 import DataSamplesMenu from "./DataSamplesMenu";
 import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
+import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
 import RecordingDialog from "./RecordingDialog";
-import LoadProjectInput, {
-  LoadProjectInputProps,
-  LoadProjectInputRef,
-} from "./LoadProjectInput";
+import ConnectToRecordDialog from "./ConnectToRecordDialog";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -43,7 +42,10 @@ const headings: GridColumnHeadingItemProps[] = [
 const DataSamplesGridView = () => {
   const gestures = useStore((s) => s.gestures);
   const [selectedGestureIdx, setSelectedGestureIdx] = useState<number>(0);
-  const selectedGesture = gestures[selectedGestureIdx] ?? gestures[0];
+  const selectedGesture: GestureData | undefined =
+    gestures[selectedGestureIdx] ?? gestures[0];
+
+  // TODO: check
   const showWalkThrough = useMemo<boolean>(
     () =>
       gestures.length === 0 ||
@@ -55,9 +57,7 @@ const DataSamplesGridView = () => {
 
   const connection = useConnectActions();
   const { actions } = useConnectionStage();
-  const hasGestures = useHasGestures();
   const { isConnected } = useConnectionStage();
-  const showConnectImportPrompt = !hasGestures && !isConnected;
   const loadProjectInputRef = useRef<LoadProjectInputRef>(null);
 
   useEffect(() => {
@@ -76,19 +76,25 @@ const DataSamplesGridView = () => {
 
   return (
     <>
-      <RecordingDialog
-        gestureId={selectedGesture.ID}
-        isOpen={isOpen}
-        onClose={onClose}
-        actionName={selectedGesture.name}
+      <ConnectToRecordDialog
+        isOpen={connectToRecordDialogDisclosure.isOpen}
+        onClose={connectToRecordDialogDisclosure.onClose}
       />
+      {selectedGesture && (
+        <RecordingDialog
+          gestureId={selectedGesture.ID}
+          isOpen={isOpen}
+          onClose={onClose}
+          actionName={selectedGesture.name}
+        />
+      )}
       <HeadingGrid
         position="sticky"
         top={0}
         {...gridCommonProps}
         headings={headings}
       />
-      {showConnectImportPrompt ? (
+      {gestures.length === 0 ? (
         <VStack
           gap={5}
           flexGrow={1}
@@ -97,25 +103,27 @@ const DataSamplesGridView = () => {
         >
           <LoadProjectInput ref={loadProjectInputRef} accept=".json" />
           <Text fontSize="lg">No data samples</Text>
-          <Text fontSize="lg">
-            <Button
-              fontSize="lg"
-              color="brand.600"
-              variant="link"
-              onClick={actions.startConnect}
-            >
-              Connect a micro:bit
-            </Button>{" "}
-            or{" "}
-            <Button
-              fontSize="lg"
-              color="brand.600"
-              variant="link"
-              onClick={loadProjectInputRef.current?.chooseFile}
-            >
-              import data samples
-            </Button>
-          </Text>
+          {!isConnected && (
+            <Text fontSize="lg">
+              <Button
+                fontSize="lg"
+                color="brand.600"
+                variant="link"
+                onClick={actions.startConnect}
+              >
+                Connect a micro:bit
+              </Button>{" "}
+              or{" "}
+              <Button
+                fontSize="lg"
+                color="brand.600"
+                variant="link"
+                onClick={() => loadProjectInputRef.current?.chooseFile()}
+              >
+                import data samples
+              </Button>
+            </Text>
+          )}
         </VStack>
       ) : (
         <Grid

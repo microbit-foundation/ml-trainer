@@ -27,6 +27,13 @@ import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 
 export const modelUrl = "indexeddb://micro:bit-ml-tool-model";
 
+const generateFirstGesture = () => ({
+  icon: defaultIcons[0],
+  ID: Date.now(),
+  name: "",
+  recordings: [],
+});
+
 const updateProject = (
   project: Project,
   projectEdited: boolean,
@@ -49,13 +56,6 @@ const updateProject = (
     appEditNeedsFlushToEditor: true,
   };
 };
-
-const generateFirstGesture = () => ({
-  icon: defaultIcons[0],
-  ID: Date.now(),
-  name: "",
-  recordings: [],
-});
 
 export interface State {
   gestures: GestureData[];
@@ -97,6 +97,7 @@ export interface Actions {
   ): void;
   deleteAllGestures(): void;
   downloadDataset(): void;
+  dataCollectionMicrobitConnected(): void;
   loadDataset(gestures: GestureData[]): void;
   setEditorOpen(open: boolean): void;
   recordingStarted(): void;
@@ -128,7 +129,7 @@ export const useStore = create<Store>()(
   devtools(
     persist(
       (set, get) => ({
-        gestures: [generateFirstGesture()],
+        gestures: [],
         isRecording: false,
         project: {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -253,10 +254,7 @@ export const useStore = create<Store>()(
           return set(({ project, projectEdited, gestures }) => {
             const newGestures = gestures.filter((g) => g.ID !== id);
             return {
-              gestures:
-                newGestures.length === 0
-                  ? [generateFirstGesture()]
-                  : newGestures,
+              gestures: newGestures,
               model: undefined,
               ...updateProject(project, projectEdited, newGestures, undefined),
             };
@@ -329,7 +327,7 @@ export const useStore = create<Store>()(
 
         deleteAllGestures() {
           return set(({ project, projectEdited }) => ({
-            gestures: [generateFirstGesture()],
+            gestures: [],
             model: undefined,
             ...updateProject(project, projectEdited, [], undefined),
           }));
@@ -507,6 +505,12 @@ export const useStore = create<Store>()(
             false,
             "projectFlushedToEditor"
           );
+        },
+        dataCollectionMicrobitConnected() {
+          set(({ gestures }) => ({
+            gestures:
+              gestures.length === 0 ? [generateFirstGesture()] : gestures,
+          }));
         },
       }),
       {
