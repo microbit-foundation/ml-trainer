@@ -1,8 +1,13 @@
-import { Input, MenuItem, MenuItemProps } from "@chakra-ui/react";
-import { useCallback, useRef } from "react";
-import { useProject } from "../hooks/project-hooks";
+import { MenuItem, MenuItemProps } from "@chakra-ui/react";
+import { useRef } from "react";
+import LoadProjectInput, {
+  LoadProjectInputProps,
+  LoadProjectInputRef,
+} from "./LoadProjectInput";
 
-interface LoadProjectMenuItemProps extends MenuItemProps {
+interface LoadProjectMenuItemProps
+  extends MenuItemProps,
+    LoadProjectInputProps {
   /**
    *
    * File input tag accept attribute.
@@ -15,48 +20,11 @@ const LoadProjectMenuItem = ({
   accept,
   ...props
 }: LoadProjectMenuItemProps) => {
-  const { loadFile } = useProject();
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleChooseFile = useCallback(() => {
-    inputRef.current && inputRef.current.click();
-  }, []);
-
-  const onOpen = useCallback(
-    (files: File[]) => {
-      if (files.length === 1) {
-        loadFile(files[0]);
-      }
-    },
-    [loadFile]
-  );
-
-  const handleOpenFile = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const files = e.target.files;
-      if (files) {
-        const filesArray = Array.from(files);
-        // Clear the input so we're triggered if the user opens the same file again.
-        inputRef.current!.value = "";
-        if (filesArray.length > 0) {
-          onOpen(filesArray);
-        }
-      }
-    },
-    [onOpen]
-  );
-
+  const ref = useRef<LoadProjectInputRef>(null);
   return (
     <>
-      <MenuItem {...props} onClick={handleChooseFile} />
-      <Input
-        type="file"
-        display="none"
-        multiple={false}
-        accept={accept}
-        onChange={handleOpenFile}
-        ref={inputRef}
-      />
+      <MenuItem {...props} onClick={() => ref.current?.chooseFile()} />
+      <LoadProjectInput ref={ref} accept={accept} />
     </>
   );
 };

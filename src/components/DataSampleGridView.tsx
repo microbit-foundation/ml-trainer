@@ -2,13 +2,12 @@ import {
   Button,
   Grid,
   GridProps,
-  Stack,
   Text,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { useHasGestures, useStore } from "../store";
@@ -16,6 +15,10 @@ import DataSampleGridRow from "./AddDataGridRow";
 import DataSamplesMenu from "./DataSamplesMenu";
 import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
 import RecordingDialog from "./RecordingDialog";
+import LoadProjectInput, {
+  LoadProjectInputProps,
+  LoadProjectInputRef,
+} from "./LoadProjectInput";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -51,9 +54,11 @@ const DataSamplesGridView = () => {
   const connectToRecordDialogDisclosure = useDisclosure();
 
   const connection = useConnectActions();
+  const { actions } = useConnectionStage();
   const hasGestures = useHasGestures();
   const { isConnected } = useConnectionStage();
   const showConnectImportPrompt = !hasGestures && !isConnected;
+  const loadProjectInputRef = useRef<LoadProjectInputRef>(null);
 
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
@@ -90,13 +95,24 @@ const DataSamplesGridView = () => {
           alignItems="center"
           justifyContent="center"
         >
+          <LoadProjectInput ref={loadProjectInputRef} accept=".json" />
           <Text fontSize="lg">No data samples</Text>
           <Text fontSize="lg">
-            <Button fontSize="lg" color="brand.600" variant="link">
+            <Button
+              fontSize="lg"
+              color="brand.600"
+              variant="link"
+              onClick={actions.startConnect}
+            >
               Connect a micro:bit
             </Button>{" "}
             or{" "}
-            <Button fontSize="lg" color="brand.600" variant="link">
+            <Button
+              fontSize="lg"
+              color="brand.600"
+              variant="link"
+              onClick={loadProjectInputRef.current?.chooseFile}
+            >
               import data samples
             </Button>
           </Text>
