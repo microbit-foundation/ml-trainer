@@ -1,23 +1,31 @@
-import { Grid, GridProps, useDisclosure } from "@chakra-ui/react";
+import {
+  Button,
+  Grid,
+  GridProps,
+  Stack,
+  Text,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
 import { useEffect, useMemo, useState } from "react";
 import { useConnectActions } from "../connect-actions-hooks";
-import DataSampleGridRow from "./AddDataGridRow";
-import HeadingGrid from "./HeadingGrid";
-import RecordingDialog from "./RecordingDialog";
-import { useStore } from "../store";
-import ConnectToRecordDialog from "./ConnectToRecordDialog";
 import { useConnectionStage } from "../connection-stage-hooks";
+import { useHasGestures, useStore } from "../store";
+import DataSampleGridRow from "./AddDataGridRow";
+import DataSamplesMenu from "./DataSamplesMenu";
+import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
+import RecordingDialog from "./RecordingDialog";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
   gap: 3,
   px: 10,
-  py: 2,
+  mb: 2,
   w: "100%",
 };
 
-const headings = [
+const headings: GridColumnHeadingItemProps[] = [
   {
     titleId: "content.data.classification",
     descriptionId: "content.data.classHelpBody",
@@ -25,6 +33,7 @@ const headings = [
   {
     titleId: "content.data.data",
     descriptionId: "content.data.dataDescription",
+    itemsRight: <DataSamplesMenu />,
   },
 ];
 
@@ -42,7 +51,9 @@ const DataSamplesGridView = () => {
   const connectToRecordDialogDisclosure = useDisclosure();
 
   const connection = useConnectActions();
+  const hasGestures = useHasGestures();
   const { isConnected } = useConnectionStage();
+  const showConnectImportPrompt = !hasGestures && !isConnected;
 
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
@@ -66,37 +77,53 @@ const DataSamplesGridView = () => {
         onClose={onClose}
         actionName={selectedGesture.name}
       />
-      <ConnectToRecordDialog
-        isOpen={connectToRecordDialogDisclosure.isOpen}
-        onClose={connectToRecordDialogDisclosure.onClose}
-      />
       <HeadingGrid
         position="sticky"
         top={0}
         {...gridCommonProps}
         headings={headings}
       />
-      <Grid
-        {...gridCommonProps}
-        alignItems="start"
-        autoRows="max-content"
-        overflow="auto"
-        flexGrow={1}
-        h={0}
-      >
-        {gestures.map((g, idx) => (
-          <DataSampleGridRow
-            key={g.ID}
-            gesture={g}
-            selected={selectedGesture.ID === g.ID}
-            onSelectRow={() => setSelectedGestureIdx(idx)}
-            onRecord={
-              isConnected ? onOpen : connectToRecordDialogDisclosure.onOpen
-            }
-            showWalkThrough={showWalkThrough}
-          />
-        ))}
-      </Grid>
+      {showConnectImportPrompt ? (
+        <VStack
+          gap={5}
+          flexGrow={1}
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Text fontSize="lg">No data samples</Text>
+          <Text fontSize="lg">
+            <Button fontSize="lg" color="brand.600" variant="link">
+              Connect a micro:bit
+            </Button>{" "}
+            or{" "}
+            <Button fontSize="lg" color="brand.600" variant="link">
+              import data samples
+            </Button>
+          </Text>
+        </VStack>
+      ) : (
+        <Grid
+          {...gridCommonProps}
+          alignItems="start"
+          autoRows="max-content"
+          overflow="auto"
+          flexGrow={1}
+          h={0}
+        >
+          {gestures.map((g, idx) => (
+            <DataSampleGridRow
+              key={g.ID}
+              gesture={g}
+              selected={selectedGesture.ID === g.ID}
+              onSelectRow={() => setSelectedGestureIdx(idx)}
+              onRecord={
+                isConnected ? onOpen : connectToRecordDialogDisclosure.onOpen
+              }
+              showWalkThrough={showWalkThrough}
+            />
+          ))}
+        </Grid>
+      )}
     </>
   );
 };
