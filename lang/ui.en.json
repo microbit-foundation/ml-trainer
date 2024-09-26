@@ -16,7 +16,7 @@
     "description": ""
   },
   "add-data-intro-description": {
-    "defaultMessage": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping).",
+    "defaultMessage": "Add samples of the actions you would like your model to recognise (e.g. ‘waving’ and ‘clapping’).",
     "description": "Add data step home page description"
   },
   "add-data-title": {
@@ -472,7 +472,7 @@
     "description": ""
   },
   "content.data.classHelpBody": {
-    "defaultMessage": "The type of movement you want the micro:bit AI creator to recognise e.g. 'waving' or 'clapping'. ",
+    "defaultMessage": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": ""
   },
   "content.data.classHelpHeader": {
