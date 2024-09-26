@@ -21,13 +21,9 @@ import { deployment, useDeployment } from "./deployment";
 import { ProjectProvider } from "./hooks/project-hooks";
 import { LoggingProvider } from "./logging/logging-hooks";
 import TranslationProvider from "./messages/TranslationProvider";
-import { resourcesConfig, sessionPageConfigs } from "./pages-config";
 import HomePage from "./pages/HomePage";
-import {
-  createHomePageUrl,
-  createResourcePageUrl,
-  createSessionPageUrl,
-} from "./urls";
+import { createHomePageUrl, createSessionPageUrl } from "./urls";
+import { sessionPageConfigs } from "./pages-config";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -98,12 +94,6 @@ const createRouter = () => {
           return {
             path: createSessionPageUrl(config.id),
             element: <config.pageElement />,
-          };
-        }),
-        ...resourcesConfig.map((resource) => {
-          return {
-            path: createResourcePageUrl(resource.id),
-            element: <resource.pageElement />,
           };
         }),
         {

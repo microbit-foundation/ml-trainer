@@ -1,4 +1,4 @@
-import { ResourceId, SessionPageId } from "./pages-config";
+import { SessionPageId } from "./pages-config";
 
 export const basepath = import.meta.env.BASE_URL ?? "/";
 
@@ -10,6 +10,3 @@ export const createHomePageUrl = () => `${basepath}`;
 
 export const createSessionPageUrl = (pageId: SessionPageId) =>
   `${basepath}${pageId}`;
-
-export const createResourcePageUrl = (resourceId: ResourceId) =>
-  `${basepath}resources/${resourceId}`;

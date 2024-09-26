@@ -1,6 +1,5 @@
 import {
   AspectRatio,
-  Grid,
   Heading,
   Image,
   Stack,
@@ -8,13 +7,11 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
+import DefaultPageLayout from "../components/DefaultPageLayout";
+import StartResumeActions from "../components/StartResumeActions";
 import addDataImage from "../images/add_data.svg";
 import testModelImage from "../images/test_model_blue.svg";
 import trainModelImage from "../images/train_model_blue.svg";
-import DefaultPageLayout from "../components/DefaultPageLayout";
-import ResourceCard from "../components/ResourceCard";
-import StartResumeActions from "../components/StartResumeActions";
-import { resourcesConfig } from "../pages-config";
 
 type StepId = "add-data" | "train-model" | "test-model";
 
@@ -80,25 +77,6 @@ const HomePage = () => {
             ))}
           </Stack>
         </VStack>
-
-        <Heading
-          as="h2"
-          fontSize="3xl"
-          px={10}
-          alignSelf={{ base: "center", lg: "start" }}
-          fontWeight="bold"
-        >
-          <FormattedMessage id="resources" />
-        </Heading>
-        <Grid
-          templateColumns={{ base: "repeat(1, 1fr)", lg: "repeat(3, 1fr)" }}
-          px={10}
-          gap={5}
-        >
-          {resourcesConfig.map((r, idx) => (
-            <ResourceCard {...r} key={idx} />
-          ))}
-        </Grid>
         <StartResumeActions />
       </VStack>
     </DefaultPageLayout>
