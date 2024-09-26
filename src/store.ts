@@ -189,7 +189,10 @@ export const useStore = create<Store>()(
         },
 
         newSession() {
-          get().deleteAllGestures();
+          set({
+            gestures: [],
+            model: undefined,
+          });
           get().resetProject();
         },
 
@@ -254,7 +257,10 @@ export const useStore = create<Store>()(
           return set(({ project, projectEdited, gestures }) => {
             const newGestures = gestures.filter((g) => g.ID !== id);
             return {
-              gestures: newGestures,
+              gestures:
+                newGestures.length === 0
+                  ? [generateFirstGesture()]
+                  : newGestures,
               model: undefined,
               ...updateProject(project, projectEdited, newGestures, undefined),
             };
@@ -327,7 +333,7 @@ export const useStore = create<Store>()(
 
         deleteAllGestures() {
           return set(({ project, projectEdited }) => ({
-            gestures: [],
+            gestures: [generateFirstGesture()],
             model: undefined,
             ...updateProject(project, projectEdited, [], undefined),
           }));
