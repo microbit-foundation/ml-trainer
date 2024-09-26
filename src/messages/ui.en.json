@@ -36,7 +36,7 @@
   "add-data-intro-description": [
     {
       "type": 0,
-      "value": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping)."
+      "value": "Add samples of the actions you would like your model to recognise (e.g. ‘waving’ and ‘clapping’)."
     }
   ],
   "add-data-title": [
@@ -214,19 +214,19 @@
   "connectFailed.bridgeHeading": [
     {
       "type": 0,
-      "value": "Failed to connect to micro:bit 2"
+      "value": "Failed to connect to radio link micro:bit"
     }
   ],
   "connectFailed.remote1": [
     {
       "type": 0,
-      "value": "The connection to the wireless micro:bit could not be established."
+      "value": "The connection to the data collection micro:bit could not be established."
     }
   ],
   "connectFailed.remoteHeading": [
     {
       "type": 0,
-      "value": "Failed to connect to micro:bit 1"
+      "value": "Failed to connect to data collection micro:bit"
     }
   ],
   "connectMB.bluetooth.cancelledConnection": [
@@ -340,7 +340,7 @@
   "connectMB.connectCable.subtitle": [
     {
       "type": 0,
-      "value": "Connect the micro:bit to this computer with a USB cable so that the data sample collection program can be downloaded to it."
+      "value": "Connect the micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it."
     }
   ],
   "connectMB.connectCableMB1.heading": [
@@ -352,7 +352,7 @@
   "connectMB.connectCableMB1.subtitle": [
     {
       "type": 0,
-      "value": "Connect micro:bit 1 to this computer with a USB cable so that the data sample collection program can be downloaded to it. This is the micro:bit you will use to collect data samples."
+      "value": "Connect the first micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it. This is the micro:bit you will use to collect data samples."
     }
   ],
   "connectMB.connectCableMB2.heading": [
@@ -364,7 +364,7 @@
   "connectMB.connectCableMB2.subtitle": [
     {
       "type": 0,
-      "value": "Connect a second micro:bit to this computer with a USB cable."
+      "value": "Connect a second micro:bit to this computer with a USB cable so that the radio link program can be downloaded to it. This radio link micro:bit will communicate with the data collection micro:bit."
     }
   ],
   "connectMB.connecting": [
@@ -674,13 +674,13 @@
   "connectMB.usbDownloadingMB1.header": [
     {
       "type": 0,
-      "value": "Downloading program to micro:bit 1"
+      "value": "Downloading the data collection program"
     }
   ],
   "connectMB.usbDownloadingMB2.header": [
     {
       "type": 0,
-      "value": "Downloading program to micro:bit 2"
+      "value": "Downloading the radio link program"
     }
   ],
   "connectMB.usbTryAgain.closeTabs1": [
@@ -800,7 +800,7 @@
   "content.data.classHelpBody": [
     {
       "type": 0,
-      "value": "The type of movement you want the micro:bit AI creator to recognise e.g. 'waving' or 'clapping'. "
+      "value": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’."
     }
   ],
   "content.data.classHelpHeader": [
@@ -1172,19 +1172,19 @@
   "disconnectedWarning.bridgeHeading": [
     {
       "type": 0,
-      "value": "micro:bit 2 connection lost"
+      "value": "radio link micro:bit connection lost"
     }
   ],
   "disconnectedWarning.remote1": [
     {
       "type": 0,
-      "value": "The connection to the wireless micro:bit has been lost."
+      "value": "The connection to the data connection micro:bit has been lost."
     }
   ],
   "disconnectedWarning.remoteHeading": [
     {
       "type": 0,
-      "value": "micro:bit 1 connection lost"
+      "value": "data collection micro:bit connection lost"
     }
   ],
   "dont-show-again": [
@@ -1256,7 +1256,7 @@
   "footer.helpContent": [
     {
       "type": 0,
-      "value": "This graph shows movement data from the microbit’s accelerometer in real time. Try moving your connected micro:bit to see the X, Y and Z axes change."
+      "value": "This graph shows movement data from the micro:bit’s accelerometer in real time. Try moving your connected micro:bit to see the X, Y and Z axes change."
     }
   ],
   "footer.helpHeader": [
@@ -1564,7 +1564,7 @@
   "reconnectFailed.bridgeHeading": [
     {
       "type": 0,
-      "value": "Failed to reconnect to micro:bit 2"
+      "value": "Failed to reconnect to radio link micro:bit"
     }
   ],
   "reconnectFailed.radioHeading": [
@@ -1576,13 +1576,13 @@
   "reconnectFailed.remote1": [
     {
       "type": 0,
-      "value": "The connection to the wireless micro:bit could not be re-established."
+      "value": "The connection to the data collection micro:bit could not be re-established."
     }
   ],
   "reconnectFailed.remoteHeading": [
     {
       "type": 0,
-      "value": "Failed to reconnect to micro:bit 1"
+      "value": "Failed to reconnect to data collection micro:bit"
     }
   ],
   "reconnectFailed.subtitle": [

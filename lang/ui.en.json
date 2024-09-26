@@ -128,11 +128,11 @@
     "description": ""
   },
   "connectFailed.remote1": {
-    "defaultMessage": "The connection to the data sample collection micro:bit could not be established.",
+    "defaultMessage": "The connection to the data collection micro:bit could not be established.",
     "description": ""
   },
   "connectFailed.remoteHeading": {
-    "defaultMessage": "Failed to connect to data sample collection micro:bit",
+    "defaultMessage": "Failed to connect to data collection micro:bit",
     "description": ""
   },
   "connectMB.bluetooth.cancelledConnection": {
@@ -208,7 +208,7 @@
     "description": ""
   },
   "connectMB.connectCable.subtitle": {
-    "defaultMessage": "Connect the micro:bit to this computer with a USB cable so that the data sample collection program can be downloaded to it.",
+    "defaultMessage": "Connect the micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it.",
     "description": ""
   },
   "connectMB.connectCableMB1.heading": {
@@ -216,7 +216,7 @@
     "description": ""
   },
   "connectMB.connectCableMB1.subtitle": {
-    "defaultMessage": "Connect the first micro:bit to this computer with a USB cable so that the data sample collection program can be downloaded to it. This is the micro:bit you will use to collect data samples.",
+    "defaultMessage": "Connect the first micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it. This is the micro:bit you will use to collect data samples.",
     "description": ""
   },
   "connectMB.connectCableMB2.heading": {
@@ -224,7 +224,7 @@
     "description": ""
   },
   "connectMB.connectCableMB2.subtitle": {
-    "defaultMessage": "Connect a second micro:bit to this computer with a USB cable so that the radio link program can be downloaded to it. This radio link micro:bit will communicate with the data sample collection micro:bit.",
+    "defaultMessage": "Connect a second micro:bit to this computer with a USB cable so that the radio link program can be downloaded to it. This radio link micro:bit will communicate with the data collection micro:bit.",
     "description": ""
   },
   "connectMB.connecting": {
@@ -388,7 +388,7 @@
     "description": ""
   },
   "connectMB.usbDownloadingMB1.header": {
-    "defaultMessage": "Downloading the data sample collection program",
+    "defaultMessage": "Downloading the data collection program",
     "description": ""
   },
   "connectMB.usbDownloadingMB2.header": {
@@ -688,11 +688,11 @@
     "description": ""
   },
   "disconnectedWarning.remote1": {
-    "defaultMessage": "The connection to the data sample connection micro:bit has been lost.",
+    "defaultMessage": "The connection to the data connection micro:bit has been lost.",
     "description": ""
   },
   "disconnectedWarning.remoteHeading": {
-    "defaultMessage": "data sample collection micro:bit connection lost",
+    "defaultMessage": "data collection micro:bit connection lost",
     "description": ""
   },
   "dont-show-again": {
@@ -948,11 +948,11 @@
     "description": ""
   },
   "reconnectFailed.remote1": {
-    "defaultMessage": "The connection to the data sample collection micro:bit could not be re-established.",
+    "defaultMessage": "The connection to the data collection micro:bit could not be re-established.",
     "description": ""
   },
   "reconnectFailed.remoteHeading": {
-    "defaultMessage": "Failed to reconnect to data sample collection micro:bit",
+    "defaultMessage": "Failed to reconnect to data collection micro:bit",
     "description": ""
   },
   "reconnectFailed.subtitle": {
