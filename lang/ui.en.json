@@ -596,7 +596,7 @@
     "description": ""
   },
   "content.model.output.estimatedGesture.iconTitle": {
-    "defaultMessage": "Estimated action:",
+    "defaultMessage": "Estimated action",
     "description": ""
   },
   "content.model.output.estimatedGesture.label": {

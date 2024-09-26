@@ -1,6 +1,5 @@
 import { Button, HStack, Portal, Text, VStack } from "@chakra-ui/react";
 import { useMemo, useRef } from "react";
-import { MdBolt } from "react-icons/md";
 import { FormattedMessage } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
@@ -55,20 +54,19 @@ const LiveGraphPanel = ({
           top={0}
           left={0}
           right={0}
-          px={7}
-          py={4}
+          px={2.5}
+          py={2.5}
           w={`calc(100% - ${
             showPredictedGesture ? `${predictedGestureDisplayWidth}px` : "0"
           })`}
         >
           <HStack gap={4}>
             <HStack gap={2}>
+              <Text fontWeight="bold">Live data graph</Text>
               <InfoToolTip
                 titleId="footer.helpHeader"
                 descriptionId="footer.helpContent"
               />
-              <MdBolt size={24} />
-              <Text fontWeight="bold">LIVE</Text>
             </HStack>
             {status === ConnectionStatus.Connected ? (
               <Button
@@ -102,31 +100,31 @@ const LiveGraphPanel = ({
       <HStack position="absolute" width="100%" height="100%" spacing={0}>
         <LiveGraph />
         {showPredictedGesture && (
-          <HStack
-            justifyContent="left"
-            alignItems="start"
+          <VStack
             w={`${predictedGestureDisplayWidth}px`}
+            gap={0}
+            h="100%"
+            py={2.5}
+            pt={3.5}
           >
-            <VStack pt={0.8}>
+            <HStack justifyContent="flex-start" w="100%" gap={2} pr={2}>
+              <Text size="md" fontWeight="bold" alignSelf="start">
+                <FormattedMessage id="content.model.output.estimatedGesture.iconTitle" />
+              </Text>
               <InfoToolTip
                 titleId="content.model.output.estimatedGesture.descriptionTitle"
                 descriptionId="content.model.output.estimatedGesture.descriptionBody"
               />
-            </VStack>
-            <VStack alignItems="left" gap={1}>
-              <VStack gap={0}>
-                <Text size="sm">
-                  <FormattedMessage id="content.model.output.estimatedGesture.iconTitle" />
-                </Text>
-                <Text isTruncated w="110px">
-                  {detected?.name ?? (
-                    <FormattedMessage id="content.model.output.estimatedGesture.none" />
-                  )}
-                </Text>
-              </VStack>
+            </HStack>
+            <Text size="md" isTruncated w={`${predictedGestureDisplayWidth}px`}>
+              {detected?.name ?? (
+                <FormattedMessage id="content.model.output.estimatedGesture.none" />
+              )}
+            </Text>
+            <VStack justifyContent="center" flexGrow={1}>
               <LedIcon icon={detected?.icon ?? "off"} size="80px" isTriggered />
             </VStack>
-          </HStack>
+          </VStack>
         )}
       </HStack>
     </HStack>
