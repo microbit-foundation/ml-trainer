@@ -1,6 +1,5 @@
 import {
   Button,
-  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -9,7 +8,6 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 import { ComponentProps, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
