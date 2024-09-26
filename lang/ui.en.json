@@ -224,7 +224,7 @@
     "description": ""
   },
   "connectMB.connectCableMB2.subtitle": {
-    "defaultMessage": "Connect a second micro:bit to this computer with a USB cable so that the radio link program can be downloaded to it.",
+    "defaultMessage": "Connect a second micro:bit to this computer with a USB cable so that the radio link program can be downloaded to it. This radio link micro:bit will communicate with the data sample collection micro:bit.",
     "description": ""
   },
   "connectMB.connecting": {
