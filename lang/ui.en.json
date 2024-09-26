@@ -216,7 +216,7 @@
     "description": ""
   },
   "connectMB.connectCableMB1.subtitle": {
-    "defaultMessage": "Connect a micro:bit to this computer with a USB cable so that the data sample collection program can be downloaded to it. This is the micro:bit you will use to collect data samples.",
+    "defaultMessage": "Connect the first micro:bit to this computer with a USB cable so that the data sample collection program can be downloaded to it. This is the micro:bit you will use to collect data samples.",
     "description": ""
   },
   "connectMB.connectCableMB2.heading": {
