@@ -19,7 +19,7 @@ type FlowStage = Pick<ConnectionStage, "flowStep" | "flowType">;
 
 export const bluetoothUniversalHex: HexUrl = {
   url: getHexFileUrl("universal", HexType.Bluetooth)!,
-  name: "ai-creator-program",
+  name: "data-sample-collection-program",
 };
 
 export class ConnectionStageActions {

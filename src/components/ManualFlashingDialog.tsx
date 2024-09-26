@@ -16,7 +16,7 @@ interface ImageProps {
   height: number;
 }
 
-// TODO: Update ChromeOS and Windows transfer program gif for AI creator program
+// TODO: Update ChromeOS and Windows transfer program gif for the data sample collection program
 // See https://github.com/lancedikson/bowser/blob/master/src/constants.js
 const getImageProps = (os: string): ImageProps => {
   switch (os) {

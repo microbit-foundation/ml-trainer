@@ -208,7 +208,7 @@
     "description": ""
   },
   "connectMB.connectCable.subtitle": {
-    "defaultMessage": "Connect the micro:bit to this computer with a USB cable so that the AI creator program can be downloaded to it.",
+    "defaultMessage": "Connect the micro:bit to this computer with a USB cable so that the data sample collection program can be downloaded to it.",
     "description": ""
   },
   "connectMB.connectCableMB1.heading": {
@@ -216,7 +216,7 @@
     "description": ""
   },
   "connectMB.connectCableMB1.subtitle": {
-    "defaultMessage": "Connect micro:bit 1 to this computer with a USB cable so that the AI creator program can be downloaded to it. This is the micro:bit you will use to collect data samples.",
+    "defaultMessage": "Connect micro:bit 1 to this computer with a USB cable so that the data sample collection program can be downloaded to it. This is the micro:bit you will use to collect data samples.",
     "description": ""
   },
   "connectMB.connectCableMB2.heading": {
@@ -472,7 +472,7 @@
     "description": ""
   },
   "content.data.classHelpBody": {
-    "defaultMessage": "The type of movement you want the AI creator to recognise e.g. 'wave' or 'clap'. ",
+    "defaultMessage": "The type of movement you want the micro:bit AI creator to recognise e.g. 'waving' or 'clapping'. ",
     "description": ""
   },
   "content.data.classHelpHeader": {
@@ -560,7 +560,7 @@
     "description": ""
   },
   "content.model.output.action.descriptionBody": {
-    "defaultMessage": "The type of movement you want the AI creator to recognise e.g. ‘wave’ or ‘clap’.",
+    "defaultMessage": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": ""
   },
   "content.model.output.action.descriptionTitle": {
@@ -773,11 +773,11 @@
   },
   "homepage-subtitle": {
     "defaultMessage": "Introduce students to machine learning concepts through physical movement and data",
-    "description": "Subtitle of AI creator home page"
+    "description": "Subtitle of micro:bit AI creator home page"
   },
   "homepage-title": {
     "defaultMessage": "micro:bit AI creator",
-    "description": "Title of AI creator home page"
+    "description": "Title of micro:bit AI creator home page"
   },
   "homepage.Link": {
     "defaultMessage": "Home page",
@@ -848,7 +848,7 @@
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
   },
   "not-found": {
-    "defaultMessage": "AI creator home page",
+    "defaultMessage": "micro:bit AI creator home page",
     "description": "Page not found link text"
   },
   "not-found-title": {
@@ -913,30 +913,6 @@
   },
   "popup.compatibility.header": {
     "defaultMessage": "This browser is not supported",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.button.later": {
-    "defaultMessage": "Later",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.button.update": {
-    "defaultMessage": "Update now",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.button.update.mkcd": {
-    "defaultMessage": "Open MakeCode",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.header": {
-    "defaultMessage": "Your micro:bit has an outdated AI creator program",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.text": {
-    "defaultMessage": "We strongly recommend that you update it now, as some features may not work as expected.",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.text.mkcd": {
-    "defaultMessage": "Open the newest MakeCode template to use the updated extension.",
     "description": ""
   },
   "privacy": {

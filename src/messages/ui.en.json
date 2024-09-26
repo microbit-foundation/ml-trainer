@@ -340,7 +340,7 @@
   "connectMB.connectCable.subtitle": [
     {
       "type": 0,
-      "value": "Connect the micro:bit to this computer with a USB cable so that the AI creator program can be downloaded to it."
+      "value": "Connect the micro:bit to this computer with a USB cable so that the data sample collection program can be downloaded to it."
     }
   ],
   "connectMB.connectCableMB1.heading": [
@@ -352,7 +352,7 @@
   "connectMB.connectCableMB1.subtitle": [
     {
       "type": 0,
-      "value": "Connect micro:bit 1 to this computer with a USB cable so that the AI creator program can be downloaded to it. This is the micro:bit you will use to collect data samples."
+      "value": "Connect micro:bit 1 to this computer with a USB cable so that the data sample collection program can be downloaded to it. This is the micro:bit you will use to collect data samples."
     }
   ],
   "connectMB.connectCableMB2.heading": [
@@ -800,7 +800,7 @@
   "content.data.classHelpBody": [
     {
       "type": 0,
-      "value": "The type of movement you want the AI creator to recognise e.g. 'wave' or 'clap'. "
+      "value": "The type of movement you want the micro:bit AI creator to recognise e.g. 'waving' or 'clapping'. "
     }
   ],
   "content.data.classHelpHeader": [
@@ -978,7 +978,7 @@
   "content.model.output.action.descriptionBody": [
     {
       "type": 0,
-      "value": "The type of movement you want the AI creator to recognise e.g. ‘wave’ or ‘clap’."
+      "value": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’."
     }
   ],
   "content.model.output.action.descriptionTitle": [
@@ -1426,7 +1426,7 @@
   "not-found": [
     {
       "type": 0,
-      "value": "AI creator home page"
+      "value": "micro:bit AI creator home page"
     }
   ],
   "not-found-title": [
@@ -1523,42 +1523,6 @@
     {
       "type": 0,
       "value": "This browser is not supported"
-    }
-  ],
-  "popup.outdatedmicrobit.button.later": [
-    {
-      "type": 0,
-      "value": "Later"
-    }
-  ],
-  "popup.outdatedmicrobit.button.update": [
-    {
-      "type": 0,
-      "value": "Update now"
-    }
-  ],
-  "popup.outdatedmicrobit.button.update.mkcd": [
-    {
-      "type": 0,
-      "value": "Open MakeCode"
-    }
-  ],
-  "popup.outdatedmicrobit.header": [
-    {
-      "type": 0,
-      "value": "Your micro:bit has an outdated AI creator program"
-    }
-  ],
-  "popup.outdatedmicrobit.text": [
-    {
-      "type": 0,
-      "value": "We strongly recommend that you update it now, as some features may not work as expected."
-    }
-  ],
-  "popup.outdatedmicrobit.text.mkcd": [
-    {
-      "type": 0,
-      "value": "Open the newest MakeCode template to use the updated extension."
     }
   ],
   "privacy": [
