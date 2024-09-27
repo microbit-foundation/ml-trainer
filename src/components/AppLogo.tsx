@@ -26,7 +26,7 @@ const AppLogo = ({
       h="33px"
       borderWidth="1px"
     />
-    <Image src={AppNameLogo} alt="micro:bit" h="25px" />
+    <Image src={AppNameLogo} alt="micro:bit" h="18px" />
   </HStack>
 );
 

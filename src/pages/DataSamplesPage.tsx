@@ -8,6 +8,7 @@ import DefaultPageLayout from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import { SessionPageId } from "../pages-config";
 import { useHasSufficientDataForTraining, useStore } from "../store";
+import { tourElClassname } from "../tours";
 import { createSessionPageUrl } from "../urls";
 
 const DataSamplesPage = () => {
@@ -46,6 +47,7 @@ const DataSamplesPage = () => {
         >
           <HStack gap={2} alignItems="center">
             <Button
+              className={tourElClassname.addActionButton}
               variant={hasSufficientData ? "secondary" : "primary"}
               leftIcon={<RiAddLine />}
               onClick={addNewGesture}
@@ -64,6 +66,7 @@ const DataSamplesPage = () => {
             </Button>
           ) : (
             <Button
+              className={tourElClassname.trainModelButton}
               onClick={trainModelFlowStart}
               variant={hasSufficientData ? "primary" : "secondary-disabled"}
             >

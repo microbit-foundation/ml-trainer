@@ -8,13 +8,13 @@ import {
 } from "react";
 import { ConnectActions } from "./connect-actions";
 import { useConnectActions } from "./connect-actions-hooks";
-import { ConnectionStageActions } from "./connection-stage-actions";
-import { useStorage } from "./hooks/use-storage";
 import {
   ConnectionStatus,
   useConnectStatus,
   useConnectStatusUpdater,
 } from "./connect-status-hooks";
+import { ConnectionStageActions } from "./connection-stage-actions";
+import { useStorage } from "./hooks/use-storage";
 import { useStore } from "./store";
 
 export enum ConnectionFlowType {

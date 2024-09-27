@@ -11,12 +11,20 @@
     "defaultMessage": "Developed in partnership with <link>Center for Computational Thinking and Design, Aarhus University</link>",
     "description": "Title of about dialog"
   },
+  "accelerometer-image-alt": {
+    "defaultMessage": "micro:bit showing X axis going across the front, Y axis going down and up, Z axis going back to front",
+    "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
+  },
+  "actions-label": {
+    "defaultMessage": "Actions",
+    "description": "Label for Actions"
+  },
   "actions.reconnect": {
     "defaultMessage": "Reconnect",
     "description": ""
   },
   "add-data-intro-description": {
-    "defaultMessage": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping).",
+    "defaultMessage": "Add samples of the actions you would like your model to recognise (e.g. ‘waving’ and ‘clapping’).",
     "description": "Add data step home page description"
   },
   "add-data-title": {
@@ -132,15 +140,15 @@
     "description": ""
   },
   "connectFailed.bridgeHeading": {
-    "defaultMessage": "Failed to connect to micro:bit 2",
+    "defaultMessage": "Failed to connect to radio link micro:bit",
     "description": ""
   },
   "connectFailed.remote1": {
-    "defaultMessage": "The connection to the wireless micro:bit could not be established.",
+    "defaultMessage": "The connection to the data collection micro:bit could not be established.",
     "description": ""
   },
   "connectFailed.remoteHeading": {
-    "defaultMessage": "Failed to connect to micro:bit 1",
+    "defaultMessage": "Failed to connect to data collection micro:bit",
     "description": ""
   },
   "connectMB.bluetooth.cancelledConnection": {
@@ -216,7 +224,7 @@
     "description": ""
   },
   "connectMB.connectCable.subtitle": {
-    "defaultMessage": "Connect the micro:bit to this computer with a USB cable so that the machine learning tool program can be downloaded to it.",
+    "defaultMessage": "Connect the micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it.",
     "description": ""
   },
   "connectMB.connectCableMB1.heading": {
@@ -224,7 +232,7 @@
     "description": ""
   },
   "connectMB.connectCableMB1.subtitle": {
-    "defaultMessage": "Connect micro:bit 1 to this computer with a USB cable so that the machine learning tool program can be downloaded to it. This is the micro:bit you will use to collect data samples.",
+    "defaultMessage": "Connect the first micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it. This is the micro:bit you will use to collect data samples.",
     "description": ""
   },
   "connectMB.connectCableMB2.heading": {
@@ -232,7 +240,7 @@
     "description": ""
   },
   "connectMB.connectCableMB2.subtitle": {
-    "defaultMessage": "Connect a second micro:bit to this computer with a USB cable.",
+    "defaultMessage": "Connect a second micro:bit to this computer with a USB cable so that the radio link program can be downloaded to it. This radio link micro:bit will communicate with the data collection micro:bit.",
     "description": ""
   },
   "connectMB.connecting": {
@@ -396,11 +404,11 @@
     "description": ""
   },
   "connectMB.usbDownloadingMB1.header": {
-    "defaultMessage": "Downloading program to micro:bit 1",
+    "defaultMessage": "Downloading the data collection program",
     "description": ""
   },
   "connectMB.usbDownloadingMB2.header": {
-    "defaultMessage": "Downloading program to micro:bit 2",
+    "defaultMessage": "Downloading the radio link program",
     "description": ""
   },
   "connectMB.usbTryAgain.closeTabs1": {
@@ -408,7 +416,7 @@
     "description": ""
   },
   "connectMB.usbTryAgain.closeTabs2": {
-    "defaultMessage": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, machine learning tool), or unplug and replug the micro:bit before trying again.",
+    "defaultMessage": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, AI creator), or unplug and replug the micro:bit before trying again.",
     "description": ""
   },
   "connectMB.usbTryAgain.heading": {
@@ -480,7 +488,7 @@
     "description": ""
   },
   "content.data.classHelpBody": {
-    "defaultMessage": "The type of movement you want the machine learning tool to recognise e.g. 'wave' or 'clap'. ",
+    "defaultMessage": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": ""
   },
   "content.data.classHelpHeader": {
@@ -520,7 +528,7 @@
     "description": ""
   },
   "content.data.dataDescription": {
-    "defaultMessage": "Multiple samples of movement data collected in approximately 2 second bursts.",
+    "defaultMessage": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else.",
     "description": ""
   },
   "content.data.deleteAction": {
@@ -567,12 +575,8 @@
     "defaultMessage": "Existing data samples and code will be lost",
     "description": ""
   },
-  "content.index.title": {
-    "defaultMessage": "machine learning tool",
-    "description": ""
-  },
   "content.model.output.action.descriptionBody": {
-    "defaultMessage": "The type of movement you want the machine learning tool to recognise e.g. ‘wave’ or ‘clap’.",
+    "defaultMessage": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": ""
   },
   "content.model.output.action.descriptionTitle": {
@@ -604,7 +608,7 @@
     "description": ""
   },
   "content.model.output.estimatedGesture.iconTitle": {
-    "defaultMessage": "Estimated action:",
+    "defaultMessage": "Estimated action",
     "description": ""
   },
   "content.model.output.estimatedGesture.label": {
@@ -616,7 +620,7 @@
     "description": ""
   },
   "content.model.output.output.descriptionBody": {
-    "defaultMessage": "What the micro:bit will do when each action is detected.",
+    "defaultMessage": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit.",
     "description": ""
   },
   "content.model.output.output.descriptionTitle": {
@@ -624,11 +628,11 @@
     "description": ""
   },
   "content.model.output.recognitionPoint": {
-    "defaultMessage": "Recognition Point:",
+    "defaultMessage": "Recognition point:",
     "description": ""
   },
   "content.trainer.description": {
-    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit machine learning tool to recognise different actions when you move your micro:bit.",
+    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit AI creator to recognise different actions when you move your micro:bit.",
     "description": ""
   },
   "content.trainer.failure.body": {
@@ -696,15 +700,15 @@
     "description": ""
   },
   "disconnectedWarning.bridgeHeading": {
-    "defaultMessage": "micro:bit 2 connection lost",
+    "defaultMessage": "radio link micro:bit connection lost",
     "description": ""
   },
   "disconnectedWarning.remote1": {
-    "defaultMessage": "The connection to the wireless micro:bit has been lost.",
+    "defaultMessage": "The connection to the data connection micro:bit has been lost.",
     "description": ""
   },
   "disconnectedWarning.remoteHeading": {
-    "defaultMessage": "micro:bit 1 connection lost",
+    "defaultMessage": "data collection micro:bit connection lost",
     "description": ""
   },
   "dont-show-again": {
@@ -728,7 +732,7 @@
     "description": "Download project different micro:bit option"
   },
   "download-project-intro-description": {
-    "defaultMessage": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to the micro:bit machine learning tool.",
+    "defaultMessage": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to the micro:bit AI creator.",
     "description": "Download project intro dialog description"
   },
   "download-project-intro-title": {
@@ -752,7 +756,7 @@
     "description": ""
   },
   "footer.helpContent": {
-    "defaultMessage": "This graph shows movement data from the microbit’s accelerometer in real time. Try moving your connected micro:bit to see the X, Y and Z axes change.",
+    "defaultMessage": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in.",
     "description": ""
   },
   "footer.helpHeader": {
@@ -785,11 +789,11 @@
   },
   "homepage-subtitle": {
     "defaultMessage": "Introduce students to machine learning concepts through physical movement and data",
-    "description": "Subtitle of machine learning tool home page"
+    "description": "Subtitle of micro:bit AI creator home page"
   },
   "homepage-title": {
-    "defaultMessage": "micro:bit machine learning tool",
-    "description": "Title of machine learning tool home page"
+    "defaultMessage": "micro:bit AI creator",
+    "description": "Title of micro:bit AI creator home page"
   },
   "homepage.Link": {
     "defaultMessage": "Home page",
@@ -807,13 +811,17 @@
     "defaultMessage": "You don't have enough data",
     "description": "Insufficient data modal title"
   },
-  "introducing-the-microbit-machine-learning-tool-title": {
-    "defaultMessage": "Introducing the micro:bit machine learning tool",
+  "introducing-the-microbit-ai-creator-title": {
+    "defaultMessage": "Introducing the micro:bit AI creator",
     "description": "Title of a resource"
   },
   "language": {
     "defaultMessage": "Language",
     "description": "Language option text"
+  },
+  "live-data-graph": {
+    "defaultMessage": "Live data graph",
+    "description": "Title for live data graph"
   },
   "loading": {
     "defaultMessage": "loading",
@@ -860,7 +868,7 @@
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
   },
   "not-found": {
-    "defaultMessage": "Machine learning tool home page",
+    "defaultMessage": "micro:bit AI creator home page",
     "description": "Page not found link text"
   },
   "not-found-title": {
@@ -927,30 +935,6 @@
     "defaultMessage": "This browser is not supported",
     "description": ""
   },
-  "popup.outdatedmicrobit.button.later": {
-    "defaultMessage": "Later",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.button.update": {
-    "defaultMessage": "Update now",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.button.update.mkcd": {
-    "defaultMessage": "Open MakeCode",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.header": {
-    "defaultMessage": "Your micro:bit has an outdated machine learning tool program",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.text": {
-    "defaultMessage": "We strongly recommend that you update it now, as some features may not work as expected.",
-    "description": ""
-  },
-  "popup.outdatedmicrobit.text.mkcd": {
-    "defaultMessage": "Open the newest MakeCode template to use the updated extension.",
-    "description": ""
-  },
   "privacy": {
     "defaultMessage": "Privacy policy",
     "description": "Link to view privacy policy"
@@ -976,7 +960,7 @@
     "description": ""
   },
   "reconnectFailed.bridgeHeading": {
-    "defaultMessage": "Failed to reconnect to micro:bit 2",
+    "defaultMessage": "Failed to reconnect to radio link micro:bit",
     "description": ""
   },
   "reconnectFailed.radioHeading": {
@@ -984,11 +968,11 @@
     "description": ""
   },
   "reconnectFailed.remote1": {
-    "defaultMessage": "The connection to the wireless micro:bit could not be re-established.",
+    "defaultMessage": "The connection to the data collection micro:bit could not be re-established.",
     "description": ""
   },
   "reconnectFailed.remoteHeading": {
-    "defaultMessage": "Failed to reconnect to micro:bit 1",
+    "defaultMessage": "Failed to reconnect to data collection micro:bit",
     "description": ""
   },
   "reconnectFailed.subtitle": {
@@ -1000,8 +984,8 @@
     "description": "Reload page button text"
   },
   "reset-to-default-action": {
-    "defaultMessage": "Reset to default",
-    "description": "Reset to default button text"
+    "defaultMessage": "Reset to default blocks",
+    "description": "Reset to default blocks button text"
   },
   "resources": {
     "defaultMessage": "Resources",
@@ -1024,7 +1008,7 @@
     "description": "Heading for the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message1": {
-    "defaultMessage": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit machine learning tool to continue working.",
+    "defaultMessage": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit AI creator to continue working.",
     "description": "Text in the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message2": {
@@ -1052,7 +1036,7 @@
     "description": "Sign up button text"
   },
   "sign-up.content": {
-    "defaultMessage": "Welcome to our prototype of the micro:bit machine learning tool. We’d love you to try it out and give us your feedback. Please enter your email so we can keep you updated as it evolves.",
+    "defaultMessage": "Welcome to our prototype of the micro:bit AI creator. We’d love you to try it out and give us your feedback. Please enter your email so we can keep you updated as it evolves.",
     "description": ""
   },
   "sign-up.email-label": {
@@ -1074,6 +1058,10 @@
   "sign-up.title": {
     "defaultMessage": "Join our testing community",
     "description": ""
+  },
+  "skip-tour-action": {
+    "defaultMessage": "Skip tour",
+    "description": "Skip tour button text"
   },
   "software-versions": {
     "defaultMessage": "Software versions",
@@ -1102,6 +1090,82 @@
   "testing-model-title": {
     "defaultMessage": "Testing model",
     "description": "Testing model page title"
+  },
+  "tour-collectData-addActions-content": {
+    "defaultMessage": "Decide what your other actions will be and what you will name them. You need at least 2 actions with 3 data samples to train the model. Your data samples are only stored on your computer, they do not get sent to anyone else.",
+    "description": "Tour step description"
+  },
+  "tour-collectData-addActions-title": {
+    "defaultMessage": "Add more actions",
+    "description": "Tour step title"
+  },
+  "tour-collectData-afterFirst-content": {
+    "defaultMessage": "To train the machine learning model you need at least 3 data samples for 2 different actions.",
+    "description": "Tour step description"
+  },
+  "tour-collectData-afterFirst-title": {
+    "defaultMessage": "You’ve recorded your first sample!",
+    "description": "Tour step title"
+  },
+  "tour-collectData-collectMore-content": {
+    "defaultMessage": "Record more samples for this action. Collecting more samples should result in a better machine learning model.",
+    "description": "Tour step description"
+  },
+  "tour-collectData-collectMore-title": {
+    "defaultMessage": "Collect more data samples",
+    "description": "Tour step title"
+  },
+  "tour-collectData-trainModel-content": {
+    "defaultMessage": "When you have collected enough data samples you can train the machine learning model. You can come back later to remove or add more data and re-train to make the model more reliable.",
+    "description": "Tour step description"
+  },
+  "tour-dataSamples-actions-content": {
+    "defaultMessage": "An action is the type of movement you want the machine learning tool to recognise e.g. ‘waving’ or ‘clapping’. Decide what your first action will be, name it and then start recording data samples.",
+    "description": "Tour step content"
+  },
+  "tour-dataSamples-connected-content": {
+    "defaultMessage": "Now you can start collecting data samples to train a machine learning (ML) model to recognise different movements.",
+    "description": "Tour step content"
+  },
+  "tour-dataSamples-connected-title": {
+    "defaultMessage": "Your data collection micro:bit is connected!",
+    "description": "Tour step title"
+  },
+  "tour-dataSamples-liveGraph-content": {
+    "defaultMessage": "The graph shows movement data from the micro:bit’s accelerometer. Move your data collection micro:bit and see how the graph changes.",
+    "description": "Tour step content"
+  },
+  "tour-testModel-afterTrain-content": {
+    "defaultMessage": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model detect each action?",
+    "description": "Tour step description"
+  },
+  "tour-testModel-afterTrain-title": {
+    "defaultMessage": "You’ve trained an ML model!",
+    "description": "Tour step title"
+  },
+  "tour-testModel-certaintyRecognition-content": {
+    "defaultMessage": "The meter shows how confident the model is that you are doing each action. Move the slider to adjust the recognition point, or threshold.",
+    "description": "Tour step description"
+  },
+  "tour-testModel-certaintyRecognition-title": {
+    "defaultMessage": "Certainty and recognition point",
+    "description": "Tour step title"
+  },
+  "tour-testModel-editInMakeCode-content": {
+    "defaultMessage": "Open your project in MakeCode to download the program and your machine learning model to a micro:bit. You can add more blocks to create your own programs using your model.",
+    "description": "Tour step description"
+  },
+  "tour-testModel-estimatedAction-content": {
+    "defaultMessage": "The action the model estimates you are currently doing is shown above the micro:bit icon for that action.",
+    "description": "Tour step description"
+  },
+  "tour-testModel-makeCodeBlocks-content": {
+    "defaultMessage": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit.",
+    "description": "Tour step description"
+  },
+  "tour-testModel-makeCodeBlocks-title": {
+    "defaultMessage": "Microsoft MakeCode blocks",
+    "description": "Tour step title"
   },
   "train-model-intro-description": {
     "defaultMessage": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",

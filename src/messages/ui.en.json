@@ -27,6 +27,18 @@
       "value": "link"
     }
   ],
+  "accelerometer-image-alt": [
+    {
+      "type": 0,
+      "value": "micro:bit showing X axis going across the front, Y axis going down and up, Z axis going back to front"
+    }
+  ],
+  "actions-label": [
+    {
+      "type": 0,
+      "value": "Actions"
+    }
+  ],
   "actions.reconnect": [
     {
       "type": 0,
@@ -36,7 +48,7 @@
   "add-data-intro-description": [
     {
       "type": 0,
-      "value": "Add samples of the actions you would like your model to recognise (e.g. waving and clapping)."
+      "value": "Add samples of the actions you would like your model to recognise (e.g. ‘waving’ and ‘clapping’)."
     }
   ],
   "add-data-title": [
@@ -226,19 +238,19 @@
   "connectFailed.bridgeHeading": [
     {
       "type": 0,
-      "value": "Failed to connect to micro:bit 2"
+      "value": "Failed to connect to radio link micro:bit"
     }
   ],
   "connectFailed.remote1": [
     {
       "type": 0,
-      "value": "The connection to the wireless micro:bit could not be established."
+      "value": "The connection to the data collection micro:bit could not be established."
     }
   ],
   "connectFailed.remoteHeading": [
     {
       "type": 0,
-      "value": "Failed to connect to micro:bit 1"
+      "value": "Failed to connect to data collection micro:bit"
     }
   ],
   "connectMB.bluetooth.cancelledConnection": [
@@ -352,7 +364,7 @@
   "connectMB.connectCable.subtitle": [
     {
       "type": 0,
-      "value": "Connect the micro:bit to this computer with a USB cable so that the machine learning tool program can be downloaded to it."
+      "value": "Connect the micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it."
     }
   ],
   "connectMB.connectCableMB1.heading": [
@@ -364,7 +376,7 @@
   "connectMB.connectCableMB1.subtitle": [
     {
       "type": 0,
-      "value": "Connect micro:bit 1 to this computer with a USB cable so that the machine learning tool program can be downloaded to it. This is the micro:bit you will use to collect data samples."
+      "value": "Connect the first micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it. This is the micro:bit you will use to collect data samples."
     }
   ],
   "connectMB.connectCableMB2.heading": [
@@ -376,7 +388,7 @@
   "connectMB.connectCableMB2.subtitle": [
     {
       "type": 0,
-      "value": "Connect a second micro:bit to this computer with a USB cable."
+      "value": "Connect a second micro:bit to this computer with a USB cable so that the radio link program can be downloaded to it. This radio link micro:bit will communicate with the data collection micro:bit."
     }
   ],
   "connectMB.connecting": [
@@ -686,13 +698,13 @@
   "connectMB.usbDownloadingMB1.header": [
     {
       "type": 0,
-      "value": "Downloading program to micro:bit 1"
+      "value": "Downloading the data collection program"
     }
   ],
   "connectMB.usbDownloadingMB2.header": [
     {
       "type": 0,
-      "value": "Downloading program to micro:bit 2"
+      "value": "Downloading the radio link program"
     }
   ],
   "connectMB.usbTryAgain.closeTabs1": [
@@ -704,7 +716,7 @@
   "connectMB.usbTryAgain.closeTabs2": [
     {
       "type": 0,
-      "value": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, machine learning tool), or unplug and replug the micro:bit before trying again."
+      "value": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, AI creator), or unplug and replug the micro:bit before trying again."
     }
   ],
   "connectMB.usbTryAgain.heading": [
@@ -812,7 +824,7 @@
   "content.data.classHelpBody": [
     {
       "type": 0,
-      "value": "The type of movement you want the machine learning tool to recognise e.g. 'wave' or 'clap'. "
+      "value": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’."
     }
   ],
   "content.data.classHelpHeader": [
@@ -872,7 +884,7 @@
   "content.data.dataDescription": [
     {
       "type": 0,
-      "value": "Multiple samples of movement data collected in approximately 2 second bursts."
+      "value": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else."
     }
   ],
   "content.data.deleteAction": [
@@ -987,16 +999,10 @@
       "value": "Existing data samples and code will be lost"
     }
   ],
-  "content.index.title": [
-    {
-      "type": 0,
-      "value": "machine learning tool"
-    }
-  ],
   "content.model.output.action.descriptionBody": [
     {
       "type": 0,
-      "value": "The type of movement you want the machine learning tool to recognise e.g. ‘wave’ or ‘clap’."
+      "value": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’."
     }
   ],
   "content.model.output.action.descriptionTitle": [
@@ -1044,7 +1050,7 @@
   "content.model.output.estimatedGesture.iconTitle": [
     {
       "type": 0,
-      "value": "Estimated action:"
+      "value": "Estimated action"
     }
   ],
   "content.model.output.estimatedGesture.label": [
@@ -1070,7 +1076,7 @@
   "content.model.output.output.descriptionBody": [
     {
       "type": 0,
-      "value": "What the micro:bit will do when each action is detected."
+      "value": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit."
     }
   ],
   "content.model.output.output.descriptionTitle": [
@@ -1082,13 +1088,13 @@
   "content.model.output.recognitionPoint": [
     {
       "type": 0,
-      "value": "Recognition Point:"
+      "value": "Recognition point:"
     }
   ],
   "content.trainer.description": [
     {
       "type": 0,
-      "value": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit machine learning tool to recognise different actions when you move your micro:bit."
+      "value": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit AI creator to recognise different actions when you move your micro:bit."
     }
   ],
   "content.trainer.failure.body": [
@@ -1190,19 +1196,19 @@
   "disconnectedWarning.bridgeHeading": [
     {
       "type": 0,
-      "value": "micro:bit 2 connection lost"
+      "value": "radio link micro:bit connection lost"
     }
   ],
   "disconnectedWarning.remote1": [
     {
       "type": 0,
-      "value": "The connection to the wireless micro:bit has been lost."
+      "value": "The connection to the data connection micro:bit has been lost."
     }
   ],
   "disconnectedWarning.remoteHeading": [
     {
       "type": 0,
-      "value": "micro:bit 1 connection lost"
+      "value": "data collection micro:bit connection lost"
     }
   ],
   "dont-show-again": [
@@ -1238,7 +1244,7 @@
   "download-project-intro-description": [
     {
       "type": 0,
-      "value": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to the micro:bit machine learning tool."
+      "value": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to the micro:bit AI creator."
     }
   ],
   "download-project-intro-title": [
@@ -1274,7 +1280,7 @@
   "footer.helpContent": [
     {
       "type": 0,
-      "value": "This graph shows movement data from the microbit’s accelerometer in real time. Try moving your connected micro:bit to see the X, Y and Z axes change."
+      "value": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in."
     }
   ],
   "footer.helpHeader": [
@@ -1328,7 +1334,7 @@
   "homepage-title": [
     {
       "type": 0,
-      "value": "micro:bit machine learning tool"
+      "value": "micro:bit AI creator"
     }
   ],
   "homepage.Link": [
@@ -1363,16 +1369,22 @@
       "value": "You don't have enough data"
     }
   ],
-  "introducing-the-microbit-machine-learning-tool-title": [
+  "introducing-the-microbit-ai-creator-title": [
     {
       "type": 0,
-      "value": "Introducing the micro:bit machine learning tool"
+      "value": "Introducing the micro:bit AI creator"
     }
   ],
   "language": [
     {
       "type": 0,
       "value": "Language"
+    }
+  ],
+  "live-data-graph": [
+    {
+      "type": 0,
+      "value": "Live data graph"
     }
   ],
   "loading": [
@@ -1444,7 +1456,7 @@
   "not-found": [
     {
       "type": 0,
-      "value": "Machine learning tool home page"
+      "value": "micro:bit AI creator home page"
     }
   ],
   "not-found-title": [
@@ -1543,42 +1555,6 @@
       "value": "This browser is not supported"
     }
   ],
-  "popup.outdatedmicrobit.button.later": [
-    {
-      "type": 0,
-      "value": "Later"
-    }
-  ],
-  "popup.outdatedmicrobit.button.update": [
-    {
-      "type": 0,
-      "value": "Update now"
-    }
-  ],
-  "popup.outdatedmicrobit.button.update.mkcd": [
-    {
-      "type": 0,
-      "value": "Open MakeCode"
-    }
-  ],
-  "popup.outdatedmicrobit.header": [
-    {
-      "type": 0,
-      "value": "Your micro:bit has an outdated machine learning tool program"
-    }
-  ],
-  "popup.outdatedmicrobit.text": [
-    {
-      "type": 0,
-      "value": "We strongly recommend that you update it now, as some features may not work as expected."
-    }
-  ],
-  "popup.outdatedmicrobit.text.mkcd": [
-    {
-      "type": 0,
-      "value": "Open the newest MakeCode template to use the updated extension."
-    }
-  ],
   "privacy": [
     {
       "type": 0,
@@ -1618,7 +1594,7 @@
   "reconnectFailed.bridgeHeading": [
     {
       "type": 0,
-      "value": "Failed to reconnect to micro:bit 2"
+      "value": "Failed to reconnect to radio link micro:bit"
     }
   ],
   "reconnectFailed.radioHeading": [
@@ -1630,13 +1606,13 @@
   "reconnectFailed.remote1": [
     {
       "type": 0,
-      "value": "The connection to the wireless micro:bit could not be re-established."
+      "value": "The connection to the data collection micro:bit could not be re-established."
     }
   ],
   "reconnectFailed.remoteHeading": [
     {
       "type": 0,
-      "value": "Failed to reconnect to micro:bit 1"
+      "value": "Failed to reconnect to data collection micro:bit"
     }
   ],
   "reconnectFailed.subtitle": [
@@ -1654,7 +1630,7 @@
   "reset-to-default-action": [
     {
       "type": 0,
-      "value": "Reset to default"
+      "value": "Reset to default blocks"
     }
   ],
   "resources": [
@@ -1690,7 +1666,7 @@
   "save-hex-dialog-message1": [
     {
       "type": 0,
-      "value": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit machine learning tool to continue working."
+      "value": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit AI creator to continue working."
     }
   ],
   "save-hex-dialog-message2": [
@@ -1732,7 +1708,7 @@
   "sign-up.content": [
     {
       "type": 0,
-      "value": "Welcome to our prototype of the micro:bit machine learning tool. We’d love you to try it out and give us your feedback. Please enter your email so we can keep you updated as it evolves."
+      "value": "Welcome to our prototype of the micro:bit AI creator. We’d love you to try it out and give us your feedback. Please enter your email so we can keep you updated as it evolves."
     }
   ],
   "sign-up.email-label": [
@@ -1777,6 +1753,12 @@
     {
       "type": 0,
       "value": "Join our testing community"
+    }
+  ],
+  "skip-tour-action": [
+    {
+      "type": 0,
+      "value": "Skip tour"
     }
   ],
   "software-versions": [
@@ -1833,6 +1815,120 @@
     {
       "type": 0,
       "value": "Testing model"
+    }
+  ],
+  "tour-collectData-addActions-content": [
+    {
+      "type": 0,
+      "value": "Decide what your other actions will be and what you will name them. You need at least 2 actions with 3 data samples to train the model. Your data samples are only stored on your computer, they do not get sent to anyone else."
+    }
+  ],
+  "tour-collectData-addActions-title": [
+    {
+      "type": 0,
+      "value": "Add more actions"
+    }
+  ],
+  "tour-collectData-afterFirst-content": [
+    {
+      "type": 0,
+      "value": "To train the machine learning model you need at least 3 data samples for 2 different actions."
+    }
+  ],
+  "tour-collectData-afterFirst-title": [
+    {
+      "type": 0,
+      "value": "You’ve recorded your first sample!"
+    }
+  ],
+  "tour-collectData-collectMore-content": [
+    {
+      "type": 0,
+      "value": "Record more samples for this action. Collecting more samples should result in a better machine learning model."
+    }
+  ],
+  "tour-collectData-collectMore-title": [
+    {
+      "type": 0,
+      "value": "Collect more data samples"
+    }
+  ],
+  "tour-collectData-trainModel-content": [
+    {
+      "type": 0,
+      "value": "When you have collected enough data samples you can train the machine learning model. You can come back later to remove or add more data and re-train to make the model more reliable."
+    }
+  ],
+  "tour-dataSamples-actions-content": [
+    {
+      "type": 0,
+      "value": "An action is the type of movement you want the machine learning tool to recognise e.g. ‘waving’ or ‘clapping’. Decide what your first action will be, name it and then start recording data samples."
+    }
+  ],
+  "tour-dataSamples-connected-content": [
+    {
+      "type": 0,
+      "value": "Now you can start collecting data samples to train a machine learning (ML) model to recognise different movements."
+    }
+  ],
+  "tour-dataSamples-connected-title": [
+    {
+      "type": 0,
+      "value": "Your data collection micro:bit is connected!"
+    }
+  ],
+  "tour-dataSamples-liveGraph-content": [
+    {
+      "type": 0,
+      "value": "The graph shows movement data from the micro:bit’s accelerometer. Move your data collection micro:bit and see how the graph changes."
+    }
+  ],
+  "tour-testModel-afterTrain-content": [
+    {
+      "type": 0,
+      "value": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model detect each action?"
+    }
+  ],
+  "tour-testModel-afterTrain-title": [
+    {
+      "type": 0,
+      "value": "You’ve trained an ML model!"
+    }
+  ],
+  "tour-testModel-certaintyRecognition-content": [
+    {
+      "type": 0,
+      "value": "The meter shows how confident the model is that you are doing each action. Move the slider to adjust the recognition point, or threshold."
+    }
+  ],
+  "tour-testModel-certaintyRecognition-title": [
+    {
+      "type": 0,
+      "value": "Certainty and recognition point"
+    }
+  ],
+  "tour-testModel-editInMakeCode-content": [
+    {
+      "type": 0,
+      "value": "Open your project in MakeCode to download the program and your machine learning model to a micro:bit. You can add more blocks to create your own programs using your model."
+    }
+  ],
+  "tour-testModel-estimatedAction-content": [
+    {
+      "type": 0,
+      "value": "The action the model estimates you are currently doing is shown above the micro:bit icon for that action."
+    }
+  ],
+  "tour-testModel-makeCodeBlocks-content": [
+    {
+      "type": 0,
+      "value": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit."
+    }
+  ],
+  "tour-testModel-makeCodeBlocks-title": [
+    {
+      "type": 0,
+      "value": "Microsoft MakeCode blocks"
     }
   ],
   "train-model-intro-description": [

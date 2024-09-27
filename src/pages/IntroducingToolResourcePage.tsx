@@ -15,9 +15,9 @@ const IntroducingToolResourcePage = () => {
   return (
     <ResourcePageLayout id={id} videoId={videoId} videoTitleId={videoTitleId}>
       <Text>
-        The <strong>micro:bit machine learning tool</strong> introduces students
-        to machine learning (ML) concepts through physical movement and data, a
-        topic familiar from mathematics and science.
+        The <strong>micro:bit AI creator</strong> introduces students to machine
+        learning (ML) concepts through physical movement and data, a topic
+        familiar from mathematics and science.
       </Text>
       <Text>
         It allows students to quickly teach a computer to tell the difference
@@ -41,9 +41,9 @@ const IntroducingToolResourcePage = () => {
         designing and making ML systems.
       </Text>
       <Text>
-        The micro:bit machine learning tool is co-designed and tested in
-        classrooms in Denmark and the United Kingdom by Aarhus University and
-        the Micro:bit Educational Foundation.
+        The micro:bit AI creator is co-designed and tested in classrooms in
+        Denmark and the United Kingdom by Aarhus University and the Micro:bit
+        Educational Foundation.
       </Text>
       <Text>
         There are no downloads, no logins. You just need the Chrome or Edge web
@@ -66,11 +66,11 @@ const IntroducingToolResourcePage = () => {
         </UnorderedList>
       </div>
       <Text>
-        Students hold or wear a micro:bit that sends movement data to the
-        machine learning tool. They see their physical movement captured as data
-        in real time, as moving lines on a graph. Making the connection between
-        moving your body and seeing your movements captured and visualised as
-        the computer sees it, as data, is a powerful, immersive experience.
+        Students hold or wear a micro:bit that sends movement data to the AI
+        creator. They see their physical movement captured as data in real time,
+        as moving lines on a graph. Making the connection between moving your
+        body and seeing your movements captured and visualised as the computer
+        sees it, as data, is a powerful, immersive experience.
       </Text>
       <Text>
         To create an ML model, students record samples of data of different
