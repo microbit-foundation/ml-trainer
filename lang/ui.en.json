@@ -763,10 +763,6 @@
     "defaultMessage": "Start new session",
     "description": ""
   },
-  "get-started-title": {
-    "defaultMessage": "Get started",
-    "description": "Title of a resource"
-  },
   "help-label": {
     "defaultMessage": "Help",
     "description": "Help icon aria label"
@@ -802,10 +798,6 @@
   "insufficient-data-title": {
     "defaultMessage": "You don't have enough data",
     "description": "Insufficient data modal title"
-  },
-  "introducing-the-microbit-ai-creator-title": {
-    "defaultMessage": "Introducing the micro:bit AI creator",
-    "description": "Title of a resource"
   },
   "language": {
     "defaultMessage": "Language",
@@ -978,18 +970,6 @@
   "reset-to-default-action": {
     "defaultMessage": "Reset to default blocks",
     "description": "Reset to default blocks button text"
-  },
-  "resources": {
-    "defaultMessage": "Resources",
-    "description": "Title of resources section"
-  },
-  "resources.getStarted.video": {
-    "defaultMessage": "get started video",
-    "description": ""
-  },
-  "resources.introduction.video": {
-    "defaultMessage": "introduction video",
-    "description": ""
   },
   "save-action": {
     "defaultMessage": "Save",

@@ -1289,12 +1289,6 @@
       "value": "Start new session"
     }
   ],
-  "get-started-title": [
-    {
-      "type": 0,
-      "value": "Get started"
-    }
-  ],
   "help-label": [
     {
       "type": 0,
@@ -1355,12 +1349,6 @@
     {
       "type": 0,
       "value": "You don't have enough data"
-    }
-  ],
-  "introducing-the-microbit-ai-creator-title": [
-    {
-      "type": 0,
-      "value": "Introducing the micro:bit AI creator"
     }
   ],
   "language": [
@@ -1619,24 +1607,6 @@
     {
       "type": 0,
       "value": "Reset to default blocks"
-    }
-  ],
-  "resources": [
-    {
-      "type": 0,
-      "value": "Resources"
-    }
-  ],
-  "resources.getStarted.video": [
-    {
-      "type": 0,
-      "value": "get started video"
-    }
-  ],
-  "resources.introduction.video": [
-    {
-      "type": 0,
-      "value": "introduction video"
     }
   ],
   "save-action": [
