@@ -31,7 +31,7 @@ const Tour = () => {
   const tourComplete = useStore((s) => s.tourComplete);
   const isOpen = !!tourState;
   const enabled = isOpen && !!step?.selector;
-  const spotlightPadding = step?.spotlightPadding ?? 5;
+  const spotlightPadding = step?.spotlightStyle?.padding ?? 5;
   const {
     getArrowProps,
     getArrowInnerProps,
@@ -40,7 +40,8 @@ const Tour = () => {
     update,
   } = usePopper({
     enabled,
-    gutter: gutterDefault + spotlightPadding,
+    gutter:
+      gutterDefault + (step?.spotlightStyle?.paddingTop ?? spotlightPadding),
   });
   const ourRef = useRef<HTMLElement>();
 
@@ -98,7 +99,14 @@ const Tour = () => {
             />
           </Box>
         )}
-        <TourOverlay referenceRef={ourRef} padding={spotlightPadding} />
+        <TourOverlay
+          referenceRef={ourRef}
+          padding={spotlightPadding}
+          paddingTop={step.spotlightStyle?.paddingTop}
+          paddingBottom={step.spotlightStyle?.paddingBottom}
+          paddingRight={step.spotlightStyle?.paddingRight}
+          paddingLeft={step.spotlightStyle?.paddingLeft}
+        />
         <ModalHeader>{step.title}</ModalHeader>
         <ModalBody maxW="md">{step.content}</ModalBody>
         <ModalFooter>

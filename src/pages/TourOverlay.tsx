@@ -1,16 +1,15 @@
 import { Box, Portal, useModalContext, useToken } from "@chakra-ui/react";
 import { MutableRefObject, RefObject, useLayoutEffect, useState } from "react";
 
-interface TourOverlayProps {
+interface TourOverlayProps extends SpotlightStyle {
   referenceRef: MutableRefObject<HTMLElement | undefined>;
-  padding?: number;
 }
 
 /**
  * A replacement for Chakra UI's overlay that cuts out a section to highlight
  * some of the background. Suitable for onboarding tours.
  */
-const TourOverlay = ({ referenceRef, padding = 0 }: TourOverlayProps) => {
+const TourOverlay = ({ referenceRef, ...clipStyle }: TourOverlayProps) => {
   const { isOpen } = useModalContext();
   const zIndex = useToken("zIndex", "overlay");
   const [overlay, cutOut] = useRects(referenceRef);
@@ -34,7 +33,7 @@ const TourOverlay = ({ referenceRef, padding = 0 }: TourOverlayProps) => {
               <clipPath id="mask">
                 <path
                   clipRule="evenodd"
-                  d={createClipPath(overlay, cutOut, padding)}
+                  d={createClipPath(overlay, cutOut, clipStyle)}
                 />
               </clipPath>
             )}
@@ -90,13 +89,28 @@ const h = (x: number) => `h ${x}`;
 const v = (y: number) => `v ${y}`;
 const a = (r: number, x: number, y: number) => `a${r},${r} 0 0 1 ${x},${y}`;
 
-const createClipPath = (overlay: Rect, cutOut: Rect, padding: number) => {
+export interface SpotlightStyle {
+  padding?: number;
+  paddingTop?: number;
+  paddingBottom?: number;
+  paddingRight?: number;
+  paddingLeft?: number;
+}
+
+const createClipPath = (overlay: Rect, cutOut: Rect, style: SpotlightStyle) => {
   const cornerRadius = 5;
+  const pt = style.paddingTop ?? style.padding ?? 0;
+  const pb = style.paddingBottom ?? style.padding ?? 0;
+  const pr = style.paddingRight ?? style.padding ?? 0;
+  const pl = style.paddingLeft ?? style.padding ?? 0;
+  const px = pl + pr;
+  const py = pt + pb;
+
   const paddedCutOut = {
-    x: cutOut.x - padding + cornerRadius,
-    y: cutOut.y - padding,
-    width: cutOut.width + padding * 2 - cornerRadius * 2,
-    height: cutOut.height + padding * 2 - cornerRadius * 2,
+    x: cutOut.x - pl + cornerRadius,
+    y: cutOut.y - pt,
+    width: cutOut.width + px - cornerRadius * 2,
+    height: cutOut.height + py - cornerRadius * 2,
   };
   return [
     M(0, 0),

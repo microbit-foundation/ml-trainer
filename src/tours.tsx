@@ -50,7 +50,7 @@ export const tours: Record<TourId, TourStep[]> = {
       selector: classSelector(tourElClassname.liveGraph),
       title: <FormattedMessage id="live-data-graph" />,
       content: <LiveGraphStep />,
-      spotlightPadding: 0,
+      spotlightStyle: { padding: 0 },
     },
     {
       selector: classSelector(tourElClassname.dataSamplesActionCard),
@@ -108,8 +108,12 @@ export const tours: Record<TourId, TourStep[]> = {
         <FormattedMessageStepContent id="tour-testModel-estimatedAction-content" />
       ),
       selector: classSelector(tourElClassname.estimatedAction),
-      // We really want t/b/l/r padding here as the spotlight needs more padding on the left.
-      spotlightPadding: 10,
+      spotlightStyle: {
+        paddingLeft: 8,
+        paddingRight: -8,
+        paddingTop: -8,
+        paddingBottom: -8,
+      },
     },
     {
       title: (

@@ -1,6 +1,7 @@
 import { MicrobitWebUSBConnection } from "@microbit/microbit-connection";
 import { MakeCodeIcon } from "./utils/icons";
 import { ReactNode } from "react";
+import { SpotlightStyle } from "./pages/TourOverlay";
 
 export interface XYZData {
   x: number[];
@@ -151,7 +152,7 @@ export interface TourStep {
   selector?: string;
   title: ReactNode;
   content: ReactNode;
-  spotlightPadding?: number;
+  spotlightStyle?: SpotlightStyle;
 }
 
 export interface TourState {
