@@ -46,7 +46,6 @@ const DataSamplesGridView = () => {
   const selectedGesture: GestureData | undefined =
     gestures[selectedGestureIdx] ?? gestures[0];
 
-  // TODO: check
   const showWalkThrough = useMemo<boolean>(
     () =>
       gestures.length === 0 ||
