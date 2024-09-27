@@ -78,6 +78,8 @@ export const tours: Record<TourId, TourStep[]> = {
       content:
         "The action the model estimates you are currently doing is shown above the micro:bit icon for that action.",
       selector: classSelector(tourElClassname.estimatedAction),
+      // We really want t/b/l/r padding here as the spotlight needs more padding on the left.
+      spotlightPadding: 10,
     },
     {
       title: "Certainty and recognition point",

@@ -1026,7 +1026,7 @@
   "content.model.output.estimatedGesture.iconTitle": [
     {
       "type": 0,
-      "value": "Estimated action:"
+      "value": "Estimated action"
     }
   ],
   "content.model.output.estimatedGesture.label": [
