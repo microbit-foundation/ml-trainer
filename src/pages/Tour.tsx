@@ -81,6 +81,7 @@ const Tour = () => {
       isOpen={isOpen}
       onClose={() => {}}
       isCentered
+      size={step.modalSize}
     >
       <ModalContent {...contentProps} motionProps={{}} boxShadow="none">
         {step.selector && (

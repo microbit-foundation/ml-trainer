@@ -2,6 +2,7 @@ import { MicrobitWebUSBConnection } from "@microbit/microbit-connection";
 import { MakeCodeIcon } from "./utils/icons";
 import { ReactNode } from "react";
 import { SpotlightStyle } from "./pages/TourOverlay";
+import { ThemingProps } from "@chakra-ui/react";
 
 export interface XYZData {
   x: number[];
@@ -153,6 +154,7 @@ export interface TourStep {
   title: ReactNode;
   content: ReactNode;
   spotlightStyle?: SpotlightStyle;
+  modalSize?: ThemingProps<"Modal">["size"];
 }
 
 export interface TourState {

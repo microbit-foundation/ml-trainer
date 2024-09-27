@@ -45,6 +45,7 @@ export const tours: Record<TourId, TourStep[]> = {
       content: (
         <FormattedMessageStepContent id="tour-dataSamples-connected-content" />
       ),
+      modalSize: "lg",
     },
     {
       selector: classSelector(tourElClassname.liveGraph),
