@@ -17,8 +17,9 @@ import { useNavigate } from "react-router";
 import { TOOL_NAME } from "../constants";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
-import { SaveStep } from "../model";
+import { SaveStep, TrainModelDialogStage } from "../model";
 import { SessionPageId } from "../pages-config";
+import Tour from "../pages/Tour";
 import { useSettings, useStore } from "../store";
 import { createHomePageUrl, createSessionPageUrl } from "../urls";
 import ActionBar from "./ActionBar";
@@ -57,6 +58,8 @@ const DefaultPageLayout = ({
   const intl = useIntl();
   const navigate = useNavigate();
   const isEditorOpen = useStore((s) => s.isEditorOpen);
+  const stage = useStore((s) => s.trainModelDialogStage);
+
   const { saveHex } = useProject();
   const [settings] = useSettings();
   const toast = useToast();
@@ -103,13 +106,12 @@ const DefaultPageLayout = ({
 
   return (
     <>
-      {/* Suppress connection and train dialogs when MakeCode editor is open */}
-      {!isEditorOpen && (
-        <>
-          <ConnectionDialogs />
-          <TrainModelDialogs />
-        </>
+      {/* Suppress dialogs to prevent overlapping dialogs */}
+      {!isEditorOpen && stage === TrainModelDialogStage.Closed && (
+        <ConnectionDialogs />
       )}
+      {!isEditorOpen && <TrainModelDialogs />}
+      {!isEditorOpen && stage === TrainModelDialogStage.Closed && <Tour />}
       <DownloadDialogs />
       <SaveDialogs />
       <VStack

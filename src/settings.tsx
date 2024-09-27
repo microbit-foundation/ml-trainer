@@ -1,4 +1,5 @@
 import { stage } from "./environment";
+import { TourId } from "./model";
 
 export interface Language {
   id: string;
@@ -38,6 +39,7 @@ export const defaultSettings: Settings = {
   showPreSaveHelp: true,
   showPreTrainHelp: true,
   showPreDownloadHelp: true,
+  toursCompleted: [],
 };
 
 export interface Settings {
@@ -45,4 +47,5 @@ export interface Settings {
   showPreSaveHelp: boolean;
   showPreTrainHelp: boolean;
   showPreDownloadHelp: boolean;
+  toursCompleted: TourId[];
 }

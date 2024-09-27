@@ -37,7 +37,6 @@ const stepsConfig: StepConfig[] = [
 
 const HomePage = () => {
   const intl = useIntl();
-
   return (
     <DefaultPageLayout showOpenButton>
       <VStack

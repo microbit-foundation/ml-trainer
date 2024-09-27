@@ -11,6 +11,14 @@
     "defaultMessage": "Developed in partnership with <link>Center for Computational Thinking and Design, Aarhus University</link>",
     "description": "Title of about dialog"
   },
+  "accelerometer-image-alt": {
+    "defaultMessage": "micro:bit showing X axis going across the front, Y axis going down and up, Z axis going back to front",
+    "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
+  },
+  "actions-label": {
+    "defaultMessage": "Actions",
+    "description": "Label for Actions"
+  },
   "actions.reconnect": {
     "defaultMessage": "Reconnect",
     "description": ""
@@ -512,7 +520,7 @@
     "description": ""
   },
   "content.data.dataDescription": {
-    "defaultMessage": "Multiple samples of movement data collected in approximately 2 second bursts.",
+    "defaultMessage": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else.",
     "description": ""
   },
   "content.data.deleteAction": {
@@ -592,7 +600,7 @@
     "description": ""
   },
   "content.model.output.estimatedGesture.iconTitle": {
-    "defaultMessage": "Estimated action:",
+    "defaultMessage": "Estimated action",
     "description": ""
   },
   "content.model.output.estimatedGesture.label": {
@@ -604,7 +612,7 @@
     "description": ""
   },
   "content.model.output.output.descriptionBody": {
-    "defaultMessage": "What the micro:bit will do when each action is detected.",
+    "defaultMessage": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit.",
     "description": ""
   },
   "content.model.output.output.descriptionTitle": {
@@ -612,7 +620,7 @@
     "description": ""
   },
   "content.model.output.recognitionPoint": {
-    "defaultMessage": "Recognition Point:",
+    "defaultMessage": "Recognition point:",
     "description": ""
   },
   "content.trainer.description": {
@@ -740,7 +748,7 @@
     "description": ""
   },
   "footer.helpContent": {
-    "defaultMessage": "This graph shows movement data from the micro:bit’s accelerometer in real time. Try moving your connected micro:bit to see the X, Y and Z axes change.",
+    "defaultMessage": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in.",
     "description": ""
   },
   "footer.helpHeader": {
@@ -802,6 +810,10 @@
   "language": {
     "defaultMessage": "Language",
     "description": "Language option text"
+  },
+  "live-data-graph": {
+    "defaultMessage": "Live data graph",
+    "description": "Title for live data graph"
   },
   "loading": {
     "defaultMessage": "loading",
@@ -964,8 +976,8 @@
     "description": "Reload page button text"
   },
   "reset-to-default-action": {
-    "defaultMessage": "Reset to default",
-    "description": "Reset to default button text"
+    "defaultMessage": "Reset to default blocks",
+    "description": "Reset to default blocks button text"
   },
   "resources": {
     "defaultMessage": "Resources",
@@ -1039,6 +1051,10 @@
     "defaultMessage": "Join our testing community",
     "description": ""
   },
+  "skip-tour-action": {
+    "defaultMessage": "Skip tour",
+    "description": "Skip tour button text"
+  },
   "software-versions": {
     "defaultMessage": "Software versions",
     "description": "Software versions text"
@@ -1066,6 +1082,82 @@
   "testing-model-title": {
     "defaultMessage": "Testing model",
     "description": "Testing model page title"
+  },
+  "tour-collectData-addActions-content": {
+    "defaultMessage": "Decide what your other actions will be and what you will name them. You need at least 2 actions with 3 data samples to train the model. Your data samples are only stored on your computer, they do not get sent to anyone else.",
+    "description": "Tour step description"
+  },
+  "tour-collectData-addActions-title": {
+    "defaultMessage": "Add more actions",
+    "description": "Tour step title"
+  },
+  "tour-collectData-afterFirst-content": {
+    "defaultMessage": "To train the machine learning model you need at least 3 data samples for 2 different actions.",
+    "description": "Tour step description"
+  },
+  "tour-collectData-afterFirst-title": {
+    "defaultMessage": "You’ve recorded your first sample!",
+    "description": "Tour step title"
+  },
+  "tour-collectData-collectMore-content": {
+    "defaultMessage": "Record more samples for this action. Collecting more samples should result in a better machine learning model.",
+    "description": "Tour step description"
+  },
+  "tour-collectData-collectMore-title": {
+    "defaultMessage": "Collect more data samples",
+    "description": "Tour step title"
+  },
+  "tour-collectData-trainModel-content": {
+    "defaultMessage": "When you have collected enough data samples you can train the machine learning model. You can come back later to remove or add more data and re-train to make the model more reliable.",
+    "description": "Tour step description"
+  },
+  "tour-dataSamples-actions-content": {
+    "defaultMessage": "An action is the type of movement you want the machine learning tool to recognise e.g. ‘waving’ or ‘clapping’. Decide what your first action will be, name it and then start recording data samples.",
+    "description": "Tour step content"
+  },
+  "tour-dataSamples-connected-content": {
+    "defaultMessage": "Now you can start collecting data samples to train a machine learning (ML) model to recognise different movements.",
+    "description": "Tour step content"
+  },
+  "tour-dataSamples-connected-title": {
+    "defaultMessage": "Your data collection micro:bit is connected!",
+    "description": "Tour step title"
+  },
+  "tour-dataSamples-liveGraph-content": {
+    "defaultMessage": "The graph shows movement data from the micro:bit’s accelerometer. Move your data collection micro:bit and see how the graph changes.",
+    "description": "Tour step content"
+  },
+  "tour-testModel-afterTrain-content": {
+    "defaultMessage": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model detect each action?",
+    "description": "Tour step description"
+  },
+  "tour-testModel-afterTrain-title": {
+    "defaultMessage": "You’ve trained an ML model!",
+    "description": "Tour step title"
+  },
+  "tour-testModel-certaintyRecognition-content": {
+    "defaultMessage": "The meter shows how confident the model is that you are doing each action. Move the slider to adjust the recognition point, or threshold.",
+    "description": "Tour step description"
+  },
+  "tour-testModel-certaintyRecognition-title": {
+    "defaultMessage": "Certainty and recognition point",
+    "description": "Tour step title"
+  },
+  "tour-testModel-editInMakeCode-content": {
+    "defaultMessage": "Open your project in MakeCode to download the program and your machine learning model to a micro:bit. You can add more blocks to create your own programs using your model.",
+    "description": "Tour step description"
+  },
+  "tour-testModel-estimatedAction-content": {
+    "defaultMessage": "The action the model estimates you are currently doing is shown above the micro:bit icon for that action.",
+    "description": "Tour step description"
+  },
+  "tour-testModel-makeCodeBlocks-content": {
+    "defaultMessage": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit.",
+    "description": "Tour step description"
+  },
+  "tour-testModel-makeCodeBlocks-title": {
+    "defaultMessage": "Microsoft MakeCode blocks",
+    "description": "Tour step title"
   },
   "train-model-intro-description": {
     "defaultMessage": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",
