@@ -1,6 +1,8 @@
 import { HStack, Image, Text } from "@chakra-ui/react";
 import accelerometerImage from "./images/microbit_xyz_arrows.png";
 import { TourId, TourStep } from "./model";
+import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessageStepContent } from "./pages/Tour";
 
 export const tourElClassname = {
   liveGraph: "live-graph",
@@ -14,6 +16,23 @@ export const tourElClassname = {
   editInMakeCodeButton: "edit-in-makecode-button",
 };
 
+const LiveGraphStep = () => {
+  const intl = useIntl();
+  return (
+    <HStack gap={5}>
+      <Text>
+        <FormattedMessage id="tour-dataSamples-liveGraph-content" />
+      </Text>
+      <Image
+        src={accelerometerImage}
+        w="150px"
+        aspectRatio={500 / 482}
+        alt={intl.formatMessage({ id: "accelerometer-image-alt" })}
+      />
+    </HStack>
+  );
+};
+
 const classSelector = (classname: string) => `.${classname}`;
 
 // If you complete a tour then we don't show it again.
@@ -22,60 +41,53 @@ export const tours: Record<TourId, TourStep[]> = {
   // If you import data without connecting a micro:bit you're on your own for now.
   [TourId.DataSamplesPage]: [
     {
-      title: "Your data collection micro:bit is connected!",
-      content:
-        "Now you can start collecting data samples to train a machine learning (ML) model to recognise different movements.",
+      title: <FormattedMessage id="tour-dataSamples-connected-title" />,
+      content: (
+        <FormattedMessageStepContent id="tour-dataSamples-connected-content" />
+      ),
     },
     {
       selector: classSelector(tourElClassname.liveGraph),
-      title: "Live data graph",
-      content: (
-        <HStack gap={5}>
-          <Text>
-            The graph shows movement data from the micro:bit’s accelerometer.
-            Move your data collection micro:bit and see how the graph changes.
-          </Text>
-          <Image
-            src={accelerometerImage}
-            w="150px"
-            aspectRatio={500 / 482}
-            alt="micro:bit showing X axis going across the front, Y axis going down and up, Z axis going back to front"
-          />
-        </HStack>
-      ),
+      title: <FormattedMessage id="live-data-graph" />,
+      content: <LiveGraphStep />,
       spotlightPadding: 0,
     },
     {
       selector: classSelector(tourElClassname.dataSamplesActionCard),
-      title: "Actions",
-      content:
-        "An action is the type of movement you want the machine learning tool to recognise e.g. ‘waving’ or ‘clapping’. Decide what your first action will be, name it and then start recording data samples.",
+      title: <FormattedMessage id="actions-label" />,
+      content: (
+        <FormattedMessageStepContent id="tour-dataSamples-actions-content" />
+      ),
     },
   ],
   // Launched after recording your first recording.
   [TourId.CollectDataToTrainModel]: [
     {
-      title: "You’ve recorded your first sample!",
-      content:
-        "To train the machine learning model you need at least 3 data samples for 2 different actions.",
+      title: <FormattedMessage id="tour-collectData-afterFirst-title" />,
+      content: (
+        <FormattedMessageStepContent id="tour-collectData-afterFirst-content" />
+      ),
     },
     {
       selector: classSelector(tourElClassname.recordDataSamplesCard),
-      title: "Collect more data samples",
-      content:
-        "Record more samples for this action. Collecting more samples should result in a better machine learning model.",
+      title: <FormattedMessage id="tour-collectData-collectMore-title" />,
+      content: (
+        <FormattedMessageStepContent id="tour-collectData-collectMore-content" />
+      ),
     },
     {
       selector: classSelector(tourElClassname.addActionButton),
-      title: "Add more actions",
-      content:
-        "Decide what your other actions will be and what you will name them. You need at least 2 actions with 3 data samples to train the model. Your data samples are only stored on your computer, they do not get sent to anyone else.",
+      title: <FormattedMessage id="tour-collectData-addActions-title" />,
+      content: (
+        <FormattedMessageStepContent id="tour-collectData-addActions-content" />
+      ),
     },
     {
       selector: classSelector(tourElClassname.trainModelButton),
-      title: "Train model",
-      content:
-        "When you have collected enough data samples you can train the machine learning model. You can come back later to remove or add more data and re-train to make the model more reliable.",
+      title: <FormattedMessage id="menu.trainer.trainModelButton" />,
+      content: (
+        <FormattedMessageStepContent id="tour-collectData-trainModel-content" />
+      ),
     },
   ],
   // Launched after training a model
@@ -83,34 +95,43 @@ export const tours: Record<TourId, TourStep[]> = {
   // be a bit weird but we just go with it for now.
   [TourId.TestModelPage]: [
     {
-      title: "You’ve trained an ML model!",
-      content:
-        "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model detect each action?",
+      title: <FormattedMessage id="tour-testModel-afterTrain-title" />,
+      content: (
+        <FormattedMessageStepContent id="tour-testModel-afterTrain-content" />
+      ),
     },
     {
-      title: "Estimated action",
-      content:
-        "The action the model estimates you are currently doing is shown above the micro:bit icon for that action.",
+      title: (
+        <FormattedMessage id="content.model.output.estimatedGesture.descriptionTitle" />
+      ),
+      content: (
+        <FormattedMessageStepContent id="tour-testModel-estimatedAction-content" />
+      ),
       selector: classSelector(tourElClassname.estimatedAction),
       // We really want t/b/l/r padding here as the spotlight needs more padding on the left.
       spotlightPadding: 10,
     },
     {
-      title: "Certainty and recognition point",
-      content:
-        "The meter shows how confident the model is that you are doing each action. Move the slider to adjust the recognition point, or threshold.",
+      title: (
+        <FormattedMessage id="tour-testModel-certaintyRecognition-title" />
+      ),
+      content: (
+        <FormattedMessageStepContent id="tour-testModel-certaintyRecognition-content" />
+      ),
       selector: classSelector(tourElClassname.certaintyThreshold),
     },
     {
-      title: "Microsoft MakeCode blocks",
-      content:
-        "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit.",
+      title: <FormattedMessage id="tour-testModel-makeCodeBlocks-title" />,
+      content: (
+        <FormattedMessageStepContent id="tour-testModel-makeCodeBlocks-content" />
+      ),
       selector: classSelector(tourElClassname.makeCodeCodeView),
     },
     {
-      title: "Edit in MakeCode",
-      content:
-        "Open your project in MakeCode to download the program and your machine learning model to a micro:bit. You can add more blocks to create your own programs using your model.",
+      title: <FormattedMessage id="edit-in-makecode-action" />,
+      content: (
+        <FormattedMessageStepContent id="tour-testModel-editInMakeCode-content" />
+      ),
       selector: classSelector(tourElClassname.editInMakeCodeButton),
     },
   ],

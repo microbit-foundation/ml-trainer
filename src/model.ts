@@ -149,7 +149,7 @@ export enum SaveStep {
 
 export interface TourStep {
   selector?: string;
-  title: string;
+  title: ReactNode;
   content: ReactNode;
   spotlightPadding?: number;
 }

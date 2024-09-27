@@ -64,7 +64,9 @@ const LiveGraphPanel = ({
         >
           <HStack gap={4}>
             <HStack gap={2}>
-              <Text fontWeight="bold">Live data graph</Text>
+              <Text fontWeight="bold">
+                <FormattedMessage id="live-data-graph" />
+              </Text>
               <InfoToolTip
                 titleId="footer.helpHeader"
                 descriptionId="footer.helpContent"
