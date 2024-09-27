@@ -117,7 +117,7 @@ const LiveGraphPanel = ({
               />
             </HStack>
             <VStack justifyContent="center" flexGrow={1} mb={0.5}>
-              <LedIcon icon={detected?.icon ?? "off"} size="80px" isTriggered />
+              <LedIcon icon={detected?.icon ?? "off"} size="70px" isTriggered />
             </VStack>
             <Text
               size="md"
