@@ -20,14 +20,14 @@ interface DataRecordingGridItemProps {
   data: GestureData;
   selected: boolean;
   onSelectRow?: () => void;
-  startRecording: () => void;
+  onRecord: () => void;
 }
 
 const DataRecordingGridItem = ({
   data,
   selected,
   onSelectRow,
-  startRecording,
+  onRecord,
 }: DataRecordingGridItemProps) => {
   const intl = useIntl();
   const deleteGestureRecording = useStore((s) => s.deleteGestureRecording);
@@ -62,14 +62,14 @@ const DataRecordingGridItem = ({
                 height="fit-content"
                 width="fit-content"
                 rounded="full"
-                onClick={startRecording}
+                onClick={onRecord}
                 variant="ghost"
                 _hover={{ backgroundColor: "transparent" }}
                 aria-label={intl.formatMessage(
                   { id: "content.data.recordAction" },
                   { action: data.name }
                 )}
-                isDisabled={!isConnected}
+                opacity={isConnected ? 1 : 0.5}
                 icon={
                   <Icon
                     as={RecordIcon}

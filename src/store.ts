@@ -29,6 +29,13 @@ import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
+const generateFirstGesture = () => ({
+  icon: defaultIcons[0],
+  ID: Date.now(),
+  name: "",
+  recordings: [],
+});
+
 const updateProject = (
   project: Project,
   projectEdited: boolean,
@@ -51,13 +58,6 @@ const updateProject = (
     appEditNeedsFlushToEditor: true,
   };
 };
-
-const generateFirstGesture = () => ({
-  icon: defaultIcons[0],
-  ID: Date.now(),
-  name: "",
-  recordings: [],
-});
 
 export interface State {
   gestures: GestureData[];
@@ -101,6 +101,7 @@ export interface Actions {
   ): void;
   deleteAllGestures(): void;
   downloadDataset(): void;
+  dataCollectionMicrobitConnected(): void;
   loadDataset(gestures: GestureData[]): void;
   setEditorOpen(open: boolean): void;
   recordingStarted(): void;
@@ -138,7 +139,7 @@ export const useStore = create<Store>()(
   devtools(
     persist(
       (set, get) => ({
-        gestures: [generateFirstGesture()],
+        gestures: [],
         isRecording: false,
         project: {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -198,7 +199,10 @@ export const useStore = create<Store>()(
         },
 
         newSession() {
-          get().deleteAllGestures();
+          set({
+            gestures: [],
+            model: undefined,
+          });
           get().resetProject();
         },
 
@@ -526,6 +530,15 @@ export const useStore = create<Store>()(
             false,
             "projectFlushedToEditor"
           );
+        },
+        dataCollectionMicrobitConnected() {
+          set(({ gestures, tourState, settings }) => ({
+            gestures:
+              gestures.length === 0 ? [generateFirstGesture()] : gestures,
+            tourState: settings.toursCompleted.includes(TourId.DataSamplesPage)
+              ? tourState
+              : { id: TourId.DataSamplesPage, index: 0 },
+          }));
         },
         tourStart(tourId: TourId) {
           set((state) => {

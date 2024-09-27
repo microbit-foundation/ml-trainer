@@ -12,7 +12,7 @@ import {
   ConnectionType,
 } from "./connection-stage-hooks";
 import { getHexFileUrl, HexType } from "./device/get-hex-file";
-import { TourId, HexUrl } from "./model";
+import { HexUrl } from "./model";
 import { downloadHex } from "./utils/fs-util";
 
 type FlowStage = Pick<ConnectionStage, "flowStep" | "flowType">;
@@ -28,7 +28,7 @@ export class ConnectionStageActions {
     private stage: ConnectionStage,
     private setStage: (stage: ConnectionStage) => void,
     private setStatus: (status: ConnectionStatus) => void,
-    private tourStart: (state: TourId) => void
+    private dataCollectionMicrobitConnected: () => void
   ) {}
 
   startConnect = () => {
@@ -194,7 +194,7 @@ export class ConnectionStageActions {
 
   private onConnected = () => {
     this.setFlowStep(ConnectionFlowStep.None);
-    this.tourStart(TourId.DataSamplesPage);
+    this.dataCollectionMicrobitConnected();
   };
 
   disconnect = async () => {

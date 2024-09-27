@@ -71,6 +71,18 @@
     "defaultMessage": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2",
     "description": "Alt text for image in connect help dialog"
   },
+  "connect-or-import": {
+    "defaultMessage": "<link1>Connect a data collection micro:bit</link1> or <link2>import data samples</link2>",
+    "description": "Empty data samples page text"
+  },
+  "connect-to-record-body": {
+    "defaultMessage": "Connect a micro:bit to record a data sample.",
+    "description": "Insufficient data modal content"
+  },
+  "connect-to-record-title": {
+    "defaultMessage": "You don't have a micro:bit connected",
+    "description": "Connect to record modal title"
+  },
   "connectFailed.bluetooth1": {
     "defaultMessage": "The connection to the micro:bit could not be established.",
     "description": ""
@@ -734,6 +746,10 @@
   "more-edit-in-makecode-options": {
     "defaultMessage": "More edit in MakeCode options",
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
+  },
+  "no-data-samples": {
+    "defaultMessage": "No data samples",
+    "description": "Empty data samples page status text"
   },
   "not-found": {
     "defaultMessage": "micro:bit AI creator home page",

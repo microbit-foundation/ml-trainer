@@ -8,13 +8,13 @@ import {
 } from "react";
 import { ConnectActions } from "./connect-actions";
 import { useConnectActions } from "./connect-actions-hooks";
-import { ConnectionStageActions } from "./connection-stage-actions";
-import { useStorage } from "./hooks/use-storage";
 import {
   ConnectionStatus,
   useConnectStatus,
   useConnectStatusUpdater,
 } from "./connect-status-hooks";
+import { ConnectionStageActions } from "./connection-stage-actions";
+import { useStorage } from "./hooks/use-storage";
 import { useStore } from "./store";
 
 export enum ConnectionFlowType {
@@ -166,8 +166,10 @@ export const useConnectionStage = (): {
   }
   const [stage, setStage] = connectionStageContextValue;
   const connectActions = useConnectActions();
+  const dataCollectionMicrobitConnected = useStore(
+    (s) => s.dataCollectionMicrobitConnected
+  );
   const [, setStatus] = useConnectStatus();
-  const tourStart = useStore((s) => s.tourStart);
 
   const actions = useMemo(() => {
     return new ConnectionStageActions(
@@ -175,9 +177,15 @@ export const useConnectionStage = (): {
       stage,
       setStage,
       setStatus,
-      tourStart
+      dataCollectionMicrobitConnected
     );
-  }, [connectActions, stage, setStage, setStatus, tourStart]);
+  }, [
+    connectActions,
+    stage,
+    setStage,
+    setStatus,
+    dataCollectionMicrobitConnected,
+  ]);
 
   const status = useConnectStatusUpdater(
     stage.connType,
