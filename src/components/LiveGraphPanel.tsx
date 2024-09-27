@@ -1,18 +1,20 @@
-import { Box, Button, HStack, Portal, Text } from "@chakra-ui/react";
+import { Button, HStack, Portal, Text, VStack } from "@chakra-ui/react";
 import { useMemo, useRef } from "react";
-import { MdBolt } from "react-icons/md";
 import { FormattedMessage } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
+import { Gesture } from "../model";
+import { tourElClassname } from "../tours";
 import InfoToolTip from "./InfoToolTip";
 import LedIcon from "./LedIcon";
 import LiveGraph from "./LiveGraph";
-import { Gesture } from "../model";
 
 interface LiveGraphPanelProps {
   detected?: Gesture | undefined;
   showPredictedGesture?: boolean;
 }
+
+const predictedGestureDisplayWidth = 180;
 
 const LiveGraphPanel = ({
   showPredictedGesture,
@@ -46,20 +48,30 @@ const LiveGraphPanel = ({
       width="100%"
       bgColor="white"
       ref={parentPortalRef}
+      className={tourElClassname.liveGraph}
     >
       <Portal containerRef={parentPortalRef}>
         <HStack
-          justifyContent="space-between"
           position="absolute"
           top={0}
           left={0}
           right={0}
-          px={7}
-          py={4}
-          w={`calc(100% - ${showPredictedGesture ? "160px" : "0"})`}
+          px={2.5}
+          py={2.5}
+          w={`calc(100% - ${
+            showPredictedGesture ? `${predictedGestureDisplayWidth}px` : "0"
+          })`}
         >
           <HStack gap={4}>
-            <LiveIndicator />
+            <HStack gap={2}>
+              <Text fontWeight="bold">
+                <FormattedMessage id="live-data-graph" />
+              </Text>
+              <InfoToolTip
+                titleId="footer.helpHeader"
+                descriptionId="footer.helpContent"
+              />
+            </HStack>
             {status === ConnectionStatus.Connected ? (
               <Button
                 backgroundColor="white"
@@ -87,29 +99,48 @@ const LiveGraphPanel = ({
               </Text>
             )}
           </HStack>
-          <InfoToolTip
-            titleId="footer.helpHeader"
-            descriptionId="footer.helpContent"
-          />
         </HStack>
       </Portal>
       <HStack position="absolute" width="100%" height="100%" spacing={0}>
         <LiveGraph />
         {showPredictedGesture && (
-          <Box px={5}>
-            <LedIcon icon={detected?.icon ?? "off"} size="120px" isTriggered />
-          </Box>
+          <VStack
+            className={tourElClassname.estimatedAction}
+            w={`${predictedGestureDisplayWidth}px`}
+            gap={0}
+            h="100%"
+            py={2.5}
+            pt={3.5}
+          >
+            <HStack justifyContent="flex-start" w="100%" gap={2} pr={2} mb={3}>
+              <Text size="md" fontWeight="bold" alignSelf="start">
+                <FormattedMessage id="content.model.output.estimatedGesture.iconTitle" />
+              </Text>
+              <InfoToolTip
+                titleId="content.model.output.estimatedGesture.descriptionTitle"
+                descriptionId="content.model.output.estimatedGesture.descriptionBody"
+              />
+            </HStack>
+            <VStack justifyContent="center" flexGrow={1} mb={0.5}>
+              <LedIcon icon={detected?.icon ?? "off"} size="70px" isTriggered />
+            </VStack>
+            <Text
+              size="md"
+              fontWeight="bold"
+              color={detected ? "green.600" : "gray.600"}
+              isTruncated
+              textAlign="center"
+              w={`${predictedGestureDisplayWidth}px`}
+            >
+              {detected?.name ?? (
+                <FormattedMessage id="content.model.output.estimatedGesture.none" />
+              )}
+            </Text>
+          </VStack>
         )}
       </HStack>
     </HStack>
   );
 };
-
-const LiveIndicator = () => (
-  <HStack gap={2}>
-    <MdBolt size={24} />
-    <Text fontWeight="bold">LIVE</Text>
-  </HStack>
-);
 
 export default LiveGraphPanel;

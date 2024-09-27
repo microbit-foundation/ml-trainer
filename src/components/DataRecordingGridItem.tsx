@@ -10,10 +10,11 @@ import {
 import { useCallback, useRef } from "react";
 import { useIntl } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { GestureData } from "../model";
 import RecordIcon from "../images/record-icon.svg?react";
-import RecordingGraph from "./RecordingGraph";
+import { GestureData } from "../model";
 import { useStore } from "../store";
+import { tourElClassname } from "../tours";
+import RecordingGraph from "./RecordingGraph";
 
 interface DataRecordingGridItemProps {
   data: GestureData;
@@ -52,6 +53,7 @@ const DataRecordingGridItem = ({
           width="fit-content"
           borderColor={selected ? "brand.500" : "transparent"}
           borderWidth={1}
+          className={tourElClassname.recordDataSamplesCard}
         >
           <CardBody display="flex" flexDirection="row" p={1} gap={3}>
             <HStack w="8.25rem" justifyContent="center">

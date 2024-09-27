@@ -1,5 +1,8 @@
 import { MicrobitWebUSBConnection } from "@microbit/microbit-connection";
 import { MakeCodeIcon } from "./utils/icons";
+import { ReactNode } from "react";
+import { SpotlightStyle } from "./pages/TourOverlay";
+import { ThemingProps } from "@chakra-ui/react";
 
 export interface XYZData {
   x: number[];
@@ -144,4 +147,23 @@ export enum SaveStep {
    * Otherwise we already have the project data in the state and save it directly.
    */
   SaveProgress = "progress",
+}
+
+export interface TourStep {
+  selector?: string;
+  title: ReactNode;
+  content: ReactNode;
+  spotlightStyle?: SpotlightStyle;
+  modalSize?: ThemingProps<"Modal">["size"];
+}
+
+export interface TourState {
+  id: TourId;
+  index: number;
+}
+
+export enum TourId {
+  DataSamplesPage = "dataSamplesPage",
+  CollectDataToTrainModel = "collectDataToTrainModel",
+  TestModelPage = "testModelPage",
 }

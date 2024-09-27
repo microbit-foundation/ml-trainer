@@ -16,11 +16,12 @@ import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
 import React from "react";
 import { RiArrowRightLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { mlSettings } from "../ml";
 import { usePrediction } from "../hooks/ml-hooks";
-import { getMakeCodeLang } from "../settings";
-import { useStore, useSettings } from "../store";
 import { useProject } from "../hooks/project-hooks";
+import { mlSettings } from "../ml";
+import { getMakeCodeLang } from "../settings";
+import { useSettings, useStore } from "../store";
+import { tourElClassname } from "../tours";
 import CertaintyThresholdGridItem from "./CertaintyThresholdGridItem";
 import CodeViewCard from "./CodeViewCard";
 import CodeViewGridItem from "./CodeViewGridItem";
@@ -163,7 +164,11 @@ const TestingModelGridView = () => {
         >
           <Menu>
             <ButtonGroup isAttached>
-              <Button variant="primary" onClick={openEditor}>
+              <Button
+                variant="primary"
+                onClick={openEditor}
+                className={tourElClassname.editInMakeCodeButton}
+              >
                 <FormattedMessage id="edit-in-makecode-action" />
               </Button>
               <MoreMenuButton

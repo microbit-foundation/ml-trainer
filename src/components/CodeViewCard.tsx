@@ -5,6 +5,7 @@ import {
   Project,
 } from "@microbit/makecode-embed/react";
 import { memo } from "react";
+import { tourElClassname } from "../tours";
 
 interface CodeViewCardProps {
   project: Project;
@@ -22,7 +23,13 @@ const CodeViewCard = ({ project }: CodeViewCardProps) => {
       borderColor="brand.500"
       justifyContent="center"
     >
-      <Card w="full" h="full" p={5} objectFit="contain">
+      <Card
+        w="full"
+        h="full"
+        p={5}
+        objectFit="contain"
+        className={tourElClassname.makeCodeCodeView}
+      >
         <MakeCodeBlocksRendering
           code={project}
           layout={BlockLayout.Flow}

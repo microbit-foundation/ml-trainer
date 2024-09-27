@@ -9,10 +9,11 @@ import {
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
+import { useStore } from "../store";
+import { tourElClassname } from "../tours";
 import { MakeCodeIcon } from "../utils/icons";
 import LedIcon from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";
-import { useStore } from "../store";
 
 interface GestureNameGridItemProps {
   name: string;
@@ -83,6 +84,7 @@ const GestureNameGridItem = ({
         borderWidth={selected ? 1 : 0}
         onClick={onSelectRow}
         position="relative"
+        className={tourElClassname.dataSamplesActionCard}
       >
         {!readOnly && onDeleteAction && (
           <CloseButton
