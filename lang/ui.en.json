@@ -512,7 +512,7 @@
     "description": ""
   },
   "content.data.dataDescription": {
-    "defaultMessage": "Multiple samples of movement data collected in approximately 2 second bursts.",
+    "defaultMessage": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else.",
     "description": ""
   },
   "content.data.deleteAction": {
@@ -604,7 +604,7 @@
     "description": ""
   },
   "content.model.output.output.descriptionBody": {
-    "defaultMessage": "What the micro:bit will do when each action is detected.",
+    "defaultMessage": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit.",
     "description": ""
   },
   "content.model.output.output.descriptionTitle": {
@@ -612,7 +612,7 @@
     "description": ""
   },
   "content.model.output.recognitionPoint": {
-    "defaultMessage": "Recognition Point:",
+    "defaultMessage": "Recognition point:",
     "description": ""
   },
   "content.trainer.description": {
@@ -740,7 +740,7 @@
     "description": ""
   },
   "footer.helpContent": {
-    "defaultMessage": "This graph shows movement data from the micro:bit’s accelerometer in real time. Try moving your connected micro:bit to see the X, Y and Z axes change.",
+    "defaultMessage": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in.",
     "description": ""
   },
   "footer.helpHeader": {
@@ -964,8 +964,8 @@
     "description": "Reload page button text"
   },
   "reset-to-default-action": {
-    "defaultMessage": "Reset to default",
-    "description": "Reset to default button text"
+    "defaultMessage": "Reset to default blocks",
+    "description": "Reset to default blocks button text"
   },
   "resources": {
     "defaultMessage": "Resources",

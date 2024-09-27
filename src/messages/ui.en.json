@@ -860,7 +860,7 @@
   "content.data.dataDescription": [
     {
       "type": 0,
-      "value": "Multiple samples of movement data collected in approximately 2 second bursts."
+      "value": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else."
     }
   ],
   "content.data.deleteAction": [
@@ -1052,7 +1052,7 @@
   "content.model.output.output.descriptionBody": [
     {
       "type": 0,
-      "value": "What the micro:bit will do when each action is detected."
+      "value": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit."
     }
   ],
   "content.model.output.output.descriptionTitle": [
@@ -1064,7 +1064,7 @@
   "content.model.output.recognitionPoint": [
     {
       "type": 0,
-      "value": "Recognition Point:"
+      "value": "Recognition point:"
     }
   ],
   "content.trainer.description": [
@@ -1256,7 +1256,7 @@
   "footer.helpContent": [
     {
       "type": 0,
-      "value": "This graph shows movement data from the micro:bit’s accelerometer in real time. Try moving your connected micro:bit to see the X, Y and Z axes change."
+      "value": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in."
     }
   ],
   "footer.helpHeader": [
@@ -1600,7 +1600,7 @@
   "reset-to-default-action": [
     {
       "type": 0,
-      "value": "Reset to default"
+      "value": "Reset to default blocks"
     }
   ],
   "resources": [
