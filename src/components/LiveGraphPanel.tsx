@@ -107,7 +107,7 @@ const LiveGraphPanel = ({
             py={2.5}
             pt={3.5}
           >
-            <HStack justifyContent="flex-start" w="100%" gap={2} pr={2}>
+            <HStack justifyContent="flex-start" w="100%" gap={2} pr={2} mb={3}>
               <Text size="md" fontWeight="bold" alignSelf="start">
                 <FormattedMessage id="content.model.output.estimatedGesture.iconTitle" />
               </Text>
@@ -116,14 +116,21 @@ const LiveGraphPanel = ({
                 descriptionId="content.model.output.estimatedGesture.descriptionBody"
               />
             </HStack>
-            <Text size="md" isTruncated w={`${predictedGestureDisplayWidth}px`}>
+            <VStack justifyContent="center" flexGrow={1} mb={0.5}>
+              <LedIcon icon={detected?.icon ?? "off"} size="80px" isTriggered />
+            </VStack>
+            <Text
+              size="md"
+              fontWeight="bold"
+              color={detected ? "green.600" : "gray.600"}
+              isTruncated
+              textAlign="center"
+              w={`${predictedGestureDisplayWidth}px`}
+            >
               {detected?.name ?? (
                 <FormattedMessage id="content.model.output.estimatedGesture.none" />
               )}
             </Text>
-            <VStack justifyContent="center" flexGrow={1}>
-              <LedIcon icon={detected?.icon ?? "off"} size="80px" isTriggered />
-            </VStack>
           </VStack>
         )}
       </HStack>
