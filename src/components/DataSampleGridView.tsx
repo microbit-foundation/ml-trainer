@@ -18,6 +18,7 @@ import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
 import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
 import RecordingDialog from "./RecordingDialog";
 import ConnectToRecordDialog from "./ConnectToRecordDialog";
+import { FormattedMessage } from "react-intl";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -102,7 +103,9 @@ const DataSamplesGridView = () => {
           justifyContent="center"
         >
           <LoadProjectInput ref={loadProjectInputRef} accept=".json" />
-          <Text fontSize="lg">No data samples</Text>
+          <Text fontSize="lg">
+            <FormattedMessage id="no-data-samples" />
+          </Text>
           {!isConnected && (
             <Text fontSize="lg">
               <Button

@@ -867,6 +867,10 @@
     "defaultMessage": "More edit in MakeCode options",
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
   },
+  "no-data-samples": {
+    "defaultMessage": "No data samples",
+    "description": "Empty data samples page text"
+  },
   "not-found": {
     "defaultMessage": "micro:bit AI creator home page",
     "description": "Page not found link text"

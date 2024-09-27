@@ -1453,6 +1453,12 @@
       "value": "More edit in MakeCode options"
     }
   ],
+  "no-data-samples": [
+    {
+      "type": 0,
+      "value": "No data samples"
+    }
+  ],
   "not-found": [
     {
       "type": 0,
