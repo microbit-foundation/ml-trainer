@@ -1,3 +1,5 @@
+import { HStack, Image, Text } from "@chakra-ui/react";
+import accelerometerImage from "./images/microbit_xyz_arrows.png";
 import { TourId, TourStep } from "./model";
 
 export const tourElClassname = {
@@ -27,8 +29,20 @@ export const tours: Record<TourId, TourStep[]> = {
     {
       selector: classSelector(tourElClassname.liveGraph),
       title: "Live data graph",
-      content:
-        "The graph shows movement data from the micro:bit’s accelerometer. Move your data collection micro:bit and see how the graph changes.",
+      content: (
+        <HStack gap={5}>
+          <Text>
+            The graph shows movement data from the micro:bit’s accelerometer.
+            Move your data collection micro:bit and see how the graph changes.
+          </Text>
+          <Image
+            src={accelerometerImage}
+            w="150px"
+            aspectRatio={500 / 482}
+            alt="micro:bit showing X axis going across the front, Y axis going down and up, Z axis going back to front"
+          />
+        </HStack>
+      ),
       spotlightPadding: 0,
     },
     {

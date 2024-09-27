@@ -1,5 +1,6 @@
 import { MicrobitWebUSBConnection } from "@microbit/microbit-connection";
 import { MakeCodeIcon } from "./utils/icons";
+import { ReactNode } from "react";
 
 export interface XYZData {
   x: number[];
@@ -149,7 +150,7 @@ export enum SaveStep {
 export interface TourStep {
   selector?: string;
   title: string;
-  content: string;
+  content: ReactNode;
   spotlightPadding?: number;
 }
 

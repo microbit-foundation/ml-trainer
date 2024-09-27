@@ -100,9 +100,7 @@ const Tour = () => {
         )}
         <TourOverlay referenceRef={ourRef} padding={spotlightPadding} />
         <ModalHeader>{step.title}</ModalHeader>
-        <ModalBody>
-          <Text maxW="md">{step.content}</Text>
-        </ModalBody>
+        <ModalBody maxW="md">{step.content}</ModalBody>
         <ModalFooter>
           <HStack justifyContent="space-between" p={0} w="full">
             <Button onClick={handleTourComplete} variant="link">
@@ -133,6 +131,14 @@ const Tour = () => {
         </ModalFooter>
       </ModalContent>
     </Modal>
+  );
+};
+
+export const FormattedMessageStepContent = ({ id }: { id: string }) => {
+  return (
+    <Text>
+      <FormattedMessage id={id} />
+    </Text>
   );
 };
 
