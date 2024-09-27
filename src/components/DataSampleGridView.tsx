@@ -7,7 +7,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { GestureData } from "../model";
@@ -108,23 +108,31 @@ const DataSamplesGridView = () => {
           </Text>
           {!isConnected && (
             <Text fontSize="lg">
-              <Button
-                fontSize="lg"
-                color="brand.600"
-                variant="link"
-                onClick={actions.startConnect}
-              >
-                Connect a micro:bit
-              </Button>{" "}
-              or{" "}
-              <Button
-                fontSize="lg"
-                color="brand.600"
-                variant="link"
-                onClick={() => loadProjectInputRef.current?.chooseFile()}
-              >
-                import data samples
-              </Button>
+              <FormattedMessage
+                id="connect-or-import"
+                values={{
+                  link1: (chunks: ReactNode) => (
+                    <Button
+                      fontSize="lg"
+                      color="brand.600"
+                      variant="link"
+                      onClick={actions.startConnect}
+                    >
+                      {chunks}
+                    </Button>
+                  ),
+                  link2: (chunks: ReactNode) => (
+                    <Button
+                      fontSize="lg"
+                      color="brand.600"
+                      variant="link"
+                      onClick={() => loadProjectInputRef.current?.chooseFile()}
+                    >
+                      {chunks}
+                    </Button>
+                  ),
+                }}
+              />
             </Text>
           )}
         </VStack>

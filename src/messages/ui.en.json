@@ -205,6 +205,32 @@
       "value": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2"
     }
   ],
+  "connect-or-import": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Connect a data collection micro:bit"
+        }
+      ],
+      "type": 8,
+      "value": "link1"
+    },
+    {
+      "type": 0,
+      "value": " or "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "import data samples"
+        }
+      ],
+      "type": 8,
+      "value": "link2"
+    }
+  ],
   "connect-to-record-body": [
     {
       "type": 0,
