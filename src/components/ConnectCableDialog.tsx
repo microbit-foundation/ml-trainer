@@ -1,5 +1,5 @@
 import { Button, Image, Text, VStack } from "@chakra-ui/react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import connectCableImage from "../images/connect-cable.gif";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
@@ -66,6 +66,7 @@ const ConnectCableDialog = ({
   ...props
 }: ConnectCableDialogProps) => {
   const { subtitleId, linkType, linkTextId, headingId } = config;
+  const intl = useIntl();
   return (
     <ConnectContainerDialog
       headingId={headingId}
@@ -91,7 +92,7 @@ const ConnectCableDialog = ({
         </Text>
         <Image
           src={connectCableImage}
-          alt=""
+          alt={intl.formatMessage({ id: "connectMB.connectCable.altText" })}
           objectFit="contain"
           boxSize="241px"
         />

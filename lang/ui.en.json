@@ -43,44 +43,8 @@
     "defaultMessage": "Confirm delete action",
     "description": ""
   },
-  "alert.isNotConnected": {
-    "defaultMessage": "Your micro:bit should be connected!",
-    "description": ""
-  },
-  "alert.isRecording": {
-    "defaultMessage": "You are currently recording!",
-    "description": ""
-  },
-  "alert.isTesting": {
-    "defaultMessage": "You are currently recording!",
-    "description": ""
-  },
-  "alert.isTraining": {
-    "defaultMessage": "You are currently training a model!",
-    "description": ""
-  },
-  "alert.oneDataRepresentation": {
-    "defaultMessage": "You need at least one data representation",
-    "description": ""
-  },
   "alert.recording.disconnectedDuringRecording": {
     "defaultMessage": "micro:bit disconnected during recording",
-    "description": ""
-  },
-  "alert.recordingsPerGesture": {
-    "defaultMessage": "You need at least three examples per action",
-    "description": ""
-  },
-  "alert.twoGestures": {
-    "defaultMessage": "You need at least two actions",
-    "description": ""
-  },
-  "arrowIconDown.altText": {
-    "defaultMessage": "arrow pointing down",
-    "description": ""
-  },
-  "arrowIconRight.altText": {
-    "defaultMessage": "arrow pointing right",
     "description": ""
   },
   "back-action": {
@@ -98,18 +62,6 @@
   "close-action": {
     "defaultMessage": "Close",
     "description": "Close button text or label"
-  },
-  "compatibility.platform.notSupported": {
-    "defaultMessage": "The tool is not supported on your current platform.",
-    "description": ""
-  },
-  "compatibility.platform.notSupported.joinDesktop": {
-    "defaultMessage": "Please use Google Chrome or Microsoft Edge on a computer.",
-    "description": ""
-  },
-  "compatibility.webgl.notSupported": {
-    "defaultMessage": "WebGL not available. Enable WebGL to see 3D data view.",
-    "description": ""
   },
   "confirm-action": {
     "defaultMessage": "Confirm",
@@ -241,10 +193,6 @@
   },
   "connectMB.nextButton": {
     "defaultMessage": "Next",
-    "description": ""
-  },
-  "connectMB.output.header": {
-    "defaultMessage": "A micro:bit is already connected",
     "description": ""
   },
   "connectMB.outputMB.different": {
@@ -455,20 +403,12 @@
     "defaultMessage": "Select 'Pair'",
     "description": ""
   },
-  "connectMB.webPopup.webUsb.altText": {
-    "defaultMessage": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2",
-    "description": ""
-  },
   "connectMB.webPopup.webUsb.instruction2": {
     "defaultMessage": "Select 'Connect'",
     "description": ""
   },
   "content.data.addAction": {
     "defaultMessage": "Add action",
-    "description": ""
-  },
-  "content.data.addAction.inputLabel": {
-    "defaultMessage": "Name of action field",
     "description": ""
   },
   "content.data.addActionWalkThrough": {
@@ -483,10 +423,6 @@
     "defaultMessage": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": ""
   },
-  "content.data.classHelpHeader": {
-    "defaultMessage": "Action",
-    "description": ""
-  },
   "content.data.classPlaceholderNewClass": {
     "defaultMessage": "Name of action",
     "description": ""
@@ -497,10 +433,6 @@
   },
   "content.data.controlbar.button.clearData": {
     "defaultMessage": "Delete all data samples",
-    "description": ""
-  },
-  "content.data.controlbar.button.clearData.confirm": {
-    "defaultMessage": "Are you sure you wish to delete all data samples?\nThis cannot be undone.",
     "description": ""
   },
   "content.data.controlbar.button.downloadData": {
@@ -551,10 +483,6 @@
     "defaultMessage": "Record data for action \"{action}\"",
     "description": ""
   },
-  "content.data.selectAndRecordAction": {
-    "defaultMessage": "Select action \"{action}\" and record data",
-    "description": ""
-  },
   "content.index.dataWarning.subtitleOne": {
     "defaultMessage": "You have existing data samples and code that will be lost when you start a new session.",
     "description": ""
@@ -575,19 +503,11 @@
     "defaultMessage": "Action",
     "description": ""
   },
-  "content.model.output.action.iconTitle": {
-    "defaultMessage": "Action",
-    "description": ""
-  },
   "content.model.output.certainty.descriptionBody": {
     "defaultMessage": "How confident the model is that you are currently doing each action.",
     "description": ""
   },
   "content.model.output.certainty.descriptionTitle": {
-    "defaultMessage": "Certainty",
-    "description": ""
-  },
-  "content.model.output.certainty.iconTitle": {
     "defaultMessage": "Certainty",
     "description": ""
   },
@@ -641,10 +561,6 @@
   },
   "content.trainer.header": {
     "defaultMessage": "Training a model",
-    "description": ""
-  },
-  "content.trainer.retrain.title": {
-    "defaultMessage": "Status: Your data samples have changed. You can retrain the model.",
     "description": ""
   },
   "content.trainer.training.title": {
@@ -707,10 +623,6 @@
     "defaultMessage": "Don't show this again",
     "description": "Text to never show a dialog again"
   },
-  "download-action": {
-    "defaultMessage": "Download",
-    "description": "Download button text"
-  },
   "download-project-choose-microbit-subtitle": {
     "defaultMessage": "Downloading your project on to the same micro:bit will disconnect the micro:bit from the tool. You will need to reconnect the micro:bit if you want to record more data samples.",
     "description": "Download project choose micro:bit dialog subtitle"
@@ -763,10 +675,6 @@
     "defaultMessage": "Start new session",
     "description": ""
   },
-  "get-started-title": {
-    "defaultMessage": "Get started",
-    "description": "Title of a resource"
-  },
   "help-label": {
     "defaultMessage": "Help",
     "description": "Help icon aria label"
@@ -791,10 +699,6 @@
     "defaultMessage": "Home page",
     "description": ""
   },
-  "info.label": {
-    "defaultMessage": "More information about \"{item}\"",
-    "description": ""
-  },
   "insufficient-data-body": {
     "defaultMessage": "You need at least 3 data samples for 2 actions to train the model.",
     "description": "Insufficient data modal content"
@@ -802,10 +706,6 @@
   "insufficient-data-title": {
     "defaultMessage": "You don't have enough data",
     "description": "Insufficient data modal title"
-  },
-  "introducing-the-microbit-ai-creator-title": {
-    "defaultMessage": "Introducing the micro:bit AI creator",
-    "description": "Title of a resource"
   },
   "language": {
     "defaultMessage": "Language",
@@ -815,33 +715,9 @@
     "defaultMessage": "Live data graph",
     "description": "Title for live data graph"
   },
-  "loading": {
-    "defaultMessage": "loading",
-    "description": ""
-  },
   "main-menu": {
     "defaultMessage": "Main menu",
     "description": "Main menu label"
-  },
-  "menu.model.connectInputMicrobit": {
-    "defaultMessage": "Connect micro:bit",
-    "description": ""
-  },
-  "menu.model.disconnect": {
-    "defaultMessage": "Disconnect output micro:bit",
-    "description": ""
-  },
-  "menu.model.noModel": {
-    "defaultMessage": "No model",
-    "description": ""
-  },
-  "menu.trainer.TrainingFinished": {
-    "defaultMessage": "Status: Your model is trained.",
-    "description": ""
-  },
-  "menu.trainer.addMoreDataButton": {
-    "defaultMessage": "Add more data",
-    "description": ""
   },
   "menu.trainer.notConnected1": {
     "defaultMessage": "You do not have a micro:bit connected",
@@ -874,46 +750,6 @@
   "open-file-dropped": {
     "defaultMessage": "Open file when dropped",
     "description": "Aria label for file drop target"
-  },
-  "performanceWarning.content1": {
-    "defaultMessage": "The quality of data being received from your micro:bit is low. This could be due to a connection issue.",
-    "description": ""
-  },
-  "performanceWarning.content2": {
-    "defaultMessage": "Do you want to restart the connection process to try to improve performance?",
-    "description": ""
-  },
-  "performanceWarning.heading": {
-    "defaultMessage": "Low quality connection",
-    "description": ""
-  },
-  "performanceWarning.nextButton": {
-    "defaultMessage": "Next",
-    "description": ""
-  },
-  "performanceWarning.troubleshoot": {
-    "defaultMessage": "Troubleshoot problems with connection quality",
-    "description": ""
-  },
-  "popup.appVersionRedirect.button.redirect": {
-    "defaultMessage": "I'm a UK primary school teacher",
-    "description": ""
-  },
-  "popup.appVersionRedirect.button.stay": {
-    "defaultMessage": "I'm not a UK primary school teacher",
-    "description": ""
-  },
-  "popup.appVersionRedirect.explain": {
-    "defaultMessage": "If you are a UK* primary school teacher, you will be redirected to the version of this tool designed for the UK's BBC micro:bit playground survey.",
-    "description": ""
-  },
-  "popup.appVersionRedirect.header": {
-    "defaultMessage": "Are you a UK* primary school teacher?",
-    "description": ""
-  },
-  "popup.appVersionRedirect.uk": {
-    "defaultMessage": "*includes crown dependencies Jersey, Guernsey and the Isle of Man",
-    "description": ""
   },
   "popup.compatibility.advice": {
     "defaultMessage": "We recommend Google Chrome or Microsoft Edge so you can connect directly to your micro:bit.",
@@ -979,18 +815,6 @@
     "defaultMessage": "Reset to default blocks",
     "description": "Reset to default blocks button text"
   },
-  "resources": {
-    "defaultMessage": "Resources",
-    "description": "Title of resources section"
-  },
-  "resources.getStarted.video": {
-    "defaultMessage": "get started video",
-    "description": ""
-  },
-  "resources.introduction.video": {
-    "defaultMessage": "introduction video",
-    "description": ""
-  },
   "save-action": {
     "defaultMessage": "Save",
     "description": "Label for action that saves the project as a file the user downloads"
@@ -1022,34 +846,6 @@
   "settings-menu-action": {
     "defaultMessage": "Settings actions menu",
     "description": "Label for settings actions menu button"
-  },
-  "sign-up-action": {
-    "defaultMessage": "Sign up",
-    "description": "Sign up button text"
-  },
-  "sign-up.content": {
-    "defaultMessage": "Welcome to our prototype of the micro:bit AI creator. We’d love you to try it out and give us your feedback. Please enter your email so we can keep you updated as it evolves.",
-    "description": ""
-  },
-  "sign-up.email-label": {
-    "defaultMessage": "Email",
-    "description": ""
-  },
-  "sign-up.error": {
-    "defaultMessage": "Something went wrong. Please try again or <link>contact us</link>.",
-    "description": ""
-  },
-  "sign-up.invalid": {
-    "defaultMessage": "Please enter a valid email address",
-    "description": ""
-  },
-  "sign-up.skip-action": {
-    "defaultMessage": "Skip",
-    "description": ""
-  },
-  "sign-up.title": {
-    "defaultMessage": "Join our testing community",
-    "description": ""
   },
   "skip-tour-action": {
     "defaultMessage": "Skip tour",

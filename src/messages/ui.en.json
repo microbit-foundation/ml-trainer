@@ -91,64 +91,10 @@
       "value": "Confirm delete action"
     }
   ],
-  "alert.isNotConnected": [
-    {
-      "type": 0,
-      "value": "Your micro:bit should be connected!"
-    }
-  ],
-  "alert.isRecording": [
-    {
-      "type": 0,
-      "value": "You are currently recording!"
-    }
-  ],
-  "alert.isTesting": [
-    {
-      "type": 0,
-      "value": "You are currently recording!"
-    }
-  ],
-  "alert.isTraining": [
-    {
-      "type": 0,
-      "value": "You are currently training a model!"
-    }
-  ],
-  "alert.oneDataRepresentation": [
-    {
-      "type": 0,
-      "value": "You need at least one data representation"
-    }
-  ],
   "alert.recording.disconnectedDuringRecording": [
     {
       "type": 0,
       "value": "micro:bit disconnected during recording"
-    }
-  ],
-  "alert.recordingsPerGesture": [
-    {
-      "type": 0,
-      "value": "You need at least three examples per action"
-    }
-  ],
-  "alert.twoGestures": [
-    {
-      "type": 0,
-      "value": "You need at least two actions"
-    }
-  ],
-  "arrowIconDown.altText": [
-    {
-      "type": 0,
-      "value": "arrow pointing down"
-    }
-  ],
-  "arrowIconRight.altText": [
-    {
-      "type": 0,
-      "value": "arrow pointing right"
     }
   ],
   "back-action": [
@@ -173,24 +119,6 @@
     {
       "type": 0,
       "value": "Close"
-    }
-  ],
-  "compatibility.platform.notSupported": [
-    {
-      "type": 0,
-      "value": "The tool is not supported on your current platform."
-    }
-  ],
-  "compatibility.platform.notSupported.joinDesktop": [
-    {
-      "type": 0,
-      "value": "Please use Google Chrome or Microsoft Edge on a computer."
-    }
-  ],
-  "compatibility.webgl.notSupported": [
-    {
-      "type": 0,
-      "value": "WebGL not available. Enable WebGL to see 3D data view."
     }
   ],
   "confirm-action": [
@@ -389,12 +317,6 @@
     {
       "type": 0,
       "value": "Next"
-    }
-  ],
-  "connectMB.output.header": [
-    {
-      "type": 0,
-      "value": "A micro:bit is already connected"
     }
   ],
   "connectMB.outputMB.different": [
@@ -773,12 +695,6 @@
       "value": "Select 'Pair'"
     }
   ],
-  "connectMB.webPopup.webUsb.altText": [
-    {
-      "type": 0,
-      "value": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2"
-    }
-  ],
   "connectMB.webPopup.webUsb.instruction2": [
     {
       "type": 0,
@@ -789,12 +705,6 @@
     {
       "type": 0,
       "value": "Add action"
-    }
-  ],
-  "content.data.addAction.inputLabel": [
-    {
-      "type": 0,
-      "value": "Name of action field"
     }
   ],
   "content.data.addActionWalkThrough": [
@@ -815,12 +725,6 @@
       "value": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’."
     }
   ],
-  "content.data.classHelpHeader": [
-    {
-      "type": 0,
-      "value": "Action"
-    }
-  ],
   "content.data.classPlaceholderNewClass": [
     {
       "type": 0,
@@ -837,12 +741,6 @@
     {
       "type": 0,
       "value": "Delete all data samples"
-    }
-  ],
-  "content.data.controlbar.button.clearData.confirm": [
-    {
-      "type": 0,
-      "value": "Are you sure you wish to delete all data samples?\nThis cannot be undone."
     }
   ],
   "content.data.controlbar.button.downloadData": [
@@ -941,20 +839,6 @@
       "value": "\""
     }
   ],
-  "content.data.selectAndRecordAction": [
-    {
-      "type": 0,
-      "value": "Select action \""
-    },
-    {
-      "type": 1,
-      "value": "action"
-    },
-    {
-      "type": 0,
-      "value": "\" and record data"
-    }
-  ],
   "content.index.dataWarning.subtitleOne": [
     {
       "type": 0,
@@ -999,12 +883,6 @@
       "value": "Action"
     }
   ],
-  "content.model.output.action.iconTitle": [
-    {
-      "type": 0,
-      "value": "Action"
-    }
-  ],
   "content.model.output.certainty.descriptionBody": [
     {
       "type": 0,
@@ -1012,12 +890,6 @@
     }
   ],
   "content.model.output.certainty.descriptionTitle": [
-    {
-      "type": 0,
-      "value": "Certainty"
-    }
-  ],
-  "content.model.output.certainty.iconTitle": [
     {
       "type": 0,
       "value": "Certainty"
@@ -1107,12 +979,6 @@
     {
       "type": 0,
       "value": "Training a model"
-    }
-  ],
-  "content.trainer.retrain.title": [
-    {
-      "type": 0,
-      "value": "Status: Your data samples have changed. You can retrain the model."
     }
   ],
   "content.trainer.training.title": [
@@ -1205,12 +1071,6 @@
       "value": "Don't show this again"
     }
   ],
-  "download-action": [
-    {
-      "type": 0,
-      "value": "Download"
-    }
-  ],
   "download-project-choose-microbit-subtitle": [
     {
       "type": 0,
@@ -1289,12 +1149,6 @@
       "value": "Start new session"
     }
   ],
-  "get-started-title": [
-    {
-      "type": 0,
-      "value": "Get started"
-    }
-  ],
   "help-label": [
     {
       "type": 0,
@@ -1331,20 +1185,6 @@
       "value": "Home page"
     }
   ],
-  "info.label": [
-    {
-      "type": 0,
-      "value": "More information about \""
-    },
-    {
-      "type": 1,
-      "value": "item"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
   "insufficient-data-body": [
     {
       "type": 0,
@@ -1355,12 +1195,6 @@
     {
       "type": 0,
       "value": "You don't have enough data"
-    }
-  ],
-  "introducing-the-microbit-ai-creator-title": [
-    {
-      "type": 0,
-      "value": "Introducing the micro:bit AI creator"
     }
   ],
   "language": [
@@ -1375,46 +1209,10 @@
       "value": "Live data graph"
     }
   ],
-  "loading": [
-    {
-      "type": 0,
-      "value": "loading"
-    }
-  ],
   "main-menu": [
     {
       "type": 0,
       "value": "Main menu"
-    }
-  ],
-  "menu.model.connectInputMicrobit": [
-    {
-      "type": 0,
-      "value": "Connect micro:bit"
-    }
-  ],
-  "menu.model.disconnect": [
-    {
-      "type": 0,
-      "value": "Disconnect output micro:bit"
-    }
-  ],
-  "menu.model.noModel": [
-    {
-      "type": 0,
-      "value": "No model"
-    }
-  ],
-  "menu.trainer.TrainingFinished": [
-    {
-      "type": 0,
-      "value": "Status: Your model is trained."
-    }
-  ],
-  "menu.trainer.addMoreDataButton": [
-    {
-      "type": 0,
-      "value": "Add more data"
     }
   ],
   "menu.trainer.notConnected1": [
@@ -1463,66 +1261,6 @@
     {
       "type": 0,
       "value": "Open file when dropped"
-    }
-  ],
-  "performanceWarning.content1": [
-    {
-      "type": 0,
-      "value": "The quality of data being received from your micro:bit is low. This could be due to a connection issue."
-    }
-  ],
-  "performanceWarning.content2": [
-    {
-      "type": 0,
-      "value": "Do you want to restart the connection process to try to improve performance?"
-    }
-  ],
-  "performanceWarning.heading": [
-    {
-      "type": 0,
-      "value": "Low quality connection"
-    }
-  ],
-  "performanceWarning.nextButton": [
-    {
-      "type": 0,
-      "value": "Next"
-    }
-  ],
-  "performanceWarning.troubleshoot": [
-    {
-      "type": 0,
-      "value": "Troubleshoot problems with connection quality"
-    }
-  ],
-  "popup.appVersionRedirect.button.redirect": [
-    {
-      "type": 0,
-      "value": "I'm a UK primary school teacher"
-    }
-  ],
-  "popup.appVersionRedirect.button.stay": [
-    {
-      "type": 0,
-      "value": "I'm not a UK primary school teacher"
-    }
-  ],
-  "popup.appVersionRedirect.explain": [
-    {
-      "type": 0,
-      "value": "If you are a UK* primary school teacher, you will be redirected to the version of this tool designed for the UK's BBC micro:bit playground survey."
-    }
-  ],
-  "popup.appVersionRedirect.header": [
-    {
-      "type": 0,
-      "value": "Are you a UK* primary school teacher?"
-    }
-  ],
-  "popup.appVersionRedirect.uk": [
-    {
-      "type": 0,
-      "value": "*includes crown dependencies Jersey, Guernsey and the Isle of Man"
     }
   ],
   "popup.compatibility.advice": [
@@ -1621,24 +1359,6 @@
       "value": "Reset to default blocks"
     }
   ],
-  "resources": [
-    {
-      "type": 0,
-      "value": "Resources"
-    }
-  ],
-  "resources.getStarted.video": [
-    {
-      "type": 0,
-      "value": "get started video"
-    }
-  ],
-  "resources.introduction.video": [
-    {
-      "type": 0,
-      "value": "introduction video"
-    }
-  ],
   "save-action": [
     {
       "type": 0,
@@ -1685,62 +1405,6 @@
     {
       "type": 0,
       "value": "Settings actions menu"
-    }
-  ],
-  "sign-up-action": [
-    {
-      "type": 0,
-      "value": "Sign up"
-    }
-  ],
-  "sign-up.content": [
-    {
-      "type": 0,
-      "value": "Welcome to our prototype of the micro:bit AI creator. We’d love you to try it out and give us your feedback. Please enter your email so we can keep you updated as it evolves."
-    }
-  ],
-  "sign-up.email-label": [
-    {
-      "type": 0,
-      "value": "Email"
-    }
-  ],
-  "sign-up.error": [
-    {
-      "type": 0,
-      "value": "Something went wrong. Please try again or "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "contact us"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "sign-up.invalid": [
-    {
-      "type": 0,
-      "value": "Please enter a valid email address"
-    }
-  ],
-  "sign-up.skip-action": [
-    {
-      "type": 0,
-      "value": "Skip"
-    }
-  ],
-  "sign-up.title": [
-    {
-      "type": 0,
-      "value": "Join our testing community"
     }
   ],
   "skip-tour-action": [
