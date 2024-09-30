@@ -22,7 +22,7 @@ const pxt = {
     core: "*",
     microphone: "*",
     radio: "*", // Needed to compile.
-    "machine-learning": "github:microbit-foundation/pxt-microbit-ml#v0.4.2",
+    "machine-learning": "github:microbit-foundation/pxt-microbit-ml#stop-start",
   },
   files: Object.values(filenames),
   preferredEditor: "blocksprj",
