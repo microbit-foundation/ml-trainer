@@ -19,6 +19,7 @@ import AboutDialog from "./AboutDialog";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useRef } from "react";
 import { manageCookies } from "../compliance";
+import { useDeployment } from "../deployment";
 
 interface HelpMenuProps {
   isMobile?: boolean;
@@ -33,6 +34,7 @@ const HelpMenu = ({ isMobile, appName, cookies, ...rest }: HelpMenuProps) => {
   const aboutDialogDisclosure = useDisclosure();
   const intl = useIntl();
   const MenuButtonRef = useRef(null);
+  const deployment = useDeployment();
 
   return (
     <Box display={isMobile ? { base: "block", lg: "none" } : undefined}>
@@ -60,44 +62,54 @@ const HelpMenu = ({ isMobile, appName, cookies, ...rest }: HelpMenuProps) => {
         />
         <Portal>
           <MenuList>
-            <MenuItem
-              as="a"
-              href="https://support.microbit.org"
-              target="_blank"
-              rel="noopener"
-              icon={<RiExternalLinkLine />}
-            >
-              <FormattedMessage id="help-support" />
-            </MenuItem>
-            <MenuDivider />
-            <MenuItem
-              as="a"
-              href="https://microbit.org/terms-of-use/"
-              target="_blank"
-              rel="noopener"
-              icon={<RiExternalLinkLine />}
-            >
-              <FormattedMessage id="terms" />
-            </MenuItem>
-            <MenuItem
-              as="a"
-              href="https://microbit.org/privacy/"
-              target="_blank"
-              rel="noopener"
-              icon={<RiExternalLinkLine />}
-            >
-              <FormattedMessage id="privacy" />
-            </MenuItem>
-            {cookies && (
+            {deployment.supportLink && (
+              <>
+                <MenuItem
+                  as="a"
+                  href={deployment.supportLink}
+                  target="_blank"
+                  rel="noopener"
+                  icon={<RiExternalLinkLine />}
+                >
+                  <FormattedMessage id="help-support" />
+                </MenuItem>
+                <MenuDivider />
+              </>
+            )}
+            {deployment.termsOfUseLink && (
+              <MenuItem
+                as="a"
+                href={deployment.termsOfUseLink}
+                target="_blank"
+                rel="noopener"
+                icon={<RiExternalLinkLine />}
+              >
+                <FormattedMessage id="terms" />
+              </MenuItem>
+            )}
+            {deployment.privacyPolicyLink && (
+              <MenuItem
+                as="a"
+                href="https://microbit.org/privacy/"
+                target="_blank"
+                rel="noopener"
+                icon={<RiExternalLinkLine />}
+              >
+                <FormattedMessage id="privacy" />
+              </MenuItem>
+            )}
+            {deployment.compliance.manageCookies && (
               <MenuItem
                 as="button"
-                onClick={manageCookies}
+                onClick={deployment.compliance.manageCookies}
                 icon={<MdOutlineCookie />}
               >
                 <FormattedMessage id="cookies-action" />
               </MenuItem>
             )}
-            <MenuDivider />
+            {(deployment.privacyPolicyLink ||
+              deployment.compliance.manageCookies ||
+              deployment.termsOfUseLink) && <MenuDivider />}
             <MenuItem
               icon={<RiInformationLine />}
               onClick={aboutDialogDisclosure.onOpen}
