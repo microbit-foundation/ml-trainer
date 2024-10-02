@@ -9,28 +9,25 @@ import {
   Portal,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useRef } from "react";
+import { MdOutlineCookie } from "react-icons/md";
 import {
   RiExternalLinkLine,
   RiInformationLine,
   RiQuestionLine,
 } from "react-icons/ri";
-import { MdOutlineCookie } from "react-icons/md";
-import AboutDialog from "./AboutDialog";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useRef } from "react";
-import { manageCookies } from "../compliance";
 import { useDeployment } from "../deployment";
+import AboutDialog from "./AboutDialog";
 
 interface HelpMenuProps {
   isMobile?: boolean;
-  appName: string;
-  cookies?: boolean;
 }
 
 /**
  * A help button that triggers a drop-down menu with actions.
  */
-const HelpMenu = ({ isMobile, appName, cookies, ...rest }: HelpMenuProps) => {
+const HelpMenu = ({ isMobile, ...rest }: HelpMenuProps) => {
   const aboutDialogDisclosure = useDisclosure();
   const intl = useIntl();
   const MenuButtonRef = useRef(null);
@@ -39,7 +36,6 @@ const HelpMenu = ({ isMobile, appName, cookies, ...rest }: HelpMenuProps) => {
   return (
     <Box display={isMobile ? { base: "block", lg: "none" } : undefined}>
       <AboutDialog
-        appName={appName}
         isOpen={aboutDialogDisclosure.isOpen}
         onClose={aboutDialogDisclosure.onClose}
         finalFocusRef={MenuButtonRef}
@@ -90,7 +86,7 @@ const HelpMenu = ({ isMobile, appName, cookies, ...rest }: HelpMenuProps) => {
             {deployment.privacyPolicyLink && (
               <MenuItem
                 as="a"
-                href="https://microbit.org/privacy/"
+                href={deployment.privacyPolicyLink}
                 target="_blank"
                 rel="noopener"
                 icon={<RiExternalLinkLine />}

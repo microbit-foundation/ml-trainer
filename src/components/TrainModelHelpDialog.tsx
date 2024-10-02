@@ -16,6 +16,7 @@ import {
 import { ComponentProps, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import trainModelImage from "../images/train_model_black.svg";
+import { useDeployment } from "../deployment";
 
 interface TrainModelHelpDialogProps
   extends Omit<ComponentProps<typeof Modal>, "children"> {
@@ -26,6 +27,7 @@ const TrainModelIntroDialog = ({
   onNext,
   ...props
 }: TrainModelHelpDialogProps) => {
+  const { appNameFull } = useDeployment();
   const [skip, setSkip] = useState<boolean>(false);
   const handleNext = useCallback(() => onNext(skip), [onNext, skip]);
 
@@ -56,7 +58,10 @@ const TrainModelIntroDialog = ({
                 />
                 <VStack gap={5}>
                   <Text textAlign="left">
-                    <FormattedMessage id="content.trainer.description" />
+                    <FormattedMessage
+                      id="content.trainer.description"
+                      values={{ appNameFull }}
+                    />
                   </Text>
                 </VStack>
               </HStack>

@@ -14,7 +14,6 @@ import { ReactNode, useCallback, useEffect } from "react";
 import { RiDownload2Line, RiFolderOpenLine, RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import { TOOL_NAME } from "../constants";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
 import { SaveStep, TrainModelDialogStage } from "../model";
@@ -35,6 +34,7 @@ import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
 import TrainModelDialogs from "./TrainModelFlowDialogs";
+import { useDeployment } from "../deployment";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -63,13 +63,13 @@ const DefaultPageLayout = ({
   const { saveHex } = useProject();
   const [settings] = useSettings();
   const toast = useToast();
+  const { appNameFull } = useDeployment();
 
   useEffect(() => {
-    const appName = `micro:bit ${TOOL_NAME}`;
     document.title = titleId
-      ? `${intl.formatMessage({ id: titleId })} | ${appName}`
-      : appName;
-  }, [intl, titleId]);
+      ? `${intl.formatMessage({ id: titleId })} | ${appNameFull}`
+      : appNameFull;
+  }, [appNameFull, intl, titleId]);
 
   useEffect(() => {
     return useStore.subscribe(
@@ -134,7 +134,7 @@ const DefaultPageLayout = ({
               )}
             </>
           }
-          itemsLeft={toolbarItemsLeft || <AppLogo name={TOOL_NAME} />}
+          itemsLeft={toolbarItemsLeft || <AppLogo />}
           itemsRight={
             <>
               <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
@@ -160,7 +160,7 @@ const DefaultPageLayout = ({
                 )}
                 <SettingsMenu />
               </HStack>
-              <HelpMenu appName={TOOL_NAME} cookies />
+              <HelpMenu />
               <ToolbarMenu
                 isMobile
                 variant="plain"

@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { Box, BoxProps, Text, VStack } from "@chakra-ui/react";
 import { ReactNode, createContext } from "react";
 import { CookieConsent, DeploymentConfigFactory } from "..";
 import { NullLogging } from "./logging";
@@ -18,8 +19,34 @@ const stubConsentContext = createContext<CookieConsent | undefined>(
 
 const defaultDeploymentFactory: DeploymentConfigFactory = () => ({
   chakraTheme: theme,
-  // This isn't ideal as it's the branded version. You can just remove the field to remove the welcome dialog.
-  welcomeVideoYouTubeId: "mREwMW69qKc",
+  appNameFull: "ml-trainer",
+  appNameShort: "ml-trainer",
+  AppLogo: (props: BoxProps) => {
+    return (
+      <VStack
+        color="white"
+        fontWeight="bold"
+        justifyContent="center"
+        alignItems="center"
+        {...props}
+      >
+        <Text>ml-trainer</Text>
+      </VStack>
+    );
+  },
+  OrgLogo: (props: BoxProps) => {
+    return (
+      <VStack
+        color="white"
+        fontWeight="bold"
+        justifyContent="center"
+        alignItems="center"
+        {...props}
+      >
+        <Text>micro:bit</Text>
+      </VStack>
+    );
+  },
   logging: new NullLogging(),
   compliance: {
     ConsentProvider: ({ children }: { children: ReactNode }) => (

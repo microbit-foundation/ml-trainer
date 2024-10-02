@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { ReactNode, useContext } from "react";
+import { ComponentType, ReactNode, useContext } from "react";
 import { Logging } from "../logging/logging";
 
 export type DeploymentConfigFactory = (
@@ -12,6 +12,7 @@ export type DeploymentConfigFactory = (
 
 // This is configured via a vite alias, defaulting to ./default
 import { default as df } from "theme-package";
+import { BoxProps } from "@chakra-ui/react";
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const deploymentFactory: DeploymentConfigFactory = df;
 export const deployment = deploymentFactory(import.meta.env);
@@ -22,9 +23,11 @@ export interface CookieConsent {
 }
 
 export interface DeploymentConfig {
+  appNameShort: string;
+  appNameFull: string;
+  AppLogo: ComponentType<BoxProps>;
+  OrgLogo?: ComponentType<BoxProps>;
   welcomeVideoYouTubeId?: string;
-  squareLogo?: ReactNode;
-  horizontalLogo?: ReactNode;
   compliance: {
     /**
      * A provider that will be used to wrap the app UI.
@@ -48,7 +51,6 @@ export interface DeploymentConfig {
   guideLink?: string;
   termsOfUseLink?: string;
   privacyPolicyLink?: string;
-  translationLink?: string;
 
   logging: Logging;
 }

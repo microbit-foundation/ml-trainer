@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import { ConnectionFlowStep } from "../connection-stage-hooks";
+import { useDeployment } from "../deployment";
 
 const OneLineContent = ({ textId }: { textId: string }) => {
   return (
@@ -47,13 +48,17 @@ const ReplugMicrobitContent = () => {
 };
 
 const CloseTabsContent = () => {
+  const { appNameShort } = useDeployment();
   return (
     <VStack>
       <Text textAlign="left" w="100%">
         <FormattedMessage id="connectMB.usbTryAgain.closeTabs1" />
       </Text>
       <Text textAlign="left" w="100%">
-        <FormattedMessage id="connectMB.usbTryAgain.closeTabs2" />
+        <FormattedMessage
+          id="connectMB.usbTryAgain.closeTabs2"
+          values={{ appNameShort }}
+        />
       </Text>
     </VStack>
   );
