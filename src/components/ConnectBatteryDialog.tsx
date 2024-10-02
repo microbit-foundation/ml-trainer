@@ -19,7 +19,7 @@ const ConnectBatteryDialog = ({ ...props }: ConnectBatteryDialogProps) => {
         <Text alignSelf="left" width="100%">
           <FormattedMessage id="connectMB.connectBattery.subtitle" />
           <Link
-            color="purple.500"
+            color="blue.600"
             //TODO: Replace with real support link.
             href="https://support.microbit.org/support/home"
             target="_blank"
@@ -32,7 +32,7 @@ const ConnectBatteryDialog = ({ ...props }: ConnectBatteryDialogProps) => {
             <Icon
               as={RiExternalLinkLine}
               boxSize={5}
-              color="purple.500"
+              color="blue.600"
               position="relative"
             />
           </Link>

@@ -70,7 +70,7 @@ const ManualFlashingDialog = ({
             id="connectMB.transferHex.manualDownload"
             values={{
               link: (chunks: ReactNode) => (
-                <Text as="button" color="purple.500" onClick={handleDownload}>
+                <Text as="button" color="blue.600" onClick={handleDownload}>
                   {chunks}
                 </Text>
               ),

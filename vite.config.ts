@@ -12,7 +12,7 @@ import { configDefaults } from "vitest/config";
 import svgr from "vite-plugin-svgr";
 
 // Support optionally pulling in external branding if the module is installed.
-const theme = "TODO: theme package";
+const theme = "@microbit-foundation/ml-trainer-microbit";
 const external = `node_modules/${theme}`;
 const internal = "src/deployment/default";
 

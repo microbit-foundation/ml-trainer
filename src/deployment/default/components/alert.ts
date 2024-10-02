@@ -3,6 +3,7 @@ import { StyleConfig, StyleFunctionProps } from "@chakra-ui/theme-tools";
 
 const Alert: StyleConfig = {
   variants: {
+    // TODO: reconsider this theme customisation
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     toast: (props: StyleFunctionProps) => {

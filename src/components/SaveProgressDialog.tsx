@@ -34,7 +34,7 @@ const SaveProgressDialog = ({ isOpen }: SavingDialogProps) => {
               <Text>
                 <FormattedMessage id="saving-description" />
               </Text>
-              <Progress colorScheme="green" isIndeterminate rounded="md" />
+              <Progress colorScheme="brand2" isIndeterminate rounded="md" />
             </VStack>
           </ModalBody>
         </ModalContent>

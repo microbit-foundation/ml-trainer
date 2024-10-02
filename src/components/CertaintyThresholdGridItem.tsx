@@ -35,7 +35,7 @@ const CertaintyThresholdGridItem = ({
   const intl = useIntl();
   const barWidth = 240;
   const colorScheme = useMemo(
-    () => (isTriggered ? "green.500" : undefined),
+    () => (isTriggered ? "brand2.500" : undefined),
     [isTriggered]
   );
 

@@ -87,7 +87,7 @@ const AboutDialog = ({
                         href="https://microbit.org"
                         target="_blank"
                         rel="noopener"
-                        color="purple.500"
+                        color="blue.600"
                       >
                         {chunks}
                       </Link>

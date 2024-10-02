@@ -127,7 +127,7 @@ const LiveGraphPanel = ({
             <Text
               size="md"
               fontWeight="bold"
-              color={detected ? "green.600" : "gray.600"}
+              color={detected ? "brand2.600" : "gray.600"}
               isTruncated
               textAlign="center"
               w={`${predictedGestureDisplayWidth}px`}
