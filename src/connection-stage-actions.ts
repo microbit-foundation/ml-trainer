@@ -37,9 +37,11 @@ export class ConnectionStageActions {
     this.setStage({
       ...this.stage,
       hasFailedToReconnectTwice: false,
-      flowType: !isWebBluetoothSupported
-        ? ConnectionFlowType.ConnectRadioRemote
-        : ConnectionFlowType.ConnectBluetooth,
+      flowType:
+        !isWebBluetoothSupported ||
+        this.stage.flowType !== ConnectionFlowType.ConnectBluetooth
+          ? ConnectionFlowType.ConnectRadioRemote
+          : ConnectionFlowType.ConnectBluetooth,
       flowStep:
         !isWebBluetoothSupported && !isWebUsbSupported
           ? ConnectionFlowStep.WebUsbBluetoothUnsupported
