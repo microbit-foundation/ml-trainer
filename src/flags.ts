@@ -16,7 +16,7 @@ export type Flag =
    */
   | "devtools"
   /**
-   * Flag to add a beta warning. Enabled for staging site and production stages.
+   * Flag to add a beta warning. Enabled for review and staging site stages.
    */
   | "preReleaseNotice"
   /**
