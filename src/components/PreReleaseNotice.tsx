@@ -8,6 +8,7 @@ import { Flex, HStack, Text } from "@chakra-ui/layout";
 import { useDisclosure } from "@chakra-ui/react";
 import { RiFeedbackFill } from "react-icons/ri";
 import FeedbackForm from "./FeedbackForm";
+import { FormattedMessage } from "react-intl";
 
 const PreReleaseNotice = () => {
   const feedbackDialogDisclosure = useDisclosure();
@@ -23,13 +24,14 @@ const PreReleaseNotice = () => {
         p={1}
         pl={3}
         pr={3}
-        justifyContent="space-between"
+        justifyContent="center"
+        gap={8}
         as="section"
         aria-label="Release information"
         role="region"
       >
         <Text fontSize="sm" textAlign="center" fontWeight="semibold" p={1}>
-          Beta release
+          This is a beta version and is subject to change without notice
         </Text>
         <HStack>
           <Button
@@ -37,11 +39,12 @@ const PreReleaseNotice = () => {
             variant="link"
             color="white"
             colorScheme="whiteAlpha"
+            fontWeight="bold"
             size="xs"
             p={1}
             onClick={feedbackDialogDisclosure.onOpen}
           >
-            Feedback
+            <FormattedMessage id="feedback" />
           </Button>
         </HStack>
       </Flex>

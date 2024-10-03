@@ -1151,6 +1151,12 @@
       "value": "Edit in MakeCode"
     }
   ],
+  "feedback": [
+    {
+      "type": 0,
+      "value": "Feedback"
+    }
+  ],
   "footer.connectButton": [
     {
       "type": 0,
@@ -1335,12 +1341,6 @@
     {
       "type": 0,
       "value": "Project loaded"
-    }
-  ],
-  "prototype.warning": [
-    {
-      "type": 0,
-      "value": "This is a prototype version and is subject to change without notice"
     }
   ],
   "reconnectFailed.bluetooth1": [

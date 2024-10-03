@@ -663,6 +663,10 @@
     "defaultMessage": "Edit in MakeCode",
     "description": "Edit in MakeCode button text"
   },
+  "feedback": {
+    "defaultMessage": "Feedback",
+    "description": "Action to open a feedback dialog"
+  },
   "footer.connectButton": {
     "defaultMessage": "Connect",
     "description": ""
