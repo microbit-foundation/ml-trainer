@@ -112,7 +112,7 @@ const HelpMenu = ({ isMobile, ...rest }: HelpMenuProps) => {
                 onClick={deployment.compliance.manageCookies}
                 icon={<MdOutlineCookie />}
               >
-                <FormattedMessage id="help-support" />
+                <FormattedMessage id="cookies-action" />
               </MenuItem>
             )}
             {(deployment.privacyPolicyLink ||
