@@ -75,7 +75,6 @@ export const getNextConnectionState = ({
       currStatus === ConnectionStatus.Connected
         ? ConnectionStatus.ConnectionLost
         : ConnectionStatus.FailedToReconnect;
-
     return { status, flowType };
   }
 
