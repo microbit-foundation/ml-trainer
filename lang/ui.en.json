@@ -75,6 +75,14 @@
     "defaultMessage": "<link1>Connect a data collection micro:bit</link1> or <link2>import data samples</link2>",
     "description": "Empty data samples page text"
   },
+  "connect-remote-microbit-description": {
+    "defaultMessage": "Connect USB cable to the data collection micro:bit",
+    "description": "Connect the data collection micro:bit to this computer with a USB cable to download your machine learning MakeCode program to it."
+  },
+  "connect-remote-microbit-title": {
+    "defaultMessage": "Connect USB cable to the data collection micro:bit",
+    "description": "Connect data collection micro:bit dialog title"
+  },
   "connect-to-record-body": {
     "defaultMessage": "Connect a micro:bit to record a data sample.",
     "description": "Insufficient data modal content"
@@ -978,5 +986,17 @@
   "train-model-title": {
     "defaultMessage": "Train model",
     "description": "Train model step title"
+  },
+  "unplug-bridge-microbit-description": {
+    "defaultMessage": "Disconnect the radio link micro:bit from the computer.",
+    "description": "Unplug radio link micro:bit dialog description"
+  },
+  "unplug-bridge-microbit-label": {
+    "defaultMessage": "animation showing a USB cable being disconnected from the top of a micro:bit",
+    "description": "Unplug radio link micro:bit dialog aria label"
+  },
+  "unplug-bridge-microbit-title": {
+    "defaultMessage": "Unplug the radio link micro:bit",
+    "description": "Unplug radio link micro:bit dialog title"
   }
 }

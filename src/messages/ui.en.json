@@ -159,6 +159,18 @@
       "value": "link2"
     }
   ],
+  "connect-remote-microbit-description": [
+    {
+      "type": 0,
+      "value": "Connect USB cable to the data collection micro:bit"
+    }
+  ],
+  "connect-remote-microbit-title": [
+    {
+      "type": 0,
+      "value": "Connect USB cable to the data collection micro:bit"
+    }
+  ],
   "connect-to-record-body": [
     {
       "type": 0,
@@ -1637,6 +1649,24 @@
     {
       "type": 0,
       "value": "Train model"
+    }
+  ],
+  "unplug-bridge-microbit-description": [
+    {
+      "type": 0,
+      "value": "Disconnect the radio link micro:bit from the computer."
+    }
+  ],
+  "unplug-bridge-microbit-label": [
+    {
+      "type": 0,
+      "value": "animation showing a USB cable being disconnected from the top of a micro:bit"
+    }
+  ],
+  "unplug-bridge-microbit-title": [
+    {
+      "type": 0,
+      "value": "Unplug the radio link micro:bit"
     }
   ]
 }

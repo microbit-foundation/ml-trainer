@@ -8,6 +8,7 @@ import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import { DownloadStep as DownloadStep } from "../model";
 import { useDownloadActions } from "../hooks/download-hooks";
 import { useStore } from "../store";
+import UnplugMicrobitDialog from "./UnplugMicrobitDialog";
 
 const DownloadDialogs = () => {
   const actions = useDownloadActions();
@@ -47,6 +48,28 @@ const DownloadDialogs = () => {
             headingId: "connectMB.connectCable.heading",
             subtitleId: "connectMB.connectCable.downloadProject.subtitle",
           }}
+        />
+      );
+    case DownloadStep.ConnectBridgeMicrobit:
+      return (
+        <ConnectCableDialog
+          isOpen
+          onClose={actions.close}
+          onBackClick={actions.getOnBack()}
+          onNextClick={actions.getOnNext()}
+          config={{
+            headingId: "connect-remote-microbit-title",
+            subtitleId: "connect-remote-microbit-description",
+          }}
+        />
+      );
+    case DownloadStep.UnplugBridgeMicrobit:
+      return (
+        <UnplugMicrobitDialog
+          isOpen
+          onClose={actions.close}
+          onBackClick={actions.getOnBack()}
+          onNextClick={actions.getOnNext()}
         />
       );
     case DownloadStep.WebUsbFlashingTutorial:

@@ -54,7 +54,8 @@ export const getNextConnectionState = ({
       // Ignore usb status when reconnecting.
       // Serial connection gets intentionally disconnected before reconnect.
       currStatus === ConnectionStatus.ReconnectingAutomatically ||
-      currStatus === ConnectionStatus.ReconnectingExplicitly
+      currStatus === ConnectionStatus.ReconnectingExplicitly ||
+      currStatus === ConnectionStatus.NotConnected
     ) {
       return undefined;
     }
@@ -74,6 +75,7 @@ export const getNextConnectionState = ({
       currStatus === ConnectionStatus.Connected
         ? ConnectionStatus.ConnectionLost
         : ConnectionStatus.FailedToReconnect;
+
     return { status, flowType };
   }
 

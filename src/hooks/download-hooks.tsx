@@ -11,7 +11,11 @@ import {
 import { useConnectActions } from "../connect-actions-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { ConnectionStageActions } from "../connection-stage-actions";
-import { useConnectionStage } from "../connection-stage-hooks";
+import {
+  ConnectionFlowType,
+  ConnectionStage,
+  useConnectionStage,
+} from "../connection-stage-hooks";
 import {
   DownloadState,
   DownloadStep,
@@ -24,48 +28,47 @@ import { downloadHex } from "../utils/fs-util";
 
 export class DownloadProjectActions {
   constructor(
-    private stage: DownloadState,
-    private setStage: (stage: DownloadState) => void,
+    private state: DownloadState,
+    private setState: (stage: DownloadState) => void,
     private settings: Settings,
     private setSettings: (settings: Partial<Settings>) => void,
     private connectActions: ConnectActions,
+    private connectionStage: ConnectionStage,
     private connectionStageActions: ConnectionStageActions,
     private connectionStatus: ConnectionStatus
   ) {}
 
   clearMakeCodeUsbDevice = () => {
-    this.setStage({ ...this.stage, usbDevice: undefined });
+    this.setState({ ...this.state, usbDevice: undefined });
   };
 
   start = async (download: HexData) => {
-    if (this.stage.usbDevice) {
-      if (this.stage.usbDevice.status === UsbConnectionStatus.CONNECTED) {
-        const newStage = {
-          ...this.stage,
-          step: DownloadStep.FlashingInProgress,
-          project: download,
-        };
-        this.setStage(newStage);
-        return this.flashMicrobit(newStage, {
-          temporaryUsbConnection: this.stage.usbDevice,
-        });
-      }
-      if (!this.settings.showPreDownloadHelp) {
-        this.updateStage({ hex: download });
-        return this.onHelpNext(true);
-      }
-      return this.updateStage({
-        hex: download,
-        step: DownloadStep.ConnectCable,
+    if (
+      this.state.usbDevice &&
+      this.state.usbDevice.status === UsbConnectionStatus.CONNECTED
+    ) {
+      const newState = {
+        ...this.state,
+        step: DownloadStep.FlashingInProgress,
+        project: download,
+      };
+      this.setState(newState);
+      return this.flashMicrobit(newState, {
+        temporaryUsbConnection: this.state.usbDevice,
       });
+    }
+    if (!this.settings.showPreDownloadHelp) {
+      const newState = { ...this.state, hex: download };
+      return this.onHelpNext(true, newState);
     }
     this.updateStage({
       step: DownloadStep.Help,
+      microbitToFlash: MicrobitToFlash.Default,
       hex: download,
     });
   };
 
-  onHelpNext = (isSkipNextTime: boolean) => {
+  onHelpNext = (isSkipNextTime: boolean, state?: DownloadState) => {
     this.setSettings({ showPreDownloadHelp: !isSkipNextTime });
 
     // If we've connected to a micro:bit in the session, we make the user
@@ -73,10 +76,13 @@ export class DownloadProjectActions {
     // This makes reconnect easier if the user has two micro:bits.
     if (this.connectionStatus !== ConnectionStatus.NotConnected) {
       return this.updateStage({
+        ...(state ?? {}),
         step: DownloadStep.ChooseSameOrAnotherMicrobit,
+        microbitToFlash: MicrobitToFlash.Default,
       });
     }
     this.updateStage({
+      ...(state ?? {}),
       step: DownloadStep.ConnectCable,
     });
   };
@@ -86,14 +92,28 @@ export class DownloadProjectActions {
 
   onBackToIntro = () => this.setStep(DownloadStep.Help);
 
+  private isBluetoothConnected = () =>
+    this.connectionStage.flowType === ConnectionFlowType.ConnectBluetooth;
+
   onChosenSameMicrobit = async () => {
-    if (this.connectActions.isUsbDeviceConnected()) {
-      const newStage = { ...this.stage, microbitToFlash: MicrobitToFlash.Same };
+    const isBluetoothConnected = this.isBluetoothConnected();
+    if (this.connectActions.isUsbDeviceConnected() && isBluetoothConnected) {
+      const newStage = {
+        ...this.state,
+        microbitToFlash: MicrobitToFlash.Same,
+      };
       // Can flash directly without choosing device.
       return this.connectAndFlashMicrobit(newStage);
     }
+    if (!isBluetoothConnected) {
+      // Disconnect input micro:bit to not trigger radio connection lost warning.
+      await this.connectionStageActions.disconnectInputMicrobit();
+    }
+
     this.updateStage({
-      step: DownloadStep.ConnectCable,
+      step: isBluetoothConnected
+        ? DownloadStep.ConnectCable
+        : DownloadStep.UnplugBridgeMicrobit,
       microbitToFlash: MicrobitToFlash.Same,
     });
   };
@@ -107,8 +127,11 @@ export class DownloadProjectActions {
 
   connectAndFlashMicrobit = async (stage: DownloadState) => {
     let connectionAndFlashOptions: ConnectionAndFlashOptions | undefined;
-    if (stage.microbitToFlash === MicrobitToFlash.Same) {
-      // Disconnect input micro:bit to not trigger connection lost warning.
+    if (
+      stage.microbitToFlash === MicrobitToFlash.Same &&
+      this.isBluetoothConnected()
+    ) {
+      // Disconnect input micro:bit to not trigger bluetooth connection lost warning.
       await this.connectionStageActions.disconnectInputMicrobit();
     }
     if (stage.microbitToFlash === MicrobitToFlash.Different) {
@@ -164,50 +187,80 @@ export class DownloadProjectActions {
   };
 
   private flashingProgressCallback = (progress: number) => {
-    this.setStage({
-      ...this.stage,
+    this.setState({
+      ...this.state,
       step: DownloadStep.FlashingInProgress,
       flashProgress: progress,
     });
   };
 
-  close = () => this.setStep(DownloadStep.None);
-  getOnNext = () => this.getOnNextIfPossible(1);
-  getOnBack = () => this.getOnNextIfPossible(-1);
-
-  private getOnNextIfPossible = (inc: number) =>
-    this.getNextStep(inc)
-      ? () => this.setStep(this.getNextStep(inc))
-      : undefined;
-
-  private getNextStep = (inc: number): DownloadStep => {
-    const orderedSteps = this.downloadProjectStepOrder();
-    const currIdx = orderedSteps.indexOf(this.stage.step);
-    const nextIdx = currIdx + inc;
-    if (currIdx < 0 || nextIdx < 0 || nextIdx === orderedSteps.length) {
-      undefined;
-    }
-    return orderedSteps[nextIdx];
+  getOnNext = () => {
+    const nextStep = this.getNextStep();
+    return nextStep ? () => this.setStep(nextStep) : undefined;
   };
 
-  private downloadProjectStepOrder = () => [
-    ...(this.settings.showPreDownloadHelp ? [DownloadStep.Help] : []),
-    ...(this.stage.step === DownloadStep.ChooseSameOrAnotherMicrobit ||
-    this.stage.microbitToFlash !== MicrobitToFlash.Default
-      ? [DownloadStep.ChooseSameOrAnotherMicrobit]
-      : []),
-    DownloadStep.ConnectCable,
-    this.stage.step === DownloadStep.ManualFlashingTutorial
-      ? DownloadStep.ManualFlashingTutorial
-      : DownloadStep.WebUsbFlashingTutorial,
-  ];
+  getOnBack = () => {
+    const prevStep = this.getPrevStep();
+    return prevStep ? () => this.setStep(prevStep) : undefined;
+  };
+
+  private getNextStep = (): DownloadStep | undefined => {
+    switch (this.state.step) {
+      case DownloadStep.UnplugBridgeMicrobit:
+        return DownloadStep.ConnectBridgeMicrobit;
+      case DownloadStep.ConnectCable:
+      case DownloadStep.ConnectBridgeMicrobit:
+        return DownloadStep.WebUsbFlashingTutorial;
+      default:
+        throw new Error(`Next step not accounted for: ${this.state.step}`);
+    }
+  };
+
+  private getPrevStep = (): DownloadStep | undefined => {
+    switch (this.state.step) {
+      case DownloadStep.ChooseSameOrAnotherMicrobit: {
+        if (this.settings.showPreDownloadHelp) {
+          return DownloadStep.Help;
+        }
+        return undefined;
+      }
+      case DownloadStep.UnplugBridgeMicrobit:
+        return DownloadStep.ChooseSameOrAnotherMicrobit;
+      case DownloadStep.ConnectBridgeMicrobit:
+        return DownloadStep.UnplugBridgeMicrobit;
+      case DownloadStep.ConnectCable: {
+        if (this.state.microbitToFlash !== MicrobitToFlash.Default) {
+          return DownloadStep.ChooseSameOrAnotherMicrobit;
+        }
+        if (this.settings.showPreDownloadHelp) {
+          return DownloadStep.Help;
+        }
+        return undefined;
+      }
+      case DownloadStep.ManualFlashingTutorial:
+      case DownloadStep.WebUsbFlashingTutorial: {
+        if (
+          !this.isBluetoothConnected() &&
+          this.state.microbitToFlash === MicrobitToFlash.Same
+        ) {
+          return DownloadStep.ConnectBridgeMicrobit;
+        } else {
+          return DownloadStep.ConnectCable;
+        }
+      }
+      default:
+        throw new Error(`Prev step not accounted for: ${this.state.step}`);
+    }
+  };
+
+  close = () => this.setStep(DownloadStep.None);
 
   private updateStage = (partialStage: Partial<DownloadState>) => {
-    this.setStage({ ...this.stage, ...partialStage } as DownloadState);
+    this.setState({ ...this.state, ...partialStage } as DownloadState);
   };
 
   private setStep = (step: DownloadStep) =>
-    this.setStage({ ...this.stage, step });
+    this.setState({ ...this.state, step });
 }
 
 export const useDownloadActions = (): DownloadProjectActions => {
@@ -215,8 +268,11 @@ export const useDownloadActions = (): DownloadProjectActions => {
   const setStage = useStore((s) => s.setDownload);
   const [settings, setSettings] = useSettings();
   const connectActions = useConnectActions();
-  const { actions: connectionStageActions, status: connectionStatus } =
-    useConnectionStage();
+  const {
+    actions: connectionStageActions,
+    status: connectionStatus,
+    stage: connectionStage,
+  } = useConnectionStage();
   return useMemo(
     () =>
       new DownloadProjectActions(
@@ -225,11 +281,13 @@ export const useDownloadActions = (): DownloadProjectActions => {
         settings,
         setSettings,
         connectActions,
+        connectionStage,
         connectionStageActions,
         connectionStatus
       ),
     [
       connectActions,
+      connectionStage,
       connectionStageActions,
       connectionStatus,
       setSettings,

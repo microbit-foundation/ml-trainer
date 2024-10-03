@@ -109,10 +109,12 @@ export enum DownloadStep {
   Help = "Introduction",
   ChooseSameOrAnotherMicrobit = "ChooseSameOrAnotherMicrobit",
   ConnectCable = "ConnectCable",
+  ConnectBridgeMicrobit = "ConnectBridgeMicrobit",
   WebUsbFlashingTutorial = "WebUsbFlashingTutorial",
   WebUsbChooseMicrobit = "WebUsbChooseMicrobit",
   FlashingInProgress = "FlashingInProgress",
   ManualFlashingTutorial = "ManualFlashingTutorial",
+  UnplugBridgeMicrobit = "UnplugBridgeMicrobit",
 }
 
 export enum MicrobitToFlash {

@@ -144,6 +144,22 @@ describe("getNextConnectionState for radio connection", () => {
       expectedNextConnectionState: undefined,
     });
   });
+  test("radio disconnected from downloading MakeCodeProgram", () => {
+    testGetNextConnectionState({
+      input: {
+        currConnType: "radio",
+        currStatus: ConnectionStatus.NotConnected,
+        deviceStatus: DeviceConnectionStatus.DISCONNECTED,
+        prevDeviceStatus: DeviceConnectionStatus.CONNECTED,
+        type: "usb",
+      },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
+      initialHasAttemptedReconnect: false,
+      expectedHasAttemptedReconnect: false,
+      expectedNextConnectionState: undefined,
+    });
+  });
   test("radio connect fail", () => {
     testGetNextConnectionState({
       input: {
