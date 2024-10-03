@@ -16,9 +16,9 @@ export type Flag =
    */
   | "devtools"
   /**
-   * Flag to add a prototype warning. Enabled for staging site and production stages.
+   * Flag to add a beta warning. Enabled for staging site and production stages.
    */
-  | "prototypeWarning"
+  | "preReleaseNotice"
   /**
    * Example flags used for testing.
    */
@@ -33,7 +33,7 @@ interface FlagMetadata {
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
   { name: "devtools", defaultOnStages: ["local"] },
-  { name: "prototypeWarning", defaultOnStages: ["staging", "production"] },
+  { name: "preReleaseNotice", defaultOnStages: ["review", "staging"] },
   { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
   { name: "exampleOptInB", defaultOnStages: [] },
 ];

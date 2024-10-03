@@ -30,7 +30,7 @@ import HelpMenu from "./HelpMenu";
 import LanguageMenuItem from "./LanguageMenuItem";
 import LoadProjectMenuItem from "./LoadProjectMenuItem";
 import OpenButton from "./OpenButton";
-import PrototypeVersionWarning from "./PrototypeVersionWarning";
+import PreReleaseNotice from "./PreReleaseNotice";
 import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
@@ -196,7 +196,7 @@ const DefaultPageLayout = ({
             </>
           }
         />
-        {flags.prototypeWarning && <PrototypeVersionWarning />}
+        {flags.preReleaseNotice && <PreReleaseNotice />}
         <Flex flexGrow={1} flexDir="column">
           {children}
         </Flex>
