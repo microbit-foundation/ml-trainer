@@ -1,6 +1,5 @@
-import { As, Divider, HStack, Image } from "@chakra-ui/react";
-import AppNameLogo from "../images/app-name.svg";
-import MicrobitLogo from "./MicrobitLogo";
+import { As, Divider, HStack } from "@chakra-ui/react";
+import { useDeployment } from "../deployment";
 
 const AppLogo = ({
   color = "#FFF",
@@ -9,25 +8,31 @@ const AppLogo = ({
   color?: string;
   beta?: boolean;
   as?: As;
-  name: string;
-}) => (
-  <HStack
-    as={as}
-    spacing={4}
-    userSelect="none"
-    transform="scale(0.93)"
-    transformOrigin="left"
-  >
-    <MicrobitLogo fill={color} alt="micro:bit" />
-    <Divider
-      aria-hidden
-      borderColor={color}
-      orientation="vertical"
-      h="33px"
-      borderWidth="1px"
-    />
-    <Image src={AppNameLogo} alt="micro:bit" h="18px" />
-  </HStack>
-);
+}) => {
+  const { AppLogo, OrgLogo } = useDeployment();
+  return (
+    <HStack
+      as={as}
+      spacing={4}
+      userSelect="none"
+      transform="scale(0.93)"
+      transformOrigin="left"
+    >
+      {OrgLogo && (
+        <>
+          <OrgLogo />
+          <Divider
+            aria-hidden
+            borderColor={color}
+            orientation="vertical"
+            h="33px"
+            borderWidth="1px"
+          />
+        </>
+      )}
+      <AppLogo h="18px" />
+    </HStack>
+  );
+};
 
 export default AppLogo;

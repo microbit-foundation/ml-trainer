@@ -36,7 +36,7 @@ const TrainingModelProgressDialog = ({
               </Heading>
               <Progress
                 value={progress}
-                colorScheme="green"
+                colorScheme="brand2"
                 size="md"
                 rounded={100}
               />

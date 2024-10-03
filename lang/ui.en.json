@@ -376,7 +376,7 @@
     "description": ""
   },
   "connectMB.usbTryAgain.closeTabs2": {
-    "defaultMessage": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, AI creator), or unplug and replug the micro:bit before trying again.",
+    "defaultMessage": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, {appNameShort}), or unplug and replug the micro:bit before trying again.",
     "description": ""
   },
   "connectMB.usbTryAgain.heading": {
@@ -440,7 +440,7 @@
     "description": ""
   },
   "content.data.classHelpBody": {
-    "defaultMessage": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’.",
+    "defaultMessage": "The type of movement you want the {appNameFull} to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": ""
   },
   "content.data.classPlaceholderNewClass": {
@@ -516,7 +516,7 @@
     "description": ""
   },
   "content.model.output.action.descriptionBody": {
-    "defaultMessage": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’.",
+    "defaultMessage": "The type of movement you want the {appNameFull} to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": ""
   },
   "content.model.output.action.descriptionTitle": {
@@ -560,7 +560,7 @@
     "description": ""
   },
   "content.trainer.description": {
-    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit AI creator to recognise different actions when you move your micro:bit.",
+    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the {appNameFull} to recognise different actions when you move your micro:bit.",
     "description": ""
   },
   "content.trainer.failure.body": {
@@ -705,11 +705,7 @@
   },
   "homepage-subtitle": {
     "defaultMessage": "Introduce students to machine learning concepts through physical movement and data",
-    "description": "Subtitle of micro:bit AI creator home page"
-  },
-  "homepage-title": {
-    "defaultMessage": "micro:bit AI creator",
-    "description": "Title of micro:bit AI creator home page"
+    "description": "Subtitle of the home page"
   },
   "homepage.Link": {
     "defaultMessage": "Home page",

@@ -26,7 +26,6 @@ const MoreMenuButton = React.forwardRef(function MoreMenuButtonInner(
       ref={ref}
       variant={variant}
       borderLeft="1px"
-      borderRadius="button"
       as={IconButton}
       icon={
         <MdMoreVert

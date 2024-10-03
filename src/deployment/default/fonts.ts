@@ -1,6 +1,11 @@
+/**
+ * (c) 2021, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 const fonts = {
-  heading: "Helvetica Now, sans-serif",
-  body: "Helvetica Now, sans-serif",
+  heading: "Helvetica, Arial, sans-serif",
+  body: "Helvetica, Arial, sans-serif",
 };
 
 export default fonts;

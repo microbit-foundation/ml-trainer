@@ -12,6 +12,7 @@ import StartResumeActions from "../components/StartResumeActions";
 import addDataImage from "../images/add_data.svg";
 import testModelImage from "../images/test_model_blue.svg";
 import trainModelImage from "../images/train_model_blue.svg";
+import { useDeployment } from "../deployment";
 
 type StepId = "add-data" | "train-model" | "test-model";
 
@@ -37,6 +38,7 @@ const stepsConfig: StepConfig[] = [
 
 const HomePage = () => {
   const intl = useIntl();
+  const { appNameFull } = useDeployment();
   return (
     <DefaultPageLayout showOpenButton>
       <VStack
@@ -48,7 +50,7 @@ const HomePage = () => {
       >
         <VStack justifyItems="center" justify="center" gap={5}>
           <Heading as="h1" fontSize="4xl" fontWeight="bold">
-            <FormattedMessage id="homepage-title" />
+            {appNameFull}
           </Heading>
           <Text fontSize="xl">
             <FormattedMessage id="homepage-subtitle" />
