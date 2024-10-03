@@ -547,10 +547,6 @@
     "defaultMessage": "Estimated action: \"{action}\"",
     "description": ""
   },
-  "content.model.output.estimatedGesture.none": {
-    "defaultMessage": "None",
-    "description": ""
-  },
   "content.model.output.output.descriptionBody": {
     "defaultMessage": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit.",
     "description": ""
@@ -986,6 +982,10 @@
   "train-model-title": {
     "defaultMessage": "Train model",
     "description": "Train model step title"
+  },
+  "unknown": {
+    "defaultMessage": "unknown",
+    "description": "Label for unknown ML event"
   },
   "unplug-bridge-microbit-description": {
     "defaultMessage": "Disconnect the radio link micro:bit from the computer.",

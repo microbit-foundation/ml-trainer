@@ -132,9 +132,7 @@ const LiveGraphPanel = ({
               textAlign="center"
               w={`${predictedGestureDisplayWidth}px`}
             >
-              {detected?.name ?? (
-                <FormattedMessage id="content.model.output.estimatedGesture.none" />
-              )}
+              {detected?.name ?? <FormattedMessage id="unknown" />}
             </Text>
           </VStack>
         )}
