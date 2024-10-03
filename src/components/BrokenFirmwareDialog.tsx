@@ -55,7 +55,7 @@ const BrokenFirmwareDialog = ({
                     values={{
                       link: (chunks: ReactNode) => (
                         <Link
-                          color="blue.600"
+                          color="brand.600"
                           href="https://microbit.org/get-started/user-guide/firmware/"
                           target="_blank"
                           rel="noopener"
@@ -68,7 +68,7 @@ const BrokenFirmwareDialog = ({
                 </Text>
                 <Text w="100%">
                   <Link
-                    color="blue.600"
+                    color="brand.600"
                     href="https://microbit.org/get-started/user-guide/firmware/"
                     target="_blank"
                     rel="noopener"
@@ -80,7 +80,7 @@ const BrokenFirmwareDialog = ({
                     <Icon
                       as={RiExternalLinkLine}
                       boxSize={5}
-                      color="blue.600"
+                      color="brand.600"
                       position="relative"
                     />
                   </Link>

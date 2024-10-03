@@ -56,7 +56,7 @@ const StartOverWarningDialog = ({
                     values={{
                       link: (chunks: ReactNode) => (
                         <Link
-                          color="blue.600"
+                          color="brand.600"
                           onClick={handleSaveHex}
                           target="_blank"
                           rel="noopener"

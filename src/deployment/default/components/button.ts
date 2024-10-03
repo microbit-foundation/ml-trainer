@@ -10,7 +10,7 @@ const Button: StyleConfig = {
     },
     link: () => ({
       borderWidth: "0",
-      color: "blue.600",
+      color: "brand.600",
       fontWeight: "normal",
       bg: "transparent",
     }),

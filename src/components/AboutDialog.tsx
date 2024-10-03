@@ -83,7 +83,7 @@ const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
                         href="https://cctd.au.dk/"
                         target="_blank"
                         rel="noopener"
-                        color="blue.600"
+                        color="brand.600"
                       >
                         {chunks}
                       </Link>
