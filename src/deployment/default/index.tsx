@@ -34,19 +34,7 @@ const defaultDeploymentFactory: DeploymentConfigFactory = () => ({
       </VStack>
     );
   },
-  OrgLogo: (props: BoxProps) => {
-    return (
-      <VStack
-        color="white"
-        fontWeight="bold"
-        justifyContent="center"
-        alignItems="center"
-        {...props}
-      >
-        <Text>micro:bit</Text>
-      </VStack>
-    );
-  },
+  OrgLogo: undefined,
   logging: new NullLogging(),
   compliance: {
     ConsentProvider: ({ children }: { children: ReactNode }) => (
