@@ -219,10 +219,9 @@ export class DownloadProjectActions {
   private getPrevStep = (): DownloadStep | undefined => {
     switch (this.state.step) {
       case DownloadStep.ChooseSameOrAnotherMicrobit: {
-        if (this.settings.showPreDownloadHelp) {
-          return DownloadStep.Help;
-        }
-        return undefined;
+        return this.settings.showPreDownloadHelp
+          ? DownloadStep.Help
+          : undefined;
       }
       case DownloadStep.UnplugBridgeMicrobit:
         return DownloadStep.ChooseSameOrAnotherMicrobit;
@@ -239,14 +238,10 @@ export class DownloadProjectActions {
       }
       case DownloadStep.ManualFlashingTutorial:
       case DownloadStep.WebUsbFlashingTutorial: {
-        if (
-          !this.isBluetoothConnected() &&
+        return !this.isBluetoothConnected() &&
           this.state.microbitToFlash === MicrobitToFlash.Same
-        ) {
-          return DownloadStep.ConnectBridgeMicrobit;
-        } else {
-          return DownloadStep.ConnectCable;
-        }
+          ? DownloadStep.ConnectBridgeMicrobit
+          : DownloadStep.ConnectCable;
       }
       default:
         throw new Error(`Prev step not accounted for: ${this.state.step}`);
