@@ -16,10 +16,11 @@ export const filenames = {
   readme: "README.md",
 };
 
-const extensionName = "machine-learning";
+// Exported for testing.
+export const extensionName = "machine-learning";
 const extensionURL = "github:microbit-foundation/pxt-microbit-ml#v0.4.3";
 
-const pxt = {
+export const pxt = {
   name: "Untitled",
   description: "",
   dependencies: {
