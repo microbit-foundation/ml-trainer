@@ -42,7 +42,7 @@ interface AboutDialogProps {
  * An about dialog with version information.
  */
 const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
-  const { appNameFull } = useDeployment();
+  const { appNameFull, OrgLogo } = useDeployment();
   const versionInfo = [
     {
       name: appNameFull,
@@ -56,7 +56,6 @@ const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
     .join("\n");
 
   const { hasCopied, onCopy } = useClipboard(clipboardVersion);
-  const { OrgLogo } = useDeployment();
   const intl = useIntl();
   return (
     <Modal
