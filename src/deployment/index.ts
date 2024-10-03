@@ -48,7 +48,6 @@ export interface DeploymentConfig {
   chakraTheme: any;
 
   supportLink?: string;
-  guideLink?: string;
   termsOfUseLink?: string;
   privacyPolicyLink?: string;
 

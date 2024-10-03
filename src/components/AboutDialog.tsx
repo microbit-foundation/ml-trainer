@@ -80,7 +80,7 @@ const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
                   values={{
                     link: (chunks: ReactNode) => (
                       <Link
-                        href="https://microbit.org"
+                        href="https://cctd.au.dk/"
                         target="_blank"
                         rel="noopener"
                         color="blue.600"
