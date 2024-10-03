@@ -113,8 +113,12 @@ export const useConnectStatusUpdater = (
     useState<boolean>(true);
 
   useEffect(() => {
-    if (!isBrowserTabVisible && currConnType === "radio") {
-      // Show reconnecting when user hides browser tab for radio bridge connection
+    if (
+      !isBrowserTabVisible &&
+      currConnType === "radio" &&
+      connectionStatus === ConnectionStatus.Connected
+    ) {
+      // Show reconnecting when user hides browser tab and is radio connected
       setConnectionStatus(ConnectionStatus.ReconnectingAutomatically);
       return;
     }
