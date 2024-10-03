@@ -65,7 +65,7 @@ const TestingModelGridView = () => {
   const detectedLabel =
     detected?.name ??
     intl.formatMessage({
-      id: "content.model.output.estimatedGesture.none",
+      id: "unknown",
     });
 
   const [{ languageId }] = useSettings();
