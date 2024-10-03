@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 const LoadingAnimation = () => {
   return (
     <HStack justifyContent="center" width="100%" h={25} position="relative">
-      <Box className={styles.loader} color="green.500"></Box>
+      <Box className={styles.loader} color="brand2.500"></Box>
     </HStack>
   );
 };

@@ -2,12 +2,14 @@ import { Icon, Text, VStack } from "@chakra-ui/react";
 import { RiInformationLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import ClickableTooltip from "./ClickableTooltip";
+import { useDeployment } from "../deployment";
 
 export interface InfoToolTipProps {
   titleId: string;
   descriptionId: string;
 }
 const InfoToolTip = ({ titleId, descriptionId }: InfoToolTipProps) => {
+  const { appNameFull } = useDeployment();
   return (
     <ClickableTooltip
       hasArrow
@@ -18,7 +20,7 @@ const InfoToolTip = ({ titleId, descriptionId }: InfoToolTipProps) => {
             <FormattedMessage id={titleId} />
           </Text>
           <Text>
-            <FormattedMessage id={descriptionId} />
+            <FormattedMessage id={descriptionId} values={{ appNameFull }} />
           </Text>
         </VStack>
       }

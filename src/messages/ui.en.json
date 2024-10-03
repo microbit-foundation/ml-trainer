@@ -965,12 +965,6 @@
       "value": "\""
     }
   ],
-  "content.model.output.estimatedGesture.none": [
-    {
-      "type": 0,
-      "value": "None"
-    }
-  ],
   "content.model.output.output.descriptionBody": [
     {
       "type": 0,
@@ -1637,6 +1631,12 @@
     {
       "type": 0,
       "value": "Train model"
+    }
+  ],
+  "unknown": [
+    {
+      "type": 0,
+      "value": "unknown"
     }
   ]
 }

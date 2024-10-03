@@ -18,7 +18,7 @@ const ActionBar = ({
       px={5}
       alignItems="center"
       justifyContent="space-between"
-      bgColor="green.500"
+      bgColor="brand2.500"
       h="64px"
       minH="64px"
       {...rest}

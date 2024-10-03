@@ -1,4 +1,3 @@
-import { theme, StyleFunctionProps } from "@chakra-ui/react";
 import { StyleConfig } from "@chakra-ui/theme-tools";
 
 const Button: StyleConfig = {
@@ -9,25 +8,9 @@ const Button: StyleConfig = {
     unstyled: {
       borderRadius: "unset",
     },
-    zoom: (props: StyleFunctionProps) => {
-      const base = {
-        ...theme.components.Button.variants!.solid(props),
-      };
-      return {
-        ...base,
-        _hover: {
-          ...base._hover,
-          backgroundColor: "gray.400",
-        },
-        _active: {
-          ...base._active,
-          backgroundColor: "gray.500",
-        },
-      };
-    },
     link: () => ({
       borderWidth: "0",
-      color: "purple.500",
+      color: "brand.600",
       fontWeight: "normal",
       bg: "transparent",
     }),
@@ -47,14 +30,14 @@ const Button: StyleConfig = {
     led: () => ({
       borderWidth: "2px",
       borderRadius: 5,
-      borderColor: "green.500",
-      color: "green.700",
+      borderColor: "brand2.500",
+      color: "brand2.700",
       bg: "transparent",
       _hover: {
         cursor: "pointer",
-        borderColor: "green.500",
+        borderColor: "brand2.500",
       },
-      _active: { bg: "green.500", borderColor: "green.500" },
+      _active: { bg: "brand2.500", borderColor: "brand2.500" },
     }),
     ghost: () => ({
       color: "black",
@@ -108,33 +91,12 @@ const Button: StyleConfig = {
         boxShadow: "outlineDark",
       },
     }),
-    sidebar: (props: StyleFunctionProps) => {
-      const base = {
-        ...theme.components.Button.variants!.ghost(props),
-      };
-      return {
-        ...base,
-        _hover: {
-          ...base._hover,
-          bg: "white",
-          color: "gray.700",
-          _disabled: {
-            bg: base.bg,
-          },
-        },
-        _active: {
-          ...base._hover,
-          bg: "white",
-          color: "gray.800",
-        },
-      };
-    },
     language: () => ({
       borderWidth: "2px",
       borderColor: "gray.200",
-      color: "green.500",
+      color: "brand2.500",
       _hover: {
-        color: "green.600",
+        color: "brand2.600",
         bg: "gray.100",
       },
     }),

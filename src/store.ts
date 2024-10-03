@@ -48,7 +48,7 @@ const updateProject = (
     text: {
       ...project.text,
       ...(projectEdited
-        ? generateCustomFiles(gestureData, model)
+        ? generateCustomFiles(gestureData, model, project)
         : generateProject(gestureData, model).text),
     },
   };
