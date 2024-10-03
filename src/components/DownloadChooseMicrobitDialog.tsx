@@ -74,7 +74,10 @@ const DownloadChooseMicrobitDialog = ({
           {...group}
           mb={3}
         >
-          {[sameMicrobitCard, differentMicrobitCard].map((config) => {
+          {[
+            { ...sameMicrobitCard, id: MicrobitToFlash.Same },
+            { ...differentMicrobitCard, id: MicrobitToFlash.Different },
+          ].map((config) => {
             const radio = getRadioProps({ value: config.id });
             return (
               <RadioCard
