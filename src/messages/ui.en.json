@@ -676,7 +676,15 @@
   "connectMB.usbTryAgain.closeTabs2": [
     {
       "type": 0,
-      "value": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, AI creator), or unplug and replug the micro:bit before trying again."
+      "value": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, "
+    },
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": "), or unplug and replug the micro:bit before trying again."
     }
   ],
   "connectMB.usbTryAgain.heading": [
@@ -772,7 +780,15 @@
   "content.data.classHelpBody": [
     {
       "type": 0,
-      "value": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’."
+      "value": "The type of movement you want the "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to recognise e.g. ‘waving’ or ‘clapping’."
     }
   ],
   "content.data.classPlaceholderNewClass": [
@@ -924,7 +940,15 @@
   "content.model.output.action.descriptionBody": [
     {
       "type": 0,
-      "value": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’."
+      "value": "The type of movement you want the "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to recognise e.g. ‘waving’ or ‘clapping’."
     }
   ],
   "content.model.output.action.descriptionTitle": [
@@ -998,7 +1022,15 @@
   "content.trainer.description": [
     {
       "type": 0,
-      "value": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit AI creator to recognise different actions when you move your micro:bit."
+      "value": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to recognise different actions when you move your micro:bit."
     }
   ],
   "content.trainer.failure.body": [
@@ -1115,10 +1147,16 @@
       "value": "Don't show this again"
     }
   ],
-  "download-project-choose-microbit-subtitle": [
+  "download-project-choose-microbit-bluetooth-subtitle": [
     {
       "type": 0,
       "value": "Downloading your project on to the same micro:bit will disconnect the micro:bit from the tool. You will need to reconnect the micro:bit if you want to record more data samples."
+    }
+  ],
+  "download-project-choose-microbit-radio-subtitle": [
+    {
+      "type": 0,
+      "value": "Downloading your project on to the same micro:bit (radio link or data collection micro:bit) will disconnect them from the tool. You will need to reconnect again if you want to record more data samples."
     }
   ],
   "download-project-choose-microbit-title": [
@@ -1215,12 +1253,6 @@
     {
       "type": 0,
       "value": "Introduce students to machine learning concepts through physical movement and data"
-    }
-  ],
-  "homepage-title": [
-    {
-      "type": 0,
-      "value": "micro:bit AI creator"
     }
   ],
   "homepage.Link": [
