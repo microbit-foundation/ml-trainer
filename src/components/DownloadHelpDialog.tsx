@@ -16,6 +16,7 @@ import {
 import { ComponentProps, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import testModelImage from "../images/test_model_black.svg";
+import { useDeployment } from "../deployment";
 
 export interface DownloadHelpDialogProps
   extends Omit<ComponentProps<typeof Modal>, "children"> {
@@ -27,6 +28,7 @@ const DownloadHelpDialog = ({
   onNext,
   ...rest
 }: DownloadHelpDialogProps) => {
+  const { appNameFull } = useDeployment();
   const [isSkipNextTime, setSkipNextTime] = useState<boolean>(false);
   const handleOnNext = useCallback(() => {
     onNext(isSkipNextTime);
@@ -52,7 +54,10 @@ const DownloadHelpDialog = ({
                 <Image src={testModelImage} opacity={0.4} w="180px" alt="" />
                 <VStack gap={5}>
                   <Text textAlign="left">
-                    <FormattedMessage id="download-project-intro-description" />
+                    <FormattedMessage
+                      id="download-project-intro-description"
+                      values={{ appNameFull }}
+                    />
                   </Text>
                 </VStack>
               </HStack>
