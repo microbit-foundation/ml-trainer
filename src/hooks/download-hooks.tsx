@@ -77,7 +77,9 @@ export class DownloadProjectActions {
     if (this.connectionStatus !== ConnectionStatus.NotConnected) {
       return this.updateStage({
         ...(state ?? {}),
-        step: DownloadStep.ChooseSameOrAnotherMicrobit,
+        step: this.isBluetoothConnected()
+          ? DownloadStep.ChooseSameOrAnotherMicrobit
+          : DownloadStep.RadioHelp,
         microbitToFlash: MicrobitToFlash.Default,
       });
     }
@@ -96,8 +98,7 @@ export class DownloadProjectActions {
     this.connectionStage.flowType === ConnectionFlowType.ConnectBluetooth;
 
   onChosenSameMicrobit = async () => {
-    const isBluetoothConnected = this.isBluetoothConnected();
-    if (this.connectActions.isUsbDeviceConnected() && isBluetoothConnected) {
+    if (this.connectActions.isUsbDeviceConnected()) {
       const newStage = {
         ...this.state,
         microbitToFlash: MicrobitToFlash.Same,
@@ -105,15 +106,8 @@ export class DownloadProjectActions {
       // Can flash directly without choosing device.
       return this.connectAndFlashMicrobit(newStage);
     }
-    if (!isBluetoothConnected) {
-      // Disconnect input micro:bit to not trigger radio connection lost warning.
-      await this.connectionStageActions.disconnectInputMicrobit();
-    }
-
     this.updateStage({
-      step: isBluetoothConnected
-        ? DownloadStep.ConnectCable
-        : DownloadStep.UnplugBridgeMicrobit,
+      step: DownloadStep.ConnectCable,
       microbitToFlash: MicrobitToFlash.Same,
     });
   };
@@ -123,6 +117,12 @@ export class DownloadProjectActions {
       step: DownloadStep.ConnectCable,
       microbitToFlash: MicrobitToFlash.Different,
     });
+  };
+
+  onRadioHelpNext = async () => {
+    // Disconnect input micro:bit to not trigger radio connection lost warning.
+    await this.connectionStageActions.disconnectInputMicrobit();
+    this.setStep(DownloadStep.UnplugRadioBridgeMicrobit);
   };
 
   connectAndFlashMicrobit = async (stage: DownloadState) => {
@@ -206,10 +206,10 @@ export class DownloadProjectActions {
 
   private getNextStep = (): DownloadStep | undefined => {
     switch (this.state.step) {
-      case DownloadStep.UnplugBridgeMicrobit:
-        return DownloadStep.ConnectBridgeMicrobit;
+      case DownloadStep.UnplugRadioBridgeMicrobit:
+        return DownloadStep.ConnectRadioRemoteMicrobit;
       case DownloadStep.ConnectCable:
-      case DownloadStep.ConnectBridgeMicrobit:
+      case DownloadStep.ConnectRadioRemoteMicrobit:
         return DownloadStep.WebUsbFlashingTutorial;
       default:
         throw new Error(`Next step not accounted for: ${this.state.step}`);
@@ -218,15 +218,16 @@ export class DownloadProjectActions {
 
   private getPrevStep = (): DownloadStep | undefined => {
     switch (this.state.step) {
+      case DownloadStep.RadioHelp:
       case DownloadStep.ChooseSameOrAnotherMicrobit: {
         return this.settings.showPreDownloadHelp
           ? DownloadStep.Help
           : undefined;
       }
-      case DownloadStep.UnplugBridgeMicrobit:
+      case DownloadStep.UnplugRadioBridgeMicrobit:
         return DownloadStep.ChooseSameOrAnotherMicrobit;
-      case DownloadStep.ConnectBridgeMicrobit:
-        return DownloadStep.UnplugBridgeMicrobit;
+      case DownloadStep.ConnectRadioRemoteMicrobit:
+        return DownloadStep.UnplugRadioBridgeMicrobit;
       case DownloadStep.ConnectCable: {
         if (this.state.microbitToFlash !== MicrobitToFlash.Default) {
           return DownloadStep.ChooseSameOrAnotherMicrobit;
@@ -238,10 +239,9 @@ export class DownloadProjectActions {
       }
       case DownloadStep.ManualFlashingTutorial:
       case DownloadStep.WebUsbFlashingTutorial: {
-        return !this.isBluetoothConnected() &&
-          this.state.microbitToFlash === MicrobitToFlash.Same
-          ? DownloadStep.ConnectBridgeMicrobit
-          : DownloadStep.ConnectCable;
+        return this.isBluetoothConnected()
+          ? DownloadStep.ConnectCable
+          : DownloadStep.ConnectRadioRemoteMicrobit;
       }
       default:
         throw new Error(`Prev step not accounted for: ${this.state.step}`);

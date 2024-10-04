@@ -1081,6 +1081,12 @@
       "value": "Copy"
     }
   ],
+  "data-collection-microbit": [
+    {
+      "type": 0,
+      "value": "Data collection micro:bit"
+    }
+  ],
   "data-samples-title": [
     {
       "type": 0,
@@ -1183,6 +1189,18 @@
     {
       "type": 0,
       "value": "Download your machine learning MakeCode project"
+    }
+  ],
+  "download-project-radio-help-description": [
+    {
+      "type": 0,
+      "value": "Let's download your project on to the data collection micro:bit. This will disconnect the micro:bit from the tool. You will need to reconnect again if you want to record more samples."
+    }
+  ],
+  "download-project-radio-help-title": [
+    {
+      "type": 0,
+      "value": "Use your data collection micro:bit"
     }
   ],
   "download-project-same-microbit-option": [
@@ -1385,6 +1403,12 @@
     {
       "type": 0,
       "value": "Project loaded"
+    }
+  ],
+  "radio-link-microbit": [
+    {
+      "type": 0,
+      "value": "Radio link micro:bit"
     }
   ],
   "reconnectFailed.bluetooth1": [

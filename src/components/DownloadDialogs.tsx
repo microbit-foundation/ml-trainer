@@ -9,6 +9,7 @@ import { DownloadStep as DownloadStep } from "../model";
 import { useDownloadActions } from "../hooks/download-hooks";
 import { useStore } from "../store";
 import UnplugMicrobitDialog from "./UnplugMicrobitDialog";
+import DownloadRadioHelpDialog from "./DownloadRadioHelpDialog";
 
 const DownloadDialogs = () => {
   const actions = useDownloadActions();
@@ -24,6 +25,15 @@ const DownloadDialogs = () => {
           isOpen
           onClose={actions.close}
           onNext={actions.onHelpNext}
+        />
+      );
+    case DownloadStep.RadioHelp:
+      return (
+        <DownloadRadioHelpDialog
+          isOpen
+          onClose={actions.close}
+          onBackClick={actions.getOnBack()}
+          onNextClick={actions.onRadioHelpNext}
         />
       );
     case DownloadStep.ChooseSameOrAnotherMicrobit:
@@ -50,7 +60,7 @@ const DownloadDialogs = () => {
           }}
         />
       );
-    case DownloadStep.ConnectBridgeMicrobit:
+    case DownloadStep.ConnectRadioRemoteMicrobit:
       return (
         <ConnectCableDialog
           isOpen
@@ -63,7 +73,7 @@ const DownloadDialogs = () => {
           }}
         />
       );
-    case DownloadStep.UnplugBridgeMicrobit:
+    case DownloadStep.UnplugRadioBridgeMicrobit:
       return (
         <UnplugMicrobitDialog
           isOpen
