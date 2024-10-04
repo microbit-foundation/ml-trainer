@@ -135,7 +135,7 @@ export const useConnectStatusUpdater = (
         setOnFirstConnectAttempt,
       });
       prevDeviceStatus.current = deviceStatus;
-      if (nextState) {
+      if (nextState && isBrowserTabVisible) {
         handleStatus && handleStatus(nextState.status, nextState.flowType);
         setConnectionStatus(nextState.status);
       }
