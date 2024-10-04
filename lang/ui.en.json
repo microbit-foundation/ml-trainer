@@ -436,7 +436,7 @@
     "description": ""
   },
   "content.data.classHelpBody": {
-    "defaultMessage": "The type of movement you want the {appNameFull} to recognise e.g. ‘waving’ or ‘clapping’.",
+    "defaultMessage": "The type of movement you want {appNameFull} to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": ""
   },
   "content.data.classPlaceholderNewClass": {
@@ -512,7 +512,7 @@
     "description": ""
   },
   "content.model.output.action.descriptionBody": {
-    "defaultMessage": "The type of movement you want the {appNameFull} to recognise e.g. ‘waving’ or ‘clapping’.",
+    "defaultMessage": "The type of movement you want {appNameFull} to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": ""
   },
   "content.model.output.action.descriptionTitle": {
@@ -556,7 +556,7 @@
     "description": ""
   },
   "content.trainer.description": {
-    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the {appNameFull} to recognise different actions when you move your micro:bit.",
+    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows {appNameFull} to recognise different actions when you move your micro:bit.",
     "description": ""
   },
   "content.trainer.failure.body": {
@@ -648,7 +648,7 @@
     "description": "Download project different micro:bit option"
   },
   "download-project-intro-description": {
-    "defaultMessage": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to the micro:bit AI creator.",
+    "defaultMessage": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to {appNameFull}.",
     "description": "Download project intro dialog description"
   },
   "download-project-intro-title": {
@@ -764,7 +764,7 @@
     "description": "Empty data samples page status text"
   },
   "not-found": {
-    "defaultMessage": "micro:bit AI creator home page",
+    "defaultMessage": "{appNameFull} home page",
     "description": "Page not found link text"
   },
   "not-found-title": {
@@ -852,7 +852,7 @@
     "description": "Heading for the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message1": {
-    "defaultMessage": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit AI creator to continue working.",
+    "defaultMessage": "The download contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
     "description": "Text in the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message2": {
