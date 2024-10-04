@@ -1147,16 +1147,10 @@
       "value": "Don't show this again"
     }
   ],
-  "download-project-choose-microbit-bluetooth-subtitle": [
+  "download-project-choose-microbit-subtitle": [
     {
       "type": 0,
       "value": "Downloading your project on to the same micro:bit will disconnect the micro:bit from the tool. You will need to reconnect the micro:bit if you want to record more data samples."
-    }
-  ],
-  "download-project-choose-microbit-radio-subtitle": [
-    {
-      "type": 0,
-      "value": "Downloading your project on to the same micro:bit (radio link or data collection micro:bit) will disconnect them from the tool. You will need to reconnect again if you want to record more data samples."
     }
   ],
   "download-project-choose-microbit-title": [

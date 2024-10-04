@@ -107,8 +107,7 @@ export const enum TrainModelDialogStage {
 export enum DownloadStep {
   None = "None",
   Help = "Introduction",
-  ChooseSameOrAnotherMicrobitBluetooth = "ChooseSameOrAnotherMicrobitBluetooth",
-  ChooseSameOrAnotherMicrobitRadio = "ChooseSameOrAnotherMicrobitRadio",
+  ChooseSameOrAnotherMicrobit = "ChooseSameOrAnotherMicrobit",
   ConnectCable = "ConnectCable",
   ConnectBridgeMicrobit = "ConnectBridgeMicrobit",
   WebUsbFlashingTutorial = "WebUsbFlashingTutorial",

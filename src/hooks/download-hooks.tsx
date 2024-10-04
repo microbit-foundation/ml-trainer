@@ -77,9 +77,7 @@ export class DownloadProjectActions {
     if (this.connectionStatus !== ConnectionStatus.NotConnected) {
       return this.updateStage({
         ...(state ?? {}),
-        step: this.isBluetoothConnected()
-          ? DownloadStep.ChooseSameOrAnotherMicrobitBluetooth
-          : DownloadStep.ChooseSameOrAnotherMicrobitRadio,
+        step: DownloadStep.ChooseSameOrAnotherMicrobit,
         microbitToFlash: MicrobitToFlash.Default,
       });
     }
@@ -220,19 +218,18 @@ export class DownloadProjectActions {
 
   private getPrevStep = (): DownloadStep | undefined => {
     switch (this.state.step) {
-      case DownloadStep.ChooseSameOrAnotherMicrobitRadio:
-      case DownloadStep.ChooseSameOrAnotherMicrobitBluetooth: {
+      case DownloadStep.ChooseSameOrAnotherMicrobit: {
         return this.settings.showPreDownloadHelp
           ? DownloadStep.Help
           : undefined;
       }
       case DownloadStep.UnplugBridgeMicrobit:
-        return DownloadStep.ChooseSameOrAnotherMicrobitRadio;
+        return DownloadStep.ChooseSameOrAnotherMicrobit;
       case DownloadStep.ConnectBridgeMicrobit:
         return DownloadStep.UnplugBridgeMicrobit;
       case DownloadStep.ConnectCable: {
         if (this.state.microbitToFlash !== MicrobitToFlash.Default) {
-          return DownloadStep.ChooseSameOrAnotherMicrobitBluetooth;
+          return DownloadStep.ChooseSameOrAnotherMicrobit;
         }
         if (this.settings.showPreDownloadHelp) {
           return DownloadStep.Help;

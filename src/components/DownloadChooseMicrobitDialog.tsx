@@ -12,19 +12,18 @@ import {
 import { useCallback, useState } from "react";
 import { RiCheckboxBlankLine, RiCheckboxFill } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import { DownloadState, MicrobitToFlash } from "../model";
+import microbitImage from "../images/stylised-microbit-black.svg";
+import twoMicrobitsImage from "../images/stylised-two-microbits-black.svg";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
+import { DownloadState, MicrobitToFlash } from "../model";
 
 export interface DownloadChooseMicrobitDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
   onSameMicrobitClick: () => void;
   onDifferentMicrobitClick: () => void;
   stage: DownloadState;
-  subtitleId: string;
-  sameMicrobitCard: Omit<RadioCardProps, "isSelected">;
-  differentMicrobitCard: Omit<RadioCardProps, "isSelected">;
 }
 
 type MicrobitOption = MicrobitToFlash.Same | MicrobitToFlash.Different;
@@ -32,9 +31,6 @@ type MicrobitOption = MicrobitToFlash.Same | MicrobitToFlash.Different;
 const DownloadChooseMicrobitDialog = ({
   onSameMicrobitClick,
   onDifferentMicrobitClick,
-  subtitleId,
-  sameMicrobitCard,
-  differentMicrobitCard,
   stage,
   ...props
 }: DownloadChooseMicrobitDialogProps) => {
@@ -53,6 +49,16 @@ const DownloadChooseMicrobitDialog = ({
     onChange: handleOptionChange,
   });
   const group = getRootProps();
+  const radioCardOptions: Omit<RadioCardProps, "isSelected">[] = [
+    {
+      id: MicrobitToFlash.Same,
+      imgSrc: microbitImage,
+    },
+    {
+      id: MicrobitToFlash.Different,
+      imgSrc: twoMicrobitsImage,
+    },
+  ];
   return (
     <ConnectContainerDialog
       {...props}
@@ -65,7 +71,7 @@ const DownloadChooseMicrobitDialog = ({
     >
       <VStack gap={5} w="full">
         <Text textAlign="left" w="full">
-          <FormattedMessage id={subtitleId} />
+          <FormattedMessage id="download-project-choose-microbit-subtitle" />
         </Text>
         <HStack
           gap={5}
@@ -74,7 +80,7 @@ const DownloadChooseMicrobitDialog = ({
           {...group}
           mb={3}
         >
-          {[sameMicrobitCard, differentMicrobitCard].map((config) => {
+          {radioCardOptions.map((config) => {
             const radio = getRadioProps({ value: config.id });
             return (
               <RadioCard
@@ -92,17 +98,12 @@ const DownloadChooseMicrobitDialog = ({
 };
 
 interface RadioCardProps extends UseRadioProps {
-  textId: string;
+  id: MicrobitOption;
   imgSrc: string;
   isSelected: boolean;
 }
 
-const RadioCard = ({
-  textId,
-  imgSrc,
-  isSelected,
-  ...props
-}: RadioCardProps) => {
+const RadioCard = ({ id, imgSrc, isSelected, ...props }: RadioCardProps) => {
   const { getInputProps, getRadioProps } = useRadio(props);
 
   const input = getInputProps();
@@ -144,7 +145,7 @@ const RadioCard = ({
             justifySelf="center"
           />
           <Text fontWeight="bold" fontSize="md" w="full">
-            <FormattedMessage id={textId} />
+            <FormattedMessage id={`download-project-${id}-microbit-option`} />
           </Text>
         </VStack>
       </Box>
