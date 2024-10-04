@@ -79,9 +79,10 @@ export const ProjectProvider = ({
   );
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
-      console.log("doAfterEditorUpdate", appEditNeedsFlushToEditor);
+      console.log("doAfterEditorUpdate");
+      console.log("appEditNeedsFlushToEditor", appEditNeedsFlushToEditor);
       if (appEditNeedsFlushToEditor) {
-        console.log("appEditNeedsFlushToEditor");
+        console.log("FLUSH APP", project.header?.name);
         expectChangedHeader();
         await driverRef.current!.importProject({ project });
         projectFlushedToEditor();
@@ -133,8 +134,10 @@ export const ProjectProvider = ({
   const saveNextDownloadRef = useRef(false);
   const saveHex = useCallback(
     async (hex?: HexData): Promise<void> => {
+      console.log("SAVE HEX");
       const { step } = save;
       if (hex) {
+        console.log("Got hex", hex);
         if (settings.showPreSaveHelp && step === SaveStep.None) {
           // All we do is trigger the help and remember the project.
           setSave({
@@ -144,7 +147,6 @@ export const ProjectProvider = ({
         } else {
           // We can just go ahead and download. Either the project came from
           // the editor or via the dialog flow.
-          // TODO: Update hex name here
           downloadHex(hex);
           setSave({
             step: SaveStep.None,
@@ -159,6 +161,7 @@ export const ProjectProvider = ({
         }
       } else {
         // We need to request something to save.
+        console.log("requesting saving");
         setSave({
           step: SaveStep.SaveProgress,
         });
@@ -184,6 +187,7 @@ export const ProjectProvider = ({
   const editorChange = useStore((s) => s.editorChange);
   const onWorkspaceSave = useCallback(
     (event: EditorWorkspaceSaveRequest) => {
+      console.log("onWorkspaceSave", event.project.header?.name);
       editorChange(event.project);
     },
     [editorChange]

@@ -20,8 +20,8 @@ import {
   FormLabel,
   Input,
 } from "@chakra-ui/react";
+import { useCallback, useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { useCallback, useState } from "react";
 import { useStore } from "../store";
 
 interface NameProjectDialogProps {
@@ -45,24 +45,23 @@ export const NameProjectDialog = ({
   const updateProjectName = useStore((s) => s.updateProjectName);
   const initialName = project.header?.name || "";
   const [name, setName] = useState<string>(initialName);
-  const [validationResult, setValidationResult] = useState<ValidationResult>(
-    validateProjectName(initialName)
-  );
+  const validationResult = useMemo(() => validateProjectName(name), [name]);
   const isValid = validationResult === "valid";
 
   const handleNameOnChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       setName(value);
-      setValidationResult(validateProjectName(value));
+      if (validateProjectName(value) === "valid") {
+        updateProjectName(value);
+      }
     },
-    []
+    [updateProjectName]
   );
 
   const handleSubmit = useCallback(() => {
-    updateProjectName(name);
     onSave();
-  }, [name, onSave, updateProjectName]);
+  }, [onSave]);
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay>

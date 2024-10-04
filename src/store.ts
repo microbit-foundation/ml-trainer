@@ -468,22 +468,25 @@ export const useStore = create<Store>()(
           );
         },
 
-        updateProjectName(name: string) {
-          return set(
-            ({ project: previousProject, projectEdited, gestures, model }) => {
-              console.log("Update project name");
-              const newProject: Project = {
-                ...previousProject,
-                header: {
-                  ...previousProject.header!,
-                  name,
-                },
-              };
-              return {
-                ...updateProject(newProject, projectEdited, gestures, model),
-              };
-            }
-          );
+        updateProjectName(name: string): void {
+          console.log("s.updateProjectName", name);
+          const {
+            project: previousProject,
+            projectEdited,
+            gestures,
+            model,
+          } = get();
+          const newProject: Project = {
+            ...previousProject,
+            header: {
+              ...previousProject.header!,
+              name,
+            },
+          };
+          return set({
+            changedHeaderExpected: true,
+            ...updateProject(newProject, projectEdited, gestures, model),
+          });
         },
 
         editorChange(newProject: Project) {
@@ -496,6 +499,7 @@ export const useStore = create<Store>()(
                 changedHeaderExpected,
               } = state;
               const newProjectHeader = newProject.header!.id;
+              console.log(actionName, newProject.header?.name);
               const previousProjectHeader = prevProject.header!.id;
               if (newProjectHeader !== previousProjectHeader) {
                 if (changedHeaderExpected) {
