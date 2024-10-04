@@ -1,4 +1,4 @@
-import { HStack, Image, Text } from "@chakra-ui/react";
+import { AspectRatio, HStack, Image, Text } from "@chakra-ui/react";
 import accelerometerImage from "./images/microbit_xyz_arrows.png";
 import { TourId, TourStep } from "./model";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -23,12 +23,12 @@ const LiveGraphStep = () => {
       <Text>
         <FormattedMessage id="tour-dataSamples-liveGraph-content" />
       </Text>
-      <Image
-        src={accelerometerImage}
-        w="150px"
-        aspectRatio={500 / 482}
-        alt={intl.formatMessage({ id: "accelerometer-image-alt" })}
-      />
+      <AspectRatio ratio={500 / 482} w="150px" flexShrink={0}>
+        <Image
+          src={accelerometerImage}
+          alt={intl.formatMessage({ id: "accelerometer-image-alt" })}
+        />
+      </AspectRatio>
     </HStack>
   );
 };
