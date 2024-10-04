@@ -15,7 +15,6 @@ import { RiDownload2Line, RiFolderOpenLine, RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { flags } from "../flags";
-import { useProject } from "../hooks/project-hooks";
 import { SaveStep, TrainModelDialogStage } from "../model";
 import { SessionPageId } from "../pages-config";
 import Tour from "../pages/Tour";
@@ -60,7 +59,6 @@ const DefaultPageLayout = ({
   const isEditorOpen = useStore((s) => s.isEditorOpen);
   const stage = useStore((s) => s.trainModelDialogStage);
 
-  const { saveHex } = useProject();
   const [settings] = useSettings();
   const toast = useToast();
   const { appNameFull } = useDeployment();
@@ -100,9 +98,9 @@ const DefaultPageLayout = ({
     if (settings.showPreSaveHelp) {
       setSave({ step: SaveStep.PreSaveHelp });
     } else {
-      void saveHex();
+      setSave({ step: SaveStep.ProjectName });
     }
-  }, [saveHex, setSave, settings.showPreSaveHelp]);
+  }, [setSave, settings.showPreSaveHelp]);
 
   return (
     <>

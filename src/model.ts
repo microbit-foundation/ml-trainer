@@ -142,6 +142,7 @@ export interface SaveState {
 export enum SaveStep {
   None = "none",
   PreSaveHelp = "help",
+  ProjectName = "project name",
   /**
    * We only show this state if we initiated the save and need to wait for the editor.
    * Otherwise we already have the project data in the state and save it directly.

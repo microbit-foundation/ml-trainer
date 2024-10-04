@@ -79,7 +79,9 @@ export const ProjectProvider = ({
   );
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
+      console.log("doAfterEditorUpdate", appEditNeedsFlushToEditor);
       if (appEditNeedsFlushToEditor) {
+        console.log("appEditNeedsFlushToEditor");
         expectChangedHeader();
         await driverRef.current!.importProject({ project });
         projectFlushedToEditor();
@@ -142,6 +144,7 @@ export const ProjectProvider = ({
         } else {
           // We can just go ahead and download. Either the project came from
           // the editor or via the dialog flow.
+          // TODO: Update hex name here
           downloadHex(hex);
           setSave({
             step: SaveStep.None,

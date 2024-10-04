@@ -116,6 +116,10 @@ export interface Actions {
    * Resets the project.
    */
   resetProject(): void;
+  /**
+   * Updates the project name.
+   */
+  updateProjectName(name: string): void;
 
   /**
    * Remainer are used by project hooks for MakeCode integration.
@@ -461,6 +465,24 @@ export const useStore = create<Store>()(
             },
             false,
             "resetProject"
+          );
+        },
+
+        updateProjectName(name: string) {
+          return set(
+            ({ project: previousProject, projectEdited, gestures, model }) => {
+              console.log("Update project name");
+              const newProject: Project = {
+                ...previousProject,
+                header: {
+                  ...previousProject.header!,
+                  name,
+                },
+              };
+              return {
+                ...updateProject(newProject, projectEdited, gestures, model),
+              };
+            }
           );
         },
 
