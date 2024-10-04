@@ -780,7 +780,7 @@
   "content.data.classHelpBody": [
     {
       "type": 0,
-      "value": "The type of movement you want the "
+      "value": "The type of movement you want "
     },
     {
       "type": 1,
@@ -940,7 +940,7 @@
   "content.model.output.action.descriptionBody": [
     {
       "type": 0,
-      "value": "The type of movement you want the "
+      "value": "The type of movement you want "
     },
     {
       "type": 1,
@@ -1022,7 +1022,7 @@
   "content.trainer.description": [
     {
       "type": 0,
-      "value": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the "
+      "value": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows "
     },
     {
       "type": 1,
@@ -1174,7 +1174,15 @@
   "download-project-intro-description": [
     {
       "type": 0,
-      "value": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to the micro:bit AI creator."
+      "value": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "download-project-intro-title": [
@@ -1193,6 +1201,12 @@
     {
       "type": 0,
       "value": "Edit in MakeCode"
+    }
+  ],
+  "feedback": [
+    {
+      "type": 0,
+      "value": "Feedback"
     }
   ],
   "footer.connectButton": [
@@ -1323,8 +1337,12 @@
   ],
   "not-found": [
     {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
       "type": 0,
-      "value": "micro:bit AI creator home page"
+      "value": " home page"
     }
   ],
   "not-found-title": [
@@ -1373,12 +1391,6 @@
     {
       "type": 0,
       "value": "Project loaded"
-    }
-  ],
-  "prototype.warning": [
-    {
-      "type": 0,
-      "value": "This is a prototype version and is subject to change without notice"
     }
   ],
   "reconnectFailed.bluetooth1": [
@@ -1456,7 +1468,15 @@
   "save-hex-dialog-message1": [
     {
       "type": 0,
-      "value": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit AI creator to continue working."
+      "value": "The download contains your actions, data samples and your MakeCode project. Open it in "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to continue working."
     }
   ],
   "save-hex-dialog-message2": [

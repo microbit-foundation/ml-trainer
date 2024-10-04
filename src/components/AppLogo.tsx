@@ -30,7 +30,7 @@ const AppLogo = ({
           />
         </>
       )}
-      <AppLogo h="18px" />
+      <AppLogo h="19px" color="white" />
     </HStack>
   );
 };

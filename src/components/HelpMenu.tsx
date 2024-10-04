@@ -13,10 +13,12 @@ import { useRef } from "react";
 import { MdOutlineCookie } from "react-icons/md";
 import {
   RiExternalLinkLine,
+  RiFeedbackLine,
   RiInformationLine,
   RiQuestionLine,
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
+import FeedbackForm from "./FeedbackForm";
 import { useDeployment } from "../deployment";
 import AboutDialog from "./AboutDialog";
 
@@ -29,16 +31,20 @@ interface HelpMenuProps {
  */
 const HelpMenu = ({ isMobile, ...rest }: HelpMenuProps) => {
   const aboutDialogDisclosure = useDisclosure();
+  const feedbackDisclosure = useDisclosure();
   const intl = useIntl();
   const MenuButtonRef = useRef(null);
   const deployment = useDeployment();
-
   return (
     <Box display={isMobile ? { base: "block", lg: "none" } : undefined}>
       <AboutDialog
         isOpen={aboutDialogDisclosure.isOpen}
         onClose={aboutDialogDisclosure.onClose}
         finalFocusRef={MenuButtonRef}
+      />
+      <FeedbackForm
+        isOpen={feedbackDisclosure.isOpen}
+        onClose={feedbackDisclosure.onClose}
       />
       <Menu {...rest}>
         <MenuButton
@@ -68,6 +74,12 @@ const HelpMenu = ({ isMobile, ...rest }: HelpMenuProps) => {
                   icon={<RiExternalLinkLine />}
                 >
                   <FormattedMessage id="help-support" />
+                </MenuItem>
+                <MenuItem
+                  icon={<RiFeedbackLine />}
+                  onClick={feedbackDisclosure.onOpen}
+                >
+                  <FormattedMessage id="feedback" />
                 </MenuItem>
                 <MenuDivider />
               </>
