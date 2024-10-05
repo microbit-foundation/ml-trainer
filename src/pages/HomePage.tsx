@@ -255,7 +255,7 @@ const CodeIllustration = () => {
 const Arrow = (props: BoxProps) => {
   return (
     <Box
-      color="green.500"
+      color="brand.500"
       as="svg"
       w="65px"
       viewBox="0 0 122 345"
