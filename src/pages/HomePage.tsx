@@ -7,7 +7,6 @@ import {
   HStack,
   Image,
   Text,
-  useDisclosure,
   useInterval,
   VStack,
 } from "@chakra-ui/react";
@@ -220,7 +219,7 @@ const CollectDataIllustration = () => {
 
 const TestModelStepIllustration = () => {
   const [value, setValue] = useState(0.75);
-  const colorScheme = value >= 0.8 ? "green.500" : undefined;
+  const colorScheme = value >= 0.8 ? "brand2.500" : undefined;
   useInterval(() => {
     setValue((value) => 0.8 * value + 0.2 * Math.min(1, 2.5 * Math.random()));
   }, 1500);

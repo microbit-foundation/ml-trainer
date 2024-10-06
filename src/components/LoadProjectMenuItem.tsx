@@ -13,7 +13,7 @@ interface LoadProjectMenuItemProps
    * File input tag accept attribute.
    * A project can be opened from .json or .hex file.
    */
-  accept?: ".json" | ".hex";
+  accept: ".json" | ".hex" | ".json,.hex";
 }
 
 const LoadProjectMenuItem = ({

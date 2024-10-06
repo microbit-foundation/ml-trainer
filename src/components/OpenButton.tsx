@@ -15,7 +15,7 @@ const OpenButton = () => {
       >
         <FormattedMessage id="open-file-action" />
       </Button>
-      <LoadProjectInput ref={ref} />
+      <LoadProjectInput ref={ref} accept=".hex" />
     </>
   );
 };

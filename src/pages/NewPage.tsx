@@ -1,6 +1,5 @@
 import {
   Box,
-  BoxProps,
   Container,
   Heading,
   HStack,
@@ -62,13 +61,7 @@ const NewPage = () => {
     >
       <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
       <VStack alignItems="center">
-        <Container
-          maxW="container.xl"
-          alignItems="stretch"
-          zIndex={1}
-          p={4}
-          mt={8}
-        >
+        <Container maxW="1180px" alignItems="stretch" zIndex={1} p={4} mt={8}>
           <VStack alignItems="stretch" w="100%">
             <Heading as="h1" fontSize="4xl" fontWeight="bold">
               <FormattedMessage id="newpage-title" />
@@ -89,62 +82,51 @@ const NewPage = () => {
                 disabled={!existingSessionTimestamp}
                 icon={<Icon as={RiRestartLine} h={20} w={20} />}
               >
-                <SetupFormSection
-                  title={lastSessionTitle}
-                  justifyContent="space-between"
-                  description={
-                    existingSessionTimestamp ? (
-                      <Stack>
-                        <Text>
-                          <FormattedMessage
-                            id="newpage-last-session-name"
-                            values={{
-                              strong: (chunks: ReactNode) => (
-                                <Text as="span" fontWeight="bold">
-                                  {chunks}
-                                </Text>
-                              ),
-                              name: projectName,
-                            }}
-                          />
-                        </Text>
-                        <Text>
-                          <FormattedMessage
-                            id="newpage-last-session-date"
-                            values={{
-                              strong: (chunks: ReactNode) => (
-                                <Text as="span" fontWeight="bold">
-                                  {chunks}
-                                </Text>
-                              ),
-                              date: new Intl.DateTimeFormat(undefined, {
-                                dateStyle: "medium",
-                              }).format(existingSessionTimestamp),
-                            }}
-                          />
-                        </Text>
-                      </Stack>
-                    ) : (
-                      <Text>
-                        <FormattedMessage id="newpage-last-session-none" />
-                      </Text>
-                    )
-                  }
-                />
+                {existingSessionTimestamp ? (
+                  <Stack mt="auto">
+                    <Text>
+                      <FormattedMessage
+                        id="newpage-last-session-name"
+                        values={{
+                          strong: (chunks: ReactNode) => (
+                            <Text as="span" fontWeight="bold">
+                              {chunks}
+                            </Text>
+                          ),
+                          name: projectName,
+                        }}
+                      />
+                    </Text>
+                    <Text>
+                      <FormattedMessage
+                        id="newpage-last-session-date"
+                        values={{
+                          strong: (chunks: ReactNode) => (
+                            <Text as="span" fontWeight="bold">
+                              {chunks}
+                            </Text>
+                          ),
+                          date: new Intl.DateTimeFormat(undefined, {
+                            dateStyle: "medium",
+                          }).format(existingSessionTimestamp),
+                        }}
+                      />
+                    </Text>
+                  </Stack>
+                ) : (
+                  <Text>
+                    <FormattedMessage id="newpage-last-session-none" />
+                  </Text>
+                )}
               </NewPageChoice>
               <NewPageChoice
                 onClick={handleContinueSessionFromFile}
                 label={continueSessionTitle}
                 icon={<Icon as={RiFolderOpenLine} h={20} w={20} />}
               >
-                <SetupFormSection
-                  title={continueSessionTitle}
-                  description={
-                    <Text>
-                      <FormattedMessage id="newpage-continue-session-subtitle" />
-                    </Text>
-                  }
-                />
+                <Text>
+                  <FormattedMessage id="newpage-continue-session-subtitle" />
+                </Text>
               </NewPageChoice>
             </HStack>
             <Heading as="h2" fontSize="2xl" mt={8}>
@@ -162,14 +144,9 @@ const NewPage = () => {
                 disabled={false}
                 icon={<Icon as={RiAddLine} h={20} w={20} />}
               >
-                <SetupFormSection
-                  title={newSessionTitle}
-                  description={
-                    <Text>
-                      <FormattedMessage id="newpage-new-session-subtitle" />
-                    </Text>
-                  }
-                />
+                <Text>
+                  <FormattedMessage id="newpage-new-session-subtitle" />
+                </Text>
               </NewPageChoice>
               <Box flex="1" />
             </HStack>
@@ -179,23 +156,5 @@ const NewPage = () => {
     </DefaultPageLayout>
   );
 };
-
-interface SetupFormSectionProps extends BoxProps {
-  title: string;
-  description: ReactNode;
-}
-
-const SetupFormSection = ({
-  title,
-  description,
-  ...rest
-}: SetupFormSectionProps) => (
-  <Stack as="section" py={5} px={5} minH={40} flex="1 1 auto" {...rest}>
-    <Heading as="h3" fontSize="xl">
-      {title}
-    </Heading>
-    {description}
-  </Stack>
-);
 
 export default NewPage;

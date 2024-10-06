@@ -141,6 +141,7 @@ export const useStore = create<Store>()(
   devtools(
     persist(
       (set, get) => ({
+        timestamp: undefined,
         gestures: [],
         isRecording: false,
         project: {

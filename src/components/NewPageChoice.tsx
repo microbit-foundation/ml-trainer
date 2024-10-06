@@ -1,4 +1,11 @@
-import { BoxProps, HStack, IconButton } from "@chakra-ui/react";
+import {
+  Box,
+  BoxProps,
+  Heading,
+  HStack,
+  IconButton,
+  Stack,
+} from "@chakra-ui/react";
 import { ReactElement, ReactNode } from "react";
 
 interface GetStartedChoiceProps extends BoxProps {
@@ -34,30 +41,35 @@ const NewPageChoice = ({
       role="group"
       {...props}
     >
-      {children}
-      <IconButton
-        isDisabled={disabled}
-        flexGrow={0}
-        flexShrink={0}
-        flexBasis={40}
-        aria-label={label}
-        bgColor="brand.700"
-        color="white"
-        height="100%"
-        variant="unstyled"
-        icon={icon}
-        onClick={onClick}
-        borderInlineEndRadius="md"
-        _groupHover={{
-          color: disabled ? undefined : "#efedf5",
-        }}
-        _hover={{
-          bgColor: "brand.700",
-        }}
-        _disabled={{
-          opacity: 1,
-        }}
-      />
+      <Stack as="section" py={5} px={5} minH={40} flex="1 1 auto">
+        <Heading as="h3" fontSize="xl">
+          {label}
+        </Heading>
+        {children}
+      </Stack>
+      <Box>
+        <IconButton
+          w={40}
+          isDisabled={disabled}
+          aria-label={label}
+          bgColor="brand.700"
+          color="white"
+          height="100%"
+          variant="unstyled"
+          icon={icon}
+          onClick={onClick}
+          borderInlineEndRadius="md"
+          _groupHover={{
+            color: disabled ? undefined : "#efedf5",
+          }}
+          _hover={{
+            bgColor: "brand.700",
+          }}
+          _disabled={{
+            opacity: 1,
+          }}
+        />
+      </Box>
     </HStack>
   );
 };
