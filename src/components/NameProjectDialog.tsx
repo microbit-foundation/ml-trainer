@@ -27,7 +27,7 @@ import { useStore } from "../store";
 interface NameProjectDialogProps {
   onClose: () => void;
   isOpen: boolean;
-  onSave: () => void;
+  onSave: (newName?: string) => void;
 }
 
 type ValidationResult = "valid" | "project name empty";
@@ -41,27 +41,14 @@ export const NameProjectDialog = ({
   isOpen,
   onSave,
 }: NameProjectDialogProps) => {
-  const project = useStore((s) => s.project);
-  const updateProjectName = useStore((s) => s.updateProjectName);
-  const initialName = project.header?.name || "";
+  const initialName = useStore((s) => s.project.header?.name ?? "");
   const [name, setName] = useState<string>(initialName);
   const validationResult = useMemo(() => validateProjectName(name), [name]);
   const isValid = validationResult === "valid";
 
-  const handleNameOnChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setName(value);
-      if (validateProjectName(value) === "valid") {
-        updateProjectName(value);
-      }
-    },
-    [updateProjectName]
-  );
-
   const handleSubmit = useCallback(() => {
-    onSave();
-  }, [onSave]);
+    onSave(name);
+  }, [name, onSave]);
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay>
@@ -81,7 +68,7 @@ export const NameProjectDialog = ({
                   <Input
                     type="text"
                     value={name}
-                    onChange={handleNameOnChange}
+                    onChange={(e) => setName(e.currentTarget.value)}
                   ></Input>
                   <FormHelperText color="gray.700">
                     <FormattedMessage id="name-used-when" />
