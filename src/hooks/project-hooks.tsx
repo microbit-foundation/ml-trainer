@@ -180,7 +180,6 @@ export const ProjectProvider = ({
   const editorChange = useStore((s) => s.editorChange);
   const onWorkspaceSave = useCallback(
     (event: EditorWorkspaceSaveRequest) => {
-      console.log("onWorkspaceSave", event.project.header?.name);
       editorChange(event.project);
     },
     [editorChange]
