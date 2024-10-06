@@ -26,6 +26,7 @@ const NewPageChoice = ({
       bgColor="white"
       onClick={onClick}
       cursor="pointer"
+      alignItems="stretch"
       opacity={disabled ? 0.5 : undefined}
       _hover={{
         bgColor: disabled ? undefined : "#efedf5",
@@ -35,7 +36,6 @@ const NewPageChoice = ({
     >
       {children}
       <IconButton
-        className=".icon"
         isDisabled={disabled}
         flexGrow={0}
         flexShrink={0}

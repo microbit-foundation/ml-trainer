@@ -7,55 +7,43 @@ import {
   Icon,
   Stack,
   Text,
-  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { ReactNode, useCallback } from "react";
+import { ReactNode, useCallback, useRef } from "react";
 import { RiAddLine, RiFolderOpenLine, RiRestartLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import DefaultPageLayout from "../components/DefaultPageLayout";
+import LoadProjectInput, {
+  LoadProjectInputRef,
+} from "../components/LoadProjectInput";
 import NewPageChoice from "../components/NewPageChoice";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { SessionPageId } from "../pages-config";
-import { useHasGestures, useStore } from "../store";
+import { useStore } from "../store";
 import { createSessionPageUrl } from "../urls";
 
 const NewPage = () => {
-  const newSession = useStore((s) => s.newSession);
-  const hasExistingSession = useHasGestures();
+  const existingSessionTimestamp = useStore((s) => s.timestamp);
   const projectName = useStore((s) => s.project.header?.name ?? "Untitled");
-  const startOverWarningDialogDisclosure = useDisclosure();
+  const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
   const { actions: connStageActions } = useConnectionStage();
 
-  const handleNavigateToAddData = useCallback(() => {
+  const handleOpenLastSession = useCallback(() => {
     navigate(createSessionPageUrl(SessionPageId.DataSamples));
   }, [navigate]);
 
-  const handleStartNewSession = useCallback(() => {
-    startOverWarningDialogDisclosure.onClose();
-    newSession();
-    handleNavigateToAddData();
-    connStageActions.startConnect();
-  }, [
-    startOverWarningDialogDisclosure,
-    newSession,
-    handleNavigateToAddData,
-    connStageActions,
-  ]);
+  const loadProjectRef = useRef<LoadProjectInputRef>(null);
+  const handleContinueSessionFromFile = useCallback(() => {
+    loadProjectRef.current?.chooseFile();
+  }, []);
 
-  const onClickStartNewSession = useCallback(() => {
-    if (hasExistingSession) {
-      startOverWarningDialogDisclosure.onOpen();
-    } else {
-      handleStartNewSession();
-    }
-  }, [
-    handleStartNewSession,
-    hasExistingSession,
-    startOverWarningDialogDisclosure,
-  ]);
+  const handleStartNewSession = useCallback(() => {
+    newSession();
+    navigate(createSessionPageUrl(SessionPageId.DataSamples));
+    connStageActions.startConnect();
+  }, [newSession, navigate, connStageActions]);
 
   const intl = useIntl();
   const lastSessionTitle = intl.formatMessage({
@@ -72,6 +60,7 @@ const NewPage = () => {
     <DefaultPageLayout
       toolbarItemsRight={<>{/* This should be the home button only */}</>}
     >
+      <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
       <VStack alignItems="center">
         <Container
           maxW="container.xl"
@@ -87,18 +76,24 @@ const NewPage = () => {
             <Heading as="h2" fontSize="2xl" mt={8}>
               <FormattedMessage id="newpage-section-one-title" />
             </Heading>
-            <HStack w="100%" gap={8} alignItems="stretch" mt={3}>
+            <HStack
+              w="100%"
+              gap={8}
+              alignItems="stretch"
+              mt={3}
+              flexDir={{ base: "column", lg: "row" }}
+            >
               <NewPageChoice
-                onClick={handleNavigateToAddData}
+                onClick={handleOpenLastSession}
                 label={lastSessionTitle}
-                disabled={!hasExistingSession}
+                disabled={!existingSessionTimestamp}
                 icon={<Icon as={RiRestartLine} h={20} w={20} />}
               >
                 <SetupFormSection
                   title={lastSessionTitle}
                   justifyContent="space-between"
                   description={
-                    hasExistingSession ? (
+                    existingSessionTimestamp ? (
                       <Stack>
                         <Text>
                           <FormattedMessage
@@ -124,7 +119,7 @@ const NewPage = () => {
                               ),
                               date: new Intl.DateTimeFormat(undefined, {
                                 dateStyle: "medium",
-                              }).format(Date.now()), // TODO: track timestamp
+                              }).format(existingSessionTimestamp),
                             }}
                           />
                         </Text>
@@ -138,7 +133,7 @@ const NewPage = () => {
                 />
               </NewPageChoice>
               <NewPageChoice
-                onClick={onClickStartNewSession}
+                onClick={handleContinueSessionFromFile}
                 label={continueSessionTitle}
                 icon={<Icon as={RiFolderOpenLine} h={20} w={20} />}
               >
@@ -155,9 +150,14 @@ const NewPage = () => {
             <Heading as="h2" fontSize="2xl" mt={8}>
               <FormattedMessage id="newpage-section-two-title" />
             </Heading>
-            <HStack alignItems="stretch" mt={3} gap={8}>
+            <HStack
+              alignItems="stretch"
+              mt={3}
+              gap={8}
+              flexDir={{ base: "column", lg: "row" }}
+            >
               <NewPageChoice
-                onClick={onClickStartNewSession}
+                onClick={handleStartNewSession}
                 label={newSessionTitle}
                 disabled={false}
                 icon={<Icon as={RiAddLine} h={20} w={20} />}

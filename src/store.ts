@@ -63,6 +63,8 @@ export interface State {
   gestures: GestureData[];
   model: tf.LayersModel | undefined;
 
+  timestamp: number | undefined;
+
   isRecording: boolean;
 
   project: Project;
@@ -202,6 +204,7 @@ export const useStore = create<Store>()(
           set({
             gestures: [],
             model: undefined,
+            timestamp: Date.now(),
           });
           get().resetProject();
         },
