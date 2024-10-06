@@ -20,7 +20,7 @@ import {
   FormLabel,
   Input,
 } from "@chakra-ui/react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useStore } from "../store";
 
