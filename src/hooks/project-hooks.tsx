@@ -74,11 +74,11 @@ export const ProjectProvider = ({
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
-  const currentProject = useStore((s) => s.getCurrentProject);
+  const getCurrentProject = useStore((s) => s.getCurrentProject);
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
       if (checkIfProjectNeedsFlush()) {
-        const project = currentProject();
+        const project = getCurrentProject();
         expectChangedHeader();
         await driverRef.current!.importProject({ project });
         projectFlushedToEditor();
@@ -87,7 +87,7 @@ export const ProjectProvider = ({
     },
     [
       checkIfProjectNeedsFlush,
-      currentProject,
+      getCurrentProject,
       driverRef,
       expectChangedHeader,
       projectFlushedToEditor,
