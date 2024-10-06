@@ -25,7 +25,7 @@ const ResourceCardPlaceholder = () => {
         mt={-2}
         color="gray.600"
       >
-        More soon
+        Coming soon
       </Text>
     </Box>
   );
