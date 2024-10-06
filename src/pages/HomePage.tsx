@@ -6,7 +6,6 @@ import {
   Heading,
   HStack,
   Image,
-  Link,
   Text,
   useInterval,
   VStack,
@@ -21,10 +20,10 @@ import RecordingGraph from "../components/RecordingGraph";
 import ResourceCard from "../components/ResourceCard";
 import ResourceCardPlaceholder from "../components/ResourceCardPlaceholder";
 import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
+import { useDeployment } from "../deployment";
 import blockImage from "../images/block.png";
 import xyzGraph from "../images/xyz-graph.png";
 import { createNewPageUrl } from "../urls";
-import { useDeployment } from "../deployment";
 
 const graphData = {
   x: [
