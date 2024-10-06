@@ -20,7 +20,7 @@ import {
   FormLabel,
   Input,
 } from "@chakra-ui/react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useStore } from "../store";
 
@@ -45,6 +45,9 @@ export const NameProjectDialog = ({
   const [name, setName] = useState<string>(initialName);
   const validationResult = useMemo(() => validateProjectName(name), [name]);
   const isValid = validationResult === "valid";
+  const ref = useCallback((input: HTMLInputElement | null) => {
+    input?.setSelectionRange(0, input.value.length);
+  }, []);
 
   const handleSubmit = useCallback(() => {
     onSave(name);
@@ -61,11 +64,12 @@ export const NameProjectDialog = ({
           <ModalBody>
             <VStack>
               <Box as="form" onSubmit={handleSubmit} width="100%">
-                <FormControl id="fileName" isRequired isInvalid={!isValid}>
+                <FormControl id="projectName" isRequired isInvalid={!isValid}>
                   <FormLabel>
                     <FormattedMessage id="name-text" />
                   </FormLabel>
                   <Input
+                    ref={ref}
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.currentTarget.value)}
