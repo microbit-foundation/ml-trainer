@@ -143,15 +143,10 @@ const DefaultPageLayout = ({
 };
 
 export const ProjectToolbarItems = () => {
-  const intl = useIntl();
   const { saveHex } = useProject();
-  const navigate = useNavigate();
   const handleSave = useCallback(() => {
     void saveHex();
   }, [saveHex]);
-  const handleHomeClick = useCallback(() => {
-    navigate(createHomePageUrl());
-  }, [navigate]);
 
   return (
     <>
@@ -162,27 +157,34 @@ export const ProjectToolbarItems = () => {
       >
         <FormattedMessage id="save-action" />
       </Button>
-      <IconButton
-        onClick={handleHomeClick}
-        icon={<RiHome2Line size={24} color="white" />}
-        aria-label={intl.formatMessage({ id: "homepage.Link" })}
-        variant="plain"
-        size="lg"
-        fontSize="xl"
-      />
+      <HomeToolbarItem />
     </>
+  );
+};
+
+export const HomeToolbarItem = () => {
+  const intl = useIntl();
+  const navigate = useNavigate();
+  const handleHomeClick = useCallback(() => {
+    navigate(createHomePageUrl());
+  }, [navigate]);
+  return (
+    <IconButton
+      onClick={handleHomeClick}
+      icon={<RiHome2Line size={24} color="white" />}
+      aria-label={intl.formatMessage({ id: "homepage.Link" })}
+      variant="plain"
+      size="lg"
+      fontSize="xl"
+    />
   );
 };
 
 export const ProjectMenuItems = () => {
   const { saveHex } = useProject();
-  const navigate = useNavigate();
   const handleSave = useCallback(() => {
     void saveHex();
   }, [saveHex]);
-  const handleHomeClick = useCallback(() => {
-    navigate(createHomePageUrl());
-  }, [navigate]);
 
   return (
     <>
@@ -193,13 +195,23 @@ export const ProjectMenuItems = () => {
         <FormattedMessage id="save-action" />
       </MenuItem>
       <MenuDivider />
-      <MenuItem
-        onClick={handleHomeClick}
-        icon={<Icon h={5} w={5} as={RiHome2Line} />}
-      >
-        <FormattedMessage id="home-action" />
-      </MenuItem>
+      <HomeMenuItem />
     </>
+  );
+};
+
+export const HomeMenuItem = () => {
+  const navigate = useNavigate();
+  const handleHomeClick = useCallback(() => {
+    navigate(createHomePageUrl());
+  }, [navigate]);
+  return (
+    <MenuItem
+      onClick={handleHomeClick}
+      icon={<Icon h={5} w={5} as={RiHome2Line} />}
+    >
+      <FormattedMessage id="home-action" />
+    </MenuItem>
   );
 };
 

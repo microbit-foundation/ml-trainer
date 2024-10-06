@@ -12,7 +12,10 @@ import { ReactNode, useCallback, useRef } from "react";
 import { RiAddLine, RiFolderOpenLine, RiRestartLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import DefaultPageLayout from "../components/DefaultPageLayout";
+import DefaultPageLayout, {
+  HomeMenuItem,
+  HomeToolbarItem,
+} from "../components/DefaultPageLayout";
 import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
@@ -57,7 +60,8 @@ const NewPage = () => {
 
   return (
     <DefaultPageLayout
-      toolbarItemsRight={<>{/* This should be the home button only */}</>}
+      toolbarItemsRight={<HomeToolbarItem />}
+      menuItems={<HomeMenuItem />}
     >
       <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
       <VStack alignItems="center">

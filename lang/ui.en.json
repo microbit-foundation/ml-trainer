@@ -695,13 +695,33 @@
     "defaultMessage": "Home",
     "description": "Home button text"
   },
-  "homepage-subtitle": {
-    "defaultMessage": "Introduce students to machine learning concepts through physical movement and data",
-    "description": "Subtitle of the home page"
+  "homepage-description": {
+    "defaultMessage": "Train a machine learning model on your own movement data and run it on your micro:bit.",
+    "description": "Home page subtitle"
   },
-  "homepage-title": {
-    "defaultMessage": "micro:bit AI creator",
-    "description": "Title of micro:bit AI creator home page"
+  "homepage-how-it-works": {
+    "defaultMessage": "How it works",
+    "description": "Home page section heading"
+  },
+  "homepage-projects": {
+    "defaultMessage": "Projects",
+    "description": "Home page section heading"
+  },
+  "homepage-step-by-step": {
+    "defaultMessage": "Step by step",
+    "description": "Home page section heading"
+  },
+  "homepage-subtitle": {
+    "defaultMessage": "Create AI on your BBC micro:bit using movement and machine learning.",
+    "description": "Home page subtitle"
+  },
+  "homepage-video-alt": {
+    "defaultMessage": "Introductory video",
+    "description": "Home page video alt text"
+  },
+  "homepage-video-prompt": {
+    "defaultMessage": "Watch the video to learn how to use {appNameFull}.",
+    "description": "Prompt to watch the video on the home page"
   },
   "homepage.Link": {
     "defaultMessage": "Home page",
@@ -942,6 +962,26 @@
   "start-training-action": {
     "defaultMessage": "Start training",
     "description": "Start training button text"
+  },
+  "steps-code": {
+    "defaultMessage": "Code",
+    "description": "Step in home page diagram"
+  },
+  "steps-collect-data": {
+    "defaultMessage": "Collect data",
+    "description": "Step in home page diagram"
+  },
+  "steps-improve": {
+    "defaultMessage": "Improve",
+    "description": "Step in home page diagram"
+  },
+  "steps-test-model": {
+    "defaultMessage": "Test model",
+    "description": "Step in home page diagram"
+  },
+  "steps-train": {
+    "defaultMessage": "Train",
+    "description": "Step in home page diagram"
   },
   "support-request": {
     "defaultMessage": "Please consider <link>raising a support request</link>.",

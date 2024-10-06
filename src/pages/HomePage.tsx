@@ -6,12 +6,13 @@ import {
   Heading,
   HStack,
   Image,
+  Link,
   Text,
   useInterval,
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import PercentageDisplay from "../components/PercentageDisplay";
@@ -23,6 +24,7 @@ import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
 import blockImage from "../images/block.png";
 import xyzGraph from "../images/xyz-graph.png";
 import { createNewPageUrl } from "../urls";
+import { useDeployment } from "../deployment";
 
 const graphData = {
   x: [
@@ -65,6 +67,8 @@ const HomePage = () => {
   const handleGetStarted = useCallback(() => {
     navigate(createNewPageUrl());
   }, [navigate]);
+  const intl = useIntl();
+  const { appNameFull } = useDeployment();
   return (
     <DefaultPageLayout
       toolbarItemsRight={
@@ -85,18 +89,14 @@ const HomePage = () => {
             gap={5}
             w={{ base: "100%", lg: "unset" }}
           >
-            <Heading as="h1" fontSize="4xl" fontWeight="bold">
-              <FormattedMessage id="homepage-title" />
+            <Heading as="h1" fontSize="5xl" fontWeight="bold">
+              {appNameFull}
             </Heading>
             <Text fontSize="md" fontWeight="bold">
-              Create AI on your BBC micro:bit using movement and machine
-              learning
+              <FormattedMessage id="homepage-subtitle" />
             </Text>
             <Text fontSize="md">
-              Train a machine learning model on your own movement data.
-            </Text>
-            <Text fontSize="md">
-              Add code to use your model in real-world projects.
+              <FormattedMessage id="homepage-description" />
             </Text>
             <Button
               size="lg"
@@ -113,24 +113,45 @@ const HomePage = () => {
         </HStack>
         <VStack spacing={8} w="100%" maxW="container.md">
           <Heading as="h2" textAlign="center">
-            How it works
+            <FormattedMessage id="homepage-how-it-works" />
           </Heading>
-          <Box w="100%">
+          <Box w="100%" position="relative">
             <YoutubeVideoEmbed
               youtubeId="ZhUtuuQemFc"
-              alt="Introductory video"
+              alt={intl.formatMessage({ id: "homepage-video-alt" })}
             />
+            <Box
+              position="absolute"
+              bgColor="brand.700"
+              color="white"
+              fontWeight="bold"
+              top={0}
+              left={0}
+              right={0}
+              bottom={0}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Text>Video coming soon</Text>
+            </Box>
           </Box>
           <Text fontSize="md">
-            Watch the video to learn how to use the micro:bit AI creator.
+            <FormattedMessage
+              id="homepage-video-prompt"
+              values={{ appNameFull }}
+            />
           </Text>
         </VStack>
         <VStack gap={8}>
           <Heading as="h2" textAlign="center">
-            Step by step
+            <FormattedMessage id="homepage-step-by-step" />
           </Heading>
           <VStack gap={12} maxW="container.md" position="relative">
-            <Step title="Collect data" image={<CollectDataIllustration />} />
+            <Step
+              title={intl.formatMessage({ id: "steps-collect-data" })}
+              image={<CollectDataIllustration />}
+            />
             <Box
               display={{ base: "flex", md: "contents" }}
               flexDir="row-reverse"
@@ -144,7 +165,7 @@ const HomePage = () => {
               >
                 <Arrow />
                 <Text fontWeight="bold" fontSize="xl">
-                  Train
+                  <FormattedMessage id="steps-train" />
                 </Text>
               </HStack>
               <HStack
@@ -154,18 +175,24 @@ const HomePage = () => {
                 top="130px"
               >
                 <Text fontWeight="bold" fontSize="xl">
-                  Improve
+                  <FormattedMessage id="steps-improve" />
                 </Text>
                 <Arrow transform="rotate(180deg)" />
               </HStack>
             </Box>
-            <Step title="Test model" image={<TestModelStepIllustration />} />
-            <Step title="Code" image={<CodeIllustration />} />
+            <Step
+              title={intl.formatMessage({ id: "steps-test-model" })}
+              image={<TestModelStepIllustration />}
+            />
+            <Step
+              title={intl.formatMessage({ id: "steps-code" })}
+              image={<CodeIllustration />}
+            />
           </VStack>
         </VStack>
         <VStack gap={8}>
           <Heading as="h2" textAlign="center">
-            Projects
+            <FormattedMessage id="homepage-projects" />
           </Heading>
           <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
             <ResourceCard

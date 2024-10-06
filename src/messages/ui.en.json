@@ -1239,16 +1239,54 @@
       "value": "Home"
     }
   ],
+  "homepage-description": [
+    {
+      "type": 0,
+      "value": "Train a machine learning model on your own movement data and run it on your micro:bit."
+    }
+  ],
+  "homepage-how-it-works": [
+    {
+      "type": 0,
+      "value": "How it works"
+    }
+  ],
+  "homepage-projects": [
+    {
+      "type": 0,
+      "value": "Projects"
+    }
+  ],
+  "homepage-step-by-step": [
+    {
+      "type": 0,
+      "value": "Step by step"
+    }
+  ],
   "homepage-subtitle": [
     {
       "type": 0,
-      "value": "Introduce students to machine learning concepts through physical movement and data"
+      "value": "Create AI on your BBC micro:bit using movement and machine learning."
     }
   ],
-  "homepage-title": [
+  "homepage-video-alt": [
     {
       "type": 0,
-      "value": "micro:bit AI creator"
+      "value": "Introductory video"
+    }
+  ],
+  "homepage-video-prompt": [
+    {
+      "type": 0,
+      "value": "Watch the video to learn how to use "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "homepage.Link": [
@@ -1649,6 +1687,36 @@
     {
       "type": 0,
       "value": "Start training"
+    }
+  ],
+  "steps-code": [
+    {
+      "type": 0,
+      "value": "Code"
+    }
+  ],
+  "steps-collect-data": [
+    {
+      "type": 0,
+      "value": "Collect data"
+    }
+  ],
+  "steps-improve": [
+    {
+      "type": 0,
+      "value": "Improve"
+    }
+  ],
+  "steps-test-model": [
+    {
+      "type": 0,
+      "value": "Test model"
+    }
+  ],
+  "steps-train": [
+    {
+      "type": 0,
+      "value": "Train"
     }
   ],
   "support-request": [
