@@ -100,7 +100,7 @@ export const NameProjectDialog = ({
               <FormattedMessage id="cancel-action" />
             </Button>
             <Button
-              variant="solid"
+              variant="primary"
               onClick={handleSubmit}
               ml={3}
               isDisabled={!isValid}
