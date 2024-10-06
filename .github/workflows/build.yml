@@ -36,7 +36,7 @@ jobs:
       - run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm install --no-save @microbit-foundation/website-deploy-aws@0.6 @microbit-foundation/website-deploy-aws-config@0.9
+      - run: npm install --no-save @microbit-foundation/ml-trainer-microbit@0.2.0-dev.8 @microbit-foundation/website-deploy-aws@0.6 @microbit-foundation/website-deploy-aws-config@0.9
         if: github.repository_owner == 'microbit-foundation'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

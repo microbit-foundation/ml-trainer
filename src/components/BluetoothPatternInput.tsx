@@ -128,9 +128,9 @@ const PatternBox = ({
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      bgColor={isOn ? "green.500" : "gray.300"}
+      bgColor={isOn ? "brand2.500" : "gray.300"}
       borderWidth={isHighlighted && !isOn ? 3 : 0}
-      borderColor={isHighlighted ? (isOn ? "white" : "green.500") : undefined}
+      borderColor={isHighlighted ? (isOn ? "white" : "brand2.500") : undefined}
       opacity={isHighlighted && isOn ? 0.25 : 1}
     />
   );

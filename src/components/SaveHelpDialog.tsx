@@ -16,6 +16,7 @@ import {
 import { FormattedMessage } from "react-intl";
 import { useSettings } from "../store";
 import { ChangeEvent, useCallback } from "react";
+import { useDeployment } from "../deployment";
 
 interface SaveHelpDialogProps {
   isOpen: boolean;
@@ -24,6 +25,7 @@ interface SaveHelpDialogProps {
 }
 
 const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
+  const { appNameFull } = useDeployment();
   const [settings, setSettings] = useSettings();
   const skip = !settings.showPreSaveHelp;
   const handleChangeSkip = useCallback(
@@ -53,7 +55,10 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
             <Stack gap={5}>
               <VStack gap={3}>
                 <Text>
-                  <FormattedMessage id="save-hex-dialog-message1" />
+                  <FormattedMessage
+                    id="save-hex-dialog-message1"
+                    values={{ appNameFull }}
+                  />
                 </Text>
                 <Text>
                   <FormattedMessage id="save-hex-dialog-message2" />

@@ -33,7 +33,9 @@ const createEventListeners = (actionNames: ActionName[]) => {
     code += `  control.onEvent(MlRunnerIds.MlRunnerInference, ${
       i + 1
     }, () => {\n`;
-    code += `    maybeUpdateEventStats(event.${actionNames[i].actionVar});\n`;
+    code += `    if (!event.${actionNames[i].actionVar}.onStartHandler) {\n`;
+    code += `      maybeUpdateEventStats(event.${actionNames[i].actionVar});\n`;
+    code += `    }\n`;
     code += `  });\n`;
   }
   return code;

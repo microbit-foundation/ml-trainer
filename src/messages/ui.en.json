@@ -664,7 +664,15 @@
   "connectMB.usbTryAgain.closeTabs2": [
     {
       "type": 0,
-      "value": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, AI creator), or unplug and replug the micro:bit before trying again."
+      "value": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, "
+    },
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": "), or unplug and replug the micro:bit before trying again."
     }
   ],
   "connectMB.usbTryAgain.heading": [
@@ -760,7 +768,15 @@
   "content.data.classHelpBody": [
     {
       "type": 0,
-      "value": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’."
+      "value": "The type of movement you want "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to recognise e.g. ‘waving’ or ‘clapping’."
     }
   ],
   "content.data.classPlaceholderNewClass": [
@@ -912,7 +928,15 @@
   "content.model.output.action.descriptionBody": [
     {
       "type": 0,
-      "value": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’."
+      "value": "The type of movement you want "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to recognise e.g. ‘waving’ or ‘clapping’."
     }
   ],
   "content.model.output.action.descriptionTitle": [
@@ -965,12 +989,6 @@
       "value": "\""
     }
   ],
-  "content.model.output.estimatedGesture.none": [
-    {
-      "type": 0,
-      "value": "None"
-    }
-  ],
   "content.model.output.output.descriptionBody": [
     {
       "type": 0,
@@ -992,7 +1010,15 @@
   "content.trainer.description": [
     {
       "type": 0,
-      "value": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit AI creator to recognise different actions when you move your micro:bit."
+      "value": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to recognise different actions when you move your micro:bit."
     }
   ],
   "content.trainer.failure.body": [
@@ -1130,7 +1156,15 @@
   "download-project-intro-description": [
     {
       "type": 0,
-      "value": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to the micro:bit AI creator."
+      "value": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "download-project-intro-title": [
@@ -1149,6 +1183,12 @@
     {
       "type": 0,
       "value": "Edit in MakeCode"
+    }
+  ],
+  "feedback": [
+    {
+      "type": 0,
+      "value": "Feedback"
     }
   ],
   "footer.connectButton": [
@@ -1197,6 +1237,12 @@
     {
       "type": 0,
       "value": "Home"
+    }
+  ],
+  "homepage-subtitle": [
+    {
+      "type": 0,
+      "value": "Introduce students to machine learning concepts through physical movement and data"
     }
   ],
   "homepage-title": [
@@ -1415,8 +1461,12 @@
   ],
   "not-found": [
     {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
       "type": 0,
-      "value": "micro:bit AI creator home page"
+      "value": " home page"
     }
   ],
   "not-found-title": [
@@ -1465,12 +1515,6 @@
     {
       "type": 0,
       "value": "Project loaded"
-    }
-  ],
-  "prototype.warning": [
-    {
-      "type": 0,
-      "value": "This is a prototype version and is subject to change without notice"
     }
   ],
   "reconnectFailed.bluetooth1": [
@@ -1548,7 +1592,15 @@
   "save-hex-dialog-message1": [
     {
       "type": 0,
-      "value": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit AI creator to continue working."
+      "value": "The download contains your actions, data samples and your MakeCode project. Open it in "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to continue working."
     }
   ],
   "save-hex-dialog-message2": [
@@ -1767,6 +1819,12 @@
     {
       "type": 0,
       "value": "Train model"
+    }
+  ],
+  "unknown": [
+    {
+      "type": 0,
+      "value": "unknown"
     }
   ]
 }

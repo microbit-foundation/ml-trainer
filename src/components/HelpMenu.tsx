@@ -9,38 +9,42 @@ import {
   Portal,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useRef } from "react";
+import { MdOutlineCookie } from "react-icons/md";
 import {
   RiExternalLinkLine,
+  RiFeedbackLine,
   RiInformationLine,
   RiQuestionLine,
 } from "react-icons/ri";
-import { MdOutlineCookie } from "react-icons/md";
-import AboutDialog from "./AboutDialog";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useRef } from "react";
-import { manageCookies } from "../compliance";
+import FeedbackForm from "./FeedbackForm";
+import { useDeployment } from "../deployment";
+import AboutDialog from "./AboutDialog";
 
 interface HelpMenuProps {
   isMobile?: boolean;
-  appName: string;
-  cookies?: boolean;
 }
 
 /**
  * A help button that triggers a drop-down menu with actions.
  */
-const HelpMenu = ({ isMobile, appName, cookies, ...rest }: HelpMenuProps) => {
+const HelpMenu = ({ isMobile, ...rest }: HelpMenuProps) => {
   const aboutDialogDisclosure = useDisclosure();
+  const feedbackDisclosure = useDisclosure();
   const intl = useIntl();
   const MenuButtonRef = useRef(null);
-
+  const deployment = useDeployment();
   return (
     <Box display={isMobile ? { base: "block", lg: "none" } : undefined}>
       <AboutDialog
-        appName={appName}
         isOpen={aboutDialogDisclosure.isOpen}
         onClose={aboutDialogDisclosure.onClose}
         finalFocusRef={MenuButtonRef}
+      />
+      <FeedbackForm
+        isOpen={feedbackDisclosure.isOpen}
+        onClose={feedbackDisclosure.onClose}
       />
       <Menu {...rest}>
         <MenuButton
@@ -60,44 +64,60 @@ const HelpMenu = ({ isMobile, appName, cookies, ...rest }: HelpMenuProps) => {
         />
         <Portal>
           <MenuList>
-            <MenuItem
-              as="a"
-              href="https://support.microbit.org"
-              target="_blank"
-              rel="noopener"
-              icon={<RiExternalLinkLine />}
-            >
-              <FormattedMessage id="help-support" />
-            </MenuItem>
-            <MenuDivider />
-            <MenuItem
-              as="a"
-              href="https://microbit.org/terms-of-use/"
-              target="_blank"
-              rel="noopener"
-              icon={<RiExternalLinkLine />}
-            >
-              <FormattedMessage id="terms" />
-            </MenuItem>
-            <MenuItem
-              as="a"
-              href="https://microbit.org/privacy/"
-              target="_blank"
-              rel="noopener"
-              icon={<RiExternalLinkLine />}
-            >
-              <FormattedMessage id="privacy" />
-            </MenuItem>
-            {cookies && (
+            {deployment.supportLink && (
+              <>
+                <MenuItem
+                  as="a"
+                  href={deployment.supportLink}
+                  target="_blank"
+                  rel="noopener"
+                  icon={<RiExternalLinkLine />}
+                >
+                  <FormattedMessage id="help-support" />
+                </MenuItem>
+                <MenuItem
+                  icon={<RiFeedbackLine />}
+                  onClick={feedbackDisclosure.onOpen}
+                >
+                  <FormattedMessage id="feedback" />
+                </MenuItem>
+                <MenuDivider />
+              </>
+            )}
+            {deployment.termsOfUseLink && (
+              <MenuItem
+                as="a"
+                href={deployment.termsOfUseLink}
+                target="_blank"
+                rel="noopener"
+                icon={<RiExternalLinkLine />}
+              >
+                <FormattedMessage id="terms" />
+              </MenuItem>
+            )}
+            {deployment.privacyPolicyLink && (
+              <MenuItem
+                as="a"
+                href={deployment.privacyPolicyLink}
+                target="_blank"
+                rel="noopener"
+                icon={<RiExternalLinkLine />}
+              >
+                <FormattedMessage id="privacy" />
+              </MenuItem>
+            )}
+            {deployment.compliance.manageCookies && (
               <MenuItem
                 as="button"
-                onClick={manageCookies}
+                onClick={deployment.compliance.manageCookies}
                 icon={<MdOutlineCookie />}
               >
                 <FormattedMessage id="cookies-action" />
               </MenuItem>
             )}
-            <MenuDivider />
+            {(deployment.privacyPolicyLink ||
+              deployment.compliance.manageCookies ||
+              deployment.termsOfUseLink) && <MenuDivider />}
             <MenuItem
               icon={<RiInformationLine />}
               onClick={aboutDialogDisclosure.onOpen}

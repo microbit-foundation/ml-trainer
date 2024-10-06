@@ -14,7 +14,7 @@ import { ReactNode, useCallback, useEffect } from "react";
 import { RiDownload2Line, RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import { TOOL_NAME } from "../constants";
+import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
 import { TrainModelDialogStage } from "../model";
@@ -28,7 +28,7 @@ import ConnectionDialogs from "./ConnectionFlowDialogs";
 import DownloadDialogs from "./DownloadDialogs";
 import HelpMenu from "./HelpMenu";
 import LanguageMenuItem from "./LanguageMenuItem";
-import PrototypeVersionWarning from "./PrototypeVersionWarning";
+import PreReleaseNotice from "./PreReleaseNotice";
 import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
@@ -56,13 +56,13 @@ const DefaultPageLayout = ({
   const isEditorOpen = useStore((s) => s.isEditorOpen);
   const stage = useStore((s) => s.trainModelDialogStage);
   const toast = useToast();
+  const { appNameFull } = useDeployment();
 
   useEffect(() => {
-    const appName = `micro:bit ${TOOL_NAME}`;
     document.title = titleId
-      ? `${intl.formatMessage({ id: titleId })} | ${appName}`
-      : appName;
-  }, [intl, titleId]);
+      ? `${intl.formatMessage({ id: titleId })} | ${appNameFull}`
+      : appNameFull;
+  }, [appNameFull, intl, titleId]);
 
   useEffect(() => {
     return useStore.subscribe(
@@ -114,14 +114,14 @@ const DefaultPageLayout = ({
               )}
             </>
           }
-          itemsLeft={toolbarItemsLeft || <AppLogo name={TOOL_NAME} />}
+          itemsLeft={toolbarItemsLeft || <AppLogo />}
           itemsRight={
             <>
               <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
                 {toolbarItemsRight}
                 <SettingsMenu />
               </HStack>
-              <HelpMenu appName={TOOL_NAME} cookies />
+              <HelpMenu />
               <ToolbarMenu
                 isMobile
                 variant="plain"
@@ -133,7 +133,7 @@ const DefaultPageLayout = ({
             </>
           }
         />
-        {flags.prototypeWarning && <PrototypeVersionWarning />}
+        {flags.preReleaseNotice && <PreReleaseNotice />}
         <Flex flexGrow={1} flexDir="column">
           {children}
         </Flex>

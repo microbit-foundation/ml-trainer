@@ -368,7 +368,7 @@
     "description": ""
   },
   "connectMB.usbTryAgain.closeTabs2": {
-    "defaultMessage": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, AI creator), or unplug and replug the micro:bit before trying again.",
+    "defaultMessage": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, {appNameShort}), or unplug and replug the micro:bit before trying again.",
     "description": ""
   },
   "connectMB.usbTryAgain.heading": {
@@ -432,7 +432,7 @@
     "description": ""
   },
   "content.data.classHelpBody": {
-    "defaultMessage": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’.",
+    "defaultMessage": "The type of movement you want {appNameFull} to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": ""
   },
   "content.data.classPlaceholderNewClass": {
@@ -508,7 +508,7 @@
     "description": ""
   },
   "content.model.output.action.descriptionBody": {
-    "defaultMessage": "The type of movement you want the micro:bit AI creator to recognise e.g. ‘waving’ or ‘clapping’.",
+    "defaultMessage": "The type of movement you want {appNameFull} to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": ""
   },
   "content.model.output.action.descriptionTitle": {
@@ -539,10 +539,6 @@
     "defaultMessage": "Estimated action: \"{action}\"",
     "description": ""
   },
-  "content.model.output.estimatedGesture.none": {
-    "defaultMessage": "None",
-    "description": ""
-  },
   "content.model.output.output.descriptionBody": {
     "defaultMessage": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit.",
     "description": ""
@@ -556,7 +552,7 @@
     "description": ""
   },
   "content.trainer.description": {
-    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows the micro:bit AI creator to recognise different actions when you move your micro:bit.",
+    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows {appNameFull} to recognise different actions when you move your micro:bit.",
     "description": ""
   },
   "content.trainer.failure.body": {
@@ -648,7 +644,7 @@
     "description": "Download project different micro:bit option"
   },
   "download-project-intro-description": {
-    "defaultMessage": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to the micro:bit AI creator.",
+    "defaultMessage": "Your program includes the machine learning model you created. The model runs on the micro:bit so you can use it without being connected to {appNameFull}.",
     "description": "Download project intro dialog description"
   },
   "download-project-intro-title": {
@@ -662,6 +658,10 @@
   "edit-in-makecode-action": {
     "defaultMessage": "Edit in MakeCode",
     "description": "Edit in MakeCode button text"
+  },
+  "feedback": {
+    "defaultMessage": "Feedback",
+    "description": "Action to open a feedback dialog"
   },
   "footer.connectButton": {
     "defaultMessage": "Connect",
@@ -694,6 +694,10 @@
   "home-action": {
     "defaultMessage": "Home",
     "description": "Home button text"
+  },
+  "homepage-subtitle": {
+    "defaultMessage": "Introduce students to machine learning concepts through physical movement and data",
+    "description": "Subtitle of the home page"
   },
   "homepage-title": {
     "defaultMessage": "micro:bit AI creator",
@@ -820,7 +824,7 @@
     "description": "Empty data samples page status text"
   },
   "not-found": {
-    "defaultMessage": "micro:bit AI creator home page",
+    "defaultMessage": "{appNameFull} home page",
     "description": "Page not found link text"
   },
   "not-found-title": {
@@ -854,10 +858,6 @@
   "project-loaded": {
     "defaultMessage": "Project loaded",
     "description": "Toast when a new project is loaded"
-  },
-  "prototype.warning": {
-    "defaultMessage": "This is a prototype version and is subject to change without notice",
-    "description": ""
   },
   "reconnectFailed.bluetooth1": {
     "defaultMessage": "The connection to the micro:bit could not be re-established.",
@@ -908,7 +908,7 @@
     "description": "Heading for the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message1": {
-    "defaultMessage": "The download contains your actions, data samples and your MakeCode project. Open it in the micro:bit AI creator to continue working.",
+    "defaultMessage": "The download contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
     "description": "Text in the dialog shown when saving a hex file"
   },
   "save-hex-dialog-message2": {
@@ -1046,5 +1046,9 @@
   "train-model-title": {
     "defaultMessage": "Train model",
     "description": "Train model step title"
+  },
+  "unknown": {
+    "defaultMessage": "unknown",
+    "description": "Label for unknown ML event"
   }
 }

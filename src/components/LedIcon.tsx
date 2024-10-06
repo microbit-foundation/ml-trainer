@@ -66,7 +66,7 @@ const LedIconRow = ({ data, isTriggered }: LedIconRowProps) => {
         return "gray.200";
       }
       if (typeof isTriggered === "boolean" && isTriggered) {
-        return "green.500";
+        return "brand2.500";
       }
       if (typeof isTriggered === "boolean" && !isTriggered) {
         return "gray.600";

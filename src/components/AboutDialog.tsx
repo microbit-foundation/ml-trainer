@@ -28,12 +28,11 @@ import {
 import { ReactNode } from "react";
 import { RiFileCopy2Line, RiGithubFill } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useDeployment } from "../deployment";
 import aarhusLogo from "../images/aulogo_uk_var2_blue.png";
 import microbitHeartImage from "../images/microbit-heart.png";
-import MicrobitLogo from "./MicrobitLogo";
 
 interface AboutDialogProps {
-  appName: string;
   isOpen: boolean;
   onClose: () => void;
   finalFocusRef?: React.RefObject<HTMLButtonElement>;
@@ -42,15 +41,11 @@ interface AboutDialogProps {
 /**
  * An about dialog with version information.
  */
-const AboutDialog = ({
-  isOpen,
-  onClose,
-  appName,
-  finalFocusRef,
-}: AboutDialogProps) => {
+const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
+  const { appNameFull, OrgLogo } = useDeployment();
   const versionInfo = [
     {
-      name: `micro:bit ${appName}`,
+      name: appNameFull,
       value: import.meta.env.VITE_VERSION,
       href: "https://github.com/microbit-foundation/ml-trainer",
     },
@@ -75,7 +70,7 @@ const AboutDialog = ({
             <ModalCloseButton />
             <VStack spacing={8} pl={5} pr={5} pt={5}>
               <HStack justifyContent="center" gap={8}>
-                <MicrobitLogo fill="#000" alt="micro:bit" height={55} />
+                {OrgLogo && <OrgLogo fill="#000" color="black" height={55} />}
                 <Image src={aarhusLogo} h="55px" />
               </HStack>
               <Text textAlign="center">
@@ -84,10 +79,10 @@ const AboutDialog = ({
                   values={{
                     link: (chunks: ReactNode) => (
                       <Link
-                        href="https://microbit.org"
+                        href="https://cctd.au.dk/"
                         target="_blank"
                         rel="noopener"
-                        color="purple.500"
+                        color="brand.600"
                       >
                         {chunks}
                       </Link>
