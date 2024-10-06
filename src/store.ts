@@ -148,8 +148,11 @@ export interface Actions {
   setProjectName(name: string): void;
 
   /**
-   * Remainer are used by project hooks for MakeCode integration.
+   * When interacting outside of React to sync with MakeCode it's important to have
+   * the current project after state changes.
    */
+  getCurrentProject(): Project;
+  checkIfProjectNeedsFlush(): boolean;
   editorChange(project: Project): void;
   setChangedHeaderExpected(): void;
   projectFlushedToEditor(): void;
@@ -503,6 +506,14 @@ export const useStore = create<Store>()(
             false,
             "setProjectName"
           );
+        },
+
+        checkIfProjectNeedsFlush() {
+          return get().appEditNeedsFlushToEditor;
+        },
+
+        getCurrentProject() {
+          return get().project;
         },
 
         editorChange(newProject: Project) {

@@ -70,19 +70,15 @@ export const ProjectProvider = ({
   const intl = useIntl();
   const toast = useToast();
   const setEditorOpen = useStore((s) => s.setEditorOpen);
-  const project = useStore((s) => s.project);
   const projectEdited = useStore((s) => s.projectEdited);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
-  const appEditNeedsFlushToEditor = useStore(
-    (s) => s.appEditNeedsFlushToEditor
-  );
+  const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
+  const currentProject = useStore((s) => s.getCurrentProject);
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
-      console.log("doAfterEditorUpdate");
-      console.log("appEditNeedsFlushToEditor", appEditNeedsFlushToEditor);
-      if (appEditNeedsFlushToEditor) {
-        console.log("FLUSH APP", project.header?.name);
+      if (checkIfProjectNeedsFlush()) {
+        const project = currentProject();
         expectChangedHeader();
         await driverRef.current!.importProject({ project });
         projectFlushedToEditor();
@@ -90,10 +86,10 @@ export const ProjectProvider = ({
       return action();
     },
     [
-      appEditNeedsFlushToEditor,
+      checkIfProjectNeedsFlush,
+      currentProject,
       driverRef,
       expectChangedHeader,
-      project,
       projectFlushedToEditor,
     ]
   );
@@ -134,10 +130,8 @@ export const ProjectProvider = ({
   const saveNextDownloadRef = useRef(false);
   const saveHex = useCallback(
     async (hex?: HexData): Promise<void> => {
-      console.log("SAVE HEX");
       const { step } = save;
       if (hex) {
-        console.log("Got hex", hex);
         if (settings.showPreSaveHelp && step === SaveStep.None) {
           // All we do is trigger the help and remember the project.
           setSave({
@@ -161,7 +155,6 @@ export const ProjectProvider = ({
         }
       } else {
         // We need to request something to save.
-        console.log("requesting saving");
         setSave({
           step: SaveStep.SaveProgress,
         });
@@ -207,6 +200,8 @@ export const ProjectProvider = ({
     },
     [downloadActions, saveHex]
   );
+
+  const project = useStore((s) => s.project);
   const value = useMemo(
     () => ({
       loadFile,
