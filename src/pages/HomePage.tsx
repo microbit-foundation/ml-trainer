@@ -7,12 +7,12 @@ import {
   HStack,
   Image,
   Text,
+  useDisclosure,
   useInterval,
   VStack,
 } from "@chakra-ui/react";
-import { ReactNode, useCallback, useState } from "react";
+import { ReactNode, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { useNavigate } from "react-router";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import PercentageDisplay from "../components/PercentageDisplay";
 import PercentageMeter from "../components/PercentageMeter";
@@ -22,8 +22,6 @@ import ResourceCardPlaceholder from "../components/ResourceCardPlaceholder";
 import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
 import blockImage from "../images/block.png";
 import xyzGraph from "../images/xyz-graph.png";
-import { SessionPageId } from "../pages-config";
-import { createSessionPageUrl } from "../urls";
 
 const graphData = {
   x: [
@@ -62,15 +60,11 @@ const graphData = {
 };
 
 const HomePage = () => {
-  const navigate = useNavigate();
-  const handleGetStarted = useCallback(() => {
-    // This isn't right, need existing session etc.
-    navigate(createSessionPageUrl(SessionPageId.DataSamples));
-  }, [navigate]);
+  const getStartedDialogDisclosure = useDisclosure();
   return (
     <DefaultPageLayout
       toolbarItemsRight={
-        <Button variant="toolbar" onClick={handleGetStarted}>
+        <Button variant="toolbar" onClick={getStartedDialogDisclosure.onOpen}>
           Get started
         </Button>
       }
@@ -103,7 +97,7 @@ const HomePage = () => {
             <Button
               size="lg"
               variant="primary"
-              onClick={handleGetStarted}
+              onClick={getStartedDialogDisclosure.onOpen}
               mt={5}
             >
               Get started

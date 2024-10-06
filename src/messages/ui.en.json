@@ -1205,18 +1205,6 @@
       "value": "Home"
     }
   ],
-  "homepage-subtitle": [
-    {
-      "type": 0,
-      "value": "Introduce students to machine learning concepts through physical movement and data"
-    }
-  ],
-  "homepage-title": [
-    {
-      "type": 0,
-      "value": "micro:bit AI creator"
-    }
-  ],
   "homepage.Link": [
     {
       "type": 0,
@@ -1275,6 +1263,148 @@
     {
       "type": 0,
       "value": "More edit in MakeCode options"
+    }
+  ],
+  "newpage-browse-lessons": [
+    {
+      "type": 0,
+      "value": "Browse lessons"
+    }
+  ],
+  "newpage-browse-projects": [
+    {
+      "type": 0,
+      "value": "Browse projects"
+    }
+  ],
+  "newpage-choose-subtitle": [
+    {
+      "type": 0,
+      "value": "Find a project or lesson from our teacher resources and open it in micro:bit classroom"
+    }
+  ],
+  "newpage-choose-title": [
+    {
+      "type": 0,
+      "value": "Choose a project or lesson"
+    }
+  ],
+  "newpage-continue-session-instruction": [
+    {
+      "type": 0,
+      "value": "To continue a saved session from a file please select a file."
+    }
+  ],
+  "newpage-continue-session-subtitle": [
+    {
+      "type": 0,
+      "value": "Use a hex file or data samples file you saved to your computer to continue a session."
+    }
+  ],
+  "newpage-continue-session-title": [
+    {
+      "type": 0,
+      "value": "Continue a saved session"
+    }
+  ],
+  "newpage-heading-subtitle": [
+    {
+      "type": 0,
+      "value": "Run whole class sessions, easily share code with students and save progress"
+    }
+  ],
+  "newpage-heading-title": [
+    {
+      "type": 0,
+      "value": "Welcome to micro:bit classroom"
+    }
+  ],
+  "newpage-last-session-date": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Date:"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    }
+  ],
+  "newpage-last-session-name": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Name:"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "newpage-last-session-none": [
+    {
+      "type": 0,
+      "value": "No session found"
+    }
+  ],
+  "newpage-last-session-title": [
+    {
+      "type": 0,
+      "value": "Open last session"
+    }
+  ],
+  "newpage-new-session-subtitle": [
+    {
+      "type": 0,
+      "value": "Connect your micro:bit and collect movement data to build a machine learning model"
+    }
+  ],
+  "newpage-new-session-title": [
+    {
+      "type": 0,
+      "value": "New session"
+    }
+  ],
+  "newpage-section-one-title": [
+    {
+      "type": 0,
+      "value": "Pick up where you left off"
+    }
+  ],
+  "newpage-section-two-title": [
+    {
+      "type": 0,
+      "value": "Start something new"
+    }
+  ],
+  "newpage-subtitle": [
+    {
+      "type": 0,
+      "value": "Introduce students to machine learning concepts through physical movement and data"
+    }
+  ],
+  "newpage-title": [
+    {
+      "type": 0,
+      "value": "micro:bit AI creator"
     }
   ],
   "no-data-samples": [

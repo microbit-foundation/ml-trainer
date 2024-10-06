@@ -21,9 +21,14 @@ import { deployment, useDeployment } from "./deployment";
 import { ProjectProvider } from "./hooks/project-hooks";
 import { LoggingProvider } from "./logging/logging-hooks";
 import TranslationProvider from "./messages/TranslationProvider";
-import HomePage from "./pages/HomePage";
-import { createHomePageUrl, createSessionPageUrl } from "./urls";
 import { sessionPageConfigs } from "./pages-config";
+import HomePage from "./pages/HomePage";
+import NewPage from "./pages/NewPage";
+import {
+  createHomePageUrl,
+  createNewPageUrl,
+  createSessionPageUrl,
+} from "./urls";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -89,6 +94,10 @@ const createRouter = () => {
         {
           path: createHomePageUrl(),
           element: <HomePage />,
+        },
+        {
+          path: createNewPageUrl(),
+          element: <NewPage />,
         },
         ...sessionPageConfigs.map((config) => {
           return {

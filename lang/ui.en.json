@@ -699,14 +699,6 @@
     "defaultMessage": "Home",
     "description": "Home button text"
   },
-  "homepage-subtitle": {
-    "defaultMessage": "Introduce students to machine learning concepts through physical movement and data",
-    "description": "Subtitle of micro:bit AI creator home page"
-  },
-  "homepage-title": {
-    "defaultMessage": "micro:bit AI creator",
-    "description": "Title of micro:bit AI creator home page"
-  },
   "homepage.Link": {
     "defaultMessage": "Home page",
     "description": ""
@@ -746,6 +738,82 @@
   "more-edit-in-makecode-options": {
     "defaultMessage": "More edit in MakeCode options",
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
+  },
+  "newpage-browse-lessons": {
+    "defaultMessage": "Browse lessons",
+    "description": "Browse lessons button text"
+  },
+  "newpage-browse-projects": {
+    "defaultMessage": "Browse projects",
+    "description": "Browse projects button text"
+  },
+  "newpage-choose-subtitle": {
+    "defaultMessage": "Find a project or lesson from our teacher resources and open it in micro:bit classroom",
+    "description": "Choose a project or lesson subtitle"
+  },
+  "newpage-choose-title": {
+    "defaultMessage": "Choose a project or lesson",
+    "description": "Choose a project or lesson title"
+  },
+  "newpage-continue-session-instruction": {
+    "defaultMessage": "To continue a saved session from a file please select a file.",
+    "description": "Instruction to users to continue a saved session from a file"
+  },
+  "newpage-continue-session-subtitle": {
+    "defaultMessage": "Use a hex file or data samples file you saved to your computer to continue a session.",
+    "description": "Continue session subtitle"
+  },
+  "newpage-continue-session-title": {
+    "defaultMessage": "Continue a saved session",
+    "description": "Continue session title"
+  },
+  "newpage-heading-subtitle": {
+    "defaultMessage": "Run whole class sessions, easily share code with students and save progress",
+    "description": "Homepage heading subtitle"
+  },
+  "newpage-heading-title": {
+    "defaultMessage": "Welcome to micro:bit classroom",
+    "description": "Homepage heading title"
+  },
+  "newpage-last-session-date": {
+    "defaultMessage": "<strong>Date:</strong> {date}",
+    "description": "Last session date label"
+  },
+  "newpage-last-session-name": {
+    "defaultMessage": "<strong>Name:</strong> {name}",
+    "description": "Last session name label"
+  },
+  "newpage-last-session-none": {
+    "defaultMessage": "No session found",
+    "description": "Last session not found text"
+  },
+  "newpage-last-session-title": {
+    "defaultMessage": "Open last session",
+    "description": "Open last session title"
+  },
+  "newpage-new-session-subtitle": {
+    "defaultMessage": "Connect your micro:bit and collect movement data to build a machine learning model",
+    "description": "Start new session subtitle"
+  },
+  "newpage-new-session-title": {
+    "defaultMessage": "New session",
+    "description": "Start new session title"
+  },
+  "newpage-section-one-title": {
+    "defaultMessage": "Pick up where you left off",
+    "description": "Homepage section one title"
+  },
+  "newpage-section-two-title": {
+    "defaultMessage": "Start something new",
+    "description": "Homepage section two title"
+  },
+  "newpage-subtitle": {
+    "defaultMessage": "Introduce students to machine learning concepts through physical movement and data",
+    "description": "Subtitle of micro:bit AI creator home page"
+  },
+  "newpage-title": {
+    "defaultMessage": "micro:bit AI creator",
+    "description": "Title of micro:bit AI creator home page"
   },
   "no-data-samples": {
     "defaultMessage": "No data samples",
