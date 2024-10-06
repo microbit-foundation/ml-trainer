@@ -697,7 +697,7 @@
   },
   "homepage-description": {
     "defaultMessage": "Train a machine learning model on your own movement data and run it on your micro:bit.",
-    "description": "Home page subtitle"
+    "description": "Home page description"
   },
   "homepage-how-it-works": {
     "defaultMessage": "How it works",
