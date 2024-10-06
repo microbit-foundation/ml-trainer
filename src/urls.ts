@@ -8,7 +8,7 @@ if (!basepath.endsWith("/")) {
 
 export const createHomePageUrl = () => `${basepath}`;
 
-export const createNewPageUrl = () => `${basepath}/new`;
+export const createNewPageUrl = () => `${basepath}new`;
 
 export const createSessionPageUrl = (pageId: SessionPageId) =>
   `${basepath}${pageId}`;

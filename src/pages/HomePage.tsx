@@ -11,8 +11,9 @@ import {
   useInterval,
   VStack,
 } from "@chakra-ui/react";
-import { ReactNode, useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { useNavigate } from "react-router";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import PercentageDisplay from "../components/PercentageDisplay";
 import PercentageMeter from "../components/PercentageMeter";
@@ -22,6 +23,7 @@ import ResourceCardPlaceholder from "../components/ResourceCardPlaceholder";
 import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
 import blockImage from "../images/block.png";
 import xyzGraph from "../images/xyz-graph.png";
+import { createNewPageUrl } from "../urls";
 
 const graphData = {
   x: [
@@ -60,12 +62,15 @@ const graphData = {
 };
 
 const HomePage = () => {
-  const getStartedDialogDisclosure = useDisclosure();
+  const navigate = useNavigate();
+  const handleGetStarted = useCallback(() => {
+    navigate(createNewPageUrl());
+  }, [navigate]);
   return (
     <DefaultPageLayout
       toolbarItemsRight={
-        <Button variant="toolbar" onClick={getStartedDialogDisclosure.onOpen}>
-          Get started
+        <Button variant="toolbar" onClick={handleGetStarted}>
+          <FormattedMessage id="get-started-action" />
         </Button>
       }
     >
@@ -97,10 +102,10 @@ const HomePage = () => {
             <Button
               size="lg"
               variant="primary"
-              onClick={getStartedDialogDisclosure.onOpen}
+              onClick={handleGetStarted}
               mt={5}
             >
-              Get started
+              <FormattedMessage id="get-started-action" />
             </Button>
           </VStack>
           <Box flex="1" position="relative">

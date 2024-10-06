@@ -1,4 +1,5 @@
 import {
+  Box,
   BoxProps,
   Container,
   Heading,
@@ -72,13 +73,19 @@ const NewPage = () => {
       toolbarItemsRight={<>{/* This should be the home button only */}</>}
     >
       <VStack alignItems="center">
-        <Container maxW="1180px" alignItems="stretch" zIndex={1} p={4} mt={8}>
+        <Container
+          maxW="container.xl"
+          alignItems="stretch"
+          zIndex={1}
+          p={4}
+          mt={8}
+        >
           <VStack alignItems="stretch" w="100%">
             <Heading as="h1" fontSize="4xl" fontWeight="bold">
-              New session
+              <FormattedMessage id="newpage-title" />
             </Heading>
             <Heading as="h2" fontSize="2xl" mt={8}>
-              Pick up where you left off
+              <FormattedMessage id="newpage-section-one-title" />
             </Heading>
             <HStack w="100%" gap={8} alignItems="stretch" mt={3}>
               <NewPageChoice
@@ -146,9 +153,9 @@ const NewPage = () => {
               </NewPageChoice>
             </HStack>
             <Heading as="h2" fontSize="2xl" mt={8}>
-              Start something new
+              <FormattedMessage id="newpage-section-two-title" />
             </Heading>
-            <HStack w="50%" alignItems="stretch" mt={3}>
+            <HStack alignItems="stretch" mt={3} gap={8}>
               <NewPageChoice
                 onClick={onClickStartNewSession}
                 label={newSessionTitle}
@@ -164,6 +171,7 @@ const NewPage = () => {
                   }
                 />
               </NewPageChoice>
+              <Box flex="1" />
             </HStack>
           </VStack>
         </Container>

@@ -1175,16 +1175,10 @@
       "value": "Live graph"
     }
   ],
-  "footer.resume": [
+  "get-started-action": [
     {
       "type": 0,
-      "value": "Resume session"
-    }
-  ],
-  "footer.start": [
-    {
-      "type": 0,
-      "value": "Start new session"
+      "value": "Get started"
     }
   ],
   "help-label": [
@@ -1203,6 +1197,12 @@
     {
       "type": 0,
       "value": "Home"
+    }
+  ],
+  "homepage-title": [
+    {
+      "type": 0,
+      "value": "micro:bit AI creator"
     }
   ],
   "homepage.Link": [
@@ -1404,7 +1404,7 @@
   "newpage-title": [
     {
       "type": 0,
-      "value": "micro:bit AI creator"
+      "value": "New session"
     }
   ],
   "no-data-samples": [

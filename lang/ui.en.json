@@ -679,13 +679,9 @@
     "defaultMessage": "Live graph",
     "description": ""
   },
-  "footer.resume": {
-    "defaultMessage": "Resume session",
-    "description": ""
-  },
-  "footer.start": {
-    "defaultMessage": "Start new session",
-    "description": ""
+  "get-started-action": {
+    "defaultMessage": "Get started",
+    "description": "Get started action"
   },
   "help-label": {
     "defaultMessage": "Help",
@@ -698,6 +694,10 @@
   "home-action": {
     "defaultMessage": "Home",
     "description": "Home button text"
+  },
+  "homepage-title": {
+    "defaultMessage": "micro:bit AI creator",
+    "description": "Title of micro:bit AI creator home page"
   },
   "homepage.Link": {
     "defaultMessage": "Home page",
@@ -812,8 +812,8 @@
     "description": "Subtitle of micro:bit AI creator home page"
   },
   "newpage-title": {
-    "defaultMessage": "micro:bit AI creator",
-    "description": "Title of micro:bit AI creator home page"
+    "defaultMessage": "New session",
+    "description": "New page title"
   },
   "no-data-samples": {
     "defaultMessage": "No data samples",
