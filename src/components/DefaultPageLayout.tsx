@@ -102,39 +102,41 @@ const DefaultPageLayout = ({
         spacing={0}
         bgColor="whitesmoke"
       >
-        <ActionBar
-          zIndex={2}
-          position="sticky"
-          top={0}
-          itemsCenter={
-            <>
-              {showPageTitle && (
-                <Heading size="md" fontWeight="normal" color="white">
-                  <FormattedMessage id={titleId} />
-                </Heading>
-              )}
-            </>
-          }
-          itemsLeft={toolbarItemsLeft || <AppLogo />}
-          itemsRight={
-            <>
-              <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
-                {toolbarItemsRight}
-                <SettingsMenu />
-              </HStack>
-              <HelpMenu />
-              <ToolbarMenu
-                isMobile
-                variant="plain"
-                label={intl.formatMessage({ id: "main-menu" })}
-              >
-                {menuItems}
-                <LanguageMenuItem />
-              </ToolbarMenu>
-            </>
-          }
-        />
-        {flags.preReleaseNotice && <PreReleaseNotice />}
+        <VStack zIndex={1} position="sticky" top={0} gap={0}>
+          <ActionBar
+            zIndex={2}
+            position="sticky"
+            top={0}
+            itemsCenter={
+              <>
+                {showPageTitle && (
+                  <Heading size="md" fontWeight="normal" color="white">
+                    <FormattedMessage id={titleId} />
+                  </Heading>
+                )}
+              </>
+            }
+            itemsLeft={toolbarItemsLeft || <AppLogo />}
+            itemsRight={
+              <>
+                <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
+                  {toolbarItemsRight}
+                  <SettingsMenu />
+                </HStack>
+                <HelpMenu />
+                <ToolbarMenu
+                  isMobile
+                  variant="plain"
+                  label={intl.formatMessage({ id: "main-menu" })}
+                >
+                  {menuItems}
+                  <LanguageMenuItem />
+                </ToolbarMenu>
+              </>
+            }
+          />
+          {flags.preReleaseNotice && <PreReleaseNotice />}
+        </VStack>
         <Flex flexGrow={1} flexDir="column">
           {children}
         </Flex>

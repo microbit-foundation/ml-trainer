@@ -19,6 +19,7 @@ const PreReleaseNotice = () => {
         onClose={feedbackDialogDisclosure.onClose}
       />
       <Flex
+        w="100%"
         bgColor="gray.800"
         color="white"
         p={1}
