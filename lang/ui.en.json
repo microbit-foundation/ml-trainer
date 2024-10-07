@@ -1020,7 +1020,7 @@
     "description": "Label for unknown ML event"
   },
   "unplug-radio-link-microbit-description": {
-    "defaultMessage": "Unplug the radio link micro:bit from the computer. If you want to record more data samples, you will need to reconnect with the tool.",
+    "defaultMessage": "Unplug the radio link micro:bit from the computer. You will need to reconnect the micro:bit if you want to record more data samples.",
     "description": "Unplug radio link micro:bit dialog description"
   },
   "unplug-radio-link-microbit-label": {
