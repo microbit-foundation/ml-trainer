@@ -645,11 +645,18 @@ export const useStore = create<Store>()(
       }),
       {
         name: "ml",
-        partialize: ({ gestures, project, projectEdited, settings }) => ({
+        partialize: ({
           gestures,
           project,
           projectEdited,
           settings,
+          timestamp,
+        }) => ({
+          gestures,
+          project,
+          projectEdited,
+          settings,
+          timestamp,
           // The model itself is in IndexDB
         }),
         merge(persistedStateUnknown, currentState) {
