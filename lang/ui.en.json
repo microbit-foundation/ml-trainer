@@ -63,6 +63,10 @@
     "defaultMessage": "Close",
     "description": "Close button text or label"
   },
+  "coming-soon": {
+    "defaultMessage": "Coming soon",
+    "description": "Placeholder text for future projects"
+  },
   "confirm-action": {
     "defaultMessage": "Confirm",
     "description": "Confirm button text"

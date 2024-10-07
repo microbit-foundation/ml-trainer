@@ -121,6 +121,12 @@
       "value": "Close"
     }
   ],
+  "coming-soon": [
+    {
+      "type": 0,
+      "value": "Coming soon"
+    }
+  ],
   "confirm-action": [
     {
       "type": 0,

@@ -1,4 +1,5 @@
 import { AspectRatio, Box, Text, VStack } from "@chakra-ui/react";
+import { FormattedMessage } from "react-intl";
 
 const ResourceCardPlaceholder = () => {
   return (
@@ -25,7 +26,7 @@ const ResourceCardPlaceholder = () => {
         mt={-2}
         color="gray.600"
       >
-        Coming soon
+        <FormattedMessage id="coming-soon" />
       </Text>
     </Box>
   );
