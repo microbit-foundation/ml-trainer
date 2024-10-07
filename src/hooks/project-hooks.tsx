@@ -131,42 +131,38 @@ export const ProjectProvider = ({
   const saveHex = useCallback(
     async (hex?: HexData): Promise<void> => {
       const { step } = save;
-      if (hex) {
-        if (settings.showPreSaveHelp && step === SaveStep.None) {
-          // All we do is trigger the help and remember the project.
-          setSave({
-            step: SaveStep.PreSaveHelp,
-            hex: hex,
-          });
-        } else {
-          // We can just go ahead and download. Either the project came from
-          // the editor or via the dialog flow.
-          downloadHex(hex);
-          setSave({
-            step: SaveStep.None,
-          });
-          toast({
-            id: "save-complete",
-            position: "top",
-            duration: 5_000,
-            title: intl.formatMessage({ id: "saving-toast-title" }),
-            status: "info",
-          });
-        }
-      } else {
-        // We need to request something to save.
-        setSave({
-          step: SaveStep.SaveProgress,
-        });
+      if (settings.showPreSaveHelp && step === SaveStep.None) {
+        setSave({ hex, step: SaveStep.PreSaveHelp });
+      } else if (
+        getCurrentProject().header?.name === "Untitled" &&
+        step === SaveStep.None
+      ) {
+        setSave({ hex, step: SaveStep.ProjectName });
+      } else if (!hex) {
+        setSave({ hex, step: SaveStep.SaveProgress });
+        // This will result in a future call to saveHex with a hex.
         await doAfterEditorUpdate(async () => {
           saveNextDownloadRef.current = true;
           await driverRef.current!.compile();
+        });
+      } else {
+        downloadHex(hex);
+        setSave({
+          step: SaveStep.None,
+        });
+        toast({
+          id: "save-complete",
+          position: "top",
+          duration: 5_000,
+          title: intl.formatMessage({ id: "saving-toast-title" }),
+          status: "info",
         });
       }
     },
     [
       doAfterEditorUpdate,
       driverRef,
+      getCurrentProject,
       intl,
       save,
       setSave,

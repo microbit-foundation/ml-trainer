@@ -14,11 +14,13 @@ import { ReactNode, useCallback, useEffect } from "react";
 import { RiDownload2Line, RiFolderOpenLine, RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { useDeployment } from "../deployment";
 import { flags } from "../flags";
-import { SaveStep, TrainModelDialogStage } from "../model";
+import { useProject } from "../hooks/project-hooks";
+import { TrainModelDialogStage } from "../model";
 import { SessionPageId } from "../pages-config";
 import Tour from "../pages/Tour";
-import { useSettings, useStore } from "../store";
+import { useStore } from "../store";
 import { createHomePageUrl, createSessionPageUrl } from "../urls";
 import ActionBar from "./ActionBar";
 import AppLogo from "./AppLogo";
@@ -33,7 +35,6 @@ import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
 import TrainModelDialogs from "./TrainModelFlowDialogs";
-import { useDeployment } from "../deployment";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -59,7 +60,6 @@ const DefaultPageLayout = ({
   const isEditorOpen = useStore((s) => s.isEditorOpen);
   const stage = useStore((s) => s.trainModelDialogStage);
 
-  const [settings] = useSettings();
   const toast = useToast();
   const { appNameFull } = useDeployment();
 
@@ -93,15 +93,10 @@ const DefaultPageLayout = ({
     navigate(createHomePageUrl());
   }, [navigate]);
 
-  const setSave = useStore((s) => s.setSave);
-  const handleSave = useCallback(() => {
-    if (settings.showPreSaveHelp) {
-      setSave({ step: SaveStep.PreSaveHelp });
-    } else {
-      setSave({ step: SaveStep.ProjectName });
-    }
-  }, [setSave, settings.showPreSaveHelp]);
-
+  const { saveHex } = useProject();
+  const handleSave = useCallback(async () => {
+    await saveHex();
+  }, [saveHex]);
   return (
     <>
       {/* Suppress dialogs to prevent overlapping dialogs */}
