@@ -27,6 +27,7 @@ const LiveGraphStep = () => {
         src={accelerometerImage}
         w="150px"
         aspectRatio={500 / 482}
+        flexShrink={0}
         alt={intl.formatMessage({ id: "accelerometer-image-alt" })}
       />
     </HStack>
