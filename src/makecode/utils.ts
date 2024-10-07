@@ -18,7 +18,7 @@ export const filenames = {
 
 // Exported for testing.
 export const extensionName = "machine-learning";
-const extensionURL = "github:microbit-foundation/pxt-microbit-ml#v0.4.4";
+const extensionURL = "github:microbit-foundation/pxt-microbit-ml#v0.4.5";
 
 export const pxt = {
   name: "Untitled",
