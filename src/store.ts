@@ -161,7 +161,6 @@ export interface Actions {
 
   setDownload(state: DownloadState): void;
   setSave(state: SaveState): void;
-  startSave(): void;
 
   tourStart(tourId: TourId): void;
   tourNext(): void;
@@ -605,23 +604,6 @@ export const useStore = create<Store>()(
             }),
             false,
             "dataCollectionMicrobitConnected"
-          );
-        },
-
-        startSave() {
-          set(
-            ({ settings: { showPreSaveHelp } }) => {
-              return {
-                save: {
-                  step: showPreSaveHelp
-                    ? SaveStep.PreSaveHelp
-                    : SaveStep.ProjectName,
-                  hex: undefined,
-                },
-              };
-            },
-            false,
-            "startSave"
           );
         },
 
