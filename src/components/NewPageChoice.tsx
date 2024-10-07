@@ -36,7 +36,7 @@ const NewPageChoice = ({
       alignItems="stretch"
       opacity={disabled ? 0.5 : undefined}
       _hover={{
-        bgColor: disabled ? undefined : "#efedf5",
+        bgColor: disabled ? undefined : "brand.50",
       }}
       role="group"
       {...props}
