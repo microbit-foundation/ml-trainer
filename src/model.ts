@@ -107,15 +107,14 @@ export const enum TrainModelDialogStage {
 export enum DownloadStep {
   None = "None",
   Help = "Introduction",
-  RadioHelp = "RadioHelp",
   ChooseSameOrAnotherMicrobit = "ChooseSameOrAnotherMicrobit",
   ConnectCable = "ConnectCable",
-  ConnectRadioRemoteMicrobit = "ConnectRadioRemoteMicrobit",
+  ConnectBridgeMicrobit = "ConnectBridgeMicrobit",
   WebUsbFlashingTutorial = "WebUsbFlashingTutorial",
   WebUsbChooseMicrobit = "WebUsbChooseMicrobit",
   FlashingInProgress = "FlashingInProgress",
   ManualFlashingTutorial = "ManualFlashingTutorial",
-  UnplugRadioBridgeMicrobit = "UnplugRadioBridgeMicrobit",
+  UnplugBridgeMicrobit = "UnplugBridgeMicrobit",
 }
 
 export enum MicrobitToFlash {
