@@ -62,7 +62,7 @@ export const getConfig = ({
         },
         {
           label: "y",
-          borderColor: "brand2",
+          borderColor: "green",
           borderWidth: 1,
           pointRadius: 0,
           pointHoverRadius: 0,
