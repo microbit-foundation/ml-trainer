@@ -779,22 +779,6 @@
     "defaultMessage": "The name is used when you save a file.",
     "description": "Text under project name field"
   },
-  "newpage-browse-lessons": {
-    "defaultMessage": "Browse lessons",
-    "description": "Browse lessons button text"
-  },
-  "newpage-browse-projects": {
-    "defaultMessage": "Browse projects",
-    "description": "Browse projects button text"
-  },
-  "newpage-choose-subtitle": {
-    "defaultMessage": "Find a project or lesson from our teacher resources and open it in micro:bit classroom",
-    "description": "Choose a project or lesson subtitle"
-  },
-  "newpage-choose-title": {
-    "defaultMessage": "Choose a project or lesson",
-    "description": "Choose a project or lesson title"
-  },
   "newpage-continue-session-instruction": {
     "defaultMessage": "To continue a saved session from a file please select a file.",
     "description": "Instruction to users to continue a saved session from a file"
