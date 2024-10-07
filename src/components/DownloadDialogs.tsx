@@ -8,7 +8,8 @@ import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import { DownloadStep as DownloadStep } from "../model";
 import { useDownloadActions } from "../hooks/download-hooks";
 import { useStore } from "../store";
-import UnplugMicrobitDialog from "./UnplugMicrobitDialog";
+import UnplugRadioLinkMicrobitDialog from "./UnplugRadioLinkMicrobitDialog";
+import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
 
 const DownloadDialogs = () => {
   const actions = useDownloadActions();
@@ -26,7 +27,7 @@ const DownloadDialogs = () => {
           onNext={actions.onHelpNext}
         />
       );
-    case DownloadStep.ChooseSameOrAnotherMicrobit:
+    case DownloadStep.ChooseSameOrDifferentMicrobit:
       return (
         <DownloadChooseMicrobitDialog
           isOpen
@@ -50,22 +51,18 @@ const DownloadDialogs = () => {
           }}
         />
       );
-    case DownloadStep.ConnectBridgeMicrobit:
+    case DownloadStep.ConnectRadioRemoteMicrobit:
       return (
-        <ConnectCableDialog
+        <ConnectRadioDataCollectionMicrobitDialog
           isOpen
           onClose={actions.close}
           onBackClick={actions.getOnBack()}
           onNextClick={actions.getOnNext()}
-          config={{
-            headingId: "connect-remote-microbit-title",
-            subtitleId: "connect-remote-microbit-description",
-          }}
         />
       );
-    case DownloadStep.UnplugBridgeMicrobit:
+    case DownloadStep.UnplugRadioBridgeMicrobit:
       return (
-        <UnplugMicrobitDialog
+        <UnplugRadioLinkMicrobitDialog
           isOpen
           onClose={actions.close}
           onBackClick={actions.getOnBack()}

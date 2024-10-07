@@ -75,13 +75,13 @@
     "defaultMessage": "<link1>Connect a data collection micro:bit</link1> or <link2>import data samples</link2>",
     "description": "Empty data samples page text"
   },
-  "connect-remote-microbit-description": {
-    "defaultMessage": "Connect USB cable to the data collection micro:bit",
-    "description": "Connect the data collection micro:bit to this computer with a USB cable to download your machine learning MakeCode program to it."
+  "connect-radio-data-collection-microbit-description": {
+    "defaultMessage": "Connect the data collection micro:bit to this computer to download your machine learning MakeCode program to it. If you're wearing the data collection micro:bit, you may need to remove it.",
+    "description": "Connect radio data collection micro:bit dialog description"
   },
-  "connect-remote-microbit-title": {
+  "connect-radio-data-collection-microbit-title": {
     "defaultMessage": "Connect USB cable to the data collection micro:bit",
-    "description": "Connect data collection micro:bit dialog title"
+    "description": "Connect radio data collection micro:bit dialog title"
   },
   "connect-to-record-body": {
     "defaultMessage": "Connect a micro:bit to record a data sample.",
@@ -595,6 +595,14 @@
     "defaultMessage": "Copy",
     "description": "Copy button text"
   },
+  "data-collection-microbit": {
+    "defaultMessage": "Data collection micro:bit",
+    "description": "Data collection micro:bit image caption"
+  },
+  "data-collection-microbit-label": {
+    "defaultMessage": "diagram showing data collection micro:bit being connected to a person's wrist",
+    "description": "Aria label for data collection image"
+  },
   "data-samples-title": {
     "defaultMessage": "Data samples",
     "description": "Data samples page title"
@@ -791,6 +799,14 @@
     "defaultMessage": "Project loaded",
     "description": "Toast when a new project is loaded"
   },
+  "radio-link-microbit": {
+    "defaultMessage": "Radio link micro:bit",
+    "description": "Radio link micro:bit image caption"
+  },
+  "radio-link-microbit-label": {
+    "defaultMessage": "diagram showing radio link micro:bit being connected with a computer",
+    "description": "Aria label for radio link image"
+  },
   "reconnectFailed.bluetooth1": {
     "defaultMessage": "The connection to the micro:bit could not be re-established.",
     "description": ""
@@ -983,15 +999,15 @@
     "defaultMessage": "unknown",
     "description": "Label for unknown ML event"
   },
-  "unplug-bridge-microbit-description": {
-    "defaultMessage": "Disconnect the radio link micro:bit from the computer.",
+  "unplug-radio-link-microbit-description": {
+    "defaultMessage": "Unplug the radio link micro:bit from the computer. If you want to record more data samples, you will need to reconnect with the tool.",
     "description": "Unplug radio link micro:bit dialog description"
   },
-  "unplug-bridge-microbit-label": {
+  "unplug-radio-link-microbit-label": {
     "defaultMessage": "animation showing a USB cable being disconnected from the top of a micro:bit",
     "description": "Unplug radio link micro:bit dialog aria label"
   },
-  "unplug-bridge-microbit-title": {
+  "unplug-radio-link-microbit-title": {
     "defaultMessage": "Unplug the radio link micro:bit",
     "description": "Unplug radio link micro:bit dialog title"
   }

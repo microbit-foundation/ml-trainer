@@ -159,13 +159,13 @@
       "value": "link2"
     }
   ],
-  "connect-remote-microbit-description": [
+  "connect-radio-data-collection-microbit-description": [
     {
       "type": 0,
-      "value": "Connect USB cable to the data collection micro:bit"
+      "value": "Connect the data collection micro:bit to this computer to download your machine learning MakeCode program to it. If you're wearing the data collection micro:bit, you may need to remove it."
     }
   ],
-  "connect-remote-microbit-title": [
+  "connect-radio-data-collection-microbit-title": [
     {
       "type": 0,
       "value": "Connect USB cable to the data collection micro:bit"
@@ -1081,6 +1081,18 @@
       "value": "Copy"
     }
   ],
+  "data-collection-microbit": [
+    {
+      "type": 0,
+      "value": "Data collection micro:bit"
+    }
+  ],
+  "data-collection-microbit-label": [
+    {
+      "type": 0,
+      "value": "diagram showing data collection micro:bit being connected to a person's wrist"
+    }
+  ],
   "data-samples-title": [
     {
       "type": 0,
@@ -1385,6 +1397,18 @@
     {
       "type": 0,
       "value": "Project loaded"
+    }
+  ],
+  "radio-link-microbit": [
+    {
+      "type": 0,
+      "value": "Radio link micro:bit"
+    }
+  ],
+  "radio-link-microbit-label": [
+    {
+      "type": 0,
+      "value": "diagram showing radio link micro:bit being connected with a computer"
     }
   ],
   "reconnectFailed.bluetooth1": [
@@ -1697,19 +1721,19 @@
       "value": "unknown"
     }
   ],
-  "unplug-bridge-microbit-description": [
+  "unplug-radio-link-microbit-description": [
     {
       "type": 0,
-      "value": "Disconnect the radio link micro:bit from the computer."
+      "value": "Unplug the radio link micro:bit from the computer. If you want to record more data samples, you will need to reconnect with the tool."
     }
   ],
-  "unplug-bridge-microbit-label": [
+  "unplug-radio-link-microbit-label": [
     {
       "type": 0,
       "value": "animation showing a USB cable being disconnected from the top of a micro:bit"
     }
   ],
-  "unplug-bridge-microbit-title": [
+  "unplug-radio-link-microbit-title": [
     {
       "type": 0,
       "value": "Unplug the radio link micro:bit"

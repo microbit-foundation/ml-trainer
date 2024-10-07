@@ -11,11 +11,7 @@ import {
 import { useConnectActions } from "../connect-actions-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { ConnectionStageActions } from "../connection-stage-actions";
-import {
-  ConnectionFlowType,
-  ConnectionStage,
-  useConnectionStage,
-} from "../connection-stage-hooks";
+import { ConnectionStage, useConnectionStage } from "../connection-stage-hooks";
 import {
   DownloadState,
   DownloadStep,
@@ -68,16 +64,25 @@ export class DownloadProjectActions {
     });
   };
 
-  onHelpNext = (isSkipNextTime: boolean, state?: DownloadState) => {
+  onHelpNext = async (isSkipNextTime: boolean, state?: DownloadState) => {
     this.setSettings({ showPreDownloadHelp: !isSkipNextTime });
 
-    // If we've connected to a micro:bit in the session, we make the user
+    if (this.connectionStage.connType === "radio") {
+      // Disconnect input micro:bit to not trigger radio connection lost warning.
+      await this.connectionStageActions.disconnectInputMicrobit();
+      return this.updateStage({
+        ...(state ?? {}),
+        step: DownloadStep.UnplugRadioBridgeMicrobit,
+      });
+    }
+
+    // If we've bluetooth connected to a micro:bit in the session, we make the user
     // choose a device even if the connection has been lost since.
     // This makes reconnect easier if the user has two micro:bits.
     if (this.connectionStatus !== ConnectionStatus.NotConnected) {
       return this.updateStage({
         ...(state ?? {}),
-        step: DownloadStep.ChooseSameOrAnotherMicrobit,
+        step: DownloadStep.ChooseSameOrDifferentMicrobit,
         microbitToFlash: MicrobitToFlash.Default,
       });
     }
@@ -92,12 +97,8 @@ export class DownloadProjectActions {
 
   onBackToIntro = () => this.setStep(DownloadStep.Help);
 
-  private isBluetoothConnected = () =>
-    this.connectionStage.flowType === ConnectionFlowType.ConnectBluetooth;
-
   onChosenSameMicrobit = async () => {
-    const isBluetoothConnected = this.isBluetoothConnected();
-    if (this.connectActions.isUsbDeviceConnected() && isBluetoothConnected) {
+    if (this.connectActions.isUsbDeviceConnected()) {
       const newStage = {
         ...this.state,
         microbitToFlash: MicrobitToFlash.Same,
@@ -105,15 +106,9 @@ export class DownloadProjectActions {
       // Can flash directly without choosing device.
       return this.connectAndFlashMicrobit(newStage);
     }
-    if (!isBluetoothConnected) {
-      // Disconnect input micro:bit to not trigger radio connection lost warning.
-      await this.connectionStageActions.disconnectInputMicrobit();
-    }
 
     this.updateStage({
-      step: isBluetoothConnected
-        ? DownloadStep.ConnectCable
-        : DownloadStep.UnplugBridgeMicrobit,
+      step: DownloadStep.ConnectCable,
       microbitToFlash: MicrobitToFlash.Same,
     });
   };
@@ -129,7 +124,7 @@ export class DownloadProjectActions {
     let connectionAndFlashOptions: ConnectionAndFlashOptions | undefined;
     if (
       stage.microbitToFlash === MicrobitToFlash.Same &&
-      this.isBluetoothConnected()
+      this.connectionStage.connType === "bluetooth"
     ) {
       // Disconnect input micro:bit to not trigger bluetooth connection lost warning.
       await this.connectionStageActions.disconnectInputMicrobit();
@@ -206,10 +201,10 @@ export class DownloadProjectActions {
 
   private getNextStep = (): DownloadStep | undefined => {
     switch (this.state.step) {
-      case DownloadStep.UnplugBridgeMicrobit:
-        return DownloadStep.ConnectBridgeMicrobit;
+      case DownloadStep.UnplugRadioBridgeMicrobit:
+        return DownloadStep.ConnectRadioRemoteMicrobit;
       case DownloadStep.ConnectCable:
-      case DownloadStep.ConnectBridgeMicrobit:
+      case DownloadStep.ConnectRadioRemoteMicrobit:
         return DownloadStep.WebUsbFlashingTutorial;
       default:
         throw new Error(`Next step not accounted for: ${this.state.step}`);
@@ -218,18 +213,17 @@ export class DownloadProjectActions {
 
   private getPrevStep = (): DownloadStep | undefined => {
     switch (this.state.step) {
-      case DownloadStep.ChooseSameOrAnotherMicrobit: {
+      case DownloadStep.UnplugRadioBridgeMicrobit:
+      case DownloadStep.ChooseSameOrDifferentMicrobit: {
         return this.settings.showPreDownloadHelp
           ? DownloadStep.Help
           : undefined;
       }
-      case DownloadStep.UnplugBridgeMicrobit:
-        return DownloadStep.ChooseSameOrAnotherMicrobit;
-      case DownloadStep.ConnectBridgeMicrobit:
-        return DownloadStep.UnplugBridgeMicrobit;
+      case DownloadStep.ConnectRadioRemoteMicrobit:
+        return DownloadStep.UnplugRadioBridgeMicrobit;
       case DownloadStep.ConnectCable: {
         if (this.state.microbitToFlash !== MicrobitToFlash.Default) {
-          return DownloadStep.ChooseSameOrAnotherMicrobit;
+          return DownloadStep.ChooseSameOrDifferentMicrobit;
         }
         if (this.settings.showPreDownloadHelp) {
           return DownloadStep.Help;
@@ -238,9 +232,8 @@ export class DownloadProjectActions {
       }
       case DownloadStep.ManualFlashingTutorial:
       case DownloadStep.WebUsbFlashingTutorial: {
-        return !this.isBluetoothConnected() &&
-          this.state.microbitToFlash === MicrobitToFlash.Same
-          ? DownloadStep.ConnectBridgeMicrobit
+        return this.connectionStage.connType === "radio"
+          ? DownloadStep.ConnectRadioRemoteMicrobit
           : DownloadStep.ConnectCable;
       }
       default:
