@@ -811,10 +811,6 @@
     "defaultMessage": "Run whole class sessions, easily share code with students and save progress",
     "description": "Homepage heading subtitle"
   },
-  "newpage-heading-title": {
-    "defaultMessage": "Welcome to micro:bit classroom",
-    "description": "Homepage heading title"
-  },
   "newpage-last-session-date": {
     "defaultMessage": "<strong>Date:</strong> {date}",
     "description": "Last session date label"
