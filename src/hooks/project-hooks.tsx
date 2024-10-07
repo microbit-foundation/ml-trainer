@@ -23,6 +23,9 @@ import {
   readFileAsText,
 } from "../utils/fs-util";
 import { useDownloadActions } from "./download-hooks";
+import { useNavigate } from "react-router";
+import { createSessionPageUrl } from "../urls";
+import { SessionPageId } from "../pages-config";
 
 interface ProjectContext {
   openEditor(): Promise<void>;
@@ -102,7 +105,7 @@ export const ProjectProvider = ({
 
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
-
+  const navigate = useNavigate();
   const loadFile = useCallback(
     async (file: File): Promise<void> => {
       const fileExtension = getLowercaseFileExtension(file.name);
@@ -111,6 +114,7 @@ export const ProjectProvider = ({
         const gestureData = JSON.parse(gestureDataString) as unknown;
         if (isDatasetUserFileFormat(gestureData)) {
           loadDataset(gestureData);
+          navigate(createSessionPageUrl(SessionPageId.DataSamples));
         } else {
           // TODO: complain to the user!
         }
@@ -121,7 +125,7 @@ export const ProjectProvider = ({
         });
       }
     },
-    [driverRef, loadDataset]
+    [driverRef, loadDataset, navigate]
   );
 
   const setSave = useStore((s) => s.setSave);
