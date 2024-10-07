@@ -55,6 +55,7 @@ const DefaultPageLayout = ({
   const navigate = useNavigate();
   const isEditorOpen = useStore((s) => s.isEditorOpen);
   const stage = useStore((s) => s.trainModelDialogStage);
+
   const toast = useToast();
   const { appNameFull } = useDeployment();
 

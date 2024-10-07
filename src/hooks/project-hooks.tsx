@@ -70,16 +70,15 @@ export const ProjectProvider = ({
   const intl = useIntl();
   const toast = useToast();
   const setEditorOpen = useStore((s) => s.setEditorOpen);
-  const project = useStore((s) => s.project);
   const projectEdited = useStore((s) => s.projectEdited);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
-  const appEditNeedsFlushToEditor = useStore(
-    (s) => s.appEditNeedsFlushToEditor
-  );
+  const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
+  const getCurrentProject = useStore((s) => s.getCurrentProject);
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
-      if (appEditNeedsFlushToEditor) {
+      if (checkIfProjectNeedsFlush()) {
+        const project = getCurrentProject();
         expectChangedHeader();
         await driverRef.current!.importProject({ project });
         projectFlushedToEditor();
@@ -87,10 +86,10 @@ export const ProjectProvider = ({
       return action();
     },
     [
-      appEditNeedsFlushToEditor,
+      checkIfProjectNeedsFlush,
+      getCurrentProject,
       driverRef,
       expectChangedHeader,
-      project,
       projectFlushedToEditor,
     ]
   );
@@ -133,24 +132,20 @@ export const ProjectProvider = ({
     async (hex?: HexData): Promise<void> => {
       const { step } = save;
       if (settings.showPreSaveHelp && step === SaveStep.None) {
-        // All we do is trigger the help and remember the project (if any).
-        // We'll be invoked again
-        setSave({
-          step: SaveStep.PreSaveHelp,
-          hex: hex,
-        });
+        setSave({ hex, step: SaveStep.PreSaveHelp });
+      } else if (
+        getCurrentProject().header?.name === "Untitled" &&
+        step === SaveStep.None
+      ) {
+        setSave({ hex, step: SaveStep.ProjectName });
       } else if (!hex) {
-        // We need to request something to save.
-        setSave({
-          step: SaveStep.SaveProgress,
-        });
+        setSave({ hex, step: SaveStep.SaveProgress });
+        // This will result in a future call to saveHex with a hex.
         await doAfterEditorUpdate(async () => {
           saveNextDownloadRef.current = true;
           await driverRef.current!.compile();
         });
       } else {
-        // We can just go ahead and download. Either the project came from
-        // the editor or via the dialog flow.
         downloadHex(hex);
         setSave({
           step: SaveStep.None,
@@ -167,6 +162,7 @@ export const ProjectProvider = ({
     [
       doAfterEditorUpdate,
       driverRef,
+      getCurrentProject,
       intl,
       save,
       setSave,
@@ -199,6 +195,8 @@ export const ProjectProvider = ({
     },
     [downloadActions, saveHex]
   );
+
+  const project = useStore((s) => s.project);
   const value = useMemo(
     () => ({
       loadFile,
