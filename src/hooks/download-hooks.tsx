@@ -49,19 +49,19 @@ export class DownloadProjectActions {
         project: download,
       };
       this.setState(newState);
-      return this.flashMicrobit(newState, {
+      await this.flashMicrobit(newState, {
         temporaryUsbConnection: this.state.usbDevice,
       });
-    }
-    if (!this.settings.showPreDownloadHelp) {
+    } else if (!this.settings.showPreDownloadHelp) {
       const newState = { ...this.state, hex: download };
-      return this.onHelpNext(true, newState);
+      await this.onHelpNext(true, newState);
+    } else {
+      this.updateStage({
+        step: DownloadStep.Help,
+        microbitToFlash: MicrobitToFlash.Default,
+        hex: download,
+      });
     }
-    this.updateStage({
-      step: DownloadStep.Help,
-      microbitToFlash: MicrobitToFlash.Default,
-      hex: download,
-    });
   };
 
   onHelpNext = async (isSkipNextTime: boolean, state?: DownloadState) => {
@@ -70,26 +70,25 @@ export class DownloadProjectActions {
     if (this.connectionStage.connType === "radio") {
       // Disconnect input micro:bit to not trigger radio connection lost warning.
       await this.connectionStageActions.disconnectInputMicrobit();
-      return this.updateStage({
+      this.updateStage({
         ...(state ?? {}),
         step: DownloadStep.UnplugRadioBridgeMicrobit,
       });
-    }
-
-    // If we've bluetooth connected to a micro:bit in the session, we make the user
-    // choose a device even if the connection has been lost since.
-    // This makes reconnect easier if the user has two micro:bits.
-    if (this.connectionStatus !== ConnectionStatus.NotConnected) {
-      return this.updateStage({
+    } else if (this.connectionStatus !== ConnectionStatus.NotConnected) {
+      // If we've bluetooth connected to a micro:bit in the session,
+      // we make the user choose a device even if the connection has been lost since.
+      // This makes reconnect easier if the user has two micro:bits.
+      this.updateStage({
         ...(state ?? {}),
         step: DownloadStep.ChooseSameOrDifferentMicrobit,
         microbitToFlash: MicrobitToFlash.Default,
       });
+    } else {
+      this.updateStage({
+        ...(state ?? {}),
+        step: DownloadStep.ConnectCable,
+      });
     }
-    this.updateStage({
-      ...(state ?? {}),
-      step: DownloadStep.ConnectCable,
-    });
   };
 
   onSkipIntro = (skipIntro: boolean) =>
@@ -99,14 +98,10 @@ export class DownloadProjectActions {
 
   onChosenSameMicrobit = async () => {
     if (this.connectActions.isUsbDeviceConnected()) {
-      const newStage = {
-        ...this.state,
-        microbitToFlash: MicrobitToFlash.Same,
-      };
+      const newStage = { ...this.state, microbitToFlash: MicrobitToFlash.Same };
       // Can flash directly without choosing device.
       return this.connectAndFlashMicrobit(newStage);
     }
-
     this.updateStage({
       step: DownloadStep.ConnectCable,
       microbitToFlash: MicrobitToFlash.Same,
