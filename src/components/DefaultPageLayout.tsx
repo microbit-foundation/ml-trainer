@@ -104,9 +104,7 @@ const DefaultPageLayout = ({
       >
         <VStack zIndex={1} position="sticky" top={0} gap={0}>
           <ActionBar
-            zIndex={2}
-            position="sticky"
-            top={0}
+            w="100%"
             itemsCenter={
               <>
                 {showPageTitle && (
