@@ -6,7 +6,7 @@ import {
   IconButton,
   Stack,
 } from "@chakra-ui/react";
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useCallback } from "react";
 
 interface NewPageChoice extends BoxProps {
   children: ReactNode;
@@ -24,6 +24,11 @@ const NewPageChoice = ({
   label,
   ...props
 }: NewPageChoice) => {
+  const handleClick = useCallback(() => {
+    if (!disabled) {
+      onClick();
+    }
+  }, [disabled, onClick]);
   return (
     <HStack
       flex="1"
@@ -31,7 +36,7 @@ const NewPageChoice = ({
       boxShadow="lg"
       borderRadius="md"
       bgColor="white"
-      onClick={onClick}
+      onClick={handleClick}
       cursor="pointer"
       alignItems="stretch"
       opacity={disabled ? 0.5 : undefined}
