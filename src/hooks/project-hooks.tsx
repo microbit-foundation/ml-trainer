@@ -70,16 +70,15 @@ export const ProjectProvider = ({
   const intl = useIntl();
   const toast = useToast();
   const setEditorOpen = useStore((s) => s.setEditorOpen);
-  const project = useStore((s) => s.project);
   const projectEdited = useStore((s) => s.projectEdited);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
-  const appEditNeedsFlushToEditor = useStore(
-    (s) => s.appEditNeedsFlushToEditor
-  );
+  const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
+  const getCurrentProject = useStore((s) => s.getCurrentProject);
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
-      if (appEditNeedsFlushToEditor) {
+      if (checkIfProjectNeedsFlush()) {
+        const project = getCurrentProject();
         expectChangedHeader();
         await driverRef.current!.importProject({ project });
         projectFlushedToEditor();
@@ -87,10 +86,10 @@ export const ProjectProvider = ({
       return action();
     },
     [
-      appEditNeedsFlushToEditor,
+      checkIfProjectNeedsFlush,
+      getCurrentProject,
       driverRef,
       expectChangedHeader,
-      project,
       projectFlushedToEditor,
     ]
   );
@@ -200,6 +199,8 @@ export const ProjectProvider = ({
     },
     [downloadActions, saveHex]
   );
+
+  const project = useStore((s) => s.project);
   const value = useMemo(
     () => ({
       loadFile,

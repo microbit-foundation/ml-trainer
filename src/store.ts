@@ -29,11 +29,37 @@ import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
-const generateFirstGesture = () => ({
+const createFirstGesture = () => ({
   icon: defaultIcons[0],
   ID: Date.now(),
   name: "",
   recordings: [],
+});
+
+const createUntitledProject = (): Project => ({
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  header: {
+    target: "microbit",
+    targetVersion: "7.1.2",
+    name: "Untitled",
+    meta: {},
+    editor: "blocksprj",
+    pubId: "",
+    pubCurrent: false,
+    _rev: null,
+    id: "45a3216b-e997-456c-bd4b-6550ddb81c4e",
+    recentUse: 1726493314,
+    modificationTime: 1726493314,
+    cloudUserId: null,
+    cloudCurrent: false,
+    cloudVersion: null,
+    cloudLastSyncTime: 0,
+    isDeleted: false,
+    githubCurrent: false,
+    saveId: null,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } as any,
+  ...generateProject({ data: [] }, undefined),
 });
 
 const updateProject = (
@@ -116,10 +142,17 @@ export interface Actions {
    * Resets the project.
    */
   resetProject(): void;
+  /**
+   * Sets the project name.
+   */
+  setProjectName(name: string): void;
 
   /**
-   * Remainer are used by project hooks for MakeCode integration.
+   * When interacting outside of React to sync with MakeCode it's important to have
+   * the current project after state changes.
    */
+  getCurrentProject(): Project;
+  checkIfProjectNeedsFlush(): boolean;
   editorChange(project: Project): void;
   setChangedHeaderExpected(): void;
   projectFlushedToEditor(): void;
@@ -141,31 +174,7 @@ export const useStore = create<Store>()(
       (set, get) => ({
         gestures: [],
         isRecording: false,
-        project: {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          header: {
-            target: "microbit",
-            targetVersion: "7.1.2",
-            name: "Untitled",
-            meta: {},
-            editor: "blocksprj",
-            pubId: "",
-            pubCurrent: false,
-            _rev: null,
-            id: "45a3216b-e997-456c-bd4b-6550ddb81c4e",
-            recentUse: 1726493314,
-            modificationTime: 1726493314,
-            cloudUserId: null,
-            cloudCurrent: false,
-            cloudVersion: null,
-            cloudLastSyncTime: 0,
-            isDeleted: false,
-            githubCurrent: false,
-            saveId: null,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any,
-          ...generateProject({ data: [] }, undefined),
-        },
+        project: createUntitledProject(),
         projectLoadTimestamp: 0,
         download: {
           step: DownloadStep.None,
@@ -179,7 +188,7 @@ export const useStore = create<Store>()(
         settings: defaultSettings,
         model: undefined,
         isEditorOpen: false,
-        appEditNeedsFlushToEditor: false,
+        appEditNeedsFlushToEditor: true,
         changedHeaderExpected: false,
         // This dialog flow spans two pages
         trainModelDialogStage: TrainModelDialogStage.Closed,
@@ -199,11 +208,16 @@ export const useStore = create<Store>()(
         },
 
         newSession() {
-          set({
-            gestures: [],
-            model: undefined,
-          });
-          get().resetProject();
+          set(
+            {
+              gestures: [],
+              model: undefined,
+              project: createUntitledProject(),
+              appEditNeedsFlushToEditor: true,
+            },
+            false,
+            "newSession"
+          );
         },
 
         setEditorOpen(open: boolean) {
@@ -277,9 +291,7 @@ export const useStore = create<Store>()(
             const newGestures = gestures.filter((g) => g.ID !== id);
             return {
               gestures:
-                newGestures.length === 0
-                  ? [generateFirstGesture()]
-                  : newGestures,
+                newGestures.length === 0 ? [createFirstGesture()] : newGestures,
               model: undefined,
               ...updateProject(project, projectEdited, newGestures, undefined),
             };
@@ -352,7 +364,7 @@ export const useStore = create<Store>()(
 
         deleteAllGestures() {
           return set(({ project, projectEdited }) => ({
-            gestures: [generateFirstGesture()],
+            gestures: [createFirstGesture()],
             model: undefined,
             ...updateProject(project, projectEdited, [], undefined),
           }));
@@ -464,6 +476,46 @@ export const useStore = create<Store>()(
           );
         },
 
+        setProjectName(name: string): void {
+          return set(
+            ({ project }) => {
+              const pxtString = project.text?.[filenames.pxtJson];
+              const pxt = JSON.parse(pxtString ?? "{}") as Record<
+                string,
+                unknown
+              >;
+
+              return {
+                appEditNeedsFlushToEditor: true,
+                project: {
+                  ...project,
+                  header: {
+                    ...project.header!,
+                    name,
+                  },
+                  text: {
+                    ...project.text,
+                    [filenames.pxtJson]: JSON.stringify({
+                      ...pxt,
+                      name,
+                    }),
+                  },
+                },
+              };
+            },
+            false,
+            "setProjectName"
+          );
+        },
+
+        checkIfProjectNeedsFlush() {
+          return get().appEditNeedsFlushToEditor;
+        },
+
+        getCurrentProject() {
+          return get().project;
+        },
+
         editorChange(newProject: Project) {
           const actionName = "editorChange";
           set(
@@ -514,13 +566,17 @@ export const useStore = create<Store>()(
           );
         },
         setDownload(download: DownloadState) {
-          set({ download });
+          set({ download }, false, "setDownload");
         },
         setSave(save: SaveState) {
-          set({ save });
+          set({ save }, false, "setSave");
         },
         setChangedHeaderExpected() {
-          set({ changedHeaderExpected: true });
+          set(
+            { changedHeaderExpected: true },
+            false,
+            "setChangedHeaderExpected"
+          );
         },
         projectFlushedToEditor() {
           set(
@@ -532,13 +588,19 @@ export const useStore = create<Store>()(
           );
         },
         dataCollectionMicrobitConnected() {
-          set(({ gestures, tourState, settings }) => ({
-            gestures:
-              gestures.length === 0 ? [generateFirstGesture()] : gestures,
-            tourState: settings.toursCompleted.includes(TourId.DataSamplesPage)
-              ? tourState
-              : { id: TourId.DataSamplesPage, index: 0 },
-          }));
+          set(
+            ({ gestures, tourState, settings }) => ({
+              gestures:
+                gestures.length === 0 ? [createFirstGesture()] : gestures,
+              tourState: settings.toursCompleted.includes(
+                TourId.DataSamplesPage
+              )
+                ? tourState
+                : { id: TourId.DataSamplesPage, index: 0 },
+            }),
+            false,
+            "dataCollectionMicrobitConnected"
+          );
         },
         tourStart(tourId: TourId) {
           set((state) => {

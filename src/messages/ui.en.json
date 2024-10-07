@@ -127,6 +127,12 @@
       "value": "Confirm"
     }
   ],
+  "confirm-save-action": [
+    {
+      "type": 0,
+      "value": "Confirm and save"
+    }
+  ],
   "connect-help-alt": [
     {
       "type": 0,
@@ -1335,6 +1341,24 @@
       "value": "More edit in MakeCode options"
     }
   ],
+  "name-project": [
+    {
+      "type": 0,
+      "value": "Name your project"
+    }
+  ],
+  "name-text": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "name-used-when": [
+    {
+      "type": 0,
+      "value": "The name is used when you save a file."
+    }
+  ],
   "no-data-samples": [
     {
       "type": 0,
@@ -1397,6 +1421,12 @@
     {
       "type": 0,
       "value": "Project loaded"
+    }
+  ],
+  "project-name-not-empty": [
+    {
+      "type": 0,
+      "value": "The project name cannot be empty"
     }
   ],
   "radio-link-microbit": [
