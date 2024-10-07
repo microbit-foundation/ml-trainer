@@ -24,7 +24,7 @@ const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
   gap: 3,
   px: 10,
-  mb: 2,
+  py: 2,
   w: "100%",
 };
 
