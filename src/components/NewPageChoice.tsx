@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { ReactElement, ReactNode } from "react";
 
-interface GetStartedChoiceProps extends BoxProps {
+interface NewPageChoice extends BoxProps {
   children: ReactNode;
   onClick: () => void;
   icon: ReactElement;
@@ -23,7 +23,7 @@ const NewPageChoice = ({
   icon,
   label,
   ...props
-}: GetStartedChoiceProps) => {
+}: NewPageChoice) => {
   return (
     <HStack
       flex="1"
