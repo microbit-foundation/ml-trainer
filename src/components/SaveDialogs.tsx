@@ -9,7 +9,6 @@ import { NameProjectDialog } from "./NameProjectDialog";
 const SaveDialogs = () => {
   const setSave = useStore((s) => s.setSave);
   const projectName = useStore((s) => s.project.header?.name);
-  // TODO: do MakeCode translate this?
   const isUntitled = projectName === "Untitled";
   const { step, hex } = useStore((s) => s.save);
   const setProjectName = useStore((s) => s.setProjectName);
