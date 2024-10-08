@@ -73,7 +73,6 @@ const UnsupportedMicrobitDialog = ({
                         link: (chunks: ReactNode) => (
                           <Link
                             color="brand.600"
-                            // TODO: Replace with real support link.
                             href={supportLinks.bluetooth}
                             target="_blank"
                             rel="noopener"
