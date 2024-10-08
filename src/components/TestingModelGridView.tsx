@@ -33,7 +33,6 @@ import MoreMenuButton from "./MoreMenuButton";
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 360px 40px auto",
   gap: 3,
-  py: 2,
   w: "100%",
 };
 
