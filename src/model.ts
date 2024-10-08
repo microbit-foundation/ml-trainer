@@ -166,7 +166,8 @@ export interface TourState {
 }
 
 export enum TourId {
-  DataSamplesPage = "dataSamplesPage",
-  CollectDataToTrainModel = "collectDataToTrainModel",
-  TestModelPage = "testModelPage",
+  DataSamplesPagePostConnect = "data samples page post connect",
+  CollectDataToTrainModel = "collect data to train model",
+  DataSamplesPagePostImport = "data samples page post import",
+  TestModelPage = "test model page connected",
 }

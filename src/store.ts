@@ -85,6 +85,17 @@ const updateProject = (
   };
 };
 
+const getPostImportTourState = (
+  settings: Settings,
+  tourState: TourState | undefined
+): TourState | undefined => {
+  const { toursCompleted } = settings;
+  return toursCompleted.includes(TourId.DataSamplesPagePostImport) ||
+    toursCompleted.includes(TourId.DataSamplesPagePostConnect)
+    ? tourState
+    : { id: TourId.DataSamplesPagePostImport, index: 0 };
+};
+
 export interface State {
   gestures: GestureData[];
   model: tf.LayersModel | undefined;
@@ -281,6 +292,7 @@ export const useStore = create<Store>()(
               gestures: updatedGestures,
               model: undefined,
               tourState:
+                !toursCompleted.includes(TourId.DataSamplesPagePostImport) &&
                 !toursCompleted.includes(TourId.CollectDataToTrainModel) &&
                 updatedGestures.length === 1 &&
                 updatedGestures[0].recordings.length === 1
@@ -388,7 +400,7 @@ export const useStore = create<Store>()(
         },
 
         loadDataset(newGestures: GestureData[]) {
-          set(({ project, projectEdited }) => {
+          set(({ project, projectEdited, tourState, settings }) => {
             return {
               gestures: (() => {
                 const copy = newGestures.map((g) => ({ ...g }));
@@ -404,6 +416,7 @@ export const useStore = create<Store>()(
               })(),
               model: undefined,
               ...updateProject(project, projectEdited, newGestures, undefined),
+              tourState: getPostImportTourState(settings, tourState),
             };
           });
         },
@@ -528,6 +541,8 @@ export const useStore = create<Store>()(
                 project: prevProject,
                 isEditorOpen,
                 changedHeaderExpected,
+                tourState,
+                settings,
               } = state;
               const newProjectHeader = newProject.header!.id;
               const previousProjectHeader = prevProject.header!.id;
@@ -557,6 +572,7 @@ export const useStore = create<Store>()(
                   gestures: dataset.data,
                   model: undefined,
                   isEditorOpen: false,
+                  tourState: getPostImportTourState(settings, tourState),
                 };
               } else if (isEditorOpen) {
                 return {
@@ -593,14 +609,17 @@ export const useStore = create<Store>()(
         },
         dataCollectionMicrobitConnected() {
           set(
-            ({ gestures, tourState, settings }) => ({
+            ({ gestures, tourState, settings: { toursCompleted } }) => ({
               gestures:
                 gestures.length === 0 ? [createFirstGesture()] : gestures,
-              tourState: settings.toursCompleted.includes(
-                TourId.DataSamplesPage
-              )
-                ? tourState
-                : { id: TourId.DataSamplesPage, index: 0 },
+              tourState:
+                toursCompleted.includes(TourId.DataSamplesPagePostConnect) ||
+                toursCompleted.includes(TourId.DataSamplesPagePostImport)
+                  ? tourState
+                  : {
+                      id: TourId.DataSamplesPagePostConnect,
+                      index: 0,
+                    },
             }),
             false,
             "dataCollectionMicrobitConnected"

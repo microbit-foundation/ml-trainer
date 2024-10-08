@@ -58,6 +58,7 @@ const DataRecordingGridItem = ({
           <CardBody display="flex" flexDirection="row" p={1} gap={3}>
             <HStack w="8.25rem" justifyContent="center">
               <IconButton
+                className={tourElClassname.recordDataSamplesButton}
                 ref={closeRecordingDialogFocusRef}
                 height="fit-content"
                 width="fit-content"

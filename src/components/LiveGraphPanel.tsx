@@ -83,6 +83,7 @@ const LiveGraphPanel = ({
               </Button>
             ) : (
               <Button
+                className={tourElClassname.connectButton}
                 variant="primary"
                 size="sm"
                 isDisabled={
