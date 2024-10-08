@@ -64,10 +64,10 @@ Significant code is derived from ML-Machine (also MIT licensed) and is (c)
 Center for Computational Thinking and Design at Aarhus University and
 contributors. See individual file copyright notices for more details.
 
-Full details of each package can be found by running `license-checker`:
-
 We use dependencies via the NPM registry as specified by the package.json file
 under common Open Source licenses.
+
+Full details of each package can be found by running `license-checker`:
 
 ```bash
 $ npx license-checker --direct --summary --production
