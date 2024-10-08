@@ -100,6 +100,7 @@ const TestingModelGridView = () => {
             <Grid
               {...gridCommonProps}
               {...(projectEdited ? { w: "fit-content", pr: 0 } : {})}
+              py={2}
               autoRows="max-content"
               h="fit-content"
               alignSelf="start"

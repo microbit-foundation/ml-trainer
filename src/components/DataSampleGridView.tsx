@@ -137,6 +137,7 @@ const DataSamplesGridView = () => {
       ) : (
         <Grid
           {...gridCommonProps}
+          py={2}
           alignItems="start"
           autoRows="max-content"
           overflow="auto"
