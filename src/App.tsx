@@ -13,7 +13,6 @@ import EditCodeDialog from "./components/EditCodeDialog";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
 import NotFound from "./components/NotFound";
-import ProjectDropTarget from "./components/ProjectDropTarget";
 import { ConnectProvider } from "./connect-actions-hooks";
 import { ConnectStatusProvider } from "./connect-status-hooks";
 import { ConnectionStageProvider } from "./connection-stage-hooks";
@@ -70,9 +69,7 @@ const Layout = () => {
       <ScrollRestoration />
       <ProjectProvider driverRef={driverRef}>
         <EditCodeDialog ref={driverRef} />
-        <ProjectDropTarget>
-          <Outlet />
-        </ProjectDropTarget>
+        <Outlet />
       </ProjectProvider>
     </ErrorBoundary>
   );

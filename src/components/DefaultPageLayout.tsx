@@ -17,7 +17,7 @@ import { useNavigate } from "react-router";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
-import { TrainModelDialogStage } from "../model";
+import { SaveStep, TrainModelDialogStage } from "../model";
 import { SessionPageId } from "../pages-config";
 import Tour from "../pages/Tour";
 import { useStore } from "../store";
@@ -33,6 +33,12 @@ import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
 import TrainModelDialogs from "./TrainModelFlowDialogs";
+import ProjectDropTarget from "./ProjectDropTarget";
+import React from "react";
+import {
+  ConnectionFlowStep,
+  useConnectionStage,
+} from "../connection-stage-hooks";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -54,7 +60,13 @@ const DefaultPageLayout = ({
   const intl = useIntl();
   const navigate = useNavigate();
   const isEditorOpen = useStore((s) => s.isEditorOpen);
-  const stage = useStore((s) => s.trainModelDialogStage);
+  const isTourClosed = useStore((s) => s.tourState === undefined);
+  const isTrainDialogClosed = useStore(
+    (s) => s.trainModelDialogStage === TrainModelDialogStage.Closed
+  );
+  const { stage } = useConnectionStage();
+  const isConnectionDialogClosed = stage.flowStep === ConnectionFlowStep.None;
+  const isSaveDialogClosed = useStore((s) => s.save.step === SaveStep.None);
 
   const toast = useToast();
   const { appNameFull } = useDeployment();
@@ -85,60 +97,71 @@ const DefaultPageLayout = ({
     );
   }, [intl, navigate, toast]);
 
+  const ProjectDropTargetWhenNeeded =
+    isTrainDialogClosed &&
+    isTourClosed &&
+    isConnectionDialogClosed &&
+    isSaveDialogClosed
+      ? ProjectDropTarget
+      : React.Fragment;
+
   return (
     <>
       {/* Suppress dialogs to prevent overlapping dialogs */}
-      {!isEditorOpen && stage === TrainModelDialogStage.Closed && (
-        <ConnectionDialogs />
-      )}
+      {!isEditorOpen &&
+        isTrainDialogClosed &&
+        isTourClosed &&
+        isSaveDialogClosed && <ConnectionDialogs />}
       {!isEditorOpen && <TrainModelDialogs />}
-      {!isEditorOpen && stage === TrainModelDialogStage.Closed && <Tour />}
+      {!isEditorOpen && <Tour />}
       <DownloadDialogs />
       <SaveDialogs />
-      <VStack
-        minH="100dvh"
-        w="100%"
-        alignItems="stretch"
-        spacing={0}
-        bgColor="whitesmoke"
-      >
-        <VStack zIndex={1} position="sticky" top={0} gap={0}>
-          <ActionBar
-            w="100%"
-            itemsCenter={
-              <>
-                {showPageTitle && (
-                  <Heading size="md" fontWeight="normal" color="white">
-                    <FormattedMessage id={titleId} />
-                  </Heading>
-                )}
-              </>
-            }
-            itemsLeft={toolbarItemsLeft || <AppLogo />}
-            itemsRight={
-              <>
-                <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
-                  {toolbarItemsRight}
-                  <SettingsMenu />
-                </HStack>
-                <HelpMenu />
-                <ToolbarMenu
-                  isMobile
-                  variant="plain"
-                  label={intl.formatMessage({ id: "main-menu" })}
-                >
-                  {menuItems}
-                  <LanguageMenuItem />
-                </ToolbarMenu>
-              </>
-            }
-          />
-          {flags.preReleaseNotice && <PreReleaseNotice />}
+      <ProjectDropTargetWhenNeeded>
+        <VStack
+          minH="100dvh"
+          w="100%"
+          alignItems="stretch"
+          spacing={0}
+          bgColor="whitesmoke"
+        >
+          <VStack zIndex={1} position="sticky" top={0} gap={0}>
+            <ActionBar
+              w="100%"
+              itemsCenter={
+                <>
+                  {showPageTitle && (
+                    <Heading size="md" fontWeight="normal" color="white">
+                      <FormattedMessage id={titleId} />
+                    </Heading>
+                  )}
+                </>
+              }
+              itemsLeft={toolbarItemsLeft || <AppLogo />}
+              itemsRight={
+                <>
+                  <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
+                    {toolbarItemsRight}
+                    <SettingsMenu />
+                  </HStack>
+                  <HelpMenu />
+                  <ToolbarMenu
+                    isMobile
+                    variant="plain"
+                    label={intl.formatMessage({ id: "main-menu" })}
+                  >
+                    {menuItems}
+                    <LanguageMenuItem />
+                  </ToolbarMenu>
+                </>
+              }
+            />
+            {flags.preReleaseNotice && <PreReleaseNotice />}
+          </VStack>
+          <Flex flexGrow={1} flexDir="column">
+            {children}
+          </Flex>
         </VStack>
-        <Flex flexGrow={1} flexDir="column">
-          {children}
-        </Flex>
-      </VStack>
+      </ProjectDropTargetWhenNeeded>
     </>
   );
 };
