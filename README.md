@@ -10,11 +10,11 @@ Try it at https://createai.microbit.org
 
 This repository is derived from [ML-Machine](https://ml-machine.org)
 ([GitHub](https://github.com/microbit-foundation/cctd-ml-machine.)), a free and
-open-source interactive machine-learning platform from [Center for Computational
-Thinking and Design at Aarhus University](https://cctd.au.dk/).
+open-source interactive machine-learning platform from the [Center for
+Computational Thinking and Design at Aarhus University](https://cctd.au.dk/).
 
 Significant changes have been made to align with the tech stack of other
-Micro:bit Educational Foundation applications, add and remove features and
+Micro:bit Educational Foundation applications, add and remove features, and
 revise the user experience for some features also in ML-Machine. We encourage
 you to review both projects and see which best fits your needs.
 
