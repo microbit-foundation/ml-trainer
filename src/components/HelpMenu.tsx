@@ -64,11 +64,11 @@ const HelpMenu = ({ isMobile, ...rest }: HelpMenuProps) => {
         />
         <Portal>
           <MenuList>
-            {deployment.supportLink && (
+            {deployment.supportLinks.main && (
               <>
                 <MenuItem
                   as="a"
-                  href={deployment.supportLink}
+                  href={deployment.supportLinks.main}
                   target="_blank"
                   rel="noopener"
                   icon={<RiExternalLinkLine />}
