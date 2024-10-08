@@ -47,7 +47,13 @@ export interface DeploymentConfig {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   chakraTheme: any;
 
-  supportLink?: string;
+  supportLinks: {
+    main: string;
+    troubleshooting: string;
+    bluetooth: string;
+    wearable: string;
+  };
+
   termsOfUseLink?: string;
   privacyPolicyLink?: string;
 

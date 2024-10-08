@@ -10,6 +10,7 @@ import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
 import ExternalLink from "./ExternalLink";
+import { useDeployment } from "../deployment";
 
 const itemsConfig = {
   radio: [
@@ -71,6 +72,7 @@ const WhatYouWillNeedDialog = ({
   onLinkClick,
   ...props
 }: WhatYouWillNeedDialogProps) => {
+  const { supportLinks } = useDeployment();
   return (
     <ConnectContainerDialog
       {...props}
@@ -92,7 +94,7 @@ const WhatYouWillNeedDialog = ({
           )}
           {reconnect && (
             <ExternalLink
-              href="https://support.microbit.org/a/solutions/articles/19000157495"
+              href={supportLinks.troubleshooting}
               textId="connectMB.troubleshoot"
             />
           )}

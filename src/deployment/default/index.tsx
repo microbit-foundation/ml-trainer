@@ -45,6 +45,13 @@ const defaultDeploymentFactory: DeploymentConfigFactory = () => ({
     consentContext: stubConsentContext,
     manageCookies: undefined,
   },
+  supportLinks: {
+    // Just placeholders, these need replacing in a real deployment with branded help content.
+    bluetooth: "https://support.microbit.org",
+    main: "https://support.microbit.org",
+    troubleshooting: "https://support.microbit.org",
+    wearable: "https://support.microbit.org",
+  },
 });
 
 export default defaultDeploymentFactory;

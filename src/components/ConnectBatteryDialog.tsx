@@ -1,15 +1,17 @@
 import { Icon, Image, Link, Text, VStack } from "@chakra-ui/react";
+import { RiExternalLinkLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
+import { useDeployment } from "../deployment";
 import microbitConnectedImage from "../images/stylised-microbit-connected.svg";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
-import { RiExternalLinkLine } from "react-icons/ri";
 
 export interface ConnectBatteryDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {}
 
 const ConnectBatteryDialog = ({ ...props }: ConnectBatteryDialogProps) => {
+  const { supportLinks } = useDeployment();
   return (
     <ConnectContainerDialog
       headingId="connectMB.connectBattery.heading"
@@ -20,8 +22,7 @@ const ConnectBatteryDialog = ({ ...props }: ConnectBatteryDialogProps) => {
           <FormattedMessage id="connectMB.connectBattery.subtitle" />
           <Link
             color="brand.600"
-            //TODO: Replace with real support link.
-            href="https://support.microbit.org/support/home"
+            href={supportLinks.wearable}
             target="_blank"
             rel="noopener"
             display="flex"

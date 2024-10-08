@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
+import { useDeployment } from "../deployment";
 import Link from "./Link";
 
 interface UnsupportedMicrobitDialogProps {
@@ -27,6 +28,7 @@ const UnsupportedMicrobitDialog = ({
   onStartBluetoothClick,
   isBluetoothSupported,
 }: UnsupportedMicrobitDialogProps) => {
+  const { supportLinks } = useDeployment();
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -72,7 +74,7 @@ const UnsupportedMicrobitDialog = ({
                           <Link
                             color="brand.600"
                             // TODO: Replace with real support link.
-                            href="https://support.microbit.org/support/home"
+                            href={supportLinks.bluetooth}
                             target="_blank"
                             rel="noopener"
                           >

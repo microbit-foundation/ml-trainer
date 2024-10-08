@@ -19,6 +19,7 @@ import {
   ConnectionFlowType,
 } from "../connection-stage-hooks";
 import ExternalLink from "./ExternalLink";
+import { useDeployment } from "../deployment";
 
 interface ConnectErrorDialogProps {
   isOpen: boolean;
@@ -68,6 +69,7 @@ const ReconnectErrorDialog = ({
   flowType,
   errorStep,
 }: ConnectErrorDialogProps) => {
+  const { supportLinks } = useDeployment();
   const errorTextIdPrefix = errorTextIdPrefixConfig[errorStep];
   const flowTypeText = {
     [ConnectionFlowType.ConnectBluetooth]: "bluetooth",
@@ -116,7 +118,7 @@ const ReconnectErrorDialog = ({
           <ModalFooter justifyContent="space-between" px={0} pb={0}>
             <ExternalLink
               textId="connectMB.troubleshooting"
-              href="https://support.microbit.org/a/solutions/articles/19000157495"
+              href={supportLinks.troubleshooting}
             />
             <HStack gap={5}>
               <Button onClick={onClose} variant="secondary" size="lg">
