@@ -64,6 +64,8 @@ Significant code is derived from ML-Machine (also MIT licensed) and is (c)
 Center for Computational Thinking and Design at Aarhus University and
 contributors. See individual file copyright notices for more details.
 
+Conceptually this project draws heavily on the work done by the Center for Computational Thinking and Design at Aarhus University (see [CCTD.dk](https://cctd.au.dk)) and we're hugely grateful for their ongoing support and collaboration.
+
 We use dependencies via the NPM registry as specified by the package.json file
 under common Open Source licenses.
 
