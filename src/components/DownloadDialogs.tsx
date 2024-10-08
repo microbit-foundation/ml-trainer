@@ -10,6 +10,7 @@ import { useDownloadActions } from "../hooks/download-hooks";
 import { useStore } from "../store";
 import UnplugRadioLinkMicrobitDialog from "./UnplugRadioLinkMicrobitDialog";
 import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
+import UnsupportedEditorDevice from "./IncompatibleEditorDevice";
 
 const DownloadDialogs = () => {
   const actions = useDownloadActions();
@@ -96,6 +97,15 @@ const DownloadDialogs = () => {
           hex={stage.hex}
           onClose={actions.close}
           closeIsPrimaryAction={true}
+        />
+      );
+    case DownloadStep.IncompatibleDevice:
+      return (
+        <UnsupportedEditorDevice
+          isOpen
+          onClose={actions.close}
+          onBack={actions.getOnBack()}
+          stage="flashDevice"
         />
       );
   }

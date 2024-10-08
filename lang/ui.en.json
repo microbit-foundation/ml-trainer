@@ -591,6 +591,10 @@
     "defaultMessage": "Training model…",
     "description": "Progress title"
   },
+  "continue-makecode-action": {
+    "defaultMessage": "Continue to MakeCode",
+    "description": "Continue to MakeCode editor button text"
+  },
   "cookies-action": {
     "defaultMessage": "Cookies",
     "description": "Action to show dialog to choose website cookie preferences"
@@ -750,6 +754,26 @@
   "homepage.Link": {
     "defaultMessage": "Home page",
     "description": ""
+  },
+  "incompatible-device-body-1": {
+    "defaultMessage": "Continue to MakeCode to edit the program. You can then save the project hex which can be downloaded onto a micro:bit V2.",
+    "description": "Incompatible device dialog body text"
+  },
+  "incompatible-device-body-2": {
+    "defaultMessage": "Alternatively, <link>save the project hex</link> without using MakeCode.",
+    "description": "Incompatible device dialog body text"
+  },
+  "incompatible-device-body-alt": {
+    "defaultMessage": "Go back to select a different micro:bit, or <link>save the project hex</link> which can be downloaded onto a micro:bit V2 later.",
+    "description": "Incompatible device dialog body text"
+  },
+  "incompatible-device-heading": {
+    "defaultMessage": "Incompatible device",
+    "description": "Incompatible device dialog heading"
+  },
+  "incompatible-device-subtitle": {
+    "defaultMessage": "This project has code that won't run on a micro:bit V1.",
+    "description": "Incompatible device dialog subtitle"
   },
   "insufficient-data-body": {
     "defaultMessage": "You need at least 3 data samples for 2 actions to train the model.",

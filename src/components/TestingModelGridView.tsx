@@ -11,9 +11,10 @@ import {
   Portal,
   VStack,
   VisuallyHidden,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
-import React from "react";
+import React, { useCallback } from "react";
 import { RiArrowRightLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { usePrediction } from "../hooks/ml-hooks";
@@ -29,6 +30,8 @@ import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
 import LiveGraphPanel from "./LiveGraphPanel";
 import MoreMenuButton from "./MoreMenuButton";
+import { useConnectActions } from "../connect-actions-hooks";
+import UnsupportedEditorDevice from "./IncompatibleEditorDevice";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 360px 40px auto",
@@ -60,6 +63,7 @@ const TestingModelGridView = () => {
   const gestures = useStore((s) => s.gestures);
   const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { openEditor, project, resetProject, projectEdited } = useProject();
+  const { getBluetoothConnection } = useConnectActions();
 
   const detectedLabel =
     detected?.name ??
@@ -70,8 +74,32 @@ const TestingModelGridView = () => {
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const continueToEditor = useCallback(async () => {
+    await openEditor();
+    onClose();
+  }, [onClose, openEditor]);
+
+  const maybeOpenEditor = useCallback(() => {
+    // Open editor if device is not a V1, otherwise show warning dialog.
+    const bluetoothConnection = getBluetoothConnection();
+    if (bluetoothConnection) {
+      if (bluetoothConnection.getBoardVersion() === "V1") {
+        return onOpen();
+      }
+    }
+    void openEditor();
+  }, [getBluetoothConnection, onOpen, openEditor]);
+
   return (
     <>
+      <UnsupportedEditorDevice
+        isOpen={isOpen}
+        onClose={onClose}
+        onNext={continueToEditor}
+        stage="openEditor"
+      />
       <MakeCodeRenderBlocksProvider
         key={makeCodeLang}
         options={{
@@ -166,7 +194,7 @@ const TestingModelGridView = () => {
             <ButtonGroup isAttached>
               <Button
                 variant="primary"
-                onClick={openEditor}
+                onClick={maybeOpenEditor}
                 className={tourElClassname.editInMakeCodeButton}
               >
                 <FormattedMessage id="edit-in-makecode-action" />

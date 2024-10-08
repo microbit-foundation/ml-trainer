@@ -2,7 +2,7 @@ import { deviceIdToMicrobitName } from "./bt-pattern-utils";
 import {
   ConnectActions,
   ConnectAndFlashFailResult,
-  ConnectAndFlashResult,
+  ConnectResult,
 } from "./connect-actions";
 import { ConnectionStatus } from "./connect-status-hooks";
 import {
@@ -67,7 +67,7 @@ export class ConnectionStageActions {
     const hex = this.getHexType();
     const { result, deviceId } =
       await this.actions.requestUSBConnectionAndFlash(hex, progressCallback);
-    if (result !== ConnectAndFlashResult.Success) {
+    if (result !== ConnectResult.Success) {
       return this.handleConnectAndFlashFail(result);
     }
 
@@ -130,15 +130,15 @@ export class ConnectionStageActions {
     // TODO: Not sure if this is a good way of error handling because it means
     // there are 2 levels of switch statements to go through to provide UI
     switch (result) {
-      case ConnectAndFlashResult.ErrorMicrobitUnsupported:
+      case ConnectResult.ErrorMicrobitUnsupported:
         return this.setFlowStep(ConnectionFlowStep.MicrobitUnsupported);
-      case ConnectAndFlashResult.ErrorBadFirmware:
+      case ConnectResult.ErrorBadFirmware:
         return this.setFlowStep(ConnectionFlowStep.BadFirmware);
-      case ConnectAndFlashResult.ErrorNoDeviceSelected:
+      case ConnectResult.ErrorNoDeviceSelected:
         return this.setFlowStep(
           ConnectionFlowStep.TryAgainWebUsbSelectMicrobit
         );
-      case ConnectAndFlashResult.ErrorUnableToClaimInterface:
+      case ConnectResult.ErrorUnableToClaimInterface:
         return this.setFlowStep(ConnectionFlowStep.TryAgainCloseTabs);
       default:
         return this.setFlowStep(ConnectionFlowStep.TryAgainReplugMicrobit);

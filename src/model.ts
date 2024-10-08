@@ -115,6 +115,7 @@ export enum DownloadStep {
   FlashingInProgress = "flashing in progress",
   ManualFlashingTutorial = "manual flashing tutorial",
   UnplugRadioBridgeMicrobit = "unplug radio bridge microbit",
+  IncompatibleDevice = "incompatible device",
 }
 
 export enum MicrobitToFlash {

@@ -1075,6 +1075,12 @@
       "value": "Training model…"
     }
   ],
+  "continue-makecode-action": [
+    {
+      "type": 0,
+      "value": "Continue to MakeCode"
+    }
+  ],
   "cookies-action": [
     {
       "type": 0,
@@ -1331,6 +1337,64 @@
       "value": "Home page"
     }
   ],
+  "incompatible-device-body-1": [
+    {
+      "type": 0,
+      "value": "Continue to MakeCode to edit the program. You can then save the project hex which can be downloaded onto a micro:bit V2."
+    }
+  ],
+  "incompatible-device-body-2": [
+    {
+      "type": 0,
+      "value": "Alternatively, "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "save the project hex"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " without using MakeCode."
+    }
+  ],
+  "incompatible-device-body-alt": [
+    {
+      "type": 0,
+      "value": "Go back to select a different micro:bit, or "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "save the project hex"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " which can be downloaded onto a micro:bit V2 later."
+    }
+  ],
+  "incompatible-device-heading": [
+    {
+      "type": 0,
+      "value": "Incompatible device"
+    }
+  ],
+  "incompatible-device-subtitle": [
+    {
+      "type": 0,
+      "value": "This project has code that won't run on a micro:bit V1."
+    }
+  ],
   "insufficient-data-body": [
     {
       "type": 0,
@@ -1403,30 +1467,6 @@
       "value": "The name is used when you save a file."
     }
   ],
-  "newpage-browse-lessons": [
-    {
-      "type": 0,
-      "value": "Browse lessons"
-    }
-  ],
-  "newpage-browse-projects": [
-    {
-      "type": 0,
-      "value": "Browse projects"
-    }
-  ],
-  "newpage-choose-subtitle": [
-    {
-      "type": 0,
-      "value": "Find a project or lesson from our teacher resources and open it in micro:bit classroom"
-    }
-  ],
-  "newpage-choose-title": [
-    {
-      "type": 0,
-      "value": "Choose a project or lesson"
-    }
-  ],
   "newpage-continue-session-instruction": [
     {
       "type": 0,
@@ -1449,12 +1489,6 @@
     {
       "type": 0,
       "value": "Run whole class sessions, easily share code with students and save progress"
-    }
-  ],
-  "newpage-heading-title": [
-    {
-      "type": 0,
-      "value": "Welcome to micro:bit classroom"
     }
   ],
   "newpage-last-session-date": [
@@ -1970,7 +2004,7 @@
   "unplug-radio-link-microbit-description": [
     {
       "type": 0,
-      "value": "Unplug the radio link micro:bit from the computer. If you want to record more data samples, you will need to reconnect with the tool."
+      "value": "Unplug the radio link micro:bit from the computer. You will need to reconnect the micro:bit if you want to record more data samples."
     }
   ],
   "unplug-radio-link-microbit-label": [
