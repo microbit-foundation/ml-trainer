@@ -20,7 +20,7 @@ const AppLogo = ({
     >
       {OrgLogo && (
         <>
-          <OrgLogo />
+          <OrgLogo color="white" />
           <Divider
             aria-hidden
             borderColor={color}
