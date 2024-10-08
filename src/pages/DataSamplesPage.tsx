@@ -40,7 +40,7 @@ const DataSamplesPage = () => {
       <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
         <HStack
           justifyContent="space-between"
-          px={10}
+          px={5}
           py={2}
           w="full"
           borderBottomWidth={3}

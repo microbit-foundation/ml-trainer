@@ -29,7 +29,7 @@ const DataSamplesMenu = () => {
           id: "content.data.controlbar.button.menu",
         })}
         variant="ghost"
-        icon={<Icon as={MdMoreVert} boxSize={10} color="brand.500" />}
+        icon={<Icon as={MdMoreVert} boxSize={10} color="gray.600" />}
         isRound
       />
       <Portal>

@@ -23,7 +23,7 @@ import { FormattedMessage } from "react-intl";
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
   gap: 3,
-  px: 10,
+  px: 5,
   py: 2,
   w: "100%",
 };

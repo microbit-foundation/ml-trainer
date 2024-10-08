@@ -56,7 +56,7 @@ const LiveGraphPanel = ({
           top={0}
           left={0}
           right={0}
-          px={2.5}
+          px={5}
           py={2.5}
           w={`calc(100% - ${
             showPredictedGesture ? `${predictedGestureDisplayWidth}px` : "0"
