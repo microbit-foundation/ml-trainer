@@ -21,7 +21,7 @@ interface ImageProps {
 const getImageProps = (os: string): ImageProps => {
   switch (os) {
     case "Chrome OS":
-      return { src: transferProgramChromeOS, height: 300 };
+      return { src: transferProgramChromeOS, height: 401 };
     case "Windows":
       return { src: transferProgramWindows, height: 352 };
     case "macOS":
