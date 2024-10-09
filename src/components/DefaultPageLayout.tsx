@@ -14,7 +14,6 @@ import { ReactNode, useCallback, useEffect } from "react";
 import { RiDownload2Line, RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
 import { SaveStep, TrainModelDialogStage } from "../model";
@@ -69,13 +68,6 @@ const DefaultPageLayout = ({
   const isSaveDialogClosed = useStore((s) => s.save.step === SaveStep.None);
 
   const toast = useToast();
-  const { appNameFull } = useDeployment();
-
-  useEffect(() => {
-    document.title = titleId
-      ? `${intl.formatMessage({ id: titleId })} | ${appNameFull}`
-      : appNameFull;
-  }, [appNameFull, intl, titleId]);
 
   useEffect(() => {
     return useStore.subscribe(
