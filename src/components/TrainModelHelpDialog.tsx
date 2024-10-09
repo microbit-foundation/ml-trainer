@@ -2,8 +2,6 @@ import {
   Button,
   Checkbox,
   Heading,
-  HStack,
-  Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -15,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 import { ComponentProps, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import trainModelImage from "../images/train_model_black.svg";
 import { useDeployment } from "../deployment";
 
 interface TrainModelHelpDialogProps
@@ -47,24 +44,14 @@ const TrainModelIntroDialog = ({
               <Heading as="h1" fontWeight="bold" fontSize="2xl">
                 <FormattedMessage id="content.trainer.header" />
               </Heading>
-              <HStack gap={5}>
-                <Image
-                  src={trainModelImage}
-                  opacity={0.4}
-                  w="180px"
-                  h="107px"
-                  alt=""
-                  flexShrink={0}
-                />
-                <VStack gap={5}>
-                  <Text textAlign="left">
-                    <FormattedMessage
-                      id="content.trainer.description"
-                      values={{ appNameFull }}
-                    />
-                  </Text>
-                </VStack>
-              </HStack>
+              <VStack gap={5} align="stretch">
+                <Text textAlign="left">
+                  <FormattedMessage
+                    id="content.trainer.description"
+                    values={{ appNameFull }}
+                  />
+                </Text>
+              </VStack>
             </VStack>
           </ModalBody>
           <ModalFooter justifyContent="space-between" px={0} pb={0}>

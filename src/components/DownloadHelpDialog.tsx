@@ -3,7 +3,6 @@ import {
   Checkbox,
   Heading,
   HStack,
-  Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -15,7 +14,6 @@ import {
 } from "@chakra-ui/react";
 import { ComponentProps, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import testModelImage from "../images/test_model_black.svg";
 import { useDeployment } from "../deployment";
 
 export interface DownloadHelpDialogProps
@@ -50,17 +48,14 @@ const DownloadHelpDialog = ({
               <Heading as="h1" fontWeight="bold" fontSize="2xl">
                 <FormattedMessage id="download-project-intro-title" />
               </Heading>
-              <HStack gap={5}>
-                <Image src={testModelImage} opacity={0.4} w="180px" alt="" />
-                <VStack gap={5}>
-                  <Text textAlign="left">
-                    <FormattedMessage
-                      id="download-project-intro-description"
-                      values={{ appNameFull }}
-                    />
-                  </Text>
-                </VStack>
-              </HStack>
+              <VStack gap={5}>
+                <Text textAlign="left">
+                  <FormattedMessage
+                    id="download-project-intro-description"
+                    values={{ appNameFull }}
+                  />
+                </Text>
+              </VStack>
             </VStack>
           </ModalBody>
           <ModalFooter justifyContent="space-between" px={0} pb={0}>
