@@ -62,13 +62,9 @@ const UnsupportedEditorDevice = ({
                         id="incompatible-device-body-2"
                         values={{
                           link: (chunks: ReactNode) => (
-                            <Text
-                              as="button"
-                              color="brand.600"
-                              onClick={() => saveHex()}
-                            >
+                            <Button variant="link" onClick={() => saveHex()}>
                               {chunks}
-                            </Text>
+                            </Button>
                           ),
                         }}
                       />
@@ -80,13 +76,9 @@ const UnsupportedEditorDevice = ({
                       id="incompatible-device-body-alt"
                       values={{
                         link: (chunks: ReactNode) => (
-                          <Text
-                            as="button"
-                            color="brand.600"
-                            onClick={() => saveHex()}
-                          >
+                          <Button variant="link" onClick={() => saveHex()}>
                             {chunks}
-                          </Text>
+                          </Button>
                         ),
                       }}
                     />
