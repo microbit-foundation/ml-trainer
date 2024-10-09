@@ -1,5 +1,6 @@
 import {
   AccelerometerDataEvent,
+  BoardVersion,
   ButtonEvent,
   ConnectionStatus,
   ConnectionStatusEvent,
@@ -58,7 +59,10 @@ export class ConnectActions {
     private logging: Logging,
     private usb: MicrobitWebUSBConnection,
     private bluetooth: MicrobitWebBluetoothConnection,
-    private radioBridge: MicrobitRadioBridgeConnection
+    private radioBridge: MicrobitRadioBridgeConnection,
+    private radioRemoteBoardVersion: React.MutableRefObject<
+      BoardVersion | undefined
+    >
   ) {
     this.isWebBluetoothSupported =
       bluetooth.status !== DeviceConnectionStatus.NOT_SUPPORTED;
@@ -137,16 +141,24 @@ export class ConnectActions {
     hex: string | HexType,
     progressCallback: (progress: number) => void
   ): Promise<
-    | { result: ConnectResult.Success; deviceId: number }
-    | { result: ConnectAndFlashFailResult; deviceId?: number }
+    | {
+        result: ConnectResult.Success;
+        deviceId: number;
+        boardVersion?: BoardVersion;
+      }
+    | {
+        result: ConnectAndFlashFailResult;
+        deviceId?: number;
+        boardVersion?: BoardVersion;
+      }
   > => {
-    const { result, deviceId } = await this.requestUSBConnection();
+    const { result, deviceId, usb } = await this.requestUSBConnection();
     if (result !== ConnectResult.Success) {
       return { result };
     }
     try {
       const result = await this.flashMicrobit(hex, progressCallback);
-      return { result, deviceId };
+      return { result, deviceId, boardVersion: usb.getBoardVersion() };
     } catch (e) {
       this.logging.error(
         `USB request device failed/cancelled: ${JSON.stringify(e)}`
@@ -173,7 +185,11 @@ export class ConnectActions {
     return ConnectResult.Failed;
   };
 
-  connectMicrobitsSerial = async (deviceId: number): Promise<void> => {
+  connectMicrobitsSerial = async (
+    deviceId: number,
+    boardVersion?: BoardVersion
+  ): Promise<void> => {
+    this.radioRemoteBoardVersion.current = boardVersion;
     this.radioBridge.setRemoteDeviceId(deviceId);
     await this.radioBridge.connect();
   };
@@ -196,6 +212,12 @@ export class ConnectActions {
 
   getUsbDevice = () => {
     return this.usb.getDevice();
+  };
+
+  getDataCollectionBoardVersion = (): BoardVersion | undefined => {
+    return (
+      this.bluetooth.getBoardVersion() ?? this.radioRemoteBoardVersion.current
+    );
   };
 
   clearUsbDevice = async () => {

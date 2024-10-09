@@ -1,4 +1,5 @@
 import {
+  BoardVersion,
   MicrobitRadioBridgeConnection,
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
@@ -19,6 +20,7 @@ interface ConnectContextValue {
   usb: MicrobitWebUSBConnection;
   bluetooth: MicrobitWebBluetoothConnection;
   radioBridge: MicrobitRadioBridgeConnection;
+  radioRemoteBoardVersion: React.MutableRefObject<BoardVersion | undefined>;
 }
 
 const ConnectContext = createContext<ConnectContextValue | null>(null);
@@ -50,8 +52,12 @@ export const ConnectProvider = ({ children }: ConnectProviderProps) => {
     }
   }, [bluetooth, isInitialized, radioBridge, usb]);
 
+  const radioRemoteBoardVersion = useRef<BoardVersion | undefined>();
+
   return (
-    <ConnectContext.Provider value={{ usb, bluetooth, radioBridge }}>
+    <ConnectContext.Provider
+      value={{ usb, bluetooth, radioBridge, radioRemoteBoardVersion }}
+    >
       {isInitialized ? children : <></>}
     </ConnectContext.Provider>
   );
@@ -62,12 +68,20 @@ export const useConnectActions = (): ConnectActions => {
   if (!connectContextValue) {
     throw new Error("Missing provider");
   }
-  const { usb, bluetooth, radioBridge } = connectContextValue;
+  const { usb, bluetooth, radioBridge, radioRemoteBoardVersion } =
+    connectContextValue;
   const logging = useLogging();
 
   const connectActions = useMemo(
-    () => new ConnectActions(logging, usb, bluetooth, radioBridge),
-    [bluetooth, logging, radioBridge, usb]
+    () =>
+      new ConnectActions(
+        logging,
+        usb,
+        bluetooth,
+        radioBridge,
+        radioRemoteBoardVersion
+      ),
+    [bluetooth, logging, radioBridge, radioRemoteBoardVersion, usb]
   );
 
   return connectActions;

@@ -1,3 +1,4 @@
+import { BoardVersion } from "@microbit/microbit-connection";
 import { deviceIdToMicrobitName } from "./bt-pattern-utils";
 import {
   ConnectActions,
@@ -65,13 +66,13 @@ export class ConnectionStageActions {
   ) => {
     this.setFlowStep(ConnectionFlowStep.WebUsbChooseMicrobit);
     const hex = this.getHexType();
-    const { result, deviceId } =
+    const { result, deviceId, boardVersion } =
       await this.actions.requestUSBConnectionAndFlash(hex, progressCallback);
     if (result !== ConnectResult.Success) {
       return this.handleConnectAndFlashFail(result);
     }
 
-    await this.onFlashSuccess(deviceId, onSuccess);
+    await this.onFlashSuccess(deviceId, onSuccess, boardVersion);
   };
 
   private getHexType = () => {
@@ -84,7 +85,8 @@ export class ConnectionStageActions {
 
   private onFlashSuccess = async (
     deviceId: number,
-    onSuccess: (stage: ConnectionStage) => void
+    onSuccess: (stage: ConnectionStage) => void,
+    boardVersion?: BoardVersion
   ) => {
     let newStage = this.stage;
     // Store radio/bluetooth details. Radio is essential to pass to micro:bit 2.
@@ -113,6 +115,7 @@ export class ConnectionStageActions {
           connType: "radio",
           flowStep: ConnectionFlowStep.ConnectBattery,
           radioRemoteDeviceId: deviceId,
+          radioRemoteBoardVersion: boardVersion,
         };
         break;
       }
@@ -176,7 +179,10 @@ export class ConnectionStageActions {
     if (!newStage.radioRemoteDeviceId) {
       throw new Error("Radio bridge device id not set");
     }
-    await this.actions.connectMicrobitsSerial(newStage.radioRemoteDeviceId);
+    await this.actions.connectMicrobitsSerial(
+      newStage.radioRemoteDeviceId,
+      newStage.radioRemoteBoardVersion
+    );
   };
 
   private getConnectingStage = (connType: ConnectionType) => {

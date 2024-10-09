@@ -63,7 +63,7 @@ const TestingModelGridView = () => {
   const gestures = useStore((s) => s.gestures);
   const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { openEditor, project, resetProject, projectEdited } = useProject();
-  const { getBluetoothConnection } = useConnectActions();
+  const { getDataCollectionBoardVersion } = useConnectActions();
 
   const detectedLabel =
     detected?.name ??
@@ -83,14 +83,11 @@ const TestingModelGridView = () => {
 
   const maybeOpenEditor = useCallback(() => {
     // Open editor if device is not a V1, otherwise show warning dialog.
-    const bluetoothConnection = getBluetoothConnection();
-    if (bluetoothConnection) {
-      if (bluetoothConnection.getBoardVersion() === "V1") {
-        return onOpen();
-      }
+    if (getDataCollectionBoardVersion() === "V1") {
+      return onOpen();
     }
     void openEditor();
-  }, [getBluetoothConnection, onOpen, openEditor]);
+  }, [getDataCollectionBoardVersion, onOpen, openEditor]);
 
   return (
     <>

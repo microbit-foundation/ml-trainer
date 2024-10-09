@@ -16,6 +16,7 @@ import {
 import { ConnectionStageActions } from "./connection-stage-actions";
 import { useStorage } from "./hooks/use-storage";
 import { useStore } from "./store";
+import { BoardVersion } from "@microbit/microbit-connection";
 
 export enum ConnectionFlowType {
   ConnectBluetooth = "ConnectBluetooth",
@@ -77,6 +78,7 @@ export interface ConnectionStage {
   bluetoothMicrobitName?: string;
   radioBridgeDeviceId?: number;
   radioRemoteDeviceId?: number;
+  radioRemoteBoardVersion?: BoardVersion;
   hasFailedToReconnectTwice: boolean;
 
   // User Project
