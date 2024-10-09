@@ -1,4 +1,8 @@
 {
+  "aarhus-university-alt": {
+    "defaultMessage": "Aarhus University",
+    "description": "Alt text for Aarhus University logo in about dialog"
+  },
   "about": {
     "defaultMessage": "About",
     "description": "Menu item link to view information about app"
@@ -59,6 +63,10 @@
     "defaultMessage": "Cancel",
     "description": "Cancel button text"
   },
+  "certainty-label": {
+    "defaultMessage": "certainty for {action}: {currentConfidence} percent",
+    "description": "Label for certainty of an action"
+  },
   "close-action": {
     "defaultMessage": "Close",
     "description": "Close button text or label"
@@ -100,7 +108,7 @@
     "description": "Connect to record modal title"
   },
   "connectFailed.bluetooth1": {
-    "defaultMessage": "The connection to the micro:bit could not be established.",
+    "defaultMessage": "The connection to the data collection micro:bit could not be established.",
     "description": ""
   },
   "connectFailed.bluetoothHeading": {
@@ -444,7 +452,7 @@
     "description": ""
   },
   "content.data.addRecordingWalkThrough": {
-    "defaultMessage": "Press to record a data sample or press button B on your micro:bit.",
+    "defaultMessage": "Press to record a data sample or press button B on your data collection micro:bit.",
     "description": ""
   },
   "content.data.classHelpBody": {
@@ -616,7 +624,7 @@
     "description": "Data samples page title"
   },
   "disconnectedWarning.bluetooth1": {
-    "defaultMessage": "The connection to the micro:bit has been lost.",
+    "defaultMessage": "The connection to the data collection micro:bit has been lost.",
     "description": ""
   },
   "disconnectedWarning.bluetooth2": {
@@ -632,7 +640,7 @@
     "description": ""
   },
   "disconnectedWarning.bluetoothHeading": {
-    "defaultMessage": "micro:bit connection lost",
+    "defaultMessage": "Data collection micro:bit connection lost",
     "description": ""
   },
   "disconnectedWarning.bridge1": {
@@ -644,11 +652,11 @@
     "description": ""
   },
   "disconnectedWarning.remote1": {
-    "defaultMessage": "The connection to the data connection micro:bit has been lost.",
+    "defaultMessage": "The connection to the data collection micro:bit has been lost.",
     "description": ""
   },
   "disconnectedWarning.remoteHeading": {
-    "defaultMessage": "data collection micro:bit connection lost",
+    "defaultMessage": "Data collection micro:bit connection lost",
     "description": ""
   },
   "dont-show-again": {
@@ -718,6 +726,10 @@
   "home-action": {
     "defaultMessage": "Home",
     "description": "Home button text"
+  },
+  "homepage-alt": {
+    "defaultMessage": "graph showing x, y, z graph lines representing micro:bit accelerometer data",
+    "description": "Alt text for image in homepage"
   },
   "homepage-description": {
     "defaultMessage": "Train a machine learning model on your own movement data and run it on your micro:bit.",
@@ -832,7 +844,7 @@
     "description": "Open last session title"
   },
   "newpage-new-session-subtitle": {
-    "defaultMessage": "Connect your micro:bit and collect movement data to build a machine learning model",
+    "defaultMessage": "Connect your micro:bit and collect movement data to build a machine learning model.",
     "description": "Start new session subtitle"
   },
   "newpage-new-session-title": {
@@ -908,11 +920,11 @@
     "description": "Aria label for radio link image"
   },
   "reconnectFailed.bluetooth1": {
-    "defaultMessage": "The connection to the micro:bit could not be re-established.",
+    "defaultMessage": "The connection to the data collection micro:bit could not be re-established.",
     "description": ""
   },
   "reconnectFailed.bluetoothHeading": {
-    "defaultMessage": "Failed to reconnect to micro:bit",
+    "defaultMessage": "Failed to reconnect to data collection micro:bit",
     "description": ""
   },
   "reconnectFailed.bridge1": {
@@ -938,6 +950,10 @@
   "reconnectFailed.subtitle": {
     "defaultMessage": "Follow these instructions to restart the connection process.",
     "description": ""
+  },
+  "recording-graph-label": {
+    "defaultMessage": "graph showing micro:bit x, y, z accelerometer data for one recording",
+    "description": "Label for recording graph"
   },
   "reload-action": {
     "defaultMessage": "Click to reload the page",
@@ -990,6 +1006,10 @@
   "start-training-action": {
     "defaultMessage": "Start training",
     "description": "Start training button text"
+  },
+  "steps-alt": {
+    "defaultMessage": "diagram showing the iterative process of collecting data, training a model, testing the model, and improving the model by improving the data collected before finally coding using the model.",
+    "description": "Alt text for the step-by-step home page diagram"
   },
   "steps-code": {
     "defaultMessage": "Code",

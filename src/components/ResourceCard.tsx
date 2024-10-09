@@ -28,7 +28,7 @@ const ResourceCard = ({ imgSrc, url, title }: ResourceCardProps) => {
       boxShadow="md"
     >
       <AspectRatio w="100%" ratio={4 / 3} position="relative">
-        <Image src={imgSrc} />
+        <Image src={imgSrc} alt="" />
       </AspectRatio>
       <VStack p={3} py={2} pb={3} flexGrow={1} spacing={3} alignItems="stretch">
         <HStack justifyContent="space-between" alignItems="flex-start">

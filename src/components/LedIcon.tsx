@@ -11,7 +11,14 @@ interface LedIconProps {
 const LedIcon = ({ icon, isTriggered, size = 20 }: LedIconProps) => {
   const iconData = icons[icon];
   return (
-    <AspectRatio width={size} height={size} ratio={1}>
+    <AspectRatio
+      width={size}
+      height={size}
+      ratio={1}
+      role="image"
+      // TODO: Will icon names need to be translated?
+      aria-label={icon}
+    >
       <VStack w="100%" h="100%" spacing={0.5}>
         {Array.from(Array(5)).map((_, idx) => {
           const start = idx * 5;

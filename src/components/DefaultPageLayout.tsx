@@ -32,7 +32,6 @@ import PreReleaseNotice from "./PreReleaseNotice";
 import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
-import TrainModelDialogs from "./TrainModelFlowDialogs";
 import ProjectDropTarget from "./ProjectDropTarget";
 import React from "react";
 import {
@@ -112,7 +111,6 @@ const DefaultPageLayout = ({
         isTrainDialogClosed &&
         isTourClosed &&
         isSaveDialogClosed && <ConnectionDialogs />}
-      {!isEditorOpen && <TrainModelDialogs />}
       {!isEditorOpen && <Tour />}
       <DownloadDialogs />
       <SaveDialogs />

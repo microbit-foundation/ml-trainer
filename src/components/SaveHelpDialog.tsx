@@ -44,14 +44,14 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
       isCentered
     >
       <ModalOverlay>
-        <ModalContent p={5}>
+        <ModalContent>
           <ModalHeader>
             <Heading as="h2" fontSize="xl" fontWeight="bold">
               <FormattedMessage id="save-hex-dialog-heading" />
             </Heading>
           </ModalHeader>
+          <ModalCloseButton />
           <ModalBody>
-            <ModalCloseButton />
             <Stack gap={5}>
               <VStack gap={3}>
                 <Text>
@@ -66,7 +66,7 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
               </VStack>
             </Stack>
           </ModalBody>
-          <ModalFooter justifyContent="space-between" px={0} pb={0}>
+          <ModalFooter justifyContent="space-between">
             <Checkbox isChecked={skip} onChange={handleChangeSkip}>
               <FormattedMessage id="dont-show-again" />
             </Checkbox>

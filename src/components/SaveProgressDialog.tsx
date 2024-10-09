@@ -1,8 +1,9 @@
 import {
-  Heading,
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Progress,
   Text,
@@ -25,18 +26,19 @@ const SaveProgressDialog = ({ isOpen }: SavingDialogProps) => {
       isCentered
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage id="saving-title" />
+          </ModalHeader>
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h1" fontWeight="bold" fontSize="2xl">
-                <FormattedMessage id="saving-title" />
-              </Heading>
               <Text>
                 <FormattedMessage id="saving-description" />
               </Text>
               <Progress colorScheme="brand2" isIndeterminate rounded="md" />
             </VStack>
           </ModalBody>
+          <ModalFooter />
         </ModalContent>
       </ModalOverlay>
     </Modal>

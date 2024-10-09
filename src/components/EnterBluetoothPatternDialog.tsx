@@ -70,9 +70,15 @@ const EnterBluetoothPatternDialog = ({
             onChange={handlePatternChange}
             invalid={showInvalid}
           />
-          <Text textColor="red" opacity={showInvalid ? 1 : 0}>
-            <FormattedMessage id="connectMB.bluetooth.invalidPattern" />
-          </Text>
+          <VStack>
+            <Text
+              textColor="red"
+              opacity={showInvalid ? 1 : 0}
+              aria-hidden={!showInvalid}
+            >
+              <FormattedMessage id="connectMB.bluetooth.invalidPattern" />
+            </Text>
+          </VStack>
         </VStack>
       </VStack>
     </ConnectContainerDialog>

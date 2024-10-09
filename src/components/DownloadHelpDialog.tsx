@@ -1,16 +1,15 @@
 import {
   Button,
   Checkbox,
-  Heading,
   HStack,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 import { ComponentProps, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -36,29 +35,25 @@ const DownloadHelpDialog = ({
       closeOnOverlayClick={false}
       motionPreset="none"
       onClose={onClose}
-      size="3xl"
+      size="xl"
       isCentered
       {...rest}
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage id="download-project-intro-title" />
+          </ModalHeader>
+          <ModalCloseButton />
           <ModalBody>
-            <ModalCloseButton />
-            <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h1" fontWeight="bold" fontSize="2xl">
-                <FormattedMessage id="download-project-intro-title" />
-              </Heading>
-              <VStack gap={5}>
-                <Text textAlign="left">
-                  <FormattedMessage
-                    id="download-project-intro-description"
-                    values={{ appNameFull }}
-                  />
-                </Text>
-              </VStack>
-            </VStack>
+            <Text>
+              <FormattedMessage
+                id="download-project-intro-description"
+                values={{ appNameFull }}
+              />
+            </Text>
           </ModalBody>
-          <ModalFooter justifyContent="space-between" px={0} pb={0}>
+          <ModalFooter justifyContent="space-between">
             <Checkbox
               isChecked={isSkipNextTime}
               onChange={(e) => setSkipNextTime(e.target.checked)}

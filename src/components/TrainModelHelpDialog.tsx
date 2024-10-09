@@ -1,15 +1,14 @@
 import {
   Button,
   Checkbox,
-  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 import { ComponentProps, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -32,29 +31,25 @@ const TrainModelIntroDialog = ({
     <Modal
       closeOnOverlayClick={false}
       motionPreset="none"
-      size="2xl"
+      size="xl"
       isCentered
       {...props}
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage id="content.trainer.header" />
+          </ModalHeader>
+          <ModalCloseButton />
           <ModalBody>
-            <ModalCloseButton />
-            <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h1" fontWeight="bold" fontSize="2xl">
-                <FormattedMessage id="content.trainer.header" />
-              </Heading>
-              <VStack gap={5} align="stretch">
-                <Text textAlign="left">
-                  <FormattedMessage
-                    id="content.trainer.description"
-                    values={{ appNameFull }}
-                  />
-                </Text>
-              </VStack>
-            </VStack>
+            <Text>
+              <FormattedMessage
+                id="content.trainer.description"
+                values={{ appNameFull }}
+              />
+            </Text>
           </ModalBody>
-          <ModalFooter justifyContent="space-between" px={0} pb={0}>
+          <ModalFooter justifyContent="space-between">
             <Checkbox
               isChecked={skip}
               onChange={(e) => setSkip(e.target.checked)}

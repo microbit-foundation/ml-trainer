@@ -25,6 +25,7 @@ const ResourceCardPlaceholder = () => {
         transform="translateX(-50%)"
         mt={-2}
         color="gray.600"
+        as="h3"
       >
         <FormattedMessage id="coming-soon" />
       </Text>

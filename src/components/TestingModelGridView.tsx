@@ -10,7 +10,6 @@ import {
   MenuList,
   Portal,
   VStack,
-  VisuallyHidden,
 } from "@chakra-ui/react";
 import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
 import React from "react";
@@ -61,12 +60,6 @@ const TestingModelGridView = () => {
   const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { openEditor, project, resetProject, projectEdited } = useProject();
 
-  const detectedLabel =
-    detected?.name ??
-    intl.formatMessage({
-      id: "unknown",
-    });
-
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
 
@@ -79,12 +72,6 @@ const TestingModelGridView = () => {
           lang: makeCodeLang,
         }}
       >
-        <VisuallyHidden aria-live="polite">
-          <FormattedMessage
-            id="content.model.output.estimatedGesture.label"
-            values={{ action: detectedLabel }}
-          />
-        </VisuallyHidden>
         <HeadingGrid {...gridCommonProps} px={5} headings={headings} />
         <VStack
           px={5}
@@ -123,6 +110,7 @@ const TestingModelGridView = () => {
                       isTriggered={isTriggered}
                     />
                     <CertaintyThresholdGridItem
+                      actionName={name}
                       onThresholdChange={(val) =>
                         setRequiredConfidence(ID, val)
                       }

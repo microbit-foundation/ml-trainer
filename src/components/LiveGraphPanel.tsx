@@ -1,6 +1,13 @@
-import { Button, HStack, Portal, Text, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  HStack,
+  Portal,
+  Text,
+  VisuallyHidden,
+  VStack,
+} from "@chakra-ui/react";
 import { useMemo, useRef } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { Gesture } from "../model";
@@ -20,6 +27,7 @@ const LiveGraphPanel = ({
   showPredictedGesture,
   detected,
 }: LiveGraphPanelProps) => {
+  const intl = useIntl();
   const { actions, status } = useConnectionStage();
   const parentPortalRef = useRef(null);
   const isReconnecting =
@@ -112,6 +120,15 @@ const LiveGraphPanel = ({
             py={2.5}
             pt={3.5}
           >
+            <VisuallyHidden aria-live="polite">
+              <FormattedMessage
+                id="content.model.output.estimatedGesture.label"
+                values={{
+                  action:
+                    detected?.name ?? intl.formatMessage({ id: "unknown" }),
+                }}
+              />
+            </VisuallyHidden>
             <HStack justifyContent="flex-start" w="100%" gap={2} pr={2} mb={3}>
               <Text size="md" fontWeight="bold" alignSelf="start">
                 <FormattedMessage id="content.model.output.estimatedGesture.iconTitle" />

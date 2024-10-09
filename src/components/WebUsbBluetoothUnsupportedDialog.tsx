@@ -1,11 +1,11 @@
 import {
   Button,
   HStack,
-  Heading,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Text,
   VStack,
@@ -31,23 +31,21 @@ const WebUsbBluetoothUnsupportedDialog = ({
       isCentered
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage id="popup.compatibility.header" />
+          </ModalHeader>
           <ModalBody>
-            <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h2" fontSize="xl" fontWeight="bold">
-                <FormattedMessage id="popup.compatibility.header" />
-              </Heading>
-              <VStack gap={5} textAlign="left" w="100%">
-                <Text w="100%">
-                  <FormattedMessage id="popup.compatibility.explain" />
-                </Text>
-                <Text w="100%">
-                  <FormattedMessage id="popup.compatibility.advice" />
-                </Text>
-              </VStack>
+            <VStack gap={5} textAlign="left" w="100%">
+              <Text w="100%">
+                <FormattedMessage id="popup.compatibility.explain" />
+              </Text>
+              <Text w="100%">
+                <FormattedMessage id="popup.compatibility.advice" />
+              </Text>
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent="end" p={0}>
+          <ModalFooter justifyContent="end">
             <HStack gap={5}>
               <Button onClick={onClose} variant="primary" size="lg">
                 <FormattedMessage id="close-action" />

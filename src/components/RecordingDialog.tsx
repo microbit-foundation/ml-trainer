@@ -1,10 +1,11 @@
 import {
   Button,
-  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
+  ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Progress,
   Text,
@@ -152,16 +153,16 @@ const RecordingDialog = ({
       isCentered
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage
+              id="content.data.recordingDialog.title"
+              values={{ action: actionName }}
+            />
+          </ModalHeader>
+          <ModalCloseButton />
           <ModalBody>
-            <ModalCloseButton />
             <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h1" fontWeight="bold" fontSize="2xl">
-                <FormattedMessage
-                  id="content.data.recordingDialog.title"
-                  values={{ action: actionName }}
-                />
-              </Heading>
               <VStack height="100px" justifyContent="center">
                 {recordingStatus === RecordingStatus.Recording ? (
                   <Text
@@ -201,6 +202,7 @@ const RecordingDialog = ({
               </Button>
             </VStack>
           </ModalBody>
+          <ModalFooter />
         </ModalContent>
       </ModalOverlay>
     </Modal>

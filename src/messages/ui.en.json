@@ -1,4 +1,10 @@
 {
+  "aarhus-university-alt": [
+    {
+      "type": 0,
+      "value": "Aarhus University"
+    }
+  ],
   "about": [
     {
       "type": 0,
@@ -115,6 +121,28 @@
       "value": "Cancel"
     }
   ],
+  "certainty-label": [
+    {
+      "type": 0,
+      "value": "certainty for "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "currentConfidence"
+    },
+    {
+      "type": 0,
+      "value": " percent"
+    }
+  ],
   "close-action": [
     {
       "type": 0,
@@ -198,7 +226,7 @@
   "connectFailed.bluetooth1": [
     {
       "type": 0,
-      "value": "The connection to the micro:bit could not be established."
+      "value": "The connection to the data collection micro:bit could not be established."
     }
   ],
   "connectFailed.bluetoothHeading": [
@@ -786,7 +814,7 @@
   "content.data.addRecordingWalkThrough": [
     {
       "type": 0,
-      "value": "Press to record a data sample or press button B on your micro:bit."
+      "value": "Press to record a data sample or press button B on your data collection micro:bit."
     }
   ],
   "content.data.classHelpBody": [
@@ -1114,7 +1142,7 @@
   "disconnectedWarning.bluetooth1": [
     {
       "type": 0,
-      "value": "The connection to the micro:bit has been lost."
+      "value": "The connection to the data collection micro:bit has been lost."
     }
   ],
   "disconnectedWarning.bluetooth2": [
@@ -1138,7 +1166,7 @@
   "disconnectedWarning.bluetoothHeading": [
     {
       "type": 0,
-      "value": "micro:bit connection lost"
+      "value": "Data collection micro:bit connection lost"
     }
   ],
   "disconnectedWarning.bridge1": [
@@ -1156,13 +1184,13 @@
   "disconnectedWarning.remote1": [
     {
       "type": 0,
-      "value": "The connection to the data connection micro:bit has been lost."
+      "value": "The connection to the data collection micro:bit has been lost."
     }
   ],
   "disconnectedWarning.remoteHeading": [
     {
       "type": 0,
-      "value": "data collection micro:bit connection lost"
+      "value": "Data collection micro:bit connection lost"
     }
   ],
   "dont-show-again": [
@@ -1273,6 +1301,12 @@
     {
       "type": 0,
       "value": "Home"
+    }
+  ],
+  "homepage-alt": [
+    {
+      "type": 0,
+      "value": "graph showing x, y, z graph lines representing micro:bit accelerometer data"
     }
   ],
   "homepage-description": [
@@ -1482,7 +1516,7 @@
   "newpage-new-session-subtitle": [
     {
       "type": 0,
-      "value": "Connect your micro:bit and collect movement data to build a machine learning model"
+      "value": "Connect your micro:bit and collect movement data to build a machine learning model."
     }
   ],
   "newpage-new-session-title": [
@@ -1600,13 +1634,13 @@
   "reconnectFailed.bluetooth1": [
     {
       "type": 0,
-      "value": "The connection to the micro:bit could not be re-established."
+      "value": "The connection to the data collection micro:bit could not be re-established."
     }
   ],
   "reconnectFailed.bluetoothHeading": [
     {
       "type": 0,
-      "value": "Failed to reconnect to micro:bit"
+      "value": "Failed to reconnect to data collection micro:bit"
     }
   ],
   "reconnectFailed.bridge1": [
@@ -1643,6 +1677,12 @@
     {
       "type": 0,
       "value": "Follow these instructions to restart the connection process."
+    }
+  ],
+  "recording-graph-label": [
+    {
+      "type": 0,
+      "value": "graph showing micro:bit x, y, z accelerometer data for one recording"
     }
   ],
   "reload-action": [
@@ -1729,6 +1769,12 @@
     {
       "type": 0,
       "value": "Start training"
+    }
+  ],
+  "steps-alt": [
+    {
+      "type": 0,
+      "value": "diagram showing the iterative process of collecting data, training a model, testing the model, and improving the model by improving the data collected before finally coding using the model."
     }
   ],
   "steps-code": [

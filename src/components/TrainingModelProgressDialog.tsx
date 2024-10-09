@@ -1,8 +1,9 @@
 import {
-  Heading,
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Progress,
   VStack,
@@ -12,11 +13,13 @@ import { FormattedMessage } from "react-intl";
 export interface DownloadingDialogProps {
   isOpen: boolean;
   progress: number;
+  finalFocusRef?: React.RefObject<HTMLButtonElement>;
 }
 
 const TrainingModelProgressDialog = ({
   isOpen,
   progress,
+  finalFocusRef,
 }: DownloadingDialogProps) => {
   return (
     <Modal
@@ -26,14 +29,15 @@ const TrainingModelProgressDialog = ({
       onClose={() => {}}
       size="2xl"
       isCentered
+      finalFocusRef={finalFocusRef}
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage id="content.trainer.training.title" />
+          </ModalHeader>
           <ModalBody>
-            <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h1" fontWeight="bold" fontSize="2xl">
-                <FormattedMessage id="content.trainer.training.title" />
-              </Heading>
+            <VStack width="100%" alignItems="left">
               <Progress
                 value={progress}
                 colorScheme="brand2"
@@ -42,6 +46,7 @@ const TrainingModelProgressDialog = ({
               />
             </VStack>
           </ModalBody>
+          <ModalFooter />
         </ModalContent>
       </ModalOverlay>
     </Modal>

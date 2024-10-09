@@ -8,8 +8,8 @@ import {
 import {
   Button,
   HStack,
-  Heading,
   ModalCloseButton,
+  ModalHeader,
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
@@ -46,20 +46,17 @@ const ConnectContainerDialog = ({
       isCentered
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader as="h2">
+            <FormattedMessage id={headingId} />
+          </ModalHeader>
+          <ModalCloseButton />
           <ModalBody>
-            <ModalCloseButton />
-            <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h2" fontSize="xl" fontWeight="bold">
-                <FormattedMessage id={headingId} />
-              </Heading>
+            <VStack width="100%" alignItems="left">
               {children}
             </VStack>
           </ModalBody>
-          <ModalFooter
-            justifyContent={footerLeft ? "space-between" : "end"}
-            p={0}
-          >
+          <ModalFooter justifyContent={footerLeft ? "space-between" : "end"}>
             {footerLeft && footerLeft}
             <HStack gap={5}>
               {onBackClick && (

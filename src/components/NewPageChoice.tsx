@@ -40,6 +40,7 @@ const NewPageChoice = ({
       cursor="pointer"
       alignItems="stretch"
       opacity={disabled ? 0.5 : undefined}
+      userSelect={disabled ? "none" : undefined}
       _hover={{
         bgColor: disabled ? undefined : "brand.50",
       }}
