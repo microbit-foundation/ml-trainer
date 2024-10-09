@@ -2,6 +2,7 @@ import {
   Button,
   HStack,
   Heading,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -50,7 +51,16 @@ const UnsupportedEditorDevice = ({
               </Heading>
               <VStack gap={5} align="stretch">
                 <Text>
-                  <FormattedMessage id="incompatible-device-subtitle" />
+                  <FormattedMessage
+                    id="incompatible-device-subtitle"
+                    values={{
+                      link: (children) => (
+                        <Link href="https://support.microbit.org/support/solutions/articles/19000154234-which-version-of-micro-bit-do-i-have-">
+                          {children}
+                        </Link>
+                      ),
+                    }}
+                  />
                 </Text>
                 {stage === "openEditor" ? (
                   <>

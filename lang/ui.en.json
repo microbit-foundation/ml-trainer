@@ -772,7 +772,7 @@
     "description": "Incompatible device dialog heading"
   },
   "incompatible-device-subtitle": {
-    "defaultMessage": "This project has code that won't run on a micro:bit V1.",
+    "defaultMessage": "You are using a micro:bit V1 but machine learning projects need the faster processor on a micro:bit V2. <link>Learn more about micro:bit versions.</link>",
     "description": "Incompatible device dialog subtitle"
   },
   "insufficient-data-body": {
