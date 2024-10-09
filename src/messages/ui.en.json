@@ -1426,7 +1426,7 @@
   "incompatible-device-subtitle": [
     {
       "type": 0,
-      "value": "You are using a micro:bit V1 but machine learning projects need the faster processor on a micro:bit V2. "
+      "value": "You are using a micro:bit V1, but machine learning projects need the faster processor on a micro:bit V2. "
     },
     {
       "children": [
