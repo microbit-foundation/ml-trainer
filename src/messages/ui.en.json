@@ -786,7 +786,7 @@
   "content.data.addRecordingWalkThrough": [
     {
       "type": 0,
-      "value": "Press to record a data sample or press button B on your micro:bit."
+      "value": "Press to record a data sample or press button B on your data collection micro:bit."
     }
   ],
   "content.data.classHelpBody": [

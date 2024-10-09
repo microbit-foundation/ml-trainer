@@ -444,7 +444,7 @@
     "description": ""
   },
   "content.data.addRecordingWalkThrough": {
-    "defaultMessage": "Press to record a data sample or press button B on your micro:bit.",
+    "defaultMessage": "Press to record a data sample or press button B on your data collection micro:bit.",
     "description": ""
   },
   "content.data.classHelpBody": {
