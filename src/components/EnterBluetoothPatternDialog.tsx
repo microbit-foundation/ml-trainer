@@ -70,7 +70,7 @@ const EnterBluetoothPatternDialog = ({
             onChange={handlePatternChange}
             invalid={showInvalid}
           />
-          <VStack role="region" aria-live="polite">
+          <VStack>
             <Text
               textColor="red"
               opacity={showInvalid ? 1 : 0}

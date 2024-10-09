@@ -1,7 +1,7 @@
 {
   "aarhus-university-alt": {
     "defaultMessage": "Aarhus University",
-    "description": "Alt text for Aarhus University logo image in about dialog"
+    "description": "Alt text for Aarhus University logo in about dialog"
   },
   "about": {
     "defaultMessage": "About",
@@ -64,8 +64,8 @@
     "description": "Cancel button text"
   },
   "certainty-label": {
-    "defaultMessage": "certainty level for {action}: {currentConfidence} percent",
-    "description": "Label for certainty level of an action"
+    "defaultMessage": "certainty for {action}: {currentConfidence} percent",
+    "description": "Label for certainty of an action"
   },
   "close-action": {
     "defaultMessage": "Close",
@@ -728,7 +728,7 @@
     "description": "Home button text"
   },
   "homepage-alt": {
-    "defaultMessage": "image of graph showing x, y, z graph lines representing micro:bit accelerometer data ",
+    "defaultMessage": "graph showing x, y, z graph lines representing micro:bit accelerometer data",
     "description": "Alt text for image in homepage"
   },
   "homepage-description": {
@@ -952,7 +952,7 @@
     "description": ""
   },
   "recording-graph-label": {
-    "defaultMessage": "image of graph showing x, y, z graph lines representing micro:bit accelerometer data in one recording",
+    "defaultMessage": "graph showing micro:bit x, y, z accelerometer data for one recording",
     "description": "Label for recording graph"
   },
   "reload-action": {

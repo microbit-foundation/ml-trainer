@@ -124,7 +124,7 @@
   "certainty-label": [
     {
       "type": 0,
-      "value": "certainty level for "
+      "value": "certainty for "
     },
     {
       "type": 1,
@@ -1306,7 +1306,7 @@
   "homepage-alt": [
     {
       "type": 0,
-      "value": "image of graph showing x, y, z graph lines representing micro:bit accelerometer data "
+      "value": "graph showing x, y, z graph lines representing micro:bit accelerometer data"
     }
   ],
   "homepage-description": [
@@ -1682,7 +1682,7 @@
   "recording-graph-label": [
     {
       "type": 0,
-      "value": "image of graph showing x, y, z graph lines representing micro:bit accelerometer data in one recording"
+      "value": "graph showing micro:bit x, y, z accelerometer data for one recording"
     }
   ],
   "reload-action": [
