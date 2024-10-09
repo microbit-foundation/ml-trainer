@@ -216,6 +216,7 @@ export const useStore = create<Store>()(
               gestures: [],
               model: undefined,
               project: createUntitledProject(),
+              projectEdited: false,
               appEditNeedsFlushToEditor: true,
               timestamp: Date.now(),
             },
