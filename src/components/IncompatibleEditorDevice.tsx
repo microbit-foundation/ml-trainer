@@ -1,20 +1,20 @@
 import {
   Button,
   HStack,
-  Heading,
   Link,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import { useProject } from "../hooks/project-hooks";
-import { ReactNode } from "react";
 
 interface UnsupportedEditorDeviceProps {
   isOpen: boolean;
@@ -42,20 +42,23 @@ const UnsupportedEditorDevice = ({
       isCentered
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage id="incompatible-device-heading" />
+          </ModalHeader>
+          <ModalCloseButton />
           <ModalBody>
-            <ModalCloseButton />
             <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h2" fontSize="xl" fontWeight="bold">
-                <FormattedMessage id="incompatible-device-heading" />
-              </Heading>
               <VStack gap={5} align="stretch">
                 <Text>
                   <FormattedMessage
                     id="incompatible-device-subtitle"
                     values={{
                       link: (children) => (
-                        <Link href="https://support.microbit.org/support/solutions/articles/19000154234-which-version-of-micro-bit-do-i-have-">
+                        <Link
+                          href="https://support.microbit.org/support/solutions/articles/19000154234-which-version-of-micro-bit-do-i-have-"
+                          color="brand.600"
+                        >
                           {children}
                         </Link>
                       ),
@@ -97,7 +100,7 @@ const UnsupportedEditorDevice = ({
               </VStack>
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent="end" px={0} pb={0}>
+          <ModalFooter justifyContent="end">
             <HStack gap={5}>
               <Button onClick={onBack ?? onClose} variant="secondary" size="lg">
                 <FormattedMessage
