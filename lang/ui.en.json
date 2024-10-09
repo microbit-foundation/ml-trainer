@@ -100,7 +100,7 @@
     "description": "Connect to record modal title"
   },
   "connectFailed.bluetooth1": {
-    "defaultMessage": "The connection to the micro:bit could not be established.",
+    "defaultMessage": "The connection to the data collection micro:bit could not be established.",
     "description": ""
   },
   "connectFailed.bluetoothHeading": {
@@ -616,7 +616,7 @@
     "description": "Data samples page title"
   },
   "disconnectedWarning.bluetooth1": {
-    "defaultMessage": "The connection to the micro:bit has been lost.",
+    "defaultMessage": "The connection to the data collection micro:bit has been lost.",
     "description": ""
   },
   "disconnectedWarning.bluetooth2": {
@@ -632,7 +632,7 @@
     "description": ""
   },
   "disconnectedWarning.bluetoothHeading": {
-    "defaultMessage": "micro:bit connection lost",
+    "defaultMessage": "Data collection micro:bit connection lost",
     "description": ""
   },
   "disconnectedWarning.bridge1": {
@@ -644,11 +644,11 @@
     "description": ""
   },
   "disconnectedWarning.remote1": {
-    "defaultMessage": "The connection to the data connection micro:bit has been lost.",
+    "defaultMessage": "The connection to the data collection micro:bit has been lost.",
     "description": ""
   },
   "disconnectedWarning.remoteHeading": {
-    "defaultMessage": "data collection micro:bit connection lost",
+    "defaultMessage": "Data collection micro:bit connection lost",
     "description": ""
   },
   "dont-show-again": {
@@ -908,11 +908,11 @@
     "description": "Aria label for radio link image"
   },
   "reconnectFailed.bluetooth1": {
-    "defaultMessage": "The connection to the micro:bit could not be re-established.",
+    "defaultMessage": "The connection to the data collection micro:bit could not be re-established.",
     "description": ""
   },
   "reconnectFailed.bluetoothHeading": {
-    "defaultMessage": "Failed to reconnect to micro:bit",
+    "defaultMessage": "Failed to reconnect to data collection micro:bit",
     "description": ""
   },
   "reconnectFailed.bridge1": {

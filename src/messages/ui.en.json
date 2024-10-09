@@ -198,7 +198,7 @@
   "connectFailed.bluetooth1": [
     {
       "type": 0,
-      "value": "The connection to the micro:bit could not be established."
+      "value": "The connection to the data collection micro:bit could not be established."
     }
   ],
   "connectFailed.bluetoothHeading": [
@@ -1114,7 +1114,7 @@
   "disconnectedWarning.bluetooth1": [
     {
       "type": 0,
-      "value": "The connection to the micro:bit has been lost."
+      "value": "The connection to the data collection micro:bit has been lost."
     }
   ],
   "disconnectedWarning.bluetooth2": [
@@ -1138,7 +1138,7 @@
   "disconnectedWarning.bluetoothHeading": [
     {
       "type": 0,
-      "value": "micro:bit connection lost"
+      "value": "Data collection micro:bit connection lost"
     }
   ],
   "disconnectedWarning.bridge1": [
@@ -1156,13 +1156,13 @@
   "disconnectedWarning.remote1": [
     {
       "type": 0,
-      "value": "The connection to the data connection micro:bit has been lost."
+      "value": "The connection to the data collection micro:bit has been lost."
     }
   ],
   "disconnectedWarning.remoteHeading": [
     {
       "type": 0,
-      "value": "data collection micro:bit connection lost"
+      "value": "Data collection micro:bit connection lost"
     }
   ],
   "dont-show-again": [
@@ -1600,13 +1600,13 @@
   "reconnectFailed.bluetooth1": [
     {
       "type": 0,
-      "value": "The connection to the micro:bit could not be re-established."
+      "value": "The connection to the data collection micro:bit could not be re-established."
     }
   ],
   "reconnectFailed.bluetoothHeading": [
     {
       "type": 0,
-      "value": "Failed to reconnect to micro:bit"
+      "value": "Failed to reconnect to data collection micro:bit"
     }
   ],
   "reconnectFailed.bridge1": [
