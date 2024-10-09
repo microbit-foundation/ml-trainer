@@ -34,8 +34,6 @@ export class DownloadProjectActions {
     private connectionStatus: ConnectionStatus
   ) {}
 
-  private connectionAndFlashOptions: ConnectionAndFlashOptions | undefined;
-
   clearMakeCodeUsbDevice = () => {
     this.setState({ ...this.state, usbDevice: undefined });
   };
@@ -127,7 +125,7 @@ export class DownloadProjectActions {
   };
 
   connectAndFlashMicrobit = async (stage: DownloadState) => {
-    this.connectionAndFlashOptions = undefined;
+    let connectionAndFlashOptions: ConnectionAndFlashOptions | undefined;
     if (
       stage.microbitToFlash === MicrobitToFlash.Same &&
       this.connectionStage.connType === "bluetooth"
@@ -146,7 +144,7 @@ export class DownloadProjectActions {
           { serialNumber: connectedDevice.serialNumber },
         ]);
       }
-      this.connectionAndFlashOptions = {
+      connectionAndFlashOptions = {
         temporaryUsbConnection,
         callbackIfDeviceIsSame:
           this.connectionStageActions.disconnectInputMicrobit,
@@ -159,7 +157,7 @@ export class DownloadProjectActions {
     this.updateStage({ step: DownloadStep.WebUsbChooseMicrobit });
 
     const { result, usb } = await this.connectActions.requestUSBConnection(
-      this.connectionAndFlashOptions
+      connectionAndFlashOptions
     );
     if (result === ConnectResult.Success && usb.getBoardVersion() === "V1") {
       return this.updateStage({
@@ -167,7 +165,7 @@ export class DownloadProjectActions {
       });
     }
 
-    await this.flashMicrobit(stage, this.connectionAndFlashOptions);
+    await this.flashMicrobit(stage, connectionAndFlashOptions);
   };
 
   flashMicrobit = async (
