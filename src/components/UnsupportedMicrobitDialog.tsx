@@ -1,11 +1,11 @@
 import {
   Button,
   HStack,
-  Heading,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Text,
   VStack,
@@ -39,21 +39,40 @@ const UnsupportedMicrobitDialog = ({
       isCentered
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage id="connectMB.unsupportedMicrobit.header" />
+          </ModalHeader>
           <ModalBody>
-            <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h2" fontSize="xl" fontWeight="bold">
-                <FormattedMessage id="connectMB.unsupportedMicrobit.header" />
-              </Heading>
-              <VStack gap={5} textAlign="left" w="100%">
-                <Text w="100%">
+            <VStack gap={5} textAlign="left" w="100%">
+              <Text w="100%">
+                <FormattedMessage
+                  id="connectMB.unsupportedMicrobit.explain"
+                  values={{
+                    link: (chunks: ReactNode) => (
+                      <Link
+                        color="brand.600"
+                        href="https://support.microbit.org/support/solutions/articles/19000119162"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        {chunks}
+                      </Link>
+                    ),
+                  }}
+                />
+              </Text>
+              <Text w="100%">
+                {isBluetoothSupported ? (
+                  <FormattedMessage id="connectMB.unsupportedMicrobit.withBluetooth" />
+                ) : (
                   <FormattedMessage
-                    id="connectMB.unsupportedMicrobit.explain"
+                    id="connectMB.unsupportedMicrobit.withoutBluetooth"
                     values={{
                       link: (chunks: ReactNode) => (
                         <Link
                           color="brand.600"
-                          href="https://support.microbit.org/support/solutions/articles/19000119162"
+                          href={supportLinks.bluetooth}
                           target="_blank"
                           rel="noopener"
                         >
@@ -62,32 +81,11 @@ const UnsupportedMicrobitDialog = ({
                       ),
                     }}
                   />
-                </Text>
-                <Text w="100%">
-                  {isBluetoothSupported ? (
-                    <FormattedMessage id="connectMB.unsupportedMicrobit.withBluetooth" />
-                  ) : (
-                    <FormattedMessage
-                      id="connectMB.unsupportedMicrobit.withoutBluetooth"
-                      values={{
-                        link: (chunks: ReactNode) => (
-                          <Link
-                            color="brand.600"
-                            href={supportLinks.bluetooth}
-                            target="_blank"
-                            rel="noopener"
-                          >
-                            {chunks}
-                          </Link>
-                        ),
-                      }}
-                    />
-                  )}
-                </Text>
-              </VStack>
+                )}
+              </Text>
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent="end" p={0}>
+          <ModalFooter justifyContent="end">
             <HStack gap={5}>
               {isBluetoothSupported ? (
                 <Button

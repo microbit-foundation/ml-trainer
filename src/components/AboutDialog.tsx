@@ -71,7 +71,11 @@ const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
             <VStack spacing={8} pl={5} pr={5} pt={5}>
               <HStack justifyContent="center" gap={8}>
                 {OrgLogo && <OrgLogo fill="#000" color="black" height={55} />}
-                <Image src={aarhusLogo} h="55px" />
+                <Image
+                  src={aarhusLogo}
+                  h="55px"
+                  alt={intl.formatMessage({ id: "aarhus-university-alt" })}
+                />
               </HStack>
               <Text textAlign="center">
                 <FormattedMessage

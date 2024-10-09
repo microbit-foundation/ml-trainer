@@ -94,7 +94,13 @@ const DataRecordingGridItem = ({
                     handleDeleteRecording(idx);
                   }}
                 />
-                <RecordingGraph data={recording.data} />
+                <RecordingGraph
+                  data={recording.data}
+                  role="image"
+                  aria-label={intl.formatMessage({
+                    id: "recording-graph-label",
+                  })}
+                />
               </HStack>
             ))}
           </CardBody>

@@ -1,6 +1,5 @@
 import {
   Button,
-  Heading,
   HStack,
   Image,
   Modal,
@@ -8,6 +7,7 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Text,
   VStack,
@@ -24,19 +24,19 @@ const TrainModelInsufficientDataDialog = ({
     <Modal
       closeOnOverlayClick={false}
       motionPreset="none"
-      size="2xl"
+      size="lg"
       isCentered
       onClose={onClose}
       {...rest}
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage id="insufficient-data-title" />
+          </ModalHeader>
+          <ModalCloseButton />
           <ModalBody>
-            <ModalCloseButton />
-            <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h1" fontWeight="bold" fontSize="2xl">
-                <FormattedMessage id="insufficient-data-title" />
-              </Heading>
+            <VStack width="100%" alignItems="left">
               <HStack gap={5}>
                 <Image
                   src={trainModelImage}
@@ -54,7 +54,7 @@ const TrainModelInsufficientDataDialog = ({
               </HStack>
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent="flex-end" px={0} pb={0}>
+          <ModalFooter justifyContent="flex-end">
             <Button variant="primary" onClick={onClose}>
               <FormattedMessage id="close-action" />
             </Button>

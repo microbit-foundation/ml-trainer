@@ -1,12 +1,12 @@
 import {
   Button,
   HStack,
-  Heading,
   ListItem,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Text,
   UnorderedList,
@@ -113,18 +113,18 @@ const TryAgainDialog = ({
       isCentered
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage id={config.headingId} />
+          </ModalHeader>
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h2" fontSize="xl" fontWeight="bold">
-                <FormattedMessage id={config.headingId} />
-              </Heading>
               <VStack gap={5} textAlign="left" w="100%">
                 {config.children}
               </VStack>
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent="end" p={0}>
+          <ModalFooter justifyContent="end">
             <HStack gap={5}>
               <Button onClick={onClose} variant="secondary" size="lg">
                 <FormattedMessage id="cancel-action" />

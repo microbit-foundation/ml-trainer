@@ -1,7 +1,6 @@
 import {
   Button,
   Checkbox,
-  Heading,
   HStack,
   Image,
   Modal,
@@ -9,14 +8,15 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { ComponentProps, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import testModelImage from "../images/test_model_black.svg";
 import { useDeployment } from "../deployment";
+import testModelImage from "../images/test_model_black.svg";
 
 export interface DownloadHelpDialogProps
   extends Omit<ComponentProps<typeof Modal>, "children"> {
@@ -43,27 +43,25 @@ const DownloadHelpDialog = ({
       {...rest}
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage id="download-project-intro-title" />
+          </ModalHeader>
+          <ModalCloseButton />
           <ModalBody>
-            <ModalCloseButton />
-            <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h1" fontWeight="bold" fontSize="2xl">
-                <FormattedMessage id="download-project-intro-title" />
-              </Heading>
-              <HStack gap={5}>
-                <Image src={testModelImage} opacity={0.4} w="180px" alt="" />
-                <VStack gap={5}>
-                  <Text textAlign="left">
-                    <FormattedMessage
-                      id="download-project-intro-description"
-                      values={{ appNameFull }}
-                    />
-                  </Text>
-                </VStack>
-              </HStack>
-            </VStack>
+            <HStack gap={5} width="100%">
+              <Image src={testModelImage} opacity={0.4} w="180px" alt="" />
+              <VStack gap={5}>
+                <Text textAlign="left">
+                  <FormattedMessage
+                    id="download-project-intro-description"
+                    values={{ appNameFull }}
+                  />
+                </Text>
+              </VStack>
+            </HStack>
           </ModalBody>
-          <ModalFooter justifyContent="space-between" px={0} pb={0}>
+          <ModalFooter justifyContent="space-between">
             <Checkbox
               isChecked={isSkipNextTime}
               onChange={(e) => setSkipNextTime(e.target.checked)}

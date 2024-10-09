@@ -211,7 +211,6 @@ export class ConnectActions {
   };
 
   getDataCollectionBoardVersion = (): BoardVersion | undefined => {
-    console.log(this.radioRemoteBoardVersion.current);
     return (
       this.bluetooth.getBoardVersion() ?? this.radioRemoteBoardVersion.current
     );

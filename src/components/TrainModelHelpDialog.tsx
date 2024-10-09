@@ -1,7 +1,6 @@
 import {
   Button,
   Checkbox,
-  Heading,
   HStack,
   Image,
   Modal,
@@ -9,14 +8,15 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { ComponentProps, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import trainModelImage from "../images/train_model_black.svg";
 import { useDeployment } from "../deployment";
+import trainModelImage from "../images/train_model_black.svg";
 
 interface TrainModelHelpDialogProps
   extends Omit<ComponentProps<typeof Modal>, "children"> {
@@ -40,34 +40,32 @@ const TrainModelIntroDialog = ({
       {...props}
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage id="content.trainer.header" />
+          </ModalHeader>
+          <ModalCloseButton />
           <ModalBody>
-            <ModalCloseButton />
-            <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h1" fontWeight="bold" fontSize="2xl">
-                <FormattedMessage id="content.trainer.header" />
-              </Heading>
-              <HStack gap={5}>
-                <Image
-                  src={trainModelImage}
-                  opacity={0.4}
-                  w="180px"
-                  h="107px"
-                  alt=""
-                  flexShrink={0}
-                />
-                <VStack gap={5}>
-                  <Text textAlign="left">
-                    <FormattedMessage
-                      id="content.trainer.description"
-                      values={{ appNameFull }}
-                    />
-                  </Text>
-                </VStack>
-              </HStack>
-            </VStack>
+            <HStack gap={5} width="100%" alignItems="left">
+              <Image
+                src={trainModelImage}
+                opacity={0.4}
+                w="180px"
+                h="107px"
+                alt=""
+                flexShrink={0}
+              />
+              <VStack gap={5}>
+                <Text textAlign="left">
+                  <FormattedMessage
+                    id="content.trainer.description"
+                    values={{ appNameFull }}
+                  />
+                </Text>
+              </VStack>
+            </HStack>
           </ModalBody>
-          <ModalFooter justifyContent="space-between" px={0} pb={0}>
+          <ModalFooter justifyContent="space-between">
             <Checkbox
               isChecked={skip}
               onChange={(e) => setSkip(e.target.checked)}

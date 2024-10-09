@@ -1,8 +1,9 @@
 import {
-  Heading,
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Progress,
   Text,
@@ -43,12 +44,12 @@ const DownloadProgressDialog = ({
       isCentered
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage id={headingId} />
+          </ModalHeader>
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h1" fontWeight="bold" fontSize="2xl">
-                <FormattedMessage id={headingId} />
-              </Heading>
               <Text>
                 <FormattedMessage id="connectMB.usbDownloading.subtitle" />
               </Text>
@@ -60,6 +61,7 @@ const DownloadProgressDialog = ({
               />
             </VStack>
           </ModalBody>
+          <ModalFooter />
         </ModalContent>
       </ModalOverlay>
     </Modal>

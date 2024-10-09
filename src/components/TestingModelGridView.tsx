@@ -10,13 +10,13 @@ import {
   MenuList,
   Portal,
   VStack,
-  VisuallyHidden,
   useDisclosure,
 } from "@chakra-ui/react";
 import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
 import React, { useCallback } from "react";
 import { RiArrowRightLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useConnectActions } from "../connect-actions-hooks";
 import { usePrediction } from "../hooks/ml-hooks";
 import { useProject } from "../hooks/project-hooks";
 import { mlSettings } from "../ml";
@@ -28,10 +28,9 @@ import CodeViewCard from "./CodeViewCard";
 import CodeViewGridItem from "./CodeViewGridItem";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
+import UnsupportedEditorDevice from "./IncompatibleEditorDevice";
 import LiveGraphPanel from "./LiveGraphPanel";
 import MoreMenuButton from "./MoreMenuButton";
-import { useConnectActions } from "../connect-actions-hooks";
-import UnsupportedEditorDevice from "./IncompatibleEditorDevice";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 360px 40px auto",
@@ -64,12 +63,6 @@ const TestingModelGridView = () => {
   const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { openEditor, project, resetProject, projectEdited } = useProject();
   const { getDataCollectionBoardVersion } = useConnectActions();
-
-  const detectedLabel =
-    detected?.name ??
-    intl.formatMessage({
-      id: "unknown",
-    });
 
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
@@ -104,12 +97,6 @@ const TestingModelGridView = () => {
           lang: makeCodeLang,
         }}
       >
-        <VisuallyHidden aria-live="polite">
-          <FormattedMessage
-            id="content.model.output.estimatedGesture.label"
-            values={{ action: detectedLabel }}
-          />
-        </VisuallyHidden>
         <HeadingGrid {...gridCommonProps} px={5} headings={headings} />
         <VStack
           px={5}
@@ -148,6 +135,7 @@ const TestingModelGridView = () => {
                       isTriggered={isTriggered}
                     />
                     <CertaintyThresholdGridItem
+                      actionName={name}
                       onThresholdChange={(val) =>
                         setRequiredConfidence(ID, val)
                       }
