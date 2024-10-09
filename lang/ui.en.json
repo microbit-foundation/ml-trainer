@@ -1064,7 +1064,7 @@
     "description": "Tour step content"
   },
   "tour-dataSamples-connected-content": {
-    "defaultMessage": "Now you can start collecting data samples to train a machine learning (ML) model to recognise different movements.",
+    "defaultMessage": "Now you can start collecting data samples to train a machine learning (ML) model to recognise different movements, or actions.",
     "description": "Tour step content"
   },
   "tour-dataSamples-connected-title": {
@@ -1076,7 +1076,7 @@
     "description": "Tour step content"
   },
   "tour-testModel-afterTrain-content": {
-    "defaultMessage": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model detect each action?",
+    "defaultMessage": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model correctly estimate each action?",
     "description": "Tour step description"
   },
   "tour-testModel-afterTrain-title": {
@@ -1084,7 +1084,7 @@
     "description": "Tour step title"
   },
   "tour-testModel-certaintyRecognition-content": {
-    "defaultMessage": "The meter shows how confident the model is that you are doing each action. Move the slider to adjust the recognition point, or threshold.",
+    "defaultMessage": "The bar graph shows how confident the model is that you are doing each action. Move the slider to adjust the recognition point, or threshold.",
     "description": "Tour step description"
   },
   "tour-testModel-certaintyRecognition-title": {
@@ -1096,7 +1096,7 @@
     "description": "Tour step description"
   },
   "tour-testModel-estimatedAction-content": {
-    "defaultMessage": "The action the model estimates you are currently doing is shown above the micro:bit icon for that action.",
+    "defaultMessage": "The action the model estimates you are currently doing is shown below the micro:bit icon for that action.",
     "description": "Tour step description"
   },
   "tour-testModel-makeCodeBlocks-content": {
