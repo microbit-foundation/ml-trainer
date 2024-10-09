@@ -1,6 +1,5 @@
 import {
   Button,
-  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -203,7 +202,7 @@ const RecordingDialog = ({
               </Button>
             </VStack>
           </ModalBody>
-          <ModalFooter></ModalFooter>
+          <ModalFooter />
         </ModalContent>
       </ModalOverlay>
     </Modal>

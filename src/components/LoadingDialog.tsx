@@ -1,8 +1,9 @@
 import {
-  Heading,
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Text,
   VStack,
@@ -26,20 +27,19 @@ const LoadingDialog = ({ headingId, isOpen }: LoadingDialogProps) => {
       isCentered
     >
       <ModalOverlay>
-        <ModalContent p={8}>
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage id={headingId} />
+          </ModalHeader>
           <ModalBody>
-            <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h1" fontWeight="bold" fontSize="2xl">
-                <FormattedMessage id={headingId} />
-              </Heading>
-              <VStack gap={5}>
-                <Text>
-                  <FormattedMessage id="connectMB.connecting" />
-                </Text>
-                <LoadingAnimation />
-              </VStack>
+            <VStack gap={5} width="100%" alignItems="left">
+              <Text>
+                <FormattedMessage id="connectMB.connecting" />
+              </Text>
+              <LoadingAnimation />
             </VStack>
           </ModalBody>
+          <ModalFooter />
         </ModalContent>
       </ModalOverlay>
     </Modal>
