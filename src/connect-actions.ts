@@ -206,15 +206,12 @@ export class ConnectActions {
     return this.usb;
   };
 
-  getBluetoothConnection = () => {
-    return this.bluetooth;
-  };
-
   getUsbDevice = () => {
     return this.usb.getDevice();
   };
 
   getDataCollectionBoardVersion = (): BoardVersion | undefined => {
+    console.log(this.radioRemoteBoardVersion.current);
     return (
       this.bluetooth.getBoardVersion() ?? this.radioRemoteBoardVersion.current
     );
