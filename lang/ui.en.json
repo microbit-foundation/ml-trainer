@@ -1071,9 +1071,57 @@
     "defaultMessage": "Your data collection micro:bit is connected!",
     "description": "Tour step title"
   },
+  "tour-dataSamples-imported-actions-content": {
+    "defaultMessage": "An action is the type of movement you want the machine learning tool to recognise e.g. ‘waving’ or ‘clapping’. ",
+    "description": "Tour step content"
+  },
+  "tour-dataSamples-imported-addActions-content": {
+    "defaultMessage": "You can add more actions by pressing on this button.",
+    "description": "Tour step description"
+  },
+  "tour-dataSamples-imported-addActions-title": {
+    "defaultMessage": "Add more actions",
+    "description": "Tour step title"
+  },
+  "tour-dataSamples-imported-collectData-content": {
+    "defaultMessage": "Connect a micro:bit to collect movement data samples from the micro:bit’s accelerometer.",
+    "description": "Tour step title"
+  },
+  "tour-dataSamples-imported-collectData-title": {
+    "defaultMessage": "Connect to collect more data samples",
+    "description": "Tour step title"
+  },
+  "tour-dataSamples-imported-content": {
+    "defaultMessage": "You can add more actions or data samples, or train a machine learning (ML) model to recognise different actions if you have enough data.",
+    "description": "Tour step content"
+  },
+  "tour-dataSamples-imported-recordings-content": {
+    "defaultMessage": "These are the movement data samples for an action. Collecting more samples should result in a better machine learning model. Your data samples are only stored on your computer, they do not get sent to anyone else.",
+    "description": "Tour step description"
+  },
+  "tour-dataSamples-imported-title": {
+    "defaultMessage": "New actions and data samples have been loaded!",
+    "description": "Tour step title"
+  },
   "tour-dataSamples-liveGraph-content": {
     "defaultMessage": "The graph shows movement data from the micro:bit’s accelerometer. Move your data collection micro:bit and see how the graph changes.",
     "description": "Tour step content"
+  },
+  "tour-dataSamples-recordButton-content": {
+    "defaultMessage": "Press to record a data sample or press button B on your micro:bit.",
+    "description": "Tour step content"
+  },
+  "tour-dataSamples-recordButton-title": {
+    "defaultMessage": "Collect more data samples",
+    "description": "Tour step title"
+  },
+  "tour-testModel-afterTrain-connect-content": {
+    "defaultMessage": "Connect a micro:bit to test your machine learning model.",
+    "description": "Tour step description"
+  },
+  "tour-testModel-afterTrain-connect-title": {
+    "defaultMessage": "Connect to test your model",
+    "description": "Tour step title"
   },
   "tour-testModel-afterTrain-content": {
     "defaultMessage": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model detect each action?",

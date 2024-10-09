@@ -7,7 +7,10 @@ import { FormattedMessageStepContent } from "./pages/Tour";
 export const tourElClassname = {
   liveGraph: "live-graph",
   dataSamplesActionCard: "data-samples-action-card",
+  dataSamplesRow: "data-samples-row",
   recordDataSamplesCard: "record-data-samples-card",
+  recordDataSamplesButton: "record-data-samples-button",
+  connectButton: "connect-button",
   addActionButton: "add-action-button",
   trainModelButton: "train-model-button",
   estimatedAction: "estimated-action",
@@ -39,8 +42,7 @@ const classSelector = (classname: string) => `.${classname}`;
 // If you complete a tour then we don't show it again.
 export const tours: Record<TourId, TourStep[]> = {
   // Launched when you connect a micro:bit when you have no recordings.
-  // If you import data without connecting a micro:bit you're on your own for now.
-  [TourId.DataSamplesPage]: [
+  [TourId.DataSamplesPagePostConnect]: [
     {
       title: <FormattedMessage id="tour-dataSamples-connected-title" />,
       content: (
@@ -62,7 +64,7 @@ export const tours: Record<TourId, TourStep[]> = {
       ),
     },
   ],
-  // Launched after recording your first recording.
+  // Launched after recording your first recording and have no recordings.
   [TourId.CollectDataToTrainModel]: [
     {
       title: <FormattedMessage id="tour-collectData-afterFirst-title" />,
@@ -91,6 +93,57 @@ export const tours: Record<TourId, TourStep[]> = {
         <FormattedMessageStepContent id="tour-collectData-trainModel-content" />
       ),
     },
+  ],
+  // Launched after importing data without connecting a micro:bit.
+  [TourId.DataSamplesPagePostImport]: [
+    {
+      title: <FormattedMessage id="tour-dataSamples-imported-title" />,
+      content: (
+        <FormattedMessageStepContent id="tour-dataSamples-imported-content" />
+      ),
+      modalSize: "xl",
+    },
+    {
+      selector: classSelector(tourElClassname.dataSamplesActionCard),
+      title: <FormattedMessage id="actions-label" />,
+      content: (
+        <FormattedMessageStepContent id="tour-dataSamples-imported-actions-content" />
+      ),
+    },
+    {
+      selector: classSelector(tourElClassname.recordDataSamplesCard),
+      title: <FormattedMessage id="content.data.data" />,
+      content: (
+        <FormattedMessageStepContent id="tour-dataSamples-imported-recordings-content" />
+      ),
+    },
+    {
+      selector: classSelector(tourElClassname.addActionButton),
+      title: (
+        <FormattedMessage id="tour-dataSamples-imported-addActions-title" />
+      ),
+      content: (
+        <FormattedMessageStepContent id="tour-dataSamples-imported-addActions-content" />
+      ),
+    },
+    {
+      selector: classSelector(tourElClassname.connectButton),
+      title: (
+        <FormattedMessage id="tour-dataSamples-imported-collectData-title" />
+      ),
+      content: (
+        <FormattedMessageStepContent id="tour-dataSamples-imported-collectData-content" />
+      ),
+    },
+    {
+      selector: classSelector(tourElClassname.trainModelButton),
+      title: <FormattedMessage id="menu.trainer.trainModelButton" />,
+      content: (
+        <FormattedMessageStepContent id="tour-collectData-trainModel-content" />
+      ),
+    },
+    // TODO: Add tour step for triggering data samples page tour
+    // so that the user can see tour steps of things they may have missed
   ],
   // Launched after training a model
   // If you haven't connected a micro:bit this session then it'll
