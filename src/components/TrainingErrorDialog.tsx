@@ -5,25 +5,15 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
+  ModalProps,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 
-interface TrainingErrorDialogProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-const TrainingErrorDialog = ({ isOpen, onClose }: TrainingErrorDialogProps) => {
+const TrainingErrorDialog = ({ ...rest }: Omit<ModalProps, "children">) => {
   return (
-    <Modal
-      motionPreset="none"
-      isOpen={isOpen}
-      onClose={onClose}
-      size="lg"
-      isCentered
-    >
+    <Modal motionPreset="none" size="lg" isCentered {...rest}>
       <ModalOverlay>
         <ModalContent p={8}>
           <ModalBody>

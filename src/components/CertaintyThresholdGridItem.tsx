@@ -24,6 +24,7 @@ interface CertaintyThresholdGridItemProps {
   currentConfidence?: number;
   onThresholdChange: (val: number) => void;
   isTriggered: boolean;
+  actionName: string;
 }
 
 const CertaintyThresholdGridItem = ({
@@ -31,6 +32,7 @@ const CertaintyThresholdGridItem = ({
   currentConfidence = 0,
   onThresholdChange,
   isTriggered,
+  actionName,
 }: CertaintyThresholdGridItemProps) => {
   const intl = useIntl();
   const barWidth = 240;
@@ -71,6 +73,12 @@ const CertaintyThresholdGridItem = ({
               colorScheme={colorScheme}
             />
             <PercentageDisplay
+              ariaLabel={intl.formatMessage(
+                {
+                  id: "certainty-label",
+                },
+                { currentConfidence, action: actionName }
+              )}
               value={currentConfidence}
               colorScheme={colorScheme}
             />

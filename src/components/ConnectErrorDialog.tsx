@@ -1,13 +1,13 @@
 import {
   Button,
   HStack,
-  Heading,
   ListItem,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Text,
   UnorderedList,
@@ -85,15 +85,15 @@ const ReconnectErrorDialog = ({
       isCentered
     >
       <ModalOverlay>
-        <ModalContent p={8}>
-          <ModalBody px={0}>
-            <ModalCloseButton />
+        <ModalContent>
+          <ModalHeader>
+            <FormattedMessage
+              id={`${errorTextIdPrefix}.${flowTypeText}Heading`}
+            />
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
-              <Heading as="h2" fontSize="xl" fontWeight="bold">
-                <FormattedMessage
-                  id={`${errorTextIdPrefix}.${flowTypeText}Heading`}
-                />
-              </Heading>
               <VStack gap={3} textAlign="left" w="100%">
                 <Text w="100%">
                   <FormattedMessage
@@ -115,7 +115,7 @@ const ReconnectErrorDialog = ({
               </VStack>
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent="space-between" px={0} pb={0}>
+          <ModalFooter justifyContent="space-between">
             <ExternalLink
               textId="connectMB.troubleshooting"
               href={supportLinks.troubleshooting}

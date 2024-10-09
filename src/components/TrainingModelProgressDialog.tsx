@@ -12,11 +12,13 @@ import { FormattedMessage } from "react-intl";
 export interface DownloadingDialogProps {
   isOpen: boolean;
   progress: number;
+  finalFocusRef?: React.RefObject<HTMLButtonElement>;
 }
 
 const TrainingModelProgressDialog = ({
   isOpen,
   progress,
+  finalFocusRef,
 }: DownloadingDialogProps) => {
   return (
     <Modal
@@ -26,6 +28,7 @@ const TrainingModelProgressDialog = ({
       onClose={() => {}}
       size="2xl"
       isCentered
+      finalFocusRef={finalFocusRef}
     >
       <ModalOverlay>
         <ModalContent p={8}>

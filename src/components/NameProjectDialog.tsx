@@ -19,6 +19,7 @@ import {
   FormHelperText,
   FormLabel,
   Input,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import { useCallback, useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -57,10 +58,9 @@ export const NameProjectDialog = ({
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <Text as="h2" fontSize="lg" fontWeight="bold">
-              <FormattedMessage id="name-project" />
-            </Text>
+            <FormattedMessage id="name-project" />
           </ModalHeader>
+          <ModalCloseButton />
           <ModalBody>
             <VStack>
               <Box as="form" onSubmit={handleSubmit} width="100%">

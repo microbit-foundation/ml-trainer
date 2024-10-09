@@ -1,4 +1,10 @@
 {
+  "aarhus-university-alt": [
+    {
+      "type": 0,
+      "value": "Aarhus University"
+    }
+  ],
   "about": [
     {
       "type": 0,
@@ -113,6 +119,28 @@
     {
       "type": 0,
       "value": "Cancel"
+    }
+  ],
+  "certainty-label": [
+    {
+      "type": 0,
+      "value": "certainty level for "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "currentConfidence"
+    },
+    {
+      "type": 0,
+      "value": " percent"
     }
   ],
   "close-action": [
@@ -1275,6 +1303,12 @@
       "value": "Home"
     }
   ],
+  "homepage-alt": [
+    {
+      "type": 0,
+      "value": "image of graph showing x, y, z graph lines representing micro:bit accelerometer data "
+    }
+  ],
   "homepage-description": [
     {
       "type": 0,
@@ -1403,30 +1437,6 @@
       "value": "The name is used when you save a file."
     }
   ],
-  "newpage-browse-lessons": [
-    {
-      "type": 0,
-      "value": "Browse lessons"
-    }
-  ],
-  "newpage-browse-projects": [
-    {
-      "type": 0,
-      "value": "Browse projects"
-    }
-  ],
-  "newpage-choose-subtitle": [
-    {
-      "type": 0,
-      "value": "Find a project or lesson from our teacher resources and open it in micro:bit classroom"
-    }
-  ],
-  "newpage-choose-title": [
-    {
-      "type": 0,
-      "value": "Choose a project or lesson"
-    }
-  ],
   "newpage-continue-session-instruction": [
     {
       "type": 0,
@@ -1449,12 +1459,6 @@
     {
       "type": 0,
       "value": "Run whole class sessions, easily share code with students and save progress"
-    }
-  ],
-  "newpage-heading-title": [
-    {
-      "type": 0,
-      "value": "Welcome to micro:bit classroom"
     }
   ],
   "newpage-last-session-date": [
@@ -1512,7 +1516,7 @@
   "newpage-new-session-subtitle": [
     {
       "type": 0,
-      "value": "Connect your micro:bit and collect movement data to build a machine learning model"
+      "value": "Connect your micro:bit and collect movement data to build a machine learning model."
     }
   ],
   "newpage-new-session-title": [
@@ -1675,6 +1679,12 @@
       "value": "Follow these instructions to restart the connection process."
     }
   ],
+  "recording-graph-label": [
+    {
+      "type": 0,
+      "value": "image of graph showing x, y, z graph lines representing micro:bit accelerometer data in one recording"
+    }
+  ],
   "reload-action": [
     {
       "type": 0,
@@ -1759,6 +1769,12 @@
     {
       "type": 0,
       "value": "Start training"
+    }
+  ],
+  "steps-alt": [
+    {
+      "type": 0,
+      "value": "diagram showing the iterative process of collecting data, training a model, testing the model, and improving the model by improving the data collected before finally coding using the model."
     }
   ],
   "steps-code": [
@@ -1970,7 +1986,7 @@
   "unplug-radio-link-microbit-description": [
     {
       "type": 0,
-      "value": "Unplug the radio link micro:bit from the computer. If you want to record more data samples, you will need to reconnect with the tool."
+      "value": "Unplug the radio link micro:bit from the computer. You will need to reconnect the micro:bit if you want to record more data samples."
     }
   ],
   "unplug-radio-link-microbit-label": [

@@ -45,6 +45,7 @@ const HelpMenu = ({ isMobile, ...rest }: HelpMenuProps) => {
       <FeedbackForm
         isOpen={feedbackDisclosure.isOpen}
         onClose={feedbackDisclosure.onClose}
+        finalFocusRef={MenuButtonRef}
       />
       <Menu {...rest}>
         <MenuButton

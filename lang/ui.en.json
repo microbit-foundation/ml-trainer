@@ -1,4 +1,8 @@
 {
+  "aarhus-university-alt": {
+    "defaultMessage": "Aarhus University",
+    "description": "Alt text for Aarhus University logo image in about dialog"
+  },
   "about": {
     "defaultMessage": "About",
     "description": "Menu item link to view information about app"
@@ -58,6 +62,10 @@
   "cancel-action": {
     "defaultMessage": "Cancel",
     "description": "Cancel button text"
+  },
+  "certainty-label": {
+    "defaultMessage": "certainty level for {action}: {currentConfidence} percent",
+    "description": "Label for certainty level of an action"
   },
   "close-action": {
     "defaultMessage": "Close",
@@ -719,6 +727,10 @@
     "defaultMessage": "Home",
     "description": "Home button text"
   },
+  "homepage-alt": {
+    "defaultMessage": "image of graph showing x, y, z graph lines representing micro:bit accelerometer data ",
+    "description": "Alt text for image in homepage"
+  },
   "homepage-description": {
     "defaultMessage": "Train a machine learning model on your own movement data and run it on your micro:bit.",
     "description": "Home page description"
@@ -832,7 +844,7 @@
     "description": "Open last session title"
   },
   "newpage-new-session-subtitle": {
-    "defaultMessage": "Connect your micro:bit and collect movement data to build a machine learning model",
+    "defaultMessage": "Connect your micro:bit and collect movement data to build a machine learning model.",
     "description": "Start new session subtitle"
   },
   "newpage-new-session-title": {
@@ -939,6 +951,10 @@
     "defaultMessage": "Follow these instructions to restart the connection process.",
     "description": ""
   },
+  "recording-graph-label": {
+    "defaultMessage": "image of graph showing x, y, z graph lines representing micro:bit accelerometer data in one recording",
+    "description": "Label for recording graph"
+  },
   "reload-action": {
     "defaultMessage": "Click to reload the page",
     "description": "Reload page button text"
@@ -990,6 +1006,10 @@
   "start-training-action": {
     "defaultMessage": "Start training",
     "description": "Start training button text"
+  },
+  "steps-alt": {
+    "defaultMessage": "diagram showing the iterative process of collecting data, training a model, testing the model, and improving the model by improving the data collected before finally coding using the model.",
+    "description": "Alt text for the step-by-step home page diagram"
   },
   "steps-code": {
     "defaultMessage": "Code",

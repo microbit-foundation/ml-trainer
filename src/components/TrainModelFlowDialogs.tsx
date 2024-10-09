@@ -9,7 +9,11 @@ import TrainingModelProgressDialog from "./TrainingModelProgressDialog";
 import TrainModelIntroDialog from "./TrainModelHelpDialog";
 import TrainModelInsufficientDataDialog from "./TrainModelInsufficientDataDialog";
 
-const TrainModelDialogs = () => {
+interface TrainModelDialogsProps {
+  finalFocusRef?: React.RefObject<HTMLButtonElement>;
+}
+
+const TrainModelDialogs = ({ finalFocusRef }: TrainModelDialogsProps) => {
   const stage = useStore((s) => s.trainModelDialogStage);
   const closeTrainModelDialogs = useStore((s) => s.closeTrainModelDialogs);
   const tourStart = useStore((s) => s.tourStart);
@@ -34,19 +38,23 @@ const TrainModelDialogs = () => {
       <TrainModelInsufficientDataDialog
         isOpen={stage === TrainModelDialogStage.InsufficientData}
         onClose={closeTrainModelDialogs}
+        finalFocusRef={finalFocusRef}
       />
       <TrainModelIntroDialog
         isOpen={stage === TrainModelDialogStage.Help}
         onNext={handleHelpNext}
         onClose={closeTrainModelDialogs}
+        finalFocusRef={finalFocusRef}
       />
       <TrainingErrorDialog
         isOpen={stage === TrainModelDialogStage.TrainingError}
         onClose={closeTrainModelDialogs}
+        finalFocusRef={finalFocusRef}
       />
       <TrainingModelProgressDialog
         isOpen={stage === TrainModelDialogStage.TrainingInProgress}
         progress={trainModelProgress * 100}
+        finalFocusRef={finalFocusRef}
       />
     </>
   );

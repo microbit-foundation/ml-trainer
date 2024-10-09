@@ -107,7 +107,13 @@ const HomePage = () => {
             </Button>
           </VStack>
           <Box flex="1" position="relative">
-            <Image src={xyzGraph} borderRadius="md" bgColor="white" pr={1} />
+            <Image
+              src={xyzGraph}
+              borderRadius="md"
+              bgColor="white"
+              pr={1}
+              alt={intl.formatMessage({ id: "homepage-alt" })}
+            />
           </Box>
         </HStack>
         <VStack spacing={8} w="100%" maxW="container.md">
@@ -146,7 +152,13 @@ const HomePage = () => {
           <Heading as="h2" textAlign="center">
             <FormattedMessage id="homepage-step-by-step" />
           </Heading>
-          <VStack gap={12} maxW="container.md" position="relative">
+          <VStack
+            gap={12}
+            maxW="container.md"
+            position="relative"
+            role="image"
+            aria-label={intl.formatMessage({ id: "steps-alt" })}
+          >
             <Step
               title={intl.formatMessage({ id: "steps-collect-data" })}
               image={<CollectDataIllustration />}
