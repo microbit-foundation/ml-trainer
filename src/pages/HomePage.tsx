@@ -133,24 +133,9 @@ const HomePage = () => {
           </Heading>
           <Box w="100%" position="relative">
             <YoutubeVideoEmbed
-              youtubeId="ZhUtuuQemFc"
+              youtubeId="7DqaU_Qexy4"
               alt={intl.formatMessage({ id: "homepage-video-alt" })}
             />
-            <Box
-              position="absolute"
-              bgColor="brand.700"
-              color="white"
-              fontWeight="bold"
-              top={0}
-              left={0}
-              right={0}
-              bottom={0}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text>Video coming soon</Text>
-            </Box>
           </Box>
           <Text fontSize="md">
             <FormattedMessage
