@@ -58,7 +58,7 @@ const RecordingDialog = ({
     () => [
       // Empty string state added to countdown because aria-live role region
       // reads dynamic changes to region and not the initial contents.
-      { value: "", duration: 500, fontSize: "8xl" },
+      { value: "", duration: 1, fontSize: "8xl" },
       { value: 3, duration: 500, fontSize: "8xl" },
       { value: 2, duration: 500, fontSize: "8xl" },
       { value: 1, duration: 500, fontSize: "8xl" },
@@ -176,7 +176,7 @@ const RecordingDialog = ({
                   textAlign="center"
                   fontWeight="bold"
                   color="brand.500"
-                  role="region"
+                  role="timer"
                   aria-live="assertive"
                 >
                   {recordingStatus === RecordingStatus.Recording ? (
