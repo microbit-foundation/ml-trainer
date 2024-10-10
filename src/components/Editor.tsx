@@ -26,8 +26,6 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
   return (
     <MakeCodeFrame
       ref={ref}
-      // TODO: Remove baseUrl and use the default once our sim extension is live there
-      baseUrl="https://ml-tool.pxt-microbit.pages.dev/"
       controllerId={controllerId}
       controller={2}
       initialProjects={initialProjects}
