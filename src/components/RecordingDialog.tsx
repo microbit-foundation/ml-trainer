@@ -56,6 +56,7 @@ const RecordingDialog = ({
   );
   const countdownStages: CountdownStage[] = useMemo(
     () => [
+      { value: "", duration: 500, fontSize: "8xl" },
       { value: 3, duration: 500, fontSize: "8xl" },
       { value: 2, duration: 500, fontSize: "8xl" },
       { value: 1, duration: 500, fontSize: "8xl" },
@@ -164,25 +165,24 @@ const RecordingDialog = ({
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
               <VStack height="100px" justifyContent="center">
-                {recordingStatus === RecordingStatus.Recording ? (
-                  <Text
-                    fontSize="5xl"
-                    textAlign="center"
-                    fontWeight="bold"
-                    color="brand.500"
-                  >
+                <Text
+                  fontSize={
+                    recordingStatus === RecordingStatus.Recording
+                      ? "5xl"
+                      : countdownStages[countdownStageIndex].fontSize
+                  }
+                  textAlign="center"
+                  fontWeight="bold"
+                  color="brand.500"
+                  role="region"
+                  aria-live="assertive"
+                >
+                  {recordingStatus === RecordingStatus.Recording ? (
                     <FormattedMessage id="content.data.recordingDialog.recording" />
-                  </Text>
-                ) : (
-                  <Text
-                    fontSize={countdownStages[countdownStageIndex].fontSize}
-                    textAlign="center"
-                    fontWeight="bold"
-                    color="brand.500"
-                  >
-                    {countdownStages[countdownStageIndex].value}
-                  </Text>
-                )}
+                  ) : (
+                    countdownStages[countdownStageIndex].value
+                  )}
+                </Text>
               </VStack>
               <Progress
                 alignSelf="center"
