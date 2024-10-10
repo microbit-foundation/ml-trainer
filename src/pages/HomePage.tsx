@@ -23,7 +23,7 @@ import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
 import { useDeployment } from "../deployment";
 import blockImage from "../images/block.png";
 import xyzGraph from "../images/xyz-graph.png";
-import clap from "../images/clap-square.jpeg";
+import clap from "../images/clap-square.png";
 import { createNewPageUrl } from "../urls";
 
 const graphData = {
@@ -116,10 +116,10 @@ const HomePage = () => {
               alt={intl.formatMessage({ id: "homepage-alt" })}
             />
             <Image
-              height="45%"
+              height="55%"
               position="absolute"
-              bottom={2}
-              left={2}
+              bottom={0}
+              left={0}
               src={clap}
               borderRadius="md"
               pr={1}
