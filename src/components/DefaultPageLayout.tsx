@@ -116,7 +116,7 @@ const DefaultPageLayout = ({
       <SaveDialogs />
       <ProjectDropTargetWhenNeeded>
         <VStack
-          minH="100dvh"
+          minH="100vh"
           w="100%"
           alignItems="stretch"
           spacing={0}
