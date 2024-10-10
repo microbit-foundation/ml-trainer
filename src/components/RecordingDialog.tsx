@@ -56,8 +56,8 @@ const RecordingDialog = ({
   );
   const countdownStages: CountdownStage[] = useMemo(
     () => [
-      // Empty string state added to countdown because aria-live reads dynamic
-      // changes to region and not the initial contents.
+      // Empty string state added to countdown because aria-live role region
+      // reads dynamic changes to region and not the initial contents.
       { value: "", duration: 500, fontSize: "8xl" },
       { value: 3, duration: 500, fontSize: "8xl" },
       { value: 2, duration: 500, fontSize: "8xl" },
