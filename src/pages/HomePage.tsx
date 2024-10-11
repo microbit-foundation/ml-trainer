@@ -23,7 +23,9 @@ import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
 import { useDeployment } from "../deployment";
 import blockImage from "../images/block.png";
 import xyzGraph from "../images/xyz-graph.png";
+import clap from "../images/clap-square.png";
 import { createNewPageUrl } from "../urls";
+import { flags } from "../flags";
 
 const graphData = {
   x: [
@@ -109,8 +111,18 @@ const HomePage = () => {
           <Box flex="1" position="relative">
             <Image
               src={xyzGraph}
-              borderRadius="md"
+              borderRadius="lg"
               bgColor="white"
+              pr={1}
+              alt={intl.formatMessage({ id: "homepage-alt" })}
+            />
+            <Image
+              height="55%"
+              position="absolute"
+              bottom={0}
+              left={0}
+              src={clap}
+              borderRadius="md"
               pr={1}
               alt={intl.formatMessage({ id: "homepage-alt" })}
             />
@@ -122,24 +134,9 @@ const HomePage = () => {
           </Heading>
           <Box w="100%" position="relative">
             <YoutubeVideoEmbed
-              youtubeId="ZhUtuuQemFc"
+              youtubeId="7DqaU_Qexy4"
               alt={intl.formatMessage({ id: "homepage-video-alt" })}
             />
-            <Box
-              position="absolute"
-              bgColor="brand.700"
-              color="white"
-              fontWeight="bold"
-              top={0}
-              left={0}
-              right={0}
-              bottom={0}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text>Video coming soon</Text>
-            </Box>
           </Box>
           <Text fontSize="md">
             <FormattedMessage
@@ -201,19 +198,21 @@ const HomePage = () => {
             />
           </VStack>
         </VStack>
-        <VStack gap={8}>
-          <Heading as="h2" textAlign="center">
-            <FormattedMessage id="homepage-projects" />
-          </Heading>
-          <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
-            <ResourceCard
-              title="Simple AI activity timer"
-              url="https://www.example.com"
-              imgSrc="https://cdn.sanity.io/images/ajwvhvgo/production/1aaac1553237900c774216aad17475ef34f8fe48-800x600.jpg?fit=max&w=1200&h=1200"
-            />
-            <ResourceCardPlaceholder />
-          </HStack>
-        </VStack>
+        {flags.homePageProjects && (
+          <VStack gap={8}>
+            <Heading as="h2" textAlign="center">
+              <FormattedMessage id="homepage-projects" />
+            </Heading>
+            <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
+              <ResourceCard
+                title="Simple AI activity timer"
+                url="https://www.example.com"
+                imgSrc="https://cdn.sanity.io/images/ajwvhvgo/production/1aaac1553237900c774216aad17475ef34f8fe48-800x600.jpg?fit=max&w=1200&h=1200"
+              />
+              <ResourceCardPlaceholder />
+            </HStack>
+          </VStack>
+        )}
       </Container>
     </DefaultPageLayout>
   );

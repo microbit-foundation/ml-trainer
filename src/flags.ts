@@ -20,6 +20,10 @@ export type Flag =
    */
   | "preReleaseNotice"
   /**
+   * Flag to show the home page projects section which lacks content.
+   */
+  | "homePageProjects"
+  /**
    * Example flags used for testing.
    */
   | "exampleOptInA"
@@ -33,6 +37,7 @@ interface FlagMetadata {
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
   { name: "devtools", defaultOnStages: ["local"] },
+  { name: "homePageProjects", defaultOnStages: ["local"] },
   { name: "preReleaseNotice", defaultOnStages: ["review", "staging"] },
   { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
   { name: "exampleOptInB", defaultOnStages: [] },

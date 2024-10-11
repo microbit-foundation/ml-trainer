@@ -10,7 +10,6 @@ import { useSettings } from "../store";
 const controllerId = "MicrobitMachineLearningTool";
 
 interface EditorProps {
-  version: string | undefined;
   style?: React.CSSProperties;
 }
 
