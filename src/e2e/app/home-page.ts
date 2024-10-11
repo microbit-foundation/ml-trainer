@@ -21,6 +21,10 @@ export class HomePage {
     return response;
   }
 
+  async getStarted() {
+    await this.page.getByText("Get started").first().click();
+  }
+
   expectOnHomePage() {
     expect(this.page.url()).toEqual(this.url);
   }
