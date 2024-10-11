@@ -135,7 +135,7 @@ export interface Actions {
   recordingStarted(): void;
   recordingStopped(): void;
   newSession(): void;
-  trainModelFlowStart: () => Promise<void>;
+  trainModelFlowStart: (callback?: () => void) => Promise<void>;
   closeTrainModelDialogs: () => void;
   trainModel(): Promise<boolean>;
   setSettings(update: Partial<Settings>): void;
@@ -415,7 +415,7 @@ export const useStore = create<Store>()(
           });
         },
 
-        async trainModelFlowStart() {
+        async trainModelFlowStart(callback?: () => void) {
           const {
             settings: { showPreTrainHelp },
             gestures,
@@ -431,6 +431,7 @@ export const useStore = create<Store>()(
             });
           } else {
             await trainModel();
+            callback?.();
           }
         },
 

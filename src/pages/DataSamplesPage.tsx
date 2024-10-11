@@ -75,7 +75,7 @@ const DataSamplesPage = () => {
               <Button
                 ref={trainButtonRef}
                 className={tourElClassname.trainModelButton}
-                onClick={trainModelFlowStart}
+                onClick={() => trainModelFlowStart(handleNavigateToModel)}
                 variant={hasSufficientData ? "primary" : "secondary-disabled"}
               >
                 <FormattedMessage id={"menu.trainer.trainModelButton"} />
