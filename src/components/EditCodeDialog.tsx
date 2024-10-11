@@ -44,11 +44,7 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
                 justifyContent="stretch"
               >
                 <Flex flexGrow="1" flexDir="column" w="100%" bgColor="white">
-                  <Editor
-                    ref={ref}
-                    style={{ flexGrow: 1 }}
-                    version={undefined}
-                  />
+                  <Editor ref={ref} style={{ flexGrow: 1 }} />
                 </Flex>
               </ModalBody>
             </ModalContent>

@@ -10,7 +10,6 @@ import { useSettings } from "../store";
 const controllerId = "MicrobitMachineLearningTool";
 
 interface EditorProps {
-  version: string | undefined;
   style?: React.CSSProperties;
 }
 
@@ -26,8 +25,8 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
   return (
     <MakeCodeFrame
       ref={ref}
-      // TODO: Remove baseUrl and use the default once our sim extension is live there
-      baseUrl="https://makecode.microbit.org/beta"
+      // TODO: Remove version use the default once our sim extension is live there.
+      version="beta"
       controllerId={controllerId}
       controller={2}
       initialProjects={initialProjects}
