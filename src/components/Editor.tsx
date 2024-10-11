@@ -25,7 +25,7 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
   return (
     <MakeCodeFrame
       ref={ref}
-      // TODO: Remove version use the default once our sim extension is live there.
+      // TODO: Remove version and use the default once our sim extension is live there.
       version="beta"
       controllerId={controllerId}
       controller={2}
