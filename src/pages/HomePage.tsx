@@ -25,6 +25,7 @@ import blockImage from "../images/block.png";
 import xyzGraph from "../images/xyz-graph.png";
 import clap from "../images/clap-square.png";
 import { createNewPageUrl } from "../urls";
+import { flags } from "../flags";
 
 const graphData = {
   x: [
@@ -197,19 +198,21 @@ const HomePage = () => {
             />
           </VStack>
         </VStack>
-        <VStack gap={8}>
-          <Heading as="h2" textAlign="center">
-            <FormattedMessage id="homepage-projects" />
-          </Heading>
-          <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
-            <ResourceCard
-              title="Simple AI activity timer"
-              url="https://www.example.com"
-              imgSrc="https://cdn.sanity.io/images/ajwvhvgo/production/1aaac1553237900c774216aad17475ef34f8fe48-800x600.jpg?fit=max&w=1200&h=1200"
-            />
-            <ResourceCardPlaceholder />
-          </HStack>
-        </VStack>
+        {flags.homePageProjects && (
+          <VStack gap={8}>
+            <Heading as="h2" textAlign="center">
+              <FormattedMessage id="homepage-projects" />
+            </Heading>
+            <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
+              <ResourceCard
+                title="Simple AI activity timer"
+                url="https://www.example.com"
+                imgSrc="https://cdn.sanity.io/images/ajwvhvgo/production/1aaac1553237900c774216aad17475ef34f8fe48-800x600.jpg?fit=max&w=1200&h=1200"
+              />
+              <ResourceCardPlaceholder />
+            </HStack>
+          </VStack>
+        )}
       </Container>
     </DefaultPageLayout>
   );
