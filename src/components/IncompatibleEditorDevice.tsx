@@ -20,6 +20,7 @@ interface UnsupportedEditorDeviceProps {
   isOpen: boolean;
   onClose: () => void;
   onNext?: () => void;
+  onNextLoading?: boolean;
   onBack?: () => void;
   stage: "openEditor" | "flashDevice";
 }
@@ -28,6 +29,7 @@ const UnsupportedEditorDevice = ({
   isOpen,
   onClose,
   onNext,
+  onNextLoading,
   onBack,
   stage,
 }: UnsupportedEditorDeviceProps) => {
@@ -111,6 +113,7 @@ const UnsupportedEditorDevice = ({
                 onClick={onNext ?? onClose}
                 variant={onNext ? "primary" : "secondary"}
                 size="lg"
+                isLoading={onNextLoading}
               >
                 <FormattedMessage
                   id={onNext ? "continue-makecode-action" : "cancel-action"}
