@@ -86,7 +86,7 @@ const WhatYouWillNeedDialog = ({
           {onLinkClick && (
             <Button onClick={onLinkClick} variant="link" size="lg">
               <FormattedMessage
-                id={`connect-${type}-start-switch${
+                id={`connect-${type}-start-switch-${
                   type === "bluetooth" ? "radio" : "bluetooth"
                 }`}
               />
