@@ -28,7 +28,7 @@ const TestingModelPage = () => {
 
   return model ? (
     <DefaultPageLayout
-      titleId={`${SessionPageId.TestingModel}-title`}
+      titleId="testing-model-title"
       showPageTitle
       menuItems={<ProjectMenuItems />}
       toolbarItemsRight={<ProjectToolbarItems />}

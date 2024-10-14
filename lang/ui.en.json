@@ -43,14 +43,6 @@
     "defaultMessage": "Add action",
     "description": "Button to add an action (movement related, e.g. clapping)"
   },
-  "add-data-intro-description": {
-    "defaultMessage": "Add samples of the actions you would like your model to recognise (e.g. ‘waving’ and ‘clapping’).",
-    "description": "Add data step home page description"
-  },
-  "add-data-title": {
-    "defaultMessage": "Add data",
-    "description": "Add data step title"
-  },
   "back-action": {
     "defaultMessage": "Back",
     "description": "Back button text"
@@ -643,10 +635,6 @@
     "defaultMessage": "The name is used when you save a file.",
     "description": "Text under project name field"
   },
-  "newpage-continue-session-instruction": {
-    "defaultMessage": "To continue a saved session from a file please select a file.",
-    "description": "Instruction to users to continue a saved session from a file"
-  },
   "newpage-continue-session-subtitle": {
     "defaultMessage": "Use a hex file or data samples file you saved to your computer to continue a session.",
     "description": "Continue session subtitle"
@@ -654,10 +642,6 @@
   "newpage-continue-session-title": {
     "defaultMessage": "Continue a saved session",
     "description": "Continue session title"
-  },
-  "newpage-heading-subtitle": {
-    "defaultMessage": "Run whole class sessions, easily share code with students and save progress",
-    "description": "Homepage heading subtitle"
   },
   "newpage-last-session-date": {
     "defaultMessage": "<strong>Date:</strong> {date}",
@@ -690,10 +674,6 @@
   "newpage-section-two-title": {
     "defaultMessage": "Start something new",
     "description": "Homepage section two title"
-  },
-  "newpage-subtitle": {
-    "defaultMessage": "Introduce students to machine learning concepts through physical movement and data",
-    "description": "Subtitle of micro:bit AI creator home page"
   },
   "newpage-title": {
     "defaultMessage": "New session",
@@ -911,14 +891,6 @@
     "defaultMessage": "Terms of use",
     "description": "Link or menu item link to view terms of use"
   },
-  "test-model-intro-description": {
-    "defaultMessage": "Find out if it correctly recognises each action. Add more data to improve the model.",
-    "description": "Test model step home page description"
-  },
-  "test-model-title": {
-    "defaultMessage": "Test model",
-    "description": "Test model step title"
-  },
   "testing-model-title": {
     "defaultMessage": "Testing model",
     "description": "Testing model page title"
@@ -1022,14 +994,6 @@
   "train-model": {
     "defaultMessage": "Train model",
     "description": "Action to train a model"
-  },
-  "train-model-intro-description": {
-    "defaultMessage": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",
-    "description": "Train model step home page description"
-  },
-  "train-model-title": {
-    "defaultMessage": "Train model",
-    "description": "Train model step title"
   },
   "training-model": {
     "defaultMessage": "Training model…",

@@ -91,18 +91,6 @@
       "value": "Add action"
     }
   ],
-  "add-data-intro-description": [
-    {
-      "type": 0,
-      "value": "Add samples of the actions you would like your model to recognise (e.g. ‘waving’ and ‘clapping’)."
-    }
-  ],
-  "add-data-title": [
-    {
-      "type": 0,
-      "value": "Add data"
-    }
-  ],
   "back-action": [
     {
       "type": 0,
@@ -1127,12 +1115,6 @@
       "value": "The name is used when you save a file."
     }
   ],
-  "newpage-continue-session-instruction": [
-    {
-      "type": 0,
-      "value": "To continue a saved session from a file please select a file."
-    }
-  ],
   "newpage-continue-session-subtitle": [
     {
       "type": 0,
@@ -1143,12 +1125,6 @@
     {
       "type": 0,
       "value": "Continue a saved session"
-    }
-  ],
-  "newpage-heading-subtitle": [
-    {
-      "type": 0,
-      "value": "Run whole class sessions, easily share code with students and save progress"
     }
   ],
   "newpage-last-session-date": [
@@ -1225,12 +1201,6 @@
     {
       "type": 0,
       "value": "Start something new"
-    }
-  ],
-  "newpage-subtitle": [
-    {
-      "type": 0,
-      "value": "Introduce students to machine learning concepts through physical movement and data"
     }
   ],
   "newpage-title": [
@@ -1607,18 +1577,6 @@
       "value": "Terms of use"
     }
   ],
-  "test-model-intro-description": [
-    {
-      "type": 0,
-      "value": "Find out if it correctly recognises each action. Add more data to improve the model."
-    }
-  ],
-  "test-model-title": [
-    {
-      "type": 0,
-      "value": "Test model"
-    }
-  ],
   "testing-model-title": [
     {
       "type": 0,
@@ -1778,18 +1736,6 @@
     }
   ],
   "train-model": [
-    {
-      "type": 0,
-      "value": "Train model"
-    }
-  ],
-  "train-model-intro-description": [
-    {
-      "type": 0,
-      "value": "Ask the computer to use your training samples to train the machine learning model to recognise different actions."
-    }
-  ],
-  "train-model-title": [
     {
       "type": 0,
       "value": "Train model"
