@@ -22,9 +22,11 @@ import { LoggingProvider } from "./logging/logging-hooks";
 import TranslationProvider from "./messages/TranslationProvider";
 import { sessionPageConfigs } from "./pages-config";
 import HomePage from "./pages/HomePage";
+import ImportPage from "./pages/ImportPage";
 import NewPage from "./pages/NewPage";
 import {
   createHomePageUrl,
+  createImportPageUrl,
   createNewPageUrl,
   createSessionPageUrl,
 } from "./urls";
@@ -93,6 +95,10 @@ const createRouter = () => {
         {
           path: createNewPageUrl(),
           element: <NewPage />,
+        },
+        {
+          path: createImportPageUrl(),
+          element: <ImportPage />,
         },
         ...sessionPageConfigs.map((config) => {
           return {

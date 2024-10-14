@@ -10,5 +10,7 @@ export const createHomePageUrl = () => `${basepath}`;
 
 export const createNewPageUrl = () => `${basepath}new`;
 
+export const createImportPageUrl = () => `${basepath}import`;
+
 export const createSessionPageUrl = (pageId: SessionPageId) =>
   `${basepath}${pageId}`;
