@@ -10,7 +10,7 @@ import { useDownloadActions } from "../hooks/download-hooks";
 import { useStore } from "../store";
 import UnplugRadioLinkMicrobitDialog from "./UnplugRadioLinkMicrobitDialog";
 import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
-import UnsupportedEditorDevice from "./IncompatibleEditorDevice";
+import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 
 const DownloadDialogs = () => {
   const actions = useDownloadActions();
@@ -101,7 +101,7 @@ const DownloadDialogs = () => {
       );
     case DownloadStep.IncompatibleDevice:
       return (
-        <UnsupportedEditorDevice
+        <IncompatibleEditorDevice
           isOpen
           onClose={actions.close}
           onBack={actions.getOnBack()}

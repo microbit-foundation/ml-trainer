@@ -28,7 +28,7 @@ import CodeViewCard from "./CodeViewCard";
 import CodeViewGridItem from "./CodeViewGridItem";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
-import UnsupportedEditorDevice from "./IncompatibleEditorDevice";
+import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 import LiveGraphPanel from "./LiveGraphPanel";
 import MoreMenuButton from "./MoreMenuButton";
 
@@ -89,7 +89,7 @@ const TestingModelGridView = () => {
 
   return (
     <>
-      <UnsupportedEditorDevice
+      <IncompatibleEditorDevice
         isOpen={isOpen}
         onClose={onClose}
         onNext={continueToEditor}
