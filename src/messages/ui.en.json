@@ -149,6 +149,12 @@
       "value": "Close"
     }
   ],
+  "code-download-error": [
+    {
+      "type": 0,
+      "value": "Error downloading the target code"
+    }
+  ],
   "coming-soon": [
     {
       "type": 0,
