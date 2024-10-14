@@ -17,7 +17,7 @@ const itemsConfig = {
     {
       imgSrc: twoMicrobitsImage,
       titleId: "connect-radio-start-requirements1",
-      subtitleId: "connect-radio-start-requirements1.subtitle",
+      subtitleId: "connect-radio-start-requirements1-subtitle",
     },
     {
       imgSrc: computerImage,

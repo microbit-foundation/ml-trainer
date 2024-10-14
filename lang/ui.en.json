@@ -287,7 +287,7 @@
     "defaultMessage": "2 micro:bits",
     "description": "Label for icon of two micro:bits"
   },
-  "connect-radio-start-requirements1.subtitle": {
+  "connect-radio-start-requirements1-subtitle": {
     "defaultMessage": "V2 only",
     "description": "Shown below 2 micro:bit label for micro:bit radio approach"
   },
