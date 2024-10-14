@@ -39,16 +39,56 @@
       "value": "micro:bit showing X axis going across the front, Y axis going down and up, Z axis going back to front"
     }
   ],
+  "action-label": [
+    {
+      "type": 0,
+      "value": "Action"
+    }
+  ],
+  "action-length-error": [
+    {
+      "type": 0,
+      "value": "Action names cannot be longer than "
+    },
+    {
+      "type": 1,
+      "value": "maxLen"
+    },
+    {
+      "type": 0,
+      "value": " characters."
+    }
+  ],
+  "action-name-placeholder": [
+    {
+      "type": 0,
+      "value": "Name of action"
+    }
+  ],
+  "action-tooltip": [
+    {
+      "type": 0,
+      "value": "The type of movement you want "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to recognise e.g. ‘waving’ or ‘clapping’."
+    }
+  ],
   "actions-label": [
     {
       "type": 0,
       "value": "Actions"
     }
   ],
-  "actions.reconnect": [
+  "add-action-action": [
     {
       "type": 0,
-      "value": "Reconnect"
+      "value": "Add action"
     }
   ],
   "add-data-intro-description": [
@@ -63,46 +103,6 @@
       "value": "Add data"
     }
   ],
-  "alert.data.classNameLengthAlert": [
-    {
-      "type": 0,
-      "value": "Action names cannot be longer than "
-    },
-    {
-      "type": 1,
-      "value": "maxLen"
-    },
-    {
-      "type": 0,
-      "value": " characters."
-    }
-  ],
-  "alert.deleteGestureConfirm": [
-    {
-      "type": 0,
-      "value": "Are you sure you want to delete the action \""
-    },
-    {
-      "type": 1,
-      "value": "action"
-    },
-    {
-      "type": 0,
-      "value": "\"?"
-    }
-  ],
-  "alert.deleteGestureConfirmHeading": [
-    {
-      "type": 0,
-      "value": "Confirm delete action"
-    }
-  ],
-  "alert.recording.disconnectedDuringRecording": [
-    {
-      "type": 0,
-      "value": "micro:bit disconnected during recording"
-    }
-  ],
   "back-action": [
     {
       "type": 0,
@@ -115,13 +115,43 @@
       "value": "Back to data samples"
     }
   ],
+  "bluetooth-unsupported-advice": [
+    {
+      "type": 0,
+      "value": "We recommend Google Chrome or Microsoft Edge so you can connect directly to your micro:bit."
+    }
+  ],
+  "bluetooth-unsupported-explain": [
+    {
+      "type": 0,
+      "value": "Unfortunately, WebUSB and Web Bluetooth are not supported by this browser. This means you cannot connect to a micro:bit to record the data samples needed to train a machine learning model."
+    }
+  ],
+  "bluetooth-unsupported-header": [
+    {
+      "type": 0,
+      "value": "This browser is not supported"
+    }
+  ],
   "cancel-action": [
     {
       "type": 0,
       "value": "Cancel"
     }
   ],
+  "cancel-recording-action": [
+    {
+      "type": 0,
+      "value": "Cancel recording"
+    }
+  ],
   "certainty-label": [
+    {
+      "type": 0,
+      "value": "Certainty"
+    }
+  ],
+  "certainty-percentage-label": [
     {
       "type": 0,
       "value": "certainty for "
@@ -141,6 +171,12 @@
     {
       "type": 0,
       "value": " percent"
+    }
+  ],
+  "certainty-tooltip": [
+    {
+      "type": 0,
+      "value": "How confident the model is that you are currently doing each action."
     }
   ],
   "close-action": [
@@ -167,10 +203,172 @@
       "value": "Confirm and save"
     }
   ],
+  "connect-action": [
+    {
+      "type": 0,
+      "value": "Connect"
+    }
+  ],
+  "connect-battery-heading": [
+    {
+      "type": 0,
+      "value": "Connect battery pack and disconnect USB"
+    }
+  ],
+  "connect-battery-holder": [
+    {
+      "type": 0,
+      "value": "Battery holder"
+    }
+  ],
+  "connect-battery-link": [
+    {
+      "type": 0,
+      "value": "You can attach the micro:bit to your wrist or an object"
+    }
+  ],
+  "connect-battery-subtitle": [
+    {
+      "type": 0,
+      "value": "Disconnect the micro:bit from the computer and connect the battery pack."
+    }
+  ],
+  "connect-bluetooth-cancelled-connection": [
+    {
+      "type": 0,
+      "value": "You didn't choose a micro:bit. Do you want to try again?"
+    }
+  ],
+  "connect-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "Connect using Web Bluetooth"
+    }
+  ],
+  "connect-bluetooth-invalid-pattern": [
+    {
+      "type": 0,
+      "value": "The pattern you have drawn is invalid."
+    }
+  ],
+  "connect-bluetooth-start-heading": [
+    {
+      "type": 0,
+      "value": "What you need to connect using Web Bluetooth"
+    }
+  ],
+  "connect-bluetooth-start-requirements1": [
+    {
+      "type": 0,
+      "value": "1 micro:bit"
+    }
+  ],
+  "connect-bluetooth-start-requirements2-subtitle": [
+    {
+      "type": 0,
+      "value": "with Internet, a USB port & Web Bluetooth"
+    }
+  ],
+  "connect-bluetooth-start-switch-radio": [
+    {
+      "type": 0,
+      "value": "Connect using micro:bit radio instead"
+    }
+  ],
+  "connect-cable-alt": [
+    {
+      "type": 0,
+      "value": "animation showing a USB cable being connected to the top of a micro:bit"
+    }
+  ],
+  "connect-cable-download-project-subtitle": [
+    {
+      "type": 0,
+      "value": "Connect a micro:bit to this computer with a USB cable to download your machine learning MakeCode program to it."
+    }
+  ],
+  "connect-cable-heading": [
+    {
+      "type": 0,
+      "value": "Connect USB cable to micro:bit"
+    }
+  ],
+  "connect-cable-skip": [
+    {
+      "type": 0,
+      "value": "Skip: program already downloaded?"
+    }
+  ],
+  "connect-cable-subtitle": [
+    {
+      "type": 0,
+      "value": "Connect the micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it."
+    }
+  ],
+  "connect-computer": [
+    {
+      "type": 0,
+      "value": "Computer"
+    }
+  ],
+  "connect-data-collection-heading": [
+    {
+      "type": 0,
+      "value": "Connect USB cable to micro:bit 1"
+    }
+  ],
+  "connect-data-collection-subtitle": [
+    {
+      "type": 0,
+      "value": "Connect the first micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it. This is the micro:bit you will use to collect data samples."
+    }
+  ],
+  "connect-failed-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "Failed to connect to micro:bit"
+    }
+  ],
+  "connect-failed-bluetooth1": [
+    {
+      "type": 0,
+      "value": "The connection to the data collection micro:bit could not be established."
+    }
+  ],
+  "connect-failed-bridge-heading": [
+    {
+      "type": 0,
+      "value": "Failed to connect to radio link micro:bit"
+    }
+  ],
+  "connect-failed-bridge1": [
+    {
+      "type": 0,
+      "value": "The connection to the micro:bit connected to your computer could not be established."
+    }
+  ],
+  "connect-failed-remote-heading": [
+    {
+      "type": 0,
+      "value": "Failed to connect to data collection micro:bit"
+    }
+  ],
+  "connect-failed-remote1": [
+    {
+      "type": 0,
+      "value": "The connection to the data collection micro:bit could not be established."
+    }
+  ],
   "connect-help-alt": [
     {
       "type": 0,
       "value": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2"
+    }
+  ],
+  "connect-micro-usb-cable": [
+    {
+      "type": 0,
+      "value": "Micro USB cable"
     }
   ],
   "connect-or-import": [
@@ -199,6 +397,68 @@
       "value": "link2"
     }
   ],
+  "connect-pattern-heading": [
+    {
+      "type": 0,
+      "value": "Copy pattern"
+    }
+  ],
+  "connect-pattern-input-label": [
+    {
+      "type": 0,
+      "value": "Number of LEDs lit in column "
+    },
+    {
+      "type": 1,
+      "value": "colNum"
+    },
+    {
+      "type": 0,
+      "value": " on the micro:bit display"
+    }
+  ],
+  "connect-pattern-subtitle": [
+    {
+      "type": 0,
+      "value": "Copy the pattern displayed on the micro:bit."
+    }
+  ],
+  "connect-popup": [
+    {
+      "type": 0,
+      "value": "Select micro:bit"
+    }
+  ],
+  "connect-popup-bluetooth-alt": [
+    {
+      "type": 0,
+      "value": "Web Bluetooth connection dialog with BBC micro:bit entry labelled 1 and Pair button labelled 2"
+    }
+  ],
+  "connect-popup-bluetooth-instruction2": [
+    {
+      "type": 0,
+      "value": "Select 'Pair'"
+    }
+  ],
+  "connect-popup-instruction-heading": [
+    {
+      "type": 0,
+      "value": "In the next popup"
+    }
+  ],
+  "connect-popup-instruction1": [
+    {
+      "type": 0,
+      "value": "Choose your micro:bit"
+    }
+  ],
+  "connect-popup-webusb-instruction2": [
+    {
+      "type": 0,
+      "value": "Select 'Connect'"
+    }
+  ],
   "connect-radio-data-collection-microbit-description": [
     {
       "type": 0,
@@ -209,6 +469,54 @@
     {
       "type": 0,
       "value": "Connect USB cable to the data collection micro:bit"
+    }
+  ],
+  "connect-radio-heading": [
+    {
+      "type": 0,
+      "value": "Connecting micro:bits"
+    }
+  ],
+  "connect-radio-link-heading": [
+    {
+      "type": 0,
+      "value": "Connect USB cable to micro:bit 2"
+    }
+  ],
+  "connect-radio-link-subtitle": [
+    {
+      "type": 0,
+      "value": "Connect a second micro:bit to this computer with a USB cable so that the radio link program can be downloaded to it. This radio link micro:bit will communicate with the data collection micro:bit."
+    }
+  ],
+  "connect-radio-start-heading": [
+    {
+      "type": 0,
+      "value": "What you need to connect using micro:bit radio"
+    }
+  ],
+  "connect-radio-start-requirements1": [
+    {
+      "type": 0,
+      "value": "2 micro:bits"
+    }
+  ],
+  "connect-radio-start-requirements1.subtitle": [
+    {
+      "type": 0,
+      "value": "V2 only"
+    }
+  ],
+  "connect-radio-start-requirements2-subtitle": [
+    {
+      "type": 0,
+      "value": "with Internet & a USB port"
+    }
+  ],
+  "connect-radio-start-switch-bluetooth": [
+    {
+      "type": 0,
+      "value": "Connect using Web Bluetooth instead"
     }
   ],
   "connect-to-record-body": [
@@ -223,884 +531,34 @@
       "value": "You don't have a micro:bit connected"
     }
   ],
-  "connectFailed.bluetooth1": [
-    {
-      "type": 0,
-      "value": "The connection to the data collection micro:bit could not be established."
-    }
-  ],
-  "connectFailed.bluetoothHeading": [
-    {
-      "type": 0,
-      "value": "Failed to connect to micro:bit"
-    }
-  ],
-  "connectFailed.bridge1": [
-    {
-      "type": 0,
-      "value": "The connection to the micro:bit connected to your computer could not be established."
-    }
-  ],
-  "connectFailed.bridgeHeading": [
-    {
-      "type": 0,
-      "value": "Failed to connect to radio link micro:bit"
-    }
-  ],
-  "connectFailed.remote1": [
-    {
-      "type": 0,
-      "value": "The connection to the data collection micro:bit could not be established."
-    }
-  ],
-  "connectFailed.remoteHeading": [
-    {
-      "type": 0,
-      "value": "Failed to connect to data collection micro:bit"
-    }
-  ],
-  "connectMB.bluetooth.cancelledConnection": [
-    {
-      "type": 0,
-      "value": "You didn't choose a micro:bit. Do you want to try again?"
-    }
-  ],
-  "connectMB.bluetooth.heading": [
-    {
-      "type": 0,
-      "value": "Connect using Web Bluetooth"
-    }
-  ],
-  "connectMB.bluetooth.invalidPattern": [
-    {
-      "type": 0,
-      "value": "The pattern you have drawn is invalid."
-    }
-  ],
-  "connectMB.bluetoothStart.heading": [
-    {
-      "type": 0,
-      "value": "What you need to connect using Web Bluetooth"
-    }
-  ],
-  "connectMB.bluetoothStart.requirements1": [
-    {
-      "type": 0,
-      "value": "1 micro:bit"
-    }
-  ],
-  "connectMB.bluetoothStart.requirements2": [
-    {
-      "type": 0,
-      "value": "Computer"
-    }
-  ],
-  "connectMB.bluetoothStart.requirements2.subtitle": [
-    {
-      "type": 0,
-      "value": "with Internet, a USB port & Web Bluetooth"
-    }
-  ],
-  "connectMB.bluetoothStart.requirements3": [
-    {
-      "type": 0,
-      "value": "Micro USB cable"
-    }
-  ],
-  "connectMB.bluetoothStart.requirements4": [
-    {
-      "type": 0,
-      "value": "Battery holder"
-    }
-  ],
-  "connectMB.bluetoothStart.requirements4.subtitle": [
-    {
-      "type": 0,
-      "value": "with batteries"
-    }
-  ],
-  "connectMB.bluetoothStart.switchRadio": [
-    {
-      "type": 0,
-      "value": "Connect using micro:bit radio instead"
-    }
-  ],
-  "connectMB.connectBattery.heading": [
-    {
-      "type": 0,
-      "value": "Connect battery pack and disconnect USB"
-    }
-  ],
-  "connectMB.connectBattery.link": [
-    {
-      "type": 0,
-      "value": "You can attach the micro:bit to your wrist or an object"
-    }
-  ],
-  "connectMB.connectBattery.subtitle": [
-    {
-      "type": 0,
-      "value": "Disconnect the micro:bit from the computer and connect the battery pack."
-    }
-  ],
-  "connectMB.connectCable.altText": [
-    {
-      "type": 0,
-      "value": "animation showing a USB cable being connected to the top of a micro:bit"
-    }
-  ],
-  "connectMB.connectCable.downloadProject.subtitle": [
-    {
-      "type": 0,
-      "value": "Connect a micro:bit to this computer with a USB cable to download your machine learning MakeCode program to it."
-    }
-  ],
-  "connectMB.connectCable.heading": [
-    {
-      "type": 0,
-      "value": "Connect USB cable to micro:bit"
-    }
-  ],
-  "connectMB.connectCable.skip": [
-    {
-      "type": 0,
-      "value": "Skip: program already downloaded?"
-    }
-  ],
-  "connectMB.connectCable.subtitle": [
-    {
-      "type": 0,
-      "value": "Connect the micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it."
-    }
-  ],
-  "connectMB.connectCableMB1.heading": [
-    {
-      "type": 0,
-      "value": "Connect USB cable to micro:bit 1"
-    }
-  ],
-  "connectMB.connectCableMB1.subtitle": [
-    {
-      "type": 0,
-      "value": "Connect the first micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it. This is the micro:bit you will use to collect data samples."
-    }
-  ],
-  "connectMB.connectCableMB2.heading": [
-    {
-      "type": 0,
-      "value": "Connect USB cable to micro:bit 2"
-    }
-  ],
-  "connectMB.connectCableMB2.subtitle": [
-    {
-      "type": 0,
-      "value": "Connect a second micro:bit to this computer with a USB cable so that the radio link program can be downloaded to it. This radio link micro:bit will communicate with the data collection micro:bit."
-    }
-  ],
-  "connectMB.connecting": [
-    {
-      "type": 0,
-      "value": "Connecting…"
-    }
-  ],
-  "connectMB.nextButton": [
-    {
-      "type": 0,
-      "value": "Next"
-    }
-  ],
-  "connectMB.outputMB.different": [
-    {
-      "type": 0,
-      "value": "Connect another micro:bit"
-    }
-  ],
-  "connectMB.outputMB.otherButton": [
-    {
-      "type": 0,
-      "value": "Other"
-    }
-  ],
-  "connectMB.outputMB.same": [
-    {
-      "type": 0,
-      "value": "Use the same micro:bit"
-    }
-  ],
-  "connectMB.outputMB.sameButton": [
-    {
-      "type": 0,
-      "value": "Same"
-    }
-  ],
-  "connectMB.pattern.heading": [
-    {
-      "type": 0,
-      "value": "Copy pattern"
-    }
-  ],
-  "connectMB.pattern.inputLabel": [
-    {
-      "type": 0,
-      "value": "Number of LEDs lit in column "
-    },
-    {
-      "type": 1,
-      "value": "colNum"
-    },
-    {
-      "type": 0,
-      "value": " on the micro:bit display"
-    }
-  ],
-  "connectMB.pattern.subtitle": [
-    {
-      "type": 0,
-      "value": "Copy the pattern displayed on the micro:bit."
-    }
-  ],
-  "connectMB.radio.heading": [
-    {
-      "type": 0,
-      "value": "Connecting micro:bits"
-    }
-  ],
-  "connectMB.radioStart.heading": [
-    {
-      "type": 0,
-      "value": "What you need to connect using micro:bit radio"
-    }
-  ],
-  "connectMB.radioStart.requirements1": [
-    {
-      "type": 0,
-      "value": "2 micro:bits"
-    }
-  ],
-  "connectMB.radioStart.requirements1.subtitle": [
-    {
-      "type": 0,
-      "value": "V2 only"
-    }
-  ],
-  "connectMB.radioStart.requirements2": [
-    {
-      "type": 0,
-      "value": "Computer"
-    }
-  ],
-  "connectMB.radioStart.requirements2.subtitle": [
-    {
-      "type": 0,
-      "value": "with Internet & a USB port"
-    }
-  ],
-  "connectMB.radioStart.requirements3": [
-    {
-      "type": 0,
-      "value": "Micro USB cable"
-    }
-  ],
-  "connectMB.radioStart.requirements4": [
-    {
-      "type": 0,
-      "value": "Battery holder"
-    }
-  ],
-  "connectMB.radioStart.requirements4.subtitle": [
-    {
-      "type": 0,
-      "value": "with batteries"
-    }
-  ],
-  "connectMB.radioStart.switchBluetooth": [
-    {
-      "type": 0,
-      "value": "Connect using Web Bluetooth instead"
-    }
-  ],
-  "connectMB.reconnecting": [
-    {
-      "type": 0,
-      "value": "Reconnecting…"
-    }
-  ],
-  "connectMB.transferHex.altText": [
-    {
-      "type": 0,
-      "value": "animation of dragging a hex file from the downloads folder onto the micro:bit drive or device listed in the file explorer"
-    }
-  ],
-  "connectMB.transferHex.heading": [
-    {
-      "type": 0,
-      "value": "Transfer saved hex file to micro:bit"
-    }
-  ],
-  "connectMB.transferHex.manualDownload": [
-    {
-      "type": 0,
-      "value": "If the file did not automatically download then "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "please download the file here"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "connectMB.transferHex.message": [
-    {
-      "type": 0,
-      "value": "Drag the hex file from your Downloads folder to the MICROBIT drive."
-    }
-  ],
-  "connectMB.troubleshoot": [
+  "connect-troubleshoot": [
     {
       "type": 0,
       "value": "Troubleshoot problems with connecting to your micro:bit"
     }
   ],
-  "connectMB.troubleshooting": [
+  "connect-troubleshooting": [
     {
       "type": 0,
       "value": "Troubleshooting"
     }
   ],
-  "connectMB.tryAgain": [
+  "connect-with-batteries": [
     {
       "type": 0,
-      "value": "Try again"
+      "value": "with batteries"
     }
   ],
-  "connectMB.unsupportedMicrobit.ctaWithBluetooth": [
+  "connect-with-web-bluetooth": [
     {
       "type": 0,
       "value": "Connect with Web Bluetooth"
     }
   ],
-  "connectMB.unsupportedMicrobit.explain": [
+  "connecting": [
     {
       "type": 0,
-      "value": "Unfortunately, we only support using micro:bit V2 when connecting two micro:bits. You have connected a "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "micro:bit V1"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "connectMB.unsupportedMicrobit.header": [
-    {
-      "type": 0,
-      "value": "micro:bit V1 is not supported for connecting two micro:bits"
-    }
-  ],
-  "connectMB.unsupportedMicrobit.withBluetooth": [
-    {
-      "type": 0,
-      "value": "Please use Web Bluetooth to connect to your micro:bit V1 instead."
-    }
-  ],
-  "connectMB.unsupportedMicrobit.withoutBluetooth": [
-    {
-      "type": 0,
-      "value": "You can connect to micro:bit V1 using Web Bluetooth, however, this browser or device does not have Bluetooth enabled. "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "How to enable Bluetooth"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "connectMB.usb.firmwareBroken.content1": [
-    {
-      "type": 0,
-      "value": "Connecting to the micro:bit failed because the firmware on your micro:bit is too old."
-    }
-  ],
-  "connectMB.usb.firmwareBroken.content2": [
-    {
-      "type": 0,
-      "value": "You must "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "update your firmware"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " before you can connect to this micro:bit."
-    }
-  ],
-  "connectMB.usb.firmwareBroken.content3": [
-    {
-      "type": 0,
-      "value": "Troubleshoot problems with connecting to your micro:bit"
-    }
-  ],
-  "connectMB.usb.firmwareBroken.heading": [
-    {
-      "type": 0,
-      "value": "Firmware update required"
-    }
-  ],
-  "connectMB.usb.firmwareBroken.skip": [
-    {
-      "type": 0,
-      "value": "Skip and transfer manually"
-    }
-  ],
-  "connectMB.usbDownloading.header": [
-    {
-      "type": 0,
-      "value": "Downloading program to micro:bit"
-    }
-  ],
-  "connectMB.usbDownloading.subtitle": [
-    {
-      "type": 0,
-      "value": "Please wait. Downloading program to micro:bit."
-    }
-  ],
-  "connectMB.usbDownloadingMB1.header": [
-    {
-      "type": 0,
-      "value": "Downloading the data collection program"
-    }
-  ],
-  "connectMB.usbDownloadingMB2.header": [
-    {
-      "type": 0,
-      "value": "Downloading the radio link program"
-    }
-  ],
-  "connectMB.usbTryAgain.closeTabs1": [
-    {
-      "type": 0,
-      "value": "Another process is connected to this device."
-    }
-  ],
-  "connectMB.usbTryAgain.closeTabs2": [
-    {
-      "type": 0,
-      "value": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, "
-    },
-    {
-      "type": 1,
-      "value": "appNameShort"
-    },
-    {
-      "type": 0,
-      "value": "), or unplug and replug the micro:bit before trying again."
-    }
-  ],
-  "connectMB.usbTryAgain.heading": [
-    {
-      "type": 0,
-      "value": "Connect using WebUSB"
-    }
-  ],
-  "connectMB.usbTryAgain.replugMicrobit1": [
-    {
-      "type": 0,
-      "value": "A WebUSB error occurred."
-    }
-  ],
-  "connectMB.usbTryAgain.replugMicrobit2": [
-    {
-      "type": 0,
-      "value": "Please:"
-    }
-  ],
-  "connectMB.usbTryAgain.replugMicrobit3": [
-    {
-      "type": 0,
-      "value": "check that this micro:bit does not have a battery pack connected"
-    }
-  ],
-  "connectMB.usbTryAgain.replugMicrobit4": [
-    {
-      "type": 0,
-      "value": "unplug and replug the USB cable"
-    }
-  ],
-  "connectMB.usbTryAgain.selectMicrobit": [
-    {
-      "type": 0,
-      "value": "You didn't select a micro:bit. Do you want to try again?"
-    }
-  ],
-  "connectMB.webPopup": [
-    {
-      "type": 0,
-      "value": "Select micro:bit"
-    }
-  ],
-  "connectMB.webPopup.instruction.heading": [
-    {
-      "type": 0,
-      "value": "In the next popup"
-    }
-  ],
-  "connectMB.webPopup.instruction1": [
-    {
-      "type": 0,
-      "value": "Choose your micro:bit"
-    }
-  ],
-  "connectMB.webPopup.webBluetooth.altText": [
-    {
-      "type": 0,
-      "value": "Web Bluetooth connection dialog with BBC micro:bit entry labelled 1 and Pair button labelled 2"
-    }
-  ],
-  "connectMB.webPopup.webBluetooth.instruction2": [
-    {
-      "type": 0,
-      "value": "Select 'Pair'"
-    }
-  ],
-  "connectMB.webPopup.webUsb.instruction2": [
-    {
-      "type": 0,
-      "value": "Select 'Connect'"
-    }
-  ],
-  "content.data.addAction": [
-    {
-      "type": 0,
-      "value": "Add action"
-    }
-  ],
-  "content.data.addActionWalkThrough": [
-    {
-      "type": 0,
-      "value": "Name an action you want the micro:bit to recognise"
-    }
-  ],
-  "content.data.addRecordingWalkThrough": [
-    {
-      "type": 0,
-      "value": "Press to record a data sample or press button B on your data collection micro:bit."
-    }
-  ],
-  "content.data.classHelpBody": [
-    {
-      "type": 0,
-      "value": "The type of movement you want "
-    },
-    {
-      "type": 1,
-      "value": "appNameFull"
-    },
-    {
-      "type": 0,
-      "value": " to recognise e.g. ‘waving’ or ‘clapping’."
-    }
-  ],
-  "content.data.classPlaceholderNewClass": [
-    {
-      "type": 0,
-      "value": "Name of action"
-    }
-  ],
-  "content.data.classification": [
-    {
-      "type": 0,
-      "value": "Action"
-    }
-  ],
-  "content.data.controlbar.button.clearData": [
-    {
-      "type": 0,
-      "value": "Delete all data samples"
-    }
-  ],
-  "content.data.controlbar.button.downloadData": [
-    {
-      "type": 0,
-      "value": "Download all data samples"
-    }
-  ],
-  "content.data.controlbar.button.menu": [
-    {
-      "type": 0,
-      "value": "Data actions"
-    }
-  ],
-  "content.data.controlbar.button.uploadData": [
-    {
-      "type": 0,
-      "value": "Import data samples"
-    }
-  ],
-  "content.data.data": [
-    {
-      "type": 0,
-      "value": "Data samples"
-    }
-  ],
-  "content.data.dataDescription": [
-    {
-      "type": 0,
-      "value": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else."
-    }
-  ],
-  "content.data.deleteAction": [
-    {
-      "type": 0,
-      "value": "Delete action \""
-    },
-    {
-      "type": 1,
-      "value": "action"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
-  "content.data.deleteRecording": [
-    {
-      "type": 0,
-      "value": "Delete recording"
-    }
-  ],
-  "content.data.recordAction": [
-    {
-      "type": 0,
-      "value": "Record data for action \""
-    },
-    {
-      "type": 1,
-      "value": "action"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
-  "content.data.recording.button.cancel": [
-    {
-      "type": 0,
-      "value": "Cancel recording"
-    }
-  ],
-  "content.data.recordingDialog.go": [
-    {
-      "type": 0,
-      "value": "Go"
-    }
-  ],
-  "content.data.recordingDialog.recording": [
-    {
-      "type": 0,
-      "value": "Recording"
-    }
-  ],
-  "content.data.recordingDialog.title": [
-    {
-      "type": 0,
-      "value": "Record data for action \""
-    },
-    {
-      "type": 1,
-      "value": "action"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
-  "content.index.dataWarning.subtitleOne": [
-    {
-      "type": 0,
-      "value": "You have existing data samples and code that will be lost when you start a new session."
-    }
-  ],
-  "content.index.dataWarning.subtitleTwo": [
-    {
-      "type": 0,
-      "value": "To save your work, "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "download a hex file"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " containing your data samples and code before continuing."
-    }
-  ],
-  "content.index.dataWarning.title": [
-    {
-      "type": 0,
-      "value": "Existing data samples and code will be lost"
-    }
-  ],
-  "content.model.output.action.descriptionBody": [
-    {
-      "type": 0,
-      "value": "The type of movement you want "
-    },
-    {
-      "type": 1,
-      "value": "appNameFull"
-    },
-    {
-      "type": 0,
-      "value": " to recognise e.g. ‘waving’ or ‘clapping’."
-    }
-  ],
-  "content.model.output.action.descriptionTitle": [
-    {
-      "type": 0,
-      "value": "Action"
-    }
-  ],
-  "content.model.output.certainty.descriptionBody": [
-    {
-      "type": 0,
-      "value": "How confident the model is that you are currently doing each action."
-    }
-  ],
-  "content.model.output.certainty.descriptionTitle": [
-    {
-      "type": 0,
-      "value": "Certainty"
-    }
-  ],
-  "content.model.output.estimatedGesture.descriptionBody": [
-    {
-      "type": 0,
-      "value": "This is the action the model thinks you are currently doing."
-    }
-  ],
-  "content.model.output.estimatedGesture.descriptionTitle": [
-    {
-      "type": 0,
-      "value": "Estimated action"
-    }
-  ],
-  "content.model.output.estimatedGesture.iconTitle": [
-    {
-      "type": 0,
-      "value": "Estimated action"
-    }
-  ],
-  "content.model.output.estimatedGesture.label": [
-    {
-      "type": 0,
-      "value": "Estimated action: \""
-    },
-    {
-      "type": 1,
-      "value": "action"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
-  "content.model.output.output.descriptionBody": [
-    {
-      "type": 0,
-      "value": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit."
-    }
-  ],
-  "content.model.output.output.descriptionTitle": [
-    {
-      "type": 0,
-      "value": "Output"
-    }
-  ],
-  "content.model.output.recognitionPoint": [
-    {
-      "type": 0,
-      "value": "Recognition point:"
-    }
-  ],
-  "content.trainer.description": [
-    {
-      "type": 0,
-      "value": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows "
-    },
-    {
-      "type": 1,
-      "value": "appNameFull"
-    },
-    {
-      "type": 0,
-      "value": " to recognise different actions when you move your micro:bit."
-    }
-  ],
-  "content.trainer.failure.body": [
-    {
-      "type": 0,
-      "value": "The training did not result in a usable model. The reason for this is most likely the data used for training. If the data samples for different actions are too similar, this can result in issues in the training process."
-    }
-  ],
-  "content.trainer.failure.header": [
-    {
-      "type": 0,
-      "value": "Training failed"
-    }
-  ],
-  "content.trainer.failure.todo": [
-    {
-      "type": 0,
-      "value": "Return to the Add data page and change your data."
-    }
-  ],
-  "content.trainer.header": [
-    {
-      "type": 0,
-      "value": "Training a model"
-    }
-  ],
-  "content.trainer.training.title": [
-    {
-      "type": 0,
-      "value": "Training model…"
+      "value": "Connecting…"
     }
   ],
   "continue-makecode-action": [
@@ -1127,6 +585,12 @@
       "value": "Copy"
     }
   ],
+  "data-actions-menu": [
+    {
+      "type": 0,
+      "value": "Data actions"
+    }
+  ],
   "data-collection-microbit": [
     {
       "type": 0,
@@ -1139,70 +603,146 @@
       "value": "diagram showing data collection micro:bit being connected to a person's wrist"
     }
   ],
+  "data-samples-label": [
+    {
+      "type": 0,
+      "value": "Data samples"
+    }
+  ],
   "data-samples-title": [
     {
       "type": 0,
       "value": "Data samples"
     }
   ],
-  "disconnectedWarning.bluetooth1": [
+  "data-samples-tooltip": [
+    {
+      "type": 0,
+      "value": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else."
+    }
+  ],
+  "delete-action-aria": [
+    {
+      "type": 0,
+      "value": "Delete action \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "delete-action-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete action"
+    }
+  ],
+  "delete-action-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the action \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "delete-data-samples-action": [
+    {
+      "type": 0,
+      "value": "Delete all data samples"
+    }
+  ],
+  "delete-recording-aria": [
+    {
+      "type": 0,
+      "value": "Delete recording"
+    }
+  ],
+  "disconnect-action": [
+    {
+      "type": 0,
+      "value": "Disconnect"
+    }
+  ],
+  "disconnected-during-recording": [
+    {
+      "type": 0,
+      "value": "micro:bit disconnected during recording"
+    }
+  ],
+  "disconnected-warning-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "Data collection micro:bit connection lost"
+    }
+  ],
+  "disconnected-warning-bluetooth1": [
     {
       "type": 0,
       "value": "The connection to the data collection micro:bit has been lost."
     }
   ],
-  "disconnectedWarning.bluetooth2": [
+  "disconnected-warning-bluetooth2": [
     {
       "type": 0,
       "value": "Please check that the micro:bit:"
     }
   ],
-  "disconnectedWarning.bluetooth3": [
+  "disconnected-warning-bluetooth3": [
     {
       "type": 0,
       "value": "is powered on (the red light on the back of the micro:bit should be on)"
     }
   ],
-  "disconnectedWarning.bluetooth4": [
+  "disconnected-warning-bluetooth4": [
     {
       "type": 0,
       "value": "is close to the computer"
     }
   ],
-  "disconnectedWarning.bluetoothHeading": [
+  "disconnected-warning-bridge-heading": [
     {
       "type": 0,
-      "value": "Data collection micro:bit connection lost"
+      "value": "Radio link micro:bit connection lost"
     }
   ],
-  "disconnectedWarning.bridge1": [
+  "disconnected-warning-bridge1": [
     {
       "type": 0,
       "value": "The connection to the micro:bit connected to your computer has been lost."
     }
   ],
-  "disconnectedWarning.bridgeHeading": [
-    {
-      "type": 0,
-      "value": "radio link micro:bit connection lost"
-    }
-  ],
-  "disconnectedWarning.remote1": [
-    {
-      "type": 0,
-      "value": "The connection to the data collection micro:bit has been lost."
-    }
-  ],
-  "disconnectedWarning.remoteHeading": [
+  "disconnected-warning-remote-heading": [
     {
       "type": 0,
       "value": "Data collection micro:bit connection lost"
+    }
+  ],
+  "disconnected-warning-remote1": [
+    {
+      "type": 0,
+      "value": "The connection to the data collection micro:bit has been lost."
     }
   ],
   "dont-show-again": [
     {
       "type": 0,
       "value": "Don't show this again"
+    }
+  ],
+  "download-data-samples-action": [
+    {
+      "type": 0,
+      "value": "Download all data samples"
     }
   ],
   "download-project-choose-microbit-subtitle": [
@@ -1249,10 +789,60 @@
       "value": "Same micro:bit"
     }
   ],
+  "downloading-data-collection-header": [
+    {
+      "type": 0,
+      "value": "Downloading the data collection program"
+    }
+  ],
+  "downloading-header": [
+    {
+      "type": 0,
+      "value": "Downloading program to micro:bit"
+    }
+  ],
+  "downloading-radio-link-header": [
+    {
+      "type": 0,
+      "value": "Downloading the radio link program"
+    }
+  ],
+  "downloading-subtitle": [
+    {
+      "type": 0,
+      "value": "Please wait. Downloading program to micro:bit."
+    }
+  ],
   "edit-in-makecode-action": [
     {
       "type": 0,
       "value": "Edit in MakeCode"
+    }
+  ],
+  "estimated-action-aria": [
+    {
+      "type": 0,
+      "value": "Estimated action: \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "estimated-action-label": [
+    {
+      "type": 0,
+      "value": "Estimated action"
+    }
+  ],
+  "estimated-action-tooltip": [
+    {
+      "type": 0,
+      "value": "This is the action the model thinks you are currently doing."
     }
   ],
   "feedback": [
@@ -1261,34 +851,54 @@
       "value": "Feedback"
     }
   ],
-  "footer.connectButton": [
+  "firmware-outdated-content1": [
     {
       "type": 0,
-      "value": "Connect"
+      "value": "Connecting to the micro:bit failed because the firmware on your micro:bit is too old."
     }
   ],
-  "footer.disconnectButton": [
+  "firmware-outdated-content2": [
     {
       "type": 0,
-      "value": "Disconnect"
+      "value": "You must "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "update your firmware"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " before you can connect to this micro:bit."
     }
   ],
-  "footer.helpContent": [
+  "firmware-outdated-heading": [
     {
       "type": 0,
-      "value": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in."
+      "value": "Firmware update required"
     }
   ],
-  "footer.helpHeader": [
+  "firmware-outdated-skip": [
     {
       "type": 0,
-      "value": "Live graph"
+      "value": "Skip and transfer manually"
     }
   ],
   "get-started-action": [
     {
       "type": 0,
       "value": "Get started"
+    }
+  ],
+  "go-action": [
+    {
+      "type": 0,
+      "value": "Go"
     }
   ],
   "help-label": [
@@ -1307,6 +917,12 @@
     {
       "type": 0,
       "value": "Home"
+    }
+  ],
+  "homepage": [
+    {
+      "type": 0,
+      "value": "Home page"
     }
   ],
   "homepage-alt": [
@@ -1365,36 +981,10 @@
       "value": "."
     }
   ],
-  "homepage.Link": [
+  "import-data-samples-action": [
     {
       "type": 0,
-      "value": "Home page"
-    }
-  ],
-  "incompatible-device-body-1": [
-    {
-      "type": 0,
-      "value": "Continue to MakeCode to edit the program. You can then save the project hex which can be downloaded onto a micro:bit V2."
-    }
-  ],
-  "incompatible-device-body-2": [
-    {
-      "type": 0,
-      "value": "Alternatively, "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "save the project hex"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " without using MakeCode."
+      "value": "Import data samples"
     }
   ],
   "incompatible-device-body-alt": [
@@ -1415,6 +1005,32 @@
     {
       "type": 0,
       "value": " which can be downloaded onto a micro:bit V2 later."
+    }
+  ],
+  "incompatible-device-body1": [
+    {
+      "type": 0,
+      "value": "Continue to MakeCode to edit the program. You can then save the project hex which can be downloaded onto a micro:bit V2."
+    }
+  ],
+  "incompatible-device-body2": [
+    {
+      "type": 0,
+      "value": "Alternatively, "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "save the project hex"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " without using MakeCode."
     }
   ],
   "incompatible-device-heading": [
@@ -1463,34 +1079,34 @@
       "value": "Live data graph"
     }
   ],
+  "live-graph": [
+    {
+      "type": 0,
+      "value": "Live graph"
+    }
+  ],
+  "live-graph-tooltip": [
+    {
+      "type": 0,
+      "value": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in."
+    }
+  ],
   "main-menu": [
     {
       "type": 0,
       "value": "Main menu"
     }
   ],
-  "menu.trainer.notConnected1": [
-    {
-      "type": 0,
-      "value": "You do not have a micro:bit connected"
-    }
-  ],
-  "menu.trainer.notConnected2": [
-    {
-      "type": 0,
-      "value": " Select the ‘Connect’ button to connect a micro:bit."
-    }
-  ],
-  "menu.trainer.trainModelButton": [
-    {
-      "type": 0,
-      "value": "Train model"
-    }
-  ],
   "more-edit-in-makecode-options": [
     {
       "type": 0,
       "value": "More edit in MakeCode options"
+    }
+  ],
+  "name-action-hint": [
+    {
+      "type": 0,
+      "value": "Name an action you want the micro:bit to recognise"
     }
   ],
   "name-project": [
@@ -1623,6 +1239,12 @@
       "value": "New session"
     }
   ],
+  "next-action": [
+    {
+      "type": 0,
+      "value": "Next"
+    }
+  ],
   "no-data-samples": [
     {
       "type": 0,
@@ -1657,22 +1279,42 @@
       "value": "Open file when dropped"
     }
   ],
-  "popup.compatibility.advice": [
+  "other-tabs-body1": [
     {
       "type": 0,
-      "value": "We recommend Google Chrome or Microsoft Edge so you can connect directly to your micro:bit."
+      "value": "Another process is connected to this device."
     }
   ],
-  "popup.compatibility.explain": [
+  "other-tabs-body2": [
     {
       "type": 0,
-      "value": "Unfortunately, WebUSB and Web Bluetooth are not supported by this browser. This means you cannot connect to a micro:bit to record the data samples needed to train a machine learning model."
+      "value": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, "
+    },
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": "), or unplug and replug the micro:bit before trying again."
     }
   ],
-  "popup.compatibility.header": [
+  "other-tabs-heading": [
     {
       "type": 0,
-      "value": "This browser is not supported"
+      "value": "Connect using WebUSB"
+    }
+  ],
+  "output-label": [
+    {
+      "type": 0,
+      "value": "Output"
+    }
+  ],
+  "output-tooltip": [
+    {
+      "type": 0,
+      "value": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit."
     }
   ],
   "privacy": [
@@ -1705,52 +1347,110 @@
       "value": "diagram showing radio link micro:bit being connected with a computer"
     }
   ],
-  "reconnectFailed.bluetooth1": [
+  "recognition-point-label": [
     {
       "type": 0,
-      "value": "The connection to the data collection micro:bit could not be re-established."
+      "value": "Recognition point:"
     }
   ],
-  "reconnectFailed.bluetoothHeading": [
+  "reconnect-action": [
+    {
+      "type": 0,
+      "value": "Reconnect"
+    }
+  ],
+  "reconnect-failed-bluetooth-heading": [
     {
       "type": 0,
       "value": "Failed to reconnect to data collection micro:bit"
     }
   ],
-  "reconnectFailed.bridge1": [
+  "reconnect-failed-bluetooth1": [
     {
       "type": 0,
-      "value": "The connection to the micro:bit connected to your computer could not be re-established."
+      "value": "The connection to the data collection micro:bit could not be re-established."
     }
   ],
-  "reconnectFailed.bridgeHeading": [
+  "reconnect-failed-bridge-heading": [
     {
       "type": 0,
       "value": "Failed to reconnect to radio link micro:bit"
     }
   ],
-  "reconnectFailed.radioHeading": [
+  "reconnect-failed-bridge1": [
+    {
+      "type": 0,
+      "value": "The connection to the micro:bit connected to your computer could not be re-established."
+    }
+  ],
+  "reconnect-failed-radio-heading": [
     {
       "type": 0,
       "value": "Failed to reconnect to micro:bits"
     }
   ],
-  "reconnectFailed.remote1": [
-    {
-      "type": 0,
-      "value": "The connection to the data collection micro:bit could not be re-established."
-    }
-  ],
-  "reconnectFailed.remoteHeading": [
+  "reconnect-failed-remote-heading": [
     {
       "type": 0,
       "value": "Failed to reconnect to data collection micro:bit"
     }
   ],
-  "reconnectFailed.subtitle": [
+  "reconnect-failed-remote1": [
+    {
+      "type": 0,
+      "value": "The connection to the data collection micro:bit could not be re-established."
+    }
+  ],
+  "reconnect-failed-subtitle": [
     {
       "type": 0,
       "value": "Follow these instructions to restart the connection process."
+    }
+  ],
+  "reconnecting": [
+    {
+      "type": 0,
+      "value": "Reconnecting…"
+    }
+  ],
+  "record-action-aria": [
+    {
+      "type": 0,
+      "value": "Record data for action \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "record-hint": [
+    {
+      "type": 0,
+      "value": "Press to record a data sample or press button B on your data collection micro:bit."
+    }
+  ],
+  "recording": [
+    {
+      "type": 0,
+      "value": "Recording"
+    }
+  ],
+  "recording-data-for": [
+    {
+      "type": 0,
+      "value": "Record data for action \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
     }
   ],
   "recording-graph-label": [
@@ -2039,6 +1739,50 @@
       "value": "Microsoft MakeCode blocks"
     }
   ],
+  "train-description": [
+    {
+      "type": 0,
+      "value": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to recognise different actions when you move your micro:bit."
+    }
+  ],
+  "train-error-body": [
+    {
+      "type": 0,
+      "value": "The training did not result in a usable model. The reason for this is most likely the data used for training. If the data samples for different actions are too similar, this can result in issues in the training process."
+    }
+  ],
+  "train-error-header": [
+    {
+      "type": 0,
+      "value": "Training failed"
+    }
+  ],
+  "train-error-todo": [
+    {
+      "type": 0,
+      "value": "Return to the Add data page and change your data."
+    }
+  ],
+  "train-header": [
+    {
+      "type": 0,
+      "value": "Training a model"
+    }
+  ],
+  "train-model": [
+    {
+      "type": 0,
+      "value": "Train model"
+    }
+  ],
   "train-model-intro-description": [
     {
       "type": 0,
@@ -2049,6 +1793,56 @@
     {
       "type": 0,
       "value": "Train model"
+    }
+  ],
+  "training-model": [
+    {
+      "type": 0,
+      "value": "Training model…"
+    }
+  ],
+  "transfer-hex-alt": [
+    {
+      "type": 0,
+      "value": "animation of dragging a hex file from the downloads folder onto the micro:bit drive or device listed in the file explorer"
+    }
+  ],
+  "transfer-hex-heading": [
+    {
+      "type": 0,
+      "value": "Transfer saved hex file to micro:bit"
+    }
+  ],
+  "transfer-hex-manual-download": [
+    {
+      "type": 0,
+      "value": "If the file did not automatically download then "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "please download the file here"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "transfer-hex-message": [
+    {
+      "type": 0,
+      "value": "Drag the hex file from your Downloads folder to the MICROBIT drive."
+    }
+  ],
+  "try-again-action": [
+    {
+      "type": 0,
+      "value": "Try again"
     }
   ],
   "unknown": [
@@ -2073,6 +1867,88 @@
     {
       "type": 0,
       "value": "Unplug the radio link micro:bit"
+    }
+  ],
+  "unsupported-device-explain": [
+    {
+      "type": 0,
+      "value": "Unfortunately, we only support using micro:bit V2 when connecting two micro:bits. You have connected a "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "micro:bit V1"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "unsupported-device-header": [
+    {
+      "type": 0,
+      "value": "micro:bit V1 is not supported for connecting two micro:bits"
+    }
+  ],
+  "unsupported-device-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "Please use Web Bluetooth to connect to your micro:bit V1 instead."
+    }
+  ],
+  "unsupported-device-without-bluetooth": [
+    {
+      "type": 0,
+      "value": "You can connect to micro:bit V1 using Web Bluetooth, however, this browser or device does not have Bluetooth enabled. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "How to enable Bluetooth"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "webusb-retry-no-select": [
+    {
+      "type": 0,
+      "value": "You didn't select a micro:bit. Do you want to try again?"
+    }
+  ],
+  "webusb-retry-replug1": [
+    {
+      "type": 0,
+      "value": "A WebUSB error occurred."
+    }
+  ],
+  "webusb-retry-replug2": [
+    {
+      "type": 0,
+      "value": "Please:"
+    }
+  ],
+  "webusb-retry-replug3": [
+    {
+      "type": 0,
+      "value": "check that this micro:bit does not have a battery pack connected"
+    }
+  ],
+  "webusb-retry-replug4": [
+    {
+      "type": 0,
+      "value": "unplug and replug the USB cable"
     }
   ]
 }

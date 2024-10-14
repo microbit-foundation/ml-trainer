@@ -68,11 +68,11 @@ const UnsupportedEditorDevice = ({
                 {stage === "openEditor" ? (
                   <>
                     <Text>
-                      <FormattedMessage id="incompatible-device-body-1" />
+                      <FormattedMessage id="incompatible-device-body1" />
                     </Text>
                     <Text>
                       <FormattedMessage
-                        id="incompatible-device-body-2"
+                        id="incompatible-device-body2"
                         values={{
                           link: (chunks: ReactNode) => (
                             <Button variant="link" onClick={() => saveHex()}>

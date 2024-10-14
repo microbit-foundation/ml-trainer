@@ -67,7 +67,7 @@ const ConnectContainerDialog = ({
               {additionalActions}
               {onNextClick && (
                 <Button onClick={onNextClick} variant="primary" size="lg">
-                  <FormattedMessage id="connectMB.nextButton" />
+                  <FormattedMessage id="next-action" />
                 </Button>
               )}
             </HStack>

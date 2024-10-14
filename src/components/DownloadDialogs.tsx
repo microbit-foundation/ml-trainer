@@ -47,8 +47,8 @@ const DownloadDialogs = () => {
           onBackClick={actions.getOnBack()}
           onNextClick={actions.getOnNext()}
           config={{
-            headingId: "connectMB.connectCable.heading",
-            subtitleId: "connectMB.connectCable.downloadProject.subtitle",
+            headingId: "connect-cable-heading",
+            subtitleId: "connect-cable-download-project-subtitle",
           }}
         />
       );
@@ -83,7 +83,7 @@ const DownloadDialogs = () => {
       return (
         <DownloadProgressDialog
           isOpen
-          headingId="connectMB.usbDownloading.header"
+          headingId="downloading-header"
           progress={stage.flashProgress * 100}
         />
       );

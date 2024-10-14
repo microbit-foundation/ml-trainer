@@ -30,12 +30,12 @@ const DataSampleGridRow = ({
       <ConfirmDialog
         isOpen={deleteConfirmDisclosure.isOpen}
         heading={intl.formatMessage({
-          id: "alert.deleteGestureConfirmHeading",
+          id: "delete-action-confirm-heading",
         })}
         body={
           <Text>
             <FormattedMessage
-              id="alert.deleteGestureConfirm"
+              id="delete-action-confirm-text"
               values={{
                 action: gesture.name,
               }}

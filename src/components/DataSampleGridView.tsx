@@ -29,12 +29,12 @@ const gridCommonProps: Partial<GridProps> = {
 
 const headings: GridColumnHeadingItemProps[] = [
   {
-    titleId: "content.data.classification",
-    descriptionId: "content.data.classHelpBody",
+    titleId: "action-label",
+    descriptionId: "action-tooltip",
   },
   {
-    titleId: "content.data.data",
-    descriptionId: "content.data.dataDescription",
+    titleId: "data-samples-label",
+    descriptionId: "data-samples-tooltip",
     itemsRight: <DataSamplesMenu />,
   },
 ];

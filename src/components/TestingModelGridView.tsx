@@ -40,18 +40,18 @@ const gridCommonProps: Partial<GridProps> = {
 
 const headings = [
   {
-    titleId: "content.model.output.action.descriptionTitle",
-    descriptionId: "content.model.output.action.descriptionBody",
+    titleId: "action-label",
+    descriptionId: "action-tooltip",
   },
   {
-    titleId: "content.model.output.certainty.descriptionTitle",
-    descriptionId: "content.model.output.certainty.descriptionBody",
+    titleId: "certainty-label",
+    descriptionId: "certainty-tooltip",
   },
   // Empty heading for arrow column
   {},
   {
-    titleId: "content.model.output.output.descriptionTitle",
-    descriptionId: "content.model.output.output.descriptionBody",
+    titleId: "output-label",
+    descriptionId: "output-tooltip",
   },
 ];
 

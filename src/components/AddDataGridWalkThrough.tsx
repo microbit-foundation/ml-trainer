@@ -21,7 +21,7 @@ const AddDataGridWalkThrough = ({
           <VStack m={0} p={2} w={200} transform="translate(-30px, 40px)">
             <GreetingEmojiWithArrow w="120px" h="103px" color="brand.500" />
             <Text textAlign="center">
-              <FormattedMessage id="content.data.addActionWalkThrough" />
+              <FormattedMessage id="name-action-hint" />
             </Text>
           </VStack>
         </GridItem>
@@ -43,7 +43,7 @@ const AddDataGridWalkThrough = ({
             >
               <UpCurveArrow w="60px" h="93px" color="brand.500" />
               <Text w={200} textAlign="center">
-                <FormattedMessage id="content.data.addRecordingWalkThrough" />
+                <FormattedMessage id="record-hint" />
               </Text>
             </HStack>
           </GridItem>

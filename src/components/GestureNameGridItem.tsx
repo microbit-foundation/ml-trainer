@@ -54,7 +54,7 @@ const GestureNameGridItem = ({
           position: "top",
           duration: 5_000,
           title: intl.formatMessage(
-            { id: "alert.data.classNameLengthAlert" },
+            { id: "action-length-error" },
             { maxLen: gestureNameMaxLength }
           ),
           variant: "subtle",
@@ -95,7 +95,7 @@ const GestureNameGridItem = ({
             size="sm"
             borderRadius="sm"
             aria-label={intl.formatMessage(
-              { id: "content.data.deleteAction" },
+              { id: "delete-action-aria" },
               { action: name }
             )}
           />
@@ -119,7 +119,7 @@ const GestureNameGridItem = ({
                 : { bgColor: "gray.25", size: "sm" })}
               _placeholder={{ opacity: 0.8, color: "gray.900" }}
               placeholder={intl.formatMessage({
-                id: "content.data.classPlaceholderNewClass",
+                id: "action-name-placeholder",
               })}
               onChange={onChange}
             />

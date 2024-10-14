@@ -22,29 +22,29 @@ export const getConnectionCableDialogConfig = (
   switch (flowType) {
     case ConnectionFlowType.ConnectBluetooth:
       return {
-        headingId: "connectMB.connectCable.heading",
-        subtitleId: "connectMB.connectCable.subtitle",
-        linkTextId: "connectMB.connectCable.skip",
+        headingId: "connect-cable-heading",
+        subtitleId: "connect-cable-subtitle",
+        linkTextId: "connect-cable-skip",
         linkType: "skip",
       };
     case ConnectionFlowType.ConnectRadioRemote:
       return {
-        headingId: "connectMB.connectCableMB1.heading",
-        subtitleId: "connectMB.connectCableMB1.subtitle",
+        headingId: "connect-data-collection-heading",
+        subtitleId: "connect-data-collection-subtitle",
         ...(stage === "local"
           ? {
-              linkTextId: "connectMB.connectCable.skip",
+              linkTextId: "connect-cable-skip",
               linkType: "skip",
             }
           : {}),
       };
     case ConnectionFlowType.ConnectRadioBridge:
       return {
-        headingId: "connectMB.connectCableMB2.heading",
-        subtitleId: "connectMB.connectCableMB2.subtitle",
+        headingId: "connect-radio-link-heading",
+        subtitleId: "connect-radio-link-subtitle",
         ...(isWebBluetoothSupported
           ? {
-              linkTextId: "connectMB.radioStart.switchBluetooth",
+              linkTextId: "connect-radio-start-switch-bluetooth",
               linkType: "switch",
             }
           : {}),
@@ -92,7 +92,7 @@ const ConnectCableDialog = ({
         </Text>
         <Image
           src={connectCableImage}
-          alt={intl.formatMessage({ id: "connectMB.connectCable.altText" })}
+          alt={intl.formatMessage({ id: "connect-cable-alt" })}
           objectFit="contain"
           boxSize="241px"
         />

@@ -186,15 +186,12 @@ const ConnectionDialogs = () => {
     }
     case ConnectionFlowStep.ConnectingBluetooth: {
       return (
-        <LoadingDialog
-          isOpen={isOpen}
-          headingId="connectMB.bluetooth.heading"
-        />
+        <LoadingDialog isOpen={isOpen} headingId="connect-bluetooth-heading" />
       );
     }
     case ConnectionFlowStep.ConnectingMicrobits: {
       return (
-        <LoadingDialog isOpen={isOpen} headingId="connectMB.radio.heading" />
+        <LoadingDialog isOpen={isOpen} headingId="connect-radio-heading" />
       );
     }
     case ConnectionFlowStep.TryAgainBluetoothSelectMicrobit:
@@ -236,7 +233,7 @@ const ConnectionDialogs = () => {
       return (
         <ConnectErrorDialog
           {...dialogCommonProps}
-          onConnect={actions.reconnect}
+          onConnect={reconnect - action}
           flowType={stage.flowType}
           errorStep={stage.flowStep}
         />

@@ -34,7 +34,7 @@ const LoadingDialog = ({ headingId, isOpen }: LoadingDialogProps) => {
           <ModalBody>
             <VStack gap={5} width="100%" alignItems="left">
               <Text>
-                <FormattedMessage id="connectMB.connecting" />
+                <FormattedMessage id="connecting" />
               </Text>
               <LoadingAnimation />
             </VStack>

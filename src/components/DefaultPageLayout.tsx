@@ -194,7 +194,7 @@ export const HomeToolbarItem = () => {
     <IconButton
       onClick={handleHomeClick}
       icon={<RiHome2Line size={24} color="white" />}
-      aria-label={intl.formatMessage({ id: "homepage.Link" })}
+      aria-label={intl.formatMessage({ id: "homepage" })}
       variant="plain"
       size="lg"
       fontSize="xl"

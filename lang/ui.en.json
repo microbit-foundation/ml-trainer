@@ -19,13 +19,29 @@
     "defaultMessage": "micro:bit showing X axis going across the front, Y axis going down and up, Z axis going back to front",
     "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
   },
+  "action-label": {
+    "defaultMessage": "Action",
+    "description": "Label for a movement-related action, e.g. clapping"
+  },
+  "action-length-error": {
+    "defaultMessage": "Action names cannot be longer than {maxLen} characters.",
+    "description": "Error message shown when an action name is too long"
+  },
+  "action-name-placeholder": {
+    "defaultMessage": "Name of action",
+    "description": "Placeholder text for user supplied name of a movement-related action, e.g. clapping"
+  },
+  "action-tooltip": {
+    "defaultMessage": "The type of movement you want {appNameFull} to recognise e.g. ‘waving’ or ‘clapping’.",
+    "description": "Tooltip explaining action"
+  },
   "actions-label": {
     "defaultMessage": "Actions",
     "description": "Label for Actions"
   },
-  "actions.reconnect": {
-    "defaultMessage": "Reconnect",
-    "description": ""
+  "add-action-action": {
+    "defaultMessage": "Add action",
+    "description": "Button to add an action (movement related, e.g. clapping)"
   },
   "add-data-intro-description": {
     "defaultMessage": "Add samples of the actions you would like your model to recognise (e.g. ‘waving’ and ‘clapping’).",
@@ -35,22 +51,6 @@
     "defaultMessage": "Add data",
     "description": "Add data step title"
   },
-  "alert.data.classNameLengthAlert": {
-    "defaultMessage": "Action names cannot be longer than {maxLen} characters.",
-    "description": ""
-  },
-  "alert.deleteGestureConfirm": {
-    "defaultMessage": "Are you sure you want to delete the action \"{action}\"?",
-    "description": ""
-  },
-  "alert.deleteGestureConfirmHeading": {
-    "defaultMessage": "Confirm delete action",
-    "description": ""
-  },
-  "alert.recording.disconnectedDuringRecording": {
-    "defaultMessage": "micro:bit disconnected during recording",
-    "description": ""
-  },
   "back-action": {
     "defaultMessage": "Back",
     "description": "Back button text"
@@ -59,13 +59,37 @@
     "defaultMessage": "Back to data samples",
     "description": "Back button text"
   },
+  "bluetooth-unsupported-advice": {
+    "defaultMessage": "We recommend Google Chrome or Microsoft Edge so you can connect directly to your micro:bit.",
+    "description": "Note on supported browsers"
+  },
+  "bluetooth-unsupported-explain": {
+    "defaultMessage": "Unfortunately, WebUSB and Web Bluetooth are not supported by this browser. This means you cannot connect to a micro:bit to record the data samples needed to train a machine learning model.",
+    "description": "Note on supported browsers"
+  },
+  "bluetooth-unsupported-header": {
+    "defaultMessage": "This browser is not supported",
+    "description": "Heading for browser support dialog"
+  },
   "cancel-action": {
     "defaultMessage": "Cancel",
     "description": "Cancel button text"
   },
+  "cancel-recording-action": {
+    "defaultMessage": "Cancel recording",
+    "description": "Button label to cancel a movement data recording"
+  },
   "certainty-label": {
+    "defaultMessage": "Certainty",
+    "description": "Heading for certainty column"
+  },
+  "certainty-percentage-label": {
     "defaultMessage": "certainty for {action}: {currentConfidence} percent",
     "description": "Label for certainty of an action"
+  },
+  "certainty-tooltip": {
+    "defaultMessage": "How confident the model is that you are currently doing each action.",
+    "description": "Tooltip for certainty column"
   },
   "close-action": {
     "defaultMessage": "Close",
@@ -83,13 +107,157 @@
     "defaultMessage": "Confirm and save",
     "description": "Confirm and save action label"
   },
+  "connect-action": {
+    "defaultMessage": "Connect",
+    "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
+  },
+  "connect-battery-heading": {
+    "defaultMessage": "Connect battery pack and disconnect USB",
+    "description": "Battery connection dialog "
+  },
+  "connect-battery-holder": {
+    "defaultMessage": "Battery holder",
+    "description": "Label for battery holder icon"
+  },
+  "connect-battery-link": {
+    "defaultMessage": "You can attach the micro:bit to your wrist or an object",
+    "description": "Battery connection dialog"
+  },
+  "connect-battery-subtitle": {
+    "defaultMessage": "Disconnect the micro:bit from the computer and connect the battery pack.",
+    "description": "Battery connection dialog"
+  },
+  "connect-bluetooth-cancelled-connection": {
+    "defaultMessage": "You didn't choose a micro:bit. Do you want to try again?",
+    "description": "Error when the user cancelled the Web Bluetooth permission/device selection dialog"
+  },
+  "connect-bluetooth-heading": {
+    "defaultMessage": "Connect using Web Bluetooth",
+    "description": "Connection dialogs"
+  },
+  "connect-bluetooth-invalid-pattern": {
+    "defaultMessage": "The pattern you have drawn is invalid.",
+    "description": "Error when the bluetooth pattern is incomplete "
+  },
+  "connect-bluetooth-start-heading": {
+    "defaultMessage": "What you need to connect using Web Bluetooth",
+    "description": "Connection dialog heading"
+  },
+  "connect-bluetooth-start-requirements1": {
+    "defaultMessage": "1 micro:bit",
+    "description": "Label for icon of single micro:bit"
+  },
+  "connect-bluetooth-start-requirements2-subtitle": {
+    "defaultMessage": "with Internet, a USB port & Web Bluetooth",
+    "description": "Under heading 'Computer' this lists the features the computer needs"
+  },
+  "connect-bluetooth-start-switch-radio": {
+    "defaultMessage": "Connect using micro:bit radio instead",
+    "description": "Link to alternative connection method"
+  },
+  "connect-cable-alt": {
+    "defaultMessage": "animation showing a USB cable being connected to the top of a micro:bit",
+    "description": "Alt text"
+  },
+  "connect-cable-download-project-subtitle": {
+    "defaultMessage": "Connect a micro:bit to this computer with a USB cable to download your machine learning MakeCode program to it.",
+    "description": "Download project dialog"
+  },
+  "connect-cable-heading": {
+    "defaultMessage": "Connect USB cable to micro:bit",
+    "description": "Connect cable dialog heading"
+  },
+  "connect-cable-skip": {
+    "defaultMessage": "Skip: program already downloaded?",
+    "description": "Link to skip"
+  },
+  "connect-cable-subtitle": {
+    "defaultMessage": "Connect the micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it.",
+    "description": "Project download instructions"
+  },
+  "connect-computer": {
+    "defaultMessage": "Computer",
+    "description": "Label for computer icon in connection dialog"
+  },
+  "connect-data-collection-heading": {
+    "defaultMessage": "Connect USB cable to micro:bit 1",
+    "description": "Connection dialog heading"
+  },
+  "connect-data-collection-subtitle": {
+    "defaultMessage": "Connect the first micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it. This is the micro:bit you will use to collect data samples.",
+    "description": "Connection dialog subtitle"
+  },
+  "connect-failed-bluetooth-heading": {
+    "defaultMessage": "Failed to connect to micro:bit",
+    "description": "Bluetooth connection error message"
+  },
+  "connect-failed-bluetooth1": {
+    "defaultMessage": "The connection to the data collection micro:bit could not be established.",
+    "description": "Bluetooth connection error message"
+  },
+  "connect-failed-bridge-heading": {
+    "defaultMessage": "Failed to connect to radio link micro:bit",
+    "description": "micro:bit radio connection error message"
+  },
+  "connect-failed-bridge1": {
+    "defaultMessage": "The connection to the micro:bit connected to your computer could not be established.",
+    "description": "micro:bit radio connection error message"
+  },
+  "connect-failed-remote-heading": {
+    "defaultMessage": "Failed to connect to data collection micro:bit",
+    "description": "micro:bit radio connection error message"
+  },
+  "connect-failed-remote1": {
+    "defaultMessage": "The connection to the data collection micro:bit could not be established.",
+    "description": "micro:bit radio connection error message"
+  },
   "connect-help-alt": {
     "defaultMessage": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2",
     "description": "Alt text for image in connect help dialog"
   },
+  "connect-micro-usb-cable": {
+    "defaultMessage": "Micro USB cable",
+    "description": "Label for cable icon in list of requirements"
+  },
   "connect-or-import": {
     "defaultMessage": "<link1>Connect a data collection micro:bit</link1> or <link2>import data samples</link2>",
     "description": "Empty data samples page text"
+  },
+  "connect-pattern-heading": {
+    "defaultMessage": "Copy pattern",
+    "description": "Heading for Bluetooth pattern connection dialog"
+  },
+  "connect-pattern-input-label": {
+    "defaultMessage": "Number of LEDs lit in column {colNum} on the micro:bit display",
+    "description": "Screenreader text for numeric pattern input"
+  },
+  "connect-pattern-subtitle": {
+    "defaultMessage": "Copy the pattern displayed on the micro:bit.",
+    "description": "Instruction for bluetooth pattern dialog"
+  },
+  "connect-popup": {
+    "defaultMessage": "Select micro:bit",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-popup-bluetooth-alt": {
+    "defaultMessage": "Web Bluetooth connection dialog with BBC micro:bit entry labelled 1 and Pair button labelled 2",
+    "description": "Alt text"
+  },
+  "connect-popup-bluetooth-instruction2": {
+    "defaultMessage": "Select 'Pair'",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-popup-instruction-heading": {
+    "defaultMessage": "In the next popup",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-popup-instruction1": {
+    "defaultMessage": "Choose your micro:bit",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-popup-webusb-instruction2": {
+    "defaultMessage": "Select 'Connect'",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
   },
   "connect-radio-data-collection-microbit-description": {
     "defaultMessage": "Connect the data collection micro:bit to this computer to download your machine learning MakeCode program to it. If you're wearing the data collection micro:bit, you may need to remove it.",
@@ -99,6 +267,38 @@
     "defaultMessage": "Connect USB cable to the data collection micro:bit",
     "description": "Connect radio data collection micro:bit dialog title"
   },
+  "connect-radio-heading": {
+    "defaultMessage": "Connecting micro:bits",
+    "description": "Text shown while radio link and data connection micro:bit are being connected"
+  },
+  "connect-radio-link-heading": {
+    "defaultMessage": "Connect USB cable to micro:bit 2",
+    "description": "Heading for connecting radio link micro:bit cable"
+  },
+  "connect-radio-link-subtitle": {
+    "defaultMessage": "Connect a second micro:bit to this computer with a USB cable so that the radio link program can be downloaded to it. This radio link micro:bit will communicate with the data collection micro:bit.",
+    "description": "Instruction for connecting radio link micro:bit cable"
+  },
+  "connect-radio-start-heading": {
+    "defaultMessage": "What you need to connect using micro:bit radio",
+    "description": "Connection dialog heading"
+  },
+  "connect-radio-start-requirements1": {
+    "defaultMessage": "2 micro:bits",
+    "description": "Label for icon of two micro:bits"
+  },
+  "connect-radio-start-requirements1.subtitle": {
+    "defaultMessage": "V2 only",
+    "description": "Shown below 2 micro:bit label for micro:bit radio approach"
+  },
+  "connect-radio-start-requirements2-subtitle": {
+    "defaultMessage": "with Internet & a USB port",
+    "description": "Shown below 'Computer' heading listing additional requirements"
+  },
+  "connect-radio-start-switch-bluetooth": {
+    "defaultMessage": "Connect using Web Bluetooth instead",
+    "description": "Link to alternative connection method"
+  },
   "connect-to-record-body": {
     "defaultMessage": "Connect a micro:bit to record a data sample.",
     "description": "Insufficient data modal content"
@@ -107,497 +307,25 @@
     "defaultMessage": "You don't have a micro:bit connected",
     "description": "Connect to record modal title"
   },
-  "connectFailed.bluetooth1": {
-    "defaultMessage": "The connection to the data collection micro:bit could not be established.",
-    "description": ""
-  },
-  "connectFailed.bluetoothHeading": {
-    "defaultMessage": "Failed to connect to micro:bit",
-    "description": ""
-  },
-  "connectFailed.bridge1": {
-    "defaultMessage": "The connection to the micro:bit connected to your computer could not be established.",
-    "description": ""
-  },
-  "connectFailed.bridgeHeading": {
-    "defaultMessage": "Failed to connect to radio link micro:bit",
-    "description": ""
-  },
-  "connectFailed.remote1": {
-    "defaultMessage": "The connection to the data collection micro:bit could not be established.",
-    "description": ""
-  },
-  "connectFailed.remoteHeading": {
-    "defaultMessage": "Failed to connect to data collection micro:bit",
-    "description": ""
-  },
-  "connectMB.bluetooth.cancelledConnection": {
-    "defaultMessage": "You didn't choose a micro:bit. Do you want to try again?",
-    "description": ""
-  },
-  "connectMB.bluetooth.heading": {
-    "defaultMessage": "Connect using Web Bluetooth",
-    "description": ""
-  },
-  "connectMB.bluetooth.invalidPattern": {
-    "defaultMessage": "The pattern you have drawn is invalid.",
-    "description": ""
-  },
-  "connectMB.bluetoothStart.heading": {
-    "defaultMessage": "What you need to connect using Web Bluetooth",
-    "description": ""
-  },
-  "connectMB.bluetoothStart.requirements1": {
-    "defaultMessage": "1 micro:bit",
-    "description": ""
-  },
-  "connectMB.bluetoothStart.requirements2": {
-    "defaultMessage": "Computer",
-    "description": ""
-  },
-  "connectMB.bluetoothStart.requirements2.subtitle": {
-    "defaultMessage": "with Internet, a USB port & Web Bluetooth",
-    "description": ""
-  },
-  "connectMB.bluetoothStart.requirements3": {
-    "defaultMessage": "Micro USB cable",
-    "description": ""
-  },
-  "connectMB.bluetoothStart.requirements4": {
-    "defaultMessage": "Battery holder",
-    "description": ""
-  },
-  "connectMB.bluetoothStart.requirements4.subtitle": {
-    "defaultMessage": "with batteries",
-    "description": ""
-  },
-  "connectMB.bluetoothStart.switchRadio": {
-    "defaultMessage": "Connect using micro:bit radio instead",
-    "description": ""
-  },
-  "connectMB.connectBattery.heading": {
-    "defaultMessage": "Connect battery pack and disconnect USB",
-    "description": ""
-  },
-  "connectMB.connectBattery.link": {
-    "defaultMessage": "You can attach the micro:bit to your wrist or an object",
-    "description": ""
-  },
-  "connectMB.connectBattery.subtitle": {
-    "defaultMessage": "Disconnect the micro:bit from the computer and connect the battery pack.",
-    "description": ""
-  },
-  "connectMB.connectCable.altText": {
-    "defaultMessage": "animation showing a USB cable being connected to the top of a micro:bit",
-    "description": ""
-  },
-  "connectMB.connectCable.downloadProject.subtitle": {
-    "defaultMessage": "Connect a micro:bit to this computer with a USB cable to download your machine learning MakeCode program to it.",
-    "description": ""
-  },
-  "connectMB.connectCable.heading": {
-    "defaultMessage": "Connect USB cable to micro:bit",
-    "description": ""
-  },
-  "connectMB.connectCable.skip": {
-    "defaultMessage": "Skip: program already downloaded?",
-    "description": ""
-  },
-  "connectMB.connectCable.subtitle": {
-    "defaultMessage": "Connect the micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it.",
-    "description": ""
-  },
-  "connectMB.connectCableMB1.heading": {
-    "defaultMessage": "Connect USB cable to micro:bit 1",
-    "description": ""
-  },
-  "connectMB.connectCableMB1.subtitle": {
-    "defaultMessage": "Connect the first micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it. This is the micro:bit you will use to collect data samples.",
-    "description": ""
-  },
-  "connectMB.connectCableMB2.heading": {
-    "defaultMessage": "Connect USB cable to micro:bit 2",
-    "description": ""
-  },
-  "connectMB.connectCableMB2.subtitle": {
-    "defaultMessage": "Connect a second micro:bit to this computer with a USB cable so that the radio link program can be downloaded to it. This radio link micro:bit will communicate with the data collection micro:bit.",
-    "description": ""
-  },
-  "connectMB.connecting": {
-    "defaultMessage": "Connecting…",
-    "description": ""
-  },
-  "connectMB.nextButton": {
-    "defaultMessage": "Next",
-    "description": ""
-  },
-  "connectMB.outputMB.different": {
-    "defaultMessage": "Connect another micro:bit",
-    "description": ""
-  },
-  "connectMB.outputMB.otherButton": {
-    "defaultMessage": "Other",
-    "description": ""
-  },
-  "connectMB.outputMB.same": {
-    "defaultMessage": "Use the same micro:bit",
-    "description": ""
-  },
-  "connectMB.outputMB.sameButton": {
-    "defaultMessage": "Same",
-    "description": ""
-  },
-  "connectMB.pattern.heading": {
-    "defaultMessage": "Copy pattern",
-    "description": ""
-  },
-  "connectMB.pattern.inputLabel": {
-    "defaultMessage": "Number of LEDs lit in column {colNum} on the micro:bit display",
-    "description": ""
-  },
-  "connectMB.pattern.subtitle": {
-    "defaultMessage": "Copy the pattern displayed on the micro:bit.",
-    "description": ""
-  },
-  "connectMB.radio.heading": {
-    "defaultMessage": "Connecting micro:bits",
-    "description": ""
-  },
-  "connectMB.radioStart.heading": {
-    "defaultMessage": "What you need to connect using micro:bit radio",
-    "description": ""
-  },
-  "connectMB.radioStart.requirements1": {
-    "defaultMessage": "2 micro:bits",
-    "description": ""
-  },
-  "connectMB.radioStart.requirements1.subtitle": {
-    "defaultMessage": "V2 only",
-    "description": ""
-  },
-  "connectMB.radioStart.requirements2": {
-    "defaultMessage": "Computer",
-    "description": ""
-  },
-  "connectMB.radioStart.requirements2.subtitle": {
-    "defaultMessage": "with Internet & a USB port",
-    "description": ""
-  },
-  "connectMB.radioStart.requirements3": {
-    "defaultMessage": "Micro USB cable",
-    "description": ""
-  },
-  "connectMB.radioStart.requirements4": {
-    "defaultMessage": "Battery holder",
-    "description": ""
-  },
-  "connectMB.radioStart.requirements4.subtitle": {
-    "defaultMessage": "with batteries",
-    "description": ""
-  },
-  "connectMB.radioStart.switchBluetooth": {
-    "defaultMessage": "Connect using Web Bluetooth instead",
-    "description": ""
-  },
-  "connectMB.reconnecting": {
-    "defaultMessage": "Reconnecting…",
-    "description": ""
-  },
-  "connectMB.transferHex.altText": {
-    "defaultMessage": "animation of dragging a hex file from the downloads folder onto the micro:bit drive or device listed in the file explorer",
-    "description": ""
-  },
-  "connectMB.transferHex.heading": {
-    "defaultMessage": "Transfer saved hex file to micro:bit",
-    "description": ""
-  },
-  "connectMB.transferHex.manualDownload": {
-    "defaultMessage": "If the file did not automatically download then <link>please download the file here</link>.",
-    "description": ""
-  },
-  "connectMB.transferHex.message": {
-    "defaultMessage": "Drag the hex file from your Downloads folder to the MICROBIT drive.",
-    "description": ""
-  },
-  "connectMB.troubleshoot": {
+  "connect-troubleshoot": {
     "defaultMessage": "Troubleshoot problems with connecting to your micro:bit",
-    "description": ""
+    "description": "Link to support article for troubleshootling"
   },
-  "connectMB.troubleshooting": {
+  "connect-troubleshooting": {
     "defaultMessage": "Troubleshooting",
-    "description": ""
+    "description": "Troubleshooting heading"
   },
-  "connectMB.tryAgain": {
-    "defaultMessage": "Try again",
-    "description": ""
+  "connect-with-batteries": {
+    "defaultMessage": "with batteries",
+    "description": "Under header 'Battery holder' this notes that batteries are required"
   },
-  "connectMB.unsupportedMicrobit.ctaWithBluetooth": {
+  "connect-with-web-bluetooth": {
     "defaultMessage": "Connect with Web Bluetooth",
-    "description": ""
-  },
-  "connectMB.unsupportedMicrobit.explain": {
-    "defaultMessage": "Unfortunately, we only support using micro:bit V2 when connecting two micro:bits. You have connected a <link>micro:bit V1</link>.",
-    "description": ""
-  },
-  "connectMB.unsupportedMicrobit.header": {
-    "defaultMessage": "micro:bit V1 is not supported for connecting two micro:bits",
-    "description": ""
-  },
-  "connectMB.unsupportedMicrobit.withBluetooth": {
-    "defaultMessage": "Please use Web Bluetooth to connect to your micro:bit V1 instead.",
-    "description": ""
-  },
-  "connectMB.unsupportedMicrobit.withoutBluetooth": {
-    "defaultMessage": "You can connect to micro:bit V1 using Web Bluetooth, however, this browser or device does not have Bluetooth enabled. <link>How to enable Bluetooth</link>.",
-    "description": ""
-  },
-  "connectMB.usb.firmwareBroken.content1": {
-    "defaultMessage": "Connecting to the micro:bit failed because the firmware on your micro:bit is too old.",
-    "description": ""
-  },
-  "connectMB.usb.firmwareBroken.content2": {
-    "defaultMessage": "You must <link>update your firmware</link> before you can connect to this micro:bit.",
-    "description": ""
-  },
-  "connectMB.usb.firmwareBroken.content3": {
-    "defaultMessage": "Troubleshoot problems with connecting to your micro:bit",
-    "description": ""
-  },
-  "connectMB.usb.firmwareBroken.heading": {
-    "defaultMessage": "Firmware update required",
-    "description": ""
-  },
-  "connectMB.usb.firmwareBroken.skip": {
-    "defaultMessage": "Skip and transfer manually",
-    "description": ""
-  },
-  "connectMB.usbDownloading.header": {
-    "defaultMessage": "Downloading program to micro:bit",
-    "description": ""
-  },
-  "connectMB.usbDownloading.subtitle": {
-    "defaultMessage": "Please wait. Downloading program to micro:bit.",
-    "description": ""
-  },
-  "connectMB.usbDownloadingMB1.header": {
-    "defaultMessage": "Downloading the data collection program",
-    "description": ""
-  },
-  "connectMB.usbDownloadingMB2.header": {
-    "defaultMessage": "Downloading the radio link program",
-    "description": ""
-  },
-  "connectMB.usbTryAgain.closeTabs1": {
-    "defaultMessage": "Another process is connected to this device.",
-    "description": ""
-  },
-  "connectMB.usbTryAgain.closeTabs2": {
-    "defaultMessage": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, {appNameShort}), or unplug and replug the micro:bit before trying again.",
-    "description": ""
-  },
-  "connectMB.usbTryAgain.heading": {
-    "defaultMessage": "Connect using WebUSB",
-    "description": ""
-  },
-  "connectMB.usbTryAgain.replugMicrobit1": {
-    "defaultMessage": "A WebUSB error occurred.",
-    "description": ""
-  },
-  "connectMB.usbTryAgain.replugMicrobit2": {
-    "defaultMessage": "Please:",
-    "description": ""
-  },
-  "connectMB.usbTryAgain.replugMicrobit3": {
-    "defaultMessage": "check that this micro:bit does not have a battery pack connected",
-    "description": ""
-  },
-  "connectMB.usbTryAgain.replugMicrobit4": {
-    "defaultMessage": "unplug and replug the USB cable",
-    "description": ""
-  },
-  "connectMB.usbTryAgain.selectMicrobit": {
-    "defaultMessage": "You didn't select a micro:bit. Do you want to try again?",
-    "description": ""
-  },
-  "connectMB.webPopup": {
-    "defaultMessage": "Select micro:bit",
-    "description": ""
-  },
-  "connectMB.webPopup.instruction.heading": {
-    "defaultMessage": "In the next popup",
-    "description": ""
-  },
-  "connectMB.webPopup.instruction1": {
-    "defaultMessage": "Choose your micro:bit",
-    "description": ""
-  },
-  "connectMB.webPopup.webBluetooth.altText": {
-    "defaultMessage": "Web Bluetooth connection dialog with BBC micro:bit entry labelled 1 and Pair button labelled 2",
-    "description": ""
-  },
-  "connectMB.webPopup.webBluetooth.instruction2": {
-    "defaultMessage": "Select 'Pair'",
-    "description": ""
-  },
-  "connectMB.webPopup.webUsb.instruction2": {
-    "defaultMessage": "Select 'Connect'",
-    "description": ""
-  },
-  "content.data.addAction": {
-    "defaultMessage": "Add action",
-    "description": ""
-  },
-  "content.data.addActionWalkThrough": {
-    "defaultMessage": "Name an action you want the micro:bit to recognise",
-    "description": ""
-  },
-  "content.data.addRecordingWalkThrough": {
-    "defaultMessage": "Press to record a data sample or press button B on your data collection micro:bit.",
-    "description": ""
-  },
-  "content.data.classHelpBody": {
-    "defaultMessage": "The type of movement you want {appNameFull} to recognise e.g. ‘waving’ or ‘clapping’.",
-    "description": ""
-  },
-  "content.data.classPlaceholderNewClass": {
-    "defaultMessage": "Name of action",
-    "description": ""
-  },
-  "content.data.classification": {
-    "defaultMessage": "Action",
-    "description": ""
-  },
-  "content.data.controlbar.button.clearData": {
-    "defaultMessage": "Delete all data samples",
-    "description": ""
-  },
-  "content.data.controlbar.button.downloadData": {
-    "defaultMessage": "Download all data samples",
-    "description": ""
-  },
-  "content.data.controlbar.button.menu": {
-    "defaultMessage": "Data actions",
-    "description": ""
-  },
-  "content.data.controlbar.button.uploadData": {
-    "defaultMessage": "Import data samples",
-    "description": ""
-  },
-  "content.data.data": {
-    "defaultMessage": "Data samples",
-    "description": ""
-  },
-  "content.data.dataDescription": {
-    "defaultMessage": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else.",
-    "description": ""
-  },
-  "content.data.deleteAction": {
-    "defaultMessage": "Delete action \"{action}\"",
-    "description": ""
-  },
-  "content.data.deleteRecording": {
-    "defaultMessage": "Delete recording",
-    "description": ""
-  },
-  "content.data.recordAction": {
-    "defaultMessage": "Record data for action \"{action}\"",
-    "description": ""
-  },
-  "content.data.recording.button.cancel": {
-    "defaultMessage": "Cancel recording",
-    "description": ""
-  },
-  "content.data.recordingDialog.go": {
-    "defaultMessage": "Go",
-    "description": ""
-  },
-  "content.data.recordingDialog.recording": {
-    "defaultMessage": "Recording",
-    "description": ""
-  },
-  "content.data.recordingDialog.title": {
-    "defaultMessage": "Record data for action \"{action}\"",
-    "description": ""
-  },
-  "content.index.dataWarning.subtitleOne": {
-    "defaultMessage": "You have existing data samples and code that will be lost when you start a new session.",
-    "description": ""
-  },
-  "content.index.dataWarning.subtitleTwo": {
-    "defaultMessage": "To save your work, <link>download a hex file</link> containing your data samples and code before continuing.",
-    "description": ""
-  },
-  "content.index.dataWarning.title": {
-    "defaultMessage": "Existing data samples and code will be lost",
-    "description": ""
-  },
-  "content.model.output.action.descriptionBody": {
-    "defaultMessage": "The type of movement you want {appNameFull} to recognise e.g. ‘waving’ or ‘clapping’.",
-    "description": ""
-  },
-  "content.model.output.action.descriptionTitle": {
-    "defaultMessage": "Action",
-    "description": ""
-  },
-  "content.model.output.certainty.descriptionBody": {
-    "defaultMessage": "How confident the model is that you are currently doing each action.",
-    "description": ""
-  },
-  "content.model.output.certainty.descriptionTitle": {
-    "defaultMessage": "Certainty",
-    "description": ""
-  },
-  "content.model.output.estimatedGesture.descriptionBody": {
-    "defaultMessage": "This is the action the model thinks you are currently doing.",
-    "description": ""
-  },
-  "content.model.output.estimatedGesture.descriptionTitle": {
-    "defaultMessage": "Estimated action",
-    "description": ""
-  },
-  "content.model.output.estimatedGesture.iconTitle": {
-    "defaultMessage": "Estimated action",
-    "description": ""
-  },
-  "content.model.output.estimatedGesture.label": {
-    "defaultMessage": "Estimated action: \"{action}\"",
-    "description": ""
-  },
-  "content.model.output.output.descriptionBody": {
-    "defaultMessage": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit.",
-    "description": ""
-  },
-  "content.model.output.output.descriptionTitle": {
-    "defaultMessage": "Output",
-    "description": ""
-  },
-  "content.model.output.recognitionPoint": {
-    "defaultMessage": "Recognition point:",
-    "description": ""
-  },
-  "content.trainer.description": {
-    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows {appNameFull} to recognise different actions when you move your micro:bit.",
-    "description": ""
-  },
-  "content.trainer.failure.body": {
-    "defaultMessage": "The training did not result in a usable model. The reason for this is most likely the data used for training. If the data samples for different actions are too similar, this can result in issues in the training process.",
-    "description": ""
-  },
-  "content.trainer.failure.header": {
-    "defaultMessage": "Training failed",
-    "description": ""
-  },
-  "content.trainer.failure.todo": {
-    "defaultMessage": "Return to the Add data page and change your data.",
-    "description": ""
-  },
-  "content.trainer.header": {
-    "defaultMessage": "Training a model",
-    "description": ""
-  },
-  "content.trainer.training.title": {
-    "defaultMessage": "Training model…",
-    "description": "Progress title"
+    "description": "Connection dialog title"
+  },
+  "connecting": {
+    "defaultMessage": "Connecting…",
+    "description": "Text shown while waiting for bluetooth/radio connection"
   },
   "continue-makecode-action": {
     "defaultMessage": "Continue to MakeCode",
@@ -615,6 +343,10 @@
     "defaultMessage": "Copy",
     "description": "Copy button text"
   },
+  "data-actions-menu": {
+    "defaultMessage": "Data actions",
+    "description": "Aria label for menu"
+  },
   "data-collection-microbit": {
     "defaultMessage": "Data collection micro:bit",
     "description": "Data collection micro:bit image caption"
@@ -623,49 +355,89 @@
     "defaultMessage": "diagram showing data collection micro:bit being connected to a person's wrist",
     "description": "Aria label for data collection image"
   },
+  "data-samples-label": {
+    "defaultMessage": "Data samples",
+    "description": "Heading for data samples column"
+  },
   "data-samples-title": {
     "defaultMessage": "Data samples",
     "description": "Data samples page title"
   },
-  "disconnectedWarning.bluetooth1": {
-    "defaultMessage": "The connection to the data collection micro:bit has been lost.",
-    "description": ""
+  "data-samples-tooltip": {
+    "defaultMessage": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else.",
+    "description": "Tooltip for data samples heading"
   },
-  "disconnectedWarning.bluetooth2": {
+  "delete-action-aria": {
+    "defaultMessage": "Delete action \"{action}\"",
+    "description": "Aria label for action delete icon"
+  },
+  "delete-action-confirm-heading": {
+    "defaultMessage": "Confirm delete action",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-action-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete the action \"{action}\"?",
+    "description": "Confirmation dialog text"
+  },
+  "delete-data-samples-action": {
+    "defaultMessage": "Delete all data samples",
+    "description": "Menu item to delete data samples"
+  },
+  "delete-recording-aria": {
+    "defaultMessage": "Delete recording",
+    "description": "Aria label for data sample delete action"
+  },
+  "disconnect-action": {
+    "defaultMessage": "Disconnect",
+    "description": "Disconnect (from bluetooth/radio) action"
+  },
+  "disconnected-during-recording": {
+    "defaultMessage": "micro:bit disconnected during recording",
+    "description": "Error when the micro:bit is disconnected during recording"
+  },
+  "disconnected-warning-bluetooth-heading": {
+    "defaultMessage": "Data collection micro:bit connection lost",
+    "description": "Dialog heading"
+  },
+  "disconnected-warning-bluetooth1": {
+    "defaultMessage": "The connection to the data collection micro:bit has been lost.",
+    "description": "Dialog text"
+  },
+  "disconnected-warning-bluetooth2": {
     "defaultMessage": "Please check that the micro:bit:",
-    "description": ""
+    "description": "Heading for list of things to check"
   },
-  "disconnectedWarning.bluetooth3": {
+  "disconnected-warning-bluetooth3": {
     "defaultMessage": "is powered on (the red light on the back of the micro:bit should be on)",
-    "description": ""
+    "description": "List item, one of several things to check about the micro:bit"
   },
-  "disconnectedWarning.bluetooth4": {
+  "disconnected-warning-bluetooth4": {
     "defaultMessage": "is close to the computer",
-    "description": ""
+    "description": "List item, one of several things to check about the micro:bit"
   },
-  "disconnectedWarning.bluetoothHeading": {
-    "defaultMessage": "Data collection micro:bit connection lost",
-    "description": ""
+  "disconnected-warning-bridge-heading": {
+    "defaultMessage": "Radio link micro:bit connection lost",
+    "description": "Connection errir dialog"
   },
-  "disconnectedWarning.bridge1": {
+  "disconnected-warning-bridge1": {
     "defaultMessage": "The connection to the micro:bit connected to your computer has been lost.",
-    "description": ""
+    "description": "Connection error dialog"
   },
-  "disconnectedWarning.bridgeHeading": {
-    "defaultMessage": "radio link micro:bit connection lost",
-    "description": ""
-  },
-  "disconnectedWarning.remote1": {
-    "defaultMessage": "The connection to the data collection micro:bit has been lost.",
-    "description": ""
-  },
-  "disconnectedWarning.remoteHeading": {
+  "disconnected-warning-remote-heading": {
     "defaultMessage": "Data collection micro:bit connection lost",
-    "description": ""
+    "description": "Connection error dialog"
+  },
+  "disconnected-warning-remote1": {
+    "defaultMessage": "The connection to the data collection micro:bit has been lost.",
+    "description": "Connection error dialog"
   },
   "dont-show-again": {
     "defaultMessage": "Don't show this again",
     "description": "Text to never show a dialog again"
+  },
+  "download-data-samples-action": {
+    "defaultMessage": "Download all data samples",
+    "description": "Download action"
   },
   "download-project-choose-microbit-subtitle": {
     "defaultMessage": "Downloading your project on to the same micro:bit will disconnect the micro:bit from the tool. You will need to reconnect the micro:bit if you want to record more data samples.",
@@ -691,33 +463,65 @@
     "defaultMessage": "Same micro:bit",
     "description": "Download project same micro:bit option"
   },
+  "downloading-data-collection-header": {
+    "defaultMessage": "Downloading the data collection program",
+    "description": "Progress text"
+  },
+  "downloading-header": {
+    "defaultMessage": "Downloading program to micro:bit",
+    "description": "Progress text"
+  },
+  "downloading-radio-link-header": {
+    "defaultMessage": "Downloading the radio link program",
+    "description": "Progress text"
+  },
+  "downloading-subtitle": {
+    "defaultMessage": "Please wait. Downloading program to micro:bit.",
+    "description": "Progress text"
+  },
   "edit-in-makecode-action": {
     "defaultMessage": "Edit in MakeCode",
     "description": "Edit in MakeCode button text"
+  },
+  "estimated-action-aria": {
+    "defaultMessage": "Estimated action: \"{action}\"",
+    "description": "Aria live text for the current estimated action"
+  },
+  "estimated-action-label": {
+    "defaultMessage": "Estimated action",
+    "description": "Heading for estimated action area next to the live graph"
+  },
+  "estimated-action-tooltip": {
+    "defaultMessage": "This is the action the model thinks you are currently doing.",
+    "description": "Tooltip for the estimated action heading"
   },
   "feedback": {
     "defaultMessage": "Feedback",
     "description": "Action to open a feedback dialog"
   },
-  "footer.connectButton": {
-    "defaultMessage": "Connect",
-    "description": ""
+  "firmware-outdated-content1": {
+    "defaultMessage": "Connecting to the micro:bit failed because the firmware on your micro:bit is too old.",
+    "description": "Connection error dialog"
   },
-  "footer.disconnectButton": {
-    "defaultMessage": "Disconnect",
-    "description": ""
+  "firmware-outdated-content2": {
+    "defaultMessage": "You must <link>update your firmware</link> before you can connect to this micro:bit.",
+    "description": "Connection error dialog"
   },
-  "footer.helpContent": {
-    "defaultMessage": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in.",
-    "description": ""
+  "firmware-outdated-heading": {
+    "defaultMessage": "Firmware update required",
+    "description": "Connection error dialog"
   },
-  "footer.helpHeader": {
-    "defaultMessage": "Live graph",
-    "description": ""
+  "firmware-outdated-skip": {
+    "defaultMessage": "Skip and transfer manually",
+    "description": "Connection error dialog content - firmware"
   },
   "get-started-action": {
     "defaultMessage": "Get started",
     "description": "Get started action"
+  },
+  "go-action": {
+    "defaultMessage": "Go",
+    "description": "Go action"
   },
   "help-label": {
     "defaultMessage": "Help",
@@ -730,6 +534,10 @@
   "home-action": {
     "defaultMessage": "Home",
     "description": "Home button text"
+  },
+  "homepage": {
+    "defaultMessage": "Home page",
+    "description": "Link to home page"
   },
   "homepage-alt": {
     "defaultMessage": "graph showing x, y, z graph lines representing micro:bit accelerometer data",
@@ -763,20 +571,20 @@
     "defaultMessage": "Watch the video to learn how to use {appNameFull}.",
     "description": "Prompt to watch the video on the home page"
   },
-  "homepage.Link": {
-    "defaultMessage": "Home page",
-    "description": ""
-  },
-  "incompatible-device-body-1": {
-    "defaultMessage": "Continue to MakeCode to edit the program. You can then save the project hex which can be downloaded onto a micro:bit V2.",
-    "description": "Incompatible device dialog body text"
-  },
-  "incompatible-device-body-2": {
-    "defaultMessage": "Alternatively, <link>save the project hex</link> without using MakeCode.",
-    "description": "Incompatible device dialog body text"
+  "import-data-samples-action": {
+    "defaultMessage": "Import data samples",
+    "description": "Data samples action"
   },
   "incompatible-device-body-alt": {
     "defaultMessage": "Go back to select a different micro:bit, or <link>save the project hex</link> which can be downloaded onto a micro:bit V2 later.",
+    "description": "Incompatible device dialog body text"
+  },
+  "incompatible-device-body1": {
+    "defaultMessage": "Continue to MakeCode to edit the program. You can then save the project hex which can be downloaded onto a micro:bit V2.",
+    "description": "Incompatible device dialog body text"
+  },
+  "incompatible-device-body2": {
+    "defaultMessage": "Alternatively, <link>save the project hex</link> without using MakeCode.",
     "description": "Incompatible device dialog body text"
   },
   "incompatible-device-heading": {
@@ -803,25 +611,25 @@
     "defaultMessage": "Live data graph",
     "description": "Title for live data graph"
   },
+  "live-graph": {
+    "defaultMessage": "Live graph",
+    "description": "Heading for live graph"
+  },
+  "live-graph-tooltip": {
+    "defaultMessage": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in.",
+    "description": "Tooltip for live graph heading"
+  },
   "main-menu": {
     "defaultMessage": "Main menu",
     "description": "Main menu label"
   },
-  "menu.trainer.notConnected1": {
-    "defaultMessage": "You do not have a micro:bit connected",
-    "description": ""
-  },
-  "menu.trainer.notConnected2": {
-    "defaultMessage": " Select the ‘Connect’ button to connect a micro:bit.",
-    "description": ""
-  },
-  "menu.trainer.trainModelButton": {
-    "defaultMessage": "Train model",
-    "description": ""
-  },
   "more-edit-in-makecode-options": {
     "defaultMessage": "More edit in MakeCode options",
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
+  },
+  "name-action-hint": {
+    "defaultMessage": "Name an action you want the micro:bit to recognise",
+    "description": "Hint shown when you have an unnamed action"
   },
   "name-project": {
     "defaultMessage": "Name your project",
@@ -891,6 +699,10 @@
     "defaultMessage": "New session",
     "description": "New page title"
   },
+  "next-action": {
+    "defaultMessage": "Next",
+    "description": "Next button text for dialogs and similar"
+  },
   "no-data-samples": {
     "defaultMessage": "No data samples",
     "description": "Empty data samples page status text"
@@ -911,17 +723,25 @@
     "defaultMessage": "Open file when dropped",
     "description": "Aria label for file drop target"
   },
-  "popup.compatibility.advice": {
-    "defaultMessage": "We recommend Google Chrome or Microsoft Edge so you can connect directly to your micro:bit.",
-    "description": ""
+  "other-tabs-body1": {
+    "defaultMessage": "Another process is connected to this device.",
+    "description": "Connection error dialog"
   },
-  "popup.compatibility.explain": {
-    "defaultMessage": "Unfortunately, WebUSB and Web Bluetooth are not supported by this browser. This means you cannot connect to a micro:bit to record the data samples needed to train a machine learning model.",
-    "description": ""
+  "other-tabs-body2": {
+    "defaultMessage": "Close any other tabs that may be using WebUSB (e.g. MakeCode, Python Editor, {appNameShort}), or unplug and replug the micro:bit before trying again.",
+    "description": "Connection error dialog"
   },
-  "popup.compatibility.header": {
-    "defaultMessage": "This browser is not supported",
-    "description": ""
+  "other-tabs-heading": {
+    "defaultMessage": "Connect using WebUSB",
+    "description": "Connection error dialog"
+  },
+  "output-label": {
+    "defaultMessage": "Output",
+    "description": "Output column heading"
+  },
+  "output-tooltip": {
+    "defaultMessage": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit.",
+    "description": "Output column heading tooltip"
   },
   "privacy": {
     "defaultMessage": "Privacy policy",
@@ -943,37 +763,65 @@
     "defaultMessage": "diagram showing radio link micro:bit being connected with a computer",
     "description": "Aria label for radio link image"
   },
-  "reconnectFailed.bluetooth1": {
-    "defaultMessage": "The connection to the data collection micro:bit could not be re-established.",
-    "description": ""
+  "recognition-point-label": {
+    "defaultMessage": "Recognition point:",
+    "description": "Label for the slider for the recognition point"
   },
-  "reconnectFailed.bluetoothHeading": {
+  "reconnect-action": {
+    "defaultMessage": "Reconnect",
+    "description": "Button text to reconnect a micro:bit over Bluetooth/radio"
+  },
+  "reconnect-failed-bluetooth-heading": {
     "defaultMessage": "Failed to reconnect to data collection micro:bit",
-    "description": ""
+    "description": "Connection error dialog"
   },
-  "reconnectFailed.bridge1": {
-    "defaultMessage": "The connection to the micro:bit connected to your computer could not be re-established.",
-    "description": ""
+  "reconnect-failed-bluetooth1": {
+    "defaultMessage": "The connection to the data collection micro:bit could not be re-established.",
+    "description": "Connection error dialog"
   },
-  "reconnectFailed.bridgeHeading": {
+  "reconnect-failed-bridge-heading": {
     "defaultMessage": "Failed to reconnect to radio link micro:bit",
-    "description": ""
+    "description": "Connection error dialog"
   },
-  "reconnectFailed.radioHeading": {
+  "reconnect-failed-bridge1": {
+    "defaultMessage": "The connection to the micro:bit connected to your computer could not be re-established.",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-radio-heading": {
     "defaultMessage": "Failed to reconnect to micro:bits",
-    "description": ""
+    "description": "Connection error dialog"
   },
-  "reconnectFailed.remote1": {
-    "defaultMessage": "The connection to the data collection micro:bit could not be re-established.",
-    "description": ""
-  },
-  "reconnectFailed.remoteHeading": {
+  "reconnect-failed-remote-heading": {
     "defaultMessage": "Failed to reconnect to data collection micro:bit",
-    "description": ""
+    "description": "Connection error dialog"
   },
-  "reconnectFailed.subtitle": {
+  "reconnect-failed-remote1": {
+    "defaultMessage": "The connection to the data collection micro:bit could not be re-established.",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-subtitle": {
     "defaultMessage": "Follow these instructions to restart the connection process.",
-    "description": ""
+    "description": "Connection error dialog"
+  },
+  "reconnecting": {
+    "defaultMessage": "Reconnecting…",
+    "description": "Shown while reconnecting"
+  },
+  "record-action-aria": {
+    "defaultMessage": "Record data for action \"{action}\"",
+    "description": "Aria label for record button"
+  },
+  "record-hint": {
+    "defaultMessage": "Press to record a data sample or press button B on your data collection micro:bit.",
+    "description": "Hint when you have named the first action but not recorded any data samples"
+  },
+  "recording": {
+    "defaultMessage": "Recording",
+    "description": "Shown during recording"
+  },
+  "recording-data-for": {
+    "defaultMessage": "Record data for action \"{action}\"",
+    "description": "Text in recording dialog"
   },
   "recording-graph-label": {
     "defaultMessage": "graph showing micro:bit x, y, z accelerometer data for one recording",
@@ -1151,6 +999,30 @@
     "defaultMessage": "Microsoft MakeCode blocks",
     "description": "Tour step title"
   },
+  "train-description": {
+    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows {appNameFull} to recognise different actions when you move your micro:bit.",
+    "description": "Explanation on training dialog"
+  },
+  "train-error-body": {
+    "defaultMessage": "The training did not result in a usable model. The reason for this is most likely the data used for training. If the data samples for different actions are too similar, this can result in issues in the training process.",
+    "description": "Training error dialog"
+  },
+  "train-error-header": {
+    "defaultMessage": "Training failed",
+    "description": "Training error dialog"
+  },
+  "train-error-todo": {
+    "defaultMessage": "Return to the Add data page and change your data.",
+    "description": "Training error dialog"
+  },
+  "train-header": {
+    "defaultMessage": "Training a model",
+    "description": "Training dialog"
+  },
+  "train-model": {
+    "defaultMessage": "Train model",
+    "description": "Action to train a model"
+  },
   "train-model-intro-description": {
     "defaultMessage": "Ask the computer to use your training samples to train the machine learning model to recognise different actions.",
     "description": "Train model step home page description"
@@ -1158,6 +1030,30 @@
   "train-model-title": {
     "defaultMessage": "Train model",
     "description": "Train model step title"
+  },
+  "training-model": {
+    "defaultMessage": "Training model…",
+    "description": "Progress title"
+  },
+  "transfer-hex-alt": {
+    "defaultMessage": "animation of dragging a hex file from the downloads folder onto the micro:bit drive or device listed in the file explorer",
+    "description": "Alt text"
+  },
+  "transfer-hex-heading": {
+    "defaultMessage": "Transfer saved hex file to micro:bit",
+    "description": "Dialog shown when WebUSB fails"
+  },
+  "transfer-hex-manual-download": {
+    "defaultMessage": "If the file did not automatically download then <link>please download the file here</link>.",
+    "description": "Dialog shown when WebUSB fails"
+  },
+  "transfer-hex-message": {
+    "defaultMessage": "Drag the hex file from your Downloads folder to the MICROBIT drive.",
+    "description": "Dialog shown when WebUSB fails"
+  },
+  "try-again-action": {
+    "defaultMessage": "Try again",
+    "description": "Button label"
   },
   "unknown": {
     "defaultMessage": "unknown",
@@ -1174,5 +1070,41 @@
   "unplug-radio-link-microbit-title": {
     "defaultMessage": "Unplug the radio link micro:bit",
     "description": "Unplug radio link micro:bit dialog title"
+  },
+  "unsupported-device-explain": {
+    "defaultMessage": "Unfortunately, we only support using micro:bit V2 when connecting two micro:bits. You have connected a <link>micro:bit V1</link>.",
+    "description": "Unsupported device dialog"
+  },
+  "unsupported-device-header": {
+    "defaultMessage": "micro:bit V1 is not supported for connecting two micro:bits",
+    "description": "Unsupported device dialog"
+  },
+  "unsupported-device-with-bluetooth": {
+    "defaultMessage": "Please use Web Bluetooth to connect to your micro:bit V1 instead.",
+    "description": "Unsupported device dialog"
+  },
+  "unsupported-device-without-bluetooth": {
+    "defaultMessage": "You can connect to micro:bit V1 using Web Bluetooth, however, this browser or device does not have Bluetooth enabled. <link>How to enable Bluetooth</link>.",
+    "description": "Unsupported device dialog"
+  },
+  "webusb-retry-no-select": {
+    "defaultMessage": "You didn't select a micro:bit. Do you want to try again?",
+    "description": "Shown if the user fails to choose a micro:bit"
+  },
+  "webusb-retry-replug1": {
+    "defaultMessage": "A WebUSB error occurred.",
+    "description": "WebUSB error dialog"
+  },
+  "webusb-retry-replug2": {
+    "defaultMessage": "Please:",
+    "description": "WebUSB error dialog"
+  },
+  "webusb-retry-replug3": {
+    "defaultMessage": "check that this micro:bit does not have a battery pack connected",
+    "description": "WebUSB error dialog"
+  },
+  "webusb-retry-replug4": {
+    "defaultMessage": "unplug and replug the USB cable",
+    "description": "WebUSB error dialog"
   }
 }

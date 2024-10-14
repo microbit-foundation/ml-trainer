@@ -60,7 +60,7 @@ const DataSamplesPage = () => {
                 onClick={addNewGesture}
                 isDisabled={isAddNewGestureDisabled}
               >
-                <FormattedMessage id="content.data.addAction" />
+                <FormattedMessage id="add-action-action" />
               </Button>
             </HStack>
             {model ? (
@@ -78,7 +78,7 @@ const DataSamplesPage = () => {
                 onClick={() => trainModelFlowStart(handleNavigateToModel)}
                 variant={hasSufficientData ? "primary" : "secondary-disabled"}
               >
-                <FormattedMessage id={"menu.trainer.trainModelButton"} />
+                <FormattedMessage id={"train-model"} />
               </Button>
             )}
           </HStack>
