@@ -24,8 +24,7 @@ import {
 } from "../utils/fs-util";
 import { useDownloadActions } from "./download-hooks";
 import { useNavigate } from "react-router";
-import { createSessionPageUrl } from "../urls";
-import { SessionPageId } from "../pages-config";
+import { createDataSamplesPageUrl } from "../urls";
 
 interface ProjectContext {
   openEditor(): Promise<void>;
@@ -114,7 +113,7 @@ export const ProjectProvider = ({
         const gestureData = JSON.parse(gestureDataString) as unknown;
         if (isDatasetUserFileFormat(gestureData)) {
           loadDataset(gestureData);
-          navigate(createSessionPageUrl(SessionPageId.DataSamples));
+          navigate(createDataSamplesPageUrl());
         } else {
           // TODO: complain to the user!
         }

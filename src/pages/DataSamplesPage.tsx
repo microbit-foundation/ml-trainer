@@ -9,11 +9,10 @@ import DefaultPageLayout, {
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
-import { SessionPageId } from "../pages-config";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
-import { createSessionPageUrl } from "../urls";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
+import { createTestingModelPageUrl } from "../urls";
 
 const DataSamplesPage = () => {
   const gestures = useStore((s) => s.gestures);
@@ -27,7 +26,7 @@ const DataSamplesPage = () => {
   const isAddNewGestureDisabled = gestures.some((g) => g.name.length === 0);
 
   const handleNavigateToModel = useCallback(() => {
-    navigate(createSessionPageUrl(SessionPageId.TestingModel));
+    navigate(createTestingModelPageUrl());
   }, [navigate]);
 
   const trainButtonRef = useRef(null);
@@ -69,7 +68,7 @@ const DataSamplesPage = () => {
                 variant="primary"
                 rightIcon={<RiArrowRightLine />}
               >
-                <FormattedMessage id={`${SessionPageId.TestingModel}-title`} />
+                <FormattedMessage id="testing-model-title" />
               </Button>
             ) : (
               <Button

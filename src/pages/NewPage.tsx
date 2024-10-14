@@ -21,9 +21,8 @@ import LoadProjectInput, {
 } from "../components/LoadProjectInput";
 import NewPageChoice from "../components/NewPageChoice";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { SessionPageId } from "../pages-config";
 import { useStore } from "../store";
-import { createSessionPageUrl } from "../urls";
+import { createDataSamplesPageUrl } from "../urls";
 
 const NewPage = () => {
   const existingSessionTimestamp = useStore((s) => s.timestamp);
@@ -33,7 +32,7 @@ const NewPage = () => {
   const { actions: connStageActions } = useConnectionStage();
 
   const handleOpenLastSession = useCallback(() => {
-    navigate(createSessionPageUrl(SessionPageId.DataSamples));
+    navigate(createDataSamplesPageUrl());
   }, [navigate]);
 
   const loadProjectRef = useRef<LoadProjectInputRef>(null);
@@ -43,7 +42,7 @@ const NewPage = () => {
 
   const handleStartNewSession = useCallback(() => {
     newSession();
-    navigate(createSessionPageUrl(SessionPageId.DataSamples));
+    navigate(createDataSamplesPageUrl());
     connStageActions.startConnect();
   }, [newSession, navigate, connStageActions]);
 
