@@ -442,6 +442,9 @@ export const useStore = create<Store>()(
             trainModelDialogStage: TrainModelDialogStage.TrainingInProgress,
             trainModelProgress: 0,
           });
+          // Await UI change before training starts. The initial part of training
+          // can block the UI. 50 ms is not sufficient, so use 100 for now.
+          await new Promise((res) => setTimeout(res, 100));
           const trainingResult = await trainModel({
             data: gestures,
             onProgress: (trainModelProgress) =>
