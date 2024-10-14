@@ -1,5 +1,6 @@
 import { useDisclosure } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
+import { bluetoothUniversalHex } from "../connection-stage-actions";
 import {
   ConnectionFlowStep,
   ConnectionFlowType,
@@ -22,7 +23,6 @@ import TryAgainDialog from "./TryAgainDialog";
 import UnsupportedMicrobitDialog from "./UnsupportedMicrobitDialog";
 import WebUsbBluetoothUnsupportedDialog from "./WebUsbBluetoothUnsupportedDialog";
 import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
-import { bluetoothUniversalHex } from "../connection-stage-actions";
 
 const ConnectionDialogs = () => {
   const { stage, actions } = useConnectionStage();
@@ -233,7 +233,7 @@ const ConnectionDialogs = () => {
       return (
         <ConnectErrorDialog
           {...dialogCommonProps}
-          onConnect={reconnect - action}
+          onConnect={actions.reconnect}
           flowType={stage.flowType}
           errorStep={stage.flowStep}
         />
