@@ -10,8 +10,8 @@ import {
   useInterval,
   VStack,
 } from "@chakra-ui/react";
-import { ReactNode, useCallback, useEffect, useState } from "react";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import { ReactNode, useCallback, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import DefaultPageLayout from "../components/DefaultPageLayout";
 import PercentageDisplay from "../components/PercentageDisplay";
@@ -24,13 +24,8 @@ import { useDeployment } from "../deployment";
 import blockImage from "../images/block.png";
 import xyzGraph from "../images/xyz-graph.png";
 import clap from "../images/clap-square.png";
-import { createNewPageUrl, createSessionPageUrl } from "../urls";
+import { createNewPageUrl } from "../urls";
 import { flags } from "../flags";
-import { useSearchParams } from "react-router-dom";
-import { MicrobitOrgResource } from "../model";
-import { Project } from "@microbit/makecode-embed/react";
-import { useStore } from "../store";
-import { SessionPageId } from "../pages-config";
 
 const graphData = {
   x: [
@@ -68,88 +63,13 @@ const graphData = {
   ],
 };
 
-const useMicrobitResourceSearchParams = (): MicrobitOrgResource | undefined => {
-  const [params] = useSearchParams();
-  const id = params.get("id");
-  const project = params.get("project");
-  const name = params.get("name");
-
-  const resource: MicrobitOrgResource | undefined =
-    id && name && project
-      ? {
-          id,
-          project,
-          name,
-        }
-      : undefined;
-  return resource;
-};
-
-const isValidEditorContent = (content: Project): content is Project => {
-  return (
-    content &&
-    typeof content === "object" &&
-    "text" in content &&
-    !!content.text
-  );
-};
-
-const fetchMicrobitOrgResourceTargetCode = async (
-  activitiesBaseUrl: string,
-  resource: MicrobitOrgResource,
-  intl: IntlShape
-): Promise<Project> => {
-  const url = `${activitiesBaseUrl}${resource.id}-makecode.json`;
-  let json;
-  try {
-    const response = await fetch(url);
-    json = (await response.json()) as object;
-  } catch (e) {
-    const rethrow = new Error(
-      intl.formatMessage({ id: "code-download-error" })
-    );
-    rethrow.stack = e instanceof Error ? e.stack : undefined;
-    throw rethrow;
-  }
-  if (
-    !("editorContent" in json) ||
-    typeof json.editorContent !== "object" ||
-    !json.editorContent ||
-    !isValidEditorContent(json.editorContent)
-  ) {
-    throw new Error(intl.formatMessage({ id: "code-format-error" }));
-  }
-  return json.editorContent;
-};
-
 const HomePage = () => {
   const navigate = useNavigate();
   const handleGetStarted = useCallback(() => {
     navigate(createNewPageUrl());
   }, [navigate]);
   const intl = useIntl();
-  const { appNameFull, activitiesBaseUrl } = useDeployment();
-  const resource = useMicrobitResourceSearchParams();
-  const loadProject = useStore((s) => s.loadProject);
-  console.log("resource", resource);
-
-  useEffect(() => {
-    const updateAsync = async () => {
-      if (!resource || !activitiesBaseUrl) {
-        return;
-      }
-      const code = await fetchMicrobitOrgResourceTargetCode(
-        activitiesBaseUrl,
-        resource,
-        intl
-      );
-      console.log("code", code);
-      loadProject(code);
-      navigate(createSessionPageUrl(SessionPageId.DataSamples));
-    };
-    void updateAsync();
-  }, [activitiesBaseUrl, intl, loadProject, navigate, resource]);
-
+  const { appNameFull } = useDeployment();
   return (
     <DefaultPageLayout
       toolbarItemsRight={
