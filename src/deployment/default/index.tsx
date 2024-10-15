@@ -52,9 +52,6 @@ const defaultDeploymentFactory: DeploymentConfigFactory = () => ({
     troubleshooting: "https://support.microbit.org",
     wearable: "https://support.microbit.org",
   },
-  // TODO: To remove from default theme
-  activitiesBaseUrl:
-    "http://open-in-createai.next-review.microbit.org.s3-website-eu-west-1.amazonaws.com/classroom/activities",
 });
 
 export default defaultDeploymentFactory;
