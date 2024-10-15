@@ -404,6 +404,7 @@ export const useStore = create<Store>()(
                 return copy;
               })(),
               model: undefined,
+              timestamp: Date.now(),
               ...updateProject(project, projectEdited, newGestures, undefined),
             };
           });
