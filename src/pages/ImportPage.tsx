@@ -3,8 +3,7 @@ import { useEffect } from "react";
 import { IntlShape, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
-// TODO: Use theme activitiesBaseUrl
-// import { useDeployment } from "../deployment";
+import { useDeployment } from "../deployment";
 import { MicrobitOrgResource } from "../model";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
@@ -12,10 +11,7 @@ import { createDataSamplesPageUrl } from "../urls";
 const ImportPage = () => {
   const navigate = useNavigate();
   const intl = useIntl();
-  // TODO: Use theme activitiesBaseUrl
-  // const { activitiesBaseUrl } = useDeployment();
-  const activitiesBaseUrl =
-    "http://open-in-createai.next-review.microbit.org.s3-website-eu-west-1.amazonaws.com/classroom/activities/";
+  const { activitiesBaseUrl } = useDeployment();
   const resource = useMicrobitResourceSearchParams();
   const loadProject = useStore((s) => s.loadProject);
 
@@ -43,7 +39,6 @@ const useMicrobitResourceSearchParams = (): MicrobitOrgResource | undefined => {
   const id = params.get("id");
   const project = params.get("project");
   const name = params.get("name");
-
   return id && name && project ? { id, project, name } : undefined;
 };
 
