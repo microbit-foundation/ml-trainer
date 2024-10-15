@@ -409,7 +409,7 @@
   },
   "disconnected-warning-bridge-heading": {
     "defaultMessage": "Radio link micro:bit connection lost",
-    "description": "Connection errir dialog"
+    "description": "Connection error dialog"
   },
   "disconnected-warning-bridge1": {
     "defaultMessage": "The connection to the micro:bit connected to your computer has been lost.",
