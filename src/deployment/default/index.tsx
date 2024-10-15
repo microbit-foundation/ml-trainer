@@ -52,8 +52,6 @@ const defaultDeploymentFactory: DeploymentConfigFactory = () => ({
     troubleshooting: "https://support.microbit.org",
     wearable: "https://support.microbit.org",
   },
-  // TODO: To move to theme
-  activitiesBaseUrl: "http://localhost:9000/classroom/activities/",
 });
 
 export default defaultDeploymentFactory;
