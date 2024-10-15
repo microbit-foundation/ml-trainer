@@ -18,7 +18,6 @@ const ImportPage = () => {
     "http://open-in-createai.next-review.microbit.org.s3-website-eu-west-1.amazonaws.com/classroom/activities";
   const resource = useMicrobitResourceSearchParams();
   const loadProject = useStore((s) => s.loadProject);
-  console.log("resource", resource);
 
   useEffect(() => {
     const updateAsync = async () => {
@@ -30,7 +29,6 @@ const ImportPage = () => {
         resource,
         intl
       );
-      console.log("code", code);
       loadProject(code);
       navigate(createDataSamplesPageUrl());
     };
