@@ -14,7 +14,8 @@ const ImportPage = () => {
   const intl = useIntl();
   // TODO: Use theme activitiesBaseUrl
   // const { activitiesBaseUrl } = useDeployment();
-  const activitiesBaseUrl = "http://localhost:9000/classroom/activities/";
+  const activitiesBaseUrl =
+    "http://open-in-createai.next-review.microbit.org.s3-website-eu-west-1.amazonaws.com/classroom/activities/";
   const resource = useMicrobitResourceSearchParams();
   const loadProject = useStore((s) => s.loadProject);
 
