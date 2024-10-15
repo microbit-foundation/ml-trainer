@@ -37,7 +37,7 @@ const ConnectRadioDataCollectionMicrobitDialog = ({
           </VStack>
           <Image
             src={connectCable}
-            alt={intl.formatMessage({ id: "connectMB.connectCable.altText" })}
+            alt={intl.formatMessage({ id: "connect-cable-alt" })}
             objectFit="contain"
             boxSize="241px"
           />

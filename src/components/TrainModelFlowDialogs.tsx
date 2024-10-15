@@ -1,9 +1,8 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router";
 import { TourId, TrainModelDialogStage } from "../model";
-import { SessionPageId } from "../pages-config";
-import { useStore, useSettings } from "../store";
-import { createSessionPageUrl } from "../urls";
+import { useSettings, useStore } from "../store";
+import { createTestingModelPageUrl } from "../urls";
 import TrainingErrorDialog from "./TrainingErrorDialog";
 import TrainingModelProgressDialog from "./TrainingModelProgressDialog";
 import TrainModelIntroDialog from "./TrainModelHelpDialog";
@@ -27,7 +26,7 @@ const TrainModelDialogs = ({ finalFocusRef }: TrainModelDialogsProps) => {
       setSettings({ showPreTrainHelp: !isSkipNextTime });
       const result = await trainModel();
       if (result) {
-        navigate(createSessionPageUrl(SessionPageId.TestingModel));
+        navigate(createTestingModelPageUrl());
         tourStart(TourId.TestModelPage);
       }
     },

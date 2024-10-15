@@ -26,7 +26,7 @@ const DataSamplesMenu = () => {
       <MenuButton
         as={IconButton}
         aria-label={intl.formatMessage({
-          id: "content.data.controlbar.button.menu",
+          id: "data-actions-menu",
         })}
         variant="ghost"
         icon={<Icon as={MdMoreVert} color="gray.800" boxSize={7} />}
@@ -35,13 +35,13 @@ const DataSamplesMenu = () => {
       <Portal>
         <MenuList>
           <LoadProjectMenuItem icon={<RiUpload2Line />} accept=".json">
-            <FormattedMessage id="content.data.controlbar.button.uploadData" />
+            <FormattedMessage id="import-data-samples-action" />
           </LoadProjectMenuItem>
           <MenuItem icon={<RiDownload2Line />} onClick={downloadDataSet}>
-            <FormattedMessage id="content.data.controlbar.button.downloadData" />
+            <FormattedMessage id="download-data-samples-action" />
           </MenuItem>
           <MenuItem icon={<RiDeleteBin2Line />} onClick={deleteAllGestures}>
-            <FormattedMessage id="content.data.controlbar.button.clearData" />
+            <FormattedMessage id="delete-data-samples-action" />
           </MenuItem>
         </MenuList>
       </Portal>

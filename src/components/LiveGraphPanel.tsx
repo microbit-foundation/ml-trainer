@@ -40,14 +40,14 @@ const LiveGraphPanel = ({
       status === ConnectionStatus.FailedToReconnectTwice ||
       status === ConnectionStatus.FailedToSelectBluetoothDevice
       ? {
-          textId: "footer.connectButton",
+          textId: "connect-action",
           onClick: actions.startConnect,
         }
       : {
-          textId: "actions.reconnect",
+          textId: "reconnect-action",
           onClick: actions.reconnect,
         };
-  }, [actions.reconnect, actions.startConnect, status]);
+  }, [actions.startConnect, actions.reconnect, status]);
 
   return (
     <HStack
@@ -76,8 +76,8 @@ const LiveGraphPanel = ({
                 <FormattedMessage id="live-data-graph" />
               </Text>
               <InfoToolTip
-                titleId="footer.helpHeader"
-                descriptionId="footer.helpContent"
+                titleId="live-graph"
+                descriptionId="live-graph-tooltip"
               />
             </HStack>
             {status === ConnectionStatus.Connected ? (
@@ -87,7 +87,7 @@ const LiveGraphPanel = ({
                 size="sm"
                 onClick={actions.disconnect}
               >
-                <FormattedMessage id="footer.disconnectButton" />
+                <FormattedMessage id="disconnect-action" />
               </Button>
             ) : (
               <Button
@@ -103,7 +103,7 @@ const LiveGraphPanel = ({
             )}
             {isReconnecting && (
               <Text rounded="4xl" bg="white" py="1px" fontWeight="bold">
-                <FormattedMessage id="connectMB.reconnecting" />
+                <FormattedMessage id="reconnecting" />
               </Text>
             )}
           </HStack>
@@ -122,7 +122,7 @@ const LiveGraphPanel = ({
           >
             <VisuallyHidden aria-live="polite">
               <FormattedMessage
-                id="content.model.output.estimatedGesture.label"
+                id="estimated-action-aria"
                 values={{
                   action:
                     detected?.name ?? intl.formatMessage({ id: "unknown" }),
@@ -131,11 +131,11 @@ const LiveGraphPanel = ({
             </VisuallyHidden>
             <HStack justifyContent="flex-start" w="100%" gap={2} pr={2} mb={3}>
               <Text size="md" fontWeight="bold" alignSelf="start">
-                <FormattedMessage id="content.model.output.estimatedGesture.iconTitle" />
+                <FormattedMessage id="estimated-action-label" />
               </Text>
               <InfoToolTip
-                titleId="content.model.output.estimatedGesture.descriptionTitle"
-                descriptionId="content.model.output.estimatedGesture.descriptionBody"
+                titleId="estimated-action-label"
+                descriptionId="estimated-action-tooltip"
               />
             </HStack>
             <VStack justifyContent="center" flexGrow={1} mb={0.5}>

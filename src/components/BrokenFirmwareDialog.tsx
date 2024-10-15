@@ -15,6 +15,7 @@ import { ReactNode } from "react";
 import { RiExternalLinkLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import Link from "./Link";
+import { useDeployment } from "../deployment";
 
 interface BrokenFirmwareDialogProps {
   isOpen: boolean;
@@ -29,6 +30,7 @@ const BrokenFirmwareDialog = ({
   onSkip,
   onTryAgain,
 }: BrokenFirmwareDialogProps) => {
+  const { supportLinks } = useDeployment();
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -41,16 +43,16 @@ const BrokenFirmwareDialog = ({
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage id="connectMB.usb.firmwareBroken.heading" />
+            <FormattedMessage id="firmware-outdated-heading" />
           </ModalHeader>
           <ModalBody>
             <VStack gap={5} textAlign="left" w="100%">
               <Text w="100%">
-                <FormattedMessage id="connectMB.usb.firmwareBroken.content1" />
+                <FormattedMessage id="firmware-outdated-content1" />
               </Text>
               <Text w="100%">
                 <FormattedMessage
-                  id="connectMB.usb.firmwareBroken.content2"
+                  id="firmware-outdated-content2"
                   values={{
                     link: (chunks: ReactNode) => (
                       <Link
@@ -68,14 +70,14 @@ const BrokenFirmwareDialog = ({
               <Text w="100%">
                 <Link
                   color="brand.600"
-                  href="https://microbit.org/get-started/user-guide/firmware/"
+                  href={supportLinks.troubleshooting}
                   target="_blank"
                   rel="noopener"
                   display="flex"
                   flexDirection="row"
                   gap={1}
                 >
-                  <FormattedMessage id="connectMB.usb.firmwareBroken.content3" />
+                  <FormattedMessage id="connect-troubleshoot" />
                   <Icon
                     as={RiExternalLinkLine}
                     boxSize={5}
@@ -92,10 +94,10 @@ const BrokenFirmwareDialog = ({
                 <FormattedMessage id="cancel-action" />
               </Button>
               <Button onClick={onSkip} variant="secondary" size="lg">
-                <FormattedMessage id="connectMB.usb.firmwareBroken.skip" />
+                <FormattedMessage id="firmware-outdated-skip" />
               </Button>
               <Button onClick={onTryAgain} variant="primary" size="lg">
-                <FormattedMessage id="connectMB.tryAgain" />
+                <FormattedMessage id="try-again-action" />
               </Button>
             </HStack>
           </ModalFooter>

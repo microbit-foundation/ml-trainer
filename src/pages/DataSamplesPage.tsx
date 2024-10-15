@@ -9,11 +9,10 @@ import DefaultPageLayout, {
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
-import { SessionPageId } from "../pages-config";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
-import { createSessionPageUrl } from "../urls";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
+import { createTestingModelPageUrl } from "../urls";
 
 const DataSamplesPage = () => {
   const gestures = useStore((s) => s.gestures);
@@ -27,7 +26,7 @@ const DataSamplesPage = () => {
   const isAddNewGestureDisabled = gestures.some((g) => g.name.length === 0);
 
   const handleNavigateToModel = useCallback(() => {
-    navigate(createSessionPageUrl(SessionPageId.TestingModel));
+    navigate(createTestingModelPageUrl());
   }, [navigate]);
 
   const trainButtonRef = useRef(null);
@@ -35,7 +34,7 @@ const DataSamplesPage = () => {
     <>
       <TrainModelDialogs finalFocusRef={trainButtonRef} />
       <DefaultPageLayout
-        titleId={`${SessionPageId.DataSamples}-title`}
+        titleId="data-samples-title"
         showPageTitle
         menuItems={<ProjectMenuItems />}
         toolbarItemsRight={<ProjectToolbarItems />}
@@ -60,7 +59,7 @@ const DataSamplesPage = () => {
                 onClick={addNewGesture}
                 isDisabled={isAddNewGestureDisabled}
               >
-                <FormattedMessage id="content.data.addAction" />
+                <FormattedMessage id="add-action-action" />
               </Button>
             </HStack>
             {model ? (
@@ -69,7 +68,7 @@ const DataSamplesPage = () => {
                 variant="primary"
                 rightIcon={<RiArrowRightLine />}
               >
-                <FormattedMessage id={`${SessionPageId.TestingModel}-title`} />
+                <FormattedMessage id="testing-model-title" />
               </Button>
             ) : (
               <Button
@@ -78,7 +77,7 @@ const DataSamplesPage = () => {
                 onClick={() => trainModelFlowStart(handleNavigateToModel)}
                 variant={hasSufficientData ? "primary" : "secondary-disabled"}
               >
-                <FormattedMessage id={"menu.trainer.trainModelButton"} />
+                <FormattedMessage id={"train-model"} />
               </Button>
             )}
           </HStack>

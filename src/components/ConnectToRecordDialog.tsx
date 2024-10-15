@@ -46,7 +46,7 @@ const ConnectToRecordDialog = ({
           </ModalBody>
           <ModalFooter justifyContent="flex-end">
             <Button variant="primary" onClick={handleConnect}>
-              <FormattedMessage id="footer.connectButton" />
+              <FormattedMessage id="connect-action" />
             </Button>
           </ModalFooter>
         </ModalContent>

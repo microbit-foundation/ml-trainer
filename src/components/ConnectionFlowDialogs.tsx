@@ -1,5 +1,6 @@
 import { useDisclosure } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
+import { bluetoothUniversalHex } from "../connection-stage-actions";
 import {
   ConnectionFlowStep,
   ConnectionFlowType,
@@ -22,7 +23,6 @@ import TryAgainDialog from "./TryAgainDialog";
 import UnsupportedMicrobitDialog from "./UnsupportedMicrobitDialog";
 import WebUsbBluetoothUnsupportedDialog from "./WebUsbBluetoothUnsupportedDialog";
 import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
-import { bluetoothUniversalHex } from "../connection-stage-actions";
 
 const ConnectionDialogs = () => {
   const { stage, actions } = useConnectionStage();
@@ -186,15 +186,12 @@ const ConnectionDialogs = () => {
     }
     case ConnectionFlowStep.ConnectingBluetooth: {
       return (
-        <LoadingDialog
-          isOpen={isOpen}
-          headingId="connectMB.bluetooth.heading"
-        />
+        <LoadingDialog isOpen={isOpen} headingId="connect-bluetooth-heading" />
       );
     }
     case ConnectionFlowStep.ConnectingMicrobits: {
       return (
-        <LoadingDialog isOpen={isOpen} headingId="connectMB.radio.heading" />
+        <LoadingDialog isOpen={isOpen} headingId="connect-radio-heading" />
       );
     }
     case ConnectionFlowStep.TryAgainBluetoothSelectMicrobit:

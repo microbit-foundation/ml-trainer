@@ -38,13 +38,13 @@ const TrainModelIntroDialog = ({
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage id="content.trainer.header" />
+            <FormattedMessage id="train-header" />
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Text>
               <FormattedMessage
-                id="content.trainer.description"
+                id="train-description"
                 values={{ appNameFull }}
               />
             </Text>

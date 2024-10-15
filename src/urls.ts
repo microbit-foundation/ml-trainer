@@ -1,5 +1,3 @@
-import { SessionPageId } from "./pages-config";
-
 export const basepath = import.meta.env.BASE_URL ?? "/";
 
 if (!basepath.endsWith("/")) {
@@ -12,5 +10,6 @@ export const createNewPageUrl = () => `${basepath}new`;
 
 export const createImportPageUrl = () => `${basepath}import`;
 
-export const createSessionPageUrl = (pageId: SessionPageId) =>
-  `${basepath}${pageId}`;
+export const createDataSamplesPageUrl = () => `${basepath}data-samples`;
+
+export const createTestingModelPageUrl = () => `${basepath}testing-model`;

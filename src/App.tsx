@@ -20,15 +20,17 @@ import { deployment, useDeployment } from "./deployment";
 import { ProjectProvider } from "./hooks/project-hooks";
 import { LoggingProvider } from "./logging/logging-hooks";
 import TranslationProvider from "./messages/TranslationProvider";
-import { sessionPageConfigs } from "./pages-config";
+import DataSamplesPage from "./pages/DataSamplesPage";
 import HomePage from "./pages/HomePage";
 import ImportPage from "./pages/ImportPage";
 import NewPage from "./pages/NewPage";
+import TestingModelPage from "./pages/TestingModelPage";
 import {
+  createDataSamplesPageUrl,
   createHomePageUrl,
   createImportPageUrl,
   createNewPageUrl,
-  createSessionPageUrl,
+  createTestingModelPageUrl,
 } from "./urls";
 
 export interface ProviderLayoutProps {
@@ -96,16 +98,15 @@ const createRouter = () => {
           path: createNewPageUrl(),
           element: <NewPage />,
         },
+        { path: createImportPageUrl(), element: <ImportPage /> },
         {
-          path: createImportPageUrl(),
-          element: <ImportPage />,
+          path: createDataSamplesPageUrl(),
+          element: <DataSamplesPage />,
         },
-        ...sessionPageConfigs.map((config) => {
-          return {
-            path: createSessionPageUrl(config.id),
-            element: <config.pageElement />,
-          };
-        }),
+        {
+          path: createTestingModelPageUrl(),
+          element: <TestingModelPage />,
+        },
         {
           path: "*",
           element: <NotFound />,

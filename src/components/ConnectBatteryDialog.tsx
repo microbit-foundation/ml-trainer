@@ -13,13 +13,10 @@ export interface ConnectBatteryDialogProps
 const ConnectBatteryDialog = ({ ...props }: ConnectBatteryDialogProps) => {
   const { supportLinks } = useDeployment();
   return (
-    <ConnectContainerDialog
-      headingId="connectMB.connectBattery.heading"
-      {...props}
-    >
+    <ConnectContainerDialog headingId="connect-battery-heading" {...props}>
       <VStack gap={5} width="100%">
         <Text alignSelf="left" width="100%">
-          <FormattedMessage id="connectMB.connectBattery.subtitle" />
+          <FormattedMessage id="connect-battery-subtitle" />
           <Link
             color="brand.600"
             href={supportLinks.wearable}
@@ -29,7 +26,7 @@ const ConnectBatteryDialog = ({ ...props }: ConnectBatteryDialogProps) => {
             flexDirection="row"
             gap={1}
           >
-            <FormattedMessage id="connectMB.connectBattery.link" />
+            <FormattedMessage id="connect-battery-link" />
             <Icon
               as={RiExternalLinkLine}
               boxSize={5}

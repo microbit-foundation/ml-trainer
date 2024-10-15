@@ -14,14 +14,17 @@ import { ReactNode, useCallback, useEffect } from "react";
 import { RiDownload2Line, RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import {
+  ConnectionFlowStep,
+  useConnectionStage,
+} from "../connection-stage-hooks";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
 import { SaveStep, TrainModelDialogStage } from "../model";
-import { SessionPageId } from "../pages-config";
 import Tour from "../pages/Tour";
 import { useStore } from "../store";
-import { createHomePageUrl, createSessionPageUrl } from "../urls";
+import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
 import ActionBar from "./ActionBar";
 import AppLogo from "./AppLogo";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
@@ -29,15 +32,10 @@ import DownloadDialogs from "./DownloadDialogs";
 import HelpMenu from "./HelpMenu";
 import LanguageMenuItem from "./LanguageMenuItem";
 import PreReleaseNotice from "./PreReleaseNotice";
+import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
-import ProjectDropTarget from "./ProjectDropTarget";
-import React from "react";
-import {
-  ConnectionFlowStep,
-  useConnectionStage,
-} from "../connection-stage-hooks";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -84,7 +82,7 @@ const DefaultPageLayout = ({
       ) => {
         if (projectLoadTimestamp > prevProjectLoadTimestamp) {
           // Side effects of loading a project, which MakeCode notifies us of.
-          navigate(createSessionPageUrl(SessionPageId.DataSamples));
+          navigate(createDataSamplesPageUrl());
           toast({
             position: "top",
             duration: 5_000,
@@ -96,14 +94,6 @@ const DefaultPageLayout = ({
     );
   }, [intl, navigate, toast]);
 
-  const ProjectDropTargetWhenNeeded =
-    isTrainDialogClosed &&
-    isTourClosed &&
-    isConnectionDialogClosed &&
-    isSaveDialogClosed
-      ? ProjectDropTarget
-      : React.Fragment;
-
   return (
     <>
       {/* Suppress dialogs to prevent overlapping dialogs */}
@@ -114,7 +104,14 @@ const DefaultPageLayout = ({
       {!isEditorOpen && <Tour />}
       <DownloadDialogs />
       <SaveDialogs />
-      <ProjectDropTargetWhenNeeded>
+      <ProjectDropTarget
+        isEnabled={
+          isTrainDialogClosed &&
+          isTourClosed &&
+          isConnectionDialogClosed &&
+          isSaveDialogClosed
+        }
+      >
         <VStack
           minH="100vh"
           w="100%"
@@ -159,7 +156,7 @@ const DefaultPageLayout = ({
             {children}
           </Flex>
         </VStack>
-      </ProjectDropTargetWhenNeeded>
+      </ProjectDropTarget>
     </>
   );
 };
@@ -194,7 +191,7 @@ export const HomeToolbarItem = () => {
     <IconButton
       onClick={handleHomeClick}
       icon={<RiHome2Line size={24} color="white" />}
-      aria-label={intl.formatMessage({ id: "homepage.Link" })}
+      aria-label={intl.formatMessage({ id: "homepage" })}
       variant="plain"
       size="lg"
       fontSize="xl"

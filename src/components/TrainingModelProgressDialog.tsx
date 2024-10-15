@@ -34,7 +34,7 @@ const TrainingModelProgressDialog = ({
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage id="content.trainer.training.title" />
+            <FormattedMessage id="training-model" />
           </ModalHeader>
           <ModalBody>
             <VStack width="100%" alignItems="left">

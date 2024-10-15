@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { RiArrowRightLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
@@ -28,7 +28,7 @@ import CodeViewCard from "./CodeViewCard";
 import CodeViewGridItem from "./CodeViewGridItem";
 import GestureNameGridItem from "./GestureNameGridItem";
 import HeadingGrid from "./HeadingGrid";
-import UnsupportedEditorDevice from "./IncompatibleEditorDevice";
+import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 import LiveGraphPanel from "./LiveGraphPanel";
 import MoreMenuButton from "./MoreMenuButton";
 
@@ -40,18 +40,18 @@ const gridCommonProps: Partial<GridProps> = {
 
 const headings = [
   {
-    titleId: "content.model.output.action.descriptionTitle",
-    descriptionId: "content.model.output.action.descriptionBody",
+    titleId: "action-label",
+    descriptionId: "action-tooltip",
   },
   {
-    titleId: "content.model.output.certainty.descriptionTitle",
-    descriptionId: "content.model.output.certainty.descriptionBody",
+    titleId: "certainty-label",
+    descriptionId: "certainty-tooltip",
   },
   // Empty heading for arrow column
   {},
   {
-    titleId: "content.model.output.output.descriptionTitle",
-    descriptionId: "content.model.output.output.descriptionBody",
+    titleId: "output-label",
+    descriptionId: "output-tooltip",
   },
 ];
 
@@ -69,26 +69,32 @@ const TestingModelGridView = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [editorLoading, setEditorLoading] = useState(false);
   const continueToEditor = useCallback(async () => {
+    setEditorLoading(true);
     await openEditor();
     onClose();
+    setEditorLoading(false);
   }, [onClose, openEditor]);
 
-  const maybeOpenEditor = useCallback(() => {
+  const maybeOpenEditor = useCallback(async () => {
     // Open editor if device is not a V1, otherwise show warning dialog.
     if (getDataCollectionBoardVersion() === "V1") {
       return onOpen();
     }
-    void openEditor();
+    setEditorLoading(true);
+    await openEditor();
+    setEditorLoading(false);
   }, [getDataCollectionBoardVersion, onOpen, openEditor]);
 
   return (
     <>
-      <UnsupportedEditorDevice
+      <IncompatibleEditorDevice
         isOpen={isOpen}
         onClose={onClose}
         onNext={continueToEditor}
         stage="openEditor"
+        onNextLoading={editorLoading}
       />
       <MakeCodeRenderBlocksProvider
         key={makeCodeLang}
@@ -181,6 +187,7 @@ const TestingModelGridView = () => {
                 variant="primary"
                 onClick={maybeOpenEditor}
                 className={tourElClassname.editInMakeCodeButton}
+                isLoading={editorLoading && !isOpen}
               >
                 <FormattedMessage id="edit-in-makecode-action" />
               </Button>

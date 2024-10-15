@@ -21,11 +21,11 @@ export interface DownloadProgressDialogProps {
 export const getHeadingId = (flowType: ConnectionFlowType) => {
   switch (flowType) {
     case ConnectionFlowType.ConnectBluetooth:
-      return "connectMB.usbDownloading.header";
+      return "downloading-header";
     case ConnectionFlowType.ConnectRadioRemote:
-      return "connectMB.usbDownloadingMB1.header";
+      return "downloading-data-collection-header";
     case ConnectionFlowType.ConnectRadioBridge:
-      return "connectMB.usbDownloadingMB2.header";
+      return "downloading-radio-link-header";
   }
 };
 
@@ -51,7 +51,7 @@ const DownloadProgressDialog = ({
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
               <Text>
-                <FormattedMessage id="connectMB.usbDownloading.subtitle" />
+                <FormattedMessage id="downloading-subtitle" />
               </Text>
               <Progress
                 value={progress}
