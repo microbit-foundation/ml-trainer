@@ -10,9 +10,10 @@ import { useProject } from "../hooks/project-hooks";
 
 interface ProjectDropTargetProps extends BoxProps {
   children: React.ReactElement;
+  isEnabled: boolean;
 }
 
-const ProjectDropTarget = ({ children }: ProjectDropTargetProps) => {
+const ProjectDropTarget = ({ children, isEnabled }: ProjectDropTargetProps) => {
   const { loadFile } = useProject();
   const handleDrop = useCallback(
     (files: File[]) => {
@@ -22,7 +23,11 @@ const ProjectDropTarget = ({ children }: ProjectDropTargetProps) => {
     },
     [loadFile]
   );
-  return <FileDropTarget onFileDrop={handleDrop}>{children}</FileDropTarget>;
+  return (
+    <FileDropTarget isEnabled={isEnabled} onFileDrop={handleDrop}>
+      {children}
+    </FileDropTarget>
+  );
 };
 
 export default ProjectDropTarget;

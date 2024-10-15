@@ -10,13 +10,18 @@ import { useIntl } from "react-intl";
 
 interface FileDropTargetProps {
   children: ReactNode;
+  isEnabled: boolean;
   onFileDrop: (files: File[]) => void;
 }
 
 /**
  * An area that handles multiple dropped files.
  */
-const FileDropTarget = ({ children, onFileDrop }: FileDropTargetProps) => {
+const FileDropTarget = ({
+  children,
+  isEnabled,
+  onFileDrop,
+}: FileDropTargetProps) => {
   const [dragOver, setDragOver] = useState(false);
 
   const handleDrop = useCallback(
@@ -31,14 +36,21 @@ const FileDropTarget = ({ children, onFileDrop }: FileDropTargetProps) => {
     },
     [onFileDrop]
   );
-  const handleDragOver = useCallback((event: React.DragEvent<HTMLElement>) => {
-    const hasFile = Array.from(event.dataTransfer.types).indexOf("Files") >= 0;
-    if (hasFile) {
-      event.preventDefault();
-      setDragOver(true);
-      event.dataTransfer.dropEffect = "copy";
-    }
-  }, []);
+  const handleDragOver = useCallback(
+    (event: React.DragEvent<HTMLElement>) => {
+      if (!isEnabled) {
+        return;
+      }
+      const hasFile =
+        Array.from(event.dataTransfer.types).indexOf("Files") >= 0;
+      if (hasFile) {
+        event.preventDefault();
+        setDragOver(true);
+        event.dataTransfer.dropEffect = "copy";
+      }
+    },
+    [isEnabled]
+  );
   const handleDragLeave = useCallback(() => {
     setDragOver(false);
   }, []);

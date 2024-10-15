@@ -16,21 +16,23 @@ import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import { useProject } from "../hooks/project-hooks";
 
-interface UnsupportedEditorDeviceProps {
+interface IncompatibleEditorDeviceProps {
   isOpen: boolean;
   onClose: () => void;
   onNext?: () => void;
+  onNextLoading?: boolean;
   onBack?: () => void;
   stage: "openEditor" | "flashDevice";
 }
 
-const UnsupportedEditorDevice = ({
+const IncompatibleEditorDevice = ({
   isOpen,
   onClose,
   onNext,
+  onNextLoading,
   onBack,
   stage,
-}: UnsupportedEditorDeviceProps) => {
+}: IncompatibleEditorDeviceProps) => {
   const { saveHex } = useProject();
   return (
     <Modal
@@ -111,6 +113,7 @@ const UnsupportedEditorDevice = ({
                 onClick={onNext ?? onClose}
                 variant={onNext ? "primary" : "secondary"}
                 size="lg"
+                isLoading={onNextLoading}
               >
                 <FormattedMessage
                   id={onNext ? "continue-makecode-action" : "cancel-action"}
@@ -124,4 +127,4 @@ const UnsupportedEditorDevice = ({
   );
 };
 
-export default UnsupportedEditorDevice;
+export default IncompatibleEditorDevice;
