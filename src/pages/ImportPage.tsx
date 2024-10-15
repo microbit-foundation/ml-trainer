@@ -5,9 +5,8 @@ import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import { useDeployment } from "../deployment";
 import { MicrobitOrgResource } from "../model";
-import { SessionPageId } from "../pages-config";
 import { useStore } from "../store";
-import { createSessionPageUrl } from "../urls";
+import { createDataSamplesPageUrl } from "../urls";
 
 const ImportPage = () => {
   const navigate = useNavigate();
@@ -29,7 +28,7 @@ const ImportPage = () => {
       );
       console.log("code", code);
       loadProject(code);
-      navigate(createSessionPageUrl(SessionPageId.DataSamples));
+      navigate(createDataSamplesPageUrl());
     };
     void updateAsync();
   }, [activitiesBaseUrl, intl, loadProject, navigate, resource]);
