@@ -414,6 +414,7 @@ export const useStore = create<Store>()(
           set(({ projectEdited, gestures: prevGestures }) => {
             const newGestures = getGesturesFromProject(project, prevGestures);
             return {
+              timestamp: Date.now(),
               gestures: newGestures,
               model: undefined,
               ...updateProject(project, projectEdited, newGestures, undefined),
