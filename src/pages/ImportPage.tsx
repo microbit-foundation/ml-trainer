@@ -5,6 +5,8 @@ import {
   Input,
   Stack,
   VStack,
+  Text,
+  Divider,
 } from "@chakra-ui/react";
 import { Project } from "@microbit/makecode-embed/react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -65,6 +67,10 @@ const ImportPage = () => {
           <Heading as="h1" mb={5}>
             <FormattedMessage id="new-session-setup-title" />
           </Heading>
+          <Text>
+            Starting a new session will overwrite your existing session. You may
+            want to save your existing session first.
+          </Text>
           <Stack py={2} spacing={5}>
             <Heading size="md" as="h2">
               <FormattedMessage id="name-label" />
