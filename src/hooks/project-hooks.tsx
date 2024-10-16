@@ -26,6 +26,7 @@ import { useDownloadActions } from "./download-hooks";
 import { useNavigate } from "react-router";
 import { createDataSamplesPageUrl } from "../urls";
 import { useLogging } from "../logging/logging-hooks";
+import { getTotalNumSamples } from "../utils/gestures";
 
 /**
  * Distinguishes the different ways to trigger the load action.
@@ -143,6 +144,7 @@ export const ProjectProvider = ({
   const setSave = useStore((s) => s.setSave);
   const save = useStore((s) => s.save);
   const settings = useStore((s) => s.settings);
+  const gestures = useStore((s) => s.gestures);
   const saveNextDownloadRef = useRef(false);
   const saveHex = useCallback(
     async (hex?: HexData): Promise<void> => {
@@ -162,6 +164,13 @@ export const ProjectProvider = ({
           await driverRef.current!.compile();
         });
       } else {
+        logging.event({
+          type: "hex-save",
+          detail: {
+            actions: gestures.length,
+            samples: getTotalNumSamples(gestures),
+          },
+        });
         downloadHex(hex);
         setSave({
           step: SaveStep.None,
@@ -178,8 +187,10 @@ export const ProjectProvider = ({
     [
       doAfterEditorUpdate,
       driverRef,
+      gestures,
       getCurrentProject,
       intl,
+      logging,
       save,
       setSave,
       settings.showPreSaveHelp,

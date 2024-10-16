@@ -11,13 +11,24 @@ import { useStore } from "../store";
 import UnplugRadioLinkMicrobitDialog from "./UnplugRadioLinkMicrobitDialog";
 import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
 import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
+import { useLogging } from "../logging/logging-hooks";
+import { getTotalNumSamples } from "../utils/gestures";
 
 const DownloadDialogs = () => {
   const actions = useDownloadActions();
   const stage = useStore((s) => s.download);
+  const gestures = useStore((s) => s.gestures);
+  const logging = useLogging();
   const handleDownloadProject = useCallback(async () => {
+    logging.event({
+      type: "hex-download",
+      detail: {
+        actions: gestures.length,
+        samples: getTotalNumSamples(gestures),
+      },
+    });
     await actions.connectAndFlashMicrobit(stage);
-  }, [actions, stage]);
+  }, [actions, gestures, logging, stage]);
 
   switch (stage.step) {
     case DownloadStep.Help:

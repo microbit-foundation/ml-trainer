@@ -168,7 +168,7 @@ export class DownloadProjectActions {
     await this.flashMicrobit(stage, connectionAndFlashOptions);
   };
 
-  flashMicrobit = async (
+  private flashMicrobit = async (
     stage: DownloadState,
     connectionAndFlashOptions?: ConnectionAndFlashOptions
   ) => {
