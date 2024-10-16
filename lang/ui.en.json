@@ -88,7 +88,7 @@
     "description": "Close button text or label"
   },
   "code-download-error": {
-    "defaultMessage": "Error downloading the target code",
+    "defaultMessage": "Error downloading the project code",
     "description": "Title for error message relating to project loading"
   },
   "coming-soon": {
