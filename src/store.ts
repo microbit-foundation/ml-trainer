@@ -410,6 +410,10 @@ export const useStore = create<Store>()(
           });
         },
 
+        /**
+         * Generally project loads go via MakeCode as it reads the hex but when we open projects
+         * from microbit.org we have the JSON already and use this route.
+         */
         loadProject(project: Project) {
           set(({ projectEdited, gestures: prevGestures }) => {
             const newGestures = getGesturesFromProject(project, prevGestures);
