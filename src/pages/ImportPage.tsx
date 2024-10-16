@@ -4,9 +4,8 @@ import {
   HStack,
   Input,
   Stack,
-  VStack,
   Text,
-  Divider,
+  VStack,
 } from "@chakra-ui/react";
 import { Project } from "@microbit/makecode-embed/react";
 import { useCallback, useEffect, useRef, useState } from "react";
