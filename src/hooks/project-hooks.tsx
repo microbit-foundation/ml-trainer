@@ -25,13 +25,19 @@ import {
 import { useDownloadActions } from "./download-hooks";
 import { useNavigate } from "react-router";
 import { createDataSamplesPageUrl } from "../urls";
+import { useLogging } from "../logging/logging-hooks";
+
+/**
+ * Distinguishes the different ways to trigger the load action.
+ */
+export type LoadType = "drop-load" | "file-upload";
 
 interface ProjectContext {
   openEditor(): Promise<void>;
   project: Project;
   projectEdited: boolean;
   resetProject: () => void;
-  loadFile: (file: File) => void;
+  loadFile: (file: File, type: LoadType) => void;
   /**
    * Called to request a save.
    *
@@ -71,6 +77,7 @@ export const ProjectProvider = ({
 }: ProjectProviderProps) => {
   const intl = useIntl();
   const toast = useToast();
+  const logging = useLogging();
   const setEditorOpen = useStore((s) => s.setEditorOpen);
   const projectEdited = useStore((s) => s.projectEdited);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
@@ -106,8 +113,14 @@ export const ProjectProvider = ({
   const loadDataset = useStore((s) => s.loadDataset);
   const navigate = useNavigate();
   const loadFile = useCallback(
-    async (file: File): Promise<void> => {
+    async (file: File, type: LoadType): Promise<void> => {
       const fileExtension = getLowercaseFileExtension(file.name);
+      logging.event({
+        type,
+        detail: {
+          extension: fileExtension || "none",
+        },
+      });
       if (fileExtension === "json") {
         const gestureDataString = await readFileAsText(file);
         const gestureData = JSON.parse(gestureDataString) as unknown;
@@ -124,7 +137,7 @@ export const ProjectProvider = ({
         });
       }
     },
-    [driverRef, loadDataset, navigate]
+    [driverRef, loadDataset, logging, navigate]
   );
 
   const setSave = useStore((s) => s.setSave);
