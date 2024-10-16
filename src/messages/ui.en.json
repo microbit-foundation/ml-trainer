@@ -1103,6 +1103,12 @@
       "value": "Name an action you want the micro:bit to recognise"
     }
   ],
+  "name-label": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
   "name-project": [
     {
       "type": 0,
@@ -1119,6 +1125,12 @@
     {
       "type": 0,
       "value": "The name is used when you save a file."
+    }
+  ],
+  "new-session-setup-title": [
+    {
+      "type": 0,
+      "value": "New session setup"
     }
   ],
   "newpage-continue-session-subtitle": [
@@ -1513,6 +1525,12 @@
     {
       "type": 0,
       "value": "Software versions"
+    }
+  ],
+  "start-session-action": [
+    {
+      "type": 0,
+      "value": "Start session"
     }
   ],
   "start-training-action": [

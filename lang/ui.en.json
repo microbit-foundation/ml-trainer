@@ -627,6 +627,10 @@
     "defaultMessage": "Name an action you want the micro:bit to recognise",
     "description": "Hint shown when you have an unnamed action"
   },
+  "name-label": {
+    "defaultMessage": "Name",
+    "description": "Project name label"
+  },
   "name-project": {
     "defaultMessage": "Name your project",
     "description": "Name your project header"
@@ -638,6 +642,10 @@
   "name-used-when": {
     "defaultMessage": "The name is used when you save a file.",
     "description": "Text under project name field"
+  },
+  "new-session-setup-title": {
+    "defaultMessage": "New session setup",
+    "description": "New session setup title"
   },
   "newpage-continue-session-subtitle": {
     "defaultMessage": "Use a hex file or data samples file you saved to your computer to continue a session.",
@@ -858,6 +866,10 @@
   "software-versions": {
     "defaultMessage": "Software versions",
     "description": "Software versions text"
+  },
+  "start-session-action": {
+    "defaultMessage": "Start session",
+    "description": "Start session button text"
   },
   "start-training-action": {
     "defaultMessage": "Start training",

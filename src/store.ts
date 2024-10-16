@@ -130,7 +130,7 @@ export interface Actions {
   downloadDataset(): void;
   dataCollectionMicrobitConnected(): void;
   loadDataset(gestures: GestureData[]): void;
-  loadProject(project: Project): void;
+  loadProject(project: Project, name: string): void;
   setEditorOpen(open: boolean): void;
   recordingStarted(): void;
   recordingStopped(): void;
@@ -414,13 +414,13 @@ export const useStore = create<Store>()(
          * Generally project loads go via MakeCode as it reads the hex but when we open projects
          * from microbit.org we have the JSON already and use this route.
          */
-        loadProject(project: Project) {
+        loadProject(project: Project, name: string) {
           set(() => {
             const timestamp = Date.now();
             return {
               gestures: getGesturesFromProject(project),
               model: undefined,
-              project,
+              project: renameProject(project, name),
               projectEdited: true,
               appEditNeedsFlushToEditor: true,
               timestamp,
@@ -505,28 +505,9 @@ export const useStore = create<Store>()(
         setProjectName(name: string): void {
           return set(
             ({ project }) => {
-              const pxtString = project.text?.[filenames.pxtJson];
-              const pxt = JSON.parse(pxtString ?? "{}") as Record<
-                string,
-                unknown
-              >;
-
               return {
                 appEditNeedsFlushToEditor: true,
-                project: {
-                  ...project,
-                  header: {
-                    ...project.header!,
-                    name,
-                  },
-                  text: {
-                    ...project.text,
-                    [filenames.pxtJson]: JSON.stringify({
-                      ...pxt,
-                      name,
-                    }),
-                  },
-                },
+                project: renameProject(project, name),
               };
             },
             false,
@@ -790,4 +771,24 @@ const getGesturesFromProject = (project: Project): GestureData[] => {
     return [];
   }
   return dataset.data as GestureData[];
+};
+
+const renameProject = (project: Project, name: string): Project => {
+  const pxtString = project.text?.[filenames.pxtJson];
+  const pxt = JSON.parse(pxtString ?? "{}") as Record<string, unknown>;
+
+  return {
+    ...project,
+    header: {
+      ...project.header!,
+      name,
+    },
+    text: {
+      ...project.text,
+      [filenames.pxtJson]: JSON.stringify({
+        ...pxt,
+        name,
+      }),
+    },
+  };
 };
