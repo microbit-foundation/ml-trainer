@@ -42,7 +42,7 @@ const useMicrobitResourceSearchParams = (): MicrobitOrgResource | undefined => {
   return id && name && project ? { id, project, name } : undefined;
 };
 
-const isValidEditorContent = (content: Project): content is Project => {
+const isValidProject = (content: Project): content is Project => {
   return (
     content &&
     typeof content === "object" &&
@@ -56,10 +56,15 @@ const fetchMicrobitOrgResourceTargetCode = async (
   resource: MicrobitOrgResource,
   intl: IntlShape
 ): Promise<Project> => {
-  const url = `${activitiesBaseUrl}${resource.id}-makecode.json`;
+  const url = `${activitiesBaseUrl}${encodeURIComponent(
+    resource.id
+  )}-makecode.json`;
   let json;
   try {
     const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Unexpected response ${response.status}`);
+    }
     json = (await response.json()) as object;
   } catch (e) {
     const rethrow = new Error(
@@ -72,7 +77,7 @@ const fetchMicrobitOrgResourceTargetCode = async (
     !("editorContent" in json) ||
     typeof json.editorContent !== "object" ||
     !json.editorContent ||
-    !isValidEditorContent(json.editorContent)
+    !isValidProject(json.editorContent)
   ) {
     throw new Error(intl.formatMessage({ id: "code-format-error" }));
   }
