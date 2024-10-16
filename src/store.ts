@@ -11,7 +11,6 @@ import {
 } from "./makecode/utils";
 import { trainModel } from "./ml";
 import {
-  DatasetEditorJsonFormat,
   DownloadState,
   DownloadStep,
   Gesture,
