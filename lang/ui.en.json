@@ -627,10 +627,6 @@
     "defaultMessage": "Name an action you want the micro:bit to recognise",
     "description": "Hint shown when you have an unnamed action"
   },
-  "name-label": {
-    "defaultMessage": "Name",
-    "description": "Project name label"
-  },
   "name-project": {
     "defaultMessage": "Name your project",
     "description": "Name your project header"

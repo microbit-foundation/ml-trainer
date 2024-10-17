@@ -1103,12 +1103,6 @@
       "value": "Name an action you want the micro:bit to recognise"
     }
   ],
-  "name-label": [
-    {
-      "type": 0,
-      "value": "Name"
-    }
-  ],
   "name-project": [
     {
       "type": 0,

@@ -12,12 +12,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
-import DefaultPageLayout from "../components/DefaultPageLayout";
+import DefaultPageLayout, {
+  HomeToolbarItem,
+} from "../components/DefaultPageLayout";
 import InlineForm from "../components/InlineForm";
 import { useDeployment } from "../deployment";
 import { MicrobitOrgResource } from "../model";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl, createNewPageUrl } from "../urls";
+import { useProject } from "../hooks/project-hooks";
 
 const ImportPage = () => {
   const navigate = useNavigate();
@@ -46,7 +49,7 @@ const ImportPage = () => {
 
   const isValidSetup = name.trim().length > 0;
 
-  const nameLabel = intl.formatMessage({ id: "name-label" });
+  const nameLabel = intl.formatMessage({ id: "name-text" });
 
   const handleBack = useCallback(() => {
     navigate(createNewPageUrl());
@@ -59,8 +62,16 @@ const ImportPage = () => {
     loadProject(code.current, name);
   }, [loadProject, name]);
 
+  const { saveHex } = useProject();
+  const handleSave = useCallback(() => {
+    void saveHex();
+  }, [saveHex]);
+
   return (
-    <DefaultPageLayout titleId="new-session-setup-title">
+    <DefaultPageLayout
+      titleId="new-session-setup-title"
+      toolbarItemsRight={<HomeToolbarItem />}
+    >
       <VStack justifyContent="center">
         <InlineForm width={["unset", "unset", "2xl", "2xl"]} maxW="2xl">
           <Heading as="h1" mb={5}>
@@ -68,11 +79,15 @@ const ImportPage = () => {
           </Heading>
           <Text>
             Starting a new session will overwrite your existing session. You may
-            want to save your existing session first.
+            want to{" "}
+            <Button onClick={handleSave} variant="link">
+              save your existing session
+            </Button>{" "}
+            first.
           </Text>
           <Stack py={2} spacing={5}>
             <Heading size="md" as="h2">
-              <FormattedMessage id="name-label" />
+              <FormattedMessage id="name-text" />
             </Heading>
             <Input
               aria-labelledby={nameLabel}
