@@ -37,7 +37,7 @@ interface FlagMetadata {
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
   { name: "devtools", defaultOnStages: ["local"] },
-  { name: "homePageProjects", defaultOnStages: ["local"] },
+  { name: "homePageProjects", defaultOnStages: ["local", "review", "staging"] },
   {
     name: "preReleaseNotice",
     defaultOnStages: ["review", "staging", "production"],

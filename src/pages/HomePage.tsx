@@ -205,8 +205,9 @@ const HomePage = () => {
             </Heading>
             <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
               <ResourceCard
-                title="Simple AI activity timer"
-                url="https://www.example.com"
+                // TODO: staging URL, translation? Pull from CMS or deployment config?
+                title="Simple AI exercise timer"
+                url="https://stage.microbit.org/projects/make-it-code-it/simple-ai-exercise-timer/"
                 imgSrc="https://cdn.sanity.io/images/ajwvhvgo/production/1aaac1553237900c774216aad17475ef34f8fe48-800x600.jpg?fit=max&w=1200&h=1200"
               />
               <ResourceCardPlaceholder />
