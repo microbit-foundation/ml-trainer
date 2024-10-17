@@ -67,7 +67,7 @@ const ConnectToRecordDialog = ({
       }
       case ConnectionStatus.ReconnectingExplicitly:
       case ConnectionStatus.Connecting: {
-        // This should be an impossible case.
+        // Impossible cases.
         return handleOnClose();
       }
     }
