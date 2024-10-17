@@ -104,11 +104,14 @@ export const ProjectProvider = ({
     ]
   );
   const openEditor = useCallback(async () => {
+    logging.event({
+      type: "edit-in-makecode",
+    });
     await doAfterEditorUpdate(() => {
       setEditorOpen(true);
       return Promise.resolve();
     });
-  }, [doAfterEditorUpdate, setEditorOpen]);
+  }, [doAfterEditorUpdate, logging, setEditorOpen]);
 
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
