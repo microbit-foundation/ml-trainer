@@ -464,7 +464,7 @@ const createMlStore = (logging: Logging) => {
           async trainModel() {
             const { gestures } = get();
             logging.event({
-              type: "train-model",
+              type: "model-train",
               detail: {
                 actions: gestures.length,
                 samples: getTotalNumSamples(gestures),
