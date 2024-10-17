@@ -33,17 +33,6 @@ const ConnectToRecordDialog = ({
     onClose();
   }, [onClose]);
 
-  useEffect(() => {
-    if (
-      connStage.flowStep !== ConnectionFlowStep.None ||
-      (isWaiting && connStatus === ConnectionStatus.Connected)
-    ) {
-      // Close dialog if connection dialog is opened, or
-      // if successfully connected afer loading.
-      handleOnClose();
-    }
-  }, [connStage.flowStep, connStatus, handleOnClose, isWaiting, onClose]);
-
   const handleConnect = useCallback(async () => {
     switch (connStatus) {
       case ConnectionStatus.FailedToConnect:
@@ -78,6 +67,17 @@ const ConnectToRecordDialog = ({
       }
     }
   }, [connStatus, actions, handleOnClose]);
+
+  useEffect(() => {
+    if (
+      connStage.flowStep !== ConnectionFlowStep.None ||
+      (isWaiting && connStatus === ConnectionStatus.Connected)
+    ) {
+      // Close dialog if connection dialog is opened, or
+      // if successfully connected afer loading.
+      handleOnClose();
+    }
+  }, [connStage.flowStep, connStatus, handleOnClose, isWaiting, onClose]);
 
   return (
     <Modal
