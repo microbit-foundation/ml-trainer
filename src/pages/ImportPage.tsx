@@ -28,7 +28,7 @@ const ImportPage = () => {
   const navigate = useNavigate();
   const { activitiesBaseUrl } = useDeployment();
   const resource = useMicrobitResourceSearchParams();
-  const code = useRef<Project>();
+  const project = useRef<Project>();
   const [name, setName] = useState<string>("Untitled");
   const isValidSetup = name.trim().length > 0;
 
@@ -37,12 +37,12 @@ const ImportPage = () => {
       if (!resource || !activitiesBaseUrl) {
         return;
       }
-      code.current = await fetchMicrobitOrgResourceTargetCode(
+      project.current = await fetchMicrobitOrgResourceProjectCode(
         activitiesBaseUrl,
         resource,
         intl
       );
-      setName(code.current.header?.name ?? "Untitled");
+      setName(project.current.header?.name ?? "Untitled");
     };
     void updateAsync();
   }, [activitiesBaseUrl, intl, resource]);
@@ -52,8 +52,8 @@ const ImportPage = () => {
   const { actions: connStageActions } = useConnectionStage();
 
   const handleStartSession = useCallback(() => {
-    if (code.current) {
-      loadProject(code.current, name);
+    if (project.current) {
+      loadProject(project.current, name);
       navigate(createDataSamplesPageUrl());
     } else {
       // If no resource fetched, start as new empty session.
@@ -160,7 +160,7 @@ const isValidProject = (content: Project): content is Project => {
   );
 };
 
-const fetchMicrobitOrgResourceTargetCode = async (
+const fetchMicrobitOrgResourceProjectCode = async (
   activitiesBaseUrl: string,
   resource: MicrobitOrgResource,
   intl: IntlShape
