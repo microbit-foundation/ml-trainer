@@ -11,7 +11,6 @@ import {
 } from "./makecode/utils";
 import { trainModel } from "./ml";
 import {
-  DatasetEditorJsonFormat,
   DownloadState,
   DownloadStep,
   Gesture,
@@ -134,6 +133,7 @@ export interface Actions {
   downloadDataset(): void;
   dataCollectionMicrobitConnected(): void;
   loadDataset(gestures: GestureData[]): void;
+  loadProject(project: Project): void;
   setEditorOpen(open: boolean): void;
   recordingStarted(): void;
   recordingStopped(): void;
@@ -425,12 +425,32 @@ const createMlStore = (logging: Logging) => {
                   return copy;
                 })(),
                 model: undefined,
+                timestamp: Date.now(),
                 ...updateProject(
                   project,
                   projectEdited,
                   newGestures,
                   undefined
                 ),
+              };
+            });
+          },
+
+          /**
+           * Generally project loads go via MakeCode as it reads the hex but when we open projects
+           * from microbit.org we have the JSON already and use this route.
+           */
+          loadProject(project: Project) {
+            set(() => {
+              const timestamp = Date.now();
+              return {
+                gestures: getGesturesFromProject(project),
+                model: undefined,
+                project,
+                projectEdited: true,
+                appEditNeedsFlushToEditor: true,
+                timestamp,
+                projectLoadTimestamp: timestamp,
               };
             });
           },
@@ -581,18 +601,14 @@ const createMlStore = (logging: Logging) => {
                   // It's a new project. Thanks user. We'll update our state.
                   // This will cause another write to MakeCode but that's OK as it gives us
                   // a chance to validate/update the project
-                  const datasetString =
-                    newProject.text?.[filenames.datasetJson];
-                  const dataset = datasetString
-                    ? (JSON.parse(datasetString) as DatasetEditorJsonFormat)
-                    : { data: [] };
-
+                  const timestamp = Date.now();
                   return {
                     project: newProject,
-                    projectLoadTimestamp: Date.now(),
+                    projectLoadTimestamp: timestamp,
+                    timestamp,
                     // New project loaded externally so we can't know whether its edited.
                     projectEdited: true,
-                    gestures: dataset.data,
+                    gestures: getGesturesFromProject(newProject),
                     model: undefined,
                     isEditorOpen: false,
                   };
@@ -804,4 +820,16 @@ const gestureIcon = ({
     return "Heart";
   }
   return useableIcons[0];
+};
+
+const getGesturesFromProject = (project: Project): GestureData[] => {
+  const { text } = project;
+  if (text === undefined || !("dataset.json" in text)) {
+    return [];
+  }
+  const dataset = JSON.parse(text["dataset.json"]) as object;
+  if (typeof dataset !== "object" || !("data" in dataset)) {
+    return [];
+  }
+  return dataset.data as GestureData[];
 };

@@ -8,6 +8,8 @@ export const createHomePageUrl = () => `${basepath}`;
 
 export const createNewPageUrl = () => `${basepath}new`;
 
+export const createImportPageUrl = () => `${basepath}import`;
+
 export const createDataSamplesPageUrl = () => `${basepath}data-samples`;
 
 export const createTestingModelPageUrl = () => `${basepath}testing-model`;

@@ -56,6 +56,7 @@ export interface DeploymentConfig {
 
   termsOfUseLink?: string;
   privacyPolicyLink?: string;
+  activitiesBaseUrl?: string;
 
   logging: Logging;
 }

@@ -94,7 +94,7 @@ const ReconnectErrorDialog = ({
               <VStack gap={3} textAlign="left" w="100%">
                 <Text w="100%">
                   <FormattedMessage
-                    id={`${errorTextIdPrefix}.${flowTypeText}1`}
+                    id={`${errorTextIdPrefix}-${flowTypeText}1`}
                   />
                 </Text>
                 <Text w="100%">

@@ -173,6 +173,12 @@
       "value": "Close"
     }
   ],
+  "code-download-error": [
+    {
+      "type": 0,
+      "value": "Error downloading the project code"
+    }
+  ],
   "coming-soon": [
     {
       "type": 0,
