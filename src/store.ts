@@ -139,7 +139,7 @@ export interface Actions {
   setEditorOpen(open: boolean): void;
   recordingStarted(): void;
   recordingStopped(): void;
-  newSession(): void;
+  newSession(projectName?: string): void;
   trainModelFlowStart: (callback?: () => void) => Promise<void>;
   closeTrainModelDialogs: () => void;
   trainModel(): Promise<boolean>;
@@ -218,12 +218,15 @@ const createMlStore = (logging: Logging) => {
             );
           },
 
-          newSession() {
+          newSession(projectName?: string) {
+            const untitledProject = createUntitledProject();
             set(
               {
                 gestures: [],
                 model: undefined,
-                project: createUntitledProject(),
+                project: projectName
+                  ? renameProject(untitledProject, projectName)
+                  : untitledProject,
                 projectEdited: false,
                 appEditNeedsFlushToEditor: true,
                 timestamp: Date.now(),

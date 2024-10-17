@@ -57,8 +57,9 @@ const ImportPage = () => {
       loadProject(project.current, name);
       navigate(createDataSamplesPageUrl());
     } else {
-      // If no resource fetched, start as new empty session.
-      newSession();
+      // If no resource fetched, start as new empty session
+      // with provided project name
+      newSession(name);
       navigate(createDataSamplesPageUrl());
       connStageActions.startConnect();
     }
