@@ -6,7 +6,7 @@ import {
   VisuallyHidden,
   VStack,
 } from "@chakra-ui/react";
-import { useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
@@ -15,6 +15,7 @@ import { tourElClassname } from "../tours";
 import InfoToolTip from "./InfoToolTip";
 import LedIcon from "./LedIcon";
 import LiveGraph from "./LiveGraph";
+import { useLogging } from "../logging/logging-hooks";
 
 interface LiveGraphPanelProps {
   detected?: Gesture | undefined;
@@ -30,6 +31,7 @@ const LiveGraphPanel = ({
   const intl = useIntl();
   const { actions, status } = useConnectionStage();
   const parentPortalRef = useRef(null);
+  const logging = useLogging();
   const isReconnecting =
     status === ConnectionStatus.ReconnectingAutomatically ||
     status === ConnectionStatus.ReconnectingExplicitly;
@@ -45,10 +47,21 @@ const LiveGraphPanel = ({
         }
       : {
           textId: "reconnect-action",
-          onClick: actions.reconnect,
+          onClick: () => {
+            logging.event({
+              type: "reconnect-user",
+            });
+            void actions.reconnect();
+          },
         };
-  }, [actions.startConnect, actions.reconnect, status]);
+  }, [status, actions, logging]);
 
+  const handleDisconnect = useCallback(() => {
+    logging.event({
+      type: "disconnect-user",
+    });
+    void actions.disconnect();
+  }, [actions, logging]);
   return (
     <HStack
       position="relative"
@@ -85,7 +98,7 @@ const LiveGraphPanel = ({
                 backgroundColor="white"
                 variant="secondary"
                 size="sm"
-                onClick={actions.disconnect}
+                onClick={handleDisconnect}
               >
                 <FormattedMessage id="disconnect-action" />
               </Button>
