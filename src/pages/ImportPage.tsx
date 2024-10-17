@@ -16,12 +16,11 @@ import DefaultPageLayout, {
   HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
-import InlineForm from "../components/InlineForm";
 import { useDeployment } from "../deployment";
+import { useProject } from "../hooks/project-hooks";
 import { MicrobitOrgResource } from "../model";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl, createNewPageUrl } from "../urls";
-import { useProject } from "../hooks/project-hooks";
 
 const ImportPage = () => {
   const navigate = useNavigate();
@@ -75,7 +74,21 @@ const ImportPage = () => {
       menuItems={<HomeMenuItem />}
     >
       <VStack justifyContent="center">
-        <InlineForm width={["unset", "unset", "2xl", "2xl"]} maxW="2xl">
+        <Stack
+          bgColor="white"
+          spacing={5}
+          m={[0, 5, 20]}
+          borderRadius={[0, "20px"]}
+          borderWidth={[null, 1]}
+          borderBottomWidth={1}
+          borderColor={[null, "gray.300"]}
+          py={[5, 8]}
+          px={[3, 5, 8]}
+          minW={[null, null, "xl"]}
+          alignItems="stretch"
+          width={["unset", "unset", "2xl", "2xl"]}
+          maxW="2xl"
+        >
           <Heading as="h1" mb={5}>
             <FormattedMessage id="new-session-setup-title" />
           </Heading>
@@ -118,7 +131,7 @@ const ImportPage = () => {
               <FormattedMessage id="start-session-action" />
             </Button>
           </HStack>
-        </InlineForm>
+        </Stack>
       </VStack>
     </DefaultPageLayout>
   );
