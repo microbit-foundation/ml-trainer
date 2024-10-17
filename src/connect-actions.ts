@@ -130,7 +130,7 @@ export class ConnectActions {
         partial: true,
         // If we could improve the re-rendering due to progress further we can remove this and accept the
         // default which updates 4x as often.
-        miniumProgressIncrement: 0.01,
+        minimumProgressIncrement: 0.01,
         progress: (v: number | undefined) => progress(v ?? 1),
       });
       return ConnectResult.Success;
