@@ -15,24 +15,31 @@ import {
   useRef,
 } from "react";
 import { useIntl } from "react-intl";
+import { useNavigate } from "react-router";
+import { useLogging } from "../logging/logging-hooks";
 import { HexData, isDatasetUserFileFormat, SaveStep } from "../model";
+import { defaultProjectName } from "../project-name";
 import { useStore } from "../store";
+import { createDataSamplesPageUrl } from "../urls";
 import {
   downloadHex,
   getLowercaseFileExtension,
   readFileAsText,
 } from "../utils/fs-util";
+import { getTotalNumSamples } from "../utils/gestures";
 import { useDownloadActions } from "./download-hooks";
-import { useNavigate } from "react-router";
-import { createDataSamplesPageUrl } from "../urls";
-import { defaultProjectName } from "../project-name";
+
+/**
+ * Distinguishes the different ways to trigger the load action.
+ */
+export type LoadType = "drop-load" | "file-upload";
 
 interface ProjectContext {
   openEditor(): Promise<void>;
   project: Project;
   projectEdited: boolean;
   resetProject: () => void;
-  loadFile: (file: File) => void;
+  loadFile: (file: File, type: LoadType) => void;
   /**
    * Called to request a save.
    *
@@ -72,6 +79,7 @@ export const ProjectProvider = ({
 }: ProjectProviderProps) => {
   const intl = useIntl();
   const toast = useToast();
+  const logging = useLogging();
   const setEditorOpen = useStore((s) => s.setEditorOpen);
   const projectEdited = useStore((s) => s.projectEdited);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
@@ -97,18 +105,27 @@ export const ProjectProvider = ({
     ]
   );
   const openEditor = useCallback(async () => {
+    logging.event({
+      type: "edit-in-makecode",
+    });
     await doAfterEditorUpdate(() => {
       setEditorOpen(true);
       return Promise.resolve();
     });
-  }, [doAfterEditorUpdate, setEditorOpen]);
+  }, [doAfterEditorUpdate, logging, setEditorOpen]);
 
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
   const navigate = useNavigate();
   const loadFile = useCallback(
-    async (file: File): Promise<void> => {
+    async (file: File, type: LoadType): Promise<void> => {
       const fileExtension = getLowercaseFileExtension(file.name);
+      logging.event({
+        type,
+        detail: {
+          extension: fileExtension || "none",
+        },
+      });
       if (fileExtension === "json") {
         const gestureDataString = await readFileAsText(file);
         const gestureData = JSON.parse(gestureDataString) as unknown;
@@ -125,12 +142,13 @@ export const ProjectProvider = ({
         });
       }
     },
-    [driverRef, loadDataset, navigate]
+    [driverRef, loadDataset, logging, navigate]
   );
 
   const setSave = useStore((s) => s.setSave);
   const save = useStore((s) => s.save);
   const settings = useStore((s) => s.settings);
+  const gestures = useStore((s) => s.gestures);
   const saveNextDownloadRef = useRef(false);
   const saveHex = useCallback(
     async (hex?: HexData): Promise<void> => {
@@ -150,6 +168,13 @@ export const ProjectProvider = ({
           await driverRef.current!.compile();
         });
       } else {
+        logging.event({
+          type: "hex-save",
+          detail: {
+            actions: gestures.length,
+            samples: getTotalNumSamples(gestures),
+          },
+        });
         downloadHex(hex);
         setSave({
           step: SaveStep.None,
@@ -166,8 +191,10 @@ export const ProjectProvider = ({
     [
       doAfterEditorUpdate,
       driverRef,
+      gestures,
       getCurrentProject,
       intl,
+      logging,
       save,
       setSave,
       settings.showPreSaveHelp,

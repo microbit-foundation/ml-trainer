@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ChakraProvider } from "@chakra-ui/react";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
-import React, { ReactNode, useMemo, useRef } from "react";
+import React, { ReactNode, useEffect, useMemo, useRef } from "react";
 import {
   Outlet,
   RouterProvider,
@@ -117,6 +117,30 @@ const createRouter = () => {
 };
 
 const App = () => {
+  useEffect(() => {
+    if (navigator.bluetooth) {
+      navigator.bluetooth
+        .getAvailability()
+        .then((bluetoothAvailable) => {
+          logging.event({
+            type: "boot",
+            detail: {
+              bluetoothAvailable,
+            },
+          });
+        })
+        .catch((err) => {
+          logging.error(err);
+        });
+    } else {
+      logging.event({
+        type: "boot",
+        detail: {
+          bluetoothAvailable: false,
+        },
+      });
+    }
+  }, []);
   const router = useMemo(createRouter, []);
   return (
     <Providers>

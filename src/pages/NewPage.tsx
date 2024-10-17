@@ -21,9 +21,10 @@ import LoadProjectInput, {
 } from "../components/LoadProjectInput";
 import NewPageChoice from "../components/NewPageChoice";
 import { useConnectionStage } from "../connection-stage-hooks";
+import { useLogging } from "../logging/logging-hooks";
+import { defaultProjectName } from "../project-name";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
-import { defaultProjectName } from "../project-name";
 
 const NewPage = () => {
   const existingSessionTimestamp = useStore((s) => s.timestamp);
@@ -33,10 +34,14 @@ const NewPage = () => {
   const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
   const { actions: connStageActions } = useConnectionStage();
+  const logging = useLogging();
 
   const handleOpenLastSession = useCallback(() => {
+    logging.event({
+      type: "session-open-last",
+    });
     navigate(createDataSamplesPageUrl());
-  }, [navigate]);
+  }, [logging, navigate]);
 
   const loadProjectRef = useRef<LoadProjectInputRef>(null);
   const handleContinueSessionFromFile = useCallback(() => {
@@ -44,10 +49,13 @@ const NewPage = () => {
   }, []);
 
   const handleStartNewSession = useCallback(() => {
+    logging.event({
+      type: "session-open-new",
+    });
     newSession();
     navigate(createDataSamplesPageUrl());
     connStageActions.startConnect();
-  }, [newSession, navigate, connStageActions]);
+  }, [logging, newSession, navigate, connStageActions]);
 
   const intl = useIntl();
   const lastSessionTitle = intl.formatMessage({
