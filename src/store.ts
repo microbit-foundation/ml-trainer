@@ -25,6 +25,7 @@ import {
 } from "./model";
 import { defaultSettings, Settings } from "./settings";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
+import { defaultProjectName } from "./project-name";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -40,7 +41,7 @@ const createUntitledProject = (): Project => ({
   header: {
     target: "microbit",
     targetVersion: "7.1.2",
-    name: "Untitled",
+    name: defaultProjectName,
     meta: {},
     editor: "blocksprj",
     pubId: "",

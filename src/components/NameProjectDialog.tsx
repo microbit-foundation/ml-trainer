@@ -21,8 +21,9 @@ import {
   Input,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { validateProjectName } from "../project-name";
 import { useStore } from "../store";
 
 interface NameProjectDialogProps {
@@ -31,12 +32,6 @@ interface NameProjectDialogProps {
   onSave: (newName?: string) => void;
 }
 
-type ValidationResult = "valid" | "project name empty";
-
-const validateProjectName = (name: string): ValidationResult => {
-  return name.trim().length === 0 ? "project name empty" : "valid";
-};
-
 export const NameProjectDialog = ({
   onClose,
   isOpen,
@@ -44,8 +39,7 @@ export const NameProjectDialog = ({
 }: NameProjectDialogProps) => {
   const initialName = useStore((s) => s.project.header?.name ?? "");
   const [name, setName] = useState<string>(initialName);
-  const validationResult = useMemo(() => validateProjectName(name), [name]);
-  const isValid = validationResult === "valid";
+  const isValid = validateProjectName(name);
   const ref = useCallback((input: HTMLInputElement | null) => {
     input?.setSelectionRange(0, input.value.length);
   }, []);
@@ -77,7 +71,7 @@ export const NameProjectDialog = ({
                   <FormHelperText color="gray.700">
                     <FormattedMessage id="name-used-when" />
                   </FormHelperText>
-                  {validationResult === "project name empty" && (
+                  {!isValid && (
                     <FormErrorMessage>
                       <FormattedMessage id="project-name-not-empty" />
                     </FormErrorMessage>

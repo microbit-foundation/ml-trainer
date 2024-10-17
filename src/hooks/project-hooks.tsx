@@ -25,6 +25,7 @@ import {
 import { useDownloadActions } from "./download-hooks";
 import { useNavigate } from "react-router";
 import { createDataSamplesPageUrl } from "../urls";
+import { defaultProjectName } from "../project-name";
 
 interface ProjectContext {
   openEditor(): Promise<void>;
@@ -137,7 +138,7 @@ export const ProjectProvider = ({
       if (settings.showPreSaveHelp && step === SaveStep.None) {
         setSave({ hex, step: SaveStep.PreSaveHelp });
       } else if (
-        getCurrentProject().header?.name === "Untitled" &&
+        getCurrentProject().header?.name === defaultProjectName &&
         step === SaveStep.None
       ) {
         setSave({ hex, step: SaveStep.ProjectName });

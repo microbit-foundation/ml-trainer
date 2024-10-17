@@ -22,6 +22,7 @@ import { MicrobitOrgResource } from "../model";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
 import { useConnectionStage } from "../connection-stage-hooks";
+import { defaultProjectName, validateProjectName } from "../project-name";
 
 const ImportPage = () => {
   const intl = useIntl();
@@ -29,8 +30,8 @@ const ImportPage = () => {
   const { activitiesBaseUrl } = useDeployment();
   const resource = useMicrobitResourceSearchParams();
   const project = useRef<Project>();
-  const [name, setName] = useState<string>("Untitled");
-  const isValidSetup = name.trim().length > 0;
+  const [name, setName] = useState<string>(defaultProjectName);
+  const isValidSetup = validateProjectName(name);
 
   useEffect(() => {
     const updateAsync = async () => {
@@ -42,7 +43,7 @@ const ImportPage = () => {
         resource,
         intl
       );
-      setName(project.current.header?.name ?? "Untitled");
+      setName(project.current.header?.name ?? defaultProjectName);
     };
     void updateAsync();
   }, [activitiesBaseUrl, intl, resource]);

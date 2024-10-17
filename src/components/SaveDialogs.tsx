@@ -5,11 +5,12 @@ import SaveHelpDialog from "./SaveHelpDialog";
 import SaveProgressDialog from "./SaveProgressDialog";
 import { SaveStep } from "../model";
 import { NameProjectDialog } from "./NameProjectDialog";
+import { defaultProjectName } from "../project-name";
 
 const SaveDialogs = () => {
   const setSave = useStore((s) => s.setSave);
   const projectName = useStore((s) => s.project.header?.name);
-  const isUntitled = projectName === "Untitled";
+  const isUntitled = projectName === defaultProjectName;
   const { step, hex } = useStore((s) => s.save);
   const setProjectName = useStore((s) => s.setProjectName);
   const { saveHex } = useProject();
