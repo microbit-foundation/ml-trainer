@@ -28,6 +28,7 @@ import { defaultSettings, Settings } from "./settings";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { deployment } from "./deployment";
 import { Logging } from "./logging/logging";
+import { getTotalNumSamples } from "./utils/gestures";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -462,7 +463,13 @@ const createMlStore = (logging: Logging) => {
 
           async trainModel() {
             const { gestures } = get();
-            logging.event({ type: "trainModel" });
+            logging.event({
+              type: "train-model",
+              detail: {
+                actions: gestures.length,
+                samples: getTotalNumSamples(gestures),
+              },
+            });
             const actionName = "trainModel";
             set({
               trainModelDialogStage: TrainModelDialogStage.TrainingInProgress,
