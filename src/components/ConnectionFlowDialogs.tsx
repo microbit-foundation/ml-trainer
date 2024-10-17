@@ -23,6 +23,7 @@ import TryAgainDialog from "./TryAgainDialog";
 import UnsupportedMicrobitDialog from "./UnsupportedMicrobitDialog";
 import WebUsbBluetoothUnsupportedDialog from "./WebUsbBluetoothUnsupportedDialog";
 import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
+import { useLogging } from "../logging/logging-hooks";
 
 const ConnectionDialogs = () => {
   const { stage, actions } = useConnectionStage();
@@ -72,6 +73,12 @@ const ConnectionDialogs = () => {
   }, []);
 
   async function connectAndFlash(): Promise<void> {
+    if (stage.flowType === ConnectionFlowType.ConnectRadioBridge) {
+      logging.event({
+        type: "connect-user",
+        message: "radio-bridge",
+      });
+    }
     await actions.connectAndflashMicrobit(progressCallback, onFlashSuccess);
   }
   const onSkip = useCallback(
@@ -84,6 +91,14 @@ const ConnectionDialogs = () => {
   );
 
   const dialogCommonProps = { isOpen, onClose };
+  const logging = useLogging();
+  const handleConnectBluetooth = useCallback(() => {
+    logging.event({
+      type: "connect-user",
+      message: "bluetooth",
+    });
+    void actions.connectBluetooth();
+  }, [actions, logging]);
 
   switch (stage.flowStep) {
     case ConnectionFlowStep.ReconnectFailedTwice:
@@ -167,7 +182,7 @@ const ConnectionDialogs = () => {
         <SelectMicrobitBluetoothDialog
           {...dialogCommonProps}
           onBackClick={actions.onBackClick}
-          onNextClick={actions.connectBluetooth}
+          onNextClick={handleConnectBluetooth}
         />
       );
     }
