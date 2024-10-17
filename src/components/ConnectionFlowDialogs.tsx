@@ -27,6 +27,7 @@ import { useLogging } from "../logging/logging-hooks";
 
 const ConnectionDialogs = () => {
   const { stage, actions } = useConnectionStage();
+  const logging = useLogging();
   const [flashProgress, setFlashProgress] = useState<number>(0);
   const { isOpen, onClose: onCloseDialog, onOpen } = useDisclosure();
   const [microbitName, setMicrobitName] = useState<string | undefined>(
@@ -72,7 +73,7 @@ const ConnectionDialogs = () => {
     }
   }, []);
 
-  async function connectAndFlash(): Promise<void> {
+  const connectAndFlash = useCallback(async () => {
     if (stage.flowType === ConnectionFlowType.ConnectRadioBridge) {
       logging.event({
         type: "connect-user",
@@ -80,7 +81,8 @@ const ConnectionDialogs = () => {
       });
     }
     await actions.connectAndflashMicrobit(progressCallback, onFlashSuccess);
-  }
+  }, [actions, logging, onFlashSuccess, progressCallback, stage.flowType]);
+
   const onSkip = useCallback(
     () => actions.setFlowStep(ConnectionFlowStep.ConnectBattery),
     [actions]
@@ -91,7 +93,7 @@ const ConnectionDialogs = () => {
   );
 
   const dialogCommonProps = { isOpen, onClose };
-  const logging = useLogging();
+
   const handleConnectBluetooth = useCallback(() => {
     logging.event({
       type: "connect-user",
