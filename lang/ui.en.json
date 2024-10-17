@@ -97,7 +97,7 @@
   },
   "code-tooltip": {
     "defaultMessage": "These are the MakeCode blocks for each detected action when you transfer your ML model and code to a micro:bit",
-    "description": "Output column heading tooltip"
+    "description": "Code column heading tooltip"
   },
   "coming-soon": {
     "defaultMessage": "Coming soon",
