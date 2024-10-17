@@ -96,10 +96,12 @@ const ConnectionDialogs = () => {
           }
         };
 
-        logging.event({
-          type: "connect-user",
-          message: "radio-bridge",
-        });
+        if (stage.flowType === ConnectionFlowType.ConnectRadioBridge) {
+          logging.event({
+            type: "connect-user",
+            message: "radio-bridge",
+          });
+        }
         await actions.connectAndflashMicrobit(progressCallback, onFlashSuccess);
       };
       return (
