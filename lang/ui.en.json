@@ -1040,11 +1040,11 @@
     "description": "Unplug radio link micro:bit dialog title"
   },
   "unsupported-device-explain": {
-    "defaultMessage": "Unfortunately, we only support using micro:bit V2 when connecting two micro:bits. You have connected a <link>micro:bit V1</link>.",
+    "defaultMessage": "Unfortunately, we only support using micro:bit V2 when connecting using micro:bit radio. You have connected a <link>micro:bit V1</link>.",
     "description": "Unsupported device dialog"
   },
   "unsupported-device-header": {
-    "defaultMessage": "micro:bit V1 is not supported for connecting two micro:bits",
+    "defaultMessage": "micro:bit radio connections do not support micro:bit V1",
     "description": "Unsupported device dialog"
   },
   "unsupported-device-with-bluetooth": {

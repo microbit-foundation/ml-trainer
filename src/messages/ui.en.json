@@ -1824,7 +1824,7 @@
   "unsupported-device-explain": [
     {
       "type": 0,
-      "value": "Unfortunately, we only support using micro:bit V2 when connecting two micro:bits. You have connected a "
+      "value": "Unfortunately, we only support using micro:bit V2 when connecting using micro:bit radio. You have connected a "
     },
     {
       "children": [
@@ -1844,7 +1844,7 @@
   "unsupported-device-header": [
     {
       "type": 0,
-      "value": "micro:bit V1 is not supported for connecting two micro:bits"
+      "value": "micro:bit radio connections do not support micro:bit V1"
     }
   ],
   "unsupported-device-with-bluetooth": [
