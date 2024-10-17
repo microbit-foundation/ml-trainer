@@ -18,7 +18,6 @@ import { Logging } from "./logging/logging";
 export enum ConnectResult {
   Success = "Success",
   Failed = "Failed",
-  ErrorMicrobitUnsupported = "ErrorMicrobitUnsupported",
   ErrorBadFirmware = "ErrorBadFirmware",
   ErrorNoDeviceSelected = "ErrorNoDeviceSelected",
   ErrorUnableToClaimInterface = "ErrorUnableToClaimInterface",
@@ -120,10 +119,6 @@ export class ConnectActions {
     const data = Object.values(HexType).includes(hex as HexType)
       ? getFlashDataSource(hex as HexType)
       : createUniversalHexFlashDataSource(hex);
-
-    if (!data) {
-      return ConnectResult.ErrorMicrobitUnsupported;
-    }
     try {
       await usb.flash(data, {
         partial: true,
