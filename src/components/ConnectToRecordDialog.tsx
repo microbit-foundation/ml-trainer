@@ -56,8 +56,7 @@ const ConnectToRecordDialog = ({
         await actions.reconnect();
         return handleOnClose();
       }
-      case ConnectionStatus.ReconnectingAutomatically:
-      case ConnectionStatus.ReconnectingExplicitly: {
+      case ConnectionStatus.ReconnectingAutomatically: {
         // Wait for reconnection to happen.
         setIsWaiting(true);
         return;
@@ -66,9 +65,10 @@ const ConnectToRecordDialog = ({
         // Start recording if connected.
         return handleOnClose();
       }
+      case ConnectionStatus.ReconnectingExplicitly:
       case ConnectionStatus.Connecting: {
         // This should be an impossible case.
-        return;
+        return handleOnClose();
       }
     }
   }, [connStatus, actions, handleOnClose]);
