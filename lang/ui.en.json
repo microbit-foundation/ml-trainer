@@ -639,6 +639,10 @@
     "defaultMessage": "The name is used when you save a file.",
     "description": "Text under project name field"
   },
+  "new-session-setup-description": {
+    "defaultMessage": "Starting a new session will overwrite your existing session. You may want to <link>save your existing session</link> first.",
+    "description": "New session setup description"
+  },
   "new-session-setup-title": {
     "defaultMessage": "New session setup",
     "description": "New session setup title"

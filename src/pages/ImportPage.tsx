@@ -8,7 +8,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Project } from "@microbit/makecode-embed/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
@@ -78,12 +78,16 @@ const ImportPage = () => {
             <FormattedMessage id="new-session-setup-title" />
           </Heading>
           <Text>
-            Starting a new session will overwrite your existing session. You may
-            want to{" "}
-            <Button onClick={handleSave} variant="link">
-              save your existing session
-            </Button>{" "}
-            first.
+            <FormattedMessage
+              id="new-session-setup-description"
+              values={{
+                link: (chunks: ReactNode) => (
+                  <Button onClick={handleSave} variant="link">
+                    {chunks}
+                  </Button>
+                ),
+              }}
+            />
           </Text>
           <Stack py={2} spacing={5}>
             <Heading size="md" as="h2">
