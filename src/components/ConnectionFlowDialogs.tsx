@@ -1,5 +1,4 @@
-import { useDisclosure } from "@chakra-ui/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { bluetoothUniversalHex } from "../connection-stage-actions";
 import {
   ConnectionFlowStep,
@@ -7,6 +6,7 @@ import {
   ConnectionStage,
   useConnectionStage,
 } from "../connection-stage-hooks";
+import { useLogging } from "../logging/logging-hooks";
 import BrokenFirmwareDialog from "./BrokenFirmwareDialog";
 import ConnectBatteryDialog from "./ConnectBatteryDialog";
 import ConnectCableDialog, {
@@ -23,29 +23,19 @@ import TryAgainDialog from "./TryAgainDialog";
 import UnsupportedMicrobitDialog from "./UnsupportedMicrobitDialog";
 import WebUsbBluetoothUnsupportedDialog from "./WebUsbBluetoothUnsupportedDialog";
 import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
-import { useLogging } from "../logging/logging-hooks";
 
 const ConnectionDialogs = () => {
   const { stage, actions } = useConnectionStage();
   const logging = useLogging();
   const [flashProgress, setFlashProgress] = useState<number>(0);
-  const { isOpen, onClose: onCloseDialog, onOpen } = useDisclosure();
   const [microbitName, setMicrobitName] = useState<string | undefined>(
     stage.bluetoothMicrobitName
   );
   const onClose = useCallback(() => {
     actions.setFlowStep(ConnectionFlowStep.None);
-    onCloseDialog();
-  }, [actions, onCloseDialog]);
+  }, [actions]);
 
-  useEffect(() => {
-    if (stage.flowStep !== ConnectionFlowStep.None && !isOpen) {
-      onOpen();
-    }
-    if (stage.flowStep === ConnectionFlowStep.None && isOpen) {
-      onClose();
-    }
-  }, [isOpen, onClose, onOpen, stage]);
+  const isOpen = stage.flowStep !== ConnectionFlowStep.None;
 
   const progressCallback = useCallback(
     (progress: number) => {
@@ -57,50 +47,7 @@ const ConnectionDialogs = () => {
     [actions, stage.flowStep]
   );
 
-  const onChangeMicrobitName = useCallback(
-    (name: string) => {
-      actions.onChangeMicrobitName(name);
-      setMicrobitName(name);
-    },
-    [actions]
-  );
-
-  const onFlashSuccess = useCallback((newStage: ConnectionStage) => {
-    // Inferring microbit name saves the user from entering the pattern
-    // for bluetooth connection flow
-    if (newStage.bluetoothMicrobitName) {
-      setMicrobitName(newStage.bluetoothMicrobitName);
-    }
-  }, []);
-
-  const connectAndFlash = useCallback(async () => {
-    if (stage.flowType === ConnectionFlowType.ConnectRadioBridge) {
-      logging.event({
-        type: "connect-user",
-        message: "radio-bridge",
-      });
-    }
-    await actions.connectAndflashMicrobit(progressCallback, onFlashSuccess);
-  }, [actions, logging, onFlashSuccess, progressCallback, stage.flowType]);
-
-  const onSkip = useCallback(
-    () => actions.setFlowStep(ConnectionFlowStep.ConnectBattery),
-    [actions]
-  );
-  const onInstructManualFlashing = useCallback(
-    () => actions.setFlowStep(ConnectionFlowStep.ManualFlashingTutorial),
-    [actions]
-  );
-
   const dialogCommonProps = { isOpen, onClose };
-
-  const handleConnectBluetooth = useCallback(() => {
-    logging.event({
-      type: "connect-user",
-      message: "bluetooth",
-    });
-    void actions.connectBluetooth();
-  }, [actions, logging]);
 
   switch (stage.flowStep) {
     case ConnectionFlowStep.ReconnectFailedTwice:
@@ -134,12 +81,27 @@ const ConnectionDialogs = () => {
           onBackClick={actions.onBackClick}
           onNextClick={actions.onNextClick}
           config={config}
-          onSkip={onSkip}
+          onSkip={() => actions.setFlowStep(ConnectionFlowStep.ConnectBattery)}
           onSwitch={actions.switchFlowType}
         />
       );
     }
     case ConnectionFlowStep.WebUsbFlashingTutorial: {
+      const connectAndFlash = async () => {
+        const onFlashSuccess = (newStage: ConnectionStage) => {
+          // Inferring microbit name saves the user from entering the pattern
+          // for bluetooth connection flow
+          if (newStage.bluetoothMicrobitName) {
+            setMicrobitName(newStage.bluetoothMicrobitName);
+          }
+        };
+
+        logging.event({
+          type: "connect-user",
+          message: "radio-bridge",
+        });
+        await actions.connectAndflashMicrobit(progressCallback, onFlashSuccess);
+      };
       return (
         <SelectMicrobitUsbDialog
           {...dialogCommonProps}
@@ -175,11 +137,21 @@ const ConnectionDialogs = () => {
           onBackClick={actions.onBackClick}
           onNextClick={actions.onNextClick}
           microbitName={microbitName}
-          onChangeMicrobitName={onChangeMicrobitName}
+          onChangeMicrobitName={(name: string) => {
+            actions.onChangeMicrobitName(name);
+            setMicrobitName(name);
+          }}
         />
       );
     }
     case ConnectionFlowStep.ConnectBluetoothTutorial: {
+      const handleConnectBluetooth = () => {
+        logging.event({
+          type: "connect-user",
+          message: "bluetooth",
+        });
+        void actions.connectBluetooth();
+      };
       return (
         <SelectMicrobitBluetoothDialog
           {...dialogCommonProps}
@@ -227,7 +199,9 @@ const ConnectionDialogs = () => {
       return (
         <BrokenFirmwareDialog
           {...dialogCommonProps}
-          onSkip={onInstructManualFlashing}
+          onSkip={() =>
+            actions.setFlowStep(ConnectionFlowStep.ManualFlashingTutorial)
+          }
           onTryAgain={actions.onTryAgain}
         />
       );

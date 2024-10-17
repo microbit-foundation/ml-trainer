@@ -108,6 +108,7 @@ export interface State {
   isEditorOpen: boolean;
 
   download: DownloadState;
+  downloadFlashingProgress: number;
   save: SaveState;
 
   settings: Settings;
@@ -163,6 +164,8 @@ export interface Actions {
   projectFlushedToEditor(): void;
 
   setDownload(state: DownloadState): void;
+  // TODO: does the persistence slow this down? we could move it to another store
+  setDownloadFlashingProgress(value: number): void;
   setSave(state: SaveState): void;
 
   tourStart(tourId: TourId): void;
@@ -186,8 +189,8 @@ const createMlStore = (logging: Logging) => {
           download: {
             step: DownloadStep.None,
             microbitToFlash: MicrobitToFlash.Default,
-            flashProgress: 0,
           },
+          downloadFlashingProgress: 0,
           save: {
             step: SaveStep.None,
           },
@@ -624,7 +627,14 @@ const createMlStore = (logging: Logging) => {
             );
           },
           setDownload(download: DownloadState) {
-            set({ download }, false, "setDownload");
+            set(
+              { download, downloadFlashingProgress: 0 },
+              false,
+              "setDownload"
+            );
+          },
+          setDownloadFlashingProgress(value) {
+            set({ downloadFlashingProgress: value });
           },
           setSave(save: SaveState) {
             set({ save }, false, "setSave");

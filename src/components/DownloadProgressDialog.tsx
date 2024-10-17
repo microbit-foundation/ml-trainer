@@ -29,6 +29,8 @@ export const getHeadingId = (flowType: ConnectionFlowType) => {
   }
 };
 
+const noop = () => {};
+
 const DownloadProgressDialog = ({
   isOpen,
   headingId,
@@ -39,7 +41,7 @@ const DownloadProgressDialog = ({
       closeOnOverlayClick={false}
       motionPreset="none"
       isOpen={isOpen}
-      onClose={() => {}}
+      onClose={noop}
       size="3xl"
       isCentered
     >

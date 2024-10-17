@@ -23,6 +23,7 @@ import { useSettings, useStore } from "../store";
 import { downloadHex } from "../utils/fs-util";
 
 export class DownloadProjectActions {
+  private flashingProgressCallback: (value: number) => void;
   constructor(
     private state: DownloadState,
     private setState: (stage: DownloadState) => void,
@@ -31,8 +32,16 @@ export class DownloadProjectActions {
     private connectActions: ConnectActions,
     private connectionStage: ConnectionStage,
     private connectionStageActions: ConnectionStageActions,
-    private connectionStatus: ConnectionStatus
-  ) {}
+    private connectionStatus: ConnectionStatus,
+    flashingProgressCallback: (value: number) => void
+  ) {
+    this.flashingProgressCallback = (value: number) => {
+      if (state.step !== DownloadStep.FlashingInProgress) {
+        setState({ ...state, step: DownloadStep.FlashingInProgress });
+      }
+      flashingProgressCallback(value);
+    };
+  }
 
   clearMakeCodeUsbDevice = () => {
     this.setState({ ...this.state, usbDevice: undefined });
@@ -196,14 +205,6 @@ export class DownloadProjectActions {
     }
   };
 
-  private flashingProgressCallback = (progress: number) => {
-    this.setState({
-      ...this.state,
-      step: DownloadStep.FlashingInProgress,
-      flashProgress: progress,
-    });
-  };
-
   getOnNext = () => {
     const nextStep = this.getNextStep();
     return nextStep ? () => this.setStep(nextStep) : undefined;
@@ -270,6 +271,9 @@ export class DownloadProjectActions {
 
 export const useDownloadActions = (): DownloadProjectActions => {
   const stage = useStore((s) => s.download);
+  const setDownloadFlashingProgress = useStore(
+    (s) => s.setDownloadFlashingProgress
+  );
   const setStage = useStore((s) => s.setDownload);
   const [settings, setSettings] = useSettings();
   const connectActions = useConnectActions();
@@ -288,13 +292,15 @@ export const useDownloadActions = (): DownloadProjectActions => {
         connectActions,
         connectionStage,
         connectionStageActions,
-        connectionStatus
+        connectionStatus,
+        setDownloadFlashingProgress
       ),
     [
       connectActions,
       connectionStage,
       connectionStageActions,
       connectionStatus,
+      setDownloadFlashingProgress,
       setSettings,
       setStage,
       settings,
