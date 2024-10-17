@@ -77,11 +77,13 @@ const ConnectToRecordDialog = ({
     if (connStage.flowStep !== ConnectionFlowStep.None) {
       // Close dialog if connection dialog is opened.
       handleOnClose();
+      return;
     }
     if (isWaiting && connStatus === ConnectionStatus.Connected) {
-      // Start recording once connected.
+      // Start recording once reconnected after waiting.
       handleOnClose();
       startRecording();
+      return;
     }
   }, [
     connStage.flowStep,
