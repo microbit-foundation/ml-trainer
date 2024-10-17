@@ -19,7 +19,6 @@ import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
 import RecordingDialog from "./RecordingDialog";
 import ConnectToRecordDialog from "./ConnectToRecordDialog";
 import { FormattedMessage } from "react-intl";
-import { ConnectionStatus } from "../connect-status-hooks";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -56,11 +55,8 @@ const DataSamplesGridView = () => {
   const connectToRecordDialogDisclosure = useDisclosure();
 
   const connection = useConnectActions();
-  const {
-    actions,
-    isConnected,
-    status: connectionStatus,
-  } = useConnectionStage();
+  const { actions } = useConnectionStage();
+  const { isConnected } = useConnectionStage();
   const loadProjectInputRef = useRef<LoadProjectInputRef>(null);
 
   useEffect(() => {
@@ -155,13 +151,7 @@ const DataSamplesGridView = () => {
               selected={selectedGesture.ID === g.ID}
               onSelectRow={() => setSelectedGestureIdx(idx)}
               onRecord={
-                isConnected
-                  ? onOpen
-                  : connectionStatus ===
-                      ConnectionStatus.ReconnectingAutomatically ||
-                    connectionStatus === ConnectionStatus.ReconnectingExplicitly
-                  ? () => {}
-                  : connectToRecordDialogDisclosure.onOpen
+                isConnected ? onOpen : connectToRecordDialogDisclosure.onOpen
               }
               showWalkThrough={showWalkThrough}
             />
