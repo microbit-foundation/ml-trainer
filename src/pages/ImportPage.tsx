@@ -13,6 +13,7 @@ import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import DefaultPageLayout, {
+  HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
 import InlineForm from "../components/InlineForm";
@@ -71,6 +72,7 @@ const ImportPage = () => {
     <DefaultPageLayout
       titleId="new-session-setup-title"
       toolbarItemsRight={<HomeToolbarItem />}
+      menuItems={<HomeMenuItem />}
     >
       <VStack justifyContent="center">
         <InlineForm width={["unset", "unset", "2xl", "2xl"]} maxW="2xl">
