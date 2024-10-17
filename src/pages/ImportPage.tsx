@@ -20,16 +20,17 @@ import { useDeployment } from "../deployment";
 import { useProject } from "../hooks/project-hooks";
 import { MicrobitOrgResource } from "../model";
 import { useStore } from "../store";
-import { createDataSamplesPageUrl, createNewPageUrl } from "../urls";
+import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
+import { useConnectionStage } from "../connection-stage-hooks";
 
 const ImportPage = () => {
-  const navigate = useNavigate();
   const intl = useIntl();
+  const navigate = useNavigate();
   const { activitiesBaseUrl } = useDeployment();
   const resource = useMicrobitResourceSearchParams();
   const code = useRef<Project>();
-  const loadProject = useStore((s) => s.loadProject);
   const [name, setName] = useState<string>("Untitled");
+  const isValidSetup = name.trim().length > 0;
 
   useEffect(() => {
     const updateAsync = async () => {
@@ -42,31 +43,36 @@ const ImportPage = () => {
         intl
       );
       setName(code.current.header?.name ?? "Untitled");
-      navigate(createDataSamplesPageUrl());
     };
     void updateAsync();
-  }, [activitiesBaseUrl, intl, loadProject, navigate, resource]);
+  }, [activitiesBaseUrl, intl, resource]);
 
-  const isValidSetup = name.trim().length > 0;
-
-  const nameLabel = intl.formatMessage({ id: "name-text" });
-
-  const handleBack = useCallback(() => {
-    navigate(createNewPageUrl());
-  }, [navigate]);
+  const loadProject = useStore((s) => s.loadProject);
+  const newSession = useStore((s) => s.newSession);
+  const { actions: connStageActions } = useConnectionStage();
 
   const handleStartSession = useCallback(() => {
-    if (!code.current) {
-      throw new Error("No imported project found");
+    if (code.current) {
+      loadProject(code.current, name);
+      navigate(createDataSamplesPageUrl());
+    } else {
+      // If no resource fetched, start as new empty session.
+      newSession();
+      navigate(createDataSamplesPageUrl());
+      connStageActions.startConnect();
     }
-    loadProject(code.current, name);
-  }, [loadProject, name]);
+  }, [connStageActions, loadProject, name, navigate, newSession]);
+
+  const handleBack = useCallback(() => {
+    navigate(createHomePageUrl());
+  }, [navigate]);
 
   const { saveHex } = useProject();
   const handleSave = useCallback(() => {
     void saveHex();
   }, [saveHex]);
 
+  const nameLabel = intl.formatMessage({ id: "name-text" });
   return (
     <DefaultPageLayout
       titleId="new-session-setup-title"
