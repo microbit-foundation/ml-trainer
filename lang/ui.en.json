@@ -91,6 +91,14 @@
     "defaultMessage": "Error downloading the project code",
     "description": "Title for error message relating to project loading"
   },
+  "code-label": {
+    "defaultMessage": "Code",
+    "description": "Code column heading"
+  },
+  "code-tooltip": {
+    "defaultMessage": "These are the MakeCode blocks for each detected action when you transfer your ML model and code to a micro:bit",
+    "description": "Output column heading tooltip"
+  },
   "coming-soon": {
     "defaultMessage": "Coming soon",
     "description": "Placeholder text for future projects"
@@ -718,14 +726,6 @@
   "other-tabs-heading": {
     "defaultMessage": "Connect using WebUSB",
     "description": "Connection error dialog"
-  },
-  "output-label": {
-    "defaultMessage": "Output",
-    "description": "Output column heading"
-  },
-  "output-tooltip": {
-    "defaultMessage": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit.",
-    "description": "Output column heading tooltip"
   },
   "privacy": {
     "defaultMessage": "Privacy policy",
