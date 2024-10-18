@@ -52,7 +52,6 @@ export const trainModel = async ({
       epochs: totalNumEpochs,
       batchSize: 16,
       shuffle: true,
-      stepsPerEpoch: 4,
       // We don't do anything with the validation data, so might
       // as well train using all of it.
       validationSplit: 0,
