@@ -51,7 +51,7 @@ const DataSamplesGridView = () => {
       (gestures.length === 1 && gestures[0].recordings.length === 0),
     [gestures]
   );
-  const recordingDialogDisclosure = useDisclosure();
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const connectToRecordDialogDisclosure = useDisclosure();
 
   const connection = useConnectActions();
@@ -61,9 +61,9 @@ const DataSamplesGridView = () => {
 
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
-      if (!recordingDialogDisclosure.isOpen) {
+      if (!isOpen) {
         if (e.state) {
-          recordingDialogDisclosure.onOpen();
+          onOpen();
         }
       }
     };
@@ -71,7 +71,7 @@ const DataSamplesGridView = () => {
     return () => {
       connection.removeButtonListener("B", listener);
     };
-  }, [connection, recordingDialogDisclosure]);
+  }, [connection, isOpen, onOpen]);
 
   return (
     <>
@@ -82,8 +82,8 @@ const DataSamplesGridView = () => {
       {selectedGesture && (
         <RecordingDialog
           gestureId={selectedGesture.ID}
-          isOpen={recordingDialogDisclosure.isOpen}
-          onClose={recordingDialogDisclosure.onClose}
+          isOpen={isOpen}
+          onClose={onClose}
           actionName={selectedGesture.name}
         />
       )}
@@ -151,9 +151,7 @@ const DataSamplesGridView = () => {
               selected={selectedGesture.ID === g.ID}
               onSelectRow={() => setSelectedGestureIdx(idx)}
               onRecord={
-                isConnected
-                  ? recordingDialogDisclosure.onOpen
-                  : connectToRecordDialogDisclosure.onOpen
+                isConnected ? onOpen : connectToRecordDialogDisclosure.onOpen
               }
               showWalkThrough={showWalkThrough}
             />
