@@ -63,7 +63,6 @@ const NewPageChoice = ({
           height="100%"
           variant="unstyled"
           icon={icon}
-          onClick={onClick}
           borderInlineEndRadius="md"
           _groupHover={{
             color: disabled ? undefined : "#efedf5",
