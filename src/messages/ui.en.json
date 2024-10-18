@@ -179,6 +179,18 @@
       "value": "Error downloading the project code"
     }
   ],
+  "code-label": [
+    {
+      "type": 0,
+      "value": "Code"
+    }
+  ],
+  "code-tooltip": [
+    {
+      "type": 0,
+      "value": "These are the MakeCode blocks for each detected action when you transfer your ML model and code to a micro:bit"
+    }
+  ],
   "coming-soon": [
     {
       "type": 0,
@@ -1305,18 +1317,6 @@
     {
       "type": 0,
       "value": "Connect using WebUSB"
-    }
-  ],
-  "output-label": [
-    {
-      "type": 0,
-      "value": "Output"
-    }
-  ],
-  "output-tooltip": [
-    {
-      "type": 0,
-      "value": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit."
     }
   ],
   "privacy": [
