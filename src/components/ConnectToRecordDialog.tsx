@@ -17,16 +17,10 @@ import {
 } from "../connection-stage-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
 
-interface ConnectToRecordDialogProps
-  extends Omit<ComponentProps<typeof Modal>, "children"> {
-  startRecording: () => void;
-}
-
 const ConnectToRecordDialog = ({
   onClose,
-  startRecording,
   ...rest
-}: ConnectToRecordDialogProps) => {
+}: Omit<ComponentProps<typeof Modal>, "children">) => {
   const {
     actions,
     status: connStatus,
@@ -62,7 +56,7 @@ const ConnectToRecordDialog = ({
         return;
       }
       case ConnectionStatus.Connected: {
-        // Start recording if connected.
+        // Connected whilst dialog is up.
         return handleOnClose();
       }
       case ConnectionStatus.ReconnectingExplicitly:
@@ -74,25 +68,16 @@ const ConnectToRecordDialog = ({
   }, [connStatus, actions, handleOnClose]);
 
   useEffect(() => {
-    if (connStage.flowStep !== ConnectionFlowStep.None) {
-      // Close dialog if connection dialog is opened.
+    if (
+      connStage.flowStep !== ConnectionFlowStep.None ||
+      (isWaiting && connStatus === ConnectionStatus.Connected)
+    ) {
+      // Close dialog if connection dialog is opened, or
+      // once connected after waiting.
       handleOnClose();
       return;
     }
-    if (isWaiting && connStatus === ConnectionStatus.Connected) {
-      // Start recording once reconnected after waiting.
-      handleOnClose();
-      startRecording();
-      return;
-    }
-  }, [
-    connStage.flowStep,
-    connStatus,
-    handleOnClose,
-    isWaiting,
-    onClose,
-    startRecording,
-  ]);
+  }, [connStage.flowStep, connStatus, handleOnClose, isWaiting, onClose]);
 
   return (
     <Modal

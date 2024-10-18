@@ -78,7 +78,6 @@ const DataSamplesGridView = () => {
       <ConnectToRecordDialog
         isOpen={connectToRecordDialogDisclosure.isOpen}
         onClose={connectToRecordDialogDisclosure.onClose}
-        startRecording={recordingDialogDisclosure.onOpen}
       />
       {selectedGesture && (
         <RecordingDialog
