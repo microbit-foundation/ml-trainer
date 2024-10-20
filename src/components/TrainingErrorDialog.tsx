@@ -18,16 +18,16 @@ const TrainingErrorDialog = ({ ...rest }: Omit<ModalProps, "children">) => {
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage id="content.trainer.failure.header" />
+            <FormattedMessage id="train-error-header" />
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <VStack gap={3} textAlign="left" w="100%">
               <Text w="100%">
-                <FormattedMessage id="content.trainer.failure.body" />
+                <FormattedMessage id="train-error-body" />
               </Text>
               <Text w="100%" fontWeight="bold">
-                <FormattedMessage id="content.trainer.failure.todo" />
+                <FormattedMessage id="train-error-todo" />
               </Text>
             </VStack>
           </ModalBody>

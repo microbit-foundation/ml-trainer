@@ -54,7 +54,7 @@ const ManualFlashingDialog = ({
 
   return (
     <ConnectContainerDialog
-      headingId="connectMB.transferHex.heading"
+      headingId="transfer-hex-heading"
       additionalActions={
         closeIsPrimaryAction ? (
           <Button onClick={props.onClose} variant="primary" size="lg">
@@ -67,7 +67,7 @@ const ManualFlashingDialog = ({
       <VStack gap={5} width="100%">
         <Text alignSelf="left" width="100%">
           <FormattedMessage
-            id="connectMB.transferHex.manualDownload"
+            id="transfer-hex-manual-download"
             values={{
               link: (chunks: ReactNode) => (
                 <Button variant="link" onClick={handleDownload}>
@@ -78,12 +78,12 @@ const ManualFlashingDialog = ({
           />
         </Text>
         <Text alignSelf="left" width="100%">
-          <FormattedMessage id="connectMB.transferHex.message" />
+          <FormattedMessage id="transfer-hex-message" />
         </Text>
         <Image
           height={imageProps.height}
           src={imageProps.src}
-          alt={intl.formatMessage({ id: "connectMB.transferHex.altText" })}
+          alt={intl.formatMessage({ id: "transfer-hex-alt" })}
           mb={5}
         />
       </VStack>

@@ -131,8 +131,8 @@ const Tour = () => {
                 </Button>
               ) : (
                 <Button variant="primary" size="sm" onClick={tourNext}>
-                  {intl.formatMessage({ id: "connectMB.nextButton" })} (
-                  {index + 1}/{steps.length})
+                  {intl.formatMessage({ id: "next-action" })} ({index + 1}/
+                  {steps.length})
                 </Button>
               )}
             </HStack>

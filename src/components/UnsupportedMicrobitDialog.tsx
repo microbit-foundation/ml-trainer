@@ -41,13 +41,13 @@ const UnsupportedMicrobitDialog = ({
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage id="connectMB.unsupportedMicrobit.header" />
+            <FormattedMessage id="unsupported-device-header" />
           </ModalHeader>
           <ModalBody>
             <VStack gap={5} textAlign="left" w="100%">
               <Text w="100%">
                 <FormattedMessage
-                  id="connectMB.unsupportedMicrobit.explain"
+                  id="unsupported-device-explain"
                   values={{
                     link: (chunks: ReactNode) => (
                       <Link
@@ -64,10 +64,10 @@ const UnsupportedMicrobitDialog = ({
               </Text>
               <Text w="100%">
                 {isBluetoothSupported ? (
-                  <FormattedMessage id="connectMB.unsupportedMicrobit.withBluetooth" />
+                  <FormattedMessage id="unsupported-device-with-bluetooth" />
                 ) : (
                   <FormattedMessage
-                    id="connectMB.unsupportedMicrobit.withoutBluetooth"
+                    id="unsupported-device-without-bluetooth"
                     values={{
                       link: (chunks: ReactNode) => (
                         <Link
@@ -93,7 +93,7 @@ const UnsupportedMicrobitDialog = ({
                   variant="primary"
                   size="lg"
                 >
-                  <FormattedMessage id="connectMB.unsupportedMicrobit.ctaWithBluetooth" />
+                  <FormattedMessage id="connect-with-web-bluetooth" />
                 </Button>
               ) : (
                 <Button onClick={onClose} variant="primary" size="lg">

@@ -8,16 +8,15 @@ import DefaultPageLayout, {
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
 import TestingModelGridView from "../components/TestingModelGridView";
-import { SessionPageId } from "../pages-config";
 import { useStore } from "../store";
-import { createSessionPageUrl } from "../urls";
+import { createDataSamplesPageUrl } from "../urls";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
   const model = useStore((s) => s.model);
 
   const navigateToDataSamples = useCallback(() => {
-    navigate(createSessionPageUrl(SessionPageId.DataSamples));
+    navigate(createDataSamplesPageUrl());
   }, [navigate]);
 
   useEffect(() => {
@@ -28,7 +27,7 @@ const TestingModelPage = () => {
 
   return model ? (
     <DefaultPageLayout
-      titleId={`${SessionPageId.TestingModel}-title`}
+      titleId="testing-model-title"
       showPageTitle
       menuItems={<ProjectMenuItems />}
       toolbarItemsRight={<ProjectToolbarItems />}

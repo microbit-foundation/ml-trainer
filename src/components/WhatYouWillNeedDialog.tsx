@@ -16,42 +16,42 @@ const itemsConfig = {
   radio: [
     {
       imgSrc: twoMicrobitsImage,
-      titleId: "connectMB.radioStart.requirements1",
-      subtitleId: "connectMB.radioStart.requirements1.subtitle",
+      titleId: "connect-radio-start-requirements1",
+      subtitleId: "connect-radio-start-requirements1-subtitle",
     },
     {
       imgSrc: computerImage,
-      titleId: "connectMB.radioStart.requirements2",
-      subtitleId: "connectMB.radioStart.requirements2.subtitle",
+      titleId: "connect-computer",
+      subtitleId: "connect-radio-start-requirements2-subtitle",
     },
     {
       imgSrc: usbCableImage,
-      titleId: "connectMB.radioStart.requirements3",
+      titleId: "connect-micro-usb-cable",
     },
     {
       imgSrc: batteryPackImage,
-      titleId: "connectMB.radioStart.requirements4",
-      subtitleId: "connectMB.radioStart.requirements4.subtitle",
+      titleId: "connect-battery-holder",
+      subtitleId: "connect-with-batteries",
     },
   ],
   bluetooth: [
     {
       imgSrc: microbitImage,
-      titleId: "connectMB.bluetoothStart.requirements1",
+      titleId: "connect-bluetooth-start-requirements1",
     },
     {
       imgSrc: computerBluetoothImage,
-      titleId: "connectMB.bluetoothStart.requirements2",
-      subtitleId: "connectMB.bluetoothStart.requirements2.subtitle",
+      titleId: "connect-computer",
+      subtitleId: "connect-bluetooth-start-requirements2-subtitle",
     },
     {
       imgSrc: usbCableImage,
-      titleId: "connectMB.bluetoothStart.requirements3",
+      titleId: "connect-micro-usb-cable",
     },
     {
       imgSrc: batteryPackImage,
-      titleId: "connectMB.bluetoothStart.requirements4",
-      subtitleId: "connectMB.bluetoothStart.requirements4.subtitle",
+      titleId: "connect-battery-holder",
+      subtitleId: "connect-with-batteries",
     },
   ],
 };
@@ -78,16 +78,16 @@ const WhatYouWillNeedDialog = ({
       {...props}
       headingId={
         reconnect
-          ? `reconnectFailed.${type}Heading`
-          : `connectMB.${type}Start.heading`
+          ? `reconnect-failed-${type}-heading`
+          : `connect-${type}-start-heading`
       }
       footerLeft={
         <VStack alignItems="start">
           {onLinkClick && (
             <Button onClick={onLinkClick} variant="link" size="lg">
               <FormattedMessage
-                id={`connectMB.${type}Start.switch${
-                  type === "bluetooth" ? "Radio" : "Bluetooth"
+                id={`connect-${type}-start-switch-${
+                  type === "bluetooth" ? "radio" : "bluetooth"
                 }`}
               />
             </Button>
@@ -95,7 +95,7 @@ const WhatYouWillNeedDialog = ({
           {reconnect && (
             <ExternalLink
               href={supportLinks.troubleshooting}
-              textId="connectMB.troubleshoot"
+              textId="connect-troubleshoot"
             />
           )}
         </VStack>
@@ -103,7 +103,7 @@ const WhatYouWillNeedDialog = ({
     >
       {reconnect && (
         <Text>
-          <FormattedMessage id="reconnectFailed.subtitle" />
+          <FormattedMessage id="reconnect-failed-subtitle" />
         </Text>
       )}
       <Grid

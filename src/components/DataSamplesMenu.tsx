@@ -16,17 +16,38 @@ import {
   RiUpload2Line,
 } from "react-icons/ri";
 import { useStore } from "../store";
+import { useLogging } from "../logging/logging-hooks";
+import { useCallback } from "react";
+import { getTotalNumSamples } from "../utils/gestures";
 
 const DataSamplesMenu = () => {
   const intl = useIntl();
-  const downloadDataSet = useStore((s) => s.downloadDataset);
+  const logging = useLogging();
+  const gestures = useStore((s) => s.gestures);
+  const downloadDataset = useStore((s) => s.downloadDataset);
+  const handleDownloadDataset = useCallback(() => {
+    logging.event({
+      type: "dataset-save",
+      detail: {
+        actions: gestures.length,
+        samples: getTotalNumSamples(gestures),
+      },
+    });
+    downloadDataset();
+  }, [downloadDataset, gestures, logging]);
   const deleteAllGestures = useStore((s) => s.deleteAllGestures);
+  const handleDeleteAllGestures = useCallback(() => {
+    logging.event({
+      type: "dataset-delete",
+    });
+    deleteAllGestures();
+  }, [deleteAllGestures, logging]);
   return (
     <Menu>
       <MenuButton
         as={IconButton}
         aria-label={intl.formatMessage({
-          id: "content.data.controlbar.button.menu",
+          id: "data-actions-menu",
         })}
         variant="ghost"
         icon={<Icon as={MdMoreVert} color="gray.800" boxSize={7} />}
@@ -35,13 +56,16 @@ const DataSamplesMenu = () => {
       <Portal>
         <MenuList>
           <LoadProjectMenuItem icon={<RiUpload2Line />} accept=".json">
-            <FormattedMessage id="content.data.controlbar.button.uploadData" />
+            <FormattedMessage id="import-data-samples-action" />
           </LoadProjectMenuItem>
-          <MenuItem icon={<RiDownload2Line />} onClick={downloadDataSet}>
-            <FormattedMessage id="content.data.controlbar.button.downloadData" />
+          <MenuItem icon={<RiDownload2Line />} onClick={handleDownloadDataset}>
+            <FormattedMessage id="download-data-samples-action" />
           </MenuItem>
-          <MenuItem icon={<RiDeleteBin2Line />} onClick={deleteAllGestures}>
-            <FormattedMessage id="content.data.controlbar.button.clearData" />
+          <MenuItem
+            icon={<RiDeleteBin2Line />}
+            onClick={handleDeleteAllGestures}
+          >
+            <FormattedMessage id="delete-data-samples-action" />
           </MenuItem>
         </MenuList>
       </Portal>

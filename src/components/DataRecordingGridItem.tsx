@@ -66,7 +66,7 @@ const DataRecordingGridItem = ({
                 variant="ghost"
                 _hover={{ backgroundColor: "transparent" }}
                 aria-label={intl.formatMessage(
-                  { id: "content.data.recordAction" },
+                  { id: "record-action-aria" },
                   { action: data.name }
                 )}
                 opacity={isConnected ? 1 : 0.5}
@@ -88,7 +88,7 @@ const DataRecordingGridItem = ({
                   right={0}
                   size="sm"
                   aria-label={intl.formatMessage({
-                    id: "content.data.deleteRecording",
+                    id: "delete-recording-aria",
                   })}
                   onClick={() => {
                     handleDeleteRecording(idx);

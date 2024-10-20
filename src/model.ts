@@ -130,7 +130,6 @@ export enum MicrobitToFlash {
 export interface DownloadState {
   step: DownloadStep;
   microbitToFlash: MicrobitToFlash;
-  flashProgress: number;
   hex?: HexData;
   // The micro:bit used to flash the hex.  We remember your choice for easy code
   // iteration for as long as the editor is open.
@@ -171,3 +170,28 @@ export enum TourId {
   CollectDataToTrainModel = "collectDataToTrainModel",
   TestModelPage = "testModelPage",
 }
+
+/**
+ * Information passed omn the URL from microbit.org.
+ * We call back into microbit.org to grab a JSON file with
+ * full details.
+ */
+export type MicrobitOrgResource = {
+  /**
+   * ID that can be used when fetching the code from microbit.org.
+   */
+  id: string;
+
+  /**
+   * Name of the microbit.org project or lesson.
+   *
+   * We use this to load the target code.
+   */
+  project: string;
+
+  /**
+   * Name of the actual code snippet.
+   * Due to a data issue this can often be the same as the project name.
+   */
+  name: string;
+};

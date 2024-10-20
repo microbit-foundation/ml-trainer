@@ -27,14 +27,11 @@ const OneLineContent = ({ textId }: { textId: string }) => {
 const ReplugMicrobitContent = () => {
   return (
     <>
-      <OneLineContent textId="connectMB.usbTryAgain.replugMicrobit1" />
+      <OneLineContent textId="webusb-retry-replug1" />
       <VStack textAlign="left" w="100%">
-        <OneLineContent textId="connectMB.usbTryAgain.replugMicrobit2" />
+        <OneLineContent textId="webusb-retry-replug2" />
         <UnorderedList textAlign="left" w="100%" ml={20}>
-          {[
-            "connectMB.usbTryAgain.replugMicrobit3",
-            "connectMB.usbTryAgain.replugMicrobit4",
-          ].map((textId) => (
+          {["webusb-retry-replug3", "webusb-retry-replug4"].map((textId) => (
             <ListItem key={textId}>
               <Text>
                 <FormattedMessage id={textId} />
@@ -52,13 +49,10 @@ const CloseTabsContent = () => {
   return (
     <VStack>
       <Text textAlign="left" w="100%">
-        <FormattedMessage id="connectMB.usbTryAgain.closeTabs1" />
+        <FormattedMessage id="other-tabs-body1" />
       </Text>
       <Text textAlign="left" w="100%">
-        <FormattedMessage
-          id="connectMB.usbTryAgain.closeTabs2"
-          values={{ appNameShort }}
-        />
+        <FormattedMessage id="other-tabs-body2" values={{ appNameShort }} />
       </Text>
     </VStack>
   );
@@ -66,21 +60,21 @@ const CloseTabsContent = () => {
 
 const configs = {
   [ConnectionFlowStep.TryAgainReplugMicrobit]: {
-    headingId: "connectMB.usbTryAgain.heading",
+    headingId: "other-tabs-heading",
     children: <ReplugMicrobitContent />,
   },
   [ConnectionFlowStep.TryAgainCloseTabs]: {
-    headingId: "connectMB.usbTryAgain.heading",
+    headingId: "other-tabs-heading",
     children: <CloseTabsContent />,
   },
   [ConnectionFlowStep.TryAgainWebUsbSelectMicrobit]: {
-    headingId: "connectMB.usbTryAgain.heading",
-    children: <OneLineContent textId="connectMB.usbTryAgain.selectMicrobit" />,
+    headingId: "other-tabs-heading",
+    children: <OneLineContent textId="webusb-retry-no-select" />,
   },
   [ConnectionFlowStep.TryAgainBluetoothSelectMicrobit]: {
-    headingId: "connectMB.bluetooth.heading",
+    headingId: "connect-bluetooth-heading",
     children: (
-      <OneLineContent textId="connectMB.bluetooth.cancelledConnection" />
+      <OneLineContent textId="connect-bluetooth-cancelled-connection" />
     ),
   },
 };
@@ -130,7 +124,7 @@ const TryAgainDialog = ({
                 <FormattedMessage id="cancel-action" />
               </Button>
               <Button onClick={onTryAgain} variant="primary" size="lg">
-                <FormattedMessage id="connectMB.tryAgain" />
+                <FormattedMessage id="try-again-action" />
               </Button>
             </HStack>
           </ModalFooter>

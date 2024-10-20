@@ -60,7 +60,7 @@ const RecordingDialog = ({
       { value: 2, duration: 500, fontSize: "8xl" },
       { value: 1, duration: 500, fontSize: "8xl" },
       {
-        value: intl.formatMessage({ id: "content.data.recordingDialog.go" }),
+        value: intl.formatMessage({ id: "go-action" }),
         duration: 1000,
         fontSize: "6xl",
       },
@@ -114,7 +114,7 @@ const RecordingDialog = ({
                 position: "top",
                 duration: 5_000,
                 title: intl.formatMessage({
-                  id: "alert.recording.disconnectedDuringRecording",
+                  id: "disconnected-during-recording",
                 }),
                 variant: "subtle",
                 status: "error",
@@ -156,7 +156,7 @@ const RecordingDialog = ({
         <ModalContent>
           <ModalHeader>
             <FormattedMessage
-              id="content.data.recordingDialog.title"
+              id="recording-data-for"
               values={{ action: actionName }}
             />
           </ModalHeader>
@@ -171,7 +171,7 @@ const RecordingDialog = ({
                     fontWeight="bold"
                     color="brand.500"
                   >
-                    <FormattedMessage id="content.data.recordingDialog.recording" />
+                    <FormattedMessage id="recording" />
                   </Text>
                 ) : (
                   <Text
@@ -198,7 +198,7 @@ const RecordingDialog = ({
                 alignSelf="center"
                 onClick={handleOnClose}
               >
-                <FormattedMessage id="content.data.recording.button.cancel" />
+                <FormattedMessage id="cancel-recording-action" />
               </Button>
             </VStack>
           </ModalBody>

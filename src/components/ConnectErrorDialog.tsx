@@ -34,32 +34,29 @@ interface ConnectErrorDialogProps {
 
 const contentConfig = {
   [ConnectionFlowType.ConnectBluetooth]: {
-    listHeading: "disconnectedWarning.bluetooth2",
+    listHeading: "disconnected-warning-bluetooth2",
     bullets: [
-      "disconnectedWarning.bluetooth3",
-      "disconnectedWarning.bluetooth4",
+      "disconnected-warning-bluetooth3",
+      "disconnected-warning-bluetooth4",
     ],
   },
   [ConnectionFlowType.ConnectRadioBridge]: {
-    listHeading: "connectMB.usbTryAgain.replugMicrobit2",
-    bullets: [
-      "connectMB.usbTryAgain.replugMicrobit3",
-      "connectMB.usbTryAgain.replugMicrobit4",
-    ],
+    listHeading: "webusb-retry-replug2",
+    bullets: ["webusb-retry-replug3", "webusb-retry-replug4"],
   },
   [ConnectionFlowType.ConnectRadioRemote]: {
-    listHeading: "disconnectedWarning.bluetooth2",
+    listHeading: "disconnected-warning-bluetooth2",
     bullets: [
-      "disconnectedWarning.bluetooth3",
-      "disconnectedWarning.bluetooth4",
+      "disconnected-warning-bluetooth3",
+      "disconnected-warning-bluetooth4",
     ],
   },
 };
 
 const errorTextIdPrefixConfig = {
-  [ConnectionFlowStep.ConnectionLost]: "disconnectedWarning",
-  [ConnectionFlowStep.ReconnectFailed]: "reconnectFailed",
-  [ConnectionFlowStep.ConnectFailed]: "connectFailed",
+  [ConnectionFlowStep.ConnectionLost]: "disconnected-warning",
+  [ConnectionFlowStep.ReconnectFailed]: "reconnect-failed",
+  [ConnectionFlowStep.ConnectFailed]: "connect-failed",
 };
 
 const ReconnectErrorDialog = ({
@@ -88,7 +85,7 @@ const ReconnectErrorDialog = ({
         <ModalContent>
           <ModalHeader>
             <FormattedMessage
-              id={`${errorTextIdPrefix}.${flowTypeText}Heading`}
+              id={`${errorTextIdPrefix}-${flowTypeText}-heading`}
             />
           </ModalHeader>
           <ModalCloseButton />
@@ -97,7 +94,7 @@ const ReconnectErrorDialog = ({
               <VStack gap={3} textAlign="left" w="100%">
                 <Text w="100%">
                   <FormattedMessage
-                    id={`${errorTextIdPrefix}.${flowTypeText}1`}
+                    id={`${errorTextIdPrefix}-${flowTypeText}1`}
                   />
                 </Text>
                 <Text w="100%">
@@ -117,7 +114,7 @@ const ReconnectErrorDialog = ({
           </ModalBody>
           <ModalFooter justifyContent="space-between">
             <ExternalLink
-              textId="connectMB.troubleshooting"
+              textId="connect-troubleshooting"
               href={supportLinks.troubleshooting}
             />
             <HStack gap={5}>
@@ -128,8 +125,8 @@ const ReconnectErrorDialog = ({
                 <FormattedMessage
                   id={
                     errorStep === ConnectionFlowStep.ConnectFailed
-                      ? "footer.connectButton"
-                      : "actions.reconnect"
+                      ? "connect-action"
+                      : "reconnect-action"
                   }
                 />
               </Button>

@@ -24,14 +24,14 @@ const SelectMicrobitBluetoothDialog = ({
   const intl = useIntl();
 
   return (
-    <ConnectContainerDialog headingId="connectMB.webPopup" {...props}>
+    <ConnectContainerDialog headingId="connect-popup" {...props}>
       <Box position="relative" width={"100%"} alignSelf={""}>
         <Image
           height={365}
           width={418}
           src={selectMicrobitImage}
           alt={intl.formatMessage({
-            id: "connectMB.webPopup.webBluetooth.altText",
+            id: "connect-popup-bluetooth-alt",
           })}
         />
         <Text
@@ -42,7 +42,7 @@ const SelectMicrobitBluetoothDialog = ({
           top="0px"
           fontSize="xl"
         >
-          <FormattedMessage id="connectMB.webPopup.instruction.heading" />
+          <FormattedMessage id="connect-popup-instruction-heading" />
         </Text>
         <List
           position="absolute"
@@ -57,7 +57,7 @@ const SelectMicrobitBluetoothDialog = ({
                 <Text>1. </Text>
               </VisuallyHidden>
               <Text>
-                <FormattedMessage id="connectMB.webPopup.instruction1" />
+                <FormattedMessage id="connect-popup-instruction1" />
               </Text>
             </Flex>
           </ListItem>
@@ -67,7 +67,7 @@ const SelectMicrobitBluetoothDialog = ({
                 <Text>2. </Text>
               </VisuallyHidden>
               <Text>
-                <FormattedMessage id="connectMB.webPopup.webBluetooth.instruction2" />
+                <FormattedMessage id="connect-popup-bluetooth-instruction2" />
               </Text>
             </Flex>
           </ListItem>

@@ -22,7 +22,7 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
   const intl = useIntl();
 
   return (
-    <ConnectContainerDialog headingId="connectMB.webPopup" {...props}>
+    <ConnectContainerDialog headingId="connect-popup" {...props}>
       <Box position="relative" width="100%">
         <Image
           height={375}
@@ -38,7 +38,7 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
           top="0px"
           fontSize="xl"
         >
-          <FormattedMessage id="connectMB.webPopup.instruction.heading" />
+          <FormattedMessage id="connect-popup-instruction-heading" />
         </Text>
         <List
           position="absolute"
@@ -53,7 +53,7 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
                 <Text>1. </Text>
               </VisuallyHidden>
               <Text>
-                <FormattedMessage id="connectMB.webPopup.instruction1" />
+                <FormattedMessage id="connect-popup-instruction1" />
               </Text>
             </Flex>
           </ListItem>
@@ -63,7 +63,7 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
                 <Text>2. </Text>
               </VisuallyHidden>
               <Text>
-                <FormattedMessage id="connectMB.webPopup.webUsb.instruction2" />
+                <FormattedMessage id="connect-popup-webusb-instruction2" />
               </Text>
             </Flex>
           </ListItem>

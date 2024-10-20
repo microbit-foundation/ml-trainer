@@ -75,7 +75,7 @@ const CertaintyThresholdGridItem = ({
             <PercentageDisplay
               ariaLabel={intl.formatMessage(
                 {
-                  id: "certainty-label",
+                  id: "certainty-percentage-label",
                 },
                 { currentConfidence, action: actionName }
               )}
@@ -85,12 +85,12 @@ const CertaintyThresholdGridItem = ({
           </HStack>
           <VStack alignItems="left" gap={1}>
             <Text fontSize="sm" textColor="gray.600">
-              <FormattedMessage id="content.model.output.recognitionPoint" />
+              <FormattedMessage id="recognition-point-label" />
             </Text>
             <Slider
               onChange={handleThresholdChange}
               aria-label={intl.formatMessage({
-                id: "content.model.output.recognitionPoint",
+                id: "recognition-point-label",
               })}
               _focusWithin={{
                 [`.${markClass}`]: {

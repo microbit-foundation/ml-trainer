@@ -57,12 +57,12 @@ const EnterBluetoothPatternDialog = ({
     <ConnectContainerDialog
       onNextClick={handleNextClick}
       onBackClick={handleBackClick}
-      headingId="connectMB.pattern.heading"
+      headingId="connect-pattern-heading"
       {...props}
     >
       <VStack gap={10}>
         <Text width="100%">
-          <FormattedMessage id="connectMB.pattern.subtitle" />
+          <FormattedMessage id="connect-pattern-subtitle" />
         </Text>
         <VStack>
           <BluetoothPatternInput
@@ -76,7 +76,7 @@ const EnterBluetoothPatternDialog = ({
               opacity={showInvalid ? 1 : 0}
               aria-hidden={!showInvalid}
             >
-              <FormattedMessage id="connectMB.bluetooth.invalidPattern" />
+              <FormattedMessage id="connect-bluetooth-invalid-pattern" />
             </Text>
           </VStack>
         </VStack>

@@ -22,10 +22,9 @@ import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
 import { SaveStep, TrainModelDialogStage } from "../model";
-import { SessionPageId } from "../pages-config";
 import Tour from "../pages/Tour";
 import { useStore } from "../store";
-import { createHomePageUrl, createSessionPageUrl } from "../urls";
+import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
 import ActionBar from "./ActionBar";
 import AppLogo from "./AppLogo";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
@@ -83,7 +82,7 @@ const DefaultPageLayout = ({
       ) => {
         if (projectLoadTimestamp > prevProjectLoadTimestamp) {
           // Side effects of loading a project, which MakeCode notifies us of.
-          navigate(createSessionPageUrl(SessionPageId.DataSamples));
+          navigate(createDataSamplesPageUrl());
           toast({
             position: "top",
             duration: 5_000,
@@ -192,7 +191,7 @@ export const HomeToolbarItem = () => {
     <IconButton
       onClick={handleHomeClick}
       icon={<RiHome2Line size={24} color="white" />}
-      aria-label={intl.formatMessage({ id: "homepage.Link" })}
+      aria-label={intl.formatMessage({ id: "homepage" })}
       variant="plain"
       size="lg"
       fontSize="xl"

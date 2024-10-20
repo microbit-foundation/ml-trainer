@@ -86,7 +86,7 @@ export const tours: Record<TourId, TourStep[]> = {
     },
     {
       selector: classSelector(tourElClassname.trainModelButton),
-      title: <FormattedMessage id="menu.trainer.trainModelButton" />,
+      title: <FormattedMessage id="train-model" />,
       content: (
         <FormattedMessageStepContent id="tour-collectData-trainModel-content" />
       ),
@@ -103,9 +103,7 @@ export const tours: Record<TourId, TourStep[]> = {
       ),
     },
     {
-      title: (
-        <FormattedMessage id="content.model.output.estimatedGesture.descriptionTitle" />
-      ),
+      title: <FormattedMessage id="estimated-action-label" />,
       content: (
         <FormattedMessageStepContent id="tour-testModel-estimatedAction-content" />
       ),

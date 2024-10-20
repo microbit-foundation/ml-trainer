@@ -65,7 +65,7 @@ const DownloadHelpDialog = ({
                 <FormattedMessage id="cancel-action" />
               </Button>
               <Button variant="primary" onClick={handleOnNext} size="lg">
-                <FormattedMessage id="connectMB.nextButton" />
+                <FormattedMessage id="next-action" />
               </Button>
             </HStack>
           </ModalFooter>

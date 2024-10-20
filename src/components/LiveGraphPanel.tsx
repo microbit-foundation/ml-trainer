@@ -6,7 +6,7 @@ import {
   VisuallyHidden,
   VStack,
 } from "@chakra-ui/react";
-import { useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
@@ -15,6 +15,7 @@ import { tourElClassname } from "../tours";
 import InfoToolTip from "./InfoToolTip";
 import LedIcon from "./LedIcon";
 import LiveGraph from "./LiveGraph";
+import { useLogging } from "../logging/logging-hooks";
 
 interface LiveGraphPanelProps {
   detected?: Gesture | undefined;
@@ -30,6 +31,7 @@ const LiveGraphPanel = ({
   const intl = useIntl();
   const { actions, status } = useConnectionStage();
   const parentPortalRef = useRef(null);
+  const logging = useLogging();
   const isReconnecting =
     status === ConnectionStatus.ReconnectingAutomatically ||
     status === ConnectionStatus.ReconnectingExplicitly;
@@ -40,15 +42,26 @@ const LiveGraphPanel = ({
       status === ConnectionStatus.FailedToReconnectTwice ||
       status === ConnectionStatus.FailedToSelectBluetoothDevice
       ? {
-          textId: "footer.connectButton",
+          textId: "connect-action",
           onClick: actions.startConnect,
         }
       : {
-          textId: "actions.reconnect",
-          onClick: actions.reconnect,
+          textId: "reconnect-action",
+          onClick: () => {
+            logging.event({
+              type: "reconnect-user",
+            });
+            void actions.reconnect();
+          },
         };
-  }, [actions.reconnect, actions.startConnect, status]);
+  }, [status, actions, logging]);
 
+  const handleDisconnect = useCallback(() => {
+    logging.event({
+      type: "disconnect-user",
+    });
+    void actions.disconnect();
+  }, [actions, logging]);
   return (
     <HStack
       position="relative"
@@ -76,8 +89,8 @@ const LiveGraphPanel = ({
                 <FormattedMessage id="live-data-graph" />
               </Text>
               <InfoToolTip
-                titleId="footer.helpHeader"
-                descriptionId="footer.helpContent"
+                titleId="live-graph"
+                descriptionId="live-graph-tooltip"
               />
             </HStack>
             {status === ConnectionStatus.Connected ? (
@@ -85,9 +98,9 @@ const LiveGraphPanel = ({
                 backgroundColor="white"
                 variant="secondary"
                 size="sm"
-                onClick={actions.disconnect}
+                onClick={handleDisconnect}
               >
-                <FormattedMessage id="footer.disconnectButton" />
+                <FormattedMessage id="disconnect-action" />
               </Button>
             ) : (
               <Button
@@ -103,7 +116,7 @@ const LiveGraphPanel = ({
             )}
             {isReconnecting && (
               <Text rounded="4xl" bg="white" py="1px" fontWeight="bold">
-                <FormattedMessage id="connectMB.reconnecting" />
+                <FormattedMessage id="reconnecting" />
               </Text>
             )}
           </HStack>
@@ -122,7 +135,7 @@ const LiveGraphPanel = ({
           >
             <VisuallyHidden aria-live="polite">
               <FormattedMessage
-                id="content.model.output.estimatedGesture.label"
+                id="estimated-action-aria"
                 values={{
                   action:
                     detected?.name ?? intl.formatMessage({ id: "unknown" }),
@@ -131,11 +144,11 @@ const LiveGraphPanel = ({
             </VisuallyHidden>
             <HStack justifyContent="flex-start" w="100%" gap={2} pr={2} mb={3}>
               <Text size="md" fontWeight="bold" alignSelf="start">
-                <FormattedMessage id="content.model.output.estimatedGesture.iconTitle" />
+                <FormattedMessage id="estimated-action-label" />
               </Text>
               <InfoToolTip
-                titleId="content.model.output.estimatedGesture.descriptionTitle"
-                descriptionId="content.model.output.estimatedGesture.descriptionBody"
+                titleId="estimated-action-label"
+                descriptionId="estimated-action-tooltip"
               />
             </HStack>
             <VStack justifyContent="center" flexGrow={1} mb={0.5}>
