@@ -1,8 +1,8 @@
-import { Box, BoxProps } from "@chakra-ui/react";
-import * as tfvis from "@tensorflow/tfjs-vis";
-import { useEffect, useMemo, useRef } from "react";
-import { applyFilters, getFilterLabels } from "../ml";
+import { BoxProps, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
+import { applyFilters } from "../ml";
 import { XYZData } from "../model";
+import { calculateColor } from "../utils/gradient-calculator";
+import ClickableTooltip from "./ClickableTooltip";
 
 interface RecordingFingerprintProps extends BoxProps {
   data: XYZData;
@@ -14,41 +14,48 @@ const RecordingFingerprint = ({
   gestureName,
   ...rest
 }: RecordingFingerprintProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const chartData = useMemo(
-    () => ({
-      values: [applyFilters(data, { normalize: true })],
-      xTickLabels: [gestureName],
-      yTickLabels: getFilterLabels(),
-    }),
-    [data, gestureName]
-  );
-  useEffect(() => {
-    if (containerRef.current) {
-      void tfvis.render.heatmap(containerRef.current, chartData, {
-        colorMap: "viridis",
-        height: 99,
-        width: 200,
-        domain: [0, 1],
-        fontSize: 0,
-      });
-    }
-  }, [chartData]);
+  const values = applyFilters(data, { normalize: true });
 
   return (
-    <Box
+    <Grid
       w="80px"
       h="100%"
-      // Used to hide the unwanted parts of the heatmap chart.
-      overflow="hidden"
       position="relative"
       borderRadius="md"
       borderWidth={1}
       borderColor="gray.200"
+      overflow="hidden"
       {...rest}
     >
-      <Box ref={containerRef} left="-10px" position="absolute" />
-    </Box>
+      {values.map((v, idx) => (
+        <ClickableTooltip
+          key={idx}
+          label={
+            <VStack
+              textAlign="left"
+              alignContent="left"
+              alignItems="left"
+              m={3}
+            >
+              <Text fontWeight="bold">
+                {/* TODO: Replace with label */}
+                {gestureName}
+              </Text>
+            </VStack>
+          }
+        >
+          <GridItem
+            w="100%"
+            backgroundColor={calculateColor(
+              v,
+              // TODO: Try another color
+              { r: 225, g: 255, b: 255 },
+              { r: 0, g: 160, b: 0 }
+            )}
+          />
+        </ClickableTooltip>
+      ))}
+    </Grid>
   );
 };
 
