@@ -113,13 +113,36 @@ const createModel = (gestureData: GestureData[]): tf.LayersModel => {
   return model;
 };
 
-// Exported for testing
+const normalize = (value: number, min: number, max: number) => {
+  const newMin = 0;
+  const newMax = 1;
+  return ((newMax - newMin) * (value - min)) / (max - min) + newMin;
+};
+
+// Used for training model and producing fingerprints
 // applyFilters reduces array of x, y and z inputs to a single number array with values.
-export const applyFilters = ({ x, y, z }: XYZData): number[] => {
+export const applyFilters = (
+  { x, y, z }: XYZData,
+  opts: { normalize?: boolean } = {}
+): number[] => {
   return Array.from(mlSettings.includedFilters).reduce((acc, filter) => {
-    const filterStrategy = mlFilters[filter];
-    return [...acc, filterStrategy(x), filterStrategy(y), filterStrategy(z)];
+    const { strategy, min, max } = mlFilters[filter];
+    const xyz = [strategy(x), strategy(y), strategy(z)];
+    return [
+      ...acc,
+      ...xyz.map((v) => (opts.normalize ? normalize(v, min, max) : v)),
+    ];
   }, [] as number[]);
+};
+
+// Used for producing fingerprints
+export const getFilterLabels = () => {
+  return Array.from(mlSettings.includedFilters).reduce(
+    (acc: string[], filter: string) => {
+      return [...acc, `${filter}-x`, `${filter}-y`, `${filter}-z`];
+    },
+    []
+  );
 };
 
 interface PredictInput {

@@ -1429,6 +1429,12 @@
       "value": "\""
     }
   ],
+  "recording-fingerprint-label": [
+    {
+      "type": 0,
+      "value": "heatmap showing micro:bit x, y, z accelerometer data features for one recording"
+    }
+  ],
   "recording-graph-label": [
     {
       "type": 0,
