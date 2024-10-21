@@ -87,7 +87,8 @@ const DataRecordingGridItem = ({
                 <CloseButton
                   position="absolute"
                   top={0}
-                  left={0}
+                  right={0}
+                  zIndex={1}
                   size="sm"
                   aria-label={intl.formatMessage({
                     id: "delete-recording-aria",
