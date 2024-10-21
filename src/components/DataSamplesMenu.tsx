@@ -3,6 +3,7 @@ import {
   IconButton,
   Menu,
   MenuButton,
+  MenuDivider,
   MenuItem,
   MenuList,
   Portal,
@@ -55,6 +56,8 @@ const DataSamplesMenu = () => {
       />
       <Portal>
         <MenuList>
+          {/* TODO: Add data features view toggling */}
+          <MenuDivider />
           <LoadProjectMenuItem icon={<RiUpload2Line />} accept=".json">
             <FormattedMessage id="import-data-samples-action" />
           </LoadProjectMenuItem>

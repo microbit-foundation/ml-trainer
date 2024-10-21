@@ -807,6 +807,10 @@
     "defaultMessage": "Record data for action \"{action}\"",
     "description": "Text in recording dialog"
   },
+  "recording-fingerprint-label": {
+    "defaultMessage": "heatmap showing micro:bit x, y, z accelerometer data features for one recording",
+    "description": "Label for recording fingerprint heatmap"
+  },
   "recording-graph-label": {
     "defaultMessage": "graph showing micro:bit x, y, z accelerometer data for one recording",
     "description": "Label for recording graph"

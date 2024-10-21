@@ -38,7 +38,7 @@ const RecordingGraph = ({ data, ...rest }: RecordingGraphProps) => {
       borderRadius="md"
       borderWidth={1}
       borderColor="gray.200"
-      width="100%"
+      w="158px"
       height="100%"
       {...rest}
     >

@@ -78,16 +78,21 @@ const zeroCrossingRate: FilterStrategy = (data) => {
   return count / (data.length - 1);
 };
 
+const acc: FilterStrategy = (d) => d.reduce((a, b) => a + Math.abs(b));
+
 const rms: FilterStrategy = (d) =>
   Math.sqrt(d.reduce((a, b) => a + Math.pow(b, 2), 0) / d.length);
 
-export const mlFilters: Record<Filter, FilterStrategy> = {
-  [Filter.MAX]: (d) => Math.max(...d),
-  [Filter.MIN]: (d) => Math.min(...d),
-  [Filter.MEAN]: mean,
-  [Filter.STD]: stddev,
-  [Filter.PEAKS]: peaks,
-  [Filter.ACC]: (d) => d.reduce((a, b) => a + Math.abs(b)),
-  [Filter.ZCR]: zeroCrossingRate,
-  [Filter.RMS]: rms,
+export const mlFilters: Record<
+  Filter,
+  { strategy: FilterStrategy; min: number; max: number }
+> = {
+  [Filter.MAX]: { strategy: (d) => Math.max(...d), min: -2.4, max: 2.4 },
+  [Filter.MIN]: { strategy: (d) => Math.min(...d), min: -2.4, max: 2.4 },
+  [Filter.MEAN]: { strategy: mean, min: -2.4, max: 2.4 },
+  [Filter.STD]: { strategy: stddev, min: 0, max: 2.4 },
+  [Filter.PEAKS]: { strategy: peaks, min: 0, max: 10 },
+  [Filter.ACC]: { strategy: acc, min: 0, max: 160 },
+  [Filter.ZCR]: { strategy: zeroCrossingRate, min: 0, max: 1 },
+  [Filter.RMS]: { strategy: rms, min: 0, max: 2 },
 };
