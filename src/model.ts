@@ -130,7 +130,6 @@ export enum MicrobitToFlash {
 export interface DownloadState {
   step: DownloadStep;
   microbitToFlash: MicrobitToFlash;
-  flashProgress: number;
   hex?: HexData;
   // The micro:bit used to flash the hex.  We remember your choice for easy code
   // iteration for as long as the editor is open.

@@ -1,23 +1,24 @@
-import { useCallback } from "react";
+import { useDownloadActions } from "../hooks/download-hooks";
+import { useLogging } from "../logging/logging-hooks";
+import { DownloadStep } from "../model";
+import { useStore } from "../store";
+import { getTotalNumSamples } from "../utils/gestures";
 import ConnectCableDialog from "./ConnectCableDialog";
-import DownloadProgressDialog from "./DownloadProgressDialog";
+import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
 import DownloadChooseMicrobitDialog from "./DownloadChooseMicrobitDialog";
 import DownloadHelpDialog from "./DownloadHelpDialog";
+import DownloadProgressDialog from "./DownloadProgressDialog";
+import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 import ManualFlashingDialog from "./ManualFlashingDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
-import { DownloadStep as DownloadStep } from "../model";
-import { useDownloadActions } from "../hooks/download-hooks";
-import { useStore } from "../store";
 import UnplugRadioLinkMicrobitDialog from "./UnplugRadioLinkMicrobitDialog";
-import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
-import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 
 const DownloadDialogs = () => {
   const actions = useDownloadActions();
   const stage = useStore((s) => s.download);
-  const handleDownloadProject = useCallback(async () => {
-    await actions.connectAndFlashMicrobit(stage);
-  }, [actions, stage]);
+  const flashingProgress = useStore((s) => s.downloadFlashingProgress);
+  const gestures = useStore((s) => s.gestures);
+  const logging = useLogging();
 
   switch (stage.step) {
     case DownloadStep.Help:
@@ -70,7 +71,18 @@ const DownloadDialogs = () => {
           onNextClick={actions.getOnNext()}
         />
       );
-    case DownloadStep.WebUsbFlashingTutorial:
+    case DownloadStep.WebUsbFlashingTutorial: {
+      const handleDownloadProject = async () => {
+        logging.event({
+          type: "hex-download",
+          detail: {
+            actions: gestures.length,
+            samples: getTotalNumSamples(gestures),
+          },
+        });
+        await actions.connectAndFlashMicrobit(stage);
+      };
+
       return (
         <SelectMicrobitUsbDialog
           isOpen
@@ -79,12 +91,13 @@ const DownloadDialogs = () => {
           onNextClick={handleDownloadProject}
         />
       );
+    }
     case DownloadStep.FlashingInProgress:
       return (
         <DownloadProgressDialog
           isOpen
           headingId="downloading-header"
-          progress={stage.flashProgress * 100}
+          progress={flashingProgress * 100}
         />
       );
     case DownloadStep.ManualFlashingTutorial:

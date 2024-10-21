@@ -91,6 +91,14 @@
     "defaultMessage": "Error downloading the project code",
     "description": "Title for error message relating to project loading"
   },
+  "code-label": {
+    "defaultMessage": "Code",
+    "description": "Code column heading"
+  },
+  "code-tooltip": {
+    "defaultMessage": "These are the MakeCode blocks for each detected action when you transfer your ML model and code to a micro:bit",
+    "description": "Code column heading tooltip"
+  },
   "coming-soon": {
     "defaultMessage": "Coming soon",
     "description": "Placeholder text for future projects"
@@ -719,14 +727,6 @@
     "defaultMessage": "Connect using WebUSB",
     "description": "Connection error dialog"
   },
-  "output-label": {
-    "defaultMessage": "Output",
-    "description": "Output column heading"
-  },
-  "output-tooltip": {
-    "defaultMessage": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit.",
-    "description": "Output column heading tooltip"
-  },
   "privacy": {
     "defaultMessage": "Privacy policy",
     "description": "Link to view privacy policy"
@@ -1040,11 +1040,11 @@
     "description": "Unplug radio link micro:bit dialog title"
   },
   "unsupported-device-explain": {
-    "defaultMessage": "Unfortunately, we only support using micro:bit V2 when connecting two micro:bits. You have connected a <link>micro:bit V1</link>.",
+    "defaultMessage": "Unfortunately, we only support using micro:bit V2 when connecting using micro:bit radio. You have connected a <link>micro:bit V1</link>.",
     "description": "Unsupported device dialog"
   },
   "unsupported-device-header": {
-    "defaultMessage": "micro:bit V1 is not supported for connecting two micro:bits",
+    "defaultMessage": "micro:bit radio connections do not support micro:bit V1",
     "description": "Unsupported device dialog"
   },
   "unsupported-device-with-bluetooth": {

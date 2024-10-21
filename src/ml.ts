@@ -15,8 +15,8 @@ export const mlSettings = {
   minSamples: 40, // minimum number of samples for reliable detection (when detecting gestures)
   updatesPrSecond: 4, // Times algorithm predicts data pr second
   defaultRequiredConfidence: 0.8, // Default threshold
-  numEpochs: 80, // Number of epochs for ML
-  learningRate: 0.5,
+  numEpochs: 160, // Number of epochs for ML
+  learningRate: 0.1,
   includedAxes: [Axes.X, Axes.Y, Axes.Z],
   includedFilters: new Set<Filter>([
     Filter.MAX,
@@ -51,7 +51,10 @@ export const trainModel = async ({
     await model.fit(tf.tensor(features), tf.tensor(labels), {
       epochs: totalNumEpochs,
       batchSize: 16,
-      validationSplit: 0.1,
+      shuffle: true,
+      // We don't do anything with the validation data, so might
+      // as well train using all of it.
+      validationSplit: 0,
       callbacks: {
         onEpochEnd: (epoch: number) => {
           // Epochs indexed at 0
@@ -106,7 +109,7 @@ const createModel = (gestureData: GestureData[]): tf.LayersModel => {
 
   model.compile({
     loss: "categoricalCrossentropy",
-    optimizer: tf.train.sgd(0.5),
+    optimizer: tf.train.sgd(mlSettings.learningRate),
     metrics: ["accuracy"],
   });
 

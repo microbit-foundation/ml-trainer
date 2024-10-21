@@ -66,12 +66,27 @@ export class ConnectionStageActions {
   ) => {
     this.setFlowStep(ConnectionFlowStep.WebUsbChooseMicrobit);
     const hex = this.getHexType();
-    const { result, deviceId, boardVersion } =
-      await this.actions.requestUSBConnectionAndFlash(hex, progressCallback);
-    if (result !== ConnectResult.Success) {
-      return this.handleConnectAndFlashFail(result);
-    }
 
+    const {
+      result: usbResult,
+      usb,
+      deviceId,
+    } = await this.actions.requestUSBConnection();
+    if (usbResult !== ConnectResult.Success) {
+      return this.handleConnectAndFlashFail(usbResult);
+    }
+    const boardVersion = usb?.getBoardVersion();
+    if (
+      usbResult === ConnectResult.Success &&
+      boardVersion === "V1" &&
+      this.stage.flowType !== ConnectionFlowType.ConnectBluetooth
+    ) {
+      return this.setFlowStep(ConnectionFlowStep.MicrobitUnsupported);
+    }
+    const flashResult = await this.actions.flashMicrobit(hex, progressCallback);
+    if (flashResult !== ConnectResult.Success) {
+      return this.handleConnectAndFlashFail(flashResult);
+    }
     await this.onFlashSuccess(deviceId, onSuccess, boardVersion);
   };
 
@@ -133,8 +148,6 @@ export class ConnectionStageActions {
     // TODO: Not sure if this is a good way of error handling because it means
     // there are 2 levels of switch statements to go through to provide UI
     switch (result) {
-      case ConnectResult.ErrorMicrobitUnsupported:
-        return this.setFlowStep(ConnectionFlowStep.MicrobitUnsupported);
       case ConnectResult.ErrorBadFirmware:
         return this.setFlowStep(ConnectionFlowStep.BadFirmware);
       case ConnectResult.ErrorNoDeviceSelected:

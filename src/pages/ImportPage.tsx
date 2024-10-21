@@ -26,7 +26,7 @@ const ImportPage = () => {
         intl
       );
       loadProject(code);
-      navigate(createDataSamplesPageUrl());
+      navigate(createDataSamplesPageUrl(), { replace: true });
     };
     void updateAsync();
   }, [activitiesBaseUrl, intl, loadProject, navigate, resource]);

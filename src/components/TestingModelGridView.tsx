@@ -50,8 +50,8 @@ const headings = [
   // Empty heading for arrow column
   {},
   {
-    titleId: "output-label",
-    descriptionId: "output-tooltip",
+    titleId: "code-label",
+    descriptionId: "code-tooltip",
   },
 ];
 

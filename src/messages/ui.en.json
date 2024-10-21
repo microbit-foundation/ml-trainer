@@ -179,6 +179,18 @@
       "value": "Error downloading the project code"
     }
   ],
+  "code-label": [
+    {
+      "type": 0,
+      "value": "Code"
+    }
+  ],
+  "code-tooltip": [
+    {
+      "type": 0,
+      "value": "These are the MakeCode blocks for each detected action when you transfer your ML model and code to a micro:bit"
+    }
+  ],
   "coming-soon": [
     {
       "type": 0,
@@ -1281,18 +1293,6 @@
       "value": "Connect using WebUSB"
     }
   ],
-  "output-label": [
-    {
-      "type": 0,
-      "value": "Output"
-    }
-  ],
-  "output-tooltip": [
-    {
-      "type": 0,
-      "value": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit."
-    }
-  ],
   "privacy": [
     {
       "type": 0,
@@ -1824,7 +1824,7 @@
   "unsupported-device-explain": [
     {
       "type": 0,
-      "value": "Unfortunately, we only support using micro:bit V2 when connecting two micro:bits. You have connected a "
+      "value": "Unfortunately, we only support using micro:bit V2 when connecting using micro:bit radio. You have connected a "
     },
     {
       "children": [
@@ -1844,7 +1844,7 @@
   "unsupported-device-header": [
     {
       "type": 0,
-      "value": "micro:bit V1 is not supported for connecting two micro:bits"
+      "value": "micro:bit radio connections do not support micro:bit V1"
     }
   ],
   "unsupported-device-with-bluetooth": [
