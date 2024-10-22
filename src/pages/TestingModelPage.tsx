@@ -33,13 +33,9 @@ const TestingModelPage = () => {
       toolbarItemsRight={<ProjectToolbarItems />}
       toolbarItemsLeft={
         <Button
-          size="lg"
-          leftIcon={<BackArrow color="white" />}
-          variant="plain"
-          color="white"
+          leftIcon={<BackArrow />}
+          variant="toolbar"
           onClick={navigateToDataSamples}
-          pr={3}
-          pl={3}
         >
           <FormattedMessage id="back-to-data-samples-action" />
         </Button>
