@@ -48,7 +48,7 @@
     "description": "Back button text"
   },
   "back-to-data-samples-action": {
-    "defaultMessage": "Back to data samples",
+    "defaultMessage": "Edit data samples",
     "description": "Back button text"
   },
   "bluetooth-unsupported-advice": {
