@@ -3,6 +3,7 @@ import { applyFilters } from "../ml";
 import { XYZData } from "../model";
 import { calculateColor } from "../utils/gradient-calculator";
 import ClickableTooltip from "./ClickableTooltip";
+import { FormattedMessage } from "react-intl";
 
 interface RecordingFingerprintProps extends BoxProps {
   data: XYZData;
@@ -14,7 +15,7 @@ const RecordingFingerprint = ({
   gestureName,
   ...rest
 }: RecordingFingerprintProps) => {
-  const values = applyFilters(data, { normalize: true });
+  const dataFeatures = applyFilters(data, { normalize: true });
 
   return (
     <Grid
@@ -27,7 +28,7 @@ const RecordingFingerprint = ({
       overflow="hidden"
       {...rest}
     >
-      {values.map((v, idx) => (
+      {Object.keys(dataFeatures).map((k, idx) => (
         <ClickableTooltip
           key={idx}
           label={
@@ -38,8 +39,10 @@ const RecordingFingerprint = ({
               m={3}
             >
               <Text fontWeight="bold">
-                {/* TODO: Replace with label */}
-                {gestureName}
+                <FormattedMessage
+                  id={`fingerprint-${k}-tooltip`}
+                  values={{ action: gestureName }}
+                />
               </Text>
             </VStack>
           }
@@ -47,10 +50,9 @@ const RecordingFingerprint = ({
           <GridItem
             w="100%"
             backgroundColor={calculateColor(
-              v,
-              // TODO: Try another color
+              dataFeatures[k],
               { r: 225, g: 255, b: 255 },
-              { r: 0, g: 160, b: 0 }
+              { r: 25, g: 125, b: 188 }
             )}
           />
         </ClickableTooltip>

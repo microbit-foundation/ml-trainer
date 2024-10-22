@@ -857,6 +857,246 @@
       "value": "Feedback"
     }
   ],
+  "fingerprint-acc-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Sum of x-direction data for "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-acc-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Sum of y-direction data for "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-acc-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Sum of z-direction data for "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-max-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Maximum point among all x-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-max-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Maximum point among all y-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-max-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Maximum point among all z-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-mean-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Mean value for x-direction data in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-mean-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Mean value for y-direction data in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-mean-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Mean value for z-direction data in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-min-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Minimum point among all x-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-min-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Minimum point among all y-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-min-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Minimum point among all z-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-peaks-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Number of extremes among all x-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-peaks-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Number of extremes among all y-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-peaks-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Number of extremes among all z-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-rms-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Root mean square value for all x-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-rms-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Root mean square value for all y-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-rms-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Root mean square value for all z-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-std-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Average deviation from 0 among all x-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-std-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Average deviation from 0 among all y-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-std-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Average deviation from 0 among all z-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-zcr-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Rate at which acceleration transitions between positive and negative for x-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-zcr-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Rate at which acceleration transitions between positive and negative for y-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-zcr-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Rate at which acceleration transitions between positive and negative for z-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
   "firmware-outdated-content1": [
     {
       "type": 0,
