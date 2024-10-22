@@ -121,7 +121,7 @@ describe("applyFilters", () => {
       expect((e as Error).message).toEqual("data sample is too short");
     }
   });
-  test("throws when data sample is too short", () => {
+  test("returns filtered results", () => {
     const xyzData = {
       x: [1, 1, 1, 1, 1, 1, 1],
       y: [1, 1, 1, 1, 1, 1, 1],
@@ -146,6 +146,39 @@ describe("applyFilters", () => {
       "rms-x": 1,
       "rms-y": 1,
       "rms-z": 1,
+      "std-x": 0,
+      "std-y": 0,
+      "std-z": 0,
+      "zcr-x": 0,
+      "zcr-y": 0,
+      "zcr-z": 0,
+    });
+  });
+  test("returns normalised results", () => {
+    const xyzData = {
+      x: [0, 0, 0, 0, 0, 0, 0],
+      y: [0, 0, 0, 0, 0, 0, 0],
+      z: [0, 0, 0, 0, 0, 0, 0],
+    };
+    expect(applyFilters(xyzData, { normalize: true })).toEqual({
+      "acc-x": 0,
+      "acc-y": 0,
+      "acc-z": 0,
+      "max-x": 0.5,
+      "max-y": 0.5,
+      "max-z": 0.5,
+      "mean-x": 0.5,
+      "mean-y": 0.5,
+      "mean-z": 0.5,
+      "min-x": 0.5,
+      "min-y": 0.5,
+      "min-z": 0.5,
+      "peaks-x": 0,
+      "peaks-y": 0,
+      "peaks-z": 0,
+      "rms-x": 0,
+      "rms-y": 0,
+      "rms-z": 0,
       "std-x": 0,
       "std-y": 0,
       "std-z": 0,
