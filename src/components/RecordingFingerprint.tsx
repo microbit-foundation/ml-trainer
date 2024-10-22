@@ -32,19 +32,12 @@ const RecordingFingerprint = ({
         <ClickableTooltip
           key={idx}
           label={
-            <VStack
-              textAlign="left"
-              alignContent="left"
-              alignItems="left"
-              m={3}
-            >
-              <Text fontWeight="bold">
-                <FormattedMessage
-                  id={`fingerprint-${k}-tooltip`}
-                  values={{ action: gestureName }}
-                />
-              </Text>
-            </VStack>
+            <Text p={3}>
+              <FormattedMessage
+                id={`fingerprint-${k}-tooltip`}
+                values={{ action: gestureName }}
+              />
+            </Text>
           }
         >
           <GridItem
