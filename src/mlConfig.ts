@@ -21,8 +21,8 @@ export const mlSettings = {
   minSamples: 80, // minimum number of samples for reliable detection (when detecting gestures)
   updatesPrSecond: 4, // Times algorithm predicts data pr second
   defaultRequiredConfidence: 0.8, // Default threshold
-  numEpochs: 80, // Number of epochs for ML
-  learningRate: 0.5,
+  numEpochs: 160, // Number of epochs for ML
+  learningRate: 0.1,
   includedAxes: [Axes.X, Axes.Y, Axes.Z],
   includedFilters: new Set<Filter>([
     Filter.MAX,
