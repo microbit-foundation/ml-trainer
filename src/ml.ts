@@ -10,9 +10,11 @@ export enum Axes {
 }
 
 export const mlSettings = {
-  duration: 1000, // Duration of recording
-  numSamples: 50, // number of samples in one recording (when recording samples)
-  minSamples: 50, // minimum number of samples for reliable detection (when detecting gestures)
+  // Maintaining a minimum sample rate of 22.5 samples per second.
+  // Previous duration 1800, previous samples 80.
+  duration: 990, // Duration of recording
+  numSamples: 44, // number of samples in one recording (when recording samples)
+  minSamples: 44, // minimum number of samples for reliable detection (when detecting gestures)
   updatesPrSecond: 4, // Times algorithm predicts data pr second
   defaultRequiredConfidence: 0.8, // Default threshold
   numEpochs: 160, // Number of epochs for ML
