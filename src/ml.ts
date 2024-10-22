@@ -1,34 +1,7 @@
 import * as tf from "@tensorflow/tfjs";
-import { GestureData, XYZData } from "./model";
-import { Filter, mlFilters } from "./mlFilters";
 import { SymbolicTensor } from "@tensorflow/tfjs";
-
-export enum Axes {
-  X = "x",
-  Y = "y",
-  Z = "z",
-}
-
-export const mlSettings = {
-  duration: 1800, // Duration of recording
-  numSamples: 80, // number of samples in one recording (when recording samples)
-  minSamples: 80, // minimum number of samples for reliable detection (when detecting gestures)
-  updatesPrSecond: 4, // Times algorithm predicts data pr second
-  defaultRequiredConfidence: 0.8, // Default threshold
-  numEpochs: 80, // Number of epochs for ML
-  learningRate: 0.5,
-  includedAxes: [Axes.X, Axes.Y, Axes.Z],
-  includedFilters: new Set<Filter>([
-    Filter.MAX,
-    Filter.MEAN,
-    Filter.MIN,
-    Filter.STD,
-    Filter.PEAKS,
-    Filter.ACC,
-    Filter.ZCR,
-    Filter.RMS,
-  ]),
-};
+import { mlFilters, mlSettings } from "./mlConfig";
+import { GestureData, XYZData } from "./model";
 
 interface TrainModelInput {
   data: GestureData[];

@@ -3,7 +3,7 @@ import { ReactNode, createContext, useContext, useEffect, useRef } from "react";
 import { BufferedData } from "./buffered-data";
 import { useConnectActions } from "./connect-actions-hooks";
 import { ConnectionStatus, useConnectStatus } from "./connect-status-hooks";
-import { mlSettings } from "./ml";
+import { mlSettings } from "./mlConfig";
 
 const BufferedDataContext = createContext<BufferedData | null>(null);
 
