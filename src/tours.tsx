@@ -3,6 +3,7 @@ import accelerometerImage from "./images/microbit_xyz_arrows.png";
 import { TourId, TourStep } from "./model";
 import { FormattedMessage, useIntl } from "react-intl";
 import { FormattedMessageStepContent } from "./pages/Tour";
+import { deployment } from "./deployment";
 
 export const tourElClassname = {
   liveGraph: "live-graph",
@@ -35,6 +36,7 @@ const LiveGraphStep = () => {
 };
 
 const classSelector = (classname: string) => `.${classname}`;
+const { appNameFull } = deployment;
 
 // If you complete a tour then we don't show it again.
 export const tours: Record<TourId, TourStep[]> = {
@@ -58,7 +60,10 @@ export const tours: Record<TourId, TourStep[]> = {
       selector: classSelector(tourElClassname.dataSamplesActionCard),
       title: <FormattedMessage id="actions-label" />,
       content: (
-        <FormattedMessageStepContent id="tour-dataSamples-actions-content" />
+        <FormattedMessageStepContent
+          id="tour-dataSamples-actions-content"
+          values={{ appNameFull }}
+        />
       ),
     },
   ],
