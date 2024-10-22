@@ -1044,7 +1044,7 @@
     "description": "Tour step description"
   },
   "tour-dataSamples-actions-content": {
-    "defaultMessage": "An action is the type of movement you want the machine learning tool to recognise e.g. ‘waving’ or ‘clapping’. Decide what your first action will be, name it and then start recording data samples.",
+    "defaultMessage": "An action is the type of movement you want the machine learning model to recognise e.g. ‘waving’ or ‘clapping’. Decide what your first action will be, name it and then start recording data samples.",
     "description": "Tour step content"
   },
   "tour-dataSamples-connected-content": {

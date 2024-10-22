@@ -8,7 +8,6 @@
  */
 
 import * as tf from "@tensorflow/tfjs";
-import { vi } from "vitest";
 import { GestureData } from "./model";
 import {
   applyFilters,
@@ -29,11 +28,6 @@ let trainingResult: TrainingResult;
 beforeAll(async () => {
   // No webgl in tests running in node.
   await tf.setBackend("cpu");
-
-  // This creates determinism in the model training step.
-  const randomSpy = vi.spyOn(Math, "random");
-  randomSpy.mockImplementation(() => 0.5);
-
   trainingResult = await trainModel({ data: fixUpTestData(gestureData) });
 });
 
@@ -94,9 +88,9 @@ describe("Model tests", () => {
     const { tensorFlowResultAccuracy } = getModelResults(
       fixUpTestData(testdataShakeStill)
     );
-    // The model thinks two samples of still are circle.
-    // 14 samples; 1.0 / 14 = 0.0714; 0.0714 * 12 correct inferences = 0.8571
-    expect(parseFloat(tensorFlowResultAccuracy)).toBeGreaterThan(0.85);
+    // The model thinks one sample of still are circle.
+    // 14 samples; 1.0 / 14 = 0.0714; 0.0714 * 13 correct inferences = 0.9285
+    expect(parseFloat(tensorFlowResultAccuracy)).toBeGreaterThan(0.9);
   });
 });
 
