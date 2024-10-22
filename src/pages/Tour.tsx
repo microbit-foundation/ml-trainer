@@ -143,16 +143,10 @@ const Tour = () => {
   );
 };
 
-export const FormattedMessageStepContent = ({
-  id,
-  values,
-}: {
-  id: string;
-  values?: Record<string, string>;
-}) => {
+export const FormattedMessageStepContent = ({ id }: { id: string }) => {
   return (
     <Text>
-      <FormattedMessage id={id} values={values} />
+      <FormattedMessage id={id} />
     </Text>
   );
 };
