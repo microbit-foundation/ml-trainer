@@ -109,6 +109,7 @@ const GestureNameGridItem = ({
               )}
             </HStack>
             <Input
+              autoFocus={name.length === 0}
               isTruncated
               readOnly={readOnly}
               value={name}
