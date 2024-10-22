@@ -61,7 +61,7 @@ const createUntitledProject = (): Project => ({
     saveId: null,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any,
-  ...generateProject({ data: [] }, undefined),
+  ...generateProject("Untitled", { data: [] }, undefined),
 });
 
 const updateProject = (
@@ -77,7 +77,11 @@ const updateProject = (
       ...project.text,
       ...(projectEdited
         ? generateCustomFiles(gestureData, model, project)
-        : generateProject(gestureData, model).text),
+        : generateProject(
+            project.header?.name ?? "Untitled",
+            gestureData,
+            model
+          ).text),
     },
   };
   return {
@@ -529,7 +533,7 @@ const createMlStore = (logging: Logging) => {
               ...previousProject,
               text: {
                 ...previousProject.text,
-                ...generateProject({ data: gestures }, model).text,
+                ...generateProject("Untitled", { data: gestures }, model).text,
               },
             };
             set(

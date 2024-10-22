@@ -21,7 +21,7 @@ const CodeViewGridItem = ({
   const model = useStore((s) => s.model);
   const gestures = useStore((s) => s.gestures);
   const project = useMemo(
-    () => generateProject({ data: gestures }, model, gesture),
+    () => generateProject("", { data: gestures }, model, gesture),
     [gesture, gestures, model]
   );
   const width = useMemo(

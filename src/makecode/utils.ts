@@ -34,6 +34,7 @@ export const pxt = {
 };
 
 export const generateProject = (
+  name: string,
   gestureState: DatasetEditorJsonFormat,
   model: LayersModel | undefined,
   gestureToRenderAsBlock?: GestureData
@@ -42,7 +43,7 @@ export const generateProject = (
   const useableGestures = model ? gestures : [];
   return {
     text: {
-      [filenames.pxtJson]: JSON.stringify(pxt),
+      [filenames.pxtJson]: JSON.stringify({ ...pxt, name }),
       [filenames.readme]: "",
       [filenames.mainTs]: getMainScript(
         useableGestures,
