@@ -1,9 +1,9 @@
 import { BoxProps, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
+import { FormattedMessage } from "react-intl";
 import { applyFilters } from "../ml";
 import { XYZData } from "../model";
-import { calculateColor } from "../utils/gradient-calculator";
+import { calculateGradientColor as calculateGradientColor } from "../utils/gradient-calculator";
 import ClickableTooltip from "./ClickableTooltip";
-import { FormattedMessage } from "react-intl";
 
 interface RecordingFingerprintProps extends BoxProps {
   data: XYZData;
@@ -49,11 +49,7 @@ const RecordingFingerprint = ({
         >
           <GridItem
             w="100%"
-            backgroundColor={calculateColor(
-              dataFeatures[k],
-              { r: 225, g: 255, b: 255 },
-              { r: 25, g: 125, b: 188 }
-            )}
+            backgroundColor={calculateGradientColor("#007DBC", dataFeatures[k])}
           />
         </ClickableTooltip>
       ))}
