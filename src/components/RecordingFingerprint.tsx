@@ -2,7 +2,7 @@ import { BoxProps, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import { applyFilters } from "../ml";
 import { XYZData } from "../model";
-import { calculateGradientColor as calculateGradientColor } from "../utils/gradient-calculator";
+import { calculateGradientColor } from "../utils/gradient-calculator";
 import ClickableTooltip from "./ClickableTooltip";
 
 interface RecordingFingerprintProps extends BoxProps {
