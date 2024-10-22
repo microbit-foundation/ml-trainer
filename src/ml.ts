@@ -125,6 +125,9 @@ export const applyFilters = (
   { x, y, z }: XYZData,
   opts: { normalize?: boolean } = {}
 ): Record<string, number> => {
+  if (x.length === 0 || y.length === 0 || z.length === 0) {
+    throw new Error("Empty x/y/z data");
+  }
   return Array.from(mlSettings.includedFilters).reduce((acc, filter) => {
     const { strategy, min, max } = mlFilters[filter];
     const applyFilter = (vs: number[]) =>

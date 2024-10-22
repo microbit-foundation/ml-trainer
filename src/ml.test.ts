@@ -10,7 +10,12 @@
 import * as tf from "@tensorflow/tfjs";
 import { vi } from "vitest";
 import { GestureData } from "./model";
-import { prepareFeaturesAndLabels, TrainingResult, trainModel } from "./ml";
+import {
+  applyFilters,
+  prepareFeaturesAndLabels,
+  TrainingResult,
+  trainModel,
+} from "./ml";
 import gestureDataBadLabels from "./test-fixtures/gesture-data-bad-labels.json";
 import gestureData from "./test-fixtures/gesture-data.json";
 import testdataShakeStill from "./test-fixtures/test-data-shake-still.json";
@@ -92,5 +97,61 @@ describe("Model tests", () => {
     // The model thinks two samples of still are circle.
     // 14 samples; 1.0 / 14 = 0.0714; 0.0714 * 12 correct inferences = 0.8571
     expect(parseFloat(tensorFlowResultAccuracy)).toBeGreaterThan(0.85);
+  });
+});
+
+describe("applyFilters", () => {
+  test("throws when x/y/z data is empty", () => {
+    const xyzData = { x: [], y: [], z: [] };
+    try {
+      applyFilters(xyzData);
+      // Fail test if above expression doesn't throw anything.
+      expect(true).toBe(false);
+    } catch (e) {
+      expect((e as Error).message).toEqual("Empty x/y/z data");
+    }
+  });
+  test("throws when data sample is too short", () => {
+    const xyzData = { x: [1, 1, 1], y: [1, 1, 1], z: [1, 1, 1] };
+    try {
+      applyFilters(xyzData);
+      // Fail test if above expression doesn't throw anything.
+      expect(true).toBe(false);
+    } catch (e) {
+      expect((e as Error).message).toEqual("data sample is too short");
+    }
+  });
+  test("throws when data sample is too short", () => {
+    const xyzData = {
+      x: [1, 1, 1, 1, 1, 1, 1],
+      y: [1, 1, 1, 1, 1, 1, 1],
+      z: [1, 1, 1, 1, 1, 1, 1],
+    };
+    expect(applyFilters(xyzData)).toEqual({
+      "acc-x": 7,
+      "acc-y": 7,
+      "acc-z": 7,
+      "max-x": 1,
+      "max-y": 1,
+      "max-z": 1,
+      "mean-x": 1,
+      "mean-y": 1,
+      "mean-z": 1,
+      "min-x": 1,
+      "min-y": 1,
+      "min-z": 1,
+      "peaks-x": 0,
+      "peaks-y": 0,
+      "peaks-z": 0,
+      "rms-x": 1,
+      "rms-y": 1,
+      "rms-z": 1,
+      "std-x": 0,
+      "std-y": 0,
+      "std-z": 0,
+      "zcr-x": 0,
+      "zcr-y": 0,
+      "zcr-z": 0,
+    });
   });
 });
