@@ -371,6 +371,22 @@
     "defaultMessage": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else.",
     "description": "Tooltip for data samples heading"
   },
+  "data-samples-view-data-features-option": {
+    "defaultMessage": "Data features",
+    "description": "Data samples view option"
+  },
+  "data-samples-view-graph-and-data-features-option": {
+    "defaultMessage": "Graph and data features",
+    "description": "Data samples view option"
+  },
+  "data-samples-view-graph-option": {
+    "defaultMessage": "Graphs",
+    "description": "Data samples view option"
+  },
+  "data-samples-view-options-heading": {
+    "defaultMessage": "Views",
+    "description": "Data samples view options heading"
+  },
   "delete-action-aria": {
     "defaultMessage": "Delete action \"{action}\"",
     "description": "Aria label for action delete icon"

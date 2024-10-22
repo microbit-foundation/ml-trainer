@@ -11,6 +11,7 @@ import {
 } from "./makecode/utils";
 import { trainModel } from "./ml";
 import {
+  DataSamplesView,
   DownloadState,
   DownloadStep,
   Gesture,
@@ -172,6 +173,8 @@ export interface Actions {
   tourNext(): void;
   tourBack(): void;
   tourComplete(id: TourId): void;
+
+  setDataSamplesView(view: DataSamplesView): void;
 }
 
 type Store = State & Actions;
@@ -203,6 +206,7 @@ const createMlStore = (logging: Logging) => {
           // This dialog flow spans two pages
           trainModelDialogStage: TrainModelDialogStage.Closed,
           trainModelProgress: 0,
+          dataSamplesView: DataSamplesView.Graph,
 
           setSettings(update: Partial<Settings>) {
             set(
@@ -707,6 +711,15 @@ const createMlStore = (logging: Logging) => {
                 toursCompleted: Array.from(
                   new Set([...settings.toursCompleted, tourId])
                 ),
+              },
+            }));
+          },
+
+          setDataSamplesView(view: DataSamplesView) {
+            set(({ settings }) => ({
+              settings: {
+                ...settings,
+                dataSamplesView: view,
               },
             }));
           },

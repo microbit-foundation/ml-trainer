@@ -627,6 +627,30 @@
       "value": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else."
     }
   ],
+  "data-samples-view-data-features-option": [
+    {
+      "type": 0,
+      "value": "Data features"
+    }
+  ],
+  "data-samples-view-graph-and-data-features-option": [
+    {
+      "type": 0,
+      "value": "Graph and data features"
+    }
+  ],
+  "data-samples-view-graph-option": [
+    {
+      "type": 0,
+      "value": "Graphs"
+    }
+  ],
+  "data-samples-view-options-heading": [
+    {
+      "type": 0,
+      "value": "Views"
+    }
+  ],
   "delete-action-aria": [
     {
       "type": 0,
