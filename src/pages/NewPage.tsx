@@ -21,13 +21,16 @@ import LoadProjectInput, {
 } from "../components/LoadProjectInput";
 import NewPageChoice from "../components/NewPageChoice";
 import { useConnectionStage } from "../connection-stage-hooks";
+import { useLogging } from "../logging/logging-hooks";
+import { defaultProjectName } from "../project-name";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
-import { useLogging } from "../logging/logging-hooks";
 
 const NewPage = () => {
   const existingSessionTimestamp = useStore((s) => s.timestamp);
-  const projectName = useStore((s) => s.project.header?.name ?? "Untitled");
+  const projectName = useStore(
+    (s) => s.project.header?.name ?? defaultProjectName
+  );
   const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
   const { actions: connStageActions } = useConnectionStage();

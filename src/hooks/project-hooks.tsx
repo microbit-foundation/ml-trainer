@@ -15,18 +15,19 @@ import {
   useRef,
 } from "react";
 import { useIntl } from "react-intl";
+import { useNavigate } from "react-router";
+import { useLogging } from "../logging/logging-hooks";
 import { HexData, isDatasetUserFileFormat, SaveStep } from "../model";
+import { defaultProjectName } from "../project-name";
 import { useStore } from "../store";
+import { createDataSamplesPageUrl } from "../urls";
 import {
   downloadHex,
   getLowercaseFileExtension,
   readFileAsText,
 } from "../utils/fs-util";
-import { useDownloadActions } from "./download-hooks";
-import { useNavigate } from "react-router";
-import { createDataSamplesPageUrl } from "../urls";
-import { useLogging } from "../logging/logging-hooks";
 import { getTotalNumSamples } from "../utils/gestures";
+import { useDownloadActions } from "./download-hooks";
 
 /**
  * Distinguishes the different ways to trigger the load action.
@@ -155,7 +156,7 @@ export const ProjectProvider = ({
       if (settings.showPreSaveHelp && step === SaveStep.None) {
         setSave({ hex, step: SaveStep.PreSaveHelp });
       } else if (
-        getCurrentProject().header?.name === "Untitled" &&
+        getCurrentProject().header?.name === defaultProjectName &&
         step === SaveStep.None
       ) {
         setSave({ hex, step: SaveStep.ProjectName });
