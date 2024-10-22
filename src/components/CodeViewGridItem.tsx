@@ -21,6 +21,7 @@ const CodeViewGridItem = ({
   const model = useStore((s) => s.model);
   const gestures = useStore((s) => s.gestures);
   const project = useMemo(
+    // Project name is left empty as it is not used or displayed.
     () => generateProject("", { data: gestures }, model, gesture),
     [gesture, gestures, model]
   );
