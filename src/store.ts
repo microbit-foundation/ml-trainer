@@ -408,14 +408,17 @@ const createMlStore = (logging: Logging) => {
           },
 
           downloadDataset() {
-            const { gestures } = get();
+            const { gestures, project } = get();
             const a = document.createElement("a");
             a.setAttribute(
               "href",
               "data:application/json;charset=utf-8," +
                 encodeURIComponent(JSON.stringify(gestures, null, 2))
             );
-            a.setAttribute("download", "dataset");
+            a.setAttribute(
+              "download",
+              `${project.header?.name || "Untitled"}-data-samples`
+            );
             a.style.display = "none";
             a.click();
           },
