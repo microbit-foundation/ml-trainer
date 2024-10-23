@@ -123,7 +123,7 @@ const LiveGraphPanel = ({
                 <Button
                   backgroundColor="white"
                   variant="secondary"
-                  size="sm"
+                  size="xs"
                   onClick={handleDisconnect}
                 >
                   <FormattedMessage id="disconnect-action" />
