@@ -13,3 +13,5 @@ export const createImportPageUrl = () => `${basepath}import`;
 export const createDataSamplesPageUrl = () => `${basepath}data-samples`;
 
 export const createTestingModelPageUrl = () => `${basepath}testing-model`;
+
+export const createEditorPageUrl = () => `${basepath}editor`;

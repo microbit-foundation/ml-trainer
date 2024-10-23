@@ -27,11 +27,13 @@ import NewPage from "./pages/NewPage";
 import TestingModelPage from "./pages/TestingModelPage";
 import {
   createDataSamplesPageUrl,
+  createEditorPageUrl,
   createHomePageUrl,
   createImportPageUrl,
   createNewPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
+import EditorPage from "./pages/EditorPage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -106,6 +108,10 @@ const createRouter = () => {
         {
           path: createTestingModelPageUrl(),
           element: <TestingModelPage />,
+        },
+        {
+          path: createEditorPageUrl(),
+          element: <EditorPage />,
         },
         {
           path: "*",

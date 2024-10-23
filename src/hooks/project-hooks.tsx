@@ -24,7 +24,11 @@ import {
 } from "../utils/fs-util";
 import { useDownloadActions } from "./download-hooks";
 import { useNavigate } from "react-router";
-import { createDataSamplesPageUrl } from "../urls";
+import {
+  createDataSamplesPageUrl,
+  createEditorPageUrl,
+  createTestingModelPageUrl,
+} from "../urls";
 import { useLogging } from "../logging/logging-hooks";
 import { getTotalNumSamples } from "../utils/gestures";
 
@@ -79,7 +83,6 @@ export const ProjectProvider = ({
   const intl = useIntl();
   const toast = useToast();
   const logging = useLogging();
-  const setEditorOpen = useStore((s) => s.setEditorOpen);
   const projectEdited = useStore((s) => s.projectEdited);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
@@ -103,19 +106,19 @@ export const ProjectProvider = ({
       projectFlushedToEditor,
     ]
   );
+  const navigate = useNavigate();
   const openEditor = useCallback(async () => {
     logging.event({
       type: "edit-in-makecode",
     });
     await doAfterEditorUpdate(() => {
-      setEditorOpen(true);
+      navigate(createEditorPageUrl());
       return Promise.resolve();
     });
-  }, [doAfterEditorUpdate, logging, setEditorOpen]);
+  }, [doAfterEditorUpdate, logging, navigate]);
 
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
-  const navigate = useNavigate();
   const loadFile = useCallback(
     async (file: File, type: LoadType): Promise<void> => {
       const fileExtension = getLowercaseFileExtension(file.name);
@@ -211,7 +214,9 @@ export const ProjectProvider = ({
     [editorChange]
   );
 
-  const onBack = useCallback(() => setEditorOpen(false), [setEditorOpen]);
+  const onBack = useCallback(() => {
+    navigate(createTestingModelPageUrl());
+  }, [navigate]);
   const onSave = saveHex;
   const downloadActions = useDownloadActions();
   const onDownload = useCallback(
