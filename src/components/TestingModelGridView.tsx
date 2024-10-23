@@ -17,8 +17,10 @@ import React, { useCallback, useState } from "react";
 import { RiArrowRightLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
+import { useConnectionStage } from "../connection-stage-hooks";
 import { usePrediction } from "../hooks/ml-hooks";
 import { useProject } from "../hooks/project-hooks";
+import { mlSettings } from "../mlConfig";
 import { getMakeCodeLang } from "../settings";
 import { useSettings, useStore } from "../store";
 import { tourElClassname } from "../tours";
@@ -30,7 +32,6 @@ import HeadingGrid from "./HeadingGrid";
 import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 import LiveGraphPanel from "./LiveGraphPanel";
 import MoreMenuButton from "./MoreMenuButton";
-import { mlSettings } from "../mlConfig";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 360px 40px auto",
@@ -63,6 +64,7 @@ const TestingModelGridView = () => {
   const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { openEditor, project, resetProject, projectEdited } = useProject();
   const { getDataCollectionBoardVersion } = useConnectActions();
+  const { isConnected } = useConnectionStage();
 
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
@@ -139,6 +141,7 @@ const TestingModelGridView = () => {
                       icon={icon}
                       readOnly={true}
                       isTriggered={isTriggered}
+                      disabled={!isConnected}
                     />
                     <CertaintyThresholdGridItem
                       actionName={name}
@@ -150,6 +153,7 @@ const TestingModelGridView = () => {
                         threshold ?? mlSettings.defaultRequiredConfidence
                       }
                       isTriggered={isTriggered}
+                      disabled={!isConnected}
                     />
                     <VStack justifyContent="center" h="full">
                       <Icon
