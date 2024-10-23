@@ -525,6 +525,12 @@
       "value": "Connect using Web Bluetooth instead"
     }
   ],
+  "connect-to-record": [
+    {
+      "type": 0,
+      "value": "Connect to record more data."
+    }
+  ],
   "connect-to-record-body": [
     {
       "type": 0,
@@ -535,6 +541,12 @@
     {
       "type": 0,
       "value": "You don't have a micro:bit connected"
+    }
+  ],
+  "connect-to-test-model": [
+    {
+      "type": 0,
+      "value": "Connect to test your ML model."
     }
   ],
   "connect-troubleshoot": [
@@ -1365,6 +1377,12 @@
     {
       "type": 0,
       "value": "Main menu"
+    }
+  ],
+  "microbit-not-connected": [
+    {
+      "type": 0,
+      "value": "Your micro:bit is not connected."
     }
   ],
   "more-edit-in-makecode-options": [

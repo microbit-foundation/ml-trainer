@@ -303,6 +303,10 @@
     "defaultMessage": "Connect using Web Bluetooth instead",
     "description": "Link to alternative connection method"
   },
+  "connect-to-record": {
+    "defaultMessage": "Connect to record more data.",
+    "description": "Live graph disconnected micro:bit status message for data samples page"
+  },
   "connect-to-record-body": {
     "defaultMessage": "Connect a micro:bit to record a data sample.",
     "description": "Insufficient data modal content"
@@ -310,6 +314,10 @@
   "connect-to-record-title": {
     "defaultMessage": "You don't have a micro:bit connected",
     "description": "Connect to record modal title"
+  },
+  "connect-to-test-model": {
+    "defaultMessage": "Connect to test your ML model.",
+    "description": "Live graph disconnected micro:bit status message for test model page"
   },
   "connect-troubleshoot": {
     "defaultMessage": "Troubleshoot problems with connecting to your micro:bit",
@@ -738,6 +746,10 @@
   "main-menu": {
     "defaultMessage": "Main menu",
     "description": "Main menu label"
+  },
+  "microbit-not-connected": {
+    "defaultMessage": "Your micro:bit is not connected.",
+    "description": "Live graph disconnected micro:bit status message"
   },
   "more-edit-in-makecode-options": {
     "defaultMessage": "More edit in MakeCode options",

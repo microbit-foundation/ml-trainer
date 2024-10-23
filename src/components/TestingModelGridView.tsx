@@ -211,7 +211,11 @@ const TestingModelGridView = () => {
             </ButtonGroup>
           </Menu>
         </HStack>
-        <LiveGraphPanel detected={prediction?.detected} showPredictedGesture />
+        <LiveGraphPanel
+          detected={prediction?.detected}
+          showPredictedGesture
+          disconnectedTextId="connect-to-test-model"
+        />
       </VStack>
     </>
   );
