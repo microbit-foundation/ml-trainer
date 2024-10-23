@@ -119,7 +119,7 @@ const LiveGraphPanel = ({
                   descriptionId="live-graph-tooltip"
                 />
               </HStack>
-              {status === ConnectionStatus.Connected && (
+              {isConnected && (
                 <Button
                   backgroundColor="white"
                   variant="secondary"
@@ -130,7 +130,7 @@ const LiveGraphPanel = ({
                 </Button>
               )}
               {isReconnecting && (
-                <Text rounded="4xl" bg="white" py="1px" fontWeight="bold">
+                <Text bg="white" fontWeight="bold">
                   <FormattedMessage id="reconnecting" />
                 </Text>
               )}
