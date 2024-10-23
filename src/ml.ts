@@ -19,7 +19,8 @@ export const trainModel = async ({
   const { features, labels } = prepareFeaturesAndLabels(data);
   const model: tf.LayersModel = createModel(data);
   const totalNumEpochs = mlSettings.numEpochs;
-
+  console.log("Features", features);
+  console.log("Labels", labels);
   try {
     await model.fit(tf.tensor(features), tf.tensor(labels), {
       epochs: totalNumEpochs,
@@ -108,12 +109,13 @@ export const applyFilters = (
     const { strategy, min, max } = mlFilters[filter];
     const applyFilter = (vs: number[]) =>
       opts.normalize ? normalize(strategy(vs), min, max) : strategy(vs);
-    return {
+    const d = {
       ...acc,
       [`${filter}-x`]: applyFilter(x),
       [`${filter}-y`]: applyFilter(y),
       [`${filter}-z`]: applyFilter(z),
     };
+    return d;
   }, {} as Record<string, number>);
 };
 
