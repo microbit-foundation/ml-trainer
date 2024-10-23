@@ -57,7 +57,8 @@ const DataSamplesMenu = () => {
       type: "dataset-delete",
     });
     deleteAllGestures();
-  }, [deleteAllGestures, logging]);
+    deleteConfirmDisclosure.onClose();
+  }, [deleteAllGestures, deleteConfirmDisclosure, logging]);
   const handleViewChange = useCallback(
     (view: string | string[]) => {
       if (typeof view === "string") {
