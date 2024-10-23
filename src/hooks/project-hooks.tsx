@@ -26,7 +26,7 @@ import { useDownloadActions } from "./download-hooks";
 import { useNavigate } from "react-router";
 import {
   createDataSamplesPageUrl,
-  createEditorPageUrl,
+  createCodePageUrl,
   createTestingModelPageUrl,
 } from "../urls";
 import { useLogging } from "../logging/logging-hooks";
@@ -38,6 +38,7 @@ import { getTotalNumSamples } from "../utils/gestures";
 export type LoadType = "drop-load" | "file-upload";
 
 interface ProjectContext {
+  browserNavigationToEditor(): Promise<boolean>;
   openEditor(): Promise<void>;
   project: Project;
   projectEdited: boolean;
@@ -88,35 +89,69 @@ export const ProjectProvider = ({
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
   const getCurrentProject = useStore((s) => s.getCurrentProject);
+  const navigate = useNavigate();
+  const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
-      if (checkIfProjectNeedsFlush()) {
-        const project = getCurrentProject();
-        expectChangedHeader();
-        await driverRef.current!.importProject({ project });
-        projectFlushedToEditor();
+      if (!doAfterEditorUpdatePromise.current && checkIfProjectNeedsFlush()) {
+        doAfterEditorUpdatePromise.current = new Promise<void>(
+          (resolve, reject) => {
+            if (!driverRef.current) {
+              reject(
+                new TypeError(
+                  "Cannot read properties of null (reading 'importProject')"
+                )
+              );
+            } else {
+              const project = getCurrentProject();
+              expectChangedHeader();
+              driverRef.current
+                .importProject({ project })
+                .then(() => {
+                  projectFlushedToEditor();
+                  resolve();
+                })
+                .catch((e) => {
+                  reject(e);
+                });
+            }
+          }
+        );
+      }
+      try {
+        await doAfterEditorUpdatePromise.current;
+      } finally {
+        doAfterEditorUpdatePromise.current = undefined;
       }
       return action();
     },
     [
       checkIfProjectNeedsFlush,
       getCurrentProject,
-      driverRef,
       expectChangedHeader,
+      driverRef,
       projectFlushedToEditor,
     ]
   );
-  const navigate = useNavigate();
   const openEditor = useCallback(async () => {
     logging.event({
       type: "edit-in-makecode",
     });
     await doAfterEditorUpdate(() => {
-      navigate(createEditorPageUrl());
+      navigate(createCodePageUrl());
       return Promise.resolve();
     });
   }, [doAfterEditorUpdate, logging, navigate]);
-
+  const browserNavigationToEditor = useCallback(async () => {
+    try {
+      await doAfterEditorUpdate(() => {
+        return Promise.resolve();
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }, [doAfterEditorUpdate]);
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
   const loadFile = useCallback(
@@ -236,6 +271,7 @@ export const ProjectProvider = ({
     () => ({
       loadFile,
       openEditor,
+      browserNavigationToEditor,
       project,
       projectEdited,
       resetProject,
@@ -248,6 +284,7 @@ export const ProjectProvider = ({
       },
     }),
     [
+      browserNavigationToEditor,
       loadFile,
       onBack,
       onDownload,

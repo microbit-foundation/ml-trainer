@@ -1361,6 +1361,12 @@
       "value": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in."
     }
   ],
+  "loading": [
+    {
+      "type": 0,
+      "value": "Loading"
+    }
+  ],
   "main-menu": [
     {
       "type": 0,
