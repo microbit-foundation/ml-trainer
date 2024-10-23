@@ -1,4 +1,4 @@
-import { BoxProps, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
+import { BoxProps, Grid, GridItem, Text } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import { applyFilters } from "../ml";
 import { XYZData } from "../model";
