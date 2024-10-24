@@ -96,6 +96,8 @@ export const ProjectProvider = ({
       if (!doAfterEditorUpdatePromise.current && checkIfProjectNeedsFlush()) {
         doAfterEditorUpdatePromise.current = new Promise<void>(
           (resolve, reject) => {
+            // driverRef.current is not defined on first render.
+            // Only an issue when navigating to code page directly.
             if (!driverRef.current) {
               reject(
                 new TypeError(
@@ -149,6 +151,8 @@ export const ProjectProvider = ({
       });
       return true;
     } catch (e) {
+      // doAfterEditorUpdate only fails when navigating to the code page directly.
+      // In this case, the caller of browserNavigationToEditor redirects.
       return false;
     }
   }, [doAfterEditorUpdate]);
