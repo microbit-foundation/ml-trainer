@@ -48,7 +48,6 @@ const DataRecordingGridItem = ({
     [data.ID, deleteGestureRecording]
   );
 
-  console.log("newRecordingId", newRecordingId);
   return (
     <>
       <GridItem>
