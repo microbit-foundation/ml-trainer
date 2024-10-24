@@ -525,6 +525,12 @@
       "value": "Connect using Web Bluetooth instead"
     }
   ],
+  "connect-to-record": [
+    {
+      "type": 0,
+      "value": "Connect to record data samples"
+    }
+  ],
   "connect-to-record-body": [
     {
       "type": 0,
@@ -535,6 +541,12 @@
     {
       "type": 0,
       "value": "You don't have a micro:bit connected"
+    }
+  ],
+  "connect-to-test-model": [
+    {
+      "type": 0,
+      "value": "Connect to test your ML model"
     }
   ],
   "connect-troubleshoot": [
@@ -1385,6 +1397,18 @@
       "value": "Main menu"
     }
   ],
+  "makecode-back-alt": [
+    {
+      "type": 0,
+      "value": "Left arrow icon for MakeCode back"
+    }
+  ],
+  "microbit-not-connected": [
+    {
+      "type": 0,
+      "value": "Your micro:bit is not connected"
+    }
+  ],
   "more-edit-in-makecode-options": [
     {
       "type": 0,
@@ -1941,6 +1965,30 @@
     {
       "type": 0,
       "value": "The graph shows movement data from the micro:bit’s accelerometer. Move your data collection micro:bit and see how the graph changes."
+    }
+  ],
+  "tour-makecode-intro-content1": [
+    {
+      "type": 0,
+      "value": "Download the program to your micro:bit. You can add more blocks to create your own programs using your model."
+    }
+  ],
+  "tour-makecode-intro-content2": [
+    {
+      "type": 0,
+      "value": "Need to improve the ML model? "
+    }
+  ],
+  "tour-makecode-intro-content3": [
+    {
+      "type": 0,
+      "value": "Use this back button in the top left."
+    }
+  ],
+  "tour-makecode-intro-title": [
+    {
+      "type": 0,
+      "value": "Microsoft MakeCode"
     }
   ],
   "tour-testModel-afterTrain-content": [

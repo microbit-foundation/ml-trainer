@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { useProject } from "../hooks/project-hooks";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl, createTestingModelPageUrl } from "../urls";
+import Tour from "./Tour";
 
 const CodePage = () => {
   const navigate = useNavigate();
@@ -38,9 +39,10 @@ const CodePage = () => {
       setEditorOpen(false);
     };
   }, [browserNavigationToEditor, model, navigate, setEditorOpen]);
+
   return (
     <>
-      {loading && (
+      {loading ? (
         <VStack h="100%" justifyContent="center">
           <Spinner
             aria-label={intl.formatMessage({ id: "loading" })}
@@ -52,6 +54,8 @@ const CodePage = () => {
             w="166px"
           />
         </VStack>
+      ) : (
+        <Tour />
       )}
     </>
   );

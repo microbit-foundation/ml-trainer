@@ -15,22 +15,22 @@ import {
   useRef,
 } from "react";
 import { useIntl } from "react-intl";
+import { useNavigate } from "react-router";
+import { useLogging } from "../logging/logging-hooks";
 import { HexData, isDatasetUserFileFormat, SaveStep } from "../model";
 import { useStore } from "../store";
+import {
+  createCodePageUrl,
+  createDataSamplesPageUrl,
+  createTestingModelPageUrl,
+} from "../urls";
 import {
   downloadHex,
   getLowercaseFileExtension,
   readFileAsText,
 } from "../utils/fs-util";
-import { useDownloadActions } from "./download-hooks";
-import { useNavigate } from "react-router";
-import {
-  createDataSamplesPageUrl,
-  createCodePageUrl,
-  createTestingModelPageUrl,
-} from "../urls";
-import { useLogging } from "../logging/logging-hooks";
 import { getTotalNumSamples } from "../utils/gestures";
+import { useDownloadActions } from "./download-hooks";
 
 class CodeEditorError extends Error {}
 

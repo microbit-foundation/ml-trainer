@@ -303,6 +303,10 @@
     "defaultMessage": "Connect using Web Bluetooth instead",
     "description": "Link to alternative connection method"
   },
+  "connect-to-record": {
+    "defaultMessage": "Connect to record data samples",
+    "description": "Live graph disconnected micro:bit status message for data samples page"
+  },
   "connect-to-record-body": {
     "defaultMessage": "Connect a micro:bit to record a data sample.",
     "description": "Insufficient data modal content"
@@ -310,6 +314,10 @@
   "connect-to-record-title": {
     "defaultMessage": "You don't have a micro:bit connected",
     "description": "Connect to record modal title"
+  },
+  "connect-to-test-model": {
+    "defaultMessage": "Connect to test your ML model",
+    "description": "Live graph disconnected micro:bit status message for test model page"
   },
   "connect-troubleshoot": {
     "defaultMessage": "Troubleshoot problems with connecting to your micro:bit",
@@ -751,6 +759,14 @@
     "defaultMessage": "Main menu",
     "description": "Main menu label"
   },
+  "makecode-back-alt": {
+    "defaultMessage": "Left arrow icon for MakeCode back",
+    "description": "Testing model page title"
+  },
+  "microbit-not-connected": {
+    "defaultMessage": "Your micro:bit is not connected",
+    "description": "Live graph disconnected micro:bit status message"
+  },
   "more-edit-in-makecode-options": {
     "defaultMessage": "More edit in MakeCode options",
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
@@ -1070,6 +1086,22 @@
   "tour-dataSamples-liveGraph-content": {
     "defaultMessage": "The graph shows movement data from the micro:bit’s accelerometer. Move your data collection micro:bit and see how the graph changes.",
     "description": "Tour step content"
+  },
+  "tour-makecode-intro-content1": {
+    "defaultMessage": "Download the program to your micro:bit. You can add more blocks to create your own programs using your model.",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-content2": {
+    "defaultMessage": "Need to improve the ML model? ",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-content3": {
+    "defaultMessage": "Use this back button in the top left.",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-title": {
+    "defaultMessage": "Microsoft MakeCode",
+    "description": "Tour step title"
   },
   "tour-testModel-afterTrain-content": {
     "defaultMessage": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model correctly estimate each action?",

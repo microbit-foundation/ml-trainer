@@ -25,6 +25,7 @@ interface CertaintyThresholdGridItemProps {
   onThresholdChange: (val: number) => void;
   isTriggered: boolean;
   actionName: string;
+  disabled?: boolean;
 }
 
 const CertaintyThresholdGridItem = ({
@@ -33,6 +34,7 @@ const CertaintyThresholdGridItem = ({
   onThresholdChange,
   isTriggered,
   actionName,
+  disabled,
 }: CertaintyThresholdGridItemProps) => {
   const intl = useIntl();
   const barWidth = 240;
@@ -58,6 +60,8 @@ const CertaintyThresholdGridItem = ({
         borderWidth={1}
         borderColor="transparent"
         className={tourElClassname.certaintyThreshold}
+        opacity={disabled ? 0.5 : undefined}
+        pointerEvents={disabled ? "none" : undefined}
       >
         <CardBody
           display="flex"
