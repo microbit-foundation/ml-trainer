@@ -9,6 +9,33 @@ export enum Filter {
   RMS = "rms",
 }
 
+export enum Axes {
+  X = "x",
+  Y = "y",
+  Z = "z",
+}
+
+export const mlSettings = {
+  duration: 1800, // Duration of recording
+  numSamples: 80, // number of samples in one recording (when recording samples)
+  minSamples: 80, // minimum number of samples for reliable detection (when detecting gestures)
+  updatesPrSecond: 4, // Times algorithm predicts data pr second
+  defaultRequiredConfidence: 0.8, // Default threshold
+  numEpochs: 160, // Number of epochs for ML
+  learningRate: 0.1,
+  includedAxes: [Axes.X, Axes.Y, Axes.Z],
+  includedFilters: new Set<Filter>([
+    Filter.MAX,
+    Filter.MEAN,
+    Filter.MIN,
+    Filter.STD,
+    Filter.PEAKS,
+    Filter.ACC,
+    Filter.ZCR,
+    Filter.RMS,
+  ]),
+};
+
 type FilterStrategy = (data: number[]) => number;
 
 const mean: FilterStrategy = (d) => d.reduce((a, b) => a + b) / d.length;
@@ -78,16 +105,45 @@ const zeroCrossingRate: FilterStrategy = (data) => {
   return count / (data.length - 1);
 };
 
+const acc: FilterStrategy = (d) => d.reduce((a, b) => a + Math.abs(b));
+
 const rms: FilterStrategy = (d) =>
   Math.sqrt(d.reduce((a, b) => a + Math.pow(b, 2), 0) / d.length);
 
-export const mlFilters: Record<Filter, FilterStrategy> = {
-  [Filter.MAX]: (d) => Math.max(...d),
-  [Filter.MIN]: (d) => Math.min(...d),
-  [Filter.MEAN]: mean,
-  [Filter.STD]: stddev,
-  [Filter.PEAKS]: peaks,
-  [Filter.ACC]: (d) => d.reduce((a, b) => a + Math.abs(b)),
-  [Filter.ZCR]: zeroCrossingRate,
-  [Filter.RMS]: rms,
+// Max acceleration the micro:bit can detect.
+// https://microbit-challenges.readthedocs.io/en/latest/tutorials/accelerometer.html#basic-functions
+const maxAcceleration = 2.048;
+
+export const mlFilters: Record<
+  Filter,
+  { strategy: FilterStrategy; min: number; max: number }
+> = {
+  [Filter.MAX]: {
+    strategy: (d) => Math.max(...d),
+    min: -maxAcceleration,
+    max: maxAcceleration,
+  },
+  [Filter.MIN]: {
+    strategy: (d) => Math.min(...d),
+    min: -maxAcceleration,
+    max: maxAcceleration,
+  },
+  [Filter.MEAN]: {
+    strategy: mean,
+    min: -maxAcceleration,
+    max: maxAcceleration,
+  },
+  [Filter.STD]: { strategy: stddev, min: 0, max: maxAcceleration },
+  [Filter.PEAKS]: { strategy: peaks, min: 0, max: 10 },
+  [Filter.ACC]: {
+    strategy: acc,
+    min: 0,
+    max: mlSettings.minSamples * maxAcceleration,
+  },
+  [Filter.ZCR]: { strategy: zeroCrossingRate, min: 0, max: 1 },
+  [Filter.RMS]: {
+    strategy: rms,
+    min: 0,
+    max: rms(Array(mlSettings.minSamples).fill(maxAcceleration) as number[]),
+  },
 };

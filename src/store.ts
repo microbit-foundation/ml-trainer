@@ -3,7 +3,9 @@ import * as tf from "@tensorflow/tfjs";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
+import { deployment } from "./deployment";
 import { flags } from "./flags";
+import { Logging } from "./logging/logging";
 import {
   filenames,
   generateCustomFiles,
@@ -11,6 +13,7 @@ import {
 } from "./makecode/utils";
 import { trainModel } from "./ml";
 import {
+  DataSamplesView,
   DownloadState,
   DownloadStep,
   Gesture,
@@ -24,10 +27,8 @@ import {
   TrainModelDialogStage,
 } from "./model";
 import { defaultSettings, Settings } from "./settings";
-import { defaultIcons, MakeCodeIcon } from "./utils/icons";
-import { deployment } from "./deployment";
-import { Logging } from "./logging/logging";
 import { getTotalNumSamples } from "./utils/gestures";
+import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -61,7 +62,7 @@ const createUntitledProject = (): Project => ({
     saveId: null,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any,
-  ...generateProject({ data: [] }, undefined),
+  ...generateProject("Untitled", { data: [] }, undefined),
 });
 
 const updateProject = (
@@ -77,7 +78,11 @@ const updateProject = (
       ...project.text,
       ...(projectEdited
         ? generateCustomFiles(gestureData, model, project)
-        : generateProject(gestureData, model).text),
+        : generateProject(
+            project.header?.name ?? "Untitled",
+            gestureData,
+            model
+          ).text),
     },
   };
   return {
@@ -172,6 +177,8 @@ export interface Actions {
   tourNext(): void;
   tourBack(): void;
   tourComplete(id: TourId): void;
+
+  setDataSamplesView(view: DataSamplesView): void;
 }
 
 type Store = State & Actions;
@@ -203,6 +210,7 @@ const createMlStore = (logging: Logging) => {
           // This dialog flow spans two pages
           trainModelDialogStage: TrainModelDialogStage.Closed,
           trainModelProgress: 0,
+          dataSamplesView: DataSamplesView.Graph,
 
           setSettings(update: Partial<Settings>) {
             set(
@@ -529,7 +537,7 @@ const createMlStore = (logging: Logging) => {
               ...previousProject,
               text: {
                 ...previousProject.text,
-                ...generateProject({ data: gestures }, model).text,
+                ...generateProject("Untitled", { data: gestures }, model).text,
               },
             };
             set(
@@ -710,6 +718,15 @@ const createMlStore = (logging: Logging) => {
                 toursCompleted: Array.from(
                   new Set([...settings.toursCompleted, tourId])
                 ),
+              },
+            }));
+          },
+
+          setDataSamplesView(view: DataSamplesView) {
+            set(({ settings }) => ({
+              settings: {
+                ...settings,
+                dataSamplesView: view,
               },
             }));
           },

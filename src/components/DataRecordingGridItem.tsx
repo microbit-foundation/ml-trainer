@@ -11,10 +11,12 @@ import { useCallback, useRef } from "react";
 import { useIntl } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";
 import RecordIcon from "../images/record-icon.svg?react";
-import { GestureData } from "../model";
+import { DataSamplesView, GestureData } from "../model";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import RecordingGraph from "./RecordingGraph";
+import RecordingFingerprint from "./RecordingFingerprint";
+import { flags } from "../flags";
 
 interface DataRecordingGridItemProps {
   data: GestureData;
@@ -31,6 +33,7 @@ const DataRecordingGridItem = ({
 }: DataRecordingGridItemProps) => {
   const intl = useIntl();
   const deleteGestureRecording = useStore((s) => s.deleteGestureRecording);
+  const view = useStore((s) => s.settings.dataSamplesView);
   const closeRecordingDialogFocusRef = useRef(null);
   const { isConnected } = useConnectionStage();
 
@@ -81,11 +84,12 @@ const DataRecordingGridItem = ({
               />
             </HStack>
             {data.recordings.map((recording, idx) => (
-              <HStack key={idx} w="158px" position="relative">
+              <HStack key={idx} position="relative">
                 <CloseButton
                   position="absolute"
                   top={0}
                   right={0}
+                  zIndex={1}
                   size="sm"
                   aria-label={intl.formatMessage({
                     id: "delete-recording-aria",
@@ -94,13 +98,29 @@ const DataRecordingGridItem = ({
                     handleDeleteRecording(idx);
                   }}
                 />
-                <RecordingGraph
-                  data={recording.data}
-                  role="image"
-                  aria-label={intl.formatMessage({
-                    id: "recording-graph-label",
-                  })}
-                />
+                {(!flags.fingerprints ||
+                  view === DataSamplesView.Graph ||
+                  view === DataSamplesView.GraphAndDataFeatures) && (
+                  <RecordingGraph
+                    data={recording.data}
+                    role="image"
+                    aria-label={intl.formatMessage({
+                      id: "recording-graph-label",
+                    })}
+                  />
+                )}
+                {flags.fingerprints &&
+                  (view === DataSamplesView.DataFeatures ||
+                    view === DataSamplesView.GraphAndDataFeatures) && (
+                    <RecordingFingerprint
+                      data={recording.data}
+                      role="image"
+                      gestureName={data.name}
+                      aria-label={intl.formatMessage({
+                        id: "recording-fingerprint-label",
+                      })}
+                    />
+                  )}
               </HStack>
             ))}
           </CardBody>

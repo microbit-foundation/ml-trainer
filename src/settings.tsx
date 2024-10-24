@@ -1,5 +1,5 @@
 import { stage } from "./environment";
-import { TourId } from "./model";
+import { DataSamplesView, TourId } from "./model";
 
 export interface Language {
   id: string;
@@ -40,6 +40,7 @@ export const defaultSettings: Settings = {
   showPreTrainHelp: true,
   showPreDownloadHelp: true,
   toursCompleted: [],
+  dataSamplesView: DataSamplesView.Graph,
 };
 
 export interface Settings {
@@ -48,4 +49,5 @@ export interface Settings {
   showPreTrainHelp: boolean;
   showPreDownloadHelp: boolean;
   toursCompleted: TourId[];
+  dataSamplesView: DataSamplesView;
 }
