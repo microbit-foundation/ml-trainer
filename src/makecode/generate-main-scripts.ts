@@ -85,7 +85,7 @@ export const getMainScript = (
       .map((c, idx) =>
         s.onMLEvent(c.name, onMLEventChildren(s, c), {
           x: initPos.x,
-          y: initPos.y + idx * 350,
+          y: initPos.y + idx * 180,
         })
       )
       .join("\n")

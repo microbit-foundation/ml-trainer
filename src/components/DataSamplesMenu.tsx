@@ -9,23 +9,25 @@ import {
   MenuList,
   MenuOptionGroup,
   Portal,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useCallback } from "react";
 import { MdMoreVert } from "react-icons/md";
-import { FormattedMessage, useIntl } from "react-intl";
-import LoadProjectMenuItem from "./LoadProjectMenuItem";
 import {
   RiDeleteBin2Line,
   RiDownload2Line,
   RiUpload2Line,
 } from "react-icons/ri";
-import { useStore } from "../store";
-import { useLogging } from "../logging/logging-hooks";
-import { useCallback } from "react";
-import { getTotalNumSamples } from "../utils/gestures";
-import { DataSamplesView } from "../model";
+import { FormattedMessage, useIntl } from "react-intl";
 import { flags } from "../flags";
 import { NameProjectDialog } from "./NameProjectDialog";
+import { useLogging } from "../logging/logging-hooks";
+import { DataSamplesView } from "../model";
+import { useStore } from "../store";
+import { getTotalNumSamples } from "../utils/gestures";
+import { ConfirmDialog } from "./ConfirmDialog";
+import LoadProjectMenuItem from "./LoadProjectMenuItem";
 import {
   ConnectionFlowStep,
   useConnectionStage,
@@ -39,6 +41,7 @@ const DataSamplesMenu = () => {
   const setDataSamplesView = useStore((s) => s.setDataSamplesView);
   const dataSamplesView = useStore((s) => s.settings.dataSamplesView);
   const { stage } = useConnectionStage();
+  const deleteConfirmDisclosure = useDisclosure();
   const nameProjectDialogDisclosure = useDisclosure();
   const projectName = useStore((s) => s.project.header?.name);
   const isUntitled = projectName === "Untitled";
@@ -60,7 +63,8 @@ const DataSamplesMenu = () => {
       type: "dataset-delete",
     });
     deleteAllGestures();
-  }, [deleteAllGestures, logging]);
+    deleteConfirmDisclosure.onClose();
+  }, [deleteAllGestures, deleteConfirmDisclosure, logging]);
   const handleViewChange = useCallback(
     (view: string | string[]) => {
       if (typeof view === "string") {
@@ -98,6 +102,22 @@ const DataSamplesMenu = () => {
         }
         onClose={nameProjectDialogDisclosure.onClose}
         onSave={handleSave}
+      />
+      <ConfirmDialog
+        isOpen={
+          deleteConfirmDisclosure.isOpen &&
+          stage.flowStep === ConnectionFlowStep.None
+        }
+        heading={intl.formatMessage({
+          id: "delete-data-samples-confirm-heading",
+        })}
+        body={
+          <Text>
+            <FormattedMessage id="delete-data-samples-confirm-text" />
+          </Text>
+        }
+        onConfirm={handleDeleteAllGestures}
+        onCancel={deleteConfirmDisclosure.onClose}
       />
       <Menu>
         <MenuButton
@@ -145,7 +165,7 @@ const DataSamplesMenu = () => {
             </MenuItem>
             <MenuItem
               icon={<RiDeleteBin2Line />}
-              onClick={handleDeleteAllGestures}
+              onClick={deleteConfirmDisclosure.onOpen}
             >
               <FormattedMessage id="delete-data-samples-action" />
             </MenuItem>
