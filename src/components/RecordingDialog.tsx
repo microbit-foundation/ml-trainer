@@ -31,6 +31,7 @@ export interface RecordingDialogProps {
   onClose: () => void;
   actionName: string;
   gestureId: GestureData["ID"];
+  onRecordingComplete: (recordingId: number) => void;
 }
 
 enum RecordingStatus {
@@ -44,6 +45,7 @@ const RecordingDialog = ({
   actionName,
   onClose,
   gestureId,
+  onRecordingComplete,
 }: RecordingDialogProps) => {
   const intl = useIntl();
   const toast = useToast();
@@ -104,7 +106,9 @@ const RecordingDialog = ({
           recordingStarted();
           recordingDataSource.startRecording({
             onDone(data) {
-              addGestureRecordings(gestureId, [{ ID: Date.now(), data }]);
+              const recordingId = Date.now();
+              addGestureRecordings(gestureId, [{ ID: recordingId, data }]);
+              onRecordingComplete(recordingId);
               handleCleanup();
             },
             onError() {

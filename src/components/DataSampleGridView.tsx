@@ -7,7 +7,14 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { GestureData } from "../model";
@@ -51,7 +58,7 @@ const DataSamplesGridView = () => {
       (gestures.length === 1 && gestures[0].recordings.length === 0),
     [gestures]
   );
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const recordingDialogDisclosure = useDisclosure();
   const connectToRecordDialogDisclosure = useDisclosure();
 
   const connection = useConnectActions();
@@ -59,11 +66,21 @@ const DataSamplesGridView = () => {
   const { isConnected } = useConnectionStage();
   const loadProjectInputRef = useRef<LoadProjectInputRef>(null);
 
+  // For adding flashing animation for new recording.
+  const [newRecordingId, setNewRecordingId] = useState<number>(0);
+  const handleRecordingComplete = useCallback((recordingId: number) => {
+    setNewRecordingId(recordingId);
+  }, []);
+
+  const handleOpenRecordingDialog = useCallback(() => {
+    recordingDialogDisclosure.onOpen();
+  }, [recordingDialogDisclosure]);
+
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
-      if (!isOpen) {
+      if (!recordingDialogDisclosure.isOpen) {
         if (e.state) {
-          onOpen();
+          handleOpenRecordingDialog();
         }
       }
     };
@@ -71,7 +88,7 @@ const DataSamplesGridView = () => {
     return () => {
       connection.removeButtonListener("B", listener);
     };
-  }, [connection, isOpen, onOpen]);
+  }, [connection, handleOpenRecordingDialog, recordingDialogDisclosure]);
 
   return (
     <>
@@ -82,9 +99,10 @@ const DataSamplesGridView = () => {
       {selectedGesture && (
         <RecordingDialog
           gestureId={selectedGesture.ID}
-          isOpen={isOpen}
-          onClose={onClose}
+          isOpen={recordingDialogDisclosure.isOpen}
+          onClose={recordingDialogDisclosure.onClose}
           actionName={selectedGesture.name}
+          onRecordingComplete={handleRecordingComplete}
         />
       )}
       <HeadingGrid
@@ -148,10 +166,13 @@ const DataSamplesGridView = () => {
             <DataSampleGridRow
               key={g.ID}
               gesture={g}
+              newRecordingId={newRecordingId}
               selected={selectedGesture.ID === g.ID}
               onSelectRow={() => setSelectedGestureIdx(idx)}
               onRecord={
-                isConnected ? onOpen : connectToRecordDialogDisclosure.onOpen
+                isConnected
+                  ? recordingDialogDisclosure.onOpen
+                  : connectToRecordDialogDisclosure.onOpen
               }
               showWalkThrough={showWalkThrough}
             />

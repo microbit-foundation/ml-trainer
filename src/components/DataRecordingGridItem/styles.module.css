@@ -1,0 +1,22 @@
+.flash-animation{
+  -webkit-animation: flash 1s;
+  animation: flash 1s;
+}
+@-webkit-keyframes flash {
+  0% {
+    border: 2px solid #4040ff44;
+    background-color: #0000ff07;
+  }
+  100% {
+    border: 2px solid transparent;
+  }
+}
+@keyframes flash {
+  0% {
+    border: 2px solid #4040ff44;
+    background-color: #0000ff07;
+  }
+  100% {
+    border: 2px solid transparent;
+  }
+}
