@@ -2,6 +2,7 @@ import {
   Button,
   ButtonGroup,
   Grid,
+  GridItem,
   GridProps,
   HStack,
   Icon,
@@ -162,10 +163,11 @@ const TestingModelGridView = () => {
                         color="gray.600"
                       />
                     </VStack>
-                    <CodeViewGridItem
-                      gesture={gesture}
-                      projectEdited={projectEdited}
-                    />
+                    {!projectEdited ? (
+                      <CodeViewGridItem gesture={gesture} />
+                    ) : (
+                      <GridItem />
+                    )}
                   </React.Fragment>
                 );
               })}

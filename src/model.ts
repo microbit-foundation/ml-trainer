@@ -169,6 +169,7 @@ export enum TourId {
   DataSamplesPage = "dataSamplesPage",
   CollectDataToTrainModel = "collectDataToTrainModel",
   TestModelPage = "testModelPage",
+  MakeCode = "makecode",
 }
 
 /**

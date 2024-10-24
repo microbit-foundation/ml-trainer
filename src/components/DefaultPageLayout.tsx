@@ -101,7 +101,7 @@ const DefaultPageLayout = ({
         isTrainDialogClosed &&
         isTourClosed &&
         isSaveDialogClosed && <ConnectionDialogs />}
-      {!isEditorOpen && <Tour />}
+      <Tour />
       <DownloadDialogs />
       <SaveDialogs />
       <ProjectDropTarget

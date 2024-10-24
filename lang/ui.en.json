@@ -411,6 +411,14 @@
     "defaultMessage": "Delete all data samples",
     "description": "Menu item to delete data samples"
   },
+  "delete-data-samples-confirm-heading": {
+    "defaultMessage": "Confirm delete all data samples",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-data-samples-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete all data samples?",
+    "description": "Confirmation dialog text"
+  },
   "delete-recording-aria": {
     "defaultMessage": "Delete recording",
     "description": "Aria label for data sample delete action"
@@ -743,9 +751,17 @@
     "defaultMessage": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in.",
     "description": "Tooltip for live graph heading"
   },
+  "loading": {
+    "defaultMessage": "Loading",
+    "description": "Aria label for loading spinner"
+  },
   "main-menu": {
     "defaultMessage": "Main menu",
     "description": "Main menu label"
+  },
+  "makecode-back-alt": {
+    "defaultMessage": "Left arrow icon for MakeCode back",
+    "description": "Testing model page title"
   },
   "microbit-not-connected": {
     "defaultMessage": "Your micro:bit is not connected",
@@ -1070,6 +1086,22 @@
   "tour-dataSamples-liveGraph-content": {
     "defaultMessage": "The graph shows movement data from the micro:bit’s accelerometer. Move your data collection micro:bit and see how the graph changes.",
     "description": "Tour step content"
+  },
+  "tour-makecode-intro-content1": {
+    "defaultMessage": "Download the program to your micro:bit. You can add more blocks to create your own programs using your model.",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-content2": {
+    "defaultMessage": "Need to improve the ML model? ",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-content3": {
+    "defaultMessage": "Use this back button in the top left.",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-title": {
+    "defaultMessage": "Microsoft MakeCode",
+    "description": "Tour step title"
   },
   "tour-testModel-afterTrain-content": {
     "defaultMessage": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model correctly estimate each action?",
