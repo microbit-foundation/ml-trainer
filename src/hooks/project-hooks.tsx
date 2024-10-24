@@ -32,6 +32,8 @@ import {
 import { useLogging } from "../logging/logging-hooks";
 import { getTotalNumSamples } from "../utils/gestures";
 
+class CodeEditorError extends Error {}
+
 /**
  * Distinguishes the different ways to trigger the load action.
  */
@@ -99,11 +101,7 @@ export const ProjectProvider = ({
             // driverRef.current is not defined on first render.
             // Only an issue when navigating to code page directly.
             if (!driverRef.current) {
-              reject(
-                new TypeError(
-                  "Cannot read properties of null (reading 'importProject')"
-                )
-              );
+              reject(new CodeEditorError("MakeCode iframe ref is undefined"));
             } else {
               const project = getCurrentProject();
               expectChangedHeader();
