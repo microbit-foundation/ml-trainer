@@ -1,4 +1,4 @@
-.flash-animation{
+.flash-animation {
   -webkit-animation: flash 1s;
   animation: flash 1s;
 }
