@@ -145,6 +145,7 @@ const RecordingDialog = ({
     intl,
     recordingStarted,
     addGestureRecordings,
+    onRecordingComplete,
   ]);
 
   return (
