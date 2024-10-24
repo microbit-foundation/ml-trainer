@@ -108,8 +108,8 @@ const RecordingDialog = ({
             onDone(data) {
               const recordingId = Date.now();
               addGestureRecordings(gestureId, [{ ID: recordingId, data }]);
-              onRecordingComplete(recordingId);
               handleCleanup();
+              onRecordingComplete(recordingId);
             },
             onError() {
               handleCleanup();
