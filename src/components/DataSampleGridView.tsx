@@ -67,7 +67,9 @@ const DataSamplesGridView = () => {
   const loadProjectInputRef = useRef<LoadProjectInputRef>(null);
 
   // For adding flashing animation for new recording.
-  const [newRecordingId, setNewRecordingId] = useState<number>(0);
+  const [newRecordingId, setNewRecordingId] = useState<number | undefined>(
+    undefined
+  );
   const handleRecordingComplete = useCallback((recordingId: number) => {
     setNewRecordingId(recordingId);
   }, []);

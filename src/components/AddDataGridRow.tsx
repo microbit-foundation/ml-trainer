@@ -17,7 +17,7 @@ interface AddDataGridRowProps {
   onSelectRow: () => void;
   onRecord: () => void;
   showWalkThrough: boolean;
-  newRecordingId: number;
+  newRecordingId?: number;
 }
 
 const DataSampleGridRow = ({

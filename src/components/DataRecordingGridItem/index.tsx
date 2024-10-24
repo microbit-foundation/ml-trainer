@@ -25,7 +25,7 @@ interface DataRecordingGridItemProps {
   selected: boolean;
   onSelectRow?: () => void;
   onRecord: () => void;
-  newRecordingId: number;
+  newRecordingId?: number;
 }
 
 const DataRecordingGridItem = ({
