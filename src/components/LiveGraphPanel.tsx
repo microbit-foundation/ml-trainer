@@ -74,20 +74,20 @@ const LiveGraphPanel = ({
       className={tourElClassname.liveGraph}
     >
       {isDisconnected && (
-        <VStack position="absolute" w="100%" h="100%" justifyContent="center">
-          <VStack gap={0}>
-            <Text fontWeight="bold">
-              <FormattedMessage id="microbit-not-connected" />
-            </Text>
-            <Text>
-              <FormattedMessage id={disconnectedTextId} />
-            </Text>
-          </VStack>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={handleConnectOrReconnect}
-          >
+        <VStack
+          position="absolute"
+          w="100%"
+          h="100%"
+          gap={3}
+          justifyContent="center"
+        >
+          <Text fontWeight="bold">
+            <FormattedMessage id="microbit-not-connected" />
+          </Text>
+          <Text>
+            <FormattedMessage id={disconnectedTextId} />
+          </Text>
+          <Button variant="primary" onClick={handleConnectOrReconnect}>
             <FormattedMessage id="connect-action" />
           </Button>
         </VStack>
