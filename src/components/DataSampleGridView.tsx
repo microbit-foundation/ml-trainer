@@ -2,6 +2,7 @@ import {
   Button,
   Grid,
   GridProps,
+  HStack,
   Text,
   useDisclosure,
   VStack,
@@ -14,7 +15,7 @@ import { GestureData } from "../model";
 import { useStore } from "../store";
 import DataSampleGridRow from "./AddDataGridRow";
 import DataSamplesMenu from "./DataSamplesMenu";
-import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
+import HeadingGrid from "./HeadingGrid";
 import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
 import RecordingDialog from "./RecordingDialog";
 import ConnectToRecordDialog from "./ConnectToRecordDialog";
@@ -26,18 +27,6 @@ const gridCommonProps: Partial<GridProps> = {
   px: 5,
   w: "100%",
 };
-
-const headings: GridColumnHeadingItemProps[] = [
-  {
-    titleId: "action-label",
-    descriptionId: "action-tooltip",
-  },
-  {
-    titleId: "data-samples-label",
-    descriptionId: "data-samples-tooltip",
-    itemsRight: <DataSamplesMenu />,
-  },
-];
 
 const DataSamplesGridView = () => {
   const gestures = useStore((s) => s.gestures);
@@ -91,7 +80,29 @@ const DataSamplesGridView = () => {
         position="sticky"
         top={0}
         {...gridCommonProps}
-        headings={headings}
+        headings={[
+          {
+            titleId: "action-label",
+            descriptionId: "action-tooltip",
+          },
+          {
+            titleId: "data-samples-label",
+            descriptionId: "data-samples-tooltip",
+            itemsRight: (
+              <HStack>
+                <HStack rounded="md" bgColor="white" px={3}>
+                  <Text opacity={0.7} fontWeight="bold">
+                    <FormattedMessage
+                      id="total-actions"
+                      values={{ numActions: gestures.length }}
+                    />
+                  </Text>
+                </HStack>
+                <DataSamplesMenu />
+              </HStack>
+            ),
+          },
+        ]}
       />
       {gestures.length === 0 ? (
         <VStack
