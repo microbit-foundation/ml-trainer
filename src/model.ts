@@ -195,3 +195,9 @@ export type MicrobitOrgResource = {
    */
   name: string;
 };
+
+export enum DataSamplesView {
+  Graph = "graph",
+  DataFeatures = "data features",
+  GraphAndDataFeatures = "graph and data features",
+}

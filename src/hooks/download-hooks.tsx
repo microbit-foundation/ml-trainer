@@ -52,10 +52,10 @@ export class DownloadProjectActions {
       this.state.usbDevice &&
       this.state.usbDevice.status === UsbConnectionStatus.CONNECTED
     ) {
-      const newState = {
+      const newState: DownloadState = {
         ...this.state,
         step: DownloadStep.FlashingInProgress,
-        project: download,
+        hex: download,
       };
       this.setState(newState);
       await this.flashMicrobit(newState, {

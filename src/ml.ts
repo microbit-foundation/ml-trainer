@@ -1,34 +1,7 @@
 import * as tf from "@tensorflow/tfjs";
-import { GestureData, XYZData } from "./model";
-import { Filter, mlFilters } from "./mlFilters";
 import { SymbolicTensor } from "@tensorflow/tfjs";
-
-export enum Axes {
-  X = "x",
-  Y = "y",
-  Z = "z",
-}
-
-export const mlSettings = {
-  duration: 900, // Duration of recording
-  numSamples: 40, // number of samples in one recording (when recording samples)
-  minSamples: 40, // minimum number of samples for reliable detection (when detecting gestures)
-  updatesPrSecond: 4, // Times algorithm predicts data pr second
-  defaultRequiredConfidence: 0.8, // Default threshold
-  numEpochs: 160, // Number of epochs for ML
-  learningRate: 0.1,
-  includedAxes: [Axes.X, Axes.Y, Axes.Z],
-  includedFilters: new Set<Filter>([
-    Filter.MAX,
-    Filter.MEAN,
-    Filter.MIN,
-    Filter.STD,
-    Filter.PEAKS,
-    Filter.ACC,
-    Filter.ZCR,
-    Filter.RMS,
-  ]),
-};
+import { mlFilters, mlSettings } from "./mlConfig";
+import { GestureData, XYZData } from "./model";
 
 interface TrainModelInput {
   data: GestureData[];
@@ -79,7 +52,7 @@ export const prepareFeaturesAndLabels = (
   gestureData.forEach((gesture, index) => {
     gesture.recordings.forEach((recording) => {
       // Prepare features
-      features.push(applyFilters(recording.data));
+      features.push(Object.values(applyFilters(recording.data)));
 
       // Prepare labels
       const label: number[] = new Array(numGestures) as number[];
@@ -116,13 +89,32 @@ const createModel = (gestureData: GestureData[]): tf.LayersModel => {
   return model;
 };
 
-// Exported for testing
+const normalize = (value: number, min: number, max: number) => {
+  const newMin = 0;
+  const newMax = 1;
+  return ((newMax - newMin) * (value - min)) / (max - min) + newMin;
+};
+
+// Used for training model and producing fingerprints
 // applyFilters reduces array of x, y and z inputs to a single number array with values.
-export const applyFilters = ({ x, y, z }: XYZData): number[] => {
+export const applyFilters = (
+  { x, y, z }: XYZData,
+  opts: { normalize?: boolean } = {}
+): Record<string, number> => {
+  if (x.length === 0 || y.length === 0 || z.length === 0) {
+    throw new Error("Empty x/y/z data");
+  }
   return Array.from(mlSettings.includedFilters).reduce((acc, filter) => {
-    const filterStrategy = mlFilters[filter];
-    return [...acc, filterStrategy(x), filterStrategy(y), filterStrategy(z)];
-  }, [] as number[]);
+    const { strategy, min, max } = mlFilters[filter];
+    const applyFilter = (vs: number[]) =>
+      opts.normalize ? normalize(strategy(vs), min, max) : strategy(vs);
+    return {
+      ...acc,
+      [`${filter}-x`]: applyFilter(x),
+      [`${filter}-y`]: applyFilter(y),
+      [`${filter}-z`]: applyFilter(z),
+    };
+  }, {} as Record<string, number>);
 };
 
 interface PredictInput {
@@ -143,7 +135,7 @@ export const predict = async ({
   data,
   classificationIds,
 }: PredictInput): Promise<ConfidencesResult> => {
-  const input = applyFilters(data);
+  const input = Object.values(applyFilters(data));
   const prediction = model.predict(tf.tensor([input])) as tf.Tensor;
   try {
     const confidences = (await prediction.data()) as Float32Array;

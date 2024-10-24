@@ -3,9 +3,10 @@ import { useBufferedData } from "../buffered-data-hooks";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectStatus } from "../connect-status-hooks";
 import { useLogging } from "../logging/logging-hooks";
-import { Confidences, mlSettings, predict } from "../ml";
+import { Confidences, predict } from "../ml";
 import { Gesture } from "../model";
 import { useStore } from "../store";
+import { mlSettings } from "../mlConfig";
 
 export interface PredictionResult {
   confidences: Confidences;

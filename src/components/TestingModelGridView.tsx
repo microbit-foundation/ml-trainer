@@ -2,6 +2,7 @@ import {
   Button,
   ButtonGroup,
   Grid,
+  GridItem,
   GridProps,
   HStack,
   Icon,
@@ -19,7 +20,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { usePrediction } from "../hooks/ml-hooks";
 import { useProject } from "../hooks/project-hooks";
-import { mlSettings } from "../ml";
+import { mlSettings } from "../mlConfig";
 import { getMakeCodeLang } from "../settings";
 import { useSettings, useStore } from "../store";
 import { tourElClassname } from "../tours";
@@ -158,10 +159,11 @@ const TestingModelGridView = () => {
                         color="gray.600"
                       />
                     </VStack>
-                    <CodeViewGridItem
-                      gesture={gesture}
-                      projectEdited={projectEdited}
-                    />
+                    {!projectEdited ? (
+                      <CodeViewGridItem gesture={gesture} />
+                    ) : (
+                      <GridItem />
+                    )}
                   </React.Fragment>
                 );
               })}
