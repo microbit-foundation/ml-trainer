@@ -1877,6 +1877,16 @@
       "value": "Testing model"
     }
   ],
+  "total-actions": [
+    {
+      "type": 0,
+      "value": "Total actions: "
+    },
+    {
+      "type": 1,
+      "value": "numActions"
+    }
+  ],
   "tour-collectData-addActions-content": [
     {
       "type": 0,

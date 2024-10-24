@@ -1027,6 +1027,10 @@
     "defaultMessage": "Testing model",
     "description": "Testing model page title"
   },
+  "total-actions": {
+    "defaultMessage": "Total actions: {numActions}",
+    "description": "Number of actions indicator text"
+  },
   "tour-collectData-addActions-content": {
     "defaultMessage": "Decide what your other actions will be and what you will name them. You need at least 2 actions with 3 data samples to train the model. Your data samples are only stored on your computer, they do not get sent to anyone else.",
     "description": "Tour step description"
