@@ -528,7 +528,7 @@
   "connect-to-record": [
     {
       "type": 0,
-      "value": "Connect to record more data."
+      "value": "Connect to record data."
     }
   ],
   "connect-to-record-body": [
