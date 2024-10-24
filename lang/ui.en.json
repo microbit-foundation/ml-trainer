@@ -304,7 +304,7 @@
     "description": "Link to alternative connection method"
   },
   "connect-to-record": {
-    "defaultMessage": "Connect to record data.",
+    "defaultMessage": "Connect to record data",
     "description": "Live graph disconnected micro:bit status message for data samples page"
   },
   "connect-to-record-body": {
@@ -316,7 +316,7 @@
     "description": "Connect to record modal title"
   },
   "connect-to-test-model": {
-    "defaultMessage": "Connect to test your ML model.",
+    "defaultMessage": "Connect to test your ML model",
     "description": "Live graph disconnected micro:bit status message for test model page"
   },
   "connect-troubleshoot": {
@@ -748,7 +748,7 @@
     "description": "Main menu label"
   },
   "microbit-not-connected": {
-    "defaultMessage": "Your micro:bit is not connected.",
+    "defaultMessage": "Your micro:bit is not connected",
     "description": "Live graph disconnected micro:bit status message"
   },
   "more-edit-in-makecode-options": {

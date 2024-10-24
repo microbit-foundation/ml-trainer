@@ -528,7 +528,7 @@
   "connect-to-record": [
     {
       "type": 0,
-      "value": "Connect to record data."
+      "value": "Connect to record data"
     }
   ],
   "connect-to-record-body": [
@@ -546,7 +546,7 @@
   "connect-to-test-model": [
     {
       "type": 0,
-      "value": "Connect to test your ML model."
+      "value": "Connect to test your ML model"
     }
   ],
   "connect-troubleshoot": [
@@ -1382,7 +1382,7 @@
   "microbit-not-connected": [
     {
       "type": 0,
-      "value": "Your micro:bit is not connected."
+      "value": "Your micro:bit is not connected"
     }
   ],
   "more-edit-in-makecode-options": [
