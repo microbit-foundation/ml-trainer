@@ -691,6 +691,18 @@
       "value": "Delete all data samples"
     }
   ],
+  "delete-data-samples-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete all data samples"
+    }
+  ],
+  "delete-data-samples-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete all data samples?"
+    }
+  ],
   "delete-recording-aria": [
     {
       "type": 0,

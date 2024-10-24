@@ -403,6 +403,14 @@
     "defaultMessage": "Delete all data samples",
     "description": "Menu item to delete data samples"
   },
+  "delete-data-samples-confirm-heading": {
+    "defaultMessage": "Confirm delete all data samples",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-data-samples-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete all data samples?",
+    "description": "Confirmation dialog text"
+  },
   "delete-recording-aria": {
     "defaultMessage": "Delete recording",
     "description": "Aria label for data sample delete action"

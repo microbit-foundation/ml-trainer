@@ -6,6 +6,10 @@ import AddDataGridWalkThrough from "./AddDataGridWalkThrough";
 import { ConfirmDialog } from "./ConfirmDialog";
 import DataRecordingGridItem from "./DataRecordingGridItem";
 import GestureNameGridItem from "./GestureNameGridItem";
+import {
+  ConnectionFlowStep,
+  useConnectionStage,
+} from "../connection-stage-hooks";
 
 interface AddDataGridRowProps {
   gesture: GestureData;
@@ -25,10 +29,15 @@ const DataSampleGridRow = ({
   const intl = useIntl();
   const deleteConfirmDisclosure = useDisclosure();
   const deleteGesture = useStore((s) => s.deleteGesture);
+  const { stage } = useConnectionStage();
+
   return (
     <>
       <ConfirmDialog
-        isOpen={deleteConfirmDisclosure.isOpen}
+        isOpen={
+          deleteConfirmDisclosure.isOpen &&
+          stage.flowStep === ConnectionFlowStep.None
+        }
         heading={intl.formatMessage({
           id: "delete-action-confirm-heading",
         })}
