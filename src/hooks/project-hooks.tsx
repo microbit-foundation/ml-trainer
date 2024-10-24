@@ -149,11 +149,16 @@ export const ProjectProvider = ({
       });
       return true;
     } catch (e) {
-      // doAfterEditorUpdate only fails when navigating to the code page directly.
-      // In this case, the caller of browserNavigationToEditor redirects.
+      if (e instanceof CodeEditorError) {
+        // In this case, doAfterEditorUpdate has failed because the app has loaded
+        // on the code page directly. The caller of browserNavigationToEditor redirects.
+        return false;
+      }
+      // Unexpected error, can't handle better than the redirect.
+      logging.error(e);
       return false;
     }
-  }, [doAfterEditorUpdate]);
+  }, [doAfterEditorUpdate, logging]);
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
   const loadFile = useCallback(
