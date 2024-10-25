@@ -2,6 +2,7 @@ import { Icon, IconProps } from "@chakra-ui/react";
 
 interface AlertIconProps extends Omit<IconProps, "viewBox"> {}
 
+// Modified version of RiAlertFill from react-icons (MIT licensed icon set used elsewhere)
 const AlertIcon = ({ ...props }: AlertIconProps) => {
   return (
     <Icon stroke-width="0" viewBox="0 0 24 24" {...props}>
