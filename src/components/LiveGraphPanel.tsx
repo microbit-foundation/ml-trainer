@@ -205,14 +205,8 @@ const LiveGraphPanel = ({
 };
 
 const MicrobitWarningIllustration = () => (
-  <HStack position="relative">
-    <Image
-      src={microbitImage}
-      alt=""
-      objectFit="contain"
-      boxSize="120px"
-      bottom={0}
-    />
+  <HStack position="relative" aria-hidden>
+    <Image src={microbitImage} objectFit="contain" boxSize="120px" bottom={0} />
     <Icon
       as={AlertIcon}
       position="absolute"
