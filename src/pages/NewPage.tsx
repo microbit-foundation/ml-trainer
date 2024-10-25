@@ -20,17 +20,15 @@ import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
 import NewPageChoice from "../components/NewPageChoice";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
-import { useLogging } from "../logging/logging-hooks";
 
 const NewPage = () => {
   const existingSessionTimestamp = useStore((s) => s.timestamp);
   const projectName = useStore((s) => s.project.header?.name ?? "Untitled");
   const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
-  const { actions: connStageActions } = useConnectionStage();
   const logging = useLogging();
 
   const handleOpenLastSession = useCallback(() => {
@@ -51,8 +49,7 @@ const NewPage = () => {
     });
     newSession();
     navigate(createDataSamplesPageUrl());
-    connStageActions.startConnect();
-  }, [logging, newSession, navigate, connStageActions]);
+  }, [logging, newSession, navigate]);
 
   const intl = useIntl();
   const lastSessionTitle = intl.formatMessage({
