@@ -8,7 +8,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Project } from "@microbit/makecode-embed/react";
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
@@ -16,45 +16,63 @@ import DefaultPageLayout, {
   HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
+import { useConnectionStage } from "../connection-stage-hooks";
 import { useDeployment } from "../deployment";
 import { useProject } from "../hooks/project-hooks";
 import { MicrobitOrgResource } from "../model";
-import { useStore } from "../store";
-import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
-import { useConnectionStage } from "../connection-stage-hooks";
 import { defaultProjectName, validateProjectName } from "../project-name";
+import { useStore } from "../store";
+import { createDataSamplesPageUrl } from "../urls";
+import { useLogging } from "../logging/logging-hooks";
 
 const ImportPage = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const { activitiesBaseUrl } = useDeployment();
-  const resource = useMicrobitResourceSearchParams();
-  const project = useRef<Project>();
+  const [params] = useSearchParams();
   const [name, setName] = useState<string>(defaultProjectName);
   const isValidSetup = validateProjectName(name);
+  const [fetchingProject, setFetchingProject] = useState<boolean>(true);
+  const [project, setProject] = useState<Project>();
+  const logging = useLogging();
+
+  const resource = useMemo(() => {
+    const id = params.get("id");
+    const project = params.get("project");
+    const name = params.get("name");
+    return id && name && project ? { id, project, name } : undefined;
+  }, [params]);
 
   useEffect(() => {
     const updateAsync = async () => {
       if (!resource || !activitiesBaseUrl) {
         return;
       }
-      project.current = await fetchMicrobitOrgResourceProjectCode(
-        activitiesBaseUrl,
-        resource,
-        intl
-      );
-      setName(project.current.header?.name ?? defaultProjectName);
+      try {
+        const project = await fetchMicrobitOrgResourceProjectCode(
+          activitiesBaseUrl,
+          resource,
+          intl
+        );
+        setProject(project);
+        setName(project.header?.name ?? defaultProjectName);
+      } catch (e) {
+        // Log the fetch error, but fallback to new blank session by default.
+        logging.error(e);
+      }
     };
-    void updateAsync();
-  }, [activitiesBaseUrl, intl, resource]);
+    void updateAsync().then(() => {
+      setFetchingProject(false);
+    });
+  }, [activitiesBaseUrl, intl, logging, resource]);
 
   const loadProject = useStore((s) => s.loadProject);
   const newSession = useStore((s) => s.newSession);
   const { actions: connStageActions } = useConnectionStage();
 
   const handleStartSession = useCallback(() => {
-    if (project.current) {
-      loadProject(project.current, name);
+    if (project) {
+      loadProject(project, name);
       navigate(createDataSamplesPageUrl());
     } else {
       // If no resource fetched, start as new empty session
@@ -63,10 +81,10 @@ const ImportPage = () => {
       navigate(createDataSamplesPageUrl());
       connStageActions.startConnect();
     }
-  }, [connStageActions, loadProject, name, navigate, newSession]);
+  }, [connStageActions, loadProject, name, navigate, newSession, project]);
 
   const handleBack = useCallback(() => {
-    navigate(createHomePageUrl());
+    navigate(-1);
   }, [navigate]);
 
   const { saveHex } = useProject();
@@ -132,6 +150,7 @@ const ImportPage = () => {
             </Button>
             <Button
               isDisabled={!isValidSetup}
+              isLoading={fetchingProject}
               variant="primary"
               onClick={handleStartSession}
               size="lg"
@@ -143,14 +162,6 @@ const ImportPage = () => {
       </VStack>
     </DefaultPageLayout>
   );
-};
-
-const useMicrobitResourceSearchParams = (): MicrobitOrgResource | undefined => {
-  const [params] = useSearchParams();
-  const id = params.get("id");
-  const project = params.get("project");
-  const name = params.get("name");
-  return id && name && project ? { id, project, name } : undefined;
 };
 
 const isValidProject = (content: Project): content is Project => {
