@@ -169,6 +169,7 @@ export enum TourId {
   DataSamplesPage = "dataSamplesPage",
   CollectDataToTrainModel = "collectDataToTrainModel",
   TestModelPage = "testModelPage",
+  MakeCode = "makecode",
 }
 
 /**
@@ -195,3 +196,9 @@ export type MicrobitOrgResource = {
    */
   name: string;
 };
+
+export enum DataSamplesView {
+  Graph = "graph",
+  DataFeatures = "data features",
+  GraphAndDataFeatures = "graph and data features",
+}

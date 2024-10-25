@@ -3,7 +3,9 @@ import * as tf from "@tensorflow/tfjs";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
+import { deployment } from "./deployment";
 import { flags } from "./flags";
+import { Logging } from "./logging/logging";
 import {
   filenames,
   generateCustomFiles,
@@ -11,6 +13,7 @@ import {
 } from "./makecode/utils";
 import { trainModel } from "./ml";
 import {
+  DataSamplesView,
   DownloadState,
   DownloadStep,
   Gesture,
@@ -23,12 +26,10 @@ import {
   TourState,
   TrainModelDialogStage,
 } from "./model";
-import { defaultSettings, Settings } from "./settings";
-import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { defaultProjectName } from "./project-name";
-import { deployment } from "./deployment";
-import { Logging } from "./logging/logging";
+import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/gestures";
+import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -62,7 +63,7 @@ const createUntitledProject = (): Project => ({
     saveId: null,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any,
-  ...generateProject({ data: [] }, undefined),
+  ...generateProject("Untitled", { data: [] }, undefined),
 });
 
 const updateProject = (
@@ -78,7 +79,11 @@ const updateProject = (
       ...project.text,
       ...(projectEdited
         ? generateCustomFiles(gestureData, model, project)
-        : generateProject(gestureData, model).text),
+        : generateProject(
+            project.header?.name ?? "Untitled",
+            gestureData,
+            model
+          ).text),
     },
   };
   return {
@@ -173,6 +178,8 @@ export interface Actions {
   tourNext(): void;
   tourBack(): void;
   tourComplete(id: TourId): void;
+
+  setDataSamplesView(view: DataSamplesView): void;
 }
 
 type Store = State & Actions;
@@ -204,6 +211,7 @@ const createMlStore = (logging: Logging) => {
           // This dialog flow spans two pages
           trainModelDialogStage: TrainModelDialogStage.Closed,
           trainModelProgress: 0,
+          dataSamplesView: DataSamplesView.Graph,
 
           setSettings(update: Partial<Settings>) {
             set(
@@ -238,10 +246,10 @@ const createMlStore = (logging: Logging) => {
 
           setEditorOpen(open: boolean) {
             set(
-              ({ download }) => ({
+              ({ download, model }) => ({
                 isEditorOpen: open,
                 // We just assume its been edited as spurious changes from MakeCode happen that we can't identify
-                projectEdited: true,
+                projectEdited: model ? true : false,
                 download: {
                   ...download,
                   usbDevice: undefined,
@@ -404,14 +412,17 @@ const createMlStore = (logging: Logging) => {
           },
 
           downloadDataset() {
-            const { gestures } = get();
+            const { gestures, project } = get();
             const a = document.createElement("a");
             a.setAttribute(
               "href",
               "data:application/json;charset=utf-8," +
                 encodeURIComponent(JSON.stringify(gestures, null, 2))
             );
-            a.setAttribute("download", "dataset");
+            a.setAttribute(
+              "download",
+              `${project.header?.name || "Untitled"}-data-samples`
+            );
             a.style.display = "none";
             a.click();
           },
@@ -502,6 +513,9 @@ const createMlStore = (logging: Logging) => {
               trainModelDialogStage: TrainModelDialogStage.TrainingInProgress,
               trainModelProgress: 0,
             });
+            // Delay so we get UI change before training starts. The initial part of training
+            // can block the UI. 50 ms is not sufficient, so use 100 for now.
+            await new Promise((res) => setTimeout(res, 100));
             const trainingResult = await trainModel({
               data: gestures,
               onProgress: (trainModelProgress) =>
@@ -530,7 +544,7 @@ const createMlStore = (logging: Logging) => {
               ...previousProject,
               text: {
                 ...previousProject.text,
-                ...generateProject({ data: gestures }, model).text,
+                ...generateProject("Untitled", { data: gestures }, model).text,
               },
             };
             set(
@@ -692,6 +706,15 @@ const createMlStore = (logging: Logging) => {
                 toursCompleted: Array.from(
                   new Set([...settings.toursCompleted, tourId])
                 ),
+              },
+            }));
+          },
+
+          setDataSamplesView(view: DataSamplesView) {
+            set(({ settings }) => ({
+              settings: {
+                ...settings,
+                dataSamplesView: view,
               },
             }));
           },

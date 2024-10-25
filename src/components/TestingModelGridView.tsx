@@ -2,6 +2,7 @@ import {
   Button,
   ButtonGroup,
   Grid,
+  GridItem,
   GridProps,
   HStack,
   Icon,
@@ -17,9 +18,10 @@ import React, { useCallback, useState } from "react";
 import { RiArrowRightLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
+import { useConnectionStage } from "../connection-stage-hooks";
 import { usePrediction } from "../hooks/ml-hooks";
 import { useProject } from "../hooks/project-hooks";
-import { mlSettings } from "../ml";
+import { mlSettings } from "../mlConfig";
 import { getMakeCodeLang } from "../settings";
 import { useSettings, useStore } from "../store";
 import { tourElClassname } from "../tours";
@@ -63,6 +65,7 @@ const TestingModelGridView = () => {
   const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { openEditor, project, resetProject, projectEdited } = useProject();
   const { getDataCollectionBoardVersion } = useConnectActions();
+  const { isConnected } = useConnectionStage();
 
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
@@ -139,6 +142,7 @@ const TestingModelGridView = () => {
                       icon={icon}
                       readOnly={true}
                       isTriggered={isTriggered}
+                      disabled={!isConnected}
                     />
                     <CertaintyThresholdGridItem
                       actionName={name}
@@ -150,6 +154,7 @@ const TestingModelGridView = () => {
                         threshold ?? mlSettings.defaultRequiredConfidence
                       }
                       isTriggered={isTriggered}
+                      disabled={!isConnected}
                     />
                     <VStack justifyContent="center" h="full">
                       <Icon
@@ -158,10 +163,11 @@ const TestingModelGridView = () => {
                         color="gray.600"
                       />
                     </VStack>
-                    <CodeViewGridItem
-                      gesture={gesture}
-                      projectEdited={projectEdited}
-                    />
+                    {!projectEdited ? (
+                      <CodeViewGridItem gesture={gesture} />
+                    ) : (
+                      <GridItem />
+                    )}
                   </React.Fragment>
                 );
               })}
@@ -211,7 +217,11 @@ const TestingModelGridView = () => {
             </ButtonGroup>
           </Menu>
         </HStack>
-        <LiveGraphPanel detected={prediction?.detected} showPredictedGesture />
+        <LiveGraphPanel
+          detected={prediction?.detected}
+          showPredictedGesture
+          disconnectedTextId="connect-to-test-model"
+        />
       </VStack>
     </>
   );

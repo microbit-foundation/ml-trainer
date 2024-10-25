@@ -100,7 +100,7 @@
   "back-to-data-samples-action": [
     {
       "type": 0,
-      "value": "Back to data samples"
+      "value": "Edit data samples"
     }
   ],
   "bluetooth-unsupported-advice": [
@@ -525,6 +525,12 @@
       "value": "Connect using Web Bluetooth instead"
     }
   ],
+  "connect-to-record": [
+    {
+      "type": 0,
+      "value": "Connect to record data samples"
+    }
+  ],
   "connect-to-record-body": [
     {
       "type": 0,
@@ -535,6 +541,12 @@
     {
       "type": 0,
       "value": "You don't have a micro:bit connected"
+    }
+  ],
+  "connect-to-test-model": [
+    {
+      "type": 0,
+      "value": "Connect to test your ML model"
     }
   ],
   "connect-troubleshoot": [
@@ -627,6 +639,30 @@
       "value": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else."
     }
   ],
+  "data-samples-view-data-features-option": [
+    {
+      "type": 0,
+      "value": "Data features"
+    }
+  ],
+  "data-samples-view-graph-and-data-features-option": [
+    {
+      "type": 0,
+      "value": "Graphs and data features"
+    }
+  ],
+  "data-samples-view-graph-option": [
+    {
+      "type": 0,
+      "value": "Graphs"
+    }
+  ],
+  "data-samples-view-options-heading": [
+    {
+      "type": 0,
+      "value": "Views"
+    }
+  ],
   "delete-action-aria": [
     {
       "type": 0,
@@ -665,6 +701,18 @@
     {
       "type": 0,
       "value": "Delete all data samples"
+    }
+  ],
+  "delete-data-samples-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete all data samples"
+    }
+  ],
+  "delete-data-samples-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete all data samples?"
     }
   ],
   "delete-recording-aria": [
@@ -855,6 +903,246 @@
     {
       "type": 0,
       "value": "Feedback"
+    }
+  ],
+  "fingerprint-acc-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Sum of x-direction data for "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-acc-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Sum of y-direction data for "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-acc-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Sum of z-direction data for "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-max-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Maximum point among all x-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-max-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Maximum point among all y-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-max-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Maximum point among all z-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-mean-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Mean value for x-direction data in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-mean-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Mean value for y-direction data in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-mean-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Mean value for z-direction data in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-min-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Minimum point among all x-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-min-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Minimum point among all y-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-min-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Minimum point among all z-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-peaks-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Number of extremes among all x-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-peaks-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Number of extremes among all y-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-peaks-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Number of extremes among all z-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-rms-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Root mean square value for all x-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-rms-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Root mean square value for all y-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-rms-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Root mean square value for all z-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-std-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Average deviation from 0 among all x-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-std-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Average deviation from 0 among all y-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-std-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Average deviation from 0 among all z-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-zcr-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Rate at which acceleration transitions between positive and negative for x-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-zcr-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Rate at which acceleration transitions between positive and negative for y-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    }
+  ],
+  "fingerprint-zcr-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Rate at which acceleration transitions between positive and negative for z-direction data points in "
+    },
+    {
+      "type": 1,
+      "value": "action"
     }
   ],
   "firmware-outdated-content1": [
@@ -1097,10 +1385,28 @@
       "value": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in."
     }
   ],
+  "loading": [
+    {
+      "type": 0,
+      "value": "Loading"
+    }
+  ],
   "main-menu": [
     {
       "type": 0,
       "value": "Main menu"
+    }
+  ],
+  "makecode-back-alt": [
+    {
+      "type": 0,
+      "value": "Left arrow icon for MakeCode back"
+    }
+  ],
+  "microbit-not-connected": [
+    {
+      "type": 0,
+      "value": "Your micro:bit is not connected"
     }
   ],
   "more-edit-in-makecode-options": [
@@ -1455,6 +1761,12 @@
       "value": "\""
     }
   ],
+  "recording-fingerprint-label": [
+    {
+      "type": 0,
+      "value": "heatmap showing micro:bit x, y, z accelerometer data features for one recording"
+    }
+  ],
   "recording-graph-label": [
     {
       "type": 0,
@@ -1666,7 +1978,7 @@
   "tour-dataSamples-actions-content": [
     {
       "type": 0,
-      "value": "An action is the type of movement you want the machine learning tool to recognise e.g. ‘waving’ or ‘clapping’. Decide what your first action will be, name it and then start recording data samples."
+      "value": "An action is the type of movement you want the machine learning model to recognise e.g. ‘waving’ or ‘clapping’. Decide what your first action will be, name it and then start recording data samples."
     }
   ],
   "tour-dataSamples-connected-content": [
@@ -1685,6 +1997,30 @@
     {
       "type": 0,
       "value": "The graph shows movement data from the micro:bit’s accelerometer. Move your data collection micro:bit and see how the graph changes."
+    }
+  ],
+  "tour-makecode-intro-content1": [
+    {
+      "type": 0,
+      "value": "Download the model and code to test your project on a micro:bit. You can also add more code blocks to create your own programs using your model."
+    }
+  ],
+  "tour-makecode-intro-content2": [
+    {
+      "type": 0,
+      "value": "Need to improve the ML model? "
+    }
+  ],
+  "tour-makecode-intro-content3": [
+    {
+      "type": 0,
+      "value": "Use this back button in the top left."
+    }
+  ],
+  "tour-makecode-intro-title": [
+    {
+      "type": 0,
+      "value": "Microsoft MakeCode"
     }
   ],
   "tour-testModel-afterTrain-content": [

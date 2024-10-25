@@ -20,7 +20,11 @@ import { useLogging } from "../logging/logging-hooks";
 import { HexData, isDatasetUserFileFormat, SaveStep } from "../model";
 import { defaultProjectName } from "../project-name";
 import { useStore } from "../store";
-import { createDataSamplesPageUrl } from "../urls";
+import {
+  createCodePageUrl,
+  createDataSamplesPageUrl,
+  createTestingModelPageUrl,
+} from "../urls";
 import {
   downloadHex,
   getLowercaseFileExtension,
@@ -29,12 +33,15 @@ import {
 import { getTotalNumSamples } from "../utils/gestures";
 import { useDownloadActions } from "./download-hooks";
 
+class CodeEditorError extends Error {}
+
 /**
  * Distinguishes the different ways to trigger the load action.
  */
 export type LoadType = "drop-load" | "file-upload";
 
 interface ProjectContext {
+  browserNavigationToEditor(): Promise<boolean>;
   openEditor(): Promise<void>;
   project: Project;
   projectEdited: boolean;
@@ -80,27 +87,50 @@ export const ProjectProvider = ({
   const intl = useIntl();
   const toast = useToast();
   const logging = useLogging();
-  const setEditorOpen = useStore((s) => s.setEditorOpen);
   const projectEdited = useStore((s) => s.projectEdited);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
   const getCurrentProject = useStore((s) => s.getCurrentProject);
+  const navigate = useNavigate();
+  const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
-      if (checkIfProjectNeedsFlush()) {
-        const project = getCurrentProject();
-        expectChangedHeader();
-        await driverRef.current!.importProject({ project });
-        projectFlushedToEditor();
+      if (!doAfterEditorUpdatePromise.current && checkIfProjectNeedsFlush()) {
+        doAfterEditorUpdatePromise.current = new Promise<void>(
+          (resolve, reject) => {
+            // driverRef.current is not defined on first render.
+            // Only an issue when navigating to code page directly.
+            if (!driverRef.current) {
+              reject(new CodeEditorError("MakeCode iframe ref is undefined"));
+            } else {
+              const project = getCurrentProject();
+              expectChangedHeader();
+              driverRef.current
+                .importProject({ project })
+                .then(() => {
+                  projectFlushedToEditor();
+                  resolve();
+                })
+                .catch((e) => {
+                  reject(e);
+                });
+            }
+          }
+        );
+      }
+      try {
+        await doAfterEditorUpdatePromise.current;
+      } finally {
+        doAfterEditorUpdatePromise.current = undefined;
       }
       return action();
     },
     [
       checkIfProjectNeedsFlush,
       getCurrentProject,
-      driverRef,
       expectChangedHeader,
+      driverRef,
       projectFlushedToEditor,
     ]
   );
@@ -109,14 +139,29 @@ export const ProjectProvider = ({
       type: "edit-in-makecode",
     });
     await doAfterEditorUpdate(() => {
-      setEditorOpen(true);
+      navigate(createCodePageUrl());
       return Promise.resolve();
     });
-  }, [doAfterEditorUpdate, logging, setEditorOpen]);
-
+  }, [doAfterEditorUpdate, logging, navigate]);
+  const browserNavigationToEditor = useCallback(async () => {
+    try {
+      await doAfterEditorUpdate(() => {
+        return Promise.resolve();
+      });
+      return true;
+    } catch (e) {
+      if (e instanceof CodeEditorError) {
+        // In this case, doAfterEditorUpdate has failed because the app has loaded
+        // on the code page directly. The caller of browserNavigationToEditor redirects.
+        return false;
+      }
+      // Unexpected error, can't handle better than the redirect.
+      logging.error(e);
+      return false;
+    }
+  }, [doAfterEditorUpdate, logging]);
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
-  const navigate = useNavigate();
   const loadFile = useCallback(
     async (file: File, type: LoadType): Promise<void> => {
       const fileExtension = getLowercaseFileExtension(file.name);
@@ -212,7 +257,9 @@ export const ProjectProvider = ({
     [editorChange]
   );
 
-  const onBack = useCallback(() => setEditorOpen(false), [setEditorOpen]);
+  const onBack = useCallback(() => {
+    navigate(createTestingModelPageUrl());
+  }, [navigate]);
   const onSave = saveHex;
   const downloadActions = useDownloadActions();
   const onDownload = useCallback(
@@ -232,6 +279,7 @@ export const ProjectProvider = ({
     () => ({
       loadFile,
       openEditor,
+      browserNavigationToEditor,
       project,
       projectEdited,
       resetProject,
@@ -244,6 +292,7 @@ export const ProjectProvider = ({
       },
     }),
     [
+      browserNavigationToEditor,
       loadFile,
       onBack,
       onDownload,
