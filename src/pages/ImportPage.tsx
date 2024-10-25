@@ -31,6 +31,7 @@ const ImportPage = () => {
   const { activitiesBaseUrl } = useDeployment();
   const [params] = useSearchParams();
   const [name, setName] = useState<string>(defaultProjectName);
+  const [resourceName, setResourceName] = useState<string>();
   const isValidSetup = validateProjectName(name);
   const [fetchingProject, setFetchingProject] = useState<boolean>(true);
   const [project, setProject] = useState<Project>();
@@ -40,6 +41,9 @@ const ImportPage = () => {
     const id = params.get("id");
     const project = params.get("project");
     const name = params.get("name");
+    if (project) {
+      setResourceName(project);
+    }
     return id && name && project ? { id, project, name } : undefined;
   }, [params]);
 
@@ -55,7 +59,7 @@ const ImportPage = () => {
           intl
         );
         setProject(project);
-        setName(project.header?.name ?? defaultProjectName);
+        setName(resourceName ?? defaultProjectName);
       } catch (e) {
         // Log the fetch error, but fallback to new blank session by default.
         logging.error(e);
@@ -64,7 +68,7 @@ const ImportPage = () => {
     void updateAsync().then(() => {
       setFetchingProject(false);
     });
-  }, [activitiesBaseUrl, intl, logging, resource]);
+  }, [activitiesBaseUrl, intl, logging, resource, resourceName]);
 
   const loadProject = useStore((s) => s.loadProject);
   const newSession = useStore((s) => s.newSession);
