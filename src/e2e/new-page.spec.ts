@@ -6,8 +6,8 @@ test.describe("new page", () => {
     await homePage.getStarted();
   });
 
-  test("starting state", async ({ newPage }) => {
-    await newPage.expectCorrectStartingButtonStates();
+  test("initial state", async ({ newPage }) => {
+    await newPage.expectCorrectInitialstate();
   });
 
   test("start new session", async ({ newPage, dataSamplesPage }) => {

@@ -40,7 +40,7 @@ export class NewPage {
     return response;
   }
 
-  async expectCorrectStartingButtonStates() {
+  async expectCorrectInitialstate() {
     await expect(this.openSavedSessionBtn).toBeVisible();
     await expect(this.openSavedSessionBtn).toBeEnabled();
     await expect(this.newSessionBtn).toBeVisible();

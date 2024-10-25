@@ -14,6 +14,15 @@ export class DataSamplesPage {
     this.heading = this.page.getByRole("heading", { name: "Data samples" });
   }
 
+  async goto(flags: string[] = ["open"]) {
+    const response = await this.page.goto(this.url);
+    await this.page.evaluate(
+      (flags) => localStorage.setItem("flags", flags.join(",")),
+      flags
+    );
+    return response;
+  }
+
   expectUrl() {
     expect(this.page.url()).toEqual(this.url);
   }
@@ -32,5 +41,10 @@ export class DataSamplesPage {
       this.page.getByRole("heading", { name: "What you need to connect" })
     ).toBeVisible();
     this.expectUrl();
+  }
+
+  async expectCorrectInitialState() {
+    this.expectUrl();
+    await expect(this.heading).toBeVisible({ timeout: 10000 });
   }
 }
