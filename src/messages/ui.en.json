@@ -1695,6 +1695,12 @@
       "value": "Reconnecting…"
     }
   ],
+  "record-action": [
+    {
+      "type": 0,
+      "value": "Record"
+    }
+  ],
   "record-action-aria": [
     {
       "type": 0,

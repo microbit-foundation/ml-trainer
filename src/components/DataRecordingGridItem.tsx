@@ -1,22 +1,22 @@
 import {
+  Button,
   Card,
   CardBody,
   CloseButton,
   GridItem,
   HStack,
-  Icon,
-  IconButton,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";
-import RecordIcon from "../images/record-icon.svg?react";
+import { flags } from "../flags";
 import { DataSamplesView, GestureData } from "../model";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
-import RecordingGraph from "./RecordingGraph";
 import RecordingFingerprint from "./RecordingFingerprint";
-import { flags } from "../flags";
+import RecordingGraph from "./RecordingGraph";
 
 interface DataRecordingGridItemProps {
   data: GestureData;
@@ -59,30 +59,26 @@ const DataRecordingGridItem = ({
           className={tourElClassname.recordDataSamplesCard}
         >
           <CardBody display="flex" flexDirection="row" p={1} gap={3}>
-            <HStack w="8.25rem" justifyContent="center">
-              <IconButton
+            <VStack w="8.25rem" justifyContent="center">
+              <Button
                 ref={closeRecordingDialogFocusRef}
-                height="fit-content"
-                width="fit-content"
                 rounded="full"
+                variant="solid"
+                textColor={selected ? "white" : "black"}
+                backgroundColor={selected ? "red.500" : "blackAlpha.200"}
                 onClick={onRecord}
-                variant="ghost"
-                _hover={{ backgroundColor: "transparent" }}
+                _hover={{
+                  backgroundColor: selected ? "red.600" : "blackAlpha.100",
+                }}
                 aria-label={intl.formatMessage(
                   { id: "record-action-aria" },
                   { action: data.name }
                 )}
-                opacity={isConnected ? 1 : 0.5}
-                icon={
-                  <Icon
-                    as={RecordIcon}
-                    boxSize="70px"
-                    color={selected ? "red.500" : "black"}
-                    opacity={selected ? 1 : 0.2}
-                  />
-                }
-              />
-            </HStack>
+                opacity={!isConnected ? 0.5 : 1}
+              >
+                <FormattedMessage id="record-action" />
+              </Button>
+            </VStack>
             {data.recordings.map((recording, idx) => (
               <HStack key={idx} position="relative">
                 <CloseButton

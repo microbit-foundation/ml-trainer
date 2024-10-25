@@ -931,6 +931,10 @@
     "defaultMessage": "Reconnecting…",
     "description": "Shown while reconnecting"
   },
+  "record-action": {
+    "defaultMessage": "Record",
+    "description": "Record button text"
+  },
   "record-action-aria": {
     "defaultMessage": "Record data for action \"{action}\"",
     "description": "Aria label for record button"
