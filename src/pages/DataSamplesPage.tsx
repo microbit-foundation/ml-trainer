@@ -81,7 +81,7 @@ const DataSamplesPage = () => {
               </Button>
             )}
           </HStack>
-          <LiveGraphPanel />
+          <LiveGraphPanel disconnectedTextId="connect-to-record" />
         </VStack>
       </DefaultPageLayout>
     </>

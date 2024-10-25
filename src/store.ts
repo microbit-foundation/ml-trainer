@@ -242,10 +242,10 @@ const createMlStore = (logging: Logging) => {
 
           setEditorOpen(open: boolean) {
             set(
-              ({ download }) => ({
+              ({ download, model }) => ({
                 isEditorOpen: open,
                 // We just assume its been edited as spurious changes from MakeCode happen that we can't identify
-                projectEdited: true,
+                projectEdited: model ? true : false,
                 download: {
                   ...download,
                   usbDevice: undefined,
@@ -408,14 +408,17 @@ const createMlStore = (logging: Logging) => {
           },
 
           downloadDataset() {
-            const { gestures } = get();
+            const { gestures, project } = get();
             const a = document.createElement("a");
             a.setAttribute(
               "href",
               "data:application/json;charset=utf-8," +
                 encodeURIComponent(JSON.stringify(gestures, null, 2))
             );
-            a.setAttribute("download", "dataset");
+            a.setAttribute(
+              "download",
+              `${project.header?.name || "Untitled"}-data-samples`
+            );
             a.style.display = "none";
             a.click();
           },

@@ -1,7 +1,9 @@
-import { HStack, Image, Text } from "@chakra-ui/react";
+import { HStack, Icon, Image, Stack, Text } from "@chakra-ui/react";
+import { RiInformationLine } from "react-icons/ri";
+import { FormattedMessage, useIntl } from "react-intl";
+import makecodeBackImage from "./images/makecode-back.png";
 import accelerometerImage from "./images/microbit_xyz_arrows.png";
 import { TourId, TourStep } from "./model";
-import { FormattedMessage, useIntl } from "react-intl";
 import { FormattedMessageStepContent } from "./pages/Tour";
 
 export const tourElClassname = {
@@ -31,6 +33,34 @@ const LiveGraphStep = () => {
         alt={intl.formatMessage({ id: "accelerometer-image-alt" })}
       />
     </HStack>
+  );
+};
+
+const MakeCodeStep = () => {
+  const intl = useIntl();
+  return (
+    <Stack gap={5}>
+      <Text>
+        <FormattedMessage id="tour-makecode-intro-content1" />
+      </Text>
+      <HStack gap={4}>
+        <Icon as={RiInformationLine} boxSize={6} />
+        <Text w="fit-content">
+          <FormattedMessage id="tour-makecode-intro-content2" />
+          <br />
+          <FormattedMessage id="tour-makecode-intro-content3" />
+        </Text>
+        <Image
+          src={makecodeBackImage}
+          w="50px"
+          aspectRatio={1}
+          flexShrink={0}
+          borderRadius="sm"
+          mx={3}
+          alt={intl.formatMessage({ id: "makecode-back-alt" })}
+        />
+      </HStack>
+    </Stack>
   );
 };
 
@@ -137,6 +167,13 @@ export const tours: Record<TourId, TourStep[]> = {
         <FormattedMessageStepContent id="tour-testModel-editInMakeCode-content" />
       ),
       selector: classSelector(tourElClassname.editInMakeCodeButton),
+    },
+  ],
+  // Launched when you "Edit in MakeCode"
+  [TourId.MakeCode]: [
+    {
+      title: <FormattedMessage id="tour-makecode-intro-title" />,
+      content: <MakeCodeStep />,
     },
   ],
 };
