@@ -70,19 +70,12 @@ const DataSamplesGridView = () => {
   const [newRecordingId, setNewRecordingId] = useState<number | undefined>(
     undefined
   );
-  const handleRecordingComplete = useCallback((recordingId: number) => {
-    setNewRecordingId(recordingId);
-  }, []);
-
-  const handleOpenRecordingDialog = useCallback(() => {
-    recordingDialogDisclosure.onOpen();
-  }, [recordingDialogDisclosure]);
 
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
       if (!recordingDialogDisclosure.isOpen) {
         if (e.state) {
-          handleOpenRecordingDialog();
+          recordingDialogDisclosure.onOpen();
         }
       }
     };
@@ -90,7 +83,7 @@ const DataSamplesGridView = () => {
     return () => {
       connection.removeButtonListener("B", listener);
     };
-  }, [connection, handleOpenRecordingDialog, recordingDialogDisclosure]);
+  }, [connection, recordingDialogDisclosure]);
 
   return (
     <>
@@ -104,7 +97,7 @@ const DataSamplesGridView = () => {
           isOpen={recordingDialogDisclosure.isOpen}
           onClose={recordingDialogDisclosure.onClose}
           actionName={selectedGesture.name}
-          onRecordingComplete={handleRecordingComplete}
+          onRecordingComplete={setNewRecordingId}
         />
       )}
       <HeadingGrid
