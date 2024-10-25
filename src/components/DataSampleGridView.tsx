@@ -7,14 +7,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { GestureData } from "../model";
