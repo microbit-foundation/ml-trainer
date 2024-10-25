@@ -2,6 +2,7 @@ import { test } from "./fixtures";
 
 test.describe("new page", () => {
   test.beforeEach(async ({ homePage }) => {
+    await homePage.setupContext();
     await homePage.goto();
     await homePage.getStarted();
   });
