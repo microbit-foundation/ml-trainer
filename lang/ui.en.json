@@ -371,6 +371,14 @@
     "defaultMessage": "Data samples",
     "description": "Heading for data samples column"
   },
+  "data-samples-status-count": {
+    "defaultMessage": "You have {numSamples} data samples",
+    "description": "Data samples status text"
+  },
+  "data-samples-status-not-enough": {
+    "defaultMessage": "You need at least 3 data samples",
+    "description": "Data samples status text"
+  },
   "data-samples-title": {
     "defaultMessage": "Data samples",
     "description": "Data samples page title"

@@ -78,6 +78,18 @@ const DataRecordingGridItem = ({
               >
                 <FormattedMessage id="record-action" />
               </Button>
+              {data.recordings.length < 3 ? (
+                <Text fontSize="xs" textAlign="center" fontWeight="bold">
+                  <FormattedMessage id="data-samples-status-not-enough" />
+                </Text>
+              ) : (
+                <Text fontSize="xs" textAlign="center">
+                  <FormattedMessage
+                    id="data-samples-status-count"
+                    values={{ numSamples: data.recordings.length }}
+                  />
+                </Text>
+              )}
             </VStack>
             {data.recordings.map((recording, idx) => (
               <HStack key={idx} position="relative">

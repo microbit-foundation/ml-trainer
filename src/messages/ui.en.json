@@ -627,6 +627,26 @@
       "value": "Data samples"
     }
   ],
+  "data-samples-status-count": [
+    {
+      "type": 0,
+      "value": "You have "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " data samples"
+    }
+  ],
+  "data-samples-status-not-enough": [
+    {
+      "type": 0,
+      "value": "You need at least 3 data samples"
+    }
+  ],
   "data-samples-title": [
     {
       "type": 0,
