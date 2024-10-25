@@ -372,7 +372,7 @@
     "description": "Heading for data samples column"
   },
   "data-samples-status-count": {
-    "defaultMessage": "You have {numSamples} data samples",
+    "defaultMessage": "{numSamples} samples recorded",
     "description": "Data samples status text"
   },
   "data-samples-status-not-enough": {

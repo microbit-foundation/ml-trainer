@@ -629,16 +629,12 @@
   ],
   "data-samples-status-count": [
     {
-      "type": 0,
-      "value": "You have "
-    },
-    {
       "type": 1,
       "value": "numSamples"
     },
     {
       "type": 0,
-      "value": " data samples"
+      "value": " samples recorded"
     }
   ],
   "data-samples-status-not-enough": [
