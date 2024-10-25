@@ -38,6 +38,7 @@ enum RecordingStatus {
   None,
   Recording,
   Countdown,
+  Done,
 }
 
 const RecordingDialog = ({
@@ -93,6 +94,7 @@ const RecordingDialog = ({
   }, [isOpen]);
 
   const [progress, setProgress] = useState(0);
+  const doneTimeout = useRef<NodeJS.Timeout>();
   useEffect(() => {
     if (recordingStatus === RecordingStatus.Countdown) {
       const config = countdownStages[countdownStageIndex];
@@ -108,8 +110,11 @@ const RecordingDialog = ({
             onDone(data) {
               const recordingId = Date.now();
               addGestureRecordings(gestureId, [{ ID: recordingId, data }]);
-              handleCleanup();
-              onRecordingComplete(recordingId);
+              setRecordingStatus(RecordingStatus.Done);
+              doneTimeout.current = setTimeout(() => {
+                handleCleanup();
+                onRecordingComplete(recordingId);
+              }, 1500);
             },
             onError() {
               handleCleanup();
@@ -130,6 +135,7 @@ const RecordingDialog = ({
       }, config.duration);
       return () => {
         clearTimeout(countdownTimeout);
+        doneTimeout.current && clearTimeout(doneTimeout.current);
       };
     }
   }, [
@@ -169,7 +175,7 @@ const RecordingDialog = ({
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
               <VStack height="100px" justifyContent="center">
-                {recordingStatus === RecordingStatus.Recording ? (
+                {recordingStatus === RecordingStatus.Recording && (
                   <Text
                     fontSize="5xl"
                     textAlign="center"
@@ -178,7 +184,8 @@ const RecordingDialog = ({
                   >
                     <FormattedMessage id="recording" />
                   </Text>
-                ) : (
+                )}
+                {recordingStatus === RecordingStatus.Countdown && (
                   <Text
                     fontSize={countdownStages[countdownStageIndex].fontSize}
                     textAlign="center"
@@ -186,6 +193,16 @@ const RecordingDialog = ({
                     color="brand.500"
                   >
                     {countdownStages[countdownStageIndex].value}
+                  </Text>
+                )}
+                {recordingStatus === RecordingStatus.Done && (
+                  <Text
+                    fontSize="4xl"
+                    textAlign="center"
+                    fontWeight="bold"
+                    color="brand.500"
+                  >
+                    <FormattedMessage id="recording-complete" />
                   </Text>
                 )}
               </VStack>
@@ -202,6 +219,8 @@ const RecordingDialog = ({
                 width="fit-content"
                 alignSelf="center"
                 onClick={handleOnClose}
+                disabled={recordingStatus === RecordingStatus.Done}
+                opacity={recordingStatus === RecordingStatus.Done ? 0.5 : 1}
               >
                 <FormattedMessage id="cancel-recording-action" />
               </Button>

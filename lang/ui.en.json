@@ -951,6 +951,10 @@
     "defaultMessage": "Recording",
     "description": "Shown during recording"
   },
+  "recording-complete": {
+    "defaultMessage": "Recording complete",
+    "description": "Recording complete dialog text"
+  },
   "recording-data-for": {
     "defaultMessage": "Record data for action \"{action}\"",
     "description": "Text in recording dialog"

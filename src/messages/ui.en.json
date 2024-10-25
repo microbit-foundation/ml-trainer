@@ -1747,6 +1747,12 @@
       "value": "Recording"
     }
   ],
+  "recording-complete": [
+    {
+      "type": 0,
+      "value": "Recording complete"
+    }
+  ],
   "recording-data-for": [
     {
       "type": 0,
