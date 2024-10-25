@@ -28,7 +28,6 @@ import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
 import ActionBar from "./ActionBar";
 import AppLogo from "./AppLogo";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
-import DownloadDialogs from "./DownloadDialogs";
 import HelpMenu from "./HelpMenu";
 import LanguageMenuItem from "./LanguageMenuItem";
 import PreReleaseNotice from "./PreReleaseNotice";
@@ -102,7 +101,6 @@ const DefaultPageLayout = ({
         isTourClosed &&
         isSaveDialogClosed && <ConnectionDialogs />}
       <Tour />
-      <DownloadDialogs />
       <SaveDialogs />
       <ProjectDropTarget
         isEnabled={
