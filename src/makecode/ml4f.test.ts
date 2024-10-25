@@ -13,6 +13,7 @@ import { GestureData } from "../model";
 import trainingData from "../test-fixtures/wand-data-samples.json";
 import testingData from "../test-fixtures/wand-test-data.json";
 import * as tf from "@tensorflow/tfjs";
+import { writeFileSync } from "fs";
 
 const fixUpTestData = (data: Partial<GestureData>[]): GestureData[] => {
   data.forEach((action) => (action.icon = "Heart"));
@@ -73,6 +74,7 @@ test("that the ml4f output is valid", async () => {
   //   9    0    4
   //   0    6    0
   //   0    0    6
+  console.log(ml4fEvalResult);
   const ml4fResultAccuracy = ml4fEvalResult.match(/(\d.*)/)?.[1];
 
   expect(tensorFlowResultAccuracy).toEqual(ml4fResultAccuracy);
@@ -80,8 +82,28 @@ test("that the ml4f output is valid", async () => {
     ml4fPredictionResult.length
   );
 
-  console.log(tensorflowPredictionResult);
-  console.log(ml4fPredictionResult);
+  // console.log(tensorFlowResultAccuracy);
+
+  // console.log(tensorflowPredictionResult);
+  // console.log(ml4fPredictionResult);
+
+  const tensorflowPredictionResultArr = Array.from(tensorflowPredictionResult);
+  const ml4fPredictionResultArry = Array.from(ml4fPredictionResult);
+
+  const tensorflowOutput = [];
+  const ml4fOutput = [];
+  for (let i = 0; i < tensorflowPredictionResultArr.length; i += 5) {
+    if (i + 5 > tensorflowPredictionResultArr.length) {
+      break;
+    }
+    tensorflowOutput.push(tensorflowPredictionResultArr.slice(i, i + 5));
+    ml4fOutput.push(ml4fPredictionResultArry.slice(i, i + 5));
+  }
+
+  // console.log(ml4fPredictionResultArry);
+  // console.log(ml4fOutput);
+  writeFileSync("tensorflow-output.json", JSON.stringify(tensorflowOutput));
+  writeFileSync("ml4f-output.json", JSON.stringify(ml4fOutput));
 
   tensorflowPredictionResult.forEach((value, i) => {
     // The values are different with higher precision.
