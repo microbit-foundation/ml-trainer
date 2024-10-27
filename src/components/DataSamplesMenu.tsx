@@ -21,6 +21,7 @@ import {
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { flags } from "../flags";
+import { NameProjectDialog } from "./NameProjectDialog";
 import { useLogging } from "../logging/logging-hooks";
 import { DataSamplesView } from "../model";
 import { useStore } from "../store";
@@ -39,9 +40,14 @@ const DataSamplesMenu = () => {
   const downloadDataset = useStore((s) => s.downloadDataset);
   const setDataSamplesView = useStore((s) => s.setDataSamplesView);
   const dataSamplesView = useStore((s) => s.settings.dataSamplesView);
-  const deleteConfirmDisclosure = useDisclosure();
   const { stage } = useConnectionStage();
-  const handleDownloadDataset = useCallback(() => {
+  const deleteConfirmDisclosure = useDisclosure();
+  const nameProjectDialogDisclosure = useDisclosure();
+  const projectName = useStore((s) => s.project.header?.name);
+  const isUntitled = projectName === "Untitled";
+  const setProjectName = useStore((s) => s.setProjectName);
+
+  const download = useCallback(() => {
     logging.event({
       type: "dataset-save",
       detail: {
@@ -67,8 +73,36 @@ const DataSamplesMenu = () => {
     },
     [setDataSamplesView]
   );
+
+  const handleSave = useCallback(
+    (newName?: string) => {
+      if (newName) {
+        setProjectName(newName);
+      }
+      download();
+      nameProjectDialogDisclosure.onClose();
+    },
+    [download, nameProjectDialogDisclosure, setProjectName]
+  );
+
+  const handleDownloadDataset = useCallback(() => {
+    if (isUntitled) {
+      nameProjectDialogDisclosure.onOpen();
+    } else {
+      download();
+    }
+  }, [download, isUntitled, nameProjectDialogDisclosure]);
+
   return (
     <>
+      <NameProjectDialog
+        isOpen={
+          stage.flowStep === ConnectionFlowStep.None &&
+          nameProjectDialogDisclosure.isOpen
+        }
+        onClose={nameProjectDialogDisclosure.onClose}
+        onSave={handleSave}
+      />
       <ConfirmDialog
         isOpen={
           deleteConfirmDisclosure.isOpen &&

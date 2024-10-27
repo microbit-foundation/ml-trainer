@@ -24,6 +24,7 @@ interface GestureNameGridItemProps {
   selected?: boolean;
   readOnly: boolean;
   isTriggered?: boolean;
+  disabled?: boolean;
 }
 
 const gestureNameMaxLength = 18;
@@ -37,6 +38,7 @@ const GestureNameGridItem = ({
   selected = false,
   readOnly = false,
   isTriggered = undefined,
+  disabled,
 }: GestureNameGridItemProps) => {
   const intl = useIntl();
   const toast = useToast();
@@ -85,6 +87,7 @@ const GestureNameGridItem = ({
         onClick={onSelectRow}
         position="relative"
         className={tourElClassname.dataSamplesActionCard}
+        opacity={disabled ? 0.5 : undefined}
       >
         {!readOnly && onDeleteAction && (
           <CloseButton

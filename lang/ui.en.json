@@ -303,6 +303,10 @@
     "defaultMessage": "Connect using Web Bluetooth instead",
     "description": "Link to alternative connection method"
   },
+  "connect-to-record": {
+    "defaultMessage": "Connect to record data samples",
+    "description": "Live graph disconnected micro:bit status message for data samples page"
+  },
   "connect-to-record-body": {
     "defaultMessage": "Connect a micro:bit to record a data sample.",
     "description": "Insufficient data modal content"
@@ -310,6 +314,10 @@
   "connect-to-record-title": {
     "defaultMessage": "You don't have a micro:bit connected",
     "description": "Connect to record modal title"
+  },
+  "connect-to-test-model": {
+    "defaultMessage": "Connect to test your ML model",
+    "description": "Live graph disconnected micro:bit status message for test model page"
   },
   "connect-troubleshoot": {
     "defaultMessage": "Troubleshoot problems with connecting to your micro:bit",
@@ -743,9 +751,21 @@
     "defaultMessage": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in.",
     "description": "Tooltip for live graph heading"
   },
+  "loading": {
+    "defaultMessage": "Loading",
+    "description": "Aria label for loading spinner"
+  },
   "main-menu": {
     "defaultMessage": "Main menu",
     "description": "Main menu label"
+  },
+  "makecode-back-alt": {
+    "defaultMessage": "Left arrow icon for MakeCode back",
+    "description": "Testing model page title"
+  },
+  "microbit-not-connected": {
+    "defaultMessage": "Your micro:bit is not connected",
+    "description": "Live graph disconnected micro:bit status message"
   },
   "more-edit-in-makecode-options": {
     "defaultMessage": "More edit in MakeCode options",
@@ -766,6 +786,14 @@
   "name-used-when": {
     "defaultMessage": "The name is used when you save a file.",
     "description": "Text under project name field"
+  },
+  "new-session-setup-description": {
+    "defaultMessage": "Starting a new session will overwrite your existing session. You may want to <link>save your existing session</link> first.",
+    "description": "New session setup description"
+  },
+  "new-session-setup-title": {
+    "defaultMessage": "New session setup",
+    "description": "New session setup title"
   },
   "newpage-continue-session-subtitle": {
     "defaultMessage": "Use a hex file or data samples file you saved to your computer to continue a session.",
@@ -983,6 +1011,10 @@
     "defaultMessage": "Software versions",
     "description": "Software versions text"
   },
+  "start-session-action": {
+    "defaultMessage": "Start session",
+    "description": "Start session button text"
+  },
   "start-training-action": {
     "defaultMessage": "Start training",
     "description": "Start training button text"
@@ -1066,6 +1098,22 @@
   "tour-dataSamples-liveGraph-content": {
     "defaultMessage": "The graph shows movement data from the micro:bit’s accelerometer. Move your data collection micro:bit and see how the graph changes.",
     "description": "Tour step content"
+  },
+  "tour-makecode-intro-content1": {
+    "defaultMessage": "Download the model and code to test your project on a micro:bit. You can also add more code blocks to create your own programs using your model.",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-content2": {
+    "defaultMessage": "Need to improve the ML model? ",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-content3": {
+    "defaultMessage": "Use this back button in the top left.",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-title": {
+    "defaultMessage": "Microsoft MakeCode",
+    "description": "Tour step title"
   },
   "tour-testModel-afterTrain-content": {
     "defaultMessage": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model correctly estimate each action?",

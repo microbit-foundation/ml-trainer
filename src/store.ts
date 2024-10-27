@@ -26,6 +26,7 @@ import {
   TourState,
   TrainModelDialogStage,
 } from "./model";
+import { defaultProjectName } from "./project-name";
 import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/gestures";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
@@ -44,7 +45,7 @@ const createUntitledProject = (): Project => ({
   header: {
     target: "microbit",
     targetVersion: "7.1.2",
-    name: "Untitled",
+    name: defaultProjectName,
     meta: {},
     editor: "blocksprj",
     pubId: "",
@@ -139,11 +140,11 @@ export interface Actions {
   downloadDataset(): void;
   dataCollectionMicrobitConnected(): void;
   loadDataset(gestures: GestureData[]): void;
-  loadProject(project: Project): void;
+  loadProject(project: Project, name: string): void;
   setEditorOpen(open: boolean): void;
   recordingStarted(): void;
   recordingStopped(): void;
-  newSession(): void;
+  newSession(projectName?: string): void;
   trainModelFlowStart: (callback?: () => void) => Promise<void>;
   closeTrainModelDialogs: () => void;
   trainModel(): Promise<boolean>;
@@ -225,12 +226,15 @@ const createMlStore = (logging: Logging) => {
             );
           },
 
-          newSession() {
+          newSession(projectName?: string) {
+            const untitledProject = createUntitledProject();
             set(
               {
                 gestures: [],
                 model: undefined,
-                project: createUntitledProject(),
+                project: projectName
+                  ? renameProject(untitledProject, projectName)
+                  : untitledProject,
                 projectEdited: false,
                 appEditNeedsFlushToEditor: true,
                 timestamp: Date.now(),
@@ -242,10 +246,10 @@ const createMlStore = (logging: Logging) => {
 
           setEditorOpen(open: boolean) {
             set(
-              ({ download }) => ({
+              ({ download, model }) => ({
                 isEditorOpen: open,
                 // We just assume its been edited as spurious changes from MakeCode happen that we can't identify
-                projectEdited: true,
+                projectEdited: model ? true : false,
                 download: {
                   ...download,
                   usbDevice: undefined,
@@ -408,14 +412,17 @@ const createMlStore = (logging: Logging) => {
           },
 
           downloadDataset() {
-            const { gestures } = get();
+            const { gestures, project } = get();
             const a = document.createElement("a");
             a.setAttribute(
               "href",
               "data:application/json;charset=utf-8," +
                 encodeURIComponent(JSON.stringify(gestures, null, 2))
             );
-            a.setAttribute("download", "dataset");
+            a.setAttribute(
+              "download",
+              `${project.header?.name || "Untitled"}-data-samples`
+            );
             a.style.display = "none";
             a.click();
           },
@@ -451,13 +458,13 @@ const createMlStore = (logging: Logging) => {
            * Generally project loads go via MakeCode as it reads the hex but when we open projects
            * from microbit.org we have the JSON already and use this route.
            */
-          loadProject(project: Project) {
+          loadProject(project: Project, name: string) {
             set(() => {
               const timestamp = Date.now();
               return {
                 gestures: getGesturesFromProject(project),
                 model: undefined,
-                project,
+                project: renameProject(project, name),
                 projectEdited: true,
                 appEditNeedsFlushToEditor: true,
                 timestamp,
@@ -554,28 +561,9 @@ const createMlStore = (logging: Logging) => {
           setProjectName(name: string): void {
             return set(
               ({ project }) => {
-                const pxtString = project.text?.[filenames.pxtJson];
-                const pxt = JSON.parse(pxtString ?? "{}") as Record<
-                  string,
-                  unknown
-                >;
-
                 return {
                   appEditNeedsFlushToEditor: true,
-                  project: {
-                    ...project,
-                    header: {
-                      ...project.header!,
-                      name,
-                    },
-                    text: {
-                      ...project.text,
-                      [filenames.pxtJson]: JSON.stringify({
-                        ...pxt,
-                        name,
-                      }),
-                    },
-                  },
+                  project: renameProject(project, name),
                 };
               },
               false,
@@ -862,4 +850,24 @@ const getGesturesFromProject = (project: Project): GestureData[] => {
     return [];
   }
   return dataset.data as GestureData[];
+};
+
+const renameProject = (project: Project, name: string): Project => {
+  const pxtString = project.text?.[filenames.pxtJson];
+  const pxt = JSON.parse(pxtString ?? "{}") as Record<string, unknown>;
+
+  return {
+    ...project,
+    header: {
+      ...project.header!,
+      name,
+    },
+    text: {
+      ...project.text,
+      [filenames.pxtJson]: JSON.stringify({
+        ...pxt,
+        name,
+      }),
+    },
+  };
 };

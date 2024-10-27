@@ -9,9 +9,9 @@ import DefaultPageLayout, {
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
+import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
-import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import { createTestingModelPageUrl } from "../urls";
 
 const DataSamplesPage = () => {
@@ -81,7 +81,7 @@ const DataSamplesPage = () => {
               </Button>
             )}
           </HStack>
-          <LiveGraphPanel />
+          <LiveGraphPanel disconnectedTextId="connect-to-record" />
         </VStack>
       </DefaultPageLayout>
     </>

@@ -7,9 +7,10 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
-import { forwardRef, memo, useRef } from "react";
-import Editor from "./Editor";
+import { forwardRef, memo, useEffect, useRef } from "react";
+import { TourId } from "../model";
 import { useStore } from "../store";
+import Editor from "./Editor";
 
 interface EditCodeDialogProps {}
 
@@ -17,6 +18,12 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
   function EditCodeDialog(_, ref) {
     const containerRef = useRef<HTMLDivElement>(null);
     const isOpen = useStore((s) => s.isEditorOpen);
+    const tourStart = useStore((s) => s.tourStart);
+    useEffect(() => {
+      if (isOpen) {
+        tourStart(TourId.MakeCode);
+      }
+    }, [isOpen, tourStart]);
     return (
       <>
         <Box

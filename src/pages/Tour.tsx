@@ -7,6 +7,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  ModalOverlay,
   Text,
   usePopper,
   useToken,
@@ -83,6 +84,18 @@ const Tour = () => {
       isCentered
       size={step.modalSize}
     >
+      {step.selector ? (
+        <TourOverlay
+          referenceRef={ourRef}
+          padding={spotlightPadding}
+          paddingTop={step.spotlightStyle?.paddingTop}
+          paddingBottom={step.spotlightStyle?.paddingBottom}
+          paddingRight={step.spotlightStyle?.paddingRight}
+          paddingLeft={step.spotlightStyle?.paddingLeft}
+        />
+      ) : (
+        <ModalOverlay />
+      )}
       <ModalContent {...contentProps} motionProps={{}} boxShadow="none">
         {step.selector && (
           <Box
@@ -100,21 +113,17 @@ const Tour = () => {
             />
           </Box>
         )}
-        <TourOverlay
-          referenceRef={ourRef}
-          padding={spotlightPadding}
-          paddingTop={step.spotlightStyle?.paddingTop}
-          paddingBottom={step.spotlightStyle?.paddingBottom}
-          paddingRight={step.spotlightStyle?.paddingRight}
-          paddingLeft={step.spotlightStyle?.paddingLeft}
-        />
         <ModalHeader>{step.title}</ModalHeader>
         <ModalBody maxW="md">{step.content}</ModalBody>
         <ModalFooter>
           <HStack justifyContent="space-between" p={0} w="full">
-            <Button onClick={handleTourComplete} variant="link">
-              <FormattedMessage id="skip-tour-action" />
-            </Button>
+            {!isLastStep ? (
+              <Button onClick={handleTourComplete} variant="link">
+                <FormattedMessage id="skip-tour-action" />
+              </Button>
+            ) : (
+              <div />
+            )}
             <HStack gap={2}>
               {hasBack && (
                 <Button variant="secondary" size="sm" onClick={tourBack}>
