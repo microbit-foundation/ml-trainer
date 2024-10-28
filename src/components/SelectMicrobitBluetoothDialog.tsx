@@ -27,8 +27,8 @@ const SelectMicrobitBluetoothDialog = ({
     <ConnectContainerDialog headingId="connect-popup" {...props}>
       <Box position="relative" width={"100%"} alignSelf={""}>
         <Image
-          height={365}
-          width={418}
+          height={379}
+          width={350}
           src={selectMicrobitImage}
           alt={intl.formatMessage({
             id: "connect-popup-bluetooth-alt",
@@ -52,7 +52,7 @@ const SelectMicrobitBluetoothDialog = ({
           spacing={2}
         >
           <ListItem>
-            <Flex alignItems="center" height="72px">
+            <Flex alignItems="center" height="90px">
               <VisuallyHidden>
                 <Text>1. </Text>
               </VisuallyHidden>
@@ -62,7 +62,7 @@ const SelectMicrobitBluetoothDialog = ({
             </Flex>
           </ListItem>
           <ListItem>
-            <Flex alignItems="center" height="50px">
+            <Flex alignItems="center" height="45px">
               <VisuallyHidden>
                 <Text>2. </Text>
               </VisuallyHidden>
@@ -72,7 +72,7 @@ const SelectMicrobitBluetoothDialog = ({
             </Flex>
           </ListItem>
         </List>
-        <Box position="absolute" top="81px" left="240px">
+        <Box position="absolute" top="85px" left="240px">
           <ArrowOne />
         </Box>
         <Box position="absolute" bottom="48px" left="265px">

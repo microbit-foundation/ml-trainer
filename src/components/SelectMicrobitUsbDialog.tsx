@@ -26,7 +26,7 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
       <Box position="relative" width="100%">
         <Image
           height={375}
-          width={418}
+          width={349}
           src={selectMicrobitImage}
           alt={intl.formatMessage({ id: "connect-help-alt" })}
         />
