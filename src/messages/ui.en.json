@@ -634,7 +634,7 @@
   "data-samples-status-not-enough": [
     {
       "type": 0,
-      "value": "3 or more samples"
+      "value": "At least 3 required"
     }
   ],
   "data-samples-title": [
