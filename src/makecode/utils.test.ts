@@ -22,6 +22,7 @@ import {
   generateProject,
   pxt,
 } from "./utils";
+import { currentDataWindow } from "../store";
 
 const data: DatasetEditorJsonFormat = {
   data: gestureData as GestureData[],
@@ -38,7 +39,10 @@ beforeAll(async () => {
   const randomSpy = vi.spyOn(Math, "random");
   randomSpy.mockImplementation(() => 0.5);
 
-  trainingResult = await trainModel(data);
+  trainingResult = await trainModel(
+    gestureData as GestureData[],
+    currentDataWindow
+  );
 });
 
 describe("test project generation", () => {

@@ -1,3 +1,5 @@
+import { DataWindow } from "./store";
+
 export enum Filter {
   MAX = "max",
   MIN = "min",
@@ -16,9 +18,6 @@ export enum Axes {
 }
 
 export const mlSettings = {
-  duration: 990, // Duration of recording
-  numSamples: 44, // number of samples in one recording (when recording samples)
-  minSamples: 44, // minimum number of samples for reliable detection (when detecting gestures)
   updatesPrSecond: 4, // Times algorithm predicts data pr second
   defaultRequiredConfidence: 0.8, // Default threshold
   numEpochs: 160, // Number of epochs for ML
@@ -114,10 +113,9 @@ const rms: FilterStrategy = (d) =>
 // https://microbit-challenges.readthedocs.io/en/latest/tutorials/accelerometer.html#basic-functions
 const maxAcceleration = 2.048;
 
-export const mlFilters: Record<
-  Filter,
-  { strategy: FilterStrategy; min: number; max: number }
-> = {
+export const getMlFilters = (
+  dataWindow: DataWindow
+): Record<Filter, { strategy: FilterStrategy; min: number; max: number }> => ({
   [Filter.MAX]: {
     strategy: (d) => Math.max(...d),
     min: -maxAcceleration,
@@ -138,12 +136,12 @@ export const mlFilters: Record<
   [Filter.ACC]: {
     strategy: acc,
     min: 0,
-    max: mlSettings.minSamples * maxAcceleration,
+    max: dataWindow.minSamples * maxAcceleration,
   },
   [Filter.ZCR]: { strategy: zeroCrossingRate, min: 0, max: 1 },
   [Filter.RMS]: {
     strategy: rms,
     min: 0,
-    max: rms(Array(mlSettings.minSamples).fill(maxAcceleration) as number[]),
+    max: rms(Array(dataWindow.minSamples).fill(maxAcceleration) as number[]),
   },
-};
+});

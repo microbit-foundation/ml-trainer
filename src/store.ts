@@ -40,6 +40,22 @@ const createFirstGesture = () => ({
   recordings: [],
 });
 
+export interface DataWindow {
+  duration: number; // Duration of recording
+  minSamples: number; // minimum number of samples for reliable detection (when detecting gestures)
+}
+
+const legacyDataWindow: DataWindow = {
+  duration: 1800,
+  minSamples: 80,
+};
+
+// Exported for testing.
+export const currentDataWindow: DataWindow = {
+  duration: 990,
+  minSamples: 44,
+};
+
 const createUntitledProject = (): Project => ({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   header: {
@@ -95,6 +111,7 @@ const updateProject = (
 
 export interface State {
   gestures: GestureData[];
+  dataWindow: DataWindow;
   model: tf.LayersModel | undefined;
 
   timestamp: number | undefined;
@@ -191,6 +208,7 @@ const createMlStore = (logging: Logging) => {
         (set, get) => ({
           timestamp: undefined,
           gestures: [],
+          dataWindow: currentDataWindow,
           isRecording: false,
           project: createUntitledProject(),
           projectLoadTimestamp: 0,
@@ -231,6 +249,7 @@ const createMlStore = (logging: Logging) => {
             set(
               {
                 gestures: [],
+                dataWindow: currentDataWindow,
                 model: undefined,
                 project: projectName
                   ? renameProject(untitledProject, projectName)
@@ -316,13 +335,15 @@ const createMlStore = (logging: Logging) => {
           },
 
           deleteGesture(id: GestureData["ID"]) {
-            return set(({ project, projectEdited, gestures }) => {
+            return set(({ project, projectEdited, gestures, dataWindow }) => {
               const newGestures = gestures.filter((g) => g.ID !== id);
               return {
                 gestures:
                   newGestures.length === 0
                     ? [createFirstGesture()]
                     : newGestures,
+                dataWindow:
+                  newGestures.length === 0 ? currentDataWindow : dataWindow,
                 model: undefined,
                 ...updateProject(
                   project,
@@ -379,7 +400,7 @@ const createMlStore = (logging: Logging) => {
           },
 
           deleteGestureRecording(id: GestureData["ID"], recordingIdx: number) {
-            return set(({ project, projectEdited, gestures }) => {
+            return set(({ project, projectEdited, gestures, dataWindow }) => {
               const newGestures = gestures.map((g) => {
                 if (id !== g.ID) {
                   return g;
@@ -389,9 +410,15 @@ const createMlStore = (logging: Logging) => {
                 );
                 return { ...g, recordings };
               });
+              const numRecordings = newGestures.reduce(
+                (acc, curr) => acc + curr.recordings.length,
+                0
+              );
 
               return {
                 gestures: newGestures,
+                dataWindow:
+                  numRecordings === 0 ? currentDataWindow : dataWindow,
                 model: undefined,
                 ...updateProject(
                   project,
@@ -406,6 +433,7 @@ const createMlStore = (logging: Logging) => {
           deleteAllGestures() {
             return set(({ project, projectEdited }) => ({
               gestures: [createFirstGesture()],
+              dataWindow: currentDataWindow,
               model: undefined,
               ...updateProject(project, projectEdited, [], undefined),
             }));
@@ -442,6 +470,7 @@ const createMlStore = (logging: Logging) => {
                   }
                   return copy;
                 })(),
+                dataWindow: getDataWindowFromGestures(newGestures),
                 model: undefined,
                 timestamp: Date.now(),
                 ...updateProject(
@@ -459,10 +488,12 @@ const createMlStore = (logging: Logging) => {
            * from microbit.org we have the JSON already and use this route.
            */
           loadProject(project: Project, name: string) {
+            const newGestures = getGesturesFromProject(project);
             set(() => {
               const timestamp = Date.now();
               return {
-                gestures: getGesturesFromProject(project),
+                gestures: newGestures,
+                dataWindow: getDataWindowFromGestures(newGestures),
                 model: undefined,
                 project: renameProject(project, name),
                 projectEdited: true,
@@ -500,7 +531,7 @@ const createMlStore = (logging: Logging) => {
           },
 
           async trainModel() {
-            const { gestures } = get();
+            const { gestures, dataWindow } = get();
             logging.event({
               type: "model-train",
               detail: {
@@ -516,11 +547,12 @@ const createMlStore = (logging: Logging) => {
             // Delay so we get UI change before training starts. The initial part of training
             // can block the UI. 50 ms is not sufficient, so use 100 for now.
             await new Promise((res) => setTimeout(res, 100));
-            const trainingResult = await trainModel({
-              data: gestures,
-              onProgress: (trainModelProgress) =>
-                set({ trainModelProgress }, false, "trainModelProgress"),
-            });
+            const trainingResult = await trainModel(
+              gestures,
+              dataWindow,
+              (trainModelProgress) =>
+                set({ trainModelProgress }, false, "trainModelProgress")
+            );
             const model = trainingResult.error
               ? undefined
               : trainingResult.model;
@@ -604,13 +636,15 @@ const createMlStore = (logging: Logging) => {
                   // This will cause another write to MakeCode but that's OK as it gives us
                   // a chance to validate/update the project
                   const timestamp = Date.now();
+                  const newGestures = getGesturesFromProject(newProject);
                   return {
                     project: newProject,
                     projectLoadTimestamp: timestamp,
                     timestamp,
                     // New project loaded externally so we can't know whether its edited.
                     projectEdited: true,
-                    gestures: getGesturesFromProject(newProject),
+                    gestures: newGestures,
+                    dataWindow: getDataWindowFromGestures(newGestures),
                     model: undefined,
                     isEditorOpen: false,
                   };
@@ -757,6 +791,21 @@ const createMlStore = (logging: Logging) => {
 };
 
 export const useStore = createMlStore(deployment.logging);
+
+const getDataWindowFromGestures = (gestures: GestureData[]): DataWindow => {
+  const dataLength = gestures.flatMap((g) => g.recordings)[0]?.data.x.length;
+  return dataLength > legacyDataWindow.minSamples
+    ? legacyDataWindow
+    : currentDataWindow;
+};
+
+// Get data window from gestures on app load.
+const { gestures } = useStore.getState();
+useStore.setState(
+  { dataWindow: getDataWindowFromGestures(gestures) },
+  false,
+  "setDataWindow"
+);
 
 tf.loadLayersModel(modelUrl)
   .then((model) => {

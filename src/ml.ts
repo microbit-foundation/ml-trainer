@@ -1,22 +1,19 @@
 import * as tf from "@tensorflow/tfjs";
 import { SymbolicTensor } from "@tensorflow/tfjs";
-import { mlFilters, mlSettings } from "./mlConfig";
+import { getMlFilters, mlSettings } from "./mlConfig";
 import { GestureData, XYZData } from "./model";
-
-interface TrainModelInput {
-  data: GestureData[];
-  onProgress?: (progress: number) => void;
-}
+import { DataWindow } from "./store";
 
 export type TrainingResult =
   | { error: false; model: tf.LayersModel }
   | { error: true };
 
-export const trainModel = async ({
-  data,
-  onProgress,
-}: TrainModelInput): Promise<TrainingResult> => {
-  const { features, labels } = prepareFeaturesAndLabels(data);
+export const trainModel = async (
+  data: GestureData[],
+  dataWindow: DataWindow,
+  onProgress?: (progress: number) => void
+): Promise<TrainingResult> => {
+  const { features, labels } = prepareFeaturesAndLabels(data, dataWindow);
   const model: tf.LayersModel = createModel(data);
   const totalNumEpochs = mlSettings.numEpochs;
 
@@ -43,7 +40,8 @@ export const trainModel = async ({
 
 // Exported for testing
 export const prepareFeaturesAndLabels = (
-  gestureData: GestureData[]
+  gestureData: GestureData[],
+  dataWindow: DataWindow
 ): { features: number[][]; labels: number[][] } => {
   const features: number[][] = [];
   const labels: number[][] = [];
@@ -52,7 +50,7 @@ export const prepareFeaturesAndLabels = (
   gestureData.forEach((gesture, index) => {
     gesture.recordings.forEach((recording) => {
       // Prepare features
-      features.push(Object.values(applyFilters(recording.data)));
+      features.push(Object.values(applyFilters(recording.data, dataWindow)));
 
       // Prepare labels
       const label: number[] = new Array(numGestures) as number[];
@@ -99,13 +97,15 @@ const normalize = (value: number, min: number, max: number) => {
 // applyFilters reduces array of x, y and z inputs to a single number array with values.
 export const applyFilters = (
   { x, y, z }: XYZData,
+  dataWindow: DataWindow,
   opts: { normalize?: boolean } = {}
 ): Record<string, number> => {
   if (x.length === 0 || y.length === 0 || z.length === 0) {
     throw new Error("Empty x/y/z data");
   }
+  const filters = getMlFilters(dataWindow);
   return Array.from(mlSettings.includedFilters).reduce((acc, filter) => {
-    const { strategy, min, max } = mlFilters[filter];
+    const { strategy, min, max } = filters[filter];
     const applyFilter = (vs: number[]) =>
       opts.normalize ? normalize(strategy(vs), min, max) : strategy(vs);
     return {
@@ -130,12 +130,11 @@ export type ConfidencesResult =
   | { error: false; confidences: Confidences };
 
 // For predicting
-export const predict = async ({
-  model,
-  data,
-  classificationIds,
-}: PredictInput): Promise<ConfidencesResult> => {
-  const input = Object.values(applyFilters(data));
+export const predict = async (
+  { model, data, classificationIds }: PredictInput,
+  dataWindow: DataWindow
+): Promise<ConfidencesResult> => {
+  const input = Object.values(applyFilters(data, dataWindow));
   const prediction = model.predict(tf.tensor([input])) as tf.Tensor;
   try {
     const confidences = (await prediction.data()) as Float32Array;

@@ -1,9 +1,16 @@
 import { AccelerometerDataEvent } from "@microbit/microbit-connection";
-import { ReactNode, createContext, useContext, useEffect, useRef } from "react";
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import { BufferedData } from "./buffered-data";
 import { useConnectActions } from "./connect-actions-hooks";
 import { ConnectionStatus, useConnectStatus } from "./connect-status-hooks";
-import { mlSettings } from "./mlConfig";
+import { useStore } from "./store";
 
 const BufferedDataContext = createContext<BufferedData | null>(null);
 
@@ -31,14 +38,15 @@ export const useBufferedData = (): BufferedData => {
 const useBufferedDataInternal = (): BufferedData => {
   const [connectStatus] = useConnectStatus();
   const connection = useConnectActions();
+  const dataWindow = useStore((s) => s.dataWindow);
   const bufferRef = useRef<BufferedData>();
-  const getBuffer = () => {
+  const getBuffer = useCallback(() => {
     if (bufferRef.current) {
       return bufferRef.current;
     }
-    bufferRef.current = new BufferedData(mlSettings.numSamples * 2);
+    bufferRef.current = new BufferedData(dataWindow.minSamples * 2);
     return bufferRef.current;
-  };
+  }, [dataWindow.minSamples]);
   useEffect(() => {
     if (connectStatus !== ConnectionStatus.Connected) {
       return;
@@ -56,6 +64,6 @@ const useBufferedDataInternal = (): BufferedData => {
     return () => {
       connection.removeAccelerometerListener(listener);
     };
-  }, [connection, connectStatus]);
+  }, [connection, connectStatus, getBuffer]);
   return getBuffer();
 };
