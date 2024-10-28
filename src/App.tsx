@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, useToast } from "@chakra-ui/react";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
 import React, { ReactNode, useEffect, useMemo, useRef } from "react";
+import { useIntl } from "react-intl";
 import {
   Outlet,
   RouterProvider,
   ScrollRestoration,
   createBrowserRouter,
+  useNavigate,
 } from "react-router-dom";
 import { BufferedDataProvider } from "./buffered-data-hooks";
 import EditCodeDialog from "./components/EditCodeDialog";
@@ -20,20 +22,21 @@ import { deployment, useDeployment } from "./deployment";
 import { ProjectProvider } from "./hooks/project-hooks";
 import { LoggingProvider } from "./logging/logging-hooks";
 import TranslationProvider from "./messages/TranslationProvider";
+import CodePage from "./pages/CodePage";
 import DataSamplesPage from "./pages/DataSamplesPage";
 import HomePage from "./pages/HomePage";
 import ImportPage from "./pages/ImportPage";
 import NewPage from "./pages/NewPage";
 import TestingModelPage from "./pages/TestingModelPage";
+import { useStore } from "./store";
 import {
-  createDataSamplesPageUrl,
   createCodePageUrl,
+  createDataSamplesPageUrl,
   createHomePageUrl,
   createImportPageUrl,
   createNewPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
-import CodePage from "./pages/CodePage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -69,6 +72,30 @@ const Providers = ({ children }: ProviderLayoutProps) => {
 
 const Layout = () => {
   const driverRef = useRef<MakeCodeFrameDriver>(null);
+  const navigate = useNavigate();
+  const toast = useToast();
+  const intl = useIntl();
+
+  useEffect(() => {
+    return useStore.subscribe(
+      (
+        { projectLoadTimestamp },
+        { projectLoadTimestamp: prevProjectLoadTimestamp }
+      ) => {
+        if (projectLoadTimestamp > prevProjectLoadTimestamp) {
+          // Side effects of loading a project, which MakeCode notifies us of.
+          navigate(createDataSamplesPageUrl());
+          toast({
+            position: "top",
+            duration: 5_000,
+            title: intl.formatMessage({ id: "project-loaded" }),
+            status: "info",
+          });
+        }
+      }
+    );
+  }, [intl, navigate, toast]);
+
   return (
     // We use this even though we have errorElement as this does logging.
     <ErrorBoundary>

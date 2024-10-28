@@ -311,10 +311,6 @@
     "defaultMessage": "Connect a micro:bit to record a data sample.",
     "description": "Insufficient data modal content"
   },
-  "connect-to-record-title": {
-    "defaultMessage": "You don't have a micro:bit connected",
-    "description": "Connect to record modal title"
-  },
   "connect-to-test-model": {
     "defaultMessage": "Connect to test your ML model",
     "description": "Live graph disconnected micro:bit status message for test model page"
@@ -371,12 +367,20 @@
     "defaultMessage": "Data samples",
     "description": "Heading for data samples column"
   },
+  "data-samples-status-count": {
+    "defaultMessage": "{numSamples} samples recorded",
+    "description": "Data samples status text"
+  },
+  "data-samples-status-not-enough": {
+    "defaultMessage": "At least 3 required",
+    "description": "Data samples status text"
+  },
   "data-samples-title": {
     "defaultMessage": "Data samples",
     "description": "Data samples page title"
   },
   "data-samples-tooltip": {
-    "defaultMessage": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else.",
+    "defaultMessage": "Short collections of movement data lasting 1 second. Your data samples are only stored on your computer, they do not get sent to anyone else.",
     "description": "Tooltip for data samples heading"
   },
   "data-samples-view-data-features-option": {
@@ -954,6 +958,10 @@
   "reconnecting": {
     "defaultMessage": "Reconnecting…",
     "description": "Shown while reconnecting"
+  },
+  "record-action": {
+    "defaultMessage": "Record",
+    "description": "Record button text"
   },
   "record-action-aria": {
     "defaultMessage": "Record data for action \"{action}\"",

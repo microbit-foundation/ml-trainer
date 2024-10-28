@@ -4,6 +4,7 @@ import { applyFilters } from "../ml";
 import { XYZData } from "../model";
 import { calculateGradientColor } from "../utils/gradient-calculator";
 import ClickableTooltip from "./ClickableTooltip";
+import { useStore } from "../store";
 
 interface RecordingFingerprintProps extends BoxProps {
   data: XYZData;
@@ -15,7 +16,8 @@ const RecordingFingerprint = ({
   gestureName,
   ...rest
 }: RecordingFingerprintProps) => {
-  const dataFeatures = applyFilters(data, { normalize: true });
+  const dataWindow = useStore((s) => s.dataWindow);
+  const dataFeatures = applyFilters(data, dataWindow, { normalize: true });
 
   return (
     <Grid

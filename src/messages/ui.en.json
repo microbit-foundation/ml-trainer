@@ -537,12 +537,6 @@
       "value": "Connect a micro:bit to record a data sample."
     }
   ],
-  "connect-to-record-title": [
-    {
-      "type": 0,
-      "value": "You don't have a micro:bit connected"
-    }
-  ],
   "connect-to-test-model": [
     {
       "type": 0,
@@ -627,6 +621,22 @@
       "value": "Data samples"
     }
   ],
+  "data-samples-status-count": [
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " samples recorded"
+    }
+  ],
+  "data-samples-status-not-enough": [
+    {
+      "type": 0,
+      "value": "At least 3 required"
+    }
+  ],
   "data-samples-title": [
     {
       "type": 0,
@@ -636,7 +646,7 @@
   "data-samples-tooltip": [
     {
       "type": 0,
-      "value": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else."
+      "value": "Short collections of movement data lasting 1 second. Your data samples are only stored on your computer, they do not get sent to anyone else."
     }
   ],
   "data-samples-view-data-features-option": [
@@ -1759,6 +1769,12 @@
     {
       "type": 0,
       "value": "Reconnecting…"
+    }
+  ],
+  "record-action": [
+    {
+      "type": 0,
+      "value": "Record"
     }
   ],
   "record-action-aria": [

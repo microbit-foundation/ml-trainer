@@ -18,7 +18,6 @@ import { TimedXYZ } from "../buffered-data";
 import { useBufferedData } from "../buffered-data-hooks";
 import { GestureData, XYZData } from "../model";
 import { useStore } from "../store";
-import { mlSettings } from "../mlConfig";
 
 interface CountdownStage {
   value: string | number;
@@ -231,13 +230,14 @@ interface RecordingDataSource {
 
 const useRecordingDataSource = (): RecordingDataSource => {
   const ref = useRef<InProgressRecording | undefined>();
+  const dataWindow = useStore((s) => s.dataWindow);
   const bufferedData = useBufferedData();
   useEffect(() => {
     const listener = (sample: TimedXYZ) => {
       if (ref.current) {
         const percentage =
           ((sample.timestamp - ref.current.startTimeMillis) /
-            mlSettings.duration) *
+            dataWindow.duration) *
           100;
         ref.current.onProgress(percentage);
       }
@@ -246,7 +246,7 @@ const useRecordingDataSource = (): RecordingDataSource => {
     return () => {
       bufferedData.removeListener(listener);
     };
-  }, [bufferedData]);
+  }, [bufferedData, dataWindow.duration]);
 
   return useMemo(
     () => ({
@@ -257,10 +257,10 @@ const useRecordingDataSource = (): RecordingDataSource => {
           if (ref.current) {
             const data = bufferedData.getSamples(
               ref.current.startTimeMillis,
-              ref.current.startTimeMillis + mlSettings.duration
+              ref.current.startTimeMillis + dataWindow.duration
             );
             const sampleCount = data.x.length;
-            if (sampleCount < mlSettings.minSamples) {
+            if (sampleCount < dataWindow.minSamples) {
               ref.current.onError();
               ref.current = undefined;
             } else {
@@ -269,7 +269,7 @@ const useRecordingDataSource = (): RecordingDataSource => {
               ref.current = undefined;
             }
           }
-        }, mlSettings.duration);
+        }, dataWindow.duration);
 
         ref.current = {
           startTimeMillis: Date.now(),
@@ -281,7 +281,7 @@ const useRecordingDataSource = (): RecordingDataSource => {
         ref.current = undefined;
       },
     }),
-    [bufferedData]
+    [bufferedData, dataWindow.duration, dataWindow.minSamples]
   );
 };
 

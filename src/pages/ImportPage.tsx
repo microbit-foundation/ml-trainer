@@ -8,7 +8,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Project } from "@microbit/makecode-embed/react";
-import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
@@ -16,14 +16,13 @@ import DefaultPageLayout, {
   HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
-import { useConnectionStage } from "../connection-stage-hooks";
 import { useDeployment } from "../deployment";
 import { useProject } from "../hooks/project-hooks";
+import { useLogging } from "../logging/logging-hooks";
 import { MicrobitOrgResource } from "../model";
 import { defaultProjectName, validateProjectName } from "../project-name";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
-import { useLogging } from "../logging/logging-hooks";
 
 const ImportPage = () => {
   const intl = useIntl();
@@ -36,15 +35,15 @@ const ImportPage = () => {
   const [project, setProject] = useState<Project>();
   const logging = useLogging();
 
-  const resource = useMemo(() => {
-    const id = params.get("id");
-    const project = params.get("project");
-    const name = params.get("name");
-    return id && name && project ? { id, project, name } : undefined;
-  }, [params]);
-
   useEffect(() => {
     const updateAsync = async () => {
+      const resourceId = params.get("id");
+      const resourceProject = params.get("project");
+      const resourceName = params.get("name");
+      const resource =
+        resourceId && resourceProject && resourceName
+          ? { id: resourceId, project: resourceProject, name: resourceName }
+          : undefined;
       if (!resource || !activitiesBaseUrl) {
         return;
       }
@@ -55,7 +54,7 @@ const ImportPage = () => {
           intl
         );
         setProject(project);
-        setName(project.header?.name ?? defaultProjectName);
+        setName(resourceName ?? defaultProjectName);
       } catch (e) {
         // Log the fetch error, but fallback to new blank session by default.
         logging.error(e);
@@ -64,11 +63,10 @@ const ImportPage = () => {
     void updateAsync().then(() => {
       setFetchingProject(false);
     });
-  }, [activitiesBaseUrl, intl, logging, resource]);
+  }, [activitiesBaseUrl, intl, logging, params]);
 
   const loadProject = useStore((s) => s.loadProject);
   const newSession = useStore((s) => s.newSession);
-  const { actions: connStageActions } = useConnectionStage();
 
   const handleStartSession = useCallback(() => {
     if (project) {
@@ -79,13 +77,8 @@ const ImportPage = () => {
       // with provided project name
       newSession(name);
       navigate(createDataSamplesPageUrl());
-      connStageActions.startConnect();
     }
-  }, [connStageActions, loadProject, name, navigate, newSession, project]);
-
-  const handleBack = useCallback(() => {
-    navigate(-1);
-  }, [navigate]);
+  }, [loadProject, name, navigate, newSession, project]);
 
   const { saveHex } = useProject();
   const handleSave = useCallback(() => {
@@ -144,10 +137,7 @@ const ImportPage = () => {
               onChange={(e) => setName(e.currentTarget.value)}
             />
           </Stack>
-          <HStack pt={5} justifyContent="space-between">
-            <Button variant="ghost" onClick={handleBack} size="lg">
-              <FormattedMessage id="back-action" />
-            </Button>
+          <HStack pt={5} justifyContent="flex-end">
             <Button
               isDisabled={!isValidSetup}
               isLoading={fetchingProject}

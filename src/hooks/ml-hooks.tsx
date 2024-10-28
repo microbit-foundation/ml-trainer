@@ -21,6 +21,7 @@ export const usePrediction = () => {
   const [prediction, setPrediction] = useState<PredictionResult | undefined>();
   const gestureData = useStore((s) => s.gestures);
   const model = useStore((s) => s.model);
+  const dataWindow = useStore((s) => s.dataWindow);
 
   // Use a ref to prevent restarting the effect every time thesholds change.
   // We only use the ref's value during the setInterval callback not render.
@@ -32,14 +33,14 @@ export const usePrediction = () => {
       return;
     }
     const runPrediction = async () => {
-      const startTime = Date.now() - mlSettings.duration;
+      const startTime = Date.now() - dataWindow.duration;
       const input = {
         model,
         data: buffer.getSamples(startTime),
         classificationIds: gestureDataRef.current.map((g) => g.ID),
       };
-      if (input.data.x.length > mlSettings.minSamples) {
-        const result = await predict(input);
+      if (input.data.x.length > dataWindow.minSamples) {
+        const result = await predict(input, dataWindow);
         if (result.error) {
           logging.error(result.detail);
         } else {
@@ -63,7 +64,7 @@ export const usePrediction = () => {
       setPrediction(undefined);
       clearInterval(interval);
     };
-  }, [connection, logging, connectStatus, buffer, model]);
+  }, [connection, logging, connectStatus, buffer, model, dataWindow]);
 
   return prediction;
 };

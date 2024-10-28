@@ -1,23 +1,22 @@
 import {
   Box,
+  Button,
   Card,
   CardBody,
   CloseButton,
   GridItem,
   HStack,
-  Icon,
-  IconButton,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
-import { useIntl } from "react-intl";
-import { useConnectionStage } from "../../connection-stage-hooks";
-import RecordIcon from "../../images/record-icon.svg?react";
+import { FormattedMessage, useIntl } from "react-intl";
+import { flags } from "../../flags";
 import { DataSamplesView, GestureData } from "../../model";
 import { useStore } from "../../store";
 import { tourElClassname } from "../../tours";
-import RecordingGraph from "../RecordingGraph";
 import RecordingFingerprint from "../RecordingFingerprint";
-import { flags } from "../../flags";
+import RecordingGraph from "../RecordingGraph";
 import styles from "./styles.module.css";
 
 interface DataRecordingGridItemProps {
@@ -39,7 +38,6 @@ const DataRecordingGridItem = ({
   const deleteGestureRecording = useStore((s) => s.deleteGestureRecording);
   const view = useStore((s) => s.settings.dataSamplesView);
   const closeRecordingDialogFocusRef = useRef(null);
-  const { isConnected } = useConnectionStage();
 
   const handleDeleteRecording = useCallback(
     (idx: number) => {
@@ -63,30 +61,32 @@ const DataRecordingGridItem = ({
           className={tourElClassname.recordDataSamplesCard}
         >
           <CardBody display="flex" flexDirection="row" p={1} gap={3}>
-            <HStack w="8.25rem" justifyContent="center">
-              <IconButton
+            <VStack w="8.25rem" justifyContent="center">
+              <Button
                 ref={closeRecordingDialogFocusRef}
-                height="fit-content"
-                width="fit-content"
-                rounded="full"
+                variant={selected ? "solid" : "outline"}
+                colorScheme="red"
                 onClick={onRecord}
-                variant="ghost"
-                _hover={{ backgroundColor: "transparent" }}
                 aria-label={intl.formatMessage(
                   { id: "record-action-aria" },
                   { action: data.name }
                 )}
-                opacity={isConnected ? 1 : 0.5}
-                icon={
-                  <Icon
-                    as={RecordIcon}
-                    boxSize="70px"
-                    color={selected ? "red.500" : "black"}
-                    opacity={selected ? 1 : 0.2}
+              >
+                <FormattedMessage id="record-action" />
+              </Button>
+              {data.recordings.length < 3 ? (
+                <Text fontSize="xs" textAlign="center" fontWeight="bold">
+                  <FormattedMessage id="data-samples-status-not-enough" />
+                </Text>
+              ) : (
+                <Text fontSize="xs" textAlign="center">
+                  <FormattedMessage
+                    id="data-samples-status-count"
+                    values={{ numSamples: data.recordings.length }}
                   />
-                }
-              />
-            </HStack>
+                </Text>
+              )}
+            </VStack>
             {data.recordings.map((recording, idx) => (
               <HStack key={recording.ID} position="relative">
                 <Box

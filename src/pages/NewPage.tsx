@@ -20,7 +20,6 @@ import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
 import NewPageChoice from "../components/NewPageChoice";
-import { useConnectionStage } from "../connection-stage-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { defaultProjectName } from "../project-name";
 import { useStore } from "../store";
@@ -33,7 +32,6 @@ const NewPage = () => {
   );
   const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
-  const { actions: connStageActions } = useConnectionStage();
   const logging = useLogging();
 
   const handleOpenLastSession = useCallback(() => {
@@ -54,8 +52,7 @@ const NewPage = () => {
     });
     newSession();
     navigate(createDataSamplesPageUrl());
-    connStageActions.startConnect();
-  }, [logging, newSession, navigate, connStageActions]);
+  }, [logging, newSession, navigate]);
 
   const intl = useIntl();
   const lastSessionTitle = intl.formatMessage({

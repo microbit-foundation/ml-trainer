@@ -7,7 +7,6 @@ import {
   IconButton,
   MenuDivider,
   MenuItem,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect } from "react";
@@ -24,7 +23,7 @@ import { useProject } from "../hooks/project-hooks";
 import { SaveStep, TrainModelDialogStage } from "../model";
 import Tour from "../pages/Tour";
 import { useStore } from "../store";
-import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
+import { createHomePageUrl } from "../urls";
 import ActionBar from "./ActionBar";
 import AppLogo from "./AppLogo";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
@@ -54,7 +53,6 @@ const DefaultPageLayout = ({
   showPageTitle = false,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
-  const navigate = useNavigate();
   const isEditorOpen = useStore((s) => s.isEditorOpen);
   const isTourClosed = useStore((s) => s.tourState === undefined);
   const isTrainDialogClosed = useStore(
@@ -63,8 +61,6 @@ const DefaultPageLayout = ({
   const { stage } = useConnectionStage();
   const isConnectionDialogClosed = stage.flowStep === ConnectionFlowStep.None;
   const isSaveDialogClosed = useStore((s) => s.save.step === SaveStep.None);
-
-  const toast = useToast();
   const { appNameFull } = useDeployment();
 
   useEffect(() => {
@@ -72,26 +68,6 @@ const DefaultPageLayout = ({
       ? `${intl.formatMessage({ id: titleId })} | ${appNameFull}`
       : appNameFull;
   }, [appNameFull, intl, titleId]);
-
-  useEffect(() => {
-    return useStore.subscribe(
-      (
-        { projectLoadTimestamp },
-        { projectLoadTimestamp: prevProjectLoadTimestamp }
-      ) => {
-        if (projectLoadTimestamp > prevProjectLoadTimestamp) {
-          // Side effects of loading a project, which MakeCode notifies us of.
-          navigate(createDataSamplesPageUrl());
-          toast({
-            position: "top",
-            duration: 5_000,
-            title: intl.formatMessage({ id: "project-loaded" }),
-            status: "info",
-          });
-        }
-      }
-    );
-  }, [intl, navigate, toast]);
 
   return (
     <>
