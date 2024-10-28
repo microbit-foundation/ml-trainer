@@ -1403,6 +1403,28 @@
       "value": "Left arrow icon for MakeCode back"
     }
   ],
+  "makecode-block-default-alt": [
+    {
+      "type": 0,
+      "value": "ml.onStart(ml.event."
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": ", function () {basic.showIcon(IconNames."
+    },
+    {
+      "type": 1,
+      "value": "iconName"
+    },
+    {
+      "type": 0,
+      "value": ")})"
+    }
+  ],
   "makecode-block-on-ML": [
     {
       "type": 0,

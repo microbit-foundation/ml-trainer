@@ -763,6 +763,10 @@
     "defaultMessage": "Left arrow icon for MakeCode back",
     "description": "Testing model page title"
   },
+  "makecode-block-default-alt": {
+    "defaultMessage": "ml.onStart(ml.event.{actionName}, function () '{'basic.showIcon(IconNames.{iconName})'}')",
+    "description": "Makecode block alt text. The translation should match MakeCode's translations."
+  },
   "makecode-block-on-ML": {
     "defaultMessage": "on ML",
     "description": "Makecode block text. The translation should match MakeCode's translations."
