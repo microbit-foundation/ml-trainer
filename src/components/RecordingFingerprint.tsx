@@ -26,6 +26,7 @@ const RecordingFingerprint = ({
       borderWidth={1}
       borderColor="gray.200"
       overflow="hidden"
+      templateColumns={`repeat(${Object.keys(dataFeatures).length}, 1fr)`}
       {...rest}
     >
       {Object.keys(dataFeatures).map((k, idx) => (
