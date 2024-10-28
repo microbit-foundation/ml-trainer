@@ -311,10 +311,6 @@
     "defaultMessage": "Connect a micro:bit to record a data sample.",
     "description": "Insufficient data modal content"
   },
-  "connect-to-record-title": {
-    "defaultMessage": "You don't have a micro:bit connected",
-    "description": "Connect to record modal title"
-  },
   "connect-to-test-model": {
     "defaultMessage": "Connect to test your ML model",
     "description": "Live graph disconnected micro:bit status message for test model page"
@@ -376,7 +372,7 @@
     "description": "Data samples status text"
   },
   "data-samples-status-not-enough": {
-    "defaultMessage": "3 or more data samples",
+    "defaultMessage": "3 or more samples",
     "description": "Data samples status text"
   },
   "data-samples-title": {

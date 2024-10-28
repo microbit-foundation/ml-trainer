@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useConnectionStage } from "../../connection-stage-hooks";
 import { flags } from "../../flags";
 import { DataSamplesView, GestureData } from "../../model";
 import { useStore } from "../../store";
@@ -39,7 +38,6 @@ const DataRecordingGridItem = ({
   const deleteGestureRecording = useStore((s) => s.deleteGestureRecording);
   const view = useStore((s) => s.settings.dataSamplesView);
   const closeRecordingDialogFocusRef = useRef(null);
-  const { isConnected } = useConnectionStage();
 
   const handleDeleteRecording = useCallback(
     (idx: number) => {
@@ -66,19 +64,13 @@ const DataRecordingGridItem = ({
             <VStack w="8.25rem" justifyContent="center">
               <Button
                 ref={closeRecordingDialogFocusRef}
-                rounded="full"
-                variant="solid"
-                textColor={selected ? "white" : "black"}
-                backgroundColor={selected ? "red.500" : "blackAlpha.200"}
+                variant={selected ? "solid" : "outline"}
+                colorScheme="red"
                 onClick={onRecord}
-                _hover={{
-                  backgroundColor: selected ? "red.600" : "blackAlpha.100",
-                }}
                 aria-label={intl.formatMessage(
                   { id: "record-action-aria" },
                   { action: data.name }
                 )}
-                opacity={!isConnected ? 0.5 : 1}
               >
                 <FormattedMessage id="record-action" />
               </Button>

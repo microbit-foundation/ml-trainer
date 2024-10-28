@@ -91,7 +91,7 @@ const ConnectToRecordDialog = ({
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage id="connect-to-record-title" />
+            <FormattedMessage id="microbit-not-connected" />
           </ModalHeader>
           <ModalBody>
             <ModalCloseButton />
