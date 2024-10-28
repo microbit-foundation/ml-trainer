@@ -24,7 +24,10 @@ const SelectMicrobitBluetoothDialog = ({
   const intl = useIntl();
 
   return (
-    <ConnectContainerDialog headingId="connect-popup" {...props}>
+    <ConnectContainerDialog
+      headingId="connect-popup-bluetooth-title"
+      {...props}
+    >
       <Box position="relative" width={"100%"} alignSelf={""}>
         <Image
           height={365}

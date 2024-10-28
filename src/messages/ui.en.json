@@ -218,7 +218,7 @@
   "connect-battery-heading": [
     {
       "type": 0,
-      "value": "Connect battery pack and disconnect USB"
+      "value": "Disconnect USB and connect battery pack"
     }
   ],
   "connect-battery-holder": [
@@ -447,6 +447,12 @@
       "value": "Select 'Pair'"
     }
   ],
+  "connect-popup-bluetooth-title": [
+    {
+      "type": 0,
+      "value": "Connect to micro:bit using Web Bluetooth"
+    }
+  ],
   "connect-popup-instruction-heading": [
     {
       "type": 0,
@@ -457,6 +463,24 @@
     {
       "type": 0,
       "value": "Choose your micro:bit"
+    }
+  ],
+  "connect-popup-usb-bluetooth-data-collection-title": [
+    {
+      "type": 0,
+      "value": "Download data collection program to micro:bit"
+    }
+  ],
+  "connect-popup-usb-radio-data-collection-title": [
+    {
+      "type": 0,
+      "value": "Download data collection program to micro:bit 1"
+    }
+  ],
+  "connect-popup-usb-radio-link-title": [
+    {
+      "type": 0,
+      "value": "Download radio link program to micro:bit 2"
     }
   ],
   "connect-popup-webusb-instruction2": [

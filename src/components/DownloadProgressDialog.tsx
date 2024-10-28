@@ -21,7 +21,7 @@ export interface DownloadProgressDialogProps {
 export const getHeadingId = (flowType: ConnectionFlowType) => {
   switch (flowType) {
     case ConnectionFlowType.ConnectBluetooth:
-      return "downloading-header";
+      return "downloading-data-collection-header";
     case ConnectionFlowType.ConnectRadioRemote:
       return "downloading-data-collection-header";
     case ConnectionFlowType.ConnectRadioBridge:

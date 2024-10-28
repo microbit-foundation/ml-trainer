@@ -116,7 +116,7 @@
     "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
   },
   "connect-battery-heading": {
-    "defaultMessage": "Connect battery pack and disconnect USB",
+    "defaultMessage": "Disconnect USB and connect battery pack",
     "description": "Battery connection dialog "
   },
   "connect-battery-holder": {
@@ -251,6 +251,10 @@
     "defaultMessage": "Select 'Pair'",
     "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
   },
+  "connect-popup-bluetooth-title": {
+    "defaultMessage": "Connect to micro:bit using Web Bluetooth",
+    "description": "Instruction for dialog that previews the Bluetooth permission dialog"
+  },
   "connect-popup-instruction-heading": {
     "defaultMessage": "In the next popup",
     "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
@@ -258,6 +262,18 @@
   "connect-popup-instruction1": {
     "defaultMessage": "Choose your micro:bit",
     "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-popup-usb-bluetooth-data-collection-title": {
+    "defaultMessage": "Download data collection program to micro:bit",
+    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+  },
+  "connect-popup-usb-radio-data-collection-title": {
+    "defaultMessage": "Download data collection program to micro:bit 1",
+    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+  },
+  "connect-popup-usb-radio-link-title": {
+    "defaultMessage": "Download radio link program to micro:bit 2",
+    "description": "Instruction for dialog that previews the WebUSB permission dialog"
   },
   "connect-popup-webusb-instruction2": {
     "defaultMessage": "Select 'Connect'",
