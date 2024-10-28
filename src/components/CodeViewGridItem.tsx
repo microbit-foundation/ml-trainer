@@ -1,30 +1,14 @@
-import { Box, Card, GridItem, SkeletonText } from "@chakra-ui/react";
-import {
-  BlockLayout,
-  MakeCodeBlocksRendering,
-} from "@microbit/makecode-embed/react";
-import { memo, useMemo } from "react";
-import { generateProject } from "../makecode/utils";
+import { Card, GridItem } from "@chakra-ui/react";
+import { memo } from "react";
 import { GestureData } from "../model";
-import { useStore } from "../store";
 import { tourElClassname } from "../tours";
+import CodeViewDefaultBlock from "./CodeViewDefaultBlock";
 
 interface CodeViewGridItemProps {
   gesture: GestureData;
 }
 
 const CodeViewGridItem = ({ gesture }: CodeViewGridItemProps) => {
-  const model = useStore((s) => s.model);
-  const gestures = useStore((s) => s.gestures);
-  const project = useMemo(
-    // Project name is left empty as it is not used or displayed.
-    () => generateProject("", { data: gestures }, model, gesture),
-    [gesture, gestures, model]
-  );
-  const width = useMemo(
-    () => `${120 + gesture.name.length * 5}px`,
-    [gesture.name.length]
-  );
   return (
     <GridItem>
       <Card
@@ -37,20 +21,7 @@ const CodeViewGridItem = ({ gesture }: CodeViewGridItemProps) => {
         justifyContent="center"
         className={tourElClassname.makeCodeCodeView}
       >
-        <Box width={width} py={2} px={2} overflow="hidden">
-          <MakeCodeBlocksRendering
-            code={project}
-            layout={BlockLayout.Clean}
-            loaderCmp={
-              <SkeletonText
-                w="full"
-                noOfLines={3}
-                spacing="5"
-                skeletonHeight="2"
-              />
-            }
-          />
-        </Box>
+        <CodeViewDefaultBlock gestureName={gesture.name} icon={gesture.icon} />
       </Card>
     </GridItem>
   );
