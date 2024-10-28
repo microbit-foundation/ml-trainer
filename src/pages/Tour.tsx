@@ -8,7 +8,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
   usePopper,
   useToken,
 } from "@chakra-ui/react";
@@ -149,14 +148,6 @@ const Tour = () => {
         </ModalFooter>
       </ModalContent>
     </Modal>
-  );
-};
-
-export const FormattedMessageStepContent = ({ id }: { id: string }) => {
-  return (
-    <Text>
-      <FormattedMessage id={id} />
-    </Text>
   );
 };
 
