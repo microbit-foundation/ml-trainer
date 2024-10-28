@@ -31,77 +31,25 @@ const CodeViewDefaultBlock = ({
         viewBox="0 0 550 145"
       >
         <defs>
-          <pattern
-            id="blocklyGridPattern27719798250106775"
-            patternUnits="userSpaceOnUse"
-            width="100"
-            height="100"
-            x="0"
-            y="0"
-          >
+          <pattern width="100" height="100" x="0" y="0">
             <line strokeWidth="1" x1="0" y1="0.5" x2="1" y2="0.5" />
           </pattern>
         </defs>
         <g>
           <g transform="translate(-20, -20) scale(1)">
-            <g>
-              <g width="80" height="5">
-                <rect width="80" height="5" display="none">
-                  <animate
-                    attributeType="XML"
-                    attributeName="fill"
-                    dur="1s"
-                    values="#ffa200;transparent;transparent;"
-                    repeatCount="indefinite"
-                  />
-                </rect>
-                <rect rx="10" ry="10" display="none" />
-                <path transform="" display="none">
-                  <animate
-                    attributeType="XML"
-                    attributeName="fill"
-                    dur="1s"
-                    values="#ffa200;transparent;transparent;"
-                    repeatCount="indefinite"
-                  />
-                </path>
-                <path transform="" display="none" fill="none" strokeWidth="4">
-                  <animate
-                    attributeType="XML"
-                    attributeName="stroke"
-                    dur="1s"
-                    values="#ffa200;transparent;transparent;"
-                    repeatCount="indefinite"
-                  />
-                </path>
-                <circle r="5" display="none" strokeWidth="4">
-                  <animate
-                    attributeType="XML"
-                    attributeName="fill"
-                    dur="1s"
-                    values="#ffa200;transparent;transparent;"
-                    repeatCount="indefinite"
-                  />
-                </circle>
-              </g>
-            </g>
-            <g data-id="9hQ$s=Jh=X+u=M4oN?2G" transform="translate(20,20)">
+            <g transform="translate(20,20)">
               <path
                 stroke="#204b92"
                 fill="#2b64c3"
-                d={` m 0,0  m 0,4 a 4 4 0 0,1 4,-4  h ${onMlStartBlockWidth} a 4 4 0 0,1 4,4  v 4  V 8  V 43  V 47 a 4 4 0 0,1 -4,4  H 64  c -2,0  -3,1  -4,2  l -4,4  c -1,1  -2,2  -4,2  h -12  c -2,0  -3,-1  -4,-2  l -4,-4  c -1,-1  -2,-2  -4,-2  h -8 a 4 4 0 0,0 -4,4  v 54 a 4 4 0 0,0 4,4  h 8  c 2,0  3,1  4,2  l 4,4  c 1,1  2,2  4,2  h 12  c 2,0  3,-1  4,-2  l 4,-4  c 1,-1  2,-2  4,-2  H ${
+                d={`m 0,0  m 0,4 a 4 4 0 0,1 4,-4  h ${onMlStartBlockWidth} a 4 4 0 0,1 4,4  v 4  V 8  V 43  V 47 a 4 4 0 0,1 -4,4  H 64  c -2,0  -3,1  -4,2  l -4,4  c -1,1  -2,2  -4,2  h -12  c -2,0  -3,-1  -4,-2  l -4,-4  c -1,-1  -2,-2  -4,-2  h -8 a 4 4 0 0,0 -4,4  v 54 a 4 4 0 0,0 4,4  h 8  c 2,0  3,1  4,2  l 4,4  c 1,1  2,2  4,2  h 12  c 2,0  3,-1  4,-2  l 4,-4  c 1,-1  2,-2  4,-2  H ${
                   onMlStartBlockWidth + 4
                 } a 4 4 0 0,1 4,4  V 121  V 141 a 4 4 0 0,1 -4,4  h -${onMlStartBlockWidth} a 4 4 0 0,1 -4,-4`}
               />
-              <g
-                data-id="bgaoB$G*o8*PP5srv4Q)"
-                display="block"
-                transform="translate(16,51)"
-              >
+              <g display="block" transform="translate(16,51)">
                 <path
                   stroke="#176cbf"
                   fill="#1e90ff"
-                  d=" m 0,0  m 0,4 a 4 4 0 0,1 4,-4  h 8  c 2,0  3,1  4,2  l 4,4  c 1,1  2,2  4,2  h 12  c 2,0  3,-1  4,-2  l 4,-4  c 1,-1  2,-2  4,-2  h 130.4140625 a 4 4 0 0,1 4,4  v 8  V 54  V 58  V 58 a 4 4 0 0,1 -4,4  h -130.4140625  c -2,0  -3,1  -4,2  l -4,4  c -1,1  -2,2  -4,2  h -12  c -2,0  -3,-1  -4,-2  l -4,-4  c -1,-1  -2,-2  -4,-2  h -8 a 4 4 0 0,1 -4,-4 z&#10;"
+                  d="m 0,0  m 0,4 a 4 4 0 0,1 4,-4  h 8  c 2,0  3,1  4,2  l 4,4  c 1,1  2,2  4,2  h 12  c 2,0  3,-1  4,-2  l 4,-4  c 1,-1  2,-2  4,-2  h 130.4140625 a 4 4 0 0,1 4,4  v 8  V 54  V 58  V 58 a 4 4 0 0,1 -4,4  h -130.4140625  c -2,0  -3,1  -4,2  l -4,4  c -1,1  -2,2  -4,2  h -12  c -2,0  -3,-1  -4,-2  l -4,-4  c -1,-1  -2,-2  -4,-2  h -8 a 4 4 0 0,1 -4,-4 z&#10;"
                 />
                 <g transform="translate(8,20)">
                   <text
@@ -116,10 +64,7 @@ const CodeViewDefaultBlock = ({
                     <FormattedMessage id="makecode-block-show-icon" />
                   </text>
                 </g>
-                <g
-                  data-argument-type="dropdown"
-                  transform="translate(102.4140625,8)"
-                >
+                <g transform="translate(102.4140625,8)">
                   <rect
                     rx="4"
                     ry="4"
@@ -185,7 +130,6 @@ const CodeViewDefaultBlock = ({
                 >
                   {gestureName}
                 </text>
-                <image display="none" />
                 <use
                   xmlnsXlink="http://www.w3.org/1999/xlink"
                   height="12px"
@@ -211,177 +155,6 @@ const CodeViewDefaultBlock = ({
           </g>
           <g transform="translate(-20, -20) scale(1)" />
           <defs>
-            <filter id="blocklyEmbossFilter21191109718400702">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur" />
-              <feSpecularLighting
-                in="blur"
-                surfaceScale="1"
-                specularConstant="0.5"
-                specularExponent="10"
-                lightingColor="white"
-                result="specOut"
-              >
-                <fePointLight x="-5000" y="-10000" z="20000" />
-              </feSpecularLighting>
-              <feComposite
-                in="specOut"
-                in2="SourceAlpha"
-                operator="in"
-                result="specOut"
-              />
-              <feComposite
-                in="SourceGraphic"
-                in2="specOut"
-                operator="arithmetic"
-                k1="0"
-                k2="1"
-                k3="1"
-                k4="0"
-              />
-            </filter>
-            <pattern
-              id="blocklyDisabledPattern21191109718400702"
-              patternUnits="userSpaceOnUse"
-              width="10"
-              height="10"
-            >
-              <rect width="10" height="10" fill="#aaa" />
-              <path d="M 0 0 L 10 10 M 10 0 L 0 10" stroke="#cc0" />
-            </pattern>
-            <filter
-              id="blocklyDebugFilter21191109718400702"
-              height="160%"
-              width="180%"
-              y="-30%"
-              x="-40%"
-            >
-              <feComponentTransfer result="outBlur">
-                <feFuncA
-                  type="table"
-                  tableValues="0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1"
-                />
-              </feComponentTransfer>
-              <feFlood
-                floodColor="#ff0000"
-                floodOpacity="0.5"
-                result="outColor"
-              />
-              <feComposite
-                in="outColor"
-                in2="outBlur"
-                operator="in"
-                result="outGlow"
-              />
-            </filter>
-          </defs>
-          <defs>
-            <filter
-              id="blocklySelectedGlowFilter21191109718400702"
-              height="160%"
-              width="180%"
-              y="-30%"
-              x="-40%"
-            >
-              <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" />
-              <feComponentTransfer result="outBlur">
-                <feFuncA
-                  type="table"
-                  tableValues="0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1"
-                />
-              </feComponentTransfer>
-              <feFlood
-                floodColor="#fff200"
-                floodOpacity="1"
-                result="outColor"
-              />
-              <feComposite
-                in="outColor"
-                in2="outBlur"
-                operator="in"
-                result="outGlow"
-              />
-            </filter>
-            <filter
-              id="blocklyReplacementGlowFilter21191109718400702"
-              height="160%"
-              width="180%"
-              y="-30%"
-              x="-40%"
-            >
-              <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
-              <feComponentTransfer result="outBlur">
-                <feFuncA
-                  type="table"
-                  tableValues="0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1"
-                />
-              </feComponentTransfer>
-              <feFlood
-                floodColor="#fff200"
-                floodOpacity="1"
-                result="outColor"
-              />
-              <feComposite
-                in="outColor"
-                in2="outBlur"
-                operator="in"
-                result="outGlow"
-              />
-              <feComposite in="SourceGraphic" in2="outGlow" operator="over" />
-            </filter>
-          </defs>
-          <defs>
-            <filter
-              id="blocklyHighlightGlowFilterundefined"
-              height="160%"
-              width="180%"
-              y="-30%"
-              x="-40%"
-            >
-              <feGaussianBlur in="SourceGraphic" stdDeviation="1.1" />
-              <feComponentTransfer result="outBlur">
-                <feFuncA
-                  type="table"
-                  tableValues="0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1"
-                />
-              </feComponentTransfer>
-              <feFlood
-                floodColor="#FFF200"
-                floodOpacity="1"
-                result="outColor"
-              />
-              <feComposite
-                in="outColor"
-                in2="outBlur"
-                operator="in"
-                result="outGlow"
-              />
-            </filter>
-            <filter
-              id="blocklyHighlightWarningFilterundefined"
-              height="160%"
-              width="180%"
-              y="-30%"
-              x="-40%"
-            >
-              <feGaussianBlur in="SourceGraphic" stdDeviation="1.1" />
-              <feComponentTransfer result="outBlur">
-                <feFuncA
-                  type="table"
-                  tableValues="0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1"
-                />
-              </feComponentTransfer>
-              <feFlood
-                floodColor="#E53D00"
-                floodOpacity="1"
-                result="outColor"
-              />
-              <feComposite
-                in="outColor"
-                in2="outBlur"
-                operator="in"
-                result="outGlow"
-              />
-            </filter>
             <image
               xmlnsXlink="http://www.w3.org/1999/xlink"
               id="blocklyDropdownArrowSvgundefined"
