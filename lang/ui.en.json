@@ -763,6 +763,18 @@
     "defaultMessage": "Left arrow icon for MakeCode back",
     "description": "Testing model page title"
   },
+  "makecode-block-on-ML": {
+    "defaultMessage": "on ML",
+    "description": "Makecode block text. The translation should match MakeCode's translations."
+  },
+  "makecode-block-show-icon": {
+    "defaultMessage": "show icon",
+    "description": "Makecode block text. The translation should match MakeCode's translations."
+  },
+  "makecode-block-start": {
+    "defaultMessage": "start",
+    "description": "Makecode block text. The translation should match MakeCode's translations."
+  },
   "microbit-not-connected": {
     "defaultMessage": "Your micro:bit is not connected",
     "description": "Live graph disconnected micro:bit status message"

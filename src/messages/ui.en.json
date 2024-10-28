@@ -1403,6 +1403,24 @@
       "value": "Left arrow icon for MakeCode back"
     }
   ],
+  "makecode-block-on-ML": [
+    {
+      "type": 0,
+      "value": "on ML"
+    }
+  ],
+  "makecode-block-show-icon": [
+    {
+      "type": 0,
+      "value": "show icon"
+    }
+  ],
+  "makecode-block-start": [
+    {
+      "type": 0,
+      "value": "start"
+    }
+  ],
   "microbit-not-connected": [
     {
       "type": 0,

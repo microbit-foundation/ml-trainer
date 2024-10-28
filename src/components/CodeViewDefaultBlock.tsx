@@ -1,3 +1,4 @@
+import { FormattedMessage } from "react-intl";
 import { MakeCodeIcon, makecodeIcons } from "../utils/icons";
 interface CodeViewDefaultBlockProps {
   gestureName: string;
@@ -19,7 +20,6 @@ const CodeViewDefaultBlock = ({
       version="1.1"
       height="100"
       viewBox="0 0 550 145"
-      className="pxt-renderer classNameic-theme"
     >
       <defs>
         <pattern
@@ -33,12 +33,9 @@ const CodeViewDefaultBlock = ({
           <line strokeWidth="1" x1="0" y1="0.5" x2="1" y2="0.5" />
         </pattern>
       </defs>
-      <g className="blocklyWorkspace">
-        <g
-          className="blocklyBlockCanvas"
-          transform="translate(-20, -20) scale(1)"
-        >
-          <g className="blocklyCursor">
+      <g>
+        <g transform="translate(-20, -20) scale(1)">
+          <g>
             <g width="80" height="5">
               <rect width="80" height="5" display="none">
                 <animate
@@ -49,12 +46,7 @@ const CodeViewDefaultBlock = ({
                   repeatCount="indefinite"
                 />
               </rect>
-              <rect
-                className="blocklyVerticalMarker"
-                rx="10"
-                ry="10"
-                display="none"
-              />
+              <rect rx="10" ry="10" display="none" />
               <path transform="" display="none">
                 <animate
                   attributeType="XML"
@@ -86,7 +78,6 @@ const CodeViewDefaultBlock = ({
           </g>
           <g data-id="9hQ$s=Jh=X+u=M4oN?2G" transform="translate(20,20)">
             <path
-              className="blocklyPath blocklyBlockBackground"
               stroke="#204b92"
               fill="#2b64c3"
               d={` m 0,0  m 0,4 a 4 4 0 0,1 4,-4  h ${onMlStartBlockWidth} a 4 4 0 0,1 4,4  v 4  V 8  V 43  V 47 a 4 4 0 0,1 -4,4  H 64  c -2,0  -3,1  -4,2  l -4,4  c -1,1  -2,2  -4,2  h -12  c -2,0  -3,-1  -4,-2  l -4,-4  c -1,-1  -2,-2  -4,-2  h -8 a 4 4 0 0,0 -4,4  v 54 a 4 4 0 0,0 4,4  h 8  c 2,0  3,1  4,2  l 4,4  c 1,1  2,2  4,2  h 12  c 2,0  3,-1  4,-2  l 4,-4  c 1,-1  2,-2  4,-2  H ${
@@ -99,14 +90,12 @@ const CodeViewDefaultBlock = ({
               transform="translate(16,51)"
             >
               <path
-                className="blocklyPath blocklyBlockBackground"
                 stroke="#176cbf"
                 fill="#1e90ff"
                 d=" m 0,0  m 0,4 a 4 4 0 0,1 4,-4  h 8  c 2,0  3,1  4,2  l 4,4  c 1,1  2,2  4,2  h 12  c 2,0  3,-1  4,-2  l 4,-4  c 1,-1  2,-2  4,-2  h 130.4140625 a 4 4 0 0,1 4,4  v 8  V 54  V 58  V 58 a 4 4 0 0,1 -4,4  h -130.4140625  c -2,0  -3,1  -4,2  l -4,4  c -1,1  -2,2  -4,2  h -12  c -2,0  -3,-1  -4,-2  l -4,-4  c -1,-1  -2,-2  -4,-2  h -8 a 4 4 0 0,1 -4,-4 z&#10;"
               />
               <g transform="translate(8,20)">
                 <text
-                  className="blocklyText"
                   dominantBaseline="central"
                   x="0"
                   y="11"
@@ -115,7 +104,7 @@ const CodeViewDefaultBlock = ({
                   fontFamily={`"Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace`}
                   fill="white"
                 >
-                  {"show icon"}
+                  <FormattedMessage id="makecode-block-show-icon" />
                 </text>
               </g>
               <g
@@ -129,12 +118,10 @@ const CodeViewDefaultBlock = ({
                   y="0"
                   height="46"
                   width="72"
-                  className="blocklyFieldRect blocklyDropdownRect"
                   stroke="#176cbf"
                   fill="transparent"
                 />
                 <text
-                  className="blocklyText"
                   dominantBaseline="central"
                   textAnchor="end"
                   x="64"
@@ -152,7 +139,6 @@ const CodeViewDefaultBlock = ({
             </g>
             <g transform="translate(8,14.5)">
               <text
-                className="blocklyText"
                 dominantBaseline="central"
                 x="0"
                 y="11"
@@ -161,7 +147,7 @@ const CodeViewDefaultBlock = ({
                 fontFamily={`"Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace`}
                 fill="white"
               >
-                {"on ML"}
+                <FormattedMessage id="makecode-block-on-ML" />
               </text>
             </g>
             <g
@@ -175,12 +161,10 @@ const CodeViewDefaultBlock = ({
                 y="0"
                 height="35"
                 width={`${gestureNameTextBoxWidth}`}
-                className="blocklyFieldRect blocklyDropdownRect"
                 stroke="#204b92"
                 fill="transparent"
               />
               <text
-                className="blocklyText blocklyDropdownText"
                 dominantBaseline="central"
                 textAnchor="start"
                 x="10"
@@ -203,7 +187,6 @@ const CodeViewDefaultBlock = ({
             </g>
             <g transform={`translate(${startTextXPos},14.5)`}>
               <text
-                className="blocklyText"
                 dominantBaseline="central"
                 x="0"
                 y="11"
@@ -212,15 +195,12 @@ const CodeViewDefaultBlock = ({
                 fontFamily={`"Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace`}
                 fill="white"
               >
-                start
+                <FormattedMessage id="makecode-block-start" />
               </text>
             </g>
           </g>
         </g>
-        <g
-          className="blocklyBubbleCanvas"
-          transform="translate(-20, -20) scale(1)"
-        />
+        <g transform="translate(-20, -20) scale(1)" />
         <defs>
           <filter id="blocklyEmbossFilter21191109718400702">
             <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur" />
@@ -416,7 +396,6 @@ const BlockLedMatrixInternalSvg = ({
       y={initalPos.y + Math.floor(idx * 0.2) * 7}
       height="5"
       width="5"
-      className="blocklyFieldRect blocklyDropdownRect"
       fill={led === "0" ? "#226ac8" : "white"}
     />
   ));
