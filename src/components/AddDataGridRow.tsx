@@ -17,6 +17,7 @@ interface AddDataGridRowProps {
   onSelectRow: () => void;
   onRecord: () => void;
   showWalkThrough: boolean;
+  newRecordingId?: number;
 }
 
 const DataSampleGridRow = ({
@@ -25,6 +26,7 @@ const DataSampleGridRow = ({
   onSelectRow,
   onRecord,
   showWalkThrough,
+  newRecordingId,
 }: AddDataGridRowProps) => {
   const intl = useIntl();
   const deleteConfirmDisclosure = useDisclosure();
@@ -69,6 +71,7 @@ const DataSampleGridRow = ({
         <>
           {gesture.name.length > 0 || gesture.recordings.length > 0 ? (
             <DataRecordingGridItem
+              newRecordingId={newRecordingId}
               data={gesture}
               selected={selected}
               onSelectRow={onSelectRow}

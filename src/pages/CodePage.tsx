@@ -6,6 +6,8 @@ import { useProject } from "../hooks/project-hooks";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl, createTestingModelPageUrl } from "../urls";
 import Tour from "./Tour";
+import DownloadDialogs from "../components/DownloadDialogs";
+import SaveDialogs from "../components/SaveDialogs";
 
 const CodePage = () => {
   const navigate = useNavigate();
@@ -55,7 +57,11 @@ const CodePage = () => {
           />
         </VStack>
       ) : (
-        <Tour />
+        <>
+          <Tour />
+          <DownloadDialogs />
+          <SaveDialogs />
+        </>
       )}
     </>
   );

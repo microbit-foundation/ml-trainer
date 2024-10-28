@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardBody,
@@ -10,19 +11,21 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useConnectionStage } from "../connection-stage-hooks";
-import { flags } from "../flags";
-import { DataSamplesView, GestureData } from "../model";
-import { useStore } from "../store";
-import { tourElClassname } from "../tours";
-import RecordingFingerprint from "./RecordingFingerprint";
-import RecordingGraph from "./RecordingGraph";
+import { useConnectionStage } from "../../connection-stage-hooks";
+import { flags } from "../../flags";
+import { DataSamplesView, GestureData } from "../../model";
+import { useStore } from "../../store";
+import { tourElClassname } from "../../tours";
+import RecordingFingerprint from "../RecordingFingerprint";
+import RecordingGraph from "../RecordingGraph";
+import styles from "./styles.module.css";
 
 interface DataRecordingGridItemProps {
   data: GestureData;
   selected: boolean;
   onSelectRow?: () => void;
   onRecord: () => void;
+  newRecordingId?: number;
 }
 
 const DataRecordingGridItem = ({
@@ -30,6 +33,7 @@ const DataRecordingGridItem = ({
   selected,
   onSelectRow,
   onRecord,
+  newRecordingId,
 }: DataRecordingGridItemProps) => {
   const intl = useIntl();
   const deleteGestureRecording = useStore((s) => s.deleteGestureRecording);
@@ -92,7 +96,18 @@ const DataRecordingGridItem = ({
               )}
             </VStack>
             {data.recordings.map((recording, idx) => (
-              <HStack key={idx} position="relative">
+              <HStack key={recording.ID} position="relative">
+                <Box
+                  position="absolute"
+                  h="100%"
+                  w="100%"
+                  rounded="md"
+                  className={
+                    newRecordingId === recording.ID
+                      ? styles["flash-animation"]
+                      : undefined
+                  }
+                />
                 <CloseButton
                   position="absolute"
                   top={0}

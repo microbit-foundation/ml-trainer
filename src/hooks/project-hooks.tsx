@@ -18,6 +18,7 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useLogging } from "../logging/logging-hooks";
 import { HexData, isDatasetUserFileFormat, SaveStep } from "../model";
+import { defaultProjectName } from "../project-name";
 import { useStore } from "../store";
 import {
   createCodePageUrl,
@@ -200,7 +201,7 @@ export const ProjectProvider = ({
       if (settings.showPreSaveHelp && step === SaveStep.None) {
         setSave({ hex, step: SaveStep.PreSaveHelp });
       } else if (
-        getCurrentProject().header?.name === "Untitled" &&
+        getCurrentProject().header?.name === defaultProjectName &&
         step === SaveStep.None
       ) {
         setSave({ hex, step: SaveStep.ProjectName });

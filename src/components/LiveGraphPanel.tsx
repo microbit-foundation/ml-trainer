@@ -1,6 +1,8 @@
 import {
   Button,
   HStack,
+  Icon,
+  Image,
   Portal,
   Text,
   VisuallyHidden,
@@ -10,12 +12,14 @@ import { useCallback, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
+import microbitImage from "../images/stylised-microbit-black.svg";
 import { useLogging } from "../logging/logging-hooks";
 import { Gesture } from "../model";
 import { tourElClassname } from "../tours";
 import InfoToolTip from "./InfoToolTip";
 import LedIcon from "./LedIcon";
 import LiveGraph from "./LiveGraph";
+import AlertIcon from "./AlertIcon";
 
 interface LiveGraphPanelProps {
   detected?: Gesture | undefined;
@@ -74,23 +78,26 @@ const LiveGraphPanel = ({
       className={tourElClassname.liveGraph}
     >
       {isDisconnected && (
-        <VStack
+        <HStack
           position="absolute"
           w="100%"
           h="100%"
-          gap={3}
+          gap={10}
           justifyContent="center"
         >
-          <Text fontWeight="bold">
-            <FormattedMessage id="microbit-not-connected" />
-          </Text>
-          <Text>
-            <FormattedMessage id={disconnectedTextId} />
-          </Text>
-          <Button variant="primary" onClick={handleConnectOrReconnect}>
-            <FormattedMessage id="connect-action" />
-          </Button>
-        </VStack>
+          <MicrobitWarningIllustration />
+          <VStack gap={3} alignItems="self-start">
+            <Text fontWeight="bold">
+              <FormattedMessage id="microbit-not-connected" />
+            </Text>
+            <Text>
+              <FormattedMessage id={disconnectedTextId} />
+            </Text>
+            <Button variant="primary" onClick={handleConnectOrReconnect}>
+              <FormattedMessage id="connect-action" />
+            </Button>
+          </VStack>
+        </HStack>
       )}
       <HStack
         ref={parentPortalRef}
@@ -196,5 +203,19 @@ const LiveGraphPanel = ({
     </HStack>
   );
 };
+
+const MicrobitWarningIllustration = () => (
+  <HStack position="relative" aria-hidden>
+    <Image src={microbitImage} objectFit="contain" boxSize="120px" bottom={0} />
+    <Icon
+      as={AlertIcon}
+      position="absolute"
+      top={-1}
+      fill="#ffde21"
+      right={-5}
+      boxSize="55px"
+    />
+  </HStack>
+);
 
 export default LiveGraphPanel;
