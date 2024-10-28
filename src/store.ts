@@ -854,7 +854,7 @@ export const useStore = createMlStore(deployment.logging);
 
 const getDataWindowFromGestures = (gestures: GestureData[]): DataWindow => {
   const dataLength = gestures.flatMap((g) => g.recordings)[0]?.data.x.length;
-  return dataLength > legacyDataWindow.minSamples
+  return dataLength >= legacyDataWindow.minSamples
     ? legacyDataWindow
     : currentDataWindow;
 };
