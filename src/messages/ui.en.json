@@ -1439,6 +1439,32 @@
       "value": "The name is used when you save a file."
     }
   ],
+  "new-session-setup-description": [
+    {
+      "type": 0,
+      "value": "Starting a new session will overwrite your existing session. You may want to "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "save your existing session"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " first."
+    }
+  ],
+  "new-session-setup-title": [
+    {
+      "type": 0,
+      "value": "New session setup"
+    }
+  ],
   "newpage-continue-session-subtitle": [
     {
       "type": 0,
@@ -1825,6 +1851,12 @@
     {
       "type": 0,
       "value": "Software versions"
+    }
+  ],
+  "start-session-action": [
+    {
+      "type": 0,
+      "value": "Start session"
     }
   ],
   "start-training-action": [
