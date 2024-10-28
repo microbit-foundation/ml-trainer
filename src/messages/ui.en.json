@@ -537,12 +537,6 @@
       "value": "Connect a micro:bit to record a data sample."
     }
   ],
-  "connect-to-record-title": [
-    {
-      "type": 0,
-      "value": "You don't have a micro:bit connected"
-    }
-  ],
   "connect-to-test-model": [
     {
       "type": 0,
