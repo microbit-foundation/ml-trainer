@@ -8,7 +8,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Project } from "@microbit/makecode-embed/react";
-import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
@@ -19,11 +19,11 @@ import DefaultPageLayout, {
 import { useConnectionStage } from "../connection-stage-hooks";
 import { useDeployment } from "../deployment";
 import { useProject } from "../hooks/project-hooks";
+import { useLogging } from "../logging/logging-hooks";
 import { MicrobitOrgResource } from "../model";
 import { defaultProjectName, validateProjectName } from "../project-name";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
-import { useLogging } from "../logging/logging-hooks";
 
 const ImportPage = () => {
   const intl = useIntl();
@@ -31,24 +31,20 @@ const ImportPage = () => {
   const { activitiesBaseUrl } = useDeployment();
   const [params] = useSearchParams();
   const [name, setName] = useState<string>(defaultProjectName);
-  const [resourceName, setResourceName] = useState<string>();
   const isValidSetup = validateProjectName(name);
   const [fetchingProject, setFetchingProject] = useState<boolean>(true);
   const [project, setProject] = useState<Project>();
   const logging = useLogging();
 
-  const resource = useMemo(() => {
-    const id = params.get("id");
-    const project = params.get("project");
-    const name = params.get("name");
-    if (project) {
-      setResourceName(project);
-    }
-    return id && name && project ? { id, project, name } : undefined;
-  }, [params]);
-
   useEffect(() => {
     const updateAsync = async () => {
+      const resourceId = params.get("id");
+      const resourceProject = params.get("project");
+      const resourceName = params.get("name");
+      const resource =
+        resourceId && resourceProject && resourceName
+          ? { id: resourceId, project: resourceProject, name: resourceName }
+          : undefined;
       if (!resource || !activitiesBaseUrl) {
         return;
       }
@@ -68,7 +64,7 @@ const ImportPage = () => {
     void updateAsync().then(() => {
       setFetchingProject(false);
     });
-  }, [activitiesBaseUrl, intl, logging, resource, resourceName]);
+  }, [activitiesBaseUrl, intl, logging, params]);
 
   const loadProject = useStore((s) => s.loadProject);
   const newSession = useStore((s) => s.newSession);
