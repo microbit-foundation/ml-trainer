@@ -632,7 +632,7 @@ const createMlStore = (logging: Logging) => {
               text: {
                 ...previousProject.text,
                 ...generateProject(
-                  "Untitled",
+                  previousProject.header?.name ?? "Untitled",
                   { data: gestures },
                   model,
                   dataWindow
