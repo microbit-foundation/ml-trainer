@@ -376,7 +376,7 @@
     "description": "Data samples status text"
   },
   "data-samples-status-not-enough": {
-    "defaultMessage": "You need at least 3 data samples",
+    "defaultMessage": "3 or more data samples",
     "description": "Data samples status text"
   },
   "data-samples-title": {
