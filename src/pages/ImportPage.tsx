@@ -83,10 +83,6 @@ const ImportPage = () => {
     }
   }, [connStageActions, loadProject, name, navigate, newSession, project]);
 
-  const handleBack = useCallback(() => {
-    navigate(-1);
-  }, [navigate]);
-
   const { saveHex } = useProject();
   const handleSave = useCallback(() => {
     void saveHex();
@@ -144,10 +140,7 @@ const ImportPage = () => {
               onChange={(e) => setName(e.currentTarget.value)}
             />
           </Stack>
-          <HStack pt={5} justifyContent="space-between">
-            <Button variant="ghost" onClick={handleBack} size="lg">
-              <FormattedMessage id="back-action" />
-            </Button>
+          <HStack pt={5} justifyContent="flex-end">
             <Button
               isDisabled={!isValidSetup}
               isLoading={fetchingProject}
