@@ -765,19 +765,19 @@
   },
   "makecode-block-default-alt": {
     "defaultMessage": "ml.onStart(ml.event.{actionName}, function () '{'basic.showIcon(IconNames.{iconName})'}')",
-    "description": "Makecode block alt text. The translation should match MakeCode's translations."
+    "description": "Makecode block alt text. The translation should match MakeCode translations."
   },
   "makecode-block-on-ML": {
     "defaultMessage": "on ML",
-    "description": "Makecode block text. The translation should match MakeCode's translations."
+    "description": "Makecode block text. The translation should match MakeCode translations."
   },
   "makecode-block-show-icon": {
     "defaultMessage": "show icon",
-    "description": "Makecode block text. The translation should match MakeCode's translations."
+    "description": "Makecode block text. The translation should match MakeCode translations."
   },
   "makecode-block-start": {
     "defaultMessage": "start",
-    "description": "Makecode block text. The translation should match MakeCode's translations."
+    "description": "Makecode block text. The translation should match MakeCode translations."
   },
   "microbit-not-connected": {
     "defaultMessage": "Your micro:bit is not connected",
