@@ -16,10 +16,11 @@ interface CodeViewGridItemProps {
 const CodeViewGridItem = ({ gesture }: CodeViewGridItemProps) => {
   const model = useStore((s) => s.model);
   const gestures = useStore((s) => s.gestures);
+  const dataWindow = useStore((s) => s.dataWindow);
   const project = useMemo(
     // Project name is left empty as it is not used or displayed.
-    () => generateProject("", { data: gestures }, model, gesture),
-    [gesture, gestures, model]
+    () => generateProject("", { data: gestures }, model, dataWindow, gesture),
+    [dataWindow, gesture, gestures, model]
   );
   const width = useMemo(
     () => `${120 + gesture.name.length * 5}px`,
