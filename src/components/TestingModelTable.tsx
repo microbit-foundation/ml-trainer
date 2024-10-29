@@ -57,84 +57,76 @@ const TestingModelTable = ({
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
   return (
-    <>
-      <MakeCodeRenderBlocksProvider
-        key={makeCodeLang}
-        options={{
-          version: undefined,
-          lang: makeCodeLang,
-        }}
+    <MakeCodeRenderBlocksProvider
+      key={makeCodeLang}
+      options={{
+        version: undefined,
+        lang: makeCodeLang,
+      }}
+    >
+      <HeadingGrid {...gridCommonProps} px={5} headings={headings} />
+      <VStack
+        px={5}
+        w="full"
+        h={0}
+        justifyContent="start"
+        flexGrow={1}
+        alignItems="start"
+        overflow="auto"
+        flexShrink={1}
       >
-        <HeadingGrid {...gridCommonProps} px={5} headings={headings} />
-        <VStack
-          px={5}
-          w="full"
-          h={0}
-          justifyContent="start"
-          flexGrow={1}
-          alignItems="start"
-          overflow="auto"
-          flexShrink={1}
-        >
-          <HStack gap={0} h="min-content" w="full">
-            <Grid
-              {...gridCommonProps}
-              {...(projectEdited ? { w: "fit-content", pr: 0 } : {})}
-              py={2}
-              autoRows="max-content"
-              h="fit-content"
-              alignSelf="start"
-            >
-              {gestures.map((gesture, idx) => {
-                const { requiredConfidence: threshold } = gesture;
-                const isTriggered = detected
-                  ? detected.ID === gesture.ID
-                  : false;
-                return (
-                  <React.Fragment key={idx}>
-                    <GridItem>
-                      <ActionNameCard
-                        value={gesture}
-                        readOnly={true}
-                        isTriggered={isTriggered}
-                        disabled={!isConnected}
-                      />
-                    </GridItem>
-                    <GridItem>
-                      <ActionCertaintyCard
-                        actionName={gesture.name}
-                        onThresholdChange={(val) =>
-                          setRequiredConfidence(gesture.ID, val)
-                        }
-                        currentConfidence={confidences?.[gesture.ID]}
-                        requiredConfidence={
-                          threshold ?? mlSettings.defaultRequiredConfidence
-                        }
-                        isTriggered={isTriggered}
-                        disabled={!isConnected}
-                      />
-                    </GridItem>
-                    <VStack justifyContent="center" h="full">
-                      <Icon
-                        as={RiArrowRightLine}
-                        boxSize={10}
-                        color="gray.600"
-                      />
-                    </VStack>
-                    <GridItem>
-                      {!projectEdited && (
-                        <CodeViewDefaultBlockCard gesture={gesture} />
-                      )}
-                    </GridItem>
-                  </React.Fragment>
-                );
-              })}
-            </Grid>
-            {projectEdited && <CodeViewCard project={project} />}
-          </HStack>
-        </VStack>
-      </MakeCodeRenderBlocksProvider>
-    </>
+        <HStack gap={0} h="min-content" w="full">
+          <Grid
+            {...gridCommonProps}
+            {...(projectEdited ? { w: "fit-content", pr: 0 } : {})}
+            py={2}
+            autoRows="max-content"
+            h="fit-content"
+            alignSelf="start"
+          >
+            {gestures.map((gesture, idx) => {
+              const { requiredConfidence: threshold } = gesture;
+              const isTriggered = detected ? detected.ID === gesture.ID : false;
+              return (
+                <React.Fragment key={idx}>
+                  <GridItem>
+                    <ActionNameCard
+                      value={gesture}
+                      readOnly={true}
+                      isTriggered={isTriggered}
+                      disabled={!isConnected}
+                    />
+                  </GridItem>
+                  <GridItem>
+                    <ActionCertaintyCard
+                      actionName={gesture.name}
+                      onThresholdChange={(val) =>
+                        setRequiredConfidence(gesture.ID, val)
+                      }
+                      currentConfidence={confidences?.[gesture.ID]}
+                      requiredConfidence={
+                        threshold ?? mlSettings.defaultRequiredConfidence
+                      }
+                      isTriggered={isTriggered}
+                      disabled={!isConnected}
+                    />
+                  </GridItem>
+                  <VStack justifyContent="center" h="full">
+                    <Icon as={RiArrowRightLine} boxSize={10} color="gray.600" />
+                  </VStack>
+                  <GridItem>
+                    {!projectEdited && (
+                      <CodeViewDefaultBlockCard gesture={gesture} />
+                    )}
+                  </GridItem>
+                </React.Fragment>
+              );
+            })}
+          </Grid>
+          {projectEdited && <CodeViewCard project={project} />}
+        </HStack>
+      </VStack>
+    </MakeCodeRenderBlocksProvider>
   );
 };
 
