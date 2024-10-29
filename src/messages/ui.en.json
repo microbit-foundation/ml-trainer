@@ -91,6 +91,12 @@
       "value": "Add action"
     }
   ],
+  "ai-activity-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "AI activity timer"
+    }
+  ],
   "back-action": [
     {
       "type": 0,
@@ -1915,6 +1921,12 @@
     {
       "type": 0,
       "value": "Settings actions menu"
+    }
+  ],
+  "simple-ai-exercise-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "Simple AI exercise timer"
     }
   ],
   "skip-tour-action": [

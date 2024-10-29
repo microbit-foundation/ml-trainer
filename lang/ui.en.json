@@ -43,6 +43,10 @@
     "defaultMessage": "Add action",
     "description": "Button to add an action (movement related, e.g. clapping)"
   },
+  "ai-activity-timer-resource-title": {
+    "defaultMessage": "AI activity timer",
+    "description": "Home page resource card title"
+  },
   "back-action": {
     "defaultMessage": "Back",
     "description": "Back button text"
@@ -1042,6 +1046,10 @@
   "settings-menu-action": {
     "defaultMessage": "Settings actions menu",
     "description": "Label for settings actions menu button"
+  },
+  "simple-ai-exercise-timer-resource-title": {
+    "defaultMessage": "Simple AI exercise timer",
+    "description": "Home page resource card title"
   },
   "skip-tour-action": {
     "defaultMessage": "Skip tour",

@@ -20,11 +20,14 @@ import RecordingGraph from "../components/RecordingGraph";
 import ResourceCard from "../components/ResourceCard";
 import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
 import { useDeployment } from "../deployment";
-import blockImage from "../images/block.png";
-import xyzGraph from "../images/xyz-graph.png";
-import clap from "../images/clap-square.png";
-import { createNewPageUrl } from "../urls";
+import { stage } from "../environment";
 import { flags } from "../flags";
+import blockImage from "../images/block.png";
+import clap from "../images/clap-square.png";
+import aiActivityTimer from "../images/resource-ai-activity-timer.png";
+import simpleAiExerciseTimer from "../images/resource-simple-ai-exercise-timer.png";
+import xyzGraph from "../images/xyz-graph.png";
+import { createNewPageUrl } from "../urls";
 
 const graphData = {
   x: [
@@ -69,6 +72,11 @@ const HomePage = () => {
   }, [navigate]);
   const intl = useIntl();
   const { appNameFull } = useDeployment();
+  const microbitOrgBaseUrl =
+    stage === "production"
+      ? "https://microbit.org/"
+      : "https://stage.microbit.org/";
+
   return (
     <DefaultPageLayout
       toolbarItemsRight={
@@ -205,9 +213,19 @@ const HomePage = () => {
             <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
               <ResourceCard
                 // TODO: staging URL, translation? Pull from CMS or deployment config?
-                title="Simple AI exercise timer"
-                url="https://stage.microbit.org/projects/make-it-code-it/simple-ai-exercise-timer/"
-                imgSrc="https://cdn.sanity.io/images/ajwvhvgo/production/1aaac1553237900c774216aad17475ef34f8fe48-800x600.jpg?fit=max&w=1200&h=1200"
+                title={intl.formatMessage({
+                  id: "simple-ai-exercise-timer-resource-title",
+                })}
+                url={`${microbitOrgBaseUrl}projects/make-it-code-it/simple-ai-exercise-timer/`}
+                imgSrc={simpleAiExerciseTimer}
+              />
+              <ResourceCard
+                // TODO: staging URL, translation? Pull from CMS or deployment config?
+                title={intl.formatMessage({
+                  id: "ai-activity-timer-resource-title",
+                })}
+                url={`${microbitOrgBaseUrl}projects/make-it-code-it/ai-activity-timer/`}
+                imgSrc={aiActivityTimer}
               />
             </HStack>
           </VStack>
