@@ -39,10 +39,18 @@ const headings: GridColumnHeadingItemProps[] = [
   },
 ];
 
-const DataSamplesGridView = () => {
+interface DataSamplesGridViewProps {
+  selectedGestureIdx: number;
+  setSelectedGestureIdx: (idx: number) => void;
+}
+
+const DataSamplesGridView = ({
+  selectedGestureIdx,
+  setSelectedGestureIdx,
+}: DataSamplesGridViewProps) => {
   const gestures = useStore((s) => s.gestures);
-  const [selectedGestureIdx, setSelectedGestureIdx] = useState<number>(0);
-  const selectedGesture: GestureData | undefined =
+  // Default to first gesture being selected if last gesture is deleted.
+  const selectedGesture: GestureData =
     gestures[selectedGestureIdx] ?? gestures[0];
 
   const showWalkThrough = useMemo<boolean>(
