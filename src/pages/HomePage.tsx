@@ -212,7 +212,6 @@ const HomePage = () => {
             </Heading>
             <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
               <ResourceCard
-                // TODO: staging URL, translation? Pull from CMS or deployment config?
                 title={intl.formatMessage({
                   id: "simple-ai-exercise-timer-resource-title",
                 })}
@@ -220,7 +219,6 @@ const HomePage = () => {
                 imgSrc={simpleAiExerciseTimer}
               />
               <ResourceCard
-                // TODO: staging URL, translation? Pull from CMS or deployment config?
                 title={intl.formatMessage({
                   id: "ai-activity-timer-resource-title",
                 })}
