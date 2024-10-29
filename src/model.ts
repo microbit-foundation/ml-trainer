@@ -202,3 +202,9 @@ export enum DataSamplesView {
   DataFeatures = "data features",
   GraphAndDataFeatures = "graph and data features",
 }
+
+export enum PostImportDialogState {
+  None = "graph",
+  NonMakeCodeHex = "non makecode hex dialog",
+  NonCreateAiHex = "non create ai hex dialog",
+}

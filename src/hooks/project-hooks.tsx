@@ -17,7 +17,12 @@ import {
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useLogging } from "../logging/logging-hooks";
-import { HexData, isDatasetUserFileFormat, SaveStep } from "../model";
+import {
+  HexData,
+  isDatasetUserFileFormat,
+  PostImportDialogState,
+  SaveStep,
+} from "../model";
 import { defaultProjectName } from "../project-name";
 import { useStore } from "../store";
 import {
@@ -92,9 +97,7 @@ export const ProjectProvider = ({
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
   const getCurrentProject = useStore((s) => s.getCurrentProject);
-  const setIsNotMakeCodeHexDialogOpen = useStore(
-    (s) => s.setIsNotMakeCodeHexDialogOpen
-  );
+  const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
   const navigate = useNavigate();
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
@@ -193,11 +196,11 @@ export const ProjectProvider = ({
             parts: [hex],
           });
         } else {
-          setIsNotMakeCodeHexDialogOpen(true);
+          setPostImportDialogState(PostImportDialogState.NonMakeCodeHex);
         }
       }
     },
-    [driverRef, loadDataset, logging, navigate, setIsNotMakeCodeHexDialogOpen]
+    [driverRef, loadDataset, logging, navigate, setPostImportDialogState]
   );
 
   const setSave = useStore((s) => s.setSave);

@@ -19,6 +19,7 @@ import {
   Gesture,
   GestureData,
   MicrobitToFlash,
+  PostImportDialogState,
   RecordingData,
   SaveState,
   SaveStep,
@@ -148,8 +149,7 @@ export interface State {
   trainModelDialogStage: TrainModelDialogStage;
 
   tourState?: TourState;
-  isNotMakeCodeHexDialogOpen: boolean;
-  isNotCreateAiHexDialogOpen: boolean;
+  postImportDialogState: PostImportDialogState;
 }
 
 export interface Actions {
@@ -208,8 +208,7 @@ export interface Actions {
 
   setDataSamplesView(view: DataSamplesView): void;
 
-  setIsNotMakeCodeHexDialogOpen(isOpen: boolean): void;
-  setIsNotCreateAHexiDialogOpen(isOpen: boolean): void;
+  setPostImportDialogState(state: PostImportDialogState): void;
 }
 
 type Store = State & Actions;
@@ -243,8 +242,7 @@ const createMlStore = (logging: Logging) => {
           trainModelDialogStage: TrainModelDialogStage.Closed,
           trainModelProgress: 0,
           dataSamplesView: DataSamplesView.Graph,
-          isNotMakeCodeHexDialogOpen: false,
-          isNotCreateAiHexDialogOpen: false,
+          postImportDialogState: PostImportDialogState.None,
 
           setSettings(update: Partial<Settings>) {
             set(
@@ -820,12 +818,8 @@ const createMlStore = (logging: Logging) => {
             }));
           },
 
-          setIsNotMakeCodeHexDialogOpen(isOpen: boolean) {
-            set({ isNotMakeCodeHexDialogOpen: isOpen });
-          },
-
-          setIsNotCreateAHexiDialogOpen(isOpen: boolean) {
-            set({ isNotCreateAiHexDialogOpen: isOpen });
+          setPostImportDialogState(state: PostImportDialogState) {
+            set({ postImportDialogState: state });
           },
         }),
         {

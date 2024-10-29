@@ -38,6 +38,7 @@ import {
   createTestingModelPageUrl,
 } from "./urls";
 import { hasMakeCodeMlExtension } from "./makecode/utils";
+import { PostImportDialogState } from "./model";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -73,12 +74,10 @@ const Providers = ({ children }: ProviderLayoutProps) => {
 
 const Layout = () => {
   const driverRef = useRef<MakeCodeFrameDriver>(null);
+  const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
   const navigate = useNavigate();
   const toast = useToast();
   const intl = useIntl();
-  const setIsNotCreateAiDialogOpen = useStore(
-    (s) => s.setIsNotCreateAHexiDialogOpen
-  );
 
   useEffect(() => {
     return useStore.subscribe(
@@ -96,12 +95,12 @@ const Layout = () => {
             status: "info",
           });
           if (!hasMakeCodeMlExtension(project)) {
-            setIsNotCreateAiDialogOpen(true);
+            setPostImportDialogState(PostImportDialogState.NonCreateAiHex);
           }
         }
       }
     );
-  }, [intl, navigate, setIsNotCreateAiDialogOpen, toast]);
+  }, [intl, navigate, setPostImportDialogState, toast]);
 
   return (
     // We use this even though we have errorElement as this does logging.

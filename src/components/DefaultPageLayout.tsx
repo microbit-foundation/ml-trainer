@@ -20,7 +20,11 @@ import {
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
-import { SaveStep, TrainModelDialogStage } from "../model";
+import {
+  PostImportDialogState,
+  SaveStep,
+  TrainModelDialogStage,
+} from "../model";
 import Tour from "../pages/Tour";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
@@ -57,11 +61,6 @@ const DefaultPageLayout = ({
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
   const isEditorOpen = useStore((s) => s.isEditorOpen);
-  const isNotMakeCodeHexDialogOpen = useStore(
-    (s) => s.isNotMakeCodeHexDialogOpen
-  );
-  const isNotCreateAiDialogOpen = useStore((s) => s.isNotCreateAiHexDialogOpen);
-
   const isTourClosed = useStore((s) => s.tourState === undefined);
   const isTrainDialogClosed = useStore(
     (s) => s.trainModelDialogStage === TrainModelDialogStage.Closed
@@ -77,6 +76,12 @@ const DefaultPageLayout = ({
       : appNameFull;
   }, [appNameFull, intl, titleId]);
 
+  const postImportDialogState = useStore((s) => s.postImportDialogState);
+  const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
+  const closePostImportDialog = useCallback(() => {
+    setPostImportDialogState(PostImportDialogState.None);
+  }, [setPostImportDialogState]);
+
   return (
     <>
       {/* Suppress dialogs to prevent overlapping dialogs */}
@@ -84,12 +89,19 @@ const DefaultPageLayout = ({
         isTrainDialogClosed &&
         isTourClosed &&
         isSaveDialogClosed &&
-        !isNotMakeCodeHexDialogOpen &&
-        !isNotCreateAiDialogOpen && <ConnectionDialogs />}
+        postImportDialogState === PostImportDialogState.None && (
+          <ConnectionDialogs />
+        )}
       <Tour />
       <SaveDialogs />
-      {isNotCreateAiDialogOpen && <NotCreateAiHexImportDialog />}
-      {isNotMakeCodeHexDialogOpen && <NotMakeCodeHexImportErrorDialog />}
+      <NotCreateAiHexImportDialog
+        onClose={closePostImportDialog}
+        isOpen={postImportDialogState === PostImportDialogState.NonCreateAiHex}
+      />
+      <NotMakeCodeHexImportErrorDialog
+        onClose={closePostImportDialog}
+        isOpen={postImportDialogState === PostImportDialogState.NonMakeCodeHex}
+      />
       <ProjectDropTarget
         isEnabled={
           isTrainDialogClosed &&

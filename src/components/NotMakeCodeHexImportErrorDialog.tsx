@@ -7,27 +7,23 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  ModalProps,
   Text,
 } from "@chakra-ui/react";
-import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
-import { useStore } from "../store";
 
-const NotMakeCodeHexImportErrorDialog = () => {
-  const setIsNotMakeCodeHexDialogOpen = useStore(
-    (s) => s.setIsNotMakeCodeHexDialogOpen
-  );
-  const handleClose = useCallback(() => {
-    setIsNotMakeCodeHexDialogOpen(false);
-  }, [setIsNotMakeCodeHexDialogOpen]);
+const NotMakeCodeHexImportErrorDialog = ({
+  onClose,
+  ...props
+}: Omit<ModalProps, "children">) => {
   return (
     <Modal
-      isOpen
       closeOnOverlayClick={false}
       motionPreset="none"
       size="md"
       isCentered
-      onClose={handleClose}
+      onClose={onClose}
+      {...props}
     >
       <ModalOverlay>
         <ModalContent>
@@ -41,7 +37,7 @@ const NotMakeCodeHexImportErrorDialog = () => {
             </Text>
           </ModalBody>
           <ModalFooter justifyContent="flex-end">
-            <Button variant="primary" onClick={handleClose}>
+            <Button variant="primary" onClick={onClose}>
               <FormattedMessage id="close-action" />
             </Button>
           </ModalFooter>
