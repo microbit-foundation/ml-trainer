@@ -50,7 +50,6 @@ const PercentageMeter = ({
                 bgColor={i === 0 || i === numTicks + 1 ? undefined : "white"}
                 w={0.5}
                 h={height}
-                zIndex={1}
               />
             ))
         }
