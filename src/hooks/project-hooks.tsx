@@ -186,10 +186,11 @@ export const ProjectProvider = ({
       } else if (fileExtension === "hex") {
         const hex = await readFileAsText(file);
         const makeCodeMagicMark = "41140E2FB82FA2BB";
+        // Check if is a MakeCode hex, otherwise show error dialog.
         if (hex.includes(makeCodeMagicMark)) {
           driverRef.current!.importFile({
             filename: file.name,
-            parts: [await readFileAsText(file)],
+            parts: [hex],
           });
         } else {
           setIsNotMakeCodeHexDialogOpen(true);
