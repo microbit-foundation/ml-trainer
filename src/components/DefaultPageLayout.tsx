@@ -132,6 +132,7 @@ const DefaultPageLayout = ({
                     {menuItems}
                     <LanguageMenuItem />
                   </ToolbarMenu>
+                  {/* Toolbar items when sm window size. */}
                   <ToolbarMenu
                     display={{ base: "block", md: "none" }}
                     variant="plain"
