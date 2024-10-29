@@ -114,7 +114,7 @@ const DefaultPageLayout = ({
                   />
                 )
               }
-              itemsLeftProps={{ width: { base: 0, sm: undefined } }}
+              itemsLeftProps={{ width: 0 }}
               itemsRight={
                 <>
                   <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
