@@ -1,16 +1,18 @@
-import { BoxProps, HStack } from "@chakra-ui/react";
+import { BoxProps, HStack, StackProps } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
 export interface ActionBarProps extends BoxProps {
   itemsLeft?: ReactNode;
   itemsCenter?: ReactNode;
   itemsRight?: ReactNode;
+  itemsLeftProps?: StackProps;
 }
 
 const ActionBar = ({
   itemsLeft,
   itemsCenter,
   itemsRight,
+  itemsLeftProps,
   ...rest
 }: ActionBarProps) => {
   return (
@@ -20,10 +22,15 @@ const ActionBar = ({
       justifyContent="space-between"
       bgColor="brand2.500"
       h="64px"
+      gap={0}
       minH="64px"
       {...rest}
     >
-      <HStack flex={`${itemsCenter ? 1 : 4} 0`} justifyContent="flex-start">
+      <HStack
+        flex={`${itemsCenter ? 1 : 4} 0`}
+        justifyContent="flex-start"
+        {...itemsLeftProps}
+      >
         {itemsLeft}
       </HStack>
       {itemsCenter && <HStack justifyContent="center">{itemsCenter}</HStack>}

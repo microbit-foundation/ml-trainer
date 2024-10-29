@@ -34,6 +34,7 @@ import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
+import HelpMenuItems from "./HelpMenuItems";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -96,6 +97,7 @@ const DefaultPageLayout = ({
           <VStack zIndex={1} position="sticky" top={0} gap={0}>
             <ActionBar
               w="100%"
+              px={{ base: 3, sm: 5 }}
               itemsCenter={
                 <>
                   {showPageTitle && (
@@ -105,21 +107,40 @@ const DefaultPageLayout = ({
                   )}
                 </>
               }
-              itemsLeft={toolbarItemsLeft || <AppLogo />}
+              itemsLeft={
+                toolbarItemsLeft || (
+                  <AppLogo
+                    transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}
+                  />
+                )
+              }
+              itemsLeftProps={{ width: { base: 0, sm: undefined } }}
               itemsRight={
                 <>
                   <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
                     {toolbarItemsRight}
                     <SettingsMenu />
                   </HStack>
-                  <HelpMenu />
+                  <HelpMenu
+                    display={{ base: "none", md: "block", lg: "block" }}
+                  />
                   <ToolbarMenu
-                    isMobile
+                    display={{ base: "none", md: "block", lg: "none" }}
                     variant="plain"
                     label={intl.formatMessage({ id: "main-menu" })}
                   >
                     {menuItems}
                     <LanguageMenuItem />
+                  </ToolbarMenu>
+                  <ToolbarMenu
+                    display={{ base: "block", md: "none" }}
+                    variant="plain"
+                    label={intl.formatMessage({ id: "main-menu" })}
+                  >
+                    {menuItems}
+                    <LanguageMenuItem />
+                    <MenuDivider />
+                    <HelpMenuItems />
                   </ToolbarMenu>
                 </>
               }
