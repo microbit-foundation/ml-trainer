@@ -39,7 +39,7 @@ import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
 import HelpMenuItems from "./HelpMenuItems";
-import NotMakeCodeHexImportErrorDialog from "./NotMakeCodeHexImportErrorDialog";
+import ImportErrorDialog from "./ImportErrorDialog";
 import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 
 interface DefaultPageLayoutProps {
@@ -98,9 +98,9 @@ const DefaultPageLayout = ({
         onClose={closePostImportDialog}
         isOpen={postImportDialogState === PostImportDialogState.NonCreateAiHex}
       />
-      <NotMakeCodeHexImportErrorDialog
+      <ImportErrorDialog
         onClose={closePostImportDialog}
-        isOpen={postImportDialogState === PostImportDialogState.NonMakeCodeHex}
+        isOpen={postImportDialogState === PostImportDialogState.Error}
       />
       <ProjectDropTarget
         isEnabled={

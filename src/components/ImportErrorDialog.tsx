@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 
-const NotMakeCodeHexImportErrorDialog = ({
+const ImportErrorDialog = ({
   onClose,
   ...props
 }: Omit<ModalProps, "children">) => {
@@ -28,12 +28,12 @@ const NotMakeCodeHexImportErrorDialog = ({
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage id="not-makecode-hex-import-error-dialog-title" />
+            <FormattedMessage id="import-error-dialog-title" />
           </ModalHeader>
           <ModalBody>
             <ModalCloseButton />
             <Text>
-              <FormattedMessage id="not-makecode-hex-import-error-dialog-content" />
+              <FormattedMessage id="import-error-dialog-content" />
             </Text>
           </ModalBody>
           <ModalFooter justifyContent="flex-end">
@@ -47,4 +47,4 @@ const NotMakeCodeHexImportErrorDialog = ({
   );
 };
 
-export default NotMakeCodeHexImportErrorDialog;
+export default ImportErrorDialog;

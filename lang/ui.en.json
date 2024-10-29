@@ -727,6 +727,14 @@
     "defaultMessage": "Import data samples",
     "description": "Data samples action"
   },
+  "import-error-dialog-content": {
+    "defaultMessage": "Only a MakeCode hex file can be imported.",
+    "description": "Content of import error dialog"
+  },
+  "import-error-dialog-title": {
+    "defaultMessage": "File cannot be imported",
+    "description": "Title of import error dialog"
+  },
   "incompatible-device-body-alt": {
     "defaultMessage": "Go back to select a different micro:bit, or <link>save the project hex</link> which can be downloaded onto a micro:bit V2 later.",
     "description": "Incompatible device dialog body text"
@@ -882,14 +890,6 @@
   "not-found-title": {
     "defaultMessage": "Page not found",
     "description": "Page not found page title"
-  },
-  "not-makecode-hex-import-error-dialog-content": {
-    "defaultMessage": "Only a MakeCode hex file can be imported.",
-    "description": "Content of import MakeCode hex error dialog"
-  },
-  "not-makecode-hex-import-error-dialog-title": {
-    "defaultMessage": "Not a MakeCode hex file",
-    "description": "Title of import MakeCode hex error dialog"
   },
   "open-file-action": {
     "defaultMessage": "Open…",

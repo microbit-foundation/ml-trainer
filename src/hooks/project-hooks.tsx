@@ -196,8 +196,10 @@ export const ProjectProvider = ({
             parts: [hex],
           });
         } else {
-          setPostImportDialogState(PostImportDialogState.NonMakeCodeHex);
+          setPostImportDialogState(PostImportDialogState.Error);
         }
+      } else {
+        setPostImportDialogState(PostImportDialogState.Error);
       }
     },
     [driverRef, loadDataset, logging, navigate, setPostImportDialogState]
