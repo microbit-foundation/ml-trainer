@@ -1,3 +1,4 @@
+import * as tf from "@tensorflow/tfjs";
 import {
   Button,
   ButtonGroup,
@@ -14,7 +15,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { RiArrowRightLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
@@ -33,6 +34,7 @@ import HeadingGrid from "./HeadingGrid";
 import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 import LiveGraphPanel from "./LiveGraphPanel";
 import MoreMenuButton from "./MoreMenuButton";
+import { prepareFeaturesAndLabels } from "../ml";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 360px 40px auto",
@@ -89,6 +91,38 @@ const TestingModelGridView = () => {
     await openEditor();
     setEditorLoading(false);
   }, [getDataCollectionBoardVersion, onOpen, openEditor]);
+
+  const model = useStore((s) => s.model);
+  const dataWindow = useStore((s) => s.dataWindow);
+  useEffect(() => {
+    const { features, labels } = prepareFeaturesAndLabels(gestures, dataWindow);
+    const modelResult = (
+      model!.predict(tf.tensor(features)) as tf.Tensor
+    ).dataSync();
+    const gestureNames = gestures.map((g) => g.name);
+    const numDimensions = labels[0].length;
+    const messages = new Set();
+    for (let i = 0, j = 0; j < labels.length; i += numDimensions, j++) {
+      const recordingResultArr = modelResult.slice(i, i + numDimensions);
+      const recordingResutlVal = Math.max(...recordingResultArr);
+      const resultLabel = recordingResultArr.indexOf(recordingResutlVal);
+      const expectedLabel = labels[j].indexOf(Math.max(...labels[j]));
+      if (resultLabel !== expectedLabel) {
+        messages.add(
+          `The model is struggling to tell "${gestureNames[resultLabel]}" and "${gestureNames[expectedLabel]}" apart.`
+        );
+      }
+      // We could use the actual threshold values here.
+      if (recordingResutlVal < 0.8) {
+        messages.add(
+          `The model is not confident estimating "${gestureNames[resultLabel]}".`
+        );
+      }
+    }
+    messages.forEach((m) => {
+      console.log(m);
+    });
+  }, [dataWindow, gestures, model]);
 
   return (
     <>
