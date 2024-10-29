@@ -94,7 +94,7 @@ const DefaultPageLayout = ({
           spacing={0}
           bgColor="whitesmoke"
         >
-          <VStack zIndex={1} position="sticky" top={0} gap={0}>
+          <VStack zIndex={999} position="sticky" top={0} gap={0}>
             <ActionBar
               w="100%"
               px={{ base: 3, sm: 5 }}
