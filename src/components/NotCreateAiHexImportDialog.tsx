@@ -20,7 +20,7 @@ const NotCreateAiHexImportDialog = ({
     <Modal
       closeOnOverlayClick={false}
       motionPreset="none"
-      size="md"
+      size="lg"
       isCentered
       onClose={onClose}
       {...props}

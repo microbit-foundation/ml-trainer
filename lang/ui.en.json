@@ -876,7 +876,7 @@
     "description": "Empty data samples page status text"
   },
   "not-create-ai-hex-import-dialog-content": {
-    "defaultMessage": "Train a model to view your imported MakeCode project.",
+    "defaultMessage": "Train a model to view your imported project.",
     "description": "Content of import non-CreateAI hex dialog"
   },
   "not-create-ai-hex-import-dialog-title": {
