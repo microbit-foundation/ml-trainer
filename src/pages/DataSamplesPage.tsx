@@ -3,7 +3,7 @@ import { useCallback, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
-import DataSampleGridView from "../components/DataSampleGridView";
+import DataSampleGridView from "../components/DataSamplesTable";
 import DefaultPageLayout, {
   ProjectMenuItems,
   ProjectToolbarItems,

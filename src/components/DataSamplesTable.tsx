@@ -8,17 +8,17 @@ import {
 } from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
 import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { FormattedMessage } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { GestureData } from "../model";
 import { useStore } from "../store";
-import DataSampleGridRow from "./AddDataGridRow";
+import ConnectToRecordDialog from "./ConnectToRecordDialog";
+import DataSamplesTableRow from "./DataSamplesTableRow";
 import DataSamplesMenu from "./DataSamplesMenu";
 import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
 import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
 import RecordingDialog from "./RecordingDialog";
-import ConnectToRecordDialog from "./ConnectToRecordDialog";
-import { FormattedMessage } from "react-intl";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -39,21 +39,21 @@ const headings: GridColumnHeadingItemProps[] = [
   },
 ];
 
-interface DataSamplesGridViewProps {
+interface DataSamplesTableProps {
   selectedGestureIdx: number;
   setSelectedGestureIdx: (idx: number) => void;
 }
 
-const DataSamplesGridView = ({
+const DataSamplesTable = ({
   selectedGestureIdx,
   setSelectedGestureIdx,
-}: DataSamplesGridViewProps) => {
+}: DataSamplesTableProps) => {
   const gestures = useStore((s) => s.gestures);
   // Default to first gesture being selected if last gesture is deleted.
   const selectedGesture: GestureData =
     gestures[selectedGestureIdx] ?? gestures[0];
 
-  const showWalkThrough = useMemo<boolean>(
+  const showHints = useMemo<boolean>(
     () =>
       gestures.length === 0 ||
       (gestures.length === 1 && gestures[0].recordings.length === 0),
@@ -159,7 +159,7 @@ const DataSamplesGridView = ({
           h={0}
         >
           {gestures.map((g, idx) => (
-            <DataSampleGridRow
+            <DataSamplesTableRow
               key={g.ID}
               gesture={g}
               newRecordingId={newRecordingId}
@@ -170,7 +170,7 @@ const DataSamplesGridView = ({
                   ? recordingDialogDisclosure.onOpen
                   : connectToRecordDialogDisclosure.onOpen
               }
-              showWalkThrough={showWalkThrough}
+              showHints={showHints}
             />
           ))}
         </Grid>
@@ -179,4 +179,4 @@ const DataSamplesGridView = ({
   );
 };
 
-export default DataSamplesGridView;
+export default DataSamplesTable;
