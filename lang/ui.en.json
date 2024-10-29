@@ -768,8 +768,8 @@
     "description": "Testing model page title"
   },
   "makecode-block-default-alt": {
-    "defaultMessage": "ml.onStart(ml.event.{actionName}, function () '{'basic.showIcon(IconNames.{iconName})'}')",
-    "description": "Makecode block alt text. The translation should match MakeCode translations."
+    "defaultMessage": "MakeCode block: on ML {actionName} start, show icon {iconName}",
+    "description": "Makecode default block alt text"
   },
   "makecode-block-on-ML": {
     "defaultMessage": "on ML",

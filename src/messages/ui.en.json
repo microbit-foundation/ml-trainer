@@ -1416,7 +1416,7 @@
   "makecode-block-default-alt": [
     {
       "type": 0,
-      "value": "ml.onStart(ml.event."
+      "value": "MakeCode block: on ML "
     },
     {
       "type": 1,
@@ -1424,15 +1424,11 @@
     },
     {
       "type": 0,
-      "value": ", function () {basic.showIcon(IconNames."
+      "value": " start, show icon "
     },
     {
       "type": 1,
       "value": "iconName"
-    },
-    {
-      "type": 0,
-      "value": ")})"
     }
   ],
   "makecode-block-on-ML": [
