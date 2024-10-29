@@ -139,6 +139,7 @@ const RadioCard = ({ id, imgSrc, isSelected, ...props }: RadioCardProps) => {
             src={imgSrc}
             alt=""
             htmlWidth="220px"
+            height="123px"
             px={12}
             py={3}
             position="relative"
