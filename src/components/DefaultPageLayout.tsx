@@ -110,6 +110,11 @@ const DefaultPageLayout = ({
               itemsLeft={
                 toolbarItemsLeft || (
                   <AppLogo
+                    display={
+                      showPageTitle
+                        ? { base: "none", md: "inline-flex" }
+                        : "inline-flex"
+                    }
                     transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}
                   />
                 )

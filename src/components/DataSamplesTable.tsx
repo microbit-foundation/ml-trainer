@@ -119,7 +119,7 @@ const DataSamplesTable = ({
             <FormattedMessage id="no-data-samples" />
           </Text>
           {!isConnected && (
-            <Text fontSize="lg">
+            <Text fontSize="lg" textAlign="center">
               <FormattedMessage
                 id="connect-or-import"
                 values={{
