@@ -1605,6 +1605,18 @@
       "value": "No data samples"
     }
   ],
+  "not-create-ai-hex-import-dialog-content": [
+    {
+      "type": 0,
+      "value": "Train a model to view your imported MakeCode project."
+    }
+  ],
+  "not-create-ai-hex-import-dialog-title": [
+    {
+      "type": 0,
+      "value": "Your MakeCode project has been imported"
+    }
+  ],
   "not-found": [
     {
       "type": 1,

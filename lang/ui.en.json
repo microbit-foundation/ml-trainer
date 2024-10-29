@@ -867,6 +867,14 @@
     "defaultMessage": "No data samples",
     "description": "Empty data samples page status text"
   },
+  "not-create-ai-hex-import-dialog-content": {
+    "defaultMessage": "Train a model to view your imported MakeCode project.",
+    "description": "Content of import non-CreateAI hex dialog"
+  },
+  "not-create-ai-hex-import-dialog-title": {
+    "defaultMessage": "Your MakeCode project has been imported",
+    "description": "Title of import non-CreateAI hex dialog"
+  },
   "not-found": {
     "defaultMessage": "{appNameFull} home page",
     "description": "Page not found link text"
@@ -877,7 +885,7 @@
   },
   "not-makecode-hex-import-error-dialog-content": {
     "defaultMessage": "Only a MakeCode hex file can be imported.",
-    "description": "Title of import MakeCode hex error dialog"
+    "description": "Content of import MakeCode hex error dialog"
   },
   "not-makecode-hex-import-error-dialog-title": {
     "defaultMessage": "Not a MakeCode hex file",

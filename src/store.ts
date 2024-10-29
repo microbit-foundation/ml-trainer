@@ -149,6 +149,7 @@ export interface State {
 
   tourState?: TourState;
   isNotMakeCodeHexDialogOpen: boolean;
+  isNotCreateAiHexDialogOpen: boolean;
 }
 
 export interface Actions {
@@ -208,6 +209,7 @@ export interface Actions {
   setDataSamplesView(view: DataSamplesView): void;
 
   setIsNotMakeCodeHexDialogOpen(isOpen: boolean): void;
+  setIsNotCreateAHexiDialogOpen(isOpen: boolean): void;
 }
 
 type Store = State & Actions;
@@ -242,6 +244,7 @@ const createMlStore = (logging: Logging) => {
           trainModelProgress: 0,
           dataSamplesView: DataSamplesView.Graph,
           isNotMakeCodeHexDialogOpen: false,
+          isNotCreateAiHexDialogOpen: false,
 
           setSettings(update: Partial<Settings>) {
             set(
@@ -819,6 +822,10 @@ const createMlStore = (logging: Logging) => {
 
           setIsNotMakeCodeHexDialogOpen(isOpen: boolean) {
             set({ isNotMakeCodeHexDialogOpen: isOpen });
+          },
+
+          setIsNotCreateAHexiDialogOpen(isOpen: boolean) {
+            set({ isNotCreateAiHexDialogOpen: isOpen });
           },
         }),
         {

@@ -37,6 +37,7 @@ import {
   createNewPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
+import { hasMakeCodeMlExtension } from "./makecode/utils";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -75,12 +76,15 @@ const Layout = () => {
   const navigate = useNavigate();
   const toast = useToast();
   const intl = useIntl();
+  const setIsNotCreateAiDialogOpen = useStore(
+    (s) => s.setIsNotCreateAHexiDialogOpen
+  );
 
   useEffect(() => {
     return useStore.subscribe(
       (
         { projectLoadTimestamp },
-        { projectLoadTimestamp: prevProjectLoadTimestamp }
+        { projectLoadTimestamp: prevProjectLoadTimestamp, project }
       ) => {
         if (projectLoadTimestamp > prevProjectLoadTimestamp) {
           // Side effects of loading a project, which MakeCode notifies us of.
@@ -91,10 +95,13 @@ const Layout = () => {
             title: intl.formatMessage({ id: "project-loaded" }),
             status: "info",
           });
+          if (!hasMakeCodeMlExtension(project)) {
+            setIsNotCreateAiDialogOpen(true);
+          }
         }
       }
     );
-  }, [intl, navigate, toast]);
+  }, [intl, navigate, setIsNotCreateAiDialogOpen, toast]);
 
   return (
     // We use this even though we have errorElement as this does logging.

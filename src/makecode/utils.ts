@@ -137,3 +137,14 @@ export const actionNamesFromLabels = (actionLabels: string[]): ActionName[] => {
   });
   return actionNames;
 };
+
+export const hasMakeCodeMlExtension = (project: Project) => {
+  if (!project.text || !project.text[filenames.pxtJson]) {
+    return false;
+  }
+  const pxtJson = JSON.parse(project.text[filenames.pxtJson]) as object;
+  if (!("dependencies" in pxtJson)) {
+    return false;
+  }
+  return extensionName in (pxtJson["dependencies"] as object);
+};
