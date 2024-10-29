@@ -72,7 +72,7 @@ const NewPage = () => {
     >
       <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
       <VStack alignItems="center">
-        <Container maxW="1180px" alignItems="stretch" zIndex={1} p={4} mt={8}>
+        <Container maxW="1180px" alignItems="stretch" p={4} mt={8}>
           <VStack alignItems="stretch" w="100%">
             <Heading as="h1" fontSize="4xl" fontWeight="bold">
               <FormattedMessage id="newpage-title" />
