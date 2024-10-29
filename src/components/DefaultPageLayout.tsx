@@ -35,6 +35,7 @@ import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
 import HelpMenuItems from "./HelpMenuItems";
+import NotMakeCodeHexImportErrorDialog from "./NotMakeCodeHexImportErrorDialog";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -55,6 +56,10 @@ const DefaultPageLayout = ({
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
   const isEditorOpen = useStore((s) => s.isEditorOpen);
+  const isNotMakeCodeHexDialogOpen = useStore(
+    (s) => s.isNotMakeCodeHexDialogOpen
+  );
+
   const isTourClosed = useStore((s) => s.tourState === undefined);
   const isTrainDialogClosed = useStore(
     (s) => s.trainModelDialogStage === TrainModelDialogStage.Closed
@@ -76,9 +81,11 @@ const DefaultPageLayout = ({
       {!isEditorOpen &&
         isTrainDialogClosed &&
         isTourClosed &&
-        isSaveDialogClosed && <ConnectionDialogs />}
+        isSaveDialogClosed &&
+        !isNotMakeCodeHexDialogOpen && <ConnectionDialogs />}
       <Tour />
       <SaveDialogs />
+      {isNotMakeCodeHexDialogOpen && <NotMakeCodeHexImportErrorDialog />}
       <ProjectDropTarget
         isEnabled={
           isTrainDialogClosed &&

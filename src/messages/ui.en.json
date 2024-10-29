@@ -1621,6 +1621,18 @@
       "value": "Page not found"
     }
   ],
+  "not-makecode-hex-import-error-dialog-content": [
+    {
+      "type": 0,
+      "value": "Only a MakeCode hex file can be imported."
+    }
+  ],
+  "not-makecode-hex-import-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "Not a MakeCode hex file"
+    }
+  ],
   "open-file-action": [
     {
       "type": 0,

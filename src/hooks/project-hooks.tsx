@@ -92,6 +92,9 @@ export const ProjectProvider = ({
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
   const getCurrentProject = useStore((s) => s.getCurrentProject);
+  const setIsNotMakeCodeHexDialogOpen = useStore(
+    (s) => s.setIsNotMakeCodeHexDialogOpen
+  );
   const navigate = useNavigate();
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
@@ -189,11 +192,11 @@ export const ProjectProvider = ({
             parts: [await readFileAsText(file)],
           });
         } else {
-          console.log("not makecode");
+          setIsNotMakeCodeHexDialogOpen(true);
         }
       }
     },
-    [driverRef, loadDataset, logging, navigate]
+    [driverRef, loadDataset, logging, navigate, setIsNotMakeCodeHexDialogOpen]
   );
 
   const setSave = useStore((s) => s.setSave);

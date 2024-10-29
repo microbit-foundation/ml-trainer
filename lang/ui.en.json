@@ -875,6 +875,14 @@
     "defaultMessage": "Page not found",
     "description": "Page not found page title"
   },
+  "not-makecode-hex-import-error-dialog-content": {
+    "defaultMessage": "Only a MakeCode hex file can be imported.",
+    "description": "Title of import MakeCode hex error dialog"
+  },
+  "not-makecode-hex-import-error-dialog-title": {
+    "defaultMessage": "Not a MakeCode hex file",
+    "description": "Title of import MakeCode hex error dialog"
+  },
   "open-file-action": {
     "defaultMessage": "Open…",
     "description": "Open file button text"
