@@ -18,7 +18,6 @@ import PercentageDisplay from "../components/PercentageDisplay";
 import PercentageMeter from "../components/PercentageMeter";
 import RecordingGraph from "../components/RecordingGraph";
 import ResourceCard from "../components/ResourceCard";
-import ResourceCardPlaceholder from "../components/ResourceCardPlaceholder";
 import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
 import { useDeployment } from "../deployment";
 import blockImage from "../images/block.png";
@@ -210,7 +209,6 @@ const HomePage = () => {
                 url="https://stage.microbit.org/projects/make-it-code-it/simple-ai-exercise-timer/"
                 imgSrc="https://cdn.sanity.io/images/ajwvhvgo/production/1aaac1553237900c774216aad17475ef34f8fe48-800x600.jpg?fit=max&w=1200&h=1200"
               />
-              <ResourceCardPlaceholder />
             </HStack>
           </VStack>
         )}
