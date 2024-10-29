@@ -9,10 +9,9 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { flags } from "../flags";
-import { DataSamplesView, GestureData } from "../model";
+import { DataSamplesView, GestureData, RecordingData } from "../model";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import RecordingFingerprint from "./RecordingFingerprint";
@@ -40,18 +39,8 @@ const ActionDataSamplesCard = ({
   onRecord,
   newRecordingId,
 }: ActionDataSamplesCardProps) => {
-  const intl = useIntl();
   const deleteGestureRecording = useStore((s) => s.deleteGestureRecording);
-  const view = useStore((s) => s.settings.dataSamplesView);
-  const closeRecordingDialogFocusRef = useRef(null);
-
-  const handleDeleteRecording = useCallback(
-    (idx: number) => {
-      deleteGestureRecording(value.ID, idx);
-    },
-    [value.ID, deleteGestureRecording]
-  );
-
+  const view = useDataSamplesView();
   return (
     <Card
       onClick={onSelectRow}
@@ -65,84 +54,123 @@ const ActionDataSamplesCard = ({
       className={tourElClassname.recordDataSamplesCard}
     >
       <CardBody display="flex" flexDirection="row" p={1} gap={3}>
-        <VStack w="8.25rem" justifyContent="center">
-          <Button
-            ref={closeRecordingDialogFocusRef}
-            variant={selected ? "solid" : "outline"}
-            colorScheme="red"
-            onClick={onRecord}
-            aria-label={intl.formatMessage(
-              { id: "record-action-aria" },
-              { action: value.name }
-            )}
-          >
-            <FormattedMessage id="record-action" />
-          </Button>
-          {value.recordings.length < 3 ? (
-            <Text fontSize="xs" textAlign="center" fontWeight="bold">
-              <FormattedMessage id="data-samples-status-not-enough" />
-            </Text>
-          ) : (
-            <Text fontSize="xs" textAlign="center">
-              <FormattedMessage
-                id="data-samples-status-count"
-                values={{ numSamples: value.recordings.length }}
-              />
-            </Text>
-          )}
-        </VStack>
+        <RecordingArea action={value} selected={selected} onRecord={onRecord} />
         {value.recordings.map((recording, idx) => (
-          <HStack key={recording.ID} position="relative">
-            <Box
-              position="absolute"
-              h="100%"
-              w="100%"
-              rounded="md"
-              animation={
-                newRecordingId === recording.ID ? `${flash} 1s` : undefined
-              }
-            />
-            <CloseButton
-              position="absolute"
-              top={0}
-              right={0}
-              zIndex={1}
-              size="sm"
-              aria-label={intl.formatMessage({
-                id: "delete-recording-aria",
-              })}
-              onClick={() => {
-                handleDeleteRecording(idx);
-              }}
-            />
-            {(!flags.fingerprints ||
-              view === DataSamplesView.Graph ||
-              view === DataSamplesView.GraphAndDataFeatures) && (
-              <RecordingGraph
-                data={recording.data}
-                role="image"
-                aria-label={intl.formatMessage({
-                  id: "recording-graph-label",
-                })}
-              />
-            )}
-            {flags.fingerprints &&
-              (view === DataSamplesView.DataFeatures ||
-                view === DataSamplesView.GraphAndDataFeatures) && (
-                <RecordingFingerprint
-                  data={recording.data}
-                  role="image"
-                  gestureName={value.name}
-                  aria-label={intl.formatMessage({
-                    id: "recording-fingerprint-label",
-                  })}
-                />
-              )}
-          </HStack>
+          <DataSample
+            action={value}
+            key={recording.ID}
+            recording={recording}
+            isNew={newRecordingId === recording.ID}
+            onDelete={() => deleteGestureRecording(value.ID, idx)}
+            view={view}
+          />
         ))}
       </CardBody>
     </Card>
   );
+};
+
+const RecordingArea = ({
+  action,
+  selected,
+  onRecord,
+}: {
+  action: GestureData;
+  selected: boolean;
+  onRecord: () => void;
+}) => {
+  const intl = useIntl();
+  return (
+    <VStack w="8.25rem" justifyContent="center">
+      <Button
+        variant={selected ? "solid" : "outline"}
+        colorScheme="red"
+        onClick={onRecord}
+        aria-label={intl.formatMessage(
+          { id: "record-action-aria" },
+          { action: action.name }
+        )}
+      >
+        <FormattedMessage id="record-action" />
+      </Button>
+      {action.recordings.length < 3 ? (
+        <Text fontSize="xs" textAlign="center" fontWeight="bold">
+          <FormattedMessage id="data-samples-status-not-enough" />
+        </Text>
+      ) : (
+        <Text fontSize="xs" textAlign="center">
+          <FormattedMessage
+            id="data-samples-status-count"
+            values={{ numSamples: action.recordings.length }}
+          />
+        </Text>
+      )}
+    </VStack>
+  );
+};
+
+const DataSample = ({
+  action,
+  recording,
+  isNew,
+  onDelete,
+  view,
+}: {
+  action: GestureData;
+  recording: RecordingData;
+  isNew: boolean;
+  onDelete: () => void;
+  view: DataSamplesView;
+}) => {
+  const intl = useIntl();
+  return (
+    <HStack key={recording.ID} position="relative">
+      <Box
+        position="absolute"
+        h="100%"
+        w="100%"
+        rounded="md"
+        animation={isNew ? `${flash} 1s` : undefined}
+      />
+      <CloseButton
+        position="absolute"
+        top={0}
+        right={0}
+        zIndex={1}
+        size="sm"
+        aria-label={intl.formatMessage({
+          id: "delete-recording-aria",
+        })}
+        onClick={onDelete}
+      />
+      {(view === DataSamplesView.Graph ||
+        view === DataSamplesView.GraphAndDataFeatures) && (
+        <RecordingGraph
+          data={recording.data}
+          role="image"
+          aria-label={intl.formatMessage({
+            id: "recording-graph-label",
+          })}
+        />
+      )}
+      {(view === DataSamplesView.DataFeatures ||
+        view === DataSamplesView.GraphAndDataFeatures) && (
+        <RecordingFingerprint
+          data={recording.data}
+          role="image"
+          gestureName={action.name}
+          aria-label={intl.formatMessage({
+            id: "recording-fingerprint-label",
+          })}
+        />
+      )}
+    </HStack>
+  );
+};
+
+const useDataSamplesView = () => {
+  const storeView = useStore((s) => s.settings.dataSamplesView);
+  return flags.fingerprints ? storeView : DataSamplesView.Graph;
 };
 
 export default ActionDataSamplesCard;
