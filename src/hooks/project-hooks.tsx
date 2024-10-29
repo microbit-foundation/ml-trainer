@@ -181,10 +181,16 @@ export const ProjectProvider = ({
           // TODO: complain to the user!
         }
       } else if (fileExtension === "hex") {
-        driverRef.current!.importFile({
-          filename: file.name,
-          parts: [await readFileAsText(file)],
-        });
+        const hex = await readFileAsText(file);
+        const makeCodeMagicMark = "41140E2FB82FA2BB";
+        if (hex.includes(makeCodeMagicMark)) {
+          driverRef.current!.importFile({
+            filename: file.name,
+            parts: [await readFileAsText(file)],
+          });
+        } else {
+          console.log("not makecode");
+        }
       }
     },
     [driverRef, loadDataset, logging, navigate]
