@@ -83,7 +83,7 @@ const Layout = () => {
     return useStore.subscribe(
       (
         { projectLoadTimestamp },
-        { projectLoadTimestamp: prevProjectLoadTimestamp, project }
+        { projectLoadTimestamp: prevProjectLoadTimestamp, getCurrentProject }
       ) => {
         if (projectLoadTimestamp > prevProjectLoadTimestamp) {
           // Side effects of loading a project, which MakeCode notifies us of.
@@ -94,6 +94,7 @@ const Layout = () => {
             title: intl.formatMessage({ id: "project-loaded" }),
             status: "info",
           });
+          const project = getCurrentProject();
           if (!hasMakeCodeMlExtension(project)) {
             setPostImportDialogState(PostImportDialogState.NonCreateAiHex);
           }
