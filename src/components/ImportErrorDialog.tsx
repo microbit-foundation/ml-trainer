@@ -11,11 +11,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
+import { useDeployment } from "../deployment";
 
 const ImportErrorDialog = ({
   onClose,
   ...props
 }: Omit<ModalProps, "children">) => {
+  const { appNameFull } = useDeployment();
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -33,7 +35,10 @@ const ImportErrorDialog = ({
           <ModalBody>
             <ModalCloseButton />
             <Text>
-              <FormattedMessage id="import-error-dialog-content" />
+              <FormattedMessage
+                id="import-error-dialog-content"
+                values={{ appNameFull }}
+              />
             </Text>
           </ModalBody>
           <ModalFooter justifyContent="flex-end">

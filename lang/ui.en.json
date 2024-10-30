@@ -728,11 +728,11 @@
     "description": "Data samples action"
   },
   "import-error-dialog-content": {
-    "defaultMessage": "Only a MakeCode hex file or a data samples json file can be imported.",
+    "defaultMessage": "Only a MakeCode hex file or a data samples json file can be opened for {appNameFull}.",
     "description": "Content of import error dialog"
   },
   "import-error-dialog-title": {
-    "defaultMessage": "File cannot be imported",
+    "defaultMessage": "Cannot open file",
     "description": "Title of import error dialog"
   },
   "incompatible-device-body-alt": {
@@ -876,7 +876,7 @@
     "description": "Empty data samples page status text"
   },
   "not-create-ai-hex-import-dialog-content": {
-    "defaultMessage": "Train a model to view your imported project.",
+    "defaultMessage": "Train a model to view your code.",
     "description": "Content of import non-CreateAI hex dialog"
   },
   "not-create-ai-hex-import-dialog-title": {
