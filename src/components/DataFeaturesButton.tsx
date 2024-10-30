@@ -50,17 +50,11 @@ const DataFeaturesButton = () => {
             <FormattedMessage id="hide-data-features-action" />
           </Button>
         )}
-        <MoreMenuButton
-          // Aria label needed
-          aria-label="Data samples features options"
-        />
+        <MoreMenuButton aria-label="data-features-view-more-label" />
         <Portal>
           <MenuList>
             <MenuOptionGroup
               defaultValue={dataSamplesView}
-              title={intl.formatMessage({
-                id: "data-samples-view-options-heading",
-              })}
               type="radio"
               onChange={handleViewChange}
             >

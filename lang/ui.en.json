@@ -383,6 +383,10 @@
     "defaultMessage": "diagram showing data collection micro:bit being connected to a person's wrist",
     "description": "Aria label for data collection image"
   },
+  "data-features-view-more-label": {
+    "defaultMessage": "Data features view more",
+    "description": "Data features view more label text"
+  },
   "data-samples-label": {
     "defaultMessage": "Data samples",
     "description": "Heading for data samples column"

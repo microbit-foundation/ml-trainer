@@ -645,52 +645,10 @@
       "value": "diagram showing data collection micro:bit being connected to a person's wrist"
     }
   ],
-  "data-feature-acc-option": [
+  "data-features-view-more-label": [
     {
       "type": 0,
-      "value": "Total acceleration"
-    }
-  ],
-  "data-feature-max-option": [
-    {
-      "type": 0,
-      "value": "Maximum"
-    }
-  ],
-  "data-feature-mean-option": [
-    {
-      "type": 0,
-      "value": "Mean"
-    }
-  ],
-  "data-feature-min-option": [
-    {
-      "type": 0,
-      "value": "Minimum"
-    }
-  ],
-  "data-feature-peaks-option": [
-    {
-      "type": 0,
-      "value": "Number of extremes"
-    }
-  ],
-  "data-feature-rms-option": [
-    {
-      "type": 0,
-      "value": "Root mean square"
-    }
-  ],
-  "data-feature-std-option": [
-    {
-      "type": 0,
-      "value": "Standard deviation"
-    }
-  ],
-  "data-feature-zcr-option": [
-    {
-      "type": 0,
-      "value": "Zero crossing rate"
+      "value": "Data features view more"
     }
   ],
   "data-samples-label": [
