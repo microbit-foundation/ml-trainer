@@ -32,6 +32,7 @@ interface ActionDataSamplesCardProps {
   onSelectRow?: () => void;
   onRecord: () => void;
   newRecordingId?: number;
+  clearNewRecordingId?: () => void;
 }
 
 const ActionDataSamplesCard = ({
@@ -40,6 +41,7 @@ const ActionDataSamplesCard = ({
   onSelectRow,
   onRecord,
   newRecordingId,
+  clearNewRecordingId,
 }: ActionDataSamplesCardProps) => {
   const deleteGestureRecording = useStore((s) => s.deleteGestureRecording);
   const view = useDataSamplesView();
@@ -81,6 +83,7 @@ const ActionDataSamplesCard = ({
               actionId={value.ID}
               recordingIndex={idx}
               isNew={newRecordingId === recording.ID}
+              onNewAnimationEnd={clearNewRecordingId}
               onDelete={deleteGestureRecording}
               view={view}
               hasClose={false}
@@ -105,6 +108,7 @@ const ActionDataSamplesCard = ({
           recording={recording}
           isNew={newRecordingId === recording.ID}
           onDelete={deleteGestureRecording}
+          onNewAnimationEnd={clearNewRecordingId}
           view={view}
         />
       ))}
@@ -187,6 +191,7 @@ const DataSample = ({
   actionId,
   recordingIndex,
   isNew,
+  onNewAnimationEnd,
   onDelete,
   view,
   hasClose = true,
@@ -195,6 +200,7 @@ const DataSample = ({
   actionId: number;
   recordingIndex: number;
   isNew: boolean;
+  onNewAnimationEnd?: () => void;
   onDelete: (gestureId: GestureData["ID"], recordingIdx: number) => void;
   view: DataSamplesView;
   hasClose?: boolean;
@@ -240,6 +246,7 @@ const DataSample = ({
             right={0}
             rounded="md"
             animation={isNew ? `${flash} 1s` : undefined}
+            onAnimationEnd={onNewAnimationEnd}
           />
         </RecordingGraph>
       )}
