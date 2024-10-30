@@ -32,7 +32,7 @@ const DataFeaturesButton = () => {
           <Button
             w="200px"
             onClick={() =>
-              setDataSamplesView(DataSamplesView.GraphAndDataFeatures)
+              handleViewChange(DataSamplesView.GraphAndDataFeatures)
             }
             variant="secondary"
             leftIcon={<RiEyeFill />}
@@ -42,18 +42,22 @@ const DataFeaturesButton = () => {
         ) : (
           <Button
             w="200px"
-            onClick={() => setDataSamplesView(DataSamplesView.Graph)}
+            onClick={() => handleViewChange(DataSamplesView.Graph)}
             variant="secondary"
             leftIcon={<RiEyeOffFill />}
           >
             <FormattedMessage id="hide-data-features-action" />
           </Button>
         )}
-        <MoreMenuButton aria-label="data-features-view-more-label" />
+        <MoreMenuButton
+          aria-label="data-features-view-more-label"
+          borderLeft={0}
+        />
         <Portal>
           <MenuList>
             <MenuOptionGroup
               defaultValue={dataSamplesView}
+              value={dataSamplesView}
               type="radio"
               onChange={handleViewChange}
             >
