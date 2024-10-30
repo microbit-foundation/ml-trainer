@@ -645,6 +645,54 @@
       "value": "diagram showing data collection micro:bit being connected to a person's wrist"
     }
   ],
+  "data-feature-acc-option": [
+    {
+      "type": 0,
+      "value": "Total acceleration"
+    }
+  ],
+  "data-feature-max-option": [
+    {
+      "type": 0,
+      "value": "Maximum"
+    }
+  ],
+  "data-feature-mean-option": [
+    {
+      "type": 0,
+      "value": "Mean"
+    }
+  ],
+  "data-feature-min-option": [
+    {
+      "type": 0,
+      "value": "Minimum"
+    }
+  ],
+  "data-feature-peaks-option": [
+    {
+      "type": 0,
+      "value": "Number of extremes"
+    }
+  ],
+  "data-feature-rms-option": [
+    {
+      "type": 0,
+      "value": "Root mean square"
+    }
+  ],
+  "data-feature-std-option": [
+    {
+      "type": 0,
+      "value": "Standard deviation"
+    }
+  ],
+  "data-feature-zcr-option": [
+    {
+      "type": 0,
+      "value": "Zero crossing rate"
+    }
+  ],
   "data-samples-label": [
     {
       "type": 0,
@@ -1149,6 +1197,12 @@
     {
       "type": 0,
       "value": "Help & support"
+    }
+  ],
+  "hide-data-features-action": [
+    {
+      "type": 0,
+      "value": "Hide data features"
     }
   ],
   "home-action": [
@@ -1825,6 +1879,12 @@
     {
       "type": 0,
       "value": "Settings actions menu"
+    }
+  ],
+  "show-data-features-action": [
+    {
+      "type": 0,
+      "value": "Show data features"
     }
   ],
   "simple-ai-exercise-timer-resource-title": [

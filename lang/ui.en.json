@@ -687,6 +687,10 @@
     "defaultMessage": "Help & support",
     "description": "Link or menu item link to support site"
   },
+  "hide-data-features-action": {
+    "defaultMessage": "Hide data features",
+    "description": "Hide data features button text"
+  },
   "home-action": {
     "defaultMessage": "Home",
     "description": "Home button text"
@@ -1046,6 +1050,10 @@
   "settings-menu-action": {
     "defaultMessage": "Settings actions menu",
     "description": "Label for settings actions menu button"
+  },
+  "show-data-features-action": {
+    "defaultMessage": "Show data features",
+    "description": "Show data features button text"
   },
   "simple-ai-exercise-timer-resource-title": {
     "defaultMessage": "Simple AI exercise timer",
