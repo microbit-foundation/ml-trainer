@@ -20,6 +20,7 @@ import {
   filenames,
   generateCustomFiles,
   generateProject,
+  hasMakeCodeMlExtension,
   pxt,
 } from "./utils";
 import { currentDataWindow } from "../store";
@@ -260,5 +261,37 @@ describe("test actionNamesFromLabels", () => {
     ];
     const userDefined = ["내 행동"];
     expect(actionNamesFromLabels(userDefined)).toEqual(expected);
+  });
+});
+
+describe("test hasMakeCodeMlExtension", () => {
+  it("has extension, returns true", () => {
+    const project: Project = {
+      text: {
+        [filenames.pxtJson]: JSON.stringify({
+          dependencies: {
+            [extensionName]: "extension url",
+          },
+        }),
+      },
+    };
+    expect(hasMakeCodeMlExtension(project)).toEqual(true);
+  });
+
+  it("does not have extension, returns false", () => {
+    const project: Project = {
+      text: {
+        [filenames.pxtJson]: JSON.stringify({
+          dependencies: {
+            "some other extension": "extension url",
+          },
+        }),
+      },
+    };
+    expect(hasMakeCodeMlExtension(project)).toEqual(false);
+  });
+
+  it("empty object, returns false", () => {
+    expect(hasMakeCodeMlExtension({})).toEqual(false);
   });
 });
