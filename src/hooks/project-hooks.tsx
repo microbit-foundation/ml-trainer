@@ -184,7 +184,7 @@ export const ProjectProvider = ({
           loadDataset(gestureData);
           navigate(createDataSamplesPageUrl());
         } else {
-          // TODO: complain to the user!
+          setPostImportDialogState(PostImportDialogState.Error);
         }
       } else if (fileExtension === "hex") {
         const hex = await readFileAsText(file);

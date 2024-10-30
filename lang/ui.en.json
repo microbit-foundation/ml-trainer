@@ -728,7 +728,7 @@
     "description": "Data samples action"
   },
   "import-error-dialog-content": {
-    "defaultMessage": "Only a MakeCode hex file can be imported.",
+    "defaultMessage": "Only a MakeCode hex file or a data samples json file can be imported.",
     "description": "Content of import error dialog"
   },
   "import-error-dialog-title": {

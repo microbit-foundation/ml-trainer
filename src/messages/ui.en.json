@@ -1318,7 +1318,7 @@
   "import-error-dialog-content": [
     {
       "type": 0,
-      "value": "Only a MakeCode hex file can be imported."
+      "value": "Only a MakeCode hex file or a data samples json file can be imported."
     }
   ],
   "import-error-dialog-title": [
