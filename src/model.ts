@@ -204,7 +204,7 @@ export enum DataSamplesView {
 }
 
 export enum PostImportDialogState {
-  None = "graph",
+  None = "none",
   Error = "error",
   NonCreateAiHex = "non create ai hex dialog",
 }
