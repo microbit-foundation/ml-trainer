@@ -40,6 +40,7 @@ const Tour = () => {
     update,
   } = usePopper({
     enabled,
+    placement: step?.placement ?? undefined,
     gutter:
       gutterDefault + (step?.spotlightStyle?.paddingTop ?? spotlightPadding),
   });
