@@ -15,7 +15,7 @@ interface DataSamplesTableRowProps {
   gesture: GestureData;
   selected: boolean;
   onSelectRow: () => void;
-  onRecord: () => void;
+  onRecord: (recordingsToCapture: number, continuousRecording: boolean) => void;
   showHints: boolean;
   newRecordingId?: number;
 }

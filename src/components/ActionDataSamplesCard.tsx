@@ -1,11 +1,16 @@
 import {
   Box,
   Button,
+  ButtonGroup,
   Card,
   CardBody,
   CloseButton,
   HStack,
   keyframes,
+  Menu,
+  MenuItem,
+  MenuList,
+  Portal,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -16,6 +21,7 @@ import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import RecordingFingerprint from "./RecordingFingerprint";
 import RecordingGraph from "./RecordingGraph";
+import MoreMenuButton from "./MoreMenuButton";
 
 const flash = keyframes({
   "0%, 10%": {
@@ -28,7 +34,7 @@ interface ActionDataSamplesCardProps {
   value: GestureData;
   selected: boolean;
   onSelectRow?: () => void;
-  onRecord: () => void;
+  onRecord: (recordingsToCapture: number, continuousRecording: boolean) => void;
   newRecordingId?: number;
 }
 
@@ -77,22 +83,43 @@ const RecordingArea = ({
 }: {
   action: GestureData;
   selected: boolean;
-  onRecord: () => void;
+  onRecord: (recordingsToCapture: number, continuousRecording: boolean) => void;
 }) => {
   const intl = useIntl();
   return (
     <VStack w="8.25rem" justifyContent="center">
-      <Button
-        variant={selected ? "solid" : "outline"}
-        colorScheme="red"
-        onClick={onRecord}
-        aria-label={intl.formatMessage(
-          { id: "record-action-aria" },
-          { action: action.name }
-        )}
-      >
-        <FormattedMessage id="record-action" />
-      </Button>
+      <Menu>
+        <ButtonGroup isAttached>
+          <Button
+            variant={selected ? "solid" : "outline"}
+            colorScheme="red"
+            onClick={() => onRecord(1, false)}
+            aria-label={intl.formatMessage(
+              { id: "record-action-aria" },
+              { action: action.name }
+            )}
+          >
+            <FormattedMessage id="record-action" />
+          </Button>
+          <MoreMenuButton
+            variant={selected ? "primary" : "secondary"}
+            aria-label="More record options"
+          />
+          <Portal>
+            <MenuList>
+              <MenuItem onClick={() => onRecord(3, false)}>
+                Record 3 samples
+              </MenuItem>
+              <MenuItem onClick={() => onRecord(10, false)}>
+                Record 10 samples
+              </MenuItem>
+              <MenuItem onClick={() => onRecord(30, true)}>
+                Record for 30 seconds
+              </MenuItem>
+            </MenuList>
+          </Portal>
+        </ButtonGroup>
+      </Menu>
       {action.recordings.length < 3 ? (
         <Text fontSize="xs" textAlign="center" fontWeight="bold">
           <FormattedMessage id="data-samples-status-not-enough" />

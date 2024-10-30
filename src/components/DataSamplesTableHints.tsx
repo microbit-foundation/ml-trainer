@@ -7,7 +7,7 @@ import UpCurveArrow from "./UpCurveArrow";
 
 interface DataSamplesTableHintsProps {
   gesture: GestureData;
-  onRecord: () => void;
+  onRecord: (recordingsToCapture: number, continuousRecording: boolean) => void;
 }
 
 const DataSamplesTableHints = ({

@@ -94,12 +94,18 @@ const DataSamplesTable = ({
   }, [connection, recordingDialogDisclosure]);
 
   const [recordingsToCapture, setRecordingsToCapture] = useState<number>(1);
-  const handleRecord = useCallback(() => {
-    setRecordingsToCapture(30);
-    isConnected
-      ? recordingDialogDisclosure.onOpen()
-      : connectToRecordDialogDisclosure.onOpen();
-  }, [connectToRecordDialogDisclosure, isConnected, recordingDialogDisclosure]);
+  const [continuousRecording, setContinuousRecording] =
+    useState<boolean>(false);
+  const handleRecord = useCallback(
+    (recordingsToCapture: number, continuousRecording: boolean) => {
+      setRecordingsToCapture(recordingsToCapture);
+      setContinuousRecording(continuousRecording);
+      isConnected
+        ? recordingDialogDisclosure.onOpen()
+        : connectToRecordDialogDisclosure.onOpen();
+    },
+    [connectToRecordDialogDisclosure, isConnected, recordingDialogDisclosure]
+  );
   return (
     <>
       <ConnectToRecordDialog
@@ -114,7 +120,7 @@ const DataSamplesTable = ({
           actionName={selectedGesture.name}
           onRecordingComplete={setNewRecordingId}
           recordingsToCapture={recordingsToCapture}
-          continuousRecording={true}
+          continuousRecording={continuousRecording}
         />
       )}
       <HeadingGrid
