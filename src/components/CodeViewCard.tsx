@@ -15,8 +15,8 @@ interface CodeViewCardProps {
 const CodeViewCard = ({ project, parentRef }: CodeViewCardProps) => {
   // This is used to set the tour cutout as the card can be taller than
   // the parent in a scrollable area.
-  const [observableHeight, setObservableHeight] = useState<number>(
-    parentRef.current?.clientHeight ?? 0
+  const [observableHeight, setObservableHeight] = useState<number | string>(
+    "full"
   );
   const ref = useRef<HTMLDivElement>(null);
   const paddingTop = 8;
@@ -35,6 +35,9 @@ const CodeViewCard = ({ project, parentRef }: CodeViewCardProps) => {
     });
     if (parentRef.current) {
       resizeObserver.observe(parentRef.current);
+    }
+    if (ref.current) {
+      resizeObserver.observe(ref.current);
     }
     return () => {
       resizeObserver.disconnect();
