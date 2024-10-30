@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { DataSamplesView } from "../model";
 import { useStore } from "../store";
 import MoreMenuButton from "./MoreMenuButton";
@@ -17,7 +17,6 @@ import MoreMenuButton from "./MoreMenuButton";
 const DataFeaturesButton = () => {
   const dataSamplesView = useStore((s) => s.settings.dataSamplesView);
   const setDataSamplesView = useStore((s) => s.setDataSamplesView);
-  const intl = useIntl();
   const handleViewChange = useCallback(
     (view: string | string[]) => {
       if (typeof view === "string") {
