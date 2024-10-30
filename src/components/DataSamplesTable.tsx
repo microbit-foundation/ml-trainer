@@ -7,7 +7,14 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { FormattedMessage } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
@@ -86,6 +93,13 @@ const DataSamplesTable = ({
     };
   }, [connection, recordingDialogDisclosure]);
 
+  const [recordingsToCapture, setRecordingsToCapture] = useState<number>(1);
+  const handleRecord = useCallback(() => {
+    setRecordingsToCapture(30);
+    isConnected
+      ? recordingDialogDisclosure.onOpen()
+      : connectToRecordDialogDisclosure.onOpen();
+  }, [connectToRecordDialogDisclosure, isConnected, recordingDialogDisclosure]);
   return (
     <>
       <ConnectToRecordDialog
@@ -99,6 +113,8 @@ const DataSamplesTable = ({
           onClose={recordingDialogDisclosure.onClose}
           actionName={selectedGesture.name}
           onRecordingComplete={setNewRecordingId}
+          recordingsToCapture={recordingsToCapture}
+          continuousRecording={true}
         />
       )}
       <HeadingGrid
@@ -165,11 +181,7 @@ const DataSamplesTable = ({
               newRecordingId={newRecordingId}
               selected={selectedGesture.ID === g.ID}
               onSelectRow={() => setSelectedGestureIdx(idx)}
-              onRecord={
-                isConnected
-                  ? recordingDialogDisclosure.onOpen
-                  : connectToRecordDialogDisclosure.onOpen
-              }
+              onRecord={handleRecord}
               showHints={showHints}
             />
           ))}
