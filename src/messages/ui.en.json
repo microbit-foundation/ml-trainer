@@ -1759,6 +1759,34 @@
       "value": "Press to record a data sample or press button B on your data collection micro:bit."
     }
   ],
+  "record-samples": [
+    {
+      "type": 0,
+      "value": "Record "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " samples"
+    }
+  ],
+  "record-seconds": [
+    {
+      "type": 0,
+      "value": "Record for "
+    },
+    {
+      "type": 1,
+      "value": "numSeconds"
+    },
+    {
+      "type": 0,
+      "value": " seconds"
+    }
+  ],
   "recording": [
     {
       "type": 0,

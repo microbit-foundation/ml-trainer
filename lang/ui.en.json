@@ -1007,6 +1007,14 @@
     "defaultMessage": "Press to record a data sample or press button B on your data collection micro:bit.",
     "description": "Hint when you have named the first action but not recorded any data samples"
   },
+  "record-samples": {
+    "defaultMessage": "Record {numSamples} samples",
+    "description": "Additional recording action text"
+  },
+  "record-seconds": {
+    "defaultMessage": "Record for {numSeconds} seconds",
+    "description": "Additional recording action text"
+  },
   "recording": {
     "defaultMessage": "Recording",
     "description": "Shown during recording"

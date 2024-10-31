@@ -7,6 +7,7 @@ import {
   CardBody,
   CloseButton,
   HStack,
+  Icon,
   keyframes,
   Menu,
   MenuItem,
@@ -16,14 +17,16 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback } from "react";
+import { RiTimerLine } from "react-icons/ri";
+import { TbNumbers } from "react-icons/tb";
 import { FormattedMessage, useIntl } from "react-intl";
 import { flags } from "../flags";
 import { DataSamplesView, GestureData, RecordingData } from "../model";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
+import MoreMenuButton from "./MoreMenuButton";
 import RecordingFingerprint from "./RecordingFingerprint";
 import RecordingGraph from "./RecordingGraph";
-import MoreMenuButton from "./MoreMenuButton";
 
 const flash = keyframes({
   "0%, 10%": {
@@ -186,11 +189,30 @@ const RecordingArea = ({
           />
           <Portal>
             <MenuList>
-              <MenuItem onClick={() => onRecord(10, false)}>
-                Record 10 samples
+              <MenuItem
+                onClick={() => onRecord(10, false)}
+                icon={<Icon as={TbNumbers} h={5} w={5} />}
+              >
+                <Text fontSize="md">
+                  <FormattedMessage
+                    id="record-samples"
+                    values={{ numSamples: 10 }}
+                  />
+                </Text>
+
+                <Text fontSize="xs">Records 10 samples in a row</Text>
               </MenuItem>
-              <MenuItem onClick={() => onRecord(30, true)}>
-                Record for 10 seconds
+              <MenuItem
+                onClick={() => onRecord(30, true)}
+                icon={<Icon as={RiTimerLine} h={5} w={5} />}
+              >
+                <Text fontSize="md">
+                  <FormattedMessage
+                    id="record-seconds"
+                    values={{ numSeconds: 10 }}
+                  />
+                </Text>
+                <Text fontSize="xs">Records continuously for 10 seconds</Text>
               </MenuItem>
             </MenuList>
           </Portal>
