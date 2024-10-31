@@ -383,9 +383,13 @@
     "defaultMessage": "diagram showing data collection micro:bit being connected to a person's wrist",
     "description": "Aria label for data collection image"
   },
-  "data-features-view-more-label": {
-    "defaultMessage": "Data features view more",
-    "description": "Data features view more label text"
+  "data-features-hide-action": {
+    "defaultMessage": "Hide data features",
+    "description": "Hide data features button text"
+  },
+  "data-features-show-action": {
+    "defaultMessage": "Show data features",
+    "description": "Show data features button text"
   },
   "data-samples-label": {
     "defaultMessage": "Data samples",
@@ -674,10 +678,6 @@
   "help-support": {
     "defaultMessage": "Help & support",
     "description": "Link or menu item link to support site"
-  },
-  "hide-data-features-action": {
-    "defaultMessage": "Hide data features",
-    "description": "Hide data features button text"
   },
   "home-action": {
     "defaultMessage": "Home",
@@ -1054,10 +1054,6 @@
   "settings-menu-action": {
     "defaultMessage": "Settings actions menu",
     "description": "Label for settings actions menu button"
-  },
-  "show-data-features-action": {
-    "defaultMessage": "Show data features",
-    "description": "Show data features button text"
   },
   "show-graphs-checkbox-label-text": {
     "defaultMessage": "Show graphs",

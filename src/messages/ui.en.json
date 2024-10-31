@@ -645,10 +645,16 @@
       "value": "diagram showing data collection micro:bit being connected to a person's wrist"
     }
   ],
-  "data-features-view-more-label": [
+  "data-features-hide-action": [
     {
       "type": 0,
-      "value": "Data features view more"
+      "value": "Hide data features"
+    }
+  ],
+  "data-features-show-action": [
+    {
+      "type": 0,
+      "value": "Show data features"
     }
   ],
   "data-samples-label": [
@@ -1133,12 +1139,6 @@
       "value": "Help & support"
     }
   ],
-  "hide-data-features-action": [
-    {
-      "type": 0,
-      "value": "Hide data features"
-    }
-  ],
   "home-action": [
     {
       "type": 0,
@@ -1216,7 +1216,7 @@
   "import-error-dialog-content": [
     {
       "type": 0,
-      "value": "Only MakeCode hex files or a data samples files (.json) can be opened by "
+      "value": "Only MakeCode hex files or data samples files (.json) can be opened by "
     },
     {
       "type": 1,
@@ -1845,12 +1845,6 @@
     {
       "type": 0,
       "value": "Settings actions menu"
-    }
-  ],
-  "show-data-features-action": [
-    {
-      "type": 0,
-      "value": "Show data features"
     }
   ],
   "show-graphs-checkbox-label-text": [

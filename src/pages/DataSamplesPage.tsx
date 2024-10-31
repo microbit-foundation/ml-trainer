@@ -87,7 +87,7 @@ const DataSamplesPage = () => {
                   onClick={() => trainModelFlowStart(handleNavigateToModel)}
                   variant={hasSufficientData ? "primary" : "secondary-disabled"}
                 >
-                  <FormattedMessage id={"train-model"} />
+                  <FormattedMessage id="train-model" />
                 </Button>
               )}
             </HStack>

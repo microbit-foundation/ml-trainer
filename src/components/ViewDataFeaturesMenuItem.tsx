@@ -26,11 +26,11 @@ const ViewDataFeaturesMenuItem = () => {
     <>
       {dataSamplesView === DataSamplesView.Graph ? (
         <MenuItem onClick={handleShowDataFeatures} icon={<RiEyeFill />}>
-          <FormattedMessage id="show-data-features-action" />
+          <FormattedMessage id="data-features-show-action" />
         </MenuItem>
       ) : (
         <MenuItem onClick={handleHideDataFeatures} icon={<RiEyeOffFill />}>
-          <FormattedMessage id="hide-data-features-action" />
+          <FormattedMessage id="data-features-hide-action" />
         </MenuItem>
       )}
     </>
