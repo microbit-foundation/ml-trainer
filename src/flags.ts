@@ -24,10 +24,6 @@ export type Flag =
    */
   | "homePageProjects"
   /**
-   * Flag to show fingerprints view option.
-   */
-  | "fingerprints"
-  /**
    * Example flags used for testing.
    */
   | "exampleOptInA"
@@ -46,7 +42,6 @@ const allFlags: FlagMetadata[] = [
     name: "preReleaseNotice",
     defaultOnStages: ["review", "staging", "production"],
   },
-  { name: "fingerprints", defaultOnStages: ["local", "review", "staging"] },
   { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
   { name: "exampleOptInB", defaultOnStages: [] },
 ];

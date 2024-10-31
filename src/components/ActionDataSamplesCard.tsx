@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import { ReactNode, useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { flags } from "../flags";
 import { DataSamplesView, GestureData, RecordingData } from "../model";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
@@ -44,7 +43,7 @@ const ActionDataSamplesCard = ({
   clearNewRecordingId,
 }: ActionDataSamplesCardProps) => {
   const deleteGestureRecording = useStore((s) => s.deleteGestureRecording);
-  const view = useDataSamplesView();
+  const view = useStore((s) => s.settings.dataSamplesView);
   if (view === DataSamplesView.GraphAndDataFeatures) {
     // We split the cards in this case
     return (
@@ -262,11 +261,6 @@ const DataSample = ({
       )}
     </HStack>
   );
-};
-
-const useDataSamplesView = () => {
-  const storeView = useStore((s) => s.settings.dataSamplesView);
-  return flags.fingerprints ? storeView : DataSamplesView.Graph;
 };
 
 export default ActionDataSamplesCard;
