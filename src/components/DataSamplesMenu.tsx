@@ -1,5 +1,4 @@
 import {
-  Divider,
   Icon,
   IconButton,
   Menu,
