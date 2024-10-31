@@ -112,9 +112,10 @@ const RecordingDialog = ({
 
   const continueRecording = useCallback(() => {
     decrementRecordingsRemaining();
+    recordingStopped();
     setRunningContinuously(true);
     setProgress(0);
-  }, [decrementRecordingsRemaining]);
+  }, [decrementRecordingsRemaining, recordingStopped]);
 
   useEffect(() => {
     if (isOpen) {
@@ -198,6 +199,7 @@ const RecordingDialog = ({
         doneTimeout.current && clearTimeout(doneTimeout.current);
       };
     } else if (runningContinuously) {
+      recordingStarted();
       startRecordingInternal();
     }
   }, [
