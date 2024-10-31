@@ -1,13 +1,12 @@
 import { Box, HStack, Icon, Text } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { AccelerometerDataEvent } from "@microbit/microbit-connection";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { RiArrowDropLeftFill } from "react-icons/ri";
 import { SmoothieChart, TimeSeries } from "smoothie";
 import { useConnectActions } from "../connect-actions-hooks";
-import { useConnectionStage } from "../connection-stage-hooks";
-import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 import { ConnectionStatus } from "../connect-status-hooks";
-import { RiArrowDropLeftFill } from "react-icons/ri";
-import React from "react";
+import { useConnectionStage } from "../connection-stage-hooks";
 import { LabelConfig, getUpdatedLabelConfig } from "../live-graph-label-config";
 import { useStore } from "../store";
 
@@ -85,30 +84,21 @@ const LiveGraph = () => {
     }
   }, [chart, isConnected, status]);
 
-  // Draw on graph to display that users are recording
-  // Ideally we'd do this without timing the recording again!
-  const [isTimingRecording, setIsTimingRecording] = useState<boolean>(false);
-  const dataWindow = useStore((s) => s.dataWindow);
+  // Draw on graph to display that users are recording.
   const isRecording = useStore((s) => s.isRecording);
   useEffect(() => {
-    if (isRecording && !isTimingRecording) {
-      {
-        // Set the start recording line
-        const now = new Date().getTime();
-        recordLines.append(now - 1, -2, false);
-        recordLines.append(now, 2.3, false);
-        setIsTimingRecording(true);
-      }
-
-      setTimeout(() => {
-        // Set the end recording line
-        const now = new Date().getTime();
-        recordLines.append(now - 1, 2.3, false);
-        recordLines.append(now, -2, false);
-        setIsTimingRecording(false);
-      }, dataWindow.duration);
+    if (isRecording) {
+      // Set the start recording line
+      const now = new Date().getTime();
+      recordLines.append(now - 1, -2, false);
+      recordLines.append(now, 2.3, false);
+    } else {
+      // Set the end recording line
+      const now = new Date().getTime();
+      recordLines.append(now - 1, 2.3, false);
+      recordLines.append(now, -2, false);
     }
-  }, [isTimingRecording, recordLines, isRecording, dataWindow.duration]);
+  }, [isRecording, recordLines]);
 
   const [labelConfigs, setLabelConfigs] =
     useState<LabelConfig[]>(initialLabelConfigs);

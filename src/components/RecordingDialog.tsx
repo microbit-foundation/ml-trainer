@@ -137,6 +137,10 @@ const RecordingDialog = ({
           setRunningContinuously(false);
           decrementRecordingsRemaining();
           setRecordingStatus(RecordingStatus.Done);
+          // Trigger recordingStopped before timeout for live graph overlay.
+          // We also do this in handleCleanup and is required there for
+          // the error and close dialog cases.
+          recordingStopped();
           doneTimeout.current = setTimeout(() => {
             handleCleanup();
             onRecordingComplete(recordingId);
@@ -167,6 +171,7 @@ const RecordingDialog = ({
     intl,
     onRecordingComplete,
     recordingDataSource,
+    recordingStopped,
     recordingsRemaining,
     startRecording,
     toast,
@@ -200,6 +205,7 @@ const RecordingDialog = ({
     countdownStages,
     recordingStarted,
     recordingStatus,
+    recordingsRemaining,
     runningContinuously,
     startRecordingInternal,
   ]);
