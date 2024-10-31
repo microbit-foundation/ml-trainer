@@ -203,7 +203,7 @@ const RecordingArea = ({
                 <Text fontSize="xs">Records 10 samples in a row</Text>
               </MenuItem>
               <MenuItem
-                onClick={() => onRecord(30, true)}
+                onClick={() => onRecord(10, true)}
                 icon={<Icon as={RiTimerLine} h={5} w={5} />}
               >
                 <Text fontSize="md">
