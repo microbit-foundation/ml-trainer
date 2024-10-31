@@ -209,6 +209,16 @@ const RecordingDialog = ({
     runningContinuously,
   ]);
 
+  const recordingsRemaingTextValue = useMemo(() => {
+    // A bit of a fiddle to show the correct number of recordings remaining
+    // without having the initial figures change just after the dialog opens
+    const recordingsRemainingVal = recordingsRemaining + 1;
+    return recordingsRemainingVal !== 0 &&
+      recordingsRemainingVal < recordingsToCapture
+      ? recordingsRemainingVal
+      : recordingsToCapture;
+  }, [recordingsRemaining, recordingsToCapture]);
+
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -229,6 +239,11 @@ const RecordingDialog = ({
           <ModalCloseButton />
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
+              {recordingsToCapture > 1 && (
+                <Text>{`${
+                  continuousRecording ? "Seconds" : "Recordings"
+                } remaining: ${recordingsRemaingTextValue}`}</Text>
+              )}
               <VStack height="100px" justifyContent="center">
                 {recordingStatus === RecordingStatus.Recording ? (
                   <Text
