@@ -74,8 +74,9 @@ const RecordingDialog = ({
     [intl]
   );
   const [countdownStageIndex, setCountdownStageIndex] = useState<number>(0);
-  const [recordingsRemaining, setRecordingsRemaining] =
-    useState<number>(recordingsToCapture);
+  const [recordingsRemaining, setRecordingsRemaining] = useState<
+    number | undefined
+  >(recordingsToCapture);
 
   const handleCleanup = useCallback(() => {
     recordingStopped();
@@ -84,7 +85,7 @@ const RecordingDialog = ({
     setProgress(0);
     setRunningContinuously(false);
     onClose();
-    setRecordingsRemaining(-2);
+    setRecordingsRemaining(undefined);
   }, [onClose, recordingStopped]);
 
   const handleOnClose = useCallback(() => {
@@ -93,7 +94,7 @@ const RecordingDialog = ({
   }, [handleCleanup, recordingDataSource]);
 
   const startRecording = useCallback(() => {
-    setRecordingsRemaining((prev) => prev - 1);
+    setRecordingsRemaining((prev) => (prev ? prev - 1 : undefined));
     recordingStopped();
     setRecordingStatus(RecordingStatus.Countdown);
     setCountdownStageIndex(0);
@@ -102,10 +103,11 @@ const RecordingDialog = ({
 
   const [runningContinuously, setRunningContinuously] =
     useState<boolean>(false);
+
   const continueRecording = useCallback(() => {
-    setProgress(0);
+    setRecordingsRemaining((prev) => (prev ? prev - 1 : undefined));
     setRunningContinuously(true);
-    setRecordingsRemaining((prev) => prev - 1);
+    setProgress(0);
   }, []);
 
   useEffect(() => {
@@ -115,6 +117,53 @@ const RecordingDialog = ({
       startRecording();
     }
   }, [isOpen, recordingsToCapture, startRecording]);
+
+  const startRecordingInternal = useCallback(() => {
+    recordingDataSource.startRecording({
+      onDone(data) {
+        const recordingId = Date.now();
+        addGestureRecordings(gestureId, [{ ID: recordingId, data }]);
+        if (continuousRecording && recordingsRemaining) {
+          continueRecording();
+        } else if (!continuousRecording && recordingsRemaining) {
+          startRecording();
+        } else {
+          setRunningContinuously(false);
+          setRecordingsRemaining((prev) => (prev ? prev - 1 : undefined));
+          setRecordingStatus(RecordingStatus.Done);
+          doneTimeout.current = setTimeout(() => {
+            handleCleanup();
+            onRecordingComplete(recordingId);
+          }, 1000);
+        }
+      },
+      onError() {
+        handleCleanup();
+        toast({
+          position: "top",
+          duration: 5_000,
+          title: intl.formatMessage({
+            id: "disconnected-during-recording",
+          }),
+          variant: "subtle",
+          status: "error",
+        });
+      },
+      onProgress: setProgress,
+    });
+  }, [
+    addGestureRecordings,
+    continueRecording,
+    continuousRecording,
+    gestureId,
+    handleCleanup,
+    intl,
+    onRecordingComplete,
+    recordingDataSource,
+    recordingsRemaining,
+    startRecording,
+    toast,
+  ]);
 
   const [progress, setProgress] = useState(0);
   const doneTimeout = useRef<NodeJS.Timeout>();
@@ -129,38 +178,7 @@ const RecordingDialog = ({
         } else {
           setRecordingStatus(RecordingStatus.Recording);
           recordingStarted();
-          recordingDataSource.startRecording({
-            onDone(data) {
-              const recordingId = Date.now();
-              addGestureRecordings(gestureId, [{ ID: recordingId, data }]);
-              if (continuousRecording) {
-                continueRecording();
-              } else if (recordingsRemaining) {
-                startRecording();
-              } else {
-                setRecordingsRemaining((prev) => prev - 1);
-                setRecordingStatus(RecordingStatus.Done);
-                doneTimeout.current = setTimeout(() => {
-                  handleCleanup();
-                  onRecordingComplete(recordingId);
-                }, 1000);
-              }
-            },
-            onError() {
-              handleCleanup();
-
-              toast({
-                position: "top",
-                duration: 5_000,
-                title: intl.formatMessage({
-                  id: "disconnected-during-recording",
-                }),
-                variant: "subtle",
-                status: "error",
-              });
-            },
-            onProgress: setProgress,
-          });
+          startRecordingInternal();
         }
       }, config.duration);
       return () => {
@@ -168,66 +186,25 @@ const RecordingDialog = ({
         doneTimeout.current && clearTimeout(doneTimeout.current);
       };
     } else if (runningContinuously) {
-      recordingDataSource.startRecording({
-        onDone(data) {
-          const recordingId = Date.now();
-          addGestureRecordings(gestureId, [{ ID: recordingId, data }]);
-          if (recordingsRemaining) {
-            continueRecording();
-          } else {
-            setRunningContinuously(false);
-            setRecordingsRemaining((prev) => prev - 1);
-            setRecordingStatus(RecordingStatus.Done);
-            doneTimeout.current = setTimeout(() => {
-              handleCleanup();
-              onRecordingComplete(recordingId);
-            }, 1000);
-          }
-        },
-        onError() {
-          handleCleanup();
-
-          toast({
-            position: "top",
-            duration: 5_000,
-            title: intl.formatMessage({
-              id: "disconnected-during-recording",
-            }),
-            variant: "subtle",
-            status: "error",
-          });
-        },
-        onProgress: setProgress,
-      });
+      startRecordingInternal();
     }
   }, [
-    countdownStages,
-    isOpen,
-    recordingStatus,
     countdownStageIndex,
-    recordingDataSource,
-    gestureId,
-    handleOnClose,
-    handleCleanup,
-    toast,
-    intl,
+    countdownStages,
     recordingStarted,
-    addGestureRecordings,
-    onRecordingComplete,
-    startRecording,
-    recordingsToCapture,
-    recordingsRemaining,
-    continuousRecording,
-    continueRecording,
+    recordingStatus,
     runningContinuously,
+    startRecordingInternal,
   ]);
 
   const recordingsRemaingTextValue = useMemo(() => {
     // A bit of a fiddle to show the correct number of recordings remaining
     // without having the initial figures change just after the dialog opens
+    if (recordingsRemaining === undefined) {
+      return recordingsToCapture;
+    }
     const recordingsRemainingVal = recordingsRemaining + 1;
-    return recordingsRemaining !== -2 &&
-      recordingsRemainingVal < recordingsToCapture
+    return recordingsRemainingVal < recordingsToCapture
       ? recordingsRemainingVal
       : recordingsToCapture;
   }, [recordingsRemaining, recordingsToCapture]);
