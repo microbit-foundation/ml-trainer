@@ -93,22 +93,28 @@ const RecordingDialog = ({
     handleCleanup();
   }, [handleCleanup, recordingDataSource]);
 
+  const decrementRecordingsRemaining = useCallback(() => {
+    setRecordingsRemaining((prev) =>
+      prev === undefined ? undefined : prev === 0 ? 0 : prev - 1
+    );
+  }, []);
+
   const startRecording = useCallback(() => {
-    setRecordingsRemaining((prev) => (prev ? prev - 1 : undefined));
+    decrementRecordingsRemaining();
     recordingStopped();
     setRecordingStatus(RecordingStatus.Countdown);
     setCountdownStageIndex(0);
     setProgress(0);
-  }, [recordingStopped]);
+  }, [decrementRecordingsRemaining, recordingStopped]);
 
   const [runningContinuously, setRunningContinuously] =
     useState<boolean>(false);
 
   const continueRecording = useCallback(() => {
-    setRecordingsRemaining((prev) => (prev ? prev - 1 : undefined));
+    decrementRecordingsRemaining();
     setRunningContinuously(true);
     setProgress(0);
-  }, []);
+  }, [decrementRecordingsRemaining]);
 
   useEffect(() => {
     if (isOpen) {
@@ -129,7 +135,7 @@ const RecordingDialog = ({
           startRecording();
         } else {
           setRunningContinuously(false);
-          setRecordingsRemaining((prev) => (prev ? prev - 1 : undefined));
+          decrementRecordingsRemaining();
           setRecordingStatus(RecordingStatus.Done);
           doneTimeout.current = setTimeout(() => {
             handleCleanup();
@@ -155,6 +161,7 @@ const RecordingDialog = ({
     addGestureRecordings,
     continueRecording,
     continuousRecording,
+    decrementRecordingsRemaining,
     gestureId,
     handleCleanup,
     intl,
@@ -197,16 +204,13 @@ const RecordingDialog = ({
     startRecordingInternal,
   ]);
 
-  const recordingsRemaingTextValue = useMemo(() => {
-    // A bit of a fiddle to show the correct number of recordings remaining
-    // without having the initial figures change just after the dialog opens
+  const currentSampleNumber = useMemo(() => {
+    // Show the correct current sample number without having
+    // the initial figures change just after the dialog opens.
     if (recordingsRemaining === undefined) {
-      return recordingsToCapture;
+      return 1;
     }
-    const recordingsRemainingVal = recordingsRemaining + 1;
-    return recordingsRemainingVal < recordingsToCapture
-      ? recordingsRemainingVal
-      : recordingsToCapture;
+    return recordingsToCapture - recordingsRemaining;
   }, [recordingsRemaining, recordingsToCapture]);
 
   return (
@@ -221,19 +225,25 @@ const RecordingDialog = ({
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage
-              id="recording-data-for"
-              values={{ action: actionName }}
-            />
+            {recordingsToCapture > 1 ? (
+              <FormattedMessage
+                id="recording-data-for-numbered"
+                values={{
+                  action: actionName,
+                  sample: currentSampleNumber,
+                  numSamples: recordingsToCapture,
+                }}
+              />
+            ) : (
+              <FormattedMessage
+                id="recording-data-for"
+                values={{ action: actionName }}
+              />
+            )}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
-              {recordingsToCapture > 1 && (
-                <Text>{`${
-                  continuousRecording ? "Seconds" : "Recordings"
-                } remaining: ${recordingsRemaingTextValue}`}</Text>
-              )}
               <VStack height="100px" justifyContent="center">
                 {recordingStatus === RecordingStatus.Recording && (
                   <Text

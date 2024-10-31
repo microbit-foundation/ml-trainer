@@ -1773,6 +1773,12 @@
       "value": " samples"
     }
   ],
+  "record-samples-help": [
+    {
+      "type": 0,
+      "value": "Each sample has its own countdown"
+    }
+  ],
   "record-seconds": [
     {
       "type": 0,
@@ -1785,6 +1791,20 @@
     {
       "type": 0,
       "value": " seconds"
+    }
+  ],
+  "record-seconds-help": [
+    {
+      "type": 0,
+      "value": "Move continuously to get "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " samples"
     }
   ],
   "recording": [
@@ -1803,6 +1823,36 @@
     {
       "type": 0,
       "value": "Record data for action \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "recording-data-for-numbered": [
+    {
+      "type": 0,
+      "value": "Record "
+    },
+    {
+      "type": 1,
+      "value": "sample"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " for action \""
     },
     {
       "type": 1,

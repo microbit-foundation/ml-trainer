@@ -1011,9 +1011,17 @@
     "defaultMessage": "Record {numSamples} samples",
     "description": "Additional recording action text"
   },
+  "record-samples-help": {
+    "defaultMessage": "Each sample has its own countdown",
+    "description": "Help text for additional recording action"
+  },
   "record-seconds": {
     "defaultMessage": "Record for {numSeconds} seconds",
     "description": "Additional recording action text"
+  },
+  "record-seconds-help": {
+    "defaultMessage": "Move continuously to get {numSamples} samples",
+    "description": "Help text for additional recording action"
   },
   "recording": {
     "defaultMessage": "Recording",
@@ -1025,6 +1033,10 @@
   },
   "recording-data-for": {
     "defaultMessage": "Record data for action \"{action}\"",
+    "description": "Text in recording dialog"
+  },
+  "recording-data-for-numbered": {
+    "defaultMessage": "Record {sample} of {numSamples} for action \"{action}\"",
     "description": "Text in recording dialog"
   },
   "recording-fingerprint-label": {

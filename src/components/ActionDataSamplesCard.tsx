@@ -198,7 +198,9 @@ const RecordingArea = ({
                     values={{ numSamples: 10 }}
                   />
                 </Text>
-                <Text fontSize="xs">Each sample has its own countdown</Text>
+                <Text fontSize="xs">
+                  <FormattedMessage id="record-samples-help" />
+                </Text>
               </MenuItem>
               <MenuItem
                 onClick={() => onRecord(10, true)}
@@ -210,7 +212,12 @@ const RecordingArea = ({
                     values={{ numSeconds: 10 }}
                   />
                 </Text>
-                <Text fontSize="xs">Move continuously to get 10 samples</Text>
+                <Text fontSize="xs">
+                  <FormattedMessage
+                    id="record-seconds-help"
+                    values={{ numSamples: 10 }}
+                  />
+                </Text>
               </MenuItem>
             </MenuList>
           </Portal>
