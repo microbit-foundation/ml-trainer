@@ -35,12 +35,14 @@ export const mlSettings = {
   ]),
 };
 
-type FilterStrategy = (data: number[]) => number;
+type FilterStrategy = (data: number[], dataWindow: DataWindow) => number;
 
-const mean: FilterStrategy = (d) => d.reduce((a, b) => a + b) / d.length;
+const _mean = (d: number[]) => d.reduce((a, b) => a + b) / d.length;
+const mean: FilterStrategy = (d) => _mean(d);
 
-const stddev: FilterStrategy = (d) =>
-  Math.sqrt(d.reduce((a, b) => a + Math.pow(b - mean(d), 2), 0) / d.length);
+const _stddev = (d: number[]) =>
+  Math.sqrt(d.reduce((a, b) => a + Math.pow(b - _mean(d), 2), 0) / d.length);
+const stddev: FilterStrategy = (d) => _stddev(d);
 
 const peaks: FilterStrategy = (data) => {
   const lag = 5;
@@ -59,9 +61,9 @@ const peaks: FilterStrategy = (data) => {
   const lead_in = data.slice(0, lag);
 
   const avgFilter: number[] = [];
-  avgFilter[lag - 1] = mean(lead_in);
+  avgFilter[lag - 1] = _mean(lead_in);
   const stdFilter: number[] = [];
-  stdFilter[lag - 1] = stddev(lead_in);
+  stdFilter[lag - 1] = _mean(lead_in);
 
   for (let i = lag; i < data.length; i++) {
     if (
@@ -85,8 +87,8 @@ const peaks: FilterStrategy = (data) => {
 
     // adjust the filters
     const y_lag = filteredY.slice(i - lag, i);
-    avgFilter[i] = mean(y_lag);
-    stdFilter[i] = stddev(y_lag);
+    avgFilter[i] = _mean(y_lag);
+    stdFilter[i] = _stddev(y_lag);
   }
   return peaksCounter;
 };
@@ -104,10 +106,17 @@ const zeroCrossingRate: FilterStrategy = (data) => {
   return count / (data.length - 1);
 };
 
-const acc: FilterStrategy = (d) => d.reduce((a, b) => a + Math.abs(b));
+const acc: FilterStrategy = (data: number[], dataWindow: DataWindow) => {
+  const totalAcc = data.reduce((a, b) => a + Math.abs(b));
+  // Normalize the total acceleration using the number of samples the device
+  // is guaranteed to operate on. This should reduce differences in the model
+  // predication between the browser and device.
+  return (totalAcc / data.length) * dataWindow.deviceSamplesLength;
+};
 
-const rms: FilterStrategy = (d) =>
+const _rms = (d: number[]) =>
   Math.sqrt(d.reduce((a, b) => a + Math.pow(b, 2), 0) / d.length);
+const rms: FilterStrategy = (d) => _rms(d);
 
 // Max acceleration the micro:bit can detect.
 // https://microbit-challenges.readthedocs.io/en/latest/tutorials/accelerometer.html#basic-functions
@@ -142,6 +151,6 @@ export const getMlFilters = (
   [Filter.RMS]: {
     strategy: rms,
     min: 0,
-    max: rms(Array(dataWindow.minSamples).fill(maxAcceleration) as number[]),
+    max: _rms(Array(dataWindow.minSamples).fill(maxAcceleration) as number[]),
   },
 });

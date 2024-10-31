@@ -1213,6 +1213,26 @@
       "value": "Import data samples"
     }
   ],
+  "import-error-dialog-content": [
+    {
+      "type": 0,
+      "value": "Only MakeCode hex files or a data samples files (.json) can be opened by "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "import-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "Unsupported file type"
+    }
+  ],
   "incompatible-device-body-alt": [
     {
       "type": 0,
@@ -1537,6 +1557,18 @@
     {
       "type": 0,
       "value": "No data samples"
+    }
+  ],
+  "not-create-ai-hex-import-dialog-content": [
+    {
+      "type": 0,
+      "value": "This project did not contain any data samples, so only the code has been opened. You need to train a model before you can use the code."
+    }
+  ],
+  "not-create-ai-hex-import-dialog-title": [
+    {
+      "type": 0,
+      "value": "Your MakeCode project has been imported"
     }
   ],
   "not-found": [

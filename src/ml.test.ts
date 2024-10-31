@@ -123,14 +123,14 @@ describe("applyFilters", () => {
   });
   test("returns filtered results", () => {
     const xyzData = {
-      x: [1, 1, 1, 1, 1, 1, 1],
-      y: [1, 1, 1, 1, 1, 1, 1],
-      z: [1, 1, 1, 1, 1, 1, 1],
+      x: new Array(44).fill(1),
+      y: new Array(44).fill(1),
+      z: new Array(44).fill(1),
     };
     expect(applyFilters(xyzData, currentDataWindow)).toEqual({
-      "acc-x": 7,
-      "acc-y": 7,
-      "acc-z": 7,
+      "acc-x": 50,
+      "acc-y": 50,
+      "acc-z": 50,
       "max-x": 1,
       "max-y": 1,
       "max-z": 1,

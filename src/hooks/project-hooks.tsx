@@ -17,7 +17,12 @@ import {
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useLogging } from "../logging/logging-hooks";
-import { HexData, isDatasetUserFileFormat, SaveStep } from "../model";
+import {
+  HexData,
+  isDatasetUserFileFormat,
+  PostImportDialogState,
+  SaveStep,
+} from "../model";
 import { defaultProjectName } from "../project-name";
 import { useStore } from "../store";
 import {
@@ -92,6 +97,7 @@ export const ProjectProvider = ({
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
   const getCurrentProject = useStore((s) => s.getCurrentProject);
+  const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
   const navigate = useNavigate();
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
@@ -178,16 +184,25 @@ export const ProjectProvider = ({
           loadDataset(gestureData);
           navigate(createDataSamplesPageUrl());
         } else {
-          // TODO: complain to the user!
+          setPostImportDialogState(PostImportDialogState.Error);
         }
       } else if (fileExtension === "hex") {
-        driverRef.current!.importFile({
-          filename: file.name,
-          parts: [await readFileAsText(file)],
-        });
+        const hex = await readFileAsText(file);
+        const makeCodeMagicMark = "41140E2FB82FA2BB";
+        // Check if is a MakeCode hex, otherwise show error dialog.
+        if (hex.includes(makeCodeMagicMark)) {
+          driverRef.current!.importFile({
+            filename: file.name,
+            parts: [hex],
+          });
+        } else {
+          setPostImportDialogState(PostImportDialogState.Error);
+        }
+      } else {
+        setPostImportDialogState(PostImportDialogState.Error);
       }
     },
-    [driverRef, loadDataset, logging, navigate]
+    [driverRef, loadDataset, logging, navigate, setPostImportDialogState]
   );
 
   const setSave = useStore((s) => s.setSave);
