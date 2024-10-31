@@ -205,6 +205,7 @@ export interface Actions {
   tourComplete(id: TourId): void;
 
   setDataSamplesView(view: DataSamplesView): void;
+  setShowGraphs(show: boolean): void;
 }
 
 type Store = State & Actions;
@@ -809,6 +810,15 @@ const createMlStore = (logging: Logging) => {
               settings: {
                 ...settings,
                 dataSamplesView: view,
+              },
+            }));
+          },
+
+          setShowGraphs(show: boolean) {
+            set(({ settings }) => ({
+              settings: {
+                ...settings,
+                showGraphs: show,
               },
             }));
           },

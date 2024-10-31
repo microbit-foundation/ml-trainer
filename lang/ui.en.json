@@ -407,22 +407,6 @@
     "defaultMessage": "Short collections of movement data lasting 1 second. Your data samples are only stored on your computer, they do not get sent to anyone else.",
     "description": "Tooltip for data samples heading"
   },
-  "data-samples-view-data-features-option": {
-    "defaultMessage": "Data features",
-    "description": "Data samples view option"
-  },
-  "data-samples-view-graph-and-data-features-option": {
-    "defaultMessage": "Graphs and data features",
-    "description": "Data samples view option"
-  },
-  "data-samples-view-graph-option": {
-    "defaultMessage": "Graphs",
-    "description": "Data samples view option"
-  },
-  "data-samples-view-options-heading": {
-    "defaultMessage": "Views",
-    "description": "Data samples view options heading"
-  },
   "delete-action-aria": {
     "defaultMessage": "Delete action \"{action}\"",
     "description": "Aria label for action delete icon"
@@ -1058,6 +1042,10 @@
   "show-data-features-action": {
     "defaultMessage": "Show data features",
     "description": "Show data features button text"
+  },
+  "show-graphs-checkbox-label-text": {
+    "defaultMessage": "Show graphs",
+    "description": "Show graphs checkbox label text"
   },
   "simple-ai-exercise-timer-resource-title": {
     "defaultMessage": "Simple AI exercise timer",

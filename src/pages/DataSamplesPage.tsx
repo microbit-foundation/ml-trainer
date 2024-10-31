@@ -13,7 +13,6 @@ import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
-import DataSampleViewControls from "../components/DataSamplesViewControls";
 
 const DataSamplesPage = () => {
   const gestures = useStore((s) => s.gestures);
@@ -73,7 +72,6 @@ const DataSamplesPage = () => {
               </Button>
             </HStack>
             <HStack>
-              <DataSampleViewControls />
               {model ? (
                 <Button
                   onClick={handleNavigateToModel}

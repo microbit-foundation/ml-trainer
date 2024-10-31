@@ -2,6 +2,7 @@ import {
   Button,
   Grid,
   GridProps,
+  HStack,
   Text,
   useDisclosure,
   VStack,
@@ -19,6 +20,7 @@ import DataSamplesMenu from "./DataSamplesMenu";
 import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
 import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
 import RecordingDialog from "./RecordingDialog";
+import ShowGraphsCheckbox from "./ShowGraphsCheckbox";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -35,7 +37,12 @@ const headings: GridColumnHeadingItemProps[] = [
   {
     titleId: "data-samples-label",
     descriptionId: "data-samples-tooltip",
-    itemsRight: <DataSamplesMenu />,
+    itemsRight: (
+      <HStack>
+        <ShowGraphsCheckbox />
+        <DataSamplesMenu />
+      </HStack>
+    ),
   },
 ];
 
