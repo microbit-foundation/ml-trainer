@@ -137,11 +137,12 @@ const RecordingDialog = ({
               } else if (recordingsRemaining) {
                 startRecording();
               } else {
+                setRecordingsRemaining((prev) => prev - 1);
                 setRecordingStatus(RecordingStatus.Done);
                 doneTimeout.current = setTimeout(() => {
                   handleCleanup();
                   onRecordingComplete(recordingId);
-                }, 1500);
+                }, 1000);
               }
             },
             onError() {
@@ -173,11 +174,13 @@ const RecordingDialog = ({
           if (recordingsRemaining) {
             continueRecording();
           } else {
+            setRunningContinuously(false);
+            setRecordingsRemaining((prev) => prev - 1);
             setRecordingStatus(RecordingStatus.Done);
             doneTimeout.current = setTimeout(() => {
               handleCleanup();
               onRecordingComplete(recordingId);
-            }, 500);
+            }, 1000);
           }
         },
         onError() {
@@ -222,8 +225,7 @@ const RecordingDialog = ({
     // A bit of a fiddle to show the correct number of recordings remaining
     // without having the initial figures change just after the dialog opens
     const recordingsRemainingVal = recordingsRemaining + 1;
-    return recordingsRemainingVal !== 0 &&
-      recordingsRemainingVal < recordingsToCapture
+    return recordingsRemainingVal < recordingsToCapture
       ? recordingsRemainingVal
       : recordingsToCapture;
   }, [recordingsRemaining, recordingsToCapture]);
@@ -276,7 +278,7 @@ const RecordingDialog = ({
                 )}
                 {recordingStatus === RecordingStatus.Done && (
                   <Text
-                    fontSize="4xl"
+                    fontSize="5xl"
                     textAlign="center"
                     fontWeight="bold"
                     color="brand.500"

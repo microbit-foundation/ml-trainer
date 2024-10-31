@@ -1228,7 +1228,7 @@
   "import-error-dialog-content": [
     {
       "type": 0,
-      "value": "Only MakeCode hex files or a data samples files (.json) can be opened by "
+      "value": "Only MakeCode hex files or data samples files (.json) can be opened by "
     },
     {
       "type": 1,
@@ -1768,7 +1768,7 @@
   "recording-complete": [
     {
       "type": 0,
-      "value": "Recording complete"
+      "value": "Done"
     }
   ],
   "recording-data-for": [

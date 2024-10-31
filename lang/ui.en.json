@@ -1012,8 +1012,8 @@
     "description": "Shown during recording"
   },
   "recording-complete": {
-    "defaultMessage": "Recording complete",
-    "description": "Recording complete dialog text"
+    "defaultMessage": "Done",
+    "description": "Text shown when data recording complete"
   },
   "recording-data-for": {
     "defaultMessage": "Record data for action \"{action}\"",
