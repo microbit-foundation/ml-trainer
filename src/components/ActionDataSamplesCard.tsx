@@ -210,9 +210,7 @@ const RecordingArea = ({
                     values={{ numSeconds: 10 }}
                   />
                 </Text>
-                <Text fontSize="xs">
-                  Move continuously for 10s to get 10 samples
-                </Text>
+                <Text fontSize="xs">Move continuously to get 10 samples</Text>
               </MenuItem>
             </MenuList>
           </Portal>
