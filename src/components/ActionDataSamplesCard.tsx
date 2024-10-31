@@ -168,6 +168,7 @@ const RecordingArea = ({
       <Menu>
         <ButtonGroup isAttached>
           <Button
+            pr={2}
             variant={selected ? "solid" : "outline"}
             colorScheme="red"
             onClick={() => onRecord(1, false)}
@@ -179,19 +180,17 @@ const RecordingArea = ({
             <FormattedMessage id="record-action" />
           </Button>
           <MoreMenuButton
+            minW={8}
             variant={selected ? "record" : "recordOutline"}
             aria-label="More record options"
           />
           <Portal>
             <MenuList>
-              <MenuItem onClick={() => onRecord(3, false)}>
-                Record 3 samples
-              </MenuItem>
               <MenuItem onClick={() => onRecord(10, false)}>
                 Record 10 samples
               </MenuItem>
               <MenuItem onClick={() => onRecord(30, true)}>
-                Record for 30 seconds
+                Record for 10 seconds
               </MenuItem>
             </MenuList>
           </Portal>
