@@ -40,7 +40,7 @@ const allFlags: FlagMetadata[] = [
   { name: "homePageProjects", defaultOnStages: ["local", "review", "staging"] },
   {
     name: "preReleaseNotice",
-    defaultOnStages: ["review", "staging", "production"],
+    defaultOnStages: ["production"],
   },
   { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
   { name: "exampleOptInB", defaultOnStages: [] },
