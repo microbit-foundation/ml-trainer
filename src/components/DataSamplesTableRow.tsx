@@ -18,6 +18,7 @@ interface DataSamplesTableRowProps {
   onRecord: (recordingsToCapture: number, continuousRecording: boolean) => void;
   showHints: boolean;
   newRecordingId?: number;
+  clearNewRecordingId: () => void;
 }
 
 const DataSamplesTableRow = ({
@@ -27,6 +28,7 @@ const DataSamplesTableRow = ({
   onRecord,
   showHints: showHints,
   newRecordingId,
+  clearNewRecordingId,
 }: DataSamplesTableRowProps) => {
   const intl = useIntl();
   const deleteConfirmDisclosure = useDisclosure();
@@ -76,6 +78,7 @@ const DataSamplesTableRow = ({
               selected={selected}
               onSelectRow={onSelectRow}
               onRecord={onRecord}
+              clearNewRecordingId={clearNewRecordingId}
             />
           )}
         </GridItem>

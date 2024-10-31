@@ -1,4 +1,5 @@
 import {
+  BoxProps,
   Button,
   HStack,
   Icon,
@@ -85,7 +86,9 @@ const LiveGraphPanel = ({
           gap={10}
           justifyContent="center"
         >
-          <MicrobitWarningIllustration />
+          <MicrobitWarningIllustration
+            display={{ base: "none", sm: "block" }}
+          />
           <VStack gap={3} alignItems="self-start">
             <Text fontWeight="bold">
               <FormattedMessage id="microbit-not-connected" />
@@ -204,8 +207,8 @@ const LiveGraphPanel = ({
   );
 };
 
-const MicrobitWarningIllustration = () => (
-  <HStack position="relative" aria-hidden>
+const MicrobitWarningIllustration = (props: BoxProps) => (
+  <HStack position="relative" aria-hidden {...props}>
     <Image src={microbitImage} objectFit="contain" boxSize="120px" bottom={0} />
     <Icon
       as={AlertIcon}

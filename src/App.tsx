@@ -37,6 +37,8 @@ import {
   createNewPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
+import { hasMakeCodeMlExtension } from "./makecode/utils";
+import { PostImportDialogState } from "./model";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -102,6 +104,7 @@ const Providers = ({ children }: ProviderLayoutProps) => {
 
 const Layout = () => {
   const driverRef = useRef<MakeCodeFrameDriver>(null);
+  const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
   const navigate = useNavigate();
   const toast = useToast();
   const intl = useIntl();
@@ -110,7 +113,7 @@ const Layout = () => {
     return useStore.subscribe(
       (
         { projectLoadTimestamp },
-        { projectLoadTimestamp: prevProjectLoadTimestamp }
+        { projectLoadTimestamp: prevProjectLoadTimestamp, getCurrentProject }
       ) => {
         if (projectLoadTimestamp > prevProjectLoadTimestamp) {
           // Side effects of loading a project, which MakeCode notifies us of.
@@ -121,10 +124,14 @@ const Layout = () => {
             title: intl.formatMessage({ id: "project-loaded" }),
             status: "info",
           });
+          const project = getCurrentProject();
+          if (!hasMakeCodeMlExtension(project)) {
+            setPostImportDialogState(PostImportDialogState.NonCreateAiHex);
+          }
         }
       }
     );
-  }, [intl, navigate, toast]);
+  }, [intl, navigate, setPostImportDialogState, toast]);
 
   return (
     // We use this even though we have errorElement as this does logging.

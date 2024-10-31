@@ -20,7 +20,11 @@ import {
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
-import { SaveStep, TrainModelDialogStage } from "../model";
+import {
+  PostImportDialogState,
+  SaveStep,
+  TrainModelDialogStage,
+} from "../model";
 import Tour from "../pages/Tour";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
@@ -35,6 +39,8 @@ import SaveDialogs from "./SaveDialogs";
 import SettingsMenu from "./SettingsMenu";
 import ToolbarMenu from "./ToolbarMenu";
 import HelpMenuItems from "./HelpMenuItems";
+import ImportErrorDialog from "./ImportErrorDialog";
+import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -70,15 +76,32 @@ const DefaultPageLayout = ({
       : appNameFull;
   }, [appNameFull, intl, titleId]);
 
+  const postImportDialogState = useStore((s) => s.postImportDialogState);
+  const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
+  const closePostImportDialog = useCallback(() => {
+    setPostImportDialogState(PostImportDialogState.None);
+  }, [setPostImportDialogState]);
+
   return (
     <>
       {/* Suppress dialogs to prevent overlapping dialogs */}
       {!isEditorOpen &&
         isTrainDialogClosed &&
         isTourClosed &&
-        isSaveDialogClosed && <ConnectionDialogs />}
+        isSaveDialogClosed &&
+        postImportDialogState === PostImportDialogState.None && (
+          <ConnectionDialogs />
+        )}
       <Tour />
       <SaveDialogs />
+      <NotCreateAiHexImportDialog
+        onClose={closePostImportDialog}
+        isOpen={postImportDialogState === PostImportDialogState.NonCreateAiHex}
+      />
+      <ImportErrorDialog
+        onClose={closePostImportDialog}
+        isOpen={postImportDialogState === PostImportDialogState.Error}
+      />
       <ProjectDropTarget
         isEnabled={
           isTrainDialogClosed &&
@@ -110,6 +133,11 @@ const DefaultPageLayout = ({
               itemsLeft={
                 toolbarItemsLeft || (
                   <AppLogo
+                    display={
+                      showPageTitle
+                        ? { base: "none", md: "inline-flex" }
+                        : "inline-flex"
+                    }
                     transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}
                   />
                 )

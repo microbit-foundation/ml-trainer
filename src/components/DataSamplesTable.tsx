@@ -141,7 +141,7 @@ const DataSamplesTable = ({
             <FormattedMessage id="no-data-samples" />
           </Text>
           {!isConnected && (
-            <Text fontSize="lg">
+            <Text fontSize="lg" textAlign="center">
               <FormattedMessage
                 id="connect-or-import"
                 values={{
@@ -185,6 +185,7 @@ const DataSamplesTable = ({
               key={g.ID}
               gesture={g}
               newRecordingId={newRecordingId}
+              clearNewRecordingId={() => setNewRecordingId(undefined)}
               selected={selectedGesture.ID === g.ID}
               onSelectRow={() => setSelectedGestureIdx(idx)}
               onRecord={handleRecord}

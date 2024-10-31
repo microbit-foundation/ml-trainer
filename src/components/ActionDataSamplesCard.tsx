@@ -1,5 +1,6 @@
 import {
   Box,
+  BoxProps,
   Button,
   ButtonGroup,
   Card,
@@ -14,6 +15,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { ReactNode, useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { flags } from "../flags";
 import { DataSamplesView, GestureData, RecordingData } from "../model";
@@ -36,6 +38,7 @@ interface ActionDataSamplesCardProps {
   onSelectRow?: () => void;
   onRecord: (recordingsToCapture: number, continuousRecording: boolean) => void;
   newRecordingId?: number;
+  clearNewRecordingId?: () => void;
 }
 
 const ActionDataSamplesCard = ({
@@ -44,9 +47,93 @@ const ActionDataSamplesCard = ({
   onSelectRow,
   onRecord,
   newRecordingId,
+  clearNewRecordingId,
 }: ActionDataSamplesCardProps) => {
   const deleteGestureRecording = useStore((s) => s.deleteGestureRecording);
   const view = useDataSamplesView();
+  if (view === DataSamplesView.GraphAndDataFeatures) {
+    // We split the cards in this case
+    return (
+      <HStack>
+        <DataSamplesRowCard
+          onSelectRow={onSelectRow}
+          selected={selected}
+          position="relative"
+          className={tourElClassname.recordDataSamplesCard}
+        >
+          <RecordingArea
+            action={value}
+            selected={selected}
+            onRecord={onRecord}
+          />
+        </DataSamplesRowCard>
+        {value.recordings.map((recording, idx) => (
+          <DataSamplesRowCard
+            onSelectRow={onSelectRow}
+            selected={selected}
+            key={recording.ID}
+          >
+            <CloseButton
+              position="absolute"
+              top={-2}
+              right={-2}
+              rounded="full"
+              bgColor="white"
+              zIndex={1}
+              borderColor="blackAlpha.500"
+              boxShadow="sm"
+              onClick={() => deleteGestureRecording(value.ID, idx)}
+            />
+            <DataSample
+              recording={recording}
+              actionId={value.ID}
+              recordingIndex={idx}
+              isNew={newRecordingId === recording.ID}
+              onNewAnimationEnd={clearNewRecordingId}
+              onDelete={deleteGestureRecording}
+              view={view}
+              hasClose={false}
+            />
+          </DataSamplesRowCard>
+        ))}
+      </HStack>
+    );
+  }
+  return (
+    <DataSamplesRowCard
+      onSelectRow={onSelectRow}
+      selected={selected}
+      className={tourElClassname.recordDataSamplesCard}
+    >
+      <RecordingArea action={value} selected={selected} onRecord={onRecord} />
+      {value.recordings.map((recording, idx) => (
+        <DataSample
+          key={recording.ID}
+          actionId={value.ID}
+          recordingIndex={idx}
+          recording={recording}
+          isNew={newRecordingId === recording.ID}
+          onDelete={deleteGestureRecording}
+          onNewAnimationEnd={clearNewRecordingId}
+          view={view}
+        />
+      ))}
+    </DataSamplesRowCard>
+  );
+};
+
+interface DataSamplesRowCardProps extends BoxProps {
+  selected: boolean;
+  onSelectRow?: () => void;
+  children: ReactNode;
+}
+
+const DataSamplesRowCard = ({
+  selected,
+  onSelectRow,
+  children,
+  ...rest
+}: DataSamplesRowCardProps) => {
   return (
     <Card
       onClick={onSelectRow}
@@ -57,20 +144,10 @@ const ActionDataSamplesCard = ({
       width="fit-content"
       borderColor={selected ? "brand.500" : "transparent"}
       borderWidth={1}
-      className={tourElClassname.recordDataSamplesCard}
+      {...rest}
     >
       <CardBody display="flex" flexDirection="row" p={1} gap={3}>
-        <RecordingArea action={value} selected={selected} onRecord={onRecord} />
-        {value.recordings.map((recording, idx) => (
-          <DataSample
-            action={value}
-            key={recording.ID}
-            recording={recording}
-            isNew={newRecordingId === recording.ID}
-            onDelete={() => deleteGestureRecording(value.ID, idx)}
-            view={view}
-          />
-        ))}
+        {children}
       </CardBody>
     </Card>
   );
@@ -137,55 +214,74 @@ const RecordingArea = ({
 };
 
 const DataSample = ({
-  action,
   recording,
+  actionId,
+  recordingIndex,
   isNew,
+  onNewAnimationEnd,
   onDelete,
   view,
+  hasClose = true,
 }: {
-  action: GestureData;
   recording: RecordingData;
+  actionId: number;
+  recordingIndex: number;
   isNew: boolean;
-  onDelete: () => void;
+  onNewAnimationEnd?: () => void;
+  onDelete: (gestureId: GestureData["ID"], recordingIdx: number) => void;
   view: DataSamplesView;
+  hasClose?: boolean;
 }) => {
+  const hasGraph =
+    view === DataSamplesView.Graph ||
+    view === DataSamplesView.GraphAndDataFeatures;
+  const hasFingerprint =
+    view === DataSamplesView.DataFeatures ||
+    view === DataSamplesView.GraphAndDataFeatures;
   const intl = useIntl();
+  const handleDelete = useCallback(() => {
+    onDelete(actionId, recordingIndex);
+  }, [actionId, onDelete, recordingIndex]);
   return (
     <HStack key={recording.ID} position="relative">
-      <Box
-        position="absolute"
-        h="100%"
-        w="100%"
-        rounded="md"
-        animation={isNew ? `${flash} 1s` : undefined}
-      />
-      <CloseButton
-        position="absolute"
-        top={0}
-        right={0}
-        zIndex={1}
-        size="sm"
-        aria-label={intl.formatMessage({
-          id: "delete-recording-aria",
-        })}
-        onClick={onDelete}
-      />
-      {(view === DataSamplesView.Graph ||
-        view === DataSamplesView.GraphAndDataFeatures) && (
+      {hasClose && (
+        <CloseButton
+          position="absolute"
+          top={0}
+          right={0}
+          zIndex={1}
+          size="sm"
+          aria-label={intl.formatMessage({
+            id: "delete-recording-aria",
+          })}
+          onClick={handleDelete}
+        />
+      )}
+      {hasGraph && (
         <RecordingGraph
           data={recording.data}
           role="image"
           aria-label={intl.formatMessage({
             id: "recording-graph-label",
           })}
-        />
+        >
+          <Box
+            position="absolute"
+            top={0}
+            bottom={0}
+            left={0}
+            right={0}
+            rounded="md"
+            animation={isNew ? `${flash} 1s` : undefined}
+            onAnimationEnd={onNewAnimationEnd}
+          />
+        </RecordingGraph>
       )}
-      {(view === DataSamplesView.DataFeatures ||
-        view === DataSamplesView.GraphAndDataFeatures) && (
+      {hasFingerprint && (
         <RecordingFingerprint
+          size={view === DataSamplesView.GraphAndDataFeatures ? "sm" : "md"}
           data={recording.data}
           role="image"
-          gestureName={action.name}
           aria-label={intl.formatMessage({
             id: "recording-fingerprint-label",
           })}

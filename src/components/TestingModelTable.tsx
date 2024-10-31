@@ -7,7 +7,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
-import React from "react";
+import React, { useRef } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { PredictionResult } from "../hooks/ml-hooks";
@@ -56,6 +56,7 @@ const TestingModelTable = ({
   const { isConnected } = useConnectionStage();
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
+  const scrollableAreaRef = useRef<HTMLDivElement>(null);
   return (
     <MakeCodeRenderBlocksProvider
       key={makeCodeLang}
@@ -74,6 +75,7 @@ const TestingModelTable = ({
         alignItems="start"
         overflow="auto"
         flexShrink={1}
+        ref={scrollableAreaRef}
       >
         <HStack gap={0} h="min-content" w="full">
           <Grid
@@ -123,7 +125,9 @@ const TestingModelTable = ({
               );
             })}
           </Grid>
-          {projectEdited && <CodeViewCard project={project} />}
+          {projectEdited && (
+            <CodeViewCard parentRef={scrollableAreaRef} project={project} />
+          )}
         </HStack>
       </VStack>
     </MakeCodeRenderBlocksProvider>

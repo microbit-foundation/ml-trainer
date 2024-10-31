@@ -2,7 +2,7 @@ import { MicrobitWebUSBConnection } from "@microbit/microbit-connection";
 import { MakeCodeIcon } from "./utils/icons";
 import { ReactNode } from "react";
 import { SpotlightStyle } from "./pages/TourOverlay";
-import { ThemingProps } from "@chakra-ui/react";
+import { PlacementWithLogical, ThemingProps } from "@chakra-ui/react";
 
 export interface XYZData {
   x: number[];
@@ -158,6 +158,7 @@ export interface TourStep {
   content: ReactNode;
   spotlightStyle?: SpotlightStyle;
   modalSize?: ThemingProps<"Modal">["size"];
+  placement?: PlacementWithLogical;
 }
 
 export interface TourState {
@@ -201,4 +202,10 @@ export enum DataSamplesView {
   Graph = "graph",
   DataFeatures = "data features",
   GraphAndDataFeatures = "graph and data features",
+}
+
+export enum PostImportDialogState {
+  None = "none",
+  Error = "error",
+  NonCreateAiHex = "non create ai hex dialog",
 }

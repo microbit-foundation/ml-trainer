@@ -107,7 +107,9 @@ export const applyFilters = (
   return Array.from(mlSettings.includedFilters).reduce((acc, filter) => {
     const { strategy, min, max } = filters[filter];
     const applyFilter = (vs: number[]) =>
-      opts.normalize ? normalize(strategy(vs), min, max) : strategy(vs);
+      opts.normalize
+        ? normalize(strategy(vs, dataWindow), min, max)
+        : strategy(vs, dataWindow);
     return {
       ...acc,
       [`${filter}-x`]: applyFilter(x),

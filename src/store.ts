@@ -19,6 +19,7 @@ import {
   Gesture,
   GestureData,
   MicrobitToFlash,
+  PostImportDialogState,
   RecordingData,
   SaveState,
   SaveStep,
@@ -148,6 +149,7 @@ export interface State {
   trainModelDialogStage: TrainModelDialogStage;
 
   tourState?: TourState;
+  postImportDialogState: PostImportDialogState;
 }
 
 export interface Actions {
@@ -205,6 +207,8 @@ export interface Actions {
   tourComplete(id: TourId): void;
 
   setDataSamplesView(view: DataSamplesView): void;
+
+  setPostImportDialogState(state: PostImportDialogState): void;
 }
 
 type Store = State & Actions;
@@ -238,6 +242,7 @@ const createMlStore = (logging: Logging) => {
           trainModelDialogStage: TrainModelDialogStage.Closed,
           trainModelProgress: 0,
           dataSamplesView: DataSamplesView.Graph,
+          postImportDialogState: PostImportDialogState.None,
 
           setSettings(update: Partial<Settings>) {
             set(
@@ -811,6 +816,10 @@ const createMlStore = (logging: Logging) => {
                 dataSamplesView: view,
               },
             }));
+          },
+
+          setPostImportDialogState(state: PostImportDialogState) {
+            set({ postImportDialogState: state });
           },
         }),
         {

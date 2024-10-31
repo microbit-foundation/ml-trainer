@@ -167,6 +167,7 @@ export const tours: Record<TourId, TourStep[]> = {
         <FormattedMessageStepContent id="tour-testModel-makeCodeBlocks-content" />
       ),
       selector: classSelector(tourElClassname.makeCodeCodeView),
+      placement: "left",
     },
     {
       title: <FormattedMessage id="edit-in-makecode-action" />,
