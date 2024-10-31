@@ -102,7 +102,7 @@ const RecordingArea = ({
             <FormattedMessage id="record-action" />
           </Button>
           <MoreMenuButton
-            variant={selected ? "primary" : "secondary"}
+            variant={selected ? "record" : "recordOutline"}
             aria-label="More record options"
           />
           <Portal>
