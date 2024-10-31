@@ -17,8 +17,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback } from "react";
-import { RiTimerLine } from "react-icons/ri";
-import { TbNumbers } from "react-icons/tb";
+import { RiHashtag, RiTimerLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { flags } from "../flags";
 import { DataSamplesView, GestureData, RecordingData } from "../model";
@@ -191,7 +190,7 @@ const RecordingArea = ({
             <MenuList>
               <MenuItem
                 onClick={() => onRecord(10, false)}
-                icon={<Icon as={TbNumbers} h={5} w={5} />}
+                icon={<Icon as={RiHashtag} h={5} w={5} />}
               >
                 <Text fontSize="md">
                   <FormattedMessage
