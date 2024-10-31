@@ -1,8 +1,10 @@
 import {
+  Divider,
   Icon,
   IconButton,
   Menu,
   MenuButton,
+  MenuDivider,
   MenuItem,
   MenuList,
   Portal,
@@ -117,7 +119,6 @@ const DataSamplesMenu = () => {
         />
         <Portal>
           <MenuList>
-            <ViewDataFeaturesMenuItem />
             <LoadProjectMenuItem icon={<RiUpload2Line />} accept=".json">
               <FormattedMessage id="import-data-samples-action" />
             </LoadProjectMenuItem>
@@ -133,6 +134,8 @@ const DataSamplesMenu = () => {
             >
               <FormattedMessage id="delete-data-samples-action" />
             </MenuItem>
+            <MenuDivider />
+            <ViewDataFeaturesMenuItem />
           </MenuList>
         </Portal>
       </Menu>
