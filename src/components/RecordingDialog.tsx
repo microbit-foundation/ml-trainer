@@ -84,6 +84,7 @@ const RecordingDialog = ({
     setProgress(0);
     setRunningContinuously(false);
     onClose();
+    setRecordingsRemaining(-2);
   }, [onClose, recordingStopped]);
 
   const handleOnClose = useCallback(() => {
@@ -225,7 +226,8 @@ const RecordingDialog = ({
     // A bit of a fiddle to show the correct number of recordings remaining
     // without having the initial figures change just after the dialog opens
     const recordingsRemainingVal = recordingsRemaining + 1;
-    return recordingsRemainingVal < recordingsToCapture
+    return recordingsRemaining !== -2 &&
+      recordingsRemainingVal < recordingsToCapture
       ? recordingsRemainingVal
       : recordingsToCapture;
   }, [recordingsRemaining, recordingsToCapture]);
