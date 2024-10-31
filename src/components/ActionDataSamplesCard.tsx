@@ -224,11 +224,16 @@ const RecordingArea = ({
         </ButtonGroup>
       </Menu>
       {action.recordings.length < 3 ? (
-        <Text fontSize="xs" textAlign="center" fontWeight="bold">
+        <Text
+          fontSize="xs"
+          textAlign="center"
+          fontWeight="bold"
+          userSelect="none"
+        >
           <FormattedMessage id="data-samples-status-not-enough" />
         </Text>
       ) : (
-        <Text fontSize="xs" textAlign="center">
+        <Text fontSize="xs" textAlign="center" userSelect="none">
           <FormattedMessage
             id="data-samples-status-count"
             values={{ numSamples: action.recordings.length }}
