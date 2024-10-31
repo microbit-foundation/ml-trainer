@@ -170,7 +170,6 @@ const RecordingArea = ({
       <Menu>
         <ButtonGroup isAttached>
           <Button
-            pr={2}
             variant={selected ? "solid" : "outline"}
             colorScheme="red"
             onClick={() => onRecord(1, false)}
@@ -182,7 +181,6 @@ const RecordingArea = ({
             <FormattedMessage id="record-action" />
           </Button>
           <MoreMenuButton
-            minW={8}
             variant={selected ? "record" : "recordOutline"}
             aria-label="More record options"
           />
