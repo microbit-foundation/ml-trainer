@@ -19,15 +19,15 @@ export const usePrediction = () => {
   const [connectStatus] = useConnectStatus();
   const connection = useConnectActions();
   const [prediction, setPrediction] = useState<PredictionResult | undefined>();
-  const gestureData = useStore((s) => s.gestures);
+  const actionData = useStore((s) => s.gestures);
   const model = useStore((s) => s.model);
   const dataWindow = useStore((s) => s.dataWindow);
 
   // Use a ref to prevent restarting the effect every time thesholds change.
   // We only use the ref's value during the setInterval callback not render.
   // We can avoid this by storing the thresolds separately in state, even if we unify them when serializing them.
-  const gestureDataRef = useRef(gestureData);
-  gestureDataRef.current = gestureData;
+  const actionDataRef = useRef(actionData);
+  actionDataRef.current = actionData;
   useEffect(() => {
     if (!model) {
       return;
@@ -37,7 +37,7 @@ export const usePrediction = () => {
       const input = {
         model,
         data: buffer.getSamples(startTime),
-        classificationIds: gestureDataRef.current.map((g) => g.ID),
+        classificationIds: actionDataRef.current.map((g) => g.ID),
       };
       if (input.data.x.length > dataWindow.minSamples) {
         const result = await predict(input, dataWindow);
@@ -45,8 +45,8 @@ export const usePrediction = () => {
           logging.error(result.detail);
         } else {
           const { confidences } = result;
-          const detected = getDetectedGesture(
-            gestureDataRef.current,
+          const detected = getDetectedAction(
+            actionDataRef.current,
             result.confidences
           );
           setPrediction({
@@ -69,7 +69,7 @@ export const usePrediction = () => {
   return prediction;
 };
 
-export const getDetectedGesture = (
+export const getDetectedAction = (
   actions: Action[],
   confidences: Confidences | undefined
 ): Action | undefined => {
@@ -79,11 +79,11 @@ export const getDetectedGesture = (
 
   // If more than one meet the threshold pick the highest
   const thresholded = actions
-    .map((gesture) => ({
-      gesture,
+    .map((action) => ({
+      action,
       thresholdDelta:
-        confidences[gesture.ID] -
-        (gesture.requiredConfidence ?? mlSettings.defaultRequiredConfidence),
+        confidences[action.ID] -
+        (action.requiredConfidence ?? mlSettings.defaultRequiredConfidence),
     }))
     .sort((left, right) => {
       const a = left.thresholdDelta;
@@ -92,5 +92,5 @@ export const getDetectedGesture = (
     });
 
   const prediction = thresholded[thresholded.length - 1];
-  return prediction.thresholdDelta >= 0 ? prediction.gesture : undefined;
+  return prediction.thresholdDelta >= 0 ? prediction.action : undefined;
 };

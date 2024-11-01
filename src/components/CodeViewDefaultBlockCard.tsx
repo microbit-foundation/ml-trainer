@@ -5,11 +5,11 @@ import { tourElClassname } from "../tours";
 import CodeViewDefaultBlock from "./CodeViewDefaultBlock";
 
 interface CodeViewDefaultBlockCardProps {
-  gesture: ActionData;
+  actionData: ActionData;
 }
 
 const CodeViewDefaultBlockCard = ({
-  gesture,
+  actionData,
 }: CodeViewDefaultBlockCardProps) => {
   return (
     <Card
@@ -22,7 +22,10 @@ const CodeViewDefaultBlockCard = ({
       justifyContent="center"
       className={tourElClassname.makeCodeCodeView}
     >
-      <CodeViewDefaultBlock gestureName={gesture.name} icon={gesture.icon} />
+      <CodeViewDefaultBlock
+        actionName={actionData.name}
+        icon={actionData.icon}
+      />
     </Card>
   );
 };

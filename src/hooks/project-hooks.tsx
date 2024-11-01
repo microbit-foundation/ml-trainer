@@ -178,10 +178,10 @@ export const ProjectProvider = ({
         },
       });
       if (fileExtension === "json") {
-        const gestureDataString = await readFileAsText(file);
-        const gestureData = JSON.parse(gestureDataString) as unknown;
-        if (isDatasetUserFileFormat(gestureData)) {
-          loadDataset(gestureData);
+        const actionDataString = await readFileAsText(file);
+        const actionData = JSON.parse(actionDataString) as unknown;
+        if (isDatasetUserFileFormat(actionData)) {
+          loadDataset(actionData);
           navigate(createDataSamplesPageUrl());
         } else {
           setPostImportDialogState(PostImportDialogState.Error);

@@ -86,14 +86,14 @@ const TestingModelTable = ({
             h="fit-content"
             alignSelf="start"
           >
-            {actionsData.map((gesture, idx) => {
-              const { requiredConfidence: threshold } = gesture;
-              const isTriggered = detected ? detected.ID === gesture.ID : false;
+            {actionsData.map((action, idx) => {
+              const { requiredConfidence: threshold } = action;
+              const isTriggered = detected ? detected.ID === action.ID : false;
               return (
                 <React.Fragment key={idx}>
                   <GridItem>
                     <ActionNameCard
-                      value={gesture}
+                      value={action}
                       readOnly={true}
                       isTriggered={isTriggered}
                       disabled={!isConnected}
@@ -101,11 +101,11 @@ const TestingModelTable = ({
                   </GridItem>
                   <GridItem>
                     <ActionCertaintyCard
-                      actionName={gesture.name}
+                      actionName={action.name}
                       onThresholdChange={(val) =>
-                        setRequiredConfidence(gesture.ID, val)
+                        setRequiredConfidence(action.ID, val)
                       }
-                      currentConfidence={confidences?.[gesture.ID]}
+                      currentConfidence={confidences?.[action.ID]}
                       requiredConfidence={
                         threshold ?? mlSettings.defaultRequiredConfidence
                       }
@@ -118,7 +118,7 @@ const TestingModelTable = ({
                   </VStack>
                   <GridItem>
                     {!projectEdited && (
-                      <CodeViewDefaultBlockCard gesture={gesture} />
+                      <CodeViewDefaultBlockCard actionData={action} />
                     )}
                   </GridItem>
                 </React.Fragment>

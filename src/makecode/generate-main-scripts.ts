@@ -5,7 +5,7 @@ import { actionNamesFromLabels } from "./utils";
  *
  * SPDX-License-Identifier: MIT
  */
-export interface OnGestureRecognisedConfig {
+export interface OnActionRecognisedConfig {
   name: string;
   iconName: string;
 }
@@ -58,7 +58,7 @@ const statements: Record<Language, LanguageStatements> = {
 
 const onMLEventChildren = (
   s: LanguageStatements,
-  { iconName }: OnGestureRecognisedConfig
+  { iconName }: OnActionRecognisedConfig
 ) => {
   return iconName ? s.showIcon(iconName) : "";
 };

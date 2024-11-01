@@ -12,7 +12,7 @@ import { assert, vi } from "vitest";
 import { TrainingResult, trainModel } from "../ml";
 import { DatasetEditorJsonFormat, ActionData } from "../model";
 import oldProject from "../test-fixtures/project-to-update.json";
-import gestureData from "../test-fixtures/still-wave-clap-dataset.json";
+import actionData from "../test-fixtures/still-wave-clap-dataset.json";
 import {
   ActionName,
   actionNamesFromLabels,
@@ -26,7 +26,7 @@ import {
 import { currentDataWindow } from "../store";
 
 const data: DatasetEditorJsonFormat = {
-  data: gestureData as ActionData[],
+  data: actionData as ActionData[],
 };
 
 let trainingResult: TrainingResult;
@@ -41,7 +41,7 @@ beforeAll(async () => {
   randomSpy.mockImplementation(() => 0.5);
 
   trainingResult = await trainModel(
-    gestureData as ActionData[],
+    actionData as ActionData[],
     currentDataWindow
   );
 });

@@ -96,16 +96,16 @@ const updateProject = (
   model: tf.LayersModel | undefined,
   dataWindow: DataWindow
 ): Partial<Store> => {
-  const gestureData = { data: actions };
+  const actionData = { data: actions };
   const updatedProject = {
     ...project,
     text: {
       ...project.text,
       ...(projectEdited
-        ? generateCustomFiles(gestureData, model, dataWindow, project)
+        ? generateCustomFiles(actionData, model, dataWindow, project)
         : generateProject(
             project.header?.name ?? "Untitled",
-            gestureData,
+            actionData,
             model,
             dataWindow
           ).text),
@@ -406,8 +406,8 @@ const createMlStore = (logging: Logging) => {
                 model,
                 dataWindow,
               }) => {
-                // If we're changing the `id` gesture to use an icon that's already in use
-                // then we update the gesture that's using it to use the `id` gesture's current icon
+                // If we're changing the action to use an icon that's already in use
+                // then we update the action that's using the icon to use the action's current icon
                 const currentIcon = actions.find((g) => g.ID === id)?.icon;
                 const newActions = actions.map((g) => {
                   if (g.ID === id) {

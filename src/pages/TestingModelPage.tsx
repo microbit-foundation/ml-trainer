@@ -138,7 +138,7 @@ const TestingModelPage = () => {
         </HStack>
         <LiveGraphPanel
           detected={prediction?.detected}
-          showPredictedGesture
+          showPredictedAction
           disconnectedTextId="connect-to-test-model"
         />
       </VStack>

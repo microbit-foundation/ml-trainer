@@ -16,25 +16,25 @@ import { createTestingModelPageUrl } from "../urls";
 
 const DataSamplesPage = () => {
   const actionsData = useStore((s) => s.gestures);
-  const addNewGesture = useStore((s) => s.addNewAction);
+  const addNewAction = useStore((s) => s.addNewAction);
   const model = useStore((s) => s.model);
-  const [selectedGestureIdx, setSelectedGestureIdx] = useState<number>(0);
+  const [selectedActionIdx, setSelectedActionIdx] = useState<number>(0);
 
   const navigate = useNavigate();
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
 
   const hasSufficientData = useHasSufficientDataForTraining();
-  const isAddNewGestureDisabled = actionsData.some((g) => g.name.length === 0);
+  const isAddNewActionDisabled = actionsData.some((g) => g.name.length === 0);
 
   const handleNavigateToModel = useCallback(() => {
     navigate(createTestingModelPageUrl());
   }, [navigate]);
 
   const trainButtonRef = useRef(null);
-  const handleAddNewGesture = useCallback(() => {
-    setSelectedGestureIdx(actionsData.length);
-    addNewGesture();
-  }, [addNewGesture, actionsData]);
+  const handleAddNewAction = useCallback(() => {
+    setSelectedActionIdx(actionsData.length);
+    addNewAction();
+  }, [addNewAction, actionsData]);
 
   return (
     <>
@@ -46,8 +46,8 @@ const DataSamplesPage = () => {
         toolbarItemsRight={<ProjectToolbarItems />}
       >
         <DataSamplesTable
-          selectedGestureIdx={selectedGestureIdx}
-          setSelectedGestureIdx={setSelectedGestureIdx}
+          selectedActionIdx={selectedActionIdx}
+          setSelectedActionIdx={setSelectedActionIdx}
         />
         <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
           <HStack
@@ -65,8 +65,8 @@ const DataSamplesPage = () => {
                 className={tourElClassname.addActionButton}
                 variant={hasSufficientData ? "secondary" : "primary"}
                 leftIcon={<RiAddLine />}
-                onClick={handleAddNewGesture}
-                isDisabled={isAddNewGestureDisabled}
+                onClick={handleAddNewAction}
+                isDisabled={isAddNewActionDisabled}
               >
                 <FormattedMessage id="add-action-action" />
               </Button>

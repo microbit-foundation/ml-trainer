@@ -34,7 +34,7 @@ export interface RecordingDialogProps {
   isOpen: boolean;
   onClose: () => void;
   actionName: string;
-  gestureId: ActionData["ID"];
+  actionId: ActionData["ID"];
   onRecordingComplete: (recordingId: number) => void;
   recordingOptions: RecordingOptions;
 }
@@ -50,7 +50,7 @@ const RecordingDialog = ({
   isOpen,
   actionName,
   onClose,
-  gestureId,
+  actionId,
   onRecordingComplete,
   recordingOptions,
 }: RecordingDialogProps) => {
@@ -58,7 +58,7 @@ const RecordingDialog = ({
   const toast = useToast();
   const recordingStarted = useStore((s) => s.recordingStarted);
   const recordingStopped = useStore((s) => s.recordingStopped);
-  const addGestureRecordings = useStore((s) => s.addActionRecordings);
+  const addActionRecordings = useStore((s) => s.addActionRecordings);
   const recordingDataSource = useRecordingDataSource();
   const [recordingStatus, setRecordingStatus] = useState<RecordingStatus>(
     RecordingStatus.None
@@ -133,7 +133,7 @@ const RecordingDialog = ({
     recordingDataSource.startRecording({
       onDone(data) {
         const recordingId = Date.now();
-        addGestureRecordings(gestureId, [{ ID: recordingId, data }]);
+        addActionRecordings(actionId, [{ ID: recordingId, data }]);
         if (continuousRecording && recordingsRemaining) {
           continueRecording();
         } else if (!continuousRecording && recordingsRemaining) {
@@ -167,11 +167,11 @@ const RecordingDialog = ({
       onProgress: setProgress,
     });
   }, [
-    addGestureRecordings,
+    addActionRecordings,
     continueRecording,
     continuousRecording,
     decrementRecordingsRemaining,
-    gestureId,
+    actionId,
     handleCleanup,
     intl,
     onRecordingComplete,

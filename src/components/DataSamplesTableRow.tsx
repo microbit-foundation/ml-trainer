@@ -13,7 +13,7 @@ import {
 import { RecordingOptions } from "./RecordingDialog";
 
 interface DataSamplesTableRowProps {
-  gesture: ActionData;
+  action: ActionData;
   selected: boolean;
   onSelectRow: () => void;
   onRecord: (recordingOptions: RecordingOptions) => void;
@@ -23,7 +23,7 @@ interface DataSamplesTableRowProps {
 }
 
 const DataSamplesTableRow = ({
-  gesture,
+  action,
   selected,
   onSelectRow,
   onRecord,
@@ -33,7 +33,7 @@ const DataSamplesTableRow = ({
 }: DataSamplesTableRowProps) => {
   const intl = useIntl();
   const deleteConfirmDisclosure = useDisclosure();
-  const deleteGesture = useStore((s) => s.deleteAction);
+  const deleteAction = useStore((s) => s.deleteAction);
   const { stage } = useConnectionStage();
 
   return (
@@ -51,17 +51,17 @@ const DataSamplesTableRow = ({
             <FormattedMessage
               id="delete-action-confirm-text"
               values={{
-                action: gesture.name,
+                action: action.name,
               }}
             />
           </Text>
         }
-        onConfirm={() => deleteGesture(gesture.ID)}
+        onConfirm={() => deleteAction(action.ID)}
         onCancel={deleteConfirmDisclosure.onClose}
       />
       <GridItem>
         <ActionNameCard
-          value={gesture}
+          value={action}
           onDeleteAction={deleteConfirmDisclosure.onOpen}
           onSelectRow={onSelectRow}
           selected={selected}
@@ -69,13 +69,13 @@ const DataSamplesTableRow = ({
         />
       </GridItem>
       {showHints ? (
-        <DataSamplesTableHints gesture={gesture} onRecord={onRecord} />
+        <DataSamplesTableHints actionData={action} onRecord={onRecord} />
       ) : (
         <GridItem>
-          {(gesture.name.length > 0 || gesture.recordings.length > 0) && (
+          {(action.name.length > 0 || action.recordings.length > 0) && (
             <ActionDataSamplesCard
               newRecordingId={newRecordingId}
-              value={gesture}
+              value={action}
               selected={selected}
               onSelectRow={onSelectRow}
               onRecord={onRecord}

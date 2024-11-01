@@ -16,7 +16,7 @@ import {
   trainModel,
 } from "./ml";
 import actionDataBadLabels from "./test-fixtures/action-data-bad-labels.json";
-import gestureData from "./test-fixtures/action-data.json";
+import actionData from "./test-fixtures/action-data.json";
 import testdataShakeStill from "./test-fixtures/test-data-shake-still.json";
 import { currentDataWindow } from "./store";
 
@@ -30,7 +30,7 @@ beforeAll(async () => {
   // No webgl in tests running in node.
   await tf.setBackend("cpu");
   trainingResult = await trainModel(
-    fixUpTestData(gestureData),
+    fixUpTestData(actionData),
     currentDataWindow
   );
 });
@@ -65,7 +65,7 @@ const getModelResults = (data: ActionData[]) => {
 describe("Model tests", () => {
   test("returns acceptable results on training data", () => {
     const { tensorFlowResultAccuracy, tensorflowPredictionResult, labels } =
-      getModelResults(fixUpTestData(gestureData));
+      getModelResults(fixUpTestData(actionData));
     const d = labels[0].length; // dimensions
     for (let i = 0, j = 0; i < tensorflowPredictionResult.length; i += d, j++) {
       const result = tensorflowPredictionResult.slice(i, i + d);

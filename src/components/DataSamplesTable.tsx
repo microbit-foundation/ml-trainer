@@ -54,18 +54,18 @@ const headings: GridColumnHeadingItemProps[] = [
 ];
 
 interface DataSamplesTableProps {
-  selectedGestureIdx: number;
-  setSelectedGestureIdx: (idx: number) => void;
+  selectedActionIdx: number;
+  setSelectedActionIdx: (idx: number) => void;
 }
 
 const DataSamplesTable = ({
-  selectedGestureIdx,
-  setSelectedGestureIdx,
+  selectedActionIdx: selectedActionIdx,
+  setSelectedActionIdx: setSelectedActionIdx,
 }: DataSamplesTableProps) => {
   const actionsData = useStore((s) => s.gestures);
-  // Default to first gesture being selected if last gesture is deleted.
+  // Default to first action being selected if last action is deleted.
   const selectedAction: ActionData =
-    actionsData[selectedGestureIdx] ?? actionsData[0];
+    actionsData[selectedActionIdx] ?? actionsData[0];
 
   const showHints = useMemo<boolean>(
     () =>
@@ -132,7 +132,7 @@ const DataSamplesTable = ({
       />
       {selectedAction && (
         <RecordingDialog
-          gestureId={selectedAction.ID}
+          actionId={selectedAction.ID}
           isOpen={recordingDialogDisclosure.isOpen}
           onClose={recordingDialogDisclosure.onClose}
           actionName={selectedAction.name}
@@ -197,14 +197,14 @@ const DataSamplesTable = ({
           flexGrow={1}
           h={0}
         >
-          {actionsData.map((g, idx) => (
+          {actionsData.map((action, idx) => (
             <DataSamplesTableRow
-              key={g.ID}
-              gesture={g}
+              key={action.ID}
+              action={action}
               newRecordingId={newRecordingId}
               clearNewRecordingId={() => setNewRecordingId(undefined)}
-              selected={selectedAction.ID === g.ID}
-              onSelectRow={() => setSelectedGestureIdx(idx)}
+              selected={selectedAction.ID === action.ID}
+              onSelectRow={() => setSelectedActionIdx(idx)}
               onRecord={handleRecord}
               showHints={showHints}
             />
