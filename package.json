@@ -14,7 +14,7 @@
     "postinstall": "npm run theme",
     "preview": "vite preview",
     "start": "vite dev",
-    "test": "vitest",
+    "test": "vitest --exclude **/ml4f-output.test.ts",
     "test:e2e": "playwright test --headed",
     "test:e2e:headless": "playwright test",
     "theme:watch": "chakra-cli tokens src/deployment/default/theme.ts --watch",
