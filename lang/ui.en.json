@@ -1131,6 +1131,10 @@
     "defaultMessage": "Train",
     "description": "Step in home page diagram"
   },
+  "stop-recording-action": {
+    "defaultMessage": "Stop recording",
+    "description": "Button label to stop recording movement data while recording multiple samples"
+  },
   "support-request": {
     "defaultMessage": "Please consider <link>raising a support request</link>.",
     "description": "Support request link text"

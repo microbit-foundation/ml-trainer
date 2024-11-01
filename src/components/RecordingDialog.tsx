@@ -304,7 +304,13 @@ const RecordingDialog = ({
                 disabled={recordingStatus === RecordingStatus.Done}
                 opacity={recordingStatus === RecordingStatus.Done ? 0.5 : 1}
               >
-                <FormattedMessage id="cancel-recording-action" />
+                <FormattedMessage
+                  id={
+                    recordingsToCapture > 1
+                      ? "stop-recording-action"
+                      : "cancel-recording-action"
+                  }
+                />
               </Button>
             </VStack>
           </ModalBody>

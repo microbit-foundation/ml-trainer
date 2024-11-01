@@ -2009,6 +2009,12 @@
       "value": "Train"
     }
   ],
+  "stop-recording-action": [
+    {
+      "type": 0,
+      "value": "Stop recording"
+    }
+  ],
   "support-request": [
     {
       "type": 0,
