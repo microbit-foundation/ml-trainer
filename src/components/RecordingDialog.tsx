@@ -25,14 +25,18 @@ interface CountdownStage {
   fontSize?: string;
 }
 
+export interface RecordingOptions {
+  recordingsToCapture: number;
+  continuousRecording: boolean;
+}
+
 export interface RecordingDialogProps {
   isOpen: boolean;
   onClose: () => void;
   actionName: string;
   gestureId: GestureData["ID"];
   onRecordingComplete: (recordingId: number) => void;
-  recordingsToCapture: number;
-  continuousRecording: boolean;
+  recordingOptions: RecordingOptions;
 }
 
 enum RecordingStatus {
@@ -48,8 +52,7 @@ const RecordingDialog = ({
   onClose,
   gestureId,
   onRecordingComplete,
-  recordingsToCapture,
-  continuousRecording,
+  recordingOptions,
 }: RecordingDialogProps) => {
   const intl = useIntl();
   const toast = useToast();
@@ -74,6 +77,7 @@ const RecordingDialog = ({
     [intl]
   );
   const [countdownStageIndex, setCountdownStageIndex] = useState<number>(0);
+  const { continuousRecording, recordingsToCapture } = recordingOptions;
   const [recordingsRemaining, setRecordingsRemaining] = useState<
     number | undefined
   >(recordingsToCapture);
@@ -311,18 +315,18 @@ const RecordingDialog = ({
   );
 };
 
-interface RecordingOptions {
+interface RecordingConfig {
   onDone: (data: XYZData) => void;
   onError: () => void;
   onProgress: (percentage: number) => void;
 }
 
-interface InProgressRecording extends RecordingOptions {
+interface InProgressRecording extends RecordingConfig {
   startTimeMillis: number;
 }
 
 interface RecordingDataSource {
-  startRecording(options: RecordingOptions): void;
+  startRecording(config: RecordingConfig): void;
   cancelRecording(): void;
 }
 
@@ -350,7 +354,7 @@ const useRecordingDataSource = (): RecordingDataSource => {
     () => ({
       timeout: undefined as ReturnType<typeof setTimeout> | undefined,
 
-      startRecording(options: RecordingOptions) {
+      startRecording(options: RecordingConfig) {
         this.timeout = setTimeout(() => {
           if (ref.current) {
             const data = bufferedData.getSamples(

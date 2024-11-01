@@ -10,12 +10,13 @@ import {
   ConnectionFlowStep,
   useConnectionStage,
 } from "../connection-stage-hooks";
+import { RecordingOptions } from "./RecordingDialog";
 
 interface DataSamplesTableRowProps {
   gesture: GestureData;
   selected: boolean;
   onSelectRow: () => void;
-  onRecord: (recordingsToCapture: number, continuousRecording: boolean) => void;
+  onRecord: (recordingOptions: RecordingOptions) => void;
   showHints: boolean;
   newRecordingId?: number;
   clearNewRecordingId: () => void;

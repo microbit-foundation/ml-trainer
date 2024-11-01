@@ -26,6 +26,7 @@ import { tourElClassname } from "../tours";
 import MoreMenuButton from "./MoreMenuButton";
 import RecordingFingerprint from "./RecordingFingerprint";
 import RecordingGraph from "./RecordingGraph";
+import { RecordingOptions } from "./RecordingDialog";
 
 const flash = keyframes({
   "0%, 10%": {
@@ -38,7 +39,7 @@ interface ActionDataSamplesCardProps {
   value: GestureData;
   selected: boolean;
   onSelectRow?: () => void;
-  onRecord: (recordingsToCapture: number, continuousRecording: boolean) => void;
+  onRecord: (recordingOptions: RecordingOptions) => void;
   newRecordingId?: number;
   clearNewRecordingId?: () => void;
 }
@@ -162,7 +163,7 @@ const RecordingArea = ({
 }: {
   action: GestureData;
   selected: boolean;
-  onRecord: (recordingsToCapture: number, continuousRecording: boolean) => void;
+  onRecord: (recordingOptions: RecordingOptions) => void;
 }) => {
   const intl = useIntl();
   return (
@@ -173,7 +174,9 @@ const RecordingArea = ({
             pr={2}
             variant={selected ? "solid" : "outline"}
             colorScheme="red"
-            onClick={() => onRecord(1, false)}
+            onClick={() =>
+              onRecord({ recordingsToCapture: 1, continuousRecording: false })
+            }
             aria-label={intl.formatMessage(
               { id: "record-action-aria" },
               { action: action.name }
@@ -189,7 +192,12 @@ const RecordingArea = ({
           <Portal>
             <MenuList>
               <MenuItem
-                onClick={() => onRecord(10, false)}
+                onClick={() =>
+                  onRecord({
+                    recordingsToCapture: 10,
+                    continuousRecording: false,
+                  })
+                }
                 icon={<Icon as={RiHashtag} h={5} w={5} />}
               >
                 <Text fontSize="md">
@@ -203,7 +211,12 @@ const RecordingArea = ({
                 </Text>
               </MenuItem>
               <MenuItem
-                onClick={() => onRecord(10, true)}
+                onClick={() =>
+                  onRecord({
+                    recordingsToCapture: 10,
+                    continuousRecording: true,
+                  })
+                }
                 icon={<Icon as={RiTimerLine} h={5} w={5} />}
               >
                 <Text fontSize="md">

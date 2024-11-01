@@ -25,7 +25,7 @@ import DataSamplesTableRow from "./DataSamplesTableRow";
 import DataSamplesMenu from "./DataSamplesMenu";
 import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
 import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
-import RecordingDialog from "./RecordingDialog";
+import RecordingDialog, { RecordingOptions } from "./RecordingDialog";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -93,13 +93,13 @@ const DataSamplesTable = ({
     };
   }, [connection, recordingDialogDisclosure]);
 
-  const [recordingsToCapture, setRecordingsToCapture] = useState<number>(1);
-  const [continuousRecording, setContinuousRecording] =
-    useState<boolean>(false);
+  const [recordingOptions, setRecordingOptions] = useState<RecordingOptions>({
+    continuousRecording: false,
+    recordingsToCapture: 1,
+  });
   const handleRecord = useCallback(
-    (recordingsToCapture: number, continuousRecording: boolean) => {
-      setRecordingsToCapture(recordingsToCapture);
-      setContinuousRecording(continuousRecording);
+    (recordingOptions: RecordingOptions) => {
+      setRecordingOptions(recordingOptions);
       isConnected
         ? recordingDialogDisclosure.onOpen()
         : connectToRecordDialogDisclosure.onOpen();
@@ -119,8 +119,7 @@ const DataSamplesTable = ({
           onClose={recordingDialogDisclosure.onClose}
           actionName={selectedGesture.name}
           onRecordingComplete={setNewRecordingId}
-          recordingsToCapture={recordingsToCapture}
-          continuousRecording={continuousRecording}
+          recordingOptions={recordingOptions}
         />
       )}
       <HeadingGrid
