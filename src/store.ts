@@ -329,7 +329,7 @@ const createMlStore = (logging: Logging) => {
           },
 
           addGestureRecordings(id: GestureData["ID"], recs: RecordingData[]) {
-            return set(({ gestures, settings: { toursCompleted } }) => {
+            return set(({ gestures }) => {
               const updatedGestures = gestures.map((g) => {
                 if (g.ID === id) {
                   return { ...g, recordings: [...recs, ...g.recordings] };
@@ -339,12 +339,6 @@ const createMlStore = (logging: Logging) => {
               return {
                 gestures: updatedGestures,
                 model: undefined,
-                tourState:
-                  !toursCompleted.includes(TourId.CollectDataToTrainModel) &&
-                  updatedGestures.length === 1 &&
-                  updatedGestures[0].recordings.length === 1
-                    ? { id: TourId.CollectDataToTrainModel, index: 0 }
-                    : undefined,
               };
             });
           },

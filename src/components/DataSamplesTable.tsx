@@ -19,7 +19,7 @@ import {
 import { FormattedMessage } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { GestureData } from "../model";
+import { GestureData, TourId } from "../model";
 import { useStore } from "../store";
 import ConnectToRecordDialog from "./ConnectToRecordDialog";
 import DataSamplesMenu from "./DataSamplesMenu";
@@ -113,6 +113,17 @@ const DataSamplesTable = ({
     },
     [connectToRecordDialogDisclosure, isConnected, recordingDialogDisclosure]
   );
+
+  const tourStart = useStore((s) => s.tourStart);
+  useEffect(() => {
+    if (
+      !recordingDialogDisclosure.isOpen &&
+      gestures.length === 1 &&
+      gestures[0].recordings.length === 1
+    ) {
+      tourStart(TourId.CollectDataToTrainModel);
+    }
+  }, [gestures, recordingDialogDisclosure.isOpen, tourStart]);
   return (
     <>
       <ConnectToRecordDialog
