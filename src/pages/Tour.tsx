@@ -7,7 +7,6 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   usePopper,
   useToken,
 } from "@chakra-ui/react";
@@ -84,18 +83,14 @@ const Tour = () => {
       isCentered
       size={step.modalSize}
     >
-      {step.selector ? (
-        <TourOverlay
-          referenceRef={ourRef}
-          padding={spotlightPadding}
-          paddingTop={step.spotlightStyle?.paddingTop}
-          paddingBottom={step.spotlightStyle?.paddingBottom}
-          paddingRight={step.spotlightStyle?.paddingRight}
-          paddingLeft={step.spotlightStyle?.paddingLeft}
-        />
-      ) : (
-        <ModalOverlay />
-      )}
+      <TourOverlay
+        referenceRef={ourRef}
+        padding={spotlightPadding}
+        paddingTop={step.spotlightStyle?.paddingTop}
+        paddingBottom={step.spotlightStyle?.paddingBottom}
+        paddingRight={step.spotlightStyle?.paddingRight}
+        paddingLeft={step.spotlightStyle?.paddingLeft}
+      />
       <ModalContent {...contentProps} motionProps={{}} boxShadow="none">
         {step.selector && (
           <Box
