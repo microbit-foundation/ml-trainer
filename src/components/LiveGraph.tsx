@@ -9,6 +9,7 @@ import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { LabelConfig, getUpdatedLabelConfig } from "../live-graph-label-config";
 import { useStore } from "../store";
+import { maxAccelerationScaleForGraphs } from "../mlConfig";
 
 const initialLabelConfigs: LabelConfig[] = [
   { label: "x", arrowHeight: 0, labelHeight: 0, color: "#f9808e", id: 0 },
@@ -48,8 +49,8 @@ const LiveGraph = () => {
       return;
     }
     const smoothieChart = new SmoothieChart({
-      maxValue: 2.3,
-      minValue: -2,
+      maxValue: maxAccelerationScaleForGraphs,
+      minValue: -maxAccelerationScaleForGraphs,
       millisPerPixel: 7,
       grid: {
         fillStyle: "#ffffff00",
@@ -90,13 +91,13 @@ const LiveGraph = () => {
     if (isRecording) {
       // Set the start recording line
       const now = new Date().getTime();
-      recordLines.append(now - 1, -2, false);
-      recordLines.append(now, 2.3, false);
+      recordLines.append(now - 1, -maxAccelerationScaleForGraphs, false);
+      recordLines.append(now, maxAccelerationScaleForGraphs, false);
     } else {
       // Set the end recording line
       const now = new Date().getTime();
-      recordLines.append(now - 1, 2.3, false);
-      recordLines.append(now, -2, false);
+      recordLines.append(now - 1, maxAccelerationScaleForGraphs, false);
+      recordLines.append(now, -maxAccelerationScaleForGraphs, false);
     }
   }, [isRecording, recordLines]);
 
