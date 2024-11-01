@@ -298,7 +298,7 @@ const RecordingDialog = ({
               />
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent="center" pb={5}>
+          <ModalFooter justifyContent="center" pb={7} pt={2}>
             <Button
               variant="warning"
               width="fit-content"
