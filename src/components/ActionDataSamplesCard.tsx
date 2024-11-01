@@ -171,8 +171,8 @@ const RecordingArea = ({
         <ButtonGroup isAttached>
           <Button
             pr={2}
-            variant={selected ? "solid" : "outline"}
-            colorScheme="red"
+            variant={selected ? "record" : "recordOutline"}
+            borderRight="none"
             onClick={() =>
               onRecord({ recordingsToCapture: 1, continuousRecording: false })
             }

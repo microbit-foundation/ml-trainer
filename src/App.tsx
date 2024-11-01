@@ -49,36 +49,6 @@ const logging = deployment.logging;
 const Providers = ({ children }: ProviderLayoutProps) => {
   const deployment = useDeployment();
   const { ConsentProvider } = deployment.compliance;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  deployment.chakraTheme.components.Button.variants = {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    ...deployment.chakraTheme.components.Button.variants,
-    recordOutline: () => ({
-      borderWidth: "1px",
-      borderColor: "red.500",
-      color: "red.700",
-      bg: "transparent",
-      _hover: {
-        bg: "red.50",
-      },
-      _active: {
-        bg: "red.100",
-      },
-    }),
-    record: () => ({
-      color: "white",
-      bg: "red.500",
-      _hover: {
-        bg: "red.600",
-        _disabled: {
-          bg: "red.500",
-        },
-      },
-      _active: {
-        bg: "red.700",
-      },
-    }),
-  };
   return (
     <React.StrictMode>
       <ChakraProvider theme={deployment.chakraTheme}>

@@ -62,6 +62,31 @@ const Button: StyleConfig = {
         bg: "brand.700",
       },
     }),
+    recordOutline: () => ({
+      borderWidth: "1px",
+      borderColor: "red.500",
+      color: "red.700",
+      bg: "transparent",
+      _hover: {
+        bg: "red.50",
+      },
+      _active: {
+        bg: "red.100",
+      },
+    }),
+    record: () => ({
+      color: "white",
+      bg: "red.500",
+      _hover: {
+        bg: "red.600",
+        _disabled: {
+          bg: "red.500",
+        },
+      },
+      _active: {
+        bg: "red.700",
+      },
+    }),
     warning: () => ({
       borderWidth: "2px",
       borderColor: "red.500",
