@@ -4,13 +4,13 @@ import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectStatus } from "../connect-status-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { Confidences, predict } from "../ml";
-import { Gesture } from "../model";
+import { Action } from "../model";
 import { useStore } from "../store";
 import { mlSettings } from "../mlConfig";
 
 export interface PredictionResult {
   confidences: Confidences;
-  detected: Gesture | undefined;
+  detected: Action | undefined;
 }
 
 export const usePrediction = () => {
@@ -70,15 +70,15 @@ export const usePrediction = () => {
 };
 
 export const getDetectedGesture = (
-  gestures: Gesture[],
+  actions: Action[],
   confidences: Confidences | undefined
-): Gesture | undefined => {
+): Action | undefined => {
   if (!confidences) {
     return undefined;
   }
 
   // If more than one meet the threshold pick the highest
-  const thresholded = gestures
+  const thresholded = actions
     .map((gesture) => ({
       gesture,
       thresholdDelta:

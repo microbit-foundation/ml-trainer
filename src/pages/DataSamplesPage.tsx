@@ -15,8 +15,8 @@ import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
 
 const DataSamplesPage = () => {
-  const gestures = useStore((s) => s.gestures);
-  const addNewGesture = useStore((s) => s.addNewGesture);
+  const actionsData = useStore((s) => s.gestures);
+  const addNewGesture = useStore((s) => s.addNewAction);
   const model = useStore((s) => s.model);
   const [selectedGestureIdx, setSelectedGestureIdx] = useState<number>(0);
 
@@ -24,7 +24,7 @@ const DataSamplesPage = () => {
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
 
   const hasSufficientData = useHasSufficientDataForTraining();
-  const isAddNewGestureDisabled = gestures.some((g) => g.name.length === 0);
+  const isAddNewGestureDisabled = actionsData.some((g) => g.name.length === 0);
 
   const handleNavigateToModel = useCallback(() => {
     navigate(createTestingModelPageUrl());
@@ -32,9 +32,9 @@ const DataSamplesPage = () => {
 
   const trainButtonRef = useRef(null);
   const handleAddNewGesture = useCallback(() => {
-    setSelectedGestureIdx(gestures.length);
+    setSelectedGestureIdx(actionsData.length);
     addNewGesture();
-  }, [addNewGesture, gestures]);
+  }, [addNewGesture, actionsData]);
 
   return (
     <>

@@ -50,7 +50,7 @@ const TestingModelTable = ({
   prediction: PredictionResult | undefined;
 }) => {
   const { detected, confidences } = prediction ?? {};
-  const gestures = useStore((s) => s.gestures);
+  const actionsData = useStore((s) => s.gestures);
   const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { project, projectEdited } = useProject();
   const { isConnected } = useConnectionStage();
@@ -86,7 +86,7 @@ const TestingModelTable = ({
             h="fit-content"
             alignSelf="start"
           >
-            {gestures.map((gesture, idx) => {
+            {actionsData.map((gesture, idx) => {
               const { requiredConfidence: threshold } = gesture;
               const isTriggered = detected ? detected.ID === gesture.ID : false;
               return (

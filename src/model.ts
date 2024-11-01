@@ -15,22 +15,22 @@ export interface RecordingData {
   data: XYZData;
 }
 
-export interface Gesture {
+export interface Action {
   name: string;
   ID: number;
   icon: MakeCodeIcon;
   requiredConfidence?: number;
 }
 
-export interface GestureData extends Gesture {
+export interface ActionData extends Action {
   recordings: RecordingData[];
 }
 
 export interface DatasetEditorJsonFormat {
-  data: GestureData[];
+  data: ActionData[];
 }
 
-export type DatasetUserFileFormat = GestureData[];
+export type DatasetUserFileFormat = ActionData[];
 
 // Exported for testing
 export const isDatasetUserFileFormat = (

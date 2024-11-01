@@ -1,11 +1,11 @@
 import { Card } from "@chakra-ui/react";
 import { memo } from "react";
-import { GestureData } from "../model";
+import { ActionData } from "../model";
 import { tourElClassname } from "../tours";
 import CodeViewDefaultBlock from "./CodeViewDefaultBlock";
 
 interface CodeViewDefaultBlockCardProps {
-  gesture: GestureData;
+  gesture: ActionData;
 }
 
 const CodeViewDefaultBlockCard = ({

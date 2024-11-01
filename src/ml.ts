@@ -1,7 +1,7 @@
 import * as tf from "@tensorflow/tfjs";
 import { SymbolicTensor } from "@tensorflow/tfjs";
 import { getMlFilters, mlSettings } from "./mlConfig";
-import { GestureData, XYZData } from "./model";
+import { ActionData, XYZData } from "./model";
 import { DataWindow } from "./store";
 
 export type TrainingResult =
@@ -9,7 +9,7 @@ export type TrainingResult =
   | { error: true };
 
 export const trainModel = async (
-  data: GestureData[],
+  data: ActionData[],
   dataWindow: DataWindow,
   onProgress?: (progress: number) => void
 ): Promise<TrainingResult> => {
@@ -40,21 +40,21 @@ export const trainModel = async (
 
 // Exported for testing
 export const prepareFeaturesAndLabels = (
-  gestureData: GestureData[],
+  actionData: ActionData[],
   dataWindow: DataWindow
 ): { features: number[][]; labels: number[][] } => {
   const features: number[][] = [];
   const labels: number[][] = [];
-  const numGestures = gestureData.length;
+  const numActions = actionData.length;
 
-  gestureData.forEach((gesture, index) => {
-    gesture.recordings.forEach((recording) => {
+  actionData.forEach((action, index) => {
+    action.recordings.forEach((recording) => {
       // Prepare features
       features.push(Object.values(applyFilters(recording.data, dataWindow)));
 
       // Prepare labels
-      const label: number[] = new Array(numGestures) as number[];
-      label.fill(0, 0, numGestures);
+      const label: number[] = new Array(numActions) as number[];
+      label.fill(0, 0, numActions);
       label[index] = 1;
       labels.push(label);
     });
@@ -62,8 +62,8 @@ export const prepareFeaturesAndLabels = (
   return { features, labels };
 };
 
-const createModel = (gestureData: GestureData[]): tf.LayersModel => {
-  const numberOfClasses: number = gestureData.length;
+const createModel = (actionData: ActionData[]): tf.LayersModel => {
+  const numberOfClasses: number = actionData.length;
   const inputShape = [
     mlSettings.includedFilters.size * mlSettings.includedAxes.length,
   ];
@@ -125,7 +125,7 @@ interface PredictInput {
   classificationIds: number[];
 }
 
-export type Confidences = Record<GestureData["ID"], number>;
+export type Confidences = Record<ActionData["ID"], number>;
 
 export type ConfidencesResult =
   | { error: true; detail: unknown }

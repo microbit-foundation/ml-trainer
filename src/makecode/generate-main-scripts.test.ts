@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Gesture } from "../model";
+import { Action } from "../model";
 import { getMainScript } from "./generate-main-scripts";
 
 describe("test generateMainScripts", () => {
@@ -20,14 +20,14 @@ describe("test generateMainScripts", () => {
     </statement>
   </block>
 </xml>`;
-    const gs: Gesture[] = [{ name: "name", icon: "Heart", ID: 12 }];
+    const gs: Action[] = [{ name: "name", icon: "Heart", ID: 12 }];
     expect(getMainScript(gs, "blocks")).toEqual(expected);
   });
 
   it("generates js", () => {
     const expected =
       "ml.onStart(ml.event.Name, function () {basic.showIcon(IconNames.Heart)})";
-    const gs: Gesture[] = [{ name: "name", icon: "Heart", ID: 12 }];
+    const gs: Action[] = [{ name: "name", icon: "Heart", ID: 12 }];
     expect(getMainScript(gs, "javascript")).toContain(expected);
   });
 });

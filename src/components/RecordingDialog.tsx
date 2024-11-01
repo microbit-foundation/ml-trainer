@@ -16,7 +16,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { TimedXYZ } from "../buffered-data";
 import { useBufferedData } from "../buffered-data-hooks";
-import { GestureData, XYZData } from "../model";
+import { ActionData, XYZData } from "../model";
 import { useStore } from "../store";
 
 interface CountdownStage {
@@ -34,7 +34,7 @@ export interface RecordingDialogProps {
   isOpen: boolean;
   onClose: () => void;
   actionName: string;
-  gestureId: GestureData["ID"];
+  gestureId: ActionData["ID"];
   onRecordingComplete: (recordingId: number) => void;
   recordingOptions: RecordingOptions;
 }
@@ -58,7 +58,7 @@ const RecordingDialog = ({
   const toast = useToast();
   const recordingStarted = useStore((s) => s.recordingStarted);
   const recordingStopped = useStore((s) => s.recordingStopped);
-  const addGestureRecordings = useStore((s) => s.addGestureRecordings);
+  const addGestureRecordings = useStore((s) => s.addActionRecordings);
   const recordingDataSource = useRecordingDataSource();
   const [recordingStatus, setRecordingStatus] = useState<RecordingStatus>(
     RecordingStatus.None

@@ -24,7 +24,7 @@ import {
 } from "../connection-stage-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
-import { getTotalNumSamples } from "../utils/gestures";
+import { getTotalNumSamples } from "../utils/actions";
 import { ConfirmDialog } from "./ConfirmDialog";
 import LoadProjectMenuItem from "./LoadProjectMenuItem";
 import { NameProjectDialog } from "./NameProjectDialog";
@@ -33,7 +33,7 @@ import ViewDataFeaturesMenuItem from "./ViewDataFeaturesMenuItem";
 const DataSamplesMenu = () => {
   const intl = useIntl();
   const logging = useLogging();
-  const gestures = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.gestures);
   const downloadDataset = useStore((s) => s.downloadDataset);
   const { stage } = useConnectionStage();
   const deleteConfirmDisclosure = useDisclosure();
@@ -46,20 +46,20 @@ const DataSamplesMenu = () => {
     logging.event({
       type: "dataset-save",
       detail: {
-        actions: gestures.length,
-        samples: getTotalNumSamples(gestures),
+        actions: actions.length,
+        samples: getTotalNumSamples(actions),
       },
     });
     downloadDataset();
-  }, [downloadDataset, gestures, logging]);
-  const deleteAllGestures = useStore((s) => s.deleteAllGestures);
-  const handleDeleteAllGestures = useCallback(() => {
+  }, [downloadDataset, actions, logging]);
+  const deleteAllActions = useStore((s) => s.deleteAllActions);
+  const handleDeleteAllActions = useCallback(() => {
     logging.event({
       type: "dataset-delete",
     });
-    deleteAllGestures();
+    deleteAllActions();
     deleteConfirmDisclosure.onClose();
-  }, [deleteAllGestures, deleteConfirmDisclosure, logging]);
+  }, [deleteAllActions, deleteConfirmDisclosure, logging]);
 
   const handleSave = useCallback(
     (newName?: string) => {
@@ -103,7 +103,7 @@ const DataSamplesMenu = () => {
             <FormattedMessage id="delete-data-samples-confirm-text" />
           </Text>
         }
-        onConfirm={handleDeleteAllGestures}
+        onConfirm={handleDeleteAllActions}
         onCancel={deleteConfirmDisclosure.onClose}
       />
       <Menu>

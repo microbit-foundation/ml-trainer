@@ -13,10 +13,10 @@ import { tourElClassname } from "../tours";
 import { MakeCodeIcon } from "../utils/icons";
 import LedIcon from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";
-import { Gesture } from "../model";
+import { Action } from "../model";
 
 interface ActionNameCardProps {
-  value: Gesture;
+  value: Action;
   onDeleteAction?: () => void;
   onSelectRow?: () => void;
   selected?: boolean;
@@ -39,8 +39,8 @@ const ActionNameCard = ({
   const intl = useIntl();
   const toast = useToast();
   const toastId = "name-too-long-toast";
-  const setGestureName = useStore((s) => s.setGestureName);
-  const setGestureIcon = useStore((s) => s.setGestureIcon);
+  const setGestureName = useStore((s) => s.setActionName);
+  const setGestureIcon = useStore((s) => s.setActionIcon);
   const { name, icon, ID: id } = value;
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(

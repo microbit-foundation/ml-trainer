@@ -1,4 +1,4 @@
-import { Gesture } from "../model";
+import { Action } from "../model";
 import { actionNamesFromLabels } from "./utils";
 /**
  * (c) 2024, Center for Computational Thinking and Design at Aarhus University and contributors
@@ -63,7 +63,7 @@ const onMLEventChildren = (
   return iconName ? s.showIcon(iconName) : "";
 };
 
-export const getMainScript = (gs: Gesture[], lang: Language) => {
+export const getMainScript = (gs: Action[], lang: Language) => {
   const actionNames = actionNamesFromLabels(gs.map((g) => g.name));
   const configs = gs.map((g, idx) => ({
     id: g.ID,

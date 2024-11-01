@@ -35,7 +35,7 @@ import {
   getLowercaseFileExtension,
   readFileAsText,
 } from "../utils/fs-util";
-import { getTotalNumSamples } from "../utils/gestures";
+import { getTotalNumSamples } from "../utils/actions";
 import { useDownloadActions } from "./download-hooks";
 
 class CodeEditorError extends Error {}
@@ -208,7 +208,7 @@ export const ProjectProvider = ({
   const setSave = useStore((s) => s.setSave);
   const save = useStore((s) => s.save);
   const settings = useStore((s) => s.settings);
-  const gestures = useStore((s) => s.gestures);
+  const actionsData = useStore((s) => s.gestures);
   const saveNextDownloadRef = useRef(false);
   const saveHex = useCallback(
     async (hex?: HexData): Promise<void> => {
@@ -231,8 +231,8 @@ export const ProjectProvider = ({
         logging.event({
           type: "hex-save",
           detail: {
-            actions: gestures.length,
-            samples: getTotalNumSamples(gestures),
+            actions: actionsData.length,
+            samples: getTotalNumSamples(actionsData),
           },
         });
         downloadHex(hex);
@@ -251,7 +251,7 @@ export const ProjectProvider = ({
     [
       doAfterEditorUpdate,
       driverRef,
-      gestures,
+      actionsData,
       getCurrentProject,
       intl,
       logging,

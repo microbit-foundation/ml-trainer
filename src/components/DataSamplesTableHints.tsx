@@ -1,13 +1,13 @@
 import { GridItem, HStack, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import { GestureData } from "../model";
+import { ActionData } from "../model";
 import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import GreetingEmojiWithArrow from "./GreetingEmojiWithArrow";
 import UpCurveArrow from "./UpCurveArrow";
 import { RecordingOptions } from "./RecordingDialog";
 
 interface DataSamplesTableHintsProps {
-  gesture: GestureData;
+  gesture: ActionData;
   onRecord: (recordingOptions: RecordingOptions) => void;
 }
 

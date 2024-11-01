@@ -15,7 +15,7 @@ import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import microbitImage from "../images/stylised-microbit-black.svg";
 import { useLogging } from "../logging/logging-hooks";
-import { Gesture } from "../model";
+import { Action } from "../model";
 import { tourElClassname } from "../tours";
 import InfoToolTip from "./InfoToolTip";
 import LedIcon from "./LedIcon";
@@ -23,7 +23,7 @@ import LiveGraph from "./LiveGraph";
 import AlertIcon from "./AlertIcon";
 
 interface LiveGraphPanelProps {
-  detected?: Gesture | undefined;
+  detected?: Action | undefined;
   showPredictedGesture?: boolean;
   disconnectedTextId: string;
 }

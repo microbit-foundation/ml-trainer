@@ -1,6 +1,6 @@
 import { GridItem, Text, useDisclosure } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { GestureData } from "../model";
+import { ActionData } from "../model";
 import { useStore } from "../store";
 import DataSamplesTableHints from "./DataSamplesTableHints";
 import { ConfirmDialog } from "./ConfirmDialog";
@@ -13,7 +13,7 @@ import {
 import { RecordingOptions } from "./RecordingDialog";
 
 interface DataSamplesTableRowProps {
-  gesture: GestureData;
+  gesture: ActionData;
   selected: boolean;
   onSelectRow: () => void;
   onRecord: (recordingOptions: RecordingOptions) => void;
@@ -33,7 +33,7 @@ const DataSamplesTableRow = ({
 }: DataSamplesTableRowProps) => {
   const intl = useIntl();
   const deleteConfirmDisclosure = useDisclosure();
-  const deleteGesture = useStore((s) => s.deleteGesture);
+  const deleteGesture = useStore((s) => s.deleteAction);
   const { stage } = useConnectionStage();
 
   return (
