@@ -96,16 +96,16 @@ const updateProject = (
   model: tf.LayersModel | undefined,
   dataWindow: DataWindow
 ): Partial<Store> => {
-  const actionData = { data: actions };
+  const actionsData = { data: actions };
   const updatedProject = {
     ...project,
     text: {
       ...project.text,
       ...(projectEdited
-        ? generateCustomFiles(actionData, model, dataWindow, project)
+        ? generateCustomFiles(actionsData, model, dataWindow, project)
         : generateProject(
             project.header?.name ?? "Untitled",
-            actionData,
+            actionsData,
             model,
             dataWindow
           ).text),
@@ -333,11 +333,14 @@ const createMlStore = (logging: Logging) => {
 
           addActionRecordings(id: ActionData["ID"], recs: RecordingData[]) {
             return set(({ gestures: actions }) => {
-              const updatedActions = actions.map((g) => {
-                if (g.ID === id) {
-                  return { ...g, recordings: [...recs, ...g.recordings] };
+              const updatedActions = actions.map((action) => {
+                if (action.ID === id) {
+                  return {
+                    ...action,
+                    recordings: [...recs, ...action.recordings],
+                  };
                 }
-                return g;
+                return action;
               });
               return {
                 gestures: updatedActions,
@@ -349,7 +352,7 @@ const createMlStore = (logging: Logging) => {
           deleteAction(id: ActionData["ID"]) {
             return set(
               ({ project, projectEdited, gestures: actions, dataWindow }) => {
-                const newActions = actions.filter((g) => g.ID !== id);
+                const newActions = actions.filter((a) => a.ID !== id);
                 const newDataWindow =
                   newActions.length === 0 ? currentDataWindow : dataWindow;
                 return {
@@ -380,8 +383,8 @@ const createMlStore = (logging: Logging) => {
                 model,
                 dataWindow,
               }) => {
-                const newActions = actions.map((g) =>
-                  id !== g.ID ? g : { ...g, name }
+                const newActions = actions.map((action) =>
+                  id !== action.ID ? action : { ...action, name }
                 );
                 return {
                   gestures: newActions,
@@ -408,14 +411,18 @@ const createMlStore = (logging: Logging) => {
               }) => {
                 // If we're changing the action to use an icon that's already in use
                 // then we update the action that's using the icon to use the action's current icon
-                const currentIcon = actions.find((g) => g.ID === id)?.icon;
-                const newActions = actions.map((g) => {
-                  if (g.ID === id) {
-                    return { ...g, icon };
-                  } else if (g.ID !== id && g.icon === icon && currentIcon) {
-                    return { ...g, icon: currentIcon };
+                const currentIcon = actions.find((a) => a.ID === id)?.icon;
+                const newActions = actions.map((action) => {
+                  if (action.ID === id) {
+                    return { ...action, icon };
+                  } else if (
+                    action.ID !== id &&
+                    action.icon === icon &&
+                    currentIcon
+                  ) {
+                    return { ...action, icon: currentIcon };
                   }
-                  return g;
+                  return action;
                 });
                 return {
                   gestures: newActions,
@@ -440,8 +447,8 @@ const createMlStore = (logging: Logging) => {
                 model,
                 dataWindow,
               }) => {
-                const newActions = actions.map((g) =>
-                  id !== g.ID ? g : { ...g, requiredConfidence: value }
+                const newActions = actions.map((a) =>
+                  id !== a.ID ? a : { ...a, requiredConfidence: value }
                 );
                 return {
                   gestures: newActions,
@@ -460,14 +467,14 @@ const createMlStore = (logging: Logging) => {
           deleteActionRecording(id: ActionData["ID"], recordingIdx: number) {
             return set(
               ({ project, projectEdited, gestures: actions, dataWindow }) => {
-                const newActions = actions.map((g) => {
-                  if (id !== g.ID) {
-                    return g;
+                const newActions = actions.map((action) => {
+                  if (id !== action.ID) {
+                    return action;
                   }
-                  const recordings = g.recordings.filter(
+                  const recordings = action.recordings.filter(
                     (_r, i) => i !== recordingIdx
                   );
-                  return { ...g, recordings };
+                  return { ...action, recordings };
                 });
                 const numRecordings = newActions.reduce(
                   (acc, curr) => acc + curr.recordings.length,
@@ -890,7 +897,7 @@ const createMlStore = (logging: Logging) => {
 export const useStore = createMlStore(deployment.logging);
 
 const getDataWindowFromActions = (actions: ActionData[]): DataWindow => {
-  const dataLength = actions.flatMap((g) => g.recordings)[0]?.data.x.length;
+  const dataLength = actions.flatMap((a) => a.recordings)[0]?.data.x.length;
   return dataLength >= legacyDataWindow.minSamples
     ? legacyDataWindow
     : currentDataWindow;
@@ -939,7 +946,7 @@ export const useHasActions = () => {
 };
 
 const hasSufficientDataForTraining = (actions: ActionData[]): boolean => {
-  return actions.length >= 2 && actions.every((g) => g.recordings.length >= 3);
+  return actions.length >= 2 && actions.every((a) => a.recordings.length >= 3);
 };
 
 export const useHasSufficientDataForTraining = (): boolean => {
@@ -950,7 +957,7 @@ export const useHasSufficientDataForTraining = (): boolean => {
 export const useHasNoStoredData = (): boolean => {
   const actions = useStore((s) => s.gestures);
   return !(
-    actions.length !== 0 && actions.some((g) => g.recordings.length > 0)
+    actions.length !== 0 && actions.some((a) => a.recordings.length > 0)
   );
 };
 
@@ -970,7 +977,7 @@ const actionIcon = ({
   if (isFirstAction) {
     return defaultIcons[0];
   }
-  const iconsInUse = existingActions.map((g) => g.icon);
+  const iconsInUse = existingActions.map((a) => a.icon);
   const useableIcons: MakeCodeIcon[] = [];
   for (const icon of defaultIcons) {
     if (!iconsInUse.includes(icon)) {

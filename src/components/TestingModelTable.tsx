@@ -118,7 +118,7 @@ const TestingModelTable = ({
                   </VStack>
                   <GridItem>
                     {!projectEdited && (
-                      <CodeViewDefaultBlockCard actionData={action} />
+                      <CodeViewDefaultBlockCard action={action} />
                     )}
                   </GridItem>
                 </React.Fragment>

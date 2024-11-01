@@ -7,17 +7,17 @@ import UpCurveArrow from "./UpCurveArrow";
 import { RecordingOptions } from "./RecordingDialog";
 
 interface DataSamplesTableHintsProps {
-  actionData: ActionData;
+  action: ActionData;
   onRecord: (recordingOptions: RecordingOptions) => void;
 }
 
 const DataSamplesTableHints = ({
-  actionData,
+  action,
   onRecord,
 }: DataSamplesTableHintsProps) => {
   return (
     <>
-      {actionData.name.length === 0 ? (
+      {action.name.length === 0 ? (
         <GridItem h="120px">
           <VStack m={0} p={2} w={200} transform="translate(-30px, 40px)">
             <GreetingEmojiWithArrow w="120px" h="103px" color="brand.500" />
@@ -30,7 +30,7 @@ const DataSamplesTableHints = ({
         <>
           <GridItem>
             <ActionDataSamplesCard
-              value={actionData}
+              value={action}
               selected={true}
               onRecord={onRecord}
             />

@@ -63,9 +63,9 @@ const onMLEventChildren = (
   return iconName ? s.showIcon(iconName) : "";
 };
 
-export const getMainScript = (gs: Action[], lang: Language) => {
-  const actionNames = actionNamesFromLabels(gs.map((g) => g.name));
-  const configs = gs.map((g, idx) => ({
+export const getMainScript = (actions: Action[], lang: Language) => {
+  const actionNames = actionNamesFromLabels(actions.map((a) => a.name));
+  const configs = actions.map((g, idx) => ({
     id: g.ID,
     name: actionNames[idx].actionVar,
     iconName: g.icon,

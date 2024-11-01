@@ -40,14 +40,14 @@ export const trainModel = async (
 
 // Exported for testing
 export const prepareFeaturesAndLabels = (
-  actionData: ActionData[],
+  actions: ActionData[],
   dataWindow: DataWindow
 ): { features: number[][]; labels: number[][] } => {
   const features: number[][] = [];
   const labels: number[][] = [];
-  const numActions = actionData.length;
+  const numActions = actions.length;
 
-  actionData.forEach((action, index) => {
+  actions.forEach((action, index) => {
     action.recordings.forEach((recording) => {
       // Prepare features
       features.push(Object.values(applyFilters(recording.data, dataWindow)));
@@ -62,8 +62,8 @@ export const prepareFeaturesAndLabels = (
   return { features, labels };
 };
 
-const createModel = (actionData: ActionData[]): tf.LayersModel => {
-  const numberOfClasses: number = actionData.length;
+const createModel = (actions: ActionData[]): tf.LayersModel => {
+  const numberOfClasses: number = actions.length;
   const inputShape = [
     mlSettings.includedFilters.size * mlSettings.includedAxes.length,
   ];

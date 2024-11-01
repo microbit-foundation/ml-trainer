@@ -24,7 +24,7 @@ const DataSamplesPage = () => {
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
 
   const hasSufficientData = useHasSufficientDataForTraining();
-  const isAddNewActionDisabled = actions.some((g) => g.name.length === 0);
+  const isAddNewActionDisabled = actions.some((a) => a.name.length === 0);
 
   const handleNavigateToModel = useCallback(() => {
     navigate(createTestingModelPageUrl());

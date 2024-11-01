@@ -19,15 +19,15 @@ export const usePrediction = () => {
   const [connectStatus] = useConnectStatus();
   const connection = useConnectActions();
   const [prediction, setPrediction] = useState<PredictionResult | undefined>();
-  const actionData = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.gestures);
   const model = useStore((s) => s.model);
   const dataWindow = useStore((s) => s.dataWindow);
 
   // Use a ref to prevent restarting the effect every time thesholds change.
   // We only use the ref's value during the setInterval callback not render.
   // We can avoid this by storing the thresolds separately in state, even if we unify them when serializing them.
-  const actionDataRef = useRef(actionData);
-  actionDataRef.current = actionData;
+  const actionsRef = useRef(actions);
+  actionsRef.current = actions;
   useEffect(() => {
     if (!model) {
       return;
@@ -37,7 +37,7 @@ export const usePrediction = () => {
       const input = {
         model,
         data: buffer.getSamples(startTime),
-        classificationIds: actionDataRef.current.map((g) => g.ID),
+        classificationIds: actionsRef.current.map((a) => a.ID),
       };
       if (input.data.x.length > dataWindow.minSamples) {
         const result = await predict(input, dataWindow);
@@ -46,7 +46,7 @@ export const usePrediction = () => {
         } else {
           const { confidences } = result;
           const detected = getDetectedAction(
-            actionDataRef.current,
+            actionsRef.current,
             result.confidences
           );
           setPrediction({

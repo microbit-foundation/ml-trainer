@@ -69,7 +69,7 @@ const DataSamplesTableRow = ({
         />
       </GridItem>
       {showHints ? (
-        <DataSamplesTableHints actionData={action} onRecord={onRecord} />
+        <DataSamplesTableHints action={action} onRecord={onRecord} />
       ) : (
         <GridItem>
           {(action.name.length > 0 || action.recordings.length > 0) && (
