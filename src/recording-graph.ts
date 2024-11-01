@@ -12,7 +12,7 @@ const smoothen = (d: number[]): number[] => {
     return d;
   }
   const newData: number[] = [];
-  let prevValue = d[0];
+  let prevValue = 0;
   d.forEach((v) => {
     const newValue = v * 0.25 + prevValue * 0.75;
     newData.push(newValue);
