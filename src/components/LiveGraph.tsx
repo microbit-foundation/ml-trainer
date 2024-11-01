@@ -132,8 +132,6 @@ const LiveGraph = () => {
     };
   }, [connectActions, isConnected, labelConfigs, lineX, lineY, lineZ]);
 
-  const arrowHeightTransformAdjustValue = 1;
-
   return (
     <HStack
       ref={liveGraphContainerRef}
@@ -159,9 +157,7 @@ const LiveGraph = () => {
                 // Use inline style attribute to avoid style tags being
                 // constantly appended to the <head/> element.
                 style={{
-                  transform: `translateY(${
-                    config.arrowHeight - arrowHeightTransformAdjustValue
-                  }rem)`,
+                  transform: `translateY(${config.arrowHeight}rem)`,
                 }}
               >
                 <Icon as={RiArrowDropLeftFill} boxSize={12} />
@@ -175,9 +171,7 @@ const LiveGraph = () => {
                 // Use inline style attribute to avoid style tags being
                 // constantly appended to the <head/> element.
                 style={{
-                  transform: `translateY(${
-                    config.labelHeight - arrowHeightTransformAdjustValue + 0.45
-                  }rem)`,
+                  transform: `translateY(${config.labelHeight + 0.45}rem)`,
                 }}
               >
                 {config.label}
