@@ -383,6 +383,14 @@
     "defaultMessage": "diagram showing data collection micro:bit being connected to a person's wrist",
     "description": "Aria label for data collection image"
   },
+  "data-features-hide-action": {
+    "defaultMessage": "Hide data features",
+    "description": "Hide data features button text"
+  },
+  "data-features-show-action": {
+    "defaultMessage": "Show data features",
+    "description": "Show data features button text"
+  },
   "data-samples-label": {
     "defaultMessage": "Data samples",
     "description": "Heading for data samples column"
@@ -402,22 +410,6 @@
   "data-samples-tooltip": {
     "defaultMessage": "Short collections of movement data lasting 1 second. Your data samples are only stored on your computer, they do not get sent to anyone else.",
     "description": "Tooltip for data samples heading"
-  },
-  "data-samples-view-data-features-option": {
-    "defaultMessage": "Data features",
-    "description": "Data samples view option"
-  },
-  "data-samples-view-graph-and-data-features-option": {
-    "defaultMessage": "Graphs and data features",
-    "description": "Data samples view option"
-  },
-  "data-samples-view-graph-option": {
-    "defaultMessage": "Graphs",
-    "description": "Data samples view option"
-  },
-  "data-samples-view-options-heading": {
-    "defaultMessage": "Views",
-    "description": "Data samples view options heading"
   },
   "delete-action-aria": {
     "defaultMessage": "Delete action \"{action}\"",
@@ -1090,6 +1082,10 @@
   "settings-menu-action": {
     "defaultMessage": "Settings actions menu",
     "description": "Label for settings actions menu button"
+  },
+  "show-graphs-checkbox-label-text": {
+    "defaultMessage": "Show graphs",
+    "description": "Show graphs checkbox label text"
   },
   "simple-ai-exercise-timer-resource-title": {
     "defaultMessage": "Simple AI exercise timer",

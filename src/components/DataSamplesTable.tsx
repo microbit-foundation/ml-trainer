@@ -2,6 +2,7 @@ import {
   Button,
   Grid,
   GridProps,
+  HStack,
   Text,
   useDisclosure,
   VStack,
@@ -21,11 +22,12 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import { GestureData } from "../model";
 import { useStore } from "../store";
 import ConnectToRecordDialog from "./ConnectToRecordDialog";
-import DataSamplesTableRow from "./DataSamplesTableRow";
 import DataSamplesMenu from "./DataSamplesMenu";
+import DataSamplesTableRow from "./DataSamplesTableRow";
 import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
 import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
 import RecordingDialog, { RecordingOptions } from "./RecordingDialog";
+import ShowGraphsCheckbox from "./ShowGraphsCheckbox";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -42,7 +44,12 @@ const headings: GridColumnHeadingItemProps[] = [
   {
     titleId: "data-samples-label",
     descriptionId: "data-samples-tooltip",
-    itemsRight: <DataSamplesMenu />,
+    itemsRight: (
+      <HStack>
+        <ShowGraphsCheckbox />
+        <DataSamplesMenu />
+      </HStack>
+    ),
   },
 ];
 

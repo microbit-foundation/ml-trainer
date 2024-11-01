@@ -5,9 +5,7 @@ import {
   MenuButton,
   MenuDivider,
   MenuItem,
-  MenuItemOption,
   MenuList,
-  MenuOptionGroup,
   Portal,
   Text,
   useDisclosure,
@@ -20,26 +18,23 @@ import {
   RiUpload2Line,
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { flags } from "../flags";
-import { NameProjectDialog } from "./NameProjectDialog";
-import { useLogging } from "../logging/logging-hooks";
-import { DataSamplesView } from "../model";
-import { useStore } from "../store";
-import { getTotalNumSamples } from "../utils/gestures";
-import { ConfirmDialog } from "./ConfirmDialog";
-import LoadProjectMenuItem from "./LoadProjectMenuItem";
 import {
   ConnectionFlowStep,
   useConnectionStage,
 } from "../connection-stage-hooks";
+import { useLogging } from "../logging/logging-hooks";
+import { useStore } from "../store";
+import { getTotalNumSamples } from "../utils/gestures";
+import { ConfirmDialog } from "./ConfirmDialog";
+import LoadProjectMenuItem from "./LoadProjectMenuItem";
+import { NameProjectDialog } from "./NameProjectDialog";
+import ViewDataFeaturesMenuItem from "./ViewDataFeaturesMenuItem";
 
 const DataSamplesMenu = () => {
   const intl = useIntl();
   const logging = useLogging();
   const gestures = useStore((s) => s.gestures);
   const downloadDataset = useStore((s) => s.downloadDataset);
-  const setDataSamplesView = useStore((s) => s.setDataSamplesView);
-  const dataSamplesView = useStore((s) => s.settings.dataSamplesView);
   const { stage } = useConnectionStage();
   const deleteConfirmDisclosure = useDisclosure();
   const nameProjectDialogDisclosure = useDisclosure();
@@ -65,14 +60,6 @@ const DataSamplesMenu = () => {
     deleteAllGestures();
     deleteConfirmDisclosure.onClose();
   }, [deleteAllGestures, deleteConfirmDisclosure, logging]);
-  const handleViewChange = useCallback(
-    (view: string | string[]) => {
-      if (typeof view === "string") {
-        setDataSamplesView(view as DataSamplesView);
-      }
-    },
-    [setDataSamplesView]
-  );
 
   const handleSave = useCallback(
     (newName?: string) => {
@@ -131,29 +118,6 @@ const DataSamplesMenu = () => {
         />
         <Portal>
           <MenuList>
-            {flags.fingerprints && (
-              <>
-                <MenuOptionGroup
-                  defaultValue={dataSamplesView}
-                  title={intl.formatMessage({
-                    id: "data-samples-view-options-heading",
-                  })}
-                  type="radio"
-                  onChange={handleViewChange}
-                >
-                  <MenuItemOption value={DataSamplesView.Graph}>
-                    <FormattedMessage id="data-samples-view-graph-option" />
-                  </MenuItemOption>
-                  <MenuItemOption value={DataSamplesView.DataFeatures}>
-                    <FormattedMessage id="data-samples-view-data-features-option" />
-                  </MenuItemOption>
-                  <MenuItemOption value={DataSamplesView.GraphAndDataFeatures}>
-                    <FormattedMessage id="data-samples-view-graph-and-data-features-option" />
-                  </MenuItemOption>
-                </MenuOptionGroup>
-                <MenuDivider />
-              </>
-            )}
             <LoadProjectMenuItem icon={<RiUpload2Line />} accept=".json">
               <FormattedMessage id="import-data-samples-action" />
             </LoadProjectMenuItem>
@@ -169,6 +133,8 @@ const DataSamplesMenu = () => {
             >
               <FormattedMessage id="delete-data-samples-action" />
             </MenuItem>
+            <MenuDivider />
+            <ViewDataFeaturesMenuItem />
           </MenuList>
         </Portal>
       </Menu>

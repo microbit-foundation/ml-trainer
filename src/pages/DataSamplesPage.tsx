@@ -71,24 +71,26 @@ const DataSamplesPage = () => {
                 <FormattedMessage id="add-action-action" />
               </Button>
             </HStack>
-            {model ? (
-              <Button
-                onClick={handleNavigateToModel}
-                variant="primary"
-                rightIcon={<RiArrowRightLine />}
-              >
-                <FormattedMessage id="testing-model-title" />
-              </Button>
-            ) : (
-              <Button
-                ref={trainButtonRef}
-                className={tourElClassname.trainModelButton}
-                onClick={() => trainModelFlowStart(handleNavigateToModel)}
-                variant={hasSufficientData ? "primary" : "secondary-disabled"}
-              >
-                <FormattedMessage id={"train-model"} />
-              </Button>
-            )}
+            <HStack>
+              {model ? (
+                <Button
+                  onClick={handleNavigateToModel}
+                  variant="primary"
+                  rightIcon={<RiArrowRightLine />}
+                >
+                  <FormattedMessage id="testing-model-title" />
+                </Button>
+              ) : (
+                <Button
+                  ref={trainButtonRef}
+                  className={tourElClassname.trainModelButton}
+                  onClick={() => trainModelFlowStart(handleNavigateToModel)}
+                  variant={hasSufficientData ? "primary" : "secondary-disabled"}
+                >
+                  <FormattedMessage id="train-model" />
+                </Button>
+              )}
+            </HStack>
           </HStack>
           <LiveGraphPanel disconnectedTextId="connect-to-record" />
         </VStack>

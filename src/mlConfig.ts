@@ -107,7 +107,7 @@ const zeroCrossingRate: FilterStrategy = (data) => {
 };
 
 const acc: FilterStrategy = (data: number[], dataWindow: DataWindow) => {
-  const totalAcc = data.reduce((a, b) => a + Math.abs(b));
+  const totalAcc = data.reduce((a, b) => a + Math.abs(b), 0);
   // Normalize the total acceleration using the number of samples the device
   // is guaranteed to operate on. This should reduce differences in the model
   // predication between the browser and device.

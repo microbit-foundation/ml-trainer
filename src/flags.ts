@@ -24,10 +24,6 @@ export type Flag =
    */
   | "homePageProjects"
   /**
-   * Flag to show fingerprints view option.
-   */
-  | "fingerprints"
-  /**
    * Example flags used for testing.
    */
   | "exampleOptInA"
@@ -44,9 +40,8 @@ const allFlags: FlagMetadata[] = [
   { name: "homePageProjects", defaultOnStages: ["local", "review", "staging"] },
   {
     name: "preReleaseNotice",
-    defaultOnStages: ["review", "staging", "production"],
+    defaultOnStages: ["production"],
   },
-  { name: "fingerprints", defaultOnStages: ["local", "review", "staging"] },
   { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
   { name: "exampleOptInB", defaultOnStages: [] },
 ];
@@ -56,6 +51,14 @@ type Flags = Record<Flag, boolean>;
 // Exposed for testing.
 export const flagsForParams = (stage: Stage, params: URLSearchParams) => {
   const enableFlags = new Set(params.getAll("flag"));
+  try {
+    localStorage
+      .getItem("flags")
+      ?.split(",")
+      ?.forEach((f) => enableFlags.add(f.trim()));
+  } catch (e) {
+    // Ignore if there are local storage security issues
+  }
   const allFlagsDefault = enableFlags.has("none")
     ? false
     : enableFlags.has("*")

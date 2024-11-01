@@ -207,6 +207,7 @@ export interface Actions {
   tourComplete(id: TourId): void;
 
   setDataSamplesView(view: DataSamplesView): void;
+  setShowGraphs(show: boolean): void;
 
   setPostImportDialogState(state: PostImportDialogState): void;
 }
@@ -814,6 +815,14 @@ const createMlStore = (logging: Logging) => {
               settings: {
                 ...settings,
                 dataSamplesView: view,
+              },
+            }));
+          },
+          setShowGraphs(show: boolean) {
+            set(({ settings }) => ({
+              settings: {
+                ...settings,
+                showGraphs: show,
               },
             }));
           },

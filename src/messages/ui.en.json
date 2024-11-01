@@ -645,6 +645,18 @@
       "value": "diagram showing data collection micro:bit being connected to a person's wrist"
     }
   ],
+  "data-features-hide-action": [
+    {
+      "type": 0,
+      "value": "Hide data features"
+    }
+  ],
+  "data-features-show-action": [
+    {
+      "type": 0,
+      "value": "Show data features"
+    }
+  ],
   "data-samples-label": [
     {
       "type": 0,
@@ -677,30 +689,6 @@
     {
       "type": 0,
       "value": "Short collections of movement data lasting 1 second. Your data samples are only stored on your computer, they do not get sent to anyone else."
-    }
-  ],
-  "data-samples-view-data-features-option": [
-    {
-      "type": 0,
-      "value": "Data features"
-    }
-  ],
-  "data-samples-view-graph-and-data-features-option": [
-    {
-      "type": 0,
-      "value": "Graphs and data features"
-    }
-  ],
-  "data-samples-view-graph-option": [
-    {
-      "type": 0,
-      "value": "Graphs"
-    }
-  ],
-  "data-samples-view-options-heading": [
-    {
-      "type": 0,
-      "value": "Views"
     }
   ],
   "delete-action-aria": [
@@ -1947,6 +1935,12 @@
     {
       "type": 0,
       "value": "Settings actions menu"
+    }
+  ],
+  "show-graphs-checkbox-label-text": [
+    {
+      "type": 0,
+      "value": "Show graphs"
     }
   ],
   "simple-ai-exercise-timer-resource-title": [
