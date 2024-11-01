@@ -65,12 +65,14 @@ const Button: StyleConfig = {
     recordOutline: () => ({
       borderWidth: "1px",
       borderColor: "red.500",
-      color: "red.700",
+      color: "red.500",
       bg: "transparent",
       _hover: {
         bg: "red.50",
       },
       _active: {
+        borderColor: "red.600",
+        color: "red.600",
         bg: "red.100",
       },
     }),
