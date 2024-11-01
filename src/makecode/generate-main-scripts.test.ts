@@ -20,14 +20,14 @@ describe("test generateMainScripts", () => {
     </statement>
   </block>
 </xml>`;
-    const gs: Action[] = [{ name: "name", icon: "Heart", ID: 12 }];
-    expect(getMainScript(gs, "blocks")).toEqual(expected);
+    const actions: Action[] = [{ name: "name", icon: "Heart", ID: 12 }];
+    expect(getMainScript(actions, "blocks")).toEqual(expected);
   });
 
   it("generates js", () => {
     const expected =
       "ml.onStart(ml.event.Name, function () {basic.showIcon(IconNames.Heart)})";
-    const gs: Action[] = [{ name: "name", icon: "Heart", ID: 12 }];
-    expect(getMainScript(gs, "javascript")).toContain(expected);
+    const actions: Action[] = [{ name: "name", icon: "Heart", ID: 12 }];
+    expect(getMainScript(actions, "javascript")).toContain(expected);
   });
 });
