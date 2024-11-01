@@ -62,16 +62,15 @@ const DataSamplesTable = ({
   selectedActionIdx: selectedActionIdx,
   setSelectedActionIdx: setSelectedActionIdx,
 }: DataSamplesTableProps) => {
-  const actionsData = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.gestures);
   // Default to first action being selected if last action is deleted.
-  const selectedAction: ActionData =
-    actionsData[selectedActionIdx] ?? actionsData[0];
+  const selectedAction: ActionData = actions[selectedActionIdx] ?? actions[0];
 
   const showHints = useMemo<boolean>(
     () =>
-      actionsData.length === 0 ||
-      (actionsData.length === 1 && actionsData[0].recordings.length === 0),
-    [actionsData]
+      actions.length === 0 ||
+      (actions.length === 1 && actions[0].recordings.length === 0),
+    [actions]
   );
   const recordingDialogDisclosure = useDisclosure();
   const connectToRecordDialogDisclosure = useDisclosure();
@@ -118,12 +117,12 @@ const DataSamplesTable = ({
   useEffect(() => {
     if (
       !recordingDialogDisclosure.isOpen &&
-      actionsData.length === 1 &&
-      actionsData[0].recordings.length === 1
+      actions.length === 1 &&
+      actions[0].recordings.length === 1
     ) {
       tourStart(TourId.CollectDataToTrainModel);
     }
-  }, [actionsData, recordingDialogDisclosure.isOpen, tourStart]);
+  }, [actions, recordingDialogDisclosure.isOpen, tourStart]);
   return (
     <>
       <ConnectToRecordDialog
@@ -146,7 +145,7 @@ const DataSamplesTable = ({
         {...gridCommonProps}
         headings={headings}
       />
-      {actionsData.length === 0 ? (
+      {actions.length === 0 ? (
         <VStack
           gap={5}
           flexGrow={1}
@@ -197,7 +196,7 @@ const DataSamplesTable = ({
           flexGrow={1}
           h={0}
         >
-          {actionsData.map((action, idx) => (
+          {actions.map((action, idx) => (
             <DataSamplesTableRow
               key={action.ID}
               action={action}

@@ -17,7 +17,7 @@ const DownloadDialogs = () => {
   const downloadActions = useDownloadActions();
   const stage = useStore((s) => s.download);
   const flashingProgress = useStore((s) => s.downloadFlashingProgress);
-  const actionsData = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.gestures);
   const logging = useLogging();
 
   switch (stage.step) {
@@ -76,8 +76,8 @@ const DownloadDialogs = () => {
         logging.event({
           type: "hex-download",
           detail: {
-            actions: actionsData.length,
-            samples: getTotalNumSamples(actionsData),
+            actions: actions.length,
+            samples: getTotalNumSamples(actions),
           },
         });
         await downloadActions.connectAndFlashMicrobit(stage);

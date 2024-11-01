@@ -208,7 +208,7 @@ export const ProjectProvider = ({
   const setSave = useStore((s) => s.setSave);
   const save = useStore((s) => s.save);
   const settings = useStore((s) => s.settings);
-  const actionsData = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.gestures);
   const saveNextDownloadRef = useRef(false);
   const saveHex = useCallback(
     async (hex?: HexData): Promise<void> => {
@@ -231,8 +231,8 @@ export const ProjectProvider = ({
         logging.event({
           type: "hex-save",
           detail: {
-            actions: actionsData.length,
-            samples: getTotalNumSamples(actionsData),
+            actions: actions.length,
+            samples: getTotalNumSamples(actions),
           },
         });
         downloadHex(hex);
@@ -251,7 +251,7 @@ export const ProjectProvider = ({
     [
       doAfterEditorUpdate,
       driverRef,
-      actionsData,
+      actions,
       getCurrentProject,
       intl,
       logging,
