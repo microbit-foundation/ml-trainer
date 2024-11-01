@@ -187,7 +187,7 @@ const RecordingArea = ({
           <MoreMenuButton
             minW={8}
             variant={selected ? "record" : "recordOutline"}
-            aria-label="More record options"
+            aria-label={intl.formatMessage({ id: "recording-options-aria" })}
           />
           <Portal>
             <MenuList>

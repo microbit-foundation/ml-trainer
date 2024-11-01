@@ -1875,6 +1875,12 @@
       "value": "graph showing micro:bit x, y, z accelerometer data for one recording"
     }
   ],
+  "recording-options-aria": [
+    {
+      "type": 0,
+      "value": "More recording options"
+    }
+  ],
   "reload-action": [
     {
       "type": 0,

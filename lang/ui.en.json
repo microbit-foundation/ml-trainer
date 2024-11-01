@@ -1047,6 +1047,10 @@
     "defaultMessage": "graph showing micro:bit x, y, z accelerometer data for one recording",
     "description": "Label for recording graph"
   },
+  "recording-options-aria": {
+    "defaultMessage": "More recording options",
+    "description": "Aria label for more recording options button"
+  },
   "reload-action": {
     "defaultMessage": "Click to reload the page",
     "description": "Reload page button text"
