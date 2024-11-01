@@ -236,7 +236,7 @@ const RecordingDialog = ({
     >
       <ModalOverlay>
         <ModalContent>
-          <ModalHeader>
+          <ModalHeader pb={0}>
             {recordingsToCapture > 1 ? (
               <FormattedMessage
                 id="recording-data-for-numbered"
@@ -254,9 +254,9 @@ const RecordingDialog = ({
             )}
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <VStack width="100%" alignItems="left" gap={5}>
-              <VStack height="100px" justifyContent="center">
+          <ModalBody py={8}>
+            <VStack justifyContent="center" gap={5}>
+              <VStack h="20" alignItems="center" justifyContent="center">
                 {recordingStatus === RecordingStatus.Recording && (
                   <Text
                     fontSize="5xl"
@@ -296,25 +296,25 @@ const RecordingDialog = ({
                 borderRadius="xl"
                 value={progress}
               />
-              <Button
-                variant="warning"
-                width="fit-content"
-                alignSelf="center"
-                onClick={handleOnClose}
-                disabled={recordingStatus === RecordingStatus.Done}
-                opacity={recordingStatus === RecordingStatus.Done ? 0.5 : 1}
-              >
-                <FormattedMessage
-                  id={
-                    recordingsToCapture > 1
-                      ? "stop-recording-action"
-                      : "cancel-recording-action"
-                  }
-                />
-              </Button>
             </VStack>
           </ModalBody>
-          <ModalFooter />
+          <ModalFooter justifyContent="center" pb={5}>
+            <Button
+              variant="warning"
+              width="fit-content"
+              onClick={handleOnClose}
+              disabled={recordingStatus === RecordingStatus.Done}
+              opacity={recordingStatus === RecordingStatus.Done ? 0.5 : 1}
+            >
+              <FormattedMessage
+                id={
+                  recordingsToCapture > 1
+                    ? "stop-recording-action"
+                    : "cancel-recording-action"
+                }
+              />
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </ModalOverlay>
     </Modal>
