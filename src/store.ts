@@ -159,10 +159,7 @@ export interface Actions {
   setActionName(id: ActionData["ID"], name: string): void;
   setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon): void;
   setRequiredConfidence(id: ActionData["ID"], value: number): void;
-  deleteActionRecording(
-    gestureId: ActionData["ID"],
-    recordingIdx: number
-  ): void;
+  deleteActionRecording(id: ActionData["ID"], recordingIdx: number): void;
   deleteAllActions(): void;
   downloadDataset(): void;
   dataCollectionMicrobitConnected(): void;
