@@ -18,7 +18,7 @@ import { useDeployment } from "../deployment";
 import { stage } from "../environment";
 import { flags } from "../flags";
 import clap from "../images/clap-square.png";
-import processsDiagram from "../images/process-square.png";
+import processsDiagram from "../images/process-horizontal.png";
 import aiActivityTimer from "../images/resource-ai-activity-timer.png";
 import simpleAiExerciseTimer from "../images/resource-simple-ai-exercise-timer.png";
 import xyzGraph from "../images/xyz-graph.png";
@@ -115,7 +115,7 @@ const HomePage = () => {
           <Heading as="h2" textAlign="center">
             <FormattedMessage id="homepage-step-by-step" />
           </Heading>
-          <Image src={processsDiagram} w="75%" />
+          <Image src={processsDiagram} />
         </VStack>
         {flags.homePageProjects && (
           <VStack gap={8}>
