@@ -27,6 +27,7 @@ import clap from "../images/clap-square.png";
 import aiActivityTimer from "../images/resource-ai-activity-timer.png";
 import simpleAiExerciseTimer from "../images/resource-simple-ai-exercise-timer.png";
 import xyzGraph from "../images/xyz-graph.png";
+import processsDiagram from "../images/process-horizontal.png";
 import { createNewPageUrl } from "../urls";
 
 const graphData = {
@@ -156,54 +157,7 @@ const HomePage = () => {
           <Heading as="h2" textAlign="center">
             <FormattedMessage id="homepage-step-by-step" />
           </Heading>
-          <VStack
-            gap={12}
-            maxW="container.md"
-            position="relative"
-            role="image"
-            aria-label={intl.formatMessage({ id: "steps-alt" })}
-          >
-            <Step
-              title={intl.formatMessage({ id: "steps-collect-data" })}
-              image={<CollectDataIllustration />}
-            />
-            <Box
-              display={{ base: "flex", md: "contents" }}
-              flexDir="row-reverse"
-              gap={12}
-            >
-              <HStack
-                gap={5}
-                position={{ base: "unset", md: "absolute" }}
-                right="-160px"
-                top="130px"
-              >
-                <Arrow />
-                <Text fontWeight="bold" fontSize="xl">
-                  <FormattedMessage id="steps-train" />
-                </Text>
-              </HStack>
-              <HStack
-                gap={5}
-                position={{ base: "unset", md: "absolute" }}
-                left="-185px"
-                top="130px"
-              >
-                <Text fontWeight="bold" fontSize="xl">
-                  <FormattedMessage id="steps-improve" />
-                </Text>
-                <Arrow transform="rotate(180deg)" />
-              </HStack>
-            </Box>
-            <Step
-              title={intl.formatMessage({ id: "steps-test-model" })}
-              image={<TestModelStepIllustration />}
-            />
-            <Step
-              title={intl.formatMessage({ id: "steps-code" })}
-              image={<CodeIllustration />}
-            />
-          </VStack>
+          <Image src={processsDiagram} />
         </VStack>
         {flags.homePageProjects && (
           <VStack gap={8}>
