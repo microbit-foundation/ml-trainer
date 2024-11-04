@@ -1,22 +1,19 @@
-import { As, Divider, HStack } from "@chakra-ui/react";
+import { Divider, HStack, StackProps } from "@chakra-ui/react";
 import { useDeployment } from "../deployment";
 
-const AppLogo = ({
-  color = "#FFF",
-  as,
-}: {
+interface AppLogoProps extends StackProps {
   color?: string;
-  beta?: boolean;
-  as?: As;
-}) => {
+}
+
+const AppLogo = ({ color = "#FFF", ...props }: AppLogoProps) => {
   const { AppLogo, OrgLogo } = useDeployment();
   return (
     <HStack
-      as={as}
-      spacing={4}
+      gap={4}
       userSelect="none"
       transform="scale(0.93)"
       transformOrigin="left"
+      {...props}
     >
       {OrgLogo && (
         <>

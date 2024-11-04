@@ -2,23 +2,32 @@ import {
   Button,
   Grid,
   GridProps,
+  HStack,
   Text,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { FormattedMessage } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { GestureData } from "../model";
+import { GestureData, TourId } from "../model";
 import { useStore } from "../store";
-import DataSampleGridRow from "./AddDataGridRow";
+import ConnectToRecordDialog from "./ConnectToRecordDialog";
 import DataSamplesMenu from "./DataSamplesMenu";
+import DataSamplesTableRow from "./DataSamplesTableRow";
 import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
 import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
-import RecordingDialog from "./RecordingDialog";
-import ConnectToRecordDialog from "./ConnectToRecordDialog";
-import { FormattedMessage } from "react-intl";
+import RecordingDialog, { RecordingOptions } from "./RecordingDialog";
+import ShowGraphsCheckbox from "./ShowGraphsCheckbox";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -35,23 +44,36 @@ const headings: GridColumnHeadingItemProps[] = [
   {
     titleId: "data-samples-label",
     descriptionId: "data-samples-tooltip",
-    itemsRight: <DataSamplesMenu />,
+    itemsRight: (
+      <HStack>
+        <ShowGraphsCheckbox />
+        <DataSamplesMenu />
+      </HStack>
+    ),
   },
 ];
 
-const DataSamplesGridView = () => {
+interface DataSamplesTableProps {
+  selectedGestureIdx: number;
+  setSelectedGestureIdx: (idx: number) => void;
+}
+
+const DataSamplesTable = ({
+  selectedGestureIdx,
+  setSelectedGestureIdx,
+}: DataSamplesTableProps) => {
   const gestures = useStore((s) => s.gestures);
-  const [selectedGestureIdx, setSelectedGestureIdx] = useState<number>(0);
-  const selectedGesture: GestureData | undefined =
+  // Default to first gesture being selected if last gesture is deleted.
+  const selectedGesture: GestureData =
     gestures[selectedGestureIdx] ?? gestures[0];
 
-  const showWalkThrough = useMemo<boolean>(
+  const showHints = useMemo<boolean>(
     () =>
       gestures.length === 0 ||
       (gestures.length === 1 && gestures[0].recordings.length === 0),
     [gestures]
   );
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const recordingDialogDisclosure = useDisclosure();
   const connectToRecordDialogDisclosure = useDisclosure();
 
   const connection = useConnectActions();
@@ -59,11 +81,16 @@ const DataSamplesGridView = () => {
   const { isConnected } = useConnectionStage();
   const loadProjectInputRef = useRef<LoadProjectInputRef>(null);
 
+  // For adding flashing animation for new recording.
+  const [newRecordingId, setNewRecordingId] = useState<number | undefined>(
+    undefined
+  );
+
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
-      if (!isOpen) {
+      if (!recordingDialogDisclosure.isOpen) {
         if (e.state) {
-          onOpen();
+          recordingDialogDisclosure.onOpen();
         }
       }
     };
@@ -71,8 +98,32 @@ const DataSamplesGridView = () => {
     return () => {
       connection.removeButtonListener("B", listener);
     };
-  }, [connection, isOpen, onOpen]);
+  }, [connection, recordingDialogDisclosure]);
 
+  const [recordingOptions, setRecordingOptions] = useState<RecordingOptions>({
+    continuousRecording: false,
+    recordingsToCapture: 1,
+  });
+  const handleRecord = useCallback(
+    (recordingOptions: RecordingOptions) => {
+      setRecordingOptions(recordingOptions);
+      isConnected
+        ? recordingDialogDisclosure.onOpen()
+        : connectToRecordDialogDisclosure.onOpen();
+    },
+    [connectToRecordDialogDisclosure, isConnected, recordingDialogDisclosure]
+  );
+
+  const tourStart = useStore((s) => s.tourStart);
+  useEffect(() => {
+    if (
+      !recordingDialogDisclosure.isOpen &&
+      gestures.length === 1 &&
+      gestures[0].recordings.length === 1
+    ) {
+      tourStart(TourId.CollectDataToTrainModel);
+    }
+  }, [gestures, recordingDialogDisclosure.isOpen, tourStart]);
   return (
     <>
       <ConnectToRecordDialog
@@ -82,9 +133,11 @@ const DataSamplesGridView = () => {
       {selectedGesture && (
         <RecordingDialog
           gestureId={selectedGesture.ID}
-          isOpen={isOpen}
-          onClose={onClose}
+          isOpen={recordingDialogDisclosure.isOpen}
+          onClose={recordingDialogDisclosure.onClose}
           actionName={selectedGesture.name}
+          onRecordingComplete={setNewRecordingId}
+          recordingOptions={recordingOptions}
         />
       )}
       <HeadingGrid
@@ -105,7 +158,7 @@ const DataSamplesGridView = () => {
             <FormattedMessage id="no-data-samples" />
           </Text>
           {!isConnected && (
-            <Text fontSize="lg">
+            <Text fontSize="lg" textAlign="center">
               <FormattedMessage
                 id="connect-or-import"
                 values={{
@@ -145,15 +198,15 @@ const DataSamplesGridView = () => {
           h={0}
         >
           {gestures.map((g, idx) => (
-            <DataSampleGridRow
+            <DataSamplesTableRow
               key={g.ID}
               gesture={g}
+              newRecordingId={newRecordingId}
+              clearNewRecordingId={() => setNewRecordingId(undefined)}
               selected={selectedGesture.ID === g.ID}
               onSelectRow={() => setSelectedGestureIdx(idx)}
-              onRecord={
-                isConnected ? onOpen : connectToRecordDialogDisclosure.onOpen
-              }
-              showWalkThrough={showWalkThrough}
+              onRecord={handleRecord}
+              showHints={showHints}
             />
           ))}
         </Grid>
@@ -162,4 +215,4 @@ const DataSamplesGridView = () => {
   );
 };
 
-export default DataSamplesGridView;
+export default DataSamplesTable;

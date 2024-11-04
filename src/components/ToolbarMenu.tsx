@@ -1,5 +1,6 @@
 import {
   Box,
+  BoxProps,
   IconButton,
   Menu,
   MenuButton,
@@ -9,9 +10,8 @@ import {
 import { ReactNode } from "react";
 import { RiMenuLine } from "react-icons/ri";
 
-interface ToolbarMenuProps {
+interface ToolbarMenuProps extends BoxProps {
   label: string;
-  isMobile?: boolean;
   children: ReactNode;
   icon?: JSX.Element;
   variant?: ThemeTypings["components"]["Menu"]["variants"];
@@ -22,12 +22,12 @@ const ToolbarMenu = ({
   label,
   icon,
   children,
-  isMobile,
   variant,
   onDarkBackground = true,
+  ...props
 }: ToolbarMenuProps) => {
   return (
-    <Box display={isMobile ? { base: "block", lg: "none" } : undefined}>
+    <Box {...props}>
       <Menu>
         <MenuButton
           as={IconButton}

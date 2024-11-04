@@ -1,31 +1,35 @@
 import { BoxProps, Grid, GridItem, Text } from "@chakra-ui/react";
+import React from "react";
 import { FormattedMessage } from "react-intl";
 import { applyFilters } from "../ml";
 import { XYZData } from "../model";
+import { useStore } from "../store";
 import { calculateGradientColor } from "../utils/gradient-calculator";
 import ClickableTooltip from "./ClickableTooltip";
 
 interface RecordingFingerprintProps extends BoxProps {
   data: XYZData;
-  gestureName: string;
+  size: "sm" | "md";
 }
 
 const RecordingFingerprint = ({
   data,
-  gestureName,
+  size,
   ...rest
 }: RecordingFingerprintProps) => {
-  const dataFeatures = applyFilters(data, { normalize: true });
+  const dataWindow = useStore((s) => s.dataWindow);
+  const dataFeatures = applyFilters(data, dataWindow, { normalize: true });
 
   return (
     <Grid
-      w="80px"
+      w={`${size === "md" ? 152 : 92}px`}
       h="100%"
       position="relative"
       borderRadius="md"
       borderWidth={1}
       borderColor="gray.200"
       overflow="hidden"
+      templateColumns={`repeat(${Object.keys(dataFeatures).length}, 1fr)`}
       {...rest}
     >
       {Object.keys(dataFeatures).map((k, idx) => (
@@ -33,10 +37,7 @@ const RecordingFingerprint = ({
           key={idx}
           label={
             <Text p={3}>
-              <FormattedMessage
-                id={`fingerprint-${k}-tooltip`}
-                values={{ action: gestureName }}
-              />
+              <FormattedMessage id={`fingerprint-${k}-tooltip`} />
             </Text>
           }
         >
@@ -50,4 +51,4 @@ const RecordingFingerprint = ({
   );
 };
 
-export default RecordingFingerprint;
+export default React.memo(RecordingFingerprint);

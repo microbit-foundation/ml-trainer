@@ -43,6 +43,10 @@
     "defaultMessage": "Add action",
     "description": "Button to add an action (movement related, e.g. clapping)"
   },
+  "ai-activity-timer-resource-title": {
+    "defaultMessage": "AI activity timer",
+    "description": "Home page resource card title"
+  },
   "back-action": {
     "defaultMessage": "Back",
     "description": "Back button text"
@@ -116,7 +120,7 @@
     "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
   },
   "connect-battery-heading": {
-    "defaultMessage": "Connect battery pack and disconnect USB",
+    "defaultMessage": "Disconnect USB and connect battery pack",
     "description": "Battery connection dialog "
   },
   "connect-battery-holder": {
@@ -251,6 +255,10 @@
     "defaultMessage": "Select 'Pair'",
     "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
   },
+  "connect-popup-bluetooth-title": {
+    "defaultMessage": "Connect to micro:bit using Web Bluetooth",
+    "description": "Instruction for dialog that previews the Bluetooth permission dialog"
+  },
   "connect-popup-instruction-heading": {
     "defaultMessage": "In the next popup",
     "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
@@ -258,6 +266,18 @@
   "connect-popup-instruction1": {
     "defaultMessage": "Choose your micro:bit",
     "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-popup-usb-bluetooth-data-collection-title": {
+    "defaultMessage": "Download data collection program to micro:bit",
+    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+  },
+  "connect-popup-usb-radio-data-collection-title": {
+    "defaultMessage": "Download data collection program to micro:bit 1",
+    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+  },
+  "connect-popup-usb-radio-link-title": {
+    "defaultMessage": "Download radio link program to micro:bit 2",
+    "description": "Instruction for dialog that previews the WebUSB permission dialog"
   },
   "connect-popup-webusb-instruction2": {
     "defaultMessage": "Select 'Connect'",
@@ -311,10 +331,6 @@
     "defaultMessage": "Connect a micro:bit to record a data sample.",
     "description": "Insufficient data modal content"
   },
-  "connect-to-record-title": {
-    "defaultMessage": "You don't have a micro:bit connected",
-    "description": "Connect to record modal title"
-  },
   "connect-to-test-model": {
     "defaultMessage": "Connect to test your ML model",
     "description": "Live graph disconnected micro:bit status message for test model page"
@@ -367,33 +383,33 @@
     "defaultMessage": "diagram showing data collection micro:bit being connected to a person's wrist",
     "description": "Aria label for data collection image"
   },
+  "data-features-hide-action": {
+    "defaultMessage": "Hide data features",
+    "description": "Hide data features button text"
+  },
+  "data-features-show-action": {
+    "defaultMessage": "Show data features",
+    "description": "Show data features button text"
+  },
   "data-samples-label": {
     "defaultMessage": "Data samples",
     "description": "Heading for data samples column"
+  },
+  "data-samples-status-count": {
+    "defaultMessage": "{numSamples} samples recorded",
+    "description": "Data samples status text"
+  },
+  "data-samples-status-not-enough": {
+    "defaultMessage": "At least 3 required",
+    "description": "Data samples status text"
   },
   "data-samples-title": {
     "defaultMessage": "Data samples",
     "description": "Data samples page title"
   },
   "data-samples-tooltip": {
-    "defaultMessage": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else.",
+    "defaultMessage": "Short collections of movement data lasting 1 second. Your data samples are only stored on your computer, they do not get sent to anyone else.",
     "description": "Tooltip for data samples heading"
-  },
-  "data-samples-view-data-features-option": {
-    "defaultMessage": "Data features",
-    "description": "Data samples view option"
-  },
-  "data-samples-view-graph-and-data-features-option": {
-    "defaultMessage": "Graphs and data features",
-    "description": "Data samples view option"
-  },
-  "data-samples-view-graph-option": {
-    "defaultMessage": "Graphs",
-    "description": "Data samples view option"
-  },
-  "data-samples-view-options-heading": {
-    "defaultMessage": "Views",
-    "description": "Data samples view options heading"
   },
   "delete-action-aria": {
     "defaultMessage": "Delete action \"{action}\"",
@@ -536,99 +552,99 @@
     "description": "Action to open a feedback dialog"
   },
   "fingerprint-acc-x-tooltip": {
-    "defaultMessage": "Sum of x-direction data for {action}",
+    "defaultMessage": "Sum of x-direction data",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-acc-y-tooltip": {
-    "defaultMessage": "Sum of y-direction data for {action}",
+    "defaultMessage": "Sum of y-direction data",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-acc-z-tooltip": {
-    "defaultMessage": "Sum of z-direction data for {action}",
+    "defaultMessage": "Sum of z-direction data",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-max-x-tooltip": {
-    "defaultMessage": "Maximum point among all x-direction data points in {action}",
+    "defaultMessage": "Maximum point among all x-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-max-y-tooltip": {
-    "defaultMessage": "Maximum point among all y-direction data points in {action}",
+    "defaultMessage": "Maximum point among all y-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-max-z-tooltip": {
-    "defaultMessage": "Maximum point among all z-direction data points in {action}",
+    "defaultMessage": "Maximum point among all z-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-mean-x-tooltip": {
-    "defaultMessage": "Mean value for x-direction data in {action}",
+    "defaultMessage": "Mean value for x-direction data ",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-mean-y-tooltip": {
-    "defaultMessage": "Mean value for y-direction data in {action}",
+    "defaultMessage": "Mean value for y-direction data ",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-mean-z-tooltip": {
-    "defaultMessage": "Mean value for z-direction data in {action}",
+    "defaultMessage": "Mean value for z-direction data ",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-min-x-tooltip": {
-    "defaultMessage": "Minimum point among all x-direction data points in {action}",
+    "defaultMessage": "Minimum point among all x-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-min-y-tooltip": {
-    "defaultMessage": "Minimum point among all y-direction data points in {action}",
+    "defaultMessage": "Minimum point among all y-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-min-z-tooltip": {
-    "defaultMessage": "Minimum point among all z-direction data points in {action}",
+    "defaultMessage": "Minimum point among all z-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-peaks-x-tooltip": {
-    "defaultMessage": "Number of extremes among all x-direction data points in {action}",
+    "defaultMessage": "Number of extremes among all x-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-peaks-y-tooltip": {
-    "defaultMessage": "Number of extremes among all y-direction data points in {action}",
+    "defaultMessage": "Number of extremes among all y-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-peaks-z-tooltip": {
-    "defaultMessage": "Number of extremes among all z-direction data points in {action}",
+    "defaultMessage": "Number of extremes among all z-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-rms-x-tooltip": {
-    "defaultMessage": "Root mean square value for all x-direction data points in {action}",
+    "defaultMessage": "Root mean square value for all x-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-rms-y-tooltip": {
-    "defaultMessage": "Root mean square value for all y-direction data points in {action}",
+    "defaultMessage": "Root mean square value for all y-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-rms-z-tooltip": {
-    "defaultMessage": "Root mean square value for all z-direction data points in {action}",
+    "defaultMessage": "Root mean square value for all z-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-std-x-tooltip": {
-    "defaultMessage": "Average deviation from 0 among all x-direction data points in {action}",
+    "defaultMessage": "Average deviation from 0 among all x-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-std-y-tooltip": {
-    "defaultMessage": "Average deviation from 0 among all y-direction data points in {action}",
+    "defaultMessage": "Average deviation from 0 among all y-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-std-z-tooltip": {
-    "defaultMessage": "Average deviation from 0 among all z-direction data points in {action}",
+    "defaultMessage": "Average deviation from 0 among all z-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-zcr-x-tooltip": {
-    "defaultMessage": "Rate at which acceleration transitions between positive and negative for x-direction data points in {action}",
+    "defaultMessage": "Rate at which acceleration transitions between positive and negative for x-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-zcr-y-tooltip": {
-    "defaultMessage": "Rate at which acceleration transitions between positive and negative for y-direction data points in {action}",
+    "defaultMessage": "Rate at which acceleration transitions between positive and negative for y-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-zcr-z-tooltip": {
-    "defaultMessage": "Rate at which acceleration transitions between positive and negative for z-direction data points in {action}",
+    "defaultMessage": "Rate at which acceleration transitions between positive and negative for z-direction data points",
     "description": "Tooltip for data feature of a recording"
   },
   "firmware-outdated-content1": {
@@ -707,6 +723,14 @@
     "defaultMessage": "Import data samples",
     "description": "Data samples action"
   },
+  "import-error-dialog-content": {
+    "defaultMessage": "Only MakeCode hex files or data samples files (.json) can be opened by {appNameFull}.",
+    "description": "Content of import error dialog"
+  },
+  "import-error-dialog-title": {
+    "defaultMessage": "Unsupported file type",
+    "description": "Title of import error dialog"
+  },
   "incompatible-device-body-alt": {
     "defaultMessage": "Go back to select a different micro:bit, or <link>save the project hex</link> which can be downloaded onto a micro:bit V2 later.",
     "description": "Incompatible device dialog body text"
@@ -763,6 +787,22 @@
     "defaultMessage": "Left arrow icon for MakeCode back",
     "description": "Testing model page title"
   },
+  "makecode-block-default-alt": {
+    "defaultMessage": "MakeCode block: on ML {actionName} start, show icon {iconName}",
+    "description": "Makecode default block alt text"
+  },
+  "makecode-block-on-ML": {
+    "defaultMessage": "on ML",
+    "description": "Makecode block text. The translation should match MakeCode translations."
+  },
+  "makecode-block-show-icon": {
+    "defaultMessage": "show icon",
+    "description": "Makecode block text. The translation should match MakeCode translations."
+  },
+  "makecode-block-start": {
+    "defaultMessage": "start",
+    "description": "Makecode block text. The translation should match MakeCode translations."
+  },
   "microbit-not-connected": {
     "defaultMessage": "Your micro:bit is not connected",
     "description": "Live graph disconnected micro:bit status message"
@@ -786,6 +826,14 @@
   "name-used-when": {
     "defaultMessage": "The name is used when you save a file.",
     "description": "Text under project name field"
+  },
+  "new-session-setup-description": {
+    "defaultMessage": "Starting a new session will overwrite your existing session. You may want to <link>save your existing session</link> first.",
+    "description": "New session setup description"
+  },
+  "new-session-setup-title": {
+    "defaultMessage": "New session setup",
+    "description": "New session setup title"
   },
   "newpage-continue-session-subtitle": {
     "defaultMessage": "Use a hex file or data samples file you saved to your computer to continue a session.",
@@ -838,6 +886,14 @@
   "no-data-samples": {
     "defaultMessage": "No data samples",
     "description": "Empty data samples page status text"
+  },
+  "not-create-ai-hex-import-dialog-content": {
+    "defaultMessage": "This project did not contain any data samples, so only the code has been opened. You need to train a model before you can use the code.",
+    "description": "Content of import non-CreateAI hex dialog"
+  },
+  "not-create-ai-hex-import-dialog-title": {
+    "defaultMessage": "Your MakeCode project has been imported",
+    "description": "Title of import non-CreateAI hex dialog"
   },
   "not-found": {
     "defaultMessage": "{appNameFull} home page",
@@ -931,6 +987,10 @@
     "defaultMessage": "Reconnecting…",
     "description": "Shown while reconnecting"
   },
+  "record-action": {
+    "defaultMessage": "Record",
+    "description": "Record button text"
+  },
   "record-action-aria": {
     "defaultMessage": "Record data for action \"{action}\"",
     "description": "Aria label for record button"
@@ -939,12 +999,36 @@
     "defaultMessage": "Press to record a data sample or press button B on your data collection micro:bit.",
     "description": "Hint when you have named the first action but not recorded any data samples"
   },
+  "record-samples": {
+    "defaultMessage": "Record {numSamples} samples",
+    "description": "Additional recording action text"
+  },
+  "record-samples-help": {
+    "defaultMessage": "Each sample has its own countdown",
+    "description": "Help text for additional recording action"
+  },
+  "record-seconds": {
+    "defaultMessage": "Record for {numSeconds} seconds",
+    "description": "Additional recording action text"
+  },
+  "record-seconds-help": {
+    "defaultMessage": "Move continuously to get {numSamples} samples",
+    "description": "Help text for additional recording action"
+  },
   "recording": {
     "defaultMessage": "Recording",
     "description": "Shown during recording"
   },
+  "recording-complete": {
+    "defaultMessage": "Done",
+    "description": "Text shown when data recording complete"
+  },
   "recording-data-for": {
     "defaultMessage": "Record data for action \"{action}\"",
+    "description": "Text in recording dialog"
+  },
+  "recording-data-for-numbered": {
+    "defaultMessage": "Record {sample} of {numSamples} for action \"{action}\"",
     "description": "Text in recording dialog"
   },
   "recording-fingerprint-label": {
@@ -954,6 +1038,10 @@
   "recording-graph-label": {
     "defaultMessage": "graph showing micro:bit x, y, z accelerometer data for one recording",
     "description": "Label for recording graph"
+  },
+  "recording-options-aria": {
+    "defaultMessage": "More recording options",
+    "description": "Aria label for more recording options button"
   },
   "reload-action": {
     "defaultMessage": "Click to reload the page",
@@ -995,6 +1083,14 @@
     "defaultMessage": "Settings actions menu",
     "description": "Label for settings actions menu button"
   },
+  "show-graphs-checkbox-label-text": {
+    "defaultMessage": "Show graphs",
+    "description": "Show graphs checkbox label text"
+  },
+  "simple-ai-exercise-timer-resource-title": {
+    "defaultMessage": "Simple AI exercise timer",
+    "description": "Home page resource card title"
+  },
   "skip-tour-action": {
     "defaultMessage": "Skip tour",
     "description": "Skip tour button text"
@@ -1002,6 +1098,10 @@
   "software-versions": {
     "defaultMessage": "Software versions",
     "description": "Software versions text"
+  },
+  "start-session-action": {
+    "defaultMessage": "Start session",
+    "description": "Start session button text"
   },
   "start-training-action": {
     "defaultMessage": "Start training",
@@ -1030,6 +1130,10 @@
   "steps-train": {
     "defaultMessage": "Train",
     "description": "Step in home page diagram"
+  },
+  "stop-recording-action": {
+    "defaultMessage": "Stop recording",
+    "description": "Button label to stop recording movement data while recording multiple samples"
   },
   "support-request": {
     "defaultMessage": "Please consider <link>raising a support request</link>.",
@@ -1088,7 +1192,7 @@
     "description": "Tour step content"
   },
   "tour-makecode-intro-content1": {
-    "defaultMessage": "Download the program to your micro:bit. You can add more blocks to create your own programs using your model.",
+    "defaultMessage": "Download the model and code to test your project on a micro:bit. You can also add more code blocks to create your own programs using your model.",
     "description": "Tour step description"
   },
   "tour-makecode-intro-content2": {

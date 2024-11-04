@@ -2,30 +2,35 @@ import { GridItem, Text, useDisclosure } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { GestureData } from "../model";
 import { useStore } from "../store";
-import AddDataGridWalkThrough from "./AddDataGridWalkThrough";
+import DataSamplesTableHints from "./DataSamplesTableHints";
 import { ConfirmDialog } from "./ConfirmDialog";
-import DataRecordingGridItem from "./DataRecordingGridItem";
-import GestureNameGridItem from "./GestureNameGridItem";
+import ActionDataSamplesCard from "./ActionDataSamplesCard";
+import ActionNameCard from "./ActionNameCard";
 import {
   ConnectionFlowStep,
   useConnectionStage,
 } from "../connection-stage-hooks";
+import { RecordingOptions } from "./RecordingDialog";
 
-interface AddDataGridRowProps {
+interface DataSamplesTableRowProps {
   gesture: GestureData;
   selected: boolean;
   onSelectRow: () => void;
-  onRecord: () => void;
-  showWalkThrough: boolean;
+  onRecord: (recordingOptions: RecordingOptions) => void;
+  showHints: boolean;
+  newRecordingId?: number;
+  clearNewRecordingId: () => void;
 }
 
-const DataSampleGridRow = ({
+const DataSamplesTableRow = ({
   gesture,
   selected,
   onSelectRow,
   onRecord,
-  showWalkThrough,
-}: AddDataGridRowProps) => {
+  showHints: showHints,
+  newRecordingId,
+  clearNewRecordingId,
+}: DataSamplesTableRowProps) => {
   const intl = useIntl();
   const deleteConfirmDisclosure = useDisclosure();
   const deleteGesture = useStore((s) => s.deleteGesture);
@@ -54,34 +59,33 @@ const DataSampleGridRow = ({
         onConfirm={() => deleteGesture(gesture.ID)}
         onCancel={deleteConfirmDisclosure.onClose}
       />
-      <GestureNameGridItem
-        id={gesture.ID}
-        name={gesture.name}
-        icon={gesture.icon}
-        onDeleteAction={deleteConfirmDisclosure.onOpen}
-        onSelectRow={onSelectRow}
-        selected={selected}
-        readOnly={false}
-      />
-      {showWalkThrough ? (
-        <AddDataGridWalkThrough gesture={gesture} onRecord={onRecord} />
+      <GridItem>
+        <ActionNameCard
+          value={gesture}
+          onDeleteAction={deleteConfirmDisclosure.onOpen}
+          onSelectRow={onSelectRow}
+          selected={selected}
+          readOnly={false}
+        />
+      </GridItem>
+      {showHints ? (
+        <DataSamplesTableHints gesture={gesture} onRecord={onRecord} />
       ) : (
-        <>
-          {gesture.name.length > 0 || gesture.recordings.length > 0 ? (
-            <DataRecordingGridItem
-              data={gesture}
+        <GridItem>
+          {(gesture.name.length > 0 || gesture.recordings.length > 0) && (
+            <ActionDataSamplesCard
+              newRecordingId={newRecordingId}
+              value={gesture}
               selected={selected}
               onSelectRow={onSelectRow}
               onRecord={onRecord}
+              clearNewRecordingId={clearNewRecordingId}
             />
-          ) : (
-            // Empty grid item to fill column space
-            <GridItem />
           )}
-        </>
+        </GridItem>
       )}
     </>
   );
 };
 
-export default DataSampleGridRow;
+export default DataSamplesTableRow;

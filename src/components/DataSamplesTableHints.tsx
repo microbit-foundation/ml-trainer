@@ -1,19 +1,20 @@
 import { GridItem, HStack, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import { GestureData } from "../model";
-import DataRecordingGridItem from "./DataRecordingGridItem";
+import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import GreetingEmojiWithArrow from "./GreetingEmojiWithArrow";
 import UpCurveArrow from "./UpCurveArrow";
+import { RecordingOptions } from "./RecordingDialog";
 
-interface AddDataGridWalkThrough {
+interface DataSamplesTableHintsProps {
   gesture: GestureData;
-  onRecord: () => void;
+  onRecord: (recordingOptions: RecordingOptions) => void;
 }
 
-const AddDataGridWalkThrough = ({
+const DataSamplesTableHints = ({
   gesture,
   onRecord,
-}: AddDataGridWalkThrough) => {
+}: DataSamplesTableHintsProps) => {
   return (
     <>
       {gesture.name.length === 0 ? (
@@ -27,11 +28,13 @@ const AddDataGridWalkThrough = ({
         </GridItem>
       ) : (
         <>
-          <DataRecordingGridItem
-            data={gesture}
-            selected={true}
-            onRecord={onRecord}
-          />
+          <GridItem>
+            <ActionDataSamplesCard
+              value={gesture}
+              selected={true}
+              onRecord={onRecord}
+            />
+          </GridItem>
           {/* Empty grid item to fill first column of grid */}
           <GridItem />
           <GridItem h="120px">
@@ -53,4 +56,4 @@ const AddDataGridWalkThrough = ({
   );
 };
 
-export default AddDataGridWalkThrough;
+export default DataSamplesTableHints;

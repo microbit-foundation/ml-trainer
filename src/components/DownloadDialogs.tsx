@@ -86,6 +86,7 @@ const DownloadDialogs = () => {
       return (
         <SelectMicrobitUsbDialog
           isOpen
+          headingId="connect-popup"
           onClose={actions.close}
           onBackClick={actions.getOnBack()}
           onNextClick={handleDownloadProject}

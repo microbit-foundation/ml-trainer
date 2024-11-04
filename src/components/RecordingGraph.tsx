@@ -15,7 +15,7 @@ interface RecordingGraphProps extends BoxProps {
   data: XYZData;
 }
 
-const RecordingGraph = ({ data, ...rest }: RecordingGraphProps) => {
+const RecordingGraph = ({ data, children, ...rest }: RecordingGraphProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -40,9 +40,11 @@ const RecordingGraph = ({ data, ...rest }: RecordingGraphProps) => {
       borderColor="gray.200"
       w="158px"
       height="100%"
+      position="relative"
       {...rest}
     >
       <canvas width="158px" height="95px" ref={canvasRef} />
+      {children}
     </Box>
   );
 };

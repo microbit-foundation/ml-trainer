@@ -41,6 +41,7 @@ export const defaultSettings: Settings = {
   showPreDownloadHelp: true,
   toursCompleted: [],
   dataSamplesView: DataSamplesView.Graph,
+  showGraphs: true,
 };
 
 export interface Settings {
@@ -50,4 +51,5 @@ export interface Settings {
   showPreDownloadHelp: boolean;
   toursCompleted: TourId[];
   dataSamplesView: DataSamplesView;
+  showGraphs: boolean;
 }

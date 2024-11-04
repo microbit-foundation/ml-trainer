@@ -6,6 +6,7 @@
 
 import { ChartConfiguration, ChartTypeRegistry } from "chart.js";
 import { XYZData } from "./model";
+import { maxAccelerationScaleForGraphs } from "./mlConfig";
 
 const smoothen = (d: number[]): number[] => {
   if (d.length === 0) {
@@ -103,8 +104,8 @@ export const getConfig = ({
         },
         y: {
           type: "linear",
-          min: -2.5,
-          max: 2.5,
+          min: -maxAccelerationScaleForGraphs,
+          max: maxAccelerationScaleForGraphs,
           grid: {
             drawTicks: false,
             display: false,

@@ -91,6 +91,12 @@
       "value": "Add action"
     }
   ],
+  "ai-activity-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "AI activity timer"
+    }
+  ],
   "back-action": [
     {
       "type": 0,
@@ -218,7 +224,7 @@
   "connect-battery-heading": [
     {
       "type": 0,
-      "value": "Connect battery pack and disconnect USB"
+      "value": "Disconnect USB and connect battery pack"
     }
   ],
   "connect-battery-holder": [
@@ -447,6 +453,12 @@
       "value": "Select 'Pair'"
     }
   ],
+  "connect-popup-bluetooth-title": [
+    {
+      "type": 0,
+      "value": "Connect to micro:bit using Web Bluetooth"
+    }
+  ],
   "connect-popup-instruction-heading": [
     {
       "type": 0,
@@ -457,6 +469,24 @@
     {
       "type": 0,
       "value": "Choose your micro:bit"
+    }
+  ],
+  "connect-popup-usb-bluetooth-data-collection-title": [
+    {
+      "type": 0,
+      "value": "Download data collection program to micro:bit"
+    }
+  ],
+  "connect-popup-usb-radio-data-collection-title": [
+    {
+      "type": 0,
+      "value": "Download data collection program to micro:bit 1"
+    }
+  ],
+  "connect-popup-usb-radio-link-title": [
+    {
+      "type": 0,
+      "value": "Download radio link program to micro:bit 2"
     }
   ],
   "connect-popup-webusb-instruction2": [
@@ -537,12 +567,6 @@
       "value": "Connect a micro:bit to record a data sample."
     }
   ],
-  "connect-to-record-title": [
-    {
-      "type": 0,
-      "value": "You don't have a micro:bit connected"
-    }
-  ],
   "connect-to-test-model": [
     {
       "type": 0,
@@ -621,10 +645,38 @@
       "value": "diagram showing data collection micro:bit being connected to a person's wrist"
     }
   ],
+  "data-features-hide-action": [
+    {
+      "type": 0,
+      "value": "Hide data features"
+    }
+  ],
+  "data-features-show-action": [
+    {
+      "type": 0,
+      "value": "Show data features"
+    }
+  ],
   "data-samples-label": [
     {
       "type": 0,
       "value": "Data samples"
+    }
+  ],
+  "data-samples-status-count": [
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " samples recorded"
+    }
+  ],
+  "data-samples-status-not-enough": [
+    {
+      "type": 0,
+      "value": "At least 3 required"
     }
   ],
   "data-samples-title": [
@@ -636,31 +688,7 @@
   "data-samples-tooltip": [
     {
       "type": 0,
-      "value": "Short collections of movement data lasting approximately 2 seconds. Your data samples are only stored on your computer, they do not get sent to anyone else."
-    }
-  ],
-  "data-samples-view-data-features-option": [
-    {
-      "type": 0,
-      "value": "Data features"
-    }
-  ],
-  "data-samples-view-graph-and-data-features-option": [
-    {
-      "type": 0,
-      "value": "Graphs and data features"
-    }
-  ],
-  "data-samples-view-graph-option": [
-    {
-      "type": 0,
-      "value": "Graphs"
-    }
-  ],
-  "data-samples-view-options-heading": [
-    {
-      "type": 0,
-      "value": "Views"
+      "value": "Short collections of movement data lasting 1 second. Your data samples are only stored on your computer, they do not get sent to anyone else."
     }
   ],
   "delete-action-aria": [
@@ -908,241 +936,145 @@
   "fingerprint-acc-x-tooltip": [
     {
       "type": 0,
-      "value": "Sum of x-direction data for "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Sum of x-direction data"
     }
   ],
   "fingerprint-acc-y-tooltip": [
     {
       "type": 0,
-      "value": "Sum of y-direction data for "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Sum of y-direction data"
     }
   ],
   "fingerprint-acc-z-tooltip": [
     {
       "type": 0,
-      "value": "Sum of z-direction data for "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Sum of z-direction data"
     }
   ],
   "fingerprint-max-x-tooltip": [
     {
       "type": 0,
-      "value": "Maximum point among all x-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Maximum point among all x-direction data points"
     }
   ],
   "fingerprint-max-y-tooltip": [
     {
       "type": 0,
-      "value": "Maximum point among all y-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Maximum point among all y-direction data points"
     }
   ],
   "fingerprint-max-z-tooltip": [
     {
       "type": 0,
-      "value": "Maximum point among all z-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Maximum point among all z-direction data points"
     }
   ],
   "fingerprint-mean-x-tooltip": [
     {
       "type": 0,
-      "value": "Mean value for x-direction data in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Mean value for x-direction data "
     }
   ],
   "fingerprint-mean-y-tooltip": [
     {
       "type": 0,
-      "value": "Mean value for y-direction data in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Mean value for y-direction data "
     }
   ],
   "fingerprint-mean-z-tooltip": [
     {
       "type": 0,
-      "value": "Mean value for z-direction data in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Mean value for z-direction data "
     }
   ],
   "fingerprint-min-x-tooltip": [
     {
       "type": 0,
-      "value": "Minimum point among all x-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Minimum point among all x-direction data points"
     }
   ],
   "fingerprint-min-y-tooltip": [
     {
       "type": 0,
-      "value": "Minimum point among all y-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Minimum point among all y-direction data points"
     }
   ],
   "fingerprint-min-z-tooltip": [
     {
       "type": 0,
-      "value": "Minimum point among all z-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Minimum point among all z-direction data points"
     }
   ],
   "fingerprint-peaks-x-tooltip": [
     {
       "type": 0,
-      "value": "Number of extremes among all x-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Number of extremes among all x-direction data points"
     }
   ],
   "fingerprint-peaks-y-tooltip": [
     {
       "type": 0,
-      "value": "Number of extremes among all y-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Number of extremes among all y-direction data points"
     }
   ],
   "fingerprint-peaks-z-tooltip": [
     {
       "type": 0,
-      "value": "Number of extremes among all z-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Number of extremes among all z-direction data points"
     }
   ],
   "fingerprint-rms-x-tooltip": [
     {
       "type": 0,
-      "value": "Root mean square value for all x-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Root mean square value for all x-direction data points"
     }
   ],
   "fingerprint-rms-y-tooltip": [
     {
       "type": 0,
-      "value": "Root mean square value for all y-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Root mean square value for all y-direction data points"
     }
   ],
   "fingerprint-rms-z-tooltip": [
     {
       "type": 0,
-      "value": "Root mean square value for all z-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Root mean square value for all z-direction data points"
     }
   ],
   "fingerprint-std-x-tooltip": [
     {
       "type": 0,
-      "value": "Average deviation from 0 among all x-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Average deviation from 0 among all x-direction data points"
     }
   ],
   "fingerprint-std-y-tooltip": [
     {
       "type": 0,
-      "value": "Average deviation from 0 among all y-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Average deviation from 0 among all y-direction data points"
     }
   ],
   "fingerprint-std-z-tooltip": [
     {
       "type": 0,
-      "value": "Average deviation from 0 among all z-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Average deviation from 0 among all z-direction data points"
     }
   ],
   "fingerprint-zcr-x-tooltip": [
     {
       "type": 0,
-      "value": "Rate at which acceleration transitions between positive and negative for x-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Rate at which acceleration transitions between positive and negative for x-direction data points"
     }
   ],
   "fingerprint-zcr-y-tooltip": [
     {
       "type": 0,
-      "value": "Rate at which acceleration transitions between positive and negative for y-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Rate at which acceleration transitions between positive and negative for y-direction data points"
     }
   ],
   "fingerprint-zcr-z-tooltip": [
     {
       "type": 0,
-      "value": "Rate at which acceleration transitions between positive and negative for z-direction data points in "
-    },
-    {
-      "type": 1,
-      "value": "action"
+      "value": "Rate at which acceleration transitions between positive and negative for z-direction data points"
     }
   ],
   "firmware-outdated-content1": [
@@ -1281,6 +1213,26 @@
       "value": "Import data samples"
     }
   ],
+  "import-error-dialog-content": [
+    {
+      "type": 0,
+      "value": "Only MakeCode hex files or data samples files (.json) can be opened by "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "import-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "Unsupported file type"
+    }
+  ],
   "incompatible-device-body-alt": [
     {
       "type": 0,
@@ -1403,6 +1355,42 @@
       "value": "Left arrow icon for MakeCode back"
     }
   ],
+  "makecode-block-default-alt": [
+    {
+      "type": 0,
+      "value": "MakeCode block: on ML "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": " start, show icon "
+    },
+    {
+      "type": 1,
+      "value": "iconName"
+    }
+  ],
+  "makecode-block-on-ML": [
+    {
+      "type": 0,
+      "value": "on ML"
+    }
+  ],
+  "makecode-block-show-icon": [
+    {
+      "type": 0,
+      "value": "show icon"
+    }
+  ],
+  "makecode-block-start": [
+    {
+      "type": 0,
+      "value": "start"
+    }
+  ],
   "microbit-not-connected": [
     {
       "type": 0,
@@ -1437,6 +1425,32 @@
     {
       "type": 0,
       "value": "The name is used when you save a file."
+    }
+  ],
+  "new-session-setup-description": [
+    {
+      "type": 0,
+      "value": "Starting a new session will overwrite your existing session. You may want to "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "save your existing session"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " first."
+    }
+  ],
+  "new-session-setup-title": [
+    {
+      "type": 0,
+      "value": "New session setup"
     }
   ],
   "newpage-continue-session-subtitle": [
@@ -1543,6 +1557,18 @@
     {
       "type": 0,
       "value": "No data samples"
+    }
+  ],
+  "not-create-ai-hex-import-dialog-content": [
+    {
+      "type": 0,
+      "value": "This project did not contain any data samples, so only the code has been opened. You need to train a model before you can use the code."
+    }
+  ],
+  "not-create-ai-hex-import-dialog-title": [
+    {
+      "type": 0,
+      "value": "Your MakeCode project has been imported"
     }
   ],
   "not-found": [
@@ -1695,6 +1721,12 @@
       "value": "Reconnecting…"
     }
   ],
+  "record-action": [
+    {
+      "type": 0,
+      "value": "Record"
+    }
+  ],
   "record-action-aria": [
     {
       "type": 0,
@@ -1715,16 +1747,100 @@
       "value": "Press to record a data sample or press button B on your data collection micro:bit."
     }
   ],
+  "record-samples": [
+    {
+      "type": 0,
+      "value": "Record "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " samples"
+    }
+  ],
+  "record-samples-help": [
+    {
+      "type": 0,
+      "value": "Each sample has its own countdown"
+    }
+  ],
+  "record-seconds": [
+    {
+      "type": 0,
+      "value": "Record for "
+    },
+    {
+      "type": 1,
+      "value": "numSeconds"
+    },
+    {
+      "type": 0,
+      "value": " seconds"
+    }
+  ],
+  "record-seconds-help": [
+    {
+      "type": 0,
+      "value": "Move continuously to get "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " samples"
+    }
+  ],
   "recording": [
     {
       "type": 0,
       "value": "Recording"
     }
   ],
+  "recording-complete": [
+    {
+      "type": 0,
+      "value": "Done"
+    }
+  ],
   "recording-data-for": [
     {
       "type": 0,
       "value": "Record data for action \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "recording-data-for-numbered": [
+    {
+      "type": 0,
+      "value": "Record "
+    },
+    {
+      "type": 1,
+      "value": "sample"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " for action \""
     },
     {
       "type": 1,
@@ -1745,6 +1861,12 @@
     {
       "type": 0,
       "value": "graph showing micro:bit x, y, z accelerometer data for one recording"
+    }
+  ],
+  "recording-options-aria": [
+    {
+      "type": 0,
+      "value": "More recording options"
     }
   ],
   "reload-action": [
@@ -1815,6 +1937,18 @@
       "value": "Settings actions menu"
     }
   ],
+  "show-graphs-checkbox-label-text": [
+    {
+      "type": 0,
+      "value": "Show graphs"
+    }
+  ],
+  "simple-ai-exercise-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "Simple AI exercise timer"
+    }
+  ],
   "skip-tour-action": [
     {
       "type": 0,
@@ -1825,6 +1959,12 @@
     {
       "type": 0,
       "value": "Software versions"
+    }
+  ],
+  "start-session-action": [
+    {
+      "type": 0,
+      "value": "Start session"
     }
   ],
   "start-training-action": [
@@ -1867,6 +2007,12 @@
     {
       "type": 0,
       "value": "Train"
+    }
+  ],
+  "stop-recording-action": [
+    {
+      "type": 0,
+      "value": "Stop recording"
     }
   ],
   "support-request": [
@@ -1970,7 +2116,7 @@
   "tour-makecode-intro-content1": [
     {
       "type": 0,
-      "value": "Download the program to your micro:bit. You can add more blocks to create your own programs using your model."
+      "value": "Download the model and code to test your project on a micro:bit. You can also add more code blocks to create your own programs using your model."
     }
   ],
   "tour-makecode-intro-content2": [

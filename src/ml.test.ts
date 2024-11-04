@@ -18,6 +18,7 @@ import {
 import gestureDataBadLabels from "./test-fixtures/gesture-data-bad-labels.json";
 import gestureData from "./test-fixtures/gesture-data.json";
 import testdataShakeStill from "./test-fixtures/test-data-shake-still.json";
+import { currentDataWindow } from "./store";
 
 const fixUpTestData = (data: Partial<GestureData>[]): GestureData[] => {
   data.forEach((action) => (action.icon = "Heart"));
@@ -28,11 +29,17 @@ let trainingResult: TrainingResult;
 beforeAll(async () => {
   // No webgl in tests running in node.
   await tf.setBackend("cpu");
-  trainingResult = await trainModel({ data: fixUpTestData(gestureData) });
+  trainingResult = await trainModel(
+    fixUpTestData(gestureData),
+    currentDataWindow
+  );
 });
 
 const getModelResults = (data: GestureData[]) => {
-  const { features, labels } = prepareFeaturesAndLabels(data);
+  const { features, labels } = prepareFeaturesAndLabels(
+    data,
+    currentDataWindow
+  );
 
   if (trainingResult.error) {
     throw Error("No model returned");
@@ -88,9 +95,8 @@ describe("Model tests", () => {
     const { tensorFlowResultAccuracy } = getModelResults(
       fixUpTestData(testdataShakeStill)
     );
-    // The model thinks one sample of still are circle.
-    // 14 samples; 1.0 / 14 = 0.0714; 0.0714 * 13 correct inferences = 0.9285
-    expect(parseFloat(tensorFlowResultAccuracy)).toBeGreaterThan(0.9);
+    // The model thinks 1-2 samples of still are circle.
+    expect(parseFloat(tensorFlowResultAccuracy)).toBeGreaterThan(0.85);
   });
 });
 
@@ -98,7 +104,7 @@ describe("applyFilters", () => {
   test("throws when x/y/z data is empty", () => {
     const xyzData = { x: [], y: [], z: [] };
     try {
-      applyFilters(xyzData);
+      applyFilters(xyzData, currentDataWindow);
       // Fail test if above expression doesn't throw anything.
       expect(true).toBe(false);
     } catch (e) {
@@ -108,7 +114,7 @@ describe("applyFilters", () => {
   test("throws when data sample is too short", () => {
     const xyzData = { x: [1, 1, 1], y: [1, 1, 1], z: [1, 1, 1] };
     try {
-      applyFilters(xyzData);
+      applyFilters(xyzData, currentDataWindow);
       // Fail test if above expression doesn't throw anything.
       expect(true).toBe(false);
     } catch (e) {
@@ -117,14 +123,14 @@ describe("applyFilters", () => {
   });
   test("returns filtered results", () => {
     const xyzData = {
-      x: [1, 1, 1, 1, 1, 1, 1],
-      y: [1, 1, 1, 1, 1, 1, 1],
-      z: [1, 1, 1, 1, 1, 1, 1],
+      x: new Array(44).fill(1),
+      y: new Array(44).fill(1),
+      z: new Array(44).fill(1),
     };
-    expect(applyFilters(xyzData)).toEqual({
-      "acc-x": 7,
-      "acc-y": 7,
-      "acc-z": 7,
+    expect(applyFilters(xyzData, currentDataWindow)).toEqual({
+      "acc-x": 50,
+      "acc-y": 50,
+      "acc-z": 50,
       "max-x": 1,
       "max-y": 1,
       "max-z": 1,
@@ -154,7 +160,9 @@ describe("applyFilters", () => {
       y: [0, 0, 0, 0, 0, 0, 0],
       z: [0, 0, 0, 0, 0, 0, 0],
     };
-    expect(applyFilters(xyzData, { normalize: true })).toEqual({
+    expect(
+      applyFilters(xyzData, currentDataWindow, { normalize: true })
+    ).toEqual({
       "acc-x": 0,
       "acc-y": 0,
       "acc-z": 0,

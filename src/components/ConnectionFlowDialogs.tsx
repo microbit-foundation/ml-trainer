@@ -13,12 +13,16 @@ import ConnectCableDialog, {
   getConnectionCableDialogConfig,
 } from "./ConnectCableDialog";
 import ConnectErrorDialog from "./ConnectErrorDialog";
-import DownloadProgressDialog, { getHeadingId } from "./DownloadProgressDialog";
+import DownloadProgressDialog, {
+  getHeadingId as getDownloadProgressHeadingId,
+} from "./DownloadProgressDialog";
 import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import LoadingDialog from "./LoadingDialog";
 import ManualFlashingDialog from "./ManualFlashingDialog";
 import SelectMicrobitBluetoothDialog from "./SelectMicrobitBluetoothDialog";
-import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
+import SelectMicrobitUsbDialog, {
+  getHeadingId as getSelectMicrobitUsbHeadingId,
+} from "./SelectMicrobitUsbDialog";
 import TryAgainDialog from "./TryAgainDialog";
 import UnsupportedMicrobitDialog from "./UnsupportedMicrobitDialog";
 import WebUsbBluetoothUnsupportedDialog from "./WebUsbBluetoothUnsupportedDialog";
@@ -106,6 +110,7 @@ const ConnectionDialogs = () => {
       };
       return (
         <SelectMicrobitUsbDialog
+          headingId={getSelectMicrobitUsbHeadingId(stage.flowType)}
           {...dialogCommonProps}
           onBackClick={actions.onBackClick}
           onNextClick={connectAndFlash}
@@ -169,7 +174,7 @@ const ConnectionDialogs = () => {
     case ConnectionFlowStep.FlashingInProgress: {
       return (
         <DownloadProgressDialog
-          headingId={getHeadingId(stage.flowType)}
+          headingId={getDownloadProgressHeadingId(stage.flowType)}
           isOpen={isOpen}
           progress={flashProgress}
         />

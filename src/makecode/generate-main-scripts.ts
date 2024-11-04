@@ -63,21 +63,13 @@ const onMLEventChildren = (
   return iconName ? s.showIcon(iconName) : "";
 };
 
-export const getMainScript = (
-  gs: Gesture[],
-  lang: Language,
-  gestureToRenderAsBlock?: Gesture
-) => {
+export const getMainScript = (gs: Gesture[], lang: Language) => {
   const actionNames = actionNamesFromLabels(gs.map((g) => g.name));
-  const configs = gs
-    .map((g, idx) => ({
-      id: g.ID,
-      name: actionNames[idx].actionVar,
-      iconName: g.icon,
-    }))
-    .filter((c) =>
-      gestureToRenderAsBlock ? c.id === gestureToRenderAsBlock.ID : true
-    );
+  const configs = gs.map((g, idx) => ({
+    id: g.ID,
+    name: actionNames[idx].actionVar,
+    iconName: g.icon,
+  }));
   const s = statements[lang];
   const initPos = { x: 0, y: 0 };
   return s.wrapper(

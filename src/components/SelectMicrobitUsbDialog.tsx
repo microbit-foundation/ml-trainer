@@ -14,19 +14,31 @@ import ConnectContainerDialog, {
 } from "./ConnectContainerDialog";
 import ArrowOne from "./ArrowOne";
 import ArrowTwo from "./ArrowTwo";
+import { ConnectionFlowType } from "../connection-stage-hooks";
 
 export interface SelectMicrobitDialogProps
-  extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {}
+  extends Omit<ConnectContainerDialogProps, "children"> {}
+
+export const getHeadingId = (flowType: ConnectionFlowType) => {
+  switch (flowType) {
+    case ConnectionFlowType.ConnectBluetooth:
+      return "connect-popup-usb-bluetooth-data-collection-title";
+    case ConnectionFlowType.ConnectRadioRemote:
+      return "connect-popup-usb-radio-data-collection-title";
+    case ConnectionFlowType.ConnectRadioBridge:
+      return "connect-popup-usb-radio-link-title";
+  }
+};
 
 const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
   const intl = useIntl();
 
   return (
-    <ConnectContainerDialog headingId="connect-popup" {...props}>
+    <ConnectContainerDialog {...props}>
       <Box position="relative" width="100%">
         <Image
           height={375}
-          width={418}
+          width={349}
           src={selectMicrobitImage}
           alt={intl.formatMessage({ id: "connect-help-alt" })}
         />

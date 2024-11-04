@@ -1,19 +1,39 @@
-import { Button } from "@chakra-ui/react";
-import { useCallback, useEffect } from "react";
-import { FormattedMessage } from "react-intl";
+import {
+  Button,
+  ButtonGroup,
+  HStack,
+  Menu,
+  MenuItem,
+  MenuList,
+  Portal,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
+import { useCallback, useEffect, useState } from "react";
+import { RiDeleteBin2Line } from "react-icons/ri";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import BackArrow from "../components/BackArrow";
 import DefaultPageLayout, {
   ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
-import TestingModelGridView from "../components/TestingModelGridView";
+import IncompatibleEditorDevice from "../components/IncompatibleEditorDevice";
+import LiveGraphPanel from "../components/LiveGraphPanel";
+import MoreMenuButton from "../components/MoreMenuButton";
+import TestingModelTable from "../components/TestingModelTable";
+import { useConnectActions } from "../connect-actions-hooks";
+import { usePrediction } from "../hooks/ml-hooks";
+import { useProject } from "../hooks/project-hooks";
 import { useStore } from "../store";
+import { tourElClassname } from "../tours";
 import { createDataSamplesPageUrl } from "../urls";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
   const model = useStore((s) => s.model);
+  const prediction = usePrediction();
+  const intl = useIntl();
 
   const navigateToDataSamples = useCallback(() => {
     navigate(createDataSamplesPageUrl());
@@ -24,6 +44,30 @@ const TestingModelPage = () => {
       navigateToDataSamples();
     }
   }, [model, navigateToDataSamples]);
+
+  const { openEditor, resetProject, projectEdited } = useProject();
+  const { getDataCollectionBoardVersion } = useConnectActions();
+  const incompatibleEditorDeviceDisclosure = useDisclosure();
+  const maybeOpenEditor = useCallback(async () => {
+    // Open editor if device is not a V1, otherwise show warning dialog.
+    if (getDataCollectionBoardVersion() === "V1") {
+      return incompatibleEditorDeviceDisclosure.onOpen();
+    }
+    setEditorLoading(true);
+    await openEditor();
+    setEditorLoading(false);
+  }, [
+    getDataCollectionBoardVersion,
+    incompatibleEditorDeviceDisclosure,
+    openEditor,
+  ]);
+  const [editorLoading, setEditorLoading] = useState(false);
+  const continueToEditor = useCallback(async () => {
+    setEditorLoading(true);
+    await openEditor();
+    incompatibleEditorDeviceDisclosure.onClose();
+    setEditorLoading(false);
+  }, [incompatibleEditorDeviceDisclosure, openEditor]);
 
   return model ? (
     <DefaultPageLayout
@@ -41,7 +85,63 @@ const TestingModelPage = () => {
         </Button>
       }
     >
-      <TestingModelGridView />
+      <IncompatibleEditorDevice
+        isOpen={incompatibleEditorDeviceDisclosure.isOpen}
+        onClose={incompatibleEditorDeviceDisclosure.onClose}
+        onNext={continueToEditor}
+        stage="openEditor"
+        onNextLoading={editorLoading}
+      />
+      <TestingModelTable prediction={prediction} />
+      <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
+        <HStack
+          justifyContent="right"
+          px={5}
+          py={2}
+          w="full"
+          borderBottomWidth={3}
+          borderTopWidth={3}
+          borderColor="gray.200"
+          alignItems="center"
+        >
+          <Menu>
+            <ButtonGroup isAttached>
+              <Button
+                variant="primary"
+                onClick={maybeOpenEditor}
+                className={tourElClassname.editInMakeCodeButton}
+                isLoading={
+                  editorLoading && !incompatibleEditorDeviceDisclosure.isOpen
+                }
+              >
+                <FormattedMessage id="edit-in-makecode-action" />
+              </Button>
+              <MoreMenuButton
+                variant="primary"
+                aria-label={intl.formatMessage({
+                  id: "more-edit-in-makecode-options",
+                })}
+              />
+              <Portal>
+                <MenuList>
+                  <MenuItem
+                    icon={<RiDeleteBin2Line />}
+                    onClick={resetProject}
+                    isDisabled={!projectEdited}
+                  >
+                    <FormattedMessage id="reset-to-default-action" />
+                  </MenuItem>
+                </MenuList>
+              </Portal>
+            </ButtonGroup>
+          </Menu>
+        </HStack>
+        <LiveGraphPanel
+          detected={prediction?.detected}
+          showPredictedGesture
+          disconnectedTextId="connect-to-test-model"
+        />
+      </VStack>
     </DefaultPageLayout>
   ) : (
     <></>

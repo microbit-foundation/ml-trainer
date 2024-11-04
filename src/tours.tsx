@@ -4,7 +4,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 import makecodeBackImage from "./images/makecode-back.png";
 import accelerometerImage from "./images/microbit_xyz_arrows.png";
 import { TourId, TourStep } from "./model";
-import { FormattedMessageStepContent } from "./pages/Tour";
+
+const FormattedMessageStepContent = ({ id }: { id: string }) => {
+  return (
+    <Text>
+      <FormattedMessage id={id} />
+    </Text>
+  );
+};
 
 export const tourElClassname = {
   liveGraph: "live-graph",
@@ -160,6 +167,7 @@ export const tours: Record<TourId, TourStep[]> = {
         <FormattedMessageStepContent id="tour-testModel-makeCodeBlocks-content" />
       ),
       selector: classSelector(tourElClassname.makeCodeCodeView),
+      placement: "left",
     },
     {
       title: <FormattedMessage id="edit-in-makecode-action" />,

@@ -1,16 +1,15 @@
 import { Box, HStack, Icon, Text } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { AccelerometerDataEvent } from "@microbit/microbit-connection";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { RiArrowDropLeftFill } from "react-icons/ri";
 import { SmoothieChart, TimeSeries } from "smoothie";
 import { useConnectActions } from "../connect-actions-hooks";
-import { useConnectionStage } from "../connection-stage-hooks";
-import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 import { ConnectionStatus } from "../connect-status-hooks";
-import { RiArrowDropLeftFill } from "react-icons/ri";
-import React from "react";
+import { useConnectionStage } from "../connection-stage-hooks";
 import { LabelConfig, getUpdatedLabelConfig } from "../live-graph-label-config";
 import { useStore } from "../store";
-import { mlSettings } from "../mlConfig";
+import { maxAccelerationScaleForGraphs } from "../mlConfig";
 
 const initialLabelConfigs: LabelConfig[] = [
   { label: "x", arrowHeight: 0, labelHeight: 0, color: "#f9808e", id: 0 },
@@ -50,8 +49,8 @@ const LiveGraph = () => {
       return;
     }
     const smoothieChart = new SmoothieChart({
-      maxValue: 2.3,
-      minValue: -2,
+      maxValue: maxAccelerationScaleForGraphs,
+      minValue: -maxAccelerationScaleForGraphs,
       millisPerPixel: 7,
       grid: {
         fillStyle: "#ffffff00",
@@ -86,29 +85,21 @@ const LiveGraph = () => {
     }
   }, [chart, isConnected, status]);
 
-  // Draw on graph to display that users are recording
-  // Ideally we'd do this without timing the recording again!
-  const [isTimingRecording, setIsTimingRecording] = useState<boolean>(false);
+  // Draw on graph to display that users are recording.
   const isRecording = useStore((s) => s.isRecording);
   useEffect(() => {
-    if (isRecording && !isTimingRecording) {
-      {
-        // Set the start recording line
-        const now = new Date().getTime();
-        recordLines.append(now - 1, -2, false);
-        recordLines.append(now, 2.3, false);
-        setIsTimingRecording(true);
-      }
-
-      setTimeout(() => {
-        // Set the end recording line
-        const now = new Date().getTime();
-        recordLines.append(now - 1, 2.3, false);
-        recordLines.append(now, -2, false);
-        setIsTimingRecording(false);
-      }, mlSettings.duration);
+    if (isRecording) {
+      // Set the start recording line
+      const now = new Date().getTime();
+      recordLines.append(now - 1, -maxAccelerationScaleForGraphs, false);
+      recordLines.append(now, maxAccelerationScaleForGraphs, false);
+    } else {
+      // Set the end recording line
+      const now = new Date().getTime();
+      recordLines.append(now - 1, maxAccelerationScaleForGraphs, false);
+      recordLines.append(now, -maxAccelerationScaleForGraphs, false);
     }
-  }, [isTimingRecording, recordLines, isRecording]);
+  }, [isRecording, recordLines]);
 
   const [labelConfigs, setLabelConfigs] =
     useState<LabelConfig[]>(initialLabelConfigs);
@@ -141,8 +132,6 @@ const LiveGraph = () => {
     };
   }, [connectActions, isConnected, labelConfigs, lineX, lineY, lineZ]);
 
-  const arrowHeightTransformAdjustValue = 1;
-
   return (
     <HStack
       ref={liveGraphContainerRef}
@@ -168,9 +157,7 @@ const LiveGraph = () => {
                 // Use inline style attribute to avoid style tags being
                 // constantly appended to the <head/> element.
                 style={{
-                  transform: `translateY(${
-                    config.arrowHeight - arrowHeightTransformAdjustValue
-                  }rem)`,
+                  transform: `translateY(${config.arrowHeight}rem)`,
                 }}
               >
                 <Icon as={RiArrowDropLeftFill} boxSize={12} />
@@ -184,9 +171,7 @@ const LiveGraph = () => {
                 // Use inline style attribute to avoid style tags being
                 // constantly appended to the <head/> element.
                 style={{
-                  transform: `translateY(${
-                    config.labelHeight - arrowHeightTransformAdjustValue + 0.45
-                  }rem)`,
+                  transform: `translateY(${config.labelHeight + 0.45}rem)`,
                 }}
               >
                 {config.label}
