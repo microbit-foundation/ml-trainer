@@ -1931,6 +1931,26 @@
       "value": "Your hex file has been downloaded"
     }
   ],
+  "select-icon-action-aria": [
+    {
+      "type": 0,
+      "value": "Pick icon"
+    }
+  ],
+  "select-icon-option-action-aria": [
+    {
+      "type": 0,
+      "value": "Select \""
+    },
+    {
+      "type": 1,
+      "value": "icon"
+    },
+    {
+      "type": 0,
+      "value": "\" icon"
+    }
+  ],
   "settings-menu-action": [
     {
       "type": 0,

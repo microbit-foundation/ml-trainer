@@ -1079,6 +1079,14 @@
     "defaultMessage": "Your hex file has been downloaded",
     "description": "Notification after a hex file has been downloaded"
   },
+  "select-icon-action-aria": {
+    "defaultMessage": "Pick icon",
+    "description": "Aria label for pick icon button"
+  },
+  "select-icon-option-action-aria": {
+    "defaultMessage": "Select \"{icon}\" icon",
+    "description": "Aria label for icon option"
+  },
   "settings-menu-action": {
     "defaultMessage": "Settings actions menu",
     "description": "Label for settings actions menu button"
