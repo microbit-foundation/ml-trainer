@@ -691,6 +691,12 @@
       "value": "Short collections of movement data lasting 1 second. Your data samples are only stored on your computer, they do not get sent to anyone else."
     }
   ],
+  "default-project-name": [
+    {
+      "type": 0,
+      "value": "Untitled"
+    }
+  ],
   "delete-action-aria": [
     {
       "type": 0,
@@ -2184,7 +2190,7 @@
     },
     {
       "type": 1,
-      "value": "icon"
+      "value": "iconName"
     },
     {
       "type": 0,

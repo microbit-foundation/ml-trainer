@@ -21,14 +21,14 @@ import LoadProjectInput, {
 } from "../components/LoadProjectInput";
 import NewPageChoice from "../components/NewPageChoice";
 import { useLogging } from "../logging/logging-hooks";
-import { defaultProjectName } from "../project-name";
+import { defaultProjectNameId } from "../project-name";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 
 const NewPage = () => {
   const existingSessionTimestamp = useStore((s) => s.timestamp);
   const projectName = useStore(
-    (s) => s.project.header?.name ?? defaultProjectName
+    (s) => s.project.header?.name ?? defaultProjectNameId
   );
   const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();

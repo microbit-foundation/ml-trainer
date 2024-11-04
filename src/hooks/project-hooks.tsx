@@ -11,6 +11,7 @@ import {
   RefObject,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
 } from "react";
@@ -23,7 +24,7 @@ import {
   PostImportDialogState,
   SaveStep,
 } from "../model";
-import { defaultProjectName } from "../project-name";
+import { defaultProjectNameId } from "../project-name";
 import { useStore } from "../store";
 import {
   createCodePageUrl,
@@ -85,6 +86,12 @@ interface ProjectProviderProps {
   children: ReactNode;
 }
 
+export const useHasUntitledProjectName = (): boolean => {
+  const intl = useIntl();
+  const projectName = useStore((s) => s.project.header?.name);
+  return projectName === intl.formatMessage({ id: defaultProjectNameId });
+};
+
 export const ProjectProvider = ({
   driverRef,
   children,
@@ -99,6 +106,16 @@ export const ProjectProvider = ({
   const getCurrentProject = useStore((s) => s.getCurrentProject);
   const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
   const navigate = useNavigate();
+
+  const projectName = useStore((s) => s.project.header?.name);
+  const setProjectName = useStore((s) => s.setProjectName);
+  useEffect(() => {
+    // Set project name as translated "untitled" name.
+    if (projectName === null) {
+      setProjectName(intl.formatMessage({ id: defaultProjectNameId }));
+    }
+  }, [intl, projectName, setProjectName]);
+
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
@@ -216,7 +233,7 @@ export const ProjectProvider = ({
       if (settings.showPreSaveHelp && step === SaveStep.None) {
         setSave({ hex, step: SaveStep.PreSaveHelp });
       } else if (
-        getCurrentProject().header?.name === defaultProjectName &&
+        getCurrentProject().header?.name === defaultProjectNameId &&
         step === SaveStep.None
       ) {
         setSave({ hex, step: SaveStep.ProjectName });

@@ -411,6 +411,10 @@
     "defaultMessage": "Short collections of movement data lasting 1 second. Your data samples are only stored on your computer, they do not get sent to anyone else.",
     "description": "Tooltip for data samples heading"
   },
+  "default-project-name": {
+    "defaultMessage": "Untitled",
+    "description": "Default project name"
+  },
   "delete-action-aria": {
     "defaultMessage": "Delete action \"{action}\"",
     "description": "Aria label for action delete icon"

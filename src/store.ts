@@ -27,7 +27,6 @@ import {
   TourState,
   TrainModelDialogStage,
 } from "./model";
-import { defaultProjectName } from "./project-name";
 import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/gestures";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
@@ -68,7 +67,9 @@ const createUntitledProject = (): Project => ({
   header: {
     target: "microbit",
     targetVersion: "7.1.2",
-    name: defaultProjectName,
+    // Project name will be renamed to user-selected language equivalent of
+    // "Untitled" in the project hook.
+    name: null,
     meta: {},
     editor: "blocksprj",
     pubId: "",
@@ -86,7 +87,7 @@ const createUntitledProject = (): Project => ({
     saveId: null,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any,
-  ...generateProject("Untitled", { data: [] }, undefined, currentDataWindow),
+  ...generateProject(null, { data: [] }, undefined, currentDataWindow),
 });
 
 const updateProject = (
@@ -104,7 +105,7 @@ const updateProject = (
       ...(projectEdited
         ? generateCustomFiles(gestureData, model, dataWindow, project)
         : generateProject(
-            project.header?.name ?? "Untitled",
+            project.header?.name ?? null,
             gestureData,
             model,
             dataWindow
@@ -489,10 +490,7 @@ const createMlStore = (logging: Logging) => {
               "data:application/json;charset=utf-8," +
                 encodeURIComponent(JSON.stringify(gestures, null, 2))
             );
-            a.setAttribute(
-              "download",
-              `${project.header?.name || "Untitled"}-data-samples`
-            );
+            a.setAttribute("download", `${project.header?.name}-data-samples`);
             a.style.display = "none";
             a.click();
           },
@@ -632,7 +630,7 @@ const createMlStore = (logging: Logging) => {
               text: {
                 ...previousProject.text,
                 ...generateProject(
-                  previousProject.header?.name ?? "Untitled",
+                  previousProject.header?.name ?? null,
                   { data: gestures },
                   model,
                   dataWindow
