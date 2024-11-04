@@ -15,9 +15,9 @@ import {
   TrainingResult,
   trainModel,
 } from "./ml";
-import gestureDataBadLabels from "./test-fixtures/gesture-data-bad-labels.json";
-import gestureData from "./test-fixtures/gesture-data.json";
-import testdataShakeStill from "./test-fixtures/test-data-shake-still.json";
+import gestureDataBadLabels from "./test-fixtures/shake-still-circle-legacy-bad-labels.json";
+import gestureData from "./test-fixtures/shake-still-circle-data-samples-legacy.json";
+import testData from "./test-fixtures/shake-still-circle-legacy-test-data.json";
 import { currentDataWindow } from "./store";
 
 const fixUpTestData = (data: Partial<GestureData>[]): GestureData[] => {
@@ -93,7 +93,7 @@ describe("Model tests", () => {
 
   test("returns correct results on testing data", () => {
     const { tensorFlowResultAccuracy } = getModelResults(
-      fixUpTestData(testdataShakeStill)
+      fixUpTestData(testData)
     );
     // The model thinks 1-2 samples of still are circle.
     expect(parseFloat(tensorFlowResultAccuracy)).toBeGreaterThan(0.85);
