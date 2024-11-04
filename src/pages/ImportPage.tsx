@@ -17,10 +17,10 @@ import DefaultPageLayout, {
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
 import { useDeployment } from "../deployment";
-import { useProject } from "../hooks/project-hooks";
+import { useDefaultProjectName, useProject } from "../hooks/project-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { MicrobitOrgResource } from "../model";
-import { defaultProjectNameId, validateProjectName } from "../project-name";
+import { validateProjectName } from "../project-name";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 
@@ -29,7 +29,8 @@ const ImportPage = () => {
   const navigate = useNavigate();
   const { activitiesBaseUrl } = useDeployment();
   const [params] = useSearchParams();
-  const [name, setName] = useState<string>(defaultProjectNameId);
+  const defaultProjectName = useDefaultProjectName();
+  const [name, setName] = useState<string>(defaultProjectName);
   const isValidSetup = validateProjectName(name);
   const [fetchingProject, setFetchingProject] = useState<boolean>(true);
   const [project, setProject] = useState<Project>();
@@ -54,7 +55,7 @@ const ImportPage = () => {
           intl
         );
         setProject(project);
-        setName(resourceName ?? defaultProjectNameId);
+        setName(resourceName ?? defaultProjectName);
       } catch (e) {
         // Log the fetch error, but fallback to new blank session by default.
         logging.error(e);
@@ -63,7 +64,7 @@ const ImportPage = () => {
     void updateAsync().then(() => {
       setFetchingProject(false);
     });
-  }, [activitiesBaseUrl, intl, logging, params]);
+  }, [activitiesBaseUrl, defaultProjectName, intl, logging, params]);
 
   const loadProject = useStore((s) => s.loadProject);
   const newSession = useStore((s) => s.newSession);

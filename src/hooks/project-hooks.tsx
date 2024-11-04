@@ -86,10 +86,15 @@ interface ProjectProviderProps {
   children: ReactNode;
 }
 
-export const useHasUntitledProjectName = (): boolean => {
+export const useDefaultProjectName = (): string => {
   const intl = useIntl();
+  return intl.formatMessage({ id: defaultProjectNameId });
+};
+
+export const useHasUntitledProjectName = (): boolean => {
+  const defaultProjectName = useDefaultProjectName();
   const projectName = useStore((s) => s.project.header?.name);
-  return projectName === intl.formatMessage({ id: defaultProjectNameId });
+  return projectName === defaultProjectName;
 };
 
 export const ProjectProvider = ({
@@ -109,12 +114,14 @@ export const ProjectProvider = ({
 
   const projectName = useStore((s) => s.project.header?.name);
   const setProjectName = useStore((s) => s.setProjectName);
+  const defaultProjectName = useDefaultProjectName();
+
+  // If project name is null, set project name as translated "untitled" name.
   useEffect(() => {
-    // Set project name as translated "untitled" name.
     if (projectName === null) {
-      setProjectName(intl.formatMessage({ id: defaultProjectNameId }));
+      setProjectName(defaultProjectName);
     }
-  }, [intl, projectName, setProjectName]);
+  }, [defaultProjectName, intl, projectName, setProjectName]);
 
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
@@ -233,7 +240,7 @@ export const ProjectProvider = ({
       if (settings.showPreSaveHelp && step === SaveStep.None) {
         setSave({ hex, step: SaveStep.PreSaveHelp });
       } else if (
-        getCurrentProject().header?.name === defaultProjectNameId &&
+        getCurrentProject().header?.name === defaultProjectName &&
         step === SaveStep.None
       ) {
         setSave({ hex, step: SaveStep.ProjectName });
@@ -266,6 +273,7 @@ export const ProjectProvider = ({
       }
     },
     [
+      defaultProjectName,
       doAfterEditorUpdate,
       driverRef,
       gestures,
