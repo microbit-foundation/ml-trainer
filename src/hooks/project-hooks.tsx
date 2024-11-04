@@ -206,7 +206,14 @@ export const ProjectProvider = ({
         setPostImportDialogState(PostImportDialogState.Error);
       }
     },
-    [driverRef, loadDataset, logging, navigate, setPostImportDialogState]
+    [
+      driverRef,
+      loadDataset,
+      logging,
+      navigate,
+      setPostImportDialogState,
+      tourComplete,
+    ]
   );
 
   const setSave = useStore((s) => s.setSave);
