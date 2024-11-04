@@ -50,7 +50,11 @@ const LedIconPicker = ({ onIconSelected }: LedIconPicker) => {
                     key={idx}
                     aria-label={intl.formatMessage(
                       { id: "select-icon-option-action-aria" },
-                      { icon }
+                      {
+                        iconName: intl.formatMessage({
+                          id: `led-icon-option-${icon.toLocaleLowerCase()}`,
+                        }),
+                      }
                     )}
                     onClick={() => handleClick(icon as MakeCodeIcon, onClose)}
                     variant="unstyled"
