@@ -1376,7 +1376,7 @@
   "led-icon-option-eighthnote": [
     {
       "type": 0,
-      "value": "EighthNote"
+      "value": "Eighth Note"
     }
   ],
   "led-icon-option-fabulous": [
@@ -1418,7 +1418,7 @@
   "led-icon-option-lefttriangle": [
     {
       "type": 0,
-      "value": "LeftTriangle"
+      "value": "Left Triangle"
     }
   ],
   "led-icon-option-meh": [
@@ -1442,7 +1442,7 @@
   "led-icon-option-quarternote": [
     {
       "type": 0,
-      "value": "QuarterNote"
+      "value": "Quarter Note"
     }
   ],
   "led-icon-option-rabbit": [
@@ -1484,19 +1484,19 @@
   "led-icon-option-smalldiamond": [
     {
       "type": 0,
-      "value": "SmallDiamond"
+      "value": "Small Diamond"
     }
   ],
   "led-icon-option-smallheart": [
     {
       "type": 0,
-      "value": "SmallHeart"
+      "value": "Small Heart"
     }
   ],
   "led-icon-option-smallsquare": [
     {
       "type": 0,
-      "value": "SmallSquare"
+      "value": "Small Square"
     }
   ],
   "led-icon-option-snake": [
@@ -1514,7 +1514,7 @@
   "led-icon-option-stickfigure": [
     {
       "type": 0,
-      "value": "StickFigure"
+      "value": "Stick Figure"
     }
   ],
   "led-icon-option-surprised": [
@@ -1550,7 +1550,7 @@
   "led-icon-option-tshirt": [
     {
       "type": 0,
-      "value": "TShirt"
+      "value": "T-Shirt"
     }
   ],
   "led-icon-option-umbrella": [
