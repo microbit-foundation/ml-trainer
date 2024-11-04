@@ -22,6 +22,7 @@ import {
   isDatasetUserFileFormat,
   PostImportDialogState,
   SaveStep,
+  TourId,
 } from "../model";
 import { defaultProjectName } from "../project-name";
 import { useStore } from "../store";
@@ -168,6 +169,7 @@ export const ProjectProvider = ({
   }, [doAfterEditorUpdate, logging]);
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
+  const tourComplete = useStore((s) => s.tourComplete);
   const loadFile = useCallback(
     async (file: File, type: LoadType): Promise<void> => {
       const fileExtension = getLowercaseFileExtension(file.name);
@@ -183,6 +185,7 @@ export const ProjectProvider = ({
         if (isDatasetUserFileFormat(actions)) {
           loadDataset(actions);
           navigate(createDataSamplesPageUrl());
+          tourComplete(TourId.CollectDataToTrainModel);
         } else {
           setPostImportDialogState(PostImportDialogState.Error);
         }
@@ -195,6 +198,7 @@ export const ProjectProvider = ({
             filename: file.name,
             parts: [hex],
           });
+          tourComplete(TourId.CollectDataToTrainModel);
         } else {
           setPostImportDialogState(PostImportDialogState.Error);
         }
