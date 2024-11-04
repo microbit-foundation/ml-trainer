@@ -33,7 +33,7 @@ import ViewDataFeaturesMenuItem from "./ViewDataFeaturesMenuItem";
 const DataSamplesMenu = () => {
   const intl = useIntl();
   const logging = useLogging();
-  const actions = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.actions);
   const downloadDataset = useStore((s) => s.downloadDataset);
   const { stage } = useConnectionStage();
   const deleteConfirmDisclosure = useDisclosure();

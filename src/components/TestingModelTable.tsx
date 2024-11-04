@@ -50,7 +50,7 @@ const TestingModelTable = ({
   prediction: PredictionResult | undefined;
 }) => {
   const { detected, confidences } = prediction ?? {};
-  const actions = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.actions);
   const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { project, projectEdited } = useProject();
   const { isConnected } = useConnectionStage();

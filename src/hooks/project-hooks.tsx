@@ -208,7 +208,7 @@ export const ProjectProvider = ({
   const setSave = useStore((s) => s.setSave);
   const save = useStore((s) => s.save);
   const settings = useStore((s) => s.settings);
-  const actions = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.actions);
   const saveNextDownloadRef = useRef(false);
   const saveHex = useCallback(
     async (hex?: HexData): Promise<void> => {
