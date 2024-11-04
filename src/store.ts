@@ -846,13 +846,12 @@ const createMlStore = (logging: Logging) => {
           migrate(persistedStateUnknown, version) {
             if (version === 0) {
               // Rename the "gestures" field to "action"
-              const persistedState = persistedStateUnknown as Store;
               interface OldStore extends Omit<Store, "actions"> {
                 gestures?: ActionData[];
               }
-              const prevPersistedState = persistedStateUnknown as OldStore;
-              persistedState.actions = prevPersistedState.gestures ?? [];
-              delete prevPersistedState.gestures;
+              (persistedStateUnknown as Store).actions =
+                (persistedStateUnknown as OldStore).gestures ?? [];
+              delete (persistedStateUnknown as OldStore).gestures;
             }
             return persistedStateUnknown;
           },
