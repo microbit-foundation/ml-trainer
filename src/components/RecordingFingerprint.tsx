@@ -34,6 +34,7 @@ const RecordingFingerprint = ({
     >
       {Object.keys(dataFeatures).map((k, idx) => (
         <ClickableTooltip
+          placement="auto"
           key={idx}
           label={
             <Text p={3}>
