@@ -15,7 +15,7 @@ import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import microbitImage from "../images/stylised-microbit-black.svg";
 import { useLogging } from "../logging/logging-hooks";
-import { Gesture } from "../model";
+import { Action } from "../model";
 import { tourElClassname } from "../tours";
 import InfoToolTip from "./InfoToolTip";
 import LedIcon from "./LedIcon";
@@ -23,15 +23,15 @@ import LiveGraph from "./LiveGraph";
 import AlertIcon from "./AlertIcon";
 
 interface LiveGraphPanelProps {
-  detected?: Gesture | undefined;
-  showPredictedGesture?: boolean;
+  detected?: Action | undefined;
+  showPredictedAction?: boolean;
   disconnectedTextId: string;
 }
 
-const predictedGestureDisplayWidth = 180;
+const predictedActionDisplayWidth = 180;
 
 const LiveGraphPanel = ({
-  showPredictedGesture,
+  showPredictedAction,
   detected,
   disconnectedTextId,
 }: LiveGraphPanelProps) => {
@@ -116,7 +116,7 @@ const LiveGraphPanel = ({
             px={5}
             py={2.5}
             w={`calc(100% - ${
-              showPredictedGesture ? `${predictedGestureDisplayWidth}px` : "0"
+              showPredictedAction ? `${predictedActionDisplayWidth}px` : "0"
             })`}
           >
             <HStack gap={4}>
@@ -149,10 +149,10 @@ const LiveGraphPanel = ({
         </Portal>
         <HStack position="absolute" width="100%" height="100%" spacing={0}>
           <LiveGraph />
-          {showPredictedGesture && (
+          {showPredictedAction && (
             <VStack
               className={tourElClassname.estimatedAction}
-              w={`${predictedGestureDisplayWidth}px`}
+              w={`${predictedActionDisplayWidth}px`}
               gap={0}
               h="100%"
               py={2.5}
@@ -195,7 +195,7 @@ const LiveGraphPanel = ({
                 color={detected ? "brand2.600" : "gray.600"}
                 isTruncated
                 textAlign="center"
-                w={`${predictedGestureDisplayWidth}px`}
+                w={`${predictedActionDisplayWidth}px`}
               >
                 {detected?.name ?? <FormattedMessage id="unknown" />}
               </Text>

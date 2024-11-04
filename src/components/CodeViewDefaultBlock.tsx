@@ -2,12 +2,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { MakeCodeIcon, makecodeIcons } from "../utils/icons";
 import { Box } from "@chakra-ui/react";
 interface CodeViewDefaultBlockProps {
-  gestureName: string;
+  actionName: string;
   icon: MakeCodeIcon;
 }
 
 const CodeViewDefaultBlock = ({
-  gestureName,
+  actionName,
   icon,
 }: CodeViewDefaultBlockProps) => {
   const intl = useIntl();
@@ -15,16 +15,16 @@ const CodeViewDefaultBlock = ({
   const iconName = intl.formatMessage({
     id: `led-icon-option-${icon.toLocaleLowerCase()}`,
   });
-  const gestureNameTextBoxWidth = getGestureNameTextBoxWidth(gestureName);
-  const dropdownArrowXPos = gestureNameTextBoxWidth - 20;
-  const onMlStartBlockWidth = gestureNameTextBoxWidth + 120;
+  const actionNameTextBoxWidth = getActionNameTextBoxWidth(actionName);
+  const dropdownArrowXPos = actionNameTextBoxWidth - 20;
+  const onMlStartBlockWidth = actionNameTextBoxWidth + 120;
   const startTextXPos = onMlStartBlockWidth - 50;
   return (
     <Box
       role="image"
       aria-label={intl.formatMessage(
         { id: "makecode-block-default-alt" },
-        { actionName: gestureName, iconName }
+        { actionName, iconName }
       )}
     >
       <svg
@@ -117,7 +117,7 @@ const CodeViewDefaultBlock = ({
                   x="0"
                   y="0"
                   height="35"
-                  width={`${gestureNameTextBoxWidth}`}
+                  width={`${actionNameTextBoxWidth}`}
                   stroke="#204b92"
                   fill="transparent"
                 />
@@ -131,7 +131,7 @@ const CodeViewDefaultBlock = ({
                   fontFamily={`"Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace`}
                   fill="white"
                 >
-                  {gestureName}
+                  {actionName}
                 </text>
                 <use
                   xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -173,7 +173,7 @@ const CodeViewDefaultBlock = ({
 };
 
 const blockFont = `600 12pt "Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace`;
-const getGestureNameTextBoxWidth = (text: string) => {
+const getActionNameTextBoxWidth = (text: string) => {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
   context!.font = blockFont;

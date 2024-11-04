@@ -14,12 +14,13 @@
     "postinstall": "npm run theme",
     "preview": "vite preview",
     "start": "vite dev",
-    "test": "vitest",
+    "test": "vitest --exclude **/ml4f-output.test.ts",
     "test:e2e": "playwright test --headed",
     "test:e2e:headless": "playwright test",
     "theme:watch": "chakra-cli tokens src/deployment/default/theme.ts --watch",
     "theme": "chakra-cli tokens src/deployment/default/theme.ts",
-    "i18n:compile": "node bin/tidy-lang.cjs && formatjs compile-folder --ast lang src/messages"
+    "i18n:compile": "node bin/tidy-lang.cjs && formatjs compile-folder --ast lang src/messages",
+    "ml4f-output": "vitest ml4f-output --run"
   },
   "devDependencies": {
     "@chakra-ui/cli": "^2.4.1",

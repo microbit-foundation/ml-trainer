@@ -8,21 +8,21 @@
  */
 
 import * as tf from "@tensorflow/tfjs";
-import { GestureData } from "./model";
+import { ActionData } from "./model";
 import {
   applyFilters,
   prepareFeaturesAndLabels,
   TrainingResult,
   trainModel,
 } from "./ml";
-import gestureDataBadLabels from "./test-fixtures/gesture-data-bad-labels.json";
-import gestureData from "./test-fixtures/gesture-data.json";
-import testdataShakeStill from "./test-fixtures/test-data-shake-still.json";
+import actionDataBadLabels from "./test-fixtures/shake-still-circle-legacy-bad-labels.json";
+import actionData from "./test-fixtures/shake-still-circle-data-samples-legacy.json";
+import testData from "./test-fixtures/shake-still-circle-legacy-test-data.json";
 import { currentDataWindow } from "./store";
 
-const fixUpTestData = (data: Partial<GestureData>[]): GestureData[] => {
+const fixUpTestData = (data: Partial<ActionData>[]): ActionData[] => {
   data.forEach((action) => (action.icon = "Heart"));
-  return data as GestureData[];
+  return data as ActionData[];
 };
 
 let trainingResult: TrainingResult;
@@ -30,12 +30,12 @@ beforeAll(async () => {
   // No webgl in tests running in node.
   await tf.setBackend("cpu");
   trainingResult = await trainModel(
-    fixUpTestData(gestureData),
+    fixUpTestData(actionData),
     currentDataWindow
   );
 });
 
-const getModelResults = (data: GestureData[]) => {
+const getModelResults = (data: ActionData[]) => {
   const { features, labels } = prepareFeaturesAndLabels(
     data,
     currentDataWindow
@@ -65,7 +65,7 @@ const getModelResults = (data: GestureData[]) => {
 describe("Model tests", () => {
   test("returns acceptable results on training data", () => {
     const { tensorFlowResultAccuracy, tensorflowPredictionResult, labels } =
-      getModelResults(fixUpTestData(gestureData));
+      getModelResults(fixUpTestData(actionData));
     const d = labels[0].length; // dimensions
     for (let i = 0, j = 0; i < tensorflowPredictionResult.length; i += d, j++) {
       const result = tensorflowPredictionResult.slice(i, i + d);
@@ -80,7 +80,7 @@ describe("Model tests", () => {
   // Training data is shake, still, circle. This data is still, circle, shake.
   test("returns incorrect results on wrongly labelled training data", () => {
     const { tensorFlowResultAccuracy, tensorflowPredictionResult, labels } =
-      getModelResults(fixUpTestData(gestureDataBadLabels));
+      getModelResults(fixUpTestData(actionDataBadLabels));
     const d = labels[0].length; // dimensions
     for (let i = 0, j = 0; i < tensorflowPredictionResult.length; i += d, j++) {
       const result = tensorflowPredictionResult.slice(i, i + d);
@@ -93,7 +93,7 @@ describe("Model tests", () => {
 
   test("returns correct results on testing data", () => {
     const { tensorFlowResultAccuracy } = getModelResults(
-      fixUpTestData(testdataShakeStill)
+      fixUpTestData(testData)
     );
     // The model thinks 1-2 samples of still are circle.
     expect(parseFloat(tensorFlowResultAccuracy)).toBeGreaterThan(0.85);

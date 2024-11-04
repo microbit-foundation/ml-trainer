@@ -1,15 +1,15 @@
 import { Card } from "@chakra-ui/react";
 import { memo } from "react";
-import { GestureData } from "../model";
+import { ActionData } from "../model";
 import { tourElClassname } from "../tours";
 import CodeViewDefaultBlock from "./CodeViewDefaultBlock";
 
 interface CodeViewDefaultBlockCardProps {
-  gesture: GestureData;
+  action: ActionData;
 }
 
 const CodeViewDefaultBlockCard = ({
-  gesture,
+  action,
 }: CodeViewDefaultBlockCardProps) => {
   return (
     <Card
@@ -22,7 +22,7 @@ const CodeViewDefaultBlockCard = ({
       justifyContent="center"
       className={tourElClassname.makeCodeCodeView}
     >
-      <CodeViewDefaultBlock gestureName={gesture.name} icon={gesture.icon} />
+      <CodeViewDefaultBlock actionName={action.name} icon={action.icon} />
     </Card>
   );
 };

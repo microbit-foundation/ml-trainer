@@ -13,10 +13,10 @@ import { tourElClassname } from "../tours";
 import { MakeCodeIcon } from "../utils/icons";
 import LedIcon from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";
-import { Gesture } from "../model";
+import { Action } from "../model";
 
 interface ActionNameCardProps {
-  value: Gesture;
+  value: Action;
   onDeleteAction?: () => void;
   onSelectRow?: () => void;
   selected?: boolean;
@@ -25,7 +25,7 @@ interface ActionNameCardProps {
   disabled?: boolean;
 }
 
-const gestureNameMaxLength = 18;
+const actionNameMaxLength = 18;
 
 const ActionNameCard = ({
   value,
@@ -39,38 +39,38 @@ const ActionNameCard = ({
   const intl = useIntl();
   const toast = useToast();
   const toastId = "name-too-long-toast";
-  const setGestureName = useStore((s) => s.setGestureName);
-  const setGestureIcon = useStore((s) => s.setGestureIcon);
+  const setActionName = useStore((s) => s.setActionName);
+  const setActionIcon = useStore((s) => s.setActionIcon);
   const { name, icon, ID: id } = value;
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       const name = e.target.value;
-      // Validate gesture name length
-      if (name.length >= gestureNameMaxLength && !toast.isActive(toastId)) {
+      // Validate action name length
+      if (name.length >= actionNameMaxLength && !toast.isActive(toastId)) {
         toast({
           id: toastId,
           position: "top",
           duration: 5_000,
           title: intl.formatMessage(
             { id: "action-length-error" },
-            { maxLen: gestureNameMaxLength }
+            { maxLen: actionNameMaxLength }
           ),
           variant: "subtle",
           status: "error",
         });
         return;
       }
-      setGestureName(id, name);
+      setActionName(id, name);
     },
-    [id, intl, setGestureName, toast]
+    [id, intl, setActionName, toast]
   );
 
   const handleIconSelected = useCallback(
     (icon: MakeCodeIcon) => {
-      setGestureIcon(id, icon);
+      setActionIcon(id, icon);
     },
-    [id, setGestureIcon]
+    [id, setActionIcon]
   );
 
   return (

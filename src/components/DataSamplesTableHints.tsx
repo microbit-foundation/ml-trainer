@@ -1,23 +1,23 @@
 import { GridItem, HStack, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import { GestureData } from "../model";
+import { ActionData } from "../model";
 import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import GreetingEmojiWithArrow from "./GreetingEmojiWithArrow";
 import UpCurveArrow from "./UpCurveArrow";
 import { RecordingOptions } from "./RecordingDialog";
 
 interface DataSamplesTableHintsProps {
-  gesture: GestureData;
+  action: ActionData;
   onRecord: (recordingOptions: RecordingOptions) => void;
 }
 
 const DataSamplesTableHints = ({
-  gesture,
+  action,
   onRecord,
 }: DataSamplesTableHintsProps) => {
   return (
     <>
-      {gesture.name.length === 0 ? (
+      {action.name.length === 0 ? (
         <GridItem h="120px">
           <VStack m={0} p={2} w={200} transform="translate(-30px, 40px)">
             <GreetingEmojiWithArrow w="120px" h="103px" color="brand.500" />
@@ -30,7 +30,7 @@ const DataSamplesTableHints = ({
         <>
           <GridItem>
             <ActionDataSamplesCard
-              value={gesture}
+              value={action}
               selected={true}
               onRecord={onRecord}
             />

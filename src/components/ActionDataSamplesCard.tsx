@@ -19,7 +19,7 @@ import {
 import { ReactNode, useCallback } from "react";
 import { RiHashtag, RiTimerLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { DataSamplesView, GestureData, RecordingData } from "../model";
+import { DataSamplesView, ActionData, RecordingData } from "../model";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import MoreMenuButton from "./MoreMenuButton";
@@ -35,7 +35,7 @@ const flash = keyframes({
 });
 
 interface ActionDataSamplesCardProps {
-  value: GestureData;
+  value: ActionData;
   selected: boolean;
   onSelectRow?: () => void;
   onRecord: (recordingOptions: RecordingOptions) => void;
@@ -51,7 +51,7 @@ const ActionDataSamplesCard = ({
   newRecordingId,
   clearNewRecordingId,
 }: ActionDataSamplesCardProps) => {
-  const deleteGestureRecording = useStore((s) => s.deleteGestureRecording);
+  const deleteActionRecording = useStore((s) => s.deleteActionRecording);
   const view = useStore((s) => s.settings.dataSamplesView);
   if (view === DataSamplesView.GraphAndDataFeatures) {
     // We split the cards in this case
@@ -84,7 +84,7 @@ const ActionDataSamplesCard = ({
               zIndex={1}
               borderColor="blackAlpha.500"
               boxShadow="sm"
-              onClick={() => deleteGestureRecording(value.ID, idx)}
+              onClick={() => deleteActionRecording(value.ID, idx)}
             />
             <DataSample
               recording={recording}
@@ -92,7 +92,7 @@ const ActionDataSamplesCard = ({
               recordingIndex={idx}
               isNew={newRecordingId === recording.ID}
               onNewAnimationEnd={clearNewRecordingId}
-              onDelete={deleteGestureRecording}
+              onDelete={deleteActionRecording}
               view={view}
               hasClose={false}
             />
@@ -115,7 +115,7 @@ const ActionDataSamplesCard = ({
           recordingIndex={idx}
           recording={recording}
           isNew={newRecordingId === recording.ID}
-          onDelete={deleteGestureRecording}
+          onDelete={deleteActionRecording}
           onNewAnimationEnd={clearNewRecordingId}
           view={view}
         />
@@ -160,7 +160,7 @@ const RecordingArea = ({
   selected,
   onRecord,
 }: {
-  action: GestureData;
+  action: ActionData;
   selected: boolean;
   onRecord: (recordingOptions: RecordingOptions) => void;
 }) => {
@@ -271,7 +271,7 @@ const DataSample = ({
   recordingIndex: number;
   isNew: boolean;
   onNewAnimationEnd?: () => void;
-  onDelete: (gestureId: GestureData["ID"], recordingIdx: number) => void;
+  onDelete: (actionId: ActionData["ID"], recordingIdx: number) => void;
   view: DataSamplesView;
   hasClose?: boolean;
 }) => {

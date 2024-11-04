@@ -1,11 +1,11 @@
-import { Gesture } from "../model";
+import { Action } from "../model";
 import { actionNamesFromLabels } from "./utils";
 /**
  * (c) 2024, Center for Computational Thinking and Design at Aarhus University and contributors
  *
  * SPDX-License-Identifier: MIT
  */
-export interface OnGestureRecognisedConfig {
+export interface OnActionRecognisedConfig {
   name: string;
   iconName: string;
 }
@@ -58,14 +58,14 @@ const statements: Record<Language, LanguageStatements> = {
 
 const onMLEventChildren = (
   s: LanguageStatements,
-  { iconName }: OnGestureRecognisedConfig
+  { iconName }: OnActionRecognisedConfig
 ) => {
   return iconName ? s.showIcon(iconName) : "";
 };
 
-export const getMainScript = (gs: Gesture[], lang: Language) => {
-  const actionNames = actionNamesFromLabels(gs.map((g) => g.name));
-  const configs = gs.map((g, idx) => ({
+export const getMainScript = (actions: Action[], lang: Language) => {
+  const actionNames = actionNamesFromLabels(actions.map((a) => a.name));
+  const configs = actions.map((g, idx) => ({
     id: g.ID,
     name: actionNames[idx].actionVar,
     iconName: g.icon,

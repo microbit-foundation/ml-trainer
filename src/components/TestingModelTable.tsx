@@ -50,7 +50,7 @@ const TestingModelTable = ({
   prediction: PredictionResult | undefined;
 }) => {
   const { detected, confidences } = prediction ?? {};
-  const gestures = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.gestures);
   const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { project, projectEdited } = useProject();
   const { isConnected } = useConnectionStage();
@@ -86,14 +86,14 @@ const TestingModelTable = ({
             h="fit-content"
             alignSelf="start"
           >
-            {gestures.map((gesture, idx) => {
-              const { requiredConfidence: threshold } = gesture;
-              const isTriggered = detected ? detected.ID === gesture.ID : false;
+            {actions.map((action, idx) => {
+              const { requiredConfidence: threshold } = action;
+              const isTriggered = detected ? detected.ID === action.ID : false;
               return (
                 <React.Fragment key={idx}>
                   <GridItem>
                     <ActionNameCard
-                      value={gesture}
+                      value={action}
                       readOnly={true}
                       isTriggered={isTriggered}
                       disabled={!isConnected}
@@ -101,11 +101,11 @@ const TestingModelTable = ({
                   </GridItem>
                   <GridItem>
                     <ActionCertaintyCard
-                      actionName={gesture.name}
+                      actionName={action.name}
                       onThresholdChange={(val) =>
-                        setRequiredConfidence(gesture.ID, val)
+                        setRequiredConfidence(action.ID, val)
                       }
-                      currentConfidence={confidences?.[gesture.ID]}
+                      currentConfidence={confidences?.[action.ID]}
                       requiredConfidence={
                         threshold ?? mlSettings.defaultRequiredConfidence
                       }
@@ -118,7 +118,7 @@ const TestingModelTable = ({
                   </VStack>
                   <GridItem>
                     {!projectEdited && (
-                      <CodeViewDefaultBlockCard gesture={gesture} />
+                      <CodeViewDefaultBlockCard action={action} />
                     )}
                   </GridItem>
                 </React.Fragment>

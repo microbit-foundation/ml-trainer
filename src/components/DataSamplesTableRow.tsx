@@ -1,6 +1,6 @@
 import { GridItem, Text, useDisclosure } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { GestureData } from "../model";
+import { ActionData } from "../model";
 import { useStore } from "../store";
 import DataSamplesTableHints from "./DataSamplesTableHints";
 import { ConfirmDialog } from "./ConfirmDialog";
@@ -13,7 +13,7 @@ import {
 import { RecordingOptions } from "./RecordingDialog";
 
 interface DataSamplesTableRowProps {
-  gesture: GestureData;
+  action: ActionData;
   selected: boolean;
   onSelectRow: () => void;
   onRecord: (recordingOptions: RecordingOptions) => void;
@@ -23,7 +23,7 @@ interface DataSamplesTableRowProps {
 }
 
 const DataSamplesTableRow = ({
-  gesture,
+  action,
   selected,
   onSelectRow,
   onRecord,
@@ -33,7 +33,7 @@ const DataSamplesTableRow = ({
 }: DataSamplesTableRowProps) => {
   const intl = useIntl();
   const deleteConfirmDisclosure = useDisclosure();
-  const deleteGesture = useStore((s) => s.deleteGesture);
+  const deleteAction = useStore((s) => s.deleteAction);
   const { stage } = useConnectionStage();
 
   return (
@@ -51,17 +51,17 @@ const DataSamplesTableRow = ({
             <FormattedMessage
               id="delete-action-confirm-text"
               values={{
-                action: gesture.name,
+                action: action.name,
               }}
             />
           </Text>
         }
-        onConfirm={() => deleteGesture(gesture.ID)}
+        onConfirm={() => deleteAction(action.ID)}
         onCancel={deleteConfirmDisclosure.onClose}
       />
       <GridItem>
         <ActionNameCard
-          value={gesture}
+          value={action}
           onDeleteAction={deleteConfirmDisclosure.onOpen}
           onSelectRow={onSelectRow}
           selected={selected}
@@ -69,13 +69,13 @@ const DataSamplesTableRow = ({
         />
       </GridItem>
       {showHints ? (
-        <DataSamplesTableHints gesture={gesture} onRecord={onRecord} />
+        <DataSamplesTableHints action={action} onRecord={onRecord} />
       ) : (
         <GridItem>
-          {(gesture.name.length > 0 || gesture.recordings.length > 0) && (
+          {(action.name.length > 0 || action.recordings.length > 0) && (
             <ActionDataSamplesCard
               newRecordingId={newRecordingId}
-              value={gesture}
+              value={action}
               selected={selected}
               onSelectRow={onSelectRow}
               onRecord={onRecord}

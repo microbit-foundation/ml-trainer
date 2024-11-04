@@ -1,6 +1,6 @@
 import { isDatasetUserFileFormat } from "./model";
 
-describe("isValidStoredGestureData", () => {
+describe("isDatasetUserFileFormat", () => {
   it("checks data", () => {
     expect(isDatasetUserFileFormat([])).toEqual(true);
     expect(isDatasetUserFileFormat(123)).toEqual(false);

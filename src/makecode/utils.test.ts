@@ -10,9 +10,9 @@ import { Project } from "@microbit/makecode-embed/react";
 import * as tf from "@tensorflow/tfjs";
 import { assert, vi } from "vitest";
 import { TrainingResult, trainModel } from "../ml";
-import { DatasetEditorJsonFormat, GestureData } from "../model";
+import { DatasetEditorJsonFormat, ActionData } from "../model";
 import oldProject from "../test-fixtures/project-to-update.json";
-import gestureData from "../test-fixtures/still-wave-clap-dataset.json";
+import actionData from "../test-fixtures/still-wave-clap-data-samples-legacy.json";
 import {
   ActionName,
   actionNamesFromLabels,
@@ -26,7 +26,7 @@ import {
 import { currentDataWindow } from "../store";
 
 const data: DatasetEditorJsonFormat = {
-  data: gestureData as GestureData[],
+  data: actionData as ActionData[],
 };
 
 let trainingResult: TrainingResult;
@@ -41,7 +41,7 @@ beforeAll(async () => {
   randomSpy.mockImplementation(() => 0.5);
 
   trainingResult = await trainModel(
-    gestureData as GestureData[],
+    actionData as ActionData[],
     currentDataWindow
   );
 });

@@ -19,7 +19,7 @@ import {
 import { FormattedMessage } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { GestureData, TourId } from "../model";
+import { ActionData, TourId } from "../model";
 import { useStore } from "../store";
 import ConnectToRecordDialog from "./ConnectToRecordDialog";
 import DataSamplesMenu from "./DataSamplesMenu";
@@ -54,30 +54,29 @@ const headings: GridColumnHeadingItemProps[] = [
 ];
 
 interface DataSamplesTableProps {
-  selectedGestureIdx: number;
-  setSelectedGestureIdx: (idx: number) => void;
+  selectedActionIdx: number;
+  setSelectedActionIdx: (idx: number) => void;
 }
 
 const DataSamplesTable = ({
-  selectedGestureIdx,
-  setSelectedGestureIdx,
+  selectedActionIdx: selectedActionIdx,
+  setSelectedActionIdx: setSelectedActionIdx,
 }: DataSamplesTableProps) => {
-  const gestures = useStore((s) => s.gestures);
-  // Default to first gesture being selected if last gesture is deleted.
-  const selectedGesture: GestureData =
-    gestures[selectedGestureIdx] ?? gestures[0];
+  const actions = useStore((s) => s.gestures);
+  // Default to first action being selected if last action is deleted.
+  const selectedAction: ActionData = actions[selectedActionIdx] ?? actions[0];
 
   const showHints = useMemo<boolean>(
     () =>
-      gestures.length === 0 ||
-      (gestures.length === 1 && gestures[0].recordings.length === 0),
-    [gestures]
+      actions.length === 0 ||
+      (actions.length === 1 && actions[0].recordings.length === 0),
+    [actions]
   );
   const recordingDialogDisclosure = useDisclosure();
   const connectToRecordDialogDisclosure = useDisclosure();
 
   const connection = useConnectActions();
-  const { actions } = useConnectionStage();
+  const { actions: connActions } = useConnectionStage();
   const { isConnected } = useConnectionStage();
   const loadProjectInputRef = useRef<LoadProjectInputRef>(null);
 
@@ -118,24 +117,24 @@ const DataSamplesTable = ({
   useEffect(() => {
     if (
       !recordingDialogDisclosure.isOpen &&
-      gestures.length === 1 &&
-      gestures[0].recordings.length === 1
+      actions.length === 1 &&
+      actions[0].recordings.length === 1
     ) {
       tourStart(TourId.CollectDataToTrainModel);
     }
-  }, [gestures, recordingDialogDisclosure.isOpen, tourStart]);
+  }, [actions, recordingDialogDisclosure.isOpen, tourStart]);
   return (
     <>
       <ConnectToRecordDialog
         isOpen={connectToRecordDialogDisclosure.isOpen}
         onClose={connectToRecordDialogDisclosure.onClose}
       />
-      {selectedGesture && (
+      {selectedAction && (
         <RecordingDialog
-          gestureId={selectedGesture.ID}
+          actionId={selectedAction.ID}
           isOpen={recordingDialogDisclosure.isOpen}
           onClose={recordingDialogDisclosure.onClose}
-          actionName={selectedGesture.name}
+          actionName={selectedAction.name}
           onRecordingComplete={setNewRecordingId}
           recordingOptions={recordingOptions}
         />
@@ -146,7 +145,7 @@ const DataSamplesTable = ({
         {...gridCommonProps}
         headings={headings}
       />
-      {gestures.length === 0 ? (
+      {actions.length === 0 ? (
         <VStack
           gap={5}
           flexGrow={1}
@@ -167,7 +166,7 @@ const DataSamplesTable = ({
                       fontSize="lg"
                       color="brand.600"
                       variant="link"
-                      onClick={actions.startConnect}
+                      onClick={connActions.startConnect}
                     >
                       {chunks}
                     </Button>
@@ -197,14 +196,14 @@ const DataSamplesTable = ({
           flexGrow={1}
           h={0}
         >
-          {gestures.map((g, idx) => (
+          {actions.map((action, idx) => (
             <DataSamplesTableRow
-              key={g.ID}
-              gesture={g}
+              key={action.ID}
+              action={action}
               newRecordingId={newRecordingId}
               clearNewRecordingId={() => setNewRecordingId(undefined)}
-              selected={selectedGesture.ID === g.ID}
-              onSelectRow={() => setSelectedGestureIdx(idx)}
+              selected={selectedAction.ID === action.ID}
+              onSelectRow={() => setSelectedActionIdx(idx)}
               onRecord={handleRecord}
               showHints={showHints}
             />
