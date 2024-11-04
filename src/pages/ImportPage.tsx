@@ -67,6 +67,7 @@ const ImportPage = () => {
 
   const loadProject = useStore((s) => s.loadProject);
   const newSession = useStore((s) => s.newSession);
+  const timestamp = useStore((s) => s.timestamp);
 
   const handleStartSession = useCallback(() => {
     if (project) {
@@ -111,18 +112,20 @@ const ImportPage = () => {
           <Heading as="h1" mb={5}>
             <FormattedMessage id="new-session-setup-title" />
           </Heading>
-          <Text>
-            <FormattedMessage
-              id="new-session-setup-description"
-              values={{
-                link: (chunks: ReactNode) => (
-                  <Button onClick={handleSave} variant="link">
-                    {chunks}
-                  </Button>
-                ),
-              }}
-            />
-          </Text>
+          {timestamp !== undefined && (
+            <Text>
+              <FormattedMessage
+                id="new-session-setup-description"
+                values={{
+                  link: (chunks: ReactNode) => (
+                    <Button onClick={handleSave} variant="link">
+                      {chunks}
+                    </Button>
+                  ),
+                }}
+              />
+            </Text>
+          )}
           <Stack py={2} spacing={5}>
             <Heading size="md" as="h2">
               <FormattedMessage id="name-text" />

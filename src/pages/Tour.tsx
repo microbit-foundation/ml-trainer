@@ -84,7 +84,10 @@ const Tour = () => {
       isCentered
       size={step.modalSize}
     >
-      {step.selector ? (
+      {/* Hack: Use ModalOverlay for the single-step tour over MakeCode which is itself in a full screen modal.
+          TourOverlay doesn't appear over the modal.
+          Avoid using it with multiple steps as the transition between overlays flashes. */}
+      {step.selector || steps.length > 1 ? (
         <TourOverlay
           referenceRef={ourRef}
           padding={spotlightPadding}

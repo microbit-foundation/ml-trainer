@@ -12,7 +12,7 @@ import { assert, vi } from "vitest";
 import { TrainingResult, trainModel } from "../ml";
 import { DatasetEditorJsonFormat, ActionData } from "../model";
 import oldProject from "../test-fixtures/project-to-update.json";
-import actionData from "../test-fixtures/still-wave-clap-dataset.json";
+import actionData from "../test-fixtures/still-wave-clap-data-samples-legacy.json";
 import {
   ActionName,
   actionNamesFromLabels,
