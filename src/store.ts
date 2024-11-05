@@ -872,16 +872,19 @@ const createMlStore = (logging: Logging) => {
             // The model itself is in IndexDB
           }),
           migrate(persistedStateUnknown, version) {
-            if (version === 0) {
-              // Rename the "gestures" field to "action"
-              interface OldStore extends Omit<Store, "actions"> {
-                gestures?: ActionData[];
+            switch (version) {
+              case 0: {
+                // We need to rename the "gestures" field to "actions"
+                interface StoreV0 extends Omit<Store, "actions"> {
+                  gestures?: ActionData[];
+                }
+                const storeV0 = persistedStateUnknown as StoreV0;
+                const { gestures, ...rest } = storeV0;
+                return { actions: gestures, ...rest } as Store;
               }
-              (persistedStateUnknown as Store).actions =
-                (persistedStateUnknown as OldStore).gestures ?? [];
-              delete (persistedStateUnknown as OldStore).gestures;
+              default:
+                return persistedStateUnknown;
             }
-            return persistedStateUnknown;
           },
           merge(persistedStateUnknown, currentState) {
             // The zustand default merge does no validation either.
