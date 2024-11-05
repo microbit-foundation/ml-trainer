@@ -270,7 +270,6 @@ export const ProjectProvider = ({
       }
     },
     [
-      untitled,
       doAfterEditorUpdate,
       driverRef,
       actions,
