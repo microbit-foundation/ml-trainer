@@ -412,7 +412,7 @@
     "description": "Tooltip for data samples heading"
   },
   "default-project-name": {
-    "defaultMessage": "Translated Untitled",
+    "defaultMessage": "Untitled",
     "description": "Default project name"
   },
   "delete-action-aria": {
