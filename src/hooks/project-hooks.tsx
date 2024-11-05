@@ -118,8 +118,8 @@ export const ProjectProvider = ({
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
   const getCurrentProject = useStore((s) => s.getCurrentProject);
   const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
+  const isUntitled = useHasUntitledProjectName();
   const navigate = useNavigate();
-
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
@@ -231,13 +231,15 @@ export const ProjectProvider = ({
   const settings = useStore((s) => s.settings);
   const actions = useStore((s) => s.gestures);
   const saveNextDownloadRef = useRef(false);
+  const translatedUntitled = useDefaultProjectName();
   const saveHex = useCallback(
     async (hex?: HexData): Promise<void> => {
       const { step } = save;
+      const projectName = getCurrentProject().header?.name;
       if (settings.showPreSaveHelp && step === SaveStep.None) {
         setSave({ hex, step: SaveStep.PreSaveHelp });
       } else if (
-        getCurrentProject().header?.name === untitled &&
+        (projectName === untitled || projectName === translatedUntitled) &&
         step === SaveStep.None
       ) {
         setSave({ hex, step: SaveStep.ProjectName });
