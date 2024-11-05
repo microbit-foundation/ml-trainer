@@ -2,6 +2,7 @@ import { ConnectionStatus as DeviceConnectionStatus } from "@microbit/microbit-c
 import {
   ReactNode,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -10,7 +11,10 @@ import {
 import { StatusListener } from "./connect-actions";
 import { useConnectActions } from "./connect-actions-hooks";
 import { ConnectionFlowType, ConnectionType } from "./connection-stage-hooks";
-import { getNextConnectionState } from "./get-next-connection-state";
+import {
+  getNextConnectionState,
+  NextConnectionState,
+} from "./get-next-connection-state";
 
 export enum ConnectionStatus {
   /**
@@ -106,22 +110,45 @@ export const useConnectStatusUpdater = (
   const [connectionStatus, setConnectionStatus] = useConnectStatus();
   const connectActions = useConnectActions();
   const isBrowserTabVisible = useBrowserTabVisibility();
+  const prevBrowserTabVisible = useRef<boolean>(isBrowserTabVisible);
+  const nextStateRef = useRef<NextConnectionState | null>(null);
   const prevDeviceStatus = useRef<DeviceConnectionStatus | null>(null);
   const [hasAttempedReconnect, setHasAttemptedReconnect] =
     useState<boolean>(false);
   const [onFirstConnectAttempt, setOnFirstConnectAttempt] =
     useState<boolean>(true);
 
+  const updateStatus = useCallback(
+    (nextState: NextConnectionState | null) => {
+      if (nextState) {
+        handleStatus && handleStatus(nextState.status, nextState.flowType);
+        setConnectionStatus(nextState.status);
+      }
+    },
+    [handleStatus, setConnectionStatus]
+  );
+
   useEffect(() => {
+    // Show reconnecting when user hides browser tab and is radio connected.
     if (
-      !isBrowserTabVisible &&
       currConnType === "radio" &&
+      !isBrowserTabVisible &&
       connectionStatus === ConnectionStatus.Connected
     ) {
-      // Show reconnecting when user hides browser tab and is radio connected
       setConnectionStatus(ConnectionStatus.ReconnectingAutomatically);
       return;
     }
+    // If browser tab becomes visible again and radio connection, then update status.
+    if (
+      currConnType === "radio" &&
+      isBrowserTabVisible &&
+      prevBrowserTabVisible.current === false &&
+      connectionStatus === ConnectionStatus.ReconnectingAutomatically
+    ) {
+      updateStatus(nextStateRef.current);
+    }
+    prevBrowserTabVisible.current = isBrowserTabVisible;
+
     const listener: StatusListener = ({ status: deviceStatus, type }) => {
       const nextState = getNextConnectionState({
         currConnType,
@@ -134,11 +161,13 @@ export const useConnectStatusUpdater = (
         onFirstConnectAttempt,
         setOnFirstConnectAttempt,
       });
+      nextStateRef.current = nextState;
       prevDeviceStatus.current = deviceStatus;
-      if (nextState && isBrowserTabVisible) {
-        handleStatus && handleStatus(nextState.status, nextState.flowType);
-        setConnectionStatus(nextState.status);
+      if (!isBrowserTabVisible && currConnType === "radio") {
+        // Ignore status updates when tab is hidden and is radio connected.
+        return;
       }
+      updateStatus(nextState);
     };
     // Only add relevant connection type status listener
     connectActions.removeStatusListener();
@@ -155,6 +184,7 @@ export const useConnectStatusUpdater = (
     isBrowserTabVisible,
     onFirstConnectAttempt,
     setConnectionStatus,
+    updateStatus,
   ]);
 
   return connectionStatus;
