@@ -118,7 +118,6 @@ export const ProjectProvider = ({
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
   const getCurrentProject = useStore((s) => s.getCurrentProject);
   const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
-  const isUntitled = useHasUntitledProjectName();
   const navigate = useNavigate();
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
@@ -272,16 +271,17 @@ export const ProjectProvider = ({
       }
     },
     [
+      save,
+      getCurrentProject,
+      settings.showPreSaveHelp,
+      translatedUntitled,
+      setSave,
       doAfterEditorUpdate,
       driverRef,
-      actions,
-      getCurrentProject,
-      intl,
       logging,
-      save,
-      setSave,
-      settings.showPreSaveHelp,
+      actions,
       toast,
+      intl,
     ]
   );
 
