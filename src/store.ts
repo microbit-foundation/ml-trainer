@@ -326,7 +326,7 @@ const createMlStore = (logging: Logging) => {
           },
 
           addActionRecordings(id: ActionData["ID"], recs: RecordingData[]) {
-            return set(({ actions: actions }) => {
+            return set(({ actions }) => {
               const updatedActions = actions.map((action) => {
                 if (action.ID === id) {
                   return {
@@ -886,7 +886,7 @@ const getDataWindowFromActions = (actions: ActionData[]): DataWindow => {
 };
 
 // Get data window from actions on app load.
-const { actions: actions } = useStore.getState();
+const { actions } = useStore.getState();
 useStore.setState(
   { dataWindow: getDataWindowFromActions(actions) },
   false,
