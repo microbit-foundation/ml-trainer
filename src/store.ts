@@ -875,12 +875,12 @@ const createMlStore = (logging: Logging) => {
             switch (version) {
               case 0: {
                 // We need to rename the "gestures" field to "actions"
-                interface StoreV0 extends Omit<Store, "actions"> {
+                interface StateV0 extends Omit<State, "actions"> {
                   gestures?: ActionData[];
                 }
-                const storeV0 = persistedStateUnknown as StoreV0;
-                const { gestures, ...rest } = storeV0;
-                return { actions: gestures, ...rest } as Store;
+                const stateV0 = persistedStateUnknown as StateV0;
+                const { gestures, ...rest } = stateV0;
+                return { actions: gestures, ...rest } as State;
               }
               default:
                 return persistedStateUnknown;
@@ -888,7 +888,7 @@ const createMlStore = (logging: Logging) => {
           },
           merge(persistedStateUnknown, currentState) {
             // The zustand default merge does no validation either.
-            const persistedState = persistedStateUnknown as Store;
+            const persistedState = persistedStateUnknown as State;
             return {
               ...currentState,
               ...persistedState,
