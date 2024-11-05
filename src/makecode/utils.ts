@@ -36,7 +36,7 @@ export const pxt = {
 };
 
 export const generateProject = (
-  name: string | null,
+  name: string,
   actionState: DatasetEditorJsonFormat,
   model: LayersModel | undefined,
   dataWindow: DataWindow

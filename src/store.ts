@@ -109,7 +109,7 @@ const updateProject = (
       ...(projectEdited
         ? generateCustomFiles(actionsData, model, dataWindow, project)
         : generateProject(
-            project.header?.name ?? null,
+            project.header?.name ?? untitledProjectName,
             actionsData,
             model,
             dataWindow
@@ -526,7 +526,10 @@ const createMlStore = (logging: Logging) => {
               "data:application/json;charset=utf-8," +
                 encodeURIComponent(JSON.stringify(actions, null, 2))
             );
-            a.setAttribute("download", `${project.header?.name}-data-samples`);
+            a.setAttribute(
+              "download",
+              `${project.header?.name ?? untitledProjectName}-data-samples`
+            );
             a.style.display = "none";
             a.click();
           },
@@ -666,7 +669,7 @@ const createMlStore = (logging: Logging) => {
               text: {
                 ...previousProject.text,
                 ...generateProject(
-                  previousProject.header?.name ?? null,
+                  previousProject.header?.name ?? untitledProjectName,
                   { data: actions },
                   model,
                   dataWindow
