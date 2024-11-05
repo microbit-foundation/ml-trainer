@@ -500,9 +500,18 @@ const createMlStore = (logging: Logging) => {
           },
 
           loadDataset(newActions: ActionData[]) {
-            set(({ project, projectEdited }) => {
+            set(({ project, projectEdited, settings }) => {
               const dataWindow = getDataWindowFromActions(newActions);
               return {
+                settings: {
+                  ...settings,
+                  toursCompleted: Array.from(
+                    new Set([
+                      ...settings.toursCompleted,
+                      TourId.CollectDataToTrainModel,
+                    ])
+                  ),
+                },
                 actions: (() => {
                   const copy = newActions.map((a) => ({ ...a }));
                   for (const a of copy) {
@@ -535,9 +544,18 @@ const createMlStore = (logging: Logging) => {
            */
           loadProject(project: Project, name: string) {
             const newActions = getActionsFromProject(project);
-            set(() => {
+            set(({ settings }) => {
               const timestamp = Date.now();
               return {
+                settings: {
+                  ...settings,
+                  toursCompleted: Array.from(
+                    new Set([
+                      ...settings.toursCompleted,
+                      TourId.CollectDataToTrainModel,
+                    ])
+                  ),
+                },
                 actions: newActions,
                 dataWindow: getDataWindowFromActions(newActions),
                 model: undefined,
@@ -681,6 +699,7 @@ const createMlStore = (logging: Logging) => {
                   project: prevProject,
                   isEditorOpen,
                   changedHeaderExpected,
+                  settings,
                 } = state;
                 const newProjectHeader = newProject.header!.id;
                 const previousProjectHeader = prevProject.header!.id;
@@ -700,6 +719,15 @@ const createMlStore = (logging: Logging) => {
                   const timestamp = Date.now();
                   const newActions = getActionsFromProject(newProject);
                   return {
+                    settings: {
+                      ...settings,
+                      toursCompleted: Array.from(
+                        new Set([
+                          ...settings.toursCompleted,
+                          TourId.CollectDataToTrainModel,
+                        ])
+                      ),
+                    },
                     project: newProject,
                     projectLoadTimestamp: timestamp,
                     timestamp,
