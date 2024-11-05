@@ -11,7 +11,6 @@ import {
   RefObject,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useRef,
 } from "react";
@@ -24,19 +23,19 @@ import {
   PostImportDialogState,
   SaveStep,
 } from "../model";
-import { defaultProjectNameId } from "../project-name";
+import { untitledProjectName as untitled } from "../project-name";
 import { useStore } from "../store";
 import {
   createCodePageUrl,
   createDataSamplesPageUrl,
   createTestingModelPageUrl,
 } from "../urls";
+import { getTotalNumSamples } from "../utils/actions";
 import {
   downloadHex,
   getLowercaseFileExtension,
   readFileAsText,
 } from "../utils/fs-util";
-import { getTotalNumSamples } from "../utils/actions";
 import { useDownloadActions } from "./download-hooks";
 
 class CodeEditorError extends Error {}
@@ -86,15 +85,24 @@ interface ProjectProviderProps {
   children: ReactNode;
 }
 
-export const useDefaultProjectName = (): string => {
+const useDefaultProjectName = (): string => {
   const intl = useIntl();
-  return intl.formatMessage({ id: defaultProjectNameId });
+  return intl.formatMessage({ id: "default-project-name" });
 };
 
 export const useHasUntitledProjectName = (): boolean => {
-  const defaultProjectName = useDefaultProjectName();
+  const translatedUntitled = useDefaultProjectName();
   const projectName = useStore((s) => s.project.header?.name);
-  return projectName === defaultProjectName;
+  return projectName === untitled || projectName === translatedUntitled;
+};
+
+export const useProjectName = (): string => {
+  const isUntitled = useHasUntitledProjectName();
+  const translatedUntitled = useDefaultProjectName();
+  const projectName = useStore((s) =>
+    !s.project.header || isUntitled ? translatedUntitled : s.project.header.name
+  );
+  return projectName;
 };
 
 export const ProjectProvider = ({
@@ -111,17 +119,6 @@ export const ProjectProvider = ({
   const getCurrentProject = useStore((s) => s.getCurrentProject);
   const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
   const navigate = useNavigate();
-
-  const projectName = useStore((s) => s.project.header?.name);
-  const setProjectName = useStore((s) => s.setProjectName);
-  const defaultProjectName = useDefaultProjectName();
-
-  // If project name is null, set project name as translated "untitled" name.
-  useEffect(() => {
-    if (projectName === null) {
-      setProjectName(defaultProjectName);
-    }
-  }, [defaultProjectName, intl, projectName, setProjectName]);
 
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
@@ -240,7 +237,7 @@ export const ProjectProvider = ({
       if (settings.showPreSaveHelp && step === SaveStep.None) {
         setSave({ hex, step: SaveStep.PreSaveHelp });
       } else if (
-        getCurrentProject().header?.name === defaultProjectName &&
+        getCurrentProject().header?.name === untitled &&
         step === SaveStep.None
       ) {
         setSave({ hex, step: SaveStep.ProjectName });
@@ -273,7 +270,7 @@ export const ProjectProvider = ({
       }
     },
     [
-      defaultProjectName,
+      untitled,
       doAfterEditorUpdate,
       driverRef,
       actions,

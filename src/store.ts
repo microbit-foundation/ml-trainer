@@ -30,6 +30,7 @@ import {
 import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
+import { untitledProjectName } from "./project-name";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -67,9 +68,7 @@ const createUntitledProject = (): Project => ({
   header: {
     target: "microbit",
     targetVersion: "7.1.2",
-    // Project name will be renamed to user-selected language equivalent of
-    // "Untitled" in the project hook.
-    name: null,
+    name: untitledProjectName,
     meta: {},
     editor: "blocksprj",
     pubId: "",
@@ -87,7 +86,12 @@ const createUntitledProject = (): Project => ({
     saveId: null,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any,
-  ...generateProject(null, { data: [] }, undefined, currentDataWindow),
+  ...generateProject(
+    untitledProjectName,
+    { data: [] },
+    undefined,
+    currentDataWindow
+  ),
 });
 
 const updateProject = (

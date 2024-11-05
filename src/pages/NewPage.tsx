@@ -23,14 +23,11 @@ import NewPageChoice from "../components/NewPageChoice";
 import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
-import { useDefaultProjectName } from "../hooks/project-hooks";
+import { useProjectName } from "../hooks/project-hooks";
 
 const NewPage = () => {
   const existingSessionTimestamp = useStore((s) => s.timestamp);
-  const defaultProjectName = useDefaultProjectName();
-  const projectName = useStore(
-    (s) => s.project.header?.name ?? defaultProjectName
-  );
+  const projectName = useProjectName();
   const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
   const logging = useLogging();

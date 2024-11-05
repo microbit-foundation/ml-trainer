@@ -17,7 +17,7 @@ import DefaultPageLayout, {
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
 import { useDeployment } from "../deployment";
-import { useDefaultProjectName, useProject } from "../hooks/project-hooks";
+import { useProjectName, useProject } from "../hooks/project-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { MicrobitOrgResource } from "../model";
 import { validateProjectName } from "../project-name";
@@ -29,7 +29,7 @@ const ImportPage = () => {
   const navigate = useNavigate();
   const { activitiesBaseUrl } = useDeployment();
   const [params] = useSearchParams();
-  const defaultProjectName = useDefaultProjectName();
+  const defaultProjectName = useProjectName();
   const [name, setName] = useState<string>(defaultProjectName);
   const isValidSetup = validateProjectName(name);
   const [fetchingProject, setFetchingProject] = useState<boolean>(true);
