@@ -1,4 +1,4 @@
-import { Box, HStack, Icon, Text } from "@chakra-ui/react";
+import { Box, HStack, Icon, Text, usePrevious } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
 import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -84,19 +84,20 @@ const LiveGraph = () => {
 
   // Draw on graph to display that users are recording.
   const isRecording = useStore((s) => s.isRecording);
+  const prevIsRecording = usePrevious(isRecording);
   useEffect(() => {
     if (isRecording) {
       // Set the start recording line
       const now = new Date().getTime();
       recordLines.append(now - 1, -maxAccelerationScaleForGraphs, false);
       recordLines.append(now, maxAccelerationScaleForGraphs, false);
-    } else {
+    } else if (prevIsRecording) {
       // Set the end recording line
       const now = new Date().getTime();
       recordLines.append(now - 1, maxAccelerationScaleForGraphs, false);
       recordLines.append(now, -maxAccelerationScaleForGraphs, false);
     }
-  }, [isRecording, recordLines]);
+  }, [isRecording, prevIsRecording, recordLines]);
 
   const [labelConfigs, setLabelConfigs] = useState<LabelConfig[]>([
     { label: "x", arrowHeight: 0, labelHeight: 0, color: colors.x, id: 0 },
