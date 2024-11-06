@@ -34,7 +34,7 @@ import { useProjectIsUntitled } from "../hooks/project-hooks";
 const DataSamplesMenu = () => {
   const intl = useIntl();
   const logging = useLogging();
-  const actions = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.actions);
   const downloadDataset = useStore((s) => s.downloadDataset);
   const { stage } = useConnectionStage();
   const deleteConfirmDisclosure = useDisclosure();

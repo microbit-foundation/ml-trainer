@@ -15,7 +15,7 @@ import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
 
 const DataSamplesPage = () => {
-  const actions = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.actions);
   const addNewAction = useStore((s) => s.addNewAction);
   const model = useStore((s) => s.model);
   const [selectedActionIdx, setSelectedActionIdx] = useState<number>(0);

@@ -62,7 +62,7 @@ const DataSamplesTable = ({
   selectedActionIdx: selectedActionIdx,
   setSelectedActionIdx: setSelectedActionIdx,
 }: DataSamplesTableProps) => {
-  const actions = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.actions);
   // Default to first action being selected if last action is deleted.
   const selectedAction: ActionData = actions[selectedActionIdx] ?? actions[0];
 
