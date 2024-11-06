@@ -24,8 +24,6 @@ import { stage } from "../environment";
 import { flags } from "../flags";
 import blockImage from "../images/block.png";
 import clap from "../images/clap-square.png";
-import aiActivityTimer from "../images/resource-ai-activity-timer.png";
-import simpleAiExerciseTimer from "../images/resource-simple-ai-exercise-timer.png";
 import xyzGraph from "../images/xyz-graph.png";
 import { createNewPageUrl } from "../urls";
 
@@ -71,7 +69,7 @@ const HomePage = () => {
     navigate(createNewPageUrl());
   }, [navigate]);
   const intl = useIntl();
-  const { appNameFull } = useDeployment();
+  const { appNameFull, projectImages } = useDeployment();
   const microbitOrgBaseUrl =
     stage === "production"
       ? "https://microbit.org/"
@@ -97,7 +95,12 @@ const HomePage = () => {
             gap={5}
             w={{ base: "100%", lg: "unset" }}
           >
-            <Heading as="h1" fontSize="5xl" fontWeight="bold">
+            <Heading
+              as="h1"
+              fontSize="5xl"
+              fontWeight="bold"
+              variant="homepage"
+            >
               {appNameFull}
             </Heading>
             <Text fontSize="md" fontWeight="bold">
@@ -136,7 +139,7 @@ const HomePage = () => {
           </Box>
         </HStack>
         <VStack spacing={8} w="100%" maxW="container.md">
-          <Heading as="h2" textAlign="center">
+          <Heading as="h2" textAlign="center" variant="homepage">
             <FormattedMessage id="homepage-how-it-works" />
           </Heading>
           <Box w="100%" position="relative">
@@ -153,7 +156,7 @@ const HomePage = () => {
           </Text>
         </VStack>
         <VStack gap={8}>
-          <Heading as="h2" textAlign="center">
+          <Heading as="h2" textAlign="center" variant="homepage">
             <FormattedMessage id="homepage-step-by-step" />
           </Heading>
           <VStack
@@ -207,7 +210,7 @@ const HomePage = () => {
         </VStack>
         {flags.homePageProjects && (
           <VStack gap={8}>
-            <Heading as="h2" textAlign="center">
+            <Heading as="h2" textAlign="center" variant="homepage">
               <FormattedMessage id="homepage-projects" />
             </Heading>
             <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
@@ -216,14 +219,14 @@ const HomePage = () => {
                   id: "simple-ai-exercise-timer-resource-title",
                 })}
                 url={`${microbitOrgBaseUrl}projects/make-it-code-it/simple-ai-exercise-timer/`}
-                imgSrc={simpleAiExerciseTimer}
+                imgSrc={projectImages[0]}
               />
               <ResourceCard
                 title={intl.formatMessage({
                   id: "ai-activity-timer-resource-title",
                 })}
                 url={`${microbitOrgBaseUrl}projects/make-it-code-it/ai-activity-timer/`}
-                imgSrc={aiActivityTimer}
+                imgSrc={projectImages[2]}
               />
             </HStack>
           </VStack>

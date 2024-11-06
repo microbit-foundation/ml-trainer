@@ -52,6 +52,7 @@ const defaultDeploymentFactory: DeploymentConfigFactory = () => ({
     troubleshooting: "https://support.microbit.org",
     wearable: "https://support.microbit.org",
   },
+  projectImages: [],
 });
 
 export default defaultDeploymentFactory;

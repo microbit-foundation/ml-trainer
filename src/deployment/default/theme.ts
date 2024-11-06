@@ -1,7 +1,9 @@
 import { extendTheme, withDefaultVariant } from "@chakra-ui/react";
+
 import colors from "./colors";
 import Alert from "./components/alert";
 import Button from "./components/button";
+import Heading from "./components/heading";
 import fonts from "./fonts";
 import radii from "./radii";
 import shadows from "./shadows";
@@ -15,6 +17,7 @@ const overrides = {
   components: {
     Alert,
     Button,
+    Heading,
   },
 };
 
