@@ -226,7 +226,7 @@ const HomePage = () => {
                   id: "ai-activity-timer-resource-title",
                 })}
                 url={`${microbitOrgBaseUrl}projects/make-it-code-it/ai-activity-timer/`}
-                imgSrc={projectImages[2]}
+                imgSrc={projectImages[1]}
               />
             </HStack>
           </VStack>
