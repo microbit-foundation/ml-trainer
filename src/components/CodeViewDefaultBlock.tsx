@@ -13,7 +13,7 @@ const CodeViewDefaultBlock = ({
   const intl = useIntl();
   const ledPattern = makecodeIcons[icon];
   const iconName = intl.formatMessage({
-    id: `led-icon-option-${icon.toLocaleLowerCase()}`,
+    id: `led-icon-option-${icon.toLowerCase()}`,
   });
   const actionNameTextBoxWidth = getActionNameTextBoxWidth(actionName);
   const dropdownArrowXPos = actionNameTextBoxWidth - 20;
