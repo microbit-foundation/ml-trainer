@@ -26,7 +26,7 @@ interface TemplateStrings {
 }
 
 // Support optionally pulling in external branding if the module is installed.
-const theme = "@microbit-foundation/ml-trainer-microbit/";
+const theme = "@microbit-foundation/ml-trainer-microbit";
 const external = `node_modules/${theme}`;
 const internal = "src/deployment/default";
 const themePackageExternal = fs.existsSync(external);
