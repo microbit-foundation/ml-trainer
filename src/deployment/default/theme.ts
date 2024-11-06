@@ -1,5 +1,4 @@
 import { extendTheme, withDefaultVariant } from "@chakra-ui/react";
-
 import colors from "./colors";
 import Alert from "./components/alert";
 import Button from "./components/button";
