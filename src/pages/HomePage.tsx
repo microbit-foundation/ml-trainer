@@ -99,7 +99,7 @@ const HomePage = () => {
               as="h1"
               fontSize="5xl"
               fontWeight="bold"
-              variant="homepage"
+              variant="marketing"
             >
               {appNameFull}
             </Heading>
@@ -139,7 +139,7 @@ const HomePage = () => {
           </Box>
         </HStack>
         <VStack spacing={8} w="100%" maxW="container.md">
-          <Heading as="h2" textAlign="center" variant="homepage">
+          <Heading as="h2" textAlign="center" variant="marketing">
             <FormattedMessage id="homepage-how-it-works" />
           </Heading>
           <Box w="100%" position="relative">
@@ -156,7 +156,7 @@ const HomePage = () => {
           </Text>
         </VStack>
         <VStack gap={8}>
-          <Heading as="h2" textAlign="center" variant="homepage">
+          <Heading as="h2" textAlign="center" variant="marketing">
             <FormattedMessage id="homepage-step-by-step" />
           </Heading>
           <VStack
@@ -210,7 +210,7 @@ const HomePage = () => {
         </VStack>
         {flags.homePageProjects && (
           <VStack gap={8}>
-            <Heading as="h2" textAlign="center" variant="homepage">
+            <Heading as="h2" textAlign="center" variant="marketing">
               <FormattedMessage id="homepage-projects" />
             </Heading>
             <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>

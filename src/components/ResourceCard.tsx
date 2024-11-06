@@ -37,7 +37,7 @@ const ResourceCard = ({ imgSrc, url, title }: ResourceCardProps) => {
             fontSize="lg"
             fontWeight="bold"
             m={2}
-            variant="homepage"
+            variant="marketing"
           >
             <LinkOverlay href={url} as={Link}>
               {title}
