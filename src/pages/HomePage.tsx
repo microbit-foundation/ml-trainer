@@ -27,6 +27,9 @@ import clap from "../images/clap-square.png";
 import xyzGraph from "../images/xyz-graph.png";
 import { createNewPageUrl } from "../urls";
 
+import projectImage1 from "theme-package/images/simple-ai-exercise-timer.png";
+import projectImage2 from "theme-package/images/ai-activity-timer.png";
+
 const graphData = {
   x: [
     0.4, 0.152, -0.008, 0.056, -0.324, 1.604, 2.04, 0.92, 1.844, 1.872, 2.04,
@@ -69,7 +72,7 @@ const HomePage = () => {
     navigate(createNewPageUrl());
   }, [navigate]);
   const intl = useIntl();
-  const { appNameFull, projectImages } = useDeployment();
+  const { appNameFull } = useDeployment();
   const microbitOrgBaseUrl =
     stage === "production"
       ? "https://microbit.org/"
@@ -219,14 +222,14 @@ const HomePage = () => {
                   id: "simple-ai-exercise-timer-resource-title",
                 })}
                 url={`${microbitOrgBaseUrl}projects/make-it-code-it/simple-ai-exercise-timer/`}
-                imgSrc={projectImages[0]}
+                imgSrc={projectImage1}
               />
               <ResourceCard
                 title={intl.formatMessage({
                   id: "ai-activity-timer-resource-title",
                 })}
                 url={`${microbitOrgBaseUrl}projects/make-it-code-it/ai-activity-timer/`}
-                imgSrc={projectImages[1]}
+                imgSrc={projectImage2}
               />
             </HStack>
           </VStack>

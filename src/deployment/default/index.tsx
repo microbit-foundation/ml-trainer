@@ -8,7 +8,6 @@ import { ReactNode, createContext } from "react";
 import { CookieConsent, DeploymentConfigFactory } from "..";
 import { NullLogging } from "./logging";
 import theme from "./theme";
-import placeholder from "./placeholder.png";
 
 const stubConsentValue: CookieConsent = {
   analytics: false,
@@ -53,7 +52,6 @@ const defaultDeploymentFactory: DeploymentConfigFactory = () => ({
     troubleshooting: "https://support.microbit.org",
     wearable: "https://support.microbit.org",
   },
-  projectImages: [placeholder, placeholder],
 });
 
 export default defaultDeploymentFactory;

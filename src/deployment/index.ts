@@ -59,7 +59,6 @@ export interface DeploymentConfig {
   activitiesBaseUrl?: string;
 
   logging: Logging;
-  projectImages: string[];
 }
 
 export const useDeployment = (): DeploymentConfig => {

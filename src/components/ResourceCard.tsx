@@ -1,6 +1,5 @@
 import {
   AspectRatio,
-  Box,
   HStack,
   Heading,
   Image,

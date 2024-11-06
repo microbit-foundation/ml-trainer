@@ -7,6 +7,7 @@
 import react from "@vitejs/plugin-react";
 import ejs from "ejs";
 import fs from "node:fs";
+import path from "node:path";
 import {
   IndexHtmlTransformContext,
   IndexHtmlTransformResult,
@@ -17,7 +18,6 @@ import {
 } from "vite";
 import svgr from "vite-plugin-svgr";
 import { configDefaults } from "vitest/config";
-import path from "node:path";
 
 interface TemplateStrings {
   appNameFull: string;
@@ -27,12 +27,12 @@ interface TemplateStrings {
 
 // Support optionally pulling in external branding if the module is installed.
 const theme = "@microbit-foundation/ml-trainer-microbit";
-const themePackageDependencyPath = `node_modules/${theme}`;
-const themePackageDependencyExists = fs.existsSync(themePackageDependencyPath);
-const themePackageAlias = path.resolve(
-  __dirname,
-  `src/deployment/${themePackageDependencyExists ? "microbit" : "default"}`
-);
+const external = `node_modules/${theme}`;
+const internal = "src/deployment/default";
+const themePackageExternal = fs.existsSync(external);
+const themePackageAlias = themePackageExternal
+  ? theme
+  : path.resolve(__dirname, internal);
 
 const viteEjsPlugin = (data: ejs.Data): Plugin => {
   return {
@@ -50,9 +50,9 @@ const viteEjsPlugin = (data: ejs.Data): Plugin => {
 export default defineConfig(async ({ mode }): Promise<UserConfig> => {
   const commonEnv = loadEnv(mode, process.cwd(), "");
 
-  const strings: TemplateStrings = themePackageDependencyExists
+  const strings: TemplateStrings = themePackageExternal
     ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      ((await import(theme)).default({}) as TemplateStrings)
+      ((await import(themePackageAlias)).default({}) as TemplateStrings)
     : {
         appNameFull: "ml-trainer",
         ogDescription: undefined,
