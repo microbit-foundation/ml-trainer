@@ -90,14 +90,14 @@ const useDefaultProjectName = (): string => {
   return intl.formatMessage({ id: "default-project-name" });
 };
 
-export const useHasUntitledProjectName = (): boolean => {
+export const useProjectIsUntitled = (): boolean => {
   const translatedUntitled = useDefaultProjectName();
   const projectName = useStore((s) => s.project.header?.name);
   return projectName === untitled || projectName === translatedUntitled;
 };
 
 export const useProjectName = (): string => {
-  const isUntitled = useHasUntitledProjectName();
+  const isUntitled = useProjectIsUntitled();
   const translatedUntitled = useDefaultProjectName();
   const projectName = useStore((s) =>
     !s.project.header || isUntitled ? translatedUntitled : s.project.header.name

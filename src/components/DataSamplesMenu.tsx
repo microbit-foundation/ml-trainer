@@ -29,7 +29,7 @@ import { ConfirmDialog } from "./ConfirmDialog";
 import LoadProjectMenuItem from "./LoadProjectMenuItem";
 import { NameProjectDialog } from "./NameProjectDialog";
 import ViewDataFeaturesMenuItem from "./ViewDataFeaturesMenuItem";
-import { useHasUntitledProjectName } from "../hooks/project-hooks";
+import { useProjectIsUntitled } from "../hooks/project-hooks";
 
 const DataSamplesMenu = () => {
   const intl = useIntl();
@@ -39,7 +39,7 @@ const DataSamplesMenu = () => {
   const { stage } = useConnectionStage();
   const deleteConfirmDisclosure = useDisclosure();
   const nameProjectDialogDisclosure = useDisclosure();
-  const isUntitled = useHasUntitledProjectName();
+  const isUntitled = useProjectIsUntitled();
   const setProjectName = useStore((s) => s.setProjectName);
 
   const download = useCallback(() => {

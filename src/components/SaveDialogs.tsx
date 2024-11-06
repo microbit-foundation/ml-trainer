@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useHasUntitledProjectName, useProject } from "../hooks/project-hooks";
+import { useProjectIsUntitled, useProject } from "../hooks/project-hooks";
 import { useStore } from "../store";
 import SaveHelpDialog from "./SaveHelpDialog";
 import SaveProgressDialog from "./SaveProgressDialog";
@@ -8,7 +8,7 @@ import { NameProjectDialog } from "./NameProjectDialog";
 
 const SaveDialogs = () => {
   const setSave = useStore((s) => s.setSave);
-  const isUntitled = useHasUntitledProjectName();
+  const isUntitled = useProjectIsUntitled();
   const { step, hex } = useStore((s) => s.save);
   const setProjectName = useStore((s) => s.setProjectName);
   const { saveHex } = useProject();
