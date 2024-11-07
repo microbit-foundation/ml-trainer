@@ -1,18 +1,17 @@
-import { FormattedMessage, useIntl } from "react-intl";
 import { Box, Text, TextProps } from "@chakra-ui/react";
 import { ReactNode } from "react";
+import { FormattedMessage } from "react-intl";
 
 const StepByStepIllustration = () => {
-  const intl = useIntl();
   return (
-    <Box role="image" aria-label={intl.formatMessage({ id: "steps-alt" })}>
+    <>
       <Box display={{ base: "none", md: "block" }}>
         <StepByStepHorizontalIllustration />
       </Box>
       <Box display={{ base: "block", md: "none" }}>
         <StepByStepVerticalIllustration />
       </Box>
-    </Box>
+    </>
   );
 };
 
@@ -419,7 +418,7 @@ const StepByStepVerticalIllustration = () => {
 
 const StepByStepHorizontalIllustration = () => {
   const stepOneTextStartXPos = -120;
-  const stepsTextYPos = 8;
+  const stepsTextYPos = 5;
   const arrowTextXPos = 15;
   return (
     <svg
