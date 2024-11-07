@@ -29,17 +29,17 @@ const HelpMenuItems = () => {
         onClose={feedbackDisclosure.onClose}
         finalFocusRef={MenuButtonRef}
       />
+      <MenuItem
+        as="a"
+        href={userGuideUrl()}
+        target="_blank"
+        rel="noopener"
+        icon={<RiExternalLinkLine />}
+      >
+        <FormattedMessage id="user-guide" />
+      </MenuItem>
       {deployment.supportLinks.main && (
         <>
-          <MenuItem
-            as="a"
-            href={userGuideUrl()}
-            target="_blank"
-            rel="noopener"
-            icon={<RiExternalLinkLine />}
-          >
-            <FormattedMessage id="user-guide" />
-          </MenuItem>
           <MenuItem
             as="a"
             href={deployment.supportLinks.main}
