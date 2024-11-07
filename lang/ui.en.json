@@ -705,7 +705,7 @@
   },
   "homepage-how-it-works-paragraph": {
     "defaultMessage": "Watch the video to get started. Learn more in the <link>user guide</link>.",
-    "description": "Prompt to watch the video on the home page"
+    "description": "Home page content under the video"
   },
   "homepage-projects": {
     "defaultMessage": "Projects",
