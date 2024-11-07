@@ -15,7 +15,6 @@ interface ToolbarMenuProps extends BoxProps {
   children: ReactNode;
   icon?: JSX.Element;
   variant?: ThemeTypings["components"]["Menu"]["variants"];
-  onDarkBackground?: boolean;
 }
 
 const ToolbarMenu = ({
@@ -23,7 +22,6 @@ const ToolbarMenu = ({
   icon,
   children,
   variant,
-  onDarkBackground = true,
   ...props
 }: ToolbarMenuProps) => {
   return (
@@ -37,7 +35,7 @@ const ToolbarMenu = ({
           size="lg"
           fontSize="xl"
           _focusVisible={{
-            boxShadow: onDarkBackground ? "outlineDark" : "outline",
+            boxShadow: "outlineDark",
           }}
         />
         <MenuList zIndex={2}>{children}</MenuList>
