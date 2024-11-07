@@ -58,7 +58,7 @@ const StepByStepVerticalIllustration = () => {
         y={arrowTextYPos}
         textAlign="right"
       >
-        <FormattedMessage id="step-by-step-improve" />
+        <FormattedMessage id="steps-improve" />
       </TextField>
       <TextField
         fontSize="21"
@@ -66,7 +66,7 @@ const StepByStepVerticalIllustration = () => {
         y={stepOneTextStartYPos}
         textAlign="left"
       >
-        <FormattedMessage id="step-by-step-collect-data" />
+        <FormattedMessage id="steps-collect-data" />
       </TextField>
       <TextField
         fontSize="21"
@@ -74,7 +74,7 @@ const StepByStepVerticalIllustration = () => {
         y={stepOneTextStartYPos + 210}
         textAlign="left"
       >
-        <FormattedMessage id="step-by-step-test-model" />
+        <FormattedMessage id="steps-test-model" />
       </TextField>
       <TextField
         fontSize="21"
@@ -82,7 +82,7 @@ const StepByStepVerticalIllustration = () => {
         y={stepOneTextStartYPos + 410}
         textAlign="left"
       >
-        <FormattedMessage id="step-by-step-code" />
+        <FormattedMessage id="steps-code" />
       </TextField>
       <path
         d="M314.17 331.07C312.74 329.75 310.96 329.02 309.16 329.02H298.76V252.57C298.76 245.91 293.34 240.49 286.68 240.49H183.07C176.41 240.49 170.99 245.91 170.99 252.57V329.02H160.49C156.68 329.02 153.47 332.28 153.47 336.14C153.47 344.92 160.57 352.06 169.3 352.06H300.46C309.18 351.96 316.28 344.82 316.28 336.14C316.28 334.24 315.54 332.45 314.18 331.08L314.17 331.07ZM176.41 329.02V252.57C176.41 248.96 179.46 245.91 183.07 245.91H286.68C290.29 245.91 293.34 248.96 293.34 252.57V329.02H176.42H176.41ZM310.32 334.75L310.39 334.8C310.68 335.09 310.84 335.54 310.84 336.04C310.84 341.83 306.17 346.54 300.44 346.54H169.29C163.55 346.54 158.89 341.83 158.89 336.04C158.89 335.12 159.66 334.35 160.58 334.35H309.15C309.67 334.45 310.07 334.62 310.32 334.75Z"
@@ -359,7 +359,7 @@ const StepByStepVerticalIllustration = () => {
         y={arrowTextYPos}
         textAlign="left"
       >
-        <FormattedMessage id="step-by-step-train" />
+        <FormattedMessage id="steps-train" />
       </TextField>
       <path
         d="M290 90.27C289.7 89.55 288.88 89.2 288.15 89.5C279.37 93.11 269.2 95.84 254.27 91.39C243.98 88.51 236.2 88.31 228.28 90.73C226.61 91.2 224.98 91.77 223.25 92.37C222.54 92.62 221.82 92.85 221.1 93.09C221.29 93.94 221.4 94.79 221.42 95.64C221.5 95.73 221.59 95.81 221.66 95.91C222.51 95.63 223.35 95.34 224.18 95.05C225.87 94.46 227.46 93.91 229.07 93.45C236.46 91.19 243.77 91.39 253.48 94.11C269.23 98.8 279.96 95.92 289.22 92.12C289.94 91.82 290.29 90.99 289.99 90.27H290Z"
@@ -473,7 +473,7 @@ const StepByStepHorizontalIllustration = () => {
         y={200}
         textAlign="center"
       >
-        <FormattedMessage id="step-by-step-improve" />
+        <FormattedMessage id="steps-improve" />
       </TextField>
       <TextField
         fontSize="21"
@@ -481,7 +481,7 @@ const StepByStepHorizontalIllustration = () => {
         y={stepsTextYPos}
         textAlign="center"
       >
-        <FormattedMessage id="step-by-step-collect-data" />
+        <FormattedMessage id="steps-collect-data" />
       </TextField>
       <TextField
         fontSize="21"
@@ -489,7 +489,7 @@ const StepByStepHorizontalIllustration = () => {
         y={stepsTextYPos}
         textAlign="center"
       >
-        <FormattedMessage id="step-by-step-test-model" />
+        <FormattedMessage id="steps-test-model" />
       </TextField>
       <TextField
         fontSize="21"
@@ -497,7 +497,7 @@ const StepByStepHorizontalIllustration = () => {
         y={stepsTextYPos}
         textAlign="center"
       >
-        <FormattedMessage id="step-by-step-code" />
+        <FormattedMessage id="steps-code" />
       </TextField>
       <path
         d="M317.43 65.76C315.88 65.6 314.48 66.74 314.33 68.3L313.97 71.89C286.74 46.95 244.32 47.01 217.19 72.85C216.06 73.93 216.01 75.72 217.09 76.86C218.17 77.99 219.96 78.04 221.1 76.96C245.85 53.38 284.44 53.13 309.51 75.51L305.96 75.15C304.4 74.99 303.01 76.13 302.86 77.69C302.7 79.25 303.84 80.64 305.4 80.79L315.83 81.84C315.93 81.84 316.02 81.85 316.12 81.85C316.77 81.85 317.4 81.63 317.91 81.21C318.49 80.73 318.86 80.05 318.94 79.3L319.99 68.87C320.15 67.31 319.01 65.92 317.45 65.77L317.43 65.76Z"
@@ -786,7 +786,7 @@ const StepByStepHorizontalIllustration = () => {
         y={25}
         textAlign="center"
       >
-        <FormattedMessage id="step-by-step-train" />
+        <FormattedMessage id="steps-train" />
       </TextField>
       <defs>
         <clipPath id="clip0_4_340">

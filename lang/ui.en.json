@@ -1107,26 +1107,6 @@
     "defaultMessage": "Start training",
     "description": "Start training button text"
   },
-  "step-by-step-code": {
-    "defaultMessage": "Code",
-    "description": "Step-by-step illustration label"
-  },
-  "step-by-step-collect-data": {
-    "defaultMessage": "Collect data",
-    "description": "Step-by-step illustration label"
-  },
-  "step-by-step-improve": {
-    "defaultMessage": "Improve",
-    "description": "Step-by-step illustration label"
-  },
-  "step-by-step-test-model": {
-    "defaultMessage": "Test model",
-    "description": "Step-by-step illustration label"
-  },
-  "step-by-step-train": {
-    "defaultMessage": "Train",
-    "description": "Step-by-step illustration label"
-  },
   "steps-alt": {
     "defaultMessage": "diagram showing the iterative process of collecting data, training a model, testing the model, and improving the model by improving the data collected before finally coding using the model.",
     "description": "Alt text for the step-by-step home page diagram"
