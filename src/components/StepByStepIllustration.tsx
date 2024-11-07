@@ -17,9 +17,19 @@ const StepByStepIllustration = () => {
 
 const StepByStepVerticalIllustration = () => {
   const stepOneTextStartYPos = 70;
-  const stepsTextXPos = 330;
-  const arrowTextYPos = 180;
-  const leftArrowTextXPos = -360;
+  const arrowTextYPos = 170;
+
+  const commonStepTextProps: Omit<TextFieldProps, "y" | "children"> = {
+    fontSize: "21",
+    textAlign: "left" as TextProps["textAlign"],
+    w: 175,
+    x: 330,
+  };
+  const commonArrowTextProps: Omit<TextFieldProps, "x" | "children"> = {
+    fontSize: "18",
+    w: 120,
+    y: 170,
+  };
   return (
     <svg
       width="100vw"
@@ -27,6 +37,37 @@ const StepByStepVerticalIllustration = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <TextField
+        {...commonArrowTextProps}
+        color="#2F91CF"
+        x={20}
+        y={arrowTextYPos}
+        textAlign="right"
+      >
+        <FormattedMessage id="steps-improve" />
+      </TextField>
+      <TextField
+        {...commonArrowTextProps}
+        color="#04A139"
+        x={280}
+        y={arrowTextYPos}
+        textAlign="left"
+      >
+        <FormattedMessage id="steps-train" />
+      </TextField>
+      <TextField {...commonStepTextProps} y={stepOneTextStartYPos}>
+        <FormattedMessage id="steps-collect-data" />
+      </TextField>
+      <TextField
+        {...commonStepTextProps}
+        y={stepOneTextStartYPos + 210}
+        textAlign="left"
+      >
+        <FormattedMessage id="steps-test-model" />
+      </TextField>
+      <TextField {...commonStepTextProps} y={stepOneTextStartYPos + 410}>
+        <FormattedMessage id="steps-code" />
+      </TextField>
       <path
         d="M149.877 133.627L147.892 137.065L148.957 137.68L150.942 134.242L149.877 133.627Z"
         fill="white"
@@ -51,39 +92,6 @@ const StepByStepVerticalIllustration = () => {
         d="M211.43 422.27L220.12 413.58C221.23 412.47 221.23 410.68 220.12 409.57C219.01 408.46 217.22 408.46 216.11 409.57L212.26 413.42V371.43C212.26 369.86 210.99 368.6 209.43 368.6C207.87 368.6 206.6 369.87 206.6 371.43V413.42L202.75 409.57C201.64 408.46 199.85 408.46 198.74 409.57C198.19 410.12 197.91 410.85 197.91 411.57C197.91 412.29 198.19 413.02 198.74 413.57L207.43 422.26C207.96 422.79 208.68 423.09 209.43 423.09C210.18 423.09 210.9 422.79 211.43 422.26V422.27Z"
         fill="#010101"
       />
-      <TextField
-        color="#2F91CF"
-        fontSize="18"
-        x={leftArrowTextXPos}
-        y={arrowTextYPos}
-        textAlign="right"
-      >
-        <FormattedMessage id="steps-improve" />
-      </TextField>
-      <TextField
-        fontSize="21"
-        x={stepsTextXPos}
-        y={stepOneTextStartYPos}
-        textAlign="left"
-      >
-        <FormattedMessage id="steps-collect-data" />
-      </TextField>
-      <TextField
-        fontSize="21"
-        x={stepsTextXPos}
-        y={stepOneTextStartYPos + 210}
-        textAlign="left"
-      >
-        <FormattedMessage id="steps-test-model" />
-      </TextField>
-      <TextField
-        fontSize="21"
-        x={stepsTextXPos}
-        y={stepOneTextStartYPos + 410}
-        textAlign="left"
-      >
-        <FormattedMessage id="steps-code" />
-      </TextField>
       <path
         d="M287.17 336.07C285.74 334.75 283.96 334.02 282.16 334.02H271.76V257.57C271.76 250.91 266.34 245.49 259.68 245.49H156.07C149.41 245.49 143.99 250.91 143.99 257.57V334.02H133.49C129.68 334.02 126.47 337.28 126.47 341.14C126.47 349.92 133.57 357.06 142.3 357.06H273.46C282.18 356.96 289.28 349.82 289.28 341.14C289.28 339.24 288.54 337.45 287.18 336.08L287.17 336.07ZM149.41 334.02V257.57C149.41 253.96 152.46 250.91 156.07 250.91H259.68C263.29 250.91 266.34 253.96 266.34 257.57V334.02H149.42H149.41ZM283.32 339.75L283.39 339.8C283.68 340.09 283.84 340.54 283.84 341.04C283.84 346.83 279.17 351.54 273.44 351.54H142.29C136.55 351.54 131.89 346.83 131.89 341.04C131.89 340.12 132.66 339.35 133.58 339.35H282.15C282.67 339.45 283.07 339.62 283.32 339.75Z"
         fill="#010101"
@@ -352,15 +360,6 @@ const StepByStepVerticalIllustration = () => {
         d="M259.83 454.23C255.02 453.03 254.84 452.99 254.33 446.08C254.31 445.76 254.04 445.5 253.71 445.5C253.38 445.49 253.11 445.74 253.08 446.06C252.38 453.2 252.02 453.28 247.6 454.22C247.31 454.28 247.1 454.54 247.11 454.84C247.11 455.14 247.33 455.39 247.62 455.45C252.18 456.29 252.21 456.57 253.09 463.62C253.13 463.93 253.39 464.17 253.71 464.17C254.03 464.17 254.29 463.93 254.33 463.62C255.15 456.52 255.25 456.36 259.81 455.45C260.1 455.39 260.31 455.14 260.31 454.85C260.31 454.56 260.12 454.3 259.84 454.23H259.83Z"
         fill="#010101"
       />
-      <TextField
-        color="#04A139"
-        fontSize="18"
-        x={leftArrowTextXPos + 645}
-        y={arrowTextYPos}
-        textAlign="left"
-      >
-        <FormattedMessage id="steps-train" />
-      </TextField>
       <path
         d="M263 95.2699C262.7 94.5499 261.88 94.1999 261.15 94.4999C252.37 98.1099 242.2 100.84 227.27 96.3899C216.98 93.5099 209.2 93.3099 201.28 95.7299C199.61 96.1999 197.98 96.7699 196.25 97.3699C195.54 97.6199 194.82 97.8499 194.1 98.0899C194.29 98.9399 194.4 99.7899 194.42 100.64C194.5 100.73 194.59 100.81 194.66 100.91C195.51 100.63 196.35 100.34 197.18 100.05C198.87 99.4599 200.46 98.9099 202.07 98.4499C209.46 96.1899 216.77 96.3899 226.48 99.1099C242.23 103.8 252.96 100.92 262.22 97.1199C262.94 96.8199 263.29 95.9899 262.99 95.2699H263Z"
         fill="#04A139"
@@ -407,8 +406,16 @@ const StepByStepVerticalIllustration = () => {
 
 const StepByStepHorizontalIllustration = () => {
   const stepOneTextStartXPos = -120;
-  const stepsTextYPos = 5;
-  const arrowTextXPos = 15;
+  const commonStepTextProps: Omit<TextFieldProps, "x" | "children"> = {
+    fontSize: "21",
+    y: 5,
+    textAlign: "center" as TextProps["textAlign"],
+  };
+  const commonArrowTextProps: Omit<TextFieldProps, "y" | "children"> = {
+    fontSize: "18",
+    x: 15,
+    textAlign: "center" as TextProps["textAlign"],
+  };
   return (
     <svg
       width="740"
@@ -417,6 +424,21 @@ const StepByStepHorizontalIllustration = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <TextField {...commonArrowTextProps} color="#04A139" y={25}>
+        <FormattedMessage id="steps-train" />
+      </TextField>
+      <TextField {...commonArrowTextProps} color="#2F91CF" y={200}>
+        <FormattedMessage id="steps-improve" />
+      </TextField>
+      <TextField {...commonStepTextProps} x={stepOneTextStartXPos}>
+        <FormattedMessage id="steps-collect-data" />
+      </TextField>
+      <TextField {...commonStepTextProps} x={stepOneTextStartXPos + 270}>
+        <FormattedMessage id="steps-test-model" />
+      </TextField>
+      <TextField {...commonStepTextProps} x={stepOneTextStartXPos + 500}>
+        <FormattedMessage id="steps-code" />
+      </TextField>
       <path
         d="M531.24 106.07L522.55 97.38C521.44 96.27 519.65 96.27 518.54 97.38C517.43 98.49 517.43 100.28 518.54 101.39L522.39 105.24H480.4C478.83 105.24 477.57 106.51 477.57 108.07C477.57 109.63 478.84 110.9 480.4 110.9H522.39L518.54 114.75C517.43 115.86 517.43 117.65 518.54 118.76C519.09 119.31 519.82 119.59 520.54 119.59C521.26 119.59 521.99 119.31 522.54 118.76L531.23 110.07C531.76 109.54 532.06 108.82 532.06 108.07C532.06 107.32 531.76 106.6 531.23 106.07H531.24Z"
         fill="#010101"
@@ -455,39 +477,6 @@ const StepByStepHorizontalIllustration = () => {
           fill="#010101"
         />
       </g>
-      <TextField
-        color="#2F91CF"
-        fontSize="18"
-        x={arrowTextXPos}
-        y={200}
-        textAlign="center"
-      >
-        <FormattedMessage id="steps-improve" />
-      </TextField>
-      <TextField
-        fontSize="21"
-        x={stepOneTextStartXPos}
-        y={stepsTextYPos}
-        textAlign="center"
-      >
-        <FormattedMessage id="steps-collect-data" />
-      </TextField>
-      <TextField
-        fontSize="21"
-        x={stepOneTextStartXPos + 270}
-        y={stepsTextYPos}
-        textAlign="center"
-      >
-        <FormattedMessage id="steps-test-model" />
-      </TextField>
-      <TextField
-        fontSize="21"
-        x={stepOneTextStartXPos + 500}
-        y={stepsTextYPos}
-        textAlign="center"
-      >
-        <FormattedMessage id="steps-code" />
-      </TextField>
       <path
         d="M317.43 65.76C315.88 65.6 314.48 66.74 314.33 68.3L313.97 71.89C286.74 46.95 244.32 47.01 217.19 72.85C216.06 73.93 216.01 75.72 217.09 76.86C218.17 77.99 219.96 78.04 221.1 76.96C245.85 53.38 284.44 53.13 309.51 75.51L305.96 75.15C304.4 74.99 303.01 76.13 302.86 77.69C302.7 79.25 303.84 80.64 305.4 80.79L315.83 81.84C315.93 81.84 316.02 81.85 316.12 81.85C316.77 81.85 317.4 81.63 317.91 81.21C318.49 80.73 318.86 80.05 318.94 79.3L319.99 68.87C320.15 67.31 319.01 65.92 317.45 65.77L317.43 65.76Z"
         fill="#04A139"
@@ -768,15 +757,6 @@ const StepByStepHorizontalIllustration = () => {
           fill="#1D1D1D"
         />
       </g>
-      <TextField
-        color="#04A139"
-        fontSize="18"
-        x={arrowTextXPos}
-        y={25}
-        textAlign="center"
-      >
-        <FormattedMessage id="steps-train" />
-      </TextField>
       <defs>
         <clipPath id="clip0_4_340">
           <rect
@@ -822,7 +802,7 @@ const TextField = ({ children, x, y, ...rest }: TextFieldProps) => {
       height="500"
       dominantBaseline="middle"
     >
-      <Text fontWeight="bold" letterSpacing="0em" textAlign="left" {...rest}>
+      <Text fontWeight="bold" letterSpacing="0em" {...rest}>
         {children}
       </Text>
     </foreignObject>
