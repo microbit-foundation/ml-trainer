@@ -66,7 +66,7 @@ interface ProjectContext {
 
   editorCallbacks: Pick<
     MakeCodeFrameProps,
-    "onDownload" | "onWorkspaceSave" | "onSave" | "onBack"
+    "onDownload" | "onWorkspaceSave" | "onWorkspaceLoaded" | "onSave" | "onBack"
   >;
 }
 
@@ -113,6 +113,9 @@ export const ProjectProvider = ({
   const toast = useToast();
   const logging = useLogging();
   const projectEdited = useStore((s) => s.projectEdited);
+  const onWorkspaceLoaded = useCallback(() => {
+    logging.log("MakeCode workspace loaded");
+  }, [logging]);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
@@ -327,6 +330,7 @@ export const ProjectProvider = ({
         onWorkspaceSave,
         onDownload,
         onBack,
+        onWorkspaceLoaded,
       },
     }),
     [
@@ -336,6 +340,7 @@ export const ProjectProvider = ({
       onDownload,
       onSave,
       onWorkspaceSave,
+      onWorkspaceLoaded,
       openEditor,
       project,
       projectEdited,
