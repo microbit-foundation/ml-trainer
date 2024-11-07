@@ -1973,6 +1973,36 @@
       "value": "Start training"
     }
   ],
+  "step-by-step-code": [
+    {
+      "type": 0,
+      "value": "Code"
+    }
+  ],
+  "step-by-step-collect-data": [
+    {
+      "type": 0,
+      "value": "Collect data"
+    }
+  ],
+  "step-by-step-improve": [
+    {
+      "type": 0,
+      "value": "Improve"
+    }
+  ],
+  "step-by-step-test-model": [
+    {
+      "type": 0,
+      "value": "Test model"
+    }
+  ],
+  "step-by-step-train": [
+    {
+      "type": 0,
+      "value": "Train"
+    }
+  ],
   "steps-alt": [
     {
       "type": 0,
