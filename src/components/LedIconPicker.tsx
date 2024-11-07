@@ -11,12 +11,14 @@ import { memo, useCallback } from "react";
 import { RiArrowDropDownFill } from "react-icons/ri";
 import { MakeCodeIcon, makecodeIcons } from "../utils/icons";
 import LedIcon from "./LedIcon";
+import { useIntl } from "react-intl";
 
 interface LedIconPicker {
   onIconSelected: (icon: MakeCodeIcon) => void;
 }
 
 const LedIconPicker = ({ onIconSelected }: LedIconPicker) => {
+  const intl = useIntl();
   const handleClick = useCallback(
     (icon: MakeCodeIcon, callback: () => void) => {
       onIconSelected(icon);
@@ -33,7 +35,7 @@ const LedIconPicker = ({ onIconSelected }: LedIconPicker) => {
             <IconButton
               variant="ghost"
               color="blackAlpha.700"
-              aria-label="Pick icon"
+              aria-label={intl.formatMessage({ id: "select-icon-action-aria" })}
               size="sm"
             >
               <RiArrowDropDownFill size={32} />
@@ -46,7 +48,14 @@ const LedIconPicker = ({ onIconSelected }: LedIconPicker) => {
                 {Object.keys(makecodeIcons).map((icon, idx) => (
                   <IconButton
                     key={idx}
-                    aria-label={`Select ${icon} icon`}
+                    aria-label={intl.formatMessage(
+                      { id: "select-icon-option-action-aria" },
+                      {
+                        iconName: intl.formatMessage({
+                          id: `led-icon-option-${icon.toLowerCase()}`,
+                        }),
+                      }
+                    )}
                     onClick={() => handleClick(icon as MakeCodeIcon, onClose)}
                     variant="unstyled"
                     h={20}

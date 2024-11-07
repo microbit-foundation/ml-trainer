@@ -29,6 +29,7 @@ import { ConfirmDialog } from "./ConfirmDialog";
 import LoadProjectMenuItem from "./LoadProjectMenuItem";
 import { NameProjectDialog } from "./NameProjectDialog";
 import ViewDataFeaturesMenuItem from "./ViewDataFeaturesMenuItem";
+import { useProjectIsUntitled } from "../hooks/project-hooks";
 
 const DataSamplesMenu = () => {
   const intl = useIntl();
@@ -38,8 +39,7 @@ const DataSamplesMenu = () => {
   const { stage } = useConnectionStage();
   const deleteConfirmDisclosure = useDisclosure();
   const nameProjectDialogDisclosure = useDisclosure();
-  const projectName = useStore((s) => s.project.header?.name);
-  const isUntitled = projectName === "Untitled";
+  const isUntitled = useProjectIsUntitled();
   const setProjectName = useStore((s) => s.setProjectName);
 
   const download = useCallback(() => {

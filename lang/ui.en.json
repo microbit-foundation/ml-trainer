@@ -411,6 +411,10 @@
     "defaultMessage": "Short collections of movement data lasting 1 second. Your data samples are only stored on your computer, they do not get sent to anyone else.",
     "description": "Tooltip for data samples heading"
   },
+  "default-project-name": {
+    "defaultMessage": "Untitled",
+    "description": "Default project name"
+  },
   "delete-action-aria": {
     "defaultMessage": "Delete action \"{action}\"",
     "description": "Aria label for action delete icon"
@@ -699,6 +703,10 @@
     "defaultMessage": "How it works",
     "description": "Home page section heading"
   },
+  "homepage-how-it-works-paragraph": {
+    "defaultMessage": "Watch the video to get started. Learn more in the <link>user guide</link>.",
+    "description": "Home page content under the video"
+  },
   "homepage-projects": {
     "defaultMessage": "Projects",
     "description": "Home page section heading"
@@ -714,10 +722,6 @@
   "homepage-video-alt": {
     "defaultMessage": "Introductory video",
     "description": "Home page video alt text"
-  },
-  "homepage-video-prompt": {
-    "defaultMessage": "Watch the video to learn how to use {appNameFull}.",
-    "description": "Prompt to watch the video on the home page"
   },
   "import-data-samples-action": {
     "defaultMessage": "Import data samples",
@@ -762,6 +766,166 @@
   "language": {
     "defaultMessage": "Language",
     "description": "Language option text"
+  },
+  "led-icon-option-angry": {
+    "defaultMessage": "Angry",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-asleep": {
+    "defaultMessage": "Asleep",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-butterfly": {
+    "defaultMessage": "Butterfly",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-chessboard": {
+    "defaultMessage": "Chessboard",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-confused": {
+    "defaultMessage": "Confused",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-cow": {
+    "defaultMessage": "Cow",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-diamond": {
+    "defaultMessage": "Diamond",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-duck": {
+    "defaultMessage": "Duck",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-eighthnote": {
+    "defaultMessage": "Eighth Note",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-fabulous": {
+    "defaultMessage": "Fabulous",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-ghost": {
+    "defaultMessage": "Ghost",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-giraffe": {
+    "defaultMessage": "Giraffe",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-happy": {
+    "defaultMessage": "Happy",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-heart": {
+    "defaultMessage": "Heart",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-house": {
+    "defaultMessage": "House",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-lefttriangle": {
+    "defaultMessage": "Left Triangle",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-meh": {
+    "defaultMessage": "Meh",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-no": {
+    "defaultMessage": "No",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-pitchfork": {
+    "defaultMessage": "Pitchfork",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-quarternote": {
+    "defaultMessage": "Quarter Note",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-rabbit": {
+    "defaultMessage": "Rabbit",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-rollerskate": {
+    "defaultMessage": "Rollerskate",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-sad": {
+    "defaultMessage": "Sad",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-scissors": {
+    "defaultMessage": "Scissors",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-silly": {
+    "defaultMessage": "Silly",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-skull": {
+    "defaultMessage": "Skull",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-smalldiamond": {
+    "defaultMessage": "Small Diamond",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-smallheart": {
+    "defaultMessage": "Small Heart",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-smallsquare": {
+    "defaultMessage": "Small Square",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-snake": {
+    "defaultMessage": "Snake",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-square": {
+    "defaultMessage": "Square",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-stickfigure": {
+    "defaultMessage": "Stick Figure",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-surprised": {
+    "defaultMessage": "Surprised",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-sword": {
+    "defaultMessage": "Sword",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-target": {
+    "defaultMessage": "Target",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-tortoise": {
+    "defaultMessage": "Tortoise",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-triangle": {
+    "defaultMessage": "Triangle",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-tshirt": {
+    "defaultMessage": "T-Shirt",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-umbrella": {
+    "defaultMessage": "Umbrella",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-yes": {
+    "defaultMessage": "Yes",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "live-data-graph": {
     "defaultMessage": "Live data graph",
@@ -1079,6 +1243,14 @@
     "defaultMessage": "Your hex file has been downloaded",
     "description": "Notification after a hex file has been downloaded"
   },
+  "select-icon-action-aria": {
+    "defaultMessage": "Pick icon",
+    "description": "Aria label for pick icon button"
+  },
+  "select-icon-option-action-aria": {
+    "defaultMessage": "Select \"{iconName}\" icon",
+    "description": "Aria label for icon option"
+  },
   "settings-menu-action": {
     "defaultMessage": "Settings actions menu",
     "description": "Label for settings actions menu button"
@@ -1318,6 +1490,10 @@
   "unsupported-device-without-bluetooth": {
     "defaultMessage": "You can connect to micro:bit V1 using Web Bluetooth, however, this browser or device does not have Bluetooth enabled. <link>How to enable Bluetooth</link>.",
     "description": "Unsupported device dialog"
+  },
+  "user-guide": {
+    "defaultMessage": "User guide",
+    "description": "Used for link to user guide page on microbit.org"
   },
   "webusb-retry-no-select": {
     "defaultMessage": "You didn't select a micro:bit. Do you want to try again?",

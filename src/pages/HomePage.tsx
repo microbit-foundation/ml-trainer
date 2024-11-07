@@ -5,6 +5,7 @@ import {
   Heading,
   HStack,
   Image,
+  Link,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -15,7 +16,6 @@ import DefaultPageLayout from "../components/DefaultPageLayout";
 import ResourceCard from "../components/ResourceCard";
 import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
 import { useDeployment } from "../deployment";
-import { stage } from "../environment";
 import { flags } from "../flags";
 import clap from "../images/clap-square.png";
 import xyzGraph from "../images/xyz-graph.png";
@@ -24,6 +24,8 @@ import { createNewPageUrl } from "../urls";
 import projectImage2 from "theme-package/images/ai-activity-timer.png";
 import projectImage1 from "theme-package/images/simple-ai-exercise-timer.png";
 import StepByStepIllustration from "../components/StepByStepIllustration";
+import { projectUrl, userGuideUrl } from "../utils/external-links";
+
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -32,11 +34,6 @@ const HomePage = () => {
   }, [navigate]);
   const intl = useIntl();
   const { appNameFull } = useDeployment();
-  const microbitOrgBaseUrl =
-    stage === "production"
-      ? "https://microbit.org/"
-      : "https://stage.microbit.org/";
-
   return (
     <DefaultPageLayout
       toolbarItemsRight={
@@ -112,8 +109,19 @@ const HomePage = () => {
           </Box>
           <Text fontSize="md">
             <FormattedMessage
-              id="homepage-video-prompt"
-              values={{ appNameFull }}
+              id="homepage-how-it-works-paragraph"
+              values={{
+                appNameFull,
+                link: (children) => (
+                  <Link
+                    color="brand.600"
+                    textDecoration="underline"
+                    href={userGuideUrl()}
+                  >
+                    {children}
+                  </Link>
+                ),
+              }}
             />
           </Text>
         </VStack>
@@ -139,14 +147,14 @@ const HomePage = () => {
                 title={intl.formatMessage({
                   id: "simple-ai-exercise-timer-resource-title",
                 })}
-                url={`${microbitOrgBaseUrl}projects/make-it-code-it/simple-ai-exercise-timer/`}
+                url={projectUrl("simple-ai-exercise-timer")}
                 imgSrc={projectImage1}
               />
               <ResourceCard
                 title={intl.formatMessage({
                   id: "ai-activity-timer-resource-title",
                 })}
-                url={`${microbitOrgBaseUrl}projects/make-it-code-it/ai-activity-timer/`}
+                url={projectUrl("ai-activity-timer")}
                 imgSrc={projectImage2}
               />
             </HStack>

@@ -23,8 +23,8 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { useProjectName } from "../hooks/project-hooks";
 import { validateProjectName } from "../project-name";
-import { useStore } from "../store";
 
 interface NameProjectDialogProps {
   onClose: () => void;
@@ -37,7 +37,7 @@ export const NameProjectDialog = ({
   isOpen,
   onSave,
 }: NameProjectDialogProps) => {
-  const initialName = useStore((s) => s.project.header?.name ?? "");
+  const initialName = useProjectName();
   const [name, setName] = useState<string>(initialName);
   const isValid = validateProjectName(name);
   const ref = useCallback((input: HTMLInputElement | null) => {

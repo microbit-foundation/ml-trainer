@@ -27,10 +27,10 @@ import {
   TourState,
   TrainModelDialogStage,
 } from "./model";
-import { defaultProjectName } from "./project-name";
 import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
+import { untitledProjectName } from "./project-name";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -68,7 +68,7 @@ const createUntitledProject = (): Project => ({
   header: {
     target: "microbit",
     targetVersion: "7.1.2",
-    name: defaultProjectName,
+    name: untitledProjectName,
     meta: {},
     editor: "blocksprj",
     pubId: "",
@@ -86,7 +86,12 @@ const createUntitledProject = (): Project => ({
     saveId: null,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any,
-  ...generateProject("Untitled", { data: [] }, undefined, currentDataWindow),
+  ...generateProject(
+    untitledProjectName,
+    { data: [] },
+    undefined,
+    currentDataWindow
+  ),
 });
 
 const updateProject = (
@@ -104,7 +109,7 @@ const updateProject = (
       ...(projectEdited
         ? generateCustomFiles(actionsData, model, dataWindow, project)
         : generateProject(
-            project.header?.name ?? "Untitled",
+            project.header?.name ?? untitledProjectName,
             actionsData,
             model,
             dataWindow
@@ -493,7 +498,7 @@ const createMlStore = (logging: Logging) => {
             );
             a.setAttribute(
               "download",
-              `${project.header?.name || "Untitled"}-data-samples`
+              `${project.header?.name ?? untitledProjectName}-data-samples`
             );
             a.style.display = "none";
             a.click();
@@ -652,7 +657,7 @@ const createMlStore = (logging: Logging) => {
               text: {
                 ...previousProject.text,
                 ...generateProject(
-                  previousProject.header?.name ?? "Untitled",
+                  previousProject.header?.name ?? untitledProjectName,
                   { data: actions },
                   model,
                   dataWindow
