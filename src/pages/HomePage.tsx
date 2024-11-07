@@ -41,7 +41,7 @@ const HomePage = () => {
         </Button>
       }
     >
-      <Container centerContent gap={16} p={8} maxW="container.lg">
+      <Container centerContent gap={20} p={8} maxW="container.lg">
         <HStack
           gap={5}
           flexDir={{ base: "column", lg: "row" }}
@@ -96,7 +96,7 @@ const HomePage = () => {
             />
           </Box>
         </HStack>
-        <VStack spacing={8} w="100%" maxW="container.md">
+        <VStack spacing={10} w="100%" maxW="container.md">
           <Heading as="h2" textAlign="center" variant="marketing">
             <FormattedMessage id="homepage-how-it-works" />
           </Heading>
@@ -124,7 +124,7 @@ const HomePage = () => {
             />
           </Text>
         </VStack>
-        <VStack gap={8}>
+        <VStack gap={10}>
           <Heading as="h2" textAlign="center" variant="marketing">
             <FormattedMessage id="homepage-step-by-step" />
           </Heading>
@@ -137,7 +137,7 @@ const HomePage = () => {
           </VStack>
         </VStack>
         {flags.homePageProjects && (
-          <VStack gap={8}>
+          <VStack gap={10}>
             <Heading as="h2" textAlign="center" variant="marketing">
               <FormattedMessage id="homepage-projects" />
             </Heading>
