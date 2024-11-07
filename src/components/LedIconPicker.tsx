@@ -52,7 +52,7 @@ const LedIconPicker = ({ onIconSelected }: LedIconPicker) => {
                       { id: "select-icon-option-action-aria" },
                       {
                         iconName: intl.formatMessage({
-                          id: `led-icon-option-${icon.toLocaleLowerCase()}`,
+                          id: `led-icon-option-${icon.toLowerCase()}`,
                         }),
                       }
                     )}
