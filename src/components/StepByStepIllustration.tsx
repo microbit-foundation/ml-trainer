@@ -22,7 +22,6 @@ const StepByStepVerticalIllustration = () => {
   return (
     <svg
       width="100vw"
-      height="590"
       viewBox="0 0 518 590"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
