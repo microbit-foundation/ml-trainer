@@ -26,7 +26,6 @@ import projectImage1 from "theme-package/images/simple-ai-exercise-timer.png";
 import StepByStepIllustration from "../components/StepByStepIllustration";
 import { projectUrl, userGuideUrl } from "../utils/external-links";
 
-
 const HomePage = () => {
   const navigate = useNavigate();
   const handleGetStarted = useCallback(() => {
