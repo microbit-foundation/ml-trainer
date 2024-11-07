@@ -1175,6 +1175,26 @@
       "value": "How it works"
     }
   ],
+  "homepage-how-it-works-paragraph": [
+    {
+      "type": 0,
+      "value": "Watch the video to get started. Learn more in the "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "user guide"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "homepage-projects": [
     {
       "type": 0,
@@ -1197,20 +1217,6 @@
     {
       "type": 0,
       "value": "Introductory video"
-    }
-  ],
-  "homepage-video-prompt": [
-    {
-      "type": 0,
-      "value": "Watch the video to learn how to use "
-    },
-    {
-      "type": 1,
-      "value": "appNameFull"
-    },
-    {
-      "type": 0,
-      "value": "."
     }
   ],
   "import-data-samples-action": [
@@ -2619,6 +2625,12 @@
     {
       "type": 0,
       "value": "."
+    }
+  ],
+  "user-guide": [
+    {
+      "type": 0,
+      "value": "User guide"
     }
   ],
   "webusb-retry-no-select": [

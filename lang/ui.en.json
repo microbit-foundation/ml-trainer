@@ -703,6 +703,10 @@
     "defaultMessage": "How it works",
     "description": "Home page section heading"
   },
+  "homepage-how-it-works-paragraph": {
+    "defaultMessage": "Watch the video to get started. Learn more in the <link>user guide</link>.",
+    "description": "Prompt to watch the video on the home page"
+  },
   "homepage-projects": {
     "defaultMessage": "Projects",
     "description": "Home page section heading"
@@ -718,10 +722,6 @@
   "homepage-video-alt": {
     "defaultMessage": "Introductory video",
     "description": "Home page video alt text"
-  },
-  "homepage-video-prompt": {
-    "defaultMessage": "Watch the video to learn how to use {appNameFull}.",
-    "description": "Prompt to watch the video on the home page"
   },
   "import-data-samples-action": {
     "defaultMessage": "Import data samples",
@@ -1490,6 +1490,10 @@
   "unsupported-device-without-bluetooth": {
     "defaultMessage": "You can connect to micro:bit V1 using Web Bluetooth, however, this browser or device does not have Bluetooth enabled. <link>How to enable Bluetooth</link>.",
     "description": "Unsupported device dialog"
+  },
+  "user-guide": {
+    "defaultMessage": "User guide",
+    "description": "Used for link to user guide page on microbit.org"
   },
   "webusb-retry-no-select": {
     "defaultMessage": "You didn't select a micro:bit. Do you want to try again?",

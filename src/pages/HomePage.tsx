@@ -6,6 +6,7 @@ import {
   Heading,
   HStack,
   Image,
+  Link,
   Text,
   useInterval,
   VStack,
@@ -29,6 +30,7 @@ import { createNewPageUrl } from "../urls";
 
 import projectImage1 from "theme-package/images/simple-ai-exercise-timer.png";
 import projectImage2 from "theme-package/images/ai-activity-timer.png";
+import { projectUrl, userGuideUrl } from "../utils/external-links";
 
 const graphData = {
   x: [
@@ -73,11 +75,6 @@ const HomePage = () => {
   }, [navigate]);
   const intl = useIntl();
   const { appNameFull } = useDeployment();
-  const microbitOrgBaseUrl =
-    stage === "production"
-      ? "https://microbit.org/"
-      : "https://stage.microbit.org/";
-
   return (
     <DefaultPageLayout
       toolbarItemsRight={
@@ -153,8 +150,19 @@ const HomePage = () => {
           </Box>
           <Text fontSize="md">
             <FormattedMessage
-              id="homepage-video-prompt"
-              values={{ appNameFull }}
+              id="homepage-how-it-works-paragraph"
+              values={{
+                appNameFull,
+                link: (children) => (
+                  <Link
+                    color="brand.600"
+                    textDecoration="underline"
+                    href={userGuideUrl()}
+                  >
+                    {children}
+                  </Link>
+                ),
+              }}
             />
           </Text>
         </VStack>
@@ -221,14 +229,14 @@ const HomePage = () => {
                 title={intl.formatMessage({
                   id: "simple-ai-exercise-timer-resource-title",
                 })}
-                url={`${microbitOrgBaseUrl}projects/make-it-code-it/simple-ai-exercise-timer/`}
+                url={projectUrl("simple-ai-exercise-timer")}
                 imgSrc={projectImage1}
               />
               <ResourceCard
                 title={intl.formatMessage({
                   id: "ai-activity-timer-resource-title",
                 })}
-                url={`${microbitOrgBaseUrl}projects/make-it-code-it/ai-activity-timer/`}
+                url={projectUrl("ai-activity-timer")}
                 imgSrc={projectImage2}
               />
             </HStack>
