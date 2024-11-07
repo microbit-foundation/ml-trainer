@@ -21,7 +21,6 @@ import RecordingGraph from "../components/RecordingGraph";
 import ResourceCard from "../components/ResourceCard";
 import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
 import { useDeployment } from "../deployment";
-import { stage } from "../environment";
 import { flags } from "../flags";
 import blockImage from "../images/block.png";
 import clap from "../images/clap-square.png";
