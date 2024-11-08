@@ -11,14 +11,16 @@ import { useEffect, useRef } from "react";
 import { XYZData } from "../model";
 import { getConfig as getRecordingChartConfig } from "../recording-graph";
 import { useGraphColors } from "../hooks/use-graph-colors";
+import { useSettings } from "../store";
 
 interface RecordingGraphProps extends BoxProps {
   data: XYZData;
 }
 
 const RecordingGraph = ({ data, children, ...rest }: RecordingGraphProps) => {
+  const [{ graphColorScheme }] = useSettings();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const colors = useGraphColors();
+  const colors = useGraphColors(graphColorScheme);
   useEffect(() => {
     Chart.unregister(...registerables);
     Chart.register([LinearScale, LineController, PointElement, LineElement]);

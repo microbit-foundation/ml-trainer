@@ -8,7 +8,7 @@ import { useConnectActions } from "../connect-actions-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { LabelConfig, getUpdatedLabelConfig } from "../live-graph-label-config";
-import { useStore } from "../store";
+import { useSettings, useStore } from "../store";
 import { maxAccelerationScaleForGraphs } from "../mlConfig";
 import { useGraphColors } from "../hooks/use-graph-colors";
 
@@ -21,8 +21,9 @@ const smoothenDataPoint = (curr: number, next: number) => {
 const LiveGraph = () => {
   const { isConnected, status } = useConnectionStage();
   const connectActions = useConnectActions();
+  const [{ graphColorScheme }] = useSettings();
 
-  const colors = useGraphColors();
+  const colors = useGraphColors(graphColorScheme);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [chart, setChart] = useState<SmoothieChart | undefined>(undefined);
@@ -100,9 +101,9 @@ const LiveGraph = () => {
   }, [isRecording, prevIsRecording, recordLines]);
 
   const [labelConfigs, setLabelConfigs] = useState<LabelConfig[]>([
-    { label: "x", arrowHeight: 0, labelHeight: 0, color: colors.x, id: 0 },
-    { label: "y", arrowHeight: 0, labelHeight: 0, color: colors.y, id: 1 },
-    { label: "z", arrowHeight: 0, labelHeight: 0, color: colors.z, id: 2 },
+    { label: "x", arrowHeight: 0, labelHeight: 0, id: 0 },
+    { label: "y", arrowHeight: 0, labelHeight: 0, id: 1 },
+    { label: "z", arrowHeight: 0, labelHeight: 0, id: 2 },
   ]);
 
   const dataRef = useRef<{ x: number; y: number; z: number }>({
@@ -152,7 +153,7 @@ const LiveGraph = () => {
             <React.Fragment key={idx}>
               <Box
                 ml={-7}
-                color={config.color}
+                color={colors[config.label]}
                 position="absolute"
                 w="fit-content"
                 // Use inline style attribute to avoid style tags being
@@ -167,7 +168,7 @@ const LiveGraph = () => {
                 ml={1}
                 fontSize="xl"
                 position="absolute"
-                color={config.color}
+                color={colors[config.label]}
                 w="fit-content"
                 // Use inline style attribute to avoid style tags being
                 // constantly appended to the <head/> element.

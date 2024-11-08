@@ -42,7 +42,14 @@ export const defaultSettings: Settings = {
   toursCompleted: [],
   dataSamplesView: DataSamplesView.Graph,
   showGraphs: true,
+  graphColorScheme: "default",
 };
+
+export type GraphColorScheme = "default" | "high-contrast";
+export const graphColorSchemeOptions: GraphColorScheme[] = [
+  "default",
+  "high-contrast",
+];
 
 export interface Settings {
   languageId: string;
@@ -52,4 +59,5 @@ export interface Settings {
   toursCompleted: TourId[];
   dataSamplesView: DataSamplesView;
   showGraphs: boolean;
+  graphColorScheme: GraphColorScheme;
 }

@@ -675,6 +675,18 @@
     "defaultMessage": "Go",
     "description": "Go action"
   },
+  "graph-color-scheme": {
+    "defaultMessage": "Graph colour scheme",
+    "description": "Graph colour scheme setting label"
+  },
+  "graph-color-scheme-default": {
+    "defaultMessage": "Default (red, blue, green)",
+    "description": "Graph colour scheme option"
+  },
+  "graph-color-scheme-high-contrast": {
+    "defaultMessage": "High contrast",
+    "description": "Graph colour scheme option"
+  },
   "help-label": {
     "defaultMessage": "Help",
     "description": "Help icon aria label"
@@ -1250,6 +1262,10 @@
   "select-icon-option-action-aria": {
     "defaultMessage": "Select \"{iconName}\" icon",
     "description": "Aria label for icon option"
+  },
+  "settings": {
+    "defaultMessage": "Settings",
+    "description": "Text for settings dialog header and menu item"
   },
   "settings-menu-action": {
     "defaultMessage": "Settings actions menu",

@@ -7,7 +7,6 @@ export interface LabelConfig {
   label: Dimension;
   arrowHeight: number;
   labelHeight: number;
-  color: string;
   id: number;
 }
 

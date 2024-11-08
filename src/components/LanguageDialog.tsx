@@ -73,7 +73,7 @@ export const LanguageDialog = ({
             )}
           </ModalBody>
           <ModalFooter>
-            <Button variant="solid" onClick={onClose}>
+            <Button variant="primary" onClick={onClose}>
               <FormattedMessage id="close-action" />
             </Button>
           </ModalFooter>

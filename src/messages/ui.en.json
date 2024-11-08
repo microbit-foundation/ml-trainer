@@ -1133,6 +1133,24 @@
       "value": "Go"
     }
   ],
+  "graph-color-scheme": [
+    {
+      "type": 0,
+      "value": "Graph colour scheme"
+    }
+  ],
+  "graph-color-scheme-default": [
+    {
+      "type": 0,
+      "value": "Default (red, blue, green)"
+    }
+  ],
+  "graph-color-scheme-high-contrast": [
+    {
+      "type": 0,
+      "value": "High contrast"
+    }
+  ],
   "help-label": [
     {
       "type": 0,
@@ -2201,6 +2219,12 @@
     {
       "type": 0,
       "value": "\" icon"
+    }
+  ],
+  "settings": [
+    {
+      "type": 0,
+      "value": "Settings"
     }
   ],
   "settings-menu-action": [
