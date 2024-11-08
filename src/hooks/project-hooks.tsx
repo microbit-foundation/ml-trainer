@@ -141,31 +141,25 @@ export const ProjectProvider = ({
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
       if (!doAfterEditorUpdatePromise.current && checkIfProjectNeedsFlush()) {
-        doAfterEditorUpdatePromise.current = new Promise<void>(
-          (resolve, reject) => {
-            // driverRef.current is not defined on first render.
-            // Only an issue when navigating to code page directly.
-            if (!driverRef.current) {
-              reject(new CodeEditorError("MakeCode iframe ref is undefined"));
-            } else {
-              logging.log("[MakeCode] Importing project");
-              const project = getCurrentProject();
-              expectChangedHeader();
-              driverRef.current
-                .importProject({ project })
-                .then(() => {
-                  logging.log("[MakeCode] Project import succeeded");
-                  projectFlushedToEditor();
-                  resolve();
-                })
-                .catch((e) => {
-                  logging.log("[MakeCode] Project import failed");
-                  logging.error(e);
-                  reject(e);
-                });
+        doAfterEditorUpdatePromise.current = (async () => {
+          // driverRef.current is not defined on first render.
+          // Only an issue when navigating to code page directly.
+          if (!driverRef.current) {
+            throw new CodeEditorError("MakeCode iframe ref is undefined");
+          } else {
+            logging.log("[MakeCode] Importing project");
+            const project = getCurrentProject();
+            expectChangedHeader();
+            try {
+              await driverRef.current.importProject({ project });
+              logging.log("[MakeCode] Project import succeeded");
+              projectFlushedToEditor();
+            } catch (e) {
+              logging.log("[MakeCode] Project import failed");
+              throw e;
             }
           }
-        );
+        })();
       }
       try {
         await doAfterEditorUpdatePromise.current;
