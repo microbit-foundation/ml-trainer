@@ -143,6 +143,7 @@ export interface State {
   changedHeaderExpected: boolean;
   appEditNeedsFlushToEditor: boolean;
   isEditorOpen: boolean;
+  isEditorReady: boolean;
 
   download: DownloadState;
   downloadFlashingProgress: number;
@@ -195,6 +196,7 @@ export interface Actions {
   getCurrentProject(): Project;
   checkIfProjectNeedsFlush(): boolean;
   editorChange(project: Project): void;
+  editorReady(): void;
   setChangedHeaderExpected(): void;
   projectFlushedToEditor(): void;
 
@@ -239,6 +241,7 @@ const createMlStore = (logging: Logging) => {
           settings: defaultSettings,
           model: undefined,
           isEditorOpen: false,
+          isEditorReady: false,
           appEditNeedsFlushToEditor: true,
           changedHeaderExpected: false,
           // This dialog flow spans two pages
@@ -696,6 +699,10 @@ const createMlStore = (logging: Logging) => {
             return get().project;
           },
 
+          editorReady() {
+            set({ isEditorReady: true }, false, "editorReady");
+          },
+
           editorChange(newProject: Project) {
             const actionName = "editorChange";
             set(
@@ -703,6 +710,7 @@ const createMlStore = (logging: Logging) => {
                 const {
                   project: prevProject,
                   isEditorOpen,
+                  isEditorReady,
                   changedHeaderExpected,
                   settings,
                 } = state;
@@ -718,7 +726,7 @@ const createMlStore = (logging: Logging) => {
                       project: newProject,
                     };
                   }
-                  if (isEditorOpen) {
+                  if (isEditorReady) {
                     logging.log(
                       `[MakeCode] Detected new project, loading actions. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
                     );
@@ -750,7 +758,7 @@ const createMlStore = (logging: Logging) => {
                   } else {
                     // In particular, this happens if the MakeCode init completes after we've updated our project state from an import from .org
                     logging.log(
-                      `[MakeCode] Ignoring changed ID when closed. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
+                      `[MakeCode] Ignoring changed ID before editor ready. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
                     );
                   }
                 } else if (isEditorOpen) {

@@ -119,6 +119,7 @@ export const ProjectProvider = ({
   const toast = useToast();
   const logging = useLogging();
   const projectEdited = useStore((s) => s.projectEdited);
+  const editorReady = useStore((s) => s.editorReady);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
@@ -137,8 +138,9 @@ export const ProjectProvider = ({
   }, [logging, project]);
   const onWorkspaceLoaded = useCallback(() => {
     logging.log("[MakeCode] Workspace loaded");
+    editorReady();
     editorReadyPromiseRef.current.resolve();
-  }, [editorReadyPromiseRef, logging]);
+  }, [editorReady, editorReadyPromiseRef, logging]);
 
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
@@ -233,6 +235,8 @@ export const ProjectProvider = ({
         const makeCodeMagicMark = "41140E2FB82FA2BB";
         // Check if is a MakeCode hex, otherwise show error dialog.
         if (hex.includes(makeCodeMagicMark)) {
+          await editorReadyPromiseRef.current.promise;
+          // This triggers the code in editorChanged to update actions etc.
           driverRef.current!.importFile({
             filename: file.name,
             parts: [hex],
@@ -244,7 +248,14 @@ export const ProjectProvider = ({
         setPostImportDialogState(PostImportDialogState.Error);
       }
     },
-    [driverRef, loadDataset, logging, navigate, setPostImportDialogState]
+    [
+      driverRef,
+      editorReadyPromiseRef,
+      loadDataset,
+      logging,
+      navigate,
+      setPostImportDialogState,
+    ]
   );
 
   const setSave = useStore((s) => s.setSave);
