@@ -1229,11 +1229,19 @@
   },
   "restore-defaults-action": {
     "defaultMessage": "Restore default values for all settings",
-    "description": "Restore defaults button text"
+    "description": "Restore default button text"
+  },
+  "restore-defaults-confirm-body": {
+    "defaultMessage": "Are you sure you want to restore default values for all settings?",
+    "description": "Restore default settings confirmation dialog body text"
+  },
+  "restore-defaults-confirm-heading": {
+    "defaultMessage": "Restore default settings",
+    "description": "Restore default settings confirmation dialog title"
   },
   "restore-defaults-helper": {
-    "defaultMessage": "Previously dismissed help content will be shown again.",
-    "description": "Restore defaults helper text"
+    "defaultMessage": "Previously dismissed help content may be shown again.",
+    "description": "Restore default settings helper text"
   },
   "save-action": {
     "defaultMessage": "Save",

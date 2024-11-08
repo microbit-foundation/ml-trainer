@@ -2157,10 +2157,22 @@
       "value": "Restore default values for all settings"
     }
   ],
+  "restore-defaults-confirm-body": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to restore default values for all settings?"
+    }
+  ],
+  "restore-defaults-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Restore default settings"
+    }
+  ],
   "restore-defaults-helper": [
     {
       "type": 0,
-      "value": "Previously dismissed help content will be shown again."
+      "value": "Previously dismissed help content may be shown again."
     }
   ],
   "save-action": [
