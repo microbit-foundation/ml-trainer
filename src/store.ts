@@ -711,7 +711,7 @@ const createMlStore = (logging: Logging) => {
                 if (newProjectHeader !== previousProjectHeader) {
                   if (changedHeaderExpected) {
                     logging.log(
-                      `Detected new project in MakeCode, ignoring as expected due to import. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
+                      `[MakeCode] Detected new project, ignoring as expected due to import. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
                     );
                     return {
                       changedHeaderExpected: false,
@@ -719,7 +719,7 @@ const createMlStore = (logging: Logging) => {
                     };
                   }
                   logging.log(
-                    `Detected new project in MakeCode, loading actions. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
+                    `[MakeCode] Detected new project, loading actions. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
                   );
                   // It's a new project. Thanks user. We'll update our state.
                   // This will cause another write to MakeCode but that's OK as it gives us
@@ -748,14 +748,14 @@ const createMlStore = (logging: Logging) => {
                   };
                 } else if (isEditorOpen) {
                   logging.log(
-                    `Edit in MakeCode copied to project. ID ${newProject.header?.id}`
+                    `[MakeCode] Edit copied to project. ID ${newProject.header?.id}`
                   );
                   return {
                     project: newProject,
                   };
                 } else {
                   logging.log(
-                    `Edit in MakeCode ignored when closed. ID ${newProject.header?.id}`
+                    `[MakeCode] Edit ignored when closed. ID ${newProject.header?.id}`
                   );
                 }
                 return state;

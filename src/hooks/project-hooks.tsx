@@ -114,7 +114,7 @@ export const ProjectProvider = ({
   const logging = useLogging();
   const projectEdited = useStore((s) => s.projectEdited);
   const onWorkspaceLoaded = useCallback(() => {
-    logging.log("MakeCode workspace loaded");
+    logging.log("[MakeCode] Workspace loaded");
   }, [logging]);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);

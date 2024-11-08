@@ -21,7 +21,9 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
   const logging = useLogging();
   const { project, editorCallbacks } = useProject();
   const initialProjects = useCallback(() => {
-    logging.log(`Initialising MakeCode with header ID: ${project.header?.id}`);
+    logging.log(
+      `[MakeCode] Initialising with header ID: ${project.header?.id}`
+    );
     return Promise.resolve([project]);
   }, [logging, project]);
   const [{ languageId }] = useSettings();
