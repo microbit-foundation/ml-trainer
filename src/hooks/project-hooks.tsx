@@ -66,7 +66,12 @@ interface ProjectContext {
 
   editorCallbacks: Pick<
     MakeCodeFrameProps,
-    "onDownload" | "onWorkspaceSave" | "onWorkspaceLoaded" | "onSave" | "onBack"
+    | "onDownload"
+    | "onWorkspaceSave"
+    | "onWorkspaceLoaded"
+    | "onSave"
+    | "onBack"
+    | "initialProjects"
   >;
 }
 
@@ -122,6 +127,16 @@ export const ProjectProvider = ({
   const getCurrentProject = useStore((s) => s.getCurrentProject);
   const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
   const navigate = useNavigate();
+
+  const project = useStore((s) => s.project);
+  const initialProjects = useCallback(async () => {
+    logging.log(
+      `[MakeCode] Initialising with header ID: ${project.header?.id}`
+    );
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    return Promise.resolve([project]);
+  }, [logging, project]);
+
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
@@ -133,15 +148,19 @@ export const ProjectProvider = ({
             if (!driverRef.current) {
               reject(new CodeEditorError("MakeCode iframe ref is undefined"));
             } else {
+              logging.log("[MakeCode] Importing project");
               const project = getCurrentProject();
               expectChangedHeader();
               driverRef.current
                 .importProject({ project })
                 .then(() => {
+                  logging.log("[MakeCode] Project import succeeded");
                   projectFlushedToEditor();
                   resolve();
                 })
                 .catch((e) => {
+                  logging.log("[MakeCode] Project import failed");
+                  logging.error(e);
                   reject(e);
                 });
             }
@@ -157,9 +176,10 @@ export const ProjectProvider = ({
     },
     [
       checkIfProjectNeedsFlush,
+      driverRef,
+      logging,
       getCurrentProject,
       expectChangedHeader,
-      driverRef,
       projectFlushedToEditor,
     ]
   );
@@ -315,7 +335,6 @@ export const ProjectProvider = ({
     [downloadActions, saveHex]
   );
 
-  const project = useStore((s) => s.project);
   const value = useMemo(
     () => ({
       loadFile,
@@ -326,6 +345,7 @@ export const ProjectProvider = ({
       resetProject,
       saveHex,
       editorCallbacks: {
+        initialProjects,
         onSave,
         onWorkspaceSave,
         onDownload,
@@ -334,18 +354,19 @@ export const ProjectProvider = ({
       },
     }),
     [
-      browserNavigationToEditor,
       loadFile,
-      onBack,
-      onDownload,
-      onSave,
-      onWorkspaceSave,
-      onWorkspaceLoaded,
       openEditor,
+      browserNavigationToEditor,
       project,
       projectEdited,
       resetProject,
       saveHex,
+      initialProjects,
+      onSave,
+      onWorkspaceSave,
+      onDownload,
+      onBack,
+      onWorkspaceLoaded,
     ]
   );
 

@@ -568,7 +568,7 @@ const createMlStore = (logging: Logging) => {
                 projectEdited: true,
                 appEditNeedsFlushToEditor: true,
                 timestamp,
-                projectLoadTimestamp: timestamp,
+                // We don't update projectLoadTimestamp here as we don't want a toast notification for .org import
               };
             });
           },
@@ -718,34 +718,40 @@ const createMlStore = (logging: Logging) => {
                       project: newProject,
                     };
                   }
-                  logging.log(
-                    `[MakeCode] Detected new project, loading actions. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
-                  );
-                  // It's a new project. Thanks user. We'll update our state.
-                  // This will cause another write to MakeCode but that's OK as it gives us
-                  // a chance to validate/update the project
-                  const timestamp = Date.now();
-                  const newActions = getActionsFromProject(newProject);
-                  return {
-                    settings: {
-                      ...settings,
-                      toursCompleted: Array.from(
-                        new Set([
-                          ...settings.toursCompleted,
-                          TourId.CollectDataToTrainModel,
-                        ])
-                      ),
-                    },
-                    project: newProject,
-                    projectLoadTimestamp: timestamp,
-                    timestamp,
-                    // New project loaded externally so we can't know whether its edited.
-                    projectEdited: true,
-                    actions: newActions,
-                    dataWindow: getDataWindowFromActions(newActions),
-                    model: undefined,
-                    isEditorOpen: false,
-                  };
+                  if (isEditorOpen) {
+                    logging.log(
+                      `[MakeCode] Detected new project, loading actions. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
+                    );
+                    // It's a new project. Thanks user. We'll update our state.
+                    // This will cause another write to MakeCode but that's OK as it gives us
+                    // a chance to validate/update the project
+                    const timestamp = Date.now();
+                    const newActions = getActionsFromProject(newProject);
+                    return {
+                      settings: {
+                        ...settings,
+                        toursCompleted: Array.from(
+                          new Set([
+                            ...settings.toursCompleted,
+                            TourId.CollectDataToTrainModel,
+                          ])
+                        ),
+                      },
+                      project: newProject,
+                      projectLoadTimestamp: timestamp,
+                      timestamp,
+                      // New project loaded externally so we can't know whether its edited.
+                      projectEdited: true,
+                      actions: newActions,
+                      dataWindow: getDataWindowFromActions(newActions),
+                      model: undefined,
+                      isEditorOpen: false,
+                    };
+                  } else {
+                    logging.log(
+                      `[MakeCode] New project ignored when closed. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
+                    );
+                  }
                 } else if (isEditorOpen) {
                   logging.log(
                     `[MakeCode] Edit copied to project. ID ${newProject.header?.id}`
