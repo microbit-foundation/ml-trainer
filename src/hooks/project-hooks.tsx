@@ -128,11 +128,11 @@ export const ProjectProvider = ({
 
   const project = useStore((s) => s.project);
   const editorReadyPromiseRef = usePromiseRef<void>();
-  const initialProjects = useCallback(async () => {
+  const initialProjects = useCallback(() => {
     logging.log(
       `[MakeCode] Initialising with header ID: ${project.header?.id}`
     );
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // This is a useful point to introduce a delay to debug MakeCode init dependencies.
     return Promise.resolve([project]);
   }, [logging, project]);
   const onWorkspaceLoaded = useCallback(() => {
