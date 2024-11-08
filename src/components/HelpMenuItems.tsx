@@ -10,6 +10,7 @@ import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
 import AboutDialog from "./AboutDialog";
 import FeedbackForm from "./FeedbackForm";
+import { userGuideUrl } from "../utils/external-links";
 
 const HelpMenuItems = () => {
   const aboutDialogDisclosure = useDisclosure();
@@ -28,6 +29,15 @@ const HelpMenuItems = () => {
         onClose={feedbackDisclosure.onClose}
         finalFocusRef={MenuButtonRef}
       />
+      <MenuItem
+        as="a"
+        href={userGuideUrl()}
+        target="_blank"
+        rel="noopener"
+        icon={<RiExternalLinkLine />}
+      >
+        <FormattedMessage id="user-guide" />
+      </MenuItem>
       {deployment.supportLinks.main && (
         <>
           <MenuItem

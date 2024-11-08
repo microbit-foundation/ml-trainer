@@ -219,6 +219,9 @@ export const HomeToolbarItem = () => {
       variant="plain"
       size="lg"
       fontSize="xl"
+      _focusVisible={{
+        boxShadow: "outlineDark",
+      }}
     />
   );
 };

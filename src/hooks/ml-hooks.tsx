@@ -19,7 +19,7 @@ export const usePrediction = () => {
   const [connectStatus] = useConnectStatus();
   const connection = useConnectActions();
   const [prediction, setPrediction] = useState<PredictionResult | undefined>();
-  const actions = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.actions);
   const model = useStore((s) => s.model);
   const dataWindow = useStore((s) => s.dataWindow);
 

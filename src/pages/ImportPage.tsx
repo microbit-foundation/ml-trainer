@@ -17,10 +17,10 @@ import DefaultPageLayout, {
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
 import { useDeployment } from "../deployment";
-import { useProject } from "../hooks/project-hooks";
+import { useProjectName, useProject } from "../hooks/project-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { MicrobitOrgResource } from "../model";
-import { defaultProjectName, validateProjectName } from "../project-name";
+import { validateProjectName } from "../project-name";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 
@@ -29,6 +29,7 @@ const ImportPage = () => {
   const navigate = useNavigate();
   const { activitiesBaseUrl } = useDeployment();
   const [params] = useSearchParams();
+  const defaultProjectName = useProjectName();
   const [name, setName] = useState<string>(defaultProjectName);
   const isValidSetup = validateProjectName(name);
   const [fetchingProject, setFetchingProject] = useState<boolean>(true);
@@ -63,7 +64,7 @@ const ImportPage = () => {
     void updateAsync().then(() => {
       setFetchingProject(false);
     });
-  }, [activitiesBaseUrl, intl, logging, params]);
+  }, [activitiesBaseUrl, defaultProjectName, intl, logging, params]);
 
   const loadProject = useStore((s) => s.loadProject);
   const newSession = useStore((s) => s.newSession);

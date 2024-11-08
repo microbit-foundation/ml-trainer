@@ -1,4 +1,4 @@
-import { Box, HStack, Icon, Text } from "@chakra-ui/react";
+import { Box, HStack, Icon, Text, usePrevious } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
 import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -10,12 +10,7 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import { LabelConfig, getUpdatedLabelConfig } from "../live-graph-label-config";
 import { useStore } from "../store";
 import { maxAccelerationScaleForGraphs } from "../mlConfig";
-
-const initialLabelConfigs: LabelConfig[] = [
-  { label: "x", arrowHeight: 0, labelHeight: 0, color: "#f9808e", id: 0 },
-  { label: "y", arrowHeight: 0, labelHeight: 0, color: "#80f98e", id: 1 },
-  { label: "z", arrowHeight: 0, labelHeight: 0, color: "#808ef9", id: 2 },
-];
+import { useGraphColors } from "../hooks/use-graph-colors";
 
 const smoothenDataPoint = (curr: number, next: number) => {
   // TODO: Factor out so that recording graph can do the same
@@ -27,6 +22,7 @@ const LiveGraph = () => {
   const { isConnected, status } = useConnectionStage();
   const connectActions = useConnectActions();
 
+  const colors = useGraphColors();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [chart, setChart] = useState<SmoothieChart | undefined>(undefined);
@@ -61,9 +57,10 @@ const LiveGraph = () => {
       interpolation: "linear",
     });
 
-    smoothieChart.addTimeSeries(lineX, { lineWidth, strokeStyle: "#f9808e" });
-    smoothieChart.addTimeSeries(lineY, { lineWidth, strokeStyle: "#80f98e" });
-    smoothieChart.addTimeSeries(lineZ, { lineWidth, strokeStyle: "#808ef9" });
+    smoothieChart.addTimeSeries(lineX, { lineWidth, strokeStyle: colors.x });
+    smoothieChart.addTimeSeries(lineY, { lineWidth, strokeStyle: colors.y });
+    smoothieChart.addTimeSeries(lineZ, { lineWidth, strokeStyle: colors.z });
+
     smoothieChart.addTimeSeries(recordLines, {
       lineWidth: 3,
       strokeStyle: "#4040ff44",
@@ -75,7 +72,7 @@ const LiveGraph = () => {
     return () => {
       smoothieChart.stop();
     };
-  }, [lineX, lineY, lineZ, recordLines]);
+  }, [colors.x, colors.y, colors.z, lineX, lineY, lineZ, recordLines]);
 
   useEffect(() => {
     if (isConnected || status === ConnectionStatus.ReconnectingAutomatically) {
@@ -87,22 +84,26 @@ const LiveGraph = () => {
 
   // Draw on graph to display that users are recording.
   const isRecording = useStore((s) => s.isRecording);
+  const prevIsRecording = usePrevious(isRecording);
   useEffect(() => {
     if (isRecording) {
       // Set the start recording line
       const now = new Date().getTime();
       recordLines.append(now - 1, -maxAccelerationScaleForGraphs, false);
       recordLines.append(now, maxAccelerationScaleForGraphs, false);
-    } else {
+    } else if (prevIsRecording) {
       // Set the end recording line
       const now = new Date().getTime();
       recordLines.append(now - 1, maxAccelerationScaleForGraphs, false);
       recordLines.append(now, -maxAccelerationScaleForGraphs, false);
     }
-  }, [isRecording, recordLines]);
+  }, [isRecording, prevIsRecording, recordLines]);
 
-  const [labelConfigs, setLabelConfigs] =
-    useState<LabelConfig[]>(initialLabelConfigs);
+  const [labelConfigs, setLabelConfigs] = useState<LabelConfig[]>([
+    { label: "x", arrowHeight: 0, labelHeight: 0, color: colors.x, id: 0 },
+    { label: "y", arrowHeight: 0, labelHeight: 0, color: colors.y, id: 1 },
+    { label: "z", arrowHeight: 0, labelHeight: 0, color: colors.z, id: 2 },
+  ]);
 
   const dataRef = useRef<{ x: number; y: number; z: number }>({
     x: 0,

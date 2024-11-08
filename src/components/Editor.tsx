@@ -6,6 +6,7 @@ import React, { forwardRef, useCallback } from "react";
 import { getMakeCodeLang } from "../settings";
 import { useProject } from "../hooks/project-hooks";
 import { useSettings } from "../store";
+import { useLogging } from "../logging/logging-hooks";
 
 const controllerId = "MicrobitMachineLearningTool";
 
@@ -17,10 +18,14 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
   props,
   ref
 ) {
+  const logging = useLogging();
   const { project, editorCallbacks } = useProject();
   const initialProjects = useCallback(() => {
+    logging.log(
+      `[MakeCode] Initialising with header ID: ${project.header?.id}`
+    );
     return Promise.resolve([project]);
-  }, [project]);
+  }, [logging, project]);
   const [{ languageId }] = useSettings();
   return (
     <MakeCodeFrame

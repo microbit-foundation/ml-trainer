@@ -1,16 +1,14 @@
 import { useCallback } from "react";
-import { useProject } from "../hooks/project-hooks";
+import { useProjectIsUntitled, useProject } from "../hooks/project-hooks";
 import { useStore } from "../store";
 import SaveHelpDialog from "./SaveHelpDialog";
 import SaveProgressDialog from "./SaveProgressDialog";
 import { SaveStep } from "../model";
 import { NameProjectDialog } from "./NameProjectDialog";
-import { defaultProjectName } from "../project-name";
 
 const SaveDialogs = () => {
   const setSave = useStore((s) => s.setSave);
-  const projectName = useStore((s) => s.project.header?.name);
-  const isUntitled = projectName === defaultProjectName;
+  const isUntitled = useProjectIsUntitled();
   const { step, hex } = useStore((s) => s.save);
   const setProjectName = useStore((s) => s.setProjectName);
   const { saveHex } = useProject();

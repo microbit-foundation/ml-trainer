@@ -39,6 +39,7 @@ import {
 } from "./urls";
 import { hasMakeCodeMlExtension } from "./makecode/utils";
 import { PostImportDialogState } from "./model";
+import "theme-package/fonts/fonts.css";
 
 export interface ProviderLayoutProps {
   children: ReactNode;

@@ -27,10 +27,10 @@ import {
   TourState,
   TrainModelDialogStage,
 } from "./model";
-import { defaultProjectName } from "./project-name";
 import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
+import { untitledProjectName } from "./project-name";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -68,7 +68,7 @@ const createUntitledProject = (): Project => ({
   header: {
     target: "microbit",
     targetVersion: "7.1.2",
-    name: defaultProjectName,
+    name: untitledProjectName,
     meta: {},
     editor: "blocksprj",
     pubId: "",
@@ -86,7 +86,12 @@ const createUntitledProject = (): Project => ({
     saveId: null,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any,
-  ...generateProject("Untitled", { data: [] }, undefined, currentDataWindow),
+  ...generateProject(
+    untitledProjectName,
+    { data: [] },
+    undefined,
+    currentDataWindow
+  ),
 });
 
 const updateProject = (
@@ -104,7 +109,7 @@ const updateProject = (
       ...(projectEdited
         ? generateCustomFiles(actionsData, model, dataWindow, project)
         : generateProject(
-            project.header?.name ?? "Untitled",
+            project.header?.name ?? untitledProjectName,
             actionsData,
             model,
             dataWindow
@@ -119,8 +124,7 @@ const updateProject = (
 };
 
 export interface State {
-  // TODO: Rename store gestures as actions instead
-  gestures: ActionData[];
+  actions: ActionData[];
   dataWindow: DataWindow;
   model: tf.LayersModel | undefined;
 
@@ -160,10 +164,7 @@ export interface Actions {
   setActionName(id: ActionData["ID"], name: string): void;
   setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon): void;
   setRequiredConfidence(id: ActionData["ID"], value: number): void;
-  deleteActionRecording(
-    gestureId: ActionData["ID"],
-    recordingIdx: number
-  ): void;
+  deleteActionRecording(id: ActionData["ID"], recordingIdx: number): void;
   deleteAllActions(): void;
   downloadDataset(): void;
   dataCollectionMicrobitConnected(): void;
@@ -221,7 +222,7 @@ const createMlStore = (logging: Logging) => {
       persist(
         (set, get) => ({
           timestamp: undefined,
-          gestures: [],
+          actions: [],
           dataWindow: currentDataWindow,
           isRecording: false,
           project: createUntitledProject(),
@@ -263,7 +264,7 @@ const createMlStore = (logging: Logging) => {
             const untitledProject = createUntitledProject();
             set(
               {
-                gestures: [],
+                actions: [],
                 dataWindow: currentDataWindow,
                 model: undefined,
                 project: projectName
@@ -302,37 +303,35 @@ const createMlStore = (logging: Logging) => {
           },
 
           addNewAction() {
-            return set(
-              ({ project, projectEdited, gestures: actions, dataWindow }) => {
-                const newActions = [
-                  ...actions,
-                  {
-                    icon: actionIcon({
-                      isFirstAction: actions.length === 0,
-                      existingActions: actions,
-                    }),
-                    ID: Date.now(),
-                    name: "",
-                    recordings: [],
-                  },
-                ];
-                return {
-                  gestures: newActions,
-                  model: undefined,
-                  ...updateProject(
-                    project,
-                    projectEdited,
-                    newActions,
-                    undefined,
-                    dataWindow
-                  ),
-                };
-              }
-            );
+            return set(({ project, projectEdited, actions, dataWindow }) => {
+              const newActions = [
+                ...actions,
+                {
+                  icon: actionIcon({
+                    isFirstAction: actions.length === 0,
+                    existingActions: actions,
+                  }),
+                  ID: Date.now(),
+                  name: "",
+                  recordings: [],
+                },
+              ];
+              return {
+                actions: newActions,
+                model: undefined,
+                ...updateProject(
+                  project,
+                  projectEdited,
+                  newActions,
+                  undefined,
+                  dataWindow
+                ),
+              };
+            });
           },
 
           addActionRecordings(id: ActionData["ID"], recs: RecordingData[]) {
-            return set(({ gestures: actions }) => {
+            return set(({ actions }) => {
               const updatedActions = actions.map((action) => {
                 if (action.ID === id) {
                   return {
@@ -343,51 +342,41 @@ const createMlStore = (logging: Logging) => {
                 return action;
               });
               return {
-                gestures: updatedActions,
+                actions: updatedActions,
                 model: undefined,
               };
             });
           },
 
           deleteAction(id: ActionData["ID"]) {
-            return set(
-              ({ project, projectEdited, gestures: actions, dataWindow }) => {
-                const newActions = actions.filter((a) => a.ID !== id);
-                const newDataWindow =
-                  newActions.length === 0 ? currentDataWindow : dataWindow;
-                return {
-                  gestures:
-                    newActions.length === 0
-                      ? [createFirstAction()]
-                      : newActions,
-                  dataWindow: newDataWindow,
-                  model: undefined,
-                  ...updateProject(
-                    project,
-                    projectEdited,
-                    newActions,
-                    undefined,
-                    newDataWindow
-                  ),
-                };
-              }
-            );
+            return set(({ project, projectEdited, actions, dataWindow }) => {
+              const newActions = actions.filter((a) => a.ID !== id);
+              const newDataWindow =
+                newActions.length === 0 ? currentDataWindow : dataWindow;
+              return {
+                actions:
+                  newActions.length === 0 ? [createFirstAction()] : newActions,
+                dataWindow: newDataWindow,
+                model: undefined,
+                ...updateProject(
+                  project,
+                  projectEdited,
+                  newActions,
+                  undefined,
+                  newDataWindow
+                ),
+              };
+            });
           },
 
           setActionName(id: ActionData["ID"], name: string) {
             return set(
-              ({
-                project,
-                projectEdited,
-                gestures: actions,
-                model,
-                dataWindow,
-              }) => {
+              ({ project, projectEdited, actions, model, dataWindow }) => {
                 const newActions = actions.map((action) =>
                   id !== action.ID ? action : { ...action, name }
                 );
                 return {
-                  gestures: newActions,
+                  actions: newActions,
                   ...updateProject(
                     project,
                     projectEdited,
@@ -402,13 +391,7 @@ const createMlStore = (logging: Logging) => {
 
           setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon) {
             return set(
-              ({
-                project,
-                projectEdited,
-                gestures: actions,
-                model,
-                dataWindow,
-              }) => {
+              ({ project, projectEdited, actions, model, dataWindow }) => {
                 // If we're changing the action to use an icon that's already in use
                 // then we update the action that's using the icon to use the action's current icon
                 const currentIcon = actions.find((a) => a.ID === id)?.icon;
@@ -425,7 +408,7 @@ const createMlStore = (logging: Logging) => {
                   return action;
                 });
                 return {
-                  gestures: newActions,
+                  actions: newActions,
                   ...updateProject(
                     project,
                     projectEdited,
@@ -440,18 +423,12 @@ const createMlStore = (logging: Logging) => {
 
           setRequiredConfidence(id: ActionData["ID"], value: number) {
             return set(
-              ({
-                project,
-                projectEdited,
-                gestures: actions,
-                model,
-                dataWindow,
-              }) => {
+              ({ project, projectEdited, actions, model, dataWindow }) => {
                 const newActions = actions.map((a) =>
                   id !== a.ID ? a : { ...a, requiredConfidence: value }
                 );
                 return {
-                  gestures: newActions,
+                  actions: newActions,
                   ...updateProject(
                     project,
                     projectEdited,
@@ -465,42 +442,40 @@ const createMlStore = (logging: Logging) => {
           },
 
           deleteActionRecording(id: ActionData["ID"], recordingIdx: number) {
-            return set(
-              ({ project, projectEdited, gestures: actions, dataWindow }) => {
-                const newActions = actions.map((action) => {
-                  if (id !== action.ID) {
-                    return action;
-                  }
-                  const recordings = action.recordings.filter(
-                    (_r, i) => i !== recordingIdx
-                  );
-                  return { ...action, recordings };
-                });
-                const numRecordings = newActions.reduce(
-                  (acc, curr) => acc + curr.recordings.length,
-                  0
+            return set(({ project, projectEdited, actions, dataWindow }) => {
+              const newActions = actions.map((action) => {
+                if (id !== action.ID) {
+                  return action;
+                }
+                const recordings = action.recordings.filter(
+                  (_r, i) => i !== recordingIdx
                 );
-                const newDataWindow =
-                  numRecordings === 0 ? currentDataWindow : dataWindow;
-                return {
-                  gestures: newActions,
-                  dataWindow: newDataWindow,
-                  model: undefined,
-                  ...updateProject(
-                    project,
-                    projectEdited,
-                    newActions,
-                    undefined,
-                    newDataWindow
-                  ),
-                };
-              }
-            );
+                return { ...action, recordings };
+              });
+              const numRecordings = newActions.reduce(
+                (acc, curr) => acc + curr.recordings.length,
+                0
+              );
+              const newDataWindow =
+                numRecordings === 0 ? currentDataWindow : dataWindow;
+              return {
+                actions: newActions,
+                dataWindow: newDataWindow,
+                model: undefined,
+                ...updateProject(
+                  project,
+                  projectEdited,
+                  newActions,
+                  undefined,
+                  newDataWindow
+                ),
+              };
+            });
           },
 
           deleteAllActions() {
             return set(({ project, projectEdited }) => ({
-              gestures: [createFirstAction()],
+              actions: [createFirstAction()],
               dataWindow: currentDataWindow,
               model: undefined,
               ...updateProject(
@@ -514,7 +489,7 @@ const createMlStore = (logging: Logging) => {
           },
 
           downloadDataset() {
-            const { gestures: actions, project } = get();
+            const { actions, project } = get();
             const a = document.createElement("a");
             a.setAttribute(
               "href",
@@ -523,17 +498,26 @@ const createMlStore = (logging: Logging) => {
             );
             a.setAttribute(
               "download",
-              `${project.header?.name || "Untitled"}-data-samples`
+              `${project.header?.name ?? untitledProjectName}-data-samples`
             );
             a.style.display = "none";
             a.click();
           },
 
           loadDataset(newActions: ActionData[]) {
-            set(({ project, projectEdited }) => {
+            set(({ project, projectEdited, settings }) => {
               const dataWindow = getDataWindowFromActions(newActions);
               return {
-                gestures: (() => {
+                settings: {
+                  ...settings,
+                  toursCompleted: Array.from(
+                    new Set([
+                      ...settings.toursCompleted,
+                      TourId.CollectDataToTrainModel,
+                    ])
+                  ),
+                },
+                actions: (() => {
                   const copy = newActions.map((a) => ({ ...a }));
                   for (const a of copy) {
                     if (!a.icon) {
@@ -565,10 +549,19 @@ const createMlStore = (logging: Logging) => {
            */
           loadProject(project: Project, name: string) {
             const newActions = getActionsFromProject(project);
-            set(() => {
+            set(({ settings }) => {
               const timestamp = Date.now();
               return {
-                gestures: newActions,
+                settings: {
+                  ...settings,
+                  toursCompleted: Array.from(
+                    new Set([
+                      ...settings.toursCompleted,
+                      TourId.CollectDataToTrainModel,
+                    ])
+                  ),
+                },
+                actions: newActions,
                 dataWindow: getDataWindowFromActions(newActions),
                 model: undefined,
                 project: renameProject(project, name),
@@ -589,7 +582,7 @@ const createMlStore = (logging: Logging) => {
           async trainModelFlowStart(callback?: () => void) {
             const {
               settings: { showPreTrainHelp },
-              gestures: actions,
+              actions,
               trainModel,
             } = get();
             if (!hasSufficientDataForTraining(actions)) {
@@ -607,7 +600,7 @@ const createMlStore = (logging: Logging) => {
           },
 
           async trainModel() {
-            const { gestures: actions, dataWindow } = get();
+            const { actions, dataWindow } = get();
             logging.event({
               type: "model-train",
               detail: {
@@ -655,7 +648,7 @@ const createMlStore = (logging: Logging) => {
           resetProject(): void {
             const {
               project: previousProject,
-              gestures: actions,
+              actions,
               model,
               dataWindow,
             } = get();
@@ -664,7 +657,7 @@ const createMlStore = (logging: Logging) => {
               text: {
                 ...previousProject.text,
                 ...generateProject(
-                  previousProject.header?.name ?? "Untitled",
+                  previousProject.header?.name ?? untitledProjectName,
                   { data: actions },
                   model,
                   dataWindow
@@ -711,18 +704,22 @@ const createMlStore = (logging: Logging) => {
                   project: prevProject,
                   isEditorOpen,
                   changedHeaderExpected,
+                  settings,
                 } = state;
                 const newProjectHeader = newProject.header!.id;
                 const previousProjectHeader = prevProject.header!.id;
                 if (newProjectHeader !== previousProjectHeader) {
                   if (changedHeaderExpected) {
+                    logging.log(
+                      `[MakeCode] Detected new project, ignoring as expected due to import. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
+                    );
                     return {
                       changedHeaderExpected: false,
                       project: newProject,
                     };
                   }
-                  console.log(
-                    "Detected new project in MakeCode, loading actions"
+                  logging.log(
+                    `[MakeCode] Detected new project, loading actions. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
                   );
                   // It's a new project. Thanks user. We'll update our state.
                   // This will cause another write to MakeCode but that's OK as it gives us
@@ -730,20 +727,36 @@ const createMlStore = (logging: Logging) => {
                   const timestamp = Date.now();
                   const newActions = getActionsFromProject(newProject);
                   return {
+                    settings: {
+                      ...settings,
+                      toursCompleted: Array.from(
+                        new Set([
+                          ...settings.toursCompleted,
+                          TourId.CollectDataToTrainModel,
+                        ])
+                      ),
+                    },
                     project: newProject,
                     projectLoadTimestamp: timestamp,
                     timestamp,
                     // New project loaded externally so we can't know whether its edited.
                     projectEdited: true,
-                    gestures: newActions,
+                    actions: newActions,
                     dataWindow: getDataWindowFromActions(newActions),
                     model: undefined,
                     isEditorOpen: false,
                   };
                 } else if (isEditorOpen) {
+                  logging.log(
+                    `[MakeCode] Edit copied to project. ID ${newProject.header?.id}`
+                  );
                   return {
                     project: newProject,
                   };
+                } else {
+                  logging.log(
+                    `[MakeCode] Edit ignored when closed. ID ${newProject.header?.id}`
+                  );
                 }
                 return state;
               },
@@ -782,9 +795,8 @@ const createMlStore = (logging: Logging) => {
           },
           dataCollectionMicrobitConnected() {
             set(
-              ({ gestures: actions, tourState, settings }) => ({
-                gestures:
-                  actions.length === 0 ? [createFirstAction()] : actions,
+              ({ actions, tourState, settings }) => ({
+                actions: actions.length === 0 ? [createFirstAction()] : actions,
                 tourState: settings.toursCompleted.includes(
                   TourId.DataSamplesPage
                 )
@@ -858,24 +870,40 @@ const createMlStore = (logging: Logging) => {
           },
         }),
         {
+          version: 1,
           name: "ml",
           partialize: ({
-            gestures: actions,
+            actions,
             project,
             projectEdited,
             settings,
             timestamp,
           }) => ({
-            gestures: actions,
+            actions,
             project,
             projectEdited,
             settings,
             timestamp,
             // The model itself is in IndexDB
           }),
+          migrate(persistedStateUnknown, version) {
+            switch (version) {
+              case 0: {
+                // We need to rename the "gestures" field to "actions"
+                interface StateV0 extends Omit<State, "actions"> {
+                  gestures?: ActionData[];
+                }
+                const stateV0 = persistedStateUnknown as StateV0;
+                const { gestures, ...rest } = stateV0;
+                return { actions: gestures, ...rest } as State;
+              }
+              default:
+                return persistedStateUnknown;
+            }
+          },
           merge(persistedStateUnknown, currentState) {
             // The zustand default merge does no validation either.
-            const persistedState = persistedStateUnknown as Store;
+            const persistedState = persistedStateUnknown as State;
             return {
               ...currentState,
               ...persistedState,
@@ -904,7 +932,7 @@ const getDataWindowFromActions = (actions: ActionData[]): DataWindow => {
 };
 
 // Get data window from actions on app load.
-const { gestures: actions } = useStore.getState();
+const { actions } = useStore.getState();
 useStore.setState(
   { dataWindow: getDataWindowFromActions(actions) },
   false,
@@ -938,7 +966,7 @@ useStore.subscribe((state, prevState) => {
 });
 
 export const useHasActions = () => {
-  const actions = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.actions);
   return (
     (actions.length > 0 && actions[0].name.length > 0) ||
     actions[0]?.recordings.length > 0
@@ -950,12 +978,12 @@ const hasSufficientDataForTraining = (actions: ActionData[]): boolean => {
 };
 
 export const useHasSufficientDataForTraining = (): boolean => {
-  const actions = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.actions);
   return hasSufficientDataForTraining(actions);
 };
 
 export const useHasNoStoredData = (): boolean => {
-  const actions = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.actions);
   return !(
     actions.length !== 0 && actions.some((a) => a.recordings.length > 0)
   );

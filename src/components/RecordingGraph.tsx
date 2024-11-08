@@ -10,6 +10,7 @@ import {
 import { useEffect, useRef } from "react";
 import { XYZData } from "../model";
 import { getConfig as getRecordingChartConfig } from "../recording-graph";
+import { useGraphColors } from "../hooks/use-graph-colors";
 
 interface RecordingGraphProps extends BoxProps {
   data: XYZData;
@@ -17,18 +18,18 @@ interface RecordingGraphProps extends BoxProps {
 
 const RecordingGraph = ({ data, children, ...rest }: RecordingGraphProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
+  const colors = useGraphColors();
   useEffect(() => {
     Chart.unregister(...registerables);
     Chart.register([LinearScale, LineController, PointElement, LineElement]);
     const chart = new Chart(
       canvasRef.current?.getContext("2d") ?? new HTMLCanvasElement(),
-      getRecordingChartConfig(data)
+      getRecordingChartConfig(data, colors)
     );
     return () => {
       chart.destroy();
     };
-  }, [data]);
+  }, [colors, data]);
 
   const containerRef = useRef<HTMLDivElement>(null);
 

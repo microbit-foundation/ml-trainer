@@ -12,6 +12,9 @@ const CodeViewDefaultBlock = ({
 }: CodeViewDefaultBlockProps) => {
   const intl = useIntl();
   const ledPattern = makecodeIcons[icon];
+  const iconName = intl.formatMessage({
+    id: `led-icon-option-${icon.toLowerCase()}`,
+  });
   const actionNameTextBoxWidth = getActionNameTextBoxWidth(actionName);
   const dropdownArrowXPos = actionNameTextBoxWidth - 20;
   const onMlStartBlockWidth = actionNameTextBoxWidth + 120;
@@ -21,7 +24,7 @@ const CodeViewDefaultBlock = ({
       role="image"
       aria-label={intl.formatMessage(
         { id: "makecode-block-default-alt" },
-        { actionName: actionName, iconName: icon }
+        { actionName, iconName }
       )}
     >
       <svg

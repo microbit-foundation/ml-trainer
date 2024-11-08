@@ -17,7 +17,7 @@ const DownloadDialogs = () => {
   const downloadActions = useDownloadActions();
   const stage = useStore((s) => s.download);
   const flashingProgress = useStore((s) => s.downloadFlashingProgress);
-  const actions = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.actions);
   const logging = useLogging();
 
   switch (stage.step) {

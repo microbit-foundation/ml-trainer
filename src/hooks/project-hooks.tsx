@@ -23,19 +23,19 @@ import {
   PostImportDialogState,
   SaveStep,
 } from "../model";
-import { defaultProjectName } from "../project-name";
+import { untitledProjectName as untitled } from "../project-name";
 import { useStore } from "../store";
 import {
   createCodePageUrl,
   createDataSamplesPageUrl,
   createTestingModelPageUrl,
 } from "../urls";
+import { getTotalNumSamples } from "../utils/actions";
 import {
   downloadHex,
   getLowercaseFileExtension,
   readFileAsText,
 } from "../utils/fs-util";
-import { getTotalNumSamples } from "../utils/actions";
 import { useDownloadActions } from "./download-hooks";
 
 class CodeEditorError extends Error {}
@@ -66,7 +66,7 @@ interface ProjectContext {
 
   editorCallbacks: Pick<
     MakeCodeFrameProps,
-    "onDownload" | "onWorkspaceSave" | "onSave" | "onBack"
+    "onDownload" | "onWorkspaceSave" | "onWorkspaceLoaded" | "onSave" | "onBack"
   >;
 }
 
@@ -85,6 +85,26 @@ interface ProjectProviderProps {
   children: ReactNode;
 }
 
+const useDefaultProjectName = (): string => {
+  const intl = useIntl();
+  return intl.formatMessage({ id: "default-project-name" });
+};
+
+export const useProjectIsUntitled = (): boolean => {
+  const translatedUntitled = useDefaultProjectName();
+  const projectName = useStore((s) => s.project.header?.name);
+  return projectName === untitled || projectName === translatedUntitled;
+};
+
+export const useProjectName = (): string => {
+  const isUntitled = useProjectIsUntitled();
+  const translatedUntitled = useDefaultProjectName();
+  const projectName = useStore((s) =>
+    !s.project.header || isUntitled ? translatedUntitled : s.project.header.name
+  );
+  return projectName;
+};
+
 export const ProjectProvider = ({
   driverRef,
   children,
@@ -93,6 +113,9 @@ export const ProjectProvider = ({
   const toast = useToast();
   const logging = useLogging();
   const projectEdited = useStore((s) => s.projectEdited);
+  const onWorkspaceLoaded = useCallback(() => {
+    logging.log("[MakeCode] Workspace loaded");
+  }, [logging]);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
@@ -208,15 +231,17 @@ export const ProjectProvider = ({
   const setSave = useStore((s) => s.setSave);
   const save = useStore((s) => s.save);
   const settings = useStore((s) => s.settings);
-  const actions = useStore((s) => s.gestures);
+  const actions = useStore((s) => s.actions);
   const saveNextDownloadRef = useRef(false);
+  const translatedUntitled = useDefaultProjectName();
   const saveHex = useCallback(
     async (hex?: HexData): Promise<void> => {
       const { step } = save;
+      const projectName = getCurrentProject().header?.name;
       if (settings.showPreSaveHelp && step === SaveStep.None) {
         setSave({ hex, step: SaveStep.PreSaveHelp });
       } else if (
-        getCurrentProject().header?.name === defaultProjectName &&
+        (projectName === untitled || projectName === translatedUntitled) &&
         step === SaveStep.None
       ) {
         setSave({ hex, step: SaveStep.ProjectName });
@@ -249,16 +274,17 @@ export const ProjectProvider = ({
       }
     },
     [
+      save,
+      getCurrentProject,
+      settings.showPreSaveHelp,
+      translatedUntitled,
+      setSave,
       doAfterEditorUpdate,
       driverRef,
-      actions,
-      getCurrentProject,
-      intl,
       logging,
-      save,
-      setSave,
-      settings.showPreSaveHelp,
+      actions,
       toast,
+      intl,
     ]
   );
 
@@ -304,6 +330,7 @@ export const ProjectProvider = ({
         onWorkspaceSave,
         onDownload,
         onBack,
+        onWorkspaceLoaded,
       },
     }),
     [
@@ -313,6 +340,7 @@ export const ProjectProvider = ({
       onDownload,
       onSave,
       onWorkspaceSave,
+      onWorkspaceLoaded,
       openEditor,
       project,
       projectEdited,
