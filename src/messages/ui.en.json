@@ -2151,6 +2151,18 @@
       "value": "Reset to default blocks"
     }
   ],
+  "restore-defaults-action": [
+    {
+      "type": 0,
+      "value": "Restore default values for all settings"
+    }
+  ],
+  "restore-defaults-helper": [
+    {
+      "type": 0,
+      "value": "Previously dismissed help content will be shown again."
+    }
+  ],
   "save-action": [
     {
       "type": 0,

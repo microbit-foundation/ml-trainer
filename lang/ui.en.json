@@ -1227,6 +1227,14 @@
     "defaultMessage": "Reset to default blocks",
     "description": "Reset to default blocks button text"
   },
+  "restore-defaults-action": {
+    "defaultMessage": "Restore default values for all settings",
+    "description": "Restore defaults button text"
+  },
+  "restore-defaults-helper": {
+    "defaultMessage": "Previously dismissed help content will be shown again.",
+    "description": "Restore defaults helper text"
+  },
   "save-action": {
     "defaultMessage": "Save",
     "description": "Label for action that saves the project as a file the user downloads"

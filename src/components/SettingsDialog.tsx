@@ -12,11 +12,11 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/modal";
-import { HStack, VStack } from "@chakra-ui/react";
-import { FormattedMessage, useIntl } from "react-intl";
-import { useSettings } from "../store";
+import { FormControl, FormHelperText, VStack } from "@chakra-ui/react";
 import { useCallback, useMemo } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import { defaultSettings, graphColorSchemeOptions } from "../settings";
+import { useSettings } from "../store";
 import SelectFormControl, { createOptions } from "./SelectFormControl";
 
 interface SettingsDialogProps {
@@ -34,8 +34,8 @@ export const SettingsDialog = ({
   const intl = useIntl();
 
   const handleResetToDefault = useCallback(() => {
-    setSettings(defaultSettings);
-  }, [setSettings]);
+    setSettings({ ...defaultSettings, languageId: settings.languageId });
+  }, [setSettings, settings.languageId]);
 
   const options = useMemo(() => {
     return {
@@ -72,17 +72,20 @@ export const SettingsDialog = ({
                   })
                 }
               />
+              <FormControl>
+                <Button variant="link" onClick={handleResetToDefault}>
+                  <FormattedMessage id="restore-defaults-action" />
+                </Button>
+                <FormHelperText>
+                  <FormattedMessage id="restore-defaults-helper" />
+                </FormHelperText>
+              </FormControl>
             </VStack>
           </ModalBody>
           <ModalFooter>
-            <HStack gap={5}>
-              <Button variant="secondary" onClick={handleResetToDefault}>
-                Reset to default
-              </Button>
-              <Button variant="primary" onClick={onClose}>
-                <FormattedMessage id="close-action" />
-              </Button>
-            </HStack>
+            <Button variant="primary" onClick={onClose}>
+              <FormattedMessage id="close-action" />
+            </Button>
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>
