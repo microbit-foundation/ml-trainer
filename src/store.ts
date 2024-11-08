@@ -748,8 +748,9 @@ const createMlStore = (logging: Logging) => {
                       isEditorOpen: false,
                     };
                   } else {
+                    // In particular, this happens if the MakeCode init completes after we've updated our project state from an import from .org
                     logging.log(
-                      `[MakeCode] New project ignored when closed. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
+                      `[MakeCode] Ignoring changed ID when closed. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
                     );
                   }
                 } else if (isEditorOpen) {

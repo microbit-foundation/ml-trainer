@@ -37,6 +37,7 @@ import {
   readFileAsText,
 } from "../utils/fs-util";
 import { useDownloadActions } from "./download-hooks";
+import { usePromiseRef } from "./use-promise-ref";
 
 class CodeEditorError extends Error {}
 
@@ -118,9 +119,6 @@ export const ProjectProvider = ({
   const toast = useToast();
   const logging = useLogging();
   const projectEdited = useStore((s) => s.projectEdited);
-  const onWorkspaceLoaded = useCallback(() => {
-    logging.log("[MakeCode] Workspace loaded");
-  }, [logging]);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
@@ -129,6 +127,7 @@ export const ProjectProvider = ({
   const navigate = useNavigate();
 
   const project = useStore((s) => s.project);
+  const editorReadyPromiseRef = usePromiseRef<void>();
   const initialProjects = useCallback(async () => {
     logging.log(
       `[MakeCode] Initialising with header ID: ${project.header?.id}`
@@ -136,6 +135,10 @@ export const ProjectProvider = ({
     await new Promise((resolve) => setTimeout(resolve, 3000));
     return Promise.resolve([project]);
   }, [logging, project]);
+  const onWorkspaceLoaded = useCallback(() => {
+    logging.log("[MakeCode] Workspace loaded");
+    editorReadyPromiseRef.current.resolve();
+  }, [editorReadyPromiseRef, logging]);
 
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
@@ -148,6 +151,7 @@ export const ProjectProvider = ({
             throw new CodeEditorError("MakeCode iframe ref is undefined");
           } else {
             logging.log("[MakeCode] Importing project");
+            await editorReadyPromiseRef.current.promise;
             const project = getCurrentProject();
             expectChangedHeader();
             try {
@@ -172,6 +176,7 @@ export const ProjectProvider = ({
       checkIfProjectNeedsFlush,
       driverRef,
       logging,
+      editorReadyPromiseRef,
       getCurrentProject,
       expectChangedHeader,
       projectFlushedToEditor,
