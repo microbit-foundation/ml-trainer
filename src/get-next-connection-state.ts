@@ -76,6 +76,8 @@ export const getNextConnectionState = ({
     }
     // If bridge micro:bit causes radio bridge reconnect to fail
     setHasAttemptedReconnect(true);
+
+    // Show reconnecting automatically when user hides browser tab and connection is lost.
     const status =
       currStatus === ConnectionStatus.Connected
         ? isBrowserTabVisible
