@@ -206,7 +206,8 @@ export const getTour = (
       throw new Error(trigger);
   }
 };
-function createCommonDataSamplesSteps(hasPreExistingRecordings: boolean) {
+
+const createCommonDataSamplesSteps = (hasPreExistingRecordings: boolean) => {
   return [
     {
       selector: classSelector(tourElClassname.recordDataSamplesCard),
@@ -239,4 +240,4 @@ function createCommonDataSamplesSteps(hasPreExistingRecordings: boolean) {
       ),
     },
   ];
-}
+};
