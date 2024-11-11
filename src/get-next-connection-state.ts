@@ -17,10 +17,7 @@ export interface GetNextConnectionStateInput {
 }
 
 export type NextConnectionState =
-  | {
-      status: ConnectionStatus;
-      flowType: ConnectionFlowType;
-    }
+  | { status: ConnectionStatus; flowType: ConnectionFlowType }
   | undefined;
 
 export const getNextConnectionState = ({
