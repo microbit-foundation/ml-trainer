@@ -23,7 +23,7 @@ import {
   RecordingData,
   SaveState,
   SaveStep,
-  TourId,
+  TourTrigger,
   TourState,
   TrainModelDialogStage,
 } from "./model";
@@ -31,6 +31,7 @@ import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { untitledProjectName } from "./project-name";
+import { getTour as getTourSpec } from "./tours";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -154,12 +155,12 @@ export interface State {
   trainModelDialogStage: TrainModelDialogStage;
 
   tourState?: TourState;
-  postConnectTourId?: TourId;
+  postConnectTourTrigger?: TourTrigger;
   postImportDialogState: PostImportDialogState;
 }
 
 export interface ConnectOptions {
-  postConnectTourId?: TourId;
+  postConnectTourId?: TourTrigger;
 }
 
 export interface Actions {
@@ -211,12 +212,12 @@ export interface Actions {
   setDownloadFlashingProgress(value: number): void;
   setSave(state: SaveState): void;
 
-  tourStart(tourId: TourId, manual?: boolean): void;
+  tourStart(trigger: TourTrigger, manual?: boolean): void;
   tourNext(): void;
   tourBack(): void;
-  tourComplete(id: TourId): void;
+  tourComplete(markCompleted: TourTrigger[]): void;
 
-  setPostConnectTourId(tourId: TourId | undefined): void;
+  setPostConnectTourTrigger(trigger: TourTrigger | undefined): void;
 
   setDataSamplesView(view: DataSamplesView): void;
   setShowGraphs(show: boolean): void;
@@ -523,7 +524,7 @@ const createMlStore = (logging: Logging) => {
                   toursCompleted: Array.from(
                     new Set([
                       ...settings.toursCompleted,
-                      TourId.CollectDataToTrainModel,
+                      TourTrigger.FirstDataSample,
                     ])
                   ),
                 },
@@ -567,7 +568,7 @@ const createMlStore = (logging: Logging) => {
                   toursCompleted: Array.from(
                     new Set([
                       ...settings.toursCompleted,
-                      TourId.CollectDataToTrainModel,
+                      TourTrigger.FirstDataSample,
                     ])
                   ),
                 },
@@ -742,7 +743,7 @@ const createMlStore = (logging: Logging) => {
                       toursCompleted: Array.from(
                         new Set([
                           ...settings.toursCompleted,
-                          TourId.CollectDataToTrainModel,
+                          TourTrigger.FirstDataSample,
                         ])
                       ),
                     },
@@ -803,32 +804,42 @@ const createMlStore = (logging: Logging) => {
               "projectFlushedToEditor"
             );
           },
-          setPostConnectTourId(tourId: TourId | undefined) {
-            set({ postConnectTourId: tourId }, false, "setPostConnectTourId");
+          setPostConnectTourTrigger(trigger: TourTrigger | undefined) {
+            set(
+              { postConnectTourTrigger: trigger },
+              false,
+              "setPostConnectTourId"
+            );
           },
           dataCollectionMicrobitConnectionStart(options) {
             set(
-              { postConnectTourId: options?.postConnectTourId },
+              { postConnectTourTrigger: options?.postConnectTourId },
               false,
               "dataCollectionMicrobitConnectionStart"
             );
           },
           dataCollectionMicrobitConnected() {
             set(
-              ({ actions, tourState, settings, postConnectTourId }) => {
+              ({ actions, tourState, settings, postConnectTourTrigger }) => {
                 const needsDefaultPostConnectTour =
-                  !settings.toursCompleted.includes(TourId.DataSamplesPage);
+                  !settings.toursCompleted.includes(TourTrigger.Connect);
                 return {
                   actions:
                     actions.length === 0 ? [createFirstAction()] : actions,
 
                   // If a tour has been explicitly requested, do that.
-                  // Otherwise if you've not done the data samples page tour, do that.
+                  // Otherwise if you've not done the connect tour, do that.
                   // TODO: what happens if you're on the wrong page when you first connect the micro:bit?
-                  tourState: postConnectTourId
-                    ? { id: postConnectTourId, index: 0 }
+                  tourState: postConnectTourTrigger
+                    ? {
+                        index: 0,
+                        ...getTourSpec(postConnectTourTrigger, actions),
+                      }
                     : needsDefaultPostConnectTour
-                    ? { id: TourId.DataSamplesPage, index: 0 }
+                    ? {
+                        index: 0,
+                        ...getTourSpec(TourTrigger.Connect, actions),
+                      }
                     : tourState,
                 };
               },
@@ -837,10 +848,16 @@ const createMlStore = (logging: Logging) => {
             );
           },
 
-          tourStart(tourId: TourId, manual: boolean = false) {
+          tourStart(trigger: TourTrigger, manual: boolean = false) {
             set((state) => {
-              if (manual || !state.settings.toursCompleted.includes(tourId)) {
-                return { tourState: { id: tourId, index: 0 } };
+              if (manual || !state.settings.toursCompleted.includes(trigger)) {
+                const tourSpec = getTourSpec(trigger, state.actions);
+                return {
+                  tourState: {
+                    ...tourSpec,
+                    index: 0,
+                  },
+                };
               }
               return state;
             });
@@ -865,13 +882,13 @@ const createMlStore = (logging: Logging) => {
               };
             });
           },
-          tourComplete(tourId: TourId) {
+          tourComplete(triggers: TourTrigger[]) {
             set(({ settings }) => ({
               tourState: undefined,
               settings: {
                 ...settings,
                 toursCompleted: Array.from(
-                  new Set([...settings.toursCompleted, tourId])
+                  new Set([...settings.toursCompleted, ...triggers])
                 ),
               },
             }));

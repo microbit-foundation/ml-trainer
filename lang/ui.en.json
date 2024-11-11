@@ -1343,20 +1343,32 @@
     "defaultMessage": "You’ve recorded your first sample!",
     "description": "Tour step title"
   },
-  "tour-collectData-collectMore-content": {
-    "defaultMessage": "Record more samples for this action. Collecting more samples should result in a better machine learning model.",
-    "description": "Tour step description"
-  },
   "tour-collectData-collectMore-title": {
     "defaultMessage": "Collect more data samples",
     "description": "Tour step title"
+  },
+  "tour-collectData-collectMoreExplanation-content": {
+    "defaultMessage": "Collecting more samples should result in a better machine learning model.",
+    "description": "Tour step description"
+  },
+  "tour-collectData-collectMoreHasRecordings-content": {
+    "defaultMessage": "Record data samples for your actions.",
+    "description": "Tour step description"
+  },
+  "tour-collectData-collectMoreNoRecordings-content": {
+    "defaultMessage": "Record more samples for this action.",
+    "description": "Tour step description"
   },
   "tour-collectData-trainModel-content": {
     "defaultMessage": "When you have collected enough data samples you can train the machine learning model. You can come back later to remove or add more data and re-train to make the model more reliable.",
     "description": "Tour step description"
   },
-  "tour-dataSamples-actions-content": {
-    "defaultMessage": "An action is the type of movement you want the machine learning model to recognise e.g. ‘waving’ or ‘clapping’. Decide what your first action will be, name it and then start recording data samples.",
+  "tour-dataSamples-actionsCommon-content": {
+    "defaultMessage": "An action is the type of movement you want the machine learning model to recognise e.g. ‘waving’ or ‘clapping’.",
+    "description": "Tour step content"
+  },
+  "tour-dataSamples-actionsNoRecordings-content": {
+    "defaultMessage": "Decide what your first action will be, name it and then start recording data samples.",
     "description": "Tour step content"
   },
   "tour-dataSamples-connected-content": {

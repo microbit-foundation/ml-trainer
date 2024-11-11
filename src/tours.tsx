@@ -3,7 +3,7 @@ import { RiInformationLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import makecodeBackImage from "./images/makecode-back.png";
 import accelerometerImage from "./images/microbit_xyz_arrows.png";
-import { TourId, TourStep } from "./model";
+import { ActionData, TourStep, TourTrigger } from "./model";
 
 const FormattedMessageStepContent = ({ id }: { id: string }) => {
   return (
@@ -73,45 +73,147 @@ const MakeCodeStep = () => {
 
 const classSelector = (classname: string) => `.${classname}`;
 
-// If you complete a tour then we don't show it again.
-export const tours: Record<TourId, TourStep[]> = {
-  // Launched when you connect a micro:bit when you have no recordings.
-  // If you import data without connecting a micro:bit you're on your own for now.
-  [TourId.DataSamplesPage]: [
-    {
-      title: <FormattedMessage id="tour-dataSamples-connected-title" />,
-      content: (
-        <FormattedMessageStepContent id="tour-dataSamples-connected-content" />
-      ),
-      modalSize: "lg",
-    },
-    {
-      selector: classSelector(tourElClassname.liveGraph),
-      title: <FormattedMessage id="live-data-graph" />,
-      content: <LiveGraphStep />,
-      spotlightStyle: { padding: 0 },
-    },
-    {
-      selector: classSelector(tourElClassname.dataSamplesActionCard),
-      title: <FormattedMessage id="actions-label" />,
-      content: (
-        <FormattedMessageStepContent id="tour-dataSamples-actions-content" />
-      ),
-    },
-  ],
-  // Launched after recording your first recording.
-  [TourId.CollectDataToTrainModel]: [
-    {
-      title: <FormattedMessage id="tour-collectData-afterFirst-title" />,
-      content: (
-        <FormattedMessageStepContent id="tour-collectData-afterFirst-content" />
-      ),
-    },
+interface TourSpec {
+  steps: TourStep[];
+  markCompleted: TourTrigger[];
+}
+
+export const getTour = (
+  trigger: TourTrigger,
+  actions: ActionData[]
+): TourSpec => {
+  const hasDataSamples = actions.some((a) => a.recordings.length > 0);
+  switch (trigger) {
+    case TourTrigger.Connect: {
+      return {
+        steps: [
+          {
+            title: <FormattedMessage id="tour-dataSamples-connected-title" />,
+            content: (
+              <FormattedMessageStepContent id="tour-dataSamples-connected-content" />
+            ),
+            modalSize: "lg",
+          },
+          {
+            selector: classSelector(tourElClassname.liveGraph),
+            title: <FormattedMessage id="live-data-graph" />,
+            content: <LiveGraphStep />,
+            spotlightStyle: { padding: 0 },
+          },
+          {
+            selector: classSelector(tourElClassname.dataSamplesActionCard),
+            title: <FormattedMessage id="actions-label" />,
+            content: (
+              <Text>
+                <FormattedMessage id="tour-dataSamples-actionsCommon-content" />{" "}
+                {!hasDataSamples && (
+                  <FormattedMessage id="tour-dataSamples-actionsNoRecordings-content" />
+                )}
+              </Text>
+            ),
+          },
+          ...(hasDataSamples ? createCommonDataSamplesSteps(true) : []),
+        ],
+        markCompleted: [TourTrigger.Connect, TourTrigger.FirstDataSample],
+      };
+    }
+    case TourTrigger.FirstDataSample: {
+      return {
+        markCompleted: [TourTrigger.FirstDataSample],
+        steps: [
+          {
+            title: <FormattedMessage id="tour-collectData-afterFirst-title" />,
+            content: (
+              <FormattedMessageStepContent id="tour-collectData-afterFirst-content" />
+            ),
+          },
+          ...createCommonDataSamplesSteps(false),
+        ],
+      };
+    }
+    case TourTrigger.TrainModel: {
+      return {
+        markCompleted: [TourTrigger.TrainModel],
+        steps: [
+          {
+            title: <FormattedMessage id="tour-testModel-afterTrain-title" />,
+            content: (
+              <FormattedMessageStepContent id="tour-testModel-afterTrain-content" />
+            ),
+          },
+          {
+            title: <FormattedMessage id="estimated-action-label" />,
+            content: (
+              <FormattedMessageStepContent id="tour-testModel-estimatedAction-content" />
+            ),
+            selector: classSelector(tourElClassname.estimatedAction),
+            spotlightStyle: {
+              paddingLeft: 8,
+              paddingRight: -8,
+              paddingTop: -8,
+              paddingBottom: -8,
+            },
+          },
+          {
+            title: (
+              <FormattedMessage id="tour-testModel-certaintyRecognition-title" />
+            ),
+            content: (
+              <FormattedMessageStepContent id="tour-testModel-certaintyRecognition-content" />
+            ),
+            selector: classSelector(tourElClassname.certaintyThreshold),
+          },
+          {
+            title: (
+              <FormattedMessage id="tour-testModel-makeCodeBlocks-title" />
+            ),
+            content: (
+              <FormattedMessageStepContent id="tour-testModel-makeCodeBlocks-content" />
+            ),
+            selector: classSelector(tourElClassname.makeCodeCodeView),
+            placement: "left",
+          },
+          {
+            title: <FormattedMessage id="edit-in-makecode-action" />,
+            content: (
+              <FormattedMessageStepContent id="tour-testModel-editInMakeCode-content" />
+            ),
+            selector: classSelector(tourElClassname.editInMakeCodeButton),
+          },
+        ],
+      };
+    }
+    case TourTrigger.MakeCode: {
+      return {
+        markCompleted: [TourTrigger.MakeCode],
+        steps: [
+          {
+            title: <FormattedMessage id="tour-makecode-intro-title" />,
+            content: <MakeCodeStep />,
+          },
+        ],
+      };
+    }
+    default:
+      throw new Error(trigger);
+  }
+};
+function createCommonDataSamplesSteps(hasPreExistingRecordings: boolean) {
+  return [
     {
       selector: classSelector(tourElClassname.recordDataSamplesCard),
       title: <FormattedMessage id="tour-collectData-collectMore-title" />,
       content: (
-        <FormattedMessageStepContent id="tour-collectData-collectMore-content" />
+        <Text>
+          <FormattedMessage
+            id={
+              hasPreExistingRecordings
+                ? "tour-collectData-collectMoreHasRecordings-content"
+                : "tour-collectData-collectMoreNoRecordings-content"
+            }
+          />{" "}
+          <FormattedMessage id="tour-collectData-collectMoreExplanation-content" />
+        </Text>
       ),
     },
     {
@@ -128,60 +230,5 @@ export const tours: Record<TourId, TourStep[]> = {
         <FormattedMessageStepContent id="tour-collectData-trainModel-content" />
       ),
     },
-  ],
-  // Launched after training a model
-  // If you haven't connected a micro:bit this session then it'll
-  // be a bit weird but we just go with it for now.
-  [TourId.TestModelPage]: [
-    {
-      title: <FormattedMessage id="tour-testModel-afterTrain-title" />,
-      content: (
-        <FormattedMessageStepContent id="tour-testModel-afterTrain-content" />
-      ),
-    },
-    {
-      title: <FormattedMessage id="estimated-action-label" />,
-      content: (
-        <FormattedMessageStepContent id="tour-testModel-estimatedAction-content" />
-      ),
-      selector: classSelector(tourElClassname.estimatedAction),
-      spotlightStyle: {
-        paddingLeft: 8,
-        paddingRight: -8,
-        paddingTop: -8,
-        paddingBottom: -8,
-      },
-    },
-    {
-      title: (
-        <FormattedMessage id="tour-testModel-certaintyRecognition-title" />
-      ),
-      content: (
-        <FormattedMessageStepContent id="tour-testModel-certaintyRecognition-content" />
-      ),
-      selector: classSelector(tourElClassname.certaintyThreshold),
-    },
-    {
-      title: <FormattedMessage id="tour-testModel-makeCodeBlocks-title" />,
-      content: (
-        <FormattedMessageStepContent id="tour-testModel-makeCodeBlocks-content" />
-      ),
-      selector: classSelector(tourElClassname.makeCodeCodeView),
-      placement: "left",
-    },
-    {
-      title: <FormattedMessage id="edit-in-makecode-action" />,
-      content: (
-        <FormattedMessageStepContent id="tour-testModel-editInMakeCode-content" />
-      ),
-      selector: classSelector(tourElClassname.editInMakeCodeButton),
-    },
-  ],
-  // Launched when you "Edit in MakeCode"
-  [TourId.MakeCode]: [
-    {
-      title: <FormattedMessage id="tour-makecode-intro-title" />,
-      content: <MakeCodeStep />,
-    },
-  ],
-};
+  ];
+}

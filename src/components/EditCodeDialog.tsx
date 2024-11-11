@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
 import { forwardRef, memo, useEffect, useRef } from "react";
-import { TourId } from "../model";
+import { TourTrigger } from "../model";
 import { useStore } from "../store";
 import Editor from "./Editor";
 
@@ -21,7 +21,7 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
     const tourStart = useStore((s) => s.tourStart);
     useEffect(() => {
       if (isOpen) {
-        tourStart(TourId.MakeCode);
+        tourStart(TourTrigger.MakeCode);
       }
     }, [isOpen, tourStart]);
     return (

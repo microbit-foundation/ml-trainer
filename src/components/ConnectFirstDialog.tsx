@@ -11,11 +11,11 @@ import {
 } from "@chakra-ui/react";
 import { ComponentProps, useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { ConnectionStatus } from "../connect-status-hooks";
 import {
   ConnectionFlowStep,
   useConnectionStage,
 } from "../connection-stage-hooks";
-import { ConnectionStatus } from "../connect-status-hooks";
 import { ConnectOptions } from "../store";
 
 interface ConnectFirstDialogProps

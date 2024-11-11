@@ -2355,16 +2355,28 @@
       "value": "You’ve recorded your first sample!"
     }
   ],
-  "tour-collectData-collectMore-content": [
-    {
-      "type": 0,
-      "value": "Record more samples for this action. Collecting more samples should result in a better machine learning model."
-    }
-  ],
   "tour-collectData-collectMore-title": [
     {
       "type": 0,
       "value": "Collect more data samples"
+    }
+  ],
+  "tour-collectData-collectMoreExplanation-content": [
+    {
+      "type": 0,
+      "value": "Collecting more samples should result in a better machine learning model."
+    }
+  ],
+  "tour-collectData-collectMoreHasRecordings-content": [
+    {
+      "type": 0,
+      "value": "Record data samples for your actions."
+    }
+  ],
+  "tour-collectData-collectMoreNoRecordings-content": [
+    {
+      "type": 0,
+      "value": "Record more samples for this action."
     }
   ],
   "tour-collectData-trainModel-content": [
@@ -2373,10 +2385,16 @@
       "value": "When you have collected enough data samples you can train the machine learning model. You can come back later to remove or add more data and re-train to make the model more reliable."
     }
   ],
-  "tour-dataSamples-actions-content": [
+  "tour-dataSamples-actionsCommon-content": [
     {
       "type": 0,
-      "value": "An action is the type of movement you want the machine learning model to recognise e.g. ‘waving’ or ‘clapping’. Decide what your first action will be, name it and then start recording data samples."
+      "value": "An action is the type of movement you want the machine learning model to recognise e.g. ‘waving’ or ‘clapping’."
+    }
+  ],
+  "tour-dataSamples-actionsNoRecordings-content": [
+    {
+      "type": 0,
+      "value": "Decide what your first action will be, name it and then start recording data samples."
     }
   ],
   "tour-dataSamples-connected-content": [

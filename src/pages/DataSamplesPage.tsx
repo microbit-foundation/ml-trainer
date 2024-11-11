@@ -75,6 +75,7 @@ const DataSamplesPage = () => {
               {model ? (
                 <Button
                   onClick={handleNavigateToModel}
+                  className={tourElClassname.trainModelButton}
                   variant="primary"
                   rightIcon={<RiArrowRightLine />}
                 >

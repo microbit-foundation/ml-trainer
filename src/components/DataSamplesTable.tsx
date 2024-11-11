@@ -19,7 +19,7 @@ import {
 import { FormattedMessage } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { ActionData, TourId } from "../model";
+import { ActionData, TourTrigger } from "../model";
 import { useStore } from "../store";
 import ConnectFirstDialog from "./ConnectFirstDialog";
 import DataSamplesMenu from "./DataSamplesMenu";
@@ -120,7 +120,7 @@ const DataSamplesTable = ({
       actions.length === 1 &&
       actions[0].recordings.length === 1
     ) {
-      tourStart(TourId.CollectDataToTrainModel);
+      tourStart(TourTrigger.FirstDataSample);
     }
   }, [actions, recordingDialogDisclosure.isOpen, tourStart]);
   return (

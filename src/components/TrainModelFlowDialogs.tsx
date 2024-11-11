@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router";
-import { TourId, TrainModelDialogStage } from "../model";
+import { TourTrigger, TrainModelDialogStage } from "../model";
 import { useSettings, useStore } from "../store";
 import { createTestingModelPageUrl } from "../urls";
 import TrainingErrorDialog from "./TrainingErrorDialog";
@@ -27,7 +27,7 @@ const TrainModelDialogs = ({ finalFocusRef }: TrainModelDialogsProps) => {
       const result = await trainModel();
       if (result) {
         navigate(createTestingModelPageUrl());
-        tourStart(TourId.TestModelPage);
+        tourStart(TourTrigger.TrainModel);
       }
     },
     [navigate, tourStart, setSettings, trainModel]

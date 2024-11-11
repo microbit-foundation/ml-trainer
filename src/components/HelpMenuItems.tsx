@@ -11,7 +11,7 @@ import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { useDeployment } from "../deployment";
-import { TourId } from "../model";
+import { TourTrigger } from "../model";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl, createTestingModelPageUrl } from "../urls";
 import { userGuideUrl } from "../utils/external-links";
@@ -111,14 +111,14 @@ const HelpMenuItems = () => {
 };
 
 const tourMap = {
-  [createDataSamplesPageUrl()]: TourId.DataSamplesPage,
-  [createTestingModelPageUrl()]: TourId.TestModelPage,
+  [createDataSamplesPageUrl()]: TourTrigger.Connect,
+  [createTestingModelPageUrl()]: TourTrigger.TrainModel,
   // No UI to retrigger MakeCode tour
 };
 
 const TourMenuItem = () => {
   const tourId = tourMap[useLocation().pathname];
-  const setPostConnectTourId = useStore((s) => s.setPostConnectTourId);
+  const setPostConnectTourId = useStore((s) => s.setPostConnectTourTrigger);
   const tourStart = useStore((s) => s.tourStart);
   const disclosure = useDisclosure();
   const { isConnected } = useConnectionStage();

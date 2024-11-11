@@ -162,14 +162,15 @@ export interface TourStep {
 }
 
 export interface TourState {
-  id: TourId;
+  steps: TourStep[];
   index: number;
+  markCompleted: TourTrigger[];
 }
 
-export enum TourId {
-  DataSamplesPage = "dataSamplesPage",
-  CollectDataToTrainModel = "collectDataToTrainModel",
-  TestModelPage = "testModelPage",
+export enum TourTrigger {
+  Connect = "dataSamplesPage",
+  FirstDataSample = "collectDataToTrainModel",
+  TrainModel = "testModelPage",
   MakeCode = "makecode",
 }
 
