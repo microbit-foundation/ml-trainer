@@ -157,7 +157,7 @@ describe("getNextConnectionState for radio connection", () => {
         type: "usb",
       },
       initialOnFirstConnectAttempt: false,
-      expectedOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: true,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: undefined,
@@ -249,7 +249,7 @@ describe("getNextConnectionState for radio connection", () => {
       expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
       isBrowserTabVisible: false,
-      expectedHasAttemptedReconnect: true,
+      expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.ReconnectingAutomatically,
         flowType: ConnectionFlowType.ConnectRadioBridge,
@@ -287,7 +287,7 @@ describe("getNextConnectionState for radio connection", () => {
       initialOnFirstConnectAttempt: false,
       expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: true,
-      expectedHasAttemptedReconnect: false,
+      expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToReconnectTwice,
         flowType: ConnectionFlowType.ConnectRadioRemote,
@@ -344,7 +344,7 @@ describe("getNextConnectionState for radio connection", () => {
       initialOnFirstConnectAttempt: false,
       expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: true,
-      expectedHasAttemptedReconnect: false,
+      expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToReconnectTwice,
         flowType: ConnectionFlowType.ConnectRadioRemote,
@@ -550,7 +550,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       initialOnFirstConnectAttempt: false,
       expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: true,
-      expectedHasAttemptedReconnect: false,
+      expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToReconnectTwice,
         flowType: ConnectionFlowType.ConnectBluetooth,

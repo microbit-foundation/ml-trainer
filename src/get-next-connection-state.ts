@@ -44,6 +44,27 @@ export const getNextConnectionState = ({
       ? ConnectionFlowType.ConnectRadioRemote
       : ConnectionFlowType.ConnectBluetooth;
 
+  // Don't update connection status when hiding browser tab if connection
+  // status is already set to an error case.
+  if (
+    !isBrowserTabVisible &&
+    (currStatus === ConnectionStatus.ConnectionLost ||
+      currStatus === ConnectionStatus.FailedToReconnect ||
+      currStatus === ConnectionStatus.FailedToReconnectTwice)
+  ) {
+    return undefined;
+  }
+
+  const hasStartedOver =
+    currStatus === ConnectionStatus.NotConnected ||
+    currStatus === ConnectionStatus.FailedToConnect ||
+    currStatus === ConnectionStatus.FailedToReconnectTwice;
+
+  if (hasStartedOver) {
+    setHasAttemptedReconnect(false);
+    setOnFirstConnectAttempt(true);
+  }
+
   // We use usb status to infer the radio bridge device status for handling error.
   if (type === "usb") {
     if (
@@ -61,11 +82,14 @@ export const getNextConnectionState = ({
     ) {
       return undefined;
     }
+    // Show reconnecting automatically when user hides browser tab and there is a connection error.
+    if (!isBrowserTabVisible) {
+      return { status: ConnectionStatus.ReconnectingAutomatically, flowType };
+    }
     if (
       // If bridge micro:bit causes radio bridge reconnect to fail twice
       hasAttempedReconnect
     ) {
-      setHasAttemptedReconnect(false);
       return {
         status: ConnectionStatus.FailedToReconnectTwice,
         flowType: ConnectionFlowType.ConnectRadioRemote,
@@ -73,24 +97,11 @@ export const getNextConnectionState = ({
     }
     // If bridge micro:bit causes radio bridge reconnect to fail
     setHasAttemptedReconnect(true);
-
-    // Show reconnecting automatically when user hides browser tab and connection is lost.
     const status =
       currStatus === ConnectionStatus.Connected
-        ? isBrowserTabVisible
-          ? ConnectionStatus.ConnectionLost
-          : ConnectionStatus.ReconnectingAutomatically
+        ? ConnectionStatus.ConnectionLost
         : ConnectionStatus.FailedToReconnect;
     return { status, flowType };
-  }
-
-  const hasStartedOver =
-    currStatus === ConnectionStatus.NotConnected ||
-    currStatus === ConnectionStatus.FailedToConnect;
-
-  if (hasStartedOver) {
-    setHasAttemptedReconnect(false);
-    setOnFirstConnectAttempt(true);
   }
 
   if (
@@ -132,7 +143,6 @@ export const getNextConnectionState = ({
     hasAttempedReconnect &&
     deviceStatus === DeviceConnectionStatus.DISCONNECTED
   ) {
-    setHasAttemptedReconnect(false);
     return { status: ConnectionStatus.FailedToReconnectTwice, flowType };
   }
   if (
