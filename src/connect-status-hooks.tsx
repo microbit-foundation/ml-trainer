@@ -116,14 +116,6 @@ export const useConnectStatusUpdater = (
   const [onFirstConnectAttempt, setOnFirstConnectAttempt] =
     useState<boolean>(true);
 
-  const updateStatus = useCallback(
-    (nextState: NextConnectionState) => {
-      handleStatus && handleStatus(nextState.status, nextState.flowType);
-      setConnectionStatus(nextState.status);
-    },
-    [handleStatus, setConnectionStatus]
-  );
-
   useEffect(() => {
     const listener: StatusListener = ({ status: deviceStatus, type }) => {
       const nextState = getNextConnectionState({
@@ -140,7 +132,8 @@ export const useConnectStatusUpdater = (
       });
       prevDeviceStatus.current = deviceStatus;
       if (nextState) {
-        updateStatus(nextState);
+        handleStatus && handleStatus(nextState.status, nextState.flowType);
+        setConnectionStatus(nextState.status);
       }
     };
     // Only add relevant connection type status listener
@@ -158,7 +151,6 @@ export const useConnectStatusUpdater = (
     isBrowserTabVisible,
     onFirstConnectAttempt,
     setConnectionStatus,
-    updateStatus,
   ]);
 
   return connectionStatus;
