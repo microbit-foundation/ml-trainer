@@ -144,6 +144,7 @@ export interface State {
   changedHeaderExpected: boolean;
   appEditNeedsFlushToEditor: boolean;
   isEditorOpen: boolean;
+  isEditorReady: boolean;
 
   download: DownloadState;
   downloadFlashingProgress: number;
@@ -204,6 +205,7 @@ export interface Actions {
   getCurrentProject(): Project;
   checkIfProjectNeedsFlush(): boolean;
   editorChange(project: Project): void;
+  editorReady(): void;
   setChangedHeaderExpected(): void;
   projectFlushedToEditor(): void;
 
@@ -250,6 +252,7 @@ const createMlStore = (logging: Logging) => {
           settings: defaultSettings,
           model: undefined,
           isEditorOpen: false,
+          isEditorReady: false,
           appEditNeedsFlushToEditor: true,
           changedHeaderExpected: false,
           // This dialog flow spans two pages
@@ -579,7 +582,7 @@ const createMlStore = (logging: Logging) => {
                 projectEdited: true,
                 appEditNeedsFlushToEditor: true,
                 timestamp,
-                projectLoadTimestamp: timestamp,
+                // We don't update projectLoadTimestamp here as we don't want a toast notification for .org import
               };
             });
           },
@@ -707,6 +710,10 @@ const createMlStore = (logging: Logging) => {
             return get().project;
           },
 
+          editorReady() {
+            set({ isEditorReady: true }, false, "editorReady");
+          },
+
           editorChange(newProject: Project) {
             const actionName = "editorChange";
             set(
@@ -714,6 +721,7 @@ const createMlStore = (logging: Logging) => {
                 const {
                   project: prevProject,
                   isEditorOpen,
+                  isEditorReady,
                   changedHeaderExpected,
                   settings,
                 } = state;
@@ -729,34 +737,41 @@ const createMlStore = (logging: Logging) => {
                       project: newProject,
                     };
                   }
-                  logging.log(
-                    `[MakeCode] Detected new project, loading actions. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
-                  );
-                  // It's a new project. Thanks user. We'll update our state.
-                  // This will cause another write to MakeCode but that's OK as it gives us
-                  // a chance to validate/update the project
-                  const timestamp = Date.now();
-                  const newActions = getActionsFromProject(newProject);
-                  return {
-                    settings: {
-                      ...settings,
-                      toursCompleted: Array.from(
-                        new Set([
-                          ...settings.toursCompleted,
-                          TourTrigger.DataSamplesRecorded,
-                        ])
-                      ),
-                    },
-                    project: newProject,
-                    projectLoadTimestamp: timestamp,
-                    timestamp,
-                    // New project loaded externally so we can't know whether its edited.
-                    projectEdited: true,
-                    actions: newActions,
-                    dataWindow: getDataWindowFromActions(newActions),
-                    model: undefined,
-                    isEditorOpen: false,
-                  };
+                  if (isEditorReady) {
+                    logging.log(
+                      `[MakeCode] Detected new project, loading actions. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
+                    );
+                    // It's a new project. Thanks user. We'll update our state.
+                    // This will cause another write to MakeCode but that's OK as it gives us
+                    // a chance to validate/update the project
+                    const timestamp = Date.now();
+                    const newActions = getActionsFromProject(newProject);
+                    return {
+                      settings: {
+                        ...settings,
+                        toursCompleted: Array.from(
+                          new Set([
+                            ...settings.toursCompleted,
+                            TourTrigger.DataSamplesRecorded,
+                          ])
+                        ),
+                      },
+                      project: newProject,
+                      projectLoadTimestamp: timestamp,
+                      timestamp,
+                      // New project loaded externally so we can't know whether its edited.
+                      projectEdited: true,
+                      actions: newActions,
+                      dataWindow: getDataWindowFromActions(newActions),
+                      model: undefined,
+                      isEditorOpen: false,
+                    };
+                  } else {
+                    // In particular, this happens if the MakeCode init completes after we've updated our project state from an import from .org
+                    logging.log(
+                      `[MakeCode] Ignoring changed ID before editor ready. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
+                    );
+                  }
                 } else if (isEditorOpen) {
                   logging.log(
                     `[MakeCode] Edit copied to project. ID ${newProject.header?.id}`

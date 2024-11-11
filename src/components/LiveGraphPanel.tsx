@@ -85,6 +85,7 @@ const LiveGraphPanel = ({
           h="100%"
           gap={10}
           justifyContent="center"
+          zIndex={1}
         >
           <MicrobitWarningIllustration
             display={{ base: "none", sm: "block" }}
