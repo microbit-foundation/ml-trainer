@@ -117,10 +117,9 @@ const DataSamplesTable = ({
   useEffect(() => {
     if (
       !recordingDialogDisclosure.isOpen &&
-      actions.length === 1 &&
-      actions[0].recordings.length === 1
+      actions?.[0]?.recordings.length > 0
     ) {
-      tourStart(TourTrigger.FirstDataSample);
+      tourStart(TourTrigger.DataSamplesRecorded);
     }
   }, [actions, recordingDialogDisclosure.isOpen, tourStart]);
   return (

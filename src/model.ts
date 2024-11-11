@@ -169,7 +169,7 @@ export interface TourState {
 
 export enum TourTrigger {
   Connect = "dataSamplesPage",
-  FirstDataSample = "collectDataToTrainModel",
+  DataSamplesRecorded = "collectDataToTrainModel",
   TrainModel = "testModelPage",
   MakeCode = "makecode",
 }

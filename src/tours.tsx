@@ -114,20 +114,28 @@ export const getTour = (
           },
           ...(hasDataSamples ? createCommonDataSamplesSteps(true) : []),
         ],
-        markCompleted: [TourTrigger.Connect, TourTrigger.FirstDataSample],
+        markCompleted: hasDataSamples
+          ? [TourTrigger.Connect, TourTrigger.DataSamplesRecorded]
+          : [TourTrigger.Connect],
       };
     }
-    case TourTrigger.FirstDataSample: {
+    case TourTrigger.DataSamplesRecorded: {
       return {
-        markCompleted: [TourTrigger.FirstDataSample],
+        markCompleted: [TourTrigger.DataSamplesRecorded],
         steps: [
-          {
-            title: <FormattedMessage id="tour-collectData-afterFirst-title" />,
-            content: (
-              <FormattedMessageStepContent id="tour-collectData-afterFirst-content" />
-            ),
-          },
-          ...createCommonDataSamplesSteps(false),
+          ...[
+            {
+              title: (
+                <FormattedMessage id="tour-collectData-afterFirst-title" />
+              ),
+              content: (
+                <FormattedMessageStepContent id="tour-collectData-afterFirst-content" />
+              ),
+            },
+          ],
+          ...createCommonDataSamplesSteps(
+            actions.some((a) => a.recordings.length > 1)
+          ),
         ],
       };
     }

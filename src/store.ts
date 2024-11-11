@@ -524,7 +524,7 @@ const createMlStore = (logging: Logging) => {
                   toursCompleted: Array.from(
                     new Set([
                       ...settings.toursCompleted,
-                      TourTrigger.FirstDataSample,
+                      TourTrigger.DataSamplesRecorded,
                     ])
                   ),
                 },
@@ -568,7 +568,7 @@ const createMlStore = (logging: Logging) => {
                   toursCompleted: Array.from(
                     new Set([
                       ...settings.toursCompleted,
-                      TourTrigger.FirstDataSample,
+                      TourTrigger.DataSamplesRecorded,
                     ])
                   ),
                 },
@@ -743,7 +743,7 @@ const createMlStore = (logging: Logging) => {
                       toursCompleted: Array.from(
                         new Set([
                           ...settings.toursCompleted,
-                          TourTrigger.FirstDataSample,
+                          TourTrigger.DataSamplesRecorded,
                         ])
                       ),
                     },
