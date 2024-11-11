@@ -21,6 +21,7 @@ import { ConnectOptions } from "../store";
 interface ConnectFirstDialogProps
   extends Omit<ComponentProps<typeof Modal>, "children"> {
   explanationTextId: string;
+  onChooseConnect?: () => void;
   options?: ConnectOptions;
 }
 
@@ -28,6 +29,7 @@ const ConnectFirstDialog = ({
   explanationTextId,
   options,
   onClose,
+  onChooseConnect,
   ...rest
 }: ConnectFirstDialogProps) => {
   const {
@@ -43,6 +45,7 @@ const ConnectFirstDialog = ({
   }, [onClose]);
 
   const handleConnect = useCallback(async () => {
+    onChooseConnect?.();
     switch (connStatus) {
       case ConnectionStatus.FailedToConnect:
       case ConnectionStatus.FailedToReconnectTwice:
@@ -74,7 +77,7 @@ const ConnectFirstDialog = ({
         return handleOnClose();
       }
     }
-  }, [connStatus, actions, options, handleOnClose]);
+  }, [onChooseConnect, connStatus, actions, options, handleOnClose]);
 
   useEffect(() => {
     if (

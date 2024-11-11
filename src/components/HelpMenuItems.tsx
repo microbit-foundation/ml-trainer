@@ -128,13 +128,13 @@ const TourMenuItem = () => {
         <ConnectFirstDialog
           isOpen={disclosure.isOpen}
           onClose={disclosure.onClose}
+          onChooseConnect={() => setPostConnectTourId(tourId)}
           explanationTextId="connect-to-tour-body"
           options={{ postConnectTourId: tourId }}
         />
         <MenuItem
           onClick={() => {
             if (!isConnected) {
-              setPostConnectTourId(tourId);
               disclosure.onOpen();
             } else {
               tourStart(tourId, true);
