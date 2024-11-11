@@ -85,7 +85,7 @@ interface ProjectProviderProps {
   children: ReactNode;
 }
 
-const useDefaultProjectName = (): string => {
+export const useDefaultProjectName = (): string => {
   const intl = useIntl();
   return intl.formatMessage({ id: "default-project-name" });
 };
