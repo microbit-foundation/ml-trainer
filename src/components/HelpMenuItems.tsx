@@ -117,27 +117,29 @@ const tourMap = {
 };
 
 const TourMenuItem = () => {
-  const tourId = tourMap[useLocation().pathname];
-  const setPostConnectTourId = useStore((s) => s.setPostConnectTourTrigger);
+  const tourTrigger = tourMap[useLocation().pathname];
+  const setPostConnectTourTrigger = useStore(
+    (s) => s.setPostConnectTourTrigger
+  );
   const tourStart = useStore((s) => s.tourStart);
   const disclosure = useDisclosure();
   const { isConnected } = useConnectionStage();
   return (
-    tourId && (
+    tourTrigger && (
       <>
         <ConnectFirstDialog
           isOpen={disclosure.isOpen}
           onClose={disclosure.onClose}
-          onChooseConnect={() => setPostConnectTourId(tourId)}
+          onChooseConnect={() => setPostConnectTourTrigger(tourTrigger)}
           explanationTextId="connect-to-tour-body"
-          options={{ postConnectTourId: tourId }}
+          options={{ postConnectTourId: tourTrigger }}
         />
         <MenuItem
           onClick={() => {
             if (!isConnected) {
               disclosure.onOpen();
             } else {
-              tourStart(tourId, true);
+              tourStart(tourTrigger, true);
             }
           }}
           icon={<RiFlag2Line />}
