@@ -85,6 +85,10 @@ const DataSamplesTable = ({
     undefined
   );
 
+  const handleConnect = useCallback(() => {
+    connActions.startConnect();
+  }, [connActions]);
+
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
       if (!recordingDialogDisclosure.isOpen) {
@@ -166,7 +170,7 @@ const DataSamplesTable = ({
                       fontSize="lg"
                       color="brand.600"
                       variant="link"
-                      onClick={connActions.startConnect}
+                      onClick={handleConnect}
                     >
                       {chunks}
                     </Button>
