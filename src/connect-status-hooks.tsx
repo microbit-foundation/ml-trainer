@@ -2,7 +2,6 @@ import { ConnectionStatus as DeviceConnectionStatus } from "@microbit/microbit-c
 import {
   ReactNode,
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -11,10 +10,7 @@ import {
 import { StatusListener } from "./connect-actions";
 import { useConnectActions } from "./connect-actions-hooks";
 import { ConnectionFlowType, ConnectionType } from "./connection-stage-hooks";
-import {
-  getNextConnectionState,
-  NextConnectionState,
-} from "./get-next-connection-state";
+import { getNextConnectionState } from "./get-next-connection-state";
 
 export enum ConnectionStatus {
   /**

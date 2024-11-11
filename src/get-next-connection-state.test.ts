@@ -32,7 +32,7 @@ const testGetNextConnectionState = ({
 }: {
   input: Input;
   initialHasAttemptedReconnect: boolean;
-  expectedNextConnectionState: NextConnectionState | undefined;
+  expectedNextConnectionState: NextConnectionState;
   expectedHasAttemptedReconnect: boolean;
   initialOnFirstConnectAttempt: boolean;
   expectedOnFirstConnectAttempt: boolean;

@@ -16,10 +16,12 @@ export interface GetNextConnectionStateInput {
   isBrowserTabVisible: boolean;
 }
 
-export type NextConnectionState = {
-  status: ConnectionStatus;
-  flowType: ConnectionFlowType;
-};
+export type NextConnectionState =
+  | {
+      status: ConnectionStatus;
+      flowType: ConnectionFlowType;
+    }
+  | undefined;
 
 export const getNextConnectionState = ({
   currConnType,
@@ -32,7 +34,7 @@ export const getNextConnectionState = ({
   onFirstConnectAttempt,
   setOnFirstConnectAttempt,
   isBrowserTabVisible,
-}: GetNextConnectionStateInput): NextConnectionState | undefined => {
+}: GetNextConnectionStateInput): NextConnectionState => {
   if (currStatus === ConnectionStatus.Disconnected) {
     // Do not update connection status when user explicitly disconnected connection
     // until user reconnects explicitly
