@@ -13,11 +13,13 @@ export interface GetNextConnectionStateInput {
   setHasAttemptedReconnect: (val: boolean) => void;
   onFirstConnectAttempt: boolean;
   setOnFirstConnectAttempt: (val: boolean) => void;
+  isBrowserTabVisible: boolean;
 }
 
-export type NextConnectionState =
-  | { status: ConnectionStatus; flowType: ConnectionFlowType }
-  | undefined;
+export type NextConnectionState = {
+  status: ConnectionStatus;
+  flowType: ConnectionFlowType;
+};
 
 export const getNextConnectionState = ({
   currConnType,
@@ -29,7 +31,8 @@ export const getNextConnectionState = ({
   setHasAttemptedReconnect,
   onFirstConnectAttempt,
   setOnFirstConnectAttempt,
-}: GetNextConnectionStateInput): NextConnectionState => {
+  isBrowserTabVisible,
+}: GetNextConnectionStateInput): NextConnectionState | undefined => {
   if (currStatus === ConnectionStatus.Disconnected) {
     // Do not update connection status when user explicitly disconnected connection
     // until user reconnects explicitly
@@ -73,7 +76,9 @@ export const getNextConnectionState = ({
     setHasAttemptedReconnect(true);
     const status =
       currStatus === ConnectionStatus.Connected
-        ? ConnectionStatus.ConnectionLost
+        ? isBrowserTabVisible
+          ? ConnectionStatus.ConnectionLost
+          : ConnectionStatus.ReconnectingAutomatically
         : ConnectionStatus.FailedToReconnect;
     return { status, flowType };
   }
