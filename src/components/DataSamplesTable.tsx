@@ -21,7 +21,7 @@ import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ActionData, TourId } from "../model";
 import { useStore } from "../store";
-import ConnectToRecordDialog from "./ConnectToRecordDialog";
+import ConnectFirstDialog from "./ConnectFirstDialog";
 import DataSamplesMenu from "./DataSamplesMenu";
 import DataSamplesTableRow from "./DataSamplesTableRow";
 import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
@@ -125,9 +125,10 @@ const DataSamplesTable = ({
   }, [actions, recordingDialogDisclosure.isOpen, tourStart]);
   return (
     <>
-      <ConnectToRecordDialog
+      <ConnectFirstDialog
         isOpen={connectToRecordDialogDisclosure.isOpen}
         onClose={connectToRecordDialogDisclosure.onClose}
+        explanationTextId="connect-to-record-body"
       />
       {selectedAction && (
         <RecordingDialog

@@ -4,13 +4,24 @@ import { MdOutlineCookie } from "react-icons/md";
 import {
   RiExternalLinkLine,
   RiFeedbackLine,
+  RiFlag2Line,
   RiInformationLine,
 } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
+import { useLocation } from "react-router";
 import { useDeployment } from "../deployment";
+import { TourId } from "../model";
+import { useStore } from "../store";
+import {
+  createCodePageUrl,
+  createDataSamplesPageUrl,
+  createTestingModelPageUrl,
+} from "../urls";
+import { userGuideUrl } from "../utils/external-links";
 import AboutDialog from "./AboutDialog";
 import FeedbackForm from "./FeedbackForm";
-import { userGuideUrl } from "../utils/external-links";
+import ConnectFirstDialog from "./ConnectFirstDialog";
+import { useConnectionStage } from "../connection-stage-hooks";
 
 const HelpMenuItems = () => {
   const aboutDialogDisclosure = useDisclosure();
@@ -38,6 +49,7 @@ const HelpMenuItems = () => {
       >
         <FormattedMessage id="user-guide" />
       </MenuItem>
+      <TourMenuItem />
       {deployment.supportLinks.main && (
         <>
           <MenuItem
@@ -99,6 +111,45 @@ const HelpMenuItems = () => {
         <FormattedMessage id="about" />
       </MenuItem>
     </>
+  );
+};
+
+const tourMap = {
+  [createDataSamplesPageUrl()]: TourId.DataSamplesPage,
+  [createTestingModelPageUrl()]: TourId.TestModelPage,
+  [createCodePageUrl()]: TourId.TestModelPage,
+};
+
+const TourMenuItem = () => {
+  const tourId = tourMap[useLocation().pathname];
+  const setPostConnectTourId = useStore((s) => s.setPostConnectTourId);
+  const tourStart = useStore((s) => s.tourStart);
+  const disclosure = useDisclosure();
+  const { isConnected } = useConnectionStage();
+  return (
+    tourId && (
+      <>
+        <ConnectFirstDialog
+          isOpen={disclosure.isOpen}
+          onClose={disclosure.onClose}
+          explanationTextId="connect-to-tour-body"
+          options={{ postConnectTourId: tourId }}
+        />
+        <MenuItem
+          onClick={() => {
+            if (!isConnected) {
+              setPostConnectTourId(tourId);
+              disclosure.onOpen();
+            } else {
+              tourStart(tourId, true);
+            }
+          }}
+          icon={<RiFlag2Line />}
+        >
+          <FormattedMessage id="tour-action" />
+        </MenuItem>
+      </>
+    )
   );
 };
 

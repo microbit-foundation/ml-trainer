@@ -154,7 +154,12 @@ export interface State {
   trainModelDialogStage: TrainModelDialogStage;
 
   tourState?: TourState;
+  postConnectTourId?: TourId;
   postImportDialogState: PostImportDialogState;
+}
+
+export interface ConnectOptions {
+  postConnectTourId?: TourId;
 }
 
 export interface Actions {
@@ -167,7 +172,10 @@ export interface Actions {
   deleteActionRecording(id: ActionData["ID"], recordingIdx: number): void;
   deleteAllActions(): void;
   downloadDataset(): void;
+
+  dataCollectionMicrobitConnectionStart(options?: ConnectOptions): void;
   dataCollectionMicrobitConnected(): void;
+
   loadDataset(actions: ActionData[]): void;
   loadProject(project: Project, name: string): void;
   setEditorOpen(open: boolean): void;
@@ -203,10 +211,12 @@ export interface Actions {
   setDownloadFlashingProgress(value: number): void;
   setSave(state: SaveState): void;
 
-  tourStart(tourId: TourId): void;
+  tourStart(tourId: TourId, manual?: boolean): void;
   tourNext(): void;
   tourBack(): void;
   tourComplete(id: TourId): void;
+
+  setPostConnectTourId(tourId: TourId | undefined): void;
 
   setDataSamplesView(view: DataSamplesView): void;
   setShowGraphs(show: boolean): void;
@@ -793,24 +803,43 @@ const createMlStore = (logging: Logging) => {
               "projectFlushedToEditor"
             );
           },
+          setPostConnectTourId(tourId: TourId | undefined) {
+            set({ postConnectTourId: tourId }, false, "setPostConnectTourId");
+          },
+          dataCollectionMicrobitConnectionStart(options) {
+            set(
+              { postConnectTourId: options?.postConnectTourId },
+              false,
+              "dataCollectionMicrobitConnectionStart"
+            );
+          },
           dataCollectionMicrobitConnected() {
             set(
-              ({ actions, tourState, settings }) => ({
-                actions: actions.length === 0 ? [createFirstAction()] : actions,
-                tourState: settings.toursCompleted.includes(
-                  TourId.DataSamplesPage
-                )
-                  ? tourState
-                  : { id: TourId.DataSamplesPage, index: 0 },
-              }),
+              ({ actions, tourState, settings, postConnectTourId }) => {
+                const needsDefaultPostConnectTour =
+                  !settings.toursCompleted.includes(TourId.DataSamplesPage);
+                return {
+                  actions:
+                    actions.length === 0 ? [createFirstAction()] : actions,
+
+                  // If a tour has been explicitly requested, do that.
+                  // Otherwise if you've not done the data samples page tour, do that.
+                  // TODO: what happens if you're on the wrong page when you first connect the micro:bit?
+                  tourState: postConnectTourId
+                    ? { id: postConnectTourId, index: 0 }
+                    : needsDefaultPostConnectTour
+                    ? { id: TourId.DataSamplesPage, index: 0 }
+                    : tourState,
+                };
+              },
               false,
               "dataCollectionMicrobitConnected"
             );
           },
 
-          tourStart(tourId: TourId) {
+          tourStart(tourId: TourId, manual: boolean = false) {
             set((state) => {
-              if (!state.settings.toursCompleted.includes(tourId)) {
+              if (manual || !state.settings.toursCompleted.includes(tourId)) {
                 return { tourState: { id: tourId, index: 0 } };
               }
               return state;

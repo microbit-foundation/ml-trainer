@@ -335,6 +335,10 @@
     "defaultMessage": "Connect to test your ML model",
     "description": "Live graph disconnected micro:bit status message for test model page"
   },
+  "connect-to-tour-body": {
+    "defaultMessage": "You need to connect the data collection micro:bit to view the tour.",
+    "description": "Prompt to connect the app to a micro:bit"
+  },
   "connect-troubleshoot": {
     "defaultMessage": "Troubleshoot problems with connecting to your micro:bit",
     "description": "Link to support article for troubleshootling"
@@ -1318,6 +1322,10 @@
   "testing-model-title": {
     "defaultMessage": "Testing model",
     "description": "Testing model page title"
+  },
+  "tour-action": {
+    "defaultMessage": "Tour",
+    "description": "Button label that starts a tour of the app's features"
   },
   "tour-collectData-addActions-content": {
     "defaultMessage": "Decide what your other actions will be and what you will name them. You need at least 2 actions with 3 data samples to train the model. Your data samples are only stored on your computer, they do not get sent to anyone else.",

@@ -573,6 +573,12 @@
       "value": "Connect to test your ML model"
     }
   ],
+  "connect-to-tour-body": [
+    {
+      "type": 0,
+      "value": "You need to connect the data collection micro:bit to view the tour."
+    }
+  ],
   "connect-troubleshoot": [
     {
       "type": 0,
@@ -2317,6 +2323,12 @@
     {
       "type": 0,
       "value": "Testing model"
+    }
+  ],
+  "tour-action": [
+    {
+      "type": 0,
+      "value": "Tour"
     }
   ],
   "tour-collectData-addActions-content": [

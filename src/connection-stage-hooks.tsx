@@ -168,6 +168,7 @@ export const useConnectionStage = (): {
   }
   const [stage, setStage] = connectionStageContextValue;
   const connectActions = useConnectActions();
+  const startConnect = useStore((s) => s.dataCollectionMicrobitConnectionStart);
   const dataCollectionMicrobitConnected = useStore(
     (s) => s.dataCollectionMicrobitConnected
   );
@@ -179,6 +180,7 @@ export const useConnectionStage = (): {
       stage,
       setStage,
       setStatus,
+      startConnect,
       dataCollectionMicrobitConnected
     );
   }, [
@@ -186,6 +188,7 @@ export const useConnectionStage = (): {
     stage,
     setStage,
     setStatus,
+    startConnect,
     dataCollectionMicrobitConnected,
   ]);
 
