@@ -9,19 +9,15 @@ import {
 } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
+import { useConnectionStage } from "../connection-stage-hooks";
 import { useDeployment } from "../deployment";
 import { TourId } from "../model";
 import { useStore } from "../store";
-import {
-  createCodePageUrl,
-  createDataSamplesPageUrl,
-  createTestingModelPageUrl,
-} from "../urls";
+import { createDataSamplesPageUrl, createTestingModelPageUrl } from "../urls";
 import { userGuideUrl } from "../utils/external-links";
 import AboutDialog from "./AboutDialog";
-import FeedbackForm from "./FeedbackForm";
 import ConnectFirstDialog from "./ConnectFirstDialog";
-import { useConnectionStage } from "../connection-stage-hooks";
+import FeedbackForm from "./FeedbackForm";
 
 const HelpMenuItems = () => {
   const aboutDialogDisclosure = useDisclosure();
@@ -117,7 +113,7 @@ const HelpMenuItems = () => {
 const tourMap = {
   [createDataSamplesPageUrl()]: TourId.DataSamplesPage,
   [createTestingModelPageUrl()]: TourId.TestModelPage,
-  [createCodePageUrl()]: TourId.TestModelPage,
+  // No UI to retrigger MakeCode tour
 };
 
 const TourMenuItem = () => {
