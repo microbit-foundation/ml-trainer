@@ -19,14 +19,17 @@ import {
 import { FormattedMessage } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { ActionData, TourTrigger } from "../model";
+import { ActionData } from "../model";
 import { useStore } from "../store";
 import ConnectFirstDialog from "./ConnectFirstDialog";
 import DataSamplesMenu from "./DataSamplesMenu";
 import DataSamplesTableRow from "./DataSamplesTableRow";
 import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
 import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
-import RecordingDialog, { RecordingOptions } from "./RecordingDialog";
+import RecordingDialog, {
+  RecordingCompleteDetail,
+  RecordingOptions,
+} from "./RecordingDialog";
 import ShowGraphsCheckbox from "./ShowGraphsCheckbox";
 
 const gridCommonProps: Partial<GridProps> = {
@@ -118,14 +121,14 @@ const DataSamplesTable = ({
   );
 
   const tourStart = useStore((s) => s.tourStart);
-  useEffect(() => {
-    if (
-      !recordingDialogDisclosure.isOpen &&
-      actions?.[0]?.recordings.length > 0
-    ) {
-      tourStart(TourTrigger.DataSamplesRecorded);
-    }
-  }, [actions, recordingDialogDisclosure.isOpen, tourStart]);
+  const handleRecordingComplete = useCallback(
+    ({ mostRecentRecordingId, recordingCount }: RecordingCompleteDetail) => {
+      setNewRecordingId(mostRecentRecordingId);
+      tourStart({ name: "DataSamplesRecorded", recordingCount });
+    },
+    [tourStart]
+  );
+
   return (
     <>
       <ConnectFirstDialog
@@ -139,7 +142,7 @@ const DataSamplesTable = ({
           isOpen={recordingDialogDisclosure.isOpen}
           onClose={recordingDialogDisclosure.onClose}
           actionName={selectedAction.name}
-          onRecordingComplete={setNewRecordingId}
+          onRecordingComplete={handleRecordingComplete}
           recordingOptions={recordingOptions}
         />
       )}

@@ -1,5 +1,5 @@
 import { Button, HStack, VStack } from "@chakra-ui/react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
@@ -13,6 +13,7 @@ import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
+import { useConnectionStage } from "../connection-stage-hooks";
 
 const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
@@ -22,6 +23,14 @@ const DataSamplesPage = () => {
 
   const navigate = useNavigate();
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
+
+  const tourStart = useStore((s) => s.tourStart);
+  const { isConnected } = useConnectionStage();
+  useEffect(() => {
+    if (isConnected) {
+      tourStart({ name: "Connect" }, false);
+    }
+  }, [isConnected, tourStart]);
 
   const hasSufficientData = useHasSufficientDataForTraining();
   const isAddNewActionDisabled = actions.some((a) => a.name.length === 0);

@@ -2352,7 +2352,35 @@
   "tour-collectData-afterFirst-title": [
     {
       "type": 0,
-      "value": "You’ve recorded your first sample!"
+      "value": "You’ve recorded your first "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "recordingCount"
+    },
+    {
+      "type": 0,
+      "value": "!"
     }
   ],
   "tour-collectData-collectMore-title": [
@@ -2445,10 +2473,16 @@
       "value": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model correctly estimate each action?"
     }
   ],
-  "tour-testModel-afterTrain-title": [
+  "tour-testModel-afterTrainAlreadyConnected-title": [
     {
       "type": 0,
       "value": "You’ve trained an ML model!"
+    }
+  ],
+  "tour-testModel-afterTrainDelayedUntilConnected-title": [
+    {
+      "type": 0,
+      "value": "Test your ML model"
     }
   ],
   "tour-testModel-certaintyRecognition-content": [

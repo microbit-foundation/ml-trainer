@@ -1340,8 +1340,8 @@
     "description": "Tour step description"
   },
   "tour-collectData-afterFirst-title": {
-    "defaultMessage": "You’ve recorded your first sample!",
-    "description": "Tour step title"
+    "defaultMessage": "You’ve recorded your first {recordingCount, plural, one {sample} other {samples}}!",
+    "description": "Tour step title. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
   },
   "tour-collectData-collectMore-title": {
     "defaultMessage": "Collect more data samples",
@@ -1403,8 +1403,12 @@
     "defaultMessage": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model correctly estimate each action?",
     "description": "Tour step description"
   },
-  "tour-testModel-afterTrain-title": {
+  "tour-testModel-afterTrainAlreadyConnected-title": {
     "defaultMessage": "You’ve trained an ML model!",
+    "description": "Tour step title"
+  },
+  "tour-testModel-afterTrainDelayedUntilConnected-title": {
+    "defaultMessage": "Test your ML model",
     "description": "Tour step title"
   },
   "tour-testModel-certaintyRecognition-content": {

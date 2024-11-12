@@ -26,6 +26,8 @@ import {
   TourTrigger,
   TourState,
   TrainModelDialogStage,
+  TourTriggerName,
+  tourSequence,
 } from "./model";
 import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/actions";
@@ -161,7 +163,7 @@ export interface State {
 }
 
 export interface ConnectOptions {
-  postConnectTourId?: TourTrigger;
+  postConnectTourTrigger?: TourTrigger;
 }
 
 export interface Actions {
@@ -217,7 +219,7 @@ export interface Actions {
   tourStart(trigger: TourTrigger, manual?: boolean): void;
   tourNext(): void;
   tourBack(): void;
-  tourComplete(markCompleted: TourTrigger[]): void;
+  tourComplete(markCompleted: TourTriggerName[]): void;
 
   setPostConnectTourTrigger(trigger: TourTrigger | undefined): void;
 
@@ -525,10 +527,7 @@ const createMlStore = (logging: Logging) => {
                 settings: {
                   ...settings,
                   toursCompleted: Array.from(
-                    new Set([
-                      ...settings.toursCompleted,
-                      TourTrigger.DataSamplesRecorded,
-                    ])
+                    new Set([...settings.toursCompleted, "DataSamplesRecorded"])
                   ),
                 },
                 actions: (() => {
@@ -569,10 +568,7 @@ const createMlStore = (logging: Logging) => {
                 settings: {
                   ...settings,
                   toursCompleted: Array.from(
-                    new Set([
-                      ...settings.toursCompleted,
-                      TourTrigger.DataSamplesRecorded,
-                    ])
+                    new Set([...settings.toursCompleted, "DataSamplesRecorded"])
                   ),
                 },
                 actions: newActions,
@@ -752,7 +748,7 @@ const createMlStore = (logging: Logging) => {
                         toursCompleted: Array.from(
                           new Set([
                             ...settings.toursCompleted,
-                            TourTrigger.DataSamplesRecorded,
+                            "DataSamplesRecorded",
                           ])
                         ),
                       },
@@ -828,32 +824,24 @@ const createMlStore = (logging: Logging) => {
           },
           dataCollectionMicrobitConnectionStart(options) {
             set(
-              { postConnectTourTrigger: options?.postConnectTourId },
+              { postConnectTourTrigger: options?.postConnectTourTrigger },
               false,
               "dataCollectionMicrobitConnectionStart"
             );
           },
           dataCollectionMicrobitConnected() {
             set(
-              ({ actions, tourState, settings, postConnectTourTrigger }) => {
-                const needsDefaultPostConnectTour =
-                  !settings.toursCompleted.includes(TourTrigger.Connect);
+              ({ actions, tourState, postConnectTourTrigger }) => {
                 return {
                   actions:
                     actions.length === 0 ? [createFirstAction()] : actions,
 
                   // If a tour has been explicitly requested, do that.
-                  // Otherwise if you've not done the connect tour, do that.
-                  // TODO: what happens if you're on the wrong page when you first connect the micro:bit?
+                  // Other tours are triggered by effects in the page so they run only on the correct screen.
                   tourState: postConnectTourTrigger
                     ? {
                         index: 0,
                         ...getTourSpec(postConnectTourTrigger, actions),
-                      }
-                    : needsDefaultPostConnectTour
-                    ? {
-                        index: 0,
-                        ...getTourSpec(TourTrigger.Connect, actions),
                       }
                     : tourState,
                 };
@@ -865,14 +853,30 @@ const createMlStore = (logging: Logging) => {
 
           tourStart(trigger: TourTrigger, manual: boolean = false) {
             set((state) => {
-              if (manual || !state.settings.toursCompleted.includes(trigger)) {
+              if (
+                manual ||
+                (!state.tourState &&
+                  !state.settings.toursCompleted.includes(trigger.name))
+              ) {
                 const tourSpec = getTourSpec(trigger, state.actions);
-                return {
+                const result = {
                   tourState: {
                     ...tourSpec,
                     index: 0,
                   },
+                  // If manually triggered, filter out subsequent tours as they should run again too when reached
+                  settings: manual
+                    ? {
+                        ...state.settings,
+                        toursCompleted: state.settings.toursCompleted.filter(
+                          (t) =>
+                            tourSequence.indexOf(t) <=
+                            tourSequence.indexOf(trigger.name)
+                        ),
+                      }
+                    : state.settings,
                 };
+                return result;
               }
               return state;
             });
@@ -897,7 +901,7 @@ const createMlStore = (logging: Logging) => {
               };
             });
           },
-          tourComplete(triggers: TourTrigger[]) {
+          tourComplete(triggers: TourTriggerName[]) {
             set(({ settings }) => ({
               tourState: undefined,
               settings: {

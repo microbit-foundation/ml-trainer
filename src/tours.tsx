@@ -3,7 +3,7 @@ import { RiInformationLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import makecodeBackImage from "./images/makecode-back.png";
 import accelerometerImage from "./images/microbit_xyz_arrows.png";
-import { ActionData, TourStep, TourTrigger } from "./model";
+import { ActionData, TourStep, TourTrigger, TourTriggerName } from "./model";
 
 const FormattedMessageStepContent = ({ id }: { id: string }) => {
   return (
@@ -75,7 +75,7 @@ const classSelector = (classname: string) => `.${classname}`;
 
 interface TourSpec {
   steps: TourStep[];
-  markCompleted: TourTrigger[];
+  markCompleted: TourTriggerName[];
 }
 
 export const getTour = (
@@ -83,8 +83,8 @@ export const getTour = (
   actions: ActionData[]
 ): TourSpec => {
   const hasDataSamples = actions.some((a) => a.recordings.length > 0);
-  switch (trigger) {
-    case TourTrigger.Connect: {
+  switch (trigger.name) {
+    case "Connect": {
       return {
         steps: [
           {
@@ -115,18 +115,21 @@ export const getTour = (
           ...(hasDataSamples ? createCommonDataSamplesSteps(true) : []),
         ],
         markCompleted: hasDataSamples
-          ? [TourTrigger.Connect, TourTrigger.DataSamplesRecorded]
-          : [TourTrigger.Connect],
+          ? ["Connect", "DataSamplesRecorded"]
+          : ["Connect"],
       };
     }
-    case TourTrigger.DataSamplesRecorded: {
+    case "DataSamplesRecorded": {
       return {
-        markCompleted: [TourTrigger.DataSamplesRecorded],
+        markCompleted: ["DataSamplesRecorded"],
         steps: [
           ...[
             {
               title: (
-                <FormattedMessage id="tour-collectData-afterFirst-title" />
+                <FormattedMessage
+                  id="tour-collectData-afterFirst-title"
+                  values={{ recordingCount: trigger.recordingCount }}
+                />
               ),
               content: (
                 <FormattedMessageStepContent id="tour-collectData-afterFirst-content" />
@@ -139,12 +142,20 @@ export const getTour = (
         ],
       };
     }
-    case TourTrigger.TrainModel: {
+    case "TrainModel": {
       return {
-        markCompleted: [TourTrigger.TrainModel],
+        markCompleted: ["TrainModel"],
         steps: [
           {
-            title: <FormattedMessage id="tour-testModel-afterTrain-title" />,
+            title: (
+              <FormattedMessage
+                id={
+                  trigger.delayedUntilConnection
+                    ? "tour-testModel-afterTrainDelayedUntilConnected-title"
+                    : "tour-testModel-afterTrainAlreadyConnected-title"
+                }
+              />
+            ),
             content: (
               <FormattedMessageStepContent id="tour-testModel-afterTrain-content" />
             ),
@@ -191,9 +202,9 @@ export const getTour = (
         ],
       };
     }
-    case TourTrigger.MakeCode: {
+    case "MakeCode": {
       return {
-        markCompleted: [TourTrigger.MakeCode],
+        markCompleted: ["MakeCode"],
         steps: [
           {
             title: <FormattedMessage id="tour-makecode-intro-title" />,

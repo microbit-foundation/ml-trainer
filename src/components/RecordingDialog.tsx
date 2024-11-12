@@ -30,12 +30,17 @@ export interface RecordingOptions {
   continuousRecording: boolean;
 }
 
+export interface RecordingCompleteDetail {
+  mostRecentRecordingId: number;
+  recordingCount: number;
+}
+
 export interface RecordingDialogProps {
   isOpen: boolean;
   onClose: () => void;
   actionName: string;
   actionId: ActionData["ID"];
-  onRecordingComplete: (recordingId: number) => void;
+  onRecordingComplete: (detail: RecordingCompleteDetail) => void;
   recordingOptions: RecordingOptions;
 }
 
@@ -56,6 +61,8 @@ const RecordingDialog = ({
 }: RecordingDialogProps) => {
   const intl = useIntl();
   const toast = useToast();
+  const recordingCountRef = useRef(0);
+  const mostRecentRecordingIdRef = useRef(-1);
   const recordingStarted = useStore((s) => s.recordingStarted);
   const recordingStopped = useStore((s) => s.recordingStopped);
   const addActionRecordings = useStore((s) => s.addActionRecordings);
@@ -83,6 +90,11 @@ const RecordingDialog = ({
   >(recordingsToCapture);
 
   const handleCleanup = useCallback(() => {
+    const recordingCount = recordingCountRef.current;
+    const mostRecentRecordingId = mostRecentRecordingIdRef.current;
+
+    recordingCountRef.current = 0;
+    mostRecentRecordingIdRef.current = -1;
     recordingStopped();
     setRecordingStatus(RecordingStatus.None);
     setCountdownStageIndex(0);
@@ -90,7 +102,11 @@ const RecordingDialog = ({
     setRunningContinuously(false);
     onClose();
     setRecordingsRemaining(undefined);
-  }, [onClose, recordingStopped]);
+
+    if (recordingCount > 0) {
+      onRecordingComplete({ mostRecentRecordingId, recordingCount });
+    }
+  }, [onClose, onRecordingComplete, recordingStopped]);
 
   const handleOnClose = useCallback(() => {
     recordingDataSource.cancelRecording();
@@ -133,6 +149,8 @@ const RecordingDialog = ({
     recordingDataSource.startRecording({
       onDone(data) {
         const recordingId = Date.now();
+        mostRecentRecordingIdRef.current = recordingId;
+        recordingCountRef.current++;
         addActionRecordings(actionId, [{ ID: recordingId, data }]);
         if (continuousRecording && recordingsRemaining) {
           continueRecording();
@@ -148,7 +166,6 @@ const RecordingDialog = ({
           recordingStopped();
           doneTimeout.current = setTimeout(() => {
             handleCleanup();
-            onRecordingComplete(recordingId);
           }, 1000);
         }
       },
@@ -174,7 +191,6 @@ const RecordingDialog = ({
     actionId,
     handleCleanup,
     intl,
-    onRecordingComplete,
     recordingDataSource,
     recordingStopped,
     recordingsRemaining,

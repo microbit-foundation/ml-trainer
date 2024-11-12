@@ -11,7 +11,6 @@ import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { useDeployment } from "../deployment";
-import { TourTrigger } from "../model";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl, createTestingModelPageUrl } from "../urls";
 import { userGuideUrl } from "../utils/external-links";
@@ -111,28 +110,35 @@ const HelpMenuItems = () => {
 };
 
 const tourMap = {
-  [createDataSamplesPageUrl()]: TourTrigger.Connect,
-  [createTestingModelPageUrl()]: TourTrigger.TrainModel,
+  [createDataSamplesPageUrl()]: "Connect" as const,
+  [createTestingModelPageUrl()]: "TrainModel" as const,
   // No UI to retrigger MakeCode tour
 };
 
 const TourMenuItem = () => {
-  const tourTrigger = tourMap[useLocation().pathname];
+  const tourTriggerName = tourMap[useLocation().pathname];
   const setPostConnectTourTrigger = useStore(
     (s) => s.setPostConnectTourTrigger
   );
   const tourStart = useStore((s) => s.tourStart);
   const disclosure = useDisclosure();
   const { isConnected } = useConnectionStage();
-  return (
-    tourTrigger && (
+  if (tourTriggerName) {
+    const tourTrigger =
+      tourTriggerName === "TrainModel"
+        ? {
+            name: tourTriggerName,
+            delayedUntilConnection: true,
+          }
+        : { name: tourTriggerName };
+    return (
       <>
         <ConnectFirstDialog
           isOpen={disclosure.isOpen}
           onClose={disclosure.onClose}
           onChooseConnect={() => setPostConnectTourTrigger(tourTrigger)}
           explanationTextId="connect-to-tour-body"
-          options={{ postConnectTourId: tourTrigger }}
+          options={{ postConnectTourTrigger: tourTrigger }}
         />
         <MenuItem
           onClick={() => {
@@ -147,8 +153,9 @@ const TourMenuItem = () => {
           <FormattedMessage id="tour-action" />
         </MenuItem>
       </>
-    )
-  );
+    );
+  }
+  return null;
 };
 
 export default HelpMenuItems;

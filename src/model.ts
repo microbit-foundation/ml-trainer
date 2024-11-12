@@ -164,15 +164,27 @@ export interface TourStep {
 export interface TourState {
   steps: TourStep[];
   index: number;
-  markCompleted: TourTrigger[];
+  markCompleted: TourTriggerName[];
 }
 
-export enum TourTrigger {
-  Connect = "dataSamplesPage",
-  DataSamplesRecorded = "collectDataToTrainModel",
-  TrainModel = "testModelPage",
-  MakeCode = "makecode",
-}
+export const tourSequence: TourTriggerName[] = [
+  "Connect",
+  "DataSamplesRecorded",
+  "TrainModel",
+  "MakeCode",
+];
+
+export type TourTriggerName =
+  | "Connect"
+  | "DataSamplesRecorded"
+  | "TrainModel"
+  | "MakeCode";
+
+export type TourTrigger =
+  | { name: "Connect" }
+  | { name: "MakeCode" }
+  | { name: "TrainModel"; delayedUntilConnection: boolean }
+  | { name: "DataSamplesRecorded"; recordingCount: number };
 
 /**
  * Information passed omn the URL from microbit.org.

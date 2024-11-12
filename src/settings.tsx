@@ -1,5 +1,5 @@
 import { stage } from "./environment";
-import { DataSamplesView, TourTrigger } from "./model";
+import { DataSamplesView, TourTriggerName } from "./model";
 
 export interface Language {
   id: string;
@@ -49,7 +49,7 @@ export interface Settings {
   showPreSaveHelp: boolean;
   showPreTrainHelp: boolean;
   showPreDownloadHelp: boolean;
-  toursCompleted: TourTrigger[];
+  toursCompleted: TourTriggerName[];
   dataSamplesView: DataSamplesView;
   showGraphs: boolean;
 }
