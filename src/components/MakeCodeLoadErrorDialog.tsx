@@ -16,8 +16,8 @@ import { useStore } from "../store";
 import ExternalLink from "./ExternalLink";
 
 const MakeCodeLoadErrorDialog = () => {
-  const isOpen = useStore((s) => s.isEditorReady === "timedout");
-  const onClose = useStore((s) => s.editorNotReady);
+  const isOpen = useStore((s) => s.isEditorTimedoutDialogOpen);
+  const onClose = useStore((s) => s.editorTimedoutDialogOnClose);
   return (
     <Modal
       motionPreset="none"

@@ -119,8 +119,8 @@ export const ProjectProvider = ({
   const toast = useToast();
   const logging = useLogging();
   const projectEdited = useStore((s) => s.projectEdited);
-  const getIsEditorReady = useStore((s) => s.getIsEditorReady);
-  const isEditorReady = useStore((s) => s.isEditorReady);
+  const editorStartUp = useStore((s) => s.editorStartUp);
+  const getEditorStartUp = useStore((s) => s.getEditorStartUp);
   const editorReady = useStore((s) => s.editorReady);
   const editorTimedout = useStore((s) => s.editorTimedout);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
@@ -139,17 +139,21 @@ export const ProjectProvider = ({
     // This is a useful point to introduce a delay to debug MakeCode init dependencies.
     return Promise.resolve([project]);
   }, [logging, project]);
+
+  const startUpTimeout = 5000;
+  const startUpTimestamp = useRef<number>(Date.now());
+
   const onWorkspaceLoaded = useCallback(() => {
     logging.log("[MakeCode] Workspace loaded");
 
     setTimeout(() => {
-      if (getIsEditorReady() === false) {
-        console.log("resolving");
-        editorReady();
-        editorReadyPromiseRef.current.resolve();
-      }
-    }, 6000);
-  }, [editorReady, editorReadyPromiseRef, getIsEditorReady, logging]);
+      const hasTimedout = getEditorStartUp() === "timedout";
+      console.log("resolved", hasTimedout);
+      // Get latest timedout state and only mark editor ready if editor has not timedout.
+      !hasTimedout && editorReady();
+      editorReadyPromiseRef.current.resolve();
+    }, 10000);
+  }, [editorReady, editorReadyPromiseRef, getEditorStartUp, logging]);
 
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
@@ -176,22 +180,30 @@ export const ProjectProvider = ({
           }
         })();
       }
-      const editorReadyTimeout = 5000;
+      const elapsedTimeSinceStartup = Date.now() - startUpTimestamp.current;
+      const remainingTimeout = startUpTimeout - elapsedTimeSinceStartup;
+      if (
+        // Editor has already timedout.
+        (editorStartUp === "in-progress" && remainingTimeout <= 0) ||
+        editorStartUp === "timedout"
+      ) {
+        return editorTimedout();
+      }
       try {
-        await Promise.race([
+        const hasTimedout = await Promise.race([
           doAfterEditorUpdatePromise.current,
-          new Promise<true>((resolve) =>
-            setTimeout(() => {
-              if (getIsEditorReady() === false) {
-                console.log("timeouting");
-                editorTimedout();
-              }
-              resolve(true);
-            }, editorReadyTimeout)
-          ),
+          ...(remainingTimeout > 0
+            ? [
+                new Promise<true>((resolve) =>
+                  setTimeout(() => {
+                    editorTimedout();
+                    resolve(true);
+                  }, remainingTimeout)
+                ),
+              ]
+            : []),
         ]);
-        if (getIsEditorReady() === "timedout") {
-          console.log("timedout");
+        if (hasTimedout) {
           logging.log("[MakeCode] Load timedout");
           return;
         }
@@ -203,13 +215,13 @@ export const ProjectProvider = ({
     },
     [
       checkIfProjectNeedsFlush,
+      editorStartUp,
       driverRef,
       logging,
       editorReadyPromiseRef,
       getCurrentProject,
       expectChangedHeader,
       projectFlushedToEditor,
-      getIsEditorReady,
       editorTimedout,
     ]
   );
@@ -217,6 +229,7 @@ export const ProjectProvider = ({
     logging.event({
       type: "edit-in-makecode",
     });
+    console.log("open editor");
     await doAfterEditorUpdate(() => {
       navigate(createCodePageUrl());
       return Promise.resolve();

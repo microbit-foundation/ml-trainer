@@ -26,6 +26,7 @@ import {
   TourId,
   TourState,
   TrainModelDialogStage,
+  EditorStartUp,
 } from "./model";
 import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/actions";
@@ -143,7 +144,9 @@ export interface State {
   changedHeaderExpected: boolean;
   appEditNeedsFlushToEditor: boolean;
   isEditorOpen: boolean;
-  isEditorReady: boolean | "timedout";
+  isEditorReady: boolean;
+  editorStartUp: EditorStartUp;
+  isEditorTimedoutDialogOpen: boolean;
 
   download: DownloadState;
   downloadFlashingProgress: number;
@@ -196,10 +199,10 @@ export interface Actions {
   getCurrentProject(): Project;
   checkIfProjectNeedsFlush(): boolean;
   editorChange(project: Project): void;
-  getIsEditorReady(): boolean | "timedout";
   editorReady(): void;
   editorTimedout(): void;
-  editorNotReady(): void;
+  getEditorStartUp(): EditorStartUp;
+  editorTimedoutDialogOnClose(): void;
   setChangedHeaderExpected(): void;
   projectFlushedToEditor(): void;
 
@@ -245,6 +248,8 @@ const createMlStore = (logging: Logging) => {
           model: undefined,
           isEditorOpen: false,
           isEditorReady: false,
+          editorStartUp: "in-progress",
+          isEditorTimedoutDialogOpen: false,
           appEditNeedsFlushToEditor: true,
           changedHeaderExpected: false,
           // This dialog flow spans two pages
@@ -702,20 +707,36 @@ const createMlStore = (logging: Logging) => {
             return get().project;
           },
 
-          getIsEditorReady() {
-            return get().isEditorReady;
-          },
-
           editorReady() {
-            set({ isEditorReady: true }, false, "editorReady");
+            set(
+              { isEditorReady: true, editorStartUp: "done" },
+              false,
+              "editorReady"
+            );
           },
 
           editorTimedout() {
-            set({ isEditorReady: "timedout" }, false, "editorTimedout");
+            set(
+              {
+                editorStartUp: "timedout",
+                isEditorTimedoutDialogOpen: true,
+                save: { step: SaveStep.None },
+              },
+              false,
+              "editorTimedout"
+            );
           },
 
-          editorNotReady() {
-            set({ isEditorReady: false }, false, "editorNotReady");
+          getEditorStartUp() {
+            return get().editorStartUp;
+          },
+
+          editorTimedoutDialogOnClose() {
+            set(
+              { isEditorTimedoutDialogOpen: false },
+              false,
+              "setIsEditorTimedoutDialogOpen"
+            );
           },
 
           editorChange(newProject: Project) {

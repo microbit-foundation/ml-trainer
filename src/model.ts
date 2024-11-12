@@ -209,3 +209,5 @@ export enum PostImportDialogState {
   Error = "error",
   NonCreateAiHex = "non create ai hex dialog",
 }
+
+export type EditorStartUp = "in-progress" | "timedout" | "done";
