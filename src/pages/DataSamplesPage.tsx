@@ -27,6 +27,7 @@ const DataSamplesPage = () => {
   const tourStart = useStore((s) => s.tourStart);
   const { isConnected } = useConnectionStage();
   useEffect(() => {
+    // If a user first connects on "Testing model" this can result in the tour when they return to the "Data samples" page.
     if (isConnected) {
       tourStart({ name: "Connect" }, false);
     }
