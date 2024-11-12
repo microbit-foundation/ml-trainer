@@ -25,8 +25,9 @@ const HelpMenu = ({ ...rest }: HelpMenuProps) => {
   const feedbackDisclosure = useDisclosure();
   const intl = useIntl();
   const MenuButtonRef = useRef(null);
+  const ContainerRef = useRef(null);
   return (
-    <Box {...rest}>
+    <Box {...rest} ref={ContainerRef}>
       <AboutDialog
         isOpen={aboutDialogDisclosure.isOpen}
         onClose={aboutDialogDisclosure.onClose}
@@ -53,7 +54,7 @@ const HelpMenu = ({ ...rest }: HelpMenuProps) => {
             boxShadow: "outlineDark",
           }}
         />
-        <Portal>
+        <Portal containerRef={ContainerRef}>
           <MenuList>
             <HelpMenuItems />
           </MenuList>
