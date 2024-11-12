@@ -27,7 +27,7 @@ const ErrorHandlerErrorView = () => {
         </Text>
         <Text>
           <Button variant="primary" onClick={() => window.location.reload()}>
-            <FormattedMessage id="reload-action" />
+            <FormattedMessage id="click-to-reload-page-action" />
           </Button>
         </Text>
       </VStack>

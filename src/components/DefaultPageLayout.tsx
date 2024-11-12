@@ -41,6 +41,7 @@ import ToolbarMenu from "./ToolbarMenu";
 import HelpMenuItems from "./HelpMenuItems";
 import ImportErrorDialog from "./ImportErrorDialog";
 import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
+import MakeCodeLoadErrorDialog from "./MakeCodeLoadErrorDialog";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -64,6 +65,9 @@ const DefaultPageLayout = ({
   const isTourClosed = useStore((s) => s.tourState === undefined);
   const isTrainDialogClosed = useStore(
     (s) => s.trainModelDialogStage === TrainModelDialogStage.Closed
+  );
+  const isMakeCodeErrorDialogClosed = useStore(
+    (s) => s.isEditorReady !== "timedout"
   );
   const { stage } = useConnectionStage();
   const isConnectionDialogClosed = stage.flowStep === ConnectionFlowStep.None;
@@ -89,6 +93,7 @@ const DefaultPageLayout = ({
         isTrainDialogClosed &&
         isTourClosed &&
         isSaveDialogClosed &&
+        isMakeCodeErrorDialogClosed &&
         postImportDialogState === PostImportDialogState.None && (
           <ConnectionDialogs />
         )}
@@ -102,6 +107,7 @@ const DefaultPageLayout = ({
         onClose={closePostImportDialog}
         isOpen={postImportDialogState === PostImportDialogState.Error}
       />
+      <MakeCodeLoadErrorDialog />
       <ProjectDropTarget
         isEnabled={
           isTrainDialogClosed &&

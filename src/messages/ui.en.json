@@ -173,6 +173,12 @@
       "value": "How confident the model is that you are currently doing each action."
     }
   ],
+  "click-to-reload-page-action": [
+    {
+      "type": 0,
+      "value": "Click to reload the page"
+    }
+  ],
   "close-action": [
     {
       "type": 0,
@@ -1331,6 +1337,12 @@
       "value": "Language"
     }
   ],
+  "learn-about-firewall-requirements-action": [
+    {
+      "type": 0,
+      "value": "Learn about firewall requirements"
+    }
+  ],
   "led-icon-option-angry": [
     {
       "type": 0,
@@ -1641,6 +1653,18 @@
     {
       "type": 0,
       "value": "start"
+    }
+  ],
+  "makecode-load-error-dialog-body": [
+    {
+      "type": 0,
+      "value": "micro:bit CreateAI has failed to load MakeCode. Please check your internet connection, reload the page then try again."
+    }
+  ],
+  "makecode-load-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "Could not load Microsoft MakeCode"
     }
   ],
   "microbit-not-connected": [
@@ -2124,7 +2148,7 @@
   "reload-action": [
     {
       "type": 0,
-      "value": "Click to reload the page"
+      "value": "Reload"
     }
   ],
   "reset-to-default-action": [

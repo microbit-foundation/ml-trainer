@@ -120,6 +120,7 @@ export const ProjectProvider = ({
   const logging = useLogging();
   const projectEdited = useStore((s) => s.projectEdited);
   const editorReady = useStore((s) => s.editorReady);
+  const editorTimedout = useStore((s) => s.editorTimedout);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
@@ -139,7 +140,7 @@ export const ProjectProvider = ({
   const onWorkspaceLoaded = useCallback(() => {
     logging.log("[MakeCode] Workspace loaded");
     editorReady();
-    editorReadyPromiseRef.current.resolve();
+    setTimeout(() => editorReadyPromiseRef.current.resolve(), 5000);
   }, [editorReady, editorReadyPromiseRef, logging]);
 
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
@@ -167,8 +168,21 @@ export const ProjectProvider = ({
           }
         })();
       }
+      const editorReadyTimeout = 5000;
       try {
-        await doAfterEditorUpdatePromise.current;
+        const hasTimedout = await Promise.race([
+          doAfterEditorUpdatePromise.current,
+          new Promise<true>((resolve) =>
+            setTimeout(() => {
+              editorTimedout();
+              resolve(true);
+            }, editorReadyTimeout)
+          ),
+        ]);
+        if (hasTimedout) {
+          logging.log("[MakeCode] Load timedout");
+          return;
+        }
       } finally {
         doAfterEditorUpdatePromise.current = undefined;
       }
@@ -181,6 +195,7 @@ export const ProjectProvider = ({
       editorReadyPromiseRef,
       getCurrentProject,
       expectChangedHeader,
+      editorTimedout,
       projectFlushedToEditor,
     ]
   );

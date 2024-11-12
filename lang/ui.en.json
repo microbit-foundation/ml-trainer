@@ -87,6 +87,10 @@
     "defaultMessage": "How confident the model is that you are currently doing each action.",
     "description": "Tooltip for certainty column"
   },
+  "click-to-reload-page-action": {
+    "defaultMessage": "Click to reload the page",
+    "description": "Reload page button text"
+  },
   "close-action": {
     "defaultMessage": "Close",
     "description": "Close button text or label"
@@ -337,7 +341,7 @@
   },
   "connect-troubleshoot": {
     "defaultMessage": "Troubleshoot problems with connecting to your micro:bit",
-    "description": "Link to support article for troubleshootling"
+    "description": "Link to support article for troubleshooting"
   },
   "connect-troubleshooting": {
     "defaultMessage": "Troubleshooting",
@@ -767,6 +771,10 @@
     "defaultMessage": "Language",
     "description": "Language option text"
   },
+  "learn-about-firewall-requirements-action": {
+    "defaultMessage": "Learn about firewall requirements",
+    "description": "Link to support article for firefall requirements"
+  },
   "led-icon-option-angry": {
     "defaultMessage": "Angry",
     "description": "Makecode icon option. The translation should match MakeCode translations."
@@ -966,6 +974,14 @@
   "makecode-block-start": {
     "defaultMessage": "start",
     "description": "Makecode block text. The translation should match MakeCode translations."
+  },
+  "makecode-load-error-dialog-body": {
+    "defaultMessage": "micro:bit CreateAI has failed to load MakeCode. Please check your internet connection, reload the page then try again.",
+    "description": "Content of MakeCode load error dialog"
+  },
+  "makecode-load-error-dialog-title": {
+    "defaultMessage": "Could not load Microsoft MakeCode",
+    "description": "Title of MakeCode load error dialog"
   },
   "microbit-not-connected": {
     "defaultMessage": "Your micro:bit is not connected",
@@ -1208,8 +1224,8 @@
     "description": "Aria label for more recording options button"
   },
   "reload-action": {
-    "defaultMessage": "Click to reload the page",
-    "description": "Reload page button text"
+    "defaultMessage": "Reload",
+    "description": "Reload button text"
   },
   "reset-to-default-action": {
     "defaultMessage": "Reset to default blocks",

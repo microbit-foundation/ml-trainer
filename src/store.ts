@@ -143,7 +143,7 @@ export interface State {
   changedHeaderExpected: boolean;
   appEditNeedsFlushToEditor: boolean;
   isEditorOpen: boolean;
-  isEditorReady: boolean;
+  isEditorReady: boolean | "timedout";
 
   download: DownloadState;
   downloadFlashingProgress: number;
@@ -197,6 +197,8 @@ export interface Actions {
   checkIfProjectNeedsFlush(): boolean;
   editorChange(project: Project): void;
   editorReady(): void;
+  editorTimedout(): void;
+  editorNotReady(): void;
   setChangedHeaderExpected(): void;
   projectFlushedToEditor(): void;
 
@@ -701,6 +703,14 @@ const createMlStore = (logging: Logging) => {
 
           editorReady() {
             set({ isEditorReady: true }, false, "editorReady");
+          },
+
+          editorTimedout() {
+            set({ isEditorReady: "timedout" }, false, "editorTimedout");
+          },
+
+          editorNotReady() {
+            set({ isEditorReady: false }, false, "editorNotReady");
           },
 
           editorChange(newProject: Project) {
