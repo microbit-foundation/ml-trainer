@@ -576,7 +576,7 @@
   "connect-to-tour-body": [
     {
       "type": 0,
-      "value": "You need to connect the data collection micro:bit to view the tour."
+      "value": "You need to connect a data collection micro:bit to view the tour."
     }
   ],
   "connect-troubleshoot": [

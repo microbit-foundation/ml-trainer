@@ -336,7 +336,7 @@
     "description": "Live graph disconnected micro:bit status message for test model page"
   },
   "connect-to-tour-body": {
-    "defaultMessage": "You need to connect the data collection micro:bit to view the tour.",
+    "defaultMessage": "You need to connect a data collection micro:bit to view the tour.",
     "description": "Prompt to connect the app to a micro:bit"
   },
   "connect-troubleshoot": {
