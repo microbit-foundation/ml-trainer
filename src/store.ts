@@ -844,6 +844,7 @@ const createMlStore = (logging: Logging) => {
                         ...getTourSpec(postConnectTourTrigger, actions),
                       }
                     : tourState,
+                  postConnectTourTrigger: undefined,
                 };
               },
               false,
