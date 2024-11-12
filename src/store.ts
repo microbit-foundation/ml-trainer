@@ -196,6 +196,7 @@ export interface Actions {
   getCurrentProject(): Project;
   checkIfProjectNeedsFlush(): boolean;
   editorChange(project: Project): void;
+  getIsEditorReady(): boolean | "timedout";
   editorReady(): void;
   editorTimedout(): void;
   editorNotReady(): void;
@@ -699,6 +700,10 @@ const createMlStore = (logging: Logging) => {
 
           getCurrentProject() {
             return get().project;
+          },
+
+          getIsEditorReady() {
+            return get().isEditorReady;
           },
 
           editorReady() {

@@ -119,6 +119,8 @@ export const ProjectProvider = ({
   const toast = useToast();
   const logging = useLogging();
   const projectEdited = useStore((s) => s.projectEdited);
+  const getIsEditorReady = useStore((s) => s.getIsEditorReady);
+  const isEditorReady = useStore((s) => s.isEditorReady);
   const editorReady = useStore((s) => s.editorReady);
   const editorTimedout = useStore((s) => s.editorTimedout);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
@@ -139,9 +141,15 @@ export const ProjectProvider = ({
   }, [logging, project]);
   const onWorkspaceLoaded = useCallback(() => {
     logging.log("[MakeCode] Workspace loaded");
-    editorReady();
-    setTimeout(() => editorReadyPromiseRef.current.resolve(), 5000);
-  }, [editorReady, editorReadyPromiseRef, logging]);
+
+    setTimeout(() => {
+      if (getIsEditorReady() === false) {
+        console.log("resolving");
+        editorReady();
+        editorReadyPromiseRef.current.resolve();
+      }
+    }, 6000);
+  }, [editorReady, editorReadyPromiseRef, getIsEditorReady, logging]);
 
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
@@ -170,19 +178,24 @@ export const ProjectProvider = ({
       }
       const editorReadyTimeout = 5000;
       try {
-        const hasTimedout = await Promise.race([
+        await Promise.race([
           doAfterEditorUpdatePromise.current,
           new Promise<true>((resolve) =>
             setTimeout(() => {
-              editorTimedout();
+              if (getIsEditorReady() === false) {
+                console.log("timeouting");
+                editorTimedout();
+              }
               resolve(true);
             }, editorReadyTimeout)
           ),
         ]);
-        if (hasTimedout) {
+        if (getIsEditorReady() === "timedout") {
+          console.log("timedout");
           logging.log("[MakeCode] Load timedout");
           return;
         }
+        console.log("passed");
       } finally {
         doAfterEditorUpdatePromise.current = undefined;
       }
@@ -195,8 +208,9 @@ export const ProjectProvider = ({
       editorReadyPromiseRef,
       getCurrentProject,
       expectChangedHeader,
-      editorTimedout,
       projectFlushedToEditor,
+      getIsEditorReady,
+      editorTimedout,
     ]
   );
   const openEditor = useCallback(async () => {
