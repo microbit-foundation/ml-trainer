@@ -1327,47 +1327,47 @@
     "defaultMessage": "Tour",
     "description": "Button label that starts a tour of the app's features"
   },
-  "tour-collectData-addActions-content": {
+  "tour-collect-addActions-content": {
     "defaultMessage": "Decide what your other actions will be and what you will name them. You need at least 2 actions with 3 data samples to train the model. Your data samples are only stored on your computer, they do not get sent to anyone else.",
     "description": "Tour step description"
   },
-  "tour-collectData-addActions-title": {
+  "tour-collect-addActions-title": {
     "defaultMessage": "Add more actions",
     "description": "Tour step title"
   },
-  "tour-collectData-afterFirst-content": {
+  "tour-collect-afterFirst-content": {
     "defaultMessage": "To train the machine learning model you need at least 3 data samples for 2 different actions.",
     "description": "Tour step description"
   },
-  "tour-collectData-afterFirst-title": {
+  "tour-collect-afterFirst-title": {
     "defaultMessage": "You’ve recorded your first {recordingCount, plural, one {sample} other {samples}}!",
     "description": "Tour step title. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
   },
-  "tour-collectData-collectMore-title": {
-    "defaultMessage": "Collect more data samples",
-    "description": "Tour step title"
-  },
-  "tour-collectData-collectMoreExplanation-content": {
+  "tour-collect-collectMore-explanation-content": {
     "defaultMessage": "Collecting more samples should result in a better machine learning model.",
     "description": "Tour step description"
   },
-  "tour-collectData-collectMoreHasRecordings-content": {
+  "tour-collect-collectMore-hasRecordings-content": {
     "defaultMessage": "Record data samples for your actions.",
     "description": "Tour step description"
   },
-  "tour-collectData-collectMoreNoRecordings-content": {
+  "tour-collect-collectMore-noRecordings-content": {
     "defaultMessage": "Record more samples for this action.",
     "description": "Tour step description"
   },
-  "tour-collectData-trainModel-content": {
+  "tour-collect-collectMore-title": {
+    "defaultMessage": "Collect more data samples",
+    "description": "Tour step title"
+  },
+  "tour-collect-trainModel-content": {
     "defaultMessage": "When you have collected enough data samples you can train the machine learning model. You can come back later to remove or add more data and re-train to make the model more reliable.",
     "description": "Tour step description"
   },
-  "tour-dataSamples-actionsCommon-content": {
+  "tour-dataSamples-actions-common-content": {
     "defaultMessage": "An action is the type of movement you want the machine learning model to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": "Tour step content"
   },
-  "tour-dataSamples-actionsNoRecordings-content": {
+  "tour-dataSamples-actions-noRecordings-content": {
     "defaultMessage": "Decide what your first action will be, name it and then start recording data samples.",
     "description": "Tour step content"
   },
@@ -1399,39 +1399,39 @@
     "defaultMessage": "Microsoft MakeCode",
     "description": "Tour step title"
   },
-  "tour-testModel-afterTrain-content": {
-    "defaultMessage": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model correctly estimate each action?",
-    "description": "Tour step description"
-  },
-  "tour-testModel-afterTrainAlreadyConnected-title": {
+  "tour-trainModel-afterTrain-alreadyConnected-title": {
     "defaultMessage": "You’ve trained an ML model!",
     "description": "Tour step title"
   },
-  "tour-testModel-afterTrainDelayedUntilConnected-title": {
+  "tour-trainModel-afterTrain-content": {
+    "defaultMessage": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model correctly estimate each action?",
+    "description": "Tour step description"
+  },
+  "tour-trainModel-afterTrain-delayedUntilConnected-title": {
     "defaultMessage": "Test your ML model",
     "description": "Tour step title"
   },
-  "tour-testModel-certaintyRecognition-content": {
+  "tour-trainModel-certaintyRecognition-content": {
     "defaultMessage": "The bar graph shows how confident the model is that you are doing each action. Move the slider to adjust the recognition point, or threshold.",
     "description": "Tour step description"
   },
-  "tour-testModel-certaintyRecognition-title": {
+  "tour-trainModel-certaintyRecognition-title": {
     "defaultMessage": "Certainty and recognition point",
     "description": "Tour step title"
   },
-  "tour-testModel-editInMakeCode-content": {
+  "tour-trainModel-editInMakeCode-content": {
     "defaultMessage": "Open your project in MakeCode to download the program and your machine learning model to a micro:bit. You can add more blocks to create your own programs using your model.",
     "description": "Tour step description"
   },
-  "tour-testModel-estimatedAction-content": {
+  "tour-trainModel-estimatedAction-content": {
     "defaultMessage": "The action the model estimates you are currently doing is shown below the micro:bit icon for that action.",
     "description": "Tour step description"
   },
-  "tour-testModel-makeCodeBlocks-content": {
+  "tour-trainModel-makeCodeBlocks-content": {
     "defaultMessage": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit.",
     "description": "Tour step description"
   },
-  "tour-testModel-makeCodeBlocks-title": {
+  "tour-trainModel-makeCodeBlocks-title": {
     "defaultMessage": "Microsoft MakeCode blocks",
     "description": "Tour step title"
   },

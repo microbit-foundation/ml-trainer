@@ -105,9 +105,9 @@ export const getTour = (
             title: <FormattedMessage id="actions-label" />,
             content: (
               <Text>
-                <FormattedMessage id="tour-dataSamples-actionsCommon-content" />{" "}
+                <FormattedMessage id="tour-dataSamples-actions-common-content" />{" "}
                 {!hasDataSamples && (
-                  <FormattedMessage id="tour-dataSamples-actionsNoRecordings-content" />
+                  <FormattedMessage id="tour-dataSamples-actions-noRecordings-content" />
                 )}
               </Text>
             ),
@@ -127,12 +127,12 @@ export const getTour = (
             {
               title: (
                 <FormattedMessage
-                  id="tour-collectData-afterFirst-title"
+                  id="tour-collect-afterFirst-title"
                   values={{ recordingCount: trigger.recordingCount }}
                 />
               ),
               content: (
-                <FormattedMessageStepContent id="tour-collectData-afterFirst-content" />
+                <FormattedMessageStepContent id="tour-collect-afterFirst-content" />
               ),
             },
           ],
@@ -151,19 +151,19 @@ export const getTour = (
               <FormattedMessage
                 id={
                   trigger.delayedUntilConnection
-                    ? "tour-testModel-afterTrainDelayedUntilConnected-title"
-                    : "tour-testModel-afterTrainAlreadyConnected-title"
+                    ? "tour-trainModel-afterTrain-delayedUntilConnected-title"
+                    : "tour-trainModel-afterTrain-alreadyConnected-title"
                 }
               />
             ),
             content: (
-              <FormattedMessageStepContent id="tour-testModel-afterTrain-content" />
+              <FormattedMessageStepContent id="tour-trainModel-afterTrain-content" />
             ),
           },
           {
             title: <FormattedMessage id="estimated-action-label" />,
             content: (
-              <FormattedMessageStepContent id="tour-testModel-estimatedAction-content" />
+              <FormattedMessageStepContent id="tour-trainModel-estimatedAction-content" />
             ),
             selector: classSelector(tourElClassname.estimatedAction),
             spotlightStyle: {
@@ -175,19 +175,19 @@ export const getTour = (
           },
           {
             title: (
-              <FormattedMessage id="tour-testModel-certaintyRecognition-title" />
+              <FormattedMessage id="tour-trainModel-certaintyRecognition-title" />
             ),
             content: (
-              <FormattedMessageStepContent id="tour-testModel-certaintyRecognition-content" />
+              <FormattedMessageStepContent id="tour-trainModel-certaintyRecognition-content" />
             ),
             selector: classSelector(tourElClassname.certaintyThreshold),
           },
           {
             title: (
-              <FormattedMessage id="tour-testModel-makeCodeBlocks-title" />
+              <FormattedMessage id="tour-trainModel-makeCodeBlocks-title" />
             ),
             content: (
-              <FormattedMessageStepContent id="tour-testModel-makeCodeBlocks-content" />
+              <FormattedMessageStepContent id="tour-trainModel-makeCodeBlocks-content" />
             ),
             selector: classSelector(tourElClassname.makeCodeCodeView),
             placement: "left",
@@ -195,7 +195,7 @@ export const getTour = (
           {
             title: <FormattedMessage id="edit-in-makecode-action" />,
             content: (
-              <FormattedMessageStepContent id="tour-testModel-editInMakeCode-content" />
+              <FormattedMessageStepContent id="tour-trainModel-editInMakeCode-content" />
             ),
             selector: classSelector(tourElClassname.editInMakeCodeButton),
           },
@@ -222,32 +222,32 @@ const createCommonDataSamplesSteps = (hasPreExistingRecordings: boolean) => {
   return [
     {
       selector: classSelector(tourElClassname.recordDataSamplesCard),
-      title: <FormattedMessage id="tour-collectData-collectMore-title" />,
+      title: <FormattedMessage id="tour-collect-collectMore-title" />,
       content: (
         <Text>
           <FormattedMessage
             id={
               hasPreExistingRecordings
-                ? "tour-collectData-collectMoreHasRecordings-content"
-                : "tour-collectData-collectMoreNoRecordings-content"
+                ? "tour-collect-collectMore-hasRecordings-content"
+                : "tour-collect-collectMore-noRecordings-content"
             }
           />{" "}
-          <FormattedMessage id="tour-collectData-collectMoreExplanation-content" />
+          <FormattedMessage id="tour-collect-collectMore-explanation-content" />
         </Text>
       ),
     },
     {
       selector: classSelector(tourElClassname.addActionButton),
-      title: <FormattedMessage id="tour-collectData-addActions-title" />,
+      title: <FormattedMessage id="tour-collect-addActions-title" />,
       content: (
-        <FormattedMessageStepContent id="tour-collectData-addActions-content" />
+        <FormattedMessageStepContent id="tour-collect-addActions-content" />
       ),
     },
     {
       selector: classSelector(tourElClassname.trainModelButton),
       title: <FormattedMessage id="train-model" />,
       content: (
-        <FormattedMessageStepContent id="tour-collectData-trainModel-content" />
+        <FormattedMessageStepContent id="tour-collect-trainModel-content" />
       ),
     },
   ];
