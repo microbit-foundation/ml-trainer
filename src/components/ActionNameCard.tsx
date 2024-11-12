@@ -21,7 +21,6 @@ interface ActionNameCardProps {
   onSelectRow?: () => void;
   selected?: boolean;
   readOnly: boolean;
-  isTriggered?: boolean;
   disabled?: boolean;
 }
 
@@ -33,7 +32,6 @@ const ActionNameCard = ({
   onSelectRow,
   selected = false,
   readOnly = false,
-  isTriggered = undefined,
   disabled,
 }: ActionNameCardProps) => {
   const intl = useIntl();
@@ -42,6 +40,8 @@ const ActionNameCard = ({
   const setActionName = useStore((s) => s.setActionName);
   const setActionIcon = useStore((s) => s.setActionIcon);
   const { name, icon, ID: id } = value;
+  const predictionResult = useStore((s) => s.predictionResult);
+  const isTriggered = predictionResult?.detected?.ID === value.ID;
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {

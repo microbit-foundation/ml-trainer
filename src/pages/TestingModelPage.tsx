@@ -23,16 +23,18 @@ import LiveGraphPanel from "../components/LiveGraphPanel";
 import MoreMenuButton from "../components/MoreMenuButton";
 import TestingModelTable from "../components/TestingModelTable";
 import { useConnectActions } from "../connect-actions-hooks";
-import { usePrediction } from "../hooks/ml-hooks";
 import { useProject } from "../hooks/project-hooks";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createDataSamplesPageUrl } from "../urls";
+import { useBufferedData } from "../buffered-data-hooks";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
   const model = useStore((s) => s.model);
-  const prediction = usePrediction();
+  const startPredicting = useStore((s) => s.startPredicting);
+  const stopPredicting = useStore((s) => s.stopPredicting);
+  const bufferedData = useBufferedData();
   const intl = useIntl();
 
   const navigateToDataSamples = useCallback(() => {
@@ -41,9 +43,20 @@ const TestingModelPage = () => {
 
   useEffect(() => {
     if (!model) {
-      navigateToDataSamples();
+      return navigateToDataSamples();
     }
-  }, [model, navigateToDataSamples]);
+    startPredicting(bufferedData);
+
+    return () => {
+      stopPredicting();
+    };
+  }, [
+    bufferedData,
+    model,
+    navigateToDataSamples,
+    startPredicting,
+    stopPredicting,
+  ]);
 
   const { openEditor, resetProject, projectEdited } = useProject();
   const { getDataCollectionBoardVersion } = useConnectActions();
@@ -92,7 +105,7 @@ const TestingModelPage = () => {
         stage="openEditor"
         onNextLoading={editorLoading}
       />
-      <TestingModelTable prediction={prediction} />
+      <TestingModelTable />
       <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
         <HStack
           justifyContent="right"
@@ -137,7 +150,6 @@ const TestingModelPage = () => {
           </Menu>
         </HStack>
         <LiveGraphPanel
-          detected={prediction?.detected}
           showPredictedAction
           disconnectedTextId="connect-to-test-model"
         />

@@ -132,14 +132,14 @@ export type ConfidencesResult =
   | { error: false; confidences: Confidences };
 
 // For predicting
-export const predict = async (
+export const predict = (
   { model, data, classificationIds }: PredictInput,
   dataWindow: DataWindow
-): Promise<ConfidencesResult> => {
+): ConfidencesResult => {
   const input = Object.values(applyFilters(data, dataWindow));
   const prediction = model.predict(tf.tensor([input])) as tf.Tensor;
   try {
-    const confidences = (await prediction.data()) as Float32Array;
+    const confidences = prediction.dataSync() as Float32Array;
     return {
       error: false,
       confidences: classificationIds.reduce(
