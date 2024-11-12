@@ -41,7 +41,9 @@ const ActionNameCard = ({
   const setActionIcon = useStore((s) => s.setActionIcon);
   const { name, icon, ID: id } = value;
   const predictionResult = useStore((s) => s.predictionResult);
-  const isTriggered = predictionResult?.detected?.ID === value.ID;
+  const isTriggered = readOnly
+    ? predictionResult?.detected?.ID === value.ID
+    : undefined;
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {

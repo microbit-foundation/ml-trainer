@@ -9,9 +9,9 @@ import {
 } from "@chakra-ui/react";
 import { memo, useCallback } from "react";
 import { RiArrowDropDownFill } from "react-icons/ri";
-import { MakeCodeIcon, makecodeIcons } from "../utils/icons";
-import LedIcon from "./LedIcon";
 import { useIntl } from "react-intl";
+import { MakeCodeIcon, makecodeIcons } from "../utils/icons";
+import LedIconSvg from "./icons/LedIconSvg";
 
 interface LedIconPicker {
   onIconSelected: (icon: MakeCodeIcon) => void;
@@ -28,7 +28,7 @@ const LedIconPicker = ({ onIconSelected }: LedIconPicker) => {
   );
 
   return (
-    <Popover placement="bottom-end">
+    <Popover placement="bottom-end" isLazy>
       {({ onClose }) => (
         <>
           <PopoverTrigger>
@@ -60,9 +60,8 @@ const LedIconPicker = ({ onIconSelected }: LedIconPicker) => {
                     variant="unstyled"
                     h={20}
                     w={20}
-                  >
-                    <LedIcon icon={icon as MakeCodeIcon} />
-                  </IconButton>
+                    icon={<LedIconSvg icon={icon as MakeCodeIcon} />}
+                  />
                 ))}
               </Grid>
             </PopoverBody>
