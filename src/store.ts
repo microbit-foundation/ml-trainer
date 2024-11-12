@@ -837,7 +837,7 @@ const createMlStore = (logging: Logging) => {
                     actions.length === 0 ? [createFirstAction()] : actions,
 
                   // If a tour has been explicitly requested, do that.
-                  // Other tours are triggered by effects in the page so they run only on the correct screen.
+                  // Other tours are triggered by callbacks or effects on the relevant page so they run only on the correct screen.
                   tourState: postConnectTourTrigger
                     ? {
                         index: 0,
