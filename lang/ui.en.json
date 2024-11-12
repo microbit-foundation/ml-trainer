@@ -103,10 +103,6 @@
     "defaultMessage": "These are the MakeCode blocks for each detected action when you transfer your ML model and code to a micro:bit",
     "description": "Code column heading tooltip"
   },
-  "coming-soon": {
-    "defaultMessage": "Coming soon",
-    "description": "Placeholder text for future projects"
-  },
   "confirm-action": {
     "defaultMessage": "Confirm",
     "description": "Confirm button text"

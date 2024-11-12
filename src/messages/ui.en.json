@@ -197,12 +197,6 @@
       "value": "These are the MakeCode blocks for each detected action when you transfer your ML model and code to a micro:bit"
     }
   ],
-  "coming-soon": [
-    {
-      "type": 0,
-      "value": "Coming soon"
-    }
-  ],
   "confirm-action": [
     {
       "type": 0,
