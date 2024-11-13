@@ -2163,6 +2163,12 @@
       "value": "Restore default values for all settings"
     }
   ],
+  "restore-defaults-confirm-action": [
+    {
+      "type": 0,
+      "value": "Restore defaults"
+    }
+  ],
   "restore-defaults-confirm-body": [
     {
       "type": 0,

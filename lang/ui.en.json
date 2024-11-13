@@ -1235,6 +1235,10 @@
     "defaultMessage": "Restore default values for all settings",
     "description": "Restore default button text"
   },
+  "restore-defaults-confirm-action": {
+    "defaultMessage": "Restore defaults",
+    "description": "Restore default settings confirm button text"
+  },
   "restore-defaults-confirm-body": {
     "defaultMessage": "Are you sure you want to restore default values for all settings?",
     "description": "Restore default settings confirmation dialog body text"

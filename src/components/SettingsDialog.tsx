@@ -77,6 +77,9 @@ export const SettingsDialog = ({
         })}
         isOpen={resetConfirmDialog.isOpen}
         onConfirm={confirmResetToDefault}
+        confirmText={intl.formatMessage({
+          id: "restore-defaults-confirm-action",
+        })}
         onCancel={resetConfirmDialog.onClose}
       />
       <Modal
