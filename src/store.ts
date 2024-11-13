@@ -169,7 +169,7 @@ export interface State {
   postConnectTourTrigger?: TourTrigger;
   postImportDialogState: PostImportDialogState;
 
-  predictionInterval: undefined | NodeJS.Timeout | number;
+  predictionInterval: ReturnType<typeof setInterval> | undefined;
   predictionResult: PredictionResult | undefined;
 }
 
