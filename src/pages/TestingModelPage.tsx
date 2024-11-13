@@ -7,6 +7,7 @@ import {
   MenuList,
   Portal,
   useDisclosure,
+  usePrevious,
   VStack,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
@@ -23,6 +24,7 @@ import LiveGraphPanel from "../components/LiveGraphPanel";
 import MoreMenuButton from "../components/MoreMenuButton";
 import TestingModelTable from "../components/TestingModelTable";
 import { useConnectActions } from "../connect-actions-hooks";
+import { useConnectionStage } from "../connection-stage-hooks";
 import { useProject } from "../hooks/project-hooks";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
@@ -57,6 +59,18 @@ const TestingModelPage = () => {
     startPredicting,
     stopPredicting,
   ]);
+
+  const tourStart = useStore((s) => s.tourStart);
+  const { isConnected } = useConnectionStage();
+  const wasConnected = usePrevious(isConnected);
+  useEffect(() => {
+    if (isConnected) {
+      tourStart(
+        { name: "TrainModel", delayedUntilConnection: wasConnected === false },
+        false
+      );
+    }
+  }, [isConnected, tourStart, wasConnected]);
 
   const { openEditor, resetProject, projectEdited } = useProject();
   const { getDataCollectionBoardVersion } = useConnectActions();

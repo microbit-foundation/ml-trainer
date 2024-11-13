@@ -65,7 +65,7 @@ const SelectMicrobitBluetoothDialog = ({
             </Flex>
           </ListItem>
           <ListItem>
-            <Flex alignItems="center" height="45px">
+            <Flex alignItems="center" height="57px">
               <VisuallyHidden>
                 <Text>2. </Text>
               </VisuallyHidden>
@@ -75,10 +75,10 @@ const SelectMicrobitBluetoothDialog = ({
             </Flex>
           </ListItem>
         </List>
-        <Box position="absolute" top="85px" left="240px">
+        <Box position="absolute" top="86px" left="240px">
           <ArrowOne />
         </Box>
-        <Box position="absolute" bottom="48px" left="265px">
+        <Box position="absolute" bottom="42px" left="268px">
           <ArrowTwo />
         </Box>
       </Box>

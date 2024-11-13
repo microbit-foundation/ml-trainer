@@ -23,9 +23,11 @@ import {
   RecordingData,
   SaveState,
   SaveStep,
-  TourId,
+  TourTrigger,
   TourState,
   TrainModelDialogStage,
+  TourTriggerName,
+  tourSequence,
 } from "./model";
 import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/actions";
@@ -34,6 +36,7 @@ import { untitledProjectName } from "./project-name";
 import { mlSettings } from "./mlConfig";
 import { BufferedData } from "./buffered-data";
 import { getDetectedAction } from "./utils/prediction";
+import { getTour as getTourSpec } from "./tours";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -163,10 +166,15 @@ export interface State {
   trainModelDialogStage: TrainModelDialogStage;
 
   tourState?: TourState;
+  postConnectTourTrigger?: TourTrigger;
   postImportDialogState: PostImportDialogState;
 
   predictionInterval: undefined | NodeJS.Timeout | number;
   predictionResult: PredictionResult | undefined;
+}
+
+export interface ConnectOptions {
+  postConnectTourTrigger?: TourTrigger;
 }
 
 export interface Actions {
@@ -179,7 +187,10 @@ export interface Actions {
   deleteActionRecording(id: ActionData["ID"], recordingIdx: number): void;
   deleteAllActions(): void;
   downloadDataset(): void;
+
+  dataCollectionMicrobitConnectionStart(options?: ConnectOptions): void;
   dataCollectionMicrobitConnected(): void;
+
   loadDataset(actions: ActionData[]): void;
   loadProject(project: Project, name: string): void;
   setEditorOpen(open: boolean): void;
@@ -216,10 +227,12 @@ export interface Actions {
   setDownloadFlashingProgress(value: number): void;
   setSave(state: SaveState): void;
 
-  tourStart(tourId: TourId): void;
+  tourStart(trigger: TourTrigger, manual?: boolean): void;
   tourNext(): void;
   tourBack(): void;
-  tourComplete(id: TourId): void;
+  tourComplete(markCompleted: TourTriggerName[]): void;
+
+  setPostConnectTourTrigger(trigger: TourTrigger | undefined): void;
 
   setDataSamplesView(view: DataSamplesView): void;
   setShowGraphs(show: boolean): void;
@@ -529,10 +542,7 @@ const createMlStore = (logging: Logging) => {
                 settings: {
                   ...settings,
                   toursCompleted: Array.from(
-                    new Set([
-                      ...settings.toursCompleted,
-                      TourId.CollectDataToTrainModel,
-                    ])
+                    new Set([...settings.toursCompleted, "DataSamplesRecorded"])
                   ),
                 },
                 actions: (() => {
@@ -573,10 +583,7 @@ const createMlStore = (logging: Logging) => {
                 settings: {
                   ...settings,
                   toursCompleted: Array.from(
-                    new Set([
-                      ...settings.toursCompleted,
-                      TourId.CollectDataToTrainModel,
-                    ])
+                    new Set([...settings.toursCompleted, "DataSamplesRecorded"])
                   ),
                 },
                 actions: newActions,
@@ -756,7 +763,7 @@ const createMlStore = (logging: Logging) => {
                         toursCompleted: Array.from(
                           new Set([
                             ...settings.toursCompleted,
-                            TourId.CollectDataToTrainModel,
+                            "DataSamplesRecorded",
                           ])
                         ),
                       },
@@ -823,25 +830,69 @@ const createMlStore = (logging: Logging) => {
               "projectFlushedToEditor"
             );
           },
+          setPostConnectTourTrigger(trigger: TourTrigger | undefined) {
+            set(
+              { postConnectTourTrigger: trigger },
+              false,
+              "setPostConnectTourId"
+            );
+          },
+          dataCollectionMicrobitConnectionStart(options) {
+            set(
+              { postConnectTourTrigger: options?.postConnectTourTrigger },
+              false,
+              "dataCollectionMicrobitConnectionStart"
+            );
+          },
           dataCollectionMicrobitConnected() {
             set(
-              ({ actions, tourState, settings }) => ({
-                actions: actions.length === 0 ? [createFirstAction()] : actions,
-                tourState: settings.toursCompleted.includes(
-                  TourId.DataSamplesPage
-                )
-                  ? tourState
-                  : { id: TourId.DataSamplesPage, index: 0 },
-              }),
+              ({ actions, tourState, postConnectTourTrigger }) => {
+                return {
+                  actions:
+                    actions.length === 0 ? [createFirstAction()] : actions,
+
+                  // If a tour has been explicitly requested, do that.
+                  // Other tours are triggered by callbacks or effects on the relevant page so they run only on the correct screen.
+                  tourState: postConnectTourTrigger
+                    ? {
+                        index: 0,
+                        ...getTourSpec(postConnectTourTrigger, actions),
+                      }
+                    : tourState,
+                  postConnectTourTrigger: undefined,
+                };
+              },
               false,
               "dataCollectionMicrobitConnected"
             );
           },
 
-          tourStart(tourId: TourId) {
+          tourStart(trigger: TourTrigger, manual: boolean = false) {
             set((state) => {
-              if (!state.settings.toursCompleted.includes(tourId)) {
-                return { tourState: { id: tourId, index: 0 } };
+              if (
+                manual ||
+                (!state.tourState &&
+                  !state.settings.toursCompleted.includes(trigger.name))
+              ) {
+                const tourSpec = getTourSpec(trigger, state.actions);
+                const result = {
+                  tourState: {
+                    ...tourSpec,
+                    index: 0,
+                  },
+                  // If manually triggered, filter out subsequent tours as they should run again too when reached
+                  settings: manual
+                    ? {
+                        ...state.settings,
+                        toursCompleted: state.settings.toursCompleted.filter(
+                          (t) =>
+                            tourSequence.indexOf(t) <=
+                            tourSequence.indexOf(trigger.name)
+                        ),
+                      }
+                    : state.settings,
+                };
+                return result;
               }
               return state;
             });
@@ -866,13 +917,13 @@ const createMlStore = (logging: Logging) => {
               };
             });
           },
-          tourComplete(tourId: TourId) {
+          tourComplete(triggers: TourTriggerName[]) {
             set(({ settings }) => ({
               tourState: undefined,
               settings: {
                 ...settings,
                 toursCompleted: Array.from(
-                  new Set([...settings.toursCompleted, tourId])
+                  new Set([...settings.toursCompleted, ...triggers])
                 ),
               },
             }));

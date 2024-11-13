@@ -19,14 +19,17 @@ import {
 import { FormattedMessage } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { ActionData, TourId } from "../model";
+import { ActionData } from "../model";
 import { useStore } from "../store";
-import ConnectToRecordDialog from "./ConnectToRecordDialog";
+import ConnectFirstDialog from "./ConnectFirstDialog";
 import DataSamplesMenu from "./DataSamplesMenu";
 import DataSamplesTableRow from "./DataSamplesTableRow";
 import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
 import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
-import RecordingDialog, { RecordingOptions } from "./RecordingDialog";
+import RecordingDialog, {
+  RecordingCompleteDetail,
+  RecordingOptions,
+} from "./RecordingDialog";
 import ShowGraphsCheckbox from "./ShowGraphsCheckbox";
 
 const gridCommonProps: Partial<GridProps> = {
@@ -85,6 +88,10 @@ const DataSamplesTable = ({
     undefined
   );
 
+  const handleConnect = useCallback(() => {
+    connActions.startConnect();
+  }, [connActions]);
+
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
       if (!recordingDialogDisclosure.isOpen) {
@@ -114,20 +121,20 @@ const DataSamplesTable = ({
   );
 
   const tourStart = useStore((s) => s.tourStart);
-  useEffect(() => {
-    if (
-      !recordingDialogDisclosure.isOpen &&
-      actions.length === 1 &&
-      actions[0].recordings.length === 1
-    ) {
-      tourStart(TourId.CollectDataToTrainModel);
-    }
-  }, [actions, recordingDialogDisclosure.isOpen, tourStart]);
+  const handleRecordingComplete = useCallback(
+    ({ mostRecentRecordingId, recordingCount }: RecordingCompleteDetail) => {
+      setNewRecordingId(mostRecentRecordingId);
+      tourStart({ name: "DataSamplesRecorded", recordingCount });
+    },
+    [tourStart]
+  );
+
   return (
     <>
-      <ConnectToRecordDialog
+      <ConnectFirstDialog
         isOpen={connectToRecordDialogDisclosure.isOpen}
         onClose={connectToRecordDialogDisclosure.onClose}
+        explanationTextId="connect-to-record-body"
       />
       {selectedAction && (
         <RecordingDialog
@@ -135,7 +142,7 @@ const DataSamplesTable = ({
           isOpen={recordingDialogDisclosure.isOpen}
           onClose={recordingDialogDisclosure.onClose}
           actionName={selectedAction.name}
-          onRecordingComplete={setNewRecordingId}
+          onRecordingComplete={handleRecordingComplete}
           recordingOptions={recordingOptions}
         />
       )}
@@ -166,7 +173,7 @@ const DataSamplesTable = ({
                       fontSize="lg"
                       color="brand.600"
                       variant="link"
-                      onClick={connActions.startConnect}
+                      onClick={handleConnect}
                     >
                       {chunks}
                     </Button>

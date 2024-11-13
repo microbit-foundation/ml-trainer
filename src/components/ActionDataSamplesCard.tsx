@@ -105,9 +105,19 @@ const ActionDataSamplesCard = ({
     <DataSamplesRowCard
       onSelectRow={onSelectRow}
       selected={selected}
-      className={tourElClassname.recordDataSamplesCard}
+      // Otherwise we put the tour class on the recording area
+      className={
+        value.recordings.length === 0
+          ? tourElClassname.recordDataSamplesCard
+          : undefined
+      }
     >
-      <RecordingArea action={value} selected={selected} onRecord={onRecord} />
+      <RecordingArea
+        className={tourElClassname.recordDataSamplesCard}
+        action={value}
+        selected={selected}
+        onRecord={onRecord}
+      />
       {value.recordings.map((recording, idx) => (
         <DataSample
           key={recording.ID}
@@ -155,18 +165,21 @@ const DataSamplesRowCard = ({
   );
 };
 
+interface RecordingAreaProps extends BoxProps {
+  action: ActionData;
+  selected: boolean;
+  onRecord: (recordingOptions: RecordingOptions) => void;
+}
+
 const RecordingArea = ({
   action,
   selected,
   onRecord,
-}: {
-  action: ActionData;
-  selected: boolean;
-  onRecord: (recordingOptions: RecordingOptions) => void;
-}) => {
+  ...props
+}: RecordingAreaProps) => {
   const intl = useIntl();
   return (
-    <VStack w="8.25rem" justifyContent="center">
+    <VStack w="8.25rem" justifyContent="center" {...props}>
       <Menu>
         <ButtonGroup isAttached>
           <Button
