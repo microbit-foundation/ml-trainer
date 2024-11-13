@@ -6,9 +6,11 @@ import { useConnectActions } from "../connect-actions-hooks";
 import { useGraphColors } from "../hooks/use-graph-colors";
 import { getLabelHeights } from "../live-graph-label-config";
 import { smoothenDataPoint } from "./LiveGraph";
+import { useSettings } from "../store";
 
 const LiveGraphLabels = () => {
-  const colors = useGraphColors();
+  const [{ graphColorScheme }] = useSettings();
+  const colors = useGraphColors(graphColorScheme);
   const connectActions = useConnectActions();
 
   const xArrowHeightRef = useRef<HTMLDivElement>(null);
