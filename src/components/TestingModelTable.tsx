@@ -44,8 +44,6 @@ const headings = [
 ];
 
 const TestingModelTable = () => {
-  // const predictionResult = useStore((s) => s.predictionResult);
-
   const actions = useStore((s) => s.actions);
   const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { project, projectEdited } = useProject();
