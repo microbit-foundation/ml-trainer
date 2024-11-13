@@ -1190,7 +1190,19 @@
   "homepage-alt": [
     {
       "type": 0,
+      "value": "graph showing x, y, z graph lines representing micro:bit accelerometer data with clapping hands overlaid"
+    }
+  ],
+  "homepage-alt-graph": [
+    {
+      "type": 0,
       "value": "graph showing x, y, z graph lines representing micro:bit accelerometer data"
+    }
+  ],
+  "homepage-alt-hands": [
+    {
+      "type": 0,
+      "value": "clapping hands"
     }
   ],
   "homepage-description": [

@@ -712,7 +712,15 @@
     "description": "Link to home page"
   },
   "homepage-alt": {
+    "defaultMessage": "graph showing x, y, z graph lines representing micro:bit accelerometer data with clapping hands overlaid",
+    "description": "Alt text for image in homepage"
+  },
+  "homepage-alt-graph": {
     "defaultMessage": "graph showing x, y, z graph lines representing micro:bit accelerometer data",
+    "description": "Alt text for image in homepage"
+  },
+  "homepage-alt-hands": {
+    "defaultMessage": "clapping hands",
     "description": "Alt text for image in homepage"
   },
   "homepage-description": {

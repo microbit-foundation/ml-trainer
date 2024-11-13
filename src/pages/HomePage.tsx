@@ -17,7 +17,7 @@ import ResourceCard from "../components/ResourceCard";
 import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
-import clap from "../images/clap-square.png";
+import clap from "../images/clap-hands.png";
 import xyzGraph from "../images/xyz-graph.png";
 import { createNewPageUrl } from "../urls";
 
@@ -80,23 +80,28 @@ const HomePage = () => {
               <FormattedMessage id="get-started-action" />
             </Button>
           </VStack>
-          <Box flex="1" position="relative">
+          <Box
+            flex="1"
+            position="relative"
+            role="img"
+            aria-label={intl.formatMessage({ id: "homepage-alt" })}
+          >
             <Image
               src={xyzGraph}
               borderRadius="lg"
               bgColor="white"
               pr={1}
-              alt={intl.formatMessage({ id: "homepage-alt" })}
+              alt={intl.formatMessage({ id: "homepage-alt-graph" })}
             />
             <Image
-              height="55%"
+              height="100%"
               position="absolute"
               bottom={0}
               left={0}
               src={clap}
               borderRadius="md"
               pr={1}
-              alt={intl.formatMessage({ id: "homepage-alt" })}
+              alt={intl.formatMessage({ id: "homepage-alt-hands" })}
             />
           </Box>
         </HStack>
