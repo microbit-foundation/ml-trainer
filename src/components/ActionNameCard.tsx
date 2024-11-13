@@ -14,6 +14,7 @@ import { MakeCodeIcon } from "../utils/icons";
 import LedIcon from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";
 import { Action } from "../model";
+import LedIconSvg from "./icons/LedIconSvg";
 
 interface ActionNameCardProps {
   value: Action;
@@ -104,7 +105,11 @@ const ActionNameCard = ({
       <CardBody p={0} alignContent="center">
         <HStack>
           <HStack>
-            <LedIcon icon={icon} isTriggered={isTriggered} />;
+            {readOnly ? (
+              <LedIcon icon={icon} isTriggered={isTriggered} />
+            ) : (
+              <LedIconSvg icon={icon} />
+            )}
             {!readOnly && <LedIconPicker onIconSelected={handleIconSelected} />}
           </HStack>
           <Input
