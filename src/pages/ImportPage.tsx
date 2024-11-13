@@ -119,7 +119,12 @@ const ImportPage = () => {
                 id="new-session-setup-description"
                 values={{
                   link: (chunks: ReactNode) => (
-                    <Button onClick={handleSave} variant="link">
+                    <Button
+                      onClick={handleSave}
+                      variant="link"
+                      color="brand.600"
+                      textDecoration="underline"
+                    >
                       {chunks}
                     </Button>
                   ),

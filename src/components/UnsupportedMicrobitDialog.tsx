@@ -52,6 +52,7 @@ const UnsupportedMicrobitDialog = ({
                     link: (chunks: ReactNode) => (
                       <Link
                         color="brand.600"
+                        textDecoration="underline"
                         href="https://support.microbit.org/support/solutions/articles/19000119162"
                         target="_blank"
                         rel="noopener"
@@ -72,6 +73,7 @@ const UnsupportedMicrobitDialog = ({
                       link: (chunks: ReactNode) => (
                         <Link
                           color="brand.600"
+                          textDecoration="underline"
                           href={supportLinks.bluetooth}
                           target="_blank"
                           rel="noopener"

@@ -83,10 +83,11 @@ const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
                   values={{
                     link: (chunks: ReactNode) => (
                       <Link
+                        color="brand.600"
+                        textDecoration="underline"
                         href="https://cctd.au.dk/"
                         target="_blank"
                         rel="noopener"
-                        color="brand.600"
                       >
                         {chunks}
                       </Link>

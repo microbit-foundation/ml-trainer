@@ -58,8 +58,9 @@ const IncompatibleEditorDevice = ({
                     values={{
                       link: (children) => (
                         <Link
-                          href="https://support.microbit.org/support/solutions/articles/19000154234-which-version-of-micro-bit-do-i-have-"
                           color="brand.600"
+                          textDecoration="underline"
+                          href="https://support.microbit.org/support/solutions/articles/19000154234-which-version-of-micro-bit-do-i-have-"
                         >
                           {children}
                         </Link>
@@ -77,7 +78,12 @@ const IncompatibleEditorDevice = ({
                         id="incompatible-device-body2"
                         values={{
                           link: (chunks: ReactNode) => (
-                            <Button variant="link" onClick={() => saveHex()}>
+                            <Button
+                              variant="link"
+                              color="brand.600"
+                              textDecoration="underline"
+                              onClick={() => saveHex()}
+                            >
                               {chunks}
                             </Button>
                           ),

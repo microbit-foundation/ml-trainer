@@ -15,6 +15,7 @@ const ErrorHandlerErrorView = () => {
               link: (chunks: ReactNode) => (
                 <Link
                   color="brand.600"
+                  textDecoration="underline"
                   href="https://support.microbit.org"
                   target="_blank"
                   rel="noopener noreferrer"
