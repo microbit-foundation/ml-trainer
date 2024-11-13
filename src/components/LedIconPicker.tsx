@@ -28,7 +28,7 @@ const LedIconPicker = ({ onIconSelected }: LedIconPicker) => {
   );
 
   return (
-    <Popover placement="bottom-end" isLazy>
+    <Popover placement="bottom-end" isLazy lazyBehavior="keepMounted">
       {({ onClose }) => (
         <>
           <PopoverTrigger>
