@@ -12,3 +12,5 @@ export const projectUrl = (slug: string) =>
 
 export const userGuideUrl = () =>
   `${microbitOrgBaseUrl}get-started/user-guide/createai/`;
+
+export const landingPageUrl = () => `${microbitOrgBaseUrl}ai/`;

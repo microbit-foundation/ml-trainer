@@ -727,6 +727,10 @@
     "defaultMessage": "Projects",
     "description": "Home page section heading"
   },
+  "homepage-projects-more-resources": {
+    "defaultMessage": "Check out our other <link>resources for micro:bit and AI</link>.",
+    "description": "Link back to AI landing page"
+  },
   "homepage-step-by-step": {
     "defaultMessage": "Step by step",
     "description": "Home page section heading"

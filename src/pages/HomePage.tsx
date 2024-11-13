@@ -24,7 +24,11 @@ import { createNewPageUrl } from "../urls";
 import projectImage2 from "theme-package/images/ai-activity-timer.png";
 import projectImage1 from "theme-package/images/simple-ai-exercise-timer.png";
 import StepByStepIllustration from "../components/StepByStepIllustration";
-import { projectUrl, userGuideUrl } from "../utils/external-links";
+import {
+  landingPageUrl,
+  projectUrl,
+  userGuideUrl,
+} from "../utils/external-links";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -41,7 +45,7 @@ const HomePage = () => {
         </Button>
       }
     >
-      <Container centerContent gap={20} p={8} maxW="container.lg">
+      <Container centerContent gap={20} p={8} pb={20} maxW="container.lg">
         <HStack
           gap={5}
           flexDir={{ base: "column", lg: "row" }}
@@ -157,6 +161,22 @@ const HomePage = () => {
                 imgSrc={projectImage2}
               />
             </HStack>
+            <Text fontSize="md">
+              <FormattedMessage
+                id="homepage-projects-more-resources"
+                values={{
+                  link: (children) => (
+                    <Link
+                      color="brand.600"
+                      textDecoration="underline"
+                      href={landingPageUrl()}
+                    >
+                      {children}
+                    </Link>
+                  ),
+                }}
+              />
+            </Text>
           </VStack>
         )}
       </Container>
