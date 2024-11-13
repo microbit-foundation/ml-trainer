@@ -11,16 +11,27 @@ import {
 } from "@chakra-ui/react";
 import { ComponentProps, useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { ConnectionStatus } from "../connect-status-hooks";
 import {
   ConnectionFlowStep,
   useConnectionStage,
 } from "../connection-stage-hooks";
-import { ConnectionStatus } from "../connect-status-hooks";
+import { ConnectOptions } from "../store";
 
-const ConnectToRecordDialog = ({
+interface ConnectFirstDialogProps
+  extends Omit<ComponentProps<typeof Modal>, "children"> {
+  explanationTextId: string;
+  onChooseConnect?: () => void;
+  options?: ConnectOptions;
+}
+
+const ConnectFirstDialog = ({
+  explanationTextId,
+  options,
   onClose,
+  onChooseConnect,
   ...rest
-}: Omit<ComponentProps<typeof Modal>, "children">) => {
+}: ConnectFirstDialogProps) => {
   const {
     actions,
     status: connStatus,
@@ -34,13 +45,14 @@ const ConnectToRecordDialog = ({
   }, [onClose]);
 
   const handleConnect = useCallback(async () => {
+    onChooseConnect?.();
     switch (connStatus) {
       case ConnectionStatus.FailedToConnect:
       case ConnectionStatus.FailedToReconnectTwice:
       case ConnectionStatus.FailedToSelectBluetoothDevice:
       case ConnectionStatus.NotConnected: {
         // Start connection flow.
-        actions.startConnect();
+        actions.startConnect(options);
         return handleOnClose();
       }
       case ConnectionStatus.ConnectionLost:
@@ -65,7 +77,7 @@ const ConnectToRecordDialog = ({
         return handleOnClose();
       }
     }
-  }, [connStatus, actions, handleOnClose]);
+  }, [onChooseConnect, connStatus, actions, options, handleOnClose]);
 
   useEffect(() => {
     if (
@@ -96,7 +108,7 @@ const ConnectToRecordDialog = ({
           <ModalBody>
             <ModalCloseButton />
             <Text>
-              <FormattedMessage id="connect-to-record-body" />
+              <FormattedMessage id={explanationTextId} />
             </Text>
           </ModalBody>
           <ModalFooter justifyContent="flex-end">
@@ -114,4 +126,4 @@ const ConnectToRecordDialog = ({
   );
 };
 
-export default ConnectToRecordDialog;
+export default ConnectFirstDialog;

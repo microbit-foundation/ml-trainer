@@ -24,23 +24,24 @@ const HelpMenu = ({ ...rest }: HelpMenuProps) => {
   const aboutDialogDisclosure = useDisclosure();
   const feedbackDisclosure = useDisclosure();
   const intl = useIntl();
-  const MenuButtonRef = useRef(null);
+  const menuButtonRef = useRef(null);
+  const containerRef = useRef(null);
   return (
-    <Box {...rest}>
+    <Box {...rest} ref={containerRef}>
       <AboutDialog
         isOpen={aboutDialogDisclosure.isOpen}
         onClose={aboutDialogDisclosure.onClose}
-        finalFocusRef={MenuButtonRef}
+        finalFocusRef={menuButtonRef}
       />
       <FeedbackForm
         isOpen={feedbackDisclosure.isOpen}
         onClose={feedbackDisclosure.onClose}
-        finalFocusRef={MenuButtonRef}
+        finalFocusRef={menuButtonRef}
       />
       <Menu>
         <MenuButton
           as={IconButton}
-          ref={MenuButtonRef}
+          ref={menuButtonRef}
           aria-label={intl.formatMessage({ id: "help-label" })}
           size="sm"
           fontSize="2xl"
@@ -53,7 +54,7 @@ const HelpMenu = ({ ...rest }: HelpMenuProps) => {
             boxShadow: "outlineDark",
           }}
         />
-        <Portal>
+        <Portal containerRef={containerRef}>
           <MenuList>
             <HelpMenuItems />
           </MenuList>
