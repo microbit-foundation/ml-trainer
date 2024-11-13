@@ -83,11 +83,16 @@ export const getConfig = (
       animation: false,
       responsive: false,
       maintainAspectRatio: false,
-
       interaction: {
-        intersect: false,
-        mode: "index",
+        // @ts-expect-error null disables interaction - the type information is wrong.
+        mode: null,
       },
+      hover: {
+        // @ts-expect-error null disables hover - the type information is wrong.
+        mode: null,
+      },
+      normalized: true,
+      parsing: false,
       scales: {
         x: {
           type: "linear",
