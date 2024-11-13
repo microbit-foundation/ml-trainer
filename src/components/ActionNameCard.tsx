@@ -6,15 +6,16 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
+import { Action, ActionData } from "../model";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { MakeCodeIcon } from "../utils/icons";
+import LedIconSvg from "./icons/LedIconSvg";
 import LedIcon from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";
-import { Action } from "../model";
-import LedIconSvg from "./icons/LedIconSvg";
+import debounce from "lodash.debounce";
 
 interface ActionNameCardProps {
   value: Action;
@@ -47,6 +48,14 @@ const ActionNameCard = ({
     ? predictionResult?.detected?.ID === value.ID
     : undefined;
 
+  const debouncedSetActionName = useMemo(
+    () =>
+      debounce((id: ActionData["ID"], name: string) => {
+        setActionName(id, name);
+      }, 400),
+    [setActionName]
+  );
+
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       const name = e.target.value;
@@ -66,13 +75,10 @@ const ActionNameCard = ({
         return;
       }
       setLocalName(name);
+      debouncedSetActionName(id, name);
     },
-    [intl, toast]
+    [debouncedSetActionName, id, intl, toast]
   );
-
-  const onBlur = useCallback(() => {
-    setActionName(id, localName);
-  }, [id, localName, setActionName]);
 
   const handleIconSelected = useCallback(
     (icon: MakeCodeIcon) => {
@@ -131,7 +137,6 @@ const ActionNameCard = ({
             placeholder={intl.formatMessage({
               id: "action-name-placeholder",
             })}
-            onBlur={onBlur}
             onChange={onChange}
           />
         </HStack>
