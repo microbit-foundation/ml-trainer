@@ -163,7 +163,7 @@ const HomePage = () => {
             </HStack>
             <Text fontSize="md">
               <FormattedMessage
-                id="homepage-projects-more-resources"
+                id="homepage-projects-more"
                 values={{
                   link: (children) => (
                     <Link

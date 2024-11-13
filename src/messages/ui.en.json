@@ -1225,24 +1225,16 @@
       "value": "Projects"
     }
   ],
-  "homepage-projects-more-resources": [
-    {
-      "type": 0,
-      "value": "Check out our other "
-    },
+  "homepage-projects-more": [
     {
       "children": [
         {
           "type": 0,
-          "value": "resources for micro:bit and AI"
+          "value": "Find out more about micro:bit and AI"
         }
       ],
       "type": 8,
       "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
     }
   ],
   "homepage-step-by-step": [

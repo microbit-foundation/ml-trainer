@@ -727,8 +727,8 @@
     "defaultMessage": "Projects",
     "description": "Home page section heading"
   },
-  "homepage-projects-more-resources": {
-    "defaultMessage": "Check out our other <link>resources for micro:bit and AI</link>.",
+  "homepage-projects-more": {
+    "defaultMessage": "<link>Find out more about micro:bit and AI</link>",
     "description": "Link back to AI landing page"
   },
   "homepage-step-by-step": {
