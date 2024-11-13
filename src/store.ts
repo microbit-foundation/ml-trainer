@@ -200,9 +200,9 @@ export interface Actions {
   checkIfProjectNeedsFlush(): boolean;
   editorChange(project: Project): void;
   editorReady(): void;
-  editorTimedout(): void;
+  editorTimedOut(): void;
   getEditorStartUp(): EditorStartUp;
-  editorTimedoutDialogOnClose(): void;
+  setIsEditorTimedOutDialogOpen(isOpen: boolean): void;
   setChangedHeaderExpected(): void;
   projectFlushedToEditor(): void;
 
@@ -715,25 +715,17 @@ const createMlStore = (logging: Logging) => {
             );
           },
 
-          editorTimedout() {
-            set(
-              {
-                editorStartUp: "timedout",
-                isEditorTimedoutDialogOpen: true,
-                save: { step: SaveStep.None },
-              },
-              false,
-              "editorTimedout"
-            );
+          editorTimedOut() {
+            set({ editorStartUp: "timed out" }, false, "editorTimedout");
           },
 
           getEditorStartUp() {
             return get().editorStartUp;
           },
 
-          editorTimedoutDialogOnClose() {
+          setIsEditorTimedOutDialogOpen(isOpen: boolean) {
             set(
-              { isEditorTimedoutDialogOpen: false },
+              { isEditorTimedoutDialogOpen: isOpen },
               false,
               "setIsEditorTimedoutDialogOpen"
             );

@@ -11,13 +11,15 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { useStore } from "../store";
 import ExternalLink from "./ExternalLink";
 
 const MakeCodeLoadErrorDialog = () => {
   const isOpen = useStore((s) => s.isEditorTimedoutDialogOpen);
-  const onClose = useStore((s) => s.editorTimedoutDialogOnClose);
+  const setIsOpen = useStore((s) => s.setIsEditorTimedOutDialogOpen);
+  const onClose = useCallback(() => setIsOpen(false), [setIsOpen]);
   return (
     <Modal
       motionPreset="none"

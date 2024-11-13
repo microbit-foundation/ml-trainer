@@ -122,7 +122,10 @@ export const ProjectProvider = ({
   const editorStartUp = useStore((s) => s.editorStartUp);
   const getEditorStartUp = useStore((s) => s.getEditorStartUp);
   const editorReady = useStore((s) => s.editorReady);
-  const editorTimedout = useStore((s) => s.editorTimedout);
+  const editorTimedOut = useStore((s) => s.editorTimedOut);
+  const openEditorTimedOutDialog = useStore(
+    (s) => () => s.setIsEditorTimedOutDialogOpen(true)
+  );
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
@@ -147,13 +150,39 @@ export const ProjectProvider = ({
     logging.log("[MakeCode] Workspace loaded");
 
     setTimeout(() => {
-      const hasTimedout = getEditorStartUp() === "timedout";
-      console.log("resolved", hasTimedout);
+      console.log("resolved");
       // Get latest timedout state and only mark editor ready if editor has not timedout.
-      !hasTimedout && editorReady();
+      getEditorStartUp() !== "timed out" && editorReady();
       editorReadyPromiseRef.current.resolve();
     }, 10000);
   }, [editorReady, editorReadyPromiseRef, getEditorStartUp, logging]);
+
+  const checkIfEditorStartUpTimedOut = useCallback(
+    async (promise: Promise<void> | undefined) => {
+      const elapsedTimeSinceStartup = Date.now() - startUpTimestamp.current;
+      const remainingTimeout = startUpTimeout - elapsedTimeSinceStartup;
+      if (
+        // Editor has already timedout.
+        (editorStartUp === "in-progress" && remainingTimeout <= 0) ||
+        editorStartUp === "timed out"
+      ) {
+        return true;
+      }
+      return await Promise.race([
+        promise,
+        ...(remainingTimeout > 0
+          ? [
+              new Promise<true>((resolve) =>
+                setTimeout(() => {
+                  resolve(true);
+                }, remainingTimeout)
+              ),
+            ]
+          : []),
+      ]);
+    },
+    [editorStartUp]
+  );
 
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
@@ -180,32 +209,15 @@ export const ProjectProvider = ({
           }
         })();
       }
-      const elapsedTimeSinceStartup = Date.now() - startUpTimestamp.current;
-      const remainingTimeout = startUpTimeout - elapsedTimeSinceStartup;
-      if (
-        // Editor has already timedout.
-        (editorStartUp === "in-progress" && remainingTimeout <= 0) ||
-        editorStartUp === "timedout"
-      ) {
-        return editorTimedout();
-      }
+
       try {
-        const hasTimedout = await Promise.race([
-          doAfterEditorUpdatePromise.current,
-          ...(remainingTimeout > 0
-            ? [
-                new Promise<true>((resolve) =>
-                  setTimeout(() => {
-                    editorTimedout();
-                    resolve(true);
-                  }, remainingTimeout)
-                ),
-              ]
-            : []),
-        ]);
+        const hasTimedout = await checkIfEditorStartUpTimedOut(
+          doAfterEditorUpdatePromise.current
+        );
         if (hasTimedout) {
+          editorTimedOut();
           logging.log("[MakeCode] Load timedout");
-          return;
+          throw new CodeEditorError("MakeCode load timed out");
         }
         console.log("passed");
       } finally {
@@ -215,14 +227,14 @@ export const ProjectProvider = ({
     },
     [
       checkIfProjectNeedsFlush,
-      editorStartUp,
       driverRef,
       logging,
       editorReadyPromiseRef,
       getCurrentProject,
       expectChangedHeader,
       projectFlushedToEditor,
-      editorTimedout,
+      checkIfEditorStartUpTimedOut,
+      editorTimedOut,
     ]
   );
   const openEditor = useCallback(async () => {
@@ -230,11 +242,17 @@ export const ProjectProvider = ({
       type: "edit-in-makecode",
     });
     console.log("open editor");
-    await doAfterEditorUpdate(() => {
-      navigate(createCodePageUrl());
-      return Promise.resolve();
-    });
-  }, [doAfterEditorUpdate, logging, navigate]);
+    try {
+      await doAfterEditorUpdate(() => {
+        navigate(createCodePageUrl());
+        return Promise.resolve();
+      });
+    } catch (e) {
+      if (e instanceof CodeEditorError) {
+        openEditorTimedOutDialog();
+      }
+    }
+  }, [doAfterEditorUpdate, logging, navigate, openEditorTimedOutDialog]);
   const browserNavigationToEditor = useCallback(async () => {
     try {
       await doAfterEditorUpdate(() => {
@@ -277,7 +295,13 @@ export const ProjectProvider = ({
         const makeCodeMagicMark = "41140E2FB82FA2BB";
         // Check if is a MakeCode hex, otherwise show error dialog.
         if (hex.includes(makeCodeMagicMark)) {
-          await editorReadyPromiseRef.current.promise;
+          const hasTimedOut = await checkIfEditorStartUpTimedOut(
+            editorReadyPromiseRef.current.promise
+          );
+          if (hasTimedOut) {
+            openEditorTimedOutDialog();
+            return;
+          }
           // This triggers the code in editorChanged to update actions etc.
           driverRef.current!.importFile({
             filename: file.name,
@@ -320,10 +344,17 @@ export const ProjectProvider = ({
       } else if (!hex) {
         setSave({ hex, step: SaveStep.SaveProgress });
         // This will result in a future call to saveHex with a hex.
-        await doAfterEditorUpdate(async () => {
-          saveNextDownloadRef.current = true;
-          await driverRef.current!.compile();
-        });
+        try {
+          await doAfterEditorUpdate(async () => {
+            saveNextDownloadRef.current = true;
+            await driverRef.current!.compile();
+          });
+        } catch (e) {
+          if (e instanceof CodeEditorError) {
+            setSave({ step: SaveStep.None });
+            openEditorTimedOutDialog();
+          }
+        }
       } else {
         logging.event({
           type: "hex-save",
@@ -333,9 +364,7 @@ export const ProjectProvider = ({
           },
         });
         downloadHex(hex);
-        setSave({
-          step: SaveStep.None,
-        });
+        setSave({ step: SaveStep.None });
         toast({
           id: "save-complete",
           position: "top",
@@ -353,6 +382,7 @@ export const ProjectProvider = ({
       setSave,
       doAfterEditorUpdate,
       driverRef,
+      openEditorTimedOutDialog,
       logging,
       actions,
       toast,
