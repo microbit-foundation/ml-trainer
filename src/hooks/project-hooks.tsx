@@ -315,11 +315,13 @@ export const ProjectProvider = ({
       }
     },
     [
+      checkIfEditorStartUpTimedOut,
       driverRef,
       editorReadyPromiseRef,
       loadDataset,
       logging,
       navigate,
+      openEditorTimedOutDialog,
       setPostImportDialogState,
     ]
   );
