@@ -6,7 +6,7 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
@@ -40,7 +40,8 @@ const ActionNameCard = ({
   const toastId = "name-too-long-toast";
   const setActionName = useStore((s) => s.setActionName);
   const setActionIcon = useStore((s) => s.setActionIcon);
-  const { name, icon, ID: id } = value;
+  const { icon, ID: id } = value;
+  const [localName, setLocalName] = useState<string>(value.name);
   const predictionResult = useStore((s) => s.predictionResult);
   const isTriggered = readOnly
     ? predictionResult?.detected?.ID === value.ID
@@ -64,10 +65,14 @@ const ActionNameCard = ({
         });
         return;
       }
-      setActionName(id, name);
+      setLocalName(name);
     },
-    [id, intl, setActionName, toast]
+    [intl, toast]
   );
+
+  const onBlur = useCallback(() => {
+    setActionName(id, localName);
+  }, [id, localName, setActionName]);
 
   const handleIconSelected = useCallback(
     (icon: MakeCodeIcon) => {
@@ -98,7 +103,7 @@ const ActionNameCard = ({
           borderRadius="sm"
           aria-label={intl.formatMessage(
             { id: "delete-action-aria" },
-            { action: name }
+            { action: localName }
           )}
         />
       )}
@@ -113,10 +118,10 @@ const ActionNameCard = ({
             {!readOnly && <LedIconPicker onIconSelected={handleIconSelected} />}
           </HStack>
           <Input
-            autoFocus={name.length === 0}
+            autoFocus={localName.length === 0}
             isTruncated
             readOnly={readOnly}
-            value={name}
+            value={localName}
             borderWidth={0}
             maxLength={18}
             {...(readOnly
@@ -126,6 +131,7 @@ const ActionNameCard = ({
             placeholder={intl.formatMessage({
               id: "action-name-placeholder",
             })}
+            onBlur={onBlur}
             onChange={onChange}
           />
         </HStack>
