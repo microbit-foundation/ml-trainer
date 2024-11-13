@@ -918,7 +918,9 @@ const createMlStore = (logging: Logging) => {
                 } else {
                   const { confidences } = result;
                   const detected = getDetectedAction(
-                    actions,
+                    // Get latest actions from store so that changes to
+                    // recognition point are realised.
+                    get().actions,
                     result.confidences
                   );
                   set({
