@@ -33,11 +33,8 @@ const RecordingGraph = ({ data, children, ...rest }: RecordingGraphProps) => {
     };
   }, [colors, data]);
 
-  const containerRef = useRef<HTMLDivElement>(null);
-
   return (
     <Box
-      ref={containerRef}
       borderRadius="md"
       borderWidth={1}
       borderColor="gray.200"

@@ -6,14 +6,16 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react";
-import { useCallback } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
+import { Action, ActionData } from "../model";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { MakeCodeIcon } from "../utils/icons";
+import LedIconSvg from "./icons/LedIconSvg";
 import LedIcon from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";
-import { Action } from "../model";
+import debounce from "lodash.debounce";
 
 interface ActionNameCardProps {
   value: Action;
@@ -21,7 +23,6 @@ interface ActionNameCardProps {
   onSelectRow?: () => void;
   selected?: boolean;
   readOnly: boolean;
-  isTriggered?: boolean;
   disabled?: boolean;
 }
 
@@ -33,7 +34,6 @@ const ActionNameCard = ({
   onSelectRow,
   selected = false,
   readOnly = false,
-  isTriggered = undefined,
   disabled,
 }: ActionNameCardProps) => {
   const intl = useIntl();
@@ -41,7 +41,20 @@ const ActionNameCard = ({
   const toastId = "name-too-long-toast";
   const setActionName = useStore((s) => s.setActionName);
   const setActionIcon = useStore((s) => s.setActionIcon);
-  const { name, icon, ID: id } = value;
+  const { icon, ID: id } = value;
+  const [localName, setLocalName] = useState<string>(value.name);
+  const predictionResult = useStore((s) => s.predictionResult);
+  const isTriggered = readOnly
+    ? predictionResult?.detected?.ID === value.ID
+    : undefined;
+
+  const debouncedSetActionName = useMemo(
+    () =>
+      debounce((id: ActionData["ID"], name: string) => {
+        setActionName(id, name);
+      }, 400),
+    [setActionName]
+  );
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
@@ -61,9 +74,10 @@ const ActionNameCard = ({
         });
         return;
       }
-      setActionName(id, name);
+      setLocalName(name);
+      debouncedSetActionName(id, name);
     },
-    [id, intl, setActionName, toast]
+    [debouncedSetActionName, id, intl, toast]
   );
 
   const handleIconSelected = useCallback(
@@ -95,21 +109,25 @@ const ActionNameCard = ({
           borderRadius="sm"
           aria-label={intl.formatMessage(
             { id: "delete-action-aria" },
-            { action: name }
+            { action: localName }
           )}
         />
       )}
       <CardBody p={0} alignContent="center">
         <HStack>
           <HStack>
-            <LedIcon icon={icon} isTriggered={isTriggered} />;
+            {readOnly ? (
+              <LedIcon icon={icon} isTriggered={isTriggered} />
+            ) : (
+              <LedIconSvg icon={icon} />
+            )}
             {!readOnly && <LedIconPicker onIconSelected={handleIconSelected} />}
           </HStack>
           <Input
-            autoFocus={name.length === 0}
+            autoFocus={localName.length === 0}
             isTruncated
             readOnly={readOnly}
-            value={name}
+            value={localName}
             borderWidth={0}
             maxLength={18}
             {...(readOnly

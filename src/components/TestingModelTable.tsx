@@ -10,7 +10,6 @@ import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
 import React, { useRef } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { PredictionResult } from "../hooks/ml-hooks";
 import { useProject } from "../hooks/project-hooks";
 import { mlSettings } from "../mlConfig";
 import { getMakeCodeLang } from "../settings";
@@ -44,12 +43,7 @@ const headings = [
   },
 ];
 
-const TestingModelTable = ({
-  prediction,
-}: {
-  prediction: PredictionResult | undefined;
-}) => {
-  const { detected, confidences } = prediction ?? {};
+const TestingModelTable = () => {
   const actions = useStore((s) => s.actions);
   const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { project, projectEdited } = useProject();
@@ -88,28 +82,25 @@ const TestingModelTable = ({
           >
             {actions.map((action, idx) => {
               const { requiredConfidence: threshold } = action;
-              const isTriggered = detected ? detected.ID === action.ID : false;
               return (
                 <React.Fragment key={idx}>
                   <GridItem>
                     <ActionNameCard
                       value={action}
                       readOnly={true}
-                      isTriggered={isTriggered}
                       disabled={!isConnected}
                     />
                   </GridItem>
                   <GridItem>
                     <ActionCertaintyCard
                       actionName={action.name}
+                      actionId={action.ID}
                       onThresholdChange={(val) =>
                         setRequiredConfidence(action.ID, val)
                       }
-                      currentConfidence={confidences?.[action.ID]}
                       requiredConfidence={
                         threshold ?? mlSettings.defaultRequiredConfidence
                       }
-                      isTriggered={isTriggered}
                       disabled={!isConnected}
                     />
                   </GridItem>

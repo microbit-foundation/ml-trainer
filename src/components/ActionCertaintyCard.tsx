@@ -15,38 +15,39 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { tourElClassname } from "../tours";
 import PercentageDisplay from "./PercentageDisplay";
 import PercentageMeter from "./PercentageMeter";
+import { useStore } from "../store";
 
 const markClass = "CertaintyThresholdGridItem--mark";
 
 interface ActionCertaintyCardProps {
   requiredConfidence?: number;
-  currentConfidence?: number;
   onThresholdChange: (val: number) => void;
-  isTriggered: boolean;
   actionName: string;
+  actionId: number;
   disabled?: boolean;
 }
 
 const ActionCertaintyCard = ({
   requiredConfidence = 0,
-  currentConfidence = 0,
   onThresholdChange,
-  isTriggered,
   actionName,
+  actionId,
   disabled,
 }: ActionCertaintyCardProps) => {
   const intl = useIntl();
   const barWidth = 240;
+  const predictionResult = useStore((s) => s.predictionResult);
+  const isTriggered = predictionResult?.detected?.ID === actionId;
   const colorScheme = useMemo(
     () => (isTriggered ? "brand2.500" : undefined),
     [isTriggered]
   );
-
   const handleThresholdChange = useCallback(
     (val: number) => onThresholdChange(val * 0.01),
     [onThresholdChange]
   );
   const sliderValue = requiredConfidence * 100;
+  const currentConfidence = predictionResult?.confidences[actionId] ?? 0;
   return (
     <Card
       py={2}

@@ -6,36 +6,31 @@ import {
   Image,
   Portal,
   Text,
-  VisuallyHidden,
   VStack,
 } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import microbitImage from "../images/stylised-microbit-black.svg";
 import { useLogging } from "../logging/logging-hooks";
-import { Action } from "../model";
 import { tourElClassname } from "../tours";
-import InfoToolTip from "./InfoToolTip";
-import LedIcon from "./LedIcon";
-import LiveGraph from "./LiveGraph";
 import AlertIcon from "./AlertIcon";
+import InfoToolTip from "./InfoToolTip";
+import LiveGraph from "./LiveGraph";
+import PredictedAction from "./PredictedAction";
 
 interface LiveGraphPanelProps {
-  detected?: Action | undefined;
   showPredictedAction?: boolean;
   disconnectedTextId: string;
 }
 
-const predictedActionDisplayWidth = 180;
+export const predictedActionDisplayWidth = 180;
 
 const LiveGraphPanel = ({
   showPredictedAction,
-  detected,
   disconnectedTextId,
 }: LiveGraphPanelProps) => {
-  const intl = useIntl();
   const { actions, status, isConnected } = useConnectionStage();
   const parentPortalRef = useRef(null);
   const logging = useLogging();
@@ -150,58 +145,7 @@ const LiveGraphPanel = ({
         </Portal>
         <HStack position="absolute" width="100%" height="100%" spacing={0}>
           <LiveGraph />
-          {showPredictedAction && (
-            <VStack
-              className={tourElClassname.estimatedAction}
-              w={`${predictedActionDisplayWidth}px`}
-              gap={0}
-              h="100%"
-              py={2.5}
-              pt={3.5}
-            >
-              <VisuallyHidden aria-live="polite">
-                <FormattedMessage
-                  id="estimated-action-aria"
-                  values={{
-                    action:
-                      detected?.name ?? intl.formatMessage({ id: "unknown" }),
-                  }}
-                />
-              </VisuallyHidden>
-              <HStack
-                justifyContent="flex-start"
-                w="100%"
-                gap={2}
-                pr={2}
-                mb={3}
-              >
-                <Text size="md" fontWeight="bold" alignSelf="start">
-                  <FormattedMessage id="estimated-action-label" />
-                </Text>
-                <InfoToolTip
-                  titleId="estimated-action-label"
-                  descriptionId="estimated-action-tooltip"
-                />
-              </HStack>
-              <VStack justifyContent="center" flexGrow={1} mb={0.5}>
-                <LedIcon
-                  icon={detected?.icon ?? "off"}
-                  size="70px"
-                  isTriggered
-                />
-              </VStack>
-              <Text
-                size="md"
-                fontWeight="bold"
-                color={detected ? "brand2.600" : "gray.600"}
-                isTruncated
-                textAlign="center"
-                w={`${predictedActionDisplayWidth}px`}
-              >
-                {detected?.name ?? <FormattedMessage id="unknown" />}
-              </Text>
-            </VStack>
-          )}
+          {showPredictedAction && <PredictedAction />}
         </HStack>
       </HStack>
     </HStack>

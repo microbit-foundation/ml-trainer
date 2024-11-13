@@ -2,23 +2,27 @@ import { maxAcceleration } from "./mlConfig";
 
 const maxDistance = 1.1;
 
-type Dimension = "x" | "y" | "z";
 export interface LabelConfig {
-  label: Dimension;
+  label: string;
   arrowHeight: number;
   labelHeight: number;
-  id: number;
 }
 
-export const getUpdatedLabelConfig = (
-  labelConfigs: LabelConfig[],
-  dataPoint: { x: number; y: number; z: number }
-) => {
-  const newLabelConfigs = labelConfigs.map((config) => ({
-    ...config,
-    arrowHeight: getArrowHeight(dataPoint[config.label]),
-  }));
-  return fixOverlappingLabels(newLabelConfigs);
+export const getLabelHeights = (dataPoint: {
+  x: number;
+  y: number;
+  z: number;
+}) => {
+  const result: LabelConfig[] = [];
+  const keys = Object.keys(dataPoint);
+  Object.values(dataPoint).forEach((value, idx) => {
+    result.push({
+      label: keys[idx],
+      arrowHeight: getArrowHeight(value),
+      labelHeight: 0,
+    });
+  });
+  return fixOverlappingLabels(result);
 };
 
 const scaleDataToArrowHeight = (value: number) => {

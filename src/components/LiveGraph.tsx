@@ -1,18 +1,17 @@
-import { Box, HStack, Icon, Text, usePrevious } from "@chakra-ui/react";
+import { HStack, usePrevious } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
 import { AccelerometerDataEvent } from "@microbit/microbit-connection";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { RiArrowDropLeftFill } from "react-icons/ri";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { SmoothieChart, TimeSeries } from "smoothie";
 import { useConnectActions } from "../connect-actions-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { LabelConfig, getUpdatedLabelConfig } from "../live-graph-label-config";
-import { useSettings, useStore } from "../store";
-import { maxAccelerationScaleForGraphs } from "../mlConfig";
 import { useGraphColors } from "../hooks/use-graph-colors";
+import { maxAccelerationScaleForGraphs } from "../mlConfig";
+import { useSettings, useStore } from "../store";
+import LiveGraphLabels from "./LiveGraphLabels";
 
-const smoothenDataPoint = (curr: number, next: number) => {
+export const smoothenDataPoint = (curr: number, next: number) => {
   // TODO: Factor out so that recording graph can do the same
   // Remove dividing by 1000 operation once it gets moved to connection lib
   return (next / 1000) * 0.25 + curr * 0.75;
@@ -101,12 +100,6 @@ const LiveGraph = () => {
     }
   }, [isRecording, prevIsRecording, recordLines]);
 
-  const [labelConfigs, setLabelConfigs] = useState<LabelConfig[]>([
-    { label: "x", arrowHeight: 0, labelHeight: 0, id: 0 },
-    { label: "y", arrowHeight: 0, labelHeight: 0, id: 1 },
-    { label: "z", arrowHeight: 0, labelHeight: 0, id: 2 },
-  ]);
-
   const dataRef = useRef<{ x: number; y: number; z: number }>({
     x: 0,
     y: 0,
@@ -124,8 +117,6 @@ const LiveGraph = () => {
       lineX.append(t, dataRef.current.x, false);
       lineY.append(t, dataRef.current.y, false);
       lineZ.append(t, dataRef.current.z, false);
-
-      setLabelConfigs(getUpdatedLabelConfig(labelConfigs, dataRef.current));
     };
     if (isConnected) {
       connectActions.addAccelerometerListener(listener);
@@ -133,7 +124,7 @@ const LiveGraph = () => {
     return () => {
       connectActions.removeAccelerometerListener(listener);
     };
-  }, [connectActions, isConnected, labelConfigs, lineX, lineY, lineZ]);
+  }, [connectActions, isConnected, lineX, lineY, lineZ]);
 
   return (
     <HStack
@@ -148,41 +139,7 @@ const LiveGraph = () => {
         id="smoothie-chart"
         width={width - 30}
       />
-      {isConnected && (
-        <Box w={10} h={40} position="relative">
-          {labelConfigs.map((config, idx) => (
-            <React.Fragment key={idx}>
-              <Box
-                ml={-7}
-                color={colors[config.label]}
-                position="absolute"
-                w="fit-content"
-                // Use inline style attribute to avoid style tags being
-                // constantly appended to the <head/> element.
-                style={{
-                  transform: `translateY(${config.arrowHeight}rem)`,
-                }}
-              >
-                <Icon as={RiArrowDropLeftFill} boxSize={12} />
-              </Box>
-              <Text
-                ml={1}
-                fontSize="xl"
-                position="absolute"
-                color={colors[config.label]}
-                w="fit-content"
-                // Use inline style attribute to avoid style tags being
-                // constantly appended to the <head/> element.
-                style={{
-                  transform: `translateY(${config.labelHeight + 0.45}rem)`,
-                }}
-              >
-                {config.label}
-              </Text>
-            </React.Fragment>
-          ))}
-        </Box>
-      )}
+      {isConnected && <LiveGraphLabels />}
     </HStack>
   );
 };

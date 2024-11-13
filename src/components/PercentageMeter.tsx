@@ -26,7 +26,7 @@ const PercentageMeter = ({
         // Use inline style attribute to avoid style tags being
         // constantly appended to the <head/> element.
         style={{
-          width: `${value * 100}%`,
+          width: `${Math.round(value * 100)}%`,
         }}
         h={height}
         rounded="full"

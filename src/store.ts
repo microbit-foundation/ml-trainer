@@ -11,7 +11,7 @@ import {
   generateCustomFiles,
   generateProject,
 } from "./makecode/utils";
-import { trainModel } from "./ml";
+import { Confidences, predict, trainModel } from "./ml";
 import {
   DataSamplesView,
   DownloadState,
@@ -33,6 +33,9 @@ import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { untitledProjectName } from "./project-name";
+import { mlSettings } from "./mlConfig";
+import { BufferedData } from "./buffered-data";
+import { getDetectedAction } from "./utils/prediction";
 import { getTour as getTourSpec } from "./tours";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
@@ -65,6 +68,11 @@ export const currentDataWindow: DataWindow = {
   deviceSamplesPeriod: 20, // Default value for accelerometer period.
   deviceSamplesLength: 50, // Number of samples required at 20 ms intervals for 1 second of data.
 };
+
+interface PredictionResult {
+  confidences: Confidences;
+  detected: Action | undefined;
+}
 
 const createUntitledProject = (): Project => ({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -160,6 +168,9 @@ export interface State {
   tourState?: TourState;
   postConnectTourTrigger?: TourTrigger;
   postImportDialogState: PostImportDialogState;
+
+  predictionInterval: ReturnType<typeof setInterval> | undefined;
+  predictionResult: PredictionResult | undefined;
 }
 
 export interface ConnectOptions {
@@ -227,6 +238,8 @@ export interface Actions {
   setShowGraphs(show: boolean): void;
 
   setPostImportDialogState(state: PostImportDialogState): void;
+  startPredicting(buffer: BufferedData): void;
+  stopPredicting(): void;
 }
 
 type Store = State & Actions;
@@ -262,6 +275,8 @@ const createMlStore = (logging: Logging) => {
           trainModelProgress: 0,
           dataSamplesView: DataSamplesView.Graph,
           postImportDialogState: PostImportDialogState.None,
+          predictionInterval: undefined,
+          predictionResult: undefined,
 
           setSettings(update: Partial<Settings>) {
             set(
@@ -933,6 +948,54 @@ const createMlStore = (logging: Logging) => {
 
           setPostImportDialogState(state: PostImportDialogState) {
             set({ postImportDialogState: state });
+          },
+
+          startPredicting(buffer: BufferedData) {
+            const { actions, model, predictionInterval, dataWindow } = get();
+            if (!model || predictionInterval) {
+              return;
+            }
+            const newPredictionInterval = setInterval(() => {
+              const startTime = Date.now() - dataWindow.duration;
+              const input = {
+                model,
+                data: buffer.getSamples(startTime),
+                classificationIds: actions.map((a) => a.ID),
+              };
+              if (input.data.x.length > dataWindow.minSamples) {
+                const result = predict(input, dataWindow);
+                if (result.error) {
+                  logging.error(result.detail);
+                } else {
+                  const { confidences } = result;
+                  const detected = getDetectedAction(
+                    // Get latest actions from store so that changes to
+                    // recognition point are realised.
+                    get().actions,
+                    result.confidences
+                  );
+                  set({
+                    predictionResult: {
+                      detected,
+                      confidences,
+                    },
+                  });
+                }
+              }
+            }, 1000 / mlSettings.updatesPrSecond);
+            set({ predictionInterval: newPredictionInterval });
+          },
+
+          getPrediction() {
+            return get().predictionResult;
+          },
+
+          stopPredicting() {
+            const { predictionInterval } = get();
+            if (predictionInterval) {
+              clearInterval(predictionInterval);
+              set({ predictionInterval: undefined });
+            }
           },
         }),
         {
