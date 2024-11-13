@@ -44,8 +44,7 @@ const MakeCodeLoadErrorDialog = () => {
           <ModalFooter justifyContent="space-between">
             <ExternalLink
               textId="learn-about-firewall-requirements-action"
-              // TODO: Replace with link
-              href=""
+              href="https://support.microbit.org/support/solutions/articles/19000030385-firewall-requirements-for-micro-bit-editors-and-websites"
             />
             <HStack gap={5}>
               <Button onClick={onClose} variant="secondary" size="lg">
