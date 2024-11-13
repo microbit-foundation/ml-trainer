@@ -1139,16 +1139,22 @@
       "value": "Graph colour scheme"
     }
   ],
+  "graph-color-scheme-color-blind-1": [
+    {
+      "type": 0,
+      "value": "Colour blind alternative 1"
+    }
+  ],
+  "graph-color-scheme-color-blind-2": [
+    {
+      "type": 0,
+      "value": "Colour blind alternative 2"
+    }
+  ],
   "graph-color-scheme-default": [
     {
       "type": 0,
       "value": "Default (red, blue, green)"
-    }
-  ],
-  "graph-color-scheme-high-contrast": [
-    {
-      "type": 0,
-      "value": "High contrast"
     }
   ],
   "help-label": [

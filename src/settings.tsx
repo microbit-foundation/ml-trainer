@@ -45,10 +45,11 @@ export const defaultSettings: Settings = {
   graphColorScheme: "default",
 };
 
-export type GraphColorScheme = "default" | "high-contrast";
+export type GraphColorScheme = "default" | "color-blind-1" | "color-blind-2";
 export const graphColorSchemeOptions: GraphColorScheme[] = [
   "default",
-  "high-contrast",
+  "color-blind-1",
+  "color-blind-2",
 ];
 
 export interface Settings {

@@ -679,12 +679,16 @@
     "defaultMessage": "Graph colour scheme",
     "description": "Graph colour scheme setting label"
   },
-  "graph-color-scheme-default": {
-    "defaultMessage": "Default (red, blue, green)",
+  "graph-color-scheme-color-blind-1": {
+    "defaultMessage": "Colour blind alternative 1",
     "description": "Graph colour scheme option"
   },
-  "graph-color-scheme-high-contrast": {
-    "defaultMessage": "High contrast",
+  "graph-color-scheme-color-blind-2": {
+    "defaultMessage": "Colour blind alternative 2",
+    "description": "Graph colour scheme option"
+  },
+  "graph-color-scheme-default": {
+    "defaultMessage": "Default (red, blue, green)",
     "description": "Graph colour scheme option"
   },
   "help-label": {
