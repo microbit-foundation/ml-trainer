@@ -149,12 +149,9 @@ export const ProjectProvider = ({
   const onWorkspaceLoaded = useCallback(() => {
     logging.log("[MakeCode] Workspace loaded");
 
-    setTimeout(() => {
-      console.log("resolved");
-      // Get latest timedout state and only mark editor ready if editor has not timedout.
-      getEditorStartUp() !== "timed out" && editorReady();
-      editorReadyPromiseRef.current.resolve();
-    }, 10000);
+    // Get latest start up state and only mark editor ready if editor has not timed out.
+    getEditorStartUp() !== "timed out" && editorReady();
+    editorReadyPromiseRef.current.resolve();
   }, [editorReady, editorReadyPromiseRef, getEditorStartUp, logging]);
 
   const checkIfEditorStartUpTimedOut = useCallback(
@@ -219,7 +216,6 @@ export const ProjectProvider = ({
           logging.log("[MakeCode] Load timedout");
           throw new CodeEditorError("MakeCode load timed out");
         }
-        console.log("passed");
       } finally {
         doAfterEditorUpdatePromise.current = undefined;
       }
@@ -241,7 +237,6 @@ export const ProjectProvider = ({
     logging.event({
       type: "edit-in-makecode",
     });
-    console.log("open editor");
     try {
       await doAfterEditorUpdate(() => {
         navigate(createCodePageUrl());

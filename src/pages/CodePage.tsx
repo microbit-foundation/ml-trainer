@@ -24,7 +24,6 @@ const CodePage = () => {
         navigate(createDataSamplesPageUrl());
       } else {
         const success = await browserNavigationToEditor();
-        console.log("success", success);
         if (success) {
           setLoading(false);
           setEditorOpen(true);
