@@ -149,7 +149,7 @@ export interface State {
   isEditorOpen: boolean;
   isEditorReady: boolean;
   editorStartUp: EditorStartUp;
-  isEditorTimedoutDialogOpen: boolean;
+  isEditorTimedOutDialogOpen: boolean;
 
   download: DownloadState;
   downloadFlashingProgress: number;
@@ -262,7 +262,7 @@ const createMlStore = (logging: Logging) => {
           isEditorOpen: false,
           isEditorReady: false,
           editorStartUp: "in-progress",
-          isEditorTimedoutDialogOpen: false,
+          isEditorTimedOutDialogOpen: false,
           appEditNeedsFlushToEditor: true,
           changedHeaderExpected: false,
           // This dialog flow spans two pages
@@ -723,7 +723,7 @@ const createMlStore = (logging: Logging) => {
           },
 
           editorTimedOut() {
-            set({ editorStartUp: "timed out" }, false, "editorTimedout");
+            set({ editorStartUp: "timed out" }, false, "editorTimedOut");
           },
 
           getEditorStartUp() {
@@ -732,9 +732,9 @@ const createMlStore = (logging: Logging) => {
 
           setIsEditorTimedOutDialogOpen(isOpen: boolean) {
             set(
-              { isEditorTimedoutDialogOpen: isOpen },
+              { isEditorTimedOutDialogOpen: isOpen },
               false,
-              "setIsEditorTimedoutDialogOpen"
+              "setIsEditorTimedOutDialogOpen"
             );
           },
 

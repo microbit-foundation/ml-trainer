@@ -159,7 +159,7 @@ export const ProjectProvider = ({
       const elapsedTimeSinceStartup = Date.now() - startUpTimestamp.current;
       const remainingTimeout = startUpTimeout - elapsedTimeSinceStartup;
       if (
-        // Editor has already timedout.
+        // Editor has already timed out.
         (editorStartUp === "in-progress" && remainingTimeout <= 0) ||
         editorStartUp === "timed out"
       ) {
@@ -208,12 +208,12 @@ export const ProjectProvider = ({
       }
 
       try {
-        const hasTimedout = await checkIfEditorStartUpTimedOut(
+        const hasTimedOut = await checkIfEditorStartUpTimedOut(
           doAfterEditorUpdatePromise.current
         );
-        if (hasTimedout) {
+        if (hasTimedOut) {
           editorTimedOut();
-          logging.log("[MakeCode] Load timedout");
+          logging.log("[MakeCode] Load timed out");
           throw new CodeEditorError("MakeCode load timed out");
         }
       } finally {

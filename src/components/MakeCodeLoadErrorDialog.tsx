@@ -17,7 +17,7 @@ import { useStore } from "../store";
 import ExternalLink from "./ExternalLink";
 
 const MakeCodeLoadErrorDialog = () => {
-  const isOpen = useStore((s) => s.isEditorTimedoutDialogOpen);
+  const isOpen = useStore((s) => s.isEditorTimedOutDialogOpen);
   const setIsOpen = useStore((s) => s.setIsEditorTimedOutDialogOpen);
   const onClose = useCallback(() => setIsOpen(false), [setIsOpen]);
   return (

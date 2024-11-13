@@ -67,7 +67,7 @@ const DefaultPageLayout = ({
     (s) => s.trainModelDialogStage === TrainModelDialogStage.Closed
   );
   const isMakeCodeErrorDialogClosed = useStore(
-    (s) => !s.isEditorTimedoutDialogOpen
+    (s) => !s.isEditorTimedOutDialogOpen
   );
   const { stage } = useConnectionStage();
   const isConnectionDialogClosed = stage.flowStep === ConnectionFlowStep.None;
