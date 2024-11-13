@@ -15,6 +15,7 @@ import {
 import { getHexFileUrl, HexType } from "./device/get-hex-file";
 import { HexUrl } from "./model";
 import { downloadHex } from "./utils/fs-util";
+import { ConnectOptions } from "./store";
 
 type FlowStage = Pick<ConnectionStage, "flowStep" | "flowType">;
 
@@ -29,10 +30,14 @@ export class ConnectionStageActions {
     private stage: ConnectionStage,
     private setStage: (stage: ConnectionStage) => void,
     private setStatus: (status: ConnectionStatus) => void,
+    private dataCollectionMicrobitStartConnect: (
+      options?: ConnectOptions
+    ) => void,
     private dataCollectionMicrobitConnected: () => void
   ) {}
 
-  startConnect = () => {
+  startConnect = (options?: ConnectOptions) => {
+    this.dataCollectionMicrobitStartConnect(options);
     this.setStatus(ConnectionStatus.NotConnected);
     const { isWebBluetoothSupported, isWebUsbSupported } = this.stage;
     this.setStage({

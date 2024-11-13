@@ -56,6 +56,7 @@ const LiveGraph = () => {
         borderVisible: false,
       },
       interpolation: "linear",
+      enableDpiScaling: false,
     });
 
     smoothieChart.addTimeSeries(lineX, { lineWidth, strokeStyle: colors.x });

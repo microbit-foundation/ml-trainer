@@ -14,7 +14,6 @@ import {
 import { useCallback, useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useStore } from "../store";
-import { tours } from "../tours";
 import TourOverlay from "./TourOverlay";
 
 // Default distance or margin between the reference and popper.
@@ -23,8 +22,8 @@ const gutterDefault = 8;
 const Tour = () => {
   const intl = useIntl();
   const tourState = useStore((s) => s.tourState);
-  const steps = tourState ? tours[tourState.id] : undefined;
-  const step = tourState && steps ? steps[tourState.index] : undefined;
+  const steps = tourState?.steps;
+  const step = steps?.[tourState?.index ?? -1];
 
   const tourNext = useStore((s) => s.tourNext);
   const tourBack = useStore((s) => s.tourBack);
@@ -50,7 +49,7 @@ const Tour = () => {
     if (!tourState) {
       throw new Error("Must be a tour");
     }
-    tourComplete(tourState.id);
+    tourComplete(tourState.markCompleted);
   }, [tourComplete, tourState]);
 
   useEffect(() => {

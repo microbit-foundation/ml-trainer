@@ -38,7 +38,7 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
       <Box position="relative" width="100%">
         <Image
           height={375}
-          width={349}
+          width={342}
           src={selectMicrobitImage}
           alt={intl.formatMessage({ id: "connect-help-alt" })}
         />
@@ -55,7 +55,7 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
         <List
           position="absolute"
           left="490px"
-          top="61px"
+          top="68px"
           alignItems="flex-start"
           spacing={2}
         >
@@ -80,10 +80,10 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
             </Flex>
           </ListItem>
         </List>
-        <Box position="absolute" top="81px" left="230px">
+        <Box position="absolute" top="85px" left="230px">
           <ArrowOne />
         </Box>
-        <Box position="absolute" bottom="48px" left="256px">
+        <Box position="absolute" bottom="43px" left="259px">
           <ArrowTwo />
         </Box>
       </Box>

@@ -37,6 +37,7 @@ import {
   readFileAsText,
 } from "../utils/fs-util";
 import { useDownloadActions } from "./download-hooks";
+import { usePromiseRef } from "./use-promise-ref";
 
 class CodeEditorError extends Error {}
 
@@ -66,7 +67,12 @@ interface ProjectContext {
 
   editorCallbacks: Pick<
     MakeCodeFrameProps,
-    "onDownload" | "onWorkspaceSave" | "onWorkspaceLoaded" | "onSave" | "onBack"
+    | "onDownload"
+    | "onWorkspaceSave"
+    | "onWorkspaceLoaded"
+    | "onSave"
+    | "onBack"
+    | "initialProjects"
   >;
 }
 
@@ -85,7 +91,7 @@ interface ProjectProviderProps {
   children: ReactNode;
 }
 
-const useDefaultProjectName = (): string => {
+export const useDefaultProjectName = (): string => {
   const intl = useIntl();
   return intl.formatMessage({ id: "default-project-name" });
 };
@@ -113,40 +119,53 @@ export const ProjectProvider = ({
   const toast = useToast();
   const logging = useLogging();
   const projectEdited = useStore((s) => s.projectEdited);
-  const onWorkspaceLoaded = useCallback(() => {
-    logging.log("[MakeCode] Workspace loaded");
-  }, [logging]);
+  const editorReady = useStore((s) => s.editorReady);
   const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
   const getCurrentProject = useStore((s) => s.getCurrentProject);
   const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
   const navigate = useNavigate();
+
+  const project = useStore((s) => s.project);
+  const editorReadyPromiseRef = usePromiseRef<void>();
+  const initialProjects = useCallback(() => {
+    logging.log(
+      `[MakeCode] Initialising with header ID: ${project.header?.id}`
+    );
+    // This is a useful point to introduce a delay to debug MakeCode init dependencies.
+    return Promise.resolve([project]);
+  }, [logging, project]);
+  const onWorkspaceLoaded = useCallback(() => {
+    logging.log("[MakeCode] Workspace loaded");
+    editorReady();
+    editorReadyPromiseRef.current.resolve();
+  }, [editorReady, editorReadyPromiseRef, logging]);
+
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
       if (!doAfterEditorUpdatePromise.current && checkIfProjectNeedsFlush()) {
-        doAfterEditorUpdatePromise.current = new Promise<void>(
-          (resolve, reject) => {
-            // driverRef.current is not defined on first render.
-            // Only an issue when navigating to code page directly.
-            if (!driverRef.current) {
-              reject(new CodeEditorError("MakeCode iframe ref is undefined"));
-            } else {
-              const project = getCurrentProject();
-              expectChangedHeader();
-              driverRef.current
-                .importProject({ project })
-                .then(() => {
-                  projectFlushedToEditor();
-                  resolve();
-                })
-                .catch((e) => {
-                  reject(e);
-                });
+        doAfterEditorUpdatePromise.current = (async () => {
+          // driverRef.current is not defined on first render.
+          // Only an issue when navigating to code page directly.
+          if (!driverRef.current) {
+            throw new CodeEditorError("MakeCode iframe ref is undefined");
+          } else {
+            logging.log("[MakeCode] Importing project");
+            await editorReadyPromiseRef.current.promise;
+            const project = getCurrentProject();
+            expectChangedHeader();
+            try {
+              await driverRef.current.importProject({ project });
+              logging.log("[MakeCode] Project import succeeded");
+              projectFlushedToEditor();
+            } catch (e) {
+              logging.log("[MakeCode] Project import failed");
+              throw e;
             }
           }
-        );
+        })();
       }
       try {
         await doAfterEditorUpdatePromise.current;
@@ -157,9 +176,11 @@ export const ProjectProvider = ({
     },
     [
       checkIfProjectNeedsFlush,
+      driverRef,
+      logging,
+      editorReadyPromiseRef,
       getCurrentProject,
       expectChangedHeader,
-      driverRef,
       projectFlushedToEditor,
     ]
   );
@@ -214,6 +235,8 @@ export const ProjectProvider = ({
         const makeCodeMagicMark = "41140E2FB82FA2BB";
         // Check if is a MakeCode hex, otherwise show error dialog.
         if (hex.includes(makeCodeMagicMark)) {
+          await editorReadyPromiseRef.current.promise;
+          // This triggers the code in editorChanged to update actions etc.
           driverRef.current!.importFile({
             filename: file.name,
             parts: [hex],
@@ -225,7 +248,14 @@ export const ProjectProvider = ({
         setPostImportDialogState(PostImportDialogState.Error);
       }
     },
-    [driverRef, loadDataset, logging, navigate, setPostImportDialogState]
+    [
+      driverRef,
+      editorReadyPromiseRef,
+      loadDataset,
+      logging,
+      navigate,
+      setPostImportDialogState,
+    ]
   );
 
   const setSave = useStore((s) => s.setSave);
@@ -315,7 +345,6 @@ export const ProjectProvider = ({
     [downloadActions, saveHex]
   );
 
-  const project = useStore((s) => s.project);
   const value = useMemo(
     () => ({
       loadFile,
@@ -326,6 +355,7 @@ export const ProjectProvider = ({
       resetProject,
       saveHex,
       editorCallbacks: {
+        initialProjects,
         onSave,
         onWorkspaceSave,
         onDownload,
@@ -334,18 +364,19 @@ export const ProjectProvider = ({
       },
     }),
     [
-      browserNavigationToEditor,
       loadFile,
-      onBack,
-      onDownload,
-      onSave,
-      onWorkspaceSave,
-      onWorkspaceLoaded,
       openEditor,
+      browserNavigationToEditor,
       project,
       projectEdited,
       resetProject,
       saveHex,
+      initialProjects,
+      onSave,
+      onWorkspaceSave,
+      onDownload,
+      onBack,
+      onWorkspaceLoaded,
     ]
   );
 

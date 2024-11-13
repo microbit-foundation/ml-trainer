@@ -23,14 +23,17 @@ import {
   RecordingData,
   SaveState,
   SaveStep,
-  TourId,
+  TourTrigger,
   TourState,
   TrainModelDialogStage,
+  TourTriggerName,
+  tourSequence,
 } from "./model";
 import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { untitledProjectName } from "./project-name";
+import { getTour as getTourSpec } from "./tours";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -143,6 +146,7 @@ export interface State {
   changedHeaderExpected: boolean;
   appEditNeedsFlushToEditor: boolean;
   isEditorOpen: boolean;
+  isEditorReady: boolean;
 
   download: DownloadState;
   downloadFlashingProgress: number;
@@ -154,7 +158,12 @@ export interface State {
   trainModelDialogStage: TrainModelDialogStage;
 
   tourState?: TourState;
+  postConnectTourTrigger?: TourTrigger;
   postImportDialogState: PostImportDialogState;
+}
+
+export interface ConnectOptions {
+  postConnectTourTrigger?: TourTrigger;
 }
 
 export interface Actions {
@@ -167,7 +176,10 @@ export interface Actions {
   deleteActionRecording(id: ActionData["ID"], recordingIdx: number): void;
   deleteAllActions(): void;
   downloadDataset(): void;
+
+  dataCollectionMicrobitConnectionStart(options?: ConnectOptions): void;
   dataCollectionMicrobitConnected(): void;
+
   loadDataset(actions: ActionData[]): void;
   loadProject(project: Project, name: string): void;
   setEditorOpen(open: boolean): void;
@@ -195,6 +207,7 @@ export interface Actions {
   getCurrentProject(): Project;
   checkIfProjectNeedsFlush(): boolean;
   editorChange(project: Project): void;
+  editorReady(): void;
   setChangedHeaderExpected(): void;
   projectFlushedToEditor(): void;
 
@@ -203,10 +216,12 @@ export interface Actions {
   setDownloadFlashingProgress(value: number): void;
   setSave(state: SaveState): void;
 
-  tourStart(tourId: TourId): void;
+  tourStart(trigger: TourTrigger, manual?: boolean): void;
   tourNext(): void;
   tourBack(): void;
-  tourComplete(id: TourId): void;
+  tourComplete(markCompleted: TourTriggerName[]): void;
+
+  setPostConnectTourTrigger(trigger: TourTrigger | undefined): void;
 
   setDataSamplesView(view: DataSamplesView): void;
   setShowGraphs(show: boolean): void;
@@ -239,6 +254,7 @@ const createMlStore = (logging: Logging) => {
           settings: defaultSettings,
           model: undefined,
           isEditorOpen: false,
+          isEditorReady: false,
           appEditNeedsFlushToEditor: true,
           changedHeaderExpected: false,
           // This dialog flow spans two pages
@@ -511,10 +527,7 @@ const createMlStore = (logging: Logging) => {
                 settings: {
                   ...settings,
                   toursCompleted: Array.from(
-                    new Set([
-                      ...settings.toursCompleted,
-                      TourId.CollectDataToTrainModel,
-                    ])
+                    new Set([...settings.toursCompleted, "DataSamplesRecorded"])
                   ),
                 },
                 actions: (() => {
@@ -555,10 +568,7 @@ const createMlStore = (logging: Logging) => {
                 settings: {
                   ...settings,
                   toursCompleted: Array.from(
-                    new Set([
-                      ...settings.toursCompleted,
-                      TourId.CollectDataToTrainModel,
-                    ])
+                    new Set([...settings.toursCompleted, "DataSamplesRecorded"])
                   ),
                 },
                 actions: newActions,
@@ -568,7 +578,7 @@ const createMlStore = (logging: Logging) => {
                 projectEdited: true,
                 appEditNeedsFlushToEditor: true,
                 timestamp,
-                projectLoadTimestamp: timestamp,
+                // We don't update projectLoadTimestamp here as we don't want a toast notification for .org import
               };
             });
           },
@@ -696,6 +706,10 @@ const createMlStore = (logging: Logging) => {
             return get().project;
           },
 
+          editorReady() {
+            set({ isEditorReady: true }, false, "editorReady");
+          },
+
           editorChange(newProject: Project) {
             const actionName = "editorChange";
             set(
@@ -703,6 +717,7 @@ const createMlStore = (logging: Logging) => {
                 const {
                   project: prevProject,
                   isEditorOpen,
+                  isEditorReady,
                   changedHeaderExpected,
                   settings,
                 } = state;
@@ -718,34 +733,41 @@ const createMlStore = (logging: Logging) => {
                       project: newProject,
                     };
                   }
-                  logging.log(
-                    `[MakeCode] Detected new project, loading actions. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
-                  );
-                  // It's a new project. Thanks user. We'll update our state.
-                  // This will cause another write to MakeCode but that's OK as it gives us
-                  // a chance to validate/update the project
-                  const timestamp = Date.now();
-                  const newActions = getActionsFromProject(newProject);
-                  return {
-                    settings: {
-                      ...settings,
-                      toursCompleted: Array.from(
-                        new Set([
-                          ...settings.toursCompleted,
-                          TourId.CollectDataToTrainModel,
-                        ])
-                      ),
-                    },
-                    project: newProject,
-                    projectLoadTimestamp: timestamp,
-                    timestamp,
-                    // New project loaded externally so we can't know whether its edited.
-                    projectEdited: true,
-                    actions: newActions,
-                    dataWindow: getDataWindowFromActions(newActions),
-                    model: undefined,
-                    isEditorOpen: false,
-                  };
+                  if (isEditorReady) {
+                    logging.log(
+                      `[MakeCode] Detected new project, loading actions. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
+                    );
+                    // It's a new project. Thanks user. We'll update our state.
+                    // This will cause another write to MakeCode but that's OK as it gives us
+                    // a chance to validate/update the project
+                    const timestamp = Date.now();
+                    const newActions = getActionsFromProject(newProject);
+                    return {
+                      settings: {
+                        ...settings,
+                        toursCompleted: Array.from(
+                          new Set([
+                            ...settings.toursCompleted,
+                            "DataSamplesRecorded",
+                          ])
+                        ),
+                      },
+                      project: newProject,
+                      projectLoadTimestamp: timestamp,
+                      timestamp,
+                      // New project loaded externally so we can't know whether its edited.
+                      projectEdited: true,
+                      actions: newActions,
+                      dataWindow: getDataWindowFromActions(newActions),
+                      model: undefined,
+                      isEditorOpen: false,
+                    };
+                  } else {
+                    // In particular, this happens if the MakeCode init completes after we've updated our project state from an import from .org
+                    logging.log(
+                      `[MakeCode] Ignoring changed ID before editor ready. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
+                    );
+                  }
                 } else if (isEditorOpen) {
                   logging.log(
                     `[MakeCode] Edit copied to project. ID ${newProject.header?.id}`
@@ -793,25 +815,69 @@ const createMlStore = (logging: Logging) => {
               "projectFlushedToEditor"
             );
           },
+          setPostConnectTourTrigger(trigger: TourTrigger | undefined) {
+            set(
+              { postConnectTourTrigger: trigger },
+              false,
+              "setPostConnectTourId"
+            );
+          },
+          dataCollectionMicrobitConnectionStart(options) {
+            set(
+              { postConnectTourTrigger: options?.postConnectTourTrigger },
+              false,
+              "dataCollectionMicrobitConnectionStart"
+            );
+          },
           dataCollectionMicrobitConnected() {
             set(
-              ({ actions, tourState, settings }) => ({
-                actions: actions.length === 0 ? [createFirstAction()] : actions,
-                tourState: settings.toursCompleted.includes(
-                  TourId.DataSamplesPage
-                )
-                  ? tourState
-                  : { id: TourId.DataSamplesPage, index: 0 },
-              }),
+              ({ actions, tourState, postConnectTourTrigger }) => {
+                return {
+                  actions:
+                    actions.length === 0 ? [createFirstAction()] : actions,
+
+                  // If a tour has been explicitly requested, do that.
+                  // Other tours are triggered by callbacks or effects on the relevant page so they run only on the correct screen.
+                  tourState: postConnectTourTrigger
+                    ? {
+                        index: 0,
+                        ...getTourSpec(postConnectTourTrigger, actions),
+                      }
+                    : tourState,
+                  postConnectTourTrigger: undefined,
+                };
+              },
               false,
               "dataCollectionMicrobitConnected"
             );
           },
 
-          tourStart(tourId: TourId) {
+          tourStart(trigger: TourTrigger, manual: boolean = false) {
             set((state) => {
-              if (!state.settings.toursCompleted.includes(tourId)) {
-                return { tourState: { id: tourId, index: 0 } };
+              if (
+                manual ||
+                (!state.tourState &&
+                  !state.settings.toursCompleted.includes(trigger.name))
+              ) {
+                const tourSpec = getTourSpec(trigger, state.actions);
+                const result = {
+                  tourState: {
+                    ...tourSpec,
+                    index: 0,
+                  },
+                  // If manually triggered, filter out subsequent tours as they should run again too when reached
+                  settings: manual
+                    ? {
+                        ...state.settings,
+                        toursCompleted: state.settings.toursCompleted.filter(
+                          (t) =>
+                            tourSequence.indexOf(t) <=
+                            tourSequence.indexOf(trigger.name)
+                        ),
+                      }
+                    : state.settings,
+                };
+                return result;
               }
               return state;
             });
@@ -836,13 +902,13 @@ const createMlStore = (logging: Logging) => {
               };
             });
           },
-          tourComplete(tourId: TourId) {
+          tourComplete(triggers: TourTriggerName[]) {
             set(({ settings }) => ({
               tourState: undefined,
               settings: {
                 ...settings,
                 toursCompleted: Array.from(
-                  new Set([...settings.toursCompleted, tourId])
+                  new Set([...settings.toursCompleted, ...triggers])
                 ),
               },
             }));

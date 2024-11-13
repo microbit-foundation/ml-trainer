@@ -197,12 +197,6 @@
       "value": "These are the MakeCode blocks for each detected action when you transfer your ML model and code to a micro:bit"
     }
   ],
-  "coming-soon": [
-    {
-      "type": 0,
-      "value": "Coming soon"
-    }
-  ],
   "confirm-action": [
     {
       "type": 0,
@@ -571,6 +565,12 @@
     {
       "type": 0,
       "value": "Connect to test your ML model"
+    }
+  ],
+  "connect-to-tour-body": [
+    {
+      "type": 0,
+      "value": "You need to connect a data collection micro:bit to view the tour."
     }
   ],
   "connect-troubleshoot": [
@@ -2367,52 +2367,104 @@
       "value": "Testing model"
     }
   ],
-  "tour-collectData-addActions-content": [
+  "tour-action": [
+    {
+      "type": 0,
+      "value": "Tour"
+    }
+  ],
+  "tour-collect-addActions-content": [
     {
       "type": 0,
       "value": "Decide what your other actions will be and what you will name them. You need at least 2 actions with 3 data samples to train the model. Your data samples are only stored on your computer, they do not get sent to anyone else."
     }
   ],
-  "tour-collectData-addActions-title": [
+  "tour-collect-addActions-title": [
     {
       "type": 0,
       "value": "Add more actions"
     }
   ],
-  "tour-collectData-afterFirst-content": [
+  "tour-collect-afterFirst-content": [
     {
       "type": 0,
       "value": "To train the machine learning model you need at least 3 data samples for 2 different actions."
     }
   ],
-  "tour-collectData-afterFirst-title": [
+  "tour-collect-afterFirst-title": [
     {
       "type": 0,
-      "value": "You’ve recorded your first sample!"
-    }
-  ],
-  "tour-collectData-collectMore-content": [
+      "value": "You’ve recorded your first "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "recordingCount"
+    },
     {
       "type": 0,
-      "value": "Record more samples for this action. Collecting more samples should result in a better machine learning model."
+      "value": "!"
     }
   ],
-  "tour-collectData-collectMore-title": [
+  "tour-collect-collectMore-explanation-content": [
+    {
+      "type": 0,
+      "value": "Collecting more samples should result in a better machine learning model."
+    }
+  ],
+  "tour-collect-collectMore-hasRecordings-content": [
+    {
+      "type": 0,
+      "value": "Record data samples for your actions."
+    }
+  ],
+  "tour-collect-collectMore-noRecordings-content": [
+    {
+      "type": 0,
+      "value": "Record more samples for this action."
+    }
+  ],
+  "tour-collect-collectMore-title": [
     {
       "type": 0,
       "value": "Collect more data samples"
     }
   ],
-  "tour-collectData-trainModel-content": [
+  "tour-collect-trainModel-content": [
     {
       "type": 0,
       "value": "When you have collected enough data samples you can train the machine learning model. You can come back later to remove or add more data and re-train to make the model more reliable."
     }
   ],
-  "tour-dataSamples-actions-content": [
+  "tour-dataSamples-actions-common-content": [
     {
       "type": 0,
-      "value": "An action is the type of movement you want the machine learning model to recognise e.g. ‘waving’ or ‘clapping’. Decide what your first action will be, name it and then start recording data samples."
+      "value": "An action is the type of movement you want the machine learning model to recognise e.g. ‘waving’ or ‘clapping’."
+    }
+  ],
+  "tour-dataSamples-actions-noRecordings-content": [
+    {
+      "type": 0,
+      "value": "Decide what your first action will be, name it and then start recording data samples."
     }
   ],
   "tour-dataSamples-connected-content": [
@@ -2457,49 +2509,55 @@
       "value": "Microsoft MakeCode"
     }
   ],
-  "tour-testModel-afterTrain-content": [
-    {
-      "type": 0,
-      "value": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model correctly estimate each action?"
-    }
-  ],
-  "tour-testModel-afterTrain-title": [
+  "tour-trainModel-afterTrain-alreadyConnected-title": [
     {
       "type": 0,
       "value": "You’ve trained an ML model!"
     }
   ],
-  "tour-testModel-certaintyRecognition-content": [
+  "tour-trainModel-afterTrain-content": [
+    {
+      "type": 0,
+      "value": "Now test your machine learning model. Try each action by moving your data collection micro:bit. Does the model correctly estimate each action?"
+    }
+  ],
+  "tour-trainModel-afterTrain-delayedUntilConnected-title": [
+    {
+      "type": 0,
+      "value": "Test your ML model"
+    }
+  ],
+  "tour-trainModel-certaintyRecognition-content": [
     {
       "type": 0,
       "value": "The bar graph shows how confident the model is that you are doing each action. Move the slider to adjust the recognition point, or threshold."
     }
   ],
-  "tour-testModel-certaintyRecognition-title": [
+  "tour-trainModel-certaintyRecognition-title": [
     {
       "type": 0,
       "value": "Certainty and recognition point"
     }
   ],
-  "tour-testModel-editInMakeCode-content": [
+  "tour-trainModel-editInMakeCode-content": [
     {
       "type": 0,
       "value": "Open your project in MakeCode to download the program and your machine learning model to a micro:bit. You can add more blocks to create your own programs using your model."
     }
   ],
-  "tour-testModel-estimatedAction-content": [
+  "tour-trainModel-estimatedAction-content": [
     {
       "type": 0,
       "value": "The action the model estimates you are currently doing is shown below the micro:bit icon for that action."
     }
   ],
-  "tour-testModel-makeCodeBlocks-content": [
+  "tour-trainModel-makeCodeBlocks-content": [
     {
       "type": 0,
       "value": "These MakeCode blocks will show icons for each action detected when you transfer your code and model to a micro:bit."
     }
   ],
-  "tour-testModel-makeCodeBlocks-title": [
+  "tour-trainModel-makeCodeBlocks-title": [
     {
       "type": 0,
       "value": "Microsoft MakeCode blocks"
