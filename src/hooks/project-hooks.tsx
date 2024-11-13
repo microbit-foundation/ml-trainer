@@ -143,7 +143,7 @@ export const ProjectProvider = ({
     return Promise.resolve([project]);
   }, [logging, project]);
 
-  const startUpTimeout = 5000;
+  const startUpTimeout = 90000;
   const startUpTimestamp = useRef<number>(Date.now());
 
   const onWorkspaceLoaded = useCallback(() => {
