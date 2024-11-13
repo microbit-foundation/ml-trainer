@@ -22,7 +22,7 @@ const RecordingFingerprint = ({
 
   return (
     <Grid
-      w={`${size === "md" ? 152 : 92}px`}
+      w={`${size === "md" ? 158 : 92}px`}
       h="100%"
       position="relative"
       borderRadius="md"
