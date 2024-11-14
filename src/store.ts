@@ -529,7 +529,7 @@ const createMlStore = (logging: Logging) => {
             );
             a.setAttribute(
               "download",
-              `${project.header?.name ?? untitledProjectName}-data-samples`
+              `${project.header?.name ?? untitledProjectName}-data-samples.json`
             );
             a.style.display = "none";
             a.click();
