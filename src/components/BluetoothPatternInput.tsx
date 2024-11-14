@@ -55,15 +55,13 @@ const BluetoothPatternInput = ({
 
   const columnInputOnChange = useCallback(
     (colIdx: number): ((value: string) => void) => {
-      return (v) => {
-        const inputValsCopy = [...inputValues];
-        const cleanedValue = v.replace("-", "").replace("+", "");
-        inputValsCopy[colIdx] = cleanedValue;
-        const colValue = parseInt(v) || 0;
-        if (colValue > 5 || colValue < 0) {
+      return (value) => {
+        const colValue = value === "" ? 0 : parseInt(value);
+        if (isNaN(colValue) || colValue > 5 || colValue < 0) {
+          // Do nothing when input value is not valid.
           return;
         }
-        setInputValues(inputValsCopy);
+        setInputValues(inputValues.map((v, i) => (i === colIdx ? value : v)));
         updateMatrix(colIdx, matrixDim - colValue);
       };
     },
