@@ -1,10 +1,11 @@
 import { GridItem, HStack, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
+import { useConnectionStage } from "../connection-stage-hooks";
 import { ActionData } from "../model";
 import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import GreetingEmojiWithArrow from "./GreetingEmojiWithArrow";
-import UpCurveArrow from "./UpCurveArrow";
 import { RecordingOptions } from "./RecordingDialog";
+import UpCurveArrow from "./UpCurveArrow";
 
 interface DataSamplesTableHintsProps {
   action: ActionData;
@@ -15,6 +16,7 @@ const DataSamplesTableHints = ({
   action,
   onRecord,
 }: DataSamplesTableHintsProps) => {
+  const { isConnected } = useConnectionStage();
   return (
     <>
       {action.name.length === 0 ? (
@@ -38,16 +40,17 @@ const DataSamplesTableHints = ({
           {/* Empty grid item to fill first column of grid */}
           <GridItem />
           <GridItem h="120px">
-            <HStack
-              m={0}
-              p={2}
-              transform="translateX(65px)"
-              w="calc(100% - 65px)"
-            >
+            <HStack m={0} p={2} transform="translateX(65px)">
               <UpCurveArrow w="60px" h="93px" color="brand.500" />
-              <Text w={200} textAlign="center">
-                <FormattedMessage id="record-hint" />
-              </Text>
+              {isConnected ? (
+                <Text textAlign="center" maxW={200}>
+                  <FormattedMessage id="record-hint-button-b" />
+                </Text>
+              ) : (
+                <Text textAlign="center" maxW={125}>
+                  <FormattedMessage id="record-hint" />
+                </Text>
+              )}
             </HStack>
           </GridItem>
         </>

@@ -2064,6 +2064,12 @@
   "record-hint": [
     {
       "type": 0,
+      "value": "Press to record a data sample."
+    }
+  ],
+  "record-hint-button-b": [
+    {
+      "type": 0,
       "value": "Press to record a data sample or press button B on your data collection micro:bit."
     }
   ],
