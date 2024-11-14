@@ -127,6 +127,11 @@ export const getNextConnectionState = ({
     currStatus === ConnectionStatus.Connecting &&
     deviceStatus === DeviceConnectionStatus.DISCONNECTED
   ) {
+    // We count this as the first connect failure.
+    // If we fail a second time, we should prompt the user to start over.
+    // Set the fields below appropriately to acheive this.
+    setOnFirstConnectAttempt(false);
+    setHasAttemptedReconnect(true);
     return { status: ConnectionStatus.FailedToConnect, flowType };
   }
   if (
