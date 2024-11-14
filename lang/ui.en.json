@@ -732,7 +732,7 @@
     "description": "Home page section heading"
   },
   "homepage-projects-more": {
-    "defaultMessage": "<link>Find out more about micro:bit and AI</link>",
+    "defaultMessage": "Explore more <link>content and resources about micro:bit and AI</link>.",
     "description": "Link back to AI landing page"
   },
   "homepage-step-by-step": {

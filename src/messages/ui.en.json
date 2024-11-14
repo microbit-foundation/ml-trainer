@@ -1233,14 +1233,22 @@
   ],
   "homepage-projects-more": [
     {
+      "type": 0,
+      "value": "Explore more "
+    },
+    {
       "children": [
         {
           "type": 0,
-          "value": "Find out more about micro:bit and AI"
+          "value": "content and resources about micro:bit and AI"
         }
       ],
       "type": 8,
       "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "homepage-step-by-step": [
