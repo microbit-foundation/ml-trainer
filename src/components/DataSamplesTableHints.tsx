@@ -40,7 +40,12 @@ const DataSamplesTableHints = ({
           {/* Empty grid item to fill first column of grid */}
           <GridItem />
           <GridItem h="120px">
-            <HStack m={0} p={2} transform="translateX(65px)">
+            <HStack
+              m={0}
+              p={2}
+              transform="translateX(65px)"
+              w="calc(100% - 65px)"
+            >
               <UpCurveArrow w="60px" h="93px" color="brand.500" />
               {isConnected ? (
                 <Text textAlign="center" maxW={200}>
