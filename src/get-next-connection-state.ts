@@ -190,14 +190,14 @@ export const getNextConnectionState = (
     return { status: ConnectionStatus.ReconnectingAutomatically, flowType };
   }
   if (
-    DeviceConnectionStatus.NO_AUTHORIZED_DEVICE &&
-    ConnectionStatus.ReconnectingAutomatically &&
+    deviceStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE &&
+    currStatus === ConnectionStatus.ReconnectingAutomatically &&
     currConnType === "radio"
   ) {
     // The link micro:bit was unplugged while the user was viewing another tab.
     // On return, show failed to reconnect.
     return {
-      status: ConnectionStatus.FailedToReconnect,
+      status: ConnectionStatus.ConnectionLost,
       flowType: ConnectionFlowType.ConnectRadioBridge,
     };
   }

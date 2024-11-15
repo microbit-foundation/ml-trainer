@@ -217,6 +217,25 @@ describe("getNextConnectionState for radio connection", () => {
       },
     });
   });
+  test("radio reconnecting automatically (changing tabs) and the link micro:bit gets unplugged", () => {
+    testGetNextConnectionState({
+      input: {
+        currConnType: "radio",
+        currStatus: ConnectionStatus.ReconnectingAutomatically,
+        deviceStatus: DeviceConnectionStatus.NO_AUTHORIZED_DEVICE,
+        prevDeviceStatus: DeviceConnectionStatus.DISCONNECTED,
+        type: "radioRemote",
+      },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
+      initialHasAttemptedReconnect: false,
+      expectedHasAttemptedReconnect: false,
+      expectedNextConnectionState: {
+        status: ConnectionStatus.ConnectionLost,
+        flowType: ConnectionFlowType.ConnectRadioBridge,
+      },
+    });
+  });
   test("radio bridge device connection lost by unplugging device", () => {
     testGetNextConnectionState({
       input: {
