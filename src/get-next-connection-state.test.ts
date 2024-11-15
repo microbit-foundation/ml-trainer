@@ -342,9 +342,9 @@ describe("getNextConnectionState for radio connection", () => {
         type: "radioRemote",
       },
       initialOnFirstConnectAttempt: false,
-      expectedOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: true,
       initialHasAttemptedReconnect: true,
-      expectedHasAttemptedReconnect: true,
+      expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToReconnectTwice,
         flowType: ConnectionFlowType.ConnectRadioRemote,
@@ -548,9 +548,9 @@ describe("getNextConnectionState for bluetooth connection", () => {
         type: "bluetooth",
       },
       initialOnFirstConnectAttempt: false,
-      expectedOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: true,
       initialHasAttemptedReconnect: true,
-      expectedHasAttemptedReconnect: true,
+      expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToReconnectTwice,
         flowType: ConnectionFlowType.ConnectBluetooth,

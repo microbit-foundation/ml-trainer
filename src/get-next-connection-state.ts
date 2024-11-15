@@ -148,6 +148,9 @@ export const getNextConnectionState = ({
     hasAttempedReconnect &&
     deviceStatus === DeviceConnectionStatus.DISCONNECTED
   ) {
+    // Reset connection state fields so that the next connection attempt is clean.
+    setOnFirstConnectAttempt(true);
+    setHasAttemptedReconnect(false);
     return { status: ConnectionStatus.FailedToReconnectTwice, flowType };
   }
   if (
