@@ -20,18 +20,22 @@ export type NextConnectionState =
   | { status: ConnectionStatus; flowType: ConnectionFlowType }
   | undefined;
 
-export const getNextConnectionState = ({
-  currConnType,
-  currStatus,
-  deviceStatus,
-  prevDeviceStatus,
-  type,
-  hasAttempedReconnect,
-  setHasAttemptedReconnect,
-  onFirstConnectAttempt,
-  setOnFirstConnectAttempt,
-  isBrowserTabVisible,
-}: GetNextConnectionStateInput): NextConnectionState => {
+export const getNextConnectionState = (
+  input: GetNextConnectionStateInput
+): NextConnectionState => {
+  const {
+    currConnType,
+    currStatus,
+    deviceStatus,
+    prevDeviceStatus,
+    type,
+    hasAttempedReconnect,
+    setHasAttemptedReconnect,
+    onFirstConnectAttempt,
+    setOnFirstConnectAttempt,
+    isBrowserTabVisible,
+  } = input;
+
   if (currStatus === ConnectionStatus.Disconnected) {
     // Do not update connection status when user explicitly disconnected connection
     // until user reconnects explicitly
@@ -48,7 +52,8 @@ export const getNextConnectionState = ({
   // status is already set to an error case.
   if (
     !isBrowserTabVisible &&
-    (currStatus === ConnectionStatus.ConnectionLost ||
+    (currStatus === ConnectionStatus.FailedToConnect ||
+      currStatus === ConnectionStatus.ConnectionLost ||
       currStatus === ConnectionStatus.FailedToReconnect ||
       currStatus === ConnectionStatus.FailedToReconnectTwice)
   ) {
