@@ -108,7 +108,6 @@ export const getNextConnectionState = (
         : ConnectionStatus.FailedToReconnect;
     return { status, flowType };
   }
-
   if (
     // If user starts or restarts connection flow.
     // Disconnection happens for newly started / restarted
@@ -189,6 +188,18 @@ export const getNextConnectionState = (
     deviceStatus === DeviceConnectionStatus.RECONNECTING
   ) {
     return { status: ConnectionStatus.ReconnectingAutomatically, flowType };
+  }
+  if (
+    DeviceConnectionStatus.NO_AUTHORIZED_DEVICE &&
+    ConnectionStatus.ReconnectingAutomatically &&
+    currConnType === "radio"
+  ) {
+    // The link micro:bit was unplugged while the user was viewing another tab.
+    // On return, show failed to reconnect.
+    return {
+      status: ConnectionStatus.FailedToReconnect,
+      flowType: ConnectionFlowType.ConnectRadioBridge,
+    };
   }
   return undefined;
 };
