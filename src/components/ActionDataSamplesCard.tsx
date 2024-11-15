@@ -316,7 +316,7 @@ const DataSample = ({
       {hasGraph && (
         <RecordingGraph
           data={recording.data}
-          role="image"
+          role="img"
           aria-label={intl.formatMessage({
             id: "recording-graph-label",
           })}
@@ -337,7 +337,7 @@ const DataSample = ({
         <RecordingFingerprint
           size={view === DataSamplesView.GraphAndDataFeatures ? "sm" : "md"}
           data={recording.data}
-          role="image"
+          role="img"
           aria-label={intl.formatMessage({
             id: "recording-fingerprint-label",
           })}

@@ -15,7 +15,7 @@ const LedIcon = ({ icon, isTriggered, size = 20 }: LedIconProps) => {
       width={size}
       height={size}
       ratio={1}
-      role="image"
+      role="img"
       // TODO: Will icon names need to be translated?
       aria-label={icon}
     >

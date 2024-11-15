@@ -139,7 +139,7 @@ const HomePage = () => {
           </Heading>
           <VStack
             position="relative"
-            role="image"
+            role="img"
             aria-label={intl.formatMessage({ id: "steps-alt" })}
           >
             <StepByStepIllustration />

@@ -21,7 +21,7 @@ const CodeViewDefaultBlock = ({
   const startTextXPos = onMlStartBlockWidth - 50;
   return (
     <Box
-      role="image"
+      role="img"
       aria-label={intl.formatMessage(
         { id: "makecode-block-default-alt" },
         { actionName, iconName }
