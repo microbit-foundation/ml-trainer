@@ -244,6 +244,9 @@ export const ProjectProvider = ({
       });
     } catch (e) {
       if (e instanceof CodeEditorError) {
+        logging.event({
+          type: "makecode-load-failed",
+        });
         openEditorTimedOutDialog();
       }
     }
