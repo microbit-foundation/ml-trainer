@@ -214,10 +214,6 @@ export class ConnectionStageActions {
     };
   };
 
-  private handleConnectFail = () => {
-    this.setFlowStep(ConnectionFlowStep.ConnectFailed);
-  };
-
   private onConnected = () => {
     this.setFlowStep(ConnectionFlowStep.None);
     this.dataCollectionMicrobitConnected();
@@ -242,7 +238,11 @@ export class ConnectionStageActions {
         );
       }
       case ConnectionStatus.FailedToConnect: {
-        return this.handleConnectFail();
+        return this.setStage({
+          ...this.stage,
+          flowType,
+          flowStep: ConnectionFlowStep.ConnectFailed,
+        });
       }
       case ConnectionStatus.FailedToReconnectTwice: {
         return this.setStage({
