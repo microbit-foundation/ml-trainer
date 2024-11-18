@@ -6,7 +6,7 @@ import {
   IconButton,
   Stack,
 } from "@chakra-ui/react";
-import { ReactElement, ReactNode, useCallback, useState } from "react";
+import { ReactElement, ReactNode, useCallback } from "react";
 
 interface NewPageChoice extends BoxProps {
   children: ReactNode;
@@ -29,9 +29,8 @@ const NewPageChoice = ({
       onClick();
     }
   }, [disabled, onClick]);
-  const [isFocused, setIsFocused] = useState(false);
   return (
-    <Box boxShadow="lg" flex="1">
+    <Box boxShadow="lg" flex="1" role="group">
       <HStack
         spacing={0}
         borderRadius="md"
@@ -46,8 +45,9 @@ const NewPageChoice = ({
         _hover={{
           bgColor: disabled ? undefined : "brand.50",
         }}
-        boxShadow={isFocused ? "outline" : "none"}
-        role="group"
+        _groupFocusWithin={{
+          boxShadow: "outline",
+        }}
         {...props}
       >
         <Stack as="section" py={5} px={5} minH={40} flex="1 1 auto">
@@ -73,9 +73,6 @@ const NewPageChoice = ({
             _focusVisible={{
               boxShadow: "none",
             }}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            boxShadow="none"
             _hover={{
               bgColor: "brand.700",
             }}
