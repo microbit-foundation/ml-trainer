@@ -12,6 +12,7 @@ const InfoToolTip = ({ titleId, descriptionId }: InfoToolTipProps) => {
   const { appNameFull } = useDeployment();
   return (
     <ClickableTooltip
+      isFocusable
       hasArrow
       placement="right"
       label={
@@ -25,7 +26,7 @@ const InfoToolTip = ({ titleId, descriptionId }: InfoToolTipProps) => {
         </VStack>
       }
     >
-      <Icon h={5} w={5} as={RiInformationLine} />
+      <Icon opacity={0.7} h={5} w={5} as={RiInformationLine} />
     </ClickableTooltip>
   );
 };

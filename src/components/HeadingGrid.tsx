@@ -35,14 +35,14 @@ const GridColumnHeadingItem = (props: GridColumnHeadingItemProps) => {
     <GridItem>
       {props.titleId && props.descriptionId && (
         <HStack justifyContent="space-between">
-          <HStack opacity={0.7}>
-            <Text>
+          <HStack>
+            <Text opacity={0.7}>
               <FormattedMessage id={props.titleId} />
             </Text>
             <InfoToolTip
               titleId={props.titleId}
               descriptionId={props.descriptionId}
-            ></InfoToolTip>
+            />
           </HStack>
           {props.itemsRight}
         </HStack>
