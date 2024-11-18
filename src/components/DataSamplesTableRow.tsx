@@ -1,17 +1,16 @@
 import { Box, GridItem, Text, useDisclosure } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { ActionData } from "../model";
-import { useStore } from "../store";
-import DataSamplesTableHints from "./DataSamplesTableHints";
-import { ConfirmDialog } from "./ConfirmDialog";
-import ActionDataSamplesCard from "./ActionDataSamplesCard";
-import ActionNameCard from "./ActionNameCard";
 import {
   ConnectionFlowStep,
   useConnectionStage,
 } from "../connection-stage-hooks";
+import { ActionData } from "../model";
+import { useStore } from "../store";
+import ActionDataSamplesCard from "./ActionDataSamplesCard";
+import ActionNameCard from "./ActionNameCard";
+import { ConfirmDialog } from "./ConfirmDialog";
+import DataSamplesTableHints from "./DataSamplesTableHints";
 import { RecordingOptions } from "./RecordingDialog";
-import { useEffect, useRef } from "react";
 
 interface DataSamplesTableRowProps {
   action: ActionData;
@@ -36,18 +35,6 @@ const DataSamplesTableRow = ({
   const deleteConfirmDisclosure = useDisclosure();
   const deleteAction = useStore((s) => s.deleteAction);
   const { stage } = useConnectionStage();
-  const rowRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    let rowRefValue: HTMLElement | undefined;
-    if (rowRef.current) {
-      rowRef.current.addEventListener("focusin", onSelectRow);
-      rowRefValue = rowRef.current;
-    }
-    return () => {
-      rowRefValue?.removeEventListener("focusin", onSelectRow);
-    };
-  }, [onSelectRow]);
 
   return (
     <>
@@ -72,7 +59,7 @@ const DataSamplesTableRow = ({
         onConfirm={() => deleteAction(action.ID)}
         onCancel={deleteConfirmDisclosure.onClose}
       />
-      <Box display="contents" ref={rowRef}>
+      <Box display="contents" onFocusCapture={onSelectRow}>
         <GridItem>
           <ActionNameCard
             value={action}
