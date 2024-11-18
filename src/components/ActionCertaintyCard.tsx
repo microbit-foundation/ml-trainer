@@ -47,7 +47,9 @@ const ActionCertaintyCard = ({
     [onThresholdChange]
   );
   const sliderValue = requiredConfidence * 100;
-  const currentConfidence = predictionResult?.confidences[actionId] ?? 0;
+  const currentConfidence = Math.round(
+    (predictionResult?.confidences[actionId] ?? 0) * 100
+  );
   return (
     <Card
       py={2}

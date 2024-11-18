@@ -26,7 +26,7 @@ const PercentageDisplay = ({
         w="60px"
         aria-hidden={!!ariaLabel}
         {...rest}
-      >{`${Math.round(value * 100)}%`}</Text>
+      >{`${value}%`}</Text>
     </>
   );
 };
