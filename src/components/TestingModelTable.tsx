@@ -1,4 +1,5 @@
 import {
+  Box,
   Grid,
   GridItem,
   GridProps,
@@ -7,15 +8,16 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
+import { useIntl } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { useProject } from "../hooks/project-hooks";
 import { mlSettings } from "../mlConfig";
 import { getMakeCodeLang } from "../settings";
 import { useSettings, useStore } from "../store";
-import ActionNameCard from "./ActionNameCard";
 import ActionCertaintyCard from "./ActionCertaintyCard";
+import ActionNameCard from "./ActionNameCard";
 import CodeViewCard from "./CodeViewCard";
 import CodeViewDefaultBlockCard from "./CodeViewDefaultBlockCard";
 import HeadingGrid from "./HeadingGrid";
@@ -51,6 +53,7 @@ const TestingModelTable = () => {
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
   const scrollableAreaRef = useRef<HTMLDivElement>(null);
+  const intl = useIntl();
   return (
     <MakeCodeRenderBlocksProvider
       key={makeCodeLang}
@@ -83,7 +86,17 @@ const TestingModelTable = () => {
             {actions.map((action, idx) => {
               const { requiredConfidence: threshold } = action;
               return (
-                <React.Fragment key={idx}>
+                <Box
+                  key={idx}
+                  role="region"
+                  aria-label={intl.formatMessage(
+                    {
+                      id: "action-region",
+                    },
+                    { action: action.name }
+                  )}
+                  display="contents"
+                >
                   <GridItem>
                     <ActionNameCard
                       value={action}
@@ -112,7 +125,7 @@ const TestingModelTable = () => {
                       <CodeViewDefaultBlockCard action={action} />
                     )}
                   </GridItem>
-                </React.Fragment>
+                </Box>
               );
             })}
           </Grid>
