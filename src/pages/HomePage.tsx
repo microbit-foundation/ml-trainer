@@ -175,24 +175,22 @@ const HomePage = () => {
                 imgSrc={projectImage2}
               />
             </HStack>
-            {flags.websiteContent && (
-              <Text fontSize="md">
-                <FormattedMessage
-                  id="homepage-projects-more"
-                  values={{
-                    link: (children) => (
-                      <Link
-                        color="brand.600"
-                        textDecoration="underline"
-                        href={landingPageUrl()}
-                      >
-                        {children}
-                      </Link>
-                    ),
-                  }}
-                />
-              </Text>
-            )}
+            <Text fontSize="md">
+              <FormattedMessage
+                id="homepage-projects-more"
+                values={{
+                  link: (children) => (
+                    <Link
+                      color="brand.600"
+                      textDecoration="underline"
+                      href={landingPageUrl()}
+                    >
+                      {children}
+                    </Link>
+                  ),
+                }}
+              />
+            </Text>
           </VStack>
         )}
       </Container>
