@@ -51,6 +51,7 @@ const ActionDataSamplesCard = ({
   newRecordingId,
   clearNewRecordingId,
 }: ActionDataSamplesCardProps) => {
+  const intl = useIntl();
   const deleteActionRecording = useStore((s) => s.deleteActionRecording);
   const view = useStore((s) => s.settings.dataSamplesView);
   if (view === DataSamplesView.GraphAndDataFeatures) {
@@ -76,6 +77,15 @@ const ActionDataSamplesCard = ({
             key={recording.ID}
           >
             <CloseButton
+              aria-label={intl.formatMessage(
+                {
+                  id: "delete-recording-aria",
+                },
+                {
+                  sample: value.recordings.length - idx,
+                  numSamples: value.recordings.length,
+                }
+              )}
               position="absolute"
               top={-2}
               right={-2}
@@ -88,6 +98,7 @@ const ActionDataSamplesCard = ({
             />
             <DataSample
               recording={recording}
+              numRecordings={value.recordings.length}
               actionId={value.ID}
               recordingIndex={idx}
               isNew={newRecordingId === recording.ID}
@@ -124,6 +135,7 @@ const ActionDataSamplesCard = ({
           actionId={value.ID}
           recordingIndex={idx}
           recording={recording}
+          numRecordings={value.recordings.length}
           isNew={newRecordingId === recording.ID}
           onDelete={deleteActionRecording}
           onNewAnimationEnd={clearNewRecordingId}
@@ -199,7 +211,10 @@ const RecordingArea = ({
           <MoreMenuButton
             minW={8}
             variant={selected ? "record" : "recordOutline"}
-            aria-label={intl.formatMessage({ id: "recording-options-aria" })}
+            aria-label={intl.formatMessage(
+              { id: "recording-options-aria" },
+              { action: action.name }
+            )}
           />
           <Portal>
             <MenuList>
@@ -271,6 +286,7 @@ const RecordingArea = ({
 
 const DataSample = ({
   recording,
+  numRecordings,
   actionId,
   recordingIndex,
   isNew,
@@ -280,6 +296,7 @@ const DataSample = ({
   hasClose = true,
 }: {
   recording: RecordingData;
+  numRecordings: number;
   actionId: number;
   recordingIndex: number;
   isNew: boolean;
@@ -307,9 +324,15 @@ const DataSample = ({
           right={0}
           zIndex={1}
           size="sm"
-          aria-label={intl.formatMessage({
-            id: "delete-recording-aria",
-          })}
+          aria-label={intl.formatMessage(
+            {
+              id: "delete-recording-aria",
+            },
+            {
+              sample: numRecordings - recordingIndex,
+              numSamples: numRecordings,
+            }
+          )}
           onClick={handleDelete}
         />
       )}

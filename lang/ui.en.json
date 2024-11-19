@@ -119,6 +119,10 @@
     "defaultMessage": "Connect",
     "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
   },
+  "connect-action-aria": {
+    "defaultMessage": "Connect to micro:bit",
+    "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
+  },
   "connect-battery-heading": {
     "defaultMessage": "Disconnect USB and connect battery pack",
     "description": "Battery connection dialog "
@@ -444,7 +448,7 @@
     "description": "Confirmation dialog text"
   },
   "delete-recording-aria": {
-    "defaultMessage": "Delete recording",
+    "defaultMessage": "Delete recording {sample} of {numSamples}",
     "description": "Aria label for data sample delete action"
   },
   "disconnect-action": {
@@ -1252,7 +1256,7 @@
     "description": "Label for recording graph"
   },
   "recording-options-aria": {
-    "defaultMessage": "More recording options",
+    "defaultMessage": "More recording options for action \"{action}\"",
     "description": "Aria label for more recording options button"
   },
   "reload-action": {
@@ -1312,7 +1316,11 @@
     "description": "Notification after a hex file has been downloaded"
   },
   "select-icon-action-aria": {
-    "defaultMessage": "Pick icon",
+    "defaultMessage": "Pick icon for action \"{action}\"",
+    "description": "Aria label for pick icon button"
+  },
+  "select-icon-action-untitled-aria": {
+    "defaultMessage": "Pick icon for untitled action",
     "description": "Aria label for pick icon button"
   },
   "select-icon-option-action-aria": {

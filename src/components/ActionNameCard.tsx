@@ -121,7 +121,12 @@ const ActionNameCard = ({
             ) : (
               <LedIconSvg icon={icon} />
             )}
-            {!readOnly && <LedIconPicker onIconSelected={handleIconSelected} />}
+            {!readOnly && (
+              <LedIconPicker
+                actionName={value.name}
+                onIconSelected={handleIconSelected}
+              />
+            )}
           </HStack>
           <Input
             autoFocus={localName.length === 0}

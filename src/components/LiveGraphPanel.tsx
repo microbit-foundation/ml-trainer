@@ -9,7 +9,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import microbitImage from "../images/stylised-microbit-black.svg";
@@ -64,7 +64,7 @@ const LiveGraphPanel = ({
     });
     void actions.disconnect();
   }, [actions, logging]);
-
+  const intl = useIntl();
   return (
     <HStack
       position="relative"
@@ -92,7 +92,11 @@ const LiveGraphPanel = ({
             <Text>
               <FormattedMessage id={disconnectedTextId} />
             </Text>
-            <Button variant="primary" onClick={handleConnectOrReconnect}>
+            <Button
+              variant="primary"
+              onClick={handleConnectOrReconnect}
+              aria-label={intl.formatMessage({ id: "connect-action-aria" })}
+            >
               <FormattedMessage id="connect-action" />
             </Button>
           </VStack>

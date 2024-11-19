@@ -14,10 +14,11 @@ import { MakeCodeIcon, makecodeIcons } from "../utils/icons";
 import LedIconSvg from "./icons/LedIconSvg";
 
 interface LedIconPicker {
+  actionName: string;
   onIconSelected: (icon: MakeCodeIcon) => void;
 }
 
-const LedIconPicker = ({ onIconSelected }: LedIconPicker) => {
+const LedIconPicker = ({ actionName, onIconSelected }: LedIconPicker) => {
   const intl = useIntl();
   const handleClick = useCallback(
     (icon: MakeCodeIcon, callback: () => void) => {
@@ -35,7 +36,16 @@ const LedIconPicker = ({ onIconSelected }: LedIconPicker) => {
             <IconButton
               variant="ghost"
               color="blackAlpha.700"
-              aria-label={intl.formatMessage({ id: "select-icon-action-aria" })}
+              aria-label={
+                actionName
+                  ? intl.formatMessage(
+                      { id: "select-icon-action-aria" },
+                      { action: actionName }
+                    )
+                  : intl.formatMessage({
+                      id: "select-icon-action-untitled-aria",
+                    })
+              }
               size="sm"
             >
               <RiArrowDropDownFill size={32} />
