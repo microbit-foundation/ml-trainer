@@ -43,9 +43,14 @@ const InfoToolTip = ({
         _active={{
           bgColor: "transparent",
         }}
+        padding={0}
+        minW="unset"
         color="chakra-body-text._dark"
         aria-label={intl.formatMessage({ id: `${titleId}-tooltip-aria` })}
         isDisabled={isDisabled}
+        _disabled={{
+          opacity: 1,
+        }}
       />
     </ClickableTooltip>
   );
