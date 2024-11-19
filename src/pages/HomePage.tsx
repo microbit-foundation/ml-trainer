@@ -111,7 +111,7 @@ const HomePage = () => {
           </Heading>
           <Box w="100%" position="relative">
             <YoutubeVideoEmbed
-              youtubeId="7DqaU_Qexy4"
+              youtubeId="yWl3WxDE6QI"
               alt={intl.formatMessage({ id: "homepage-video-alt" })}
             />
           </Box>
