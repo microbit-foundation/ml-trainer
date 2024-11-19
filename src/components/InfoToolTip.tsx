@@ -1,8 +1,8 @@
 import { Icon, Text, TooltipProps, VStack } from "@chakra-ui/react";
 import { RiInformationLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import ClickableTooltip from "./ClickableTooltip";
 import { useDeployment } from "../deployment";
+import ClickableTooltip from "./ClickableTooltip";
 
 export interface InfoToolTipProps extends Omit<TooltipProps, "children"> {
   titleId: string;
@@ -13,6 +13,7 @@ const InfoToolTip = ({ titleId, descriptionId, ...rest }: InfoToolTipProps) => {
   return (
     <ClickableTooltip
       isFocusable
+      titleId={titleId}
       hasArrow
       placement="right"
       {...rest}

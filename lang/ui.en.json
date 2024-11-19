@@ -23,6 +23,10 @@
     "defaultMessage": "Action",
     "description": "Label for a movement-related action, e.g. clapping"
   },
+  "action-label-tooltip-aria": {
+    "defaultMessage": "Action tooltip",
+    "description": "Aria label for action tooltip icon"
+  },
   "action-length-error": {
     "defaultMessage": "Action names cannot be longer than {maxLen} characters.",
     "description": "Error message shown when an action name is too long"
@@ -403,6 +407,10 @@
     "defaultMessage": "Data samples",
     "description": "Heading for data samples column"
   },
+  "data-samples-label-tooltip-aria": {
+    "defaultMessage": "Data samples tooltip",
+    "description": "Aria label for data samples tooltip icon"
+  },
   "data-samples-status-count": {
     "defaultMessage": "{numSamples} samples recorded",
     "description": "Data samples status text"
@@ -554,6 +562,10 @@
   "estimated-action-label": {
     "defaultMessage": "Estimated action",
     "description": "Heading for estimated action area next to the live graph"
+  },
+  "estimated-action-label-tooltip-aria": {
+    "defaultMessage": "Estimated action tooltip",
+    "description": "Aria label for estimated action tooltip icon"
   },
   "estimated-action-tooltip": {
     "defaultMessage": "This is the action the model thinks you are currently doing.",
@@ -978,6 +990,10 @@
   "live-graph-tooltip": {
     "defaultMessage": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in.",
     "description": "Tooltip for live graph heading"
+  },
+  "live-graph-tooltip-aria": {
+    "defaultMessage": "Live graph tooltip",
+    "description": "Aria label for live graph tooltip icon"
   },
   "loading": {
     "defaultMessage": "Loading",

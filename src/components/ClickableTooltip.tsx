@@ -1,9 +1,11 @@
 import { Flex, Tooltip, TooltipProps, useDisclosure } from "@chakra-ui/react";
 import { ReactNode, useCallback, useRef } from "react";
+import { useIntl } from "react-intl";
 
 interface ClickableTooltipProps extends TooltipProps {
   children: ReactNode;
   isFocusable?: boolean;
+  titleId?: string;
 }
 
 // Chakra Tooltip doesn't support triggering on mobile/tablets:
@@ -12,10 +14,12 @@ interface ClickableTooltipProps extends TooltipProps {
 const ClickableTooltip = ({
   children,
   isFocusable = false,
+  titleId,
   isDisabled,
   ...rest
 }: ClickableTooltipProps) => {
   const label = useDisclosure();
+  const intl = useIntl();
   const ref = useRef<HTMLDivElement>(null);
   const handleMouseEnter = useCallback(() => {
     const focussedTooltips = Array.from(
@@ -46,6 +50,12 @@ const ClickableTooltip = ({
   return (
     <Tooltip isOpen={label.isOpen} {...rest} closeOnEsc={true}>
       <Flex
+        as="span"
+        aria-label={
+          titleId
+            ? intl.formatMessage({ id: `${titleId}-tooltip-aria` })
+            : undefined
+        }
         className={isFocusable ? "focusable-tooltip" : undefined}
         onKeyDown={handleKeydown}
         ref={ref}
