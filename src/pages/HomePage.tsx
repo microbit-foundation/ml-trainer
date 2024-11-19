@@ -122,23 +122,25 @@ const HomePage = () => {
               alt={intl.formatMessage({ id: "homepage-video-alt" })}
             />
           </Box>
-          <Text fontSize="md">
-            <FormattedMessage
-              id="homepage-how-it-works-paragraph"
-              values={{
-                appNameFull,
-                link: (children) => (
-                  <Link
-                    color="brand.600"
-                    textDecoration="underline"
-                    href={userGuideUrl()}
-                  >
-                    {children}
-                  </Link>
-                ),
-              }}
-            />
-          </Text>
+          {flags.websiteContent && (
+            <Text fontSize="md">
+              <FormattedMessage
+                id="homepage-how-it-works-paragraph"
+                values={{
+                  appNameFull,
+                  link: (children) => (
+                    <Link
+                      color="brand.600"
+                      textDecoration="underline"
+                      href={userGuideUrl()}
+                    >
+                      {children}
+                    </Link>
+                  ),
+                }}
+              />
+            </Text>
+          )}
         </VStack>
         <VStack gap={10}>
           <Heading as="h2" textAlign="center" variant="marketing">
@@ -152,7 +154,7 @@ const HomePage = () => {
             <StepByStepIllustration />
           </VStack>
         </VStack>
-        {flags.homePageProjects && (
+        {flags.websiteContent && (
           <VStack gap={10}>
             <Heading as="h2" textAlign="center" variant="marketing">
               <FormattedMessage id="homepage-projects" />
@@ -173,22 +175,24 @@ const HomePage = () => {
                 imgSrc={projectImage2}
               />
             </HStack>
-            <Text fontSize="md">
-              <FormattedMessage
-                id="homepage-projects-more"
-                values={{
-                  link: (children) => (
-                    <Link
-                      color="brand.600"
-                      textDecoration="underline"
-                      href={landingPageUrl()}
-                    >
-                      {children}
-                    </Link>
-                  ),
-                }}
-              />
-            </Text>
+            {flags.websiteContent && (
+              <Text fontSize="md">
+                <FormattedMessage
+                  id="homepage-projects-more"
+                  values={{
+                    link: (children) => (
+                      <Link
+                        color="brand.600"
+                        textDecoration="underline"
+                        href={landingPageUrl()}
+                      >
+                        {children}
+                      </Link>
+                    ),
+                  }}
+                />
+              </Text>
+            )}
           </VStack>
         )}
       </Container>

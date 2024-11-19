@@ -17,6 +17,7 @@ import { userGuideUrl } from "../utils/external-links";
 import AboutDialog from "./AboutDialog";
 import ConnectFirstDialog from "./ConnectFirstDialog";
 import FeedbackForm from "./FeedbackForm";
+import { flags } from "../flags";
 
 const HelpMenuItems = () => {
   const aboutDialogDisclosure = useDisclosure();
@@ -35,15 +36,17 @@ const HelpMenuItems = () => {
         onClose={feedbackDisclosure.onClose}
         finalFocusRef={menuButtonRef}
       />
-      <MenuItem
-        as="a"
-        href={userGuideUrl()}
-        target="_blank"
-        rel="noopener"
-        icon={<RiExternalLinkLine />}
-      >
-        <FormattedMessage id="user-guide" />
-      </MenuItem>
+      {flags.websiteContent && (
+        <MenuItem
+          as="a"
+          href={userGuideUrl()}
+          target="_blank"
+          rel="noopener"
+          icon={<RiExternalLinkLine />}
+        >
+          <FormattedMessage id="user-guide" />
+        </MenuItem>
+      )}
       <TourMenuItem />
       {deployment.supportLinks.main && (
         <>

@@ -20,9 +20,9 @@ export type Flag =
    */
   | "preReleaseNotice"
   /**
-   * Flag to show the home page projects section which lacks content.
+   * Flag to show links to website content for the CreateAI release.
    */
-  | "homePageProjects"
+  | "websiteContent"
   /**
    * Example flags used for testing.
    */
@@ -37,7 +37,7 @@ interface FlagMetadata {
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
   { name: "devtools", defaultOnStages: ["local"] },
-  { name: "homePageProjects", defaultOnStages: ["local", "review", "staging"] },
+  { name: "websiteContent", defaultOnStages: ["local", "review", "staging"] },
   {
     name: "preReleaseNotice",
     defaultOnStages: ["production"],
