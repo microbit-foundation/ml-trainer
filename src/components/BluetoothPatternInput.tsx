@@ -165,7 +165,6 @@ const PatternColumnInput = ({
           <FormattedMessage
             id="connect-pattern-input-label"
             values={{ colNum: colIdx + 1 }}
-            sr-onlu
           />
         </FormLabel>
       </VisuallyHidden>

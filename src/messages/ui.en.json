@@ -418,7 +418,7 @@
   "connect-pattern-input-label": [
     {
       "type": 0,
-      "value": "Number of LEDs lit in column "
+      "value": "Column "
     },
     {
       "type": 1,
@@ -426,7 +426,7 @@
     },
     {
       "type": 0,
-      "value": " on the micro:bit display"
+      "value": " - number of LEDs lit on the micro:bit display"
     }
   ],
   "connect-pattern-subtitle": [

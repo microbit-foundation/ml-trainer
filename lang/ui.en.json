@@ -236,7 +236,7 @@
     "description": "Heading for Bluetooth pattern connection dialog"
   },
   "connect-pattern-input-label": {
-    "defaultMessage": "Number of LEDs lit in column {colNum} on the micro:bit display",
+    "defaultMessage": "Column {colNum} - number of LEDs lit on the micro:bit display",
     "description": "Screenreader text for numeric pattern input"
   },
   "connect-pattern-subtitle": {
