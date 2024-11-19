@@ -1,18 +1,23 @@
-import { Icon, Text, TooltipProps, VStack } from "@chakra-ui/react";
+import { IconButton, Text, TooltipProps, VStack } from "@chakra-ui/react";
 import { RiInformationLine } from "react-icons/ri";
-import { FormattedMessage } from "react-intl";
-import ClickableTooltip from "./ClickableTooltip";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useDeployment } from "../deployment";
+import ClickableTooltip from "./ClickableTooltip";
 
 export interface InfoToolTipProps extends Omit<TooltipProps, "children"> {
   titleId: string;
   descriptionId: string;
 }
-const InfoToolTip = ({ titleId, descriptionId, ...rest }: InfoToolTipProps) => {
+const InfoToolTip = ({
+  titleId,
+  descriptionId,
+  isDisabled,
+  ...rest
+}: InfoToolTipProps) => {
   const { appNameFull } = useDeployment();
+  const intl = useIntl();
   return (
     <ClickableTooltip
-      isFocusable
       hasArrow
       placement="right"
       {...rest}
@@ -27,7 +32,21 @@ const InfoToolTip = ({ titleId, descriptionId, ...rest }: InfoToolTipProps) => {
         </VStack>
       }
     >
-      <Icon opacity={0.7} h={5} w={5} as={RiInformationLine} />
+      <IconButton
+        size="xs"
+        icon={<RiInformationLine opacity={0.7} />}
+        fontSize="xl"
+        variant="ghost"
+        _hover={{
+          bgColor: "transparent",
+        }}
+        _active={{
+          bgColor: "transparent",
+        }}
+        color="chakra-body-text._dark"
+        aria-label={intl.formatMessage({ id: `${titleId}-tooltip-aria` })}
+        isDisabled={isDisabled}
+      />
     </ClickableTooltip>
   );
 };

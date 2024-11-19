@@ -45,6 +45,12 @@
       "value": "Action"
     }
   ],
+  "action-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Action tooltip"
+    }
+  ],
   "action-length-error": [
     {
       "type": 0,
@@ -675,6 +681,12 @@
       "value": "Data samples"
     }
   ],
+  "data-samples-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Data samples tooltip"
+    }
+  ],
   "data-samples-status-count": [
     {
       "type": 1,
@@ -949,6 +961,12 @@
     {
       "type": 0,
       "value": "Estimated action"
+    }
+  ],
+  "estimated-action-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Estimated action tooltip"
     }
   ],
   "estimated-action-tooltip": [
@@ -1673,6 +1691,12 @@
     {
       "type": 0,
       "value": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in."
+    }
+  ],
+  "live-graph-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Live graph tooltip"
     }
   ],
   "loading": [
