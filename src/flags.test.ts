@@ -8,10 +8,7 @@ describe("flags", () => {
 
     expect(
       Object.entries(flags).every(
-        ([flag, status]) =>
-          !status ||
-          (flag === "prototypeWarning" && status) ||
-          (flag === "preReleaseNotice" && status)
+        ([flag, status]) => !status || (flag === "websiteContent" && status)
       )
     ).toEqual(true);
   });
