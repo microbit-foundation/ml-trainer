@@ -68,7 +68,7 @@ const LiveGraphPanel = ({
   return (
     <HStack
       role="region"
-      arial-label={intl.formatMessage({ id: "live-data-graph" })}
+      aria-label={intl.formatMessage({ id: "live-data-graph" })}
       position="relative"
       h={160}
       width="100%"
