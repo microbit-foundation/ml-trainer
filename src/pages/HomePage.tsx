@@ -45,7 +45,14 @@ const HomePage = () => {
         </Button>
       }
     >
-      <Container centerContent gap={20} p={8} pb={20} maxW="container.lg">
+      <Container
+        as="main"
+        centerContent
+        gap={20}
+        p={8}
+        pb={20}
+        maxW="container.lg"
+      >
         <HStack
           gap={5}
           flexDir={{ base: "column", lg: "row" }}

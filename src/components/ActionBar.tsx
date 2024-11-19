@@ -17,7 +17,7 @@ const ActionBar = ({
 }: ActionBarProps) => {
   return (
     <HStack
-      px={5}
+      as="header"
       alignItems="center"
       justifyContent="space-between"
       bgColor="brand2.500"

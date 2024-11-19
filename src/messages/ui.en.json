@@ -65,6 +65,20 @@
       "value": "Name of action"
     }
   ],
+  "action-region": [
+    {
+      "type": 0,
+      "value": "Action \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
   "action-tooltip": [
     {
       "type": 0,
@@ -661,6 +675,12 @@
     {
       "type": 0,
       "value": "Show data features"
+    }
+  ],
+  "data-samples-actions-region": [
+    {
+      "type": 0,
+      "value": "Data and model actions"
     }
   ],
   "data-samples-label": [
@@ -2433,6 +2453,12 @@
     {
       "type": 0,
       "value": "Terms of use"
+    }
+  ],
+  "testing-model-actions-region": [
+    {
+      "type": 0,
+      "value": "Project actions"
     }
   ],
   "testing-model-title": [

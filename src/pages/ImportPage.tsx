@@ -94,7 +94,7 @@ const ImportPage = () => {
       toolbarItemsRight={<HomeToolbarItem />}
       menuItems={<HomeMenuItem />}
     >
-      <VStack justifyContent="center">
+      <VStack as="main" justifyContent="center">
         <Stack
           bgColor="white"
           spacing={5}

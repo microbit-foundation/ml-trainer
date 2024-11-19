@@ -1,7 +1,7 @@
-import { Button, HStack, VStack } from "@chakra-ui/react";
+import { Button, Flex, HStack, VStack } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import DataSamplesTable from "../components/DataSamplesTable";
 import DefaultPageLayout, {
@@ -45,7 +45,7 @@ const DataSamplesPage = () => {
     setSelectedActionIdx(actions.length);
     addNewAction();
   }, [addNewAction, actions]);
-
+  const intl = useIntl();
   return (
     <>
       <TrainModelDialogs finalFocusRef={trainButtonRef} />
@@ -55,12 +55,18 @@ const DataSamplesPage = () => {
         menuItems={<ProjectMenuItems />}
         toolbarItemsRight={<ProjectToolbarItems />}
       >
-        <DataSamplesTable
-          selectedActionIdx={selectedActionIdx}
-          setSelectedActionIdx={setSelectedActionIdx}
-        />
+        <Flex as="main" flexGrow={1} flexDir="column">
+          <DataSamplesTable
+            selectedActionIdx={selectedActionIdx}
+            setSelectedActionIdx={setSelectedActionIdx}
+          />
+        </Flex>
         <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
           <HStack
+            role="region"
+            aria-label={intl.formatMessage({
+              id: "data-samples-actions-region",
+            })}
             justifyContent="space-between"
             px={5}
             py={2}

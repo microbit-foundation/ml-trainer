@@ -69,7 +69,7 @@ const NewPage = () => {
       menuItems={<HomeMenuItem />}
     >
       <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
-      <VStack alignItems="center">
+      <VStack as="main" alignItems="center">
         <Container maxW="1180px" alignItems="stretch" p={4} mt={8}>
           <VStack alignItems="stretch" w="100%">
             <Heading as="h1" fontSize="4xl" fontWeight="bold">

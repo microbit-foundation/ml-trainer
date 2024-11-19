@@ -1,6 +1,7 @@
 import {
   Button,
   ButtonGroup,
+  Flex,
   HStack,
   Menu,
   MenuItem,
@@ -119,9 +120,15 @@ const TestingModelPage = () => {
         stage="openEditor"
         onNextLoading={editorLoading}
       />
-      <TestingModelTable />
+      <Flex as="main" flexGrow={1} flexDir="column">
+        <TestingModelTable />
+      </Flex>
       <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
         <HStack
+          role="region"
+          aria-label={intl.formatMessage({
+            id: "testing-model-actions-region",
+          })}
           justifyContent="right"
           px={5}
           py={2}

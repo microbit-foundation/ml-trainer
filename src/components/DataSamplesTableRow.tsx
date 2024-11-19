@@ -59,7 +59,17 @@ const DataSamplesTableRow = ({
         onConfirm={() => deleteAction(action.ID)}
         onCancel={deleteConfirmDisclosure.onClose}
       />
-      <Box display="contents" onFocusCapture={onSelectRow}>
+      <Box
+        role="region"
+        aria-label={intl.formatMessage(
+          {
+            id: "action-region",
+          },
+          { action: action.name }
+        )}
+        display="contents"
+        onFocusCapture={onSelectRow}
+      >
         <GridItem>
           <ActionNameCard
             value={action}

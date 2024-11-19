@@ -9,7 +9,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import microbitImage from "../images/stylised-microbit-black.svg";
@@ -64,9 +64,11 @@ const LiveGraphPanel = ({
     });
     void actions.disconnect();
   }, [actions, logging]);
-
+  const intl = useIntl();
   return (
     <HStack
+      role="region"
+      arial-label={intl.formatMessage({ id: "live-data-graph" })}
       position="relative"
       h={160}
       width="100%"

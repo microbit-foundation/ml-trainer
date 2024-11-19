@@ -31,6 +31,10 @@
     "defaultMessage": "Name of action",
     "description": "Placeholder text for user supplied name of a movement-related action, e.g. clapping"
   },
+  "action-region": {
+    "defaultMessage": "Action \"{action}\"",
+    "description": "Region label for action row"
+  },
   "action-tooltip": {
     "defaultMessage": "The type of movement you want {appNameFull} to recognise e.g. ‘waving’ or ‘clapping’.",
     "description": "Tooltip explaining action"
@@ -394,6 +398,10 @@
   "data-features-show-action": {
     "defaultMessage": "Show data features",
     "description": "Show data features button text"
+  },
+  "data-samples-actions-region": {
+    "defaultMessage": "Data and model actions",
+    "description": "Region label for data samples actions"
   },
   "data-samples-label": {
     "defaultMessage": "Data samples",
@@ -1386,6 +1394,10 @@
   "terms": {
     "defaultMessage": "Terms of use",
     "description": "Link or menu item link to view terms of use"
+  },
+  "testing-model-actions-region": {
+    "defaultMessage": "Project actions",
+    "description": "Region label for testing model actions"
   },
   "testing-model-title": {
     "defaultMessage": "Testing model",
