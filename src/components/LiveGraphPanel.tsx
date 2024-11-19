@@ -123,6 +123,7 @@ const LiveGraphPanel = ({
                 <InfoToolTip
                   titleId="live-graph"
                   descriptionId="live-graph-tooltip"
+                  isDisabled={isDisconnected}
                 />
               </HStack>
               {isConnected && (

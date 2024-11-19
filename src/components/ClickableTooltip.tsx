@@ -12,6 +12,7 @@ interface ClickableTooltipProps extends TooltipProps {
 const ClickableTooltip = ({
   children,
   isFocusable = false,
+  isDisabled,
   ...rest
 }: ClickableTooltipProps) => {
   const label = useDisclosure();
@@ -48,7 +49,7 @@ const ClickableTooltip = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={label.onOpen}
-        tabIndex={0}
+        tabIndex={isDisabled ? undefined : 0}
         onFocus={isFocusable ? label.onOpen : undefined}
         onBlur={isFocusable ? label.onClose : undefined}
         _focusVisible={{
