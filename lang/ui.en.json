@@ -400,7 +400,7 @@
     "description": "Show data features button text"
   },
   "data-samples-actions-region": {
-    "defaultMessage": "Data and model actions",
+    "defaultMessage": "Data samples toolbar",
     "description": "Region label for data samples actions"
   },
   "data-samples-label": {
@@ -1396,7 +1396,7 @@
     "description": "Link or menu item link to view terms of use"
   },
   "testing-model-actions-region": {
-    "defaultMessage": "Project actions",
+    "defaultMessage": "Testing model toolbar",
     "description": "Region label for testing model actions"
   },
   "testing-model-title": {

@@ -680,7 +680,7 @@
   "data-samples-actions-region": [
     {
       "type": 0,
-      "value": "Data and model actions"
+      "value": "Data samples toolbar"
     }
   ],
   "data-samples-label": [
@@ -2458,7 +2458,7 @@
   "testing-model-actions-region": [
     {
       "type": 0,
-      "value": "Project actions"
+      "value": "Testing model toolbar"
     }
   ],
   "testing-model-title": [
