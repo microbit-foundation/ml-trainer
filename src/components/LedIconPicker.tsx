@@ -6,6 +6,7 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
+  Portal,
 } from "@chakra-ui/react";
 import { memo, useCallback } from "react";
 import { RiArrowDropDownFill } from "react-icons/ri";
@@ -28,7 +29,7 @@ const LedIconPicker = ({ onIconSelected }: LedIconPicker) => {
   );
 
   return (
-    <Popover placement="bottom-end" isLazy lazyBehavior="keepMounted">
+    <Popover placement="right-start" isLazy lazyBehavior="keepMounted">
       {({ onClose }) => (
         <>
           <PopoverTrigger>
@@ -41,31 +42,33 @@ const LedIconPicker = ({ onIconSelected }: LedIconPicker) => {
               <RiArrowDropDownFill size={32} />
             </IconButton>
           </PopoverTrigger>
-          <PopoverContent w="100%" height="300px" overflowY="auto">
-            <PopoverArrow />
-            <PopoverBody p={4}>
-              <Grid templateColumns="repeat(4, 1fr)" gap={4}>
-                {Object.keys(makecodeIcons).map((icon, idx) => (
-                  <IconButton
-                    key={idx}
-                    aria-label={intl.formatMessage(
-                      { id: "select-icon-option-action-aria" },
-                      {
-                        iconName: intl.formatMessage({
-                          id: `led-icon-option-${icon.toLowerCase()}`,
-                        }),
-                      }
-                    )}
-                    onClick={() => handleClick(icon as MakeCodeIcon, onClose)}
-                    variant="unstyled"
-                    h={20}
-                    w={20}
-                    icon={<LedIconSvg icon={icon as MakeCodeIcon} />}
-                  />
-                ))}
-              </Grid>
-            </PopoverBody>
-          </PopoverContent>
+          <Portal>
+            <PopoverContent w="100%" height="300px" overflowY="auto">
+              <PopoverArrow />
+              <PopoverBody p={4}>
+                <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+                  {Object.keys(makecodeIcons).map((icon, idx) => (
+                    <IconButton
+                      key={idx}
+                      aria-label={intl.formatMessage(
+                        { id: "select-icon-option-action-aria" },
+                        {
+                          iconName: intl.formatMessage({
+                            id: `led-icon-option-${icon.toLowerCase()}`,
+                          }),
+                        }
+                      )}
+                      onClick={() => handleClick(icon as MakeCodeIcon, onClose)}
+                      variant="unstyled"
+                      h={20}
+                      w={20}
+                      icon={<LedIconSvg icon={icon as MakeCodeIcon} />}
+                    />
+                  ))}
+                </Grid>
+              </PopoverBody>
+            </PopoverContent>
+          </Portal>
         </>
       )}
     </Popover>
