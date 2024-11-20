@@ -612,15 +612,15 @@
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-mean-x-tooltip": {
-    "defaultMessage": "Mean value for x-direction data ",
+    "defaultMessage": "Mean value for x-direction data",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-mean-y-tooltip": {
-    "defaultMessage": "Mean value for y-direction data ",
+    "defaultMessage": "Mean value for y-direction data",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-mean-z-tooltip": {
-    "defaultMessage": "Mean value for z-direction data ",
+    "defaultMessage": "Mean value for z-direction data",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-min-x-tooltip": {

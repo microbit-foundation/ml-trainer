@@ -1046,19 +1046,19 @@
   "fingerprint-mean-x-tooltip": [
     {
       "type": 0,
-      "value": "Mean value for x-direction data "
+      "value": "Mean value for x-direction data"
     }
   ],
   "fingerprint-mean-y-tooltip": [
     {
       "type": 0,
-      "value": "Mean value for y-direction data "
+      "value": "Mean value for y-direction data"
     }
   ],
   "fingerprint-mean-z-tooltip": [
     {
       "type": 0,
-      "value": "Mean value for z-direction data "
+      "value": "Mean value for z-direction data"
     }
   ],
   "fingerprint-min-x-tooltip": [
