@@ -84,6 +84,7 @@ const ActionDataSamplesCard = ({
                 {
                   sample: value.recordings.length - idx,
                   numSamples: value.recordings.length,
+                  action: value.name,
                 }
               )}
               position="absolute"
@@ -100,6 +101,7 @@ const ActionDataSamplesCard = ({
               recording={recording}
               numRecordings={value.recordings.length}
               actionId={value.ID}
+              actionName={value.name}
               recordingIndex={idx}
               isNew={newRecordingId === recording.ID}
               onNewAnimationEnd={clearNewRecordingId}
@@ -133,6 +135,7 @@ const ActionDataSamplesCard = ({
         <DataSample
           key={recording.ID}
           actionId={value.ID}
+          actionName={value.name}
           recordingIndex={idx}
           recording={recording}
           numRecordings={value.recordings.length}
@@ -288,6 +291,7 @@ const DataSample = ({
   recording,
   numRecordings,
   actionId,
+  actionName,
   recordingIndex,
   isNew,
   onNewAnimationEnd,
@@ -298,6 +302,7 @@ const DataSample = ({
   recording: RecordingData;
   numRecordings: number;
   actionId: number;
+  actionName: string;
   recordingIndex: number;
   isNew: boolean;
   onNewAnimationEnd?: () => void;
@@ -331,6 +336,7 @@ const DataSample = ({
             {
               sample: numRecordings - recordingIndex,
               numSamples: numRecordings,
+              action: actionName,
             }
           )}
           onClick={handleDelete}

@@ -464,7 +464,7 @@
     "description": "Confirmation dialog text"
   },
   "delete-recording-aria": {
-    "defaultMessage": "Delete recording {sample} of {numSamples}",
+    "defaultMessage": "Delete recording {sample} of {numSamples} for action \"{action}\"",
     "description": "Aria label for data sample delete action"
   },
   "disconnect-action": {

@@ -809,6 +809,18 @@
     {
       "type": 1,
       "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " for action \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
     }
   ],
   "disconnect-action": [
