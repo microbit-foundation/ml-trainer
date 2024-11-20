@@ -1,6 +1,7 @@
 import { AspectRatio, Box, HStack, keyframes, VStack } from "@chakra-ui/react";
 import { memo, useCallback } from "react";
 import { icons, LedIconType } from "../utils/icons";
+import { useIntl } from "react-intl";
 
 interface LedIconProps {
   icon: LedIconType;
@@ -10,14 +11,16 @@ interface LedIconProps {
 
 const LedIcon = ({ icon, isTriggered, size = 20 }: LedIconProps) => {
   const iconData = icons[icon];
+  const intl = useIntl();
   return (
     <AspectRatio
       width={size}
       height={size}
       ratio={1}
       role="img"
-      // TODO: Will icon names need to be translated?
-      aria-label={icon}
+      aria-label={intl.formatMessage({
+        id: `led-icon-option-${icon.toLowerCase()}`,
+      })}
     >
       <VStack w="100%" h="100%" spacing={0.5}>
         {Array.from(Array(5)).map((_, idx) => {

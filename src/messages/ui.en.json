@@ -165,6 +165,12 @@
       "value": "Certainty"
     }
   ],
+  "certainty-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Certainty tooltip"
+    }
+  ],
   "certainty-percentage-label": [
     {
       "type": 0,
@@ -215,6 +221,12 @@
     {
       "type": 0,
       "value": "Code"
+    }
+  ],
+  "code-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Code tooltip"
     }
   ],
   "code-tooltip": [
@@ -1579,6 +1591,12 @@
     {
       "type": 0,
       "value": "No"
+    }
+  ],
+  "led-icon-option-off": [
+    {
+      "type": 0,
+      "value": "Off"
     }
   ],
   "led-icon-option-pitchfork": [

@@ -87,6 +87,10 @@
     "defaultMessage": "Certainty",
     "description": "Heading for certainty column"
   },
+  "certainty-label-tooltip-aria": {
+    "defaultMessage": "Certainty tooltip",
+    "description": "Aria label for code certainty icon"
+  },
   "certainty-percentage-label": {
     "defaultMessage": "certainty for {action}: {currentConfidence} percent",
     "description": "Label for certainty of an action"
@@ -110,6 +114,10 @@
   "code-label": {
     "defaultMessage": "Code",
     "description": "Code column heading"
+  },
+  "code-label-tooltip-aria": {
+    "defaultMessage": "Code tooltip",
+    "description": "Aria label for code tooltip icon"
   },
   "code-tooltip": {
     "defaultMessage": "These are the MakeCode blocks for each detected action when you transfer your ML model and code to a micro:bit",
@@ -902,6 +910,10 @@
   "led-icon-option-no": {
     "defaultMessage": "No",
     "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-off": {
+    "defaultMessage": "Off",
+    "description": "Icon option."
   },
   "led-icon-option-pitchfork": {
     "defaultMessage": "Pitchfork",

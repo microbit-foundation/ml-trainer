@@ -1,6 +1,7 @@
 import { useToken } from "@chakra-ui/react";
 import { icons, LedIconType } from "../../utils/icons";
 import { useCallback } from "react";
+import { useIntl } from "react-intl";
 
 interface LedIconSvg {
   icon: LedIconType;
@@ -9,6 +10,7 @@ interface LedIconSvg {
 const LedIconSvg = ({ icon }: LedIconSvg) => {
   const [brand500, gray200] = useToken("colors", ["brand.500", "gray.200"]);
   const iconData = icons[icon];
+  const intl = useIntl();
   const getFill = useCallback(
     (value: string) => {
       return value === "1" ? brand500 : gray200;
@@ -18,7 +20,9 @@ const LedIconSvg = ({ icon }: LedIconSvg) => {
   return (
     <svg
       role="img"
-      aria-label={icon}
+      aria-label={intl.formatMessage({
+        id: `led-icon-option-${icon.toLowerCase()}`,
+      })}
       xmlns="http://www.w3.org/2000/svg"
       width="80.05"
       height="80.05"
