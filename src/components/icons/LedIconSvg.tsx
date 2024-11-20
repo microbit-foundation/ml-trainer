@@ -17,6 +17,8 @@ const LedIconSvg = ({ icon }: LedIconSvg) => {
   );
   return (
     <svg
+      role="img"
+      aria-label={icon}
       xmlns="http://www.w3.org/2000/svg"
       width="80.05"
       height="80.05"
