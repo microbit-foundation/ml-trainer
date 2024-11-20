@@ -677,6 +677,12 @@
       "value": "diagram showing data collection micro:bit being connected to a person's wrist"
     }
   ],
+  "data-connection-region": [
+    {
+      "type": 0,
+      "value": "micro:bit data connection"
+    }
+  ],
   "data-features-hide-action": [
     {
       "type": 0,
