@@ -42,6 +42,7 @@ import HelpMenuItems from "./HelpMenuItems";
 import ImportErrorDialog from "./ImportErrorDialog";
 import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import MakeCodeLoadErrorDialog from "./MakeCodeLoadErrorDialog";
+import SettingsMenuItem from "./SettingsMenuItem";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -165,6 +166,7 @@ const DefaultPageLayout = ({
                   >
                     {menuItems}
                     <LanguageMenuItem />
+                    <SettingsMenuItem />
                   </ToolbarMenu>
                   {/* Toolbar items when sm window size. */}
                   <ToolbarMenu
@@ -174,6 +176,7 @@ const DefaultPageLayout = ({
                   >
                     {menuItems}
                     <LanguageMenuItem />
+                    <SettingsMenuItem />
                     <MenuDivider />
                     <HelpMenuItems />
                   </ToolbarMenu>
