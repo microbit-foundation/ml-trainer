@@ -30,7 +30,8 @@ const ToolbarMenu = ({
         <MenuButton
           as={IconButton}
           aria-label={label}
-          icon={icon ?? <RiMenuLine size={24} color="white" />}
+          color="white"
+          icon={icon ?? <RiMenuLine size={24} />}
           variant={variant}
           size="lg"
           fontSize="xl"
