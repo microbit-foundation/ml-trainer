@@ -249,7 +249,7 @@
   },
   "connect-pattern-input-label": {
     "defaultMessage": "Column {colNum} - number of LEDs lit on the micro:bit display",
-    "description": "Screenreader text for numeric pattern input"
+    "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-subtitle": {
     "defaultMessage": "Copy the pattern displayed on the micro:bit.",
@@ -1036,7 +1036,7 @@
     "description": "Makecode block text. The translation should match MakeCode translations."
   },
   "makecode-load-error-dialog-body": {
-    "defaultMessage": "micro:bit CreateAI has failed to load MakeCode. Please check your internet connection, reload the page then try again.",
+    "defaultMessage": "{appNameFull} has failed to load MakeCode. Please check your internet connection, reload the page then try again.",
     "description": "Content of MakeCode load error dialog"
   },
   "makecode-load-error-dialog-title": {

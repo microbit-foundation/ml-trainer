@@ -15,11 +15,13 @@ import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { useStore } from "../store";
 import ExternalLink from "./ExternalLink";
+import { useDeployment } from "../deployment";
 
 const MakeCodeLoadErrorDialog = () => {
   const isOpen = useStore((s) => s.isEditorTimedOutDialogOpen);
   const setIsOpen = useStore((s) => s.setIsEditorTimedOutDialogOpen);
   const onClose = useCallback(() => setIsOpen(false), [setIsOpen]);
+  const { appNameFull } = useDeployment();
   return (
     <Modal
       motionPreset="none"
@@ -37,7 +39,10 @@ const MakeCodeLoadErrorDialog = () => {
           <ModalBody>
             <VStack textAlign="left" w="100%">
               <Text w="100%">
-                <FormattedMessage id="makecode-load-error-dialog-body" />
+                <FormattedMessage
+                  id="makecode-load-error-dialog-body"
+                  values={{ appNameFull }}
+                />
               </Text>
             </VStack>
           </ModalBody>
