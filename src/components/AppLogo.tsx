@@ -13,11 +13,12 @@ const AppLogo = ({ color = "#FFF", ...props }: AppLogoProps) => {
       userSelect="none"
       transform="scale(0.93)"
       transformOrigin="left"
+      color="white"
       {...props}
     >
       {OrgLogo && (
         <>
-          <OrgLogo color="white" />
+          <OrgLogo />
           <Divider
             aria-hidden
             borderColor={color}
@@ -27,7 +28,7 @@ const AppLogo = ({ color = "#FFF", ...props }: AppLogoProps) => {
           />
         </>
       )}
-      <AppLogo h="19px" color="white" />
+      <AppLogo h="19px" />
     </HStack>
   );
 };

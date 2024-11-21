@@ -47,7 +47,8 @@ const HelpMenu = ({ ...rest }: HelpMenuProps) => {
           fontSize="2xl"
           h={12}
           w={12}
-          icon={<RiQuestionLine fill="white" size={24} />}
+          color="white"
+          icon={<RiQuestionLine size={24} />}
           variant="plain"
           isRound
           _focusVisible={{

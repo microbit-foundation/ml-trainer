@@ -28,7 +28,8 @@ const SettingsMenu = () => {
           aria-label={intl.formatMessage({ id: "settings-menu-action" })}
           size="lg"
           fontSize="2xl"
-          icon={<RiSettings2Line fill="white" size={24} />}
+          color="white"
+          icon={<RiSettings2Line size={24} />}
           variant="plain"
           isRound
           h={12}

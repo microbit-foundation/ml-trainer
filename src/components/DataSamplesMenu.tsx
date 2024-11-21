@@ -112,8 +112,9 @@ const DataSamplesMenu = () => {
           aria-label={intl.formatMessage({
             id: "data-actions-menu",
           })}
+          color="gray.800"
           variant="ghost"
-          icon={<Icon as={MdMoreVert} color="gray.800" boxSize={7} />}
+          icon={<Icon as={MdMoreVert} boxSize={7} />}
           isRound
         />
         <Portal>
