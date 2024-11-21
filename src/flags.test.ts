@@ -1,14 +1,14 @@
 import { flagsForParams } from "./flags";
 
 describe("flags", () => {
-  it("enables nothing in production except prototypeWarning flag", () => {
+  it("enables correct production flags", () => {
     const params = new URLSearchParams([]);
 
     const flags = flagsForParams("production", params);
 
     expect(
       Object.entries(flags).every(
-        ([flag, status]) => !status || (flag === "prototypeWarning" && status)
+        ([flag, status]) => !status || (flag === "websiteContent" && status)
       )
     ).toEqual(true);
   });

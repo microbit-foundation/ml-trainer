@@ -7,37 +7,42 @@ import {
   IconButton,
   MenuDivider,
   MenuItem,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect } from "react";
 import { RiDownload2Line, RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import { useDeployment } from "../deployment";
-import { flags } from "../flags";
-import { useProject } from "../hooks/project-hooks";
-import { SaveStep, TrainModelDialogStage } from "../model";
-import { SessionPageId } from "../pages-config";
-import Tour from "../pages/Tour";
-import { useStore } from "../store";
-import { createHomePageUrl, createSessionPageUrl } from "../urls";
-import ActionBar from "./ActionBar";
-import AppLogo from "./AppLogo";
-import ConnectionDialogs from "./ConnectionFlowDialogs";
-import DownloadDialogs from "./DownloadDialogs";
-import HelpMenu from "./HelpMenu";
-import LanguageMenuItem from "./LanguageMenuItem";
-import PreReleaseNotice from "./PreReleaseNotice";
-import SaveDialogs from "./SaveDialogs";
-import SettingsMenu from "./SettingsMenu";
-import ToolbarMenu from "./ToolbarMenu";
-import ProjectDropTarget from "./ProjectDropTarget";
-import React from "react";
 import {
   ConnectionFlowStep,
   useConnectionStage,
 } from "../connection-stage-hooks";
+import { useDeployment } from "../deployment";
+import { flags } from "../flags";
+import { useProject } from "../hooks/project-hooks";
+import {
+  PostImportDialogState,
+  SaveStep,
+  TrainModelDialogStage,
+} from "../model";
+import Tour from "../pages/Tour";
+import { useStore } from "../store";
+import { createHomePageUrl } from "../urls";
+import ActionBar from "./ActionBar";
+import AppLogo from "./AppLogo";
+import ConnectionDialogs from "./ConnectionFlowDialogs";
+import HelpMenu from "./HelpMenu";
+import LanguageMenuItem from "./LanguageMenuItem";
+import PreReleaseNotice from "./PreReleaseNotice";
+import ProjectDropTarget from "./ProjectDropTarget";
+import SaveDialogs from "./SaveDialogs";
+import SettingsMenu from "./SettingsMenu";
+import ToolbarMenu from "./ToolbarMenu";
+import HelpMenuItems from "./HelpMenuItems";
+import ImportErrorDialog from "./ImportErrorDialog";
+import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
+import MakeCodeLoadErrorDialog from "./MakeCodeLoadErrorDialog";
+import SettingsMenuItem from "./SettingsMenuItem";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -57,17 +62,17 @@ const DefaultPageLayout = ({
   showPageTitle = false,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
-  const navigate = useNavigate();
   const isEditorOpen = useStore((s) => s.isEditorOpen);
   const isTourClosed = useStore((s) => s.tourState === undefined);
   const isTrainDialogClosed = useStore(
     (s) => s.trainModelDialogStage === TrainModelDialogStage.Closed
   );
+  const isMakeCodeErrorDialogClosed = useStore(
+    (s) => !s.isEditorTimedOutDialogOpen
+  );
   const { stage } = useConnectionStage();
   const isConnectionDialogClosed = stage.flowStep === ConnectionFlowStep.None;
   const isSaveDialogClosed = useStore((s) => s.save.step === SaveStep.None);
-
-  const toast = useToast();
   const { appNameFull } = useDeployment();
 
   useEffect(() => {
@@ -76,33 +81,11 @@ const DefaultPageLayout = ({
       : appNameFull;
   }, [appNameFull, intl, titleId]);
 
-  useEffect(() => {
-    return useStore.subscribe(
-      (
-        { projectLoadTimestamp },
-        { projectLoadTimestamp: prevProjectLoadTimestamp }
-      ) => {
-        if (projectLoadTimestamp > prevProjectLoadTimestamp) {
-          // Side effects of loading a project, which MakeCode notifies us of.
-          navigate(createSessionPageUrl(SessionPageId.DataSamples));
-          toast({
-            position: "top",
-            duration: 5_000,
-            title: intl.formatMessage({ id: "project-loaded" }),
-            status: "info",
-          });
-        }
-      }
-    );
-  }, [intl, navigate, toast]);
-
-  const ProjectDropTargetWhenNeeded =
-    isTrainDialogClosed &&
-    isTourClosed &&
-    isConnectionDialogClosed &&
-    isSaveDialogClosed
-      ? ProjectDropTarget
-      : React.Fragment;
+  const postImportDialogState = useStore((s) => s.postImportDialogState);
+  const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
+  const closePostImportDialog = useCallback(() => {
+    setPostImportDialogState(PostImportDialogState.None);
+  }, [setPostImportDialogState]);
 
   return (
     <>
@@ -110,21 +93,41 @@ const DefaultPageLayout = ({
       {!isEditorOpen &&
         isTrainDialogClosed &&
         isTourClosed &&
-        isSaveDialogClosed && <ConnectionDialogs />}
-      {!isEditorOpen && <Tour />}
-      <DownloadDialogs />
+        isSaveDialogClosed &&
+        isMakeCodeErrorDialogClosed &&
+        postImportDialogState === PostImportDialogState.None && (
+          <ConnectionDialogs />
+        )}
+      <Tour />
       <SaveDialogs />
-      <ProjectDropTargetWhenNeeded>
+      <NotCreateAiHexImportDialog
+        onClose={closePostImportDialog}
+        isOpen={postImportDialogState === PostImportDialogState.NonCreateAiHex}
+      />
+      <ImportErrorDialog
+        onClose={closePostImportDialog}
+        isOpen={postImportDialogState === PostImportDialogState.Error}
+      />
+      <MakeCodeLoadErrorDialog />
+      <ProjectDropTarget
+        isEnabled={
+          isTrainDialogClosed &&
+          isTourClosed &&
+          isConnectionDialogClosed &&
+          isSaveDialogClosed
+        }
+      >
         <VStack
-          minH="100dvh"
+          minH="100vh"
           w="100%"
           alignItems="stretch"
           spacing={0}
           bgColor="whitesmoke"
         >
-          <VStack zIndex={1} position="sticky" top={0} gap={0}>
+          <VStack zIndex={999} position="sticky" top={0} gap={0}>
             <ActionBar
               w="100%"
+              px={{ base: 3, sm: 5 }}
               itemsCenter={
                 <>
                   {showPageTitle && (
@@ -134,21 +137,48 @@ const DefaultPageLayout = ({
                   )}
                 </>
               }
-              itemsLeft={toolbarItemsLeft || <AppLogo />}
+              itemsLeft={
+                toolbarItemsLeft || (
+                  <AppLogo
+                    display={
+                      showPageTitle
+                        ? { base: "none", md: "inline-flex" }
+                        : "inline-flex"
+                    }
+                    transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}
+                  />
+                )
+              }
+              itemsLeftProps={{ width: 0 }}
               itemsRight={
                 <>
                   <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
                     {toolbarItemsRight}
                     <SettingsMenu />
                   </HStack>
-                  <HelpMenu />
+                  <HelpMenu
+                    display={{ base: "none", md: "block", lg: "block" }}
+                  />
                   <ToolbarMenu
-                    isMobile
+                    display={{ base: "none", md: "block", lg: "none" }}
                     variant="plain"
                     label={intl.formatMessage({ id: "main-menu" })}
                   >
                     {menuItems}
                     <LanguageMenuItem />
+                    <SettingsMenuItem />
+                  </ToolbarMenu>
+                  {/* Toolbar items when sm window size. */}
+                  <ToolbarMenu
+                    display={{ base: "block", md: "none" }}
+                    variant="plain"
+                    label={intl.formatMessage({ id: "main-menu" })}
+                  >
+                    {menuItems}
+                    <LanguageMenuItem />
+                    <SettingsMenuItem />
+                    <MenuDivider />
+                    <HelpMenuItems />
                   </ToolbarMenu>
                 </>
               }
@@ -159,7 +189,7 @@ const DefaultPageLayout = ({
             {children}
           </Flex>
         </VStack>
-      </ProjectDropTargetWhenNeeded>
+      </ProjectDropTarget>
     </>
   );
 };
@@ -194,10 +224,13 @@ export const HomeToolbarItem = () => {
     <IconButton
       onClick={handleHomeClick}
       icon={<RiHome2Line size={24} color="white" />}
-      aria-label={intl.formatMessage({ id: "homepage.Link" })}
+      aria-label={intl.formatMessage({ id: "homepage" })}
       variant="plain"
       size="lg"
       fontSize="xl"
+      _focusVisible={{
+        boxShadow: "outlineDark",
+      }}
     />
   );
 };

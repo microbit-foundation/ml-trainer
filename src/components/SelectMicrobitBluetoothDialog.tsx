@@ -24,14 +24,17 @@ const SelectMicrobitBluetoothDialog = ({
   const intl = useIntl();
 
   return (
-    <ConnectContainerDialog headingId="connectMB.webPopup" {...props}>
+    <ConnectContainerDialog
+      headingId="connect-popup-bluetooth-title"
+      {...props}
+    >
       <Box position="relative" width={"100%"} alignSelf={""}>
         <Image
-          height={365}
-          width={418}
+          height={379}
+          width={350}
           src={selectMicrobitImage}
           alt={intl.formatMessage({
-            id: "connectMB.webPopup.webBluetooth.altText",
+            id: "connect-popup-bluetooth-alt",
           })}
         />
         <Text
@@ -42,7 +45,7 @@ const SelectMicrobitBluetoothDialog = ({
           top="0px"
           fontSize="xl"
         >
-          <FormattedMessage id="connectMB.webPopup.instruction.heading" />
+          <FormattedMessage id="connect-popup-instruction-heading" />
         </Text>
         <List
           position="absolute"
@@ -52,30 +55,30 @@ const SelectMicrobitBluetoothDialog = ({
           spacing={2}
         >
           <ListItem>
-            <Flex alignItems="center" height="72px">
+            <Flex alignItems="center" height="90px">
               <VisuallyHidden>
                 <Text>1. </Text>
               </VisuallyHidden>
               <Text>
-                <FormattedMessage id="connectMB.webPopup.instruction1" />
+                <FormattedMessage id="connect-popup-instruction1" />
               </Text>
             </Flex>
           </ListItem>
           <ListItem>
-            <Flex alignItems="center" height="50px">
+            <Flex alignItems="center" height="57px">
               <VisuallyHidden>
                 <Text>2. </Text>
               </VisuallyHidden>
               <Text>
-                <FormattedMessage id="connectMB.webPopup.webBluetooth.instruction2" />
+                <FormattedMessage id="connect-popup-bluetooth-instruction2" />
               </Text>
             </Flex>
           </ListItem>
         </List>
-        <Box position="absolute" top="81px" left="240px">
+        <Box position="absolute" top="86px" left="240px">
           <ArrowOne />
         </Box>
-        <Box position="absolute" bottom="48px" left="265px">
+        <Box position="absolute" bottom="42px" left="268px">
           <ArrowTwo />
         </Box>
       </Box>

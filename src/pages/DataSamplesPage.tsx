@@ -1,48 +1,72 @@
-import { Button, HStack, VStack } from "@chakra-ui/react";
-import { useCallback, useRef } from "react";
+import { Button, Flex, HStack, VStack } from "@chakra-ui/react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import DataSampleGridView from "../components/DataSampleGridView";
+import DataSamplesTable from "../components/DataSamplesTable";
 import DefaultPageLayout, {
   ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
-import { SessionPageId } from "../pages-config";
+import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
-import { createSessionPageUrl } from "../urls";
-import TrainModelDialogs from "../components/TrainModelFlowDialogs";
+import { createTestingModelPageUrl } from "../urls";
+import { useConnectionStage } from "../connection-stage-hooks";
 
 const DataSamplesPage = () => {
-  const gestures = useStore((s) => s.gestures);
-  const addNewGesture = useStore((s) => s.addNewGesture);
+  const actions = useStore((s) => s.actions);
+  const addNewAction = useStore((s) => s.addNewAction);
   const model = useStore((s) => s.model);
+  const [selectedActionIdx, setSelectedActionIdx] = useState<number>(0);
 
   const navigate = useNavigate();
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
 
+  const tourStart = useStore((s) => s.tourStart);
+  const { isConnected } = useConnectionStage();
+  useEffect(() => {
+    // If a user first connects on "Testing model" this can result in the tour when they return to the "Data samples" page.
+    if (isConnected) {
+      tourStart({ name: "Connect" }, false);
+    }
+  }, [isConnected, tourStart]);
+
   const hasSufficientData = useHasSufficientDataForTraining();
-  const isAddNewGestureDisabled = gestures.some((g) => g.name.length === 0);
+  const isAddNewActionDisabled = actions.some((a) => a.name.length === 0);
 
   const handleNavigateToModel = useCallback(() => {
-    navigate(createSessionPageUrl(SessionPageId.TestingModel));
+    navigate(createTestingModelPageUrl());
   }, [navigate]);
 
   const trainButtonRef = useRef(null);
+  const handleAddNewAction = useCallback(() => {
+    setSelectedActionIdx(actions.length);
+    addNewAction();
+  }, [addNewAction, actions]);
+  const intl = useIntl();
   return (
     <>
       <TrainModelDialogs finalFocusRef={trainButtonRef} />
       <DefaultPageLayout
-        titleId={`${SessionPageId.DataSamples}-title`}
+        titleId="data-samples-title"
         showPageTitle
         menuItems={<ProjectMenuItems />}
         toolbarItemsRight={<ProjectToolbarItems />}
       >
-        <DataSampleGridView />
+        <Flex as="main" flexGrow={1} flexDir="column">
+          <DataSamplesTable
+            selectedActionIdx={selectedActionIdx}
+            setSelectedActionIdx={setSelectedActionIdx}
+          />
+        </Flex>
         <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
           <HStack
+            role="region"
+            aria-label={intl.formatMessage({
+              id: "data-samples-actions-region",
+            })}
             justifyContent="space-between"
             px={5}
             py={2}
@@ -57,32 +81,35 @@ const DataSamplesPage = () => {
                 className={tourElClassname.addActionButton}
                 variant={hasSufficientData ? "secondary" : "primary"}
                 leftIcon={<RiAddLine />}
-                onClick={addNewGesture}
-                isDisabled={isAddNewGestureDisabled}
+                onClick={handleAddNewAction}
+                isDisabled={isAddNewActionDisabled}
               >
-                <FormattedMessage id="content.data.addAction" />
+                <FormattedMessage id="add-action-action" />
               </Button>
             </HStack>
-            {model ? (
-              <Button
-                onClick={handleNavigateToModel}
-                variant="primary"
-                rightIcon={<RiArrowRightLine />}
-              >
-                <FormattedMessage id={`${SessionPageId.TestingModel}-title`} />
-              </Button>
-            ) : (
-              <Button
-                ref={trainButtonRef}
-                className={tourElClassname.trainModelButton}
-                onClick={trainModelFlowStart}
-                variant={hasSufficientData ? "primary" : "secondary-disabled"}
-              >
-                <FormattedMessage id={"menu.trainer.trainModelButton"} />
-              </Button>
-            )}
+            <HStack>
+              {model ? (
+                <Button
+                  onClick={handleNavigateToModel}
+                  className={tourElClassname.trainModelButton}
+                  variant="primary"
+                  rightIcon={<RiArrowRightLine />}
+                >
+                  <FormattedMessage id="testing-model-title" />
+                </Button>
+              ) : (
+                <Button
+                  ref={trainButtonRef}
+                  className={tourElClassname.trainModelButton}
+                  onClick={() => trainModelFlowStart(handleNavigateToModel)}
+                  variant={hasSufficientData ? "primary" : "secondary-disabled"}
+                >
+                  <FormattedMessage id="train-model" />
+                </Button>
+              )}
+            </HStack>
           </HStack>
-          <LiveGraphPanel />
+          <LiveGraphPanel disconnectedTextId="connect-to-record" />
         </VStack>
       </DefaultPageLayout>
     </>

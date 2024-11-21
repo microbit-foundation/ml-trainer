@@ -34,7 +34,7 @@ const LoadProjectInput = forwardRef<LoadProjectInputRef, LoadProjectInputProps>(
     const onOpen = useCallback(
       (files: File[]) => {
         if (files.length === 1) {
-          loadFile(files[0]);
+          loadFile(files[0], "file-upload");
         }
       },
       [loadFile]

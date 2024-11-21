@@ -1,3 +1,4 @@
+import { BoardVersion } from "@microbit/microbit-connection";
 import {
   ReactNode,
   createContext,
@@ -77,6 +78,7 @@ export interface ConnectionStage {
   bluetoothMicrobitName?: string;
   radioBridgeDeviceId?: number;
   radioRemoteDeviceId?: number;
+  radioRemoteBoardVersion?: BoardVersion;
   hasFailedToReconnectTwice: boolean;
 
   // User Project
@@ -166,6 +168,7 @@ export const useConnectionStage = (): {
   }
   const [stage, setStage] = connectionStageContextValue;
   const connectActions = useConnectActions();
+  const startConnect = useStore((s) => s.dataCollectionMicrobitConnectionStart);
   const dataCollectionMicrobitConnected = useStore(
     (s) => s.dataCollectionMicrobitConnected
   );
@@ -177,6 +180,7 @@ export const useConnectionStage = (): {
       stage,
       setStage,
       setStatus,
+      startConnect,
       dataCollectionMicrobitConnected
     );
   }, [
@@ -184,6 +188,7 @@ export const useConnectionStage = (): {
     stage,
     setStage,
     setStatus,
+    startConnect,
     dataCollectionMicrobitConnected,
   ]);
 

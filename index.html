@@ -7,25 +7,24 @@
 <html lang="en" style="height: 100%">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>micro:bit CreateAI</title>
-    <meta property="og:title" content="micro:bit CreateAI" />
+    <meta
+      name="viewport"
+      content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, target-densitydpi=device-dpi"
+    />
+    <title><%= appNameFull %></title>
+    <meta property="og:title" content="<%= appNameFull %>" />
     <link rel="canonical" href="%VITE_FULL_URL%" />
     <meta property="og:url" content="%VITE_FULL_URL%" />
+    <% if (ogDescription) { %>
+    <meta property="og:description" content="<%= ogDescription %>" />
+    <% } %>
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@microbit_edu" />
-    <meta
-      name="description"
-      content="Create AI by training a machine learning model with your movement data, testing it to see if it works, then writing your own code to use it on a BBC micro:bit"
-    />
-    <meta
-      property="og:description"
-      content="Create AI on your BBC micro:bit using movement and machine learning"
-    />
-    <meta property="og:image" content="%VITE_FULL_URL%social.jpg" />
-
-    <link rel="icon" type="image/png" href="/imgs/favicon.png" />
-
+    <% if (metaDescription) { %>
+    <meta name="description" content="<%= metaDescription %>" />
+    <% } %>
+    <meta property="og:image" content="%VITE_FULL_URL%social.png" />
+    <link rel="shortcut icon" href="%VITE_FULL_URL%imgs/favicon.ico" />
     <script
       src="https://shared-assets.microbit.org/common/v1/common.js"
       async

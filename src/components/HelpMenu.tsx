@@ -1,58 +1,49 @@
 import {
   Box,
+  BoxProps,
   IconButton,
   Menu,
   MenuButton,
-  MenuDivider,
-  MenuItem,
   MenuList,
   Portal,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import { MdOutlineCookie } from "react-icons/md";
-import {
-  RiExternalLinkLine,
-  RiFeedbackLine,
-  RiInformationLine,
-  RiQuestionLine,
-} from "react-icons/ri";
-import { FormattedMessage, useIntl } from "react-intl";
-import FeedbackForm from "./FeedbackForm";
-import { useDeployment } from "../deployment";
+import { RiQuestionLine } from "react-icons/ri";
+import { useIntl } from "react-intl";
 import AboutDialog from "./AboutDialog";
+import FeedbackForm from "./FeedbackForm";
+import HelpMenuItems from "./HelpMenuItems";
 
-interface HelpMenuProps {
-  isMobile?: boolean;
-}
+interface HelpMenuProps extends BoxProps {}
 
 /**
  * A help button that triggers a drop-down menu with actions.
  */
-const HelpMenu = ({ isMobile, ...rest }: HelpMenuProps) => {
+const HelpMenu = ({ ...rest }: HelpMenuProps) => {
   const aboutDialogDisclosure = useDisclosure();
   const feedbackDisclosure = useDisclosure();
   const intl = useIntl();
-  const MenuButtonRef = useRef(null);
-  const deployment = useDeployment();
+  const menuButtonRef = useRef(null);
+  const containerRef = useRef(null);
   return (
-    <Box display={isMobile ? { base: "block", lg: "none" } : undefined}>
+    <Box {...rest} ref={containerRef}>
       <AboutDialog
         isOpen={aboutDialogDisclosure.isOpen}
         onClose={aboutDialogDisclosure.onClose}
-        finalFocusRef={MenuButtonRef}
+        finalFocusRef={menuButtonRef}
       />
       <FeedbackForm
         isOpen={feedbackDisclosure.isOpen}
         onClose={feedbackDisclosure.onClose}
-        finalFocusRef={MenuButtonRef}
+        finalFocusRef={menuButtonRef}
       />
-      <Menu {...rest}>
+      <Menu>
         <MenuButton
           as={IconButton}
-          ref={MenuButtonRef}
+          ref={menuButtonRef}
           aria-label={intl.formatMessage({ id: "help-label" })}
-          size={isMobile ? "md" : "sm"}
+          size="sm"
           fontSize="2xl"
           h={12}
           w={12}
@@ -63,68 +54,9 @@ const HelpMenu = ({ isMobile, ...rest }: HelpMenuProps) => {
             boxShadow: "outlineDark",
           }}
         />
-        <Portal>
+        <Portal containerRef={containerRef}>
           <MenuList>
-            {deployment.supportLinks.main && (
-              <>
-                <MenuItem
-                  as="a"
-                  href={deployment.supportLinks.main}
-                  target="_blank"
-                  rel="noopener"
-                  icon={<RiExternalLinkLine />}
-                >
-                  <FormattedMessage id="help-support" />
-                </MenuItem>
-                <MenuItem
-                  icon={<RiFeedbackLine />}
-                  onClick={feedbackDisclosure.onOpen}
-                >
-                  <FormattedMessage id="feedback" />
-                </MenuItem>
-                <MenuDivider />
-              </>
-            )}
-            {deployment.termsOfUseLink && (
-              <MenuItem
-                as="a"
-                href={deployment.termsOfUseLink}
-                target="_blank"
-                rel="noopener"
-                icon={<RiExternalLinkLine />}
-              >
-                <FormattedMessage id="terms" />
-              </MenuItem>
-            )}
-            {deployment.privacyPolicyLink && (
-              <MenuItem
-                as="a"
-                href={deployment.privacyPolicyLink}
-                target="_blank"
-                rel="noopener"
-                icon={<RiExternalLinkLine />}
-              >
-                <FormattedMessage id="privacy" />
-              </MenuItem>
-            )}
-            {deployment.compliance.manageCookies && (
-              <MenuItem
-                as="button"
-                onClick={deployment.compliance.manageCookies}
-                icon={<MdOutlineCookie />}
-              >
-                <FormattedMessage id="cookies-action" />
-              </MenuItem>
-            )}
-            {(deployment.privacyPolicyLink ||
-              deployment.compliance.manageCookies ||
-              deployment.termsOfUseLink) && <MenuDivider />}
-            <MenuItem
-              icon={<RiInformationLine />}
-              onClick={aboutDialogDisclosure.onOpen}
-            >
-              <FormattedMessage id="about" />
-            </MenuItem>
+            <HelpMenuItems />
           </MenuList>
         </Portal>
       </Menu>

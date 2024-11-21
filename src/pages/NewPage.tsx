@@ -20,21 +20,24 @@ import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
 import NewPageChoice from "../components/NewPageChoice";
-import { useConnectionStage } from "../connection-stage-hooks";
-import { SessionPageId } from "../pages-config";
+import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
-import { createSessionPageUrl } from "../urls";
+import { createDataSamplesPageUrl } from "../urls";
+import { useProjectName } from "../hooks/project-hooks";
 
 const NewPage = () => {
   const existingSessionTimestamp = useStore((s) => s.timestamp);
-  const projectName = useStore((s) => s.project.header?.name ?? "Untitled");
+  const projectName = useProjectName();
   const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
-  const { actions: connStageActions } = useConnectionStage();
+  const logging = useLogging();
 
   const handleOpenLastSession = useCallback(() => {
-    navigate(createSessionPageUrl(SessionPageId.DataSamples));
-  }, [navigate]);
+    logging.event({
+      type: "session-open-last",
+    });
+    navigate(createDataSamplesPageUrl());
+  }, [logging, navigate]);
 
   const loadProjectRef = useRef<LoadProjectInputRef>(null);
   const handleContinueSessionFromFile = useCallback(() => {
@@ -42,10 +45,12 @@ const NewPage = () => {
   }, []);
 
   const handleStartNewSession = useCallback(() => {
+    logging.event({
+      type: "session-open-new",
+    });
     newSession();
-    navigate(createSessionPageUrl(SessionPageId.DataSamples));
-    connStageActions.startConnect();
-  }, [newSession, navigate, connStageActions]);
+    navigate(createDataSamplesPageUrl());
+  }, [logging, newSession, navigate]);
 
   const intl = useIntl();
   const lastSessionTitle = intl.formatMessage({
@@ -64,8 +69,8 @@ const NewPage = () => {
       menuItems={<HomeMenuItem />}
     >
       <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
-      <VStack alignItems="center">
-        <Container maxW="1180px" alignItems="stretch" zIndex={1} p={4} mt={8}>
+      <VStack as="main" alignItems="center">
+        <Container maxW="1180px" alignItems="stretch" p={4} mt={8}>
           <VStack alignItems="stretch" w="100%">
             <Heading as="h1" fontSize="4xl" fontWeight="bold">
               <FormattedMessage id="newpage-title" />

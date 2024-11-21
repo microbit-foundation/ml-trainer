@@ -1,52 +1,180 @@
-import { Button } from "@chakra-ui/react";
-import { useCallback, useEffect } from "react";
-import { FormattedMessage } from "react-intl";
+import {
+  Button,
+  ButtonGroup,
+  Flex,
+  HStack,
+  Menu,
+  MenuItem,
+  MenuList,
+  Portal,
+  useDisclosure,
+  usePrevious,
+  VStack,
+} from "@chakra-ui/react";
+import { useCallback, useEffect, useState } from "react";
+import { RiDeleteBin2Line } from "react-icons/ri";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import BackArrow from "../components/BackArrow";
 import DefaultPageLayout, {
   ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
-import TestingModelGridView from "../components/TestingModelGridView";
-import { SessionPageId } from "../pages-config";
+import IncompatibleEditorDevice from "../components/IncompatibleEditorDevice";
+import LiveGraphPanel from "../components/LiveGraphPanel";
+import MoreMenuButton from "../components/MoreMenuButton";
+import TestingModelTable from "../components/TestingModelTable";
+import { useConnectActions } from "../connect-actions-hooks";
+import { useConnectionStage } from "../connection-stage-hooks";
+import { useProject } from "../hooks/project-hooks";
 import { useStore } from "../store";
-import { createSessionPageUrl } from "../urls";
+import { tourElClassname } from "../tours";
+import { createDataSamplesPageUrl } from "../urls";
+import { useBufferedData } from "../buffered-data-hooks";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
   const model = useStore((s) => s.model);
+  const startPredicting = useStore((s) => s.startPredicting);
+  const stopPredicting = useStore((s) => s.stopPredicting);
+  const bufferedData = useBufferedData();
+  const intl = useIntl();
 
   const navigateToDataSamples = useCallback(() => {
-    navigate(createSessionPageUrl(SessionPageId.DataSamples));
+    navigate(createDataSamplesPageUrl());
   }, [navigate]);
 
   useEffect(() => {
     if (!model) {
-      navigateToDataSamples();
+      return navigateToDataSamples();
     }
-  }, [model, navigateToDataSamples]);
+    startPredicting(bufferedData);
+
+    return () => {
+      stopPredicting();
+    };
+  }, [
+    bufferedData,
+    model,
+    navigateToDataSamples,
+    startPredicting,
+    stopPredicting,
+  ]);
+
+  const tourStart = useStore((s) => s.tourStart);
+  const { isConnected } = useConnectionStage();
+  const wasConnected = usePrevious(isConnected);
+  useEffect(() => {
+    if (isConnected) {
+      tourStart(
+        { name: "TrainModel", delayedUntilConnection: wasConnected === false },
+        false
+      );
+    }
+  }, [isConnected, tourStart, wasConnected]);
+
+  const { openEditor, resetProject, projectEdited } = useProject();
+  const { getDataCollectionBoardVersion } = useConnectActions();
+  const incompatibleEditorDeviceDisclosure = useDisclosure();
+  const maybeOpenEditor = useCallback(async () => {
+    // Open editor if device is not a V1, otherwise show warning dialog.
+    if (getDataCollectionBoardVersion() === "V1") {
+      return incompatibleEditorDeviceDisclosure.onOpen();
+    }
+    setEditorLoading(true);
+    await openEditor();
+    setEditorLoading(false);
+  }, [
+    getDataCollectionBoardVersion,
+    incompatibleEditorDeviceDisclosure,
+    openEditor,
+  ]);
+  const [editorLoading, setEditorLoading] = useState(false);
+  const continueToEditor = useCallback(async () => {
+    setEditorLoading(true);
+    await openEditor();
+    incompatibleEditorDeviceDisclosure.onClose();
+    setEditorLoading(false);
+  }, [incompatibleEditorDeviceDisclosure, openEditor]);
 
   return model ? (
     <DefaultPageLayout
-      titleId={`${SessionPageId.TestingModel}-title`}
+      titleId="testing-model-title"
       showPageTitle
       menuItems={<ProjectMenuItems />}
       toolbarItemsRight={<ProjectToolbarItems />}
       toolbarItemsLeft={
         <Button
-          size="lg"
-          leftIcon={<BackArrow color="white" />}
-          variant="plain"
-          color="white"
+          leftIcon={<BackArrow />}
+          variant="toolbar"
           onClick={navigateToDataSamples}
-          pr={3}
-          pl={3}
         >
           <FormattedMessage id="back-to-data-samples-action" />
         </Button>
       }
     >
-      <TestingModelGridView />
+      <IncompatibleEditorDevice
+        isOpen={incompatibleEditorDeviceDisclosure.isOpen}
+        onClose={incompatibleEditorDeviceDisclosure.onClose}
+        onNext={continueToEditor}
+        stage="openEditor"
+        onNextLoading={editorLoading}
+      />
+      <Flex as="main" flexGrow={1} flexDir="column">
+        <TestingModelTable />
+      </Flex>
+      <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
+        <HStack
+          role="region"
+          aria-label={intl.formatMessage({
+            id: "testing-model-actions-region",
+          })}
+          justifyContent="right"
+          px={5}
+          py={2}
+          w="full"
+          borderBottomWidth={3}
+          borderTopWidth={3}
+          borderColor="gray.200"
+          alignItems="center"
+        >
+          <Menu>
+            <ButtonGroup isAttached>
+              <Button
+                variant="primary"
+                onClick={maybeOpenEditor}
+                className={tourElClassname.editInMakeCodeButton}
+                isLoading={
+                  editorLoading && !incompatibleEditorDeviceDisclosure.isOpen
+                }
+              >
+                <FormattedMessage id="edit-in-makecode-action" />
+              </Button>
+              <MoreMenuButton
+                variant="primary"
+                aria-label={intl.formatMessage({
+                  id: "more-edit-in-makecode-options",
+                })}
+              />
+              <Portal>
+                <MenuList>
+                  <MenuItem
+                    icon={<RiDeleteBin2Line />}
+                    onClick={resetProject}
+                    isDisabled={!projectEdited}
+                  >
+                    <FormattedMessage id="reset-to-default-action" />
+                  </MenuItem>
+                </MenuList>
+              </Portal>
+            </ButtonGroup>
+          </Menu>
+        </HStack>
+        <LiveGraphPanel
+          showPredictedAction
+          disconnectedTextId="connect-to-test-model"
+        />
+      </VStack>
     </DefaultPageLayout>
   ) : (
     <></>

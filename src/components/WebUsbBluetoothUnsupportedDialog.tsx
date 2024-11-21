@@ -33,15 +33,15 @@ const WebUsbBluetoothUnsupportedDialog = ({
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage id="popup.compatibility.header" />
+            <FormattedMessage id="bluetooth-unsupported-header" />
           </ModalHeader>
           <ModalBody>
             <VStack gap={5} textAlign="left" w="100%">
               <Text w="100%">
-                <FormattedMessage id="popup.compatibility.explain" />
+                <FormattedMessage id="bluetooth-unsupported-explain" />
               </Text>
               <Text w="100%">
-                <FormattedMessage id="popup.compatibility.advice" />
+                <FormattedMessage id="bluetooth-unsupported-advice" />
               </Text>
             </VStack>
           </ModalBody>

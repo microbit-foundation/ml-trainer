@@ -13,7 +13,11 @@ const NotFound = ({ href }: NotFoundProps) => {
   const { appNameFull } = useDeployment();
   return (
     <ErrorPage title={intl.formatMessage({ id: "not-found-title" })}>
-      <Link color="brand.600" href={href ? href : createHomePageUrl()}>
+      <Link
+        color="brand.600"
+        textDecoration="underline"
+        href={href ? href : createHomePageUrl()}
+      >
         <FormattedMessage id="not-found" values={{ appNameFull }} />
       </Link>
     </ErrorPage>

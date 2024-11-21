@@ -1,19 +1,22 @@
-import { Icon, Text, VStack } from "@chakra-ui/react";
+import { Icon, Text, TooltipProps, VStack } from "@chakra-ui/react";
 import { RiInformationLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import ClickableTooltip from "./ClickableTooltip";
 import { useDeployment } from "../deployment";
+import ClickableTooltip from "./ClickableTooltip";
 
-export interface InfoToolTipProps {
+export interface InfoToolTipProps extends Omit<TooltipProps, "children"> {
   titleId: string;
   descriptionId: string;
 }
-const InfoToolTip = ({ titleId, descriptionId }: InfoToolTipProps) => {
+const InfoToolTip = ({ titleId, descriptionId, ...rest }: InfoToolTipProps) => {
   const { appNameFull } = useDeployment();
   return (
     <ClickableTooltip
+      isFocusable
+      titleId={titleId}
       hasArrow
       placement="right"
+      {...rest}
       label={
         <VStack textAlign="left" alignContent="left" alignItems="left" m={3}>
           <Text fontWeight="bold">
@@ -25,7 +28,7 @@ const InfoToolTip = ({ titleId, descriptionId }: InfoToolTipProps) => {
         </VStack>
       }
     >
-      <Icon h={5} w={5} as={RiInformationLine} />
+      <Icon opacity={0.7} h={5} w={5} as={RiInformationLine} />
     </ClickableTooltip>
   );
 };

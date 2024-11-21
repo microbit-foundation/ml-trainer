@@ -7,23 +7,17 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  ModalProps,
   Text,
 } from "@chakra-ui/react";
-import { ComponentProps, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { useDeployment } from "../deployment";
 
-const ConnectToRecordDialog = ({
+const ImportErrorDialog = ({
   onClose,
-  ...rest
-}: Omit<ComponentProps<typeof Modal>, "children">) => {
-  const { actions } = useConnectionStage();
-
-  const handleConnect = useCallback(() => {
-    onClose();
-    actions.startConnect();
-  }, [actions, onClose]);
-
+  ...props
+}: Omit<ModalProps, "children">) => {
+  const { appNameFull } = useDeployment();
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -31,22 +25,25 @@ const ConnectToRecordDialog = ({
       size="md"
       isCentered
       onClose={onClose}
-      {...rest}
+      {...props}
     >
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage id="connect-to-record-title" />
+            <FormattedMessage id="import-error-dialog-title" />
           </ModalHeader>
           <ModalBody>
             <ModalCloseButton />
             <Text>
-              <FormattedMessage id="connect-to-record-body" />
+              <FormattedMessage
+                id="import-error-dialog-content"
+                values={{ appNameFull }}
+              />
             </Text>
           </ModalBody>
           <ModalFooter justifyContent="flex-end">
-            <Button variant="primary" onClick={handleConnect}>
-              <FormattedMessage id="footer.connectButton" />
+            <Button variant="primary" onClick={onClose}>
+              <FormattedMessage id="close-action" />
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -55,4 +52,4 @@ const ConnectToRecordDialog = ({
   );
 };
 
-export default ConnectToRecordDialog;
+export default ImportErrorDialog;

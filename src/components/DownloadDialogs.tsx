@@ -1,40 +1,42 @@
-import { useCallback } from "react";
+import { useDownloadActions } from "../hooks/download-hooks";
+import { useLogging } from "../logging/logging-hooks";
+import { DownloadStep } from "../model";
+import { useStore } from "../store";
+import { getTotalNumSamples } from "../utils/actions";
 import ConnectCableDialog from "./ConnectCableDialog";
-import DownloadProgressDialog from "./DownloadProgressDialog";
+import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
 import DownloadChooseMicrobitDialog from "./DownloadChooseMicrobitDialog";
 import DownloadHelpDialog from "./DownloadHelpDialog";
+import DownloadProgressDialog from "./DownloadProgressDialog";
+import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 import ManualFlashingDialog from "./ManualFlashingDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
-import { DownloadStep as DownloadStep } from "../model";
-import { useDownloadActions } from "../hooks/download-hooks";
-import { useStore } from "../store";
 import UnplugRadioLinkMicrobitDialog from "./UnplugRadioLinkMicrobitDialog";
-import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
 
 const DownloadDialogs = () => {
-  const actions = useDownloadActions();
+  const downloadActions = useDownloadActions();
   const stage = useStore((s) => s.download);
-  const handleDownloadProject = useCallback(async () => {
-    await actions.connectAndFlashMicrobit(stage);
-  }, [actions, stage]);
+  const flashingProgress = useStore((s) => s.downloadFlashingProgress);
+  const actions = useStore((s) => s.actions);
+  const logging = useLogging();
 
   switch (stage.step) {
     case DownloadStep.Help:
       return (
         <DownloadHelpDialog
           isOpen
-          onClose={actions.close}
-          onNext={actions.onHelpNext}
+          onClose={downloadActions.close}
+          onNext={downloadActions.onHelpNext}
         />
       );
     case DownloadStep.ChooseSameOrDifferentMicrobit:
       return (
         <DownloadChooseMicrobitDialog
           isOpen
-          onBackClick={actions.getOnBack()}
-          onClose={actions.close}
-          onDifferentMicrobitClick={actions.onChosenDifferentMicrobit}
-          onSameMicrobitClick={actions.onChosenSameMicrobit}
+          onBackClick={downloadActions.getOnBack()}
+          onClose={downloadActions.close}
+          onDifferentMicrobitClick={downloadActions.onChosenDifferentMicrobit}
+          onSameMicrobitClick={downloadActions.onChosenSameMicrobit}
           stage={stage}
         />
       );
@@ -42,12 +44,12 @@ const DownloadDialogs = () => {
       return (
         <ConnectCableDialog
           isOpen
-          onClose={actions.close}
-          onBackClick={actions.getOnBack()}
-          onNextClick={actions.getOnNext()}
+          onClose={downloadActions.close}
+          onBackClick={downloadActions.getOnBack()}
+          onNextClick={downloadActions.getOnNext()}
           config={{
-            headingId: "connectMB.connectCable.heading",
-            subtitleId: "connectMB.connectCable.downloadProject.subtitle",
+            headingId: "connect-cable-heading",
+            subtitleId: "connect-cable-download-project-subtitle",
           }}
         />
       );
@@ -55,35 +57,48 @@ const DownloadDialogs = () => {
       return (
         <ConnectRadioDataCollectionMicrobitDialog
           isOpen
-          onClose={actions.close}
-          onBackClick={actions.getOnBack()}
-          onNextClick={actions.getOnNext()}
+          onClose={downloadActions.close}
+          onBackClick={downloadActions.getOnBack()}
+          onNextClick={downloadActions.getOnNext()}
         />
       );
     case DownloadStep.UnplugRadioBridgeMicrobit:
       return (
         <UnplugRadioLinkMicrobitDialog
           isOpen
-          onClose={actions.close}
-          onBackClick={actions.getOnBack()}
-          onNextClick={actions.getOnNext()}
+          onClose={downloadActions.close}
+          onBackClick={downloadActions.getOnBack()}
+          onNextClick={downloadActions.getOnNext()}
         />
       );
-    case DownloadStep.WebUsbFlashingTutorial:
+    case DownloadStep.WebUsbFlashingTutorial: {
+      const handleDownloadProject = async () => {
+        logging.event({
+          type: "hex-download",
+          detail: {
+            actions: actions.length,
+            samples: getTotalNumSamples(actions),
+          },
+        });
+        await downloadActions.connectAndFlashMicrobit(stage);
+      };
+
       return (
         <SelectMicrobitUsbDialog
           isOpen
-          onClose={actions.close}
-          onBackClick={actions.getOnBack()}
+          headingId="connect-popup"
+          onClose={downloadActions.close}
+          onBackClick={downloadActions.getOnBack()}
           onNextClick={handleDownloadProject}
         />
       );
+    }
     case DownloadStep.FlashingInProgress:
       return (
         <DownloadProgressDialog
           isOpen
-          headingId="connectMB.usbDownloading.header"
-          progress={stage.flashProgress * 100}
+          headingId="downloading-header"
+          progress={flashingProgress * 100}
         />
       );
     case DownloadStep.ManualFlashingTutorial:
@@ -94,8 +109,17 @@ const DownloadDialogs = () => {
         <ManualFlashingDialog
           isOpen
           hex={stage.hex}
-          onClose={actions.close}
+          onClose={downloadActions.close}
           closeIsPrimaryAction={true}
+        />
+      );
+    case DownloadStep.IncompatibleDevice:
+      return (
+        <IncompatibleEditorDevice
+          isOpen
+          onClose={downloadActions.close}
+          onBack={downloadActions.getOnBack()}
+          stage="flashDevice"
         />
       );
   }

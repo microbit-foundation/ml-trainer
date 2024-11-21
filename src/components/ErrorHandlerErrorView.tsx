@@ -15,6 +15,7 @@ const ErrorHandlerErrorView = () => {
               link: (chunks: ReactNode) => (
                 <Link
                   color="brand.600"
+                  textDecoration="underline"
                   href="https://support.microbit.org"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -27,7 +28,7 @@ const ErrorHandlerErrorView = () => {
         </Text>
         <Text>
           <Button variant="primary" onClick={() => window.location.reload()}>
-            <FormattedMessage id="reload-action" />
+            <FormattedMessage id="click-to-reload-page-action" />
           </Button>
         </Text>
       </VStack>

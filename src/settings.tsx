@@ -1,5 +1,5 @@
 import { stage } from "./environment";
-import { TourId } from "./model";
+import { DataSamplesView, TourTriggerName } from "./model";
 
 export interface Language {
   id: string;
@@ -40,12 +40,25 @@ export const defaultSettings: Settings = {
   showPreTrainHelp: true,
   showPreDownloadHelp: true,
   toursCompleted: [],
+  dataSamplesView: DataSamplesView.Graph,
+  showGraphs: true,
+  graphColorScheme: "default",
 };
+
+export type GraphColorScheme = "default" | "color-blind-1" | "color-blind-2";
+export const graphColorSchemeOptions: GraphColorScheme[] = [
+  "default",
+  "color-blind-1",
+  "color-blind-2",
+];
 
 export interface Settings {
   languageId: string;
   showPreSaveHelp: boolean;
   showPreTrainHelp: boolean;
   showPreDownloadHelp: boolean;
-  toursCompleted: TourId[];
+  toursCompleted: TourTriggerName[];
+  dataSamplesView: DataSamplesView;
+  showGraphs: boolean;
+  graphColorScheme: GraphColorScheme;
 }

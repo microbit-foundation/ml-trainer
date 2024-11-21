@@ -2,7 +2,7 @@ import { MicrobitWebUSBConnection } from "@microbit/microbit-connection";
 import { MakeCodeIcon } from "./utils/icons";
 import { ReactNode } from "react";
 import { SpotlightStyle } from "./pages/TourOverlay";
-import { ThemingProps } from "@chakra-ui/react";
+import { PlacementWithLogical, ThemingProps } from "@chakra-ui/react";
 
 export interface XYZData {
   x: number[];
@@ -15,22 +15,22 @@ export interface RecordingData {
   data: XYZData;
 }
 
-export interface Gesture {
+export interface Action {
   name: string;
   ID: number;
   icon: MakeCodeIcon;
   requiredConfidence?: number;
 }
 
-export interface GestureData extends Gesture {
+export interface ActionData extends Action {
   recordings: RecordingData[];
 }
 
 export interface DatasetEditorJsonFormat {
-  data: GestureData[];
+  data: ActionData[];
 }
 
-export type DatasetUserFileFormat = GestureData[];
+export type DatasetUserFileFormat = ActionData[];
 
 // Exported for testing
 export const isDatasetUserFileFormat = (
@@ -115,6 +115,7 @@ export enum DownloadStep {
   FlashingInProgress = "flashing in progress",
   ManualFlashingTutorial = "manual flashing tutorial",
   UnplugRadioBridgeMicrobit = "unplug radio bridge microbit",
+  IncompatibleDevice = "incompatible device",
 }
 
 export enum MicrobitToFlash {
@@ -129,7 +130,6 @@ export enum MicrobitToFlash {
 export interface DownloadState {
   step: DownloadStep;
   microbitToFlash: MicrobitToFlash;
-  flashProgress: number;
   hex?: HexData;
   // The micro:bit used to flash the hex.  We remember your choice for easy code
   // iteration for as long as the editor is open.
@@ -158,15 +158,69 @@ export interface TourStep {
   content: ReactNode;
   spotlightStyle?: SpotlightStyle;
   modalSize?: ThemingProps<"Modal">["size"];
+  placement?: PlacementWithLogical;
 }
 
 export interface TourState {
-  id: TourId;
+  steps: TourStep[];
   index: number;
+  markCompleted: TourTriggerName[];
 }
 
-export enum TourId {
-  DataSamplesPage = "dataSamplesPage",
-  CollectDataToTrainModel = "collectDataToTrainModel",
-  TestModelPage = "testModelPage",
+export const tourSequence: TourTriggerName[] = [
+  "Connect",
+  "DataSamplesRecorded",
+  "TrainModel",
+  "MakeCode",
+];
+
+export type TourTriggerName =
+  | "Connect"
+  | "DataSamplesRecorded"
+  | "TrainModel"
+  | "MakeCode";
+
+export type TourTrigger =
+  | { name: "Connect" }
+  | { name: "MakeCode" }
+  | { name: "TrainModel"; delayedUntilConnection: boolean }
+  | { name: "DataSamplesRecorded"; recordingCount: number };
+
+/**
+ * Information passed omn the URL from microbit.org.
+ * We call back into microbit.org to grab a JSON file with
+ * full details.
+ */
+export type MicrobitOrgResource = {
+  /**
+   * ID that can be used when fetching the code from microbit.org.
+   */
+  id: string;
+
+  /**
+   * Name of the microbit.org project or lesson.
+   *
+   * We use this to load the target code.
+   */
+  project: string;
+
+  /**
+   * Name of the actual code snippet.
+   * Due to a data issue this can often be the same as the project name.
+   */
+  name: string;
+};
+
+export enum DataSamplesView {
+  Graph = "graph",
+  DataFeatures = "data features",
+  GraphAndDataFeatures = "graph and data features",
 }
+
+export enum PostImportDialogState {
+  None = "none",
+  Error = "error",
+  NonCreateAiHex = "non create ai hex dialog",
+}
+
+export type EditorStartUp = "in-progress" | "timed out" | "done";

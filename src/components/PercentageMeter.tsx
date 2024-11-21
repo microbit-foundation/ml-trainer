@@ -26,7 +26,7 @@ const PercentageMeter = ({
         // Use inline style attribute to avoid style tags being
         // constantly appended to the <head/> element.
         style={{
-          width: `${value * 100}%`,
+          width: `${value}%`,
         }}
         h={height}
         rounded="full"
@@ -50,7 +50,6 @@ const PercentageMeter = ({
                 bgColor={i === 0 || i === numTicks + 1 ? undefined : "white"}
                 w={0.5}
                 h={height}
-                zIndex={1}
               />
             ))
         }

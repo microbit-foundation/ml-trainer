@@ -1,6 +1,7 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, useToken } from "@chakra-ui/react";
 
 const ArrowTwo = () => {
+  const [brand500] = useToken("colors", ["brand2.500"]);
   return (
     <svg
       width="244"
@@ -9,10 +10,10 @@ const ArrowTwo = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect x="13" y="25" width="202" height="10" fill="#00a000" />
-      <rect x="13" y="25" width="10" height="120" fill="#00a000" />
-      <circle cx="202" cy="30" r="20" fill="#00a000" />
-      <path d="M17.5 170L2.34455 133.75H32.6554L17.5 170Z" fill="#00a000" />
+      <rect x="25" y="25" width="180" height="10" fill={brand500} />
+      <rect x="25" y="25" width="10" height="120" fill={brand500} />
+      <circle cx="202" cy="30" r="20" fill={brand500} />
+      <path d="M30 170 L14.84455 133.75 H45.1554 L30 170Z" fill={brand500} />
       <foreignObject x="182" y="10" width="40" height="40">
         <Box
           aria-hidden

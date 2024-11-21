@@ -6,6 +6,7 @@
 
 import { ChartConfiguration, ChartTypeRegistry } from "chart.js";
 import { XYZData } from "./model";
+import { maxAccelerationScaleForGraphs } from "./mlConfig";
 
 const smoothen = (d: number[]): number[] => {
   if (d.length === 0) {
@@ -40,40 +41,40 @@ const processDimensionData = (data: number[]) => {
   return smoothen(data).map(formatToChartPos);
 };
 
-export const getConfig = ({
-  x: rawX,
-  y: rawY,
-  z: rawZ,
-}: XYZData): ChartConfiguration<keyof ChartTypeRegistry, Pos[], string> => {
+interface GraphColors {
+  x: string;
+  y: string;
+  z: string;
+}
+
+export const getConfig = (
+  { x: rawX, y: rawY, z: rawZ }: XYZData,
+  colors: GraphColors
+): ChartConfiguration<keyof ChartTypeRegistry, Pos[], string> => {
   const x = processDimensionData(rawX);
   const y = processDimensionData(rawY);
   const z = processDimensionData(rawZ);
+  const common = { borderWidth: 1, pointRadius: 0, pointHoverRadius: 0 };
   return {
     type: "line",
     data: {
       datasets: [
         {
+          ...common,
           label: "x",
-          borderColor: "red",
-          borderWidth: 1,
-          pointRadius: 0,
-          pointHoverRadius: 0,
+          borderColor: colors.x,
           data: x,
         },
         {
+          ...common,
           label: "y",
-          borderColor: "green",
-          borderWidth: 1,
-          pointRadius: 0,
-          pointHoverRadius: 0,
+          borderColor: colors.y,
           data: y,
         },
         {
+          ...common,
           label: "z",
-          borderColor: "blue",
-          borderWidth: 1,
-          pointRadius: 0,
-          pointHoverRadius: 0,
+          borderColor: colors.z,
           data: z,
         },
       ],
@@ -82,11 +83,16 @@ export const getConfig = ({
       animation: false,
       responsive: false,
       maintainAspectRatio: false,
-
       interaction: {
-        intersect: false,
-        mode: "index",
+        // @ts-expect-error null disables interaction - the type information is wrong.
+        mode: null,
       },
+      hover: {
+        // @ts-expect-error null disables hover - the type information is wrong.
+        mode: null,
+      },
+      normalized: true,
+      parsing: false,
       scales: {
         x: {
           type: "linear",
@@ -103,8 +109,8 @@ export const getConfig = ({
         },
         y: {
           type: "linear",
-          min: -2.5,
-          max: 2.5,
+          min: -maxAccelerationScaleForGraphs,
+          max: maxAccelerationScaleForGraphs,
           grid: {
             drawTicks: false,
             display: false,

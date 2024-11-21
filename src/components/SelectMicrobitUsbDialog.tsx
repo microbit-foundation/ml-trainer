@@ -14,19 +14,31 @@ import ConnectContainerDialog, {
 } from "./ConnectContainerDialog";
 import ArrowOne from "./ArrowOne";
 import ArrowTwo from "./ArrowTwo";
+import { ConnectionFlowType } from "../connection-stage-hooks";
 
 export interface SelectMicrobitDialogProps
-  extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {}
+  extends Omit<ConnectContainerDialogProps, "children"> {}
+
+export const getHeadingId = (flowType: ConnectionFlowType) => {
+  switch (flowType) {
+    case ConnectionFlowType.ConnectBluetooth:
+      return "connect-popup-usb-bluetooth-data-collection-title";
+    case ConnectionFlowType.ConnectRadioRemote:
+      return "connect-popup-usb-radio-data-collection-title";
+    case ConnectionFlowType.ConnectRadioBridge:
+      return "connect-popup-usb-radio-link-title";
+  }
+};
 
 const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
   const intl = useIntl();
 
   return (
-    <ConnectContainerDialog headingId="connectMB.webPopup" {...props}>
+    <ConnectContainerDialog {...props}>
       <Box position="relative" width="100%">
         <Image
           height={375}
-          width={418}
+          width={342}
           src={selectMicrobitImage}
           alt={intl.formatMessage({ id: "connect-help-alt" })}
         />
@@ -38,12 +50,12 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
           top="0px"
           fontSize="xl"
         >
-          <FormattedMessage id="connectMB.webPopup.instruction.heading" />
+          <FormattedMessage id="connect-popup-instruction-heading" />
         </Text>
         <List
           position="absolute"
           left="490px"
-          top="61px"
+          top="68px"
           alignItems="flex-start"
           spacing={2}
         >
@@ -53,7 +65,7 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
                 <Text>1. </Text>
               </VisuallyHidden>
               <Text>
-                <FormattedMessage id="connectMB.webPopup.instruction1" />
+                <FormattedMessage id="connect-popup-instruction1" />
               </Text>
             </Flex>
           </ListItem>
@@ -63,15 +75,15 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
                 <Text>2. </Text>
               </VisuallyHidden>
               <Text>
-                <FormattedMessage id="connectMB.webPopup.webUsb.instruction2" />
+                <FormattedMessage id="connect-popup-webusb-instruction2" />
               </Text>
             </Flex>
           </ListItem>
         </List>
-        <Box position="absolute" top="81px" left="230px">
+        <Box position="absolute" top="85px" left="230px">
           <ArrowOne />
         </Box>
-        <Box position="absolute" bottom="48px" left="256px">
+        <Box position="absolute" bottom="43px" left="259px">
           <ArrowTwo />
         </Box>
       </Box>

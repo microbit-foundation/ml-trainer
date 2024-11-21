@@ -1,11 +1,11 @@
-import { Gesture } from "../model";
+import { Action } from "../model";
 import { actionNamesFromLabels } from "./utils";
 /**
  * (c) 2024, Center for Computational Thinking and Design at Aarhus University and contributors
  *
  * SPDX-License-Identifier: MIT
  */
-export interface OnGestureRecognisedConfig {
+export interface OnActionRecognisedConfig {
   name: string;
   iconName: string;
 }
@@ -58,26 +58,18 @@ const statements: Record<Language, LanguageStatements> = {
 
 const onMLEventChildren = (
   s: LanguageStatements,
-  { iconName }: OnGestureRecognisedConfig
+  { iconName }: OnActionRecognisedConfig
 ) => {
   return iconName ? s.showIcon(iconName) : "";
 };
 
-export const getMainScript = (
-  gs: Gesture[],
-  lang: Language,
-  gestureToRenderAsBlock?: Gesture
-) => {
-  const actionNames = actionNamesFromLabels(gs.map((g) => g.name));
-  const configs = gs
-    .map((g, idx) => ({
-      id: g.ID,
-      name: actionNames[idx].actionVar,
-      iconName: g.icon,
-    }))
-    .filter((c) =>
-      gestureToRenderAsBlock ? c.id === gestureToRenderAsBlock.ID : true
-    );
+export const getMainScript = (actions: Action[], lang: Language) => {
+  const actionNames = actionNamesFromLabels(actions.map((a) => a.name));
+  const configs = actions.map((g, idx) => ({
+    id: g.ID,
+    name: actionNames[idx].actionVar,
+    iconName: g.icon,
+  }));
   const s = statements[lang];
   const initPos = { x: 0, y: 0 };
   return s.wrapper(
@@ -85,7 +77,7 @@ export const getMainScript = (
       .map((c, idx) =>
         s.onMLEvent(c.name, onMLEventChildren(s, c), {
           x: initPos.x,
-          y: initPos.y + idx * 350,
+          y: initPos.y + idx * 180,
         })
       )
       .join("\n")

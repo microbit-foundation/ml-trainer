@@ -20,6 +20,10 @@ export type Flag =
    */
   | "preReleaseNotice"
   /**
+   * Flag to show links to website content for the CreateAI release.
+   */
+  | "websiteContent"
+  /**
    * Example flags used for testing.
    */
   | "exampleOptInA"
@@ -33,7 +37,14 @@ interface FlagMetadata {
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
   { name: "devtools", defaultOnStages: ["local"] },
-  { name: "preReleaseNotice", defaultOnStages: ["review", "staging"] },
+  {
+    name: "websiteContent",
+    defaultOnStages: ["local", "review", "staging", "production"],
+  },
+  {
+    name: "preReleaseNotice",
+    defaultOnStages: ["staging"],
+  },
   { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
   { name: "exampleOptInB", defaultOnStages: [] },
 ];
@@ -43,6 +54,14 @@ type Flags = Record<Flag, boolean>;
 // Exposed for testing.
 export const flagsForParams = (stage: Stage, params: URLSearchParams) => {
   const enableFlags = new Set(params.getAll("flag"));
+  try {
+    localStorage
+      .getItem("flags")
+      ?.split(",")
+      ?.forEach((f) => enableFlags.add(f.trim()));
+  } catch (e) {
+    // Ignore if there are local storage security issues
+  }
   const allFlagsDefault = enableFlags.has("none")
     ? false
     : enableFlags.has("*")

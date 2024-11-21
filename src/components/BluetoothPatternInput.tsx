@@ -36,6 +36,9 @@ const BluetoothPatternInput = ({
     generateMatrix(matrixDim, false)
   );
   const matrixColumns = transformMatrixToColumns(pattern, matrixDim);
+  const [inputValues, setInputValues] = useState<string[]>(
+    matrixColumns.map((cols) => cols.filter((c) => c).length.toString())
+  );
 
   const clearHighlighted = useCallback(() => {
     setHighlighted(generateMatrix(matrixDim, false));
@@ -52,11 +55,17 @@ const BluetoothPatternInput = ({
 
   const columnInputOnChange = useCallback(
     (colIdx: number): ((value: string) => void) => {
-      return (v) => {
-        updateMatrix(colIdx, matrixDim - parseInt(v));
+      return (value) => {
+        const colValue = value === "" ? 0 : parseInt(value);
+        if (isNaN(colValue) || colValue > 5 || colValue < 0) {
+          // Do nothing when input value is not valid.
+          return;
+        }
+        setInputValues(inputValues.map((v, i) => (i === colIdx ? value : v)));
+        updateMatrix(colIdx, matrixDim - colValue);
       };
     },
-    [updateMatrix]
+    [inputValues, updateMatrix]
   );
 
   return (
@@ -94,7 +103,7 @@ const BluetoothPatternInput = ({
               isInvalid={invalid}
               onChange={columnInputOnChange(colIdx)}
               colIdx={colIdx}
-              value={cells.filter((c) => c).length}
+              value={inputValues[colIdx]}
             />
           </GridItem>
         </React.Fragment>
@@ -138,7 +147,7 @@ const PatternBox = ({
 
 interface PatternColumnInputProps {
   colIdx: number;
-  value: number;
+  value: string;
   isInvalid: boolean;
   onChange: (value: string) => void;
 }
@@ -154,9 +163,8 @@ const PatternColumnInput = ({
       <VisuallyHidden>
         <FormLabel>
           <FormattedMessage
-            id="connectMB.pattern.inputLabel"
+            id="connect-pattern-input-label"
             values={{ colNum: colIdx + 1 }}
-            sr-onlu
           />
         </FormLabel>
       </VisuallyHidden>

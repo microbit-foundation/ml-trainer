@@ -35,14 +35,7 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
     [setSettings]
   );
   return (
-    <Modal
-      size="xl"
-      isOpen={isOpen}
-      onClose={onClose}
-      closeOnOverlayClick={false}
-      closeOnEsc={false}
-      isCentered
-    >
+    <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>

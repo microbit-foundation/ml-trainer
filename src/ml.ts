@@ -1,49 +1,19 @@
 import * as tf from "@tensorflow/tfjs";
-import { GestureData, XYZData } from "./model";
-import { Filter, mlFilters } from "./mlFilters";
 import { SymbolicTensor } from "@tensorflow/tfjs";
-
-export enum Axes {
-  X = "x",
-  Y = "y",
-  Z = "z",
-}
-
-export const mlSettings = {
-  duration: 1800, // Duration of recording
-  numSamples: 80, // number of samples in one recording (when recording samples)
-  minSamples: 80, // minimum number of samples for reliable detection (when detecting gestures)
-  updatesPrSecond: 4, // Times algorithm predicts data pr second
-  defaultRequiredConfidence: 0.8, // Default threshold
-  numEpochs: 80, // Number of epochs for ML
-  learningRate: 0.5,
-  includedAxes: [Axes.X, Axes.Y, Axes.Z],
-  includedFilters: new Set<Filter>([
-    Filter.MAX,
-    Filter.MEAN,
-    Filter.MIN,
-    Filter.STD,
-    Filter.PEAKS,
-    Filter.ACC,
-    Filter.ZCR,
-    Filter.RMS,
-  ]),
-};
-
-interface TrainModelInput {
-  data: GestureData[];
-  onProgress?: (progress: number) => void;
-}
+import { getMlFilters, mlSettings } from "./mlConfig";
+import { ActionData, XYZData } from "./model";
+import { DataWindow } from "./store";
 
 export type TrainingResult =
   | { error: false; model: tf.LayersModel }
   | { error: true };
 
-export const trainModel = async ({
-  data,
-  onProgress,
-}: TrainModelInput): Promise<TrainingResult> => {
-  const { features, labels } = prepareFeaturesAndLabels(data);
+export const trainModel = async (
+  data: ActionData[],
+  dataWindow: DataWindow,
+  onProgress?: (progress: number) => void
+): Promise<TrainingResult> => {
+  const { features, labels } = prepareFeaturesAndLabels(data, dataWindow);
   const model: tf.LayersModel = createModel(data);
   const totalNumEpochs = mlSettings.numEpochs;
 
@@ -51,7 +21,10 @@ export const trainModel = async ({
     await model.fit(tf.tensor(features), tf.tensor(labels), {
       epochs: totalNumEpochs,
       batchSize: 16,
-      validationSplit: 0.1,
+      shuffle: true,
+      // We don't do anything with the validation data, so might
+      // as well train using all of it.
+      validationSplit: 0,
       callbacks: {
         onEpochEnd: (epoch: number) => {
           // Epochs indexed at 0
@@ -67,20 +40,21 @@ export const trainModel = async ({
 
 // Exported for testing
 export const prepareFeaturesAndLabels = (
-  gestureData: GestureData[]
+  actions: ActionData[],
+  dataWindow: DataWindow
 ): { features: number[][]; labels: number[][] } => {
   const features: number[][] = [];
   const labels: number[][] = [];
-  const numGestures = gestureData.length;
+  const numActions = actions.length;
 
-  gestureData.forEach((gesture, index) => {
-    gesture.recordings.forEach((recording) => {
+  actions.forEach((action, index) => {
+    action.recordings.forEach((recording) => {
       // Prepare features
-      features.push(applyFilters(recording.data));
+      features.push(Object.values(applyFilters(recording.data, dataWindow)));
 
       // Prepare labels
-      const label: number[] = new Array(numGestures) as number[];
-      label.fill(0, 0, numGestures);
+      const label: number[] = new Array(numActions) as number[];
+      label.fill(0, 0, numActions);
       label[index] = 1;
       labels.push(label);
     });
@@ -88,8 +62,8 @@ export const prepareFeaturesAndLabels = (
   return { features, labels };
 };
 
-const createModel = (gestureData: GestureData[]): tf.LayersModel => {
-  const numberOfClasses: number = gestureData.length;
+const createModel = (actions: ActionData[]): tf.LayersModel => {
+  const numberOfClasses: number = actions.length;
   const inputShape = [
     mlSettings.includedFilters.size * mlSettings.includedAxes.length,
   ];
@@ -106,20 +80,43 @@ const createModel = (gestureData: GestureData[]): tf.LayersModel => {
 
   model.compile({
     loss: "categoricalCrossentropy",
-    optimizer: tf.train.sgd(0.5),
+    optimizer: tf.train.sgd(mlSettings.learningRate),
     metrics: ["accuracy"],
   });
 
   return model;
 };
 
-// Exported for testing
+const normalize = (value: number, min: number, max: number) => {
+  const newMin = 0;
+  const newMax = 1;
+  return ((newMax - newMin) * (value - min)) / (max - min) + newMin;
+};
+
+// Used for training model and producing fingerprints
 // applyFilters reduces array of x, y and z inputs to a single number array with values.
-export const applyFilters = ({ x, y, z }: XYZData): number[] => {
+export const applyFilters = (
+  { x, y, z }: XYZData,
+  dataWindow: DataWindow,
+  opts: { normalize?: boolean } = {}
+): Record<string, number> => {
+  if (x.length === 0 || y.length === 0 || z.length === 0) {
+    throw new Error("Empty x/y/z data");
+  }
+  const filters = getMlFilters(dataWindow);
   return Array.from(mlSettings.includedFilters).reduce((acc, filter) => {
-    const filterStrategy = mlFilters[filter];
-    return [...acc, filterStrategy(x), filterStrategy(y), filterStrategy(z)];
-  }, [] as number[]);
+    const { strategy, min, max } = filters[filter];
+    const applyFilter = (vs: number[]) =>
+      opts.normalize
+        ? normalize(strategy(vs, dataWindow), min, max)
+        : strategy(vs, dataWindow);
+    return {
+      ...acc,
+      [`${filter}-x`]: applyFilter(x),
+      [`${filter}-y`]: applyFilter(y),
+      [`${filter}-z`]: applyFilter(z),
+    };
+  }, {} as Record<string, number>);
 };
 
 interface PredictInput {
@@ -128,22 +125,21 @@ interface PredictInput {
   classificationIds: number[];
 }
 
-export type Confidences = Record<GestureData["ID"], number>;
+export type Confidences = Record<ActionData["ID"], number>;
 
 export type ConfidencesResult =
   | { error: true; detail: unknown }
   | { error: false; confidences: Confidences };
 
 // For predicting
-export const predict = async ({
-  model,
-  data,
-  classificationIds,
-}: PredictInput): Promise<ConfidencesResult> => {
-  const input = applyFilters(data);
+export const predict = (
+  { model, data, classificationIds }: PredictInput,
+  dataWindow: DataWindow
+): ConfidencesResult => {
+  const input = Object.values(applyFilters(data, dataWindow));
   const prediction = model.predict(tf.tensor([input])) as tf.Tensor;
   try {
-    const confidences = (await prediction.data()) as Float32Array;
+    const confidences = prediction.dataSync() as Float32Array;
     return {
       error: false,
       confidences: classificationIds.reduce(

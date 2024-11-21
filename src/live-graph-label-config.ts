@@ -1,26 +1,45 @@
+import { maxAcceleration } from "./mlConfig";
+
 const maxDistance = 1.1;
 
-type Dimension = "x" | "y" | "z";
 export interface LabelConfig {
-  label: Dimension;
+  label: string;
   arrowHeight: number;
   labelHeight: number;
-  color: string;
-  id: number;
 }
 
-export const getUpdatedLabelConfig = (
-  labelConfigs: LabelConfig[],
-  dataPoint: { x: number; y: number; z: number }
-) => {
-  const newLabelConfigs = labelConfigs.map((config) => ({
-    ...config,
-    arrowHeight: getArrowHeight(dataPoint[config.label]),
-  }));
-  return fixOverlappingLabels(newLabelConfigs);
+export const getLabelHeights = (dataPoint: {
+  x: number;
+  y: number;
+  z: number;
+}) => {
+  const result: LabelConfig[] = [];
+  const keys = Object.keys(dataPoint);
+  Object.values(dataPoint).forEach((value, idx) => {
+    result.push({
+      label: keys[idx],
+      arrowHeight: getArrowHeight(value),
+      labelHeight: 0,
+    });
+  });
+  return fixOverlappingLabels(result);
 };
 
-const getArrowHeight = (pos: number) => (2.1 - pos) * 2.32;
+const scaleDataToArrowHeight = (value: number) => {
+  // The proportion of 10 rem assigned to -2.2 to 2.2 that relate to acc values (2.048)
+  // is 10 / 4.4 * (2.048 * 2) = ~9.309
+  // Remove half the difference of 10 - 9.309  and apply to the range we translate to
+  // (-1.5 rem to 8.5 rem). This gives the newMin and newMax values below.
+  const newMin = 8.15;
+  const newMax = -1.15;
+  return (
+    ((newMax - newMin) * (value - -maxAcceleration)) /
+      (maxAcceleration - -maxAcceleration) +
+    newMin
+  );
+};
+
+const getArrowHeight = (pos: number) => scaleDataToArrowHeight(pos);
 
 const fixOverlappingLabels = (labels: LabelConfig[]): LabelConfig[] => {
   labels.sort((a, b) => a.arrowHeight - b.arrowHeight);

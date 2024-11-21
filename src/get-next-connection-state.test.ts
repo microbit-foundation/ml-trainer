@@ -28,6 +28,7 @@ const testGetNextConnectionState = ({
   expectedNextConnectionState,
   expectedHasAttemptedReconnect,
   expectedOnFirstConnectAttempt,
+  isBrowserTabVisible,
 }: {
   input: Input;
   initialHasAttemptedReconnect: boolean;
@@ -35,6 +36,7 @@ const testGetNextConnectionState = ({
   expectedHasAttemptedReconnect: boolean;
   initialOnFirstConnectAttempt: boolean;
   expectedOnFirstConnectAttempt: boolean;
+  isBrowserTabVisible?: boolean;
 }) => {
   let hasAttempedReconnect = initialHasAttemptedReconnect;
   let onFirstConnectAttempt = initialOnFirstConnectAttempt;
@@ -48,6 +50,7 @@ const testGetNextConnectionState = ({
     setHasAttemptedReconnect: (val: boolean) => {
       hasAttempedReconnect = val;
     },
+    isBrowserTabVisible: isBrowserTabVisible ?? true,
   });
   expect(result).toEqual(expectedNextConnectionState);
   expect(hasAttempedReconnect).toEqual(expectedHasAttemptedReconnect);
@@ -154,7 +157,7 @@ describe("getNextConnectionState for radio connection", () => {
         type: "usb",
       },
       initialOnFirstConnectAttempt: false,
-      expectedOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: true,
       initialHasAttemptedReconnect: false,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: undefined,
@@ -170,9 +173,9 @@ describe("getNextConnectionState for radio connection", () => {
         type: "radioRemote",
       },
       initialOnFirstConnectAttempt: true,
-      expectedOnFirstConnectAttempt: true,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
-      expectedHasAttemptedReconnect: false,
+      expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToConnect,
         flowType: ConnectionFlowType.ConnectRadioRemote,
@@ -214,6 +217,25 @@ describe("getNextConnectionState for radio connection", () => {
       },
     });
   });
+  test("radio reconnecting automatically (changing tabs) and the link micro:bit gets unplugged", () => {
+    testGetNextConnectionState({
+      input: {
+        currConnType: "radio",
+        currStatus: ConnectionStatus.ReconnectingAutomatically,
+        deviceStatus: DeviceConnectionStatus.NO_AUTHORIZED_DEVICE,
+        prevDeviceStatus: DeviceConnectionStatus.DISCONNECTED,
+        type: "radioRemote",
+      },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
+      initialHasAttemptedReconnect: false,
+      expectedHasAttemptedReconnect: false,
+      expectedNextConnectionState: {
+        status: ConnectionStatus.ConnectionLost,
+        flowType: ConnectionFlowType.ConnectRadioBridge,
+      },
+    });
+  });
   test("radio bridge device connection lost by unplugging device", () => {
     testGetNextConnectionState({
       input: {
@@ -229,6 +251,26 @@ describe("getNextConnectionState for radio connection", () => {
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.ConnectionLost,
+        flowType: ConnectionFlowType.ConnectRadioBridge,
+      },
+    });
+  });
+  test("radio bridge device showing reconnecting automatically because tab is no longer visible", () => {
+    testGetNextConnectionState({
+      input: {
+        currConnType: "radio",
+        currStatus: ConnectionStatus.Connected,
+        deviceStatus: DeviceConnectionStatus.DISCONNECTED,
+        prevDeviceStatus: DeviceConnectionStatus.NO_AUTHORIZED_DEVICE,
+        type: "usb",
+      },
+      initialOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: false,
+      initialHasAttemptedReconnect: false,
+      isBrowserTabVisible: false,
+      expectedHasAttemptedReconnect: false,
+      expectedNextConnectionState: {
+        status: ConnectionStatus.ReconnectingAutomatically,
         flowType: ConnectionFlowType.ConnectRadioBridge,
       },
     });
@@ -264,7 +306,7 @@ describe("getNextConnectionState for radio connection", () => {
       initialOnFirstConnectAttempt: false,
       expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: true,
-      expectedHasAttemptedReconnect: false,
+      expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToReconnectTwice,
         flowType: ConnectionFlowType.ConnectRadioRemote,
@@ -319,7 +361,7 @@ describe("getNextConnectionState for radio connection", () => {
         type: "radioRemote",
       },
       initialOnFirstConnectAttempt: false,
-      expectedOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: true,
       initialHasAttemptedReconnect: true,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
@@ -433,9 +475,9 @@ describe("getNextConnectionState for bluetooth connection", () => {
         type: "bluetooth",
       },
       initialOnFirstConnectAttempt: true,
-      expectedOnFirstConnectAttempt: true,
+      expectedOnFirstConnectAttempt: false,
       initialHasAttemptedReconnect: false,
-      expectedHasAttemptedReconnect: false,
+      expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToConnect,
         flowType: ConnectionFlowType.ConnectBluetooth,
@@ -525,7 +567,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
         type: "bluetooth",
       },
       initialOnFirstConnectAttempt: false,
-      expectedOnFirstConnectAttempt: false,
+      expectedOnFirstConnectAttempt: true,
       initialHasAttemptedReconnect: true,
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {

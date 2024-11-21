@@ -5,7 +5,7 @@ import {
 import { useMemo } from "react";
 import {
   ConnectActions,
-  ConnectAndFlashResult,
+  ConnectResult,
   ConnectionAndFlashOptions,
 } from "../connect-actions";
 import { useConnectActions } from "../connect-actions-hooks";
@@ -23,6 +23,7 @@ import { useSettings, useStore } from "../store";
 import { downloadHex } from "../utils/fs-util";
 
 export class DownloadProjectActions {
+  private flashingProgressCallback: (value: number) => void;
   constructor(
     private state: DownloadState,
     private setState: (stage: DownloadState) => void,
@@ -31,8 +32,16 @@ export class DownloadProjectActions {
     private connectActions: ConnectActions,
     private connectionStage: ConnectionStage,
     private connectionStageActions: ConnectionStageActions,
-    private connectionStatus: ConnectionStatus
-  ) {}
+    private connectionStatus: ConnectionStatus,
+    flashingProgressCallback: (value: number) => void
+  ) {
+    this.flashingProgressCallback = (value: number) => {
+      if (state.step !== DownloadStep.FlashingInProgress) {
+        setState({ ...state, step: DownloadStep.FlashingInProgress });
+      }
+      flashingProgressCallback(value);
+    };
+  }
 
   clearMakeCodeUsbDevice = () => {
     this.setState({ ...this.state, usbDevice: undefined });
@@ -43,10 +52,10 @@ export class DownloadProjectActions {
       this.state.usbDevice &&
       this.state.usbDevice.status === UsbConnectionStatus.CONNECTED
     ) {
-      const newState = {
+      const newState: DownloadState = {
         ...this.state,
         step: DownloadStep.FlashingInProgress,
-        project: download,
+        hex: download,
       };
       this.setState(newState);
       await this.flashMicrobit(newState, {
@@ -99,6 +108,15 @@ export class DownloadProjectActions {
   onChosenSameMicrobit = async () => {
     if (this.connectActions.isUsbDeviceConnected()) {
       const newStage = { ...this.state, microbitToFlash: MicrobitToFlash.Same };
+      const usbConnection = this.connectActions.getUsbConnection();
+      if (usbConnection.getBoardVersion() === "V1") {
+        this.updateStage({
+          ...newStage,
+          step: DownloadStep.IncompatibleDevice,
+        });
+        return;
+      }
+      this.updateStage(newStage);
       // Can flash directly without choosing device.
       return this.connectAndFlashMicrobit(newStage);
     }
@@ -144,28 +162,39 @@ export class DownloadProjectActions {
     if (!stage.hex) {
       throw new Error("Project hex/name is not set!");
     }
+
     this.updateStage({ step: DownloadStep.WebUsbChooseMicrobit });
+
+    const { result, usb } = await this.connectActions.requestUSBConnection(
+      connectionAndFlashOptions
+    );
+    if (result === ConnectResult.Success && usb.getBoardVersion() === "V1") {
+      return this.updateStage({
+        step: DownloadStep.IncompatibleDevice,
+      });
+    }
+
     await this.flashMicrobit(stage, connectionAndFlashOptions);
   };
 
-  flashMicrobit = async (
+  private flashMicrobit = async (
     stage: DownloadState,
     connectionAndFlashOptions?: ConnectionAndFlashOptions
   ) => {
     if (!stage.hex) {
       throw new Error("Project hex/name is not set!");
     }
-    const { result } = await this.connectActions.requestUSBConnectionAndFlash(
+    const result = await this.connectActions.flashMicrobit(
       stage.hex.hex,
       this.flashingProgressCallback,
-      connectionAndFlashOptions
+      connectionAndFlashOptions?.temporaryUsbConnection
     );
     const newStage = {
       usbDevice:
         connectionAndFlashOptions?.temporaryUsbConnection ??
         this.connectActions.getUsbConnection(),
       step:
-        result === ConnectAndFlashResult.Success
+        result === ConnectResult.Success
           ? DownloadStep.None
           : DownloadStep.ManualFlashingTutorial,
       flashProgress: 0,
@@ -174,14 +203,6 @@ export class DownloadProjectActions {
     if (newStage.step === DownloadStep.ManualFlashingTutorial) {
       downloadHex(stage.hex);
     }
-  };
-
-  private flashingProgressCallback = (progress: number) => {
-    this.setState({
-      ...this.state,
-      step: DownloadStep.FlashingInProgress,
-      flashProgress: progress,
-    });
   };
 
   getOnNext = () => {
@@ -231,6 +252,8 @@ export class DownloadProjectActions {
           ? DownloadStep.ConnectRadioRemoteMicrobit
           : DownloadStep.ConnectCable;
       }
+      case DownloadStep.IncompatibleDevice:
+        return DownloadStep.ChooseSameOrDifferentMicrobit;
       default:
         throw new Error(`Prev step not accounted for: ${this.state.step}`);
     }
@@ -248,6 +271,9 @@ export class DownloadProjectActions {
 
 export const useDownloadActions = (): DownloadProjectActions => {
   const stage = useStore((s) => s.download);
+  const setDownloadFlashingProgress = useStore(
+    (s) => s.setDownloadFlashingProgress
+  );
   const setStage = useStore((s) => s.setDownload);
   const [settings, setSettings] = useSettings();
   const connectActions = useConnectActions();
@@ -266,13 +292,15 @@ export const useDownloadActions = (): DownloadProjectActions => {
         connectActions,
         connectionStage,
         connectionStageActions,
-        connectionStatus
+        connectionStatus,
+        setDownloadFlashingProgress
       ),
     [
       connectActions,
       connectionStage,
       connectionStageActions,
       connectionStatus,
+      setDownloadFlashingProgress,
       setSettings,
       setStage,
       settings,

@@ -1,8 +1,9 @@
+import { BoardVersion } from "@microbit/microbit-connection";
 import { deviceIdToMicrobitName } from "./bt-pattern-utils";
 import {
   ConnectActions,
   ConnectAndFlashFailResult,
-  ConnectAndFlashResult,
+  ConnectResult,
 } from "./connect-actions";
 import { ConnectionStatus } from "./connect-status-hooks";
 import {
@@ -14,6 +15,7 @@ import {
 import { getHexFileUrl, HexType } from "./device/get-hex-file";
 import { HexUrl } from "./model";
 import { downloadHex } from "./utils/fs-util";
+import { ConnectOptions } from "./store";
 
 type FlowStage = Pick<ConnectionStage, "flowStep" | "flowType">;
 
@@ -28,10 +30,14 @@ export class ConnectionStageActions {
     private stage: ConnectionStage,
     private setStage: (stage: ConnectionStage) => void,
     private setStatus: (status: ConnectionStatus) => void,
+    private dataCollectionMicrobitStartConnect: (
+      options?: ConnectOptions
+    ) => void,
     private dataCollectionMicrobitConnected: () => void
   ) {}
 
-  startConnect = () => {
+  startConnect = (options?: ConnectOptions) => {
+    this.dataCollectionMicrobitStartConnect(options);
     this.setStatus(ConnectionStatus.NotConnected);
     const { isWebBluetoothSupported, isWebUsbSupported } = this.stage;
     this.setStage({
@@ -65,13 +71,28 @@ export class ConnectionStageActions {
   ) => {
     this.setFlowStep(ConnectionFlowStep.WebUsbChooseMicrobit);
     const hex = this.getHexType();
-    const { result, deviceId } =
-      await this.actions.requestUSBConnectionAndFlash(hex, progressCallback);
-    if (result !== ConnectAndFlashResult.Success) {
-      return this.handleConnectAndFlashFail(result);
-    }
 
-    await this.onFlashSuccess(deviceId, onSuccess);
+    const {
+      result: usbResult,
+      usb,
+      deviceId,
+    } = await this.actions.requestUSBConnection();
+    if (usbResult !== ConnectResult.Success) {
+      return this.handleConnectAndFlashFail(usbResult);
+    }
+    const boardVersion = usb?.getBoardVersion();
+    if (
+      usbResult === ConnectResult.Success &&
+      boardVersion === "V1" &&
+      this.stage.flowType !== ConnectionFlowType.ConnectBluetooth
+    ) {
+      return this.setFlowStep(ConnectionFlowStep.MicrobitUnsupported);
+    }
+    const flashResult = await this.actions.flashMicrobit(hex, progressCallback);
+    if (flashResult !== ConnectResult.Success) {
+      return this.handleConnectAndFlashFail(flashResult);
+    }
+    await this.onFlashSuccess(deviceId, onSuccess, boardVersion);
   };
 
   private getHexType = () => {
@@ -84,7 +105,8 @@ export class ConnectionStageActions {
 
   private onFlashSuccess = async (
     deviceId: number,
-    onSuccess: (stage: ConnectionStage) => void
+    onSuccess: (stage: ConnectionStage) => void,
+    boardVersion?: BoardVersion
   ) => {
     let newStage = this.stage;
     // Store radio/bluetooth details. Radio is essential to pass to micro:bit 2.
@@ -113,6 +135,7 @@ export class ConnectionStageActions {
           connType: "radio",
           flowStep: ConnectionFlowStep.ConnectBattery,
           radioRemoteDeviceId: deviceId,
+          radioRemoteBoardVersion: boardVersion,
         };
         break;
       }
@@ -130,15 +153,13 @@ export class ConnectionStageActions {
     // TODO: Not sure if this is a good way of error handling because it means
     // there are 2 levels of switch statements to go through to provide UI
     switch (result) {
-      case ConnectAndFlashResult.ErrorMicrobitUnsupported:
-        return this.setFlowStep(ConnectionFlowStep.MicrobitUnsupported);
-      case ConnectAndFlashResult.ErrorBadFirmware:
+      case ConnectResult.ErrorBadFirmware:
         return this.setFlowStep(ConnectionFlowStep.BadFirmware);
-      case ConnectAndFlashResult.ErrorNoDeviceSelected:
+      case ConnectResult.ErrorNoDeviceSelected:
         return this.setFlowStep(
           ConnectionFlowStep.TryAgainWebUsbSelectMicrobit
         );
-      case ConnectAndFlashResult.ErrorUnableToClaimInterface:
+      case ConnectResult.ErrorUnableToClaimInterface:
         return this.setFlowStep(ConnectionFlowStep.TryAgainCloseTabs);
       default:
         return this.setFlowStep(ConnectionFlowStep.TryAgainReplugMicrobit);
@@ -176,7 +197,10 @@ export class ConnectionStageActions {
     if (!newStage.radioRemoteDeviceId) {
       throw new Error("Radio bridge device id not set");
     }
-    await this.actions.connectMicrobitsSerial(newStage.radioRemoteDeviceId);
+    await this.actions.connectMicrobitsSerial(
+      newStage.radioRemoteDeviceId,
+      newStage.radioRemoteBoardVersion
+    );
   };
 
   private getConnectingStage = (connType: ConnectionType) => {
@@ -188,10 +212,6 @@ export class ConnectionStageActions {
           ? ConnectionFlowStep.ConnectingBluetooth
           : ConnectionFlowStep.ConnectingMicrobits,
     };
-  };
-
-  private handleConnectFail = () => {
-    this.setFlowStep(ConnectionFlowStep.ConnectFailed);
   };
 
   private onConnected = () => {
@@ -218,7 +238,11 @@ export class ConnectionStageActions {
         );
       }
       case ConnectionStatus.FailedToConnect: {
-        return this.handleConnectFail();
+        return this.setStage({
+          ...this.stage,
+          flowType,
+          flowStep: ConnectionFlowStep.ConnectFailed,
+        });
       }
       case ConnectionStatus.FailedToReconnectTwice: {
         return this.setStage({

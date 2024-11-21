@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, useToast } from "@chakra-ui/react";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
-import React, { ReactNode, useMemo, useRef } from "react";
+import React, { ReactNode, useEffect, useMemo, useRef } from "react";
+import { useIntl } from "react-intl";
 import {
   Outlet,
   RouterProvider,
   ScrollRestoration,
   createBrowserRouter,
+  useNavigate,
 } from "react-router-dom";
 import { BufferedDataProvider } from "./buffered-data-hooks";
 import EditCodeDialog from "./components/EditCodeDialog";
@@ -20,14 +22,24 @@ import { deployment, useDeployment } from "./deployment";
 import { ProjectProvider } from "./hooks/project-hooks";
 import { LoggingProvider } from "./logging/logging-hooks";
 import TranslationProvider from "./messages/TranslationProvider";
-import { sessionPageConfigs } from "./pages-config";
+import CodePage from "./pages/CodePage";
+import DataSamplesPage from "./pages/DataSamplesPage";
 import HomePage from "./pages/HomePage";
+import ImportPage from "./pages/ImportPage";
 import NewPage from "./pages/NewPage";
+import TestingModelPage from "./pages/TestingModelPage";
+import { useStore } from "./store";
 import {
+  createCodePageUrl,
+  createDataSamplesPageUrl,
   createHomePageUrl,
+  createImportPageUrl,
   createNewPageUrl,
-  createSessionPageUrl,
+  createTestingModelPageUrl,
 } from "./urls";
+import { hasMakeCodeMlExtension } from "./makecode/utils";
+import { PostImportDialogState } from "./model";
+import "theme-package/fonts/fonts.css";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -63,6 +75,35 @@ const Providers = ({ children }: ProviderLayoutProps) => {
 
 const Layout = () => {
   const driverRef = useRef<MakeCodeFrameDriver>(null);
+  const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
+  const navigate = useNavigate();
+  const toast = useToast();
+  const intl = useIntl();
+
+  useEffect(() => {
+    return useStore.subscribe(
+      (
+        { projectLoadTimestamp },
+        { projectLoadTimestamp: prevProjectLoadTimestamp, getCurrentProject }
+      ) => {
+        if (projectLoadTimestamp > prevProjectLoadTimestamp) {
+          // Side effects of loading a project, which MakeCode notifies us of.
+          navigate(createDataSamplesPageUrl());
+          toast({
+            position: "top",
+            duration: 5_000,
+            title: intl.formatMessage({ id: "project-loaded" }),
+            status: "info",
+          });
+          const project = getCurrentProject();
+          if (!hasMakeCodeMlExtension(project)) {
+            setPostImportDialogState(PostImportDialogState.NonCreateAiHex);
+          }
+        }
+      }
+    );
+  }, [intl, navigate, setPostImportDialogState, toast]);
+
   return (
     // We use this even though we have errorElement as this does logging.
     <ErrorBoundary>
@@ -94,12 +135,19 @@ const createRouter = () => {
           path: createNewPageUrl(),
           element: <NewPage />,
         },
-        ...sessionPageConfigs.map((config) => {
-          return {
-            path: createSessionPageUrl(config.id),
-            element: <config.pageElement />,
-          };
-        }),
+        { path: createImportPageUrl(), element: <ImportPage /> },
+        {
+          path: createDataSamplesPageUrl(),
+          element: <DataSamplesPage />,
+        },
+        {
+          path: createTestingModelPageUrl(),
+          element: <TestingModelPage />,
+        },
+        {
+          path: createCodePageUrl(),
+          element: <CodePage />,
+        },
         {
           path: "*",
           element: <NotFound />,
@@ -110,6 +158,30 @@ const createRouter = () => {
 };
 
 const App = () => {
+  useEffect(() => {
+    if (navigator.bluetooth) {
+      navigator.bluetooth
+        .getAvailability()
+        .then((bluetoothAvailable) => {
+          logging.event({
+            type: "boot",
+            detail: {
+              bluetoothAvailable,
+            },
+          });
+        })
+        .catch((err) => {
+          logging.error(err);
+        });
+    } else {
+      logging.event({
+        type: "boot",
+        detail: {
+          bluetoothAvailable: false,
+        },
+      });
+    }
+  }, []);
   const router = useMemo(createRouter, []);
   return (
     <Providers>

@@ -16,8 +16,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { TimedXYZ } from "../buffered-data";
 import { useBufferedData } from "../buffered-data-hooks";
-import { mlSettings } from "../ml";
-import { GestureData, XYZData } from "../model";
+import { ActionData, XYZData } from "../model";
 import { useStore } from "../store";
 
 interface CountdownStage {
@@ -26,30 +25,47 @@ interface CountdownStage {
   fontSize?: string;
 }
 
+export interface RecordingOptions {
+  recordingsToCapture: number;
+  continuousRecording: boolean;
+}
+
+export interface RecordingCompleteDetail {
+  mostRecentRecordingId: number;
+  recordingCount: number;
+}
+
 export interface RecordingDialogProps {
   isOpen: boolean;
   onClose: () => void;
   actionName: string;
-  gestureId: GestureData["ID"];
+  actionId: ActionData["ID"];
+  onRecordingComplete: (detail: RecordingCompleteDetail) => void;
+  recordingOptions: RecordingOptions;
 }
 
 enum RecordingStatus {
   None,
   Recording,
   Countdown,
+  Done,
 }
 
 const RecordingDialog = ({
   isOpen,
   actionName,
   onClose,
-  gestureId,
+  actionId,
+  onRecordingComplete,
+  recordingOptions,
 }: RecordingDialogProps) => {
   const intl = useIntl();
   const toast = useToast();
+  const recordingCountRef = useRef(0);
+  const mostRecentRecordingIdRef = useRef(-1);
   const recordingStarted = useStore((s) => s.recordingStarted);
   const recordingStopped = useStore((s) => s.recordingStopped);
-  const addGestureRecordings = useStore((s) => s.addGestureRecordings);
+  const addActionRecordings = useStore((s) => s.addActionRecordings);
   const recordingDataSource = useRecordingDataSource();
   const [recordingStatus, setRecordingStatus] = useState<RecordingStatus>(
     RecordingStatus.None
@@ -63,7 +79,7 @@ const RecordingDialog = ({
       { value: 2, duration: 500, fontSize: "8xl" },
       { value: 1, duration: 500, fontSize: "8xl" },
       {
-        value: intl.formatMessage({ id: "content.data.recordingDialog.go" }),
+        value: intl.formatMessage({ id: "go-action" }),
         duration: 1000,
         fontSize: "6xl",
       },
@@ -71,29 +87,122 @@ const RecordingDialog = ({
     [intl]
   );
   const [countdownStageIndex, setCountdownStageIndex] = useState<number>(0);
+  const { continuousRecording, recordingsToCapture } = recordingOptions;
+  const [recordingsRemaining, setRecordingsRemaining] = useState<
+    number | undefined
+  >(recordingsToCapture);
 
   const handleCleanup = useCallback(() => {
+    const recordingCount = recordingCountRef.current;
+    const mostRecentRecordingId = mostRecentRecordingIdRef.current;
+
+    recordingCountRef.current = 0;
+    mostRecentRecordingIdRef.current = -1;
     recordingStopped();
     setRecordingStatus(RecordingStatus.None);
     setCountdownStageIndex(0);
     setProgress(0);
+    setRunningContinuously(false);
     onClose();
-  }, [onClose, recordingStopped]);
+    setRecordingsRemaining(undefined);
+
+    if (recordingCount > 0) {
+      onRecordingComplete({ mostRecentRecordingId, recordingCount });
+    }
+  }, [onClose, onRecordingComplete, recordingStopped]);
 
   const handleOnClose = useCallback(() => {
     recordingDataSource.cancelRecording();
     handleCleanup();
   }, [handleCleanup, recordingDataSource]);
 
+  const decrementRecordingsRemaining = useCallback(() => {
+    setRecordingsRemaining((prev) =>
+      prev === undefined ? undefined : prev === 0 ? 0 : prev - 1
+    );
+  }, []);
+
+  const startRecording = useCallback(() => {
+    decrementRecordingsRemaining();
+    recordingStopped();
+    setRecordingStatus(RecordingStatus.Countdown);
+    setCountdownStageIndex(0);
+    setProgress(0);
+  }, [decrementRecordingsRemaining, recordingStopped]);
+
+  const [runningContinuously, setRunningContinuously] =
+    useState<boolean>(false);
+
+  const continueRecording = useCallback(() => {
+    decrementRecordingsRemaining();
+    recordingStopped();
+    setRunningContinuously(true);
+    setProgress(0);
+  }, [decrementRecordingsRemaining, recordingStopped]);
+
   useEffect(() => {
     if (isOpen) {
+      setRecordingsRemaining(recordingsToCapture);
       // When dialog is opened, restart countdown
-      setRecordingStatus(RecordingStatus.Countdown);
-      setCountdownStageIndex(0);
+      startRecording();
     }
-  }, [isOpen]);
+  }, [isOpen, recordingsToCapture, startRecording]);
+
+  const startRecordingInternal = useCallback(() => {
+    recordingDataSource.startRecording({
+      onDone(data) {
+        const recordingId = Date.now();
+        mostRecentRecordingIdRef.current = recordingId;
+        recordingCountRef.current++;
+        addActionRecordings(actionId, [{ ID: recordingId, data }]);
+        if (continuousRecording && recordingsRemaining) {
+          continueRecording();
+        } else if (!continuousRecording && recordingsRemaining) {
+          startRecording();
+        } else {
+          setRunningContinuously(false);
+          decrementRecordingsRemaining();
+          setRecordingStatus(RecordingStatus.Done);
+          // Trigger recordingStopped before timeout for live graph overlay.
+          // We also do this in handleCleanup and is required there for
+          // the error and close dialog cases.
+          recordingStopped();
+          doneTimeout.current = setTimeout(() => {
+            handleCleanup();
+          }, 1000);
+        }
+      },
+      onError() {
+        handleCleanup();
+        toast({
+          position: "top",
+          duration: 5_000,
+          title: intl.formatMessage({
+            id: "disconnected-during-recording",
+          }),
+          variant: "subtle",
+          status: "error",
+        });
+      },
+      onProgress: setProgress,
+    });
+  }, [
+    addActionRecordings,
+    continueRecording,
+    continuousRecording,
+    decrementRecordingsRemaining,
+    actionId,
+    handleCleanup,
+    intl,
+    recordingDataSource,
+    recordingStopped,
+    recordingsRemaining,
+    startRecording,
+    toast,
+  ]);
 
   const [progress, setProgress] = useState(0);
+  const doneTimeout = useRef<NodeJS.Timeout>();
   useEffect(() => {
     if (recordingStatus === RecordingStatus.Countdown) {
       const config = countdownStages[countdownStageIndex];
@@ -105,46 +214,35 @@ const RecordingDialog = ({
         } else {
           setRecordingStatus(RecordingStatus.Recording);
           recordingStarted();
-          recordingDataSource.startRecording({
-            onDone(data) {
-              addGestureRecordings(gestureId, [{ ID: Date.now(), data }]);
-              handleCleanup();
-            },
-            onError() {
-              handleCleanup();
-
-              toast({
-                position: "top",
-                duration: 5_000,
-                title: intl.formatMessage({
-                  id: "alert.recording.disconnectedDuringRecording",
-                }),
-                variant: "subtle",
-                status: "error",
-              });
-            },
-            onProgress: setProgress,
-          });
+          startRecordingInternal();
         }
       }, config.duration);
       return () => {
         clearTimeout(countdownTimeout);
+        doneTimeout.current && clearTimeout(doneTimeout.current);
       };
+    } else if (runningContinuously) {
+      recordingStarted();
+      startRecordingInternal();
     }
   }, [
-    countdownStages,
-    isOpen,
-    recordingStatus,
     countdownStageIndex,
-    recordingDataSource,
-    gestureId,
-    handleOnClose,
-    handleCleanup,
-    toast,
-    intl,
+    countdownStages,
     recordingStarted,
-    addGestureRecordings,
+    recordingStatus,
+    recordingsRemaining,
+    runningContinuously,
+    startRecordingInternal,
   ]);
+
+  const currentSampleNumber = useMemo(() => {
+    // Show the correct current sample number without having
+    // the initial figures change just after the dialog opens.
+    if (recordingsRemaining === undefined) {
+      return 1;
+    }
+    return recordingsToCapture - recordingsRemaining;
+  }, [recordingsRemaining, recordingsToCapture]);
 
   return (
     <Modal
@@ -157,21 +255,32 @@ const RecordingDialog = ({
     >
       <ModalOverlay>
         <ModalContent>
-          <ModalHeader>
-            <FormattedMessage
-              id="content.data.recordingDialog.title"
-              values={{ action: actionName }}
-            />
+          <ModalHeader pb={0}>
+            {recordingsToCapture > 1 ? (
+              <FormattedMessage
+                id="recording-data-for-numbered"
+                values={{
+                  action: actionName,
+                  sample: currentSampleNumber,
+                  numSamples: recordingsToCapture,
+                }}
+              />
+            ) : (
+              <FormattedMessage
+                id="recording-data-for"
+                values={{ action: actionName }}
+              />
+            )}
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <VStack width="100%" alignItems="left" gap={5}>
-              <VStack height="100px" justifyContent="center">
+          <ModalBody py={8}>
+            <VStack justifyContent="center" gap={5}>
+              <VStack h="20" alignItems="center" justifyContent="center">
                 <Text
                   fontSize={
-                    recordingStatus === RecordingStatus.Recording
-                      ? "5xl"
-                      : countdownStages[countdownStageIndex].fontSize
+                    recordingStatus === RecordingStatus.Countdown
+                      ? countdownStages[countdownStageIndex].fontSize
+                      : "5xl"
                   }
                   textAlign="center"
                   fontWeight="bold"
@@ -179,10 +288,13 @@ const RecordingDialog = ({
                   role="timer"
                   aria-live="assertive"
                 >
-                  {recordingStatus === RecordingStatus.Recording ? (
-                    <FormattedMessage id="content.data.recordingDialog.recording" />
-                  ) : (
-                    countdownStages[countdownStageIndex].value
+                  {recordingStatus === RecordingStatus.Recording && (
+                    <FormattedMessage id="recording" />
+                  )}
+                  {recordingStatus === RecordingStatus.Countdown &&
+                    countdownStages[countdownStageIndex].value}
+                  {recordingStatus === RecordingStatus.Done && (
+                    <FormattedMessage id="recording-complete" />
                   )}
                 </Text>
               </VStack>
@@ -194,47 +306,56 @@ const RecordingDialog = ({
                 borderRadius="xl"
                 value={progress}
               />
-              <Button
-                variant="warning"
-                width="fit-content"
-                alignSelf="center"
-                onClick={handleOnClose}
-              >
-                <FormattedMessage id="content.data.recording.button.cancel" />
-              </Button>
             </VStack>
           </ModalBody>
-          <ModalFooter />
+          <ModalFooter justifyContent="center" pb={7} pt={2}>
+            <Button
+              variant="warning"
+              width="fit-content"
+              onClick={handleOnClose}
+              disabled={recordingStatus === RecordingStatus.Done}
+              opacity={recordingStatus === RecordingStatus.Done ? 0.5 : 1}
+            >
+              <FormattedMessage
+                id={
+                  recordingsToCapture > 1
+                    ? "stop-recording-action"
+                    : "cancel-recording-action"
+                }
+              />
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </ModalOverlay>
     </Modal>
   );
 };
 
-interface RecordingOptions {
+interface RecordingConfig {
   onDone: (data: XYZData) => void;
   onError: () => void;
   onProgress: (percentage: number) => void;
 }
 
-interface InProgressRecording extends RecordingOptions {
+interface InProgressRecording extends RecordingConfig {
   startTimeMillis: number;
 }
 
 interface RecordingDataSource {
-  startRecording(options: RecordingOptions): void;
+  startRecording(config: RecordingConfig): void;
   cancelRecording(): void;
 }
 
 const useRecordingDataSource = (): RecordingDataSource => {
   const ref = useRef<InProgressRecording | undefined>();
+  const dataWindow = useStore((s) => s.dataWindow);
   const bufferedData = useBufferedData();
   useEffect(() => {
     const listener = (sample: TimedXYZ) => {
       if (ref.current) {
         const percentage =
           ((sample.timestamp - ref.current.startTimeMillis) /
-            mlSettings.duration) *
+            dataWindow.duration) *
           100;
         ref.current.onProgress(percentage);
       }
@@ -243,21 +364,21 @@ const useRecordingDataSource = (): RecordingDataSource => {
     return () => {
       bufferedData.removeListener(listener);
     };
-  }, [bufferedData]);
+  }, [bufferedData, dataWindow.duration]);
 
   return useMemo(
     () => ({
       timeout: undefined as ReturnType<typeof setTimeout> | undefined,
 
-      startRecording(options: RecordingOptions) {
+      startRecording(options: RecordingConfig) {
         this.timeout = setTimeout(() => {
           if (ref.current) {
             const data = bufferedData.getSamples(
               ref.current.startTimeMillis,
-              ref.current.startTimeMillis + mlSettings.duration
+              ref.current.startTimeMillis + dataWindow.duration
             );
             const sampleCount = data.x.length;
-            if (sampleCount < mlSettings.minSamples) {
+            if (sampleCount < dataWindow.minSamples) {
               ref.current.onError();
               ref.current = undefined;
             } else {
@@ -266,7 +387,7 @@ const useRecordingDataSource = (): RecordingDataSource => {
               ref.current = undefined;
             }
           }
-        }, mlSettings.duration);
+        }, dataWindow.duration);
 
         ref.current = {
           startTimeMillis: Date.now(),
@@ -278,7 +399,7 @@ const useRecordingDataSource = (): RecordingDataSource => {
         ref.current = undefined;
       },
     }),
-    [bufferedData]
+    [bufferedData, dataWindow.duration, dataWindow.minSamples]
   );
 };
 

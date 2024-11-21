@@ -1,5 +1,6 @@
 import {
   AccelerometerDataEvent,
+  BoardVersion,
   ButtonEvent,
   ConnectionStatus,
   ConnectionStatusEvent,
@@ -14,25 +15,18 @@ import { ConnectionType } from "./connection-stage-hooks";
 import { HexType, getFlashDataSource } from "./device/get-hex-file";
 import { Logging } from "./logging/logging";
 
-export enum ConnectAndFlashResult {
+export enum ConnectResult {
   Success = "Success",
   Failed = "Failed",
-  ErrorMicrobitUnsupported = "ErrorMicrobitUnsupported",
   ErrorBadFirmware = "ErrorBadFirmware",
   ErrorNoDeviceSelected = "ErrorNoDeviceSelected",
   ErrorUnableToClaimInterface = "ErrorUnableToClaimInterface",
 }
 
 export type ConnectAndFlashFailResult = Exclude<
-  ConnectAndFlashResult,
-  ConnectAndFlashResult.Success
+  ConnectResult,
+  ConnectResult.Success
 >;
-
-export enum ConnectResult {
-  Success,
-  ManualConnectFailed,
-  AutomaticConnectFailed,
-}
 
 export interface StatusListeners {
   bluetooth: (e: ConnectionStatusEvent) => void;
@@ -64,7 +58,10 @@ export class ConnectActions {
     private logging: Logging,
     private usb: MicrobitWebUSBConnection,
     private bluetooth: MicrobitWebBluetoothConnection,
-    private radioBridge: MicrobitRadioBridgeConnection
+    private radioBridge: MicrobitRadioBridgeConnection,
+    private radioRemoteBoardVersion: React.MutableRefObject<
+      BoardVersion | undefined
+    >
   ) {
     this.isWebBluetoothSupported =
       bluetooth.status !== DeviceConnectionStatus.NOT_SUPPORTED;
@@ -72,14 +69,19 @@ export class ConnectActions {
       usb.status !== DeviceConnectionStatus.NOT_SUPPORTED;
   }
 
-  requestUSBConnectionAndFlash = async (
-    hex: string | HexType,
-    progressCallback: (progress: number) => void,
-    // Used for MakeCode hex downloads.
+  requestUSBConnection = async (
     options?: ConnectionAndFlashOptions
   ): Promise<
-    | { result: ConnectAndFlashResult.Success; deviceId: number }
-    | { result: ConnectAndFlashFailResult; deviceId?: number }
+    | {
+        result: ConnectResult.Success;
+        deviceId: number;
+        usb: MicrobitWebUSBConnection;
+      }
+    | {
+        result: ConnectAndFlashFailResult;
+        deviceId?: number;
+        usb?: MicrobitWebUSBConnection;
+      }
   > => {
     const usb = options?.temporaryUsbConnection ?? this.usb;
     try {
@@ -94,14 +96,9 @@ export class ConnectActions {
         await options?.callbackIfDeviceIsSame();
       }
       if (!deviceId) {
-        return { result: ConnectAndFlashResult.Failed };
+        return { result: ConnectResult.Failed };
       }
-      const result = await this.flashMicrobit(
-        hex,
-        progressCallback,
-        options?.temporaryUsbConnection
-      );
-      return { result, deviceId };
+      return { result: ConnectResult.Success, deviceId, usb };
     } catch (e) {
       this.logging.error(
         `USB request device failed/cancelled: ${JSON.stringify(e)}`
@@ -110,31 +107,30 @@ export class ConnectActions {
     }
   };
 
-  private flashMicrobit = async (
+  flashMicrobit = async (
     hex: string | HexType,
     progress: (progress: number) => void,
     temporaryUsbConnection?: MicrobitWebUSBConnection
-  ): Promise<ConnectAndFlashResult> => {
+  ): Promise<ConnectResult> => {
     const usb = temporaryUsbConnection ?? this.usb;
     if (!usb) {
-      return ConnectAndFlashResult.Failed;
+      return ConnectResult.Failed;
     }
     const data = Object.values(HexType).includes(hex as HexType)
       ? getFlashDataSource(hex as HexType)
       : createUniversalHexFlashDataSource(hex);
-
-    if (!data) {
-      return ConnectAndFlashResult.ErrorMicrobitUnsupported;
-    }
     try {
       await usb.flash(data, {
         partial: true,
-        progress: (v: number | undefined) => progress(v ?? 100),
+        // If we could improve the re-rendering due to progress further we can remove this and accept the
+        // default which updates 4x as often.
+        minimumProgressIncrement: 0.01,
+        progress: (v: number | undefined) => progress(v ?? 1),
       });
-      return ConnectAndFlashResult.Success;
+      return ConnectResult.Success;
     } catch (e) {
       this.logging.error(`Flashing failed: ${JSON.stringify(e)}`);
-      return ConnectAndFlashResult.Failed;
+      return ConnectResult.Failed;
     }
   };
 
@@ -144,19 +140,23 @@ export class ConnectActions {
     if (err instanceof DeviceError) {
       switch (err.code) {
         case "clear-connect":
-          return ConnectAndFlashResult.ErrorUnableToClaimInterface;
+          return ConnectResult.ErrorUnableToClaimInterface;
         case "no-device-selected":
-          return ConnectAndFlashResult.ErrorNoDeviceSelected;
+          return ConnectResult.ErrorNoDeviceSelected;
         case "update-req":
-          return ConnectAndFlashResult.ErrorBadFirmware;
+          return ConnectResult.ErrorBadFirmware;
         default:
-          return ConnectAndFlashResult.Failed;
+          return ConnectResult.Failed;
       }
     }
-    return ConnectAndFlashResult.Failed;
+    return ConnectResult.Failed;
   };
 
-  connectMicrobitsSerial = async (deviceId: number): Promise<void> => {
+  connectMicrobitsSerial = async (
+    deviceId: number,
+    boardVersion?: BoardVersion
+  ): Promise<void> => {
+    this.radioRemoteBoardVersion.current = boardVersion;
     this.radioBridge.setRemoteDeviceId(deviceId);
     await this.radioBridge.connect();
   };
@@ -175,6 +175,12 @@ export class ConnectActions {
 
   getUsbDevice = () => {
     return this.usb.getDevice();
+  };
+
+  getDataCollectionBoardVersion = (): BoardVersion | undefined => {
+    return (
+      this.bluetooth.getBoardVersion() ?? this.radioRemoteBoardVersion.current
+    );
   };
 
   clearUsbDevice = async () => {
