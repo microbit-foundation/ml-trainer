@@ -244,6 +244,17 @@ const RecordingDialog = ({
     return recordingsToCapture - recordingsRemaining;
   }, [recordingsRemaining, recordingsToCapture]);
 
+  const recordingText = useMemo(() => {
+    if (recordingStatus === RecordingStatus.Recording) {
+      return intl.formatMessage({ id: "recording" });
+    } else if (recordingStatus === RecordingStatus.Countdown) {
+      return countdownStages[countdownStageIndex].value;
+    } else if (recordingStatus === RecordingStatus.Done) {
+      return intl.formatMessage({ id: "recording-complete" });
+    }
+    return "";
+  }, [countdownStageIndex, countdownStages, intl, recordingStatus]);
+
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -288,14 +299,7 @@ const RecordingDialog = ({
                   role="timer"
                   aria-live="assertive"
                 >
-                  {recordingStatus === RecordingStatus.Recording && (
-                    <FormattedMessage id="recording" />
-                  )}
-                  {recordingStatus === RecordingStatus.Countdown &&
-                    countdownStages[countdownStageIndex].value}
-                  {recordingStatus === RecordingStatus.Done && (
-                    <FormattedMessage id="recording-complete" />
-                  )}
+                  {recordingText}
                 </Text>
               </VStack>
               <Progress
