@@ -16,7 +16,7 @@ const PredictedAction = () => {
     string | undefined
   >(estimatedAction);
   const setLiveRegionEstimatedActionDebounced = useMemo(
-    () => debounce(setLiveRegionEstimatedAction, 500, { leading: true }),
+    () => debounce(setLiveRegionEstimatedAction, 500),
     []
   );
   useEffect(() => {
