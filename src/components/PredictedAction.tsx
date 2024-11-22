@@ -1,10 +1,4 @@
-import {
-  HStack,
-  Text,
-  usePrevious,
-  VisuallyHidden,
-  VStack,
-} from "@chakra-ui/react";
+import { HStack, Text, VisuallyHidden, VStack } from "@chakra-ui/react";
 import debounce from "lodash.debounce";
 import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -17,27 +11,17 @@ import { predictedActionDisplayWidth } from "./LiveGraphPanel";
 const PredictedAction = () => {
   const intl = useIntl();
   const predictionResult = useStore((s) => s.predictionResult);
-  const [estimatedAction, setEstimatedAction] = useState<string>(
-    intl.formatMessage({ id: "unknown" })
+  const estimatedAction = predictionResult?.detected?.name;
+  const [liveRegionEstimatedAction, setLiveRegionEstimatedAction] = useState<
+    string | undefined
+  >(estimatedAction);
+  const setLiveRegionEstimatedActionDebounced = useMemo(
+    () => debounce(setLiveRegionEstimatedAction, 500, { leading: true }),
+    []
   );
-  const debouncedEstimatedAction = useMemo(
-    () =>
-      debounce((name: string | undefined) => {
-        if (name) {
-          setEstimatedAction(name);
-        } else {
-          setEstimatedAction(intl.formatMessage({ id: "unknown" }));
-        }
-      }, 500),
-    [intl]
-  );
-
-  const prevEstimatedAction = usePrevious(predictionResult?.detected?.name);
   useEffect(() => {
-    if (prevEstimatedAction !== predictionResult?.detected?.name) {
-      debouncedEstimatedAction(predictionResult?.detected?.name);
-    }
-  }, [debouncedEstimatedAction, predictionResult, prevEstimatedAction]);
+    setLiveRegionEstimatedActionDebounced(estimatedAction);
+  }, [setLiveRegionEstimatedActionDebounced, estimatedAction]);
 
   return (
     <VStack
@@ -52,7 +36,9 @@ const PredictedAction = () => {
         <FormattedMessage
           id="estimated-action-aria"
           values={{
-            action: estimatedAction,
+            action:
+              liveRegionEstimatedAction ??
+              intl.formatMessage({ id: "unknown" }),
           }}
         />
       </VisuallyHidden>
@@ -80,7 +66,7 @@ const PredictedAction = () => {
         textAlign="center"
         w={`${predictedActionDisplayWidth}px`}
       >
-        {predictionResult?.detected?.name ?? <FormattedMessage id="unknown" />}
+        {estimatedAction ?? <FormattedMessage id="unknown" />}
       </Text>
     </VStack>
   );
