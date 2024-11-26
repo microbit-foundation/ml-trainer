@@ -4,7 +4,7 @@ Train a machine learning model on movement data from the micro:bit's
 accelerometer. Run it on your BBC micro:bit, building your own progam that uses
 the machine learning model in Microsoft MakeCode.
 
-Try it at https://createai.microbit.org (beta)
+Try it at https://createai.microbit.org
 
 ## History
 
