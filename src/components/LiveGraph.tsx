@@ -165,7 +165,6 @@ const LiveGraph = () => {
       overflow="hidden"
     >
       <canvas
-        dir="rtl"
         ref={canvasRef}
         height={height}
         id="smoothie-chart"
