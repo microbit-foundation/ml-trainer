@@ -43,6 +43,8 @@ export const defaultSettings: Settings = {
   dataSamplesView: DataSamplesView.Graph,
   showGraphs: true,
   graphColorScheme: "default",
+  graphLineScheme: "solid",
+  graphLineWeight: "normal",
 };
 
 export type GraphColorScheme = "default" | "color-blind-1" | "color-blind-2";
@@ -50,6 +52,19 @@ export const graphColorSchemeOptions: GraphColorScheme[] = [
   "default",
   "color-blind-1",
   "color-blind-2",
+];
+
+export type GraphLineScheme = "solid" | "accessible";
+export const graphLineSchemeOptions: GraphLineScheme[] = [
+  "solid",
+  "accessible",
+];
+
+export type GraphLineWeight = "thin" | "normal" | "thick";
+export const graphLineWeightOptions: GraphLineWeight[] = [
+  "thin",
+  "normal",
+  "thick",
 ];
 
 export interface Settings {
@@ -61,4 +76,6 @@ export interface Settings {
   dataSamplesView: DataSamplesView;
   showGraphs: boolean;
   graphColorScheme: GraphColorScheme;
+  graphLineScheme: GraphLineScheme;
+  graphLineWeight: GraphLineWeight;
 }

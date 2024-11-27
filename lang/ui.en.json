@@ -731,6 +731,34 @@
     "defaultMessage": "Default (red, blue, green)",
     "description": "Graph colour scheme option"
   },
+  "graph-line-scheme": {
+    "defaultMessage": "Graph line style",
+    "description": "Graph line scheme setting label"
+  },
+  "graph-line-scheme-accessible": {
+    "defaultMessage": "Accessible lines (solid, dashed, dots)",
+    "description": "Graph line scheme option"
+  },
+  "graph-line-scheme-solid": {
+    "defaultMessage": "Solid lines",
+    "description": "Graph line scheme option"
+  },
+  "graph-line-weight": {
+    "defaultMessage": "Graph line thickness",
+    "description": "Graph line weight setting label"
+  },
+  "graph-line-weight-normal": {
+    "defaultMessage": "Normal",
+    "description": "Graph line weight option"
+  },
+  "graph-line-weight-thick": {
+    "defaultMessage": "Thick",
+    "description": "Graph line weight option"
+  },
+  "graph-line-weight-thin": {
+    "defaultMessage": "Thin",
+    "description": "Graph line weight option"
+  },
   "help-label": {
     "defaultMessage": "Help",
     "description": "Help icon aria label"

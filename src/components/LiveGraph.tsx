@@ -2,7 +2,7 @@ import { HStack, usePrevious } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
 import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { SmoothieChart, TimeSeries } from "smoothie";
+import { SmoothieChart, TimeSeries } from "@microbit/smoothie";
 import { useConnectActions } from "../connect-actions-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
@@ -10,6 +10,10 @@ import { useGraphColors } from "../hooks/use-graph-colors";
 import { maxAccelerationScaleForGraphs } from "../mlConfig";
 import { useSettings, useStore } from "../store";
 import LiveGraphLabels from "./LiveGraphLabels";
+import {
+  graphLineStyleStringToArray,
+  useGraphLineStyles,
+} from "../hooks/use-graph-line-styles";
 
 export const smoothenDataPoint = (curr: number, next: number) => {
   // TODO: Factor out so that recording graph can do the same
@@ -20,13 +24,16 @@ export const smoothenDataPoint = (curr: number, next: number) => {
 const LiveGraph = () => {
   const { isConnected, status } = useConnectionStage();
   const connectActions = useConnectActions();
-  const [{ graphColorScheme }] = useSettings();
+  const [{ graphColorScheme, graphLineScheme, graphLineWeight }] =
+    useSettings();
 
   const colors = useGraphColors(graphColorScheme);
+  const lineStyles = useGraphLineStyles(graphLineScheme);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [chart, setChart] = useState<SmoothieChart | undefined>(undefined);
-  const lineWidth = 2;
+  const lineWidth =
+    graphLineWeight === "normal" ? 2 : graphLineWeight === "thin" ? 1 : 3;
 
   const liveGraphContainerRef = useRef(null);
   const { width, height } = useSize(liveGraphContainerRef) ?? {
@@ -58,9 +65,21 @@ const LiveGraph = () => {
       enableDpiScaling: false,
     });
 
-    smoothieChart.addTimeSeries(lineX, { lineWidth, strokeStyle: colors.x });
-    smoothieChart.addTimeSeries(lineY, { lineWidth, strokeStyle: colors.y });
-    smoothieChart.addTimeSeries(lineZ, { lineWidth, strokeStyle: colors.z });
+    smoothieChart.addTimeSeries(lineX, {
+      lineWidth,
+      strokeStyle: colors.x,
+      lineDash: graphLineStyleStringToArray(lineStyles.x),
+    });
+    smoothieChart.addTimeSeries(lineY, {
+      lineWidth,
+      strokeStyle: colors.y,
+      lineDash: graphLineStyleStringToArray(lineStyles.y),
+    });
+    smoothieChart.addTimeSeries(lineZ, {
+      lineWidth,
+      strokeStyle: colors.z,
+      lineDash: graphLineStyleStringToArray(lineStyles.z),
+    });
 
     smoothieChart.addTimeSeries(recordLines, {
       lineWidth: 3,
@@ -73,7 +92,19 @@ const LiveGraph = () => {
     return () => {
       smoothieChart.stop();
     };
-  }, [colors.x, colors.y, colors.z, lineX, lineY, lineZ, recordLines]);
+  }, [
+    colors.x,
+    colors.y,
+    colors.z,
+    lineStyles.x,
+    lineStyles.y,
+    lineStyles.z,
+    lineWidth,
+    lineX,
+    lineY,
+    lineZ,
+    recordLines,
+  ]);
 
   useEffect(() => {
     if (isConnected || status === ConnectionStatus.ReconnectingAutomatically) {
@@ -134,6 +165,7 @@ const LiveGraph = () => {
       overflow="hidden"
     >
       <canvas
+        dir="rtl"
         ref={canvasRef}
         height={height}
         id="smoothie-chart"

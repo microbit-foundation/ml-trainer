@@ -20,7 +20,12 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { defaultSettings, graphColorSchemeOptions } from "../settings";
+import {
+  defaultSettings,
+  graphColorSchemeOptions,
+  graphLineSchemeOptions as graphLineSchemeOptions,
+  graphLineWeightOptions,
+} from "../settings";
 import { useSettings } from "../store";
 import SelectFormControl, { createOptions } from "./SelectFormControl";
 import { ConfirmDialog } from "./ConfirmDialog";
@@ -64,6 +69,16 @@ export const SettingsDialog = ({
         "graph-color-scheme",
         intl
       ),
+      graphLineScheme: createOptions(
+        graphLineSchemeOptions,
+        "graph-line-scheme",
+        intl
+      ),
+      graphLineWeight: createOptions(
+        graphLineWeightOptions,
+        "graph-line-weight",
+        intl
+      ),
     };
   }, [intl]);
   return (
@@ -104,6 +119,30 @@ export const SettingsDialog = ({
                     setSettings({
                       ...settings,
                       graphColorScheme,
+                    })
+                  }
+                />
+                <SelectFormControl
+                  id="graphLineScheme"
+                  label={intl.formatMessage({ id: "graph-line-scheme" })}
+                  options={options.graphLineScheme}
+                  value={settings.graphLineScheme}
+                  onChange={(graphLineScheme) =>
+                    setSettings({
+                      ...settings,
+                      graphLineScheme,
+                    })
+                  }
+                />
+                <SelectFormControl
+                  id="graphLineWeight"
+                  label={intl.formatMessage({ id: "graph-line-weight" })}
+                  options={options.graphLineWeight}
+                  value={settings.graphLineWeight}
+                  onChange={(graphLineWeight) =>
+                    setSettings({
+                      ...settings,
+                      graphLineWeight,
                     })
                   }
                 />

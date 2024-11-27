@@ -1249,6 +1249,48 @@
       "value": "Default (red, blue, green)"
     }
   ],
+  "graph-line-scheme": [
+    {
+      "type": 0,
+      "value": "Graph line style"
+    }
+  ],
+  "graph-line-scheme-accessible": [
+    {
+      "type": 0,
+      "value": "Accessible lines (solid, dashed, dots)"
+    }
+  ],
+  "graph-line-scheme-solid": [
+    {
+      "type": 0,
+      "value": "Solid lines"
+    }
+  ],
+  "graph-line-weight": [
+    {
+      "type": 0,
+      "value": "Graph line thickness"
+    }
+  ],
+  "graph-line-weight-normal": [
+    {
+      "type": 0,
+      "value": "Normal"
+    }
+  ],
+  "graph-line-weight-thick": [
+    {
+      "type": 0,
+      "value": "Thick"
+    }
+  ],
+  "graph-line-weight-thin": [
+    {
+      "type": 0,
+      "value": "Thin"
+    }
+  ],
   "help-label": [
     {
       "type": 0,
@@ -1811,8 +1853,12 @@
   ],
   "makecode-load-error-dialog-body": [
     {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
       "type": 0,
-      "value": "micro:bit CreateAI has failed to load MakeCode. Please check your internet connection, reload the page then try again."
+      "value": " has failed to load MakeCode. Please check your internet connection, reload the page then try again."
     }
   ],
   "makecode-load-error-dialog-title": [

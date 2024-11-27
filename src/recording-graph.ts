@@ -5,8 +5,13 @@
  */
 
 import { ChartConfiguration, ChartTypeRegistry } from "chart.js";
-import { XYZData } from "./model";
+import {
+  GraphLineStyles,
+  graphLineStyleStringToArray,
+} from "./hooks/use-graph-line-styles";
 import { maxAccelerationScaleForGraphs } from "./mlConfig";
+import { XYZData } from "./model";
+import { GraphLineWeight } from "./settings";
 
 const smoothen = (d: number[]): number[] => {
   if (d.length === 0) {
@@ -49,12 +54,19 @@ interface GraphColors {
 
 export const getConfig = (
   { x: rawX, y: rawY, z: rawZ }: XYZData,
-  colors: GraphColors
+  colors: GraphColors,
+  lineStyles: GraphLineStyles,
+  graphLineWeight: GraphLineWeight
 ): ChartConfiguration<keyof ChartTypeRegistry, Pos[], string> => {
   const x = processDimensionData(rawX);
   const y = processDimensionData(rawY);
   const z = processDimensionData(rawZ);
-  const common = { borderWidth: 1, pointRadius: 0, pointHoverRadius: 0 };
+  const common = {
+    borderWidth:
+      graphLineWeight === "normal" ? 1.5 : graphLineWeight === "thin" ? 1 : 2.5,
+    pointRadius: 0,
+    pointHoverRadius: 0,
+  };
   return {
     type: "line",
     data: {
@@ -63,18 +75,21 @@ export const getConfig = (
           ...common,
           label: "x",
           borderColor: colors.x,
+          borderDash: graphLineStyleStringToArray(lineStyles.x) ?? [],
           data: x,
         },
         {
           ...common,
           label: "y",
           borderColor: colors.y,
+          borderDash: graphLineStyleStringToArray(lineStyles.y) ?? [],
           data: y,
         },
         {
           ...common,
           label: "z",
           borderColor: colors.z,
+          borderDash: graphLineStyleStringToArray(lineStyles.z) ?? [],
           data: z,
         },
       ],
