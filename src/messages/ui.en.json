@@ -1273,10 +1273,10 @@
       "value": "Graph line thickness"
     }
   ],
-  "graph-line-weight-normal": [
+  "graph-line-weight-medium": [
     {
       "type": 0,
-      "value": "Normal"
+      "value": "Medium"
     }
   ],
   "graph-line-weight-thick": [
