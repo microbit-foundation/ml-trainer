@@ -13,6 +13,7 @@ import {
   ModalOverlay,
 } from "@chakra-ui/modal";
 import {
+  AspectRatio,
   FormControl,
   FormHelperText,
   Text,
@@ -151,15 +152,17 @@ export const SettingsDialog = ({
                 />
                 <VStack alignItems="flex-start" w="full">
                   <Text>Graph preview</Text>
-                  <RecordingGraph
-                    responsive
-                    data={previewGraphData}
-                    role="img"
-                    w="full"
-                    aria-label={intl.formatMessage({
-                      id: "recording-graph-label",
-                    })}
-                  />
+                  <AspectRatio ratio={526 / 92} w="full">
+                    <RecordingGraph
+                      responsive
+                      data={previewGraphData}
+                      role="img"
+                      w="full"
+                      aria-label={intl.formatMessage({
+                        id: "recording-graph-label",
+                      })}
+                    />
+                  </AspectRatio>
                 </VStack>
                 <FormControl>
                   <Button variant="link" onClick={handleResetToDefault}>
