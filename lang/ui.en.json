@@ -747,16 +747,12 @@
     "defaultMessage": "Graph line thickness",
     "description": "Graph line weight setting label"
   },
-  "graph-line-weight-medium": {
-    "defaultMessage": "Medium",
+  "graph-line-weight-default": {
+    "defaultMessage": "Default",
     "description": "Graph line weight option"
   },
   "graph-line-weight-thick": {
     "defaultMessage": "Thick",
-    "description": "Graph line weight option"
-  },
-  "graph-line-weight-thin": {
-    "defaultMessage": "Thin",
     "description": "Graph line weight option"
   },
   "help-label": {

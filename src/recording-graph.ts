@@ -60,8 +60,7 @@ export const getConfig = (
   const y = processDimensionData(rawY);
   const z = processDimensionData(rawZ);
   const common = {
-    borderWidth:
-      graphLineWeight === "medium" ? 1.5 : graphLineWeight === "thin" ? 1 : 2.5,
+    borderWidth: graphLineWeight === "default" ? 1 : 2,
     pointRadius: 0,
     pointHoverRadius: 0,
   };

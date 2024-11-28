@@ -30,8 +30,7 @@ const LiveGraph = () => {
 
   // When we update the chart we re-run the effect that syncs it with the connection state.
   const [chart, setChart] = useState<SmoothieChart | undefined>(undefined);
-  const lineWidth =
-    graphLineWeight === "medium" ? 2 : graphLineWeight === "thin" ? 1 : 3;
+  const lineWidth = graphLineWeight === "default" ? 2 : 3;
 
   const liveGraphContainerRef = useRef(null);
   const { width, height } = useSize(liveGraphContainerRef) ?? {

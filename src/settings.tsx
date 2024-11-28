@@ -44,7 +44,7 @@ export const defaultSettings: Settings = {
   showGraphs: true,
   graphColorScheme: "default",
   graphLineScheme: "solid",
-  graphLineWeight: "medium",
+  graphLineWeight: "default",
 };
 
 export type GraphColorScheme = "default" | "color-blind-1" | "color-blind-2";
@@ -60,12 +60,8 @@ export const graphLineSchemeOptions: GraphLineScheme[] = [
   "accessible",
 ];
 
-export type GraphLineWeight = "thin" | "medium" | "thick";
-export const graphLineWeightOptions: GraphLineWeight[] = [
-  "thin",
-  "medium",
-  "thick",
-];
+export type GraphLineWeight = "default" | "thick";
+export const graphLineWeightOptions: GraphLineWeight[] = ["default", "thick"];
 
 export interface Settings {
   languageId: string;
