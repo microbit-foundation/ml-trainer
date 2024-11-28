@@ -1,19 +1,16 @@
 import { HStack, usePrevious } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
 import { AccelerometerDataEvent } from "@microbit/microbit-connection";
-import { useEffect, useMemo, useRef, useState } from "react";
 import { SmoothieChart, TimeSeries } from "@microbit/smoothie";
+import { useEffect, useMemo, useRef } from "react";
 import { useConnectActions } from "../connect-actions-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { useGraphColors } from "../hooks/use-graph-colors";
+import { useGraphLineStyles } from "../hooks/use-graph-line-styles";
 import { maxAccelerationScaleForGraphs } from "../mlConfig";
 import { useSettings, useStore } from "../store";
 import LiveGraphLabels from "./LiveGraphLabels";
-import {
-  graphLineStyleStringToArray,
-  useGraphLineStyles,
-} from "../hooks/use-graph-line-styles";
 
 export const smoothenDataPoint = (curr: number, next: number) => {
   // TODO: Factor out so that recording graph can do the same
@@ -31,7 +28,7 @@ const LiveGraph = () => {
   const lineStyles = useGraphLineStyles(graphLineScheme);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const [chart, setChart] = useState<SmoothieChart | undefined>(undefined);
+  const chartRef = useRef<SmoothieChart | undefined>(undefined);
   const lineWidth =
     graphLineWeight === "normal" ? 2 : graphLineWeight === "thin" ? 1 : 3;
 
@@ -68,17 +65,17 @@ const LiveGraph = () => {
     smoothieChart.addTimeSeries(lineX, {
       lineWidth,
       strokeStyle: colors.x,
-      lineDash: graphLineStyleStringToArray(lineStyles.x),
+      lineDash: lineStyles.x,
     });
     smoothieChart.addTimeSeries(lineY, {
       lineWidth,
       strokeStyle: colors.y,
-      lineDash: graphLineStyleStringToArray(lineStyles.y),
+      lineDash: lineStyles.y,
     });
     smoothieChart.addTimeSeries(lineZ, {
       lineWidth,
       strokeStyle: colors.z,
-      lineDash: graphLineStyleStringToArray(lineStyles.z),
+      lineDash: lineStyles.z,
     });
 
     smoothieChart.addTimeSeries(recordLines, {
@@ -86,11 +83,12 @@ const LiveGraph = () => {
       strokeStyle: "#4040ff44",
       fillStyle: "#0000ff07",
     });
-    setChart(smoothieChart);
+    chartRef.current = smoothieChart;
     smoothieChart.streamTo(canvasRef.current, 0);
     smoothieChart.render();
     return () => {
       smoothieChart.stop();
+      chartRef.current = undefined;
     };
   }, [
     colors.x,
@@ -108,11 +106,11 @@ const LiveGraph = () => {
 
   useEffect(() => {
     if (isConnected || status === ConnectionStatus.ReconnectingAutomatically) {
-      chart?.start();
+      chartRef.current?.start();
     } else {
-      chart?.stop();
+      chartRef.current?.stop();
     }
-  }, [chart, isConnected, status]);
+  }, [isConnected, status]);
 
   // Draw on graph to display that users are recording.
   const isRecording = useStore((s) => s.isRecording);
