@@ -5,10 +5,7 @@
  */
 
 import { ChartConfiguration, ChartTypeRegistry } from "chart.js";
-import {
-  GraphLineStyles,
-  graphLineStyleStringToArray,
-} from "./hooks/use-graph-line-styles";
+import { GraphLineStyles } from "./hooks/use-graph-line-styles";
 import { maxAccelerationScaleForGraphs } from "./mlConfig";
 import { XYZData } from "./model";
 import { GraphLineWeight } from "./settings";
@@ -76,21 +73,21 @@ export const getConfig = (
           ...common,
           label: "x",
           borderColor: colors.x,
-          borderDash: graphLineStyleStringToArray(lineStyles.x) ?? [],
+          borderDash: lineStyles.x ?? [],
           data: x,
         },
         {
           ...common,
           label: "y",
           borderColor: colors.y,
-          borderDash: graphLineStyleStringToArray(lineStyles.y) ?? [],
+          borderDash: lineStyles.y ?? [],
           data: y,
         },
         {
           ...common,
           label: "z",
           borderColor: colors.z,
-          borderDash: graphLineStyleStringToArray(lineStyles.z) ?? [],
+          borderDash: lineStyles.z ?? [],
           data: z,
         },
       ],

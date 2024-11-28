@@ -1,33 +1,31 @@
+import { useMemo } from "react";
 import { GraphLineScheme } from "../settings";
 
 export interface GraphLineStyles {
-  x: undefined | string;
-  y: undefined | string;
-  z: undefined | string;
+  x: undefined | [number, number];
+  y: undefined | [number, number];
+  z: undefined | [number, number];
 }
 
 export const useGraphLineStyles = (
   graphLineScheme: GraphLineScheme
 ): GraphLineStyles => {
-  switch (graphLineScheme) {
-    case "accessible": {
-      return {
-        x: undefined,
-        y: "10,5",
-        z: "2,2",
-      };
+  return useMemo(() => {
+    switch (graphLineScheme) {
+      case "accessible": {
+        return {
+          x: undefined,
+          y: [10, 5],
+          z: [2, 2],
+        };
+      }
+      default: {
+        return {
+          x: undefined,
+          y: undefined,
+          z: undefined,
+        };
+      }
     }
-    default: {
-      return {
-        x: undefined,
-        y: undefined,
-        z: undefined,
-      };
-    }
-  }
+  }, [graphLineScheme]);
 };
-
-export const graphLineStyleStringToArray = (value: string | undefined) =>
-  value
-    ? (value.split(",").map((x) => Number(x)) as [number, number])
-    : undefined;

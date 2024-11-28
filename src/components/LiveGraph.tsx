@@ -10,10 +10,7 @@ import { useGraphColors } from "../hooks/use-graph-colors";
 import { maxAccelerationScaleForGraphs } from "../mlConfig";
 import { useSettings, useStore } from "../store";
 import LiveGraphLabels from "./LiveGraphLabels";
-import {
-  graphLineStyleStringToArray,
-  useGraphLineStyles,
-} from "../hooks/use-graph-line-styles";
+import { useGraphLineStyles } from "../hooks/use-graph-line-styles";
 
 export const smoothenDataPoint = (curr: number, next: number) => {
   // TODO: Factor out so that recording graph can do the same
@@ -31,6 +28,7 @@ const LiveGraph = () => {
   const lineStyles = useGraphLineStyles(graphLineScheme);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  // When we update the chart we re-run the effect that syncs it with the connection state.
   const [chart, setChart] = useState<SmoothieChart | undefined>(undefined);
   const lineWidth =
     graphLineWeight === "normal" ? 2 : graphLineWeight === "thin" ? 1 : 3;
@@ -68,17 +66,17 @@ const LiveGraph = () => {
     smoothieChart.addTimeSeries(lineX, {
       lineWidth,
       strokeStyle: colors.x,
-      lineDash: graphLineStyleStringToArray(lineStyles.x),
+      lineDash: lineStyles.x,
     });
     smoothieChart.addTimeSeries(lineY, {
       lineWidth,
       strokeStyle: colors.y,
-      lineDash: graphLineStyleStringToArray(lineStyles.y),
+      lineDash: lineStyles.y,
     });
     smoothieChart.addTimeSeries(lineZ, {
       lineWidth,
       strokeStyle: colors.z,
-      lineDash: graphLineStyleStringToArray(lineStyles.z),
+      lineDash: lineStyles.z,
     });
 
     smoothieChart.addTimeSeries(recordLines, {
