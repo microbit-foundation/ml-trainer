@@ -54,6 +54,7 @@ interface GraphColors {
 
 export const getConfig = (
   { x: rawX, y: rawY, z: rawZ }: XYZData,
+  responsive: boolean,
   colors: GraphColors,
   lineStyles: GraphLineStyles,
   graphLineWeight: GraphLineWeight
@@ -96,7 +97,7 @@ export const getConfig = (
     },
     options: {
       animation: false,
-      responsive: false,
+      responsive,
       maintainAspectRatio: false,
       interaction: {
         // @ts-expect-error null disables interaction - the type information is wrong.
@@ -112,7 +113,8 @@ export const getConfig = (
         x: {
           type: "linear",
           min: 0,
-          max: rawX.length,
+          // We start at zero.
+          max: rawX.length - 1,
           grid: {
             drawTicks: false,
             display: false,

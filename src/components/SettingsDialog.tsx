@@ -15,6 +15,7 @@ import {
 import {
   FormControl,
   FormHelperText,
+  Text,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
@@ -23,12 +24,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 import {
   defaultSettings,
   graphColorSchemeOptions,
-  graphLineSchemeOptions as graphLineSchemeOptions,
+  graphLineSchemeOptions,
   graphLineWeightOptions,
 } from "../settings";
 import { useSettings } from "../store";
-import SelectFormControl, { createOptions } from "./SelectFormControl";
+import { previewGraphData } from "../utils/preview-graph-data";
 import { ConfirmDialog } from "./ConfirmDialog";
+import RecordingGraph from "./RecordingGraph";
+import SelectFormControl, { createOptions } from "./SelectFormControl";
 
 interface SettingsDialogProps {
   isOpen: boolean;
@@ -146,6 +149,18 @@ export const SettingsDialog = ({
                     })
                   }
                 />
+                <VStack alignItems="flex-start" w="full">
+                  <Text>Graph preview</Text>
+                  <RecordingGraph
+                    responsive
+                    data={previewGraphData}
+                    role="img"
+                    w="full"
+                    aria-label={intl.formatMessage({
+                      id: "recording-graph-label",
+                    })}
+                  />
+                </VStack>
                 <FormControl>
                   <Button variant="link" onClick={handleResetToDefault}>
                     <FormattedMessage id="restore-defaults-action" />
