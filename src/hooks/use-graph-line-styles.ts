@@ -2,9 +2,9 @@ import { useMemo } from "react";
 import { GraphLineScheme } from "../settings";
 
 export interface GraphLineStyles {
-  x: undefined | [number, number];
-  y: undefined | [number, number];
-  z: undefined | [number, number];
+  x: undefined | number[];
+  y: undefined | number[];
+  z: undefined | number[];
 }
 
 export const useGraphLineStyles = (
