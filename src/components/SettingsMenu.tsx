@@ -12,10 +12,17 @@ import { useIntl } from "react-intl";
 import LanguageMenuItem from "./LanguageMenuItem";
 import SettingsMenuItem from "./SettingsMenuItem";
 
+interface SettingsMenuProps {
+  onLanguageDialogOpen: () => void;
+  onSettingsDialogOpen: () => void;
+}
 /**
  * A settings button that triggers a drop-down menu with actions.
  */
-const SettingsMenu = () => {
+const SettingsMenu = ({
+  onLanguageDialogOpen,
+  onSettingsDialogOpen,
+}: SettingsMenuProps) => {
   const intl = useIntl();
   const settingsMenuRef = useRef(null);
   const containerRef = useRef(null);
@@ -40,8 +47,8 @@ const SettingsMenu = () => {
         />
         <Portal containerRef={containerRef}>
           <MenuList>
-            <LanguageMenuItem finalFocusRef={settingsMenuRef} />
-            <SettingsMenuItem finalFocusRef={settingsMenuRef} />
+            <LanguageMenuItem onOpen={onLanguageDialogOpen} />
+            <SettingsMenuItem onOpen={onSettingsDialogOpen} />
           </MenuList>
         </Portal>
       </Menu>

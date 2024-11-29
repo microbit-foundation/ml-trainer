@@ -1,29 +1,19 @@
-import { Icon, MenuItem, useDisclosure } from "@chakra-ui/react";
-import { FormattedMessage } from "react-intl";
+import { Icon, MenuItem } from "@chakra-ui/react";
 import { RiListSettingsLine } from "react-icons/ri";
-import { SettingsDialog } from "./SettingsDialog";
+import { FormattedMessage } from "react-intl";
 
 interface SettingsMenuItemProps {
-  finalFocusRef?: React.RefObject<HTMLButtonElement>;
+  onOpen: () => void;
 }
 
-const SettingsMenuItem = ({ finalFocusRef }: SettingsMenuItemProps) => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
-
+const SettingsMenuItem = ({ onOpen }: SettingsMenuItemProps) => {
   return (
-    <>
-      <SettingsDialog
-        isOpen={isOpen}
-        onClose={onClose}
-        finalFocusRef={finalFocusRef}
-      />
-      <MenuItem
-        icon={<Icon h={5} w={5} as={RiListSettingsLine} />}
-        onClick={onOpen}
-      >
-        <FormattedMessage id="settings" />
-      </MenuItem>
-    </>
+    <MenuItem
+      icon={<Icon h={5} w={5} as={RiListSettingsLine} />}
+      onClick={onOpen}
+    >
+      <FormattedMessage id="settings" />
+    </MenuItem>
   );
 };
 

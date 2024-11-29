@@ -2,7 +2,6 @@ import {
   Button,
   Flex,
   Heading,
-  HStack,
   Icon,
   IconButton,
   MenuDivider,
@@ -28,21 +27,16 @@ import {
 import Tour from "../pages/Tour";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
-import ActionBar from "./ActionBar";
+import ActionBar from "./ActionBar/ActionBar";
 import AppLogo from "./AppLogo";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
-import HelpMenu from "./HelpMenu";
-import LanguageMenuItem from "./LanguageMenuItem";
+import ImportErrorDialog from "./ImportErrorDialog";
+import MakeCodeLoadErrorDialog from "./MakeCodeLoadErrorDialog";
+import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
-import SettingsMenu from "./SettingsMenu";
-import ToolbarMenu from "./ToolbarMenu";
-import HelpMenuItems from "./HelpMenuItems";
-import ImportErrorDialog from "./ImportErrorDialog";
-import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
-import MakeCodeLoadErrorDialog from "./MakeCodeLoadErrorDialog";
-import SettingsMenuItem from "./SettingsMenuItem";
+import ItemsRight from "./ActionBar/ActionBarItemsRight";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -151,36 +145,10 @@ const DefaultPageLayout = ({
               }
               itemsLeftProps={{ width: 0 }}
               itemsRight={
-                <>
-                  <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
-                    {toolbarItemsRight}
-                    <SettingsMenu />
-                  </HStack>
-                  <HelpMenu
-                    display={{ base: "none", md: "block", lg: "block" }}
-                  />
-                  <ToolbarMenu
-                    display={{ base: "none", md: "block", lg: "none" }}
-                    variant="plain"
-                    label={intl.formatMessage({ id: "main-menu" })}
-                  >
-                    {menuItems}
-                    <LanguageMenuItem />
-                    <SettingsMenuItem />
-                  </ToolbarMenu>
-                  {/* Toolbar items when sm window size. */}
-                  <ToolbarMenu
-                    display={{ base: "block", md: "none" }}
-                    variant="plain"
-                    label={intl.formatMessage({ id: "main-menu" })}
-                  >
-                    {menuItems}
-                    <LanguageMenuItem />
-                    <SettingsMenuItem />
-                    <MenuDivider />
-                    <HelpMenuItems />
-                  </ToolbarMenu>
-                </>
+                <ItemsRight
+                  menuItems={menuItems}
+                  toolbarItems={toolbarItemsRight}
+                />
               }
             />
             {flags.preReleaseNotice && <PreReleaseNotice />}

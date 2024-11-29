@@ -1,5 +1,4 @@
-import { MenuDivider, MenuItem, useDisclosure } from "@chakra-ui/react";
-import { useRef } from "react";
+import { MenuDivider, MenuItem } from "@chakra-ui/react";
 import { MdOutlineCookie } from "react-icons/md";
 import {
   RiExternalLinkLine,
@@ -8,34 +7,29 @@ import {
   RiInformationLine,
 } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import { useLocation } from "react-router";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { useDeployment } from "../deployment";
-import { useStore } from "../store";
-import { createDataSamplesPageUrl, createTestingModelPageUrl } from "../urls";
-import { userGuideUrl } from "../utils/external-links";
-import AboutDialog from "./AboutDialog";
-import ConnectFirstDialog from "./ConnectFirstDialog";
-import FeedbackForm from "./FeedbackForm";
 import { flags } from "../flags";
+import { TourTrigger } from "../model";
+import { useStore } from "../store";
+import { userGuideUrl } from "../utils/external-links";
+import { createDataSamplesPageUrl, createTestingModelPageUrl } from "../urls";
 
-const HelpMenuItems = () => {
-  const aboutDialogDisclosure = useDisclosure();
-  const feedbackDisclosure = useDisclosure();
-  const menuButtonRef = useRef(null);
+interface HelpMenuItemsProps {
+  onAboutDialogOpen: () => void;
+  onConnectFirstDialogOpen: () => void;
+  onFeedbackOpen: () => void;
+  tourTrigger: TourTrigger | undefined;
+}
+const HelpMenuItems = ({
+  onAboutDialogOpen,
+  onConnectFirstDialogOpen,
+  onFeedbackOpen,
+  tourTrigger,
+}: HelpMenuItemsProps) => {
   const deployment = useDeployment();
   return (
     <>
-      <AboutDialog
-        isOpen={aboutDialogDisclosure.isOpen}
-        onClose={aboutDialogDisclosure.onClose}
-        finalFocusRef={menuButtonRef}
-      />
-      <FeedbackForm
-        isOpen={feedbackDisclosure.isOpen}
-        onClose={feedbackDisclosure.onClose}
-        finalFocusRef={menuButtonRef}
-      />
       {flags.websiteContent && (
         <MenuItem
           as="a"
@@ -47,7 +41,10 @@ const HelpMenuItems = () => {
           <FormattedMessage id="user-guide" />
         </MenuItem>
       )}
-      <TourMenuItem />
+      <TourMenuItem
+        onConnectFirstDialogOpen={onConnectFirstDialogOpen}
+        tourTrigger={tourTrigger}
+      />
       {deployment.supportLinks.main && (
         <>
           <MenuItem
@@ -59,10 +56,7 @@ const HelpMenuItems = () => {
           >
             <FormattedMessage id="help-support" />
           </MenuItem>
-          <MenuItem
-            icon={<RiFeedbackLine />}
-            onClick={feedbackDisclosure.onOpen}
-          >
+          <MenuItem icon={<RiFeedbackLine />} onClick={onFeedbackOpen}>
             <FormattedMessage id="feedback" />
           </MenuItem>
           <MenuDivider />
@@ -102,63 +96,47 @@ const HelpMenuItems = () => {
       {(deployment.privacyPolicyLink ||
         deployment.compliance.manageCookies ||
         deployment.termsOfUseLink) && <MenuDivider />}
-      <MenuItem
-        icon={<RiInformationLine />}
-        onClick={aboutDialogDisclosure.onOpen}
-      >
+      <MenuItem icon={<RiInformationLine />} onClick={onAboutDialogOpen}>
         <FormattedMessage id="about" />
       </MenuItem>
     </>
   );
 };
 
-const tourMap = {
-  [createDataSamplesPageUrl()]: "Connect" as const,
-  [createTestingModelPageUrl()]: "TrainModel" as const,
-  // No UI to retrigger MakeCode tour
-};
+interface TourMenuItemProps {
+  onConnectFirstDialogOpen: () => void;
+  tourTrigger: TourTrigger | undefined;
+}
 
-const TourMenuItem = () => {
-  const tourTriggerName = tourMap[useLocation().pathname];
-  const setPostConnectTourTrigger = useStore(
-    (s) => s.setPostConnectTourTrigger
-  );
+const TourMenuItem = ({
+  onConnectFirstDialogOpen,
+  tourTrigger,
+}: TourMenuItemProps) => {
   const tourStart = useStore((s) => s.tourStart);
-  const disclosure = useDisclosure();
   const { isConnected } = useConnectionStage();
-  if (tourTriggerName) {
-    const tourTrigger =
-      tourTriggerName === "TrainModel"
-        ? {
-            name: tourTriggerName,
-            delayedUntilConnection: true,
-          }
-        : { name: tourTriggerName };
+  if (tourTrigger) {
     return (
-      <>
-        <ConnectFirstDialog
-          isOpen={disclosure.isOpen}
-          onClose={disclosure.onClose}
-          onChooseConnect={() => setPostConnectTourTrigger(tourTrigger)}
-          explanationTextId="connect-to-tour-body"
-          options={{ postConnectTourTrigger: tourTrigger }}
-        />
-        <MenuItem
-          onClick={() => {
-            if (!isConnected) {
-              disclosure.onOpen();
-            } else {
-              tourStart(tourTrigger, true);
-            }
-          }}
-          icon={<RiFlag2Line />}
-        >
-          <FormattedMessage id="tour-action" />
-        </MenuItem>
-      </>
+      <MenuItem
+        onClick={() => {
+          if (!isConnected) {
+            onConnectFirstDialogOpen();
+          } else {
+            tourStart(tourTrigger, true);
+          }
+        }}
+        icon={<RiFlag2Line />}
+      >
+        <FormattedMessage id="tour-action" />
+      </MenuItem>
     );
   }
   return null;
+};
+
+export const tourMap = {
+  [createDataSamplesPageUrl()]: "Connect" as const,
+  [createTestingModelPageUrl()]: "TrainModel" as const,
+  // No UI to retrigger MakeCode tour
 };
 
 export default HelpMenuItems;

@@ -6,38 +6,35 @@ import {
   MenuButton,
   MenuList,
   Portal,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { RiQuestionLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
-import AboutDialog from "./AboutDialog";
-import FeedbackForm from "./FeedbackForm";
 import HelpMenuItems from "./HelpMenuItems";
+import { TourTrigger } from "../model";
 
-interface HelpMenuProps extends BoxProps {}
+interface HelpMenuProps extends BoxProps {
+  onAboutDialogOpen: () => void;
+  onConnectFirstDialogOpen: () => void;
+  onFeedbackOpen: () => void;
+  tourTrigger: TourTrigger | undefined;
+}
 
 /**
  * A help button that triggers a drop-down menu with actions.
  */
-const HelpMenu = ({ ...rest }: HelpMenuProps) => {
-  const aboutDialogDisclosure = useDisclosure();
-  const feedbackDisclosure = useDisclosure();
+const HelpMenu = ({
+  onAboutDialogOpen,
+  onConnectFirstDialogOpen,
+  onFeedbackOpen,
+  tourTrigger,
+  ...rest
+}: HelpMenuProps) => {
   const intl = useIntl();
   const menuButtonRef = useRef(null);
   const containerRef = useRef(null);
   return (
     <Box {...rest} ref={containerRef}>
-      <AboutDialog
-        isOpen={aboutDialogDisclosure.isOpen}
-        onClose={aboutDialogDisclosure.onClose}
-        finalFocusRef={menuButtonRef}
-      />
-      <FeedbackForm
-        isOpen={feedbackDisclosure.isOpen}
-        onClose={feedbackDisclosure.onClose}
-        finalFocusRef={menuButtonRef}
-      />
       <Menu>
         <MenuButton
           as={IconButton}
@@ -57,7 +54,12 @@ const HelpMenu = ({ ...rest }: HelpMenuProps) => {
         />
         <Portal containerRef={containerRef}>
           <MenuList>
-            <HelpMenuItems />
+            <HelpMenuItems
+              onAboutDialogOpen={onAboutDialogOpen}
+              onConnectFirstDialogOpen={onConnectFirstDialogOpen}
+              onFeedbackOpen={onFeedbackOpen}
+              tourTrigger={tourTrigger}
+            />
           </MenuList>
         </Portal>
       </Menu>
