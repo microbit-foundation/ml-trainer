@@ -1,8 +1,10 @@
 import { Button, Flex, HStack, VStack } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { recordButtonId } from "../components/ActionDataSamplesCard";
 import DataSamplesTable from "../components/DataSamplesTable";
 import DefaultPageLayout, {
   ProjectMenuItems,
@@ -10,12 +12,11 @@ import DefaultPageLayout, {
 } from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
+import { useConnectionStage } from "../connection-stage-hooks";
+import { globalShortcutConfig, keyboardShortcuts } from "../keyboard-shortcuts";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
-import { useConnectionStage } from "../connection-stage-hooks";
-import { useHotkeys } from "react-hotkeys-hook";
-import { globalShortcutConfig, keyboardShortcuts } from "../keyboard-shortcuts";
 
 const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
@@ -56,6 +57,10 @@ const DataSamplesPage = () => {
     (idx: number) => {
       if (idx >= 0 && idx < actions.length) {
         setSelectedActionIdx(idx);
+        const recordButton = document.getElementById(
+          recordButtonId(actions[idx])
+        );
+        recordButton?.focus();
       }
     },
     [actions]
