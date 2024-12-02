@@ -5,6 +5,7 @@ import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { recordButtonId } from "../components/ActionDataSamplesCard";
+import { actionNameInputId } from "../components/ActionNameCard";
 import DataSamplesTable from "../components/DataSamplesTable";
 import DefaultPageLayout, {
   ProjectMenuItems,
@@ -53,6 +54,14 @@ const DataSamplesPage = () => {
     handleAddNewAction,
     globalShortcutConfig
   );
+  const focusActionNameInput = useCallback(
+    (actionIdx: number) => {
+      const inputId = actionNameInputId(actions[actionIdx]);
+      const actionNameInputEl = document.getElementById(inputId);
+      actionNameInputEl?.focus();
+    },
+    [actions]
+  );
   const focusAction = useCallback(
     (idx: number) => {
       if (idx >= 0 && idx < actions.length) {
@@ -60,10 +69,14 @@ const DataSamplesPage = () => {
         const recordButton = document.getElementById(
           recordButtonId(actions[idx])
         );
-        recordButton?.focus();
+        if (recordButton) {
+          recordButton?.focus();
+        } else {
+          focusActionNameInput(idx);
+        }
       }
     },
-    [actions]
+    [actions, focusActionNameInput]
   );
   useHotkeys(
     keyboardShortcuts.nextAction,
@@ -73,6 +86,11 @@ const DataSamplesPage = () => {
   useHotkeys(
     keyboardShortcuts.previousAction,
     () => focusAction(selectedActionIdx - 1),
+    globalShortcutConfig
+  );
+  useHotkeys(
+    keyboardShortcuts.renameAction,
+    () => focusActionNameInput(selectedActionIdx),
     globalShortcutConfig
   );
   const intl = useIntl();

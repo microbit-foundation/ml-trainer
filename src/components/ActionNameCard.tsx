@@ -28,6 +28,9 @@ interface ActionNameCardProps {
 
 const actionNameMaxLength = 18;
 
+export const actionNameInputId = (action: Action) =>
+  `action-name-input-${action.ID}`;
+
 const ActionNameCard = ({
   value,
   onDeleteAction,
@@ -129,6 +132,7 @@ const ActionNameCard = ({
             )}
           </HStack>
           <Input
+            id={actionNameInputId(value)}
             autoFocus={localName.length === 0}
             isTruncated
             readOnly={readOnly}
