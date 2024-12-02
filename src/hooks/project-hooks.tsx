@@ -146,7 +146,9 @@ export const ProjectProvider = ({
   const startUpTimeout = 90000;
   const startUpTimestamp = useRef<number>(Date.now());
 
-  const onWorkspaceLoaded = useCallback(() => {
+  const onWorkspaceLoaded = useCallback(async () => {
+    // Wait another second because it's not really ready at this point.
+    await new Promise((res) => setTimeout(res, 1000));
     logging.log("[MakeCode] Workspace loaded");
 
     // Get latest start up state and only mark editor ready if editor has not timed out.
