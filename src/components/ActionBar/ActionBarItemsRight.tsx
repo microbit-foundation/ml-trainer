@@ -14,6 +14,11 @@ import { SettingsDialog } from "../SettingsDialog";
 import SettingsMenu from "../SettingsMenu";
 import SettingsMenuItem from "../SettingsMenuItem";
 import ToolbarMenu from "../ToolbarMenu";
+import { useHotkeys } from "react-hotkeys-hook";
+import {
+  globalShortcutConfig,
+  keyboardShortcuts,
+} from "../../keyboard-shortcuts";
 
 interface ItemsRightProps {
   menuItems?: ReactNode;
@@ -47,6 +52,11 @@ const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
       }
     }
   }, [tourTriggerName]);
+  useHotkeys(
+    keyboardShortcuts.settings,
+    settingsDisclosure.onOpen,
+    globalShortcutConfig
+  );
   return (
     <>
       <LanguageDialog

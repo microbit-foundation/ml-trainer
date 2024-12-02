@@ -14,6 +14,8 @@ import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
 import { useConnectionStage } from "../connection-stage-hooks";
+import { useHotkeys } from "react-hotkeys-hook";
+import { globalShortcutConfig, keyboardShortcuts } from "../keyboard-shortcuts";
 
 const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
@@ -45,6 +47,29 @@ const DataSamplesPage = () => {
     setSelectedActionIdx(actions.length);
     addNewAction();
   }, [addNewAction, actions]);
+  useHotkeys(
+    keyboardShortcuts.addAction,
+    handleAddNewAction,
+    globalShortcutConfig
+  );
+  const focusAction = useCallback(
+    (idx: number) => {
+      if (idx >= 0 && idx < actions.length) {
+        setSelectedActionIdx(idx);
+      }
+    },
+    [actions]
+  );
+  useHotkeys(
+    keyboardShortcuts.nextAction,
+    () => focusAction(selectedActionIdx + 1),
+    globalShortcutConfig
+  );
+  useHotkeys(
+    keyboardShortcuts.previousAction,
+    () => focusAction(selectedActionIdx - 1),
+    globalShortcutConfig
+  );
   const intl = useIntl();
   return (
     <>

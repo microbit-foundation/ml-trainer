@@ -9,6 +9,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import { RiDownload2Line, RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
@@ -19,6 +20,7 @@ import {
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
+import { globalShortcutConfig, keyboardShortcuts } from "../keyboard-shortcuts";
 import {
   PostImportDialogState,
   SaveStep,
@@ -28,6 +30,7 @@ import Tour from "../pages/Tour";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
 import ActionBar from "./ActionBar/ActionBar";
+import ItemsRight from "./ActionBar/ActionBarItemsRight";
 import AppLogo from "./AppLogo";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
 import ImportErrorDialog from "./ImportErrorDialog";
@@ -36,7 +39,6 @@ import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
-import ItemsRight from "./ActionBar/ActionBarItemsRight";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -167,6 +169,7 @@ export const ProjectToolbarItems = () => {
   const handleSave = useCallback(() => {
     void saveHex();
   }, [saveHex]);
+  useHotkeys(keyboardShortcuts.saveSession, handleSave, globalShortcutConfig);
 
   return (
     <>
