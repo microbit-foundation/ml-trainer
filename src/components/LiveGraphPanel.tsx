@@ -11,7 +11,10 @@ import {
 import { useCallback, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
-import { useConnectionStage } from "../connection-stage-hooks";
+import {
+  ConnectionFlowStep,
+  useConnectionStage,
+} from "../connection-stage-hooks";
 import microbitImage from "../images/stylised-microbit-black.svg";
 import { useLogging } from "../logging/logging-hooks";
 import { tourElClassname } from "../tours";
@@ -33,7 +36,7 @@ const LiveGraphPanel = ({
   showPredictedAction,
   disconnectedTextId,
 }: LiveGraphPanelProps) => {
-  const { actions, status, isConnected } = useConnectionStage();
+  const { actions, status, isConnected, stage } = useConnectionStage();
   const parentPortalRef = useRef(null);
   const logging = useLogging();
   const isReconnecting =
@@ -71,7 +74,7 @@ const LiveGraphPanel = ({
   }, [actions, logging]);
   useHotkeys(keyboardShortcuts.disconnect, handleDisconnect, {
     ...globalShortcutConfig,
-    enabled: isConnected,
+    enabled: isConnected && stage.flowStep === ConnectionFlowStep.None,
   });
   const intl = useIntl();
   return (
