@@ -1,7 +1,12 @@
 import { HStack, MenuDivider, useDisclosure } from "@chakra-ui/react";
 import { ReactNode, useMemo } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
+import {
+  globalShortcutConfig,
+  keyboardShortcuts,
+} from "../../keyboard-shortcuts";
 import { useStore } from "../../store";
 import AboutDialog from "../AboutDialog";
 import ConnectFirstDialog from "../ConnectFirstDialog";
@@ -14,11 +19,6 @@ import { SettingsDialog } from "../SettingsDialog";
 import SettingsMenu from "../SettingsMenu";
 import SettingsMenuItem from "../SettingsMenuItem";
 import ToolbarMenu from "../ToolbarMenu";
-import { useHotkeys } from "react-hotkeys-hook";
-import {
-  globalShortcutConfig,
-  keyboardShortcuts,
-} from "../../keyboard-shortcuts";
 
 interface ItemsRightProps {
   menuItems?: ReactNode;
