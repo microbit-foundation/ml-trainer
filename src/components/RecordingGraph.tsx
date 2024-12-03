@@ -8,30 +8,45 @@ import {
   registerables,
 } from "chart.js";
 import { useEffect, useRef } from "react";
+import { useGraphColors } from "../hooks/use-graph-colors";
+import { useGraphLineStyles } from "../hooks/use-graph-line-styles";
 import { XYZData } from "../model";
 import { getConfig as getRecordingChartConfig } from "../recording-graph";
-import { useGraphColors } from "../hooks/use-graph-colors";
 import { useSettings } from "../store";
 
 interface RecordingGraphProps extends BoxProps {
   data: XYZData;
+  responsive?: boolean;
 }
 
-const RecordingGraph = ({ data, children, ...rest }: RecordingGraphProps) => {
-  const [{ graphColorScheme }] = useSettings();
+const RecordingGraph = ({
+  data,
+  responsive = false,
+  children,
+  ...rest
+}: RecordingGraphProps) => {
+  const [{ graphColorScheme, graphLineScheme, graphLineWeight }] =
+    useSettings();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const colors = useGraphColors(graphColorScheme);
+  const lineStyles = useGraphLineStyles(graphLineScheme);
   useEffect(() => {
     Chart.unregister(...registerables);
     Chart.register([LinearScale, LineController, PointElement, LineElement]);
     const chart = new Chart(
       canvasRef.current?.getContext("2d") ?? new HTMLCanvasElement(),
-      getRecordingChartConfig(data, colors)
+      getRecordingChartConfig(
+        data,
+        responsive,
+        colors,
+        lineStyles,
+        graphLineWeight
+      )
     );
     return () => {
       chart.destroy();
     };
-  }, [colors, data]);
+  }, [colors, data, graphLineWeight, lineStyles, responsive]);
 
   return (
     <Box
@@ -43,7 +58,8 @@ const RecordingGraph = ({ data, children, ...rest }: RecordingGraphProps) => {
       position="relative"
       {...rest}
     >
-      <canvas width="158px" height="95px" ref={canvasRef} />
+      {/* canvas dimensions must account for parent border width */}
+      <canvas width="156px" height="92px" ref={canvasRef} />
       {children}
     </Box>
   );

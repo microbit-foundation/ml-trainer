@@ -5,8 +5,10 @@
  */
 
 import { ChartConfiguration, ChartTypeRegistry } from "chart.js";
-import { XYZData } from "./model";
+import { GraphLineStyles } from "./hooks/use-graph-line-styles";
 import { maxAccelerationScaleForGraphs } from "./mlConfig";
+import { XYZData } from "./model";
+import { GraphLineWeight } from "./settings";
 
 const smoothen = (d: number[]): number[] => {
   if (d.length === 0) {
@@ -49,12 +51,19 @@ interface GraphColors {
 
 export const getConfig = (
   { x: rawX, y: rawY, z: rawZ }: XYZData,
-  colors: GraphColors
+  responsive: boolean,
+  colors: GraphColors,
+  lineStyles: GraphLineStyles,
+  graphLineWeight: GraphLineWeight
 ): ChartConfiguration<keyof ChartTypeRegistry, Pos[], string> => {
   const x = processDimensionData(rawX);
   const y = processDimensionData(rawY);
   const z = processDimensionData(rawZ);
-  const common = { borderWidth: 1, pointRadius: 0, pointHoverRadius: 0 };
+  const common = {
+    borderWidth: graphLineWeight === "default" ? 1 : 2,
+    pointRadius: 0,
+    pointHoverRadius: 0,
+  };
   return {
     type: "line",
     data: {
@@ -63,25 +72,28 @@ export const getConfig = (
           ...common,
           label: "x",
           borderColor: colors.x,
+          borderDash: lineStyles.x ?? [],
           data: x,
         },
         {
           ...common,
           label: "y",
           borderColor: colors.y,
+          borderDash: lineStyles.y ?? [],
           data: y,
         },
         {
           ...common,
           label: "z",
           borderColor: colors.z,
+          borderDash: lineStyles.z ?? [],
           data: z,
         },
       ],
     },
     options: {
       animation: false,
-      responsive: false,
+      responsive,
       maintainAspectRatio: false,
       interaction: {
         // @ts-expect-error null disables interaction - the type information is wrong.
@@ -97,7 +109,8 @@ export const getConfig = (
         x: {
           type: "linear",
           min: 0,
-          max: rawX.length,
+          // We start at zero.
+          max: rawX.length - 1,
           grid: {
             drawTicks: false,
             display: false,

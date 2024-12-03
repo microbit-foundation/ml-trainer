@@ -13,17 +13,26 @@ import {
   ModalOverlay,
 } from "@chakra-ui/modal";
 import {
+  AspectRatio,
   FormControl,
   FormHelperText,
+  Text,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { defaultSettings, graphColorSchemeOptions } from "../settings";
+import {
+  defaultSettings,
+  graphColorSchemeOptions,
+  graphLineSchemeOptions,
+  graphLineWeightOptions,
+} from "../settings";
 import { useSettings } from "../store";
-import SelectFormControl, { createOptions } from "./SelectFormControl";
+import { previewGraphData } from "../utils/preview-graph-data";
 import { ConfirmDialog } from "./ConfirmDialog";
+import RecordingGraph from "./RecordingGraph";
+import SelectFormControl, { createOptions } from "./SelectFormControl";
 
 interface SettingsDialogProps {
   isOpen: boolean;
@@ -62,6 +71,16 @@ export const SettingsDialog = ({
       graphColorScheme: createOptions(
         graphColorSchemeOptions,
         "graph-color-scheme",
+        intl
+      ),
+      graphLineScheme: createOptions(
+        graphLineSchemeOptions,
+        "graph-line-scheme",
+        intl
+      ),
+      graphLineWeight: createOptions(
+        graphLineWeightOptions,
+        "graph-line-weight",
         intl
       ),
     };
@@ -107,6 +126,44 @@ export const SettingsDialog = ({
                     })
                   }
                 />
+                <SelectFormControl
+                  id="graphLineScheme"
+                  label={intl.formatMessage({ id: "graph-line-scheme" })}
+                  options={options.graphLineScheme}
+                  value={settings.graphLineScheme}
+                  onChange={(graphLineScheme) =>
+                    setSettings({
+                      ...settings,
+                      graphLineScheme,
+                    })
+                  }
+                />
+                <SelectFormControl
+                  id="graphLineWeight"
+                  label={intl.formatMessage({ id: "graph-line-weight" })}
+                  options={options.graphLineWeight}
+                  value={settings.graphLineWeight}
+                  onChange={(graphLineWeight) =>
+                    setSettings({
+                      ...settings,
+                      graphLineWeight,
+                    })
+                  }
+                />
+                <VStack alignItems="flex-start" w="full">
+                  <Text>Graph preview</Text>
+                  <AspectRatio ratio={526 / 92} w="full">
+                    <RecordingGraph
+                      responsive
+                      data={previewGraphData}
+                      role="img"
+                      w="full"
+                      aria-label={intl.formatMessage({
+                        id: "recording-graph-label",
+                      })}
+                    />
+                  </AspectRatio>
+                </VStack>
                 <FormControl>
                   <Button variant="link" onClick={handleResetToDefault}>
                     <FormattedMessage id="restore-defaults-action" />

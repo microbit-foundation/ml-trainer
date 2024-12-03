@@ -64,6 +64,7 @@
     "@microbit/makecode-embed": "^0.0.0-alpha.7",
     "@microbit/microbit-connection": "^0.0.0-alpha.29",
     "@microbit/ml-header-generator": "^0.4.3",
+    "@microbit/smoothie": "^1.37.0-microbit.2",
     "@tensorflow/tfjs": "^4.20.0",
     "@types/w3c-web-serial": "^1.0.6",
     "@types/w3c-web-usb": "^1.0.6",
@@ -81,7 +82,6 @@
     "react-intl": "^6.6.8",
     "react-router": "^6.24.0",
     "react-router-dom": "^6.24.0",
-    "smoothie": "^1.36.1",
     "zustand": "^4.5.5"
   }
 }
