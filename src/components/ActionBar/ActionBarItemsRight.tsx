@@ -52,11 +52,6 @@ const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
       }
     }
   }, [tourTriggerName]);
-  useHotkeys(
-    keyboardShortcuts.settings,
-    settingsDisclosure.onOpen,
-    globalShortcutConfig
-  );
   return (
     <>
       <LanguageDialog
