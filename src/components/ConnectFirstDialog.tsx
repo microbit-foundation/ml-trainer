@@ -27,6 +27,7 @@ const ConnectFirstDialog = ({
   options,
   onClose,
   onChooseConnect,
+  isOpen,
   ...rest
 }: ConnectFirstDialogProps) => {
   const {
@@ -78,15 +79,23 @@ const ConnectFirstDialog = ({
 
   useEffect(() => {
     if (
-      isConnectionDialogOpen ||
-      (isWaiting && connStatus === ConnectionStatus.Connected)
+      isOpen &&
+      (isConnectionDialogOpen ||
+        (isWaiting && connStatus === ConnectionStatus.Connected))
     ) {
       // Close dialog if connection dialog is opened, or
       // once connected after waiting.
       handleOnClose();
       return;
     }
-  }, [connStatus, handleOnClose, isConnectionDialogOpen, isWaiting, onClose]);
+  }, [
+    connStatus,
+    handleOnClose,
+    isConnectionDialogOpen,
+    isOpen,
+    isWaiting,
+    onClose,
+  ]);
 
   return (
     <Modal
@@ -95,6 +104,7 @@ const ConnectFirstDialog = ({
       size="md"
       isCentered
       onClose={handleOnClose}
+      isOpen={isOpen}
       {...rest}
     >
       <ModalOverlay>
