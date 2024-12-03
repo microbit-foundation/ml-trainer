@@ -4,7 +4,6 @@ import {
   GridProps,
   HStack,
   Text,
-  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
@@ -16,7 +15,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ActionData } from "../model";
@@ -31,6 +30,7 @@ import RecordingDialog, {
   RecordingOptions,
 } from "./RecordingDialog";
 import ShowGraphsCheckbox from "./ShowGraphsCheckbox";
+import { ConfirmDialog } from "./ConfirmDialog";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -75,8 +75,19 @@ const DataSamplesTable = ({
       (actions.length === 1 && actions[0].recordings.length === 0),
     [actions]
   );
-  const recordingDialogDisclosure = useDisclosure();
-  const connectToRecordDialogDisclosure = useDisclosure();
+  const intl = useIntl();
+  const isDeleteActionConfirmOpen = useStore((s) => s.isDeleteActionDialogOpen);
+  const deleteActionConfirmOnOpen = useStore((s) => s.deleteActionDialogOnOpen);
+  const deleteAction = useStore((s) => s.deleteAction);
+  const isRecordingDialogOpen = useStore((s) => s.isRecordingDialogOpen);
+  const recordingDialogOnOpen = useStore((s) => s.recordingDialogOnOpen);
+  const isConnectToRecordDialogOpen = useStore(
+    (s) => s.isConnectToRecordDialogOpen
+  );
+  const connectToRecordDialogOnOpen = useStore(
+    (s) => s.connectToRecordDialogOnOpen
+  );
+  const closeDialog = useStore((s) => s.closeDialog);
 
   const connection = useConnectActions();
   const { actions: connActions } = useConnectionStage();
@@ -94,9 +105,9 @@ const DataSamplesTable = ({
 
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
-      if (!recordingDialogDisclosure.isOpen) {
+      if (!isRecordingDialogOpen) {
         if (e.state) {
-          recordingDialogDisclosure.onOpen();
+          recordingDialogOnOpen();
         }
       }
     };
@@ -104,7 +115,7 @@ const DataSamplesTable = ({
     return () => {
       connection.removeButtonListener("B", listener);
     };
-  }, [connection, recordingDialogDisclosure]);
+  }, [connection, isRecordingDialogOpen, recordingDialogOnOpen]);
 
   const [recordingOptions, setRecordingOptions] = useState<RecordingOptions>({
     continuousRecording: false,
@@ -113,11 +124,9 @@ const DataSamplesTable = ({
   const handleRecord = useCallback(
     (recordingOptions: RecordingOptions) => {
       setRecordingOptions(recordingOptions);
-      isConnected
-        ? recordingDialogDisclosure.onOpen()
-        : connectToRecordDialogDisclosure.onOpen();
+      isConnected ? recordingDialogOnOpen() : connectToRecordDialogOnOpen();
     },
-    [connectToRecordDialogDisclosure, isConnected, recordingDialogDisclosure]
+    [connectToRecordDialogOnOpen, isConnected, recordingDialogOnOpen]
   );
 
   const tourStart = useStore((s) => s.tourStart);
@@ -131,16 +140,34 @@ const DataSamplesTable = ({
 
   return (
     <>
+      <ConfirmDialog
+        isOpen={isDeleteActionConfirmOpen}
+        heading={intl.formatMessage({
+          id: "delete-action-confirm-heading",
+        })}
+        body={
+          <Text>
+            <FormattedMessage
+              id="delete-action-confirm-text"
+              values={{
+                action: selectedAction.name,
+              }}
+            />
+          </Text>
+        }
+        onConfirm={() => deleteAction(selectedAction.ID)}
+        onCancel={closeDialog}
+      />
       <ConnectFirstDialog
-        isOpen={connectToRecordDialogDisclosure.isOpen}
-        onClose={connectToRecordDialogDisclosure.onClose}
+        isOpen={isConnectToRecordDialogOpen}
+        onClose={closeDialog}
         explanationTextId="connect-to-record-body"
       />
       {selectedAction && (
         <RecordingDialog
           actionId={selectedAction.ID}
-          isOpen={recordingDialogDisclosure.isOpen}
-          onClose={recordingDialogDisclosure.onClose}
+          isOpen={isRecordingDialogOpen}
+          onClose={closeDialog}
           actionName={selectedAction.name}
           onRecordingComplete={handleRecordingComplete}
           recordingOptions={recordingOptions}
@@ -213,6 +240,7 @@ const DataSamplesTable = ({
               onSelectRow={() => setSelectedActionIdx(idx)}
               onRecord={handleRecord}
               showHints={showHints}
+              onDeleteAction={deleteActionConfirmOnOpen}
             />
           ))}
         </Grid>

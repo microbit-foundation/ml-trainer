@@ -7,7 +7,6 @@ import {
   MenuItem,
   MenuList,
   Portal,
-  useDisclosure,
   usePrevious,
   VStack,
 } from "@chakra-ui/react";
@@ -79,27 +78,33 @@ const TestingModelPage = () => {
 
   const { openEditor, resetProject, projectEdited } = useProject();
   const { getDataCollectionBoardVersion } = useConnectActions();
-  const incompatibleEditorDeviceDisclosure = useDisclosure();
+  const incompatibleEditorDeviceDialogOnOpen = useStore(
+    (s) => s.incompatibleEditorDeviceDialogOnOpen
+  );
+  const isIncompatibleEditorDeviceDialogOpen = useStore(
+    (s) => s.isIncompatibleEditorDeviceDialogOpen
+  );
+  const closeDialog = useStore((s) => s.closeDialog);
   const maybeOpenEditor = useCallback(async () => {
     // Open editor if device is not a V1, otherwise show warning dialog.
     if (getDataCollectionBoardVersion() === "V1") {
-      return incompatibleEditorDeviceDisclosure.onOpen();
+      return incompatibleEditorDeviceDialogOnOpen();
     }
     setEditorLoading(true);
     await openEditor();
     setEditorLoading(false);
   }, [
     getDataCollectionBoardVersion,
-    incompatibleEditorDeviceDisclosure,
+    incompatibleEditorDeviceDialogOnOpen,
     openEditor,
   ]);
   const [editorLoading, setEditorLoading] = useState(false);
   const continueToEditor = useCallback(async () => {
     setEditorLoading(true);
     await openEditor();
-    incompatibleEditorDeviceDisclosure.onClose();
+    closeDialog();
     setEditorLoading(false);
-  }, [incompatibleEditorDeviceDisclosure, openEditor]);
+  }, [closeDialog, openEditor]);
   useKeyboardShortcut(keyboardShortcuts.editInMakeCode, maybeOpenEditor);
 
   return model ? (
@@ -119,8 +124,8 @@ const TestingModelPage = () => {
       }
     >
       <IncompatibleEditorDevice
-        isOpen={incompatibleEditorDeviceDisclosure.isOpen}
-        onClose={incompatibleEditorDeviceDisclosure.onClose}
+        isOpen={isIncompatibleEditorDeviceDialogOpen}
+        onClose={closeDialog}
         onNext={continueToEditor}
         stage="openEditor"
         onNextLoading={editorLoading}
@@ -150,7 +155,7 @@ const TestingModelPage = () => {
                 onClick={maybeOpenEditor}
                 className={tourElClassname.editInMakeCodeButton}
                 isLoading={
-                  editorLoading && !incompatibleEditorDeviceDisclosure.isOpen
+                  editorLoading && !isIncompatibleEditorDeviceDialogOpen
                 }
               >
                 <FormattedMessage id="edit-in-makecode-action" />

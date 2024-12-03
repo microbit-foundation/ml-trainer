@@ -1,14 +1,8 @@
-import { Box, GridItem, Text, useDisclosure } from "@chakra-ui/react";
-import { FormattedMessage, useIntl } from "react-intl";
-import {
-  ConnectionFlowStep,
-  useConnectionStage,
-} from "../connection-stage-hooks";
+import { Box, GridItem } from "@chakra-ui/react";
+import { useIntl } from "react-intl";
 import { ActionData } from "../model";
-import { useStore } from "../store";
 import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import ActionNameCard from "./ActionNameCard";
-import { ConfirmDialog } from "./ConfirmDialog";
 import DataSamplesTableHints from "./DataSamplesTableHints";
 import { RecordingOptions } from "./RecordingDialog";
 
@@ -20,6 +14,7 @@ interface DataSamplesTableRowProps {
   showHints: boolean;
   newRecordingId?: number;
   clearNewRecordingId: () => void;
+  onDeleteAction: () => void;
 }
 
 const DataSamplesTableRow = ({
@@ -30,35 +25,12 @@ const DataSamplesTableRow = ({
   showHints: showHints,
   newRecordingId,
   clearNewRecordingId,
+  onDeleteAction,
 }: DataSamplesTableRowProps) => {
   const intl = useIntl();
-  const deleteConfirmDisclosure = useDisclosure();
-  const deleteAction = useStore((s) => s.deleteAction);
-  const { stage } = useConnectionStage();
 
   return (
     <>
-      <ConfirmDialog
-        isOpen={
-          deleteConfirmDisclosure.isOpen &&
-          stage.flowStep === ConnectionFlowStep.None
-        }
-        heading={intl.formatMessage({
-          id: "delete-action-confirm-heading",
-        })}
-        body={
-          <Text>
-            <FormattedMessage
-              id="delete-action-confirm-text"
-              values={{
-                action: action.name,
-              }}
-            />
-          </Text>
-        }
-        onConfirm={() => deleteAction(action.ID)}
-        onCancel={deleteConfirmDisclosure.onClose}
-      />
       <Box
         role="region"
         aria-label={intl.formatMessage(
@@ -73,7 +45,7 @@ const DataSamplesTableRow = ({
         <GridItem>
           <ActionNameCard
             value={action}
-            onDeleteAction={deleteConfirmDisclosure.onOpen}
+            onDeleteAction={onDeleteAction}
             onSelectRow={onSelectRow}
             selected={selected}
             readOnly={false}

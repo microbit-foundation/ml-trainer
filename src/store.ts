@@ -182,7 +182,12 @@ export interface State {
   isAboutDialogOpen: boolean;
   isFeedbackFormOpen: boolean;
   isDeleteAllActionsDialogOpen: boolean;
+  isDeleteActionDialogOpen: boolean;
+  isResetSettingsDialogOpen: boolean;
+  isIncompatibleEditorDeviceDialogOpen: boolean;
   isNameProjectDialogOpen: boolean;
+  isRecordingDialogOpen: boolean;
+  isConnectToRecordDialogOpen: boolean;
 }
 
 export interface ConnectOptions {
@@ -264,6 +269,11 @@ export interface Actions {
   feedbackFormOnOpen(): void;
   nameProjectDialogOnOpen(): void;
   deleteAllActionsDialogOnOpen(): void;
+  deleteActionDialogOnOpen(): void;
+  resetSettingsDialogOnOpen(): void;
+  incompatibleEditorDeviceDialogOnOpen(): void;
+  recordingDialogOnOpen(): void;
+  connectToRecordDialogOnOpen(): void;
   closeDialog(): void;
   isNonConnectionDialogOpen(): boolean;
 }
@@ -313,6 +323,11 @@ const createMlStore = (logging: Logging) => {
           isConnectionDialogOpen: false,
           isDeleteAllActionsDialogOpen: false,
           isNameProjectDialogOpen: false,
+          isRecordingDialogOpen: false,
+          isConnectToRecordDialogOpen: false,
+          isDeleteActionDialogOpen: false,
+          isResetSettingsDialogOpen: false,
+          isIncompatibleEditorDeviceDialogOpen: false,
 
           setSettings(update: Partial<Settings>) {
             set(
@@ -1077,6 +1092,21 @@ const createMlStore = (logging: Logging) => {
           nameProjectDialogOnOpen() {
             set({ isNameProjectDialogOpen: true });
           },
+          recordingDialogOnOpen() {
+            set({ isRecordingDialogOpen: true });
+          },
+          connectToRecordDialogOnOpen() {
+            set({ isConnectToRecordDialogOpen: true });
+          },
+          deleteActionDialogOnOpen() {
+            set({ isDeleteActionDialogOpen: true });
+          },
+          resetSettingsDialogOnOpen() {
+            set({ isResetSettingsDialogOpen: true });
+          },
+          incompatibleEditorDeviceDialogOnOpen() {
+            set({ isIncompatibleEditorDeviceDialogOpen: true });
+          },
           closeDialog() {
             set({
               isLanguageDialogOpen: false,
@@ -1086,6 +1116,11 @@ const createMlStore = (logging: Logging) => {
               isFeedbackFormOpen: false,
               isDeleteAllActionsDialogOpen: false,
               isNameProjectDialogOpen: false,
+              isRecordingDialogOpen: false,
+              isConnectToRecordDialogOpen: false,
+              isDeleteActionDialogOpen: false,
+              isResetSettingsDialogOpen: false,
+              isIncompatibleEditorDeviceDialogOpen: false,
             });
           },
           setIsConnectionDialogOpen(isOpen: boolean) {
@@ -1107,6 +1142,11 @@ const createMlStore = (logging: Logging) => {
               trainModelDialogStage,
               isEditorTimedOutDialogOpen,
               isDeleteAllActionsDialogOpen,
+              isRecordingDialogOpen,
+              isConnectToRecordDialogOpen,
+              isDeleteActionDialogOpen,
+              isResetSettingsDialogOpen,
+              isIncompatibleEditorDeviceDialogOpen,
               save,
             } = get();
             return (
@@ -1116,6 +1156,11 @@ const createMlStore = (logging: Logging) => {
               isLanguageDialogOpen ||
               isFeedbackFormOpen ||
               isDeleteAllActionsDialogOpen ||
+              isRecordingDialogOpen ||
+              isConnectToRecordDialogOpen ||
+              isDeleteActionDialogOpen ||
+              isResetSettingsDialogOpen ||
+              isIncompatibleEditorDeviceDialogOpen ||
               postImportDialogState !== PostImportDialogState.None ||
               isEditorOpen ||
               tourState !== undefined ||

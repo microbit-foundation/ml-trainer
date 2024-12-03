@@ -17,7 +17,6 @@ import {
   FormControl,
   FormHelperText,
   Text,
-  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { useCallback, useMemo } from "react";
@@ -28,7 +27,7 @@ import {
   graphLineSchemeOptions,
   graphLineWeightOptions,
 } from "../settings";
-import { useSettings } from "../store";
+import { useSettings, useStore } from "../store";
 import { previewGraphData } from "../utils/preview-graph-data";
 import { ConfirmDialog } from "./ConfirmDialog";
 import RecordingGraph from "./RecordingGraph";
@@ -47,10 +46,9 @@ export const SettingsDialog = ({
 }: SettingsDialogProps) => {
   const [settings, setSettings] = useSettings();
   const intl = useIntl();
-  const resetConfirmDialog = useDisclosure();
-  const handleResetToDefault = useCallback(() => {
-    resetConfirmDialog.onOpen();
-  }, [resetConfirmDialog]);
+  const resetConfirmDialogOnOpen = useStore((s) => s.resetSettingsDialogOnOpen);
+  const isResetConfirmDialogOpen = useStore((s) => s.isResetSettingsDialogOpen);
+  const closeDialog = useStore((s) => s.closeDialog);
 
   const confirmResetToDefault = useCallback(() => {
     setSettings({
@@ -58,13 +56,8 @@ export const SettingsDialog = ({
       languageId: settings.languageId,
       toursCompleted: settings.toursCompleted,
     });
-    resetConfirmDialog.onClose();
-  }, [
-    resetConfirmDialog,
-    setSettings,
-    settings.languageId,
-    settings.toursCompleted,
-  ]);
+    closeDialog();
+  }, [closeDialog, setSettings, settings.languageId, settings.toursCompleted]);
 
   const options = useMemo(() => {
     return {
@@ -94,12 +87,12 @@ export const SettingsDialog = ({
         body={intl.formatMessage({
           id: "restore-defaults-confirm-body",
         })}
-        isOpen={resetConfirmDialog.isOpen}
+        isOpen={isResetConfirmDialogOpen}
         onConfirm={confirmResetToDefault}
         confirmText={intl.formatMessage({
           id: "restore-defaults-confirm-action",
         })}
-        onCancel={resetConfirmDialog.onClose}
+        onCancel={closeDialog}
       />
       <Modal
         isOpen={isOpen}
@@ -165,7 +158,7 @@ export const SettingsDialog = ({
                   </AspectRatio>
                 </VStack>
                 <FormControl>
-                  <Button variant="link" onClick={handleResetToDefault}>
+                  <Button variant="link" onClick={resetConfirmDialogOnOpen}>
                     <FormattedMessage id="restore-defaults-action" />
                   </Button>
                   <FormHelperText>
