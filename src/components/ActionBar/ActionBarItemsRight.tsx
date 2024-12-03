@@ -34,7 +34,6 @@ const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
   const aboutDialogOnOpen = useStore((s) => s.aboutDialogOnOpen);
   const isAboutDialogOpen = useStore((s) => s.isAboutDialogOpen);
   const feedbackOnOpen = useStore((s) => s.feedbackFormOnOpen);
-  const isFeedbackOpen = useStore((s) => s.isFeedbackFormOpen);
   const connectFirstDialogOnOpen = useStore((s) => s.connectFirstDialogOnOpen);
   const isConnectFirstDialogOpen = useStore((s) => s.isConnectFirstDialogOpen);
   const setPostConnectTourTrigger = useStore(
@@ -70,7 +69,6 @@ const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
         options={{ postConnectTourTrigger: tourTrigger }}
       />
       <AboutDialog isOpen={isAboutDialogOpen} onClose={closeDialog} />
-      <FeedbackForm isOpen={isFeedbackOpen} onClose={closeDialog} />
       <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
         {toolbarItems}
         <SettingsMenu

@@ -33,6 +33,7 @@ import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
+import FeedbackForm from "./FeedbackForm";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -70,6 +71,9 @@ const DefaultPageLayout = ({
     setPostImportDialogState(PostImportDialogState.None);
   }, [setPostImportDialogState]);
 
+  const isFeedbackOpen = useStore((s) => s.isFeedbackFormOpen);
+  const closeDialog = useStore((s) => s.closeDialog);
+
   return (
     <>
       {/* Suppress dialogs to prevent overlapping dialogs */}
@@ -85,6 +89,7 @@ const DefaultPageLayout = ({
         isOpen={postImportDialogState === PostImportDialogState.Error}
       />
       <MakeCodeLoadErrorDialog />
+      <FeedbackForm isOpen={isFeedbackOpen} onClose={closeDialog} />
       <ProjectDropTarget
         isEnabled={!isNonConnectionDialogOpen && !isConnectionDialogOpen}
       >
