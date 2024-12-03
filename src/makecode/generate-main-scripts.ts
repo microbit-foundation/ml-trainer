@@ -15,14 +15,16 @@ interface BlockPos {
   y: number;
 }
 
-const onMLEventBlock = (name: string, children: string, pos: BlockPos) => `
-  <block type="ml_on_event_start" x="${pos.x}" y="${pos.y}">
-    <field name="event">ml.event.${name}</field>
-    <statement name="HANDLER">
-      ${children}       
-    </statement>
-  </block>
-`;
+const onMLEventBlock = (name: string, children: string, pos: BlockPos) => {
+  let code = "";
+  code += `<block type="ml_on_event_start" x="${pos.x}" y="${pos.y}">`;
+  code += `<field name="event">ml.event.${name}</field>`;
+  code += '<statement name="HANDLER">';
+  code += children;
+  code += "</statement>";
+  code += "</block>";
+  return code;
+};
 
 type Language = "blocks" | "javascript";
 
@@ -38,7 +40,7 @@ const statements: Record<Language, LanguageStatements> = {
   javascript: {
     wrapper: (children) => children + "\n",
     showLeds: (ledPattern) => `basic.showLeds(\`${ledPattern}\`)`,
-    showIcon: (iconName) => `basic.showIcon(IconNames.${iconName})`,
+    showIcon: (iconName) => `\n    basic.showIcon(IconNames.${iconName})\n`,
     clearDisplay: () => "basic.clearScreen()",
     onMLEvent: (name, children) => {
       return `ml.onStart(ml.event.${name}, function () {${children}})`;
@@ -80,6 +82,6 @@ export const getMainScript = (actions: Action[], lang: Language) => {
           y: initPos.y + idx * 180,
         })
       )
-      .join("\n")
+      .join(lang === "javascript" ? "\n" : "")
   );
 };
