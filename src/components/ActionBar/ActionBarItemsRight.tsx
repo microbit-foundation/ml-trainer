@@ -1,7 +1,12 @@
 import { HStack, MenuDivider, useDisclosure } from "@chakra-ui/react";
 import { ReactNode, useMemo } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
+import {
+  globalShortcutConfig,
+  keyboardShortcuts,
+} from "../../keyboard-shortcuts";
 import { useStore } from "../../store";
 import AboutDialog from "../AboutDialog";
 import ConnectFirstDialog from "../ConnectFirstDialog";
@@ -47,6 +52,11 @@ const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
       }
     }
   }, [tourTriggerName]);
+  useHotkeys(
+    keyboardShortcuts.settings,
+    settingsDisclosure.onOpen,
+    globalShortcutConfig
+  );
   return (
     <>
       <LanguageDialog
