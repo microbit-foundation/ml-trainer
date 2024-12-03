@@ -183,7 +183,6 @@ export interface State {
   isFeedbackFormOpen: boolean;
   isDeleteAllActionsDialogOpen: boolean;
   isDeleteActionDialogOpen: boolean;
-  isResetSettingsDialogOpen: boolean;
   isIncompatibleEditorDeviceDialogOpen: boolean;
   isNameProjectDialogOpen: boolean;
   isRecordingDialogOpen: boolean;
@@ -270,7 +269,6 @@ export interface Actions {
   nameProjectDialogOnOpen(): void;
   deleteAllActionsDialogOnOpen(): void;
   deleteActionDialogOnOpen(): void;
-  resetSettingsDialogOnOpen(): void;
   incompatibleEditorDeviceDialogOnOpen(): void;
   recordingDialogOnOpen(): void;
   connectToRecordDialogOnOpen(): void;
@@ -326,7 +324,6 @@ const createMlStore = (logging: Logging) => {
           isRecordingDialogOpen: false,
           isConnectToRecordDialogOpen: false,
           isDeleteActionDialogOpen: false,
-          isResetSettingsDialogOpen: false,
           isIncompatibleEditorDeviceDialogOpen: false,
 
           setSettings(update: Partial<Settings>) {
@@ -1101,9 +1098,6 @@ const createMlStore = (logging: Logging) => {
           deleteActionDialogOnOpen() {
             set({ isDeleteActionDialogOpen: true });
           },
-          resetSettingsDialogOnOpen() {
-            set({ isResetSettingsDialogOpen: true });
-          },
           incompatibleEditorDeviceDialogOnOpen() {
             set({ isIncompatibleEditorDeviceDialogOpen: true });
           },
@@ -1119,7 +1113,6 @@ const createMlStore = (logging: Logging) => {
               isRecordingDialogOpen: false,
               isConnectToRecordDialogOpen: false,
               isDeleteActionDialogOpen: false,
-              isResetSettingsDialogOpen: false,
               isIncompatibleEditorDeviceDialogOpen: false,
             });
           },
@@ -1145,7 +1138,6 @@ const createMlStore = (logging: Logging) => {
               isRecordingDialogOpen,
               isConnectToRecordDialogOpen,
               isDeleteActionDialogOpen,
-              isResetSettingsDialogOpen,
               isIncompatibleEditorDeviceDialogOpen,
               save,
             } = get();
@@ -1159,7 +1151,6 @@ const createMlStore = (logging: Logging) => {
               isRecordingDialogOpen ||
               isConnectToRecordDialogOpen ||
               isDeleteActionDialogOpen ||
-              isResetSettingsDialogOpen ||
               isIncompatibleEditorDeviceDialogOpen ||
               postImportDialogState !== PostImportDialogState.None ||
               isEditorOpen ||

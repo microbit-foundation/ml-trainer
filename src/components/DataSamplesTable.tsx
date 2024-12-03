@@ -105,10 +105,8 @@ const DataSamplesTable = ({
 
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
-      if (!isRecordingDialogOpen) {
-        if (e.state) {
-          recordingDialogOnOpen();
-        }
+      if (!isRecordingDialogOpen && e.state) {
+        recordingDialogOnOpen();
       }
     };
     connection.addButtonListener("B", listener);
