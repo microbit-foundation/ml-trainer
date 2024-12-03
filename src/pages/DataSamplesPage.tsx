@@ -51,7 +51,7 @@ const DataSamplesPage = () => {
   }, [addNewAction, actions]);
   useHotkeys(
     keyboardShortcuts.addAction,
-    handleAddNewAction,
+    isAddNewActionDisabled ? () => {} : handleAddNewAction,
     globalShortcutConfig
   );
   const focusActionNameInput = useCallback(
