@@ -9,6 +9,7 @@ export const keyboardShortcuts = {
   renameAction: ["F2"],
   connect: ["ctrl+shift+c", "meta+shift+c"],
   disconnect: ["ctrl+shift+d", "meta+shift+d"],
+  editInMakeCode: ["ctrl+shift+e", "meta+shift+e"],
 };
 
 export const globalShortcutConfig = {
