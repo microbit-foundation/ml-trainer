@@ -9,7 +9,6 @@ import {
 import { useStore } from "../../store";
 import AboutDialog from "../AboutDialog";
 import ConnectFirstDialog from "../ConnectFirstDialog";
-import FeedbackForm from "../FeedbackForm";
 import HelpMenu from "../HelpMenu";
 import HelpMenuItems, { tourMap } from "../HelpMenuItems";
 import { LanguageDialog } from "../LanguageDialog";
