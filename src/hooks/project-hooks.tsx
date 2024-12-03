@@ -135,6 +135,7 @@ export const ProjectProvider = ({
 
   const project = useStore((s) => s.project);
   const editorReadyPromiseRef = usePromiseRef<void>();
+  const editorContentLoadedPromiseRef = usePromiseRef<void>();
   const initialProjects = useCallback(() => {
     logging.log(
       `[MakeCode] Initialising with header ID: ${project.header?.id}`
@@ -147,14 +148,23 @@ export const ProjectProvider = ({
   const startUpTimestamp = useRef<number>(Date.now());
 
   const onWorkspaceLoaded = useCallback(async () => {
-    // Wait another second because it's not really ready at this point.
-    await new Promise((res) => setTimeout(res, 1000));
     logging.log("[MakeCode] Workspace loaded");
-
+    await editorContentLoadedPromiseRef.current.promise;
     // Get latest start up state and only mark editor ready if editor has not timed out.
     getEditorStartUp() !== "timed out" && editorReady();
     editorReadyPromiseRef.current.resolve();
-  }, [editorReady, editorReadyPromiseRef, getEditorStartUp, logging]);
+  }, [
+    editorContentLoadedPromiseRef,
+    editorReady,
+    editorReadyPromiseRef,
+    getEditorStartUp,
+    logging,
+  ]);
+
+  const onEditorContentLoaded = useCallback(() => {
+    logging.log("[MakeCode] Editor content loaded");
+    editorContentLoadedPromiseRef.current.resolve();
+  }, [editorContentLoadedPromiseRef, logging]);
 
   const checkIfEditorStartUpTimedOut = useCallback(
     async (promise: Promise<void> | undefined) => {
@@ -434,6 +444,7 @@ export const ProjectProvider = ({
         onWorkspaceSave,
         onDownload,
         onBack,
+        onEditorContentLoaded,
         onWorkspaceLoaded,
       },
     }),
@@ -450,6 +461,7 @@ export const ProjectProvider = ({
       onWorkspaceSave,
       onDownload,
       onBack,
+      onEditorContentLoaded,
       onWorkspaceLoaded,
     ]
   );
