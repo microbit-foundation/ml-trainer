@@ -11,19 +11,18 @@ import {
 import { useCallback, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
-import {
-  ConnectionFlowStep,
-  useConnectionStage,
-} from "../connection-stage-hooks";
+import { useConnectionStage } from "../connection-stage-hooks";
 import microbitImage from "../images/stylised-microbit-black.svg";
+import {
+  keyboardShortcuts,
+  useKeyboardShortcut,
+} from "../keyboard-shortcut-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { tourElClassname } from "../tours";
 import AlertIcon from "./AlertIcon";
 import InfoToolTip from "./InfoToolTip";
 import LiveGraph from "./LiveGraph";
 import PredictedAction from "./PredictedAction";
-import { useHotkeys } from "react-hotkeys-hook";
-import { globalShortcutConfig, keyboardShortcuts } from "../keyboard-shortcuts";
 
 interface LiveGraphPanelProps {
   showPredictedAction?: boolean;
@@ -36,7 +35,7 @@ const LiveGraphPanel = ({
   showPredictedAction,
   disconnectedTextId,
 }: LiveGraphPanelProps) => {
-  const { actions, status, isConnected, stage } = useConnectionStage();
+  const { actions, status, isConnected } = useConnectionStage();
   const parentPortalRef = useRef(null);
   const logging = useLogging();
   const isReconnecting =
@@ -62,8 +61,7 @@ const LiveGraphPanel = ({
       void actions.reconnect();
     }
   }, [status, actions, logging]);
-  useHotkeys(keyboardShortcuts.connect, handleConnectOrReconnect, {
-    ...globalShortcutConfig,
+  useKeyboardShortcut(keyboardShortcuts.connect, handleConnectOrReconnect, {
     enabled: isDisconnected,
   });
   const handleDisconnect = useCallback(() => {
@@ -72,9 +70,8 @@ const LiveGraphPanel = ({
     });
     void actions.disconnect();
   }, [actions, logging]);
-  useHotkeys(keyboardShortcuts.disconnect, handleDisconnect, {
-    ...globalShortcutConfig,
-    enabled: isConnected && stage.flowStep === ConnectionFlowStep.None,
+  useKeyboardShortcut(keyboardShortcuts.disconnect, handleDisconnect, {
+    enabled: isConnected,
   });
   const intl = useIntl();
   return (

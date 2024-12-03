@@ -135,15 +135,19 @@ export const ConnectionStageProvider = ({
       connectActions.isWebUsbSupported
     )
   );
+  const setIsConnectionDialogOpen = useStore(
+    (s) => s.setIsConnectionDialogOpen
+  );
   const setConnectionStage = useCallback(
     (connStage: ConnectionStage) => {
+      setIsConnectionDialogOpen(connStage.flowStep !== ConnectionFlowStep.None);
       setConfig({
         bluetoothMicrobitName: connStage.bluetoothMicrobitName,
         radioRemoteDeviceId: connStage.radioRemoteDeviceId,
       });
       setConnStage(connStage);
     },
-    [setConfig]
+    [setConfig, setIsConnectionDialogOpen]
   );
 
   return (

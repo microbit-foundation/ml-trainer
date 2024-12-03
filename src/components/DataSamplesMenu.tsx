@@ -8,7 +8,6 @@ import {
   MenuList,
   Portal,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { MdMoreVert } from "react-icons/md";
@@ -18,10 +17,6 @@ import {
   RiUpload2Line,
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import {
-  ConnectionFlowStep,
-  useConnectionStage,
-} from "../connection-stage-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 import { getTotalNumSamples } from "../utils/actions";
@@ -36,9 +31,15 @@ const DataSamplesMenu = () => {
   const logging = useLogging();
   const actions = useStore((s) => s.actions);
   const downloadDataset = useStore((s) => s.downloadDataset);
-  const { stage } = useConnectionStage();
-  const deleteConfirmDisclosure = useDisclosure();
-  const nameProjectDialogDisclosure = useDisclosure();
+  const isDeleteAllActionsDialogOpen = useStore(
+    (s) => s.isDeleteAllActionsDialogOpen
+  );
+  const deleteAllActionsDialogOnOpen = useStore(
+    (s) => s.deleteAllActionsDialogOnOpen
+  );
+  const closeDialog = useStore((s) => s.closeDialog);
+  const isNameProjectDialogOpen = useStore((s) => s.isNameProjectDialogOpen);
+  const nameProjectDialogOnOpen = useStore((s) => s.nameProjectDialogOnOpen);
   const isUntitled = useProjectIsUntitled();
   const setProjectName = useStore((s) => s.setProjectName);
 
@@ -58,8 +59,7 @@ const DataSamplesMenu = () => {
       type: "dataset-delete",
     });
     deleteAllActions();
-    deleteConfirmDisclosure.onClose();
-  }, [deleteAllActions, deleteConfirmDisclosure, logging]);
+  }, [deleteAllActions, logging]);
 
   const handleSave = useCallback(
     (newName?: string) => {
@@ -67,34 +67,27 @@ const DataSamplesMenu = () => {
         setProjectName(newName);
       }
       download();
-      nameProjectDialogDisclosure.onClose();
     },
-    [download, nameProjectDialogDisclosure, setProjectName]
+    [download, setProjectName]
   );
 
   const handleDownloadDataset = useCallback(() => {
     if (isUntitled) {
-      nameProjectDialogDisclosure.onOpen();
+      nameProjectDialogOnOpen();
     } else {
       download();
     }
-  }, [download, isUntitled, nameProjectDialogDisclosure]);
+  }, [download, isUntitled, nameProjectDialogOnOpen]);
 
   return (
     <>
       <NameProjectDialog
-        isOpen={
-          stage.flowStep === ConnectionFlowStep.None &&
-          nameProjectDialogDisclosure.isOpen
-        }
-        onClose={nameProjectDialogDisclosure.onClose}
+        isOpen={isNameProjectDialogOpen}
+        onClose={closeDialog}
         onSave={handleSave}
       />
       <ConfirmDialog
-        isOpen={
-          deleteConfirmDisclosure.isOpen &&
-          stage.flowStep === ConnectionFlowStep.None
-        }
+        isOpen={isDeleteAllActionsDialogOpen}
         heading={intl.formatMessage({
           id: "delete-data-samples-confirm-heading",
         })}
@@ -104,7 +97,7 @@ const DataSamplesMenu = () => {
           </Text>
         }
         onConfirm={handleDeleteAllActions}
-        onCancel={deleteConfirmDisclosure.onClose}
+        onCancel={closeDialog}
       />
       <Menu>
         <MenuButton
@@ -130,7 +123,7 @@ const DataSamplesMenu = () => {
             </MenuItem>
             <MenuItem
               icon={<RiDeleteBin2Line />}
-              onClick={deleteConfirmDisclosure.onOpen}
+              onClick={deleteAllActionsDialogOnOpen}
             >
               <FormattedMessage id="delete-data-samples-action" />
             </MenuItem>

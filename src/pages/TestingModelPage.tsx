@@ -12,7 +12,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
@@ -29,7 +28,10 @@ import TestingModelTable from "../components/TestingModelTable";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { useProject } from "../hooks/project-hooks";
-import { globalShortcutConfig, keyboardShortcuts } from "../keyboard-shortcuts";
+import {
+  keyboardShortcuts,
+  useKeyboardShortcut,
+} from "../keyboard-shortcut-hooks";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createDataSamplesPageUrl } from "../urls";
@@ -98,11 +100,7 @@ const TestingModelPage = () => {
     incompatibleEditorDeviceDisclosure.onClose();
     setEditorLoading(false);
   }, [incompatibleEditorDeviceDisclosure, openEditor]);
-  useHotkeys(
-    keyboardShortcuts.editInMakeCode,
-    maybeOpenEditor,
-    globalShortcutConfig
-  );
+  useKeyboardShortcut(keyboardShortcuts.editInMakeCode, maybeOpenEditor);
 
   return model ? (
     <DefaultPageLayout

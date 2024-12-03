@@ -1,6 +1,5 @@
 import { Button, Flex, HStack, VStack } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
@@ -14,7 +13,10 @@ import DefaultPageLayout, {
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import { useConnectionStage } from "../connection-stage-hooks";
-import { globalShortcutConfig, keyboardShortcuts } from "../keyboard-shortcuts";
+import {
+  keyboardShortcuts,
+  useKeyboardShortcut,
+} from "../keyboard-shortcut-hooks";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
@@ -49,8 +51,7 @@ const DataSamplesPage = () => {
     setSelectedActionIdx(actions.length);
     addNewAction();
   }, [addNewAction, actions]);
-  useHotkeys(keyboardShortcuts.addAction, handleAddNewAction, {
-    ...globalShortcutConfig,
+  useKeyboardShortcut(keyboardShortcuts.addAction, handleAddNewAction, {
     enabled: !isAddNewActionDisabled,
   });
   const focusActionNameInput = useCallback(
@@ -77,20 +78,14 @@ const DataSamplesPage = () => {
     },
     [actions, focusActionNameInput]
   );
-  useHotkeys(
-    keyboardShortcuts.nextAction,
-    () => focusAction(selectedActionIdx + 1),
-    globalShortcutConfig
+  useKeyboardShortcut(keyboardShortcuts.nextAction, () =>
+    focusAction(selectedActionIdx + 1)
   );
-  useHotkeys(
-    keyboardShortcuts.previousAction,
-    () => focusAction(selectedActionIdx - 1),
-    globalShortcutConfig
+  useKeyboardShortcut(keyboardShortcuts.previousAction, () =>
+    focusAction(selectedActionIdx - 1)
   );
-  useHotkeys(
-    keyboardShortcuts.renameAction,
-    () => focusActionNameInput(selectedActionIdx),
-    globalShortcutConfig
+  useKeyboardShortcut(keyboardShortcuts.renameAction, () =>
+    focusActionNameInput(selectedActionIdx)
   );
   const intl = useIntl();
   return (

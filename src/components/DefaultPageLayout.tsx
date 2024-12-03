@@ -9,23 +9,17 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
 import { RiDownload2Line, RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import {
-  ConnectionFlowStep,
-  useConnectionStage,
-} from "../connection-stage-hooks";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
-import { globalShortcutConfig, keyboardShortcuts } from "../keyboard-shortcuts";
 import {
-  PostImportDialogState,
-  SaveStep,
-  TrainModelDialogStage,
-} from "../model";
+  keyboardShortcuts,
+  useKeyboardShortcut,
+} from "../keyboard-shortcut-hooks";
+import { PostImportDialogState } from "../model";
 import Tour from "../pages/Tour";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
@@ -58,17 +52,10 @@ const DefaultPageLayout = ({
   showPageTitle = false,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
-  const isEditorOpen = useStore((s) => s.isEditorOpen);
-  const isTourClosed = useStore((s) => s.tourState === undefined);
-  const isTrainDialogClosed = useStore(
-    (s) => s.trainModelDialogStage === TrainModelDialogStage.Closed
+  const isConnectionDialogOpen = useStore((s) => s.isConnectionDialogOpen);
+  const isNonConnectionDialogOpen = useStore((s) =>
+    s.isNonConnectionDialogOpen()
   );
-  const isMakeCodeErrorDialogClosed = useStore(
-    (s) => !s.isEditorTimedOutDialogOpen
-  );
-  const { stage } = useConnectionStage();
-  const isConnectionDialogClosed = stage.flowStep === ConnectionFlowStep.None;
-  const isSaveDialogClosed = useStore((s) => s.save.step === SaveStep.None);
   const { appNameFull } = useDeployment();
 
   useEffect(() => {
@@ -86,14 +73,7 @@ const DefaultPageLayout = ({
   return (
     <>
       {/* Suppress dialogs to prevent overlapping dialogs */}
-      {!isEditorOpen &&
-        isTrainDialogClosed &&
-        isTourClosed &&
-        isSaveDialogClosed &&
-        isMakeCodeErrorDialogClosed &&
-        postImportDialogState === PostImportDialogState.None && (
-          <ConnectionDialogs />
-        )}
+      {!isNonConnectionDialogOpen && <ConnectionDialogs />}
       <Tour />
       <SaveDialogs />
       <NotCreateAiHexImportDialog
@@ -106,12 +86,7 @@ const DefaultPageLayout = ({
       />
       <MakeCodeLoadErrorDialog />
       <ProjectDropTarget
-        isEnabled={
-          isTrainDialogClosed &&
-          isTourClosed &&
-          isConnectionDialogClosed &&
-          isSaveDialogClosed
-        }
+        isEnabled={!isNonConnectionDialogOpen && !isConnectionDialogOpen}
       >
         <VStack
           minH="100vh"
@@ -169,7 +144,7 @@ export const ProjectToolbarItems = () => {
   const handleSave = useCallback(() => {
     void saveHex();
   }, [saveHex]);
-  useHotkeys(keyboardShortcuts.saveSession, handleSave, globalShortcutConfig);
+  useKeyboardShortcut(keyboardShortcuts.saveSession, handleSave);
 
   return (
     <>

@@ -1,12 +1,11 @@
-import { HStack, MenuDivider, useDisclosure } from "@chakra-ui/react";
+import { HStack, MenuDivider } from "@chakra-ui/react";
 import { ReactNode, useMemo } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 import {
-  globalShortcutConfig,
   keyboardShortcuts,
-} from "../../keyboard-shortcuts";
+  useKeyboardShortcut,
+} from "../../keyboard-shortcut-hooks";
 import { useStore } from "../../store";
 import AboutDialog from "../AboutDialog";
 import ConnectFirstDialog from "../ConnectFirstDialog";
@@ -27,11 +26,17 @@ interface ItemsRightProps {
 
 const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
   const intl = useIntl();
-  const languageDisclosure = useDisclosure();
-  const settingsDisclosure = useDisclosure();
-  const aboutDialogDisclosure = useDisclosure();
-  const feedbackDisclosure = useDisclosure();
-  const connectFirstDisclosure = useDisclosure();
+  const closeDialog = useStore((s) => s.closeDialog);
+  const languageDialogOnOpen = useStore((s) => s.languageDialogOnOpen);
+  const isLanguageDialogOpen = useStore((s) => s.isLanguageDialogOpen);
+  const settingsDialogOnOpen = useStore((s) => s.settingsDialogOnOpen);
+  const isSettingsDialogOpen = useStore((s) => s.isSettingsDialogOpen);
+  const aboutDialogOnOpen = useStore((s) => s.aboutDialogOnOpen);
+  const isAboutDialogOpen = useStore((s) => s.isAboutDialogOpen);
+  const feedbackOnOpen = useStore((s) => s.feedbackFormOnOpen);
+  const isFeedbackOpen = useStore((s) => s.isFeedbackFormOpen);
+  const connectFirstDialogOnOpen = useStore((s) => s.connectFirstDialogOnOpen);
+  const isConnectFirstDialogOpen = useStore((s) => s.isConnectFirstDialogOpen);
   const setPostConnectTourTrigger = useStore(
     (s) => s.setPostConnectTourTrigger
   );
@@ -52,48 +57,32 @@ const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
       }
     }
   }, [tourTriggerName]);
-  useHotkeys(
-    keyboardShortcuts.settings,
-    settingsDisclosure.onOpen,
-    globalShortcutConfig
-  );
+  useKeyboardShortcut(keyboardShortcuts.settings, settingsDialogOnOpen);
   return (
     <>
-      <LanguageDialog
-        isOpen={languageDisclosure.isOpen}
-        onClose={languageDisclosure.onClose}
-      />
-      <SettingsDialog
-        isOpen={settingsDisclosure.isOpen}
-        onClose={settingsDisclosure.onClose}
-      />
+      <LanguageDialog isOpen={isLanguageDialogOpen} onClose={closeDialog} />
+      <SettingsDialog isOpen={isSettingsDialogOpen} onClose={closeDialog} />
       <ConnectFirstDialog
-        isOpen={connectFirstDisclosure.isOpen}
-        onClose={connectFirstDisclosure.onClose}
+        isOpen={isConnectFirstDialogOpen}
+        onClose={closeDialog}
         onChooseConnect={() => setPostConnectTourTrigger(tourTrigger)}
         explanationTextId="connect-to-tour-body"
         options={{ postConnectTourTrigger: tourTrigger }}
       />
-      <AboutDialog
-        isOpen={aboutDialogDisclosure.isOpen}
-        onClose={aboutDialogDisclosure.onClose}
-      />
-      <FeedbackForm
-        isOpen={feedbackDisclosure.isOpen}
-        onClose={feedbackDisclosure.onClose}
-      />
+      <AboutDialog isOpen={isAboutDialogOpen} onClose={closeDialog} />
+      <FeedbackForm isOpen={isFeedbackOpen} onClose={closeDialog} />
       <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
         {toolbarItems}
         <SettingsMenu
-          onLanguageDialogOpen={languageDisclosure.onOpen}
-          onSettingsDialogOpen={settingsDisclosure.onOpen}
+          onLanguageDialogOpen={languageDialogOnOpen}
+          onSettingsDialogOpen={settingsDialogOnOpen}
         />
       </HStack>
       <HelpMenu
         display={{ base: "none", md: "block", lg: "block" }}
-        onAboutDialogOpen={aboutDialogDisclosure.onOpen}
-        onConnectFirstDialogOpen={connectFirstDisclosure.onOpen}
-        onFeedbackOpen={feedbackDisclosure.onOpen}
+        onAboutDialogOpen={aboutDialogOnOpen}
+        onConnectFirstDialogOpen={connectFirstDialogOnOpen}
+        onFeedbackOpen={feedbackOnOpen}
         tourTrigger={tourTrigger}
       />
       <ToolbarMenu
@@ -102,8 +91,8 @@ const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
         label={intl.formatMessage({ id: "main-menu" })}
       >
         {menuItems}
-        <LanguageMenuItem onOpen={languageDisclosure.onOpen} />
-        <SettingsMenuItem onOpen={settingsDisclosure.onOpen} />
+        <LanguageMenuItem onOpen={languageDialogOnOpen} />
+        <SettingsMenuItem onOpen={settingsDialogOnOpen} />
       </ToolbarMenu>
       {/* Toolbar items when sm window size. */}
       <ToolbarMenu
@@ -112,13 +101,13 @@ const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
         label={intl.formatMessage({ id: "main-menu" })}
       >
         {menuItems}
-        <LanguageMenuItem onOpen={languageDisclosure.onOpen} />
-        <SettingsMenuItem onOpen={settingsDisclosure.onOpen} />
+        <LanguageMenuItem onOpen={languageDialogOnOpen} />
+        <SettingsMenuItem onOpen={settingsDialogOnOpen} />
         <MenuDivider />
         <HelpMenuItems
-          onAboutDialogOpen={aboutDialogDisclosure.onOpen}
-          onConnectFirstDialogOpen={connectFirstDisclosure.onOpen}
-          onFeedbackOpen={feedbackDisclosure.onOpen}
+          onAboutDialogOpen={aboutDialogOnOpen}
+          onConnectFirstDialogOpen={connectFirstDialogOnOpen}
+          onFeedbackOpen={feedbackOnOpen}
           tourTrigger={tourTrigger}
         />
       </ToolbarMenu>
