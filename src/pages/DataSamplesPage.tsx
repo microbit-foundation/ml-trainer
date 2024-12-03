@@ -49,11 +49,10 @@ const DataSamplesPage = () => {
     setSelectedActionIdx(actions.length);
     addNewAction();
   }, [addNewAction, actions]);
-  useHotkeys(
-    keyboardShortcuts.addAction,
-    isAddNewActionDisabled ? () => {} : handleAddNewAction,
-    globalShortcutConfig
-  );
+  useHotkeys(keyboardShortcuts.addAction, handleAddNewAction, {
+    ...globalShortcutConfig,
+    enabled: !isAddNewActionDisabled,
+  });
   const focusActionNameInput = useCallback(
     (actionIdx: number) => {
       const inputId = actionNameInputId(actions[actionIdx]);

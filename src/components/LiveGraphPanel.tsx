@@ -44,10 +44,6 @@ const LiveGraphPanel = ({
     !isConnected && !isReconnecting && status !== ConnectionStatus.Connecting;
 
   const handleConnectOrReconnect = useCallback(() => {
-    if (isConnected) {
-      // Don't connect if already connected.
-      return;
-    }
     if (
       status === ConnectionStatus.NotConnected ||
       status === ConnectionStatus.Connecting ||
@@ -62,29 +58,22 @@ const LiveGraphPanel = ({
       });
       void actions.reconnect();
     }
-  }, [isConnected, status, actions, logging]);
-
+  }, [status, actions, logging]);
+  useHotkeys(keyboardShortcuts.connect, handleConnectOrReconnect, {
+    ...globalShortcutConfig,
+    enabled: isDisconnected,
+  });
   const handleDisconnect = useCallback(() => {
-    if (!isConnected) {
-      // Don't disconnect if already disconnected.
-      return;
-    }
     logging.event({
       type: "disconnect-user",
     });
     void actions.disconnect();
-  }, [actions, isConnected, logging]);
+  }, [actions, logging]);
+  useHotkeys(keyboardShortcuts.disconnect, handleDisconnect, {
+    ...globalShortcutConfig,
+    enabled: isConnected,
+  });
   const intl = useIntl();
-  useHotkeys(
-    keyboardShortcuts.connect,
-    handleConnectOrReconnect,
-    globalShortcutConfig
-  );
-  useHotkeys(
-    keyboardShortcuts.disconnect,
-    handleDisconnect,
-    globalShortcutConfig
-  );
   return (
     <HStack
       role="region"
