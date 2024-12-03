@@ -53,10 +53,14 @@ const ActionNameCard = ({
 
   const debouncedSetActionName = useMemo(
     () =>
-      debounce((id: ActionData["ID"], name: string) => {
-        setActionName(id, name);
-      }, 400),
-    [setActionName]
+      debounce(
+        (id: ActionData["ID"], name: string) => {
+          setActionName(id, name);
+        },
+        400,
+        { leading: localName.length === 0 }
+      ),
+    [localName.length, setActionName]
   );
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
