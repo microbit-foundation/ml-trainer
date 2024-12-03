@@ -12,6 +12,7 @@ import { ReactNode, useCallback, useEffect } from "react";
 import { RiDownload2Line, RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { useConnectionStage } from "../connection-stage-hooks";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
@@ -27,13 +28,13 @@ import ActionBar from "./ActionBar/ActionBar";
 import ItemsRight from "./ActionBar/ActionBarItemsRight";
 import AppLogo from "./AppLogo";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
+import FeedbackForm from "./FeedbackForm";
 import ImportErrorDialog from "./ImportErrorDialog";
 import MakeCodeLoadErrorDialog from "./MakeCodeLoadErrorDialog";
 import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
-import FeedbackForm from "./FeedbackForm";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -53,7 +54,7 @@ const DefaultPageLayout = ({
   showPageTitle = false,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
-  const isConnectionDialogOpen = useStore((s) => s.isConnectionDialogOpen);
+  const { isDialogOpen: isConnectionDialogOpen } = useConnectionStage();
   const isNonConnectionDialogOpen = useStore((s) =>
     s.isNonConnectionDialogOpen()
   );

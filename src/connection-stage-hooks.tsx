@@ -135,19 +135,15 @@ export const ConnectionStageProvider = ({
       connectActions.isWebUsbSupported
     )
   );
-  const setIsConnectionDialogOpen = useStore(
-    (s) => s.setIsConnectionDialogOpen
-  );
   const setConnectionStage = useCallback(
     (connStage: ConnectionStage) => {
-      setIsConnectionDialogOpen(connStage.flowStep !== ConnectionFlowStep.None);
       setConfig({
         bluetoothMicrobitName: connStage.bluetoothMicrobitName,
         radioRemoteDeviceId: connStage.radioRemoteDeviceId,
       });
       setConnStage(connStage);
     },
-    [setConfig, setIsConnectionDialogOpen]
+    [setConfig]
   );
 
   return (
@@ -165,6 +161,7 @@ export const useConnectionStage = (): {
   actions: ConnectionStageActions;
   isConnected: boolean;
   connectActions: ConnectActions;
+  isDialogOpen: boolean;
 } => {
   const connectionStageContextValue = useContext(ConnectionStageContext);
   if (!connectionStageContextValue) {
@@ -201,6 +198,7 @@ export const useConnectionStage = (): {
     actions.handleConnectionStatus
   );
   const isConnected = status === ConnectionStatus.Connected;
+  const isDialogOpen = stage.flowStep !== ConnectionFlowStep.None;
 
   return {
     status,
@@ -208,5 +206,6 @@ export const useConnectionStage = (): {
     actions,
     isConnected,
     connectActions,
+    isDialogOpen,
   };
 };

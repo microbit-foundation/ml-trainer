@@ -175,7 +175,6 @@ export interface State {
   predictionInterval: ReturnType<typeof setInterval> | undefined;
   predictionResult: PredictionResult | undefined;
 
-  isConnectionDialogOpen: boolean;
   isLanguageDialogOpen: boolean;
   isSettingsDialogOpen: boolean;
   isConnectFirstDialogOpen: boolean;
@@ -260,7 +259,6 @@ export interface Actions {
   startPredicting(buffer: BufferedData): void;
   stopPredicting(): void;
 
-  setIsConnectionDialogOpen(open: boolean): void;
   languageDialogOnOpen(): void;
   settingsDialogOnOpen(): void;
   connectFirstDialogOnOpen(): void;
@@ -318,7 +316,6 @@ const createMlStore = (logging: Logging) => {
           isConnectFirstDialogOpen: false,
           isAboutDialogOpen: false,
           isFeedbackFormOpen: false,
-          isConnectionDialogOpen: false,
           isDeleteAllActionsDialogOpen: false,
           isNameProjectDialogOpen: false,
           isRecordingDialogOpen: false,
@@ -1114,11 +1111,6 @@ const createMlStore = (logging: Logging) => {
               isConnectToRecordDialogOpen: false,
               isDeleteActionDialogOpen: false,
               isIncompatibleEditorDeviceDialogOpen: false,
-            });
-          },
-          setIsConnectionDialogOpen(isOpen: boolean) {
-            set({
-              isConnectionDialogOpen: isOpen,
             });
           },
 

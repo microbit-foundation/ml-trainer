@@ -12,10 +12,7 @@ import {
 import { ComponentProps, useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
-import {
-  ConnectionFlowStep,
-  useConnectionStage,
-} from "../connection-stage-hooks";
+import { useConnectionStage } from "../connection-stage-hooks";
 import { ConnectOptions } from "../store";
 
 interface ConnectFirstDialogProps
@@ -35,7 +32,7 @@ const ConnectFirstDialog = ({
   const {
     actions,
     status: connStatus,
-    stage: connStage,
+    isDialogOpen: isConnectionDialogOpen,
   } = useConnectionStage();
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
 
@@ -81,7 +78,7 @@ const ConnectFirstDialog = ({
 
   useEffect(() => {
     if (
-      connStage.flowStep !== ConnectionFlowStep.None ||
+      isConnectionDialogOpen ||
       (isWaiting && connStatus === ConnectionStatus.Connected)
     ) {
       // Close dialog if connection dialog is opened, or
@@ -89,7 +86,7 @@ const ConnectFirstDialog = ({
       handleOnClose();
       return;
     }
-  }, [connStage.flowStep, connStatus, handleOnClose, isWaiting, onClose]);
+  }, [connStatus, handleOnClose, isConnectionDialogOpen, isWaiting, onClose]);
 
   return (
     <Modal
