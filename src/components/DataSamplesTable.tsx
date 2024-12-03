@@ -140,38 +140,40 @@ const DataSamplesTable = ({
 
   return (
     <>
-      <ConfirmDialog
-        isOpen={isDeleteActionConfirmOpen}
-        heading={intl.formatMessage({
-          id: "delete-action-confirm-heading",
-        })}
-        body={
-          <Text>
-            <FormattedMessage
-              id="delete-action-confirm-text"
-              values={{
-                action: selectedAction.name,
-              }}
-            />
-          </Text>
-        }
-        onConfirm={() => deleteAction(selectedAction.ID)}
-        onCancel={closeDialog}
-      />
       <ConnectFirstDialog
         isOpen={isConnectToRecordDialogOpen}
         onClose={closeDialog}
         explanationTextId="connect-to-record-body"
       />
       {selectedAction && (
-        <RecordingDialog
-          actionId={selectedAction.ID}
-          isOpen={isRecordingDialogOpen}
-          onClose={closeDialog}
-          actionName={selectedAction.name}
-          onRecordingComplete={handleRecordingComplete}
-          recordingOptions={recordingOptions}
-        />
+        <>
+          <ConfirmDialog
+            isOpen={isDeleteActionConfirmOpen}
+            heading={intl.formatMessage({
+              id: "delete-action-confirm-heading",
+            })}
+            body={
+              <Text>
+                <FormattedMessage
+                  id="delete-action-confirm-text"
+                  values={{
+                    action: selectedAction.name,
+                  }}
+                />
+              </Text>
+            }
+            onConfirm={() => deleteAction(selectedAction.ID)}
+            onCancel={closeDialog}
+          />
+          <RecordingDialog
+            actionId={selectedAction.ID}
+            isOpen={isRecordingDialogOpen}
+            onClose={closeDialog}
+            actionName={selectedAction.name}
+            onRecordingComplete={handleRecordingComplete}
+            recordingOptions={recordingOptions}
+          />
+        </>
       )}
       <HeadingGrid
         position="sticky"
