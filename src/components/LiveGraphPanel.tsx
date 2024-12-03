@@ -19,6 +19,8 @@ import AlertIcon from "./AlertIcon";
 import InfoToolTip from "./InfoToolTip";
 import LiveGraph from "./LiveGraph";
 import PredictedAction from "./PredictedAction";
+import { useHotkeys } from "react-hotkeys-hook";
+import { globalShortcutConfig, keyboardShortcuts } from "../keyboard-shortcuts";
 
 interface LiveGraphPanelProps {
   showPredictedAction?: boolean;
@@ -42,6 +44,10 @@ const LiveGraphPanel = ({
     !isConnected && !isReconnecting && status !== ConnectionStatus.Connecting;
 
   const handleConnectOrReconnect = useCallback(() => {
+    if (isConnected) {
+      // Don't connect if already connected.
+      return;
+    }
     if (
       status === ConnectionStatus.NotConnected ||
       status === ConnectionStatus.Connecting ||
@@ -56,15 +62,29 @@ const LiveGraphPanel = ({
       });
       void actions.reconnect();
     }
-  }, [status, actions, logging]);
+  }, [isConnected, status, actions, logging]);
 
   const handleDisconnect = useCallback(() => {
+    if (!isConnected) {
+      // Don't disconnect if already disconnected.
+      return;
+    }
     logging.event({
       type: "disconnect-user",
     });
     void actions.disconnect();
-  }, [actions, logging]);
+  }, [actions, isConnected, logging]);
   const intl = useIntl();
+  useHotkeys(
+    keyboardShortcuts.connect,
+    handleConnectOrReconnect,
+    globalShortcutConfig
+  );
+  useHotkeys(
+    keyboardShortcuts.disconnect,
+    handleDisconnect,
+    globalShortcutConfig
+  );
   return (
     <HStack
       role="region"

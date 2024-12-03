@@ -7,6 +7,8 @@ export const keyboardShortcuts = {
   nextAction: ["down"],
   previousAction: ["up"],
   renameAction: ["F2"],
+  connect: ["ctrl+shift+c", "meta+shift+c"],
+  disconnect: ["ctrl+shift+d", "meta+shift+d"],
 };
 
 export const globalShortcutConfig = {
