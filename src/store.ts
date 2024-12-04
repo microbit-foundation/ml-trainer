@@ -441,6 +441,7 @@ const createMlStore = (logging: Logging) => {
                   undefined,
                   newDataWindow
                 ),
+                isDeleteActionDialogOpen: false,
               };
             });
           },
