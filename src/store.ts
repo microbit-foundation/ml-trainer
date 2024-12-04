@@ -441,7 +441,6 @@ const createMlStore = (logging: Logging) => {
                   undefined,
                   newDataWindow
                 ),
-                isDeleteActionDialogOpen: false,
               };
             });
           },
@@ -562,7 +561,6 @@ const createMlStore = (logging: Logging) => {
                 undefined,
                 currentDataWindow
               ),
-              isDeleteAllActionsDialogOpen: false,
             }));
           },
 
@@ -580,7 +578,6 @@ const createMlStore = (logging: Logging) => {
             );
             a.style.display = "none";
             a.click();
-            set({ isNameProjectDialogOpen: false });
           },
 
           loadDataset(newActions: ActionData[]) {

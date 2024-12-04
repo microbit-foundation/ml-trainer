@@ -160,7 +160,10 @@ const DataSamplesTable = ({
                 />
               </Text>
             }
-            onConfirm={() => deleteAction(selectedAction.ID)}
+            onConfirm={() => {
+              deleteAction(selectedAction.ID);
+              closeDialog();
+            }}
             onCancel={closeDialog}
           />
           <RecordingDialog

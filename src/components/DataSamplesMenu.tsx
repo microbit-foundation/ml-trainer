@@ -59,7 +59,8 @@ const DataSamplesMenu = () => {
       type: "dataset-delete",
     });
     deleteAllActions();
-  }, [deleteAllActions, logging]);
+    closeDialog();
+  }, [closeDialog, deleteAllActions, logging]);
 
   const handleSave = useCallback(
     (newName?: string) => {
@@ -67,8 +68,9 @@ const DataSamplesMenu = () => {
         setProjectName(newName);
       }
       download();
+      closeDialog();
     },
-    [download, setProjectName]
+    [closeDialog, download, setProjectName]
   );
 
   const handleDownloadDataset = useCallback(() => {
