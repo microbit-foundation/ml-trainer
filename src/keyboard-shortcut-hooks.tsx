@@ -12,7 +12,7 @@ export const keyboardShortcuts = {
   nextAction: ["down"],
   previousAction: ["up"],
   renameAction: ["F2"],
-  connect: ["ctrl+shift+l", "meta+shift+l"],
+  connect: ["ctrl+shift+u", "meta+shift+u"],
   disconnect: ["ctrl+shift+k", "meta+shift+k"],
   editInMakeCode: ["ctrl+shift+e", "meta+shift+e"],
 };
