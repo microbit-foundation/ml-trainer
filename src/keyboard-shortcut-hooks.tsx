@@ -12,8 +12,8 @@ export const keyboardShortcuts = {
   nextAction: ["down"],
   previousAction: ["up"],
   renameAction: ["F2"],
-  connect: ["ctrl+shift+c", "meta+shift+c"],
-  disconnect: ["ctrl+shift+d", "meta+shift+d"],
+  connect: ["ctrl+shift+l", "meta+shift+l"],
+  disconnect: ["ctrl+shift+k", "meta+shift+k"],
   editInMakeCode: ["ctrl+shift+e", "meta+shift+e"],
 };
 
