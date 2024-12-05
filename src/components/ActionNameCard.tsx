@@ -63,9 +63,9 @@ const ActionNameCard = ({
           setActionName(id, name);
         },
         400,
-        { leading: localName.length === 0 }
+        { leading: true }
       ),
-    [localName.length, setActionName]
+    [setActionName]
   );
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
