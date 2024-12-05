@@ -32,7 +32,7 @@ export const useKeyboardShortcut = (
     s.isNonConnectionDialogOpen()
   );
   const { isDialogOpen: isConnectionDialogOpen } = useConnectionStage();
-  useHotkeys(keys, hotkeyCallback, {
+  return useHotkeys(keys, hotkeyCallback, {
     ...globalShortcutConfig,
     ...options,
     enabled:

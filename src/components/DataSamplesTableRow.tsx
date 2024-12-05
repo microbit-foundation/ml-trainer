@@ -11,6 +11,7 @@ import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import ActionNameCard from "./ActionNameCard";
 import DataSamplesTableHints from "./DataSamplesTableHints";
 import { RecordingOptions } from "./RecordingDialog";
+import { RefType } from "react-hotkeys-hook/dist/types";
 
 interface DataSamplesTableRowProps {
   action: ActionData;
@@ -21,6 +22,7 @@ interface DataSamplesTableRowProps {
   newRecordingId?: number;
   clearNewRecordingId: () => void;
   onDeleteAction: () => void;
+  renameShortcutScopeRef: (instance: RefType<HTMLElement>) => void;
 }
 
 const DataSamplesTableRow = ({
@@ -32,12 +34,14 @@ const DataSamplesTableRow = ({
   newRecordingId,
   clearNewRecordingId,
   onDeleteAction,
+  renameShortcutScopeRef,
 }: DataSamplesTableRowProps) => {
   const intl = useIntl();
 
   return (
     <>
       <Box
+        ref={selected ? renameShortcutScopeRef : undefined}
         role="region"
         aria-label={intl.formatMessage(
           {

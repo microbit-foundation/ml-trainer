@@ -37,6 +37,12 @@ import RecordingDialog, {
 } from "./RecordingDialog";
 import ShowGraphsCheckbox from "./ShowGraphsCheckbox";
 import { ConfirmDialog } from "./ConfirmDialog";
+import { actionNameInputId } from "./ActionNameCard";
+import { recordButtonId } from "./ActionDataSamplesCard";
+import {
+  keyboardShortcuts,
+  useKeyboardShortcut,
+} from "../keyboard-shortcut-hooks";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -140,6 +146,41 @@ const DataSamplesTable = ({
       tourStart({ name: "DataSamplesRecorded", recordingCount });
     },
     [tourStart]
+  );
+
+  const focusActionNameInput = useCallback(
+    (actionIdx: number) => {
+      const inputId = actionNameInputId(actions[actionIdx]);
+      const actionNameInputEl = document.getElementById(inputId);
+      actionNameInputEl?.focus();
+    },
+    [actions]
+  );
+  const focusAction = useCallback(
+    (idx: number) => {
+      if (idx >= 0 && idx < actions.length) {
+        setSelectedActionIdx(idx);
+        const recordButton = document.getElementById(
+          recordButtonId(actions[idx])
+        );
+        if (recordButton) {
+          recordButton?.focus();
+        } else {
+          focusActionNameInput(idx);
+        }
+      }
+    },
+    [actions, focusActionNameInput, setSelectedActionIdx]
+  );
+  useKeyboardShortcut(keyboardShortcuts.nextAction, () =>
+    focusAction(selectedActionIdx + 1)
+  );
+  useKeyboardShortcut(keyboardShortcuts.previousAction, () =>
+    focusAction(selectedActionIdx - 1)
+  );
+  const renameActionShortcutScopeRef = useKeyboardShortcut(
+    keyboardShortcuts.renameAction,
+    () => focusActionNameInput(selectedActionIdx)
   );
 
   return (
@@ -250,6 +291,7 @@ const DataSamplesTable = ({
               onRecord={handleRecord}
               showHints={showHints}
               onDeleteAction={deleteActionConfirmOnOpen}
+              renameShortcutScopeRef={renameActionShortcutScopeRef}
             />
           ))}
         </Grid>

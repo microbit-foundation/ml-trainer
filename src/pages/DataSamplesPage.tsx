@@ -9,8 +9,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import { recordButtonId } from "../components/ActionDataSamplesCard";
-import { actionNameInputId } from "../components/ActionNameCard";
 import DataSamplesTable from "../components/DataSamplesTable";
 import DefaultPageLayout, {
   ProjectMenuItems,
@@ -60,39 +58,6 @@ const DataSamplesPage = () => {
   useKeyboardShortcut(keyboardShortcuts.addAction, handleAddNewAction, {
     enabled: !isAddNewActionDisabled,
   });
-  const focusActionNameInput = useCallback(
-    (actionIdx: number) => {
-      const inputId = actionNameInputId(actions[actionIdx]);
-      const actionNameInputEl = document.getElementById(inputId);
-      actionNameInputEl?.focus();
-    },
-    [actions]
-  );
-  const focusAction = useCallback(
-    (idx: number) => {
-      if (idx >= 0 && idx < actions.length) {
-        setSelectedActionIdx(idx);
-        const recordButton = document.getElementById(
-          recordButtonId(actions[idx])
-        );
-        if (recordButton) {
-          recordButton?.focus();
-        } else {
-          focusActionNameInput(idx);
-        }
-      }
-    },
-    [actions, focusActionNameInput]
-  );
-  useKeyboardShortcut(keyboardShortcuts.nextAction, () =>
-    focusAction(selectedActionIdx + 1)
-  );
-  useKeyboardShortcut(keyboardShortcuts.previousAction, () =>
-    focusAction(selectedActionIdx - 1)
-  );
-  useKeyboardShortcut(keyboardShortcuts.renameAction, () =>
-    focusActionNameInput(selectedActionIdx)
-  );
   const intl = useIntl();
   return (
     <>
