@@ -39,10 +39,7 @@ import ShowGraphsCheckbox from "./ShowGraphsCheckbox";
 import { ConfirmDialog } from "./ConfirmDialog";
 import { actionNameInputId } from "./ActionNameCard";
 import { recordButtonId } from "./ActionDataSamplesCard";
-import {
-  keyboardShortcuts,
-  useKeyboardShortcut,
-} from "../keyboard-shortcut-hooks";
+import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -172,13 +169,13 @@ const DataSamplesTable = ({
     },
     [actions, focusActionNameInput, setSelectedActionIdx]
   );
-  useKeyboardShortcut(keyboardShortcuts.nextAction, () =>
+  useShortcut(keyboardShortcuts.nextAction, () =>
     focusAction(selectedActionIdx + 1)
   );
-  useKeyboardShortcut(keyboardShortcuts.previousAction, () =>
+  useShortcut(keyboardShortcuts.previousAction, () =>
     focusAction(selectedActionIdx - 1)
   );
-  const renameActionShortcutScopeRef = useKeyboardShortcut(
+  const renameActionShortcutScopeRef = useShortcut(
     keyboardShortcuts.renameAction,
     () => focusActionNameInput(selectedActionIdx)
   );

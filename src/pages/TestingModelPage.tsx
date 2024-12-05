@@ -33,10 +33,7 @@ import TestingModelTable from "../components/TestingModelTable";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { useProject } from "../hooks/project-hooks";
-import {
-  keyboardShortcuts,
-  useKeyboardShortcut,
-} from "../keyboard-shortcut-hooks";
+import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createDataSamplesPageUrl } from "../urls";
@@ -111,7 +108,7 @@ const TestingModelPage = () => {
     closeDialog();
     setEditorLoading(false);
   }, [closeDialog, openEditor]);
-  useKeyboardShortcut(keyboardShortcuts.editInMakeCode, maybeOpenEditor);
+  useShortcut(keyboardShortcuts.editInMakeCode, maybeOpenEditor);
 
   return model ? (
     <DefaultPageLayout

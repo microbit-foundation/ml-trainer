@@ -21,10 +21,7 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
-import {
-  keyboardShortcuts,
-  useKeyboardShortcut,
-} from "../keyboard-shortcut-hooks";
+import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { PostImportDialogState } from "../model";
 import Tour from "../pages/Tour";
 import { useStore } from "../store";
@@ -155,7 +152,7 @@ export const ProjectToolbarItems = () => {
   const handleSave = useCallback(() => {
     void saveHex();
   }, [saveHex]);
-  useKeyboardShortcut(keyboardShortcuts.saveSession, handleSave);
+  useShortcut(keyboardShortcuts.saveSession, handleSave);
 
   return (
     <>

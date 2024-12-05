@@ -17,10 +17,7 @@ import DefaultPageLayout, {
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import { useConnectionStage } from "../connection-stage-hooks";
-import {
-  keyboardShortcuts,
-  useKeyboardShortcut,
-} from "../keyboard-shortcut-hooks";
+import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
@@ -55,7 +52,7 @@ const DataSamplesPage = () => {
     setSelectedActionIdx(actions.length);
     addNewAction();
   }, [addNewAction, actions]);
-  useKeyboardShortcut(keyboardShortcuts.addAction, handleAddNewAction, {
+  useShortcut(keyboardShortcuts.addAction, handleAddNewAction, {
     enabled: !isAddNewActionDisabled,
   });
   const intl = useIntl();

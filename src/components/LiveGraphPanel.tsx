@@ -19,10 +19,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import microbitImage from "../images/stylised-microbit-black.svg";
-import {
-  keyboardShortcuts,
-  useKeyboardShortcut,
-} from "../keyboard-shortcut-hooks";
+import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { tourElClassname } from "../tours";
 import AlertIcon from "./AlertIcon";
@@ -67,7 +64,7 @@ const LiveGraphPanel = ({
       void actions.reconnect();
     }
   }, [status, actions, logging]);
-  useKeyboardShortcut(keyboardShortcuts.connect, handleConnectOrReconnect, {
+  useShortcut(keyboardShortcuts.connect, handleConnectOrReconnect, {
     enabled: isDisconnected,
   });
   const handleDisconnect = useCallback(() => {
@@ -76,7 +73,7 @@ const LiveGraphPanel = ({
     });
     void actions.disconnect();
   }, [actions, logging]);
-  useKeyboardShortcut(keyboardShortcuts.disconnect, handleDisconnect, {
+  useShortcut(keyboardShortcuts.disconnect, handleDisconnect, {
     enabled: isConnected,
   });
   const intl = useIntl();

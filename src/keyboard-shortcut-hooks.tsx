@@ -23,7 +23,7 @@ const globalShortcutConfig = {
   enableOnFormTags: true,
 };
 
-export const useKeyboardShortcut = (
+export const useShortcut = (
   keys: Keys,
   hotkeyCallback: HotkeyCallback,
   options: Options = {}
