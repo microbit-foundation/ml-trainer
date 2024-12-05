@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { MenuDivider, MenuItem } from "@chakra-ui/react";
 import { MdOutlineCookie } from "react-icons/md";
 import {

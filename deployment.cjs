@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 const {
   createDeploymentDetailsFromOptions,
 } = require("@microbit-foundation/website-deploy-aws-config");

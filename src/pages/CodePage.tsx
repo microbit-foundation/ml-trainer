@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Spinner, VStack } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";

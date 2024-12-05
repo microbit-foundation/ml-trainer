@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { HStack, MenuDivider, useDisclosure } from "@chakra-ui/react";
 import { ReactNode, useMemo } from "react";
 import { useIntl } from "react-intl";

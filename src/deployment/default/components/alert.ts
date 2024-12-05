@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { theme } from "@chakra-ui/react";
 import { StyleConfig, StyleFunctionProps } from "@chakra-ui/theme-tools";
 

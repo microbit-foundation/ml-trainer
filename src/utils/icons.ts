@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 export const makecodeIcons = {
   Heart: "0101011111111110111000100",
   SmallHeart: "0000001010011100010000000",

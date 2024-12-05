@@ -1,3 +1,9 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 // See CI & package.json scripts.
 export const version = import.meta.env.VITE_VERSION || "local";
 export type Stage = "local" | "review" | "staging" | "production";

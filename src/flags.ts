@@ -1,4 +1,9 @@
 /**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+/**
  * Simple feature flags.
  *
  * Features disabled here even in preview are not ready for feedback.

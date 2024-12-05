@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Card } from "@chakra-ui/react";
 import { memo } from "react";
 import { ActionData } from "../model";

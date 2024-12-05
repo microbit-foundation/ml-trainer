@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { HStack, StackProps } from "@chakra-ui/react";
 
 interface PercentageMeterProps extends StackProps {

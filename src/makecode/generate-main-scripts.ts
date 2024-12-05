@@ -1,10 +1,12 @@
-import { Action } from "../model";
-import { actionNamesFromLabels } from "./utils";
 /**
- * (c) 2024, Center for Computational Thinking and Design at Aarhus University and contributors
+ * (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
+ * Modifications (c) 2024, Micro:bit Educational Foundation and contributors
  *
  * SPDX-License-Identifier: MIT
  */
+import { Action } from "../model";
+import { actionNamesFromLabels } from "./utils";
+
 export interface OnActionRecognisedConfig {
   name: string;
   iconName: string;

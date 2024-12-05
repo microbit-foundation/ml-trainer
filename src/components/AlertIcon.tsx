@@ -1,3 +1,11 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * Modified version of RiAlertFill from react-icons (MIT licensed icon set used elsewhere)
+ * Original source https://github.com/Remix-Design/RemixIcon
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 import { Icon, IconProps } from "@chakra-ui/react";
 
 interface AlertIconProps extends Omit<IconProps, "viewBox"> {}

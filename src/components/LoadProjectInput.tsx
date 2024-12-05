@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Input } from "@chakra-ui/react";
 import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
 import { useProject } from "../hooks/project-hooks";

@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { MenuItem } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";

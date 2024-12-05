@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Icon, MenuItem } from "@chakra-ui/react";
 import { RiListSettingsLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";

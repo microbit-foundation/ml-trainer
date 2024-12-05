@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 export const basepath = import.meta.env.BASE_URL ?? "/";
 
 if (!basepath.endsWith("/")) {

@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { FormattedMessage, useIntl } from "react-intl";
 import { MakeCodeIcon, makecodeIcons } from "../utils/icons";
 import { Box } from "@chakra-ui/react";

@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { BoxProps, Grid, GridItem, Text } from "@chakra-ui/react";
 import React from "react";
 import { FormattedMessage } from "react-intl";

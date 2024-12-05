@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { useCallback } from "react";
 import { useNavigate } from "react-router";
 import { TrainModelDialogStage } from "../model";
