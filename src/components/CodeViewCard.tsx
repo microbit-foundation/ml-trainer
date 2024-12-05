@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Box, Card, SkeletonText, VStack } from "@chakra-ui/react";
 import {
   BlockLayout,

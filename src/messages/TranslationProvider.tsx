@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { useSettings } from "../store";
 import { IntlProvider, MessageFormatElement } from "react-intl";
 import { ReactNode, useEffect, useState } from "react";

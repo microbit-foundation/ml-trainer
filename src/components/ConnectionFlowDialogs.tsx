@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { useCallback, useState } from "react";
 import { bluetoothUniversalHex } from "../connection-stage-actions";
 import {

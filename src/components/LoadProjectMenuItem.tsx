@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { MenuItem, MenuItemProps } from "@chakra-ui/react";
 import { useRef } from "react";
 import LoadProjectInput, {

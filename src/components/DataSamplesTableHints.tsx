@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { GridItem, HStack, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";

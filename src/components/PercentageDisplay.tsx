@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { BoxProps, Text, VisuallyHidden } from "@chakra-ui/react";
 
 interface PercentageDisplayProps extends BoxProps {

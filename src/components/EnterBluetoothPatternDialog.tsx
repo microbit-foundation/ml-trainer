@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Text, VStack } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";

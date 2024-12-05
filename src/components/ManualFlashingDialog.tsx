@@ -1,3 +1,9 @@
+/**
+ * (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
+ * Modifications (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Button, Image, Text, VStack } from "@chakra-ui/react";
 import Bowser from "bowser";
 import { ReactNode, useCallback } from "react";

@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { extendTheme, withDefaultVariant } from "@chakra-ui/react";
 import colors from "./colors";
 import Alert from "./components/alert";

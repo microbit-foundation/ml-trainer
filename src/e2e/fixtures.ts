@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { test as base } from "@playwright/test";
 import { HomePage } from "./app/home-page";
 import { DataSamplesPage } from "./app/data-samples";

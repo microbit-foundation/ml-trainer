@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 export const previewGraphData = {
   x: [
     0.588, 1.156, 1.156, 1.82, 1.804, 1.804, 1.46, 1.168, 1.048, 0.828, 0.128,

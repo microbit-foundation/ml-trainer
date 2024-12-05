@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 /**
  * (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
+ * Modifications (c) 2024, Micro:bit Educational Foundation and contributors
  *
  * SPDX-License-Identifier: MIT
  */
@@ -61,6 +62,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
   return {
     base: process.env.BASE_URL ?? "/",
     plugins: [viteEjsPlugin(strings), react(), svgr()],
+    assetsInclude: ["**/*.hex"],
     define: {
       "import.meta.env.VITE_APP_VERSION": JSON.stringify(
         process.env.npm_package_version

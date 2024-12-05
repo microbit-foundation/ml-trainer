@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { AspectRatio, Box, HStack, keyframes, VStack } from "@chakra-ui/react";
 import { memo, useCallback } from "react";
 import { icons, LedIconType } from "../utils/icons";

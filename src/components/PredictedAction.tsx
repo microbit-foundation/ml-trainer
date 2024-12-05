@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { HStack, Text, VisuallyHidden, VStack } from "@chakra-ui/react";
 import debounce from "lodash.debounce";
 import { useEffect, useMemo, useState } from "react";

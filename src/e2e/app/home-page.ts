@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { expect, type Page } from "@playwright/test";
 import { Navbar } from "./shared";
 

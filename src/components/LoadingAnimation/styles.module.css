@@ -1,4 +1,9 @@
-/* Modified from https://github.com/lukehaas/css-loaders */
+/**
+ * Modified from css-loaders https://github.com/lukehaas/css-loaders
+ * Copyright (c) 2014, Luke Haas
+ * Changes (c) 2024, Micro:bit Educational Foundation and contributors
+ * SPDX-License-Identifier: MIT
+ */
 .loader,
 .loader:before,
 .loader:after {
@@ -10,6 +15,7 @@
   -webkit-animation: load7 1.8s infinite ease-in-out;
   animation: load7 1.8s infinite ease-in-out;
 }
+
 .loader {
   font-size: 10px;
   position: absolute;
@@ -21,36 +27,43 @@
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }
+
 .loader:before,
 .loader:after {
   content: "";
   position: absolute;
   top: 0;
 }
+
 .loader:before {
   left: -3.5em;
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
+
 .loader:after {
   left: 3.5em;
 }
+
 @-webkit-keyframes load7 {
   0%,
   80%,
   100% {
     box-shadow: 0 2.5em 0 -1.3em;
   }
+
   40% {
     box-shadow: 0 2.5em 0 -1.3em;
   }
 }
+
 @keyframes load7 {
   0%,
   80%,
   100% {
     box-shadow: 0 2.5em 0 -1.3em;
   }
+
   40% {
     box-shadow: 0 2.5em 0 0;
   }

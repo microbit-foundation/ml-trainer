@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 /// <reference types="vite-plugin-svgr/client" />
 /// <reference types="vite/client" />
 

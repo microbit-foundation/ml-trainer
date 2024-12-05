@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { useCallback } from "react";
 import { useProjectIsUntitled, useProject } from "../hooks/project-hooks";
 import { useStore } from "../store";

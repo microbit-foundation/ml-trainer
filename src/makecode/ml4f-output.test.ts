@@ -1,8 +1,10 @@
 /**
  * @vitest-environment jsdom
  */
+
 /**
- * (c) 2024, Center for Computational Thinking and Design at Aarhus University and contributors
+ * (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
+ * Modifications (c) 2024, Micro:bit Educational Foundation and contributors
  *
  * SPDX-License-Identifier: MIT
  */

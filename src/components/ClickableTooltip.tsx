@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Flex, Tooltip, TooltipProps, useDisclosure } from "@chakra-ui/react";
 import { ReactNode, useCallback, useRef } from "react";
 import { useIntl } from "react-intl";

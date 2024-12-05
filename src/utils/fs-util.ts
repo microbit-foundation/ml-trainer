@@ -1,3 +1,9 @@
+/**
+ * (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
+ * Modifications (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { HexData, HexUrl } from "../model";
 
 export const getFileExtension = (filename: string): string | undefined => {

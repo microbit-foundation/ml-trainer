@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Divider, HStack, StackProps } from "@chakra-ui/react";
 import { useDeployment } from "../deployment";
 

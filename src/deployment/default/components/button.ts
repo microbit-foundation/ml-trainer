@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { StyleConfig } from "@chakra-ui/theme-tools";
 
 const Button: StyleConfig = {

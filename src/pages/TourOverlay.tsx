@@ -1,3 +1,8 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Box, Portal, useModalContext, useToken } from "@chakra-ui/react";
 import { MutableRefObject, RefObject, useLayoutEffect, useState } from "react";
 
