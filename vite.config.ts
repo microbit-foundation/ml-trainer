@@ -61,6 +61,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
   return {
     base: process.env.BASE_URL ?? "/",
     plugins: [viteEjsPlugin(strings), react(), svgr()],
+    assetsInclude: ["**/*.hex"],
     define: {
       "import.meta.env.VITE_APP_VERSION": JSON.stringify(
         process.env.npm_package_version

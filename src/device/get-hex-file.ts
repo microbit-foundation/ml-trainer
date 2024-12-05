@@ -4,6 +4,14 @@ import {
   FlashDataSource,
 } from "@microbit/microbit-connection";
 
+import hexV1 from "./firmware/ml-microbit-cpp-version-combined.hex";
+import hexV2 from "./firmware/MICROBIT.hex";
+import hexUniversal from "./firmware/universal-hex.hex";
+import hexRadioRemoteDev from "./firmware/radio-remote-v0.2.1-dev.hex";
+import hexRadioRemote from "./firmware/radio-remote-v0.2.1.hex";
+import hexRadioBridge from "./firmware/radio-bridge-v0.2.1.hex";
+import hexRadioLocal from "./firmware/local-sensors-v0.2.1.hex";
+
 export enum HexType {
   RadioRemote = "radio-remote",
   RadioBridge = "radio-bridge",
@@ -17,19 +25,19 @@ export const getHexFileUrl = (
 ): string | undefined => {
   if (type === HexType.Bluetooth) {
     return {
-      V1: "firmware/ml-microbit-cpp-version-combined.hex",
-      V2: "firmware/MICROBIT.hex",
-      universal: "firmware/universal-hex.hex",
+      V1: hexV1,
+      V2: hexV2,
+      universal: hexUniversal,
     }[version];
   }
   if (version !== "V2") {
     return undefined;
   }
   return {
-    "radio-remote-dev": "firmware/radio-remote-v0.2.1-dev.hex",
-    "radio-remote": "firmware/radio-remote-v0.2.1.hex",
-    "radio-bridge": "firmware/radio-bridge-v0.2.1.hex",
-    "radio-local": "firmware/local-sensors-v0.2.1.hex",
+    "radio-remote-dev": hexRadioRemoteDev,
+    "radio-remote": hexRadioRemote,
+    "radio-bridge": hexRadioBridge,
+    "radio-local": hexRadioLocal,
   }[type];
 };
 
