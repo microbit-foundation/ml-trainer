@@ -145,39 +145,59 @@ const DataSamplesTable = ({
     [tourStart]
   );
 
-  const focusActionNameInput = useCallback(
-    (actionIdx: number) => {
-      const inputId = actionNameInputId(actions[actionIdx]);
-      const actionNameInputEl = document.getElementById(inputId);
-      actionNameInputEl?.focus();
-    },
+  const actionNameInputEl = useCallback(
+    (idx: number) => document.getElementById(actionNameInputId(actions[idx])),
     [actions]
   );
-  const focusAction = useCallback(
-    (idx: number) => {
-      if (idx >= 0 && idx < actions.length) {
-        setSelectedActionIdx(idx);
-        const recordButton = document.getElementById(
-          recordButtonId(actions[idx])
-        );
-        if (recordButton) {
-          recordButton?.focus();
-        } else {
-          focusActionNameInput(idx);
-        }
-      }
-    },
-    [actions, focusActionNameInput, setSelectedActionIdx]
+  const recordButtonEl = useCallback(
+    (idx: number) => document.getElementById(recordButtonId(actions[idx])),
+    [actions]
   );
-  useShortcut(keyboardShortcuts.nextAction, () =>
-    focusAction(selectedActionIdx + 1)
+  useShortcut(keyboardShortcuts.focusRecordButton, () =>
+    recordButtonEl(selectedActionIdx)?.focus()
   );
-  useShortcut(keyboardShortcuts.previousAction, () =>
-    focusAction(selectedActionIdx - 1)
+  useShortcut(keyboardShortcuts.focusActionName, () =>
+    actionNameInputEl(selectedActionIdx)?.focus()
   );
   const renameActionShortcutScopeRef = useShortcut(
     keyboardShortcuts.renameAction,
-    () => focusActionNameInput(selectedActionIdx)
+    () => actionNameInputEl(selectedActionIdx)?.focus()
+  );
+  const focusAction = useCallback(
+    (idx: number) => {
+      if (idx < 0 || idx >= actions.length) {
+        // Index is out of range.
+        return;
+      }
+      const nextRecordButton = recordButtonEl(idx);
+      const nextActionNameInput = actionNameInputEl(idx);
+      if (document.activeElement === actionNameInputEl(selectedActionIdx)) {
+        // When focused on an action name input.
+        return nextActionNameInput?.focus();
+      }
+      if (
+        document.activeElement === recordButtonEl(selectedActionIdx) &&
+        nextRecordButton
+      ) {
+        // When focused on a record button and next record button exists.
+        return nextRecordButton.focus();
+      }
+      nextActionNameInput?.focus();
+      setSelectedActionIdx(idx);
+    },
+    [
+      actionNameInputEl,
+      actions.length,
+      recordButtonEl,
+      selectedActionIdx,
+      setSelectedActionIdx,
+    ]
+  );
+  useShortcut(keyboardShortcuts.focusBelowAction, () =>
+    focusAction(selectedActionIdx + 1)
+  );
+  useShortcut(keyboardShortcuts.focusAboveAction, () =>
+    focusAction(selectedActionIdx - 1)
   );
 
   return (
