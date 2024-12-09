@@ -172,9 +172,6 @@ export class ConnectionStageActions {
   };
 
   onChangeMicrobitName = (name: string) => {
-    if (this.stage.connType !== "bluetooth") {
-      throw new Error("Microbit name can only be set for bluetooth flow");
-    }
     this.setStage({
       ...this.stage,
       connType: "bluetooth",
