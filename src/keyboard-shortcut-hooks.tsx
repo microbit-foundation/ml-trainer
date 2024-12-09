@@ -11,8 +11,6 @@ export const keyboardShortcuts = {
   settings: ["ctrl+shift+p", "meta+shift+p"],
   focusBelowAction: ["down"],
   focusAboveAction: ["up"],
-  focusActionName: ["left"],
-  focusRecordButton: ["right"],
   renameAction: ["F2"],
   connect: ["ctrl+shift+u", "meta+shift+u"],
   disconnect: ["ctrl+shift+k", "meta+shift+k"],
