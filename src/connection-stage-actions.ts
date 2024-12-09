@@ -150,16 +150,14 @@ export class ConnectionStageActions {
   };
 
   private handleConnectAndFlashFail = (result: ConnectAndFlashFailResult) => {
+    if (result === ConnectResult.ErrorBadFirmware) {
+      return this.setFlowStep(ConnectionFlowStep.BadFirmware);
+    }
     if (this.stage.flowType === ConnectionFlowType.ConnectBluetooth) {
       downloadHex(bluetoothUniversalHex);
       return this.setFlowStep(ConnectionFlowStep.ManualFlashingTutorial);
     }
-
-    // TODO: Not sure if this is a good way of error handling because it means
-    // there are 2 levels of switch statements to go through to provide UI
     switch (result) {
-      case ConnectResult.ErrorBadFirmware:
-        return this.setFlowStep(ConnectionFlowStep.BadFirmware);
       case ConnectResult.ErrorNoDeviceSelected:
         return this.setFlowStep(
           ConnectionFlowStep.TryAgainWebUsbSelectMicrobit

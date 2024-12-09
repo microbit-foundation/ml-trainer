@@ -703,10 +703,6 @@
     "defaultMessage": "Firmware update required",
     "description": "Connection error dialog"
   },
-  "firmware-outdated-skip": {
-    "defaultMessage": "Skip and transfer manually",
-    "description": "Connection error dialog content - firmware"
-  },
   "get-started-action": {
     "defaultMessage": "Get started",
     "description": "Get started action"

@@ -26,13 +26,11 @@ interface BrokenFirmwareDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onTryAgain: () => void;
-  onSkip: () => void;
 }
 
 const BrokenFirmwareDialog = ({
   isOpen,
   onClose,
-  onSkip,
   onTryAgain,
 }: BrokenFirmwareDialogProps) => {
   const { supportLinks } = useDeployment();
@@ -99,9 +97,6 @@ const BrokenFirmwareDialog = ({
             <HStack gap={5}>
               <Button onClick={onClose} variant="secondary" size="lg">
                 <FormattedMessage id="cancel-action" />
-              </Button>
-              <Button onClick={onSkip} variant="secondary" size="lg">
-                <FormattedMessage id="firmware-outdated-skip" />
               </Button>
               <Button onClick={onTryAgain} variant="primary" size="lg">
                 <FormattedMessage id="try-again-action" />

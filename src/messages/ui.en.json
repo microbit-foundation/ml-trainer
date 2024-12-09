@@ -1207,12 +1207,6 @@
       "value": "Firmware update required"
     }
   ],
-  "firmware-outdated-skip": [
-    {
-      "type": 0,
-      "value": "Skip and transfer manually"
-    }
-  ],
   "get-started-action": [
     {
       "type": 0,

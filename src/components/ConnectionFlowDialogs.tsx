@@ -211,9 +211,6 @@ const ConnectionDialogs = () => {
       return (
         <BrokenFirmwareDialog
           {...dialogCommonProps}
-          onSkip={() =>
-            actions.setFlowStep(ConnectionFlowStep.ManualFlashingTutorial)
-          }
           onTryAgain={actions.onTryAgain}
         />
       );
