@@ -37,6 +37,7 @@ import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
+import StorageQuotaExceededErrorDialog from "./StorageQuotaExceededErrorDialog";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -92,6 +93,7 @@ const DefaultPageLayout = ({
         isOpen={postImportDialogState === PostImportDialogState.Error}
       />
       <MakeCodeLoadErrorDialog />
+      <StorageQuotaExceededErrorDialog />
       <FeedbackForm isOpen={isFeedbackOpen} onClose={closeDialog} />
       <ProjectDropTarget
         isEnabled={!isNonConnectionDialogOpen && !isConnectionDialogOpen}

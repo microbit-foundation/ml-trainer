@@ -7,7 +7,7 @@
 import { Project } from "@microbit/makecode-embed/react";
 import * as tf from "@tensorflow/tfjs";
 import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
 import { deployment } from "./deployment";
 import { flags } from "./flags";
@@ -192,6 +192,7 @@ export interface State {
   isNameProjectDialogOpen: boolean;
   isRecordingDialogOpen: boolean;
   isConnectToRecordDialogOpen: boolean;
+  isStorageQuotaExceededDialogOpen: boolean;
 }
 
 export interface ConnectOptions {
@@ -327,6 +328,7 @@ const createMlStore = (logging: Logging) => {
           isRecordingDialogOpen: false,
           isConnectToRecordDialogOpen: false,
           isDeleteActionDialogOpen: false,
+          isStorageQuotaExceededDialogOpen: false,
           isIncompatibleEditorDeviceDialogOpen: false,
 
           setSettings(update: Partial<Settings>) {
@@ -587,39 +589,51 @@ const createMlStore = (logging: Logging) => {
           },
 
           loadDataset(newActions: ActionData[]) {
-            set(({ project, projectEdited, settings }) => {
-              const dataWindow = getDataWindowFromActions(newActions);
-              return {
-                settings: {
-                  ...settings,
-                  toursCompleted: Array.from(
-                    new Set([...settings.toursCompleted, "DataSamplesRecorded"])
-                  ),
-                },
-                actions: (() => {
-                  const copy = newActions.map((a) => ({ ...a }));
-                  for (const a of copy) {
-                    if (!a.icon) {
-                      a.icon = actionIcon({
-                        isFirstAction: false,
-                        existingActions: copy,
-                      });
+            try {
+              set(({ project, projectEdited, settings }) => {
+                const dataWindow = getDataWindowFromActions(newActions);
+                return {
+                  settings: {
+                    ...settings,
+                    toursCompleted: Array.from(
+                      new Set([
+                        ...settings.toursCompleted,
+                        "DataSamplesRecorded",
+                      ])
+                    ),
+                  },
+                  actions: (() => {
+                    const copy = newActions.map((a) => ({ ...a }));
+                    for (const a of copy) {
+                      if (!a.icon) {
+                        a.icon = actionIcon({
+                          isFirstAction: false,
+                          existingActions: copy,
+                        });
+                      }
                     }
-                  }
-                  return copy;
-                })(),
-                dataWindow,
-                model: undefined,
-                timestamp: Date.now(),
-                ...updateProject(
-                  project,
-                  projectEdited,
-                  newActions,
-                  undefined,
-                  dataWindow
-                ),
-              };
-            });
+                    return copy;
+                  })(),
+                  dataWindow,
+                  model: undefined,
+                  timestamp: Date.now(),
+                  ...updateProject(
+                    project,
+                    projectEdited,
+                    newActions,
+                    undefined,
+                    dataWindow
+                  ),
+                };
+              });
+            } catch (e) {
+              if ((e as Error).name === "QuotaExceededError") {
+                return set({
+                  isStorageQuotaExceededDialogOpen: true,
+                });
+              }
+              throw e;
+            }
           },
 
           /**
@@ -1135,6 +1149,7 @@ const createMlStore = (logging: Logging) => {
               isConnectToRecordDialogOpen,
               isDeleteActionDialogOpen,
               isIncompatibleEditorDeviceDialogOpen,
+              isStorageQuotaExceededDialogOpen,
               save,
             } = get();
             return (
@@ -1147,6 +1162,7 @@ const createMlStore = (logging: Logging) => {
               isRecordingDialogOpen ||
               isConnectToRecordDialogOpen ||
               isDeleteActionDialogOpen ||
+              isStorageQuotaExceededDialogOpen ||
               isIncompatibleEditorDeviceDialogOpen ||
               postImportDialogState !== PostImportDialogState.None ||
               isEditorOpen ||
@@ -1161,6 +1177,7 @@ const createMlStore = (logging: Logging) => {
         {
           version: 1,
           name: "ml",
+          storage: createJSONStorage(() => mlStorage),
           partialize: ({
             actions,
             project,
@@ -1209,6 +1226,26 @@ const createMlStore = (logging: Logging) => {
       { enabled: flags.devtools }
     )
   );
+};
+
+const mlStorage = {
+  getItem: localStorage.getItem,
+  setItem: (name: string, value: string) => {
+    try {
+      localStorage.setItem(name, value);
+    } catch (e) {
+      if ((e as Error).name === "QuotaExceededError") {
+        const prevValue = JSON.parse(value) as object;
+        const newValue = {
+          ...prevValue,
+          isStorageQuotaExceededDialogOpen: true,
+        };
+        return localStorage.setItem(name, JSON.stringify(newValue));
+      }
+      throw e;
+    }
+  },
+  removeItem: localStorage.removeItem,
 };
 
 export const useStore = createMlStore(deployment.logging);

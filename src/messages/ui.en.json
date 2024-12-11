@@ -2563,6 +2563,18 @@
       "value": "Stop recording"
     }
   ],
+  "storage-quota-exceeded-dialog-body": [
+    {
+      "type": 0,
+      "value": "You have reached your session's storage limit. Recent changes made on your session cannot be saved. Please reload the page to continue your session."
+    }
+  ],
+  "storage-quota-exceeded-dialog-title": [
+    {
+      "type": 0,
+      "value": "Error auto-saving your session"
+    }
+  ],
   "support-request": [
     {
       "type": 0,
