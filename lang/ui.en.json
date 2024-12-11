@@ -1447,6 +1447,14 @@
     "defaultMessage": "Stop recording",
     "description": "Button label to stop recording movement data while recording multiple samples"
   },
+  "storage-quota-exceeded-dialog-body": {
+    "defaultMessage": "You have reached your session's storage limit. Recent changes made on your session cannot be saved. Please reload the page to continue your session.",
+    "description": "Body of storage error dialog"
+  },
+  "storage-quota-exceeded-dialog-title": {
+    "defaultMessage": "Error auto-saving your session",
+    "description": "Title of storage error dialog"
+  },
   "support-request": {
     "defaultMessage": "Please consider <link>raising a support request</link>.",
     "description": "Support request link text"
