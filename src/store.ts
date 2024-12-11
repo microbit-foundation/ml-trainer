@@ -589,51 +589,39 @@ const createMlStore = (logging: Logging) => {
           },
 
           loadDataset(newActions: ActionData[]) {
-            try {
-              set(({ project, projectEdited, settings }) => {
-                const dataWindow = getDataWindowFromActions(newActions);
-                return {
-                  settings: {
-                    ...settings,
-                    toursCompleted: Array.from(
-                      new Set([
-                        ...settings.toursCompleted,
-                        "DataSamplesRecorded",
-                      ])
-                    ),
-                  },
-                  actions: (() => {
-                    const copy = newActions.map((a) => ({ ...a }));
-                    for (const a of copy) {
-                      if (!a.icon) {
-                        a.icon = actionIcon({
-                          isFirstAction: false,
-                          existingActions: copy,
-                        });
-                      }
-                    }
-                    return copy;
-                  })(),
-                  dataWindow,
-                  model: undefined,
-                  timestamp: Date.now(),
-                  ...updateProject(
-                    project,
-                    projectEdited,
-                    newActions,
-                    undefined,
-                    dataWindow
+            set(({ project, projectEdited, settings }) => {
+              const dataWindow = getDataWindowFromActions(newActions);
+              return {
+                settings: {
+                  ...settings,
+                  toursCompleted: Array.from(
+                    new Set([...settings.toursCompleted, "DataSamplesRecorded"])
                   ),
-                };
-              });
-            } catch (e) {
-              if ((e as Error).name === "QuotaExceededError") {
-                return set({
-                  isStorageQuotaExceededDialogOpen: true,
-                });
-              }
-              throw e;
-            }
+                },
+                actions: (() => {
+                  const copy = newActions.map((a) => ({ ...a }));
+                  for (const a of copy) {
+                    if (!a.icon) {
+                      a.icon = actionIcon({
+                        isFirstAction: false,
+                        existingActions: copy,
+                      });
+                    }
+                  }
+                  return copy;
+                })(),
+                dataWindow,
+                model: undefined,
+                timestamp: Date.now(),
+                ...updateProject(
+                  project,
+                  projectEdited,
+                  newActions,
+                  undefined,
+                  dataWindow
+                ),
+              };
+            });
           },
 
           /**
