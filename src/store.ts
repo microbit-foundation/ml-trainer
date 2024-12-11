@@ -192,7 +192,6 @@ export interface State {
   isNameProjectDialogOpen: boolean;
   isRecordingDialogOpen: boolean;
   isConnectToRecordDialogOpen: boolean;
-  isStorageQuotaExceededDialogOpen: boolean;
 }
 
 export interface ConnectOptions {
@@ -328,7 +327,6 @@ const createMlStore = (logging: Logging) => {
           isRecordingDialogOpen: false,
           isConnectToRecordDialogOpen: false,
           isDeleteActionDialogOpen: false,
-          isStorageQuotaExceededDialogOpen: false,
           isIncompatibleEditorDeviceDialogOpen: false,
 
           setSettings(update: Partial<Settings>) {
@@ -1137,7 +1135,6 @@ const createMlStore = (logging: Logging) => {
               isConnectToRecordDialogOpen,
               isDeleteActionDialogOpen,
               isIncompatibleEditorDeviceDialogOpen,
-              isStorageQuotaExceededDialogOpen,
               save,
             } = get();
             return (
@@ -1150,7 +1147,6 @@ const createMlStore = (logging: Logging) => {
               isRecordingDialogOpen ||
               isConnectToRecordDialogOpen ||
               isDeleteActionDialogOpen ||
-              isStorageQuotaExceededDialogOpen ||
               isIncompatibleEditorDeviceDialogOpen ||
               postImportDialogState !== PostImportDialogState.None ||
               isEditorOpen ||
