@@ -24,7 +24,7 @@ import { useProject } from "../hooks/project-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { PostImportDialogState } from "../model";
 import Tour from "../pages/Tour";
-import { useStore } from "../store";
+import { isStorageQuotaExceeded, useStore } from "../store";
 import { createHomePageUrl } from "../urls";
 import ActionBar from "./ActionBar/ActionBar";
 import ItemsRight from "./ActionBar/ActionBarItemsRight";
@@ -77,11 +77,14 @@ const DefaultPageLayout = ({
 
   const isFeedbackOpen = useStore((s) => s.isFeedbackFormOpen);
   const closeDialog = useStore((s) => s.closeDialog);
+  const isStorageQuotaExceededDialogOpen = isStorageQuotaExceeded();
 
   return (
     <>
       {/* Suppress dialogs to prevent overlapping dialogs */}
-      {!isNonConnectionDialogOpen && <ConnectionDialogs />}
+      {!isNonConnectionDialogOpen && !isStorageQuotaExceededDialogOpen && (
+        <ConnectionDialogs />
+      )}
       <Tour />
       <SaveDialogs />
       <NotCreateAiHexImportDialog
@@ -93,7 +96,9 @@ const DefaultPageLayout = ({
         isOpen={postImportDialogState === PostImportDialogState.Error}
       />
       <MakeCodeLoadErrorDialog />
-      <StorageQuotaExceededErrorDialog />
+      <StorageQuotaExceededErrorDialog
+        isOpen={isStorageQuotaExceededDialogOpen}
+      />
       <FeedbackForm isOpen={isFeedbackOpen} onClose={closeDialog} />
       <ProjectDropTarget
         isEnabled={!isNonConnectionDialogOpen && !isConnectionDialogOpen}

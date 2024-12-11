@@ -16,10 +16,14 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import { useStore } from "../store";
 
-const StorageQuotaExceededErrorDialog = () => {
-  const isOpen = useStore((s) => s.isStorageQuotaExceededDialogOpen);
+interface StorageQuotaExceededErrorDialogProps {
+  isOpen: boolean;
+}
+
+const StorageQuotaExceededErrorDialog = ({
+  isOpen,
+}: StorageQuotaExceededErrorDialogProps) => {
   return (
     <Modal
       motionPreset="none"

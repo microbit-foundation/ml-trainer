@@ -1216,6 +1216,7 @@ const createMlStore = (logging: Logging) => {
   );
 };
 
+const storageQuotaExceededKey = "QuotaExceededError";
 const mlStorage = {
   getItem: localStorage.getItem,
   setItem: (name: string, value: string) => {
@@ -1223,17 +1224,16 @@ const mlStorage = {
       localStorage.setItem(name, value);
     } catch (e) {
       if ((e as Error).name === "QuotaExceededError") {
-        const prevValue = JSON.parse(value) as object;
-        const newValue = {
-          ...prevValue,
-          isStorageQuotaExceededDialogOpen: true,
-        };
-        return localStorage.setItem(name, JSON.stringify(newValue));
+        return localStorage.setItem(storageQuotaExceededKey, "1");
       }
       throw e;
     }
   },
   removeItem: localStorage.removeItem,
+};
+
+export const isStorageQuotaExceeded = () => {
+  return localStorage.getItem(storageQuotaExceededKey) === "1";
 };
 
 export const useStore = createMlStore(deployment.logging);
@@ -1244,6 +1244,9 @@ const getDataWindowFromActions = (actions: ActionData[]): DataWindow => {
     ? legacyDataWindow
     : currentDataWindow;
 };
+
+// Reset storage quota exceeded state
+localStorage.setItem(storageQuotaExceededKey, "0");
 
 // Get data window from actions on app load.
 const { actions } = useStore.getState();
