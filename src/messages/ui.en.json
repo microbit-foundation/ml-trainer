@@ -117,6 +117,12 @@
       "value": "AI activity timer"
     }
   ],
+  "ai-storytelling-friend-resource-title": [
+    {
+      "type": 0,
+      "value": "AI storytelling friend"
+    }
+  ],
   "back-action": [
     {
       "type": 0,

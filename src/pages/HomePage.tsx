@@ -26,8 +26,9 @@ import clap from "../images/clap-hands.png";
 import xyzGraph from "../images/xyz-graph.png";
 import { createNewPageUrl } from "../urls";
 
-import projectImage2 from "theme-package/images/ai-activity-timer.png";
-import projectImage1 from "theme-package/images/simple-ai-exercise-timer.png";
+import projectImage3 from "theme-package/images/ai-activity-timer.png";
+import projectImage2 from "theme-package/images/simple-ai-exercise-timer.png";
+import projectImage1 from "theme-package/images/ai-storytelling-friend.png";
 import StepByStepIllustration from "../components/StepByStepIllustration";
 import {
   landingPageUrl,
@@ -167,17 +168,24 @@ const HomePage = () => {
             <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
               <ResourceCard
                 title={intl.formatMessage({
+                  id: "ai-storytelling-friend-resource-title",
+                })}
+                url={projectUrl("ai-storytelling-friend")}
+                imgSrc={projectImage1}
+              />
+              <ResourceCard
+                title={intl.formatMessage({
                   id: "simple-ai-exercise-timer-resource-title",
                 })}
                 url={projectUrl("simple-ai-exercise-timer")}
-                imgSrc={projectImage1}
+                imgSrc={projectImage2}
               />
               <ResourceCard
                 title={intl.formatMessage({
                   id: "ai-activity-timer-resource-title",
                 })}
                 url={projectUrl("ai-activity-timer")}
-                imgSrc={projectImage2}
+                imgSrc={projectImage3}
               />
             </HStack>
             <Text fontSize="md">

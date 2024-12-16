@@ -55,6 +55,10 @@
     "defaultMessage": "AI activity timer",
     "description": "Home page resource card title"
   },
+  "ai-storytelling-friend-resource-title": {
+    "defaultMessage": "AI storytelling friend",
+    "description": "Home page resource card title"
+  },
   "back-action": {
     "defaultMessage": "Back",
     "description": "Back button text"
