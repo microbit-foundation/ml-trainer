@@ -1,0 +1,3012 @@
+{
+  "aarhus-university-alt": [
+    {
+      "type": 0,
+      "value": "Universiteit van Aarhus"
+    }
+  ],
+  "about": [
+    {
+      "type": 0,
+      "value": "Over"
+    }
+  ],
+  "about-dialog-alt": [
+    {
+      "type": 0,
+      "value": "micro:bit bord met een hart op het LED-display"
+    }
+  ],
+  "about-dialog-title": [
+    {
+      "type": 0,
+      "value": "Ontwikkeld in een partnerschap met "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Center for Computational Thinking and Design, Universiteit van Aarhus"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    }
+  ],
+  "accelerometer-image-alt": [
+    {
+      "type": 0,
+      "value": "micro:bit toont de X-as over de voorkant, de Y-as gaat naar beneden en omhoog, de Z-as gaat terug naar voren"
+    }
+  ],
+  "action-label": [
+    {
+      "type": 0,
+      "value": "Actie"
+    }
+  ],
+  "action-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Actie tooltip"
+    }
+  ],
+  "action-length-error": [
+    {
+      "type": 0,
+      "value": "Actienamen kunnen niet langer zijn dan "
+    },
+    {
+      "type": 1,
+      "value": "maxLen"
+    },
+    {
+      "type": 0,
+      "value": " tekens."
+    }
+  ],
+  "action-name-placeholder": [
+    {
+      "type": 0,
+      "value": "Naam van actie"
+    }
+  ],
+  "action-region": [
+    {
+      "type": 0,
+      "value": "Actie \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "action-tooltip": [
+    {
+      "type": 0,
+      "value": "Het type beweging dat je "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " wilt laten herkennen, bijvoorbeeld 'zwaaien' of 'klappen'."
+    }
+  ],
+  "actions-label": [
+    {
+      "type": 0,
+      "value": "Acties"
+    }
+  ],
+  "add-action-action": [
+    {
+      "type": 0,
+      "value": "Voeg actie toe"
+    }
+  ],
+  "ai-activity-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "AI activiteiten timer"
+    }
+  ],
+  "ai-storytelling-friend-resource-title": [
+    {
+      "type": 0,
+      "value": "AI verhalenvertellende vriend"
+    }
+  ],
+  "back-action": [
+    {
+      "type": 0,
+      "value": "Terug"
+    }
+  ],
+  "back-to-data-samples-action": [
+    {
+      "type": 0,
+      "value": "Bewerk data samples"
+    }
+  ],
+  "bluetooth-unsupported-advice": [
+    {
+      "type": 0,
+      "value": "We raden Google Chrome of Microsoft Edge aan, zodat je direct verbinding kunt maken met je micro:bit."
+    }
+  ],
+  "bluetooth-unsupported-explain": [
+    {
+      "type": 0,
+      "value": "Helaas worden WebUSB en Web Bluetooth niet ondersteund door deze browser. Dit betekent dat je niet kunt verbinden met een micro:bit om de data samples te registreren die nodig zijn om een machine learning model te trainen."
+    }
+  ],
+  "bluetooth-unsupported-header": [
+    {
+      "type": 0,
+      "value": "Deze browser wordt niet ondersteund."
+    }
+  ],
+  "cancel-action": [
+    {
+      "type": 0,
+      "value": "Annuleren"
+    }
+  ],
+  "cancel-recording-action": [
+    {
+      "type": 0,
+      "value": "Opname annuleren"
+    }
+  ],
+  "certainty-label": [
+    {
+      "type": 0,
+      "value": "Zekerheid"
+    }
+  ],
+  "certainty-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Zekerheid tooltip"
+    }
+  ],
+  "certainty-percentage-label": [
+    {
+      "type": 0,
+      "value": "zekerheid voor "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "currentConfidence"
+    },
+    {
+      "type": 0,
+      "value": " procent"
+    }
+  ],
+  "certainty-tooltip": [
+    {
+      "type": 0,
+      "value": "Hoeveel vertrouwen het model erin heeft dat je momenteel elke actie uitvoert."
+    }
+  ],
+  "click-to-reload-page-action": [
+    {
+      "type": 0,
+      "value": "Klik om de pagina te herladen"
+    }
+  ],
+  "close-action": [
+    {
+      "type": 0,
+      "value": "Afsluiten"
+    }
+  ],
+  "code-download-error": [
+    {
+      "type": 0,
+      "value": "Fout bij downloaden van de projectcode"
+    }
+  ],
+  "code-label": [
+    {
+      "type": 0,
+      "value": "Codeer"
+    }
+  ],
+  "code-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Code tooltip"
+    }
+  ],
+  "code-tooltip": [
+    {
+      "type": 0,
+      "value": "Dit zijn de MakeCode blokken voor elke gedetecteerde actie wanneer je je ML model en code naar een micro:bit verplaatst"
+    }
+  ],
+  "confirm-action": [
+    {
+      "type": 0,
+      "value": "Bevestig"
+    }
+  ],
+  "confirm-save-action": [
+    {
+      "type": 0,
+      "value": "Bevestigen en opslaan"
+    }
+  ],
+  "connect-action": [
+    {
+      "type": 0,
+      "value": "Verbinden "
+    }
+  ],
+  "connect-action-aria": [
+    {
+      "type": 0,
+      "value": "Verbinden met een micro:bit"
+    }
+  ],
+  "connect-battery-heading": [
+    {
+      "type": 0,
+      "value": "Ontkoppel USB en sluit batterijpakket aan"
+    }
+  ],
+  "connect-battery-holder": [
+    {
+      "type": 0,
+      "value": "Batterijhouder"
+    }
+  ],
+  "connect-battery-link": [
+    {
+      "type": 0,
+      "value": "Je kan de micro:bit vastmaken om je pols of aan een object"
+    }
+  ],
+  "connect-battery-subtitle": [
+    {
+      "type": 0,
+      "value": "Koppel de micro:bit los van de computer en verbind het batterijpakket."
+    }
+  ],
+  "connect-bluetooth-cancelled-connection": [
+    {
+      "type": 0,
+      "value": "Je hebt geen micro:bit gekozen. Wil je het opnieuw proberen?"
+    }
+  ],
+  "connect-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "Verbinden via Web Bluetooth"
+    }
+  ],
+  "connect-bluetooth-invalid-pattern": [
+    {
+      "type": 0,
+      "value": "Het patroon dat je hebt getekend is ongeldig."
+    }
+  ],
+  "connect-bluetooth-start-heading": [
+    {
+      "type": 0,
+      "value": "Wat je nodig hebt om via Web Bluetooth te verbinden"
+    }
+  ],
+  "connect-bluetooth-start-requirements1": [
+    {
+      "type": 0,
+      "value": "1 micro:bit"
+    }
+  ],
+  "connect-bluetooth-start-requirements2-subtitle": [
+    {
+      "type": 0,
+      "value": "met Internet, een USB-poort & Web Bluetooth"
+    }
+  ],
+  "connect-bluetooth-start-switch-radio": [
+    {
+      "type": 0,
+      "value": "Maak in plaats daarvan verbinding met de micro:bit radio"
+    }
+  ],
+  "connect-cable-alt": [
+    {
+      "type": 0,
+      "value": "animatie met een USB-kabel die is aangesloten op de bovenkant van een micro:bit"
+    }
+  ],
+  "connect-cable-download-project-subtitle": [
+    {
+      "type": 0,
+      "value": "Sluit een micro:bit aan op deze computer met een USB-kabel om je machine learning MakeCode programma te downloaden."
+    }
+  ],
+  "connect-cable-heading": [
+    {
+      "type": 0,
+      "value": "USB-kabel aansluiten op de micro:bit"
+    }
+  ],
+  "connect-cable-skip": [
+    {
+      "type": 0,
+      "value": "Overslaan: programma al gedownload?"
+    }
+  ],
+  "connect-cable-subtitle": [
+    {
+      "type": 0,
+      "value": "Sluit de micro:bit aan op deze computer met een USB-kabel zodat het programma voor gegevensverzameling kan worden gedownload."
+    }
+  ],
+  "connect-computer": [
+    {
+      "type": 0,
+      "value": "Computer"
+    }
+  ],
+  "connect-data-collection-heading": [
+    {
+      "type": 0,
+      "value": "USB-kabel aansluiten op micro:bit 1"
+    }
+  ],
+  "connect-data-collection-subtitle": [
+    {
+      "type": 0,
+      "value": "Sluit de eerste micro:bit aan op deze computer met een USB-kabel zodat het programma voor gegevensverzameling kan worden gedownload. Dit is de micro:bit die je zal gebruiken om data samples te verzamelen."
+    }
+  ],
+  "connect-failed-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "Kan geen verbinding maken met micro:bit"
+    }
+  ],
+  "connect-failed-bluetooth1": [
+    {
+      "type": 0,
+      "value": "De verbinding met de micro:bit die de gegevens verzamelt kon niet worden gemaakt."
+    }
+  ],
+  "connect-failed-bridge-heading": [
+    {
+      "type": 0,
+      "value": "Kan geen verbinding maken met de radio link micro:bit"
+    }
+  ],
+  "connect-failed-bridge1": [
+    {
+      "type": 0,
+      "value": "De verbinding van de micro:bit met je computer kon niet tot stand worden gebracht."
+    }
+  ],
+  "connect-failed-remote-heading": [
+    {
+      "type": 0,
+      "value": "Kan geen verbinding maken met gegevensverzameling micro:bit"
+    }
+  ],
+  "connect-failed-remote1": [
+    {
+      "type": 0,
+      "value": "De verbinding met de micro:bit die de gegevens verzamelt kon niet worden gemaakt."
+    }
+  ],
+  "connect-help-alt": [
+    {
+      "type": 0,
+      "value": "WebUSB verbinding dialoogvenster met BBC micro:bit item gelabeld 1 en Connect knop gelabeld 2"
+    }
+  ],
+  "connect-micro-usb-cable": [
+    {
+      "type": 0,
+      "value": "Micro USB-kabel"
+    }
+  ],
+  "connect-or-import": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Verbind een micro:bit die gegevens verzamelt"
+        }
+      ],
+      "type": 8,
+      "value": "link1"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "importeer data samples"
+        }
+      ],
+      "type": 8,
+      "value": "link2"
+    }
+  ],
+  "connect-pattern-heading": [
+    {
+      "type": 0,
+      "value": "Kopieer patroon"
+    }
+  ],
+  "connect-pattern-input-label": [
+    {
+      "type": 0,
+      "value": "Kolom "
+    },
+    {
+      "type": 1,
+      "value": "colNum"
+    },
+    {
+      "type": 0,
+      "value": " - aantal verlichte LEDs op de micro:bit display"
+    }
+  ],
+  "connect-pattern-subtitle": [
+    {
+      "type": 0,
+      "value": "Kopieer het getoonde patroon op de micro:bit."
+    }
+  ],
+  "connect-popup": [
+    {
+      "type": 0,
+      "value": "Selecteer een micro:bit"
+    }
+  ],
+  "connect-popup-bluetooth-alt": [
+    {
+      "type": 0,
+      "value": "Web Bluetooth-verbinding dialoog met BBC micro:bit item gelabeld 1 en Koppelen-knop gelabeld 2"
+    }
+  ],
+  "connect-popup-bluetooth-instruction2": [
+    {
+      "type": 0,
+      "value": "Selecteer 'Koppelen'"
+    }
+  ],
+  "connect-popup-bluetooth-title": [
+    {
+      "type": 0,
+      "value": " Micro:bit verbinden met behulp van Web Bluetooth"
+    }
+  ],
+  "connect-popup-instruction-heading": [
+    {
+      "type": 0,
+      "value": "In de volgende pop-up"
+    }
+  ],
+  "connect-popup-instruction1": [
+    {
+      "type": 0,
+      "value": "Kies je micro:bit"
+    }
+  ],
+  "connect-popup-usb-bluetooth-data-collection-title": [
+    {
+      "type": 0,
+      "value": "Download programma voor gegevensverzameling naar micro:bit"
+    }
+  ],
+  "connect-popup-usb-radio-data-collection-title": [
+    {
+      "type": 0,
+      "value": "Download programma voor gegevensverzameling naar micro:bit 1"
+    }
+  ],
+  "connect-popup-usb-radio-link-title": [
+    {
+      "type": 0,
+      "value": "Download radiolink programma naar micro:bit 2"
+    }
+  ],
+  "connect-popup-webusb-instruction2": [
+    {
+      "type": 0,
+      "value": "Selecteer 'Verbinden'"
+    }
+  ],
+  "connect-radio-data-collection-microbit-description": [
+    {
+      "type": 0,
+      "value": "Verbind de gegevensverzameling micro:bit met deze computer om jouw machine learning MakeCode programma ernaar te downloaden. Als je de gegevensverzameling micro:bit draagt, moet je het misschien eerst losmaken."
+    }
+  ],
+  "connect-radio-data-collection-microbit-title": [
+    {
+      "type": 0,
+      "value": "USB-kabel aansluiten op de gegevensverzameling micro:bit"
+    }
+  ],
+  "connect-radio-heading": [
+    {
+      "type": 0,
+      "value": "micro:bits verbinden"
+    }
+  ],
+  "connect-radio-link-heading": [
+    {
+      "type": 0,
+      "value": "USB-kabel aansluiten op micro:bit 2"
+    }
+  ],
+  "connect-radio-link-subtitle": [
+    {
+      "type": 0,
+      "value": "Sluit een tweede micro:bit aan op deze computer met een USB-kabel zodat het radio link programma kan worden gedownload. Deze radio link micro:bit zal communiceren met de gegevensverzameling micro:bit."
+    }
+  ],
+  "connect-radio-start-heading": [
+    {
+      "type": 0,
+      "value": "Wat je nodig hebt om te verbinden met de micro:bit radio"
+    }
+  ],
+  "connect-radio-start-requirements1": [
+    {
+      "type": 0,
+      "value": "2 micro:bits"
+    }
+  ],
+  "connect-radio-start-requirements1-subtitle": [
+    {
+      "type": 0,
+      "value": "Alleen voor de V2"
+    }
+  ],
+  "connect-radio-start-requirements2-subtitle": [
+    {
+      "type": 0,
+      "value": "met internet & een USB-poort"
+    }
+  ],
+  "connect-radio-start-switch-bluetooth": [
+    {
+      "type": 0,
+      "value": "In plaats daarvan verbinding maken via Web Bluetooth"
+    }
+  ],
+  "connect-to-record": [
+    {
+      "type": 0,
+      "value": "Verbinden om data samples op te nemen"
+    }
+  ],
+  "connect-to-record-body": [
+    {
+      "type": 0,
+      "value": "Verbind een micro:bit om een data sample op te nemen."
+    }
+  ],
+  "connect-to-test-model": [
+    {
+      "type": 0,
+      "value": "Maak verbinding om jouw ML-model te testen"
+    }
+  ],
+  "connect-to-tour-body": [
+    {
+      "type": 0,
+      "value": "Je moet een gegevensverzameling micro:bit koppelen om de rondleiding te bekijken."
+    }
+  ],
+  "connect-troubleshoot": [
+    {
+      "type": 0,
+      "value": "Problemen met het verbinden met je micro:bit"
+    }
+  ],
+  "connect-troubleshooting": [
+    {
+      "type": 0,
+      "value": "Probleemoplossing"
+    }
+  ],
+  "connect-with-batteries": [
+    {
+      "type": 0,
+      "value": "met batterijen"
+    }
+  ],
+  "connect-with-web-bluetooth": [
+    {
+      "type": 0,
+      "value": "Verbinding maken via Web Bluetooth"
+    }
+  ],
+  "connecting": [
+    {
+      "type": 0,
+      "value": "Verbinden…"
+    }
+  ],
+  "continue-makecode-action": [
+    {
+      "type": 0,
+      "value": "Doorgaan naar MakeCode"
+    }
+  ],
+  "cookies-action": [
+    {
+      "type": 0,
+      "value": "Cookies"
+    }
+  ],
+  "copied": [
+    {
+      "type": 0,
+      "value": "Gekopieerd"
+    }
+  ],
+  "copy-action": [
+    {
+      "type": 0,
+      "value": "Kopiëer"
+    }
+  ],
+  "data-actions-menu": [
+    {
+      "type": 0,
+      "value": "Data acties"
+    }
+  ],
+  "data-collection-microbit": [
+    {
+      "type": 0,
+      "value": "micro:bit voor gegevensverzameling"
+    }
+  ],
+  "data-collection-microbit-label": [
+    {
+      "type": 0,
+      "value": "diagram met gegevensverzameling micro:bit die is verbonden met de pols van een persoon"
+    }
+  ],
+  "data-connection-region": [
+    {
+      "type": 0,
+      "value": "micro: bit data verbinding"
+    }
+  ],
+  "data-features-hide-action": [
+    {
+      "type": 0,
+      "value": "Verberg data-functies"
+    }
+  ],
+  "data-features-show-action": [
+    {
+      "type": 0,
+      "value": "Toon data-functies"
+    }
+  ],
+  "data-samples-actions-region": [
+    {
+      "type": 0,
+      "value": "Data samples werkbalk"
+    }
+  ],
+  "data-samples-label": [
+    {
+      "type": 0,
+      "value": "Data samples"
+    }
+  ],
+  "data-samples-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Data samples tooltip"
+    }
+  ],
+  "data-samples-status-count": [
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " samples opgenomen"
+    }
+  ],
+  "data-samples-status-not-enough": [
+    {
+      "type": 0,
+      "value": "Ten minste 3 vereist"
+    }
+  ],
+  "data-samples-title": [
+    {
+      "type": 0,
+      "value": "Data samples"
+    }
+  ],
+  "data-samples-tooltip": [
+    {
+      "type": 0,
+      "value": "Korte verzamelingen van bewegingsgegevens van 1 seconde. Jouw voorbeelden worden alleen op je computer opgeslagen, ze worden aan niemand anders verzonden."
+    }
+  ],
+  "default-project-name": [
+    {
+      "type": 0,
+      "value": "Naamloos"
+    }
+  ],
+  "delete-action-aria": [
+    {
+      "type": 0,
+      "value": "Verwijder actie \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "delete-action-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Bevestig verwijder-actie"
+    }
+  ],
+  "delete-action-confirm-text": [
+    {
+      "type": 0,
+      "value": "Weet je zeker dat je deze actie \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\" wil verwijderen?"
+    }
+  ],
+  "delete-data-samples-action": [
+    {
+      "type": 0,
+      "value": "Verwijder alle data samples"
+    }
+  ],
+  "delete-data-samples-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Bevestig het verwijderen van alle data samples"
+    }
+  ],
+  "delete-data-samples-confirm-text": [
+    {
+      "type": 0,
+      "value": "Weet je zeker dat je alle data samples wil verwijderen?"
+    }
+  ],
+  "delete-recording-aria": [
+    {
+      "type": 0,
+      "value": "Verwijder opname "
+    },
+    {
+      "type": 1,
+      "value": "sample"
+    },
+    {
+      "type": 0,
+      "value": " van "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " voor actie \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "disconnect-action": [
+    {
+      "type": 0,
+      "value": "Loskoppelen"
+    }
+  ],
+  "disconnected-during-recording": [
+    {
+      "type": 0,
+      "value": "micro: bit losgekoppeld tijdens opname"
+    }
+  ],
+  "disconnected-warning-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "Verbinding verbroken met micro:bit die gegevens verzamelt"
+    }
+  ],
+  "disconnected-warning-bluetooth1": [
+    {
+      "type": 0,
+      "value": "De verbinding met de gegevensverzameling micro:bit is verloren."
+    }
+  ],
+  "disconnected-warning-bluetooth2": [
+    {
+      "type": 0,
+      "value": "Controleer dat de micro:bit:"
+    }
+  ],
+  "disconnected-warning-bluetooth3": [
+    {
+      "type": 0,
+      "value": "is aangezet (het rode licht op de achterkant van de micro:bit moet aanstaan)"
+    }
+  ],
+  "disconnected-warning-bluetooth4": [
+    {
+      "type": 0,
+      "value": "dicht bij de computer is"
+    }
+  ],
+  "disconnected-warning-bridge-heading": [
+    {
+      "type": 0,
+      "value": "Radio link micro:bit verbinding verbroken"
+    }
+  ],
+  "disconnected-warning-bridge1": [
+    {
+      "type": 0,
+      "value": "De verbinding met de micro:bit die met je computer is aangesloten, is verbroken."
+    }
+  ],
+  "disconnected-warning-remote-heading": [
+    {
+      "type": 0,
+      "value": "Verbinding verbroken met micro:bit die gegevens verzamelt"
+    }
+  ],
+  "disconnected-warning-remote1": [
+    {
+      "type": 0,
+      "value": "De verbinding met de gegevensverzameling micro:bit is verloren."
+    }
+  ],
+  "dont-show-again": [
+    {
+      "type": 0,
+      "value": "Deze melding niet opnieuw weergeven"
+    }
+  ],
+  "download-data-samples-action": [
+    {
+      "type": 0,
+      "value": "Download alle data samples"
+    }
+  ],
+  "download-project-choose-microbit-subtitle": [
+    {
+      "type": 0,
+      "value": "Het downloaden van je project naar dezelfde micro:bit zal de micro:bit loskoppelen van de tool. Je moet de micro:bit opnieuw koppelen als je meer data samples wilt registreren."
+    }
+  ],
+  "download-project-choose-microbit-title": [
+    {
+      "type": 0,
+      "value": "Welke micro:bit wil je gebruiken?"
+    }
+  ],
+  "download-project-different-microbit-option": [
+    {
+      "type": 0,
+      "value": "Andere micro:bit"
+    }
+  ],
+  "download-project-intro-description": [
+    {
+      "type": 0,
+      "value": "Je programma bevat het door jou gecreëerde machine learning model. Het model wordt uitgevoerd op de micro:bit zodat je het kan gebruiken zonder verbonden te zijn met "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "download-project-intro-title": [
+    {
+      "type": 0,
+      "value": "Download je machine learning MakeCode project"
+    }
+  ],
+  "download-project-same-microbit-option": [
+    {
+      "type": 0,
+      "value": "Dezelfde micro:bit"
+    }
+  ],
+  "downloading-data-collection-header": [
+    {
+      "type": 0,
+      "value": "Het programma voor gegevensverzameling downloaden"
+    }
+  ],
+  "downloading-header": [
+    {
+      "type": 0,
+      "value": "Programma downloaden naar micro:bit"
+    }
+  ],
+  "downloading-radio-link-header": [
+    {
+      "type": 0,
+      "value": "Het radiolink-programma downloaden"
+    }
+  ],
+  "downloading-subtitle": [
+    {
+      "type": 0,
+      "value": "Even geduld. Programma is aan het downloaden naar de micro:bit."
+    }
+  ],
+  "edit-in-makecode-action": [
+    {
+      "type": 0,
+      "value": "Bewerken in MakeCode"
+    }
+  ],
+  "estimated-action-aria": [
+    {
+      "type": 0,
+      "value": "Geschatte actie: \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "estimated-action-label": [
+    {
+      "type": 0,
+      "value": "Geschatte actie"
+    }
+  ],
+  "estimated-action-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Geschatte actie tooltip"
+    }
+  ],
+  "estimated-action-tooltip": [
+    {
+      "type": 0,
+      "value": "Dit is de actie waarvan het model denkt dat je dit op dit moment aan het doen bent."
+    }
+  ],
+  "feedback": [
+    {
+      "type": 0,
+      "value": "Feedback"
+    }
+  ],
+  "fingerprint-acc-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Som van x-richtinggegevens"
+    }
+  ],
+  "fingerprint-acc-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Som van y-richtinggegevens"
+    }
+  ],
+  "fingerprint-acc-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Som van z-richtinggegevens"
+    }
+  ],
+  "fingerprint-max-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Maximum punt van alle x-richting gegevenspunten"
+    }
+  ],
+  "fingerprint-max-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Maximum punt van alle y-richting gegevenspunten"
+    }
+  ],
+  "fingerprint-max-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Maximum punt van alle z-richting gegevenspunten"
+    }
+  ],
+  "fingerprint-mean-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Gemiddelde waarde voor x-richtinggegevens"
+    }
+  ],
+  "fingerprint-mean-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Gemiddelde waarde voor y-richtinggegevens"
+    }
+  ],
+  "fingerprint-mean-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Gemiddelde waarde voor z-richtinggegevens"
+    }
+  ],
+  "fingerprint-min-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Minimum punt van alle x-richtinggegevenspunten"
+    }
+  ],
+  "fingerprint-min-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Minimum punt van alle y-richtinggegevenspunten"
+    }
+  ],
+  "fingerprint-min-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Minimum punt van alle z-richting data punten"
+    }
+  ],
+  "fingerprint-peaks-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Aantal extremen tussen alle x-richtinggegevenspunten"
+    }
+  ],
+  "fingerprint-peaks-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Aantal extremen tussen alle y-richtinggegegevenspunten"
+    }
+  ],
+  "fingerprint-peaks-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Aantal extremen tussen alle z-richtinggegevenspunten"
+    }
+  ],
+  "fingerprint-rms-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Gemiddelde vierkantswaarde voor alle x-richtinggegevenspunten"
+    }
+  ],
+  "fingerprint-rms-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Gemiddelde vierkantswaarde voor alle y-richtinggegevenspunten"
+    }
+  ],
+  "fingerprint-rms-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Gemiddelde vierkantswaarde voor alle z-richtinggegevenspunten"
+    }
+  ],
+  "fingerprint-std-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Gemiddelde afwijking van 0 tussen alle x-richtinggegevenspunten"
+    }
+  ],
+  "fingerprint-std-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Gemiddelde afwijking van 0 tussen alle y-richtinggegevenspunten"
+    }
+  ],
+  "fingerprint-std-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Gemiddelde afwijking van 0 tussen alle z-richtinggegevenspunten"
+    }
+  ],
+  "fingerprint-zcr-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Snelheid van versnellingsovergangen tussen positief en negatief voor x-richtinggegevenspunten"
+    }
+  ],
+  "fingerprint-zcr-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Snelheid van versnellingsovergangen tussen positief en negatief voor y-richtinggegevenspunten"
+    }
+  ],
+  "fingerprint-zcr-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Snelheid van versnellingsovergangen tussen positief en negatief voor z-richtinggegevenspunten"
+    }
+  ],
+  "firmware-outdated-content1": [
+    {
+      "type": 0,
+      "value": "Het verbinden met de micro:bit is mislukt omdat de firmware op je micro:bit te oud is."
+    }
+  ],
+  "firmware-outdated-content2": [
+    {
+      "type": 0,
+      "value": "Je moet "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "firmware updaten"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " voordat je verbinding kan maken met deze micro:bit."
+    }
+  ],
+  "firmware-outdated-heading": [
+    {
+      "type": 0,
+      "value": "Firmware update vereist"
+    }
+  ],
+  "get-started-action": [
+    {
+      "type": 0,
+      "value": "Hoe te beginnen"
+    }
+  ],
+  "go-action": [
+    {
+      "type": 0,
+      "value": "Gaan"
+    }
+  ],
+  "graph-color-scheme": [
+    {
+      "type": 0,
+      "value": "Grafiek kleurschema"
+    }
+  ],
+  "graph-color-scheme-color-blind-1": [
+    {
+      "type": 0,
+      "value": "Kleurenblind alternatief 1"
+    }
+  ],
+  "graph-color-scheme-color-blind-2": [
+    {
+      "type": 0,
+      "value": "Kleurenblind alternatief 2"
+    }
+  ],
+  "graph-color-scheme-default": [
+    {
+      "type": 0,
+      "value": "Standaard (rood, blauw, groen)"
+    }
+  ],
+  "graph-line-scheme": [
+    {
+      "type": 0,
+      "value": "Grafiek lijnstijl"
+    }
+  ],
+  "graph-line-scheme-accessible": [
+    {
+      "type": 0,
+      "value": "Toegankelijke lijnen (volledig, streepjes, stippen)"
+    }
+  ],
+  "graph-line-scheme-solid": [
+    {
+      "type": 0,
+      "value": "Ononderbroken lijnen"
+    }
+  ],
+  "graph-line-weight": [
+    {
+      "type": 0,
+      "value": "Grafiek lijndikte"
+    }
+  ],
+  "graph-line-weight-default": [
+    {
+      "type": 0,
+      "value": "Standaard"
+    }
+  ],
+  "graph-line-weight-thick": [
+    {
+      "type": 0,
+      "value": "Vet"
+    }
+  ],
+  "help-label": [
+    {
+      "type": 0,
+      "value": "Help"
+    }
+  ],
+  "help-support": [
+    {
+      "type": 0,
+      "value": "Hulp & Ondersteuning"
+    }
+  ],
+  "home-action": [
+    {
+      "type": 0,
+      "value": "Startpagina"
+    }
+  ],
+  "homepage": [
+    {
+      "type": 0,
+      "value": "Startpagina"
+    }
+  ],
+  "homepage-alt": [
+    {
+      "type": 0,
+      "value": "grafiek met de x, y, z grafieklijnen die de micro:bit versnellingsmetergegevens weergeven met klappende handen er overheen getekend"
+    }
+  ],
+  "homepage-alt-graph": [
+    {
+      "type": 0,
+      "value": "grafiek toont x, y, z grafieklijnen die de micro:bit versnellingsmetergegevens weergeven"
+    }
+  ],
+  "homepage-alt-hands": [
+    {
+      "type": 0,
+      "value": "klappende handen"
+    }
+  ],
+  "homepage-description": [
+    {
+      "type": 0,
+      "value": "Train een machine learning model op je eigen bewegingsgegevens en voer het uit op je micro:bit."
+    }
+  ],
+  "homepage-how-it-works": [
+    {
+      "type": 0,
+      "value": "Zo werkt het"
+    }
+  ],
+  "homepage-how-it-works-paragraph": [
+    {
+      "type": 0,
+      "value": "Bekijk de video om te beginnen. Lees meer in de "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "gebruikershandleiding"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "homepage-projects": [
+    {
+      "type": 0,
+      "value": "Projecten"
+    }
+  ],
+  "homepage-projects-more": [
+    {
+      "type": 0,
+      "value": "Ontdek meer "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "inhoud en bronnen over micro:bit en AI"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "homepage-step-by-step": [
+    {
+      "type": 0,
+      "value": "Stap voor stap"
+    }
+  ],
+  "homepage-subtitle": [
+    {
+      "type": 0,
+      "value": "Maak AI aan op je BBC micro:bit met behulp van beweging en machine learning."
+    }
+  ],
+  "homepage-video-alt": [
+    {
+      "type": 0,
+      "value": "Introductievideo"
+    }
+  ],
+  "import-data-samples-action": [
+    {
+      "type": 0,
+      "value": "Importeer data samples"
+    }
+  ],
+  "import-error-dialog-content": [
+    {
+      "type": 0,
+      "value": "Alleen MakeCode hex-bestanden of data samples-bestanden (.json) kunnen worden geopend door "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "import-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "Niet-ondersteund bestandstype"
+    }
+  ],
+  "incompatible-device-body-alt": [
+    {
+      "type": 0,
+      "value": "Ga terug naar een andere micro:bit, of "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "sla de project-hex"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " op die later kan worden gedownload naar een micro:bit V2"
+    }
+  ],
+  "incompatible-device-body1": [
+    {
+      "type": 0,
+      "value": "Ga door naar MakeCode om het programma te bewerken. Je kunt vervolgens de project-hex opslaan die kan worden gedownload naar een micro:bit V2."
+    }
+  ],
+  "incompatible-device-body2": [
+    {
+      "type": 0,
+      "value": "Als alternatief "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "sla de project-hex"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " op zonder MakeCode te gebruiken."
+    }
+  ],
+  "incompatible-device-heading": [
+    {
+      "type": 0,
+      "value": "Incompatibel apparaat"
+    }
+  ],
+  "incompatible-device-subtitle": [
+    {
+      "type": 0,
+      "value": "Je gebruikt een micro:bit V1, maar machine learning projecten hebben de snellere processor van een micro:bit V2 nodig. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Leer meer over micro:bit versies."
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    }
+  ],
+  "insufficient-data-body": [
+    {
+      "type": 0,
+      "value": "Je hebt ten minste 3 data samples nodig voor 2 acties om het model te trainen."
+    }
+  ],
+  "insufficient-data-title": [
+    {
+      "type": 0,
+      "value": "Je hebt niet genoeg gegevens"
+    }
+  ],
+  "language": [
+    {
+      "type": 0,
+      "value": "Taal"
+    }
+  ],
+  "learn-about-firewall-requirements-action": [
+    {
+      "type": 0,
+      "value": "Meer informatie over firewall vereisten"
+    }
+  ],
+  "led-icon-option-angry": [
+    {
+      "type": 0,
+      "value": "Kwaad"
+    }
+  ],
+  "led-icon-option-asleep": [
+    {
+      "type": 0,
+      "value": "Slapend"
+    }
+  ],
+  "led-icon-option-butterfly": [
+    {
+      "type": 0,
+      "value": "Vlinder"
+    }
+  ],
+  "led-icon-option-chessboard": [
+    {
+      "type": 0,
+      "value": "Schaakbord"
+    }
+  ],
+  "led-icon-option-confused": [
+    {
+      "type": 0,
+      "value": "Verward"
+    }
+  ],
+  "led-icon-option-cow": [
+    {
+      "type": 0,
+      "value": "Koe"
+    }
+  ],
+  "led-icon-option-diamond": [
+    {
+      "type": 0,
+      "value": "Diamant"
+    }
+  ],
+  "led-icon-option-duck": [
+    {
+      "type": 0,
+      "value": "Eend"
+    }
+  ],
+  "led-icon-option-eighthnote": [
+    {
+      "type": 0,
+      "value": "Achtste noot"
+    }
+  ],
+  "led-icon-option-fabulous": [
+    {
+      "type": 0,
+      "value": "Fantastisch"
+    }
+  ],
+  "led-icon-option-ghost": [
+    {
+      "type": 0,
+      "value": "Spook"
+    }
+  ],
+  "led-icon-option-giraffe": [
+    {
+      "type": 0,
+      "value": "Giraffe"
+    }
+  ],
+  "led-icon-option-happy": [
+    {
+      "type": 0,
+      "value": "Blij"
+    }
+  ],
+  "led-icon-option-heart": [
+    {
+      "type": 0,
+      "value": "Hartje"
+    }
+  ],
+  "led-icon-option-house": [
+    {
+      "type": 0,
+      "value": "Huis"
+    }
+  ],
+  "led-icon-option-lefttriangle": [
+    {
+      "type": 0,
+      "value": "Driehoek links"
+    }
+  ],
+  "led-icon-option-meh": [
+    {
+      "type": 0,
+      "value": "Gaat wel"
+    }
+  ],
+  "led-icon-option-no": [
+    {
+      "type": 0,
+      "value": "Nee"
+    }
+  ],
+  "led-icon-option-off": [
+    {
+      "type": 0,
+      "value": "Uit"
+    }
+  ],
+  "led-icon-option-pitchfork": [
+    {
+      "type": 0,
+      "value": "Stemvork"
+    }
+  ],
+  "led-icon-option-quarternote": [
+    {
+      "type": 0,
+      "value": "Kwart noot"
+    }
+  ],
+  "led-icon-option-rabbit": [
+    {
+      "type": 0,
+      "value": "Konijn"
+    }
+  ],
+  "led-icon-option-rollerskate": [
+    {
+      "type": 0,
+      "value": "Rolschaatsen"
+    }
+  ],
+  "led-icon-option-sad": [
+    {
+      "type": 0,
+      "value": "Bedroefd"
+    }
+  ],
+  "led-icon-option-scissors": [
+    {
+      "type": 0,
+      "value": "Schaar"
+    }
+  ],
+  "led-icon-option-silly": [
+    {
+      "type": 0,
+      "value": "Onnozel"
+    }
+  ],
+  "led-icon-option-skull": [
+    {
+      "type": 0,
+      "value": "Schedel"
+    }
+  ],
+  "led-icon-option-smalldiamond": [
+    {
+      "type": 0,
+      "value": "Kleine diamant"
+    }
+  ],
+  "led-icon-option-smallheart": [
+    {
+      "type": 0,
+      "value": "Klein hart"
+    }
+  ],
+  "led-icon-option-smallsquare": [
+    {
+      "type": 0,
+      "value": "Klein vierkant"
+    }
+  ],
+  "led-icon-option-snake": [
+    {
+      "type": 0,
+      "value": "Slang"
+    }
+  ],
+  "led-icon-option-square": [
+    {
+      "type": 0,
+      "value": "Vierkant"
+    }
+  ],
+  "led-icon-option-stickfigure": [
+    {
+      "type": 0,
+      "value": "Poppetje"
+    }
+  ],
+  "led-icon-option-surprised": [
+    {
+      "type": 0,
+      "value": "Verrast"
+    }
+  ],
+  "led-icon-option-sword": [
+    {
+      "type": 0,
+      "value": "Zwaard"
+    }
+  ],
+  "led-icon-option-target": [
+    {
+      "type": 0,
+      "value": "Doelwit"
+    }
+  ],
+  "led-icon-option-tortoise": [
+    {
+      "type": 0,
+      "value": "Schildpad"
+    }
+  ],
+  "led-icon-option-triangle": [
+    {
+      "type": 0,
+      "value": "Driehoek"
+    }
+  ],
+  "led-icon-option-tshirt": [
+    {
+      "type": 0,
+      "value": "T-shirt"
+    }
+  ],
+  "led-icon-option-umbrella": [
+    {
+      "type": 0,
+      "value": "Paraplu"
+    }
+  ],
+  "led-icon-option-yes": [
+    {
+      "type": 0,
+      "value": "Ja"
+    }
+  ],
+  "live-data-graph": [
+    {
+      "type": 0,
+      "value": "Live data grafiek"
+    }
+  ],
+  "live-graph": [
+    {
+      "type": 0,
+      "value": "Live grafiek"
+    }
+  ],
+  "live-graph-tooltip": [
+    {
+      "type": 0,
+      "value": "Deze grafiek toont bewegingsgegevens van de micro:bit's versnellingsmeter in realtime. Probeer je gegevensverzameling micro:bit te verplaatsen om de verandering van X, Y en Z assen te zien. Elke gekleurde lijn staat voor een andere richting (dimensie) waarin je de micro:bit verplaatst."
+    }
+  ],
+  "live-graph-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Live grafiek tooltip"
+    }
+  ],
+  "loading": [
+    {
+      "type": 0,
+      "value": "Laden"
+    }
+  ],
+  "main-menu": [
+    {
+      "type": 0,
+      "value": "Hoofd menu"
+    }
+  ],
+  "makecode-back-alt": [
+    {
+      "type": 0,
+      "value": "Pijl naar links voor MakeCode terug"
+    }
+  ],
+  "makecode-block-default-alt": [
+    {
+      "type": 0,
+      "value": "MakeCode blok: op ML "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": " start, toon pictogram "
+    },
+    {
+      "type": 1,
+      "value": "iconName"
+    }
+  ],
+  "makecode-block-on-ML": [
+    {
+      "type": 0,
+      "value": "op ML"
+    }
+  ],
+  "makecode-block-show-icon": [
+    {
+      "type": 0,
+      "value": "toon pictogram"
+    }
+  ],
+  "makecode-block-start": [
+    {
+      "type": 0,
+      "value": "start"
+    }
+  ],
+  "makecode-load-error-dialog-body": [
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " kan MakeCode niet laden. Controleer je internetverbinding, ververs de pagina en probeer het opnieuw."
+    }
+  ],
+  "makecode-load-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "Kon Microsoft MakeCode niet laden"
+    }
+  ],
+  "microbit-not-connected": [
+    {
+      "type": 0,
+      "value": "Je micro:bit is niet verbonden"
+    }
+  ],
+  "more-edit-in-makecode-options": [
+    {
+      "type": 0,
+      "value": "Meer opties voor bewerken in MakeCode"
+    }
+  ],
+  "name-action-hint": [
+    {
+      "type": 0,
+      "value": "Geef een naam aan een actie die je wilt dat de micro:bit herkent"
+    }
+  ],
+  "name-project": [
+    {
+      "type": 0,
+      "value": "Geef een naam aan je project"
+    }
+  ],
+  "name-text": [
+    {
+      "type": 0,
+      "value": "Naam"
+    }
+  ],
+  "name-used-when": [
+    {
+      "type": 0,
+      "value": "De naam wordt gebruikt wanneer je een hex-bestand opslaat."
+    }
+  ],
+  "new-session-setup-description": [
+    {
+      "type": 0,
+      "value": "Een nieuwe sessie starten overschrijft je bestaande sessie. Mogelijk wil je eerst "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "je bestaande sessie opslaan"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "new-session-setup-title": [
+    {
+      "type": 0,
+      "value": "Nieuwe sessie-instellingen"
+    }
+  ],
+  "newpage-continue-session-subtitle": [
+    {
+      "type": 0,
+      "value": "Gebruik een hex-bestand of data samples die je op je computer hebt opgeslagen om door te gaan met een sessie."
+    }
+  ],
+  "newpage-continue-session-title": [
+    {
+      "type": 0,
+      "value": "Doorgaan met opgeslagen sessie"
+    }
+  ],
+  "newpage-last-session-date": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Datum:"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    }
+  ],
+  "newpage-last-session-name": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Naam:"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "newpage-last-session-none": [
+    {
+      "type": 0,
+      "value": "Geen sessie gevonden"
+    }
+  ],
+  "newpage-last-session-title": [
+    {
+      "type": 0,
+      "value": "Laatste sessie openen"
+    }
+  ],
+  "newpage-new-session-subtitle": [
+    {
+      "type": 0,
+      "value": "Verbind je micro:bit en verzamel bewegingsgegevens om een machine learning model te bouwen."
+    }
+  ],
+  "newpage-new-session-title": [
+    {
+      "type": 0,
+      "value": "Nieuwe sessie"
+    }
+  ],
+  "newpage-section-one-title": [
+    {
+      "type": 0,
+      "value": "Ga verder waar u was gebleven"
+    }
+  ],
+  "newpage-section-two-title": [
+    {
+      "type": 0,
+      "value": "Begin iets nieuws"
+    }
+  ],
+  "newpage-title": [
+    {
+      "type": 0,
+      "value": "Nieuwe sessie"
+    }
+  ],
+  "next-action": [
+    {
+      "type": 0,
+      "value": "Volgende"
+    }
+  ],
+  "no-data-samples": [
+    {
+      "type": 0,
+      "value": "Geen data samples"
+    }
+  ],
+  "not-create-ai-hex-import-dialog-content": [
+    {
+      "type": 0,
+      "value": "Dit project bevatte geen data samples, dus alleen de code is geopend. Je moet een model trainen voordat je de code kunt gebruiken."
+    }
+  ],
+  "not-create-ai-hex-import-dialog-title": [
+    {
+      "type": 0,
+      "value": "Je MakeCode project is geïmporteerd"
+    }
+  ],
+  "not-found": [
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " startpagina"
+    }
+  ],
+  "not-found-title": [
+    {
+      "type": 0,
+      "value": "Pagina niet gevonden"
+    }
+  ],
+  "open-file-action": [
+    {
+      "type": 0,
+      "value": "Open…"
+    }
+  ],
+  "open-file-dropped": [
+    {
+      "type": 0,
+      "value": "Open bestand wanneer gedropt"
+    }
+  ],
+  "other-tabs-body1": [
+    {
+      "type": 0,
+      "value": "Een ander proces is verbonden met dit apparaat."
+    }
+  ],
+  "other-tabs-body2": [
+    {
+      "type": 0,
+      "value": "Sluit alle andere tabbladen die WebUSB kunnen gebruiken (bijv. MakeCode, Python Editor, "
+    },
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": ") of verwijder de stekker van de micro:bit voordat je het opnieuw probeert."
+    }
+  ],
+  "other-tabs-heading": [
+    {
+      "type": 0,
+      "value": "Verbinden via WebUSB"
+    }
+  ],
+  "privacy": [
+    {
+      "type": 0,
+      "value": "Privacybeleid"
+    }
+  ],
+  "project-loaded": [
+    {
+      "type": 0,
+      "value": "Project geladen"
+    }
+  ],
+  "project-name-not-empty": [
+    {
+      "type": 0,
+      "value": "De projectnaam kan niet leeg zijn"
+    }
+  ],
+  "radio-link-microbit": [
+    {
+      "type": 0,
+      "value": "Radio link micro:bit"
+    }
+  ],
+  "radio-link-microbit-label": [
+    {
+      "type": 0,
+      "value": "diagram dat de radio link micro:bit toont die wordt verbonden met een computer"
+    }
+  ],
+  "recognition-point-label": [
+    {
+      "type": 0,
+      "value": "Herkenningspunt:"
+    }
+  ],
+  "reconnect-action": [
+    {
+      "type": 0,
+      "value": "Opnieuw verbinden"
+    }
+  ],
+  "reconnect-failed-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "Niet gelukt om opnieuw verbinding te maken met de gegevensverzameling micro:bit"
+    }
+  ],
+  "reconnect-failed-bluetooth1": [
+    {
+      "type": 0,
+      "value": "De verbinding met de gegevensverzameling micro:bit kon niet worden hersteld."
+    }
+  ],
+  "reconnect-failed-bridge-heading": [
+    {
+      "type": 0,
+      "value": "Niet gelukt om opnieuw verbinding te maken met radio link micro:bit"
+    }
+  ],
+  "reconnect-failed-bridge1": [
+    {
+      "type": 0,
+      "value": "De verbinding van de micro:bit met je computer kon niet opnieuw tot stand worden gebracht."
+    }
+  ],
+  "reconnect-failed-radio-heading": [
+    {
+      "type": 0,
+      "value": "Kan geen nieuwe verbinding maken met micro:bits"
+    }
+  ],
+  "reconnect-failed-remote-heading": [
+    {
+      "type": 0,
+      "value": "Niet gelukt om opnieuw verbinding te maken met de gegevensverzameling micro:bit"
+    }
+  ],
+  "reconnect-failed-remote1": [
+    {
+      "type": 0,
+      "value": "De verbinding met de gegevensverzameling micro:bit kon niet worden hersteld."
+    }
+  ],
+  "reconnect-failed-subtitle": [
+    {
+      "type": 0,
+      "value": "Volg deze instructies om het verbindingsproces opnieuw op te starten."
+    }
+  ],
+  "reconnecting": [
+    {
+      "type": 0,
+      "value": "Opnieuw verbinding maken ..."
+    }
+  ],
+  "record-action": [
+    {
+      "type": 0,
+      "value": "Opnemen"
+    }
+  ],
+  "record-action-aria": [
+    {
+      "type": 0,
+      "value": "Registreer gegevens voor actie \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "record-hint": [
+    {
+      "type": 0,
+      "value": "Klik om een data sample op te nemen."
+    }
+  ],
+  "record-hint-button-b": [
+    {
+      "type": 0,
+      "value": "Klik om een data sample op te nemen of druk op knop B op jouw data collectie micro:bit."
+    }
+  ],
+  "record-samples": [
+    {
+      "type": 0,
+      "value": "Neem "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " samples op"
+    }
+  ],
+  "record-samples-help": [
+    {
+      "type": 0,
+      "value": "Elke sample heeft zijn eigen aftelling"
+    }
+  ],
+  "record-seconds": [
+    {
+      "type": 0,
+      "value": "Neem op gedurende "
+    },
+    {
+      "type": 1,
+      "value": "numSeconds"
+    },
+    {
+      "type": 0,
+      "value": " seconden"
+    }
+  ],
+  "record-seconds-help": [
+    {
+      "type": 0,
+      "value": "Verplaats voortdurend om "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " samples te krijgen"
+    }
+  ],
+  "recording": [
+    {
+      "type": 0,
+      "value": "Bezig met opnemen"
+    }
+  ],
+  "recording-complete": [
+    {
+      "type": 0,
+      "value": "Klaar"
+    }
+  ],
+  "recording-data-for": [
+    {
+      "type": 0,
+      "value": "Neem de gegevens op voor actie \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "recording-data-for-numbered": [
+    {
+      "type": 0,
+      "value": "Neem "
+    },
+    {
+      "type": 1,
+      "value": "sample"
+    },
+    {
+      "type": 0,
+      "value": " op van "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " voor actie \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "recording-fingerprint-label": [
+    {
+      "type": 0,
+      "value": "heatmap met micro:bit x, y, z accelerometer data functies voor één opname"
+    }
+  ],
+  "recording-graph-label": [
+    {
+      "type": 0,
+      "value": "Grafiek met micro:bit x, y, z versnellingsmeter data voor één opname"
+    }
+  ],
+  "recording-options-aria": [
+    {
+      "type": 0,
+      "value": "Meer opnameopties voor actie \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "reload-action": [
+    {
+      "type": 0,
+      "value": "Herladen"
+    }
+  ],
+  "reset-to-default-action": [
+    {
+      "type": 0,
+      "value": "Herstel naar standaardblokken"
+    }
+  ],
+  "restore-defaults-action": [
+    {
+      "type": 0,
+      "value": "Standaardwaarden herstellen voor alle instellingen"
+    }
+  ],
+  "restore-defaults-confirm-action": [
+    {
+      "type": 0,
+      "value": "Standaardwaarden herstellen"
+    }
+  ],
+  "restore-defaults-confirm-body": [
+    {
+      "type": 0,
+      "value": "Weet je zeker dat je de standaardwaarden voor alle instellingen wilt herstellen?"
+    }
+  ],
+  "restore-defaults-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Herstel standaardinstellingen"
+    }
+  ],
+  "restore-defaults-helper": [
+    {
+      "type": 0,
+      "value": "Hulpinhoud die eerder afgesloten is kan opnieuw getoond worden."
+    }
+  ],
+  "save-action": [
+    {
+      "type": 0,
+      "value": "Opslaan"
+    }
+  ],
+  "save-hex-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Project opslaan als hex bestand"
+    }
+  ],
+  "save-hex-dialog-message1": [
+    {
+      "type": 0,
+      "value": "De download bevat je acties, data samples en je MakeCode project. Open het in "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " om verder te werken."
+    }
+  ],
+  "save-hex-dialog-message2": [
+    {
+      "type": 0,
+      "value": "Je kunt het ook openen met Microsoft MakeCode als je de acties en data samples niet hoeft te wijzigen."
+    }
+  ],
+  "saving-description": [
+    {
+      "type": 0,
+      "value": "Je download zal binnenkort klaar zijn."
+    }
+  ],
+  "saving-title": [
+    {
+      "type": 0,
+      "value": "Opslaan…"
+    }
+  ],
+  "saving-toast-title": [
+    {
+      "type": 0,
+      "value": "Je hex bestand is gedownload"
+    }
+  ],
+  "select-icon-action-aria": [
+    {
+      "type": 0,
+      "value": "Kies pictogram voor actie \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "select-icon-action-untitled-aria": [
+    {
+      "type": 0,
+      "value": "Pictogram kiezen voor actie zonder naam"
+    }
+  ],
+  "select-icon-option-action-aria": [
+    {
+      "type": 0,
+      "value": "Selecteer \""
+    },
+    {
+      "type": 1,
+      "value": "iconName"
+    },
+    {
+      "type": 0,
+      "value": "\" pictogram"
+    }
+  ],
+  "settings": [
+    {
+      "type": 0,
+      "value": "Instellingen"
+    }
+  ],
+  "settings-menu-action": [
+    {
+      "type": 0,
+      "value": "Instellingen acties menu"
+    }
+  ],
+  "show-graphs-checkbox-label-text": [
+    {
+      "type": 0,
+      "value": "Grafieken weergeven"
+    }
+  ],
+  "simple-ai-exercise-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "Eenvoudig AI sporthorloge"
+    }
+  ],
+  "skip-tour-action": [
+    {
+      "type": 0,
+      "value": "Rondleiding overslaan"
+    }
+  ],
+  "software-versions": [
+    {
+      "type": 0,
+      "value": "Software versies"
+    }
+  ],
+  "start-session-action": [
+    {
+      "type": 0,
+      "value": "Start sessie"
+    }
+  ],
+  "start-training-action": [
+    {
+      "type": 0,
+      "value": "Start de training"
+    }
+  ],
+  "steps-alt": [
+    {
+      "type": 0,
+      "value": "diagram toont het iteratieve proces van het verzamelen van gegevens, trainen van een model, testen van het model en verbeteren van het model door de verzamelde gegevens te verbeteren voor het uiteindelijk coderen met het model."
+    }
+  ],
+  "steps-code": [
+    {
+      "type": 0,
+      "value": "Codeer"
+    }
+  ],
+  "steps-collect-data": [
+    {
+      "type": 0,
+      "value": "Gegevens verzamelen"
+    }
+  ],
+  "steps-improve": [
+    {
+      "type": 0,
+      "value": "Verbeteren"
+    }
+  ],
+  "steps-test-model": [
+    {
+      "type": 0,
+      "value": "Model testen"
+    }
+  ],
+  "steps-train": [
+    {
+      "type": 0,
+      "value": "Trainen"
+    }
+  ],
+  "stop-recording-action": [
+    {
+      "type": 0,
+      "value": "Stop met opnemen"
+    }
+  ],
+  "support-request": [
+    {
+      "type": 0,
+      "value": "Overweeg "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "een ondersteuningsverzoek"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " in te dienen."
+    }
+  ],
+  "terms": [
+    {
+      "type": 0,
+      "value": "Gebruiksvoorwaarden"
+    }
+  ],
+  "testing-model-actions-region": [
+    {
+      "type": 0,
+      "value": "Testen model werkbalk"
+    }
+  ],
+  "testing-model-title": [
+    {
+      "type": 0,
+      "value": "Model testen"
+    }
+  ],
+  "tour-action": [
+    {
+      "type": 0,
+      "value": "Rondleiding"
+    }
+  ],
+  "tour-collect-addActions-content": [
+    {
+      "type": 0,
+      "value": "Beslis wat je andere acties zullen zijn en welke naam je ze geeft. Je hebt minstens 2 acties nodig met 3 data samples om het model te trainen. Je data samples worden alleen op jouw computer opgeslagen, ze worden aan niemand anders verzonden."
+    }
+  ],
+  "tour-collect-addActions-title": [
+    {
+      "type": 0,
+      "value": "Meer acties toevoegen"
+    }
+  ],
+  "tour-collect-afterFirst-content": [
+    {
+      "type": 0,
+      "value": "Om het machine learning model te trainen, heb je minstens 3 data samples voor 2 verschillende acties nodig."
+    }
+  ],
+  "tour-collect-afterFirst-title": [
+    {
+      "type": 0,
+      "value": "Je hebt je eerste "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "recordingCount"
+    },
+    {
+      "type": 0,
+      "value": " opgenomen!"
+    }
+  ],
+  "tour-collect-collectMore-explanation-content": [
+    {
+      "type": 0,
+      "value": "Het verzamelen van meer samples zou moeten leiden tot een beter machine learning model."
+    }
+  ],
+  "tour-collect-collectMore-hasRecordings-content": [
+    {
+      "type": 0,
+      "value": "Neem data samples op voor jouw acties."
+    }
+  ],
+  "tour-collect-collectMore-noRecordings-content": [
+    {
+      "type": 0,
+      "value": "Registreer meer samples voor deze actie."
+    }
+  ],
+  "tour-collect-collectMore-title": [
+    {
+      "type": 0,
+      "value": "Verzamel meer data samples"
+    }
+  ],
+  "tour-collect-trainModel-content": [
+    {
+      "type": 0,
+      "value": "Wanneer je genoeg data samples hebt verzameld, kun je het machine learning model trainen. Je kunt later terugkomen om data te verwijderen of toe te voegen en te hertrainen om het model betrouwbaarder te maken."
+    }
+  ],
+  "tour-dataSamples-actions-common-content": [
+    {
+      "type": 0,
+      "value": "Een actie is het type beweging dat je wilt dat het machine learning model herkent, bijvoorbeeld 'zwaaien' of 'klappen'."
+    }
+  ],
+  "tour-dataSamples-actions-noRecordings-content": [
+    {
+      "type": 0,
+      "value": "Bepaal wat je eerste actie is, benoem deze en begin vervolgens met het opnemen van gegevenssamples."
+    }
+  ],
+  "tour-dataSamples-connected-content": [
+    {
+      "type": 0,
+      "value": "Nu kun je beginnen met het verzamelen van data samples om een machine learning (ML) model te trainen om verschillende bewegingen of acties te herkennen."
+    }
+  ],
+  "tour-dataSamples-connected-title": [
+    {
+      "type": 0,
+      "value": "Jouw data collectie micro:bit is verbonden!"
+    }
+  ],
+  "tour-dataSamples-liveGraph-content": [
+    {
+      "type": 0,
+      "value": "De grafiek toont bewegingsgegevens van de micro:bit’s versnellingsmeter. Verplaats je data collectie micro:bit en zie hoe de grafiek verandert."
+    }
+  ],
+  "tour-makecode-intro-content1": [
+    {
+      "type": 0,
+      "value": "Download het model en de code om je project te testen op een micro:bit. Je kunt ook meer codeblokken toevoegen om je eigen programma's te maken met je model."
+    }
+  ],
+  "tour-makecode-intro-content2": [
+    {
+      "type": 0,
+      "value": "Wil je het ML-model verbeteren? "
+    }
+  ],
+  "tour-makecode-intro-content3": [
+    {
+      "type": 0,
+      "value": "Gebruik deze terugknop linksboven in de app."
+    }
+  ],
+  "tour-makecode-intro-title": [
+    {
+      "type": 0,
+      "value": "Microsoft MakeCode"
+    }
+  ],
+  "tour-trainModel-afterTrain-alreadyConnected-title": [
+    {
+      "type": 0,
+      "value": "Je hebt een ML model getraind!"
+    }
+  ],
+  "tour-trainModel-afterTrain-content": [
+    {
+      "type": 0,
+      "value": "Test nu je machine learning model. Probeer elke actie door je data collectie micro:bit te verplaatsen. Schat het model elke actie correct?"
+    }
+  ],
+  "tour-trainModel-afterTrain-delayedUntilConnected-title": [
+    {
+      "type": 0,
+      "value": "Test jouw ML-model"
+    }
+  ],
+  "tour-trainModel-certaintyRecognition-content": [
+    {
+      "type": 0,
+      "value": "Het staafdiagram toont hoe zeker het model is dat je elke actie doet. Verplaats de schuifregelaar om het herkenningspunt aan te passen, of de drempelwaarde."
+    }
+  ],
+  "tour-trainModel-certaintyRecognition-title": [
+    {
+      "type": 0,
+      "value": "Zekerheid en herkenningspunt"
+    }
+  ],
+  "tour-trainModel-editInMakeCode-content": [
+    {
+      "type": 0,
+      "value": "Open je project in MakeCode om het programma en je machine learning model te downloaden naar een micro:bit. Je kunt meer blokken toevoegen om je eigen programma's te maken met je model."
+    }
+  ],
+  "tour-trainModel-estimatedAction-content": [
+    {
+      "type": 0,
+      "value": "De actie die het model schat dat je momenteel aan het doen bent wordt onder het micro:bit pictogram getoond voor die actie."
+    }
+  ],
+  "tour-trainModel-makeCodeBlocks-content": [
+    {
+      "type": 0,
+      "value": "Deze MakeCode blokken tonen pictogrammen voor elke actie die gedetecteerd wordt wanneer je code en model naar een micro:bit verplaatst."
+    }
+  ],
+  "tour-trainModel-makeCodeBlocks-title": [
+    {
+      "type": 0,
+      "value": "Microsoft MakeCode blokken"
+    }
+  ],
+  "train-description": [
+    {
+      "type": 0,
+      "value": "Het computerprogramma spoort patronen of verschillen op in jouw data samples, en gebruikt deze om een wiskundig model te bouwen waarmee "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " verschillende acties herkent wanneer je de micro:bit verplaatst."
+    }
+  ],
+  "train-error-body": [
+    {
+      "type": 0,
+      "value": "Het trainen heeft niet geleid tot een bruikbaar model, wat zeer waarschijnlijk te wijten is aan de gegevens die voor training worden gebruikt. Als de gegevens voor verschillende acties te vergelijkbaar zijn, kan dat leiden tot problemen in het trainingsproces."
+    }
+  ],
+  "train-error-header": [
+    {
+      "type": 0,
+      "value": "Training mislukt"
+    }
+  ],
+  "train-error-todo": [
+    {
+      "type": 0,
+      "value": "Ga terug naar de pagina voor gegevens toevoegen en wijzig jouw gegevens."
+    }
+  ],
+  "train-header": [
+    {
+      "type": 0,
+      "value": "Model trainen"
+    }
+  ],
+  "train-model": [
+    {
+      "type": 0,
+      "value": "Train model"
+    }
+  ],
+  "training-model": [
+    {
+      "type": 0,
+      "value": "Model trainen..."
+    }
+  ],
+  "transfer-hex-alt": [
+    {
+      "type": 0,
+      "value": "animatie van het slepen van een hex bestand van de download-map naar de micro:bit schijf of apparaat vermeld in de bestandsverkenner"
+    }
+  ],
+  "transfer-hex-heading": [
+    {
+      "type": 0,
+      "value": "Zet het opgeslagen hex-bestand over naar micro:bit"
+    }
+  ],
+  "transfer-hex-manual-download": [
+    {
+      "type": 0,
+      "value": "Als het bestand niet automatisch gedownload is dan "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "download het bestand hier"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "transfer-hex-message": [
+    {
+      "type": 0,
+      "value": "Sleep het hex-bestand van je map Downloads naar het MICROBIT-station."
+    }
+  ],
+  "try-again-action": [
+    {
+      "type": 0,
+      "value": "Probeer het opnieuw"
+    }
+  ],
+  "unknown": [
+    {
+      "type": 0,
+      "value": "onbekend"
+    }
+  ],
+  "unplug-radio-link-microbit-description": [
+    {
+      "type": 0,
+      "value": "Haal de radio link micro:bit los van de computer. Je moet de micro:bit opnieuw koppelen als je meer data samples wilt opnemen."
+    }
+  ],
+  "unplug-radio-link-microbit-label": [
+    {
+      "type": 0,
+      "value": "animatie met een USB-kabel die wordt losgekoppeld van de bovenkant van een micro:bit"
+    }
+  ],
+  "unplug-radio-link-microbit-title": [
+    {
+      "type": 0,
+      "value": "Ontkoppel de radio link micro:bit"
+    }
+  ],
+  "unsupported-device-explain": [
+    {
+      "type": 0,
+      "value": "Helaas ondersteunen we alleen het gebruik van micro:bit V2 bij het verbinden met een micro:bit radio. Je hebt een "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "micro:bit V1"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " verbonden."
+    }
+  ],
+  "unsupported-device-header": [
+    {
+      "type": 0,
+      "value": "micro:bit radioverbindingen ondersteunen geen micro:bit V1"
+    }
+  ],
+  "unsupported-device-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "Gebruik Web Bluetooth om in plaats daarvan verbinding te maken met je micro:bit V1."
+    }
+  ],
+  "unsupported-device-without-bluetooth": [
+    {
+      "type": 0,
+      "value": "Je kunt verbinden met micro:bit V1 via Web Bluetooth, deze browser of apparaat heeft Bluetooth echter niet ingeschakeld. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Hoe Bluetooth in te schakelen"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "user-guide": [
+    {
+      "type": 0,
+      "value": "Gebruikershandleiding"
+    }
+  ],
+  "webusb-retry-no-select": [
+    {
+      "type": 0,
+      "value": "Je hebt geen micro:bit gekozen. Wil je het opnieuw proberen?"
+    }
+  ],
+  "webusb-retry-replug1": [
+    {
+      "type": 0,
+      "value": "Er is een WebUSB-fout opgetreden."
+    }
+  ],
+  "webusb-retry-replug2": [
+    {
+      "type": 0,
+      "value": "Alsjeblieft:"
+    }
+  ],
+  "webusb-retry-replug3": [
+    {
+      "type": 0,
+      "value": "controleer of deze micro:bit niet is aangesloten op de batterij"
+    }
+  ],
+  "webusb-retry-replug4": [
+    {
+      "type": 0,
+      "value": "de USB-kabel ontkoppelen en opnieuw aansluiten"
+    }
+  ]
+}

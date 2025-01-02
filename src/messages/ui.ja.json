@@ -1,0 +1,2980 @@
+{
+  "aarhus-university-alt": [
+    {
+      "type": 0,
+      "value": "オーフス大学"
+    }
+  ],
+  "about": [
+    {
+      "type": 0,
+      "value": "micro:bitについて"
+    }
+  ],
+  "about-dialog-alt": [
+    {
+      "type": 0,
+      "value": "micro:bit でLEDディスプレイにハートを表示する"
+    }
+  ],
+  "about-dialog-title": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "オーフス大学 Center for Computational Thinking and Design"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "とのパートナーシップにより開発されています"
+    }
+  ],
+  "accelerometer-image-alt": [
+    {
+      "type": 0,
+      "value": "micro:bitでは、X軸が前面を横切る方向、Y軸が下から上方向、Z軸が裏面から前面の方向を示しています。"
+    }
+  ],
+  "action-label": [
+    {
+      "type": 0,
+      "value": "アクション"
+    }
+  ],
+  "action-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "アクションのツールチップ"
+    }
+  ],
+  "action-length-error": [
+    {
+      "type": 0,
+      "value": "アクション名は "
+    },
+    {
+      "type": 1,
+      "value": "maxLen"
+    },
+    {
+      "type": 0,
+      "value": " 文字より長くできません。"
+    }
+  ],
+  "action-name-placeholder": [
+    {
+      "type": 0,
+      "value": "アクション名"
+    }
+  ],
+  "action-region": [
+    {
+      "type": 0,
+      "value": "アクション「"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "」"
+    }
+  ],
+  "action-tooltip": [
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " に認識させたい動きの種類(例: 手を振る、拍手する)"
+    }
+  ],
+  "actions-label": [
+    {
+      "type": 0,
+      "value": "アクション"
+    }
+  ],
+  "add-action-action": [
+    {
+      "type": 0,
+      "value": "アクションを追加"
+    }
+  ],
+  "ai-activity-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "AIアクティビティタイマー"
+    }
+  ],
+  "ai-storytelling-friend-resource-title": [
+    {
+      "type": 0,
+      "value": "AIストーリーテリングの友達"
+    }
+  ],
+  "back-action": [
+    {
+      "type": 0,
+      "value": "戻る"
+    }
+  ],
+  "back-to-data-samples-action": [
+    {
+      "type": 0,
+      "value": "データサンプルを編集"
+    }
+  ],
+  "bluetooth-unsupported-advice": [
+    {
+      "type": 0,
+      "value": "micro:bitに直接接続できるように、Google ChromeまたはMicrosoft Edgeをお勧めします。"
+    }
+  ],
+  "bluetooth-unsupported-explain": [
+    {
+      "type": 0,
+      "value": "残念ながら、WebUSBとWeb Bluetoothはこのブラウザではサポートされていません。 これは、機械学習モデルを訓練するために必要なデータサンプルを記録するためにmicro:bitに接続できないことを意味します。"
+    }
+  ],
+  "bluetooth-unsupported-header": [
+    {
+      "type": 0,
+      "value": "お使いのブラウザーはサポートされていません。"
+    }
+  ],
+  "cancel-action": [
+    {
+      "type": 0,
+      "value": "キャンセル"
+    }
+  ],
+  "cancel-recording-action": [
+    {
+      "type": 0,
+      "value": "記録をキャンセル"
+    }
+  ],
+  "certainty-label": [
+    {
+      "type": 0,
+      "value": "確実性"
+    }
+  ],
+  "certainty-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "確実性のツールチップ"
+    }
+  ],
+  "certainty-percentage-label": [
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "の確実性: "
+    },
+    {
+      "type": 1,
+      "value": "currentConfidence"
+    },
+    {
+      "type": 0,
+      "value": "%"
+    }
+  ],
+  "certainty-tooltip": [
+    {
+      "type": 0,
+      "value": "現在各アクションを実行しているかどうかについて、モデルがどの程度確信を持っているか。"
+    }
+  ],
+  "click-to-reload-page-action": [
+    {
+      "type": 0,
+      "value": "ページをリロードするにはクリックします"
+    }
+  ],
+  "close-action": [
+    {
+      "type": 0,
+      "value": "閉じる"
+    }
+  ],
+  "code-download-error": [
+    {
+      "type": 0,
+      "value": "プロジェクトのプログラムのダウンロードに失敗しました"
+    }
+  ],
+  "code-label": [
+    {
+      "type": 0,
+      "value": "コードを書く"
+    }
+  ],
+  "code-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "プログラムのツールチップ"
+    }
+  ],
+  "code-tooltip": [
+    {
+      "type": 0,
+      "value": "micro:bitにMLモデルとプログラムを転送する際に検出されたアクションごとのMakeCodeブロックです。"
+    }
+  ],
+  "confirm-action": [
+    {
+      "type": 0,
+      "value": "確認"
+    }
+  ],
+  "confirm-save-action": [
+    {
+      "type": 0,
+      "value": "確認して保存"
+    }
+  ],
+  "connect-action": [
+    {
+      "type": 0,
+      "value": "接続"
+    }
+  ],
+  "connect-action-aria": [
+    {
+      "type": 0,
+      "value": "micro:bitに接続中"
+    }
+  ],
+  "connect-battery-heading": [
+    {
+      "type": 0,
+      "value": "USBケーブルを外して、電池ボックスを繋げます"
+    }
+  ],
+  "connect-battery-holder": [
+    {
+      "type": 0,
+      "value": "電池ボックスホルダー"
+    }
+  ],
+  "connect-battery-link": [
+    {
+      "type": 0,
+      "value": "micro:bitを手首や物に取り付けられます。。"
+    }
+  ],
+  "connect-battery-subtitle": [
+    {
+      "type": 0,
+      "value": "micro:bitをコンピュータから取り外し、電池ボックスを繋げます。"
+    }
+  ],
+  "connect-bluetooth-cancelled-connection": [
+    {
+      "type": 0,
+      "value": "micro:bitを選択していません。もう一度試しますか？"
+    }
+  ],
+  "connect-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "Web Bluetooth を使って繋げる"
+    }
+  ],
+  "connect-bluetooth-invalid-pattern": [
+    {
+      "type": 0,
+      "value": "描画したパターンは無効です。"
+    }
+  ],
+  "connect-bluetooth-start-heading": [
+    {
+      "type": 0,
+      "value": "Web Bluetooth で繋げるのに必要なもの"
+    }
+  ],
+  "connect-bluetooth-start-requirements1": [
+    {
+      "type": 0,
+      "value": "micro:bit 1台"
+    }
+  ],
+  "connect-bluetooth-start-requirements2-subtitle": [
+    {
+      "type": 0,
+      "value": "インターネット、USB ポート、 Web  Bluetooth"
+    }
+  ],
+  "connect-bluetooth-start-switch-radio": [
+    {
+      "type": 0,
+      "value": "代わりにmicro:bit無線機能を使って接続"
+    }
+  ],
+  "connect-cable-alt": [
+    {
+      "type": 0,
+      "value": "micro:bitの上部にUSBケーブルが繋げられていることを示すアニメーション"
+    }
+  ],
+  "connect-cable-download-project-subtitle": [
+    {
+      "type": 0,
+      "value": "micro:bitをUSBケーブルでこのコンピュータに繋いで、機械学習MakeCodeプログラムをダウンロードします。"
+    }
+  ],
+  "connect-cable-heading": [
+    {
+      "type": 0,
+      "value": "USBケーブルをmicro:bitに繋げます"
+    }
+  ],
+  "connect-cable-skip": [
+    {
+      "type": 0,
+      "value": "スキップ: プログラムは既にダウンロードされていませんか？"
+    }
+  ],
+  "connect-cable-subtitle": [
+    {
+      "type": 0,
+      "value": "データ収集プログラムをダウンロードできるように、micro:bitをUSBケーブルでこのコンピュータに繋げます。"
+    }
+  ],
+  "connect-computer": [
+    {
+      "type": 0,
+      "value": "コンピュータ"
+    }
+  ],
+  "connect-data-collection-heading": [
+    {
+      "type": 0,
+      "value": "USBケーブルをmicro:bit 1に繋げます"
+    }
+  ],
+  "connect-data-collection-subtitle": [
+    {
+      "type": 0,
+      "value": "最初のmicro:bitをUSBケーブルでコンピュータに繋げて、データ収集プログラムをダウンロードできます。 これは、データサンプルの収集に使うmicro:bitです。"
+    }
+  ],
+  "connect-failed-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "micro:bitへの接続に失敗しました"
+    }
+  ],
+  "connect-failed-bluetooth1": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitへの接続を確立できませんでした。"
+    }
+  ],
+  "connect-failed-bridge-heading": [
+    {
+      "type": 0,
+      "value": "無線リンク用micro:bitへの接続に失敗しました"
+    }
+  ],
+  "connect-failed-bridge1": [
+    {
+      "type": 0,
+      "value": "コンピューターに接続されたmicro:bitとの接続を確立できませんでした。"
+    }
+  ],
+  "connect-failed-remote-heading": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitへの接続に失敗しました"
+    }
+  ],
+  "connect-failed-remote1": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitへの接続を確立できませんでした。"
+    }
+  ],
+  "connect-help-alt": [
+    {
+      "type": 0,
+      "value": "「1」のラベルが付いたBBC micro:bitエントリと「2」のラベルが付いた接続ボタンを持つWebUSB接続ダイアログ"
+    }
+  ],
+  "connect-micro-usb-cable": [
+    {
+      "type": 0,
+      "value": "マイクロUSBケーブル"
+    }
+  ],
+  "connect-or-import": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "データ収集用micro:bitを接続"
+        }
+      ],
+      "type": 8,
+      "value": "link1"
+    },
+    {
+      "type": 0,
+      "value": " または "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "データサンプルのインポート"
+        }
+      ],
+      "type": 8,
+      "value": "link2"
+    }
+  ],
+  "connect-pattern-heading": [
+    {
+      "type": 0,
+      "value": "パターンをコピー"
+    }
+  ],
+  "connect-pattern-input-label": [
+    {
+      "type": 1,
+      "value": "colNum"
+    },
+    {
+      "type": 0,
+      "value": " 列 - micro:bitディスプレイで点灯したLEDの数"
+    }
+  ],
+  "connect-pattern-subtitle": [
+    {
+      "type": 0,
+      "value": "micro:bitに表示されているパターンをコピーします。"
+    }
+  ],
+  "connect-popup": [
+    {
+      "type": 0,
+      "value": "micro:bitを選択"
+    }
+  ],
+  "connect-popup-bluetooth-alt": [
+    {
+      "type": 0,
+      "value": "ラベル 1 で示している BBC micro:bit のエントリとラベル 2 で示しているペアリングボタンのあるWeb Bluetooth ダイアログ"
+    }
+  ],
+  "connect-popup-bluetooth-instruction2": [
+    {
+      "type": 0,
+      "value": "「ペアリング」(Pair)を選択"
+    }
+  ],
+  "connect-popup-bluetooth-title": [
+    {
+      "type": 0,
+      "value": "Web Bluetoothでmicro:bitに接続"
+    }
+  ],
+  "connect-popup-instruction-heading": [
+    {
+      "type": 0,
+      "value": "次のポップアップ"
+    }
+  ],
+  "connect-popup-instruction1": [
+    {
+      "type": 0,
+      "value": "micro:bitを選ぶ"
+    }
+  ],
+  "connect-popup-usb-bluetooth-data-collection-title": [
+    {
+      "type": 0,
+      "value": "データ収集プログラムをmicro:bitにダウンロード"
+    }
+  ],
+  "connect-popup-usb-radio-data-collection-title": [
+    {
+      "type": 0,
+      "value": "データ収集プログラムをmicro:bit 1にダウンロードする"
+    }
+  ],
+  "connect-popup-usb-radio-link-title": [
+    {
+      "type": 0,
+      "value": "micro:bit 2に無線リンクプログラムをダウンロードする"
+    }
+  ],
+  "connect-popup-webusb-instruction2": [
+    {
+      "type": 0,
+      "value": "「接続」(Connect)を選択"
+    }
+  ],
+  "connect-radio-data-collection-microbit-description": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitをこのコンピュータに接続して、機械学習MakeCodeプログラムをダウンロードします。 データ収集用micro:bitを身につけている場合は、取り外す必要があります。"
+    }
+  ],
+  "connect-radio-data-collection-microbit-title": [
+    {
+      "type": 0,
+      "value": "USBケーブルをデータ収集micro:bitにつなぐ"
+    }
+  ],
+  "connect-radio-heading": [
+    {
+      "type": 0,
+      "value": "micro:bitに接続中"
+    }
+  ],
+  "connect-radio-link-heading": [
+    {
+      "type": 0,
+      "value": "USBケーブルをmicro:bit 2に繋げます"
+    }
+  ],
+  "connect-radio-link-subtitle": [
+    {
+      "type": 0,
+      "value": "無線リンクプログラムをダウンロードできるように、2つ目のmicro:bitをUSBケーブルでこのコンピュータに繋ぎます。この無線リンクmicro:bitはデータ収集micro:bitと通信します。"
+    }
+  ],
+  "connect-radio-start-heading": [
+    {
+      "type": 0,
+      "value": "micro:bit無線機能で接続するために必要なもの"
+    }
+  ],
+  "connect-radio-start-requirements1": [
+    {
+      "type": 0,
+      "value": "micro:bit 2個"
+    }
+  ],
+  "connect-radio-start-requirements1-subtitle": [
+    {
+      "type": 0,
+      "value": "V2のみ"
+    }
+  ],
+  "connect-radio-start-requirements2-subtitle": [
+    {
+      "type": 0,
+      "value": "インターネットとUSBポート"
+    }
+  ],
+  "connect-radio-start-switch-bluetooth": [
+    {
+      "type": 0,
+      "value": "Web Bluetooth で接続"
+    }
+  ],
+  "connect-to-record": [
+    {
+      "type": 0,
+      "value": "データサンプルを記録するための接続"
+    }
+  ],
+  "connect-to-record-body": [
+    {
+      "type": 0,
+      "value": "データサンプルを記録するためにmicro:bitを接続します。"
+    }
+  ],
+  "connect-to-test-model": [
+    {
+      "type": 0,
+      "value": "接続して MLモデルをテストする"
+    }
+  ],
+  "connect-to-tour-body": [
+    {
+      "type": 0,
+      "value": "ツアーを見るには、データ収集用micro:bitを接続する必要があります。"
+    }
+  ],
+  "connect-troubleshoot": [
+    {
+      "type": 0,
+      "value": "micro:bit接続時に発生する問題のトラブルシューティング"
+    }
+  ],
+  "connect-troubleshooting": [
+    {
+      "type": 0,
+      "value": "トラブルシューティング"
+    }
+  ],
+  "connect-with-batteries": [
+    {
+      "type": 0,
+      "value": "電池と"
+    }
+  ],
+  "connect-with-web-bluetooth": [
+    {
+      "type": 0,
+      "value": "Web Bluetooth で接続"
+    }
+  ],
+  "connecting": [
+    {
+      "type": 0,
+      "value": "接続中..."
+    }
+  ],
+  "continue-makecode-action": [
+    {
+      "type": 0,
+      "value": "MakeCodeに進む"
+    }
+  ],
+  "cookies-action": [
+    {
+      "type": 0,
+      "value": "Cookieについて"
+    }
+  ],
+  "copied": [
+    {
+      "type": 0,
+      "value": "コピーしました"
+    }
+  ],
+  "copy-action": [
+    {
+      "type": 0,
+      "value": "コピー"
+    }
+  ],
+  "data-actions-menu": [
+    {
+      "type": 0,
+      "value": "データアクション"
+    }
+  ],
+  "data-collection-microbit": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bit"
+    }
+  ],
+  "data-collection-microbit-label": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitを人の手首につけていることを示す図"
+    }
+  ],
+  "data-connection-region": [
+    {
+      "type": 0,
+      "value": "micro:bitデータ接続"
+    }
+  ],
+  "data-features-hide-action": [
+    {
+      "type": 0,
+      "value": "データ機能を隠す"
+    }
+  ],
+  "data-features-show-action": [
+    {
+      "type": 0,
+      "value": "データ機能を表示"
+    }
+  ],
+  "data-samples-actions-region": [
+    {
+      "type": 0,
+      "value": "データサンプルツールバー"
+    }
+  ],
+  "data-samples-label": [
+    {
+      "type": 0,
+      "value": "データサンプル"
+    }
+  ],
+  "data-samples-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "データサンプルツールチップ"
+    }
+  ],
+  "data-samples-status-count": [
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " 個のサンプルを記録"
+    }
+  ],
+  "data-samples-status-not-enough": [
+    {
+      "type": 0,
+      "value": "少なくとも3個必要"
+    }
+  ],
+  "data-samples-title": [
+    {
+      "type": 0,
+      "value": "データサンプル"
+    }
+  ],
+  "data-samples-tooltip": [
+    {
+      "type": 0,
+      "value": "1秒間の短い動きデータを収集。あなたのデータサンプルはあなたのPCにのみ保存され、他の誰にも送信されません。"
+    }
+  ],
+  "default-project-name": [
+    {
+      "type": 0,
+      "value": "名称未設定"
+    }
+  ],
+  "delete-action-aria": [
+    {
+      "type": 0,
+      "value": "アクション \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\" を削除"
+    }
+  ],
+  "delete-action-confirm-heading": [
+    {
+      "type": 0,
+      "value": "アクション削除を確認"
+    }
+  ],
+  "delete-action-confirm-text": [
+    {
+      "type": 0,
+      "value": "アクション \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\" を削除してもよろしいですか？"
+    }
+  ],
+  "delete-data-samples-action": [
+    {
+      "type": 0,
+      "value": "すべてのデータサンプルを削除"
+    }
+  ],
+  "delete-data-samples-confirm-heading": [
+    {
+      "type": 0,
+      "value": "すべてのデータサンプル削除を確認"
+    }
+  ],
+  "delete-data-samples-confirm-text": [
+    {
+      "type": 0,
+      "value": "すべてのデータサンプルを削除してもよろしいですか？"
+    }
+  ],
+  "delete-recording-aria": [
+    {
+      "type": 0,
+      "value": "アクション \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\" の "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " 個の記録 "
+    },
+    {
+      "type": 1,
+      "value": "sample"
+    },
+    {
+      "type": 0,
+      "value": " を削除"
+    }
+  ],
+  "disconnect-action": [
+    {
+      "type": 0,
+      "value": "切断"
+    }
+  ],
+  "disconnected-during-recording": [
+    {
+      "type": 0,
+      "value": "記録中にmicro:bitが切断されました"
+    }
+  ],
+  "disconnected-warning-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitの接続が失われました"
+    }
+  ],
+  "disconnected-warning-bluetooth1": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitへの接続が失われました。"
+    }
+  ],
+  "disconnected-warning-bluetooth2": [
+    {
+      "type": 0,
+      "value": "micro:bitを確認してください。"
+    }
+  ],
+  "disconnected-warning-bluetooth3": [
+    {
+      "type": 0,
+      "value": "電源が入っているか(micro:bit の背面にある赤いライトが点灯している必要があります)"
+    }
+  ],
+  "disconnected-warning-bluetooth4": [
+    {
+      "type": 0,
+      "value": "PCが近くにあるか"
+    }
+  ],
+  "disconnected-warning-bridge-heading": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitの接続が失われました"
+    }
+  ],
+  "disconnected-warning-bridge1": [
+    {
+      "type": 0,
+      "value": "PCに接続されたmicro:bitへの接続が失われました。"
+    }
+  ],
+  "disconnected-warning-remote-heading": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitの接続が失われました"
+    }
+  ],
+  "disconnected-warning-remote1": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitへの接続が失われました。"
+    }
+  ],
+  "dont-show-again": [
+    {
+      "type": 0,
+      "value": "今後表示しない"
+    }
+  ],
+  "download-data-samples-action": [
+    {
+      "type": 0,
+      "value": "すべてのデータサンプルをダウンロード"
+    }
+  ],
+  "download-project-choose-microbit-subtitle": [
+    {
+      "type": 0,
+      "value": "プロジェクトを同じmicro:bitにダウンロードすると、micro:bitがツールから切断されます。 データサンプルをもっと記録したい場合は、micro:bitを再接続する必要があります。"
+    }
+  ],
+  "download-project-choose-microbit-title": [
+    {
+      "type": 0,
+      "value": "どのmicro:bitを使いますか？"
+    }
+  ],
+  "download-project-different-microbit-option": [
+    {
+      "type": 0,
+      "value": "別のmicro:bit"
+    }
+  ],
+  "download-project-intro-description": [
+    {
+      "type": 0,
+      "value": "プログラムには、作成した機械学習モデルが含まれます。 モデルはmicro:bit上で動作するので、 "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " に接続せずに使えます。"
+    }
+  ],
+  "download-project-intro-title": [
+    {
+      "type": 0,
+      "value": "機械学習のMakeCodeプロジェクトをダウンロード"
+    }
+  ],
+  "download-project-same-microbit-option": [
+    {
+      "type": 0,
+      "value": "同じmicro:bit"
+    }
+  ],
+  "downloading-data-collection-header": [
+    {
+      "type": 0,
+      "value": "データ収集プログラムのダウンロード"
+    }
+  ],
+  "downloading-header": [
+    {
+      "type": 0,
+      "value": "micro:bitへのプログラムのダウンロード"
+    }
+  ],
+  "downloading-radio-link-header": [
+    {
+      "type": 0,
+      "value": "無線リンクプログラムのダウンロード"
+    }
+  ],
+  "downloading-subtitle": [
+    {
+      "type": 0,
+      "value": "しばらくお待ちください。micro:bitにプログラムをダウンロードしています。"
+    }
+  ],
+  "edit-in-makecode-action": [
+    {
+      "type": 0,
+      "value": "MakeCodeで編集"
+    }
+  ],
+  "estimated-action-aria": [
+    {
+      "type": 0,
+      "value": "推定アクション: \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "estimated-action-label": [
+    {
+      "type": 0,
+      "value": "推定アクション"
+    }
+  ],
+  "estimated-action-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "推定アクションツールチップ"
+    }
+  ],
+  "estimated-action-tooltip": [
+    {
+      "type": 0,
+      "value": "これは、モデルが現在行っていると判断したアクションです。"
+    }
+  ],
+  "feedback": [
+    {
+      "type": 0,
+      "value": "フィードバック"
+    }
+  ],
+  "fingerprint-acc-x-tooltip": [
+    {
+      "type": 0,
+      "value": "X 方向データの合計"
+    }
+  ],
+  "fingerprint-acc-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Y 方向データの合計"
+    }
+  ],
+  "fingerprint-acc-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Z 方向データの合計"
+    }
+  ],
+  "fingerprint-max-x-tooltip": [
+    {
+      "type": 0,
+      "value": "すべての X 方向データポイントの最大値"
+    }
+  ],
+  "fingerprint-max-y-tooltip": [
+    {
+      "type": 0,
+      "value": "すべての Y 方向のデータポイントの最大値"
+    }
+  ],
+  "fingerprint-max-z-tooltip": [
+    {
+      "type": 0,
+      "value": "すべてのZ方向データポイントの最大値"
+    }
+  ],
+  "fingerprint-mean-x-tooltip": [
+    {
+      "type": 0,
+      "value": "X 方向データの平均値"
+    }
+  ],
+  "fingerprint-mean-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Y 方向データの平均値"
+    }
+  ],
+  "fingerprint-mean-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Z方向データの平均値"
+    }
+  ],
+  "fingerprint-min-x-tooltip": [
+    {
+      "type": 0,
+      "value": "すべての X 方向データポイントの最小値"
+    }
+  ],
+  "fingerprint-min-y-tooltip": [
+    {
+      "type": 0,
+      "value": "すべての Y 方向データポイントの最小値"
+    }
+  ],
+  "fingerprint-min-z-tooltip": [
+    {
+      "type": 0,
+      "value": "すべてのZ方向データポイントの最小値"
+    }
+  ],
+  "fingerprint-peaks-x-tooltip": [
+    {
+      "type": 0,
+      "value": "すべての X 方向データポイントの中の極値の数"
+    }
+  ],
+  "fingerprint-peaks-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Y 方向のすべてのデータポイントの中の極値の数"
+    }
+  ],
+  "fingerprint-peaks-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Z方向のすべてのデータポイント間の極値の数"
+    }
+  ],
+  "fingerprint-rms-x-tooltip": [
+    {
+      "type": 0,
+      "value": "すべての X 方向データポイントの実効値"
+    }
+  ],
+  "fingerprint-rms-y-tooltip": [
+    {
+      "type": 0,
+      "value": "すべての Y 方向データポイントの実効値"
+    }
+  ],
+  "fingerprint-rms-z-tooltip": [
+    {
+      "type": 0,
+      "value": "すべての Z 方向データポイントの実効値"
+    }
+  ],
+  "fingerprint-std-x-tooltip": [
+    {
+      "type": 0,
+      "value": "X方向のすべてのデータポイントの0からの平均偏差"
+    }
+  ],
+  "fingerprint-std-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Y方向のすべてのデータポイントの0からの平均偏差"
+    }
+  ],
+  "fingerprint-std-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Z方向のすべてのデータポイントの0からの平均偏差"
+    }
+  ],
+  "fingerprint-zcr-x-tooltip": [
+    {
+      "type": 0,
+      "value": "X方向のデータポイントの正と負の間で加速度が遷移するレート"
+    }
+  ],
+  "fingerprint-zcr-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Y方向のデータポイントの正と負の間で加速度が遷移するレート"
+    }
+  ],
+  "fingerprint-zcr-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Z方向のデータポイントの正と負の間で加速度が遷移するレート"
+    }
+  ],
+  "firmware-outdated-content1": [
+    {
+      "type": 0,
+      "value": "micro:bitのファームウェアが古すぎるため、micro:bitへの接続に失敗しました。"
+    }
+  ],
+  "firmware-outdated-content2": [
+    {
+      "type": 0,
+      "value": "このmicro:bitに接続するには、"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ファームウェアを更新する"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "必要があります。"
+    }
+  ],
+  "firmware-outdated-heading": [
+    {
+      "type": 0,
+      "value": "ファームウェアの更新が必要です"
+    }
+  ],
+  "get-started-action": [
+    {
+      "type": 0,
+      "value": "はじめよう"
+    }
+  ],
+  "go-action": [
+    {
+      "type": 0,
+      "value": "実行"
+    }
+  ],
+  "graph-color-scheme": [
+    {
+      "type": 0,
+      "value": "グラフの配色設定"
+    }
+  ],
+  "graph-color-scheme-color-blind-1": [
+    {
+      "type": 0,
+      "value": "カラーブラインド代替案1"
+    }
+  ],
+  "graph-color-scheme-color-blind-2": [
+    {
+      "type": 0,
+      "value": "カラーブラインド代替案2"
+    }
+  ],
+  "graph-color-scheme-default": [
+    {
+      "type": 0,
+      "value": "デフォルト (赤、青、緑)"
+    }
+  ],
+  "graph-line-scheme": [
+    {
+      "type": 0,
+      "value": "グラフ線のスタイル"
+    }
+  ],
+  "graph-line-scheme-accessible": [
+    {
+      "type": 0,
+      "value": "利用できる線 (実線、破線、点線)"
+    }
+  ],
+  "graph-line-scheme-solid": [
+    {
+      "type": 0,
+      "value": "実線"
+    }
+  ],
+  "graph-line-weight": [
+    {
+      "type": 0,
+      "value": "グラフ線の太さ"
+    }
+  ],
+  "graph-line-weight-default": [
+    {
+      "type": 0,
+      "value": "初期値"
+    }
+  ],
+  "graph-line-weight-thick": [
+    {
+      "type": 0,
+      "value": "太い"
+    }
+  ],
+  "help-label": [
+    {
+      "type": 0,
+      "value": "ヘルプ"
+    }
+  ],
+  "help-support": [
+    {
+      "type": 0,
+      "value": "ヘルプとサポート"
+    }
+  ],
+  "home-action": [
+    {
+      "type": 0,
+      "value": "ホーム"
+    }
+  ],
+  "homepage": [
+    {
+      "type": 0,
+      "value": "ホームページ"
+    }
+  ],
+  "homepage-alt": [
+    {
+      "type": 0,
+      "value": "micro:bitの加速度センサーデータを表すx, y, zのグラフ線を示すグラフに拍手している様子を重ね合わせたもの"
+    }
+  ],
+  "homepage-alt-graph": [
+    {
+      "type": 0,
+      "value": "micro:bitの加速度センサーデータを表すx, y, zのグラフ線を示すグラフ"
+    }
+  ],
+  "homepage-alt-hands": [
+    {
+      "type": 0,
+      "value": "拍手"
+    }
+  ],
+  "homepage-description": [
+    {
+      "type": 0,
+      "value": "自分の動作データで機械学習モデルをトレーニングし、micro:bitで実行します。"
+    }
+  ],
+  "homepage-how-it-works": [
+    {
+      "type": 0,
+      "value": "動作の仕組み"
+    }
+  ],
+  "homepage-how-it-works-paragraph": [
+    {
+      "type": 0,
+      "value": "ビデオを見て、始めましょう。 "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "利用者ガイド"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "で詳細をご覧ください。"
+    }
+  ],
+  "homepage-projects": [
+    {
+      "type": 0,
+      "value": "サンプルプロジェクト"
+    }
+  ],
+  "homepage-projects-more": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "micro:bitとAIに関するコンテンツとリソース"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "を探る。"
+    }
+  ],
+  "homepage-step-by-step": [
+    {
+      "type": 0,
+      "value": "セットアップ手順"
+    }
+  ],
+  "homepage-subtitle": [
+    {
+      "type": 0,
+      "value": "動作と機械学習を使った BBC micro:bit のCreate AI"
+    }
+  ],
+  "homepage-video-alt": [
+    {
+      "type": 0,
+      "value": "紹介動画"
+    }
+  ],
+  "import-data-samples-action": [
+    {
+      "type": 0,
+      "value": "データサンプルをインポート"
+    }
+  ],
+  "import-error-dialog-content": [
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "で開くことができるのはMakeCodeのhexファイルまたはデータサンプルファイル(.json)だけです。"
+    }
+  ],
+  "import-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "対応していないファイル形式です"
+    }
+  ],
+  "incompatible-device-body-alt": [
+    {
+      "type": 0,
+      "value": "戻って別のmicro:bitを選ぶか、"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "プロジェクトのhexを保存して"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "、micro:bit V2にダウンロードしてください。"
+    }
+  ],
+  "incompatible-device-body1": [
+    {
+      "type": 0,
+      "value": "プログラムを編集するには、MakeCodeに進んでください。その後、micro:bit V2にダウンロードできるプロジェクトのhexファイルを保存できます。"
+    }
+  ],
+  "incompatible-device-body2": [
+    {
+      "type": 0,
+      "value": "別の方法として、 "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "MakeCode を使用せずにプロジェクトの hex"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " を保存します。"
+    }
+  ],
+  "incompatible-device-heading": [
+    {
+      "type": 0,
+      "value": "互換性のないデバイス"
+    }
+  ],
+  "incompatible-device-subtitle": [
+    {
+      "type": 0,
+      "value": "micro:bit V1を使っていますが、機械学習プロジェクトでは micro:bit V2 に載っている、より速いプロセッサが必要となります。 "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "micro:bitのバージョンについてもっと調べる。"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    }
+  ],
+  "insufficient-data-body": [
+    {
+      "type": 0,
+      "value": "モデルを訓練するには、少なくとも2つのアクションと、それぞれのアクションに対して3つのデータサンプルが必要です。"
+    }
+  ],
+  "insufficient-data-title": [
+    {
+      "type": 0,
+      "value": "十分なデータがありません"
+    }
+  ],
+  "language": [
+    {
+      "type": 0,
+      "value": "言語"
+    }
+  ],
+  "learn-about-firewall-requirements-action": [
+    {
+      "type": 0,
+      "value": "ファイアウォール要件について調べる"
+    }
+  ],
+  "led-icon-option-angry": [
+    {
+      "type": 0,
+      "value": "おこり顔"
+    }
+  ],
+  "led-icon-option-asleep": [
+    {
+      "type": 0,
+      "value": "ねてる顔"
+    }
+  ],
+  "led-icon-option-butterfly": [
+    {
+      "type": 0,
+      "value": "ちょうちょ"
+    }
+  ],
+  "led-icon-option-chessboard": [
+    {
+      "type": 0,
+      "value": "チェスボード"
+    }
+  ],
+  "led-icon-option-confused": [
+    {
+      "type": 0,
+      "value": "こまり顔"
+    }
+  ],
+  "led-icon-option-cow": [
+    {
+      "type": 0,
+      "value": "うし"
+    }
+  ],
+  "led-icon-option-diamond": [
+    {
+      "type": 0,
+      "value": "ダイアモンド"
+    }
+  ],
+  "led-icon-option-duck": [
+    {
+      "type": 0,
+      "value": "あひる"
+    }
+  ],
+  "led-icon-option-eighthnote": [
+    {
+      "type": 0,
+      "value": "８分音符"
+    }
+  ],
+  "led-icon-option-fabulous": [
+    {
+      "type": 0,
+      "value": "すばらしい"
+    }
+  ],
+  "led-icon-option-ghost": [
+    {
+      "type": 0,
+      "value": "おばけ"
+    }
+  ],
+  "led-icon-option-giraffe": [
+    {
+      "type": 0,
+      "value": "きりん"
+    }
+  ],
+  "led-icon-option-happy": [
+    {
+      "type": 0,
+      "value": "うれしい顔"
+    }
+  ],
+  "led-icon-option-heart": [
+    {
+      "type": 0,
+      "value": "ハート"
+    }
+  ],
+  "led-icon-option-house": [
+    {
+      "type": 0,
+      "value": "家"
+    }
+  ],
+  "led-icon-option-lefttriangle": [
+    {
+      "type": 0,
+      "value": "左向き三角"
+    }
+  ],
+  "led-icon-option-meh": [
+    {
+      "type": 0,
+      "value": "ふーん"
+    }
+  ],
+  "led-icon-option-no": [
+    {
+      "type": 0,
+      "value": "いいえ"
+    }
+  ],
+  "led-icon-option-off": [
+    {
+      "type": 0,
+      "value": "オフ"
+    }
+  ],
+  "led-icon-option-pitchfork": [
+    {
+      "type": 0,
+      "value": "くまで"
+    }
+  ],
+  "led-icon-option-quarternote": [
+    {
+      "type": 0,
+      "value": "４分音符"
+    }
+  ],
+  "led-icon-option-rabbit": [
+    {
+      "type": 0,
+      "value": "うさぎ"
+    }
+  ],
+  "led-icon-option-rollerskate": [
+    {
+      "type": 0,
+      "value": "ローラースケート"
+    }
+  ],
+  "led-icon-option-sad": [
+    {
+      "type": 0,
+      "value": "かなしい顔"
+    }
+  ],
+  "led-icon-option-scissors": [
+    {
+      "type": 0,
+      "value": "はさみ"
+    }
+  ],
+  "led-icon-option-silly": [
+    {
+      "type": 0,
+      "value": "へん顔"
+    }
+  ],
+  "led-icon-option-skull": [
+    {
+      "type": 0,
+      "value": "がいこつ"
+    }
+  ],
+  "led-icon-option-smalldiamond": [
+    {
+      "type": 0,
+      "value": "小さいダイアモンド"
+    }
+  ],
+  "led-icon-option-smallheart": [
+    {
+      "type": 0,
+      "value": "小さいハート"
+    }
+  ],
+  "led-icon-option-smallsquare": [
+    {
+      "type": 0,
+      "value": "小さいしかく"
+    }
+  ],
+  "led-icon-option-snake": [
+    {
+      "type": 0,
+      "value": "へび"
+    }
+  ],
+  "led-icon-option-square": [
+    {
+      "type": 0,
+      "value": "しかく"
+    }
+  ],
+  "led-icon-option-stickfigure": [
+    {
+      "type": 0,
+      "value": "棒人間"
+    }
+  ],
+  "led-icon-option-surprised": [
+    {
+      "type": 0,
+      "value": "びっくり顔"
+    }
+  ],
+  "led-icon-option-sword": [
+    {
+      "type": 0,
+      "value": "剣"
+    }
+  ],
+  "led-icon-option-target": [
+    {
+      "type": 0,
+      "value": "まと"
+    }
+  ],
+  "led-icon-option-tortoise": [
+    {
+      "type": 0,
+      "value": "かめ"
+    }
+  ],
+  "led-icon-option-triangle": [
+    {
+      "type": 0,
+      "value": "三角"
+    }
+  ],
+  "led-icon-option-tshirt": [
+    {
+      "type": 0,
+      "value": "Tシャツ"
+    }
+  ],
+  "led-icon-option-umbrella": [
+    {
+      "type": 0,
+      "value": "かさ"
+    }
+  ],
+  "led-icon-option-yes": [
+    {
+      "type": 0,
+      "value": "はい"
+    }
+  ],
+  "live-data-graph": [
+    {
+      "type": 0,
+      "value": "ライブデータグラフ"
+    }
+  ],
+  "live-graph": [
+    {
+      "type": 0,
+      "value": "ライブグラフ"
+    }
+  ],
+  "live-graph-tooltip": [
+    {
+      "type": 0,
+      "value": "このグラフは、micro:bitの加速度センサーの動きデータをリアルタイムで表示しています。 データ収集用micro:bitを動かして、X、Y、Z軸の変化を見てみましょう。 各色の線は、micro:bitを動かしている方向(軸)を表します。"
+    }
+  ],
+  "live-graph-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "ライブグラフツールチップ"
+    }
+  ],
+  "loading": [
+    {
+      "type": 0,
+      "value": "読み込み中"
+    }
+  ],
+  "main-menu": [
+    {
+      "type": 0,
+      "value": "メインメニュー"
+    }
+  ],
+  "makecode-back-alt": [
+    {
+      "type": 0,
+      "value": "MakeCodeを戻すための左矢印アイコン"
+    }
+  ],
+  "makecode-block-default-alt": [
+    {
+      "type": 0,
+      "value": "MakeCodeブロック: ML "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": " 開始時にアイコン "
+    },
+    {
+      "type": 1,
+      "value": "iconName"
+    },
+    {
+      "type": 0,
+      "value": "を表示する"
+    }
+  ],
+  "makecode-block-on-ML": [
+    {
+      "type": 0,
+      "value": "ML開始時"
+    }
+  ],
+  "makecode-block-show-icon": [
+    {
+      "type": 0,
+      "value": "アイコンを表示"
+    }
+  ],
+  "makecode-block-start": [
+    {
+      "type": 0,
+      "value": "start"
+    }
+  ],
+  "makecode-load-error-dialog-body": [
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " は MakeCode の読み込みに失敗しました。インターネット接続を確認し、ページを更新してからもう一度お試しください。"
+    }
+  ],
+  "makecode-load-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "Microsoft MakeCode を読み込めませんでした"
+    }
+  ],
+  "microbit-not-connected": [
+    {
+      "type": 0,
+      "value": "micro:bitが接続されていません"
+    }
+  ],
+  "more-edit-in-makecode-options": [
+    {
+      "type": 0,
+      "value": "MakeCodeのオプションをさらに編集する"
+    }
+  ],
+  "name-action-hint": [
+    {
+      "type": 0,
+      "value": "micro:bitに認識させたいアクションに名前を付けてください"
+    }
+  ],
+  "name-project": [
+    {
+      "type": 0,
+      "value": "プロジェクトに名前を付ける"
+    }
+  ],
+  "name-text": [
+    {
+      "type": 0,
+      "value": "名前"
+    }
+  ],
+  "name-used-when": [
+    {
+      "type": 0,
+      "value": "この名前は hex ファイルを保存するときに使用されます。"
+    }
+  ],
+  "new-session-setup-description": [
+    {
+      "type": 0,
+      "value": "新しいセッションを開始すると、既存のセッションを上書きすることになります。"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "既存のセッションを保存"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "することもできますよ。"
+    }
+  ],
+  "new-session-setup-title": [
+    {
+      "type": 0,
+      "value": "新しいセッションの設定"
+    }
+  ],
+  "newpage-continue-session-subtitle": [
+    {
+      "type": 0,
+      "value": "セッションを続行するには、コンピュータに保存したhexファイルまたはデータサンプルファイルを使います。"
+    }
+  ],
+  "newpage-continue-session-title": [
+    {
+      "type": 0,
+      "value": "保存したセッションを続ける"
+    }
+  ],
+  "newpage-last-session-date": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "日付:"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    }
+  ],
+  "newpage-last-session-name": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "名前:"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "newpage-last-session-none": [
+    {
+      "type": 0,
+      "value": "セッションが見つかりませんでした"
+    }
+  ],
+  "newpage-last-session-title": [
+    {
+      "type": 0,
+      "value": "最後のセッションを開く"
+    }
+  ],
+  "newpage-new-session-subtitle": [
+    {
+      "type": 0,
+      "value": "micro:bitに接続し、動作データを収集して機械学習モデルを構築します。"
+    }
+  ],
+  "newpage-new-session-title": [
+    {
+      "type": 0,
+      "value": "新規セッション"
+    }
+  ],
+  "newpage-section-one-title": [
+    {
+      "type": 0,
+      "value": "前に終了したところから再開する"
+    }
+  ],
+  "newpage-section-two-title": [
+    {
+      "type": 0,
+      "value": "新しく始める"
+    }
+  ],
+  "newpage-title": [
+    {
+      "type": 0,
+      "value": "新規セッション"
+    }
+  ],
+  "next-action": [
+    {
+      "type": 0,
+      "value": "次"
+    }
+  ],
+  "no-data-samples": [
+    {
+      "type": 0,
+      "value": "データサンプルがありません"
+    }
+  ],
+  "not-create-ai-hex-import-dialog-content": [
+    {
+      "type": 0,
+      "value": "このプロジェクトにはデータサンプルが含まれていないため、プログラムだけが開かれています。 プログラムを使う前に、モデルを訓練する必要があります。"
+    }
+  ],
+  "not-create-ai-hex-import-dialog-title": [
+    {
+      "type": 0,
+      "value": "MakeCodeプロジェクトがインポートされました"
+    }
+  ],
+  "not-found": [
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " ホームページ"
+    }
+  ],
+  "not-found-title": [
+    {
+      "type": 0,
+      "value": "ページが見つかりません"
+    }
+  ],
+  "open-file-action": [
+    {
+      "type": 0,
+      "value": "開く…"
+    }
+  ],
+  "open-file-dropped": [
+    {
+      "type": 0,
+      "value": "ドロップ時にファイルを開く"
+    }
+  ],
+  "other-tabs-body1": [
+    {
+      "type": 0,
+      "value": "別のプロセスがこのデバイスに接続されています。"
+    }
+  ],
+  "other-tabs-body2": [
+    {
+      "type": 0,
+      "value": "WebUSBを使っている他のタブ(例: MakeCode、Pythonエディター、 "
+    },
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": ")を閉じるか、micro:bitを抜き差ししてやり直してください。"
+    }
+  ],
+  "other-tabs-heading": [
+    {
+      "type": 0,
+      "value": "WebUSBで接続"
+    }
+  ],
+  "privacy": [
+    {
+      "type": 0,
+      "value": "プライバシーポリシー"
+    }
+  ],
+  "project-loaded": [
+    {
+      "type": 0,
+      "value": "プロジェクトが読み込まれました"
+    }
+  ],
+  "project-name-not-empty": [
+    {
+      "type": 0,
+      "value": "プロジェクト名は空にできません"
+    }
+  ],
+  "radio-link-microbit": [
+    {
+      "type": 0,
+      "value": "無線リンク用micro:bit"
+    }
+  ],
+  "radio-link-microbit-label": [
+    {
+      "type": 0,
+      "value": "無線リンク用micro:bitがPCに接続しているところを示す図"
+    }
+  ],
+  "recognition-point-label": [
+    {
+      "type": 0,
+      "value": "認識ポイント:"
+    }
+  ],
+  "reconnect-action": [
+    {
+      "type": 0,
+      "value": "再接続"
+    }
+  ],
+  "reconnect-failed-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitへの接続に失敗しました"
+    }
+  ],
+  "reconnect-failed-bluetooth1": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitへの接続を確立できませんでした。"
+    }
+  ],
+  "reconnect-failed-bridge-heading": [
+    {
+      "type": 0,
+      "value": "無線リンク用micro:bitへの接続に失敗しました"
+    }
+  ],
+  "reconnect-failed-bridge1": [
+    {
+      "type": 0,
+      "value": "コンピューターに接続されたmicro:bitとの接続を再確立できませんでした。"
+    }
+  ],
+  "reconnect-failed-radio-heading": [
+    {
+      "type": 0,
+      "value": "micro:bitへの接続に失敗しました"
+    }
+  ],
+  "reconnect-failed-remote-heading": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitへの接続に失敗しました"
+    }
+  ],
+  "reconnect-failed-remote1": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitへの接続を確立できませんでした。"
+    }
+  ],
+  "reconnect-failed-subtitle": [
+    {
+      "type": 0,
+      "value": "接続プロセスを再起動するには、次の手順に従ってください。"
+    }
+  ],
+  "reconnecting": [
+    {
+      "type": 0,
+      "value": "再接続中…"
+    }
+  ],
+  "record-action": [
+    {
+      "type": 0,
+      "value": "録画"
+    }
+  ],
+  "record-action-aria": [
+    {
+      "type": 0,
+      "value": "アクション「"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "」のデータを記録"
+    }
+  ],
+  "record-hint": [
+    {
+      "type": 0,
+      "value": "データサンプルを記録するためのボタン押し。"
+    }
+  ],
+  "record-hint-button-b": [
+    {
+      "type": 0,
+      "value": "データサンプルを記録するには、データ収集用micro:bitのボタンBを押します。"
+    }
+  ],
+  "record-samples": [
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " サンプルを記録"
+    }
+  ],
+  "record-samples-help": [
+    {
+      "type": 0,
+      "value": "各サンプルにはそれぞれにカウントダウンがあります"
+    }
+  ],
+  "record-seconds": [
+    {
+      "type": 1,
+      "value": "numSeconds"
+    },
+    {
+      "type": 0,
+      "value": " 秒の記録"
+    }
+  ],
+  "record-seconds-help": [
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " サンプルを取得するには、動き続けてください"
+    }
+  ],
+  "recording": [
+    {
+      "type": 0,
+      "value": "記録中"
+    }
+  ],
+  "recording-complete": [
+    {
+      "type": 0,
+      "value": "完了"
+    }
+  ],
+  "recording-data-for": [
+    {
+      "type": 0,
+      "value": "アクション「"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "」のデータを記録"
+    }
+  ],
+  "recording-data-for-numbered": [
+    {
+      "type": 0,
+      "value": "アクション「"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "」の "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " 個の記録 "
+    },
+    {
+      "type": 1,
+      "value": "sample"
+    },
+    {
+      "type": 0,
+      "value": " "
+    }
+  ],
+  "recording-fingerprint-label": [
+    {
+      "type": 0,
+      "value": "記録について、micro:bitのx、y、z加速度センサーデータ特性を表示するヒートマップ"
+    }
+  ],
+  "recording-graph-label": [
+    {
+      "type": 0,
+      "value": "micro:bit の加速度センサーのx軸、y軸、z軸の各データを示しているグラフ"
+    }
+  ],
+  "recording-options-aria": [
+    {
+      "type": 0,
+      "value": "アクション「"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "」の他の記録オプション"
+    }
+  ],
+  "reload-action": [
+    {
+      "type": 0,
+      "value": "再読み込み"
+    }
+  ],
+  "reset-to-default-action": [
+    {
+      "type": 0,
+      "value": "初期ブロックにリセット"
+    }
+  ],
+  "restore-defaults-action": [
+    {
+      "type": 0,
+      "value": "すべての設定を初期値に復元"
+    }
+  ],
+  "restore-defaults-confirm-action": [
+    {
+      "type": 0,
+      "value": "初期値に復元"
+    }
+  ],
+  "restore-defaults-confirm-body": [
+    {
+      "type": 0,
+      "value": "すべての設定を初期値に復元してもよろしいですか？"
+    }
+  ],
+  "restore-defaults-confirm-heading": [
+    {
+      "type": 0,
+      "value": "初期設定に復元"
+    }
+  ],
+  "restore-defaults-helper": [
+    {
+      "type": 0,
+      "value": "以前に却下されたヘルプコンテンツが再び表示される場合があります。"
+    }
+  ],
+  "save-action": [
+    {
+      "type": 0,
+      "value": "保存"
+    }
+  ],
+  "save-hex-dialog-heading": [
+    {
+      "type": 0,
+      "value": "プロジェクトをhexファイルとして保存"
+    }
+  ],
+  "save-hex-dialog-message1": [
+    {
+      "type": 0,
+      "value": "ダウンロードには、アクション、データサンプル、MakeCodeプロジェクトが含まれています。作業を続けるには "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " で開いてください。"
+    }
+  ],
+  "save-hex-dialog-message2": [
+    {
+      "type": 0,
+      "value": "アクションとデータサンプルを変更する必要がない場合は、Microsoft MakeCode で開くこともできます。"
+    }
+  ],
+  "saving-description": [
+    {
+      "type": 0,
+      "value": "ダウンロードはまもなく完了します。"
+    }
+  ],
+  "saving-title": [
+    {
+      "type": 0,
+      "value": "保存中…"
+    }
+  ],
+  "saving-toast-title": [
+    {
+      "type": 0,
+      "value": "hexファイルをダウンロードしました"
+    }
+  ],
+  "select-icon-action-aria": [
+    {
+      "type": 0,
+      "value": "アクション「"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "」のアイコンを選択"
+    }
+  ],
+  "select-icon-action-untitled-aria": [
+    {
+      "type": 0,
+      "value": "無題アクションのアイコンを選択"
+    }
+  ],
+  "select-icon-option-action-aria": [
+    {
+      "type": 0,
+      "value": "「"
+    },
+    {
+      "type": 1,
+      "value": "iconName"
+    },
+    {
+      "type": 0,
+      "value": "」アイコンを選択"
+    }
+  ],
+  "settings": [
+    {
+      "type": 0,
+      "value": "設定"
+    }
+  ],
+  "settings-menu-action": [
+    {
+      "type": 0,
+      "value": "設定アクションメニュー"
+    }
+  ],
+  "show-graphs-checkbox-label-text": [
+    {
+      "type": 0,
+      "value": "グラフを表示"
+    }
+  ],
+  "simple-ai-exercise-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "簡単なAI運動タイマー"
+    }
+  ],
+  "skip-tour-action": [
+    {
+      "type": 0,
+      "value": "ツアーをスキップ"
+    }
+  ],
+  "software-versions": [
+    {
+      "type": 0,
+      "value": "ソフトウェアのバージョン"
+    }
+  ],
+  "start-session-action": [
+    {
+      "type": 0,
+      "value": "セッションを開始"
+    }
+  ],
+  "start-training-action": [
+    {
+      "type": 0,
+      "value": "トレーニング開始"
+    }
+  ],
+  "steps-alt": [
+    {
+      "type": 0,
+      "value": "最終的にモデルを使ってコーディングする前に、データ収集、モデルのトレーニング、モデルのテスト、収集データを改善することでモデルを改善することを繰り返すプロセスを示す図。"
+    }
+  ],
+  "steps-code": [
+    {
+      "type": 0,
+      "value": "コードを書く"
+    }
+  ],
+  "steps-collect-data": [
+    {
+      "type": 0,
+      "value": "データを集める"
+    }
+  ],
+  "steps-improve": [
+    {
+      "type": 0,
+      "value": "改善する"
+    }
+  ],
+  "steps-test-model": [
+    {
+      "type": 0,
+      "value": "モデルのテスト"
+    }
+  ],
+  "steps-train": [
+    {
+      "type": 0,
+      "value": "トレーニング"
+    }
+  ],
+  "stop-recording-action": [
+    {
+      "type": 0,
+      "value": "記録の停止"
+    }
+  ],
+  "support-request": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "サポートリクエストの提出"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " を検討してください。"
+    }
+  ],
+  "terms": [
+    {
+      "type": 0,
+      "value": "利用規約"
+    }
+  ],
+  "testing-model-actions-region": [
+    {
+      "type": 0,
+      "value": "モデルツールバーのテスト"
+    }
+  ],
+  "testing-model-title": [
+    {
+      "type": 0,
+      "value": "モデルのテスト"
+    }
+  ],
+  "tour-action": [
+    {
+      "type": 0,
+      "value": "ツアー"
+    }
+  ],
+  "tour-collect-addActions-content": [
+    {
+      "type": 0,
+      "value": "他のアクションとその名前を決めてください。モデルを訓練するには、少なくとも2つのアクションと3つのデータサンプルが必要です。データサンプルはPCにのみ保存され、他の人に送信されることはありません。"
+    }
+  ],
+  "tour-collect-addActions-title": [
+    {
+      "type": 0,
+      "value": "さらにアクションを追加"
+    }
+  ],
+  "tour-collect-afterFirst-content": [
+    {
+      "type": 0,
+      "value": "機械学習モデルを訓練するには、少なくとも２つの異なるアクションと、アクションそれぞれについて少なくとも3つのデータサンプルが必要となります。"
+    }
+  ],
+  "tour-collect-afterFirst-title": [
+    {
+      "type": 0,
+      "value": "最初の"
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "サンプル"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "サンプル"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "recordingCount"
+    },
+    {
+      "type": 0,
+      "value": "を記録しました！"
+    }
+  ],
+  "tour-collect-collectMore-explanation-content": [
+    {
+      "type": 0,
+      "value": "さらにデータサンプルを収集すると、より良い機械学習モデルになります。"
+    }
+  ],
+  "tour-collect-collectMore-hasRecordings-content": [
+    {
+      "type": 0,
+      "value": "アクションのデータサンプルを記録します。"
+    }
+  ],
+  "tour-collect-collectMore-noRecordings-content": [
+    {
+      "type": 0,
+      "value": "アクションのデータサンプルを記録。"
+    }
+  ],
+  "tour-collect-collectMore-title": [
+    {
+      "type": 0,
+      "value": "さらにデータサンプルを収集"
+    }
+  ],
+  "tour-collect-trainModel-content": [
+    {
+      "type": 0,
+      "value": "十分なデータサンプルを収集したら、機械学習モデルのトレーニングができます。 後でもう一度、データを削除またはさらに追加し、モデルの信頼性を高めるためにトレーニングを続けられます。"
+    }
+  ],
+  "tour-dataSamples-actions-common-content": [
+    {
+      "type": 0,
+      "value": "アクションは、機械学習モデルに認識させたい動きの種類です。たとえば、「手を振る」や「手をたたく」などです。"
+    }
+  ],
+  "tour-dataSamples-actions-noRecordings-content": [
+    {
+      "type": 0,
+      "value": "最初のアクションを決め、名前を付けてから、データサンプルの記録を開始します。"
+    }
+  ],
+  "tour-dataSamples-connected-content": [
+    {
+      "type": 0,
+      "value": "データサンプルの収集を開始して、さまざまな動きや行動を認識する機械学習(ML)モデルをトレーニングしましょう。"
+    }
+  ],
+  "tour-dataSamples-connected-title": [
+    {
+      "type": 0,
+      "value": "データ収集用micro:bitが接続されています！"
+    }
+  ],
+  "tour-dataSamples-liveGraph-content": [
+    {
+      "type": 0,
+      "value": "グラフはmicro:bitの加速度センサーからの動きのデータを示しています。データ収集用micro:bitを動かして、グラフがどのように変化するか見てください。"
+    }
+  ],
+  "tour-makecode-intro-content1": [
+    {
+      "type": 0,
+      "value": "micro:bitでプロジェクトをテストするために、モデルとコードをダウンロードします。 さらにコードブロックを追加して、モデルを使った独自のプログラムを作ることもできます。"
+    }
+  ],
+  "tour-makecode-intro-content2": [
+    {
+      "type": 0,
+      "value": "MLモデルを改善する必要がありますか？ "
+    }
+  ],
+  "tour-makecode-intro-content3": [
+    {
+      "type": 0,
+      "value": "左上にあるこの戻るボタンを使ってください。"
+    }
+  ],
+  "tour-makecode-intro-title": [
+    {
+      "type": 0,
+      "value": "Microsoft MakeCode"
+    }
+  ],
+  "tour-trainModel-afterTrain-alreadyConnected-title": [
+    {
+      "type": 0,
+      "value": "MLモデルを訓練しました！"
+    }
+  ],
+  "tour-trainModel-afterTrain-content": [
+    {
+      "type": 0,
+      "value": "では、機械学習モデルをテストしましょう。データ収集用micro:bitを動かして、それぞれのアクションを試してみましょう。モデルはそれぞれのアクションを正しく推定しますか？"
+    }
+  ],
+  "tour-trainModel-afterTrain-delayedUntilConnected-title": [
+    {
+      "type": 0,
+      "value": "MLモデルをテスト"
+    }
+  ],
+  "tour-trainModel-certaintyRecognition-content": [
+    {
+      "type": 0,
+      "value": "棒グラフは、モデルが各アクションを実行していることを示しています。スライダーを動かして認識ポイントまたはしきい値を調整します。"
+    }
+  ],
+  "tour-trainModel-certaintyRecognition-title": [
+    {
+      "type": 0,
+      "value": "確実性と認識ポイント"
+    }
+  ],
+  "tour-trainModel-editInMakeCode-content": [
+    {
+      "type": 0,
+      "value": "プログラムと機械学習モデルをmicro:bitにダウンロードするには、MakeCodeでプロジェクトを開きます。 さらにブロックを追加して、モデルを使った独自のプログラムを作れます。"
+    }
+  ],
+  "tour-trainModel-estimatedAction-content": [
+    {
+      "type": 0,
+      "value": "現在あなたが実行しているとモデルが推定しているアクションは、そのアクションのmicro:bitアイコンの下に表示されます。"
+    }
+  ],
+  "tour-trainModel-makeCodeBlocks-content": [
+    {
+      "type": 0,
+      "value": "これらのMakeCodeブロックは、プログラムとモデルをmicro:bitに転送すると検出されるようになるアクションのアイコンを表示します。"
+    }
+  ],
+  "tour-trainModel-makeCodeBlocks-title": [
+    {
+      "type": 0,
+      "value": "Microsoft MakeCode ブロック"
+    }
+  ],
+  "train-description": [
+    {
+      "type": 0,
+      "value": "コンピュータプログラムは、データサンプルのパターンや違いを特定します。 そしてこれらを使って、 "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " がmicro:bitを動かすときに異なる動きを認識できる数学モデルを構築します。"
+    }
+  ],
+  "train-error-body": [
+    {
+      "type": 0,
+      "value": "訓練の結果、モデルは使用可能になりませんでした。その理由は、訓練に使われたデータにある可能性が高いです。 異なるアクションのデータサンプルがあまりにも類似している場合、訓練プロセスに問題が生じる可能性があります。"
+    }
+  ],
+  "train-error-header": [
+    {
+      "type": 0,
+      "value": "訓練が失敗しました"
+    }
+  ],
+  "train-error-todo": [
+    {
+      "type": 0,
+      "value": "データ追加のページに戻り、データを変更してください。"
+    }
+  ],
+  "train-header": [
+    {
+      "type": 0,
+      "value": "モデルの訓練"
+    }
+  ],
+  "train-model": [
+    {
+      "type": 0,
+      "value": "モデルの訓練"
+    }
+  ],
+  "training-model": [
+    {
+      "type": 0,
+      "value": "モデルを訓練中..."
+    }
+  ],
+  "transfer-hex-alt": [
+    {
+      "type": 0,
+      "value": "ダウンロードフォルダからmicro:bitドライブまたはファイルエクスプローラにリストされているデバイスにhexファイルをドラッグするアニメーション"
+    }
+  ],
+  "transfer-hex-heading": [
+    {
+      "type": 0,
+      "value": "保存された hex ファイルをmicro:bitに転送する"
+    }
+  ],
+  "transfer-hex-manual-download": [
+    {
+      "type": 0,
+      "value": "ファイルが自動でダウンロードされない場合は"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ここにファイルをダウンロードしてください"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "。"
+    }
+  ],
+  "transfer-hex-message": [
+    {
+      "type": 0,
+      "value": "hex ファイルをダウンロードフォルダからMICROBITドライブへドラッグします。"
+    }
+  ],
+  "try-again-action": [
+    {
+      "type": 0,
+      "value": "もう一度やり直す"
+    }
+  ],
+  "unknown": [
+    {
+      "type": 0,
+      "value": "不明"
+    }
+  ],
+  "unplug-radio-link-microbit-description": [
+    {
+      "type": 0,
+      "value": "無線リンク用micro:bitをPCから取り外します。データサンプルをもっと記録したい場合は、micro:bitを再接続する必要があります。"
+    }
+  ],
+  "unplug-radio-link-microbit-label": [
+    {
+      "type": 0,
+      "value": "micro:bit上部からUSBケーブルが取り外されていることを示すアニメーション"
+    }
+  ],
+  "unplug-radio-link-microbit-title": [
+    {
+      "type": 0,
+      "value": "無線リンク用micro:bitを外す"
+    }
+  ],
+  "unsupported-device-explain": [
+    {
+      "type": 0,
+      "value": "残念ながら、micro:bit 無線を使った接続は micro:bit V2 だけでサポートされています。接続されているのは "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "micro:bit V1"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " です。 "
+    }
+  ],
+  "unsupported-device-header": [
+    {
+      "type": 0,
+      "value": "micro:bit無線接続はmicro:bit V1をサポートしていません"
+    }
+  ],
+  "unsupported-device-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "代わりにWeb Bluetoothを使ってmicro:bitに接続してください。"
+    }
+  ],
+  "unsupported-device-without-bluetooth": [
+    {
+      "type": 0,
+      "value": "Web Bluetoothを使ってmicro:bit V1に接続できますが、このブラウザやデバイスはBluetoothを有効にしていません。 "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Bluetooth を有効にする方法"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "。"
+    }
+  ],
+  "user-guide": [
+    {
+      "type": 0,
+      "value": "ユーザーガイド"
+    }
+  ],
+  "webusb-retry-no-select": [
+    {
+      "type": 0,
+      "value": "micro:bitが選択されていません。もう一度試しますか？"
+    }
+  ],
+  "webusb-retry-replug1": [
+    {
+      "type": 0,
+      "value": "WebUSBエラーが発生しました。"
+    }
+  ],
+  "webusb-retry-replug2": [
+    {
+      "type": 0,
+      "value": "次のことを行ってください:"
+    }
+  ],
+  "webusb-retry-replug3": [
+    {
+      "type": 0,
+      "value": "このmicro:bitにバッテリーパックが接続されていないことを確認"
+    }
+  ],
+  "webusb-retry-replug4": [
+    {
+      "type": 0,
+      "value": "USBケーブルを抜いて再接続"
+    }
+  ]
+}

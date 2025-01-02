@@ -1,0 +1,3016 @@
+{
+  "aarhus-university-alt": [
+    {
+      "type": 0,
+      "value": "Universidade de Aarhus"
+    }
+  ],
+  "about": [
+    {
+      "type": 0,
+      "value": "Sobre"
+    }
+  ],
+  "about-dialog-alt": [
+    {
+      "type": 0,
+      "value": "Um micro:bit mostrando coração no visor LED"
+    }
+  ],
+  "about-dialog-title": [
+    {
+      "type": 0,
+      "value": "Desenvolvido em parceria com o "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Centro de Pensamento Computacional e Design, Universidade de Aarhus"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    }
+  ],
+  "accelerometer-image-alt": [
+    {
+      "type": 0,
+      "value": "micro:bit mostrando o eixo X indo através da frente, o eixo Y indo para baixo e para cima, o eixo Z voltando à frente"
+    }
+  ],
+  "action-label": [
+    {
+      "type": 0,
+      "value": "Ação"
+    }
+  ],
+  "action-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Dica de ação"
+    }
+  ],
+  "action-length-error": [
+    {
+      "type": 0,
+      "value": "Os nomes das ações não podem ter mais do que "
+    },
+    {
+      "type": 1,
+      "value": "maxLen"
+    },
+    {
+      "type": 0,
+      "value": " caracteres."
+    }
+  ],
+  "action-name-placeholder": [
+    {
+      "type": 0,
+      "value": "Nome da ação"
+    }
+  ],
+  "action-region": [
+    {
+      "type": 0,
+      "value": "Ação \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "action-tooltip": [
+    {
+      "type": 0,
+      "value": "O tipo de movimento que você deseja que "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " reconheça, por exemplo, 'aceno' ou 'aplauso'."
+    }
+  ],
+  "actions-label": [
+    {
+      "type": 0,
+      "value": "Ações"
+    }
+  ],
+  "add-action-action": [
+    {
+      "type": 0,
+      "value": "Adicionar ação"
+    }
+  ],
+  "ai-activity-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "AI activity timer"
+    }
+  ],
+  "ai-storytelling-friend-resource-title": [
+    {
+      "type": 0,
+      "value": "Amigo de narrativa de IA"
+    }
+  ],
+  "back-action": [
+    {
+      "type": 0,
+      "value": "Voltar"
+    }
+  ],
+  "back-to-data-samples-action": [
+    {
+      "type": 0,
+      "value": "Editar amostras de dados"
+    }
+  ],
+  "bluetooth-unsupported-advice": [
+    {
+      "type": 0,
+      "value": "Recomendamos o Google Chrome ou o Microsoft Edge para que você possa se conectar diretamente ao seu micro:bit."
+    }
+  ],
+  "bluetooth-unsupported-explain": [
+    {
+      "type": 0,
+      "value": "Infelizmente, o WebUSB e o Web Bluetooth não são suportados por este navegador. Isso significa que você não pode se conectar a um micro:bit para registrar as amostras de dados necessárias para treinar um modelo de aprendizado de máquina."
+    }
+  ],
+  "bluetooth-unsupported-header": [
+    {
+      "type": 0,
+      "value": "Este navegador não é suportado"
+    }
+  ],
+  "cancel-action": [
+    {
+      "type": 0,
+      "value": "Cancelar"
+    }
+  ],
+  "cancel-recording-action": [
+    {
+      "type": 0,
+      "value": "Cancelar a gravação"
+    }
+  ],
+  "certainty-label": [
+    {
+      "type": 0,
+      "value": "Certeza"
+    }
+  ],
+  "certainty-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Dica de certeza"
+    }
+  ],
+  "certainty-percentage-label": [
+    {
+      "type": 0,
+      "value": "certeza para "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "currentConfidence"
+    },
+    {
+      "type": 0,
+      "value": " por cento"
+    }
+  ],
+  "certainty-tooltip": [
+    {
+      "type": 0,
+      "value": "Quão confiante o modelo está de que você está realizando cada ação no momento."
+    }
+  ],
+  "click-to-reload-page-action": [
+    {
+      "type": 0,
+      "value": "Clique para recarregar a página"
+    }
+  ],
+  "close-action": [
+    {
+      "type": 0,
+      "value": "Fechar"
+    }
+  ],
+  "code-download-error": [
+    {
+      "type": 0,
+      "value": "Erro ao baixar o código do projeto."
+    }
+  ],
+  "code-label": [
+    {
+      "type": 0,
+      "value": "Programar"
+    }
+  ],
+  "code-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Dica de código"
+    }
+  ],
+  "code-tooltip": [
+    {
+      "type": 0,
+      "value": "Esses são os blocos MakeCode para cada ação detectada quando você transfere seu modelo de aprendizado de máquina e código para um micro:bit."
+    }
+  ],
+  "confirm-action": [
+    {
+      "type": 0,
+      "value": "Confirmar"
+    }
+  ],
+  "confirm-save-action": [
+    {
+      "type": 0,
+      "value": "Confirmar e salvar"
+    }
+  ],
+  "connect-action": [
+    {
+      "type": 0,
+      "value": "Conectar"
+    }
+  ],
+  "connect-action-aria": [
+    {
+      "type": 0,
+      "value": "Conectar ao micro:bit"
+    }
+  ],
+  "connect-battery-heading": [
+    {
+      "type": 0,
+      "value": "Desconecte o USB e conecte o pacote de baterias."
+    }
+  ],
+  "connect-battery-holder": [
+    {
+      "type": 0,
+      "value": "Suporte para bateria"
+    }
+  ],
+  "connect-battery-link": [
+    {
+      "type": 0,
+      "value": "Você pode prender o micro:bit no seu pulso ou em um objeto."
+    }
+  ],
+  "connect-battery-subtitle": [
+    {
+      "type": 0,
+      "value": "Desconecte o micro:bit do computador e conecte o pacote de baterias."
+    }
+  ],
+  "connect-bluetooth-cancelled-connection": [
+    {
+      "type": 0,
+      "value": "Você não escolheu um micro:bit. Deseja tentar novamente?"
+    }
+  ],
+  "connect-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "Conectar usando Web Bluetooth"
+    }
+  ],
+  "connect-bluetooth-invalid-pattern": [
+    {
+      "type": 0,
+      "value": "O padrão que você desenhou é inválido."
+    }
+  ],
+  "connect-bluetooth-start-heading": [
+    {
+      "type": 0,
+      "value": "O que você precisa conectar usando o Web Bluetooth."
+    }
+  ],
+  "connect-bluetooth-start-requirements1": [
+    {
+      "type": 0,
+      "value": "Um micro:bit;"
+    }
+  ],
+  "connect-bluetooth-start-requirements2-subtitle": [
+    {
+      "type": 0,
+      "value": "Com internet, uma porta USB e Web Bluetooth."
+    }
+  ],
+  "connect-bluetooth-start-switch-radio": [
+    {
+      "type": 0,
+      "value": "Conecte usando o rádio do micro:bit em vez disso."
+    }
+  ],
+  "connect-cable-alt": [
+    {
+      "type": 0,
+      "value": "animação mostrando um cabo USB sendo conectado à parte superior de um micro:bit."
+    }
+  ],
+  "connect-cable-download-project-subtitle": [
+    {
+      "type": 0,
+      "value": "Conecte um micro:bit a este computador com um cabo USB para baixar seu programa de aprendizado de máquina MakeCode nele."
+    }
+  ],
+  "connect-cable-heading": [
+    {
+      "type": 0,
+      "value": "Conecte o cabo USB ao micro:bit"
+    }
+  ],
+  "connect-cable-skip": [
+    {
+      "type": 0,
+      "value": "Pular: programa já baixado?"
+    }
+  ],
+  "connect-cable-subtitle": [
+    {
+      "type": 0,
+      "value": "Conecte o micro:bit a este computador com um cabo USB para que o programa de coleta de dados possa ser baixado para ele."
+    }
+  ],
+  "connect-computer": [
+    {
+      "type": 0,
+      "value": "Computador"
+    }
+  ],
+  "connect-data-collection-heading": [
+    {
+      "type": 0,
+      "value": "Conecte o cabo USB para micro:bit 1"
+    }
+  ],
+  "connect-data-collection-subtitle": [
+    {
+      "type": 0,
+      "value": "Conecte o primeiro micro:bit a este computador com um cabo USB para que o programa de coleta de dados possa ser baixado para ele. Este é o micro:bit que você usará para coletar as amostras de dados."
+    }
+  ],
+  "connect-failed-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "Falha ao conectar ao micro:bit."
+    }
+  ],
+  "connect-failed-bluetooth1": [
+    {
+      "type": 0,
+      "value": "A conexão com o micro:bit de coleta de dados não pôde ser estabelecida."
+    }
+  ],
+  "connect-failed-bridge-heading": [
+    {
+      "type": 0,
+      "value": "Falha ao conectar ao micro:bit de link de rádio."
+    }
+  ],
+  "connect-failed-bridge1": [
+    {
+      "type": 0,
+      "value": "A conexão com o micro:bit conectado ao seu computador não pôde ser estabelecida."
+    }
+  ],
+  "connect-failed-remote-heading": [
+    {
+      "type": 0,
+      "value": "Falha ao conectar ao micro:bit de coleta de dados."
+    }
+  ],
+  "connect-failed-remote1": [
+    {
+      "type": 0,
+      "value": "A conexão com o micro:bit de coleta de dados não pôde ser estabelecida."
+    }
+  ],
+  "connect-help-alt": [
+    {
+      "type": 0,
+      "value": "Diálogo de conexão WebUSB com a entrada BBC micro:bit rotulada como 1 e botão Conectar rotulado como 2"
+    }
+  ],
+  "connect-micro-usb-cable": [
+    {
+      "type": 0,
+      "value": "Cabo Micro USB"
+    }
+  ],
+  "connect-or-import": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Conecte um micro:bit de coleta de dados"
+        }
+      ],
+      "type": 8,
+      "value": "link1"
+    },
+    {
+      "type": 0,
+      "value": " ou "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "importe as amostras de dados"
+        }
+      ],
+      "type": 8,
+      "value": "link2"
+    }
+  ],
+  "connect-pattern-heading": [
+    {
+      "type": 0,
+      "value": "Copiar padrão"
+    }
+  ],
+  "connect-pattern-input-label": [
+    {
+      "type": 0,
+      "value": "Coluna "
+    },
+    {
+      "type": 1,
+      "value": "colNum"
+    },
+    {
+      "type": 0,
+      "value": " - número de LEDs acesos no display do micro:bit"
+    }
+  ],
+  "connect-pattern-subtitle": [
+    {
+      "type": 0,
+      "value": "Copie o padrão exibido no micro:bit."
+    }
+  ],
+  "connect-popup": [
+    {
+      "type": 0,
+      "value": "Selecionar micro:bit"
+    }
+  ],
+  "connect-popup-bluetooth-alt": [
+    {
+      "type": 0,
+      "value": "Diálogo de conexão Web Bluetooth com uma entrada do BBC micro:bit rotulada como 1 e o botão de emparelhamento rotulado como 2."
+    }
+  ],
+  "connect-popup-bluetooth-instruction2": [
+    {
+      "type": 0,
+      "value": "Selecione 'Parear'"
+    }
+  ],
+  "connect-popup-bluetooth-title": [
+    {
+      "type": 0,
+      "value": "Conectar ao micro:bit usando Web Bluetooth."
+    }
+  ],
+  "connect-popup-instruction-heading": [
+    {
+      "type": 0,
+      "value": "Na próxima janela pop-up."
+    }
+  ],
+  "connect-popup-instruction1": [
+    {
+      "type": 0,
+      "value": "Escolha seu micro:bit"
+    }
+  ],
+  "connect-popup-usb-bluetooth-data-collection-title": [
+    {
+      "type": 0,
+      "value": "Baixar o programa de coleta de dados para o micro:bit."
+    }
+  ],
+  "connect-popup-usb-radio-data-collection-title": [
+    {
+      "type": 0,
+      "value": "Baixar o programa de coleta de dados para o micro:bit 1."
+    }
+  ],
+  "connect-popup-usb-radio-link-title": [
+    {
+      "type": 0,
+      "value": "Baixar o programa de link de rádio para o micro:bit 2."
+    }
+  ],
+  "connect-popup-webusb-instruction2": [
+    {
+      "type": 0,
+      "value": "Selecione 'Conectar'"
+    }
+  ],
+  "connect-radio-data-collection-microbit-description": [
+    {
+      "type": 0,
+      "value": "Conecte o micro:bit de coleta de dados a este computador para baixar seu programa de aprendizado de máquina MakeCode nele. Se você estiver usando o micro:bit de coleta de dados, pode ser necessário retirá-lo."
+    }
+  ],
+  "connect-radio-data-collection-microbit-title": [
+    {
+      "type": 0,
+      "value": "Conecte o cabo USB ao micro:bit de coleta de dados."
+    }
+  ],
+  "connect-radio-heading": [
+    {
+      "type": 0,
+      "value": "Conectando micro:bits"
+    }
+  ],
+  "connect-radio-link-heading": [
+    {
+      "type": 0,
+      "value": "Conecte o cabo USB ao micro:bit 2."
+    }
+  ],
+  "connect-radio-link-subtitle": [
+    {
+      "type": 0,
+      "value": "Conecte um segundo micro:bit a este computador com um cabo USB para que o programa de link de rádio possa ser baixado para ele. Este micro:bit de link de rádio se comunicará com o micro:bit de coleta de dados."
+    }
+  ],
+  "connect-radio-start-heading": [
+    {
+      "type": 0,
+      "value": "O que você precisa conectar usando o rádio do micro:bit."
+    }
+  ],
+  "connect-radio-start-requirements1": [
+    {
+      "type": 0,
+      "value": "Um micro:bit;"
+    }
+  ],
+  "connect-radio-start-requirements1-subtitle": [
+    {
+      "type": 0,
+      "value": "Somente V2"
+    }
+  ],
+  "connect-radio-start-requirements2-subtitle": [
+    {
+      "type": 0,
+      "value": "com Internet e uma porta USB"
+    }
+  ],
+  "connect-radio-start-switch-bluetooth": [
+    {
+      "type": 0,
+      "value": "Conecte usando Web Bluetooth em vez disso."
+    }
+  ],
+  "connect-to-record": [
+    {
+      "type": 0,
+      "value": "Conecte para registrar as amostras de dados."
+    }
+  ],
+  "connect-to-record-body": [
+    {
+      "type": 0,
+      "value": "Conecte um micro:bit para registrar uma amostra de dados."
+    }
+  ],
+  "connect-to-test-model": [
+    {
+      "type": 0,
+      "value": "Conecte para testar seu modelo de aprendizado de máquina (ML)."
+    }
+  ],
+  "connect-to-tour-body": [
+    {
+      "type": 0,
+      "value": "Você precisa conectar um micro:bit de coleta de dados para visualizar o tour."
+    }
+  ],
+  "connect-troubleshoot": [
+    {
+      "type": 0,
+      "value": "Solução de problemas com a conexão ao seu micro:bit"
+    }
+  ],
+  "connect-troubleshooting": [
+    {
+      "type": 0,
+      "value": "Resolução de problemas"
+    }
+  ],
+  "connect-with-batteries": [
+    {
+      "type": 0,
+      "value": "com baterias"
+    }
+  ],
+  "connect-with-web-bluetooth": [
+    {
+      "type": 0,
+      "value": "Conectar com Web Bluetooth"
+    }
+  ],
+  "connecting": [
+    {
+      "type": 0,
+      "value": "Conectando…"
+    }
+  ],
+  "continue-makecode-action": [
+    {
+      "type": 0,
+      "value": "Continuar para MakeCode"
+    }
+  ],
+  "cookies-action": [
+    {
+      "type": 0,
+      "value": "Cookies"
+    }
+  ],
+  "copied": [
+    {
+      "type": 0,
+      "value": "Copiado"
+    }
+  ],
+  "copy-action": [
+    {
+      "type": 0,
+      "value": "Copiar"
+    }
+  ],
+  "data-actions-menu": [
+    {
+      "type": 0,
+      "value": "Ações de dados"
+    }
+  ],
+  "data-collection-microbit": [
+    {
+      "type": 0,
+      "value": "Coleta de dados micro:bit"
+    }
+  ],
+  "data-collection-microbit-label": [
+    {
+      "type": 0,
+      "value": "Diagrama mostrando o micro:bit de coleta de dados sendo conectado ao pulso de uma pessoa."
+    }
+  ],
+  "data-connection-region": [
+    {
+      "type": 0,
+      "value": "Conexão de dados micro:bit"
+    }
+  ],
+  "data-features-hide-action": [
+    {
+      "type": 0,
+      "value": "Ocultar recursos de dados"
+    }
+  ],
+  "data-features-show-action": [
+    {
+      "type": 0,
+      "value": "Mostrar recursos de dados"
+    }
+  ],
+  "data-samples-actions-region": [
+    {
+      "type": 0,
+      "value": "Barra de ferramentas de amostras de dados"
+    }
+  ],
+  "data-samples-label": [
+    {
+      "type": 0,
+      "value": "Amostras de dados"
+    }
+  ],
+  "data-samples-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Dica de ferramenta de amostras de dados"
+    }
+  ],
+  "data-samples-status-count": [
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " amostras registradas"
+    }
+  ],
+  "data-samples-status-not-enough": [
+    {
+      "type": 0,
+      "value": "Pelo menos 3 são necessários"
+    }
+  ],
+  "data-samples-title": [
+    {
+      "type": 0,
+      "value": "Amostras de dados"
+    }
+  ],
+  "data-samples-tooltip": [
+    {
+      "type": 0,
+      "value": "Coleções curtas de dados de movimento com duração de 1 segundo. Suas amostras de dados são armazenadas apenas no seu computador, não sendo enviadas para ninguém mais."
+    }
+  ],
+  "default-project-name": [
+    {
+      "type": 0,
+      "value": "Sem nome"
+    }
+  ],
+  "delete-action-aria": [
+    {
+      "type": 0,
+      "value": "Excluir ação \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "delete-action-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirmar ação de exclusão"
+    }
+  ],
+  "delete-action-confirm-text": [
+    {
+      "type": 0,
+      "value": "Tem certeza de que deseja excluir a ação \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "delete-data-samples-action": [
+    {
+      "type": 0,
+      "value": "Excluir todas as amostras de dados"
+    }
+  ],
+  "delete-data-samples-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirmar exclusão de todas as amostras de dados."
+    }
+  ],
+  "delete-data-samples-confirm-text": [
+    {
+      "type": 0,
+      "value": "Tem certeza de que deseja excluir todas as amostras de dados?"
+    }
+  ],
+  "delete-recording-aria": [
+    {
+      "type": 0,
+      "value": "Excluir gravação "
+    },
+    {
+      "type": 1,
+      "value": "sample"
+    },
+    {
+      "type": 0,
+      "value": " de "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " para a ação \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\"."
+    }
+  ],
+  "disconnect-action": [
+    {
+      "type": 0,
+      "value": "Desconectar"
+    }
+  ],
+  "disconnected-during-recording": [
+    {
+      "type": 0,
+      "value": "micro:bit desconectado durante a gravação."
+    }
+  ],
+  "disconnected-warning-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "Conexão com o micro:bit de coleta de dados perdida."
+    }
+  ],
+  "disconnected-warning-bluetooth1": [
+    {
+      "type": 0,
+      "value": "A conexão com o micro:bit de coleta de dados foi perdida."
+    }
+  ],
+  "disconnected-warning-bluetooth2": [
+    {
+      "type": 0,
+      "value": "Por favor, verifique se o micro:bit:"
+    }
+  ],
+  "disconnected-warning-bluetooth3": [
+    {
+      "type": 0,
+      "value": "está ligado (a luz vermelha na parte de trás do micro:bit deve estar acesa)"
+    }
+  ],
+  "disconnected-warning-bluetooth4": [
+    {
+      "type": 0,
+      "value": "está perto do computador"
+    }
+  ],
+  "disconnected-warning-bridge-heading": [
+    {
+      "type": 0,
+      "value": "Conexão do link de rádio micro:bit perdida"
+    }
+  ],
+  "disconnected-warning-bridge1": [
+    {
+      "type": 0,
+      "value": "A conexão com o micro:bit conectado ao seu computador foi perdida."
+    }
+  ],
+  "disconnected-warning-remote-heading": [
+    {
+      "type": 0,
+      "value": "Conexão com o micro:bit de coleta de dados perdida."
+    }
+  ],
+  "disconnected-warning-remote1": [
+    {
+      "type": 0,
+      "value": "A conexão com o micro:bit de coleta de dados foi perdida."
+    }
+  ],
+  "dont-show-again": [
+    {
+      "type": 0,
+      "value": "Não mostrar novamente"
+    }
+  ],
+  "download-data-samples-action": [
+    {
+      "type": 0,
+      "value": "Baixar todas as amostras de dados"
+    }
+  ],
+  "download-project-choose-microbit-subtitle": [
+    {
+      "type": 0,
+      "value": "Baixar seu projeto para o mesmo micro:bit desconectará o micro:bit da ferramenta. Você precisará reconectar o micro:bit se quiser gravar mais amostras de dados."
+    }
+  ],
+  "download-project-choose-microbit-title": [
+    {
+      "type": 0,
+      "value": "Qual micro:bit você deseja usar?"
+    }
+  ],
+  "download-project-different-microbit-option": [
+    {
+      "type": 0,
+      "value": "Micro:bit diferente"
+    }
+  ],
+  "download-project-intro-description": [
+    {
+      "type": 0,
+      "value": "Seu programa inclui o modelo de aprendizado de máquina que você criou. O modelo é executado no micro:bit, para que você possa usá-lo sem estar conectado ao "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "download-project-intro-title": [
+    {
+      "type": 0,
+      "value": "Baixar seu projeto de aprendizado de máquina MakeCode"
+    }
+  ],
+  "download-project-same-microbit-option": [
+    {
+      "type": 0,
+      "value": "Mesmo micro:bit"
+    }
+  ],
+  "downloading-data-collection-header": [
+    {
+      "type": 0,
+      "value": "Baixando o programa de coleta de dados"
+    }
+  ],
+  "downloading-header": [
+    {
+      "type": 0,
+      "value": "Baixando o programa para o micro:bit"
+    }
+  ],
+  "downloading-radio-link-header": [
+    {
+      "type": 0,
+      "value": "Baixando o programa do link de rádio"
+    }
+  ],
+  "downloading-subtitle": [
+    {
+      "type": 0,
+      "value": "Por favor, aguarde. Baixando o programa para o micro:bit."
+    }
+  ],
+  "edit-in-makecode-action": [
+    {
+      "type": 0,
+      "value": "Editar no MakeCode"
+    }
+  ],
+  "estimated-action-aria": [
+    {
+      "type": 0,
+      "value": "Ação estimada: \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "estimated-action-label": [
+    {
+      "type": 0,
+      "value": "Ação estimada"
+    }
+  ],
+  "estimated-action-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Dica da ação estimada"
+    }
+  ],
+  "estimated-action-tooltip": [
+    {
+      "type": 0,
+      "value": "Esta é a ação que o modelo acha que você está realizando no momento."
+    }
+  ],
+  "feedback": [
+    {
+      "type": 0,
+      "value": "Comentários"
+    }
+  ],
+  "fingerprint-acc-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Soma dos dados na direção x"
+    }
+  ],
+  "fingerprint-acc-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Soma dos dados na direção y"
+    }
+  ],
+  "fingerprint-acc-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Soma dos dados na direção z"
+    }
+  ],
+  "fingerprint-max-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Ponto máximo entre todos os dados na direção x"
+    }
+  ],
+  "fingerprint-max-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Ponto máximo entre todos os dados na direção y"
+    }
+  ],
+  "fingerprint-max-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Ponto máximo entre todos os dados na direção z"
+    }
+  ],
+  "fingerprint-mean-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Valor médio dos dados na direção x"
+    }
+  ],
+  "fingerprint-mean-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Valor médio dos dados na direção y"
+    }
+  ],
+  "fingerprint-mean-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Valor médio dos dados na direção z"
+    }
+  ],
+  "fingerprint-min-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Ponto mínimo entre todos os dados na direção x"
+    }
+  ],
+  "fingerprint-min-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Ponto mínimo entre todos os dados na direção y"
+    }
+  ],
+  "fingerprint-min-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Ponto mínimo entre todos os dados na direção z"
+    }
+  ],
+  "fingerprint-peaks-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Número de extremos entre todos os dados na direção x"
+    }
+  ],
+  "fingerprint-peaks-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Number of extremes among all x-direction data points"
+    }
+  ],
+  "fingerprint-peaks-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Número de extremos entre todos os dados na direção z"
+    }
+  ],
+  "fingerprint-rms-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Valor quadrático médio (RMS) para todos os dados na direção x"
+    }
+  ],
+  "fingerprint-rms-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Valor quadrático médio (RMS) para todos os dados na direção y"
+    }
+  ],
+  "fingerprint-rms-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Valor quadrático médio (RMS) para todos os dados na direção z"
+    }
+  ],
+  "fingerprint-std-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Desvio médio em relação a 0 entre todos os dados na direção x"
+    }
+  ],
+  "fingerprint-std-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Desvio médio em relação a 0 entre todos os dados na direção y"
+    }
+  ],
+  "fingerprint-std-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Desvio médio em relação a 0 entre todos os dados na direção z"
+    }
+  ],
+  "fingerprint-zcr-x-tooltip": [
+    {
+      "type": 0,
+      "value": "Taxa na qual a aceleração transita entre positiva e negativa para os dados na direção x"
+    }
+  ],
+  "fingerprint-zcr-y-tooltip": [
+    {
+      "type": 0,
+      "value": "Taxa na qual a aceleração transita entre positiva e negativa para os dados na direção y"
+    }
+  ],
+  "fingerprint-zcr-z-tooltip": [
+    {
+      "type": 0,
+      "value": "Taxa na qual a aceleração transita entre positiva e negativa para os dados na direção z"
+    }
+  ],
+  "firmware-outdated-content1": [
+    {
+      "type": 0,
+      "value": "Conexão com o micro:bit falhou porque o firmware no seu micro:bit é muito antigo."
+    }
+  ],
+  "firmware-outdated-content2": [
+    {
+      "type": 0,
+      "value": "Você deve "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "atualizar seu firmware antes"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " de poder se conectar a este micro:bit."
+    }
+  ],
+  "firmware-outdated-heading": [
+    {
+      "type": 0,
+      "value": "Atualização do firmware necessária"
+    }
+  ],
+  "get-started-action": [
+    {
+      "type": 0,
+      "value": "Começar"
+    }
+  ],
+  "go-action": [
+    {
+      "type": 0,
+      "value": "Ir"
+    }
+  ],
+  "graph-color-scheme": [
+    {
+      "type": 0,
+      "value": "Esquema de cores do gráfico"
+    }
+  ],
+  "graph-color-scheme-color-blind-1": [
+    {
+      "type": 0,
+      "value": "Alternativa 1 para daltonismo"
+    }
+  ],
+  "graph-color-scheme-color-blind-2": [
+    {
+      "type": 0,
+      "value": "Alternativa 2 para daltonismo"
+    }
+  ],
+  "graph-color-scheme-default": [
+    {
+      "type": 0,
+      "value": "Padrão (vermelho, azul, verde)"
+    }
+  ],
+  "graph-line-scheme": [
+    {
+      "type": 0,
+      "value": "Estilo de linha do gráfico"
+    }
+  ],
+  "graph-line-scheme-accessible": [
+    {
+      "type": 0,
+      "value": "Linhas acessíveis (inteiras, tracejadas, pontilhadas)"
+    }
+  ],
+  "graph-line-scheme-solid": [
+    {
+      "type": 0,
+      "value": "Linhas contínuas"
+    }
+  ],
+  "graph-line-weight": [
+    {
+      "type": 0,
+      "value": "Espessura da linha do gráfico"
+    }
+  ],
+  "graph-line-weight-default": [
+    {
+      "type": 0,
+      "value": "Padrão"
+    }
+  ],
+  "graph-line-weight-thick": [
+    {
+      "type": 0,
+      "value": "Grossa"
+    }
+  ],
+  "help-label": [
+    {
+      "type": 0,
+      "value": "Ajuda"
+    }
+  ],
+  "help-support": [
+    {
+      "type": 0,
+      "value": "Ajuda e suporte"
+    }
+  ],
+  "home-action": [
+    {
+      "type": 0,
+      "value": "Início"
+    }
+  ],
+  "homepage": [
+    {
+      "type": 0,
+      "value": "Página Inicial"
+    }
+  ],
+  "homepage-alt": [
+    {
+      "type": 0,
+      "value": "gráfico mostrando as linhas dos eixos x, y e z representando os dados do acelerômetro do micro:bit, com as palmas das mãos sobrepostas"
+    }
+  ],
+  "homepage-alt-graph": [
+    {
+      "type": 0,
+      "value": "Gráfico mostrando as linhas dos eixos x, y e z representando os dados do acelerômetro do micro:bit."
+    }
+  ],
+  "homepage-alt-hands": [
+    {
+      "type": 0,
+      "value": "Batendo palmas"
+    }
+  ],
+  "homepage-description": [
+    {
+      "type": 0,
+      "value": "Treine um modelo de aprendizado de máquina com seus próprios dados de movimento e execute-o no seu micro:bit."
+    }
+  ],
+  "homepage-how-it-works": [
+    {
+      "type": 0,
+      "value": "Como funciona:"
+    }
+  ],
+  "homepage-how-it-works-paragraph": [
+    {
+      "type": 0,
+      "value": "Assista ao vídeo para começar. Saiba mais no "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "guia do usuário"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "homepage-projects": [
+    {
+      "type": 0,
+      "value": "Projetos"
+    }
+  ],
+  "homepage-projects-more": [
+    {
+      "type": 0,
+      "value": "Explore mais "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "conteúdos e recursos sobre micro:bit e IA"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "homepage-step-by-step": [
+    {
+      "type": 0,
+      "value": "Passo a passo"
+    }
+  ],
+  "homepage-subtitle": [
+    {
+      "type": 0,
+      "value": "Crie IA no seu BBC micro:bit usando movimento e aprendizado de máquina."
+    }
+  ],
+  "homepage-video-alt": [
+    {
+      "type": 0,
+      "value": "Vídeo de Introdução"
+    }
+  ],
+  "import-data-samples-action": [
+    {
+      "type": 0,
+      "value": "Importar amostras de dados"
+    }
+  ],
+  "import-error-dialog-content": [
+    {
+      "type": 0,
+      "value": "Somente arquivos MakeCode hex ou arquivos de amostras de dados (.json) podem ser abertos pelo "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "import-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "Tipo de arquivo não suportado."
+    }
+  ],
+  "incompatible-device-body-alt": [
+    {
+      "type": 0,
+      "value": "Volte para selecionar um micro:bit diferente, ou "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "salve o arquivo hex do projeto"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": ", que pode ser baixado em um micro:bit V2 mais tarde."
+    }
+  ],
+  "incompatible-device-body1": [
+    {
+      "type": 0,
+      "value": "Continue para o MakeCode para editar o programa. Você pode então salvar o arquivo hex do projeto, que pode ser baixado em um micro:bit V2."
+    }
+  ],
+  "incompatible-device-body2": [
+    {
+      "type": 0,
+      "value": "Alternativamente, "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "salve o arquivo hex do projeto"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " sem usar o MakeCode."
+    }
+  ],
+  "incompatible-device-heading": [
+    {
+      "type": 0,
+      "value": "Dispositivo incompatível"
+    }
+  ],
+  "incompatible-device-subtitle": [
+    {
+      "type": 0,
+      "value": "Você está usando um micro:bit V1, mas projetos de aprendizado de máquina precisam do processador mais rápido de um micro:bit V2. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Saiba mais sobre as versões do micro:bit."
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    }
+  ],
+  "insufficient-data-body": [
+    {
+      "type": 0,
+      "value": "Você precisa de pelo menos 3 amostras de dados para 2 ações para treinar o modelo."
+    }
+  ],
+  "insufficient-data-title": [
+    {
+      "type": 0,
+      "value": "Você não tem dados suficientes."
+    }
+  ],
+  "language": [
+    {
+      "type": 0,
+      "value": "Idioma"
+    }
+  ],
+  "learn-about-firewall-requirements-action": [
+    {
+      "type": 0,
+      "value": "Saiba mais sobre os requisitos de firewall."
+    }
+  ],
+  "led-icon-option-angry": [
+    {
+      "type": 0,
+      "value": "Bravo"
+    }
+  ],
+  "led-icon-option-asleep": [
+    {
+      "type": 0,
+      "value": "Dormindo"
+    }
+  ],
+  "led-icon-option-butterfly": [
+    {
+      "type": 0,
+      "value": "Borboleta"
+    }
+  ],
+  "led-icon-option-chessboard": [
+    {
+      "type": 0,
+      "value": "Tabuleiro de Xadrez"
+    }
+  ],
+  "led-icon-option-confused": [
+    {
+      "type": 0,
+      "value": "Confuso"
+    }
+  ],
+  "led-icon-option-cow": [
+    {
+      "type": 0,
+      "value": "Vaca"
+    }
+  ],
+  "led-icon-option-diamond": [
+    {
+      "type": 0,
+      "value": "Diamante"
+    }
+  ],
+  "led-icon-option-duck": [
+    {
+      "type": 0,
+      "value": "Pato"
+    }
+  ],
+  "led-icon-option-eighthnote": [
+    {
+      "type": 0,
+      "value": "Oitava Nota"
+    }
+  ],
+  "led-icon-option-fabulous": [
+    {
+      "type": 0,
+      "value": "Fabuloso"
+    }
+  ],
+  "led-icon-option-ghost": [
+    {
+      "type": 0,
+      "value": "Fantasma\n\nAparição"
+    }
+  ],
+  "led-icon-option-giraffe": [
+    {
+      "type": 0,
+      "value": "Girafa"
+    }
+  ],
+  "led-icon-option-happy": [
+    {
+      "type": 0,
+      "value": "Feliz"
+    }
+  ],
+  "led-icon-option-heart": [
+    {
+      "type": 0,
+      "value": "Coração"
+    }
+  ],
+  "led-icon-option-house": [
+    {
+      "type": 0,
+      "value": "Residência"
+    }
+  ],
+  "led-icon-option-lefttriangle": [
+    {
+      "type": 0,
+      "value": "Triângulo à esquerda"
+    }
+  ],
+  "led-icon-option-meh": [
+    {
+      "type": 0,
+      "value": "Mais ou menos"
+    }
+  ],
+  "led-icon-option-no": [
+    {
+      "type": 0,
+      "value": "Não"
+    }
+  ],
+  "led-icon-option-off": [
+    {
+      "type": 0,
+      "value": "Desativado"
+    }
+  ],
+  "led-icon-option-pitchfork": [
+    {
+      "type": 0,
+      "value": "Forquilha"
+    }
+  ],
+  "led-icon-option-quarternote": [
+    {
+      "type": 0,
+      "value": "Nota de quarto"
+    }
+  ],
+  "led-icon-option-rabbit": [
+    {
+      "type": 0,
+      "value": "Coelho"
+    }
+  ],
+  "led-icon-option-rollerskate": [
+    {
+      "type": 0,
+      "value": "Patins"
+    }
+  ],
+  "led-icon-option-sad": [
+    {
+      "type": 0,
+      "value": "Triste"
+    }
+  ],
+  "led-icon-option-scissors": [
+    {
+      "type": 0,
+      "value": "Tesoura"
+    }
+  ],
+  "led-icon-option-silly": [
+    {
+      "type": 0,
+      "value": "Bobo"
+    }
+  ],
+  "led-icon-option-skull": [
+    {
+      "type": 0,
+      "value": "Caveira/Crânio"
+    }
+  ],
+  "led-icon-option-smalldiamond": [
+    {
+      "type": 0,
+      "value": "Diamante Pequeno"
+    }
+  ],
+  "led-icon-option-smallheart": [
+    {
+      "type": 0,
+      "value": "Coração Pequeno"
+    }
+  ],
+  "led-icon-option-smallsquare": [
+    {
+      "type": 0,
+      "value": "Quadrado pequeno"
+    }
+  ],
+  "led-icon-option-snake": [
+    {
+      "type": 0,
+      "value": "Cobra"
+    }
+  ],
+  "led-icon-option-square": [
+    {
+      "type": 0,
+      "value": "Quadrado"
+    }
+  ],
+  "led-icon-option-stickfigure": [
+    {
+      "type": 0,
+      "value": "Figura de palito"
+    }
+  ],
+  "led-icon-option-surprised": [
+    {
+      "type": 0,
+      "value": "Surpreso"
+    }
+  ],
+  "led-icon-option-sword": [
+    {
+      "type": 0,
+      "value": "Espada"
+    }
+  ],
+  "led-icon-option-target": [
+    {
+      "type": 0,
+      "value": "Alvo"
+    }
+  ],
+  "led-icon-option-tortoise": [
+    {
+      "type": 0,
+      "value": "Tartaruga"
+    }
+  ],
+  "led-icon-option-triangle": [
+    {
+      "type": 0,
+      "value": "Triângulo"
+    }
+  ],
+  "led-icon-option-tshirt": [
+    {
+      "type": 0,
+      "value": "Camisa"
+    }
+  ],
+  "led-icon-option-umbrella": [
+    {
+      "type": 0,
+      "value": "Guarda-Chuva"
+    }
+  ],
+  "led-icon-option-yes": [
+    {
+      "type": 0,
+      "value": "Sim"
+    }
+  ],
+  "live-data-graph": [
+    {
+      "type": 0,
+      "value": "Gráfico de dados ao vivo"
+    }
+  ],
+  "live-graph": [
+    {
+      "type": 0,
+      "value": "Gráfico ao vivo"
+    }
+  ],
+  "live-graph-tooltip": [
+    {
+      "type": 0,
+      "value": "Este gráfico mostra os dados de movimento do acelerômetro do micro:bit em tempo real. Tente mover o micro:bit de coleta de dados para ver os eixos X, Y e Z mudarem. Cada linha colorida representa uma direção (dimensão) diferente em que você está movendo o micro:bit."
+    }
+  ],
+  "live-graph-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "Dica de ferramenta do gráfico ao vivo"
+    }
+  ],
+  "loading": [
+    {
+      "type": 0,
+      "value": "Carregando"
+    }
+  ],
+  "main-menu": [
+    {
+      "type": 0,
+      "value": "Menu principal"
+    }
+  ],
+  "makecode-back-alt": [
+    {
+      "type": 0,
+      "value": "Ícone de seta para a esquerda para a ação \"voltar\" no MakeCode."
+    }
+  ],
+  "makecode-block-default-alt": [
+    {
+      "type": 0,
+      "value": "Bloco MakeCode: ao iniciar o ML "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": ", mostrar ícone "
+    },
+    {
+      "type": 1,
+      "value": "iconName"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "makecode-block-on-ML": [
+    {
+      "type": 0,
+      "value": "no ML"
+    }
+  ],
+  "makecode-block-show-icon": [
+    {
+      "type": 0,
+      "value": "mostrar ícone"
+    }
+  ],
+  "makecode-block-start": [
+    {
+      "type": 0,
+      "value": "início"
+    }
+  ],
+  "makecode-load-error-dialog-body": [
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " não conseguiu carregar o MakeCode. Por favor, verifique sua conexão com a internet, recarregue a página e tente novamente."
+    }
+  ],
+  "makecode-load-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "Não foi possível carregar o Microsoft MakeCode."
+    }
+  ],
+  "microbit-not-connected": [
+    {
+      "type": 0,
+      "value": "Seu micro:bit não está conectado."
+    }
+  ],
+  "more-edit-in-makecode-options": [
+    {
+      "type": 0,
+      "value": "Mais opções de edição no MakeCode."
+    }
+  ],
+  "name-action-hint": [
+    {
+      "type": 0,
+      "value": "Nomeie uma ação que você deseja que o micro:bit reconheça."
+    }
+  ],
+  "name-project": [
+    {
+      "type": 0,
+      "value": "Dê um nome para seu projeto"
+    }
+  ],
+  "name-text": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "name-used-when": [
+    {
+      "type": 0,
+      "value": "O nome é usado quando você salva um arquivo."
+    }
+  ],
+  "new-session-setup-description": [
+    {
+      "type": 0,
+      "value": "Iniciar uma nova sessão substituirá sua sessão atual. Você pode querer "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "salvar sua sessão atual"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " primeiro."
+    }
+  ],
+  "new-session-setup-title": [
+    {
+      "type": 0,
+      "value": "Configuração de nova sessão"
+    }
+  ],
+  "newpage-continue-session-subtitle": [
+    {
+      "type": 0,
+      "value": "Use um arquivo hex ou um arquivo de amostras de dados que você salvou no seu computador para continuar uma sessão."
+    }
+  ],
+  "newpage-continue-session-title": [
+    {
+      "type": 0,
+      "value": "Continuar uma sessão salva"
+    }
+  ],
+  "newpage-last-session-date": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Data:"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    }
+  ],
+  "newpage-last-session-name": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Nome:"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "newpage-last-session-none": [
+    {
+      "type": 0,
+      "value": "Nenhuma sessão encontrada"
+    }
+  ],
+  "newpage-last-session-title": [
+    {
+      "type": 0,
+      "value": "Abrir a última sessão"
+    }
+  ],
+  "newpage-new-session-subtitle": [
+    {
+      "type": 0,
+      "value": "Conecte seu micro:bit e colete dados de movimento para construir um modelo de aprendizado de máquina."
+    }
+  ],
+  "newpage-new-session-title": [
+    {
+      "type": 0,
+      "value": "Nova sessão"
+    }
+  ],
+  "newpage-section-one-title": [
+    {
+      "type": 0,
+      "value": "Continue de onde você parou"
+    }
+  ],
+  "newpage-section-two-title": [
+    {
+      "type": 0,
+      "value": "Começar algo novo"
+    }
+  ],
+  "newpage-title": [
+    {
+      "type": 0,
+      "value": "Nova sessão"
+    }
+  ],
+  "next-action": [
+    {
+      "type": 0,
+      "value": "Próximo"
+    }
+  ],
+  "no-data-samples": [
+    {
+      "type": 0,
+      "value": "Nenhuma amostra de dados"
+    }
+  ],
+  "not-create-ai-hex-import-dialog-content": [
+    {
+      "type": 0,
+      "value": "Este projeto não contém amostras de dados, portanto, apenas o código foi aberto. Você precisa treinar um modelo antes de poder usar o código."
+    }
+  ],
+  "not-create-ai-hex-import-dialog-title": [
+    {
+      "type": 0,
+      "value": "Seu projeto MakeCode foi importado."
+    }
+  ],
+  "not-found": [
+    {
+      "type": 0,
+      "value": "Página inicial do "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "not-found-title": [
+    {
+      "type": 0,
+      "value": "Página não encontrada"
+    }
+  ],
+  "open-file-action": [
+    {
+      "type": 0,
+      "value": "Abrir…"
+    }
+  ],
+  "open-file-dropped": [
+    {
+      "type": 0,
+      "value": "Abrir arquivo quando concluído"
+    }
+  ],
+  "other-tabs-body1": [
+    {
+      "type": 0,
+      "value": "Outro processo está conectado a este dispositivo."
+    }
+  ],
+  "other-tabs-body2": [
+    {
+      "type": 0,
+      "value": "Feche quaisquer outras abas que possam estar usando o WebUSB (por exemplo, MakeCode, Editor Python, "
+    },
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": "), ou desconecte e reconecte o micro:bit antes de tentar novamente."
+    }
+  ],
+  "other-tabs-heading": [
+    {
+      "type": 0,
+      "value": "Conectar usando WebUSB"
+    }
+  ],
+  "privacy": [
+    {
+      "type": 0,
+      "value": "Política de privacidade"
+    }
+  ],
+  "project-loaded": [
+    {
+      "type": 0,
+      "value": "Projeto carregado"
+    }
+  ],
+  "project-name-not-empty": [
+    {
+      "type": 0,
+      "value": "O nome do projeto não pode estar vazio"
+    }
+  ],
+  "radio-link-microbit": [
+    {
+      "type": 0,
+      "value": "Link de rádio micro:bit"
+    }
+  ],
+  "radio-link-microbit-label": [
+    {
+      "type": 0,
+      "value": "Diagrama mostrando o link de rádio micro:bit sendo conectado a um computador"
+    }
+  ],
+  "recognition-point-label": [
+    {
+      "type": 0,
+      "value": "Ponto de reconhecimento:"
+    }
+  ],
+  "reconnect-action": [
+    {
+      "type": 0,
+      "value": "Reconectar"
+    }
+  ],
+  "reconnect-failed-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "Falha ao reconectar ao micro:bit de coleta de dados"
+    }
+  ],
+  "reconnect-failed-bluetooth1": [
+    {
+      "type": 0,
+      "value": "A conexão com o micro:bit de coleta de dados não pôde ser restabelecida."
+    }
+  ],
+  "reconnect-failed-bridge-heading": [
+    {
+      "type": 0,
+      "value": "Falha ao reconectar ao micro:bit do link de rádio"
+    }
+  ],
+  "reconnect-failed-bridge1": [
+    {
+      "type": 0,
+      "value": "A conexão com o micro:bit conectado ao seu computador não pôde ser restabelecida."
+    }
+  ],
+  "reconnect-failed-radio-heading": [
+    {
+      "type": 0,
+      "value": "Falha ao reconectar aos micro:bits"
+    }
+  ],
+  "reconnect-failed-remote-heading": [
+    {
+      "type": 0,
+      "value": "Falha ao reconectar ao micro:bit de coleta de dados"
+    }
+  ],
+  "reconnect-failed-remote1": [
+    {
+      "type": 0,
+      "value": "A conexão com o micro:bit de coleta de dados não pôde ser restabelecida."
+    }
+  ],
+  "reconnect-failed-subtitle": [
+    {
+      "type": 0,
+      "value": "Siga estas instruções para reiniciar o processo de conexão."
+    }
+  ],
+  "reconnecting": [
+    {
+      "type": 0,
+      "value": "Reconectando…"
+    }
+  ],
+  "record-action": [
+    {
+      "type": 0,
+      "value": "Gravar"
+    }
+  ],
+  "record-action-aria": [
+    {
+      "type": 0,
+      "value": "Gravar dados para a ação \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "record-hint": [
+    {
+      "type": 0,
+      "value": "Pressione para gravar uma amostra de dados."
+    }
+  ],
+  "record-hint-button-b": [
+    {
+      "type": 0,
+      "value": "Pressione para gravar uma amostra de dados ou pressione o botão B no seu micro:bit de coleta de dados."
+    }
+  ],
+  "record-samples": [
+    {
+      "type": 0,
+      "value": "Gravar "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " amostras"
+    }
+  ],
+  "record-samples-help": [
+    {
+      "type": 0,
+      "value": "Cada amostra tem sua própria contagem regressiva."
+    }
+  ],
+  "record-seconds": [
+    {
+      "type": 0,
+      "value": "Gravar por "
+    },
+    {
+      "type": 1,
+      "value": "numSeconds"
+    },
+    {
+      "type": 0,
+      "value": " segundos"
+    }
+  ],
+  "record-seconds-help": [
+    {
+      "type": 0,
+      "value": "Movimente-se continuamente para obter "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " amostras."
+    }
+  ],
+  "recording": [
+    {
+      "type": 0,
+      "value": "Gravando"
+    }
+  ],
+  "recording-complete": [
+    {
+      "type": 0,
+      "value": "Concluído"
+    }
+  ],
+  "recording-data-for": [
+    {
+      "type": 0,
+      "value": "Gravar dados para a ação \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "recording-data-for-numbered": [
+    {
+      "type": 0,
+      "value": "Gravar "
+    },
+    {
+      "type": 1,
+      "value": "sample"
+    },
+    {
+      "type": 0,
+      "value": " de "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " para a ação \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "recording-fingerprint-label": [
+    {
+      "type": 0,
+      "value": "Mapa de calor mostrando os recursos dos dados do acelerômetro x, y, z do micro:bit para uma gravação."
+    }
+  ],
+  "recording-graph-label": [
+    {
+      "type": 0,
+      "value": "gráfico mostrando os dados do acelerômetro micro:bit x, y, z para uma gravação"
+    }
+  ],
+  "recording-options-aria": [
+    {
+      "type": 0,
+      "value": "Mais opções de gravação para a ação \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "reload-action": [
+    {
+      "type": 0,
+      "value": "Recarregar"
+    }
+  ],
+  "reset-to-default-action": [
+    {
+      "type": 0,
+      "value": "Resetar para os blocos padrão"
+    }
+  ],
+  "restore-defaults-action": [
+    {
+      "type": 0,
+      "value": "Restaurar os valores padrão para todas as configurações"
+    }
+  ],
+  "restore-defaults-confirm-action": [
+    {
+      "type": 0,
+      "value": "Restaurar padrões"
+    }
+  ],
+  "restore-defaults-confirm-body": [
+    {
+      "type": 0,
+      "value": "Tem certeza de que deseja restaurar os valores padrão para todas as configurações?"
+    }
+  ],
+  "restore-defaults-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Restaurar configurações padrão"
+    }
+  ],
+  "restore-defaults-helper": [
+    {
+      "type": 0,
+      "value": "O conteúdo de ajuda anteriormente descartado pode ser exibido novamente."
+    }
+  ],
+  "save-action": [
+    {
+      "type": 0,
+      "value": "Salvar"
+    }
+  ],
+  "save-hex-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Salvar projeto como um arquivo .hex"
+    }
+  ],
+  "save-hex-dialog-message1": [
+    {
+      "type": 0,
+      "value": "O download contém suas ações, amostras de dados e seu projeto MakeCode. Abra-o no "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " para continuar trabalhando."
+    }
+  ],
+  "save-hex-dialog-message2": [
+    {
+      "type": 0,
+      "value": "Você também pode abri-lo com o Microsoft MakeCode se não precisar alterar as ações e amostras de dados."
+    }
+  ],
+  "saving-description": [
+    {
+      "type": 0,
+      "value": "Seu download estará pronto em breve."
+    }
+  ],
+  "saving-title": [
+    {
+      "type": 0,
+      "value": "Salvando…"
+    }
+  ],
+  "saving-toast-title": [
+    {
+      "type": 0,
+      "value": "Seu arquivo .hex foi baixado."
+    }
+  ],
+  "select-icon-action-aria": [
+    {
+      "type": 0,
+      "value": "Escolher ícone para a ação \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "select-icon-action-untitled-aria": [
+    {
+      "type": 0,
+      "value": "Escolher ícone para ação sem título"
+    }
+  ],
+  "select-icon-option-action-aria": [
+    {
+      "type": 0,
+      "value": "Selecionar ícone \""
+    },
+    {
+      "type": 1,
+      "value": "iconName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "settings": [
+    {
+      "type": 0,
+      "value": "Configurações"
+    }
+  ],
+  "settings-menu-action": [
+    {
+      "type": 0,
+      "value": "Menu de configurações"
+    }
+  ],
+  "show-graphs-checkbox-label-text": [
+    {
+      "type": 0,
+      "value": "Mostrar gráficos"
+    }
+  ],
+  "simple-ai-exercise-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "Simple AI exercise timer"
+    }
+  ],
+  "skip-tour-action": [
+    {
+      "type": 0,
+      "value": "Pular tour"
+    }
+  ],
+  "software-versions": [
+    {
+      "type": 0,
+      "value": "Versões de Software"
+    }
+  ],
+  "start-session-action": [
+    {
+      "type": 0,
+      "value": "Iniciar sessão"
+    }
+  ],
+  "start-training-action": [
+    {
+      "type": 0,
+      "value": "Iniciar treinamento"
+    }
+  ],
+  "steps-alt": [
+    {
+      "type": 0,
+      "value": "Diagrama mostrando o processo iterativo de coleta de dados, treinamento de um modelo, teste do modelo e melhoria do modelo ao melhorar os dados coletados antes de, finalmente, codificar utilizando o modelo."
+    }
+  ],
+  "steps-code": [
+    {
+      "type": 0,
+      "value": "Programar"
+    }
+  ],
+  "steps-collect-data": [
+    {
+      "type": 0,
+      "value": "Coletar dados"
+    }
+  ],
+  "steps-improve": [
+    {
+      "type": 0,
+      "value": "Aprimorar"
+    }
+  ],
+  "steps-test-model": [
+    {
+      "type": 0,
+      "value": "Modelo de teste"
+    }
+  ],
+  "steps-train": [
+    {
+      "type": 0,
+      "value": "Trem"
+    }
+  ],
+  "stop-recording-action": [
+    {
+      "type": 0,
+      "value": "Parar a gravação"
+    }
+  ],
+  "support-request": [
+    {
+      "type": 0,
+      "value": "Por favor, considere "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "abrir uma solicitação de suporte"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    }
+  ],
+  "terms": [
+    {
+      "type": 0,
+      "value": "Termos de Uso"
+    }
+  ],
+  "testing-model-actions-region": [
+    {
+      "type": 0,
+      "value": "Barra de ferramentas de teste do modelo"
+    }
+  ],
+  "testing-model-title": [
+    {
+      "type": 0,
+      "value": "Modelo de teste"
+    }
+  ],
+  "tour-action": [
+    {
+      "type": 0,
+      "value": "Fazer um tour"
+    }
+  ],
+  "tour-collect-addActions-content": [
+    {
+      "type": 0,
+      "value": "Decida quais serão suas outras ações e como irá nomeá-las. Você precisa de pelo menos 2 ações com 3 amostras de dados para treinar o modelo. Suas amostras de dados são armazenadas apenas no seu computador, não sendo enviadas para ninguém mais."
+    }
+  ],
+  "tour-collect-addActions-title": [
+    {
+      "type": 0,
+      "value": "Adicionar mais ações"
+    }
+  ],
+  "tour-collect-afterFirst-content": [
+    {
+      "type": 0,
+      "value": "Para treinar o modelo de aprendizado de máquina, você precisa de pelo menos 3 amostras de dados para 2 ações diferentes."
+    }
+  ],
+  "tour-collect-afterFirst-title": [
+    {
+      "type": 0,
+      "value": "Você registrou sua primeira "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "amostra"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "amostras"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "recordingCount"
+    },
+    {
+      "type": 0,
+      "value": "!"
+    }
+  ],
+  "tour-collect-collectMore-explanation-content": [
+    {
+      "type": 0,
+      "value": "Coletar mais amostras deve resultar em um modelo de aprendizado de máquina melhor."
+    }
+  ],
+  "tour-collect-collectMore-hasRecordings-content": [
+    {
+      "type": 0,
+      "value": "Registre amostras de dados para suas ações."
+    }
+  ],
+  "tour-collect-collectMore-noRecordings-content": [
+    {
+      "type": 0,
+      "value": "Registre mais amostras para esta ação."
+    }
+  ],
+  "tour-collect-collectMore-title": [
+    {
+      "type": 0,
+      "value": "Colete mais amostras de dados."
+    }
+  ],
+  "tour-collect-trainModel-content": [
+    {
+      "type": 0,
+      "value": "Quando você tiver coletado amostras de dados suficientes, poderá treinar o modelo de aprendizado de máquina. Você pode voltar mais tarde para remover ou adicionar mais dados e re-treinar o modelo para torná-lo mais confiável."
+    }
+  ],
+  "tour-dataSamples-actions-common-content": [
+    {
+      "type": 0,
+      "value": "Uma ação é o tipo de movimento que você deseja que o modelo de aprendizado de máquina reconheça, por exemplo, \"aceno\" ou \"aplauso\"."
+    }
+  ],
+  "tour-dataSamples-actions-noRecordings-content": [
+    {
+      "type": 0,
+      "value": "Decida qual será sua primeira ação, dê-lhe um nome e então comece a registrar as amostras de dados."
+    }
+  ],
+  "tour-dataSamples-connected-content": [
+    {
+      "type": 0,
+      "value": "Agora você pode começar a coletar amostras de dados para treinar um modelo de aprendizado de máquina (ML) para reconhecer diferentes movimentos ou ações."
+    }
+  ],
+  "tour-dataSamples-connected-title": [
+    {
+      "type": 0,
+      "value": "Seu micro:bit de coleta de dados está conectado!"
+    }
+  ],
+  "tour-dataSamples-liveGraph-content": [
+    {
+      "type": 0,
+      "value": "O gráfico mostra os dados de movimento do acelerômetro do micro:bit. Mova seu micro:bit de coleta de dados e veja como o gráfico muda."
+    }
+  ],
+  "tour-makecode-intro-content1": [
+    {
+      "type": 0,
+      "value": "Baixe o modelo e o código para testar seu projeto em um micro:bit. Você também pode adicionar mais blocos de código para criar seus próprios programas usando seu modelo."
+    }
+  ],
+  "tour-makecode-intro-content2": [
+    {
+      "type": 0,
+      "value": "Precisa melhorar o modelo de aprendizado de máquina?"
+    }
+  ],
+  "tour-makecode-intro-content3": [
+    {
+      "type": 0,
+      "value": "Use este botão de voltar no canto superior esquerdo."
+    }
+  ],
+  "tour-makecode-intro-title": [
+    {
+      "type": 0,
+      "value": "Microsoft MakeCode"
+    }
+  ],
+  "tour-trainModel-afterTrain-alreadyConnected-title": [
+    {
+      "type": 0,
+      "value": "Você treinou um modelo de aprendizado de máquina!"
+    }
+  ],
+  "tour-trainModel-afterTrain-content": [
+    {
+      "type": 0,
+      "value": "Agora teste seu modelo de aprendizado de máquina. Tente cada ação movendo seu micro:bit de coleta de dados. O modelo estima corretamente cada ação?"
+    }
+  ],
+  "tour-trainModel-afterTrain-delayedUntilConnected-title": [
+    {
+      "type": 0,
+      "value": "Teste seu modelo de aprendizado de máquina."
+    }
+  ],
+  "tour-trainModel-certaintyRecognition-content": [
+    {
+      "type": 0,
+      "value": "O gráfico de barras mostra o quão confiante o modelo está de que você está realizando cada ação. Mova o controle deslizante para ajustar o ponto de reconhecimento ou limiar."
+    }
+  ],
+  "tour-trainModel-certaintyRecognition-title": [
+    {
+      "type": 0,
+      "value": "Certeza e ponto de reconhecimento"
+    }
+  ],
+  "tour-trainModel-editInMakeCode-content": [
+    {
+      "type": 0,
+      "value": "Abra seu projeto no MakeCode para baixar o programa e o modelo de aprendizado de máquina para um micro:bit. Você pode adicionar mais blocos para criar seus próprios programas usando seu modelo."
+    }
+  ],
+  "tour-trainModel-estimatedAction-content": [
+    {
+      "type": 0,
+      "value": "A ação que o modelo estima que você está realizando atualmente é mostrada abaixo do ícone do micro:bit para essa ação."
+    }
+  ],
+  "tour-trainModel-makeCodeBlocks-content": [
+    {
+      "type": 0,
+      "value": "Esses blocos MakeCode mostrarão ícones para cada ação detectada quando você transferir seu código e modelo para um micro:bit."
+    }
+  ],
+  "tour-trainModel-makeCodeBlocks-title": [
+    {
+      "type": 0,
+      "value": "Blocos do Microsoft MakeCode"
+    }
+  ],
+  "train-description": [
+    {
+      "type": 0,
+      "value": "O programa de computador identifica padrões ou diferenças nas suas amostras de dados e usa essas informações para construir um modelo matemático que permite ao "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " reconhecer diferentes ações quando você move seu micro:bit."
+    }
+  ],
+  "train-error-body": [
+    {
+      "type": 0,
+      "value": "O treinamento não resultou em um modelo utilizável. A razão para isso provavelmente é a qualidade dos dados usados para o treinamento. Se as amostras de dados para ações diferentes forem muito semelhantes, isso pode resultar em problemas no processo de treinamento."
+    }
+  ],
+  "train-error-header": [
+    {
+      "type": 0,
+      "value": "O treinamento falhou."
+    }
+  ],
+  "train-error-todo": [
+    {
+      "type": 0,
+      "value": "Volte para a página Adicionar dados e altere suas amostras de dados."
+    }
+  ],
+  "train-header": [
+    {
+      "type": 0,
+      "value": "Treinando um modelo."
+    }
+  ],
+  "train-model": [
+    {
+      "type": 0,
+      "value": "Treinar modelo."
+    }
+  ],
+  "training-model": [
+    {
+      "type": 0,
+      "value": "Treinando modelo…"
+    }
+  ],
+  "transfer-hex-alt": [
+    {
+      "type": 0,
+      "value": "Animação mostrando um arquivo hex sendo arrastado da pasta de downloads e solto na unidade ou dispositivo micro:bit listado no explorador de arquivos."
+    }
+  ],
+  "transfer-hex-heading": [
+    {
+      "type": 0,
+      "value": "Transferir arquivo hex salvo para o micro:bit"
+    }
+  ],
+  "transfer-hex-manual-download": [
+    {
+      "type": 0,
+      "value": "Se o arquivo não foi baixado automaticamente, "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "por favor, baixe o arquivo aqui"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "transfer-hex-message": [
+    {
+      "type": 0,
+      "value": "Arraste o arquivo hex da sua pasta de Downloads para a unidade MICROBIT."
+    }
+  ],
+  "try-again-action": [
+    {
+      "type": 0,
+      "value": "Tentar novamente"
+    }
+  ],
+  "unknown": [
+    {
+      "type": 0,
+      "value": "desconhecido"
+    }
+  ],
+  "unplug-radio-link-microbit-description": [
+    {
+      "type": 0,
+      "value": "Desconecte o micro:bit de link de rádio do computador. Você precisará reconectar o micro:bit se quiser registrar mais amostras de dados."
+    }
+  ],
+  "unplug-radio-link-microbit-label": [
+    {
+      "type": 0,
+      "value": "Animação mostrando um cabo USB sendo desconectado da parte superior de um micro:bit."
+    }
+  ],
+  "unplug-radio-link-microbit-title": [
+    {
+      "type": 0,
+      "value": "Desconecte o micro:bit de link de rádio."
+    }
+  ],
+  "unsupported-device-explain": [
+    {
+      "type": 0,
+      "value": "Infelizmente, só suportamos o uso do micro:bit V2 ao conectar usando o rádio do micro:bit. Você conectou um "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "micro:bit V1"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "unsupported-device-header": [
+    {
+      "type": 0,
+      "value": "As conexões de rádio do micro:bit não suportam o micro:bit V1."
+    }
+  ],
+  "unsupported-device-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "Por favor, use o Web Bluetooth para se conectar ao seu micro:bit V1 em vez disso."
+    }
+  ],
+  "unsupported-device-without-bluetooth": [
+    {
+      "type": 0,
+      "value": "Você pode se conectar ao micro:bit V1 usando o Web Bluetooth, no entanto, este navegador ou dispositivo não tem o Bluetooth ativado. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Como ativar o Bluetooth"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "user-guide": [
+    {
+      "type": 0,
+      "value": "Guia do utilizador"
+    }
+  ],
+  "webusb-retry-no-select": [
+    {
+      "type": 0,
+      "value": "Você não selecionou um micro:bit. Quer tentar novamente?"
+    }
+  ],
+  "webusb-retry-replug1": [
+    {
+      "type": 0,
+      "value": "Ocorreu um erro de WebUSB."
+    }
+  ],
+  "webusb-retry-replug2": [
+    {
+      "type": 0,
+      "value": "Por favor:"
+    }
+  ],
+  "webusb-retry-replug3": [
+    {
+      "type": 0,
+      "value": "Verifique se este micro:bit não tem um pacote de baterias conectado."
+    }
+  ],
+  "webusb-retry-replug4": [
+    {
+      "type": 0,
+      "value": "Desconecte e reconecte o cabo USB."
+    }
+  ]
+}

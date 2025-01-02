@@ -1,0 +1,2988 @@
+{
+  "aarhus-university-alt": [
+    {
+      "type": 0,
+      "value": "오르후스대학교"
+    }
+  ],
+  "about": [
+    {
+      "type": 0,
+      "value": "소개"
+    }
+  ],
+  "about-dialog-alt": [
+    {
+      "type": 0,
+      "value": "LED 화면에 하트를 표시하고 있는 micro:bit"
+    }
+  ],
+  "about-dialog-title": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "오르후스대학교 컴퓨팅 사고 및 디자인 센터(Center for Computational Thinking and Design, Aarhus University)"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "와 협력하여 개발"
+    }
+  ],
+  "accelerometer-image-alt": [
+    {
+      "type": 0,
+      "value": "micro:bit은 X축을 앞으로 이동, Y축을 위 아래로 이동, Z축을 뒤에서 앞으로 표시합니다."
+    }
+  ],
+  "action-label": [
+    {
+      "type": 0,
+      "value": "행동"
+    }
+  ],
+  "action-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "행동 툴팁"
+    }
+  ],
+  "action-length-error": [
+    {
+      "type": 0,
+      "value": "행동 이름은 "
+    },
+    {
+      "type": 1,
+      "value": "maxLen"
+    },
+    {
+      "type": 0,
+      "value": "자 이하여야 합니다."
+    }
+  ],
+  "action-name-placeholder": [
+    {
+      "type": 0,
+      "value": "행동 이름"
+    }
+  ],
+  "action-region": [
+    {
+      "type": 0,
+      "value": "\""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\" 행동"
+    }
+  ],
+  "action-tooltip": [
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "이(가) 인식할 움직임 유형(예: '손 흔들기' 또는 '박수 치기')"
+    }
+  ],
+  "actions-label": [
+    {
+      "type": 0,
+      "value": "행동"
+    }
+  ],
+  "add-action-action": [
+    {
+      "type": 0,
+      "value": "행동 추가"
+    }
+  ],
+  "ai-activity-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "AI 활동 타이머"
+    }
+  ],
+  "ai-storytelling-friend-resource-title": [
+    {
+      "type": 0,
+      "value": "AI 스토리텔링 친구"
+    }
+  ],
+  "back-action": [
+    {
+      "type": 0,
+      "value": "뒤로"
+    }
+  ],
+  "back-to-data-samples-action": [
+    {
+      "type": 0,
+      "value": "데이터 샘플 편집"
+    }
+  ],
+  "bluetooth-unsupported-advice": [
+    {
+      "type": 0,
+      "value": "micro:bit에 바로 연결하려면 Google Chrome 또는 Microsoft Edge를 사용하는 것이 좋습니다."
+    }
+  ],
+  "bluetooth-unsupported-explain": [
+    {
+      "type": 0,
+      "value": "아쉽게도 이 브라우저는 WebUSB와 Web Bluetooth를 지원하지 않습니다. 따라서 micro:bit에 연결할 수 없어 기계 학습 모델을 훈련하는 데 필요한 데이터 샘플을 기록할 수 없습니다."
+    }
+  ],
+  "bluetooth-unsupported-header": [
+    {
+      "type": 0,
+      "value": "이 브라우저는 지원되지 않습니다"
+    }
+  ],
+  "cancel-action": [
+    {
+      "type": 0,
+      "value": "취소"
+    }
+  ],
+  "cancel-recording-action": [
+    {
+      "type": 0,
+      "value": "기록 취소"
+    }
+  ],
+  "certainty-label": [
+    {
+      "type": 0,
+      "value": "확실성"
+    }
+  ],
+  "certainty-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "확실성 툴팁"
+    }
+  ],
+  "certainty-percentage-label": [
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": " 확실성: "
+    },
+    {
+      "type": 1,
+      "value": "currentConfidence"
+    },
+    {
+      "type": 0,
+      "value": "퍼센트"
+    }
+  ],
+  "certainty-tooltip": [
+    {
+      "type": 0,
+      "value": "현재 사용자가 각 행동을 수행하고 있는 모델에 대한 확신 정도를 나타냅니다."
+    }
+  ],
+  "click-to-reload-page-action": [
+    {
+      "type": 0,
+      "value": "클릭하여 페이지 새로 고침"
+    }
+  ],
+  "close-action": [
+    {
+      "type": 0,
+      "value": "닫기"
+    }
+  ],
+  "code-download-error": [
+    {
+      "type": 0,
+      "value": "프로젝트 코드 다운로드 오류"
+    }
+  ],
+  "code-label": [
+    {
+      "type": 0,
+      "value": "Code"
+    }
+  ],
+  "code-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "코드 툴팁"
+    }
+  ],
+  "code-tooltip": [
+    {
+      "type": 0,
+      "value": "ML 모델과 코드를 micro:bit로 전송할 때 감지된 각 행동에 대한 MakeCode 블록입니다."
+    }
+  ],
+  "confirm-action": [
+    {
+      "type": 0,
+      "value": "확인"
+    }
+  ],
+  "confirm-save-action": [
+    {
+      "type": 0,
+      "value": "확인 및 저장"
+    }
+  ],
+  "connect-action": [
+    {
+      "type": 0,
+      "value": "연결하기"
+    }
+  ],
+  "connect-action-aria": [
+    {
+      "type": 0,
+      "value": "마이크로비트 연결"
+    }
+  ],
+  "connect-battery-heading": [
+    {
+      "type": 0,
+      "value": "USB를 분리하고 배터리 팩을 연결합니다."
+    }
+  ],
+  "connect-battery-holder": [
+    {
+      "type": 0,
+      "value": "배터리 홀더"
+    }
+  ],
+  "connect-battery-link": [
+    {
+      "type": 0,
+      "value": "micro:bit를 손목에 착용하거나 물체에 부착할 수 있습니다."
+    }
+  ],
+  "connect-battery-subtitle": [
+    {
+      "type": 0,
+      "value": "컴퓨터에서 micro:bit를 분리한 후 배터리 팩을 연결하세요."
+    }
+  ],
+  "connect-bluetooth-cancelled-connection": [
+    {
+      "type": 0,
+      "value": "micro:bit를 선택하지 않으셨습니다. 다시 시도하시겠습니까? "
+    }
+  ],
+  "connect-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "Web Bluetooth를 사용하여 연결"
+    }
+  ],
+  "connect-bluetooth-invalid-pattern": [
+    {
+      "type": 0,
+      "value": "잘못된 패턴을 그렸습니다."
+    }
+  ],
+  "connect-bluetooth-start-heading": [
+    {
+      "type": 0,
+      "value": "Web Bluetooth로 연결할 수 있는 것"
+    }
+  ],
+  "connect-bluetooth-start-requirements1": [
+    {
+      "type": 0,
+      "value": "micro:bit 1대"
+    }
+  ],
+  "connect-bluetooth-start-requirements2-subtitle": [
+    {
+      "type": 0,
+      "value": "인터넷, USB 포트, Web Bluetooth"
+    }
+  ],
+  "connect-bluetooth-start-switch-radio": [
+    {
+      "type": 0,
+      "value": "대신 micro:bit 라디오를 사용하여 연결하기"
+    }
+  ],
+  "connect-cable-alt": [
+    {
+      "type": 0,
+      "value": "micro:bit 상단에 연결된 USB 케이블을 보여주는 애니메이션"
+    }
+  ],
+  "connect-cable-download-project-subtitle": [
+    {
+      "type": 0,
+      "value": "USB 케이블로 micro:bit를 이 컴퓨터에 연결하여 기계 학습 MakeCode 프로그램을 micro:bit에 다운로드합니다."
+    }
+  ],
+  "connect-cable-heading": [
+    {
+      "type": 0,
+      "value": "USB 케이블을 micro:bit에 연결하기"
+    }
+  ],
+  "connect-cable-skip": [
+    {
+      "type": 0,
+      "value": "건너뛰기: 프로그램이 이미 다운로드되었나요?"
+    }
+  ],
+  "connect-cable-subtitle": [
+    {
+      "type": 0,
+      "value": "데이터 수집 프로그램을 micro:bit에 다운로드할 수 있도록 USB 케이블로 micro:bit를 이 컴퓨터에 연결합니다."
+    }
+  ],
+  "connect-computer": [
+    {
+      "type": 0,
+      "value": "컴퓨터"
+    }
+  ],
+  "connect-data-collection-heading": [
+    {
+      "type": 0,
+      "value": "USB 케이블을 micro:bit 1에 연결하기"
+    }
+  ],
+  "connect-data-collection-subtitle": [
+    {
+      "type": 0,
+      "value": "데이터 수집 프로그램을 micro:bit에 다운로드할 수 있도록 USB 케이블로 첫 번째 micro:bit를 이 컴퓨터에 연결합니다. 이 micro:bit를 사용하여 데이터 샘플을 수집하게 됩니다."
+    }
+  ],
+  "connect-failed-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "micro:bit에 연결하지 못했습니다."
+    }
+  ],
+  "connect-failed-bluetooth1": [
+    {
+      "type": 0,
+      "value": "데이터 수집 micro:bit에 연결할 수 없습니다."
+    }
+  ],
+  "connect-failed-bridge-heading": [
+    {
+      "type": 0,
+      "value": "라디오 링크 micro:bit에 연결할 수 없습니다."
+    }
+  ],
+  "connect-failed-bridge1": [
+    {
+      "type": 0,
+      "value": "컴퓨터에 연결된 micro:bit에 대한 연결을 설정할 수 없습니다."
+    }
+  ],
+  "connect-failed-remote-heading": [
+    {
+      "type": 0,
+      "value": "데이터 수집 micro:bit에 연결할 수 없습니다."
+    }
+  ],
+  "connect-failed-remote1": [
+    {
+      "type": 0,
+      "value": "데이터 수집 micro:bit에 연결할 수 없습니다."
+    }
+  ],
+  "connect-help-alt": [
+    {
+      "type": 0,
+      "value": "BBC micro:bit entry 레이블 1 및 연결 버튼 레이블 2의 WebUSB 연결 대화 상자 "
+    }
+  ],
+  "connect-micro-usb-cable": [
+    {
+      "type": 0,
+      "value": "마이크로 USB 케이블"
+    }
+  ],
+  "connect-or-import": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "데이터 수집 micro:bit에 연결하기"
+        }
+      ],
+      "type": 8,
+      "value": "link1"
+    },
+    {
+      "type": 0,
+      "value": " 또는  "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "데이터 샘플 가져오기"
+        }
+      ],
+      "type": 8,
+      "value": "link2"
+    },
+    {
+      "type": 0,
+      "value": "를 하세요."
+    }
+  ],
+  "connect-pattern-heading": [
+    {
+      "type": 0,
+      "value": "패턴 복사"
+    }
+  ],
+  "connect-pattern-input-label": [
+    {
+      "type": 1,
+      "value": "colNum"
+    },
+    {
+      "type": 0,
+      "value": "열 - micro:bit 디스플레이에 켜진 LED 개수"
+    }
+  ],
+  "connect-pattern-subtitle": [
+    {
+      "type": 0,
+      "value": "micro:bit에 표시된 패턴을 복사합니다."
+    }
+  ],
+  "connect-popup": [
+    {
+      "type": 0,
+      "value": "micro:bit을 선택하세요"
+    }
+  ],
+  "connect-popup-bluetooth-alt": [
+    {
+      "type": 0,
+      "value": "BBC micro:bit entry 레이블 1 및 페어링 버튼 레이블 2의 Web Bluetooth 연결 대화 상자"
+    }
+  ],
+  "connect-popup-bluetooth-instruction2": [
+    {
+      "type": 0,
+      "value": "'페어링(Pair)' 선택"
+    }
+  ],
+  "connect-popup-bluetooth-title": [
+    {
+      "type": 0,
+      "value": "Web Bluetooth를 사용하여 micro:bit에 연결하기"
+    }
+  ],
+  "connect-popup-instruction-heading": [
+    {
+      "type": 0,
+      "value": "다음 팝업창에서"
+    }
+  ],
+  "connect-popup-instruction1": [
+    {
+      "type": 0,
+      "value": "micro:bit를 선택하세요"
+    }
+  ],
+  "connect-popup-usb-bluetooth-data-collection-title": [
+    {
+      "type": 0,
+      "value": "micro:bit에 데이터 수집 프로그램 다운로드하기"
+    }
+  ],
+  "connect-popup-usb-radio-data-collection-title": [
+    {
+      "type": 0,
+      "value": "micro:bit 1에 데이터 수집 프로그램 다운로드하기"
+    }
+  ],
+  "connect-popup-usb-radio-link-title": [
+    {
+      "type": 0,
+      "value": "micro:bit 2에 라디오 링크 프로그램 다운로드하기"
+    }
+  ],
+  "connect-popup-webusb-instruction2": [
+    {
+      "type": 0,
+      "value": "'연결(Connect)'을 선택합니다."
+    }
+  ],
+  "connect-radio-data-collection-microbit-description": [
+    {
+      "type": 0,
+      "value": "기계 학습 MakeCode 프로그램을 데이터 수집 micro:bit에 다운로드하려면 해당 micro:bit를 컴퓨터에 연결하세요. 데이터 수집 micro:bit을 착용하고 있다면 벗어야 합니다."
+    }
+  ],
+  "connect-radio-data-collection-microbit-title": [
+    {
+      "type": 0,
+      "value": "USB 케이블을 데이터 수집 micro:bit에 연결하기"
+    }
+  ],
+  "connect-radio-heading": [
+    {
+      "type": 0,
+      "value": "micro:bit 연결 중"
+    }
+  ],
+  "connect-radio-link-heading": [
+    {
+      "type": 0,
+      "value": "USB 케이블을 micro:bit 2에 연결하기"
+    }
+  ],
+  "connect-radio-link-subtitle": [
+    {
+      "type": 0,
+      "value": "USB 케이블로 두 번째 micro:bit를 이 컴퓨터에 연결하여 라디오 링크 프로그램을 다운로드합니다. 이 라디오 링크 micro:bit는 데이터 수집 micro:bit와 통신하게 됩니다."
+    }
+  ],
+  "connect-radio-start-heading": [
+    {
+      "type": 0,
+      "value": "micro:bit 라디오를 사용하여 연결하는 데 필요한 것"
+    }
+  ],
+  "connect-radio-start-requirements1": [
+    {
+      "type": 0,
+      "value": "micro:bit 2대"
+    }
+  ],
+  "connect-radio-start-requirements1-subtitle": [
+    {
+      "type": 0,
+      "value": "V2에 한정됨"
+    }
+  ],
+  "connect-radio-start-requirements2-subtitle": [
+    {
+      "type": 0,
+      "value": "인터넷 및 USB 포트"
+    }
+  ],
+  "connect-radio-start-switch-bluetooth": [
+    {
+      "type": 0,
+      "value": "대신 Web Bluetooth를 사용하여 연결하기"
+    }
+  ],
+  "connect-to-record": [
+    {
+      "type": 0,
+      "value": "데이터 샘플을 기록하려면 연결하기"
+    }
+  ],
+  "connect-to-record-body": [
+    {
+      "type": 0,
+      "value": "데이터 샘플을 기록하려면 micro:bit 연결하기"
+    }
+  ],
+  "connect-to-test-model": [
+    {
+      "type": 0,
+      "value": "ML 모델을 테스트하려면 연결하기"
+    }
+  ],
+  "connect-to-tour-body": [
+    {
+      "type": 0,
+      "value": "투어를 보려면 데이터 수집 micro:bit를 연결해야 합니다."
+    }
+  ],
+  "connect-troubleshoot": [
+    {
+      "type": 0,
+      "value": "micro:bit 연결 문제 해결"
+    }
+  ],
+  "connect-troubleshooting": [
+    {
+      "type": 0,
+      "value": "문제 해결"
+    }
+  ],
+  "connect-with-batteries": [
+    {
+      "type": 0,
+      "value": "배터리"
+    }
+  ],
+  "connect-with-web-bluetooth": [
+    {
+      "type": 0,
+      "value": "Web Bluetooth로 연결"
+    }
+  ],
+  "connecting": [
+    {
+      "type": 0,
+      "value": "연결 중…"
+    }
+  ],
+  "continue-makecode-action": [
+    {
+      "type": 0,
+      "value": "MakeCode로 계속 진행하기"
+    }
+  ],
+  "cookies-action": [
+    {
+      "type": 0,
+      "value": "쿠키"
+    }
+  ],
+  "copied": [
+    {
+      "type": 0,
+      "value": "복사됨"
+    }
+  ],
+  "copy-action": [
+    {
+      "type": 0,
+      "value": "복사"
+    }
+  ],
+  "data-actions-menu": [
+    {
+      "type": 0,
+      "value": "데이터 행동"
+    }
+  ],
+  "data-collection-microbit": [
+    {
+      "type": 0,
+      "value": "데이터 수집 micro:bit"
+    }
+  ],
+  "data-collection-microbit-label": [
+    {
+      "type": 0,
+      "value": "데이터 수집 micro:bit가 사람의 손목에 연결되는 것을 보여주는 다이어그램"
+    }
+  ],
+  "data-connection-region": [
+    {
+      "type": 0,
+      "value": "micro:bit 데이터 연결"
+    }
+  ],
+  "data-features-hide-action": [
+    {
+      "type": 0,
+      "value": "데이터 기능 숨기기"
+    }
+  ],
+  "data-features-show-action": [
+    {
+      "type": 0,
+      "value": "데이터 기능 표시"
+    }
+  ],
+  "data-samples-actions-region": [
+    {
+      "type": 0,
+      "value": "데이터 샘플 도구 모음"
+    }
+  ],
+  "data-samples-label": [
+    {
+      "type": 0,
+      "value": "데이터 샘플"
+    }
+  ],
+  "data-samples-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "데이터 샘플 툴팁"
+    }
+  ],
+  "data-samples-status-count": [
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "개 샘플 기록됨"
+    }
+  ],
+  "data-samples-status-not-enough": [
+    {
+      "type": 0,
+      "value": "3개 이상 필요"
+    }
+  ],
+  "data-samples-title": [
+    {
+      "type": 0,
+      "value": "데이터 샘플"
+    }
+  ],
+  "data-samples-tooltip": [
+    {
+      "type": 0,
+      "value": "1초 동안의 짧은 움직임 데이터 모음. 데이터 샘플은 사용자 컴퓨터에만 보관되며 어느 누구에게도 전송되지 않습니다."
+    }
+  ],
+  "default-project-name": [
+    {
+      "type": 0,
+      "value": "제목 없음"
+    }
+  ],
+  "delete-action-aria": [
+    {
+      "type": 0,
+      "value": "\""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\" 행동 삭제"
+    }
+  ],
+  "delete-action-confirm-heading": [
+    {
+      "type": 0,
+      "value": "행동 삭제 확인"
+    }
+  ],
+  "delete-action-confirm-text": [
+    {
+      "type": 0,
+      "value": "\""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\" 행동을 삭제하시겠습니까?"
+    }
+  ],
+  "delete-data-samples-action": [
+    {
+      "type": 0,
+      "value": "모든 데이터 샘플 삭제"
+    }
+  ],
+  "delete-data-samples-confirm-heading": [
+    {
+      "type": 0,
+      "value": "모든 데이터 샘플 삭제 확인"
+    }
+  ],
+  "delete-data-samples-confirm-text": [
+    {
+      "type": 0,
+      "value": "모든 데이터 샘플을 삭제하시겠습니까?"
+    }
+  ],
+  "delete-recording-aria": [
+    {
+      "type": 0,
+      "value": "\""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\" 행동에 대한   샘플 "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "개 중 "
+    },
+    {
+      "type": 1,
+      "value": "sample"
+    },
+    {
+      "type": 0,
+      "value": "개의 기록 샘플 삭제"
+    }
+  ],
+  "disconnect-action": [
+    {
+      "type": 0,
+      "value": "연결 해제"
+    }
+  ],
+  "disconnected-during-recording": [
+    {
+      "type": 0,
+      "value": "기록 중에 micro:bit 연결이 끊어짐"
+    }
+  ],
+  "disconnected-warning-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "데이터 수집 micro:bit 연결 끊어짐"
+    }
+  ],
+  "disconnected-warning-bluetooth1": [
+    {
+      "type": 0,
+      "value": "데이터 수집 micro:bit 연결이 끊어졌습니다."
+    }
+  ],
+  "disconnected-warning-bluetooth2": [
+    {
+      "type": 0,
+      "value": "다음 사항을 확인하세요."
+    }
+  ],
+  "disconnected-warning-bluetooth3": [
+    {
+      "type": 0,
+      "value": "micro:bit의 전원이 켜져 있는가(micro:bit 뒷면의 빨간색 표시등이 켜져 있어야 합니다.)?"
+    }
+  ],
+  "disconnected-warning-bluetooth4": [
+    {
+      "type": 0,
+      "value": "micro:bit가 컴퓨터 가까이 있는가?"
+    }
+  ],
+  "disconnected-warning-bridge-heading": [
+    {
+      "type": 0,
+      "value": "라디오 링크 micro:bit 연결 끊어짐"
+    }
+  ],
+  "disconnected-warning-bridge1": [
+    {
+      "type": 0,
+      "value": "컴퓨터와 micro:bit의 연결이 끊어졌습니다."
+    }
+  ],
+  "disconnected-warning-remote-heading": [
+    {
+      "type": 0,
+      "value": "데이터 수집 micro:bit 연결 끊어짐"
+    }
+  ],
+  "disconnected-warning-remote1": [
+    {
+      "type": 0,
+      "value": "데이터 수집 micro:bit 연결이 끊어졌습니다."
+    }
+  ],
+  "dont-show-again": [
+    {
+      "type": 0,
+      "value": "다시 보지 않기"
+    }
+  ],
+  "download-data-samples-action": [
+    {
+      "type": 0,
+      "value": "모든 데이터 샘플 다운로드"
+    }
+  ],
+  "download-project-choose-microbit-subtitle": [
+    {
+      "type": 0,
+      "value": "동일한 micro:bit에 프로젝트를 다운로드하면 micro:bit와 도구의 연결이 끊어집니다. 데이터 샘플을 더 많이 기록하려면 micro:bit를 다시 연결하세요."
+    }
+  ],
+  "download-project-choose-microbit-title": [
+    {
+      "type": 0,
+      "value": "어느 micro:bit를 사용하시겠습니까?"
+    }
+  ],
+  "download-project-different-microbit-option": [
+    {
+      "type": 0,
+      "value": "다른 micro:bit"
+    }
+  ],
+  "download-project-intro-description": [
+    {
+      "type": 0,
+      "value": "프로그램에 사용자가 만든 기계 학습 모델이 포함되어 있습니다. 이 모델은 micro:bit에서 실행되므로 "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "에 연결하지 않아도 사용할 수 있습니다."
+    }
+  ],
+  "download-project-intro-title": [
+    {
+      "type": 0,
+      "value": "기계 학습 MakeCode 프로젝트 다운로드"
+    }
+  ],
+  "download-project-same-microbit-option": [
+    {
+      "type": 0,
+      "value": "동일한 micro:bit"
+    }
+  ],
+  "downloading-data-collection-header": [
+    {
+      "type": 0,
+      "value": "데이터 수집 프로그램 다운로드 중"
+    }
+  ],
+  "downloading-header": [
+    {
+      "type": 0,
+      "value": "micro:bit에 프로그램 다운로드 중"
+    }
+  ],
+  "downloading-radio-link-header": [
+    {
+      "type": 0,
+      "value": "라디오 링크 프로그램 다운로드 중"
+    }
+  ],
+  "downloading-subtitle": [
+    {
+      "type": 0,
+      "value": "잠시만 기다리세요. micro:bit에 프로그램을 다운로드하는 중입니다."
+    }
+  ],
+  "edit-in-makecode-action": [
+    {
+      "type": 0,
+      "value": "MakeCode에서 편집하기"
+    }
+  ],
+  "estimated-action-aria": [
+    {
+      "type": 0,
+      "value": "추정되는 행동: \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "estimated-action-label": [
+    {
+      "type": 0,
+      "value": "추정되는 행동"
+    }
+  ],
+  "estimated-action-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "추정되는 행동 툴팁"
+    }
+  ],
+  "estimated-action-tooltip": [
+    {
+      "type": 0,
+      "value": "모델은 사용자가 현재 \u001d이 행동을 하고 있다고 생각합니다."
+    }
+  ],
+  "feedback": [
+    {
+      "type": 0,
+      "value": "피드백 평가"
+    }
+  ],
+  "fingerprint-acc-x-tooltip": [
+    {
+      "type": 0,
+      "value": "x 방향 데이터의 합"
+    }
+  ],
+  "fingerprint-acc-y-tooltip": [
+    {
+      "type": 0,
+      "value": "\by 방향 데이터의 합"
+    }
+  ],
+  "fingerprint-acc-z-tooltip": [
+    {
+      "type": 0,
+      "value": "z 방향 데이터의 합"
+    }
+  ],
+  "fingerprint-max-x-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 x 방향 데이터 포인트 중 최대 포인트"
+    }
+  ],
+  "fingerprint-max-y-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 y 방향 데이터 포인트 중 최대 포인트"
+    }
+  ],
+  "fingerprint-max-z-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 z 방향 데이터 포인트 중 최대 포인트"
+    }
+  ],
+  "fingerprint-mean-x-tooltip": [
+    {
+      "type": 0,
+      "value": "x 방향 데이터의 평균값"
+    }
+  ],
+  "fingerprint-mean-y-tooltip": [
+    {
+      "type": 0,
+      "value": "y 방향 데이터의 평균값"
+    }
+  ],
+  "fingerprint-mean-z-tooltip": [
+    {
+      "type": 0,
+      "value": "z 방향 데이터의 평균값"
+    }
+  ],
+  "fingerprint-min-x-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 x 방향 데이터 포인트 중 최소 포인트"
+    }
+  ],
+  "fingerprint-min-y-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 y 방향 데이터 포인트 중 최소 포인트"
+    }
+  ],
+  "fingerprint-min-z-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 z 방향 데이터 포인트 중 최소 포인트"
+    }
+  ],
+  "fingerprint-peaks-x-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 x 방향 데이터 포인트 중 극단값 개수"
+    }
+  ],
+  "fingerprint-peaks-y-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 y 방향 데이터 포인트 중 극단값 개수"
+    }
+  ],
+  "fingerprint-peaks-z-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 z 방향 데이터 포인트 중 극단값 개수"
+    }
+  ],
+  "fingerprint-rms-x-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 x 방향 데이터 포인트의 제곱평균제곱근 값"
+    }
+  ],
+  "fingerprint-rms-y-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 y 방향 데이터 포인트의 제곱평균제곱근 값"
+    }
+  ],
+  "fingerprint-rms-z-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 z 방향 데이터 포인트의 제곱평균제곱근 값"
+    }
+  ],
+  "fingerprint-std-x-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 x 방향 데이터 포인트 중 0으로부터의 평균 편차"
+    }
+  ],
+  "fingerprint-std-y-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 y 방향 데이터 포인트 중 0으로부터의 평균 편차"
+    }
+  ],
+  "fingerprint-std-z-tooltip": [
+    {
+      "type": 0,
+      "value": "모든 z 방향 데이터 포인트 중 0으로부터의 평균 편차"
+    }
+  ],
+  "fingerprint-zcr-x-tooltip": [
+    {
+      "type": 0,
+      "value": "x 방향 데이터 포인트에 대해 가속도가 양수와 음수 사이에서 전환되는 속도"
+    }
+  ],
+  "fingerprint-zcr-y-tooltip": [
+    {
+      "type": 0,
+      "value": "\by 방향 데이터 포인트에 대해 가속도가 양수와 음수 사이에서 전환되는 속도"
+    }
+  ],
+  "fingerprint-zcr-z-tooltip": [
+    {
+      "type": 0,
+      "value": "\bz 방향 데이터 포인트에 대해 가속도가 양수와 음수 사이에서 전환되는 속도"
+    }
+  ],
+  "firmware-outdated-content1": [
+    {
+      "type": 0,
+      "value": "micro:bit 펌웨어가 너무 오래되어 연결에 실패했습니다."
+    }
+  ],
+  "firmware-outdated-content2": [
+    {
+      "type": 0,
+      "value": "이 micro:bit에 연결하기 전에 "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "펌웨어를 업데이트"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "해야 합니다."
+    }
+  ],
+  "firmware-outdated-heading": [
+    {
+      "type": 0,
+      "value": "펌웨어 업데이트 필요"
+    }
+  ],
+  "get-started-action": [
+    {
+      "type": 0,
+      "value": "시작하기"
+    }
+  ],
+  "go-action": [
+    {
+      "type": 0,
+      "value": "이동"
+    }
+  ],
+  "graph-color-scheme": [
+    {
+      "type": 0,
+      "value": "그래프 색 구성표"
+    }
+  ],
+  "graph-color-scheme-color-blind-1": [
+    {
+      "type": 0,
+      "value": "색맹용 대안 1"
+    }
+  ],
+  "graph-color-scheme-color-blind-2": [
+    {
+      "type": 0,
+      "value": "색맹용 대안 2"
+    }
+  ],
+  "graph-color-scheme-default": [
+    {
+      "type": 0,
+      "value": "기본색(빨간색, 파란색, 녹색)"
+    }
+  ],
+  "graph-line-scheme": [
+    {
+      "type": 0,
+      "value": "그래프 선 스타일"
+    }
+  ],
+  "graph-line-scheme-accessible": [
+    {
+      "type": 0,
+      "value": "사용할 수 있는 선(실선, 파선, 점선)"
+    }
+  ],
+  "graph-line-scheme-solid": [
+    {
+      "type": 0,
+      "value": "실선"
+    }
+  ],
+  "graph-line-weight": [
+    {
+      "type": 0,
+      "value": "그래프 선 두께"
+    }
+  ],
+  "graph-line-weight-default": [
+    {
+      "type": 0,
+      "value": "기본값"
+    }
+  ],
+  "graph-line-weight-thick": [
+    {
+      "type": 0,
+      "value": "두꺼움"
+    }
+  ],
+  "help-label": [
+    {
+      "type": 0,
+      "value": "도움 및 지원"
+    }
+  ],
+  "help-support": [
+    {
+      "type": 0,
+      "value": "도움말 및 지원"
+    }
+  ],
+  "home-action": [
+    {
+      "type": 0,
+      "value": "처음으로"
+    }
+  ],
+  "homepage": [
+    {
+      "type": 0,
+      "value": "홈페이지"
+    }
+  ],
+  "homepage-alt": [
+    {
+      "type": 0,
+      "value": "박수 치는 손이 겹쳐진 micro:bit 가속도계 데이터를 나타내는 x, y, z 그래프 선을 보여주는 그래프"
+    }
+  ],
+  "homepage-alt-graph": [
+    {
+      "type": 0,
+      "value": "micro:bit 가속도계 데이터를 나타내는 x, y, z 그래프 선을 보여주는 그래프"
+    }
+  ],
+  "homepage-alt-hands": [
+    {
+      "type": 0,
+      "value": "박수 치는 손"
+    }
+  ],
+  "homepage-description": [
+    {
+      "type": 0,
+      "value": "사용자의 움직임 데이터로 기계 학습 모델을 훈련하여 micro:bit에서 실행하세요."
+    }
+  ],
+  "homepage-how-it-works": [
+    {
+      "type": 0,
+      "value": "설명"
+    }
+  ],
+  "homepage-how-it-works-paragraph": [
+    {
+      "type": 0,
+      "value": "시작하려면 동영상을 시청하세요. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "사용자 가이드"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "에서 자세히 알아보세요."
+    }
+  ],
+  "homepage-projects": [
+    {
+      "type": 0,
+      "value": "프로젝트"
+    }
+  ],
+  "homepage-projects-more": [
+    {
+      "type": 0,
+      "value": "더 많은 "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "micro:bit와 AI 콘텐츠와 리소스"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "를 살펴보세요."
+    }
+  ],
+  "homepage-step-by-step": [
+    {
+      "type": 0,
+      "value": "단계별"
+    }
+  ],
+  "homepage-subtitle": [
+    {
+      "type": 0,
+      "value": "움직임과 기계 학습을 사용하여 BBC micro:bit에서 AI를 만들어 보세요."
+    }
+  ],
+  "homepage-video-alt": [
+    {
+      "type": 0,
+      "value": "소개 동영상"
+    }
+  ],
+  "import-data-samples-action": [
+    {
+      "type": 0,
+      "value": "데이터 샘플 가져오기"
+    }
+  ],
+  "import-error-dialog-content": [
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "(으)로 MakeCode hex 파일이나 데이터 샘플 파일(.json)만 열 수 있습니다."
+    }
+  ],
+  "import-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "지원되지 않는 파일 유형"
+    }
+  ],
+  "incompatible-device-body-alt": [
+    {
+      "type": 0,
+      "value": "뒤로 돌아가 다른 micro:bit를 선택하거나,  "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "프로젝트 hex를 저장"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "하세요. 프로젝트 hex는 나중에 micro:bit V2에 다운로드할 수 있습니다."
+    }
+  ],
+  "incompatible-device-body1": [
+    {
+      "type": 0,
+      "value": "MakeCode로 계속 프로그램을 편집하면 micro:bit V2에 다운로드할 수 있는 프로젝트 hex를 저장할 수 있습니다."
+    }
+  ],
+  "incompatible-device-body2": [
+    {
+      "type": 0,
+      "value": "또는 MakeCode를 사용하지 않고 "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "프로젝트 hex를 저장"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "하세요."
+    }
+  ],
+  "incompatible-device-heading": [
+    {
+      "type": 0,
+      "value": "호환되지 않는 기기"
+    }
+  ],
+  "incompatible-device-subtitle": [
+    {
+      "type": 0,
+      "value": "현재 micro:bit V1을 사용하고 있지만 기계 학습 프로젝트에는 더 빠른 프로세서가 탑재된 micro:bit V2가 필요합니다. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "micro:bit 버전에 대해 자세히 알아보세요."
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    }
+  ],
+  "insufficient-data-body": [
+    {
+      "type": 0,
+      "value": "모델을 훈련하려면 최소 2개 행동에 대한 데이터 샘플 3개가 필요합니다."
+    }
+  ],
+  "insufficient-data-title": [
+    {
+      "type": 0,
+      "value": "데이터가 충분하지 않습니다."
+    }
+  ],
+  "language": [
+    {
+      "type": 0,
+      "value": "언어 선택"
+    }
+  ],
+  "learn-about-firewall-requirements-action": [
+    {
+      "type": 0,
+      "value": "방화벽 요구 사항에 대해 알아보기"
+    }
+  ],
+  "led-icon-option-angry": [
+    {
+      "type": 0,
+      "value": "화남"
+    }
+  ],
+  "led-icon-option-asleep": [
+    {
+      "type": 0,
+      "value": "수면 중"
+    }
+  ],
+  "led-icon-option-butterfly": [
+    {
+      "type": 0,
+      "value": "나비"
+    }
+  ],
+  "led-icon-option-chessboard": [
+    {
+      "type": 0,
+      "value": "체스판"
+    }
+  ],
+  "led-icon-option-confused": [
+    {
+      "type": 0,
+      "value": "어리둥절"
+    }
+  ],
+  "led-icon-option-cow": [
+    {
+      "type": 0,
+      "value": "소"
+    }
+  ],
+  "led-icon-option-diamond": [
+    {
+      "type": 0,
+      "value": "다이아몬드"
+    }
+  ],
+  "led-icon-option-duck": [
+    {
+      "type": 0,
+      "value": "오리"
+    }
+  ],
+  "led-icon-option-eighthnote": [
+    {
+      "type": 0,
+      "value": "8분음표"
+    }
+  ],
+  "led-icon-option-fabulous": [
+    {
+      "type": 0,
+      "value": "멋짐"
+    }
+  ],
+  "led-icon-option-ghost": [
+    {
+      "type": 0,
+      "value": "유령"
+    }
+  ],
+  "led-icon-option-giraffe": [
+    {
+      "type": 0,
+      "value": "기린"
+    }
+  ],
+  "led-icon-option-happy": [
+    {
+      "type": 0,
+      "value": "행복"
+    }
+  ],
+  "led-icon-option-heart": [
+    {
+      "type": 0,
+      "value": "하트"
+    }
+  ],
+  "led-icon-option-house": [
+    {
+      "type": 0,
+      "value": "집"
+    }
+  ],
+  "led-icon-option-lefttriangle": [
+    {
+      "type": 0,
+      "value": "왼쪽 삼각형"
+    }
+  ],
+  "led-icon-option-meh": [
+    {
+      "type": 0,
+      "value": "별로"
+    }
+  ],
+  "led-icon-option-no": [
+    {
+      "type": 0,
+      "value": "아니요"
+    }
+  ],
+  "led-icon-option-off": [
+    {
+      "type": 0,
+      "value": "끔"
+    }
+  ],
+  "led-icon-option-pitchfork": [
+    {
+      "type": 0,
+      "value": "갈퀴"
+    }
+  ],
+  "led-icon-option-quarternote": [
+    {
+      "type": 0,
+      "value": "4분음표"
+    }
+  ],
+  "led-icon-option-rabbit": [
+    {
+      "type": 0,
+      "value": "토끼"
+    }
+  ],
+  "led-icon-option-rollerskate": [
+    {
+      "type": 0,
+      "value": "롤러스케이트"
+    }
+  ],
+  "led-icon-option-sad": [
+    {
+      "type": 0,
+      "value": "슬픔"
+    }
+  ],
+  "led-icon-option-scissors": [
+    {
+      "type": 0,
+      "value": "가위"
+    }
+  ],
+  "led-icon-option-silly": [
+    {
+      "type": 0,
+      "value": "바보"
+    }
+  ],
+  "led-icon-option-skull": [
+    {
+      "type": 0,
+      "value": "해골"
+    }
+  ],
+  "led-icon-option-smalldiamond": [
+    {
+      "type": 0,
+      "value": "작은 다이아몬드"
+    }
+  ],
+  "led-icon-option-smallheart": [
+    {
+      "type": 0,
+      "value": "작은 하트"
+    }
+  ],
+  "led-icon-option-smallsquare": [
+    {
+      "type": 0,
+      "value": "작은 정사각형"
+    }
+  ],
+  "led-icon-option-snake": [
+    {
+      "type": 0,
+      "value": "뱀"
+    }
+  ],
+  "led-icon-option-square": [
+    {
+      "type": 0,
+      "value": "정사각형"
+    }
+  ],
+  "led-icon-option-stickfigure": [
+    {
+      "type": 0,
+      "value": "막대 인간"
+    }
+  ],
+  "led-icon-option-surprised": [
+    {
+      "type": 0,
+      "value": "놀람"
+    }
+  ],
+  "led-icon-option-sword": [
+    {
+      "type": 0,
+      "value": "칼"
+    }
+  ],
+  "led-icon-option-target": [
+    {
+      "type": 0,
+      "value": "과녁"
+    }
+  ],
+  "led-icon-option-tortoise": [
+    {
+      "type": 0,
+      "value": "거북이"
+    }
+  ],
+  "led-icon-option-triangle": [
+    {
+      "type": 0,
+      "value": "삼각형"
+    }
+  ],
+  "led-icon-option-tshirt": [
+    {
+      "type": 0,
+      "value": "티셔츠"
+    }
+  ],
+  "led-icon-option-umbrella": [
+    {
+      "type": 0,
+      "value": "우산"
+    }
+  ],
+  "led-icon-option-yes": [
+    {
+      "type": 0,
+      "value": "예"
+    }
+  ],
+  "live-data-graph": [
+    {
+      "type": 0,
+      "value": "실시간 데이터 그래프"
+    }
+  ],
+  "live-graph": [
+    {
+      "type": 0,
+      "value": "실시간 그래프"
+    }
+  ],
+  "live-graph-tooltip": [
+    {
+      "type": 0,
+      "value": "이 그래프는 micro:bit 가속도계의 움직임 데이터를 실시간으로 보여줍니다. 데이터 수집 micro:bit을 움직여 X, Y, Z 축이 바뀌는 것을 확인해 보세요. 색깔 선은 micro:bit가 이동하는 각각의 방향(차원)을 나타냅니다."
+    }
+  ],
+  "live-graph-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "실시간 그래프 툴팁"
+    }
+  ],
+  "loading": [
+    {
+      "type": 0,
+      "value": "불러오는 중..."
+    }
+  ],
+  "main-menu": [
+    {
+      "type": 0,
+      "value": "메인 메뉴"
+    }
+  ],
+  "makecode-back-alt": [
+    {
+      "type": 0,
+      "value": "MakeCode 뒤로 가기 왼쪽 화살 아이콘"
+    }
+  ],
+  "makecode-block-default-alt": [
+    {
+      "type": 0,
+      "value": "MakeCode 블록: ML "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": " 시작 시, "
+    },
+    {
+      "type": 1,
+      "value": "iconName"
+    },
+    {
+      "type": 0,
+      "value": " 아이콘 표시"
+    }
+  ],
+  "makecode-block-on-ML": [
+    {
+      "type": 0,
+      "value": "ML에서"
+    }
+  ],
+  "makecode-block-show-icon": [
+    {
+      "type": 0,
+      "value": "아이콘 표시"
+    }
+  ],
+  "makecode-block-start": [
+    {
+      "type": 0,
+      "value": "start"
+    }
+  ],
+  "makecode-load-error-dialog-body": [
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "이(가) MakeCode를 불러올 수 없습니다. 인터넷 연결을 확인하고 페이지를 새로 고침한 다음 다시 시도하세요."
+    }
+  ],
+  "makecode-load-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "Microsoft MakeCode를 불러올 수 없습니다."
+    }
+  ],
+  "microbit-not-connected": [
+    {
+      "type": 0,
+      "value": "micro:bit가 연결되지 않았습니다."
+    }
+  ],
+  "more-edit-in-makecode-options": [
+    {
+      "type": 0,
+      "value": "MakeCode 옵션에서 추가 편집"
+    }
+  ],
+  "name-action-hint": [
+    {
+      "type": 0,
+      "value": "micro:bit가 인식할 행동의 이름 지정하기"
+    }
+  ],
+  "name-project": [
+    {
+      "type": 0,
+      "value": "프로젝트 이름을 지정하세요"
+    }
+  ],
+  "name-text": [
+    {
+      "type": 0,
+      "value": "이름"
+    }
+  ],
+  "name-used-when": [
+    {
+      "type": 0,
+      "value": "hex 파일을 저장할 때 해당 이름을 사용합니다."
+    }
+  ],
+  "new-session-setup-description": [
+    {
+      "type": 0,
+      "value": "새 세션을 시작하면 기존 세션을 덮어쓱[ 됩니다. 먼저 "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "기존 세션을 저장"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "하는 것이 좋습니다."
+    }
+  ],
+  "new-session-setup-title": [
+    {
+      "type": 0,
+      "value": "새 세션 설정"
+    }
+  ],
+  "newpage-continue-session-subtitle": [
+    {
+      "type": 0,
+      "value": "컴퓨터에 저장한 데이터 샘플 파일 또는 hex 파일을 사용하여 세션을 계속 진행하세요."
+    }
+  ],
+  "newpage-continue-session-title": [
+    {
+      "type": 0,
+      "value": "저장된 세션 계속"
+    }
+  ],
+  "newpage-last-session-date": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "날짜:"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    }
+  ],
+  "newpage-last-session-name": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "이름:"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "newpage-last-session-none": [
+    {
+      "type": 0,
+      "value": "세션을 찾을 수 없음"
+    }
+  ],
+  "newpage-last-session-title": [
+    {
+      "type": 0,
+      "value": "마지막 세션 열기"
+    }
+  ],
+  "newpage-new-session-subtitle": [
+    {
+      "type": 0,
+      "value": "micro:bit를 연결하고 움직임 데이터를 수집하여 기계 학습 모델을 구축하세요."
+    }
+  ],
+  "newpage-new-session-title": [
+    {
+      "type": 0,
+      "value": "새 세션"
+    }
+  ],
+  "newpage-section-one-title": [
+    {
+      "type": 0,
+      "value": "중단한 곳에서 다시 시작하기"
+    }
+  ],
+  "newpage-section-two-title": [
+    {
+      "type": 0,
+      "value": "새로 시작하기"
+    }
+  ],
+  "newpage-title": [
+    {
+      "type": 0,
+      "value": "새 세션"
+    }
+  ],
+  "next-action": [
+    {
+      "type": 0,
+      "value": "Next"
+    }
+  ],
+  "no-data-samples": [
+    {
+      "type": 0,
+      "value": "데이터 샘플 없음"
+    }
+  ],
+  "not-create-ai-hex-import-dialog-content": [
+    {
+      "type": 0,
+      "value": "이 프로젝트에는 데이터 샘플이 없어 코드만 공개되었습니다. 코드를 사용하기 전에 모델을 훈련해야 합니다."
+    }
+  ],
+  "not-create-ai-hex-import-dialog-title": [
+    {
+      "type": 0,
+      "value": "MakeCode 프로젝트를 가져왔습니다."
+    }
+  ],
+  "not-found": [
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " 홈페이지"
+    }
+  ],
+  "not-found-title": [
+    {
+      "type": 0,
+      "value": "페이지를 찾을 수 없습니다."
+    }
+  ],
+  "open-file-action": [
+    {
+      "type": 0,
+      "value": "열기…"
+    }
+  ],
+  "open-file-dropped": [
+    {
+      "type": 0,
+      "value": "드롭될 때 파일 열기"
+    }
+  ],
+  "other-tabs-body1": [
+    {
+      "type": 0,
+      "value": "다른 프로세스가 이 장치에 연결되어 있습니다."
+    }
+  ],
+  "other-tabs-body2": [
+    {
+      "type": 0,
+      "value": "WebUSB를 사용하고 있는 다른 탭(예: MakeCode, Python Editor, "
+    },
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": ")을 닫거나 micro:bit를 분리하여 다시 연결한 다음 재시도해 보세요."
+    }
+  ],
+  "other-tabs-heading": [
+    {
+      "type": 0,
+      "value": "WebUSB를 사용하여 연결하기"
+    }
+  ],
+  "privacy": [
+    {
+      "type": 0,
+      "value": "개인정보 보호 정책"
+    }
+  ],
+  "project-loaded": [
+    {
+      "type": 0,
+      "value": "프로젝트 불러오기 완료"
+    }
+  ],
+  "project-name-not-empty": [
+    {
+      "type": 0,
+      "value": "프로젝트 이름을 입력해야 합니다"
+    }
+  ],
+  "radio-link-microbit": [
+    {
+      "type": 0,
+      "value": "라디오 링크 micro:bit"
+    }
+  ],
+  "radio-link-microbit-label": [
+    {
+      "type": 0,
+      "value": "라디오 링크 micro:bit가 컴퓨터에 연결된 것을 보여주는 다이어그램"
+    }
+  ],
+  "recognition-point-label": [
+    {
+      "type": 0,
+      "value": "인식 포인트:"
+    }
+  ],
+  "reconnect-action": [
+    {
+      "type": 0,
+      "value": "다시 연결"
+    }
+  ],
+  "reconnect-failed-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "데이터 수집 micro:bit에 다시 연결할 수 없습니다."
+    }
+  ],
+  "reconnect-failed-bluetooth1": [
+    {
+      "type": 0,
+      "value": "데이터 수집 micro:bit에 대한 연결을 다시 설정할 수 없습니다."
+    }
+  ],
+  "reconnect-failed-bridge-heading": [
+    {
+      "type": 0,
+      "value": "라디오 링크 micro:bit를 다시 연결할 수 없습니다."
+    }
+  ],
+  "reconnect-failed-bridge1": [
+    {
+      "type": 0,
+      "value": "컴퓨터에 연결된 micro:bit에 대한 연결을 다시 설정할 수 없습니다."
+    }
+  ],
+  "reconnect-failed-radio-heading": [
+    {
+      "type": 0,
+      "value": "micro:bit에 다시 연결할 수 없습니다."
+    }
+  ],
+  "reconnect-failed-remote-heading": [
+    {
+      "type": 0,
+      "value": "데이터 수집 micro:bit에 다시 연결할 수 없습니다."
+    }
+  ],
+  "reconnect-failed-remote1": [
+    {
+      "type": 0,
+      "value": "데이터 수집 micro:bit에 대한 연결을 다시 설정할 수 없습니다."
+    }
+  ],
+  "reconnect-failed-subtitle": [
+    {
+      "type": 0,
+      "value": "안내에 따라 연결 프로세스를 다시 시작하세요."
+    }
+  ],
+  "reconnecting": [
+    {
+      "type": 0,
+      "value": "다시 연결 중…"
+    }
+  ],
+  "record-action": [
+    {
+      "type": 0,
+      "value": "녹화시작"
+    }
+  ],
+  "record-action-aria": [
+    {
+      "type": 0,
+      "value": "\""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\" 행동에 대한 데이터 기록"
+    }
+  ],
+  "record-hint": [
+    {
+      "type": 0,
+      "value": "데이터 샘플을 기록하려면 누르세요."
+    }
+  ],
+  "record-hint-button-b": [
+    {
+      "type": 0,
+      "value": "눌러서 데이터 샘플을 기록하거나 데이터 수집 micro:bit의 B 버튼을 누르세요."
+    }
+  ],
+  "record-samples": [
+    {
+      "type": 0,
+      "value": "샘플 "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "개 기록"
+    }
+  ],
+  "record-samples-help": [
+    {
+      "type": 0,
+      "value": "각 샘플은 자체 카운트다운이 있습니다."
+    }
+  ],
+  "record-seconds": [
+    {
+      "type": 1,
+      "value": "numSeconds"
+    },
+    {
+      "type": 0,
+      "value": "초 동안 기록"
+    }
+  ],
+  "record-seconds-help": [
+    {
+      "type": 0,
+      "value": "계속 움직여서 샘플 "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "개 만드세요."
+    }
+  ],
+  "recording": [
+    {
+      "type": 0,
+      "value": "기록 중"
+    }
+  ],
+  "recording-complete": [
+    {
+      "type": 0,
+      "value": "완료"
+    }
+  ],
+  "recording-data-for": [
+    {
+      "type": 0,
+      "value": "\""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\" 행동에 대한 데이터 기록"
+    }
+  ],
+  "recording-data-for-numbered": [
+    {
+      "type": 0,
+      "value": "\""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\" 행동에 대한 "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "개의 "
+    },
+    {
+      "type": 1,
+      "value": "sample"
+    },
+    {
+      "type": 0,
+      "value": " 기록"
+    }
+  ],
+  "recording-fingerprint-label": [
+    {
+      "type": 0,
+      "value": "micro:bit x, y, z 가속도계 데이터 기록 1개를 보여주는 히트 맵"
+    }
+  ],
+  "recording-graph-label": [
+    {
+      "type": 0,
+      "value": "micro:bit x, y, z 가속도계 데이터 기록 1개를 보여주는 그래프"
+    }
+  ],
+  "recording-options-aria": [
+    {
+      "type": 0,
+      "value": "더 많은 \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\" 행동 기록 옵션"
+    }
+  ],
+  "reload-action": [
+    {
+      "type": 0,
+      "value": "새로 고침"
+    }
+  ],
+  "reset-to-default-action": [
+    {
+      "type": 0,
+      "value": "기본 블록으로 초기화"
+    }
+  ],
+  "restore-defaults-action": [
+    {
+      "type": 0,
+      "value": "모든 설정의 기본값 복원"
+    }
+  ],
+  "restore-defaults-confirm-action": [
+    {
+      "type": 0,
+      "value": "기본값 복원"
+    }
+  ],
+  "restore-defaults-confirm-body": [
+    {
+      "type": 0,
+      "value": "모든 설정의 기본값을 복원하시겠습니까?"
+    }
+  ],
+  "restore-defaults-confirm-heading": [
+    {
+      "type": 0,
+      "value": "기본 설정 복원하기"
+    }
+  ],
+  "restore-defaults-helper": [
+    {
+      "type": 0,
+      "value": "이전에 삭제된 도움말 내용이 다시 표시될 수 있습니다."
+    }
+  ],
+  "save-action": [
+    {
+      "type": 0,
+      "value": "저장하기"
+    }
+  ],
+  "save-hex-dialog-heading": [
+    {
+      "type": 0,
+      "value": "프로젝트를 hex 파일로 저장하기"
+    }
+  ],
+  "save-hex-dialog-message1": [
+    {
+      "type": 0,
+      "value": "다운로드 파일에는 사용자의 행동, 데이터 샘플, MakeCode 프로젝트가 포함되어 있습니다. "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "에서 다운로드 파일을 열어 작업을 계속하세요."
+    }
+  ],
+  "save-hex-dialog-message2": [
+    {
+      "type": 0,
+      "value": "행동과 데이터 샘플을 변경할 필요가 없는 경우 Microsoft MakeCode로도 열 수 있습니다."
+    }
+  ],
+  "saving-description": [
+    {
+      "type": 0,
+      "value": "다운로드 파일이 곧 준비됩니다."
+    }
+  ],
+  "saving-title": [
+    {
+      "type": 0,
+      "value": "저장 중…"
+    }
+  ],
+  "saving-toast-title": [
+    {
+      "type": 0,
+      "value": "hex 파일이 다운로드되었습니다."
+    }
+  ],
+  "select-icon-action-aria": [
+    {
+      "type": 0,
+      "value": "\""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\" 행동에 대한 아이콘 선택"
+    }
+  ],
+  "select-icon-action-untitled-aria": [
+    {
+      "type": 0,
+      "value": "이름  없는 행동에 대한 아이콘 선택"
+    }
+  ],
+  "select-icon-option-action-aria": [
+    {
+      "type": 0,
+      "value": "\""
+    },
+    {
+      "type": 1,
+      "value": "iconName"
+    },
+    {
+      "type": 0,
+      "value": "\" 아이콘 선택"
+    }
+  ],
+  "settings": [
+    {
+      "type": 0,
+      "value": "설정"
+    }
+  ],
+  "settings-menu-action": [
+    {
+      "type": 0,
+      "value": "설정 행동 메뉴"
+    }
+  ],
+  "show-graphs-checkbox-label-text": [
+    {
+      "type": 0,
+      "value": "그래프 표시"
+    }
+  ],
+  "simple-ai-exercise-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "심플 AI 운동 타이머"
+    }
+  ],
+  "skip-tour-action": [
+    {
+      "type": 0,
+      "value": "투어 건너뛰기"
+    }
+  ],
+  "software-versions": [
+    {
+      "type": 0,
+      "value": "소프트웨어 버전"
+    }
+  ],
+  "start-session-action": [
+    {
+      "type": 0,
+      "value": "세션 시작"
+    }
+  ],
+  "start-training-action": [
+    {
+      "type": 0,
+      "value": "훈련 시작"
+    }
+  ],
+  "steps-alt": [
+    {
+      "type": 0,
+      "value": "데이터 수집, 모델 훈련, 모델 테스트, 수집한 데이터 개선하여 모델을 개선한 다음 최종적으로 모델을 사용하여 코딩하는 반복적 프로세스를 보여주는 다이어그램"
+    }
+  ],
+  "steps-code": [
+    {
+      "type": 0,
+      "value": "Code"
+    }
+  ],
+  "steps-collect-data": [
+    {
+      "type": 0,
+      "value": "데이터 수집"
+    }
+  ],
+  "steps-improve": [
+    {
+      "type": 0,
+      "value": "개선"
+    }
+  ],
+  "steps-test-model": [
+    {
+      "type": 0,
+      "value": "테스트 모델"
+    }
+  ],
+  "steps-train": [
+    {
+      "type": 0,
+      "value": "훈련"
+    }
+  ],
+  "stop-recording-action": [
+    {
+      "type": 0,
+      "value": "기록 중단"
+    }
+  ],
+  "support-request": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "지원 요청"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "을 생각해 보세요."
+    }
+  ],
+  "terms": [
+    {
+      "type": 0,
+      "value": "이용 약관"
+    }
+  ],
+  "testing-model-actions-region": [
+    {
+      "type": 0,
+      "value": "테스트 모델 도구 모음"
+    }
+  ],
+  "testing-model-title": [
+    {
+      "type": 0,
+      "value": "모델 테스트 중"
+    }
+  ],
+  "tour-action": [
+    {
+      "type": 0,
+      "value": "투어"
+    }
+  ],
+  "tour-collect-addActions-content": [
+    {
+      "type": 0,
+      "value": "어떤 행동을 할지, 그 행동의 이름은 무엇으로 할지 결정하세요. 모델을 훈련하려면 최소 행동 2개와 데이터 샘플 3개가 필요합니다. 데이터 샘플은 사용자 컴퓨터에만 저장되며 누구에게도 전송되지 않습니다."
+    }
+  ],
+  "tour-collect-addActions-title": [
+    {
+      "type": 0,
+      "value": "더 많은 행동 추가"
+    }
+  ],
+  "tour-collect-afterFirst-content": [
+    {
+      "type": 0,
+      "value": "기계 학습 모델을 훈련하려면 적어도 2가지 행동에 대한 데이터 샘플 3개가 필요합니다."
+    }
+  ],
+  "tour-collect-afterFirst-title": [
+    {
+      "type": 0,
+      "value": "첫 번째 "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "샘플"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "recordingCount"
+    },
+    {
+      "type": 0,
+      "value": "을 기록했습니다!"
+    }
+  ],
+  "tour-collect-collectMore-explanation-content": [
+    {
+      "type": 0,
+      "value": "더 많은 샘플을 수집하면 더 나은 기계 학습 모델을 만들 수 있습니다."
+    }
+  ],
+  "tour-collect-collectMore-hasRecordings-content": [
+    {
+      "type": 0,
+      "value": "행동에 대한 데이터 샘플을 기록하세요."
+    }
+  ],
+  "tour-collect-collectMore-noRecordings-content": [
+    {
+      "type": 0,
+      "value": "이 행동에 대한 더 많은 샘플을 기록하세요."
+    }
+  ],
+  "tour-collect-collectMore-title": [
+    {
+      "type": 0,
+      "value": "더 많은 데이터 샘플 수집하기"
+    }
+  ],
+  "tour-collect-trainModel-content": [
+    {
+      "type": 0,
+      "value": "데이터 샘플을 충분히 수집하면 기계 학습 모델을 훈련할 수 있습니다. 나중에 데이터를 삭제하거나 추가한 후 다시 훈련하여 모델의 신뢰성을 높일 수 있습니다."
+    }
+  ],
+  "tour-dataSamples-actions-common-content": [
+    {
+      "type": 0,
+      "value": "행동은 기계 학습 모델이 인식하는 움직임의 유형입니다. (예: '손 흔들기', '손뼉 치기')"
+    }
+  ],
+  "tour-dataSamples-actions-noRecordings-content": [
+    {
+      "type": 0,
+      "value": "첫 번째 행동을 무엇으로 할지 결정하고 그 행동의 이름을 정한 후 데이터 샘플 기록을 시작하세요."
+    }
+  ],
+  "tour-dataSamples-connected-content": [
+    {
+      "type": 0,
+      "value": "이제 데이터 샘플을 수집하여 기계 학습(ML) 모델이 다양한 움직임이나 동작을 인식하도록 훈련할 수 있습니다."
+    }
+  ],
+  "tour-dataSamples-connected-title": [
+    {
+      "type": 0,
+      "value": "데이터 수집 micro:bit가 연결되었습니다!"
+    }
+  ],
+  "tour-dataSamples-liveGraph-content": [
+    {
+      "type": 0,
+      "value": "micro:bit 가속도계의 움직임 데이터를 보여주는 그래프입니다. 데이터 수집 micro:bit를 움직여서 그래프가 어떻게 바뀌는지 확인하세요."
+    }
+  ],
+  "tour-makecode-intro-content1": [
+    {
+      "type": 0,
+      "value": "모델과 코드를 다운로드하여 micro:bit에서 프로젝트를 테스트하세요. 또한 코드 블록을 더 추가한 후 모델을 사용하여 나만의 프로그램을 만들 수 있습니다."
+    }
+  ],
+  "tour-makecode-intro-content2": [
+    {
+      "type": 0,
+      "value": "ML 모델을 개선해야 하나요? "
+    }
+  ],
+  "tour-makecode-intro-content3": [
+    {
+      "type": 0,
+      "value": "상단 왼쪽의 뒤로 가기 버튼을 사용하세요."
+    }
+  ],
+  "tour-makecode-intro-title": [
+    {
+      "type": 0,
+      "value": "Microsoft MakeCode"
+    }
+  ],
+  "tour-trainModel-afterTrain-alreadyConnected-title": [
+    {
+      "type": 0,
+      "value": "ML 모델을 훈련했습니다!"
+    }
+  ],
+  "tour-trainModel-afterTrain-content": [
+    {
+      "type": 0,
+      "value": "이제 기계 학습 모델을 테스트할 수 있습니다. 데이터 수집 micro:bit를 움직여 행동을 수행해 보세요. 모델이 행동을 정확하게 추정하나요?"
+    }
+  ],
+  "tour-trainModel-afterTrain-delayedUntilConnected-title": [
+    {
+      "type": 0,
+      "value": "ML 모델 테스트"
+    }
+  ],
+  "tour-trainModel-certaintyRecognition-content": [
+    {
+      "type": 0,
+      "value": "막대그래프는 모델이 각 행동에 대한 확신하는 정도를 보여줍니다. 슬라이더를 움직여 인식 지점 또는 임곗값을 조정합니다."
+    }
+  ],
+  "tour-trainModel-certaintyRecognition-title": [
+    {
+      "type": 0,
+      "value": "확실성 및 인식 지점"
+    }
+  ],
+  "tour-trainModel-editInMakeCode-content": [
+    {
+      "type": 0,
+      "value": "MakeCode에서 프로젝트를 열어 프로그램과 기계 학습 모델을 micro:bit에 다운로드합니다. 블록을 더 추가한 후 모델을 사용하여 나만의 프로그램을 만들 수 있습니다."
+    }
+  ],
+  "tour-trainModel-estimatedAction-content": [
+    {
+      "type": 0,
+      "value": "모델이 추정하는 사용자의 현재 행동은 해당 행동에 대한 micro:bit 아이콘 아래에 표시됩니다."
+    }
+  ],
+  "tour-trainModel-makeCodeBlocks-content": [
+    {
+      "type": 0,
+      "value": "MakeCode 블록은 코드와 모델을 micro:bit로 전송할 때 감지된 각 행동에 대한 아이콘을 표시합니다."
+    }
+  ],
+  "tour-trainModel-makeCodeBlocks-title": [
+    {
+      "type": 0,
+      "value": "Microsoft MakeCode 블록"
+    }
+  ],
+  "train-description": [
+    {
+      "type": 0,
+      "value": "컴퓨터 프로그램은 데이터 샘플의 패턴이나 차이점을 발견하고 이를 사용하여 micro:bit를 움직일 때 "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "이(가) 다른 동작을 인식할 수 있는 수학적 모델을 구축합니다."
+    }
+  ],
+  "train-error-body": [
+    {
+      "type": 0,
+      "value": "훈련을 통해 사용 가능한 모델을 생성하지 못했습니다. 그 이유는 훈련에 사용된 데이터 때문일 가능성이 높습니다. 여러 가지 행동에 대한 데이터 샘플이 너무 비슷하다면 훈련 프로세스에 문제가 발생할 수 있습니다."
+    }
+  ],
+  "train-error-header": [
+    {
+      "type": 0,
+      "value": "훈련 실패"
+    }
+  ],
+  "train-error-todo": [
+    {
+      "type": 0,
+      "value": "데이터 추가 페이지로 돌아가서 데이터를 변경하세요."
+    }
+  ],
+  "train-header": [
+    {
+      "type": 0,
+      "value": "모델 훈련 중"
+    }
+  ],
+  "train-model": [
+    {
+      "type": 0,
+      "value": "모델 훈련"
+    }
+  ],
+  "training-model": [
+    {
+      "type": 0,
+      "value": "모델 훈련 중…"
+    }
+  ],
+  "transfer-hex-alt": [
+    {
+      "type": 0,
+      "value": "다운로드 폴더의 hex 파일을 파일 탐색기에 나열된 기기 또는 micro:bit 드라이브에 드래그하는 애니메이션"
+    }
+  ],
+  "transfer-hex-heading": [
+    {
+      "type": 0,
+      "value": "저장된 hex 파일을 micro:bit으로 전송"
+    }
+  ],
+  "transfer-hex-manual-download": [
+    {
+      "type": 0,
+      "value": "파일 다운로드가 자동으로 시작되지 않으면 "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "여기에서 파일을 다운로드하세요"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "transfer-hex-message": [
+    {
+      "type": 0,
+      "value": "다운로드 폴더의 hex 파일을 MICROBIT 드라이브로 드래그하세요."
+    }
+  ],
+  "try-again-action": [
+    {
+      "type": 0,
+      "value": "다시 시도"
+    }
+  ],
+  "unknown": [
+    {
+      "type": 0,
+      "value": "알 수 없음"
+    }
+  ],
+  "unplug-radio-link-microbit-description": [
+    {
+      "type": 0,
+      "value": "컴퓨터에서 라디오 링크 micro:bit를 분리합니다. 데이터 샘플을 더 기록하려면 micro:bit를 다시 연결해야 합니다."
+    }
+  ],
+  "unplug-radio-link-microbit-label": [
+    {
+      "type": 0,
+      "value": "USB 케이블이 micro:bit 상단에서 분리되는 것을 보여주는 애니메이션"
+    }
+  ],
+  "unplug-radio-link-microbit-title": [
+    {
+      "type": 0,
+      "value": "라디오 링크 micro:bit 분리"
+    }
+  ],
+  "unsupported-device-explain": [
+    {
+      "type": 0,
+      "value": "아쉽게도 micro:bit 라디오로 연결 시 micro:bit V2만 지원합니다. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "micro:bit V1"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "을 연결했습니다."
+    }
+  ],
+  "unsupported-device-header": [
+    {
+      "type": 0,
+      "value": "micro:bit 라디오 연결은 micro:bit V1을 지원하지 않습니다."
+    }
+  ],
+  "unsupported-device-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "대신 Web Bluetooth를 사용하여 micro:bit V1에 연결하세요."
+    }
+  ],
+  "unsupported-device-without-bluetooth": [
+    {
+      "type": 0,
+      "value": "Web Bluetooth를 사용하여 micro:bit V1에 연결할 수 있지만, 이 브라우저 또는 기기의 Bluetooth가 활성화되어 있지 않습니다. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Bluetooth를 활성화하는 방법"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "user-guide": [
+    {
+      "type": 0,
+      "value": "사용자 가이드"
+    }
+  ],
+  "webusb-retry-no-select": [
+    {
+      "type": 0,
+      "value": "micro:bit를 선택하지 않으셨습니다. 다시 시도하시겠습니까?"
+    }
+  ],
+  "webusb-retry-replug1": [
+    {
+      "type": 0,
+      "value": "WebUSB 오류가 발생했습니다."
+    }
+  ],
+  "webusb-retry-replug2": [
+    {
+      "type": 0,
+      "value": "다음을 확인하세요"
+    }
+  ],
+  "webusb-retry-replug3": [
+    {
+      "type": 0,
+      "value": "micro:bit에 배터리 팩이 연결되어 있지 않은지 확인하세요."
+    }
+  ],
+  "webusb-retry-replug4": [
+    {
+      "type": 0,
+      "value": "USB 케이블을 분리했다가 다시 연결하세요."
+    }
+  ]
+}

@@ -464,7 +464,7 @@
     "description": "Confirmation dialog heading"
   },
   "delete-action-confirm-text": {
-    "defaultMessage": "¿Realmente quieres eliminar la acción \"{acción}\"?",
+    "defaultMessage": "¿Realmente quieres eliminar la acción \"{action}\"?",
     "description": "Confirmation dialog text"
   },
   "delete-data-samples-action": {
@@ -480,7 +480,7 @@
     "description": "Confirmation dialog text"
   },
   "delete-recording-aria": {
-    "defaultMessage": "Eliminar la grabación {sample} de {numSamples} para la acción \"{acción}\"",
+    "defaultMessage": "Eliminar la grabación {sample} de {numSamples} para la acción \"{action}\"",
     "description": "Aria label for data sample delete action"
   },
   "disconnect-action": {

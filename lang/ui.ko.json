@@ -480,7 +480,7 @@
     "description": "Confirmation dialog text"
   },
   "delete-recording-aria": {
-    "defaultMessage": "\"{action}\" 행동에 대한 {numSamples}개의 기록 샘플 삭제",
+    "defaultMessage": "\"{action}\" 행동에 대한   샘플 {numSamples}개 중 {sample}개의 기록 샘플 삭제",
     "description": "Aria label for data sample delete action"
   },
   "disconnect-action": {
