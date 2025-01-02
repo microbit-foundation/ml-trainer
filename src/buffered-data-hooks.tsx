@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { AccelerometerDataEvent } from "@microbit/microbit-connection";
+import { MagnetometerDataEvent } from "@microbit/microbit-connection";
 import {
   ReactNode,
   createContext,
@@ -17,6 +17,7 @@ import { BufferedData } from "./buffered-data";
 import { useConnectActions } from "./connect-actions-hooks";
 import { ConnectionStatus, useConnectStatus } from "./connect-status-hooks";
 import { useStore } from "./store";
+import { processMagnetometerValue } from "./utils/magnetometer";
 
 const BufferedDataContext = createContext<BufferedData | null>(null);
 
@@ -57,18 +58,18 @@ const useBufferedDataInternal = (): BufferedData => {
     if (connectStatus !== ConnectionStatus.Connected) {
       return;
     }
-    const listener = (e: AccelerometerDataEvent) => {
+    const listener = (e: MagnetometerDataEvent) => {
       const { x, y, z } = e.data;
       const sample = {
-        x: x / 1000,
-        y: y / 1000,
-        z: z / 1000,
+        x: processMagnetometerValue(x),
+        y: processMagnetometerValue(y),
+        z: processMagnetometerValue(z),
       };
       getBuffer().addSample(sample, Date.now());
     };
-    connection.addAccelerometerListener(listener);
+    connection.addMagnetometerListener(listener);
     return () => {
-      connection.removeAccelerometerListener(listener);
+      connection.removeMagnetometerListener(listener);
     };
   }, [connection, connectStatus, getBuffer]);
   return getBuffer();

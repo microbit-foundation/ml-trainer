@@ -11,6 +11,7 @@ import {
   ConnectionStatusEvent,
   ConnectionStatus as DeviceConnectionStatus,
   DeviceError,
+  MagnetometerDataEvent,
   MicrobitRadioBridgeConnection,
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
@@ -217,6 +218,18 @@ export class ConnectActions {
   ) => {
     this.bluetooth.removeEventListener("accelerometerdatachanged", listener);
     this.radioBridge.removeEventListener("accelerometerdatachanged", listener);
+  };
+
+  addMagnetometerListener = (listener: (e: MagnetometerDataEvent) => void) => {
+    this.bluetooth.addEventListener("magnetometerdatachanged", listener);
+    this.radioBridge.addEventListener("magnetometerdatachanged", listener);
+  };
+
+  removeMagnetometerListener = (
+    listener: (e: MagnetometerDataEvent) => void
+  ) => {
+    this.bluetooth.removeEventListener("magnetometerdatachanged", listener);
+    this.radioBridge.removeEventListener("magnetometerdatachanged", listener);
   };
 
   addButtonListener = (

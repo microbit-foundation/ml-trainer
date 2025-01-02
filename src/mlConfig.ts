@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { DataWindow } from "./store";
+import { maxMagnetometer } from "./utils/magnetometer";
 
 export enum Filter {
   MAX = "max",
@@ -15,6 +16,7 @@ export enum Filter {
   ACC = "acc",
   ZCR = "zcr",
   RMS = "rms",
+  GRADIENT = "gradient",
 }
 
 export enum Axes {
@@ -124,6 +126,86 @@ const _rms = (d: number[]) =>
   Math.sqrt(d.reduce((a, b) => a + Math.pow(b, 2), 0) / d.length);
 const rms: FilterStrategy = (d) => _rms(d);
 
+interface Gradient {
+  start: number;
+  end: number;
+  yDiff: number;
+  vector: number;
+}
+
+const getMovingAverage = (data: number[]): number[] => {
+  const numSamplesToAverage = 6;
+  const smoothed: number[] = [];
+  for (let i = 0; i <= data.length - numSamplesToAverage; i++) {
+    const x =
+      data.slice(i, i + numSamplesToAverage).reduce((a, b) => a + b) /
+      numSamplesToAverage;
+    smoothed.push(x);
+  }
+  return smoothed;
+};
+
+const getGradients = (data: number[]): Gradient[] => {
+  const smoothedData = getMovingAverage(data);
+  let start = 0;
+  let sampleVector: number | undefined;
+  const gradients: Gradient[] = [];
+  for (let i = 0; i < smoothedData.length - 1; i++) {
+    const sampleDiff = smoothedData[i + 1] - smoothedData[i];
+    const currentVector =
+      Math.sign(sampleDiff) * Math.sqrt(2 ** 2 + sampleDiff ** 2);
+    if (sampleVector === undefined) {
+      sampleVector = currentVector;
+    } else {
+      if (
+        Math.sign(sampleVector) !== Math.sign(currentVector) &&
+        Math.sign(currentVector) !== 0
+      ) {
+        const end = i;
+        const yDiff = smoothedData[end] - smoothedData[start];
+        const vector =
+          Math.sign(yDiff) * Math.sqrt((end - start) ** 2 + yDiff ** 2);
+        gradients.push({
+          start,
+          end,
+          yDiff,
+          vector,
+        });
+        start = end;
+      }
+      sampleVector = currentVector;
+    }
+  }
+  return gradients;
+};
+
+// Returns first significant gradient as vector.
+const gradient: FilterStrategy = (
+  data: number[],
+  dataWindow: DataWindow
+): number => {
+  const gradients = getGradients(data);
+  const vectors = gradients.map((g) => Math.abs(g.vector));
+  const vectorMean = mean(vectors, dataWindow);
+  const vectorStdDev = stddev(vectors, dataWindow);
+  const yDiffs = gradients.map((g) => Math.abs(g.yDiff));
+  const yDiffMean = yDiffs.reduce((a, b) => a + b, 0) / yDiffs.length;
+  const yDiffStdDev = Math.sqrt(
+    yDiffs.reduce((a, b) => a + Math.pow(b - yDiffMean, 2), 0) / yDiffs.length
+  );
+  const range = 2; // Data is scaled to -1..1
+  for (let i = 0; i < vectors.length; i++) {
+    if (
+      vectors[i] > vectorMean + vectorStdDev &&
+      yDiffs[i] > yDiffMean + yDiffStdDev &&
+      yDiffs[i] > range / 10
+    ) {
+      return gradients[i].vector;
+    }
+  }
+  return 0;
+};
+
 // Max acceleration the micro:bit can detect.
 // https://microbit-challenges.readthedocs.io/en/latest/tutorials/accelerometer.html#basic-functions
 export const maxAcceleration = 2.048;
@@ -134,30 +216,35 @@ export const getMlFilters = (
 ): Record<Filter, { strategy: FilterStrategy; min: number; max: number }> => ({
   [Filter.MAX]: {
     strategy: (d) => Math.max(...d),
-    min: -maxAcceleration,
-    max: maxAcceleration,
+    min: -maxMagnetometer,
+    max: maxMagnetometer,
   },
   [Filter.MIN]: {
     strategy: (d) => Math.min(...d),
-    min: -maxAcceleration,
-    max: maxAcceleration,
+    min: -maxMagnetometer,
+    max: maxMagnetometer,
   },
   [Filter.MEAN]: {
     strategy: mean,
-    min: -maxAcceleration,
-    max: maxAcceleration,
+    min: -maxMagnetometer,
+    max: maxMagnetometer,
   },
-  [Filter.STD]: { strategy: stddev, min: 0, max: maxAcceleration },
+  [Filter.STD]: { strategy: stddev, min: 0, max: maxMagnetometer },
   [Filter.PEAKS]: { strategy: peaks, min: 0, max: 10 },
   [Filter.ACC]: {
     strategy: acc,
     min: 0,
-    max: dataWindow.minSamples * maxAcceleration,
+    max: dataWindow.minSamples * maxMagnetometer,
   },
   [Filter.ZCR]: { strategy: zeroCrossingRate, min: 0, max: 1 },
   [Filter.RMS]: {
     strategy: rms,
     min: 0,
-    max: _rms(Array(dataWindow.minSamples).fill(maxAcceleration) as number[]),
+    max: _rms(Array(dataWindow.minSamples).fill(maxMagnetometer) as number[]),
+  },
+  [Filter.GRADIENT]: {
+    strategy: gradient,
+    min: 0,
+    max: dataWindow.minSamples * maxMagnetometer,
   },
 });
