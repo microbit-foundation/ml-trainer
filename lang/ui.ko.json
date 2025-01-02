@@ -1,0 +1,1686 @@
+{
+  "aarhus-university-alt": {
+    "defaultMessage": "오르후스대학교",
+    "description": "Alt text for Aarhus University logo in about dialog"
+  },
+  "about": {
+    "defaultMessage": "소개",
+    "description": "Menu item link to view information about app"
+  },
+  "about-dialog-alt": {
+    "defaultMessage": "LED 화면에 하트를 표시하고 있는 micro:bit",
+    "description": "Alt text for image in about dialog"
+  },
+  "about-dialog-title": {
+    "defaultMessage": "<link>오르후스대학교 컴퓨팅 사고 및 디자인 센터(Center for Computational Thinking and Design, Aarhus University)</link>와 협력하여 개발",
+    "description": "Title of about dialog"
+  },
+  "accelerometer-image-alt": {
+    "defaultMessage": "micro:bit은 X축을 앞으로 이동, Y축을 위 아래로 이동, Z축을 뒤에서 앞으로 표시합니다.",
+    "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
+  },
+  "action-label": {
+    "defaultMessage": "행동",
+    "description": "Label for a movement-related action, e.g. clapping"
+  },
+  "action-label-tooltip-aria": {
+    "defaultMessage": "행동 툴팁",
+    "description": "Aria label for action tooltip icon"
+  },
+  "action-length-error": {
+    "defaultMessage": "행동 이름은 {maxLen}자 이하여야 합니다.",
+    "description": "Error message shown when an action name is too long"
+  },
+  "action-name-placeholder": {
+    "defaultMessage": "행동 이름",
+    "description": "Placeholder text for user supplied name of a movement-related action, e.g. clapping"
+  },
+  "action-region": {
+    "defaultMessage": "\"{action}\" 행동",
+    "description": "Region label for action row"
+  },
+  "action-tooltip": {
+    "defaultMessage": "{appNameFull}이(가) 인식할 움직임 유형(예: '손 흔들기' 또는 '박수 치기')",
+    "description": "Tooltip explaining action"
+  },
+  "actions-label": {
+    "defaultMessage": "행동",
+    "description": "Label for Actions"
+  },
+  "add-action-action": {
+    "defaultMessage": "행동 추가",
+    "description": "Button to add an action (movement related, e.g. clapping)"
+  },
+  "ai-activity-timer-resource-title": {
+    "defaultMessage": "AI 활동 타이머",
+    "description": "Home page resource card title"
+  },
+  "ai-storytelling-friend-resource-title": {
+    "defaultMessage": "AI 스토리텔링 친구",
+    "description": "Home page resource card title"
+  },
+  "back-action": {
+    "defaultMessage": "뒤로",
+    "description": "Back button text"
+  },
+  "back-to-data-samples-action": {
+    "defaultMessage": "데이터 샘플 편집",
+    "description": "Back button text"
+  },
+  "bluetooth-unsupported-advice": {
+    "defaultMessage": "micro:bit에 바로 연결하려면 Google Chrome 또는 Microsoft Edge를 사용하는 것이 좋습니다.",
+    "description": "Note on supported browsers"
+  },
+  "bluetooth-unsupported-explain": {
+    "defaultMessage": "아쉽게도 이 브라우저는 WebUSB와 Web Bluetooth를 지원하지 않습니다. 따라서 micro:bit에 연결할 수 없어 기계 학습 모델을 훈련하는 데 필요한 데이터 샘플을 기록할 수 없습니다.",
+    "description": "Note on supported browsers"
+  },
+  "bluetooth-unsupported-header": {
+    "defaultMessage": "이 브라우저는 지원되지 않습니다",
+    "description": "Heading for browser support dialog"
+  },
+  "cancel-action": {
+    "defaultMessage": "취소",
+    "description": "Cancel button text"
+  },
+  "cancel-recording-action": {
+    "defaultMessage": "기록 취소",
+    "description": "Button label to cancel a movement data recording"
+  },
+  "certainty-label": {
+    "defaultMessage": "확실성",
+    "description": "Heading for certainty column"
+  },
+  "certainty-label-tooltip-aria": {
+    "defaultMessage": "확실성 툴팁",
+    "description": "Aria label for code certainty icon"
+  },
+  "certainty-percentage-label": {
+    "defaultMessage": "{action} 확실성: {currentConfidence}퍼센트",
+    "description": "Label for certainty of an action"
+  },
+  "certainty-tooltip": {
+    "defaultMessage": "현재 사용자가 각 행동을 수행하고 있는 모델에 대한 확신 정도를 나타냅니다.",
+    "description": "Tooltip for certainty column"
+  },
+  "click-to-reload-page-action": {
+    "defaultMessage": "클릭하여 페이지 새로 고침",
+    "description": "Reload page button text"
+  },
+  "close-action": {
+    "defaultMessage": "닫기",
+    "description": "Close button text or label"
+  },
+  "code-download-error": {
+    "defaultMessage": "프로젝트 코드 다운로드 오류",
+    "description": "Title for error message relating to project loading"
+  },
+  "code-label": {
+    "defaultMessage": "Code",
+    "description": "Code column heading"
+  },
+  "code-label-tooltip-aria": {
+    "defaultMessage": "코드 툴팁",
+    "description": "Aria label for code tooltip icon"
+  },
+  "code-tooltip": {
+    "defaultMessage": "ML 모델과 코드를 micro:bit로 전송할 때 감지된 각 행동에 대한 MakeCode 블록입니다.",
+    "description": "Code column heading tooltip"
+  },
+  "confirm-action": {
+    "defaultMessage": "확인",
+    "description": "Confirm button text"
+  },
+  "confirm-save-action": {
+    "defaultMessage": "확인 및 저장",
+    "description": "Confirm and save action label"
+  },
+  "connect-action": {
+    "defaultMessage": "연결하기",
+    "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
+  },
+  "connect-action-aria": {
+    "defaultMessage": "마이크로비트 연결",
+    "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
+  },
+  "connect-battery-heading": {
+    "defaultMessage": "USB를 분리하고 배터리 팩을 연결합니다.",
+    "description": "Battery connection dialog "
+  },
+  "connect-battery-holder": {
+    "defaultMessage": "배터리 홀더",
+    "description": "Label for battery holder icon"
+  },
+  "connect-battery-link": {
+    "defaultMessage": "micro:bit를 손목에 착용하거나 물체에 부착할 수 있습니다.",
+    "description": "Battery connection dialog"
+  },
+  "connect-battery-subtitle": {
+    "defaultMessage": "컴퓨터에서 micro:bit를 분리한 후 배터리 팩을 연결하세요.",
+    "description": "Battery connection dialog"
+  },
+  "connect-bluetooth-cancelled-connection": {
+    "defaultMessage": "micro:bit를 선택하지 않으셨습니다. 다시 시도하시겠습니까? ",
+    "description": "Error when the user cancelled the Web Bluetooth permission/device selection dialog"
+  },
+  "connect-bluetooth-heading": {
+    "defaultMessage": "Web Bluetooth를 사용하여 연결",
+    "description": "Connection dialogs"
+  },
+  "connect-bluetooth-invalid-pattern": {
+    "defaultMessage": "잘못된 패턴을 그렸습니다.",
+    "description": "Error when the bluetooth pattern is incomplete "
+  },
+  "connect-bluetooth-start-heading": {
+    "defaultMessage": "Web Bluetooth로 연결할 수 있는 것",
+    "description": "Connection dialog heading"
+  },
+  "connect-bluetooth-start-requirements1": {
+    "defaultMessage": "micro:bit 1대",
+    "description": "Label for icon of single micro:bit"
+  },
+  "connect-bluetooth-start-requirements2-subtitle": {
+    "defaultMessage": "인터넷, USB 포트, Web Bluetooth",
+    "description": "Under heading 'Computer' this lists the features the computer needs"
+  },
+  "connect-bluetooth-start-switch-radio": {
+    "defaultMessage": "대신 micro:bit 라디오를 사용하여 연결하기",
+    "description": "Link to alternative connection method"
+  },
+  "connect-cable-alt": {
+    "defaultMessage": "micro:bit 상단에 연결된 USB 케이블을 보여주는 애니메이션",
+    "description": "Alt text"
+  },
+  "connect-cable-download-project-subtitle": {
+    "defaultMessage": "USB 케이블로 micro:bit를 이 컴퓨터에 연결하여 기계 학습 MakeCode 프로그램을 micro:bit에 다운로드합니다.",
+    "description": "Download project dialog"
+  },
+  "connect-cable-heading": {
+    "defaultMessage": "USB 케이블을 micro:bit에 연결하기",
+    "description": "Connect cable dialog heading"
+  },
+  "connect-cable-skip": {
+    "defaultMessage": "건너뛰기: 프로그램이 이미 다운로드되었나요?",
+    "description": "Link to skip"
+  },
+  "connect-cable-subtitle": {
+    "defaultMessage": "데이터 수집 프로그램을 micro:bit에 다운로드할 수 있도록 USB 케이블로 micro:bit를 이 컴퓨터에 연결합니다.",
+    "description": "Project download instructions"
+  },
+  "connect-computer": {
+    "defaultMessage": "컴퓨터",
+    "description": "Label for computer icon in connection dialog"
+  },
+  "connect-data-collection-heading": {
+    "defaultMessage": "USB 케이블을 micro:bit 1에 연결하기",
+    "description": "Connection dialog heading"
+  },
+  "connect-data-collection-subtitle": {
+    "defaultMessage": "데이터 수집 프로그램을 micro:bit에 다운로드할 수 있도록 USB 케이블로 첫 번째 micro:bit를 이 컴퓨터에 연결합니다. 이 micro:bit를 사용하여 데이터 샘플을 수집하게 됩니다.",
+    "description": "Connection dialog subtitle"
+  },
+  "connect-failed-bluetooth-heading": {
+    "defaultMessage": "micro:bit에 연결하지 못했습니다.",
+    "description": "Bluetooth connection error message"
+  },
+  "connect-failed-bluetooth1": {
+    "defaultMessage": "데이터 수집 micro:bit에 연결할 수 없습니다.",
+    "description": "Bluetooth connection error message"
+  },
+  "connect-failed-bridge-heading": {
+    "defaultMessage": "라디오 링크 micro:bit에 연결할 수 없습니다.",
+    "description": "micro:bit radio connection error message"
+  },
+  "connect-failed-bridge1": {
+    "defaultMessage": "컴퓨터에 연결된 micro:bit에 대한 연결을 설정할 수 없습니다.",
+    "description": "micro:bit radio connection error message"
+  },
+  "connect-failed-remote-heading": {
+    "defaultMessage": "데이터 수집 micro:bit에 연결할 수 없습니다.",
+    "description": "micro:bit radio connection error message"
+  },
+  "connect-failed-remote1": {
+    "defaultMessage": "데이터 수집 micro:bit에 연결할 수 없습니다.",
+    "description": "micro:bit radio connection error message"
+  },
+  "connect-help-alt": {
+    "defaultMessage": "BBC micro:bit entry 레이블 1 및 연결 버튼 레이블 2의 WebUSB 연결 대화 상자 ",
+    "description": "Alt text for image in connect help dialog"
+  },
+  "connect-micro-usb-cable": {
+    "defaultMessage": "마이크로 USB 케이블",
+    "description": "Label for cable icon in list of requirements"
+  },
+  "connect-or-import": {
+    "defaultMessage": "<link1>데이터 수집 micro:bit에 연결하기</link1> 또는  <link2>데이터 샘플 가져오기</link2>를 하세요.",
+    "description": "Empty data samples page text"
+  },
+  "connect-pattern-heading": {
+    "defaultMessage": "패턴 복사",
+    "description": "Heading for Bluetooth pattern connection dialog"
+  },
+  "connect-pattern-input-label": {
+    "defaultMessage": "{colNum}열 - micro:bit 디스플레이에 켜진 LED 개수",
+    "description": "Screen reader text for numeric pattern input"
+  },
+  "connect-pattern-subtitle": {
+    "defaultMessage": "micro:bit에 표시된 패턴을 복사합니다.",
+    "description": "Instruction for bluetooth pattern dialog"
+  },
+  "connect-popup": {
+    "defaultMessage": "micro:bit을 선택하세요",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-popup-bluetooth-alt": {
+    "defaultMessage": "BBC micro:bit entry 레이블 1 및 페어링 버튼 레이블 2의 Web Bluetooth 연결 대화 상자",
+    "description": "Alt text"
+  },
+  "connect-popup-bluetooth-instruction2": {
+    "defaultMessage": "'페어링(Pair)' 선택",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-popup-bluetooth-title": {
+    "defaultMessage": "Web Bluetooth를 사용하여 micro:bit에 연결하기",
+    "description": "Instruction for dialog that previews the Bluetooth permission dialog"
+  },
+  "connect-popup-instruction-heading": {
+    "defaultMessage": "다음 팝업창에서",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-popup-instruction1": {
+    "defaultMessage": "micro:bit를 선택하세요",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-popup-usb-bluetooth-data-collection-title": {
+    "defaultMessage": "micro:bit에 데이터 수집 프로그램 다운로드하기",
+    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+  },
+  "connect-popup-usb-radio-data-collection-title": {
+    "defaultMessage": "micro:bit 1에 데이터 수집 프로그램 다운로드하기",
+    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+  },
+  "connect-popup-usb-radio-link-title": {
+    "defaultMessage": "micro:bit 2에 라디오 링크 프로그램 다운로드하기",
+    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+  },
+  "connect-popup-webusb-instruction2": {
+    "defaultMessage": "'연결(Connect)'을 선택합니다.",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-radio-data-collection-microbit-description": {
+    "defaultMessage": "기계 학습 MakeCode 프로그램을 데이터 수집 micro:bit에 다운로드하려면 해당 micro:bit를 컴퓨터에 연결하세요. 데이터 수집 micro:bit을 착용하고 있다면 벗어야 합니다.",
+    "description": "Connect radio data collection micro:bit dialog description"
+  },
+  "connect-radio-data-collection-microbit-title": {
+    "defaultMessage": "USB 케이블을 데이터 수집 micro:bit에 연결하기",
+    "description": "Connect radio data collection micro:bit dialog title"
+  },
+  "connect-radio-heading": {
+    "defaultMessage": "micro:bit 연결 중",
+    "description": "Text shown while radio link and data connection micro:bit are being connected"
+  },
+  "connect-radio-link-heading": {
+    "defaultMessage": "USB 케이블을 micro:bit 2에 연결하기",
+    "description": "Heading for connecting radio link micro:bit cable"
+  },
+  "connect-radio-link-subtitle": {
+    "defaultMessage": "USB 케이블로 두 번째 micro:bit를 이 컴퓨터에 연결하여 라디오 링크 프로그램을 다운로드합니다. 이 라디오 링크 micro:bit는 데이터 수집 micro:bit와 통신하게 됩니다.",
+    "description": "Instruction for connecting radio link micro:bit cable"
+  },
+  "connect-radio-start-heading": {
+    "defaultMessage": "micro:bit 라디오를 사용하여 연결하는 데 필요한 것",
+    "description": "Connection dialog heading"
+  },
+  "connect-radio-start-requirements1": {
+    "defaultMessage": "micro:bit 2대",
+    "description": "Label for icon of two micro:bits"
+  },
+  "connect-radio-start-requirements1-subtitle": {
+    "defaultMessage": "V2에 한정됨",
+    "description": "Shown below 2 micro:bit label for micro:bit radio approach"
+  },
+  "connect-radio-start-requirements2-subtitle": {
+    "defaultMessage": "인터넷 및 USB 포트",
+    "description": "Shown below 'Computer' heading listing additional requirements"
+  },
+  "connect-radio-start-switch-bluetooth": {
+    "defaultMessage": "대신 Web Bluetooth를 사용하여 연결하기",
+    "description": "Link to alternative connection method"
+  },
+  "connect-to-record": {
+    "defaultMessage": "데이터 샘플을 기록하려면 연결하기",
+    "description": "Live graph disconnected micro:bit status message for data samples page"
+  },
+  "connect-to-record-body": {
+    "defaultMessage": "데이터 샘플을 기록하려면 micro:bit 연결하기",
+    "description": "Insufficient data modal content"
+  },
+  "connect-to-test-model": {
+    "defaultMessage": "ML 모델을 테스트하려면 연결하기",
+    "description": "Live graph disconnected micro:bit status message for test model page"
+  },
+  "connect-to-tour-body": {
+    "defaultMessage": "투어를 보려면 데이터 수집 micro:bit를 연결해야 합니다.",
+    "description": "Prompt to connect the app to a micro:bit"
+  },
+  "connect-troubleshoot": {
+    "defaultMessage": "micro:bit 연결 문제 해결",
+    "description": "Link to support article for troubleshooting"
+  },
+  "connect-troubleshooting": {
+    "defaultMessage": "문제 해결",
+    "description": "Troubleshooting heading"
+  },
+  "connect-with-batteries": {
+    "defaultMessage": "배터리",
+    "description": "Under header 'Battery holder' this notes that batteries are required"
+  },
+  "connect-with-web-bluetooth": {
+    "defaultMessage": "Web Bluetooth로 연결",
+    "description": "Connection dialog title"
+  },
+  "connecting": {
+    "defaultMessage": "연결 중…",
+    "description": "Text shown while waiting for bluetooth/radio connection"
+  },
+  "continue-makecode-action": {
+    "defaultMessage": "MakeCode로 계속 진행하기",
+    "description": "Continue to MakeCode editor button text"
+  },
+  "cookies-action": {
+    "defaultMessage": "쿠키",
+    "description": "Action to show dialog to choose website cookie preferences"
+  },
+  "copied": {
+    "defaultMessage": "복사됨",
+    "description": "Displayed as copy button text briefly after successful copy action"
+  },
+  "copy-action": {
+    "defaultMessage": "복사",
+    "description": "Copy button text"
+  },
+  "data-actions-menu": {
+    "defaultMessage": "데이터 행동",
+    "description": "Aria label for menu"
+  },
+  "data-collection-microbit": {
+    "defaultMessage": "데이터 수집 micro:bit",
+    "description": "Data collection micro:bit image caption"
+  },
+  "data-collection-microbit-label": {
+    "defaultMessage": "데이터 수집 micro:bit가 사람의 손목에 연결되는 것을 보여주는 다이어그램",
+    "description": "Aria label for data collection image"
+  },
+  "data-connection-region": {
+    "defaultMessage": "micro:bit 데이터 연결",
+    "description": "Region label for data connection area"
+  },
+  "data-features-hide-action": {
+    "defaultMessage": "데이터 기능 숨기기",
+    "description": "Hide data features button text"
+  },
+  "data-features-show-action": {
+    "defaultMessage": "데이터 기능 표시",
+    "description": "Show data features button text"
+  },
+  "data-samples-actions-region": {
+    "defaultMessage": "데이터 샘플 도구 모음",
+    "description": "Region label for data samples actions"
+  },
+  "data-samples-label": {
+    "defaultMessage": "데이터 샘플",
+    "description": "Heading for data samples column"
+  },
+  "data-samples-label-tooltip-aria": {
+    "defaultMessage": "데이터 샘플 툴팁",
+    "description": "Aria label for data samples tooltip icon"
+  },
+  "data-samples-status-count": {
+    "defaultMessage": "{numSamples}개 샘플 기록됨",
+    "description": "Data samples status text"
+  },
+  "data-samples-status-not-enough": {
+    "defaultMessage": "3개 이상 필요",
+    "description": "Data samples status text"
+  },
+  "data-samples-title": {
+    "defaultMessage": "데이터 샘플",
+    "description": "Data samples page title"
+  },
+  "data-samples-tooltip": {
+    "defaultMessage": "1초 동안의 짧은 움직임 데이터 모음. 데이터 샘플은 사용자 컴퓨터에만 보관되며 어느 누구에게도 전송되지 않습니다.",
+    "description": "Tooltip for data samples heading"
+  },
+  "default-project-name": {
+    "defaultMessage": "제목 없음",
+    "description": "Default project name"
+  },
+  "delete-action-aria": {
+    "defaultMessage": "\"{action}\" 행동 삭제",
+    "description": "Aria label for action delete icon"
+  },
+  "delete-action-confirm-heading": {
+    "defaultMessage": "행동 삭제 확인",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-action-confirm-text": {
+    "defaultMessage": "\"{action}\" 행동을 삭제하시겠습니까?",
+    "description": "Confirmation dialog text"
+  },
+  "delete-data-samples-action": {
+    "defaultMessage": "모든 데이터 샘플 삭제",
+    "description": "Menu item to delete data samples"
+  },
+  "delete-data-samples-confirm-heading": {
+    "defaultMessage": "모든 데이터 샘플 삭제 확인",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-data-samples-confirm-text": {
+    "defaultMessage": "모든 데이터 샘플을 삭제하시겠습니까?",
+    "description": "Confirmation dialog text"
+  },
+  "delete-recording-aria": {
+    "defaultMessage": "\"{action}\" 행동에 대한 {numSamples}개의 기록 샘플 삭제",
+    "description": "Aria label for data sample delete action"
+  },
+  "disconnect-action": {
+    "defaultMessage": "연결 해제",
+    "description": "Disconnect (from bluetooth/radio) action"
+  },
+  "disconnected-during-recording": {
+    "defaultMessage": "기록 중에 micro:bit 연결이 끊어짐",
+    "description": "Error when the micro:bit is disconnected during recording"
+  },
+  "disconnected-warning-bluetooth-heading": {
+    "defaultMessage": "데이터 수집 micro:bit 연결 끊어짐",
+    "description": "Dialog heading"
+  },
+  "disconnected-warning-bluetooth1": {
+    "defaultMessage": "데이터 수집 micro:bit 연결이 끊어졌습니다.",
+    "description": "Dialog text"
+  },
+  "disconnected-warning-bluetooth2": {
+    "defaultMessage": "다음 사항을 확인하세요.",
+    "description": "Heading for list of things to check"
+  },
+  "disconnected-warning-bluetooth3": {
+    "defaultMessage": "micro:bit의 전원이 켜져 있는가(micro:bit 뒷면의 빨간색 표시등이 켜져 있어야 합니다.)?",
+    "description": "List item, one of several things to check about the micro:bit"
+  },
+  "disconnected-warning-bluetooth4": {
+    "defaultMessage": "micro:bit가 컴퓨터 가까이 있는가?",
+    "description": "List item, one of several things to check about the micro:bit"
+  },
+  "disconnected-warning-bridge-heading": {
+    "defaultMessage": "라디오 링크 micro:bit 연결 끊어짐",
+    "description": "Connection error dialog"
+  },
+  "disconnected-warning-bridge1": {
+    "defaultMessage": "컴퓨터와 micro:bit의 연결이 끊어졌습니다.",
+    "description": "Connection error dialog"
+  },
+  "disconnected-warning-remote-heading": {
+    "defaultMessage": "데이터 수집 micro:bit 연결 끊어짐",
+    "description": "Connection error dialog"
+  },
+  "disconnected-warning-remote1": {
+    "defaultMessage": "데이터 수집 micro:bit 연결이 끊어졌습니다.",
+    "description": "Connection error dialog"
+  },
+  "dont-show-again": {
+    "defaultMessage": "다시 보지 않기",
+    "description": "Text to never show a dialog again"
+  },
+  "download-data-samples-action": {
+    "defaultMessage": "모든 데이터 샘플 다운로드",
+    "description": "Download action"
+  },
+  "download-project-choose-microbit-subtitle": {
+    "defaultMessage": "동일한 micro:bit에 프로젝트를 다운로드하면 micro:bit와 도구의 연결이 끊어집니다. 데이터 샘플을 더 많이 기록하려면 micro:bit를 다시 연결하세요.",
+    "description": "Download project choose micro:bit dialog subtitle"
+  },
+  "download-project-choose-microbit-title": {
+    "defaultMessage": "어느 micro:bit를 사용하시겠습니까?",
+    "description": "Download project choose micro:bit dialog title"
+  },
+  "download-project-different-microbit-option": {
+    "defaultMessage": "다른 micro:bit",
+    "description": "Download project different micro:bit option"
+  },
+  "download-project-intro-description": {
+    "defaultMessage": "프로그램에 사용자가 만든 기계 학습 모델이 포함되어 있습니다. 이 모델은 micro:bit에서 실행되므로 {appNameFull}에 연결하지 않아도 사용할 수 있습니다.",
+    "description": "Download project intro dialog description"
+  },
+  "download-project-intro-title": {
+    "defaultMessage": "기계 학습 MakeCode 프로젝트 다운로드",
+    "description": "Download project intro dialog title"
+  },
+  "download-project-same-microbit-option": {
+    "defaultMessage": "동일한 micro:bit",
+    "description": "Download project same micro:bit option"
+  },
+  "downloading-data-collection-header": {
+    "defaultMessage": "데이터 수집 프로그램 다운로드 중",
+    "description": "Progress text"
+  },
+  "downloading-header": {
+    "defaultMessage": "micro:bit에 프로그램 다운로드 중",
+    "description": "Progress text"
+  },
+  "downloading-radio-link-header": {
+    "defaultMessage": "라디오 링크 프로그램 다운로드 중",
+    "description": "Progress text"
+  },
+  "downloading-subtitle": {
+    "defaultMessage": "잠시만 기다리세요. micro:bit에 프로그램을 다운로드하는 중입니다.",
+    "description": "Progress text"
+  },
+  "edit-in-makecode-action": {
+    "defaultMessage": "MakeCode에서 편집하기",
+    "description": "Edit in MakeCode button text"
+  },
+  "estimated-action-aria": {
+    "defaultMessage": "추정되는 행동: \"{action}\"",
+    "description": "Aria live text for the current estimated action"
+  },
+  "estimated-action-label": {
+    "defaultMessage": "추정되는 행동",
+    "description": "Heading for estimated action area next to the live graph"
+  },
+  "estimated-action-label-tooltip-aria": {
+    "defaultMessage": "추정되는 행동 툴팁",
+    "description": "Aria label for estimated action tooltip icon"
+  },
+  "estimated-action-tooltip": {
+    "defaultMessage": "모델은 사용자가 현재 \u001d이 행동을 하고 있다고 생각합니다.",
+    "description": "Tooltip for the estimated action heading"
+  },
+  "feedback": {
+    "defaultMessage": "피드백 평가",
+    "description": "Action to open a feedback dialog"
+  },
+  "fingerprint-acc-x-tooltip": {
+    "defaultMessage": "x 방향 데이터의 합",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-acc-y-tooltip": {
+    "defaultMessage": "\by 방향 데이터의 합",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-acc-z-tooltip": {
+    "defaultMessage": "z 방향 데이터의 합",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-max-x-tooltip": {
+    "defaultMessage": "모든 x 방향 데이터 포인트 중 최대 포인트",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-max-y-tooltip": {
+    "defaultMessage": "모든 y 방향 데이터 포인트 중 최대 포인트",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-max-z-tooltip": {
+    "defaultMessage": "모든 z 방향 데이터 포인트 중 최대 포인트",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-mean-x-tooltip": {
+    "defaultMessage": "x 방향 데이터의 평균값",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-mean-y-tooltip": {
+    "defaultMessage": "y 방향 데이터의 평균값",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-mean-z-tooltip": {
+    "defaultMessage": "z 방향 데이터의 평균값",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-min-x-tooltip": {
+    "defaultMessage": "모든 x 방향 데이터 포인트 중 최소 포인트",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-min-y-tooltip": {
+    "defaultMessage": "모든 y 방향 데이터 포인트 중 최소 포인트",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-min-z-tooltip": {
+    "defaultMessage": "모든 z 방향 데이터 포인트 중 최소 포인트",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-peaks-x-tooltip": {
+    "defaultMessage": "모든 x 방향 데이터 포인트 중 극단값 개수",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-peaks-y-tooltip": {
+    "defaultMessage": "모든 y 방향 데이터 포인트 중 극단값 개수",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-peaks-z-tooltip": {
+    "defaultMessage": "모든 z 방향 데이터 포인트 중 극단값 개수",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-rms-x-tooltip": {
+    "defaultMessage": "모든 x 방향 데이터 포인트의 제곱평균제곱근 값",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-rms-y-tooltip": {
+    "defaultMessage": "모든 y 방향 데이터 포인트의 제곱평균제곱근 값",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-rms-z-tooltip": {
+    "defaultMessage": "모든 z 방향 데이터 포인트의 제곱평균제곱근 값",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-std-x-tooltip": {
+    "defaultMessage": "모든 x 방향 데이터 포인트 중 0으로부터의 평균 편차",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-std-y-tooltip": {
+    "defaultMessage": "모든 y 방향 데이터 포인트 중 0으로부터의 평균 편차",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-std-z-tooltip": {
+    "defaultMessage": "모든 z 방향 데이터 포인트 중 0으로부터의 평균 편차",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-zcr-x-tooltip": {
+    "defaultMessage": "x 방향 데이터 포인트에 대해 가속도가 양수와 음수 사이에서 전환되는 속도",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-zcr-y-tooltip": {
+    "defaultMessage": "\by 방향 데이터 포인트에 대해 가속도가 양수와 음수 사이에서 전환되는 속도",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-zcr-z-tooltip": {
+    "defaultMessage": "\bz 방향 데이터 포인트에 대해 가속도가 양수와 음수 사이에서 전환되는 속도",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "firmware-outdated-content1": {
+    "defaultMessage": "micro:bit 펌웨어가 너무 오래되어 연결에 실패했습니다.",
+    "description": "Connection error dialog"
+  },
+  "firmware-outdated-content2": {
+    "defaultMessage": "이 micro:bit에 연결하기 전에 <link>펌웨어를 업데이트</link>해야 합니다.",
+    "description": "Connection error dialog"
+  },
+  "firmware-outdated-heading": {
+    "defaultMessage": "펌웨어 업데이트 필요",
+    "description": "Connection error dialog"
+  },
+  "get-started-action": {
+    "defaultMessage": "시작하기",
+    "description": "Get started action"
+  },
+  "go-action": {
+    "defaultMessage": "이동",
+    "description": "Go action"
+  },
+  "graph-color-scheme": {
+    "defaultMessage": "그래프 색 구성표",
+    "description": "Graph colour scheme setting label"
+  },
+  "graph-color-scheme-color-blind-1": {
+    "defaultMessage": "색맹용 대안 1",
+    "description": "Graph colour scheme option"
+  },
+  "graph-color-scheme-color-blind-2": {
+    "defaultMessage": "색맹용 대안 2",
+    "description": "Graph colour scheme option"
+  },
+  "graph-color-scheme-default": {
+    "defaultMessage": "기본색(빨간색, 파란색, 녹색)",
+    "description": "Graph colour scheme option"
+  },
+  "graph-line-scheme": {
+    "defaultMessage": "그래프 선 스타일",
+    "description": "Graph line scheme setting label"
+  },
+  "graph-line-scheme-accessible": {
+    "defaultMessage": "사용할 수 있는 선(실선, 파선, 점선)",
+    "description": "Graph line scheme option"
+  },
+  "graph-line-scheme-solid": {
+    "defaultMessage": "실선",
+    "description": "Graph line scheme option"
+  },
+  "graph-line-weight": {
+    "defaultMessage": "그래프 선 두께",
+    "description": "Graph line weight setting label"
+  },
+  "graph-line-weight-default": {
+    "defaultMessage": "기본값",
+    "description": "Graph line weight option"
+  },
+  "graph-line-weight-thick": {
+    "defaultMessage": "두꺼움",
+    "description": "Graph line weight option"
+  },
+  "help-label": {
+    "defaultMessage": "도움 및 지원",
+    "description": "Help icon aria label"
+  },
+  "help-support": {
+    "defaultMessage": "도움말 및 지원",
+    "description": "Link or menu item link to support site"
+  },
+  "home-action": {
+    "defaultMessage": "처음으로",
+    "description": "Home button text"
+  },
+  "homepage": {
+    "defaultMessage": "홈페이지",
+    "description": "Link to home page"
+  },
+  "homepage-alt": {
+    "defaultMessage": "박수 치는 손이 겹쳐진 micro:bit 가속도계 데이터를 나타내는 x, y, z 그래프 선을 보여주는 그래프",
+    "description": "Alt text for image in homepage"
+  },
+  "homepage-alt-graph": {
+    "defaultMessage": "micro:bit 가속도계 데이터를 나타내는 x, y, z 그래프 선을 보여주는 그래프",
+    "description": "Alt text for image in homepage"
+  },
+  "homepage-alt-hands": {
+    "defaultMessage": "박수 치는 손",
+    "description": "Alt text for image in homepage"
+  },
+  "homepage-description": {
+    "defaultMessage": "사용자의 움직임 데이터로 기계 학습 모델을 훈련하여 micro:bit에서 실행하세요.",
+    "description": "Home page description"
+  },
+  "homepage-how-it-works": {
+    "defaultMessage": "설명",
+    "description": "Home page section heading"
+  },
+  "homepage-how-it-works-paragraph": {
+    "defaultMessage": "시작하려면 동영상을 시청하세요. <link>사용자 가이드</link>에서 자세히 알아보세요.",
+    "description": "Home page content under the video"
+  },
+  "homepage-projects": {
+    "defaultMessage": "프로젝트",
+    "description": "Home page section heading"
+  },
+  "homepage-projects-more": {
+    "defaultMessage": "더 많은 <link>micro:bit와 AI 콘텐츠와 리소스</link>를 살펴보세요.",
+    "description": "Link back to AI landing page"
+  },
+  "homepage-step-by-step": {
+    "defaultMessage": "단계별",
+    "description": "Home page section heading"
+  },
+  "homepage-subtitle": {
+    "defaultMessage": "움직임과 기계 학습을 사용하여 BBC micro:bit에서 AI를 만들어 보세요.",
+    "description": "Home page subtitle"
+  },
+  "homepage-video-alt": {
+    "defaultMessage": "소개 동영상",
+    "description": "Home page video alt text"
+  },
+  "import-data-samples-action": {
+    "defaultMessage": "데이터 샘플 가져오기",
+    "description": "Data samples action"
+  },
+  "import-error-dialog-content": {
+    "defaultMessage": "{appNameFull}(으)로 MakeCode hex 파일이나 데이터 샘플 파일(.json)만 열 수 있습니다.",
+    "description": "Content of import error dialog"
+  },
+  "import-error-dialog-title": {
+    "defaultMessage": "지원되지 않는 파일 유형",
+    "description": "Title of import error dialog"
+  },
+  "incompatible-device-body-alt": {
+    "defaultMessage": "뒤로 돌아가 다른 micro:bit를 선택하거나,  <link>프로젝트 hex를 저장</link>하세요. 프로젝트 hex는 나중에 micro:bit V2에 다운로드할 수 있습니다.",
+    "description": "Incompatible device dialog body text"
+  },
+  "incompatible-device-body1": {
+    "defaultMessage": "MakeCode로 계속 프로그램을 편집하면 micro:bit V2에 다운로드할 수 있는 프로젝트 hex를 저장할 수 있습니다.",
+    "description": "Incompatible device dialog body text"
+  },
+  "incompatible-device-body2": {
+    "defaultMessage": "또는 MakeCode를 사용하지 않고 <link>프로젝트 hex를 저장</link>하세요.",
+    "description": "Incompatible device dialog body text"
+  },
+  "incompatible-device-heading": {
+    "defaultMessage": "호환되지 않는 기기",
+    "description": "Incompatible device dialog heading"
+  },
+  "incompatible-device-subtitle": {
+    "defaultMessage": "현재 micro:bit V1을 사용하고 있지만 기계 학습 프로젝트에는 더 빠른 프로세서가 탑재된 micro:bit V2가 필요합니다. <link>micro:bit 버전에 대해 자세히 알아보세요.</link>",
+    "description": "Incompatible device dialog subtitle"
+  },
+  "insufficient-data-body": {
+    "defaultMessage": "모델을 훈련하려면 최소 2개 행동에 대한 데이터 샘플 3개가 필요합니다.",
+    "description": "Insufficient data modal content"
+  },
+  "insufficient-data-title": {
+    "defaultMessage": "데이터가 충분하지 않습니다.",
+    "description": "Insufficient data modal title"
+  },
+  "language": {
+    "defaultMessage": "언어 선택",
+    "description": "Language option text"
+  },
+  "learn-about-firewall-requirements-action": {
+    "defaultMessage": "방화벽 요구 사항에 대해 알아보기",
+    "description": "Link to support article for firewall requirements"
+  },
+  "led-icon-option-angry": {
+    "defaultMessage": "화남",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-asleep": {
+    "defaultMessage": "수면 중",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-butterfly": {
+    "defaultMessage": "나비",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-chessboard": {
+    "defaultMessage": "체스판",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-confused": {
+    "defaultMessage": "어리둥절",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-cow": {
+    "defaultMessage": "소",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-diamond": {
+    "defaultMessage": "다이아몬드",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-duck": {
+    "defaultMessage": "오리",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-eighthnote": {
+    "defaultMessage": "8분음표",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-fabulous": {
+    "defaultMessage": "멋짐",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-ghost": {
+    "defaultMessage": "유령",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-giraffe": {
+    "defaultMessage": "기린",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-happy": {
+    "defaultMessage": "행복",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-heart": {
+    "defaultMessage": "하트",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-house": {
+    "defaultMessage": "집",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-lefttriangle": {
+    "defaultMessage": "왼쪽 삼각형",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-meh": {
+    "defaultMessage": "별로",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-no": {
+    "defaultMessage": "아니요",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-off": {
+    "defaultMessage": "끔",
+    "description": "Icon option."
+  },
+  "led-icon-option-pitchfork": {
+    "defaultMessage": "갈퀴",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-quarternote": {
+    "defaultMessage": "4분음표",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-rabbit": {
+    "defaultMessage": "토끼",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-rollerskate": {
+    "defaultMessage": "롤러스케이트",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-sad": {
+    "defaultMessage": "슬픔",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-scissors": {
+    "defaultMessage": "가위",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-silly": {
+    "defaultMessage": "바보",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-skull": {
+    "defaultMessage": "해골",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-smalldiamond": {
+    "defaultMessage": "작은 다이아몬드",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-smallheart": {
+    "defaultMessage": "작은 하트",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-smallsquare": {
+    "defaultMessage": "작은 정사각형",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-snake": {
+    "defaultMessage": "뱀",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-square": {
+    "defaultMessage": "정사각형",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-stickfigure": {
+    "defaultMessage": "막대 인간",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-surprised": {
+    "defaultMessage": "놀람",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-sword": {
+    "defaultMessage": "칼",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-target": {
+    "defaultMessage": "과녁",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-tortoise": {
+    "defaultMessage": "거북이",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-triangle": {
+    "defaultMessage": "삼각형",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-tshirt": {
+    "defaultMessage": "티셔츠",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-umbrella": {
+    "defaultMessage": "우산",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-yes": {
+    "defaultMessage": "예",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "live-data-graph": {
+    "defaultMessage": "실시간 데이터 그래프",
+    "description": "Title for live data graph"
+  },
+  "live-graph": {
+    "defaultMessage": "실시간 그래프",
+    "description": "Heading for live graph"
+  },
+  "live-graph-tooltip": {
+    "defaultMessage": "이 그래프는 micro:bit 가속도계의 움직임 데이터를 실시간으로 보여줍니다. 데이터 수집 micro:bit을 움직여 X, Y, Z 축이 바뀌는 것을 확인해 보세요. 색깔 선은 micro:bit가 이동하는 각각의 방향(차원)을 나타냅니다.",
+    "description": "Tooltip for live graph heading"
+  },
+  "live-graph-tooltip-aria": {
+    "defaultMessage": "실시간 그래프 툴팁",
+    "description": "Aria label for live graph tooltip icon"
+  },
+  "loading": {
+    "defaultMessage": "불러오는 중...",
+    "description": "Aria label for loading spinner"
+  },
+  "main-menu": {
+    "defaultMessage": "메인 메뉴",
+    "description": "Main menu label"
+  },
+  "makecode-back-alt": {
+    "defaultMessage": "MakeCode 뒤로 가기 왼쪽 화살 아이콘",
+    "description": "Testing model page title"
+  },
+  "makecode-block-default-alt": {
+    "defaultMessage": "MakeCode 블록: ML {actionName} 시작 시, {iconName} 아이콘 표시",
+    "description": "Makecode default block alt text"
+  },
+  "makecode-block-on-ML": {
+    "defaultMessage": "ML에서",
+    "description": "Makecode block text. The translation should match MakeCode translations."
+  },
+  "makecode-block-show-icon": {
+    "defaultMessage": "아이콘 표시",
+    "description": "Makecode block text. The translation should match MakeCode translations."
+  },
+  "makecode-block-start": {
+    "defaultMessage": "start",
+    "description": "Makecode block text. The translation should match MakeCode translations."
+  },
+  "makecode-load-error-dialog-body": {
+    "defaultMessage": "{appNameFull}이(가) MakeCode를 불러올 수 없습니다. 인터넷 연결을 확인하고 페이지를 새로 고침한 다음 다시 시도하세요.",
+    "description": "Content of MakeCode load error dialog"
+  },
+  "makecode-load-error-dialog-title": {
+    "defaultMessage": "Microsoft MakeCode를 불러올 수 없습니다.",
+    "description": "Title of MakeCode load error dialog"
+  },
+  "microbit-not-connected": {
+    "defaultMessage": "micro:bit가 연결되지 않았습니다.",
+    "description": "Live graph disconnected micro:bit status message"
+  },
+  "more-edit-in-makecode-options": {
+    "defaultMessage": "MakeCode 옵션에서 추가 편집",
+    "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
+  },
+  "name-action-hint": {
+    "defaultMessage": "micro:bit가 인식할 행동의 이름 지정하기",
+    "description": "Hint shown when you have an unnamed action"
+  },
+  "name-project": {
+    "defaultMessage": "프로젝트 이름을 지정하세요",
+    "description": "Name your project header"
+  },
+  "name-text": {
+    "defaultMessage": "이름",
+    "description": "Header for name field"
+  },
+  "name-used-when": {
+    "defaultMessage": "hex 파일을 저장할 때 해당 이름을 사용합니다.",
+    "description": "Text under project name field"
+  },
+  "new-session-setup-description": {
+    "defaultMessage": "새 세션을 시작하면 기존 세션을 덮어쓱[ 됩니다. 먼저 <link>기존 세션을 저장</link>하는 것이 좋습니다.",
+    "description": "New session setup description"
+  },
+  "new-session-setup-title": {
+    "defaultMessage": "새 세션 설정",
+    "description": "New session setup title"
+  },
+  "newpage-continue-session-subtitle": {
+    "defaultMessage": "컴퓨터에 저장한 데이터 샘플 파일 또는 hex 파일을 사용하여 세션을 계속 진행하세요.",
+    "description": "Continue session subtitle"
+  },
+  "newpage-continue-session-title": {
+    "defaultMessage": "저장된 세션 계속",
+    "description": "Continue session title"
+  },
+  "newpage-last-session-date": {
+    "defaultMessage": "<strong>날짜:</strong> {date}",
+    "description": "Last session date label"
+  },
+  "newpage-last-session-name": {
+    "defaultMessage": "<strong>이름:</strong> {name}",
+    "description": "Last session name label"
+  },
+  "newpage-last-session-none": {
+    "defaultMessage": "세션을 찾을 수 없음",
+    "description": "Last session not found text"
+  },
+  "newpage-last-session-title": {
+    "defaultMessage": "마지막 세션 열기",
+    "description": "Open last session title"
+  },
+  "newpage-new-session-subtitle": {
+    "defaultMessage": "micro:bit를 연결하고 움직임 데이터를 수집하여 기계 학습 모델을 구축하세요.",
+    "description": "Start new session subtitle"
+  },
+  "newpage-new-session-title": {
+    "defaultMessage": "새 세션",
+    "description": "Start new session title"
+  },
+  "newpage-section-one-title": {
+    "defaultMessage": "중단한 곳에서 다시 시작하기",
+    "description": "Homepage section one title"
+  },
+  "newpage-section-two-title": {
+    "defaultMessage": "새로 시작하기",
+    "description": "Homepage section two title"
+  },
+  "newpage-title": {
+    "defaultMessage": "새 세션",
+    "description": "New page title"
+  },
+  "next-action": {
+    "defaultMessage": "Next",
+    "description": "Next button text for dialogs and similar"
+  },
+  "no-data-samples": {
+    "defaultMessage": "데이터 샘플 없음",
+    "description": "Empty data samples page status text"
+  },
+  "not-create-ai-hex-import-dialog-content": {
+    "defaultMessage": "이 프로젝트에는 데이터 샘플이 없어 코드만 공개되었습니다. 코드를 사용하기 전에 모델을 훈련해야 합니다.",
+    "description": "Content of import non-CreateAI hex dialog"
+  },
+  "not-create-ai-hex-import-dialog-title": {
+    "defaultMessage": "MakeCode 프로젝트를 가져왔습니다.",
+    "description": "Title of import non-CreateAI hex dialog"
+  },
+  "not-found": {
+    "defaultMessage": "{appNameFull} 홈페이지",
+    "description": "Page not found link text"
+  },
+  "not-found-title": {
+    "defaultMessage": "페이지를 찾을 수 없습니다.",
+    "description": "Page not found page title"
+  },
+  "open-file-action": {
+    "defaultMessage": "열기…",
+    "description": "Open file button text"
+  },
+  "open-file-dropped": {
+    "defaultMessage": "드롭될 때 파일 열기",
+    "description": "Aria label for file drop target"
+  },
+  "other-tabs-body1": {
+    "defaultMessage": "다른 프로세스가 이 장치에 연결되어 있습니다.",
+    "description": "Connection error dialog"
+  },
+  "other-tabs-body2": {
+    "defaultMessage": "WebUSB를 사용하고 있는 다른 탭(예: MakeCode, Python Editor, {appNameShort})을 닫거나 micro:bit를 분리하여 다시 연결한 다음 재시도해 보세요.",
+    "description": "Connection error dialog"
+  },
+  "other-tabs-heading": {
+    "defaultMessage": "WebUSB를 사용하여 연결하기",
+    "description": "Connection error dialog"
+  },
+  "privacy": {
+    "defaultMessage": "개인정보 보호 정책",
+    "description": "Link to view privacy policy"
+  },
+  "project-loaded": {
+    "defaultMessage": "프로젝트 불러오기 완료",
+    "description": "Toast when a new project is loaded"
+  },
+  "project-name-not-empty": {
+    "defaultMessage": "프로젝트 이름을 입력해야 합니다",
+    "description": "Validation message for project name"
+  },
+  "radio-link-microbit": {
+    "defaultMessage": "라디오 링크 micro:bit",
+    "description": "Radio link micro:bit image caption"
+  },
+  "radio-link-microbit-label": {
+    "defaultMessage": "라디오 링크 micro:bit가 컴퓨터에 연결된 것을 보여주는 다이어그램",
+    "description": "Aria label for radio link image"
+  },
+  "recognition-point-label": {
+    "defaultMessage": "인식 포인트:",
+    "description": "Label for the slider for the recognition point"
+  },
+  "reconnect-action": {
+    "defaultMessage": "다시 연결",
+    "description": "Button text to reconnect a micro:bit over Bluetooth/radio"
+  },
+  "reconnect-failed-bluetooth-heading": {
+    "defaultMessage": "데이터 수집 micro:bit에 다시 연결할 수 없습니다.",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-bluetooth1": {
+    "defaultMessage": "데이터 수집 micro:bit에 대한 연결을 다시 설정할 수 없습니다.",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-bridge-heading": {
+    "defaultMessage": "라디오 링크 micro:bit를 다시 연결할 수 없습니다.",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-bridge1": {
+    "defaultMessage": "컴퓨터에 연결된 micro:bit에 대한 연결을 다시 설정할 수 없습니다.",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-radio-heading": {
+    "defaultMessage": "micro:bit에 다시 연결할 수 없습니다.",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-remote-heading": {
+    "defaultMessage": "데이터 수집 micro:bit에 다시 연결할 수 없습니다.",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-remote1": {
+    "defaultMessage": "데이터 수집 micro:bit에 대한 연결을 다시 설정할 수 없습니다.",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-subtitle": {
+    "defaultMessage": "안내에 따라 연결 프로세스를 다시 시작하세요.",
+    "description": "Connection error dialog"
+  },
+  "reconnecting": {
+    "defaultMessage": "다시 연결 중…",
+    "description": "Shown while reconnecting"
+  },
+  "record-action": {
+    "defaultMessage": "녹화시작",
+    "description": "Record button text"
+  },
+  "record-action-aria": {
+    "defaultMessage": "\"{action}\" 행동에 대한 데이터 기록",
+    "description": "Aria label for record button"
+  },
+  "record-hint": {
+    "defaultMessage": "데이터 샘플을 기록하려면 누르세요.",
+    "description": "Hint when you have named the first action but not recorded any data samples"
+  },
+  "record-hint-button-b": {
+    "defaultMessage": "눌러서 데이터 샘플을 기록하거나 데이터 수집 micro:bit의 B 버튼을 누르세요.",
+    "description": "Hint when you have named the first action but not recorded any data samples and have a micro:bit connected"
+  },
+  "record-samples": {
+    "defaultMessage": "샘플 {numSamples}개 기록",
+    "description": "Additional recording action text"
+  },
+  "record-samples-help": {
+    "defaultMessage": "각 샘플은 자체 카운트다운이 있습니다.",
+    "description": "Help text for additional recording action"
+  },
+  "record-seconds": {
+    "defaultMessage": "{numSeconds}초 동안 기록",
+    "description": "Additional recording action text"
+  },
+  "record-seconds-help": {
+    "defaultMessage": "계속 움직여서 샘플 {numSamples}개 만드세요.",
+    "description": "Help text for additional recording action"
+  },
+  "recording": {
+    "defaultMessage": "기록 중",
+    "description": "Shown during recording"
+  },
+  "recording-complete": {
+    "defaultMessage": "완료",
+    "description": "Text shown when data recording complete"
+  },
+  "recording-data-for": {
+    "defaultMessage": "\"{action}\" 행동에 대한 데이터 기록",
+    "description": "Text in recording dialog"
+  },
+  "recording-data-for-numbered": {
+    "defaultMessage": "\"{action}\" 행동에 대한 {numSamples}개의 {sample} 기록",
+    "description": "Text in recording dialog"
+  },
+  "recording-fingerprint-label": {
+    "defaultMessage": "micro:bit x, y, z 가속도계 데이터 기록 1개를 보여주는 히트 맵",
+    "description": "Label for recording fingerprint heatmap"
+  },
+  "recording-graph-label": {
+    "defaultMessage": "micro:bit x, y, z 가속도계 데이터 기록 1개를 보여주는 그래프",
+    "description": "Label for recording graph"
+  },
+  "recording-options-aria": {
+    "defaultMessage": "더 많은 \"{action}\" 행동 기록 옵션",
+    "description": "Aria label for more recording options button"
+  },
+  "reload-action": {
+    "defaultMessage": "새로 고침",
+    "description": "Reload button text"
+  },
+  "reset-to-default-action": {
+    "defaultMessage": "기본 블록으로 초기화",
+    "description": "Reset to default blocks button text"
+  },
+  "restore-defaults-action": {
+    "defaultMessage": "모든 설정의 기본값 복원",
+    "description": "Restore default button text"
+  },
+  "restore-defaults-confirm-action": {
+    "defaultMessage": "기본값 복원",
+    "description": "Restore default settings confirm button text"
+  },
+  "restore-defaults-confirm-body": {
+    "defaultMessage": "모든 설정의 기본값을 복원하시겠습니까?",
+    "description": "Restore default settings confirmation dialog body text"
+  },
+  "restore-defaults-confirm-heading": {
+    "defaultMessage": "기본 설정 복원하기",
+    "description": "Restore default settings confirmation dialog title"
+  },
+  "restore-defaults-helper": {
+    "defaultMessage": "이전에 삭제된 도움말 내용이 다시 표시될 수 있습니다.",
+    "description": "Restore default settings helper text"
+  },
+  "save-action": {
+    "defaultMessage": "저장하기",
+    "description": "Label for action that saves the project as a file the user downloads"
+  },
+  "save-hex-dialog-heading": {
+    "defaultMessage": "프로젝트를 hex 파일로 저장하기",
+    "description": "Heading for the dialog shown when saving a hex file"
+  },
+  "save-hex-dialog-message1": {
+    "defaultMessage": "다운로드 파일에는 사용자의 행동, 데이터 샘플, MakeCode 프로젝트가 포함되어 있습니다. {appNameFull}에서 다운로드 파일을 열어 작업을 계속하세요.",
+    "description": "Text in the dialog shown when saving a hex file"
+  },
+  "save-hex-dialog-message2": {
+    "defaultMessage": "행동과 데이터 샘플을 변경할 필요가 없는 경우 Microsoft MakeCode로도 열 수 있습니다.",
+    "description": "Text in the dialog shown when saving a hex file"
+  },
+  "saving-description": {
+    "defaultMessage": "다운로드 파일이 곧 준비됩니다.",
+    "description": "Saving progress dialog text"
+  },
+  "saving-title": {
+    "defaultMessage": "저장 중…",
+    "description": "Saving progress title"
+  },
+  "saving-toast-title": {
+    "defaultMessage": "hex 파일이 다운로드되었습니다.",
+    "description": "Notification after a hex file has been downloaded"
+  },
+  "select-icon-action-aria": {
+    "defaultMessage": "\"{action}\" 행동에 대한 아이콘 선택",
+    "description": "Aria label for pick icon button"
+  },
+  "select-icon-action-untitled-aria": {
+    "defaultMessage": "이름  없는 행동에 대한 아이콘 선택",
+    "description": "Aria label for pick icon button"
+  },
+  "select-icon-option-action-aria": {
+    "defaultMessage": "\"{iconName}\" 아이콘 선택",
+    "description": "Aria label for icon option"
+  },
+  "settings": {
+    "defaultMessage": "설정",
+    "description": "Text for settings dialog header and menu item"
+  },
+  "settings-menu-action": {
+    "defaultMessage": "설정 행동 메뉴",
+    "description": "Label for settings actions menu button"
+  },
+  "show-graphs-checkbox-label-text": {
+    "defaultMessage": "그래프 표시",
+    "description": "Show graphs checkbox label text"
+  },
+  "simple-ai-exercise-timer-resource-title": {
+    "defaultMessage": "심플 AI 운동 타이머",
+    "description": "Home page resource card title"
+  },
+  "skip-tour-action": {
+    "defaultMessage": "투어 건너뛰기",
+    "description": "Skip tour button text"
+  },
+  "software-versions": {
+    "defaultMessage": "소프트웨어 버전",
+    "description": "Software versions text"
+  },
+  "start-session-action": {
+    "defaultMessage": "세션 시작",
+    "description": "Start session button text"
+  },
+  "start-training-action": {
+    "defaultMessage": "훈련 시작",
+    "description": "Start training button text"
+  },
+  "steps-alt": {
+    "defaultMessage": "데이터 수집, 모델 훈련, 모델 테스트, 수집한 데이터 개선하여 모델을 개선한 다음 최종적으로 모델을 사용하여 코딩하는 반복적 프로세스를 보여주는 다이어그램",
+    "description": "Alt text for the step-by-step home page diagram"
+  },
+  "steps-code": {
+    "defaultMessage": "Code",
+    "description": "Step in home page diagram"
+  },
+  "steps-collect-data": {
+    "defaultMessage": "데이터 수집",
+    "description": "Step in home page diagram"
+  },
+  "steps-improve": {
+    "defaultMessage": "개선",
+    "description": "Step in home page diagram"
+  },
+  "steps-test-model": {
+    "defaultMessage": "테스트 모델",
+    "description": "Step in home page diagram"
+  },
+  "steps-train": {
+    "defaultMessage": "훈련",
+    "description": "Step in home page diagram"
+  },
+  "stop-recording-action": {
+    "defaultMessage": "기록 중단",
+    "description": "Button label to stop recording movement data while recording multiple samples"
+  },
+  "support-request": {
+    "defaultMessage": "<link>지원 요청</link>을 생각해 보세요.",
+    "description": "Support request link text"
+  },
+  "terms": {
+    "defaultMessage": "이용 약관",
+    "description": "Link or menu item link to view terms of use"
+  },
+  "testing-model-actions-region": {
+    "defaultMessage": "테스트 모델 도구 모음",
+    "description": "Region label for testing model actions"
+  },
+  "testing-model-title": {
+    "defaultMessage": "모델 테스트 중",
+    "description": "Testing model page title"
+  },
+  "tour-action": {
+    "defaultMessage": "투어",
+    "description": "Button label that starts a tour of the app's features"
+  },
+  "tour-collect-addActions-content": {
+    "defaultMessage": "어떤 행동을 할지, 그 행동의 이름은 무엇으로 할지 결정하세요. 모델을 훈련하려면 최소 행동 2개와 데이터 샘플 3개가 필요합니다. 데이터 샘플은 사용자 컴퓨터에만 저장되며 누구에게도 전송되지 않습니다.",
+    "description": "Tour step description"
+  },
+  "tour-collect-addActions-title": {
+    "defaultMessage": "더 많은 행동 추가",
+    "description": "Tour step title"
+  },
+  "tour-collect-afterFirst-content": {
+    "defaultMessage": "기계 학습 모델을 훈련하려면 적어도 2가지 행동에 대한 데이터 샘플 3개가 필요합니다.",
+    "description": "Tour step description"
+  },
+  "tour-collect-afterFirst-title": {
+    "defaultMessage": "첫 번째 {recordingCount, plural, other {샘플}}을 기록했습니다!",
+    "description": "Tour step title. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+  },
+  "tour-collect-collectMore-explanation-content": {
+    "defaultMessage": "더 많은 샘플을 수집하면 더 나은 기계 학습 모델을 만들 수 있습니다.",
+    "description": "Tour step description"
+  },
+  "tour-collect-collectMore-hasRecordings-content": {
+    "defaultMessage": "행동에 대한 데이터 샘플을 기록하세요.",
+    "description": "Tour step description"
+  },
+  "tour-collect-collectMore-noRecordings-content": {
+    "defaultMessage": "이 행동에 대한 더 많은 샘플을 기록하세요.",
+    "description": "Tour step description"
+  },
+  "tour-collect-collectMore-title": {
+    "defaultMessage": "더 많은 데이터 샘플 수집하기",
+    "description": "Tour step title"
+  },
+  "tour-collect-trainModel-content": {
+    "defaultMessage": "데이터 샘플을 충분히 수집하면 기계 학습 모델을 훈련할 수 있습니다. 나중에 데이터를 삭제하거나 추가한 후 다시 훈련하여 모델의 신뢰성을 높일 수 있습니다.",
+    "description": "Tour step description"
+  },
+  "tour-dataSamples-actions-common-content": {
+    "defaultMessage": "행동은 기계 학습 모델이 인식하는 움직임의 유형입니다. (예: '손 흔들기', '손뼉 치기')",
+    "description": "Tour step content"
+  },
+  "tour-dataSamples-actions-noRecordings-content": {
+    "defaultMessage": "첫 번째 행동을 무엇으로 할지 결정하고 그 행동의 이름을 정한 후 데이터 샘플 기록을 시작하세요.",
+    "description": "Tour step content"
+  },
+  "tour-dataSamples-connected-content": {
+    "defaultMessage": "이제 데이터 샘플을 수집하여 기계 학습(ML) 모델이 다양한 움직임이나 동작을 인식하도록 훈련할 수 있습니다.",
+    "description": "Tour step content"
+  },
+  "tour-dataSamples-connected-title": {
+    "defaultMessage": "데이터 수집 micro:bit가 연결되었습니다!",
+    "description": "Tour step title"
+  },
+  "tour-dataSamples-liveGraph-content": {
+    "defaultMessage": "micro:bit 가속도계의 움직임 데이터를 보여주는 그래프입니다. 데이터 수집 micro:bit를 움직여서 그래프가 어떻게 바뀌는지 확인하세요.",
+    "description": "Tour step content"
+  },
+  "tour-makecode-intro-content1": {
+    "defaultMessage": "모델과 코드를 다운로드하여 micro:bit에서 프로젝트를 테스트하세요. 또한 코드 블록을 더 추가한 후 모델을 사용하여 나만의 프로그램을 만들 수 있습니다.",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-content2": {
+    "defaultMessage": "ML 모델을 개선해야 하나요? ",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-content3": {
+    "defaultMessage": "상단 왼쪽의 뒤로 가기 버튼을 사용하세요.",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-title": {
+    "defaultMessage": "Microsoft MakeCode",
+    "description": "Tour step title"
+  },
+  "tour-trainModel-afterTrain-alreadyConnected-title": {
+    "defaultMessage": "ML 모델을 훈련했습니다!",
+    "description": "Tour step title"
+  },
+  "tour-trainModel-afterTrain-content": {
+    "defaultMessage": "이제 기계 학습 모델을 테스트할 수 있습니다. 데이터 수집 micro:bit를 움직여 행동을 수행해 보세요. 모델이 행동을 정확하게 추정하나요?",
+    "description": "Tour step description"
+  },
+  "tour-trainModel-afterTrain-delayedUntilConnected-title": {
+    "defaultMessage": "ML 모델 테스트",
+    "description": "Tour step title"
+  },
+  "tour-trainModel-certaintyRecognition-content": {
+    "defaultMessage": "막대그래프는 모델이 각 행동에 대한 확신하는 정도를 보여줍니다. 슬라이더를 움직여 인식 지점 또는 임곗값을 조정합니다.",
+    "description": "Tour step description"
+  },
+  "tour-trainModel-certaintyRecognition-title": {
+    "defaultMessage": "확실성 및 인식 지점",
+    "description": "Tour step title"
+  },
+  "tour-trainModel-editInMakeCode-content": {
+    "defaultMessage": "MakeCode에서 프로젝트를 열어 프로그램과 기계 학습 모델을 micro:bit에 다운로드합니다. 블록을 더 추가한 후 모델을 사용하여 나만의 프로그램을 만들 수 있습니다.",
+    "description": "Tour step description"
+  },
+  "tour-trainModel-estimatedAction-content": {
+    "defaultMessage": "모델이 추정하는 사용자의 현재 행동은 해당 행동에 대한 micro:bit 아이콘 아래에 표시됩니다.",
+    "description": "Tour step description"
+  },
+  "tour-trainModel-makeCodeBlocks-content": {
+    "defaultMessage": "MakeCode 블록은 코드와 모델을 micro:bit로 전송할 때 감지된 각 행동에 대한 아이콘을 표시합니다.",
+    "description": "Tour step description"
+  },
+  "tour-trainModel-makeCodeBlocks-title": {
+    "defaultMessage": "Microsoft MakeCode 블록",
+    "description": "Tour step title"
+  },
+  "train-description": {
+    "defaultMessage": "컴퓨터 프로그램은 데이터 샘플의 패턴이나 차이점을 발견하고 이를 사용하여 micro:bit를 움직일 때 {appNameFull}이(가) 다른 동작을 인식할 수 있는 수학적 모델을 구축합니다.",
+    "description": "Explanation on training dialog"
+  },
+  "train-error-body": {
+    "defaultMessage": "훈련을 통해 사용 가능한 모델을 생성하지 못했습니다. 그 이유는 훈련에 사용된 데이터 때문일 가능성이 높습니다. 여러 가지 행동에 대한 데이터 샘플이 너무 비슷하다면 훈련 프로세스에 문제가 발생할 수 있습니다.",
+    "description": "Training error dialog"
+  },
+  "train-error-header": {
+    "defaultMessage": "훈련 실패",
+    "description": "Training error dialog"
+  },
+  "train-error-todo": {
+    "defaultMessage": "데이터 추가 페이지로 돌아가서 데이터를 변경하세요.",
+    "description": "Training error dialog"
+  },
+  "train-header": {
+    "defaultMessage": "모델 훈련 중",
+    "description": "Training dialog"
+  },
+  "train-model": {
+    "defaultMessage": "모델 훈련",
+    "description": "Action to train a model"
+  },
+  "training-model": {
+    "defaultMessage": "모델 훈련 중…",
+    "description": "Progress title"
+  },
+  "transfer-hex-alt": {
+    "defaultMessage": "다운로드 폴더의 hex 파일을 파일 탐색기에 나열된 기기 또는 micro:bit 드라이브에 드래그하는 애니메이션",
+    "description": "Alt text"
+  },
+  "transfer-hex-heading": {
+    "defaultMessage": "저장된 hex 파일을 micro:bit으로 전송",
+    "description": "Dialog shown when WebUSB fails"
+  },
+  "transfer-hex-manual-download": {
+    "defaultMessage": "파일 다운로드가 자동으로 시작되지 않으면 <link>여기에서 파일을 다운로드하세요</link>.",
+    "description": "Dialog shown when WebUSB fails"
+  },
+  "transfer-hex-message": {
+    "defaultMessage": "다운로드 폴더의 hex 파일을 MICROBIT 드라이브로 드래그하세요.",
+    "description": "Dialog shown when WebUSB fails"
+  },
+  "try-again-action": {
+    "defaultMessage": "다시 시도",
+    "description": "Button label"
+  },
+  "unknown": {
+    "defaultMessage": "알 수 없음",
+    "description": "Label for unknown ML event"
+  },
+  "unplug-radio-link-microbit-description": {
+    "defaultMessage": "컴퓨터에서 라디오 링크 micro:bit를 분리합니다. 데이터 샘플을 더 기록하려면 micro:bit를 다시 연결해야 합니다.",
+    "description": "Unplug radio link micro:bit dialog description"
+  },
+  "unplug-radio-link-microbit-label": {
+    "defaultMessage": "USB 케이블이 micro:bit 상단에서 분리되는 것을 보여주는 애니메이션",
+    "description": "Unplug radio link micro:bit dialog aria label"
+  },
+  "unplug-radio-link-microbit-title": {
+    "defaultMessage": "라디오 링크 micro:bit 분리",
+    "description": "Unplug radio link micro:bit dialog title"
+  },
+  "unsupported-device-explain": {
+    "defaultMessage": "아쉽게도 micro:bit 라디오로 연결 시 micro:bit V2만 지원합니다. <link>micro:bit V1</link>을 연결했습니다.",
+    "description": "Unsupported device dialog"
+  },
+  "unsupported-device-header": {
+    "defaultMessage": "micro:bit 라디오 연결은 micro:bit V1을 지원하지 않습니다.",
+    "description": "Unsupported device dialog"
+  },
+  "unsupported-device-with-bluetooth": {
+    "defaultMessage": "대신 Web Bluetooth를 사용하여 micro:bit V1에 연결하세요.",
+    "description": "Unsupported device dialog"
+  },
+  "unsupported-device-without-bluetooth": {
+    "defaultMessage": "Web Bluetooth를 사용하여 micro:bit V1에 연결할 수 있지만, 이 브라우저 또는 기기의 Bluetooth가 활성화되어 있지 않습니다. <link>Bluetooth를 활성화하는 방법</link>.",
+    "description": "Unsupported device dialog"
+  },
+  "user-guide": {
+    "defaultMessage": "사용자 가이드",
+    "description": "Used for link to user guide page on microbit.org"
+  },
+  "webusb-retry-no-select": {
+    "defaultMessage": "micro:bit를 선택하지 않으셨습니다. 다시 시도하시겠습니까?",
+    "description": "Shown if the user fails to choose a micro:bit"
+  },
+  "webusb-retry-replug1": {
+    "defaultMessage": "WebUSB 오류가 발생했습니다.",
+    "description": "WebUSB error dialog"
+  },
+  "webusb-retry-replug2": {
+    "defaultMessage": "다음을 확인하세요",
+    "description": "WebUSB error dialog"
+  },
+  "webusb-retry-replug3": {
+    "defaultMessage": "micro:bit에 배터리 팩이 연결되어 있지 않은지 확인하세요.",
+    "description": "WebUSB error dialog"
+  },
+  "webusb-retry-replug4": {
+    "defaultMessage": "USB 케이블을 분리했다가 다시 연결하세요.",
+    "description": "WebUSB error dialog"
+  }
+}
