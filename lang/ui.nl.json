@@ -763,6 +763,10 @@
     "defaultMessage": "Hulp & Ondersteuning",
     "description": "Link or menu item link to support site"
   },
+  "help-translate": {
+    "defaultMessage": "Help translate",
+    "description": "Help translate  menu option text"
+  },
   "home-action": {
     "defaultMessage": "Startpagina",
     "description": "Home button text"

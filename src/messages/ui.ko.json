@@ -1289,6 +1289,12 @@
       "value": "도움말 및 지원"
     }
   ],
+  "help-translate": [
+    {
+      "type": 0,
+      "value": "Help translate"
+    }
+  ],
   "home-action": [
     {
       "type": 0,

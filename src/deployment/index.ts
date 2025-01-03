@@ -57,7 +57,7 @@ export interface DeploymentConfig {
   termsOfUseLink?: string;
   privacyPolicyLink?: string;
   activitiesBaseUrl?: string;
-
+  translationLink?: string;
   logging: Logging;
 }
 

@@ -12,11 +12,13 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/modal";
-import { HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { HStack, Icon, Link, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { Language, supportedLanguages } from "../settings";
 import { useSettings } from "../store";
+import { RiExternalLinkLine } from "react-icons/ri";
+import { deployment } from "../deployment";
 
 interface LanguageDialogProps {
   isOpen: boolean;
@@ -64,6 +66,17 @@ export const LanguageDialog = ({
                   />
                 ))}
               </SimpleGrid>
+              <Link
+                pl={1}
+                alignSelf="flex-start"
+                href={deployment.translationLink}
+                target="_blank"
+                rel="noopener"
+                color="brand.500"
+              >
+                <FormattedMessage id="help-translate" />{" "}
+                <Icon as={RiExternalLinkLine} />
+              </Link>
             </VStack>
             {hasPreviewLanguages && (
               <Text fontSize="xs" alignSelf="flex-end" mt={1}>

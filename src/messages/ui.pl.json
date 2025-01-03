@@ -1301,6 +1301,12 @@
       "value": "Pomoc i wsparcie"
     }
   ],
+  "help-translate": [
+    {
+      "type": 0,
+      "value": "Help translate"
+    }
+  ],
   "home-action": [
     {
       "type": 0,
@@ -2459,7 +2465,8 @@
       "value": "\""
     }
   ],
-  "select-icon-action-untitled-aria": [],
+  "select-icon-action-untitled-aria": [
+  ],
   "select-icon-option-action-aria": [
     {
       "type": 0,

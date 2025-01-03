@@ -1297,6 +1297,12 @@
       "value": "Help & support"
     }
   ],
+  "help-translate": [
+    {
+      "type": 0,
+      "value": "Help translate"
+    }
+  ],
   "home-action": [
     {
       "type": 0,
