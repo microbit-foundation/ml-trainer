@@ -160,11 +160,19 @@ export const ProjectProvider = ({
     // Get latest start up state and only mark editor ready if editor has not timed out.
     getEditorStartUp() !== "timed out" && editorReady();
     editorReadyPromiseRef.current.resolve();
-    const {locale: makeCodeLang} = await driverRef.current!.info()
-    if (supportedLanguages.find(l => l.id === makeCodeLang)) {
-      setSettings({ languageId: makeCodeLang })
+    const { locale: makeCodeLang } = await driverRef.current!.info();
+    if (supportedLanguages.find((l) => l.id === makeCodeLang)) {
+      setSettings({ languageId: makeCodeLang });
     }
-  }, [driverRef, editorContentLoadedPromiseRef, editorReady, editorReadyPromiseRef, getEditorStartUp, logging, setSettings]);
+  }, [
+    driverRef,
+    editorContentLoadedPromiseRef,
+    editorReady,
+    editorReadyPromiseRef,
+    getEditorStartUp,
+    logging,
+    setSettings,
+  ]);
 
   const onEditorContentLoaded = useCallback(() => {
     logging.log("[MakeCode] Editor content loaded");
