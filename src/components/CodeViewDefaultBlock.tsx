@@ -24,6 +24,9 @@ const CodeViewDefaultBlock = ({
   const dropdownArrowXPos = actionNameTextBoxWidth - 20;
   const onMlStartBlockWidth = actionNameTextBoxWidth + 120;
   const startTextXPos = onMlStartBlockWidth - 50;
+  const showIconText = intl.formatMessage({id: "makecode-block-show-icon"})
+  const showIconTextWidth = getShowIconTextWidth(showIconText)
+  const showIconBlockWidth = showIconTextWidth + 10
   return (
     <Box
       role="img"
@@ -57,7 +60,7 @@ const CodeViewDefaultBlock = ({
                 <path
                   stroke="#176cbf"
                   fill="#1e90ff"
-                  d="m 0,0  m 0,4 a 4 4 0 0,1 4,-4  h 8  c 2,0  3,1  4,2  l 4,4  c 1,1  2,2  4,2  h 12  c 2,0  3,-1  4,-2  l 4,-4  c 1,-1  2,-2  4,-2  h 130.4140625 a 4 4 0 0,1 4,4  v 8  V 54  V 58  V 58 a 4 4 0 0,1 -4,4  h -130.4140625  c -2,0  -3,1  -4,2  l -4,4  c -1,1  -2,2  -4,2  h -12  c -2,0  -3,-1  -4,-2  l -4,-4  c -1,-1  -2,-2  -4,-2  h -8 a 4 4 0 0,1 -4,-4 z&#10;"
+                  d={`m 0,0  m 0,4 a 4 4 0 0,1 4,-4  h 8  c 2,0  3,1  4,2  l 4,4  c 1,1  2,2  4,2  h 12  c 2,0  3,-1  4,-2  l 4,-4  c 1,-1  2,-2  4,-2  h ${showIconBlockWidth} a 4 4 0 0,1 4,4  v 8  V 54  V 58  V 58 a 4 4 0 0,1 -4,4  h -${showIconBlockWidth}  c -2,0  -3,1  -4,2  l -4,4  c -1,1  -2,2  -4,2  h -12  c -2,0  -3,-1  -4,-2  l -4,-4  c -1,-1  -2,-2  -4,-2  h -8 a 4 4 0 0,1 -4,-4 z&#10;`}
                 />
                 <g transform="translate(8,20)">
                   <text
@@ -72,7 +75,7 @@ const CodeViewDefaultBlock = ({
                     <FormattedMessage id="makecode-block-show-icon" />
                   </text>
                 </g>
-                <g transform="translate(102.4140625,8)">
+                <g transform={`translate(${showIconBlockWidth - 28}, 8)`}>
                   <rect
                     rx="4"
                     ry="4"
@@ -178,6 +181,13 @@ const CodeViewDefaultBlock = ({
 };
 
 const blockFont = `600 12pt "Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace`;
+const getShowIconTextWidth = (text: string) => {
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
+  context!.font = blockFont;
+  const textBoxPaddingWidth = 40;
+  return context!.measureText(text).width + textBoxPaddingWidth;
+};
 const getActionNameTextBoxWidth = (text: string) => {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
