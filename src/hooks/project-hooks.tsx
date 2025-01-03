@@ -43,6 +43,7 @@ import {
 } from "../utils/fs-util";
 import { useDownloadActions } from "./download-hooks";
 import { usePromiseRef } from "./use-promise-ref";
+import { supportedLanguages } from "../settings";
 
 class CodeEditorError extends Error {}
 
@@ -152,19 +153,18 @@ export const ProjectProvider = ({
   const startUpTimeout = 90000;
   const startUpTimestamp = useRef<number>(Date.now());
 
+  const setSettings = useStore((s) => s.setSettings);
   const onWorkspaceLoaded = useCallback(async () => {
     logging.log("[MakeCode] Workspace loaded");
     await editorContentLoadedPromiseRef.current.promise;
     // Get latest start up state and only mark editor ready if editor has not timed out.
     getEditorStartUp() !== "timed out" && editorReady();
     editorReadyPromiseRef.current.resolve();
-  }, [
-    editorContentLoadedPromiseRef,
-    editorReady,
-    editorReadyPromiseRef,
-    getEditorStartUp,
-    logging,
-  ]);
+    const {locale: makeCodeLang} = await driverRef.current!.info()
+    if (supportedLanguages.find(l => l.id === makeCodeLang)) {
+      setSettings({ languageId: makeCodeLang })
+    }
+  }, [driverRef, editorContentLoadedPromiseRef, editorReady, editorReadyPromiseRef, getEditorStartUp, logging, setSettings]);
 
   const onEditorContentLoaded = useCallback(() => {
     logging.log("[MakeCode] Editor content loaded");

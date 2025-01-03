@@ -25,7 +25,7 @@ export const allLanguages: Language[] = [
     makeCode: true,
   },
   {
-    id: "es-es",
+    id: "es-ES",
     name: "Español",
     enName: "Spanish",
     makeCode: true,
@@ -60,14 +60,14 @@ export const allLanguages: Language[] = [
     preview: true,
   },
   {
-    id: "pt-br",
+    id: "pt-BR",
     name: "Português (Brasil)",
     enName: "Portuguese (Brazil)",
     makeCode: true,
     preview: true,
   },
   {
-    id: "zh-tw",
+    id: "zh-TW",
     name: "繁體中文",
     enName: "Chinese (Traditional)",
     makeCode: true,

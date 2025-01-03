@@ -10,7 +10,7 @@ import { retryAsyncLoad } from "./chunk-util";
 
 async function loadLocaleData(locale: string) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  return (await import(`./ui.${locale}.json`)).default as Messages;
+  return (await import(`./ui.${locale.toLowerCase()}.json`)).default as Messages;
 }
 
 type Messages = Record<string, string> | Record<string, MessageFormatElement[]>;
