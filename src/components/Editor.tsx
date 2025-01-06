@@ -9,8 +9,6 @@ import {
 } from "@microbit/makecode-embed/react";
 import React, { forwardRef } from "react";
 import { useProject } from "../hooks/project-hooks";
-import { getMakeCodeLang } from "../settings";
-import { useSettings } from "../store";
 
 const controllerId = "MicrobitMachineLearningTool";
 
@@ -23,13 +21,13 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
   ref
 ) {
   const { editorCallbacks } = useProject();
-  const [{ languageId }] = useSettings();
+  // const [{ languageId }] = useSettings();
   return (
     <MakeCodeFrame
       ref={ref}
       controllerId={controllerId}
       controller={2}
-      lang={getMakeCodeLang(languageId)}
+      // lang={getMakeCodeLang(languageId)}
       loading="eager"
       {...editorCallbacks}
       {...props}
