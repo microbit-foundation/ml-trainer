@@ -161,7 +161,6 @@ export const ProjectProvider = ({
     getEditorStartUp() !== "timed out" && editorReady();
     editorReadyPromiseRef.current.resolve();
     const { locale: makeCodeLang } = await driverRef.current!.info();
-    console.log("onWorkspaceLoaded MakeCode lang", makeCodeLang);
     if (supportedLanguages.find((l) => l.id === makeCodeLang)) {
       setSettings({ languageId: makeCodeLang });
     }
@@ -175,12 +174,10 @@ export const ProjectProvider = ({
     setSettings,
   ]);
 
-  const onEditorContentLoaded = useCallback(async () => {
+  const onEditorContentLoaded = useCallback(() => {
     logging.log("[MakeCode] Editor content loaded");
     editorContentLoadedPromiseRef.current.resolve();
-    const { locale: makeCodeLang } = await driverRef.current!.info();
-    console.log("onEditorContentLoaded MakeCode lang", makeCodeLang);
-  }, [driverRef, editorContentLoadedPromiseRef, logging]);
+  }, [editorContentLoadedPromiseRef, logging]);
 
   const checkIfEditorStartUpTimedOut = useCallback(
     async (promise: Promise<void> | undefined) => {
@@ -422,17 +419,11 @@ export const ProjectProvider = ({
 
   const editorChange = useStore((s) => s.editorChange);
   const onWorkspaceSave = useCallback(
-    async (event: EditorWorkspaceSaveRequest) => {
-      const { locale: makeCodeLang } = await driverRef.current!.info();
-      console.log("onWorkspaceSave MakeCode lang", makeCodeLang);
+    (event: EditorWorkspaceSaveRequest) => {
       editorChange(event.project);
     },
-    [driverRef, editorChange]
+    [editorChange]
   );
-  const onWorkspaceSync = useCallback(async () => {
-    const { locale: makeCodeLang } = await driverRef.current!.info();
-    console.log("onWorkspaceSync MakeCode lang", makeCodeLang);
-  }, [driverRef]);
 
   const onBack = useCallback(() => {
     navigate(createTestingModelPageUrl());
@@ -468,7 +459,6 @@ export const ProjectProvider = ({
         onBack,
         onEditorContentLoaded,
         onWorkspaceLoaded,
-        onWorkspaceSync,
       },
     }),
     [
@@ -486,7 +476,6 @@ export const ProjectProvider = ({
       onBack,
       onEditorContentLoaded,
       onWorkspaceLoaded,
-      onWorkspaceSync,
     ]
   );
 
