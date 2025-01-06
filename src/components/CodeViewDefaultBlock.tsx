@@ -52,14 +52,19 @@ const CodeViewDefaultBlock = ({
   const showIconText = intl.formatMessage({ id: "makecode-block-show-icon" });
   const showIconTextWidth = getTextWidth(showIconText) + textBoxPadding;
   const showIconBlockWidth = showIconTextWidth + 10;
+
+  const [makecodeBlockText] = intl
+    .formatMessage(
+      { id: "makecode-block-default-alt" },
+      { actionName, iconName }
+    )
+    .split(":")
+    .map((s) => s.trim());
+  const altText = `${makecodeBlockText}: ${onMlStartText1} ${actionName}${
+    onMlStartText2 ? ` ${onMlStartText2},` : ","
+  } ${showIconText} ${iconName}`;
   return (
-    <Box
-      role="img"
-      aria-label={intl.formatMessage(
-        { id: "makecode-block-default-alt" },
-        { actionName, iconName }
-      )}
-    >
+    <Box role="img" aria-label={altText}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
