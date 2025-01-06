@@ -8,7 +8,7 @@ import {
   EditorWorkspaceSaveRequest,
   MakeCodeFrameDriver,
   MakeCodeFrameProps,
-  Project
+  Project,
 } from "@microbit/makecode-embed/react";
 import {
   createContext,
@@ -429,13 +429,10 @@ export const ProjectProvider = ({
     },
     [driverRef, editorChange]
   );
-  const onWorkspaceSync = useCallback(
-    async () => {
-      const { locale: makeCodeLang } = await driverRef.current!.info();
-      console.log("onWorkspaceSync MakeCode lang", makeCodeLang);
-    },
-    [driverRef]
-  );
+  const onWorkspaceSync = useCallback(async () => {
+    const { locale: makeCodeLang } = await driverRef.current!.info();
+    console.log("onWorkspaceSync MakeCode lang", makeCodeLang);
+  }, [driverRef]);
 
   const onBack = useCallback(() => {
     navigate(createTestingModelPageUrl());
