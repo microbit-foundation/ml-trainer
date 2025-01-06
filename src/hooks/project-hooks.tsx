@@ -486,6 +486,7 @@ export const ProjectProvider = ({
       onBack,
       onEditorContentLoaded,
       onWorkspaceLoaded,
+      onWorkspaceSync,
     ]
   );
 
