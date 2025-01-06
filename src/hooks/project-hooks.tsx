@@ -161,7 +161,7 @@ export const ProjectProvider = ({
     getEditorStartUp() !== "timed out" && editorReady();
     editorReadyPromiseRef.current.resolve();
     const { locale: makeCodeLang } = await driverRef.current!.info();
-    console.log("onWorkspaceLoaded MakeCode lang", makeCodeLang)
+    console.log("onWorkspaceLoaded MakeCode lang", makeCodeLang);
     if (supportedLanguages.find((l) => l.id === makeCodeLang)) {
       setSettings({ languageId: makeCodeLang });
     }
@@ -179,7 +179,7 @@ export const ProjectProvider = ({
     logging.log("[MakeCode] Editor content loaded");
     editorContentLoadedPromiseRef.current.resolve();
     const { locale: makeCodeLang } = await driverRef.current!.info();
-    console.log("onEditorContentLoaded MakeCode lang", makeCodeLang)
+    console.log("onEditorContentLoaded MakeCode lang", makeCodeLang);
   }, [driverRef, editorContentLoadedPromiseRef, logging]);
 
   const checkIfEditorStartUpTimedOut = useCallback(
