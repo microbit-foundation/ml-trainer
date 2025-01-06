@@ -1873,6 +1873,12 @@
       "value": "Tu micro:bit no está conectado"
     }
   ],
+  "ml.onStart|block": [
+    {
+      "type": 0,
+      "value": "al iniciar ML $event"
+    }
+  ],
   "more-edit-in-makecode-options": [
     {
       "type": 0,

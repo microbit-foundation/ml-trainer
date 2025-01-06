@@ -1087,6 +1087,10 @@
     "defaultMessage": "Je micro:bit is niet verbonden",
     "description": "Live graph disconnected micro:bit status message"
   },
+  "ml.onStart|block": {
+    "defaultMessage": "op ML $event start",
+    "description": "Translation not needed."
+  },
   "more-edit-in-makecode-options": {
     "defaultMessage": "Meer opties voor bewerken in MakeCode",
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"

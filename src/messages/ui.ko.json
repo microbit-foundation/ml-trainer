@@ -1865,6 +1865,12 @@
       "value": "micro:bit가 연결되지 않았습니다."
     }
   ],
+  "ml.onStart|block": [
+    {
+      "type": 0,
+      "value": "ML $event 시작 시"
+    }
+  ],
   "more-edit-in-makecode-options": [
     {
       "type": 0,

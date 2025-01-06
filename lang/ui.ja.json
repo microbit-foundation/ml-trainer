@@ -720,11 +720,11 @@
     "description": "Graph colour scheme setting label"
   },
   "graph-color-scheme-color-blind-1": {
-    "defaultMessage": "カラーブラインド代替案1",
+    "defaultMessage": "カラーブラインド代替案 1",
     "description": "Graph colour scheme option"
   },
   "graph-color-scheme-color-blind-2": {
-    "defaultMessage": "カラーブラインド代替案2",
+    "defaultMessage": "カラーブラインド代替案 2",
     "description": "Graph colour scheme option"
   },
   "graph-color-scheme-default": {
@@ -812,7 +812,7 @@
     "description": "Home page section heading"
   },
   "homepage-subtitle": {
-    "defaultMessage": "動作と機械学習を使った BBC micro:bit のCreate AI",
+    "defaultMessage": "動作と機械学習を使って BBC micro:bit のAIを作る",
     "description": "Home page subtitle"
   },
   "homepage-video-alt": {
@@ -848,11 +848,11 @@
     "description": "Incompatible device dialog heading"
   },
   "incompatible-device-subtitle": {
-    "defaultMessage": "micro:bit V1を使っていますが、機械学習プロジェクトでは micro:bit V2 に載っている、より速いプロセッサが必要となります。 <link>micro:bitのバージョンについてもっと調べる。</link>",
+    "defaultMessage": "micro:bit V1を使っていますが、機械学習プロジェクトでは micro:bit V2 に載っている、より速いプロセッサが必要となります。  <link> micro:bitのバージョンについてもっと調べる。 </link>",
     "description": "Incompatible device dialog subtitle"
   },
   "insufficient-data-body": {
-    "defaultMessage": "モデルを訓練するには、少なくとも2つのアクションと、それぞれのアクションに対して3つのデータサンプルが必要です。",
+    "defaultMessage": "モデルを訓練するには、少なくとも 2 個のアクションと、それぞれのアクションに対して 3 個のデータサンプルが必要です。",
     "description": "Insufficient data modal content"
   },
   "insufficient-data-title": {
@@ -1076,16 +1076,20 @@
     "description": "Makecode block text. The translation should match MakeCode translations."
   },
   "makecode-load-error-dialog-body": {
-    "defaultMessage": "{appNameFull} は MakeCode の読み込みに失敗しました。インターネット接続を確認し、ページを更新してからもう一度お試しください。",
+    "defaultMessage": "{appNameFull} は MakeCode のロードに失敗しました。インターネット接続をチェックし、ページを更新してからもう一度お試しください。",
     "description": "Content of MakeCode load error dialog"
   },
   "makecode-load-error-dialog-title": {
-    "defaultMessage": "Microsoft MakeCode を読み込めませんでした",
+    "defaultMessage": "Microsoft MakeCode をロードできませんでした",
     "description": "Title of MakeCode load error dialog"
   },
   "microbit-not-connected": {
     "defaultMessage": "micro:bitが接続されていません",
     "description": "Live graph disconnected micro:bit status message"
+  },
+  "ml.onStart|block": {
+    "defaultMessage": "ML の $event が開始したとき",
+    "description": "Translation not needed."
   },
   "more-edit-in-makecode-options": {
     "defaultMessage": "MakeCodeのオプションをさらに編集する",
@@ -1208,7 +1212,7 @@
     "description": "Link to view privacy policy"
   },
   "project-loaded": {
-    "defaultMessage": "プロジェクトが読み込まれました",
+    "defaultMessage": "プロジェクトがロードされました",
     "description": "Toast when a new project is loaded"
   },
   "project-name-not-empty": {

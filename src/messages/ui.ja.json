@@ -1222,13 +1222,13 @@
   "graph-color-scheme-color-blind-1": [
     {
       "type": 0,
-      "value": "カラーブラインド代替案1"
+      "value": "カラーブラインド代替案 1"
     }
   ],
   "graph-color-scheme-color-blind-2": [
     {
       "type": 0,
-      "value": "カラーブラインド代替案2"
+      "value": "カラーブラインド代替案 2"
     }
   ],
   "graph-color-scheme-default": [
@@ -1384,7 +1384,7 @@
   "homepage-subtitle": [
     {
       "type": 0,
-      "value": "動作と機械学習を使った BBC micro:bit のCreate AI"
+      "value": "動作と機械学習を使って BBC micro:bit のAIを作る"
     }
   ],
   "homepage-video-alt": [
@@ -1470,13 +1470,13 @@
   "incompatible-device-subtitle": [
     {
       "type": 0,
-      "value": "micro:bit V1を使っていますが、機械学習プロジェクトでは micro:bit V2 に載っている、より速いプロセッサが必要となります。 "
+      "value": "micro:bit V1を使っていますが、機械学習プロジェクトでは micro:bit V2 に載っている、より速いプロセッサが必要となります。  "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "micro:bitのバージョンについてもっと調べる。"
+          "value": " micro:bitのバージョンについてもっと調べる。 "
         }
       ],
       "type": 8,
@@ -1486,7 +1486,7 @@
   "insufficient-data-body": [
     {
       "type": 0,
-      "value": "モデルを訓練するには、少なくとも2つのアクションと、それぞれのアクションに対して3つのデータサンプルが必要です。"
+      "value": "モデルを訓練するには、少なくとも 2 個のアクションと、それぞれのアクションに対して 3 個のデータサンプルが必要です。"
     }
   ],
   "insufficient-data-title": [
@@ -1842,19 +1842,25 @@
     },
     {
       "type": 0,
-      "value": " は MakeCode の読み込みに失敗しました。インターネット接続を確認し、ページを更新してからもう一度お試しください。"
+      "value": " は MakeCode のロードに失敗しました。インターネット接続をチェックし、ページを更新してからもう一度お試しください。"
     }
   ],
   "makecode-load-error-dialog-title": [
     {
       "type": 0,
-      "value": "Microsoft MakeCode を読み込めませんでした"
+      "value": "Microsoft MakeCode をロードできませんでした"
     }
   ],
   "microbit-not-connected": [
     {
       "type": 0,
       "value": "micro:bitが接続されていません"
+    }
+  ],
+  "ml.onStart|block": [
+    {
+      "type": 0,
+      "value": "ML の $event が開始したとき"
     }
   ],
   "more-edit-in-makecode-options": [
@@ -2094,7 +2100,7 @@
   "project-loaded": [
     {
       "type": 0,
-      "value": "プロジェクトが読み込まれました"
+      "value": "プロジェクトがロードされました"
     }
   ],
   "project-name-not-empty": [

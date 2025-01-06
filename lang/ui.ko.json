@@ -1087,6 +1087,10 @@
     "defaultMessage": "micro:bit가 연결되지 않았습니다.",
     "description": "Live graph disconnected micro:bit status message"
   },
+  "ml.onStart|block": {
+    "defaultMessage": "ML $event 시작 시",
+    "description": "Translation not needed."
+  },
   "more-edit-in-makecode-options": {
     "defaultMessage": "MakeCode 옵션에서 추가 편집",
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
