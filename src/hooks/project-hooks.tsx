@@ -8,7 +8,7 @@ import {
   EditorWorkspaceSaveRequest,
   MakeCodeFrameDriver,
   MakeCodeFrameProps,
-  Project,
+  Project
 } from "@microbit/makecode-embed/react";
 import {
   createContext,
@@ -29,6 +29,7 @@ import {
   SaveStep,
 } from "../model";
 import { untitledProjectName as untitled } from "../project-name";
+import { supportedLanguages } from "../settings";
 import { useStore } from "../store";
 import {
   createCodePageUrl,
@@ -43,7 +44,6 @@ import {
 } from "../utils/fs-util";
 import { useDownloadActions } from "./download-hooks";
 import { usePromiseRef } from "./use-promise-ref";
-import { supportedLanguages } from "../settings";
 
 class CodeEditorError extends Error {}
 
@@ -429,6 +429,13 @@ export const ProjectProvider = ({
     },
     [driverRef, editorChange]
   );
+  const onWorkspaceSync = useCallback(
+    async () => {
+      const { locale: makeCodeLang } = await driverRef.current!.info();
+      console.log("onWorkspaceSync MakeCode lang", makeCodeLang);
+    },
+    [driverRef]
+  );
 
   const onBack = useCallback(() => {
     navigate(createTestingModelPageUrl());
@@ -464,6 +471,7 @@ export const ProjectProvider = ({
         onBack,
         onEditorContentLoaded,
         onWorkspaceLoaded,
+        onWorkspaceSync,
       },
     }),
     [
