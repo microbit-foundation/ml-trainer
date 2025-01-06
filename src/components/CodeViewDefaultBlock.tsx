@@ -13,14 +13,14 @@ interface CodeViewDefaultBlockProps {
 
 const blockFont = `600 12pt "Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace`;
 const textBoxPadding = 40;
-const textBoxMargin = 10
+const textBoxMargin = 10;
 
 const getTextWidth = (text: string) => {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
   context!.font = blockFont;
-  return context!.measureText(text).width
-}
+  return context!.measureText(text).width;
+};
 
 const CodeViewDefaultBlock = ({
   actionName,
@@ -34,16 +34,24 @@ const CodeViewDefaultBlock = ({
 
   const actionNameBoxWidth = getTextWidth(actionName) + textBoxPadding;
   const dropdownArrowXPos = actionNameBoxWidth - 20;
-  
-  const onMlStartText = intl.formatMessage({id: "ml.onStart|block"})
-  const [onMlStartText1, onMlStartText2] = onMlStartText.split("$event").map(s => s.trim())
-  const actionNameXPos = getTextWidth(onMlStartText1) + (onMlStartText1 ? textBoxMargin : 10) + 5
-  const onMlStartText2XPos = actionNameXPos + actionNameBoxWidth + textBoxMargin
-  const onMlStartBlockWidth = actionNameXPos + actionNameBoxWidth + getTextWidth(onMlStartText2) + (onMlStartText2 ? textBoxMargin : 0);
 
-  const showIconText = intl.formatMessage({id: "makecode-block-show-icon"})
-  const showIconTextWidth = getTextWidth(showIconText) + textBoxPadding
-  const showIconBlockWidth = showIconTextWidth + 10
+  const onMlStartText = intl.formatMessage({ id: "ml.onStart|block" });
+  const [onMlStartText1, onMlStartText2] = onMlStartText
+    .split("$event")
+    .map((s) => s.trim());
+  const actionNameXPos =
+    getTextWidth(onMlStartText1) + (onMlStartText1 ? textBoxMargin : 10) + 5;
+  const onMlStartText2XPos =
+    actionNameXPos + actionNameBoxWidth + textBoxMargin;
+  const onMlStartBlockWidth =
+    actionNameXPos +
+    actionNameBoxWidth +
+    getTextWidth(onMlStartText2) +
+    (onMlStartText2 ? textBoxMargin : 0);
+
+  const showIconText = intl.formatMessage({ id: "makecode-block-show-icon" });
+  const showIconTextWidth = getTextWidth(showIconText) + textBoxPadding;
+  const showIconBlockWidth = showIconTextWidth + 10;
   return (
     <Box
       role="img"
