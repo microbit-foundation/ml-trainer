@@ -422,10 +422,12 @@ export const ProjectProvider = ({
 
   const editorChange = useStore((s) => s.editorChange);
   const onWorkspaceSave = useCallback(
-    (event: EditorWorkspaceSaveRequest) => {
+    async (event: EditorWorkspaceSaveRequest) => {
+      const { locale: makeCodeLang } = await driverRef.current!.info();
+      console.log("onWorkspaceSave MakeCode lang", makeCodeLang);
       editorChange(event.project);
     },
-    [editorChange]
+    [driverRef, editorChange]
   );
 
   const onBack = useCallback(() => {
