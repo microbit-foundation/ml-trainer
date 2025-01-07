@@ -1063,16 +1063,8 @@
     "defaultMessage": "MakeCode blok: op ML {actionName} start, toon pictogram {iconName}",
     "description": "Makecode default block alt text"
   },
-  "makecode-block-on-ML": {
-    "defaultMessage": "op ML",
-    "description": "Makecode block text. The translation should match MakeCode translations."
-  },
   "makecode-block-show-icon": {
     "defaultMessage": "toon pictogram",
-    "description": "Makecode block text. The translation should match MakeCode translations."
-  },
-  "makecode-block-start": {
-    "defaultMessage": "start",
     "description": "Makecode block text. The translation should match MakeCode translations."
   },
   "makecode-load-error-dialog-body": {

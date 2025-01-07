@@ -1837,22 +1837,10 @@
       "value": "."
     }
   ],
-  "makecode-block-on-ML": [
-    {
-      "type": 0,
-      "value": "no ML"
-    }
-  ],
   "makecode-block-show-icon": [
     {
       "type": 0,
       "value": "mostrar ícone"
-    }
-  ],
-  "makecode-block-start": [
-    {
-      "type": 0,
-      "value": "início"
     }
   ],
   "makecode-load-error-dialog-body": [

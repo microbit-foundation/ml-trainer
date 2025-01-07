@@ -1829,22 +1829,10 @@
       "value": "iconName"
     }
   ],
-  "makecode-block-on-ML": [
-    {
-      "type": 0,
-      "value": "在 ML 上"
-    }
-  ],
   "makecode-block-show-icon": [
     {
       "type": 0,
       "value": "顯示圖示"
-    }
-  ],
-  "makecode-block-start": [
-    {
-      "type": 0,
-      "value": "start"
     }
   ],
   "makecode-load-error-dialog-body": [

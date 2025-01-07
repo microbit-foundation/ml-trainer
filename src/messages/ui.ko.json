@@ -1825,22 +1825,10 @@
       "value": " 아이콘 표시"
     }
   ],
-  "makecode-block-on-ML": [
-    {
-      "type": 0,
-      "value": "ML에서"
-    }
-  ],
   "makecode-block-show-icon": [
     {
       "type": 0,
       "value": "아이콘 표시"
-    }
-  ],
-  "makecode-block-start": [
-    {
-      "type": 0,
-      "value": "start"
     }
   ],
   "makecode-load-error-dialog-body": [

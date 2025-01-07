@@ -1817,22 +1817,10 @@
       "value": "を表示する"
     }
   ],
-  "makecode-block-on-ML": [
-    {
-      "type": 0,
-      "value": "ML開始時"
-    }
-  ],
   "makecode-block-show-icon": [
     {
       "type": 0,
       "value": "アイコンを表示"
-    }
-  ],
-  "makecode-block-start": [
-    {
-      "type": 0,
-      "value": "start"
     }
   ],
   "makecode-load-error-dialog-body": [

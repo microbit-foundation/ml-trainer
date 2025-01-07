@@ -1833,22 +1833,10 @@
       "value": "iconName"
     }
   ],
-  "makecode-block-on-ML": [
-    {
-      "type": 0,
-      "value": "op ML"
-    }
-  ],
   "makecode-block-show-icon": [
     {
       "type": 0,
       "value": "toon pictogram"
-    }
-  ],
-  "makecode-block-start": [
-    {
-      "type": 0,
-      "value": "start"
     }
   ],
   "makecode-load-error-dialog-body": [

@@ -1063,16 +1063,8 @@
     "defaultMessage": "Bloco MakeCode: ao iniciar o ML {actionName}, mostrar ícone {iconName}.",
     "description": "Makecode default block alt text"
   },
-  "makecode-block-on-ML": {
-    "defaultMessage": "no ML",
-    "description": "Makecode block text. The translation should match MakeCode translations."
-  },
   "makecode-block-show-icon": {
     "defaultMessage": "mostrar ícone",
-    "description": "Makecode block text. The translation should match MakeCode translations."
-  },
-  "makecode-block-start": {
-    "defaultMessage": "início",
     "description": "Makecode block text. The translation should match MakeCode translations."
   },
   "makecode-load-error-dialog-body": {

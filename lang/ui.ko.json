@@ -1063,16 +1063,8 @@
     "defaultMessage": "MakeCode 블록: ML {actionName} 시작 시, {iconName} 아이콘 표시",
     "description": "Makecode default block alt text"
   },
-  "makecode-block-on-ML": {
-    "defaultMessage": "ML에서",
-    "description": "Makecode block text. The translation should match MakeCode translations."
-  },
   "makecode-block-show-icon": {
     "defaultMessage": "아이콘 표시",
-    "description": "Makecode block text. The translation should match MakeCode translations."
-  },
-  "makecode-block-start": {
-    "defaultMessage": "start",
     "description": "Makecode block text. The translation should match MakeCode translations."
   },
   "makecode-load-error-dialog-body": {
