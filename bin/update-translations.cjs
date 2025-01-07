@@ -24,7 +24,7 @@ const languages = ["en", "es-ES", "ja", "ko", "nl", "pl", "pt-br", "zh-tw"];
 const enMessagesToAdd = {
   "ml.onStart|block": {
     defaultMessage: "on ML $event start",
-    description: "Translation not needed.",
+    description: "This string should be a Crowdin duplicate of the MakeCode extension block with the same text and use the same translation.",
   },
 };
 
@@ -41,7 +41,7 @@ const getMessagesToAdd = (mlStrings, langMessages) => {
     if (!langMessages[k]) {
       return { ...acc, [k]: { ...enMessagesToAdd[k] } };
     }
-    return acc;
+    return { ...acc, [k]: { ...enMessagesToAdd[k], defaultMessage: acc[k].defaultMessage } };
   }, {});
 };
 const getFileJSONContent = (filepath) => JSON.parse(fs.readFileSync(filepath));

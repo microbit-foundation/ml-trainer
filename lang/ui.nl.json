@@ -1089,7 +1089,7 @@
   },
   "ml.onStart|block": {
     "defaultMessage": "op ML $event start",
-    "description": "Translation not needed."
+    "description": "This string should be a Crowdin duplicate of the MakeCode extension block with the same text and use the same translation."
   },
   "more-edit-in-makecode-options": {
     "defaultMessage": "Meer opties voor bewerken in MakeCode",
