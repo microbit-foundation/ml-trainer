@@ -161,6 +161,7 @@ export const ProjectProvider = ({
     getEditorStartUp() !== "timed out" && editorReady();
     editorReadyPromiseRef.current.resolve();
     const { locale: makeCodeLang } = await driverRef.current!.info();
+    console.log({ makeCodeLang });
     if (supportedLanguages.find((l) => l.id === makeCodeLang)) {
       setSettings({ languageId: makeCodeLang });
     }
