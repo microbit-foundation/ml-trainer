@@ -29,6 +29,7 @@ import {
   SaveStep,
 } from "../model";
 import { untitledProjectName as untitled } from "../project-name";
+import { supportedLanguages } from "../settings";
 import { useStore } from "../store";
 import {
   createCodePageUrl,
@@ -152,18 +153,25 @@ export const ProjectProvider = ({
   const startUpTimeout = 90000;
   const startUpTimestamp = useRef<number>(Date.now());
 
+  const setSettings = useStore((s) => s.setSettings);
   const onWorkspaceLoaded = useCallback(async () => {
     logging.log("[MakeCode] Workspace loaded");
     await editorContentLoadedPromiseRef.current.promise;
     // Get latest start up state and only mark editor ready if editor has not timed out.
     getEditorStartUp() !== "timed out" && editorReady();
     editorReadyPromiseRef.current.resolve();
+    const { locale: makeCodeLang } = await driverRef.current!.info();
+    if (supportedLanguages.find((l) => l.id === makeCodeLang)) {
+      setSettings({ languageId: makeCodeLang });
+    }
   }, [
+    driverRef,
     editorContentLoadedPromiseRef,
     editorReady,
     editorReadyPromiseRef,
     getEditorStartUp,
     logging,
+    setSettings,
   ]);
 
   const onEditorContentLoaded = useCallback(() => {
