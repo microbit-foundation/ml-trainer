@@ -1815,22 +1815,10 @@
       "value": "Icono de flecha izquierda para volver a MakeCode"
     }
   ],
-  "makecode-block-default-alt": [
+  "makecode-block-alt-prefix": [
     {
       "type": 0,
-      "value": "Bloque de MakeCode: al iniciar ML "
-    },
-    {
-      "type": 1,
-      "value": "actionName"
-    },
-    {
-      "type": 0,
-      "value": ", mostrar icono "
-    },
-    {
-      "type": 1,
-      "value": "iconName"
+      "value": "MakeCode block:"
     }
   ],
   "makecode-block-show-icon": [

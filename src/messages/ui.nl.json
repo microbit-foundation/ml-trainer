@@ -1815,22 +1815,10 @@
       "value": "Pijl naar links voor MakeCode terug"
     }
   ],
-  "makecode-block-default-alt": [
+  "makecode-block-alt-prefix": [
     {
       "type": 0,
-      "value": "MakeCode blok: op ML "
-    },
-    {
-      "type": 1,
-      "value": "actionName"
-    },
-    {
-      "type": 0,
-      "value": " start, toon pictogram "
-    },
-    {
-      "type": 1,
-      "value": "iconName"
+      "value": "MakeCode block:"
     }
   ],
   "makecode-block-show-icon": [

@@ -1059,9 +1059,9 @@
     "defaultMessage": "Pijl naar links voor MakeCode terug",
     "description": "Testing model page title"
   },
-  "makecode-block-default-alt": {
-    "defaultMessage": "MakeCode blok: op ML {actionName} start, toon pictogram {iconName}",
-    "description": "Makecode default block alt text"
+  "makecode-block-alt-prefix": {
+    "defaultMessage": "MakeCode block:",
+    "description": "Makecode block alt text prefix"
   },
   "makecode-block-show-icon": {
     "defaultMessage": "toon pictogram",

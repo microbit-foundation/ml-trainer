@@ -1059,9 +1059,9 @@
     "defaultMessage": "MakeCodeを戻すための左矢印アイコン",
     "description": "Testing model page title"
   },
-  "makecode-block-default-alt": {
-    "defaultMessage": "MakeCodeブロック: ML {actionName} 開始時にアイコン {iconName}を表示する",
-    "description": "Makecode default block alt text"
+  "makecode-block-alt-prefix": {
+    "defaultMessage": "MakeCode block:",
+    "description": "Makecode block alt text prefix"
   },
   "makecode-block-show-icon": {
     "defaultMessage": "アイコンを表示",

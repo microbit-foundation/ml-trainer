@@ -53,14 +53,10 @@ const CodeViewDefaultBlock = ({
   const showIconTextWidth = getTextWidth(showIconText) + textBoxPadding;
   const showIconBlockWidth = showIconTextWidth + 10;
 
-  const [makecodeBlockText] = intl
-    .formatMessage(
-      { id: "makecode-block-default-alt" },
-      { actionName, iconName }
-    )
-    .split(":")
-    .map((s) => s.trim());
-  const altText = `${makecodeBlockText}: ${onMlStartText1} ${actionName}${
+  const makecodeBlockText = intl.formatMessage({
+    id: "makecode-block-alt-prefix",
+  });
+  const altText = `${makecodeBlockText} ${onMlStartText1} ${actionName}${
     onMlStartText2 ? ` ${onMlStartText2},` : ","
   } ${showIconText} ${iconName}`;
   return (

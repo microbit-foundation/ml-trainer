@@ -1803,26 +1803,10 @@
       "value": "MakeCode 뒤로 가기 왼쪽 화살 아이콘"
     }
   ],
-  "makecode-block-default-alt": [
+  "makecode-block-alt-prefix": [
     {
       "type": 0,
-      "value": "MakeCode 블록: ML "
-    },
-    {
-      "type": 1,
-      "value": "actionName"
-    },
-    {
-      "type": 0,
-      "value": " 시작 시, "
-    },
-    {
-      "type": 1,
-      "value": "iconName"
-    },
-    {
-      "type": 0,
-      "value": " 아이콘 표시"
+      "value": "MakeCode block:"
     }
   ],
   "makecode-block-show-icon": [

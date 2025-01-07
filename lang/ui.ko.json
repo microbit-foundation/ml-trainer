@@ -1059,9 +1059,9 @@
     "defaultMessage": "MakeCode 뒤로 가기 왼쪽 화살 아이콘",
     "description": "Testing model page title"
   },
-  "makecode-block-default-alt": {
-    "defaultMessage": "MakeCode 블록: ML {actionName} 시작 시, {iconName} 아이콘 표시",
-    "description": "Makecode default block alt text"
+  "makecode-block-alt-prefix": {
+    "defaultMessage": "MakeCode block:",
+    "description": "Makecode block alt text prefix"
   },
   "makecode-block-show-icon": {
     "defaultMessage": "아이콘 표시",

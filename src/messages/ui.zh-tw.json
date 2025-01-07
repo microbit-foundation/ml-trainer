@@ -1811,22 +1811,10 @@
       "value": "MakeCode 傳回的左箭頭圖標"
     }
   ],
-  "makecode-block-default-alt": [
+  "makecode-block-alt-prefix": [
     {
       "type": 0,
-      "value": "MakeCode 區塊：在 ML "
-    },
-    {
-      "type": 1,
-      "value": "actionName"
-    },
-    {
-      "type": 0,
-      "value": " 啟動時，顯示圖示 "
-    },
-    {
-      "type": 1,
-      "value": "iconName"
+      "value": "MakeCode block:"
     }
   ],
   "makecode-block-show-icon": [

@@ -1059,9 +1059,9 @@
     "defaultMessage": "MakeCode 傳回的左箭頭圖標",
     "description": "Testing model page title"
   },
-  "makecode-block-default-alt": {
-    "defaultMessage": "MakeCode 區塊：在 ML {actionName} 啟動時，顯示圖示 {iconName}",
-    "description": "Makecode default block alt text"
+  "makecode-block-alt-prefix": {
+    "defaultMessage": "MakeCode block:",
+    "description": "Makecode block alt text prefix"
   },
   "makecode-block-show-icon": {
     "defaultMessage": "顯示圖示",

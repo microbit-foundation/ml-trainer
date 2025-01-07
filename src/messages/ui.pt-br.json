@@ -1815,26 +1815,10 @@
       "value": "Ícone de seta para a esquerda para a ação \"voltar\" no MakeCode."
     }
   ],
-  "makecode-block-default-alt": [
+  "makecode-block-alt-prefix": [
     {
       "type": 0,
-      "value": "Bloco MakeCode: ao iniciar o ML "
-    },
-    {
-      "type": 1,
-      "value": "actionName"
-    },
-    {
-      "type": 0,
-      "value": ", mostrar ícone "
-    },
-    {
-      "type": 1,
-      "value": "iconName"
-    },
-    {
-      "type": 0,
-      "value": "."
+      "value": "MakeCode block:"
     }
   ],
   "makecode-block-show-icon": [

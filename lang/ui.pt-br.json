@@ -1059,9 +1059,9 @@
     "defaultMessage": "Ícone de seta para a esquerda para a ação \"voltar\" no MakeCode.",
     "description": "Testing model page title"
   },
-  "makecode-block-default-alt": {
-    "defaultMessage": "Bloco MakeCode: ao iniciar o ML {actionName}, mostrar ícone {iconName}.",
-    "description": "Makecode default block alt text"
+  "makecode-block-alt-prefix": {
+    "defaultMessage": "MakeCode block:",
+    "description": "Makecode block alt text prefix"
   },
   "makecode-block-show-icon": {
     "defaultMessage": "mostrar ícone",

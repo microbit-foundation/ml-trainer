@@ -1059,9 +1059,9 @@
     "defaultMessage": "Icono de flecha izquierda para volver a MakeCode",
     "description": "Testing model page title"
   },
-  "makecode-block-default-alt": {
-    "defaultMessage": "Bloque de MakeCode: al iniciar ML {actionName}, mostrar icono {iconName}",
-    "description": "Makecode default block alt text"
+  "makecode-block-alt-prefix": {
+    "defaultMessage": "MakeCode block:",
+    "description": "Makecode block alt text prefix"
   },
   "makecode-block-show-icon": {
     "defaultMessage": "mostrar icono",

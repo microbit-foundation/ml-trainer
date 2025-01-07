@@ -1059,9 +1059,9 @@
     "defaultMessage": "Left arrow icon for MakeCode back",
     "description": "Testing model page title"
   },
-  "makecode-block-default-alt": {
-    "defaultMessage": "MakeCode block: on ML {actionName} start, show icon {iconName}",
-    "description": "Makecode default block alt text"
+  "makecode-block-alt-prefix": {
+    "defaultMessage": "MakeCode block:",
+    "description": "Makecode block alt text prefix"
   },
   "makecode-block-show-icon": {
     "defaultMessage": "show icon",

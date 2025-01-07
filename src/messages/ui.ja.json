@@ -1795,26 +1795,10 @@
       "value": "MakeCodeを戻すための左矢印アイコン"
     }
   ],
-  "makecode-block-default-alt": [
+  "makecode-block-alt-prefix": [
     {
       "type": 0,
-      "value": "MakeCodeブロック: ML "
-    },
-    {
-      "type": 1,
-      "value": "actionName"
-    },
-    {
-      "type": 0,
-      "value": " 開始時にアイコン "
-    },
-    {
-      "type": 1,
-      "value": "iconName"
-    },
-    {
-      "type": 0,
-      "value": "を表示する"
+      "value": "MakeCode block:"
     }
   ],
   "makecode-block-show-icon": [
