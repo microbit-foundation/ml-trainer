@@ -1292,7 +1292,7 @@
   "help-translate": [
     {
       "type": 0,
-      "value": "Help translate"
+      "value": "번역 지원"
     }
   ],
   "home-action": [
@@ -1806,7 +1806,7 @@
   "makecode-block-alt-prefix": [
     {
       "type": 0,
-      "value": "MakeCode block:"
+      "value": "MakeCode 블록:"
     }
   ],
   "makecode-block-show-icon": [

@@ -1288,7 +1288,7 @@
   "help-translate": [
     {
       "type": 0,
-      "value": "Help translate"
+      "value": "翻訳を手伝う"
     }
   ],
   "home-action": [
@@ -1798,7 +1798,7 @@
   "makecode-block-alt-prefix": [
     {
       "type": 0,
-      "value": "MakeCode block:"
+      "value": "MakeCodeブロック:"
     }
   ],
   "makecode-block-show-icon": [

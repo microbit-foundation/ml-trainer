@@ -764,7 +764,7 @@
     "description": "Link or menu item link to support site"
   },
   "help-translate": {
-    "defaultMessage": "Help translate",
+    "defaultMessage": "Ajude a traduzir",
     "description": "Help translate  menu option text"
   },
   "home-action": {
@@ -1060,7 +1060,7 @@
     "description": "Testing model page title"
   },
   "makecode-block-alt-prefix": {
-    "defaultMessage": "MakeCode block:",
+    "defaultMessage": "Bloco MakeCode:",
     "description": "Makecode block alt text prefix"
   },
   "makecode-block-show-icon": {

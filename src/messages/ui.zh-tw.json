@@ -1300,7 +1300,7 @@
   "help-translate": [
     {
       "type": 0,
-      "value": "Help translate"
+      "value": "說明翻譯"
     }
   ],
   "home-action": [
@@ -1814,7 +1814,7 @@
   "makecode-block-alt-prefix": [
     {
       "type": 0,
-      "value": "MakeCode block:"
+      "value": "MakeCode 區塊："
     }
   ],
   "makecode-block-show-icon": [

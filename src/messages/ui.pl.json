@@ -1304,7 +1304,7 @@
   "help-translate": [
     {
       "type": 0,
-      "value": "Help translate"
+      "value": "Pomóż tłumaczyć"
     }
   ],
   "home-action": [
@@ -1822,7 +1822,7 @@
   "makecode-block-alt-prefix": [
     {
       "type": 0,
-      "value": "MakeCode block:"
+      "value": "Blok MakeCode:"
     }
   ],
   "makecode-block-show-icon": [
