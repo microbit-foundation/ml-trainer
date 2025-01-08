@@ -755,6 +755,10 @@
     "defaultMessage": "Grossa",
     "description": "Graph line weight option"
   },
+  "graph-preview": {
+    "defaultMessage": "Graph preview",
+    "description": "Label for preview of the graph shown in the settings dialog"
+  },
   "help-label": {
     "defaultMessage": "Ajuda",
     "description": "Help icon aria label"

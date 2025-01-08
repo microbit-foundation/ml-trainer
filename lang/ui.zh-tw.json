@@ -755,6 +755,10 @@
     "defaultMessage": "厚實的",
     "description": "Graph line weight option"
   },
+  "graph-preview": {
+    "defaultMessage": "Graph preview",
+    "description": "Label for preview of the graph shown in the settings dialog"
+  },
   "help-label": {
     "defaultMessage": "幫助",
     "description": "Help icon aria label"

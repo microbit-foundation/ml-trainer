@@ -1289,6 +1289,12 @@
       "value": "Grube"
     }
   ],
+  "graph-preview": [
+    {
+      "type": 0,
+      "value": "Graph preview"
+    }
+  ],
   "help-label": [
     {
       "type": 0,

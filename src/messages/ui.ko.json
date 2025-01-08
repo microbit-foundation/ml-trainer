@@ -1277,6 +1277,12 @@
       "value": "두꺼움"
     }
   ],
+  "graph-preview": [
+    {
+      "type": 0,
+      "value": "Graph preview"
+    }
+  ],
   "help-label": [
     {
       "type": 0,

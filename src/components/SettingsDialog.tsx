@@ -151,7 +151,9 @@ export const SettingsDialog = ({
                   }
                 />
                 <VStack alignItems="flex-start" w="full">
-                  <Text>Graph preview</Text>
+                  <Text>
+                    <FormattedMessage id="graph-preview" />
+                  </Text>
                   <AspectRatio ratio={526 / 92} w="full">
                     <RecordingGraph
                       responsive
