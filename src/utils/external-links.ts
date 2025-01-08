@@ -12,8 +12,10 @@ const microbitOrgBaseUrl =
     ? "https://microbit.org/"
     : "https://stage.microbit.org/";
 
-export const projectUrl = (slug: string) =>
-  `${microbitOrgBaseUrl}projects/make-it-code-it/${encodeURIComponent(slug)}/`;
+export const projectUrl = (slug: string, language: string) =>
+  `${microbitOrgBaseUrl}${
+    language === "en" ? "" : `${language.toLowerCase()}/`
+  }projects/make-it-code-it/${encodeURIComponent(slug)}/`;
 
 export const userGuideUrl = () =>
   `${microbitOrgBaseUrl}get-started/user-guide/microbit-createai/`;

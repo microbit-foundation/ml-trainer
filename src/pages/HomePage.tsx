@@ -35,6 +35,7 @@ import {
   projectUrl,
   userGuideUrl,
 } from "../utils/external-links";
+import { useSettings } from "../store";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ const HomePage = () => {
     navigate(createNewPageUrl());
   }, [navigate]);
   const intl = useIntl();
+  const [{ languageId }] = useSettings();
   const { appNameFull } = useDeployment();
   return (
     <DefaultPageLayout
@@ -170,21 +172,21 @@ const HomePage = () => {
                 title={intl.formatMessage({
                   id: "ai-storytelling-friend-resource-title",
                 })}
-                url={projectUrl("ai-storytelling-friend")}
+                url={projectUrl("ai-storytelling-friend", languageId)}
                 imgSrc={projectImage1}
               />
               <ResourceCard
                 title={intl.formatMessage({
                   id: "simple-ai-exercise-timer-resource-title",
                 })}
-                url={projectUrl("simple-ai-exercise-timer")}
+                url={projectUrl("simple-ai-exercise-timer", languageId)}
                 imgSrc={projectImage2}
               />
               <ResourceCard
                 title={intl.formatMessage({
                   id: "ai-activity-timer-resource-title",
                 })}
-                url={projectUrl("ai-activity-timer")}
+                url={projectUrl("ai-activity-timer", languageId)}
                 imgSrc={projectImage3}
               />
             </HStack>
