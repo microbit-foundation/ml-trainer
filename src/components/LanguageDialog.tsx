@@ -14,11 +14,11 @@ import {
 } from "@chakra-ui/modal";
 import { HStack, Icon, Link, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { useCallback } from "react";
-import { FormattedMessage } from "react-intl";
-import { Language, supportedLanguages } from "../settings";
-import { useSettings } from "../store";
 import { RiExternalLinkLine } from "react-icons/ri";
+import { FormattedMessage } from "react-intl";
 import { deployment } from "../deployment";
+import { Language, supportedLanguages } from "../settings";
+import { useStore } from "../store";
 
 interface LanguageDialogProps {
   isOpen: boolean;
@@ -34,13 +34,13 @@ export const LanguageDialog = ({
   onClose,
   finalFocusRef,
 }: LanguageDialogProps) => {
-  const [, setSettings] = useSettings();
+  const setLanguage = useStore((s) => s.setLanguage);
   const handleChooseLanguage = useCallback(
     (languageId: string) => {
-      setSettings({ languageId });
+      setLanguage(languageId);
       onClose();
     },
-    [setSettings, onClose]
+    [onClose, setLanguage]
   );
   const hasPreviewLanguages = supportedLanguages.some((l) => l.preview);
   return (

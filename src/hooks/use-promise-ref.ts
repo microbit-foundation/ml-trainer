@@ -10,11 +10,11 @@ interface PromiseCallbacks<T> {
   reject: (reason?: unknown) => void;
 }
 
-interface PromiseInfo<T> extends PromiseCallbacks<T> {
+export interface PromiseInfo<T> extends PromiseCallbacks<T> {
   promise: Promise<T>;
 }
 
-const createPromise = <T>(): PromiseInfo<T> => {
+export const createPromise = <T>(): PromiseInfo<T> => {
   let callbacks: PromiseCallbacks<T> | undefined;
   const promise = new Promise<T>((resolve, reject) => {
     callbacks = { resolve, reject };
