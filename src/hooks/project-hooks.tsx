@@ -223,6 +223,7 @@ export const ProjectProvider = ({
               await driverRef.current.importProject({ project });
               logging.log("[MakeCode] Project import succeeded");
               projectFlushedToEditor();
+              langChangeFlushedToEditor();
             } catch (e) {
               logging.log("[MakeCode] Project import failed");
               throw e;
@@ -425,9 +426,14 @@ export const ProjectProvider = ({
   const editorChange = useStore((s) => s.editorChange);
   const onWorkspaceSave = useCallback(
     (event: EditorWorkspaceSaveRequest) => {
-      editorChange(event.project);
+      if (!checkIfLangChanged()) {
+        // We don't want to handle these events until MakeCode has been
+        // reinitialised after a language change.
+        // We should reinitialise with the latest project.
+        editorChange(event.project);
+      }
     },
-    [editorChange]
+    [checkIfLangChanged, editorChange]
   );
 
   const onBack = useCallback(() => {
