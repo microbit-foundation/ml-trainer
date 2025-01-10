@@ -44,7 +44,6 @@ import { mlSettings } from "./mlConfig";
 import { BufferedData } from "./buffered-data";
 import { getDetectedAction } from "./utils/prediction";
 import { getTour as getTourSpec } from "./tours";
-import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -165,10 +164,6 @@ export interface State {
   isEditorReady: boolean;
   editorStartUp: EditorStartUp;
   editorStartUpTimestamp: number;
-  editorPromises: {
-    editorReadyPromise: PromiseInfo<void>;
-    editorContentLoadedPromise: PromiseInfo<void>;
-  };
   isEditorTimedOutDialogOpen: boolean;
 
   download: DownloadState;
@@ -252,8 +247,6 @@ export interface Actions {
   setIsEditorTimedOutDialogOpen(isOpen: boolean): void;
   setChangedHeaderExpected(): void;
   projectFlushedToEditor(): void;
-  resetContentLoadedEditorPromise: () => void;
-  resetEditorReadyPromise: () => void;
 
   setDownload(state: DownloadState): void;
   // TODO: does the persistence slow this down? we could move it to another store
@@ -317,10 +310,6 @@ const createMlStore = (logging: Logging) => {
           isEditorReady: false,
           editorStartUp: "in-progress",
           editorStartUpTimestamp: Date.now(),
-          editorPromises: {
-            editorReadyPromise: createPromise<void>(),
-            editorContentLoadedPromise: createPromise<void>(),
-          },
           isEditorTimedOutDialogOpen: false,
           appEditNeedsFlushToEditor: true,
           changedHeaderExpected: false,
@@ -375,34 +364,6 @@ const createMlStore = (logging: Logging) => {
               }),
               false,
               "setLanguage"
-            );
-          },
-
-          resetContentLoadedEditorPromise() {
-            console.log("resetContentLoadedEditorPromise");
-            set(
-              ({ editorPromises }) => ({
-                editorPromises: {
-                  ...editorPromises,
-                  editorContentLoadedPromise: createPromise<void>(),
-                },
-              }),
-              false,
-              "resetContentLoadedEditorPromise"
-            );
-          },
-
-          resetEditorReadyPromise() {
-            console.log("resetEditorReadyPromise");
-            set(
-              ({ editorPromises }) => ({
-                editorPromises: {
-                  ...editorPromises,
-                  editorReadyPromise: createPromise<void>(),
-                },
-              }),
-              false,
-              "resetEditorReadyPromise"
             );
           },
 

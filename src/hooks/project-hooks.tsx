@@ -42,6 +42,7 @@ import {
   readFileAsText,
 } from "../utils/fs-util";
 import { useDownloadActions } from "./download-hooks";
+import { usePromiseRef } from "./use-promise-ref";
 
 class CodeEditorError extends Error {}
 
@@ -135,13 +136,12 @@ export const ProjectProvider = ({
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
   const getCurrentProject = useStore((s) => s.getCurrentProject);
   const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
-  const { editorReadyPromise, editorContentLoadedPromise } = useStore(
-    (s) => s.editorPromises
-  );
   const startUpTimestamp = useStore((s) => s.editorStartUpTimestamp);
   const navigate = useNavigate();
 
   const project = useStore((s) => s.project);
+  const editorReadyPromiseRef = usePromiseRef<void>();
+  const editorContentLoadedPromiseRef = usePromiseRef<void>();
   const initialProjects = useCallback(() => {
     logging.log(
       `[MakeCode] Initialising with header ID: ${project.header?.id}`
@@ -152,31 +152,24 @@ export const ProjectProvider = ({
 
   const startUpTimeout = 90000;
 
-  const resetContentLoadedEditorPromise = useStore(
-    (s) => s.resetContentLoadedEditorPromise
-  );
-  const resetEditorReadyPromise = useStore((s) => s.resetEditorReadyPromise);
   const onWorkspaceLoaded = useCallback(async () => {
     logging.log("[MakeCode] Workspace loaded");
-    await editorContentLoadedPromise.promise;
+    await editorContentLoadedPromiseRef.current.promise;
     // Get latest start up state and only mark editor ready if editor has not timed out.
     getEditorStartUp() !== "timed out" && editorReady();
-    editorReadyPromise.resolve();
-    resetEditorReadyPromise();
+    editorReadyPromiseRef.current.resolve();
   }, [
-    editorContentLoadedPromise.promise,
+    editorContentLoadedPromiseRef,
     editorReady,
-    editorReadyPromise,
+    editorReadyPromiseRef,
     getEditorStartUp,
     logging,
-    resetEditorReadyPromise,
   ]);
 
   const onEditorContentLoaded = useCallback(() => {
     logging.log("[MakeCode] Editor content loaded");
-    editorContentLoadedPromise.resolve();
-    resetContentLoadedEditorPromise();
-  }, [editorContentLoadedPromise, logging, resetContentLoadedEditorPromise]);
+    editorContentLoadedPromiseRef.current.resolve();
+  }, [editorContentLoadedPromiseRef, logging]);
 
   const checkIfEditorStartUpTimedOut = useCallback(
     async (promise: Promise<void> | undefined) => {
@@ -219,7 +212,7 @@ export const ProjectProvider = ({
             logging.log("[MakeCode] Importing project");
             if (!isEditorReady) {
               console.log("Wait for editor to be ready");
-              await editorReadyPromise.promise;
+              await editorReadyPromiseRef.current.promise;
             }
             logging.log("[MakeCode] EDITOR READY");
             const project = getCurrentProject();
@@ -256,11 +249,11 @@ export const ProjectProvider = ({
     [
       checkIfProjectNeedsFlush,
       driverRef,
+      editorReadyPromiseRef,
       logging,
       isEditorReady,
       getCurrentProject,
       expectChangedHeader,
-      editorReadyPromise.promise,
       projectFlushedToEditor,
       checkIfEditorStartUpTimedOut,
       editorTimedOut,
@@ -324,7 +317,7 @@ export const ProjectProvider = ({
         // Check if is a MakeCode hex, otherwise show error dialog.
         if (hex.includes(makeCodeMagicMark)) {
           const hasTimedOut = await checkIfEditorStartUpTimedOut(
-            editorReadyPromise.promise
+            editorReadyPromiseRef.current.promise
           );
           if (hasTimedOut) {
             openEditorTimedOutDialog();
@@ -345,7 +338,7 @@ export const ProjectProvider = ({
     [
       checkIfEditorStartUpTimedOut,
       driverRef,
-      editorReadyPromise,
+      editorReadyPromiseRef,
       loadDataset,
       logging,
       navigate,
