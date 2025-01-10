@@ -850,6 +850,8 @@ const createMlStore = (logging: Logging) => {
                     logging.log(
                       `[MakeCode] Detected new project, loading actions. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
                     );
+                    console.log("prevProject", prevProject);
+                    console.log("newProject", newProject);
                     // It's a new project. Thanks user. We'll update our state.
                     // This will cause another write to MakeCode but that's OK as it gives us
                     // a chance to validate/update the project

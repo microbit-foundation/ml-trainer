@@ -260,6 +260,7 @@ export const ProjectProvider = ({
     ]
   );
   const openEditor = useCallback(async () => {
+    console.log("openEditor");
     logging.event({
       type: "edit-in-makecode",
     });
@@ -275,6 +276,7 @@ export const ProjectProvider = ({
     }
   }, [doAfterEditorUpdate, logging, navigate, openEditorTimedOutDialog]);
   const browserNavigationToEditor = useCallback(async () => {
+    console.log("browserNavigationToEditor");
     try {
       await doAfterEditorUpdate(() => {
         return Promise.resolve();
@@ -418,9 +420,10 @@ export const ProjectProvider = ({
   const editorChange = useStore((s) => s.editorChange);
   const onWorkspaceSave = useCallback(
     (event: EditorWorkspaceSaveRequest) => {
+      logging.log("[MakeCode] onWorkspaceSave");
       editorChange(event.project);
     },
-    [editorChange]
+    [editorChange, logging]
   );
 
   const onBack = useCallback(() => {
