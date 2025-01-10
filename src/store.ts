@@ -359,6 +359,12 @@ const createMlStore = (logging: Logging) => {
           },
 
           setLanguage(languageId: string) {
+            const currLanguageId = get().settings.languageId;
+            if (languageId === currLanguageId) {
+              // No need to update language if language is the same.
+              // MakeCode does not reload.
+              return;
+            }
             set(
               ({ settings }) => ({
                 settings: {
