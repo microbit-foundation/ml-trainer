@@ -170,6 +170,7 @@ export interface State {
     editorContentLoadedPromise: PromiseInfo<void>;
   };
   isEditorTimedOutDialogOpen: boolean;
+  langChanged: boolean;
 
   download: DownloadState;
   downloadFlashingProgress: number;
@@ -245,6 +246,8 @@ export interface Actions {
    */
   getCurrentProject(): Project;
   checkIfProjectNeedsFlush(): boolean;
+  checkIfLangChanged(): boolean;
+  langChangeFlushedToEditor(): void;
   editorChange(project: Project): void;
   editorReady(): void;
   editorTimedOut(): void;
@@ -320,6 +323,7 @@ const createMlStore = (logging: Logging) => {
             editorContentLoadedPromise: createPromise<void>(),
           },
           isEditorTimedOutDialogOpen: false,
+          langChanged: false,
           appEditNeedsFlushToEditor: true,
           changedHeaderExpected: false,
           // This dialog flow spans two pages
@@ -368,7 +372,7 @@ const createMlStore = (logging: Logging) => {
                 isEditorReady: false,
                 editorStartUp: "in-progress",
                 editorStartUpTimestamp: Date.now(),
-                appEditNeedsFlushToEditor: true,
+                langChanged: true,
               }),
               false,
               "setLanguage"
@@ -801,6 +805,10 @@ const createMlStore = (logging: Logging) => {
             return get().appEditNeedsFlushToEditor;
           },
 
+          checkIfLangChanged() {
+            return get().langChanged;
+          },
+
           getCurrentProject() {
             return get().project;
           },
@@ -923,6 +931,15 @@ const createMlStore = (logging: Logging) => {
               { changedHeaderExpected: true },
               false,
               "setChangedHeaderExpected"
+            );
+          },
+          langChangeFlushedToEditor() {
+            set(
+              {
+                langChanged: false,
+              },
+              false,
+              "langChangeFlushedToEditor"
             );
           },
           projectFlushedToEditor() {

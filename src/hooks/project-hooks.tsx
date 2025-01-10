@@ -139,6 +139,10 @@ export const ProjectProvider = ({
     (s) => s.editorPromises
   );
   const startUpTimestamp = useStore((s) => s.editorStartUpTimestamp);
+  const langChangeFlushedToEditor = useStore(
+    (s) => s.langChangeFlushedToEditor
+  );
+  const checkIfLangChanged = useStore((s) => s.checkIfLangChanged);
   const navigate = useNavigate();
 
   const project = useStore((s) => s.project);
@@ -201,16 +205,18 @@ export const ProjectProvider = ({
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
-      if (!doAfterEditorUpdatePromise.current && checkIfProjectNeedsFlush()) {
+      if (
+        !doAfterEditorUpdatePromise.current &&
+        (checkIfProjectNeedsFlush() || checkIfLangChanged())
+      ) {
         doAfterEditorUpdatePromise.current = (async () => {
           // driverRef.current is not defined on first render.
           // Only an issue when navigating to code page directly.
           if (!driverRef.current) {
             throw new CodeEditorError("MakeCode iframe ref is undefined");
-          } else {
+          } else if (checkIfProjectNeedsFlush()) {
             logging.log("[MakeCode] Importing project");
             await editorReadyPromise.promise;
-            logging.log("[MakeCode] EDITOR READY");
             const project = getCurrentProject();
             expectChangedHeader();
             try {
@@ -221,6 +227,10 @@ export const ProjectProvider = ({
               logging.log("[MakeCode] Project import failed");
               throw e;
             }
+          } else {
+            logging.log("[MakeCode] Waiting for editor after language change");
+            await editorReadyPromise.promise;
+            langChangeFlushedToEditor();
           }
         })();
       }
@@ -244,12 +254,14 @@ export const ProjectProvider = ({
     },
     [
       checkIfProjectNeedsFlush,
+      checkIfLangChanged,
       driverRef,
       logging,
-      editorReadyPromise,
+      editorReadyPromise.promise,
       getCurrentProject,
       expectChangedHeader,
       projectFlushedToEditor,
+      langChangeFlushedToEditor,
       checkIfEditorStartUpTimedOut,
       editorTimedOut,
     ]
