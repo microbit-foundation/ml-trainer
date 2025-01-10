@@ -346,6 +346,7 @@ const createMlStore = (logging: Logging) => {
           },
 
           setLanguage(languageId: string) {
+            console.log("setLanguage");
             const currLanguage = get().settings.languageId;
             if (currLanguage === languageId) {
               // When language is the same, no need to update states.
