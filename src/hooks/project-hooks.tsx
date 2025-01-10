@@ -152,24 +152,31 @@ export const ProjectProvider = ({
 
   const startUpTimeout = 90000;
 
+  const resetContentLoadedEditorPromise = useStore(
+    (s) => s.resetContentLoadedEditorPromise
+  );
+  const resetEditorReadyPromise = useStore((s) => s.resetEditorReadyPromise);
   const onWorkspaceLoaded = useCallback(async () => {
     logging.log("[MakeCode] Workspace loaded");
     await editorContentLoadedPromise.promise;
     // Get latest start up state and only mark editor ready if editor has not timed out.
     getEditorStartUp() !== "timed out" && editorReady();
     editorReadyPromise.resolve();
+    resetEditorReadyPromise();
   }, [
-    editorContentLoadedPromise,
+    editorContentLoadedPromise.promise,
     editorReady,
     editorReadyPromise,
     getEditorStartUp,
     logging,
+    resetEditorReadyPromise,
   ]);
 
   const onEditorContentLoaded = useCallback(() => {
     logging.log("[MakeCode] Editor content loaded");
     editorContentLoadedPromise.resolve();
-  }, [editorContentLoadedPromise, logging]);
+    resetContentLoadedEditorPromise();
+  }, [editorContentLoadedPromise, logging, resetContentLoadedEditorPromise]);
 
   const checkIfEditorStartUpTimedOut = useCallback(
     async (promise: Promise<void> | undefined) => {
@@ -198,6 +205,7 @@ export const ProjectProvider = ({
     [editorStartUp, startUpTimestamp]
   );
 
+  const isEditorReady = useStore((s) => s.isEditorReady);
   const doAfterEditorUpdatePromise = useRef<Promise<void>>();
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
@@ -209,7 +217,10 @@ export const ProjectProvider = ({
             throw new CodeEditorError("MakeCode iframe ref is undefined");
           } else {
             logging.log("[MakeCode] Importing project");
-            await editorReadyPromise.promise;
+            if (!isEditorReady) {
+              console.log("Wait for editor to be ready");
+              await editorReadyPromise.promise;
+            }
             logging.log("[MakeCode] EDITOR READY");
             const project = getCurrentProject();
             expectChangedHeader();

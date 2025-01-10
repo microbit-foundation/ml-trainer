@@ -252,6 +252,8 @@ export interface Actions {
   setIsEditorTimedOutDialogOpen(isOpen: boolean): void;
   setChangedHeaderExpected(): void;
   projectFlushedToEditor(): void;
+  resetContentLoadedEditorPromise: () => void;
+  resetEditorReadyPromise: () => void;
 
   setDownload(state: DownloadState): void;
   // TODO: does the persistence slow this down? we could move it to another store
@@ -355,23 +357,52 @@ const createMlStore = (logging: Logging) => {
           },
 
           setLanguage(languageId: string) {
+            const currLanguage = get().settings.languageId;
+            if (currLanguage === languageId) {
+              // When language is the same, no need to update states.
+              // MakeCode will not reload.
+              return;
+            }
             set(
               ({ settings }) => ({
                 settings: {
                   ...settings,
                   languageId,
                 },
-                editorPromises: {
-                  editorReadyPromise: createPromise<void>(),
-                  editorContentLoadedPromise: createPromise<void>(),
-                },
                 isEditorReady: false,
                 editorStartUp: "in-progress",
                 editorStartUpTimestamp: Date.now(),
-                appEditNeedsFlushToEditor: true,
               }),
               false,
               "setLanguage"
+            );
+          },
+
+          resetContentLoadedEditorPromise() {
+            console.log("resetContentLoadedEditorPromise");
+            set(
+              ({ editorPromises }) => ({
+                editorPromises: {
+                  ...editorPromises,
+                  editorContentLoadedPromise: createPromise<void>(),
+                },
+              }),
+              false,
+              "resetContentLoadedEditorPromise"
+            );
+          },
+
+          resetEditorReadyPromise() {
+            console.log("resetEditorReadyPromise");
+            set(
+              ({ editorPromises }) => ({
+                editorPromises: {
+                  ...editorPromises,
+                  editorReadyPromise: createPromise<void>(),
+                },
+              }),
+              false,
+              "resetEditorReadyPromise"
             );
           },
 
@@ -806,6 +837,7 @@ const createMlStore = (logging: Logging) => {
           },
 
           editorReady() {
+            console.log("editorReady");
             set(
               { isEditorReady: true, editorStartUp: "done" },
               false,

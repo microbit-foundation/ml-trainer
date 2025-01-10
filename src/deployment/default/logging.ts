@@ -9,5 +9,7 @@ import { Logging } from "../../logging/logging";
 export class NullLogging implements Logging {
   event(): void {}
   error(): void {}
-  log(): void {}
+  log(e: string): void {
+    console.log(e);
+  }
 }

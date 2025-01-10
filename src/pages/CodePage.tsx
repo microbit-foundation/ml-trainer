@@ -32,6 +32,7 @@ const CodePage = () => {
         if (success) {
           setLoading(false);
           setEditorOpen(true);
+          console.log("Open editor");
         } else {
           navigate(createTestingModelPageUrl());
         }
@@ -44,6 +45,7 @@ const CodePage = () => {
 
     return () => {
       setEditorOpen(false);
+      initAsyncCalled.current = false;
     };
   }, [browserNavigationToEditor, model, navigate, setEditorOpen]);
 
