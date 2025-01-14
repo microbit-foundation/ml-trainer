@@ -30,6 +30,8 @@ import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 import { useProjectName } from "../hooks/project-hooks";
+import { ActionData } from "../model";
+import sampleData from "../sample.json";
 
 const NewPage = () => {
   const existingSessionTimestamp = useStore((s) => s.timestamp);
@@ -37,6 +39,7 @@ const NewPage = () => {
   const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
   const logging = useLogging();
+  const loadDataset = useStore((s) => s.loadDataset);
 
   const handleOpenLastSession = useCallback(() => {
     logging.event({
@@ -55,8 +58,10 @@ const NewPage = () => {
       type: "session-open-new",
     });
     newSession();
+    // Hack to import data samples automatically so that we can reach MakeCode
+    loadDataset(sampleData as ActionData[]);
     navigate(createDataSamplesPageUrl());
-  }, [logging, newSession, navigate]);
+  }, [logging, newSession, loadDataset, navigate]);
 
   const intl = useIntl();
   const lastSessionTitle = intl.formatMessage({
