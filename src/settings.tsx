@@ -29,7 +29,6 @@ export const allLanguages: Language[] = [
     name: "Español",
     enName: "Spanish",
     makeCode: true,
-    preview: true,
   },
   {
     id: "ja",
@@ -43,35 +42,30 @@ export const allLanguages: Language[] = [
     name: "한국어",
     enName: "Korean",
     makeCode: true,
-    preview: true,
   },
   {
     id: "nl",
     name: "Nederlands",
     enName: "Dutch",
     makeCode: true,
-    preview: true,
   },
   {
     id: "pl",
     name: "Polski",
     enName: "Polish",
     makeCode: true,
-    preview: true,
   },
   {
     id: "pt-BR",
     name: "Português (Brasil)",
     enName: "Portuguese (Brazil)",
     makeCode: true,
-    preview: true,
   },
   {
     id: "zh-TW",
     name: "繁體中文",
     enName: "Chinese (Traditional)",
     makeCode: true,
-    preview: true,
   },
 ];
 
