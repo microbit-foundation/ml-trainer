@@ -1276,7 +1276,7 @@
   "graph-preview": [
     {
       "type": 0,
-      "value": "Graph preview"
+      "value": "グラフのプレビュー"
     }
   ],
   "help-label": [
@@ -1476,13 +1476,13 @@
   "incompatible-device-subtitle": [
     {
       "type": 0,
-      "value": "micro:bit V1を使っていますが、機械学習プロジェクトでは micro:bit V2 に載っている、より速いプロセッサが必要となります。  "
+      "value": "micro:bit V1を使っていますが、機械学習プロジェクトでは micro:bit V2 に載っている、より速いプロセッサが必要となります。 "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": " micro:bitのバージョンについてもっと調べる。 "
+          "value": "micro:bitのバージョンについてもっと調べる。"
         }
       ],
       "type": 8,
@@ -1826,7 +1826,7 @@
   "makecode-load-error-dialog-title": [
     {
       "type": 0,
-      "value": "Microsoft MakeCode をロードできませんでした"
+      "value": "Microsoft MakeCode を読み込めませんでした"
     }
   ],
   "microbit-not-connected": [

@@ -116,7 +116,7 @@
     "description": "Title for error message relating to project loading"
   },
   "code-label": {
-    "defaultMessage": "Code",
+    "defaultMessage": "코드",
     "description": "Code column heading"
   },
   "code-label-tooltip-aria": {
@@ -480,7 +480,7 @@
     "description": "Confirmation dialog text"
   },
   "delete-recording-aria": {
-    "defaultMessage": "\"{action}\" 행동에 대한   샘플 {numSamples}개 중 {sample}개의 기록 샘플 삭제",
+    "defaultMessage": "\"{action}\" 행동에 대한 {numSamples}개의 기록 {sample} 삭제",
     "description": "Aria label for data sample delete action"
   },
   "disconnect-action": {
@@ -756,7 +756,7 @@
     "description": "Graph line weight option"
   },
   "graph-preview": {
-    "defaultMessage": "Graph preview",
+    "defaultMessage": "그래프 미리보기",
     "description": "Label for preview of the graph shown in the settings dialog"
   },
   "help-label": {
@@ -1160,7 +1160,7 @@
     "description": "New page title"
   },
   "next-action": {
-    "defaultMessage": "Next",
+    "defaultMessage": "다음",
     "description": "Next button text for dialogs and similar"
   },
   "no-data-samples": {
@@ -1432,7 +1432,7 @@
     "description": "Alt text for the step-by-step home page diagram"
   },
   "steps-code": {
-    "defaultMessage": "Code",
+    "defaultMessage": "코드",
     "description": "Step in home page diagram"
   },
   "steps-collect-data": {

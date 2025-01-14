@@ -218,7 +218,7 @@
   "code-label": [
     {
       "type": 0,
-      "value": "Code"
+      "value": "코드"
     }
   ],
   "code-label-tooltip-aria": [
@@ -820,7 +820,7 @@
     },
     {
       "type": 0,
-      "value": "\" 행동에 대한   샘플 "
+      "value": "\" 행동에 대한 "
     },
     {
       "type": 1,
@@ -828,7 +828,7 @@
     },
     {
       "type": 0,
-      "value": "개 중 "
+      "value": "개의 기록 "
     },
     {
       "type": 1,
@@ -836,7 +836,7 @@
     },
     {
       "type": 0,
-      "value": "개의 기록 샘플 삭제"
+      "value": " 삭제"
     }
   ],
   "disconnect-action": [
@@ -1280,7 +1280,7 @@
   "graph-preview": [
     {
       "type": 0,
-      "value": "Graph preview"
+      "value": "그래프 미리보기"
     }
   ],
   "help-label": [
@@ -2002,7 +2002,7 @@
   "next-action": [
     {
       "type": 0,
-      "value": "Next"
+      "value": "다음"
     }
   ],
   "no-data-samples": [
@@ -2514,7 +2514,7 @@
   "steps-code": [
     {
       "type": 0,
-      "value": "Code"
+      "value": "코드"
     }
   ],
   "steps-collect-data": [

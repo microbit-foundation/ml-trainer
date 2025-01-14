@@ -140,7 +140,7 @@
     "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
   },
   "connect-action-aria": {
-    "defaultMessage": "連接到 micro:bit",
+    "defaultMessage": "連結到 micro:bit",
     "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
   },
   "connect-battery-heading": {
@@ -388,7 +388,7 @@
     "description": "Continue to MakeCode editor button text"
   },
   "cookies-action": {
-    "defaultMessage": "餅乾",
+    "defaultMessage": "Cookies",
     "description": "Action to show dialog to choose website cookie preferences"
   },
   "copied": {
@@ -756,7 +756,7 @@
     "description": "Graph line weight option"
   },
   "graph-preview": {
-    "defaultMessage": "Graph preview",
+    "defaultMessage": "圖表預覽",
     "description": "Label for preview of the graph shown in the settings dialog"
   },
   "help-label": {

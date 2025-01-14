@@ -262,7 +262,7 @@
   "connect-action-aria": [
     {
       "type": 0,
-      "value": "連接到 micro:bit"
+      "value": "連結到 micro:bit"
     }
   ],
   "connect-battery-heading": [
@@ -662,7 +662,7 @@
   "cookies-action": [
     {
       "type": 0,
-      "value": "餅乾"
+      "value": "Cookies"
     }
   ],
   "copied": [
@@ -1288,7 +1288,7 @@
   "graph-preview": [
     {
       "type": 0,
-      "value": "Graph preview"
+      "value": "圖表預覽"
     }
   ],
   "help-label": [
