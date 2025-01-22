@@ -13,7 +13,7 @@ test.describe("new page", () => {
 
   test("start new session", async ({ newPage, dataSamplesPage }) => {
     await newPage.startNewSession();
-    await dataSamplesPage.expectOnPageWithConnectDialog();
+    await dataSamplesPage.expectOnPage();
   });
 
   test("continue a saved session (.json file)", async ({
@@ -26,7 +26,6 @@ test.describe("new page", () => {
 
   test("resume session", async ({ newPage, homePage, dataSamplesPage }) => {
     await newPage.startNewSession();
-    await dataSamplesPage.closeConnectDialog();
     await dataSamplesPage.navbar.home();
     await homePage.getStarted();
     await newPage.expectResumeButtonToShowProjectName("Untitled");

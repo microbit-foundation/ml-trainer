@@ -41,13 +41,6 @@ export class DataSamplesPage {
     this.expectUrl();
   }
 
-  async expectOnPageWithConnectDialog() {
-    await expect(
-      this.page.getByRole("heading", { name: "What you need to connect" })
-    ).toBeVisible();
-    this.expectUrl();
-  }
-
   async expectCorrectInitialState() {
     this.expectUrl();
     await expect(this.heading).toBeVisible({ timeout: 10000 });
