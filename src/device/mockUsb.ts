@@ -11,14 +11,31 @@ import {
   TypedEventTarget,
 } from "@microbit/microbit-connection";
 
+/**
+ * A mock USB connection used during end-to-end testing.
+ */
 export class MockWebUSBConnection
   extends TypedEventTarget<DeviceConnectionEventMap>
   implements DeviceWebUSBConnection
 {
   status: ConnectionStatus = ConnectionStatus.NO_AUTHORIZED_DEVICE;
 
+  private fakeDeviceId: number | undefined = 123;
+
+  constructor() {
+    super();
+    // Make globally available to allow e2e tests to configure interactions.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+    (window as any).mockUsb = this;
+    this.fakeDeviceId = Math.round(Math.random() * 1000);
+  }
+
   async initialize(): Promise<void> {}
   dispose(): void {}
+
+  mockDeviceId(deviceId: number | undefined) {
+    this.fakeDeviceId = deviceId;
+  }
 
   private mockStatus(newStatus: ConnectionStatus) {
     this.dispatchTypedEvent("status", new ConnectionStatusEvent(newStatus));
@@ -33,8 +50,7 @@ export class MockWebUSBConnection
     return ConnectionStatus.CONNECTED;
   }
   getDeviceId(): number | undefined {
-    const fakeDeviceId = 123;
-    return fakeDeviceId;
+    return this.fakeDeviceId;
   }
   getBoardVersion(): BoardVersion | undefined {
     return "V2";

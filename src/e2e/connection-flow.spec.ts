@@ -5,7 +5,7 @@
  */
 import { test } from "./fixtures";
 
-test.describe("connection flow", () => {
+test.describe("bluetooth connection", () => {
   test.beforeEach(async ({ homePage, newPage }) => {
     await homePage.setupContext();
     await homePage.goto();
@@ -13,9 +13,16 @@ test.describe("connection flow", () => {
     await newPage.startNewSession();
   });
 
-  test("happy bluetooth flow", async ({ dataSamplesPage }) => {
+  test("happy flow", async ({ dataSamplesPage }) => {
     const connectionDialogs = await dataSamplesPage.connect();
     await connectionDialogs.bluetoothConnect();
     await dataSamplesPage.expectConnected();
+  });
+
+  test("no device selected for flashing", async ({ dataSamplesPage }) => {
+    const connectionDialogs = await dataSamplesPage.connect();
+    await connectionDialogs.mockUsbDeviceNotSelected();
+    await connectionDialogs.bluetoothDownloadProgram();
+    await connectionDialogs.expectManualTransferProgramDialog();
   });
 });

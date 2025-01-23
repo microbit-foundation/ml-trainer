@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { type Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
+import { MockWebUSBConnection } from "../../device/mockUsb";
 
 export class ConnectionDialogs {
   constructor(public readonly page: Page) {}
@@ -20,13 +21,31 @@ export class ConnectionDialogs {
     await this.page.getByRole("button", { name: "Next" }).click();
   }
 
-  async bluetoothConnect() {
+  async bluetoothDownloadProgram() {
     await this.waitForText("What you need to connect using Web Bluetooth");
     await this.clickNext();
     await this.waitForText("Connect USB cable to micro:bit");
     await this.clickNext();
     await this.waitForText("Download data collection program to micro:bit");
     await this.clickNext();
+  }
+
+  async expectManualTransferProgramDialog() {
+    await expect(
+      this.page.getByText("Transfer saved hex file to micro:bit")
+    ).toBeVisible();
+  }
+
+  async mockUsbDeviceNotSelected() {
+    await this.page.evaluate(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+      const mockUsb = (window as any).mockUsb as MockWebUSBConnection;
+      mockUsb.mockDeviceId(undefined);
+    });
+  }
+
+  async bluetoothConnect() {
+    await this.bluetoothDownloadProgram();
     await this.waitForText("Downloading the data collection program");
     await this.waitForText("Disconnect USB and connect battery pack");
     await this.clickNext();

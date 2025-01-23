@@ -46,12 +46,34 @@ import {
 import { hasMakeCodeMlExtension } from "./makecode/utils";
 import { PostImportDialogState } from "./model";
 import "theme-package/fonts/fonts.css";
+import { MockWebUSBConnection } from "./device/mockUsb";
+import {
+  MicrobitRadioBridgeConnection,
+  MicrobitWebBluetoothConnection,
+  MicrobitWebUSBConnection,
+} from "@microbit/microbit-connection";
+import { MockWebBluetoothConnection } from "./device/mockBluetooth";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
 }
 
+const isMockDeviceMode = () => true;
+// TODO: Use cookie mechanism for isMockDeviceMode.
+// We use a cookie set from the e2e tests. Avoids having separate test and live builds.
+// Boolean(
+//   document.cookie.split("; ").find((row) => row.startsWith("mockDevice="))
+// );
+
 const logging = deployment.logging;
+
+const usb = isMockDeviceMode()
+  ? (new MockWebUSBConnection() as unknown as MicrobitWebUSBConnection)
+  : new MicrobitWebUSBConnection({ logging });
+const bluetooth = isMockDeviceMode()
+  ? (new MockWebBluetoothConnection() as unknown as MicrobitWebBluetoothConnection)
+  : new MicrobitWebBluetoothConnection({ logging });
+const radioBridge = new MicrobitRadioBridgeConnection(usb, { logging });
 
 const Providers = ({ children }: ProviderLayoutProps) => {
   const deployment = useDeployment();
@@ -63,7 +85,7 @@ const Providers = ({ children }: ProviderLayoutProps) => {
           <ConsentProvider>
             <TranslationProvider>
               <ConnectStatusProvider>
-                <ConnectProvider>
+                <ConnectProvider {...{ usb, bluetooth, radioBridge }}>
                   <BufferedDataProvider>
                     <ConnectionStageProvider>
                       {children}

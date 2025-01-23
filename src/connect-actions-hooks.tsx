@@ -20,8 +20,6 @@ import {
 } from "react";
 import { ConnectActions } from "./connect-actions";
 import { useLogging } from "./logging/logging-hooks";
-import { MockWebUSBConnection } from "./device/mockUsb";
-import { MockWebBluetoothConnection } from "./device/mockBluetooth";
 
 interface ConnectContextValue {
   usb: MicrobitWebUSBConnection;
@@ -34,30 +32,17 @@ const ConnectContext = createContext<ConnectContextValue | null>(null);
 
 interface ConnectProviderProps {
   children: ReactNode;
+  usb: MicrobitWebUSBConnection;
+  bluetooth: MicrobitWebBluetoothConnection;
+  radioBridge: MicrobitRadioBridgeConnection;
 }
 
-const isMockDeviceMode = () => true;
-// TODO: Use cookie mechanism for isMockDeviceMode.
-// We use a cookie set from the e2e tests. Avoids having separate test and live builds.
-// Boolean(
-//   document.cookie.split("; ").find((row) => row.startsWith("mockDevice="))
-// );
-
-export const ConnectProvider = ({ children }: ConnectProviderProps) => {
-  const usb = useRef(
-    isMockDeviceMode()
-      ? new MockWebUSBConnection()
-      : new MicrobitWebUSBConnection()
-  ).current as MicrobitWebUSBConnection;
-  const logging = useRef(useLogging()).current;
-  const bluetooth = useRef(
-    isMockDeviceMode()
-      ? new MockWebBluetoothConnection()
-      : new MicrobitWebBluetoothConnection({ logging })
-  ).current as MicrobitWebBluetoothConnection;
-  const radioBridge = useRef(
-    new MicrobitRadioBridgeConnection(usb, { logging })
-  ).current;
+export const ConnectProvider = ({
+  children,
+  usb,
+  bluetooth,
+  radioBridge,
+}: ConnectProviderProps) => {
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   useEffect(() => {
