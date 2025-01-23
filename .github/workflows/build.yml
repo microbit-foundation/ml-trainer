@@ -43,18 +43,19 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: node ./bin/print-ci-env.cjs >> $GITHUB_ENV
       - run: npm run ci
-      - name: Run Playwright tests
-        if: env.STAGE == 'REVIEW' || env.STAGE == 'STAGING'
-        uses: docker://mcr.microsoft.com/playwright:v1.45.0-jammy
-        with:
-          args: npx playwright test
-      - name: Store reports
-        if: (env.STAGE == 'REVIEW' || env.STAGE == 'STAGING') && failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 3
+      # TODO: Uncomment E2E tests once ready to test
+      # - name: Run Playwright tests
+      #   if: env.STAGE == 'REVIEW' || env.STAGE == 'STAGING'
+      #   uses: docker://mcr.microsoft.com/playwright:v1.45.0-jammy
+      #   with:
+      #     args: npx playwright test
+      # - name: Store reports
+      #   if: (env.STAGE == 'REVIEW' || env.STAGE == 'STAGING') && failure()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: playwright-report
+      #     path: playwright-report/
+      #     retention-days: 3
       - run: npx website-deploy-aws
         if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || success())
         env:
