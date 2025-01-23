@@ -22,7 +22,18 @@ test.describe("bluetooth connection", () => {
   test("no device selected for flashing", async ({ dataSamplesPage }) => {
     const connectionDialogs = await dataSamplesPage.connect();
     await connectionDialogs.mockUsbDeviceNotSelected();
-    await connectionDialogs.bluetoothDownloadProgram();
+    await connectionDialogs.bluetoothConnect({
+      stopAfterText: connectionDialogs.types.bluetooth.download.text,
+    });
     await connectionDialogs.expectManualTransferProgramDialog();
+  });
+
+  test("no device selected for connecting", async ({ dataSamplesPage }) => {
+    const connectionDialogs = await dataSamplesPage.connect();
+    await connectionDialogs.mockBluetoothDeviceNotSelected();
+    await connectionDialogs.bluetoothConnect({
+      stopAfterText: connectionDialogs.types.bluetooth.connectBluetooth.text,
+    });
+    await connectionDialogs.expectDidntChooseMicrobitDialog();
   });
 });

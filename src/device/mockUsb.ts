@@ -7,6 +7,7 @@ import {
   DeviceConnectionEventMap,
   DeviceWebUSBConnection,
   FlashDataSource,
+  FlashEvent,
   FlashOptions,
   TypedEventTarget,
 } from "@microbit/microbit-connection";
@@ -37,7 +38,9 @@ export class MockWebUSBConnection
     this.fakeDeviceId = deviceId;
   }
 
-  private mockStatus(newStatus: ConnectionStatus) {
+  private setStatus(newStatus: ConnectionStatus) {
+    this.status = newStatus;
+    console.log("usb", newStatus);
     this.dispatchTypedEvent("status", new ConnectionStatusEvent(newStatus));
   }
 
@@ -46,15 +49,18 @@ export class MockWebUSBConnection
     await new Promise((resolve) => setTimeout(resolve, 100));
     this.dispatchTypedEvent("afterrequestdevice", new AfterRequestDevice());
     await new Promise((resolve) => setTimeout(resolve, 100));
-    this.mockStatus(ConnectionStatus.CONNECTED);
-    return ConnectionStatus.CONNECTED;
+    this.setStatus(ConnectionStatus.CONNECTED);
+    return this.status;
   }
+
   getDeviceId(): number | undefined {
     return this.fakeDeviceId;
   }
+
   getBoardVersion(): BoardVersion | undefined {
     return "V2";
   }
+
   async flash(
     _dataSource: FlashDataSource,
     options: FlashOptions
@@ -63,8 +69,14 @@ export class MockWebUSBConnection
     options.progress(50, options.partial);
     await new Promise((resolve) => setTimeout(resolve, 100));
     options.progress(undefined, options.partial);
+    this.dispatchTypedEvent("flash", new FlashEvent());
   }
+
   async disconnect(): Promise<void> {}
   async serialWrite(_data: string): Promise<void> {}
-  clearDevice(): void {}
+
+  clearDevice(): void {
+    this.fakeDeviceId = undefined;
+    this.setStatus(ConnectionStatus.NO_AUTHORIZED_DEVICE);
+  }
 }
