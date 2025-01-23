@@ -30,7 +30,6 @@ export class MockWebUSBConnection
     (window as any).mockUsb = this;
     this.fakeDeviceId = Math.round(Math.random() * 1000);
   }
-
   async initialize(): Promise<void> {}
   dispose(): void {}
 

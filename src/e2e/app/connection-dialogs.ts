@@ -13,33 +13,48 @@ interface DialogStep {
   next?: "skip" | "copy-pattern";
 }
 
-type DialogTypes = {
+const dialogTypes: {
   bluetooth: Record<string, DialogStep>;
+  radio: Record<string, DialogStep>;
+} = {
+  bluetooth: {
+    whatYouNeed: { text: "What you need to connect using Web Bluetooth" },
+    connectUsb: { text: "Connect USB cable to micro:bit" },
+    download: { text: "Download data collection program to micro:bit" },
+    downloading: {
+      text: "Downloading the data collection program",
+      next: "skip",
+    },
+    connectBattery: { text: "Disconnect USB and connect battery pack" },
+    copyPattern: { text: "Copy pattern", next: "copy-pattern" },
+    connectBluetooth: { text: "Connect to micro:bit using Web Bluetooth" },
+    connecting: { text: "Connect using Web Bluetooth", next: "skip" },
+  },
+  radio: {
+    whatYouNeed: { text: "What you need to connect using micro:bit radio" },
+    connect1: { text: "Connect USB cable to micro:bit 1" },
+    download1: { text: "Download data collection program to micro:bit 1" },
+    downloading1: {
+      text: "Downloading the data collection program",
+      next: "skip",
+    },
+    connectBattery: { text: "Disconnect USB and connect battery pack" },
+    connect2: { text: "Connect USB cable to micro:bit 2" },
+    download2: { text: "Download radio link program to micro:bit 2" },
+    downloading2: {
+      text: "Downloading the radio link program",
+      next: "skip",
+    },
+    connecting: {
+      text: "Connecting micro:bits",
+      next: "skip",
+    },
+  },
 };
 
 export class ConnectionDialogs {
-  public types: DialogTypes = {
-    bluetooth: {},
-  };
+  public types = dialogTypes;
   constructor(public readonly page: Page) {}
-
-  initialise() {
-    this.types = {
-      bluetooth: {
-        whatYouNeed: { text: "What you need to connect using Web Bluetooth" },
-        connectUsb: { text: "Connect USB cable to micro:bit" },
-        download: { text: "Download data collection program to micro:bit" },
-        downloading: {
-          text: "Downloading the data collection program",
-          next: "skip",
-        },
-        connectBattery: { text: "Disconnect USB and connect battery pack" },
-        copyPattern: { text: "Copy pattern", next: "copy-pattern" },
-        connectBluetooth: { text: "Connect to micro:bit using Web Bluetooth" },
-        connecting: { text: "Connect using Web Bluetooth", next: "skip" },
-      },
-    };
-  }
 
   async close() {
     await this.page.getByLabel("Close").click();
@@ -90,18 +105,40 @@ export class ConnectionDialogs {
     );
   }
 
-  async bluetoothConnect(options: { stopAfterText?: string } = {}) {
+  async connect(options: {
+    stopAfterText?: string;
+    type: "radio" | "bluetooth";
+  }) {
     const bluetoothTypes = this.types.bluetooth;
-    const steps = [
-      bluetoothTypes.whatYouNeed,
-      bluetoothTypes.connectUsb,
-      bluetoothTypes.download,
-      bluetoothTypes.downloading,
-      bluetoothTypes.connectBattery,
-      bluetoothTypes.copyPattern,
-      bluetoothTypes.connectBluetooth,
-      bluetoothTypes.connecting,
-    ];
+    const radioTypes = this.types.radio;
+    if (options.type === "radio") {
+      await this.page
+        .getByRole("button", { name: "Connect using micro:bit radio" })
+        .click();
+    }
+    const steps =
+      options.type === "bluetooth"
+        ? [
+            bluetoothTypes.whatYouNeed,
+            bluetoothTypes.connectUsb,
+            bluetoothTypes.download,
+            bluetoothTypes.downloading,
+            bluetoothTypes.connectBattery,
+            bluetoothTypes.copyPattern,
+            bluetoothTypes.connectBluetooth,
+            bluetoothTypes.connecting,
+          ]
+        : [
+            radioTypes.whatYouNeed,
+            radioTypes.connect1,
+            radioTypes.download1,
+            radioTypes.downloading1,
+            radioTypes.connectBattery,
+            radioTypes.connect2,
+            radioTypes.download2,
+            radioTypes.downloading2,
+            radioTypes.connecting,
+          ];
     for (const { text, next } of steps) {
       await this.waitForText(text);
       switch (next) {

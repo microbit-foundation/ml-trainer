@@ -42,7 +42,6 @@ export class DataSamplesPage {
   async connect() {
     await this.connectBtn.click();
     const connectionDialogs = new ConnectionDialogs(this.page);
-    connectionDialogs.initialise();
     return connectionDialogs;
   }
 

@@ -53,6 +53,7 @@ import {
   MicrobitWebUSBConnection,
 } from "@microbit/microbit-connection";
 import { MockWebBluetoothConnection } from "./device/mockBluetooth";
+import { MockRadioBridgeConnection } from "./device/mockRadioBridge";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -73,7 +74,11 @@ const usb = isMockDeviceMode()
 const bluetooth = isMockDeviceMode()
   ? (new MockWebBluetoothConnection() as unknown as MicrobitWebBluetoothConnection)
   : new MicrobitWebBluetoothConnection({ logging });
-const radioBridge = new MicrobitRadioBridgeConnection(usb, { logging });
+const radioBridge = isMockDeviceMode()
+  ? (new MockRadioBridgeConnection(
+      usb
+    ) as unknown as MicrobitWebBluetoothConnection)
+  : new MicrobitRadioBridgeConnection(usb, { logging });
 
 const Providers = ({ children }: ProviderLayoutProps) => {
   const deployment = useDeployment();
