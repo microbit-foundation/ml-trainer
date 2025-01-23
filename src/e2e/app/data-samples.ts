@@ -5,11 +5,13 @@
  */
 import { expect, Locator, type Page } from "@playwright/test";
 import { Navbar } from "./shared";
+import { ConnectionDialogs } from "./connection-dialogs";
 
 export class DataSamplesPage {
   public readonly navbar: Navbar;
   private url: string;
   private heading: Locator;
+  private connectBtn: Locator;
 
   constructor(public readonly page: Page) {
     this.url = `http://localhost:5173${
@@ -17,6 +19,7 @@ export class DataSamplesPage {
     }data-samples`;
     this.navbar = new Navbar(page);
     this.heading = this.page.getByRole("heading", { name: "Data samples" });
+    this.connectBtn = this.page.getByLabel("Connect to micro:bit");
   }
 
   async goto(flags: string[] = ["open"]) {
@@ -32,8 +35,20 @@ export class DataSamplesPage {
     expect(this.page.url()).toEqual(this.url);
   }
 
-  async closeConnectDialog() {
+  async closeDialog() {
     await this.page.getByLabel("Close").click();
+  }
+
+  async connect() {
+    await this.connectBtn.click();
+    return new ConnectionDialogs(this.page);
+  }
+
+  async expectConnected() {
+    await expect(this.connectBtn).toBeHidden();
+    await expect(
+      this.page.getByText("Your data collection micro:bit is connected!")
+    ).toBeVisible();
   }
 
   async expectOnPage() {
