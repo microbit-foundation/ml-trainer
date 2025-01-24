@@ -59,12 +59,11 @@ export interface ProviderLayoutProps {
   children: ReactNode;
 }
 
-const isMockDeviceMode = () => true;
-// TODO: Use cookie mechanism for isMockDeviceMode.
-// We use a cookie set from the e2e tests. Avoids having separate test and live builds.
-// Boolean(
-//   document.cookie.split("; ").find((row) => row.startsWith("mockDevice="))
-// );
+const isMockDeviceMode = () =>
+  // We use a cookie set from the e2e tests. Avoids having separate test and live builds.
+  Boolean(
+    document.cookie.split("; ").find((row) => row.startsWith("mockDevice="))
+  );
 
 const logging = deployment.logging;
 

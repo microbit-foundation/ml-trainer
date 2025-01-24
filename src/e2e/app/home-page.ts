@@ -19,6 +19,12 @@ export class HomePage {
 
   async setupContext() {
     await this.context.addCookies([
+      {
+        // See corresponding code in App.tsx.
+        name: "mockDevice",
+        value: "1",
+        url: this.url,
+      },
       // Don't show compliance notice for Foundation builds
       {
         name: "MBCC",
