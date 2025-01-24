@@ -10,7 +10,7 @@ import { ConnectionStatus } from "@microbit/microbit-connection";
 
 interface DialogStep {
   text: string;
-  next?: "skip" | "copy-pattern";
+  next?: "copy-pattern";
 }
 
 const dialogTypes: {
@@ -21,34 +21,17 @@ const dialogTypes: {
     whatYouNeed: { text: "What you need to connect using Web Bluetooth" },
     connectUsb: { text: "Connect USB cable to micro:bit" },
     download: { text: "Download data collection program to micro:bit" },
-    downloading: {
-      text: "Downloading the data collection program",
-      next: "skip",
-    },
     connectBattery: { text: "Disconnect USB and connect battery pack" },
     copyPattern: { text: "Copy pattern", next: "copy-pattern" },
     connectBluetooth: { text: "Connect to micro:bit using Web Bluetooth" },
-    connecting: { text: "Connect using Web Bluetooth", next: "skip" },
   },
   radio: {
     whatYouNeed: { text: "What you need to connect using micro:bit radio" },
     connect1: { text: "Connect USB cable to micro:bit 1" },
     download1: { text: "Download data collection program to micro:bit 1" },
-    downloading1: {
-      text: "Downloading the data collection program",
-      next: "skip",
-    },
     connectBattery: { text: "Disconnect USB and connect battery pack" },
     connect2: { text: "Connect USB cable to micro:bit 2" },
     download2: { text: "Download radio link program to micro:bit 2" },
-    downloading2: {
-      text: "Downloading the radio link program",
-      next: "skip",
-    },
-    connecting: {
-      text: "Connecting micro:bits",
-      next: "skip",
-    },
   },
 };
 
@@ -56,23 +39,18 @@ const bluetoothFlow = [
   dialogTypes.bluetooth.whatYouNeed,
   dialogTypes.bluetooth.connectUsb,
   dialogTypes.bluetooth.download,
-  dialogTypes.bluetooth.downloading,
   dialogTypes.bluetooth.connectBattery,
   dialogTypes.bluetooth.copyPattern,
   dialogTypes.bluetooth.connectBluetooth,
-  dialogTypes.bluetooth.connecting,
 ];
 
 const radioFlow = [
   dialogTypes.radio.whatYouNeed,
   dialogTypes.radio.connect1,
   dialogTypes.radio.download1,
-  dialogTypes.radio.downloading1,
   dialogTypes.radio.connectBattery,
   dialogTypes.radio.connect2,
   dialogTypes.radio.download2,
-  dialogTypes.radio.downloading2,
-  dialogTypes.radio.connecting,
 ];
 
 export class ConnectionDialogs {
@@ -149,8 +127,6 @@ export class ConnectionDialogs {
     for (const { text, next } of steps) {
       await this.waitForText(text);
       switch (next) {
-        case "skip":
-          break;
         case "copy-pattern": {
           await this.enterBluetoothPattern();
           await this.clickNext();
