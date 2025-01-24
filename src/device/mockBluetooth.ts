@@ -4,6 +4,7 @@ import {
   ConnectionStatusEvent,
   DeviceConnectionEventMap,
   DeviceWebBluetoothConnection,
+  LedMatrix,
   TypedEventTarget,
 } from "@microbit/microbit-connection";
 
@@ -61,4 +62,19 @@ export class MockWebBluetoothConnection
   clearDevice(): void {
     this.setStatus(ConnectionStatus.NO_AUTHORIZED_DEVICE);
   }
+
+  async getAccelerometerData(): Promise<undefined> {}
+  async getAccelerometerPeriod(): Promise<undefined> {}
+  async setAccelerometerPeriod(_value: number): Promise<void> {}
+  async setLedText(_text: string): Promise<void> {}
+  async getLedScrollingDelay(): Promise<undefined> {}
+  async setLedScrollingDelay(_delayInMillis: number): Promise<void> {}
+  async getLedMatrix(): Promise<undefined> {}
+  async setLedMatrix(_matrix: LedMatrix): Promise<void> {}
+  async getMagnetometerData(): Promise<undefined> {}
+  async getMagnetometerBearing(): Promise<undefined> {}
+  async getMagnetometerPeriod(): Promise<undefined> {}
+  async setMagnetometerPeriod(_value: number): Promise<void> {}
+  async triggerMagnetometerCalibration(): Promise<void> {}
+  async writeUART(_data: Uint8Array): Promise<void> {}
 }

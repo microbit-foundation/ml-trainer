@@ -77,4 +77,12 @@ export class MockWebUSBConnection
     this.fakeDeviceId = undefined;
     this.setStatus(ConnectionStatus.NO_AUTHORIZED_DEVICE);
   }
+
+  setRequestDeviceExclusionFilters(
+    _exclusionFilters: USBDeviceFilter[]
+  ): void {}
+  getDevice(): USBDevice | undefined {
+    return undefined;
+  }
+  async softwareReset(): Promise<void> {}
 }
