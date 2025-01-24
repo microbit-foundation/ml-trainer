@@ -39,7 +39,6 @@ export class MockWebUSBConnection
 
   private setStatus(newStatus: ConnectionStatus) {
     this.status = newStatus;
-    console.log("usb", newStatus);
     this.dispatchTypedEvent("status", new ConnectionStatusEvent(newStatus));
   }
 

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { expect, type Page } from "@playwright/test";
+import { expect, Locator, type Page } from "@playwright/test";
 import { MockWebUSBConnection } from "../../device/mockUsb";
 import { MockWebBluetoothConnection } from "../../device/mockBluetooth";
 import { ConnectionStatus } from "@microbit/microbit-connection";
@@ -52,9 +52,36 @@ const dialogTypes: {
   },
 };
 
+const bluetoothFlow = [
+  dialogTypes.bluetooth.whatYouNeed,
+  dialogTypes.bluetooth.connectUsb,
+  dialogTypes.bluetooth.download,
+  dialogTypes.bluetooth.downloading,
+  dialogTypes.bluetooth.connectBattery,
+  dialogTypes.bluetooth.copyPattern,
+  dialogTypes.bluetooth.connectBluetooth,
+  dialogTypes.bluetooth.connecting,
+];
+
+const radioFlow = [
+  dialogTypes.radio.whatYouNeed,
+  dialogTypes.radio.connect1,
+  dialogTypes.radio.download1,
+  dialogTypes.radio.downloading1,
+  dialogTypes.radio.connectBattery,
+  dialogTypes.radio.connect2,
+  dialogTypes.radio.download2,
+  dialogTypes.radio.downloading2,
+  dialogTypes.radio.connecting,
+];
+
 export class ConnectionDialogs {
   public types = dialogTypes;
-  constructor(public readonly page: Page) {}
+  private tryAgainButton: Locator;
+
+  constructor(public readonly page: Page) {
+    this.tryAgainButton = this.page.getByRole("button", { name: "Try again" });
+  }
 
   async close() {
     await this.page.getByLabel("Close").click();
@@ -66,6 +93,11 @@ export class ConnectionDialogs {
 
   private async clickNext() {
     await this.page.getByRole("button", { name: "Next" }).click();
+  }
+
+  async expectConnectWebUsbErrorDialog() {
+    await expect(this.page.getByText("Connect using WebUSB")).toBeVisible();
+    await expect(this.tryAgainButton).toBeVisible();
   }
 
   async expectManualTransferProgramDialog() {
@@ -80,9 +112,7 @@ export class ConnectionDialogs {
         "You didn't choose a micro:bit. Do you want to try again?"
       )
     ).toBeVisible();
-    await expect(
-      this.page.getByRole("button", { name: "Try again" })
-    ).toBeVisible();
+    await expect(this.tryAgainButton).toBeVisible();
   }
 
   async mockUsbDeviceNotSelected() {
@@ -93,52 +123,29 @@ export class ConnectionDialogs {
     });
   }
 
+  async mockBluetoothStatus(status: ConnectionStatus[]) {
+    await this.page.evaluate((results: ConnectionStatus[]) => {
+      const mockBluetooth =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        (window as any).mockBluetooth as MockWebBluetoothConnection;
+      mockBluetooth.mockConnectResults(results);
+    }, status);
+  }
+
   async mockBluetoothDeviceNotSelected() {
-    await this.page.evaluate(
-      (results: ConnectionStatus[]) => {
-        const mockBluetooth =
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-          (window as any).mockBluetooth as MockWebBluetoothConnection;
-        mockBluetooth.mockConnectResults(results);
-      },
-      [ConnectionStatus.NO_AUTHORIZED_DEVICE]
-    );
+    await this.mockBluetoothStatus([ConnectionStatus.NO_AUTHORIZED_DEVICE]);
   }
 
   async connect(options: {
     stopAfterText?: string;
     type: "radio" | "bluetooth";
   }) {
-    const bluetoothTypes = this.types.bluetooth;
-    const radioTypes = this.types.radio;
     if (options.type === "radio") {
       await this.page
         .getByRole("button", { name: "Connect using micro:bit radio" })
         .click();
     }
-    const steps =
-      options.type === "bluetooth"
-        ? [
-            bluetoothTypes.whatYouNeed,
-            bluetoothTypes.connectUsb,
-            bluetoothTypes.download,
-            bluetoothTypes.downloading,
-            bluetoothTypes.connectBattery,
-            bluetoothTypes.copyPattern,
-            bluetoothTypes.connectBluetooth,
-            bluetoothTypes.connecting,
-          ]
-        : [
-            radioTypes.whatYouNeed,
-            radioTypes.connect1,
-            radioTypes.download1,
-            radioTypes.downloading1,
-            radioTypes.connectBattery,
-            radioTypes.connect2,
-            radioTypes.download2,
-            radioTypes.downloading2,
-            radioTypes.connecting,
-          ];
+    const steps = options.type === "bluetooth" ? bluetoothFlow : radioFlow;
     for (const { text, next } of steps) {
       await this.waitForText(text);
       switch (next) {

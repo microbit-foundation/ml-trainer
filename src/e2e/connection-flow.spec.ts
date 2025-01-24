@@ -53,4 +53,14 @@ test.describe("radio connection", () => {
     await connectionDialogs.connect({ type: "radio" });
     await dataSamplesPage.expectConnected();
   });
+
+  test("no device selected for flashing", async ({ dataSamplesPage }) => {
+    const connectionDialogs = await dataSamplesPage.connect();
+    await connectionDialogs.mockUsbDeviceNotSelected();
+    await connectionDialogs.connect({
+      type: "radio",
+      stopAfterText: connectionDialogs.types.radio.download1.text,
+    });
+    await connectionDialogs.expectConnectWebUsbErrorDialog();
+  });
 });

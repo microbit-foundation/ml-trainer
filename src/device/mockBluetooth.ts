@@ -22,7 +22,6 @@ export class MockWebBluetoothConnection
   }
   private setStatus(newStatus: ConnectionStatus) {
     this.status = newStatus;
-    console.log("bluetooth", newStatus);
     this.dispatchTypedEvent("status", new ConnectionStatusEvent(newStatus));
   }
 
