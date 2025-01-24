@@ -76,7 +76,7 @@ const bluetooth = isMockDeviceMode()
 const radioBridge = isMockDeviceMode()
   ? (new MockRadioBridgeConnection(
       usb
-    ) as unknown as MicrobitWebBluetoothConnection)
+    ) as unknown as MicrobitRadioBridgeConnection)
   : new MicrobitRadioBridgeConnection(usb, { logging });
 
 const Providers = ({ children }: ProviderLayoutProps) => {
