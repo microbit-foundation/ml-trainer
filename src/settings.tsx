@@ -25,6 +25,13 @@ export const allLanguages: Language[] = [
     makeCode: true,
   },
   {
+    id: "ca",
+    name: "Català",
+    enName: "Catalan",
+    makeCode: true,
+    preview: true,
+  },
+  {
     id: "es-ES",
     name: "Español",
     enName: "Spanish",
