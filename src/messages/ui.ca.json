@@ -2,31 +2,31 @@
   "aarhus-university-alt": [
     {
       "type": 0,
-      "value": "Universidad de Aarhus"
+      "value": "Universitat d'Aarhus"
     }
   ],
   "about": [
     {
       "type": 0,
-      "value": "Acerca de nosotros"
+      "value": "Quant a"
     }
   ],
   "about-dialog-alt": [
     {
       "type": 0,
-      "value": "placa micro:bit mostrando un corazón en la pantalla LED"
+      "value": "placa micro:bit que mostra un cor a la pantalla LED"
     }
   ],
   "about-dialog-title": [
     {
       "type": 0,
-      "value": "Desarrollado en colaboración con "
+      "value": "Desenvolupat en col·laboració amb el "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "Center for Computational Thinking and Design, Aarhus University"
+          "value": "Centre for Computational Thinking and Design, Universitat d'Aarhus"
         }
       ],
       "type": 8,
@@ -36,25 +36,25 @@
   "accelerometer-image-alt": [
     {
       "type": 0,
-      "value": "micro:bit mostrando el eje X atravesando la parte delantera, el eje Y de arriba abajo y el eje Z de atrás hacia delante"
+      "value": "micro:bit que mostra l'eix X de darrere al davant mesurant el balanceig de dreta a esquerra, l'eix Y de costat a costat mesura el capcineig endavant o enrere, l'eix Z mesura el moviment amunt i avall"
     }
   ],
   "action-label": [
     {
       "type": 0,
-      "value": "Acción"
+      "value": "Acció"
     }
   ],
   "action-label-tooltip-aria": [
     {
       "type": 0,
-      "value": "Información de herramienta de la acción"
+      "value": "Informació d'eina d'acció"
     }
   ],
   "action-length-error": [
     {
       "type": 0,
-      "value": "Los nombres de las acciones no pueden tener más de "
+      "value": "Els noms d'acció no poden tenir més de "
     },
     {
       "type": 1,
@@ -62,19 +62,19 @@
     },
     {
       "type": 0,
-      "value": " caracteres."
+      "value": " caràcters."
     }
   ],
   "action-name-placeholder": [
     {
       "type": 0,
-      "value": "Nombre de la acción"
+      "value": "Nom de l'acció"
     }
   ],
   "action-region": [
     {
       "type": 0,
-      "value": "Acción \""
+      "value": "Acció\""
     },
     {
       "type": 1,
@@ -88,7 +88,7 @@
   "action-tooltip": [
     {
       "type": 0,
-      "value": "El tipo de movimiento que quieres que "
+      "value": "El tipus de moviment que vols que "
     },
     {
       "type": 1,
@@ -96,91 +96,91 @@
     },
     {
       "type": 0,
-      "value": " reconozca, por ejemplo, «saludar» o «aplaudir»."
+      "value": " reconegui, p. ex. 'agitar amb la mà' o 'aplaudir'."
     }
   ],
   "actions-label": [
     {
       "type": 0,
-      "value": "Acciones"
+      "value": "Accions"
     }
   ],
   "add-action-action": [
     {
       "type": 0,
-      "value": "Añadir acción"
+      "value": "Afegir una acció"
     }
   ],
   "ai-activity-timer-resource-title": [
     {
       "type": 0,
-      "value": "Temporizador de actividad de IA"
+      "value": "Temporitzador d'activitat d'IA"
     }
   ],
   "ai-storytelling-friend-resource-title": [
     {
       "type": 0,
-      "value": "Amigo cuentacuentos con IA"
+      "value": "Amic que narra contes amb IA"
     }
   ],
   "back-action": [
     {
       "type": 0,
-      "value": "Volver"
+      "value": "Enrera"
     }
   ],
   "back-to-data-samples-action": [
     {
       "type": 0,
-      "value": "Editar muestras de datos"
+      "value": "Edita mostres de dades"
     }
   ],
   "bluetooth-unsupported-advice": [
     {
       "type": 0,
-      "value": "Te recomendamos Google Chrome o Microsoft Edge para que puedas conectarte directamente a tu micro:bit."
+      "value": "Et recomanem Google Chrome o Microsoft Edge perquè puguis connectar-te directament a la micro:bit."
     }
   ],
   "bluetooth-unsupported-explain": [
     {
       "type": 0,
-      "value": "Lamentablemente, WebUSB y Web Bluetooth no son compatibles con este navegador. Esto significa que no puedes conectarte a un micro:bit para grabar las muestras de datos necesarias para entrenar un modelo de aprendizaje automático."
+      "value": "Malauradament, aquest navegador no admet WebUSB i Web Bluetooth. Això vol dir que no et pots connectar a una micro:bit per registrar les mostres de dades necessàries per entrenar un model d'aprenentatge automàtic."
     }
   ],
   "bluetooth-unsupported-header": [
     {
       "type": 0,
-      "value": "Este navegador no es compatible"
+      "value": "Aquest navegador no és compatible"
     }
   ],
   "cancel-action": [
     {
       "type": 0,
-      "value": "Cancelar"
+      "value": "Cancel·lar"
     }
   ],
   "cancel-recording-action": [
     {
       "type": 0,
-      "value": "Cancelar grabación"
+      "value": "Cancel·la l'enregistrament"
     }
   ],
   "certainty-label": [
     {
       "type": 0,
-      "value": "Certeza"
+      "value": "Certesa"
     }
   ],
   "certainty-label-tooltip-aria": [
     {
       "type": 0,
-      "value": "Información de herramienta de la certeza"
+      "value": "Informació d'eina de certesa"
     }
   ],
   "certainty-percentage-label": [
     {
       "type": 0,
-      "value": "certeza para "
+      "value": "certesa per a "
     },
     {
       "type": 1,
@@ -196,31 +196,31 @@
     },
     {
       "type": 0,
-      "value": " por ciento"
+      "value": " per cent"
     }
   ],
   "certainty-tooltip": [
     {
       "type": 0,
-      "value": "Cómo de seguro está el modelo de que estás realizando cada acción."
+      "value": "Quina confiança té el model que actualment esteu fent cada acció."
     }
   ],
   "click-to-reload-page-action": [
     {
       "type": 0,
-      "value": "Haga clic para recargar la página"
+      "value": "Fes clic per tornar a carregar la pàgina"
     }
   ],
   "close-action": [
     {
       "type": 0,
-      "value": "Cerrar"
+      "value": "Tanca "
     }
   ],
   "code-download-error": [
     {
       "type": 0,
-      "value": "Error al descargar el código del proyecto"
+      "value": "S'ha produït un error en baixar el codi del projecte"
     }
   ],
   "code-label": [
@@ -232,193 +232,193 @@
   "code-label-tooltip-aria": [
     {
       "type": 0,
-      "value": "Información de herramienta del código"
+      "value": "Informació sobre el codi"
     }
   ],
   "code-tooltip": [
     {
       "type": 0,
-      "value": "Estos son los bloques MakeCode para cada acción detectada cuando transfieres tu modelo y código ML a un micro:bit"
+      "value": "Aquests són els blocs MakeCode per a cada acció detectada quan transfereixes el teu model i codi ML a una micro:bit"
     }
   ],
   "confirm-action": [
     {
       "type": 0,
-      "value": "Confirmar"
+      "value": "Confirma"
     }
   ],
   "confirm-save-action": [
     {
       "type": 0,
-      "value": "Confirmar y guardar"
+      "value": "Confirma i desa"
     }
   ],
   "connect-action": [
     {
       "type": 0,
-      "value": "Conectar"
+      "value": "Connecta"
     }
   ],
   "connect-action-aria": [
     {
       "type": 0,
-      "value": "Conectar al micro:bit"
+      "value": "Connectar a la micro:bit"
     }
   ],
   "connect-battery-heading": [
     {
       "type": 0,
-      "value": "Desconectar el USB y conectar la batería"
+      "value": "Desconnectal'USB i connecta la bateria"
     }
   ],
   "connect-battery-holder": [
     {
       "type": 0,
-      "value": "Portapilas"
+      "value": "Porta piles"
     }
   ],
   "connect-battery-link": [
     {
       "type": 0,
-      "value": "Puedes sujetar el micro:bit a tu muñeca o a un objeto"
+      "value": "Pots connectar la micro:bit al canell o a un objecte"
     }
   ],
   "connect-battery-subtitle": [
     {
       "type": 0,
-      "value": "Desconecta el micro:bit del ordenador y conecta la batería."
+      "value": "Desconnecta la micro:bit de l'ordinador i connecta-la a la bateria."
     }
   ],
   "connect-bluetooth-cancelled-connection": [
     {
       "type": 0,
-      "value": "No has elegido un micro:bit. ¿Quieres volver a intentarlo?"
+      "value": "No has triat una micro:bit. Vols tornar-ho a provar?"
     }
   ],
   "connect-bluetooth-heading": [
     {
       "type": 0,
-      "value": "Conectar mediante Web Bluetooth"
+      "value": "Connecta't mitjançant Web Bluetooth"
     }
   ],
   "connect-bluetooth-invalid-pattern": [
     {
       "type": 0,
-      "value": "El patrón que has dibujado no es válido."
+      "value": "El patró que has dibuixat no és vàlid."
     }
   ],
   "connect-bluetooth-start-heading": [
     {
       "type": 0,
-      "value": "Qué necesitas para conectarte mediante Web Bluetooth"
+      "value": "Què necessites per connectar-te mitjançant Web Bluetooth"
     }
   ],
   "connect-bluetooth-start-requirements1": [
     {
       "type": 0,
-      "value": "un micro:bit"
+      "value": "1 micro:bit"
     }
   ],
   "connect-bluetooth-start-requirements2-subtitle": [
     {
       "type": 0,
-      "value": "con Internet, un puerto USB y Web Bluetooth"
+      "value": "amb Internet, un port USB i Web Bluetooth"
     }
   ],
   "connect-bluetooth-start-switch-radio": [
     {
       "type": 0,
-      "value": "Conéctate utilizando la radio del micro:bit"
+      "value": "Connecta't mitjançant la ràdio micro:bit"
     }
   ],
   "connect-cable-alt": [
     {
       "type": 0,
-      "value": "animación que muestra cómo se conecta un cable USB a la parte superior de un micro:bit"
+      "value": "animació que mostra un cable USB connectat a la part superior d'una micro:bit"
     }
   ],
   "connect-cable-download-project-subtitle": [
     {
       "type": 0,
-      "value": "Conecta un micro:bit a este ordenador con un cable USB para descargar en él tu programa MakeCode de aprendizaje automático."
+      "value": "Connecta una micro:bit a aquest ordinador amb un cable USB per descarregar-hi el teu programa MakeCode d'aprenentatge automàtic."
     }
   ],
   "connect-cable-heading": [
     {
       "type": 0,
-      "value": "Conecta el cable USB al micro:bit"
+      "value": "Connecta el cable USB a la micro:bit"
     }
   ],
   "connect-cable-skip": [
     {
       "type": 0,
-      "value": "Saltar: ¿programa ya descargado?"
+      "value": "Omet: el programa ja està descarregat?"
     }
   ],
   "connect-cable-subtitle": [
     {
       "type": 0,
-      "value": "Conecta el micro:bit a este ordenador con un cable USB para poder descargar en él el programa de recogida de datos."
+      "value": "Connecta la micro:bit a aquest ordinador amb un cable USB perquè el programa de recollida de dades es pugui descarregar."
     }
   ],
   "connect-computer": [
     {
       "type": 0,
-      "value": "Ordenador"
+      "value": "Ordinador"
     }
   ],
   "connect-data-collection-heading": [
     {
       "type": 0,
-      "value": "Conecta el cable USB al micro:bit 1"
+      "value": "Connecta el cable USB a la micro:bit 1"
     }
   ],
   "connect-data-collection-subtitle": [
     {
       "type": 0,
-      "value": "Conecta el primer micro:bit a este ordenador con un cable USB para poder descargarle el programa de recogida de datos. Este es el micro:bit que utilizarás para recoger las muestras de datos."
+      "value": "Connecta la primera micro:bit a aquest ordinador amb un cable USB per poder descarregar-hi el programa de recollida de dades. Aquest és la micro:bit que utilitzaràs per recollir mostres de dades."
     }
   ],
   "connect-failed-bluetooth-heading": [
     {
       "type": 0,
-      "value": "Error al conectarse con el micro:bit"
+      "value": "No es pot connectar a la micro:bit"
     }
   ],
   "connect-failed-bluetooth1": [
     {
       "type": 0,
-      "value": "No se ha podido establecer la conexión con el micro:bit de recogida de datos."
+      "value": "No s'ha pogut establir la connexió amb la micro:bit de la  recollida de dades."
     }
   ],
   "connect-failed-bridge-heading": [
     {
       "type": 0,
-      "value": "No se ha podido conectar al enlace de radio del micro:bit"
+      "value": "No s'ha pogut connectar a l'enllaç de ràdio de la micro:bit"
     }
   ],
   "connect-failed-bridge1": [
     {
       "type": 0,
-      "value": "No se ha podido establecer la conexión con el micro:bit conectado a tu ordenador."
+      "value": "No s'ha pogut establir la connexió amb la micro:bit connectada al teu ordinador."
     }
   ],
   "connect-failed-remote-heading": [
     {
       "type": 0,
-      "value": "Error al conectar con la recogida de datos del micro:bit"
+      "value": "No s'ha pogut connectar a la micro:bit de la recollida de dades"
     }
   ],
   "connect-failed-remote1": [
     {
       "type": 0,
-      "value": "No se ha podido establecer la conexión con el micro:bit de recogida de datos."
+      "value": "No s'ha pogut establir la connexió amb la micro:bit de la  recollida de dades."
     }
   ],
   "connect-help-alt": [
     {
       "type": 0,
-      "value": "Diálogo de conexión WebUSB con entrada BBC micro:bit con la etiqueta 1 y botón Conectar con la etiqueta 2"
+      "value": "Diàleg de connexió WebUSB amb l'entrada de BBC micro:bit etiquetada com 1 i el botó de connexió etiquetat com 2"
     }
   ],
   "connect-micro-usb-cable": [
@@ -432,7 +432,7 @@
       "children": [
         {
           "type": 0,
-          "value": "Conecta una colección de datos de micro:bit"
+          "value": "Connecta una micro:bit de recollida de dades"
         }
       ],
       "type": 8,
@@ -446,7 +446,7 @@
       "children": [
         {
           "type": 0,
-          "value": "importa muestras de datos"
+          "value": "importa mostres de dades"
         }
       ],
       "type": 8,
@@ -456,7 +456,7 @@
   "connect-pattern-heading": [
     {
       "type": 0,
-      "value": "Copiar patrón"
+      "value": "Copia el patró"
     }
   ],
   "connect-pattern-input-label": [
@@ -470,109 +470,109 @@
     },
     {
       "type": 0,
-      "value": ": número de LED encendidos en la pantalla del micro:bit"
+      "value": ": nombre de LEDs encesos a la pantalla de la micro:bit"
     }
   ],
   "connect-pattern-subtitle": [
     {
       "type": 0,
-      "value": "Copia el patrón que aparece en el micro:bit."
+      "value": "Copia el patró que es mostra a la micro:bit."
     }
   ],
   "connect-popup": [
     {
       "type": 0,
-      "value": "Selecciona micro:bit"
+      "value": "Selecciona la micro:bit"
     }
   ],
   "connect-popup-bluetooth-alt": [
     {
       "type": 0,
-      "value": "Diálogo de conexión de Web Bluetooth con la entrada del micro:bit BBC etiquetada como 1 y el botón Emparejar etiquetado como 2"
+      "value": "Diàleg de connexió de la Web Bluetooth amb l'entrada de la micro:bit de la BBC amb l'etiqueta 1 i el botó d'aparellament amb l'etiqueta 2"
     }
   ],
   "connect-popup-bluetooth-instruction2": [
     {
       "type": 0,
-      "value": "Selecciona «Emparejar»."
+      "value": "Selecciona \"Aparellar\""
     }
   ],
   "connect-popup-bluetooth-title": [
     {
       "type": 0,
-      "value": "Conéctate a micro:bit mediante Web Bluetooth"
+      "value": "Connecta't a la micro:bit mitjançant Web Bluetooth"
     }
   ],
   "connect-popup-instruction-heading": [
     {
       "type": 0,
-      "value": "En la siguiente ventana emergente"
+      "value": "A la següent finestra emergent"
     }
   ],
   "connect-popup-instruction1": [
     {
       "type": 0,
-      "value": "Elige tu micro:bit"
+      "value": "Tria la teva micro:bit"
     }
   ],
   "connect-popup-usb-bluetooth-data-collection-title": [
     {
       "type": 0,
-      "value": "Descarga el programa de recogida de datos al micro:bit"
+      "value": "Transfereix el programa de recollida de dades a la micro:bit"
     }
   ],
   "connect-popup-usb-radio-data-collection-title": [
     {
       "type": 0,
-      "value": "Descarga el programa de recogida de datos al micro:bit 1"
+      "value": "Transfereix el programa de recollida de dades a la micro:bit 1"
     }
   ],
   "connect-popup-usb-radio-link-title": [
     {
       "type": 0,
-      "value": "Descarga el programa de enlace de radio al micro:bit 2"
+      "value": "Transfereix el programa d'enllaç de ràdio a la micro:bit 2"
     }
   ],
   "connect-popup-webusb-instruction2": [
     {
       "type": 0,
-      "value": "Selecciona «Conectar»."
+      "value": "Selecciona \"Connecta\""
     }
   ],
   "connect-radio-data-collection-microbit-description": [
     {
       "type": 0,
-      "value": "Conecta el micro:bit de recogida de datos a este ordenador para descargar en él tu programa MakeCode de aprendizaje automático. Si llevas puesto el micro:bit de recogida de datos, puede que tengas que quitártelo."
+      "value": "Connecta la micro:bit de recollida de dades a aquest ordinador per descarregar-hi el teu programa MakeCode d'aprenentatge automàtic. Si portes el micro:bit de recollida de dades, potser hauries de treure'l."
     }
   ],
   "connect-radio-data-collection-microbit-title": [
     {
       "type": 0,
-      "value": "Conecta el cable USB al micro:bit de recogida de datos"
+      "value": "Connecta el cable USB a la micro:bit de recollida de dades"
     }
   ],
   "connect-radio-heading": [
     {
       "type": 0,
-      "value": "Conectar micro:bits"
+      "value": "Connectar micro:bits"
     }
   ],
   "connect-radio-link-heading": [
     {
       "type": 0,
-      "value": "Conecta el cable USB al micro:bit 2"
+      "value": "Connecta el cable USB a la micro:bit 2"
     }
   ],
   "connect-radio-link-subtitle": [
     {
       "type": 0,
-      "value": "Conecta un segundo micro:bit a este ordenador con un cable USB para poder descargarle el programa de enlace de radio. Este micro:bit de radioenlace se comunicará con el micro:bit de recogida de datos."
+      "value": "Connecta una segona micro:bit a aquest ordinador amb un cable USB perquè s'hi pugui descarregar el programa d'enllaç de ràdio. Aquest enllaç de ràdio micro:bit es comunicarà amb la micro:bit de recollida de dades."
     }
   ],
   "connect-radio-start-heading": [
     {
       "type": 0,
-      "value": "Qué necesitas para conectarte con la radio del micro:bit"
+      "value": "Què necessites per connectar-te mitjançant la ràdio micro:bit"
     }
   ],
   "connect-radio-start-requirements1": [
@@ -584,151 +584,151 @@
   "connect-radio-start-requirements1-subtitle": [
     {
       "type": 0,
-      "value": "V2 solo"
+      "value": "Només V2"
     }
   ],
   "connect-radio-start-requirements2-subtitle": [
     {
       "type": 0,
-      "value": "con Internet y un puerto USB"
+      "value": "amb Internet i un port USB"
     }
   ],
   "connect-radio-start-switch-bluetooth": [
     {
       "type": 0,
-      "value": "Conéctate utilizando Web Bluetooth en su lugar"
+      "value": "Connecta't mitjançant Web Bluetooth"
     }
   ],
   "connect-to-record": [
     {
       "type": 0,
-      "value": "Conecta para grabar muestras de datos"
+      "value": "Connecta't per registrar mostres de dades"
     }
   ],
   "connect-to-record-body": [
     {
       "type": 0,
-      "value": "Conecta un micro:bit para grabar una muestra de datos."
+      "value": "Connecta una micro:bit per registrar una mostra de dades."
     }
   ],
   "connect-to-test-model": [
     {
       "type": 0,
-      "value": "Conecta para probar tu modelo de ML"
+      "value": "Connecta't per provar el teu model ML"
     }
   ],
   "connect-to-tour-body": [
     {
       "type": 0,
-      "value": "Necesitas conectar un micro:bit de recogida de datos para ver el recorrido."
+      "value": "Has de connectar una micro:bit de recollida de dades per veure el recorregut."
     }
   ],
   "connect-troubleshoot": [
     {
       "type": 0,
-      "value": "Solucionar problemas de conexión al micro:bit"
+      "value": "Soluciona problemes de connexió a la teva micro:bit"
     }
   ],
   "connect-troubleshooting": [
     {
       "type": 0,
-      "value": "Resolución de problemas"
+      "value": "Resolució de problemes"
     }
   ],
   "connect-with-batteries": [
     {
       "type": 0,
-      "value": "con pilas"
+      "value": "amb piles"
     }
   ],
   "connect-with-web-bluetooth": [
     {
       "type": 0,
-      "value": "Conectar con Web Bluetooth"
+      "value": "Connecta amb Web Bluetooth"
     }
   ],
   "connecting": [
     {
       "type": 0,
-      "value": "Conectando..."
+      "value": "S'està connectant..."
     }
   ],
   "continue-makecode-action": [
     {
       "type": 0,
-      "value": "Continuar a MakeCode"
+      "value": "Continua amb MakeCode"
     }
   ],
   "cookies-action": [
     {
       "type": 0,
-      "value": "Cookies"
+      "value": "Galetes"
     }
   ],
   "copied": [
     {
       "type": 0,
-      "value": "Copiado"
+      "value": "Copiat"
     }
   ],
   "copy-action": [
     {
       "type": 0,
-      "value": "Copiar"
+      "value": "Copia"
     }
   ],
   "data-actions-menu": [
     {
       "type": 0,
-      "value": "Acciones de datos"
+      "value": "Accions de dades"
     }
   ],
   "data-collection-microbit": [
     {
       "type": 0,
-      "value": "micro:bit de recogida de datos "
+      "value": "Micro:bit de recollida de dades"
     }
   ],
   "data-collection-microbit-label": [
     {
       "type": 0,
-      "value": "diagrama del micro:bit de recogida de datos conectado a la muñeca de una persona"
+      "value": "diagrama que mostra la micro:bit de recollida de dades connectada al canell d'una persona"
     }
   ],
   "data-connection-region": [
     {
       "type": 0,
-      "value": "conexión de datos del micro:bit"
+      "value": "micro:bit de connexió de dades "
     }
   ],
   "data-features-hide-action": [
     {
       "type": 0,
-      "value": "Ocultar funciones de datos"
+      "value": "Amaga les funcions de dades"
     }
   ],
   "data-features-show-action": [
     {
       "type": 0,
-      "value": "Mostrar características de los datos"
+      "value": "Mostra les funcions de dades"
     }
   ],
   "data-samples-actions-region": [
     {
       "type": 0,
-      "value": "Barra de herramientas de muestras de datos"
+      "value": "Barra d'eines de mostres de dades"
     }
   ],
   "data-samples-label": [
     {
       "type": 0,
-      "value": "Muestras de datos"
+      "value": "Mostra de dades"
     }
   ],
   "data-samples-label-tooltip-aria": [
     {
       "type": 0,
-      "value": "Información de herramienta de las muestras de datos"
+      "value": "Informació sobre mostres de dades"
     }
   ],
   "data-samples-status-count": [
@@ -738,37 +738,37 @@
     },
     {
       "type": 0,
-      "value": " muestras grabadas"
+      "value": " mostres enregistrades"
     }
   ],
   "data-samples-status-not-enough": [
     {
       "type": 0,
-      "value": "Se requieren al menos 3"
+      "value": "Es requereixen almenys 3"
     }
   ],
   "data-samples-title": [
     {
       "type": 0,
-      "value": "Muestras de datos"
+      "value": "Mostra de dades"
     }
   ],
   "data-samples-tooltip": [
     {
       "type": 0,
-      "value": "Breves recopilaciones de datos de movimiento que duran 1 segundo. Tus muestras de datos solo se almacenan en tu ordenador, no se envían a nadie más."
+      "value": "Col·leccions breus de dades de moviment amb una durada d'1 segon. Les teves mostres de dades només s'emmagatzemen al teu ordinador, no s'envien a ningú més."
     }
   ],
   "default-project-name": [
     {
       "type": 0,
-      "value": "Sin título"
+      "value": "Sense títol"
     }
   ],
   "delete-action-aria": [
     {
       "type": 0,
-      "value": "Eliminar acción \""
+      "value": "Suprimeix l'acció \""
     },
     {
       "type": 1,
@@ -782,13 +782,13 @@
   "delete-action-confirm-heading": [
     {
       "type": 0,
-      "value": "Confirmar la acción de eliminar"
+      "value": "Confirma l'acció de supressió"
     }
   ],
   "delete-action-confirm-text": [
     {
       "type": 0,
-      "value": "¿Realmente quieres eliminar la acción \""
+      "value": "Estàs segur que vols suprimir l'acció \""
     },
     {
       "type": 1,
@@ -802,25 +802,25 @@
   "delete-data-samples-action": [
     {
       "type": 0,
-      "value": "Eliminar todas las muestras de datos"
+      "value": "Suprimeix totes les mostres de dades"
     }
   ],
   "delete-data-samples-confirm-heading": [
     {
       "type": 0,
-      "value": "Confirmar la eliminación de todas las muestras de datos"
+      "value": "Confirma que suprimiu totes les mostres de dades"
     }
   ],
   "delete-data-samples-confirm-text": [
     {
       "type": 0,
-      "value": "¿Estás seguro de que quieres eliminar todas las muestras de datos?"
+      "value": "Estàs segur que vols suprimir totes les mostres de dades?"
     }
   ],
   "delete-recording-aria": [
     {
       "type": 0,
-      "value": "Eliminar la grabación "
+      "value": "Suprimeix l'enregistrament "
     },
     {
       "type": 1,
@@ -836,7 +836,7 @@
     },
     {
       "type": 0,
-      "value": " para la acción \""
+      "value": " per a l'acció \""
     },
     {
       "type": 1,
@@ -850,103 +850,103 @@
   "disconnect-action": [
     {
       "type": 0,
-      "value": "Desconectar"
+      "value": "Desconnecta"
     }
   ],
   "disconnected-during-recording": [
     {
       "type": 0,
-      "value": "micro:bit desconectado durante la grabación"
+      "value": "micro:bit desconnectat durant la gravació"
     }
   ],
   "disconnected-warning-bluetooth-heading": [
     {
       "type": 0,
-      "value": "Se ha perdido la conexión con el micro:bit de recogida de datos"
+      "value": "S'ha perdut la connexió de la micro:bit de recollida de dades"
     }
   ],
   "disconnected-warning-bluetooth1": [
     {
       "type": 0,
-      "value": "Se ha perdido la conexión con el micro:bit de recogida de datos."
+      "value": "S'ha perdut la connexió amb la recollida de dades micro:bit."
     }
   ],
   "disconnected-warning-bluetooth2": [
     {
       "type": 0,
-      "value": "Comprueba que el micro:bit:"
+      "value": "Comproveu que la micro:bit:"
     }
   ],
   "disconnected-warning-bluetooth3": [
     {
       "type": 0,
-      "value": "está encendido (la luz roja de la parte posterior del micro:bit debe estar encendida)"
+      "value": "està encès (la llum vermella de la part posterior de la micro:bit hauria d'estar encesa)"
     }
   ],
   "disconnected-warning-bluetooth4": [
     {
       "type": 0,
-      "value": "está cerca del ordenador"
+      "value": "està a prop de l'ordinador"
     }
   ],
   "disconnected-warning-bridge-heading": [
     {
       "type": 0,
-      "value": "Se ha perdido la conexión con el micro:bit con enlace de radio"
+      "value": "S'ha perdut la connexió de la micro:bit de l'enllaç de ràdio"
     }
   ],
   "disconnected-warning-bridge1": [
     {
       "type": 0,
-      "value": "Se ha perdido la conexión con el micro:bit conectado a tu ordenador."
+      "value": "No s'ha pogut establir la connexió amb la micro:bit connectada al teu ordinador."
     }
   ],
   "disconnected-warning-remote-heading": [
     {
       "type": 0,
-      "value": "Se ha perdido la conexión para la recogida de datos del micro:bit"
+      "value": "S'ha perdut la connexió de la micro:bit de recollida de dades"
     }
   ],
   "disconnected-warning-remote1": [
     {
       "type": 0,
-      "value": "La conexión para la recogida de datos del micro:bit se ha perdido."
+      "value": "S'ha perdut la connexió amb la recollida de dades micro:bit."
     }
   ],
   "dont-show-again": [
     {
       "type": 0,
-      "value": "No volver a mostrar"
+      "value": "No tornis a mostrar això"
     }
   ],
   "download-data-samples-action": [
     {
       "type": 0,
-      "value": "Descargar todas las muestras de datos"
+      "value": "Baixa totes les mostres de dades"
     }
   ],
   "download-project-choose-microbit-subtitle": [
     {
       "type": 0,
-      "value": "Si descargas tu proyecto en el mismo micro:bit, este se desconectará de la herramienta. Tendrás que volver a conectar el micro:bit si quieres grabar más muestras de datos."
+      "value": "Si baixes el teu projecte a la mateixa micro:bit, es desconnectarà la micro:bit de l'eina. Hauràs de tornar a connectar la micro:bit si vols gravar més mostres de dades."
     }
   ],
   "download-project-choose-microbit-title": [
     {
       "type": 0,
-      "value": "¿Qué micro:bit quieres utilizar?"
+      "value": "Quina micro:bit vols utilitzar?"
     }
   ],
   "download-project-different-microbit-option": [
     {
       "type": 0,
-      "value": "micro:bit diferente"
+      "value": "Diferent micro:bit"
     }
   ],
   "download-project-intro-description": [
     {
       "type": 0,
-      "value": "Tu programa incluye el modelo de aprendizaje automático que has creado. El modelo se ejecuta en el micro:bit, por lo que puedes utilizarlo sin estar conectado a "
+      "value": "El teu programa inclou el model d'aprenentatge automàtic que has creat. El model s'executa a la micro:bit perquè el puguis utilitzar sense estar connectada a "
     },
     {
       "type": 1,
@@ -960,49 +960,49 @@
   "download-project-intro-title": [
     {
       "type": 0,
-      "value": "Descarga tu proyecto de MakeCode de aprendizaje automático"
+      "value": "Transfereix el teu projecte MakeCode d'aprenentatge automàtic"
     }
   ],
   "download-project-same-microbit-option": [
     {
       "type": 0,
-      "value": "El mismo micro:bit"
+      "value": "Mateixa micro:bit"
     }
   ],
   "downloading-data-collection-header": [
     {
       "type": 0,
-      "value": "Descargar el programa de recogida de datos"
+      "value": "Transferir el programa de recollida de dades"
     }
   ],
   "downloading-header": [
     {
       "type": 0,
-      "value": "Descargando el programa al micro:bit"
+      "value": "Transfereix el programa a la micro:bit"
     }
   ],
   "downloading-radio-link-header": [
     {
       "type": 0,
-      "value": "Descargando el programa de enlace de radio"
+      "value": "Transferir el programa d'enllaç de ràdio"
     }
   ],
   "downloading-subtitle": [
     {
       "type": 0,
-      "value": "Espera, por favor. Descargando el programa al micro:bit."
+      "value": "Si us plau, espera. Transferint el programa a la micro:bit."
     }
   ],
   "edit-in-makecode-action": [
     {
       "type": 0,
-      "value": "Editar en MakeCode"
+      "value": "Edita a MakeCode"
     }
   ],
   "estimated-action-aria": [
     {
       "type": 0,
-      "value": "Acción estimada: \""
+      "value": "Acció estimada: \""
     },
     {
       "type": 1,
@@ -1016,351 +1016,337 @@
   "estimated-action-label": [
     {
       "type": 0,
-      "value": "Acción estimada"
+      "value": "Acció estimada"
     }
   ],
   "estimated-action-label-tooltip-aria": [
     {
       "type": 0,
-      "value": "Información de herramienta de la acción estimada"
+      "value": "Informació sobre l'acció estimada"
     }
   ],
   "estimated-action-tooltip": [
     {
       "type": 0,
-      "value": "Esta es la acción que el modelo cree que estás haciendo actualmente."
+      "value": "Aquesta és l'acció que el model creu que estàs fent actualment."
     }
   ],
   "feedback": [
     {
       "type": 0,
-      "value": "Comentarios"
+      "value": "Comentaris"
     }
   ],
   "fingerprint-acc-x-tooltip": [
     {
       "type": 0,
-      "value": "Suma de los datos de la dirección x"
+      "value": "Suma de dades de la direcció x"
     }
   ],
   "fingerprint-acc-y-tooltip": [
     {
       "type": 0,
-      "value": "Suma de los datos de la dirección y"
+      "value": "Suma de dades de la direcció y"
     }
   ],
   "fingerprint-acc-z-tooltip": [
     {
       "type": 0,
-      "value": "Suma de los datos de la dirección z"
+      "value": "Suma de dades de la direcció z"
     }
   ],
   "fingerprint-max-x-tooltip": [
     {
       "type": 0,
-      "value": "Punto máximo entre todos los puntos de datos de la dirección x"
+      "value": "Punt màxim entre tots els punts de dades de direcció x"
     }
   ],
   "fingerprint-max-y-tooltip": [
     {
       "type": 0,
-      "value": "Punto máximo entre todos los puntos de datos de la dirección y"
+      "value": "Punt màxim entre tots els punts de dades de direcció y"
     }
   ],
   "fingerprint-max-z-tooltip": [
     {
       "type": 0,
-      "value": "Punto máximo entre todos los puntos de datos de la dirección z"
+      "value": "Punt màxim entre tots els punts de dades de direcció z"
     }
   ],
   "fingerprint-mean-x-tooltip": [
     {
       "type": 0,
-      "value": "Valor medio de los datos de la dirección x"
+      "value": "Valor mitjà de les dades de direcció x"
     }
   ],
   "fingerprint-mean-y-tooltip": [
     {
       "type": 0,
-      "value": "Valor medio de los datos de la dirección y"
+      "value": "Valor mitjà de les dades de direcció y"
     }
   ],
   "fingerprint-mean-z-tooltip": [
     {
       "type": 0,
-      "value": "Valor medio de los datos de la dirección z"
+      "value": "Valor mitjà de les dades de direcció z"
     }
   ],
   "fingerprint-min-x-tooltip": [
     {
       "type": 0,
-      "value": "Punto mínimo entre todos los puntos de datos de la dirección x"
+      "value": "Punt mínim entre tots els punts de dades de direcció x"
     }
   ],
   "fingerprint-min-y-tooltip": [
     {
       "type": 0,
-      "value": "Punto mínimo entre todos los puntos de datos de la dirección y"
+      "value": "Punt mínim entre tots els punts de dades de direcció y"
     }
   ],
   "fingerprint-min-z-tooltip": [
     {
       "type": 0,
-      "value": "Punto mínimo entre todos los puntos de datos de la dirección z"
+      "value": "Punt mínim entre tots els punts de dades de direcció z"
     }
   ],
   "fingerprint-peaks-x-tooltip": [
     {
       "type": 0,
-      "value": "Número de extremos entre todos los puntos de datos de la dirección x"
+      "value": "Nombre d'extrems entre tots els punts de dades de la direcció x"
     }
   ],
   "fingerprint-peaks-y-tooltip": [
     {
       "type": 0,
-      "value": "Número de extremos entre todos los puntos de datos de la dirección y"
+      "value": "Nombre d'extrems entre tots els punts de dades de la direcció y"
     }
   ],
   "fingerprint-peaks-z-tooltip": [
     {
       "type": 0,
-      "value": "Número de extremos entre todos los puntos de datos de la dirección z"
+      "value": "Nombre d'extrems entre tots els punts de dades de la direcció z"
     }
   ],
   "fingerprint-rms-x-tooltip": [
     {
       "type": 0,
-      "value": "Valor cuadrático medio de todos los puntos de datos de la dirección x"
+      "value": "Valor quadrat mitjà de l'arrel per a tots els punts de dades de la direcció x"
     }
   ],
   "fingerprint-rms-y-tooltip": [
     {
       "type": 0,
-      "value": "Valor cuadrático medio de todos los puntos de datos de la dirección y"
+      "value": "Valor quadrat mitjà de l'arrel per a tots els punts de dades de la direcció y"
     }
   ],
   "fingerprint-rms-z-tooltip": [
     {
       "type": 0,
-      "value": "Valor cuadrático medio de todos los puntos de datos de la dirección z"
+      "value": "Valor quadrat mitjà de l'arrel per a tots els punts de dades de la direcció z"
     }
   ],
   "fingerprint-std-x-tooltip": [
     {
       "type": 0,
-      "value": "Desviación media respecto a 0 entre todos los puntos de datos de la dirección x"
+      "value": "Desviació mitjana de 0 entre tots els punts de dades de la direcció x"
     }
   ],
   "fingerprint-std-y-tooltip": [
     {
       "type": 0,
-      "value": "Desviación media respecto a 0 entre todos los puntos de datos de la dirección y"
+      "value": "Desviació mitjana de 0 entre tots els punts de dades de direcció y"
     }
   ],
   "fingerprint-std-z-tooltip": [
     {
       "type": 0,
-      "value": "Desviación media respecto a 0 entre todos los puntos de datos de la dirección z"
+      "value": "Desviació mitjana de 0 entre tots els punts de dades de la direcció z"
     }
   ],
   "fingerprint-zcr-x-tooltip": [
     {
       "type": 0,
-      "value": "Velocidad a la que la aceleración pasa de positiva a negativa para los puntos de datos de la dirección x"
+      "value": "Velocitat amb què l'acceleració passa entre positiva i negativa per als punts de dades de la direcció x"
     }
   ],
   "fingerprint-zcr-y-tooltip": [
     {
       "type": 0,
-      "value": "Velocidad a la que la aceleración pasa de positiva a negativa para los puntos de datos de la dirección y"
+      "value": "Velocitat amb què l'acceleració passa entre positiva i negativa per als punts de dades de la direcció y"
     }
   ],
   "fingerprint-zcr-z-tooltip": [
     {
       "type": 0,
-      "value": "Velocidad a la que la aceleración pasa de positiva a negativa para los puntos de datos de la dirección z"
+      "value": "Velocitat amb què l'acceleració passa entre positiva i negativa per als punts de dades de la direcció z"
     }
   ],
   "firmware-outdated-content1": [
     {
       "type": 0,
-      "value": "La conexión al micro:bit ha fallado porque el firmware del micro:bit es demasiado antiguo."
+      "value": "La connexió a la micro:bit ha fallat perquè el microprogramari de la teva micro:bit és massa antic."
     }
   ],
   "firmware-outdated-content2": [
     {
       "type": 0,
-      "value": "Debes "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "actualizar el firmware"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " para poder conectar a este micro:bit."
+      "value": "Has d<link>actualitzar el teu microprogramari</link> abans de poder connectar amb aquesta micro:bit."
     }
   ],
   "firmware-outdated-heading": [
     {
       "type": 0,
-      "value": "Es necesario actualizar el firmware"
+      "value": "Cal actualitzar el firmware"
     }
   ],
   "get-started-action": [
     {
       "type": 0,
-      "value": "Empieza"
+      "value": "Comencem"
     }
   ],
   "go-action": [
     {
       "type": 0,
-      "value": "Ir"
+      "value": "Ves"
     }
   ],
   "graph-color-scheme": [
     {
       "type": 0,
-      "value": "Esquema de colores del gráfico"
+      "value": "Esquema de colors del gràfic"
     }
   ],
   "graph-color-scheme-color-blind-1": [
     {
       "type": 0,
-      "value": "Alternativa 1 para daltónicos"
+      "value": "Alternativa daltònica 1"
     }
   ],
   "graph-color-scheme-color-blind-2": [
     {
       "type": 0,
-      "value": "Alternativa 2 para daltónicos"
+      "value": "Alternativa daltònica 2"
     }
   ],
   "graph-color-scheme-default": [
     {
       "type": 0,
-      "value": "Por defecto (rojo, azul, verde)"
+      "value": "Per defecte (vermell, blau, verd)"
     }
   ],
   "graph-line-scheme": [
     {
       "type": 0,
-      "value": "Estilo de línea gráfica"
+      "value": "Estil de línia del gràfic"
     }
   ],
   "graph-line-scheme-accessible": [
     {
       "type": 0,
-      "value": "Líneas accesibles (continuas, discontinuas, puntos)"
+      "value": "Línies accessibles (sòlides, discontinues, punts)"
     }
   ],
   "graph-line-scheme-solid": [
     {
       "type": 0,
-      "value": "Líneas continuas"
+      "value": "Línies sòlides"
     }
   ],
   "graph-line-weight": [
     {
       "type": 0,
-      "value": "Grosor de la línea gráfica"
+      "value": "Gruix de la línia del gràfic"
     }
   ],
   "graph-line-weight-default": [
     {
       "type": 0,
-      "value": "Por defecto"
+      "value": "Per defecte"
     }
   ],
   "graph-line-weight-thick": [
     {
       "type": 0,
-      "value": "Grosor"
+      "value": "Gruixut"
     }
   ],
   "graph-preview": [
     {
       "type": 0,
-      "value": "Vista previa del gráfico"
+      "value": "Vista prèvia del gràfic"
     }
   ],
   "help-label": [
     {
       "type": 0,
-      "value": "Ayuda"
+      "value": "Ajuda"
     }
   ],
   "help-support": [
     {
       "type": 0,
-      "value": "Ayuda y asistencia"
+      "value": "Ajuda i suport"
     }
   ],
   "help-translate": [
     {
       "type": 0,
-      "value": "Ayudar a traducir"
+      "value": "Ajuda a traduir"
     }
   ],
   "home-action": [
     {
       "type": 0,
-      "value": "Inicio"
+      "value": "Inici"
     }
   ],
   "homepage": [
     {
       "type": 0,
-      "value": "Página de inicio"
+      "value": "Pàgina d'inici"
     }
   ],
   "homepage-alt": [
     {
       "type": 0,
-      "value": "gráfico que muestra las líneas gráficas x, y, z que representan los datos del acelerómetro del micro:bit con palmas superpuestas"
+      "value": "gràfic que mostra les línies del gràfic x, y, z que representen dades de l'acceleròmetre de la micro:bit amb les mans aplaudides superposades"
     }
   ],
   "homepage-alt-graph": [
     {
       "type": 0,
-      "value": "gráfico que muestra las líneas gráficas x, y, z que representan los datos del acelerómetro del micro:bit"
+      "value": "gràfic que mostra les línies del gràfic x, y, z que representen dades de l'acceleròmetre de la micro:bit"
     }
   ],
   "homepage-alt-hands": [
     {
       "type": 0,
-      "value": "palmas aplaudiendo"
+      "value": "picant de mans"
     }
   ],
   "homepage-description": [
     {
       "type": 0,
-      "value": "Entrena un modelo de aprendizaje automático con tus propios datos de movimiento y ejecútalo en tu micro:bit."
+      "value": "Entrena un model d'aprenentatge automàtic amb les teves dades de moviment i executa'l a la teva micro:bit."
     }
   ],
   "homepage-how-it-works": [
     {
       "type": 0,
-      "value": "Cómo funciona"
+      "value": "Com funciona"
     }
   ],
   "homepage-how-it-works-paragraph": [
     {
       "type": 0,
-      "value": "Mira el vídeo para empezar. Más información en la "
+      "value": "Mira el vídeo per començar. Més informació a la "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "guía del usuario"
+          "value": "guia de l'usuari"
         }
       ],
       "type": 8,
@@ -1374,19 +1360,19 @@
   "homepage-projects": [
     {
       "type": 0,
-      "value": "Proyectos"
+      "value": "Projectes"
     }
   ],
   "homepage-projects-more": [
     {
       "type": 0,
-      "value": "Explora más "
+      "value": "Explora més "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "contenidos y recursos sobre micro:bit e IA"
+          "value": "contingut i recursos sobre la micro:bit i AI"
         }
       ],
       "type": 8,
@@ -1400,31 +1386,31 @@
   "homepage-step-by-step": [
     {
       "type": 0,
-      "value": "Paso a paso"
+      "value": "Pas a pas"
     }
   ],
   "homepage-subtitle": [
     {
       "type": 0,
-      "value": "Crea IA en tu BBC micro:bit utilizando el movimiento y el aprendizaje automático."
+      "value": "Crea IA a la teva micro:bit de la BBC utilitzant el moviment i l'aprenentatge automàtic."
     }
   ],
   "homepage-video-alt": [
     {
       "type": 0,
-      "value": "Vídeo de introducción"
+      "value": "Vídeo de presentació"
     }
   ],
   "import-data-samples-action": [
     {
       "type": 0,
-      "value": "Importar muestras de datos"
+      "value": "Importa mostres de dades"
     }
   ],
   "import-error-dialog-content": [
     {
       "type": 0,
-      "value": "Solo los archivos hexadecimales MakeCode o los archivos de muestras de datos (.json) pueden ser abiertos por "
+      "value": "Els fitxers Makecode hex o mostres de dades (j.son) només poden ser oberts per "
     },
     {
       "type": 1,
@@ -1438,19 +1424,19 @@
   "import-error-dialog-title": [
     {
       "type": 0,
-      "value": "Tipo de archivo no compatible"
+      "value": "Tipus d'arxiu no permés"
     }
   ],
   "incompatible-device-body-alt": [
     {
       "type": 0,
-      "value": "Vuelve atrás para seleccionar un micro:bit diferente o "
+      "value": "Torna enrere per seleccionar una micro:bit diferent, o bé "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "guarda el hexadecimal del proyecto"
+          "value": "desa l'hexadecimal del projecte"
         }
       ],
       "type": 8,
@@ -1458,25 +1444,25 @@
     },
     {
       "type": 0,
-      "value": " para poder descargarlo más tarde en un micro:bit V2."
+      "value": " que es pot transferir a una micro:bit V2 més tard."
     }
   ],
   "incompatible-device-body1": [
     {
       "type": 0,
-      "value": "Continúa en MakeCode para editar el programa. A continuación, puedes guardar el hexadecimal del proyecto que se puede descargar en un micro:bit V2."
+      "value": "Continua a MakeCode per editar el programa. A continuació, pots desar l'hex del projecte que es pot transferir a una micro:bit V2."
     }
   ],
   "incompatible-device-body2": [
     {
       "type": 0,
-      "value": "Como alternativa, "
+      "value": "Alternativament, "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "guarda el hexadecimal del proyecto"
+          "value": "desa l'hexadecimal del projecte"
         }
       ],
       "type": 8,
@@ -1484,25 +1470,25 @@
     },
     {
       "type": 0,
-      "value": " sin utilizar MakeCode."
+      "value": " sense utilitzar MakeCode."
     }
   ],
   "incompatible-device-heading": [
     {
       "type": 0,
-      "value": "Dispositivo incompatible"
+      "value": "Dispositiu incompatible"
     }
   ],
   "incompatible-device-subtitle": [
     {
       "type": 0,
-      "value": "Estás utilizando un micro:bit V1, pero los proyectos de aprendizaje automático necesitan el procesador más rápido de un micro:bit V2. "
+      "value": "Estàs utilitzant una micro:bit V1, però els projectes d'aprenentatge automàtic necessiten el processador més ràpid en una micro:bit V2. "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "Más información sobre las versiones del micro:bit."
+          "value": "Més informació sobre les versions de les micro:bit."
         }
       ],
       "type": 8,
@@ -1512,13 +1498,13 @@
   "insufficient-data-body": [
     {
       "type": 0,
-      "value": "Necesitas al menos 3 muestras de datos de 2 acciones para entrenar el modelo."
+      "value": "Necessites almenys 3 mostres de dades per a 2 accions per entrenar el model."
     }
   ],
   "insufficient-data-title": [
     {
       "type": 0,
-      "value": "No tienes suficientes datos"
+      "value": "No tens prou dades"
     }
   ],
   "language": [
@@ -1530,37 +1516,37 @@
   "learn-about-firewall-requirements-action": [
     {
       "type": 0,
-      "value": "Conoce los requisitos del cortafuegos"
+      "value": "Més informació sobre els requisits del tallafoc"
     }
   ],
   "led-icon-option-angry": [
     {
       "type": 0,
-      "value": "Enfadado"
+      "value": "Enfadat"
     }
   ],
   "led-icon-option-asleep": [
     {
       "type": 0,
-      "value": "Dormido"
+      "value": "Adormit"
     }
   ],
   "led-icon-option-butterfly": [
     {
       "type": 0,
-      "value": "Mariposa"
+      "value": "Papallona"
     }
   ],
   "led-icon-option-chessboard": [
     {
       "type": 0,
-      "value": "Tablero de ajedrez"
+      "value": "Tauler d'escacs"
     }
   ],
   "led-icon-option-confused": [
     {
       "type": 0,
-      "value": "Confundido"
+      "value": "Confús"
     }
   ],
   "led-icon-option-cow": [
@@ -1572,25 +1558,25 @@
   "led-icon-option-diamond": [
     {
       "type": 0,
-      "value": "Diamante"
+      "value": "Diamant"
     }
   ],
   "led-icon-option-duck": [
     {
       "type": 0,
-      "value": "Pato"
+      "value": "Ànec"
     }
   ],
   "led-icon-option-eighthnote": [
     {
       "type": 0,
-      "value": "Octava nota"
+      "value": "Vuitena nota"
     }
   ],
   "led-icon-option-fabulous": [
     {
       "type": 0,
-      "value": "Fabuloso"
+      "value": "Fabulós"
     }
   ],
   "led-icon-option-ghost": [
@@ -1602,37 +1588,37 @@
   "led-icon-option-giraffe": [
     {
       "type": 0,
-      "value": "Jirafa"
+      "value": "Girafa"
     }
   ],
   "led-icon-option-happy": [
     {
       "type": 0,
-      "value": "Feliz"
+      "value": "Feliç"
     }
   ],
   "led-icon-option-heart": [
     {
       "type": 0,
-      "value": "Corazón"
+      "value": "Cor"
     }
   ],
   "led-icon-option-house": [
     {
       "type": 0,
-      "value": "Casa - House"
+      "value": "Casa"
     }
   ],
   "led-icon-option-lefttriangle": [
     {
       "type": 0,
-      "value": "Triángulo izquierdo"
+      "value": "Triangle esquerre"
     }
   ],
   "led-icon-option-meh": [
     {
       "type": 0,
-      "value": "Indiferente"
+      "value": "BAH avorrit"
     }
   ],
   "led-icon-option-no": [
@@ -1644,109 +1630,109 @@
   "led-icon-option-off": [
     {
       "type": 0,
-      "value": "Apagado"
+      "value": "Desactivat"
     }
   ],
   "led-icon-option-pitchfork": [
     {
       "type": 0,
-      "value": "Horca"
+      "value": "Forca"
     }
   ],
   "led-icon-option-quarternote": [
     {
       "type": 0,
-      "value": "Nota musical negra"
+      "value": "Nota negra"
     }
   ],
   "led-icon-option-rabbit": [
     {
       "type": 0,
-      "value": "Conejo"
+      "value": "Conill"
     }
   ],
   "led-icon-option-rollerskate": [
     {
       "type": 0,
-      "value": "Patín"
+      "value": "Patinet"
     }
   ],
   "led-icon-option-sad": [
     {
       "type": 0,
-      "value": "Triste"
+      "value": "Trist"
     }
   ],
   "led-icon-option-scissors": [
     {
       "type": 0,
-      "value": "Tijeras"
+      "value": "Tisores"
     }
   ],
   "led-icon-option-silly": [
     {
       "type": 0,
-      "value": "Tonto"
+      "value": "Ximple"
     }
   ],
   "led-icon-option-skull": [
     {
       "type": 0,
-      "value": "Calavera"
+      "value": "Crani"
     }
   ],
   "led-icon-option-smalldiamond": [
     {
       "type": 0,
-      "value": "Diamante pequeño"
+      "value": "Petit diamant"
     }
   ],
   "led-icon-option-smallheart": [
     {
       "type": 0,
-      "value": "Corazón pequeño"
+      "value": "Petit cor"
     }
   ],
   "led-icon-option-smallsquare": [
     {
       "type": 0,
-      "value": "Cuadrado pequeño"
+      "value": "Quadrat petit"
     }
   ],
   "led-icon-option-snake": [
     {
       "type": 0,
-      "value": "Serpiente"
+      "value": "Serp"
     }
   ],
   "led-icon-option-square": [
     {
       "type": 0,
-      "value": "Cuadrado"
+      "value": "Quadrat"
     }
   ],
   "led-icon-option-stickfigure": [
     {
       "type": 0,
-      "value": "Figura de palo"
+      "value": "Figura de pal"
     }
   ],
   "led-icon-option-surprised": [
     {
       "type": 0,
-      "value": "Sorprendido"
+      "value": "Sorprès"
     }
   ],
   "led-icon-option-sword": [
     {
       "type": 0,
-      "value": "Espada"
+      "value": "Espasa"
     }
   ],
   "led-icon-option-target": [
     {
       "type": 0,
-      "value": "Objetivo"
+      "value": "Objectiu"
     }
   ],
   "led-icon-option-tortoise": [
@@ -1758,19 +1744,19 @@
   "led-icon-option-triangle": [
     {
       "type": 0,
-      "value": "Triángulo"
+      "value": "Triangle"
     }
   ],
   "led-icon-option-tshirt": [
     {
       "type": 0,
-      "value": "Camiseta"
+      "value": "Samarreta"
     }
   ],
   "led-icon-option-umbrella": [
     {
       "type": 0,
-      "value": "Paraguas"
+      "value": "Paraigua"
     }
   ],
   "led-icon-option-yes": [
@@ -1782,31 +1768,31 @@
   "live-data-graph": [
     {
       "type": 0,
-      "value": "Gráfico de datos en directo"
+      "value": "Gràfic de dades en directe"
     }
   ],
   "live-graph": [
     {
       "type": 0,
-      "value": "Gráfico en directo"
+      "value": "Gràfic en directe"
     }
   ],
   "live-graph-tooltip": [
     {
       "type": 0,
-      "value": "Este gráfico muestra los datos de movimiento del acelerómetro del micro:bit en tiempo real. Intenta mover tu micro:bit de recogida de datos para ver cómo cambian los ejes X, Y y Z. Cada línea de color representa una dirección (dimensión) diferente en la que estás moviendo el micro:bit."
+      "value": "Aquest gràfic mostra les dades de moviment de l'acceleròmetre de la micro:bit en temps real. Prova de moure la teva recollida de dades micro:bit per veure com canvien els eixos X, Y i Z. Cada línia de color representa una direcció (dimensió) diferent en la qual estàs movent la micro:bit."
     }
   ],
   "live-graph-tooltip-aria": [
     {
       "type": 0,
-      "value": "Información de herramienta del gráfico en directo"
+      "value": "Informació sobre gràfics en directe"
     }
   ],
   "loading": [
     {
       "type": 0,
-      "value": "Cargando"
+      "value": "S'està carregant"
     }
   ],
   "main-menu": [
@@ -1818,19 +1804,19 @@
   "makecode-back-alt": [
     {
       "type": 0,
-      "value": "Icono de flecha izquierda para volver a MakeCode"
+      "value": "Icona de fletxa esquerra per tornar a MakeCode"
     }
   ],
   "makecode-block-alt-prefix": [
     {
       "type": 0,
-      "value": "Bloque de MakeCode:"
+      "value": "Bloc MakeCode:"
     }
   ],
   "makecode-block-show-icon": [
     {
       "type": 0,
-      "value": "mostrar icono"
+      "value": "mostra la icona"
     }
   ],
   "makecode-load-error-dialog-body": [
@@ -1840,67 +1826,67 @@
     },
     {
       "type": 0,
-      "value": " no ha podido cargar MakeCode. Comprueba tu conexión a Internet, recarga la página e inténtalo de nuevo."
+      "value": " no ha pogut carregar MakeCode. Comprova la connexió a Internet, torna a carregar la pàgina i torna-ho a provar."
     }
   ],
   "makecode-load-error-dialog-title": [
     {
       "type": 0,
-      "value": "No se ha podido cargar Microsoft MakeCode"
+      "value": "No s'ha pogut carregar Microsoft MakeCode"
     }
   ],
   "microbit-not-connected": [
     {
       "type": 0,
-      "value": "Tu micro:bit no está conectado"
+      "value": "La teva micro:bit no està connectada"
     }
   ],
   "ml.onStart|block": [
     {
       "type": 0,
-      "value": "al iniciar ML $event"
+      "value": "a l'inici de ML $event"
     }
   ],
   "more-edit-in-makecode-options": [
     {
       "type": 0,
-      "value": "Más edición en opciones de MakeCode"
+      "value": "Més edició a les opcions de MakeCode"
     }
   ],
   "name-action-hint": [
     {
       "type": 0,
-      "value": "Nombra una acción que quieras que reconozca el micro:bit"
+      "value": "Anomena una acció que vulguis que reconegui la micro:bit"
     }
   ],
   "name-project": [
     {
       "type": 0,
-      "value": "Pon un nombre al proyecto"
+      "value": "Anomena el teu projecte"
     }
   ],
   "name-text": [
     {
       "type": 0,
-      "value": "Nombre"
+      "value": "Nom"
     }
   ],
   "name-used-when": [
     {
       "type": 0,
-      "value": "El nombre se usa al guardar un archivo HEX."
+      "value": "El nom s'utilitza quan deses un fitxer hexadecimal."
     }
   ],
   "new-session-setup-description": [
     {
       "type": 0,
-      "value": "Al iniciar una nueva sesión, se sobrescribirá la sesión existente. Es posible que quieras "
+      "value": "Iniciar una sessió nova sobreescriurà la sessió existent. És possible que vulguis "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "guardar primero tu sesión actual"
+          "value": "desar la teva sessió existent"
         }
       ],
       "type": 8,
@@ -1908,25 +1894,25 @@
     },
     {
       "type": 0,
-      "value": "."
+      "value": " primer."
     }
   ],
   "new-session-setup-title": [
     {
       "type": 0,
-      "value": "Nueva configuración de sesión"
+      "value": "Nova configuració de sessió"
     }
   ],
   "newpage-continue-session-subtitle": [
     {
       "type": 0,
-      "value": "Utiliza un archivo hexadecimal o un archivo de muestras de datos que hayas guardado en tu ordenador para continuar una sesión."
+      "value": "Fes servir un fitxer hexadecimal o un fitxer de mostres de dades que has desat a l'ordinador per continuar una sessió."
     }
   ],
   "newpage-continue-session-title": [
     {
       "type": 0,
-      "value": "Continúa con una sesión guardada"
+      "value": "Continuar una sessió desada"
     }
   ],
   "newpage-last-session-date": [
@@ -1934,7 +1920,7 @@
       "children": [
         {
           "type": 0,
-          "value": "Fecha:"
+          "value": "Data:"
         }
       ],
       "type": 8,
@@ -1954,7 +1940,7 @@
       "children": [
         {
           "type": 0,
-          "value": "Nombre:"
+          "value": "Nom:"
         }
       ],
       "type": 8,
@@ -1972,73 +1958,73 @@
   "newpage-last-session-none": [
     {
       "type": 0,
-      "value": "Sesión no encontrada"
+      "value": "Sense sessions trobades!"
     }
   ],
   "newpage-last-session-title": [
     {
       "type": 0,
-      "value": "Abrir la última sesión"
+      "value": "Obre l'última sessió"
     }
   ],
   "newpage-new-session-subtitle": [
     {
       "type": 0,
-      "value": "Conecta tu micro:bit y recoge datos de movimiento para construir un modelo de aprendizaje automático."
+      "value": "Connecta la teva micro:bit i recull dades de moviment per crear un model d'aprenentatge automàtic."
     }
   ],
   "newpage-new-session-title": [
     {
       "type": 0,
-      "value": "Nueva sesión"
+      "value": "Nova sessió"
     }
   ],
   "newpage-section-one-title": [
     {
       "type": 0,
-      "value": "Continúa donde lo dejaste"
+      "value": "Reprèn on ho vas deixar"
     }
   ],
   "newpage-section-two-title": [
     {
       "type": 0,
-      "value": "Empieza algo nuevo"
+      "value": "Comença alguna cosa nova"
     }
   ],
   "newpage-title": [
     {
       "type": 0,
-      "value": "Nueva sesión"
+      "value": "Nova sessió"
     }
   ],
   "next-action": [
     {
       "type": 0,
-      "value": "Siguiente"
+      "value": "Següent"
     }
   ],
   "no-data-samples": [
     {
       "type": 0,
-      "value": "No hay muestras de datos"
+      "value": "No hi ha mostres de dades"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
     {
       "type": 0,
-      "value": "Este proyecto no contenía ninguna muestra de datos, por lo que sólo se ha abierto el código. Necesitas entrenar un modelo antes de poder utilizar el código."
+      "value": "Aquest projecte no contenia cap mostra de dades, de manera que només s'ha obert el programa. Has d'entrenar un model abans de poder utilitzar el programa."
     }
   ],
   "not-create-ai-hex-import-dialog-title": [
     {
       "type": 0,
-      "value": "Tu proyecto de MakeCode ha sido importado"
+      "value": "S'ha importat el teu projecte MakeCode"
     }
   ],
   "not-found": [
     {
       "type": 0,
-      "value": "Página de inicio de "
+      "value": "Pàgina d'inici "
     },
     {
       "type": 1,
@@ -2048,31 +2034,31 @@
   "not-found-title": [
     {
       "type": 0,
-      "value": "Página no encontrada"
+      "value": "No s'ha trobat la pàgina"
     }
   ],
   "open-file-action": [
     {
       "type": 0,
-      "value": "Abrir…"
+      "value": "Obert"
     }
   ],
   "open-file-dropped": [
     {
       "type": 0,
-      "value": "Abrir archivo al soltarlo"
+      "value": "Obre el fitxer quan es deixa anar"
     }
   ],
   "other-tabs-body1": [
     {
       "type": 0,
-      "value": "Otro proceso está conectado a este dispositivo."
+      "value": "Un altre procés està connectat a aquest dispositiu."
     }
   ],
   "other-tabs-body2": [
     {
       "type": 0,
-      "value": "Cierra cualquier otra pestaña que pueda estar utilizando WebUSB (por ejemplo, MakeCode, Python Editor, "
+      "value": "Tanqa qualsevol altra pestanya que pugui utilitzar WebUSB (per exemple, MakeCode, Python Editor, "
     },
     {
       "type": 1,
@@ -2080,121 +2066,121 @@
     },
     {
       "type": 0,
-      "value": "), o desconecta y vuelve a conectar el micro:bit antes de intentarlo de nuevo."
+      "value": ") o desconnecta i torna a connectar la micro:bit abans de tornar-ho a provar."
     }
   ],
   "other-tabs-heading": [
     {
       "type": 0,
-      "value": "Conectar mediante WebUSB"
+      "value": "Connecta't mitjançant WebUSB"
     }
   ],
   "privacy": [
     {
       "type": 0,
-      "value": "Política de privacidad"
+      "value": "Política de privadesa"
     }
   ],
   "project-loaded": [
     {
       "type": 0,
-      "value": "Proyecto cargado"
+      "value": "Projecte desat"
     }
   ],
   "project-name-not-empty": [
     {
       "type": 0,
-      "value": "El nombre del proyecto no puede estar en blanco"
+      "value": "El nom del projecte no pot estar buit"
     }
   ],
   "radio-link-microbit": [
     {
       "type": 0,
-      "value": "micro:bit con enlace de radio"
+      "value": "micro:bit d'enllaç de ràdio "
     }
   ],
   "radio-link-microbit-label": [
     {
       "type": 0,
-      "value": "diagrama que muestra un micro:bit con enlace de radio conectado con un ordenador"
+      "value": "diagrama que mostra la micro:bit de l'enllaç de ràdio connectada amb un ordinador"
     }
   ],
   "recognition-point-label": [
     {
       "type": 0,
-      "value": "Punto de reconocimiento:"
+      "value": "Punt de reconeixement:"
     }
   ],
   "reconnect-action": [
     {
       "type": 0,
-      "value": "Reconectar"
+      "value": "Reconnectar"
     }
   ],
   "reconnect-failed-bluetooth-heading": [
     {
       "type": 0,
-      "value": "Error al volver a conectar con el micro:bit de recogida de datos "
+      "value": "No s'ha pogut tornar a connectar amb la micro:bit de recollida de dades"
     }
   ],
   "reconnect-failed-bluetooth1": [
     {
       "type": 0,
-      "value": "No se pudo restablecer la conexión con el micro:bit de recogida de datos."
+      "value": "No s'ha pogut restablir la connexió amb la micro:bit de la  recollida de dades."
     }
   ],
   "reconnect-failed-bridge-heading": [
     {
       "type": 0,
-      "value": "No se ha podido reconectar al micro:bit con enlace de radio"
+      "value": "No s'ha pogut reconnectar la micro:bit de l'enllaç de ràdio"
     }
   ],
   "reconnect-failed-bridge1": [
     {
       "type": 0,
-      "value": "No se ha podido restablecer la conexión con el micro:bit conectado a tu ordenador."
+      "value": "No s'ha pogut restablir la connexió amb la micro:bit connectada al teu ordinador."
     }
   ],
   "reconnect-failed-radio-heading": [
     {
       "type": 0,
-      "value": "No se ha podido reconectar a micro:bits"
+      "value": "No es pot reconnectar a les micro:bits"
     }
   ],
   "reconnect-failed-remote-heading": [
     {
       "type": 0,
-      "value": "Error al volver a conectar con el micro:bit de recogida de datos "
+      "value": "No s'ha pogut tornar a connectar amb la micro:bit de recollida de dades"
     }
   ],
   "reconnect-failed-remote1": [
     {
       "type": 0,
-      "value": "No se pudo restablecer la conexión con el micro:bit de recogida de datos."
+      "value": "No s'ha pogut restablir la connexió amb la micro:bit de la  recollida de dades."
     }
   ],
   "reconnect-failed-subtitle": [
     {
       "type": 0,
-      "value": "Sigue estas instrucciones para reiniciar el proceso de conexión."
+      "value": "Segueix aquestes instruccions per reiniciar el procés de connexió."
     }
   ],
   "reconnecting": [
     {
       "type": 0,
-      "value": "Reconectando..."
+      "value": "Reconnectant…"
     }
   ],
   "record-action": [
     {
       "type": 0,
-      "value": "Grabar"
+      "value": "Registre"
     }
   ],
   "record-action-aria": [
     {
       "type": 0,
-      "value": "Grabar datos para la acción \""
+      "value": "Enregistra les dades de l'acció \""
     },
     {
       "type": 1,
@@ -2208,19 +2194,19 @@
   "record-hint": [
     {
       "type": 0,
-      "value": "Pulsa para grabar una muestra de datos."
+      "value": "Prem per gravar una mostra de dades."
     }
   ],
   "record-hint-button-b": [
     {
       "type": 0,
-      "value": "Pulsa para grabar una muestra de datos o pulsa el botón B de tu micro:bit de recogida de datos."
+      "value": "Prem per gravar una mostra de dades o prem el botó B de la teva micro:bit de recollida de dades."
     }
   ],
   "record-samples": [
     {
       "type": 0,
-      "value": "Grabar "
+      "value": "Enregistra "
     },
     {
       "type": 1,
@@ -2228,19 +2214,19 @@
     },
     {
       "type": 0,
-      "value": " muestras"
+      "value": " mostres"
     }
   ],
   "record-samples-help": [
     {
       "type": 0,
-      "value": "Cada muestra tiene su propia cuenta atrás"
+      "value": "Cada mostra té el seu propi compte enrere"
     }
   ],
   "record-seconds": [
     {
       "type": 0,
-      "value": "Grabar durante "
+      "value": "Grava durant "
     },
     {
       "type": 1,
@@ -2248,13 +2234,13 @@
     },
     {
       "type": 0,
-      "value": " segundos"
+      "value": " segons"
     }
   ],
   "record-seconds-help": [
     {
       "type": 0,
-      "value": "Muévete continuamente para conseguir "
+      "value": "Mou-te contínuament per obtenir "
     },
     {
       "type": 1,
@@ -2262,25 +2248,25 @@
     },
     {
       "type": 0,
-      "value": " muestras"
+      "value": " mostres"
     }
   ],
   "recording": [
     {
       "type": 0,
-      "value": "Grabación"
+      "value": "Enregistrant"
     }
   ],
   "recording-complete": [
     {
       "type": 0,
-      "value": "Hecho"
+      "value": "Fet"
     }
   ],
   "recording-data-for": [
     {
       "type": 0,
-      "value": "Grabar datos para la acción \""
+      "value": "Enregistra les dades de l'acció \""
     },
     {
       "type": 1,
@@ -2294,7 +2280,7 @@
   "recording-data-for-numbered": [
     {
       "type": 0,
-      "value": "Grabar "
+      "value": "Registre "
     },
     {
       "type": 1,
@@ -2310,7 +2296,7 @@
     },
     {
       "type": 0,
-      "value": " para la acción \""
+      "value": " per a l'acció \""
     },
     {
       "type": 1,
@@ -2324,19 +2310,19 @@
   "recording-fingerprint-label": [
     {
       "type": 0,
-      "value": "mapa de calor que muestra las características de los datos del acelerómetro x, y, z del micro:bit para una grabación"
+      "value": "gràfic que mostra les de dades de l'acceleròmetre micro:bit x, y, z per a un enregistrament"
     }
   ],
   "recording-graph-label": [
     {
       "type": 0,
-      "value": "gráfico que muestra los datos del acelerómetro x, y, z de micro:bit para una grabación"
+      "value": "gràfic que mostra les dades de l'acceleròmetre de la  micro:bit x, y, z per a un enregistrament"
     }
   ],
   "recording-options-aria": [
     {
       "type": 0,
-      "value": "Más opciones de grabación para la acción \""
+      "value": "Més opcions de gravació per a l'acció \""
     },
     {
       "type": 1,
@@ -2350,61 +2336,61 @@
   "reload-action": [
     {
       "type": 0,
-      "value": "Recargar"
+      "value": "Torna a carregar"
     }
   ],
   "reset-to-default-action": [
     {
       "type": 0,
-      "value": "Restablecer bloques por defecto"
+      "value": "Restableix els blocs predeterminats"
     }
   ],
   "restore-defaults-action": [
     {
       "type": 0,
-      "value": "Restaurar los valores por defecto de todos los ajustes"
+      "value": "Restaura els valors predeterminats per a tots els paràmetres"
     }
   ],
   "restore-defaults-confirm-action": [
     {
       "type": 0,
-      "value": "Restaurar valores por defecto"
+      "value": "Restaura els valors predeterminats"
     }
   ],
   "restore-defaults-confirm-body": [
     {
       "type": 0,
-      "value": "¿Realmente quieres restaurar los valores por defecto de todos los ajustes?"
+      "value": "Estàs segur que vols restaurar els valors predeterminats de totes les configuracions?"
     }
   ],
   "restore-defaults-confirm-heading": [
     {
       "type": 0,
-      "value": "Restablecer ajustes por defecto"
+      "value": "Restaura els paràmetres predeterminats"
     }
   ],
   "restore-defaults-helper": [
     {
       "type": 0,
-      "value": "El contenido de ayuda previamente descartado puede volver a mostrarse."
+      "value": "És possible que es torni a mostrar contingut d'ajuda ignorat anteriorment."
     }
   ],
   "save-action": [
     {
       "type": 0,
-      "value": "Guardar"
+      "value": "Desa"
     }
   ],
   "save-hex-dialog-heading": [
     {
       "type": 0,
-      "value": "Guardar proyecto como archivo hexadecimal"
+      "value": "Desa el projecte com a fitxer hexadecimal"
     }
   ],
   "save-hex-dialog-message1": [
     {
       "type": 0,
-      "value": "La descarga contiene tus acciones, muestras de datos y tu proyecto de MakeCode. Ábrelo en "
+      "value": "La transferència conté les teves accions, mostres de dades i el teu projecte MakeCode. Obre'l a "
     },
     {
       "type": 1,
@@ -2412,37 +2398,37 @@
     },
     {
       "type": 0,
-      "value": " para seguir trabajando."
+      "value": " per continuar treballant."
     }
   ],
   "save-hex-dialog-message2": [
     {
       "type": 0,
-      "value": "También puedes abrirlo con Microsoft MakeCode si no necesitas cambiar las acciones y las muestras de datos."
+      "value": "També pots obrir-lo amb Microsoft MakeCode si no necessites canviar les accions i les mostres de dades."
     }
   ],
   "saving-description": [
     {
       "type": 0,
-      "value": "Tu descarga estará lista en breve."
+      "value": "La transferència estarà llesta aviat."
     }
   ],
   "saving-title": [
     {
       "type": 0,
-      "value": "Guardando…"
+      "value": "S'està desant…"
     }
   ],
   "saving-toast-title": [
     {
       "type": 0,
-      "value": "Se ha descargado tu archivo hexadecimal"
+      "value": "S'ha transferit el teu fitxer hexadecimal"
     }
   ],
   "select-icon-action-aria": [
     {
       "type": 0,
-      "value": "Elige un icono para la acción \""
+      "value": "Tria la icona per a l'acció \""
     },
     {
       "type": 1,
@@ -2456,13 +2442,13 @@
   "select-icon-action-untitled-aria": [
     {
       "type": 0,
-      "value": "Elegir icono para acción sin título"
+      "value": "Tria la icona per a l'acció sense títol"
     }
   ],
   "select-icon-option-action-aria": [
     {
       "type": 0,
-      "value": "Selecciona el icono \""
+      "value": "Selecciona la icona \""
     },
     {
       "type": 1,
@@ -2470,61 +2456,61 @@
     },
     {
       "type": 0,
-      "value": "\""
+      "value": "\"."
     }
   ],
   "settings": [
     {
       "type": 0,
-      "value": "Configuración"
+      "value": "Configuració"
     }
   ],
   "settings-menu-action": [
     {
       "type": 0,
-      "value": "Menú de acciones de configuración"
+      "value": "Menú de les accions de configuració"
     }
   ],
   "show-graphs-checkbox-label-text": [
     {
       "type": 0,
-      "value": "Mostrar gráficos"
+      "value": "Mostra gràfics"
     }
   ],
   "simple-ai-exercise-timer-resource-title": [
     {
       "type": 0,
-      "value": "Sencillo temporizador de ejercicios con IA"
+      "value": "Temporitzador d'exercicis AI senzill"
     }
   ],
   "skip-tour-action": [
     {
       "type": 0,
-      "value": "Saltar el recorrido"
+      "value": "Saltar el tour"
     }
   ],
   "software-versions": [
     {
       "type": 0,
-      "value": "Versiones de software"
+      "value": "Versions de programari"
     }
   ],
   "start-session-action": [
     {
       "type": 0,
-      "value": "Iniciar sesión"
+      "value": "Inicia sessió"
     }
   ],
   "start-training-action": [
     {
       "type": 0,
-      "value": "Empieza a entrenar"
+      "value": "Comença l'entrenament"
     }
   ],
   "steps-alt": [
     {
       "type": 0,
-      "value": "diagrama que muestra el proceso iterativo de recogida de datos, entrenamiento de un modelo, prueba del modelo y mejora del modelo mediante la mejora de los datos recogidos antes de programar finalmente utilizando el modelo."
+      "value": "diagrama que mostra el procés iteratiu de recollida de dades, formació d'un model, prova del model i millora del model millorant les dades recollides abans de programar finalment amb el model."
     }
   ],
   "steps-code": [
@@ -2536,43 +2522,43 @@
   "steps-collect-data": [
     {
       "type": 0,
-      "value": "Recoger datos"
+      "value": "Recollida de dades"
     }
   ],
   "steps-improve": [
     {
       "type": 0,
-      "value": "Mejorar"
+      "value": "Millora"
     }
   ],
   "steps-test-model": [
     {
       "type": 0,
-      "value": "Probar modelo"
+      "value": "Prova el model"
     }
   ],
   "steps-train": [
     {
       "type": 0,
-      "value": "Entrenar"
+      "value": "Entrena"
     }
   ],
   "stop-recording-action": [
     {
       "type": 0,
-      "value": "Detener la grabación"
+      "value": "Atura l'enregistrament"
     }
   ],
   "support-request": [
     {
       "type": 0,
-      "value": "Por favor considere "
+      "value": "Si us plau, considera"
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "una solicitud de soporte"
+          "value": "fer una sol·licitud d'assistència"
         }
       ],
       "type": 8,
@@ -2586,49 +2572,49 @@
   "terms": [
     {
       "type": 0,
-      "value": "Términos de uso"
+      "value": "Condicions d'ús"
     }
   ],
   "testing-model-actions-region": [
     {
       "type": 0,
-      "value": "Barra de herramientas del modelo de pruebas"
+      "value": "Barra d'eines del model de prova"
     }
   ],
   "testing-model-title": [
     {
       "type": 0,
-      "value": "Modelo de pruebas"
+      "value": "Prova el model"
     }
   ],
   "tour-action": [
     {
       "type": 0,
-      "value": "Recorrido"
+      "value": "Tour"
     }
   ],
   "tour-collect-addActions-content": [
     {
       "type": 0,
-      "value": "Decide cuáles serán tus otras acciones y cómo las llamarás. Necesitas al menos 2 acciones con 3 muestras de datos para entrenar el modelo. Tus muestras de datos solo se almacenan en tu ordenador. No se envían a nadie más."
+      "value": "Decideix quines seran les teves altres accions i com les posaràs. Necessites almenys 2 accions amb 3 mostres de dades per entrenar el model. Les teves mostres de dades només s'emmagatzemen al teu ordinador, no s'envien a ningú més."
     }
   ],
   "tour-collect-addActions-title": [
     {
       "type": 0,
-      "value": "Añadir más acciones"
+      "value": "Afegeix més accions"
     }
   ],
   "tour-collect-afterFirst-content": [
     {
       "type": 0,
-      "value": "Para entrenar el modelo de aprendizaje automático necesitas al menos 3 muestras de datos de 2 acciones diferentes."
+      "value": "Per entrenar el model d'aprenentatge automàtic, necessites almenys 3 mostres de dades per a 2 accions diferents."
     }
   ],
   "tour-collect-afterFirst-title": [
     {
       "type": 0,
-      "value": "¡Has grabado tu primera "
+      "value": "Has gravat el teu primer "
     },
     {
       "offset": 0,
@@ -2656,85 +2642,85 @@
     },
     {
       "type": 0,
-      "value": "!"
+      "value": "}!"
     }
   ],
   "tour-collect-collectMore-explanation-content": [
     {
       "type": 0,
-      "value": "Recoger más muestras debería dar lugar a un mejor modelo de aprendizaje automático."
+      "value": "La recollida de més mostres hauria de donar lloc a un millor model d'aprenentatge automàtic."
     }
   ],
   "tour-collect-collectMore-hasRecordings-content": [
     {
       "type": 0,
-      "value": "Graba muestras de datos para tus acciones."
+      "value": "Enregistra mostres de dades per a les teves accions."
     }
   ],
   "tour-collect-collectMore-noRecordings-content": [
     {
       "type": 0,
-      "value": "Graba más muestras para esta acción."
+      "value": "Enregistra més mostres per a aquesta acció."
     }
   ],
   "tour-collect-collectMore-title": [
     {
       "type": 0,
-      "value": "Recoge más muestras de datos"
+      "value": "Recull més mostres de dades"
     }
   ],
   "tour-collect-trainModel-content": [
     {
       "type": 0,
-      "value": "Cuando hayas recogido suficientes muestras de datos, podrás entrenar el modelo de aprendizaje automático. Puedes volver más tarde para eliminar o añadir más datos y volver a entrenar para que el modelo sea más fiable."
+      "value": "Quan hagis recollit prou mostres de dades, pots entrenar el model d'aprenentatge automàtic. Pots tornar més tard per eliminar o afegir més dades i tornar a entrenar per fer que el model sigui més fiable."
     }
   ],
   "tour-dataSamples-actions-common-content": [
     {
       "type": 0,
-      "value": "Una acción es el tipo de movimiento que quieres que reconozca el modelo de aprendizaje automático, por ejemplo, «saludar» o «aplaudir»."
+      "value": "Una acció és el tipus de moviment que vols que reconegui el model d'aprenentatge automàtic, p. ex. 'agitar amb la mà' o 'aplaudir'."
     }
   ],
   "tour-dataSamples-actions-noRecordings-content": [
     {
       "type": 0,
-      "value": "Decide cuál será tu primera acción, ponle un nombre y empieza a grabar muestras de datos."
+      "value": "Decideix quina serà la teva primera acció, posa-hi un nom i després comença a gravar mostres de dades."
     }
   ],
   "tour-dataSamples-connected-content": [
     {
       "type": 0,
-      "value": "Ahora puedes empezar a recoger muestras de datos para entrenar un modelo de aprendizaje automático (ML) que reconozca diferentes movimientos o acciones."
+      "value": "Ara pots començar a recollir mostres de dades per entrenar un model d'aprenentatge automàtic (ML) per reconèixer diferents moviments o accions."
     }
   ],
   "tour-dataSamples-connected-title": [
     {
       "type": 0,
-      "value": "¡Tu micro:bit de recogida de datos está conectado!"
+      "value": "La teva recollida de dades micro:bit està connectada!"
     }
   ],
   "tour-dataSamples-liveGraph-content": [
     {
       "type": 0,
-      "value": "El gráfico muestra los datos de movimiento del acelerómetro del micro:bit. Mueve tu micro:bit de recogida de datos y observa cómo cambia el gráfico."
+      "value": "El gràfic mostra les dades de moviment de l'acceleròmetre de la micro:bit. Mou la teva col·lecció de dades micro:bit i mira com canvia el gràfic."
     }
   ],
   "tour-makecode-intro-content1": [
     {
       "type": 0,
-      "value": "Descarga el modelo y el código para probar tu proyecto en un micro:bit. También puedes añadir más bloques de código para crear tus propios programas utilizando tu modelo."
+      "value": "Baixa el model i el codi per provar el teu projecte en una micro:bit. També pots afegir més blocs de codi per crear els teus propis programes amb el teu model."
     }
   ],
   "tour-makecode-intro-content2": [
     {
       "type": 0,
-      "value": "¿Necesitas mejorar el modelo de ML? "
+      "value": "Necessites millorar el model ML?"
     }
   ],
   "tour-makecode-intro-content3": [
     {
       "type": 0,
-      "value": "Utiliza el botón de retroceso de la parte superior izquierda."
+      "value": "Fes servir aquest botó enrere a la part superior esquerra."
     }
   ],
   "tour-makecode-intro-title": [
@@ -2746,61 +2732,61 @@
   "tour-trainModel-afterTrain-alreadyConnected-title": [
     {
       "type": 0,
-      "value": "¡Has entrenado un modelo de ML!"
+      "value": "Has entrenat un model ML!"
     }
   ],
   "tour-trainModel-afterTrain-content": [
     {
       "type": 0,
-      "value": "Ahora prueba tu modelo de aprendizaje automático. Prueba cada acción moviendo tu micro:bit de recogida de datos. ¿El modelo estima correctamente cada acción?"
+      "value": "Ara prova el teu model d'aprenentatge automàtic. Prova cada acció movent la teva recollida de dades de la micro:bit. El model estima correctament cada acció?"
     }
   ],
   "tour-trainModel-afterTrain-delayedUntilConnected-title": [
     {
       "type": 0,
-      "value": "Prueba tu modelo de ML"
+      "value": "Prova el teu model ML"
     }
   ],
   "tour-trainModel-certaintyRecognition-content": [
     {
       "type": 0,
-      "value": "El gráfico de barras muestra el grado de confianza del modelo en que estás realizando cada acción. Mueve el control deslizante para ajustar el punto de reconocimiento o umbral."
+      "value": "El gràfic de barres mostra la confiança que té el model que estàs fent cada acció. Mou el control lliscant per ajustar el punt de reconeixement o el llindar."
     }
   ],
   "tour-trainModel-certaintyRecognition-title": [
     {
       "type": 0,
-      "value": "Punto de certeza y reconocimiento"
+      "value": "Punt de certesa i reconeixement"
     }
   ],
   "tour-trainModel-editInMakeCode-content": [
     {
       "type": 0,
-      "value": "Abre tu proyecto en MakeCode para descargar el programa y tu modelo de aprendizaje automático en un micro:bit. Puedes añadir más bloques para crear tus propios programas utilizando tu modelo."
+      "value": "Obre el teu projecte a MakeCode per descarregar el programa i el teu model d'aprenentatge automàtic a una micro:bit. Pots afegir més blocs per crear els teus propis programes amb el teu model."
     }
   ],
   "tour-trainModel-estimatedAction-content": [
     {
       "type": 0,
-      "value": "La acción que el modelo estima que estás realizando en ese momento se muestra debajo del icono del micro:bit de esa acción."
+      "value": "L'acció que el model estima que estàs fent actualment es mostra a sota de la icona de la micro:bit d'aquesta acció."
     }
   ],
   "tour-trainModel-makeCodeBlocks-content": [
     {
       "type": 0,
-      "value": "Estos bloques de MakeCode mostrarán iconos para cada acción detectada cuando transfieras tu código y modelo a un micro:bit."
+      "value": "Aquests blocs MakeCode mostraran icones per a cada acció detectada quan transfereixis el teu programa i model a una micro:bit."
     }
   ],
   "tour-trainModel-makeCodeBlocks-title": [
     {
       "type": 0,
-      "value": "Bloques de MakeCode de Microsoft"
+      "value": "Blocs de Microsoft MakeCode"
     }
   ],
   "train-description": [
     {
       "type": 0,
-      "value": "El programa informático detecta patrones o diferencias en tus muestras de datos, y los utiliza para construir un modelo matemático que permite a "
+      "value": "El programa informàtic detecta patrons o diferències en les teves mostres de dades i les utilitza per crear un model matemàtic que permeti a "
     },
     {
       "type": 1,
@@ -2808,67 +2794,67 @@
     },
     {
       "type": 0,
-      "value": " reconocer diferentes acciones cuando mueves tu micro:bit."
+      "value": " reconèixer diferents accions quan mous la teva micro:bit."
     }
   ],
   "train-error-body": [
     {
       "type": 0,
-      "value": "El entrenamiento no dio como resultado un modelo utilizable. Lo más probable es que el motivo sean los datos utilizados para el entrenamiento. Si las muestras de datos de las distintas acciones son demasiado similares, pueden surgir problemas en el proceso de entrenamiento."
+      "value": "La formació no va donar lloc a un model utilitzable. El motiu d'això són probablement les dades utilitzades per a la formació. Si les mostres de dades per a diferents accions són massa semblants, això pot provocar problemes en el procés de formació."
     }
   ],
   "train-error-header": [
     {
       "type": 0,
-      "value": "Entrenamiento fallido"
+      "value": "L'entrenament ha fallat"
     }
   ],
   "train-error-todo": [
     {
       "type": 0,
-      "value": "Vuelve a la página Añadir datos y modifica tus datos."
+      "value": "Torna a la pàgina Afegeix dades i canvia les teves dades."
     }
   ],
   "train-header": [
     {
       "type": 0,
-      "value": "Entrenar un modelo"
+      "value": "Entrenant un model"
     }
   ],
   "train-model": [
     {
       "type": 0,
-      "value": "Entrenar modelo"
+      "value": "Entrenant un model"
     }
   ],
   "training-model": [
     {
       "type": 0,
-      "value": "Entrenando modelo…"
+      "value": "Entrenant un model..."
     }
   ],
   "transfer-hex-alt": [
     {
       "type": 0,
-      "value": "animación de arrastrar un archivo hexadecimal desde la carpeta de descargas a la unidad o dispositivo micro:bit que aparece en el explorador de archivos"
+      "value": "animació d'arrossegar un fitxer hexadecimal de la carpeta de descàrregues a la unitat o dispositiu micro:bit que apareix a l'explorador de fitxers"
     }
   ],
   "transfer-hex-heading": [
     {
       "type": 0,
-      "value": "Transferir archivo HEX guardado a micro:bit"
+      "value": "Transfereix el fitxer hexadecimal desat a la micro:bit"
     }
   ],
   "transfer-hex-manual-download": [
     {
       "type": 0,
-      "value": "Si el archivo no se ha descargado automáticamente, "
+      "value": "Si el fitxer no s'ha transferit automàticament, "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "descarga el archivo aquí"
+          "value": "descarrega el fitxer aquí"
         }
       ],
       "type": 8,
@@ -2882,43 +2868,43 @@
   "transfer-hex-message": [
     {
       "type": 0,
-      "value": "Arrastra el archivo hexadecimal desde tu carpeta Descargas a la unidad MICROBIT."
+      "value": "Arrossega el fitxer hexadecimal de la teva carpeta de descàrregues a la unitat MICROBIT."
     }
   ],
   "try-again-action": [
     {
       "type": 0,
-      "value": "Inténtalo de nuevo"
+      "value": "Torna-ho a provar"
     }
   ],
   "unknown": [
     {
       "type": 0,
-      "value": "desconocido"
+      "value": "desconegut"
     }
   ],
   "unplug-radio-link-microbit-description": [
     {
       "type": 0,
-      "value": "Desconecta el micro:bit con enlace de radio del ordenador. Tendrás que volver a conectar el micro:bit si quieres grabar más muestras de datos."
+      "value": "Desconnecta l'enllaç de ràdio de la micro:bit de l'ordinador. Hauràs de tornar a connectar la micro:bit si vols gravar més mostres de dades."
     }
   ],
   "unplug-radio-link-microbit-label": [
     {
       "type": 0,
-      "value": "animación que muestra cómo se desconecta un cable USB de la parte superior de un micro:bit"
+      "value": "animació que mostra un cable USB connectat a la part superior d'una micro:bit"
     }
   ],
   "unplug-radio-link-microbit-title": [
     {
       "type": 0,
-      "value": "Desenchufa el micro:bit con enlace de radio"
+      "value": "Desconnecta la micro:bit de l'enllaç de ràdio"
     }
   ],
   "unsupported-device-explain": [
     {
       "type": 0,
-      "value": "Lamentablemente, sólo admitimos el uso de micro:bit V2 cuando se conecta mediante la radio del micro:bit. Has conectado un "
+      "value": "Malauradament, només admetem l'ús de micro:bit V2 quan ens connectem mitjançant la ràdio micro:bit. Has connectat una "
     },
     {
       "children": [
@@ -2938,25 +2924,25 @@
   "unsupported-device-header": [
     {
       "type": 0,
-      "value": "las conexiones de radio del micro:bit no son compatibles con micro:bit V1"
+      "value": "Les connexions de ràdio micro:bit no admeten micro:bit V1"
     }
   ],
   "unsupported-device-with-bluetooth": [
     {
       "type": 0,
-      "value": "Utiliza Web Bluetooth para conectarte a tu micro:bit V1 en su lugar."
+      "value": "UtilitzaWeb Bluetooth per connectar-te a la teva micro:bit V1."
     }
   ],
   "unsupported-device-without-bluetooth": [
     {
       "type": 0,
-      "value": "Puedes conectarte a micro:bit V1 utilizando Web Bluetooth, sin embargo, este navegador o dispositivo no tiene Bluetooth activado. "
+      "value": "Pots connectar-te a la micro:bit V1 mitjançant Web Bluetooth, però aquest navegador o dispositiu no té Bluetooth activat. "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "Cómo activar el Bluetooth"
+          "value": "Com activar el Bluetooth"
         }
       ],
       "type": 8,
@@ -2970,37 +2956,37 @@
   "user-guide": [
     {
       "type": 0,
-      "value": "Guía del usuario"
+      "value": "Guia de l'usuari"
     }
   ],
   "webusb-retry-no-select": [
     {
       "type": 0,
-      "value": "No has seleccionado un micro:bit. ¿Quieres volver a intentarlo?"
+      "value": "No has triat una micro:bit. Vols tornar-ho a provar?"
     }
   ],
   "webusb-retry-replug1": [
     {
       "type": 0,
-      "value": "Se ha producido un error WebUSB."
+      "value": "S'ha produït un error de WebUSB."
     }
   ],
   "webusb-retry-replug2": [
     {
       "type": 0,
-      "value": "Por favor:"
+      "value": "Si us plau:"
     }
   ],
   "webusb-retry-replug3": [
     {
       "type": 0,
-      "value": "comprueba que este micro:bit no tiene una batería conectada"
+      "value": "comprova que aquesta micro:bit no tingui una bateria connectada"
     }
   ],
   "webusb-retry-replug4": [
     {
       "type": 0,
-      "value": "desenchufa y vuelve a enchufar el cable USB"
+      "value": "desconnecta i torna a connectar el cable USB"
     }
   ]
 }

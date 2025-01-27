@@ -110,7 +110,7 @@
   "ai-activity-timer-resource-title": [
     {
       "type": 0,
-      "value": "AIアクティビティタイマー"
+      "value": "AI活動タイマー"
     }
   ],
   "ai-storytelling-friend-resource-title": [
@@ -1118,19 +1118,19 @@
   "fingerprint-rms-x-tooltip": [
     {
       "type": 0,
-      "value": "すべての X 方向データポイントの実効値"
+      "value": "すべての X 方向データポイントの二乗平均平方根値"
     }
   ],
   "fingerprint-rms-y-tooltip": [
     {
       "type": 0,
-      "value": "すべての Y 方向データポイントの実効値"
+      "value": "すべての Y 方向データポイントの二乗平均平方根値"
     }
   ],
   "fingerprint-rms-z-tooltip": [
     {
       "type": 0,
-      "value": "すべての Z 方向データポイントの実効値"
+      "value": "すべての Z 方向データポイントの二乗平均平方根値"
     }
   ],
   "fingerprint-std-x-tooltip": [
@@ -1276,7 +1276,7 @@
   "graph-preview": [
     {
       "type": 0,
-      "value": "Graph preview"
+      "value": "グラフのプレビュー"
     }
   ],
   "help-label": [
@@ -1390,7 +1390,7 @@
   "homepage-subtitle": [
     {
       "type": 0,
-      "value": "動作と機械学習を使って BBC micro:bit のAIを作る"
+      "value": "動作と機械学習を使ってBBC micro:bitでAIを作ります。"
     }
   ],
   "homepage-video-alt": [
@@ -1476,13 +1476,13 @@
   "incompatible-device-subtitle": [
     {
       "type": 0,
-      "value": "micro:bit V1を使っていますが、機械学習プロジェクトでは micro:bit V2 に載っている、より速いプロセッサが必要となります。  "
+      "value": "micro:bit V1を使っていますが、機械学習プロジェクトでは micro:bit V2 に載っている、より速いプロセッサが必要となります。 "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": " micro:bitのバージョンについてもっと調べる。 "
+          "value": "micro:bitのバージョンについてもっと調べる。"
         }
       ],
       "type": 8,
@@ -1492,7 +1492,7 @@
   "insufficient-data-body": [
     {
       "type": 0,
-      "value": "モデルを訓練するには、少なくとも 2 個のアクションと、それぞれのアクションに対して 3 個のデータサンプルが必要です。"
+      "value": "モデルをトレーニングするには、少なくとも 2 個のアクションと、それぞれのアクションに対して 3 個のデータサンプルが必要です。"
     }
   ],
   "insufficient-data-title": [
@@ -1820,13 +1820,13 @@
     },
     {
       "type": 0,
-      "value": " は MakeCode のロードに失敗しました。インターネット接続をチェックし、ページを更新してからもう一度お試しください。"
+      "value": " は MakeCode の読み込みに失敗しました。インターネット接続を確認し、ページを更新してからもう一度お試しください。"
     }
   ],
   "makecode-load-error-dialog-title": [
     {
       "type": 0,
-      "value": "Microsoft MakeCode をロードできませんでした"
+      "value": "Microsoft MakeCode を読み込めませんでした"
     }
   ],
   "microbit-not-connected": [
@@ -2078,7 +2078,7 @@
   "project-loaded": [
     {
       "type": 0,
-      "value": "プロジェクトがロードされました"
+      "value": "プロジェクトが読み込まれました"
     }
   ],
   "project-name-not-empty": [
@@ -2278,7 +2278,7 @@
     },
     {
       "type": 0,
-      "value": " 個の記録 "
+      "value": " 個の "
     },
     {
       "type": 1,
@@ -2286,7 +2286,7 @@
     },
     {
       "type": 0,
-      "value": " "
+      "value": " を記録"
     }
   ],
   "recording-fingerprint-label": [
@@ -2574,7 +2574,7 @@
   "tour-collect-addActions-content": [
     {
       "type": 0,
-      "value": "他のアクションとその名前を決めてください。モデルを訓練するには、少なくとも2つのアクションと3つのデータサンプルが必要です。データサンプルはPCにのみ保存され、他の人に送信されることはありません。"
+      "value": "他のアクションとその名前を決めてください。モデルをトレーニングするには、少なくとも2個のアクションと3個のデータサンプルが必要です。データサンプルはPCにのみ保存され、他の人に送信されることはありません。"
     }
   ],
   "tour-collect-addActions-title": [
@@ -2710,7 +2710,7 @@
   "tour-trainModel-afterTrain-alreadyConnected-title": [
     {
       "type": 0,
-      "value": "MLモデルを訓練しました！"
+      "value": "MLモデルをトレーニングしました！"
     }
   ],
   "tour-trainModel-afterTrain-content": [
@@ -2778,13 +2778,13 @@
   "train-error-body": [
     {
       "type": 0,
-      "value": "訓練の結果、モデルは使用可能になりませんでした。その理由は、訓練に使われたデータにある可能性が高いです。 異なるアクションのデータサンプルがあまりにも類似している場合、訓練プロセスに問題が生じる可能性があります。"
+      "value": "トレーニングの結果、モデルは使用可能になりませんでした。その理由は、トレーニングに使われたデータにある可能性が高いです。 異なるアクションのデータサンプルがあまりにも類似している場合、トレーニングの処理に問題が生じる可能性があります。"
     }
   ],
   "train-error-header": [
     {
       "type": 0,
-      "value": "訓練が失敗しました"
+      "value": "トレーニングが失敗しました"
     }
   ],
   "train-error-todo": [
@@ -2796,19 +2796,19 @@
   "train-header": [
     {
       "type": 0,
-      "value": "モデルの訓練"
+      "value": "モデルのトレーニング"
     }
   ],
   "train-model": [
     {
       "type": 0,
-      "value": "モデルの訓練"
+      "value": "モデルのトレーニング"
     }
   ],
   "training-model": [
     {
       "type": 0,
-      "value": "モデルを訓練中..."
+      "value": "モデルをトレーニング中..."
     }
   ],
   "transfer-hex-alt": [
