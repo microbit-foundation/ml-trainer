@@ -7,9 +7,9 @@
 
 import { ChartConfiguration, ChartTypeRegistry } from "chart.js";
 import { GraphLineStyles } from "./hooks/use-graph-line-styles";
-import { maxAccelerationScaleForGraphs } from "./mlConfig";
 import { XYZData } from "./model";
 import { GraphLineWeight } from "./settings";
+import { maxmaxMagnetometerScaleForGraphs } from "./utils/magnetometer";
 
 const smoothen = (d: number[]): number[] => {
   if (d.length === 0) {
@@ -123,8 +123,8 @@ export const getConfig = (
         },
         y: {
           type: "linear",
-          min: -maxAccelerationScaleForGraphs,
-          max: maxAccelerationScaleForGraphs,
+          min: -maxmaxMagnetometerScaleForGraphs,
+          max: maxmaxMagnetometerScaleForGraphs,
           grid: {
             drawTicks: false,
             display: false,

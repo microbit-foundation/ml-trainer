@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { maxAcceleration } from "./mlConfig";
+import { maxMagnetometer } from "./utils/magnetometer";
 
 const maxDistance = 1.1;
 
@@ -32,15 +32,15 @@ export const getLabelHeights = (dataPoint: {
 };
 
 const scaleDataToArrowHeight = (value: number) => {
-  // The proportion of 10 rem assigned to -2.2 to 2.2 that relate to acc values (2.048)
-  // is 10 / 4.4 * (2.048 * 2) = ~9.309
-  // Remove half the difference of 10 - 9.309  and apply to the range we translate to
+  // The proportion of 10 rem assigned to -1.2 to 1.2 that relate to magnetometer values (1)
+  // is 10 / 2.4 * (1 * 2) = ~8.333
+  // Remove half the difference of 10 - 8.333  and apply to the range we translate to
   // (-1.5 rem to 8.5 rem). This gives the newMin and newMax values below.
-  const newMin = 8.15;
-  const newMax = -1.15;
+  const newMin = 7.66;
+  const newMax = -0.66;
   return (
-    ((newMax - newMin) * (value - -maxAcceleration)) /
-      (maxAcceleration - -maxAcceleration) +
+    ((newMax - newMin) * (value - -maxMagnetometer)) /
+      (maxMagnetometer - -maxMagnetometer) +
     newMin
   );
 };

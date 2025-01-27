@@ -6,22 +6,25 @@
  */
 import { HStack, usePrevious } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
-import { AccelerometerDataEvent } from "@microbit/microbit-connection";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { MagnetometerDataEvent } from "@microbit/microbit-connection";
 import { SmoothieChart, TimeSeries } from "@microbit/smoothie";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useConnectActions } from "../connect-actions-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { useGraphColors } from "../hooks/use-graph-colors";
-import { maxAccelerationScaleForGraphs } from "../mlConfig";
+import { useGraphLineStyles } from "../hooks/use-graph-line-styles";
 import { useSettings, useStore } from "../store";
 import LiveGraphLabels from "./LiveGraphLabels";
-import { useGraphLineStyles } from "../hooks/use-graph-line-styles";
+import {
+  maxmaxMagnetometerScaleForGraphs,
+  processMagnetometerValue,
+} from "../utils/magnetometer";
 
 export const smoothenDataPoint = (curr: number, next: number) => {
   // TODO: Factor out so that recording graph can do the same
   // Remove dividing by 1000 operation once it gets moved to connection lib
-  return (next / 1000) * 0.25 + curr * 0.75;
+  return processMagnetometerValue(next) * 0.25 + curr * 0.75;
 };
 
 const LiveGraph = () => {
@@ -55,8 +58,8 @@ const LiveGraph = () => {
       return;
     }
     const smoothieChart = new SmoothieChart({
-      maxValue: maxAccelerationScaleForGraphs,
-      minValue: -maxAccelerationScaleForGraphs,
+      maxValue: maxmaxMagnetometerScaleForGraphs,
+      minValue: -maxmaxMagnetometerScaleForGraphs,
       millisPerPixel: 7,
       grid: {
         fillStyle: "#ffffff00",
@@ -124,13 +127,13 @@ const LiveGraph = () => {
     if (isRecording) {
       // Set the start recording line
       const now = new Date().getTime();
-      recordLines.append(now - 1, -maxAccelerationScaleForGraphs, false);
-      recordLines.append(now, maxAccelerationScaleForGraphs, false);
+      recordLines.append(now - 1, -maxmaxMagnetometerScaleForGraphs, false);
+      recordLines.append(now, maxmaxMagnetometerScaleForGraphs, false);
     } else if (prevIsRecording) {
       // Set the end recording line
       const now = new Date().getTime();
-      recordLines.append(now - 1, maxAccelerationScaleForGraphs, false);
-      recordLines.append(now, -maxAccelerationScaleForGraphs, false);
+      recordLines.append(now - 1, maxmaxMagnetometerScaleForGraphs, false);
+      recordLines.append(now, -maxmaxMagnetometerScaleForGraphs, false);
     }
   }, [isRecording, prevIsRecording, recordLines]);
 
@@ -141,7 +144,7 @@ const LiveGraph = () => {
   });
 
   useEffect(() => {
-    const listener = ({ data }: AccelerometerDataEvent) => {
+    const listener = ({ data }: MagnetometerDataEvent) => {
       const t = new Date().getTime();
       dataRef.current = {
         x: smoothenDataPoint(dataRef.current.x, data.x),
@@ -153,10 +156,10 @@ const LiveGraph = () => {
       lineZ.append(t, dataRef.current.z, false);
     };
     if (isConnected) {
-      connectActions.addAccelerometerListener(listener);
+      connectActions.addMagnetometerListener(listener);
     }
     return () => {
-      connectActions.removeAccelerometerListener(listener);
+      connectActions.removeMagnetometerListener(listener);
     };
   }, [connectActions, isConnected, lineX, lineY, lineZ]);
 

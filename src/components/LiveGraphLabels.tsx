@@ -76,9 +76,9 @@ const LiveGraphLabels = () => {
         }
       });
     };
-    connectActions.addAccelerometerListener(listener);
+    connectActions.addMagnetometerListener(listener);
     return () => {
-      connectActions.removeAccelerometerListener(listener);
+      connectActions.removeMagnetometerListener(listener);
     };
   }, [connectActions, labelConfig]);
 

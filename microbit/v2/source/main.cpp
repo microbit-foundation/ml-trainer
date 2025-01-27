@@ -22,6 +22,7 @@ MicroBitUARTService *uart;
 MicroBitLEDService *led;
 MicroBitIOPinService *io;
 MicroBitButtonService *btn;
+MicroBitMagnetometerService *mag;
 
 // State
 int connected = 0;
@@ -101,6 +102,7 @@ int main()
     io = new MicroBitIOPinService(*uBit.ble, uBit.io);
     btn = new MicroBitButtonService(*uBit.ble);
     accel = new MicroBitAccelerometerService(*uBit.ble, uBit.accelerometer);
+    mag = new MicroBitMagnetometerService(*uBit.ble, uBit.compass);
 
     uart->eventOn("#");
 
