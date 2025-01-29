@@ -42,7 +42,6 @@ export const allLanguages: Language[] = [
     name: "日本語",
     enName: "Japanese",
     makeCode: true,
-    preview: true,
   },
   {
     id: "ko",
