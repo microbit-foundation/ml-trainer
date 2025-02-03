@@ -8,7 +8,7 @@ import {
   EditorWorkspaceSaveRequest,
   MakeCodeFrameDriver,
   MakeCodeFrameProps,
-  Project,
+  MakeCodeProject,
 } from "@microbit/makecode-embed/react";
 import {
   createContext,
@@ -53,7 +53,7 @@ export type LoadType = "drop-load" | "file-upload";
 interface ProjectContext {
   browserNavigationToEditor(): Promise<boolean>;
   openEditor(): Promise<void>;
-  project: Project;
+  project: MakeCodeProject;
   projectEdited: boolean;
   resetProject: () => void;
   loadFile: (file: File, type: LoadType) => void;

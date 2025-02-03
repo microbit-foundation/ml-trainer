@@ -7,13 +7,13 @@ import { Box, Card, SkeletonText, VStack } from "@chakra-ui/react";
 import {
   BlockLayout,
   MakeCodeBlocksRendering,
-  Project,
+  MakeCodeProject,
 } from "@microbit/makecode-embed/react";
 import { memo, useLayoutEffect, useRef, useState } from "react";
 import { tourElClassname } from "../tours";
 
 interface CodeViewCardProps {
-  project: Project;
+  project: MakeCodeProject;
   parentRef: React.RefObject<HTMLDivElement>;
 }
 
