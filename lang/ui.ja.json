@@ -1268,7 +1268,7 @@
     "description": "Shown while reconnecting"
   },
   "record-action": {
-    "defaultMessage": "録画",
+    "defaultMessage": "記録",
     "description": "Record button text"
   },
   "record-action-aria": {
