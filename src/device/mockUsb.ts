@@ -5,10 +5,11 @@ import {
   ConnectionStatus,
   ConnectionStatusEvent,
   DeviceConnectionEventMap,
-  DeviceWebUSBConnection,
   FlashDataSource,
   FlashEvent,
   FlashOptions,
+  MicrobitWebUSBConnection,
+  SerialConnectionEventMap,
   TypedEventTarget,
 } from "@microbit/microbit-connection";
 
@@ -16,8 +17,8 @@ import {
  * A mock USB connection used during end-to-end testing.
  */
 export class MockWebUSBConnection
-  extends TypedEventTarget<DeviceConnectionEventMap>
-  implements DeviceWebUSBConnection
+  extends TypedEventTarget<DeviceConnectionEventMap & SerialConnectionEventMap>
+  implements MicrobitWebUSBConnection
 {
   status: ConnectionStatus = ConnectionStatus.NO_AUTHORIZED_DEVICE;
 

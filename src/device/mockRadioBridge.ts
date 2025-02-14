@@ -3,14 +3,15 @@ import {
   ConnectionStatus,
   ConnectionStatusEvent,
   DeviceConnectionEventMap,
-  DeviceRadioBridgeConnection,
+  MicrobitRadioBridgeConnection,
   MicrobitWebUSBConnection,
+  ServiceConnectionEventMap,
   TypedEventTarget,
 } from "@microbit/microbit-connection";
 
 export class MockRadioBridgeConnection
-  extends TypedEventTarget<DeviceConnectionEventMap>
-  implements DeviceRadioBridgeConnection
+  extends TypedEventTarget<DeviceConnectionEventMap & ServiceConnectionEventMap>
+  implements MicrobitRadioBridgeConnection
 {
   status: ConnectionStatus;
 

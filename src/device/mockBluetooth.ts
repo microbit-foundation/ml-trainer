@@ -3,14 +3,15 @@ import {
   ConnectionStatus,
   ConnectionStatusEvent,
   DeviceConnectionEventMap,
-  DeviceWebBluetoothConnection,
   LedMatrix,
+  MicrobitWebBluetoothConnection,
+  ServiceConnectionEventMap,
   TypedEventTarget,
 } from "@microbit/microbit-connection";
 
 export class MockWebBluetoothConnection
-  extends TypedEventTarget<DeviceConnectionEventMap>
-  implements DeviceWebBluetoothConnection
+  extends TypedEventTarget<DeviceConnectionEventMap & ServiceConnectionEventMap>
+  implements MicrobitWebBluetoothConnection
 {
   status: ConnectionStatus = ConnectionStatus.NO_AUTHORIZED_DEVICE;
   private connectResults: ConnectionStatus[] = [];
