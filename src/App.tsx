@@ -48,6 +48,9 @@ import { PostImportDialogState } from "./model";
 import "theme-package/fonts/fonts.css";
 import { MockWebUSBConnection } from "./device/mockUsb";
 import {
+  createRadioBridgeConnection,
+  createWebBluetoothConnection,
+  createWebUSBConnection,
   MicrobitRadioBridgeConnection,
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
@@ -69,15 +72,15 @@ const logging = deployment.logging;
 
 const usb = isMockDeviceMode()
   ? (new MockWebUSBConnection() as unknown as MicrobitWebUSBConnection)
-  : new MicrobitWebUSBConnection({ logging });
+  : createWebUSBConnection({ logging });
 const bluetooth = isMockDeviceMode()
   ? (new MockWebBluetoothConnection() as unknown as MicrobitWebBluetoothConnection)
-  : new MicrobitWebBluetoothConnection({ logging });
+  : createWebBluetoothConnection({ logging });
 const radioBridge = isMockDeviceMode()
   ? (new MockRadioBridgeConnection(
       usb
     ) as unknown as MicrobitRadioBridgeConnection)
-  : new MicrobitRadioBridgeConnection(usb, { logging });
+  : createRadioBridgeConnection(usb, { logging });
 
 const Providers = ({ children }: ProviderLayoutProps) => {
   const deployment = useDeployment();
