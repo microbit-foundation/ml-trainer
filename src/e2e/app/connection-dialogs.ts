@@ -8,53 +8,30 @@ import { MockWebUSBConnection } from "../../device/mockUsb";
 import { MockWebBluetoothConnection } from "../../device/mockBluetooth";
 import { ConnectionStatus } from "@microbit/microbit-connection";
 
-interface DialogStep {
-  text: string;
-  next?: "copy-pattern";
-}
-
-const dialogTypes: {
-  bluetooth: Record<string, DialogStep>;
-  radio: Record<string, DialogStep>;
+const dialogTitles: {
+  bluetooth: Record<string, string>;
+  radio: Record<string, string>;
 } = {
   bluetooth: {
-    whatYouNeed: { text: "What you need to connect using Web Bluetooth" },
-    connectUsb: { text: "Connect USB cable to micro:bit" },
-    download: { text: "Download data collection program to micro:bit" },
-    connectBattery: { text: "Disconnect USB and connect battery pack" },
-    copyPattern: { text: "Copy pattern", next: "copy-pattern" },
-    connectBluetooth: { text: "Connect to micro:bit using Web Bluetooth" },
+    whatYouNeed: "What you need to connect using Web Bluetooth",
+    connectUsb: "Connect USB cable to micro:bit",
+    download: "Download data collection program to micro:bit",
+    connectBattery: "Disconnect USB and connect battery pack",
+    copyPattern: "Copy pattern",
+    connectBluetooth: "Connect to micro:bit using Web Bluetooth",
   },
   radio: {
-    whatYouNeed: { text: "What you need to connect using micro:bit radio" },
-    connect1: { text: "Connect USB cable to micro:bit 1" },
-    download1: { text: "Download data collection program to micro:bit 1" },
-    connectBattery: { text: "Disconnect USB and connect battery pack" },
-    connect2: { text: "Connect USB cable to micro:bit 2" },
-    download2: { text: "Download radio link program to micro:bit 2" },
+    whatYouNeed: "What you need to connect using micro:bit radio",
+    connect1: "Connect USB cable to micro:bit 1",
+    download1: "Download data collection program to micro:bit 1",
+    connectBattery: "Disconnect USB and connect battery pack",
+    connect2: "Connect USB cable to micro:bit 2",
+    download2: "Download radio link program to micro:bit 2",
   },
 };
 
-const bluetoothFlow = [
-  dialogTypes.bluetooth.whatYouNeed,
-  dialogTypes.bluetooth.connectUsb,
-  dialogTypes.bluetooth.download,
-  dialogTypes.bluetooth.connectBattery,
-  dialogTypes.bluetooth.copyPattern,
-  dialogTypes.bluetooth.connectBluetooth,
-];
-
-const radioFlow = [
-  dialogTypes.radio.whatYouNeed,
-  dialogTypes.radio.connect1,
-  dialogTypes.radio.download1,
-  dialogTypes.radio.connectBattery,
-  dialogTypes.radio.connect2,
-  dialogTypes.radio.download2,
-];
-
 export class ConnectionDialogs {
-  public types = dialogTypes;
+  public types = dialogTitles;
   private tryAgainButton: Locator;
 
   constructor(public readonly page: Page) {
@@ -114,31 +91,38 @@ export class ConnectionDialogs {
     await this.mockBluetoothStatus([ConnectionStatus.NO_AUTHORIZED_DEVICE]);
   }
 
-  async connect(options: {
-    stopAfterText?: string;
-    type: "radio" | "bluetooth";
-  }) {
-    if (options.type === "radio") {
-      await this.page
-        .getByRole("button", { name: "Connect using micro:bit radio" })
-        .click();
-    }
-    const steps = options.type === "bluetooth" ? bluetoothFlow : radioFlow;
-    for (const { text, next } of steps) {
-      await this.waitForText(text);
-      switch (next) {
-        case "copy-pattern": {
-          await this.enterBluetoothPattern();
-          await this.clickNext();
-          break;
-        }
-        default:
-          await this.clickNext();
-      }
-      if (options.stopAfterText && options.stopAfterText === text) {
-        return;
-      }
-    }
+  async connectRadio() {
+    await this.page
+      .getByRole("button", { name: "Connect using micro:bit radio" })
+      .click();
+    await this.waitForText(dialogTitles.radio.whatYouNeed);
+    await this.clickNext();
+    await this.waitForText(dialogTitles.radio.connect1);
+    await this.clickNext();
+    await this.waitForText(dialogTitles.radio.download1);
+    await this.clickNext();
+    await this.waitForText(dialogTitles.radio.connectBattery);
+    await this.clickNext();
+    await this.waitForText(dialogTitles.radio.connect2);
+    await this.clickNext();
+    await this.waitForText(dialogTitles.radio.download2);
+    await this.clickNext();
+  }
+
+  async connectBluetooth() {
+    await this.waitForText(dialogTitles.bluetooth.whatYouNeed);
+    await this.clickNext();
+    await this.waitForText(dialogTitles.bluetooth.connectUsb);
+    await this.clickNext();
+    await this.waitForText(dialogTitles.bluetooth.download);
+    await this.clickNext();
+    await this.waitForText(dialogTitles.bluetooth.connectBattery);
+    await this.clickNext();
+    await this.waitForText(dialogTitles.bluetooth.copyPattern);
+    await this.enterBluetoothPattern();
+    await this.clickNext();
+    await this.waitForText(dialogTitles.bluetooth.connectBluetooth);
+    await this.clickNext();
   }
 
   async enterBluetoothPattern() {
