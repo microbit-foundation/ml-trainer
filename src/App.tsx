@@ -7,15 +7,22 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ChakraProvider, useToast } from "@chakra-ui/react";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
+import {
+  createRadioBridgeConnection,
+  createWebBluetoothConnection,
+  createWebUSBConnection,
+  MicrobitRadioBridgeConnection,
+} from "@microbit/microbit-connection";
 import React, { ReactNode, useEffect, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
+  createBrowserRouter,
   Outlet,
   RouterProvider,
   ScrollRestoration,
-  createBrowserRouter,
   useNavigate,
 } from "react-router-dom";
+import "theme-package/fonts/fonts.css";
 import { BufferedDataProvider } from "./buffered-data-hooks";
 import EditCodeDialog from "./components/EditCodeDialog";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -25,9 +32,14 @@ import { ConnectProvider } from "./connect-actions-hooks";
 import { ConnectStatusProvider } from "./connect-status-hooks";
 import { ConnectionStageProvider } from "./connection-stage-hooks";
 import { deployment, useDeployment } from "./deployment";
+import { MockWebBluetoothConnection } from "./device/mockBluetooth";
+import { MockRadioBridgeConnection } from "./device/mockRadioBridge";
+import { MockWebUSBConnection } from "./device/mockUsb";
 import { ProjectProvider } from "./hooks/project-hooks";
 import { LoggingProvider } from "./logging/logging-hooks";
+import { hasMakeCodeMlExtension } from "./makecode/utils";
 import TranslationProvider from "./messages/TranslationProvider";
+import { PostImportDialogState } from "./model";
 import CodePage from "./pages/CodePage";
 import DataSamplesPage from "./pages/DataSamplesPage";
 import HomePage from "./pages/HomePage";
@@ -43,20 +55,6 @@ import {
   createNewPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
-import { hasMakeCodeMlExtension } from "./makecode/utils";
-import { PostImportDialogState } from "./model";
-import "theme-package/fonts/fonts.css";
-import { MockWebUSBConnection } from "./device/mockUsb";
-import {
-  createRadioBridgeConnection,
-  createWebBluetoothConnection,
-  createWebUSBConnection,
-  MicrobitRadioBridgeConnection,
-  MicrobitWebBluetoothConnection,
-  MicrobitWebUSBConnection,
-} from "@microbit/microbit-connection";
-import { MockWebBluetoothConnection } from "./device/mockBluetooth";
-import { MockRadioBridgeConnection } from "./device/mockRadioBridge";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
