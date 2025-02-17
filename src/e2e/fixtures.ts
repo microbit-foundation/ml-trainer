@@ -6,7 +6,7 @@
 import { test as base } from "@playwright/test";
 import { HomePage } from "./app/home-page";
 import { DataSamplesPage } from "./app/data-samples";
-import { TestModelPage } from "./app/test-model";
+import { TestModelPage } from "./app/test-model-page";
 import { NewPage } from "./app/new-page";
 
 type MyFixtures = {

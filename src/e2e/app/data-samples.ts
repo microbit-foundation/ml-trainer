@@ -6,6 +6,7 @@
 import { expect, Locator, type Page } from "@playwright/test";
 import { Navbar } from "./shared";
 import { ConnectionDialogs } from "./connection-dialogs";
+import { TrainModelDialog } from "./train-model-dialog";
 
 export class DataSamplesPage {
   public readonly navbar: Navbar;
@@ -60,5 +61,10 @@ export class DataSamplesPage {
   async expectCorrectInitialState() {
     this.expectUrl();
     await expect(this.heading).toBeVisible({ timeout: 10000 });
+  }
+
+  async trainModel() {
+    await this.page.getByRole("button", { name: "Train model" }).click();
+    return new TrainModelDialog(this.page);
   }
 }
