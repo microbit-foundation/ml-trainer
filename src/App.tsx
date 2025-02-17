@@ -11,7 +11,6 @@ import {
   createRadioBridgeConnection,
   createWebBluetoothConnection,
   createWebUSBConnection,
-  MicrobitRadioBridgeConnection,
 } from "@microbit/microbit-connection";
 import React, { ReactNode, useEffect, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
@@ -75,9 +74,7 @@ const bluetooth = isMockDeviceMode()
   ? new MockWebBluetoothConnection()
   : createWebBluetoothConnection({ logging });
 const radioBridge = isMockDeviceMode()
-  ? (new MockRadioBridgeConnection(
-      usb
-    ) as unknown as MicrobitRadioBridgeConnection)
+  ? new MockRadioBridgeConnection(usb)
   : createRadioBridgeConnection(usb, { logging });
 
 const Providers = ({ children }: ProviderLayoutProps) => {

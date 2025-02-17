@@ -77,5 +77,5 @@ export class MockWebBluetoothConnection
   async getMagnetometerPeriod(): Promise<undefined> {}
   async setMagnetometerPeriod(_value: number): Promise<void> {}
   async triggerMagnetometerCalibration(): Promise<void> {}
-  async writeUART(_data: Uint8Array): Promise<void> {}
+  async uartWrite(_data: Uint8Array): Promise<void> {}
 }
