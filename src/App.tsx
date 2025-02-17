@@ -71,10 +71,10 @@ const isMockDeviceMode = () =>
 const logging = deployment.logging;
 
 const usb = isMockDeviceMode()
-  ? (new MockWebUSBConnection() as unknown as MicrobitWebUSBConnection)
+  ? new MockWebUSBConnection()
   : createWebUSBConnection({ logging });
 const bluetooth = isMockDeviceMode()
-  ? (new MockWebBluetoothConnection() as unknown as MicrobitWebBluetoothConnection)
+  ? new MockWebBluetoothConnection()
   : createWebBluetoothConnection({ logging });
 const radioBridge = isMockDeviceMode()
   ? (new MockRadioBridgeConnection(
