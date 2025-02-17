@@ -142,10 +142,10 @@ export class ConnectionDialogs {
   }
 
   async enterBluetoothPattern() {
-    await this.page.locator(".css-1jvu5j > .chakra-button").first().click();
-    await this.page.locator("div:nth-child(11) > .chakra-button").click();
-    await this.page.locator("div:nth-child(17) > .chakra-button").click();
-    await this.page.locator("div:nth-child(23) > .chakra-button").click();
-    await this.page.locator("div:nth-child(29) > .chakra-button").click();
+    const numCols = 5;
+    for (let i = 0; i < numCols; i++) {
+      const n = (i + 1).toString();
+      await this.page.getByLabel(`Column ${n} - number of LEDs lit`).fill(n);
+    }
   }
 }
