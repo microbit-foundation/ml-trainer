@@ -41,8 +41,9 @@ export class MakeCodeEditor {
       .frameLocator('iframe[title="MakeCode"]')
       .getByText("ml.onStart(ml.event.")
       .first();
-    await textArea.press("Meta+A");
-    await textArea.pressSequentially(jsText);
+    await textArea.click();
+    await this.page.keyboard.press("ControlOrMeta+A");
+    await this.page.keyboard.insertText(jsText);
     await this.page.waitForTimeout(1000);
   }
 
