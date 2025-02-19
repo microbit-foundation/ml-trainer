@@ -8,7 +8,7 @@ import { MockWebUSBConnection } from "../../device/mockUsb";
 import { MockWebBluetoothConnection } from "../../device/mockBluetooth";
 import { ConnectionStatus } from "@microbit/microbit-connection";
 
-const dialogTitles: {
+export const dialogTitles: {
   bluetooth: Record<string, string>;
   radio: Record<string, string>;
 } = {
@@ -46,8 +46,14 @@ export class ConnectionDialogs {
     await this.page.getByText(name).waitFor();
   }
 
-  private async clickNext() {
+  async clickNext() {
     await this.page.getByRole("button", { name: "Next" }).click();
+  }
+
+  async switchToRadio() {
+    await this.page
+      .getByRole("button", { name: "Connect using micro:bit radio" })
+      .click();
   }
 
   async expectConnectWebUsbErrorDialog() {
@@ -89,40 +95,6 @@ export class ConnectionDialogs {
 
   async mockBluetoothDeviceNotSelected() {
     await this.mockBluetoothStatus([ConnectionStatus.NO_AUTHORIZED_DEVICE]);
-  }
-
-  async connectRadio() {
-    await this.page
-      .getByRole("button", { name: "Connect using micro:bit radio" })
-      .click();
-    await this.waitForText(dialogTitles.radio.whatYouNeed);
-    await this.clickNext();
-    await this.waitForText(dialogTitles.radio.connect1);
-    await this.clickNext();
-    await this.waitForText(dialogTitles.radio.download1);
-    await this.clickNext();
-    await this.waitForText(dialogTitles.radio.connectBattery);
-    await this.clickNext();
-    await this.waitForText(dialogTitles.radio.connect2);
-    await this.clickNext();
-    await this.waitForText(dialogTitles.radio.download2);
-    await this.clickNext();
-  }
-
-  async connectBluetooth() {
-    await this.waitForText(dialogTitles.bluetooth.whatYouNeed);
-    await this.clickNext();
-    await this.waitForText(dialogTitles.bluetooth.connectUsb);
-    await this.clickNext();
-    await this.waitForText(dialogTitles.bluetooth.download);
-    await this.clickNext();
-    await this.waitForText(dialogTitles.bluetooth.connectBattery);
-    await this.clickNext();
-    await this.waitForText(dialogTitles.bluetooth.copyPattern);
-    await this.enterBluetoothPattern();
-    await this.clickNext();
-    await this.waitForText(dialogTitles.bluetooth.connectBluetooth);
-    await this.clickNext();
   }
 
   async enterBluetoothPattern() {
