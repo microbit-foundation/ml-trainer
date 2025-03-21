@@ -198,7 +198,7 @@ const HomePage = () => {
                     <Link
                       color="brand.600"
                       textDecoration="underline"
-                      href={landingPageUrl()}
+                      href={landingPageUrl(languageId)}
                     >
                       {children}
                     </Link>
