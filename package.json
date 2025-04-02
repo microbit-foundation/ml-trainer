@@ -62,7 +62,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@microbit/makecode-embed": "^0.3.0",
-    "@microbit/microbit-connection": "file:microbit-microbit-connection-0.0.1.tgz",
+    "@microbit/microbit-connection": "file:microbit-microbit-connection-0.0.2.tgz",
     "@microbit/ml-header-generator": "^0.4.3",
     "@microbit/smoothie": "^1.37.0-microbit.2",
     "@tensorflow/tfjs": "^4.20.0",
