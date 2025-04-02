@@ -7,7 +7,13 @@
 import { Logging } from "../../logging/logging";
 
 export class NullLogging implements Logging {
-  event(): void {}
-  error(): void {}
-  log(): void {}
+  event(_event: Event): void {
+    console.log(_event);
+  }
+  error(_e: any): void {
+    console.log(_e);
+  }
+  log(_e: any): void {
+    console.log(_e);
+  }
 }
