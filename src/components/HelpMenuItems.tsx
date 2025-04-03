@@ -61,7 +61,7 @@ const HelpMenuItems = ({
           <FormattedMessage id="help-support" />
         </MenuItem>
       )}
-      {(true || deployment.accessibilityLink) && (
+      {deployment.accessibilityLink && (
         <MenuItem
           as="a"
           href={deployment.accessibilityLink}
