@@ -20,7 +20,7 @@
     "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
   },
   "accessibility": {
-    "defaultMessage": "Accessibility",
+    "defaultMessage": "Acessibilidade",
     "description": "Menu item for link to accessibility site"
   },
   "action-label": {
