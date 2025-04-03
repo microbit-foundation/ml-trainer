@@ -50,6 +50,17 @@ const HelpMenuItems = ({
         onConnectFirstDialogOpen={onConnectFirstDialogOpen}
         tourTrigger={tourTrigger}
       />
+      {deployment.supportLinks.main && (
+        <MenuItem
+          as="a"
+          href={deployment.supportLinks.main}
+          target="_blank"
+          rel="noopener"
+          icon={<RiExternalLinkLine />}
+        >
+          <FormattedMessage id="help-support" />
+        </MenuItem>
+      )}
       {(true || deployment.accessibilityLink) && (
         <MenuItem
           as="a"
@@ -62,22 +73,11 @@ const HelpMenuItems = ({
         </MenuItem>
       )}
       {deployment.supportLinks.main && (
-        <>
-          <MenuItem
-            as="a"
-            href={deployment.supportLinks.main}
-            target="_blank"
-            rel="noopener"
-            icon={<RiExternalLinkLine />}
-          >
-            <FormattedMessage id="help-support" />
-          </MenuItem>
-          <MenuItem icon={<RiFeedbackLine />} onClick={onFeedbackOpen}>
-            <FormattedMessage id="feedback" />
-          </MenuItem>
-          <MenuDivider />
-        </>
+        <MenuItem icon={<RiFeedbackLine />} onClick={onFeedbackOpen}>
+          <FormattedMessage id="feedback" />
+        </MenuItem>
       )}
+      <MenuDivider />
       {deployment.termsOfUseLink && (
         <MenuItem
           as="a"
