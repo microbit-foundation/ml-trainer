@@ -50,6 +50,17 @@ const HelpMenuItems = ({
         onConnectFirstDialogOpen={onConnectFirstDialogOpen}
         tourTrigger={tourTrigger}
       />
+      {(true || deployment.accessibilityLink) && (
+        <MenuItem
+          as="a"
+          href={deployment.accessibilityLink}
+          target="_blank"
+          rel="noopener"
+          icon={<RiExternalLinkLine />}
+        >
+          <FormattedMessage id="accessibility" />
+        </MenuItem>
+      )}
       {deployment.supportLinks.main && (
         <>
           <MenuItem
