@@ -19,6 +19,10 @@
     "defaultMessage": "micro:bitでは、X軸が前面を横切る方向、Y軸が下から上方向、Z軸が裏面から前面の方向を示しています。",
     "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
   },
+  "accessibility": {
+    "defaultMessage": "Accessibility",
+    "description": "Menu item for link to accessibility site"
+  },
   "action-label": {
     "defaultMessage": "アクション",
     "description": "Label for a movement-related action, e.g. clapping"

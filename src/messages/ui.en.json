@@ -39,6 +39,12 @@
       "value": "micro:bit showing X axis going across the front, Y axis going down and up, Z axis going back to front"
     }
   ],
+  "accessibility": [
+    {
+      "type": 0,
+      "value": "Accessibility"
+    }
+  ],
   "action-label": [
     {
       "type": 0,

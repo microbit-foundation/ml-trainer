@@ -19,6 +19,10 @@
     "defaultMessage": "micro:bit pokazujący oś X przechodzącą z przodu, oś Y idącą w dół i w górę, oś Z idącą do tyłu i do przodu",
     "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
   },
+  "accessibility": {
+    "defaultMessage": "Accessibility",
+    "description": "Menu item for link to accessibility site"
+  },
   "action-label": {
     "defaultMessage": "Akcja",
     "description": "Label for a movement-related action, e.g. clapping"

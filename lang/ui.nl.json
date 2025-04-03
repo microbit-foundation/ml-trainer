@@ -19,6 +19,10 @@
     "defaultMessage": "micro:bit toont de X-as over de voorkant, de Y-as gaat naar beneden en omhoog, de Z-as gaat terug naar voren",
     "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
   },
+  "accessibility": {
+    "defaultMessage": "Accessibility",
+    "description": "Menu item for link to accessibility site"
+  },
   "action-label": {
     "defaultMessage": "Actie",
     "description": "Label for a movement-related action, e.g. clapping"

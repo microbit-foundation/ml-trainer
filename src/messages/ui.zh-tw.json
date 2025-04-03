@@ -43,6 +43,12 @@
       "value": "micro:bit 會顯示 X 軸穿過前方，Y 軸向下和向上，Z 軸回到前方"
     }
   ],
+  "accessibility": [
+    {
+      "type": 0,
+      "value": "Accessibility"
+    }
+  ],
   "action-label": [
     {
       "type": 0,

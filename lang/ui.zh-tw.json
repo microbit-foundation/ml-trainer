@@ -19,6 +19,10 @@
     "defaultMessage": "micro:bit 會顯示 X 軸穿過前方，Y 軸向下和向上，Z 軸回到前方",
     "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
   },
+  "accessibility": {
+    "defaultMessage": "Accessibility",
+    "description": "Menu item for link to accessibility site"
+  },
   "action-label": {
     "defaultMessage": "動作",
     "description": "Label for a movement-related action, e.g. clapping"
