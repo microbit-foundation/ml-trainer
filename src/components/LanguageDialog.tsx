@@ -89,16 +89,16 @@ export const LanguageDialog = ({
           </ModalBody>
           <ModalFooter justifyContent="space-between">
             <Link
-                pl={1}
-                alignSelf="flex-start"
-                href={deployment.translationLink}
-                target="_blank"
-                rel="noopener"
-                color="brand.500"
-              >
-                <FormattedMessage id="help-translate" />{" "}
-                <Icon as={RiExternalLinkLine} />
-              </Link>
+              pl={1}
+              alignSelf="flex-start"
+              href={deployment.translationLink}
+              target="_blank"
+              rel="noopener"
+              color="brand.500"
+            >
+              <FormattedMessage id="help-translate" />{" "}
+              <Icon as={RiExternalLinkLine} />
+            </Link>
             <Button variant="primary" onClick={onClose}>
               <FormattedMessage id="close-action" />
             </Button>
