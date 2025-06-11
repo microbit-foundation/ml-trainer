@@ -871,6 +871,22 @@
     "defaultMessage": "Language",
     "description": "Language option text"
   },
+  "language-support-checked": {
+    "defaultMessage": "Supported",
+    "description": "Aria label for ticked checkbox for language support"
+  },
+  "language-support-unchecked": {
+    "defaultMessage": "Unsupported",
+    "description": "Aria label for unticked checkbox for language support"
+  },
+  "language-supported-for": {
+    "defaultMessage": "Translations supported for:",
+    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit Python Editor, micro:bit CreateAI UI itself)"
+  },
+  "language-toast-title": {
+    "defaultMessage": "Language not fully supported",
+    "description": "Language support toast notification title"
+  },
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "Learn about firewall requirements",
     "description": "Link to support article for firewall requirements"

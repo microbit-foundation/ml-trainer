@@ -1529,6 +1529,30 @@
       "value": "語言"
     }
   ],
+  "language-support-checked": [
+    {
+      "type": 0,
+      "value": "Supported"
+    }
+  ],
+  "language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "Unsupported"
+    }
+  ],
+  "language-supported-for": [
+    {
+      "type": 0,
+      "value": "Translations supported for:"
+    }
+  ],
+  "language-toast-title": [
+    {
+      "type": 0,
+      "value": "Language not fully supported"
+    }
+  ],
   "learn-about-firewall-requirements-action": [
     {
       "type": 0,

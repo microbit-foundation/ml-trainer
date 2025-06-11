@@ -25,6 +25,10 @@ export type Flag =
    */
   | "preReleaseNotice"
   /**
+   * Enables languages that are ready for review.
+   */
+  | "translationPreview"
+  /**
    * Flag to show links to website content for the CreateAI release.
    */
   | "websiteContent"
