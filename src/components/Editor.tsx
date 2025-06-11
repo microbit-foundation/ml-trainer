@@ -27,6 +27,9 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
   return (
     <MakeCodeFrame
       ref={ref}
+      // TODO: To use live MakeCode instead of beta.
+      baseUrl="https://makecode.microbit.org/beta"
+      queryParams={{ hidelanguage : "1"}}
       controllerId={controllerId}
       controller={2}
       lang={getMakeCodeLang(languageId)}
