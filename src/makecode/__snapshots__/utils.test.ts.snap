@@ -45,6 +45,7 @@ namespace ml {
   };
 
   simulatorSendData();
+  startRunning();
 }
 
 // Auto-generated. Do not edit. Really.
