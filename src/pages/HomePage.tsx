@@ -36,8 +36,12 @@ import {
   userGuideUrl,
 } from "../utils/external-links";
 import { useSettings } from "../store";
+import { useSearchParams } from "react-router-dom";
+import { setEditorVersionOverride } from "../editor-version";
 
 const HomePage = () => {
+  const [params] = useSearchParams();
+  setEditorVersionOverride(params.get("editorVersion") || undefined);
   const navigate = useNavigate();
   const handleGetStarted = useCallback(() => {
     navigate(createNewPageUrl());
