@@ -58,8 +58,8 @@ export const allLanguages: Language[] = [
   {
     id: "cy",
     name: "Cymraeg",
-    ui: true,
     enName: "Welsh",
+    ui: false,
     makeCode: true,
   },
   {
@@ -72,8 +72,8 @@ export const allLanguages: Language[] = [
   {
     id: "de",
     name: "Deutsch",
-    ui: "preview",
     enName: "German",
+    ui: false,
     makeCode: true,
   },
   {
@@ -100,8 +100,8 @@ export const allLanguages: Language[] = [
   {
     id: "fr",
     name: "Français",
-    ui: true,
     enName: "French",
+    ui: false,
     makeCode: true,
   },
   {
@@ -128,8 +128,8 @@ export const allLanguages: Language[] = [
   {
     id: "it",
     name: "Italiano",
-    ui: "preview",
     enName: "Italian",
+    ui: false,
     makeCode: true,
   },
   {
