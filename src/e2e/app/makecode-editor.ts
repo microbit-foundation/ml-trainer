@@ -25,14 +25,14 @@ export class MakeCodeEditor {
   async switchToJavaScript() {
     await this.page
       .frameLocator('iframe[title="MakeCode"]')
-      .getByRole("menuitem", { name: "Convert code to JavaScript" })
+      .getByRole("option", { name: "Convert code to JavaScript" })
       .click();
   }
 
   async switchToBlocks() {
     await this.page
       .frameLocator('iframe[title="MakeCode"]')
-      .getByRole("menuitem", { name: "Convert code to Blocks" })
+      .getByRole("option", { name: "Convert code to Blocks" })
       .click();
   }
 
