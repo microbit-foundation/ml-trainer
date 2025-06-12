@@ -37,8 +37,8 @@ export const allLanguages: Language[] = [
   {
     id: "bg",
     name: "български",
-    ui: false,
     enName: "Bulgarian",
+    ui: false,
     makeCode: true,
   },
   {
@@ -51,8 +51,8 @@ export const allLanguages: Language[] = [
   {
     id: "cs",
     name: "Čeština",
-    ui: false,
     enName: "Czech",
+    ui: false,
     makeCode: true,
   },
   {
@@ -65,8 +65,8 @@ export const allLanguages: Language[] = [
   {
     id: "da",
     name: "Dansk",
-    ui: false,
     enName: "Danish",
+    ui: false,
     makeCode: true,
   },
   {
@@ -79,8 +79,8 @@ export const allLanguages: Language[] = [
   {
     id: "el",
     name: "Ελληνικά",
-    ui: false,
     enName: "Greek",
+    ui: false,
     makeCode: true,
   },
   {
@@ -93,8 +93,8 @@ export const allLanguages: Language[] = [
   {
     id: "fi",
     name: "Suomi",
-    ui: false,
     enName: "Finnish",
+    ui: false,
     makeCode: true,
   },
   {
@@ -107,22 +107,22 @@ export const allLanguages: Language[] = [
   {
     id: "he",
     name: "עברית",
-    ui: false,
     enName: "Hebrew",
+    ui: false,
     makeCode: true,
   },
   {
     id: "hu",
     name: "Magyar",
-    ui: false,
     enName: "Hungarian",
+    ui: false,
     makeCode: true,
   },
   {
     id: "is",
     name: "Íslenska",
-    ui: false,
     enName: "Icelandic",
+    ui: false,
     makeCode: true,
   },
   {
@@ -156,15 +156,15 @@ export const allLanguages: Language[] = [
   {
     id: "nb",
     name: "Norsk bokmål",
-    ui: false,
     enName: "Norwegian Bokmal",
+    ui: false,
     makeCode: true,
   },
   {
     id: "nn-NO",
     name: "Norsk nynorsk",
-    ui: false,
     enName: "Norwegian Nynorsk",
+    ui: false,
     makeCode: true,
   },
   {
@@ -184,64 +184,64 @@ export const allLanguages: Language[] = [
   {
     id: "pt-PT",
     name: "Português (Portugal)",
-    ui: false,
     enName: "Portuguese (Portugal)",
+    ui: false,
     makeCode: true,
   },
   {
     id: "ru",
     name: "Русский",
-    ui: false,
     enName: "Russian",
+    ui: false,
     makeCode: true,
   },
   {
     id: "si-LK",
     name: "සිංහල",
-    ui: false,
     enName: "Sinhala",
+    ui: false,
     makeCode: true,
   },
   {
     id: "sk",
     name: "Slovenčina",
-    ui: false,
     enName: "Slovak",
+    ui: false,
     makeCode: true,
   },
   {
     id: "sr",
     name: "Srpski",
-    ui: false,
     enName: "Serbian (Latin)",
+    ui: false,
     makeCode: true,
   },
   {
     id: "sv-SE",
     name: "Svenska",
-    ui: false,
     enName: "Swedish",
+    ui: false,
     makeCode: true,
   },
   {
     id: "tr",
     name: "Türkçe",
-    ui: false,
     enName: "Turkish",
+    ui: false,
     makeCode: true,
   },
   {
     id: "uk",
     name: "Українська",
-    ui: false,
     enName: "Ukrainian",
+    ui: false,
     makeCode: true,
   },
   {
     id: "zh-CN",
     name: "简体中文",
-    ui: false,
     enName: "Chinese (Simplified)",
+    ui: false,
     makeCode: true,
   },
   {

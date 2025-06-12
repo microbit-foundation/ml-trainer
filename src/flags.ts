@@ -45,17 +45,18 @@ interface FlagMetadata {
 
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
+  { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
+  { name: "exampleOptInB", defaultOnStages: [] },
   { name: "devtools", defaultOnStages: ["local"] },
-  {
-    name: "websiteContent",
-    defaultOnStages: ["local", "review", "staging", "production"],
-  },
   {
     name: "preReleaseNotice",
     defaultOnStages: ["staging"],
   },
-  { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
-  { name: "exampleOptInB", defaultOnStages: [] },
+  { name: "translationPreview", defaultOnStages: [] },
+  {
+    name: "websiteContent",
+    defaultOnStages: ["local", "review", "staging", "production"],
+  },
 ];
 
 type Flags = Record<Flag, boolean>;
