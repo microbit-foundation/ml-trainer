@@ -881,7 +881,7 @@
   },
   "language-supported-for": {
     "defaultMessage": "Translations supported for:",
-    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit Python Editor, micro:bit CreateAI UI itself)"
+    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
   },
   "language-toast-title": {
     "defaultMessage": "Language not fully supported",
