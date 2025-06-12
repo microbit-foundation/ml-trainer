@@ -7,11 +7,22 @@ import { useSettings } from "../store";
 import { IntlProvider, MessageFormatElement } from "react-intl";
 import { ReactNode, useEffect, useState } from "react";
 import { retryAsyncLoad } from "./chunk-util";
+import { allLanguages } from "../settings";
+import { flags } from "../flags";
 
 async function loadLocaleData(locale: string) {
   const lang = locale.toLowerCase();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  return (await import(`./ui.${lang}.json`)).default as Messages;
+  const languageSetting = allLanguages.find(
+    l => l.id.toLowerCase() === lang
+  );
+  const importLanguage =
+    (flags.translationPreview && languageSetting?.ui === "preview") ||
+    languageSetting?.ui === true;
+  if (importLanguage) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    return (await import(`./ui.${lang}.json`)).default as Messages;
+  }
+  return (await import("./ui.en.json")).default;
 }
 
 type Messages = Record<string, string> | Record<string, MessageFormatElement[]>;
