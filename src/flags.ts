@@ -25,6 +25,10 @@ export type Flag =
    */
   | "preReleaseNotice"
   /**
+   * Enables in-context Crowdin translating.
+   */
+  | "translate"
+  /**
    * Flag to show links to website content for the CreateAI release.
    */
   | "websiteContent"
@@ -42,16 +46,17 @@ interface FlagMetadata {
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
   { name: "devtools", defaultOnStages: ["local"] },
-  {
-    name: "websiteContent",
-    defaultOnStages: ["local", "review", "staging", "production"],
-  },
+  { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
+  { name: "exampleOptInB", defaultOnStages: [] },
   {
     name: "preReleaseNotice",
     defaultOnStages: ["staging"],
   },
-  { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
-  { name: "exampleOptInB", defaultOnStages: [] },
+  { name: "translate", defaultOnStages: [] },
+  {
+    name: "websiteContent",
+    defaultOnStages: ["local", "review", "staging", "production"],
+  },
 ];
 
 type Flags = Record<Flag, boolean>;
