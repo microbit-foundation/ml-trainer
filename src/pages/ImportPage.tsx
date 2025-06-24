@@ -28,6 +28,7 @@ import { MicrobitOrgResource } from "../model";
 import { validateProjectName } from "../project-name";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
+import { ButtonWithLoading } from "../components/ButtonWithLoading";
 
 const ImportPage = () => {
   const intl = useIntl();
@@ -152,7 +153,7 @@ const ImportPage = () => {
             />
           </Stack>
           <HStack pt={5} justifyContent="flex-end">
-            <Button
+            <ButtonWithLoading
               isDisabled={!isValidSetup}
               isLoading={fetchingProject}
               variant="primary"
@@ -160,7 +161,7 @@ const ImportPage = () => {
               size="lg"
             >
               <FormattedMessage id="start-session-action" />
-            </Button>
+            </ButtonWithLoading>
           </HStack>
         </Stack>
       </VStack>
