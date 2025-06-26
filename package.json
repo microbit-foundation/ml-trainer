@@ -51,6 +51,7 @@
     "prettier": "2.8.8",
     "typescript": "^5.4.2",
     "vite": "^6.3.5",
+    "vite-plugin-pwa": "^1.0.0",
     "vite-plugin-svgr": "^4.3.0",
     "vitest": "^3.2.3",
     "vitest-dom": "^0.1.1"
