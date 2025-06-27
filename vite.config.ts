@@ -74,6 +74,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
         },
         workbox: {
           globPatterns: ["**/*.{js,css,html,ico,png,svg,gif,hex}"],
+          maximumFileSizeToCacheInBytes: 3780000,
         },
         manifest: {
           name: "micro:bit CreateAI",
