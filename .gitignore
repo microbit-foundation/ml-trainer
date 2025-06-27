@@ -1,4 +1,5 @@
 /dist/
+/dev-dist/
 /.idea/
 /node_modules/
 

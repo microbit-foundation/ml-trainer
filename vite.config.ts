@@ -18,6 +18,7 @@ import {
   loadEnv,
 } from "vite";
 import svgr from "vite-plugin-svgr";
+import { VitePWA } from "vite-plugin-pwa";
 import { configDefaults } from "vitest/config";
 
 interface TemplateStrings {
@@ -61,7 +62,40 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
       };
   return {
     base: process.env.BASE_URL ?? "/",
-    plugins: [viteEjsPlugin(strings), react(), svgr()],
+    plugins: [
+      viteEjsPlugin(strings),
+      react(),
+      svgr(),
+      VitePWA({
+        registerType: "autoUpdate",
+        injectRegister: "auto",
+        devOptions: {
+          enabled: true,
+        },
+        workbox: {
+          globPatterns: ["**/*.{js,css,html,ico,png,svg,gif,hex}"],
+        },
+        manifest: {
+          name: "micro:bit CreateAI",
+          short_name: "micro:bit CreateAI",
+          description:
+            "A Python Editor for the BBC micro:bit, built by the Micro:bit Educational Foundation and the global Python Community.",
+          theme_color: "#007dbc",
+          icons: [
+            {
+              src: `${process.env.BASE_URL ?? "/"}logo-512x512.png`,
+              sizes: "512x512",
+              type: "image/png",
+            },
+            {
+              src: `${process.env.BASE_URL ?? "/"}logo-192x192.png`,
+              sizes: "192x192",
+              type: "image/png",
+            },
+          ],
+        },
+      }),
+    ],
     assetsInclude: ["**/*.hex"],
     define: {
       "import.meta.env.VITE_APP_VERSION": JSON.stringify(
