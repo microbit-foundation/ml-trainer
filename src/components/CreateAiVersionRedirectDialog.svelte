@@ -33,7 +33,7 @@
   </svelte:fragment>
   <svelte:fragment slot="body">
     <div class="space-y-5">
-    <img src={createAiTestingPage} alt="" />
+      <img src={createAiTestingPage} alt="" />
       <div class="space-y-2">
         <p>{$t('popup.createAIVersionRedirect.explain1')}</p>
         <p>{$t('popup.createAIVersionRedirect.explain2')}</p>
