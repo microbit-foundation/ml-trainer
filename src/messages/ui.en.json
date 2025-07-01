@@ -291,6 +291,12 @@
   "popup.appVersionRedirect.button.stay": "I'm a UK primary school teacher",
   "popup.appVersionRedirect.uk": "*includes crown dependencies Jersey, Guernsey and the Isle of Man",
 
+  "popup.createAIVersionRedirect.header": "Try micro:bit CreateAI",
+  "popup.createAIVersionRedirect.explain1": "micro:bit CreateAI is our updated version of the micro:bit machine learning tool.",
+  "popup.createAIVersionRedirect.explain2": "Using CreateAI you can train and test a machine learning model then use it in a Microsoft MakeCode program on your micro:bit.",
+  "popup.createAIVersionRedirect.button.redirect": "Try CreateAI",
+  "popup.createAIVersionRedirect.button.stay": "Not now",
+
   "arrowIconRight.altText": "arrow pointing right",
   "arrowIconDown.altText": "arrow pointing down",
 
