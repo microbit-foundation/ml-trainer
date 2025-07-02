@@ -68,6 +68,14 @@ function showConsent(
   w.commonConsent?.show({ userTriggered, config });
 }
 
+export function initialShowConsent() {
+  if (w.commonConsent) {
+    showConsent();
+  } else {
+    w.addEventListener('consentinit', showConsent);
+  }
+}
+
 export function manageCookies() {
   showConsent({ userTriggered: true });
 }
@@ -79,8 +87,3 @@ const updateListener = (event: CustomEvent<CookieConsent>) => {
   consent.set(event.detail);
 };
 w.addEventListener('consentchange', updateListener);
-if (w.commonConsent) {
-  showConsent();
-} else {
-  w.addEventListener('consentinit', showConsent);
-}

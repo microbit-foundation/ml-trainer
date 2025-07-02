@@ -27,6 +27,10 @@
   };
 
   const onCloseDialog = () => {
+    if (!isOpen) {
+      // Don't close dialog if already closed.
+      return;
+    }
     onClose();
     if (finalFocusRef) {
       (finalFocusRef as HTMLElement).focus();

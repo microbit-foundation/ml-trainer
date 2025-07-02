@@ -2,7 +2,7 @@
 
 const ref = process.env.GITHUB_REF;
 let stage;
-if (ref === 'refs/heads/main') {
+if (ref === 'refs/heads/maint-nextgen') {
   stage = 'STAGING';
 } else if (ref.startsWith('refs/tags/v')) {
   stage = 'PRODUCTION';

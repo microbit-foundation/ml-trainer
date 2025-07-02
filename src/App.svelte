@@ -9,12 +9,11 @@
   import PageContentView from './views/PageContentView.svelte';
   import {
     compatibility,
-    hasSeenAppVersionRedirectDialog,
     isCompatibilityWarningDialogOpen,
   } from './script/stores/uiStore';
   import IncompatiblePlatformView from './views/IncompatiblePlatformView.svelte';
   import CompatibilityWarningDialog from './components/CompatibilityWarningDialog.svelte';
-  import AppVersionRedirectDialog from './components/AppVersionRedirectDialog.svelte';
+  import CreateAiVersionRedirectDialog from './components/CreateAiVersionRedirectDialog.svelte';
   import Router from './router/Router.svelte';
   import ControlBar from './components/control-bar/ControlBar.svelte';
   import { t } from './i18n';
@@ -33,17 +32,8 @@
     connectionDialogState,
   } from './script/stores/connectDialogStore';
   import { isLoading } from 'svelte-i18n';
-  import { fetchBrowserInfo } from './script/utils/api';
-  import { get } from 'svelte/store';
 
-  let isPotentiallyNonNextGenUser: boolean = false;
   onMount(async () => {
-    if (!get(hasSeenAppVersionRedirectDialog)) {
-      const { country } = await fetchBrowserInfo();
-      const nextGenAvailableCountries = ['GB', 'JE', 'IM', 'GG'];
-      isPotentiallyNonNextGenUser = !nextGenAvailableCountries.includes(country || '');
-    }
-
     const { bluetooth, usb } = $compatibility;
     // Value must switch from false to true after mount to trigger dialog transition
     isCompatibilityWarningDialogOpen.set(!bluetooth && !usb);
@@ -73,11 +63,11 @@
       <div class="h-full w-full m-0 relative flex">
         <OverlayView />
         <!-- Wait for consent dialog to avoid a clash -->
+        {#if !$isCompatibilityWarningDialogOpen}
+          <CreateAiVersionRedirectDialog />
+        {/if}
         {#if $consent}
           <CompatibilityWarningDialog />
-        {/if}
-        {#if $consent && !$isCompatibilityWarningDialogOpen && isPotentiallyNonNextGenUser}
-          <AppVersionRedirectDialog />
         {/if}
         <div class="w-full flex flex-col bg-backgrounddark">
           <ControlBar>
