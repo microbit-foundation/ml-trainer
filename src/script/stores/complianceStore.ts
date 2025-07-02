@@ -61,16 +61,17 @@ const config = {
   ],
 };
 
-let addedConsentInitListener = false;
-export function showConsent(
+function showConsent(
   { userTriggered }: { userTriggered: boolean } = { userTriggered: false },
 ) {
   const w = window as any;
-  // Show commonConsent dialog if it's not already opened
-  if (w.commonConsent && w.commonConsent.current === undefined) {
-    w.commonConsent?.show({ userTriggered, config });
-  }
-  if (!w.commonConsent && !addedConsentInitListener) {
+  w.commonConsent?.show({ userTriggered, config });
+}
+
+export function initialShowConsent() {
+  if (w.commonConsent) {
+    showConsent()
+  } else {
     w.addEventListener('consentinit', showConsent);
   }
 }

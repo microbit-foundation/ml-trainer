@@ -9,7 +9,7 @@
   import StandardDialog from './dialogs/StandardDialog.svelte';
   import StandardButton from './StandardButton.svelte';
   import createAiTestingPage from '../imgs/createai_testing_page.png';
-  import { showConsent } from '../script/stores/complianceStore';
+  import { initialShowConsent } from '../script/stores/complianceStore';
 
   let isOpen = true;
 
@@ -19,7 +19,7 @@
 
   const onClose = () => {
     isOpen = false;
-    showConsent();
+    initialShowConsent();
   };
 </script>
 
