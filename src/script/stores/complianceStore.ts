@@ -60,12 +60,14 @@ const config = {
     // Some of the Svelte stores use local storage, this needs investigating
   ],
 };
-
-function showConsent(
+export function showConsent(
   { userTriggered }: { userTriggered: boolean } = { userTriggered: false },
 ) {
   const w = window as any;
-  w.commonConsent?.show({ userTriggered, config });
+  // Show commonConsent dialog if it's not already opened
+  if (w.commonConsent && w.commonConsent.current === undefined) {
+      w.commonConsent?.show({ userTriggered, config });
+  }
 }
 
 export function manageCookies() {
@@ -79,8 +81,3 @@ const updateListener = (event: CustomEvent<CookieConsent>) => {
   consent.set(event.detail);
 };
 w.addEventListener('consentchange', updateListener);
-if (w.commonConsent) {
-  showConsent();
-} else {
-  w.addEventListener('consentinit', showConsent);
-}

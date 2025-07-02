@@ -73,11 +73,11 @@
       <div class="h-full w-full m-0 relative flex">
         <OverlayView />
         <!-- Wait for consent dialog to avoid a clash -->
+        {#if !$isCompatibilityWarningDialogOpen && isPotentiallyNonNextGenUser}
+          <CreateAiVersionRedirectDialog />
+        {/if}
         {#if $consent}
           <CompatibilityWarningDialog />
-        {/if}
-        {#if $consent && !$isCompatibilityWarningDialogOpen && isPotentiallyNonNextGenUser}
-          <CreateAiVersionRedirectDialog />
         {/if}
         <div class="w-full flex flex-col bg-backgrounddark">
           <ControlBar>
