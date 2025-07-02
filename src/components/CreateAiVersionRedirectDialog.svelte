@@ -19,7 +19,7 @@
 
   const onClose = () => {
     isOpen = false;
-    showConsent()
+    showConsent();
   };
 </script>
 

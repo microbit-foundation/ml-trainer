@@ -66,7 +66,7 @@ export function showConsent(
   const w = window as any;
   // Show commonConsent dialog if it's not already opened
   if (w.commonConsent && w.commonConsent.current === undefined) {
-      w.commonConsent?.show({ userTriggered, config });
+    w.commonConsent?.show({ userTriggered, config });
   }
 }
 
