@@ -33,17 +33,8 @@
     connectionDialogState,
   } from './script/stores/connectDialogStore';
   import { isLoading } from 'svelte-i18n';
-  import { fetchBrowserInfo } from './script/utils/api';
-  import { get } from 'svelte/store';
 
-  let isPotentiallyNonNextGenUser: boolean = false;
   onMount(async () => {
-    if (!get(hasSeenAppVersionRedirectDialog)) {
-      const { country } = await fetchBrowserInfo();
-      const nextGenAvailableCountries = ['GB', 'JE', 'IM', 'GG'];
-      isPotentiallyNonNextGenUser = !nextGenAvailableCountries.includes(country || '');
-    }
-
     const { bluetooth, usb } = $compatibility;
     // Value must switch from false to true after mount to trigger dialog transition
     isCompatibilityWarningDialogOpen.set(!bluetooth && !usb);
@@ -73,7 +64,7 @@
       <div class="h-full w-full m-0 relative flex">
         <OverlayView />
         <!-- Wait for consent dialog to avoid a clash -->
-        {#if !$isCompatibilityWarningDialogOpen && isPotentiallyNonNextGenUser}
+        {#if !$isCompatibilityWarningDialogOpen}
           <CreateAiVersionRedirectDialog />
         {/if}
         {#if $consent}
