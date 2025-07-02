@@ -70,7 +70,7 @@ function showConsent(
 
 export function initialShowConsent() {
   if (w.commonConsent) {
-    showConsent()
+    showConsent();
   } else {
     w.addEventListener('consentinit', showConsent);
   }
