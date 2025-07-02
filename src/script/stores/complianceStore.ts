@@ -60,6 +60,8 @@ const config = {
     // Some of the Svelte stores use local storage, this needs investigating
   ],
 };
+
+let addedConsentInitListener = false;
 export function showConsent(
   { userTriggered }: { userTriggered: boolean } = { userTriggered: false },
 ) {
@@ -67,6 +69,9 @@ export function showConsent(
   // Show commonConsent dialog if it's not already opened
   if (w.commonConsent && w.commonConsent.current === undefined) {
     w.commonConsent?.show({ userTriggered, config });
+  }
+  if (!w.commonConsent && !addedConsentInitListener) {
+    w.addEventListener('consentinit', showConsent);
   }
 }
 
