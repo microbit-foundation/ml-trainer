@@ -43,11 +43,6 @@ if (compatibilityResult.bluetooth) {
 
 export const isCompatibilityWarningDialogOpen = writable<boolean>(false);
 
-export const hasSeenAppVersionRedirectDialog = persistantWritable<boolean>(
-  'hasSeenAppVersionRedirectDialog',
-  false,
-);
-
 export enum ModelView {
   TILE,
   STACK,

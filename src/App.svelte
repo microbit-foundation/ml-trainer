@@ -9,7 +9,6 @@
   import PageContentView from './views/PageContentView.svelte';
   import {
     compatibility,
-    hasSeenAppVersionRedirectDialog,
     isCompatibilityWarningDialogOpen,
   } from './script/stores/uiStore';
   import IncompatiblePlatformView from './views/IncompatiblePlatformView.svelte';
