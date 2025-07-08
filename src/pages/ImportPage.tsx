@@ -29,12 +29,14 @@ import { validateProjectName } from "../project-name";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 import { ButtonWithLoading } from "../components/ButtonWithLoading";
+import { setEditorVersionOverride } from "../editor-version";
 
 const ImportPage = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const { activitiesBaseUrl } = useDeployment();
   const [params] = useSearchParams();
+  setEditorVersionOverride(params.get("editorVersion") || undefined);
   const defaultProjectName = useDefaultProjectName();
   const [name, setName] = useState<string>(defaultProjectName);
   const isValidSetup = validateProjectName(name);
