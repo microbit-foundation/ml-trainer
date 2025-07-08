@@ -25,6 +25,10 @@ export type Flag =
    */
   | "preReleaseNotice"
   /**
+   * Enables in-context Crowdin translating.
+   */
+  | "translate"
+  /**
    * Enables languages that are ready for review.
    */
   | "translationPreview"
@@ -52,6 +56,7 @@ const allFlags: FlagMetadata[] = [
     name: "preReleaseNotice",
     defaultOnStages: ["staging"],
   },
+  { name: "translate", defaultOnStages: [] },
   { name: "translationPreview", defaultOnStages: [] },
   {
     name: "websiteContent",

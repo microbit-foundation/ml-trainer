@@ -3,7 +3,13 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, Text, VisuallyHidden, VStack } from "@chakra-ui/react";
+import {
+  HStack,
+  Text,
+  TextProps,
+  VisuallyHidden,
+  VStack,
+} from "@chakra-ui/react";
 import debounce from "lodash.debounce";
 import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -27,6 +33,15 @@ const PredictedAction = () => {
   useEffect(() => {
     setLiveRegionEstimatedActionDebounced(estimatedAction);
   }, [setLiveRegionEstimatedActionDebounced, estimatedAction]);
+
+  const commonEstimatedActionProps: TextProps = {
+    size: "md",
+    fontWeight: "bold",
+    color: predictionResult?.detected ? "brand2.600" : "gray.600",
+    isTruncated: true,
+    textAlign: "center",
+    w: `${predictedActionDisplayWidth}px`,
+  };
 
   return (
     <VStack
@@ -63,15 +78,18 @@ const PredictedAction = () => {
           isTriggered
         />
       </VStack>
+      {/* Display workaround for in-context translation error caused by DOM change. */}
       <Text
-        size="md"
-        fontWeight="bold"
-        color={predictionResult?.detected ? "brand2.600" : "gray.600"}
-        isTruncated
-        textAlign="center"
-        w={`${predictedActionDisplayWidth}px`}
+        {...commonEstimatedActionProps}
+        display={estimatedAction ? "block" : "none"}
       >
-        {estimatedAction ?? <FormattedMessage id="unknown" />}
+        {estimatedAction}
+      </Text>
+      <Text
+        {...commonEstimatedActionProps}
+        display={estimatedAction ? "none" : "block"}
+      >
+        <FormattedMessage id="unknown" />
       </Text>
     </VStack>
   );

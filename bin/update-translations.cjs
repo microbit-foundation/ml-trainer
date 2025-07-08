@@ -20,7 +20,7 @@ const fs = require("fs");
 const okExitStatus = 0;
 const errExitStatus = 2;
 
-const languages = ["ca", "en", "es-ES", "ja", "ko", "nl", "pl", "pt-br", "zh-tw"];
+const languages = ["ca", "en", "es-ES", "ja", "ko", "nl", "pl", "pt-br", "zh-tw", "lol"];
 const enMessagesToAdd = {
   "ml.onStart|block": {
     defaultMessage: "on ML $event start",

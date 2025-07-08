@@ -89,12 +89,6 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
       globals: true,
       environment: "jsdom",
       exclude: [...configDefaults.exclude, "**/e2e/**"],
-      poolOptions: {
-        threads: {
-          // threads disabled for now due to https://github.com/vitest-dev/vitest/issues/1982
-          singleThread: true,
-        },
-      },
     },
     resolve: {
       alias: {

@@ -1336,8 +1336,16 @@ export const useHasNoStoredData = (): boolean => {
 
 type UseSettingsReturn = [Settings, (settings: Partial<Settings>) => void];
 
+const inContextTranslationLangId = "lol";
+
 export const useSettings = (): UseSettingsReturn => {
-  return useStore(useShallow((s) => [s.settings, s.setSettings]));
+  const [settings, setSettings] = useStore(
+    useShallow((s) => [s.settings, s.setSettings])
+  );
+  const settingsOverride = flags.translate
+    ? { languageId: inContextTranslationLangId }
+    : {};
+  return [{ ...settings, ...settingsOverride }, setSettings];
 };
 
 const actionIcon = ({

@@ -34,6 +34,7 @@ import { deployment, useDeployment } from "./deployment";
 import { MockWebBluetoothConnection } from "./device/mockBluetooth";
 import { MockRadioBridgeConnection } from "./device/mockRadioBridge";
 import { MockWebUSBConnection } from "./device/mockUsb";
+import { flags } from "./flags";
 import { ProjectProvider } from "./hooks/project-hooks";
 import { LoggingProvider } from "./logging/logging-hooks";
 import { hasMakeCodeMlExtension } from "./makecode/utils";
@@ -210,6 +211,19 @@ const App = () => {
           bluetoothAvailable: false,
         },
       });
+    }
+    const scriptId = "crowdin-jipt";
+    if (
+      document.getElementById("crowdin-jipt-config") &&
+      flags.translate &&
+      !document.getElementById(scriptId)
+    ) {
+      // Add Crowdin just in place translation script.
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.type = "text/javascript";
+      script.src = "//cdn.crowdin.com/jipt/jipt.js";
+      document.head.appendChild(script);
     }
   }, []);
   const router = useMemo(createRouter, []);

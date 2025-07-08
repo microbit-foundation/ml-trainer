@@ -1,0 +1,2812 @@
+{
+  "aarhus-university-alt": [
+    {
+      "type": 0,
+      "value": "crwdns362648:0crwdne362648:0"
+    }
+  ],
+  "about": [
+    {
+      "type": 0,
+      "value": "crwdns362650:0crwdne362650:0"
+    }
+  ],
+  "about-dialog-alt": [
+    {
+      "type": 0,
+      "value": "crwdns362652:0crwdne362652:0"
+    }
+  ],
+  "about-dialog-title": [
+    {
+      "type": 0,
+      "value": "crwdns362654:0crwdne362654:0"
+    }
+  ],
+  "accelerometer-image-alt": [
+    {
+      "type": 0,
+      "value": "crwdns362656:0crwdne362656:0"
+    }
+  ],
+  "accessibility": [
+    {
+      "type": 0,
+      "value": "crwdns364036:0crwdne364036:0"
+    }
+  ],
+  "action-label": [
+    {
+      "type": 0,
+      "value": "crwdns362658:0crwdne362658:0"
+    }
+  ],
+  "action-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "crwdns362660:0crwdne362660:0"
+    }
+  ],
+  "action-length-error": [
+    {
+      "type": 0,
+      "value": "crwdns362662:0"
+    },
+    {
+      "type": 1,
+      "value": "maxLen"
+    },
+    {
+      "type": 0,
+      "value": "crwdne362662:0"
+    }
+  ],
+  "action-name-placeholder": [
+    {
+      "type": 0,
+      "value": "crwdns362664:0crwdne362664:0"
+    }
+  ],
+  "action-region": [
+    {
+      "type": 0,
+      "value": "crwdns362666:0"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "crwdne362666:0"
+    }
+  ],
+  "action-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362668:0"
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "crwdne362668:0"
+    }
+  ],
+  "actions-label": [
+    {
+      "type": 0,
+      "value": "crwdns362670:0crwdne362670:0"
+    }
+  ],
+  "add-action-action": [
+    {
+      "type": 0,
+      "value": "crwdns362672:0crwdne362672:0"
+    }
+  ],
+  "ai-activity-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "crwdns362674:0crwdne362674:0"
+    }
+  ],
+  "ai-storytelling-friend-resource-title": [
+    {
+      "type": 0,
+      "value": "crwdns363518:0crwdne363518:0"
+    }
+  ],
+  "back-action": [
+    {
+      "type": 0,
+      "value": "crwdns362676:0crwdne362676:0"
+    }
+  ],
+  "back-to-data-samples-action": [
+    {
+      "type": 0,
+      "value": "crwdns362678:0crwdne362678:0"
+    }
+  ],
+  "bluetooth-unsupported-advice": [
+    {
+      "type": 0,
+      "value": "crwdns362680:0crwdne362680:0"
+    }
+  ],
+  "bluetooth-unsupported-explain": [
+    {
+      "type": 0,
+      "value": "crwdns362682:0crwdne362682:0"
+    }
+  ],
+  "bluetooth-unsupported-header": [
+    {
+      "type": 0,
+      "value": "crwdns362684:0crwdne362684:0"
+    }
+  ],
+  "cancel-action": [
+    {
+      "type": 0,
+      "value": "crwdns362686:0crwdne362686:0"
+    }
+  ],
+  "cancel-recording-action": [
+    {
+      "type": 0,
+      "value": "crwdns362688:0crwdne362688:0"
+    }
+  ],
+  "certainty-label": [
+    {
+      "type": 0,
+      "value": "crwdns362690:0crwdne362690:0"
+    }
+  ],
+  "certainty-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "crwdns362692:0crwdne362692:0"
+    }
+  ],
+  "certainty-percentage-label": [
+    {
+      "type": 0,
+      "value": "crwdns362694:0"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "crwdnd362694:0"
+    },
+    {
+      "type": 1,
+      "value": "currentConfidence"
+    },
+    {
+      "type": 0,
+      "value": "crwdne362694:0"
+    }
+  ],
+  "certainty-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362696:0crwdne362696:0"
+    }
+  ],
+  "click-to-reload-page-action": [
+    {
+      "type": 0,
+      "value": "crwdns362698:0crwdne362698:0"
+    }
+  ],
+  "close-action": [
+    {
+      "type": 0,
+      "value": "crwdns362700:0crwdne362700:0"
+    }
+  ],
+  "code-download-error": [
+    {
+      "type": 0,
+      "value": "crwdns362702:0crwdne362702:0"
+    }
+  ],
+  "code-label": [
+    {
+      "type": 0,
+      "value": "crwdns362704:0crwdne362704:0"
+    }
+  ],
+  "code-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "crwdns362706:0crwdne362706:0"
+    }
+  ],
+  "code-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362708:0crwdne362708:0"
+    }
+  ],
+  "confirm-action": [
+    {
+      "type": 0,
+      "value": "crwdns362710:0crwdne362710:0"
+    }
+  ],
+  "confirm-save-action": [
+    {
+      "type": 0,
+      "value": "crwdns362712:0crwdne362712:0"
+    }
+  ],
+  "connect-action": [
+    {
+      "type": 0,
+      "value": "crwdns362714:0crwdne362714:0"
+    }
+  ],
+  "connect-action-aria": [
+    {
+      "type": 0,
+      "value": "crwdns362716:0crwdne362716:0"
+    }
+  ],
+  "connect-battery-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362718:0crwdne362718:0"
+    }
+  ],
+  "connect-battery-holder": [
+    {
+      "type": 0,
+      "value": "crwdns362720:0crwdne362720:0"
+    }
+  ],
+  "connect-battery-link": [
+    {
+      "type": 0,
+      "value": "crwdns362722:0crwdne362722:0"
+    }
+  ],
+  "connect-battery-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns362724:0crwdne362724:0"
+    }
+  ],
+  "connect-bluetooth-cancelled-connection": [
+    {
+      "type": 0,
+      "value": "crwdns362726:0crwdne362726:0"
+    }
+  ],
+  "connect-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362728:0crwdne362728:0"
+    }
+  ],
+  "connect-bluetooth-invalid-pattern": [
+    {
+      "type": 0,
+      "value": "crwdns362730:0crwdne362730:0"
+    }
+  ],
+  "connect-bluetooth-start-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362732:0crwdne362732:0"
+    }
+  ],
+  "connect-bluetooth-start-requirements1": [
+    {
+      "type": 0,
+      "value": "crwdns362734:0crwdne362734:0"
+    }
+  ],
+  "connect-bluetooth-start-requirements2-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns362736:0crwdne362736:0"
+    }
+  ],
+  "connect-bluetooth-start-switch-radio": [
+    {
+      "type": 0,
+      "value": "crwdns362738:0crwdne362738:0"
+    }
+  ],
+  "connect-cable-alt": [
+    {
+      "type": 0,
+      "value": "crwdns362740:0crwdne362740:0"
+    }
+  ],
+  "connect-cable-download-project-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns362742:0crwdne362742:0"
+    }
+  ],
+  "connect-cable-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362744:0crwdne362744:0"
+    }
+  ],
+  "connect-cable-skip": [
+    {
+      "type": 0,
+      "value": "crwdns362746:0crwdne362746:0"
+    }
+  ],
+  "connect-cable-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns362748:0crwdne362748:0"
+    }
+  ],
+  "connect-computer": [
+    {
+      "type": 0,
+      "value": "crwdns362750:0crwdne362750:0"
+    }
+  ],
+  "connect-data-collection-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362752:0crwdne362752:0"
+    }
+  ],
+  "connect-data-collection-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns362754:0crwdne362754:0"
+    }
+  ],
+  "connect-failed-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362756:0crwdne362756:0"
+    }
+  ],
+  "connect-failed-bluetooth1": [
+    {
+      "type": 0,
+      "value": "crwdns362758:0crwdne362758:0"
+    }
+  ],
+  "connect-failed-bridge-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362760:0crwdne362760:0"
+    }
+  ],
+  "connect-failed-bridge1": [
+    {
+      "type": 0,
+      "value": "crwdns362762:0crwdne362762:0"
+    }
+  ],
+  "connect-failed-remote-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362764:0crwdne362764:0"
+    }
+  ],
+  "connect-failed-remote1": [
+    {
+      "type": 0,
+      "value": "crwdns362766:0crwdne362766:0"
+    }
+  ],
+  "connect-help-alt": [
+    {
+      "type": 0,
+      "value": "crwdns362768:0crwdne362768:0"
+    }
+  ],
+  "connect-micro-usb-cable": [
+    {
+      "type": 0,
+      "value": "crwdns362770:0crwdne362770:0"
+    }
+  ],
+  "connect-or-import": [
+    {
+      "type": 0,
+      "value": "crwdns362772:0crwdne362772:0"
+    }
+  ],
+  "connect-pattern-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362774:0crwdne362774:0"
+    }
+  ],
+  "connect-pattern-input-label": [
+    {
+      "type": 0,
+      "value": "crwdns362776:0"
+    },
+    {
+      "type": 1,
+      "value": "colNum"
+    },
+    {
+      "type": 0,
+      "value": "crwdne362776:0"
+    }
+  ],
+  "connect-pattern-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns362778:0crwdne362778:0"
+    }
+  ],
+  "connect-popup": [
+    {
+      "type": 0,
+      "value": "crwdns362780:0crwdne362780:0"
+    }
+  ],
+  "connect-popup-bluetooth-alt": [
+    {
+      "type": 0,
+      "value": "crwdns362782:0crwdne362782:0"
+    }
+  ],
+  "connect-popup-bluetooth-instruction2": [
+    {
+      "type": 0,
+      "value": "crwdns362784:0crwdne362784:0"
+    }
+  ],
+  "connect-popup-bluetooth-title": [
+    {
+      "type": 0,
+      "value": "crwdns362786:0crwdne362786:0"
+    }
+  ],
+  "connect-popup-instruction-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362788:0crwdne362788:0"
+    }
+  ],
+  "connect-popup-instruction1": [
+    {
+      "type": 0,
+      "value": "crwdns362790:0crwdne362790:0"
+    }
+  ],
+  "connect-popup-usb-bluetooth-data-collection-title": [
+    {
+      "type": 0,
+      "value": "crwdns362792:0crwdne362792:0"
+    }
+  ],
+  "connect-popup-usb-radio-data-collection-title": [
+    {
+      "type": 0,
+      "value": "crwdns362794:0crwdne362794:0"
+    }
+  ],
+  "connect-popup-usb-radio-link-title": [
+    {
+      "type": 0,
+      "value": "crwdns362796:0crwdne362796:0"
+    }
+  ],
+  "connect-popup-webusb-instruction2": [
+    {
+      "type": 0,
+      "value": "crwdns362798:0crwdne362798:0"
+    }
+  ],
+  "connect-radio-data-collection-microbit-description": [
+    {
+      "type": 0,
+      "value": "crwdns362800:0crwdne362800:0"
+    }
+  ],
+  "connect-radio-data-collection-microbit-title": [
+    {
+      "type": 0,
+      "value": "crwdns362802:0crwdne362802:0"
+    }
+  ],
+  "connect-radio-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362804:0crwdne362804:0"
+    }
+  ],
+  "connect-radio-link-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362806:0crwdne362806:0"
+    }
+  ],
+  "connect-radio-link-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns362808:0crwdne362808:0"
+    }
+  ],
+  "connect-radio-start-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362810:0crwdne362810:0"
+    }
+  ],
+  "connect-radio-start-requirements1": [
+    {
+      "type": 0,
+      "value": "crwdns362812:0crwdne362812:0"
+    }
+  ],
+  "connect-radio-start-requirements1-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns362814:0crwdne362814:0"
+    }
+  ],
+  "connect-radio-start-requirements2-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns362816:0crwdne362816:0"
+    }
+  ],
+  "connect-radio-start-switch-bluetooth": [
+    {
+      "type": 0,
+      "value": "crwdns362818:0crwdne362818:0"
+    }
+  ],
+  "connect-to-record": [
+    {
+      "type": 0,
+      "value": "crwdns362820:0crwdne362820:0"
+    }
+  ],
+  "connect-to-record-body": [
+    {
+      "type": 0,
+      "value": "crwdns362822:0crwdne362822:0"
+    }
+  ],
+  "connect-to-test-model": [
+    {
+      "type": 0,
+      "value": "crwdns362824:0crwdne362824:0"
+    }
+  ],
+  "connect-to-tour-body": [
+    {
+      "type": 0,
+      "value": "crwdns362826:0crwdne362826:0"
+    }
+  ],
+  "connect-troubleshoot": [
+    {
+      "type": 0,
+      "value": "crwdns362828:0crwdne362828:0"
+    }
+  ],
+  "connect-troubleshooting": [
+    {
+      "type": 0,
+      "value": "crwdns362830:0crwdne362830:0"
+    }
+  ],
+  "connect-with-batteries": [
+    {
+      "type": 0,
+      "value": "crwdns362832:0crwdne362832:0"
+    }
+  ],
+  "connect-with-web-bluetooth": [
+    {
+      "type": 0,
+      "value": "crwdns362834:0crwdne362834:0"
+    }
+  ],
+  "connecting": [
+    {
+      "type": 0,
+      "value": "crwdns362836:0crwdne362836:0"
+    }
+  ],
+  "continue-makecode-action": [
+    {
+      "type": 0,
+      "value": "crwdns362838:0crwdne362838:0"
+    }
+  ],
+  "cookies-action": [
+    {
+      "type": 0,
+      "value": "crwdns362840:0crwdne362840:0"
+    }
+  ],
+  "copied": [
+    {
+      "type": 0,
+      "value": "crwdns362842:0crwdne362842:0"
+    }
+  ],
+  "copy-action": [
+    {
+      "type": 0,
+      "value": "crwdns362844:0crwdne362844:0"
+    }
+  ],
+  "data-actions-menu": [
+    {
+      "type": 0,
+      "value": "crwdns362846:0crwdne362846:0"
+    }
+  ],
+  "data-collection-microbit": [
+    {
+      "type": 0,
+      "value": "crwdns362848:0crwdne362848:0"
+    }
+  ],
+  "data-collection-microbit-label": [
+    {
+      "type": 0,
+      "value": "crwdns362850:0crwdne362850:0"
+    }
+  ],
+  "data-connection-region": [
+    {
+      "type": 0,
+      "value": "crwdns362852:0crwdne362852:0"
+    }
+  ],
+  "data-features-hide-action": [
+    {
+      "type": 0,
+      "value": "crwdns362854:0crwdne362854:0"
+    }
+  ],
+  "data-features-show-action": [
+    {
+      "type": 0,
+      "value": "crwdns362856:0crwdne362856:0"
+    }
+  ],
+  "data-samples-actions-region": [
+    {
+      "type": 0,
+      "value": "crwdns362858:0crwdne362858:0"
+    }
+  ],
+  "data-samples-label": [
+    {
+      "type": 0,
+      "value": "crwdns362860:0crwdne362860:0"
+    }
+  ],
+  "data-samples-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "crwdns362862:0crwdne362862:0"
+    }
+  ],
+  "data-samples-status-count": [
+    {
+      "type": 0,
+      "value": "crwdns362864:0"
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "crwdne362864:0"
+    }
+  ],
+  "data-samples-status-not-enough": [
+    {
+      "type": 0,
+      "value": "crwdns362866:0crwdne362866:0"
+    }
+  ],
+  "data-samples-title": [
+    {
+      "type": 0,
+      "value": "crwdns362868:0crwdne362868:0"
+    }
+  ],
+  "data-samples-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362870:0crwdne362870:0"
+    }
+  ],
+  "default-project-name": [
+    {
+      "type": 0,
+      "value": "crwdns362872:0crwdne362872:0"
+    }
+  ],
+  "delete-action-aria": [
+    {
+      "type": 0,
+      "value": "crwdns362874:0"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "crwdne362874:0"
+    }
+  ],
+  "delete-action-confirm-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362876:0crwdne362876:0"
+    }
+  ],
+  "delete-action-confirm-text": [
+    {
+      "type": 0,
+      "value": "crwdns362878:0"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "crwdne362878:0"
+    }
+  ],
+  "delete-data-samples-action": [
+    {
+      "type": 0,
+      "value": "crwdns362880:0crwdne362880:0"
+    }
+  ],
+  "delete-data-samples-confirm-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362882:0crwdne362882:0"
+    }
+  ],
+  "delete-data-samples-confirm-text": [
+    {
+      "type": 0,
+      "value": "crwdns362884:0crwdne362884:0"
+    }
+  ],
+  "delete-recording-aria": [
+    {
+      "type": 0,
+      "value": "crwdns362886:0"
+    },
+    {
+      "type": 1,
+      "value": "sample"
+    },
+    {
+      "type": 0,
+      "value": "crwdnd362886:0"
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "crwdnd362886:0"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "crwdne362886:0"
+    }
+  ],
+  "disconnect-action": [
+    {
+      "type": 0,
+      "value": "crwdns362888:0crwdne362888:0"
+    }
+  ],
+  "disconnected-during-recording": [
+    {
+      "type": 0,
+      "value": "crwdns362890:0crwdne362890:0"
+    }
+  ],
+  "disconnected-warning-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362892:0crwdne362892:0"
+    }
+  ],
+  "disconnected-warning-bluetooth1": [
+    {
+      "type": 0,
+      "value": "crwdns362894:0crwdne362894:0"
+    }
+  ],
+  "disconnected-warning-bluetooth2": [
+    {
+      "type": 0,
+      "value": "crwdns362896:0crwdne362896:0"
+    }
+  ],
+  "disconnected-warning-bluetooth3": [
+    {
+      "type": 0,
+      "value": "crwdns362898:0crwdne362898:0"
+    }
+  ],
+  "disconnected-warning-bluetooth4": [
+    {
+      "type": 0,
+      "value": "crwdns362900:0crwdne362900:0"
+    }
+  ],
+  "disconnected-warning-bridge-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362902:0crwdne362902:0"
+    }
+  ],
+  "disconnected-warning-bridge1": [
+    {
+      "type": 0,
+      "value": "crwdns362904:0crwdne362904:0"
+    }
+  ],
+  "disconnected-warning-remote-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362906:0crwdne362906:0"
+    }
+  ],
+  "disconnected-warning-remote1": [
+    {
+      "type": 0,
+      "value": "crwdns362908:0crwdne362908:0"
+    }
+  ],
+  "dont-show-again": [
+    {
+      "type": 0,
+      "value": "crwdns362910:0crwdne362910:0"
+    }
+  ],
+  "download-data-samples-action": [
+    {
+      "type": 0,
+      "value": "crwdns362912:0crwdne362912:0"
+    }
+  ],
+  "download-project-choose-microbit-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns362914:0crwdne362914:0"
+    }
+  ],
+  "download-project-choose-microbit-title": [
+    {
+      "type": 0,
+      "value": "crwdns362916:0crwdne362916:0"
+    }
+  ],
+  "download-project-different-microbit-option": [
+    {
+      "type": 0,
+      "value": "crwdns362918:0crwdne362918:0"
+    }
+  ],
+  "download-project-intro-description": [
+    {
+      "type": 0,
+      "value": "crwdns362920:0"
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "crwdne362920:0"
+    }
+  ],
+  "download-project-intro-title": [
+    {
+      "type": 0,
+      "value": "crwdns362922:0crwdne362922:0"
+    }
+  ],
+  "download-project-same-microbit-option": [
+    {
+      "type": 0,
+      "value": "crwdns362924:0crwdne362924:0"
+    }
+  ],
+  "downloading-data-collection-header": [
+    {
+      "type": 0,
+      "value": "crwdns362926:0crwdne362926:0"
+    }
+  ],
+  "downloading-header": [
+    {
+      "type": 0,
+      "value": "crwdns362928:0crwdne362928:0"
+    }
+  ],
+  "downloading-radio-link-header": [
+    {
+      "type": 0,
+      "value": "crwdns362930:0crwdne362930:0"
+    }
+  ],
+  "downloading-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns362932:0crwdne362932:0"
+    }
+  ],
+  "edit-in-makecode-action": [
+    {
+      "type": 0,
+      "value": "crwdns362934:0crwdne362934:0"
+    }
+  ],
+  "estimated-action-aria": [
+    {
+      "type": 0,
+      "value": "crwdns362936:0"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "crwdne362936:0"
+    }
+  ],
+  "estimated-action-label": [
+    {
+      "type": 0,
+      "value": "crwdns362938:0crwdne362938:0"
+    }
+  ],
+  "estimated-action-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "crwdns362940:0crwdne362940:0"
+    }
+  ],
+  "estimated-action-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362942:0crwdne362942:0"
+    }
+  ],
+  "feedback": [
+    {
+      "type": 0,
+      "value": "crwdns362944:0crwdne362944:0"
+    }
+  ],
+  "fingerprint-acc-x-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362946:0crwdne362946:0"
+    }
+  ],
+  "fingerprint-acc-y-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362948:0crwdne362948:0"
+    }
+  ],
+  "fingerprint-acc-z-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362950:0crwdne362950:0"
+    }
+  ],
+  "fingerprint-max-x-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362952:0crwdne362952:0"
+    }
+  ],
+  "fingerprint-max-y-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362954:0crwdne362954:0"
+    }
+  ],
+  "fingerprint-max-z-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362956:0crwdne362956:0"
+    }
+  ],
+  "fingerprint-mean-x-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362958:0crwdne362958:0"
+    }
+  ],
+  "fingerprint-mean-y-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362960:0crwdne362960:0"
+    }
+  ],
+  "fingerprint-mean-z-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362962:0crwdne362962:0"
+    }
+  ],
+  "fingerprint-min-x-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362964:0crwdne362964:0"
+    }
+  ],
+  "fingerprint-min-y-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362966:0crwdne362966:0"
+    }
+  ],
+  "fingerprint-min-z-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362968:0crwdne362968:0"
+    }
+  ],
+  "fingerprint-peaks-x-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362970:0crwdne362970:0"
+    }
+  ],
+  "fingerprint-peaks-y-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362972:0crwdne362972:0"
+    }
+  ],
+  "fingerprint-peaks-z-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362974:0crwdne362974:0"
+    }
+  ],
+  "fingerprint-rms-x-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362976:0crwdne362976:0"
+    }
+  ],
+  "fingerprint-rms-y-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362978:0crwdne362978:0"
+    }
+  ],
+  "fingerprint-rms-z-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362980:0crwdne362980:0"
+    }
+  ],
+  "fingerprint-std-x-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362982:0crwdne362982:0"
+    }
+  ],
+  "fingerprint-std-y-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362984:0crwdne362984:0"
+    }
+  ],
+  "fingerprint-std-z-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362986:0crwdne362986:0"
+    }
+  ],
+  "fingerprint-zcr-x-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362988:0crwdne362988:0"
+    }
+  ],
+  "fingerprint-zcr-y-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362990:0crwdne362990:0"
+    }
+  ],
+  "fingerprint-zcr-z-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns362992:0crwdne362992:0"
+    }
+  ],
+  "firmware-outdated-content1": [
+    {
+      "type": 0,
+      "value": "crwdns362994:0crwdne362994:0"
+    }
+  ],
+  "firmware-outdated-content2": [
+    {
+      "type": 0,
+      "value": "crwdns362996:0crwdne362996:0"
+    }
+  ],
+  "firmware-outdated-heading": [
+    {
+      "type": 0,
+      "value": "crwdns362998:0crwdne362998:0"
+    }
+  ],
+  "get-started-action": [
+    {
+      "type": 0,
+      "value": "crwdns363002:0crwdne363002:0"
+    }
+  ],
+  "go-action": [
+    {
+      "type": 0,
+      "value": "crwdns363004:0crwdne363004:0"
+    }
+  ],
+  "graph-color-scheme": [
+    {
+      "type": 0,
+      "value": "crwdns363006:0crwdne363006:0"
+    }
+  ],
+  "graph-color-scheme-color-blind-1": [
+    {
+      "type": 0,
+      "value": "crwdns363008:0crwdne363008:0"
+    }
+  ],
+  "graph-color-scheme-color-blind-2": [
+    {
+      "type": 0,
+      "value": "crwdns363010:0crwdne363010:0"
+    }
+  ],
+  "graph-color-scheme-default": [
+    {
+      "type": 0,
+      "value": "crwdns363012:0crwdne363012:0"
+    }
+  ],
+  "graph-line-scheme": [
+    {
+      "type": 0,
+      "value": "crwdns363504:0crwdne363504:0"
+    }
+  ],
+  "graph-line-scheme-accessible": [
+    {
+      "type": 0,
+      "value": "crwdns363506:0crwdne363506:0"
+    }
+  ],
+  "graph-line-scheme-solid": [
+    {
+      "type": 0,
+      "value": "crwdns363508:0crwdne363508:0"
+    }
+  ],
+  "graph-line-weight": [
+    {
+      "type": 0,
+      "value": "crwdns363510:0crwdne363510:0"
+    }
+  ],
+  "graph-line-weight-default": [
+    {
+      "type": 0,
+      "value": "crwdns363512:0crwdne363512:0"
+    }
+  ],
+  "graph-line-weight-thick": [
+    {
+      "type": 0,
+      "value": "crwdns363514:0crwdne363514:0"
+    }
+  ],
+  "graph-preview": [
+    {
+      "type": 0,
+      "value": "crwdns363892:0crwdne363892:0"
+    }
+  ],
+  "help-label": [
+    {
+      "type": 0,
+      "value": "crwdns363014:0crwdne363014:0"
+    }
+  ],
+  "help-support": [
+    {
+      "type": 0,
+      "value": "crwdns363016:0crwdne363016:0"
+    }
+  ],
+  "help-translate": [
+    {
+      "type": 0,
+      "value": "crwdns363886:0crwdne363886:0"
+    }
+  ],
+  "home-action": [
+    {
+      "type": 0,
+      "value": "crwdns363018:0crwdne363018:0"
+    }
+  ],
+  "homepage": [
+    {
+      "type": 0,
+      "value": "crwdns363020:0crwdne363020:0"
+    }
+  ],
+  "homepage-alt": [
+    {
+      "type": 0,
+      "value": "crwdns363022:0crwdne363022:0"
+    }
+  ],
+  "homepage-alt-graph": [
+    {
+      "type": 0,
+      "value": "crwdns363024:0crwdne363024:0"
+    }
+  ],
+  "homepage-alt-hands": [
+    {
+      "type": 0,
+      "value": "crwdns363026:0crwdne363026:0"
+    }
+  ],
+  "homepage-description": [
+    {
+      "type": 0,
+      "value": "crwdns363028:0crwdne363028:0"
+    }
+  ],
+  "homepage-how-it-works": [
+    {
+      "type": 0,
+      "value": "crwdns363030:0crwdne363030:0"
+    }
+  ],
+  "homepage-how-it-works-paragraph": [
+    {
+      "type": 0,
+      "value": "crwdns363032:0crwdne363032:0"
+    }
+  ],
+  "homepage-projects": [
+    {
+      "type": 0,
+      "value": "crwdns363034:0crwdne363034:0"
+    }
+  ],
+  "homepage-projects-more": [
+    {
+      "type": 0,
+      "value": "crwdns363036:0crwdne363036:0"
+    }
+  ],
+  "homepage-step-by-step": [
+    {
+      "type": 0,
+      "value": "crwdns363038:0crwdne363038:0"
+    }
+  ],
+  "homepage-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns363040:0crwdne363040:0"
+    }
+  ],
+  "homepage-video-alt": [
+    {
+      "type": 0,
+      "value": "crwdns363042:0crwdne363042:0"
+    }
+  ],
+  "import-data-samples-action": [
+    {
+      "type": 0,
+      "value": "crwdns363044:0crwdne363044:0"
+    }
+  ],
+  "import-error-dialog-content": [
+    {
+      "type": 0,
+      "value": "crwdns363046:0"
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363046:0"
+    }
+  ],
+  "import-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "crwdns363048:0crwdne363048:0"
+    }
+  ],
+  "incompatible-device-body-alt": [
+    {
+      "type": 0,
+      "value": "crwdns363050:0crwdne363050:0"
+    }
+  ],
+  "incompatible-device-body1": [
+    {
+      "type": 0,
+      "value": "crwdns363052:0crwdne363052:0"
+    }
+  ],
+  "incompatible-device-body2": [
+    {
+      "type": 0,
+      "value": "crwdns363054:0crwdne363054:0"
+    }
+  ],
+  "incompatible-device-heading": [
+    {
+      "type": 0,
+      "value": "crwdns363056:0crwdne363056:0"
+    }
+  ],
+  "incompatible-device-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns363058:0crwdne363058:0"
+    }
+  ],
+  "insufficient-data-body": [
+    {
+      "type": 0,
+      "value": "crwdns363060:0crwdne363060:0"
+    }
+  ],
+  "insufficient-data-title": [
+    {
+      "type": 0,
+      "value": "crwdns363062:0crwdne363062:0"
+    }
+  ],
+  "language": [
+    {
+      "type": 0,
+      "value": "crwdns363064:0crwdne363064:0"
+    }
+  ],
+  "learn-about-firewall-requirements-action": [
+    {
+      "type": 0,
+      "value": "crwdns363066:0crwdne363066:0"
+    }
+  ],
+  "led-icon-option-angry": [
+    {
+      "type": 0,
+      "value": "crwdns363068:0crwdne363068:0"
+    }
+  ],
+  "led-icon-option-asleep": [
+    {
+      "type": 0,
+      "value": "crwdns363070:0crwdne363070:0"
+    }
+  ],
+  "led-icon-option-butterfly": [
+    {
+      "type": 0,
+      "value": "crwdns363072:0crwdne363072:0"
+    }
+  ],
+  "led-icon-option-chessboard": [
+    {
+      "type": 0,
+      "value": "crwdns363074:0crwdne363074:0"
+    }
+  ],
+  "led-icon-option-confused": [
+    {
+      "type": 0,
+      "value": "crwdns363076:0crwdne363076:0"
+    }
+  ],
+  "led-icon-option-cow": [
+    {
+      "type": 0,
+      "value": "crwdns363078:0crwdne363078:0"
+    }
+  ],
+  "led-icon-option-diamond": [
+    {
+      "type": 0,
+      "value": "crwdns363080:0crwdne363080:0"
+    }
+  ],
+  "led-icon-option-duck": [
+    {
+      "type": 0,
+      "value": "crwdns363082:0crwdne363082:0"
+    }
+  ],
+  "led-icon-option-eighthnote": [
+    {
+      "type": 0,
+      "value": "crwdns363084:0crwdne363084:0"
+    }
+  ],
+  "led-icon-option-fabulous": [
+    {
+      "type": 0,
+      "value": "crwdns363086:0crwdne363086:0"
+    }
+  ],
+  "led-icon-option-ghost": [
+    {
+      "type": 0,
+      "value": "crwdns363088:0crwdne363088:0"
+    }
+  ],
+  "led-icon-option-giraffe": [
+    {
+      "type": 0,
+      "value": "crwdns363090:0crwdne363090:0"
+    }
+  ],
+  "led-icon-option-happy": [
+    {
+      "type": 0,
+      "value": "crwdns363092:0crwdne363092:0"
+    }
+  ],
+  "led-icon-option-heart": [
+    {
+      "type": 0,
+      "value": "crwdns363094:0crwdne363094:0"
+    }
+  ],
+  "led-icon-option-house": [
+    {
+      "type": 0,
+      "value": "crwdns363096:0crwdne363096:0"
+    }
+  ],
+  "led-icon-option-lefttriangle": [
+    {
+      "type": 0,
+      "value": "crwdns363098:0crwdne363098:0"
+    }
+  ],
+  "led-icon-option-meh": [
+    {
+      "type": 0,
+      "value": "crwdns363100:0crwdne363100:0"
+    }
+  ],
+  "led-icon-option-no": [
+    {
+      "type": 0,
+      "value": "crwdns363102:0crwdne363102:0"
+    }
+  ],
+  "led-icon-option-off": [
+    {
+      "type": 0,
+      "value": "crwdns363104:0crwdne363104:0"
+    }
+  ],
+  "led-icon-option-pitchfork": [
+    {
+      "type": 0,
+      "value": "crwdns363106:0crwdne363106:0"
+    }
+  ],
+  "led-icon-option-quarternote": [
+    {
+      "type": 0,
+      "value": "crwdns363108:0crwdne363108:0"
+    }
+  ],
+  "led-icon-option-rabbit": [
+    {
+      "type": 0,
+      "value": "crwdns363110:0crwdne363110:0"
+    }
+  ],
+  "led-icon-option-rollerskate": [
+    {
+      "type": 0,
+      "value": "crwdns363112:0crwdne363112:0"
+    }
+  ],
+  "led-icon-option-sad": [
+    {
+      "type": 0,
+      "value": "crwdns363114:0crwdne363114:0"
+    }
+  ],
+  "led-icon-option-scissors": [
+    {
+      "type": 0,
+      "value": "crwdns363116:0crwdne363116:0"
+    }
+  ],
+  "led-icon-option-silly": [
+    {
+      "type": 0,
+      "value": "crwdns363118:0crwdne363118:0"
+    }
+  ],
+  "led-icon-option-skull": [
+    {
+      "type": 0,
+      "value": "crwdns363120:0crwdne363120:0"
+    }
+  ],
+  "led-icon-option-smalldiamond": [
+    {
+      "type": 0,
+      "value": "crwdns363122:0crwdne363122:0"
+    }
+  ],
+  "led-icon-option-smallheart": [
+    {
+      "type": 0,
+      "value": "crwdns363124:0crwdne363124:0"
+    }
+  ],
+  "led-icon-option-smallsquare": [
+    {
+      "type": 0,
+      "value": "crwdns363126:0crwdne363126:0"
+    }
+  ],
+  "led-icon-option-snake": [
+    {
+      "type": 0,
+      "value": "crwdns363128:0crwdne363128:0"
+    }
+  ],
+  "led-icon-option-square": [
+    {
+      "type": 0,
+      "value": "crwdns363130:0crwdne363130:0"
+    }
+  ],
+  "led-icon-option-stickfigure": [
+    {
+      "type": 0,
+      "value": "crwdns363132:0crwdne363132:0"
+    }
+  ],
+  "led-icon-option-surprised": [
+    {
+      "type": 0,
+      "value": "crwdns363134:0crwdne363134:0"
+    }
+  ],
+  "led-icon-option-sword": [
+    {
+      "type": 0,
+      "value": "crwdns363136:0crwdne363136:0"
+    }
+  ],
+  "led-icon-option-target": [
+    {
+      "type": 0,
+      "value": "crwdns363138:0crwdne363138:0"
+    }
+  ],
+  "led-icon-option-tortoise": [
+    {
+      "type": 0,
+      "value": "crwdns363140:0crwdne363140:0"
+    }
+  ],
+  "led-icon-option-triangle": [
+    {
+      "type": 0,
+      "value": "crwdns363142:0crwdne363142:0"
+    }
+  ],
+  "led-icon-option-tshirt": [
+    {
+      "type": 0,
+      "value": "crwdns363144:0crwdne363144:0"
+    }
+  ],
+  "led-icon-option-umbrella": [
+    {
+      "type": 0,
+      "value": "crwdns363146:0crwdne363146:0"
+    }
+  ],
+  "led-icon-option-yes": [
+    {
+      "type": 0,
+      "value": "crwdns363148:0crwdne363148:0"
+    }
+  ],
+  "live-data-graph": [
+    {
+      "type": 0,
+      "value": "crwdns363150:0crwdne363150:0"
+    }
+  ],
+  "live-graph": [
+    {
+      "type": 0,
+      "value": "crwdns363152:0crwdne363152:0"
+    }
+  ],
+  "live-graph-tooltip": [
+    {
+      "type": 0,
+      "value": "crwdns363154:0crwdne363154:0"
+    }
+  ],
+  "live-graph-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "crwdns363156:0crwdne363156:0"
+    }
+  ],
+  "loading": [
+    {
+      "type": 0,
+      "value": "crwdns363158:0crwdne363158:0"
+    }
+  ],
+  "main-menu": [
+    {
+      "type": 0,
+      "value": "crwdns363160:0crwdne363160:0"
+    }
+  ],
+  "makecode-back-alt": [
+    {
+      "type": 0,
+      "value": "crwdns363162:0crwdne363162:0"
+    }
+  ],
+  "makecode-block-alt-prefix": [
+    {
+      "type": 0,
+      "value": "crwdns363888:0crwdne363888:0"
+    }
+  ],
+  "makecode-block-show-icon": [
+    {
+      "type": 0,
+      "value": "crwdns363168:0crwdne363168:0"
+    }
+  ],
+  "makecode-load-error-dialog-body": [
+    {
+      "type": 0,
+      "value": "crwdns363172:0"
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363172:0"
+    }
+  ],
+  "makecode-load-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "crwdns363174:0crwdne363174:0"
+    }
+  ],
+  "microbit-not-connected": [
+    {
+      "type": 0,
+      "value": "crwdns363176:0crwdne363176:0"
+    }
+  ],
+  "ml.onStart|block": [
+    {
+      "type": 0,
+      "value": "crwdns363890:0$eventcrwdne363890:0"
+    }
+  ],
+  "more-edit-in-makecode-options": [
+    {
+      "type": 0,
+      "value": "crwdns363178:0crwdne363178:0"
+    }
+  ],
+  "name-action-hint": [
+    {
+      "type": 0,
+      "value": "crwdns363180:0crwdne363180:0"
+    }
+  ],
+  "name-project": [
+    {
+      "type": 0,
+      "value": "crwdns363182:0crwdne363182:0"
+    }
+  ],
+  "name-text": [
+    {
+      "type": 0,
+      "value": "crwdns363184:0crwdne363184:0"
+    }
+  ],
+  "name-used-when": [
+    {
+      "type": 0,
+      "value": "crwdns363186:0crwdne363186:0"
+    }
+  ],
+  "new-session-setup-description": [
+    {
+      "type": 0,
+      "value": "crwdns363188:0crwdne363188:0"
+    }
+  ],
+  "new-session-setup-title": [
+    {
+      "type": 0,
+      "value": "crwdns363190:0crwdne363190:0"
+    }
+  ],
+  "newpage-continue-session-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns363192:0crwdne363192:0"
+    }
+  ],
+  "newpage-continue-session-title": [
+    {
+      "type": 0,
+      "value": "crwdns363194:0crwdne363194:0"
+    }
+  ],
+  "newpage-last-session-date": [
+    {
+      "type": 0,
+      "value": "crwdns363196:0"
+    },
+    {
+      "type": 1,
+      "value": "date"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363196:0"
+    }
+  ],
+  "newpage-last-session-name": [
+    {
+      "type": 0,
+      "value": "crwdns363198:0"
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363198:0"
+    }
+  ],
+  "newpage-last-session-none": [
+    {
+      "type": 0,
+      "value": "crwdns363200:0crwdne363200:0"
+    }
+  ],
+  "newpage-last-session-title": [
+    {
+      "type": 0,
+      "value": "crwdns363202:0crwdne363202:0"
+    }
+  ],
+  "newpage-new-session-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns363204:0crwdne363204:0"
+    }
+  ],
+  "newpage-new-session-title": [
+    {
+      "type": 0,
+      "value": "crwdns363206:0crwdne363206:0"
+    }
+  ],
+  "newpage-section-one-title": [
+    {
+      "type": 0,
+      "value": "crwdns363208:0crwdne363208:0"
+    }
+  ],
+  "newpage-section-two-title": [
+    {
+      "type": 0,
+      "value": "crwdns363210:0crwdne363210:0"
+    }
+  ],
+  "newpage-title": [
+    {
+      "type": 0,
+      "value": "crwdns363212:0crwdne363212:0"
+    }
+  ],
+  "next-action": [
+    {
+      "type": 0,
+      "value": "crwdns363214:0crwdne363214:0"
+    }
+  ],
+  "no-data-samples": [
+    {
+      "type": 0,
+      "value": "crwdns363216:0crwdne363216:0"
+    }
+  ],
+  "not-create-ai-hex-import-dialog-content": [
+    {
+      "type": 0,
+      "value": "crwdns363218:0crwdne363218:0"
+    }
+  ],
+  "not-create-ai-hex-import-dialog-title": [
+    {
+      "type": 0,
+      "value": "crwdns363220:0crwdne363220:0"
+    }
+  ],
+  "not-found": [
+    {
+      "type": 0,
+      "value": "crwdns363222:0"
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363222:0"
+    }
+  ],
+  "not-found-title": [
+    {
+      "type": 0,
+      "value": "crwdns363224:0crwdne363224:0"
+    }
+  ],
+  "open-file-action": [
+    {
+      "type": 0,
+      "value": "crwdns363226:0crwdne363226:0"
+    }
+  ],
+  "open-file-dropped": [
+    {
+      "type": 0,
+      "value": "crwdns363228:0crwdne363228:0"
+    }
+  ],
+  "other-tabs-body1": [
+    {
+      "type": 0,
+      "value": "crwdns363230:0crwdne363230:0"
+    }
+  ],
+  "other-tabs-body2": [
+    {
+      "type": 0,
+      "value": "crwdns363232:0"
+    },
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363232:0"
+    }
+  ],
+  "other-tabs-heading": [
+    {
+      "type": 0,
+      "value": "crwdns363234:0crwdne363234:0"
+    }
+  ],
+  "privacy": [
+    {
+      "type": 0,
+      "value": "crwdns363236:0crwdne363236:0"
+    }
+  ],
+  "project-loaded": [
+    {
+      "type": 0,
+      "value": "crwdns363238:0crwdne363238:0"
+    }
+  ],
+  "project-name-not-empty": [
+    {
+      "type": 0,
+      "value": "crwdns363240:0crwdne363240:0"
+    }
+  ],
+  "radio-link-microbit": [
+    {
+      "type": 0,
+      "value": "crwdns363242:0crwdne363242:0"
+    }
+  ],
+  "radio-link-microbit-label": [
+    {
+      "type": 0,
+      "value": "crwdns363244:0crwdne363244:0"
+    }
+  ],
+  "recognition-point-label": [
+    {
+      "type": 0,
+      "value": "crwdns363246:0crwdne363246:0"
+    }
+  ],
+  "reconnect-action": [
+    {
+      "type": 0,
+      "value": "crwdns363248:0crwdne363248:0"
+    }
+  ],
+  "reconnect-failed-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "crwdns363250:0crwdne363250:0"
+    }
+  ],
+  "reconnect-failed-bluetooth1": [
+    {
+      "type": 0,
+      "value": "crwdns363252:0crwdne363252:0"
+    }
+  ],
+  "reconnect-failed-bridge-heading": [
+    {
+      "type": 0,
+      "value": "crwdns363254:0crwdne363254:0"
+    }
+  ],
+  "reconnect-failed-bridge1": [
+    {
+      "type": 0,
+      "value": "crwdns363256:0crwdne363256:0"
+    }
+  ],
+  "reconnect-failed-radio-heading": [
+    {
+      "type": 0,
+      "value": "crwdns363258:0crwdne363258:0"
+    }
+  ],
+  "reconnect-failed-remote-heading": [
+    {
+      "type": 0,
+      "value": "crwdns363260:0crwdne363260:0"
+    }
+  ],
+  "reconnect-failed-remote1": [
+    {
+      "type": 0,
+      "value": "crwdns363262:0crwdne363262:0"
+    }
+  ],
+  "reconnect-failed-subtitle": [
+    {
+      "type": 0,
+      "value": "crwdns363264:0crwdne363264:0"
+    }
+  ],
+  "reconnecting": [
+    {
+      "type": 0,
+      "value": "crwdns363266:0crwdne363266:0"
+    }
+  ],
+  "record-action": [
+    {
+      "type": 0,
+      "value": "crwdns363268:0crwdne363268:0"
+    }
+  ],
+  "record-action-aria": [
+    {
+      "type": 0,
+      "value": "crwdns363270:0"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363270:0"
+    }
+  ],
+  "record-hint": [
+    {
+      "type": 0,
+      "value": "crwdns363272:0crwdne363272:0"
+    }
+  ],
+  "record-hint-button-b": [
+    {
+      "type": 0,
+      "value": "crwdns363274:0crwdne363274:0"
+    }
+  ],
+  "record-samples": [
+    {
+      "type": 0,
+      "value": "crwdns363276:0"
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363276:0"
+    }
+  ],
+  "record-samples-help": [
+    {
+      "type": 0,
+      "value": "crwdns363278:0crwdne363278:0"
+    }
+  ],
+  "record-seconds": [
+    {
+      "type": 0,
+      "value": "crwdns363280:0"
+    },
+    {
+      "type": 1,
+      "value": "numSeconds"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363280:0"
+    }
+  ],
+  "record-seconds-help": [
+    {
+      "type": 0,
+      "value": "crwdns363282:0"
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363282:0"
+    }
+  ],
+  "recording": [
+    {
+      "type": 0,
+      "value": "crwdns363284:0crwdne363284:0"
+    }
+  ],
+  "recording-complete": [
+    {
+      "type": 0,
+      "value": "crwdns363286:0crwdne363286:0"
+    }
+  ],
+  "recording-data-for": [
+    {
+      "type": 0,
+      "value": "crwdns363288:0"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363288:0"
+    }
+  ],
+  "recording-data-for-numbered": [
+    {
+      "type": 0,
+      "value": "crwdns363290:0"
+    },
+    {
+      "type": 1,
+      "value": "sample"
+    },
+    {
+      "type": 0,
+      "value": "crwdnd363290:0"
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "crwdnd363290:0"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363290:0"
+    }
+  ],
+  "recording-fingerprint-label": [
+    {
+      "type": 0,
+      "value": "crwdns363292:0crwdne363292:0"
+    }
+  ],
+  "recording-graph-label": [
+    {
+      "type": 0,
+      "value": "crwdns363294:0crwdne363294:0"
+    }
+  ],
+  "recording-options-aria": [
+    {
+      "type": 0,
+      "value": "crwdns363296:0"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363296:0"
+    }
+  ],
+  "reload-action": [
+    {
+      "type": 0,
+      "value": "crwdns363298:0crwdne363298:0"
+    }
+  ],
+  "reset-to-default-action": [
+    {
+      "type": 0,
+      "value": "crwdns363300:0crwdne363300:0"
+    }
+  ],
+  "restore-defaults-action": [
+    {
+      "type": 0,
+      "value": "crwdns363302:0crwdne363302:0"
+    }
+  ],
+  "restore-defaults-confirm-action": [
+    {
+      "type": 0,
+      "value": "crwdns363304:0crwdne363304:0"
+    }
+  ],
+  "restore-defaults-confirm-body": [
+    {
+      "type": 0,
+      "value": "crwdns363306:0crwdne363306:0"
+    }
+  ],
+  "restore-defaults-confirm-heading": [
+    {
+      "type": 0,
+      "value": "crwdns363308:0crwdne363308:0"
+    }
+  ],
+  "restore-defaults-helper": [
+    {
+      "type": 0,
+      "value": "crwdns363310:0crwdne363310:0"
+    }
+  ],
+  "save-action": [
+    {
+      "type": 0,
+      "value": "crwdns363312:0crwdne363312:0"
+    }
+  ],
+  "save-hex-dialog-heading": [
+    {
+      "type": 0,
+      "value": "crwdns363314:0crwdne363314:0"
+    }
+  ],
+  "save-hex-dialog-message1": [
+    {
+      "type": 0,
+      "value": "crwdns363316:0"
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363316:0"
+    }
+  ],
+  "save-hex-dialog-message2": [
+    {
+      "type": 0,
+      "value": "crwdns363318:0crwdne363318:0"
+    }
+  ],
+  "saving-description": [
+    {
+      "type": 0,
+      "value": "crwdns363320:0crwdne363320:0"
+    }
+  ],
+  "saving-title": [
+    {
+      "type": 0,
+      "value": "crwdns363322:0crwdne363322:0"
+    }
+  ],
+  "saving-toast-title": [
+    {
+      "type": 0,
+      "value": "crwdns363324:0crwdne363324:0"
+    }
+  ],
+  "select-icon-action-aria": [
+    {
+      "type": 0,
+      "value": "crwdns363326:0"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363326:0"
+    }
+  ],
+  "select-icon-action-untitled-aria": [
+    {
+      "type": 0,
+      "value": "crwdns363328:0crwdne363328:0"
+    }
+  ],
+  "select-icon-option-action-aria": [
+    {
+      "type": 0,
+      "value": "crwdns363330:0"
+    },
+    {
+      "type": 1,
+      "value": "iconName"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363330:0"
+    }
+  ],
+  "settings": [
+    {
+      "type": 0,
+      "value": "crwdns363332:0crwdne363332:0"
+    }
+  ],
+  "settings-menu-action": [
+    {
+      "type": 0,
+      "value": "crwdns363334:0crwdne363334:0"
+    }
+  ],
+  "show-graphs-checkbox-label-text": [
+    {
+      "type": 0,
+      "value": "crwdns363336:0crwdne363336:0"
+    }
+  ],
+  "simple-ai-exercise-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "crwdns363338:0crwdne363338:0"
+    }
+  ],
+  "skip-tour-action": [
+    {
+      "type": 0,
+      "value": "crwdns363340:0crwdne363340:0"
+    }
+  ],
+  "software-versions": [
+    {
+      "type": 0,
+      "value": "crwdns363342:0crwdne363342:0"
+    }
+  ],
+  "start-session-action": [
+    {
+      "type": 0,
+      "value": "crwdns363344:0crwdne363344:0"
+    }
+  ],
+  "start-training-action": [
+    {
+      "type": 0,
+      "value": "crwdns363346:0crwdne363346:0"
+    }
+  ],
+  "steps-alt": [
+    {
+      "type": 0,
+      "value": "crwdns363348:0crwdne363348:0"
+    }
+  ],
+  "steps-code": [
+    {
+      "type": 0,
+      "value": "crwdns363350:0crwdne363350:0"
+    }
+  ],
+  "steps-collect-data": [
+    {
+      "type": 0,
+      "value": "crwdns363352:0crwdne363352:0"
+    }
+  ],
+  "steps-improve": [
+    {
+      "type": 0,
+      "value": "crwdns363354:0crwdne363354:0"
+    }
+  ],
+  "steps-test-model": [
+    {
+      "type": 0,
+      "value": "crwdns363356:0crwdne363356:0"
+    }
+  ],
+  "steps-train": [
+    {
+      "type": 0,
+      "value": "crwdns363358:0crwdne363358:0"
+    }
+  ],
+  "stop-recording-action": [
+    {
+      "type": 0,
+      "value": "crwdns363360:0crwdne363360:0"
+    }
+  ],
+  "support-request": [
+    {
+      "type": 0,
+      "value": "crwdns363362:0crwdne363362:0"
+    }
+  ],
+  "terms": [
+    {
+      "type": 0,
+      "value": "crwdns363364:0crwdne363364:0"
+    }
+  ],
+  "testing-model-actions-region": [
+    {
+      "type": 0,
+      "value": "crwdns363366:0crwdne363366:0"
+    }
+  ],
+  "testing-model-title": [
+    {
+      "type": 0,
+      "value": "crwdns363368:0crwdne363368:0"
+    }
+  ],
+  "tour-action": [
+    {
+      "type": 0,
+      "value": "crwdns363370:0crwdne363370:0"
+    }
+  ],
+  "tour-collect-addActions-content": [
+    {
+      "type": 0,
+      "value": "crwdns363372:0crwdne363372:0"
+    }
+  ],
+  "tour-collect-addActions-title": [
+    {
+      "type": 0,
+      "value": "crwdns363374:0crwdne363374:0"
+    }
+  ],
+  "tour-collect-afterFirst-content": [
+    {
+      "type": 0,
+      "value": "crwdns363376:0crwdne363376:0"
+    }
+  ],
+  "tour-collect-afterFirst-title": [
+    {
+      "type": 0,
+      "value": "crwdns363378:0recordingCount="
+    },
+    {
+      "type": 1,
+      "value": "recordingCount"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363378:0"
+    }
+  ],
+  "tour-collect-collectMore-explanation-content": [
+    {
+      "type": 0,
+      "value": "crwdns363380:0crwdne363380:0"
+    }
+  ],
+  "tour-collect-collectMore-hasRecordings-content": [
+    {
+      "type": 0,
+      "value": "crwdns363382:0crwdne363382:0"
+    }
+  ],
+  "tour-collect-collectMore-noRecordings-content": [
+    {
+      "type": 0,
+      "value": "crwdns363384:0crwdne363384:0"
+    }
+  ],
+  "tour-collect-collectMore-title": [
+    {
+      "type": 0,
+      "value": "crwdns363386:0crwdne363386:0"
+    }
+  ],
+  "tour-collect-trainModel-content": [
+    {
+      "type": 0,
+      "value": "crwdns363388:0crwdne363388:0"
+    }
+  ],
+  "tour-dataSamples-actions-common-content": [
+    {
+      "type": 0,
+      "value": "crwdns363390:0crwdne363390:0"
+    }
+  ],
+  "tour-dataSamples-actions-noRecordings-content": [
+    {
+      "type": 0,
+      "value": "crwdns363392:0crwdne363392:0"
+    }
+  ],
+  "tour-dataSamples-connected-content": [
+    {
+      "type": 0,
+      "value": "crwdns363394:0crwdne363394:0"
+    }
+  ],
+  "tour-dataSamples-connected-title": [
+    {
+      "type": 0,
+      "value": "crwdns363396:0crwdne363396:0"
+    }
+  ],
+  "tour-dataSamples-liveGraph-content": [
+    {
+      "type": 0,
+      "value": "crwdns363398:0crwdne363398:0"
+    }
+  ],
+  "tour-makecode-intro-content1": [
+    {
+      "type": 0,
+      "value": "crwdns363400:0crwdne363400:0"
+    }
+  ],
+  "tour-makecode-intro-content2": [
+    {
+      "type": 0,
+      "value": "crwdns363402:0crwdne363402:0"
+    }
+  ],
+  "tour-makecode-intro-content3": [
+    {
+      "type": 0,
+      "value": "crwdns363404:0crwdne363404:0"
+    }
+  ],
+  "tour-makecode-intro-title": [
+    {
+      "type": 0,
+      "value": "crwdns363406:0crwdne363406:0"
+    }
+  ],
+  "tour-trainModel-afterTrain-alreadyConnected-title": [
+    {
+      "type": 0,
+      "value": "crwdns363408:0crwdne363408:0"
+    }
+  ],
+  "tour-trainModel-afterTrain-content": [
+    {
+      "type": 0,
+      "value": "crwdns363410:0crwdne363410:0"
+    }
+  ],
+  "tour-trainModel-afterTrain-delayedUntilConnected-title": [
+    {
+      "type": 0,
+      "value": "crwdns363412:0crwdne363412:0"
+    }
+  ],
+  "tour-trainModel-certaintyRecognition-content": [
+    {
+      "type": 0,
+      "value": "crwdns363414:0crwdne363414:0"
+    }
+  ],
+  "tour-trainModel-certaintyRecognition-title": [
+    {
+      "type": 0,
+      "value": "crwdns363416:0crwdne363416:0"
+    }
+  ],
+  "tour-trainModel-editInMakeCode-content": [
+    {
+      "type": 0,
+      "value": "crwdns363418:0crwdne363418:0"
+    }
+  ],
+  "tour-trainModel-estimatedAction-content": [
+    {
+      "type": 0,
+      "value": "crwdns363420:0crwdne363420:0"
+    }
+  ],
+  "tour-trainModel-makeCodeBlocks-content": [
+    {
+      "type": 0,
+      "value": "crwdns363422:0crwdne363422:0"
+    }
+  ],
+  "tour-trainModel-makeCodeBlocks-title": [
+    {
+      "type": 0,
+      "value": "crwdns363424:0crwdne363424:0"
+    }
+  ],
+  "train-description": [
+    {
+      "type": 0,
+      "value": "crwdns363426:0"
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "crwdne363426:0"
+    }
+  ],
+  "train-error-body": [
+    {
+      "type": 0,
+      "value": "crwdns363428:0crwdne363428:0"
+    }
+  ],
+  "train-error-header": [
+    {
+      "type": 0,
+      "value": "crwdns363430:0crwdne363430:0"
+    }
+  ],
+  "train-error-todo": [
+    {
+      "type": 0,
+      "value": "crwdns363432:0crwdne363432:0"
+    }
+  ],
+  "train-header": [
+    {
+      "type": 0,
+      "value": "crwdns363434:0crwdne363434:0"
+    }
+  ],
+  "train-model": [
+    {
+      "type": 0,
+      "value": "crwdns363436:0crwdne363436:0"
+    }
+  ],
+  "training-model": [
+    {
+      "type": 0,
+      "value": "crwdns363438:0crwdne363438:0"
+    }
+  ],
+  "transfer-hex-alt": [
+    {
+      "type": 0,
+      "value": "crwdns363440:0crwdne363440:0"
+    }
+  ],
+  "transfer-hex-heading": [
+    {
+      "type": 0,
+      "value": "crwdns363442:0crwdne363442:0"
+    }
+  ],
+  "transfer-hex-manual-download": [
+    {
+      "type": 0,
+      "value": "crwdns363444:0crwdne363444:0"
+    }
+  ],
+  "transfer-hex-message": [
+    {
+      "type": 0,
+      "value": "crwdns363446:0crwdne363446:0"
+    }
+  ],
+  "try-again-action": [
+    {
+      "type": 0,
+      "value": "crwdns363448:0crwdne363448:0"
+    }
+  ],
+  "unknown": [
+    {
+      "type": 0,
+      "value": "crwdns363450:0crwdne363450:0"
+    }
+  ],
+  "unplug-radio-link-microbit-description": [
+    {
+      "type": 0,
+      "value": "crwdns363452:0crwdne363452:0"
+    }
+  ],
+  "unplug-radio-link-microbit-label": [
+    {
+      "type": 0,
+      "value": "crwdns363454:0crwdne363454:0"
+    }
+  ],
+  "unplug-radio-link-microbit-title": [
+    {
+      "type": 0,
+      "value": "crwdns363456:0crwdne363456:0"
+    }
+  ],
+  "unsupported-device-explain": [
+    {
+      "type": 0,
+      "value": "crwdns363458:0crwdne363458:0"
+    }
+  ],
+  "unsupported-device-header": [
+    {
+      "type": 0,
+      "value": "crwdns363460:0crwdne363460:0"
+    }
+  ],
+  "unsupported-device-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "crwdns363462:0crwdne363462:0"
+    }
+  ],
+  "unsupported-device-without-bluetooth": [
+    {
+      "type": 0,
+      "value": "crwdns363464:0crwdne363464:0"
+    }
+  ],
+  "user-guide": [
+    {
+      "type": 0,
+      "value": "crwdns363466:0crwdne363466:0"
+    }
+  ],
+  "webusb-retry-no-select": [
+    {
+      "type": 0,
+      "value": "crwdns363468:0crwdne363468:0"
+    }
+  ],
+  "webusb-retry-replug1": [
+    {
+      "type": 0,
+      "value": "crwdns363470:0crwdne363470:0"
+    }
+  ],
+  "webusb-retry-replug2": [
+    {
+      "type": 0,
+      "value": "crwdns363472:0crwdne363472:0"
+    }
+  ],
+  "webusb-retry-replug3": [
+    {
+      "type": 0,
+      "value": "crwdns363474:0crwdne363474:0"
+    }
+  ],
+  "webusb-retry-replug4": [
+    {
+      "type": 0,
+      "value": "crwdns363476:0crwdne363476:0"
+    }
+  ]
+}
