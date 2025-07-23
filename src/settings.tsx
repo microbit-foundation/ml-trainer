@@ -105,6 +105,13 @@ export const allLanguages: Language[] = [
     makeCode: true,
   },
   {
+    id: "gn",
+    name: "Avañe'ẽ",
+    enName: "Guarani",
+    ui: false,
+    makeCode: true,
+  },
+  {
     id: "he",
     name: "עברית",
     enName: "Hebrew",
@@ -234,6 +241,13 @@ export const allLanguages: Language[] = [
     id: "uk",
     name: "Українська",
     enName: "Ukrainian",
+    ui: false,
+    makeCode: true,
+  },
+  {
+    id: "vi",
+    name: "Tiếng việt",
+    enName: "Vietnamese",
     ui: false,
     makeCode: true,
   },
