@@ -1534,25 +1534,25 @@
   "language-support-checked": [
     {
       "type": 0,
-      "value": "Supported"
+      "value": "Compatible"
     }
   ],
   "language-support-unchecked": [
     {
       "type": 0,
-      "value": "Unsupported"
+      "value": "Incompatible"
     }
   ],
   "language-supported-for": [
     {
       "type": 0,
-      "value": "Translations supported for:"
+      "value": "Traduccions compatibles per a:"
     }
   ],
   "language-toast-title": [
     {
       "type": 0,
-      "value": "Language not fully supported"
+      "value": "L'idioma no està disponible totalment"
     }
   ],
   "learn-about-firewall-requirements-action": [

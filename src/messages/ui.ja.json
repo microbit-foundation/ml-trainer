@@ -1528,25 +1528,25 @@
   "language-support-checked": [
     {
       "type": 0,
-      "value": "Supported"
+      "value": "対応"
     }
   ],
   "language-support-unchecked": [
     {
       "type": 0,
-      "value": "Unsupported"
+      "value": "非対応"
     }
   ],
   "language-supported-for": [
     {
       "type": 0,
-      "value": "Translations supported for:"
+      "value": "サポートされている翻訳:"
     }
   ],
   "language-toast-title": [
     {
       "type": 0,
-      "value": "Language not fully supported"
+      "value": "言語が完全にサポートされていません"
     }
   ],
   "learn-about-firewall-requirements-action": [

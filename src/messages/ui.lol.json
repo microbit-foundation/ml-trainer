@@ -1430,37 +1430,37 @@
   "language-fully-supported-heading": [
     {
       "type": 0,
-      "value": "Fully supported"
+      "value": "crwdns366275:0crwdne366275:0"
     }
   ],
   "language-partially-supported-heading": [
     {
       "type": 0,
-      "value": "Partially supported"
+      "value": "crwdns366277:0crwdne366277:0"
     }
   ],
   "language-support-checked": [
     {
       "type": 0,
-      "value": "Supported"
+      "value": "crwdns366279:0crwdne366279:0"
     }
   ],
   "language-support-unchecked": [
     {
       "type": 0,
-      "value": "Unsupported"
+      "value": "crwdns366281:0crwdne366281:0"
     }
   ],
   "language-supported-for": [
     {
       "type": 0,
-      "value": "Translations supported for:"
+      "value": "crwdns366283:0crwdne366283:0"
     }
   ],
   "language-toast-title": [
     {
       "type": 0,
-      "value": "Language not fully supported"
+      "value": "crwdns366285:0crwdne366285:0"
     }
   ],
   "learn-about-firewall-requirements-action": [

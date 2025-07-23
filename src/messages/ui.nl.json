@@ -1548,25 +1548,25 @@
   "language-support-checked": [
     {
       "type": 0,
-      "value": "Supported"
+      "value": "Ondersteund"
     }
   ],
   "language-support-unchecked": [
     {
       "type": 0,
-      "value": "Unsupported"
+      "value": "Niet ondersteund"
     }
   ],
   "language-supported-for": [
     {
       "type": 0,
-      "value": "Translations supported for:"
+      "value": "Vertalingen ondersteund voor:"
     }
   ],
   "language-toast-title": [
     {
       "type": 0,
-      "value": "Language not fully supported"
+      "value": "Taal niet volledig ondersteund"
     }
   ],
   "learn-about-firewall-requirements-action": [

@@ -872,27 +872,27 @@
     "description": "Language option text"
   },
   "language-fully-supported-heading": {
-    "defaultMessage": "Fully supported",
+    "defaultMessage": "crwdns366275:0crwdne366275:0",
     "description": "Fully supported languages heading text"
   },
   "language-partially-supported-heading": {
-    "defaultMessage": "Partially supported",
+    "defaultMessage": "crwdns366277:0crwdne366277:0",
     "description": "Partially supported languages heading text"
   },
   "language-support-checked": {
-    "defaultMessage": "Supported",
+    "defaultMessage": "crwdns366279:0crwdne366279:0",
     "description": "Aria label for ticked checkbox for language support"
   },
   "language-support-unchecked": {
-    "defaultMessage": "Unsupported",
+    "defaultMessage": "crwdns366281:0crwdne366281:0",
     "description": "Aria label for unticked checkbox for language support"
   },
   "language-supported-for": {
-    "defaultMessage": "Translations supported for:",
+    "defaultMessage": "crwdns366283:0crwdne366283:0",
     "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
   },
   "language-toast-title": {
-    "defaultMessage": "Language not fully supported",
+    "defaultMessage": "crwdns366285:0crwdne366285:0",
     "description": "Language support toast notification title"
   },
   "learn-about-firewall-requirements-action": {

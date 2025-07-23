@@ -1536,25 +1536,25 @@
   "language-support-checked": [
     {
       "type": 0,
-      "value": "Supported"
+      "value": "지원됨"
     }
   ],
   "language-support-unchecked": [
     {
       "type": 0,
-      "value": "Unsupported"
+      "value": "지원되지 않음"
     }
   ],
   "language-supported-for": [
     {
       "type": 0,
-      "value": "Translations supported for:"
+      "value": "지원되는 번역:"
     }
   ],
   "language-toast-title": [
     {
       "type": 0,
-      "value": "Language not fully supported"
+      "value": "언어가 완전히 지원되지 않습니다"
     }
   ],
   "learn-about-firewall-requirements-action": [

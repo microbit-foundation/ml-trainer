@@ -880,19 +880,19 @@
     "description": "Partially supported languages heading text"
   },
   "language-support-checked": {
-    "defaultMessage": "Supported",
+    "defaultMessage": "対応",
     "description": "Aria label for ticked checkbox for language support"
   },
   "language-support-unchecked": {
-    "defaultMessage": "Unsupported",
+    "defaultMessage": "非対応",
     "description": "Aria label for unticked checkbox for language support"
   },
   "language-supported-for": {
-    "defaultMessage": "Translations supported for:",
-    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode,  micro:bit CreateAI UI itself)"
+    "defaultMessage": "サポートされている翻訳:",
+    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
   },
   "language-toast-title": {
-    "defaultMessage": "Language not fully supported",
+    "defaultMessage": "言語が完全にサポートされていません",
     "description": "Language support toast notification title"
   },
   "learn-about-firewall-requirements-action": {
