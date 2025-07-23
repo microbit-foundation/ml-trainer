@@ -8,8 +8,8 @@
  * 1. Path to CreateAI tool translation strings directory.
  * 2. Path to machine-learning-strings.json translation strings directory.
  *
- * To only update MakeCode block translations, pass path to
- * machine-learning-strings.json translation strings directory as an argument.
+ * To only update CreateAI tool translations, pass path to CreateAI tool 
+ * translation strings directory as an argument.
  *
  * Manually run `npm run i18n:compile` after.
  *
@@ -55,7 +55,7 @@ if (args.length === 0 || args.length > 2) {
 }
 
 const [createAiTranslationsFilepath, mlTranslationsFilepath] =
-  args.length === 1 ? [null, args[0]] : args;
+  args.length === 1 ? [args[0], null] : args;
 
 languages.forEach((language) => {
   const lowerLang = language.toLowerCase();
@@ -76,10 +76,14 @@ languages.forEach((language) => {
     : `${createAiTranslationsFilepath}/${language}/ui.en.json`;
   const langMessages = getFileJSONContent(srcLangFilepath);
 
-  const mlFilepath = `${mlTranslationsFilepath}/${language}/machine-learning-strings.json`;
-  const mlStrings = getFileJSONContent(mlFilepath);
+  // Update machine learning strings.
+  let messagesToAdd = {}
+  if (mlTranslationsFilepath) {
+    const mlFilepath = `${mlTranslationsFilepath}/${language}/machine-learning-strings.json`;
+    const mlStrings = getFileJSONContent(mlFilepath);
+    messagesToAdd = getMessagesToAdd(mlStrings, langMessages);
+  }
 
-  const messagesToAdd = getMessagesToAdd(mlStrings, langMessages);
   fs.writeFileSync(
     outputFilepath,
     JSON.stringify({ ...langMessages, ...messagesToAdd })
