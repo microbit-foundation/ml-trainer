@@ -66,7 +66,7 @@ export const LanguageDialog = ({
       isOpen={isOpen}
       onClose={onClose}
       size="4xl"
-      scrollBehavior="inside"
+      scrollBehavior="outside"
       finalFocusRef={finalFocusRef}
     >
       <ModalOverlay>
@@ -75,15 +75,47 @@ export const LanguageDialog = ({
             <FormattedMessage id="language" />
           </ModalHeader>
           <ModalBody>
-            <VStack spacing={8} width="100%">
+            <VStack spacing={3} width="100%">
+              <Text
+                as="h2"
+                fontSize="md"
+                fontWeight="bold"
+                textAlign="left"
+                width="100%"
+              >
+                <FormattedMessage id="language-fully-supported-heading" />
+              </Text>
               <SimpleGrid width="100%" columns={[1, 2, 3]} spacing={4}>
-                {allLanguages.map((language) => (
-                  <LanguageCard
-                    key={language.id}
-                    language={language}
-                    onChooseLanguage={handleChooseLanguage}
-                  />
-                ))}
+                {allLanguages
+                  .filter((l) => l.makeCode && l.ui)
+                  .map((language) => (
+                    <LanguageCard
+                      key={language.id}
+                      language={language}
+                      onChooseLanguage={handleChooseLanguage}
+                    />
+                  ))}
+              </SimpleGrid>
+              <Text
+                marginTop="1em"
+                as="h2"
+                fontSize="md"
+                fontWeight="bold"
+                textAlign="left"
+                width="100%"
+              >
+                <FormattedMessage id="language-partially-supported-heading" />
+              </Text>
+              <SimpleGrid width="100%" columns={[1, 2, 3]} spacing={4}>
+                {allLanguages
+                  .filter((l) => !(l.makeCode && l.ui))
+                  .map((language) => (
+                    <LanguageCard
+                      key={language.id}
+                      language={language}
+                      onChooseLanguage={handleChooseLanguage}
+                    />
+                  ))}
               </SimpleGrid>
             </VStack>
           </ModalBody>

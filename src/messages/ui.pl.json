@@ -1537,6 +1537,18 @@
       "value": "Język"
     }
   ],
+  "language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Fully-supported"
+    }
+  ],
+  "language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Partially-supported"
+    }
+  ],
   "language-support-checked": [
     {
       "type": 0,

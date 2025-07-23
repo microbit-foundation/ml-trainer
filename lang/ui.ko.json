@@ -871,6 +871,14 @@
     "defaultMessage": "언어 선택",
     "description": "Language option text"
   },
+  "language-fully-supported-heading": {
+    "defaultMessage": "Fully-supported",
+    "description": "Fully-supported languages heading text"
+  },
+  "language-partially-supported-heading": {
+    "defaultMessage": "Partially-supported",
+    "description": "Partially-supported languages heading text"
+  },
   "language-support-checked": {
     "defaultMessage": "Supported",
     "description": "Aria label for ticked checkbox for language support"
