@@ -39,6 +39,12 @@
       "value": "micro:bit pokazujący oś X przechodzącą z przodu, oś Y idącą w dół i w górę, oś Z idącą do tyłu i do przodu"
     }
   ],
+  "accessibility": [
+    {
+      "type": 0,
+      "value": "Dostępność"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
@@ -1292,7 +1298,7 @@
   "graph-preview": [
     {
       "type": 0,
-      "value": "Graph preview"
+      "value": "Podgląd wykresu"
     }
   ],
   "help-label": [
@@ -1529,6 +1535,42 @@
     {
       "type": 0,
       "value": "Język"
+    }
+  ],
+  "language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Fully supported"
+    }
+  ],
+  "language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Partially supported"
+    }
+  ],
+  "language-support-checked": [
+    {
+      "type": 0,
+      "value": "Wspierane"
+    }
+  ],
+  "language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "Niewspierany"
+    }
+  ],
+  "language-supported-for": [
+    {
+      "type": 0,
+      "value": "Tłumaczenia wspierane dla:"
+    }
+  ],
+  "language-toast-title": [
+    {
+      "type": 0,
+      "value": "Język nie w pełni obsługiwany"
     }
   ],
   "learn-about-firewall-requirements-action": [

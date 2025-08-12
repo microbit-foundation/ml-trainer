@@ -39,6 +39,12 @@
       "value": "micro:bit showing X axis going across the front, Y axis going down and up, Z axis going back to front"
     }
   ],
+  "accessibility": [
+    {
+      "type": 0,
+      "value": "Accessibility"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
@@ -1525,6 +1531,42 @@
     {
       "type": 0,
       "value": "Language"
+    }
+  ],
+  "language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Fully supported"
+    }
+  ],
+  "language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Partially supported"
+    }
+  ],
+  "language-support-checked": [
+    {
+      "type": 0,
+      "value": "Supported"
+    }
+  ],
+  "language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "Unsupported"
+    }
+  ],
+  "language-supported-for": [
+    {
+      "type": 0,
+      "value": "Translations supported for:"
+    }
+  ],
+  "language-toast-title": [
+    {
+      "type": 0,
+      "value": "Language not fully supported"
     }
   ],
   "learn-about-firewall-requirements-action": [

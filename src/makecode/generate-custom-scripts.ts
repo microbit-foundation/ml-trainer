@@ -86,6 +86,7 @@ ${createEventListeners(actionNames)}
   };
 
   simulatorSendData();
+  startRunning();
 }
 
 // Auto-generated. Do not edit. Really.

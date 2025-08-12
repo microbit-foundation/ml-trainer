@@ -19,6 +19,10 @@
     "defaultMessage": "micro:bitでは、X軸が前面を横切る方向、Y軸が下から上方向、Z軸が裏面から前面の方向を示しています。",
     "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
   },
+  "accessibility": {
+    "defaultMessage": "アクセシビリティ",
+    "description": "Menu item for link to accessibility site"
+  },
   "action-label": {
     "defaultMessage": "アクション",
     "description": "Label for a movement-related action, e.g. clapping"
@@ -52,7 +56,7 @@
     "description": "Button to add an action (movement related, e.g. clapping)"
   },
   "ai-activity-timer-resource-title": {
-    "defaultMessage": "AIアクティビティタイマー",
+    "defaultMessage": "AI活動タイマー",
     "description": "Home page resource card title"
   },
   "ai-storytelling-friend-resource-title": {
@@ -660,15 +664,15 @@
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-rms-x-tooltip": {
-    "defaultMessage": "すべての X 方向データポイントの実効値",
+    "defaultMessage": "すべての X 方向データポイントの二乗平均平方根値",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-rms-y-tooltip": {
-    "defaultMessage": "すべての Y 方向データポイントの実効値",
+    "defaultMessage": "すべての Y 方向データポイントの二乗平均平方根値",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-rms-z-tooltip": {
-    "defaultMessage": "すべての Z 方向データポイントの実効値",
+    "defaultMessage": "すべての Z 方向データポイントの二乗平均平方根値",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-std-x-tooltip": {
@@ -756,7 +760,7 @@
     "description": "Graph line weight option"
   },
   "graph-preview": {
-    "defaultMessage": "Graph preview",
+    "defaultMessage": "グラフのプレビュー",
     "description": "Label for preview of the graph shown in the settings dialog"
   },
   "help-label": {
@@ -816,7 +820,7 @@
     "description": "Home page section heading"
   },
   "homepage-subtitle": {
-    "defaultMessage": "動作と機械学習を使って BBC micro:bit のAIを作る",
+    "defaultMessage": "動作と機械学習を使ってBBC micro:bitでAIを作ります。",
     "description": "Home page subtitle"
   },
   "homepage-video-alt": {
@@ -852,11 +856,11 @@
     "description": "Incompatible device dialog heading"
   },
   "incompatible-device-subtitle": {
-    "defaultMessage": "micro:bit V1を使っていますが、機械学習プロジェクトでは micro:bit V2 に載っている、より速いプロセッサが必要となります。  <link> micro:bitのバージョンについてもっと調べる。 </link>",
+    "defaultMessage": "micro:bit V1を使っていますが、機械学習プロジェクトでは micro:bit V2 に載っている、より速いプロセッサが必要となります。 <link>micro:bitのバージョンについてもっと調べる。</link>",
     "description": "Incompatible device dialog subtitle"
   },
   "insufficient-data-body": {
-    "defaultMessage": "モデルを訓練するには、少なくとも 2 個のアクションと、それぞれのアクションに対して 3 個のデータサンプルが必要です。",
+    "defaultMessage": "モデルをトレーニングするには、少なくとも 2 個のアクションと、それぞれのアクションに対して 3 個のデータサンプルが必要です。",
     "description": "Insufficient data modal content"
   },
   "insufficient-data-title": {
@@ -866,6 +870,30 @@
   "language": {
     "defaultMessage": "言語",
     "description": "Language option text"
+  },
+  "language-fully-supported-heading": {
+    "defaultMessage": "Fully supported",
+    "description": "Fully supported languages heading text"
+  },
+  "language-partially-supported-heading": {
+    "defaultMessage": "Partially supported",
+    "description": "Partially supported languages heading text"
+  },
+  "language-support-checked": {
+    "defaultMessage": "対応",
+    "description": "Aria label for ticked checkbox for language support"
+  },
+  "language-support-unchecked": {
+    "defaultMessage": "非対応",
+    "description": "Aria label for unticked checkbox for language support"
+  },
+  "language-supported-for": {
+    "defaultMessage": "サポートされている翻訳:",
+    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
+  },
+  "language-toast-title": {
+    "defaultMessage": "言語が完全にサポートされていません",
+    "description": "Language support toast notification title"
   },
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "ファイアウォール要件について調べる",
@@ -1072,11 +1100,11 @@
     "description": "Makecode block text. The translation should match MakeCode translations."
   },
   "makecode-load-error-dialog-body": {
-    "defaultMessage": "{appNameFull} は MakeCode のロードに失敗しました。インターネット接続をチェックし、ページを更新してからもう一度お試しください。",
+    "defaultMessage": "{appNameFull} は MakeCode の読み込みに失敗しました。インターネット接続を確認し、ページを更新してからもう一度お試しください。",
     "description": "Content of MakeCode load error dialog"
   },
   "makecode-load-error-dialog-title": {
-    "defaultMessage": "Microsoft MakeCode をロードできませんでした",
+    "defaultMessage": "Microsoft MakeCode を読み込めませんでした",
     "description": "Title of MakeCode load error dialog"
   },
   "microbit-not-connected": {
@@ -1208,7 +1236,7 @@
     "description": "Link to view privacy policy"
   },
   "project-loaded": {
-    "defaultMessage": "プロジェクトがロードされました",
+    "defaultMessage": "プロジェクトが読み込まれました",
     "description": "Toast when a new project is loaded"
   },
   "project-name-not-empty": {
@@ -1268,7 +1296,7 @@
     "description": "Shown while reconnecting"
   },
   "record-action": {
-    "defaultMessage": "録画",
+    "defaultMessage": "記録",
     "description": "Record button text"
   },
   "record-action-aria": {
@@ -1312,7 +1340,7 @@
     "description": "Text in recording dialog"
   },
   "recording-data-for-numbered": {
-    "defaultMessage": "アクション「{action}」の {numSamples} 個の記録 {sample} ",
+    "defaultMessage": "アクション「{action}」の {numSamples} 個の {sample} を記録",
     "description": "Text in recording dialog"
   },
   "recording-fingerprint-label": {
@@ -1476,7 +1504,7 @@
     "description": "Button label that starts a tour of the app's features"
   },
   "tour-collect-addActions-content": {
-    "defaultMessage": "他のアクションとその名前を決めてください。モデルを訓練するには、少なくとも2つのアクションと3つのデータサンプルが必要です。データサンプルはPCにのみ保存され、他の人に送信されることはありません。",
+    "defaultMessage": "他のアクションとその名前を決めてください。モデルをトレーニングするには、少なくとも2個のアクションと3個のデータサンプルが必要です。データサンプルはPCにのみ保存され、他の人に送信されることはありません。",
     "description": "Tour step description"
   },
   "tour-collect-addActions-title": {
@@ -1548,7 +1576,7 @@
     "description": "Tour step title"
   },
   "tour-trainModel-afterTrain-alreadyConnected-title": {
-    "defaultMessage": "MLモデルを訓練しました！",
+    "defaultMessage": "MLモデルをトレーニングしました！",
     "description": "Tour step title"
   },
   "tour-trainModel-afterTrain-content": {
@@ -1588,11 +1616,11 @@
     "description": "Explanation on training dialog"
   },
   "train-error-body": {
-    "defaultMessage": "訓練の結果、モデルは使用可能になりませんでした。その理由は、訓練に使われたデータにある可能性が高いです。 異なるアクションのデータサンプルがあまりにも類似している場合、訓練プロセスに問題が生じる可能性があります。",
+    "defaultMessage": "トレーニングの結果、モデルは使用可能になりませんでした。その理由は、トレーニングに使われたデータにある可能性が高いです。 異なるアクションのデータサンプルがあまりにも類似している場合、トレーニングの処理に問題が生じる可能性があります。",
     "description": "Training error dialog"
   },
   "train-error-header": {
-    "defaultMessage": "訓練が失敗しました",
+    "defaultMessage": "トレーニングが失敗しました",
     "description": "Training error dialog"
   },
   "train-error-todo": {
@@ -1600,15 +1628,15 @@
     "description": "Training error dialog"
   },
   "train-header": {
-    "defaultMessage": "モデルの訓練",
+    "defaultMessage": "モデルのトレーニング",
     "description": "Training dialog"
   },
   "train-model": {
-    "defaultMessage": "モデルの訓練",
+    "defaultMessage": "モデルのトレーニング",
     "description": "Action to train a model"
   },
   "training-model": {
-    "defaultMessage": "モデルを訓練中...",
+    "defaultMessage": "モデルをトレーニング中...",
     "description": "Progress title"
   },
   "transfer-hex-alt": {

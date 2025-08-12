@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  MicrobitWebUSBConnection,
+  createWebUSBConnection,
   ConnectionStatus as UsbConnectionStatus,
 } from "@microbit/microbit-connection";
 import { useMemo } from "react";
@@ -151,7 +151,7 @@ export class DownloadProjectActions {
       // Use a temporary USB connection to flash the MakeCode program.
       // Disconnect the input micro:bit if the user selects this device from the
       // list by mistake.
-      const temporaryUsbConnection = new MicrobitWebUSBConnection();
+      const temporaryUsbConnection = createWebUSBConnection();
       const connectedDevice = this.connectActions.getUsbDevice();
       if (connectedDevice) {
         temporaryUsbConnection.setRequestDeviceExclusionFilters([

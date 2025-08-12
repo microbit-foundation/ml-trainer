@@ -19,6 +19,10 @@
     "defaultMessage": "micro:bit은 X축을 앞으로 이동, Y축을 위 아래로 이동, Z축을 뒤에서 앞으로 표시합니다.",
     "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
   },
+  "accessibility": {
+    "defaultMessage": "접근성",
+    "description": "Menu item for link to accessibility site"
+  },
   "action-label": {
     "defaultMessage": "행동",
     "description": "Label for a movement-related action, e.g. clapping"
@@ -116,7 +120,7 @@
     "description": "Title for error message relating to project loading"
   },
   "code-label": {
-    "defaultMessage": "Code",
+    "defaultMessage": "코드",
     "description": "Code column heading"
   },
   "code-label-tooltip-aria": {
@@ -480,7 +484,7 @@
     "description": "Confirmation dialog text"
   },
   "delete-recording-aria": {
-    "defaultMessage": "\"{action}\" 행동에 대한   샘플 {numSamples}개 중 {sample}개의 기록 샘플 삭제",
+    "defaultMessage": "\"{action}\" 행동에 대한 {numSamples}개의 기록 {sample} 삭제",
     "description": "Aria label for data sample delete action"
   },
   "disconnect-action": {
@@ -756,7 +760,7 @@
     "description": "Graph line weight option"
   },
   "graph-preview": {
-    "defaultMessage": "Graph preview",
+    "defaultMessage": "그래프 미리보기",
     "description": "Label for preview of the graph shown in the settings dialog"
   },
   "help-label": {
@@ -866,6 +870,30 @@
   "language": {
     "defaultMessage": "언어 선택",
     "description": "Language option text"
+  },
+  "language-fully-supported-heading": {
+    "defaultMessage": "Fully supported",
+    "description": "Fully supported languages heading text"
+  },
+  "language-partially-supported-heading": {
+    "defaultMessage": "Partially supported",
+    "description": "Partially supported languages heading text"
+  },
+  "language-support-checked": {
+    "defaultMessage": "지원됨",
+    "description": "Aria label for ticked checkbox for language support"
+  },
+  "language-support-unchecked": {
+    "defaultMessage": "지원되지 않음",
+    "description": "Aria label for unticked checkbox for language support"
+  },
+  "language-supported-for": {
+    "defaultMessage": "지원되는 번역:",
+    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
+  },
+  "language-toast-title": {
+    "defaultMessage": "언어가 완전히 지원되지 않습니다",
+    "description": "Language support toast notification title"
   },
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "방화벽 요구 사항에 대해 알아보기",
@@ -1160,7 +1188,7 @@
     "description": "New page title"
   },
   "next-action": {
-    "defaultMessage": "Next",
+    "defaultMessage": "다음",
     "description": "Next button text for dialogs and similar"
   },
   "no-data-samples": {
@@ -1432,7 +1460,7 @@
     "description": "Alt text for the step-by-step home page diagram"
   },
   "steps-code": {
-    "defaultMessage": "Code",
+    "defaultMessage": "코드",
     "description": "Step in home page diagram"
   },
   "steps-collect-data": {

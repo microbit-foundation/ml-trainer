@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Project } from "@microbit/makecode-embed/react";
+import { MakeCodeProject } from "@microbit/makecode-embed/react";
 import * as tf from "@tensorflow/tfjs";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
@@ -82,7 +82,7 @@ interface PredictionResult {
   detected: Action | undefined;
 }
 
-const createUntitledProject = (): Project => ({
+const createUntitledProject = (): MakeCodeProject => ({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   header: {
     target: "microbit",
@@ -114,7 +114,7 @@ const createUntitledProject = (): Project => ({
 });
 
 const updateProject = (
-  project: Project,
+  project: MakeCodeProject,
   projectEdited: boolean,
   actions: ActionData[],
   model: tf.LayersModel | undefined,
@@ -151,7 +151,7 @@ export interface State {
 
   isRecording: boolean;
 
-  project: Project;
+  project: MakeCodeProject;
   /**
    * We use this for the UI to tell when we've switched new project,
    * e.g. to show a toast.
@@ -220,7 +220,7 @@ export interface Actions {
   dataCollectionMicrobitConnected(): void;
 
   loadDataset(actions: ActionData[]): void;
-  loadProject(project: Project, name: string): void;
+  loadProject(project: MakeCodeProject, name: string): void;
   setEditorOpen(open: boolean): void;
   recordingStarted(): void;
   recordingStopped(): void;
@@ -244,11 +244,11 @@ export interface Actions {
    * When interacting outside of React to sync with MakeCode it's important to have
    * the current project after state changes.
    */
-  getCurrentProject(): Project;
+  getCurrentProject(): MakeCodeProject;
   checkIfProjectNeedsFlush(): boolean;
   checkIfLangChanged(): boolean;
   langChangeFlushedToEditor(): void;
-  editorChange(project: Project): void;
+  editorChange(project: MakeCodeProject): void;
   editorReady(): void;
   editorTimedOut(): void;
   getEditorStartUp(): EditorStartUp;
@@ -669,7 +669,7 @@ const createMlStore = (logging: Logging) => {
            * Generally project loads go via MakeCode as it reads the hex but when we open projects
            * from microbit.org we have the JSON already and use this route.
            */
-          loadProject(project: Project, name: string) {
+          loadProject(project: MakeCodeProject, name: string) {
             const newActions = getActionsFromProject(project);
             set(({ settings }) => {
               const timestamp = Date.now();
@@ -843,7 +843,7 @@ const createMlStore = (logging: Logging) => {
             );
           },
 
-          editorChange(newProject: Project) {
+          editorChange(newProject: MakeCodeProject) {
             const actionName = "editorChange";
             set(
               (state) => {
@@ -1336,8 +1336,16 @@ export const useHasNoStoredData = (): boolean => {
 
 type UseSettingsReturn = [Settings, (settings: Partial<Settings>) => void];
 
+const inContextTranslationLangId = "lol";
+
 export const useSettings = (): UseSettingsReturn => {
-  return useStore(useShallow((s) => [s.settings, s.setSettings]));
+  const [settings, setSettings] = useStore(
+    useShallow((s) => [s.settings, s.setSettings])
+  );
+  const settingsOverride = flags.translate
+    ? { languageId: inContextTranslationLangId }
+    : {};
+  return [{ ...settings, ...settingsOverride }, setSettings];
 };
 
 const actionIcon = ({
@@ -1364,7 +1372,7 @@ const actionIcon = ({
   return useableIcons[0];
 };
 
-const getActionsFromProject = (project: Project): ActionData[] => {
+const getActionsFromProject = (project: MakeCodeProject): ActionData[] => {
   const { text } = project;
   if (text === undefined || !("dataset.json" in text)) {
     return [];
@@ -1376,7 +1384,10 @@ const getActionsFromProject = (project: Project): ActionData[] => {
   return dataset.data as ActionData[];
 };
 
-const renameProject = (project: Project, name: string): Project => {
+const renameProject = (
+  project: MakeCodeProject,
+  name: string
+): MakeCodeProject => {
   const pxtString = project.text?.[filenames.pxtJson];
   const pxt = JSON.parse(pxtString ?? "{}") as Record<string, unknown>;
 

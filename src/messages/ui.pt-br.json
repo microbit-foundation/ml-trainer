@@ -39,6 +39,12 @@
       "value": "micro:bit mostrando o eixo X indo através da frente, o eixo Y indo para baixo e para cima, o eixo Z voltando à frente"
     }
   ],
+  "accessibility": [
+    {
+      "type": 0,
+      "value": "Acessibilidade"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
@@ -96,7 +102,7 @@
     },
     {
       "type": 0,
-      "value": " reconheça, por exemplo, 'aceno' ou 'aplauso'."
+      "value": " reconheça, por exemplo, 'balançar as mãos' ou 'bater palmas'."
     }
   ],
   "actions-label": [
@@ -114,13 +120,13 @@
   "ai-activity-timer-resource-title": [
     {
       "type": 0,
-      "value": "AI activity timer"
+      "value": "Cronômetro de atividades de IA"
     }
   ],
   "ai-storytelling-friend-resource-title": [
     {
       "type": 0,
-      "value": "Amigo de narrativa de IA"
+      "value": "Amigo contador de histórias de IA"
     }
   ],
   "back-action": [
@@ -174,7 +180,7 @@
   "certainty-label-tooltip-aria": [
     {
       "type": 0,
-      "value": "Dica de certeza"
+      "value": "Descrição de certeza"
     }
   ],
   "certainty-percentage-label": [
@@ -268,7 +274,7 @@
   "connect-battery-heading": [
     {
       "type": 0,
-      "value": "Desconecte o USB e conecte o pacote de baterias."
+      "value": "Desconecte o USB e conecte o conjunto de baterias."
     }
   ],
   "connect-battery-holder": [
@@ -286,7 +292,7 @@
   "connect-battery-subtitle": [
     {
       "type": 0,
-      "value": "Desconecte o micro:bit do computador e conecte o pacote de baterias."
+      "value": "Desconecte o micro:bit do computador e conecte o conjunto de baterias."
     }
   ],
   "connect-bluetooth-cancelled-connection": [
@@ -310,7 +316,7 @@
   "connect-bluetooth-start-heading": [
     {
       "type": 0,
-      "value": "O que você precisa conectar usando o Web Bluetooth."
+      "value": "Do que você precisa para se conectar usando o Web Bluetooth."
     }
   ],
   "connect-bluetooth-start-requirements1": [
@@ -370,7 +376,7 @@
   "connect-data-collection-heading": [
     {
       "type": 0,
-      "value": "Conecte o cabo USB para micro:bit 1"
+      "value": "Conecte o cabo USB no micro:bit 1"
     }
   ],
   "connect-data-collection-subtitle": [
@@ -394,7 +400,7 @@
   "connect-failed-bridge-heading": [
     {
       "type": 0,
-      "value": "Falha ao conectar ao micro:bit de link de rádio."
+      "value": "Falha ao conectar ao link de rádio do micro:bit."
     }
   ],
   "connect-failed-bridge1": [
@@ -406,7 +412,7 @@
   "connect-failed-remote-heading": [
     {
       "type": 0,
-      "value": "Falha ao conectar ao micro:bit de coleta de dados."
+      "value": "Não foi possível conectar ao micro:bit de coleta de dados."
     }
   ],
   "connect-failed-remote1": [
@@ -572,7 +578,7 @@
   "connect-radio-start-heading": [
     {
       "type": 0,
-      "value": "O que você precisa conectar usando o rádio do micro:bit."
+      "value": "O que você precisa para conectar usando o rádio do micro:bit."
     }
   ],
   "connect-radio-start-requirements1": [
@@ -656,7 +662,7 @@
   "continue-makecode-action": [
     {
       "type": 0,
-      "value": "Continuar para MakeCode"
+      "value": "Continuar no MakeCode"
     }
   ],
   "cookies-action": [
@@ -686,7 +692,7 @@
   "data-collection-microbit": [
     {
       "type": 0,
-      "value": "Coleta de dados micro:bit"
+      "value": "A coleta de dados micro:bit"
     }
   ],
   "data-collection-microbit-label": [
@@ -704,7 +710,7 @@
   "data-features-hide-action": [
     {
       "type": 0,
-      "value": "Ocultar recursos de dados"
+      "value": "Ocultar características de dados"
     }
   ],
   "data-features-show-action": [
@@ -862,7 +868,7 @@
   "disconnected-warning-bluetooth-heading": [
     {
       "type": 0,
-      "value": "Conexão com o micro:bit de coleta de dados perdida."
+      "value": "Conexão do micro:bit durante a coleta de dados perdida."
     }
   ],
   "disconnected-warning-bluetooth1": [
@@ -892,7 +898,7 @@
   "disconnected-warning-bridge-heading": [
     {
       "type": 0,
-      "value": "Conexão do link de rádio micro:bit perdida"
+      "value": "Conexão de rádio do micro:bit perdida"
     }
   ],
   "disconnected-warning-bridge1": [
@@ -904,7 +910,7 @@
   "disconnected-warning-remote-heading": [
     {
       "type": 0,
-      "value": "Conexão com o micro:bit de coleta de dados perdida."
+      "value": "Conexão do micro:bit durante a coleta de dados perdida."
     }
   ],
   "disconnected-warning-remote1": [
@@ -984,7 +990,7 @@
   "downloading-radio-link-header": [
     {
       "type": 0,
-      "value": "Baixando o programa do link de rádio"
+      "value": "Baixando o programa de link de rádio"
     }
   ],
   "downloading-subtitle": [
@@ -1022,7 +1028,7 @@
   "estimated-action-label-tooltip-aria": [
     {
       "type": 0,
-      "value": "Dica da ação estimada"
+      "value": "Dica de ferramenta de ação estimada"
     }
   ],
   "estimated-action-tooltip": [
@@ -1118,7 +1124,7 @@
   "fingerprint-peaks-y-tooltip": [
     {
       "type": 0,
-      "value": "Number of extremes among all x-direction data points"
+      "value": "Número de extremos entre todos os pontos de dados na direção y"
     }
   ],
   "fingerprint-peaks-z-tooltip": [
@@ -1166,7 +1172,7 @@
   "fingerprint-zcr-x-tooltip": [
     {
       "type": 0,
-      "value": "Taxa na qual a aceleração transita entre positiva e negativa para os dados na direção x"
+      "value": "Taxa com que a aceleração transita entre positiva e negativa para os pontos de dados na direção x"
     }
   ],
   "fingerprint-zcr-y-tooltip": [
@@ -1178,7 +1184,7 @@
   "fingerprint-zcr-z-tooltip": [
     {
       "type": 0,
-      "value": "Taxa na qual a aceleração transita entre positiva e negativa para os dados na direção z"
+      "value": "Taxa com a qual a aceleração transita entre positiva e negativa para os pontos de dados na direção z"
     }
   ],
   "firmware-outdated-content1": [
@@ -1288,7 +1294,7 @@
   "graph-preview": [
     {
       "type": 0,
-      "value": "Graph preview"
+      "value": "Pré-visualização do gráfico"
     }
   ],
   "help-label": [
@@ -1527,6 +1533,42 @@
       "value": "Idioma"
     }
   ],
+  "language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Fully supported"
+    }
+  ],
+  "language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Partially supported"
+    }
+  ],
+  "language-support-checked": [
+    {
+      "type": 0,
+      "value": "Auxiliado"
+    }
+  ],
+  "language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "Não auxiliado"
+    }
+  ],
+  "language-supported-for": [
+    {
+      "type": 0,
+      "value": "Traduções suportadas para:"
+    }
+  ],
+  "language-toast-title": [
+    {
+      "type": 0,
+      "value": "O idioma possui suporte parcial"
+    }
+  ],
   "learn-about-firewall-requirements-action": [
     {
       "type": 0,
@@ -1536,7 +1578,7 @@
   "led-icon-option-angry": [
     {
       "type": 0,
-      "value": "Bravo"
+      "value": "Irritado"
     }
   ],
   "led-icon-option-asleep": [
@@ -1584,7 +1626,7 @@
   "led-icon-option-eighthnote": [
     {
       "type": 0,
-      "value": "Oitava Nota"
+      "value": "Colcheia"
     }
   ],
   "led-icon-option-fabulous": [
@@ -1596,7 +1638,7 @@
   "led-icon-option-ghost": [
     {
       "type": 0,
-      "value": "Fantasma\n\nAparição"
+      "value": "Fantasma"
     }
   ],
   "led-icon-option-giraffe": [
@@ -1620,7 +1662,7 @@
   "led-icon-option-house": [
     {
       "type": 0,
-      "value": "Residência"
+      "value": "Casa"
     }
   ],
   "led-icon-option-lefttriangle": [
@@ -1644,7 +1686,7 @@
   "led-icon-option-off": [
     {
       "type": 0,
-      "value": "Desativado"
+      "value": "Desligado"
     }
   ],
   "led-icon-option-pitchfork": [
@@ -1656,7 +1698,7 @@
   "led-icon-option-quarternote": [
     {
       "type": 0,
-      "value": "Nota de quarto"
+      "value": "Semínima"
     }
   ],
   "led-icon-option-rabbit": [
@@ -1668,7 +1710,7 @@
   "led-icon-option-rollerskate": [
     {
       "type": 0,
-      "value": "Patins"
+      "value": "Patins de rodas"
     }
   ],
   "led-icon-option-sad": [
@@ -1686,13 +1728,13 @@
   "led-icon-option-silly": [
     {
       "type": 0,
-      "value": "Bobo"
+      "value": "Engraçado"
     }
   ],
   "led-icon-option-skull": [
     {
       "type": 0,
-      "value": "Caveira/Crânio"
+      "value": "Crânio"
     }
   ],
   "led-icon-option-smalldiamond": [
@@ -1734,7 +1776,7 @@
   "led-icon-option-surprised": [
     {
       "type": 0,
-      "value": "Surpreso"
+      "value": "Surpresa"
     }
   ],
   "led-icon-option-sword": [
@@ -1764,7 +1806,7 @@
   "led-icon-option-tshirt": [
     {
       "type": 0,
-      "value": "Camisa"
+      "value": "Camiseta"
     }
   ],
   "led-icon-option-umbrella": [
@@ -1800,7 +1842,7 @@
   "live-graph-tooltip-aria": [
     {
       "type": 0,
-      "value": "Dica de ferramenta do gráfico ao vivo"
+      "value": "Tooltip do gráfico em tempo real"
     }
   ],
   "loading": [
@@ -1931,18 +1973,8 @@
   ],
   "newpage-last-session-date": [
     {
-      "children": [
-        {
-          "type": 0,
-          "value": "Data:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
       "type": 0,
-      "value": " "
+      "value": "Data: "
     },
     {
       "type": 1,
@@ -1951,18 +1983,8 @@
   ],
   "newpage-last-session-name": [
     {
-      "children": [
-        {
-          "type": 0,
-          "value": "Nome:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
       "type": 0,
-      "value": " "
+      "value": "Nome: "
     },
     {
       "type": 1,
@@ -2064,7 +2086,7 @@
   "open-file-dropped": [
     {
       "type": 0,
-      "value": "Abrir arquivo quando concluído"
+      "value": "Abrir arquivo quando solto"
     }
   ],
   "other-tabs-body1": [
@@ -2150,7 +2172,7 @@
   "reconnect-failed-bridge-heading": [
     {
       "type": 0,
-      "value": "Falha ao reconectar ao micro:bit do link de rádio"
+      "value": "Falha ao reconectar ao link de rádio do micro:bit"
     }
   ],
   "reconnect-failed-bridge1": [
@@ -2466,7 +2488,7 @@
   "select-icon-option-action-aria": [
     {
       "type": 0,
-      "value": "Selecionar ícone \""
+      "value": "Selecionar o ícone \""
     },
     {
       "type": 1,
@@ -2486,7 +2508,7 @@
   "settings-menu-action": [
     {
       "type": 0,
-      "value": "Menu de configurações"
+      "value": "Menu de ações de configurações"
     }
   ],
   "show-graphs-checkbox-label-text": [
@@ -2498,7 +2520,7 @@
   "simple-ai-exercise-timer-resource-title": [
     {
       "type": 0,
-      "value": "Simple AI exercise timer"
+      "value": "Cronômetro de exercício do Simple IA"
     }
   ],
   "skip-tour-action": [
@@ -2692,7 +2714,7 @@
   "tour-dataSamples-actions-common-content": [
     {
       "type": 0,
-      "value": "Uma ação é o tipo de movimento que você deseja que o modelo de aprendizado de máquina reconheça, por exemplo, \"aceno\" ou \"aplauso\"."
+      "value": "Uma ação é o tipo de movimento que você deseja que o modelo de aprendizado de máquina reconheça, como 'acenar' ou 'bater palmas'."
     }
   ],
   "tour-dataSamples-actions-noRecordings-content": [
@@ -2950,21 +2972,7 @@
   "unsupported-device-without-bluetooth": [
     {
       "type": 0,
-      "value": "Você pode se conectar ao micro:bit V1 usando o Web Bluetooth, no entanto, este navegador ou dispositivo não tem o Bluetooth ativado. "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Como ativar o Bluetooth"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
+      "value": "Você pode se conectar ao micro:bit V1 usando o Web Bluetooth, no entanto, este navegador ou dispositivo não tem o Bluetooth ativado. Como ativar o Bluetooth."
     }
   ],
   "user-guide": [

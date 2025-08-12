@@ -12,7 +12,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { Project } from "@microbit/makecode-embed/react";
+import { MakeCodeProject } from "@microbit/makecode-embed/react";
 import { ReactNode, useCallback, useEffect, useState } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
@@ -28,17 +28,20 @@ import { MicrobitOrgResource } from "../model";
 import { validateProjectName } from "../project-name";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
+import { ButtonWithLoading } from "../components/ButtonWithLoading";
+import { setEditorVersionOverride } from "../editor-version";
 
 const ImportPage = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const { activitiesBaseUrl } = useDeployment();
   const [params] = useSearchParams();
+  setEditorVersionOverride(params.get("editorVersion") || undefined);
   const defaultProjectName = useDefaultProjectName();
   const [name, setName] = useState<string>(defaultProjectName);
   const isValidSetup = validateProjectName(name);
   const [fetchingProject, setFetchingProject] = useState<boolean>(true);
-  const [project, setProject] = useState<Project>();
+  const [project, setProject] = useState<MakeCodeProject>();
   const logging = useLogging();
 
   useEffect(() => {
@@ -152,7 +155,7 @@ const ImportPage = () => {
             />
           </Stack>
           <HStack pt={5} justifyContent="flex-end">
-            <Button
+            <ButtonWithLoading
               isDisabled={!isValidSetup}
               isLoading={fetchingProject}
               variant="primary"
@@ -160,7 +163,7 @@ const ImportPage = () => {
               size="lg"
             >
               <FormattedMessage id="start-session-action" />
-            </Button>
+            </ButtonWithLoading>
           </HStack>
         </Stack>
       </VStack>
@@ -168,7 +171,9 @@ const ImportPage = () => {
   );
 };
 
-const isValidProject = (content: Project): content is Project => {
+const isValidProject = (
+  content: MakeCodeProject
+): content is MakeCodeProject => {
   return (
     content &&
     typeof content === "object" &&
@@ -181,7 +186,7 @@ const fetchMicrobitOrgResourceProjectCode = async (
   activitiesBaseUrl: string,
   resource: MicrobitOrgResource,
   intl: IntlShape
-): Promise<Project> => {
+): Promise<MakeCodeProject> => {
   const url = `${activitiesBaseUrl}${encodeURIComponent(
     resource.id
   )}-makecode.json`;

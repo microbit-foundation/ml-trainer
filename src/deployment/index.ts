@@ -54,6 +54,7 @@ export interface DeploymentConfig {
     wearable: string;
   };
 
+  accessibilityLink?: string;
   termsOfUseLink?: string;
   privacyPolicyLink?: string;
   activitiesBaseUrl?: string;

@@ -12,12 +12,16 @@ const microbitOrgBaseUrl =
     ? "https://microbit.org/"
     : "https://stage.microbit.org/";
 
+const langPath = (languageId: string) =>
+  languageId === "en" ? "" : `${languageId.toLowerCase()}/`;
+
 export const projectUrl = (slug: string, language: string) =>
-  `${microbitOrgBaseUrl}${
-    language === "en" ? "" : `${language.toLowerCase()}/`
-  }projects/make-it-code-it/${encodeURIComponent(slug)}/`;
+  `${microbitOrgBaseUrl}${langPath(
+    language
+  )}projects/make-it-code-it/${encodeURIComponent(slug)}/`;
 
 export const userGuideUrl = () =>
   `${microbitOrgBaseUrl}get-started/user-guide/microbit-createai/`;
 
-export const landingPageUrl = () => `${microbitOrgBaseUrl}ai/`;
+export const landingPageUrl = (language: string) =>
+  `${microbitOrgBaseUrl}${langPath(language)}ai/`;

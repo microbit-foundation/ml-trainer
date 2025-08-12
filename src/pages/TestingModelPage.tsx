@@ -37,6 +37,7 @@ import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createDataSamplesPageUrl } from "../urls";
+import { ButtonWithLoading } from "../components/ButtonWithLoading";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
@@ -153,7 +154,7 @@ const TestingModelPage = () => {
         >
           <Menu>
             <ButtonGroup isAttached>
-              <Button
+              <ButtonWithLoading
                 variant="primary"
                 onClick={maybeOpenEditor}
                 className={tourElClassname.editInMakeCodeButton}
@@ -162,7 +163,7 @@ const TestingModelPage = () => {
                 }
               >
                 <FormattedMessage id="edit-in-makecode-action" />
-              </Button>
+              </ButtonWithLoading>
               <MoreMenuButton
                 variant="primary"
                 aria-label={intl.formatMessage({

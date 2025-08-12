@@ -1,0 +1,1718 @@
+{
+  "aarhus-university-alt": {
+    "defaultMessage": "crwdns362648:0crwdne362648:0",
+    "description": "Alt text for Aarhus University logo in about dialog"
+  },
+  "about": {
+    "defaultMessage": "crwdns362650:0crwdne362650:0",
+    "description": "Menu item link to view information about app"
+  },
+  "about-dialog-alt": {
+    "defaultMessage": "crwdns362652:0crwdne362652:0",
+    "description": "Alt text for image in about dialog"
+  },
+  "about-dialog-title": {
+    "defaultMessage": "crwdns362654:0crwdne362654:0",
+    "description": "Title of about dialog"
+  },
+  "accelerometer-image-alt": {
+    "defaultMessage": "crwdns362656:0crwdne362656:0",
+    "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
+  },
+  "accessibility": {
+    "defaultMessage": "crwdns364036:0crwdne364036:0",
+    "description": "Menu item for link to accessibility site"
+  },
+  "action-label": {
+    "defaultMessage": "crwdns362658:0crwdne362658:0",
+    "description": "Label for a movement-related action, e.g. clapping"
+  },
+  "action-label-tooltip-aria": {
+    "defaultMessage": "crwdns362660:0crwdne362660:0",
+    "description": "Aria label for action tooltip icon"
+  },
+  "action-length-error": {
+    "defaultMessage": "crwdns362662:0{maxLen}crwdne362662:0",
+    "description": "Error message shown when an action name is too long"
+  },
+  "action-name-placeholder": {
+    "defaultMessage": "crwdns362664:0crwdne362664:0",
+    "description": "Placeholder text for user supplied name of a movement-related action, e.g. clapping"
+  },
+  "action-region": {
+    "defaultMessage": "crwdns362666:0{action}crwdne362666:0",
+    "description": "Region label for action row"
+  },
+  "action-tooltip": {
+    "defaultMessage": "crwdns362668:0{appNameFull}crwdne362668:0",
+    "description": "Tooltip explaining action"
+  },
+  "actions-label": {
+    "defaultMessage": "crwdns362670:0crwdne362670:0",
+    "description": "Label for Actions"
+  },
+  "add-action-action": {
+    "defaultMessage": "crwdns362672:0crwdne362672:0",
+    "description": "Button to add an action (movement related, e.g. clapping)"
+  },
+  "ai-activity-timer-resource-title": {
+    "defaultMessage": "crwdns362674:0crwdne362674:0",
+    "description": "Home page resource card title"
+  },
+  "ai-storytelling-friend-resource-title": {
+    "defaultMessage": "crwdns363518:0crwdne363518:0",
+    "description": "Home page resource card title"
+  },
+  "back-action": {
+    "defaultMessage": "crwdns362676:0crwdne362676:0",
+    "description": "Back button text"
+  },
+  "back-to-data-samples-action": {
+    "defaultMessage": "crwdns362678:0crwdne362678:0",
+    "description": "Back button text"
+  },
+  "bluetooth-unsupported-advice": {
+    "defaultMessage": "crwdns362680:0crwdne362680:0",
+    "description": "Note on supported browsers"
+  },
+  "bluetooth-unsupported-explain": {
+    "defaultMessage": "crwdns362682:0crwdne362682:0",
+    "description": "Note on supported browsers"
+  },
+  "bluetooth-unsupported-header": {
+    "defaultMessage": "crwdns362684:0crwdne362684:0",
+    "description": "Heading for browser support dialog"
+  },
+  "cancel-action": {
+    "defaultMessage": "crwdns362686:0crwdne362686:0",
+    "description": "Cancel button text"
+  },
+  "cancel-recording-action": {
+    "defaultMessage": "crwdns362688:0crwdne362688:0",
+    "description": "Button label to cancel a movement data recording"
+  },
+  "certainty-label": {
+    "defaultMessage": "crwdns362690:0crwdne362690:0",
+    "description": "Heading for certainty column"
+  },
+  "certainty-label-tooltip-aria": {
+    "defaultMessage": "crwdns362692:0crwdne362692:0",
+    "description": "Aria label for code certainty icon"
+  },
+  "certainty-percentage-label": {
+    "defaultMessage": "crwdns362694:0{action}crwdnd362694:0{currentConfidence}crwdne362694:0",
+    "description": "Label for certainty of an action"
+  },
+  "certainty-tooltip": {
+    "defaultMessage": "crwdns362696:0crwdne362696:0",
+    "description": "Tooltip for certainty column"
+  },
+  "click-to-reload-page-action": {
+    "defaultMessage": "crwdns362698:0crwdne362698:0",
+    "description": "Reload page button text"
+  },
+  "close-action": {
+    "defaultMessage": "crwdns362700:0crwdne362700:0",
+    "description": "Close button text or label"
+  },
+  "code-download-error": {
+    "defaultMessage": "crwdns362702:0crwdne362702:0",
+    "description": "Title for error message relating to project loading"
+  },
+  "code-label": {
+    "defaultMessage": "crwdns362704:0crwdne362704:0",
+    "description": "Code column heading"
+  },
+  "code-label-tooltip-aria": {
+    "defaultMessage": "crwdns362706:0crwdne362706:0",
+    "description": "Aria label for code tooltip icon"
+  },
+  "code-tooltip": {
+    "defaultMessage": "crwdns362708:0crwdne362708:0",
+    "description": "Code column heading tooltip"
+  },
+  "confirm-action": {
+    "defaultMessage": "crwdns362710:0crwdne362710:0",
+    "description": "Confirm button text"
+  },
+  "confirm-save-action": {
+    "defaultMessage": "crwdns362712:0crwdne362712:0",
+    "description": "Confirm and save action label"
+  },
+  "connect-action": {
+    "defaultMessage": "crwdns362714:0crwdne362714:0",
+    "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
+  },
+  "connect-action-aria": {
+    "defaultMessage": "crwdns362716:0crwdne362716:0",
+    "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
+  },
+  "connect-battery-heading": {
+    "defaultMessage": "crwdns362718:0crwdne362718:0",
+    "description": "Battery connection dialog "
+  },
+  "connect-battery-holder": {
+    "defaultMessage": "crwdns362720:0crwdne362720:0",
+    "description": "Label for battery holder icon"
+  },
+  "connect-battery-link": {
+    "defaultMessage": "crwdns362722:0crwdne362722:0",
+    "description": "Battery connection dialog"
+  },
+  "connect-battery-subtitle": {
+    "defaultMessage": "crwdns362724:0crwdne362724:0",
+    "description": "Battery connection dialog"
+  },
+  "connect-bluetooth-cancelled-connection": {
+    "defaultMessage": "crwdns362726:0crwdne362726:0",
+    "description": "Error when the user cancelled the Web Bluetooth permission/device selection dialog"
+  },
+  "connect-bluetooth-heading": {
+    "defaultMessage": "crwdns362728:0crwdne362728:0",
+    "description": "Connection dialogs"
+  },
+  "connect-bluetooth-invalid-pattern": {
+    "defaultMessage": "crwdns362730:0crwdne362730:0",
+    "description": "Error when the bluetooth pattern is incomplete "
+  },
+  "connect-bluetooth-start-heading": {
+    "defaultMessage": "crwdns362732:0crwdne362732:0",
+    "description": "Connection dialog heading"
+  },
+  "connect-bluetooth-start-requirements1": {
+    "defaultMessage": "crwdns362734:0crwdne362734:0",
+    "description": "Label for icon of single micro:bit"
+  },
+  "connect-bluetooth-start-requirements2-subtitle": {
+    "defaultMessage": "crwdns362736:0crwdne362736:0",
+    "description": "Under heading 'Computer' this lists the features the computer needs"
+  },
+  "connect-bluetooth-start-switch-radio": {
+    "defaultMessage": "crwdns362738:0crwdne362738:0",
+    "description": "Link to alternative connection method"
+  },
+  "connect-cable-alt": {
+    "defaultMessage": "crwdns362740:0crwdne362740:0",
+    "description": "Alt text"
+  },
+  "connect-cable-download-project-subtitle": {
+    "defaultMessage": "crwdns362742:0crwdne362742:0",
+    "description": "Download project dialog"
+  },
+  "connect-cable-heading": {
+    "defaultMessage": "crwdns362744:0crwdne362744:0",
+    "description": "Connect cable dialog heading"
+  },
+  "connect-cable-skip": {
+    "defaultMessage": "crwdns362746:0crwdne362746:0",
+    "description": "Link to skip"
+  },
+  "connect-cable-subtitle": {
+    "defaultMessage": "crwdns362748:0crwdne362748:0",
+    "description": "Project download instructions"
+  },
+  "connect-computer": {
+    "defaultMessage": "crwdns362750:0crwdne362750:0",
+    "description": "Label for computer icon in connection dialog"
+  },
+  "connect-data-collection-heading": {
+    "defaultMessage": "crwdns362752:0crwdne362752:0",
+    "description": "Connection dialog heading"
+  },
+  "connect-data-collection-subtitle": {
+    "defaultMessage": "crwdns362754:0crwdne362754:0",
+    "description": "Connection dialog subtitle"
+  },
+  "connect-failed-bluetooth-heading": {
+    "defaultMessage": "crwdns362756:0crwdne362756:0",
+    "description": "Bluetooth connection error message"
+  },
+  "connect-failed-bluetooth1": {
+    "defaultMessage": "crwdns362758:0crwdne362758:0",
+    "description": "Bluetooth connection error message"
+  },
+  "connect-failed-bridge-heading": {
+    "defaultMessage": "crwdns362760:0crwdne362760:0",
+    "description": "micro:bit radio connection error message"
+  },
+  "connect-failed-bridge1": {
+    "defaultMessage": "crwdns362762:0crwdne362762:0",
+    "description": "micro:bit radio connection error message"
+  },
+  "connect-failed-remote-heading": {
+    "defaultMessage": "crwdns362764:0crwdne362764:0",
+    "description": "micro:bit radio connection error message"
+  },
+  "connect-failed-remote1": {
+    "defaultMessage": "crwdns362766:0crwdne362766:0",
+    "description": "micro:bit radio connection error message"
+  },
+  "connect-help-alt": {
+    "defaultMessage": "crwdns362768:0crwdne362768:0",
+    "description": "Alt text for image in connect help dialog"
+  },
+  "connect-micro-usb-cable": {
+    "defaultMessage": "crwdns362770:0crwdne362770:0",
+    "description": "Label for cable icon in list of requirements"
+  },
+  "connect-or-import": {
+    "defaultMessage": "crwdns362772:0crwdne362772:0",
+    "description": "Empty data samples page text"
+  },
+  "connect-pattern-heading": {
+    "defaultMessage": "crwdns362774:0crwdne362774:0",
+    "description": "Heading for Bluetooth pattern connection dialog"
+  },
+  "connect-pattern-input-label": {
+    "defaultMessage": "crwdns362776:0{colNum}crwdne362776:0",
+    "description": "Screen reader text for numeric pattern input"
+  },
+  "connect-pattern-subtitle": {
+    "defaultMessage": "crwdns362778:0crwdne362778:0",
+    "description": "Instruction for bluetooth pattern dialog"
+  },
+  "connect-popup": {
+    "defaultMessage": "crwdns362780:0crwdne362780:0",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-popup-bluetooth-alt": {
+    "defaultMessage": "crwdns362782:0crwdne362782:0",
+    "description": "Alt text"
+  },
+  "connect-popup-bluetooth-instruction2": {
+    "defaultMessage": "crwdns362784:0crwdne362784:0",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-popup-bluetooth-title": {
+    "defaultMessage": "crwdns362786:0crwdne362786:0",
+    "description": "Instruction for dialog that previews the Bluetooth permission dialog"
+  },
+  "connect-popup-instruction-heading": {
+    "defaultMessage": "crwdns362788:0crwdne362788:0",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-popup-instruction1": {
+    "defaultMessage": "crwdns362790:0crwdne362790:0",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-popup-usb-bluetooth-data-collection-title": {
+    "defaultMessage": "crwdns362792:0crwdne362792:0",
+    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+  },
+  "connect-popup-usb-radio-data-collection-title": {
+    "defaultMessage": "crwdns362794:0crwdne362794:0",
+    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+  },
+  "connect-popup-usb-radio-link-title": {
+    "defaultMessage": "crwdns362796:0crwdne362796:0",
+    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+  },
+  "connect-popup-webusb-instruction2": {
+    "defaultMessage": "crwdns362798:0crwdne362798:0",
+    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+  },
+  "connect-radio-data-collection-microbit-description": {
+    "defaultMessage": "crwdns362800:0crwdne362800:0",
+    "description": "Connect radio data collection micro:bit dialog description"
+  },
+  "connect-radio-data-collection-microbit-title": {
+    "defaultMessage": "crwdns362802:0crwdne362802:0",
+    "description": "Connect radio data collection micro:bit dialog title"
+  },
+  "connect-radio-heading": {
+    "defaultMessage": "crwdns362804:0crwdne362804:0",
+    "description": "Text shown while radio link and data connection micro:bit are being connected"
+  },
+  "connect-radio-link-heading": {
+    "defaultMessage": "crwdns362806:0crwdne362806:0",
+    "description": "Heading for connecting radio link micro:bit cable"
+  },
+  "connect-radio-link-subtitle": {
+    "defaultMessage": "crwdns362808:0crwdne362808:0",
+    "description": "Instruction for connecting radio link micro:bit cable"
+  },
+  "connect-radio-start-heading": {
+    "defaultMessage": "crwdns362810:0crwdne362810:0",
+    "description": "Connection dialog heading"
+  },
+  "connect-radio-start-requirements1": {
+    "defaultMessage": "crwdns362812:0crwdne362812:0",
+    "description": "Label for icon of two micro:bits"
+  },
+  "connect-radio-start-requirements1-subtitle": {
+    "defaultMessage": "crwdns362814:0crwdne362814:0",
+    "description": "Shown below 2 micro:bit label for micro:bit radio approach"
+  },
+  "connect-radio-start-requirements2-subtitle": {
+    "defaultMessage": "crwdns362816:0crwdne362816:0",
+    "description": "Shown below 'Computer' heading listing additional requirements"
+  },
+  "connect-radio-start-switch-bluetooth": {
+    "defaultMessage": "crwdns362818:0crwdne362818:0",
+    "description": "Link to alternative connection method"
+  },
+  "connect-to-record": {
+    "defaultMessage": "crwdns362820:0crwdne362820:0",
+    "description": "Live graph disconnected micro:bit status message for data samples page"
+  },
+  "connect-to-record-body": {
+    "defaultMessage": "crwdns362822:0crwdne362822:0",
+    "description": "Insufficient data modal content"
+  },
+  "connect-to-test-model": {
+    "defaultMessage": "crwdns362824:0crwdne362824:0",
+    "description": "Live graph disconnected micro:bit status message for test model page"
+  },
+  "connect-to-tour-body": {
+    "defaultMessage": "crwdns362826:0crwdne362826:0",
+    "description": "Prompt to connect the app to a micro:bit"
+  },
+  "connect-troubleshoot": {
+    "defaultMessage": "crwdns362828:0crwdne362828:0",
+    "description": "Link to support article for troubleshooting"
+  },
+  "connect-troubleshooting": {
+    "defaultMessage": "crwdns362830:0crwdne362830:0",
+    "description": "Troubleshooting heading"
+  },
+  "connect-with-batteries": {
+    "defaultMessage": "crwdns362832:0crwdne362832:0",
+    "description": "Under header 'Battery holder' this notes that batteries are required"
+  },
+  "connect-with-web-bluetooth": {
+    "defaultMessage": "crwdns362834:0crwdne362834:0",
+    "description": "Connection dialog title"
+  },
+  "connecting": {
+    "defaultMessage": "crwdns362836:0crwdne362836:0",
+    "description": "Text shown while waiting for bluetooth/radio connection"
+  },
+  "continue-makecode-action": {
+    "defaultMessage": "crwdns362838:0crwdne362838:0",
+    "description": "Continue to MakeCode editor button text"
+  },
+  "cookies-action": {
+    "defaultMessage": "crwdns362840:0crwdne362840:0",
+    "description": "Action to show dialog to choose website cookie preferences"
+  },
+  "copied": {
+    "defaultMessage": "crwdns362842:0crwdne362842:0",
+    "description": "Displayed as copy button text briefly after successful copy action"
+  },
+  "copy-action": {
+    "defaultMessage": "crwdns362844:0crwdne362844:0",
+    "description": "Copy button text"
+  },
+  "data-actions-menu": {
+    "defaultMessage": "crwdns362846:0crwdne362846:0",
+    "description": "Aria label for menu"
+  },
+  "data-collection-microbit": {
+    "defaultMessage": "crwdns362848:0crwdne362848:0",
+    "description": "Data collection micro:bit image caption"
+  },
+  "data-collection-microbit-label": {
+    "defaultMessage": "crwdns362850:0crwdne362850:0",
+    "description": "Aria label for data collection image"
+  },
+  "data-connection-region": {
+    "defaultMessage": "crwdns362852:0crwdne362852:0",
+    "description": "Region label for data connection area"
+  },
+  "data-features-hide-action": {
+    "defaultMessage": "crwdns362854:0crwdne362854:0",
+    "description": "Hide data features button text"
+  },
+  "data-features-show-action": {
+    "defaultMessage": "crwdns362856:0crwdne362856:0",
+    "description": "Show data features button text"
+  },
+  "data-samples-actions-region": {
+    "defaultMessage": "crwdns362858:0crwdne362858:0",
+    "description": "Region label for data samples actions"
+  },
+  "data-samples-label": {
+    "defaultMessage": "crwdns362860:0crwdne362860:0",
+    "description": "Heading for data samples column"
+  },
+  "data-samples-label-tooltip-aria": {
+    "defaultMessage": "crwdns362862:0crwdne362862:0",
+    "description": "Aria label for data samples tooltip icon"
+  },
+  "data-samples-status-count": {
+    "defaultMessage": "crwdns362864:0{numSamples}crwdne362864:0",
+    "description": "Data samples status text"
+  },
+  "data-samples-status-not-enough": {
+    "defaultMessage": "crwdns362866:0crwdne362866:0",
+    "description": "Data samples status text"
+  },
+  "data-samples-title": {
+    "defaultMessage": "crwdns362868:0crwdne362868:0",
+    "description": "Data samples page title"
+  },
+  "data-samples-tooltip": {
+    "defaultMessage": "crwdns362870:0crwdne362870:0",
+    "description": "Tooltip for data samples heading"
+  },
+  "default-project-name": {
+    "defaultMessage": "crwdns362872:0crwdne362872:0",
+    "description": "Default project name"
+  },
+  "delete-action-aria": {
+    "defaultMessage": "crwdns362874:0{action}crwdne362874:0",
+    "description": "Aria label for action delete icon"
+  },
+  "delete-action-confirm-heading": {
+    "defaultMessage": "crwdns362876:0crwdne362876:0",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-action-confirm-text": {
+    "defaultMessage": "crwdns362878:0{action}crwdne362878:0",
+    "description": "Confirmation dialog text"
+  },
+  "delete-data-samples-action": {
+    "defaultMessage": "crwdns362880:0crwdne362880:0",
+    "description": "Menu item to delete data samples"
+  },
+  "delete-data-samples-confirm-heading": {
+    "defaultMessage": "crwdns362882:0crwdne362882:0",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-data-samples-confirm-text": {
+    "defaultMessage": "crwdns362884:0crwdne362884:0",
+    "description": "Confirmation dialog text"
+  },
+  "delete-recording-aria": {
+    "defaultMessage": "crwdns362886:0{sample}crwdnd362886:0{numSamples}crwdnd362886:0{action}crwdne362886:0",
+    "description": "Aria label for data sample delete action"
+  },
+  "disconnect-action": {
+    "defaultMessage": "crwdns362888:0crwdne362888:0",
+    "description": "Disconnect (from bluetooth/radio) action"
+  },
+  "disconnected-during-recording": {
+    "defaultMessage": "crwdns362890:0crwdne362890:0",
+    "description": "Error when the micro:bit is disconnected during recording"
+  },
+  "disconnected-warning-bluetooth-heading": {
+    "defaultMessage": "crwdns362892:0crwdne362892:0",
+    "description": "Dialog heading"
+  },
+  "disconnected-warning-bluetooth1": {
+    "defaultMessage": "crwdns362894:0crwdne362894:0",
+    "description": "Dialog text"
+  },
+  "disconnected-warning-bluetooth2": {
+    "defaultMessage": "crwdns362896:0crwdne362896:0",
+    "description": "Heading for list of things to check"
+  },
+  "disconnected-warning-bluetooth3": {
+    "defaultMessage": "crwdns362898:0crwdne362898:0",
+    "description": "List item, one of several things to check about the micro:bit"
+  },
+  "disconnected-warning-bluetooth4": {
+    "defaultMessage": "crwdns362900:0crwdne362900:0",
+    "description": "List item, one of several things to check about the micro:bit"
+  },
+  "disconnected-warning-bridge-heading": {
+    "defaultMessage": "crwdns362902:0crwdne362902:0",
+    "description": "Connection error dialog"
+  },
+  "disconnected-warning-bridge1": {
+    "defaultMessage": "crwdns362904:0crwdne362904:0",
+    "description": "Connection error dialog"
+  },
+  "disconnected-warning-remote-heading": {
+    "defaultMessage": "crwdns362906:0crwdne362906:0",
+    "description": "Connection error dialog"
+  },
+  "disconnected-warning-remote1": {
+    "defaultMessage": "crwdns362908:0crwdne362908:0",
+    "description": "Connection error dialog"
+  },
+  "dont-show-again": {
+    "defaultMessage": "crwdns362910:0crwdne362910:0",
+    "description": "Text to never show a dialog again"
+  },
+  "download-data-samples-action": {
+    "defaultMessage": "crwdns362912:0crwdne362912:0",
+    "description": "Download action"
+  },
+  "download-project-choose-microbit-subtitle": {
+    "defaultMessage": "crwdns362914:0crwdne362914:0",
+    "description": "Download project choose micro:bit dialog subtitle"
+  },
+  "download-project-choose-microbit-title": {
+    "defaultMessage": "crwdns362916:0crwdne362916:0",
+    "description": "Download project choose micro:bit dialog title"
+  },
+  "download-project-different-microbit-option": {
+    "defaultMessage": "crwdns362918:0crwdne362918:0",
+    "description": "Download project different micro:bit option"
+  },
+  "download-project-intro-description": {
+    "defaultMessage": "crwdns362920:0{appNameFull}crwdne362920:0",
+    "description": "Download project intro dialog description"
+  },
+  "download-project-intro-title": {
+    "defaultMessage": "crwdns362922:0crwdne362922:0",
+    "description": "Download project intro dialog title"
+  },
+  "download-project-same-microbit-option": {
+    "defaultMessage": "crwdns362924:0crwdne362924:0",
+    "description": "Download project same micro:bit option"
+  },
+  "downloading-data-collection-header": {
+    "defaultMessage": "crwdns362926:0crwdne362926:0",
+    "description": "Progress text"
+  },
+  "downloading-header": {
+    "defaultMessage": "crwdns362928:0crwdne362928:0",
+    "description": "Progress text"
+  },
+  "downloading-radio-link-header": {
+    "defaultMessage": "crwdns362930:0crwdne362930:0",
+    "description": "Progress text"
+  },
+  "downloading-subtitle": {
+    "defaultMessage": "crwdns362932:0crwdne362932:0",
+    "description": "Progress text"
+  },
+  "edit-in-makecode-action": {
+    "defaultMessage": "crwdns362934:0crwdne362934:0",
+    "description": "Edit in MakeCode button text"
+  },
+  "estimated-action-aria": {
+    "defaultMessage": "crwdns362936:0{action}crwdne362936:0",
+    "description": "Aria live text for the current estimated action"
+  },
+  "estimated-action-label": {
+    "defaultMessage": "crwdns362938:0crwdne362938:0",
+    "description": "Heading for estimated action area next to the live graph"
+  },
+  "estimated-action-label-tooltip-aria": {
+    "defaultMessage": "crwdns362940:0crwdne362940:0",
+    "description": "Aria label for estimated action tooltip icon"
+  },
+  "estimated-action-tooltip": {
+    "defaultMessage": "crwdns362942:0crwdne362942:0",
+    "description": "Tooltip for the estimated action heading"
+  },
+  "feedback": {
+    "defaultMessage": "crwdns362944:0crwdne362944:0",
+    "description": "Action to open a feedback dialog"
+  },
+  "fingerprint-acc-x-tooltip": {
+    "defaultMessage": "crwdns362946:0crwdne362946:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-acc-y-tooltip": {
+    "defaultMessage": "crwdns362948:0crwdne362948:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-acc-z-tooltip": {
+    "defaultMessage": "crwdns362950:0crwdne362950:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-max-x-tooltip": {
+    "defaultMessage": "crwdns362952:0crwdne362952:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-max-y-tooltip": {
+    "defaultMessage": "crwdns362954:0crwdne362954:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-max-z-tooltip": {
+    "defaultMessage": "crwdns362956:0crwdne362956:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-mean-x-tooltip": {
+    "defaultMessage": "crwdns362958:0crwdne362958:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-mean-y-tooltip": {
+    "defaultMessage": "crwdns362960:0crwdne362960:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-mean-z-tooltip": {
+    "defaultMessage": "crwdns362962:0crwdne362962:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-min-x-tooltip": {
+    "defaultMessage": "crwdns362964:0crwdne362964:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-min-y-tooltip": {
+    "defaultMessage": "crwdns362966:0crwdne362966:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-min-z-tooltip": {
+    "defaultMessage": "crwdns362968:0crwdne362968:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-peaks-x-tooltip": {
+    "defaultMessage": "crwdns362970:0crwdne362970:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-peaks-y-tooltip": {
+    "defaultMessage": "crwdns362972:0crwdne362972:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-peaks-z-tooltip": {
+    "defaultMessage": "crwdns362974:0crwdne362974:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-rms-x-tooltip": {
+    "defaultMessage": "crwdns362976:0crwdne362976:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-rms-y-tooltip": {
+    "defaultMessage": "crwdns362978:0crwdne362978:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-rms-z-tooltip": {
+    "defaultMessage": "crwdns362980:0crwdne362980:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-std-x-tooltip": {
+    "defaultMessage": "crwdns362982:0crwdne362982:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-std-y-tooltip": {
+    "defaultMessage": "crwdns362984:0crwdne362984:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-std-z-tooltip": {
+    "defaultMessage": "crwdns362986:0crwdne362986:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-zcr-x-tooltip": {
+    "defaultMessage": "crwdns362988:0crwdne362988:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-zcr-y-tooltip": {
+    "defaultMessage": "crwdns362990:0crwdne362990:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "fingerprint-zcr-z-tooltip": {
+    "defaultMessage": "crwdns362992:0crwdne362992:0",
+    "description": "Tooltip for data feature of a recording"
+  },
+  "firmware-outdated-content1": {
+    "defaultMessage": "crwdns362994:0crwdne362994:0",
+    "description": "Connection error dialog"
+  },
+  "firmware-outdated-content2": {
+    "defaultMessage": "crwdns362996:0crwdne362996:0",
+    "description": "Connection error dialog"
+  },
+  "firmware-outdated-heading": {
+    "defaultMessage": "crwdns362998:0crwdne362998:0",
+    "description": "Connection error dialog"
+  },
+  "get-started-action": {
+    "defaultMessage": "crwdns363002:0crwdne363002:0",
+    "description": "Get started action"
+  },
+  "go-action": {
+    "defaultMessage": "crwdns363004:0crwdne363004:0",
+    "description": "Go action"
+  },
+  "graph-color-scheme": {
+    "defaultMessage": "crwdns363006:0crwdne363006:0",
+    "description": "Graph colour scheme setting label"
+  },
+  "graph-color-scheme-color-blind-1": {
+    "defaultMessage": "crwdns363008:0crwdne363008:0",
+    "description": "Graph colour scheme option"
+  },
+  "graph-color-scheme-color-blind-2": {
+    "defaultMessage": "crwdns363010:0crwdne363010:0",
+    "description": "Graph colour scheme option"
+  },
+  "graph-color-scheme-default": {
+    "defaultMessage": "crwdns363012:0crwdne363012:0",
+    "description": "Graph colour scheme option"
+  },
+  "graph-line-scheme": {
+    "defaultMessage": "crwdns363504:0crwdne363504:0",
+    "description": "Graph line scheme setting label"
+  },
+  "graph-line-scheme-accessible": {
+    "defaultMessage": "crwdns363506:0crwdne363506:0",
+    "description": "Graph line scheme option"
+  },
+  "graph-line-scheme-solid": {
+    "defaultMessage": "crwdns363508:0crwdne363508:0",
+    "description": "Graph line scheme option"
+  },
+  "graph-line-weight": {
+    "defaultMessage": "crwdns363510:0crwdne363510:0",
+    "description": "Graph line weight setting label"
+  },
+  "graph-line-weight-default": {
+    "defaultMessage": "crwdns363512:0crwdne363512:0",
+    "description": "Graph line weight option"
+  },
+  "graph-line-weight-thick": {
+    "defaultMessage": "crwdns363514:0crwdne363514:0",
+    "description": "Graph line weight option"
+  },
+  "graph-preview": {
+    "defaultMessage": "crwdns363892:0crwdne363892:0",
+    "description": "Label for preview of the graph shown in the settings dialog"
+  },
+  "help-label": {
+    "defaultMessage": "crwdns363014:0crwdne363014:0",
+    "description": "Help icon aria label"
+  },
+  "help-support": {
+    "defaultMessage": "crwdns363016:0crwdne363016:0",
+    "description": "Link or menu item link to support site"
+  },
+  "help-translate": {
+    "defaultMessage": "crwdns363886:0crwdne363886:0",
+    "description": "Help translate  menu option text"
+  },
+  "home-action": {
+    "defaultMessage": "crwdns363018:0crwdne363018:0",
+    "description": "Home button text"
+  },
+  "homepage": {
+    "defaultMessage": "crwdns363020:0crwdne363020:0",
+    "description": "Link to home page"
+  },
+  "homepage-alt": {
+    "defaultMessage": "crwdns363022:0crwdne363022:0",
+    "description": "Alt text for image in homepage"
+  },
+  "homepage-alt-graph": {
+    "defaultMessage": "crwdns363024:0crwdne363024:0",
+    "description": "Alt text for image in homepage"
+  },
+  "homepage-alt-hands": {
+    "defaultMessage": "crwdns363026:0crwdne363026:0",
+    "description": "Alt text for image in homepage"
+  },
+  "homepage-description": {
+    "defaultMessage": "crwdns363028:0crwdne363028:0",
+    "description": "Home page description"
+  },
+  "homepage-how-it-works": {
+    "defaultMessage": "crwdns363030:0crwdne363030:0",
+    "description": "Home page section heading"
+  },
+  "homepage-how-it-works-paragraph": {
+    "defaultMessage": "crwdns363032:0crwdne363032:0",
+    "description": "Home page content under the video"
+  },
+  "homepage-projects": {
+    "defaultMessage": "crwdns363034:0crwdne363034:0",
+    "description": "Home page section heading"
+  },
+  "homepage-projects-more": {
+    "defaultMessage": "crwdns363036:0crwdne363036:0",
+    "description": "Link back to AI landing page"
+  },
+  "homepage-step-by-step": {
+    "defaultMessage": "crwdns363038:0crwdne363038:0",
+    "description": "Home page section heading"
+  },
+  "homepage-subtitle": {
+    "defaultMessage": "crwdns363040:0crwdne363040:0",
+    "description": "Home page subtitle"
+  },
+  "homepage-video-alt": {
+    "defaultMessage": "crwdns363042:0crwdne363042:0",
+    "description": "Home page video alt text"
+  },
+  "import-data-samples-action": {
+    "defaultMessage": "crwdns363044:0crwdne363044:0",
+    "description": "Data samples action"
+  },
+  "import-error-dialog-content": {
+    "defaultMessage": "crwdns363046:0{appNameFull}crwdne363046:0",
+    "description": "Content of import error dialog"
+  },
+  "import-error-dialog-title": {
+    "defaultMessage": "crwdns363048:0crwdne363048:0",
+    "description": "Title of import error dialog"
+  },
+  "incompatible-device-body-alt": {
+    "defaultMessage": "crwdns363050:0crwdne363050:0",
+    "description": "Incompatible device dialog body text"
+  },
+  "incompatible-device-body1": {
+    "defaultMessage": "crwdns363052:0crwdne363052:0",
+    "description": "Incompatible device dialog body text"
+  },
+  "incompatible-device-body2": {
+    "defaultMessage": "crwdns363054:0crwdne363054:0",
+    "description": "Incompatible device dialog body text"
+  },
+  "incompatible-device-heading": {
+    "defaultMessage": "crwdns363056:0crwdne363056:0",
+    "description": "Incompatible device dialog heading"
+  },
+  "incompatible-device-subtitle": {
+    "defaultMessage": "crwdns363058:0crwdne363058:0",
+    "description": "Incompatible device dialog subtitle"
+  },
+  "insufficient-data-body": {
+    "defaultMessage": "crwdns363060:0crwdne363060:0",
+    "description": "Insufficient data modal content"
+  },
+  "insufficient-data-title": {
+    "defaultMessage": "crwdns363062:0crwdne363062:0",
+    "description": "Insufficient data modal title"
+  },
+  "language": {
+    "defaultMessage": "crwdns363064:0crwdne363064:0",
+    "description": "Language option text"
+  },
+  "language-fully-supported-heading": {
+    "defaultMessage": "crwdns366275:0crwdne366275:0",
+    "description": "Fully supported languages heading text"
+  },
+  "language-partially-supported-heading": {
+    "defaultMessage": "crwdns366277:0crwdne366277:0",
+    "description": "Partially supported languages heading text"
+  },
+  "language-support-checked": {
+    "defaultMessage": "crwdns366279:0crwdne366279:0",
+    "description": "Aria label for ticked checkbox for language support"
+  },
+  "language-support-unchecked": {
+    "defaultMessage": "crwdns366281:0crwdne366281:0",
+    "description": "Aria label for unticked checkbox for language support"
+  },
+  "language-supported-for": {
+    "defaultMessage": "crwdns366283:0crwdne366283:0",
+    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
+  },
+  "language-toast-title": {
+    "defaultMessage": "crwdns366285:0crwdne366285:0",
+    "description": "Language support toast notification title"
+  },
+  "learn-about-firewall-requirements-action": {
+    "defaultMessage": "crwdns363066:0crwdne363066:0",
+    "description": "Link to support article for firewall requirements"
+  },
+  "led-icon-option-angry": {
+    "defaultMessage": "crwdns363068:0crwdne363068:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-asleep": {
+    "defaultMessage": "crwdns363070:0crwdne363070:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-butterfly": {
+    "defaultMessage": "crwdns363072:0crwdne363072:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-chessboard": {
+    "defaultMessage": "crwdns363074:0crwdne363074:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-confused": {
+    "defaultMessage": "crwdns363076:0crwdne363076:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-cow": {
+    "defaultMessage": "crwdns363078:0crwdne363078:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-diamond": {
+    "defaultMessage": "crwdns363080:0crwdne363080:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-duck": {
+    "defaultMessage": "crwdns363082:0crwdne363082:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-eighthnote": {
+    "defaultMessage": "crwdns363084:0crwdne363084:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-fabulous": {
+    "defaultMessage": "crwdns363086:0crwdne363086:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-ghost": {
+    "defaultMessage": "crwdns363088:0crwdne363088:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-giraffe": {
+    "defaultMessage": "crwdns363090:0crwdne363090:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-happy": {
+    "defaultMessage": "crwdns363092:0crwdne363092:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-heart": {
+    "defaultMessage": "crwdns363094:0crwdne363094:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-house": {
+    "defaultMessage": "crwdns363096:0crwdne363096:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-lefttriangle": {
+    "defaultMessage": "crwdns363098:0crwdne363098:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-meh": {
+    "defaultMessage": "crwdns363100:0crwdne363100:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-no": {
+    "defaultMessage": "crwdns363102:0crwdne363102:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-off": {
+    "defaultMessage": "crwdns363104:0crwdne363104:0",
+    "description": "Icon option."
+  },
+  "led-icon-option-pitchfork": {
+    "defaultMessage": "crwdns363106:0crwdne363106:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-quarternote": {
+    "defaultMessage": "crwdns363108:0crwdne363108:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-rabbit": {
+    "defaultMessage": "crwdns363110:0crwdne363110:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-rollerskate": {
+    "defaultMessage": "crwdns363112:0crwdne363112:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-sad": {
+    "defaultMessage": "crwdns363114:0crwdne363114:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-scissors": {
+    "defaultMessage": "crwdns363116:0crwdne363116:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-silly": {
+    "defaultMessage": "crwdns363118:0crwdne363118:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-skull": {
+    "defaultMessage": "crwdns363120:0crwdne363120:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-smalldiamond": {
+    "defaultMessage": "crwdns363122:0crwdne363122:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-smallheart": {
+    "defaultMessage": "crwdns363124:0crwdne363124:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-smallsquare": {
+    "defaultMessage": "crwdns363126:0crwdne363126:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-snake": {
+    "defaultMessage": "crwdns363128:0crwdne363128:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-square": {
+    "defaultMessage": "crwdns363130:0crwdne363130:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-stickfigure": {
+    "defaultMessage": "crwdns363132:0crwdne363132:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-surprised": {
+    "defaultMessage": "crwdns363134:0crwdne363134:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-sword": {
+    "defaultMessage": "crwdns363136:0crwdne363136:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-target": {
+    "defaultMessage": "crwdns363138:0crwdne363138:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-tortoise": {
+    "defaultMessage": "crwdns363140:0crwdne363140:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-triangle": {
+    "defaultMessage": "crwdns363142:0crwdne363142:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-tshirt": {
+    "defaultMessage": "crwdns363144:0crwdne363144:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-umbrella": {
+    "defaultMessage": "crwdns363146:0crwdne363146:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "led-icon-option-yes": {
+    "defaultMessage": "crwdns363148:0crwdne363148:0",
+    "description": "Makecode icon option. The translation should match MakeCode translations."
+  },
+  "live-data-graph": {
+    "defaultMessage": "crwdns363150:0crwdne363150:0",
+    "description": "Title for live data graph"
+  },
+  "live-graph": {
+    "defaultMessage": "crwdns363152:0crwdne363152:0",
+    "description": "Heading for live graph"
+  },
+  "live-graph-tooltip": {
+    "defaultMessage": "crwdns363154:0crwdne363154:0",
+    "description": "Tooltip for live graph heading"
+  },
+  "live-graph-tooltip-aria": {
+    "defaultMessage": "crwdns363156:0crwdne363156:0",
+    "description": "Aria label for live graph tooltip icon"
+  },
+  "loading": {
+    "defaultMessage": "crwdns363158:0crwdne363158:0",
+    "description": "Aria label for loading spinner"
+  },
+  "main-menu": {
+    "defaultMessage": "crwdns363160:0crwdne363160:0",
+    "description": "Main menu label"
+  },
+  "makecode-back-alt": {
+    "defaultMessage": "crwdns363162:0crwdne363162:0",
+    "description": "Testing model page title"
+  },
+  "makecode-block-alt-prefix": {
+    "defaultMessage": "crwdns363888:0crwdne363888:0",
+    "description": "Makecode block alt text prefix"
+  },
+  "makecode-block-show-icon": {
+    "defaultMessage": "crwdns363168:0crwdne363168:0",
+    "description": "Makecode block text. The translation should match MakeCode translations."
+  },
+  "makecode-load-error-dialog-body": {
+    "defaultMessage": "crwdns363172:0{appNameFull}crwdne363172:0",
+    "description": "Content of MakeCode load error dialog"
+  },
+  "makecode-load-error-dialog-title": {
+    "defaultMessage": "crwdns363174:0crwdne363174:0",
+    "description": "Title of MakeCode load error dialog"
+  },
+  "microbit-not-connected": {
+    "defaultMessage": "crwdns363176:0crwdne363176:0",
+    "description": "Live graph disconnected micro:bit status message"
+  },
+  "ml.onStart|block": {
+    "defaultMessage": "crwdns363890:0$eventcrwdne363890:0",
+    "description": "This string should be a Crowdin duplicate of the MakeCode extension block with the same text and use the same translation."
+  },
+  "more-edit-in-makecode-options": {
+    "defaultMessage": "crwdns363178:0crwdne363178:0",
+    "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
+  },
+  "name-action-hint": {
+    "defaultMessage": "crwdns363180:0crwdne363180:0",
+    "description": "Hint shown when you have an unnamed action"
+  },
+  "name-project": {
+    "defaultMessage": "crwdns363182:0crwdne363182:0",
+    "description": "Name your project header"
+  },
+  "name-text": {
+    "defaultMessage": "crwdns363184:0crwdne363184:0",
+    "description": "Header for name field"
+  },
+  "name-used-when": {
+    "defaultMessage": "crwdns363186:0crwdne363186:0",
+    "description": "Text under project name field"
+  },
+  "new-session-setup-description": {
+    "defaultMessage": "crwdns363188:0crwdne363188:0",
+    "description": "New session setup description"
+  },
+  "new-session-setup-title": {
+    "defaultMessage": "crwdns363190:0crwdne363190:0",
+    "description": "New session setup title"
+  },
+  "newpage-continue-session-subtitle": {
+    "defaultMessage": "crwdns363192:0crwdne363192:0",
+    "description": "Continue session subtitle"
+  },
+  "newpage-continue-session-title": {
+    "defaultMessage": "crwdns363194:0crwdne363194:0",
+    "description": "Continue session title"
+  },
+  "newpage-last-session-date": {
+    "defaultMessage": "crwdns363196:0{date}crwdne363196:0",
+    "description": "Last session date label"
+  },
+  "newpage-last-session-name": {
+    "defaultMessage": "crwdns363198:0{name}crwdne363198:0",
+    "description": "Last session name label"
+  },
+  "newpage-last-session-none": {
+    "defaultMessage": "crwdns363200:0crwdne363200:0",
+    "description": "Last session not found text"
+  },
+  "newpage-last-session-title": {
+    "defaultMessage": "crwdns363202:0crwdne363202:0",
+    "description": "Open last session title"
+  },
+  "newpage-new-session-subtitle": {
+    "defaultMessage": "crwdns363204:0crwdne363204:0",
+    "description": "Start new session subtitle"
+  },
+  "newpage-new-session-title": {
+    "defaultMessage": "crwdns363206:0crwdne363206:0",
+    "description": "Start new session title"
+  },
+  "newpage-section-one-title": {
+    "defaultMessage": "crwdns363208:0crwdne363208:0",
+    "description": "Homepage section one title"
+  },
+  "newpage-section-two-title": {
+    "defaultMessage": "crwdns363210:0crwdne363210:0",
+    "description": "Homepage section two title"
+  },
+  "newpage-title": {
+    "defaultMessage": "crwdns363212:0crwdne363212:0",
+    "description": "New page title"
+  },
+  "next-action": {
+    "defaultMessage": "crwdns363214:0crwdne363214:0",
+    "description": "Next button text for dialogs and similar"
+  },
+  "no-data-samples": {
+    "defaultMessage": "crwdns363216:0crwdne363216:0",
+    "description": "Empty data samples page status text"
+  },
+  "not-create-ai-hex-import-dialog-content": {
+    "defaultMessage": "crwdns363218:0crwdne363218:0",
+    "description": "Content of import non-CreateAI hex dialog"
+  },
+  "not-create-ai-hex-import-dialog-title": {
+    "defaultMessage": "crwdns363220:0crwdne363220:0",
+    "description": "Title of import non-CreateAI hex dialog"
+  },
+  "not-found": {
+    "defaultMessage": "crwdns363222:0{appNameFull}crwdne363222:0",
+    "description": "Page not found link text"
+  },
+  "not-found-title": {
+    "defaultMessage": "crwdns363224:0crwdne363224:0",
+    "description": "Page not found page title"
+  },
+  "open-file-action": {
+    "defaultMessage": "crwdns363226:0crwdne363226:0",
+    "description": "Open file button text"
+  },
+  "open-file-dropped": {
+    "defaultMessage": "crwdns363228:0crwdne363228:0",
+    "description": "Aria label for file drop target"
+  },
+  "other-tabs-body1": {
+    "defaultMessage": "crwdns363230:0crwdne363230:0",
+    "description": "Connection error dialog"
+  },
+  "other-tabs-body2": {
+    "defaultMessage": "crwdns363232:0{appNameShort}crwdne363232:0",
+    "description": "Connection error dialog"
+  },
+  "other-tabs-heading": {
+    "defaultMessage": "crwdns363234:0crwdne363234:0",
+    "description": "Connection error dialog"
+  },
+  "privacy": {
+    "defaultMessage": "crwdns363236:0crwdne363236:0",
+    "description": "Link to view privacy policy"
+  },
+  "project-loaded": {
+    "defaultMessage": "crwdns363238:0crwdne363238:0",
+    "description": "Toast when a new project is loaded"
+  },
+  "project-name-not-empty": {
+    "defaultMessage": "crwdns363240:0crwdne363240:0",
+    "description": "Validation message for project name"
+  },
+  "radio-link-microbit": {
+    "defaultMessage": "crwdns363242:0crwdne363242:0",
+    "description": "Radio link micro:bit image caption"
+  },
+  "radio-link-microbit-label": {
+    "defaultMessage": "crwdns363244:0crwdne363244:0",
+    "description": "Aria label for radio link image"
+  },
+  "recognition-point-label": {
+    "defaultMessage": "crwdns363246:0crwdne363246:0",
+    "description": "Label for the slider for the recognition point"
+  },
+  "reconnect-action": {
+    "defaultMessage": "crwdns363248:0crwdne363248:0",
+    "description": "Button text to reconnect a micro:bit over Bluetooth/radio"
+  },
+  "reconnect-failed-bluetooth-heading": {
+    "defaultMessage": "crwdns363250:0crwdne363250:0",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-bluetooth1": {
+    "defaultMessage": "crwdns363252:0crwdne363252:0",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-bridge-heading": {
+    "defaultMessage": "crwdns363254:0crwdne363254:0",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-bridge1": {
+    "defaultMessage": "crwdns363256:0crwdne363256:0",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-radio-heading": {
+    "defaultMessage": "crwdns363258:0crwdne363258:0",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-remote-heading": {
+    "defaultMessage": "crwdns363260:0crwdne363260:0",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-remote1": {
+    "defaultMessage": "crwdns363262:0crwdne363262:0",
+    "description": "Connection error dialog"
+  },
+  "reconnect-failed-subtitle": {
+    "defaultMessage": "crwdns363264:0crwdne363264:0",
+    "description": "Connection error dialog"
+  },
+  "reconnecting": {
+    "defaultMessage": "crwdns363266:0crwdne363266:0",
+    "description": "Shown while reconnecting"
+  },
+  "record-action": {
+    "defaultMessage": "crwdns363268:0crwdne363268:0",
+    "description": "Record button text"
+  },
+  "record-action-aria": {
+    "defaultMessage": "crwdns363270:0{action}crwdne363270:0",
+    "description": "Aria label for record button"
+  },
+  "record-hint": {
+    "defaultMessage": "crwdns363272:0crwdne363272:0",
+    "description": "Hint when you have named the first action but not recorded any data samples"
+  },
+  "record-hint-button-b": {
+    "defaultMessage": "crwdns363274:0crwdne363274:0",
+    "description": "Hint when you have named the first action but not recorded any data samples and have a micro:bit connected"
+  },
+  "record-samples": {
+    "defaultMessage": "crwdns363276:0{numSamples}crwdne363276:0",
+    "description": "Additional recording action text"
+  },
+  "record-samples-help": {
+    "defaultMessage": "crwdns363278:0crwdne363278:0",
+    "description": "Help text for additional recording action"
+  },
+  "record-seconds": {
+    "defaultMessage": "crwdns363280:0{numSeconds}crwdne363280:0",
+    "description": "Additional recording action text"
+  },
+  "record-seconds-help": {
+    "defaultMessage": "crwdns363282:0{numSamples}crwdne363282:0",
+    "description": "Help text for additional recording action"
+  },
+  "recording": {
+    "defaultMessage": "crwdns363284:0crwdne363284:0",
+    "description": "Shown during recording"
+  },
+  "recording-complete": {
+    "defaultMessage": "crwdns363286:0crwdne363286:0",
+    "description": "Text shown when data recording complete"
+  },
+  "recording-data-for": {
+    "defaultMessage": "crwdns363288:0{action}crwdne363288:0",
+    "description": "Text in recording dialog"
+  },
+  "recording-data-for-numbered": {
+    "defaultMessage": "crwdns363290:0{sample}crwdnd363290:0{numSamples}crwdnd363290:0{action}crwdne363290:0",
+    "description": "Text in recording dialog"
+  },
+  "recording-fingerprint-label": {
+    "defaultMessage": "crwdns363292:0crwdne363292:0",
+    "description": "Label for recording fingerprint heatmap"
+  },
+  "recording-graph-label": {
+    "defaultMessage": "crwdns363294:0crwdne363294:0",
+    "description": "Label for recording graph"
+  },
+  "recording-options-aria": {
+    "defaultMessage": "crwdns363296:0{action}crwdne363296:0",
+    "description": "Aria label for more recording options button"
+  },
+  "reload-action": {
+    "defaultMessage": "crwdns363298:0crwdne363298:0",
+    "description": "Reload button text"
+  },
+  "reset-to-default-action": {
+    "defaultMessage": "crwdns363300:0crwdne363300:0",
+    "description": "Reset to default blocks button text"
+  },
+  "restore-defaults-action": {
+    "defaultMessage": "crwdns363302:0crwdne363302:0",
+    "description": "Restore default button text"
+  },
+  "restore-defaults-confirm-action": {
+    "defaultMessage": "crwdns363304:0crwdne363304:0",
+    "description": "Restore default settings confirm button text"
+  },
+  "restore-defaults-confirm-body": {
+    "defaultMessage": "crwdns363306:0crwdne363306:0",
+    "description": "Restore default settings confirmation dialog body text"
+  },
+  "restore-defaults-confirm-heading": {
+    "defaultMessage": "crwdns363308:0crwdne363308:0",
+    "description": "Restore default settings confirmation dialog title"
+  },
+  "restore-defaults-helper": {
+    "defaultMessage": "crwdns363310:0crwdne363310:0",
+    "description": "Restore default settings helper text"
+  },
+  "save-action": {
+    "defaultMessage": "crwdns363312:0crwdne363312:0",
+    "description": "Label for action that saves the project as a file the user downloads"
+  },
+  "save-hex-dialog-heading": {
+    "defaultMessage": "crwdns363314:0crwdne363314:0",
+    "description": "Heading for the dialog shown when saving a hex file"
+  },
+  "save-hex-dialog-message1": {
+    "defaultMessage": "crwdns363316:0{appNameFull}crwdne363316:0",
+    "description": "Text in the dialog shown when saving a hex file"
+  },
+  "save-hex-dialog-message2": {
+    "defaultMessage": "crwdns363318:0crwdne363318:0",
+    "description": "Text in the dialog shown when saving a hex file"
+  },
+  "saving-description": {
+    "defaultMessage": "crwdns363320:0crwdne363320:0",
+    "description": "Saving progress dialog text"
+  },
+  "saving-title": {
+    "defaultMessage": "crwdns363322:0crwdne363322:0",
+    "description": "Saving progress title"
+  },
+  "saving-toast-title": {
+    "defaultMessage": "crwdns363324:0crwdne363324:0",
+    "description": "Notification after a hex file has been downloaded"
+  },
+  "select-icon-action-aria": {
+    "defaultMessage": "crwdns363326:0{action}crwdne363326:0",
+    "description": "Aria label for pick icon button"
+  },
+  "select-icon-action-untitled-aria": {
+    "defaultMessage": "crwdns363328:0crwdne363328:0",
+    "description": "Aria label for pick icon button"
+  },
+  "select-icon-option-action-aria": {
+    "defaultMessage": "crwdns363330:0{iconName}crwdne363330:0",
+    "description": "Aria label for icon option"
+  },
+  "settings": {
+    "defaultMessage": "crwdns363332:0crwdne363332:0",
+    "description": "Text for settings dialog header and menu item"
+  },
+  "settings-menu-action": {
+    "defaultMessage": "crwdns363334:0crwdne363334:0",
+    "description": "Label for settings actions menu button"
+  },
+  "show-graphs-checkbox-label-text": {
+    "defaultMessage": "crwdns363336:0crwdne363336:0",
+    "description": "Show graphs checkbox label text"
+  },
+  "simple-ai-exercise-timer-resource-title": {
+    "defaultMessage": "crwdns363338:0crwdne363338:0",
+    "description": "Home page resource card title"
+  },
+  "skip-tour-action": {
+    "defaultMessage": "crwdns363340:0crwdne363340:0",
+    "description": "Skip tour button text"
+  },
+  "software-versions": {
+    "defaultMessage": "crwdns363342:0crwdne363342:0",
+    "description": "Software versions text"
+  },
+  "start-session-action": {
+    "defaultMessage": "crwdns363344:0crwdne363344:0",
+    "description": "Start session button text"
+  },
+  "start-training-action": {
+    "defaultMessage": "crwdns363346:0crwdne363346:0",
+    "description": "Start training button text"
+  },
+  "steps-alt": {
+    "defaultMessage": "crwdns363348:0crwdne363348:0",
+    "description": "Alt text for the step-by-step home page diagram"
+  },
+  "steps-code": {
+    "defaultMessage": "crwdns363350:0crwdne363350:0",
+    "description": "Step in home page diagram"
+  },
+  "steps-collect-data": {
+    "defaultMessage": "crwdns363352:0crwdne363352:0",
+    "description": "Step in home page diagram"
+  },
+  "steps-improve": {
+    "defaultMessage": "crwdns363354:0crwdne363354:0",
+    "description": "Step in home page diagram"
+  },
+  "steps-test-model": {
+    "defaultMessage": "crwdns363356:0crwdne363356:0",
+    "description": "Step in home page diagram"
+  },
+  "steps-train": {
+    "defaultMessage": "crwdns363358:0crwdne363358:0",
+    "description": "Step in home page diagram"
+  },
+  "stop-recording-action": {
+    "defaultMessage": "crwdns363360:0crwdne363360:0",
+    "description": "Button label to stop recording movement data while recording multiple samples"
+  },
+  "support-request": {
+    "defaultMessage": "crwdns363362:0crwdne363362:0",
+    "description": "Support request link text"
+  },
+  "terms": {
+    "defaultMessage": "crwdns363364:0crwdne363364:0",
+    "description": "Link or menu item link to view terms of use"
+  },
+  "testing-model-actions-region": {
+    "defaultMessage": "crwdns363366:0crwdne363366:0",
+    "description": "Region label for testing model actions"
+  },
+  "testing-model-title": {
+    "defaultMessage": "crwdns363368:0crwdne363368:0",
+    "description": "Testing model page title"
+  },
+  "tour-action": {
+    "defaultMessage": "crwdns363370:0crwdne363370:0",
+    "description": "Button label that starts a tour of the app's features"
+  },
+  "tour-collect-addActions-content": {
+    "defaultMessage": "crwdns363372:0crwdne363372:0",
+    "description": "Tour step description"
+  },
+  "tour-collect-addActions-title": {
+    "defaultMessage": "crwdns363374:0crwdne363374:0",
+    "description": "Tour step title"
+  },
+  "tour-collect-afterFirst-content": {
+    "defaultMessage": "crwdns363376:0crwdne363376:0",
+    "description": "Tour step description"
+  },
+  "tour-collect-afterFirst-title": {
+    "defaultMessage": "crwdns363378:0recordingCount={recordingCount}crwdne363378:0",
+    "description": "Tour step title. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+  },
+  "tour-collect-collectMore-explanation-content": {
+    "defaultMessage": "crwdns363380:0crwdne363380:0",
+    "description": "Tour step description"
+  },
+  "tour-collect-collectMore-hasRecordings-content": {
+    "defaultMessage": "crwdns363382:0crwdne363382:0",
+    "description": "Tour step description"
+  },
+  "tour-collect-collectMore-noRecordings-content": {
+    "defaultMessage": "crwdns363384:0crwdne363384:0",
+    "description": "Tour step description"
+  },
+  "tour-collect-collectMore-title": {
+    "defaultMessage": "crwdns363386:0crwdne363386:0",
+    "description": "Tour step title"
+  },
+  "tour-collect-trainModel-content": {
+    "defaultMessage": "crwdns363388:0crwdne363388:0",
+    "description": "Tour step description"
+  },
+  "tour-dataSamples-actions-common-content": {
+    "defaultMessage": "crwdns363390:0crwdne363390:0",
+    "description": "Tour step content"
+  },
+  "tour-dataSamples-actions-noRecordings-content": {
+    "defaultMessage": "crwdns363392:0crwdne363392:0",
+    "description": "Tour step content"
+  },
+  "tour-dataSamples-connected-content": {
+    "defaultMessage": "crwdns363394:0crwdne363394:0",
+    "description": "Tour step content"
+  },
+  "tour-dataSamples-connected-title": {
+    "defaultMessage": "crwdns363396:0crwdne363396:0",
+    "description": "Tour step title"
+  },
+  "tour-dataSamples-liveGraph-content": {
+    "defaultMessage": "crwdns363398:0crwdne363398:0",
+    "description": "Tour step content"
+  },
+  "tour-makecode-intro-content1": {
+    "defaultMessage": "crwdns363400:0crwdne363400:0",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-content2": {
+    "defaultMessage": "crwdns363402:0crwdne363402:0",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-content3": {
+    "defaultMessage": "crwdns363404:0crwdne363404:0",
+    "description": "Tour step description"
+  },
+  "tour-makecode-intro-title": {
+    "defaultMessage": "crwdns363406:0crwdne363406:0",
+    "description": "Tour step title"
+  },
+  "tour-trainModel-afterTrain-alreadyConnected-title": {
+    "defaultMessage": "crwdns363408:0crwdne363408:0",
+    "description": "Tour step title"
+  },
+  "tour-trainModel-afterTrain-content": {
+    "defaultMessage": "crwdns363410:0crwdne363410:0",
+    "description": "Tour step description"
+  },
+  "tour-trainModel-afterTrain-delayedUntilConnected-title": {
+    "defaultMessage": "crwdns363412:0crwdne363412:0",
+    "description": "Tour step title"
+  },
+  "tour-trainModel-certaintyRecognition-content": {
+    "defaultMessage": "crwdns363414:0crwdne363414:0",
+    "description": "Tour step description"
+  },
+  "tour-trainModel-certaintyRecognition-title": {
+    "defaultMessage": "crwdns363416:0crwdne363416:0",
+    "description": "Tour step title"
+  },
+  "tour-trainModel-editInMakeCode-content": {
+    "defaultMessage": "crwdns363418:0crwdne363418:0",
+    "description": "Tour step description"
+  },
+  "tour-trainModel-estimatedAction-content": {
+    "defaultMessage": "crwdns363420:0crwdne363420:0",
+    "description": "Tour step description"
+  },
+  "tour-trainModel-makeCodeBlocks-content": {
+    "defaultMessage": "crwdns363422:0crwdne363422:0",
+    "description": "Tour step description"
+  },
+  "tour-trainModel-makeCodeBlocks-title": {
+    "defaultMessage": "crwdns363424:0crwdne363424:0",
+    "description": "Tour step title"
+  },
+  "train-description": {
+    "defaultMessage": "crwdns363426:0{appNameFull}crwdne363426:0",
+    "description": "Explanation on training dialog"
+  },
+  "train-error-body": {
+    "defaultMessage": "crwdns363428:0crwdne363428:0",
+    "description": "Training error dialog"
+  },
+  "train-error-header": {
+    "defaultMessage": "crwdns363430:0crwdne363430:0",
+    "description": "Training error dialog"
+  },
+  "train-error-todo": {
+    "defaultMessage": "crwdns363432:0crwdne363432:0",
+    "description": "Training error dialog"
+  },
+  "train-header": {
+    "defaultMessage": "crwdns363434:0crwdne363434:0",
+    "description": "Training dialog"
+  },
+  "train-model": {
+    "defaultMessage": "crwdns363436:0crwdne363436:0",
+    "description": "Action to train a model"
+  },
+  "training-model": {
+    "defaultMessage": "crwdns363438:0crwdne363438:0",
+    "description": "Progress title"
+  },
+  "transfer-hex-alt": {
+    "defaultMessage": "crwdns363440:0crwdne363440:0",
+    "description": "Alt text"
+  },
+  "transfer-hex-heading": {
+    "defaultMessage": "crwdns363442:0crwdne363442:0",
+    "description": "Dialog shown when WebUSB fails"
+  },
+  "transfer-hex-manual-download": {
+    "defaultMessage": "crwdns363444:0crwdne363444:0",
+    "description": "Dialog shown when WebUSB fails"
+  },
+  "transfer-hex-message": {
+    "defaultMessage": "crwdns363446:0crwdne363446:0",
+    "description": "Dialog shown when WebUSB fails"
+  },
+  "try-again-action": {
+    "defaultMessage": "crwdns363448:0crwdne363448:0",
+    "description": "Button label"
+  },
+  "unknown": {
+    "defaultMessage": "crwdns363450:0crwdne363450:0",
+    "description": "Label for unknown ML event"
+  },
+  "unplug-radio-link-microbit-description": {
+    "defaultMessage": "crwdns363452:0crwdne363452:0",
+    "description": "Unplug radio link micro:bit dialog description"
+  },
+  "unplug-radio-link-microbit-label": {
+    "defaultMessage": "crwdns363454:0crwdne363454:0",
+    "description": "Unplug radio link micro:bit dialog aria label"
+  },
+  "unplug-radio-link-microbit-title": {
+    "defaultMessage": "crwdns363456:0crwdne363456:0",
+    "description": "Unplug radio link micro:bit dialog title"
+  },
+  "unsupported-device-explain": {
+    "defaultMessage": "crwdns363458:0crwdne363458:0",
+    "description": "Unsupported device dialog"
+  },
+  "unsupported-device-header": {
+    "defaultMessage": "crwdns363460:0crwdne363460:0",
+    "description": "Unsupported device dialog"
+  },
+  "unsupported-device-with-bluetooth": {
+    "defaultMessage": "crwdns363462:0crwdne363462:0",
+    "description": "Unsupported device dialog"
+  },
+  "unsupported-device-without-bluetooth": {
+    "defaultMessage": "crwdns363464:0crwdne363464:0",
+    "description": "Unsupported device dialog"
+  },
+  "user-guide": {
+    "defaultMessage": "crwdns363466:0crwdne363466:0",
+    "description": "Used for link to user guide page on microbit.org"
+  },
+  "webusb-retry-no-select": {
+    "defaultMessage": "crwdns363468:0crwdne363468:0",
+    "description": "Shown if the user fails to choose a micro:bit"
+  },
+  "webusb-retry-replug1": {
+    "defaultMessage": "crwdns363470:0crwdne363470:0",
+    "description": "WebUSB error dialog"
+  },
+  "webusb-retry-replug2": {
+    "defaultMessage": "crwdns363472:0crwdne363472:0",
+    "description": "WebUSB error dialog"
+  },
+  "webusb-retry-replug3": {
+    "defaultMessage": "crwdns363474:0crwdne363474:0",
+    "description": "WebUSB error dialog"
+  },
+  "webusb-retry-replug4": {
+    "defaultMessage": "crwdns363476:0crwdne363476:0",
+    "description": "WebUSB error dialog"
+  }
+}

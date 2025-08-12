@@ -19,6 +19,10 @@
     "defaultMessage": "micro:bit mostrando o eixo X indo através da frente, o eixo Y indo para baixo e para cima, o eixo Z voltando à frente",
     "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
   },
+  "accessibility": {
+    "defaultMessage": "Acessibilidade",
+    "description": "Menu item for link to accessibility site"
+  },
   "action-label": {
     "defaultMessage": "Ação",
     "description": "Label for a movement-related action, e.g. clapping"
@@ -40,7 +44,7 @@
     "description": "Region label for action row"
   },
   "action-tooltip": {
-    "defaultMessage": "O tipo de movimento que você deseja que {appNameFull} reconheça, por exemplo, 'aceno' ou 'aplauso'.",
+    "defaultMessage": "O tipo de movimento que você deseja que {appNameFull} reconheça, por exemplo, 'balançar as mãos' ou 'bater palmas'.",
     "description": "Tooltip explaining action"
   },
   "actions-label": {
@@ -52,11 +56,11 @@
     "description": "Button to add an action (movement related, e.g. clapping)"
   },
   "ai-activity-timer-resource-title": {
-    "defaultMessage": "AI activity timer",
+    "defaultMessage": "Cronômetro de atividades de IA",
     "description": "Home page resource card title"
   },
   "ai-storytelling-friend-resource-title": {
-    "defaultMessage": "Amigo de narrativa de IA",
+    "defaultMessage": "Amigo contador de histórias de IA",
     "description": "Home page resource card title"
   },
   "back-action": {
@@ -92,7 +96,7 @@
     "description": "Heading for certainty column"
   },
   "certainty-label-tooltip-aria": {
-    "defaultMessage": "Dica de certeza",
+    "defaultMessage": "Descrição de certeza",
     "description": "Aria label for code certainty icon"
   },
   "certainty-percentage-label": {
@@ -144,7 +148,7 @@
     "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
   },
   "connect-battery-heading": {
-    "defaultMessage": "Desconecte o USB e conecte o pacote de baterias.",
+    "defaultMessage": "Desconecte o USB e conecte o conjunto de baterias.",
     "description": "Battery connection dialog "
   },
   "connect-battery-holder": {
@@ -156,7 +160,7 @@
     "description": "Battery connection dialog"
   },
   "connect-battery-subtitle": {
-    "defaultMessage": "Desconecte o micro:bit do computador e conecte o pacote de baterias.",
+    "defaultMessage": "Desconecte o micro:bit do computador e conecte o conjunto de baterias.",
     "description": "Battery connection dialog"
   },
   "connect-bluetooth-cancelled-connection": {
@@ -172,7 +176,7 @@
     "description": "Error when the bluetooth pattern is incomplete "
   },
   "connect-bluetooth-start-heading": {
-    "defaultMessage": "O que você precisa conectar usando o Web Bluetooth.",
+    "defaultMessage": "Do que você precisa para se conectar usando o Web Bluetooth.",
     "description": "Connection dialog heading"
   },
   "connect-bluetooth-start-requirements1": {
@@ -212,7 +216,7 @@
     "description": "Label for computer icon in connection dialog"
   },
   "connect-data-collection-heading": {
-    "defaultMessage": "Conecte o cabo USB para micro:bit 1",
+    "defaultMessage": "Conecte o cabo USB no micro:bit 1",
     "description": "Connection dialog heading"
   },
   "connect-data-collection-subtitle": {
@@ -228,7 +232,7 @@
     "description": "Bluetooth connection error message"
   },
   "connect-failed-bridge-heading": {
-    "defaultMessage": "Falha ao conectar ao micro:bit de link de rádio.",
+    "defaultMessage": "Falha ao conectar ao link de rádio do micro:bit.",
     "description": "micro:bit radio connection error message"
   },
   "connect-failed-bridge1": {
@@ -236,7 +240,7 @@
     "description": "micro:bit radio connection error message"
   },
   "connect-failed-remote-heading": {
-    "defaultMessage": "Falha ao conectar ao micro:bit de coleta de dados.",
+    "defaultMessage": "Não foi possível conectar ao micro:bit de coleta de dados.",
     "description": "micro:bit radio connection error message"
   },
   "connect-failed-remote1": {
@@ -328,7 +332,7 @@
     "description": "Instruction for connecting radio link micro:bit cable"
   },
   "connect-radio-start-heading": {
-    "defaultMessage": "O que você precisa conectar usando o rádio do micro:bit.",
+    "defaultMessage": "O que você precisa para conectar usando o rádio do micro:bit.",
     "description": "Connection dialog heading"
   },
   "connect-radio-start-requirements1": {
@@ -384,7 +388,7 @@
     "description": "Text shown while waiting for bluetooth/radio connection"
   },
   "continue-makecode-action": {
-    "defaultMessage": "Continuar para MakeCode",
+    "defaultMessage": "Continuar no MakeCode",
     "description": "Continue to MakeCode editor button text"
   },
   "cookies-action": {
@@ -404,7 +408,7 @@
     "description": "Aria label for menu"
   },
   "data-collection-microbit": {
-    "defaultMessage": "Coleta de dados micro:bit",
+    "defaultMessage": "A coleta de dados micro:bit",
     "description": "Data collection micro:bit image caption"
   },
   "data-collection-microbit-label": {
@@ -416,7 +420,7 @@
     "description": "Region label for data connection area"
   },
   "data-features-hide-action": {
-    "defaultMessage": "Ocultar recursos de dados",
+    "defaultMessage": "Ocultar características de dados",
     "description": "Hide data features button text"
   },
   "data-features-show-action": {
@@ -492,7 +496,7 @@
     "description": "Error when the micro:bit is disconnected during recording"
   },
   "disconnected-warning-bluetooth-heading": {
-    "defaultMessage": "Conexão com o micro:bit de coleta de dados perdida.",
+    "defaultMessage": "Conexão do micro:bit durante a coleta de dados perdida.",
     "description": "Dialog heading"
   },
   "disconnected-warning-bluetooth1": {
@@ -512,7 +516,7 @@
     "description": "List item, one of several things to check about the micro:bit"
   },
   "disconnected-warning-bridge-heading": {
-    "defaultMessage": "Conexão do link de rádio micro:bit perdida",
+    "defaultMessage": "Conexão de rádio do micro:bit perdida",
     "description": "Connection error dialog"
   },
   "disconnected-warning-bridge1": {
@@ -520,7 +524,7 @@
     "description": "Connection error dialog"
   },
   "disconnected-warning-remote-heading": {
-    "defaultMessage": "Conexão com o micro:bit de coleta de dados perdida.",
+    "defaultMessage": "Conexão do micro:bit durante a coleta de dados perdida.",
     "description": "Connection error dialog"
   },
   "disconnected-warning-remote1": {
@@ -568,7 +572,7 @@
     "description": "Progress text"
   },
   "downloading-radio-link-header": {
-    "defaultMessage": "Baixando o programa do link de rádio",
+    "defaultMessage": "Baixando o programa de link de rádio",
     "description": "Progress text"
   },
   "downloading-subtitle": {
@@ -588,7 +592,7 @@
     "description": "Heading for estimated action area next to the live graph"
   },
   "estimated-action-label-tooltip-aria": {
-    "defaultMessage": "Dica da ação estimada",
+    "defaultMessage": "Dica de ferramenta de ação estimada",
     "description": "Aria label for estimated action tooltip icon"
   },
   "estimated-action-tooltip": {
@@ -652,7 +656,7 @@
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-peaks-y-tooltip": {
-    "defaultMessage": "Number of extremes among all x-direction data points",
+    "defaultMessage": "Número de extremos entre todos os pontos de dados na direção y",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-peaks-z-tooltip": {
@@ -684,7 +688,7 @@
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-zcr-x-tooltip": {
-    "defaultMessage": "Taxa na qual a aceleração transita entre positiva e negativa para os dados na direção x",
+    "defaultMessage": "Taxa com que a aceleração transita entre positiva e negativa para os pontos de dados na direção x",
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-zcr-y-tooltip": {
@@ -692,7 +696,7 @@
     "description": "Tooltip for data feature of a recording"
   },
   "fingerprint-zcr-z-tooltip": {
-    "defaultMessage": "Taxa na qual a aceleração transita entre positiva e negativa para os dados na direção z",
+    "defaultMessage": "Taxa com a qual a aceleração transita entre positiva e negativa para os pontos de dados na direção z",
     "description": "Tooltip for data feature of a recording"
   },
   "firmware-outdated-content1": {
@@ -756,7 +760,7 @@
     "description": "Graph line weight option"
   },
   "graph-preview": {
-    "defaultMessage": "Graph preview",
+    "defaultMessage": "Pré-visualização do gráfico",
     "description": "Label for preview of the graph shown in the settings dialog"
   },
   "help-label": {
@@ -867,12 +871,36 @@
     "defaultMessage": "Idioma",
     "description": "Language option text"
   },
+  "language-fully-supported-heading": {
+    "defaultMessage": "Fully supported",
+    "description": "Fully supported languages heading text"
+  },
+  "language-partially-supported-heading": {
+    "defaultMessage": "Partially supported",
+    "description": "Partially supported languages heading text"
+  },
+  "language-support-checked": {
+    "defaultMessage": "Auxiliado",
+    "description": "Aria label for ticked checkbox for language support"
+  },
+  "language-support-unchecked": {
+    "defaultMessage": "Não auxiliado",
+    "description": "Aria label for unticked checkbox for language support"
+  },
+  "language-supported-for": {
+    "defaultMessage": "Traduções suportadas para:",
+    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
+  },
+  "language-toast-title": {
+    "defaultMessage": "O idioma possui suporte parcial",
+    "description": "Language support toast notification title"
+  },
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "Saiba mais sobre os requisitos de firewall.",
     "description": "Link to support article for firewall requirements"
   },
   "led-icon-option-angry": {
-    "defaultMessage": "Bravo",
+    "defaultMessage": "Irritado",
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-asleep": {
@@ -904,7 +932,7 @@
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-eighthnote": {
-    "defaultMessage": "Oitava Nota",
+    "defaultMessage": "Colcheia",
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-fabulous": {
@@ -912,7 +940,7 @@
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-ghost": {
-    "defaultMessage": "Fantasma\n\nAparição",
+    "defaultMessage": "Fantasma",
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-giraffe": {
@@ -928,7 +956,7 @@
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-house": {
-    "defaultMessage": "Residência",
+    "defaultMessage": "Casa",
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-lefttriangle": {
@@ -944,7 +972,7 @@
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-off": {
-    "defaultMessage": "Desativado",
+    "defaultMessage": "Desligado",
     "description": "Icon option."
   },
   "led-icon-option-pitchfork": {
@@ -952,7 +980,7 @@
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-quarternote": {
-    "defaultMessage": "Nota de quarto",
+    "defaultMessage": "Semínima",
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-rabbit": {
@@ -960,7 +988,7 @@
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-rollerskate": {
-    "defaultMessage": "Patins",
+    "defaultMessage": "Patins de rodas",
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-sad": {
@@ -972,11 +1000,11 @@
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-silly": {
-    "defaultMessage": "Bobo",
+    "defaultMessage": "Engraçado",
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-skull": {
-    "defaultMessage": "Caveira/Crânio",
+    "defaultMessage": "Crânio",
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-smalldiamond": {
@@ -1004,7 +1032,7 @@
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-surprised": {
-    "defaultMessage": "Surpreso",
+    "defaultMessage": "Surpresa",
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-sword": {
@@ -1024,7 +1052,7 @@
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-tshirt": {
-    "defaultMessage": "Camisa",
+    "defaultMessage": "Camiseta",
     "description": "Makecode icon option. The translation should match MakeCode translations."
   },
   "led-icon-option-umbrella": {
@@ -1048,7 +1076,7 @@
     "description": "Tooltip for live graph heading"
   },
   "live-graph-tooltip-aria": {
-    "defaultMessage": "Dica de ferramenta do gráfico ao vivo",
+    "defaultMessage": "Tooltip do gráfico em tempo real",
     "description": "Aria label for live graph tooltip icon"
   },
   "loading": {
@@ -1124,11 +1152,11 @@
     "description": "Continue session title"
   },
   "newpage-last-session-date": {
-    "defaultMessage": "<strong>Data:</strong> {date}",
+    "defaultMessage": "Data: {date}",
     "description": "Last session date label"
   },
   "newpage-last-session-name": {
-    "defaultMessage": "<strong>Nome:</strong> {name}",
+    "defaultMessage": "Nome: {name}",
     "description": "Last session name label"
   },
   "newpage-last-session-none": {
@@ -1188,7 +1216,7 @@
     "description": "Open file button text"
   },
   "open-file-dropped": {
-    "defaultMessage": "Abrir arquivo quando concluído",
+    "defaultMessage": "Abrir arquivo quando solto",
     "description": "Aria label for file drop target"
   },
   "other-tabs-body1": {
@@ -1240,7 +1268,7 @@
     "description": "Connection error dialog"
   },
   "reconnect-failed-bridge-heading": {
-    "defaultMessage": "Falha ao reconectar ao micro:bit do link de rádio",
+    "defaultMessage": "Falha ao reconectar ao link de rádio do micro:bit",
     "description": "Connection error dialog"
   },
   "reconnect-failed-bridge1": {
@@ -1392,7 +1420,7 @@
     "description": "Aria label for pick icon button"
   },
   "select-icon-option-action-aria": {
-    "defaultMessage": "Selecionar ícone \"{iconName}\"",
+    "defaultMessage": "Selecionar o ícone \"{iconName}\"",
     "description": "Aria label for icon option"
   },
   "settings": {
@@ -1400,7 +1428,7 @@
     "description": "Text for settings dialog header and menu item"
   },
   "settings-menu-action": {
-    "defaultMessage": "Menu de configurações",
+    "defaultMessage": "Menu de ações de configurações",
     "description": "Label for settings actions menu button"
   },
   "show-graphs-checkbox-label-text": {
@@ -1408,7 +1436,7 @@
     "description": "Show graphs checkbox label text"
   },
   "simple-ai-exercise-timer-resource-title": {
-    "defaultMessage": "Simple AI exercise timer",
+    "defaultMessage": "Cronômetro de exercício do Simple IA",
     "description": "Home page resource card title"
   },
   "skip-tour-action": {
@@ -1512,7 +1540,7 @@
     "description": "Tour step description"
   },
   "tour-dataSamples-actions-common-content": {
-    "defaultMessage": "Uma ação é o tipo de movimento que você deseja que o modelo de aprendizado de máquina reconheça, por exemplo, \"aceno\" ou \"aplauso\".",
+    "defaultMessage": "Uma ação é o tipo de movimento que você deseja que o modelo de aprendizado de máquina reconheça, como 'acenar' ou 'bater palmas'.",
     "description": "Tour step content"
   },
   "tour-dataSamples-actions-noRecordings-content": {
@@ -1660,7 +1688,7 @@
     "description": "Unsupported device dialog"
   },
   "unsupported-device-without-bluetooth": {
-    "defaultMessage": "Você pode se conectar ao micro:bit V1 usando o Web Bluetooth, no entanto, este navegador ou dispositivo não tem o Bluetooth ativado. <link>Como ativar o Bluetooth</link>.",
+    "defaultMessage": "Você pode se conectar ao micro:bit V1 usando o Web Bluetooth, no entanto, este navegador ou dispositivo não tem o Bluetooth ativado. Como ativar o Bluetooth.",
     "description": "Unsupported device dialog"
   },
   "user-guide": {

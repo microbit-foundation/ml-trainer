@@ -11,6 +11,7 @@ import React, { forwardRef } from "react";
 import { useProject } from "../hooks/project-hooks";
 import { getMakeCodeLang } from "../settings";
 import { useSettings } from "../store";
+import { getEditorVersionOverride } from "../editor-version";
 
 const controllerId = "MicrobitMachineLearningTool";
 
@@ -27,10 +28,12 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
   return (
     <MakeCodeFrame
       ref={ref}
+      queryParams={{ hidelanguage: "1" }}
       controllerId={controllerId}
       controller={2}
       lang={getMakeCodeLang(languageId)}
       loading="eager"
+      version={getEditorVersionOverride()}
       {...editorCallbacks}
       {...props}
     />

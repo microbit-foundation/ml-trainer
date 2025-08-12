@@ -32,17 +32,17 @@ const ConnectContext = createContext<ConnectContextValue | null>(null);
 
 interface ConnectProviderProps {
   children: ReactNode;
+  usb: MicrobitWebUSBConnection;
+  bluetooth: MicrobitWebBluetoothConnection;
+  radioBridge: MicrobitRadioBridgeConnection;
 }
 
-export const ConnectProvider = ({ children }: ConnectProviderProps) => {
-  const usb = useRef(new MicrobitWebUSBConnection()).current;
-  const logging = useRef(useLogging()).current;
-  const bluetooth = useRef(
-    new MicrobitWebBluetoothConnection({ logging })
-  ).current;
-  const radioBridge = useRef(
-    new MicrobitRadioBridgeConnection(usb, { logging })
-  ).current;
+export const ConnectProvider = ({
+  children,
+  usb,
+  bluetooth,
+  radioBridge,
+}: ConnectProviderProps) => {
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   useEffect(() => {

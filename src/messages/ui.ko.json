@@ -39,6 +39,12 @@
       "value": "micro:bit은 X축을 앞으로 이동, Y축을 위 아래로 이동, Z축을 뒤에서 앞으로 표시합니다."
     }
   ],
+  "accessibility": [
+    {
+      "type": 0,
+      "value": "접근성"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
@@ -218,7 +224,7 @@
   "code-label": [
     {
       "type": 0,
-      "value": "Code"
+      "value": "코드"
     }
   ],
   "code-label-tooltip-aria": [
@@ -820,7 +826,7 @@
     },
     {
       "type": 0,
-      "value": "\" 행동에 대한   샘플 "
+      "value": "\" 행동에 대한 "
     },
     {
       "type": 1,
@@ -828,7 +834,7 @@
     },
     {
       "type": 0,
-      "value": "개 중 "
+      "value": "개의 기록 "
     },
     {
       "type": 1,
@@ -836,7 +842,7 @@
     },
     {
       "type": 0,
-      "value": "개의 기록 샘플 삭제"
+      "value": " 삭제"
     }
   ],
   "disconnect-action": [
@@ -1280,7 +1286,7 @@
   "graph-preview": [
     {
       "type": 0,
-      "value": "Graph preview"
+      "value": "그래프 미리보기"
     }
   ],
   "help-label": [
@@ -1513,6 +1519,42 @@
     {
       "type": 0,
       "value": "언어 선택"
+    }
+  ],
+  "language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Fully supported"
+    }
+  ],
+  "language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Partially supported"
+    }
+  ],
+  "language-support-checked": [
+    {
+      "type": 0,
+      "value": "지원됨"
+    }
+  ],
+  "language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "지원되지 않음"
+    }
+  ],
+  "language-supported-for": [
+    {
+      "type": 0,
+      "value": "지원되는 번역:"
+    }
+  ],
+  "language-toast-title": [
+    {
+      "type": 0,
+      "value": "언어가 완전히 지원되지 않습니다"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -2002,7 +2044,7 @@
   "next-action": [
     {
       "type": 0,
-      "value": "Next"
+      "value": "다음"
     }
   ],
   "no-data-samples": [
@@ -2514,7 +2556,7 @@
   "steps-code": [
     {
       "type": 0,
-      "value": "Code"
+      "value": "코드"
     }
   ],
   "steps-collect-data": [

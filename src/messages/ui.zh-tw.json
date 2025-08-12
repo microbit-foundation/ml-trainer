@@ -43,6 +43,12 @@
       "value": "micro:bit 會顯示 X 軸穿過前方，Y 軸向下和向上，Z 軸回到前方"
     }
   ],
+  "accessibility": [
+    {
+      "type": 0,
+      "value": "無障礙設定"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
@@ -262,7 +268,7 @@
   "connect-action-aria": [
     {
       "type": 0,
-      "value": "連接到 micro:bit"
+      "value": "連結到 micro:bit"
     }
   ],
   "connect-battery-heading": [
@@ -662,7 +668,7 @@
   "cookies-action": [
     {
       "type": 0,
-      "value": "餅乾"
+      "value": "Cookies"
     }
   ],
   "copied": [
@@ -1288,7 +1294,7 @@
   "graph-preview": [
     {
       "type": 0,
-      "value": "Graph preview"
+      "value": "圖表預覽"
     }
   ],
   "help-label": [
@@ -1521,6 +1527,42 @@
     {
       "type": 0,
       "value": "語言"
+    }
+  ],
+  "language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Fully supported"
+    }
+  ],
+  "language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Partially supported"
+    }
+  ],
+  "language-support-checked": [
+    {
+      "type": 0,
+      "value": "Supported"
+    }
+  ],
+  "language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "Unsupported"
+    }
+  ],
+  "language-supported-for": [
+    {
+      "type": 0,
+      "value": "Translations supported for:"
+    }
+  ],
+  "language-toast-title": [
+    {
+      "type": 0,
+      "value": "Language not fully supported"
     }
   ],
   "learn-about-firewall-requirements-action": [

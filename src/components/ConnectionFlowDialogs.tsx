@@ -32,6 +32,7 @@ import TryAgainDialog from "./TryAgainDialog";
 import UnsupportedMicrobitDialog from "./UnsupportedMicrobitDialog";
 import WebUsbBluetoothUnsupportedDialog from "./WebUsbBluetoothUnsupportedDialog";
 import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
+import ChooseDeviceOverlay from "./ChooseDeviceOverlay";
 
 const ConnectionDialogs = () => {
   const { stage, actions } = useConnectionStage();
@@ -174,7 +175,7 @@ const ConnectionDialogs = () => {
     }
     case ConnectionFlowStep.WebUsbChooseMicrobit: {
       // Browser dialog is shown, no custom dialog shown at the same time
-      return <></>;
+      return <ChooseDeviceOverlay />;
     }
     case ConnectionFlowStep.FlashingInProgress: {
       return (

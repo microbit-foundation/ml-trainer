@@ -39,6 +39,12 @@
       "value": "micro:bit mostrando el eje X atravesando la parte delantera, el eje Y de arriba abajo y el eje Z de atrás hacia delante"
     }
   ],
+  "accessibility": [
+    {
+      "type": 0,
+      "value": "Accesibilidad"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
@@ -1288,7 +1294,7 @@
   "graph-preview": [
     {
       "type": 0,
-      "value": "Graph preview"
+      "value": "Vista previa del gráfico"
     }
   ],
   "help-label": [
@@ -1525,6 +1531,42 @@
     {
       "type": 0,
       "value": "Idioma"
+    }
+  ],
+  "language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Fully supported"
+    }
+  ],
+  "language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Partially supported"
+    }
+  ],
+  "language-support-checked": [
+    {
+      "type": 0,
+      "value": "Admitidas"
+    }
+  ],
+  "language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "No admitidas"
+    }
+  ],
+  "language-supported-for": [
+    {
+      "type": 0,
+      "value": "Traducciones admitidas para:"
+    }
+  ],
+  "language-toast-title": [
+    {
+      "type": 0,
+      "value": "El idioma no es soportado totalmente"
     }
   ],
   "learn-about-firewall-requirements-action": [

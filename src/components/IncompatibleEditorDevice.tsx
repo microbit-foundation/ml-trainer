@@ -20,6 +20,7 @@ import {
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import { useProject } from "../hooks/project-hooks";
+import { ButtonWithLoading } from "./ButtonWithLoading";
 
 interface IncompatibleEditorDeviceProps {
   isOpen: boolean;
@@ -122,7 +123,7 @@ const IncompatibleEditorDevice = ({
                   id={onBack ? "back-action" : "cancel-action"}
                 />
               </Button>
-              <Button
+              <ButtonWithLoading
                 onClick={onNext ?? onClose}
                 variant={onNext ? "primary" : "secondary"}
                 size="lg"
@@ -131,7 +132,7 @@ const IncompatibleEditorDevice = ({
                 <FormattedMessage
                   id={onNext ? "continue-makecode-action" : "cancel-action"}
                 />
-              </Button>
+              </ButtonWithLoading>
             </HStack>
           </ModalFooter>
         </ModalContent>

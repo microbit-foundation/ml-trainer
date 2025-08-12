@@ -39,6 +39,12 @@
       "value": "micro:bit toont de X-as over de voorkant, de Y-as gaat naar beneden en omhoog, de Z-as gaat terug naar voren"
     }
   ],
+  "accessibility": [
+    {
+      "type": 0,
+      "value": "Toegankelijkheid"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
@@ -1288,7 +1294,7 @@
   "graph-preview": [
     {
       "type": 0,
-      "value": "Graph preview"
+      "value": "Grafiek voorbeeld"
     }
   ],
   "help-label": [
@@ -1525,6 +1531,42 @@
     {
       "type": 0,
       "value": "Taal"
+    }
+  ],
+  "language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Fully supported"
+    }
+  ],
+  "language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Partially supported"
+    }
+  ],
+  "language-support-checked": [
+    {
+      "type": 0,
+      "value": "Ondersteund"
+    }
+  ],
+  "language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "Niet ondersteund"
+    }
+  ],
+  "language-supported-for": [
+    {
+      "type": 0,
+      "value": "Vertalingen ondersteund voor:"
+    }
+  ],
+  "language-toast-title": [
+    {
+      "type": 0,
+      "value": "Taal niet volledig ondersteund"
     }
   ],
   "learn-about-firewall-requirements-action": [

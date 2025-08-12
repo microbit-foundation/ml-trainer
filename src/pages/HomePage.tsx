@@ -36,8 +36,12 @@ import {
   userGuideUrl,
 } from "../utils/external-links";
 import { useSettings } from "../store";
+import { useSearchParams } from "react-router-dom";
+import { setEditorVersionOverride } from "../editor-version";
 
 const HomePage = () => {
+  const [params] = useSearchParams();
+  setEditorVersionOverride(params.get("editorVersion") || undefined);
   const navigate = useNavigate();
   const handleGetStarted = useCallback(() => {
     navigate(createNewPageUrl());
@@ -198,7 +202,7 @@ const HomePage = () => {
                     <Link
                       color="brand.600"
                       textDecoration="underline"
-                      href={landingPageUrl()}
+                      href={landingPageUrl(languageId)}
                     >
                       {children}
                     </Link>

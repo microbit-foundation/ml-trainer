@@ -61,13 +61,7 @@ const TestingModelTable = () => {
   const scrollableAreaRef = useRef<HTMLDivElement>(null);
   const intl = useIntl();
   return (
-    <MakeCodeRenderBlocksProvider
-      key={makeCodeLang}
-      options={{
-        version: undefined,
-        lang: makeCodeLang,
-      }}
-    >
+    <MakeCodeRenderBlocksProvider key={makeCodeLang} lang={makeCodeLang}>
       <HeadingGrid {...gridCommonProps} px={5} headings={headings} />
       <VStack
         px={5}

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  Button,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -19,6 +18,7 @@ import { FormattedMessage } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ConnectOptions } from "../store";
+import { ButtonWithLoading } from "./ButtonWithLoading";
 
 interface ConnectFirstDialogProps
   extends Omit<ComponentProps<typeof Modal>, "children"> {
@@ -124,13 +124,13 @@ const ConnectFirstDialog = ({
             </Text>
           </ModalBody>
           <ModalFooter justifyContent="flex-end">
-            <Button
+            <ButtonWithLoading
               variant="primary"
               onClick={handleConnect}
               isLoading={isWaiting}
             >
               <FormattedMessage id="connect-action" />
-            </Button>
+            </ButtonWithLoading>
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>
