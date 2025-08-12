@@ -27,6 +27,9 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
   const [{ languageId }] = useSettings();
   return (
     <MakeCodeFrame
+      // Hardcode to use staticpkg pxt-microbit in build from using
+      // add-staticpkg-to-build.sh script for now.
+      baseUrl={`${window.location.origin}/staticpkg-pxt-microbit/index.html`}
       ref={ref}
       queryParams={{ hidelanguage: "1" }}
       controllerId={controllerId}

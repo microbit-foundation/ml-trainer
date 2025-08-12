@@ -21,7 +21,8 @@
     "theme": "chakra-cli tokens src/deployment/default/theme.ts",
     "i18n:compile": "node bin/tidy-lang.cjs && formatjs compile-folder --ast lang src/messages",
     "ml4f-output": "vitest ml4f-output --run",
-    "cap-android": "npm run build && rm -rf ./android && npx cap add android && npx cap run android"
+    "cap-android": "npm run build && rm -rf ./android && npx cap add android && npx cap open android",
+    "cap-ios": "npm run build && rm -rf ./ios && npx cap add ios && npx cap open ios"
   },
   "devDependencies": {
     "@capacitor/cli": "^6.2.0",
