@@ -25,7 +25,7 @@
     "cap-ios": "npm run build && rm -rf ./ios && npx cap add ios && npx cap open ios"
   },
   "devDependencies": {
-    "@capacitor/cli": "^6.2.0",
+    "@capacitor/cli": "^7.4.2",
     "@chakra-ui/cli": "^2.4.1",
     "@formatjs/cli": "^6.2.7",
     "@playwright/test": "^1.42.1",
