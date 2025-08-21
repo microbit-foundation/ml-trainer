@@ -715,10 +715,7 @@
     "defaultMessage": "Empieza",
     "description": "Get started action"
   },
-  "go-action": {
-    "defaultMessage": "Ir",
-    "description": "Go action"
-  },
+  "go-action": { "defaultMessage": "Ir", "description": "Go action" },
   "graph-color-scheme": {
     "defaultMessage": "Esquema de colores del gráfico",
     "description": "Graph colour scheme setting label"
@@ -872,27 +869,27 @@
     "description": "Language option text"
   },
   "language-fully-supported-heading": {
-    "defaultMessage": "Fully supported",
+    "defaultMessage": "Totalmente compatible",
     "description": "Fully supported languages heading text"
   },
   "language-partially-supported-heading": {
-    "defaultMessage": "Partially supported",
+    "defaultMessage": "Parcialmente compatible",
     "description": "Partially supported languages heading text"
   },
   "language-support-checked": {
-    "defaultMessage": "Admitidas",
+    "defaultMessage": "Compatible",
     "description": "Aria label for ticked checkbox for language support"
   },
   "language-support-unchecked": {
-    "defaultMessage": "No admitidas",
+    "defaultMessage": "No compatible",
     "description": "Aria label for unticked checkbox for language support"
   },
   "language-supported-for": {
-    "defaultMessage": "Traducciones admitidas para:",
+    "defaultMessage": "Traducciones compatibles con:",
     "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
   },
   "language-toast-title": {
-    "defaultMessage": "El idioma no es soportado totalmente",
+    "defaultMessage": "Idioma no es totalmente compatible",
     "description": "Language support toast notification title"
   },
   "learn-about-firewall-requirements-action": {

@@ -715,10 +715,7 @@
     "defaultMessage": "Comencem",
     "description": "Get started action"
   },
-  "go-action": {
-    "defaultMessage": "Ves",
-    "description": "Go action"
-  },
+  "go-action": { "defaultMessage": "Ves", "description": "Go action" },
   "graph-color-scheme": {
     "defaultMessage": "Esquema de colors del gràfic",
     "description": "Graph colour scheme setting label"
@@ -872,11 +869,11 @@
     "description": "Language option text"
   },
   "language-fully-supported-heading": {
-    "defaultMessage": "Fully supported",
+    "defaultMessage": "Completament compatible",
     "description": "Fully supported languages heading text"
   },
   "language-partially-supported-heading": {
-    "defaultMessage": "Partially supported",
+    "defaultMessage": "Parcialment compatible",
     "description": "Partially supported languages heading text"
   },
   "language-support-checked": {

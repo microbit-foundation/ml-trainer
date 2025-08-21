@@ -1522,13 +1522,13 @@
   "language-fully-supported-heading": [
     {
       "type": 0,
-      "value": "Fully supported"
+      "value": "Completament compatible"
     }
   ],
   "language-partially-supported-heading": [
     {
       "type": 0,
-      "value": "Partially supported"
+      "value": "Parcialment compatible"
     }
   ],
   "language-support-checked": [

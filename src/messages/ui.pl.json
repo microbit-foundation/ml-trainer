@@ -1540,13 +1540,13 @@
   "language-fully-supported-heading": [
     {
       "type": 0,
-      "value": "Fully supported"
+      "value": "W pełni wspierane"
     }
   ],
   "language-partially-supported-heading": [
     {
       "type": 0,
-      "value": "Partially supported"
+      "value": "Częściowo wspierane"
     }
   ],
   "language-support-checked": [

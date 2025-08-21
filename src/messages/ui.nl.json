@@ -1536,13 +1536,13 @@
   "language-fully-supported-heading": [
     {
       "type": 0,
-      "value": "Fully supported"
+      "value": "Volledig ondersteund"
     }
   ],
   "language-partially-supported-heading": [
     {
       "type": 0,
-      "value": "Partially supported"
+      "value": "Gedeeltelijk ondersteund"
     }
   ],
   "language-support-checked": [

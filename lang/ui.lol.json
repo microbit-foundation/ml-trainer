@@ -1112,7 +1112,7 @@
     "description": "Live graph disconnected micro:bit status message"
   },
   "ml.onStart|block": {
-    "defaultMessage": "crwdns363890:0$eventcrwdne363890:0",
+    "defaultMessage": "crwdns363484:0$eventcrwdne363484:0",
     "description": "This string should be a Crowdin duplicate of the MakeCode extension block with the same text and use the same translation."
   },
   "more-edit-in-makecode-options": {

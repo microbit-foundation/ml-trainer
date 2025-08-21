@@ -715,10 +715,7 @@
     "defaultMessage": "Hoe te beginnen",
     "description": "Get started action"
   },
-  "go-action": {
-    "defaultMessage": "Gaan",
-    "description": "Go action"
-  },
+  "go-action": { "defaultMessage": "Gaan", "description": "Go action" },
   "graph-color-scheme": {
     "defaultMessage": "Grafiek kleurschema",
     "description": "Graph colour scheme setting label"
@@ -872,11 +869,11 @@
     "description": "Language option text"
   },
   "language-fully-supported-heading": {
-    "defaultMessage": "Fully supported",
+    "defaultMessage": "Volledig ondersteund",
     "description": "Fully supported languages heading text"
   },
   "language-partially-supported-heading": {
-    "defaultMessage": "Partially supported",
+    "defaultMessage": "Gedeeltelijk ondersteund",
     "description": "Partially supported languages heading text"
   },
   "language-support-checked": {
