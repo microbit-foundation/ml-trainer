@@ -715,10 +715,7 @@
     "defaultMessage": "入門指南",
     "description": "Get started action"
   },
-  "go-action": {
-    "defaultMessage": "進行",
-    "description": "Go action"
-  },
+  "go-action": { "defaultMessage": "進行", "description": "Go action" },
   "graph-color-scheme": {
     "defaultMessage": "圖表顏色方案",
     "description": "Graph colour scheme setting label"
@@ -779,10 +776,7 @@
     "defaultMessage": "主頁",
     "description": "Home button text"
   },
-  "homepage": {
-    "defaultMessage": "首頁",
-    "description": "Link to home page"
-  },
+  "homepage": { "defaultMessage": "首頁", "description": "Link to home page" },
   "homepage-alt": {
     "defaultMessage": "顯示代表 micro:bit 加速計數據的 x、y、z 圖線的圖表，並重疊拍手圖示",
     "description": "Alt text for image in homepage"
@@ -1083,10 +1077,7 @@
     "defaultMessage": "正在載入",
     "description": "Aria label for loading spinner"
   },
-  "main-menu": {
-    "defaultMessage": "主選單",
-    "description": "Main menu label"
-  },
+  "main-menu": { "defaultMessage": "主選單", "description": "Main menu label" },
   "makecode-back-alt": {
     "defaultMessage": "MakeCode 傳回的左箭頭圖標",
     "description": "Testing model page title"

@@ -101,7 +101,7 @@ export const allLanguages: Language[] = [
     id: "fr",
     name: "Français",
     enName: "French",
-    ui: false,
+    ui: "preview",
     makeCode: true,
   },
   {

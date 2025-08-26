@@ -715,10 +715,7 @@
     "defaultMessage": "Get started",
     "description": "Get started action"
   },
-  "go-action": {
-    "defaultMessage": "Go",
-    "description": "Go action"
-  },
+  "go-action": { "defaultMessage": "Go", "description": "Go action" },
   "graph-color-scheme": {
     "defaultMessage": "Graph colour scheme",
     "description": "Graph colour scheme setting label"

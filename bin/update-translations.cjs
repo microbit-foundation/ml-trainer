@@ -4,12 +4,7 @@
  * pxt-microbit-ml machine-learning-strings.json. See CodeViewDefaultBlock.tsx
  * to see where they are used.
  *
- * To update all translations, pass 2 arguments:
- * 1. Path to CreateAI tool translation strings directory.
- * 2. Path to machine-learning-strings.json translation strings directory.
- *
- * To only update CreateAI tool translations, pass path to CreateAI tool 
- * translation strings directory as an argument.
+ * Pass path to extracted Crowdin ZIP
  *
  * Manually run `npm run i18n:compile` after.
  *
@@ -20,11 +15,24 @@ const fs = require("fs");
 const okExitStatus = 0;
 const errExitStatus = 2;
 
-const languages = ["ca", "en", "es-ES", "ja", "ko", "nl", "pl", "pt-br", "zh-tw", "lol"];
+const languages = [
+  "ca",
+  "en",
+  "es-ES",
+  "fr",
+  "ja",
+  "ko",
+  "nl",
+  "pl",
+  "pt-BR",
+  "zh-TW",
+  "lol",
+];
 const enMessagesToAdd = {
   "ml.onStart|block": {
     defaultMessage: "on ML $event start",
-    description: "This string should be a Crowdin duplicate of the MakeCode extension block with the same text and use the same translation.",
+    description:
+      "This string should be a Crowdin duplicate of the MakeCode extension block with the same text and use the same translation.",
   },
 };
 
@@ -41,21 +49,23 @@ const getMessagesToAdd = (mlStrings, langMessages) => {
     if (!langMessages[k]) {
       return { ...acc, [k]: { ...enMessagesToAdd[k] } };
     }
-    return { ...acc, [k]: { ...enMessagesToAdd[k], defaultMessage: acc[k].defaultMessage } };
+    return {
+      ...acc,
+      [k]: { ...enMessagesToAdd[k], defaultMessage: acc[k].defaultMessage },
+    };
   }, {});
 };
 const getFileJSONContent = (filepath) => JSON.parse(fs.readFileSync(filepath));
 
 const args = process.argv.slice(2);
-if (args.length === 0 || args.length > 2) {
-  console.log(`Error: 2 arguments needed. 
-    1. Path to CreateAI tool translation strings directory.
-    2. Path to machine-learning-strings.json translation strings directory. `);
+if (args.length !== 1) {
+  console.log("Error: Missing argument to extracted Crowdin ZIP");
   process.exit(errExitStatus);
 }
 
-const [createAiTranslationsFilepath, mlTranslationsFilepath] =
-  args.length === 1 ? [args[0], null] : args;
+const prefix = args[0];
+const createAiStringsDir = "new/apps/microbit-createai";
+const extensionStringsDir = "new/makecode-extensions/pxt-microbit-ml";
 
 languages.forEach((language) => {
   const lowerLang = language.toLowerCase();
@@ -71,18 +81,13 @@ languages.forEach((language) => {
     return;
   }
 
-  const srcLangFilepath = !createAiTranslationsFilepath
-    ? `lang/ui.${lowerLang}.json`
-    : `${createAiTranslationsFilepath}/${language}/ui.en.json`;
+  const srcLangFilepath = `${prefix}/${lowerLang}/${createAiStringsDir}/ui.en.json`;
   const langMessages = getFileJSONContent(srcLangFilepath);
 
   // Update machine learning strings.
-  let messagesToAdd = {}
-  if (mlTranslationsFilepath) {
-    const mlFilepath = `${mlTranslationsFilepath}/${language}/machine-learning-strings.json`;
-    const mlStrings = getFileJSONContent(mlFilepath);
-    messagesToAdd = getMessagesToAdd(mlStrings, langMessages);
-  }
+  const mlFilepath = `${prefix}/${lowerLang}/${extensionStringsDir}/machine-learning-strings.json`;
+  const mlStrings = getFileJSONContent(mlFilepath);
+  const messagesToAdd = getMessagesToAdd(mlStrings, langMessages);
 
   fs.writeFileSync(
     outputFilepath,
