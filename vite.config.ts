@@ -67,6 +67,9 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
       "import.meta.env.VITE_APP_VERSION": JSON.stringify(
         process.env.npm_package_version
       ),
+      "import.meta.env.OFFLINE": JSON.stringify(
+        process.env.OFFLINE
+      ),
     },
     build: {
       target: "es2017",

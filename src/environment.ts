@@ -6,6 +6,7 @@
 
 // See CI & package.json scripts.
 export const version = import.meta.env.VITE_VERSION || "local";
+export const offline = import.meta.env.OFFLINE === "1";
 export type Stage = "local" | "review" | "staging" | "production";
 export const stage: Stage = (() => {
   const value = (import.meta.env.VITE_STAGE || "LOCAL").toLowerCase();

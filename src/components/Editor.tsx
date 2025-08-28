@@ -12,6 +12,7 @@ import { useProject } from "../hooks/project-hooks";
 import { getMakeCodeLang } from "../settings";
 import { useSettings } from "../store";
 import { getEditorVersionOverride } from "../editor-version";
+import { offline } from "../environment";
 
 const controllerId = "MicrobitMachineLearningTool";
 
@@ -27,9 +28,8 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
   const [{ languageId }] = useSettings();
   return (
     <MakeCodeFrame
-      // Hardcode to use staticpkg pxt-microbit in build from using
-      // add-staticpkg-to-build.sh script for now.
-      baseUrl={`${window.location.origin}/staticpkg-pxt-microbit/index.html`}
+      // Use offline bundled MakeCode.
+      baseUrl={offline ? `${window.location.origin}/staticpkg-pxt-microbit/index.html` : undefined}
       ref={ref}
       queryParams={{ hidelanguage: "1" }}
       controllerId={controllerId}

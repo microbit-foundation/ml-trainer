@@ -1,5 +1,6 @@
 #!/bin/bash
-npm run build
+# Create offline build.
+npx cross-env OFFLINE=1 npm run build
 
 output_dir="./dist"
 path_to_pxt_microbit="../pxt-microbit"
