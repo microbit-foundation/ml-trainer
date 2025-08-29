@@ -71,56 +71,60 @@ const DataSamplesPage = () => {
             setSelectedActionIdx={setSelectedActionIdx}
           />
         </Flex>
-        <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
-          <HStack
-            role="region"
-            aria-label={intl.formatMessage({
-              id: "data-samples-actions-region",
-            })}
-            justifyContent="space-between"
-            px={5}
-            py={2}
-            w="full"
-            borderBottomWidth={3}
-            borderTopWidth={3}
-            borderColor="gray.200"
-            alignItems="center"
-          >
-            <HStack gap={2} alignItems="center">
-              <Button
-                className={tourElClassname.addActionButton}
-                variant={hasSufficientData ? "secondary" : "primary"}
-                leftIcon={<RiAddLine />}
-                onClick={handleAddNewAction}
-                isDisabled={isAddNewActionDisabled}
-              >
-                <FormattedMessage id="add-action-action" />
-              </Button>
-            </HStack>
-            <HStack>
-              {model ? (
+        {(actions.length > 0 || isConnected) && (
+          <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
+            <HStack
+              role="region"
+              aria-label={intl.formatMessage({
+                id: "data-samples-actions-region",
+              })}
+              justifyContent="space-between"
+              px={5}
+              py={2}
+              w="full"
+              borderBottomWidth={3}
+              borderTopWidth={3}
+              borderColor="gray.200"
+              alignItems="center"
+            >
+              <HStack gap={2} alignItems="center">
                 <Button
-                  onClick={handleNavigateToModel}
-                  className={tourElClassname.trainModelButton}
-                  variant="primary"
-                  rightIcon={<RiArrowRightLine />}
+                  className={tourElClassname.addActionButton}
+                  variant={hasSufficientData ? "secondary" : "primary"}
+                  leftIcon={<RiAddLine />}
+                  onClick={handleAddNewAction}
+                  isDisabled={isAddNewActionDisabled}
                 >
-                  <FormattedMessage id="testing-model-title" />
+                  <FormattedMessage id="add-action-action" />
                 </Button>
-              ) : (
-                <Button
-                  ref={trainButtonRef}
-                  className={tourElClassname.trainModelButton}
-                  onClick={() => trainModelFlowStart(handleNavigateToModel)}
-                  variant={hasSufficientData ? "primary" : "secondary-disabled"}
-                >
-                  <FormattedMessage id="train-model" />
-                </Button>
-              )}
+              </HStack>
+              <HStack>
+                {model ? (
+                  <Button
+                    onClick={handleNavigateToModel}
+                    className={tourElClassname.trainModelButton}
+                    variant="primary"
+                    rightIcon={<RiArrowRightLine />}
+                  >
+                    <FormattedMessage id="testing-model-title" />
+                  </Button>
+                ) : (
+                  <Button
+                    ref={trainButtonRef}
+                    className={tourElClassname.trainModelButton}
+                    onClick={() => trainModelFlowStart(handleNavigateToModel)}
+                    variant={
+                      hasSufficientData ? "primary" : "secondary-disabled"
+                    }
+                  >
+                    <FormattedMessage id="train-model" />
+                  </Button>
+                )}
+              </HStack>
             </HStack>
-          </HStack>
-          <LiveGraphPanel disconnectedTextId="connect-to-record" />
-        </VStack>
+            <LiveGraphPanel disconnectedTextId="connect-to-record" />
+          </VStack>
+        )}
       </DefaultPageLayout>
     </>
   );
