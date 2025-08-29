@@ -205,6 +205,11 @@ export interface ConnectOptions {
   postConnectTourTrigger?: TourTrigger;
 }
 
+interface NewSessionOptions {
+  projectName?: string;
+  hasFirstAction?: boolean;
+}
+
 export interface Actions {
   addNewAction(): void;
   addActionRecordings(id: ActionData["ID"], recs: RecordingData[]): void;
@@ -224,7 +229,7 @@ export interface Actions {
   setEditorOpen(open: boolean): void;
   recordingStarted(): void;
   recordingStopped(): void;
-  newSession(projectName?: string): void;
+  newSession(options: NewSessionOptions): void;
   trainModelFlowStart: (callback?: () => void) => Promise<void>;
   closeTrainModelDialogs: () => void;
   trainModel(): Promise<boolean>;
@@ -385,11 +390,11 @@ const createMlStore = (logging: Logging) => {
             );
           },
 
-          newSession(projectName?: string) {
+          newSession({ projectName, hasFirstAction }: NewSessionOptions = {}) {
             const untitledProject = createUntitledProject();
             set(
               {
-                actions: [],
+                actions: hasFirstAction ? [createFirstAction()] : [],
                 dataWindow: currentDataWindow,
                 model: undefined,
                 project: projectName
