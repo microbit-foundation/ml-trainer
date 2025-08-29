@@ -3,16 +3,14 @@
 npx cross-env OFFLINE=1 npm run build
 
 output_dir="./dist"
-path_to_pxt_microbit="../pxt-microbit"
-path_staticpkg_prefix="staticpkg-pxt-microbit"
+pxt_microbit_dir="../pxt-microbit"
+staticpkg_prefix="staticpkg-pxt-microbit"
+pxt_microbit_build_dir="$pxt_microbit_dir/built/packaged/$staticpkg_prefix"
 
 # Generate pxt-microbit static package if it does not exist.
-pxt_microbit_build_dir="$path_to_pxt_microbit/built/packaged/$path_staticpkg_prefix"
 if [ ! -d "$pxt_microbit_build_dir" ] || [ -z "$(ls -A "$pxt_microbit_build_dir" 2>/dev/null)" ]; then
-    echo "Generating pxt-microbit static package"
-    cd "$path_to_pxt_microbit"
-    pxt staticpkg --route "$path_staticpkg_prefix"
-    cd -
+    echo "Generating pxt-microbit static package with extensions"
+    ./ml-pxt-microbit-staticpkg.sh
 fi
 
 # Copy static packaged pxt-microbit into built ml-trainer.
