@@ -20,7 +20,9 @@ export class DataSamplesPage {
     }data-samples`;
     this.navbar = new Navbar(page);
     this.heading = this.page.getByRole("heading", { name: "Data samples" });
-    this.connectBtn = this.page.getByRole('button', { name: 'Connect to record data samples' })
+    this.connectBtn = this.page.getByRole("button", {
+      name: "Connect to record data samples",
+    });
   }
 
   async goto(flags: string[] = ["open"]) {
