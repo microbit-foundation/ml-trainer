@@ -40,6 +40,17 @@ if ! grep -q "libs/$ml_extension_runner" pxtarget.json; then
     sed 's/"libs\/core",/"libs\/core",\n        "libs\/machine-learning-runner",/' pxtarget.json > temp_file && mv temp_file pxtarget.json
 fi
 
+# Update targetconfig.json so that simulator works.
+# The new devUrl will need to be configured differently depending on the hostname. WIP this does not work for the app.
+sed '/microbit-foundation\/pxt-microbit-ml/,/}/ s|"devUrl": "[^"]*"|"devUrl": "http://localhost:4173/"|' targetconfig.json > temp_file && mv temp_file targetconfig.json
+if ! sed -n '/microbit-foundation\/pxt-microbit-ml/,/}/p' targetconfig.json | grep -q '"index":'; then
+    sed '/microbit-foundation\/pxt-microbit-ml/,/}/ {
+        s/"aspectRatio": \([0-9.]*\)$/"aspectRatio": \1,/
+        /"aspectRatio": [0-9.]*,$/a\
+                    "index": "sim/index.html"
+    }' targetconfig.json > temp_file && mv temp_file targetconfig.json
+fi
+
 # Generate staticpkg
 pxt staticpkg --route "$staticpkg_prefix"
 cd ../ml-trainer

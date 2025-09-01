@@ -17,6 +17,18 @@ fi
 echo "Copying pxt_microbit_build_dir into $output_dir..."
 cp -r "$pxt_microbit_build_dir" "$output_dir"
 
+# Add ml extension simulator controls
+cd ../pxt-microbit-ml/simx
+if [ ! -d "built" ]; then
+    echo "Building simulator controls..."
+    npm run build
+fi
+cd -
+sim_output_path="$output_dir/sim/"
+echo "Copying simulator controls into $sim_output_path..."
+mkdir -p "$sim_output_path"
+cp -r ../pxt-microbit-ml/simx/dist/. "$sim_output_path/."
+
 echo "Done"
 
 # To serve locally to check.

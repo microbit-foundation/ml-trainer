@@ -29,9 +29,13 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
   return (
     <MakeCodeFrame
       // Use offline bundled MakeCode.
-      baseUrl={offline ? `${window.location.origin}/staticpkg-pxt-microbit/index.html` : undefined}
+      baseUrl={
+        offline
+          ? `${window.location.origin}/staticpkg-pxt-microbit/index.html`
+          : undefined
+      }
       ref={ref}
-      queryParams={{ hidelanguage: "1" }}
+      queryParams={{ hidelanguage: "1", ...(offline ? { simxdev: "1" } : {}) }}
       controllerId={controllerId}
       controller={2}
       lang={getMakeCodeLang(languageId)}
