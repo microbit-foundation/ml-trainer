@@ -1093,7 +1093,7 @@
     "description": "Makecode block alt text prefix"
   },
   "makecode-block-show-icon": {
-    "defaultMessage": "afficher l'icône",
+    "defaultMessage": "montrer l'icône",
     "description": "Makecode block text. The translation should match MakeCode translations."
   },
   "makecode-load-error-dialog-body": {
@@ -1601,7 +1601,7 @@
     "description": "Tour step description"
   },
   "tour-trainModel-makeCodeBlocks-content": {
-    "defaultMessage": "Ces blocs MakeCode afficheront des icônes pour chaque action détectée lorsque vous transférez votre code et votre modèle sur un micro:bit.",
+    "defaultMessage": "Ces blocs MakeCode montreront des icônes pour chaque action détectée lorsque vous transférez votre code et votre modèle sur un micro:bit.",
     "description": "Tour step description"
   },
   "tour-trainModel-makeCodeBlocks-title": {
