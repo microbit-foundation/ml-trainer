@@ -30,11 +30,13 @@ import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 import { useProjectName } from "../hooks/project-hooks";
+import { useConnectionStage } from "../connection-stage-hooks";
 
 const NewPage = () => {
   const existingSessionTimestamp = useStore((s) => s.timestamp);
   const projectName = useProjectName();
   const newSession = useStore((s) => s.newSession);
+  const { isConnected } = useConnectionStage();
   const navigate = useNavigate();
   const logging = useLogging();
 
@@ -54,9 +56,9 @@ const NewPage = () => {
     logging.event({
       type: "session-open-new",
     });
-    newSession();
+    newSession({ hasFirstAction: isConnected });
     navigate(createDataSamplesPageUrl());
-  }, [logging, newSession, navigate]);
+  }, [logging, newSession, isConnected, navigate]);
 
   const intl = useIntl();
   const lastSessionTitle = intl.formatMessage({

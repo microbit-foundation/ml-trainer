@@ -11,16 +11,10 @@ import {
   HStack,
   Text,
   VStack,
+  Image,
 } from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
@@ -40,6 +34,7 @@ import { ConfirmDialog } from "./ConfirmDialog";
 import { actionNameInputId } from "./ActionNameCard";
 import { recordButtonId } from "./ActionDataSamplesCard";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
+import collectDataImage from "../images/collect-data.svg";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -48,7 +43,11 @@ const gridCommonProps: Partial<GridProps> = {
   w: "100%",
 };
 
-const headings: GridColumnHeadingItemProps[] = [
+const getHeadings = (
+  options: {
+    hideItemsRight?: boolean;
+  } = {}
+): GridColumnHeadingItemProps[] => [
   {
     titleId: "action-label",
     descriptionId: "action-tooltip",
@@ -56,7 +55,7 @@ const headings: GridColumnHeadingItemProps[] = [
   {
     titleId: "data-samples-label",
     descriptionId: "data-samples-tooltip",
-    itemsRight: (
+    itemsRight: options.hideItemsRight ? undefined : (
       <HStack>
         <ShowGraphsCheckbox />
         <DataSamplesMenu />
@@ -225,48 +224,34 @@ const DataSamplesTable = ({
         position="sticky"
         top={0}
         {...gridCommonProps}
-        headings={headings}
+        headings={getHeadings({
+          hideItemsRight: actions.length === 0 || !isConnected,
+        })}
       />
-      {actions.length === 0 ? (
+      {actions.length === 0 && !isConnected ? (
         <VStack
           gap={5}
           flexGrow={1}
           alignItems="center"
-          justifyContent="center"
+          justifyContent="start"
+          pt="5em"
         >
           <LoadProjectInput ref={loadProjectInputRef} accept=".json" />
-          <Text fontSize="lg">
+          <Image src={collectDataImage} width={350} opacity={0.7} />
+          <Text fontWeight="bold" fontSize="xl">
             <FormattedMessage id="no-data-samples" />
           </Text>
-          {!isConnected && (
-            <Text fontSize="lg" textAlign="center">
-              <FormattedMessage
-                id="connect-or-import"
-                values={{
-                  link1: (chunks: ReactNode) => (
-                    <Button
-                      fontSize="lg"
-                      color="brand.600"
-                      variant="link"
-                      onClick={handleConnect}
-                    >
-                      {chunks}
-                    </Button>
-                  ),
-                  link2: (chunks: ReactNode) => (
-                    <Button
-                      fontSize="lg"
-                      color="brand.600"
-                      variant="link"
-                      onClick={() => loadProjectInputRef.current?.chooseFile()}
-                    >
-                      {chunks}
-                    </Button>
-                  ),
-                }}
-              />
-            </Text>
-          )}
+          <VStack gap={3}>
+            <Button variant="primary" onClick={handleConnect}>
+              <FormattedMessage id="connect-to-record" />
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => loadProjectInputRef.current?.chooseFile()}
+            >
+              <FormattedMessage id="import-data-samples-action" />
+            </Button>
+          </VStack>
         </VStack>
       ) : (
         <Grid
