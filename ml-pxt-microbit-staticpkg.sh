@@ -1,17 +1,43 @@
 #!/bin/bash
 
+# Check if required arguments were provided
+if [ $# -lt 3 ]; then
+    echo "Usage: $0 <pxt-microbit-dir> <pxt-microbit-ml-dir> <pxt-microbit-ml-runner-dir> [ml-trainer-dir]"
+    echo "  pxt-microbit-dir: Path to the pxt-microbit directory"
+    echo "  pxt-microbit-ml-dir: Path to the pxt-microbit-ml source directory"
+    echo "  pxt-microbit-ml-runner-dir: Path to the pxt-microbit-ml-runner source directory"
+    exit 1
+fi
 
+# Get directory arguments
+pxt_microbit_dir="$1"
+pxt_microbit_ml_dir="$2"
+pxt_microbit_ml_runner_dir="$3"
+
+# Store directories in an array for validation
+directories=("$pxt_microbit_dir" "$pxt_microbit_ml_dir" "$pxt_microbit_ml_runner_dir")
+
+# Check if all required paths exist
+for dir in "${directories[@]}"; do
+    if [ ! -d "$dir" ]; then
+        echo "Error: Directory '$dir' does not exist"
+        exit 1
+    fi
+done
+
+# Extension names constants.
 ml_extension="machine-learning"
 ml_extension_runner="machine-learning-runner"
 staticpkg_prefix="staticpkg-pxt-microbit"
 
-cd ../pxt-microbit
+ml_trainer_dir=$(pwd)
+cd "$pxt_microbit_dir"
 
 # Copy ml extension libs.
 cd libs
 if [ ! -d "$ml_extension" ]; then
     echo "Adding machine-learning lib..."
-    cp -r ../../pxt-microbit-ml "./$ml_extension"
+    cp -r "$pxt_microbit_ml_dir" "./$ml_extension"
     
     # Update dependencies in pxt.json.
     cd "$ml_extension"
@@ -21,7 +47,7 @@ if [ ! -d "$ml_extension" ]; then
 fi
 if [ ! -d "$ml_extension_runner" ]; then
     echo "Adding machine-learning-runner lib..."
-    cp -r ../../pxt-microbit-ml-runner "./$ml_extension_runner"
+    cp -r "$pxt_microbit_ml_runner_dir" "./$ml_extension_runner"
 
     # Update dependencies in pxt.json.
     cd "$ml_extension_runner"
@@ -53,4 +79,4 @@ fi
 
 # Generate staticpkg
 pxt staticpkg --route "$staticpkg_prefix"
-cd ../ml-trainer
+cd "$ml_trainer_dir"
