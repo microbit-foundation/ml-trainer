@@ -42,6 +42,10 @@ fi
 echo "Copying pxt_microbit_build_dir into $output_dir..."
 cp -r "$pxt_microbit_build_dir" "$output_dir"
 
+# Update static packaged pxt-microbit docs.html so that the renderBlocks work.
+docs_dir="$output_dir/$staticpkg_prefix/docs.html"
+sed 's/id="blocklycss"/id="style-blockly.css"/' "$docs_dir" > temp_file && mv temp_file "$docs_dir"
+
 # Add ml extension simulator controls
 cd ../pxt-microbit-ml/simx
 if [ ! -d "built" ]; then

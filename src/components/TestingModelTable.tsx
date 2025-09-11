@@ -27,6 +27,7 @@ import ActionNameCard from "./ActionNameCard";
 import CodeViewCard from "./CodeViewCard";
 import CodeViewDefaultBlockCard from "./CodeViewDefaultBlockCard";
 import HeadingGrid from "./HeadingGrid";
+import { offline } from "../environment";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 360px 40px auto",
@@ -61,7 +62,16 @@ const TestingModelTable = () => {
   const scrollableAreaRef = useRef<HTMLDivElement>(null);
   const intl = useIntl();
   return (
-    <MakeCodeRenderBlocksProvider key={makeCodeLang} lang={makeCodeLang}>
+    <MakeCodeRenderBlocksProvider
+      key={makeCodeLang}
+      lang={makeCodeLang} 
+      // Use bundled MakeCode if offline.
+      baseUrl={
+        offline
+          ? `${window.location.origin}/staticpkg-pxt-microbit/docs.html`
+          : undefined
+      }
+    >
       <HeadingGrid {...gridCommonProps} px={5} headings={headings} />
       <VStack
         px={5}
