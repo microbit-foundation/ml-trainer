@@ -87,7 +87,7 @@ export const LanguageDialog = ({
               </Text>
               <SimpleGrid width="100%" columns={[1, 2, 3]} spacing={4}>
                 {allLanguages
-                  .filter((l) => l.makeCode && l.ui)
+                  .filter((l) => l.makeCode && uiSupported(l))
                   .map((language) => (
                     <LanguageCard
                       key={language.id}
@@ -108,7 +108,7 @@ export const LanguageDialog = ({
               </Text>
               <SimpleGrid width="100%" columns={[1, 2, 3]} spacing={4}>
                 {allLanguages
-                  .filter((l) => !(l.makeCode && l.ui))
+                  .filter((l) => !(l.makeCode && uiSupported(l)))
                   .map((language) => (
                     <LanguageCard
                       key={language.id}
