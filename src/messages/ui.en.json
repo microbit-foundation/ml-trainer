@@ -1959,6 +1959,12 @@
       "value": "New session setup"
     }
   ],
+  "import-shared-url-title": [
+    {
+      "type": 0,
+      "value": "Importing a shared project"
+    }
+  ],
   "newpage-continue-session-subtitle": [
     {
       "type": 0,

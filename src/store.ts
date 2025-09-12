@@ -35,6 +35,8 @@ import {
   EditorStartUp,
   TourTriggerName,
   tourSequence,
+  SharedImportState,
+  WebDownloadStep,
 } from "./model";
 import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/actions";
@@ -176,6 +178,8 @@ export interface State {
   downloadFlashingProgress: number;
   save: SaveState;
 
+  sharedImportState: SharedImportState;
+
   settings: Settings;
 
   trainModelProgress: number;
@@ -221,6 +225,7 @@ export interface Actions {
 
   loadDataset(actions: ActionData[]): void;
   loadProject(project: MakeCodeProject, name: string): void;
+  updateSharedImportState(update: Partial<SharedImportState>): void;
   setEditorOpen(open: boolean): void;
   recordingStarted(): void;
   recordingStopped(): void;
@@ -310,6 +315,9 @@ const createMlStore = (logging: Logging) => {
           downloadFlashingProgress: 0,
           save: {
             step: SaveStep.None,
+          },
+          sharedImportState: {
+            step: WebDownloadStep.None
           },
           projectEdited: false,
           settings: defaultSettings,
@@ -688,6 +696,17 @@ const createMlStore = (logging: Logging) => {
                 // We don't update projectLoadTimestamp here as we don't want a toast notification for .org import
               };
             });
+          },
+
+          updateSharedImportState(update: Partial<SharedImportState>) {
+            set(({ sharedImportState }) => ({
+              sharedImportState: {
+                ...sharedImportState,
+                ...update
+              }
+            }),
+              false,
+              "updateSharedImportState")
           },
 
           closeTrainModelDialogs() {

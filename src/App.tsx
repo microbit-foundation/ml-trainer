@@ -52,9 +52,11 @@ import {
   createDataSamplesPageUrl,
   createHomePageUrl,
   createImportPageUrl,
+  createImportSharedURLPageUrl,
   createNewPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
+import { ImportSharedURLPage } from "./pages/ImportSharedURLPage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -178,6 +180,10 @@ const createRouter = () => {
         {
           path: createCodePageUrl(),
           element: <CodePage />,
+        },
+        {
+          path: createImportSharedURLPageUrl(),
+          element: <ImportSharedURLPage />
         },
         {
           path: "*",

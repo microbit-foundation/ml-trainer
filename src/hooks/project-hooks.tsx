@@ -27,6 +27,7 @@ import {
   isDatasetUserFileFormat,
   PostImportDialogState,
   SaveStep,
+  WebDownloadStep,
 } from "../model";
 import { untitledProjectName as untitled } from "../project-name";
 import { useStore } from "../store";
@@ -42,6 +43,7 @@ import {
   readFileAsText,
 } from "../utils/fs-util";
 import { useDownloadActions } from "./download-hooks";
+import { Header, ScriptText } from "@microbit/makecode-embed/vanilla";
 
 class CodeEditorError extends Error {}
 
@@ -57,6 +59,7 @@ interface ProjectContext {
   projectEdited: boolean;
   resetProject: () => void;
   loadFile: (file: File, type: LoadType) => void;
+  importSharedURL: (url: string) => Promise<void>;
   /**
    * Called to request a save.
    *
@@ -354,6 +357,85 @@ export const ProjectProvider = ({
       setPostImportDialogState,
     ]
   );
+  const latestImportSharedURLPromise = useRef<Promise<void>>(Promise.resolve());
+  const importSharedURL = useCallback(
+    async (shortId: string): Promise<void> => {
+      const appState = useStore.getState().sharedImportState;
+
+      // Already downloading this project
+      if (appState.fetchKey === shortId && appState.step === WebDownloadStep.Active) return;
+      else if (appState.step !== WebDownloadStep.None) {
+        // downloading another project
+        useStore.getState().updateSharedImportState({step: WebDownloadStep.Cancelled});
+        await latestImportSharedURLPromise.current;
+      }
+      logging.event({
+        type: "import-shared-project",
+        detail: { shortId }
+      });
+      useStore.getState().updateSharedImportState({
+        step: WebDownloadStep.Active,
+        fetchKey: shortId
+      });
+      const isCancelled = () => useStore.getState().sharedImportState.step === WebDownloadStep.Cancelled;
+      latestImportSharedURLPromise.current = (async () => {
+        if (isCancelled()) return;
+
+        const headerResponse = await fetch(`https://www.makecode.com/api/${shortId}`);
+        const header = await headerResponse.json() as Header;
+        if (!header || !header.id) return Promise.reject("Incorrect header data");
+
+        if (isCancelled()) return;
+
+        const textResponse = await fetch(`https://www.makecode.com/api/${header.id}/text`);
+        const text = await textResponse.json() as ScriptText;
+
+        const hasTimedOut = await checkIfEditorStartUpTimedOut(
+          editorReadyPromise.promise
+        );
+
+        if (isCancelled()) return;
+
+        if (hasTimedOut) {
+          openEditorTimedOutDialog();
+          return;
+        }
+
+        if (isCancelled()) return;
+
+        // This triggers the code in editorChanged to update actions etc.
+        await driverRef.current!.importProject({project: {header, text}});
+      })();
+
+      try {
+        await latestImportSharedURLPromise.current;
+
+      logging.event({
+        type: "import-shared-project-complete",
+        detail: { shortId }
+      });
+
+      } catch (e) {
+
+        logging.event({
+          type: "import-shared-project-failed",
+          detail: { shortId }
+        });
+
+        throw e;
+      } finally {
+        useStore.getState().updateSharedImportState(({
+          step: WebDownloadStep.None,
+          fetchKey: undefined
+        }));
+      }
+    }, [
+      checkIfEditorStartUpTimedOut,
+      driverRef,
+      editorReadyPromise.promise,
+      logging,
+      openEditorTimedOutDialog
+    ]);
 
   const setSave = useStore((s) => s.setSave);
   const save = useStore((s) => s.save);
@@ -456,6 +538,7 @@ export const ProjectProvider = ({
   const value = useMemo(
     () => ({
       loadFile,
+      importSharedURL,
       openEditor,
       browserNavigationToEditor,
       project,
@@ -474,6 +557,7 @@ export const ProjectProvider = ({
     }),
     [
       loadFile,
+      importSharedURL,
       openEditor,
       browserNavigationToEditor,
       project,
