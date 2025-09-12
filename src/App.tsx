@@ -183,7 +183,7 @@ const createRouter = () => {
         },
         {
           path: createImportSharedURLPageUrl(),
-          element: <ImportSharedURLPage />
+          element: <ImportSharedURLPage />,
         },
         {
           path: "*",

@@ -161,7 +161,7 @@ export enum SaveStep {
 export enum WebDownloadStep {
   None = "none",
   Active = "active",
-  Cancelled = "cancelled"
+  Cancelled = "cancelled",
 }
 
 export interface SharedImportState {

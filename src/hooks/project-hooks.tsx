@@ -363,32 +363,45 @@ export const ProjectProvider = ({
       const appState = useStore.getState().sharedImportState;
 
       // Already downloading this project
-      if (appState.fetchKey === shortId && appState.step === WebDownloadStep.Active) return;
+      if (
+        appState.fetchKey === shortId &&
+        appState.step === WebDownloadStep.Active
+      )
+        return;
       else if (appState.step !== WebDownloadStep.None) {
         // downloading another project
-        useStore.getState().updateSharedImportState({step: WebDownloadStep.Cancelled});
+        useStore
+          .getState()
+          .updateSharedImportState({ step: WebDownloadStep.Cancelled });
         await latestImportSharedURLPromise.current;
       }
       logging.event({
         type: "import-shared-project",
-        detail: { shortId }
+        detail: { shortId },
       });
       useStore.getState().updateSharedImportState({
         step: WebDownloadStep.Active,
-        fetchKey: shortId
+        fetchKey: shortId,
       });
-      const isCancelled = () => useStore.getState().sharedImportState.step === WebDownloadStep.Cancelled;
+      const isCancelled = () =>
+        useStore.getState().sharedImportState.step ===
+        WebDownloadStep.Cancelled;
       latestImportSharedURLPromise.current = (async () => {
         if (isCancelled()) return;
 
-        const headerResponse = await fetch(`https://www.makecode.com/api/${shortId}`);
-        const header = await headerResponse.json() as Header;
-        if (!header || !header.id) return Promise.reject("Incorrect header data");
+        const headerResponse = await fetch(
+          `https://www.makecode.com/api/${shortId}`
+        );
+        const header = (await headerResponse.json()) as Header;
+        if (!header || !header.id)
+          return Promise.reject("Incorrect header data");
 
         if (isCancelled()) return;
 
-        const textResponse = await fetch(`https://www.makecode.com/api/${header.id}/text`);
-        const text = await textResponse.json() as ScriptText;
+        const textResponse = await fetch(
+          `https://www.makecode.com/api/${header.id}/text`
+        );
+        const text = (await textResponse.json()) as ScriptText;
 
         const hasTimedOut = await checkIfEditorStartUpTimedOut(
           editorReadyPromise.promise
@@ -404,38 +417,38 @@ export const ProjectProvider = ({
         if (isCancelled()) return;
 
         // This triggers the code in editorChanged to update actions etc.
-        await driverRef.current!.importProject({project: {header, text}});
+        await driverRef.current!.importProject({ project: { header, text } });
       })();
 
       try {
         await latestImportSharedURLPromise.current;
 
-      logging.event({
-        type: "import-shared-project-complete",
-        detail: { shortId }
-      });
-
+        logging.event({
+          type: "import-shared-project-complete",
+          detail: { shortId },
+        });
       } catch (e) {
-
         logging.event({
           type: "import-shared-project-failed",
-          detail: { shortId }
+          detail: { shortId },
         });
 
         throw e;
       } finally {
-        useStore.getState().updateSharedImportState(({
+        useStore.getState().updateSharedImportState({
           step: WebDownloadStep.None,
-          fetchKey: undefined
-        }));
+          fetchKey: undefined,
+        });
       }
-    }, [
+    },
+    [
       checkIfEditorStartUpTimedOut,
       driverRef,
       editorReadyPromise.promise,
       logging,
-      openEditorTimedOutDialog
-    ]);
+      openEditorTimedOutDialog,
+    ]
+  );
 
   const setSave = useStore((s) => s.setSave);
   const save = useStore((s) => s.save);

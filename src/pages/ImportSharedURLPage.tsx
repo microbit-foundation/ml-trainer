@@ -1,33 +1,34 @@
 import { Heading, Stack, Text, VStack } from "@chakra-ui/react";
-import DefaultPageLayout, { HomeMenuItem, HomeToolbarItem } from "../components/DefaultPageLayout";
+import DefaultPageLayout, {
+  HomeMenuItem,
+  HomeToolbarItem,
+} from "../components/DefaultPageLayout";
 import { FormattedMessage } from "react-intl";
-import {  useParams } from "react-router";
+import { useParams } from "react-router";
 import NotFound from "../components/NotFound";
 import { useEffect, useState } from "react";
 import { useProject } from "../hooks/project-hooks";
 
 export const ImportSharedURLPage = () => {
+  const { shortId } = useParams();
+  const { importSharedURL } = useProject();
+  const [isLoadError, setLoadError] = useState<boolean>(false);
 
-    const { shortId } = useParams();
-    const { importSharedURL } = useProject();
-    const [isLoadError, setLoadError] = useState<boolean>(false);
+  const idIsValid = !!shortId && /^_[a-zA-Z0-9]+$/.test(shortId);
 
-    const idIsValid = !!shortId && /^_[a-zA-Z0-9]+$/.test(shortId);
+  useEffect(() => {
+    if (!idIsValid) return;
+    importSharedURL(shortId).catch((e) => {
+      console.error("Loading shared project failed", e);
+      setLoadError(true);
+    });
+  }, [importSharedURL, idIsValid, shortId]);
 
-    useEffect(() => {
-        if (!idIsValid) return;
-        importSharedURL(shortId)
-        .catch(e => {
-            console.error("Loading shared project failed", e);
-            setLoadError(true);
-        });
-    }, [importSharedURL, idIsValid, shortId]);
+  if (!idIsValid) {
+    return <NotFound />;
+  }
 
-    if (!idIsValid) {
-        return <NotFound />;
-    }
-
-      return (
+  return (
     <DefaultPageLayout
       titleId="import-shared-url-title"
       toolbarItemsRight={<HomeToolbarItem />}

@@ -317,7 +317,7 @@ const createMlStore = (logging: Logging) => {
             step: SaveStep.None,
           },
           sharedImportState: {
-            step: WebDownloadStep.None
+            step: WebDownloadStep.None,
           },
           projectEdited: false,
           settings: defaultSettings,
@@ -699,14 +699,16 @@ const createMlStore = (logging: Logging) => {
           },
 
           updateSharedImportState(update: Partial<SharedImportState>) {
-            set(({ sharedImportState }) => ({
-              sharedImportState: {
-                ...sharedImportState,
-                ...update
-              }
-            }),
+            set(
+              ({ sharedImportState }) => ({
+                sharedImportState: {
+                  ...sharedImportState,
+                  ...update,
+                },
+              }),
               false,
-              "updateSharedImportState")
+              "updateSharedImportState"
+            );
           },
 
           closeTrainModelDialogs() {
