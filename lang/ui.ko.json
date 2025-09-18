@@ -839,6 +839,10 @@
     "defaultMessage": "지원되지 않는 파일 유형",
     "description": "Title of import error dialog"
   },
+  "import-shared-url-title": {
+    "defaultMessage": "Open shared CreateAI project",
+    "description": "Import shared CreateAI project title"
+  },
   "incompatible-device-body-alt": {
     "defaultMessage": "뒤로 돌아가 다른 micro:bit를 선택하거나,  <link>프로젝트 hex를 저장</link>하세요. 프로젝트 hex는 나중에 micro:bit V2에 다운로드할 수 있습니다.",
     "description": "Incompatible device dialog body text"
@@ -1498,6 +1502,10 @@
   "testing-model-title": {
     "defaultMessage": "모델 테스트 중",
     "description": "Testing model page title"
+  },
+  "third-party-content-description": {
+    "defaultMessage": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation.",
+    "description": "Notify user of third party content"
   },
   "tour-action": {
     "defaultMessage": "투어",

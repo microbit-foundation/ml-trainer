@@ -1447,6 +1447,12 @@
       "value": "Tipo de archivo no compatible"
     }
   ],
+  "import-shared-url-title": [
+    {
+      "type": 0,
+      "value": "Open shared CreateAI project"
+    }
+  ],
   "incompatible-device-body-alt": [
     {
       "type": 0,
@@ -2641,6 +2647,12 @@
     {
       "type": 0,
       "value": "Modelo de pruebas"
+    }
+  ],
+  "third-party-content-description": [
+    {
+      "type": 0,
+      "value": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation."
     }
   ],
   "tour-action": [

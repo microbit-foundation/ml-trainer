@@ -839,6 +839,10 @@
     "defaultMessage": "Tipo de archivo no compatible",
     "description": "Title of import error dialog"
   },
+  "import-shared-url-title": {
+    "defaultMessage": "Open shared CreateAI project",
+    "description": "Import shared CreateAI project title"
+  },
   "incompatible-device-body-alt": {
     "defaultMessage": "Vuelve atrás para seleccionar un micro:bit diferente o <link>guarda el hexadecimal del proyecto</link> para poder descargarlo más tarde en un micro:bit V2.",
     "description": "Incompatible device dialog body text"
@@ -1498,6 +1502,10 @@
   "testing-model-title": {
     "defaultMessage": "Modelo de pruebas",
     "description": "Testing model page title"
+  },
+  "third-party-content-description": {
+    "defaultMessage": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation.",
+    "description": "Notify user of third party content"
   },
   "tour-action": {
     "defaultMessage": "Recorrido",

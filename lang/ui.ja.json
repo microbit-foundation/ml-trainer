@@ -839,6 +839,10 @@
     "defaultMessage": "対応していないファイル形式です",
     "description": "Title of import error dialog"
   },
+  "import-shared-url-title": {
+    "defaultMessage": "Open shared CreateAI project",
+    "description": "Import shared CreateAI project title"
+  },
   "incompatible-device-body-alt": {
     "defaultMessage": "戻って別のmicro:bitを選ぶか、<link>プロジェクトのhexを保存して</link>、micro:bit V2にダウンロードしてください。",
     "description": "Incompatible device dialog body text"
@@ -1498,6 +1502,10 @@
   "testing-model-title": {
     "defaultMessage": "モデルのテスト",
     "description": "Testing model page title"
+  },
+  "third-party-content-description": {
+    "defaultMessage": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation.",
+    "description": "Notify user of third party content"
   },
   "tour-action": {
     "defaultMessage": "ツアー",

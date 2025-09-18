@@ -158,17 +158,6 @@ export enum SaveStep {
   SaveProgress = "progress",
 }
 
-export enum WebDownloadStep {
-  None = "none",
-  Active = "active",
-  Cancelled = "cancelled",
-}
-
-export interface SharedImportState {
-  step: WebDownloadStep;
-  fetchKey?: string;
-}
-
 export interface TourStep {
   selector?: string;
   title: ReactNode;

@@ -839,6 +839,10 @@
     "defaultMessage": "crwdns363048:0crwdne363048:0",
     "description": "Title of import error dialog"
   },
+  "import-shared-url-title": {
+    "defaultMessage": "Open shared CreateAI project",
+    "description": "Import shared CreateAI project title"
+  },
   "incompatible-device-body-alt": {
     "defaultMessage": "crwdns363050:0crwdne363050:0",
     "description": "Incompatible device dialog body text"
@@ -1498,6 +1502,10 @@
   "testing-model-title": {
     "defaultMessage": "crwdns363368:0crwdne363368:0",
     "description": "Testing model page title"
+  },
+  "third-party-content-description": {
+    "defaultMessage": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation.",
+    "description": "Notify user of third party content"
   },
   "tour-action": {
     "defaultMessage": "crwdns363370:0crwdne363370:0",

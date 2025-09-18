@@ -183,7 +183,14 @@ const createRouter = () => {
         },
         {
           path: createImportSharedURLPageUrl(),
+          loader: ({ params }) => {
+            if (!params.shortId || !/^_[a-zA-Z0-9]+$/.test(params.shortId)) {
+              throw "Not a shared key";
+            }
+            return null;
+          },
           element: <ImportSharedURLPage />,
+          errorElement: <NotFound />,
         },
         {
           path: "*",
