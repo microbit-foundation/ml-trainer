@@ -110,6 +110,7 @@ const ActionNameCard = ({
       position="relative"
       className={tourElClassname.dataSamplesActionCard}
       opacity={disabled ? 0.5 : undefined}
+      variant={readOnly ? "outline" : undefined}
     >
       {!readOnly && onDeleteAction && (
         <CloseButton

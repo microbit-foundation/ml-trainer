@@ -839,6 +839,34 @@
     "defaultMessage": "Tipo de arquivo não suportado.",
     "description": "Title of import error dialog"
   },
+  "import-shared-url-blocks-preview-description": {
+    "defaultMessage": "Preview of the MakeCode code contained within this project.",
+    "description": "Blocks preview description text"
+  },
+  "import-shared-url-blocks-preview-title": {
+    "defaultMessage": "Blocks preview",
+    "description": "Blocks preview heading text"
+  },
+  "import-shared-url-data-preview-description": {
+    "defaultMessage": "Preview of the actions and data contained within this project.",
+    "description": "Data preview description text"
+  },
+  "import-shared-url-data-preview-title": {
+    "defaultMessage": "Data preview",
+    "description": "Data preview heading text"
+  },
+  "import-shared-url-description": {
+    "defaultMessage": "This is a Microsoft MakeCode shared project compatible with CreateAI.",
+    "description": "Import shared CreateAI project description"
+  },
+  "import-shared-url-error-description": {
+    "defaultMessage": "Check the link you followed is correct, and make sure you are connected to the internet before trying again.",
+    "description": "Import shared CreateAI error description"
+  },
+  "import-shared-url-error-title": {
+    "defaultMessage": "An error occurred while fetching the shared project",
+    "description": "Import shared CreateAI error page title"
+  },
   "import-shared-url-title": {
     "defaultMessage": "Open shared CreateAI project",
     "description": "Import shared CreateAI project title"

@@ -1451,6 +1451,48 @@
       "value": "Nieobsługiwany typ pliku"
     }
   ],
+  "import-shared-url-blocks-preview-description": [
+    {
+      "type": 0,
+      "value": "Preview of the MakeCode code contained within this project."
+    }
+  ],
+  "import-shared-url-blocks-preview-title": [
+    {
+      "type": 0,
+      "value": "Blocks preview"
+    }
+  ],
+  "import-shared-url-data-preview-description": [
+    {
+      "type": 0,
+      "value": "Preview of the actions and data contained within this project."
+    }
+  ],
+  "import-shared-url-data-preview-title": [
+    {
+      "type": 0,
+      "value": "Data preview"
+    }
+  ],
+  "import-shared-url-description": [
+    {
+      "type": 0,
+      "value": "This is a Microsoft MakeCode shared project compatible with CreateAI."
+    }
+  ],
+  "import-shared-url-error-description": [
+    {
+      "type": 0,
+      "value": "Check the link you followed is correct, and make sure you are connected to the internet before trying again."
+    }
+  ],
+  "import-shared-url-error-title": [
+    {
+      "type": 0,
+      "value": "An error occurred while fetching the shared project"
+    }
+  ],
   "import-shared-url-title": [
     {
       "type": 0,
