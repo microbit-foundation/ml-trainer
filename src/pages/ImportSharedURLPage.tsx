@@ -1,5 +1,5 @@
 import {
-  Alert,
+  Box,
   Button,
   Grid,
   Heading,
@@ -12,38 +12,36 @@ import {
   Stack,
   StackProps,
   Text,
-  TextProps,
   VStack,
 } from "@chakra-ui/react";
-import DefaultPageLayout, {
-  HomeMenuItem,
-  HomeToolbarItem,
-} from "../components/DefaultPageLayout";
-import { FormattedMessage, useIntl } from "react-intl";
-import { useNavigate, useParams } from "react-router";
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import { useLogging } from "../logging/logging-hooks";
-import { useSettings, useStore } from "../store";
-import { ButtonWithLoading } from "../components/ButtonWithLoading";
-import LoadingAnimation from "../components/LoadingAnimation";
+import {
+  MakeCodeBlocksRendering,
+  MakeCodeRenderBlocksProvider,
+} from "@microbit/makecode-embed";
 import {
   BlockLayout,
   Header,
   MakeCodeProject,
   ScriptText,
 } from "@microbit/makecode-embed/vanilla";
-import { createDataSamplesPageUrl } from "../urls";
-import { useProject } from "../hooks/project-hooks";
-import { ActionData, DatasetEditorJsonFormat } from "../model";
-import DataSamplesTableRow from "../components/DataSamplesTableRow";
-import {
-  MakeCodeBlocksRendering,
-  MakeCodeRenderBlocksProvider,
-} from "@microbit/makecode-embed";
-import { getMakeCodeLang } from "../settings";
-import CodeViewCard from "../components/CodeViewCard";
-import ErrorPage from "../components/ErrorPage";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import { RiInformationLine } from "react-icons/ri";
+import { FormattedMessage, useIntl } from "react-intl";
+import { useNavigate, useParams } from "react-router";
+import { ButtonWithLoading } from "../components/ButtonWithLoading";
+import DataSamplesTableRow from "../components/DataSamplesTableRow";
+import DefaultPageLayout, {
+  HomeMenuItem,
+  HomeToolbarItem,
+} from "../components/DefaultPageLayout";
+import ErrorPage from "../components/ErrorPage";
+import LoadingAnimation from "../components/LoadingAnimation";
+import { useProject } from "../hooks/project-hooks";
+import { useLogging } from "../logging/logging-hooks";
+import { ActionData, DatasetEditorJsonFormat } from "../model";
+import { getMakeCodeLang } from "../settings";
+import { useSettings, useStore } from "../store";
+import { createDataSamplesPageUrl } from "../urls";
 
 const enum SharedState {
   None = 0,
@@ -254,10 +252,14 @@ const StartSessionButton = ({
   </HStack>
 );
 
-const previewFrame: HTMLChakraProps<"div"> = {
-  borderRadius: "sm",
+const previewFrameOuter: HTMLChakraProps<"div"> = {
   p: 2,
   bg: "whitesmoke",
+  borderRadius: "sm",
+};
+const previewFrame: HTMLChakraProps<"div"> = {
+  overflow: "auto",
+  h: 96,
 };
 
 interface PreviewDataProps {
@@ -273,36 +275,21 @@ const PreviewData = ({ dataset }: PreviewDataProps) => {
       <Text>
         <FormattedMessage id="import-shared-url-data-preview-description" />
       </Text>
-      <VStack
-        justifyContent="start"
-        flexGrow={1}
-        alignItems="start"
-        flexShrink={1}
-        position="relative"
-      >
-        <Grid
-          gridTemplateColumns="290px 1fr"
-          gap={3}
-          p={5}
-          maxH="420px"
-          w="full"
-          overflow="auto"
-          {...previewFrame}
-          alignItems="start"
-          autoRows="max-content"
-          flexGrow={1}
-        >
-          {dataset.map((action) => (
-            <DataSamplesTableRow
-              readonly={true}
-              key={action.ID}
-              action={action}
-              selected={false}
-              showHints={false}
-            />
-          ))}
-        </Grid>
-      </VStack>
+      <Box {...previewFrameOuter}>
+        <Box {...previewFrame}>
+          <Grid gap={3} gridTemplateColumns="290px 1fr">
+            {dataset.map((action) => (
+              <DataSamplesTableRow
+                readonly={true}
+                key={action.ID}
+                action={action}
+                selected={false}
+                showHints={false}
+              />
+            ))}
+          </Grid>
+        </Box>
+      </Box>
     </>
   );
 };
@@ -323,30 +310,27 @@ const MakeCodePreview = ({ project }: MakeCodePreviewProps) => {
         <FormattedMessage id="import-shared-url-blocks-preview-description" />
       </Text>
       <MakeCodeRenderBlocksProvider key={makeCodeLang} lang={makeCodeLang}>
-        <VStack
-          p={5}
-          h={96}
-          justifyContent="start"
-          flexGrow={1}
-          alignItems="start"
-          overflow="auto"
-          bg="whitesmoke"
-          flexShrink={1}
-          {...previewFrame}
-        >
-          <MakeCodeBlocksRendering
-            code={project}
-            layout={BlockLayout.Clean}
-            loaderCmp={
-              <SkeletonText
-                w="xs"
-                noOfLines={5}
-                spacing="5"
-                skeletonHeight="2"
-              />
-            }
-          />
-        </VStack>
+        <Box {...previewFrameOuter}>
+          <Box
+            sx={{
+              div: previewFrame,
+              img: { maxWidth: "unset", height: "unset" },
+            }}
+          >
+            <MakeCodeBlocksRendering
+              code={project}
+              layout={BlockLayout.Clean}
+              loaderCmp={
+                <SkeletonText
+                  w="xs"
+                  noOfLines={5}
+                  spacing="5"
+                  skeletonHeight="2"
+                />
+              }
+            />
+          </Box>
+        </Box>
       </MakeCodeRenderBlocksProvider>
     </>
   );
