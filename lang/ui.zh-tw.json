@@ -833,6 +833,38 @@
     "defaultMessage": "不支援的檔案類型",
     "description": "Title of import error dialog"
   },
+  "import-shared-url-blocks-preview-description": {
+    "defaultMessage": "Preview of the MakeCode code contained within this project.",
+    "description": "Blocks preview description text"
+  },
+  "import-shared-url-blocks-preview-title": {
+    "defaultMessage": "Blocks preview",
+    "description": "Blocks preview heading text"
+  },
+  "import-shared-url-data-preview-description": {
+    "defaultMessage": "Preview of the actions and data contained within this project.",
+    "description": "Data preview description text"
+  },
+  "import-shared-url-data-preview-title": {
+    "defaultMessage": "Data preview",
+    "description": "Data preview heading text"
+  },
+  "import-shared-url-description": {
+    "defaultMessage": "This is a Microsoft MakeCode shared project compatible with CreateAI.",
+    "description": "Import shared CreateAI project description"
+  },
+  "import-shared-url-error-description": {
+    "defaultMessage": "Check the link you followed is correct, and make sure you are connected to the internet before trying again.",
+    "description": "Import shared CreateAI error description"
+  },
+  "import-shared-url-error-title": {
+    "defaultMessage": "An error occurred while fetching the shared project",
+    "description": "Import shared CreateAI error page title"
+  },
+  "import-shared-url-title": {
+    "defaultMessage": "Open shared CreateAI project",
+    "description": "Import shared CreateAI project title"
+  },
   "incompatible-device-body-alt": {
     "defaultMessage": "返回選擇不同的 micro:bit，或<link>儲存專案十六進位檔案</link>，稍後可以將其下載到 micro:bit V2 上。",
     "description": "Incompatible device dialog body text"
@@ -1210,6 +1242,14 @@
     "defaultMessage": "放置時開啟檔案",
     "description": "Aria label for file drop target"
   },
+  "open-project-action": {
+    "defaultMessage": "Open project",
+    "description": "Open project button text"
+  },
+  "open-project-setup-description": {
+    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
+    "description": "Open project setup description"
+  },
   "other-tabs-body1": {
     "defaultMessage": "其他程序連線至此裝置。",
     "description": "Connection error dialog"
@@ -1489,6 +1529,10 @@
   "testing-model-title": {
     "defaultMessage": "測試模型",
     "description": "Testing model page title"
+  },
+  "third-party-content-description": {
+    "defaultMessage": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation.",
+    "description": "Notify user of third party content"
   },
   "tour-action": {
     "defaultMessage": "導覽",

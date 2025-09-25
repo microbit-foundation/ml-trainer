@@ -1427,6 +1427,54 @@
       "value": "対応していないファイル形式です"
     }
   ],
+  "import-shared-url-blocks-preview-description": [
+    {
+      "type": 0,
+      "value": "Preview of the MakeCode code contained within this project."
+    }
+  ],
+  "import-shared-url-blocks-preview-title": [
+    {
+      "type": 0,
+      "value": "Blocks preview"
+    }
+  ],
+  "import-shared-url-data-preview-description": [
+    {
+      "type": 0,
+      "value": "Preview of the actions and data contained within this project."
+    }
+  ],
+  "import-shared-url-data-preview-title": [
+    {
+      "type": 0,
+      "value": "Data preview"
+    }
+  ],
+  "import-shared-url-description": [
+    {
+      "type": 0,
+      "value": "This is a Microsoft MakeCode shared project compatible with CreateAI."
+    }
+  ],
+  "import-shared-url-error-description": [
+    {
+      "type": 0,
+      "value": "Check the link you followed is correct, and make sure you are connected to the internet before trying again."
+    }
+  ],
+  "import-shared-url-error-title": [
+    {
+      "type": 0,
+      "value": "An error occurred while fetching the shared project"
+    }
+  ],
+  "import-shared-url-title": [
+    {
+      "type": 0,
+      "value": "Open shared CreateAI project"
+    }
+  ],
   "incompatible-device-body-alt": [
     {
       "type": 0,
@@ -2085,6 +2133,32 @@
       "value": "ドロップ時にファイルを開く"
     }
   ],
+  "open-project-action": [
+    {
+      "type": 0,
+      "value": "Open project"
+    }
+  ],
+  "open-project-setup-description": [
+    {
+      "type": 0,
+      "value": "Opening this project will overwrite any existing session. You may want to "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "save your existing session"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " first."
+    }
+  ],
   "other-tabs-body1": [
     {
       "type": 0,
@@ -2605,6 +2679,12 @@
     {
       "type": 0,
       "value": "モデルのテスト"
+    }
+  ],
+  "third-party-content-description": [
+    {
+      "type": 0,
+      "value": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation."
     }
   ],
   "tour-action": [

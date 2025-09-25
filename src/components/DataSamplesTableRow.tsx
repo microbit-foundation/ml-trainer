@@ -14,15 +14,16 @@ import { RecordingOptions } from "./RecordingDialog";
 import { RefType } from "react-hotkeys-hook/dist/types";
 
 interface DataSamplesTableRowProps {
+  readonly?: boolean;
   action: ActionData;
   selected: boolean;
-  onSelectRow: () => void;
-  onRecord: (recordingOptions: RecordingOptions) => void;
+  onSelectRow?: () => void;
+  onRecord?: (recordingOptions: RecordingOptions) => void;
   showHints: boolean;
   newRecordingId?: number;
-  clearNewRecordingId: () => void;
-  onDeleteAction: () => void;
-  renameShortcutScopeRef: (instance: RefType<HTMLElement>) => void;
+  clearNewRecordingId?: () => void;
+  onDeleteAction?: () => void;
+  renameShortcutScopeRef?: (instance: RefType<HTMLElement>) => void;
 }
 
 const DataSamplesTableRow = ({
@@ -30,7 +31,8 @@ const DataSamplesTableRow = ({
   selected,
   onSelectRow,
   onRecord,
-  showHints: showHints,
+  readonly,
+  showHints,
   newRecordingId,
   clearNewRecordingId,
   onDeleteAction,
@@ -58,7 +60,7 @@ const DataSamplesTableRow = ({
             onDeleteAction={onDeleteAction}
             onSelectRow={onSelectRow}
             selected={selected}
-            readOnly={false}
+            readOnly={!!readonly}
           />
         </GridItem>
         {showHints ? (
@@ -67,6 +69,7 @@ const DataSamplesTableRow = ({
           <GridItem>
             {(action.name.length > 0 || action.recordings.length > 0) && (
               <ActionDataSamplesCard
+                readonly={readonly}
                 newRecordingId={newRecordingId}
                 value={action}
                 selected={selected}
