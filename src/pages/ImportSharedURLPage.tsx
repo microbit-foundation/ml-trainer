@@ -5,8 +5,10 @@ import {
   Heading,
   HStack,
   HTMLChakraProps,
+  Icon,
   Input,
   Link,
+  SkeletonText,
   Stack,
   StackProps,
   Text,
@@ -25,6 +27,7 @@ import { useSettings, useStore } from "../store";
 import { ButtonWithLoading } from "../components/ButtonWithLoading";
 import LoadingAnimation from "../components/LoadingAnimation";
 import {
+  BlockLayout,
   Header,
   MakeCodeProject,
   ScriptText,
@@ -33,10 +36,14 @@ import { createDataSamplesPageUrl } from "../urls";
 import { useProject } from "../hooks/project-hooks";
 import { ActionData, DatasetEditorJsonFormat } from "../model";
 import DataSamplesTableRow from "../components/DataSamplesTableRow";
-import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed";
+import {
+  MakeCodeBlocksRendering,
+  MakeCodeRenderBlocksProvider,
+} from "@microbit/makecode-embed";
 import { getMakeCodeLang } from "../settings";
 import CodeViewCard from "../components/CodeViewCard";
 import ErrorPage from "../components/ErrorPage";
+import { RiInformationLine } from "react-icons/ri";
 
 const enum SharedState {
   None = 0,
@@ -49,19 +56,15 @@ const enum SharedState {
 const contentStackProps: Partial<StackProps> = {
   bgColor: "white",
   spacing: 5,
-  m: [20],
+  my: [0, 0, 20],
   borderRadius: [0, "20px"],
-  borderWidth: [null, 1],
+  borderWidth: [null, null, 1],
   borderBottomWidth: 1,
-  borderColor: [null, "gray.300"],
-  p: [0, 10, 20],
+  borderColor: [null, null, "gray.300"],
+  p: 10,
   minW: [null, null, "xl"],
   alignItems: "stretch",
   width: ["full", "full", "3xl", "4xl"],
-};
-
-const readableProps: Partial<TextProps> = {
-  width: ["full", "65ch"],
 };
 
 export const ImportSharedURLPage = () => {
@@ -118,6 +121,29 @@ export const ImportSharedURLPage = () => {
           {sharedState >= SharedState.GettingProject && (
             <>
               <ProjectLoadDetails name={name} setName={setName} />
+              {sharedState === SharedState.Complete && (
+                <HStack gap={3}>
+                  <Icon as={RiInformationLine} boxSize={6} alignSelf="start" />
+                  <Text fontSize="md">
+                    <FormattedMessage
+                      id="third-party-content-description"
+                      values={{
+                        link: (children: ReactNode) => (
+                          <Link
+                            color="brand.600"
+                            textDecoration="underline"
+                            href={`https://makecode.microbit.org/${encodeURIComponent(
+                              shortId!
+                            )}`}
+                          >
+                            {children}
+                          </Link>
+                        ),
+                      }}
+                    />
+                  </Text>
+                </HStack>
+              )}
               <StartSessionButton
                 onStartSession={onStartSession}
                 isDisabled={sharedState !== SharedState.Complete}
@@ -145,13 +171,6 @@ export const ImportSharedURLPage = () => {
             </>
           )}
         </Stack>
-        {sharedState === SharedState.Complete && (
-          <Stack>
-            <Alert status="info">
-              <FormattedMessage id="third-party-content-description" />
-            </Alert>
-          </Stack>
-        )}
       </VStack>
     </DefaultPageLayout>
   );
@@ -172,11 +191,11 @@ const ProjectLoadDetails = ({ name, setName }: ProjectLoadDetailsProps) => {
 
   return (
     <>
-      <Text {...readableProps}>
+      <Text>
         <FormattedMessage id="import-shared-url-description" />
       </Text>
       {timestamp !== undefined && (
-        <Text {...readableProps}>
+        <Text>
           <FormattedMessage
             id="open-project-setup-description"
             values={{
@@ -199,7 +218,6 @@ const ProjectLoadDetails = ({ name, setName }: ProjectLoadDetailsProps) => {
           <FormattedMessage id="name-text" />
         </Heading>
         <Input
-          {...readableProps}
           aria-label={nameLabel}
           minW="25ch"
           value={name}
@@ -237,11 +255,9 @@ const StartSessionButton = ({
 );
 
 const previewFrame: HTMLChakraProps<"div"> = {
-  borderWidth: 1,
-  borderColor: "gray.300",
-  backgroundColor: "gray.25",
-  borderRadius: 15,
-  overflowX: "scroll",
+  borderRadius: "sm",
+  p: 2,
+  bg: "whitesmoke",
 };
 
 interface PreviewDataProps {
@@ -254,7 +270,7 @@ const PreviewData = ({ dataset }: PreviewDataProps) => {
       <Heading size="md" as="h2">
         <FormattedMessage id="import-shared-url-data-preview-title" />
       </Heading>
-      <Text {...readableProps}>
+      <Text>
         <FormattedMessage id="import-shared-url-data-preview-description" />
       </Text>
       <VStack
@@ -298,27 +314,38 @@ interface MakeCodePreviewProps {
 const MakeCodePreview = ({ project }: MakeCodePreviewProps) => {
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
-  const scrollableAreaRef = useRef<HTMLDivElement>(null);
   return (
     <>
       <Heading size="md" as="h2" pt={[1, 3, 5]}>
         <FormattedMessage id="import-shared-url-blocks-preview-title" />
       </Heading>
-      <Text {...readableProps}>
+      <Text>
         <FormattedMessage id="import-shared-url-blocks-preview-description" />
       </Text>
       <MakeCodeRenderBlocksProvider key={makeCodeLang} lang={makeCodeLang}>
         <VStack
           p={5}
+          h={96}
           justifyContent="start"
           flexGrow={1}
           alignItems="start"
-          overflowY="auto"
+          overflow="auto"
+          bg="whitesmoke"
           flexShrink={1}
           {...previewFrame}
-          ref={scrollableAreaRef}
         >
-          <CodeViewCard parentRef={scrollableAreaRef} project={project} />
+          <MakeCodeBlocksRendering
+            code={project}
+            layout={BlockLayout.Clean}
+            loaderCmp={
+              <SkeletonText
+                w="xs"
+                noOfLines={5}
+                spacing="5"
+                skeletonHeight="2"
+              />
+            }
+          />
         </VStack>
       </MakeCodeRenderBlocksProvider>
     </>
@@ -332,7 +359,7 @@ const ErrorPreloading = () => {
     <ErrorPage title={titleText}>
       <VStack spacing={3}>
         <Stack>
-          <Text {...readableProps}>
+          <Text>
             <FormattedMessage id="import-shared-url-error-description" />
           </Text>
           <Text>
