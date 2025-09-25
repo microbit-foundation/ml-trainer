@@ -1251,6 +1251,14 @@
     "defaultMessage": "Abrir arquivo quando solto",
     "description": "Aria label for file drop target"
   },
+  "open-project-action": {
+    "defaultMessage": "Open project",
+    "description": "Open project button text"
+  },
+  "open-project-setup-description": {
+    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
+    "description": "Open project setup description"
+  },
   "other-tabs-body1": {
     "defaultMessage": "Outro processo está conectado a este dispositivo.",
     "description": "Connection error dialog"

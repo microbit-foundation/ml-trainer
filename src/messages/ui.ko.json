@@ -2141,6 +2141,32 @@
       "value": "드롭될 때 파일 열기"
     }
   ],
+  "open-project-action": [
+    {
+      "type": 0,
+      "value": "Open project"
+    }
+  ],
+  "open-project-setup-description": [
+    {
+      "type": 0,
+      "value": "Opening this project will overwrite any existing session. You may want to "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "save your existing session"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " first."
+    }
+  ],
   "other-tabs-body1": [
     {
       "type": 0,

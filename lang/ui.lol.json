@@ -1251,6 +1251,14 @@
     "defaultMessage": "crwdns363228:0crwdne363228:0",
     "description": "Aria label for file drop target"
   },
+  "open-project-action": {
+    "defaultMessage": "Open project",
+    "description": "Open project button text"
+  },
+  "open-project-setup-description": {
+    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
+    "description": "Open project setup description"
+  },
   "other-tabs-body1": {
     "defaultMessage": "crwdns363230:0crwdne363230:0",
     "description": "Connection error dialog"

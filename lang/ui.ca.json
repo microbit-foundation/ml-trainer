@@ -1251,6 +1251,14 @@
     "defaultMessage": "Obre el fitxer quan es deixa anar",
     "description": "Aria label for file drop target"
   },
+  "open-project-action": {
+    "defaultMessage": "Open project",
+    "description": "Open project button text"
+  },
+  "open-project-setup-description": {
+    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
+    "description": "Open project setup description"
+  },
   "other-tabs-body1": {
     "defaultMessage": "Un altre procés està connectat a aquest dispositiu.",
     "description": "Connection error dialog"

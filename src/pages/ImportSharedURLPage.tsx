@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Grid,
   Heading,
@@ -53,15 +54,14 @@ const contentStackProps: Partial<StackProps> = {
   borderWidth: [null, 1],
   borderBottomWidth: 1,
   borderColor: [null, "gray.300"],
-  py: [5, 8],
-  px: [3, 5, 8],
+  p: [0, 10, 20],
   minW: [null, null, "xl"],
   alignItems: "stretch",
-  width: ["100%", "90%", "80%"],
+  width: ["full", "full", "3xl", "4xl"],
 };
 
 const readableProps: Partial<TextProps> = {
-  width: "65ch",
+  width: ["full", "65ch"],
 };
 
 export const ImportSharedURLPage = () => {
@@ -109,8 +109,8 @@ export const ImportSharedURLPage = () => {
       toolbarItemsRight={<HomeToolbarItem />}
       menuItems={<HomeMenuItem />}
     >
-      <VStack as="main" justifyContent="center" paddingBottom={15}>
-        <Stack {...contentStackProps}>
+      <VStack as="main" justifyContent="center" paddingBottom={20}>
+        <Stack {...contentStackProps} mb="5">
           <Heading as="h1" mb={5}>
             <FormattedMessage id="import-shared-url-title" />
           </Heading>
@@ -145,6 +145,13 @@ export const ImportSharedURLPage = () => {
             </>
           )}
         </Stack>
+        {sharedState === SharedState.Complete && (
+          <Stack>
+            <Alert status="info">
+              <FormattedMessage id="third-party-content-description" />
+            </Alert>
+          </Stack>
+        )}
       </VStack>
     </DefaultPageLayout>
   );
@@ -171,7 +178,7 @@ const ProjectLoadDetails = ({ name, setName }: ProjectLoadDetailsProps) => {
       {timestamp !== undefined && (
         <Text {...readableProps}>
           <FormattedMessage
-            id="new-session-setup-description"
+            id="open-project-setup-description"
             values={{
               link: (chunks: ReactNode) => (
                 <Button
@@ -200,9 +207,6 @@ const ProjectLoadDetails = ({ name, setName }: ProjectLoadDetailsProps) => {
           size="lg"
           onChange={(e) => setName(e.currentTarget.value)}
         />
-        <Text {...readableProps}>
-          <FormattedMessage id="third-party-content-description" />
-        </Text>
       </Stack>
     </>
   );
@@ -227,19 +231,17 @@ const StartSessionButton = ({
       onClick={onStartSession}
       size="lg"
     >
-      <FormattedMessage id="start-session-action" />
+      <FormattedMessage id="open-project-action" />
     </ButtonWithLoading>
   </HStack>
 );
 
 const previewFrame: HTMLChakraProps<"div"> = {
-  px: 5,
   borderWidth: 1,
   borderColor: "gray.300",
   backgroundColor: "gray.25",
   borderRadius: 15,
   overflowX: "scroll",
-  py: 5,
 };
 
 interface PreviewDataProps {
@@ -256,20 +258,19 @@ const PreviewData = ({ dataset }: PreviewDataProps) => {
         <FormattedMessage id="import-shared-url-data-preview-description" />
       </Text>
       <VStack
-        px={5}
-        w="full"
         justifyContent="start"
         flexGrow={1}
         alignItems="start"
         flexShrink={1}
-        overflowY="scroll"
-        maxH="420px"
         position="relative"
       >
         <Grid
           gridTemplateColumns="290px 1fr"
           gap={3}
+          p={5}
+          maxH="420px"
           w="full"
+          overflow="auto"
           {...previewFrame}
           alignItems="start"
           autoRows="max-content"
@@ -309,7 +310,6 @@ const MakeCodePreview = ({ project }: MakeCodePreviewProps) => {
       <MakeCodeRenderBlocksProvider key={makeCodeLang} lang={makeCodeLang}>
         <VStack
           p={5}
-          mx={5}
           justifyContent="start"
           flexGrow={1}
           alignItems="start"
