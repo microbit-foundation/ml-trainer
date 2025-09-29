@@ -23,9 +23,9 @@ import LedIconPicker from "./LedIconPicker";
 import debounce from "lodash.debounce";
 
 export enum ActionCardNameViewMode {
-  Editable = "editable", // Interaction, color, depth
-  Readonly = "readonly", // Grayed out
-  Preview = "preview", // Flattened
+  Editable = "Editable", // Interaction, color, depth
+  ReadOnly = "Readonly", // Grayed out
+  Preview = "Preview", // Flattened
 }
 
 interface ActionNameCardProps {
@@ -59,7 +59,7 @@ const ActionNameCard = ({
   const [localName, setLocalName] = useState<string>(value.name);
   const predictionResult = useStore((s) => s.predictionResult);
   const isTriggered =
-    viewMode === ActionCardNameViewMode.Readonly
+    viewMode === ActionCardNameViewMode.ReadOnly
       ? predictionResult?.detected?.ID === value.ID
       : undefined;
 
@@ -138,7 +138,7 @@ const ActionNameCard = ({
       <CardBody p={0} alignContent="center">
         <HStack>
           <HStack>
-            {viewMode === ActionCardNameViewMode.Readonly ? (
+            {viewMode === ActionCardNameViewMode.ReadOnly ? (
               <LedIcon icon={icon} isTriggered={isTriggered} />
             ) : (
               <LedIconSvg icon={icon} />

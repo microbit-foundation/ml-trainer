@@ -100,7 +100,7 @@ const TestingModelTable = () => {
                   <GridItem>
                     <ActionNameCard
                       value={action}
-                      viewMode={ActionCardNameViewMode.Readonly}
+                      viewMode={ActionCardNameViewMode.ReadOnly}
                       disabled={!isConnected}
                     />
                   </GridItem>
