@@ -280,7 +280,7 @@ const PreviewData = ({ dataset }: PreviewDataProps) => {
           <Grid gap={3} gridTemplateColumns="290px 1fr">
             {dataset.map((action) => (
               <DataSamplesTableRow
-                readonly={true}
+                preview={true}
                 key={action.ID}
                 action={action}
                 selected={false}

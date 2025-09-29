@@ -8,13 +8,13 @@ import { Box, GridItem } from "@chakra-ui/react";
 import { useIntl } from "react-intl";
 import { ActionData } from "../model";
 import ActionDataSamplesCard from "./ActionDataSamplesCard";
-import ActionNameCard from "./ActionNameCard";
+import ActionNameCard, { ActionCardNameViewMode } from "./ActionNameCard";
 import DataSamplesTableHints from "./DataSamplesTableHints";
 import { RecordingOptions } from "./RecordingDialog";
 import { RefType } from "react-hotkeys-hook/dist/types";
 
 interface DataSamplesTableRowProps {
-  readonly?: boolean;
+  preview?: boolean;
   action: ActionData;
   selected: boolean;
   onSelectRow?: () => void;
@@ -31,7 +31,7 @@ const DataSamplesTableRow = ({
   selected,
   onSelectRow,
   onRecord,
-  readonly,
+  preview,
   showHints,
   newRecordingId,
   clearNewRecordingId,
@@ -60,7 +60,11 @@ const DataSamplesTableRow = ({
             onDeleteAction={onDeleteAction}
             onSelectRow={onSelectRow}
             selected={selected}
-            readOnly={!!readonly}
+            viewMode={
+              preview
+                ? ActionCardNameViewMode.Preview
+                : ActionCardNameViewMode.Editable
+            }
           />
         </GridItem>
         {showHints ? (
@@ -69,7 +73,7 @@ const DataSamplesTableRow = ({
           <GridItem>
             {(action.name.length > 0 || action.recordings.length > 0) && (
               <ActionDataSamplesCard
-                readonly={readonly}
+                preview={preview}
                 newRecordingId={newRecordingId}
                 value={action}
                 selected={selected}

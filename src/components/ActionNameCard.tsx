@@ -22,12 +22,18 @@ import LedIcon from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";
 import debounce from "lodash.debounce";
 
+export enum ActionCardNameViewMode {
+  Editable = "editable", // Interaction, color, depth
+  Readonly = "readonly", // Grayed out
+  Preview = "preview", // Flattened
+}
+
 interface ActionNameCardProps {
   value: Action;
   onDeleteAction?: () => void;
   onSelectRow?: () => void;
   selected?: boolean;
-  readOnly: boolean;
+  viewMode: ActionCardNameViewMode;
   disabled?: boolean;
 }
 
@@ -41,7 +47,7 @@ const ActionNameCard = ({
   onDeleteAction,
   onSelectRow,
   selected = false,
-  readOnly = false,
+  viewMode,
   disabled,
 }: ActionNameCardProps) => {
   const intl = useIntl();
@@ -52,9 +58,10 @@ const ActionNameCard = ({
   const { icon, ID: id } = value;
   const [localName, setLocalName] = useState<string>(value.name);
   const predictionResult = useStore((s) => s.predictionResult);
-  const isTriggered = readOnly
-    ? predictionResult?.detected?.ID === value.ID
-    : undefined;
+  const isTriggered =
+    viewMode === ActionCardNameViewMode.Readonly
+      ? predictionResult?.detected?.ID === value.ID
+      : undefined;
 
   const debouncedSetActionName = useMemo(
     () =>
@@ -110,9 +117,11 @@ const ActionNameCard = ({
       position="relative"
       className={tourElClassname.dataSamplesActionCard}
       opacity={disabled ? 0.5 : undefined}
-      variant={readOnly ? "outline" : undefined}
+      variant={
+        viewMode === ActionCardNameViewMode.Preview ? "outline" : undefined
+      }
     >
-      {!readOnly && onDeleteAction && (
+      {viewMode === ActionCardNameViewMode.Editable && onDeleteAction && (
         <CloseButton
           position="absolute"
           right={1}
@@ -129,12 +138,12 @@ const ActionNameCard = ({
       <CardBody p={0} alignContent="center">
         <HStack>
           <HStack>
-            {readOnly ? (
+            {viewMode === ActionCardNameViewMode.Readonly ? (
               <LedIcon icon={icon} isTriggered={isTriggered} />
             ) : (
               <LedIconSvg icon={icon} />
             )}
-            {!readOnly && (
+            {viewMode === ActionCardNameViewMode.Editable && (
               <LedIconPicker
                 actionName={value.name}
                 onIconSelected={handleIconSelected}
@@ -145,11 +154,11 @@ const ActionNameCard = ({
             id={actionNameInputId(value)}
             autoFocus={localName.length === 0}
             isTruncated
-            readOnly={readOnly}
+            readOnly={viewMode !== ActionCardNameViewMode.Editable}
             value={localName}
             borderWidth={0}
             maxLength={18}
-            {...(readOnly
+            {...(viewMode !== ActionCardNameViewMode.Editable
               ? { bgColor: "transparent", size: "lg" }
               : { bgColor: "gray.25", size: "sm" })}
             _placeholder={{ opacity: 0.8, color: "gray.900" }}

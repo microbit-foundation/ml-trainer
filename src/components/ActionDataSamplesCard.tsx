@@ -41,7 +41,7 @@ const flash = keyframes({
 });
 
 interface ActionDataSamplesCardProps {
-  readonly?: boolean;
+  preview?: boolean;
   value: ActionData;
   selected: boolean;
   onSelectRow?: () => void;
@@ -57,7 +57,7 @@ const ActionDataSamplesCard = ({
   onRecord,
   newRecordingId,
   clearNewRecordingId,
-  readonly,
+  preview,
 }: ActionDataSamplesCardProps) => {
   const intl = useIntl();
   const deleteActionRecording = useStore((s) => s.deleteActionRecording);
@@ -85,7 +85,6 @@ const ActionDataSamplesCard = ({
             onSelectRow={onSelectRow}
             selected={selected}
             key={recording.ID}
-            variant="outline"
           >
             <CloseButton
               aria-label={intl.formatMessage(
@@ -129,7 +128,7 @@ const ActionDataSamplesCard = ({
     <DataSamplesRowCard
       onSelectRow={onSelectRow}
       selected={selected}
-      variant={readonly ? "outline" : undefined}
+      variant={preview ? "outline" : undefined}
       // Otherwise we put the tour class on the recording area
       className={
         value.recordings.length === 0
@@ -151,7 +150,7 @@ const ActionDataSamplesCard = ({
           actionId={value.ID}
           actionName={value.name}
           recordingIndex={idx}
-          hasClose={!readonly}
+          hasClose={!preview}
           recording={recording}
           numRecordings={value.recordings.length}
           isNew={newRecordingId === recording.ID}
