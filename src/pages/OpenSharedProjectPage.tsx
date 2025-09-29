@@ -95,7 +95,12 @@ export const OpenSharedProjectPage = () => {
         toolbarItemsRight={<HomeToolbarItem />}
         menuItems={<HomeMenuItem />}
       >
-        <VStack as="main" justifyContent="center" m={[0, 5, 28]}>
+        <VStack
+          as="main"
+          justifyContent="center"
+          m={[0, 5, 28]}
+          aria-busy="true"
+        >
           <VisuallyHidden>
             <Heading as="h1">
               <FormattedMessage id="open-shared-project-title" />
@@ -222,6 +227,7 @@ const ProjectLoadDetails = ({ name, setName }: ProjectLoadDetailsProps) => {
         </Heading>
         <Input
           aria-label={nameLabel}
+          data-testid="name-text"
           minW="25ch"
           value={name}
           placeholder={nameLabel}

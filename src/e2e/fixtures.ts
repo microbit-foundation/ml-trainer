@@ -8,12 +8,14 @@ import { HomePage } from "./app/home-page";
 import { DataSamplesPage } from "./app/data-samples";
 import { TestModelPage } from "./app/test-model-page";
 import { NewPage } from "./app/new-page";
+import { ImportSharedPage } from "./app/import-shared-page";
 
 type MyFixtures = {
   homePage: HomePage;
   newPage: NewPage;
   dataSamplesPage: DataSamplesPage;
   testModelPage: TestModelPage;
+  importSharedPage: ImportSharedPage;
 };
 
 export const test = base.extend<MyFixtures>({
@@ -30,5 +32,8 @@ export const test = base.extend<MyFixtures>({
   },
   testModelPage: async ({ page }, use) => {
     await use(new TestModelPage(page));
+  },
+  importSharedPage: async ({ page }, use) => {
+    await use(new ImportSharedPage(page));
   },
 });
