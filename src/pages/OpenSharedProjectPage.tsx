@@ -66,7 +66,7 @@ const contentStackProps: Partial<StackProps> = {
   width: ["full", "full", "3xl", "4xl"],
 };
 
-export const ImportSharedURLPage = () => {
+export const OpenSharedProjectPage = () => {
   const logging = useLogging();
   const navigate = useNavigate();
   const loadProject = useStore((s) => s.loadProject);
@@ -234,7 +234,7 @@ const ProjectLoadDetails = ({ name, setName }: ProjectLoadDetailsProps) => {
   );
 };
 
-interface StartSessionButtonProps {
+interface OpenProjectButtonProps {
   isDisabled: boolean;
   isLoading: boolean;
   onClick: () => void;
@@ -244,7 +244,7 @@ const OpenProjectButton = ({
   isDisabled,
   isLoading,
   onClick,
-}: StartSessionButtonProps) => (
+}: OpenProjectButtonProps) => (
   <HStack pt={5} justifyContent="flex-end">
     <ButtonWithLoading
       isDisabled={isDisabled}

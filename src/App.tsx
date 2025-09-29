@@ -56,7 +56,7 @@ import {
   createNewPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
-import { ImportSharedURLPage } from "./pages/ImportSharedURLPage";
+import { OpenSharedProjectPage } from "./pages/OpenSharedProjectPage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -189,7 +189,7 @@ const createRouter = () => {
             }
             return null;
           },
-          element: <ImportSharedURLPage />,
+          element: <OpenSharedProjectPage />,
           errorElement: <NotFound />,
         },
         {
