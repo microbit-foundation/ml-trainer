@@ -1486,7 +1486,7 @@
   "import-shared-url-error-title": [
     {
       "type": 0,
-      "value": "An error occurred while fetching the shared project"
+      "value": "Failed to load the shared project"
     }
   ],
   "import-shared-url-title": [

@@ -43,6 +43,7 @@ import { ActionData, DatasetEditorJsonFormat } from "../model";
 import { getMakeCodeLang } from "../settings";
 import { useSettings, useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
+import { V } from "vitest/dist/chunks/reporters.d.DL9pg5DB.js";
 
 const enum SharedState {
   None = 0,
@@ -346,38 +347,21 @@ const ErrorPreloading = () => {
   const intl = useIntl();
   const titleText = intl.formatMessage({ id: "import-shared-url-error-title" });
   return (
-    <ErrorPage title={titleText}>
-      <VStack spacing={3}>
-        <Stack>
-          <Text>
-            <FormattedMessage id="import-shared-url-error-description" />
-          </Text>
-          <Text>
-            <FormattedMessage
-              id="support-request"
-              values={{
-                link: (chunks: ReactNode) => (
-                  <Link
-                    color="brand.600"
-                    textDecoration="underline"
-                    href="https://support.microbit.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {chunks}
-                  </Link>
-                ),
-              }}
-            />
-          </Text>
-          <Text>
-            <Button variant="primary" onClick={() => window.location.reload()}>
-              <FormattedMessage id="click-to-reload-page-action" />
-            </Button>
-          </Text>
-        </Stack>
-      </VStack>
-    </ErrorPage>
+    <VStack as="main" spacing={10} minH="100vh" w="100%" bgColor="whitesmoke">
+      <Stack maxW="container.md" gap={5}>
+        <Heading mt="33vh" as="h1">
+          {titleText}
+        </Heading>
+        <Text>
+          <FormattedMessage id="import-shared-url-error-description" />
+        </Text>
+        <Text>
+          <Button variant="primary" onClick={() => window.location.reload()}>
+            <FormattedMessage id="click-to-reload-page-action" />
+          </Button>
+        </Text>
+      </Stack>
+    </VStack>
   );
 };
 

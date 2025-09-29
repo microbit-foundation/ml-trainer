@@ -864,7 +864,7 @@
     "description": "Import shared CreateAI error description"
   },
   "import-shared-url-error-title": {
-    "defaultMessage": "An error occurred while fetching the shared project",
+    "defaultMessage": "Failed to load the shared project",
     "description": "Import shared CreateAI error page title"
   },
   "import-shared-url-title": {
