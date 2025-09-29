@@ -93,14 +93,14 @@ export const OpenSharedProjectPage = () => {
   if (sharedState < SharedState.GettingProject)
     return (
       <DefaultPageLayout
-        titleId="import-shared-url-title"
+        titleId="open-shared-project-title"
         toolbarItemsRight={<HomeToolbarItem />}
         menuItems={<HomeMenuItem />}
       >
         <VStack as="main" justifyContent="center" m={[0, 5, 28]}>
           <VisuallyHidden>
             <Heading as="h1">
-              <FormattedMessage id="import-shared-url-title" />
+              <FormattedMessage id="open-shared-project-title" />
             </Heading>
             <Text>
               <FormattedMessage id="loading" />
@@ -113,14 +113,14 @@ export const OpenSharedProjectPage = () => {
 
   return (
     <DefaultPageLayout
-      titleId="import-shared-url-title"
+      titleId="open-shared-project-title"
       toolbarItemsRight={<HomeToolbarItem />}
       menuItems={<HomeMenuItem />}
     >
       <VStack as="main" justifyContent="center" paddingBottom={20}>
         <Stack {...contentStackProps} mb="5">
           <Heading as="h1" mb={5}>
-            <FormattedMessage id="import-shared-url-title" />
+            <FormattedMessage id="open-shared-project-title" />
           </Heading>
           {sharedState === SharedState.GettingHeader && <LoadingAnimation />}
           {sharedState >= SharedState.GettingProject && (
@@ -197,7 +197,7 @@ const ProjectLoadDetails = ({ name, setName }: ProjectLoadDetailsProps) => {
   return (
     <>
       <Text>
-        <FormattedMessage id="import-shared-url-description" />
+        <FormattedMessage id="open-shared-project-description" />
       </Text>
       {timestamp !== undefined && (
         <Text>
@@ -278,10 +278,10 @@ const PreviewData = ({ dataset }: PreviewDataProps) => {
   return (
     <>
       <Heading size="md" as="h2">
-        <FormattedMessage id="import-shared-url-data-preview-title" />
+        <FormattedMessage id="data-preview-title" />
       </Heading>
       <Text>
-        <FormattedMessage id="import-shared-url-data-preview-description" />
+        <FormattedMessage id="open-shared-project-data-preview-description" />
       </Text>
       <Box {...previewFrameOuter}>
         <Box {...previewFrame}>
@@ -312,10 +312,10 @@ const MakeCodePreview = ({ project }: MakeCodePreviewProps) => {
   return (
     <>
       <Heading size="md" as="h2" pt={[1, 3, 5]}>
-        <FormattedMessage id="import-shared-url-blocks-preview-title" />
+        <FormattedMessage id="blocks-preview-title" />
       </Heading>
       <Text>
-        <FormattedMessage id="import-shared-url-blocks-preview-description" />
+        <FormattedMessage id="open-shared-project-blocks-preview-description" />
       </Text>
       <MakeCodeRenderBlocksProvider key={makeCodeLang} lang={makeCodeLang}>
         <Box
@@ -345,7 +345,9 @@ const MakeCodePreview = ({ project }: MakeCodePreviewProps) => {
 
 const ErrorPreloading = () => {
   const intl = useIntl();
-  const titleText = intl.formatMessage({ id: "import-shared-url-error-title" });
+  const titleText = intl.formatMessage({
+    id: "open-shared-project-error-title",
+  });
   return (
     <VStack as="main" spacing={10} minH="100vh" w="100%" bgColor="whitesmoke">
       <Stack maxW="container.md" gap={5}>
@@ -353,7 +355,7 @@ const ErrorPreloading = () => {
           {titleText}
         </Heading>
         <Text>
-          <FormattedMessage id="import-shared-url-error-description" />
+          <FormattedMessage id="open-shared-project-error-description" />
         </Text>
         <Text>
           <Button variant="primary" onClick={() => window.location.reload()}>

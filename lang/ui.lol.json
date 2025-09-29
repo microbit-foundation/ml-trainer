@@ -71,6 +71,10 @@
     "defaultMessage": "crwdns362678:0crwdne362678:0",
     "description": "Back button text"
   },
+  "blocks-preview-title": {
+    "defaultMessage": "Blocks preview",
+    "description": "Blocks preview heading text"
+  },
   "bluetooth-unsupported-advice": {
     "defaultMessage": "crwdns362680:0crwdne362680:0",
     "description": "Note on supported browsers"
@@ -426,6 +430,10 @@
   "data-features-show-action": {
     "defaultMessage": "crwdns362856:0crwdne362856:0",
     "description": "Show data features button text"
+  },
+  "data-preview-title": {
+    "defaultMessage": "Data preview",
+    "description": "Data preview heading text"
   },
   "data-samples-actions-region": {
     "defaultMessage": "crwdns362858:0crwdne362858:0",
@@ -839,38 +847,6 @@
     "defaultMessage": "crwdns363048:0crwdne363048:0",
     "description": "Title of import error dialog"
   },
-  "import-shared-url-blocks-preview-description": {
-    "defaultMessage": "Preview of the MakeCode code contained within this project.",
-    "description": "Blocks preview description text"
-  },
-  "import-shared-url-blocks-preview-title": {
-    "defaultMessage": "Blocks preview",
-    "description": "Blocks preview heading text"
-  },
-  "import-shared-url-data-preview-description": {
-    "defaultMessage": "Preview of the actions and data contained within this project.",
-    "description": "Data preview description text"
-  },
-  "import-shared-url-data-preview-title": {
-    "defaultMessage": "Data preview",
-    "description": "Data preview heading text"
-  },
-  "import-shared-url-description": {
-    "defaultMessage": "This is a Microsoft MakeCode shared project compatible with CreateAI.",
-    "description": "Import shared CreateAI project description"
-  },
-  "import-shared-url-error-description": {
-    "defaultMessage": "Check the link you followed is correct, and make sure you are connected to the internet before trying again.",
-    "description": "Import shared CreateAI error description"
-  },
-  "import-shared-url-error-title": {
-    "defaultMessage": "An error occurred while fetching the shared project",
-    "description": "Import shared CreateAI error page title"
-  },
-  "import-shared-url-title": {
-    "defaultMessage": "Open shared CreateAI project",
-    "description": "Import shared CreateAI project title"
-  },
   "incompatible-device-body-alt": {
     "defaultMessage": "crwdns363050:0crwdne363050:0",
     "description": "Incompatible device dialog body text"
@@ -1258,6 +1234,30 @@
   "open-project-setup-description": {
     "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
     "description": "Open project setup description"
+  },
+  "open-shared-project-blocks-preview-description": {
+    "defaultMessage": "Preview of the MakeCode code contained within this project.",
+    "description": "Blocks preview description text"
+  },
+  "open-shared-project-data-preview-description": {
+    "defaultMessage": "Preview of the actions and data contained within this project.",
+    "description": "Data preview description text"
+  },
+  "open-shared-project-description": {
+    "defaultMessage": "This is a Microsoft MakeCode shared project compatible with CreateAI.",
+    "description": "Import shared CreateAI project description"
+  },
+  "open-shared-project-error-description": {
+    "defaultMessage": "Check the link you followed is correct, and make sure you are connected to the internet before trying again.",
+    "description": "Import shared CreateAI error description"
+  },
+  "open-shared-project-error-title": {
+    "defaultMessage": "Failed to load the shared project",
+    "description": "Import shared CreateAI error page title"
+  },
+  "open-shared-project-title": {
+    "defaultMessage": "Open shared CreateAI project",
+    "description": "Import shared CreateAI project title"
   },
   "other-tabs-body1": {
     "defaultMessage": "crwdns363230:0crwdne363230:0",

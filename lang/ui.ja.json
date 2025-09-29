@@ -71,6 +71,10 @@
     "defaultMessage": "データサンプルを編集",
     "description": "Back button text"
   },
+  "blocks-preview-title": {
+    "defaultMessage": "Blocks preview",
+    "description": "Blocks preview heading text"
+  },
   "bluetooth-unsupported-advice": {
     "defaultMessage": "micro:bitに直接接続できるように、Google ChromeまたはMicrosoft Edgeをお勧めします。",
     "description": "Note on supported browsers"
@@ -426,6 +430,10 @@
   "data-features-show-action": {
     "defaultMessage": "データ機能を表示",
     "description": "Show data features button text"
+  },
+  "data-preview-title": {
+    "defaultMessage": "Data preview",
+    "description": "Data preview heading text"
   },
   "data-samples-actions-region": {
     "defaultMessage": "データサンプルツールバー",
@@ -839,38 +847,6 @@
     "defaultMessage": "対応していないファイル形式です",
     "description": "Title of import error dialog"
   },
-  "import-shared-url-blocks-preview-description": {
-    "defaultMessage": "Preview of the MakeCode code contained within this project.",
-    "description": "Blocks preview description text"
-  },
-  "import-shared-url-blocks-preview-title": {
-    "defaultMessage": "Blocks preview",
-    "description": "Blocks preview heading text"
-  },
-  "import-shared-url-data-preview-description": {
-    "defaultMessage": "Preview of the actions and data contained within this project.",
-    "description": "Data preview description text"
-  },
-  "import-shared-url-data-preview-title": {
-    "defaultMessage": "Data preview",
-    "description": "Data preview heading text"
-  },
-  "import-shared-url-description": {
-    "defaultMessage": "This is a Microsoft MakeCode shared project compatible with CreateAI.",
-    "description": "Import shared CreateAI project description"
-  },
-  "import-shared-url-error-description": {
-    "defaultMessage": "Check the link you followed is correct, and make sure you are connected to the internet before trying again.",
-    "description": "Import shared CreateAI error description"
-  },
-  "import-shared-url-error-title": {
-    "defaultMessage": "An error occurred while fetching the shared project",
-    "description": "Import shared CreateAI error page title"
-  },
-  "import-shared-url-title": {
-    "defaultMessage": "Open shared CreateAI project",
-    "description": "Import shared CreateAI project title"
-  },
   "incompatible-device-body-alt": {
     "defaultMessage": "戻って別のmicro:bitを選ぶか、<link>プロジェクトのhexを保存して</link>、micro:bit V2にダウンロードしてください。",
     "description": "Incompatible device dialog body text"
@@ -1258,6 +1234,30 @@
   "open-project-setup-description": {
     "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
     "description": "Open project setup description"
+  },
+  "open-shared-project-blocks-preview-description": {
+    "defaultMessage": "Preview of the MakeCode code contained within this project.",
+    "description": "Blocks preview description text"
+  },
+  "open-shared-project-data-preview-description": {
+    "defaultMessage": "Preview of the actions and data contained within this project.",
+    "description": "Data preview description text"
+  },
+  "open-shared-project-description": {
+    "defaultMessage": "This is a Microsoft MakeCode shared project compatible with CreateAI.",
+    "description": "Import shared CreateAI project description"
+  },
+  "open-shared-project-error-description": {
+    "defaultMessage": "Check the link you followed is correct, and make sure you are connected to the internet before trying again.",
+    "description": "Import shared CreateAI error description"
+  },
+  "open-shared-project-error-title": {
+    "defaultMessage": "Failed to load the shared project",
+    "description": "Import shared CreateAI error page title"
+  },
+  "open-shared-project-title": {
+    "defaultMessage": "Open shared CreateAI project",
+    "description": "Import shared CreateAI project title"
   },
   "other-tabs-body1": {
     "defaultMessage": "別のプロセスがこのデバイスに接続されています。",

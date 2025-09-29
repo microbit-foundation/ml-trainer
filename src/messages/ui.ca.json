@@ -141,6 +141,12 @@
       "value": "Edita mostres de dades"
     }
   ],
+  "blocks-preview-title": [
+    {
+      "type": 0,
+      "value": "Blocks preview"
+    }
+  ],
   "bluetooth-unsupported-advice": [
     {
       "type": 0,
@@ -717,6 +723,12 @@
     {
       "type": 0,
       "value": "Mostra les funcions de dades"
+    }
+  ],
+  "data-preview-title": [
+    {
+      "type": 0,
+      "value": "Data preview"
     }
   ],
   "data-samples-actions-region": [
@@ -1433,54 +1445,6 @@
       "value": "Tipus d'arxiu no permés"
     }
   ],
-  "import-shared-url-blocks-preview-description": [
-    {
-      "type": 0,
-      "value": "Preview of the MakeCode code contained within this project."
-    }
-  ],
-  "import-shared-url-blocks-preview-title": [
-    {
-      "type": 0,
-      "value": "Blocks preview"
-    }
-  ],
-  "import-shared-url-data-preview-description": [
-    {
-      "type": 0,
-      "value": "Preview of the actions and data contained within this project."
-    }
-  ],
-  "import-shared-url-data-preview-title": [
-    {
-      "type": 0,
-      "value": "Data preview"
-    }
-  ],
-  "import-shared-url-description": [
-    {
-      "type": 0,
-      "value": "This is a Microsoft MakeCode shared project compatible with CreateAI."
-    }
-  ],
-  "import-shared-url-error-description": [
-    {
-      "type": 0,
-      "value": "Check the link you followed is correct, and make sure you are connected to the internet before trying again."
-    }
-  ],
-  "import-shared-url-error-title": [
-    {
-      "type": 0,
-      "value": "An error occurred while fetching the shared project"
-    }
-  ],
-  "import-shared-url-title": [
-    {
-      "type": 0,
-      "value": "Open shared CreateAI project"
-    }
-  ],
   "incompatible-device-body-alt": [
     {
       "type": 0,
@@ -2163,6 +2127,42 @@
     {
       "type": 0,
       "value": " first."
+    }
+  ],
+  "open-shared-project-blocks-preview-description": [
+    {
+      "type": 0,
+      "value": "Preview of the MakeCode code contained within this project."
+    }
+  ],
+  "open-shared-project-data-preview-description": [
+    {
+      "type": 0,
+      "value": "Preview of the actions and data contained within this project."
+    }
+  ],
+  "open-shared-project-description": [
+    {
+      "type": 0,
+      "value": "This is a Microsoft MakeCode shared project compatible with CreateAI."
+    }
+  ],
+  "open-shared-project-error-description": [
+    {
+      "type": 0,
+      "value": "Check the link you followed is correct, and make sure you are connected to the internet before trying again."
+    }
+  ],
+  "open-shared-project-error-title": [
+    {
+      "type": 0,
+      "value": "Failed to load the shared project"
+    }
+  ],
+  "open-shared-project-title": [
+    {
+      "type": 0,
+      "value": "Open shared CreateAI project"
     }
   ],
   "other-tabs-body1": [
