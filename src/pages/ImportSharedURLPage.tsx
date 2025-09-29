@@ -67,15 +67,15 @@ const contentStackProps: Partial<StackProps> = {
 };
 
 export const ImportSharedURLPage = () => {
-  const [name, setName] = useState("Not Loaded");
   const logging = useLogging();
   const navigate = useNavigate();
   const loadProject = useStore((s) => s.loadProject);
+  const [name, setName] = useState("");
   const { sharedState, header, dataset, projectText } =
     useProjectPreload(setName);
   const { shortId } = useParams();
 
-  const onStartSession = useCallback(() => {
+  const handleOpenProject = useCallback(() => {
     if (!header || !projectText) return;
     loadProject({ header: { ...header, name }, text: projectText }, name);
     logging.event({
@@ -101,6 +101,9 @@ export const ImportSharedURLPage = () => {
             <Heading as="h1">
               <FormattedMessage id="import-shared-url-title" />
             </Heading>
+            <Text>
+              <FormattedMessage id="loading" />
+            </Text>
           </VisuallyHidden>
           <LoadingAnimation />
         </VStack>
@@ -145,8 +148,8 @@ export const ImportSharedURLPage = () => {
                   </Text>
                 </HStack>
               )}
-              <StartSessionButton
-                onStartSession={onStartSession}
+              <OpenProjectButton
+                onClick={handleOpenProject}
                 isDisabled={sharedState !== SharedState.Complete}
                 isLoading={
                   sharedState === SharedState.GettingHeader ||
@@ -164,8 +167,8 @@ export const ImportSharedURLPage = () => {
                   text: projectText,
                 }}
               />
-              <StartSessionButton
-                onStartSession={onStartSession}
+              <OpenProjectButton
+                onClick={handleOpenProject}
                 isDisabled={false}
                 isLoading={false}
               />
@@ -234,20 +237,20 @@ const ProjectLoadDetails = ({ name, setName }: ProjectLoadDetailsProps) => {
 interface StartSessionButtonProps {
   isDisabled: boolean;
   isLoading: boolean;
-  onStartSession: () => void;
+  onClick: () => void;
 }
 
-const StartSessionButton = ({
+const OpenProjectButton = ({
   isDisabled,
   isLoading,
-  onStartSession,
+  onClick,
 }: StartSessionButtonProps) => (
   <HStack pt={5} justifyContent="flex-end">
     <ButtonWithLoading
       isDisabled={isDisabled}
       isLoading={isLoading}
       variant="primary"
-      onClick={onStartSession}
+      onClick={onClick}
       size="lg"
     >
       <FormattedMessage id="open-project-action" />
@@ -263,6 +266,7 @@ const previewFrameOuter: HTMLChakraProps<"div"> = {
 const previewFrame: HTMLChakraProps<"div"> = {
   overflow: "auto",
   h: 96,
+  minW: "100%",
 };
 
 interface PreviewDataProps {
@@ -313,26 +317,25 @@ const MakeCodePreview = ({ project }: MakeCodePreviewProps) => {
         <FormattedMessage id="import-shared-url-blocks-preview-description" />
       </Text>
       <MakeCodeRenderBlocksProvider key={makeCodeLang} lang={makeCodeLang}>
-        <Box {...previewFrameOuter}>
-          <Box
-            sx={{
-              div: previewFrame,
-              img: { maxWidth: "unset", height: "unset" },
-            }}
-          >
-            <MakeCodeBlocksRendering
-              code={project}
-              layout={BlockLayout.Clean}
-              loaderCmp={
-                <SkeletonText
-                  w="xs"
-                  noOfLines={5}
-                  spacing="5"
-                  skeletonHeight="2"
-                />
-              }
-            />
-          </Box>
+        <Box
+          {...previewFrameOuter}
+          sx={{
+            "> div": previewFrame,
+            img: { maxWidth: "unset", height: "unset" },
+          }}
+        >
+          <MakeCodeBlocksRendering
+            code={project}
+            layout={BlockLayout.Clean}
+            loaderCmp={
+              <SkeletonText
+                w="xs"
+                noOfLines={5}
+                spacing="5"
+                skeletonHeight="2"
+              />
+            }
+          />
         </Box>
       </MakeCodeRenderBlocksProvider>
     </>
@@ -387,7 +390,9 @@ const useProjectPreload = (setName: (name: string) => void) => {
   const { shortId } = useParams();
   const logging = useLogging();
 
-  const [sharedState, setSharedState] = useState<SharedState>(SharedState.None);
+  const [sharedState, setSharedState] = useState<SharedState>(
+    SharedState.GettingHeader
+  );
 
   const [header, setHeader] = useState<Header>();
   const [projectText, setProjectText] = useState<ScriptText>();
@@ -396,23 +401,20 @@ const useProjectPreload = (setName: (name: string) => void) => {
   useEffect(() => {
     if (!shortId) return;
     let cleanedUp = false;
-    setSharedState(SharedState.GettingHeader);
-    logging.event({
-      type: "import-shared-project-start",
-      detail: { shortId },
-    });
-    fetchSharedHeader(shortId)
-      .then(async (header) => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+    const loadAsync = async () => {
+      try {
+        logging.event({
+          type: "import-shared-project-start",
+          detail: { shortId },
+        });
+        const header = await fetchSharedHeader(shortId);
         if (cleanedUp) {
           throw new Error("Cancelled");
         }
         setSharedState(SharedState.GettingProject);
         setHeader(header);
         setName(header.name);
-        return fetchSharedProjectText(header.id);
-      })
-      .then((text) => {
+        const text = await fetchSharedProjectText(header.id);
         if (cleanedUp) {
           throw new Error("Cancelled");
         }
@@ -428,16 +430,17 @@ const useProjectPreload = (setName: (name: string) => void) => {
           type: "import-shared-project-preloaded",
           detail: { shortId },
         });
-      })
-      .catch((error: unknown) => {
+      } catch (e: unknown) {
         logging.event({
           type: "import-shared-project-failed",
-          detail: { shortId, error },
+          detail: { shortId, error: e },
         });
         if (!cleanedUp) {
           setSharedState(SharedState.Failed);
         }
-      });
+      }
+    };
+    void loadAsync();
     return () => {
       cleanedUp = true;
     };
@@ -452,23 +455,25 @@ const useProjectPreload = (setName: (name: string) => void) => {
 };
 
 const fetchSharedHeader = async (shortId: string): Promise<Header> => {
-  const headerResponse = await fetch(`https://www.makecode.com/api/${shortId}`);
+  const headerResponse = await fetch(
+    `https://www.makecode.com/api/${encodeURIComponent(shortId)}`
+  );
   if (!headerResponse.ok) {
-    throw new Error("Network errorr");
+    throw new Error("Network error");
   }
   const header = (await headerResponse.json()) as Header;
   if (!header || !header.id || !header.name) {
-    return Promise.reject("Incorrect header data");
+    throw new Error("Incorrect header data");
   }
   return header;
 };
 
 const fetchSharedProjectText = async (longId: string): Promise<ScriptText> => {
   const textResponse = await fetch(
-    `https://www.makecode.com/api/${longId}/text`
+    `https://www.makecode.com/api/${encodeURIComponent(longId)}/text`
   );
   if (!textResponse.ok) {
-    throw new Error("Network errorr");
+    throw new Error("Network error");
   }
   const text = (await textResponse.json()) as ScriptText;
   if (typeof text !== "object") {
