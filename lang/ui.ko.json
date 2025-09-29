@@ -1251,10 +1251,6 @@
     "defaultMessage": "Check the link you followed is correct, and make sure you are connected to the internet before trying again.",
     "description": "Import shared CreateAI error description"
   },
-  "open-shared-project-error-title": {
-    "defaultMessage": "Failed to load the shared project",
-    "description": "Import shared CreateAI error page title"
-  },
   "open-shared-project-title": {
     "defaultMessage": "Open shared CreateAI project",
     "description": "Import shared CreateAI project title"

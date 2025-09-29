@@ -2155,12 +2155,6 @@
       "value": "Check the link you followed is correct, and make sure you are connected to the internet before trying again."
     }
   ],
-  "open-shared-project-error-title": [
-    {
-      "type": 0,
-      "value": "Failed to load the shared project"
-    }
-  ],
   "open-shared-project-title": [
     {
       "type": 0,
