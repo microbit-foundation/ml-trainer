@@ -344,15 +344,11 @@ const MakeCodePreview = ({ project }: MakeCodePreviewProps) => {
 };
 
 const ErrorPreloading = () => {
-  const intl = useIntl();
-  const titleText = intl.formatMessage({
-    id: "open-shared-project-error-title",
-  });
   return (
     <VStack as="main" spacing={10} minH="100vh" w="100%" bgColor="whitesmoke">
       <Stack maxW="container.md" gap={5}>
         <Heading mt="33vh" as="h1">
-          {titleText}
+          <FormattedMessage id="code-download-error" />
         </Heading>
         <Text>
           <FormattedMessage id="open-shared-project-error-description" />
