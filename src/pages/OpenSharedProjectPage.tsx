@@ -35,7 +35,6 @@ import DefaultPageLayout, {
   HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
-import ErrorPage from "../components/ErrorPage";
 import LoadingAnimation from "../components/LoadingAnimation";
 import { useProject } from "../hooks/project-hooks";
 import { useLogging } from "../logging/logging-hooks";
@@ -43,7 +42,6 @@ import { ActionData, DatasetEditorJsonFormat } from "../model";
 import { getMakeCodeLang } from "../settings";
 import { useSettings, useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
-import { V } from "vitest/dist/chunks/reporters.d.DL9pg5DB.js";
 
 const enum SharedState {
   None = 0,
