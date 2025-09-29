@@ -12,6 +12,7 @@ import {
   Stack,
   StackProps,
   Text,
+  VisuallyHidden,
   VStack,
 } from "@chakra-ui/react";
 import {
@@ -95,10 +96,12 @@ export const ImportSharedURLPage = () => {
         toolbarItemsRight={<HomeToolbarItem />}
         menuItems={<HomeMenuItem />}
       >
-        <VStack as="main" justifyContent="center" m={[0, 5, 20]}>
-          <Heading as="h1" mb={5}>
-            <FormattedMessage id="import-shared-url-title" />
-          </Heading>
+        <VStack as="main" justifyContent="center" m={[0, 5, 28]}>
+          <VisuallyHidden>
+            <Heading as="h1">
+              <FormattedMessage id="import-shared-url-title" />
+            </Heading>
+          </VisuallyHidden>
           <LoadingAnimation />
         </VStack>
       </DefaultPageLayout>
@@ -399,7 +402,8 @@ const useProjectPreload = (setName: (name: string) => void) => {
       detail: { shortId },
     });
     fetchSharedHeader(shortId)
-      .then((header) => {
+      .then(async (header) => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         if (cleanedUp) {
           throw new Error("Cancelled");
         }
