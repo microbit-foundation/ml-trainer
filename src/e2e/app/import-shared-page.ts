@@ -14,6 +14,9 @@ export class ImportSharedPage {
     this.nameInputField = page.getByTestId("name-text");
   }
 
+  /**
+   * Unlike other page fixtures, you must specify a shortId in the goto
+   */
   async goto(shortId: string, flags: string[] = ["open"]) {
     const response = await this.page.goto(`${this.url}${shortId}`);
     await this.page.evaluate(
@@ -48,5 +51,13 @@ export class ImportSharedPage {
 
   clickOpenProjectBtn() {
     return this.openProjectBtn.click();
+  }
+
+  expectTitle() {
+    return expect(this.page.getByText("Open shared CreateAI project"));
+  }
+
+  expectErrorMessage() {
+    return expect(this.page.getByText("Error downloading the project code"));
   }
 }
