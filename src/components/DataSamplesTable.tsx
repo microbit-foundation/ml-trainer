@@ -23,6 +23,7 @@ import {
 } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
+import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { ActionData } from "../model";
@@ -39,7 +40,6 @@ import RecordingDialog, {
   RecordingOptions,
 } from "./RecordingDialog";
 import ShowGraphsCheckbox from "./ShowGraphsCheckbox";
-import { ConnectionStatus } from "../connect-status-hooks";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -90,9 +90,6 @@ const DataSamplesTable = ({
   const deleteAction = useStore((s) => s.deleteAction);
   const isRecordingDialogOpen = useStore((s) => s.isRecordingDialogOpen);
   const recordingDialogOnOpen = useStore((s) => s.recordingDialogOnOpen);
-  const connectToRecordDialogOnOpen = useStore(
-    (s) => s.connectToRecordDialogOnOpen
-  );
   const closeDialog = useStore((s) => s.closeDialog);
 
   const connection = useConnectActions();
