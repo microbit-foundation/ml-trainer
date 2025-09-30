@@ -81,7 +81,7 @@ export const OpenSharedProjectPage = () => {
       type: "import-shared-project-complete",
       detail: { shortId },
     });
-    navigate(createDataSamplesPageUrl(), { replace: true });
+    navigate(createDataSamplesPageUrl());
   }, [loadProject, header, projectText, name, navigate, logging, shortId]);
 
   if (sharedState === SharedState.Failed) {
