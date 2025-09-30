@@ -24,9 +24,12 @@ import {
 import { FormattedMessage, useIntl } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
+import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { ActionData } from "../model";
 import { useStore } from "../store";
-import ConnectFirstDialog from "./ConnectFirstDialog";
+import { recordButtonId } from "./ActionDataSamplesCard";
+import { actionNameInputId } from "./ActionNameCard";
+import { ConfirmDialog } from "./ConfirmDialog";
 import DataSamplesMenu from "./DataSamplesMenu";
 import DataSamplesTableRow from "./DataSamplesTableRow";
 import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
@@ -36,10 +39,7 @@ import RecordingDialog, {
   RecordingOptions,
 } from "./RecordingDialog";
 import ShowGraphsCheckbox from "./ShowGraphsCheckbox";
-import { ConfirmDialog } from "./ConfirmDialog";
-import { actionNameInputId } from "./ActionNameCard";
-import { recordButtonId } from "./ActionDataSamplesCard";
-import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
+import { ConnectionStatus } from "../connect-status-hooks";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -90,16 +90,13 @@ const DataSamplesTable = ({
   const deleteAction = useStore((s) => s.deleteAction);
   const isRecordingDialogOpen = useStore((s) => s.isRecordingDialogOpen);
   const recordingDialogOnOpen = useStore((s) => s.recordingDialogOnOpen);
-  const isConnectToRecordDialogOpen = useStore(
-    (s) => s.isConnectToRecordDialogOpen
-  );
   const connectToRecordDialogOnOpen = useStore(
     (s) => s.connectToRecordDialogOnOpen
   );
   const closeDialog = useStore((s) => s.closeDialog);
 
   const connection = useConnectActions();
-  const { actions: connActions } = useConnectionStage();
+  const { actions: connActions, status: connStatus } = useConnectionStage();
   const { isConnected } = useConnectionStage();
   const loadProjectInputRef = useRef<LoadProjectInputRef>(null);
 
@@ -130,10 +127,43 @@ const DataSamplesTable = ({
   });
   const handleRecord = useCallback(
     (recordingOptions: RecordingOptions) => {
+      const connectFirst = async () => {
+        switch (connStatus) {
+          case ConnectionStatus.FailedToConnect:
+          case ConnectionStatus.FailedToReconnectTwice:
+          case ConnectionStatus.FailedToSelectBluetoothDevice:
+          case ConnectionStatus.NotConnected: {
+            // Start connection flow.
+            connActions.startConnect();
+            break;
+          }
+          case ConnectionStatus.ConnectionLost:
+          case ConnectionStatus.FailedToReconnect:
+          case ConnectionStatus.Disconnected: {
+            // Reconnect.
+            await connActions.reconnect();
+            break;
+          }
+          case ConnectionStatus.ReconnectingAutomatically: {
+            // Wait for reconnection to happen.
+            return;
+          }
+          case ConnectionStatus.Connected: {
+            // Connected whilst dialog is up.
+            return;
+          }
+          case ConnectionStatus.ReconnectingExplicitly:
+          case ConnectionStatus.Connecting: {
+            // Impossible cases.
+          }
+        }
+      };
+
       setRecordingOptions(recordingOptions);
-      isConnected ? recordingDialogOnOpen() : connectToRecordDialogOnOpen();
+      // TODO: async?
+      isConnected ? recordingDialogOnOpen() : void connectFirst();
     },
-    [connectToRecordDialogOnOpen, isConnected, recordingDialogOnOpen]
+    [connActions, connStatus, isConnected, recordingDialogOnOpen]
   );
 
   const tourStart = useStore((s) => s.tourStart);
@@ -183,11 +213,6 @@ const DataSamplesTable = ({
 
   return (
     <>
-      <ConnectFirstDialog
-        isOpen={isConnectToRecordDialogOpen}
-        onClose={closeDialog}
-        explanationTextId="connect-to-record-body"
-      />
       {selectedAction && (
         <>
           <ConfirmDialog
@@ -227,73 +252,79 @@ const DataSamplesTable = ({
         {...gridCommonProps}
         headings={headings}
       />
-      {actions.length === 0 ? (
-        <VStack
-          gap={5}
-          flexGrow={1}
-          alignItems="center"
-          justifyContent="center"
-        >
-          <LoadProjectInput ref={loadProjectInputRef} accept=".json" />
-          <Text fontSize="lg">
-            <FormattedMessage id="no-data-samples" />
-          </Text>
-          {!isConnected && (
-            <Text fontSize="lg" textAlign="center">
-              <FormattedMessage
-                id="connect-or-import"
-                values={{
-                  link1: (chunks: ReactNode) => (
-                    <Button
-                      fontSize="lg"
-                      color="brand.600"
-                      variant="link"
-                      onClick={handleConnect}
-                    >
-                      {chunks}
-                    </Button>
-                  ),
-                  link2: (chunks: ReactNode) => (
-                    <Button
-                      fontSize="lg"
-                      color="brand.600"
-                      variant="link"
-                      onClick={() => loadProjectInputRef.current?.chooseFile()}
-                    >
-                      {chunks}
-                    </Button>
-                  ),
-                }}
-              />
+      {
+        /* Disabled as part of UX experiment */
+        // eslint-disable-next-line no-constant-condition
+        false && actions.length === 0 ? (
+          <VStack
+            gap={5}
+            flexGrow={1}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <LoadProjectInput ref={loadProjectInputRef} accept=".json" />
+            <Text fontSize="lg">
+              <FormattedMessage id="no-data-samples" />
             </Text>
-          )}
-        </VStack>
-      ) : (
-        <Grid
-          {...gridCommonProps}
-          py={2}
-          alignItems="start"
-          autoRows="max-content"
-          overflow="auto"
-          flexGrow={1}
-          h={0}
-        >
-          {actions.map((action, idx) => (
-            <DataSamplesTableRow
-              key={action.ID}
-              action={action}
-              newRecordingId={newRecordingId}
-              clearNewRecordingId={() => setNewRecordingId(undefined)}
-              selected={selectedAction.ID === action.ID}
-              onSelectRow={() => setSelectedActionIdx(idx)}
-              onRecord={handleRecord}
-              showHints={showHints}
-              onDeleteAction={deleteActionConfirmOnOpen}
-              renameShortcutScopeRef={renameActionShortcutScopeRef}
-            />
-          ))}
-        </Grid>
-      )}
+            {!isConnected && (
+              <Text fontSize="lg" textAlign="center">
+                <FormattedMessage
+                  id="connect-or-import"
+                  values={{
+                    link1: (chunks: ReactNode) => (
+                      <Button
+                        fontSize="lg"
+                        color="brand.600"
+                        variant="link"
+                        onClick={handleConnect}
+                      >
+                        {chunks}
+                      </Button>
+                    ),
+                    link2: (chunks: ReactNode) => (
+                      <Button
+                        fontSize="lg"
+                        color="brand.600"
+                        variant="link"
+                        onClick={() =>
+                          loadProjectInputRef.current?.chooseFile()
+                        }
+                      >
+                        {chunks}
+                      </Button>
+                    ),
+                  }}
+                />
+              </Text>
+            )}
+          </VStack>
+        ) : (
+          <Grid
+            {...gridCommonProps}
+            py={2}
+            alignItems="start"
+            autoRows="max-content"
+            overflow="auto"
+            flexGrow={1}
+            h={0}
+          >
+            {actions.map((action, idx) => (
+              <DataSamplesTableRow
+                key={action.ID}
+                action={action}
+                newRecordingId={newRecordingId}
+                clearNewRecordingId={() => setNewRecordingId(undefined)}
+                selected={selectedAction.ID === action.ID}
+                onSelectRow={() => setSelectedActionIdx(idx)}
+                onRecord={handleRecord}
+                showHints={showHints}
+                onDeleteAction={deleteActionConfirmOnOpen}
+                renameShortcutScopeRef={renameActionShortcutScopeRef}
+              />
+            ))}
+          </Grid>
+        )
+      }
     </>
   );
 };
