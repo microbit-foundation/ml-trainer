@@ -14,7 +14,7 @@ import UpCurveArrow from "./UpCurveArrow";
 
 interface DataSamplesTableHintsProps {
   action: ActionData;
-  onRecord: (recordingOptions: RecordingOptions) => void;
+  onRecord?: (recordingOptions: RecordingOptions) => void;
 }
 
 const DataSamplesTableHints = ({

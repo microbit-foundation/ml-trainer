@@ -10,6 +10,7 @@ import {
   ButtonGroup,
   Card,
   CardBody,
+  CardProps,
   CloseButton,
   HStack,
   Icon,
@@ -40,10 +41,11 @@ const flash = keyframes({
 });
 
 interface ActionDataSamplesCardProps {
+  preview?: boolean;
   value: ActionData;
   selected: boolean;
   onSelectRow?: () => void;
-  onRecord: (recordingOptions: RecordingOptions) => void;
+  onRecord?: (recordingOptions: RecordingOptions) => void;
   newRecordingId?: number;
   clearNewRecordingId?: () => void;
 }
@@ -55,6 +57,7 @@ const ActionDataSamplesCard = ({
   onRecord,
   newRecordingId,
   clearNewRecordingId,
+  preview,
 }: ActionDataSamplesCardProps) => {
   const intl = useIntl();
   const deleteActionRecording = useStore((s) => s.deleteActionRecording);
@@ -63,18 +66,20 @@ const ActionDataSamplesCard = ({
     // We split the cards in this case
     return (
       <HStack>
-        <DataSamplesRowCard
-          onSelectRow={onSelectRow}
-          selected={selected}
-          position="relative"
-          className={tourElClassname.recordDataSamplesCard}
-        >
-          <RecordingArea
-            action={value}
+        {onRecord && (
+          <DataSamplesRowCard
+            onSelectRow={onSelectRow}
             selected={selected}
-            onRecord={onRecord}
-          />
-        </DataSamplesRowCard>
+            position="relative"
+            className={tourElClassname.recordDataSamplesCard}
+          >
+            <RecordingArea
+              action={value}
+              selected={selected}
+              onRecord={onRecord}
+            />
+          </DataSamplesRowCard>
+        )}
         {value.recordings.map((recording, idx) => (
           <DataSamplesRowCard
             onSelectRow={onSelectRow}
@@ -123,6 +128,7 @@ const ActionDataSamplesCard = ({
     <DataSamplesRowCard
       onSelectRow={onSelectRow}
       selected={selected}
+      variant={preview ? "outline" : undefined}
       // Otherwise we put the tour class on the recording area
       className={
         value.recordings.length === 0
@@ -130,18 +136,21 @@ const ActionDataSamplesCard = ({
           : undefined
       }
     >
-      <RecordingArea
-        className={tourElClassname.recordDataSamplesCard}
-        action={value}
-        selected={selected}
-        onRecord={onRecord}
-      />
+      {!!onRecord && (
+        <RecordingArea
+          className={tourElClassname.recordDataSamplesCard}
+          action={value}
+          selected={selected}
+          onRecord={onRecord}
+        />
+      )}
       {value.recordings.map((recording, idx) => (
         <DataSample
           key={recording.ID}
           actionId={value.ID}
           actionName={value.name}
           recordingIndex={idx}
+          hasClose={!preview}
           recording={recording}
           numRecordings={value.recordings.length}
           isNew={newRecordingId === recording.ID}
@@ -154,7 +163,7 @@ const ActionDataSamplesCard = ({
   );
 };
 
-interface DataSamplesRowCardProps extends BoxProps {
+interface DataSamplesRowCardProps extends CardProps {
   selected: boolean;
   onSelectRow?: () => void;
   children: ReactNode;

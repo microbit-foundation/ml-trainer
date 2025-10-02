@@ -8,21 +8,22 @@ import { Box, GridItem } from "@chakra-ui/react";
 import { useIntl } from "react-intl";
 import { ActionData } from "../model";
 import ActionDataSamplesCard from "./ActionDataSamplesCard";
-import ActionNameCard from "./ActionNameCard";
+import ActionNameCard, { ActionCardNameViewMode } from "./ActionNameCard";
 import DataSamplesTableHints from "./DataSamplesTableHints";
 import { RecordingOptions } from "./RecordingDialog";
 import { RefType } from "react-hotkeys-hook/dist/types";
 
 interface DataSamplesTableRowProps {
+  preview?: boolean;
   action: ActionData;
   selected: boolean;
-  onSelectRow: () => void;
-  onRecord: (recordingOptions: RecordingOptions) => void;
+  onSelectRow?: () => void;
+  onRecord?: (recordingOptions: RecordingOptions) => void;
   showHints: boolean;
   newRecordingId?: number;
-  clearNewRecordingId: () => void;
-  onDeleteAction: () => void;
-  renameShortcutScopeRef: (instance: RefType<HTMLElement>) => void;
+  clearNewRecordingId?: () => void;
+  onDeleteAction?: () => void;
+  renameShortcutScopeRef?: (instance: RefType<HTMLElement>) => void;
 }
 
 const DataSamplesTableRow = ({
@@ -30,7 +31,8 @@ const DataSamplesTableRow = ({
   selected,
   onSelectRow,
   onRecord,
-  showHints: showHints,
+  preview,
+  showHints,
   newRecordingId,
   clearNewRecordingId,
   onDeleteAction,
@@ -58,7 +60,11 @@ const DataSamplesTableRow = ({
             onDeleteAction={onDeleteAction}
             onSelectRow={onSelectRow}
             selected={selected}
-            readOnly={false}
+            viewMode={
+              preview
+                ? ActionCardNameViewMode.Preview
+                : ActionCardNameViewMode.Editable
+            }
           />
         </GridItem>
         {showHints ? (
@@ -67,6 +73,7 @@ const DataSamplesTableRow = ({
           <GridItem>
             {(action.name.length > 0 || action.recordings.length > 0) && (
               <ActionDataSamplesCard
+                preview={preview}
                 newRecordingId={newRecordingId}
                 value={action}
                 selected={selected}

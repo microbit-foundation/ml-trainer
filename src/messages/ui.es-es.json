@@ -141,6 +141,12 @@
       "value": "Editar muestras de datos"
     }
   ],
+  "blocks-preview-title": [
+    {
+      "type": 0,
+      "value": "Blocks preview"
+    }
+  ],
   "bluetooth-unsupported-advice": [
     {
       "type": 0,
@@ -717,6 +723,12 @@
     {
       "type": 0,
       "value": "Mostrar características de los datos"
+    }
+  ],
+  "data-preview-title": [
+    {
+      "type": 0,
+      "value": "Data preview"
     }
   ],
   "data-samples-actions-region": [
@@ -2105,6 +2117,62 @@
       "value": "Abrir archivo al soltarlo"
     }
   ],
+  "open-project-action": [
+    {
+      "type": 0,
+      "value": "Open project"
+    }
+  ],
+  "open-project-setup-description": [
+    {
+      "type": 0,
+      "value": "Opening this project will overwrite any existing session. You may want to "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "save your existing session"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " first."
+    }
+  ],
+  "open-shared-project-blocks-preview-description": [
+    {
+      "type": 0,
+      "value": "Preview of the MakeCode code contained within this project."
+    }
+  ],
+  "open-shared-project-data-preview-description": [
+    {
+      "type": 0,
+      "value": "Preview of the actions and data contained within this project."
+    }
+  ],
+  "open-shared-project-description": [
+    {
+      "type": 0,
+      "value": "This is a Microsoft MakeCode shared project compatible with CreateAI."
+    }
+  ],
+  "open-shared-project-error-description": [
+    {
+      "type": 0,
+      "value": "Check the link you followed is correct, and make sure you are connected to the internet before trying again."
+    }
+  ],
+  "open-shared-project-title": [
+    {
+      "type": 0,
+      "value": "Open shared CreateAI project"
+    }
+  ],
   "other-tabs-body1": [
     {
       "type": 0,
@@ -2641,6 +2709,12 @@
     {
       "type": 0,
       "value": "Modelo de pruebas"
+    }
+  ],
+  "third-party-content-description": [
+    {
+      "type": 0,
+      "value": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation."
     }
   ],
   "tour-action": [
