@@ -351,6 +351,10 @@
     "defaultMessage": "Connecta't mitjançant Web Bluetooth",
     "description": "Link to alternative connection method"
   },
+  "connect-start-heading": {
+    "defaultMessage": "Connect to collect data",
+    "description": "Connection dialog heading"
+  },
   "connect-to-record": {
     "defaultMessage": "Connecta't per registrar mostres de dades",
     "description": "Live graph disconnected micro:bit status message for data samples page"
@@ -715,7 +719,10 @@
     "defaultMessage": "Comencem",
     "description": "Get started action"
   },
-  "go-action": { "defaultMessage": "Ves", "description": "Go action" },
+  "go-action": {
+    "defaultMessage": "Ves",
+    "description": "Go action"
+  },
   "graph-color-scheme": {
     "defaultMessage": "Esquema de colors del gràfic",
     "description": "Graph colour scheme setting label"
@@ -1711,5 +1718,9 @@
   "webusb-retry-replug4": {
     "defaultMessage": "desconnecta i torna a connectar el cable USB",
     "description": "WebUSB error dialog"
+  },
+  "you-will-need": {
+    "defaultMessage": "You will need",
+    "description": "Connection dialog heading"
   }
 }

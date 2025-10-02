@@ -351,6 +351,10 @@
     "defaultMessage": "In plaats daarvan verbinding maken via Web Bluetooth",
     "description": "Link to alternative connection method"
   },
+  "connect-start-heading": {
+    "defaultMessage": "Connect to collect data",
+    "description": "Connection dialog heading"
+  },
   "connect-to-record": {
     "defaultMessage": "Verbinden om data samples op te nemen",
     "description": "Live graph disconnected micro:bit status message for data samples page"
@@ -715,7 +719,10 @@
     "defaultMessage": "Hoe te beginnen",
     "description": "Get started action"
   },
-  "go-action": { "defaultMessage": "Gaan", "description": "Go action" },
+  "go-action": {
+    "defaultMessage": "Gaan",
+    "description": "Go action"
+  },
   "graph-color-scheme": {
     "defaultMessage": "Grafiek kleurschema",
     "description": "Graph colour scheme setting label"
@@ -1711,5 +1718,9 @@
   "webusb-retry-replug4": {
     "defaultMessage": "de USB-kabel ontkoppelen en opnieuw aansluiten",
     "description": "WebUSB error dialog"
+  },
+  "you-will-need": {
+    "defaultMessage": "You will need",
+    "description": "Connection dialog heading"
   }
 }

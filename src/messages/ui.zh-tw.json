@@ -605,6 +605,12 @@
       "value": "改用網路藍牙進行連線"
     }
   ],
+  "connect-start-heading": [
+    {
+      "type": 0,
+      "value": "Connect to collect data"
+    }
+  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -3035,6 +3041,12 @@
     {
       "type": 0,
       "value": "拔下並重新插入 USB 纜線"
+    }
+  ],
+  "you-will-need": [
+    {
+      "type": 0,
+      "value": "You will need"
     }
   ]
 }

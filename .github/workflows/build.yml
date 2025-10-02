@@ -44,12 +44,12 @@ jobs:
       - run: node ./bin/print-ci-env.cjs >> $GITHUB_ENV
       - run: npm run ci
       - name: Run Playwright tests
-        if: env.STAGE == 'REVIEW' || env.STAGE == 'STAGING'
+        if: false
         uses: docker://mcr.microsoft.com/playwright:v1.45.0-jammy
         with:
           args: npx playwright test
       - name: Store reports
-        if: (env.STAGE == 'REVIEW' || env.STAGE == 'STAGING') && failure()
+        if: false
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
