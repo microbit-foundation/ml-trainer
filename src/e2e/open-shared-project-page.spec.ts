@@ -10,9 +10,14 @@ test.describe("import shared page", () => {
     await homePage.setupContext();
   });
 
-  test("preview and import", async ({ dataSamplesPage, openSharedProjectPage }) => {
+  test("preview and import", async ({
+    dataSamplesPage,
+    openSharedProjectPage,
+  }) => {
     await openSharedProjectPage.goto("_fDpWJaY67cgR");
-    await openSharedProjectPage.expectMain().toHaveAttribute("aria-busy", "true");
+    await openSharedProjectPage
+      .expectMain()
+      .toHaveAttribute("aria-busy", "true");
     // loading header
     await openSharedProjectPage.expectMain().not.toHaveAttribute("aria-busy");
 
@@ -35,7 +40,9 @@ test.describe("import shared page", () => {
 
   test("error", async ({ openSharedProjectPage }) => {
     await openSharedProjectPage.goto("_aBadSh0rt1d");
-    await openSharedProjectPage.expectMain().toHaveAttribute("aria-busy", "true");
+    await openSharedProjectPage
+      .expectMain()
+      .toHaveAttribute("aria-busy", "true");
     // loading...
     await openSharedProjectPage.expectMain().not.toHaveAttribute("aria-busy");
 
