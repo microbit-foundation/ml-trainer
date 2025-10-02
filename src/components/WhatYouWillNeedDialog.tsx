@@ -3,7 +3,17 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, Grid, GridItem, Image, Text, VStack } from "@chakra-ui/react";
+import {
+  AspectRatio,
+  Box,
+  Button,
+  Grid,
+  GridItem,
+  HStack,
+  Image,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import batteryPackImage from "../images/stylised-battery-pack.svg";
 import microbitImage from "../images/stylised-microbit-black.svg";
@@ -16,6 +26,7 @@ import ConnectContainerDialog, {
 } from "./ConnectContainerDialog";
 import ExternalLink from "./ExternalLink";
 import { useDeployment } from "../deployment";
+import preConnectVideo from "../images/pre-connect-video.mp4";
 
 const itemsConfig = {
   radio: [
@@ -82,9 +93,7 @@ const WhatYouWillNeedDialog = ({
     <ConnectContainerDialog
       {...props}
       headingId={
-        reconnect
-          ? `reconnect-failed-${type}-heading`
-          : `connect-${type}-start-heading`
+        reconnect ? `reconnect-failed-${type}-heading` : `connect-start-heading`
       }
       footerLeft={
         <VStack alignItems="start">
@@ -111,11 +120,18 @@ const WhatYouWillNeedDialog = ({
           <FormattedMessage id="reconnect-failed-subtitle" />
         </Text>
       )}
+      {/* Massively hacked due to extra vertical whitespace in the video */}
+      <AspectRatio ratio={7.3 / 2} mx={5}>
+        <Box as="video" autoPlay loop src={preConnectVideo} mt={-8} />
+      </AspectRatio>
+      <Text fontWeight="bold" fontSize="lg" mt={-5}>
+        <FormattedMessage id="you-will-need" />
+      </Text>
       <Grid
         width="100%"
         templateColumns={`repeat(${itemsConfig[type].length}, 1fr)`}
-        gap={16}
-        p="30px"
+        gap={8}
+        px="30px"
       >
         {itemsConfig[type].map(({ imgSrc, titleId, subtitleId }) => {
           return (

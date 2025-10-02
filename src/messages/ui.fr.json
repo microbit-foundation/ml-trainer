@@ -605,6 +605,12 @@
       "value": "Se connecter en utilisant Web Bluetooth à la place"
     }
   ],
+  "connect-start-heading": [
+    {
+      "type": 0,
+      "value": "Connect to collect data"
+    }
+  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -1876,7 +1882,7 @@
   "makecode-block-show-icon": [
     {
       "type": 0,
-      "value": "afficher l'icône"
+      "value": "montrer l'icône"
     }
   ],
   "makecode-load-error-dialog-body": [
@@ -2834,7 +2840,7 @@
   "tour-trainModel-makeCodeBlocks-content": [
     {
       "type": 0,
-      "value": "Ces blocs MakeCode afficheront des icônes pour chaque action détectée lorsque vous transférez votre code et votre modèle sur un micro:bit."
+      "value": "Ces blocs MakeCode montreront des icônes pour chaque action détectée lorsque vous transférez votre code et votre modèle sur un micro:bit."
     }
   ],
   "tour-trainModel-makeCodeBlocks-title": [
@@ -3047,6 +3053,12 @@
     {
       "type": 0,
       "value": "débrancher et rebrancher le câble USB"
+    }
+  ],
+  "you-will-need": [
+    {
+      "type": 0,
+      "value": "You will need"
     }
   ]
 }

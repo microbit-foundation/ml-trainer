@@ -605,6 +605,12 @@
       "value": "Conéctate utilizando Web Bluetooth en su lugar"
     }
   ],
+  "connect-start-heading": [
+    {
+      "type": 0,
+      "value": "Connect to collect data"
+    }
+  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -3043,6 +3049,12 @@
     {
       "type": 0,
       "value": "desenchufa y vuelve a enchufar el cable USB"
+    }
+  ],
+  "you-will-need": [
+    {
+      "type": 0,
+      "value": "You will need"
     }
   ]
 }

@@ -351,6 +351,10 @@
     "defaultMessage": "crwdns362818:0crwdne362818:0",
     "description": "Link to alternative connection method"
   },
+  "connect-start-heading": {
+    "defaultMessage": "Connect to collect data",
+    "description": "Connection dialog heading"
+  },
   "connect-to-record": {
     "defaultMessage": "crwdns362820:0crwdne362820:0",
     "description": "Live graph disconnected micro:bit status message for data samples page"
@@ -1714,5 +1718,9 @@
   "webusb-retry-replug4": {
     "defaultMessage": "crwdns363476:0crwdne363476:0",
     "description": "WebUSB error dialog"
+  },
+  "you-will-need": {
+    "defaultMessage": "You will need",
+    "description": "Connection dialog heading"
   }
 }

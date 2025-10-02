@@ -593,6 +593,12 @@
       "value": "Web Bluetooth で接続"
     }
   ],
+  "connect-start-heading": [
+    {
+      "type": 0,
+      "value": "Connect to collect data"
+    }
+  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -3007,6 +3013,12 @@
     {
       "type": 0,
       "value": "USBケーブルを抜いて再接続"
+    }
+  ],
+  "you-will-need": [
+    {
+      "type": 0,
+      "value": "You will need"
     }
   ]
 }
