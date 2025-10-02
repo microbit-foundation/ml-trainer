@@ -16,7 +16,6 @@ import DefaultPageLayout, {
 } from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
-import { useConnectionStage } from "../connection-stage-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
@@ -30,15 +29,6 @@ const DataSamplesPage = () => {
 
   const navigate = useNavigate();
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
-
-  const tourStart = useStore((s) => s.tourStart);
-  const { isConnected } = useConnectionStage();
-  useEffect(() => {
-    // If a user first connects on "Testing model" this can result in the tour when they return to the "Data samples" page.
-    if (isConnected) {
-      tourStart({ name: "Connect" }, false);
-    }
-  }, [isConnected, tourStart]);
 
   const hasSufficientData = useHasSufficientDataForTraining();
   const isAddNewActionDisabled = actions.some((a) => a.name.length === 0);

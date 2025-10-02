@@ -163,13 +163,11 @@ const DataSamplesTable = ({
     [connActions, connStatus, isConnected, recordingDialogOnOpen]
   );
 
-  const tourStart = useStore((s) => s.tourStart);
   const handleRecordingComplete = useCallback(
-    ({ mostRecentRecordingId, recordingCount }: RecordingCompleteDetail) => {
+    ({ mostRecentRecordingId }: RecordingCompleteDetail) => {
       setNewRecordingId(mostRecentRecordingId);
-      tourStart({ name: "DataSamplesRecorded", recordingCount });
     },
-    [tourStart]
+    []
   );
 
   const actionNameInputEl = useCallback(

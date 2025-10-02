@@ -46,14 +46,10 @@ const HelpMenuItems = ({
           <FormattedMessage id="user-guide" />
         </MenuItem>
       )}
-      {
-        /* Temporarily disabled */ false && (
-          <TourMenuItem
-            onConnectFirstDialogOpen={onConnectFirstDialogOpen}
-            tourTrigger={tourTrigger}
-          />
-        )
-      }
+      <TourMenuItem
+        onConnectFirstDialogOpen={onConnectFirstDialogOpen}
+        tourTrigger={tourTrigger}
+      />
       {deployment.supportLinks.main && (
         <MenuItem
           as="a"

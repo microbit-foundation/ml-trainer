@@ -995,9 +995,6 @@ const createMlStore = (logging: Logging) => {
           },
 
           tourStart(trigger: TourTrigger, manual: boolean = false) {
-            // Temporarily disabled.
-            return;
-
             set((state) => {
               if (
                 manual ||
