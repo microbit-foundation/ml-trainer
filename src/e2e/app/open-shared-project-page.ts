@@ -1,6 +1,6 @@
 import { Locator, type Page, expect } from "@playwright/test";
 
-export class ImportSharedPage {
+export class OpenSharedProjectPage {
   private readonly url: string;
   private nameInputField: Locator;
   private openProjectBtn: Locator;

@@ -15,7 +15,7 @@ export const createNewPageUrl = () => `${basepath}new`;
 
 export const createImportPageUrl = () => `${basepath}import`;
 
-export const createImportSharedURLPageUrl = () => `${basepath}:shortId`;
+export const createOpenSharedProjectPageUrl = () => `${basepath}:shortId`;
 
 export const createDataSamplesPageUrl = () => `${basepath}data-samples`;
 

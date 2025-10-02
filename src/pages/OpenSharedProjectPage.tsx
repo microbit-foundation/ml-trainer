@@ -65,7 +65,7 @@ const contentStackProps: Partial<StackProps> = {
   width: ["full", "full", "3xl", "4xl"],
 };
 
-export const OpenSharedProjectPage = () => {
+const OpenSharedProjectPage = () => {
   const logging = useLogging();
   const navigate = useNavigate();
   const loadProject = useStore((s) => s.loadProject);
@@ -467,3 +467,5 @@ const fetchSharedProjectText = async (longId: string): Promise<ScriptText> => {
   }
   return text;
 };
+
+export default OpenSharedProjectPage;

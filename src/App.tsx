@@ -46,17 +46,17 @@ import HomePage from "./pages/HomePage";
 import ImportPage from "./pages/ImportPage";
 import NewPage from "./pages/NewPage";
 import TestingModelPage from "./pages/TestingModelPage";
+import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
 import { useStore } from "./store";
 import {
   createCodePageUrl,
   createDataSamplesPageUrl,
   createHomePageUrl,
   createImportPageUrl,
-  createImportSharedURLPageUrl,
+  createOpenSharedProjectPageUrl,
   createNewPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
-import { OpenSharedProjectPage } from "./pages/OpenSharedProjectPage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -182,7 +182,7 @@ const createRouter = () => {
           element: <CodePage />,
         },
         {
-          path: createImportSharedURLPageUrl(),
+          path: createOpenSharedProjectPageUrl(),
           loader: ({ params }) => {
             if (!params.shortId || !/^_[a-zA-Z0-9]+$/.test(params.shortId)) {
               throw "Not a shared key";
