@@ -9,12 +9,13 @@ import {
   Button,
   Grid,
   GridItem,
-  HStack,
   Image,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
+import { useDeployment } from "../deployment";
+import preConnectVideo from "../images/pre-connect-video.mp4";
 import batteryPackImage from "../images/stylised-battery-pack.svg";
 import microbitImage from "../images/stylised-microbit-black.svg";
 import twoMicrobitsImage from "../images/stylised-two-microbits-black.svg";
@@ -25,8 +26,6 @@ import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
 import ExternalLink from "./ExternalLink";
-import { useDeployment } from "../deployment";
-import preConnectVideo from "../images/pre-connect-video.mp4";
 
 const itemsConfig = {
   radio: [
