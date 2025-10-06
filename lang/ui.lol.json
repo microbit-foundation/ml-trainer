@@ -71,6 +71,10 @@
     "defaultMessage": "crwdns362678:0crwdne362678:0",
     "description": "Back button text"
   },
+  "blocks-preview-title": {
+    "defaultMessage": "Blocks preview",
+    "description": "Blocks preview heading text"
+  },
   "bluetooth-unsupported-advice": {
     "defaultMessage": "crwdns362680:0crwdne362680:0",
     "description": "Note on supported browsers"
@@ -426,6 +430,10 @@
   "data-features-show-action": {
     "defaultMessage": "crwdns362856:0crwdne362856:0",
     "description": "Show data features button text"
+  },
+  "data-preview-title": {
+    "defaultMessage": "Data preview",
+    "description": "Data preview heading text"
   },
   "data-samples-actions-region": {
     "defaultMessage": "crwdns362858:0crwdne362858:0",
@@ -1219,6 +1227,34 @@
     "defaultMessage": "crwdns363228:0crwdne363228:0",
     "description": "Aria label for file drop target"
   },
+  "open-project-action": {
+    "defaultMessage": "Open project",
+    "description": "Open project button text"
+  },
+  "open-project-setup-description": {
+    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
+    "description": "Open project setup description"
+  },
+  "open-shared-project-blocks-preview-description": {
+    "defaultMessage": "Preview of the MakeCode code contained within this project.",
+    "description": "Blocks preview description text"
+  },
+  "open-shared-project-data-preview-description": {
+    "defaultMessage": "Preview of the actions and data contained within this project.",
+    "description": "Data preview description text"
+  },
+  "open-shared-project-description": {
+    "defaultMessage": "This is a Microsoft MakeCode shared project compatible with CreateAI.",
+    "description": "Import shared CreateAI project description"
+  },
+  "open-shared-project-error-description": {
+    "defaultMessage": "Check the link you followed is correct, and make sure you are connected to the internet before trying again.",
+    "description": "Import shared CreateAI error description"
+  },
+  "open-shared-project-title": {
+    "defaultMessage": "Open shared CreateAI project",
+    "description": "Import shared CreateAI project title"
+  },
   "other-tabs-body1": {
     "defaultMessage": "crwdns363230:0crwdne363230:0",
     "description": "Connection error dialog"
@@ -1498,6 +1534,10 @@
   "testing-model-title": {
     "defaultMessage": "crwdns363368:0crwdne363368:0",
     "description": "Testing model page title"
+  },
+  "third-party-content-description": {
+    "defaultMessage": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation.",
+    "description": "Notify user of third party content"
   },
   "tour-action": {
     "defaultMessage": "crwdns363370:0crwdne363370:0",
