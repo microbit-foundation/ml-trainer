@@ -87,35 +87,37 @@ const LiveGraphPanel = ({
       bgColor="white"
       className={tourElClassname.liveGraph}
     >
-      {isDisconnected && (
-        <HStack
-          position="absolute"
-          w="100%"
-          h="100%"
-          gap={10}
-          justifyContent="center"
-          zIndex={1}
-        >
-          <MicrobitWarningIllustration
-            display={{ base: "none", sm: "block" }}
-          />
-          <VStack gap={3} alignItems="self-start">
-            <Text fontWeight="bold">
-              <FormattedMessage id="microbit-not-connected" />
-            </Text>
-            <Text>
-              <FormattedMessage id={disconnectedTextId} />
-            </Text>
-            <Button
-              variant="primary"
-              onClick={handleConnectOrReconnect}
-              aria-label={intl.formatMessage({ id: "connect-action-aria" })}
-            >
-              <FormattedMessage id="connect-action" />
-            </Button>
-          </VStack>
-        </HStack>
-      )}
+      {
+        /* Disabled as UX experiment */ false && isDisconnected && (
+          <HStack
+            position="absolute"
+            w="100%"
+            h="100%"
+            gap={10}
+            justifyContent="center"
+            zIndex={1}
+          >
+            <MicrobitWarningIllustration
+              display={{ base: "none", sm: "block" }}
+            />
+            <VStack gap={3} alignItems="self-start">
+              <Text fontWeight="bold">
+                <FormattedMessage id="microbit-not-connected" />
+              </Text>
+              <Text>
+                <FormattedMessage id={disconnectedTextId} />
+              </Text>
+              <Button
+                variant="primary"
+                onClick={handleConnectOrReconnect}
+                aria-label={intl.formatMessage({ id: "connect-action-aria" })}
+              >
+                <FormattedMessage id="connect-action" />
+              </Button>
+            </VStack>
+          </HStack>
+        )
+      }
       <HStack
         ref={parentPortalRef}
         pointerEvents={isDisconnected ? "none" : undefined}
