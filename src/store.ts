@@ -406,8 +406,10 @@ const createMlStore = (logging: Logging) => {
 
           setEditorOpen(open: boolean) {
             set(
-              ({ download }) => ({
+              ({ download, model }) => ({
                 isEditorOpen: open,
+                // We just assume its been edited as spurious changes from MakeCode happen that we can't identify
+                projectEdited: model ? true : false,
                 download: {
                   ...download,
                   usbDevice: undefined,
@@ -905,8 +907,6 @@ const createMlStore = (logging: Logging) => {
                   );
                   return {
                     project: newProject,
-                    // We just assume its been edited as spurious changes from MakeCode happen that we can't identify
-                    projectEdited: true,
                   };
                 } else {
                   logging.log(
