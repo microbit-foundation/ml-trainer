@@ -4,24 +4,36 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, Flex, HStack, useDisclosure, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Text,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { useHasMoved } from "../buffered-data-hooks";
 import DataSamplesTable from "../components/DataSamplesTable";
 import DefaultPageLayout, {
   ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
+import GreetingEmojiWithArrow from "../components/GreetingEmojiWithArrow";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
+import WelcomeDialog from "../components/WelcomeDialog";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
-import WelcomeDialog from "../components/WelcomeDialog";
+
+type ActiveHint = null | "graph" | "table";
 
 const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
@@ -33,7 +45,8 @@ const DataSamplesPage = () => {
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
 
   const tourStart = useStore((s) => s.tourStart);
-  const { isConnected, isDialogOpen } = useConnectionStage();
+  const { isConnected, isDialogOpen: isConnectionDialogOpen } =
+    useConnectionStage();
   useEffect(() => {
     // If a user first connects on "Testing model" this can result in the tour when they return to the "Data samples" page.
     if (isConnected) {
@@ -60,6 +73,16 @@ const DataSamplesPage = () => {
   const welcomeDialogDisclosure = useDisclosure({
     defaultIsOpen: !isConnected,
   });
+  const hasMoved = useHasMoved();
+  const tourInProgress = useStore((s) => !!s.tourState);
+  const isDialogOpen =
+    welcomeDialogDisclosure.isOpen || isConnectionDialogOpen || tourInProgress;
+  const activeHint: ActiveHint = isDialogOpen
+    ? null
+    : isConnected && !hasMoved
+    ? "graph"
+    : "table";
+  console.log(activeHint, isConnected, hasMoved);
 
   return (
     <>
@@ -80,6 +103,7 @@ const DataSamplesPage = () => {
           <DataSamplesTable
             selectedActionIdx={selectedActionIdx}
             setSelectedActionIdx={setSelectedActionIdx}
+            showHints={activeHint === "table"}
           />
         </Flex>
         <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
@@ -96,6 +120,7 @@ const DataSamplesPage = () => {
             borderTopWidth={3}
             borderColor="gray.200"
             alignItems="center"
+            position="relative"
           >
             <HStack gap={2} alignItems="center">
               <Button
@@ -129,12 +154,32 @@ const DataSamplesPage = () => {
                 </Button>
               )}
             </HStack>
+            {activeHint === "graph" && (
+              <VStack
+                m={0}
+                p={2}
+                position="absolute"
+                right={36}
+                bottom={0}
+                w="200px"
+              >
+                <Text textAlign="center">
+                  Move the micro:bit to see your movement data on the graph
+                </Text>
+                <Box transform="rotate(270deg)">
+                  <GreetingEmojiWithArrow
+                    w="120px"
+                    h="103px"
+                    color="brand.500"
+                  />
+                </Box>
+              </VStack>
+            )}
           </HStack>
+
           <LiveGraphPanel
             disconnectedTextId="connect-to-record"
-            showDisconnectedOverlay={
-              !welcomeDialogDisclosure.isOpen && !isDialogOpen
-            }
+            showDisconnectedOverlay={!isDialogOpen}
           />
         </VStack>
       </DefaultPageLayout>

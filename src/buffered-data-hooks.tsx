@@ -4,7 +4,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { AccelerometerDataEvent } from "@microbit/microbit-connection";
+import {
+  AccelerometerData,
+  AccelerometerDataEvent,
+} from "@microbit/microbit-connection";
 import {
   ReactNode,
   createContext,
@@ -12,6 +15,7 @@ import {
   useContext,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { BufferedData } from "./buffered-data";
 import { useConnectActions } from "./connect-actions-hooks";
@@ -72,4 +76,51 @@ const useBufferedDataInternal = (): BufferedData => {
     };
   }, [connection, connectStatus, getBuffer]);
   return getBuffer();
+};
+
+export const useHasMoved = (): boolean => {
+  const [hasMoved, setHasMoved] = useState(false);
+  const [connectStatus] = useConnectStatus();
+  const connection = useConnectActions();
+  useEffect(() => {
+    if (connectStatus !== ConnectionStatus.Connected) {
+      return;
+    }
+    let ignore = false;
+    const movements: AccelerometerData = { x: 0, y: 0, z: 0 };
+    const delta = 1000;
+    let firstSample: AccelerometerData | undefined;
+    const listener = (e: AccelerometerDataEvent) => {
+      if (!firstSample) {
+        firstSample = e.data;
+        console.log(firstSample);
+      } else {
+        if (Math.abs(firstSample.x - e.data.x) > delta) {
+          movements.x = 1;
+        }
+        if (Math.abs(firstSample.y - e.data.y) > delta) {
+          movements.y = 1;
+        }
+        if (Math.abs(firstSample.z - e.data.z) > delta) {
+          movements.z = 1;
+        }
+      }
+      if (movements.x + movements.y + movements.z > 1) {
+        connection.removeAccelerometerListener(listener);
+        setTimeout(() => {
+          if (!ignore) {
+            setHasMoved(true);
+          }
+        }, 5_000);
+      }
+    };
+    if (!hasMoved) {
+      connection.addAccelerometerListener(listener);
+    }
+    return () => {
+      ignore = true;
+      connection.removeAccelerometerListener(listener);
+    };
+  }, [connection, connectStatus, hasMoved]);
+  return hasMoved;
 };

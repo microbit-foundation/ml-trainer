@@ -53,11 +53,13 @@ const headings: GridColumnHeadingItemProps[] = [
 interface DataSamplesTableProps {
   selectedActionIdx: number;
   setSelectedActionIdx: (idx: number) => void;
+  showHints: boolean;
 }
 
 const DataSamplesTable = ({
   selectedActionIdx: selectedActionIdx,
   setSelectedActionIdx: setSelectedActionIdx,
+  showHints: showHintsExternal,
 }: DataSamplesTableProps) => {
   const actions = useStore((s) => s.actions);
   // Default to first action being selected if last action is deleted.
@@ -65,9 +67,10 @@ const DataSamplesTable = ({
 
   const showHints = useMemo<boolean>(
     () =>
-      actions.length === 0 ||
-      (actions.length === 1 && actions[0].recordings.length === 0),
-    [actions]
+      showHintsExternal &&
+      (actions.length === 0 ||
+        (actions.length === 1 && actions[0].recordings.length === 0)),
+    [actions, showHintsExternal]
   );
   const intl = useIntl();
   const isDeleteActionConfirmOpen = useStore((s) => s.isDeleteActionDialogOpen);
