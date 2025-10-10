@@ -4,7 +4,14 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Grid, GridProps, HStack, Text } from "@chakra-ui/react";
+import {
+  CardBody,
+  Grid,
+  GridProps,
+  HStack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -232,6 +239,24 @@ const DataSamplesTable = ({
             renameShortcutScopeRef={renameActionShortcutScopeRef}
           />
         ))}
+        {actions.length === 1 && actions[0].recordings.length > 0 && (
+          <VStack
+            p={2}
+            h="120px"
+            borderColor="blackAlpha.500"
+            borderWidth={1}
+            borderRadius="md"
+            justifyContent="center"
+            alignItems="center"
+            textAlign="center"
+            fontSize="sm"
+            color="blackAlpha.800"
+          >
+            <Text>
+              You need at least 3 data samples for 2 different actions.
+            </Text>
+          </VStack>
+        )}
       </Grid>
     </>
   );
