@@ -4,14 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  CardBody,
-  Grid,
-  GridProps,
-  HStack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Grid, GridProps, HStack, Text, VStack } from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
