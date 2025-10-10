@@ -298,7 +298,7 @@ const createMlStore = (logging: Logging) => {
       persist(
         (set, get) => ({
           timestamp: undefined,
-          actions: [],
+          actions: [createFirstAction()],
           dataWindow: currentDataWindow,
           isRecording: false,
           project: createUntitledProject(),
@@ -389,7 +389,7 @@ const createMlStore = (logging: Logging) => {
             const untitledProject = createUntitledProject();
             set(
               {
-                actions: [],
+                actions: [createFirstAction()],
                 dataWindow: currentDataWindow,
                 model: undefined,
                 project: projectName
