@@ -118,7 +118,7 @@ const WelcomeDialog = ({
       motionPreset="none"
       size="4xl"
       isCentered
-      onClose={handleOnClose}
+      onClose={() => handleOnClose(false)}
       isOpen={isOpen}
       {...rest}
     >
