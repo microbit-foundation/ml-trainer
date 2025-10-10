@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, Flex, HStack, VStack } from "@chakra-ui/react";
+import { Button, Flex, HStack, useDisclosure, VStack } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -21,6 +21,7 @@ import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
+import WelcomeDialog from "../components/WelcomeDialog";
 
 const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
@@ -56,8 +57,23 @@ const DataSamplesPage = () => {
     enabled: !isAddNewActionDisabled,
   });
   const intl = useIntl();
+  const welcomeDialogDisclosure = useDisclosure({ defaultIsOpen: true });
+  const deleteAllActions = useStore((s) => s.deleteAllActions);
+  const handleWelcomeClose = useCallback(() => {
+    // TODO: hacky way to create the initial action!
+    if (actions.length === 0) {
+      deleteAllActions();
+    }
+    welcomeDialogDisclosure.onClose();
+  }, [actions.length, deleteAllActions, welcomeDialogDisclosure]);
   return (
     <>
+      {welcomeDialogDisclosure.isOpen && (
+        <WelcomeDialog
+          onClose={handleWelcomeClose}
+          isOpen={welcomeDialogDisclosure.isOpen}
+        />
+      )}
       <TrainModelDialogs finalFocusRef={trainButtonRef} />
       <DefaultPageLayout
         titleId="data-samples-title"

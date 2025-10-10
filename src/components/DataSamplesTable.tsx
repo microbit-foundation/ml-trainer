@@ -227,73 +227,30 @@ const DataSamplesTable = ({
         {...gridCommonProps}
         headings={headings}
       />
-      {actions.length === 0 ? (
-        <VStack
-          gap={5}
-          flexGrow={1}
-          alignItems="center"
-          justifyContent="center"
-        >
-          <LoadProjectInput ref={loadProjectInputRef} accept=".json" />
-          <Text fontSize="lg">
-            <FormattedMessage id="no-data-samples" />
-          </Text>
-          {!isConnected && (
-            <Text fontSize="lg" textAlign="center">
-              <FormattedMessage
-                id="connect-or-import"
-                values={{
-                  link1: (chunks: ReactNode) => (
-                    <Button
-                      fontSize="lg"
-                      color="brand.600"
-                      variant="link"
-                      onClick={handleConnect}
-                    >
-                      {chunks}
-                    </Button>
-                  ),
-                  link2: (chunks: ReactNode) => (
-                    <Button
-                      fontSize="lg"
-                      color="brand.600"
-                      variant="link"
-                      onClick={() => loadProjectInputRef.current?.chooseFile()}
-                    >
-                      {chunks}
-                    </Button>
-                  ),
-                }}
-              />
-            </Text>
-          )}
-        </VStack>
-      ) : (
-        <Grid
-          {...gridCommonProps}
-          py={2}
-          alignItems="start"
-          autoRows="max-content"
-          overflow="auto"
-          flexGrow={1}
-          h={0}
-        >
-          {actions.map((action, idx) => (
-            <DataSamplesTableRow
-              key={action.ID}
-              action={action}
-              newRecordingId={newRecordingId}
-              clearNewRecordingId={() => setNewRecordingId(undefined)}
-              selected={selectedAction.ID === action.ID}
-              onSelectRow={() => setSelectedActionIdx(idx)}
-              onRecord={handleRecord}
-              showHints={showHints}
-              onDeleteAction={deleteActionConfirmOnOpen}
-              renameShortcutScopeRef={renameActionShortcutScopeRef}
-            />
-          ))}
-        </Grid>
-      )}
+      <Grid
+        {...gridCommonProps}
+        py={2}
+        alignItems="start"
+        autoRows="max-content"
+        overflow="auto"
+        flexGrow={1}
+        h={0}
+      >
+        {actions.map((action, idx) => (
+          <DataSamplesTableRow
+            key={action.ID}
+            action={action}
+            newRecordingId={newRecordingId}
+            clearNewRecordingId={() => setNewRecordingId(undefined)}
+            selected={selectedAction.ID === action.ID}
+            onSelectRow={() => setSelectedActionIdx(idx)}
+            onRecord={handleRecord}
+            showHints={showHints}
+            onDeleteAction={deleteActionConfirmOnOpen}
+            renameShortcutScopeRef={renameActionShortcutScopeRef}
+          />
+        ))}
+      </Grid>
     </>
   );
 };
