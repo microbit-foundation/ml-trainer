@@ -4,42 +4,27 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Button,
-  Grid,
-  GridProps,
-  HStack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Grid, GridProps, HStack, Text } from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
+import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { ActionData } from "../model";
 import { useStore } from "../store";
+import { recordButtonId } from "./ActionDataSamplesCard";
+import { actionNameInputId } from "./ActionNameCard";
+import { ConfirmDialog } from "./ConfirmDialog";
 import ConnectFirstDialog from "./ConnectFirstDialog";
 import DataSamplesMenu from "./DataSamplesMenu";
 import DataSamplesTableRow from "./DataSamplesTableRow";
 import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
-import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
 import RecordingDialog, {
   RecordingCompleteDetail,
   RecordingOptions,
 } from "./RecordingDialog";
 import ShowGraphsCheckbox from "./ShowGraphsCheckbox";
-import { ConfirmDialog } from "./ConfirmDialog";
-import { actionNameInputId } from "./ActionNameCard";
-import { recordButtonId } from "./ActionDataSamplesCard";
-import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -99,18 +84,12 @@ const DataSamplesTable = ({
   const closeDialog = useStore((s) => s.closeDialog);
 
   const connection = useConnectActions();
-  const { actions: connActions } = useConnectionStage();
   const { isConnected } = useConnectionStage();
-  const loadProjectInputRef = useRef<LoadProjectInputRef>(null);
 
   // For adding flashing animation for new recording.
   const [newRecordingId, setNewRecordingId] = useState<number | undefined>(
     undefined
   );
-
-  const handleConnect = useCallback(() => {
-    connActions.startConnect();
-  }, [connActions]);
 
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
