@@ -93,7 +93,6 @@ export const useHasMoved = (): boolean => {
     const listener = (e: AccelerometerDataEvent) => {
       if (!firstSample) {
         firstSample = e.data;
-        console.log(firstSample);
       } else {
         if (Math.abs(firstSample.x - e.data.x) > delta) {
           movements.x = 1;

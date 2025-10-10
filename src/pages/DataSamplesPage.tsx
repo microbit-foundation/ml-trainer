@@ -82,7 +82,6 @@ const DataSamplesPage = () => {
     : isConnected && !hasMoved
     ? "graph"
     : "table";
-  console.log(activeHint, isConnected, hasMoved);
 
   return (
     <>
