@@ -21,6 +21,7 @@ import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ButtonWithLoading } from "./ButtonWithLoading";
 import preConnectVideo from "../images/pre-connect-video.mp4";
+import { useStore } from "../store";
 
 interface WelcomeDialogProps
   extends Omit<ComponentProps<typeof Modal>, "children"> {
@@ -40,10 +41,20 @@ const WelcomeDialog = ({
   } = useConnectionStage();
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
 
-  const handleOnClose = useCallback(() => {
-    setIsWaiting(false);
-    onClose();
-  }, [onClose]);
+  const deleteAllActions = useStore((s) => s.deleteAllActions);
+  const hasActions = useStore((s) => s.actions.length > 0);
+
+  const handleOnClose = useCallback(
+    (connecting: boolean) => {
+      // TODO: hacky way to create the initial action!
+      if (!hasActions && !connecting) {
+        deleteAllActions();
+      }
+      setIsWaiting(false);
+      onClose();
+    },
+    [deleteAllActions, hasActions, onClose]
+  );
 
   const handleConnect = useCallback(async () => {
     onClose();
@@ -55,14 +66,14 @@ const WelcomeDialog = ({
       case ConnectionStatus.NotConnected: {
         // Start connection flow.
         actions.startConnect({});
-        return handleOnClose();
+        return handleOnClose(true);
       }
       case ConnectionStatus.ConnectionLost:
       case ConnectionStatus.FailedToReconnect:
       case ConnectionStatus.Disconnected: {
         // Reconnect.
         await actions.reconnect();
-        return handleOnClose();
+        return handleOnClose(true);
       }
       case ConnectionStatus.ReconnectingAutomatically: {
         // Wait for reconnection to happen.
@@ -71,12 +82,12 @@ const WelcomeDialog = ({
       }
       case ConnectionStatus.Connected: {
         // Connected whilst dialog is up.
-        return handleOnClose();
+        return handleOnClose(false);
       }
       case ConnectionStatus.ReconnectingExplicitly:
       case ConnectionStatus.Connecting: {
         // Impossible cases.
-        return handleOnClose();
+        return handleOnClose(true);
       }
     }
   }, [onClose, onChooseConnect, connStatus, actions, handleOnClose]);
@@ -89,7 +100,7 @@ const WelcomeDialog = ({
     ) {
       // Close dialog if connection dialog is opened, or
       // once connected after waiting.
-      handleOnClose();
+      handleOnClose(isConnectionDialogOpen);
       return;
     }
   }, [
@@ -105,7 +116,7 @@ const WelcomeDialog = ({
     <Modal
       closeOnOverlayClick={false}
       motionPreset="none"
-      size="xl"
+      size="4xl"
       isCentered
       onClose={handleOnClose}
       isOpen={isOpen}

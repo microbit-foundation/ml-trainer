@@ -33,7 +33,7 @@ const DataSamplesPage = () => {
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
 
   const tourStart = useStore((s) => s.tourStart);
-  const { isConnected } = useConnectionStage();
+  const { isConnected, isDialogOpen } = useConnectionStage();
   useEffect(() => {
     // If a user first connects on "Testing model" this can result in the tour when they return to the "Data samples" page.
     if (isConnected) {
@@ -57,20 +57,15 @@ const DataSamplesPage = () => {
     enabled: !isAddNewActionDisabled,
   });
   const intl = useIntl();
-  const welcomeDialogDisclosure = useDisclosure({ defaultIsOpen: true });
-  const deleteAllActions = useStore((s) => s.deleteAllActions);
-  const handleWelcomeClose = useCallback(() => {
-    // TODO: hacky way to create the initial action!
-    if (actions.length === 0) {
-      deleteAllActions();
-    }
-    welcomeDialogDisclosure.onClose();
-  }, [actions.length, deleteAllActions, welcomeDialogDisclosure]);
+  const welcomeDialogDisclosure = useDisclosure({
+    defaultIsOpen: !isConnected,
+  });
+
   return (
     <>
       {welcomeDialogDisclosure.isOpen && (
         <WelcomeDialog
-          onClose={handleWelcomeClose}
+          onClose={welcomeDialogDisclosure.onClose}
           isOpen={welcomeDialogDisclosure.isOpen}
         />
       )}
@@ -135,7 +130,12 @@ const DataSamplesPage = () => {
               )}
             </HStack>
           </HStack>
-          <LiveGraphPanel disconnectedTextId="connect-to-record" />
+          <LiveGraphPanel
+            disconnectedTextId="connect-to-record"
+            showDisconnectedOverlay={
+              !welcomeDialogDisclosure.isOpen && !isDialogOpen
+            }
+          />
         </VStack>
       </DefaultPageLayout>
     </>
