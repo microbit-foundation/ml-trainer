@@ -127,9 +127,14 @@ const WelcomeDialog = ({
           <ModalHeader>
             <Text>Welcome to micro:bit CreateAI</Text>
           </ModalHeader>
-          <ModalBody p={20}>
+          <ModalBody px={20} py={8}>
             <ModalCloseButton />
-            <AspectRatio ratio={7.3 / 2}>
+            <Text>
+              This is a placeholder. Full animation to cover need to connect to
+              collect <strong>movement data</strong> and full flow through to
+              coding.
+            </Text>
+            <AspectRatio ratio={3}>
               <Box as="video" autoPlay loop src={preConnectVideo} />
             </AspectRatio>
           </ModalBody>
