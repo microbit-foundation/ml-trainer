@@ -15,7 +15,17 @@ import { default as df } from "theme-package";
 import { BoxProps } from "@chakra-ui/react";
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const deploymentFactory: DeploymentConfigFactory = df;
-export const deployment = deploymentFactory(import.meta.env);
+export const deployment = (() => {
+  const deployment = deploymentFactory(import.meta.env);
+  if (import.meta.env.DEV) {
+    return {
+      ...deployment,
+      // Sidestep CORS issues in development. See vite.config.ts.
+      activitiesBaseUrl: "/microbit-org-proxy/classroom/activities/",
+    };
+  }
+  return deployment;
+})();
 
 export interface CookieConsent {
   analytics: boolean;
