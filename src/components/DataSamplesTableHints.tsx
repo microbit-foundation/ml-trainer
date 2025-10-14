@@ -11,6 +11,7 @@ import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import GreetingEmojiWithArrow from "./GreetingEmojiWithArrow";
 import { RecordingOptions } from "./RecordingDialog";
 import UpCurveArrow from "./UpCurveArrow";
+import Emoji from "./Emoji";
 
 interface DataSamplesTableHintsProps {
   action: ActionData;
@@ -27,6 +28,7 @@ const DataSamplesTableHints = ({
       {action.name.length === 0 ? (
         <GridItem h="120px">
           <VStack m={0} p={2} w={200} transform="translate(-30px, 40px)">
+            <Emoji boxSize={16} color="blue.500" transform="rotate(-8deg)" />
             <GreetingEmojiWithArrow w="120px" h="103px" color="brand.500" />
             <Text textAlign="center">
               <FormattedMessage id="name-action-hint" />
