@@ -581,6 +581,12 @@
       "value": "crwdns362818:0crwdne362818:0"
     }
   ],
+  "connect-start-heading": [
+    {
+      "type": 0,
+      "value": "Connect to collect data"
+    }
+  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -2917,6 +2923,12 @@
     {
       "type": 0,
       "value": "crwdns363476:0crwdne363476:0"
+    }
+  ],
+  "you-will-need": [
+    {
+      "type": 0,
+      "value": "You will need"
     }
   ]
 }
