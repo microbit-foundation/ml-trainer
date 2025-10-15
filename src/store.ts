@@ -669,7 +669,15 @@ const createMlStore = (logging: Logging) => {
            */
           loadProject(project: MakeCodeProject, name: string) {
             const newActions = getActionsFromProject(project);
-            set(({ settings }) => {
+            set(({ settings, project: prevProject }) => {
+              project = renameProject(project, name);
+              if (prevProject.header) {
+                project.header = {
+                  ...prevProject.header,
+                  ...project.header,
+                };
+              }
+
               const timestamp = Date.now();
               return {
                 settings: {
@@ -681,7 +689,7 @@ const createMlStore = (logging: Logging) => {
                 actions: newActions,
                 dataWindow: getDataWindowFromActions(newActions),
                 model: undefined,
-                project: renameProject(project, name),
+                project,
                 projectEdited: true,
                 appEditNeedsFlushToEditor: true,
                 timestamp,
