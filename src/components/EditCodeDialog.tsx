@@ -22,7 +22,6 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
     }, [isOpen, tourStart]);
     return (
       <Flex
-        flexGrow="1"
         w="100%"
         h="100%"
         bgColor="white"
