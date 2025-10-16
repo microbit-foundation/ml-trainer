@@ -162,6 +162,9 @@ const ActionNameCard = ({
               ? { bgColor: "transparent", size: "lg" }
               : { bgColor: "gray.25", size: "sm" })}
             _placeholder={{ opacity: 0.8, color: "gray.900" }}
+            aria-label={intl.formatMessage({
+              id: "action-name-placeholder",
+            })}
             placeholder={intl.formatMessage({
               id: "action-name-placeholder",
             })}

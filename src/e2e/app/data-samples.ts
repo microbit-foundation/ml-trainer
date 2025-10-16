@@ -63,6 +63,19 @@ export class DataSamplesPage {
     await expect(this.heading).toBeVisible({ timeout: 10000 });
   }
 
+  async expectActions(expectedActions: string[]) {
+    const actionInputs = this.page.getByRole("textbox", {
+      name: "Name of action",
+    });
+    await expect(actionInputs).toHaveCount(expectedActions.length, {
+      timeout: 10_000,
+    });
+    let i = 0;
+    for (const input of await actionInputs.all()) {
+      await expect(input).toHaveValue(expectedActions[i++]);
+    }
+  }
+
   async trainModel() {
     await this.page.getByRole("button", { name: "Train model" }).click();
     return new TrainModelDialog(this.page);

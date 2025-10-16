@@ -21,6 +21,10 @@ export type Flag =
    */
   | "devtools"
   /**
+   * Flag to enable e2e support.
+   */
+  | "e2e"
+  /**
    * Flag to add a beta warning. Enabled for review and staging site stages.
    */
   | "preReleaseNotice"
@@ -52,6 +56,7 @@ const allFlags: FlagMetadata[] = [
   { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
   { name: "exampleOptInB", defaultOnStages: [] },
   { name: "devtools", defaultOnStages: ["local"] },
+  { name: "e2e", defaultOnStages: [] },
   {
     name: "preReleaseNotice",
     defaultOnStages: ["staging"],

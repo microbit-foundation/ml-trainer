@@ -9,6 +9,7 @@ import { DataSamplesPage } from "./app/data-samples";
 import { TestModelPage } from "./app/test-model-page";
 import { NewPage } from "./app/new-page";
 import { OpenSharedProjectPage } from "./app/open-shared-project-page";
+import { ImportPage } from "./app/import-page";
 
 type MyFixtures = {
   homePage: HomePage;
@@ -16,6 +17,7 @@ type MyFixtures = {
   dataSamplesPage: DataSamplesPage;
   testModelPage: TestModelPage;
   openSharedProjectPage: OpenSharedProjectPage;
+  importPage: ImportPage;
 };
 
 export const test = base.extend<MyFixtures>({
@@ -35,5 +37,8 @@ export const test = base.extend<MyFixtures>({
   },
   openSharedProjectPage: async ({ page }, use) => {
     await use(new OpenSharedProjectPage(page));
+  },
+  importPage: async ({ page }, use) => {
+    await use(new ImportPage(page));
   },
 });
