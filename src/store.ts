@@ -9,42 +9,38 @@ import * as tf from "@tensorflow/tfjs";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
+import { BufferedData } from "./buffered-data";
 import { deployment } from "./deployment";
 import { flags } from "./flags";
+import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
 import { Logging } from "./logging/logging";
-import {
-  filenames,
-  generateCustomFiles,
-  generateProject,
-} from "./makecode/utils";
+import { generateCustomFiles, generateProject } from "./makecode/utils";
 import { Confidences, predict, trainModel } from "./ml";
+import { mlSettings } from "./mlConfig";
 import {
+  Action,
+  ActionData,
   DataSamplesView,
   DownloadState,
   DownloadStep,
-  Action,
-  ActionData,
+  EditorStartUp,
   MicrobitToFlash,
   PostImportDialogState,
   RecordingData,
   SaveState,
   SaveStep,
-  TourTrigger,
-  TourState,
-  TrainModelDialogStage,
-  EditorStartUp,
-  TourTriggerName,
   tourSequence,
+  TourState,
+  TourTrigger,
+  TourTriggerName,
+  TrainModelDialogStage,
 } from "./model";
+import { renameProject, untitledProjectName } from "./project-name";
 import { defaultSettings, Settings } from "./settings";
+import { getTour as getTourSpec } from "./tours";
 import { getTotalNumSamples } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
-import { untitledProjectName } from "./project-name";
-import { mlSettings } from "./mlConfig";
-import { BufferedData } from "./buffered-data";
 import { getDetectedAction } from "./utils/prediction";
-import { getTour as getTourSpec } from "./tours";
-import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -220,7 +216,6 @@ export interface Actions {
   dataCollectionMicrobitConnected(): void;
 
   loadDataset(actions: ActionData[]): void;
-  loadProject(project: MakeCodeProject, name: string): void;
   setEditorOpen(open: boolean): void;
   recordingStarted(): void;
   recordingStopped(): void;
@@ -659,33 +654,6 @@ const createMlStore = (logging: Logging) => {
                   undefined,
                   dataWindow
                 ),
-              };
-            });
-          },
-
-          /**
-           * Generally project loads go via MakeCode as it reads the hex but when we open projects
-           * from microbit.org we have the JSON already and use this route.
-           */
-          loadProject(project: MakeCodeProject, name: string) {
-            const newActions = getActionsFromProject(project);
-            set(({ settings }) => {
-              const timestamp = Date.now();
-              return {
-                settings: {
-                  ...settings,
-                  toursCompleted: Array.from(
-                    new Set([...settings.toursCompleted, "DataSamplesRecorded"])
-                  ),
-                },
-                actions: newActions,
-                dataWindow: getDataWindowFromActions(newActions),
-                model: undefined,
-                project: renameProject(project, name),
-                projectEdited: true,
-                appEditNeedsFlushToEditor: true,
-                timestamp,
-                // We don't update projectLoadTimestamp here as we don't want a toast notification for .org import
               };
             });
           },
@@ -1382,27 +1350,4 @@ const getActionsFromProject = (project: MakeCodeProject): ActionData[] => {
     return [];
   }
   return dataset.data as ActionData[];
-};
-
-const renameProject = (
-  project: MakeCodeProject,
-  name: string
-): MakeCodeProject => {
-  const pxtString = project.text?.[filenames.pxtJson];
-  const pxt = JSON.parse(pxtString ?? "{}") as Record<string, unknown>;
-
-  return {
-    ...project,
-    header: {
-      ...project.header!,
-      name,
-    },
-    text: {
-      ...project.text,
-      [filenames.pxtJson]: JSON.stringify({
-        ...pxt,
-        name,
-      }),
-    },
-  };
 };

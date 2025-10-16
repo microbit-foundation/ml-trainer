@@ -68,7 +68,7 @@ const contentStackProps: Partial<StackProps> = {
 const OpenSharedProjectPage = () => {
   const logging = useLogging();
   const navigate = useNavigate();
-  const loadProject = useStore((s) => s.loadProject);
+  const { importProject } = useProject();
   const [name, setName] = useState("");
   const { sharedState, header, dataset, projectText } =
     useProjectPreload(setName);
@@ -76,13 +76,13 @@ const OpenSharedProjectPage = () => {
 
   const handleOpenProject = useCallback(() => {
     if (!header || !projectText) return;
-    loadProject({ header: { ...header, name }, text: projectText }, name);
+    importProject({ header: { ...header, name }, text: projectText }, name);
     logging.event({
       type: "import-shared-project-complete",
       detail: { shortId },
     });
     navigate(createDataSamplesPageUrl());
-  }, [loadProject, header, projectText, name, navigate, logging, shortId]);
+  }, [importProject, header, projectText, name, navigate, logging, shortId]);
 
   if (sharedState === SharedState.Failed) {
     return <ErrorPreloading />;
