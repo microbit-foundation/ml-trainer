@@ -4,9 +4,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Grid, GridProps, HStack, Text, VStack } from "@chakra-ui/react";
+import { Grid, GridProps, HStack, Text } from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
@@ -59,19 +59,12 @@ interface DataSamplesTableProps {
 const DataSamplesTable = ({
   selectedActionIdx: selectedActionIdx,
   setSelectedActionIdx: setSelectedActionIdx,
-  showHints: showHintsExternal,
+  showHints,
 }: DataSamplesTableProps) => {
   const actions = useStore((s) => s.actions);
   // Default to first action being selected if last action is deleted.
   const selectedAction: ActionData = actions[selectedActionIdx] ?? actions[0];
 
-  const showHints = useMemo<boolean>(
-    () =>
-      showHintsExternal &&
-      (actions.length === 0 ||
-        (actions.length === 1 && actions[0].recordings.length === 0)),
-    [actions, showHintsExternal]
-  );
   const intl = useIntl();
   const isDeleteActionConfirmOpen = useStore((s) => s.isDeleteActionDialogOpen);
   const deleteActionConfirmOnOpen = useStore((s) => s.deleteActionDialogOnOpen);
@@ -222,6 +215,7 @@ const DataSamplesTable = ({
           <DataSamplesTableRow
             key={action.ID}
             action={action}
+            actions={actions}
             newRecordingId={newRecordingId}
             clearNewRecordingId={() => setNewRecordingId(undefined)}
             selected={selectedAction.ID === action.ID}
@@ -232,24 +226,6 @@ const DataSamplesTable = ({
             renameShortcutScopeRef={renameActionShortcutScopeRef}
           />
         ))}
-        {actions.length === 1 && actions[0].recordings.length > 0 && (
-          <VStack
-            p={2}
-            h="120px"
-            borderColor="blackAlpha.500"
-            borderWidth={1}
-            borderRadius="md"
-            justifyContent="center"
-            alignItems="center"
-            textAlign="center"
-            fontSize="sm"
-            color="blackAlpha.800"
-          >
-            <Text>
-              You need at least 3 data samples for 2 different actions.
-            </Text>
-          </VStack>
-        )}
       </Grid>
     </>
   );
