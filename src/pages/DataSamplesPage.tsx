@@ -70,8 +70,12 @@ const DataSamplesPage = () => {
   });
   const hasMoved = useHasMoved();
   const tourInProgress = useStore((s) => !!s.tourState);
+  const isRecordingDialogOpen = useStore((s) => !!s.isRecordingDialogOpen);
   const isDialogOpen =
-    welcomeDialogDisclosure.isOpen || isConnectionDialogOpen || tourInProgress;
+    welcomeDialogDisclosure.isOpen ||
+    isConnectionDialogOpen ||
+    tourInProgress ||
+    isRecordingDialogOpen;
   const hint: DataSamplesPageHint = isDialogOpen
     ? null
     : activeHintForActions(actions, hasMoved, isConnected);
@@ -141,9 +145,10 @@ const DataSamplesPage = () => {
                   className={tourElClassname.trainModelButton}
                   onClick={() => trainModelFlowStart(handleNavigateToModel)}
                   variant={hasSufficientData ? "primary" : "secondary-disabled"}
-                  // Delay due to Done dialog delay
                   animation={
-                    hasSufficientData ? `${animations.tada} 1s` : undefined
+                    hasSufficientData && !isRecordingDialogOpen
+                      ? animations.tada
+                      : undefined
                   }
                 >
                   <FormattedMessage id="train-model" />
