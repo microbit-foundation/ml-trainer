@@ -296,7 +296,7 @@ const PreviewData = ({ dataset }: PreviewDataProps) => {
                 key={action.ID}
                 action={action}
                 selected={false}
-                showHints={false}
+                hint={null}
               />
             ))}
           </Grid>
