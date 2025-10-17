@@ -1,7 +1,7 @@
 import { Icon, IconProps, keyframes } from "@chakra-ui/react";
 
 export const animations = {
-  greeting: `${keyframes({
+  wobble: `${keyframes({
     "0%": {
       transform: "rotate(15deg)",
     },
@@ -14,8 +14,13 @@ export const animations = {
     "75%": {
       transform: "rotate(-15deg)",
     },
+  })} 2s`,
+  spin: `${keyframes({
+    "0%": {
+      transform: "rotate3d(0, 1, 0, 0deg)",
+    },
     "100%": {
-      transform: "rotate(0deg)",
+      transform: "rotate3d(0, 1, 0, 360deg)",
     },
   })} 2s`,
 };
