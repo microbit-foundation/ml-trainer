@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { GridItem, HStack, Text, VStack } from "@chakra-ui/react";
+import { GridItem, HStack, Stack, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ActionData } from "../model";
@@ -11,7 +11,8 @@ import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import GreetingEmojiWithArrow from "./GreetingEmojiWithArrow";
 import { RecordingOptions } from "./RecordingDialog";
 import UpCurveArrow from "./UpCurveArrow";
-import Emoji from "./Emoji";
+import Emoji, { animations } from "./Emoji";
+import EmojiArrow from "./EmojiArrow";
 
 interface DataSamplesTableHintsProps {
   action: ActionData;
@@ -27,9 +28,16 @@ const DataSamplesTableHints = ({
     <>
       {action.name.length === 0 ? (
         <GridItem h="120px">
-          <VStack m={0} p={2} w={200} transform="translate(-30px, 40px)">
-            <Emoji boxSize={16} color="blue.500" transform="rotate(-8deg)" />
-            <GreetingEmojiWithArrow w="120px" h="103px" color="brand.500" />
+          <VStack m={0} p={2} w={200} transform="translate(-30px, 45px)">
+            <Stack spacing={0} color="brand.500" ml={-8}>
+              <EmojiArrow />
+              <Emoji
+                ml="25px"
+                boxSize={16}
+                transform="rotate(-8deg)"
+                animation={animations.greeting}
+              />
+            </Stack>
             <Text textAlign="center">
               <FormattedMessage id="name-action-hint" />
             </Text>

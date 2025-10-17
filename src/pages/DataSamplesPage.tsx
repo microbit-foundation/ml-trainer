@@ -23,7 +23,6 @@ import DefaultPageLayout, {
   ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
-import GreetingEmojiWithArrow from "../components/GreetingEmojiWithArrow";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import WelcomeDialog from "../components/WelcomeDialog";
@@ -165,13 +164,7 @@ const DataSamplesPage = () => {
                 <Text textAlign="center">
                   Move the micro:bit to see your movement data on the graph
                 </Text>
-                <Box transform="rotate(270deg)">
-                  <GreetingEmojiWithArrow
-                    w="120px"
-                    h="103px"
-                    color="brand.500"
-                  />
-                </Box>
+                <Box transform="rotate(270deg)">{/* TODO */}</Box>
               </VStack>
             )}
           </HStack>

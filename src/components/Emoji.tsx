@@ -1,4 +1,24 @@
-import { Icon, IconProps } from "@chakra-ui/react";
+import { Icon, IconProps, keyframes } from "@chakra-ui/react";
+
+export const animations = {
+  greeting: `${keyframes({
+    "0%": {
+      transform: "rotate(15deg)",
+    },
+    "25%": {
+      transform: "rotate(-15deg)",
+    },
+    "50%": {
+      transform: "rotate(15deg)",
+    },
+    "75%": {
+      transform: "rotate(-15deg)",
+    },
+    "100%": {
+      transform: "rotate(0deg)",
+    },
+  })} 2s`,
+};
 
 type Eye = "round" | "tick";
 
