@@ -13,6 +13,7 @@ import {
   IndexHtmlTransformContext,
   IndexHtmlTransformResult,
   Plugin,
+  ServerOptions,
   UserConfig,
   defineConfig,
   loadEnv,
@@ -49,8 +50,6 @@ const viteEjsPlugin = (data: ejs.Data): Plugin => {
 };
 
 export default defineConfig(async ({ mode }): Promise<UserConfig> => {
-  const commonEnv = loadEnv(mode, process.cwd(), "");
-
   const strings: TemplateStrings = themePackageExternal
     ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       ((await import(themePackageAlias)).default({}) as TemplateStrings)
@@ -74,17 +73,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
         input: "index.html",
       },
     },
-    server: commonEnv.API_PROXY
-      ? {
-          port: 5173,
-          proxy: {
-            "/api/v1": {
-              target: commonEnv.API_PROXY,
-              changeOrigin: true,
-            },
-          },
-        }
-      : undefined,
+    server: createServer(mode),
     test: {
       globals: true,
       environment: "jsdom",
@@ -97,3 +86,25 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
     },
   };
 });
+
+const createServer = (mode: string): ServerOptions => {
+  const commonEnv = loadEnv(mode, process.cwd(), "");
+  const options = {
+    port: 5173,
+    proxy: {
+      "/microbit-org-proxy/": {
+        target: "https://microbit.org/",
+        changeOrigin: true,
+        rewrite: (path: string) => path.replace(/^\/microbit-org-proxy/, ""),
+      },
+    },
+  };
+
+  if (commonEnv.API_PROXY) {
+    options.proxy["/api/v1"] = {
+      target: commonEnv.API_PROXY,
+      changeOrigin: true,
+    };
+  }
+  return options;
+};

@@ -13,9 +13,20 @@ export type DeploymentConfigFactory = (
 // This is configured via a vite alias, defaulting to ./default
 import { default as df } from "theme-package";
 import { BoxProps } from "@chakra-ui/react";
+import { flags } from "../flags";
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const deploymentFactory: DeploymentConfigFactory = df;
-export const deployment = deploymentFactory(import.meta.env);
+export const deployment = (() => {
+  const deployment = deploymentFactory(import.meta.env);
+  if (import.meta.env.DEV || flags.e2e) {
+    return {
+      ...deployment,
+      // Sidestep CORS issues in development/e2e. See vite.config.ts.
+      activitiesBaseUrl: "/microbit-org-proxy/classroom/activities/",
+    };
+  }
+  return deployment;
+})();
 
 export interface CookieConsent {
   analytics: boolean;

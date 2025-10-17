@@ -38,7 +38,9 @@ const ImportPage = () => {
   const [params] = useSearchParams();
   setEditorVersionOverride(params.get("editorVersion") || undefined);
   const defaultProjectName = useDefaultProjectName();
-  const [name, setName] = useState<string>(defaultProjectName);
+  const [name, setName] = useState<string>(
+    params.get("name") ?? defaultProjectName
+  );
   const isValidSetup = validateProjectName(name);
   const [fetchingProject, setFetchingProject] = useState<boolean>(true);
   const [project, setProject] = useState<MakeCodeProject>();
@@ -63,7 +65,6 @@ const ImportPage = () => {
           intl
         );
         setProject(project);
-        setName(resourceName ?? defaultProjectName);
       } catch (e) {
         // Log the fetch error, but fallback to new blank session by default.
         logging.error(e);
@@ -141,11 +142,12 @@ const ImportPage = () => {
             </Text>
           )}
           <Stack py={2} spacing={5}>
-            <Heading size="md" as="h2">
+            <Heading size="md" as="h2" id="name-label">
               <FormattedMessage id="name-text" />
             </Heading>
             <Input
-              aria-labelledby={nameLabel}
+              type="text"
+              aria-labelledby="name-label"
               minW="25ch"
               value={name}
               name={nameLabel}
