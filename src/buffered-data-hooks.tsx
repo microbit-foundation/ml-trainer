@@ -87,30 +87,40 @@ export const useHasMoved = (): boolean => {
       return;
     }
     let ignore = false;
-    const movements: AccelerometerData = { x: 0, y: 0, z: 0 };
-    const delta = 1000;
-    let firstSample: AccelerometerData | undefined;
+    const delta: AccelerometerData = { x: 0, y: 0, z: 0 };
+    let lastSample: AccelerometerData | undefined;
+    const threshold = 40_000;
+    const minDelta = 100;
+    const skipSamples = 10;
+    let skipped = 0;
     const listener = (e: AccelerometerDataEvent) => {
-      if (!firstSample) {
-        firstSample = e.data;
-      } else {
-        if (Math.abs(firstSample.x - e.data.x) > delta) {
-          movements.x = 1;
+      if (skipped < skipSamples) {
+        skipped++;
+      } else if (lastSample) {
+        const deltaX = Math.abs(lastSample.x - e.data.x);
+        if (deltaX > minDelta) {
+          delta.x += deltaX;
         }
-        if (Math.abs(firstSample.y - e.data.y) > delta) {
-          movements.y = 1;
+        const deltaY = Math.abs(lastSample.y - e.data.y);
+        if (deltaY > minDelta) {
+          delta.y += deltaY;
         }
-        if (Math.abs(firstSample.z - e.data.z) > delta) {
-          movements.z = 1;
+        const deltaZ = Math.abs(lastSample.z - e.data.z);
+        if (deltaZ > minDelta) {
+          delta.z += deltaZ;
         }
       }
-      if (movements.x + movements.y + movements.z > 1) {
+      lastSample = e.data;
+      if (
+        (delta.x > threshold ? 1 : 0) +
+          (delta.y > threshold ? 1 : 0) +
+          (delta.z > threshold ? 1 : 0) >
+        1
+      ) {
         connection.removeAccelerometerListener(listener);
-        setTimeout(() => {
-          if (!ignore) {
-            setHasMoved(true);
-          }
-        }, 5_000);
+        if (!ignore) {
+          setHasMoved(true);
+        }
       }
     };
     if (!hasMoved) {
