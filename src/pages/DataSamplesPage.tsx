@@ -24,18 +24,17 @@ import DefaultPageLayout, {
   ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
+import { animations } from "../components/Emoji";
 import EmojiArrow from "../components/EmojiArrow";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import WelcomeDialog from "../components/WelcomeDialog";
 import { useConnectionStage } from "../connection-stage-hooks";
+import moveMicrobitImage from "../images/move-microbit.svg";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
-import moveMicrobitImage from "../images/move-microbit.svg";
-import { animate } from "framer-motion";
-import { animations } from "../components/Emoji";
 
 type ActiveHint = null | "graph" | "table";
 
