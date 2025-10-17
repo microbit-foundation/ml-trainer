@@ -723,7 +723,10 @@
     "defaultMessage": "はじめよう",
     "description": "Get started action"
   },
-  "go-action": { "defaultMessage": "実行", "description": "Go action" },
+  "go-action": {
+    "defaultMessage": "実行",
+    "description": "Go action"
+  },
   "graph-color-scheme": {
     "defaultMessage": "グラフの配色設定",
     "description": "Graph colour scheme setting label"

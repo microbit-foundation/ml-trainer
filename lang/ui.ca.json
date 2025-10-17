@@ -723,7 +723,10 @@
     "defaultMessage": "Comencem",
     "description": "Get started action"
   },
-  "go-action": { "defaultMessage": "Ves", "description": "Go action" },
+  "go-action": {
+    "defaultMessage": "Ves",
+    "description": "Go action"
+  },
   "graph-color-scheme": {
     "defaultMessage": "Esquema de colors del gràfic",
     "description": "Graph colour scheme setting label"

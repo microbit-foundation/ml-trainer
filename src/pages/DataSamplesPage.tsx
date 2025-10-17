@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  Box,
   Button,
   Flex,
   HStack,
@@ -23,6 +22,7 @@ import DefaultPageLayout, {
   ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
+import EmojiArrow from "../components/EmojiArrow";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import WelcomeDialog from "../components/WelcomeDialog";
@@ -153,7 +153,7 @@ const DataSamplesPage = () => {
               )}
             </HStack>
             {activeHint === "graph" && (
-              <VStack
+              <HStack
                 m={0}
                 p={2}
                 position="absolute"
@@ -161,11 +161,11 @@ const DataSamplesPage = () => {
                 bottom={0}
                 w="200px"
               >
+                <EmojiArrow />
                 <Text textAlign="center">
-                  Move the micro:bit to see your movement data on the graph
+                  Shake the micro:bit and watch the graph change
                 </Text>
-                <Box transform="rotate(270deg)">{/* TODO */}</Box>
-              </VStack>
+              </HStack>
             )}
           </HStack>
 

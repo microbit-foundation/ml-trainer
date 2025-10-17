@@ -1924,7 +1924,7 @@
   "name-action-hint": [
     {
       "type": 0,
-      "value": "Name an action you want the micro:bit to recognise"
+      "value": "Name an action you want the micro:bit to recognise, e.g. ‘waving’ or ‘jumping’"
     }
   ],
   "name-project": [

@@ -723,7 +723,10 @@
     "defaultMessage": "Rozpocznij",
     "description": "Get started action"
   },
-  "go-action": { "defaultMessage": "Dalej", "description": "Go action" },
+  "go-action": {
+    "defaultMessage": "Dalej",
+    "description": "Go action"
+  },
   "graph-color-scheme": {
     "defaultMessage": "Schemat kolorów wykresu",
     "description": "Graph colour scheme setting label"

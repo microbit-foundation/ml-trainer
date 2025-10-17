@@ -723,7 +723,10 @@
     "defaultMessage": "시작하기",
     "description": "Get started action"
   },
-  "go-action": { "defaultMessage": "이동", "description": "Go action" },
+  "go-action": {
+    "defaultMessage": "이동",
+    "description": "Go action"
+  },
   "graph-color-scheme": {
     "defaultMessage": "그래프 색 구성표",
     "description": "Graph colour scheme setting label"
