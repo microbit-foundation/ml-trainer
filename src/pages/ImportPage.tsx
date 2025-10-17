@@ -75,13 +75,13 @@ const ImportPage = () => {
     });
   }, [activitiesBaseUrl, defaultProjectName, intl, logging, params]);
 
-  const loadProject = useStore((s) => s.loadProject);
+  const { importProject } = useProject();
   const newSession = useStore((s) => s.newSession);
   const timestamp = useStore((s) => s.timestamp);
 
   const handleStartSession = useCallback(() => {
     if (project) {
-      loadProject(project, name);
+      importProject(project, name);
       navigate(createDataSamplesPageUrl());
     } else {
       // If no resource fetched, start as new empty session
@@ -89,7 +89,7 @@ const ImportPage = () => {
       newSession(name);
       navigate(createDataSamplesPageUrl());
     }
-  }, [loadProject, name, navigate, newSession, project]);
+  }, [importProject, name, navigate, newSession, project]);
 
   const { saveHex } = useProject();
   const handleSave = useCallback(() => {
