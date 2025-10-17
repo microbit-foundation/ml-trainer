@@ -78,7 +78,7 @@ const DataSamplesPage = () => {
     isRecordingDialogOpen;
   const hint: DataSamplesPageHint = isDialogOpen
     ? null
-    : activeHintForActions(actions, hasMoved, isConnected);
+    : activeHintForActions(actions, isConnected, hasMoved);
 
   return (
     <>
