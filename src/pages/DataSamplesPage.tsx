@@ -5,9 +5,11 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  AspectRatio,
   Button,
   Flex,
   HStack,
+  Image,
   Text,
   useDisclosure,
   VStack,
@@ -31,6 +33,9 @@ import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
+import moveMicrobitImage from "../images/move-microbit.svg";
+import { animate } from "framer-motion";
+import { animations } from "../components/Emoji";
 
 type ActiveHint = null | "graph" | "table";
 
@@ -155,14 +160,25 @@ const DataSamplesPage = () => {
             {activeHint === "graph" && (
               <HStack
                 m={0}
-                p={2}
                 position="absolute"
-                right={36}
-                bottom={0}
-                w="200px"
+                right={16}
+                bottom={12}
+                spacing={0}
               >
-                <EmojiArrow />
-                <Text textAlign="center">
+                <EmojiArrow
+                  mt={8}
+                  transform="rotate(-80deg)"
+                  transformOrigin="center"
+                  color="brand.500"
+                />
+                <AspectRatio
+                  ratio={30 / 25}
+                  w={36}
+                  animation={animations.wobble}
+                >
+                  <Image src={moveMicrobitImage} />
+                </AspectRatio>
+                <Text textAlign="center" w={48}>
                   Shake the micro:bit and watch the graph change
                 </Text>
               </HStack>
