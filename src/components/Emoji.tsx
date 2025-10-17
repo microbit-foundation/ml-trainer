@@ -15,6 +15,23 @@ export const animations = {
       transform: "rotate(-15deg)",
     },
   })} 2s`,
+  tada: `${keyframes({
+    "0%": {
+      transform: "scale(1) rotate(0deg)",
+    },
+    "10%, 20%": {
+      transform: "scale(0.95) rotate(-3deg)",
+    },
+    "30%, 50%, 70%, 90%": {
+      transform: "scale(1.1) rotate(3deg)",
+    },
+    "40%, 60%, 80%": {
+      transform: "scale(1.1) rotate(-3deg)",
+    },
+    "100%": {
+      transform: "scale(1) rotate(0deg)",
+    },
+  })} 1s ease-in-out`,
   spin: `${keyframes({
     "0%": {
       transform: "rotate3d(0, 1, 0, 0deg)",
@@ -37,10 +54,12 @@ interface EmojiProps extends IconProps {
 const Emoji = ({
   leftEye = "round",
   rightEye = "round",
+  boxSize = 16,
+  color = "brand.500",
   ...props
 }: EmojiProps) => {
   return (
-    <Icon {...props} viewBox="0 0 124 101">
+    <Icon boxSize={boxSize} color={color} {...props} viewBox="0 0 124 101">
       {/* Outline */}
       <path
         d="M88.874 0.0159531V0.00657654H34.1453V0.0159531C14.6584 0.173286 0 15.7146 0 36.3026C0 56.6373 14.4073 72.0239 33.6396 72.4399V72.46H88.5953C108.233 72.46 123.041 56.9173 123.041 36.3026C123.041 15.7093 108.371 0.162621 88.874 0.0159531ZM88.5953 57.0106L34.1084 56.9999C23.3745 56.8133 14.726 47.5906 14.726 36.2346C14.726 24.7599 23.5516 15.4586 34.4396 15.4586H88.5953C99.4792 15.4586 108.307 24.7599 108.307 36.2346C108.307 47.7092 99.4792 57.0106 88.5953 57.0106Z"

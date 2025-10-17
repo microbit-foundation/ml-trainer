@@ -4,39 +4,31 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  AspectRatio,
-  Button,
-  Flex,
-  HStack,
-  Image,
-  Text,
-  useDisclosure,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, Flex, HStack, useDisclosure, VStack } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useHasMoved } from "../buffered-data-hooks";
 import DataSamplesTable from "../components/DataSamplesTable";
+import {
+  AddActionHint,
+  MoveMicrobitHint,
+} from "../components/DataSamplesTableHints";
 import DefaultPageLayout, {
   ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
-import { animations } from "../components/Emoji";
-import EmojiArrow from "../components/EmojiArrow";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import WelcomeDialog from "../components/WelcomeDialog";
 import { useConnectionStage } from "../connection-stage-hooks";
-import moveMicrobitImage from "../images/move-microbit.svg";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
+import { ActionData, DataSamplesPageHint } from "../model";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
-
-type ActiveHint = null | "graph" | "table";
+import { animations } from "../components/Emoji";
 
 const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
@@ -80,11 +72,9 @@ const DataSamplesPage = () => {
   const tourInProgress = useStore((s) => !!s.tourState);
   const isDialogOpen =
     welcomeDialogDisclosure.isOpen || isConnectionDialogOpen || tourInProgress;
-  const activeHint: ActiveHint = isDialogOpen
+  const hint: DataSamplesPageHint = isDialogOpen
     ? null
-    : isConnected && !hasMoved
-    ? "graph"
-    : "table";
+    : activeHintForActions(actions, hasMoved, isConnected);
 
   return (
     <>
@@ -105,7 +95,7 @@ const DataSamplesPage = () => {
           <DataSamplesTable
             selectedActionIdx={selectedActionIdx}
             setSelectedActionIdx={setSelectedActionIdx}
-            showHints={activeHint === "table"}
+            hint={hint}
           />
         </Flex>
         <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
@@ -150,38 +140,18 @@ const DataSamplesPage = () => {
                   ref={trainButtonRef}
                   className={tourElClassname.trainModelButton}
                   onClick={() => trainModelFlowStart(handleNavigateToModel)}
-                  variant="primary"
+                  variant={hasSufficientData ? "primary" : "secondary-disabled"}
+                  // Delay due to Done dialog delay
+                  animation={
+                    hasSufficientData ? `${animations.tada} 1s` : undefined
+                  }
                 >
                   <FormattedMessage id="train-model" />
                 </Button>
               )}
             </HStack>
-            {activeHint === "graph" && (
-              <HStack
-                m={0}
-                position="absolute"
-                right={16}
-                bottom={12}
-                spacing={0}
-              >
-                <EmojiArrow
-                  mt={8}
-                  transform="rotate(-80deg)"
-                  transformOrigin="center"
-                  color="brand.500"
-                />
-                <AspectRatio
-                  ratio={30 / 25}
-                  w={36}
-                  animation={animations.wobble}
-                >
-                  <Image src={moveMicrobitImage} />
-                </AspectRatio>
-                <Text textAlign="center" w={48}>
-                  Shake the micro:bit and watch the graph change
-                </Text>
-              </HStack>
-            )}
+            {hint === "move-microbit" && <MoveMicrobitHint />}
+            {hint === "add-action" && <AddActionHint action={actions[0]} />}
           </HStack>
 
           <LiveGraphPanel
@@ -192,6 +162,38 @@ const DataSamplesPage = () => {
       </DefaultPageLayout>
     </>
   );
+};
+
+const activeHintForActions = (
+  actions: ActionData[],
+  isConnected: boolean,
+  hasMoved: boolean
+): DataSamplesPageHint => {
+  if (isConnected && !hasMoved) {
+    return "move-microbit";
+  }
+
+  // We don't let you have zero. If you have > 1 you've seen it all before.
+  if (actions.length !== 1) {
+    return null;
+  }
+  const action = actions[0];
+  if (action.name.length === 0) {
+    if (action.recordings.length === 0) {
+      return "name-action";
+    } else {
+      // No space for hint with actions already recorded.
+      return null;
+    }
+  }
+
+  if (action.recordings.length === 0) {
+    return "record";
+  }
+  if (action.recordings.length < 3) {
+    return "record-more";
+  }
+  return "add-action";
 };
 
 export default DataSamplesPage;

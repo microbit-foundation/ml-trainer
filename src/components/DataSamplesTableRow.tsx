@@ -7,20 +7,23 @@
 import { Box, GridItem } from "@chakra-ui/react";
 import { RefType } from "react-hotkeys-hook/dist/types";
 import { useIntl } from "react-intl";
-import { ActionData } from "../model";
+import { ActionData, DataSamplesPageHint } from "../model";
 import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import ActionNameCard, { ActionCardNameViewMode } from "./ActionNameCard";
-import { NameActionHint, RecordButtonHint } from "./DataSamplesTableHints";
+import {
+  NameActionHint,
+  RecordButtonHint,
+  RecordMoreHint,
+} from "./DataSamplesTableHints";
 import { RecordingOptions } from "./RecordingDialog";
 
 interface DataSamplesTableRowProps {
   preview?: boolean;
   action: ActionData;
-  actions: ActionData[];
   selected: boolean;
   onSelectRow?: () => void;
   onRecord?: (recordingOptions: RecordingOptions) => void;
-  showHints: boolean;
+  hint: DataSamplesPageHint;
   newRecordingId?: number;
   clearNewRecordingId?: () => void;
   onDeleteAction?: () => void;
@@ -29,24 +32,17 @@ interface DataSamplesTableRowProps {
 
 const DataSamplesTableRow = ({
   action,
-  actions,
   selected,
   onSelectRow,
   onRecord,
   preview,
-  showHints,
+  hint,
   newRecordingId,
   clearNewRecordingId,
   onDeleteAction,
   renameShortcutScopeRef,
 }: DataSamplesTableRowProps) => {
   const intl = useIntl();
-  const needsNameHint =
-    actions.length === 1 &&
-    action.name.length === 0 &&
-    action.recordings.length === 0;
-  const needsRecordHint =
-    !needsNameHint && actions.length === 1 && action.recordings.length === 0;
   return (
     <>
       <Box
@@ -74,7 +70,11 @@ const DataSamplesTableRow = ({
             }
           />
         </GridItem>
-        {showHints && needsNameHint && <NameActionHint />}
+        {hint === "name-action" && (
+          <GridItem h="120px">
+            <NameActionHint />
+          </GridItem>
+        )}
         <GridItem>
           {(action.name.length > 0 || action.recordings.length > 0) && (
             <ActionDataSamplesCard
@@ -88,11 +88,16 @@ const DataSamplesTableRow = ({
             />
           )}
         </GridItem>
-        {showHints && needsRecordHint && (
+        {(hint === "record" || hint === "record-more") && (
           <>
             {/* Skip first column to correctly place hint. */}
             <GridItem />
-            <RecordButtonHint />
+            <GridItem h="120px">
+              {hint === "record" && <RecordButtonHint />}
+              {hint === "record-more" && (
+                <RecordMoreHint recorded={action.recordings.length} />
+              )}
+            </GridItem>
           </>
         )}
       </Box>

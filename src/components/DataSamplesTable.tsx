@@ -11,7 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
-import { ActionData } from "../model";
+import { ActionData, DataSamplesPageHint } from "../model";
 import { useStore } from "../store";
 import { recordButtonId } from "./ActionDataSamplesCard";
 import { actionNameInputId } from "./ActionNameCard";
@@ -53,13 +53,13 @@ const headings: GridColumnHeadingItemProps[] = [
 interface DataSamplesTableProps {
   selectedActionIdx: number;
   setSelectedActionIdx: (idx: number) => void;
-  showHints: boolean;
+  hint: DataSamplesPageHint;
 }
 
 const DataSamplesTable = ({
   selectedActionIdx: selectedActionIdx,
   setSelectedActionIdx: setSelectedActionIdx,
-  showHints,
+  hint,
 }: DataSamplesTableProps) => {
   const actions = useStore((s) => s.actions);
   // Default to first action being selected if last action is deleted.
@@ -215,13 +215,12 @@ const DataSamplesTable = ({
           <DataSamplesTableRow
             key={action.ID}
             action={action}
-            actions={actions}
             newRecordingId={newRecordingId}
             clearNewRecordingId={() => setNewRecordingId(undefined)}
             selected={selectedAction.ID === action.ID}
             onSelectRow={() => setSelectedActionIdx(idx)}
             onRecord={handleRecord}
-            showHints={showHints}
+            hint={hint}
             onDeleteAction={deleteActionConfirmOnOpen}
             renameShortcutScopeRef={renameActionShortcutScopeRef}
           />

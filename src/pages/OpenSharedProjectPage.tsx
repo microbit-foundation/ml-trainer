@@ -292,12 +292,11 @@ const PreviewData = ({ dataset }: PreviewDataProps) => {
           <Grid gap={3} gridTemplateColumns="290px 1fr">
             {dataset.map((action) => (
               <DataSamplesTableRow
-                actions={dataset}
                 preview={true}
                 key={action.ID}
                 action={action}
                 selected={false}
-                showHints={false}
+                hint={null}
               />
             ))}
           </Grid>
