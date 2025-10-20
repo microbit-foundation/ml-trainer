@@ -75,8 +75,7 @@ const ImportPage = () => {
     });
   }, [activitiesBaseUrl, defaultProjectName, intl, logging, params]);
 
-  const { importProject } = useProject();
-  const newSession = useStore((s) => s.newSession);
+  const { importProject, newProject } = useProject();
   const timestamp = useStore((s) => s.timestamp);
 
   const handleStartSession = useCallback(() => {
@@ -86,10 +85,10 @@ const ImportPage = () => {
     } else {
       // If no resource fetched, start as new empty session
       // with provided project name
-      newSession(name);
+      newProject(name);
       navigate(createDataSamplesPageUrl());
     }
-  }, [importProject, name, navigate, newSession, project]);
+  }, [importProject, name, navigate, newProject, project]);
 
   const { saveHex } = useProject();
   const handleSave = useCallback(() => {

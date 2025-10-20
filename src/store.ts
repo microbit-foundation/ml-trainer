@@ -16,6 +16,7 @@ import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
 import { Logging } from "./logging/logging";
 import {
   createUntitledProject,
+  currentDataWindow,
   generateCustomFiles,
   generateProject,
 } from "./makecode/utils";
@@ -67,14 +68,6 @@ const legacyDataWindow: DataWindow = {
   minSamples: 80,
   deviceSamplesPeriod: 25,
   deviceSamplesLength: 80,
-};
-
-// Exported for testing.
-export const currentDataWindow: DataWindow = {
-  duration: 990,
-  minSamples: 44,
-  deviceSamplesPeriod: 20, // Default value for accelerometer period.
-  deviceSamplesLength: 50, // Number of samples required at 20 ms intervals for 1 second of data.
 };
 
 interface PredictionResult {

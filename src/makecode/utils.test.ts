@@ -18,6 +18,7 @@ import actionData from "../test-fixtures/still-wave-clap-data-samples-legacy.jso
 import {
   ActionName,
   actionNamesFromLabels,
+  currentDataWindow,
   extensionName,
   filenames,
   generateCustomFiles,
@@ -25,7 +26,6 @@ import {
   hasMakeCodeMlExtension,
   pxt,
 } from "./utils";
-import { currentDataWindow } from "../store";
 
 const data: DatasetEditorJsonFormat = {
   data: actionData as ActionData[],
