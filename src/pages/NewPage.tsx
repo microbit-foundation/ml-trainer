@@ -29,14 +29,14 @@ import NewPageChoice from "../components/NewPageChoice";
 import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
-import { useProjectName } from "../hooks/project-hooks";
+import { useProject, useProjectName } from "../hooks/project-hooks";
 
 const NewPage = () => {
   const existingSessionTimestamp = useStore((s) => s.timestamp);
   const projectName = useProjectName();
-  const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
   const logging = useLogging();
+  const { newProject } = useProject();
 
   const handleOpenLastSession = useCallback(() => {
     logging.event({
@@ -54,9 +54,9 @@ const NewPage = () => {
     logging.event({
       type: "session-open-new",
     });
-    newSession();
+    newProject();
     navigate(createDataSamplesPageUrl());
-  }, [logging, newSession, navigate]);
+  }, [logging, newProject, navigate]);
 
   const intl = useIntl();
   const lastSessionTitle = intl.formatMessage({

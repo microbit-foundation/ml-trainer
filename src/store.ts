@@ -14,7 +14,11 @@ import { deployment } from "./deployment";
 import { flags } from "./flags";
 import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
 import { Logging } from "./logging/logging";
-import { generateCustomFiles, generateProject } from "./makecode/utils";
+import {
+  createUntitledProject,
+  generateCustomFiles,
+  generateProject,
+} from "./makecode/utils";
 import { Confidences, predict, trainModel } from "./ml";
 import { mlSettings } from "./mlConfig";
 import {
@@ -77,37 +81,6 @@ interface PredictionResult {
   confidences: Confidences;
   detected: Action | undefined;
 }
-
-const createUntitledProject = (): MakeCodeProject => ({
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  header: {
-    target: "microbit",
-    targetVersion: "7.1.2",
-    name: untitledProjectName,
-    meta: {},
-    editor: "blocksprj",
-    pubId: "",
-    pubCurrent: false,
-    _rev: null,
-    id: "45a3216b-e997-456c-bd4b-6550ddb81c4e",
-    recentUse: 1726493314,
-    modificationTime: 1726493314,
-    cloudUserId: null,
-    cloudCurrent: false,
-    cloudVersion: null,
-    cloudLastSyncTime: 0,
-    isDeleted: false,
-    githubCurrent: false,
-    saveId: null,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } as any,
-  ...generateProject(
-    untitledProjectName,
-    { data: [] },
-    undefined,
-    currentDataWindow
-  ),
-});
 
 const updateProject = (
   project: MakeCodeProject,
@@ -219,7 +192,6 @@ export interface Actions {
   setEditorOpen(open: boolean): void;
   recordingStarted(): void;
   recordingStopped(): void;
-  newSession(projectName?: string): void;
   trainModelFlowStart: (callback?: () => void) => Promise<void>;
   closeTrainModelDialogs: () => void;
   trainModel(): Promise<boolean>;
@@ -377,25 +349,6 @@ const createMlStore = (logging: Logging) => {
               }),
               false,
               "setLanguage"
-            );
-          },
-
-          newSession(projectName?: string) {
-            const untitledProject = createUntitledProject();
-            set(
-              {
-                actions: [],
-                dataWindow: currentDataWindow,
-                model: undefined,
-                project: projectName
-                  ? renameProject(untitledProject, projectName)
-                  : untitledProject,
-                projectEdited: false,
-                appEditNeedsFlushToEditor: true,
-                timestamp: Date.now(),
-              },
-              false,
-              "newSession"
             );
           },
 

@@ -22,6 +22,7 @@ import {
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useLogging } from "../logging/logging-hooks";
+import { createUntitledProject } from "../makecode/utils";
 import {
   HexData,
   isDatasetUserFileFormat,
@@ -58,12 +59,13 @@ interface ProjectContext {
   openEditor(): Promise<void>;
   project: MakeCodeProject;
   projectEdited: boolean;
-  resetProject: () => void;
+  newProject(projectNameOverride?: string): void;
+  resetProject(): void;
   importProject: (
     project: MakeCodeProject,
-    projectNameOverride: string
+    projectNameOverride?: string
   ) => void;
-  loadFile: (file: File, type: LoadType) => void;
+  loadFile(file: File, type: LoadType): void;
   /**
    * Called to request a save.
    *
@@ -365,7 +367,7 @@ export const ProjectProvider = ({
   const importProject = useCallback(
     async (
       project: MakeCodeProject,
-      projectNameOverride: string
+      projectNameOverride?: string
     ): Promise<void> => {
       const hasTimedOut = await checkIfEditorStartUpTimedOut(
         editorReadyPromise.promise
@@ -377,7 +379,9 @@ export const ProjectProvider = ({
       try {
         // This triggers the code in editorChanged to update actions etc.
         await driverRef.current!.importProject({
-          project: renameProject(project, projectNameOverride),
+          project: projectNameOverride
+            ? renameProject(project, projectNameOverride)
+            : project,
         });
       } catch (e) {
         setPostImportDialogState(PostImportDialogState.Error);
@@ -390,6 +394,22 @@ export const ProjectProvider = ({
       openEditorTimedOutDialog,
       setPostImportDialogState,
     ]
+  );
+
+  const newProject = useCallback(
+    (projectName?: string) => {
+      // BUG:
+      // MakeCode will have initialized with whatever is already in state
+      // at this point. We don't tell MakeCode about our new project here.
+      //
+      // MakeCode's visibility listener will cause it to reload the
+      // project it already has open (after a workspacesync),
+      // then we'll conisder that to be a new project and
+
+      const untitledProject = createUntitledProject();
+      return importProject(untitledProject, projectName);
+    },
+    [importProject]
   );
 
   const setSave = useStore((s) => s.setSave);
@@ -492,6 +512,7 @@ export const ProjectProvider = ({
 
   const value = useMemo(
     () => ({
+      newProject,
       loadFile,
       importProject,
       openEditor,
@@ -511,6 +532,7 @@ export const ProjectProvider = ({
       },
     }),
     [
+      newProject,
       loadFile,
       importProject,
       openEditor,
