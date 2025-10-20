@@ -28,10 +28,7 @@ import {
   PostImportDialogState,
   SaveStep,
 } from "../model";
-import {
-  renameProject,
-  untitledProjectName as untitled,
-} from "../project-name";
+import { untitledProjectName as untitled } from "../project-name";
 import { useStore } from "../store";
 import {
   createCodePageUrl,
@@ -59,10 +56,6 @@ interface ProjectContext {
   project: MakeCodeProject;
   projectEdited: boolean;
   resetProject: () => void;
-  importProject: (
-    project: MakeCodeProject,
-    projectNameOverride: string
-  ) => void;
   loadFile: (file: File, type: LoadType) => void;
   /**
    * Called to request a save.
@@ -362,36 +355,6 @@ export const ProjectProvider = ({
     ]
   );
 
-  const importProject = useCallback(
-    async (
-      project: MakeCodeProject,
-      projectNameOverride: string
-    ): Promise<void> => {
-      const hasTimedOut = await checkIfEditorStartUpTimedOut(
-        editorReadyPromise.promise
-      );
-      if (hasTimedOut) {
-        openEditorTimedOutDialog();
-        return;
-      }
-      try {
-        // This triggers the code in editorChanged to update actions etc.
-        await driverRef.current!.importProject({
-          project: renameProject(project, projectNameOverride),
-        });
-      } catch (e) {
-        setPostImportDialogState(PostImportDialogState.Error);
-      }
-    },
-    [
-      checkIfEditorStartUpTimedOut,
-      driverRef,
-      editorReadyPromise.promise,
-      openEditorTimedOutDialog,
-      setPostImportDialogState,
-    ]
-  );
-
   const setSave = useStore((s) => s.setSave);
   const save = useStore((s) => s.save);
   const settings = useStore((s) => s.settings);
@@ -493,7 +456,6 @@ export const ProjectProvider = ({
   const value = useMemo(
     () => ({
       loadFile,
-      importProject,
       openEditor,
       browserNavigationToEditor,
       project,
@@ -512,7 +474,6 @@ export const ProjectProvider = ({
     }),
     [
       loadFile,
-      importProject,
       openEditor,
       browserNavigationToEditor,
       project,
