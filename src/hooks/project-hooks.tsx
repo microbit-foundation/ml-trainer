@@ -139,7 +139,8 @@ export const ProjectProvider = ({
   const openEditorTimedOutDialog = useStore(
     (s) => () => s.setIsEditorTimedOutDialogOpen(true)
   );
-  const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
+  const markEditorUpdating = useStore((s) => s.setEditorUpdating);
+  const markEditorCreating = useStore((s) => s.setEditorCreating);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
   const getCurrentProject = useStore((s) => s.getCurrentProject);
@@ -224,10 +225,10 @@ export const ProjectProvider = ({
           if (!driverRef.current) {
             throw new CodeEditorError("MakeCode iframe ref is undefined");
           } else if (checkIfProjectNeedsFlush()) {
-            logging.log("[MakeCode] Importing project");
+            logging.log("[MakeCode] Importing project due to edit");
             await editorReadyPromise.promise;
             const project = getCurrentProject();
-            expectChangedHeader();
+            markEditorUpdating();
             try {
               await driverRef.current.importProject({ project });
               logging.log("[MakeCode] Project import succeeded");
@@ -269,7 +270,7 @@ export const ProjectProvider = ({
       logging,
       editorReadyPromise.promise,
       getCurrentProject,
-      expectChangedHeader,
+      markEditorUpdating,
       projectFlushedToEditor,
       langChangeFlushedToEditor,
       checkIfEditorStartUpTimedOut,
@@ -377,6 +378,7 @@ export const ProjectProvider = ({
         return;
       }
       try {
+        markEditorCreating();
         // This triggers the code in editorChanged to update actions etc.
         await driverRef.current!.importProject({
           project: projectNameOverride
@@ -391,6 +393,7 @@ export const ProjectProvider = ({
       checkIfEditorStartUpTimedOut,
       driverRef,
       editorReadyPromise.promise,
+      markEditorCreating,
       openEditorTimedOutDialog,
       setPostImportDialogState,
     ]
@@ -398,14 +401,6 @@ export const ProjectProvider = ({
 
   const newProject = useCallback(
     (projectName?: string) => {
-      // BUG:
-      // MakeCode will have initialized with whatever is already in state
-      // at this point. We don't tell MakeCode about our new project here.
-      //
-      // MakeCode's visibility listener will cause it to reload the
-      // project it already has open (after a workspacesync),
-      // then we'll conisder that to be a new project and
-
       const untitledProject = createUntitledProject();
       return importProject(untitledProject, projectName);
     },

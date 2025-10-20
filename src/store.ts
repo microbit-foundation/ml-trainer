@@ -121,7 +121,16 @@ export interface State {
   projectLoadTimestamp: number;
   // false if we're sure the user hasn't changed the project, otherwise true
   projectEdited: boolean;
-  changedHeaderExpected: boolean;
+  /**
+   * We've created a new project by importing into MakeCode and are waiting
+   * for the first editorChange call from MakeCode.
+   */
+  editorCreating: boolean;
+  /**
+   * We're updating the project by importing into MakeCode. MakeCode will change
+   * the header id but we consider it to be the same project.
+   */
+  editorUpdating: boolean;
   appEditNeedsFlushToEditor: boolean;
   isEditorOpen: boolean;
   isEditorReady: boolean;
@@ -213,7 +222,8 @@ export interface Actions {
   editorTimedOut(): void;
   getEditorStartUp(): EditorStartUp;
   setIsEditorTimedOutDialogOpen(isOpen: boolean): void;
-  setChangedHeaderExpected(): void;
+  setEditorCreating(): void;
+  setEditorUpdating(): void;
   projectFlushedToEditor(): void;
 
   setDownload(state: DownloadState): void;
@@ -285,7 +295,8 @@ const createMlStore = (logging: Logging) => {
           isEditorTimedOutDialogOpen: false,
           langChanged: false,
           appEditNeedsFlushToEditor: true,
-          changedHeaderExpected: false,
+          editorCreating: false,
+          editorUpdating: false,
           // This dialog flow spans two pages
           trainModelDialogStage: TrainModelDialogStage.Closed,
           trainModelProgress: 0,
@@ -763,18 +774,19 @@ const createMlStore = (logging: Logging) => {
                   project: prevProject,
                   isEditorOpen,
                   isEditorReady,
-                  changedHeaderExpected,
+                  editorCreating,
+                  editorUpdating,
                   settings,
                 } = state;
                 const newProjectHeader = newProject.header!.id;
                 const previousProjectHeader = prevProject.header!.id;
                 if (newProjectHeader !== previousProjectHeader) {
-                  if (changedHeaderExpected) {
+                  if (editorUpdating) {
                     logging.log(
                       `[MakeCode] Detected new project, ignoring as expected due to import. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
                     );
                     return {
-                      changedHeaderExpected: false,
+                      editorUpdating: false,
                       project: newProject,
                     };
                   }
@@ -798,7 +810,9 @@ const createMlStore = (logging: Logging) => {
                         ),
                       },
                       project: newProject,
-                      projectLoadTimestamp: timestamp,
+                      projectLoadTimestamp: editorCreating
+                        ? state.projectLoadTimestamp
+                        : timestamp,
                       timestamp,
                       // New project loaded externally so we can't know whether its edited.
                       projectEdited: true,
@@ -806,6 +820,7 @@ const createMlStore = (logging: Logging) => {
                       dataWindow: getDataWindowFromActions(newActions),
                       model: undefined,
                       isEditorOpen: false,
+                      editorCreating: false,
                     };
                   } else {
                     // In particular, this happens if the MakeCode init completes after we've updated our project state from an import from .org
@@ -846,12 +861,11 @@ const createMlStore = (logging: Logging) => {
           setSave(save: SaveState) {
             set({ save }, false, "setSave");
           },
-          setChangedHeaderExpected() {
-            set(
-              { changedHeaderExpected: true },
-              false,
-              "setChangedHeaderExpected"
-            );
+          setEditorCreating() {
+            set({ editorCreating: true }, false, "setEditorCreating");
+          },
+          setEditorUpdating() {
+            set({ editorUpdating: true }, false, "setEditorUpdating");
           },
           langChangeFlushedToEditor() {
             set(
