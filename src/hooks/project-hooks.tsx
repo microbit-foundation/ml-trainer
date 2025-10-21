@@ -130,7 +130,8 @@ export const ProjectProvider = ({
   const openEditorTimedOutDialog = useStore(
     (s) => () => s.setIsEditorTimedOutDialogOpen(true)
   );
-  const expectChangedHeader = useStore((s) => s.setChangedHeaderExpected);
+  const setEditorLoadingFile = useStore((s) => s.setEditorLoadingFile);
+  const setEditorImportingState = useStore((s) => s.setEditorImportingState);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
   const checkIfProjectNeedsFlush = useStore((s) => s.checkIfProjectNeedsFlush);
   const getCurrentProject = useStore((s) => s.getCurrentProject);
@@ -218,8 +219,8 @@ export const ProjectProvider = ({
             logging.log("[MakeCode] Importing project");
             await editorReadyPromise.promise;
             const project = getCurrentProject();
-            expectChangedHeader();
             try {
+              setEditorImportingState();
               await driverRef.current.importProject({ project });
               logging.log("[MakeCode] Project import succeeded");
               projectFlushedToEditor();
@@ -260,7 +261,7 @@ export const ProjectProvider = ({
       logging,
       editorReadyPromise.promise,
       getCurrentProject,
-      expectChangedHeader,
+      setEditorImportingState,
       projectFlushedToEditor,
       langChangeFlushedToEditor,
       checkIfEditorStartUpTimedOut,
@@ -332,6 +333,7 @@ export const ProjectProvider = ({
             return;
           }
           // This triggers the code in editorChanged to update actions etc.
+          setEditorLoadingFile();
           driverRef.current!.importFile({
             filename: file.name,
             parts: [hex],
@@ -346,12 +348,13 @@ export const ProjectProvider = ({
     [
       checkIfEditorStartUpTimedOut,
       driverRef,
-      editorReadyPromise,
+      editorReadyPromise.promise,
       loadDataset,
       logging,
       navigate,
       openEditorTimedOutDialog,
       setPostImportDialogState,
+      setEditorLoadingFile,
     ]
   );
 
