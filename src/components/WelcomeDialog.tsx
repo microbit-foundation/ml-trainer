@@ -20,7 +20,7 @@ import { FormattedMessage } from "react-intl";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { ButtonWithLoading } from "./ButtonWithLoading";
-import preConnectVideo from "../images/pre-connect-video.mp4";
+import preConnectVideo from "../images/createai-animation.mp4";
 import { useStore } from "../store";
 
 interface WelcomeDialogProps
@@ -127,14 +127,9 @@ const WelcomeDialog = ({
           <ModalHeader>
             <Text>Welcome to micro:bit CreateAI</Text>
           </ModalHeader>
-          <ModalBody px={20} py={8}>
+          <ModalBody px={20} py={3}>
             <ModalCloseButton />
-            <Text>
-              This is a placeholder. Full animation to cover need to connect to
-              collect <strong>movement data</strong> and full flow through to
-              coding.
-            </Text>
-            <AspectRatio ratio={3}>
+            <AspectRatio ratio={1.78}>
               <Box as="video" autoPlay loop src={preConnectVideo} />
             </AspectRatio>
           </ModalBody>
