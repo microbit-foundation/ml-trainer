@@ -723,7 +723,10 @@
     "defaultMessage": "Hoe te beginnen",
     "description": "Get started action"
   },
-  "go-action": { "defaultMessage": "Gaan", "description": "Go action" },
+  "go-action": {
+    "defaultMessage": "Gaan",
+    "description": "Go action"
+  },
   "graph-color-scheme": {
     "defaultMessage": "Grafiek kleurschema",
     "description": "Graph colour scheme setting label"
