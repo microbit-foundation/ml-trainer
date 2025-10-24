@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  AspectRatio,
   Box,
   Button,
   Container,
@@ -29,7 +30,7 @@ import { createNewPageUrl } from "../urls";
 import projectImage3 from "theme-package/images/ai-activity-timer.png";
 import projectImage2 from "theme-package/images/simple-ai-exercise-timer.png";
 import projectImage1 from "theme-package/images/ai-storytelling-friend.png";
-import StepByStepIllustration from "../components/StepByStepIllustration";
+import stepByStepAnimated from "../images/step-by-step-animated.mp4";
 import {
   landingPageUrl,
   projectUrl,
@@ -154,7 +155,7 @@ const HomePage = () => {
             </Text>
           )}
         </VStack>
-        <VStack gap={10}>
+        <VStack gap={10} width="100%">
           <Heading as="h2" textAlign="center" variant="marketing">
             <FormattedMessage id="homepage-step-by-step" />
           </Heading>
@@ -162,8 +163,23 @@ const HomePage = () => {
             position="relative"
             role="img"
             aria-label={intl.formatMessage({ id: "steps-alt" })}
+            width="100%"
           >
-            <StepByStepIllustration />
+            <Box flex="1" width="100%">
+              <AspectRatio ratio={3.9} width="100%" margin="auto">
+                <Box
+                  as="video"
+                  autoPlay
+                  loop
+                  muted
+                  src={stepByStepAnimated}
+                  // Crop out thin visible outline in video.
+                  clipPath="polygon(1% 1%, 99% 1%, 99% 99%, 0 99%)"
+                  // TODO: Change aria label to something appropriate
+                  aria-label={intl.formatMessage({ id: "homepage-alt" })}
+                />
+              </AspectRatio>
+            </Box>
           </VStack>
         </VStack>
         {flags.websiteContent && (
