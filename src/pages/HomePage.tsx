@@ -29,7 +29,7 @@ import { createNewPageUrl } from "../urls";
 import projectImage3 from "theme-package/images/ai-activity-timer.png";
 import projectImage2 from "theme-package/images/simple-ai-exercise-timer.png";
 import projectImage1 from "theme-package/images/ai-storytelling-friend.png";
-import StepByStepIllustration from "../components/StepByStepIllustration";
+import stepByStep from "../images/step-by-step.svg";
 import {
   landingPageUrl,
   projectUrl,
@@ -163,7 +163,11 @@ const HomePage = () => {
             role="img"
             aria-label={intl.formatMessage({ id: "steps-alt" })}
           >
-            <StepByStepIllustration />
+            <Image
+              src={stepByStep}
+              // TODO: Add appropriate alt text.
+              alt={intl.formatMessage({ id: "homepage-alt-hands" })}
+            />
           </VStack>
         </VStack>
         {flags.websiteContent && (
