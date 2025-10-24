@@ -803,6 +803,10 @@
     "defaultMessage": "crwdns363026:0crwdne363026:0",
     "description": "Alt text for image in homepage"
   },
+  "homepage-alt-media": {
+    "defaultMessage": "clips showing how CreateAI can detect different movements",
+    "description": "Alt text for media in homepage"
+  },
   "homepage-description": {
     "defaultMessage": "crwdns363028:0crwdne363028:0",
     "description": "Home page description"

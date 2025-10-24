@@ -723,7 +723,10 @@
     "defaultMessage": "Get started",
     "description": "Get started action"
   },
-  "go-action": { "defaultMessage": "Go", "description": "Go action" },
+  "go-action": {
+    "defaultMessage": "Go",
+    "description": "Go action"
+  },
   "graph-color-scheme": {
     "defaultMessage": "Graph colour scheme",
     "description": "Graph colour scheme setting label"
@@ -799,6 +802,10 @@
   "homepage-alt-hands": {
     "defaultMessage": "clapping hands",
     "description": "Alt text for image in homepage"
+  },
+  "homepage-alt-media": {
+    "defaultMessage": "clips showing how CreateAI can detect different movements",
+    "description": "Alt text for media in homepage"
   },
   "homepage-description": {
     "defaultMessage": "Train a machine learning model on your own movement data and run it on your micro:bit.",

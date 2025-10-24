@@ -1349,6 +1349,12 @@
       "value": "박수 치는 손"
     }
   ],
+  "homepage-alt-media": [
+    {
+      "type": 0,
+      "value": "clips showing how CreateAI can detect different movements"
+    }
+  ],
   "homepage-description": [
     {
       "type": 0,

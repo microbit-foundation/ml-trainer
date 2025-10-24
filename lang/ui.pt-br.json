@@ -723,7 +723,10 @@
     "defaultMessage": "Começar",
     "description": "Get started action"
   },
-  "go-action": { "defaultMessage": "Ir", "description": "Go action" },
+  "go-action": {
+    "defaultMessage": "Ir",
+    "description": "Go action"
+  },
   "graph-color-scheme": {
     "defaultMessage": "Esquema de cores do gráfico",
     "description": "Graph colour scheme setting label"
@@ -799,6 +802,10 @@
   "homepage-alt-hands": {
     "defaultMessage": "Batendo palmas",
     "description": "Alt text for image in homepage"
+  },
+  "homepage-alt-media": {
+    "defaultMessage": "clips showing how CreateAI can detect different movements",
+    "description": "Alt text for media in homepage"
   },
   "homepage-description": {
     "defaultMessage": "Treine um modelo de aprendizado de máquina com seus próprios dados de movimento e execute-o no seu micro:bit.",

@@ -723,7 +723,10 @@
     "defaultMessage": "Hoe te beginnen",
     "description": "Get started action"
   },
-  "go-action": { "defaultMessage": "Gaan", "description": "Go action" },
+  "go-action": {
+    "defaultMessage": "Gaan",
+    "description": "Go action"
+  },
   "graph-color-scheme": {
     "defaultMessage": "Grafiek kleurschema",
     "description": "Graph colour scheme setting label"
@@ -799,6 +802,10 @@
   "homepage-alt-hands": {
     "defaultMessage": "klappende handen",
     "description": "Alt text for image in homepage"
+  },
+  "homepage-alt-media": {
+    "defaultMessage": "clips showing how CreateAI can detect different movements",
+    "description": "Alt text for media in homepage"
   },
   "homepage-description": {
     "defaultMessage": "Train een machine learning model op je eigen bewegingsgegevens en voer het uit op je micro:bit.",
