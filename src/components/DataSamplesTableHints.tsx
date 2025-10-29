@@ -120,8 +120,7 @@ export const MoveMicrobitHint = () => {
         <Image src={moveMicrobitImage} />
       </AspectRatio>
       <Text textAlign="center" w={48}>
-        Move, such as shake or clap, with the micro:bit and watch the graph
-        change.
+        Try different movements to see how your actions change the graph.
       </Text>
     </HStack>
   );
