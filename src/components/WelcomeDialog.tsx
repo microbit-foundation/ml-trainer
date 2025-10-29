@@ -130,7 +130,7 @@ const WelcomeDialog = ({
           <ModalBody px={20} py={3}>
             <ModalCloseButton />
             <AspectRatio ratio={1.78}>
-              <Box as="video" autoPlay loop src={preConnectVideo} />
+              <Box as="video" autoPlay loop muted src={preConnectVideo} />
             </AspectRatio>
           </ModalBody>
           <ModalFooter justifyContent="flex-end">
