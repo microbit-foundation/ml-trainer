@@ -104,7 +104,7 @@ const HomePage = () => {
           {HomepageMedia ? (
             <HomepageMedia
               ariaLabel={intl.formatMessage({ id: "homepage-alt-media" })}
-/>
+            />
           ) : (
             <Box
               flex="1"
