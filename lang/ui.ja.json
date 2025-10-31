@@ -723,7 +723,10 @@
     "defaultMessage": "はじめよう",
     "description": "Get started action"
   },
-  "go-action": { "defaultMessage": "実行", "description": "Go action" },
+  "go-action": {
+    "defaultMessage": "実行",
+    "description": "Go action"
+  },
   "graph-color-scheme": {
     "defaultMessage": "グラフの配色設定",
     "description": "Graph colour scheme setting label"
@@ -799,6 +802,10 @@
   "homepage-alt-hands": {
     "defaultMessage": "拍手",
     "description": "Alt text for image in homepage"
+  },
+  "homepage-alt-media": {
+    "defaultMessage": "clips showing how CreateAI can detect different movements",
+    "description": "Alt text for media in homepage"
   },
   "homepage-description": {
     "defaultMessage": "自分の動作データで機械学習モデルをトレーニングし、micro:bitで実行します。",

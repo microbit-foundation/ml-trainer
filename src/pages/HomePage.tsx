@@ -29,6 +29,7 @@ import { createNewPageUrl } from "../urls";
 import projectImage3 from "theme-package/images/ai-activity-timer.png";
 import projectImage2 from "theme-package/images/simple-ai-exercise-timer.png";
 import projectImage1 from "theme-package/images/ai-storytelling-friend.png";
+import homepageMediaAsset from "theme-package/images/homepage-short-clip.mp4";
 import StepByStepIllustration from "../components/StepByStepIllustration";
 import {
   landingPageUrl,
@@ -48,7 +49,7 @@ const HomePage = () => {
   }, [navigate]);
   const intl = useIntl();
   const [{ languageId }] = useSettings();
-  const { appNameFull } = useDeployment();
+  const { appNameFull, HomepageMedia } = useDeployment();
   return (
     <DefaultPageLayout
       toolbarItemsRight={
@@ -67,14 +68,16 @@ const HomePage = () => {
       >
         <HStack
           gap={5}
-          flexDir={{ base: "column", lg: "row" }}
-          w={{ base: "100%", lg: "unset" }}
+          flexDir={{ base: "column-reverse", lg: "row" }}
+          w="100%"
+          alignItems="flex-start"
+          justifyContent="space-between"
         >
           <VStack
             flex="1"
             alignItems="flex-start"
             gap={5}
-            w={{ base: "100%", lg: "unset" }}
+            w={{ base: "100%", lg: "50%" }}
           >
             <Heading
               as="h1"
@@ -99,30 +102,37 @@ const HomePage = () => {
               <FormattedMessage id="get-started-action" />
             </Button>
           </VStack>
-          <Box
-            flex="1"
-            position="relative"
-            role="img"
-            aria-label={intl.formatMessage({ id: "homepage-alt" })}
-          >
-            <Image
-              src={xyzGraph}
-              borderRadius="lg"
-              bgColor="white"
-              pr={1}
-              alt={intl.formatMessage({ id: "homepage-alt-graph" })}
+          {HomepageMedia ? (
+            <HomepageMedia
+              ariaLabel={intl.formatMessage({ id: "homepage-alt-media" })}
+              src={homepageMediaAsset}
             />
-            <Image
-              height="100%"
-              position="absolute"
-              bottom={0}
-              left={0}
-              src={clap}
-              borderRadius="md"
-              pr={1}
-              alt={intl.formatMessage({ id: "homepage-alt-hands" })}
-            />
-          </Box>
+          ) : (
+            <Box
+              flex="1"
+              position="relative"
+              role="img"
+              aria-label={intl.formatMessage({ id: "homepage-alt" })}
+            >
+              <Image
+                src={xyzGraph}
+                borderRadius="lg"
+                bgColor="white"
+                pr={1}
+                alt={intl.formatMessage({ id: "homepage-alt-graph" })}
+              />
+              <Image
+                height="100%"
+                position="absolute"
+                bottom={0}
+                left={0}
+                src={clap}
+                borderRadius="md"
+                pr={1}
+                alt={intl.formatMessage({ id: "homepage-alt-hands" })}
+              />
+            </Box>
+          )}
         </HStack>
         <VStack spacing={10} w="100%" maxW="container.md">
           <Heading as="h2" textAlign="center" variant="marketing">

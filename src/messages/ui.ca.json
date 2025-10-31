@@ -1343,6 +1343,12 @@
       "value": "picant de mans"
     }
   ],
+  "homepage-alt-media": [
+    {
+      "type": 0,
+      "value": "clips showing how CreateAI can detect different movements"
+    }
+  ],
   "homepage-description": [
     {
       "type": 0,
