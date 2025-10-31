@@ -29,6 +29,7 @@ import { createNewPageUrl } from "../urls";
 import projectImage3 from "theme-package/images/ai-activity-timer.png";
 import projectImage2 from "theme-package/images/simple-ai-exercise-timer.png";
 import projectImage1 from "theme-package/images/ai-storytelling-friend.png";
+import homepageMediaAsset from "theme-package/images/homepage-short-clip.mp4";
 import StepByStepIllustration from "../components/StepByStepIllustration";
 import {
   landingPageUrl,
@@ -104,6 +105,7 @@ const HomePage = () => {
           {HomepageMedia ? (
             <HomepageMedia
               ariaLabel={intl.formatMessage({ id: "homepage-alt-media" })}
+              src={homepageMediaAsset}
             />
           ) : (
             <Box
