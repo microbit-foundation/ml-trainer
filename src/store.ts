@@ -45,6 +45,7 @@ import { BufferedData } from "./buffered-data";
 import { getDetectedAction } from "./utils/prediction";
 import { getTour as getTourSpec } from "./tours";
 import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
+import { projectStorage } from "./store-persistence";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -1312,7 +1313,9 @@ const createMlStore = (logging: Logging) => {
               },
             };
           },
-        }
+          storage: projectStorage(),
+          skipHydration: true
+        },
       ),
       { enabled: flags.devtools }
     )
