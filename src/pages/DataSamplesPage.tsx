@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, Flex, HStack, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, useDisclosure, VStack } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -95,7 +95,14 @@ const DataSamplesPage = () => {
         menuItems={<ProjectMenuItems />}
         toolbarItemsRight={<ProjectToolbarItems />}
       >
-        <Flex as="main" flexGrow={1} flexDir="column">
+        <Flex
+          as="main"
+          flexGrow={1}
+          flexDir="column"
+          // TODO: Make contents not keyboard accessible when dimmed.
+          opacity={hint === "move-microbit" ? 0.1 : undefined}
+          pointerEvents={hint === "move-microbit" ? "none" : undefined}
+        >
           <DataSamplesTable
             selectedActionIdx={selectedActionIdx}
             setSelectedActionIdx={setSelectedActionIdx}
