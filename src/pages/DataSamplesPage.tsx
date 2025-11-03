@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, Button, Flex, HStack, useDisclosure, VStack } from "@chakra-ui/react";
+import { Button, Flex, HStack, useDisclosure, VStack } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
