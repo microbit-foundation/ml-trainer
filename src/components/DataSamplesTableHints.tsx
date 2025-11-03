@@ -19,6 +19,7 @@ import Emoji, { animations } from "./Emoji";
 import EmojiArrow from "./EmojiArrow";
 import UpCurveArrow from "./UpCurveArrow";
 import moveMicrobitImage from "../images/move-microbit.svg";
+import microbitOnWrist from "../images/microbit-on-wrist.svg";
 
 export const NameActionHint = () => {
   return (
@@ -39,13 +40,22 @@ export const NameActionHint = () => {
 export const RecordButtonHint = () => {
   const { isConnected } = useConnectionStage();
   return (
-    <HStack m={0} p={2} transform="translateX(65px)" w="calc(100% - 65px)">
+    <HStack
+      m={0}
+      p={2}
+      transform="translateX(65px)"
+      w="calc(100% - 65px)"
+      alignItems="flex-start"
+    >
       <UpCurveArrow w="60px" h="93px" color="brand.500" />
       {/* Emoji? Or explain button B visually? */}
       {isConnected ? (
-        <Text textAlign="center" maxW={200}>
-          <FormattedMessage id="record-hint-button-b" />
-        </Text>
+        <>
+          <Text textAlign="center" maxW={200}>
+            <FormattedMessage id="record-hint-button-b" />
+          </Text>
+          <Image src={microbitOnWrist} alt="" transform="translateY(-50%)" />
+        </>
       ) : (
         <Text textAlign="center" maxW={125}>
           <FormattedMessage id="record-hint" />
