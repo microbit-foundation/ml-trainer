@@ -819,6 +819,14 @@
     "defaultMessage": "Bekijk de video om te beginnen. Lees meer in de <link>gebruikershandleiding</link>.",
     "description": "Home page content under the video"
   },
+  "homepage-media-description": {
+    "defaultMessage": "Video information is available as a <link>descriptive transcript</link>.",
+    "description": "Homepage media description"
+  },
+  "homepage-media-text-transcript-dialog-heading": {
+    "defaultMessage": "Descriptive transcript",
+    "description": "Homepage media text transcript dialog heading"
+  },
   "homepage-projects": {
     "defaultMessage": "Projecten",
     "description": "Home page section heading"

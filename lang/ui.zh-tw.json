@@ -819,6 +819,14 @@
     "defaultMessage": "觀看影片即可開始。請參閱<link>使用者指南</link>以瞭解更多資訊。",
     "description": "Home page content under the video"
   },
+  "homepage-media-description": {
+    "defaultMessage": "Video information is available as a <link>descriptive transcript</link>.",
+    "description": "Homepage media description"
+  },
+  "homepage-media-text-transcript-dialog-heading": {
+    "defaultMessage": "Descriptive transcript",
+    "description": "Homepage media text transcript dialog heading"
+  },
   "homepage-projects": {
     "defaultMessage": "專案",
     "description": "Home page section heading"

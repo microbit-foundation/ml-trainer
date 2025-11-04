@@ -12,6 +12,7 @@ import {
   Image,
   Link,
   Text,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { useCallback } from "react";
@@ -26,19 +27,20 @@ import clap from "../images/clap-hands.png";
 import xyzGraph from "../images/xyz-graph.png";
 import { createNewPageUrl } from "../urls";
 
+import { useSearchParams } from "react-router-dom";
 import projectImage3 from "theme-package/images/ai-activity-timer.png";
-import projectImage2 from "theme-package/images/simple-ai-exercise-timer.png";
 import projectImage1 from "theme-package/images/ai-storytelling-friend.png";
 import homepageMediaAsset from "theme-package/images/homepage-short-clip.mp4";
+import projectImage2 from "theme-package/images/simple-ai-exercise-timer.png";
+import HomepageMediaTextTranscriptDialog from "../components/HomepageMediaTextTranscriptDialog";
 import StepByStepIllustration from "../components/StepByStepIllustration";
+import { setEditorVersionOverride } from "../editor-version";
+import { useSettings } from "../store";
 import {
   landingPageUrl,
   projectUrl,
   userGuideUrl,
 } from "../utils/external-links";
-import { useSettings } from "../store";
-import { useSearchParams } from "react-router-dom";
-import { setEditorVersionOverride } from "../editor-version";
 
 const HomePage = () => {
   const [params] = useSearchParams();
@@ -50,6 +52,8 @@ const HomePage = () => {
   const intl = useIntl();
   const [{ languageId }] = useSettings();
   const { appNameFull, HomepageMedia } = useDeployment();
+
+  const textTranscriptDialog = useDisclosure();
   return (
     <DefaultPageLayout
       toolbarItemsRight={
@@ -103,10 +107,33 @@ const HomePage = () => {
             </Button>
           </VStack>
           {HomepageMedia ? (
-            <HomepageMedia
-              ariaLabel={intl.formatMessage({ id: "homepage-alt-media" })}
-              src={homepageMediaAsset}
-            />
+            <>
+              <HomepageMediaTextTranscriptDialog
+                isOpen={textTranscriptDialog.isOpen}
+                onClose={textTranscriptDialog.onClose}
+              />
+              <HomepageMedia
+                ariaLabel={intl.formatMessage({ id: "homepage-alt-media" })}
+                src={homepageMediaAsset}
+              >
+                <Text fontSize="small">
+                  <FormattedMessage
+                    id="homepage-media-description"
+                    values={{
+                      link: (chunks) => (
+                        <Button
+                          variant="link"
+                          fontSize="small"
+                          onClick={textTranscriptDialog.onOpen}
+                        >
+                          {chunks}
+                        </Button>
+                      ),
+                    }}
+                  />
+                </Text>
+              </HomepageMedia>
+            </>
           ) : (
             <Box
               flex="1"

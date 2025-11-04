@@ -819,6 +819,14 @@
     "defaultMessage": "시작하려면 동영상을 시청하세요. <link>사용자 가이드</link>에서 자세히 알아보세요.",
     "description": "Home page content under the video"
   },
+  "homepage-media-description": {
+    "defaultMessage": "Video information is available as a <link>descriptive transcript</link>.",
+    "description": "Homepage media description"
+  },
+  "homepage-media-text-transcript-dialog-heading": {
+    "defaultMessage": "Descriptive transcript",
+    "description": "Homepage media text transcript dialog heading"
+  },
   "homepage-projects": {
     "defaultMessage": "프로젝트",
     "description": "Home page section heading"

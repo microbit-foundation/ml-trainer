@@ -819,6 +819,14 @@
     "defaultMessage": "Assista ao vídeo para começar. Saiba mais no <link>guia do usuário</link>.",
     "description": "Home page content under the video"
   },
+  "homepage-media-description": {
+    "defaultMessage": "Video information is available as a <link>descriptive transcript</link>.",
+    "description": "Homepage media description"
+  },
+  "homepage-media-text-transcript-dialog-heading": {
+    "defaultMessage": "Descriptive transcript",
+    "description": "Homepage media text transcript dialog heading"
+  },
   "homepage-projects": {
     "defaultMessage": "Projetos",
     "description": "Home page section heading"

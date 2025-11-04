@@ -1387,6 +1387,32 @@
       "value": "에서 자세히 알아보세요."
     }
   ],
+  "homepage-media-description": [
+    {
+      "type": 0,
+      "value": "Video information is available as a "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "descriptive transcript"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "homepage-media-text-transcript-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Descriptive transcript"
+    }
+  ],
   "homepage-projects": [
     {
       "type": 0,
