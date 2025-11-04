@@ -25,7 +25,9 @@ export const useStoreProjects = () => {
         }
         const newProjectPromise = newProjectImpl();
         loadNewDoc(newProjectPromise);
-        await newProjectPromise;
+        // TODO: testing adding a Y datatype to Zustand
+        const newDoc = await newProjectPromise;
+        (window as unknown as any).actions2 = newDoc.getMap("files").get("actions2");
         // TODO: currently the new session setup is done from within NewPage
         // seems like it could be here...
     }
@@ -36,7 +38,9 @@ export const useStoreProjects = () => {
         }
         const loadProjectPromise = loadProjectImpl();
         loadNewDoc(loadProjectPromise);
-        await loadProjectPromise;
+        const newDoc = await loadProjectPromise;
+
+        (window as unknown as any).actions2 = newDoc.getMap("files").get("actions2");
         useStore.persist.rehydrate(); // TODO: better type?
         let unregister: () => void;
         await new Promise(res => unregister = useStore.persist.onFinishHydration(res));

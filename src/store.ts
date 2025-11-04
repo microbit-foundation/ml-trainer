@@ -35,6 +35,7 @@ import {
   EditorStartUp,
   TourTriggerName,
   tourSequence,
+  ActionDataY,
 } from "./model";
 import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/actions";
@@ -46,6 +47,7 @@ import { getDetectedAction } from "./utils/prediction";
 import { getTour as getTourSpec } from "./tours";
 import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
 import { projectStorage } from "./store-persistence";
+import * as Y from "yjs";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -308,7 +310,7 @@ export interface Actions {
   isNonConnectionDialogOpen(): boolean;
 }
 
-type Store = State & Actions;
+type Store = State & Actions & { actions2: Y.Text };
 
 const createMlStore = (logging: Logging) => {
   return create<Store>()(
@@ -317,6 +319,7 @@ const createMlStore = (logging: Logging) => {
         (set, get) => ({
           timestamp: undefined,
           actions: [],
+          actions2: new Y.Text(),
           dataWindow: currentDataWindow,
           isRecording: false,
           project: createUntitledProject(),
