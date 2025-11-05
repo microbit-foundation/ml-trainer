@@ -223,6 +223,14 @@ export enum DataSamplesView {
   GraphAndDataFeatures = "graph and data features",
 }
 
+export type DataSamplesPageHint =
+  | null
+  | "move-microbit"
+  | "name-action"
+  | "record"
+  | "record-more"
+  | "add-action";
+
 export enum PostImportDialogState {
   None = "none",
   Error = "error",

@@ -1180,7 +1180,7 @@
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
   },
   "name-action-hint": {
-    "defaultMessage": "Name an action you want the micro:bit to recognise",
+    "defaultMessage": "Name an action you want the micro:bit to recognise, e.g. ‘waving’ or ‘jumping’",
     "description": "Hint shown when you have an unnamed action"
   },
   "name-project": {
