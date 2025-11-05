@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  AspectRatio,
   Box,
   Button,
   Container,
@@ -31,7 +32,7 @@ import projectImage2 from "theme-package/images/simple-ai-exercise-timer.png";
 import projectImage1 from "theme-package/images/ai-storytelling-friend.png";
 import homepageVideo from "theme-package/images/homepage-short-clip.mp4";
 import HomepageBannerVideo from "../components/HomepageBannerVideo";
-import StepByStepIllustration from "../components/StepByStepIllustration";
+import stepByStepAnimated from "../images/step-by-step-animated.mp4";
 import {
   landingPageUrl,
   projectUrl,
@@ -133,6 +134,33 @@ const HomePage = () => {
             </Box>
           )}
         </HStack>
+        <VStack gap={10} width="100%">
+          <Heading as="h2" textAlign="center" variant="marketing">
+            <FormattedMessage id="homepage-step-by-step" />
+          </Heading>
+          <VStack
+            position="relative"
+            role="img"
+            aria-label={intl.formatMessage({ id: "steps-alt" })}
+            width="100%"
+          >
+            <Box flex="1" width="100%">
+              <AspectRatio ratio={3.9} width="100%" margin="auto">
+                <Box
+                  as="video"
+                  autoPlay
+                  loop
+                  muted
+                  src={stepByStepAnimated}
+                  // Crop out thin visible outline in video.
+                  clipPath="polygon(1% 1%, 99% 1%, 99% 99%, 0 99%)"
+                  // TODO: Change aria label to something appropriate
+                  aria-label={intl.formatMessage({ id: "homepage-alt" })}
+                />
+              </AspectRatio>
+            </Box>
+          </VStack>
+        </VStack>
         <VStack spacing={10} w="100%" maxW="container.md">
           <Heading as="h2" textAlign="center" variant="marketing">
             <FormattedMessage id="homepage-how-it-works" />
@@ -162,18 +190,6 @@ const HomePage = () => {
               />
             </Text>
           )}
-        </VStack>
-        <VStack gap={10}>
-          <Heading as="h2" textAlign="center" variant="marketing">
-            <FormattedMessage id="homepage-step-by-step" />
-          </Heading>
-          <VStack
-            position="relative"
-            role="img"
-            aria-label={intl.formatMessage({ id: "steps-alt" })}
-          >
-            <StepByStepIllustration />
-          </VStack>
         </VStack>
         {flags.websiteContent && (
           <VStack gap={10}>
