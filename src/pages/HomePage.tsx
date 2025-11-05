@@ -114,24 +114,23 @@ const HomePage = () => {
               />
               <HomepageMedia
                 ariaLabel={intl.formatMessage({ id: "homepage-alt-media" })}
+                playAriaLabel={intl.formatMessage({
+                  id: "homepage-media-play-action",
+                })}
+                pauseAriaLabel={intl.formatMessage({
+                  id: "homepage-media-pause-action",
+                })}
                 src={homepageMediaAsset}
               >
-                <Text fontSize="small">
-                  <FormattedMessage
-                    id="homepage-media-description"
-                    values={{
-                      link: (chunks) => (
-                        <Button
-                          variant="link"
-                          fontSize="small"
-                          onClick={textTranscriptDialog.onOpen}
-                        >
-                          {chunks}
-                        </Button>
-                      ),
-                    }}
-                  />
-                </Text>
+                <Button
+                  mt={1}
+                  variant="link"
+                  fontSize="small"
+                  onClick={textTranscriptDialog.onOpen}
+                  textDecoration="underline"
+                >
+                  <FormattedMessage id="homepage-media-description" />
+                </Button>
               </HomepageMedia>
             </>
           ) : (

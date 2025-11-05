@@ -820,12 +820,52 @@
     "description": "Home page content under the video"
   },
   "homepage-media-description": {
-    "defaultMessage": "Video information is available as a <link>descriptive transcript</link>.",
+    "defaultMessage": "Video descriptive transcript",
     "description": "Homepage media description"
   },
-  "homepage-media-text-transcript-dialog-heading": {
+  "homepage-media-descriptive-transcript-dialog-content-1": {
+    "defaultMessage": "There is no sound in this video.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-2": {
+    "defaultMessage": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting 'Waving' rather than 'Clapping'.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-3": {
+    "defaultMessage": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting 'Clapping' rather than 'Waving'.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-4": {
+    "defaultMessage": "The meter now displays 'Bouncing' versus 'Running'. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects 'Bouncing' rather than 'Running' as she bounces the ball.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-5": {
+    "defaultMessage": "The scene shifts to a boy running across a field. As he runs, the model detects 'Running' rather than 'Bouncing'.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-6": {
+    "defaultMessage": "The meter changes to show 'Jumping' versus 'Walking'. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects 'Walking' rather than 'Jumping'. As the children leap into the air, the detection switches to 'Jumping' rather than 'Walking'. The children land and walk across the field. The detection returns to 'Walking' rather than 'Jumping'.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-7": {
+    "defaultMessage": "The children land and walk across the field. The detection returns to 'Walking' rather than 'Jumping'.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-8": {
+    "defaultMessage": "This video plays on a continuous loop.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-heading": {
     "defaultMessage": "Descriptive transcript",
-    "description": "Homepage media text transcript dialog heading"
+    "description": "Homepage media descriptive transcript dialog heading"
+  },
+  "homepage-media-pause-action": {
+    "defaultMessage": "Pause video",
+    "description": "Homepage media pause video button text"
+  },
+  "homepage-media-play-action": {
+    "defaultMessage": "Play video",
+    "description": "Homepage media play video button text"
   },
   "homepage-projects": {
     "defaultMessage": "Proyectos",

@@ -42,6 +42,8 @@ export interface DeploymentConfig {
   HomepageMedia?: (props: {
     src: string;
     ariaLabel?: string;
+    playAriaLabel?: string;
+    pauseAriaLabel?: string;
     children?: ReactNode;
   }) => ReactNode;
   compliance: {

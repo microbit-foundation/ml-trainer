@@ -1386,27 +1386,73 @@
   "homepage-media-description": [
     {
       "type": 0,
-      "value": "Video information is available as a "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "descriptive transcript"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
+      "value": "Video descriptive transcript"
     }
   ],
-  "homepage-media-text-transcript-dialog-heading": [
+  "homepage-media-descriptive-transcript-dialog-content-1": [
+    {
+      "type": 0,
+      "value": "There is no sound in this video."
+    }
+  ],
+  "homepage-media-descriptive-transcript-dialog-content-2": [
+    {
+      "type": 0,
+      "value": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting 'Waving' rather than 'Clapping'."
+    }
+  ],
+  "homepage-media-descriptive-transcript-dialog-content-3": [
+    {
+      "type": 0,
+      "value": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting 'Clapping' rather than 'Waving'."
+    }
+  ],
+  "homepage-media-descriptive-transcript-dialog-content-4": [
+    {
+      "type": 0,
+      "value": "The meter now displays 'Bouncing' versus 'Running'. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects 'Bouncing' rather than 'Running' as she bounces the ball."
+    }
+  ],
+  "homepage-media-descriptive-transcript-dialog-content-5": [
+    {
+      "type": 0,
+      "value": "The scene shifts to a boy running across a field. As he runs, the model detects 'Running' rather than 'Bouncing'."
+    }
+  ],
+  "homepage-media-descriptive-transcript-dialog-content-6": [
+    {
+      "type": 0,
+      "value": "The meter changes to show 'Jumping' versus 'Walking'. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects 'Walking' rather than 'Jumping'. As the children leap into the air, the detection switches to 'Jumping' rather than 'Walking'. The children land and walk across the field. The detection returns to 'Walking' rather than 'Jumping'."
+    }
+  ],
+  "homepage-media-descriptive-transcript-dialog-content-7": [
+    {
+      "type": 0,
+      "value": "The children land and walk across the field. The detection returns to 'Walking' rather than 'Jumping'."
+    }
+  ],
+  "homepage-media-descriptive-transcript-dialog-content-8": [
+    {
+      "type": 0,
+      "value": "This video plays on a continuous loop."
+    }
+  ],
+  "homepage-media-descriptive-transcript-dialog-heading": [
     {
       "type": 0,
       "value": "Descriptive transcript"
+    }
+  ],
+  "homepage-media-pause-action": [
+    {
+      "type": 0,
+      "value": "Pause video"
+    }
+  ],
+  "homepage-media-play-action": [
+    {
+      "type": 0,
+      "value": "Play video"
     }
   ],
   "homepage-projects": [
