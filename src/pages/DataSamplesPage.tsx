@@ -95,14 +95,7 @@ const DataSamplesPage = () => {
         menuItems={<ProjectMenuItems />}
         toolbarItemsRight={<ProjectToolbarItems />}
       >
-        <Flex
-          as="main"
-          flexGrow={1}
-          flexDir="column"
-          // TODO: Make contents not keyboard accessible when dimmed.
-          opacity={hint === "move-microbit" ? 0.1 : undefined}
-          pointerEvents={hint === "move-microbit" ? "none" : undefined}
-        >
+        <Flex as="main" flexGrow={1} flexDir="column">
           <DataSamplesTable
             selectedActionIdx={selectedActionIdx}
             setSelectedActionIdx={setSelectedActionIdx}
