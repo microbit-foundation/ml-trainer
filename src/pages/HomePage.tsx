@@ -12,7 +12,6 @@ import {
   Image,
   Link,
   Text,
-  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { useCallback } from "react";
@@ -30,9 +29,9 @@ import { createNewPageUrl } from "../urls";
 import { useSearchParams } from "react-router-dom";
 import projectImage3 from "theme-package/images/ai-activity-timer.png";
 import projectImage1 from "theme-package/images/ai-storytelling-friend.png";
-import homepageMediaAsset from "theme-package/images/homepage-short-clip.mp4";
 import projectImage2 from "theme-package/images/simple-ai-exercise-timer.png";
-import HomepageMediaTextTranscriptDialog from "../components/HomepageMediaTextTranscriptDialog";
+import homepageVideo from "theme-package/images/homepage-short-clip.mp4";
+import HomepageBannerVideo from "../components/HomepageBannerVideo";
 import StepByStepIllustration from "../components/StepByStepIllustration";
 import { setEditorVersionOverride } from "../editor-version";
 import { useSettings } from "../store";
@@ -51,9 +50,8 @@ const HomePage = () => {
   }, [navigate]);
   const intl = useIntl();
   const [{ languageId }] = useSettings();
-  const { appNameFull, HomepageMedia } = useDeployment();
+  const { appNameFull, hasCustomHomepageVideo } = useDeployment();
 
-  const textTranscriptDialog = useDisclosure();
   return (
     <DefaultPageLayout
       toolbarItemsRight={
@@ -106,33 +104,8 @@ const HomePage = () => {
               <FormattedMessage id="get-started-action" />
             </Button>
           </VStack>
-          {HomepageMedia ? (
-            <>
-              <HomepageMediaTextTranscriptDialog
-                isOpen={textTranscriptDialog.isOpen}
-                onClose={textTranscriptDialog.onClose}
-              />
-              <HomepageMedia
-                ariaLabel={intl.formatMessage({ id: "homepage-alt-media" })}
-                playAriaLabel={intl.formatMessage({
-                  id: "homepage-media-play-action",
-                })}
-                pauseAriaLabel={intl.formatMessage({
-                  id: "homepage-media-pause-action",
-                })}
-                src={homepageMediaAsset}
-              >
-                <Button
-                  mt={1}
-                  variant="link"
-                  fontSize="small"
-                  onClick={textTranscriptDialog.onOpen}
-                  textDecoration="underline"
-                >
-                  <FormattedMessage id="homepage-media-description" />
-                </Button>
-              </HomepageMedia>
-            </>
+          {hasCustomHomepageVideo ? (
+            <HomepageBannerVideo src={homepageVideo} />
           ) : (
             <Box
               flex="1"

@@ -39,13 +39,7 @@ export interface DeploymentConfig {
   AppLogo: ComponentType<BoxProps>;
   OrgLogo?: ComponentType<BoxProps>;
   welcomeVideoYouTubeId?: string;
-  HomepageMedia?: (props: {
-    src: string;
-    ariaLabel?: string;
-    playAriaLabel?: string;
-    pauseAriaLabel?: string;
-    children?: ReactNode;
-  }) => ReactNode;
+  hasCustomHomepageVideo?: boolean;
   compliance: {
     /**
      * A provider that will be used to wrap the app UI.

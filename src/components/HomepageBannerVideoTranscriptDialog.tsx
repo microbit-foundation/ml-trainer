@@ -19,15 +19,15 @@ import {
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 
-export interface HomepageMediaTextTranscriptDialogProps {
+export interface HomepageBannerVideoTranscriptDialogProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const HomepageMediaTextTranscriptDialog = ({
+const HomepageBannerVideoTranscriptDialog = ({
   isOpen,
   onClose,
-}: HomepageMediaTextTranscriptDialogProps) => {
+}: HomepageBannerVideoTranscriptDialogProps) => {
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -82,4 +82,4 @@ const HomepageMediaTextTranscriptDialog = ({
   );
 };
 
-export default HomepageMediaTextTranscriptDialog;
+export default HomepageBannerVideoTranscriptDialog;
