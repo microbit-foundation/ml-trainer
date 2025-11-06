@@ -227,6 +227,7 @@ export type DataSamplesPageHint =
   | null
   | "move-microbit"
   | "name-action"
+  | "name-action-with-samples"
   | "record"
   | "record-more"
   | "add-action";

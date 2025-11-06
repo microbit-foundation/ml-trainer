@@ -12,6 +12,7 @@ import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import ActionNameCard, { ActionCardNameViewMode } from "./ActionNameCard";
 import {
   NameActionHint,
+  NameActionWithSamplesHint,
   RecordButtonHint,
   RecordMoreHint,
 } from "./DataSamplesTableHints";
@@ -88,6 +89,11 @@ const DataSamplesTableRow = ({
             />
           )}
         </GridItem>
+        {hint === "name-action-with-samples" && (
+          <GridItem h="120px">
+            <NameActionWithSamplesHint />
+          </GridItem>
+        )}
         {(hint === "record" || hint === "record-more") && (
           <>
             {/* Skip first column to correctly place hint. */}

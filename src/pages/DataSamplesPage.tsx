@@ -187,8 +187,7 @@ const activeHintForActions = (
     if (action.recordings.length === 0) {
       return "name-action";
     } else {
-      // No space for hint with actions already recorded.
-      return null;
+      return "name-action-with-samples";
     }
   }
 

@@ -37,6 +37,33 @@ export const NameActionHint = () => {
   );
 };
 
+export const NameActionWithSamplesHint = () => {
+  return (
+    <HStack
+      m={0}
+      p={2}
+      transform="translate(200px, 0)"
+      gap={3}
+      alignItems="center"
+    >
+      <HStack spacing={0} color="brand.500" ml={-8}>
+        <UpCurveArrow w="60px" h="93px" color="brand.500" />
+        <Box transform="rotate(-8deg)">
+          <Emoji ml="10px" boxSize={16} animation={animations.spin} />
+        </Box>
+      </HStack>
+      <Text
+        textAlign="center"
+        width="100%"
+        position="absolute"
+        transform="translate(120px, 0)"
+      >
+        <FormattedMessage id="name-action-hint" />
+      </Text>
+    </HStack>
+  );
+};
+
 export const RecordButtonHint = () => {
   const { isConnected } = useConnectionStage();
   return (
