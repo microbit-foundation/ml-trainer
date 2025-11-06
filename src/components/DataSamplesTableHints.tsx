@@ -243,3 +243,35 @@ export const MoveMicrobitHint = () => {
     </HStack>
   );
 };
+
+export const TrainHint = () => {
+  return (
+    <HStack
+      m={0}
+      position="absolute"
+      right={0}
+      spacing={0}
+      zIndex={2}
+      transform="translate(-80px, -65px)"
+    >
+      <HStack>
+        <Emoji
+          leftEye="heart"
+          rightEye="heart"
+          pb={3}
+          pr={2}
+          animation={animations.spin}
+        />
+        <Text textAlign="center" zIndex={3}>
+          Finished recording? <br /> Train the model
+        </Text>
+        <EmojiArrow
+          mt={8}
+          transform="rotate(-120deg) scaleY(-1)"
+          transformOrigin="center"
+          color="brand.500"
+        />
+      </HStack>
+    </HStack>
+  );
+};

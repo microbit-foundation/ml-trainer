@@ -14,6 +14,7 @@ import DataSamplesTable from "../components/DataSamplesTable";
 import {
   AddActionHint,
   MoveMicrobitHint,
+  TrainHint,
 } from "../components/DataSamplesTableHints";
 import DefaultPageLayout, {
   ProjectMenuItems,
@@ -157,6 +158,7 @@ const DataSamplesPage = () => {
             </HStack>
             {hint === "move-microbit" && <MoveMicrobitHint />}
             {hint === "add-action" && <AddActionHint action={actions[0]} />}
+            {hint === "train" && <TrainHint />}
           </HStack>
 
           <LiveGraphPanel

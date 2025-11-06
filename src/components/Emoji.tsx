@@ -42,7 +42,7 @@ export const animations = {
   })} 2s`,
 };
 
-type Eye = "round" | "tick";
+type Eye = "round" | "tick" | "heart";
 
 type Side = "left" | "right";
 
@@ -82,6 +82,8 @@ const Eye = ({ type, side }: { type: Eye; side: Side }) => {
       return <RoundEye side={side} />;
     case "tick":
       return <TickEye position={side} />;
+    case "heart":
+      return <HeartEye side={side} />;
   }
 };
 
@@ -111,6 +113,18 @@ const TickEye = ({ position }: { position: Side }) => {
         fill="currentColor"
       />
     </g>
+  );
+};
+
+const HeartEye = ({ side }: { side: Side }) => {
+  return (
+    <path
+      transform={`scale(1.3) ${
+        side === "right" ? "translate(20, 20)" : "translate(57, 20)"
+      }`}
+      d="M7.92396 15.3679L6.81335 14.2013C2.69201 10.3613 0 7.76925 0 4.59325C0 2.00658 1.90399 -0.000113487 4.35599 -0.000113487C5.70666 -0.000113487 7.05329 0.670574 7.92396 1.75457C8.79729 0.670574 10.14 -0.000113487 11.4933 -0.000113487C13.9466 -0.000113487 15.8493 2.00658 15.8493 4.59325C15.8493 7.76925 13.156 10.3613 9.03464 14.2013L7.92396 15.3679Z"
+      fill="currentColor"
+    />
   );
 };
 
