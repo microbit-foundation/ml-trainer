@@ -71,6 +71,10 @@
     "defaultMessage": "Modifier les échantillons de données",
     "description": "Back button text"
   },
+  "blocks-preview-title": {
+    "defaultMessage": "Blocks preview",
+    "description": "Blocks preview heading text"
+  },
   "bluetooth-unsupported-advice": {
     "defaultMessage": "Nous recommandons Google Chrome ou Microsoft Edge pour que vous puissiez vous connecter directement à votre micro:bit.",
     "description": "Note on supported browsers"
@@ -427,6 +431,10 @@
     "defaultMessage": "Afficher les fonctionnalités des données",
     "description": "Show data features button text"
   },
+  "data-preview-title": {
+    "defaultMessage": "Data preview",
+    "description": "Data preview heading text"
+  },
   "data-samples-actions-region": {
     "defaultMessage": "Barre d'outils d'échantillons de données",
     "description": "Region label for data samples actions"
@@ -715,7 +723,10 @@
     "defaultMessage": "C'est parti",
     "description": "Get started action"
   },
-  "go-action": { "defaultMessage": "Aller", "description": "Go action" },
+  "go-action": {
+    "defaultMessage": "Aller",
+    "description": "Go action"
+  },
   "graph-color-scheme": {
     "defaultMessage": "Schéma de couleurs du graphique",
     "description": "Graph colour scheme setting label"
@@ -792,6 +803,10 @@
     "defaultMessage": "taper dans les mains",
     "description": "Alt text for image in homepage"
   },
+  "homepage-alt-media": {
+    "defaultMessage": "video showing CreateAI detecting different movements",
+    "description": "Alt text for media in homepage"
+  },
   "homepage-description": {
     "defaultMessage": "Entraînez un modèle d'apprentissage automatique sur vos propres données de mouvement et exécutez-le sur votre micro:bit.",
     "description": "Home page description"
@@ -803,6 +818,54 @@
   "homepage-how-it-works-paragraph": {
     "defaultMessage": "Regardez la vidéo pour commencer. Apprenez-en plus dans le <link>guide de l'utilisateur</link>.",
     "description": "Home page content under the video"
+  },
+  "homepage-media-description": {
+    "defaultMessage": "Video descriptive transcript",
+    "description": "Homepage media description"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-1": {
+    "defaultMessage": "There is no sound in this video.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-2": {
+    "defaultMessage": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting 'Waving' rather than 'Clapping'.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-3": {
+    "defaultMessage": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting 'Clapping' rather than 'Waving'.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-4": {
+    "defaultMessage": "The meter now displays 'Bouncing' versus 'Running'. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects 'Bouncing' rather than 'Running' as she bounces the ball.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-5": {
+    "defaultMessage": "The scene shifts to a boy running across a field. As he runs, the model detects 'Running' rather than 'Bouncing'.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-6": {
+    "defaultMessage": "The meter changes to show 'Jumping' versus 'Walking'. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects 'Walking' rather than 'Jumping'. As the children leap into the air, the detection switches to 'Jumping' rather than 'Walking'. The children land and walk across the field. The detection returns to 'Walking' rather than 'Jumping'.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-7": {
+    "defaultMessage": "The children land and walk across the field. The detection returns to 'Walking' rather than 'Jumping'.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-content-8": {
+    "defaultMessage": "This video plays on a continuous loop.",
+    "description": "Homepage media descriptive transcript dialog content"
+  },
+  "homepage-media-descriptive-transcript-dialog-heading": {
+    "defaultMessage": "Descriptive transcript",
+    "description": "Homepage media descriptive transcript dialog heading"
+  },
+  "homepage-media-pause-action": {
+    "defaultMessage": "Pause video",
+    "description": "Homepage media pause video button text"
+  },
+  "homepage-media-play-action": {
+    "defaultMessage": "Play video",
+    "description": "Homepage media play video button text"
   },
   "homepage-projects": {
     "defaultMessage": "Projets",
@@ -1216,6 +1279,34 @@
     "defaultMessage": "Ouvrir le fichier lorsqu’il est déposé",
     "description": "Aria label for file drop target"
   },
+  "open-project-action": {
+    "defaultMessage": "Open project",
+    "description": "Open project button text"
+  },
+  "open-project-setup-description": {
+    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
+    "description": "Open project setup description"
+  },
+  "open-shared-project-blocks-preview-description": {
+    "defaultMessage": "Preview of the MakeCode code contained within this project.",
+    "description": "Blocks preview description text"
+  },
+  "open-shared-project-data-preview-description": {
+    "defaultMessage": "Preview of the actions and data contained within this project.",
+    "description": "Data preview description text"
+  },
+  "open-shared-project-description": {
+    "defaultMessage": "This is a Microsoft MakeCode shared project compatible with CreateAI.",
+    "description": "Import shared CreateAI project description"
+  },
+  "open-shared-project-error-description": {
+    "defaultMessage": "Check the link you followed is correct, and make sure you are connected to the internet before trying again.",
+    "description": "Import shared CreateAI error description"
+  },
+  "open-shared-project-title": {
+    "defaultMessage": "Open shared CreateAI project",
+    "description": "Import shared CreateAI project title"
+  },
   "other-tabs-body1": {
     "defaultMessage": "Un autre processus est connecté à cet appareil.",
     "description": "Connection error dialog"
@@ -1495,6 +1586,10 @@
   "testing-model-title": {
     "defaultMessage": "Test du modèle",
     "description": "Testing model page title"
+  },
+  "third-party-content-description": {
+    "defaultMessage": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the <link>MakeCode shared project</link> to report abuse to Microsoft MakeCode if you think it's not appropriate.",
+    "description": "Notify user of third party content"
   },
   "tour-action": {
     "defaultMessage": "Visite",
