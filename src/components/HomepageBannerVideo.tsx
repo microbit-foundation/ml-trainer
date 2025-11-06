@@ -9,40 +9,10 @@ import {
 import { useCallback, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import HomepageBannerVideoTranscriptDialog from "./HomepageBannerVideoTranscriptDialog";
+
 export interface HomepageBannerVideoProps {
   src: string;
 }
-
-const PlayIcon = (props: BoxProps) => {
-  return (
-    <Box
-      as="svg"
-      role="img"
-      viewBox="0 0 163 163"
-      fill="currentColor"
-      {...props}
-    >
-      <circle cx="81.5" cy="81.5" r="81.5" fill="white" />
-      <path d="M57.0001 41L129.5 82L57 122L57.0001 41Z" fill="black" />
-    </Box>
-  );
-};
-
-const PauseIcon = (props: BoxProps) => {
-  return (
-    <Box
-      as="svg"
-      role="img"
-      viewBox="0 0 163 163"
-      fill="currentColor"
-      {...props}
-    >
-      <circle cx="81.5" cy="81.5" r="81.5" fill="white" />
-      <rect x="53" y="54" width="18" height="56" fill="black" />
-      <rect x="89" y="54" width="18" height="56" fill="black" />
-    </Box>
-  );
-};
 
 const HomepageBannerVideo = ({ src }: HomepageBannerVideoProps) => {
   const intl = useIntl();
@@ -95,15 +65,11 @@ const HomepageBannerVideo = ({ src }: HomepageBannerVideoProps) => {
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
-                aria-label={
-                  isPaused
-                    ? intl.formatMessage({
-                        id: "homepage-media-play-action",
-                      })
-                    : intl.formatMessage({
-                        id: "homepage-media-pause-action",
-                      })
-                }
+                aria-label={intl.formatMessage({
+                  id: isPaused
+                    ? "homepage-media-play-action"
+                    : "homepage-media-pause-action",
+                })}
               >
                 <Icon as={isPaused ? PlayIcon : PauseIcon} boxSize={8} />
               </Box>
@@ -136,6 +102,37 @@ const HomepageBannerVideo = ({ src }: HomepageBannerVideoProps) => {
         </AspectRatio>
       </Box>
     </>
+  );
+};
+
+const PlayIcon = (props: BoxProps) => {
+  return (
+    <Box
+      as="svg"
+      role="img"
+      viewBox="0 0 163 163"
+      fill="currentColor"
+      {...props}
+    >
+      <circle cx="81.5" cy="81.5" r="81.5" fill="white" />
+      <path d="M57.0001 41L129.5 82L57 122L57.0001 41Z" fill="black" />
+    </Box>
+  );
+};
+
+const PauseIcon = (props: BoxProps) => {
+  return (
+    <Box
+      as="svg"
+      role="img"
+      viewBox="0 0 163 163"
+      fill="currentColor"
+      {...props}
+    >
+      <circle cx="81.5" cy="81.5" r="81.5" fill="white" />
+      <rect x="53" y="54" width="18" height="56" fill="black" />
+      <rect x="89" y="54" width="18" height="56" fill="black" />
+    </Box>
   );
 };
 
