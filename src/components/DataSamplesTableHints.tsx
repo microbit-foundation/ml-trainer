@@ -19,7 +19,7 @@ import Emoji, { animations } from "./Emoji";
 import EmojiArrow from "./EmojiArrow";
 import UpCurveArrow from "./UpCurveArrow";
 import moveMicrobitImage from "../images/move-microbit.svg";
-import microbitOnWrist from "../images/microbit-on-wrist.svg";
+import microbitButtonB from "../images/microbit-button-b.svg";
 
 export const NameActionHint = () => {
   return (
@@ -48,13 +48,15 @@ export const RecordButtonHint = () => {
       alignItems="flex-start"
     >
       <UpCurveArrow w="60px" h="93px" color="brand.500" />
-      {/* Emoji? Or explain button B visually? */}
       {isConnected ? (
         <>
-          <Text textAlign="center" maxW={200}>
-            <FormattedMessage id="record-hint-button-b" />
+          <Text textAlign="center" maxW={200} alignSelf="center">
+            <FormattedMessage
+              id="record-hint-button-b"
+              values={{ mark: (chunks) => <strong>{chunks}</strong> }}
+            />
           </Text>
-          <Image src={microbitOnWrist} alt="" transform="translateY(-50%)" />
+          <Image src={microbitButtonB} alt="" pl={3} alignSelf="center" />
         </>
       ) : (
         <Text textAlign="center" maxW={125}>

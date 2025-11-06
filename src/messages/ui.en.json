@@ -2402,7 +2402,21 @@
   "record-hint-button-b": [
     {
       "type": 0,
-      "value": "Press to record a data sample or press button B on your data collection micro:bit."
+      "value": "Press record "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "or"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    },
+    {
+      "type": 0,
+      "value": " button B on the micro:bit to collect a movement data sample."
     }
   ],
   "record-samples": [
