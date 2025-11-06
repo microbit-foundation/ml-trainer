@@ -26,20 +26,20 @@ import clap from "../images/clap-hands.png";
 import xyzGraph from "../images/xyz-graph.png";
 import { createNewPageUrl } from "../urls";
 
-import { useSearchParams } from "react-router-dom";
 import projectImage3 from "theme-package/images/ai-activity-timer.png";
-import projectImage1 from "theme-package/images/ai-storytelling-friend.png";
 import projectImage2 from "theme-package/images/simple-ai-exercise-timer.png";
+import projectImage1 from "theme-package/images/ai-storytelling-friend.png";
 import homepageVideo from "theme-package/images/homepage-short-clip.mp4";
 import HomepageBannerVideo from "../components/HomepageBannerVideo";
 import StepByStepIllustration from "../components/StepByStepIllustration";
-import { setEditorVersionOverride } from "../editor-version";
-import { useSettings } from "../store";
 import {
   landingPageUrl,
   projectUrl,
   userGuideUrl,
 } from "../utils/external-links";
+import { useSettings } from "../store";
+import { useSearchParams } from "react-router-dom";
+import { setEditorVersionOverride } from "../editor-version";
 
 const HomePage = () => {
   const [params] = useSearchParams();
