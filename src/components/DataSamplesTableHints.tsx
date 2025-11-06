@@ -17,7 +17,7 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import microbitButtonB from "../images/microbit-button-b.svg";
 import moveMicrobitImage from "../images/move-microbit.svg";
 import { Action } from "../model";
-import Emoji, { animations } from "./Emoji";
+import Emoji, { animations, EmojiAi } from "./Emoji";
 import EmojiArrow from "./EmojiArrow";
 import UpCurveArrow from "./UpCurveArrow";
 
@@ -255,15 +255,11 @@ export const TrainHint = () => {
       transform="translate(-80px, -65px)"
     >
       <HStack>
-        <Emoji
-          leftEye="heart"
-          rightEye="heart"
-          pb={3}
-          pr={2}
-          animation={animations.spin}
-        />
+        <EmojiAi boxSize={20} pb={3} animation={animations.spin} />
         <Text textAlign="center" zIndex={3}>
-          Finished recording? <br /> Train the model
+          Finished recording?
+          <br />
+          Train the model
         </Text>
         <EmojiArrow
           mt={8}
