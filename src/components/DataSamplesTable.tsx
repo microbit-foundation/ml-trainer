@@ -220,7 +220,8 @@ const DataSamplesTable = ({
             selected={selectedAction.ID === action.ID}
             onSelectRow={() => setSelectedActionIdx(idx)}
             onRecord={handleRecord}
-            hint={hint}
+            // Only show hint on the last row.
+            hint={idx === actions.length - 1 ? hint : null}
             onDeleteAction={deleteActionConfirmOnOpen}
             renameShortcutScopeRef={renameActionShortcutScopeRef}
           />

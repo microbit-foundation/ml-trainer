@@ -13,7 +13,9 @@ import ActionNameCard, { ActionCardNameViewMode } from "./ActionNameCard";
 import {
   NameActionHint,
   NameActionWithSamplesHint,
-  RecordButtonHint,
+  NameFirstActionHint,
+  RecordFirstActionHint,
+  RecordHint,
   RecordMoreHint,
 } from "./DataSamplesTableHints";
 import { RecordingOptions } from "./RecordingDialog";
@@ -71,12 +73,13 @@ const DataSamplesTableRow = ({
             }
           />
         </GridItem>
-        {hint === "name-action" && (
+        {(hint === "name-first-action" || hint === "name-action") && (
           <GridItem h="120px">
-            <NameActionHint />
+            {hint === "name-first-action" && <NameFirstActionHint />}
+            {hint === "name-action" && <NameActionHint />}
           </GridItem>
         )}
-        <GridItem>
+        <GridItem position="relative">
           {(action.name.length > 0 || action.recordings.length > 0) && (
             <ActionDataSamplesCard
               preview={preview}
@@ -88,21 +91,22 @@ const DataSamplesTableRow = ({
               clearNewRecordingId={clearNewRecordingId}
             />
           )}
+          {hint === "record-action" && <RecordHint />}
+          {hint === "record-more-action" && (
+            <RecordMoreHint recorded={action.recordings.length} />
+          )}
         </GridItem>
         {hint === "name-action-with-samples" && (
           <GridItem h="120px">
             <NameActionWithSamplesHint />
           </GridItem>
         )}
-        {(hint === "record" || hint === "record-more") && (
+        {hint === "record-first-action" && (
           <>
             {/* Skip first column to correctly place hint. */}
             <GridItem />
             <GridItem h="120px">
-              {hint === "record" && <RecordButtonHint />}
-              {hint === "record-more" && (
-                <RecordMoreHint recorded={action.recordings.length} />
-              )}
+              {hint === "record-first-action" && <RecordFirstActionHint />}
             </GridItem>
           </>
         )}

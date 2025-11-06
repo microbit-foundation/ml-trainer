@@ -178,26 +178,36 @@ const activeHintForActions = (
     return "move-microbit";
   }
 
-  // We don't let you have zero. If you have > 1 you've seen it all before.
-  if (actions.length !== 1) {
+  // We don't let you have zero. If you have > 2 you've seen it all before.
+  if (actions.length === 0 || actions.length > 2) {
     return null;
   }
-  const action = actions[0];
+  const lastActionIdx = actions.length - 1;
+  const action = actions[lastActionIdx];
+  const isFirstAction = lastActionIdx === 0;
+
   if (action.name.length === 0) {
     if (action.recordings.length === 0) {
-      return "name-action";
+      return isFirstAction ? "name-first-action" : "name-action";
     } else {
       return "name-action-with-samples";
     }
   }
 
   if (action.recordings.length === 0) {
-    return "record";
+    return isFirstAction ? "record-first-action" : "record-action";
   }
   if (action.recordings.length < 3) {
-    return "record-more";
+    return "record-more-action";
   }
-  return "add-action";
+  if (isFirstAction) {
+    return "add-action";
+  }
+  // First and second action have at least 3 recordings.
+  if (actions[0].recordings.length > 2) {
+    return "train";
+  }
+  return null;
 };
 
 export default DataSamplesPage;

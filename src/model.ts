@@ -226,11 +226,14 @@ export enum DataSamplesView {
 export type DataSamplesPageHint =
   | null
   | "move-microbit"
+  | "name-first-action"
+  | "record-first-action"
+  | "record-more-action"
+  | "add-action"
   | "name-action"
-  | "name-action-with-samples"
-  | "record"
-  | "record-more"
-  | "add-action";
+  | "record-action"
+  | "train"
+  | "name-action-with-samples";
 
 export enum PostImportDialogState {
   None = "none",

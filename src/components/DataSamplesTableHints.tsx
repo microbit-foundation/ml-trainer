@@ -10,7 +10,7 @@ import {
   Image,
   Stack,
   Text,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";
@@ -21,7 +21,7 @@ import Emoji, { animations } from "./Emoji";
 import EmojiArrow from "./EmojiArrow";
 import UpCurveArrow from "./UpCurveArrow";
 
-export const NameActionHint = () => {
+export const NameFirstActionHint = () => {
   return (
     <VStack m={0} p={2} w={200} transform="translate(-30px, 45px)">
       <Stack spacing={0} color="brand.500" ml={-8}>
@@ -33,6 +33,24 @@ export const NameActionHint = () => {
       <Text textAlign="center">
         <FormattedMessage id="name-action-hint" />
       </Text>
+    </VStack>
+  );
+};
+
+export const NameActionHint = () => {
+  return (
+    <VStack m={0} p={2} w="300px" transform="translate(30px, 40px)" spacing={0}>
+      <Stack spacing={0} ml={-8}>
+        <EmojiArrow color="brand.500" />
+        <HStack>
+          <Box transform="rotate(-8deg)" color="brand.500">
+            <Emoji ml="25px" boxSize={16} animation={animations.spin} />
+          </Box>
+          <Text textAlign="center">
+            <FormattedMessage id="name-action-hint" />
+          </Text>
+        </HStack>
+      </Stack>
     </VStack>
   );
 };
@@ -64,7 +82,7 @@ export const NameActionWithSamplesHint = () => {
   );
 };
 
-export const RecordButtonHint = () => {
+export const RecordFirstActionHint = () => {
   const { isConnected } = useConnectionStage();
   return (
     <HStack
@@ -94,19 +112,64 @@ export const RecordButtonHint = () => {
   );
 };
 
+export const RecordHint = () => {
+  const { isConnected } = useConnectionStage();
+  return (
+    <VStack
+      position="absolute"
+      m={0}
+      p={2}
+      transform="translate(170px, -110px)"
+      w="calc(100% - 65px)"
+      alignItems="flex-start"
+    >
+      <Box transform="rotate(-8deg)">
+        <EmojiArrow color="brand.500" />
+      </Box>
+      <HStack transform="translateX(20px)">
+        {isConnected ? (
+          <>
+            <Text textAlign="center" maxW={200} alignSelf="center">
+              <FormattedMessage
+                id="record-hint-button-b"
+                values={{ mark: (chunks) => <strong>{chunks}</strong> }}
+              />
+            </Text>
+            <Image src={microbitButtonB} alt="" pl={3} alignSelf="center" />
+          </>
+        ) : (
+          <Text textAlign="center" maxW={125}>
+            <FormattedMessage id="record-hint" />
+          </Text>
+        )}
+      </HStack>
+    </VStack>
+  );
+};
+
 export const RecordMoreHint = ({ recorded }: { recorded: number }) => {
   return (
-    <HStack m={0} p={2} transform="translateX(65px)" w="calc(100% - 65px)">
-      <UpCurveArrow w="60px" h="93px" color="brand.500" />
-      <Emoji
-        transform="rotate(-8deg)"
-        leftEye={recorded == 2 ? "tick" : "round"}
-      />
-      <Text maxW="20ch" textAlign="center">
-        {recorded === 1
-          ? "Record at least 2 more data samples"
-          : "Record at least 1 more data sample"}
-      </Text>
+    <HStack
+      m={0}
+      p={2}
+      transform="translate(65px, 0)"
+      w="calc(100% - 65px)"
+      alignItems="start"
+    >
+      <Box transform="translateY(-23px)">
+        <UpCurveArrow w="60px" h="93px" color="brand.500" />
+      </Box>
+      <HStack gap={3}>
+        <Emoji
+          transform="rotate(-8deg)"
+          leftEye={recorded == 2 ? "tick" : "round"}
+        />
+        <Text textAlign="center">
+          {recorded === 1
+            ? "Record at least 2 more data samples"
+            : "Record at least 1 more data sample"}
+        </Text>
+      </HStack>
     </HStack>
   );
 };
