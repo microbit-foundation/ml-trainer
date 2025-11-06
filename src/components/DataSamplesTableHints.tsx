@@ -10,16 +10,16 @@ import {
   Image,
   Stack,
   Text,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";
+import microbitButtonB from "../images/microbit-button-b.svg";
+import moveMicrobitImage from "../images/move-microbit.svg";
 import { Action } from "../model";
 import Emoji, { animations } from "./Emoji";
 import EmojiArrow from "./EmojiArrow";
 import UpCurveArrow from "./UpCurveArrow";
-import moveMicrobitImage from "../images/move-microbit.svg";
-import microbitButtonB from "../images/microbit-button-b.svg";
 
 export const NameActionHint = () => {
   return (
@@ -147,20 +147,36 @@ export const AddActionHint = ({ action }: { action: Action }) => {
 
 export const MoveMicrobitHint = () => {
   return (
-    <HStack m={0} position="absolute" right={16} bottom={12} spacing={0}>
-      <EmojiArrow
-        mt={8}
-        transform="rotate(-80deg)"
-        transformOrigin="center"
-        color="brand.500"
-      />
-      {/* Ratio hides excess whitespace */}
-      <AspectRatio ratio={30 / 25} w={36} animation={animations.wobble}>
-        <Image src={moveMicrobitImage} />
-      </AspectRatio>
-      <Text textAlign="center" w={48}>
-        Try different movements to see how your actions change the graph.
-      </Text>
+    <HStack
+      m={0}
+      position="absolute"
+      right={16}
+      bottom={12}
+      spacing={0}
+      zIndex={2}
+    >
+      <HStack>
+        <Box
+          position="absolute"
+          background="radial-gradient(50% 50% at 50% 50%, rgba(245,245,245,1) 75%, rgba(245,245,245,0) 100%);"
+          transform="translate(-100px, 0)"
+          w="150%"
+          h="120%"
+        />
+        <EmojiArrow
+          mt={8}
+          transform="rotate(-80deg)"
+          transformOrigin="center"
+          color="brand.500"
+        />
+        {/* Ratio hides excess whitespace */}
+        <AspectRatio ratio={30 / 25} w={36} animation={animations.wobble}>
+          <Image src={moveMicrobitImage} />
+        </AspectRatio>
+        <Text textAlign="center" w={48} zIndex={3}>
+          Try different movements to see how your actions change the graph
+        </Text>
+      </HStack>
     </HStack>
   );
 };
