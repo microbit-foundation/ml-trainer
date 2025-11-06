@@ -44,7 +44,7 @@ export const NameActionHint = () => {
         <EmojiArrow color="brand.500" />
         <HStack>
           <Box transform="rotate(-8deg)" color="brand.500">
-            <Emoji ml="25px" boxSize={16} animation={animations.spin} />
+            <Emoji ml="25px" boxSize={16} />
           </Box>
           <Text textAlign="center">
             <FormattedMessage id="name-action-hint" />
