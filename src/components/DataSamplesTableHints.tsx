@@ -85,13 +85,7 @@ export const NameActionWithSamplesHint = () => {
 export const RecordFirstActionHint = () => {
   const { isConnected } = useConnectionStage();
   return (
-    <HStack
-      m={0}
-      p={2}
-      transform="translateX(65px)"
-      w="calc(100% - 65px)"
-      alignItems="flex-start"
-    >
+    <HStack m={0} p={2} transform="translateX(65px)" w="calc(100% - 65px)">
       <UpCurveArrow w="60px" h="93px" color="brand.500" />
       {isConnected ? (
         <>
