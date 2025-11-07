@@ -1,6 +1,5 @@
 import { PersistStorage, StorageValue } from "zustand/middleware";
 import * as Y from "yjs";
-import { ActionData } from "./model";
 
 
 interface ProjectState {
@@ -17,10 +16,6 @@ export const loadNewDoc = async (loadingPromise : Promise<Y.Doc>) => {
     activeState.doc = null;
     activeState.loadingPromise = loadingPromise;
     activeState.doc = await loadingPromise;
-    // TODO: testing accessing a Y.Text through Zustand
-    if (!activeState.doc.getMap("files").has("actions2")) {
-        activeState.doc.getMap("files").set("actions2", new Y.Text("defaultvalue"));
-    }
 }
 
 // This storage system ignores that Zustand supports multiple datastores, because it exists
@@ -28,17 +23,20 @@ export const loadNewDoc = async (loadingPromise : Promise<Y.Doc>) => {
 // backend, and we know what the data should be so genericism goes out of the window.
 // Anything that is not handled as a special case (e.g. actions are special) becomes a
 // simple json doc in the same way that Zustand persist conventionally does it.
-const BASE_DOC_NAME = "ml";
+export const BASE_DOC_NAME = "ml";
 
 // TODO: Think about what versioning should relate to.
 // The zustand store has a version, and this also has structurally-sensitive things in
 // its storeState mapper.
+// store.ts currently has a lot of controller logic, and it could be pared out and synced
+// more loosely with the yjs-ified data. E.g. project syncing could be done at a level above
+// the store, with a subscription.
 export const projectStorage = <T>() => {
 
     const getItemImpl = (ydoc: Y.Doc) => {
-        const doc = JSON.parse(ydoc.getText(BASE_DOC_NAME).toString()) as T;
-        (doc as undefined as any).actions2 = ydoc.getMap("files").get("actions2");
-        return doc;
+        const state = JSON.parse(ydoc.getText(BASE_DOC_NAME).toString()) as T;
+        (state as undefined as any).actions = ydoc.getMap("files").get("actions");
+        return { state, version: 2 };
     }
 
     const getItem = (_name: string) => {
@@ -52,7 +50,11 @@ export const projectStorage = <T>() => {
         }
     }
 
-    const setItem = (_name: string, value: StorageValue<T>) => {
+    const setItem = (_name: string, valueFull: StorageValue<T>) => {
+        const { state: { actions, ...state }, version } = valueFull as StorageValue<T & { actions: any }>;
+
+        const value = { state, version };
+
         if (activeState.doc) {
             const storeText = activeState.doc.getText(BASE_DOC_NAME);
             storeText.delete(0, storeText.length);
@@ -67,7 +69,7 @@ export const projectStorage = <T>() => {
         }
     }
     const removeItem = (_name: string) => {
-        // TODO:
+        // Don't remove things through Zustand, use ProjectStorage
     }
 
     return {
@@ -75,12 +77,4 @@ export const projectStorage = <T>() => {
         setItem,
         removeItem
     } as PersistStorage<T>;
-}
-
-interface CustomStructures {
-    actions: ActionData[];
-}
-
-const storeState = (state: CustomStructures, doc: Y.Doc) => {
-    const { actions, ...unfiltered } = state;
 }

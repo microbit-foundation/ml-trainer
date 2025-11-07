@@ -6,12 +6,12 @@
  */
 import { Confidences } from "../ml";
 import { mlSettings } from "../mlConfig";
-import { Action } from "../model";
+import { ActionDataY, ActionDatumY } from "../model";
 
 export const getDetectedAction = (
-  actions: Action[],
+  actions: ActionDataY,
   confidences: Confidences | undefined
-): Action | undefined => {
+): ActionDatumY | undefined => {
   if (!confidences) {
     return undefined;
   }
@@ -21,8 +21,8 @@ export const getDetectedAction = (
     .map((action) => ({
       action,
       thresholdDelta:
-        confidences[action.ID] -
-        (action.requiredConfidence ?? mlSettings.defaultRequiredConfidence),
+        confidences[action.get("ID") as number] -
+        (action.get("requiredConfidence") as number ?? mlSettings.defaultRequiredConfidence),
     }))
     .sort((left, right) => {
       const a = left.thresholdDelta;

@@ -35,8 +35,10 @@ export interface ActionData extends Action {
 
 // TODO: how much do we hate these types?
 // TODO: maybe use zod?
-export type RecordingDataY = Y.Map<number | XYZData>;
-export type ActionDataY = Y.Array<Y.Map<string | number | MakeCodeIcon | Y.Map<RecordingDataY>>>;
+export type RecordingDatumY = Y.Map<number | XYZData>;
+export type RecordingDataY = Y.Array<RecordingDatumY>;
+export type ActionDatumY = Y.Map<string | number | MakeCodeIcon | RecordingDataY>;
+export type ActionDataY = Y.Array<ActionDatumY>;
 
 export interface DatasetEditorJsonFormat {
   data: ActionData[];
