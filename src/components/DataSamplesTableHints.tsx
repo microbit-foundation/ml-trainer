@@ -249,7 +249,14 @@ export const TrainHint = () => {
       transform="translate(-80px, -65px)"
     >
       <HStack>
-        <EmojiAi boxSize={20} pb={3} animation={animations.spin} />
+        <Box
+          position="absolute"
+          background="radial-gradient(50% 50% at 50% 50%, rgba(245,245,245,1) 75%, rgba(245,245,245,0) 100%);"
+          transform="translate(-100px, 0)"
+          w="150%"
+          h="120%"
+        />
+        <EmojiAi boxSize={20} pb={3} animation={animations.spin} zIndex={3} />
         <Text textAlign="center" zIndex={3}>
           Finished recording?
           <br />
