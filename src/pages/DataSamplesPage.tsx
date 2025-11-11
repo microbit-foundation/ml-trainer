@@ -25,7 +25,7 @@ import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import WelcomeDialog from "../components/WelcomeDialog";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
-import { ActionData, DataSamplesPageHint } from "../model";
+import { DataSamplesPageHint, PostImportDialogState } from "../model";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
@@ -72,18 +72,27 @@ const DataSamplesPage = () => {
   const hasMoved = useHasMoved();
   const tourInProgress = useStore((s) => !!s.tourState);
   const isRecordingDialogOpen = useStore((s) => !!s.isRecordingDialogOpen);
+  const isPostImportDialogOpen = useStore(
+    (s) => s.postImportDialogState !== PostImportDialogState.None
+  );
   const isDialogOpen =
     welcomeDialogDisclosure.isOpen ||
     isConnectionDialogOpen ||
     tourInProgress ||
-    isRecordingDialogOpen;
-  const hint: DataSamplesPageHint = isDialogOpen
+    isRecordingDialogOpen ||
+    isPostImportDialogOpen;
+  const hint = useStore((s) => s.hint);
+  const initialiseHint = useStore((s) => s.initialiseHint);
+  useEffect(() => {
+    initialiseHint();
+  }, [initialiseHint]);
+  const dataSamplesHint: DataSamplesPageHint = isDialogOpen
     ? null
-    : activeHintForActions(actions, isConnected, hasMoved);
+    : activeHintForActions(hint, isConnected, hasMoved);
 
   return (
     <>
-      {welcomeDialogDisclosure.isOpen && (
+      {welcomeDialogDisclosure.isOpen && !isPostImportDialogOpen && (
         <WelcomeDialog
           onClose={welcomeDialogDisclosure.onClose}
           isOpen={welcomeDialogDisclosure.isOpen}
@@ -100,7 +109,7 @@ const DataSamplesPage = () => {
           <DataSamplesTable
             selectedActionIdx={selectedActionIdx}
             setSelectedActionIdx={setSelectedActionIdx}
-            hint={hint}
+            hint={dataSamplesHint}
           />
         </Flex>
         <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
@@ -156,9 +165,11 @@ const DataSamplesPage = () => {
                 </Button>
               )}
             </HStack>
-            {hint === "move-microbit" && <MoveMicrobitHint />}
-            {hint === "add-action" && <AddActionHint action={actions[0]} />}
-            {hint === "train" && <TrainHint />}
+            {dataSamplesHint === "move-microbit" && <MoveMicrobitHint />}
+            {dataSamplesHint === "add-action" && (
+              <AddActionHint action={actions[0]} />
+            )}
+            {dataSamplesHint === "train" && <TrainHint />}
           </HStack>
 
           <LiveGraphPanel
@@ -172,44 +183,14 @@ const DataSamplesPage = () => {
 };
 
 const activeHintForActions = (
-  actions: ActionData[],
+  hint: DataSamplesPageHint,
   isConnected: boolean,
   hasMoved: boolean
 ): DataSamplesPageHint => {
   if (isConnected && !hasMoved) {
     return "move-microbit";
   }
-
-  // We don't let you have zero. If you have > 2 you've seen it all before.
-  if (actions.length === 0 || actions.length > 2) {
-    return null;
-  }
-  const lastActionIdx = actions.length - 1;
-  const action = actions[lastActionIdx];
-  const isFirstAction = lastActionIdx === 0;
-
-  if (action.name.length === 0) {
-    if (action.recordings.length === 0) {
-      return isFirstAction ? "name-first-action" : "name-action";
-    } else {
-      return "name-action-with-samples";
-    }
-  }
-
-  if (action.recordings.length === 0) {
-    return isFirstAction ? "record-first-action" : "record-action";
-  }
-  if (action.recordings.length < 3) {
-    return "record-more-action";
-  }
-  if (isFirstAction) {
-    return "add-action";
-  }
-  // First and second action have at least 3 recordings.
-  if (actions[0].recordings.length > 2) {
-    return "train";
-  }
-  return null;
+  return hint;
 };
 
 export default DataSamplesPage;

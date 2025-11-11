@@ -15,7 +15,6 @@ import {
   useContext,
   useEffect,
   useRef,
-  useState,
 } from "react";
 import { BufferedData } from "./buffered-data";
 import { useConnectActions } from "./connect-actions-hooks";
@@ -79,7 +78,8 @@ const useBufferedDataInternal = (): BufferedData => {
 };
 
 export const useHasMoved = (): boolean => {
-  const [hasMoved, setHasMoved] = useState(false);
+  const hasMoved = useStore((s) => s.hasMoved);
+  const setHasMoved = useStore((s) => s.setHasMoved);
   const [connectStatus] = useConnectStatus();
   const connection = useConnectActions();
   useEffect(() => {
@@ -130,6 +130,6 @@ export const useHasMoved = (): boolean => {
       ignore = true;
       connection.removeAccelerometerListener(listener);
     };
-  }, [connection, connectStatus, hasMoved]);
+  }, [connection, connectStatus, hasMoved, setHasMoved]);
   return hasMoved;
 };

@@ -35,6 +35,7 @@ import {
   EditorStartUp,
   TourTriggerName,
   tourSequence,
+  DataSamplesPageHint,
 } from "./model";
 import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/actions";
@@ -149,6 +150,15 @@ export interface State {
 
   timestamp: number | undefined;
 
+  /**
+   * To decide hint to trigger depending on actions.
+   */
+  hint: DataSamplesPageHint;
+  /**
+   * Set to true if user has moved the micro:bit.
+   * This is used to decide whether to show the move hint.
+   */
+  hasMoved: boolean;
   isRecording: boolean;
 
   project: MakeCodeProject;
@@ -238,6 +248,8 @@ export interface Actions {
   loadDataset(actions: ActionData[]): void;
   loadProject(project: MakeCodeProject, name: string): void;
   setEditorOpen(open: boolean): void;
+  initialiseHint(): void;
+  setHasMoved(hasMoved: boolean): void;
   recordingStarted(): void;
   recordingStopped(): void;
   newSession(projectName?: string): void;
@@ -317,6 +329,8 @@ const createMlStore = (logging: Logging) => {
           timestamp: undefined,
           actions: [createFirstAction()],
           dataWindow: currentDataWindow,
+          hint: null,
+          hasMoved: false,
           isRecording: false,
           project: createUntitledProject(),
           projectLoadTimestamp: 0,
@@ -405,9 +419,10 @@ const createMlStore = (logging: Logging) => {
 
           newSession(projectName?: string) {
             const untitledProject = createUntitledProject();
+            const actions = [createFirstAction()];
             set(
               {
-                actions: [createFirstAction()],
+                actions,
                 dataWindow: currentDataWindow,
                 model: undefined,
                 project: projectName
@@ -416,6 +431,7 @@ const createMlStore = (logging: Logging) => {
                 projectEdited: false,
                 appEditNeedsFlushToEditor: true,
                 timestamp: Date.now(),
+                hint: getHint(actions, false),
               },
               false,
               "newSession"
@@ -434,6 +450,21 @@ const createMlStore = (logging: Logging) => {
               false,
               "setEditorOpen"
             );
+          },
+
+          initialiseHint() {
+            set(
+              ({ actions }) => {
+                const hint = getHint(actions, true);
+                return { hint };
+              },
+              false,
+              "initialiseHint"
+            );
+          },
+
+          setHasMoved(hasMoved) {
+            set({ hasMoved }, false, "setHasMoved");
           },
 
           recordingStarted() {
@@ -459,6 +490,7 @@ const createMlStore = (logging: Logging) => {
               ];
               return {
                 actions: newActions,
+                hint: getHint(newActions, false),
                 model: undefined,
                 ...updateProject(
                   project,
@@ -484,6 +516,7 @@ const createMlStore = (logging: Logging) => {
               });
               return {
                 actions: updatedActions,
+                hint: getHint(updatedActions, false),
                 model: undefined,
               };
             });
@@ -491,12 +524,16 @@ const createMlStore = (logging: Logging) => {
 
           deleteAction(id: ActionData["ID"]) {
             return set(({ project, projectEdited, actions, dataWindow }) => {
-              const newActions = actions.filter((a) => a.ID !== id);
+              const remainingActions = actions.filter((a) => a.ID !== id);
+              const newActions =
+                remainingActions.length === 0
+                  ? [createFirstAction()]
+                  : remainingActions;
               const newDataWindow =
                 newActions.length === 0 ? currentDataWindow : dataWindow;
               return {
-                actions:
-                  newActions.length === 0 ? [createFirstAction()] : newActions,
+                actions: newActions,
+                hint: getHint(newActions, false),
                 dataWindow: newDataWindow,
                 model: undefined,
                 ...updateProject(
@@ -518,6 +555,7 @@ const createMlStore = (logging: Logging) => {
                 );
                 return {
                   actions: newActions,
+                  hint: getHint(newActions, !!model),
                   ...updateProject(
                     project,
                     projectEdited,
@@ -601,6 +639,7 @@ const createMlStore = (logging: Logging) => {
                 numRecordings === 0 ? currentDataWindow : dataWindow;
               return {
                 actions: newActions,
+                hint: getHint(newActions, false),
                 dataWindow: newDataWindow,
                 model: undefined,
                 ...updateProject(
@@ -615,18 +654,22 @@ const createMlStore = (logging: Logging) => {
           },
 
           deleteAllActions() {
-            return set(({ project, projectEdited }) => ({
-              actions: [createFirstAction()],
-              dataWindow: currentDataWindow,
-              model: undefined,
-              ...updateProject(
-                project,
-                projectEdited,
-                [],
-                undefined,
-                currentDataWindow
-              ),
-            }));
+            return set(({ project, projectEdited }) => {
+              const actions = [createFirstAction()];
+              return {
+                actions,
+                hint: getHint(actions, false),
+                dataWindow: currentDataWindow,
+                model: undefined,
+                ...updateProject(
+                  project,
+                  projectEdited,
+                  [],
+                  undefined,
+                  currentDataWindow
+                ),
+              };
+            });
           },
 
           downloadDataset() {
@@ -645,8 +688,12 @@ const createMlStore = (logging: Logging) => {
             a.click();
           },
 
-          loadDataset(newActions: ActionData[]) {
+          loadDataset(datasetActions: ActionData[]) {
             set(({ project, projectEdited, settings }) => {
+              const newActions =
+                datasetActions.length > 0
+                  ? datasetActions
+                  : [createFirstAction()];
               const dataWindow = getDataWindowFromActions(newActions);
               return {
                 settings: {
@@ -670,6 +717,7 @@ const createMlStore = (logging: Logging) => {
                 dataWindow,
                 model: undefined,
                 timestamp: Date.now(),
+                hint: getHint(newActions, true),
                 ...updateProject(
                   project,
                   projectEdited,
@@ -686,7 +734,11 @@ const createMlStore = (logging: Logging) => {
            * from microbit.org we have the JSON already and use this route.
            */
           loadProject(project: MakeCodeProject, name: string) {
-            const newActions = getActionsFromProject(project);
+            const projectActions = getActionsFromProject(project);
+            const newActions =
+              projectActions.length > 0
+                ? projectActions
+                : [createFirstAction()];
             set(({ settings, project: prevProject }) => {
               project = renameProject(project, name);
               project = {
@@ -707,6 +759,7 @@ const createMlStore = (logging: Logging) => {
                 },
                 actions: newActions,
                 dataWindow: getDataWindowFromActions(newActions),
+                hint: getHint(newActions, true),
                 model: undefined,
                 project,
                 projectEdited: true,
@@ -924,7 +977,11 @@ const createMlStore = (logging: Logging) => {
                       `[MakeCode] Updating state from MakeCode header change. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
                     );
                     const timestamp = Date.now();
-                    const newActions = getActionsFromProject(newProject);
+                    const projectActions = getActionsFromProject(newProject);
+                    const newActions =
+                      projectActions.length > 0
+                        ? projectActions
+                        : [createFirstAction()];
                     return {
                       settings: {
                         ...settings,
@@ -942,6 +999,7 @@ const createMlStore = (logging: Logging) => {
                       projectEdited: true,
                       actions: newActions,
                       dataWindow: getDataWindowFromActions(newActions),
+                      hint: getHint(newActions, true),
                       model: undefined,
                       isEditorOpen: false,
                       isEditorLoadingFile: false,
@@ -1457,4 +1515,44 @@ const renameProject = (
       }),
     },
   };
+};
+
+const getHint = (
+  actions: ActionData[],
+  suppressTrainAndAddActionHint: boolean
+): DataSamplesPageHint => {
+  const sufficientDataForTraining = hasSufficientDataForTraining(actions);
+
+  // We don't let you have zero. If you have > 2 you've seen it all before.
+  if (actions.length === 0 || actions.length > 2) {
+    if (sufficientDataForTraining && !suppressTrainAndAddActionHint) {
+      return "train";
+    }
+    return null;
+  }
+  const lastActionIdx = actions.length - 1;
+  const action = actions[lastActionIdx];
+  const isFirstAction = lastActionIdx === 0;
+
+  if (action.name.length === 0) {
+    if (action.recordings.length === 0) {
+      return isFirstAction ? "name-first-action" : "name-action";
+    } else {
+      return "name-action-with-samples";
+    }
+  }
+
+  if (action.recordings.length === 0) {
+    return isFirstAction ? "record-first-action" : "record-action";
+  }
+  if (action.recordings.length < 3) {
+    return "record-more-action";
+  }
+  if (isFirstAction && !suppressTrainAndAddActionHint) {
+    return "add-action";
+  }
+  if (sufficientDataForTraining && !suppressTrainAndAddActionHint) {
+    return "train";
+  }
+  return null;
 };
