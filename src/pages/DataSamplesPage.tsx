@@ -67,7 +67,7 @@ const DataSamplesPage = () => {
   });
   const intl = useIntl();
   const welcomeDialogDisclosure = useDisclosure({
-    defaultIsOpen: !isConnected,
+    defaultIsOpen: !isConnected && !model,
   });
   const hasMoved = useHasMoved();
   const tourInProgress = useStore((s) => !!s.tourState);
