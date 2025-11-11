@@ -208,7 +208,7 @@ export const MoveMicrobitHint = () => {
       m={0}
       position="absolute"
       right={16}
-      bottom={12}
+      bottom={16}
       spacing={0}
       zIndex={2}
     >
@@ -216,8 +216,9 @@ export const MoveMicrobitHint = () => {
         <Box
           position="absolute"
           background="radial-gradient(50% 50% at 50% 50%, rgba(245,245,245,1) 75%, rgba(245,245,245,0) 100%);"
-          transform="translate(-100px, 0)"
-          w="150%"
+          bottom={0}
+          right={-16}
+          w="calc(100% + 50px)"
           h="120%"
         />
         <EmojiArrow
@@ -246,14 +247,14 @@ export const TrainHint = () => {
       right={0}
       spacing={0}
       zIndex={2}
-      transform="translate(-80px, -65px)"
+      transform="translate(-80px, -85px)"
     >
       <HStack>
         <Box
           position="absolute"
           background="radial-gradient(50% 50% at 50% 50%, rgba(245,245,245,1) 75%, rgba(245,245,245,0) 100%);"
-          transform="translate(-100px, 0)"
-          w="150%"
+          transform="translate(-50px, 0)"
+          w="calc(100% + 50px)"
           h="120%"
         />
         <EmojiAi boxSize={20} pb={3} animation={animations.spin} zIndex={3} />
