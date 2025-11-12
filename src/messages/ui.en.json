@@ -2426,7 +2426,7 @@
   "record-hint": [
     {
       "type": 0,
-      "value": "Press to record a data sample."
+      "value": "Press record to collect a movement data sample."
     }
   ],
   "record-hint-button-b": [

@@ -98,7 +98,7 @@ export const RecordFirstActionHint = () => {
           <Image src={microbitButtonB} alt="" pl={3} alignSelf="center" />
         </>
       ) : (
-        <Text textAlign="center" maxW={125}>
+        <Text textAlign="center" maxW={200}>
           <FormattedMessage id="record-hint" />
         </Text>
       )}

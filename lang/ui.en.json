@@ -1400,7 +1400,7 @@
     "description": "Aria label for record button"
   },
   "record-hint": {
-    "defaultMessage": "Press to record a data sample.",
+    "defaultMessage": "Press record to collect a movement data sample.",
     "description": "Hint when you have named the first action but not recorded any data samples"
   },
   "record-hint-button-b": {
