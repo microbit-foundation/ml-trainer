@@ -95,7 +95,7 @@ export const RecordFirstActionHint = () => {
               values={{ mark: (chunks) => <strong>{chunks}</strong> }}
             />
           </Text>
-          <Image src={microbitButtonB} alt="" pl={3} alignSelf="center" />
+          <Image src={microbitButtonB} pl={3} alignSelf="center" aria-hidden />
         </>
       ) : (
         <Text textAlign="center" maxW={200}>
@@ -129,7 +129,12 @@ export const RecordHint = () => {
                 values={{ mark: (chunks) => <strong>{chunks}</strong> }}
               />
             </Text>
-            <Image src={microbitButtonB} alt="" pl={3} alignSelf="center" />
+            <Image
+              src={microbitButtonB}
+              pl={3}
+              alignSelf="center"
+              aria-hidden
+            />
           </>
         ) : (
           <Text textAlign="center" maxW={125}>
@@ -240,7 +245,7 @@ export const MoveMicrobitHint = () => {
         />
         {/* Ratio hides excess whitespace */}
         <AspectRatio ratio={30 / 25} w={36} animation={animations.wobble}>
-          <Image src={moveMicrobitImage} />
+          <Image src={moveMicrobitImage} aria-hidden />
         </AspectRatio>
         <Text textAlign="center" w={48} zIndex={3}>
           <FormattedMessage id="move-hint" />
