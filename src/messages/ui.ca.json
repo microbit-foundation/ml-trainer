@@ -117,6 +117,30 @@
       "value": "Afegir una acció"
     }
   ],
+  "add-action-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Add another action"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
   "ai-activity-timer-resource-title": [
     {
       "type": 0,
@@ -1985,6 +2009,12 @@
       "value": "Més edició a les opcions de MakeCode"
     }
   ],
+  "move-hint": [
+    {
+      "type": 0,
+      "value": "Try different movements to see how your actions change the graph"
+    }
+  ],
   "name-action-hint": [
     {
       "type": 0,
@@ -2389,6 +2419,44 @@
     {
       "type": 0,
       "value": "Prem per gravar una mostra de dades o prem el botó B de la teva micro:bit de recollida de dades."
+    }
+  ],
+  "record-more-hint": [
+    {
+      "type": 0,
+      "value": "Record at least "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
     }
   ],
   "record-samples": [
@@ -3015,6 +3083,22 @@
       "value": "Entrenant un model"
     }
   ],
+  "train-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Train the model"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
   "train-model": [
     {
       "type": 0,
@@ -3181,6 +3265,12 @@
     {
       "type": 0,
       "value": "desconnecta i torna a connectar el cable USB"
+    }
+  ],
+  "welcome-title": [
+    {
+      "type": 0,
+      "value": "Welcome to micro:bit CreateAI"
     }
   ]
 }

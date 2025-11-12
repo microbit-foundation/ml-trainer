@@ -159,9 +159,10 @@ export const RecordMoreHint = ({ recorded }: { recorded: number }) => {
           leftEye={recorded == 2 ? "tick" : "round"}
         />
         <Text textAlign="center">
-          {recorded === 1
-            ? "Record at least 2 more data samples"
-            : "Record at least 1 more data sample"}
+          <FormattedMessage
+            id="record-more-hint"
+            values={{ numSamples: recorded === 1 ? 2 : 1 }}
+          />
         </Text>
       </HStack>
     </HStack>
@@ -195,8 +196,18 @@ export const AddActionHint = ({ action }: { action: Action }) => {
         </Box>
       </HStack>
       <Text textAlign="center">
-        Finished recording for {action.name}?<br />
-        Add another action
+        <FormattedMessage
+          id="add-action-hint"
+          values={{
+            actionName: action.name,
+            mark: (chunks) => (
+              <>
+                <br />
+                {chunks}
+              </>
+            ),
+          }}
+        />
       </Text>
     </HStack>
   );
@@ -232,7 +243,7 @@ export const MoveMicrobitHint = () => {
           <Image src={moveMicrobitImage} />
         </AspectRatio>
         <Text textAlign="center" w={48} zIndex={3}>
-          Try different movements to see how your actions change the graph
+          <FormattedMessage id="move-hint" />
         </Text>
       </HStack>
     </HStack>
@@ -259,9 +270,17 @@ export const TrainHint = () => {
         />
         <EmojiAi boxSize={20} pb={3} animation={animations.spin} zIndex={3} />
         <Text textAlign="center" zIndex={3}>
-          Finished recording?
-          <br />
-          Train the model
+          <FormattedMessage
+            id="train-hint"
+            values={{
+              mark: (chunks) => (
+                <>
+                  <br />
+                  {chunks}
+                </>
+              ),
+            }}
+          />
         </Text>
         <EmojiArrow
           mt={8}

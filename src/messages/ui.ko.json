@@ -113,6 +113,30 @@
       "value": "행동 추가"
     }
   ],
+  "add-action-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Add another action"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
   "ai-activity-timer-resource-title": [
     {
       "type": 0,
@@ -1987,6 +2011,12 @@
       "value": "MakeCode 옵션에서 추가 편집"
     }
   ],
+  "move-hint": [
+    {
+      "type": 0,
+      "value": "Try different movements to see how your actions change the graph"
+    }
+  ],
   "name-action-hint": [
     {
       "type": 0,
@@ -2391,6 +2421,44 @@
     {
       "type": 0,
       "value": "눌러서 데이터 샘플을 기록하거나 데이터 수집 micro:bit의 B 버튼을 누르세요."
+    }
+  ],
+  "record-more-hint": [
+    {
+      "type": 0,
+      "value": "Record at least "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
     }
   ],
   "record-samples": [
@@ -3001,6 +3069,22 @@
       "value": "모델 훈련 중"
     }
   ],
+  "train-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Train the model"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
   "train-model": [
     {
       "type": 0,
@@ -3167,6 +3251,12 @@
     {
       "type": 0,
       "value": "USB 케이블을 분리했다가 다시 연결하세요."
+    }
+  ],
+  "welcome-title": [
+    {
+      "type": 0,
+      "value": "Welcome to micro:bit CreateAI"
     }
   ]
 }

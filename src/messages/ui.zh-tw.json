@@ -121,6 +121,30 @@
       "value": "新增動作"
     }
   ],
+  "add-action-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Add another action"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
   "ai-activity-timer-resource-title": [
     {
       "type": 0,
@@ -1995,6 +2019,12 @@
       "value": "在 MakeCode 選項中進行更多編輯"
     }
   ],
+  "move-hint": [
+    {
+      "type": 0,
+      "value": "Try different movements to see how your actions change the graph"
+    }
+  ],
   "name-action-hint": [
     {
       "type": 0,
@@ -2399,6 +2429,44 @@
     {
       "type": 0,
       "value": "按下以記錄數據樣本或是按下您的數據收集用的 micro:bit 上的按鍵 B。"
+    }
+  ],
+  "record-more-hint": [
+    {
+      "type": 0,
+      "value": "Record at least "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
     }
   ],
   "record-samples": [
@@ -3021,6 +3089,22 @@
       "value": "訓練模型"
     }
   ],
+  "train-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Train the model"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
   "train-model": [
     {
       "type": 0,
@@ -3187,6 +3271,12 @@
     {
       "type": 0,
       "value": "拔下並重新插入 USB 纜線"
+    }
+  ],
+  "welcome-title": [
+    {
+      "type": 0,
+      "value": "Welcome to micro:bit CreateAI"
     }
   ]
 }

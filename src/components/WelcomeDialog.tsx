@@ -125,7 +125,9 @@ const WelcomeDialog = ({
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <Text>Welcome to micro:bit CreateAI</Text>
+            <Text>
+              <FormattedMessage id="welcome-title" />
+            </Text>
           </ModalHeader>
           <ModalBody pb={5}>
             <ModalCloseButton />
