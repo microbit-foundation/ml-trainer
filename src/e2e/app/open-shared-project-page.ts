@@ -15,10 +15,10 @@ export class OpenSharedProjectPage {
   }
 
   /**
-   * Unlike other page fixtures, you must specify a shortId in the goto
+   * Unlike other page fixtures, you must specify a shareId in the goto
    */
-  async goto(shortId: string, flags: string[] = ["open"]) {
-    const response = await this.page.goto(`${this.url}${shortId}`);
+  async goto(shareId: string, flags: string[] = ["open"]) {
+    const response = await this.page.goto(`${this.url}${shareId}`);
     await this.page.evaluate(
       (flags) => localStorage.setItem("flags", flags.join(",")),
       flags

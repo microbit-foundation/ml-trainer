@@ -72,17 +72,17 @@ const OpenSharedProjectPage = () => {
   const [name, setName] = useState("");
   const { sharedState, header, dataset, projectText } =
     useProjectPreload(setName);
-  const { shortId } = useParams();
+  const { shareId } = useParams();
 
   const handleOpenProject = useCallback(() => {
     if (!header || !projectText) return;
     loadProject({ header: { ...header, name }, text: projectText }, name);
     logging.event({
       type: "import-shared-project-complete",
-      detail: { shortId },
+      detail: { shareId },
     });
     navigate(createDataSamplesPageUrl());
-  }, [loadProject, header, projectText, name, navigate, logging, shortId]);
+  }, [loadProject, header, projectText, name, navigate, logging, shareId]);
 
   if (sharedState === SharedState.Failed) {
     return <ErrorPreloading />;
@@ -141,7 +141,7 @@ const OpenSharedProjectPage = () => {
                             color="brand.600"
                             textDecoration="underline"
                             href={`https://makecode.microbit.org/${encodeURIComponent(
-                              shortId!
+                              shareId!
                             )}`}
                           >
                             {children}
@@ -373,7 +373,7 @@ const ErrorPreloading = () => {
  * it update the name on preload via a callback.
  */
 const useProjectPreload = (setName: (name: string) => void) => {
-  const { shortId } = useParams();
+  const { shareId } = useParams();
   const logging = useLogging();
 
   const [sharedState, setSharedState] = useState<SharedState>(
@@ -385,15 +385,15 @@ const useProjectPreload = (setName: (name: string) => void) => {
   const [dataset, setDataset] = useState<ActionData[]>();
 
   useEffect(() => {
-    if (!shortId) return;
+    if (!shareId) return;
     let cleanedUp = false;
     const loadAsync = async () => {
       try {
         logging.event({
           type: "import-shared-project-start",
-          detail: { shortId },
+          detail: { shareId },
         });
-        const header = await fetchSharedHeader(shortId);
+        const header = await fetchSharedHeader(shareId);
         if (cleanedUp) {
           throw new Error("Cancelled");
         }
@@ -414,12 +414,12 @@ const useProjectPreload = (setName: (name: string) => void) => {
         setProjectText(text);
         logging.event({
           type: "import-shared-project-preloaded",
-          detail: { shortId },
+          detail: { shareId },
         });
       } catch (e: unknown) {
         logging.event({
           type: "import-shared-project-failed",
-          detail: { shortId, error: e },
+          detail: { shareId, error: e },
         });
         if (!cleanedUp) {
           setSharedState(SharedState.Failed);
@@ -430,7 +430,7 @@ const useProjectPreload = (setName: (name: string) => void) => {
     return () => {
       cleanedUp = true;
     };
-  }, [logging, shortId, setName]);
+  }, [logging, shareId, setName]);
   return {
     sharedState,
     header,
@@ -440,9 +440,9 @@ const useProjectPreload = (setName: (name: string) => void) => {
   };
 };
 
-const fetchSharedHeader = async (shortId: string): Promise<Header> => {
+const fetchSharedHeader = async (shareId: string): Promise<Header> => {
   const headerResponse = await fetch(
-    `https://www.makecode.com/api/${encodeURIComponent(shortId)}`
+    `https://www.makecode.com/api/${encodeURIComponent(shareId)}`
   );
   if (!headerResponse.ok) {
     throw new Error("Network error");

@@ -39,7 +39,7 @@ test.describe("import shared page", () => {
   });
 
   test("error", async ({ openSharedProjectPage }) => {
-    await openSharedProjectPage.goto("_aBadSh0rt1d");
+    await openSharedProjectPage.goto("_aaBadSh0rt1d");
     await openSharedProjectPage
       .expectMain()
       .toHaveAttribute("aria-busy", "true");
