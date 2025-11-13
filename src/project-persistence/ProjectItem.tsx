@@ -3,19 +3,20 @@ import {
   GridItem,
   Heading,
   HStack,
-  Icon,
+  IconButton,
   Text,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { ProjectEntry } from "./project-list-db";
 import { timeAgo } from "./utils";
-import { RiHistoryFill } from "react-icons/ri";
+import { RiEditFill, RiHistoryFill } from "react-icons/ri";
 
 interface ProjectItemProps {
   project: ProjectEntry;
   showHistory: (projectId: string) => void;
   loadProject: (projectId: string) => void;
   deleteProject: (projectId: string) => void;
+  renameProject: (projectId: string) => void;
 }
 
 interface ProjectItemBaseProps {
@@ -50,6 +51,7 @@ export const ProjectItem = ({
   project,
   loadProject,
   deleteProject,
+  renameProject,
   showHistory,
 }: ProjectItemProps) => (
   <ProjectItemBase onClick={() => loadProject(project.id)}>
@@ -60,13 +62,30 @@ export const ProjectItem = ({
     </HStack>
     <Text size="lg">{timeAgo(new Date(project.modifiedDate))}</Text>
 
-    <Icon
-      as={RiHistoryFill}
+    <IconButton
+      aria-label="Project history"
+      icon={<RiHistoryFill />}
+      mr="2"
       onClick={(e) => {
         showHistory(project.id);
         e.stopPropagation();
         e.preventDefault();
       }}
+      size="lg"
+      title="Project history"
+      variant="outline"
+    />
+    <IconButton
+      aria-label="Rename"
+      icon={<RiEditFill />}
+      onClick={(e) => {
+        renameProject(project.id);
+        e.stopPropagation();
+        e.preventDefault();
+      }}
+      size="lg"
+      title="Rename"
+      variant="outline"
     />
     <CloseButton
       position="absolute"

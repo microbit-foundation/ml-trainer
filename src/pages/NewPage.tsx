@@ -5,12 +5,16 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  Box,
   Button,
   Container,
   Grid,
+  GridItem,
   Heading,
   HStack,
   Icon,
+  List,
+  ListItem,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -40,41 +44,45 @@ import { useStoreProjects } from "../store-persistence-hooks";
 import { useProjectStorage } from "../project-persistence/ProjectStorageProvider";
 import { ProjectItem } from "../project-persistence/ProjectItem";
 import { HistoryList } from "../project-persistence/project-history-db";
+import ProjectHistoryModal from "../components/ProjectHistoryModal";
+import { ProjectEntry } from "../project-persistence/project-list-db";
+import RenameProjectModal from "../components/RenameProjectModal";
 
 const NewPage = () => {
   const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
   const logging = useLogging();
   const { loadProject, newProject } = useStoreProjects();
-  const [showProjectHistory, setShowProjectHistory] = useState<string | null>(
-    null
+  const [showProjectHistory, setShowProjectHistory] =
+    useState<ProjectEntry | null>(null);
+  const [showProjectRename, setShowProjectRename] =
+    useState<ProjectEntry | null>(null);
+
+  const { projectList, deleteProject, loadRevision, setProjectName } =
+    useProjectStorage();
+
+  const handleOpenSession = useCallback(
+    async (projectId: string) => {
+      logging.event({
+        type: "session-open-saved",
+      });
+      await loadProject(projectId);
+      navigate(createDataSamplesPageUrl());
+    },
+    [logging, navigate]
   );
-  const [projectHistoryList, setProjectHistoryList] =
-    useState<HistoryList | null>();
 
-  const { projectList, deleteProject, getHistory } = useProjectStorage();
+  const handleOpenRevision = useCallback(
+    async (projectId: string, revisionId: string) => {
+      logging.event({
+        type: "session-open-revision",
+      });
 
-  (window as any).newProject = newProject;
-  (window as any).loadProject = loadProject;
-
-  useEffect(() => {
-    const getProjectHistory = async () => {
-      if (showProjectHistory === null) {
-        setProjectHistoryList(null);
-        return;
-      }
-      const historyList = await getHistory(showProjectHistory);
-      setProjectHistoryList(historyList);
-    };
-    void getProjectHistory();
-  }, [showProjectHistory]);
-
-  const handleOpenSession = useCallback(() => {
-    logging.event({
-      type: "session-open-saved",
-    });
-    navigate(createDataSamplesPageUrl());
-  }, [logging, navigate]);
+      await loadRevision(projectId, revisionId);
+      navigate(createDataSamplesPageUrl());
+    },
+    [logging, navigate]
+  );
 
   const loadProjectRef = useRef<LoadProjectInputRef>(null);
   const handleContinueSessionFromFile = useCallback(() => {
@@ -154,48 +162,32 @@ const NewPage = () => {
                   key={proj.id}
                   project={proj}
                   loadProject={async () => {
-                    await loadProject(proj.id);
-                    handleOpenSession();
+                    void handleOpenSession(proj.id);
                   }}
                   deleteProject={deleteProject}
-                  showHistory={() => setShowProjectHistory(proj.id)}
+                  renameProject={() => setShowProjectRename(proj)}
+                  showHistory={() => setShowProjectHistory(proj)}
                 />
               ))}
             </Grid>
           </VStack>
         </Container>
       </VStack>
-
-      <Modal
+      <ProjectHistoryModal
         isOpen={showProjectHistory !== null}
-        onClose={() => setShowProjectHistory(null)}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Project history</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            {showProjectHistory} :{" "}
-            {JSON.stringify(
-              projectHistoryList?.map((ph) => ({
-                timestamp: ph.timestamp,
-                revisionId: ph.revisionId,
-                parentId: ph.parentId,
-              }))
-            )}
-          </ModalBody>
-
-          <ModalFooter>
-            <Button
-              colorScheme="blue"
-              mr={3}
-              onClick={() => setShowProjectHistory(null)}
-            >
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+        onLoadRequest={handleOpenRevision}
+        onDismiss={() => setShowProjectHistory(null)}
+        projectInfo={showProjectHistory}
+      />
+      <RenameProjectModal
+        isOpen={showProjectRename !== null}
+        onDismiss={() => setShowProjectRename(null)}
+        projectInfo={showProjectRename}
+        handleRename={(projectId, projectName) => {
+          setProjectName(projectId, projectName);
+          setShowProjectRename(null);
+        }}
+      />
     </DefaultPageLayout>
   );
 };
