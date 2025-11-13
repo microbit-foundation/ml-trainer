@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { stage } from "../environment";
+import { isPublicFacingStage } from "../environment";
 
 // We might move these into the deployment config in future
 // They'll also need to become language aware
-const microbitOrgBaseUrl =
-  stage === "production"
-    ? "https://microbit.org/"
-    : "https://stage.microbit.org/";
+const microbitOrgBaseUrl = isPublicFacingStage()
+  ? "https://microbit.org/"
+  : "https://stage.microbit.org/";
 
 const langPath = (languageId: string) =>
   languageId === "en" ? "" : `${languageId.toLowerCase()}/`;

@@ -2,18 +2,20 @@
 
 const ref = process.env.GITHUB_REF;
 let stage;
-if (ref === 'refs/heads/main') {
-  stage = 'STAGING';
-} else if (ref.startsWith('refs/tags/v')) {
-  stage = 'PRODUCTION';
+if (ref === "refs/heads/beta") {
+  stage = "BETA";
+} else if (ref === "refs/heads/main") {
+  stage = "STAGING";
+} else if (ref.startsWith("refs/tags/v")) {
+  stage = "PRODUCTION";
 } else {
-  stage = 'REVIEW';
+  stage = "REVIEW";
 }
 
 process.env.STAGE = stage;
 // STAGE must be defined before this is imported
-const { bucketName, bucketPrefix } = require('../deployment.cjs');
-const baseUrl = !bucketPrefix ? '/' : `/${bucketPrefix}/`;
+const { bucketName, bucketPrefix } = require("../deployment.cjs");
+const baseUrl = !bucketPrefix ? "/" : `/${bucketPrefix}/`;
 const fullUrl = `https://${bucketName}${baseUrl}`;
 
 console.log(`STAGE=${stage}`);
