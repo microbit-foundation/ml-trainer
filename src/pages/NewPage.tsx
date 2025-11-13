@@ -5,15 +5,23 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  Button,
   Container,
   Grid,
   Heading,
   HStack,
   Icon,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { RiAddLine, RiFolderOpenLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
@@ -31,21 +39,39 @@ import { createDataSamplesPageUrl } from "../urls";
 import { useStoreProjects } from "../store-persistence-hooks";
 import { useProjectStorage } from "../project-persistence/ProjectStorageProvider";
 import { ProjectItem } from "../project-persistence/ProjectItem";
+import { HistoryList } from "../project-persistence/project-history-db";
 
 const NewPage = () => {
   const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
   const logging = useLogging();
   const { loadProject, newProject } = useStoreProjects();
+  const [showProjectHistory, setShowProjectHistory] = useState<string | null>(
+    null
+  );
+  const [projectHistoryList, setProjectHistoryList] =
+    useState<HistoryList | null>();
 
-  const { projectList, deleteProject } = useProjectStorage();
+  const { projectList, deleteProject, getHistory } = useProjectStorage();
 
   (window as any).newProject = newProject;
   (window as any).loadProject = loadProject;
 
-  const handleOpenLastSession = useCallback(() => {
+  useEffect(() => {
+    const getProjectHistory = async () => {
+      if (showProjectHistory === null) {
+        setProjectHistoryList(null);
+        return;
+      }
+      const historyList = await getHistory(showProjectHistory);
+      setProjectHistoryList(historyList);
+    };
+    void getProjectHistory();
+  }, [showProjectHistory]);
+
+  const handleOpenSession = useCallback(() => {
     logging.event({
-      type: "session-open-last",
+      type: "session-open-saved",
     });
     navigate(createDataSamplesPageUrl());
   }, [logging, navigate]);
@@ -65,9 +91,6 @@ const NewPage = () => {
   }, [logging, newSession, navigate]);
 
   const intl = useIntl();
-  const lastSessionTitle = intl.formatMessage({
-    id: "newpage-last-session-title",
-  });
   const continueSessionTitle = intl.formatMessage({
     id: "newpage-continue-session-title",
   });
@@ -132,15 +155,47 @@ const NewPage = () => {
                   project={proj}
                   loadProject={async () => {
                     await loadProject(proj.id);
-                    handleOpenLastSession(); // TODO: handleOpenSession
+                    handleOpenSession();
                   }}
                   deleteProject={deleteProject}
+                  showHistory={() => setShowProjectHistory(proj.id)}
                 />
               ))}
             </Grid>
           </VStack>
         </Container>
       </VStack>
+
+      <Modal
+        isOpen={showProjectHistory !== null}
+        onClose={() => setShowProjectHistory(null)}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Project history</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {showProjectHistory} :{" "}
+            {JSON.stringify(
+              projectHistoryList?.map((ph) => ({
+                timestamp: ph.timestamp,
+                revisionId: ph.revisionId,
+                parentId: ph.parentId,
+              }))
+            )}
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={() => setShowProjectHistory(null)}
+            >
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </DefaultPageLayout>
   );
 };

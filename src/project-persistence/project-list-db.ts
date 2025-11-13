@@ -3,6 +3,7 @@ export interface ProjectEntry {
   projectName: string;
   id: string;
   modifiedDate: number;
+  parentRevision?: string;
 }
 
 export type ProjectList = ProjectEntry[];
