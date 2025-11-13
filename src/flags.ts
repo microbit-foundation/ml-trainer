@@ -59,13 +59,14 @@ const allFlags: FlagMetadata[] = [
   { name: "e2e", defaultOnStages: [] },
   {
     name: "preReleaseNotice",
-    defaultOnStages: ["staging"],
+    defaultOnStages: ["staging", "beta"],
   },
   { name: "translate", defaultOnStages: [] },
-  { name: "translationPreview", defaultOnStages: [] },
+  { name: "translationPreview", defaultOnStages: ["beta"] },
+  // We can probably remove this flag now it's enabled everywhere!
   {
     name: "websiteContent",
-    defaultOnStages: ["local", "review", "staging", "production"],
+    defaultOnStages: ["local", "review", "staging", "beta", "production"],
   },
 ];
 

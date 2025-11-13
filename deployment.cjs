@@ -16,6 +16,11 @@ const { s3Config } = createDeploymentDetailsFromOptions({
   staging: {
     bucket: "stage-createai.microbit.org",
   },
+  beta: {
+    bucket: "review-createai.microbit.org",
+    hostname: "createai.microbit.org",
+    prefix: "v/beta",
+  },
   review: {
     bucket: "review-createai.microbit.org",
     mode: "branch-prefix",
