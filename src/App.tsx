@@ -186,7 +186,7 @@ const createRouter = () => {
           loader: ({ params }) => {
             if (
               !params.shareId ||
-              !/^(_[a-zA-Z\d]{12})|(S(?:\d{5}-){3}\d{5})$/.test(params.shareId)
+              !/^_[a-zA-Z\d]{12}$|^S(?:\d{5}-){3}\d{5}$/.test(params.shareId)
             ) {
               throw new Error("Not a valid shareId");
             }
