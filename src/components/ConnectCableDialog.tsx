@@ -5,12 +5,12 @@
  */
 import { Button, Image, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { ConnectionFlowType } from "../connection-stage-hooks";
+import { isLocalStage } from "../environment";
 import connectCableImage from "../images/connect-cable.gif";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
-import { ConnectionFlowType } from "../connection-stage-hooks";
-import { stage } from "../environment";
 
 type LinkType = "switch" | "skip" | "none";
 interface Config {
@@ -36,7 +36,7 @@ export const getConnectionCableDialogConfig = (
       return {
         headingId: "connect-data-collection-heading",
         subtitleId: "connect-data-collection-subtitle",
-        ...(stage === "local"
+        ...(isLocalStage()
           ? {
               linkTextId: "connect-cable-skip",
               linkType: "skip",
