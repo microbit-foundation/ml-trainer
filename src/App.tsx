@@ -184,8 +184,11 @@ const createRouter = () => {
         {
           path: createOpenSharedProjectPageUrl(),
           loader: ({ params }) => {
-            if (!params.shortId || !/^_[a-zA-Z0-9]+$/.test(params.shortId)) {
-              throw "Not a shared key";
+            if (
+              !params.shareId ||
+              !/^(_[a-zA-Z\d]{12})|(S(?:\d{5}-){3}\d{5})$/.test(params.shareId)
+            ) {
+              throw new Error("Not a valid shareId");
             }
             return null;
           },
