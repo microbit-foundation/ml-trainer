@@ -1,5 +1,5 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, VStack, Button, ModalFooter, Input } from "@chakra-ui/react";
-import { ProjectEntry } from "../project-persistence/project-list-db";
+import { ProjectEntry } from "./project-list-db";
 import { useEffect, useState } from "react";
 
 interface ProjectHistoryModalProps {

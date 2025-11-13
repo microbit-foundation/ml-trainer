@@ -44,9 +44,9 @@ import { useStoreProjects } from "../store-persistence-hooks";
 import { useProjectStorage } from "../project-persistence/ProjectStorageProvider";
 import { ProjectItem } from "../project-persistence/ProjectItem";
 import { HistoryList } from "../project-persistence/project-history-db";
-import ProjectHistoryModal from "../components/ProjectHistoryModal";
+import ProjectHistoryModal from "../project-persistence/ProjectHistoryModal";
 import { ProjectEntry } from "../project-persistence/project-list-db";
-import RenameProjectModal from "../components/RenameProjectModal";
+import RenameProjectModal from "../project-persistence/RenameProjectModal";
 
 const NewPage = () => {
   const newSession = useStore((s) => s.newSession);
