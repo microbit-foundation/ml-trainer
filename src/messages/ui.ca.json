@@ -2012,7 +2012,7 @@
   "move-hint": [
     {
       "type": 0,
-      "value": "Try different movements to see how your actions change the graph"
+      "value": "Move the micro:bit to explore how different actions change the graph"
     }
   ],
   "name-action-hint": [

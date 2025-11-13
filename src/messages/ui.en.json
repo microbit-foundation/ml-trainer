@@ -2026,13 +2026,13 @@
   "move-hint": [
     {
       "type": 0,
-      "value": "Try different movements to see how your actions change the graph"
+      "value": "Move the micro:bit to explore how different actions change the graph"
     }
   ],
   "name-action-hint": [
     {
       "type": 0,
-      "value": "Name an action you want the micro:bit to recognise, e.g. ‘waving’ or ‘jumping’"
+      "value": "Name an action you want CreateAI to recognise, like ‘waving’ or ‘jumping’"
     }
   ],
   "name-project": [

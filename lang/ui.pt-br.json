@@ -1184,7 +1184,7 @@
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
   },
   "move-hint": {
-    "defaultMessage": "Try different movements to see how your actions change the graph",
+    "defaultMessage": "Move the micro:bit to explore how different actions change the graph",
     "description": "Hint when you have just connected a micro:bit"
   },
   "name-action-hint": {
