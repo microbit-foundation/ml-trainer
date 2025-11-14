@@ -564,7 +564,7 @@ const createMlStore = (logging: Logging) => {
                 return {
                   actions: newActions,
                   // Hint is set separately using `setHint` due to difference
-                  // in debouncing configuration needed. Hint is set to null 
+                  // in debouncing configuration needed. Hint is set to null
                   // when the hint will change to avoid showing the wrong hint
                   // whilst debouncing the setting of the new hint.
                   ...(hint === newHint ? {} : { hint: null }),
