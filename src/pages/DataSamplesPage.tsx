@@ -4,7 +4,14 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, Flex, HStack, useDisclosure, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  HStack,
+  useDisclosure,
+  usePrefersReducedMotion,
+  VStack,
+} from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, IntlFormatters, useIntl } from "react-intl";
@@ -72,6 +79,7 @@ const DataSamplesPage = () => {
     enabled: !isAddNewActionDisabled,
   });
   const intl = useIntl();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const welcomeDialogDisclosure = useDisclosure({
     defaultIsOpen: !isConnected && !model,
   });
@@ -195,7 +203,9 @@ const DataSamplesPage = () => {
                   onClick={() => trainModelFlowStart(handleNavigateToModel)}
                   variant={hasSufficientData ? "primary" : "secondary-disabled"}
                   animation={
-                    hasSufficientData && !isRecordingDialogOpen
+                    hasSufficientData &&
+                    !isRecordingDialogOpen &&
+                    !prefersReducedMotion
                       ? animations.tada
                       : undefined
                   }

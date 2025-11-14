@@ -1,4 +1,9 @@
-import { Icon, IconProps, keyframes } from "@chakra-ui/react";
+import {
+  Icon,
+  IconProps,
+  keyframes,
+  usePrefersReducedMotion,
+} from "@chakra-ui/react";
 
 export const animations = {
   wobble: `${keyframes({
@@ -56,13 +61,16 @@ const Emoji = ({
   rightEye = "round",
   boxSize = 16,
   color = "brand.500",
+  animation,
   ...props
 }: EmojiProps) => {
+  const prefersReducedMotion = usePrefersReducedMotion();
   return (
     <Icon
       boxSize={boxSize}
       color={color}
       aria-hidden
+      animation={prefersReducedMotion ? undefined : animation}
       {...props}
       viewBox="0 0 124 101"
     >
@@ -137,12 +145,15 @@ const HeartEye = ({ side }: { side: Side }) => {
 export const EmojiAi = ({
   boxSize = 16,
   color = "brand.500",
+  animation,
   ...props
 }: EmojiProps) => {
+  const prefersReducedMotion = usePrefersReducedMotion();
   return (
     <Icon
       boxSize={boxSize}
       color={color}
+      animation={prefersReducedMotion ? undefined : animation}
       {...props}
       viewBox="0 0 80 80"
       aria-hidden

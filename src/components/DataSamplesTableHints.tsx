@@ -10,6 +10,7 @@ import {
   Image,
   Stack,
   Text,
+  usePrefersReducedMotion,
   VisuallyHidden,
   VStack,
 } from "@chakra-ui/react";
@@ -233,6 +234,7 @@ export const AddActionHint = ({ action }: { action: Action }) => {
 };
 
 export const MoveMicrobitHint = () => {
+  const prefersReducedMotion = usePrefersReducedMotion();
   return (
     <HStack
       m={0}
@@ -258,7 +260,11 @@ export const MoveMicrobitHint = () => {
           color="brand.500"
         />
         {/* Ratio hides excess whitespace */}
-        <AspectRatio ratio={30 / 25} w={36} animation={animations.wobble}>
+        <AspectRatio
+          ratio={30 / 25}
+          w={36}
+          animation={prefersReducedMotion ? undefined : animations.wobble}
+        >
           <Image src={moveMicrobitImage} aria-hidden />
         </AspectRatio>
         <Text textAlign="center" w={48} zIndex={3}>
