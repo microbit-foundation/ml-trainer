@@ -563,10 +563,9 @@ const createMlStore = (logging: Logging) => {
                 const newHint = getHint(newActions, false);
                 return {
                   actions: newActions,
-                  // Hint is set separately using `setHint` due to difference
-                  // in debouncing configuration needed. Hint is set to null
-                  // when the hint will change to avoid showing the wrong hint
-                  // whilst debouncing the setting of the new hint.
+                  // Hint is set separately in DataSamplesPage.tsx and debounced
+                  // to avoid aria-live interruptions. Hint is set to null when
+                  // the hint will change to avoid showing incorrect hint.
                   ...(hint === newHint ? {} : { hint: null }),
                   ...updateProject(
                     project,
