@@ -141,6 +141,20 @@
       "value": "mark"
     }
   ],
+  "add-action-hint-label": [
+    {
+      "type": 0,
+      "value": "Finished recording for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "? Press ‘Add action’ button to add another action"
+    }
+  ],
   "ai-activity-timer-resource-title": [
     {
       "type": 0,
@@ -2487,6 +2501,52 @@
       "value": "numSamples"
     }
   ],
+  "record-more-hint-label": [
+    {
+      "type": 0,
+      "value": "Record at least "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    }
+  ],
   "record-samples": [
     {
       "type": 0,
@@ -3139,6 +3199,12 @@
       ],
       "type": 8,
       "value": "mark"
+    }
+  ],
+  "train-hint-label": [
+    {
+      "type": 0,
+      "value": "Finished recording? Press ‘Train the model’ button to train the model"
     }
   ],
   "train-model": [

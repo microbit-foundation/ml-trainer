@@ -5,9 +5,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { Button, Flex, HStack, useDisclosure, VStack } from "@chakra-ui/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, IntlFormatters, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useHasMoved } from "../buffered-data-hooks";
 import DataSamplesTable from "../components/DataSamplesTable";
@@ -25,11 +25,17 @@ import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import WelcomeDialog from "../components/WelcomeDialog";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
-import { DataSamplesPageHint, PostImportDialogState } from "../model";
+import {
+  ActionData,
+  DataSamplesPageHint,
+  PostImportDialogState,
+} from "../model";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
 import { animations } from "../components/Emoji";
+import { useLiveRegion } from "../live-region-hook";
+import debounce from "lodash.debounce";
 
 const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
@@ -82,13 +88,43 @@ const DataSamplesPage = () => {
     isRecordingDialogOpen ||
     isPostImportDialogOpen;
   const hint = useStore((s) => s.hint);
-  const initialiseHint = useStore((s) => s.initialiseHint);
+  const setHint = useStore((s) => s.setHint);
   useEffect(() => {
-    initialiseHint();
-  }, [initialiseHint]);
+    setHint(false);
+  }, [setHint]);
   const dataSamplesHint: DataSamplesPageHint = isDialogOpen
     ? null
     : activeHintForActions(hint, isConnected, hasMoved);
+
+  const pageRef = useRef(null);
+  const region = useLiveRegion(pageRef.current);
+
+  // To avoid aria-live interruptions, particularly when inputting action name.
+  const debouncedSpeakHint = useMemo(
+    () =>
+      debounce(
+        (hintText: string) => {
+          region.speak(hintText);
+        },
+        1000,
+        { leading: false, trailing: true }
+      ),
+    [region]
+  );
+
+  useEffect(() => {
+    if (!dataSamplesHint) {
+      return;
+    }
+    const actionWithHint = actions[actions.length - 1];
+    const hintText = getHintText(
+      intl,
+      dataSamplesHint,
+      isConnected,
+      actionWithHint
+    );
+    debouncedSpeakHint(hintText);
+  }, [actions, dataSamplesHint, debouncedSpeakHint, intl, isConnected, region]);
 
   return (
     <>
@@ -105,7 +141,7 @@ const DataSamplesPage = () => {
         menuItems={<ProjectMenuItems />}
         toolbarItemsRight={<ProjectToolbarItems />}
       >
-        <Flex as="main" flexGrow={1} flexDir="column">
+        <Flex as="main" flexGrow={1} flexDir="column" ref={pageRef}>
           <DataSamplesTable
             selectedActionIdx={selectedActionIdx}
             setSelectedActionIdx={setSelectedActionIdx}
@@ -139,6 +175,9 @@ const DataSamplesPage = () => {
                 <FormattedMessage id="add-action-action" />
               </Button>
             </HStack>
+            {dataSamplesHint === "add-action" && (
+              <AddActionHint action={actions[0]} />
+            )}
             <HStack>
               {model ? (
                 <Button
@@ -165,11 +204,8 @@ const DataSamplesPage = () => {
                 </Button>
               )}
             </HStack>
-            {dataSamplesHint === "move-microbit" && <MoveMicrobitHint />}
-            {dataSamplesHint === "add-action" && (
-              <AddActionHint action={actions[0]} />
-            )}
             {dataSamplesHint === "train" && <TrainHint />}
+            {dataSamplesHint === "move-microbit" && <MoveMicrobitHint />}
           </HStack>
 
           <LiveGraphPanel
@@ -180,6 +216,56 @@ const DataSamplesPage = () => {
       </DefaultPageLayout>
     </>
   );
+};
+
+const getHintText = (
+  intl: IntlFormatters,
+  hint: DataSamplesPageHint,
+  isConnected: boolean,
+  action: ActionData
+): string => {
+  if (!hint) {
+    return "";
+  }
+  switch (hint) {
+    case "add-action": {
+      return intl.formatMessage(
+        { id: "add-action-hint-label" },
+        { actionName: action.name }
+      );
+    }
+    case "move-microbit": {
+      return intl.formatMessage({ id: "move-hint" });
+    }
+    case "record-first-action":
+    case "record-action": {
+      return isConnected
+        ? intl
+            .formatMessage(
+              { id: "record-hint-button-b" },
+              { mark: (chunks: string[]) => chunks }
+            )
+            .toString()
+        : intl.formatMessage({ id: "record-hint" });
+    }
+    case "name-first-action":
+    case "name-action-with-samples":
+    case "name-action": {
+      return intl.formatMessage({ id: "name-action-hint" });
+    }
+    case "record-more-action": {
+      return intl.formatMessage(
+        { id: "record-more-hint-label" },
+        {
+          numSamples: action.recordings.length === 1 ? 2 : 1,
+          actionName: action.name,
+        }
+      );
+    }
+    case "train": {
+      return intl.formatMessage({ id: "train-hint-label" });
+    }
+  }
 };
 
 const activeHintForActions = (

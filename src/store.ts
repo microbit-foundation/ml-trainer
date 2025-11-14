@@ -248,7 +248,7 @@ export interface Actions {
   loadDataset(actions: ActionData[]): void;
   loadProject(project: MakeCodeProject, name: string): void;
   setEditorOpen(open: boolean): void;
-  initialiseHint(): void;
+  setHint(suppressTrainAndAddActionHint?: boolean): void;
   setHasMoved(hasMoved: boolean): void;
   recordingStarted(): void;
   recordingStopped(): void;
@@ -452,14 +452,14 @@ const createMlStore = (logging: Logging) => {
             );
           },
 
-          initialiseHint() {
+          setHint(suppressTrainAndAddActionHint = false) {
             set(
               ({ actions }) => {
-                const hint = getHint(actions, true);
+                const hint = getHint(actions, suppressTrainAndAddActionHint);
                 return { hint };
               },
               false,
-              "initialiseHint"
+              "setHint"
             );
           },
 
@@ -555,7 +555,9 @@ const createMlStore = (logging: Logging) => {
                 );
                 return {
                   actions: newActions,
-                  hint: getHint(newActions, !!model),
+                  // Hint is set separately using `setHint` due to difference
+                  // in debouncing configuration needed.
+                  hint: null,
                   ...updateProject(
                     project,
                     projectEdited,

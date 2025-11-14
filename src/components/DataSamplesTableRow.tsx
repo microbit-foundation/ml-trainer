@@ -93,7 +93,10 @@ const DataSamplesTableRow = ({
           )}
           {hint === "record-action" && <RecordHint />}
           {hint === "record-more-action" && (
-            <RecordMoreHint recorded={action.recordings.length} />
+            <RecordMoreHint
+              actionName={action.name}
+              recorded={action.recordings.length}
+            />
           )}
         </GridItem>
         {hint === "name-action-with-samples" && (

@@ -10,6 +10,7 @@ import {
   Image,
   Stack,
   Text,
+  VisuallyHidden,
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
@@ -82,21 +83,27 @@ export const NameActionWithSamplesHint = () => {
   );
 };
 
+const RecordHintWithButtonB = () => {
+  return (
+    <>
+      <Text textAlign="center" maxW={200} alignSelf="center">
+        <FormattedMessage
+          id="record-hint-button-b"
+          values={{ mark: (chunks) => <strong>{chunks}</strong> }}
+        />
+      </Text>
+      <Image src={microbitButtonB} pl={3} alignSelf="center" aria-hidden />
+    </>
+  );
+};
+
 export const RecordFirstActionHint = () => {
   const { isConnected } = useConnectionStage();
   return (
     <HStack m={0} p={2} transform="translateX(65px)" w="calc(100% - 65px)">
       <UpCurveArrow w="60px" h="93px" color="brand.500" />
       {isConnected ? (
-        <>
-          <Text textAlign="center" maxW={200} alignSelf="center">
-            <FormattedMessage
-              id="record-hint-button-b"
-              values={{ mark: (chunks) => <strong>{chunks}</strong> }}
-            />
-          </Text>
-          <Image src={microbitButtonB} pl={3} alignSelf="center" aria-hidden />
-        </>
+        <RecordHintWithButtonB />
       ) : (
         <Text textAlign="center" maxW={200}>
           <FormattedMessage id="record-hint" />
@@ -122,22 +129,9 @@ export const RecordHint = () => {
       </Box>
       <HStack transform="translateX(20px)">
         {isConnected ? (
-          <>
-            <Text textAlign="center" maxW={200} alignSelf="center">
-              <FormattedMessage
-                id="record-hint-button-b"
-                values={{ mark: (chunks) => <strong>{chunks}</strong> }}
-              />
-            </Text>
-            <Image
-              src={microbitButtonB}
-              pl={3}
-              alignSelf="center"
-              aria-hidden
-            />
-          </>
+          <RecordHintWithButtonB />
         ) : (
-          <Text textAlign="center" maxW={125}>
+          <Text textAlign="center" maxW={200}>
             <FormattedMessage id="record-hint" />
           </Text>
         )}
@@ -146,7 +140,14 @@ export const RecordHint = () => {
   );
 };
 
-export const RecordMoreHint = ({ recorded }: { recorded: number }) => {
+export const RecordMoreHint = ({
+  recorded,
+  actionName,
+}: {
+  recorded: number;
+  actionName: string;
+}) => {
+  const numSamples = recorded === 1 ? 2 : 1;
   return (
     <HStack
       m={0}
@@ -163,11 +164,16 @@ export const RecordMoreHint = ({ recorded }: { recorded: number }) => {
           transform="rotate(-8deg)"
           leftEye={recorded == 2 ? "tick" : "round"}
         />
-        <Text textAlign="center">
-          <FormattedMessage
-            id="record-more-hint"
-            values={{ numSamples: recorded === 1 ? 2 : 1 }}
-          />
+        <VisuallyHidden>
+          <Text>
+            <FormattedMessage
+              id="record-more-hint-label"
+              values={{ numSamples, actionName }}
+            />
+          </Text>
+        </VisuallyHidden>
+        <Text textAlign="center" aria-hidden>
+          <FormattedMessage id="record-more-hint" values={{ numSamples }} />
         </Text>
       </HStack>
     </HStack>
@@ -200,7 +206,15 @@ export const AddActionHint = ({ action }: { action: Action }) => {
           />
         </Box>
       </HStack>
-      <Text textAlign="center">
+      <VisuallyHidden>
+        <Text>
+          <FormattedMessage
+            id="add-action-hint-label"
+            values={{ actionName: action.name }}
+          />
+        </Text>
+      </VisuallyHidden>
+      <Text textAlign="center" aria-hidden>
         <FormattedMessage
           id="add-action-hint"
           values={{
@@ -274,7 +288,12 @@ export const TrainHint = () => {
           h="120%"
         />
         <EmojiAi boxSize={20} pb={3} animation={animations.spin} zIndex={3} />
-        <Text textAlign="center" zIndex={3}>
+        <VisuallyHidden>
+          <Text>
+            <FormattedMessage id="train-hint-label" />
+          </Text>
+        </VisuallyHidden>
+        <Text textAlign="center" zIndex={3} aria-hidden>
           <FormattedMessage
             id="train-hint"
             values={{

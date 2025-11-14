@@ -55,6 +55,7 @@ const ActionNameCard = ({
   const toastId = "name-too-long-toast";
   const setActionName = useStore((s) => s.setActionName);
   const setActionIcon = useStore((s) => s.setActionIcon);
+  const setHint = useStore((s) => s.setHint);
   const { icon, ID: id } = value;
   const [localName, setLocalName] = useState<string>(value.name);
   const predictionResult = useStore((s) => s.predictionResult);
@@ -70,9 +71,20 @@ const ActionNameCard = ({
           setActionName(id, name);
         },
         400,
+        // Allowing the first 'Record' button to appear immediately so that
+        // users can keyboard navigate to the button immediately after naming
+        // their first action.
         { leading: true }
       ),
     [setActionName]
+  );
+
+  const debouncedSetHint = useMemo(
+    () =>
+      // Set hint on the trailing end of inputting action name to avoid
+      // aria-live for hint from being interrupted by inputting of action name.
+      debounce(() => setHint(false), 400, { leading: false, trailing: true }),
+    [setHint]
   );
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -95,8 +107,9 @@ const ActionNameCard = ({
       }
       setLocalName(name);
       debouncedSetActionName(id, name);
+      debouncedSetHint();
     },
-    [debouncedSetActionName, id, intl, toast]
+    [debouncedSetActionName, debouncedSetHint, id, intl, toast]
   );
 
   const handleIconSelected = useCallback(
