@@ -549,15 +549,25 @@ const createMlStore = (logging: Logging) => {
 
           setActionName(id: ActionData["ID"], name: string) {
             return set(
-              ({ project, projectEdited, actions, model, dataWindow }) => {
+              ({
+                project,
+                projectEdited,
+                actions,
+                model,
+                dataWindow,
+                hint,
+              }) => {
                 const newActions = actions.map((action) =>
                   id !== action.ID ? action : { ...action, name }
                 );
+                const newHint = getHint(newActions, false);
                 return {
                   actions: newActions,
                   // Hint is set separately using `setHint` due to difference
-                  // in debouncing configuration needed.
-                  hint: null,
+                  // in debouncing configuration needed. Hint is set to null 
+                  // when the hint will change to avoid showing the wrong hint
+                  // whilst debouncing the setting of the new hint.
+                  ...(hint === newHint ? {} : { hint: null }),
                   ...updateProject(
                     project,
                     projectEdited,
