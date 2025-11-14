@@ -15,102 +15,19 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import { ComponentProps, useCallback, useEffect, useState } from "react";
+import { ComponentProps } from "react";
 import { FormattedMessage } from "react-intl";
-import { ConnectionStatus } from "../connect-status-hooks";
-import { useConnectionStage } from "../connection-stage-hooks";
-import { ButtonWithLoading } from "./ButtonWithLoading";
 import preConnectVideo from "../images/pre-connect-video.mp4";
-import { useStore } from "../store";
+import { ButtonWithLoading } from "./ButtonWithLoading";
+import { useConnectFirst } from "./ConnectFirstDialog";
 
-interface WelcomeDialogProps
-  extends Omit<ComponentProps<typeof Modal>, "children"> {
-  onChooseConnect?: () => void;
-}
+type WelcomeDialogProps = Omit<ComponentProps<typeof Modal>, "children">;
 
-const WelcomeDialog = ({
-  onClose,
-  onChooseConnect,
-  isOpen,
-  ...rest
-}: WelcomeDialogProps) => {
-  const {
-    actions,
-    status: connStatus,
-    isDialogOpen: isConnectionDialogOpen,
-  } = useConnectionStage();
-  const [isWaiting, setIsWaiting] = useState<boolean>(false);
-
-  const deleteAllActions = useStore((s) => s.deleteAllActions);
-  const hasActions = useStore((s) => s.actions.length > 0);
-
-  const handleOnClose = useCallback(
-    (connecting: boolean) => {
-      // TODO: hacky way to create the initial action!
-      if (!hasActions && !connecting) {
-        deleteAllActions();
-      }
-      setIsWaiting(false);
-      onClose();
-    },
-    [deleteAllActions, hasActions, onClose]
-  );
-
-  const handleConnect = useCallback(async () => {
-    onClose();
-    onChooseConnect?.();
-    switch (connStatus) {
-      case ConnectionStatus.FailedToConnect:
-      case ConnectionStatus.FailedToReconnectTwice:
-      case ConnectionStatus.FailedToSelectBluetoothDevice:
-      case ConnectionStatus.NotConnected: {
-        // Start connection flow.
-        actions.startConnect({});
-        return handleOnClose(true);
-      }
-      case ConnectionStatus.ConnectionLost:
-      case ConnectionStatus.FailedToReconnect:
-      case ConnectionStatus.Disconnected: {
-        // Reconnect.
-        await actions.reconnect();
-        return handleOnClose(true);
-      }
-      case ConnectionStatus.ReconnectingAutomatically: {
-        // Wait for reconnection to happen.
-        setIsWaiting(true);
-        return;
-      }
-      case ConnectionStatus.Connected: {
-        // Connected whilst dialog is up.
-        return handleOnClose(false);
-      }
-      case ConnectionStatus.ReconnectingExplicitly:
-      case ConnectionStatus.Connecting: {
-        // Impossible cases.
-        return handleOnClose(true);
-      }
-    }
-  }, [onClose, onChooseConnect, connStatus, actions, handleOnClose]);
-
-  useEffect(() => {
-    if (
-      isOpen &&
-      (isConnectionDialogOpen ||
-        (isWaiting && connStatus === ConnectionStatus.Connected))
-    ) {
-      // Close dialog if connection dialog is opened, or
-      // once connected after waiting.
-      handleOnClose(isConnectionDialogOpen);
-      return;
-    }
-  }, [
-    connStatus,
-    handleOnClose,
-    isConnectionDialogOpen,
+const WelcomeDialog = ({ onClose, isOpen, ...rest }: WelcomeDialogProps) => {
+  const { handleClose, isConnecting, handleConnect } = useConnectFirst({
     isOpen,
-    isWaiting,
     onClose,
-  ]);
+  });
 
   return (
     <Modal
@@ -118,7 +35,7 @@ const WelcomeDialog = ({
       motionPreset="none"
       size="4xl"
       isCentered
-      onClose={() => handleOnClose(false)}
+      onClose={handleClose}
       isOpen={isOpen}
       {...rest}
     >
@@ -148,7 +65,7 @@ const WelcomeDialog = ({
             <ButtonWithLoading
               variant="primary"
               onClick={handleConnect}
-              isLoading={isWaiting}
+              isLoading={isConnecting}
             >
               <FormattedMessage id="connect-action" />
             </ButtonWithLoading>
