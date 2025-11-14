@@ -1,11 +1,12 @@
 import { test } from "./fixtures";
 
 test.describe("test model page", () => {
-  test.beforeEach(async ({ homePage, newPage }) => {
+  test.beforeEach(async ({ homePage, newPage, dataSamplesPage }) => {
     await homePage.setupContext();
     await homePage.goto();
     await homePage.getStarted();
     await newPage.continueSavedSession("test-data/dataset.json");
+    await dataSamplesPage.welcomeDialog.close();
   });
 
   test("initial state", async ({ dataSamplesPage, testModelPage }) => {

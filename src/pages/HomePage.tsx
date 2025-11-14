@@ -31,7 +31,7 @@ import projectImage2 from "theme-package/images/simple-ai-exercise-timer.png";
 import projectImage1 from "theme-package/images/ai-storytelling-friend.png";
 import homepageVideo from "theme-package/images/homepage-short-clip.mp4";
 import HomepageBannerVideo from "../components/HomepageBannerVideo";
-import StepByStepIllustration from "../components/StepByStepIllustration";
+import stepByStep from "../images/step-by-step.svg";
 import {
   landingPageUrl,
   projectUrl,
@@ -133,6 +133,19 @@ const HomePage = () => {
             </Box>
           )}
         </HStack>
+        <VStack gap={10} w="100%">
+          <Heading as="h2" textAlign="center" variant="marketing">
+            <FormattedMessage id="homepage-step-by-step" />
+          </Heading>
+          <VStack
+            position="relative"
+            role="img"
+            // TODO: Update aria-label once step by step image is finalised.
+            aria-label={intl.formatMessage({ id: "steps-alt" })}
+          >
+            <Image src={stepByStep} />
+          </VStack>
+        </VStack>
         <VStack spacing={10} w="100%" maxW="container.md">
           <Heading as="h2" textAlign="center" variant="marketing">
             <FormattedMessage id="homepage-how-it-works" />
@@ -162,18 +175,6 @@ const HomePage = () => {
               />
             </Text>
           )}
-        </VStack>
-        <VStack gap={10}>
-          <Heading as="h2" textAlign="center" variant="marketing">
-            <FormattedMessage id="homepage-step-by-step" />
-          </Heading>
-          <VStack
-            position="relative"
-            role="img"
-            aria-label={intl.formatMessage({ id: "steps-alt" })}
-          >
-            <StepByStepIllustration />
-          </VStack>
         </VStack>
         {flags.websiteContent && (
           <VStack gap={10}>
