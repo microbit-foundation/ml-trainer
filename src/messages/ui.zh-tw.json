@@ -477,32 +477,6 @@
       "value": "微型 USB 纜線"
     }
   ],
-  "connect-or-import": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "連線數據收集用的 micro:bit"
-        }
-      ],
-      "type": 8,
-      "value": "link1"
-    },
-    {
-      "type": 0,
-      "value": " 或"
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "匯入數據樣本"
-        }
-      ],
-      "type": 8,
-      "value": "link2"
-    }
-  ],
   "connect-pattern-heading": [
     {
       "type": 0,
@@ -2187,12 +2161,6 @@
     {
       "type": 0,
       "value": "下一個"
-    }
-  ],
-  "no-data-samples": [
-    {
-      "type": 0,
-      "value": "沒有數據樣本"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [

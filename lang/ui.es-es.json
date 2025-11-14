@@ -267,10 +267,6 @@
     "defaultMessage": "Cable micro USB",
     "description": "Label for cable icon in list of requirements"
   },
-  "connect-or-import": {
-    "defaultMessage": "<link1>Conecta una colección de datos de micro:bit</link1> o <link2>importa muestras de datos</link2>",
-    "description": "Empty data samples page text"
-  },
   "connect-pattern-heading": {
     "defaultMessage": "Copiar patrón",
     "description": "Heading for Bluetooth pattern connection dialog"
@@ -1262,10 +1258,6 @@
   "next-action": {
     "defaultMessage": "Siguiente",
     "description": "Next button text for dialogs and similar"
-  },
-  "no-data-samples": {
-    "defaultMessage": "No hay muestras de datos",
-    "description": "Empty data samples page status text"
   },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "Este proyecto no contenía ninguna muestra de datos, por lo que sólo se ha abierto el código. Necesitas entrenar un modelo antes de poder utilizar el código.",

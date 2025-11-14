@@ -267,10 +267,6 @@
     "defaultMessage": "crwdns362770:0crwdne362770:0",
     "description": "Label for cable icon in list of requirements"
   },
-  "connect-or-import": {
-    "defaultMessage": "crwdns362772:0crwdne362772:0",
-    "description": "Empty data samples page text"
-  },
   "connect-pattern-heading": {
     "defaultMessage": "crwdns362774:0crwdne362774:0",
     "description": "Heading for Bluetooth pattern connection dialog"
@@ -1262,10 +1258,6 @@
   "next-action": {
     "defaultMessage": "crwdns363214:0crwdne363214:0",
     "description": "Next button text for dialogs and similar"
-  },
-  "no-data-samples": {
-    "defaultMessage": "crwdns363216:0crwdne363216:0",
-    "description": "Empty data samples page status text"
   },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "crwdns363218:0crwdne363218:0",

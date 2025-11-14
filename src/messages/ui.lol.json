@@ -467,12 +467,6 @@
       "value": "crwdns362770:0crwdne362770:0"
     }
   ],
-  "connect-or-import": [
-    {
-      "type": 0,
-      "value": "crwdns362772:0crwdne362772:0"
-    }
-  ],
   "connect-pattern-heading": [
     {
       "type": 0,
@@ -2063,12 +2057,6 @@
     {
       "type": 0,
       "value": "crwdns363214:0crwdne363214:0"
-    }
-  ],
-  "no-data-samples": [
-    {
-      "type": 0,
-      "value": "crwdns363216:0crwdne363216:0"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [

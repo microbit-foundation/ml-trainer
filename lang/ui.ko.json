@@ -267,10 +267,6 @@
     "defaultMessage": "마이크로 USB 케이블",
     "description": "Label for cable icon in list of requirements"
   },
-  "connect-or-import": {
-    "defaultMessage": "<link1>데이터 수집 micro:bit에 연결하기</link1> 또는  <link2>데이터 샘플 가져오기</link2>를 하세요.",
-    "description": "Empty data samples page text"
-  },
   "connect-pattern-heading": {
     "defaultMessage": "패턴 복사",
     "description": "Heading for Bluetooth pattern connection dialog"
@@ -1262,10 +1258,6 @@
   "next-action": {
     "defaultMessage": "다음",
     "description": "Next button text for dialogs and similar"
-  },
-  "no-data-samples": {
-    "defaultMessage": "데이터 샘플 없음",
-    "description": "Empty data samples page status text"
   },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "이 프로젝트에는 데이터 샘플이 없어 코드만 공개되었습니다. 코드를 사용하기 전에 모델을 훈련해야 합니다.",

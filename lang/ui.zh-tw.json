@@ -267,10 +267,6 @@
     "defaultMessage": "微型 USB 纜線",
     "description": "Label for cable icon in list of requirements"
   },
-  "connect-or-import": {
-    "defaultMessage": "<link1>連線數據收集用的 micro:bit</link1> 或<link2>匯入數據樣本</link2>",
-    "description": "Empty data samples page text"
-  },
   "connect-pattern-heading": {
     "defaultMessage": "複製圖案",
     "description": "Heading for Bluetooth pattern connection dialog"
@@ -1262,10 +1258,6 @@
   "next-action": {
     "defaultMessage": "下一個",
     "description": "Next button text for dialogs and similar"
-  },
-  "no-data-samples": {
-    "defaultMessage": "沒有數據樣本",
-    "description": "Empty data samples page status text"
   },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "這項專案不包含任何數據樣本，因此僅開啟程式碼。您需要先訓練模型，然後才能使用程式碼。",

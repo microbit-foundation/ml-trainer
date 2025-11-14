@@ -477,32 +477,6 @@
       "value": "Micro USB cable"
     }
   ],
-  "connect-or-import": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Connect a data collection micro:bit"
-        }
-      ],
-      "type": 8,
-      "value": "link1"
-    },
-    {
-      "type": 0,
-      "value": " or "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "import data samples"
-        }
-      ],
-      "type": 8,
-      "value": "link2"
-    }
-  ],
   "connect-pattern-heading": [
     {
       "type": 0,
@@ -2191,12 +2165,6 @@
     {
       "type": 0,
       "value": "Next"
-    }
-  ],
-  "no-data-samples": [
-    {
-      "type": 0,
-      "value": "No data samples"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [

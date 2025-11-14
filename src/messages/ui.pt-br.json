@@ -477,32 +477,6 @@
       "value": "Cabo Micro USB"
     }
   ],
-  "connect-or-import": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Conecte um micro:bit de coleta de dados"
-        }
-      ],
-      "type": 8,
-      "value": "link1"
-    },
-    {
-      "type": 0,
-      "value": " ou "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "importe as amostras de dados"
-        }
-      ],
-      "type": 8,
-      "value": "link2"
-    }
-  ],
   "connect-pattern-heading": [
     {
       "type": 0,
@@ -2171,12 +2145,6 @@
     {
       "type": 0,
       "value": "Próximo"
-    }
-  ],
-  "no-data-samples": [
-    {
-      "type": 0,
-      "value": "Nenhuma amostra de dados"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [

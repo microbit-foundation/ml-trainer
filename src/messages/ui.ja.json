@@ -469,32 +469,6 @@
       "value": "マイクロUSBケーブル"
     }
   ],
-  "connect-or-import": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "データ収集用micro:bitを接続"
-        }
-      ],
-      "type": 8,
-      "value": "link1"
-    },
-    {
-      "type": 0,
-      "value": " または "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "データサンプルのインポート"
-        }
-      ],
-      "type": 8,
-      "value": "link2"
-    }
-  ],
   "connect-pattern-heading": [
     {
       "type": 0,
@@ -2171,12 +2145,6 @@
     {
       "type": 0,
       "value": "次"
-    }
-  ],
-  "no-data-samples": [
-    {
-      "type": 0,
-      "value": "データサンプルがありません"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
