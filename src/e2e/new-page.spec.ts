@@ -26,6 +26,7 @@ test.describe("new page", () => {
 
   test("resume session", async ({ newPage, homePage, dataSamplesPage }) => {
     await newPage.startNewSession();
+    await dataSamplesPage.welcomeDialog.close();
     await dataSamplesPage.navbar.home();
     await homePage.getStarted();
     await newPage.expectResumeButtonToShowProjectName("Untitled");
