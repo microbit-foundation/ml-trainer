@@ -140,13 +140,10 @@ const HomePage = () => {
           <VStack
             position="relative"
             role="img"
+            // TODO: Update aria-label once step by step image is finalised.
             aria-label={intl.formatMessage({ id: "steps-alt" })}
           >
-            <Image
-              src={stepByStep}
-              // TODO: Add appropriate alt text.
-              alt={intl.formatMessage({ id: "homepage-alt-hands" })}
-            />
+            <Image src={stepByStep} />
           </VStack>
         </VStack>
         <VStack spacing={10} w="100%" maxW="container.md">

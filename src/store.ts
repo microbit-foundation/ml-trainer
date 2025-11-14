@@ -151,7 +151,7 @@ export interface State {
   timestamp: number | undefined;
 
   /**
-   * To decide hint to trigger depending on actions.
+   * Hint to trigger depending on actions.
    */
   hint: DataSamplesPageHint;
   /**

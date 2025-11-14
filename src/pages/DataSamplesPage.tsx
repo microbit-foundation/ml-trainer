@@ -98,11 +98,14 @@ const DataSamplesPage = () => {
   const hint = useStore((s) => s.hint);
   const setHint = useStore((s) => s.setHint);
   useEffect(() => {
-    setHint(false);
+    // Initialise hint on first load.
+    setHint(true);
   }, [setHint]);
   const dataSamplesHint: DataSamplesPageHint = isDialogOpen
     ? null
-    : activeHintForActions(hint, isConnected, hasMoved);
+    : isConnected && !hasMoved
+    ? "move-microbit"
+    : hint;
 
   const pageRef = useRef(null);
   const region = useLiveRegion(pageRef.current);
@@ -276,17 +279,6 @@ const getHintText = (
       return intl.formatMessage({ id: "train-hint-label" });
     }
   }
-};
-
-const activeHintForActions = (
-  hint: DataSamplesPageHint,
-  isConnected: boolean,
-  hasMoved: boolean
-): DataSamplesPageHint => {
-  if (isConnected && !hasMoved) {
-    return "move-microbit";
-  }
-  return hint;
 };
 
 export default DataSamplesPage;
