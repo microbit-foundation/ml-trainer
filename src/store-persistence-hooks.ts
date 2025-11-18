@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { ActionDataY, RecordingDataY } from "./model";
-import { useProjectStorage } from "./project-persistence/ProjectStorageProvider";
 import { useStore } from "./store";
 import { BASE_DOC_NAME, loadNewDoc } from "./store-persistence";
 import * as Y from "yjs";
+import { useProjectList } from "./project-persistence/project-list-hooks";
+import { usePersistentProject } from "./project-persistence/persistent-project-hooks";
 
 export const useStoreProjects = () => {
     // storeprojects relates to projects of type Store
     // projectstorage stores projects
     // simple?
     // TODO: improve naming
-    const { newStoredProject, restoreStoredProject } = useProjectStorage();
+    const { newStoredProject, restoreStoredProject } = useProjectList();
     const newProject = async () => {
         const newProjectImpl = async () => {
             const { ydoc } = await newStoredProject();
@@ -18,9 +19,7 @@ export const useStoreProjects = () => {
             ydoc.getMap("files").set("actions", new Y.Array<ActionDataY>);
             return ydoc;
         }
-        const newProjectPromise = newProjectImpl();
-        loadNewDoc(newProjectPromise);
-        await newProjectPromise;
+        await loadNewDoc(newProjectImpl());
         // Needed to attach Y types
         await useStore.persist.rehydrate();
     }
@@ -29,10 +28,7 @@ export const useStoreProjects = () => {
             const { ydoc } = await restoreStoredProject(projectId);
             return ydoc;
         }
-        const loadProjectPromise = loadProjectImpl();
-        loadNewDoc(loadProjectPromise);
-        await loadProjectPromise;
-
+        await loadNewDoc(loadProjectImpl());
         await useStore.persist.rehydrate();
     }
     return { loadProject, newProject };
@@ -40,7 +36,7 @@ export const useStoreProjects = () => {
 
 export const useActions = () => {
     const [actionsRev, setActionsRev] = useState(0);
-    const { ydoc } = useProjectStorage();
+    const { ydoc } = usePersistentProject();
     const actions = ydoc?.getMap("files").get("actions") as ActionDataY; // TODO: what happens when you don't got actions?
     useEffect(() => {
         const actionsInner = ydoc?.getMap("files").get("actions") as ActionDataY;
@@ -50,7 +46,7 @@ export const useActions = () => {
         const observer = () => setActionsRev(actionsRev + 1);
         actionsInner.observeDeep(observer)
         return () => actionsInner.unobserveDeep(observer);
-    }, [ydoc]);
+    }, [ydoc, actionsRev]);
     return actions;
 }
 

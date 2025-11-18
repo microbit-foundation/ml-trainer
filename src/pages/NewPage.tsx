@@ -5,27 +5,15 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  Box,
-  Button,
   Container,
   Grid,
-  GridItem,
   Heading,
   HStack,
   Icon,
-  List,
-  ListItem,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { RiAddLine, RiFolderOpenLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
@@ -41,11 +29,12 @@ import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 import { useStoreProjects } from "../store-persistence-hooks";
-import { useProjectStorage } from "../project-persistence/ProjectStorageProvider";
 import { ProjectItem } from "../project-persistence/ProjectItem";
 import ProjectHistoryModal from "../project-persistence/ProjectHistoryModal";
 import { ProjectEntry } from "../project-persistence/project-list-db";
 import RenameProjectModal from "../project-persistence/RenameProjectModal";
+import { useProjectList } from "../project-persistence/project-list-hooks";
+import { useProjectHistory } from "../project-persistence/project-history-hooks";
 
 const NewPage = () => {
   const newSession = useStore((s) => s.newSession);
@@ -57,8 +46,8 @@ const NewPage = () => {
   const [showProjectRename, setShowProjectRename] =
     useState<ProjectEntry | null>(null);
 
-  const { projectList, deleteProject, loadRevision, setProjectName } =
-    useProjectStorage();
+  const { projectList, deleteProject, setProjectName } = useProjectList();
+  const { loadRevision } = useProjectHistory();
 
   const handleOpenSession = useCallback(
     async (projectId: string) => {
@@ -80,7 +69,7 @@ const NewPage = () => {
       await loadRevision(projectId, revisionId);
       navigate(createDataSamplesPageUrl());
     },
-    [logging, navigate]
+    [logging, navigate, loadRevision]
   );
 
   const loadProjectRef = useRef<LoadProjectInputRef>(null);
@@ -95,7 +84,7 @@ const NewPage = () => {
     await newProject();
     newSession();
     navigate(createDataSamplesPageUrl());
-  }, [logging, newSession, navigate]);
+  }, [logging, newSession, navigate, newProject]);
 
   const intl = useIntl();
   const continueSessionTitle = intl.formatMessage({
@@ -160,7 +149,7 @@ const NewPage = () => {
                 <ProjectItem
                   key={proj.id}
                   project={proj}
-                  loadProject={async () => {
+                  loadProject={() => {
                     void handleOpenSession(proj.id);
                   }}
                   deleteProject={deleteProject}
@@ -182,8 +171,8 @@ const NewPage = () => {
         isOpen={showProjectRename !== null}
         onDismiss={() => setShowProjectRename(null)}
         projectInfo={showProjectRename}
-        handleRename={(projectId, projectName) => {
-          setProjectName(projectId, projectName);
+        handleRename={async (projectId, projectName) => {
+          await setProjectName(projectId, projectName);
           setShowProjectRename(null);
         }}
       />

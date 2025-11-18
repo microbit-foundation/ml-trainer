@@ -75,7 +75,7 @@ const DataSamplesTable = ({
   selectedActionIdx: selectedActionIdx,
   setSelectedActionIdx: setSelectedActionIdx,
 }: DataSamplesTableProps) => {
-  const actions = useActions().toJSON();
+  const actions = useActions().toJSON() as ActionData[];
   // Default to first action being selected if last action is deleted.
   const selectedAction: ActionData = actions[selectedActionIdx] ?? actions[0];
 

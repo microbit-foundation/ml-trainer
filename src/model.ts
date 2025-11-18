@@ -37,7 +37,7 @@ export interface ActionData extends Action {
 // TODO: maybe use zod?
 export type RecordingDatumY = Y.Map<number | XYZData>;
 export type RecordingDataY = Y.Array<RecordingDatumY>;
-export type ActionDatumY = Y.Map<string | number | MakeCodeIcon | RecordingDataY>;
+export type ActionDatumY = Y.Map<string | number | RecordingDataY>;
 export type ActionDataY = Y.Array<ActionDatumY>;
 
 export interface DatasetEditorJsonFormat {

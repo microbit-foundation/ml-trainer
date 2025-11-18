@@ -28,6 +28,7 @@ import CodeViewCard from "./CodeViewCard";
 import CodeViewDefaultBlockCard from "./CodeViewDefaultBlockCard";
 import HeadingGrid from "./HeadingGrid";
 import { useActions } from "../store-persistence-hooks";
+import { ActionData } from "../model";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 360px 40px auto",
@@ -53,7 +54,7 @@ const headings = [
 ];
 
 const TestingModelTable = () => {
-  const actions = useActions().toJSON();
+  const actions = useActions().toJSON() as ActionData[];
   const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { project, projectEdited } = useProject();
   const { isConnected } = useConnectionStage();

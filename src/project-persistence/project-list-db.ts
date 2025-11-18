@@ -39,12 +39,11 @@ export const withProjectDb: ProjectDbWrapper = async (accessMode, callback) => {
         updateProjectData.onsuccess = () => {
           updateProjectData.result.forEach((project) => {
             if (!('modifiedDate' in project)) {
-              project.modifiedDate = now;
-              projects.put(project);
+              projects.put({ ...project, modifiedDate: now });
             }
           });
         };
-      };
+      }
     };
 
     openRequest.onsuccess = async () => {
@@ -64,3 +63,20 @@ export const withProjectDb: ProjectDbWrapper = async (accessMode, callback) => {
     openRequest.onerror = rej;
   });
 };
+
+
+export const modifyProject = async (id: string, extras?: Partial<ProjectEntry>) => {
+  await withProjectDb("readwrite", async (store) => {
+    await new Promise((res, _rej) => {
+      const getQuery = store.get(id);
+      getQuery.onsuccess = () => {
+        const putQuery = store.put({
+          ...getQuery.result,
+          ...extras,
+          modifiedDate: new Date().valueOf(),
+        });
+        putQuery.onsuccess = () => res(getQuery.result);
+      };
+    });
+  });
+}

@@ -1,5 +1,6 @@
 import { PersistStorage, StorageValue } from "zustand/middleware";
 import * as Y from "yjs";
+import { ActionDataY } from "./model";
 
 
 interface ProjectState {
@@ -7,7 +8,7 @@ interface ProjectState {
     loadingPromise: Promise<Y.Doc> | null;
 }
 
-let activeState : ProjectState = {
+const activeState: ProjectState = {
     doc: null,
     loadingPromise: null
 }
@@ -31,11 +32,11 @@ export const BASE_DOC_NAME = "ml";
 // store.ts currently has a lot of controller logic, and it could be pared out and synced
 // more loosely with the yjs-ified data. E.g. project syncing could be done at a level above
 // the store, with a subscription.
-export const projectStorage = <T>() => {
+export const projectStorage = <T extends { actions: ActionDataY }>() => {
 
     const getItemImpl = (ydoc: Y.Doc) => {
-        const state = JSON.parse(ydoc.getText(BASE_DOC_NAME).toString()) as T;
-        (state as undefined as any).actions = ydoc.getMap("files").get("actions");
+        const state = JSON.parse(ydoc.getText(BASE_DOC_NAME).toJSON()) as T;
+        state.actions = ydoc.getMap("files").get("actions") as ActionDataY;
         return { state, version: 2 };
     }
 
@@ -51,7 +52,8 @@ export const projectStorage = <T>() => {
     }
 
     const setItem = (_name: string, valueFull: StorageValue<T>) => {
-        const { state: { actions, ...state }, version } = valueFull as StorageValue<T & { actions: any }>;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { state: { actions, ...state }, version } = valueFull as StorageValue<T & { actions: ActionDataY }>;
 
         const value = { state, version };
 

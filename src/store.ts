@@ -655,7 +655,7 @@ const createMlStore = (logging: Logging) => {
           loadDataset(newActions: ActionData[]) {
             const { actions } = get();
             actions.delete(0, actions.length);
-            let newActionsY: ActionDatumY[] = actionDataToY(newActions);
+            const newActionsY: ActionDatumY[] = actionDataToY(newActions);
 
             actions.push(newActionsY);
             set(({ project, projectEdited, settings }) => {
@@ -760,7 +760,7 @@ const createMlStore = (logging: Logging) => {
             // can block the UI. 50 ms is not sufficient, so use 100 for now.
             await new Promise((res) => setTimeout(res, 100));
             const trainingResult = await trainModel(
-              actions.toJSON(),
+              actions.toJSON() as ActionData[],
               dataWindow,
               (trainModelProgress) =>
                 set({ trainModelProgress }, false, "trainModelProgress")
@@ -801,7 +801,7 @@ const createMlStore = (logging: Logging) => {
                 ...previousProject.text,
                 ...generateProject(
                   previousProject.header?.name ?? untitledProjectName,
-                  { data: actions.toJSON() },
+                  { data: actions.toJSON() as ActionData[] },
                   model,
                   dataWindow
                 ).text,
@@ -1035,7 +1035,7 @@ const createMlStore = (logging: Logging) => {
                   tourState: postConnectTourTrigger
                     ? {
                         index: 0,
-                      ...getTourSpec(postConnectTourTrigger, actions.toJSON()),
+                      ...getTourSpec(postConnectTourTrigger, actions.toJSON() as ActionData[]),
                       }
                     : tourState,
                   postConnectTourTrigger: undefined,
@@ -1053,7 +1053,7 @@ const createMlStore = (logging: Logging) => {
                 (!state.tourState &&
                   !state.settings.toursCompleted.includes(trigger.name))
               ) {
-                const tourSpec = getTourSpec(trigger, state.actions.toJSON());
+                const tourSpec = getTourSpec(trigger, state.actions.toJSON() as ActionData[]);
                 const result = {
                   tourState: {
                     ...tourSpec,
@@ -1291,9 +1291,11 @@ const createMlStore = (logging: Logging) => {
                   gestures?: ActionData[];
                 }
                 const stateV0 = persistedStateUnknown as StateV0;
+
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const { gestures, ...rest } = stateV0;
 
-                // TODO: spicy problem as we can't see the Y.js actions from here
+                // TODO: Poke gestures through
                 //const newActions = actionDataToY(gestures as ActionData[]);
                 //actions.delete(0, actions.length);
                 //actions.push(newActions);
@@ -1446,8 +1448,8 @@ const withActionIndex = (actionID: number, actions: ActionDataY, cb: (actionInde
 }
 
 const actionDataToY = (newActions: ActionData[]) => {
-  let existingIcons: MakeCodeIcon[] = [];
-  let newActionsY: ActionDatumY[] = [];
+  const existingIcons: MakeCodeIcon[] = [];
+  const newActionsY: ActionDatumY[] = [];
   for (const a of newActions) {
     const newActionY: ActionDatumY = new Y.Map();
     newActionY.set("ID", a.ID);
