@@ -1455,6 +1455,17 @@ const actionDataToY = (newActions: ActionData[]) => {
     const newIcon = a.icon ? a.icon : actionIcon({ isFirstAction: false, existingIcons });
     existingIcons.push(newIcon);
     newActionY.set("icon", newIcon);
+    newActionY.set("requiredConfidence", a.requiredConfidence as number); // TODO: consider undefined case
+    const recordings: RecordingDatumY[] = [];
+    for (const r of a.recordings) {
+      const recordingY = new Y.Map() as RecordingDatumY;
+      recordingY.set("ID", r.ID);
+      recordingY.set("data", r.data);
+      recordings.push(recordingY);
+    }
+    const recordingsY = new Y.Array() as RecordingDataY;
+    recordingsY.push(recordings);
+    newActionY.set("recordings", recordingsY);
     newActionsY.push(newActionY);
   }
   return newActionsY;

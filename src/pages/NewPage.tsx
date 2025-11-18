@@ -43,7 +43,6 @@ import { createDataSamplesPageUrl } from "../urls";
 import { useStoreProjects } from "../store-persistence-hooks";
 import { useProjectStorage } from "../project-persistence/ProjectStorageProvider";
 import { ProjectItem } from "../project-persistence/ProjectItem";
-import { HistoryList } from "../project-persistence/project-history-db";
 import ProjectHistoryModal from "../project-persistence/ProjectHistoryModal";
 import { ProjectEntry } from "../project-persistence/project-list-db";
 import RenameProjectModal from "../project-persistence/RenameProjectModal";
@@ -69,7 +68,7 @@ const NewPage = () => {
       await loadProject(projectId);
       navigate(createDataSamplesPageUrl());
     },
-    [logging, navigate]
+    [logging, navigate, loadProject]
   );
 
   const handleOpenRevision = useCallback(

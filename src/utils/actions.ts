@@ -17,5 +17,9 @@ export const forSomeAction = (actions: ActionDataY, cb: (action: ActionDatumY) =
 }
 
 export const hasSufficientDataForTraining = (actions: ActionDataY): boolean => {
-  return actions.length >= 2 && actions.map(action => (action.get("recordings") as RecordingDataY).length).reduce((p, c) => p && c >= 3, true);
+  if (actions.length < 2) return false;
+  const numRecordings = actions.map(action => (action.get("recordings") as RecordingDataY).length);
+  const enoughRecordings = numRecordings.reduce((p, c) => p && c >= 3, true);
+  return enoughRecordings;
+  //return actions.length >= 2 && actions.map(action => (action.get("recordings") as RecordingDataY).length).reduce((p, c) => p && c >= 3, true);
 };

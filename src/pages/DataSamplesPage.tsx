@@ -21,11 +21,8 @@ import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
-import { forSomeAction } from "../utils/actions";
-import {
-  useActions,
-  useHasSufficientDataForTraining,
-} from "../store-persistence-hooks";
+import { forSomeAction, hasSufficientDataForTraining } from "../utils/actions";
+import { useActions } from "../store-persistence-hooks";
 
 const DataSamplesPage = () => {
   const actions = useActions();
@@ -45,7 +42,7 @@ const DataSamplesPage = () => {
     }
   }, [isConnected, tourStart]);
 
-  const hasSufficientData = useHasSufficientDataForTraining();
+  const hasSufficientData = hasSufficientDataForTraining(actions);
   const isAddNewActionDisabled = forSomeAction(
     actions,
     (a) => (a.get("name") as string).length === 0

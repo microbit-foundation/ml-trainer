@@ -4,7 +4,6 @@ import { useProjectStorage } from "./project-persistence/ProjectStorageProvider"
 import { useStore } from "./store";
 import { BASE_DOC_NAME, loadNewDoc } from "./store-persistence";
 import * as Y from "yjs";
-import { forSomeAction, hasSufficientDataForTraining } from "./utils/actions";
 
 export const useStoreProjects = () => {
     // storeprojects relates to projects of type Store
@@ -60,17 +59,5 @@ export const useHasActions = () => {
     return (
         (actions.length > 0 && (actions.get(0).get("name") as string).length > 0) ||
         (actions.get(0).get("recordings") as RecordingDataY).length > 0
-    );
-};
-
-export const useHasSufficientDataForTraining = (): boolean => {
-    const actions = useActions();
-    return hasSufficientDataForTraining(actions);
-};
-
-export const useHasNoStoredData = (): boolean => {
-    const actions = useActions();
-    return !(
-        actions.length !== 0 && forSomeAction(actions, (a) => (a.get("recordings") as RecordingDataY).length > 0)
     );
 };
