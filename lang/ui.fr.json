@@ -55,6 +55,14 @@
     "defaultMessage": "Ajouter une action",
     "description": "Button to add an action (movement related, e.g. clapping)"
   },
+  "add-action-hint": {
+    "defaultMessage": "Finished recording for {actionName}?<mark>Add another action</mark>",
+    "description": "Hint when you have recorded enough data samples for one action"
+  },
+  "add-action-hint-label": {
+    "defaultMessage": "Finished recording for {actionName}? Press ‘Add action’ button to add another action",
+    "description": "Hint when you have recorded enough data samples for one action aria label"
+  },
   "ai-activity-timer-resource-title": {
     "defaultMessage": "Minuteur d'activité IA",
     "description": "Home page resource card title"
@@ -258,10 +266,6 @@
   "connect-micro-usb-cable": {
     "defaultMessage": "Câble Micro USB",
     "description": "Label for cable icon in list of requirements"
-  },
-  "connect-or-import": {
-    "defaultMessage": "<link1>Connecter un micro:bit de collecte de données</link1> ou <link2>importer des échantillons de données</link2>",
-    "description": "Empty data samples page text"
   },
   "connect-pattern-heading": {
     "defaultMessage": "Copier le motif",
@@ -1179,6 +1183,10 @@
     "defaultMessage": "Plus de modifications dans les options MakeCode",
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
   },
+  "move-hint": {
+    "defaultMessage": "Move the micro:bit to explore how different actions change the graph",
+    "description": "Hint when you have just connected a micro:bit"
+  },
   "name-action-hint": {
     "defaultMessage": "Nommez une action que vous voulez que le micro:bit reconnaisse",
     "description": "Hint shown when you have an unnamed action"
@@ -1250,10 +1258,6 @@
   "next-action": {
     "defaultMessage": "Suivant",
     "description": "Next button text for dialogs and similar"
-  },
-  "no-data-samples": {
-    "defaultMessage": "Aucun échantillon de données",
-    "description": "Empty data samples page status text"
   },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "Ce projet ne contenait pas d'échantillons de données, donc seul le code a été ouvert. Vous devez entraîner un modèle avant de pouvoir utiliser le code.",
@@ -1398,6 +1402,14 @@
   "record-hint-button-b": {
     "defaultMessage": "Appuyez pour enregistrer un échantillon de données ou appuyez sur le bouton B de votre micro:bit de collecte de données.",
     "description": "Hint when you have named the first action but not recorded any data samples and have a micro:bit connected"
+  },
+  "record-more-hint": {
+    "defaultMessage": "Record at least {numSamples, plural, one {{numSamples} more data sample} other {{numSamples} more data samples}}",
+    "description": "Hint when you have not recorded enough data samples. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+  },
+  "record-more-hint-label": {
+    "defaultMessage": "Record at least {numSamples, plural, one {{numSamples} more data sample} other {{numSamples} more data samples}} for {actionName}",
+    "description": "Hint when you have not recorded enough data samples aria label. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
   },
   "record-samples": {
     "defaultMessage": "Enregistrer {numSamples} échantillons ",
@@ -1723,6 +1735,14 @@
     "defaultMessage": "Entraînement d'un modèle",
     "description": "Training dialog"
   },
+  "train-hint": {
+    "defaultMessage": "Finished recording?<mark>Train the model</mark>",
+    "description": "Hint when you have recorded enough data samples to train a model"
+  },
+  "train-hint-label": {
+    "defaultMessage": "Finished recording? Press ‘Train the model’ button to train the model",
+    "description": "Hint when you have recorded enough data samples to train a model aria label"
+  },
   "train-model": {
     "defaultMessage": "Entraîner le modèle",
     "description": "Action to train a model"
@@ -1806,5 +1826,9 @@
   "webusb-retry-replug4": {
     "defaultMessage": "débrancher et rebrancher le câble USB",
     "description": "WebUSB error dialog"
+  },
+  "welcome-title": {
+    "defaultMessage": "Welcome to micro:bit CreateAI",
+    "description": "Welcome dialog"
   }
 }

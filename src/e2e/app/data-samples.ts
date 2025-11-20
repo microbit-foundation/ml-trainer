@@ -13,6 +13,7 @@ export class DataSamplesPage {
   private url: string;
   private heading: Locator;
   private connectBtn: Locator;
+  public welcomeDialog: WelcomeDialog;
 
   constructor(public readonly page: Page) {
     this.url = `http://localhost:5173${
@@ -20,6 +21,7 @@ export class DataSamplesPage {
     }data-samples`;
     this.navbar = new Navbar(page);
     this.heading = this.page.getByRole("heading", { name: "Data samples" });
+    this.welcomeDialog = new WelcomeDialog(page);
     this.connectBtn = this.page.getByLabel("Connect to micro:bit");
   }
 
@@ -41,7 +43,7 @@ export class DataSamplesPage {
   }
 
   async connect() {
-    await this.connectBtn.click();
+    await this.welcomeDialog.connect();
     const connectionDialogs = new ConnectionDialogs(this.page);
     return connectionDialogs;
   }
@@ -54,13 +56,9 @@ export class DataSamplesPage {
   }
 
   async expectOnPage() {
+    await this.welcomeDialog.close();
     await expect(this.heading).toBeVisible();
     this.expectUrl();
-  }
-
-  async expectCorrectInitialState() {
-    this.expectUrl();
-    await expect(this.heading).toBeVisible({ timeout: 10000 });
   }
 
   async expectActions(expectedActions: string[]) {
@@ -79,5 +77,26 @@ export class DataSamplesPage {
   async trainModel() {
     await this.page.getByRole("button", { name: "Train model" }).click();
     return new TrainModelDialog(this.page);
+  }
+}
+
+class WelcomeDialog {
+  private heading: Locator;
+
+  constructor(public readonly page: Page) {
+    this.page = page;
+    this.heading = this.page.getByText("Welcome to micro:bit CreateAI");
+  }
+
+  async expectOpen() {
+    await expect(this.heading).toBeVisible();
+  }
+
+  async close() {
+    await this.page.getByRole("button", { name: "Close" }).click();
+  }
+
+  async connect() {
+    await this.page.getByRole("button", { name: "Connect" }).click();
   }
 }

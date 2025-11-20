@@ -5,13 +5,20 @@
  * SPDX-License-Identifier: MIT
  */
 import { Box, GridItem } from "@chakra-ui/react";
+import { RefType } from "react-hotkeys-hook/dist/types";
 import { useIntl } from "react-intl";
-import { ActionData } from "../model";
+import { ActionData, DataSamplesPageHint } from "../model";
 import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import ActionNameCard, { ActionCardNameViewMode } from "./ActionNameCard";
-import DataSamplesTableHints from "./DataSamplesTableHints";
+import {
+  NameActionHint,
+  NameActionWithSamplesHint,
+  NameFirstActionHint,
+  RecordFirstActionHint,
+  RecordHint,
+  RecordMoreHint,
+} from "./DataSamplesTableHints";
 import { RecordingOptions } from "./RecordingDialog";
-import { RefType } from "react-hotkeys-hook/dist/types";
 
 interface DataSamplesTableRowProps {
   preview?: boolean;
@@ -19,7 +26,7 @@ interface DataSamplesTableRowProps {
   selected: boolean;
   onSelectRow?: () => void;
   onRecord?: (recordingOptions: RecordingOptions) => void;
-  showHints: boolean;
+  hint: DataSamplesPageHint;
   newRecordingId?: number;
   clearNewRecordingId?: () => void;
   onDeleteAction?: () => void;
@@ -32,14 +39,13 @@ const DataSamplesTableRow = ({
   onSelectRow,
   onRecord,
   preview,
-  showHints,
+  hint,
   newRecordingId,
   clearNewRecordingId,
   onDeleteAction,
   renameShortcutScopeRef,
 }: DataSamplesTableRowProps) => {
   const intl = useIntl();
-
   return (
     <>
       <Box
@@ -67,22 +73,45 @@ const DataSamplesTableRow = ({
             }
           />
         </GridItem>
-        {showHints ? (
-          <DataSamplesTableHints action={action} onRecord={onRecord} />
-        ) : (
-          <GridItem>
-            {(action.name.length > 0 || action.recordings.length > 0) && (
-              <ActionDataSamplesCard
-                preview={preview}
-                newRecordingId={newRecordingId}
-                value={action}
-                selected={selected}
-                onSelectRow={onSelectRow}
-                onRecord={onRecord}
-                clearNewRecordingId={clearNewRecordingId}
-              />
-            )}
+        {(hint === "name-first-action" || hint === "name-action") && (
+          <GridItem h="120px">
+            {hint === "name-first-action" && <NameFirstActionHint />}
+            {hint === "name-action" && <NameActionHint />}
           </GridItem>
+        )}
+        <GridItem position="relative">
+          {(action.name.length > 0 || action.recordings.length > 0) && (
+            <ActionDataSamplesCard
+              preview={preview}
+              newRecordingId={newRecordingId}
+              value={action}
+              selected={selected}
+              onSelectRow={onSelectRow}
+              onRecord={onRecord}
+              clearNewRecordingId={clearNewRecordingId}
+            />
+          )}
+          {hint === "record-action" && <RecordHint />}
+          {hint === "record-more-action" && (
+            <RecordMoreHint
+              actionName={action.name}
+              recorded={action.recordings.length}
+            />
+          )}
+        </GridItem>
+        {hint === "name-action-with-samples" && (
+          <GridItem h="120px">
+            <NameActionWithSamplesHint />
+          </GridItem>
+        )}
+        {hint === "record-first-action" && (
+          <>
+            {/* Skip first column to correctly place hint. */}
+            <GridItem />
+            <GridItem h="120px">
+              {hint === "record-first-action" && <RecordFirstActionHint />}
+            </GridItem>
+          </>
         )}
       </Box>
     </>
