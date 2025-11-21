@@ -4,8 +4,8 @@ import { modifyProject, ProjectList, withProjectDb } from "./project-list-db";
 import { makeUID } from "./utils";
 
 export interface DocAccessor {
-    setDoc(doc: string): void;
-    getDoc(): string;
+    setDoc: (doc: string) => void | Promise<void>;
+    getDoc: () => string | Promise<string>;
 }
 
 export interface NewStoredDoc {

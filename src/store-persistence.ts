@@ -33,12 +33,19 @@ export const BASE_DOC_NAME = "ml";
 // the store, with a subscription.
 export const projectStorage = <T>() => {
     const getItem = (_name: string) => {
+        const unpackResult = (result: string | Promise<string>) => {
+            if (typeof result === "string") {
+                return JSON.parse(result) as T;
+            } else {
+                return async () => JSON.parse(await activeState.doc!.getDoc()) as T;
+            }
+        }
         if (activeState.doc) {
-            return JSON.parse(activeState.doc.getDoc()) as T;
+            return unpackResult(activeState.doc.getDoc());
         } else {
             return async () => {
                 await activeState.loadingPromise;
-                return JSON.parse(activeState.doc!.getDoc()) as T;
+                return unpackResult(activeState.doc!.getDoc());
             }
         }
     }

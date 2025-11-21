@@ -8,49 +8,33 @@ export interface ProjectEntry {
 
 export type ProjectList = ProjectEntry[];
 
+export interface ProjectData {
+  id: string;
+  contents: string;
+}
+
+export enum ProjectDbTable {
+  Projects = "projects",
+  ProjectData = "projectData"
+}
+
 type ProjectDbWrapper = <T>(
   accessMode: "readonly" | "readwrite",
-  callback: (projects: IDBObjectStore) => Promise<T>
+  callback: (projects: IDBObjectStore) => Promise<T>,
+  tableName?: ProjectDbTable
 ) => Promise<T>;
 
-export const withProjectDb: ProjectDbWrapper = async (accessMode, callback) => {
+export const withProjectDb: ProjectDbWrapper = async (accessMode, callback, tableName = ProjectDbTable.Projects) => {
   return new Promise((res, rej) => {
     // TODO: what if multiple users? I think MakeCode just keeps everything...
-    const openRequest = indexedDB.open("UserProjects", 2);
-    openRequest.onupgradeneeded = (evt: IDBVersionChangeEvent) => {
-      const db = openRequest.result;
-      // NB: a more robust way to write migrations would be to get the current stored
-      // db.version and open it repeatedly with an ascending version number until the
-      // db is up to date. That would be more boilerplate though.
-      const tx = (evt.target as IDBOpenDBRequest).transaction;
-      // if the data object store doesn't exist, create it
-
-      let projects: IDBObjectStore;
-      if (!db.objectStoreNames.contains("projects")) {
-        projects = db.createObjectStore("projects", { keyPath: "id" });
-        // no indexes at present, get the whole db each time
-      } else {
-        projects = tx!.objectStore("projects");
-      }
-      if (!projects.indexNames.contains("modifiedDate")) {
-        projects.createIndex("modifiedDate", "modifiedDate");
-        const now = new Date().valueOf();
-        const updateProjectData = projects.getAll();
-        updateProjectData.onsuccess = () => {
-          updateProjectData.result.forEach((project) => {
-            if (!('modifiedDate' in project)) {
-              projects.put({ ...project, modifiedDate: now });
-            }
-          });
-        };
-      }
-    };
+    const openRequest = indexedDB.open("UserProjects", 3);
+    openRequest.onupgradeneeded = onUpgradeNeeded(openRequest);
 
     openRequest.onsuccess = async () => {
       const db = openRequest.result;
 
-      const tx = db.transaction("projects", accessMode);
-      const store = tx.objectStore("projects");
+      const tx = db.transaction(tableName, accessMode);
+      const store = tx.objectStore(tableName);
       tx.onabort = rej;
       tx.onerror = rej;
 
@@ -63,7 +47,6 @@ export const withProjectDb: ProjectDbWrapper = async (accessMode, callback) => {
     openRequest.onerror = rej;
   });
 };
-
 
 export const modifyProject = async (id: string, extras?: Partial<ProjectEntry>) => {
   await withProjectDb("readwrite", async (store) => {
@@ -80,3 +63,38 @@ export const modifyProject = async (id: string, extras?: Partial<ProjectEntry>) 
     });
   });
 }
+
+const onUpgradeNeeded = (openRequest: IDBOpenDBRequest) => (evt: IDBVersionChangeEvent) => {
+  const db = openRequest.result;
+  // NB: a more robust way to write migrations would be to get the current stored
+  // db.version and open it repeatedly with an ascending version number until the
+  // db is up to date. That would be more boilerplate though.
+  const tx = (evt.target as IDBOpenDBRequest).transaction;
+  // if the data object store doesn't exist, create it
+
+  let projectListStore: IDBObjectStore;
+  if (!db.objectStoreNames.contains(ProjectDbTable.Projects)) {
+    projectListStore = db.createObjectStore(ProjectDbTable.Projects, { keyPath: "id" });
+  } else {
+    projectListStore = tx!.objectStore(ProjectDbTable.Projects);
+  }
+  if (!projectListStore.indexNames.contains("modifiedDate")) {
+    projectListStore.createIndex("modifiedDate", "modifiedDate");
+    const now = new Date().valueOf();
+    const updateProjectData = projectListStore.getAll();
+    updateProjectData.onsuccess = () => {
+      updateProjectData.result.forEach((project) => {
+        if (!('modifiedDate' in project)) {
+          projectListStore.put({ ...project, modifiedDate: now });
+        }
+      });
+    };
+  }
+
+  let projectDataStore: IDBObjectStore;
+  if (!db.objectStoreNames.contains(ProjectDbTable.ProjectData)) {
+    projectDataStore = db.createObjectStore(ProjectDbTable.ProjectData, { keyPath: "id" });
+  } else {
+    projectDataStore = tx!.objectStore(ProjectDbTable.ProjectData);
+  }
+};

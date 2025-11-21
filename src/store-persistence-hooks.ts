@@ -14,7 +14,6 @@ export const useStoreProjects = () => {
             return doc;
         }
         await loadNewDoc(newProjectImpl());
-        // Needed to attach Y types
         await useStore.persist.rehydrate();
     }
     const loadProject = async (projectId: string) => {

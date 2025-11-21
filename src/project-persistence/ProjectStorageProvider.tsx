@@ -2,7 +2,7 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
 import { ProjectList } from "./project-list-db";
 import { DocAccessor } from "./project-list-hooks";
-import { ProjectStoreYjs } from "./project-store-yjs";
+import { writeProject, readProject } from "./project-store-idb";
 
 interface ProjectContextValue {
   projectId: string | null;
@@ -58,18 +58,15 @@ export function ProjectStorageProvider({
     projectId: string,
     onChangeObserver: () => void
   ) => {
-    const newProjectStore = new ProjectStoreYjs(projectId, onChangeObserver);
-    await newProjectStore.persist();
-    newProjectStore.startSyncing();
     const newProjectAccessor: DocAccessorInternal = {
       setDoc: (doc: string) => {
-        const t = newProjectStore.ydoc.getText();
-        t.delete(0, t.length);
-        t.insert(0, doc);
+        writeProject(projectId, doc);
+        onChangeObserver(); // Fine here, because we only use it to trigger modified behaviour, but...
+        // TODO: handle synchronisation from other DB changes
       },
-      getDoc: () => newProjectStore.ydoc.getText().toJSON(),
-      destroy: () => newProjectStore.destroy(),
-      projectId: newProjectStore.projectId,
+      getDoc: () => readProject(projectId),
+      destroy: () => {},
+      projectId,
     };
     return newProjectAccessor;
   };
