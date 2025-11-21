@@ -9,6 +9,7 @@ import { MakeCodeIcon } from "./utils/icons";
 import { ReactNode } from "react";
 import { SpotlightStyle } from "./pages/TourOverlay";
 import { PlacementWithLogical, ThemingProps } from "@chakra-ui/react";
+import * as Y from "yjs";
 
 export interface XYZData {
   x: number[];
@@ -31,6 +32,13 @@ export interface Action {
 export interface ActionData extends Action {
   recordings: RecordingData[];
 }
+
+// TODO: how much do we hate these types?
+// TODO: maybe use zod?
+export type RecordingDatumY = Y.Map<number | XYZData>;
+export type RecordingDataY = Y.Array<RecordingDatumY>;
+export type ActionDatumY = Y.Map<string | number | RecordingDataY>;
+export type ActionDataY = Y.Array<ActionDatumY>;
 
 export interface DatasetEditorJsonFormat {
   data: ActionData[];

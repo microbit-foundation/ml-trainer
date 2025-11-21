@@ -5,17 +5,16 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  Box,
   Container,
+  Grid,
   Heading,
   HStack,
   Icon,
-  Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { ReactNode, useCallback, useRef } from "react";
-import { RiAddLine, RiFolderOpenLine, RiRestartLine } from "react-icons/ri";
+import { useCallback, useRef, useState } from "react";
+import { RiAddLine, RiFolderOpenLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import DefaultPageLayout, {
@@ -29,39 +28,65 @@ import NewPageChoice from "../components/NewPageChoice";
 import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
-import { useProjectName } from "../hooks/project-hooks";
+import { useStoreProjects } from "../store-persistence-hooks";
+import { ProjectItem } from "../project-persistence/ProjectItem";
+import ProjectHistoryModal from "../project-persistence/ProjectHistoryModal";
+import { ProjectEntry } from "../project-persistence/project-list-db";
+import RenameProjectModal from "../project-persistence/RenameProjectModal";
+import { useProjectList } from "../project-persistence/project-list-hooks";
+import { useProjectHistory } from "../project-persistence/project-history-hooks";
 
 const NewPage = () => {
-  const existingSessionTimestamp = useStore((s) => s.timestamp);
-  const projectName = useProjectName();
   const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
   const logging = useLogging();
+  const { loadProject, newProject } = useStoreProjects();
+  const [showProjectHistory, setShowProjectHistory] =
+    useState<ProjectEntry | null>(null);
+  const [showProjectRename, setShowProjectRename] =
+    useState<ProjectEntry | null>(null);
 
-  const handleOpenLastSession = useCallback(() => {
-    logging.event({
-      type: "session-open-last",
-    });
-    navigate(createDataSamplesPageUrl());
-  }, [logging, navigate]);
+  const { projectList, deleteProject, setProjectName } = useProjectList();
+  const { loadRevision } = useProjectHistory();
+
+  const handleOpenSession = useCallback(
+    async (projectId: string) => {
+      logging.event({
+        type: "session-open-saved",
+      });
+      await loadProject(projectId);
+      navigate(createDataSamplesPageUrl());
+    },
+    [logging, navigate, loadProject]
+  );
+
+  const handleOpenRevision = useCallback(
+    async (projectId: string, revisionId: string) => {
+      logging.event({
+        type: "session-open-revision",
+      });
+
+      await loadRevision(projectId, revisionId);
+      navigate(createDataSamplesPageUrl());
+    },
+    [logging, navigate, loadRevision]
+  );
 
   const loadProjectRef = useRef<LoadProjectInputRef>(null);
   const handleContinueSessionFromFile = useCallback(() => {
     loadProjectRef.current?.chooseFile();
   }, []);
 
-  const handleStartNewSession = useCallback(() => {
+  const handleStartNewSession = useCallback(async () => {
     logging.event({
       type: "session-open-new",
     });
+    await newProject();
     newSession();
     navigate(createDataSamplesPageUrl());
-  }, [logging, newSession, navigate]);
+  }, [logging, newSession, navigate, newProject]);
 
   const intl = useIntl();
-  const lastSessionTitle = intl.formatMessage({
-    id: "newpage-last-session-title",
-  });
   const continueSessionTitle = intl.formatMessage({
     id: "newpage-continue-session-title",
   });
@@ -92,47 +117,14 @@ const NewPage = () => {
               flexDir={{ base: "column", lg: "row" }}
             >
               <NewPageChoice
-                onClick={handleOpenLastSession}
-                label={lastSessionTitle}
-                disabled={!existingSessionTimestamp}
-                icon={<Icon as={RiRestartLine} h={20} w={20} />}
+                onClick={handleStartNewSession}
+                label={newSessionTitle}
+                disabled={false}
+                icon={<Icon as={RiAddLine} h={20} w={20} />}
               >
-                {existingSessionTimestamp ? (
-                  <Stack mt="auto">
-                    <Text>
-                      <FormattedMessage
-                        id="newpage-last-session-name"
-                        values={{
-                          strong: (chunks: ReactNode) => (
-                            <Text as="span" fontWeight="bold">
-                              {chunks}
-                            </Text>
-                          ),
-                          name: projectName,
-                        }}
-                      />
-                    </Text>
-                    <Text>
-                      <FormattedMessage
-                        id="newpage-last-session-date"
-                        values={{
-                          strong: (chunks: ReactNode) => (
-                            <Text as="span" fontWeight="bold">
-                              {chunks}
-                            </Text>
-                          ),
-                          date: new Intl.DateTimeFormat(undefined, {
-                            dateStyle: "medium",
-                          }).format(existingSessionTimestamp),
-                        }}
-                      />
-                    </Text>
-                  </Stack>
-                ) : (
-                  <Text>
-                    <FormattedMessage id="newpage-last-session-none" />
-                  </Text>
-                )}
+                <Text>
+                  <FormattedMessage id="newpage-new-session-subtitle" />
+                </Text>
               </NewPageChoice>
               <NewPageChoice
                 onClick={handleContinueSessionFromFile}
@@ -144,30 +136,46 @@ const NewPage = () => {
                 </Text>
               </NewPageChoice>
             </HStack>
+
             <Heading as="h2" fontSize="2xl" mt={8}>
-              <FormattedMessage id="newpage-section-two-title" />
+              Your projects
             </Heading>
-            <HStack
-              alignItems="stretch"
-              mt={3}
-              gap={8}
-              flexDir={{ base: "column", lg: "row" }}
+            <Grid
+              position="relative"
+              backgroundColor="whitesmoke"
+              templateColumns="repeat(auto-fill, 400px)"
             >
-              <NewPageChoice
-                onClick={handleStartNewSession}
-                label={newSessionTitle}
-                disabled={false}
-                icon={<Icon as={RiAddLine} h={20} w={20} />}
-              >
-                <Text>
-                  <FormattedMessage id="newpage-new-session-subtitle" />
-                </Text>
-              </NewPageChoice>
-              <Box flex="1" />
-            </HStack>
+              {projectList?.map((proj) => (
+                <ProjectItem
+                  key={proj.id}
+                  project={proj}
+                  loadProject={() => {
+                    void handleOpenSession(proj.id);
+                  }}
+                  deleteProject={deleteProject}
+                  renameProject={() => setShowProjectRename(proj)}
+                  showHistory={() => setShowProjectHistory(proj)}
+                />
+              ))}
+            </Grid>
           </VStack>
         </Container>
       </VStack>
+      <ProjectHistoryModal
+        isOpen={showProjectHistory !== null}
+        onLoadRequest={handleOpenRevision}
+        onDismiss={() => setShowProjectHistory(null)}
+        projectInfo={showProjectHistory}
+      />
+      <RenameProjectModal
+        isOpen={showProjectRename !== null}
+        onDismiss={() => setShowProjectRename(null)}
+        projectInfo={showProjectRename}
+        handleRename={async (projectId, projectName) => {
+          await setProjectName(projectId, projectName);
+          setShowProjectRename(null);
+        }}
+      />
     </DefaultPageLayout>
   );
 };

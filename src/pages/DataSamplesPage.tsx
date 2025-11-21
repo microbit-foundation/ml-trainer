@@ -18,12 +18,14 @@ import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
-import { useHasSufficientDataForTraining, useStore } from "../store";
+import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createTestingModelPageUrl } from "../urls";
+import { forSomeAction, hasSufficientDataForTraining } from "../utils/actions";
+import { useActions } from "../store-persistence-hooks";
 
 const DataSamplesPage = () => {
-  const actions = useStore((s) => s.actions);
+  const actions = useActions();
   const addNewAction = useStore((s) => s.addNewAction);
   const model = useStore((s) => s.model);
   const [selectedActionIdx, setSelectedActionIdx] = useState<number>(0);
@@ -40,8 +42,11 @@ const DataSamplesPage = () => {
     }
   }, [isConnected, tourStart]);
 
-  const hasSufficientData = useHasSufficientDataForTraining();
-  const isAddNewActionDisabled = actions.some((a) => a.name.length === 0);
+  const hasSufficientData = hasSufficientDataForTraining(actions);
+  const isAddNewActionDisabled = forSomeAction(
+    actions,
+    (a) => (a.get("name") as string).length === 0
+  );
 
   const handleNavigateToModel = useCallback(() => {
     navigate(createTestingModelPageUrl());

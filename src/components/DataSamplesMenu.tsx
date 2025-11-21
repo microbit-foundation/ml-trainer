@@ -30,11 +30,12 @@ import LoadProjectMenuItem from "./LoadProjectMenuItem";
 import { NameProjectDialog } from "./NameProjectDialog";
 import ViewDataFeaturesMenuItem from "./ViewDataFeaturesMenuItem";
 import { useProjectIsUntitled } from "../hooks/project-hooks";
+import { useActions } from "../store-persistence-hooks";
 
 const DataSamplesMenu = () => {
   const intl = useIntl();
   const logging = useLogging();
-  const actions = useStore((s) => s.actions);
+  const actions = useActions();
   const downloadDataset = useStore((s) => s.downloadDataset);
   const isDeleteAllActionsDialogOpen = useStore(
     (s) => s.isDeleteAllActionsDialogOpen
