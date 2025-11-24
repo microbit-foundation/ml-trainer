@@ -35,9 +35,9 @@ export const projectStorage = <T>() => {
     const getItem = (_name: string) => {
         const unpackResult = (result: string | Promise<string>) => {
             if (typeof result === "string") {
-                return JSON.parse(result) as T;
+                return JSON.parse(result) as StorageValue<T>;
             } else {
-                return async () => JSON.parse(await activeState.doc!.getDoc()) as T;
+                return (async () => JSON.parse(await activeState.doc!.getDoc()) as StorageValue<T>)();
             }
         }
         if (activeState.doc) {
@@ -52,11 +52,11 @@ export const projectStorage = <T>() => {
 
     const setItem = (_name: string, value: StorageValue<T>) => {
         if (activeState.doc) {
-            activeState.doc.setDoc(JSON.stringify(value));
+            return activeState.doc.setDoc(JSON.stringify(value));
         } else {
             return async () => {
                 await activeState.loadingPromise;
-                activeState.doc!.setDoc(JSON.stringify(value));
+                return activeState.doc!.setDoc(JSON.stringify(value));
             }
         }
     }

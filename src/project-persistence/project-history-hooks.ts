@@ -3,8 +3,7 @@ import { ProjectStorageContext } from "./ProjectStorageProvider";
 import { HistoryEntry, HistoryList, withHistoryDb } from "./project-history-db";
 import { modifyProject, ProjectEntry, withProjectDb } from "./project-list-db";
 import { makeUID } from "./utils";
-import * as Y from "yjs";
-import { ProjectStoreYjs } from "./project-store-yjs";
+import { readProject } from "./project-store-idb";
 import { useProjectList } from "./project-list-hooks";
 
 /**
@@ -36,21 +35,15 @@ export const useProjectHistory = (): ProjectHistoryActions => {
     const { newStoredProject } = useProjectList();
 
     const getUpdateAtRevision = useCallback(async (projectId: string, revision: string) => {
-        const deltas: HistoryEntry[] = [];
-        let parentRevision = revision;
-        do {
-            const delta = await withHistoryDb("readonly", async (revisions) => {
+        const update = await withHistoryDb("readonly", async (revisions) => {
                 return new Promise<HistoryEntry>((res, _rej) => {
                     const query = revisions
                         .index("projectRevision")
-                        .get([projectId, parentRevision]);
+                        .get([projectId, revision]);
                     query.onsuccess = () => res(query.result as HistoryEntry);
                 });
             });
-            parentRevision = delta.parentId;
-            deltas.unshift(delta);
-        } while (parentRevision);
-        return Y.mergeUpdatesV2(deltas.map((d) => d.data));
+        return update;
     }, []);
 
     const getProjectInfo = (projectId: string) =>
@@ -68,24 +61,12 @@ export const useProjectHistory = (): ProjectHistoryActions => {
             projectName: `${projectInfo.projectName} revision`,
             parentRevision: forkId,
         });
-        const updates = await getUpdateAtRevision(projectId, projectRevision);
-        // TODO: I broke history!
-        //Y.applyUpdateV2(ydoc, updates);
+        const update = await getUpdateAtRevision(projectId, projectRevision);
+        return doc.setDoc(update.data);
     }, [getUpdateAtRevision, newStoredProject]);
 
     const saveRevision = useCallback(async (projectInfo: ProjectEntry) => {
-        const projectStore = new ProjectStoreYjs(projectInfo.id, () => { });
-        await projectStore.persist();
-        let newUpdate: Uint8Array;
-        if (projectInfo.parentRevision) {
-            const previousUpdate = await getUpdateAtRevision(
-                projectInfo.id,
-                projectInfo.parentRevision
-            );
-            newUpdate = Y.encodeStateAsUpdateV2(projectStore.ydoc, previousUpdate);
-        } else {
-            newUpdate = Y.encodeStateAsUpdateV2(projectStore.ydoc);
-        }
+        const newUpdate = ((await readProject(projectInfo.id)).contents);
         const newRevision = makeUID();
         await withHistoryDb("readwrite", async (revisions) => {
             return new Promise<void>((res, _rej) => {
@@ -100,7 +81,7 @@ export const useProjectHistory = (): ProjectHistoryActions => {
             });
         });
         await modifyProject(projectInfo.id, { parentRevision: newRevision });
-    }, [getUpdateAtRevision]);
+    }, []);
 
     const getHistory = useCallback(async (projectId: string) =>
         withHistoryDb("readonly", async (store) => {

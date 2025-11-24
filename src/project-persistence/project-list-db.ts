@@ -91,10 +91,7 @@ const onUpgradeNeeded = (openRequest: IDBOpenDBRequest) => (evt: IDBVersionChang
     };
   }
 
-  let projectDataStore: IDBObjectStore;
   if (!db.objectStoreNames.contains(ProjectDbTable.ProjectData)) {
-    projectDataStore = db.createObjectStore(ProjectDbTable.ProjectData, { keyPath: "id" });
-  } else {
-    projectDataStore = tx!.objectStore(ProjectDbTable.ProjectData);
+    db.createObjectStore(ProjectDbTable.ProjectData, { keyPath: "id" });
   }
 };

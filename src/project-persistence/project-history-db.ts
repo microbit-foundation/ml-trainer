@@ -3,7 +3,7 @@ export interface HistoryEntry {
   projectId: string;
   revisionId: string;
   parentId: string;
-  data: Uint8Array;
+  data: string;
   timestamp: number;
 }
 

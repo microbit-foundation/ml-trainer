@@ -76,7 +76,7 @@ export const useProjectList = (): ProjectListActions => {
                     .projectName,
             };
         },
-        [projectList, setProjectAccessor]
+        [projectList, setProjectAccessor, openProject]
     );
 
     const newStoredProject: () => Promise<NewStoredDoc> =
@@ -95,7 +95,7 @@ export const useProjectList = (): ProjectListActions => {
             );
             setProjectAccessor(newProjectStore);
             return { doc: newProjectStore, id: newProjectId };
-        }, [setProjectAccessor]);
+        }, [setProjectAccessor, openProject]);
 
     const deleteProject: (id: string) => Promise<void> = useCallback(
         async (id) => {

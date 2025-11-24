@@ -1,6 +1,6 @@
 // ProjectContext.tsx
 import React, { createContext, useCallback, useContext, useState } from "react";
-import { ProjectList } from "./project-list-db";
+import { ProjectData, ProjectList } from "./project-list-db";
 import { DocAccessor } from "./project-list-hooks";
 import { writeProject, readProject } from "./project-store-idb";
 
@@ -46,29 +46,28 @@ export function ProjectStorageProvider({
   const projectAccessorInternal = projectAccessor as DocAccessorInternal;
   const setProjectAccessor = useCallback(
     (newProjectStore: DocAccessor) => {
-      if (projectAccessor) {
+      if (projectAccessorInternal) {
         projectAccessorInternal.destroy();
       }
       setProjectAccessorImpl(newProjectStore);
     },
-    [projectAccessor]
+    [projectAccessorInternal]
   );
 
-  const openProject = async (
-    projectId: string,
-    onChangeObserver: () => void
-  ) => {
+  const openProject = (projectId: string, onChangeObserver: () => void) => {
     const newProjectAccessor: DocAccessorInternal = {
-      setDoc: (doc: string) => {
-        writeProject(projectId, doc);
+      setDoc: async (doc: string) => {
+        await writeProject(projectId, doc);
         onChangeObserver(); // Fine here, because we only use it to trigger modified behaviour, but...
         // TODO: handle synchronisation from other DB changes
       },
-      getDoc: () => readProject(projectId),
+      getDoc: async () => {
+        return (await readProject(projectId)).contents;
+      },
       destroy: () => {},
       projectId,
     };
-    return newProjectAccessor;
+    return Promise.resolve(newProjectAccessor);
   };
 
   return (
