@@ -23,6 +23,7 @@
     "ml4f-output": "vitest ml4f-output --run"
   },
   "devDependencies": {
+    "@capacitor/cli": "^7.4.4",
     "@chakra-ui/cli": "^2.4.1",
     "@formatjs/cli": "^6.2.7",
     "@playwright/test": "^1.42.1",
@@ -56,6 +57,9 @@
     "vitest-dom": "^0.1.1"
   },
   "dependencies": {
+    "@capacitor/android": "^7.4.4",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/ios": "^7.4.4",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",

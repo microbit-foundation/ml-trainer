@@ -20,3 +20,5 @@
 /playwright-report/
 /test-results/
 /ml4f-output/
+/android/app/src/main/assets/public
+/ios/App/App/public
