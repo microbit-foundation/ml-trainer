@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   build-ios:
-    timeout-minutes: 45
+    timeout-minutes: 10
     runs-on: macos-latest
     permissions:
       contents: read
