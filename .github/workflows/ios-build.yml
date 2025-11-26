@@ -1,0 +1,57 @@
+name: iOS Build
+
+on:
+  push:
+    branches:
+      - apps
+  pull_request:
+    branches:
+      - apps
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/apps' }}
+
+jobs:
+  build-ios:
+    timeout-minutes: 45
+    runs-on: macos-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+          registry-url: "https://npm.pkg.github.com"
+
+      - run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: echo "ML_THEME_VERSION=$(jq -r '.["theme-package-version"]' workflow-config.json)" >> $GITHUB_ENV
+
+      - run: npm install --no-save @microbit-foundation/ml-trainer-microbit@${{ env.ML_THEME_VERSION }}
+        if: github.repository_owner == 'microbit-foundation'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: npm run build:apps
+
+      - run: npx cap sync ios
+
+      - run: pod install
+        working-directory: ios/App
+
+      - run: xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug -sdk iphonesimulator -derivedDataPath build CODE_SIGNING_ALLOWED=NO
+        working-directory: ios/App
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ios-app-${{ github.sha }}
+          path: ios/App/build/Build/Products/Debug-iphonesimulator/*.app
+          retention-days: 30
