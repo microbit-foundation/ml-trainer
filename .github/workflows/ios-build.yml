@@ -4,10 +4,7 @@ on:
   push:
     branches:
       - apps
-  pull_request:
-    branches:
-      - apps
-  workflow_dispatch:
+      - apps-*
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
