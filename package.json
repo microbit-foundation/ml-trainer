@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc && cross-env VITE_VERSION=$npm_package_version vite build",
+    "build:apps": "tsc && cross-env VITE_BUILD_MODE=apps VITE_VERSION=$npm_package_version vite build",
     "ci": "npm run test && npm run lint && npm run build && npx prettier --check src",
     "deploy": "website-deploy-aws",
     "dev": "cross-env VITE_VERSION=$npm_package_version vite",
@@ -60,6 +61,7 @@
     "@capacitor/android": "^7.4.4",
     "@capacitor/core": "^7.4.4",
     "@capacitor/ios": "^7.4.4",
+    "@capacitor/status-bar": "^7.0.3",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",

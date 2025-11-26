@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta
       name="viewport"
-      content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, target-densitydpi=device-dpi"
+      content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, target-densitydpi=device-dpi, viewport-fit=cover"
     />
     <title><%= appNameFull %></title>
     <meta property="og:title" content="<%= appNameFull %>" />
@@ -25,6 +25,7 @@
     <% } %>
     <meta property="og:image" content="%VITE_FULL_URL%social.png" />
     <link rel="shortcut icon" href="%VITE_FULL_URL%imgs/favicon.ico" />
+    <% if (buildMode !== 'apps') { %>
     <script
       src="https://shared-assets.microbit.org/common/v2/common.js"
       async
@@ -42,6 +43,7 @@
           window.dataLayer.push(arguments);
         };
     </script>
+    <% } %>
     <script type="text/javascript" id="crowdin-jipt-config">
       (function () {
         function escape() {
@@ -56,7 +58,14 @@
     <script type="module" src="/src/main.tsx"></script>
   </head>
 
-  <body style="overscroll-behavior-y: none; height: 100%">
+  <body
+    style="
+      overscroll-behavior-y: none;
+      height: 100%;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+    "
+  >
     <div id="root" style="overscroll-behavior-y: none; height: 100%"></div>
   </body>
 </html>
