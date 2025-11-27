@@ -932,11 +932,11 @@
     "description": "Language option text"
   },
   "language-fully-supported-heading": {
-    "defaultMessage": "Fully supported",
+    "defaultMessage": "Suporte completo",
     "description": "Fully supported languages heading text"
   },
   "language-partially-supported-heading": {
-    "defaultMessage": "Partially supported",
+    "defaultMessage": "Suporte parcial",
     "description": "Partially supported languages heading text"
   },
   "language-support-checked": {
@@ -1588,7 +1588,7 @@
     "description": "Testing model page title"
   },
   "third-party-content-description": {
-    "defaultMessage": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation.",
+    "defaultMessage": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the <link>MakeCode shared project</link> to report abuse to Microsoft MakeCode if you think it's not appropriate.",
     "description": "Notify user of third party content"
   },
   "tour-action": {
