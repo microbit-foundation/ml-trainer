@@ -1388,7 +1388,7 @@ export const useHasNoStoredData = (): boolean => {
 
 type UseSettingsReturn = [Settings, (settings: Partial<Settings>) => void];
 
-const inContextTranslationLangId = "lol";
+export const inContextTranslationLangId = "lol";
 
 export const useSettings = (): UseSettingsReturn => {
   const [settings, setSettings] = useStore(
