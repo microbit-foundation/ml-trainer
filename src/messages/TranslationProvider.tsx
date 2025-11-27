@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { useSettings } from "../store";
+import { inContextTranslationLangId, useSettings } from "../store";
 import { IntlProvider, MessageFormatElement } from "react-intl";
 import { ReactNode, useEffect, useState } from "react";
 import { retryAsyncLoad } from "./chunk-util";
@@ -17,7 +17,7 @@ async function loadLocaleData(locale: string) {
   );
   const importLanguage =
     (flags.translationPreview && languageSetting?.ui === "preview") ||
-    languageSetting?.ui === true;
+    languageSetting?.ui === true || lang === inContextTranslationLangId;
   if (importLanguage) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return (await import(`./ui.${lang}.json`)).default as Messages;
