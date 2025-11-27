@@ -1626,13 +1626,13 @@
   "language-fully-supported-heading": [
     {
       "type": 0,
-      "value": "Fully supported"
+      "value": "Suporte completo"
     }
   ],
   "language-partially-supported-heading": [
     {
       "type": 0,
-      "value": "Partially supported"
+      "value": "Suporte parcial"
     }
   ],
   "language-support-checked": [
@@ -2772,7 +2772,21 @@
   "third-party-content-description": [
     {
       "type": 0,
-      "value": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation."
+      "value": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "MakeCode shared project"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
     }
   ],
   "tour-action": [
