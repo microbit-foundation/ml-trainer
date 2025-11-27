@@ -7,6 +7,7 @@ import { useDownloadActions } from "../hooks/download-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { DownloadStep } from "../model";
 import { useStore } from "../store";
+import { useActions } from "../store-persistence-hooks";
 import { getTotalNumSamples } from "../utils/actions";
 import ConnectCableDialog from "./ConnectCableDialog";
 import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
@@ -22,7 +23,7 @@ const DownloadDialogs = () => {
   const downloadActions = useDownloadActions();
   const stage = useStore((s) => s.download);
   const flashingProgress = useStore((s) => s.downloadFlashingProgress);
-  const actions = useStore((s) => s.actions);
+  const actions = useActions();
   const logging = useLogging();
 
   switch (stage.step) {

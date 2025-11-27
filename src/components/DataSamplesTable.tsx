@@ -40,6 +40,7 @@ import { ConfirmDialog } from "./ConfirmDialog";
 import { actionNameInputId } from "./ActionNameCard";
 import { recordButtonId } from "./ActionDataSamplesCard";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
+import { useActions } from "../store-persistence-hooks";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -74,7 +75,7 @@ const DataSamplesTable = ({
   selectedActionIdx: selectedActionIdx,
   setSelectedActionIdx: setSelectedActionIdx,
 }: DataSamplesTableProps) => {
-  const actions = useStore((s) => s.actions);
+  const actions = useActions().toJSON() as ActionData[];
   // Default to first action being selected if last action is deleted.
   const selectedAction: ActionData = actions[selectedActionIdx] ?? actions[0];
 

@@ -42,6 +42,7 @@ import {
   readFileAsText,
 } from "../utils/fs-util";
 import { useDownloadActions } from "./download-hooks";
+import { useActions } from "../store-persistence-hooks";
 
 class CodeEditorError extends Error {}
 
@@ -361,7 +362,7 @@ export const ProjectProvider = ({
   const setSave = useStore((s) => s.setSave);
   const save = useStore((s) => s.save);
   const settings = useStore((s) => s.settings);
-  const actions = useStore((s) => s.actions);
+  const actions = useActions();
   const saveNextDownloadRef = useRef(false);
   const translatedUntitled = useDefaultProjectName();
   const saveHex = useCallback(

@@ -57,6 +57,7 @@ import {
   createNewPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
+import { ProjectStorageProvider } from "./project-persistence/ProjectStorageProvider";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -93,7 +94,9 @@ const Providers = ({ children }: ProviderLayoutProps) => {
                 <ConnectProvider {...{ usb, bluetooth, radioBridge }}>
                   <BufferedDataProvider>
                     <ConnectionStageProvider>
-                      {children}
+                      <ProjectStorageProvider>
+                        {children}
+                      </ProjectStorageProvider>
                     </ConnectionStageProvider>
                   </BufferedDataProvider>
                 </ConnectProvider>

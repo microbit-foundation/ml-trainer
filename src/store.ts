@@ -35,9 +35,14 @@ import {
   EditorStartUp,
   TourTriggerName,
   tourSequence,
+  ActionDataY,
+  RecordingDatumY,
+  XYZData,
+  ActionDatumY,
+  RecordingDataY,
 } from "./model";
 import { defaultSettings, Settings } from "./settings";
-import { getTotalNumSamples } from "./utils/actions";
+import { getTotalNumSamples, hasSufficientDataForTraining } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { untitledProjectName } from "./project-name";
 import { mlSettings } from "./mlConfig";
@@ -45,15 +50,19 @@ import { BufferedData } from "./buffered-data";
 import { getDetectedAction } from "./utils/prediction";
 import { getTour as getTourSpec } from "./tours";
 import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
+import { projectStorage } from "./store-persistence";
+import * as Y from "yjs";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
-const createFirstAction = () => ({
-  icon: defaultIcons[0],
-  ID: Date.now(),
-  name: "",
-  recordings: [],
-});
+const createFirstAction = (actions: ActionDataY) => {
+  const newAction = new Y.Map<string | number | Y.Array<RecordingDatumY>>();
+  newAction.set("icon", defaultIcons[0]);
+  newAction.set("ID", Date.now());
+  newAction.set("name", "");
+  newAction.set("recordings", new Y.Array<RecordingDatumY>());
+  actions.push([newAction]);
+};
 
 export interface DataWindow {
   duration: number; // Duration of recording
@@ -116,11 +125,11 @@ const createUntitledProject = (): MakeCodeProject => ({
 const updateProject = (
   project: MakeCodeProject,
   projectEdited: boolean,
-  actions: ActionData[],
+  actions: ActionDataY,
   model: tf.LayersModel | undefined,
   dataWindow: DataWindow
 ): Partial<Store> => {
-  const actionsData = { data: actions };
+  const actionsData = { data: actions.toJSON() };
   const updatedProject = {
     ...project,
     text: {
@@ -143,7 +152,7 @@ const updateProject = (
 };
 
 export interface State {
-  actions: ActionData[];
+  actions: ActionDataY;
   dataWindow: DataWindow;
   model: tf.LayersModel | undefined;
 
@@ -315,7 +324,7 @@ const createMlStore = (logging: Logging) => {
       persist(
         (set, get) => ({
           timestamp: undefined,
-          actions: [],
+          actions: new Y.Array(),
           dataWindow: currentDataWindow,
           isRecording: false,
           project: createUntitledProject(),
@@ -407,7 +416,6 @@ const createMlStore = (logging: Logging) => {
             const untitledProject = createUntitledProject();
             set(
               {
-                actions: [],
                 dataWindow: currentDataWindow,
                 model: undefined,
                 project: projectName
@@ -444,26 +452,23 @@ const createMlStore = (logging: Logging) => {
           },
 
           addNewAction() {
-            return set(({ project, projectEdited, actions, dataWindow }) => {
-              const newActions = [
-                ...actions,
-                {
-                  icon: actionIcon({
-                    isFirstAction: actions.length === 0,
-                    existingActions: actions,
-                  }),
-                  ID: Date.now(),
-                  name: "",
-                  recordings: [],
-                },
-              ];
+            return set(({ project, actions, projectEdited, dataWindow }) => {
+              const newAction = new Y.Map<string | number | Y.Array<RecordingDatumY>>();
+              const existingIcons = actions.map(action => action.get("icon") as MakeCodeIcon);
+              newAction.set("icon", actionIcon({
+                isFirstAction: actions.length === 0,
+                existingIcons,
+              }));
+              newAction.set("ID", Date.now());
+              newAction.set("name", "");
+              newAction.set("recordings", new Y.Array<Y.Map<number | XYZData>>());
+              actions.push([newAction]);
               return {
-                actions: newActions,
                 model: undefined,
                 ...updateProject(
                   project,
                   projectEdited,
-                  newActions,
+                  actions,
                   undefined,
                   dataWindow
                 ),
@@ -472,37 +477,40 @@ const createMlStore = (logging: Logging) => {
           },
 
           addActionRecordings(id: ActionData["ID"], recs: RecordingData[]) {
-            return set(({ actions }) => {
-              const updatedActions = actions.map((action) => {
-                if (action.ID === id) {
-                  return {
-                    ...action,
-                    recordings: [...recs, ...action.recordings],
-                  };
-                }
-                return action;
-              });
-              return {
-                actions: updatedActions,
-                model: undefined,
-              };
-            });
+            const { actions } = get();
+            for (const action of actions) {
+              if (action.get("ID") === id) {
+                const recsY = recs.map(rec => {
+                  const recY = new Y.Map<number | XYZData>();
+                  recY.set("ID", rec.ID);
+                  recY.set("data", rec.data);
+                  return recY;
+                });
+                (action.get("recordings") as Y.Array<RecordingDatumY>).push(recsY);
+              }
+            }
           },
 
           deleteAction(id: ActionData["ID"]) {
+            const { actions } = get();
+            withActionIndex(id, actions, (actionIndex) => {
+              actions.delete(actionIndex)
+            });
+            if (actions.length === 0) {
+              // TODO: Port this to Y mode
+              createFirstAction(actions);
+            }
+
             return set(({ project, projectEdited, actions, dataWindow }) => {
-              const newActions = actions.filter((a) => a.ID !== id);
               const newDataWindow =
-                newActions.length === 0 ? currentDataWindow : dataWindow;
+                actions.length === 0 ? currentDataWindow : dataWindow;
               return {
-                actions:
-                  newActions.length === 0 ? [createFirstAction()] : newActions,
                 dataWindow: newDataWindow,
                 model: undefined,
                 ...updateProject(
                   project,
                   projectEdited,
-                  newActions,
+                  actions,
                   undefined,
                   newDataWindow
                 ),
@@ -511,17 +519,18 @@ const createMlStore = (logging: Logging) => {
           },
 
           setActionName(id: ActionData["ID"], name: string) {
+            const { actions } = get();
+            withActionIndex(id, actions, (actionIndex) => {
+              actions.get(actionIndex).set("name", name);
+            });
             return set(
               ({ project, projectEdited, actions, model, dataWindow }) => {
-                const newActions = actions.map((action) =>
-                  id !== action.ID ? action : { ...action, name }
-                );
+
                 return {
-                  actions: newActions,
                   ...updateProject(
                     project,
                     projectEdited,
-                    newActions,
+                    actions,
                     model,
                     dataWindow
                   ),
@@ -531,29 +540,32 @@ const createMlStore = (logging: Logging) => {
           },
 
           setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon) {
+            const { actions } = get();
+
+            withActionIndex(id, actions, (actionIndex) => {
+              const action = actions.get(actionIndex);
+              const currentIcon = action.get("icon");
+              action.set("icon", icon);
+              actions.forEach((maybeClashingAction, maybeClashingActionIndex) => {
+                if (maybeClashingActionIndex === actionIndex) {
+                  return;
+                }
+                const maybeClashingIcon = maybeClashingAction.get("icon");
+                if (maybeClashingIcon === icon) {
+                  maybeClashingAction.set("icon", currentIcon!);
+                }
+              });
+            });
             return set(
               ({ project, projectEdited, actions, model, dataWindow }) => {
                 // If we're changing the action to use an icon that's already in use
                 // then we update the action that's using the icon to use the action's current icon
-                const currentIcon = actions.find((a) => a.ID === id)?.icon;
-                const newActions = actions.map((action) => {
-                  if (action.ID === id) {
-                    return { ...action, icon };
-                  } else if (
-                    action.ID !== id &&
-                    action.icon === icon &&
-                    currentIcon
-                  ) {
-                    return { ...action, icon: currentIcon };
-                  }
-                  return action;
-                });
+
                 return {
-                  actions: newActions,
                   ...updateProject(
                     project,
                     projectEdited,
-                    newActions,
+                    actions,
                     model,
                     dataWindow
                   ),
@@ -563,17 +575,17 @@ const createMlStore = (logging: Logging) => {
           },
 
           setRequiredConfidence(id: ActionData["ID"], value: number) {
+            const { actions } = get();
+            withActionIndex(id, actions, (actionIndex) => {
+              actions.get(actionIndex).set("requiredConfidence", value);
+            });
             return set(
               ({ project, projectEdited, actions, model, dataWindow }) => {
-                const newActions = actions.map((a) =>
-                  id !== a.ID ? a : { ...a, requiredConfidence: value }
-                );
                 return {
-                  actions: newActions,
                   ...updateProject(
                     project,
                     projectEdited,
-                    newActions,
+                    actions,
                     model,
                     dataWindow
                   ),
@@ -583,30 +595,24 @@ const createMlStore = (logging: Logging) => {
           },
 
           deleteActionRecording(id: ActionData["ID"], recordingIdx: number) {
+            const { actions } = get();
+            let hasRecordings: boolean = false;
+            for (const action of actions) {
+              if (action.get("ID") === id) {
+                (action.get("recordings") as RecordingDataY).delete(recordingIdx);
+              } else {
+                hasRecordings ||= (action.get("recordings") as RecordingDataY).length > 0;
+              }
+            }
+
             return set(({ project, projectEdited, actions, dataWindow }) => {
-              const newActions = actions.map((action) => {
-                if (id !== action.ID) {
-                  return action;
-                }
-                const recordings = action.recordings.filter(
-                  (_r, i) => i !== recordingIdx
-                );
-                return { ...action, recordings };
-              });
-              const numRecordings = newActions.reduce(
-                (acc, curr) => acc + curr.recordings.length,
-                0
-              );
-              const newDataWindow =
-                numRecordings === 0 ? currentDataWindow : dataWindow;
+              const newDataWindow: DataWindow = hasRecordings ? currentDataWindow : dataWindow;
               return {
-                actions: newActions,
                 dataWindow: newDataWindow,
-                model: undefined,
                 ...updateProject(
                   project,
                   projectEdited,
-                  newActions,
+                  actions,
                   undefined,
                   newDataWindow
                 ),
@@ -615,14 +621,15 @@ const createMlStore = (logging: Logging) => {
           },
 
           deleteAllActions() {
-            return set(({ project, projectEdited }) => ({
-              actions: [createFirstAction()],
+            const { actions } = get();
+            actions.delete(0, actions.length);
+            return set(({ actions, project, projectEdited }) => ({
               dataWindow: currentDataWindow,
               model: undefined,
               ...updateProject(
                 project,
                 projectEdited,
-                [],
+                actions,
                 undefined,
                 currentDataWindow
               ),
@@ -646,6 +653,11 @@ const createMlStore = (logging: Logging) => {
           },
 
           loadDataset(newActions: ActionData[]) {
+            const { actions } = get();
+            actions.delete(0, actions.length);
+            const newActionsY: ActionDatumY[] = actionDataToY(newActions);
+
+            actions.push(newActionsY);
             set(({ project, projectEdited, settings }) => {
               const dataWindow = getDataWindowFromActions(newActions);
               return {
@@ -655,25 +667,13 @@ const createMlStore = (logging: Logging) => {
                     new Set([...settings.toursCompleted, "DataSamplesRecorded"])
                   ),
                 },
-                actions: (() => {
-                  const copy = newActions.map((a) => ({ ...a }));
-                  for (const a of copy) {
-                    if (!a.icon) {
-                      a.icon = actionIcon({
-                        isFirstAction: false,
-                        existingActions: copy,
-                      });
-                    }
-                  }
-                  return copy;
-                })(),
                 dataWindow,
                 model: undefined,
                 timestamp: Date.now(),
                 ...updateProject(
                   project,
                   projectEdited,
-                  newActions,
+                  actions,
                   undefined,
                   dataWindow
                 ),
@@ -705,7 +705,6 @@ const createMlStore = (logging: Logging) => {
                     new Set([...settings.toursCompleted, "DataSamplesRecorded"])
                   ),
                 },
-                actions: newActions,
                 dataWindow: getDataWindowFromActions(newActions),
                 model: undefined,
                 project,
@@ -761,7 +760,7 @@ const createMlStore = (logging: Logging) => {
             // can block the UI. 50 ms is not sufficient, so use 100 for now.
             await new Promise((res) => setTimeout(res, 100));
             const trainingResult = await trainModel(
-              actions,
+              actions.toJSON() as ActionData[],
               dataWindow,
               (trainModelProgress) =>
                 set({ trainModelProgress }, false, "trainModelProgress")
@@ -802,7 +801,7 @@ const createMlStore = (logging: Logging) => {
                 ...previousProject.text,
                 ...generateProject(
                   previousProject.header?.name ?? untitledProjectName,
-                  { data: actions },
+                  { data: actions.toJSON() as ActionData[] },
                   model,
                   dataWindow
                 ).text,
@@ -940,7 +939,6 @@ const createMlStore = (logging: Logging) => {
                       timestamp,
                       // New project loaded externally so we can't know whether its edited.
                       projectEdited: true,
-                      actions: newActions,
                       dataWindow: getDataWindowFromActions(newActions),
                       model: undefined,
                       isEditorOpen: false,
@@ -1024,18 +1022,20 @@ const createMlStore = (logging: Logging) => {
             );
           },
           dataCollectionMicrobitConnected() {
+            const { actions } = get();
+            if (actions.length === 0) {
+              createFirstAction(actions);
+            }
             set(
               ({ actions, tourState, postConnectTourTrigger }) => {
                 return {
-                  actions:
-                    actions.length === 0 ? [createFirstAction()] : actions,
 
                   // If a tour has been explicitly requested, do that.
                   // Other tours are triggered by callbacks or effects on the relevant page so they run only on the correct screen.
                   tourState: postConnectTourTrigger
                     ? {
                         index: 0,
-                        ...getTourSpec(postConnectTourTrigger, actions),
+                      ...getTourSpec(postConnectTourTrigger, actions.toJSON() as ActionData[]),
                       }
                     : tourState,
                   postConnectTourTrigger: undefined,
@@ -1053,7 +1053,7 @@ const createMlStore = (logging: Logging) => {
                 (!state.tourState &&
                   !state.settings.toursCompleted.includes(trigger.name))
               ) {
-                const tourSpec = getTourSpec(trigger, state.actions);
+                const tourSpec = getTourSpec(trigger, state.actions.toJSON() as ActionData[]);
                 const result = {
                   tourState: {
                     ...tourSpec,
@@ -1139,7 +1139,7 @@ const createMlStore = (logging: Logging) => {
               const input = {
                 model,
                 data: buffer.getSamples(startTime),
-                classificationIds: actions.map((a) => a.ID),
+                classificationIds: actions.map((a) => a.get("ID") as number),
               };
               if (input.data.x.length > dataWindow.minSamples) {
                 const result = predict(input, dataWindow);
@@ -1152,7 +1152,7 @@ const createMlStore = (logging: Logging) => {
                     // recognition point are realised.
                     get().actions,
                     result.confidences
-                  );
+                  )?.toJSON() as Action;
                   set({
                     predictionResult: {
                       detected,
@@ -1291,8 +1291,16 @@ const createMlStore = (logging: Logging) => {
                   gestures?: ActionData[];
                 }
                 const stateV0 = persistedStateUnknown as StateV0;
+
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const { gestures, ...rest } = stateV0;
-                return { actions: gestures, ...rest } as State;
+
+                // TODO: Poke gestures through
+                //const newActions = actionDataToY(gestures as ActionData[]);
+                //actions.delete(0, actions.length);
+                //actions.push(newActions);
+
+                return { ...rest } as State;
               }
               default:
                 return persistedStateUnknown;
@@ -1308,11 +1316,13 @@ const createMlStore = (logging: Logging) => {
                 // Make sure we have any new settings defaulted
                 ...defaultSettings,
                 ...currentState.settings,
-                ...persistedState.settings,
+                ...persistedState?.settings,
               },
             };
           },
-        }
+          storage: projectStorage(),
+          skipHydration: true
+        },
       ),
       { enabled: flags.devtools }
     )
@@ -1327,14 +1337,6 @@ const getDataWindowFromActions = (actions: ActionData[]): DataWindow => {
     ? legacyDataWindow
     : currentDataWindow;
 };
-
-// Get data window from actions on app load.
-const { actions } = useStore.getState();
-useStore.setState(
-  { dataWindow: getDataWindowFromActions(actions) },
-  false,
-  "setDataWindow"
-);
 
 tf.loadLayersModel(modelUrl)
   .then((model) => {
@@ -1362,30 +1364,6 @@ useStore.subscribe((state, prevState) => {
   }
 });
 
-export const useHasActions = () => {
-  const actions = useStore((s) => s.actions);
-  return (
-    (actions.length > 0 && actions[0].name.length > 0) ||
-    actions[0]?.recordings.length > 0
-  );
-};
-
-const hasSufficientDataForTraining = (actions: ActionData[]): boolean => {
-  return actions.length >= 2 && actions.every((a) => a.recordings.length >= 3);
-};
-
-export const useHasSufficientDataForTraining = (): boolean => {
-  const actions = useStore((s) => s.actions);
-  return hasSufficientDataForTraining(actions);
-};
-
-export const useHasNoStoredData = (): boolean => {
-  const actions = useStore((s) => s.actions);
-  return !(
-    actions.length !== 0 && actions.some((a) => a.recordings.length > 0)
-  );
-};
-
 type UseSettingsReturn = [Settings, (settings: Partial<Settings>) => void];
 
 export const inContextTranslationLangId = "lol";
@@ -1402,18 +1380,17 @@ export const useSettings = (): UseSettingsReturn => {
 
 const actionIcon = ({
   isFirstAction,
-  existingActions,
+  existingIcons,
 }: {
-  isFirstAction: boolean;
-  existingActions: Action[];
+    isFirstAction: boolean;
+    existingIcons: MakeCodeIcon[];
 }) => {
   if (isFirstAction) {
     return defaultIcons[0];
   }
-  const iconsInUse = existingActions.map((a) => a.icon);
   const useableIcons: MakeCodeIcon[] = [];
   for (const icon of defaultIcons) {
-    if (!iconsInUse.includes(icon)) {
+    if (!existingIcons.includes(icon)) {
       useableIcons.push(icon);
     }
   }
@@ -1458,3 +1435,40 @@ const renameProject = (
     },
   };
 };
+
+const withActionIndex = (actionID: number, actions: ActionDataY, cb: (actionIndex: number) => void) => {
+  let actionIndex;
+  for (actionIndex = 0; actionIndex < actions.length; ++actionIndex) {
+    if (actions.get(actionIndex).get("ID") === actionID) {
+      break;
+    }
+  }
+  if (actionIndex === actions.length) return;
+  cb(actionIndex);
+}
+
+const actionDataToY = (newActions: ActionData[]) => {
+  const existingIcons: MakeCodeIcon[] = [];
+  const newActionsY: ActionDatumY[] = [];
+  for (const a of newActions) {
+    const newActionY: ActionDatumY = new Y.Map();
+    newActionY.set("ID", a.ID);
+    newActionY.set("name", a.name);
+    const newIcon = a.icon ? a.icon : actionIcon({ isFirstAction: false, existingIcons });
+    existingIcons.push(newIcon);
+    newActionY.set("icon", newIcon);
+    newActionY.set("requiredConfidence", a.requiredConfidence as number); // TODO: consider undefined case
+    const recordings: RecordingDatumY[] = [];
+    for (const r of a.recordings) {
+      const recordingY = new Y.Map() as RecordingDatumY;
+      recordingY.set("ID", r.ID);
+      recordingY.set("data", r.data);
+      recordings.push(recordingY);
+    }
+    const recordingsY = new Y.Array() as RecordingDataY;
+    recordingsY.push(recordings);
+    newActionY.set("recordings", recordingsY);
+    newActionsY.push(newActionY);
+  }
+  return newActionsY;
+}
