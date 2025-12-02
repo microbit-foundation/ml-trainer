@@ -6,7 +6,7 @@ import {
   Icon,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import HomepageBannerVideoTranscriptDialog from "./HomepageBannerVideoTranscriptDialog";
 
@@ -17,18 +17,37 @@ export interface HomepageBannerVideoProps {
 const HomepageBannerVideo = ({ src }: HomepageBannerVideoProps) => {
   const intl = useIntl();
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [videoState, setVideoState] = useState<
+    "loading" | "playing" | "paused"
+  >("loading");
   const textTranscriptDialog = useDisclosure();
 
-  const handleTogglePlayPause = useCallback(async () => {
-    if (videoRef.current?.paused) {
-      await videoRef.current?.play();
-      setIsPaused(false);
-    } else {
-      videoRef.current?.pause();
-      setIsPaused(true);
+  const attemptPlayVideo = useCallback(() => {
+    const playPromise = videoRef.current?.play();
+    if (playPromise) {
+      playPromise
+        .then(() => {
+          setVideoState("playing");
+        })
+        .catch((_error) => {
+          // Auto-play was prevented.
+          setVideoState("paused");
+        });
     }
   }, []);
+
+  useEffect(() => {
+    attemptPlayVideo();
+  }, [attemptPlayVideo]);
+
+  const handleTogglePlayPause = useCallback(() => {
+    if (videoRef.current?.paused) {
+      attemptPlayVideo();
+    } else {
+      videoRef.current?.pause();
+      setVideoState("paused");
+    }
+  }, [attemptPlayVideo]);
 
   return (
     <>
@@ -47,7 +66,7 @@ const HomepageBannerVideo = ({ src }: HomepageBannerVideoProps) => {
             <Box position="relative">
               <Box
                 as="button"
-                opacity={isPaused ? 1 : 0}
+                opacity={videoState === "paused" ? 1 : 0}
                 zIndex={2}
                 onClick={handleTogglePlayPause}
                 _hover={{
@@ -62,16 +81,20 @@ const HomepageBannerVideo = ({ src }: HomepageBannerVideoProps) => {
                 height="100%"
                 width="100%"
                 backgroundColor="rgba(0,0,0,0.7)"
-                display="flex"
+                display={videoState === "loading" ? "none" : "flex"}
                 justifyContent="center"
                 alignItems="center"
                 aria-label={intl.formatMessage({
-                  id: isPaused
-                    ? "homepage-media-play-action"
-                    : "homepage-media-pause-action",
+                  id:
+                    videoState === "playing"
+                      ? "homepage-media-play-action"
+                      : "homepage-media-pause-action",
                 })}
               >
-                <Icon as={isPaused ? PlayIcon : PauseIcon} boxSize={8} />
+                <Icon
+                  as={videoState === "paused" ? PlayIcon : PauseIcon}
+                  boxSize={8}
+                />
               </Box>
               <Box
                 ref={videoRef}
