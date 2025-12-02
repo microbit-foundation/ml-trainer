@@ -6,8 +6,6 @@
  */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ChakraProvider, useToast } from "@chakra-ui/react";
-import { Capacitor } from "@capacitor/core";
-import { StatusBar, Style } from "@capacitor/status-bar";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
 import {
   createRadioBridgeConnection,
@@ -59,6 +57,8 @@ import {
   createNewPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
+import { SafeArea, SystemBarsStyle } from "@capacitor-community/safe-area";
+import { Capacitor } from "@capacitor/core";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -208,13 +208,9 @@ const createRouter = () => {
 
 const App = () => {
   useEffect(() => {
-    // Configure status bar for native platforms
     if (Capacitor.isNativePlatform()) {
-      StatusBar.setStyle({ style: Style.Light }).catch((err) => {
-        logging.error(err);
-      });
-      StatusBar.setOverlaysWebView({ overlay: false }).catch((err) => {
-        logging.error(err);
+      void SafeArea.setSystemBarsStyle({
+        style: SystemBarsStyle.Dark,
       });
     }
 

@@ -1,28 +1,28 @@
 PODS:
   - Capacitor (7.4.4):
     - CapacitorCordova
-  - CapacitorCordova (7.4.4)
-  - CapacitorStatusBar (7.0.3):
+  - CapacitorCommunitySafeArea (7.0.0-beta.5):
     - Capacitor
+  - CapacitorCordova (7.4.4)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorCommunitySafeArea (from `../../node_modules/@capacitor-community/safe-area`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
-  - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
 
 EXTERNAL SOURCES:
   Capacitor:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorCommunitySafeArea:
+    :path: "../../node_modules/@capacitor-community/safe-area"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
-  CapacitorStatusBar:
-    :path: "../../node_modules/@capacitor/status-bar"
 
 SPEC CHECKSUMS:
-  Capacitor: 09d9ff8e9618e8c4b3cab2bbee34a17215dd2fef
+  Capacitor: 358dd1c3fdd71d969547b17e159fd8a7736cb45f
+  CapacitorCommunitySafeArea: 53e3ad999bada9892cb4e9aca8fa8012aabad4b2
   CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
-  CapacitorStatusBar: 7d8fcbd6768db014bd721d75e246590b014928e8
 
-PODFILE CHECKSUM: 2dda0cc353931d1c074294a0067df65453b878b5
+PODFILE CHECKSUM: b14023669789a78b7a53c7515766b1a886b64d37
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

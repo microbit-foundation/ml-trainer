@@ -24,11 +24,14 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
       <Flex
         w="100%"
         h="100%"
-        bgColor="white"
+        bgColor="#3454D1" // Matches MakeCode behind status bar, for edge-to-edge appearance
         left={isOpen ? undefined : "-150vw"}
         top={isOpen ? undefined : "-150vh"}
         visibility={isOpen ? "visible" : "hidden"}
         position={isOpen ? undefined : "absolute"}
+        sx={{
+          paddingTop: "env(safe-area-inset-top)",
+        }}
       >
         <Editor ref={ref} style={{ flexGrow: 1 }} />
       </Flex>

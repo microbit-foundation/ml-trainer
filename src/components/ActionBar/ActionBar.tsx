@@ -25,10 +25,15 @@ const ActionBar = ({
       as="header"
       alignItems="center"
       justifyContent="space-between"
-      bgColor="brand2.500"
-      h="64px"
       gap={0}
-      minH="64px"
+      sx={{
+        // Pad the action bar when it appears under the system status bar
+        maxHeight: "calc(64px + env(safe-area-inset-top))",
+        height: "calc(64px + env(safe-area-inset-top))",
+        paddingTop: "env(safe-area-inset-top)",
+        background:
+          "linear-gradient(to bottom, var(--chakra-colors-brand2-600) env(safe-area-inset-top), var(--chakra-colors-brand2-500) env(safe-area-inset-top))",
+      }}
       {...rest}
     >
       <HStack
