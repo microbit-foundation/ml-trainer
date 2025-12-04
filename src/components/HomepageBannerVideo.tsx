@@ -17,38 +17,31 @@ export interface HomepageBannerVideoProps {
 const HomepageBannerVideo = ({ src }: HomepageBannerVideoProps) => {
   const intl = useIntl();
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [videoState, setVideoState] = useState<
-    "loading" | "playing" | "paused"
-  >("loading");
-  const isPaused = videoState === "paused";
+  const [isPaused, setIsPaused] = useState<boolean>(true);
   const textTranscriptDialog = useDisclosure();
 
-  const attemptPlayVideo = useCallback(() => {
-    const playPromise = videoRef.current?.play();
-    if (playPromise) {
-      playPromise
-        .then(() => {
-          setVideoState("playing");
-        })
-        .catch((_error) => {
-          // Auto-play was prevented.
-          setVideoState("paused");
-        });
-    }
-  }, []);
-
   useEffect(() => {
-    attemptPlayVideo();
-  }, [attemptPlayVideo]);
+    const video = videoRef.current;
+    const listener = () => setIsPaused(false);
+    if (video) {
+      // When video plays or autoplays successfully.
+      video.addEventListener("play", listener);
+    }
+    return () => {
+      if (video) {
+        video.removeEventListener("play", listener);
+      }
+    };
+  }, []);
 
   const handleTogglePlayPause = useCallback(() => {
     if (videoRef.current?.paused) {
-      attemptPlayVideo();
+      void videoRef.current.play();
     } else {
       videoRef.current?.pause();
-      setVideoState("paused");
+      setIsPaused(true);
     }
-  }, [attemptPlayVideo]);
+  }, []);
 
   return (
     <>
@@ -82,7 +75,7 @@ const HomepageBannerVideo = ({ src }: HomepageBannerVideoProps) => {
                 height="100%"
                 width="100%"
                 backgroundColor="rgba(0,0,0,0.7)"
-                display={videoState === "loading" ? "none" : "flex"}
+                display="flex"
                 justifyContent="center"
                 alignItems="center"
                 aria-label={intl.formatMessage({
