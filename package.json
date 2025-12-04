@@ -58,10 +58,10 @@
     "vitest-dom": "^0.1.1"
   },
   "dependencies": {
+    "@capacitor-community/safe-area": "^7.0.0-beta.5",
     "@capacitor/android": "^7.4.4",
     "@capacitor/core": "^7.4.4",
     "@capacitor/ios": "^7.4.4",
-    "@capacitor/status-bar": "^7.0.3",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
