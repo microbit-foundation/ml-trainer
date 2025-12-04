@@ -34,9 +34,11 @@ const HomepageBannerVideo = ({ src }: HomepageBannerVideoProps) => {
     };
   }, []);
 
-  const handleTogglePlayPause = useCallback(() => {
+  const handleTogglePlayPause = useCallback(async () => {
     if (videoRef.current?.paused) {
-      void videoRef.current.play();
+      await videoRef.current.play().catch((_e) => {
+        // Do nothing. Continue to show video as paused.
+      });
     } else {
       videoRef.current?.pause();
       setIsPaused(true);
