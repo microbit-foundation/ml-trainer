@@ -20,15 +20,23 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
-import { createTestingModelPageUrl } from "../urls";
+import { createHomePageUrl, createTestingModelPageUrl } from "../urls";
+import { projectSessionStorage } from "../session-storage";
 
 const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
   const addNewAction = useStore((s) => s.addNewAction);
   const model = useStore((s) => s.model);
+  const newSession = useStore((s) => s.newSession);
   const [selectedActionIdx, setSelectedActionIdx] = useState<number>(0);
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!projectSessionStorage.getProjectId()) {
+      return navigate(createHomePageUrl());
+    }
+  }, [navigate, newSession]);
+
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
 
   const tourStart = useStore((s) => s.tourStart);
@@ -36,7 +44,7 @@ const DataSamplesPage = () => {
   useEffect(() => {
     // If a user first connects on "Testing model" this can result in the tour when they return to the "Data samples" page.
     if (isConnected) {
-      tourStart({ name: "Connect" }, false);
+      void tourStart({ name: "Connect" }, false);
     }
   }, [isConnected, tourStart]);
 
@@ -48,9 +56,9 @@ const DataSamplesPage = () => {
   }, [navigate]);
 
   const trainButtonRef = useRef(null);
-  const handleAddNewAction = useCallback(() => {
+  const handleAddNewAction = useCallback(async () => {
     setSelectedActionIdx(actions.length);
-    addNewAction();
+    await addNewAction();
   }, [addNewAction, actions]);
   useShortcut(keyboardShortcuts.addAction, handleAddNewAction, {
     enabled: !isAddNewActionDisabled,

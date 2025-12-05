@@ -217,6 +217,12 @@
       "value": "Quão confiante o modelo está de que você está realizando cada ação no momento."
     }
   ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "click-to-reload-page-action": [
     {
       "type": 0,
@@ -833,6 +839,26 @@
     {
       "type": 0,
       "value": "Tem certeza de que deseja excluir todas as amostras de dados?"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete project"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
     }
   ],
   "delete-recording-aria": [
@@ -2093,6 +2119,12 @@
       "value": "Abrir a última sessão"
     }
   ],
+  "newpage-new-project-title": [
+    {
+      "type": 0,
+      "value": "New project"
+    }
+  ],
   "newpage-new-session-subtitle": [
     {
       "type": 0,
@@ -2277,6 +2309,12 @@
     {
       "type": 0,
       "value": "O nome do projeto não pode estar vazio"
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
     }
   ],
   "radio-link-microbit": [
@@ -2611,6 +2649,12 @@
       "value": "Seu arquivo .hex foi baixado."
     }
   ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
+    }
+  ],
   "select-icon-action-aria": [
     {
       "type": 0,
@@ -2787,6 +2831,18 @@
     {
       "type": 0,
       "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "now"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "a few seconds ago"
     }
   ],
   "tour-action": [

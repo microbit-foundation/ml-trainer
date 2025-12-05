@@ -37,10 +37,10 @@ const RecordingFingerprint = ({
       templateColumns={`repeat(${Object.keys(dataFeatures).length}, 1fr)`}
       {...rest}
     >
-      {Object.keys(dataFeatures).map((k, idx) => (
+      {Object.keys(dataFeatures).map((k) => (
         <ClickableTooltip
           placement="end-end"
-          key={idx}
+          key={k}
           label={
             <Text p={3}>
               <FormattedMessage id={`fingerprint-${k}-tooltip`} />

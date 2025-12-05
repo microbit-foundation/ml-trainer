@@ -11,9 +11,9 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
-import { Action, ActionData } from "../model";
+import { Action } from "../model";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { MakeCodeIcon } from "../utils/icons";
@@ -40,7 +40,7 @@ interface ActionNameCardProps {
 const actionNameMaxLength = 18;
 
 export const actionNameInputId = (action: Action) =>
-  `action-name-input-${action.ID}`;
+  `action-name-input-${action.id}`;
 
 const ActionNameCard = ({
   value,
@@ -55,19 +55,23 @@ const ActionNameCard = ({
   const toastId = "name-too-long-toast";
   const setActionName = useStore((s) => s.setActionName);
   const setActionIcon = useStore((s) => s.setActionIcon);
-  const { icon, ID: id } = value;
+  const { icon, id } = value;
   const [localName, setLocalName] = useState<string>(value.name);
+  useEffect(() => {
+    // Occurs when the name is updated in another tab.
+    setLocalName(value.name);
+  }, [value.name]);
   const predictionResult = useStore((s) => s.predictionResult);
   const isTriggered =
     viewMode === ActionCardNameViewMode.ReadOnly
-      ? predictionResult?.detected?.ID === value.ID
+      ? predictionResult?.detected?.id === value.id
       : undefined;
 
   const debouncedSetActionName = useMemo(
     () =>
       debounce(
-        (id: ActionData["ID"], name: string) => {
-          setActionName(id, name);
+        async (id: string, name: string) => {
+          await setActionName(id, name);
         },
         400,
         { leading: true }
@@ -76,7 +80,7 @@ const ActionNameCard = ({
   );
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
+    async (e) => {
       const name = e.target.value;
       // Validate action name length
       if (name.length >= actionNameMaxLength && !toast.isActive(toastId)) {
@@ -94,14 +98,14 @@ const ActionNameCard = ({
         return;
       }
       setLocalName(name);
-      debouncedSetActionName(id, name);
+      await debouncedSetActionName(id, name);
     },
     [debouncedSetActionName, id, intl, toast]
   );
 
   const handleIconSelected = useCallback(
-    (icon: MakeCodeIcon) => {
-      setActionIcon(id, icon);
+    async (icon: MakeCodeIcon) => {
+      await setActionIcon(id, icon);
     },
     [id, setActionIcon]
   );

@@ -74,9 +74,9 @@ const OpenSharedProjectPage = () => {
     useProjectPreload(setName);
   const { shareId } = useParams();
 
-  const handleOpenProject = useCallback(() => {
+  const handleOpenProject = useCallback(async () => {
     if (!header || !projectText) return;
-    loadProject({ header: { ...header, name }, text: projectText }, name);
+    await loadProject({ header: { ...header, name }, text: projectText }, name);
     logging.event({
       type: "import-shared-project-complete",
       detail: { shareId },
@@ -293,7 +293,7 @@ const PreviewData = ({ dataset }: PreviewDataProps) => {
             {dataset.map((action) => (
               <DataSamplesTableRow
                 preview={true}
-                key={action.ID}
+                key={action.id}
                 action={action}
                 selected={false}
                 showHints={false}

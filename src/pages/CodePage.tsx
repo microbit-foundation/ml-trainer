@@ -11,30 +11,38 @@ import DownloadDialogs from "../components/DownloadDialogs";
 import SaveDialogs from "../components/SaveDialogs";
 import { useProject } from "../hooks/project-hooks";
 import { useStore } from "../store";
-import { createDataSamplesPageUrl, createTestingModelPageUrl } from "../urls";
+import {
+  createDataSamplesPageUrl,
+  createHomePageUrl,
+  createTestingModelPageUrl,
+} from "../urls";
 import Tour from "./Tour";
+import { projectSessionStorage } from "../session-storage";
 
 const CodePage = () => {
   const navigate = useNavigate();
   const model = useStore((s) => s.model);
   const setEditorOpen = useStore((s) => s.setEditorOpen);
+  const isEditorOpen = useStore((s) => s.isEditorOpen);
   const { browserNavigationToEditor } = useProject();
   const [loading, setLoading] = useState<boolean>(true);
   const intl = useIntl();
   const initAsyncCalled = useRef(false);
   useEffect(() => {
+    if (!projectSessionStorage.getProjectId()) {
+      return navigate(createHomePageUrl());
+    }
+    if (!model) {
+      return navigate(createDataSamplesPageUrl());
+    }
     const initAsync = async () => {
       initAsyncCalled.current = true;
-      if (!model) {
-        navigate(createDataSamplesPageUrl());
+      const success = await browserNavigationToEditor();
+      if (success) {
+        setLoading(false);
+        setEditorOpen(true);
       } else {
-        const success = await browserNavigationToEditor();
-        if (success) {
-          setLoading(false);
-          setEditorOpen(true);
-        } else {
-          navigate(createTestingModelPageUrl());
-        }
+        navigate(createTestingModelPageUrl());
       }
     };
 
@@ -46,6 +54,14 @@ const CodePage = () => {
       setEditorOpen(false);
     };
   }, [browserNavigationToEditor, model, navigate, setEditorOpen]);
+
+  // Redirects to the testing model page when MakeCode is closed by
+  // MakeCode activity in another tab / window.
+  useEffect(() => {
+    if (!loading && !isEditorOpen) {
+      navigate(createTestingModelPageUrl());
+    }
+  }, [isEditorOpen, loading, navigate]);
 
   return (
     <>
