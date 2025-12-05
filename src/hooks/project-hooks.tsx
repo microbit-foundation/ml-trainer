@@ -315,7 +315,7 @@ export const ProjectProvider = ({
         const actionsString = await readFileAsText(file);
         const actions = JSON.parse(actionsString) as unknown;
         if (isDatasetUserFileFormat(actions)) {
-          loadDataset(actions);
+          await loadDataset(actions);
           navigate(createDataSamplesPageUrl());
         } else {
           setPostImportDialogState(PostImportDialogState.Error);
@@ -428,12 +428,12 @@ export const ProjectProvider = ({
 
   const editorChange = useStore((s) => s.editorChange);
   const onWorkspaceSave = useCallback(
-    (event: EditorWorkspaceSaveRequest) => {
+    async (event: EditorWorkspaceSaveRequest) => {
       if (!checkIfLangChanged()) {
         // We don't want to handle these events until MakeCode has been
         // reinitialised after a language change.
         // We should reinitialise with the latest project.
-        editorChange(event.project);
+        await editorChange(event.project);
       }
     },
     [checkIfLangChanged, editorChange]

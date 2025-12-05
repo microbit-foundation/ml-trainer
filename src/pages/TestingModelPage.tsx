@@ -73,7 +73,7 @@ const TestingModelPage = () => {
   const wasConnected = usePrevious(isConnected);
   useEffect(() => {
     if (isConnected) {
-      tourStart(
+      void tourStart(
         { name: "TrainModel", delayedUntilConnection: wasConnected === false },
         false
       );

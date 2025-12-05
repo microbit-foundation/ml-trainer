@@ -79,9 +79,9 @@ const ImportPage = () => {
   const newSession = useStore((s) => s.newSession);
   const timestamp = useStore((s) => s.timestamp);
 
-  const handleStartSession = useCallback(() => {
+  const handleStartSession = useCallback(async () => {
     if (project) {
-      loadProject(project, name);
+      await loadProject(project, name);
       navigate(createDataSamplesPageUrl());
     } else {
       // If no resource fetched, start as new empty session

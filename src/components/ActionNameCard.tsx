@@ -66,8 +66,8 @@ const ActionNameCard = ({
   const debouncedSetActionName = useMemo(
     () =>
       debounce(
-        (id: ActionData["ID"], name: string) => {
-          setActionName(id, name);
+        async (id: ActionData["ID"], name: string) => {
+          await setActionName(id, name);
         },
         400,
         { leading: true }
@@ -76,7 +76,7 @@ const ActionNameCard = ({
   );
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
+    async (e) => {
       const name = e.target.value;
       // Validate action name length
       if (name.length >= actionNameMaxLength && !toast.isActive(toastId)) {
@@ -94,14 +94,14 @@ const ActionNameCard = ({
         return;
       }
       setLocalName(name);
-      debouncedSetActionName(id, name);
+      await debouncedSetActionName(id, name);
     },
     [debouncedSetActionName, id, intl, toast]
   );
 
   const handleIconSelected = useCallback(
-    (icon: MakeCodeIcon) => {
-      setActionIcon(id, icon);
+    async (icon: MakeCodeIcon) => {
+      await setActionIcon(id, icon);
     },
     [id, setActionIcon]
   );

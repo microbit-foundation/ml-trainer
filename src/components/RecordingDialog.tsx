@@ -156,11 +156,11 @@ const RecordingDialog = ({
 
   const startRecordingInternal = useCallback(() => {
     recordingDataSource.startRecording({
-      onDone(data) {
+      async onDone(data) {
         const recordingId = Date.now();
         mostRecentRecordingIdRef.current = recordingId;
         recordingCountRef.current++;
-        addActionRecording(actionId, { ID: recordingId, data });
+        await addActionRecording(actionId, { ID: recordingId, data });
         if (continuousRecording && recordingsRemaining) {
           continueRecording();
         } else if (!continuousRecording && recordingsRemaining) {

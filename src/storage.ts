@@ -126,4 +126,12 @@ export class Database {
   async deleteRecording(key: string): Promise<void> {
     return (await this.dbPromise).delete(DatabaseStore.RECORDINGS, key);
   }
+
+  async updateSettings(settings: Settings): Promise<string> {
+    return (await this.dbPromise).put(
+      DatabaseStore.SETTINGS,
+      settings,
+      "settings"
+    );
+  }
 }

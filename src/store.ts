@@ -226,21 +226,27 @@ export interface ConnectOptions {
 
 export interface Actions {
   getActions(): Promise<void>;
-  addNewAction(): void;
-  addActionRecording(id: ActionData["ID"], recording: RecordingData): void;
-  deleteAction(id: ActionData["ID"]): void;
-  setActionName(id: ActionData["ID"], name: string): void;
-  setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon): void;
-  setRequiredConfidence(id: ActionData["ID"], value: number): void;
-  deleteActionRecording(id: ActionData["ID"], recordingId: number): void;
-  deleteAllActions(): void;
+  addNewAction(): Promise<void>;
+  addActionRecording(
+    id: ActionData["ID"],
+    recording: RecordingData
+  ): Promise<void>;
+  deleteAction(id: ActionData["ID"]): Promise<void>;
+  setActionName(id: ActionData["ID"], name: string): Promise<void>;
+  setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon): Promise<void>;
+  setRequiredConfidence(id: ActionData["ID"], value: number): Promise<void>;
+  deleteActionRecording(
+    id: ActionData["ID"],
+    recordingId: number
+  ): Promise<void>;
+  deleteAllActions(): Promise<void>;
   downloadDataset(): void;
 
   dataCollectionMicrobitConnectionStart(options?: ConnectOptions): void;
   dataCollectionMicrobitConnected(): void;
 
-  loadDataset(actions: ActionData[]): void;
-  loadProject(project: MakeCodeProject, name: string): void;
+  loadDataset(actions: ActionData[]): Promise<void>;
+  loadProject(project: MakeCodeProject, name: string): Promise<void>;
   setEditorOpen(open: boolean): void;
   recordingStarted(): void;
   recordingStopped(): void;
@@ -248,8 +254,8 @@ export interface Actions {
   trainModelFlowStart: (callback?: () => void) => Promise<void>;
   closeTrainModelDialogs: () => void;
   trainModel(): Promise<boolean>;
-  setSettings(update: Partial<Settings>): void;
-  setLanguage(languageId: string): void;
+  setSettings(update: Partial<Settings>): Promise<void>;
+  setLanguage(languageId: string): Promise<void>;
 
   /**
    * Resets the project.
@@ -268,7 +274,7 @@ export interface Actions {
   checkIfProjectNeedsFlush(): boolean;
   checkIfLangChanged(): boolean;
   langChangeFlushedToEditor(): void;
-  editorChange(project: MakeCodeProject): void;
+  editorChange(project: MakeCodeProject): Promise<void>;
   editorReady(): void;
   editorTimedOut(): void;
   getEditorStartUp(): EditorStartUp;
@@ -282,15 +288,15 @@ export interface Actions {
   setDownloadFlashingProgress(value: number): void;
   setSave(state: SaveState): void;
 
-  tourStart(trigger: TourTrigger, manual?: boolean): void;
+  tourStart(trigger: TourTrigger, manual?: boolean): Promise<void>;
   tourNext(): void;
   tourBack(): void;
-  tourComplete(markCompleted: TourTriggerName[]): void;
+  tourComplete(markCompleted: TourTriggerName[]): Promise<void>;
 
   setPostConnectTourTrigger(trigger: TourTrigger | undefined): void;
 
-  setDataSamplesView(view: DataSamplesView): void;
-  setShowGraphs(show: boolean): void;
+  setDataSamplesView(view: DataSamplesView): Promise<void>;
+  setShowGraphs(show: boolean): Promise<void>;
 
   setPostImportDialogState(state: PostImportDialogState): void;
   startPredicting(buffer: BufferedData): void;
@@ -366,32 +372,32 @@ const createMlStore = (logging: Logging) => {
         isDeleteActionDialogOpen: false,
         isIncompatibleEditorDeviceDialogOpen: false,
 
-        setSettings(update: Partial<Settings>) {
-          set(
-            ({ settings }) => ({
-              settings: {
-                ...settings,
-                ...update,
-              },
-            }),
-            false,
-            "setSettings"
+        async setSettings(update: Partial<Settings>) {
+          const { settings } = get();
+          const updatedSettings = {
+            ...settings,
+            ...update,
+          };
+          set({ settings: updatedSettings }, false, "setSettings");
+          await storageWithErrHandling<string>(() =>
+            storage.updateSettings(updatedSettings)
           );
         },
 
-        setLanguage(languageId: string) {
-          const currLanguageId = get().settings.languageId;
-          if (languageId === currLanguageId) {
+        async setLanguage(languageId: string) {
+          const { settings } = get();
+          if (languageId === settings.languageId) {
             // No need to update language if language is the same.
             // MakeCode does not reload.
             return;
           }
+          const updatedSettings = {
+            ...settings,
+            languageId,
+          };
           set(
-            ({ settings }) => ({
-              settings: {
-                ...settings,
-                languageId,
-              },
+            {
+              settings: updatedSettings,
               editorPromises: {
                 editorReadyPromise: createPromise<void>(),
                 editorContentLoadedPromise: createPromise<void>(),
@@ -400,9 +406,12 @@ const createMlStore = (logging: Logging) => {
               editorStartUp: "in-progress",
               editorStartUpTimestamp: Date.now(),
               langChanged: true,
-            }),
+            },
             false,
             "setLanguage"
+          );
+          await storageWithErrHandling<string>(() =>
+            storage.updateSettings(updatedSettings)
           );
         },
 
@@ -725,16 +734,18 @@ const createMlStore = (logging: Logging) => {
           a.click();
         },
 
-        loadDataset(newActions: ActionData[]) {
-          set(({ project, projectEdited, settings }) => {
+        async loadDataset(newActions: ActionData[]) {
+          const { settings } = get();
+          const updatedSettings: Settings = {
+            ...settings,
+            toursCompleted: Array.from(
+              new Set([...settings.toursCompleted, "DataSamplesRecorded"])
+            ),
+          };
+          set(({ project, projectEdited }) => {
             const dataWindow = getDataWindowFromActions(newActions);
             return {
-              settings: {
-                ...settings,
-                toursCompleted: Array.from(
-                  new Set([...settings.toursCompleted, "DataSamplesRecorded"])
-                ),
-              },
+              settings: updatedSettings,
               actions: (() => {
                 const copy = newActions.map((a) => ({ ...a }));
                 for (const a of copy) {
@@ -759,15 +770,25 @@ const createMlStore = (logging: Logging) => {
               ),
             };
           });
+          await storageWithErrHandling<string>(() =>
+            storage.updateSettings(updatedSettings)
+          );
         },
 
         /**
          * Generally project loads go via MakeCode as it reads the hex but when we open projects
          * from microbit.org we have the JSON already and use this route.
          */
-        loadProject(project: MakeCodeProject, name: string) {
+        async loadProject(project: MakeCodeProject, name: string) {
+          const { settings } = get();
+          const updatedSettings: Settings = {
+            ...settings,
+            toursCompleted: Array.from(
+              new Set([...settings.toursCompleted, "DataSamplesRecorded"])
+            ),
+          };
           const newActions = getActionsFromProject(project);
-          set(({ settings, project: prevProject }) => {
+          set(({ project: prevProject }) => {
             project = renameProject(project, name);
             project = {
               ...project,
@@ -779,12 +800,7 @@ const createMlStore = (logging: Logging) => {
             };
             const timestamp = Date.now();
             return {
-              settings: {
-                ...settings,
-                toursCompleted: Array.from(
-                  new Set([...settings.toursCompleted, "DataSamplesRecorded"])
-                ),
-              },
+              settings: updatedSettings,
               actions: newActions,
               dataWindow: getDataWindowFromActions(newActions),
               model: undefined,
@@ -795,6 +811,9 @@ const createMlStore = (logging: Logging) => {
               // We don't update projectLoadTimestamp here as we don't want a toast notification for .org import
             };
           });
+          await storageWithErrHandling<string>(() =>
+            storage.updateSettings(updatedSettings)
+          );
         },
 
         closeTrainModelDialogs() {
@@ -946,7 +965,7 @@ const createMlStore = (logging: Logging) => {
           );
         },
 
-        editorChange(newProject: MakeCodeProject) {
+        async editorChange(newProject: MakeCodeProject) {
           // Notes on past issues with the MakeCode integration:
           //
           // We update MakeCode only as needed. However, it loads in the
@@ -969,6 +988,13 @@ const createMlStore = (logging: Logging) => {
           // project data in editorChange when loading a hex file.
 
           const actionName = "editorChange";
+          const { settings } = get();
+          const updatedSettings: Settings = {
+            ...settings,
+            toursCompleted: Array.from(
+              new Set([...settings.toursCompleted, "DataSamplesRecorded"])
+            ),
+          };
           set(
             (state) => {
               const {
@@ -976,7 +1002,6 @@ const createMlStore = (logging: Logging) => {
                 isEditorOpen,
                 isEditorImportingState,
                 isEditorLoadingFile,
-                settings,
               } = state;
               const newProjectHeader = newProject.header!.id;
               const previousProjectHeader = prevProject.header!.id;
@@ -1004,15 +1029,7 @@ const createMlStore = (logging: Logging) => {
                   const timestamp = Date.now();
                   const newActions = getActionsFromProject(newProject);
                   return {
-                    settings: {
-                      ...settings,
-                      toursCompleted: Array.from(
-                        new Set([
-                          ...settings.toursCompleted,
-                          "DataSamplesRecorded",
-                        ])
-                      ),
-                    },
+                    settings: updatedSettings,
                     project: newProject,
                     projectLoadTimestamp: timestamp,
                     timestamp,
@@ -1044,6 +1061,9 @@ const createMlStore = (logging: Logging) => {
             },
             false,
             actionName
+          );
+          await storageWithErrHandling<string>(() =>
+            storage.updateSettings(updatedSettings)
           );
         },
         setDownload(download: DownloadState) {
@@ -1119,35 +1139,36 @@ const createMlStore = (logging: Logging) => {
           );
         },
 
-        tourStart(trigger: TourTrigger, manual: boolean = false) {
-          set((state) => {
-            if (
-              manual ||
-              (!state.tourState &&
-                !state.settings.toursCompleted.includes(trigger.name))
-            ) {
-              const tourSpec = getTourSpec(trigger, state.actions);
-              const result = {
-                tourState: {
-                  ...tourSpec,
-                  index: 0,
-                },
-                // If manually triggered, filter out subsequent tours as they should run again too when reached
-                settings: manual
-                  ? {
-                      ...state.settings,
-                      toursCompleted: state.settings.toursCompleted.filter(
-                        (t) =>
-                          tourSequence.indexOf(t) <=
-                          tourSequence.indexOf(trigger.name)
-                      ),
-                    }
-                  : state.settings,
-              };
-              return result;
-            }
-            return state;
-          });
+        async tourStart(trigger: TourTrigger, manual: boolean = false) {
+          const { actions, settings, tourState } = get();
+          if (
+            manual ||
+            (!tourState && !settings.toursCompleted.includes(trigger.name))
+          ) {
+            const tourSpec = getTourSpec(trigger, actions);
+            // If manually triggered, filter out subsequent tours as they should run again too when reached
+            const updatedSettings = manual
+              ? {
+                  ...settings,
+                  toursCompleted: settings.toursCompleted.filter(
+                    (t) =>
+                      tourSequence.indexOf(t) <=
+                      tourSequence.indexOf(trigger.name)
+                  ),
+                }
+              : settings;
+            const updatedState = {
+              tourState: {
+                ...tourSpec,
+                index: 0,
+              },
+              settings: updatedSettings,
+            };
+            set(updatedState);
+            await storageWithErrHandling<string>(() =>
+              storage.updateSettings(updatedSettings)
+            );
+          }
         },
         tourNext() {
           set(({ tourState }) => {
@@ -1169,33 +1190,48 @@ const createMlStore = (logging: Logging) => {
             };
           });
         },
-        tourComplete(triggers: TourTriggerName[]) {
-          set(({ settings }) => ({
+        async tourComplete(triggers: TourTriggerName[]) {
+          const { settings } = get();
+          const updatedSettings = {
+            ...settings,
+            toursCompleted: Array.from(
+              new Set([...settings.toursCompleted, ...triggers])
+            ),
+          };
+          set({
             tourState: undefined,
-            settings: {
-              ...settings,
-              toursCompleted: Array.from(
-                new Set([...settings.toursCompleted, ...triggers])
-              ),
-            },
-          }));
+            settings: updatedSettings,
+          });
+          await storageWithErrHandling<string>(() =>
+            storage.updateSettings(updatedSettings)
+          );
         },
 
-        setDataSamplesView(view: DataSamplesView) {
-          set(({ settings }) => ({
-            settings: {
-              ...settings,
-              dataSamplesView: view,
-            },
-          }));
+        async setDataSamplesView(view: DataSamplesView) {
+          const { settings } = get();
+          const updatedSettings = {
+            ...settings,
+            dataSamplesView: view,
+          };
+          set({
+            settings: updatedSettings,
+          });
+          await storageWithErrHandling<string>(() =>
+            storage.updateSettings(updatedSettings)
+          );
         },
-        setShowGraphs(show: boolean) {
-          set(({ settings }) => ({
-            settings: {
-              ...settings,
-              showGraphs: show,
-            },
-          }));
+        async setShowGraphs(show: boolean) {
+          const { settings } = get();
+          const updatedSettings = {
+            ...settings,
+            showGraphs: show,
+          };
+          set({
+            settings: updatedSettings,
+          });
+          await storageWithErrHandling<string>(() =>
+            storage.updateSettings(updatedSettings)
+          );
         },
 
         setPostImportDialogState(state: PostImportDialogState) {

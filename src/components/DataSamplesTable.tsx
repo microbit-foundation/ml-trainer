@@ -138,12 +138,20 @@ const DataSamplesTable = ({
 
   const tourStart = useStore((s) => s.tourStart);
   const handleRecordingComplete = useCallback(
-    ({ mostRecentRecordingId, recordingCount }: RecordingCompleteDetail) => {
+    async ({
+      mostRecentRecordingId,
+      recordingCount,
+    }: RecordingCompleteDetail) => {
       setNewRecordingId(mostRecentRecordingId);
-      tourStart({ name: "DataSamplesRecorded", recordingCount });
+      await tourStart({ name: "DataSamplesRecorded", recordingCount });
     },
     [tourStart]
   );
+
+  const handleConfirm = useCallback(async () => {
+    await deleteAction(selectedAction?.ID);
+    closeDialog();
+  }, [closeDialog, deleteAction, selectedAction]);
 
   const actionNameInputEl = useCallback(
     (idx: number) => document.getElementById(actionNameInputId(actions[idx])),
@@ -205,10 +213,7 @@ const DataSamplesTable = ({
                 />
               </Text>
             }
-            onConfirm={() => {
-              deleteAction(selectedAction.ID);
-              closeDialog();
-            }}
+            onConfirm={handleConfirm}
             onCancel={closeDialog}
           />
           <RecordingDialog
