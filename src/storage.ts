@@ -1,29 +1,46 @@
 import { MakeCodeProject } from "@microbit/makecode-embed";
 import { openDB, IDBPDatabase, DBSchema } from "idb";
 import { Action, ActionData, RecordingData } from "./model";
-import { Settings } from "./settings";
+import { defaultSettings, Settings } from "./settings";
 import { prepActionForStorage } from "./storageUtils";
-
-// Meed a custom migraton from current localStorage to IndexedDB - one project only.
 
 const DATABASE_NAME = "ml";
 
 export enum DatabaseStore {
-  PROJECT = "project",
+  PROJECT_DATA = "project-data",
   MAKECODE = "makecode",
   RECORDINGS = "recordings",
   ACTIONS = "actions",
   SETTINGS = "settings",
 }
 
+const defaultStoreData: Record<
+  DatabaseStore.PROJECT_DATA | DatabaseStore.SETTINGS,
+  { key: string; value: ProjectData | Settings }
+> = {
+  [DatabaseStore.PROJECT_DATA]: {
+    value: { timestamp: undefined, projectEdited: false },
+    key: "project-data",
+  },
+  [DatabaseStore.SETTINGS]: {
+    value: defaultSettings,
+    key: "settings",
+  },
+};
+
 export interface StoreAction extends Action {
   recordingIds: string[];
 }
 
+interface ProjectData {
+  projectEdited: boolean;
+  timestamp?: number;
+}
+
 interface Schema extends DBSchema {
-  [DatabaseStore.PROJECT]: {
+  [DatabaseStore.PROJECT_DATA]: {
     key: string;
-    value: string;
+    value: ProjectData;
   };
   [DatabaseStore.ACTIONS]: {
     key: string;
@@ -51,12 +68,38 @@ export class Database {
 
   initialize(): Promise<IDBPDatabase<Schema>> {
     return openDB(DATABASE_NAME, 1, {
-      upgrade(db) {
+      async upgrade(db) {
         for (const store of Object.values(DatabaseStore)) {
-          db.createObjectStore(store);
+          const objectStore = db.createObjectStore(store);
+          if (
+            store === DatabaseStore.PROJECT_DATA ||
+            store === DatabaseStore.SETTINGS
+          ) {
+            // TODO: Migrate from localStorage.
+            const defaultData = defaultStoreData[store];
+            await objectStore.add(defaultData.value, defaultData.key);
+          }
         }
       },
     });
+  }
+
+  async getProjectData(): Promise<ProjectData> {
+    const projectData = await (
+      await this.dbPromise
+    ).get(DatabaseStore.PROJECT_DATA, "project-data");
+    if (!projectData) {
+      throw new Error("Failed to fetch project data");
+    }
+    return projectData;
+  }
+
+  async updateProjectData(projectData: ProjectData): Promise<string> {
+    return (await this.dbPromise).put(
+      DatabaseStore.PROJECT_DATA,
+      projectData,
+      "project-data"
+    );
   }
 
   async getActions(): Promise<ActionData[]> {
@@ -125,6 +168,16 @@ export class Database {
 
   async deleteRecording(key: string): Promise<void> {
     return (await this.dbPromise).delete(DatabaseStore.RECORDINGS, key);
+  }
+
+  async getSettings(): Promise<Settings> {
+    const settings = await (
+      await this.dbPromise
+    ).get(DatabaseStore.SETTINGS, "settings");
+    if (!settings) {
+      throw new Error("Failed to fetch settings");
+    }
+    return settings;
   }
 
   async updateSettings(settings: Settings): Promise<string> {

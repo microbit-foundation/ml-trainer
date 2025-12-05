@@ -86,7 +86,7 @@ const ImportPage = () => {
     } else {
       // If no resource fetched, start as new empty session
       // with provided project name
-      newSession(name);
+      await newSession(name);
       navigate(createDataSamplesPageUrl());
     }
   }, [loadProject, name, navigate, newSession, project]);

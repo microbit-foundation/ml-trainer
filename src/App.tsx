@@ -109,17 +109,17 @@ const Providers = ({ children }: ProviderLayoutProps) => {
 const Layout = () => {
   const driverRef = useRef<MakeCodeFrameDriver>(null);
   const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
-  const getActions = useStore((s) => s.getActions);
+  const loadProjectFromStorage = useStore((s) => s.loadProjectFromStorage);
   const navigate = useNavigate();
   const toast = useToast();
   const intl = useIntl();
 
   useEffect(() => {
-    // TODO: This could be get last project and could set loading state inside the store call.
+    // TODO:This could be get last project and could set loading state inside the store call.
     // Or we await the getter here and set loading state here?
-    void getActions();
-    console.log("Get actions");
-  }, [getActions]);
+    void loadProjectFromStorage();
+    console.log("Load project from storage");
+  }, [loadProjectFromStorage]);
 
   useEffect(() => {
     return useStore.subscribe(

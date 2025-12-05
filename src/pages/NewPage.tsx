@@ -50,11 +50,11 @@ const NewPage = () => {
     loadProjectRef.current?.chooseFile();
   }, []);
 
-  const handleStartNewSession = useCallback(() => {
+  const handleStartNewSession = useCallback(async () => {
     logging.event({
       type: "session-open-new",
     });
-    newSession();
+    await newSession();
     navigate(createDataSamplesPageUrl());
   }, [logging, newSession, navigate]);
 
