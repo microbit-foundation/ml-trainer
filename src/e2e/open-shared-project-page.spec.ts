@@ -35,7 +35,7 @@ test.describe("import shared page", () => {
     // try import
     await openSharedProjectPage.clickOpenProjectBtn();
     // importing the loaded project
-    dataSamplesPage.expectUrl();
+    await dataSamplesPage.expectUrl();
   });
 
   test("error", async ({ openSharedProjectPage }) => {

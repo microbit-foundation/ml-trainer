@@ -15,10 +15,10 @@ const ShowGraphsCheckbox = () => {
   const setShowGraphs = useStore((s) => s.setShowGraphs);
 
   const handleShowGraphOnChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
       const isChecked = e.target.checked;
-      setShowGraphs(isChecked);
-      setDataSamplesView(
+      await setShowGraphs(isChecked);
+      await setDataSamplesView(
         isChecked
           ? DataSamplesView.GraphAndDataFeatures
           : DataSamplesView.DataFeatures

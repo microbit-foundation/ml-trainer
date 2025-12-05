@@ -255,6 +255,12 @@
       "value": "How confident the model is that you are currently doing each action."
     }
   ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "click-to-reload-page-action": [
     {
       "type": 0,
@@ -845,6 +851,26 @@
     {
       "type": 0,
       "value": "Are you sure you want to delete all data samples?"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete project"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
     }
   ],
   "delete-recording-aria": [
@@ -2131,6 +2157,12 @@
       "value": "Open last session"
     }
   ],
+  "newpage-new-project-title": [
+    {
+      "type": 0,
+      "value": "New project"
+    }
+  ],
   "newpage-new-session-subtitle": [
     {
       "type": 0,
@@ -2305,6 +2337,12 @@
     {
       "type": 0,
       "value": "The project name cannot be empty"
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
     }
   ],
   "radio-link-microbit": [
@@ -2737,6 +2775,12 @@
       "value": "Your hex file has been downloaded"
     }
   ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
+    }
+  ],
   "select-icon-action-aria": [
     {
       "type": 0,
@@ -2917,6 +2961,18 @@
     {
       "type": 0,
       "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "now"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "a few seconds ago"
     }
   ],
   "tour-action": [

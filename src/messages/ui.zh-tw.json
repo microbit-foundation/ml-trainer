@@ -255,6 +255,12 @@
       "value": "模型對您目前正在執行的各個動作的信心程度。"
     }
   ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "click-to-reload-page-action": [
     {
       "type": 0,
@@ -849,6 +855,26 @@
     {
       "type": 0,
       "value": "您確定您要刪除所有的數據樣本嗎？"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete project"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
     }
   ],
   "delete-recording-aria": [
@@ -2127,6 +2153,12 @@
       "value": "開啟上一個會話"
     }
   ],
+  "newpage-new-project-title": [
+    {
+      "type": 0,
+      "value": "New project"
+    }
+  ],
   "newpage-new-session-subtitle": [
     {
       "type": 0,
@@ -2301,6 +2333,12 @@
     {
       "type": 0,
       "value": "專案名稱不可為空白"
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
     }
   ],
   "radio-link-microbit": [
@@ -2715,6 +2753,12 @@
       "value": "您的十六進位檔案已下載"
     }
   ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
+    }
+  ],
   "select-icon-action-aria": [
     {
       "type": 0,
@@ -2895,6 +2939,18 @@
     {
       "type": 0,
       "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "now"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "a few seconds ago"
     }
   ],
   "tour-action": [

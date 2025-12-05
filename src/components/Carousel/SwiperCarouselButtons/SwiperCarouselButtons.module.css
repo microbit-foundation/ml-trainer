@@ -1,0 +1,17 @@
+.carouselButton {
+  position: absolute;
+  z-index: 5;
+  background-color: transparent;
+  transform: translateY(-50%);
+  top: 50%;
+  &.left {
+    left: 0;
+  }
+  &.right {
+    right: 0;
+  }
+}
+:global .swiper-button-disabled {
+  cursor: auto;
+  opacity: 0.35;
+}

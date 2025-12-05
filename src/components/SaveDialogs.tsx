@@ -29,7 +29,7 @@ const SaveDialogs = () => {
   const handleSave = useCallback(
     async (newName?: string) => {
       if (newName) {
-        setProjectName(newName);
+        await setProjectName(newName);
       }
       await saveHex(hex);
     },

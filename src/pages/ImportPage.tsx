@@ -25,7 +25,7 @@ import { useDeployment } from "../deployment";
 import { useDefaultProjectName, useProject } from "../hooks/project-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { MicrobitOrgResource } from "../model";
-import { validateProjectName } from "../project-name";
+import { validateProjectName } from "../project-utils";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 import { ButtonWithLoading } from "../components/ButtonWithLoading";
@@ -79,14 +79,14 @@ const ImportPage = () => {
   const newSession = useStore((s) => s.newSession);
   const timestamp = useStore((s) => s.timestamp);
 
-  const handleStartSession = useCallback(() => {
+  const handleStartSession = useCallback(async () => {
     if (project) {
-      loadProject(project, name);
+      await loadProject(project, name);
       navigate(createDataSamplesPageUrl());
     } else {
       // If no resource fetched, start as new empty session
       // with provided project name
-      newSession(name);
+      await newSession(name);
       navigate(createDataSamplesPageUrl());
     }
   }, [loadProject, name, navigate, newSession, project]);

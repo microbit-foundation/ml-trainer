@@ -50,11 +50,11 @@ const Tour = () => {
   });
   const ourRef = useRef<HTMLElement>();
 
-  const handleTourComplete = useCallback(() => {
+  const handleTourComplete = useCallback(async () => {
     if (!tourState) {
       throw new Error("Must be a tour");
     }
-    tourComplete(tourState.markCompleted);
+    await tourComplete(tourState.markCompleted);
   }, [tourComplete, tourState]);
 
   useEffect(() => {

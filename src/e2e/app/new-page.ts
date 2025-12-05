@@ -63,7 +63,7 @@ export class NewPage {
   }
 
   async expectResumeButtonToShowProjectName(projectName: string) {
-    await expect(this.page.getByText(projectName)).toBeVisible();
+    await expect(this.page.getByText(`Name: ${projectName}`)).toBeVisible();
   }
 
   async resumeSession() {

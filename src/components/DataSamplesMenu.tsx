@@ -59,18 +59,18 @@ const DataSamplesMenu = () => {
     downloadDataset();
   }, [downloadDataset, actions, logging]);
   const deleteAllActions = useStore((s) => s.deleteAllActions);
-  const handleDeleteAllActions = useCallback(() => {
+  const handleDeleteAllActions = useCallback(async () => {
     logging.event({
       type: "dataset-delete",
     });
-    deleteAllActions();
+    await deleteAllActions();
     closeDialog();
   }, [closeDialog, deleteAllActions, logging]);
 
   const handleSave = useCallback(
-    (newName?: string) => {
+    async (newName?: string) => {
       if (newName) {
-        setProjectName(newName);
+        await setProjectName(newName);
       }
       download();
       closeDialog();
