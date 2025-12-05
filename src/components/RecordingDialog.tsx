@@ -71,7 +71,7 @@ const RecordingDialog = ({
   const mostRecentRecordingIdRef = useRef(-1);
   const recordingStarted = useStore((s) => s.recordingStarted);
   const recordingStopped = useStore((s) => s.recordingStopped);
-  const addActionRecordings = useStore((s) => s.addActionRecordings);
+  const addActionRecording = useStore((s) => s.addActionRecording);
   const recordingDataSource = useRecordingDataSource();
   const [recordingStatus, setRecordingStatus] = useState<RecordingStatus>(
     RecordingStatus.None
@@ -160,7 +160,7 @@ const RecordingDialog = ({
         const recordingId = Date.now();
         mostRecentRecordingIdRef.current = recordingId;
         recordingCountRef.current++;
-        addActionRecordings(actionId, [{ ID: recordingId, data }]);
+        addActionRecording(actionId, { ID: recordingId, data });
         if (continuousRecording && recordingsRemaining) {
           continueRecording();
         } else if (!continuousRecording && recordingsRemaining) {
@@ -193,7 +193,7 @@ const RecordingDialog = ({
       onProgress: setProgress,
     });
   }, [
-    addActionRecordings,
+    addActionRecording,
     continueRecording,
     continuousRecording,
     decrementRecordingsRemaining,

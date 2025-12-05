@@ -45,6 +45,9 @@ import { BufferedData } from "./buffered-data";
 import { getDetectedAction } from "./utils/prediction";
 import { getTour as getTourSpec } from "./tours";
 import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
+import { Database } from "./storage";
+
+const storage = new Database();
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -222,13 +225,14 @@ export interface ConnectOptions {
 }
 
 export interface Actions {
+  getActions(): Promise<void>;
   addNewAction(): void;
-  addActionRecordings(id: ActionData["ID"], recs: RecordingData[]): void;
+  addActionRecording(id: ActionData["ID"], recording: RecordingData): void;
   deleteAction(id: ActionData["ID"]): void;
   setActionName(id: ActionData["ID"], name: string): void;
   setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon): void;
   setRequiredConfidence(id: ActionData["ID"], value: number): void;
-  deleteActionRecording(id: ActionData["ID"], recordingIdx: number): void;
+  deleteActionRecording(id: ActionData["ID"], recordingId: number): void;
   deleteAllActions(): void;
   downloadDataset(): void;
 
@@ -442,45 +446,26 @@ const createMlStore = (logging: Logging) => {
           set({ isRecording: false }, false, "recordingStopped");
         },
 
-        addNewAction() {
-          return set(({ project, projectEdited, actions, dataWindow }) => {
-            const newActions = [
-              ...actions,
-              {
-                icon: actionIcon({
-                  isFirstAction: actions.length === 0,
-                  existingActions: actions,
-                }),
-                ID: Date.now(),
-                name: "",
-                recordings: [],
-              },
-            ];
-            return {
-              actions: newActions,
-              model: undefined,
-              ...updateProject(
-                project,
-                projectEdited,
-                newActions,
-                undefined,
-                dataWindow
-              ),
-            };
+        async getActions() {
+          const actions = await storage.getActions();
+          set(() => {
+            return { actions };
           });
         },
 
-        addActionRecordings(id: ActionData["ID"], recs: RecordingData[]) {
-          return set(({ actions, dataWindow, project, projectEdited }) => {
-            const updatedActions = actions.map((action) => {
-              if (action.ID === id) {
-                return {
-                  ...action,
-                  recordings: [...recs, ...action.recordings],
-                };
-              }
-              return action;
-            });
+        async addNewAction() {
+          const { actions } = get();
+          const newAction: ActionData = {
+            icon: actionIcon({
+              isFirstAction: actions.length === 0,
+              existingActions: actions,
+            }),
+            ID: Date.now(),
+            name: "",
+            recordings: [],
+          };
+          const updatedActions = [...actions, newAction];
+          set(({ project, projectEdited, dataWindow }) => {
             return {
               actions: updatedActions,
               model: undefined,
@@ -493,10 +478,55 @@ const createMlStore = (logging: Logging) => {
               ),
             };
           });
+          await storageWithErrHandling<string>(() =>
+            storage.addAction(newAction)
+          );
         },
 
-        deleteAction(id: ActionData["ID"]) {
-          return set(({ project, projectEdited, actions, dataWindow }) => {
+        async addActionRecording(
+          id: ActionData["ID"],
+          recording: RecordingData
+        ) {
+          const { actions, dataWindow, project, projectEdited } = get();
+          let updatedAction: ActionData;
+          const updatedActions = actions.map((action) => {
+            if (action.ID === id) {
+              updatedAction = {
+                ...action,
+                recordings: [recording, ...action.recordings],
+              };
+              return updatedAction;
+            }
+            return action;
+          });
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            updatedActions,
+            undefined,
+            dataWindow
+          );
+          set({
+            actions: updatedActions,
+            model: undefined,
+            ...updatedProject,
+          });
+          const storeUpdates: Promise<string | undefined>[] = [];
+          storeUpdates.push(
+            storageWithErrHandling<string>(() =>
+              storage.updateAction(updatedAction)
+            )
+          );
+          storeUpdates.push(
+            storageWithErrHandling<string>(() =>
+              storage.addRecording(recording)
+            )
+          );
+          await Promise.all(storeUpdates);
+        },
+
+        async deleteAction(id: ActionData["ID"]) {
+          set(({ project, projectEdited, actions, dataWindow }) => {
             const newActions = actions.filter((a) => a.ID !== id);
             const newDataWindow =
               newActions.length === 0 ? currentDataWindow : dataWindow;
@@ -514,114 +544,157 @@ const createMlStore = (logging: Logging) => {
               ),
             };
           });
-        },
-
-        setActionName(id: ActionData["ID"], name: string) {
-          return set(
-            ({ project, projectEdited, actions, model, dataWindow }) => {
-              const newActions = actions.map((action) =>
-                id !== action.ID ? action : { ...action, name }
-              );
-              return {
-                actions: newActions,
-                ...updateProject(
-                  project,
-                  projectEdited,
-                  newActions,
-                  model,
-                  dataWindow
-                ),
-              };
-            }
+          await storageWithErrHandling<void>(() =>
+            storage.deleteAction(id.toString())
           );
         },
 
-        setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon) {
-          return set(
-            ({ project, projectEdited, actions, model, dataWindow }) => {
-              // If we're changing the action to use an icon that's already in use
-              // then we update the action that's using the icon to use the action's current icon
-              const currentIcon = actions.find((a) => a.ID === id)?.icon;
-              const newActions = actions.map((action) => {
-                if (action.ID === id) {
-                  return { ...action, icon };
-                } else if (
-                  action.ID !== id &&
-                  action.icon === icon &&
-                  currentIcon
-                ) {
-                  return { ...action, icon: currentIcon };
-                }
-                return action;
-              });
-              return {
-                actions: newActions,
-                ...updateProject(
-                  project,
-                  projectEdited,
-                  newActions,
-                  model,
-                  dataWindow
-                ),
-              };
+        async setActionName(id: ActionData["ID"], name: string) {
+          const { actions } = get();
+          let updatedAction: ActionData;
+          const newActions = actions.map((action) => {
+            if (id === action.ID) {
+              updatedAction = { ...action, name };
+              return updatedAction;
             }
+            return action;
+          });
+          set(({ project, projectEdited, model, dataWindow }) => {
+            return {
+              actions: newActions,
+              ...updateProject(
+                project,
+                projectEdited,
+                newActions,
+                model,
+                dataWindow
+              ),
+            };
+          });
+          await storageWithErrHandling<string>(() =>
+            storage.updateAction(updatedAction)
           );
         },
 
-        setRequiredConfidence(id: ActionData["ID"], value: number) {
-          return set(
-            ({ project, projectEdited, actions, model, dataWindow }) => {
-              const newActions = actions.map((a) =>
-                id !== a.ID ? a : { ...a, requiredConfidence: value }
-              );
-              return {
-                actions: newActions,
-                ...updateProject(
-                  project,
-                  projectEdited,
-                  newActions,
-                  model,
-                  dataWindow
-                ),
-              };
+        async setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon) {
+          const { actions } = get();
+          const updatedActions: ActionData[] = [];
+          // If we're changing the action to use an icon that's already in use
+          // then we update the action that's using the icon to use the action's current icon
+          const currentIcon = actions.find((a) => a.ID === id)?.icon;
+          const newActions = actions.map((action) => {
+            if (action.ID === id) {
+              const updatedAction = { ...action, icon };
+              updatedActions.push(updatedAction);
+              return updatedAction;
+            } else if (
+              action.ID !== id &&
+              action.icon === icon &&
+              currentIcon
+            ) {
+              const updatedAction = { ...action, icon: currentIcon };
+              updatedActions.push(updatedAction);
+              return updatedAction;
             }
+            return action;
+          });
+          set(({ project, projectEdited, model, dataWindow }) => {
+            return {
+              actions: newActions,
+              ...updateProject(
+                project,
+                projectEdited,
+                newActions,
+                model,
+                dataWindow
+              ),
+            };
+          });
+          const storeUpdates: Promise<string | undefined>[] = [];
+          updatedActions.forEach((action) =>
+            storeUpdates.push(
+              storageWithErrHandling<string>(() => storage.updateAction(action))
+            )
+          );
+          await Promise.all(storeUpdates);
+        },
+
+        async setRequiredConfidence(id: ActionData["ID"], value: number) {
+          const { actions } = get();
+          let updatedAction: ActionData;
+          const newActions = actions.map((action) => {
+            if (id === action.ID) {
+              updatedAction = { ...action, requiredConfidence: value };
+              return updatedAction;
+            }
+            return action;
+          });
+          set(({ project, projectEdited, model, dataWindow }) => {
+            return {
+              actions: newActions,
+              ...updateProject(
+                project,
+                projectEdited,
+                newActions,
+                model,
+                dataWindow
+              ),
+            };
+          });
+          await storageWithErrHandling<string>(() =>
+            storage.updateAction(updatedAction)
           );
         },
 
-        deleteActionRecording(id: ActionData["ID"], recordingIdx: number) {
-          return set(({ project, projectEdited, actions, dataWindow }) => {
-            const newActions = actions.map((action) => {
-              if (id !== action.ID) {
-                return action;
-              }
-              const recordings = action.recordings.filter(
-                (_r, i) => i !== recordingIdx
-              );
-              return { ...action, recordings };
-            });
-            const numRecordings = newActions.reduce(
+        async deleteActionRecording(id: ActionData["ID"], recordingId: number) {
+          const { actions } = get();
+          let updatedAction: ActionData;
+          const updatedActions = actions.map((action) => {
+            if (id !== action.ID) {
+              return action;
+            }
+            const recordings = action.recordings.filter(
+              (recording) => recording.ID !== recordingId
+            );
+            updatedAction = { ...action, recordings };
+            return updatedAction;
+          });
+          set(({ project, projectEdited, dataWindow }) => {
+            const numRecordings = updatedActions.reduce(
               (acc, curr) => acc + curr.recordings.length,
               0
             );
             const newDataWindow =
               numRecordings === 0 ? currentDataWindow : dataWindow;
             return {
-              actions: newActions,
+              actions: updatedActions,
               dataWindow: newDataWindow,
               model: undefined,
               ...updateProject(
                 project,
                 projectEdited,
-                newActions,
+                updatedActions,
                 undefined,
                 newDataWindow
               ),
             };
           });
+          const storeUpdates: Promise<string | void>[] = [];
+          storeUpdates.push(
+            storageWithErrHandling<string>(() =>
+              storage.updateAction(updatedAction)
+            )
+          );
+          storeUpdates.push(
+            storageWithErrHandling<void>(() =>
+              storage.deleteRecording(recordingId.toString())
+            )
+          );
+          await Promise.all(storeUpdates);
         },
 
-        deleteAllActions() {
-          return set(({ project, projectEdited }) => ({
+        async deleteAllActions() {
+          set(({ project, projectEdited }) => ({
             actions: [createFirstAction()],
             dataWindow: currentDataWindow,
             model: undefined,
@@ -633,6 +706,7 @@ const createMlStore = (logging: Logging) => {
               currentDataWindow
             ),
           }));
+          await storageWithErrHandling<void>(() => storage.deleteAllActions());
         },
 
         downloadDataset() {
@@ -1279,9 +1353,11 @@ const getDataWindowFromActions = (actions: ActionData[]): DataWindow => {
 };
 
 // Get data window from actions on app load.
-const { actions } = useStore.getState();
+// TODO: change when this happens.
+// Don't use actions as a global value in this file, it is dangerous.
+const { actions: actionsForDataWindow } = useStore.getState();
 useStore.setState(
-  { dataWindow: getDataWindowFromActions(actions) },
+  { dataWindow: getDataWindowFromActions(actionsForDataWindow) },
   false,
   "setDataWindow"
 );
@@ -1407,4 +1483,17 @@ const renameProject = (
       }),
     },
   };
+};
+
+const storageWithErrHandling = async <T>(callback: () => Promise<T>) => {
+  try {
+    return await callback();
+  } catch (err) {
+    if (err instanceof DOMException && err.name === "QuotaExceededError") {
+      console.error("Storage quota exceeded!", err);
+    } else {
+      console.error(err);
+    }
+    // We can in theory set error state here with useStore.setState.
+  }
 };

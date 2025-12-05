@@ -105,7 +105,7 @@ const ActionDataSamplesCard = ({
               zIndex={1}
               borderColor="blackAlpha.500"
               boxShadow="sm"
-              onClick={() => deleteActionRecording(value.ID, idx)}
+              onClick={() => deleteActionRecording(value.ID, recording.ID)}
             />
             <DataSample
               recording={recording}
@@ -324,7 +324,7 @@ const DataSample = ({
   recordingIndex: number;
   isNew: boolean;
   onNewAnimationEnd?: () => void;
-  onDelete: (actionId: ActionData["ID"], recordingIdx: number) => void;
+  onDelete: (actionId: ActionData["ID"], recordingId: number) => void;
   view: DataSamplesView;
   hasClose?: boolean;
 }) => {
@@ -336,8 +336,8 @@ const DataSample = ({
     view === DataSamplesView.GraphAndDataFeatures;
   const intl = useIntl();
   const handleDelete = useCallback(() => {
-    onDelete(actionId, recordingIndex);
-  }, [actionId, onDelete, recordingIndex]);
+    onDelete(actionId, recording.ID);
+  }, [actionId, onDelete, recording.ID]);
   return (
     <HStack key={recording.ID} position="relative">
       {hasClose && (

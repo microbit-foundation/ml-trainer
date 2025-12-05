@@ -70,6 +70,7 @@
     "bowser": "^2.11.0",
     "chart.js": "^4.2.1",
     "framer-motion": "^10.2.4",
+    "idb": "^8.0.3",
     "lodash.camelcase": "^4.3.0",
     "lodash.debounce": "^4.0.8",
     "lodash.upperfirst": "^4.3.1",
