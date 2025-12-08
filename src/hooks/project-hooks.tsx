@@ -16,6 +16,7 @@ import {
   RefObject,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
 } from "react";
@@ -42,6 +43,9 @@ import {
   readFileAsText,
 } from "../utils/fs-util";
 import { useDownloadActions } from "./download-hooks";
+import { Capacitor } from "@capacitor/core";
+import { App as CapacitorApp } from "@capacitor/app";
+import { Encoding, Filesystem } from "@capacitor/filesystem";
 
 class CodeEditorError extends Error {}
 
@@ -154,6 +158,43 @@ export const ProjectProvider = ({
     // This is a useful point to introduce a delay to debug MakeCode init dependencies.
     return Promise.resolve([project]);
   }, [logging, project]);
+
+  const projectRef = useRef<MakeCodeProject>();
+  projectRef.current = project;
+
+  // Native app-specific handlers
+  useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      const appUrlListener = CapacitorApp.addListener(
+        "appUrlOpen",
+        async (evt) => {
+          const contents = await Filesystem.readFile({
+            path: evt.url,
+            encoding: Encoding.UTF8,
+          });
+          let filename = evt.url.substring(evt.url.lastIndexOf("/") + 1);
+          // Forgivingly shim broken filenames to hex files,
+          // we can't rely on android to maintain file data.
+          // Even Android's Files app often passes us a broken
+          // filename. MakeCode is resilient to bad files.
+          if (filename.length === 0) {
+            filename = "Unnamed.hex";
+          }
+          if (!filename.includes(".")) {
+            filename += ".hex";
+          }
+          await importProjectFromHexText(contents.data as string, filename);
+        }
+      );
+
+      return () => {
+        const removeListenerHandler = async () => {
+          void (await appUrlListener).remove();
+        };
+        void removeListenerHandler();
+      };
+    }
+  });
 
   const startUpTimeout = 90000;
 
@@ -302,6 +343,36 @@ export const ProjectProvider = ({
   }, [doAfterEditorUpdate, logging]);
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
+  const importProjectFromHexText = useCallback(
+    async (hex: string, fileName: string) => {
+      const makeCodeMagicMark = "41140E2FB82FA2BB";
+      // Check if is a MakeCode hex, otherwise show error dialog.
+      if (!hex.includes(makeCodeMagicMark)) {
+        setPostImportDialogState(PostImportDialogState.Error);
+      }
+      const hasTimedOut = await checkIfEditorStartUpTimedOut(
+        editorReadyPromise.promise
+      );
+      if (hasTimedOut) {
+        openEditorTimedOutDialog();
+        return;
+      }
+      // This triggers the code in editorChanged to update actions etc.
+      setEditorLoadingFile();
+      driverRef.current!.importFile({
+        filename: fileName,
+        parts: [hex],
+      });
+    },
+    [
+      checkIfEditorStartUpTimedOut,
+      driverRef,
+      editorReadyPromise.promise,
+      openEditorTimedOutDialog,
+      setEditorLoadingFile,
+      setPostImportDialogState,
+    ]
+  );
   const loadFile = useCallback(
     async (file: File, type: LoadType): Promise<void> => {
       const fileExtension = getLowercaseFileExtension(file.name);
@@ -322,39 +393,17 @@ export const ProjectProvider = ({
         }
       } else if (fileExtension === "hex") {
         const hex = await readFileAsText(file);
-        const makeCodeMagicMark = "41140E2FB82FA2BB";
-        // Check if is a MakeCode hex, otherwise show error dialog.
-        if (hex.includes(makeCodeMagicMark)) {
-          const hasTimedOut = await checkIfEditorStartUpTimedOut(
-            editorReadyPromise.promise
-          );
-          if (hasTimedOut) {
-            openEditorTimedOutDialog();
-            return;
-          }
-          // This triggers the code in editorChanged to update actions etc.
-          setEditorLoadingFile();
-          driverRef.current!.importFile({
-            filename: file.name,
-            parts: [hex],
-          });
-        } else {
-          setPostImportDialogState(PostImportDialogState.Error);
-        }
+        await importProjectFromHexText(hex, file.name);
       } else {
         setPostImportDialogState(PostImportDialogState.Error);
       }
     },
     [
-      checkIfEditorStartUpTimedOut,
-      driverRef,
-      editorReadyPromise.promise,
+      importProjectFromHexText,
       loadDataset,
       logging,
       navigate,
-      openEditorTimedOutDialog,
       setPostImportDialogState,
-      setEditorLoadingFile,
     ]
   );
 
