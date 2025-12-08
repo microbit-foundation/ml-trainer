@@ -370,10 +370,8 @@ const createMlStore = (logging: Logging) => {
 
         async newSession(projectName?: string) {
           const untitledProject = createUntitledProject();
-          const projectData = {
-            timestamp: Date.now(),
-            projectEdited: false,
-          };
+          const timestamp = Date.now();
+          const projectEdited = false;
           const newProject = projectName
             ? renameProject(untitledProject, projectName)
             : untitledProject;
@@ -383,17 +381,20 @@ const createMlStore = (logging: Logging) => {
               dataWindow: currentDataWindow,
               model: undefined,
               project: newProject,
-              projectEdited: projectData.projectEdited,
+              projectEdited,
               appEditNeedsFlushToEditor: true,
-              timestamp: projectData.timestamp,
+              timestamp,
             },
             false,
             "newSession"
           );
           await storageWithErrHandling<string | void>([
             storage.deleteAllActions(),
-            storage.updateProjectData(projectData),
-            storage.updateMakeCodeProject(newProject),
+            storage.updateProjectData({ timestamp }),
+            storage.updateMakeCodeProject({
+              project: newProject,
+              projectEdited,
+            }),
           ]);
         },
 
@@ -423,8 +424,7 @@ const createMlStore = (logging: Logging) => {
         },
 
         async addNewAction() {
-          const { actions, dataWindow, project, projectEdited, timestamp } =
-            get();
+          const { actions, dataWindow, project, projectEdited } = get();
           const newAction: ActionData = {
             icon: actionIcon({
               isFirstAction: actions.length === 0,
@@ -449,11 +449,10 @@ const createMlStore = (logging: Logging) => {
           });
           await storageWithErrHandling<string>([
             storage.addAction(newAction),
-            storage.updateProjectData({
+            storage.updateMakeCodeProject({
+              project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
-              timestamp,
             }),
-            storage.updateMakeCodeProject(updatedProject.project),
           ]);
         },
 
@@ -491,8 +490,7 @@ const createMlStore = (logging: Logging) => {
         },
 
         async deleteAction(action: ActionData) {
-          const { actions, dataWindow, project, projectEdited, timestamp } =
-            get();
+          const { actions, dataWindow, project, projectEdited } = get();
           const newActions = actions.filter((a) => a.ID !== action.ID);
           const newDataWindow =
             newActions.length === 0 ? currentDataWindow : dataWindow;
@@ -512,23 +510,15 @@ const createMlStore = (logging: Logging) => {
           });
           await storageWithErrHandling<string | void>([
             storage.deleteAction(action),
-            storage.updateProjectData({
+            storage.updateMakeCodeProject({
+              project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
-              timestamp,
             }),
-            storage.updateMakeCodeProject(updatedProject.project),
           ]);
         },
 
         async setActionName(id: ActionData["ID"], name: string) {
-          const {
-            actions,
-            dataWindow,
-            project,
-            projectEdited,
-            model,
-            timestamp,
-          } = get();
+          const { actions, dataWindow, project, projectEdited, model } = get();
           let updatedAction: ActionData;
           const newActions = actions.map((action) => {
             if (id === action.ID) {
@@ -550,23 +540,15 @@ const createMlStore = (logging: Logging) => {
           });
           await storageWithErrHandling<string | void>([
             storage.updateAction(updatedAction!),
-            storage.updateProjectData({
+            storage.updateMakeCodeProject({
+              project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
-              timestamp,
             }),
-            storage.updateMakeCodeProject(updatedProject.project),
           ]);
         },
 
         async setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon) {
-          const {
-            actions,
-            dataWindow,
-            project,
-            projectEdited,
-            model,
-            timestamp,
-          } = get();
+          const { actions, dataWindow, project, projectEdited, model } = get();
           const updatedActions: ActionData[] = [];
           // If we're changing the action to use an icon that's already in use
           // then we update the action that's using the icon to use the action's current icon
@@ -600,23 +582,15 @@ const createMlStore = (logging: Logging) => {
           });
           await storageWithErrHandling<string | void>([
             ...updatedActions.map((action) => storage.updateAction(action)),
-            storage.updateProjectData({
+            storage.updateMakeCodeProject({
+              project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
-              timestamp,
             }),
-            storage.updateMakeCodeProject(updatedProject.project),
           ]);
         },
 
         async setRequiredConfidence(id: ActionData["ID"], value: number) {
-          const {
-            actions,
-            dataWindow,
-            project,
-            projectEdited,
-            model,
-            timestamp,
-          } = get();
+          const { actions, dataWindow, project, projectEdited, model } = get();
           let updatedAction: ActionData;
           const newActions = actions.map((action) => {
             if (id === action.ID) {
@@ -638,17 +612,15 @@ const createMlStore = (logging: Logging) => {
           });
           await storageWithErrHandling<string | void>([
             storage.updateAction(updatedAction!),
-            storage.updateProjectData({
+            storage.updateMakeCodeProject({
+              project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
-              timestamp,
             }),
-            storage.updateMakeCodeProject(updatedProject.project),
           ]);
         },
 
         async deleteActionRecording(id: ActionData["ID"], recordingId: number) {
-          const { actions, dataWindow, project, projectEdited, timestamp } =
-            get();
+          const { actions, dataWindow, project, projectEdited } = get();
           let updatedAction: ActionData;
           const updatedActions = actions.map((action) => {
             if (id !== action.ID) {
@@ -681,16 +653,15 @@ const createMlStore = (logging: Logging) => {
           });
           await storageWithErrHandling<string | void>([
             storage.deleteRecording(recordingId.toString(), updatedAction!),
-            storage.updateProjectData({
+            storage.updateMakeCodeProject({
+              project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
-              timestamp,
             }),
-            storage.updateMakeCodeProject(updatedProject.project),
           ]);
         },
 
         async deleteAllActions() {
-          const { project, projectEdited, timestamp } = get();
+          const { project, projectEdited } = get();
           const updatedProject = updateProject(
             project,
             projectEdited,
@@ -706,11 +677,10 @@ const createMlStore = (logging: Logging) => {
           });
           await storageWithErrHandling<string | void>([
             storage.deleteAllActions(),
-            storage.updateProjectData({
+            storage.updateMakeCodeProject({
+              project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
-              timestamp,
             }),
-            storage.updateMakeCodeProject(updatedProject.project),
           ]);
         },
 
@@ -768,9 +738,11 @@ const createMlStore = (logging: Logging) => {
           await storageWithErrHandling<void>(() =>
             storage.importProject(
               newActionsWithIcons,
-              updatedProject.project,
               {
+                project: updatedProject.project,
                 projectEdited: updatedProject.projectEdited,
+              },
+              {
                 timestamp,
               },
               updatedSettings
@@ -791,10 +763,8 @@ const createMlStore = (logging: Logging) => {
             ),
           };
           const newActions = getActionsFromProject(project);
-          const projectData = {
-            timestamp: Date.now(),
-            projectEdited: true,
-          };
+          const timestamp = Date.now();
+          const projectEdited = true;
           set(({ project: prevProject }) => {
             project = renameProject(project, name);
             project = {
@@ -811,17 +781,17 @@ const createMlStore = (logging: Logging) => {
               dataWindow: getDataWindowFromActions(newActions),
               model: undefined,
               project,
-              projectEdited: projectData.projectEdited,
+              projectEdited,
               appEditNeedsFlushToEditor: true,
-              timestamp: projectData.timestamp,
+              timestamp,
               // We don't update projectLoadTimestamp here as we don't want a toast notification for .org import
             };
           });
           await storageWithErrHandling<void>(() =>
             storage.importProject(
               newActions,
-              project,
-              projectData,
+              { project, projectEdited },
+              { timestamp },
               updatedSettings
             )
           );
@@ -854,8 +824,7 @@ const createMlStore = (logging: Logging) => {
         },
 
         async trainModel() {
-          const { actions, dataWindow, project, projectEdited, timestamp } =
-            get();
+          const { actions, dataWindow, project, projectEdited } = get();
           logging.event({
             type: "model-train",
             detail: {
@@ -897,11 +866,10 @@ const createMlStore = (logging: Logging) => {
             actionName
           );
           await storageWithErrHandling<string>([
-            storage.updateProjectData({
+            storage.updateMakeCodeProject({
+              project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
-              timestamp,
             }),
-            storage.updateMakeCodeProject(updatedProject.project),
           ]);
           return !trainingResult.error;
         },
@@ -912,7 +880,6 @@ const createMlStore = (logging: Logging) => {
             actions,
             model,
             dataWindow,
-            timestamp,
           } = get();
           const newProject = {
             ...previousProject,
@@ -936,13 +903,15 @@ const createMlStore = (logging: Logging) => {
             "resetProject"
           );
           await storageWithErrHandling<string>([
-            storage.updateProjectData({ projectEdited: false, timestamp }),
-            storage.updateMakeCodeProject(newProject),
+            storage.updateMakeCodeProject({
+              project: newProject,
+              projectEdited: false,
+            }),
           ]);
         },
 
         async setProjectName(name: string): Promise<void> {
-          const { project } = get();
+          const { project, projectEdited } = get();
           const updatedProject = renameProject(project, name);
           set(
             {
@@ -953,7 +922,10 @@ const createMlStore = (logging: Logging) => {
             "setProjectName"
           );
           await storageWithErrHandling<string>(() =>
-            storage.updateMakeCodeProject(updatedProject)
+            storage.updateMakeCodeProject({
+              project: updatedProject,
+              projectEdited,
+            })
           );
         },
 
@@ -1023,10 +995,8 @@ const createMlStore = (logging: Logging) => {
               new Set([...settings.toursCompleted, "DataSamplesRecorded"])
             ),
           };
-          const projectData = {
-            timestamp,
-            projectEdited,
-          };
+          let updatedTimestamp = timestamp;
+          let updatedProjectEdited = projectEdited;
           let updatedProjectInStorage = true;
           let newActions: ActionData[] | undefined;
           set(
@@ -1061,15 +1031,15 @@ const createMlStore = (logging: Logging) => {
                     `[MakeCode] Updating state from MakeCode header change. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
                   );
                   newActions = getActionsFromProject(newProject);
-                  projectData.timestamp = Date.now();
-                  projectData.projectEdited = true;
+                  updatedTimestamp = Date.now();
+                  updatedProjectEdited = true;
                   return {
                     settings: updatedSettings,
                     project: newProject,
-                    projectLoadTimestamp: projectData.timestamp,
-                    timestamp: projectData.timestamp,
+                    projectLoadTimestamp: updatedTimestamp,
+                    timestamp: updatedTimestamp,
                     // New project loaded externally so we can't know whether its edited.
-                    projectEdited: projectData.projectEdited,
+                    projectEdited: updatedProjectEdited,
                     actions: newActions,
                     dataWindow: getDataWindowFromActions(newActions),
                     model: undefined,
@@ -1081,7 +1051,7 @@ const createMlStore = (logging: Logging) => {
                 logging.log(
                   `[MakeCode] Edit copied to project. ID ${newProject.header?.id}`
                 );
-                projectData.projectEdited = true;
+                updatedProjectEdited = true;
                 return {
                   project: newProject,
                   // We just assume its been edited as spurious changes from MakeCode happen that we can't identify
@@ -1102,8 +1072,13 @@ const createMlStore = (logging: Logging) => {
           await storageWithErrHandling<void>(() =>
             storage.importProject(
               newActions,
-              updatedProjectInStorage ? newProject : undefined,
-              projectData,
+              updatedProjectInStorage
+                ? {
+                    project: newProject,
+                    projectEdited: updatedProjectEdited,
+                  }
+                : undefined,
+              { timestamp: updatedTimestamp },
               updatedSettings
             )
           );

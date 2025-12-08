@@ -7,6 +7,11 @@ import { createUntitledProject } from "./project-utils";
 
 const DATABASE_NAME = "ml";
 
+interface MakeCodeData {
+  project: MakeCodeProject;
+  projectEdited: boolean;
+}
+
 export enum DatabaseStore {
   PROJECT_DATA = "project-data",
   MAKECODE = "makecode-project",
@@ -17,7 +22,7 @@ export enum DatabaseStore {
 
 const defaultStoreData: Record<
   DatabaseStore.PROJECT_DATA | DatabaseStore.SETTINGS | DatabaseStore.MAKECODE,
-  { key: string; value: ProjectData | Settings | MakeCodeProject }
+  { key: string; value: ProjectData | Settings | MakeCodeData }
 > = {
   [DatabaseStore.PROJECT_DATA]: {
     value: { timestamp: undefined, projectEdited: false },
@@ -28,7 +33,10 @@ const defaultStoreData: Record<
     key: DatabaseStore.SETTINGS,
   },
   [DatabaseStore.MAKECODE]: {
-    value: createUntitledProject(),
+    value: {
+      project: createUntitledProject(),
+      projectEdited: false,
+    },
     key: DatabaseStore.MAKECODE,
   },
 };
@@ -38,7 +46,6 @@ export interface StoreAction extends Action {
 }
 
 interface ProjectData {
-  projectEdited: boolean;
   timestamp?: number;
 }
 
@@ -57,7 +64,7 @@ interface Schema extends DBSchema {
   };
   [DatabaseStore.MAKECODE]: {
     key: string;
-    value: MakeCodeProject;
+    value: MakeCodeData;
   };
   [DatabaseStore.SETTINGS]: {
     key: string;
@@ -111,7 +118,6 @@ export class Database {
     const storeActions = await actionsStore.getAll();
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
     const recordings = (await recordingsStore.getAll()).reverse();
-    await tx.done;
     const actions: ActionData[] = storeActions.map((action) => {
       return {
         ...action,
@@ -121,9 +127,9 @@ export class Database {
       };
     });
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE);
-    const makeCodeProject = await makeCodeStore.get(DatabaseStore.MAKECODE);
-    if (!makeCodeProject) {
-      throw new Error("Failed to fetch MakeCode project");
+    const makeCodeData = await makeCodeStore.get(DatabaseStore.MAKECODE);
+    if (!makeCodeData) {
+      throw new Error("Failed to fetch MakeCode data");
     }
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = await projectDataStore.get(DatabaseStore.PROJECT_DATA);
@@ -135,10 +141,11 @@ export class Database {
     if (!settings) {
       throw new Error("Failed to fetch settings");
     }
+    await tx.done;
     return {
       actions,
-      project: makeCodeProject,
-      projectEdited: projectData.projectEdited,
+      project: makeCodeData.project,
+      projectEdited: makeCodeData.projectEdited,
       timestamp: projectData.timestamp,
       settings,
     };
@@ -146,7 +153,7 @@ export class Database {
 
   async importProject(
     actions: ActionData[] | undefined,
-    makeCodeProject: MakeCodeProject | undefined,
+    makeCodeData: MakeCodeData | undefined,
     projectData: ProjectData,
     settings: Settings
   ): Promise<void> {
@@ -177,10 +184,10 @@ export class Database {
         )
       );
     }
-    if (makeCodeProject) {
+    if (makeCodeData) {
       const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE);
       storePromises.push(
-        makeCodeStore.put(makeCodeProject, DatabaseStore.MAKECODE)
+        makeCodeStore.put(makeCodeData, DatabaseStore.MAKECODE)
       );
     }
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
@@ -266,10 +273,10 @@ export class Database {
     return tx.done;
   }
 
-  async updateMakeCodeProject(project: MakeCodeProject): Promise<string> {
+  async updateMakeCodeProject(makeCodeData: MakeCodeData): Promise<string> {
     return (await this.dbPromise).put(
       DatabaseStore.MAKECODE,
-      project,
+      makeCodeData,
       DatabaseStore.MAKECODE
     );
   }
