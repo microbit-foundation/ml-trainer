@@ -61,6 +61,7 @@ interface ProjectContext {
   projectEdited: boolean;
   resetProject: () => void;
   loadFile: (file: File, type: LoadType) => void;
+  loadNativeUrl: (url: string, filename: string) => void; // like loadFile but for apps only
   /**
    * Called to request a save.
    *
@@ -183,7 +184,7 @@ export const ProjectProvider = ({
           if (!filename.includes(".")) {
             filename += ".hex";
           }
-          await importProjectFromHexText(contents.data as string, filename);
+          await importHex(contents.data as string, filename);
         }
       );
 
@@ -343,7 +344,7 @@ export const ProjectProvider = ({
   }, [doAfterEditorUpdate, logging]);
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
-  const importProjectFromHexText = useCallback(
+  const importHex = useCallback(
     async (hex: string, fileName: string) => {
       const makeCodeMagicMark = "41140E2FB82FA2BB";
       // Check if is a MakeCode hex, otherwise show error dialog.
@@ -373,6 +374,20 @@ export const ProjectProvider = ({
       setPostImportDialogState,
     ]
   );
+
+  const importJson = useCallback(
+    (actionsString: string) => {
+      const actions = JSON.parse(actionsString) as unknown;
+      if (isDatasetUserFileFormat(actions)) {
+        loadDataset(actions);
+        navigate(createDataSamplesPageUrl());
+      } else {
+        setPostImportDialogState(PostImportDialogState.Error);
+      }
+    },
+    [loadDataset, navigate, setPostImportDialogState]
+  );
+
   const loadFile = useCallback(
     async (file: File, type: LoadType): Promise<void> => {
       const fileExtension = getLowercaseFileExtension(file.name);
@@ -384,27 +399,44 @@ export const ProjectProvider = ({
       });
       if (fileExtension === "json") {
         const actionsString = await readFileAsText(file);
-        const actions = JSON.parse(actionsString) as unknown;
-        if (isDatasetUserFileFormat(actions)) {
-          loadDataset(actions);
-          navigate(createDataSamplesPageUrl());
-        } else {
-          setPostImportDialogState(PostImportDialogState.Error);
-        }
+        importJson(actionsString);
       } else if (fileExtension === "hex") {
         const hex = await readFileAsText(file);
-        await importProjectFromHexText(hex, file.name);
+        await importHex(hex, file.name);
       } else {
         setPostImportDialogState(PostImportDialogState.Error);
       }
     },
-    [
-      importProjectFromHexText,
-      loadDataset,
-      logging,
-      navigate,
-      setPostImportDialogState,
-    ]
+    [importHex, importJson, logging, setPostImportDialogState]
+  );
+
+  // Capacitor-only
+  const loadNativeUrl = useCallback(
+    async (path: string, filename: string): Promise<void> => {
+      const fileExtension = getLowercaseFileExtension(filename);
+      logging.event({
+        type: "app-file-load",
+        detail: {
+          extension: fileExtension || "none",
+        },
+      });
+      if (fileExtension === "json") {
+        const actionsFile = await Filesystem.readFile({
+          path,
+          encoding: Encoding.UTF8,
+        });
+        importJson(actionsFile.data as string);
+      } else if (fileExtension === "hex") {
+        const hexFile = await Filesystem.readFile({
+          path,
+          encoding: Encoding.UTF8,
+        });
+        await importHex(hexFile.data as string, filename);
+      } else {
+        setPostImportDialogState(PostImportDialogState.Error);
+      }
+    },
+    [importHex, importJson, logging, setPostImportDialogState]
   );
 
   const setSave = useStore((s) => s.setSave);
@@ -508,6 +540,7 @@ export const ProjectProvider = ({
   const value = useMemo(
     () => ({
       loadFile,
+      loadNativeUrl,
       openEditor,
       browserNavigationToEditor,
       project,
@@ -526,6 +559,7 @@ export const ProjectProvider = ({
     }),
     [
       loadFile,
+      loadNativeUrl,
       openEditor,
       browserNavigationToEditor,
       project,

@@ -9,6 +9,8 @@ PODS:
   - CapacitorFilesystem (7.1.5):
     - Capacitor
     - IONFilesystemLib (~> 1.0.1)
+  - CapawesomeCapacitorFilePicker (7.2.0):
+    - Capacitor
   - IONFilesystemLib (1.0.1)
 
 DEPENDENCIES:
@@ -17,6 +19,7 @@ DEPENDENCIES:
   - "CapacitorCommunitySafeArea (from `../../node_modules/@capacitor-community/safe-area`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
+  - "CapawesomeCapacitorFilePicker (from `../../node_modules/@capawesome/capacitor-file-picker`)"
 
 SPEC REPOS:
   trunk:
@@ -33,6 +36,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorFilesystem:
     :path: "../../node_modules/@capacitor/filesystem"
+  CapawesomeCapacitorFilePicker:
+    :path: "../../node_modules/@capawesome/capacitor-file-picker"
 
 SPEC CHECKSUMS:
   Capacitor: 358dd1c3fdd71d969547b17e159fd8a7736cb45f
@@ -40,8 +45,9 @@ SPEC CHECKSUMS:
   CapacitorCommunitySafeArea: 53e3ad999bada9892cb4e9aca8fa8012aabad4b2
   CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
   CapacitorFilesystem: 609d5cceca1ed93d7f25839dbfdfd224bfe78209
+  CapawesomeCapacitorFilePicker: 0f4a913a00e39dd77213449f0d917e92f35a5ca9
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
 
-PODFILE CHECKSUM: 2ea1e05a7d431084287c3c34eedd0623d2effe19
+PODFILE CHECKSUM: 6769faeced07758089d2f74750625115d3f324e2
 
 COCOAPODS: 1.16.2
