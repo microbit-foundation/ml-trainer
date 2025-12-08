@@ -531,10 +531,9 @@ const createMlStore = (logging: Logging) => {
             model: undefined,
             ...updatedProject,
           });
-          await storageWithErrHandling<string | void>([
-            storage.updateAction(updatedAction!),
-            storage.addRecording(recording),
-          ]);
+          await storageWithErrHandling<void>(() =>
+            storage.addRecording(recording, updatedAction!)
+          );
         },
 
         async deleteAction(id: ActionData["ID"]) {
@@ -687,10 +686,9 @@ const createMlStore = (logging: Logging) => {
               ),
             };
           });
-          await storageWithErrHandling<string | void>([
-            storage.updateAction(updatedAction!),
-            storage.deleteRecording(recordingId.toString()),
-          ]);
+          await storageWithErrHandling<void>(() =>
+            storage.deleteRecording(recordingId.toString(), updatedAction!)
+          );
         },
 
         async deleteAllActions() {

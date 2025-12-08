@@ -158,16 +158,33 @@ export class Database {
     return tx.done;
   }
 
-  async addRecording(recording: RecordingData): Promise<string> {
-    return (await this.dbPromise).add(
-      DatabaseStore.RECORDINGS,
-      recording,
-      recording.ID.toString()
+  async addRecording(
+    recording: RecordingData,
+    action: ActionData
+  ): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [DatabaseStore.RECORDINGS, DatabaseStore.ACTIONS],
+      "readwrite"
     );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    const actionToStore = prepActionForStorage(action);
+    await actionsStore.put(actionToStore, actionToStore.ID.toString());
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await recordingsStore.add(recording, recording.ID.toString());
+    return tx.done;
   }
 
-  async deleteRecording(key: string): Promise<void> {
-    return (await this.dbPromise).delete(DatabaseStore.RECORDINGS, key);
+  async deleteRecording(key: string, action: ActionData): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [DatabaseStore.RECORDINGS, DatabaseStore.ACTIONS],
+      "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    const actionToStore = prepActionForStorage(action);
+    await actionsStore.put(actionToStore, actionToStore.ID.toString());
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await recordingsStore.delete(key);
+    return tx.done;
   }
 
   async getSettings(): Promise<Settings> {
