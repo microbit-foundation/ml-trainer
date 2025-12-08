@@ -7,6 +7,14 @@ import { createUntitledProject } from "./project-utils";
 
 const DATABASE_NAME = "ml";
 
+interface PersistedData {
+  actions: ActionData[];
+  project: MakeCodeProject;
+  projectEdited: boolean;
+  settings: Settings;
+  timestamp: number | undefined;
+}
+
 interface MakeCodeData {
   project: MakeCodeProject;
   projectEdited: boolean;
@@ -81,14 +89,62 @@ export class Database {
   initialize(): Promise<IDBPDatabase<Schema>> {
     return openDB(DATABASE_NAME, 1, {
       async upgrade(db) {
+        let dataToMigrate: { state: PersistedData } | undefined;
+        const data = localStorage.getItem("ml");
+        if (data) {
+          dataToMigrate = JSON.parse(data) as { state: PersistedData };
+        }
         for (const store of Object.values(DatabaseStore)) {
           const objectStore = db.createObjectStore(store);
+          if (dataToMigrate) {
+            const { state } = dataToMigrate;
+            switch (store) {
+              case DatabaseStore.ACTIONS: {
+                await Promise.all(
+                  state.actions.map((a) =>
+                    objectStore.add(prepActionForStorage(a), a.ID.toString())
+                  )
+                );
+                break;
+              }
+              case DatabaseStore.RECORDINGS: {
+                await Promise.all(
+                  state.actions
+                    .flatMap((a) => a.recordings)
+                    .map((r) => objectStore.add(r, r.ID.toString()))
+                );
+                break;
+              }
+              case DatabaseStore.MAKECODE: {
+                await objectStore.add(
+                  {
+                    project: state.project,
+                    projectEdited: state.projectEdited,
+                  },
+                  DatabaseStore.MAKECODE
+                );
+                break;
+              }
+              case DatabaseStore.PROJECT_DATA: {
+                await objectStore.add(
+                  { timestamp: state.timestamp },
+                  DatabaseStore.PROJECT_DATA
+                );
+                break;
+              }
+              case DatabaseStore.SETTINGS: {
+                await objectStore.add(state.settings, DatabaseStore.SETTINGS);
+                break;
+              }
+            }
+            continue;
+          }
+          // Set default values if there is are data to migrate.
           if (
             store === DatabaseStore.PROJECT_DATA ||
             store === DatabaseStore.MAKECODE ||
             store === DatabaseStore.SETTINGS
           ) {
-            // TODO: Migrate from localStorage.
             const defaultData = defaultStoreData[store];
             await objectStore.add(defaultData.value, defaultData.key);
           }
@@ -97,13 +153,7 @@ export class Database {
     });
   }
 
-  async loadProject(): Promise<{
-    actions: ActionData[];
-    project: MakeCodeProject;
-    projectEdited: boolean;
-    settings: Settings;
-    timestamp: number | undefined;
-  }> {
+  async loadProject(): Promise<PersistedData> {
     const tx = (await this.dbPromise).transaction(
       [
         DatabaseStore.ACTIONS,
