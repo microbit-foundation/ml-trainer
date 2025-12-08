@@ -1555,3 +1555,9 @@ const storageWithErrHandling = async <T>(
     // We can in theory set error state here with useStore.setState.
   }
 };
+
+export const loadProjectFromStorage = async () => {
+  const loadProjectFromStorage = useStore.getState().loadProjectFromStorage;
+  await loadProjectFromStorage();
+  return true;
+};

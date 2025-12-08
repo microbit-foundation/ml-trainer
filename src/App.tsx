@@ -12,13 +12,16 @@ import {
   createWebBluetoothConnection,
   createWebUSBConnection,
 } from "@microbit/microbit-connection";
-import React, { ReactNode, useEffect, useMemo, useRef } from "react";
+import React, { ReactNode, Suspense, useEffect, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
+  Await,
   createBrowserRouter,
+  defer,
   Outlet,
   RouterProvider,
   ScrollRestoration,
+  useLoaderData,
   useNavigate,
 } from "react-router-dom";
 import "theme-package/fonts/fonts.css";
@@ -47,7 +50,7 @@ import ImportPage from "./pages/ImportPage";
 import NewPage from "./pages/NewPage";
 import TestingModelPage from "./pages/TestingModelPage";
 import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
-import { useStore } from "./store";
+import { loadProjectFromStorage, useStore } from "./store";
 import {
   createCodePageUrl,
   createDataSamplesPageUrl,
@@ -57,6 +60,7 @@ import {
   createNewPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
+import LoadingPage from "./components/LoadingPage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -109,17 +113,10 @@ const Providers = ({ children }: ProviderLayoutProps) => {
 const Layout = () => {
   const driverRef = useRef<MakeCodeFrameDriver>(null);
   const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
-  const loadProjectFromStorage = useStore((s) => s.loadProjectFromStorage);
   const navigate = useNavigate();
   const toast = useToast();
   const intl = useIntl();
-
-  useEffect(() => {
-    // TODO:This could be get last project and could set loading state inside the store call.
-    // Or we await the getter here and set loading state here?
-    void loadProjectFromStorage();
-    console.log("Load project from storage");
-  }, [loadProjectFromStorage]);
+  const { projectLoaded } = useLoaderData() as { projectLoaded: boolean };
 
   useEffect(() => {
     return useStore.subscribe(
@@ -146,14 +143,18 @@ const Layout = () => {
   }, [intl, navigate, setPostImportDialogState, toast]);
 
   return (
-    // We use this even though we have errorElement as this does logging.
-    <ErrorBoundary>
-      <ScrollRestoration />
-      <ProjectProvider driverRef={driverRef}>
-        <EditCodeDialog ref={driverRef} />
-        <Outlet />
-      </ProjectProvider>
-    </ErrorBoundary>
+    <Suspense fallback={<LoadingPage />}>
+      <Await resolve={projectLoaded}>
+        {/* We use this even though we have errorElement as this does logging. */}
+        <ErrorBoundary>
+          <ScrollRestoration />
+          <ProjectProvider driverRef={driverRef}>
+            <EditCodeDialog ref={driverRef} />
+            <Outlet />
+          </ProjectProvider>
+        </ErrorBoundary>
+      </Await>
+    </Suspense>
   );
 };
 
@@ -163,6 +164,10 @@ const createRouter = () => {
       id: "root",
       path: "",
       element: <Layout />,
+      loader: () => {
+        const projectLoaded = loadProjectFromStorage();
+        return defer({ projectLoaded });
+      },
       // This one gets used for loader errors (typically offline)
       // We set an error boundary inside the routes too that logs render-time errors.
       // ErrorBoundary doesn't work properly in the loader case at least.
