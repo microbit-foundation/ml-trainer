@@ -6,7 +6,7 @@ import {
   Icon,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import HomepageBannerVideoTranscriptDialog from "./HomepageBannerVideoTranscriptDialog";
 
@@ -17,13 +17,30 @@ export interface HomepageBannerVideoProps {
 const HomepageBannerVideo = ({ src }: HomepageBannerVideoProps) => {
   const intl = useIntl();
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(true);
   const textTranscriptDialog = useDisclosure();
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const listener = () => setIsPaused(false);
+    if (video) {
+      // Fires when video playback starts or resumes (including autoplay).
+      // Autoplay requires page permission, element creation, and sufficient buffering.
+      // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play_event
+      video.addEventListener("play", listener);
+    }
+    return () => {
+      if (video) {
+        video.removeEventListener("play", listener);
+      }
+    };
+  }, []);
 
   const handleTogglePlayPause = useCallback(async () => {
     if (videoRef.current?.paused) {
-      await videoRef.current?.play();
-      setIsPaused(false);
+      await videoRef.current.play().catch((_e) => {
+        // Do nothing. Continue to show video as paused.
+      });
     } else {
       videoRef.current?.pause();
       setIsPaused(true);
