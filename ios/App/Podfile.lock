@@ -1,6 +1,8 @@
 PODS:
   - Capacitor (7.4.4):
     - CapacitorCordova
+  - CapacitorApp (7.1.0):
+    - Capacitor
   - CapacitorCommunityBluetoothLe (7.3.0):
     - Capacitor
   - CapacitorCommunitySafeArea (7.0.0-beta.5):
@@ -19,6 +21,7 @@ PODS:
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
   - "CapacitorCommunityBluetoothLe (from `../../node_modules/@capacitor-community/bluetooth-le`)"
   - "CapacitorCommunitySafeArea (from `../../node_modules/@capacitor-community/safe-area`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
@@ -34,6 +37,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Capacitor:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorApp:
+    :path: "../../node_modules/@capacitor/app"
   CapacitorCommunityBluetoothLe:
     :path: "../../node_modules/@capacitor-community/bluetooth-le"
   CapacitorCommunitySafeArea:
@@ -46,16 +51,17 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@microbit/capacitor-community-nordic-dfu"
 
 SPEC CHECKSUMS:
-  Capacitor: 09d9ff8e9618e8c4b3cab2bbee34a17215dd2fef
-  CapacitorCommunityBluetoothLe: dd86d538624119307c46f5c67f0aa1930198e995
-  CapacitorCommunitySafeArea: 9d1d82a77c056101a7e0b808de3eb39ef1431df4
+  Capacitor: 358dd1c3fdd71d969547b17e159fd8a7736cb45f
+  CapacitorApp: 26587c2ce485d88ddb39adb21cac64f8e481afe3
+  CapacitorCommunityBluetoothLe: 41f9dec8a4c16ab6b81e56402b6047fc19b4735d
+  CapacitorCommunitySafeArea: 53e3ad999bada9892cb4e9aca8fa8012aabad4b2
   CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
-  CapacitorFilesystem: 2267b9183bfecb9e5b8163b79685c9efb5ed0a09
+  CapacitorFilesystem: 66f05ee0d8b1ccdc00d509091273a9b3b57c4a0b
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
-  MicrobitCapacitorCommunityNordicDfu: b7d5532fff6f36c4a202ccda3be8d835c2523eb9
+  MicrobitCapacitorCommunityNordicDfu: 2fc86a9ebd698d5609023cafd74ece8b5d64a59e
   NordicDFU: 116a4ec458945889f8e0e71759e03b23c39c3482
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: c99931faff9d0b8213b7a556796098549de867e5
+PODFILE CHECKSUM: 1b18202e6f59ad2a7694de09b5a672105ac90e81
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
