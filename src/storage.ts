@@ -3,28 +3,33 @@ import { openDB, IDBPDatabase, DBSchema } from "idb";
 import { Action, ActionData, RecordingData } from "./model";
 import { defaultSettings, Settings } from "./settings";
 import { prepActionForStorage } from "./storageUtils";
+import { createUntitledProject } from "./project-utils";
 
 const DATABASE_NAME = "ml";
 
 export enum DatabaseStore {
   PROJECT_DATA = "project-data",
-  MAKECODE = "makecode",
+  MAKECODE = "makecode-project",
   RECORDINGS = "recordings",
   ACTIONS = "actions",
   SETTINGS = "settings",
 }
 
 const defaultStoreData: Record<
-  DatabaseStore.PROJECT_DATA | DatabaseStore.SETTINGS,
-  { key: string; value: ProjectData | Settings }
+  DatabaseStore.PROJECT_DATA | DatabaseStore.SETTINGS | DatabaseStore.MAKECODE,
+  { key: string; value: ProjectData | Settings | MakeCodeProject }
 > = {
   [DatabaseStore.PROJECT_DATA]: {
     value: { timestamp: undefined, projectEdited: false },
-    key: "project-data",
+    key: DatabaseStore.PROJECT_DATA,
   },
   [DatabaseStore.SETTINGS]: {
     value: defaultSettings,
-    key: "settings",
+    key: DatabaseStore.SETTINGS,
+  },
+  [DatabaseStore.MAKECODE]: {
+    value: createUntitledProject(),
+    key: DatabaseStore.MAKECODE,
   },
 };
 
@@ -73,6 +78,7 @@ export class Database {
           const objectStore = db.createObjectStore(store);
           if (
             store === DatabaseStore.PROJECT_DATA ||
+            store === DatabaseStore.MAKECODE ||
             store === DatabaseStore.SETTINGS
           ) {
             // TODO: Migrate from localStorage.
@@ -82,24 +88,6 @@ export class Database {
         }
       },
     });
-  }
-
-  async getProjectData(): Promise<ProjectData> {
-    const projectData = await (
-      await this.dbPromise
-    ).get(DatabaseStore.PROJECT_DATA, "project-data");
-    if (!projectData) {
-      throw new Error("Failed to fetch project data");
-    }
-    return projectData;
-  }
-
-  async updateProjectData(projectData: ProjectData): Promise<string> {
-    return (await this.dbPromise).put(
-      DatabaseStore.PROJECT_DATA,
-      projectData,
-      "project-data"
-    );
   }
 
   async getActions(): Promise<ActionData[]> {
@@ -141,20 +129,31 @@ export class Database {
     );
   }
 
-  async deleteAction(key: string): Promise<void> {
-    return (await this.dbPromise).delete(DatabaseStore.ACTIONS, key);
+  async deleteAction(action: ActionData): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [DatabaseStore.ACTIONS, DatabaseStore.RECORDINGS],
+      "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    await actionsStore.delete(action.ID.toString());
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await Promise.all([
+      action.recordings.map((r) => recordingsStore.delete(r.ID.toString())),
+    ]);
+    return tx.done;
   }
 
   async deleteAllActions(): Promise<void> {
     const tx = (await this.dbPromise).transaction(
-      DatabaseStore.ACTIONS,
+      [DatabaseStore.ACTIONS, DatabaseStore.RECORDINGS],
       "readwrite"
     );
-    const store = tx.objectStore(DatabaseStore.ACTIONS);
-    const keys = await store.getAllKeys();
-    const promises: Promise<void>[] = [];
-    keys.forEach((key) => promises.push(store.delete(key)));
-    await Promise.all(promises);
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    await actionsStore.clear();
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await recordingsStore.clear();
+    // const actionKeys = await store.getAllKeys();
+    // await Promise.all(actionKeys.map((k) => store.delete(k)));
     return tx.done;
   }
 
@@ -187,10 +186,46 @@ export class Database {
     return tx.done;
   }
 
+  async getMakeCodeProject(): Promise<MakeCodeProject> {
+    const makeCodeProject = await (
+      await this.dbPromise
+    ).get(DatabaseStore.MAKECODE, DatabaseStore.MAKECODE);
+    if (!makeCodeProject) {
+      throw new Error("Failed to fetch MakeCode project");
+    }
+    return makeCodeProject;
+  }
+
+  async updateMakeCodeProject(project: MakeCodeProject): Promise<string> {
+    return (await this.dbPromise).put(
+      DatabaseStore.MAKECODE,
+      project,
+      DatabaseStore.MAKECODE
+    );
+  }
+
+  async getProjectData(): Promise<ProjectData> {
+    const projectData = await (
+      await this.dbPromise
+    ).get(DatabaseStore.PROJECT_DATA, DatabaseStore.PROJECT_DATA);
+    if (!projectData) {
+      throw new Error("Failed to fetch project data");
+    }
+    return projectData;
+  }
+
+  async updateProjectData(projectData: ProjectData): Promise<string> {
+    return (await this.dbPromise).put(
+      DatabaseStore.PROJECT_DATA,
+      projectData,
+      DatabaseStore.PROJECT_DATA
+    );
+  }
+
   async getSettings(): Promise<Settings> {
     const settings = await (
       await this.dbPromise
-    ).get(DatabaseStore.SETTINGS, "settings");
+    ).get(DatabaseStore.SETTINGS, DatabaseStore.SETTINGS);
     if (!settings) {
       throw new Error("Failed to fetch settings");
     }
@@ -201,7 +236,56 @@ export class Database {
     return (await this.dbPromise).put(
       DatabaseStore.SETTINGS,
       settings,
-      "settings"
+      DatabaseStore.SETTINGS
     );
+  }
+
+  async importProject(
+    actions: ActionData[] | undefined,
+    makeCodeProject: MakeCodeProject | undefined,
+    projectData: ProjectData,
+    settings: Settings
+  ): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.RECORDINGS,
+        DatabaseStore.MAKECODE,
+        DatabaseStore.PROJECT_DATA,
+        DatabaseStore.SETTINGS,
+      ],
+      "readwrite"
+    );
+    const storePromises: Promise<string>[] = [];
+    if (actions) {
+      const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+      await recordingsStore.clear();
+      const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+      await actionsStore.clear();
+      storePromises.push(
+        ...actions
+          .flatMap((a) => a.recordings)
+          .map((r) => recordingsStore.add(r, r.ID.toString()))
+      );
+      storePromises.push(
+        ...actions.map((a) =>
+          actionsStore.add(prepActionForStorage(a), a.ID.toString())
+        )
+      );
+    }
+    if (makeCodeProject) {
+      const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE);
+      storePromises.push(
+        makeCodeStore.put(makeCodeProject, DatabaseStore.MAKECODE)
+      );
+    }
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    storePromises.push(
+      projectDataStore.put(projectData, DatabaseStore.PROJECT_DATA)
+    );
+    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
+    storePromises.push(settingsStore.put(settings, DatabaseStore.SETTINGS));
+    await Promise.all(storePromises);
+    return tx.done;
   }
 }

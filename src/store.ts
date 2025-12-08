@@ -39,7 +39,13 @@ import {
 import { defaultSettings, Settings } from "./settings";
 import { getTotalNumSamples } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
-import { untitledProjectName } from "./project-name";
+import {
+  createUntitledProject,
+  currentDataWindow,
+  DataWindow,
+  legacyDataWindow,
+  untitledProjectName,
+} from "./project-utils";
 import { mlSettings } from "./mlConfig";
 import { BufferedData } from "./buffered-data";
 import { getDetectedAction } from "./utils/prediction";
@@ -58,63 +64,10 @@ const createFirstAction = () => ({
   recordings: [],
 });
 
-export interface DataWindow {
-  duration: number; // Duration of recording
-  minSamples: number; // minimum number of samples for reliable detection (when detecting actions)
-  deviceSamplesPeriod: number;
-  deviceSamplesLength: number;
-}
-
-const legacyDataWindow: DataWindow = {
-  duration: 1800,
-  minSamples: 80,
-  deviceSamplesPeriod: 25,
-  deviceSamplesLength: 80,
-};
-
-// Exported for testing.
-export const currentDataWindow: DataWindow = {
-  duration: 990,
-  minSamples: 44,
-  deviceSamplesPeriod: 20, // Default value for accelerometer period.
-  deviceSamplesLength: 50, // Number of samples required at 20 ms intervals for 1 second of data.
-};
-
 interface PredictionResult {
   confidences: Confidences;
   detected: Action | undefined;
 }
-
-const createUntitledProject = (): MakeCodeProject => ({
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  header: {
-    target: "microbit",
-    targetVersion: "7.1.2",
-    name: untitledProjectName,
-    meta: {},
-    editor: "blocksprj",
-    pubId: "",
-    pubCurrent: false,
-    _rev: null,
-    id: "45a3216b-e997-456c-bd4b-6550ddb81c4e",
-    recentUse: 1726493314,
-    modificationTime: 1726493314,
-    cloudUserId: null,
-    cloudCurrent: false,
-    cloudVersion: null,
-    cloudLastSyncTime: 0,
-    isDeleted: false,
-    githubCurrent: false,
-    saveId: null,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } as any,
-  ...generateProject(
-    untitledProjectName,
-    { data: [] },
-    undefined,
-    currentDataWindow
-  ),
-});
 
 const updateProject = (
   project: MakeCodeProject,
@@ -122,7 +75,7 @@ const updateProject = (
   actions: ActionData[],
   model: tf.LayersModel | undefined,
   dataWindow: DataWindow
-): Partial<Store> => {
+): Pick<Store, "project" | "projectEdited" | "appEditNeedsFlushToEditor"> => {
   const actionsData = { data: actions };
   const updatedProject = {
     ...project,
@@ -231,7 +184,7 @@ export interface Actions {
     id: ActionData["ID"],
     recording: RecordingData
   ): Promise<void>;
-  deleteAction(id: ActionData["ID"]): Promise<void>;
+  deleteAction(action: ActionData): Promise<void>;
   setActionName(id: ActionData["ID"], name: string): Promise<void>;
   setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon): Promise<void>;
   setRequiredConfidence(id: ActionData["ID"], value: number): Promise<void>;
@@ -260,11 +213,11 @@ export interface Actions {
   /**
    * Resets the project.
    */
-  resetProject(): void;
+  resetProject(): Promise<void>;
   /**
    * Sets the project name.
    */
-  setProjectName(name: string): void;
+  setProjectName(name: string): Promise<void>;
 
   /**
    * When interacting outside of React to sync with MakeCode it's important to have
@@ -421,14 +374,15 @@ const createMlStore = (logging: Logging) => {
             timestamp: Date.now(),
             projectEdited: false,
           };
+          const newProject = projectName
+            ? renameProject(untitledProject, projectName)
+            : untitledProject;
           set(
             {
               actions: [],
               dataWindow: currentDataWindow,
               model: undefined,
-              project: projectName
-                ? renameProject(untitledProject, projectName)
-                : untitledProject,
+              project: newProject,
               projectEdited: projectData.projectEdited,
               appEditNeedsFlushToEditor: true,
               timestamp: projectData.timestamp,
@@ -436,9 +390,11 @@ const createMlStore = (logging: Logging) => {
             false,
             "newSession"
           );
-          await storageWithErrHandling<string>(() =>
-            storage.updateProjectData(projectData)
-          );
+          await storageWithErrHandling<string | void>([
+            storage.deleteAllActions(),
+            storage.updateProjectData(projectData),
+            storage.updateMakeCodeProject(newProject),
+          ]);
         },
 
         setEditorOpen(open: boolean) {
@@ -463,18 +419,26 @@ const createMlStore = (logging: Logging) => {
         },
 
         async loadProjectFromStorage() {
-          const [actions, projectData, settings] = await Promise.all([
-            storage.getActions(),
-            storage.getProjectData(),
-            storage.getSettings(),
-          ]);
+          const [actions, makeCodeProject, projectData, settings] =
+            await Promise.all([
+              storage.getActions(),
+              storage.getMakeCodeProject(),
+              storage.getProjectData(),
+              storage.getSettings(),
+            ]);
           set(() => {
-            return { actions, timestamp: projectData.timestamp, settings };
+            return {
+              actions,
+              project: makeCodeProject,
+              ...projectData,
+              settings,
+            };
           });
         },
 
         async addNewAction() {
-          const { actions } = get();
+          const { actions, dataWindow, project, projectEdited, timestamp } =
+            get();
           const newAction: ActionData = {
             icon: actionIcon({
               isFirstAction: actions.length === 0,
@@ -485,22 +449,26 @@ const createMlStore = (logging: Logging) => {
             recordings: [],
           };
           const updatedActions = [...actions, newAction];
-          set(({ project, projectEdited, dataWindow }) => {
-            return {
-              actions: updatedActions,
-              model: undefined,
-              ...updateProject(
-                project,
-                projectEdited,
-                updatedActions,
-                undefined,
-                dataWindow
-              ),
-            };
-          });
-          await storageWithErrHandling<string>(() =>
-            storage.addAction(newAction)
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            updatedActions,
+            undefined,
+            dataWindow
           );
+          set({
+            actions: updatedActions,
+            model: undefined,
+            ...updatedProject,
+          });
+          await storageWithErrHandling<string>([
+            storage.addAction(newAction),
+            storage.updateProjectData({
+              projectEdited: updatedProject.projectEdited,
+              timestamp,
+            }),
+            storage.updateMakeCodeProject(updatedProject.project),
+          ]);
         },
 
         async addActionRecording(
@@ -536,32 +504,45 @@ const createMlStore = (logging: Logging) => {
           );
         },
 
-        async deleteAction(id: ActionData["ID"]) {
-          set(({ project, projectEdited, actions, dataWindow }) => {
-            const newActions = actions.filter((a) => a.ID !== id);
-            const newDataWindow =
-              newActions.length === 0 ? currentDataWindow : dataWindow;
-            return {
-              actions:
-                newActions.length === 0 ? [createFirstAction()] : newActions,
-              dataWindow: newDataWindow,
-              model: undefined,
-              ...updateProject(
-                project,
-                projectEdited,
-                newActions,
-                undefined,
-                newDataWindow
-              ),
-            };
-          });
-          await storageWithErrHandling<void>(() =>
-            storage.deleteAction(id.toString())
+        async deleteAction(action: ActionData) {
+          const { actions, dataWindow, project, projectEdited, timestamp } =
+            get();
+          const newActions = actions.filter((a) => a.ID !== action.ID);
+          const newDataWindow =
+            newActions.length === 0 ? currentDataWindow : dataWindow;
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            newActions,
+            undefined,
+            newDataWindow
           );
+          set({
+            actions:
+              newActions.length === 0 ? [createFirstAction()] : newActions,
+            dataWindow: newDataWindow,
+            model: undefined,
+            ...updatedProject,
+          });
+          await storageWithErrHandling<string | void>([
+            storage.deleteAction(action),
+            storage.updateProjectData({
+              projectEdited: updatedProject.projectEdited,
+              timestamp,
+            }),
+            storage.updateMakeCodeProject(updatedProject.project),
+          ]);
         },
 
         async setActionName(id: ActionData["ID"], name: string) {
-          const { actions } = get();
+          const {
+            actions,
+            dataWindow,
+            project,
+            projectEdited,
+            model,
+            timestamp,
+          } = get();
           let updatedAction: ActionData;
           const newActions = actions.map((action) => {
             if (id === action.ID) {
@@ -570,25 +551,36 @@ const createMlStore = (logging: Logging) => {
             }
             return action;
           });
-          set(({ project, projectEdited, model, dataWindow }) => {
-            return {
-              actions: newActions,
-              ...updateProject(
-                project,
-                projectEdited,
-                newActions,
-                model,
-                dataWindow
-              ),
-            };
-          });
-          await storageWithErrHandling<string>(() =>
-            storage.updateAction(updatedAction)
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            newActions,
+            model,
+            dataWindow
           );
+          set({
+            actions: newActions,
+            ...updatedProject,
+          });
+          await storageWithErrHandling<string | void>([
+            storage.updateAction(updatedAction!),
+            storage.updateProjectData({
+              projectEdited: updatedProject.projectEdited,
+              timestamp,
+            }),
+            storage.updateMakeCodeProject(updatedProject.project),
+          ]);
         },
 
         async setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon) {
-          const { actions } = get();
+          const {
+            actions,
+            dataWindow,
+            project,
+            projectEdited,
+            model,
+            timestamp,
+          } = get();
           const updatedActions: ActionData[] = [];
           // If we're changing the action to use an icon that's already in use
           // then we update the action that's using the icon to use the action's current icon
@@ -609,25 +601,36 @@ const createMlStore = (logging: Logging) => {
             }
             return action;
           });
-          set(({ project, projectEdited, model, dataWindow }) => {
-            return {
-              actions: newActions,
-              ...updateProject(
-                project,
-                projectEdited,
-                newActions,
-                model,
-                dataWindow
-              ),
-            };
-          });
-          await storageWithErrHandling(
-            updatedActions.map((action) => storage.updateAction(action))
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            newActions,
+            model,
+            dataWindow
           );
+          set({
+            actions: newActions,
+            ...updatedProject,
+          });
+          await storageWithErrHandling<string | void>([
+            ...updatedActions.map((action) => storage.updateAction(action)),
+            storage.updateProjectData({
+              projectEdited: updatedProject.projectEdited,
+              timestamp,
+            }),
+            storage.updateMakeCodeProject(updatedProject.project),
+          ]);
         },
 
         async setRequiredConfidence(id: ActionData["ID"], value: number) {
-          const { actions } = get();
+          const {
+            actions,
+            dataWindow,
+            project,
+            projectEdited,
+            model,
+            timestamp,
+          } = get();
           let updatedAction: ActionData;
           const newActions = actions.map((action) => {
             if (id === action.ID) {
@@ -636,25 +639,30 @@ const createMlStore = (logging: Logging) => {
             }
             return action;
           });
-          set(({ project, projectEdited, model, dataWindow }) => {
-            return {
-              actions: newActions,
-              ...updateProject(
-                project,
-                projectEdited,
-                newActions,
-                model,
-                dataWindow
-              ),
-            };
-          });
-          await storageWithErrHandling<string>(() =>
-            storage.updateAction(updatedAction)
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            newActions,
+            model,
+            dataWindow
           );
+          set({
+            actions: newActions,
+            ...updatedProject,
+          });
+          await storageWithErrHandling<string | void>([
+            storage.updateAction(updatedAction!),
+            storage.updateProjectData({
+              projectEdited: updatedProject.projectEdited,
+              timestamp,
+            }),
+            storage.updateMakeCodeProject(updatedProject.project),
+          ]);
         },
 
         async deleteActionRecording(id: ActionData["ID"], recordingId: number) {
-          const { actions } = get();
+          const { actions, dataWindow, project, projectEdited, timestamp } =
+            get();
           let updatedAction: ActionData;
           const updatedActions = actions.map((action) => {
             if (id !== action.ID) {
@@ -666,45 +674,58 @@ const createMlStore = (logging: Logging) => {
             updatedAction = { ...action, recordings };
             return updatedAction;
           });
-          set(({ project, projectEdited, dataWindow }) => {
-            const numRecordings = updatedActions.reduce(
-              (acc, curr) => acc + curr.recordings.length,
-              0
-            );
-            const newDataWindow =
-              numRecordings === 0 ? currentDataWindow : dataWindow;
-            return {
-              actions: updatedActions,
-              dataWindow: newDataWindow,
-              model: undefined,
-              ...updateProject(
-                project,
-                projectEdited,
-                updatedActions,
-                undefined,
-                newDataWindow
-              ),
-            };
-          });
-          await storageWithErrHandling<void>(() =>
-            storage.deleteRecording(recordingId.toString(), updatedAction!)
+          const numRecordings = updatedActions.reduce(
+            (acc, curr) => acc + curr.recordings.length,
+            0
           );
+          const newDataWindow =
+            numRecordings === 0 ? currentDataWindow : dataWindow;
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            updatedActions,
+            undefined,
+            newDataWindow
+          );
+          set({
+            actions: updatedActions,
+            dataWindow: newDataWindow,
+            model: undefined,
+            ...updatedProject,
+          });
+          await storageWithErrHandling<string | void>([
+            storage.deleteRecording(recordingId.toString(), updatedAction!),
+            storage.updateProjectData({
+              projectEdited: updatedProject.projectEdited,
+              timestamp,
+            }),
+            storage.updateMakeCodeProject(updatedProject.project),
+          ]);
         },
 
         async deleteAllActions() {
-          set(({ project, projectEdited }) => ({
+          const { project, projectEdited, timestamp } = get();
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            [],
+            undefined,
+            currentDataWindow
+          );
+          set({
             actions: [createFirstAction()],
             dataWindow: currentDataWindow,
             model: undefined,
-            ...updateProject(
-              project,
-              projectEdited,
-              [],
-              undefined,
-              currentDataWindow
-            ),
-          }));
-          await storageWithErrHandling<void>(() => storage.deleteAllActions());
+            ...updatedProject,
+          });
+          await storageWithErrHandling<string | void>([
+            storage.deleteAllActions(),
+            storage.updateProjectData({
+              projectEdited: updatedProject.projectEdited,
+              timestamp,
+            }),
+            storage.updateMakeCodeProject(updatedProject.project),
+          ]);
         },
 
         downloadDataset() {
@@ -724,46 +745,51 @@ const createMlStore = (logging: Logging) => {
         },
 
         async loadDataset(newActions: ActionData[]) {
-          const { settings, projectEdited } = get();
+          const { settings, project, projectEdited } = get();
           const updatedSettings: Settings = {
             ...settings,
             toursCompleted: Array.from(
               new Set([...settings.toursCompleted, "DataSamplesRecorded"])
             ),
           };
-          const timestamp = Date.now();
-          set(({ project }) => {
-            const dataWindow = getDataWindowFromActions(newActions);
-            return {
-              settings: updatedSettings,
-              actions: (() => {
-                const copy = newActions.map((a) => ({ ...a }));
-                for (const a of copy) {
-                  if (!a.icon) {
-                    a.icon = actionIcon({
-                      isFirstAction: false,
-                      existingActions: copy,
-                    });
-                  }
-                }
-                return copy;
-              })(),
-              dataWindow,
-              model: undefined,
-              timestamp,
-              ...updateProject(
-                project,
-                projectEdited,
-                newActions,
-                undefined,
-                dataWindow
-              ),
-            };
+          // Older datasets did not have icons. Add icons to actions where these are missing.
+          const newActionsWithIcons = [...newActions];
+          newActionsWithIcons.forEach((a) => {
+            if (!a.icon) {
+              a.icon = actionIcon({
+                isFirstAction: false,
+                existingActions: newActionsWithIcons,
+              });
+            }
           });
-          await storageWithErrHandling<string>([
-            storage.updateSettings(updatedSettings),
-            storage.updateProjectData({ timestamp, projectEdited }),
-          ]);
+          const timestamp = Date.now();
+          const dataWindow = getDataWindowFromActions(newActionsWithIcons);
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            newActionsWithIcons,
+            undefined,
+            dataWindow
+          );
+          set({
+            settings: updatedSettings,
+            actions: newActionsWithIcons,
+            dataWindow,
+            model: undefined,
+            timestamp,
+            ...updatedProject,
+          });
+          await storageWithErrHandling<void>(() =>
+            storage.importProject(
+              newActionsWithIcons,
+              updatedProject.project,
+              {
+                projectEdited: updatedProject.projectEdited,
+                timestamp,
+              },
+              updatedSettings
+            )
+          );
         },
 
         /**
@@ -805,10 +831,14 @@ const createMlStore = (logging: Logging) => {
               // We don't update projectLoadTimestamp here as we don't want a toast notification for .org import
             };
           });
-          await storageWithErrHandling<string>([
-            storage.updateSettings(updatedSettings),
-            storage.updateProjectData(projectData),
-          ]);
+          await storageWithErrHandling<void>(() =>
+            storage.importProject(
+              newActions,
+              project,
+              projectData,
+              updatedSettings
+            )
+          );
         },
 
         closeTrainModelDialogs() {
@@ -838,7 +868,8 @@ const createMlStore = (logging: Logging) => {
         },
 
         async trainModel() {
-          const { actions, dataWindow } = get();
+          const { actions, dataWindow, project, projectEdited, timestamp } =
+            get();
           logging.event({
             type: "model-train",
             detail: {
@@ -861,32 +892,41 @@ const createMlStore = (logging: Logging) => {
               set({ trainModelProgress }, false, "trainModelProgress")
           );
           const model = trainingResult.error ? undefined : trainingResult.model;
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            actions,
+            model,
+            dataWindow
+          );
           set(
-            ({ project, projectEdited }) => ({
+            {
               model,
               trainModelDialogStage: model
                 ? TrainModelDialogStage.Closed
                 : TrainModelDialogStage.TrainingError,
-              ...updateProject(
-                project,
-                projectEdited,
-                actions,
-                model,
-                dataWindow
-              ),
-            }),
+              ...updatedProject,
+            },
             false,
             actionName
           );
+          await storageWithErrHandling<string>([
+            storage.updateProjectData({
+              projectEdited: updatedProject.projectEdited,
+              timestamp,
+            }),
+            storage.updateMakeCodeProject(updatedProject.project),
+          ]);
           return !trainingResult.error;
         },
 
-        resetProject(): void {
+        async resetProject(): Promise<void> {
           const {
             project: previousProject,
             actions,
             model,
             dataWindow,
+            timestamp,
           } = get();
           const newProject = {
             ...previousProject,
@@ -909,18 +949,25 @@ const createMlStore = (logging: Logging) => {
             false,
             "resetProject"
           );
+          await storageWithErrHandling<string>([
+            storage.updateProjectData({ projectEdited: false, timestamp }),
+            storage.updateMakeCodeProject(newProject),
+          ]);
         },
 
-        setProjectName(name: string): void {
-          return set(
-            ({ project }) => {
-              return {
-                appEditNeedsFlushToEditor: true,
-                project: renameProject(project, name),
-              };
+        async setProjectName(name: string): Promise<void> {
+          const { project } = get();
+          const updatedProject = renameProject(project, name);
+          set(
+            {
+              appEditNeedsFlushToEditor: true,
+              project: updatedProject,
             },
             false,
             "setProjectName"
+          );
+          await storageWithErrHandling<string>(() =>
+            storage.updateMakeCodeProject(updatedProject)
           );
         },
 
@@ -994,6 +1041,8 @@ const createMlStore = (logging: Logging) => {
             timestamp,
             projectEdited,
           };
+          let updatedProjectInStorage = true;
+          let newActions: ActionData[] | undefined;
           set(
             (state) => {
               const {
@@ -1025,7 +1074,7 @@ const createMlStore = (logging: Logging) => {
                   logging.log(
                     `[MakeCode] Updating state from MakeCode header change. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
                   );
-                  const newActions = getActionsFromProject(newProject);
+                  newActions = getActionsFromProject(newProject);
                   projectData.timestamp = Date.now();
                   projectData.projectEdited = true;
                   return {
@@ -1057,16 +1106,21 @@ const createMlStore = (logging: Logging) => {
                 logging.log(
                   `[MakeCode] Edit ignored when closed. ID ${newProject.header?.id}`
                 );
+                updatedProjectInStorage = false;
               }
               return state;
             },
             false,
             actionName
           );
-          await storageWithErrHandling<string>([
-            storage.updateSettings(updatedSettings),
-            storage.updateProjectData(projectData),
-          ]);
+          await storageWithErrHandling<void>(() =>
+            storage.importProject(
+              newActions,
+              updatedProjectInStorage ? newProject : undefined,
+              projectData,
+              updatedSettings
+            )
+          );
         },
         setDownload(download: DownloadState) {
           set({ download, downloadFlashingProgress: 0 }, false, "setDownload");

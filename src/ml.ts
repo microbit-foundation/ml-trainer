@@ -8,7 +8,7 @@ import * as tf from "@tensorflow/tfjs";
 import { SymbolicTensor } from "@tensorflow/tfjs";
 import { getMlFilters, mlSettings } from "./mlConfig";
 import { ActionData, XYZData } from "./model";
-import { DataWindow } from "./store";
+import { DataWindow } from "./project-utils";
 
 export type TrainingResult =
   | { error: false; model: tf.LayersModel }

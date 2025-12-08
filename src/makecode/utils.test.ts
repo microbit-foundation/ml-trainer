@@ -25,7 +25,7 @@ import {
   hasMakeCodeMlExtension,
   pxt,
 } from "./utils";
-import { currentDataWindow } from "../store";
+import { currentDataWindow } from "../project-utils";
 
 const data: DatasetEditorJsonFormat = {
   data: actionData as ActionData[],

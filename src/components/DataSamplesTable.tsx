@@ -149,7 +149,7 @@ const DataSamplesTable = ({
   );
 
   const handleConfirm = useCallback(async () => {
-    await deleteAction(selectedAction?.ID);
+    await deleteAction(selectedAction);
     closeDialog();
   }, [closeDialog, deleteAction, selectedAction]);
 

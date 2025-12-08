@@ -68,9 +68,9 @@ const DataSamplesMenu = () => {
   }, [closeDialog, deleteAllActions, logging]);
 
   const handleSave = useCallback(
-    (newName?: string) => {
+    async (newName?: string) => {
       if (newName) {
-        setProjectName(newName);
+        await setProjectName(newName);
       }
       download();
       closeDialog();

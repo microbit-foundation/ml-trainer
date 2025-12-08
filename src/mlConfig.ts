@@ -4,7 +4,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { DataWindow } from "./store";
+
+import { DataWindow } from "./project-utils";
 
 export enum Filter {
   MAX = "max",

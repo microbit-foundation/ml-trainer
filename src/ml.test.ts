@@ -19,7 +19,7 @@ import {
 import actionDataBadLabels from "./test-fixtures/shake-still-circle-legacy-bad-labels.json";
 import actionData from "./test-fixtures/shake-still-circle-data-samples-legacy.json";
 import testData from "./test-fixtures/shake-still-circle-legacy-test-data.json";
-import { currentDataWindow } from "./store";
+import { currentDataWindow } from "./project-utils";
 
 const fixUpTestData = (data: Partial<ActionData>[]): ActionData[] => {
   data.forEach((action) => (action.icon = "Heart"));

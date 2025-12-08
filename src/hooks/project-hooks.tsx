@@ -28,7 +28,7 @@ import {
   PostImportDialogState,
   SaveStep,
 } from "../model";
-import { untitledProjectName as untitled } from "../project-name";
+import { untitledProjectName as untitled } from "../project-utils";
 import { useStore } from "../store";
 import {
   createCodePageUrl,

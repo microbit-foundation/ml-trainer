@@ -25,7 +25,7 @@ import { useDeployment } from "../deployment";
 import { useDefaultProjectName, useProject } from "../hooks/project-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { MicrobitOrgResource } from "../model";
-import { validateProjectName } from "../project-name";
+import { validateProjectName } from "../project-utils";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 import { ButtonWithLoading } from "../components/ButtonWithLoading";
