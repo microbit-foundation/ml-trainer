@@ -24,11 +24,9 @@ const HomepageBannerVideo = ({ src }: HomepageBannerVideoProps) => {
     const video = videoRef.current;
     const listener = () => setIsPaused(false);
     if (video) {
-      // When video resumes play after a pause or autoplays.
-      // The `autoplay` attribute autoplays the video when page allows it,
-      // element has been created, and video is loaded enough to play to end
-      // without interruption.
-      // https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Autoplay#the_autoplay_attribute
+      // Fires when video playback starts or resumes (including autoplay).
+      // Autoplay requires page permission, element creation, and sufficient buffering.
+      // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play_event
       video.addEventListener("play", listener);
     }
     return () => {
