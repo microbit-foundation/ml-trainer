@@ -419,21 +419,7 @@ const createMlStore = (logging: Logging) => {
         },
 
         async loadProjectFromStorage() {
-          const [actions, makeCodeProject, projectData, settings] =
-            await Promise.all([
-              storage.getActions(),
-              storage.getMakeCodeProject(),
-              storage.getProjectData(),
-              storage.getSettings(),
-            ]);
-          set(() => {
-            return {
-              actions,
-              project: makeCodeProject,
-              ...projectData,
-              settings,
-            };
-          });
+          set(await storage.loadProject());
         },
 
         async addNewAction() {

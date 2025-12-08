@@ -90,9 +90,21 @@ export class Database {
     });
   }
 
-  async getActions(): Promise<ActionData[]> {
+  async loadProject(): Promise<{
+    actions: ActionData[];
+    project: MakeCodeProject;
+    projectEdited: boolean;
+    settings: Settings;
+    timestamp: number | undefined;
+  }> {
     const tx = (await this.dbPromise).transaction(
-      [DatabaseStore.ACTIONS, DatabaseStore.RECORDINGS],
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.RECORDINGS,
+        DatabaseStore.MAKECODE,
+        DatabaseStore.PROJECT_DATA,
+        DatabaseStore.SETTINGS,
+      ],
       "readonly"
     );
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
@@ -108,136 +120,28 @@ export class Database {
         ),
       };
     });
-    return actions;
-  }
-
-  async addAction(action: ActionData): Promise<string> {
-    const actionToStore = prepActionForStorage(action);
-    return (await this.dbPromise).add(
-      DatabaseStore.ACTIONS,
-      actionToStore,
-      actionToStore.ID.toString()
-    );
-  }
-
-  async updateAction(action: ActionData): Promise<string> {
-    const actionToStore = prepActionForStorage(action);
-    return (await this.dbPromise).put(
-      DatabaseStore.ACTIONS,
-      actionToStore,
-      actionToStore.ID.toString()
-    );
-  }
-
-  async deleteAction(action: ActionData): Promise<void> {
-    const tx = (await this.dbPromise).transaction(
-      [DatabaseStore.ACTIONS, DatabaseStore.RECORDINGS],
-      "readwrite"
-    );
-    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    await actionsStore.delete(action.ID.toString());
-    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    await Promise.all([
-      action.recordings.map((r) => recordingsStore.delete(r.ID.toString())),
-    ]);
-    return tx.done;
-  }
-
-  async deleteAllActions(): Promise<void> {
-    const tx = (await this.dbPromise).transaction(
-      [DatabaseStore.ACTIONS, DatabaseStore.RECORDINGS],
-      "readwrite"
-    );
-    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    await actionsStore.clear();
-    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    await recordingsStore.clear();
-    // const actionKeys = await store.getAllKeys();
-    // await Promise.all(actionKeys.map((k) => store.delete(k)));
-    return tx.done;
-  }
-
-  async addRecording(
-    recording: RecordingData,
-    action: ActionData
-  ): Promise<void> {
-    const tx = (await this.dbPromise).transaction(
-      [DatabaseStore.RECORDINGS, DatabaseStore.ACTIONS],
-      "readwrite"
-    );
-    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const actionToStore = prepActionForStorage(action);
-    await actionsStore.put(actionToStore, actionToStore.ID.toString());
-    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    await recordingsStore.add(recording, recording.ID.toString());
-    return tx.done;
-  }
-
-  async deleteRecording(key: string, action: ActionData): Promise<void> {
-    const tx = (await this.dbPromise).transaction(
-      [DatabaseStore.RECORDINGS, DatabaseStore.ACTIONS],
-      "readwrite"
-    );
-    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const actionToStore = prepActionForStorage(action);
-    await actionsStore.put(actionToStore, actionToStore.ID.toString());
-    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    await recordingsStore.delete(key);
-    return tx.done;
-  }
-
-  async getMakeCodeProject(): Promise<MakeCodeProject> {
-    const makeCodeProject = await (
-      await this.dbPromise
-    ).get(DatabaseStore.MAKECODE, DatabaseStore.MAKECODE);
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE);
+    const makeCodeProject = await makeCodeStore.get(DatabaseStore.MAKECODE);
     if (!makeCodeProject) {
       throw new Error("Failed to fetch MakeCode project");
     }
-    return makeCodeProject;
-  }
-
-  async updateMakeCodeProject(project: MakeCodeProject): Promise<string> {
-    return (await this.dbPromise).put(
-      DatabaseStore.MAKECODE,
-      project,
-      DatabaseStore.MAKECODE
-    );
-  }
-
-  async getProjectData(): Promise<ProjectData> {
-    const projectData = await (
-      await this.dbPromise
-    ).get(DatabaseStore.PROJECT_DATA, DatabaseStore.PROJECT_DATA);
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = await projectDataStore.get(DatabaseStore.PROJECT_DATA);
     if (!projectData) {
       throw new Error("Failed to fetch project data");
     }
-    return projectData;
-  }
-
-  async updateProjectData(projectData: ProjectData): Promise<string> {
-    return (await this.dbPromise).put(
-      DatabaseStore.PROJECT_DATA,
-      projectData,
-      DatabaseStore.PROJECT_DATA
-    );
-  }
-
-  async getSettings(): Promise<Settings> {
-    const settings = await (
-      await this.dbPromise
-    ).get(DatabaseStore.SETTINGS, DatabaseStore.SETTINGS);
+    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
+    const settings = await settingsStore.get(DatabaseStore.SETTINGS);
     if (!settings) {
       throw new Error("Failed to fetch settings");
     }
-    return settings;
-  }
-
-  async updateSettings(settings: Settings): Promise<string> {
-    return (await this.dbPromise).put(
-      DatabaseStore.SETTINGS,
+    return {
+      actions,
+      project: makeCodeProject,
+      projectEdited: projectData.projectEdited,
+      timestamp: projectData.timestamp,
       settings,
-      DatabaseStore.SETTINGS
-    );
+    };
   }
 
   async importProject(
@@ -287,5 +191,102 @@ export class Database {
     storePromises.push(settingsStore.put(settings, DatabaseStore.SETTINGS));
     await Promise.all(storePromises);
     return tx.done;
+  }
+
+  async addAction(action: ActionData): Promise<string> {
+    const actionToStore = prepActionForStorage(action);
+    return (await this.dbPromise).add(
+      DatabaseStore.ACTIONS,
+      actionToStore,
+      actionToStore.ID.toString()
+    );
+  }
+
+  async updateAction(action: ActionData): Promise<string> {
+    const actionToStore = prepActionForStorage(action);
+    return (await this.dbPromise).put(
+      DatabaseStore.ACTIONS,
+      actionToStore,
+      actionToStore.ID.toString()
+    );
+  }
+
+  async deleteAction(action: ActionData): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [DatabaseStore.ACTIONS, DatabaseStore.RECORDINGS],
+      "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    await actionsStore.delete(action.ID.toString());
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await Promise.all([
+      action.recordings.map((r) => recordingsStore.delete(r.ID.toString())),
+    ]);
+    return tx.done;
+  }
+
+  async deleteAllActions(): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [DatabaseStore.ACTIONS, DatabaseStore.RECORDINGS],
+      "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    await actionsStore.clear();
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await recordingsStore.clear();
+    return tx.done;
+  }
+
+  async addRecording(
+    recording: RecordingData,
+    action: ActionData
+  ): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [DatabaseStore.RECORDINGS, DatabaseStore.ACTIONS],
+      "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    const actionToStore = prepActionForStorage(action);
+    await actionsStore.put(actionToStore, actionToStore.ID.toString());
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await recordingsStore.add(recording, recording.ID.toString());
+    return tx.done;
+  }
+
+  async deleteRecording(key: string, action: ActionData): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [DatabaseStore.RECORDINGS, DatabaseStore.ACTIONS],
+      "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    const actionToStore = prepActionForStorage(action);
+    await actionsStore.put(actionToStore, actionToStore.ID.toString());
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await recordingsStore.delete(key);
+    return tx.done;
+  }
+
+  async updateMakeCodeProject(project: MakeCodeProject): Promise<string> {
+    return (await this.dbPromise).put(
+      DatabaseStore.MAKECODE,
+      project,
+      DatabaseStore.MAKECODE
+    );
+  }
+
+  async updateProjectData(projectData: ProjectData): Promise<string> {
+    return (await this.dbPromise).put(
+      DatabaseStore.PROJECT_DATA,
+      projectData,
+      DatabaseStore.PROJECT_DATA
+    );
+  }
+
+  async updateSettings(settings: Settings): Promise<string> {
+    return (await this.dbPromise).put(
+      DatabaseStore.SETTINGS,
+      settings,
+      DatabaseStore.SETTINGS
+    );
   }
 }
