@@ -485,7 +485,7 @@ const createMlStore = (logging: Logging) => {
             ...updatedProject,
           });
           await storageWithErrHandling<void>(() =>
-            storage.addRecording(recording, updatedAction!)
+            storage.addRecording(recording, updatedAction)
           );
         },
 
@@ -865,12 +865,12 @@ const createMlStore = (logging: Logging) => {
             false,
             actionName
           );
-          await storageWithErrHandling<string>([
+          await storageWithErrHandling<string>(() =>
             storage.updateMakeCodeProject({
               project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
-            }),
-          ]);
+            })
+          );
           return !trainingResult.error;
         },
 
@@ -902,12 +902,12 @@ const createMlStore = (logging: Logging) => {
             false,
             "resetProject"
           );
-          await storageWithErrHandling<string>([
+          await storageWithErrHandling<string>(() =>
             storage.updateMakeCodeProject({
               project: newProject,
               projectEdited: false,
-            }),
-          ]);
+            })
+          );
         },
 
         async setProjectName(name: string): Promise<void> {
