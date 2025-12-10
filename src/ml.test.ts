@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: MIT
  */
 import * as tf from "@tensorflow/tfjs";
-import { ActionData } from "./model";
+import { ActionData, OldActionData } from "./model";
 import {
   applyFilters,
   prepareFeaturesAndLabels,
@@ -19,21 +19,24 @@ import {
 import actionDataBadLabels from "./test-fixtures/shake-still-circle-legacy-bad-labels.json";
 import actionData from "./test-fixtures/shake-still-circle-data-samples-legacy.json";
 import testData from "./test-fixtures/shake-still-circle-legacy-test-data.json";
-import { currentDataWindow } from "./project-utils";
+import { currentDataWindow, migrateLegacyActionData } from "./project-utils";
 
-const fixUpTestData = (data: Partial<ActionData>[]): ActionData[] => {
+const fixUpTestData = (data: Partial<OldActionData>[]): OldActionData[] => {
   data.forEach((action) => (action.icon = "Heart"));
-  return data as ActionData[];
+  return data as OldActionData[];
 };
+
+const migratedActionData = migrateLegacyActionData(fixUpTestData(actionData));
+const migratedActionDataBadLabels = migrateLegacyActionData(
+  fixUpTestData(actionDataBadLabels)
+);
+const migratedTestData = migrateLegacyActionData(fixUpTestData(testData));
 
 let trainingResult: TrainingResult;
 beforeAll(async () => {
   // No webgl in tests running in node.
   await tf.setBackend("cpu");
-  trainingResult = await trainModel(
-    fixUpTestData(actionData),
-    currentDataWindow
-  );
+  trainingResult = await trainModel(migratedActionData, currentDataWindow);
 });
 
 const getModelResults = (data: ActionData[]) => {
@@ -66,7 +69,7 @@ const getModelResults = (data: ActionData[]) => {
 describe("Model tests", () => {
   test("returns acceptable results on training data", () => {
     const { tensorFlowResultAccuracy, tensorflowPredictionResult, labels } =
-      getModelResults(fixUpTestData(actionData));
+      getModelResults(migratedActionData);
     const d = labels[0].length; // dimensions
     for (let i = 0, j = 0; i < tensorflowPredictionResult.length; i += d, j++) {
       const result = tensorflowPredictionResult.slice(i, i + d);
@@ -81,7 +84,7 @@ describe("Model tests", () => {
   // Training data is shake, still, circle. This data is still, circle, shake.
   test("returns incorrect results on wrongly labelled training data", () => {
     const { tensorFlowResultAccuracy, tensorflowPredictionResult, labels } =
-      getModelResults(fixUpTestData(actionDataBadLabels));
+      getModelResults(migratedActionDataBadLabels);
     const d = labels[0].length; // dimensions
     for (let i = 0, j = 0; i < tensorflowPredictionResult.length; i += d, j++) {
       const result = tensorflowPredictionResult.slice(i, i + d);
@@ -93,9 +96,7 @@ describe("Model tests", () => {
   });
 
   test("returns correct results on testing data", () => {
-    const { tensorFlowResultAccuracy } = getModelResults(
-      fixUpTestData(testData)
-    );
+    const { tensorFlowResultAccuracy } = getModelResults(migratedTestData);
     // The model thinks 1-2 samples of still are circle.
     expect(parseFloat(tensorFlowResultAccuracy)).toBeGreaterThan(0.85);
   });

@@ -2,7 +2,10 @@ import { MakeCodeProject } from "@microbit/makecode-embed";
 import { DBSchema, IDBPDatabase, openDB } from "idb";
 import orderBy from "lodash.orderby";
 import { Action, ActionData, RecordingData } from "./model";
-import { createUntitledProject, migrateActionIds } from "./project-utils";
+import {
+  createUntitledProject,
+  migrateLegacyActionData,
+} from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
 import { prepActionForStorage } from "./storageUtils";
 
@@ -362,6 +365,6 @@ export const getLocalStorageProject = (): PersistedData | undefined => {
   const dataToMigrate = JSON.parse(data) as { state: PersistedData };
   return {
     ...dataToMigrate.state,
-    actions: migrateActionIds(dataToMigrate.state.actions),
+    actions: migrateLegacyActionData(dataToMigrate.state.actions),
   };
 };

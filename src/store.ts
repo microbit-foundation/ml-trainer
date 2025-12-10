@@ -46,7 +46,7 @@ import {
   currentDataWindow,
   DataWindow,
   legacyDataWindow,
-  migrateActionIds,
+  migrateLegacyActionData,
   untitledProjectName,
 } from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
@@ -704,7 +704,7 @@ const createMlStore = (logging: Logging) => {
               new Set([...settings.toursCompleted, "DataSamplesRecorded"])
             ),
           };
-          const newActionsWithIcons = migrateActionIds(newActions);
+          const newActionsWithIcons = migrateLegacyActionData(newActions);
           // Older datasets did not have icons. Add icons to actions where these are missing.
           newActionsWithIcons.forEach((a) => {
             if (!a.icon) {
@@ -1508,7 +1508,9 @@ const getActionsFromProject = (project: MakeCodeProject): ActionData[] => {
   if (typeof dataset !== "object" || !("data" in dataset)) {
     return [];
   }
-  return migrateActionIds(dataset.data as OldActionData[] | ActionData[]);
+  return migrateLegacyActionData(
+    dataset.data as OldActionData[] | ActionData[]
+  );
 };
 
 const renameProject = (

@@ -67,7 +67,7 @@ export const createUntitledProject = (): MakeCodeProject => ({
   ),
 });
 
-export const migrateActionIds = (
+export const migrateLegacyActionData = (
   actions: OldActionData[] | ActionData[]
 ): ActionData[] => {
   return actions.map((a) => {

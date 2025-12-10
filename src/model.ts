@@ -35,7 +35,8 @@ export interface OldRecordingData {
   data: XYZData;
 }
 
-export interface OldActionData extends Omit<ActionData, "id" | "recordings"> {
+export interface OldActionData
+  extends Omit<ActionData, "id" | "recordings" | "createdAt"> {
   ID: number;
   recordings: OldRecordingData[];
 }
