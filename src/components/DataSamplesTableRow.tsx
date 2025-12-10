@@ -20,7 +20,7 @@ interface DataSamplesTableRowProps {
   onSelectRow?: () => void;
   onRecord?: (recordingOptions: RecordingOptions) => void;
   showHints: boolean;
-  newRecordingId?: number;
+  newRecordingId?: string;
   clearNewRecordingId?: () => void;
   onDeleteAction?: () => void;
   renameShortcutScopeRef?: (instance: RefType<HTMLElement>) => void;

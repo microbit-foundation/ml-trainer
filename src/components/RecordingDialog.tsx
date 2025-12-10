@@ -20,9 +20,10 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { v4 as uuid } from "uuid";
 import { TimedXYZ } from "../buffered-data";
 import { useBufferedData } from "../buffered-data-hooks";
-import { ActionData, XYZData } from "../model";
+import { XYZData } from "../model";
 import { useStore } from "../store";
 
 interface CountdownStage {
@@ -37,7 +38,7 @@ export interface RecordingOptions {
 }
 
 export interface RecordingCompleteDetail {
-  mostRecentRecordingId: number;
+  mostRecentRecordingId: string | undefined;
   recordingCount: number;
 }
 
@@ -45,7 +46,7 @@ export interface RecordingDialogProps {
   isOpen: boolean;
   onClose: () => void;
   actionName: string;
-  actionId: ActionData["ID"];
+  actionId: string;
   onRecordingComplete: (detail: RecordingCompleteDetail) => void;
   recordingOptions: RecordingOptions;
 }
@@ -68,7 +69,7 @@ const RecordingDialog = ({
   const intl = useIntl();
   const toast = useToast();
   const recordingCountRef = useRef(0);
-  const mostRecentRecordingIdRef = useRef(-1);
+  const mostRecentRecordingIdRef = useRef<string | undefined>();
   const recordingStarted = useStore((s) => s.recordingStarted);
   const recordingStopped = useStore((s) => s.recordingStopped);
   const addActionRecording = useStore((s) => s.addActionRecording);
@@ -103,7 +104,7 @@ const RecordingDialog = ({
     const mostRecentRecordingId = mostRecentRecordingIdRef.current;
 
     recordingCountRef.current = 0;
-    mostRecentRecordingIdRef.current = -1;
+    mostRecentRecordingIdRef.current = undefined;
     recordingStopped();
     setRecordingStatus(RecordingStatus.None);
     setCountdownStageIndex(0);
@@ -157,10 +158,14 @@ const RecordingDialog = ({
   const startRecordingInternal = useCallback(() => {
     recordingDataSource.startRecording({
       async onDone(data) {
-        const recordingId = Date.now();
+        const recordingId = uuid();
         mostRecentRecordingIdRef.current = recordingId;
         recordingCountRef.current++;
-        await addActionRecording(actionId, { ID: recordingId, data });
+        await addActionRecording(actionId, {
+          id: recordingId,
+          data,
+          createdAt: Date.now(),
+        });
         if (continuousRecording && recordingsRemaining) {
           continueRecording();
         } else if (!continuousRecording && recordingsRemaining) {

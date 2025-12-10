@@ -128,10 +128,10 @@ export const applyFilters = (
 interface PredictInput {
   model: tf.LayersModel;
   data: XYZData;
-  classificationIds: number[];
+  classificationIds: string[];
 }
 
-export type Confidences = Record<ActionData["ID"], number>;
+export type Confidences = Record<string, number>;
 
 export type ConfidencesResult =
   | { error: true; detail: unknown }

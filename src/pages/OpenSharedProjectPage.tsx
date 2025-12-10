@@ -293,7 +293,7 @@ const PreviewData = ({ dataset }: PreviewDataProps) => {
             {dataset.map((action) => (
               <DataSamplesTableRow
                 preview={true}
-                key={action.ID}
+                key={action.id}
                 action={action}
                 selected={false}
                 showHints={false}

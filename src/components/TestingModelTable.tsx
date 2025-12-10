@@ -107,9 +107,9 @@ const TestingModelTable = () => {
                   <GridItem>
                     <ActionCertaintyCard
                       actionName={action.name}
-                      actionId={action.ID}
+                      actionId={action.id}
                       onThresholdChange={(val) =>
-                        setRequiredConfidence(action.ID, val)
+                        setRequiredConfidence(action.id, val)
                       }
                       requiredConfidence={
                         threshold ?? mlSettings.defaultRequiredConfidence

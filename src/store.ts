@@ -6,11 +6,14 @@
  */
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
 import * as tf from "@tensorflow/tfjs";
+import { v4 as uuid } from "uuid";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
+import { BufferedData } from "./buffered-data";
 import { deployment } from "./deployment";
 import { flags } from "./flags";
+import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
 import { Logging } from "./logging/logging";
 import {
   filenames,
@@ -18,50 +21,51 @@ import {
   generateProject,
 } from "./makecode/utils";
 import { Confidences, predict, trainModel } from "./ml";
+import { mlSettings } from "./mlConfig";
 import {
+  Action,
+  ActionData,
   DataSamplesView,
   DownloadState,
   DownloadStep,
-  Action,
-  ActionData,
+  EditorStartUp,
   MicrobitToFlash,
+  OldActionData,
   PostImportDialogState,
   RecordingData,
   SaveState,
   SaveStep,
-  TourTrigger,
-  TourState,
-  TrainModelDialogStage,
-  EditorStartUp,
-  TourTriggerName,
   tourSequence,
+  TourState,
+  TourTrigger,
+  TourTriggerName,
+  TrainModelDialogStage,
 } from "./model";
-import { defaultSettings, Settings } from "./settings";
-import { getTotalNumSamples } from "./utils/actions";
-import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import {
   createUntitledProject,
   currentDataWindow,
   DataWindow,
   legacyDataWindow,
+  migrateActionIds,
   untitledProjectName,
 } from "./project-utils";
-import { mlSettings } from "./mlConfig";
-import { BufferedData } from "./buffered-data";
-import { getDetectedAction } from "./utils/prediction";
-import { getTour as getTourSpec } from "./tours";
-import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
+import { defaultSettings, Settings } from "./settings";
 import { Database } from "./storage";
+import { getTour as getTourSpec } from "./tours";
+import { getTotalNumSamples } from "./utils/actions";
+import { defaultIcons, MakeCodeIcon } from "./utils/icons";
+import { getDetectedAction } from "./utils/prediction";
 
 const storage = new Database();
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
-const createFirstAction = () => ({
+const createFirstAction = (): ActionData => ({
   icon: defaultIcons[0],
-  ID: Date.now(),
+  id: uuid(),
   name: "",
   recordings: [],
+  createdAt: Date.now(),
 });
 
 interface PredictionResult {
@@ -180,18 +184,12 @@ export interface ConnectOptions {
 export interface Actions {
   loadProjectFromStorage(): Promise<void>;
   addNewAction(): Promise<void>;
-  addActionRecording(
-    id: ActionData["ID"],
-    recording: RecordingData
-  ): Promise<void>;
+  addActionRecording(id: string, recording: RecordingData): Promise<void>;
   deleteAction(action: ActionData): Promise<void>;
-  setActionName(id: ActionData["ID"], name: string): Promise<void>;
-  setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon): Promise<void>;
-  setRequiredConfidence(id: ActionData["ID"], value: number): Promise<void>;
-  deleteActionRecording(
-    id: ActionData["ID"],
-    recordingId: number
-  ): Promise<void>;
+  setActionName(id: string, name: string): Promise<void>;
+  setActionIcon(id: string, icon: MakeCodeIcon): Promise<void>;
+  setRequiredConfidence(id: string, value: number): Promise<void>;
+  deleteActionRecording(id: string, recordingId: string): Promise<void>;
   deleteAllActions(): Promise<void>;
   downloadDataset(): void;
 
@@ -430,9 +428,10 @@ const createMlStore = (logging: Logging) => {
               isFirstAction: actions.length === 0,
               existingActions: actions,
             }),
-            ID: Date.now(),
+            id: uuid(),
             name: "",
             recordings: [],
+            createdAt: Date.now(),
           };
           const updatedActions = [...actions, newAction];
           const updatedProject = updateProject(
@@ -456,14 +455,11 @@ const createMlStore = (logging: Logging) => {
           ]);
         },
 
-        async addActionRecording(
-          id: ActionData["ID"],
-          recording: RecordingData
-        ) {
+        async addActionRecording(id: string, recording: RecordingData) {
           const { actions, dataWindow, project, projectEdited } = get();
           let updatedAction: ActionData;
           const updatedActions = actions.map((action) => {
-            if (action.ID === id) {
+            if (action.id === id) {
               updatedAction = {
                 ...action,
                 recordings: [recording, ...action.recordings],
@@ -491,7 +487,7 @@ const createMlStore = (logging: Logging) => {
 
         async deleteAction(action: ActionData) {
           const { actions, dataWindow, project, projectEdited } = get();
-          const newActions = actions.filter((a) => a.ID !== action.ID);
+          const newActions = actions.filter((a) => a.id !== action.id);
           const newDataWindow =
             newActions.length === 0 ? currentDataWindow : dataWindow;
           const updatedProject = updateProject(
@@ -517,11 +513,11 @@ const createMlStore = (logging: Logging) => {
           ]);
         },
 
-        async setActionName(id: ActionData["ID"], name: string) {
+        async setActionName(id: string, name: string) {
           const { actions, dataWindow, project, projectEdited, model } = get();
           let updatedAction: ActionData;
           const newActions = actions.map((action) => {
-            if (id === action.ID) {
+            if (id === action.id) {
               updatedAction = { ...action, name };
               return updatedAction;
             }
@@ -547,19 +543,19 @@ const createMlStore = (logging: Logging) => {
           ]);
         },
 
-        async setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon) {
+        async setActionIcon(id: string, icon: MakeCodeIcon) {
           const { actions, dataWindow, project, projectEdited, model } = get();
           const updatedActions: ActionData[] = [];
           // If we're changing the action to use an icon that's already in use
           // then we update the action that's using the icon to use the action's current icon
-          const currentIcon = actions.find((a) => a.ID === id)?.icon;
+          const currentIcon = actions.find((a) => a.id === id)?.icon;
           const newActions = actions.map((action) => {
-            if (action.ID === id) {
+            if (action.id === id) {
               const updatedAction = { ...action, icon };
               updatedActions.push(updatedAction);
               return updatedAction;
             } else if (
-              action.ID !== id &&
+              action.id !== id &&
               action.icon === icon &&
               currentIcon
             ) {
@@ -589,11 +585,11 @@ const createMlStore = (logging: Logging) => {
           ]);
         },
 
-        async setRequiredConfidence(id: ActionData["ID"], value: number) {
+        async setRequiredConfidence(id: string, value: number) {
           const { actions, dataWindow, project, projectEdited, model } = get();
           let updatedAction: ActionData;
           const newActions = actions.map((action) => {
-            if (id === action.ID) {
+            if (id === action.id) {
               updatedAction = { ...action, requiredConfidence: value };
               return updatedAction;
             }
@@ -619,15 +615,15 @@ const createMlStore = (logging: Logging) => {
           ]);
         },
 
-        async deleteActionRecording(id: ActionData["ID"], recordingId: number) {
+        async deleteActionRecording(id: string, recordingId: string) {
           const { actions, dataWindow, project, projectEdited } = get();
           let updatedAction: ActionData;
           const updatedActions = actions.map((action) => {
-            if (id !== action.ID) {
+            if (id !== action.id) {
               return action;
             }
             const recordings = action.recordings.filter(
-              (recording) => recording.ID !== recordingId
+              (recording) => recording.id !== recordingId
             );
             updatedAction = { ...action, recordings };
             return updatedAction;
@@ -708,8 +704,8 @@ const createMlStore = (logging: Logging) => {
               new Set([...settings.toursCompleted, "DataSamplesRecorded"])
             ),
           };
+          const newActionsWithIcons = migrateActionIds(newActions);
           // Older datasets did not have icons. Add icons to actions where these are missing.
-          const newActionsWithIcons = [...newActions];
           newActionsWithIcons.forEach((a) => {
             if (!a.icon) {
               a.icon = actionIcon({
@@ -1265,7 +1261,7 @@ const createMlStore = (logging: Logging) => {
             const input = {
               model,
               data: buffer.getSamples(startTime),
-              classificationIds: actions.map((a) => a.ID),
+              classificationIds: actions.map((a) => a.id),
             };
             if (input.data.x.length > dataWindow.minSamples) {
               const result = predict(input, dataWindow);
@@ -1512,7 +1508,7 @@ const getActionsFromProject = (project: MakeCodeProject): ActionData[] => {
   if (typeof dataset !== "object" || !("data" in dataset)) {
     return [];
   }
-  return dataset.data as ActionData[];
+  return migrateActionIds(dataset.data as OldActionData[] | ActionData[]);
 };
 
 const renameProject = (

@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
-import { Action, ActionData } from "../model";
+import { Action } from "../model";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { MakeCodeIcon } from "../utils/icons";
@@ -40,7 +40,7 @@ interface ActionNameCardProps {
 const actionNameMaxLength = 18;
 
 export const actionNameInputId = (action: Action) =>
-  `action-name-input-${action.ID}`;
+  `action-name-input-${action.id}`;
 
 const ActionNameCard = ({
   value,
@@ -55,18 +55,18 @@ const ActionNameCard = ({
   const toastId = "name-too-long-toast";
   const setActionName = useStore((s) => s.setActionName);
   const setActionIcon = useStore((s) => s.setActionIcon);
-  const { icon, ID: id } = value;
+  const { icon, id } = value;
   const [localName, setLocalName] = useState<string>(value.name);
   const predictionResult = useStore((s) => s.predictionResult);
   const isTriggered =
     viewMode === ActionCardNameViewMode.ReadOnly
-      ? predictionResult?.detected?.ID === value.ID
+      ? predictionResult?.detected?.id === value.id
       : undefined;
 
   const debouncedSetActionName = useMemo(
     () =>
       debounce(
-        async (id: ActionData["ID"], name: string) => {
+        async (id: string, name: string) => {
           await setActionName(id, name);
         },
         400,

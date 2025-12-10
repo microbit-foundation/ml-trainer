@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { MakeCodeProject } from "@microbit/makecode-embed";
+import { v4 as uuid } from "uuid";
 import { generateProject } from "./makecode/utils";
+import { ActionData, OldActionData } from "./model";
 
 export const untitledProjectName = "Untitled";
 
@@ -64,3 +66,25 @@ export const createUntitledProject = (): MakeCodeProject => ({
     currentDataWindow
   ),
 });
+
+export const migrateActionIds = (
+  actions: OldActionData[] | ActionData[]
+): ActionData[] => {
+  return actions.map((a) => {
+    if (Object.prototype.hasOwnProperty.call(a, "ID")) {
+      return {
+        name: a.name,
+        id: uuid(),
+        icon: a.icon,
+        requiredConfidence: a.requiredConfidence,
+        recordings: (a as OldActionData).recordings.map((r) => ({
+          id: uuid(),
+          data: r.data,
+          createdAt: r.ID,
+        })),
+        createdAt: (a as OldActionData).ID,
+      };
+    }
+    return a as ActionData;
+  });
+};

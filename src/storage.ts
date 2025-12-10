@@ -1,9 +1,10 @@
 import { MakeCodeProject } from "@microbit/makecode-embed";
-import { openDB, IDBPDatabase, DBSchema } from "idb";
+import { DBSchema, IDBPDatabase, openDB } from "idb";
+import orderBy from "lodash.orderby";
 import { Action, ActionData, RecordingData } from "./model";
+import { createUntitledProject, migrateActionIds } from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
 import { prepActionForStorage } from "./storageUtils";
-import { createUntitledProject } from "./project-utils";
 
 const DATABASE_NAME = "ml";
 
@@ -89,37 +90,32 @@ export class Database {
   initialize(): Promise<IDBPDatabase<Schema>> {
     return openDB(DATABASE_NAME, 1, {
       async upgrade(db) {
-        let dataToMigrate: { state: PersistedData } | undefined;
-        const data = localStorage.getItem("ml");
-        if (data) {
-          dataToMigrate = JSON.parse(data) as { state: PersistedData };
-        }
+        const localStorageProject = getLocalStorageProject();
         for (const store of Object.values(DatabaseStore)) {
           const objectStore = db.createObjectStore(store);
-          if (dataToMigrate) {
-            const { state } = dataToMigrate;
+          if (localStorageProject) {
             switch (store) {
               case DatabaseStore.ACTIONS: {
                 await Promise.all(
-                  state.actions.map((a) =>
-                    objectStore.add(prepActionForStorage(a), a.ID.toString())
+                  localStorageProject.actions.map((a) =>
+                    objectStore.add(prepActionForStorage(a), a.id)
                   )
                 );
                 break;
               }
               case DatabaseStore.RECORDINGS: {
                 await Promise.all(
-                  state.actions
+                  localStorageProject.actions
                     .flatMap((a) => a.recordings)
-                    .map((r) => objectStore.add(r, r.ID.toString()))
+                    .map((r) => objectStore.add(r, r.id))
                 );
                 break;
               }
               case DatabaseStore.MAKECODE: {
                 await objectStore.add(
                   {
-                    project: state.project,
-                    projectEdited: state.projectEdited,
+                    project: localStorageProject.project,
+                    projectEdited: localStorageProject.projectEdited,
                   },
                   DatabaseStore.MAKECODE
                 );
@@ -127,13 +123,16 @@ export class Database {
               }
               case DatabaseStore.PROJECT_DATA: {
                 await objectStore.add(
-                  { timestamp: state.timestamp },
+                  { timestamp: localStorageProject.timestamp },
                   DatabaseStore.PROJECT_DATA
                 );
                 break;
               }
               case DatabaseStore.SETTINGS: {
-                await objectStore.add(state.settings, DatabaseStore.SETTINGS);
+                await objectStore.add(
+                  localStorageProject.settings,
+                  DatabaseStore.SETTINGS
+                );
                 break;
               }
             }
@@ -149,6 +148,7 @@ export class Database {
             await objectStore.add(defaultData.value, defaultData.key);
           }
         }
+        localStorage.removeItem(DATABASE_NAME);
       },
     });
   }
@@ -165,14 +165,22 @@ export class Database {
       "readonly"
     );
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const storeActions = await actionsStore.getAll();
+    const storeActions = orderBy(
+      await actionsStore.getAll(),
+      "createdAt",
+      "asc"
+    );
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    const recordings = (await recordingsStore.getAll()).reverse();
+    const recordings = orderBy(
+      await recordingsStore.getAll(),
+      "createdAt",
+      "desc"
+    );
     const actions: ActionData[] = storeActions.map((action) => {
       return {
         ...action,
         recordings: recordings.filter((rec) =>
-          action.recordingIds.includes(rec.ID.toString())
+          action.recordingIds.includes(rec.id)
         ),
       };
     });
@@ -226,12 +234,10 @@ export class Database {
       storePromises.push(
         ...actions
           .flatMap((a) => a.recordings)
-          .map((r) => recordingsStore.add(r, r.ID.toString()))
+          .map((r) => recordingsStore.add(r, r.id))
       );
       storePromises.push(
-        ...actions.map((a) =>
-          actionsStore.add(prepActionForStorage(a), a.ID.toString())
-        )
+        ...actions.map((a) => actionsStore.add(prepActionForStorage(a), a.id))
       );
     }
     if (makeCodeData) {
@@ -255,7 +261,7 @@ export class Database {
     return (await this.dbPromise).add(
       DatabaseStore.ACTIONS,
       actionToStore,
-      actionToStore.ID.toString()
+      actionToStore.id
     );
   }
 
@@ -264,7 +270,7 @@ export class Database {
     return (await this.dbPromise).put(
       DatabaseStore.ACTIONS,
       actionToStore,
-      actionToStore.ID.toString()
+      actionToStore.id
     );
   }
 
@@ -274,10 +280,10 @@ export class Database {
       "readwrite"
     );
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    await actionsStore.delete(action.ID.toString());
+    await actionsStore.delete(action.id);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
     await Promise.all([
-      action.recordings.map((r) => recordingsStore.delete(r.ID.toString())),
+      action.recordings.map((r) => recordingsStore.delete(r.id)),
     ]);
     return tx.done;
   }
@@ -304,9 +310,9 @@ export class Database {
     );
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     const actionToStore = prepActionForStorage(action);
-    await actionsStore.put(actionToStore, actionToStore.ID.toString());
+    await actionsStore.put(actionToStore, actionToStore.id);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    await recordingsStore.add(recording, recording.ID.toString());
+    await recordingsStore.add(recording, recording.id);
     return tx.done;
   }
 
@@ -317,7 +323,7 @@ export class Database {
     );
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     const actionToStore = prepActionForStorage(action);
-    await actionsStore.put(actionToStore, actionToStore.ID.toString());
+    await actionsStore.put(actionToStore, actionToStore.id);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
     await recordingsStore.delete(key);
     return tx.done;
@@ -347,3 +353,15 @@ export class Database {
     );
   }
 }
+
+export const getLocalStorageProject = (): PersistedData | undefined => {
+  const data = localStorage.getItem(DATABASE_NAME);
+  if (!data) {
+    return undefined;
+  }
+  const dataToMigrate = JSON.parse(data) as { state: PersistedData };
+  return {
+    ...dataToMigrate.state,
+    actions: migrateActionIds(dataToMigrate.state.actions),
+  };
+};

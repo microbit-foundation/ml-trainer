@@ -21,7 +21,7 @@ export const getDetectedAction = (
     .map((action) => ({
       action,
       thresholdDelta:
-        confidences[action.ID] -
+        confidences[action.id] -
         (action.requiredConfidence ?? mlSettings.defaultRequiredConfidence),
     }))
     .sort((left, right) => {

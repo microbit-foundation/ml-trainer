@@ -46,7 +46,7 @@ interface ActionDataSamplesCardProps {
   selected: boolean;
   onSelectRow?: () => void;
   onRecord?: (recordingOptions: RecordingOptions) => void;
-  newRecordingId?: number;
+  newRecordingId?: string;
   clearNewRecordingId?: () => void;
 }
 
@@ -84,7 +84,7 @@ const ActionDataSamplesCard = ({
           <DataSamplesRowCard
             onSelectRow={onSelectRow}
             selected={selected}
-            key={recording.ID}
+            key={recording.id}
           >
             <CloseButton
               aria-label={intl.formatMessage(
@@ -105,15 +105,15 @@ const ActionDataSamplesCard = ({
               zIndex={1}
               borderColor="blackAlpha.500"
               boxShadow="sm"
-              onClick={() => deleteActionRecording(value.ID, recording.ID)}
+              onClick={() => deleteActionRecording(value.id, recording.id)}
             />
             <DataSample
               recording={recording}
               numRecordings={value.recordings.length}
-              actionId={value.ID}
+              actionId={value.id}
               actionName={value.name}
               recordingIndex={idx}
-              isNew={newRecordingId === recording.ID}
+              isNew={newRecordingId === recording.id}
               onNewAnimationEnd={clearNewRecordingId}
               onDelete={deleteActionRecording}
               view={view}
@@ -146,14 +146,14 @@ const ActionDataSamplesCard = ({
       )}
       {value.recordings.map((recording, idx) => (
         <DataSample
-          key={recording.ID}
-          actionId={value.ID}
+          key={recording.id}
+          actionId={value.id}
           actionName={value.name}
           recordingIndex={idx}
           hasClose={!preview}
           recording={recording}
           numRecordings={value.recordings.length}
-          isNew={newRecordingId === recording.ID}
+          isNew={newRecordingId === recording.id}
           onDelete={deleteActionRecording}
           onNewAnimationEnd={clearNewRecordingId}
           view={view}
@@ -201,7 +201,7 @@ interface RecordingAreaProps extends BoxProps {
 }
 
 export const recordButtonId = (action: ActionData) =>
-  `record-button-${action.ID}`;
+  `record-button-${action.id}`;
 
 const RecordingArea = ({
   action,
@@ -319,12 +319,12 @@ const DataSample = ({
 }: {
   recording: RecordingData;
   numRecordings: number;
-  actionId: number;
+  actionId: string;
   actionName: string;
   recordingIndex: number;
   isNew: boolean;
   onNewAnimationEnd?: () => void;
-  onDelete: (actionId: ActionData["ID"], recordingId: number) => void;
+  onDelete: (actionId: string, recordingId: string) => void;
   view: DataSamplesView;
   hasClose?: boolean;
 }) => {
@@ -336,10 +336,10 @@ const DataSample = ({
     view === DataSamplesView.GraphAndDataFeatures;
   const intl = useIntl();
   const handleDelete = useCallback(() => {
-    onDelete(actionId, recording.ID);
-  }, [actionId, onDelete, recording.ID]);
+    onDelete(actionId, recording.id);
+  }, [actionId, onDelete, recording.id]);
   return (
-    <HStack key={recording.ID} position="relative">
+    <HStack key={recording.id} position="relative">
       {hasClose && (
         <CloseButton
           position="absolute"
