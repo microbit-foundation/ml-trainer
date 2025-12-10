@@ -181,7 +181,11 @@ export class Database {
     );
     const actions: ActionData[] = storeActions.map((action) => {
       return {
-        ...action,
+        id: action.id,
+        name: action.name,
+        icon: action.icon,
+        requiredConfidence: action.requiredConfidence,
+        createdAt: action.createdAt,
         recordings: recordings.filter((rec) =>
           action.recordingIds.includes(rec.id)
         ),
