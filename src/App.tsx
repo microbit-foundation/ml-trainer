@@ -159,14 +159,19 @@ const Layout = () => {
 };
 
 const createRouter = () => {
+  let loaderFuncCalled = false;
   return createBrowserRouter([
     {
       id: "root",
       path: "",
       element: <Layout />,
       loader: () => {
-        const projectLoaded = loadProjectFromStorage();
-        return defer({ projectLoaded });
+        if (!loaderFuncCalled) {
+          loaderFuncCalled = true;
+          const projectLoaded = loadProjectFromStorage();
+          return defer({ projectLoaded });
+        }
+        return { projectLoaded: true };
       },
       // This one gets used for loader errors (typically offline)
       // We set an error boundary inside the routes too that logs render-time errors.
