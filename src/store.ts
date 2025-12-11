@@ -58,6 +58,7 @@ import { getDetectedAction } from "./utils/prediction";
 
 export enum BroadcastChannelMessages {
   RELOAD_PROJECT = "reload-project",
+  REMOVE_MODEL = "remove-model",
 }
 const broadcastChannel = new BroadcastChannel("ml");
 
@@ -210,6 +211,7 @@ export interface Actions {
   trainModelFlowStart: (callback?: () => void) => Promise<void>;
   closeTrainModelDialogs: () => void;
   trainModel(): Promise<boolean>;
+  removeModel(): void;
   setSettings(update: Partial<Settings>): Promise<void>;
   setLanguage(languageId: string): Promise<void>;
 
@@ -875,6 +877,12 @@ const createMlStore = (logging: Logging) => {
           return !trainingResult.error;
         },
 
+        removeModel(): void {
+          set({
+            model: undefined,
+          });
+        },
+
         async resetProject(): Promise<void> {
           const {
             project: previousProject,
@@ -1416,28 +1424,34 @@ useStore.setState(
   "setDataWindow"
 );
 
-tf.loadLayersModel(modelUrl)
-  .then((model) => {
+const loadModelFromStorage = async () => {
+  try {
+    const model = await tf.loadLayersModel(modelUrl);
     if (model) {
       useStore.setState({ model }, false, "loadModel");
     }
-  })
-  .catch(() => {
+  } catch (err) {
     // This happens if there's no model.
-  });
+  }
+};
 
-useStore.subscribe((state, prevState) => {
+useStore.subscribe(async (state, prevState) => {
   const { model: newModel } = state;
   const { model: previousModel } = prevState;
   if (newModel !== previousModel) {
     if (!newModel) {
-      tf.io.removeModel(modelUrl).catch(() => {
-        // No IndexedDB/no model.
-      });
-    } else {
-      newModel.save(modelUrl).catch(() => {
+      try {
+        await tf.io.removeModel(modelUrl);
+        broadcastChannel.postMessage(BroadcastChannelMessages.REMOVE_MODEL);
+      } catch (err) {
         // IndexedDB not available?
-      });
+      }
+    } else {
+      try {
+        await newModel.save(modelUrl);
+      } catch (err) {
+        // IndexedDB not available?
+      }
     }
   }
 });
@@ -1564,11 +1578,19 @@ const storageWithErrHandling = async <T>(
 export const loadProjectFromStorage = async () => {
   const loadProjectFromStorage = useStore.getState().loadProjectFromStorage;
   await loadProjectFromStorage();
+  await loadModelFromStorage();
   return true;
 };
 
 broadcastChannel.onmessage = async (event) => {
-  if (event.data === BroadcastChannelMessages.RELOAD_PROJECT) {
-    await loadProjectFromStorage();
+  switch (event.data) {
+    case BroadcastChannelMessages.RELOAD_PROJECT: {
+      await loadProjectFromStorage();
+      break;
+    }
+    case BroadcastChannelMessages.REMOVE_MODEL: {
+      useStore.getState().removeModel();
+      break;
+    }
   }
 };
