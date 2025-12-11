@@ -60,6 +60,7 @@ export enum BroadcastChannelMessages {
   RELOAD_PROJECT = "reload-project",
   REMOVE_MODEL = "remove-model",
 }
+// Used to keep state synced between open tabs.
 const broadcastChannel = new BroadcastChannel("ml");
 
 const storage = new Database();
@@ -425,7 +426,12 @@ const createMlStore = (logging: Logging) => {
         },
 
         async loadProjectFromStorage() {
-          set(await storage.loadProject());
+          const persistedData = await storage.loadProject();
+          set({
+            // Get data window from actions on app load.
+            dataWindow: getDataWindowFromActions(persistedData.actions),
+            ...persistedData,
+          });
         },
 
         async addNewAction() {
@@ -1414,16 +1420,6 @@ const getDataWindowFromActions = (actions: ActionData[]): DataWindow => {
     : currentDataWindow;
 };
 
-// Get data window from actions on app load.
-// TODO: change when this happens.
-// Don't use actions as a global value in this file, it is dangerous.
-const { actions: actionsForDataWindow } = useStore.getState();
-useStore.setState(
-  { dataWindow: getDataWindowFromActions(actionsForDataWindow) },
-  false,
-  "setDataWindow"
-);
-
 const loadModelFromStorage = async () => {
   try {
     const model = await tf.loadLayersModel(modelUrl);
@@ -1576,8 +1572,7 @@ const storageWithErrHandling = async <T>(
 };
 
 export const loadProjectFromStorage = async () => {
-  const loadProjectFromStorage = useStore.getState().loadProjectFromStorage;
-  await loadProjectFromStorage();
+  await useStore.getState().loadProjectFromStorage();
   await loadModelFromStorage();
   return true;
 };
