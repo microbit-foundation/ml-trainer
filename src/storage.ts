@@ -24,7 +24,7 @@ interface MakeCodeData {
   projectEdited: boolean;
 }
 
-export enum DatabaseStore {
+enum DatabaseStore {
   PROJECT_DATA = "project-data",
   MAKECODE = "makecode-project",
   RECORDINGS = "recordings",

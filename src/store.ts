@@ -56,6 +56,11 @@ import { getTotalNumSamples } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { getDetectedAction } from "./utils/prediction";
 
+export enum BroadcastChannelMessages {
+  RELOAD_PROJECT = "reload-project",
+}
+const broadcastChannel = new BroadcastChannel("ml");
+
 const storage = new Database();
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
@@ -1541,9 +1546,11 @@ const storageWithErrHandling = async <T>(
 ) => {
   try {
     if (Array.isArray(callback)) {
-      return await Promise.all(callback);
+      await Promise.all(callback);
+    } else {
+      await callback();
     }
-    return await callback();
+    broadcastChannel.postMessage(BroadcastChannelMessages.RELOAD_PROJECT);
   } catch (err) {
     if (err instanceof DOMException && err.name === "QuotaExceededError") {
       console.error("Storage quota exceeded!", err);
@@ -1558,4 +1565,10 @@ export const loadProjectFromStorage = async () => {
   const loadProjectFromStorage = useStore.getState().loadProjectFromStorage;
   await loadProjectFromStorage();
   return true;
+};
+
+broadcastChannel.onmessage = async (event) => {
+  if (event.data === BroadcastChannelMessages.RELOAD_PROJECT) {
+    await loadProjectFromStorage();
+  }
 };

@@ -11,7 +11,7 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import { Action } from "../model";
 import { useStore } from "../store";
@@ -57,6 +57,10 @@ const ActionNameCard = ({
   const setActionIcon = useStore((s) => s.setActionIcon);
   const { icon, id } = value;
   const [localName, setLocalName] = useState<string>(value.name);
+  useEffect(() => {
+    // Occurs when the name is updated in another tab.
+    setLocalName(value.name);
+  }, [value.name]);
   const predictionResult = useStore((s) => s.predictionResult);
   const isTriggered =
     viewMode === ActionCardNameViewMode.ReadOnly

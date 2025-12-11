@@ -83,11 +83,11 @@ const TestingModelTable = () => {
             h="fit-content"
             alignSelf="start"
           >
-            {actions.map((action, idx) => {
+            {actions.map((action) => {
               const { requiredConfidence: threshold } = action;
               return (
                 <Box
-                  key={idx}
+                  key={action.id}
                   role="region"
                   aria-label={intl.formatMessage(
                     {
