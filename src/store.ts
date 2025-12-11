@@ -243,7 +243,6 @@ export interface Actions {
   projectFlushedToEditor(): void;
 
   setDownload(state: DownloadState): void;
-  // TODO: does the persistence slow this down? we could move it to another store
   setDownloadFlashingProgress(value: number): void;
   setSave(state: SaveState): void;
 
