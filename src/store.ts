@@ -472,7 +472,7 @@ const createMlStore = (logging: Logging) => {
           },
 
           addActionRecordings(id: ActionData["ID"], recs: RecordingData[]) {
-            return set(({ actions }) => {
+            return set(({ actions, dataWindow, project, projectEdited }) => {
               const updatedActions = actions.map((action) => {
                 if (action.ID === id) {
                   return {
@@ -485,6 +485,13 @@ const createMlStore = (logging: Logging) => {
               return {
                 actions: updatedActions,
                 model: undefined,
+                ...updateProject(
+                  project,
+                  projectEdited,
+                  updatedActions,
+                  undefined,
+                  dataWindow
+                ),
               };
             });
           },
