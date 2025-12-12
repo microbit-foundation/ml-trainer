@@ -492,9 +492,13 @@ const createMlStore = (logging: Logging) => {
             model: undefined,
             ...updatedProject,
           });
-          await storageWithErrHandling<void>(() =>
-            storage.addRecording(recording, updatedAction)
-          );
+          await storageWithErrHandling<string | void>([
+            storage.addRecording(recording, updatedAction!),
+            storage.updateMakeCodeProject({
+              project: updatedProject.project,
+              projectEdited: updatedProject.projectEdited,
+            }),
+          ]);
         },
 
         async deleteAction(action: ActionData) {
