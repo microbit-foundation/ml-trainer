@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">micro:bit CreateAI</string>
-    <string name="title_activity_main">micro:bit CreateAI</string>
+    <string name="app_name">CreateAI</string>
+    <string name="title_activity_main">CreateAI</string>
     <string name="package_name">org.microbit.createai</string>
     <string name="custom_url_scheme">org.microbit.createai</string>
 </resources>
