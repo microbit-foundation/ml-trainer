@@ -24,7 +24,6 @@
     "ml4f-output": "vitest ml4f-output --run"
   },
   "devDependencies": {
-    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^7.4.4",
     "@chakra-ui/cli": "^2.4.1",
     "@formatjs/cli": "^6.2.7",
