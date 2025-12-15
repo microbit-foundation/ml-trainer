@@ -36,7 +36,7 @@ const DataSamplesPage = () => {
   useEffect(() => {
     // If a user first connects on "Testing model" this can result in the tour when they return to the "Data samples" page.
     if (isConnected) {
-      tourStart({ name: "Connect" }, false);
+      void tourStart({ name: "Connect" }, false);
     }
   }, [isConnected, tourStart]);
 
@@ -48,9 +48,9 @@ const DataSamplesPage = () => {
   }, [navigate]);
 
   const trainButtonRef = useRef(null);
-  const handleAddNewAction = useCallback(() => {
+  const handleAddNewAction = useCallback(async () => {
     setSelectedActionIdx(actions.length);
-    addNewAction();
+    await addNewAction();
   }, [addNewAction, actions]);
   useShortcut(keyboardShortcuts.addAction, handleAddNewAction, {
     enabled: !isAddNewActionDisabled,

@@ -1,0 +1,641 @@
+import { MakeCodeProject } from "@microbit/makecode-embed";
+import { DBSchema, IDBPDatabase, IDBPTransaction, openDB } from "idb";
+import orderBy from "lodash.orderby";
+import { Action, ActionData, RecordingData } from "./model";
+import {
+  createUntitledProject,
+  migrateLegacyActionData,
+} from "./project-utils";
+import { defaultSettings, Settings } from "./settings";
+import { prepActionForStorage } from "./storageUtils";
+import { v4 as uuid } from "uuid";
+
+const DATABASE_NAME = "ml";
+
+interface PersistedProjectData {
+  actions: ActionData[];
+  project: MakeCodeProject;
+  projectEdited: boolean;
+  settings: Settings;
+  timestamp: number | undefined;
+}
+
+interface MakeCodeData {
+  project: MakeCodeProject;
+  projectEdited: boolean;
+}
+
+enum DatabaseStore {
+  PROJECT_DATA = "project-data",
+  MAKECODE_DATA = "makecode-data",
+  RECORDINGS = "recordings",
+  ACTIONS = "actions",
+  SETTINGS = "settings",
+}
+
+export class StorageError extends Error {}
+
+const defaultCreatedAt = Date.now();
+const defaultProjectId = uuid();
+
+const defaultStoreData: Record<
+  | DatabaseStore.PROJECT_DATA
+  | DatabaseStore.SETTINGS
+  | DatabaseStore.MAKECODE_DATA,
+  { key: string; value: ProjectData | Settings | MakeCodeData }
+> = {
+  [DatabaseStore.PROJECT_DATA]: {
+    value: {
+      id: defaultProjectId,
+      createdAt: defaultCreatedAt,
+      updatedAt: defaultCreatedAt,
+      actionIds: [],
+    },
+    key: defaultProjectId,
+  },
+  [DatabaseStore.SETTINGS]: {
+    value: defaultSettings,
+    key: DatabaseStore.SETTINGS,
+  },
+  [DatabaseStore.MAKECODE_DATA]: {
+    value: {
+      project: createUntitledProject(),
+      projectEdited: false,
+    },
+    key: defaultProjectId,
+  },
+};
+
+export interface StoreAction extends Action {
+  recordingIds: string[];
+}
+
+interface ProjectData {
+  id: string;
+  timestamp?: number;
+  actionIds: string[];
+  createdAt: number;
+  updatedAt: number;
+}
+
+interface Schema extends DBSchema {
+  [DatabaseStore.PROJECT_DATA]: {
+    key: string;
+    value: ProjectData;
+  };
+  [DatabaseStore.ACTIONS]: {
+    key: string;
+    value: StoreAction;
+  };
+  [DatabaseStore.RECORDINGS]: {
+    key: string;
+    value: RecordingData;
+  };
+  [DatabaseStore.MAKECODE_DATA]: {
+    key: string;
+    value: MakeCodeData;
+  };
+  [DatabaseStore.SETTINGS]: {
+    key: string;
+    value: Settings;
+  };
+}
+
+export class Database {
+  dbPromise: Promise<IDBPDatabase<Schema>>;
+  projectId: string = defaultProjectId;
+  constructor() {
+    this.dbPromise = this.initialize();
+  }
+
+  initialize(): Promise<IDBPDatabase<Schema>> {
+    return openDB(DATABASE_NAME, 1, {
+      async upgrade(db) {
+        const localStorageProject = getLocalStorageProject();
+        for (const store of Object.values(DatabaseStore)) {
+          const objectStore = db.createObjectStore(store);
+          if (localStorageProject) {
+            switch (store) {
+              case DatabaseStore.ACTIONS: {
+                await Promise.all(
+                  localStorageProject.actions.map((a) =>
+                    objectStore.add(prepActionForStorage(a), a.id)
+                  )
+                );
+                break;
+              }
+              case DatabaseStore.RECORDINGS: {
+                await Promise.all(
+                  localStorageProject.actions
+                    .flatMap((a) => a.recordings)
+                    .map((r) => objectStore.add(r, r.id))
+                );
+                break;
+              }
+              case DatabaseStore.MAKECODE_DATA: {
+                await objectStore.add(
+                  {
+                    project: localStorageProject.project,
+                    projectEdited: localStorageProject.projectEdited,
+                  },
+                  defaultProjectId
+                );
+                break;
+              }
+              case DatabaseStore.PROJECT_DATA: {
+                await objectStore.add(
+                  {
+                    id: defaultProjectId,
+                    timestamp: localStorageProject.timestamp,
+                    createdAt: defaultCreatedAt,
+                    updatedAt: defaultCreatedAt,
+                    actionIds: [],
+                  },
+                  defaultProjectId
+                );
+                break;
+              }
+              case DatabaseStore.SETTINGS: {
+                await objectStore.add(
+                  localStorageProject.settings,
+                  DatabaseStore.SETTINGS
+                );
+                break;
+              }
+            }
+            continue;
+          }
+          // Set default values if there is are data to migrate.
+          if (
+            store === DatabaseStore.PROJECT_DATA ||
+            store === DatabaseStore.MAKECODE_DATA ||
+            store === DatabaseStore.SETTINGS
+          ) {
+            const defaultData = defaultStoreData[store];
+            await objectStore.add(defaultData.value, defaultData.key);
+          }
+        }
+        localStorage.removeItem(DATABASE_NAME);
+      },
+    });
+  }
+
+  async newSession(
+    makeCodeData: MakeCodeData,
+    projectData: Partial<ProjectData>
+  ): Promise<void> {
+    this.projectId = uuid();
+    const tx = (await this.dbPromise).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.RECORDINGS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+      ],
+      "readwrite"
+    );
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await recordingsStore.clear();
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    await actionsStore.clear();
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    await makeCodeStore.clear();
+    await makeCodeStore.add(makeCodeData, this.projectId);
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    await projectDataStore.clear();
+    await projectDataStore.add(
+      {
+        id: this.projectId,
+        actionIds: [],
+        createdAt: projectData.timestamp!,
+        updatedAt: projectData.timestamp!,
+        ...projectData,
+      },
+      this.projectId
+    );
+    return tx.done;
+  }
+
+  async loadProject(id: string): Promise<PersistedProjectData> {
+    const tx = (await this.dbPromise).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.RECORDINGS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+        DatabaseStore.SETTINGS,
+      ],
+      "readwrite"
+    );
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(id));
+    // Ensure that this project will be loaded by default during next page load.
+    await projectDataStore.put(
+      { ...projectData, updatedAt: Date.now() },
+      this.projectId
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    const storeActions = orderBy(
+      assertDataArray(
+        await Promise.all(
+          projectData.actionIds.map((id) => actionsStore.get(id))
+        )
+      ),
+      "createdAt",
+      "asc"
+    );
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    const actions: ActionData[] = await Promise.all(
+      storeActions.map(async (action) => {
+        return {
+          id: action.id,
+          name: action.name,
+          icon: action.icon,
+          requiredConfidence: action.requiredConfidence,
+          createdAt: action.createdAt,
+          recordings: assertDataArray(
+            await Promise.all(
+              action.recordingIds.map((id) => recordingsStore.get(id))
+            )
+          ),
+        };
+      })
+    );
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeData = assertData(await makeCodeStore.get(id));
+    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
+    const settings = assertData(
+      await settingsStore.get(DatabaseStore.SETTINGS)
+    );
+    await tx.done;
+    return {
+      actions,
+      project: makeCodeData.project,
+      projectEdited: makeCodeData.projectEdited,
+      timestamp: projectData.timestamp,
+      settings,
+    };
+  }
+
+  async importProject(
+    actions: ActionData[],
+    makeCodeData: MakeCodeData,
+    projectData: Partial<ProjectData>,
+    settings: Settings
+  ): Promise<void> {
+    this.projectId = uuid();
+    const tx = (await this.dbPromise).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.RECORDINGS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+        DatabaseStore.SETTINGS,
+      ],
+      "readwrite"
+    );
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await recordingsStore.clear();
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    await actionsStore.clear();
+    await Promise.all(
+      actions
+        .flatMap((a) => a.recordings)
+        .map((r) => recordingsStore.add(r, r.id))
+    );
+    await Promise.all(
+      actions.map((a) => actionsStore.add(prepActionForStorage(a), a.id))
+    );
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    await makeCodeStore.clear();
+    await makeCodeStore.add(makeCodeData, this.projectId);
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    await projectDataStore.clear();
+    const createdAt = Date.now();
+    await projectDataStore.add(
+      {
+        id: this.projectId,
+        actionIds: actions.map((a) => a.id),
+        createdAt,
+        updatedAt: createdAt,
+        ...projectData,
+      },
+      this.projectId
+    );
+
+    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
+    await settingsStore.put(settings, DatabaseStore.SETTINGS);
+    return tx.done;
+  }
+
+  async getLatestProjectId(): Promise<string> {
+    const projectData = await (
+      await this.dbPromise
+    ).getAll(DatabaseStore.PROJECT_DATA);
+    const latestProjectData = orderBy(projectData, "updatedAt", "desc")[0];
+    this.projectId = latestProjectData.id;
+    return this.projectId;
+  }
+
+  async addAction(
+    action: ActionData,
+    makeCodeData: MakeCodeData
+  ): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+      ],
+      "readwrite"
+    );
+    const actionToStore = prepActionForStorage(action);
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    await actionsStore.add(actionToStore, actionToStore.id);
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    await makeCodeStore.put(makeCodeData, this.projectId);
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(this.projectId));
+    projectData.actionIds.push(action.id);
+    projectData.updatedAt = Date.now();
+    await projectDataStore.put(projectData, this.projectId);
+    return tx.done;
+  }
+
+  async updateAction(
+    action: ActionData,
+    makeCodeData: MakeCodeData
+  ): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+      ],
+      "readwrite"
+    );
+    const actionToStore = prepActionForStorage(action);
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    await actionsStore.put(actionToStore, actionToStore.id);
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    await makeCodeStore.put(makeCodeData, this.projectId);
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(this.projectId));
+    const updatedActionIds = Array.from(
+      new Set([action.id, ...projectData.actionIds])
+    );
+    await projectDataStore.put(
+      {
+        ...projectData,
+        actionIds: updatedActionIds,
+        updatedAt: Date.now(),
+      },
+      this.projectId
+    );
+    return tx.done;
+  }
+
+  async updateActions(
+    actions: ActionData[],
+    makeCodeData: MakeCodeData
+  ): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+      ],
+      "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    await Promise.all(
+      actions.map((action) =>
+        actionsStore.put(prepActionForStorage(action), action.id)
+      )
+    );
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    await makeCodeStore.put(makeCodeData, this.projectId);
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(this.projectId));
+    const updatedActionIds = Array.from(
+      new Set(...actions.map((a) => a.id), projectData.actionIds)
+    );
+    await projectDataStore.put(
+      {
+        ...projectData,
+        actionIds: updatedActionIds,
+        updatedAt: Date.now(),
+      },
+      this.projectId
+    );
+    return tx.done;
+  }
+
+  async deleteAction(
+    action: ActionData,
+    makeCodeData: MakeCodeData
+  ): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.RECORDINGS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+      ],
+      "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    await actionsStore.delete(action.id);
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await Promise.all(
+      action.recordings.map((r) => recordingsStore.delete(r.id))
+    );
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    await makeCodeStore.put(makeCodeData, this.projectId);
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(this.projectId));
+    const updatedActionIds = projectData.actionIds.filter(
+      (id) => id !== action.id
+    );
+    await projectDataStore.put(
+      { ...projectData, actionIds: updatedActionIds, updatedAt: Date.now() },
+      this.projectId
+    );
+    return tx.done;
+  }
+
+  async deleteAllActions(makeCodeData: MakeCodeData): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.RECORDINGS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+      ],
+      "readwrite"
+    );
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(this.projectId));
+
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    const actions = assertDataArray(
+      await Promise.all(projectData.actionIds.map((id) => actionsStore.get(id)))
+    );
+    await Promise.all(
+      projectData.actionIds.map((id) => actionsStore.delete(id))
+    );
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await Promise.all(
+      actions
+        .flatMap((a) => a.recordingIds)
+        .map((id) => recordingsStore.delete(id))
+    );
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    await makeCodeStore.put(makeCodeData, this.projectId);
+    await projectDataStore.put(
+      { ...projectData, actionIds: [], updatedAt: Date.now() },
+      this.projectId
+    );
+    return tx.done;
+  }
+
+  async addRecording(
+    recording: RecordingData,
+    action: ActionData,
+    makeCodeData: MakeCodeData
+  ): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+        DatabaseStore.RECORDINGS,
+      ],
+      "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    const actionToStore = prepActionForStorage(action);
+    await actionsStore.put(actionToStore, actionToStore.id);
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await recordingsStore.add(recording, recording.id);
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    await makeCodeStore.put(makeCodeData, this.projectId);
+    await this.updateProjectInternal(tx);
+    return tx.done;
+  }
+
+  async deleteRecording(
+    key: string,
+    action: ActionData,
+    makeCodeData: MakeCodeData
+  ): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+        DatabaseStore.RECORDINGS,
+      ],
+      "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    const actionToStore = prepActionForStorage(action);
+    await actionsStore.put(actionToStore, actionToStore.id);
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await recordingsStore.delete(key);
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    await makeCodeStore.put(makeCodeData, this.projectId);
+    await this.updateProjectInternal(tx);
+    return tx.done;
+  }
+
+  async updateMakeCodeProject(makeCodeData: MakeCodeData): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+        DatabaseStore.RECORDINGS,
+      ],
+      "readwrite"
+    );
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    await makeCodeStore.put(makeCodeData, this.projectId);
+    await this.updateProjectInternal(tx);
+    return tx.done;
+  }
+
+  // TODO: TypeScript to ensure that a transaction with DatabaseStore.PROJECT_DATA is passed in.
+  private async updateProjectInternal(
+    tx: IDBPTransaction<Schema, DatabaseStore[], "readwrite">,
+    projectUpdates?: Partial<ProjectData>
+  ): Promise<void> {
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(this.projectId));
+    await projectDataStore.put(
+      {
+        ...projectData,
+        updatedAt: Date.now(),
+        ...projectUpdates,
+      },
+      this.projectId
+    );
+  }
+
+  // Currently unused.
+  async updateProject(project: Partial<ProjectData>): Promise<void> {
+    const tx = (await this.dbPromise).transaction(
+      DatabaseStore.PROJECT_DATA,
+      "readwrite"
+    );
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const storedProjectData = assertData(
+      await projectDataStore.get(this.projectId)
+    );
+    await projectDataStore.put(
+      {
+        ...storedProjectData,
+        ...project,
+        updatedAt: Date.now(),
+      },
+      this.projectId
+    );
+    return tx.done;
+  }
+
+  async updateSettings(settings: Settings): Promise<string> {
+    return (await this.dbPromise).put(
+      DatabaseStore.SETTINGS,
+      settings,
+      DatabaseStore.SETTINGS
+    );
+  }
+}
+
+const assertData = <T>(data: T) => {
+  if (!data) {
+    throw new StorageError("Failed to fetch expected data from storage");
+  }
+  return data;
+};
+
+const assertDataArray = <T>(data: (undefined | T)[]) => {
+  data.forEach((item) => {
+    if (!item) {
+      throw new StorageError("Failed to fetch expected data from storage");
+    }
+  });
+  return data as T[];
+};
+
+export const getLocalStorageProject = (): PersistedProjectData | undefined => {
+  const data = localStorage.getItem(DATABASE_NAME);
+  if (!data) {
+    return undefined;
+  }
+  const dataToMigrate = JSON.parse(data) as { state: PersistedProjectData };
+  return {
+    ...dataToMigrate.state,
+    actions: migrateLegacyActionData(dataToMigrate.state.actions),
+  };
+};

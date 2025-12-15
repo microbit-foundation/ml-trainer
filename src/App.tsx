@@ -12,13 +12,16 @@ import {
   createWebBluetoothConnection,
   createWebUSBConnection,
 } from "@microbit/microbit-connection";
-import React, { ReactNode, useEffect, useMemo, useRef } from "react";
+import React, { ReactNode, Suspense, useEffect, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
+  Await,
   createBrowserRouter,
+  defer,
   Outlet,
   RouterProvider,
   ScrollRestoration,
+  useLoaderData,
   useNavigate,
 } from "react-router-dom";
 import "theme-package/fonts/fonts.css";
@@ -47,7 +50,7 @@ import ImportPage from "./pages/ImportPage";
 import NewPage from "./pages/NewPage";
 import TestingModelPage from "./pages/TestingModelPage";
 import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
-import { useStore } from "./store";
+import { loadProjectFromStorage, useStore } from "./store";
 import {
   createCodePageUrl,
   createDataSamplesPageUrl,
@@ -57,6 +60,7 @@ import {
   createNewPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
+import LoadingPage from "./components/LoadingPage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -112,6 +116,7 @@ const Layout = () => {
   const navigate = useNavigate();
   const toast = useToast();
   const intl = useIntl();
+  const { projectLoaded } = useLoaderData() as { projectLoaded: boolean };
 
   useEffect(() => {
     return useStore.subscribe(
@@ -138,23 +143,36 @@ const Layout = () => {
   }, [intl, navigate, setPostImportDialogState, toast]);
 
   return (
-    // We use this even though we have errorElement as this does logging.
-    <ErrorBoundary>
-      <ScrollRestoration />
-      <ProjectProvider driverRef={driverRef}>
-        <EditCodeDialog ref={driverRef} />
-        <Outlet />
-      </ProjectProvider>
-    </ErrorBoundary>
+    <Suspense fallback={<LoadingPage />}>
+      <Await resolve={projectLoaded}>
+        {/* We use this even though we have errorElement as this does logging. */}
+        <ErrorBoundary>
+          <ScrollRestoration />
+          <ProjectProvider driverRef={driverRef}>
+            <EditCodeDialog ref={driverRef} />
+            <Outlet />
+          </ProjectProvider>
+        </ErrorBoundary>
+      </Await>
+    </Suspense>
   );
 };
 
 const createRouter = () => {
+  let loaderFuncCalled = false;
   return createBrowserRouter([
     {
       id: "root",
       path: "",
       element: <Layout />,
+      loader: () => {
+        if (!loaderFuncCalled) {
+          loaderFuncCalled = true;
+          const projectLoaded = loadProjectFromStorage();
+          return defer({ projectLoaded });
+        }
+        return { projectLoaded: true };
+      },
       // This one gets used for loader errors (typically offline)
       // We set an error boundary inside the routes too that logs render-time errors.
       // ErrorBoundary doesn't work properly in the loader case at least.

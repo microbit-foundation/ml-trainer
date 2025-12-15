@@ -24,7 +24,7 @@ import {
 import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useProjectName } from "../hooks/project-hooks";
-import { validateProjectName } from "../project-name";
+import { validateProjectName } from "../project-utils";
 
 interface NameProjectDialogProps {
   onClose: () => void;

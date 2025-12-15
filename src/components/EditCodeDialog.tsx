@@ -17,7 +17,7 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
     const tourStart = useStore((s) => s.tourStart);
     useEffect(() => {
       if (isOpen) {
-        tourStart({ name: "MakeCode" });
+        void tourStart({ name: "MakeCode" });
       }
     }, [isOpen, tourStart]);
     return (
