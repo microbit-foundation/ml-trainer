@@ -439,6 +439,18 @@
       "value": "Cabo Micro USB"
     }
   ],
+  "connect-native-start-heading": [
+    {
+      "type": 0,
+      "value": "What you need to connect"
+    }
+  ],
+  "connect-native-start-requirements1": [
+    {
+      "type": 0,
+      "value": "micro:bit with battery pack"
+    }
+  ],
   "connect-or-import": [
     {
       "children": [
@@ -611,6 +623,12 @@
       "value": "Conecte usando Web Bluetooth em vez disso."
     }
   ],
+  "connect-tablet": [
+    {
+      "type": 0,
+      "value": "iPad or Android tablet"
+    }
+  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -647,10 +665,22 @@
       "value": "Resolução de problemas"
     }
   ],
+  "connect-try-another-way": [
+    {
+      "type": 0,
+      "value": "Not working? Try another way"
+    }
+  ],
   "connect-with-batteries": [
     {
       "type": 0,
       "value": "com baterias"
+    }
+  ],
+  "connect-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "with Bluetooth enabled"
     }
   ],
   "connect-with-web-bluetooth": [
@@ -1003,6 +1033,30 @@
     {
       "type": 0,
       "value": "Baixando o programa de link de rádio"
+    }
+  ],
+  "downloading-stage-connecting": [
+    {
+      "type": 0,
+      "value": "Connecting to micro:bit..."
+    }
+  ],
+  "downloading-stage-finding-device": [
+    {
+      "type": 0,
+      "value": "Finding micro:bit..."
+    }
+  ],
+  "downloading-stage-flashing": [
+    {
+      "type": 0,
+      "value": "Downloading program to micro:bit..."
+    }
+  ],
+  "downloading-stage-initializing": [
+    {
+      "type": 0,
+      "value": "Initializing..."
     }
   ],
   "downloading-subtitle": [
@@ -1626,13 +1680,13 @@
   "language-fully-supported-heading": [
     {
       "type": 0,
-      "value": "Fully supported"
+      "value": "Suporte completo"
     }
   ],
   "language-partially-supported-heading": [
     {
       "type": 0,
-      "value": "Partially supported"
+      "value": "Suporte parcial"
     }
   ],
   "language-support-checked": [
@@ -2525,6 +2579,18 @@
       "value": "Recarregar"
     }
   ],
+  "reset-to-bluetooth-mode-heading": [
+    {
+      "type": 0,
+      "value": "Reset to Bluetooth mode"
+    }
+  ],
+  "reset-to-bluetooth-mode-subtitle": [
+    {
+      "type": 0,
+      "value": "Press RESET three times"
+    }
+  ],
   "reset-to-default-action": [
     {
       "type": 0,
@@ -2772,7 +2838,21 @@
   "third-party-content-description": [
     {
       "type": 0,
-      "value": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation."
+      "value": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "MakeCode shared project"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
     }
   ],
   "tour-action": [

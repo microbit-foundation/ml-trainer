@@ -9,7 +9,10 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
+    implementation project(':capacitor-community-bluetooth-le')
     implementation project(':capacitor-community-safe-area')
+    implementation project(':capacitor-filesystem')
+    implementation project(':microbit-capacitor-community-nordic-dfu')
 
 }
 

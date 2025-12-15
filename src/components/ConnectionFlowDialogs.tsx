@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { ProgressStage } from "@microbit/microbit-connection";
 import { useCallback, useState } from "react";
 import { bluetoothUniversalHex } from "../connection-stage-actions";
 import {
@@ -13,6 +14,7 @@ import {
 } from "../connection-stage-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import BrokenFirmwareDialog from "./BrokenFirmwareDialog";
+import ChooseDeviceOverlay from "./ChooseDeviceOverlay";
 import ConnectBatteryDialog from "./ConnectBatteryDialog";
 import ConnectCableDialog, {
   getConnectionCableDialogConfig,
@@ -24,6 +26,7 @@ import DownloadProgressDialog, {
 import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import LoadingDialog from "./LoadingDialog";
 import ManualFlashingDialog from "./ManualFlashingDialog";
+import ResetToBluetoothModeDialog from "./ResetToBluetoothModeDialog";
 import SelectMicrobitBluetoothDialog from "./SelectMicrobitBluetoothDialog";
 import SelectMicrobitUsbDialog, {
   getHeadingId as getSelectMicrobitUsbHeadingId,
@@ -32,12 +35,14 @@ import TryAgainDialog from "./TryAgainDialog";
 import UnsupportedMicrobitDialog from "./UnsupportedMicrobitDialog";
 import WebUsbBluetoothUnsupportedDialog from "./WebUsbBluetoothUnsupportedDialog";
 import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
-import ChooseDeviceOverlay from "./ChooseDeviceOverlay";
 
 const ConnectionDialogs = () => {
   const { stage, actions } = useConnectionStage();
   const logging = useLogging();
-  const [flashProgress, setFlashProgress] = useState<number>(0);
+  const [flashProgress, setFlashProgress] = useState<{
+    stage: ProgressStage | undefined;
+    value: number | undefined;
+  }>({ stage: undefined, value: undefined });
   const [microbitName, setMicrobitName] = useState<string | undefined>(
     stage.bluetoothMicrobitName
   );
@@ -48,11 +53,11 @@ const ConnectionDialogs = () => {
   const isOpen = stage.flowStep !== ConnectionFlowStep.None;
 
   const progressCallback = useCallback(
-    (progress: number) => {
+    (progressStage: ProgressStage, value: number | undefined) => {
       if (stage.flowStep !== ConnectionFlowStep.FlashingInProgress) {
         actions.setFlowStep(ConnectionFlowStep.FlashingInProgress);
       }
-      setFlashProgress(progress * 100);
+      setFlashProgress({ stage: progressStage, value });
     },
     [actions, stage.flowStep]
   );
@@ -64,11 +69,7 @@ const ConnectionDialogs = () => {
     case ConnectionFlowStep.Start: {
       return (
         <WhatYouWillNeedDialog
-          type={
-            stage.flowType === ConnectionFlowType.ConnectBluetooth
-              ? "bluetooth"
-              : "radio"
-          }
+          type={stage.flowType}
           {...dialogCommonProps}
           onLinkClick={
             stage.isWebBluetoothSupported && stage.isWebUsbSupported
@@ -77,6 +78,15 @@ const ConnectionDialogs = () => {
           }
           onNextClick={actions.onNextClick}
           reconnect={stage.flowStep === ConnectionFlowStep.ReconnectFailedTwice}
+        />
+      );
+    }
+    case ConnectionFlowStep.NativeBluetoothPreConnectTutorial: {
+      return (
+        <ResetToBluetoothModeDialog
+          {...dialogCommonProps}
+          onBackClick={actions.onBackClick}
+          onNextClick={actions.onNextClick}
         />
       );
     }
@@ -112,7 +122,7 @@ const ConnectionDialogs = () => {
             message: "radio-bridge",
           });
         }
-        await actions.connectAndflashMicrobit(progressCallback, onFlashSuccess);
+        await actions.connectAndFlash(progressCallback, onFlashSuccess);
       };
       return (
         <SelectMicrobitUsbDialog
@@ -143,12 +153,19 @@ const ConnectionDialogs = () => {
         />
       );
     }
-    case ConnectionFlowStep.EnterBluetoothPattern: {
+    case ConnectionFlowStep.BluetoothPattern: {
+      const handleConnectNativeBluetooth = async () => {
+        await actions.connectAndFlash(progressCallback, () => {});
+      };
+      const onNextClick =
+        stage.flowType === ConnectionFlowType.ConnectNativeBluetooth
+          ? handleConnectNativeBluetooth
+          : actions.onNextClick;
       return (
         <EnterBluetoothPatternDialog
           {...dialogCommonProps}
           onBackClick={actions.onBackClick}
-          onNextClick={actions.onNextClick}
+          onNextClick={onNextClick}
           microbitName={microbitName}
           onChangeMicrobitName={(name: string) => {
             actions.onChangeMicrobitName(name);
@@ -157,7 +174,7 @@ const ConnectionDialogs = () => {
         />
       );
     }
-    case ConnectionFlowStep.ConnectBluetoothTutorial: {
+    case ConnectionFlowStep.WebBluetoothPreConnectTutorial: {
       const handleConnectBluetooth = () => {
         logging.event({
           type: "connect-user",
@@ -182,11 +199,12 @@ const ConnectionDialogs = () => {
         <DownloadProgressDialog
           headingId={getDownloadProgressHeadingId(stage.flowType)}
           isOpen={isOpen}
-          progress={flashProgress}
+          stage={flashProgress.stage}
+          progress={flashProgress.value}
         />
       );
     }
-    case ConnectionFlowStep.ConnectingBluetooth: {
+    case ConnectionFlowStep.BluetoothConnect: {
       return (
         <LoadingDialog isOpen={isOpen} headingId="connect-bluetooth-heading" />
       );

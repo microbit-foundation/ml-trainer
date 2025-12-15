@@ -296,7 +296,7 @@ export const ProjectProvider = ({
         return false;
       }
       // Unexpected error, can't handle better than the redirect.
-      logging.error(e);
+      logging.error("Error", e);
       return false;
     }
   }, [doAfterEditorUpdate, logging]);

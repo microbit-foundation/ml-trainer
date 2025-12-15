@@ -32,23 +32,25 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 24
           cache: "npm"
           registry-url: "https://npm.pkg.github.com"
       - uses: microbit-foundation/npm-package-versioner-action@v1
       - run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - run: echo "ML_THEME_VERSION=$(jq -r '.["theme-package-version"]' workflow-config.json)" >> $GITHUB_ENV
       - run: npm install --no-save @microbit-foundation/ml-trainer-microbit@${{ env.ML_THEME_VERSION }} @microbit-foundation/website-deploy-aws@0.6 @microbit-foundation/website-deploy-aws-config@0.10
         if: github.repository_owner == 'microbit-foundation'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - run: node ./bin/print-ci-env.cjs >> $GITHUB_ENV
       - run: npm run ci
       - name: Run Playwright tests
         if: env.STAGE == 'REVIEW' || env.STAGE == 'STAGING' || env.STAGE == 'BETA'
-        uses: docker://mcr.microsoft.com/playwright:v1.45.0-jammy
+        uses: docker://mcr.microsoft.com/playwright:v1.57.0-jammy
         with:
           args: npx playwright test
       - name: Store reports

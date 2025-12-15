@@ -1,5 +1,6 @@
 import {
   BoardVersion,
+  ConnectOptions,
   ConnectionStatus,
   ConnectionStatusEvent,
   DeviceConnectionEventMap,
@@ -36,12 +37,11 @@ export class MockRadioBridgeConnection
     this.dispatchTypedEvent("status", new ConnectionStatusEvent(newStatus));
   }
 
-  async connect(): Promise<ConnectionStatus> {
-    await this.delegate.connect();
+  async connect(options?: ConnectOptions): Promise<void> {
+    await this.delegate.connect(options);
     this.setStatus(ConnectionStatus.CONNECTING);
     await new Promise((resolve) => setTimeout(resolve, 100));
     this.setStatus(ConnectionStatus.CONNECTED);
-    return this.status;
   }
 
   getBoardVersion(): BoardVersion | undefined {

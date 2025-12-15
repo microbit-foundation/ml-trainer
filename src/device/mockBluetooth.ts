@@ -1,8 +1,11 @@
 import {
   BoardVersion,
+  ConnectOptions,
   ConnectionStatus,
   ConnectionStatusEvent,
   DeviceConnectionEventMap,
+  FlashDataSource,
+  FlashOptions,
   LedMatrix,
   MicrobitWebBluetoothConnection,
   ServiceConnectionEventMap,
@@ -38,18 +41,18 @@ export class MockWebBluetoothConnection
     this.connectResults = results;
   }
 
-  async connect(): Promise<ConnectionStatus> {
+  async connect(_options?: ConnectOptions): Promise<void> {
     if (this.connectResults.length > 0) {
       for (const result of this.connectResults) {
         this.setStatus(result);
         await new Promise((resolve) => setTimeout(resolve, 100));
       }
-      return this.status;
+      // Return early when mocking error scenarios
+      return;
     }
     this.setStatus(ConnectionStatus.CONNECTING);
     await new Promise((resolve) => setTimeout(resolve, 100));
     this.setStatus(ConnectionStatus.CONNECTED);
-    return this.status;
   }
 
   getBoardVersion(): BoardVersion | undefined {
@@ -59,6 +62,11 @@ export class MockWebBluetoothConnection
   async disconnect(): Promise<void> {}
   async serialWrite(_data: string): Promise<void> {}
   setNameFilter(_name: string): void {}
+
+  async flash(
+    _dataSource: FlashDataSource,
+    _options: FlashOptions = {}
+  ): Promise<void> {}
 
   clearDevice(): void {
     this.setStatus(ConnectionStatus.NO_AUTHORIZED_DEVICE);

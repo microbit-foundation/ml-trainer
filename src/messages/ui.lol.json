@@ -134,7 +134,7 @@
   "blocks-preview-title": [
     {
       "type": 0,
-      "value": "Blocks preview"
+      "value": "crwdns368553:0crwdne368553:0"
     }
   ],
   "bluetooth-unsupported-advice": [
@@ -429,6 +429,18 @@
       "value": "crwdns362770:0crwdne362770:0"
     }
   ],
+  "connect-native-start-heading": [
+    {
+      "type": 0,
+      "value": "What you need to connect"
+    }
+  ],
+  "connect-native-start-requirements1": [
+    {
+      "type": 0,
+      "value": "micro:bit with battery pack"
+    }
+  ],
   "connect-or-import": [
     {
       "type": 0,
@@ -581,6 +593,12 @@
       "value": "crwdns362818:0crwdne362818:0"
     }
   ],
+  "connect-tablet": [
+    {
+      "type": 0,
+      "value": "iPad or Android tablet"
+    }
+  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -617,10 +635,22 @@
       "value": "crwdns362830:0crwdne362830:0"
     }
   ],
+  "connect-try-another-way": [
+    {
+      "type": 0,
+      "value": "Not working? Try another way"
+    }
+  ],
   "connect-with-batteries": [
     {
       "type": 0,
       "value": "crwdns362832:0crwdne362832:0"
+    }
+  ],
+  "connect-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "with Bluetooth enabled"
     }
   ],
   "connect-with-web-bluetooth": [
@@ -698,7 +728,7 @@
   "data-preview-title": [
     {
       "type": 0,
-      "value": "Data preview"
+      "value": "crwdns368555:0crwdne368555:0"
     }
   ],
   "data-samples-actions-region": [
@@ -977,6 +1007,30 @@
     {
       "type": 0,
       "value": "crwdns362930:0crwdne362930:0"
+    }
+  ],
+  "downloading-stage-connecting": [
+    {
+      "type": 0,
+      "value": "Connecting to micro:bit..."
+    }
+  ],
+  "downloading-stage-finding-device": [
+    {
+      "type": 0,
+      "value": "Finding micro:bit..."
+    }
+  ],
+  "downloading-stage-flashing": [
+    {
+      "type": 0,
+      "value": "Downloading program to micro:bit..."
+    }
+  ],
+  "downloading-stage-initializing": [
+    {
+      "type": 0,
+      "value": "Initializing..."
     }
   ],
   "downloading-subtitle": [
@@ -1320,7 +1374,7 @@
   "homepage-alt-media": [
     {
       "type": 0,
-      "value": "video showing CreateAI detecting different movements"
+      "value": "crwdns368557:0crwdne368557:0"
     }
   ],
   "homepage-description": [
@@ -1344,73 +1398,73 @@
   "homepage-media-description": [
     {
       "type": 0,
-      "value": "Video descriptive transcript"
+      "value": "crwdns368559:0crwdne368559:0"
     }
   ],
   "homepage-media-descriptive-transcript-dialog-content-1": [
     {
       "type": 0,
-      "value": "There is no sound in this video."
+      "value": "crwdns368561:0crwdne368561:0"
     }
   ],
   "homepage-media-descriptive-transcript-dialog-content-2": [
     {
       "type": 0,
-      "value": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting ‘Waving’ rather than ‘Clapping’."
+      "value": "crwdns368563:0crwdne368563:0"
     }
   ],
   "homepage-media-descriptive-transcript-dialog-content-3": [
     {
       "type": 0,
-      "value": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting ‘Clapping’ rather than ‘Waving’."
+      "value": "crwdns368565:0crwdne368565:0"
     }
   ],
   "homepage-media-descriptive-transcript-dialog-content-4": [
     {
       "type": 0,
-      "value": "The meter now displays ‘Bouncing’ versus ‘Running’. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects ‘Bouncing’ rather than ‘Running’ as she bounces the ball."
+      "value": "crwdns368567:0crwdne368567:0"
     }
   ],
   "homepage-media-descriptive-transcript-dialog-content-5": [
     {
       "type": 0,
-      "value": "The scene shifts to a boy running across a field. As he runs, the model detects ‘Running’ rather than ‘Bouncing’."
+      "value": "crwdns368569:0crwdne368569:0"
     }
   ],
   "homepage-media-descriptive-transcript-dialog-content-6": [
     {
       "type": 0,
-      "value": "The meter changes to show ‘Jumping’ versus ‘Walking’. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects ‘Walking’ rather than ‘Jumping’. As the children leap into the air, the detection switches to ‘Jumping’ rather than ‘Walking’. The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
+      "value": "crwdns368571:0crwdne368571:0"
     }
   ],
   "homepage-media-descriptive-transcript-dialog-content-7": [
     {
       "type": 0,
-      "value": "The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
+      "value": "crwdns368573:0crwdne368573:0"
     }
   ],
   "homepage-media-descriptive-transcript-dialog-content-8": [
     {
       "type": 0,
-      "value": "This video plays on a continuous loop."
+      "value": "crwdns368575:0crwdne368575:0"
     }
   ],
   "homepage-media-descriptive-transcript-dialog-heading": [
     {
       "type": 0,
-      "value": "Descriptive transcript"
+      "value": "crwdns368577:0crwdne368577:0"
     }
   ],
   "homepage-media-pause-action": [
     {
       "type": 0,
-      "value": "Pause video"
+      "value": "crwdns368579:0crwdne368579:0"
     }
   ],
   "homepage-media-play-action": [
     {
       "type": 0,
-      "value": "Play video"
+      "value": "crwdns368581:0crwdne368581:0"
     }
   ],
   "homepage-projects": [
@@ -2074,57 +2128,43 @@
   "open-project-action": [
     {
       "type": 0,
-      "value": "Open project"
+      "value": "crwdns368583:0crwdne368583:0"
     }
   ],
   "open-project-setup-description": [
     {
       "type": 0,
-      "value": "Opening this project will overwrite any existing session. You may want to "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "save your existing session"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " first."
+      "value": "crwdns368585:0crwdne368585:0"
     }
   ],
   "open-shared-project-blocks-preview-description": [
     {
       "type": 0,
-      "value": "Preview of the MakeCode code contained within this project."
+      "value": "crwdns368587:0crwdne368587:0"
     }
   ],
   "open-shared-project-data-preview-description": [
     {
       "type": 0,
-      "value": "Preview of the actions and data contained within this project."
+      "value": "crwdns368589:0crwdne368589:0"
     }
   ],
   "open-shared-project-description": [
     {
       "type": 0,
-      "value": "This is a Microsoft MakeCode shared project compatible with CreateAI."
+      "value": "crwdns368591:0crwdne368591:0"
     }
   ],
   "open-shared-project-error-description": [
     {
       "type": 0,
-      "value": "Check the link you followed is correct, and make sure you are connected to the internet before trying again."
+      "value": "crwdns368593:0crwdne368593:0"
     }
   ],
   "open-shared-project-title": [
     {
       "type": 0,
-      "value": "Open shared CreateAI project"
+      "value": "crwdns368595:0crwdne368595:0"
     }
   ],
   "other-tabs-body1": [
@@ -2417,6 +2457,18 @@
       "value": "crwdns363298:0crwdne363298:0"
     }
   ],
+  "reset-to-bluetooth-mode-heading": [
+    {
+      "type": 0,
+      "value": "Reset to Bluetooth mode"
+    }
+  ],
+  "reset-to-bluetooth-mode-subtitle": [
+    {
+      "type": 0,
+      "value": "Press RESET three times"
+    }
+  ],
   "reset-to-default-action": [
     {
       "type": 0,
@@ -2654,7 +2706,7 @@
   "third-party-content-description": [
     {
       "type": 0,
-      "value": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation."
+      "value": "crwdns368597:0crwdne368597:0"
     }
   ],
   "tour-action": [

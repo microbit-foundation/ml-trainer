@@ -37,25 +37,20 @@ interface ConnectErrorDialogProps {
     | ConnectionFlowStep.ConnectionLost;
 }
 
-const contentConfig = {
-  [ConnectionFlowType.ConnectBluetooth]: {
+const getContentConfig = (flowType: ConnectionFlowType) => {
+  if (flowType === ConnectionFlowType.ConnectRadioBridge) {
+    return {
+      listHeading: "webusb-retry-replug2",
+      bullets: ["webusb-retry-replug3", "webusb-retry-replug4"],
+    };
+  }
+  return {
     listHeading: "disconnected-warning-bluetooth2",
     bullets: [
       "disconnected-warning-bluetooth3",
       "disconnected-warning-bluetooth4",
     ],
-  },
-  [ConnectionFlowType.ConnectRadioBridge]: {
-    listHeading: "webusb-retry-replug2",
-    bullets: ["webusb-retry-replug3", "webusb-retry-replug4"],
-  },
-  [ConnectionFlowType.ConnectRadioRemote]: {
-    listHeading: "disconnected-warning-bluetooth2",
-    bullets: [
-      "disconnected-warning-bluetooth3",
-      "disconnected-warning-bluetooth4",
-    ],
-  },
+  };
 };
 
 const errorTextIdPrefixConfig = {
@@ -73,8 +68,10 @@ const ReconnectErrorDialog = ({
 }: ConnectErrorDialogProps) => {
   const { supportLinks } = useDeployment();
   const errorTextIdPrefix = errorTextIdPrefixConfig[errorStep];
+  const contentConfig = getContentConfig(flowType);
   const flowTypeText = {
-    [ConnectionFlowType.ConnectBluetooth]: "bluetooth",
+    [ConnectionFlowType.ConnectNativeBluetooth]: "bluetooth",
+    [ConnectionFlowType.ConnectWebBluetooth]: "bluetooth",
     [ConnectionFlowType.ConnectRadioBridge]: "bridge",
     [ConnectionFlowType.ConnectRadioRemote]: "remote",
   }[flowType];
@@ -103,10 +100,10 @@ const ReconnectErrorDialog = ({
                   />
                 </Text>
                 <Text w="100%">
-                  <FormattedMessage id={contentConfig[flowType].listHeading} />
+                  <FormattedMessage id={contentConfig.listHeading} />
                 </Text>
                 <UnorderedList textAlign="left" w="100%" ml={20}>
-                  {contentConfig[flowType].bullets.map((textId) => (
+                  {contentConfig.bullets.map((textId) => (
                     <ListItem key={textId}>
                       <Text>
                         <FormattedMessage id={textId} />

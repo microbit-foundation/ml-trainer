@@ -7,6 +7,8 @@ import { Button, Grid, GridItem, Image, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import batteryPackImage from "../images/stylised-battery-pack.svg";
 import microbitImage from "../images/stylised-microbit-black.svg";
+import microbitWithBatteryPack from "../images/microbit-with-battery-pack.svg";
+import tablet from "../images/tablet-bluetooth.svg";
 import twoMicrobitsImage from "../images/stylised-two-microbits-black.svg";
 import usbCableImage from "../images/stylised-usb-cable.svg";
 import computerImage from "../images/stylised_computer.svg";
@@ -16,9 +18,19 @@ import ConnectContainerDialog, {
 } from "./ConnectContainerDialog";
 import ExternalLink from "./ExternalLink";
 import { useDeployment } from "../deployment";
+import { ConnectionFlowType } from "../connection-stage-hooks";
 
-const itemsConfig = {
-  radio: [
+const itemsConfig: Record<
+  ConnectionFlowType,
+  Array<{
+    imgSrc: string;
+    titleId: string;
+    subtitleId?: string;
+    width?: string;
+    height?: string;
+  }>
+> = {
+  [ConnectionFlowType.ConnectRadioRemote]: [
     {
       imgSrc: twoMicrobitsImage,
       titleId: "connect-radio-start-requirements1",
@@ -39,7 +51,7 @@ const itemsConfig = {
       subtitleId: "connect-with-batteries",
     },
   ],
-  bluetooth: [
+  [ConnectionFlowType.ConnectWebBluetooth]: [
     {
       imgSrc: microbitImage,
       titleId: "connect-bluetooth-start-requirements1",
@@ -59,6 +71,22 @@ const itemsConfig = {
       subtitleId: "connect-with-batteries",
     },
   ],
+  [ConnectionFlowType.ConnectNativeBluetooth]: [
+    {
+      imgSrc: microbitWithBatteryPack,
+      titleId: "connect-native-start-requirements1",
+      width: "250px",
+      height: "148px",
+    },
+    {
+      imgSrc: tablet,
+      titleId: "connect-tablet",
+      subtitleId: "connect-with-bluetooth",
+      width: "148px",
+      height: "148px",
+    },
+  ],
+  [ConnectionFlowType.ConnectRadioBridge]: [],
 };
 
 export interface WhatYouWillNeedDialogProps
@@ -67,7 +95,7 @@ export interface WhatYouWillNeedDialogProps
     "children" | "onBack" | "headingId"
   > {
   reconnect: boolean;
-  type: "radio" | "bluetooth";
+  type: ConnectionFlowType;
   onLinkClick: (() => void) | undefined;
 }
 
@@ -78,22 +106,29 @@ const WhatYouWillNeedDialog = ({
   ...props
 }: WhatYouWillNeedDialogProps) => {
   const { supportLinks } = useDeployment();
+  if (type === ConnectionFlowType.ConnectRadioBridge) {
+    throw new Error();
+  }
+  const simpleType = {
+    [ConnectionFlowType.ConnectNativeBluetooth]: "native",
+    [ConnectionFlowType.ConnectRadioRemote]: "radio",
+    [ConnectionFlowType.ConnectWebBluetooth]: "bluetooth",
+  }[type];
+  const otherSimpleType = simpleType === "radio" ? "bluetooth" : "radio";
   return (
     <ConnectContainerDialog
       {...props}
       headingId={
         reconnect
-          ? `reconnect-failed-${type}-heading`
-          : `connect-${type}-start-heading`
+          ? `reconnect-failed-${simpleType}-heading`
+          : `connect-${simpleType}-start-heading`
       }
       footerLeft={
         <VStack alignItems="start">
           {onLinkClick && (
             <Button onClick={onLinkClick} variant="link" size="lg">
               <FormattedMessage
-                id={`connect-${type}-start-switch-${
-                  type === "bluetooth" ? "radio" : "bluetooth"
-                }`}
+                id={`connect-${simpleType}-start-switch-${otherSimpleType}`}
               />
             </Button>
           )}
@@ -117,30 +152,33 @@ const WhatYouWillNeedDialog = ({
         gap={16}
         p="30px"
       >
-        {itemsConfig[type].map(({ imgSrc, titleId, subtitleId }) => {
-          return (
-            <GridItem key={titleId}>
-              <VStack gap={5}>
-                <Image
-                  src={imgSrc}
-                  alt=""
-                  objectFit="contain"
-                  boxSize="107px"
-                />
-                <VStack textAlign="center">
-                  <Text fontWeight="bold">
-                    <FormattedMessage id={titleId} />
-                  </Text>
-                  {subtitleId && (
-                    <Text>
-                      <FormattedMessage id={subtitleId} />
+        {itemsConfig[type].map(
+          ({ imgSrc, width, height, titleId, subtitleId }) => {
+            return (
+              <GridItem key={titleId}>
+                <VStack gap={5}>
+                  <Image
+                    src={imgSrc}
+                    alt=""
+                    objectFit="contain"
+                    width={width ?? "107px"}
+                    height={height ?? "107px"}
+                  />
+                  <VStack textAlign="center">
+                    <Text fontWeight="bold">
+                      <FormattedMessage id={titleId} />
                     </Text>
-                  )}
+                    {subtitleId && (
+                      <Text>
+                        <FormattedMessage id={subtitleId} />
+                      </Text>
+                    )}
+                  </VStack>
                 </VStack>
-              </VStack>
-            </GridItem>
-          );
-        })}
+              </GridItem>
+            );
+          }
+        )}
       </Grid>
     </ConnectContainerDialog>
   );

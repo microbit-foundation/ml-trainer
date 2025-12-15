@@ -226,7 +226,7 @@ const App = () => {
           });
         })
         .catch((err) => {
-          logging.error(err);
+          logging.error("Error checking BT availability", err);
         });
     } else {
       logging.event({

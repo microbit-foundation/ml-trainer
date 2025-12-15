@@ -259,6 +259,14 @@
     "defaultMessage": "Cable micro USB",
     "description": "Label for cable icon in list of requirements"
   },
+  "connect-native-start-heading": {
+    "defaultMessage": "What you need to connect",
+    "description": "Connection dialog heading"
+  },
+  "connect-native-start-requirements1": {
+    "defaultMessage": "micro:bit with battery pack",
+    "description": "Label for image of a micro:bit and battery pack"
+  },
   "connect-or-import": {
     "defaultMessage": "<link1>Conecta una colección de datos de micro:bit</link1> o <link2>importa muestras de datos</link2>",
     "description": "Empty data samples page text"
@@ -355,6 +363,10 @@
     "defaultMessage": "Conéctate utilizando Web Bluetooth en su lugar",
     "description": "Link to alternative connection method"
   },
+  "connect-tablet": {
+    "defaultMessage": "iPad or Android tablet",
+    "description": "Label for image of a tablet with a superimposed bluetooth icon"
+  },
   "connect-to-record": {
     "defaultMessage": "Conecta para grabar muestras de datos",
     "description": "Live graph disconnected micro:bit status message for data samples page"
@@ -379,9 +391,17 @@
     "defaultMessage": "Resolución de problemas",
     "description": "Troubleshooting heading"
   },
+  "connect-try-another-way": {
+    "defaultMessage": "Not working? Try another way",
+    "description": "Link to alternative connection method"
+  },
   "connect-with-batteries": {
     "defaultMessage": "con pilas",
     "description": "Under header 'Battery holder' this notes that batteries are required"
+  },
+  "connect-with-bluetooth": {
+    "defaultMessage": "with Bluetooth enabled",
+    "description": "Subtitle for tablet image with Bluetooth icon"
   },
   "connect-with-web-bluetooth": {
     "defaultMessage": "Conectar con Web Bluetooth",
@@ -582,6 +602,22 @@
   "downloading-radio-link-header": {
     "defaultMessage": "Descargando el programa de enlace de radio",
     "description": "Progress text"
+  },
+  "downloading-stage-connecting": {
+    "defaultMessage": "Connecting to micro:bit...",
+    "description": "Progress text during connection stage of flashing"
+  },
+  "downloading-stage-finding-device": {
+    "defaultMessage": "Finding micro:bit...",
+    "description": "Progress text during device discovery stage of flashing"
+  },
+  "downloading-stage-flashing": {
+    "defaultMessage": "Downloading program to micro:bit...",
+    "description": "Progress text during actual flashing stage"
+  },
+  "downloading-stage-initializing": {
+    "defaultMessage": "Initializing...",
+    "description": "Progress text during initialization stage of flashing"
   },
   "downloading-subtitle": {
     "defaultMessage": "Espera, por favor. Descargando el programa al micro:bit.",
@@ -1447,6 +1483,14 @@
     "defaultMessage": "Recargar",
     "description": "Reload button text"
   },
+  "reset-to-bluetooth-mode-heading": {
+    "defaultMessage": "Reset to Bluetooth mode",
+    "description": "Title for dialog with instructures on using "
+  },
+  "reset-to-bluetooth-mode-subtitle": {
+    "defaultMessage": "Press RESET three times",
+    "description": "Instructions to press the physical reset button on the micro:bit"
+  },
   "reset-to-default-action": {
     "defaultMessage": "Restablecer bloques por defecto",
     "description": "Reset to default blocks button text"
@@ -1588,7 +1632,7 @@
     "description": "Testing model page title"
   },
   "third-party-content-description": {
-    "defaultMessage": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation.",
+    "defaultMessage": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the <link>MakeCode shared project</link> to report abuse to Microsoft MakeCode if you think it's not appropriate.",
     "description": "Notify user of third party content"
   },
   "tour-action": {
