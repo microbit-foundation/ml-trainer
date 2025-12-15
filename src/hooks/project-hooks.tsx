@@ -43,9 +43,16 @@ import {
   readFileAsText,
 } from "../utils/fs-util";
 import { useDownloadActions } from "./download-hooks";
-import { Capacitor } from "@capacitor/core";
+import { Capacitor, registerPlugin } from "@capacitor/core";
 import { App as CapacitorApp } from "@capacitor/app";
 import { Encoding, Filesystem } from "@capacitor/filesystem";
+
+interface ShareReceiverI {
+  isShare(): Promise<{ isShare: boolean }>;
+  openMainActivity(): Promise<void>;
+  finish(): Promise<void>;
+}
+const ShareReceiver = registerPlugin<ShareReceiverI>("ShareReceiver");
 
 class CodeEditorError extends Error {}
 
@@ -173,20 +180,56 @@ export const ProjectProvider = ({
             path: evt.url,
             encoding: Encoding.UTF8,
           });
-          let filename = evt.url.substring(evt.url.lastIndexOf("/") + 1);
-          // Forgivingly shim broken filenames to hex files,
-          // we can't rely on android to maintain file data.
-          // Even Android's Files app often passes us a broken
-          // filename. MakeCode is resilient to bad files.
-          if (filename.length === 0) {
-            filename = "Unnamed.hex";
-          }
-          if (!filename.includes(".")) {
-            filename += ".hex";
-          }
+          const filename = filenameProbablyHex(
+            evt.url.substring(evt.url.lastIndexOf("/") + 1)
+          );
+
           await importHex(contents.data as string, filename);
         }
       );
+
+      // This part receives projects sent using the Share interface.
+      // The send intent is received using a separate activity, and
+      // sent back to CreateAI's main activity so that it persists
+      // in the app's main process.
+      // See https://github.com/carsten-klaffke/send-intent/issues/69#issuecomment-1544619608
+      const initSendIntent = async () => {
+        const isShare = await ShareReceiver.isShare();
+        if (!isShare.isShare) {
+          return;
+        }
+
+        logging.log("Passing share action to main activity.");
+        await ShareReceiver.openMainActivity(); // reuses the shared object passed in
+        void ShareReceiver.finish();
+      };
+
+      void initSendIntent();
+
+      // This is the portion that gets called in the receiving MainActivity
+      window.addEventListener("indirectShareReceived", async (evt) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+        const path = (evt as any).uri as string;
+
+        const fileExtension = getLowercaseFileExtension(path);
+        logging.event({
+          type: "app-file-share-open",
+          detail: {
+            extension: fileExtension || "none",
+          },
+        });
+
+        const contents = await Filesystem.readFile({
+          path,
+          encoding: Encoding.UTF8,
+        });
+
+        const filename = filenameProbablyHex(
+          path.substring(path.lastIndexOf("/") + 1)
+        );
+
+        await importHex(contents.data as string, filename);
+      });
 
       return () => {
         const removeListenerHandler = async () => {
@@ -579,4 +622,18 @@ export const ProjectProvider = ({
   return (
     <ProjectContext.Provider value={value}>{children}</ProjectContext.Provider>
   );
+};
+
+// Forgivingly shim broken filenames into hex files,
+// we can't rely on android to maintain file data.
+// Even Android's Files app often passes us a broken
+// filename. MakeCode is resilient to bad files.
+const filenameProbablyHex = (filename: string) => {
+  if (filename.length === 0) {
+    return "Unnamed.hex";
+  }
+  if (!filename.includes(".")) {
+    return filename + ".hex";
+  }
+  return filename;
 };

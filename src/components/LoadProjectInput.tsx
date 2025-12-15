@@ -42,7 +42,6 @@ const LoadProjectInput = forwardRef<LoadProjectInputRef, LoadProjectInputProps>(
                 inputRef.current!.value = "";
                 if (filesArray.length === 1) {
                   const { path, name } = filesArray[0];
-                  console.log("Attempting to load", path, name);
                   if (path && name) {
                     loadNativeUrl(path, name);
                   }
