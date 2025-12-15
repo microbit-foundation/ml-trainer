@@ -189,7 +189,7 @@ export class DownloadProjectActions {
     if (!stage.hex) {
       throw new Error("Project hex/name is not set!");
     }
-    const result = await this.connectActions.flashMicrobit(
+    const result = await this.connectActions.flashMicrobitWebUSB(
       stage.hex.hex,
       this.flashingProgressCallback,
       connectionAndFlashOptions?.temporaryUsbConnection

@@ -431,6 +431,18 @@
       "value": "マイクロUSBケーブル"
     }
   ],
+  "connect-native-start-heading": [
+    {
+      "type": 0,
+      "value": "What you need to connect"
+    }
+  ],
+  "connect-native-start-requirements1": [
+    {
+      "type": 0,
+      "value": "micro:bit with battery pack"
+    }
+  ],
   "connect-or-import": [
     {
       "children": [
@@ -599,6 +611,12 @@
       "value": "Web Bluetooth で接続"
     }
   ],
+  "connect-tablet": [
+    {
+      "type": 0,
+      "value": "iPad or Android tablet"
+    }
+  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -639,6 +657,12 @@
     {
       "type": 0,
       "value": "電池と"
+    }
+  ],
+  "connect-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "with Bluetooth enabled"
     }
   ],
   "connect-with-web-bluetooth": [

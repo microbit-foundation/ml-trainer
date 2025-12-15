@@ -17,6 +17,7 @@ import {
   createUniversalHexFlashDataSource,
 } from "@microbit/microbit-connection";
 import { ConnectionType } from "./connection-stage-hooks";
+import { MicrobitCapacitorBluetoothConnection } from "./device/capacitor-ble";
 import { HexType, getFlashDataSource } from "./device/get-hex-file";
 import { Logging } from "./logging/logging";
 
@@ -62,7 +63,9 @@ export class ConnectActions {
   constructor(
     private logging: Logging,
     private usb: MicrobitWebUSBConnection,
-    private bluetooth: MicrobitWebBluetoothConnection,
+    private bluetooth:
+      | MicrobitWebBluetoothConnection
+      | MicrobitCapacitorBluetoothConnection,
     private radioBridge: MicrobitRadioBridgeConnection,
     private radioRemoteBoardVersion: React.MutableRefObject<
       BoardVersion | undefined
@@ -112,18 +115,20 @@ export class ConnectActions {
     }
   };
 
-  flashMicrobit = async (
+  flashMicrobitWebUSB = async (
     hex: string | HexType,
     progress: (progress: number) => void,
     temporaryUsbConnection?: MicrobitWebUSBConnection
   ): Promise<ConnectResult> => {
+    const data = Object.values(HexType).includes(hex as HexType)
+      ? getFlashDataSource(hex as HexType)
+      : createUniversalHexFlashDataSource(hex);
+
     const usb = temporaryUsbConnection ?? this.usb;
     if (!usb) {
       return ConnectResult.Failed;
     }
-    const data = Object.values(HexType).includes(hex as HexType)
-      ? getFlashDataSource(hex as HexType)
-      : createUniversalHexFlashDataSource(hex);
+
     try {
       await usb.flash(data, {
         partial: true,
@@ -134,7 +139,24 @@ export class ConnectActions {
       });
       return ConnectResult.Success;
     } catch (e) {
-      this.logging.error(`Flashing failed: ${JSON.stringify(e)}`);
+      this.logging.error(`USB flashing failed: ${JSON.stringify(e)}`);
+      return ConnectResult.Failed;
+    }
+  };
+
+  flashMicrobitBluetooth = async (hex: string | HexType, name: string) => {
+    const data = Object.values(HexType).includes(hex as HexType)
+      ? getFlashDataSource(hex as HexType)
+      : createUniversalHexFlashDataSource(hex);
+
+    const bluetooth = this.bluetooth as MicrobitCapacitorBluetoothConnection;
+    try {
+      this.logging.log("Starting bluetooth flashing");
+      bluetooth.setNameFilter(name);
+      await bluetooth.flash(data);
+      return ConnectResult.Success;
+    } catch (e) {
+      this.logging.error(e);
       return ConnectResult.Failed;
     }
   };

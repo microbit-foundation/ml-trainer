@@ -26,7 +26,9 @@ export interface SelectMicrobitDialogProps
 
 export const getHeadingId = (flowType: ConnectionFlowType) => {
   switch (flowType) {
-    case ConnectionFlowType.ConnectBluetooth:
+    case ConnectionFlowType.ConnectWebBluetooth:
+    case ConnectionFlowType.ConnectNativeBluetooth:
+      // TODO: customise for native
       return "connect-popup-usb-bluetooth-data-collection-title";
     case ConnectionFlowType.ConnectRadioRemote:
       return "connect-popup-usb-radio-data-collection-title";

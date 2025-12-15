@@ -59,6 +59,7 @@ import {
 } from "./urls";
 import { SafeArea, SystemBarsStyle } from "@capacitor-community/safe-area";
 import { Capacitor } from "@capacitor/core";
+import { MicrobitCapacitorBluetoothConnection } from "./device/capacitor-ble";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -77,6 +78,8 @@ const usb = isMockDeviceMode()
   : createWebUSBConnection({ logging });
 const bluetooth = isMockDeviceMode()
   ? new MockWebBluetoothConnection()
+  : Capacitor.isNativePlatform()
+  ? new MicrobitCapacitorBluetoothConnection()
   : createWebBluetoothConnection({ logging });
 const radioBridge = isMockDeviceMode()
   ? new MockRadioBridgeConnection(usb)

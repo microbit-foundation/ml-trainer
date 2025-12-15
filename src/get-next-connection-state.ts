@@ -51,7 +51,7 @@ export const getNextConnectionState = (
       ? ConnectionFlowType.ConnectRadioBridge
       : type === "radioRemote"
       ? ConnectionFlowType.ConnectRadioRemote
-      : ConnectionFlowType.ConnectBluetooth;
+      : ConnectionFlowType.ConnectWebBluetooth;
 
   // Don't update connection status when hiding browser tab if connection
   // status is already set to an error case.

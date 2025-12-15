@@ -64,11 +64,7 @@ const ConnectionDialogs = () => {
     case ConnectionFlowStep.Start: {
       return (
         <WhatYouWillNeedDialog
-          type={
-            stage.flowType === ConnectionFlowType.ConnectBluetooth
-              ? "bluetooth"
-              : "radio"
-          }
+          type={stage.flowType}
           {...dialogCommonProps}
           onLinkClick={
             stage.isWebBluetoothSupported && stage.isWebUsbSupported
@@ -112,7 +108,10 @@ const ConnectionDialogs = () => {
             message: "radio-bridge",
           });
         }
-        await actions.connectAndflashMicrobit(progressCallback, onFlashSuccess);
+        await actions.connectAndFlashMicrobitViaWebUSB(
+          progressCallback,
+          onFlashSuccess
+        );
       };
       return (
         <SelectMicrobitUsbDialog
@@ -144,11 +143,18 @@ const ConnectionDialogs = () => {
       );
     }
     case ConnectionFlowStep.EnterBluetoothPattern: {
+      const handleConnectNativeBluetooth = async () => {
+        await actions.connectAndFlashMicrobitViaBluetooth(progressCallback);
+      };
+      const onNextClick =
+        stage.flowType === ConnectionFlowType.ConnectNativeBluetooth
+          ? handleConnectNativeBluetooth
+          : actions.onNextClick;
       return (
         <EnterBluetoothPatternDialog
           {...dialogCommonProps}
           onBackClick={actions.onBackClick}
-          onNextClick={actions.onNextClick}
+          onNextClick={onNextClick}
           microbitName={microbitName}
           onChangeMicrobitName={(name: string) => {
             actions.onChangeMicrobitName(name);

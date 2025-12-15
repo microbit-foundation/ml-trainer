@@ -439,6 +439,18 @@
       "value": "微型 USB 纜線"
     }
   ],
+  "connect-native-start-heading": [
+    {
+      "type": 0,
+      "value": "What you need to connect"
+    }
+  ],
+  "connect-native-start-requirements1": [
+    {
+      "type": 0,
+      "value": "micro:bit with battery pack"
+    }
+  ],
   "connect-or-import": [
     {
       "children": [
@@ -611,6 +623,12 @@
       "value": "改用網路藍牙進行連線"
     }
   ],
+  "connect-tablet": [
+    {
+      "type": 0,
+      "value": "iPad or Android tablet"
+    }
+  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -651,6 +669,12 @@
     {
       "type": 0,
       "value": "需要電池"
+    }
+  ],
+  "connect-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "with Bluetooth enabled"
     }
   ],
   "connect-with-web-bluetooth": [

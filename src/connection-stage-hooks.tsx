@@ -24,15 +24,11 @@ import { useStorage } from "./hooks/use-storage";
 import { useStore } from "./store";
 
 export enum ConnectionFlowType {
-  ConnectBluetooth = "ConnectBluetooth",
+  ConnectWebBluetooth = "ConnectWebBluetooth",
+  ConnectNativeBluetooth = "ConnectNativeBluetooth",
   ConnectRadioBridge = "ConnectRadioBridge",
   ConnectRadioRemote = "ConnectRadioRemote",
 }
-
-export type InputConnectionFlowType =
-  | ConnectionFlowType.ConnectBluetooth
-  | ConnectionFlowType.ConnectRadioBridge
-  | ConnectionFlowType.ConnectRadioRemote;
 
 export type ConnectionType = "bluetooth" | "radio";
 
@@ -114,7 +110,7 @@ const getInitialConnectionStageValue = (
 ): ConnectionStage => ({
   flowStep: ConnectionFlowStep.None,
   flowType: isWebBluetoothSupported
-    ? ConnectionFlowType.ConnectBluetooth
+    ? ConnectionFlowType.ConnectWebBluetooth
     : ConnectionFlowType.ConnectRadioRemote,
   bluetoothMicrobitName: config.bluetoothMicrobitName,
   radioRemoteDeviceId: config.radioRemoteDeviceId,
