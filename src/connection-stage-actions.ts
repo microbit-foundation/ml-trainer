@@ -85,16 +85,23 @@ export class ConnectionStageActions {
   connectAndFlashMicrobitViaBluetooth = async (
     _progressCallback: (progress: number) => void
   ) => {
+    const { bluetoothMicrobitName } = this.stage;
+    if (!bluetoothMicrobitName) {
+      throw new Error("Name must be set by previous step");
+    }
+    // TODO: Use indeterminate UI for initial search/connection process
+    // Then use progress UI for flashing process.
     const flashResult = await this.actions.flashMicrobitBluetooth(
       this.getHexType(),
-      this.stage.bluetoothMicrobitName!
+      bluetoothMicrobitName
     );
     if (flashResult !== ConnectResult.Success) {
-      console.log("Failed");
-      // TODO: existing error handling is not suitable.
+      // TODO: Existing error handling is not suitable and we need to
+      // break down the cases as there are so many!
+      this.setFlowStep(ConnectionFlowStep.None);
     } else {
-      console.log("Success");
-      // What now?
+      // This indirectly updates the connection flow step via connection status.
+      await this.actions.connectBluetooth(bluetoothMicrobitName, false);
     }
   };
 

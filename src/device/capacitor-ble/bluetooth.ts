@@ -109,7 +109,7 @@ export async function findMatchingDevice(
         // For a V1 in the Nordic bootloader, we see a name of "DfuTarg" that
         // isn't matched by the name filter but the advertising name is in the
         // localName on the device. So we filter here instead.  This happens on
-        // iOS DFU fails / is interrupted.
+        // iOS if DFU fails / is interrupted.
         if (
           result.device.name?.startsWith(namePrefix) ||
           result.localName?.startsWith(namePrefix)
@@ -185,7 +185,7 @@ export class Device {
     );
   }
 
-  private subscribe(
+  subscribe(
     serviceId: string,
     characteristicId: string,
     callback: (data: Uint8Array) => void
@@ -197,7 +197,7 @@ export class Device {
     this.notificationListeners.get(key)!.add(callback);
   }
 
-  private unsubscribe(
+  unsubscribe(
     serviceId: string,
     characteristicId: string,
     callback: (data: Uint8Array) => void

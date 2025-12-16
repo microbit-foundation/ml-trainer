@@ -25,6 +25,7 @@ import MemoryMap from "nrf-intel-hex";
 import partialFlash, { PartialFlashResult } from "./flashing-partial";
 import { fullFlash } from "./flashing-full";
 import { FlashResult } from "./model";
+import { AccelerometerService } from "./acceleromoeter-service";
 
 export class MicrobitCapacitorBluetoothConnection
   extends TypedEventTarget<DeviceConnectionEventMap & ServiceConnectionEventMap>
@@ -34,6 +35,7 @@ export class MicrobitCapacitorBluetoothConnection
   private deviceName: string | undefined;
   private device: Device | undefined;
   private boardVersion: BoardVersion | undefined;
+  private accelerometerService: AccelerometerService | undefined;
 
   // Subset needed for CreateAI
 
@@ -97,6 +99,10 @@ export class MicrobitCapacitorBluetoothConnection
         this.boardVersion = await deviceInformationService.getBoardVersion();
         this.device.log(`Detected micro:bit version as ${this.boardVersion}`);
 
+        if (this.getActiveEvents().includes("accelerometerdatachanged")) {
+          // TODO: background error
+          void this.accelerometerService?.startNotifications();
+        }
         return ConnectionStatus.CONNECTED;
       }
       return ConnectionStatus.DISCONNECTED;
@@ -124,11 +130,29 @@ export class MicrobitCapacitorBluetoothConnection
   }
 
   protected eventActivated(_type: string): void {
-    // TODO: merge with the notificatiobn bookkeeping in bluetooth.ts
+    // TODO: merge with the notification bookkeeping in bluetooth.ts
+    if (_type === "accelerometerdatachanged") {
+      if (this.device) {
+        if (!this.accelerometerService) {
+          this.accelerometerService = new AccelerometerService(
+            this.device,
+            this.dispatchTypedEvent.bind(this)
+          );
+        }
+        // TODO: handle background error
+        void this.accelerometerService.startNotifications();
+      }
+    }
   }
 
   protected eventDeactivated(_type: string): void {
-    // TODO: merge with the notificatiobn bookkeeping in bluetooth.ts
+    // TODO: merge with the notification bookkeeping in bluetooth.ts
+    if (_type === "accelerometerdatachanged") {
+      if (this.device) {
+        // TODO: handle background error
+        void this.accelerometerService?.stopNotifications();
+      }
+    }
   }
 
   private setStatus(status: ConnectionStatus) {
