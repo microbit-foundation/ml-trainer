@@ -86,10 +86,6 @@ export class MicrobitCapacitorBluetoothConnection
       }
       this.device = new Device(bleDevice.deviceId, this.deviceName);
       if (await connectHandlingBond(this.device)) {
-        void this.device.disconnectTracker?.promise.then(() => {
-          this.setStatus(ConnectionStatus.DISCONNECTED);
-        });
-
         // Refresh services before using characteristics.
         await BleClient.discoverServices(this.device.deviceId);
 
@@ -98,18 +94,27 @@ export class MicrobitCapacitorBluetoothConnection
         );
         this.boardVersion = await deviceInformationService.getBoardVersion();
         this.device.log(`Detected micro:bit version as ${this.boardVersion}`);
-
-        if (this.getActiveEvents().includes("accelerometerdatachanged")) {
-          // TODO: background error
-          void this.accelerometerService?.startNotifications();
-        }
+        this.handleConnected();
         return ConnectionStatus.CONNECTED;
       }
       return ConnectionStatus.DISCONNECTED;
     } else {
       console.log("Reconnecting");
       await this.device.connect("reconnect");
+      this.handleConnected();
       return ConnectionStatus.CONNECTED;
+    }
+  }
+
+  private handleConnected() {
+    if (this.device) {
+      void this.device.disconnectTracker?.promise.then(() => {
+        this.setStatus(ConnectionStatus.DISCONNECTED);
+      });
+      if (this.getActiveEvents().includes("accelerometerdatachanged")) {
+        // TODO: background error
+        void this.accelerometerService?.startNotifications();
+      }
     }
   }
 
