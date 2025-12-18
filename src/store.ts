@@ -24,7 +24,7 @@ import {
   DownloadStep,
   Action,
   ActionData,
-  MicrobitToFlash,
+  SameOrDifferentChoice,
   PostImportDialogState,
   RecordingData,
   SaveState,
@@ -322,7 +322,7 @@ const createMlStore = (logging: Logging) => {
           projectLoadTimestamp: 0,
           download: {
             step: DownloadStep.None,
-            microbitToFlash: MicrobitToFlash.Default,
+            microbitChoice: SameOrDifferentChoice.Default,
           },
           downloadFlashingProgress: 0,
           save: {
@@ -428,7 +428,7 @@ const createMlStore = (logging: Logging) => {
                 isEditorOpen: open,
                 download: {
                   ...download,
-                  usbDevice: undefined,
+                  connection: undefined,
                 },
               }),
               false,

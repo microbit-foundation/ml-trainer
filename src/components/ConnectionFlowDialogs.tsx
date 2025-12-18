@@ -108,10 +108,7 @@ const ConnectionDialogs = () => {
             message: "radio-bridge",
           });
         }
-        await actions.connectAndFlashMicrobitViaWebUSB(
-          progressCallback,
-          onFlashSuccess
-        );
+        await actions.connectAndFlash(progressCallback, onFlashSuccess);
       };
       return (
         <SelectMicrobitUsbDialog
@@ -142,9 +139,9 @@ const ConnectionDialogs = () => {
         />
       );
     }
-    case ConnectionFlowStep.EnterBluetoothPattern: {
+    case ConnectionFlowStep.BluetoothPattern: {
       const handleConnectNativeBluetooth = async () => {
-        await actions.connectAndFlashMicrobitViaBluetooth(progressCallback);
+        await actions.connectAndFlash(progressCallback, () => {});
       };
       const onNextClick =
         stage.flowType === ConnectionFlowType.ConnectNativeBluetooth
@@ -163,7 +160,7 @@ const ConnectionDialogs = () => {
         />
       );
     }
-    case ConnectionFlowStep.ConnectBluetoothTutorial: {
+    case ConnectionFlowStep.WebBluetoothPreConnectTutorial: {
       const handleConnectBluetooth = () => {
         logging.event({
           type: "connect-user",
@@ -192,7 +189,7 @@ const ConnectionDialogs = () => {
         />
       );
     }
-    case ConnectionFlowStep.ConnectingBluetooth: {
+    case ConnectionFlowStep.BluetoothConnect: {
       return (
         <LoadingDialog isOpen={isOpen} headingId="connect-bluetooth-heading" />
       );

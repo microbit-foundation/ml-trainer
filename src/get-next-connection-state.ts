@@ -41,7 +41,10 @@ export const getNextConnectionState = (
     isBrowserTabVisible,
   } = input;
 
-  if (currStatus === ConnectionStatus.Disconnected) {
+  if (
+    currStatus === ConnectionStatus.Disconnected ||
+    currStatus === ConnectionStatus.Preparing
+  ) {
     // Do not update connection status when user explicitly disconnected connection
     // until user reconnects explicitly
     return undefined;

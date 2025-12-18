@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { Capacitor } from "@capacitor/core";
 import {
   AccelerometerDataEvent,
   BoardVersion,
@@ -20,6 +21,11 @@ import { ConnectionType } from "./connection-stage-hooks";
 import { MicrobitCapacitorBluetoothConnection } from "./device/capacitor-ble";
 import { HexType, getFlashDataSource } from "./device/get-hex-file";
 import { Logging } from "./logging/logging";
+import {
+  isWebUSBConnection,
+  MicrobitConnection,
+  MicrobitFlashConnection,
+} from "./device/connection-utils";
 
 export enum ConnectResult {
   Success = "Success",
@@ -48,7 +54,6 @@ export type StatusListener = (e: {
 }) => void;
 
 export interface ConnectionAndFlashOptions {
-  temporaryUsbConnection: MicrobitWebUSBConnection;
   callbackIfDeviceIsSame?: () => Promise<void>;
 }
 
@@ -77,60 +82,53 @@ export class ConnectActions {
       usb.status !== DeviceConnectionStatus.NOT_SUPPORTED;
   }
 
-  requestUSBConnection = async (
+  getDefaultFlashConnection(): MicrobitFlashConnection {
+    return Capacitor.isNativePlatform()
+      ? (this.bluetooth as MicrobitCapacitorBluetoothConnection)
+      : this.usb;
+  }
+
+  connect = async (
+    connection: MicrobitConnection,
     options?: ConnectionAndFlashOptions
-  ): Promise<
-    | {
-        result: ConnectResult.Success;
-        deviceId: number;
-        usb: MicrobitWebUSBConnection;
-      }
-    | {
-        result: ConnectAndFlashFailResult;
-        deviceId?: number;
-        usb?: MicrobitWebUSBConnection;
-      }
-  > => {
-    const usb = options?.temporaryUsbConnection ?? this.usb;
+  ): Promise<ConnectResult> => {
     try {
-      await usb.connect();
-      // Save remote micro:bit device id is stored for passing it to bridge micro:bit
-      const deviceId = usb.getDeviceId();
-      if (
-        options?.temporaryUsbConnection &&
-        options?.callbackIfDeviceIsSame &&
-        deviceId === this.usb.getDeviceId()
-      ) {
-        await options?.callbackIfDeviceIsSame();
+      await connection.connect();
+
+      if (isWebUSBConnection(connection)) {
+        // Save remote micro:bit device id is stored for passing it to bridge micro:bit
+        const deviceId = connection.getDeviceId();
+        if (
+          options?.callbackIfDeviceIsSame &&
+          this.usb !== connection &&
+          deviceId === this.usb.getDeviceId()
+        ) {
+          await options.callbackIfDeviceIsSame();
+        }
+        if (!deviceId) {
+          return ConnectResult.Failed;
+        }
       }
-      if (!deviceId) {
-        return { result: ConnectResult.Failed };
-      }
-      return { result: ConnectResult.Success, deviceId, usb };
+      return ConnectResult.Success;
     } catch (e) {
       this.logging.error(
         `USB request device failed/cancelled: ${JSON.stringify(e)}`
       );
-      return { result: this.handleConnectAndFlashError(e) };
+      return this.handleConnectAndFlashError(e);
     }
   };
 
-  flashMicrobitWebUSB = async (
+  flash = async (
+    connection: MicrobitFlashConnection,
     hex: string | HexType,
-    progress: (progress: number) => void,
-    temporaryUsbConnection?: MicrobitWebUSBConnection
+    progress: (progress: number) => void
   ): Promise<ConnectResult> => {
     const data = Object.values(HexType).includes(hex as HexType)
       ? getFlashDataSource(hex as HexType)
       : createUniversalHexFlashDataSource(hex);
 
-    const usb = temporaryUsbConnection ?? this.usb;
-    if (!usb) {
-      return ConnectResult.Failed;
-    }
-
     try {
-      await usb.flash(data, {
+      await connection.flash(data, {
         partial: true,
         // If we could improve the re-rendering due to progress further we can remove this and accept the
         // default which updates 4x as often.
@@ -140,24 +138,7 @@ export class ConnectActions {
       return ConnectResult.Success;
     } catch (e) {
       this.logging.error(`USB flashing failed: ${JSON.stringify(e)}`);
-      return ConnectResult.Failed;
-    }
-  };
-
-  flashMicrobitBluetooth = async (hex: string | HexType, name: string) => {
-    const data = Object.values(HexType).includes(hex as HexType)
-      ? getFlashDataSource(hex as HexType)
-      : createUniversalHexFlashDataSource(hex);
-
-    const bluetooth = this.bluetooth as MicrobitCapacitorBluetoothConnection;
-    try {
-      this.logging.log("Starting bluetooth flashing");
-      bluetooth.setNameFilter(name);
-      await bluetooth.flash(data);
-      return ConnectResult.Success;
-    } catch (e) {
-      this.logging.error(e);
-      return ConnectResult.Failed;
+      return this.handleConnectAndFlashError(e);
     }
   };
 

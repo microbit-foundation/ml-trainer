@@ -36,6 +36,7 @@ export class MicrobitCapacitorBluetoothConnection
   private device: Device | undefined;
   private boardVersion: BoardVersion | undefined;
   private accelerometerService: AccelerometerService | undefined;
+  private deferStatusUpdates: boolean = false;
 
   // Subset needed for CreateAI
 
@@ -118,6 +119,18 @@ export class MicrobitCapacitorBluetoothConnection
     }
   }
 
+  /**
+   * Get the micro:bit name, extracted from the device name.
+   *
+   * Returns undefined if the format does not match or no device has been connected.
+   */
+  getName(): string | undefined {
+    if (this.device?.name) {
+      return /(BBC micro:bit|uBit) \[([a-z]{5})\]/.exec(this.device.name)?.[2];
+    }
+    return undefined;
+  }
+
   async disconnect(): Promise<void> {
     await this.device?.disconnect();
     this.setStatus(ConnectionStatus.DISCONNECTED);
@@ -162,7 +175,9 @@ export class MicrobitCapacitorBluetoothConnection
 
   private setStatus(status: ConnectionStatus) {
     this.status = status;
-    this.dispatchTypedEvent("status", new ConnectionStatusEvent(status));
+    if (!this.deferStatusUpdates) {
+      this.dispatchTypedEvent("status", new ConnectionStatusEvent(status));
+    }
   }
 
   // Extra API, matching USB case
@@ -176,65 +191,70 @@ export class MicrobitCapacitorBluetoothConnection
    * @param options Flash options and progress callback.
    */
   async flash(dataSource: FlashDataSource): Promise<void> {
-    const progress = () => {
-      // TODO!
-    };
-    if (this.status !== ConnectionStatus.CONNECTED) {
-      // Don't immediately update the status when connecting just for flashing
-      // as we're going to disconnect anyway and the rest of the app doesn't care
-      const status = await this.connectInternal();
-      if (status !== ConnectionStatus.CONNECTED) {
-        throw new Error(`Failed to connect ${status}`);
-      }
-    }
-
+    // We'll disconnect/reconnect multiple times but reporting this is unhelpful.
+    this.deferStatusUpdates = true;
     try {
-      const memoryMap = convertDataToMemoryMap(
-        await dataSource(this.getBoardVersion()!)
-      );
-      if (!memoryMap) {
-        throw new FlashDataError();
+      const progress = () => {
+        // TODO!
+      };
+      if (this.status !== ConnectionStatus.CONNECTED) {
+        const status = await this.connect();
+        if (status !== ConnectionStatus.CONNECTED) {
+          throw new Error(`Failed to connect ${status}`);
+        }
       }
 
-      if (!this.device || !this.boardVersion) {
-        throw new Error();
-      }
-      const partialFlashResult = await partialFlash(
-        this.device,
-        memoryMap,
-        progress
-      );
+      try {
+        const memoryMap = convertDataToMemoryMap(
+          await dataSource(this.getBoardVersion()!)
+        );
+        if (!memoryMap) {
+          throw new FlashDataError();
+        }
 
-      switch (partialFlashResult) {
-        case PartialFlashResult.Success: {
-          return;
+        if (!this.device || !this.boardVersion) {
+          throw new Error();
         }
-        case PartialFlashResult.Failed: {
-          throw new Error("Partial flash failed");
-        }
-        case PartialFlashResult.AttemptFullFlash: {
-          const fullFlashResult = await fullFlash(
-            this.device,
-            this.boardVersion,
-            memoryMap,
-            progress
-          );
-          // TODO: get a grip on this return value
-          if (fullFlashResult !== FlashResult.Success) {
-            throw new Error();
+        const partialFlashResult = await partialFlash(
+          this.device,
+          memoryMap,
+          progress
+        );
+
+        switch (partialFlashResult) {
+          case PartialFlashResult.Success: {
+            return;
           }
-          return;
+          case PartialFlashResult.Failed: {
+            throw new Error("Partial flash failed");
+          }
+          case PartialFlashResult.AttemptFullFlash: {
+            const fullFlashResult = await fullFlash(
+              this.device,
+              this.boardVersion,
+              memoryMap,
+              progress
+            );
+            // TODO: get a grip on this return value
+            if (fullFlashResult !== FlashResult.Success) {
+              throw new Error();
+            }
+            return;
+          }
+          default: {
+            throw new Error("Unexpected");
+          }
         }
-        default: {
-          throw new Error("Unexpected");
-        }
+      } catch (e) {
+        this.log("Failed to flash");
+        this.error(e);
+        throw e;
+      } finally {
+        await this.disconnect();
       }
-    } catch (e) {
-      this.log("Failed to flash");
-      this.error(e);
-      throw e;
     } finally {
-      await this.disconnect();
+      this.deferStatusUpdates = false;
+      this.setStatus(this.status);
     }
   }
 

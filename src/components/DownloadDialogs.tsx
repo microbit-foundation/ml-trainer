@@ -13,6 +13,7 @@ import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollecti
 import DownloadChooseMicrobitDialog from "./DownloadChooseMicrobitDialog";
 import DownloadHelpDialog from "./DownloadHelpDialog";
 import DownloadProgressDialog from "./DownloadProgressDialog";
+import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 import ManualFlashingDialog from "./ManualFlashingDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
@@ -85,7 +86,7 @@ const DownloadDialogs = () => {
             samples: getTotalNumSamples(actions),
           },
         });
-        await downloadActions.connectAndFlashMicrobit(stage);
+        await downloadActions.connectAndFlash(stage);
       };
 
       return (
@@ -95,6 +96,25 @@ const DownloadDialogs = () => {
           onClose={downloadActions.close}
           onBackClick={downloadActions.getOnBack()}
           onNextClick={handleDownloadProject}
+        />
+      );
+    }
+    case DownloadStep.BluetoothPattern: {
+      // This is only used for native bluetooth.
+      const handleConnectNativeBluetooth = async () => {
+        // TODO: progress needs to account for searching stage
+        await downloadActions.connectAndFlash(stage);
+      };
+      return (
+        <EnterBluetoothPatternDialog
+          isOpen
+          onClose={downloadActions.close}
+          onBackClick={downloadActions.getOnBack}
+          onNextClick={handleConnectNativeBluetooth}
+          microbitName={stage.bluetoothMicrobitName}
+          onChangeMicrobitName={(name: string) => {
+            downloadActions.onChangeMicrobitName(name);
+          }}
         />
       );
     }
