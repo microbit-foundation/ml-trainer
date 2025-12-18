@@ -27,6 +27,7 @@ import { Settings } from "../settings";
 import { useSettings, useStore } from "../store";
 import { downloadHex } from "../utils/fs-util";
 
+// TODO: extract this for consistency with connection actions
 export class DownloadProjectActions {
   private flashingProgressCallback: (value: number) => void;
   constructor(
@@ -58,7 +59,7 @@ export class DownloadProjectActions {
       (this.state.connection.status === DeviceConnectionStatus.CONNECTED ||
         isNativeBluetoothConnection(this.state.connection))
     ) {
-      // Reuse connection from last time.
+      // Reuse connection from last time if still connected or native Bluetooth.
       const newState: DownloadState = {
         ...this.state,
         step: DownloadStep.FlashingInProgress,

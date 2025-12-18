@@ -24,7 +24,7 @@ import { DeviceInformationService } from "./device-information-service";
 import MemoryMap from "nrf-intel-hex";
 import partialFlash, { PartialFlashResult } from "./flashing-partial";
 import { fullFlash } from "./flashing-full";
-import { FlashResult } from "./model";
+import { FlashProgressStage, FlashResult, Progress } from "./model";
 import { AccelerometerService } from "./acceleromoeter-service";
 
 export class MicrobitCapacitorBluetoothConnection
@@ -190,13 +190,25 @@ export class MicrobitCapacitorBluetoothConnection
    * @param dataSource The data to use.
    * @param options Flash options and progress callback.
    */
-  async flash(dataSource: FlashDataSource): Promise<void> {
-    // We'll disconnect/reconnect multiple times but reporting this is unhelpful.
+  async flash(
+    dataSource: FlashDataSource,
+    options: { progress?: (v: number | undefined) => void }
+  ): Promise<void> {
+    // TODO: deal with the need for richer progress for BLE
+    const externalProgress = options.progress ?? (() => {});
+    const progress: Progress = (stage, v) => {
+      if (
+        (stage === FlashProgressStage.Partial ||
+          stage === FlashProgressStage.Full) &&
+        v !== undefined
+      ) {
+        externalProgress(v);
+      }
+    };
+
+    // We'll disconnect/reconnect multiple times due to device resets, but reporting this is unhelpful.
     this.deferStatusUpdates = true;
     try {
-      const progress = () => {
-        // TODO!
-      };
       if (this.status !== ConnectionStatus.CONNECTED) {
         const status = await this.connect();
         if (status !== ConnectionStatus.CONNECTED) {

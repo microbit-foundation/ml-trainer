@@ -91,6 +91,7 @@ export async function flashDfu(
         ({ state, data }) => {
           switch (state) {
             case DfuState.DFU_COMPLETED: {
+              progress(FlashProgressStage.Full, 1);
               resolve(FlashResult.Success);
               break;
             }
@@ -99,7 +100,9 @@ export async function flashDfu(
               break;
             }
             case DfuState.DFU_PROGRESS: {
-              progress(FlashProgressStage.Full, data.percent);
+              if (typeof data.percent === "number") {
+                progress(FlashProgressStage.Full, data.percent / 100);
+              }
               break;
             }
             case DfuState.DFU_FAILED: {

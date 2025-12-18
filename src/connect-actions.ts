@@ -128,13 +128,16 @@ export class ConnectActions {
       : createUniversalHexFlashDataSource(hex);
 
     try {
-      await connection.flash(data, {
+      const options = {
+        // TODO: not supported by BLE (it's always partial first)
         partial: true,
         // If we could improve the re-rendering due to progress further we can remove this and accept the
         // default which updates 4x as often.
+        // TODO: Needed for BLE?
         minimumProgressIncrement: 0.01,
         progress: (v: number | undefined) => progress(v ?? 1),
-      });
+      };
+      await connection.flash(data, options);
       return ConnectResult.Success;
     } catch (e) {
       this.logging.error(`USB flashing failed: ${JSON.stringify(e)}`);
