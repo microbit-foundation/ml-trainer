@@ -30,8 +30,8 @@ const DataSamplesPage = () => {
   const [selectedActionIdx, setSelectedActionIdx] = useState<number>(0);
 
   useEffect(() => {
-    updateOrCreateProject();
-  }, []);
+    void updateOrCreateProject();
+  }, [updateOrCreateProject]);
 
   const navigate = useNavigate();
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
