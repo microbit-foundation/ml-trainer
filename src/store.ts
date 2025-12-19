@@ -46,7 +46,7 @@ import {
   currentDataWindow,
   DataWindow,
   legacyDataWindow,
-  migrateLegacyActionData,
+  migrateLegacyActionDataAndAssignNewIds,
   untitledProjectName,
 } from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
@@ -64,8 +64,6 @@ export enum BroadcastChannelMessages {
 const broadcastChannel = new BroadcastChannel("ml");
 
 const storage = new Database();
-
-export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
 const createFirstAction = (): ActionData => ({
   icon: defaultIcons[0],
@@ -110,6 +108,7 @@ const updateProject = (
 };
 
 export interface State {
+  id: string | undefined;
   actions: ActionData[];
   dataWindow: DataWindow;
   model: tf.LayersModel | undefined;
@@ -190,6 +189,8 @@ export interface ConnectOptions {
 
 export interface Actions {
   loadProjectFromStorage(id: string): Promise<void>;
+  updateOrCreateProject(): Promise<void>;
+  deleteProject(id: string): Promise<void>;
   addNewAction(): Promise<void>;
   addActionRecording(id: string, recording: RecordingData): Promise<void>;
   deleteAction(action: ActionData): Promise<void>;
@@ -281,6 +282,7 @@ const createMlStore = (logging: Logging) => {
   return create<Store>()(
     devtools(
       (set, get) => ({
+        id: undefined,
         timestamp: undefined,
         actions: [],
         dataWindow: currentDataWindow,
@@ -380,8 +382,10 @@ const createMlStore = (logging: Logging) => {
           const newProject = projectName
             ? renameProject(untitledProject, projectName)
             : untitledProject;
+          const id = uuid();
           set(
             {
+              id,
               actions: [],
               dataWindow: currentDataWindow,
               model: undefined,
@@ -399,7 +403,7 @@ const createMlStore = (logging: Logging) => {
                 project: newProject,
                 projectEdited,
               },
-              { timestamp }
+              { timestamp, name: projectName ?? untitledProjectName, id }
             )
           );
         },
@@ -426,12 +430,59 @@ const createMlStore = (logging: Logging) => {
         },
 
         async loadProjectFromStorage(id: string) {
-          const persistedData = await storage.loadProject(id);
+          const persistedData = await storageWithErrHandling(() =>
+            storage.loadProject(id)
+          );
           set({
             // Get data window from actions on app load.
             dataWindow: getDataWindowFromActions(persistedData.actions),
             ...persistedData,
           });
+        },
+
+        async updateOrCreateProject() {
+          const { id, project, projectEdited, timestamp } = get();
+          const existingOrNewTimestamp = timestamp ?? Date.now();
+          const existingOrNewId = id ?? uuid();
+          set({
+            id: existingOrNewId,
+            timestamp: existingOrNewTimestamp,
+          });
+          await storageWithErrHandling(() =>
+            storage.updateOrCreateProject(
+              {
+                timestamp: existingOrNewTimestamp,
+                id: existingOrNewId,
+              },
+              { project, projectEdited }
+            )
+          );
+        },
+
+        async deleteProject(id) {
+          const result = await storageWithErrHandling(() =>
+            storage.deleteProject(id)
+          );
+          if (typeof result === "boolean") {
+            if (result) {
+              // Clear state. No projects remaining in storage.
+              const untitledProject = createUntitledProject();
+              set({
+                id: undefined,
+                actions: [],
+                dataWindow: currentDataWindow,
+                model: undefined,
+                project: untitledProject,
+                projectEdited: false,
+                appEditNeedsFlushToEditor: true,
+                timestamp: undefined,
+              });
+            }
+            // No action required. Deleted a project that isn't currently loaded.
+            return;
+          }
+          // Deleted a project that was loaded. Load the next most recent project.
+          set(result);
         },
 
         async addNewAction() {
@@ -713,7 +764,8 @@ const createMlStore = (logging: Logging) => {
               new Set([...settings.toursCompleted, "DataSamplesRecorded"])
             ),
           };
-          const newActionsWithIcons = migrateLegacyActionData(newActions);
+          const newActionsWithIcons =
+            migrateLegacyActionDataAndAssignNewIds(newActions);
           // Older datasets did not have icons. Add icons to actions where these are missing.
           newActionsWithIcons.forEach((a) => {
             if (!a.icon) {
@@ -723,6 +775,7 @@ const createMlStore = (logging: Logging) => {
               });
             }
           });
+          const id = uuid();
           const timestamp = Date.now();
           const dataWindow = getDataWindowFromActions(newActionsWithIcons);
           const updatedProject = updateProject(
@@ -733,6 +786,7 @@ const createMlStore = (logging: Logging) => {
             dataWindow
           );
           set({
+            id,
             settings: updatedSettings,
             actions: newActionsWithIcons,
             dataWindow,
@@ -749,6 +803,7 @@ const createMlStore = (logging: Logging) => {
               },
               {
                 timestamp,
+                id,
               },
               updatedSettings
             )
@@ -768,6 +823,7 @@ const createMlStore = (logging: Logging) => {
             ),
           };
           const newActions = getActionsFromProject(project);
+          const id = uuid();
           const timestamp = Date.now();
           const projectEdited = true;
           set(({ project: prevProject }) => {
@@ -781,6 +837,7 @@ const createMlStore = (logging: Logging) => {
               },
             };
             return {
+              id,
               settings: updatedSettings,
               actions: newActions,
               dataWindow: getDataWindowFromActions(newActions),
@@ -796,7 +853,7 @@ const createMlStore = (logging: Logging) => {
             storage.importProject(
               newActions,
               { project, projectEdited },
-              { timestamp },
+              { timestamp, id },
               updatedSettings
             )
           );
@@ -1011,6 +1068,7 @@ const createMlStore = (logging: Logging) => {
           let newActions: ActionData[] | undefined;
           let importProject = false;
           let updateMakeCodeProject = false;
+          const id = uuid();
           set(
             (state) => {
               const {
@@ -1048,6 +1106,7 @@ const createMlStore = (logging: Logging) => {
                   updatedProjectEdited = true;
                   importProject = true;
                   return {
+                    id,
                     settings: updatedSettings,
                     project: newProject,
                     projectLoadTimestamp: updatedTimestamp,
@@ -1091,7 +1150,7 @@ const createMlStore = (logging: Logging) => {
                   project: newProject,
                   projectEdited: updatedProjectEdited,
                 },
-                { timestamp: updatedTimestamp },
+                { timestamp: updatedTimestamp, id },
                 updatedSettings
               )
             );
@@ -1428,7 +1487,7 @@ const getDataWindowFromActions = (actions: ActionData[]): DataWindow => {
 
 const loadModelFromStorage = async () => {
   try {
-    const model = await tf.loadLayersModel(modelUrl);
+    const model = await storage.loadModel();
     if (model) {
       useStore.setState({ model }, false, "loadModel");
     }
@@ -1438,19 +1497,19 @@ const loadModelFromStorage = async () => {
 };
 
 useStore.subscribe(async (state, prevState) => {
-  const { model: newModel } = state;
-  const { model: previousModel } = prevState;
+  const { model: newModel, id: newId } = state;
+  const { model: previousModel, id: prevId } = prevState;
   if (newModel !== previousModel) {
-    if (!newModel) {
+    if (!newModel && newId === prevId) {
       try {
-        await tf.io.removeModel(modelUrl);
+        await storage.removeModel();
         broadcastChannel.postMessage(BroadcastChannelMessages.REMOVE_MODEL);
       } catch (err) {
         // IndexedDB not available?
       }
-    } else {
+    } else if (newModel) {
       try {
-        await newModel.save(modelUrl);
+        await storage.saveModel(newModel);
       } catch (err) {
         // IndexedDB not available?
       }
@@ -1529,7 +1588,7 @@ const getActionsFromProject = (project: MakeCodeProject): ActionData[] => {
   if (typeof dataset !== "object" || !("data" in dataset)) {
     return [];
   }
-  return migrateLegacyActionData(
+  return migrateLegacyActionDataAndAssignNewIds(
     dataset.data as OldActionData[] | ActionData[]
   );
 };
@@ -1559,8 +1618,9 @@ const renameProject = (
 
 const storageWithErrHandling = async <T>(callback: () => Promise<T>) => {
   try {
-    await callback();
+    const value = await callback();
     broadcastChannel.postMessage(BroadcastChannelMessages.RELOAD_PROJECT);
+    return value;
   } catch (err) {
     if (err instanceof DOMException && err.name === "QuotaExceededError") {
       console.error("Storage quota exceeded!", err);
@@ -1570,17 +1630,26 @@ const storageWithErrHandling = async <T>(callback: () => Promise<T>) => {
     } else {
       console.error(err);
     }
+    // Throw for now to improve typing.
+    throw err;
     // We can in theory set error state here with useStore.setState.
   }
 };
 
-export const loadProjectFromStorage = async () => {
-  // When multiple projects are supported, the latest project should only be
-  // fetched when not on the homepage / projects page.
-  const lastestProjectId = await storage.getLatestProjectId();
-  await useStore.getState().loadProjectFromStorage(lastestProjectId);
+export const loadProjectFromStorage = async (id?: string) => {
+  if (!id) {
+    id = await storageWithErrHandling(() => storage.getLatestProjectId());
+  }
+  if (!id) {
+    return true;
+  }
+  await useStore.getState().loadProjectFromStorage(id);
   await loadModelFromStorage();
   return true;
+};
+
+export const getAllProjects = async () => {
+  return storageWithErrHandling(() => storage.getAllProjectData());
 };
 
 broadcastChannel.onmessage = async (event) => {

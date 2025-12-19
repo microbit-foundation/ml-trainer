@@ -67,7 +67,7 @@ export const createUntitledProject = (): MakeCodeProject => ({
   ),
 });
 
-export const migrateLegacyActionData = (
+export const migrateLegacyActionDataAndAssignNewIds = (
   actions: OldActionData[] | ActionData[]
 ): ActionData[] => {
   return actions.map((a) => {
@@ -85,6 +85,15 @@ export const migrateLegacyActionData = (
         createdAt: (a as OldActionData).ID,
       };
     }
-    return a as ActionData;
+    // Assign new unique ids to actions and recordings.
+    // This is required if the user imports the same dataset / project twice.
+    return {
+      ...a,
+      id: uuid(),
+      recordings: a.recordings.map((r) => ({
+        ...r,
+        id: uuid(),
+      })),
+    } as ActionData;
   });
 };
