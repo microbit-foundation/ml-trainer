@@ -117,11 +117,8 @@ const partialFlashInternal = async (
           } else {
             progress(
               FlashProgressStage.Partial,
-              Math.round(
-                ((offset - fileCodeRegion.start) /
-                  (fileCodeRegion.end - fileCodeRegion.start)) *
-                  100
-              )
+              (offset - fileCodeRegion.start) /
+                (fileCodeRegion.end - fileCodeRegion.start)
             );
           }
         }
@@ -132,7 +129,7 @@ const partialFlashInternal = async (
     await delay(100); // allow time for write to complete
     await pf.writeEndOfFlashPacket();
     await delay(100); // allow time for write to complete
-    progress(FlashProgressStage.Partial, 100);
+    progress(FlashProgressStage.Partial, 1);
 
     return PartialFlashResult.Success;
   } catch (e) {

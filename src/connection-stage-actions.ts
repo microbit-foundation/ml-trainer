@@ -31,6 +31,7 @@ import { getHexFileUrl, HexType } from "./device/get-hex-file";
 import { HexUrl } from "./model";
 import { ConnectOptions } from "./store";
 import { downloadHex } from "./utils/fs-util";
+import { delay } from "./device/capacitor-ble/bluetooth";
 
 type FlowStage = Pick<ConnectionStage, "flowStep" | "flowType">;
 
@@ -170,6 +171,10 @@ export class ConnectionStageActions {
         // We'll be in Preparing at this point but from now on we want to just
         // connect/disconnect for accelerometer data.
         this.setStatus(ConnectionStatus.NotConnected);
+
+        // TODO: Tune delay.
+        // If we try to reconnect to soon then we'll time out as it'll still be booting at least in the PF case (DFU seemed OK).
+        await delay(2000);
         await this.connectBluetooth(false);
         return;
       }
