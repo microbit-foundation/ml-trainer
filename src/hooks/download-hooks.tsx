@@ -20,6 +20,7 @@ import {
 } from "../connection-stage-hooks";
 import {
   isNativeBluetoothConnection,
+  isWebUSBConnection,
   MicrobitFlashConnection,
 } from "../device/connection-utils";
 import {
@@ -103,7 +104,6 @@ export class DownloadProjectActions {
         step: DownloadStep.UnplugRadioBridgeMicrobit,
       });
     } else if (isNativeBluetoothConnection(defaultConnection)) {
-      // Disconnect input micro:bit to not trigger radio connection lost warning.
       await this.connectionStageActions.disconnectInputMicrobit();
 
       const newState: DownloadState = {
@@ -201,8 +201,9 @@ export class DownloadProjectActions {
         this.connectionStageActions.disconnectInputMicrobit;
     }
 
-    // TODO: this needs to be the reset to BT mode step.
-    this.updateStage({ step: DownloadStep.WebUsbChooseMicrobit });
+    if (isWebUSBConnection(connection)) {
+      this.updateStage({ step: DownloadStep.WebUsbChooseMicrobit });
+    }
 
     const result = await this.connectActions.connect(connection, {
       callbackIfDeviceIsSame,
