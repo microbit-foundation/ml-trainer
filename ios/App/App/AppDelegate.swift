@@ -26,7 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        let defaults = UserDefaults(suiteName: "group.org.microbit.createai")
+        guard let dict = defaults?.object(forKey: "sharedData") as? [String: Any] else { return }
+
+        // TODO: let's try this with URL data instead
+        defaults?.removeObject(forKey: "sharedData")
+
+
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -34,8 +40,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        // Called when the app was launched with a url. Feel free to add additional processing here,
-        // but if you want the App API to support tracking app url opens, make sure to keep this call
+        
+        if url.scheme == "mbcreateai" {
+            
+            // pop the custom scheme and replace it with content
+            var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+            components.scheme = "file"
+            let fileUrl = components.url
+        
+            if let jsonString = fileUrl?.absoluteString {
+                    
+                    let js = """
+                (() => {
+                const evt = new Event('indirectShareReceived');
+                evt.uri = "\(jsonString)";
+                window.dispatchEvent(evt);
+                })();
+                """
+                    if let rootVC = window?.rootViewController as? CAPBridgeViewController {
+                        rootVC.webView?.evaluateJavaScript(js, completionHandler: nil)
+                        
+                        return true
+                    }
+                }
+            
+        }
         return ApplicationDelegateProxy.shared.application(app, open: url, options: options)
     }
 

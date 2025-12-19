@@ -52,7 +52,15 @@ interface ShareReceiverI {
   openMainActivity(): Promise<void>;
   finish(): Promise<void>;
 }
-const ShareReceiver = registerPlugin<ShareReceiverI>("ShareReceiver");
+const ShareReceiver =
+  Capacitor.getPlatform() === "android"
+    ? registerPlugin<ShareReceiverI>("ShareReceiver")
+    : {
+        // TODO: this is a contrived way to do android-only stuff
+        isShare: () => Promise.resolve({ isShare: false }),
+        openMainActivity: () => Promise.resolve(),
+        finish: () => Promise.resolve(),
+      };
 
 class CodeEditorError extends Error {}
 

@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>micro:bit CreateAI</string>
+	<string>micro:bit CreateAI</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -44,38 +44,38 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<true/>
+	<true/><key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLName</key>
+        <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>mbcreateai</string>
+        </array>
+      </dict>
+    </array>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
-	<dict>
-		<key>UTTypeIdentifier</key>
-		<string>org.microbit.hexfile</string>
-		<key>UTTypeDescription</key>
-		<string>MicroBit HEX File</string>
-		<key>UTTypeConformsTo</key>
-		<array>
-		<string>public.data</string>
-		</array>
-		<key>UTTypeTagSpecification</key>
 		<dict>
-		<key>public.filename-extension</key>
-		<string>hex</string>
-		<key>public.mime-type</key>
-		<string>application/octet-stream</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>MicroBit HEX File</string>
+			<key>UTTypeIconFiles</key>
+			<array/>
+			<key>UTTypeIdentifier</key>
+			<string>org.microbit.hexfile</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<string>hex</string>
+				<key>public.mime-type</key>
+				<string>application/octet-stream</string>
+			</dict>
 		</dict>
-	</dict>
 	</array>
-	<key>CFBundleDocumentTypes</key>
-	<array>
-	<dict>
-		<key>CFBundleTypeName</key>
-		<string>MicroBit HEX File</string>
-		<key>LSItemContentTypes</key>
-		<array>
-		<string>org.microbit.hexfile</string>
-		</array>
-	</dict>
-	</array>
-
 </dict>
 </plist>
