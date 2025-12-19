@@ -41,7 +41,10 @@ export const getNextConnectionState = (
     isBrowserTabVisible,
   } = input;
 
-  if (currStatus === ConnectionStatus.Disconnected) {
+  if (
+    currStatus === ConnectionStatus.Disconnected ||
+    currStatus === ConnectionStatus.Preparing
+  ) {
     // Do not update connection status when user explicitly disconnected connection
     // until user reconnects explicitly
     return undefined;
@@ -51,7 +54,7 @@ export const getNextConnectionState = (
       ? ConnectionFlowType.ConnectRadioBridge
       : type === "radioRemote"
       ? ConnectionFlowType.ConnectRadioRemote
-      : ConnectionFlowType.ConnectBluetooth;
+      : ConnectionFlowType.ConnectWebBluetooth;
 
   // Don't update connection status when hiding browser tab if connection
   // status is already set to an error case.

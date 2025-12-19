@@ -25,7 +25,9 @@ export interface DownloadProgressDialogProps {
 
 export const getHeadingId = (flowType: ConnectionFlowType) => {
   switch (flowType) {
-    case ConnectionFlowType.ConnectBluetooth:
+    case ConnectionFlowType.ConnectWebBluetooth:
+    case ConnectionFlowType.ConnectNativeBluetooth:
+      // TODO: customise for native?
       return "downloading-data-collection-header";
     case ConnectionFlowType.ConnectRadioRemote:
       return "downloading-data-collection-header";

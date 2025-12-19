@@ -23,6 +23,10 @@ export enum ConnectionStatus {
    */
   NotConnected = "NotConnected",
   /**
+   * Skip all listener connection updates until an explicit transition.
+   */
+  Preparing = "Preparing",
+  /**
    * Connecting occurs for the initial connection.
    */
   Connecting = "Connecting",

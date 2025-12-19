@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,7 +30,25 @@
         </provider>
     </application>
 
-    <!-- Permissions -->
+    <!-- BLE Hardware Features -->
+    <!-- Restricts app visibility in Google Play Store to devices with BLE support -->
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
 
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Location permissions for BLE scanning on Android < 12 only -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="30" />
+
+    <!-- BLE permissions for Android 12+ (API 31+) -->
+    <!-- neverForLocation flag indicates we don't use BLE scan results for physical location -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="s" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+    <!-- Foreground service permission for Nordic DFU library -->
+    <!-- Note: Android 14+ (API 34+) requires specifying a foreground service type if using foreground services -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 </manifest>

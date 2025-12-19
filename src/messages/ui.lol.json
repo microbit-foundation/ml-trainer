@@ -429,6 +429,18 @@
       "value": "crwdns362770:0crwdne362770:0"
     }
   ],
+  "connect-native-start-heading": [
+    {
+      "type": 0,
+      "value": "What you need to connect"
+    }
+  ],
+  "connect-native-start-requirements1": [
+    {
+      "type": 0,
+      "value": "micro:bit with battery pack"
+    }
+  ],
   "connect-or-import": [
     {
       "type": 0,
@@ -581,6 +593,12 @@
       "value": "crwdns362818:0crwdne362818:0"
     }
   ],
+  "connect-tablet": [
+    {
+      "type": 0,
+      "value": "iPad or Android tablet"
+    }
+  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -621,6 +639,12 @@
     {
       "type": 0,
       "value": "crwdns362832:0crwdne362832:0"
+    }
+  ],
+  "connect-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "with Bluetooth enabled"
     }
   ],
   "connect-with-web-bluetooth": [
@@ -2415,6 +2439,18 @@
     {
       "type": 0,
       "value": "crwdns363298:0crwdne363298:0"
+    }
+  ],
+  "reset-to-bluetooth-mode-heading": [
+    {
+      "type": 0,
+      "value": "Reset to Bluetooth mode"
+    }
+  ],
+  "reset-to-bluetooth-mode-subtitle": [
+    {
+      "type": 0,
+      "value": "Press RESET three times"
     }
   ],
   "reset-to-default-action": [

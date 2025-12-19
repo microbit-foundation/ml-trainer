@@ -13,7 +13,7 @@ import {
 } from "../connection-stage-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import BrokenFirmwareDialog from "./BrokenFirmwareDialog";
-import ConnectBatteryDialog from "./ConnectBatteryDialog";
+import ResetToBluetoothModeDialog from "./ResetToBluetoothModeDialog";
 import ConnectCableDialog, {
   getConnectionCableDialogConfig,
 } from "./ConnectCableDialog";
@@ -64,11 +64,7 @@ const ConnectionDialogs = () => {
     case ConnectionFlowStep.Start: {
       return (
         <WhatYouWillNeedDialog
-          type={
-            stage.flowType === ConnectionFlowType.ConnectBluetooth
-              ? "bluetooth"
-              : "radio"
-          }
+          type={stage.flowType}
           {...dialogCommonProps}
           onLinkClick={
             stage.isWebBluetoothSupported && stage.isWebUsbSupported
@@ -77,6 +73,15 @@ const ConnectionDialogs = () => {
           }
           onNextClick={actions.onNextClick}
           reconnect={stage.flowStep === ConnectionFlowStep.ReconnectFailedTwice}
+        />
+      );
+    }
+    case ConnectionFlowStep.NativeBluetoothPreConnectTutorial: {
+      return (
+        <ResetToBluetoothModeDialog
+          {...dialogCommonProps}
+          onBackClick={actions.onBackClick}
+          onNextClick={actions.onNextClick}
         />
       );
     }
@@ -112,7 +117,7 @@ const ConnectionDialogs = () => {
             message: "radio-bridge",
           });
         }
-        await actions.connectAndflashMicrobit(progressCallback, onFlashSuccess);
+        await actions.connectAndFlash(progressCallback, onFlashSuccess);
       };
       return (
         <SelectMicrobitUsbDialog
@@ -136,19 +141,26 @@ const ConnectionDialogs = () => {
     }
     case ConnectionFlowStep.ConnectBattery: {
       return (
-        <ConnectBatteryDialog
+        <ResetToBluetoothModeDialog
           {...dialogCommonProps}
           onBackClick={actions.onBackClick}
           onNextClick={actions.onNextClick}
         />
       );
     }
-    case ConnectionFlowStep.EnterBluetoothPattern: {
+    case ConnectionFlowStep.BluetoothPattern: {
+      const handleConnectNativeBluetooth = async () => {
+        await actions.connectAndFlash(progressCallback, () => {});
+      };
+      const onNextClick =
+        stage.flowType === ConnectionFlowType.ConnectNativeBluetooth
+          ? handleConnectNativeBluetooth
+          : actions.onNextClick;
       return (
         <EnterBluetoothPatternDialog
           {...dialogCommonProps}
           onBackClick={actions.onBackClick}
-          onNextClick={actions.onNextClick}
+          onNextClick={onNextClick}
           microbitName={microbitName}
           onChangeMicrobitName={(name: string) => {
             actions.onChangeMicrobitName(name);
@@ -157,7 +169,7 @@ const ConnectionDialogs = () => {
         />
       );
     }
-    case ConnectionFlowStep.ConnectBluetoothTutorial: {
+    case ConnectionFlowStep.WebBluetoothPreConnectTutorial: {
       const handleConnectBluetooth = () => {
         logging.event({
           type: "connect-user",
@@ -186,7 +198,7 @@ const ConnectionDialogs = () => {
         />
       );
     }
-    case ConnectionFlowStep.ConnectingBluetooth: {
+    case ConnectionFlowStep.BluetoothConnect: {
       return (
         <LoadingDialog isOpen={isOpen} headingId="connect-bluetooth-heading" />
       );

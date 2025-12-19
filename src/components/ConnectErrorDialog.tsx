@@ -38,7 +38,15 @@ interface ConnectErrorDialogProps {
 }
 
 const contentConfig = {
-  [ConnectionFlowType.ConnectBluetooth]: {
+  // TODO: switch to dedupe?
+  [ConnectionFlowType.ConnectNativeBluetooth]: {
+    listHeading: "disconnected-warning-bluetooth2",
+    bullets: [
+      "disconnected-warning-bluetooth3",
+      "disconnected-warning-bluetooth4",
+    ],
+  },
+  [ConnectionFlowType.ConnectWebBluetooth]: {
     listHeading: "disconnected-warning-bluetooth2",
     bullets: [
       "disconnected-warning-bluetooth3",
@@ -74,7 +82,8 @@ const ReconnectErrorDialog = ({
   const { supportLinks } = useDeployment();
   const errorTextIdPrefix = errorTextIdPrefixConfig[errorStep];
   const flowTypeText = {
-    [ConnectionFlowType.ConnectBluetooth]: "bluetooth",
+    [ConnectionFlowType.ConnectNativeBluetooth]: "bluetooth",
+    [ConnectionFlowType.ConnectWebBluetooth]: "bluetooth",
     [ConnectionFlowType.ConnectRadioBridge]: "bridge",
     [ConnectionFlowType.ConnectRadioRemote]: "remote",
   }[flowType];

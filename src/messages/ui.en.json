@@ -439,6 +439,18 @@
       "value": "Micro USB cable"
     }
   ],
+  "connect-native-start-heading": [
+    {
+      "type": 0,
+      "value": "What you need to connect"
+    }
+  ],
+  "connect-native-start-requirements1": [
+    {
+      "type": 0,
+      "value": "micro:bit with battery pack"
+    }
+  ],
   "connect-or-import": [
     {
       "children": [
@@ -611,6 +623,12 @@
       "value": "Connect using Web Bluetooth instead"
     }
   ],
+  "connect-tablet": [
+    {
+      "type": 0,
+      "value": "iPad or Android tablet"
+    }
+  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -651,6 +669,12 @@
     {
       "type": 0,
       "value": "with batteries"
+    }
+  ],
+  "connect-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "with Bluetooth enabled"
     }
   ],
   "connect-with-web-bluetooth": [
@@ -2539,6 +2563,18 @@
     {
       "type": 0,
       "value": "Reload"
+    }
+  ],
+  "reset-to-bluetooth-mode-heading": [
+    {
+      "type": 0,
+      "value": "Reset to Bluetooth mode"
+    }
+  ],
+  "reset-to-bluetooth-mode-subtitle": [
+    {
+      "type": 0,
+      "value": "Press RESET three times"
     }
   ],
   "reset-to-default-action": [
