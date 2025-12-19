@@ -6,6 +6,8 @@
 import { Input } from "@chakra-ui/react";
 import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
 import { useProject } from "../hooks/project-hooks";
+import { Capacitor } from "@capacitor/core";
+import { FilePicker, PickedFile } from "@capawesome/capacitor-file-picker";
 
 export interface LoadProjectInputProps {
   /**
@@ -22,18 +24,41 @@ export interface LoadProjectInputRef {
 
 const LoadProjectInput = forwardRef<LoadProjectInputRef, LoadProjectInputProps>(
   function LoadProjectInput({ accept }: LoadProjectInputProps, ref) {
-    const { loadFile } = useProject();
+    const { loadFile, loadNativeUrl } = useProject();
     const inputRef = useRef<HTMLInputElement>(null);
     useImperativeHandle(
       ref,
       () => {
-        return {
-          chooseFile() {
-            inputRef.current?.click();
-          },
-        };
+        if (Capacitor.isNativePlatform()) {
+          return {
+            chooseFile() {
+              const pickFiles = async () => {
+                const result = await FilePicker.pickFiles({
+                  types: ["application/octet-stream"],
+                });
+
+                const filesArray: PickedFile[] = Array.from(result.files);
+                // Clear the input so we're triggered if the user opens the same file again.
+                inputRef.current!.value = "";
+                if (filesArray.length === 1) {
+                  const { path, name } = filesArray[0];
+                  if (path && name) {
+                    loadNativeUrl(path, name);
+                  }
+                }
+              };
+              void pickFiles();
+            },
+          };
+        } else {
+          return {
+            chooseFile() {
+              inputRef.current?.click();
+            },
+          };
+        }
       },
-      []
+      [loadNativeUrl]
     );
 
     const onOpen = useCallback(

@@ -16,6 +16,7 @@ import {
   RefObject,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
 } from "react";
@@ -42,6 +43,24 @@ import {
   readFileAsText,
 } from "../utils/fs-util";
 import { useDownloadActions } from "./download-hooks";
+import { Capacitor, registerPlugin } from "@capacitor/core";
+import { App as CapacitorApp } from "@capacitor/app";
+import { Encoding, Filesystem } from "@capacitor/filesystem";
+
+interface ShareReceiverI {
+  isShare(): Promise<{ isShare: boolean }>;
+  openMainActivity(): Promise<void>;
+  finish(): Promise<void>;
+}
+const ShareReceiver =
+  Capacitor.getPlatform() === "android"
+    ? registerPlugin<ShareReceiverI>("ShareReceiver")
+    : {
+        // TODO: this is a contrived way to do android-only stuff
+        isShare: () => Promise.resolve({ isShare: false }),
+        openMainActivity: () => Promise.resolve(),
+        finish: () => Promise.resolve(),
+      };
 
 class CodeEditorError extends Error {}
 
@@ -57,6 +76,7 @@ interface ProjectContext {
   projectEdited: boolean;
   resetProject: () => void;
   loadFile: (file: File, type: LoadType) => void;
+  loadNativeUrl: (url: string, filename: string) => void; // like loadFile but for apps only
   /**
    * Called to request a save.
    *
@@ -154,6 +174,79 @@ export const ProjectProvider = ({
     // This is a useful point to introduce a delay to debug MakeCode init dependencies.
     return Promise.resolve([project]);
   }, [logging, project]);
+
+  const projectRef = useRef<MakeCodeProject>();
+  projectRef.current = project;
+
+  // Native app-specific handlers
+  useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      const appUrlListener = CapacitorApp.addListener(
+        "appUrlOpen",
+        async (evt) => {
+          const contents = await Filesystem.readFile({
+            path: evt.url,
+            encoding: Encoding.UTF8,
+          });
+          const filename = filenameProbablyHex(
+            evt.url.substring(evt.url.lastIndexOf("/") + 1)
+          );
+
+          await importHex(contents.data as string, filename);
+        }
+      );
+
+      // This part receives projects sent using the Share interface.
+      // The send intent is received using a separate activity, and
+      // sent back to CreateAI's main activity so that it persists
+      // in the app's main process.
+      // See https://github.com/carsten-klaffke/send-intent/issues/69#issuecomment-1544619608
+      const initSendIntent = async () => {
+        const isShare = await ShareReceiver.isShare();
+        if (!isShare.isShare) {
+          return;
+        }
+
+        logging.log("Passing share action to main activity.");
+        await ShareReceiver.openMainActivity(); // reuses the shared object passed in
+        void ShareReceiver.finish();
+      };
+
+      void initSendIntent();
+
+      // This is the portion that gets called in the receiving MainActivity
+      window.addEventListener("indirectShareReceived", async (evt) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+        const path = (evt as any).uri as string;
+
+        const fileExtension = getLowercaseFileExtension(path);
+        logging.event({
+          type: "app-file-share-open",
+          detail: {
+            extension: fileExtension || "none",
+          },
+        });
+
+        const contents = await Filesystem.readFile({
+          path,
+          encoding: Encoding.UTF8,
+        });
+
+        const filename = filenameProbablyHex(
+          path.substring(path.lastIndexOf("/") + 1)
+        );
+
+        await importHex(contents.data as string, filename);
+      });
+
+      return () => {
+        const removeListenerHandler = async () => {
+          void (await appUrlListener).remove();
+        };
+        void removeListenerHandler();
+      };
+    }
+  });
 
   const startUpTimeout = 90000;
 
@@ -302,6 +395,50 @@ export const ProjectProvider = ({
   }, [doAfterEditorUpdate, logging]);
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
+  const importHex = useCallback(
+    async (hex: string, fileName: string) => {
+      const makeCodeMagicMark = "41140E2FB82FA2BB";
+      // Check if is a MakeCode hex, otherwise show error dialog.
+      if (!hex.includes(makeCodeMagicMark)) {
+        setPostImportDialogState(PostImportDialogState.Error);
+      }
+      const hasTimedOut = await checkIfEditorStartUpTimedOut(
+        editorReadyPromise.promise
+      );
+      if (hasTimedOut) {
+        openEditorTimedOutDialog();
+        return;
+      }
+      // This triggers the code in editorChanged to update actions etc.
+      setEditorLoadingFile();
+      driverRef.current!.importFile({
+        filename: fileName,
+        parts: [hex],
+      });
+    },
+    [
+      checkIfEditorStartUpTimedOut,
+      driverRef,
+      editorReadyPromise.promise,
+      openEditorTimedOutDialog,
+      setEditorLoadingFile,
+      setPostImportDialogState,
+    ]
+  );
+
+  const importJson = useCallback(
+    (actionsString: string) => {
+      const actions = JSON.parse(actionsString) as unknown;
+      if (isDatasetUserFileFormat(actions)) {
+        loadDataset(actions);
+        navigate(createDataSamplesPageUrl());
+      } else {
+        setPostImportDialogState(PostImportDialogState.Error);
+      }
+    },
+    [loadDataset, navigate, setPostImportDialogState]
+  );
+
   const loadFile = useCallback(
     async (file: File, type: LoadType): Promise<void> => {
       const fileExtension = getLowercaseFileExtension(file.name);
@@ -313,49 +450,44 @@ export const ProjectProvider = ({
       });
       if (fileExtension === "json") {
         const actionsString = await readFileAsText(file);
-        const actions = JSON.parse(actionsString) as unknown;
-        if (isDatasetUserFileFormat(actions)) {
-          loadDataset(actions);
-          navigate(createDataSamplesPageUrl());
-        } else {
-          setPostImportDialogState(PostImportDialogState.Error);
-        }
+        importJson(actionsString);
       } else if (fileExtension === "hex") {
         const hex = await readFileAsText(file);
-        const makeCodeMagicMark = "41140E2FB82FA2BB";
-        // Check if is a MakeCode hex, otherwise show error dialog.
-        if (hex.includes(makeCodeMagicMark)) {
-          const hasTimedOut = await checkIfEditorStartUpTimedOut(
-            editorReadyPromise.promise
-          );
-          if (hasTimedOut) {
-            openEditorTimedOutDialog();
-            return;
-          }
-          // This triggers the code in editorChanged to update actions etc.
-          setEditorLoadingFile();
-          driverRef.current!.importFile({
-            filename: file.name,
-            parts: [hex],
-          });
-        } else {
-          setPostImportDialogState(PostImportDialogState.Error);
-        }
+        await importHex(hex, file.name);
       } else {
         setPostImportDialogState(PostImportDialogState.Error);
       }
     },
-    [
-      checkIfEditorStartUpTimedOut,
-      driverRef,
-      editorReadyPromise.promise,
-      loadDataset,
-      logging,
-      navigate,
-      openEditorTimedOutDialog,
-      setPostImportDialogState,
-      setEditorLoadingFile,
-    ]
+    [importHex, importJson, logging, setPostImportDialogState]
+  );
+
+  // Capacitor-only
+  const loadNativeUrl = useCallback(
+    async (path: string, filename: string): Promise<void> => {
+      const fileExtension = getLowercaseFileExtension(filename);
+      logging.event({
+        type: "app-file-load",
+        detail: {
+          extension: fileExtension || "none",
+        },
+      });
+      if (fileExtension === "json") {
+        const actionsFile = await Filesystem.readFile({
+          path,
+          encoding: Encoding.UTF8,
+        });
+        importJson(actionsFile.data as string);
+      } else if (fileExtension === "hex") {
+        const hexFile = await Filesystem.readFile({
+          path,
+          encoding: Encoding.UTF8,
+        });
+        await importHex(hexFile.data as string, filename);
+      } else {
+        setPostImportDialogState(PostImportDialogState.Error);
+      }
+    },
+    [importHex, importJson, logging, setPostImportDialogState]
   );
 
   const setSave = useStore((s) => s.setSave);
@@ -459,6 +591,7 @@ export const ProjectProvider = ({
   const value = useMemo(
     () => ({
       loadFile,
+      loadNativeUrl,
       openEditor,
       browserNavigationToEditor,
       project,
@@ -477,6 +610,7 @@ export const ProjectProvider = ({
     }),
     [
       loadFile,
+      loadNativeUrl,
       openEditor,
       browserNavigationToEditor,
       project,
@@ -496,4 +630,18 @@ export const ProjectProvider = ({
   return (
     <ProjectContext.Provider value={value}>{children}</ProjectContext.Provider>
   );
+};
+
+// Forgivingly shim broken filenames into hex files,
+// we can't rely on android to maintain file data.
+// Even Android's Files app often passes us a broken
+// filename. MakeCode is resilient to bad files.
+const filenameProbablyHex = (filename: string) => {
+  if (filename.length === 0) {
+    return "Unnamed.hex";
+  }
+  if (!filename.includes(".")) {
+    return filename + ".hex";
+  }
+  return filename;
 };

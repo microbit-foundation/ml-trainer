@@ -19,6 +19,7 @@ import { TourTrigger } from "../model";
 import { useStore } from "../store";
 import { userGuideUrl } from "../utils/external-links";
 import { createDataSamplesPageUrl, createTestingModelPageUrl } from "../urls";
+import { Capacitor } from "@capacitor/core";
 
 interface HelpMenuItemsProps {
   onAboutDialogOpen: () => void;
@@ -100,7 +101,7 @@ const HelpMenuItems = ({
           <FormattedMessage id="privacy" />
         </MenuItem>
       )}
-      {deployment.compliance.manageCookies && (
+      {deployment.compliance.manageCookies && !Capacitor.isNativePlatform() && (
         <MenuItem
           as="button"
           onClick={deployment.compliance.manageCookies}

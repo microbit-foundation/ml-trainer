@@ -25,6 +25,7 @@ interface TemplateStrings {
   appNameFull: string;
   ogDescription: undefined | string;
   metaDescription: undefined | string;
+  buildMode?: string;
 }
 
 // Support optionally pulling in external branding if the module is installed.
@@ -58,6 +59,10 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
         ogDescription: undefined,
         metaDescription: undefined,
       };
+
+  // Add VITE_BUILD_MODE environment variable to template data
+  strings.buildMode = process.env.VITE_BUILD_MODE;
+
   return {
     base: process.env.BASE_URL ?? "/",
     plugins: [viteEjsPlugin(strings), react(), svgr()],

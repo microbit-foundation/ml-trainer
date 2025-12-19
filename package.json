@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc && cross-env VITE_VERSION=$npm_package_version vite build",
+    "build:apps": "tsc && cross-env VITE_BUILD_MODE=apps VITE_VERSION=$npm_package_version vite build",
     "ci": "npm run test && npm run lint && npm run build && npx prettier --check src",
     "deploy": "website-deploy-aws",
     "dev": "cross-env VITE_VERSION=$npm_package_version vite",
@@ -23,6 +24,7 @@
     "ml4f-output": "vitest ml4f-output --run"
   },
   "devDependencies": {
+    "@capacitor/cli": "^7.4.4",
     "@chakra-ui/cli": "^2.4.1",
     "@formatjs/cli": "^6.2.7",
     "@playwright/test": "^1.42.1",
@@ -56,6 +58,13 @@
     "vitest-dom": "^0.1.1"
   },
   "dependencies": {
+    "@capacitor-community/safe-area": "^7.0.0-beta.5",
+    "@capacitor/android": "^7.4.4",
+    "@capacitor/app": "^7.1.0",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/filesystem": "^7.1.5",
+    "@capacitor/ios": "^7.4.4",
+    "@capawesome/capacitor-file-picker": "^7.2.0",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",

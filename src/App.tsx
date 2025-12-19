@@ -57,6 +57,8 @@ import {
   createNewPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
+import { SafeArea, SystemBarsStyle } from "@capacitor-community/safe-area";
+import { Capacitor } from "@capacitor/core";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -206,6 +208,12 @@ const createRouter = () => {
 
 const App = () => {
   useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      void SafeArea.setSystemBarsStyle({
+        style: SystemBarsStyle.Dark,
+      });
+    }
+
     if (navigator.bluetooth) {
       navigator.bluetooth
         .getAvailability()

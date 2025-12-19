@@ -1,5 +1,5 @@
 /dist/
-/.idea/
+.idea/
 /node_modules/
 
 .DS_Store
@@ -20,3 +20,5 @@
 /playwright-report/
 /test-results/
 /ml4f-output/
+/android/app/src/main/assets/public
+/ios/App/App/public
