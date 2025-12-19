@@ -6,18 +6,23 @@
  */
 import {
   Box,
+  Card,
+  CardBody,
   Container,
+  Grid,
+  GridItem,
   Heading,
   HStack,
   Icon,
+  IconButton,
   Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { ReactNode, useCallback, useRef } from "react";
+import { ReactNode, Suspense, useCallback, useRef, useState } from "react";
 import { RiAddLine, RiFolderOpenLine, RiRestartLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useNavigate } from "react-router";
+import { Await, useAsyncValue, useLoaderData, useNavigate } from "react-router";
 import DefaultPageLayout, {
   HomeMenuItem,
   HomeToolbarItem,
@@ -27,9 +32,12 @@ import LoadProjectInput, {
 } from "../components/LoadProjectInput";
 import NewPageChoice from "../components/NewPageChoice";
 import { useLogging } from "../logging/logging-hooks";
-import { useStore } from "../store";
+import { loadProjectFromStorage, useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 import { useProjectName } from "../hooks/project-hooks";
+import LoadingAnimation from "../components/LoadingAnimation";
+import { ProjectData, ProjectDataWithActions, StoreAction } from "../storage";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 const NewPage = () => {
   const existingSessionTimestamp = useStore((s) => s.timestamp);
@@ -37,6 +45,9 @@ const NewPage = () => {
   const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
   const logging = useLogging();
+  const { allProjectData } = useLoaderData() as {
+    allProjectData: ProjectData[];
+  };
 
   const handleOpenLastSession = useCallback(() => {
     logging.event({
@@ -165,10 +176,119 @@ const NewPage = () => {
               </NewPageChoice>
               <Box flex="1" />
             </HStack>
+            <Suspense fallback={<LoadingAnimation />}>
+              <Await resolve={allProjectData}>
+                <ProjectsList />
+              </Await>
+            </Suspense>
           </VStack>
         </Container>
       </VStack>
     </DefaultPageLayout>
+  );
+};
+
+const ProjectsList = () => {
+  const data = useAsyncValue() as ProjectDataWithActions[];
+  const [projects, setProjects] = useState(data);
+  const deleteProject = useStore((s) => s.deleteProject);
+
+  const handleDeleteProject = useCallback(
+    async (id: string) => {
+      setProjects((prev) => prev.filter((p) => p.id !== id));
+      await deleteProject(id);
+    },
+    [deleteProject]
+  );
+
+  return (
+    <>
+      <Heading as="h2" fontSize="2xl" mt={8}>
+        Projects
+      </Heading>
+      <Grid mt={3} gap={3} templateColumns="repeat(5, 1fr)">
+        {projects.map((projectData) => (
+          <GridItem key={projectData.id} display="flex">
+            <ProjectCard
+              id={projectData.id}
+              name={projectData.name}
+              actions={projectData.actions}
+              updatedAt={projectData.updatedAt}
+              onDeleteProject={handleDeleteProject}
+            />
+          </GridItem>
+        ))}
+      </Grid>
+    </>
+  );
+};
+
+interface ProjectCard {
+  id: string;
+  name: string;
+  actions: StoreAction[];
+  updatedAt: number;
+  onDeleteProject: (id: string) => Promise<void>;
+}
+
+const ProjectCard = ({
+  id,
+  name,
+  actions,
+  updatedAt,
+  onDeleteProject,
+}: ProjectCard) => {
+  const navigate = useNavigate();
+
+  const handleLoadProject = useCallback(
+    async (_e: React.MouseEvent) => {
+      await loadProjectFromStorage(id);
+      navigate(createDataSamplesPageUrl());
+    },
+    [id, navigate]
+  );
+
+  const handleDeleteProject = useCallback(
+    async (e: React.MouseEvent) => {
+      e.stopPropagation();
+      await onDeleteProject(id);
+    },
+    [id, onDeleteProject]
+  );
+
+  return (
+    <Card onClick={handleLoadProject} cursor="pointer" flexGrow={1}>
+      <IconButton
+        aria-label="Delete project"
+        onClick={handleDeleteProject}
+        icon={<DeleteIcon />}
+        position="absolute"
+        right={1}
+        top={1}
+        borderRadius="sm"
+        border="none"
+      />
+      <CardBody display="flex">
+        <Stack h="100%">
+          <Heading as="h3" fontSize="xl">
+            {name}
+          </Heading>
+          <Text mb="auto">
+            Actions:{" "}
+            {actions.length > 0
+              ? actions.map((a) => a.name).join(", ")
+              : "none"}
+          </Text>
+          <Text>{`Last edited: ${new Intl.DateTimeFormat(undefined, {
+            dateStyle: "medium",
+            timeStyle: "medium",
+          }).format(updatedAt)}`}</Text>
+          <Text fontSize="xs" color="gray.600">
+            id: {id}
+          </Text>
+        </Stack>
+      </CardBody>
+    </Card>
   );
 };
 

@@ -19,18 +19,25 @@ import {
 import actionDataBadLabels from "./test-fixtures/shake-still-circle-legacy-bad-labels.json";
 import actionData from "./test-fixtures/shake-still-circle-data-samples-legacy.json";
 import testData from "./test-fixtures/shake-still-circle-legacy-test-data.json";
-import { currentDataWindow, migrateLegacyActionData } from "./project-utils";
+import {
+  currentDataWindow,
+  migrateLegacyActionDataAndAssignNewIds,
+} from "./project-utils";
 
 const fixUpTestData = (data: Partial<OldActionData>[]): OldActionData[] => {
   data.forEach((action) => (action.icon = "Heart"));
   return data as OldActionData[];
 };
 
-const migratedActionData = migrateLegacyActionData(fixUpTestData(actionData));
-const migratedActionDataBadLabels = migrateLegacyActionData(
+const migratedActionData = migrateLegacyActionDataAndAssignNewIds(
+  fixUpTestData(actionData)
+);
+const migratedActionDataBadLabels = migrateLegacyActionDataAndAssignNewIds(
   fixUpTestData(actionDataBadLabels)
 );
-const migratedTestData = migrateLegacyActionData(fixUpTestData(testData));
+const migratedTestData = migrateLegacyActionDataAndAssignNewIds(
+  fixUpTestData(testData)
+);
 
 let trainingResult: TrainingResult;
 beforeAll(async () => {

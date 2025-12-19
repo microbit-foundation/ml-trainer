@@ -50,7 +50,7 @@ import ImportPage from "./pages/ImportPage";
 import NewPage from "./pages/NewPage";
 import TestingModelPage from "./pages/TestingModelPage";
 import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
-import { loadProjectFromStorage, useStore } from "./store";
+import { getAllProjects, loadProjectFromStorage, useStore } from "./store";
 import {
   createCodePageUrl,
   createDataSamplesPageUrl,
@@ -185,6 +185,10 @@ const createRouter = () => {
         {
           path: createNewPageUrl(),
           element: <NewPage />,
+          loader: () => {
+            const allProjectData = getAllProjects();
+            return defer({ allProjectData });
+          },
         },
         { path: createImportPageUrl(), element: <ImportPage /> },
         {
