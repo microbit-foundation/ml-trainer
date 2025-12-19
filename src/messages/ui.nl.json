@@ -2565,6 +2565,18 @@
       "value": "Herladen"
     }
   ],
+  "reset-to-bluetooth-mode-heading": [
+    {
+      "type": 0,
+      "value": "Reset to Bluetooth mode"
+    }
+  ],
+  "reset-to-bluetooth-mode-subtitle": [
+    {
+      "type": 0,
+      "value": "Press RESET three times"
+    }
+  ],
   "reset-to-default-action": [
     {
       "type": 0,

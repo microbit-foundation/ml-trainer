@@ -13,7 +13,7 @@ import {
 } from "../connection-stage-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import BrokenFirmwareDialog from "./BrokenFirmwareDialog";
-import ConnectBatteryDialog from "./ConnectBatteryDialog";
+import ResetToBluetoothModeDialog from "./ResetToBluetoothModeDialog";
 import ConnectCableDialog, {
   getConnectionCableDialogConfig,
 } from "./ConnectCableDialog";
@@ -76,6 +76,15 @@ const ConnectionDialogs = () => {
         />
       );
     }
+    case ConnectionFlowStep.NativeBluetoothPreConnectTutorial: {
+      return (
+        <ResetToBluetoothModeDialog
+          {...dialogCommonProps}
+          onBackClick={actions.onBackClick}
+          onNextClick={actions.onNextClick}
+        />
+      );
+    }
     case ConnectionFlowStep.ConnectCable: {
       const config = getConnectionCableDialogConfig(
         stage.flowType,
@@ -132,7 +141,7 @@ const ConnectionDialogs = () => {
     }
     case ConnectionFlowStep.ConnectBattery: {
       return (
-        <ConnectBatteryDialog
+        <ResetToBluetoothModeDialog
           {...dialogCommonProps}
           onBackClick={actions.onBackClick}
           onNextClick={actions.onNextClick}

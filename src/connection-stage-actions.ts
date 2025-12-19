@@ -446,6 +446,10 @@ const nativeBluetoothFlow = ({
     flowType: ConnectionFlowType.ConnectNativeBluetooth,
   },
   {
+    flowStep: ConnectionFlowStep.NativeBluetoothPreConnectTutorial,
+    flowType: ConnectionFlowType.ConnectNativeBluetooth,
+  },
+  {
     flowStep: ConnectionFlowStep.BluetoothPattern,
     flowType: ConnectionFlowType.ConnectNativeBluetooth,
   },

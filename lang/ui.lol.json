@@ -1463,6 +1463,14 @@
     "defaultMessage": "crwdns363298:0crwdne363298:0",
     "description": "Reload button text"
   },
+  "reset-to-bluetooth-mode-heading": {
+    "defaultMessage": "Reset to Bluetooth mode",
+    "description": "Title for dialog with instructures on using "
+  },
+  "reset-to-bluetooth-mode-subtitle": {
+    "defaultMessage": "Press RESET three times",
+    "description": "Instructions to press the physical reset button on the micro:bit"
+  },
   "reset-to-default-action": {
     "defaultMessage": "crwdns363300:0crwdne363300:0",
     "description": "Reset to default blocks button text"

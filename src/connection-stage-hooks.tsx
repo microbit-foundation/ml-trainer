@@ -135,7 +135,7 @@ interface ConnectionStageProviderProps {
   children: ReactNode;
 }
 
-interface StoredConnectionConfig {
+export interface StoredConnectionConfig {
   bluetoothMicrobitName?: string;
   radioRemoteDeviceId?: number;
 }
@@ -157,15 +157,18 @@ const getInitialConnectionStageValue = (
   hasFailedToReconnectTwice: false,
 });
 
+export const useConnectionConfigStorage = () => {
+  return useStorage<StoredConnectionConfig>("local", "connectionConfig", {
+    bluetoothMicrobitName: undefined,
+    radioRemoteDeviceId: undefined,
+  });
+};
+
 export const ConnectionStageProvider = ({
   children,
 }: ConnectionStageProviderProps) => {
-  const [config, setConfig] = useStorage<StoredConnectionConfig>(
-    "local",
-    "connectionConfig",
-    { bluetoothMicrobitName: undefined, radioRemoteDeviceId: undefined }
-  );
   const connectActions = useConnectActions();
+  const [config, setConfig] = useConnectionConfigStorage();
   const [connectionStage, setConnStage] = useState<ConnectionStage>(
     getInitialConnectionStageValue(
       config,

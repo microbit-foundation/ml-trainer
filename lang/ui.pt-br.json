@@ -1463,6 +1463,14 @@
     "defaultMessage": "Recarregar",
     "description": "Reload button text"
   },
+  "reset-to-bluetooth-mode-heading": {
+    "defaultMessage": "Reset to Bluetooth mode",
+    "description": "Title for dialog with instructures on using "
+  },
+  "reset-to-bluetooth-mode-subtitle": {
+    "defaultMessage": "Press RESET three times",
+    "description": "Instructions to press the physical reset button on the micro:bit"
+  },
   "reset-to-default-action": {
     "defaultMessage": "Resetar para os blocos padrão",
     "description": "Reset to default blocks button text"

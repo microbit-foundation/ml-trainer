@@ -12,7 +12,12 @@ import { ConnectActions, ConnectResult } from "../connect-actions";
 import { useConnectActions } from "../connect-actions-hooks";
 import { ConnectionStatus } from "../connect-status-hooks";
 import { ConnectionStageActions } from "../connection-stage-actions";
-import { ConnectionStage, useConnectionStage } from "../connection-stage-hooks";
+import {
+  ConnectionStage,
+  StoredConnectionConfig,
+  useConnectionConfigStorage,
+  useConnectionStage,
+} from "../connection-stage-hooks";
 import {
   isNativeBluetoothConnection,
   MicrobitFlashConnection,
@@ -31,6 +36,7 @@ import { downloadHex } from "../utils/fs-util";
 export class DownloadProjectActions {
   private flashingProgressCallback: (value: number) => void;
   constructor(
+    private config: StoredConnectionConfig,
     private state: DownloadState,
     private setState: (stage: DownloadState) => void,
     private settings: Settings,
@@ -64,17 +70,23 @@ export class DownloadProjectActions {
         ...this.state,
         step: DownloadStep.FlashingInProgress,
         hex: download,
+        bluetoothMicrobitName: this.config.bluetoothMicrobitName,
       };
       this.setState(newState);
       await this.flash(this.state, this.state.connection);
     } else if (!this.settings.showPreDownloadHelp) {
-      const newState = { ...this.state, hex: download };
+      const newState = {
+        ...this.state,
+        hex: download,
+        bluetoothMicrobitName: this.config.bluetoothMicrobitName,
+      };
       await this.onHelpNext(true, newState);
     } else {
       this.updateStage({
         step: DownloadStep.Help,
         microbitChoice: SameOrDifferentChoice.Default,
         hex: download,
+        bluetoothMicrobitName: this.config.bluetoothMicrobitName,
       });
     }
   };
@@ -90,21 +102,16 @@ export class DownloadProjectActions {
         ...(state ?? {}),
         step: DownloadStep.UnplugRadioBridgeMicrobit,
       });
-    } else if (
-      isNativeBluetoothConnection(defaultConnection) &&
-      [
-        DeviceConnectionStatus.CONNECTED,
-        DeviceConnectionStatus.DISCONNECTED,
-      ].includes(defaultConnection.status)
-    ) {
+    } else if (isNativeBluetoothConnection(defaultConnection)) {
+      // Disconnect input micro:bit to not trigger radio connection lost warning.
+      await this.connectionStageActions.disconnectInputMicrobit();
+
       const newState: DownloadState = {
         ...this.state,
         ...state,
-        step: DownloadStep.FlashingInProgress,
-        bluetoothMicrobitName: defaultConnection.getName(),
+        step: DownloadStep.NativeBluetoothPreConnectTutorial,
       };
       this.setState(newState);
-      await this.flash(this.state, defaultConnection);
     } else if (this.connectionStatus !== ConnectionStatus.NotConnected) {
       // If we've Web Bluetooth connected to a micro:bit in the session,
       // we make the user choose a device even if the connection has been lost since.
@@ -253,6 +260,8 @@ export class DownloadProjectActions {
     switch (this.state.step) {
       case DownloadStep.UnplugRadioBridgeMicrobit:
         return DownloadStep.ConnectRadioRemoteMicrobit;
+      case DownloadStep.NativeBluetoothPreConnectTutorial:
+        return DownloadStep.BluetoothPattern;
       case DownloadStep.ConnectCable:
       case DownloadStep.ConnectRadioRemoteMicrobit:
         return DownloadStep.WebUsbFlashingTutorial;
@@ -271,6 +280,14 @@ export class DownloadProjectActions {
       }
       case DownloadStep.ConnectRadioRemoteMicrobit:
         return DownloadStep.UnplugRadioBridgeMicrobit;
+      case DownloadStep.NativeBluetoothPreConnectTutorial: {
+        if (this.settings.showPreDownloadHelp) {
+          return DownloadStep.Help;
+        }
+        return undefined;
+      }
+      case DownloadStep.BluetoothPattern:
+        return DownloadStep.NativeBluetoothPreConnectTutorial;
       case DownloadStep.ConnectCable: {
         if (this.state.microbitChoice !== SameOrDifferentChoice.Default) {
           return DownloadStep.ChooseSameOrDifferentMicrobit;
@@ -287,6 +304,7 @@ export class DownloadProjectActions {
           : DownloadStep.ConnectCable;
       }
       case DownloadStep.IncompatibleDevice:
+        // TODO: dubious.
         return DownloadStep.ChooseSameOrDifferentMicrobit;
       default:
         throw new Error(`Prev step not accounted for: ${this.state.step}`);
@@ -310,6 +328,8 @@ export const useDownloadActions = (): DownloadProjectActions => {
   );
   const setStage = useStore((s) => s.setDownload);
   const [settings, setSettings] = useSettings();
+  const [config] = useConnectionConfigStorage();
+
   const connectActions = useConnectActions();
   const {
     actions: connectionStageActions,
@@ -319,6 +339,7 @@ export const useDownloadActions = (): DownloadProjectActions => {
   return useMemo(
     () =>
       new DownloadProjectActions(
+        config,
         stage,
         setStage,
         settings,
@@ -330,6 +351,7 @@ export const useDownloadActions = (): DownloadProjectActions => {
         setDownloadFlashingProgress
       ),
     [
+      config,
       connectActions,
       connectionStage,
       connectionStageActions,
