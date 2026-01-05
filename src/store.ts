@@ -1486,13 +1486,9 @@ const getDataWindowFromActions = (actions: ActionData[]): DataWindow => {
 };
 
 const loadModelFromStorage = async () => {
-  try {
-    const model = await storage.loadModel();
-    if (model) {
-      useStore.setState({ model }, false, "loadModel");
-    }
-  } catch (err) {
-    // This happens if there's no model.
+  const model = await storage.loadModel();
+  if (model) {
+    useStore.setState({ model }, false, "loadModel");
   }
 };
 
@@ -1501,18 +1497,10 @@ useStore.subscribe(async (state, prevState) => {
   const { model: previousModel, id: prevId } = prevState;
   if (newModel !== previousModel) {
     if (!newModel && newId === prevId) {
-      try {
-        await storage.removeModel();
-        broadcastChannel.postMessage(BroadcastChannelMessages.REMOVE_MODEL);
-      } catch (err) {
-        // IndexedDB not available?
-      }
+      await storage.removeModel();
+      broadcastChannel.postMessage(BroadcastChannelMessages.REMOVE_MODEL);
     } else if (newModel) {
-      try {
-        await storage.saveModel(newModel);
-      } catch (err) {
-        // IndexedDB not available?
-      }
+      await storage.saveModel(newModel);
     }
   }
 });

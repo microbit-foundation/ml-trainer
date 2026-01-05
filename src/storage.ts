@@ -104,10 +104,14 @@ export class Database {
       async upgrade(db) {
         const localStorageProject = getLocalStorageProject();
         if (localStorageProject) {
-          const model = await tf.loadLayersModel(oldModelUrl);
-          if (model) {
-            await model.save(defaultProjectId);
-            await tf.io.removeModel(oldModelUrl);
+          try {
+            const model = await tf.loadLayersModel(oldModelUrl);
+            if (model) {
+              await model.save(defaultProjectId);
+              await tf.io.removeModel(oldModelUrl);
+            }
+          } catch (err) {
+            // There is no model.
           }
         }
         for (const store of Object.values(DatabaseStore)) {
@@ -704,17 +708,30 @@ export class Database {
 
   async saveModel(model: tf.LayersModel) {
     const projectId = this.assertProjectId();
-    await model.save(`indexeddb://${projectId}`);
+    try {
+      await model.save(`indexeddb://${projectId}`);
+    } catch (err) {
+      // IndexedDB not available?
+    }
   }
 
   async removeModel() {
     const projectId = this.assertProjectId();
-    await tf.io.removeModel(`indexeddb://${projectId}`);
+    try {
+      await tf.io.removeModel(`indexeddb://${projectId}`);
+    } catch (err) {
+      // IndexedDB not available?
+    }
   }
 
   async loadModel(): Promise<tf.LayersModel | undefined> {
     const projectId = this.assertProjectId();
-    return tf.loadLayersModel(`indexeddb://${projectId}`);
+    try {
+      return await tf.loadLayersModel(`indexeddb://${projectId}`);
+    } catch (err) {
+      // There is no model.
+      return undefined;
+    }
   }
 }
 
