@@ -117,80 +117,32 @@ interface Schema extends DBSchema {
 export class Database {
   dbPromise: Promise<IDBPDatabase<Schema>>;
   projectId: string = defaultProjectId;
+  dbReady: boolean = false;
   constructor() {
-    this.dbPromise = this.initialize();
+    this.dbPromise = this.initializeDb();
   }
 
-  initialize(): Promise<IDBPDatabase<Schema>> {
+  async useDb(): Promise<IDBPDatabase<Schema>> {
+    if (this.dbReady) {
+      return this.dbPromise;
+    }
+    const db = await this.dbPromise;
+    const settings = await db.get(
+      DatabaseStore.SETTINGS,
+      DatabaseStore.SETTINGS
+    );
+    if (!settings) {
+      await this.migrateFromLocalStorage(db);
+    }
+    this.dbReady = true;
+    return db;
+  }
+
+  initializeDb(): Promise<IDBPDatabase<Schema>> {
     return openDB(DATABASE_NAME, 1, {
-      async upgrade(db) {
-        const localStorageProject = getLocalStorageProject();
+      upgrade(db) {
         for (const store of Object.values(DatabaseStore)) {
           const objectStore = db.createObjectStore(store);
-          if (localStorageProject) {
-            switch (store) {
-              case DatabaseStore.ACTIONS: {
-                await Promise.all(
-                  localStorageProject.actions.map((a) =>
-                    objectStore.add(
-                      prepActionForStorage(a, defaultProjectId),
-                      a.id
-                    )
-                  )
-                );
-                break;
-              }
-              case DatabaseStore.RECORDINGS: {
-                await Promise.all(
-                  localStorageProject.actions
-                    .flatMap((a) =>
-                      a.recordings.map((r) => ({ ...r, actionId: a.id }))
-                    )
-                    .map((r) => objectStore.add(r, r.id))
-                );
-                break;
-              }
-              case DatabaseStore.MAKECODE_DATA: {
-                await objectStore.add(
-                  {
-                    project: localStorageProject.project,
-                    projectEdited: localStorageProject.projectEdited,
-                  },
-                  defaultProjectId
-                );
-                break;
-              }
-              case DatabaseStore.PROJECT_DATA: {
-                await objectStore.add(
-                  {
-                    id: defaultProjectId,
-                    timestamp: localStorageProject.timestamp,
-                    createdAt: defaultCreatedAt,
-                    updatedAt: defaultCreatedAt,
-                  },
-                  defaultProjectId
-                );
-                break;
-              }
-              case DatabaseStore.SETTINGS: {
-                await objectStore.add(
-                  localStorageProject.settings,
-                  DatabaseStore.SETTINGS
-                );
-                break;
-              }
-            }
-            continue;
-          }
-          // Set default values if there is are data to migrate.
-          if (
-            store === DatabaseStore.PROJECT_DATA ||
-            store === DatabaseStore.MAKECODE_DATA ||
-            store === DatabaseStore.SETTINGS
-          ) {
-            const defaultData = defaultStoreData[store];
-            await objectStore.add(defaultData.value, defaultData.key);
-          }
           if (store === DatabaseStore.ACTIONS) {
             (
               objectStore as IDBPObjectStore<
@@ -212,9 +164,91 @@ export class Database {
             ).createIndex("actionId", "actionId");
           }
         }
-        localStorage.removeItem(DATABASE_NAME);
       },
     });
+  }
+
+  async migrateFromLocalStorage(db: IDBPDatabase<Schema>): Promise<void> {
+    const localStorageProject = getLocalStorageProject();
+    if (!localStorageProject) {
+      // Set default values if there is are no data to migrate.
+      const tx = db.transaction(
+        [
+          DatabaseStore.MAKECODE_DATA,
+          DatabaseStore.PROJECT_DATA,
+          DatabaseStore.SETTINGS,
+        ],
+        "readwrite"
+      );
+      const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
+      const defaultSettings = defaultStoreData[DatabaseStore.SETTINGS];
+      await settingsStore.add(
+        defaultSettings.value as Settings,
+        defaultSettings.key
+      );
+      const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+      const defaultMakeCodeProject =
+        defaultStoreData[DatabaseStore.MAKECODE_DATA];
+      await makeCodeStore.add(
+        defaultMakeCodeProject.value as MakeCodeData,
+        defaultMakeCodeProject.key
+      );
+      const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+      const defaultProjectData = defaultStoreData[DatabaseStore.PROJECT_DATA];
+      await projectDataStore.add(
+        defaultProjectData.value as ProjectData,
+        defaultProjectData.key
+      );
+      return tx.done;
+    }
+    const tx = db.transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.RECORDINGS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+        DatabaseStore.SETTINGS,
+      ],
+      "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    await Promise.all(
+      localStorageProject.actions.map((a) =>
+        actionsStore.add(prepActionForStorage(a, defaultProjectId), a.id)
+      )
+    );
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await Promise.all(
+      localStorageProject.actions
+        .flatMap((a) => a.recordings.map((r) => ({ ...r, actionId: a.id })))
+        .map((r) => recordingsStore.add(r, r.id))
+    );
+
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    await makeCodeStore.add(
+      {
+        project: localStorageProject.project,
+        projectEdited: localStorageProject.projectEdited,
+      },
+      defaultProjectId
+    );
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    await projectDataStore.add(
+      {
+        id: defaultProjectId,
+        timestamp: localStorageProject.timestamp,
+        createdAt: defaultCreatedAt,
+        updatedAt: defaultCreatedAt,
+      },
+      defaultProjectId
+    );
+    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
+    await settingsStore.add(
+      localStorageProject.settings,
+      DatabaseStore.SETTINGS
+    );
+    await tx.done;
+    localStorage.removeItem(DATABASE_NAME);
   }
 
   async newSession(
@@ -222,7 +256,7 @@ export class Database {
     projectData: Partial<ProjectData>
   ): Promise<void> {
     this.projectId = uuid();
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -253,7 +287,7 @@ export class Database {
   }
 
   async loadProject(id: string): Promise<PersistedProjectData> {
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -316,7 +350,7 @@ export class Database {
     settings: Settings
   ): Promise<void> {
     this.projectId = uuid();
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -363,7 +397,7 @@ export class Database {
 
   async getLatestProjectId(): Promise<string> {
     const projectData = await (
-      await this.dbPromise
+      await this.useDb()
     ).getAll(DatabaseStore.PROJECT_DATA);
     const latestProjectData = orderBy(projectData, "updatedAt", "desc")[0];
     this.projectId = latestProjectData.id;
@@ -374,7 +408,7 @@ export class Database {
     action: ActionData,
     makeCodeData: MakeCodeData
   ): Promise<void> {
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.MAKECODE_DATA,
@@ -403,7 +437,7 @@ export class Database {
     action: ActionData,
     makeCodeData: MakeCodeData
   ): Promise<void> {
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.MAKECODE_DATA,
@@ -432,7 +466,7 @@ export class Database {
     actions: ActionData[],
     makeCodeData: MakeCodeData
   ): Promise<void> {
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.MAKECODE_DATA,
@@ -467,7 +501,7 @@ export class Database {
     action: ActionData,
     makeCodeData: MakeCodeData
   ): Promise<void> {
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -495,7 +529,7 @@ export class Database {
   }
 
   async deleteAllActions(makeCodeData: MakeCodeData): Promise<void> {
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -532,7 +566,7 @@ export class Database {
     action: ActionData,
     makeCodeData: MakeCodeData
   ): Promise<void> {
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.MAKECODE_DATA,
@@ -560,7 +594,7 @@ export class Database {
     action: ActionData,
     makeCodeData: MakeCodeData
   ): Promise<void> {
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.MAKECODE_DATA,
@@ -581,7 +615,7 @@ export class Database {
   }
 
   async updateMakeCodeProject(makeCodeData: MakeCodeData): Promise<void> {
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.MAKECODE_DATA,
@@ -615,7 +649,7 @@ export class Database {
 
   // Currently unused.
   async updateProject(project: Partial<ProjectData>): Promise<void> {
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       DatabaseStore.PROJECT_DATA,
       "readwrite"
     );
@@ -635,7 +669,7 @@ export class Database {
   }
 
   async updateSettings(settings: Settings): Promise<string> {
-    return (await this.dbPromise).put(
+    return (await this.useDb()).put(
       DatabaseStore.SETTINGS,
       settings,
       DatabaseStore.SETTINGS
