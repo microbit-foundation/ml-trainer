@@ -106,25 +106,30 @@ interface Schema extends DBSchema {
 export class Database {
   dbPromise: Promise<IDBPDatabase<Schema>>;
   projectId: string | undefined;
+  dbReady: boolean = false;
   constructor() {
-    this.dbPromise = this.initialize();
+    this.dbPromise = this.initializeDb();
   }
 
-  initialize(): Promise<IDBPDatabase<Schema>> {
+  async useDb(): Promise<IDBPDatabase<Schema>> {
+    if (this.dbReady) {
+      return this.dbPromise;
+    }
+    const db = await this.dbPromise;
+    const settings = await db.get(
+      DatabaseStore.SETTINGS,
+      DatabaseStore.SETTINGS
+    );
+    if (!settings) {
+      await this.migrateFromLocalStorage(db);
+    }
+    this.dbReady = true;
+    return db;
+  }
+
+  initializeDb(): Promise<IDBPDatabase<Schema>> {
     return openDB(DATABASE_NAME, 1, {
-      async upgrade(db) {
-        const localStorageProject = getLocalStorageProject();
-        if (localStorageProject) {
-          try {
-            const model = await tf.loadLayersModel(oldModelUrl);
-            if (model) {
-              await model.save(defaultProjectId);
-              await tf.io.removeModel(oldModelUrl);
-            }
-          } catch (err) {
-            // There is no model.
-          }
-        }
+      upgrade(db) {
         for (const store of Object.values(DatabaseStore)) {
           const objectStore = db.createObjectStore(store);
           if (store === DatabaseStore.ACTIONS) {
@@ -147,73 +152,77 @@ export class Database {
               >
             ).createIndex("actionId", "actionId");
           }
-          if (localStorageProject) {
-            switch (store) {
-              case DatabaseStore.ACTIONS: {
-                await Promise.all(
-                  localStorageProject.actions.map((a) =>
-                    objectStore.add(
-                      prepActionForStorage(a, defaultProjectId),
-                      a.id
-                    )
-                  )
-                );
-                break;
-              }
-              case DatabaseStore.RECORDINGS: {
-                await Promise.all(
-                  localStorageProject.actions
-                    .flatMap((a) =>
-                      a.recordings.map((r) => ({ ...r, actionId: a.id }))
-                    )
-                    .map((r) => objectStore.add(r, r.id))
-                );
-                break;
-              }
-              case DatabaseStore.MAKECODE_DATA: {
-                await objectStore.add(
-                  {
-                    project: localStorageProject.project,
-                    projectEdited: localStorageProject.projectEdited,
-                  },
-                  defaultProjectId
-                );
-                break;
-              }
-              case DatabaseStore.PROJECT_DATA: {
-                await objectStore.add(
-                  {
-                    id: defaultProjectId,
-                    timestamp: localStorageProject.timestamp,
-                    createdAt: defaultCreatedAt,
-                    updatedAt: defaultCreatedAt,
-                    name:
-                      localStorageProject.project.header?.name ??
-                      untitledProjectName,
-                  },
-                  defaultProjectId
-                );
-                break;
-              }
-              case DatabaseStore.SETTINGS: {
-                await objectStore.add(
-                  localStorageProject.settings,
-                  DatabaseStore.SETTINGS
-                );
-                break;
-              }
-            }
-            continue;
-          }
-          // Set default values if there is are no data to migrate.
-          if (store === DatabaseStore.SETTINGS) {
-            const defaultData = defaultStoreData[store];
-            await objectStore.add(defaultData.value, defaultData.key);
-          }
         }
-        localStorage.removeItem(DATABASE_NAME);
       },
     });
+  }
+
+  async migrateFromLocalStorage(db: IDBPDatabase<Schema>): Promise<void> {
+    const localStorageProject = getLocalStorageProject();
+    if (!localStorageProject) {
+      // Set default values if there is are no data to migrate.
+      const defaultData = defaultStoreData[DatabaseStore.SETTINGS];
+      await db.add(DatabaseStore.SETTINGS, defaultData.value, defaultData.key);
+      return;
+    }
+    const tx = db.transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.RECORDINGS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+        DatabaseStore.SETTINGS,
+      ],
+      "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    await Promise.all(
+      localStorageProject.actions.map((a) =>
+        actionsStore.add(prepActionForStorage(a, defaultProjectId), a.id)
+      )
+    );
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await Promise.all(
+      localStorageProject.actions
+        .flatMap((a) => a.recordings.map((r) => ({ ...r, actionId: a.id })))
+        .map((r) => recordingsStore.add(r, r.id))
+    );
+
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    await makeCodeStore.add(
+      {
+        project: localStorageProject.project,
+        projectEdited: localStorageProject.projectEdited,
+      },
+      defaultProjectId
+    );
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    await projectDataStore.add(
+      {
+        id: defaultProjectId,
+        timestamp: localStorageProject.timestamp,
+        createdAt: defaultCreatedAt,
+        updatedAt: defaultCreatedAt,
+        name: localStorageProject.project.header?.name ?? untitledProjectName,
+      },
+      defaultProjectId
+    );
+    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
+
+    await settingsStore.add(
+      localStorageProject.settings,
+      DatabaseStore.SETTINGS
+    );
+    try {
+      const model = await tf.loadLayersModel(oldModelUrl);
+      if (model) {
+        await model.save(defaultProjectId);
+        await tf.io.removeModel(oldModelUrl);
+      }
+    } catch (err) {
+      // There is no model.
+    }
+    localStorage.removeItem(DATABASE_NAME);
   }
 
   assertProjectId(): string {
@@ -228,7 +237,7 @@ export class Database {
     projectData: { timestamp: number; name: string; id: string }
   ): Promise<void> {
     this.projectId = projectData.id;
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [DatabaseStore.MAKECODE_DATA, DatabaseStore.PROJECT_DATA],
       "readwrite"
     );
@@ -248,7 +257,7 @@ export class Database {
 
   async loadProject(id: string): Promise<PersistedProjectData> {
     this.projectId = id;
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -312,7 +321,7 @@ export class Database {
     settings: Settings
   ): Promise<void> {
     this.projectId = projectData.id;
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -356,7 +365,7 @@ export class Database {
 
   async getLatestProjectId(): Promise<string | undefined> {
     const projectData = await (
-      await this.dbPromise
+      await this.useDb()
     ).getAll(DatabaseStore.PROJECT_DATA);
     if (!projectData.length) {
       this.projectId = undefined;
@@ -368,7 +377,7 @@ export class Database {
   }
 
   async getAllProjectData(): Promise<ProjectDataWithActions[]> {
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [DatabaseStore.ACTIONS, DatabaseStore.PROJECT_DATA],
       "readonly"
     );
@@ -395,7 +404,7 @@ export class Database {
     makeCodeData: MakeCodeData
   ): Promise<void> {
     const projectId = this.assertProjectId();
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.MAKECODE_DATA,
@@ -425,7 +434,7 @@ export class Database {
     makeCodeData: MakeCodeData
   ): Promise<void> {
     const projectId = this.assertProjectId();
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.MAKECODE_DATA,
@@ -455,7 +464,7 @@ export class Database {
     makeCodeData: MakeCodeData
   ): Promise<void> {
     const projectId = this.assertProjectId();
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.MAKECODE_DATA,
@@ -488,7 +497,7 @@ export class Database {
     makeCodeData: MakeCodeData
   ): Promise<void> {
     const projectId = this.assertProjectId();
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -517,7 +526,7 @@ export class Database {
 
   async deleteAllActions(makeCodeData: MakeCodeData): Promise<void> {
     const projectId = this.assertProjectId();
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -555,7 +564,7 @@ export class Database {
     makeCodeData: MakeCodeData
   ): Promise<void> {
     const projectId = this.assertProjectId();
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.MAKECODE_DATA,
@@ -584,7 +593,7 @@ export class Database {
     makeCodeData: MakeCodeData
   ): Promise<void> {
     const projectId = this.assertProjectId();
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.MAKECODE_DATA,
@@ -606,7 +615,7 @@ export class Database {
 
   async updateMakeCodeProject(makeCodeData: MakeCodeData): Promise<void> {
     const projectId = this.assertProjectId();
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [DatabaseStore.MAKECODE_DATA, DatabaseStore.PROJECT_DATA],
       "readwrite"
     );
@@ -645,7 +654,7 @@ export class Database {
     projectData: { timestamp: number; id: string },
     makeCodeData: MakeCodeData
   ): Promise<void> {
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [DatabaseStore.MAKECODE_DATA, DatabaseStore.PROJECT_DATA],
       "readwrite"
     );
@@ -679,7 +688,7 @@ export class Database {
   }
 
   async deleteProject(id: string): Promise<PersistedProjectData | boolean> {
-    const tx = (await this.dbPromise).transaction(
+    const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -720,7 +729,7 @@ export class Database {
   }
 
   async updateSettings(settings: Settings): Promise<string> {
-    return (await this.dbPromise).put(
+    return (await this.useDb()).put(
       DatabaseStore.SETTINGS,
       settings,
       DatabaseStore.SETTINGS
