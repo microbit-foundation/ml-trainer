@@ -7,6 +7,7 @@ import {
   openDB,
 } from "idb";
 import orderBy from "lodash.orderby";
+import { v4 as uuid } from "uuid";
 import { Action, ActionData, RecordingData } from "./model";
 import {
   createUntitledProject,
@@ -14,7 +15,6 @@ import {
 } from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
 import { prepActionForStorage } from "./storageUtils";
-import { v4 as uuid } from "uuid";
 
 const DATABASE_NAME = "ml";
 
@@ -51,7 +51,6 @@ const defaultStoreData: Record<
   {
     key: string;
     value: ProjectData | Settings | MakeCodeData;
-    indexes?: Record<string, IDBValidKey>;
   }
 > = {
   [DatabaseStore.PROJECT_DATA]: {
