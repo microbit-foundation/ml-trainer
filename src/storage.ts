@@ -418,7 +418,7 @@ export class Database {
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(this.projectId));
     const updatedActionIds = Array.from(
-      new Set(...actions.map((a) => a.id), projectData.actionIds)
+      new Set([...actions.map((a) => a.id), ...projectData.actionIds])
     );
     await projectDataStore.put(
       {
