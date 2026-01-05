@@ -1,5 +1,11 @@
 import { MakeCodeProject } from "@microbit/makecode-embed";
-import { DBSchema, IDBPDatabase, IDBPTransaction, openDB } from "idb";
+import {
+  DBSchema,
+  IDBPDatabase,
+  IDBPObjectStore,
+  IDBPTransaction,
+  openDB,
+} from "idb";
 import orderBy from "lodash.orderby";
 import { Action, ActionData, RecordingData } from "./model";
 import {
@@ -42,14 +48,17 @@ const defaultStoreData: Record<
   | DatabaseStore.PROJECT_DATA
   | DatabaseStore.SETTINGS
   | DatabaseStore.MAKECODE_DATA,
-  { key: string; value: ProjectData | Settings | MakeCodeData }
+  {
+    key: string;
+    value: ProjectData | Settings | MakeCodeData;
+    indexes?: Record<string, IDBValidKey>;
+  }
 > = {
   [DatabaseStore.PROJECT_DATA]: {
     value: {
       id: defaultProjectId,
       createdAt: defaultCreatedAt,
       updatedAt: defaultCreatedAt,
-      actionIds: [],
     },
     key: defaultProjectId,
   },
@@ -67,13 +76,16 @@ const defaultStoreData: Record<
 };
 
 export interface StoreAction extends Action {
-  recordingIds: string[];
+  projectId: string;
+}
+
+export interface StoreRecordingData extends RecordingData {
+  actionId: string;
 }
 
 interface ProjectData {
   id: string;
   timestamp?: number;
-  actionIds: string[];
   createdAt: number;
   updatedAt: number;
 }
@@ -86,10 +98,12 @@ interface Schema extends DBSchema {
   [DatabaseStore.ACTIONS]: {
     key: string;
     value: StoreAction;
+    indexes: { projectId: string };
   };
   [DatabaseStore.RECORDINGS]: {
     key: string;
-    value: RecordingData;
+    value: StoreRecordingData;
+    indexes: { actionId: string };
   };
   [DatabaseStore.MAKECODE_DATA]: {
     key: string;
@@ -119,7 +133,10 @@ export class Database {
               case DatabaseStore.ACTIONS: {
                 await Promise.all(
                   localStorageProject.actions.map((a) =>
-                    objectStore.add(prepActionForStorage(a), a.id)
+                    objectStore.add(
+                      prepActionForStorage(a, defaultProjectId),
+                      a.id
+                    )
                   )
                 );
                 break;
@@ -127,7 +144,9 @@ export class Database {
               case DatabaseStore.RECORDINGS: {
                 await Promise.all(
                   localStorageProject.actions
-                    .flatMap((a) => a.recordings)
+                    .flatMap((a) =>
+                      a.recordings.map((r) => ({ ...r, actionId: a.id }))
+                    )
                     .map((r) => objectStore.add(r, r.id))
                 );
                 break;
@@ -149,7 +168,6 @@ export class Database {
                     timestamp: localStorageProject.timestamp,
                     createdAt: defaultCreatedAt,
                     updatedAt: defaultCreatedAt,
-                    actionIds: [],
                   },
                   defaultProjectId
                 );
@@ -173,6 +191,26 @@ export class Database {
           ) {
             const defaultData = defaultStoreData[store];
             await objectStore.add(defaultData.value, defaultData.key);
+          }
+          if (store === DatabaseStore.ACTIONS) {
+            (
+              objectStore as IDBPObjectStore<
+                Schema,
+                ArrayLike<DatabaseStore>,
+                DatabaseStore.ACTIONS,
+                "versionchange"
+              >
+            ).createIndex("projectId", "projectId");
+          }
+          if (store === DatabaseStore.RECORDINGS) {
+            (
+              objectStore as IDBPObjectStore<
+                Schema,
+                ArrayLike<DatabaseStore>,
+                DatabaseStore.RECORDINGS,
+                "versionchange"
+              >
+            ).createIndex("actionId", "actionId");
           }
         }
         localStorage.removeItem(DATABASE_NAME);
@@ -206,7 +244,6 @@ export class Database {
     await projectDataStore.add(
       {
         id: this.projectId,
-        actionIds: [],
         createdAt: projectData.timestamp!,
         updatedAt: projectData.timestamp!,
         ...projectData,
@@ -237,9 +274,7 @@ export class Database {
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     const storeActions = orderBy(
       assertDataArray(
-        await Promise.all(
-          projectData.actionIds.map((id) => actionsStore.get(id))
-        )
+        await actionsStore.index("projectId").getAll(this.projectId)
       ),
       "createdAt",
       "asc"
@@ -254,9 +289,7 @@ export class Database {
           requiredConfidence: action.requiredConfidence,
           createdAt: action.createdAt,
           recordings: assertDataArray(
-            await Promise.all(
-              action.recordingIds.map((id) => recordingsStore.get(id))
-            )
+            await recordingsStore.index("actionId").getAll(action.id)
           ),
         };
       })
@@ -300,11 +333,13 @@ export class Database {
     await actionsStore.clear();
     await Promise.all(
       actions
-        .flatMap((a) => a.recordings)
+        .flatMap((a) => a.recordings.map((r) => ({ ...r, actionId: a.id })))
         .map((r) => recordingsStore.add(r, r.id))
     );
     await Promise.all(
-      actions.map((a) => actionsStore.add(prepActionForStorage(a), a.id))
+      actions.map((a) =>
+        actionsStore.add(prepActionForStorage(a, this.projectId), a.id)
+      )
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.clear();
@@ -315,7 +350,6 @@ export class Database {
     await projectDataStore.add(
       {
         id: this.projectId,
-        actionIds: actions.map((a) => a.id),
         createdAt,
         updatedAt: createdAt,
         ...projectData,
@@ -349,16 +383,20 @@ export class Database {
       ],
       "readwrite"
     );
-    const actionToStore = prepActionForStorage(action);
+    const actionToStore = prepActionForStorage(action, this.projectId);
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     await actionsStore.add(actionToStore, actionToStore.id);
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, this.projectId);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(this.projectId));
-    projectData.actionIds.push(action.id);
-    projectData.updatedAt = Date.now();
-    await projectDataStore.put(projectData, this.projectId);
+    await projectDataStore.put(
+      {
+        ...projectData,
+        updatedAt: Date.now(),
+      },
+      this.projectId
+    );
     return tx.done;
   }
 
@@ -374,20 +412,16 @@ export class Database {
       ],
       "readwrite"
     );
-    const actionToStore = prepActionForStorage(action);
+    const actionToStore = prepActionForStorage(action, this.projectId);
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     await actionsStore.put(actionToStore, actionToStore.id);
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, this.projectId);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(this.projectId));
-    const updatedActionIds = Array.from(
-      new Set([action.id, ...projectData.actionIds])
-    );
     await projectDataStore.put(
       {
         ...projectData,
-        actionIds: updatedActionIds,
         updatedAt: Date.now(),
       },
       this.projectId
@@ -410,20 +444,19 @@ export class Database {
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     await Promise.all(
       actions.map((action) =>
-        actionsStore.put(prepActionForStorage(action), action.id)
+        actionsStore.put(
+          prepActionForStorage(action, this.projectId),
+          action.id
+        )
       )
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, this.projectId);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(this.projectId));
-    const updatedActionIds = Array.from(
-      new Set([...actions.map((a) => a.id), ...projectData.actionIds])
-    );
     await projectDataStore.put(
       {
         ...projectData,
-        actionIds: updatedActionIds,
         updatedAt: Date.now(),
       },
       this.projectId
@@ -447,18 +480,16 @@ export class Database {
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     await actionsStore.delete(action.id);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    await Promise.all(
-      action.recordings.map((r) => recordingsStore.delete(r.id))
-    );
+    const recordingIds = await recordingsStore
+      .index("actionId")
+      .getAllKeys(action.id);
+    await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, this.projectId);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(this.projectId));
-    const updatedActionIds = projectData.actionIds.filter(
-      (id) => id !== action.id
-    );
     await projectDataStore.put(
-      { ...projectData, actionIds: updatedActionIds, updatedAt: Date.now() },
+      { ...projectData, updatedAt: Date.now() },
       this.projectId
     );
     return tx.done;
@@ -476,24 +507,22 @@ export class Database {
     );
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(this.projectId));
-
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const actions = assertDataArray(
-      await Promise.all(projectData.actionIds.map((id) => actionsStore.get(id)))
-    );
-    await Promise.all(
-      projectData.actionIds.map((id) => actionsStore.delete(id))
-    );
+    const actionIds = await actionsStore
+      .index("projectId")
+      .getAllKeys(this.projectId);
+    await Promise.all(actionIds.map((id) => actionsStore.delete(id)));
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    await Promise.all(
-      actions
-        .flatMap((a) => a.recordingIds)
-        .map((id) => recordingsStore.delete(id))
-    );
+    const recordingIds = (
+      await Promise.all(
+        actionIds.map((id) => recordingsStore.index("actionId").getAllKeys(id))
+      )
+    ).flat();
+    await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, this.projectId);
     await projectDataStore.put(
-      { ...projectData, actionIds: [], updatedAt: Date.now() },
+      { ...projectData, updatedAt: Date.now() },
       this.projectId
     );
     return tx.done;
@@ -514,10 +543,13 @@ export class Database {
       "readwrite"
     );
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const actionToStore = prepActionForStorage(action);
+    const actionToStore = prepActionForStorage(action, this.projectId);
     await actionsStore.put(actionToStore, actionToStore.id);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    await recordingsStore.add(recording, recording.id);
+    await recordingsStore.add(
+      { ...recording, actionId: action.id },
+      recording.id
+    );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, this.projectId);
     await this.updateProjectInternal(tx);
@@ -539,7 +571,7 @@ export class Database {
       "readwrite"
     );
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const actionToStore = prepActionForStorage(action);
+    const actionToStore = prepActionForStorage(action, this.projectId);
     await actionsStore.put(actionToStore, actionToStore.id);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
     await recordingsStore.delete(key);
