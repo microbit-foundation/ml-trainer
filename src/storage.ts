@@ -1,5 +1,11 @@
 import { MakeCodeProject } from "@microbit/makecode-embed";
-import { DBSchema, IDBPDatabase, IDBPTransaction, openDB } from "idb";
+import {
+  DBSchema,
+  IDBPDatabase,
+  IDBPObjectStore,
+  IDBPTransaction,
+  openDB,
+} from "idb";
 import orderBy from "lodash.orderby";
 import { Action, ActionData, RecordingData } from "./model";
 import {
@@ -53,14 +59,17 @@ const defaultStoreData: Record<
 };
 
 export interface StoreAction extends Action {
-  recordingIds: string[];
+  projectId: string;
+}
+
+export interface StoreRecordingData extends RecordingData {
+  actionId: string;
 }
 
 export interface ProjectData {
   id: string;
   name: string;
   timestamp?: number;
-  actionIds: string[];
   createdAt: number;
   updatedAt: number;
 }
@@ -77,10 +86,12 @@ interface Schema extends DBSchema {
   [DatabaseStore.ACTIONS]: {
     key: string;
     value: StoreAction;
+    indexes: { projectId: string };
   };
   [DatabaseStore.RECORDINGS]: {
     key: string;
-    value: RecordingData;
+    value: StoreRecordingData;
+    indexes: { actionId: string };
   };
   [DatabaseStore.MAKECODE_DATA]: {
     key: string;
@@ -116,12 +127,35 @@ export class Database {
         }
         for (const store of Object.values(DatabaseStore)) {
           const objectStore = db.createObjectStore(store);
+          if (store === DatabaseStore.ACTIONS) {
+            (
+              objectStore as IDBPObjectStore<
+                Schema,
+                ArrayLike<DatabaseStore>,
+                DatabaseStore.ACTIONS,
+                "versionchange"
+              >
+            ).createIndex("projectId", "projectId");
+          }
+          if (store === DatabaseStore.RECORDINGS) {
+            (
+              objectStore as IDBPObjectStore<
+                Schema,
+                ArrayLike<DatabaseStore>,
+                DatabaseStore.RECORDINGS,
+                "versionchange"
+              >
+            ).createIndex("actionId", "actionId");
+          }
           if (localStorageProject) {
             switch (store) {
               case DatabaseStore.ACTIONS: {
                 await Promise.all(
                   localStorageProject.actions.map((a) =>
-                    objectStore.add(prepActionForStorage(a), a.id)
+                    objectStore.add(
+                      prepActionForStorage(a, defaultProjectId),
+                      a.id
+                    )
                   )
                 );
                 break;
@@ -129,7 +163,9 @@ export class Database {
               case DatabaseStore.RECORDINGS: {
                 await Promise.all(
                   localStorageProject.actions
-                    .flatMap((a) => a.recordings)
+                    .flatMap((a) =>
+                      a.recordings.map((r) => ({ ...r, actionId: a.id }))
+                    )
                     .map((r) => objectStore.add(r, r.id))
                 );
                 break;
@@ -151,7 +187,6 @@ export class Database {
                     timestamp: localStorageProject.timestamp,
                     createdAt: defaultCreatedAt,
                     updatedAt: defaultCreatedAt,
-                    actionIds: [],
                     name:
                       localStorageProject.project.header?.name ??
                       untitledProjectName,
@@ -202,7 +237,6 @@ export class Database {
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     await projectDataStore.add(
       {
-        actionIds: [],
         createdAt: projectData.timestamp,
         updatedAt: projectData.timestamp,
         ...projectData,
@@ -234,9 +268,7 @@ export class Database {
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     const storeActions = orderBy(
       assertDataArray(
-        await Promise.all(
-          projectData.actionIds.map((id) => actionsStore.get(id))
-        )
+        await actionsStore.index("projectId").getAll(this.projectId)
       ),
       "createdAt",
       "asc"
@@ -251,9 +283,7 @@ export class Database {
           requiredConfidence: action.requiredConfidence,
           createdAt: action.createdAt,
           recordings: assertDataArray(
-            await Promise.all(
-              action.recordingIds.map((id) => recordingsStore.get(id))
-            )
+            await recordingsStore.index("actionId").getAll(action.id)
           ),
         };
       })
@@ -296,11 +326,13 @@ export class Database {
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     await Promise.all(
       actions
-        .flatMap((a) => a.recordings)
+        .flatMap((a) => a.recordings.map((r) => ({ ...r, actionId: a.id })))
         .map((r) => recordingsStore.add(r, r.id))
     );
     await Promise.all(
-      actions.map((a) => actionsStore.add(prepActionForStorage(a), a.id))
+      actions.map((a) =>
+        actionsStore.add(prepActionForStorage(a, this.projectId!), a.id)
+      )
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.add(makeCodeData, this.projectId);
@@ -310,7 +342,6 @@ export class Database {
       {
         id: this.projectId,
         name: makeCodeData.project.header?.name ?? untitledProjectName,
-        actionIds: actions.map((a) => a.id),
         createdAt: projectData.timestamp,
         updatedAt: projectData.timestamp,
         timestamp: projectData.timestamp,
@@ -352,7 +383,7 @@ export class Database {
       projectData.map(async (p) => ({
         ...p,
         actions: assertDataArray(
-          await Promise.all(p.actionIds.map((id) => actionsStore.get(id)))
+          await actionsStore.index("projectId").getAll(p.id)
         ),
       }))
     );
@@ -372,16 +403,20 @@ export class Database {
       ],
       "readwrite"
     );
-    const actionToStore = prepActionForStorage(action);
+    const actionToStore = prepActionForStorage(action, projectId);
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     await actionsStore.add(actionToStore, actionToStore.id);
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, projectId);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(projectId));
-    projectData.actionIds.push(action.id);
-    projectData.updatedAt = Date.now();
-    await projectDataStore.put(projectData, projectId);
+    await projectDataStore.put(
+      {
+        ...projectData,
+        updatedAt: Date.now(),
+      },
+      projectId
+    );
     return tx.done;
   }
 
@@ -398,20 +433,16 @@ export class Database {
       ],
       "readwrite"
     );
-    const actionToStore = prepActionForStorage(action);
+    const actionToStore = prepActionForStorage(action, projectId);
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     await actionsStore.put(actionToStore, actionToStore.id);
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, projectId);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(projectId));
-    const updatedActionIds = Array.from(
-      new Set([action.id, ...projectData.actionIds])
-    );
     await projectDataStore.put(
       {
         ...projectData,
-        actionIds: updatedActionIds,
         updatedAt: Date.now(),
       },
       projectId
@@ -435,20 +466,16 @@ export class Database {
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     await Promise.all(
       actions.map((action) =>
-        actionsStore.put(prepActionForStorage(action), action.id)
+        actionsStore.put(prepActionForStorage(action, projectId), action.id)
       )
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, projectId);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(projectId));
-    const updatedActionIds = Array.from(
-      new Set([...actions.map((a) => a.id), ...projectData.actionIds])
-    );
     await projectDataStore.put(
       {
         ...projectData,
-        actionIds: updatedActionIds,
         updatedAt: Date.now(),
       },
       projectId
@@ -473,18 +500,16 @@ export class Database {
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     await actionsStore.delete(action.id);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    await Promise.all(
-      action.recordings.map((r) => recordingsStore.delete(r.id))
-    );
+    const recordingIds = await recordingsStore
+      .index("actionId")
+      .getAllKeys(action.id);
+    await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, projectId);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(projectId));
-    const updatedActionIds = projectData.actionIds.filter(
-      (id) => id !== action.id
-    );
     await projectDataStore.put(
-      { ...projectData, actionIds: updatedActionIds, updatedAt: Date.now() },
+      { ...projectData, updatedAt: Date.now() },
       projectId
     );
     return tx.done;
@@ -503,24 +528,22 @@ export class Database {
     );
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(projectId));
-
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const actions = assertDataArray(
-      await Promise.all(projectData.actionIds.map((id) => actionsStore.get(id)))
-    );
-    await Promise.all(
-      projectData.actionIds.map((id) => actionsStore.delete(id))
-    );
+    const actionIds = await actionsStore
+      .index("projectId")
+      .getAllKeys(projectId);
+    await Promise.all(actionIds.map((id) => actionsStore.delete(id)));
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    await Promise.all(
-      actions
-        .flatMap((a) => a.recordingIds)
-        .map((id) => recordingsStore.delete(id))
-    );
+    const recordingIds = (
+      await Promise.all(
+        actionIds.map((id) => recordingsStore.index("actionId").getAllKeys(id))
+      )
+    ).flat();
+    await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, projectId);
     await projectDataStore.put(
-      { ...projectData, actionIds: [], updatedAt: Date.now() },
+      { ...projectData, updatedAt: Date.now() },
       projectId
     );
     return tx.done;
@@ -542,10 +565,13 @@ export class Database {
       "readwrite"
     );
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const actionToStore = prepActionForStorage(action);
+    const actionToStore = prepActionForStorage(action, projectId);
     await actionsStore.put(actionToStore, actionToStore.id);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    await recordingsStore.add(recording, recording.id);
+    await recordingsStore.add(
+      { ...recording, actionId: action.id },
+      recording.id
+    );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, projectId);
     await this.updateProjectInternal(tx);
@@ -568,7 +594,7 @@ export class Database {
       "readwrite"
     );
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const actionToStore = prepActionForStorage(action);
+    const actionToStore = prepActionForStorage(action, projectId);
     await actionsStore.put(actionToStore, actionToStore.id);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
     await recordingsStore.delete(key);
@@ -641,7 +667,6 @@ export class Database {
     await projectDataStore.put(
       {
         name: makeCodeData.project.header?.name ?? untitledProjectName,
-        actionIds: [],
         createdAt: projectData.timestamp,
         updatedAt: projectData.timestamp,
         ...projectData,
@@ -663,23 +688,19 @@ export class Database {
       ],
       "readwrite"
     );
-    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    const projectData = assertData(await projectDataStore.get(id));
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const actions = assertDataArray(
-      await Promise.all(projectData.actionIds.map((id) => actionsStore.get(id)))
-    );
-    await Promise.all(
-      projectData.actionIds.map((id) => actionsStore.delete(id))
-    );
+    const actionIds = await actionsStore.index("projectId").getAllKeys(id);
+    await Promise.all(actionIds.map((id) => actionsStore.delete(id)));
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    await Promise.all(
-      actions
-        .flatMap((a) => a.recordingIds)
-        .map((id) => recordingsStore.delete(id))
-    );
+    const recordingIds = (
+      await Promise.all(
+        actionIds.map((id) => recordingsStore.index("actionId").getAllKeys(id))
+      )
+    ).flat();
+    await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.delete(id);
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     await projectDataStore.delete(id);
     await tx.done;
     if (this.projectId === id) {
