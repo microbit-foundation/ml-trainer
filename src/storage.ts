@@ -260,7 +260,6 @@ export class Database {
     const settings = assertData(
       await settingsStore.get(DatabaseStore.SETTINGS)
     );
-    makeCodeData.project.header?.name;
     await tx.done;
     return {
       id,
