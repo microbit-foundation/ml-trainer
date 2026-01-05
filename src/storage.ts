@@ -708,7 +708,6 @@ export class Database {
   }
 
   async removeModel() {
-    console.trace("when");
     const projectId = this.assertProjectId();
     await tf.io.removeModel(`indexeddb://${projectId}`);
   }
