@@ -1,11 +1,5 @@
 import { MakeCodeProject } from "@microbit/makecode-embed";
-import {
-  DBSchema,
-  IDBPDatabase,
-  IDBPObjectStore,
-  IDBPTransaction,
-  openDB,
-} from "idb";
+import { DBSchema, IDBPDatabase, IDBPObjectStore, openDB } from "idb";
 import orderBy from "lodash.orderby";
 import { v4 as uuid } from "uuid";
 import { Action, ActionData, RecordingData } from "./model";
@@ -585,7 +579,15 @@ export class Database {
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, this.projectId);
-    await this.updateProjectInternal(tx);
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(this.projectId));
+    await projectDataStore.put(
+      {
+        ...projectData,
+        updatedAt: Date.now(),
+      },
+      this.projectId
+    );
     return tx.done;
   }
 
@@ -610,7 +612,15 @@ export class Database {
     await recordingsStore.delete(key);
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, this.projectId);
-    await this.updateProjectInternal(tx);
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(this.projectId));
+    await projectDataStore.put(
+      {
+        ...projectData,
+        updatedAt: Date.now(),
+      },
+      this.projectId
+    );
     return tx.done;
   }
 
@@ -626,25 +636,16 @@ export class Database {
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, this.projectId);
-    await this.updateProjectInternal(tx);
-    return tx.done;
-  }
-
-  // TODO: TypeScript to ensure that a transaction with DatabaseStore.PROJECT_DATA is passed in.
-  private async updateProjectInternal(
-    tx: IDBPTransaction<Schema, DatabaseStore[], "readwrite">,
-    projectUpdates?: Partial<ProjectData>
-  ): Promise<void> {
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(this.projectId));
     await projectDataStore.put(
       {
         ...projectData,
         updatedAt: Date.now(),
-        ...projectUpdates,
       },
       this.projectId
     );
+    return tx.done;
   }
 
   // Currently unused.
