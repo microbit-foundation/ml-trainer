@@ -43,6 +43,9 @@ const CodePage = () => {
     }
 
     return () => {
+      // This needs to be reset if the model changes as a result of changes in MakeCode
+      // open in another tab.
+      initAsyncCalled.current = false;
       setEditorOpen(false);
     };
   }, [browserNavigationToEditor, model, navigate, setEditorOpen]);

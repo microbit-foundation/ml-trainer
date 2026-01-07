@@ -113,6 +113,8 @@ const Providers = ({ children }: ProviderLayoutProps) => {
 const Layout = () => {
   const driverRef = useRef<MakeCodeFrameDriver>(null);
   const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
+  const setEditorImportingState = useStore((s) => s.setEditorImportingState);
+  const getCurrentProject = useStore((s) => s.getCurrentProject);
   const navigate = useNavigate();
   const toast = useToast();
   const intl = useIntl();
@@ -122,7 +124,7 @@ const Layout = () => {
     return useStore.subscribe(
       (
         { projectLoadTimestamp },
-        { projectLoadTimestamp: prevProjectLoadTimestamp, getCurrentProject }
+        { projectLoadTimestamp: prevProjectLoadTimestamp }
       ) => {
         if (projectLoadTimestamp > prevProjectLoadTimestamp) {
           // Side effects of loading a project, which MakeCode notifies us of.
@@ -140,7 +142,22 @@ const Layout = () => {
         }
       }
     );
-  }, [intl, navigate, setPostImportDialogState, toast]);
+  }, [getCurrentProject, intl, navigate, setPostImportDialogState, toast]);
+
+  useEffect(() => {
+    const listener = async () => {
+      if (!document.hidden && driverRef.current) {
+        setEditorImportingState();
+        await driverRef.current.importProject({
+          project: getCurrentProject(),
+        });
+      }
+    };
+    document.addEventListener("visibilitychange", listener);
+    return () => {
+      document.removeEventListener("visibilitychange", listener);
+    };
+  });
 
   return (
     <Suspense fallback={<LoadingPage />}>
