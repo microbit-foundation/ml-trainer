@@ -28,7 +28,7 @@ test.describe("new page", () => {
     await newPage.startNewSession();
     await dataSamplesPage.navbar.home();
     await homePage.getStarted();
-    // await newPage.expectResumeButtonToShowProjectName("Untitled");
+    await newPage.expectResumeButtonToShowProjectName("Untitled");
     await newPage.resumeSession();
     await dataSamplesPage.expectOnPage();
   });
