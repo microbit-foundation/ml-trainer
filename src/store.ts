@@ -55,6 +55,7 @@ import { getTour as getTourSpec } from "./tours";
 import { getTotalNumSamples } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { getDetectedAction } from "./utils/prediction";
+import { LoadAction } from "./hooks/project-hooks";
 
 export enum BroadcastChannelMessages {
   RELOAD_PROJECT = "reload-project",
@@ -205,7 +206,7 @@ export interface Actions {
   dataCollectionMicrobitConnectionStart(options?: ConnectOptions): void;
   dataCollectionMicrobitConnected(): void;
 
-  loadDataset(actions: ActionData[]): Promise<void>;
+  loadDataset(actions: ActionData[], loadAction: LoadAction): Promise<void>;
   loadProject(project: MakeCodeProject, name: string): Promise<void>;
   setEditorOpen(open: boolean): void;
   recordingStarted(): void;
@@ -771,8 +772,8 @@ const createMlStore = (logging: Logging) => {
           a.click();
         },
 
-        async loadDataset(newActions: ActionData[]) {
-          const { settings, project, projectEdited } = get();
+        async loadDataset(newActions: ActionData[], loadAction: LoadAction) {
+          const { id, settings, project, projectEdited } = get();
           const updatedSettings: Settings = {
             ...settings,
             toursCompleted: Array.from(
@@ -790,7 +791,6 @@ const createMlStore = (logging: Logging) => {
               });
             }
           });
-          const id = uuid();
           const timestamp = Date.now();
           const dataWindow = getDataWindowFromActions(newActionsWithIcons);
           const updatedProject = updateProject(
@@ -800,29 +800,55 @@ const createMlStore = (logging: Logging) => {
             undefined,
             dataWindow
           );
-          set({
-            id,
-            settings: updatedSettings,
-            actions: newActionsWithIcons,
-            dataWindow,
-            model: undefined,
-            timestamp,
-            ...updatedProject,
-          });
-          await storageWithErrHandling(() =>
-            storage.importProject(
-              newActionsWithIcons,
-              {
-                project: updatedProject.project,
-                projectEdited: updatedProject.projectEdited,
-              },
-              {
-                timestamp,
-                id,
-              },
-              updatedSettings
-            )
-          );
+          if (loadAction === "replaceActions") {
+            set({
+              settings: updatedSettings,
+              actions: newActionsWithIcons,
+              dataWindow,
+              model: undefined,
+              timestamp,
+              ...updatedProject,
+            });
+            await storageWithErrHandling(() =>
+              storage.replaceActions(
+                newActionsWithIcons,
+                {
+                  project: updatedProject.project,
+                  projectEdited: updatedProject.projectEdited,
+                },
+                {
+                  timestamp,
+                  id,
+                },
+                updatedSettings
+              )
+            );
+          } else if (loadAction === "replaceProject") {
+            const newId = uuid();
+            set({
+              id: newId,
+              settings: updatedSettings,
+              actions: newActionsWithIcons,
+              dataWindow,
+              model: undefined,
+              timestamp,
+              ...updatedProject,
+            });
+            await storageWithErrHandling(() =>
+              storage.importProject(
+                newActionsWithIcons,
+                {
+                  project: updatedProject.project,
+                  projectEdited: updatedProject.projectEdited,
+                },
+                {
+                  timestamp,
+                  id: newId,
+                },
+                updatedSettings
+              )
+            );
+          }
         },
 
         /**

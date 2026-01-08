@@ -263,7 +263,11 @@ const DataSamplesTable = ({
                       fontSize="lg"
                       color="brand.600"
                       variant="link"
-                      onClick={() => loadProjectInputRef.current?.chooseFile()}
+                      onClick={() =>
+                        loadProjectInputRef.current?.chooseFile(
+                          "replaceActions"
+                        )
+                      }
                     >
                       {chunks}
                     </Button>

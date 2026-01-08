@@ -59,7 +59,7 @@ const NewPage = () => {
 
   const loadProjectRef = useRef<LoadProjectInputRef>(null);
   const handleContinueSessionFromFile = useCallback(() => {
-    loadProjectRef.current?.chooseFile();
+    loadProjectRef.current?.chooseFile("replaceProject");
   }, []);
 
   const handleStartNewSession = useCallback(async () => {
