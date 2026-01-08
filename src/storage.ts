@@ -1,11 +1,5 @@
 import { MakeCodeProject } from "@microbit/makecode-embed";
-import {
-  DBSchema,
-  IDBPDatabase,
-  IDBPObjectStore,
-  IDBPTransaction,
-  openDB,
-} from "idb";
+import { DBSchema, IDBPDatabase, IDBPObjectStore, openDB } from "idb";
 import orderBy from "lodash.orderby";
 import { Action, ActionData, RecordingData } from "./model";
 import {
@@ -583,7 +577,15 @@ export class Database {
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, projectId);
-    await this.updateProjectInternal(tx);
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(projectId));
+    await projectDataStore.put(
+      {
+        ...projectData,
+        updatedAt: Date.now(),
+      },
+      projectId
+    );
     return tx.done;
   }
 
@@ -609,7 +611,15 @@ export class Database {
     await recordingsStore.delete(key);
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, projectId);
-    await this.updateProjectInternal(tx);
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(projectId));
+    await projectDataStore.put(
+      {
+        ...projectData,
+        updatedAt: Date.now(),
+      },
+      projectId
+    );
     return tx.done;
   }
 
@@ -632,22 +642,6 @@ export class Database {
       projectId
     );
     return tx.done;
-  }
-
-  // TODO: TypeScript to ensure that a transaction with DatabaseStore.PROJECT_DATA is passed in.
-  private async updateProjectInternal(
-    tx: IDBPTransaction<Schema, DatabaseStore[], "readwrite">
-  ): Promise<void> {
-    const projectId = this.assertProjectId();
-    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    const projectData = assertData(await projectDataStore.get(projectId));
-    await projectDataStore.put(
-      {
-        ...projectData,
-        updatedAt: Date.now(),
-      },
-      projectId
-    );
   }
 
   async updateOrCreateProject(
