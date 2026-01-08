@@ -189,7 +189,8 @@ export interface ConnectOptions {
 
 export interface Actions {
   loadProjectFromStorage(id: string): Promise<void>;
-  updateOrCreateProject(): Promise<void>;
+  loadLatestProjectFromStorage(): Promise<string | undefined>;
+  updateProjectUpdatedAt(): Promise<void>;
   deleteProject(id: string): Promise<void>;
   addNewAction(): Promise<void>;
   addActionRecording(id: string, recording: RecordingData): Promise<void>;
@@ -210,6 +211,7 @@ export interface Actions {
   recordingStarted(): void;
   recordingStopped(): void;
   newSession(projectName?: string): Promise<void>;
+  maybeNewSession(): Promise<void>;
   trainModelFlowStart: (callback?: () => void) => Promise<void>;
   closeTrainModelDialogs: () => void;
   trainModel(): Promise<boolean>;
@@ -431,7 +433,7 @@ const createMlStore = (logging: Logging) => {
 
         async loadProjectFromStorage(id: string) {
           const persistedData = await storageWithErrHandling(() =>
-            storage.loadProject(id)
+            storage.getProject(id)
           );
           set({
             // Get data window from actions on app load.
@@ -440,53 +442,58 @@ const createMlStore = (logging: Logging) => {
           });
         },
 
-        async updateOrCreateProject() {
-          const { id, project, projectEdited, timestamp } = get();
-          const existingOrNewTimestamp = timestamp ?? Date.now();
-          const existingOrNewId = id ?? uuid();
-          set({
-            id: existingOrNewId,
-            timestamp: existingOrNewTimestamp,
-          });
+        async loadLatestProjectFromStorage(): Promise<string | undefined> {
+          const latestProject = await storageWithErrHandling(() =>
+            storage.getLatestProject()
+          );
+          if (latestProject) {
+            set({
+              // Get data window from actions on app load.
+              dataWindow: getDataWindowFromActions(latestProject.actions),
+              ...latestProject,
+            });
+            return latestProject.id;
+          }
+        },
+
+        async maybeNewSession() {
+          const { id, newSession } = get();
+          if (!id) {
+            // You have no project open and you have no projects in storage.
+            // Start a new session.
+            await newSession();
+          }
+        },
+
+        async updateProjectUpdatedAt() {
+          const { id } = get();
           await storageWithErrHandling(() =>
-            storage.updateOrCreateProject(
-              {
-                timestamp: existingOrNewTimestamp,
-                id: existingOrNewId,
-              },
-              { project, projectEdited }
-            )
+            storage.updateProjectUpdatedAt(id, Date.now())
           );
         },
 
         async deleteProject(id) {
-          const result = await storageWithErrHandling(() =>
-            storage.deleteProject(id)
-          );
-          if (typeof result === "boolean") {
-            if (result) {
-              // Clear state. No projects remaining in storage.
-              const untitledProject = createUntitledProject();
-              set({
-                id: undefined,
-                actions: [],
-                dataWindow: currentDataWindow,
-                model: undefined,
-                project: untitledProject,
-                projectEdited: false,
-                appEditNeedsFlushToEditor: true,
-                timestamp: undefined,
-              });
-            }
-            // No action required. Deleted a project that isn't currently loaded.
-            return;
+          const { id: currentProjectId } = get();
+          await storageWithErrHandling(() => storage.deleteProject(id));
+          if (id === currentProjectId) {
+            // You have deleted the currently open project.
+            // Clear state.
+            const untitledProject = createUntitledProject();
+            set({
+              id: undefined,
+              actions: [],
+              dataWindow: currentDataWindow,
+              model: undefined,
+              project: untitledProject,
+              projectEdited: false,
+              appEditNeedsFlushToEditor: true,
+              timestamp: undefined,
+            });
           }
-          // Deleted a project that was loaded. Load the next most recent project.
-          set(result);
         },
 
         async addNewAction() {
-          const { actions, dataWindow, project, projectEdited } = get();
+          const { actions, dataWindow, id, project, projectEdited } = get();
           const newAction: ActionData = {
             icon: actionIcon({
               isFirstAction: actions.length === 0,
@@ -511,18 +518,18 @@ const createMlStore = (logging: Logging) => {
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.addAction(newAction, {
+            storage.addAction(id, newAction, {
               project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
             })
           );
         },
 
-        async addActionRecording(id: string, recording: RecordingData) {
-          const { actions, dataWindow, project, projectEdited } = get();
+        async addActionRecording(actionId: string, recording: RecordingData) {
+          const { actions, dataWindow, id, project, projectEdited } = get();
           let updatedAction: ActionData;
           const updatedActions = actions.map((action) => {
-            if (action.id === id) {
+            if (action.id === actionId) {
               updatedAction = {
                 ...action,
                 recordings: [recording, ...action.recordings],
@@ -544,7 +551,7 @@ const createMlStore = (logging: Logging) => {
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.addRecording(recording, updatedAction, {
+            storage.addRecording(id, recording, updatedAction, {
               project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
             })
@@ -552,7 +559,7 @@ const createMlStore = (logging: Logging) => {
         },
 
         async deleteAction(action: ActionData) {
-          const { actions, dataWindow, project, projectEdited } = get();
+          const { actions, dataWindow, id, project, projectEdited } = get();
           const newActions = actions.filter((a) => a.id !== action.id);
           const newDataWindow =
             newActions.length === 0 ? currentDataWindow : dataWindow;
@@ -571,18 +578,19 @@ const createMlStore = (logging: Logging) => {
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.deleteAction(action, {
+            storage.deleteAction(id, action, {
               project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
             })
           );
         },
 
-        async setActionName(id: string, name: string) {
-          const { actions, dataWindow, project, projectEdited, model } = get();
+        async setActionName(actionId: string, name: string) {
+          const { actions, dataWindow, id, project, projectEdited, model } =
+            get();
           let updatedAction: ActionData;
           const newActions = actions.map((action) => {
-            if (id === action.id) {
+            if (actionId === action.id) {
               updatedAction = { ...action, name };
               return updatedAction;
             }
@@ -600,26 +608,27 @@ const createMlStore = (logging: Logging) => {
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.updateAction(updatedAction, {
+            storage.updateAction(id, updatedAction, {
               project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
             })
           );
         },
 
-        async setActionIcon(id: string, icon: MakeCodeIcon) {
-          const { actions, dataWindow, project, projectEdited, model } = get();
+        async setActionIcon(actionId: string, icon: MakeCodeIcon) {
+          const { actions, dataWindow, id, project, projectEdited, model } =
+            get();
           const updatedActions: ActionData[] = [];
           // If we're changing the action to use an icon that's already in use
           // then we update the action that's using the icon to use the action's current icon
-          const currentIcon = actions.find((a) => a.id === id)?.icon;
+          const currentIcon = actions.find((a) => a.id === actionId)?.icon;
           const newActions = actions.map((action) => {
-            if (action.id === id) {
+            if (action.id === actionId) {
               const updatedAction = { ...action, icon };
               updatedActions.push(updatedAction);
               return updatedAction;
             } else if (
-              action.id !== id &&
+              action.id !== actionId &&
               action.icon === icon &&
               currentIcon
             ) {
@@ -641,18 +650,19 @@ const createMlStore = (logging: Logging) => {
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.updateActions(updatedActions, {
+            storage.updateActions(id, updatedActions, {
               project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
             })
           );
         },
 
-        async setRequiredConfidence(id: string, value: number) {
-          const { actions, dataWindow, project, projectEdited, model } = get();
+        async setRequiredConfidence(actionId: string, value: number) {
+          const { actions, dataWindow, id, project, projectEdited, model } =
+            get();
           let updatedAction: ActionData;
           const newActions = actions.map((action) => {
-            if (id === action.id) {
+            if (actionId === action.id) {
               updatedAction = { ...action, requiredConfidence: value };
               return updatedAction;
             }
@@ -670,18 +680,18 @@ const createMlStore = (logging: Logging) => {
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.updateAction(updatedAction, {
+            storage.updateAction(id, updatedAction, {
               project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
             })
           );
         },
 
-        async deleteActionRecording(id: string, recordingId: string) {
-          const { actions, dataWindow, project, projectEdited } = get();
+        async deleteActionRecording(actionId: string, recordingId: string) {
+          const { actions, dataWindow, id, project, projectEdited } = get();
           let updatedAction: ActionData;
           const updatedActions = actions.map((action) => {
-            if (id !== action.id) {
+            if (actionId !== action.id) {
               return action;
             }
             const recordings = action.recordings.filter(
@@ -710,7 +720,7 @@ const createMlStore = (logging: Logging) => {
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.deleteRecording(recordingId.toString(), updatedAction, {
+            storage.deleteRecording(id, recordingId.toString(), updatedAction, {
               project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
             })
@@ -718,7 +728,7 @@ const createMlStore = (logging: Logging) => {
         },
 
         async deleteAllActions() {
-          const { project, projectEdited } = get();
+          const { id, project, projectEdited } = get();
           const updatedProject = updateProject(
             project,
             projectEdited,
@@ -733,7 +743,7 @@ const createMlStore = (logging: Logging) => {
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.deleteAllActions({
+            storage.deleteAllActions(id, {
               project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
             })
@@ -886,7 +896,7 @@ const createMlStore = (logging: Logging) => {
         },
 
         async trainModel() {
-          const { actions, dataWindow, project, projectEdited } = get();
+          const { actions, dataWindow, id, project, projectEdited } = get();
           logging.event({
             type: "model-train",
             detail: {
@@ -928,7 +938,7 @@ const createMlStore = (logging: Logging) => {
             actionName
           );
           await storageWithErrHandling(() =>
-            storage.updateMakeCodeProject({
+            storage.updateMakeCodeProject(id, {
               project: updatedProject.project,
               projectEdited: updatedProject.projectEdited,
             })
@@ -946,6 +956,7 @@ const createMlStore = (logging: Logging) => {
           const {
             project: previousProject,
             actions,
+            id,
             model,
             dataWindow,
           } = get();
@@ -971,7 +982,7 @@ const createMlStore = (logging: Logging) => {
             "resetProject"
           );
           await storageWithErrHandling(() =>
-            storage.updateMakeCodeProject({
+            storage.updateMakeCodeProject(id, {
               project: newProject,
               projectEdited: false,
             })
@@ -979,7 +990,7 @@ const createMlStore = (logging: Logging) => {
         },
 
         async setProjectName(name: string): Promise<void> {
-          const { project, projectEdited } = get();
+          const { id, project, projectEdited } = get();
           const updatedProject = renameProject(project, name);
           set(
             {
@@ -990,7 +1001,7 @@ const createMlStore = (logging: Logging) => {
             "setProjectName"
           );
           await storageWithErrHandling(() =>
-            storage.updateMakeCodeProject({
+            storage.updateMakeCodeProject(id, {
               project: updatedProject,
               projectEdited,
             })
@@ -1056,7 +1067,7 @@ const createMlStore = (logging: Logging) => {
           // project data in editorChange when loading a hex file.
 
           const actionName = "editorChange";
-          const { settings, timestamp, projectEdited } = get();
+          const { id, settings, timestamp, projectEdited } = get();
           const updatedSettings: Settings = {
             ...settings,
             toursCompleted: Array.from(
@@ -1068,7 +1079,7 @@ const createMlStore = (logging: Logging) => {
           let newActions: ActionData[] | undefined;
           let importProject = false;
           let updateMakeCodeProject = false;
-          const id = uuid();
+          const newProjectId = uuid();
           set(
             (state) => {
               const {
@@ -1106,7 +1117,7 @@ const createMlStore = (logging: Logging) => {
                   updatedProjectEdited = true;
                   importProject = true;
                   return {
-                    id,
+                    id: newProjectId,
                     settings: updatedSettings,
                     project: newProject,
                     projectLoadTimestamp: updatedTimestamp,
@@ -1150,13 +1161,13 @@ const createMlStore = (logging: Logging) => {
                   project: newProject,
                   projectEdited: updatedProjectEdited,
                 },
-                { timestamp: updatedTimestamp, id },
+                { timestamp: updatedTimestamp, id: newProjectId },
                 updatedSettings
               )
             );
           } else if (updateMakeCodeProject) {
             await storageWithErrHandling(() =>
-              storage.updateMakeCodeProject({
+              storage.updateMakeCodeProject(id, {
                 project: newProject,
                 projectEdited: updatedProjectEdited,
               })
@@ -1485,8 +1496,8 @@ const getDataWindowFromActions = (actions: ActionData[]): DataWindow => {
     : currentDataWindow;
 };
 
-const loadModelFromStorage = async () => {
-  const model = await storage.loadModel();
+const loadModelFromStorage = async (id: string) => {
+  const model = await storage.loadModel(id);
   if (model) {
     useStore.setState({ model }, false, "loadModel");
   }
@@ -1497,10 +1508,10 @@ useStore.subscribe(async (state, prevState) => {
   const { model: previousModel, id: prevId } = prevState;
   if (newModel !== previousModel) {
     if (!newModel && newId === prevId) {
-      await storage.removeModel();
+      await storage.removeModel(newId);
       broadcastChannel.postMessage(BroadcastChannelMessages.REMOVE_MODEL);
     } else if (newModel) {
-      await storage.saveModel(newModel);
+      await storage.saveModel(newId, newModel);
     }
   }
 });
@@ -1610,6 +1621,7 @@ const storageWithErrHandling = async <T>(callback: () => Promise<T>) => {
     broadcastChannel.postMessage(BroadcastChannelMessages.RELOAD_PROJECT);
     return value;
   } catch (err) {
+    // TODO: Add sensible error handling.
     if (err instanceof DOMException && err.name === "QuotaExceededError") {
       console.error("Storage quota exceeded!", err);
     } else if (err instanceof StorageError) {
@@ -1624,16 +1636,17 @@ const storageWithErrHandling = async <T>(callback: () => Promise<T>) => {
   }
 };
 
-export const loadProjectFromStorage = async (id?: string) => {
-  if (!id) {
-    id = await storageWithErrHandling(() => storage.getLatestProjectId());
+export const loadLatestProjectAndModelFromStorage = async () => {
+  const id = await useStore.getState().loadLatestProjectFromStorage();
+  if (id) {
+    await loadModelFromStorage(id);
   }
-  if (!id) {
-    return true;
-  }
-  await useStore.getState().loadProjectFromStorage(id);
-  await loadModelFromStorage();
   return true;
+};
+
+export const loadProjectAndModelFromStorage = async (id: string) => {
+  await useStore.getState().loadProjectFromStorage(id);
+  await loadModelFromStorage(id);
 };
 
 export const getAllProjects = async () => {
@@ -1643,7 +1656,7 @@ export const getAllProjects = async () => {
 broadcastChannel.onmessage = async (event) => {
   switch (event.data) {
     case BroadcastChannelMessages.RELOAD_PROJECT: {
-      await loadProjectFromStorage();
+      await loadLatestProjectAndModelFromStorage();
       break;
     }
     case BroadcastChannelMessages.REMOVE_MODEL: {

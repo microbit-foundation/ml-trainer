@@ -26,12 +26,12 @@ const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
   const addNewAction = useStore((s) => s.addNewAction);
   const model = useStore((s) => s.model);
-  const updateOrCreateProject = useStore((s) => s.updateOrCreateProject);
+  const maybeNewSession = useStore((s) => s.maybeNewSession);
   const [selectedActionIdx, setSelectedActionIdx] = useState<number>(0);
 
   useEffect(() => {
-    void updateOrCreateProject();
-  }, [updateOrCreateProject]);
+    void maybeNewSession();
+  }, [maybeNewSession]);
 
   const navigate = useNavigate();
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);

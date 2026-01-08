@@ -22,6 +22,7 @@ import {
   RouterProvider,
   ScrollRestoration,
   useLoaderData,
+  useLocation,
   useNavigate,
 } from "react-router-dom";
 import "theme-package/fonts/fonts.css";
@@ -50,7 +51,11 @@ import ImportPage from "./pages/ImportPage";
 import NewPage from "./pages/NewPage";
 import TestingModelPage from "./pages/TestingModelPage";
 import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
-import { getAllProjects, loadProjectFromStorage, useStore } from "./store";
+import {
+  getAllProjects,
+  loadLatestProjectAndModelFromStorage,
+  useStore,
+} from "./store";
 import {
   createCodePageUrl,
   createDataSamplesPageUrl,
@@ -113,10 +118,20 @@ const Providers = ({ children }: ProviderLayoutProps) => {
 const Layout = () => {
   const driverRef = useRef<MakeCodeFrameDriver>(null);
   const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
+  const id = useStore((s) => s.id);
+  const updateProjectTimestamp = useStore((s) => s.updateProjectUpdatedAt);
+  const location = useLocation();
   const navigate = useNavigate();
   const toast = useToast();
   const intl = useIntl();
   const { projectLoaded } = useLoaderData() as { projectLoaded: boolean };
+  const updateProjectTimestampUrls = useMemo(() => {
+    return [
+      createDataSamplesPageUrl(),
+      createTestingModelPageUrl(),
+      createCodePageUrl(),
+    ];
+  }, []);
 
   useEffect(() => {
     return useStore.subscribe(
@@ -141,6 +156,12 @@ const Layout = () => {
       }
     );
   }, [intl, navigate, setPostImportDialogState, toast]);
+
+  useEffect(() => {
+    if (updateProjectTimestampUrls.includes(location.pathname) && id) {
+      void updateProjectTimestamp();
+    }
+  }, [id, location, updateProjectTimestamp, updateProjectTimestampUrls]);
 
   return (
     <Suspense fallback={<LoadingPage />}>
@@ -168,7 +189,7 @@ const createRouter = () => {
       loader: () => {
         if (!loaderFuncCalled) {
           loaderFuncCalled = true;
-          const projectLoaded = loadProjectFromStorage();
+          const projectLoaded = loadLatestProjectAndModelFromStorage();
           return defer({ projectLoaded });
         }
         return { projectLoaded: true };

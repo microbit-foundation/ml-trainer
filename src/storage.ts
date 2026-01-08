@@ -10,6 +10,7 @@ import { defaultSettings, Settings } from "./settings";
 import { prepActionForStorage } from "./storageUtils";
 import { v4 as uuid } from "uuid";
 import * as tf from "@tensorflow/tfjs";
+import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
 
 const DATABASE_NAME = "ml";
 
@@ -99,7 +100,7 @@ interface Schema extends DBSchema {
 
 export class Database {
   dbPromise: Promise<IDBPDatabase<Schema>>;
-  projectId: string | undefined;
+  dbInitValuesPromise: PromiseInfo<void> | undefined;
   dbReady: boolean = false;
   constructor() {
     this.dbPromise = this.initializeDb();
@@ -114,8 +115,16 @@ export class Database {
       DatabaseStore.SETTINGS,
       DatabaseStore.SETTINGS
     );
+    // If there are no settings then migrate data from local storage
+    // or initialize default values.
     if (!settings) {
-      await this.migrateFromLocalStorage(db);
+      if (this.dbInitValuesPromise) {
+        await this.dbInitValuesPromise.promise;
+      } else {
+        this.dbInitValuesPromise = createPromise<void>();
+        await this.migrateFromLocalStorage(db);
+        this.dbInitValuesPromise.resolve();
+      }
     }
     this.dbReady = true;
     return db;
@@ -219,24 +228,17 @@ export class Database {
     localStorage.removeItem(DATABASE_NAME);
   }
 
-  assertProjectId(): string {
-    if (!this.projectId) {
-      throw new Error("Project id is unexpectedly undefined");
-    }
-    return this.projectId;
-  }
-
   async newSession(
     makeCodeData: MakeCodeData,
     projectData: { timestamp: number; name: string; id: string }
   ): Promise<void> {
-    this.projectId = projectData.id;
+    const id = projectData.id;
     const tx = (await this.useDb()).transaction(
       [DatabaseStore.MAKECODE_DATA, DatabaseStore.PROJECT_DATA],
       "readwrite"
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
-    await makeCodeStore.add(makeCodeData, this.projectId);
+    await makeCodeStore.add(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     await projectDataStore.add(
       {
@@ -244,13 +246,12 @@ export class Database {
         updatedAt: projectData.timestamp,
         ...projectData,
       },
-      this.projectId
+      id
     );
     return tx.done;
   }
 
-  async loadProject(id: string): Promise<PersistedProjectData> {
-    this.projectId = id;
+  async getProject(id: string): Promise<PersistedProjectData> {
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
@@ -262,17 +263,12 @@ export class Database {
       "readwrite"
     );
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    const projectData = assertData(await projectDataStore.get(this.projectId));
+    const projectData = assertData(await projectDataStore.get(id));
     // Ensure that this project will be loaded by default during next page load.
-    await projectDataStore.put(
-      { ...projectData, updatedAt: Date.now() },
-      this.projectId
-    );
+    await projectDataStore.put({ ...projectData, updatedAt: Date.now() }, id);
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     const storeActions = orderBy(
-      assertDataArray(
-        await actionsStore.index("projectId").getAll(this.projectId)
-      ),
+      assertDataArray(await actionsStore.index("projectId").getAll(id)),
       "createdAt",
       "asc"
     );
@@ -292,7 +288,64 @@ export class Database {
       })
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
-    const makeCodeData = assertData(await makeCodeStore.get(this.projectId));
+    const makeCodeData = assertData(await makeCodeStore.get(id));
+    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
+    const settings = assertData(
+      await settingsStore.get(DatabaseStore.SETTINGS)
+    );
+    await tx.done;
+    return {
+      id,
+      actions,
+      project: makeCodeData.project,
+      projectEdited: makeCodeData.projectEdited,
+      timestamp: projectData.timestamp,
+      settings,
+    };
+  }
+
+  // This method is used passively. Don't update the project timestamp.
+  async getLatestProject(): Promise<PersistedProjectData | undefined> {
+    const tx = (await this.useDb()).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.RECORDINGS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+        DatabaseStore.SETTINGS,
+      ],
+      "readwrite"
+    );
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const allProjectsData = await projectDataStore.getAll();
+    if (!allProjectsData.length) {
+      return undefined;
+    }
+    const projectData = orderBy(allProjectsData, "updatedAt", "desc")[0];
+    const id = projectData.id;
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    const storeActions = orderBy(
+      assertDataArray(await actionsStore.index("projectId").getAll(id)),
+      "createdAt",
+      "asc"
+    );
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    const actions: ActionData[] = await Promise.all(
+      storeActions.map(async (action) => {
+        return {
+          id: action.id,
+          name: action.name,
+          icon: action.icon,
+          requiredConfidence: action.requiredConfidence,
+          createdAt: action.createdAt,
+          recordings: assertDataArray(
+            await recordingsStore.index("actionId").getAll(action.id)
+          ),
+        };
+      })
+    );
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeData = assertData(await makeCodeStore.get(id));
     const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
     const settings = assertData(
       await settingsStore.get(DatabaseStore.SETTINGS)
@@ -314,7 +367,7 @@ export class Database {
     projectData: { timestamp?: number; id: string },
     settings: Settings
   ): Promise<void> {
-    this.projectId = projectData.id;
+    const id = projectData.id;
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
@@ -333,41 +386,26 @@ export class Database {
         .map((r) => recordingsStore.add(r, r.id))
     );
     await Promise.all(
-      actions.map((a) =>
-        actionsStore.add(prepActionForStorage(a, this.projectId!), a.id)
-      )
+      actions.map((a) => actionsStore.add(prepActionForStorage(a, id), a.id))
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
-    await makeCodeStore.add(makeCodeData, this.projectId);
+    await makeCodeStore.add(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     projectData.timestamp = projectData.timestamp ?? Date.now();
     await projectDataStore.add(
       {
-        id: this.projectId,
+        id,
         name: makeCodeData.project.header?.name ?? untitledProjectName,
         createdAt: projectData.timestamp,
         updatedAt: projectData.timestamp,
         timestamp: projectData.timestamp,
       },
-      this.projectId
+      id
     );
 
     const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
     await settingsStore.put(settings, DatabaseStore.SETTINGS);
     return tx.done;
-  }
-
-  async getLatestProjectId(): Promise<string | undefined> {
-    const projectData = await (
-      await this.useDb()
-    ).getAll(DatabaseStore.PROJECT_DATA);
-    if (!projectData.length) {
-      this.projectId = undefined;
-      return undefined;
-    }
-    const latestProjectData = orderBy(projectData, "updatedAt", "desc")[0];
-    this.projectId = latestProjectData.id;
-    return this.projectId;
   }
 
   async getAllProjectData(): Promise<ProjectDataWithActions[]> {
@@ -394,10 +432,11 @@ export class Database {
   }
 
   async addAction(
+    id: string | undefined,
     action: ActionData,
     makeCodeData: MakeCodeData
   ): Promise<void> {
-    const projectId = this.assertProjectId();
+    id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
@@ -406,28 +445,29 @@ export class Database {
       ],
       "readwrite"
     );
-    const actionToStore = prepActionForStorage(action, projectId);
+    const actionToStore = prepActionForStorage(action, id);
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     await actionsStore.add(actionToStore, actionToStore.id);
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
-    await makeCodeStore.put(makeCodeData, projectId);
+    await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    const projectData = assertData(await projectDataStore.get(projectId));
+    const projectData = assertData(await projectDataStore.get(id));
     await projectDataStore.put(
       {
         ...projectData,
         updatedAt: Date.now(),
       },
-      projectId
+      id
     );
     return tx.done;
   }
 
   async updateAction(
+    id: string | undefined,
     action: ActionData,
     makeCodeData: MakeCodeData
   ): Promise<void> {
-    const projectId = this.assertProjectId();
+    id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
@@ -436,28 +476,29 @@ export class Database {
       ],
       "readwrite"
     );
-    const actionToStore = prepActionForStorage(action, projectId);
+    const actionToStore = prepActionForStorage(action, id);
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     await actionsStore.put(actionToStore, actionToStore.id);
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
-    await makeCodeStore.put(makeCodeData, projectId);
+    await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    const projectData = assertData(await projectDataStore.get(projectId));
+    const projectData = assertData(await projectDataStore.get(id));
     await projectDataStore.put(
       {
         ...projectData,
         updatedAt: Date.now(),
       },
-      projectId
+      id
     );
     return tx.done;
   }
 
   async updateActions(
+    id: string | undefined,
     actions: ActionData[],
     makeCodeData: MakeCodeData
   ): Promise<void> {
-    const projectId = this.assertProjectId();
+    id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
@@ -469,28 +510,29 @@ export class Database {
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     await Promise.all(
       actions.map((action) =>
-        actionsStore.put(prepActionForStorage(action, projectId), action.id)
+        actionsStore.put(prepActionForStorage(action, id), action.id)
       )
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
-    await makeCodeStore.put(makeCodeData, projectId);
+    await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    const projectData = assertData(await projectDataStore.get(projectId));
+    const projectData = assertData(await projectDataStore.get(id));
     await projectDataStore.put(
       {
         ...projectData,
         updatedAt: Date.now(),
       },
-      projectId
+      id
     );
     return tx.done;
   }
 
   async deleteAction(
+    id: string | undefined,
     action: ActionData,
     makeCodeData: MakeCodeData
   ): Promise<void> {
-    const projectId = this.assertProjectId();
+    id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
@@ -508,18 +550,18 @@ export class Database {
       .getAllKeys(action.id);
     await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
-    await makeCodeStore.put(makeCodeData, projectId);
+    await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    const projectData = assertData(await projectDataStore.get(projectId));
-    await projectDataStore.put(
-      { ...projectData, updatedAt: Date.now() },
-      projectId
-    );
+    const projectData = assertData(await projectDataStore.get(id));
+    await projectDataStore.put({ ...projectData, updatedAt: Date.now() }, id);
     return tx.done;
   }
 
-  async deleteAllActions(makeCodeData: MakeCodeData): Promise<void> {
-    const projectId = this.assertProjectId();
+  async deleteAllActions(
+    id: string | undefined,
+    makeCodeData: MakeCodeData
+  ): Promise<void> {
+    id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
@@ -530,11 +572,9 @@ export class Database {
       "readwrite"
     );
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    const projectData = assertData(await projectDataStore.get(projectId));
+    const projectData = assertData(await projectDataStore.get(id));
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const actionIds = await actionsStore
-      .index("projectId")
-      .getAllKeys(projectId);
+    const actionIds = await actionsStore.index("projectId").getAllKeys(id);
     await Promise.all(actionIds.map((id) => actionsStore.delete(id)));
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
     const recordingIds = (
@@ -544,20 +584,18 @@ export class Database {
     ).flat();
     await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
-    await makeCodeStore.put(makeCodeData, projectId);
-    await projectDataStore.put(
-      { ...projectData, updatedAt: Date.now() },
-      projectId
-    );
+    await makeCodeStore.put(makeCodeData, id);
+    await projectDataStore.put({ ...projectData, updatedAt: Date.now() }, id);
     return tx.done;
   }
 
   async addRecording(
+    id: string | undefined,
     recording: RecordingData,
     action: ActionData,
     makeCodeData: MakeCodeData
   ): Promise<void> {
-    const projectId = this.assertProjectId();
+    id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
@@ -568,7 +606,7 @@ export class Database {
       "readwrite"
     );
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const actionToStore = prepActionForStorage(action, projectId);
+    const actionToStore = prepActionForStorage(action, id);
     await actionsStore.put(actionToStore, actionToStore.id);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
     await recordingsStore.add(
@@ -576,25 +614,26 @@ export class Database {
       recording.id
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
-    await makeCodeStore.put(makeCodeData, projectId);
+    await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    const projectData = assertData(await projectDataStore.get(projectId));
+    const projectData = assertData(await projectDataStore.get(id));
     await projectDataStore.put(
       {
         ...projectData,
         updatedAt: Date.now(),
       },
-      projectId
+      id
     );
     return tx.done;
   }
 
   async deleteRecording(
+    id: string | undefined,
     key: string,
     action: ActionData,
     makeCodeData: MakeCodeData
   ): Promise<void> {
-    const projectId = this.assertProjectId();
+    id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
@@ -605,41 +644,62 @@ export class Database {
       "readwrite"
     );
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const actionToStore = prepActionForStorage(action, projectId);
+    const actionToStore = prepActionForStorage(action, id);
     await actionsStore.put(actionToStore, actionToStore.id);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
     await recordingsStore.delete(key);
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
-    await makeCodeStore.put(makeCodeData, projectId);
+    await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    const projectData = assertData(await projectDataStore.get(projectId));
+    const projectData = assertData(await projectDataStore.get(id));
     await projectDataStore.put(
       {
         ...projectData,
         updatedAt: Date.now(),
       },
-      projectId
+      id
     );
     return tx.done;
   }
 
-  async updateMakeCodeProject(makeCodeData: MakeCodeData): Promise<void> {
-    const projectId = this.assertProjectId();
+  async updateMakeCodeProject(
+    id: string | undefined,
+    makeCodeData: MakeCodeData
+  ): Promise<void> {
+    id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
       [DatabaseStore.MAKECODE_DATA, DatabaseStore.PROJECT_DATA],
       "readwrite"
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
-    await makeCodeStore.put(makeCodeData, projectId);
+    await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    const projectData = assertData(await projectDataStore.get(projectId));
+    const projectData = assertData(await projectDataStore.get(id));
     await projectDataStore.put(
       {
         ...projectData,
         updatedAt: Date.now(),
         name: makeCodeData.project.header?.name ?? untitledProjectName,
       },
-      projectId
+      id
+    );
+    return tx.done;
+  }
+
+  async updateProjectUpdatedAt(id: string | undefined, updatedAt: number) {
+    id = this.assertProjectId(id);
+    const tx = (await this.useDb()).transaction(
+      [DatabaseStore.PROJECT_DATA],
+      "readwrite"
+    );
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(id));
+    await projectDataStore.put(
+      {
+        ...projectData,
+        updatedAt,
+      },
+      id
     );
     return tx.done;
   }
@@ -648,25 +708,23 @@ export class Database {
     projectData: { timestamp: number; id: string },
     makeCodeData: MakeCodeData
   ): Promise<void> {
+    const id = projectData.id;
     const tx = (await this.useDb()).transaction(
       [DatabaseStore.MAKECODE_DATA, DatabaseStore.PROJECT_DATA],
       "readwrite"
     );
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    if (this.projectId === projectData.id) {
-      const projectData = assertData(
-        await projectDataStore.get(this.projectId)
-      );
+    const existingProjectData = await projectDataStore.get(id);
+    if (existingProjectData) {
       await projectDataStore.put(
         {
-          ...projectData,
+          ...existingProjectData,
           updatedAt: Date.now(),
         },
-        this.projectId
+        id
       );
       return tx.done;
     }
-    this.projectId = projectData.id;
     await projectDataStore.put(
       {
         name: makeCodeData.project.header?.name ?? untitledProjectName,
@@ -674,14 +732,14 @@ export class Database {
         updatedAt: projectData.timestamp,
         ...projectData,
       },
-      this.projectId
+      id
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
-    await makeCodeStore.put(makeCodeData, this.projectId);
+    await makeCodeStore.put(makeCodeData, id);
     return tx.done;
   }
 
-  async deleteProject(id: string): Promise<PersistedProjectData | boolean> {
+  async deleteProject(id: string): Promise<void> {
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
@@ -706,20 +764,6 @@ export class Database {
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     await projectDataStore.delete(id);
     await tx.done;
-    if (this.projectId === id) {
-      // You've just deleted the project you had loaded, load the next available project.
-      const latestProjectId = await this.getLatestProjectId();
-      if (!latestProjectId) {
-        // There are no other projects in storage. Clear state.
-        this.projectId = undefined;
-        return true;
-      }
-      this.projectId = latestProjectId;
-      const latestProject = await this.loadProject(latestProjectId);
-      return latestProject;
-    }
-    // Do nothing. You've deleted a project that isn't loaded.
-    return false;
   }
 
   async updateSettings(settings: Settings): Promise<string> {
@@ -730,32 +774,38 @@ export class Database {
     );
   }
 
-  async saveModel(model: tf.LayersModel) {
-    const projectId = this.assertProjectId();
+  async saveModel(id: string | undefined, model: tf.LayersModel) {
+    id = this.assertProjectId(id);
     try {
-      await model.save(`indexeddb://${projectId}`);
+      await model.save(`indexeddb://${id}`);
     } catch (err) {
       // IndexedDB not available?
     }
   }
 
-  async removeModel() {
-    const projectId = this.assertProjectId();
+  async removeModel(id: string | undefined) {
+    id = this.assertProjectId(id);
     try {
-      await tf.io.removeModel(`indexeddb://${projectId}`);
+      await tf.io.removeModel(`indexeddb://${id}`);
     } catch (err) {
       // IndexedDB not available?
     }
   }
 
-  async loadModel(): Promise<tf.LayersModel | undefined> {
-    const projectId = this.assertProjectId();
+  async loadModel(id: string): Promise<tf.LayersModel | undefined> {
     try {
-      return await tf.loadLayersModel(`indexeddb://${projectId}`);
+      return await tf.loadLayersModel(`indexeddb://${id}`);
     } catch (err) {
       // There is no model.
       return undefined;
     }
+  }
+
+  assertProjectId(id: string | undefined) {
+    if (!id) {
+      throw new StorageError("Project id is undefined");
+    }
+    return id;
   }
 }
 

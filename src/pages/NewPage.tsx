@@ -32,7 +32,7 @@ import LoadProjectInput, {
 } from "../components/LoadProjectInput";
 import NewPageChoice from "../components/NewPageChoice";
 import { useLogging } from "../logging/logging-hooks";
-import { loadProjectFromStorage, useStore } from "../store";
+import { loadProjectAndModelFromStorage, useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 import { useProjectName } from "../hooks/project-hooks";
 import LoadingAnimation from "../components/LoadingAnimation";
@@ -242,7 +242,7 @@ const ProjectCard = ({
 
   const handleLoadProject = useCallback(
     async (_e: React.MouseEvent) => {
-      await loadProjectFromStorage(id);
+      await loadProjectAndModelFromStorage(id);
       navigate(createDataSamplesPageUrl());
     },
     [id, navigate]
