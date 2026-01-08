@@ -18,6 +18,7 @@ const CodePage = () => {
   const navigate = useNavigate();
   const model = useStore((s) => s.model);
   const setEditorOpen = useStore((s) => s.setEditorOpen);
+  const isEditorOpen = useStore((s) => s.isEditorOpen);
   const { browserNavigationToEditor } = useProject();
   const [loading, setLoading] = useState<boolean>(true);
   const intl = useIntl();
@@ -46,6 +47,14 @@ const CodePage = () => {
       setEditorOpen(false);
     };
   }, [browserNavigationToEditor, model, navigate, setEditorOpen]);
+
+  // Redirects to the testing model page when MakeCode is closed by
+  // MakeCode activity in another tab / window.
+  useEffect(() => {
+    if (!loading && !isEditorOpen) {
+      navigate(createTestingModelPageUrl());
+    }
+  }, [isEditorOpen, loading, navigate]);
 
   return (
     <>

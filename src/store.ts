@@ -438,18 +438,23 @@ const createMlStore = (logging: Logging) => {
           set({
             // Get data window from actions on app load.
             dataWindow: getDataWindowFromActions(persistedData.actions),
+            appEditNeedsFlushToEditor: true,
+            isEditorOpen: false,
             ...persistedData,
           });
         },
 
         async loadLatestProjectFromStorage(): Promise<string | undefined> {
-          const latestProject = await storageWithErrHandling(() =>
-            storage.getLatestProject()
+          const latestProject = await storageWithErrHandling(
+            () => storage.getLatestProject(),
+            false
           );
           if (latestProject) {
             set({
               // Get data window from actions on app load.
               dataWindow: getDataWindowFromActions(latestProject.actions),
+              appEditNeedsFlushToEditor: true,
+              isEditorOpen: false,
               ...latestProject,
             });
             return latestProject.id;
@@ -1615,10 +1620,15 @@ const renameProject = (
   };
 };
 
-const storageWithErrHandling = async <T>(callback: () => Promise<T>) => {
+const storageWithErrHandling = async <T>(
+  callback: () => Promise<T>,
+  broadcastEvent: boolean = true
+) => {
   try {
     const value = await callback();
-    broadcastChannel.postMessage(BroadcastChannelMessages.RELOAD_PROJECT);
+    if (broadcastEvent) {
+      broadcastChannel.postMessage(BroadcastChannelMessages.RELOAD_PROJECT);
+    }
     return value;
   } catch (err) {
     // TODO: Add sensible error handling.
