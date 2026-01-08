@@ -41,7 +41,7 @@ const oldModelUrl = "indexeddb://micro:bit-ai-creator-model";
 
 export class StorageError extends Error {}
 
-const defaultCreatedAt = Date.now();
+const defaultTimestamp = Date.now();
 const defaultProjectId = uuid();
 
 const defaultStoreData: Record<
@@ -65,9 +65,7 @@ export interface StoreRecordingData extends RecordingData {
 export interface ProjectData {
   id: string;
   name: string;
-  timestamp?: number;
-  createdAt: number;
-  updatedAt: number;
+  timestamp: number;
 }
 
 export interface ProjectDataWithActions extends ProjectData {
@@ -204,9 +202,7 @@ export class Database {
     await projectDataStore.add(
       {
         id: defaultProjectId,
-        timestamp: localStorageProject.timestamp,
-        createdAt: defaultCreatedAt,
-        updatedAt: defaultCreatedAt,
+        timestamp: localStorageProject.timestamp ?? defaultTimestamp,
         name: localStorageProject.project.header?.name ?? untitledProjectName,
       },
       defaultProjectId
@@ -242,14 +238,7 @@ export class Database {
       const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
       await makeCodeStore.add(makeCodeData, id);
       const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-      await projectDataStore.add(
-        {
-          createdAt: projectData.timestamp,
-          updatedAt: projectData.timestamp,
-          ...projectData,
-        },
-        id
-      );
+      await projectDataStore.add(projectData, id);
       return tx.done;
     } else {
       const tx = (await this.useDb()).transaction(
@@ -270,14 +259,7 @@ export class Database {
       await makeCodeStore.add(makeCodeData, id);
       const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
       await projectDataStore.clear();
-      await projectDataStore.add(
-        {
-          createdAt: projectData.timestamp,
-          updatedAt: projectData.timestamp,
-          ...projectData,
-        },
-        id
-      );
+      await projectDataStore.add(projectData, id);
       return tx.done;
     }
   }
@@ -296,7 +278,7 @@ export class Database {
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(id));
     // Ensure that this project will be loaded by default during next page load.
-    await projectDataStore.put({ ...projectData, updatedAt: Date.now() }, id);
+    await projectDataStore.put({ ...projectData, timestamp: Date.now() }, id);
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     const storeActions = orderBy(
       assertDataArray(await actionsStore.index("projectId").getAll(id)),
@@ -395,7 +377,7 @@ export class Database {
   async importProject(
     actions: ActionData[],
     makeCodeData: MakeCodeData,
-    projectData: { timestamp?: number; id: string },
+    projectData: { timestamp: number; id: string },
     settings: Settings
   ): Promise<void> {
     const id = projectData.id;
@@ -423,14 +405,10 @@ export class Database {
       const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
       await makeCodeStore.add(makeCodeData, id);
       const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-      projectData.timestamp = projectData.timestamp ?? Date.now();
       await projectDataStore.add(
         {
-          id,
+          ...projectData,
           name: makeCodeData.project.header?.name ?? untitledProjectName,
-          createdAt: projectData.timestamp,
-          updatedAt: projectData.timestamp,
-          timestamp: projectData.timestamp,
         },
         id
       );
@@ -465,14 +443,10 @@ export class Database {
       await makeCodeStore.add(makeCodeData, id);
       const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
       await projectDataStore.clear();
-      projectData.timestamp = projectData.timestamp ?? Date.now();
       await projectDataStore.add(
         {
-          id,
+          ...projectData,
           name: makeCodeData.project.header?.name ?? untitledProjectName,
-          createdAt: projectData.timestamp,
-          updatedAt: projectData.timestamp,
-          timestamp: projectData.timestamp,
         },
         id
       );
@@ -490,7 +464,7 @@ export class Database {
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = orderBy(
       await projectDataStore.getAll(),
-      "updatedAt",
+      "timestamp",
       "desc"
     );
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
@@ -508,7 +482,8 @@ export class Database {
   async addAction(
     id: string | undefined,
     action: ActionData,
-    makeCodeData: MakeCodeData
+    makeCodeData: MakeCodeData,
+    timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
@@ -529,7 +504,7 @@ export class Database {
     await projectDataStore.put(
       {
         ...projectData,
-        updatedAt: Date.now(),
+        timestamp,
       },
       id
     );
@@ -539,7 +514,8 @@ export class Database {
   async updateAction(
     id: string | undefined,
     action: ActionData,
-    makeCodeData: MakeCodeData
+    makeCodeData: MakeCodeData,
+    timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
@@ -560,7 +536,7 @@ export class Database {
     await projectDataStore.put(
       {
         ...projectData,
-        updatedAt: Date.now(),
+        timestamp,
       },
       id
     );
@@ -570,7 +546,8 @@ export class Database {
   async updateActions(
     id: string | undefined,
     actions: ActionData[],
-    makeCodeData: MakeCodeData
+    makeCodeData: MakeCodeData,
+    timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
@@ -594,7 +571,7 @@ export class Database {
     await projectDataStore.put(
       {
         ...projectData,
-        updatedAt: Date.now(),
+        timestamp,
       },
       id
     );
@@ -604,7 +581,8 @@ export class Database {
   async deleteAction(
     id: string | undefined,
     action: ActionData,
-    makeCodeData: MakeCodeData
+    makeCodeData: MakeCodeData,
+    timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
@@ -627,13 +605,14 @@ export class Database {
     await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(id));
-    await projectDataStore.put({ ...projectData, updatedAt: Date.now() }, id);
+    await projectDataStore.put({ ...projectData, timestamp }, id);
     return tx.done;
   }
 
   async deleteAllActions(
     id: string | undefined,
-    makeCodeData: MakeCodeData
+    makeCodeData: MakeCodeData,
+    timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
@@ -659,14 +638,14 @@ export class Database {
     await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, id);
-    await projectDataStore.put({ ...projectData, updatedAt: Date.now() }, id);
+    await projectDataStore.put({ ...projectData, timestamp }, id);
     return tx.done;
   }
 
   async replaceActions(
     actions: ActionData[],
     makeCodeData: MakeCodeData,
-    projectData: { timestamp?: number; id: string | undefined },
+    projectData: { timestamp: number; id: string | undefined },
     settings: Settings
   ) {
     const id = this.assertProjectId(projectData.id);
@@ -701,14 +680,11 @@ export class Database {
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    projectData.timestamp = projectData.timestamp ?? Date.now();
     await projectDataStore.put(
       {
+        ...projectData,
         id,
         name: makeCodeData.project.header?.name ?? untitledProjectName,
-        createdAt: projectData.timestamp,
-        updatedAt: projectData.timestamp,
-        timestamp: projectData.timestamp,
       },
       id
     );
@@ -721,7 +697,8 @@ export class Database {
     id: string | undefined,
     recording: RecordingData,
     action: ActionData,
-    makeCodeData: MakeCodeData
+    makeCodeData: MakeCodeData,
+    timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
@@ -748,7 +725,7 @@ export class Database {
     await projectDataStore.put(
       {
         ...projectData,
-        updatedAt: Date.now(),
+        timestamp,
       },
       id
     );
@@ -759,7 +736,8 @@ export class Database {
     id: string | undefined,
     key: string,
     action: ActionData,
-    makeCodeData: MakeCodeData
+    makeCodeData: MakeCodeData,
+    timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
@@ -783,7 +761,7 @@ export class Database {
     await projectDataStore.put(
       {
         ...projectData,
-        updatedAt: Date.now(),
+        timestamp,
       },
       id
     );
@@ -792,7 +770,8 @@ export class Database {
 
   async updateMakeCodeProject(
     id: string | undefined,
-    makeCodeData: MakeCodeData
+    makeCodeData: MakeCodeData,
+    timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
@@ -806,7 +785,7 @@ export class Database {
     await projectDataStore.put(
       {
         ...projectData,
-        updatedAt: Date.now(),
+        timestamp,
         name: makeCodeData.project.header?.name ?? untitledProjectName,
       },
       id
@@ -814,7 +793,7 @@ export class Database {
     return tx.done;
   }
 
-  async updateProjectUpdatedAt(id: string | undefined, updatedAt: number) {
+  async updateProjectTimestamp(id: string | undefined, timestamp: number) {
     id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
       [DatabaseStore.PROJECT_DATA],
@@ -825,7 +804,7 @@ export class Database {
     await projectDataStore.put(
       {
         ...projectData,
-        updatedAt,
+        timestamp,
       },
       id
     );
@@ -859,12 +838,25 @@ export class Database {
     await tx.done;
   }
 
-  async updateSettings(settings: Settings): Promise<string> {
-    return (await this.useDb()).put(
-      DatabaseStore.SETTINGS,
-      settings,
-      DatabaseStore.SETTINGS
+  async updateSettings(
+    id: string | undefined,
+    settings: Settings,
+    timestamp: number
+  ): Promise<void> {
+    id = this.assertProjectId(id);
+    const tx = (await this.useDb()).transaction(
+      [DatabaseStore.PROJECT_DATA, DatabaseStore.SETTINGS],
+      "readwrite"
     );
+    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
+    await settingsStore.put(settings, DatabaseStore.SETTINGS);
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(id));
+    await projectDataStore.put({
+      ...projectData,
+      timestamp,
+    });
+    return tx.done;
   }
 
   async saveModel(id: string | undefined, model: tf.LayersModel) {

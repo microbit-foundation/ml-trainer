@@ -216,7 +216,7 @@ const ProjectsList = () => {
               id={projectData.id}
               name={projectData.name}
               actions={projectData.actions}
-              updatedAt={projectData.updatedAt}
+              updatedAt={projectData.timestamp}
               onDeleteProject={handleDeleteProject}
             />
           </GridItem>

@@ -114,7 +114,7 @@ export interface State {
   dataWindow: DataWindow;
   model: tf.LayersModel | undefined;
 
-  timestamp: number | undefined;
+  timestamp: number;
 
   isRecording: boolean;
 
@@ -286,7 +286,7 @@ const createMlStore = (logging: Logging) => {
     devtools(
       (set, get) => ({
         id: undefined,
-        timestamp: undefined,
+        timestamp: 0,
         actions: [],
         dataWindow: currentDataWindow,
         isRecording: false,
@@ -336,19 +336,20 @@ const createMlStore = (logging: Logging) => {
         isIncompatibleEditorDeviceDialogOpen: false,
 
         async setSettings(update: Partial<Settings>) {
-          const { settings } = get();
+          const { id, settings } = get();
           const updatedSettings = {
             ...settings,
             ...update,
           };
-          set({ settings: updatedSettings }, false, "setSettings");
+          const timestamp = Date.now();
+          set({ settings: updatedSettings, timestamp }, false, "setSettings");
           await storageWithErrHandling(() =>
-            storage.updateSettings(updatedSettings)
+            storage.updateSettings(id, updatedSettings, timestamp)
           );
         },
 
         async setLanguage(languageId: string) {
-          const { settings } = get();
+          const { id, settings } = get();
           if (languageId === settings.languageId) {
             // No need to update language if language is the same.
             // MakeCode does not reload.
@@ -358,6 +359,7 @@ const createMlStore = (logging: Logging) => {
             ...settings,
             languageId,
           };
+          const timestamp = Date.now();
           set(
             {
               settings: updatedSettings,
@@ -369,12 +371,13 @@ const createMlStore = (logging: Logging) => {
               editorStartUp: "in-progress",
               editorStartUpTimestamp: Date.now(),
               langChanged: true,
+              timestamp,
             },
             false,
             "setLanguage"
           );
           await storageWithErrHandling(() =>
-            storage.updateSettings(updatedSettings)
+            storage.updateSettings(id, updatedSettings, timestamp)
           );
         },
 
@@ -474,7 +477,7 @@ const createMlStore = (logging: Logging) => {
         async updateProjectUpdatedAt() {
           const { id } = get();
           await storageWithErrHandling(() =>
-            storage.updateProjectUpdatedAt(id, Date.now())
+            storage.updateProjectTimestamp(id, Date.now())
           );
         },
 
@@ -518,16 +521,23 @@ const createMlStore = (logging: Logging) => {
             undefined,
             dataWindow
           );
+          const timestamp = Date.now();
           set({
             actions: updatedActions,
             model: undefined,
+            timestamp,
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.addAction(id, newAction, {
-              project: updatedProject.project,
-              projectEdited: updatedProject.projectEdited,
-            })
+            storage.addAction(
+              id,
+              newAction,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
           );
         },
 
@@ -551,16 +561,25 @@ const createMlStore = (logging: Logging) => {
             undefined,
             dataWindow
           );
+          const timestamp = Date.now();
           set({
             actions: updatedActions,
             model: undefined,
+            timestamp,
+
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.addRecording(id, recording, updatedAction, {
-              project: updatedProject.project,
-              projectEdited: updatedProject.projectEdited,
-            })
+            storage.addRecording(
+              id,
+              recording,
+              updatedAction,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
           );
         },
 
@@ -576,18 +595,25 @@ const createMlStore = (logging: Logging) => {
             undefined,
             newDataWindow
           );
+          const timestamp = Date.now();
           set({
             actions:
               newActions.length === 0 ? [createFirstAction()] : newActions,
             dataWindow: newDataWindow,
             model: undefined,
+            timestamp,
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.deleteAction(id, action, {
-              project: updatedProject.project,
-              projectEdited: updatedProject.projectEdited,
-            })
+            storage.deleteAction(
+              id,
+              action,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
           );
         },
 
@@ -609,15 +635,22 @@ const createMlStore = (logging: Logging) => {
             model,
             dataWindow
           );
+          const timestamp = Date.now();
           set({
             actions: newActions,
+            timestamp,
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.updateAction(id, updatedAction, {
-              project: updatedProject.project,
-              projectEdited: updatedProject.projectEdited,
-            })
+            storage.updateAction(
+              id,
+              updatedAction,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
           );
         },
 
@@ -651,15 +684,22 @@ const createMlStore = (logging: Logging) => {
             model,
             dataWindow
           );
+          const timestamp = Date.now();
           set({
             actions: newActions,
+            timestamp,
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.updateActions(id, updatedActions, {
-              project: updatedProject.project,
-              projectEdited: updatedProject.projectEdited,
-            })
+            storage.updateActions(
+              id,
+              updatedActions,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
           );
         },
 
@@ -681,15 +721,22 @@ const createMlStore = (logging: Logging) => {
             model,
             dataWindow
           );
+          const timestamp = Date.now();
           set({
             actions: newActions,
+            timestamp,
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.updateAction(id, updatedAction, {
-              project: updatedProject.project,
-              projectEdited: updatedProject.projectEdited,
-            })
+            storage.updateAction(
+              id,
+              updatedAction,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
           );
         },
 
@@ -719,17 +766,25 @@ const createMlStore = (logging: Logging) => {
             undefined,
             newDataWindow
           );
+          const timestamp = Date.now();
           set({
             actions: updatedActions,
             dataWindow: newDataWindow,
             model: undefined,
+            timestamp,
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.deleteRecording(id, recordingId.toString(), updatedAction, {
-              project: updatedProject.project,
-              projectEdited: updatedProject.projectEdited,
-            })
+            storage.deleteRecording(
+              id,
+              recordingId.toString(),
+              updatedAction,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
           );
         },
 
@@ -742,6 +797,7 @@ const createMlStore = (logging: Logging) => {
             undefined,
             currentDataWindow
           );
+          const timestamp = Date.now();
           set({
             actions: [createFirstAction()],
             dataWindow: currentDataWindow,
@@ -749,10 +805,14 @@ const createMlStore = (logging: Logging) => {
             ...updatedProject,
           });
           await storageWithErrHandling(() =>
-            storage.deleteAllActions(id, {
-              project: updatedProject.project,
-              projectEdited: updatedProject.projectEdited,
-            })
+            storage.deleteAllActions(
+              id,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
           );
         },
 
@@ -957,22 +1017,28 @@ const createMlStore = (logging: Logging) => {
             model,
             dataWindow
           );
+          const timestamp = Date.now();
           set(
             {
               model,
               trainModelDialogStage: model
                 ? TrainModelDialogStage.Closed
                 : TrainModelDialogStage.TrainingError,
+              timestamp,
               ...updatedProject,
             },
             false,
             actionName
           );
           await storageWithErrHandling(() =>
-            storage.updateMakeCodeProject(id, {
-              project: updatedProject.project,
-              projectEdited: updatedProject.projectEdited,
-            })
+            storage.updateMakeCodeProject(
+              id,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
           );
           return !trainingResult.error;
         },
@@ -1003,39 +1069,51 @@ const createMlStore = (logging: Logging) => {
               ).text,
             },
           };
+          const timestamp = Date.now();
           set(
             {
               project: newProject,
               projectEdited: false,
               appEditNeedsFlushToEditor: true,
+              timestamp,
             },
             false,
             "resetProject"
           );
           await storageWithErrHandling(() =>
-            storage.updateMakeCodeProject(id, {
-              project: newProject,
-              projectEdited: false,
-            })
+            storage.updateMakeCodeProject(
+              id,
+              {
+                project: newProject,
+                projectEdited: false,
+              },
+              timestamp
+            )
           );
         },
 
         async setProjectName(name: string): Promise<void> {
           const { id, project, projectEdited } = get();
           const updatedProject = renameProject(project, name);
+          const timestamp = Date.now();
           set(
             {
               appEditNeedsFlushToEditor: true,
               project: updatedProject,
+              timestamp,
             },
             false,
             "setProjectName"
           );
           await storageWithErrHandling(() =>
-            storage.updateMakeCodeProject(id, {
-              project: updatedProject,
-              projectEdited,
-            })
+            storage.updateMakeCodeProject(
+              id,
+              {
+                project: updatedProject,
+                projectEdited,
+              },
+              timestamp
+            )
           );
         },
 
@@ -1198,10 +1276,14 @@ const createMlStore = (logging: Logging) => {
             );
           } else if (updateMakeCodeProject) {
             await storageWithErrHandling(() =>
-              storage.updateMakeCodeProject(id, {
-                project: newProject,
-                projectEdited: updatedProjectEdited,
-              })
+              storage.updateMakeCodeProject(
+                id,
+                {
+                  project: newProject,
+                  projectEdited: updatedProjectEdited,
+                },
+                updatedTimestamp
+              )
             );
           }
         },
@@ -1279,7 +1361,7 @@ const createMlStore = (logging: Logging) => {
         },
 
         async tourStart(trigger: TourTrigger, manual: boolean = false) {
-          const { actions, settings, tourState } = get();
+          const { actions, id, settings, tourState } = get();
           if (
             manual ||
             (!tourState && !settings.toursCompleted.includes(trigger.name))
@@ -1296,16 +1378,18 @@ const createMlStore = (logging: Logging) => {
                   ),
                 }
               : settings;
+            const timestamp = Date.now();
             const updatedState = {
               tourState: {
                 ...tourSpec,
                 index: 0,
               },
               settings: updatedSettings,
+              timestamp,
             };
             set(updatedState);
             await storageWithErrHandling(() =>
-              storage.updateSettings(updatedSettings)
+              storage.updateSettings(id, updatedSettings, timestamp)
             );
           }
         },
@@ -1330,46 +1414,51 @@ const createMlStore = (logging: Logging) => {
           });
         },
         async tourComplete(triggers: TourTriggerName[]) {
-          const { settings } = get();
+          const { id, settings } = get();
           const updatedSettings = {
             ...settings,
             toursCompleted: Array.from(
               new Set([...settings.toursCompleted, ...triggers])
             ),
           };
+          const timestamp = Date.now();
           set({
             tourState: undefined,
             settings: updatedSettings,
+            timestamp,
           });
           await storageWithErrHandling(() =>
-            storage.updateSettings(updatedSettings)
+            storage.updateSettings(id, updatedSettings, timestamp)
           );
         },
 
         async setDataSamplesView(view: DataSamplesView) {
-          const { settings } = get();
+          const { id, settings } = get();
           const updatedSettings = {
             ...settings,
             dataSamplesView: view,
           };
+          const timestamp = Date.now();
           set({
             settings: updatedSettings,
+            timestamp,
           });
           await storageWithErrHandling(() =>
-            storage.updateSettings(updatedSettings)
+            storage.updateSettings(id, updatedSettings, timestamp)
           );
         },
         async setShowGraphs(show: boolean) {
-          const { settings } = get();
+          const { id, settings } = get();
           const updatedSettings = {
             ...settings,
             showGraphs: show,
           };
+          const timestamp = Date.now();
           set({
             settings: updatedSettings,
           });
           await storageWithErrHandling(() =>
-            storage.updateSettings(updatedSettings)
+            storage.updateSettings(id, updatedSettings, timestamp)
           );
         },
 
