@@ -11,6 +11,7 @@ import { prepActionForStorage } from "./storageUtils";
 import { v4 as uuid } from "uuid";
 import * as tf from "@tensorflow/tfjs";
 import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
+import { flags } from "./flags";
 
 const DATABASE_NAME = "ml";
 
@@ -233,22 +234,52 @@ export class Database {
     projectData: { timestamp: number; name: string; id: string }
   ): Promise<void> {
     const id = projectData.id;
-    const tx = (await this.useDb()).transaction(
-      [DatabaseStore.MAKECODE_DATA, DatabaseStore.PROJECT_DATA],
-      "readwrite"
-    );
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
-    await makeCodeStore.add(makeCodeData, id);
-    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    await projectDataStore.add(
-      {
-        createdAt: projectData.timestamp,
-        updatedAt: projectData.timestamp,
-        ...projectData,
-      },
-      id
-    );
-    return tx.done;
+    if (flags.multipleProjects) {
+      const tx = (await this.useDb()).transaction(
+        [DatabaseStore.MAKECODE_DATA, DatabaseStore.PROJECT_DATA],
+        "readwrite"
+      );
+      const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+      await makeCodeStore.add(makeCodeData, id);
+      const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+      await projectDataStore.add(
+        {
+          createdAt: projectData.timestamp,
+          updatedAt: projectData.timestamp,
+          ...projectData,
+        },
+        id
+      );
+      return tx.done;
+    } else {
+      const tx = (await this.useDb()).transaction(
+        [
+          DatabaseStore.ACTIONS,
+          DatabaseStore.MAKECODE_DATA,
+          DatabaseStore.PROJECT_DATA,
+          DatabaseStore.RECORDINGS,
+        ],
+        "readwrite"
+      );
+      const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+      await actionsStore.clear();
+      const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+      await recordingsStore.clear();
+      const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+      await makeCodeStore.clear();
+      await makeCodeStore.add(makeCodeData, id);
+      const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+      await projectDataStore.clear();
+      await projectDataStore.add(
+        {
+          createdAt: projectData.timestamp,
+          updatedAt: projectData.timestamp,
+          ...projectData,
+        },
+        id
+      );
+      return tx.done;
+    }
   }
 
   async getProject(id: string): Promise<PersistedProjectData> {
@@ -368,44 +399,87 @@ export class Database {
     settings: Settings
   ): Promise<void> {
     const id = projectData.id;
-    const tx = (await this.useDb()).transaction(
-      [
-        DatabaseStore.ACTIONS,
-        DatabaseStore.RECORDINGS,
-        DatabaseStore.MAKECODE_DATA,
-        DatabaseStore.PROJECT_DATA,
-        DatabaseStore.SETTINGS,
-      ],
-      "readwrite"
-    );
-    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    await Promise.all(
-      actions
-        .flatMap((a) => a.recordings.map((r) => ({ ...r, actionId: a.id })))
-        .map((r) => recordingsStore.add(r, r.id))
-    );
-    await Promise.all(
-      actions.map((a) => actionsStore.add(prepActionForStorage(a, id), a.id))
-    );
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
-    await makeCodeStore.add(makeCodeData, id);
-    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    projectData.timestamp = projectData.timestamp ?? Date.now();
-    await projectDataStore.add(
-      {
-        id,
-        name: makeCodeData.project.header?.name ?? untitledProjectName,
-        createdAt: projectData.timestamp,
-        updatedAt: projectData.timestamp,
-        timestamp: projectData.timestamp,
-      },
-      id
-    );
-
-    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
-    await settingsStore.put(settings, DatabaseStore.SETTINGS);
-    return tx.done;
+    if (flags.multipleProjects) {
+      const tx = (await this.useDb()).transaction(
+        [
+          DatabaseStore.ACTIONS,
+          DatabaseStore.RECORDINGS,
+          DatabaseStore.MAKECODE_DATA,
+          DatabaseStore.PROJECT_DATA,
+          DatabaseStore.SETTINGS,
+        ],
+        "readwrite"
+      );
+      const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+      const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+      await Promise.all(
+        actions
+          .flatMap((a) => a.recordings.map((r) => ({ ...r, actionId: a.id })))
+          .map((r) => recordingsStore.add(r, r.id))
+      );
+      await Promise.all(
+        actions.map((a) => actionsStore.add(prepActionForStorage(a, id), a.id))
+      );
+      const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+      await makeCodeStore.add(makeCodeData, id);
+      const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+      projectData.timestamp = projectData.timestamp ?? Date.now();
+      await projectDataStore.add(
+        {
+          id,
+          name: makeCodeData.project.header?.name ?? untitledProjectName,
+          createdAt: projectData.timestamp,
+          updatedAt: projectData.timestamp,
+          timestamp: projectData.timestamp,
+        },
+        id
+      );
+      const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
+      await settingsStore.put(settings, DatabaseStore.SETTINGS);
+      return tx.done;
+    } else {
+      const tx = (await this.useDb()).transaction(
+        [
+          DatabaseStore.ACTIONS,
+          DatabaseStore.RECORDINGS,
+          DatabaseStore.MAKECODE_DATA,
+          DatabaseStore.PROJECT_DATA,
+          DatabaseStore.SETTINGS,
+        ],
+        "readwrite"
+      );
+      const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+      await recordingsStore.clear();
+      await Promise.all(
+        actions
+          .flatMap((a) => a.recordings.map((r) => ({ ...r, actionId: a.id })))
+          .map((r) => recordingsStore.add(r, r.id))
+      );
+      const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+      await actionsStore.clear();
+      await Promise.all(
+        actions.map((a) => actionsStore.add(prepActionForStorage(a, id), a.id))
+      );
+      const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+      await makeCodeStore.clear();
+      await makeCodeStore.add(makeCodeData, id);
+      const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+      await projectDataStore.clear();
+      projectData.timestamp = projectData.timestamp ?? Date.now();
+      await projectDataStore.add(
+        {
+          id,
+          name: makeCodeData.project.header?.name ?? untitledProjectName,
+          createdAt: projectData.timestamp,
+          updatedAt: projectData.timestamp,
+          timestamp: projectData.timestamp,
+        },
+        id
+      );
+      const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
+      await settingsStore.put(settings, DatabaseStore.SETTINGS);
+      return tx.done;
+    }
   }
 
   async getAllProjectData(): Promise<ProjectDataWithActions[]> {

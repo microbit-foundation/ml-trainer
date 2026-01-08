@@ -4,6 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { DeleteIcon } from "@chakra-ui/icons";
 import {
   Box,
   Card,
@@ -27,17 +28,17 @@ import DefaultPageLayout, {
   HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
+import LoadingAnimation from "../components/LoadingAnimation";
 import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
 import NewPageChoice from "../components/NewPageChoice";
+import { flags } from "../flags";
+import { useProjectName } from "../hooks/project-hooks";
 import { useLogging } from "../logging/logging-hooks";
+import { ProjectData, ProjectDataWithActions, StoreAction } from "../storage";
 import { loadProjectAndModelFromStorage, useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
-import { useProjectName } from "../hooks/project-hooks";
-import LoadingAnimation from "../components/LoadingAnimation";
-import { ProjectData, ProjectDataWithActions, StoreAction } from "../storage";
-import { DeleteIcon } from "@chakra-ui/icons";
 
 const NewPage = () => {
   const existingSessionTimestamp = useStore((s) => s.timestamp);
@@ -176,11 +177,13 @@ const NewPage = () => {
               </NewPageChoice>
               <Box flex="1" />
             </HStack>
-            <Suspense fallback={<LoadingAnimation />}>
-              <Await resolve={allProjectData}>
-                <ProjectsList />
-              </Await>
-            </Suspense>
+            {flags.multipleProjects && (
+              <Suspense fallback={<LoadingAnimation />}>
+                <Await resolve={allProjectData}>
+                  <ProjectsList />
+                </Await>
+              </Suspense>
+            )}
           </VStack>
         </Container>
       </VStack>

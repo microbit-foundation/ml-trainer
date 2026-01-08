@@ -25,6 +25,10 @@ export type Flag =
    */
   | "e2e"
   /**
+   * Flag to enable the storage of and supporting UI for multiple projects.
+   */
+  | "multipleProjects"
+  /**
    * Flag to add a beta warning. Enabled for review and staging site stages.
    */
   | "preReleaseNotice"
@@ -57,6 +61,10 @@ const allFlags: FlagMetadata[] = [
   { name: "exampleOptInB", defaultOnStages: [] },
   { name: "devtools", defaultOnStages: ["local"] },
   { name: "e2e", defaultOnStages: [] },
+  {
+    name: "multipleProjects",
+    defaultOnStages: [],
+  },
   {
     name: "preReleaseNotice",
     defaultOnStages: ["staging", "beta"],
