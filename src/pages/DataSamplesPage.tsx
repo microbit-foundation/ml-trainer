@@ -20,20 +20,31 @@ import { useConnectionStage } from "../connection-stage-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
-import { createTestingModelPageUrl } from "../urls";
+import { createHomePageUrl, createTestingModelPageUrl } from "../urls";
+import { projectSessionStorage } from "../session-storage";
+import { flags } from "../flags";
 
 const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
   const addNewAction = useStore((s) => s.addNewAction);
   const model = useStore((s) => s.model);
-  const maybeNewSession = useStore((s) => s.maybeNewSession);
+  const newSession = useStore((s) => s.newSession);
   const [selectedActionIdx, setSelectedActionIdx] = useState<number>(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    void maybeNewSession();
-  }, [maybeNewSession]);
+    const initAsync = async () => {
+      if (!projectSessionStorage.getProjectId()) {
+        if (flags.multipleProjects) {
+          return navigate(createHomePageUrl());
+        } else {
+          await newSession();
+        }
+      }
+    };
+    void initAsync();
+  }, [navigate, newSession]);
 
-  const navigate = useNavigate();
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
 
   const tourStart = useStore((s) => s.tourStart);

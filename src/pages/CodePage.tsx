@@ -11,8 +11,14 @@ import DownloadDialogs from "../components/DownloadDialogs";
 import SaveDialogs from "../components/SaveDialogs";
 import { useProject } from "../hooks/project-hooks";
 import { useStore } from "../store";
-import { createDataSamplesPageUrl, createTestingModelPageUrl } from "../urls";
+import {
+  createDataSamplesPageUrl,
+  createHomePageUrl,
+  createTestingModelPageUrl,
+} from "../urls";
 import Tour from "./Tour";
+import { projectSessionStorage } from "../session-storage";
+import { flags } from "../flags";
 
 const CodePage = () => {
   const navigate = useNavigate();
@@ -24,18 +30,20 @@ const CodePage = () => {
   const intl = useIntl();
   const initAsyncCalled = useRef(false);
   useEffect(() => {
+    if (!projectSessionStorage.getProjectId() && flags.multipleProjects) {
+      return navigate(createHomePageUrl());
+    }
+    if (!model) {
+      return navigate(createDataSamplesPageUrl());
+    }
     const initAsync = async () => {
       initAsyncCalled.current = true;
-      if (!model) {
-        navigate(createDataSamplesPageUrl());
+      const success = await browserNavigationToEditor();
+      if (success) {
+        setLoading(false);
+        setEditorOpen(true);
       } else {
-        const success = await browserNavigationToEditor();
-        if (success) {
-          setLoading(false);
-          setEditorOpen(true);
-        } else {
-          navigate(createTestingModelPageUrl());
-        }
+        navigate(createTestingModelPageUrl());
       }
     };
 

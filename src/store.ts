@@ -61,6 +61,7 @@ import {
   BroadcastChannelData,
   BroadcastChannelMessageType,
 } from "./broadcast-channel";
+import { projectSessionStorage } from "./session-storage";
 
 const storage = new Database();
 
@@ -191,7 +192,6 @@ export interface ConnectOptions {
 export interface Actions {
   getAllProjectData(): Promise<void>;
   loadProjectFromStorage(id: string): Promise<void>;
-  loadLatestProjectFromStorage(): Promise<string | undefined>;
   updateProjectUpdatedAt(): Promise<void>;
   deleteProject(id: string): Promise<void>;
   clearProjectState(): void;
@@ -214,7 +214,6 @@ export interface Actions {
   recordingStarted(): void;
   recordingStopped(): void;
   newSession(projectName?: string): Promise<void>;
-  maybeNewSession(): Promise<void>;
   trainModelFlowStart: (callback?: () => void) => Promise<void>;
   closeTrainModelDialogs: () => void;
   trainModel(): Promise<boolean>;
@@ -407,6 +406,7 @@ const createMlStore = (logging: Logging) => {
             false,
             "newSession"
           );
+          projectSessionStorage.setProjectId(id);
           await storageWithErrHandling(() =>
             storage.newSession(
               {
@@ -444,6 +444,7 @@ const createMlStore = (logging: Logging) => {
             () => storage.getProject(id),
             false
           );
+          projectSessionStorage.setProjectId(id);
           set({
             // Get data window from actions on app load.
             dataWindow: getDataWindowFromActions(persistedData.actions),
@@ -451,23 +452,6 @@ const createMlStore = (logging: Logging) => {
             isEditorOpen: false,
             ...persistedData,
           });
-        },
-
-        async loadLatestProjectFromStorage(): Promise<string | undefined> {
-          const latestProject = await storageWithErrHandling(
-            () => storage.getLatestProject(),
-            false
-          );
-          if (latestProject) {
-            set({
-              // Get data window from actions on app load.
-              dataWindow: getDataWindowFromActions(latestProject.actions),
-              appEditNeedsFlushToEditor: true,
-              isEditorOpen: false,
-              ...latestProject,
-            });
-            return latestProject.id;
-          }
         },
 
         async getAllProjectData(): Promise<void> {
@@ -478,15 +462,6 @@ const createMlStore = (logging: Logging) => {
           set({
             allProjectData,
           });
-        },
-
-        async maybeNewSession() {
-          const { id, newSession } = get();
-          if (!id) {
-            // You have no project open and you have no projects in storage.
-            // Start a new session.
-            await newSession();
-          }
         },
 
         async updateProjectUpdatedAt() {
@@ -517,6 +492,9 @@ const createMlStore = (logging: Logging) => {
             })(),
             allProjectData: allProjectData.filter((p) => p.id !== id),
           });
+          if (id === currentProjectId) {
+            projectSessionStorage.clearProjectId();
+          }
           await storageWithErrHandling(() => storage.deleteProject(id), false);
           const message: BroadcastChannelData = {
             messageType: BroadcastChannelMessageType.DELETE_PROJECT,
@@ -537,6 +515,7 @@ const createMlStore = (logging: Logging) => {
             appEditNeedsFlushToEditor: true,
             timestamp: undefined,
           });
+          projectSessionStorage.clearProjectId();
         },
 
         async addNewAction() {
@@ -1813,18 +1792,10 @@ const storageWithErrHandling = async <T>(
   }
 };
 
-export const loadLatestProjectAndModelFromStorage =
-  async (): Promise<boolean> => {
-    const id = await useStore.getState().loadLatestProjectFromStorage();
-    if (id) {
-      await loadModelFromStorage(id);
-    }
-    return true;
-  };
-
 export const loadProjectAndModelFromStorage = async (id: string) => {
   await useStore.getState().loadProjectFromStorage(id);
   await loadModelFromStorage(id);
+  return true;
 };
 
 export const getAllProjectsFromStorage = async (): Promise<boolean> => {

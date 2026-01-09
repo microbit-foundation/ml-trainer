@@ -53,7 +53,6 @@ import TestingModelPage from "./pages/TestingModelPage";
 import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
 import {
   getAllProjectsFromStorage,
-  loadLatestProjectAndModelFromStorage,
   loadProjectAndModelFromStorage,
   useStore,
 } from "./store";
@@ -72,6 +71,7 @@ import {
   BroadcastChannelData,
   BroadcastChannelMessageType,
 } from "./broadcast-channel";
+import { projectSessionStorage } from "./session-storage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -242,8 +242,11 @@ const createRouter = () => {
       loader: () => {
         if (!loaderFuncCalled) {
           loaderFuncCalled = true;
-          const projectLoaded = loadLatestProjectAndModelFromStorage();
-          return defer({ projectLoaded });
+          const projectId = projectSessionStorage.getProjectId();
+          if (projectId) {
+            const projectLoaded = loadProjectAndModelFromStorage(projectId);
+            return defer({ projectLoaded });
+          }
         }
         return { projectLoaded: true };
       },

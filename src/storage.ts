@@ -12,6 +12,7 @@ import { v4 as uuid } from "uuid";
 import * as tf from "@tensorflow/tfjs";
 import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
 import { flags } from "./flags";
+import { projectSessionStorage } from "./session-storage";
 
 const DATABASE_NAME = "ml";
 
@@ -222,6 +223,7 @@ export class Database {
     } catch (err) {
       // There is no model.
     }
+    projectSessionStorage.setProjectId(defaultProjectId);
     localStorage.removeItem(DATABASE_NAME);
   }
 
