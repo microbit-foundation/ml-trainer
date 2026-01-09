@@ -6,7 +6,7 @@
 import { BoxProps, Text, VStack } from "@chakra-ui/react";
 import { ReactNode, createContext } from "react";
 import { CookieConsent, DeploymentConfigFactory } from "..";
-import { NullLogging } from "./logging";
+import { ConsoleLogging } from "./logging";
 import theme from "./theme";
 
 const stubConsentValue: CookieConsent = {
@@ -35,7 +35,7 @@ const defaultDeploymentFactory: DeploymentConfigFactory = () => ({
     );
   },
   OrgLogo: undefined,
-  logging: new NullLogging(),
+  logging: new ConsoleLogging(),
   compliance: {
     ConsentProvider: ({ children }: { children: ReactNode }) => (
       <stubConsentContext.Provider value={stubConsentValue}>

@@ -431,6 +431,18 @@
       "value": "마이크로 USB 케이블"
     }
   ],
+  "connect-native-start-heading": [
+    {
+      "type": 0,
+      "value": "What you need to connect"
+    }
+  ],
+  "connect-native-start-requirements1": [
+    {
+      "type": 0,
+      "value": "micro:bit with battery pack"
+    }
+  ],
   "connect-or-import": [
     {
       "children": [
@@ -603,6 +615,12 @@
       "value": "대신 Web Bluetooth를 사용하여 연결하기"
     }
   ],
+  "connect-tablet": [
+    {
+      "type": 0,
+      "value": "iPad or Android tablet"
+    }
+  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -639,10 +657,22 @@
       "value": "문제 해결"
     }
   ],
+  "connect-try-another-way": [
+    {
+      "type": 0,
+      "value": "Not working? Try another way"
+    }
+  ],
   "connect-with-batteries": [
     {
       "type": 0,
       "value": "배터리"
+    }
+  ],
+  "connect-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "with Bluetooth enabled"
     }
   ],
   "connect-with-web-bluetooth": [
@@ -995,6 +1025,30 @@
     {
       "type": 0,
       "value": "라디오 링크 프로그램 다운로드 중"
+    }
+  ],
+  "downloading-stage-connecting": [
+    {
+      "type": 0,
+      "value": "Connecting to micro:bit…"
+    }
+  ],
+  "downloading-stage-finding-device": [
+    {
+      "type": 0,
+      "value": "Finding micro:bit…"
+    }
+  ],
+  "downloading-stage-flashing": [
+    {
+      "type": 0,
+      "value": "Downloading program to micro:bit…"
+    }
+  ],
+  "downloading-stage-initializing": [
+    {
+      "type": 0,
+      "value": "Initializing…"
     }
   ],
   "downloading-subtitle": [
@@ -2523,6 +2577,18 @@
     {
       "type": 0,
       "value": "새로 고침"
+    }
+  ],
+  "reset-to-bluetooth-mode-heading": [
+    {
+      "type": 0,
+      "value": "Reset to Bluetooth mode"
+    }
+  ],
+  "reset-to-bluetooth-mode-subtitle": [
+    {
+      "type": 0,
+      "value": "Press RESET three times"
     }
   ],
   "reset-to-default-action": [

@@ -388,7 +388,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.Connecting,
-        flowType: ConnectionFlowType.ConnectBluetooth,
+        flowType: ConnectionFlowType.ConnectWebBluetooth,
       },
     });
   });
@@ -407,7 +407,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.Connected,
-        flowType: ConnectionFlowType.ConnectBluetooth,
+        flowType: ConnectionFlowType.ConnectWebBluetooth,
       },
     });
   });
@@ -426,7 +426,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.Connected,
-        flowType: ConnectionFlowType.ConnectBluetooth,
+        flowType: ConnectionFlowType.ConnectWebBluetooth,
       },
     });
   });
@@ -461,7 +461,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToSelectBluetoothDevice,
-        flowType: ConnectionFlowType.ConnectBluetooth,
+        flowType: ConnectionFlowType.ConnectWebBluetooth,
       },
     });
   });
@@ -480,7 +480,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToConnect,
-        flowType: ConnectionFlowType.ConnectBluetooth,
+        flowType: ConnectionFlowType.ConnectWebBluetooth,
       },
     });
   });
@@ -515,7 +515,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.ReconnectingAutomatically,
-        flowType: ConnectionFlowType.ConnectBluetooth,
+        flowType: ConnectionFlowType.ConnectWebBluetooth,
       },
     });
   });
@@ -534,7 +534,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.ConnectionLost,
-        flowType: ConnectionFlowType.ConnectBluetooth,
+        flowType: ConnectionFlowType.ConnectWebBluetooth,
       },
     });
   });
@@ -553,7 +553,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: true,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToReconnect,
-        flowType: ConnectionFlowType.ConnectBluetooth,
+        flowType: ConnectionFlowType.ConnectWebBluetooth,
       },
     });
   });
@@ -572,7 +572,7 @@ describe("getNextConnectionState for bluetooth connection", () => {
       expectedHasAttemptedReconnect: false,
       expectedNextConnectionState: {
         status: ConnectionStatus.FailedToReconnectTwice,
-        flowType: ConnectionFlowType.ConnectBluetooth,
+        flowType: ConnectionFlowType.ConnectWebBluetooth,
       },
     });
   });

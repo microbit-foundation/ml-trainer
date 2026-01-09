@@ -67,7 +67,7 @@ const ImportPage = () => {
         setProject(project);
       } catch (e) {
         // Log the fetch error, but fallback to new blank session by default.
-        logging.error(e);
+        logging.error("Failed to fetch project", e);
       }
     };
     void updateAsync().then(() => {

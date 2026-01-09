@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
+import { ProgressStage } from "@microbit/microbit-connection";
 import * as tf from "@tensorflow/tfjs";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
@@ -24,7 +25,7 @@ import {
   DownloadStep,
   Action,
   ActionData,
-  MicrobitToFlash,
+  SameOrDifferentChoice,
   PostImportDialogState,
   RecordingData,
   SaveState,
@@ -189,7 +190,10 @@ export interface State {
   langChanged: boolean;
 
   download: DownloadState;
-  downloadFlashingProgress: number;
+  downloadFlashingProgress: {
+    stage: ProgressStage | undefined;
+    value: number | undefined;
+  };
   save: SaveState;
 
   settings: Settings;
@@ -274,8 +278,10 @@ export interface Actions {
   projectFlushedToEditor(): void;
 
   setDownload(state: DownloadState): void;
-  // TODO: does the persistence slow this down? we could move it to another store
-  setDownloadFlashingProgress(value: number): void;
+  setDownloadFlashingProgress(
+    stage: ProgressStage,
+    value: number | undefined
+  ): void;
   setSave(state: SaveState): void;
 
   tourStart(trigger: TourTrigger, manual?: boolean): void;
@@ -322,9 +328,10 @@ const createMlStore = (logging: Logging) => {
           projectLoadTimestamp: 0,
           download: {
             step: DownloadStep.None,
-            microbitToFlash: MicrobitToFlash.Default,
+            history: [],
+            microbitChoice: SameOrDifferentChoice.Default,
           },
-          downloadFlashingProgress: 0,
+          downloadFlashingProgress: { stage: undefined, value: undefined },
           save: {
             step: SaveStep.None,
           },
@@ -428,7 +435,7 @@ const createMlStore = (logging: Logging) => {
                 isEditorOpen: open,
                 download: {
                   ...download,
-                  usbDevice: undefined,
+                  connection: undefined,
                 },
               }),
               false,
@@ -970,13 +977,26 @@ const createMlStore = (logging: Logging) => {
           },
           setDownload(download: DownloadState) {
             set(
-              { download, downloadFlashingProgress: 0 },
+              {
+                download,
+                downloadFlashingProgress: {
+                  stage: undefined,
+                  value: undefined,
+                },
+              },
               false,
               "setDownload"
             );
           },
-          setDownloadFlashingProgress(value) {
-            set({ downloadFlashingProgress: value });
+          setDownloadFlashingProgress(stage, value) {
+            set((state) => ({
+              // Show progress dialog if not already showing
+              download:
+                state.download.step !== DownloadStep.FlashingInProgress
+                  ? { ...state.download, step: DownloadStep.FlashingInProgress }
+                  : state.download,
+              downloadFlashingProgress: { stage, value },
+            }));
           },
           setSave(save: SaveState) {
             set({ save }, false, "setSave");
@@ -1144,7 +1164,7 @@ const createMlStore = (logging: Logging) => {
               if (input.data.x.length > dataWindow.minSamples) {
                 const result = predict(input, dataWindow);
                 if (result.error) {
-                  logging.error(result.detail);
+                  logging.error("Prediction error", result.detail);
                 } else {
                   const { confidences } = result;
                   const detected = getDetectedAction(

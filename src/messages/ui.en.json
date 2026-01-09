@@ -310,7 +310,7 @@
   "connect-bluetooth-heading": [
     {
       "type": 0,
-      "value": "Connect using Web Bluetooth"
+      "value": "Connecting to data collection micro:bit"
     }
   ],
   "connect-bluetooth-invalid-pattern": [
@@ -437,6 +437,18 @@
     {
       "type": 0,
       "value": "Micro USB cable"
+    }
+  ],
+  "connect-native-start-heading": [
+    {
+      "type": 0,
+      "value": "What you need to connect"
+    }
+  ],
+  "connect-native-start-requirements1": [
+    {
+      "type": 0,
+      "value": "micro:bit with battery pack"
     }
   ],
   "connect-or-import": [
@@ -611,6 +623,12 @@
       "value": "Connect using Web Bluetooth instead"
     }
   ],
+  "connect-tablet": [
+    {
+      "type": 0,
+      "value": "iPad or Android tablet"
+    }
+  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -647,10 +665,22 @@
       "value": "Troubleshooting"
     }
   ],
+  "connect-try-another-way": [
+    {
+      "type": 0,
+      "value": "Not working? Try another way"
+    }
+  ],
   "connect-with-batteries": [
     {
       "type": 0,
       "value": "with batteries"
+    }
+  ],
+  "connect-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "with Bluetooth enabled"
     }
   ],
   "connect-with-web-bluetooth": [
@@ -1003,6 +1033,30 @@
     {
       "type": 0,
       "value": "Downloading the radio link program"
+    }
+  ],
+  "downloading-stage-connecting": [
+    {
+      "type": 0,
+      "value": "Connecting to micro:bit…"
+    }
+  ],
+  "downloading-stage-finding-device": [
+    {
+      "type": 0,
+      "value": "Finding micro:bit…"
+    }
+  ],
+  "downloading-stage-flashing": [
+    {
+      "type": 0,
+      "value": "Downloading program to micro:bit…"
+    }
+  ],
+  "downloading-stage-initializing": [
+    {
+      "type": 0,
+      "value": "Initializing…"
     }
   ],
   "downloading-subtitle": [
@@ -2539,6 +2593,18 @@
     {
       "type": 0,
       "value": "Reload"
+    }
+  ],
+  "reset-to-bluetooth-mode-heading": [
+    {
+      "type": 0,
+      "value": "Reset to Bluetooth mode"
+    }
+  ],
+  "reset-to-bluetooth-mode-subtitle": [
+    {
+      "type": 0,
+      "value": "Press RESET three times"
     }
   ],
   "reset-to-default-action": [

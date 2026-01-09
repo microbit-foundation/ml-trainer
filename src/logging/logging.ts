@@ -13,6 +13,6 @@ export interface Event {
 
 export interface Logging {
   event(event: Event): void;
-  error(e: any): void;
+  error(message: string, e: unknown): void;
   log(e: any): void;
 }

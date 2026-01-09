@@ -25,7 +25,9 @@ export const getConnectionCableDialogConfig = (
   isWebBluetoothSupported: boolean
 ): Config => {
   switch (flowType) {
-    case ConnectionFlowType.ConnectBluetooth:
+    case ConnectionFlowType.ConnectNativeBluetooth:
+      throw new Error("Unused");
+    case ConnectionFlowType.ConnectWebBluetooth:
       return {
         headingId: "connect-cable-heading",
         subtitleId: "connect-cable-subtitle",

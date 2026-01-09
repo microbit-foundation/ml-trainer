@@ -13,8 +13,10 @@ import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollecti
 import DownloadChooseMicrobitDialog from "./DownloadChooseMicrobitDialog";
 import DownloadHelpDialog from "./DownloadHelpDialog";
 import DownloadProgressDialog from "./DownloadProgressDialog";
+import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 import ManualFlashingDialog from "./ManualFlashingDialog";
+import ResetToBluetoothModeDialog from "./ResetToBluetoothModeDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import UnplugRadioLinkMicrobitDialog from "./UnplugRadioLinkMicrobitDialog";
 
@@ -45,6 +47,16 @@ const DownloadDialogs = () => {
           stage={stage}
         />
       );
+    case DownloadStep.NativeBluetoothPreConnectTutorial: {
+      return (
+        <ResetToBluetoothModeDialog
+          isOpen
+          onClose={downloadActions.close}
+          onBackClick={downloadActions.getOnBack()}
+          onNextClick={downloadActions.getOnNext()}
+        />
+      );
+    }
     case DownloadStep.ConnectCable:
       return (
         <ConnectCableDialog
@@ -85,7 +97,7 @@ const DownloadDialogs = () => {
             samples: getTotalNumSamples(actions),
           },
         });
-        await downloadActions.connectAndFlashMicrobit(stage);
+        await downloadActions.connectAndFlash(stage);
       };
 
       return (
@@ -98,12 +110,31 @@ const DownloadDialogs = () => {
         />
       );
     }
+    case DownloadStep.BluetoothPattern: {
+      // This is only used for native bluetooth.
+      const handleConnectNativeBluetooth = async () => {
+        await downloadActions.connectAndFlash(stage);
+      };
+      return (
+        <EnterBluetoothPatternDialog
+          isOpen
+          onClose={downloadActions.close}
+          onBackClick={downloadActions.getOnBack()}
+          onNextClick={handleConnectNativeBluetooth}
+          microbitName={stage.bluetoothMicrobitName}
+          onChangeMicrobitName={(name: string) => {
+            downloadActions.onChangeMicrobitName(name);
+          }}
+        />
+      );
+    }
     case DownloadStep.FlashingInProgress:
       return (
         <DownloadProgressDialog
           isOpen
           headingId="downloading-header"
-          progress={flashingProgress * 100}
+          stage={flashingProgress.stage}
+          progress={flashingProgress.value}
         />
       );
     case DownloadStep.ManualFlashingTutorial:

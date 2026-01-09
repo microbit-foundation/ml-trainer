@@ -48,6 +48,26 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 Builds the app for production to the `dist` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
+## iOS/Android development
+
+### Local development
+
+To get a proper dev server for iOS/Android development run:
+
+```bash
+npm run cap:sync:dev
+```
+
+Then run
+
+```bash
+npm run apps:dev
+```
+
+Use e.g. `npx cap open ios` to open the IDE and run from there.
+
+The vite dev server run by apps:dev will be running inside the app.
+
 ## Deployments
 
 Most users should use the supported Foundation deployment at https://createai.microbit.org/

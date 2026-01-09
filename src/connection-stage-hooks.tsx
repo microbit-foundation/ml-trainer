@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { Capacitor } from "@capacitor/core";
 import { BoardVersion } from "@microbit/microbit-connection";
 import {
   ReactNode,
@@ -24,17 +25,47 @@ import { useStorage } from "./hooks/use-storage";
 import { useStore } from "./store";
 
 export enum ConnectionFlowType {
-  ConnectBluetooth = "ConnectBluetooth",
-  ConnectRadioBridge = "ConnectRadioBridge",
+  /**
+   * This connection flow first flashes over WebUSB (with manual fallback)
+   * and then connects over bluetooth.
+   */
+  ConnectWebBluetooth = "ConnectWebBluetooth",
+  /**
+   * This is a native-app bluetooth only connection flow that flashes over
+   * bluetooth and then reconnects to the flashed device.
+   */
+  ConnectNativeBluetooth = "ConnectNativeBluetooth",
+  /**
+   * This is the first half of the two flows that set up a radio bridge connection.
+   * It flashes the data collection micro:bit (the radio remote).
+   */
   ConnectRadioRemote = "ConnectRadioRemote",
+  /**
+   * This is the second half of the two flows that set up a radio bridge connection
+   * It flashes the bridge program over Web and then connects the two micro:bits over
+   * radio by instructing the bridge micro:bit over WebUSB serial.
+   */
+  ConnectRadioBridge = "ConnectRadioBridge",
 }
 
-export type InputConnectionFlowType =
-  | ConnectionFlowType.ConnectBluetooth
-  | ConnectionFlowType.ConnectRadioBridge
-  | ConnectionFlowType.ConnectRadioRemote;
-
+/**
+ * This is the connection type from the perspective of how we end up talking
+ * to the data connection micro:bit.
+ */
 export type ConnectionType = "bluetooth" | "radio";
+
+export const flowTypeToConnectionType = (flowType: ConnectionFlowType) => {
+  switch (flowType) {
+    case ConnectionFlowType.ConnectNativeBluetooth:
+    case ConnectionFlowType.ConnectWebBluetooth:
+      return "bluetooth";
+    case ConnectionFlowType.ConnectRadioBridge:
+    case ConnectionFlowType.ConnectRadioRemote:
+      return "radio";
+    default:
+      throw new Error();
+  }
+};
 
 export enum ConnectionFlowStep {
   // Happy flow stages
@@ -44,12 +75,14 @@ export enum ConnectionFlowStep {
   WebUsbFlashingTutorial = "WebUsbFlashingTutorial",
   ManualFlashingTutorial = "ManualFlashingTutorial",
   ConnectBattery = "ConnectBattery",
-  EnterBluetoothPattern = "EnterBluetoothPattern",
-  ConnectBluetoothTutorial = "ConnectBluetoothTutorial",
+  BluetoothPattern = "BluetoothPattern",
+  WebBluetoothPreConnectTutorial = "WebBluetoothPreConnectTutorial",
+  // Reset to pairing mode
+  NativeBluetoothPreConnectTutorial = "NativeBluetoothPreConnectTutorial",
 
-  // Stages that are not user-controlled
+  // Transient stages (not user-controlled, not navigable)
   WebUsbChooseMicrobit = "WebUsbChooseMicrobit",
-  ConnectingBluetooth = "ConnectingBluetooth",
+  BluetoothConnect = "BluetoothConnect",
   ConnectingMicrobits = "ConnectingMicrobits",
   FlashingInProgress = "FlashingInProgress",
 
@@ -70,15 +103,14 @@ export enum ConnectionFlowStep {
 
 export interface ConnectionStage {
   // For connection flow
-  flowStep: ConnectionFlowStep;
   flowType: ConnectionFlowType;
+  flowStep: ConnectionFlowStep;
 
   // Compatibility
   isWebBluetoothSupported: boolean;
   isWebUsbSupported: boolean;
 
   // Connection state
-  connType: "bluetooth" | "radio";
   bluetoothDeviceId?: number;
   bluetoothMicrobitName?: string;
   radioBridgeDeviceId?: number;
@@ -102,37 +134,56 @@ interface ConnectionStageProviderProps {
   children: ReactNode;
 }
 
-interface StoredConnectionConfig {
+export interface StoredConnectionConfig {
   bluetoothMicrobitName?: string;
   radioRemoteDeviceId?: number;
 }
+
+/**
+ * Determines the initial connection flow type based on platform capabilities.
+ */
+const getInitialFlowType = (
+  isWebBluetoothSupported: boolean
+): ConnectionFlowType => {
+  if (isWebBluetoothSupported) {
+    return ConnectionFlowType.ConnectWebBluetooth;
+  }
+  if (Capacitor.isNativePlatform()) {
+    return ConnectionFlowType.ConnectNativeBluetooth;
+  }
+  return ConnectionFlowType.ConnectRadioRemote;
+};
 
 const getInitialConnectionStageValue = (
   config: StoredConnectionConfig,
   isWebBluetoothSupported: boolean,
   isWebUsbSupported: boolean
-): ConnectionStage => ({
-  flowStep: ConnectionFlowStep.None,
-  flowType: isWebBluetoothSupported
-    ? ConnectionFlowType.ConnectBluetooth
-    : ConnectionFlowType.ConnectRadioRemote,
-  bluetoothMicrobitName: config.bluetoothMicrobitName,
-  radioRemoteDeviceId: config.radioRemoteDeviceId,
-  connType: isWebBluetoothSupported ? "bluetooth" : "radio",
-  isWebBluetoothSupported,
-  isWebUsbSupported,
-  hasFailedToReconnectTwice: false,
-});
+): ConnectionStage => {
+  const flowType = getInitialFlowType(isWebBluetoothSupported);
+
+  return {
+    flowStep: ConnectionFlowStep.None,
+    flowType,
+    bluetoothMicrobitName: config.bluetoothMicrobitName,
+    radioRemoteDeviceId: config.radioRemoteDeviceId,
+    isWebBluetoothSupported,
+    isWebUsbSupported,
+    hasFailedToReconnectTwice: false,
+  };
+};
+
+export const useConnectionConfigStorage = () => {
+  return useStorage<StoredConnectionConfig>("local", "connectionConfig", {
+    bluetoothMicrobitName: undefined,
+    radioRemoteDeviceId: undefined,
+  });
+};
 
 export const ConnectionStageProvider = ({
   children,
 }: ConnectionStageProviderProps) => {
-  const [config, setConfig] = useStorage<StoredConnectionConfig>(
-    "local",
-    "connectionConfig",
-    { bluetoothMicrobitName: undefined, radioRemoteDeviceId: undefined }
-  );
   const connectActions = useConnectActions();
+  const [config, setConfig] = useConnectionConfigStorage();
   const [connectionStage, setConnStage] = useState<ConnectionStage>(
     getInitialConnectionStageValue(
       config,
@@ -199,7 +250,7 @@ export const useConnectionStage = (): {
   ]);
 
   const status = useConnectStatusUpdater(
-    stage.connType,
+    flowTypeToConnectionType(stage.flowType),
     actions.handleConnectionStatus
   );
   const isConnected = status === ConnectionStatus.Connected;

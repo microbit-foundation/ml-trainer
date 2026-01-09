@@ -259,6 +259,14 @@
     "defaultMessage": "마이크로 USB 케이블",
     "description": "Label for cable icon in list of requirements"
   },
+  "connect-native-start-heading": {
+    "defaultMessage": "What you need to connect",
+    "description": "Connection dialog heading"
+  },
+  "connect-native-start-requirements1": {
+    "defaultMessage": "micro:bit with battery pack",
+    "description": "Label for image of a micro:bit and battery pack"
+  },
   "connect-or-import": {
     "defaultMessage": "<link1>데이터 수집 micro:bit에 연결하기</link1> 또는  <link2>데이터 샘플 가져오기</link2>를 하세요.",
     "description": "Empty data samples page text"
@@ -355,6 +363,10 @@
     "defaultMessage": "대신 Web Bluetooth를 사용하여 연결하기",
     "description": "Link to alternative connection method"
   },
+  "connect-tablet": {
+    "defaultMessage": "iPad or Android tablet",
+    "description": "Label for image of a tablet with a superimposed bluetooth icon"
+  },
   "connect-to-record": {
     "defaultMessage": "데이터 샘플을 기록하려면 연결하기",
     "description": "Live graph disconnected micro:bit status message for data samples page"
@@ -379,9 +391,17 @@
     "defaultMessage": "문제 해결",
     "description": "Troubleshooting heading"
   },
+  "connect-try-another-way": {
+    "defaultMessage": "Not working? Try another way",
+    "description": "Link to alternative connection method"
+  },
   "connect-with-batteries": {
     "defaultMessage": "배터리",
     "description": "Under header 'Battery holder' this notes that batteries are required"
+  },
+  "connect-with-bluetooth": {
+    "defaultMessage": "with Bluetooth enabled",
+    "description": "Subtitle for tablet image with Bluetooth icon"
   },
   "connect-with-web-bluetooth": {
     "defaultMessage": "Web Bluetooth로 연결",
@@ -582,6 +602,22 @@
   "downloading-radio-link-header": {
     "defaultMessage": "라디오 링크 프로그램 다운로드 중",
     "description": "Progress text"
+  },
+  "downloading-stage-connecting": {
+    "defaultMessage": "Connecting to micro:bit…",
+    "description": "Progress text during connection stage of flashing"
+  },
+  "downloading-stage-finding-device": {
+    "defaultMessage": "Finding micro:bit…",
+    "description": "Progress text during device discovery stage of flashing"
+  },
+  "downloading-stage-flashing": {
+    "defaultMessage": "Downloading program to micro:bit…",
+    "description": "Progress text during actual flashing stage"
+  },
+  "downloading-stage-initializing": {
+    "defaultMessage": "Initializing…",
+    "description": "Progress text during initialization stage of flashing"
   },
   "downloading-subtitle": {
     "defaultMessage": "잠시만 기다리세요. micro:bit에 프로그램을 다운로드하는 중입니다.",
@@ -1446,6 +1482,14 @@
   "reload-action": {
     "defaultMessage": "새로 고침",
     "description": "Reload button text"
+  },
+  "reset-to-bluetooth-mode-heading": {
+    "defaultMessage": "Reset to Bluetooth mode",
+    "description": "Title for dialog with instructures on using "
+  },
+  "reset-to-bluetooth-mode-subtitle": {
+    "defaultMessage": "Press RESET three times",
+    "description": "Instructions to press the physical reset button on the micro:bit"
   },
   "reset-to-default-action": {
     "defaultMessage": "기본 블록으로 초기화",

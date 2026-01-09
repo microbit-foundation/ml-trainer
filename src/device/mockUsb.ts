@@ -2,6 +2,7 @@ import {
   AfterRequestDevice,
   BeforeRequestDevice,
   BoardVersion,
+  ConnectOptions,
   ConnectionStatus,
   ConnectionStatusEvent,
   DeviceConnectionEventMap,
@@ -9,6 +10,7 @@ import {
   FlashEvent,
   FlashOptions,
   MicrobitWebUSBConnection,
+  ProgressStage,
   SerialConnectionEventMap,
   TypedEventTarget,
 } from "@microbit/microbit-connection";
@@ -43,13 +45,12 @@ export class MockWebUSBConnection
     this.dispatchTypedEvent("status", new ConnectionStatusEvent(newStatus));
   }
 
-  async connect(): Promise<ConnectionStatus> {
+  async connect(_options?: ConnectOptions): Promise<void> {
     this.dispatchTypedEvent("beforerequestdevice", new BeforeRequestDevice());
     await new Promise((resolve) => setTimeout(resolve, 100));
     this.dispatchTypedEvent("afterrequestdevice", new AfterRequestDevice());
     await new Promise((resolve) => setTimeout(resolve, 100));
     this.setStatus(ConnectionStatus.CONNECTED);
-    return this.status;
   }
 
   getDeviceId(): number | undefined {
@@ -62,12 +63,16 @@ export class MockWebUSBConnection
 
   async flash(
     _dataSource: FlashDataSource,
-    options: FlashOptions
+    options: FlashOptions = {}
   ): Promise<void> {
+    const stage: ProgressStage =
+      options.partial === undefined || options.partial
+        ? ProgressStage.PartialFlashing
+        : ProgressStage.FullFlashing;
     await new Promise((resolve) => setTimeout(resolve, 100));
-    options.progress(50, options.partial);
+    options.progress?.(stage, 50);
     await new Promise((resolve) => setTimeout(resolve, 100));
-    options.progress(undefined, options.partial);
+    options.progress?.(stage, undefined);
     this.dispatchTypedEvent("flash", new FlashEvent());
   }
 
