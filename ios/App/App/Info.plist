@@ -6,6 +6,8 @@
 	<string>en</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>The micro:bit CreateAI app uses Bluetooth to connect to your micro:bit.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>The micro:bit CreateAI app uses Bluetooth to connect to your micro:bit.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>
