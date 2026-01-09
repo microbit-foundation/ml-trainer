@@ -911,6 +911,7 @@ const createMlStore = (logging: Logging) => {
               timestamp,
               ...updatedProject,
             });
+            projectSessionStorage.setProjectId(newId);
             await storageWithErrHandling(() =>
               storage.importProject(
                 newActionsWithIcons,
@@ -967,6 +968,7 @@ const createMlStore = (logging: Logging) => {
               // We don't update projectLoadTimestamp here as we don't want a toast notification for .org import
             };
           });
+          projectSessionStorage.setProjectId(id);
           await storageWithErrHandling(() =>
             storage.importProject(
               newActions,
@@ -1280,6 +1282,7 @@ const createMlStore = (logging: Logging) => {
             actionName
           );
           if (importProject) {
+            projectSessionStorage.setProjectId(newProjectId);
             await storageWithErrHandling(() =>
               storage.importProject(
                 newActions as ActionData[],
