@@ -1038,25 +1038,25 @@
   "downloading-stage-connecting": [
     {
       "type": 0,
-      "value": "Connecting to micro:bit..."
+      "value": "Connecting to micro:bit…"
     }
   ],
   "downloading-stage-finding-device": [
     {
       "type": 0,
-      "value": "Finding micro:bit..."
+      "value": "Finding micro:bit…"
     }
   ],
   "downloading-stage-flashing": [
     {
       "type": 0,
-      "value": "Downloading program to micro:bit..."
+      "value": "Downloading program to micro:bit…"
     }
   ],
   "downloading-stage-initializing": [
     {
       "type": 0,
-      "value": "Initializing..."
+      "value": "Initializing…"
     }
   ],
   "downloading-subtitle": [

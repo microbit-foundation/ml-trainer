@@ -1038,25 +1038,25 @@
   "downloading-stage-connecting": [
     {
       "type": 0,
-      "value": "Connecting to micro:bit..."
+      "value": "Connecting to micro:bit…"
     }
   ],
   "downloading-stage-finding-device": [
     {
       "type": 0,
-      "value": "Finding micro:bit..."
+      "value": "Finding micro:bit…"
     }
   ],
   "downloading-stage-flashing": [
     {
       "type": 0,
-      "value": "Downloading program to micro:bit..."
+      "value": "Downloading program to micro:bit…"
     }
   ],
   "downloading-stage-initializing": [
     {
       "type": 0,
-      "value": "Initializing..."
+      "value": "Initializing…"
     }
   ],
   "downloading-subtitle": [
@@ -2844,21 +2844,7 @@
   "third-party-content-description": [
     {
       "type": 0,
-      "value": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "MakeCode shared project"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+      "value": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation."
     }
   ],
   "tour-action": [

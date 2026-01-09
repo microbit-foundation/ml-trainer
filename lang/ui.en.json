@@ -604,19 +604,19 @@
     "description": "Progress text"
   },
   "downloading-stage-connecting": {
-    "defaultMessage": "Connecting to micro:bit...",
+    "defaultMessage": "Connecting to micro:bit…",
     "description": "Progress text during connection stage of flashing"
   },
   "downloading-stage-finding-device": {
-    "defaultMessage": "Finding micro:bit...",
+    "defaultMessage": "Finding micro:bit…",
     "description": "Progress text during device discovery stage of flashing"
   },
   "downloading-stage-flashing": {
-    "defaultMessage": "Downloading program to micro:bit...",
+    "defaultMessage": "Downloading program to micro:bit…",
     "description": "Progress text during actual flashing stage"
   },
   "downloading-stage-initializing": {
-    "defaultMessage": "Initializing...",
+    "defaultMessage": "Initializing…",
     "description": "Progress text during initialization stage of flashing"
   },
   "downloading-subtitle": {
