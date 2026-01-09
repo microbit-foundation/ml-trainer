@@ -20,10 +20,10 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { ReactNode, Suspense, useCallback, useRef, useState } from "react";
+import { ReactNode, Suspense, useCallback, useRef } from "react";
 import { RiAddLine, RiFolderOpenLine, RiRestartLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Await, useAsyncValue, useLoaderData, useNavigate } from "react-router";
+import { Await, useLoaderData, useNavigate } from "react-router";
 import DefaultPageLayout, {
   HomeMenuItem,
   HomeToolbarItem,
@@ -36,7 +36,7 @@ import NewPageChoice from "../components/NewPageChoice";
 import { flags } from "../flags";
 import { useProjectName } from "../hooks/project-hooks";
 import { useLogging } from "../logging/logging-hooks";
-import { ProjectData, ProjectDataWithActions, StoreAction } from "../storage";
+import { StoreAction } from "../storage";
 import { loadProjectAndModelFromStorage, useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 
@@ -46,8 +46,8 @@ const NewPage = () => {
   const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
   const logging = useLogging();
-  const { allProjectData } = useLoaderData() as {
-    allProjectData: ProjectData[];
+  const { allProjectDataLoaded } = useLoaderData() as {
+    allProjectDataLoaded: boolean;
   };
 
   const handleOpenLastSession = useCallback(() => {
@@ -179,7 +179,7 @@ const NewPage = () => {
             </HStack>
             {flags.multipleProjects && (
               <Suspense fallback={<LoadingAnimation />}>
-                <Await resolve={allProjectData}>
+                <Await resolve={allProjectDataLoaded}>
                   <ProjectsList />
                 </Await>
               </Suspense>
@@ -192,13 +192,12 @@ const NewPage = () => {
 };
 
 const ProjectsList = () => {
-  const data = useAsyncValue() as ProjectDataWithActions[];
-  const [projects, setProjects] = useState(data);
+  const allProjectData = useStore((s) => s.allProjectData);
   const deleteProject = useStore((s) => s.deleteProject);
 
   const handleDeleteProject = useCallback(
     async (id: string) => {
-      setProjects((prev) => prev.filter((p) => p.id !== id));
+      // setProjects((prev) => prev.filter((p) => p.id !== id));
       await deleteProject(id);
     },
     [deleteProject]
@@ -210,7 +209,7 @@ const ProjectsList = () => {
         Projects
       </Heading>
       <Grid mt={3} gap={3} templateColumns="repeat(5, 1fr)">
-        {projects.map((projectData) => (
+        {allProjectData.map((projectData) => (
           <GridItem key={projectData.id} display="flex">
             <ProjectCard
               id={projectData.id}

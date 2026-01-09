@@ -50,19 +50,17 @@ import {
   untitledProjectName,
 } from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
-import { Database, StorageError } from "./storage";
+import { Database, ProjectDataWithActions, StorageError } from "./storage";
 import { getTour as getTourSpec } from "./tours";
 import { getTotalNumSamples } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { getDetectedAction } from "./utils/prediction";
 import { LoadAction } from "./hooks/project-hooks";
-
-export enum BroadcastChannelMessages {
-  RELOAD_PROJECT = "reload-project",
-  REMOVE_MODEL = "remove-model",
-}
-// Used to keep state synced between open tabs.
-const broadcastChannel = new BroadcastChannel("ml");
+import {
+  broadcastChannel,
+  BroadcastChannelData,
+  BroadcastChannelMessageType,
+} from "./broadcast-channel";
 
 const storage = new Database();
 
@@ -182,6 +180,8 @@ export interface State {
   isNameProjectDialogOpen: boolean;
   isRecordingDialogOpen: boolean;
   isConnectToRecordDialogOpen: boolean;
+
+  allProjectData: ProjectDataWithActions[];
 }
 
 export interface ConnectOptions {
@@ -189,10 +189,12 @@ export interface ConnectOptions {
 }
 
 export interface Actions {
+  getAllProjectData(): Promise<void>;
   loadProjectFromStorage(id: string): Promise<void>;
   loadLatestProjectFromStorage(): Promise<string | undefined>;
   updateProjectUpdatedAt(): Promise<void>;
   deleteProject(id: string): Promise<void>;
+  clearProjectState(): void;
   addNewAction(): Promise<void>;
   addActionRecording(id: string, recording: RecordingData): Promise<void>;
   deleteAction(action: ActionData): Promise<void>;
@@ -335,6 +337,8 @@ const createMlStore = (logging: Logging) => {
         isDeleteActionDialogOpen: false,
         isIncompatibleEditorDeviceDialogOpen: false,
 
+        allProjectData: [],
+
         async setSettings(update: Partial<Settings>) {
           const { id, settings } = get();
           const updatedSettings = {
@@ -436,8 +440,9 @@ const createMlStore = (logging: Logging) => {
         },
 
         async loadProjectFromStorage(id: string) {
-          const persistedData = await storageWithErrHandling(() =>
-            storage.getProject(id)
+          const persistedData = await storageWithErrHandling(
+            () => storage.getProject(id),
+            false
           );
           set({
             // Get data window from actions on app load.
@@ -465,6 +470,16 @@ const createMlStore = (logging: Logging) => {
           }
         },
 
+        async getAllProjectData(): Promise<void> {
+          const allProjectData = await storageWithErrHandling(
+            () => storage.getAllProjectData(),
+            false
+          );
+          set({
+            allProjectData,
+          });
+        },
+
         async maybeNewSession() {
           const { id, newSession } = get();
           if (!id) {
@@ -482,23 +497,46 @@ const createMlStore = (logging: Logging) => {
         },
 
         async deleteProject(id) {
-          const { id: currentProjectId } = get();
-          await storageWithErrHandling(() => storage.deleteProject(id));
-          if (id === currentProjectId) {
-            // You have deleted the currently open project.
-            // Clear state.
-            const untitledProject = createUntitledProject();
-            set({
-              id: undefined,
-              actions: [],
-              dataWindow: currentDataWindow,
-              model: undefined,
-              project: untitledProject,
-              projectEdited: false,
-              appEditNeedsFlushToEditor: true,
-              timestamp: undefined,
-            });
-          }
+          const { id: currentProjectId, allProjectData } = get();
+          set({
+            ...(() => {
+              if (id === currentProjectId) {
+                // You have deleted the currently open project.
+                return {
+                  id: undefined,
+                  actions: [],
+                  dataWindow: currentDataWindow,
+                  model: undefined,
+                  project: createUntitledProject(),
+                  projectEdited: false,
+                  appEditNeedsFlushToEditor: true,
+                  timestamp: undefined,
+                };
+              }
+              return {};
+            })(),
+            allProjectData: allProjectData.filter((p) => p.id !== id),
+          });
+          await storageWithErrHandling(() => storage.deleteProject(id), false);
+          const message: BroadcastChannelData = {
+            messageType: BroadcastChannelMessageType.DELETE_PROJECT,
+            projectId: id,
+          };
+          broadcastChannel.postMessage(message);
+        },
+
+        clearProjectState() {
+          const untitledProject = createUntitledProject();
+          set({
+            id: undefined,
+            actions: [],
+            dataWindow: currentDataWindow,
+            model: undefined,
+            project: untitledProject,
+            projectEdited: false,
+            appEditNeedsFlushToEditor: true,
+            timestamp: undefined,
+          });
         },
 
         async addNewAction() {
@@ -1617,7 +1655,10 @@ const getDataWindowFromActions = (actions: ActionData[]): DataWindow => {
 };
 
 const loadModelFromStorage = async (id: string) => {
-  const model = await storage.loadModel(id);
+  const model = await storageWithErrHandling(
+    () => storage.loadModel(id),
+    false
+  );
   if (model) {
     useStore.setState({ model }, false, "loadModel");
   }
@@ -1628,10 +1669,17 @@ useStore.subscribe(async (state, prevState) => {
   const { model: previousModel, id: prevId } = prevState;
   if (newModel !== previousModel) {
     if (!newModel && newId === prevId) {
-      await storage.removeModel(newId);
-      broadcastChannel.postMessage(BroadcastChannelMessages.REMOVE_MODEL);
+      await storageWithErrHandling(() => storage.removeModel(newId), false);
+      const message: BroadcastChannelData = {
+        messageType: BroadcastChannelMessageType.REMOVE_MODEL,
+        projectId: newId,
+      };
+      broadcastChannel.postMessage(message);
     } else if (newModel) {
-      await storage.saveModel(newId, newModel);
+      await storageWithErrHandling(
+        () => storage.saveModel(newId, newModel),
+        false
+      );
     }
   }
 });
@@ -1742,7 +1790,11 @@ const storageWithErrHandling = async <T>(
   try {
     const value = await callback();
     if (broadcastEvent) {
-      broadcastChannel.postMessage(BroadcastChannelMessages.RELOAD_PROJECT);
+      const message: BroadcastChannelData = {
+        messageType: BroadcastChannelMessageType.RELOAD_PROJECT,
+        projectId: useStore.getState().id,
+      };
+      broadcastChannel.postMessage(message);
     }
     return value;
   } catch (err) {
@@ -1761,32 +1813,21 @@ const storageWithErrHandling = async <T>(
   }
 };
 
-export const loadLatestProjectAndModelFromStorage = async () => {
-  const id = await useStore.getState().loadLatestProjectFromStorage();
-  if (id) {
-    await loadModelFromStorage(id);
-  }
-  return true;
-};
+export const loadLatestProjectAndModelFromStorage =
+  async (): Promise<boolean> => {
+    const id = await useStore.getState().loadLatestProjectFromStorage();
+    if (id) {
+      await loadModelFromStorage(id);
+    }
+    return true;
+  };
 
 export const loadProjectAndModelFromStorage = async (id: string) => {
   await useStore.getState().loadProjectFromStorage(id);
   await loadModelFromStorage(id);
 };
 
-export const getAllProjects = async () => {
-  return storageWithErrHandling(() => storage.getAllProjectData());
-};
-
-broadcastChannel.onmessage = async (event) => {
-  switch (event.data) {
-    case BroadcastChannelMessages.RELOAD_PROJECT: {
-      await loadLatestProjectAndModelFromStorage();
-      break;
-    }
-    case BroadcastChannelMessages.REMOVE_MODEL: {
-      useStore.getState().removeModel();
-      break;
-    }
-  }
+export const getAllProjectsFromStorage = async (): Promise<boolean> => {
+  await useStore.getState().getAllProjectData();
+  return true;
 };

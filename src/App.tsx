@@ -52,8 +52,9 @@ import NewPage from "./pages/NewPage";
 import TestingModelPage from "./pages/TestingModelPage";
 import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
 import {
-  getAllProjects,
+  getAllProjectsFromStorage,
   loadLatestProjectAndModelFromStorage,
+  loadProjectAndModelFromStorage,
   useStore,
 } from "./store";
 import {
@@ -66,6 +67,11 @@ import {
   createTestingModelPageUrl,
 } from "./urls";
 import LoadingPage from "./components/LoadingPage";
+import {
+  broadcastChannel,
+  BroadcastChannelData,
+  BroadcastChannelMessageType,
+} from "./broadcast-channel";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -120,6 +126,8 @@ const Layout = () => {
   const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
   const id = useStore((s) => s.id);
   const updateProjectTimestamp = useStore((s) => s.updateProjectUpdatedAt);
+  const clearProjectState = useStore((s) => s.clearProjectState);
+  const removeModel = useStore((s) => s.removeModel);
   const location = useLocation();
   const navigate = useNavigate();
   const toast = useToast();
@@ -162,6 +170,51 @@ const Layout = () => {
       void updateProjectTimestamp();
     }
   }, [id, location, updateProjectTimestamp, updateProjectTimestampUrls]);
+
+  useEffect(() => {
+    const listener = async (event: MessageEvent<BroadcastChannelData>) => {
+      const data = event.data;
+      // If multiple projects are allowed, only respond to broadcastChannel messages
+      // from projects with the same id to keep tabs / windows in sync.
+      if (
+        data.projectId &&
+        (!flags.multipleProjects || data.projectId === id)
+      ) {
+        switch (data.messageType) {
+          case BroadcastChannelMessageType.RELOAD_PROJECT: {
+            await loadProjectAndModelFromStorage(data.projectId);
+            break;
+          }
+          case BroadcastChannelMessageType.DELETE_PROJECT: {
+            clearProjectState();
+            if (updateProjectTimestampUrls.includes(location.pathname)) {
+              navigate(createHomePageUrl());
+            }
+            break;
+          }
+          case BroadcastChannelMessageType.REMOVE_MODEL: {
+            removeModel();
+            break;
+          }
+        }
+      }
+      // Update all project data on new / listing page.
+      if (location.pathname === createNewPageUrl()) {
+        await getAllProjectsFromStorage();
+      }
+    };
+    broadcastChannel.addEventListener("message", listener);
+    return () => {
+      broadcastChannel.removeEventListener("message", listener);
+    };
+  }, [
+    clearProjectState,
+    id,
+    location.pathname,
+    navigate,
+    removeModel,
+    updateProjectTimestampUrls,
+  ]);
 
   return (
     <Suspense fallback={<LoadingPage />}>
@@ -207,8 +260,8 @@ const createRouter = () => {
           path: createNewPageUrl(),
           element: <NewPage />,
           loader: () => {
-            const allProjectData = getAllProjects();
-            return defer({ allProjectData });
+            const allProjectDataLoaded = getAllProjectsFromStorage();
+            return defer({ allProjectDataLoaded });
           },
         },
         { path: createImportPageUrl(), element: <ImportPage /> },

@@ -334,7 +334,7 @@ export class Database {
     if (!allProjectsData.length) {
       return undefined;
     }
-    const projectData = orderBy(allProjectsData, "updatedAt", "desc")[0];
+    const projectData = orderBy(allProjectsData, "timestamp", "desc")[0];
     const id = projectData.id;
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     const storeActions = orderBy(
@@ -852,10 +852,13 @@ export class Database {
     await settingsStore.put(settings, DatabaseStore.SETTINGS);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(id));
-    await projectDataStore.put({
-      ...projectData,
-      timestamp,
-    });
+    await projectDataStore.put(
+      {
+        ...projectData,
+        timestamp,
+      },
+      id
+    );
     return tx.done;
   }
 
