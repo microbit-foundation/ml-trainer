@@ -7,7 +7,7 @@
 import { LoggingEvent } from "@microbit/microbit-connection";
 import { Logging } from "../../logging/logging";
 
-export class NullLogging implements Logging {
+export class ConsoleLogging implements Logging {
   event(event: LoggingEvent): void {
     console.log(event);
   }
