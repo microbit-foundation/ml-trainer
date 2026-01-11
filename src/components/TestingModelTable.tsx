@@ -17,7 +17,7 @@ import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
 import { useRef } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { DataConnectionStep } from "../data-connection-flow";
 import { useProject } from "../hooks/project-hooks";
 import { mlSettings } from "../mlConfig";
 import { getMakeCodeLang } from "../settings";
@@ -55,7 +55,8 @@ const TestingModelTable = () => {
   const actions = useStore((s) => s.actions);
   const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { project, projectEdited } = useProject();
-  const { isConnected } = useConnectionStage();
+  const step = useStore((s) => s.dataConnection.step);
+  const isConnected = step === DataConnectionStep.Connected;
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
   const scrollableAreaRef = useRef<HTMLDivElement>(null);

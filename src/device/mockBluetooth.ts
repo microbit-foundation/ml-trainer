@@ -4,20 +4,63 @@ import {
   ConnectionStatus,
   ConnectionStatusEvent,
   DeviceConnectionEventMap,
+  DeviceError,
   FlashDataSource,
   FlashOptions,
   LedMatrix,
   MicrobitWebBluetoothConnection,
+  ProgressStage,
   ServiceConnectionEventMap,
   TypedEventTarget,
 } from "@microbit/microbit-connection";
 
+/**
+ * Describes the outcome of a connect() call.
+ *
+ * - 'success': Fires CONNECTING -> CONNECTED
+ * - 'failure': Fires CONNECTING -> specified status (e.g., DISCONNECTED)
+ * - 'noDevice': Fires NO_AUTHORIZED_DEVICE and throws DeviceError
+ */
+export type ConnectBehavior =
+  | { outcome: "success" }
+  | { outcome: "failure"; status: ConnectionStatus }
+  | { outcome: "noDevice" };
+
+/**
+ * A mock Bluetooth connection used during end-to-end testing.
+ *
+ * Usage in e2e tests:
+ *
+ * ```typescript
+ * // Configure what happens on subsequent connect() calls
+ * await page.evaluate(() => {
+ *   window.mockBluetooth.setConnectBehaviors([
+ *     { outcome: 'failure', status: ConnectionStatus.DISCONNECTED },
+ *     { outcome: 'success' },
+ *   ]);
+ * });
+ *
+ * // Simulate device disconnecting
+ * await page.evaluate(() => window.mockBluetooth.simulateDisconnect());
+ * ```
+ */
 export class MockWebBluetoothConnection
   extends TypedEventTarget<DeviceConnectionEventMap & ServiceConnectionEventMap>
   implements MicrobitWebBluetoothConnection
 {
   status: ConnectionStatus = ConnectionStatus.NO_AUTHORIZED_DEVICE;
-  private connectResults: ConnectionStatus[] = [];
+
+  /**
+   * Queue of behaviors for subsequent connect() calls.
+   * Each call to connect() shifts one behavior from this queue.
+   * When empty, defaults to success.
+   */
+  private connectBehaviors: ConnectBehavior[] = [];
+
+  /**
+   * Delay between status changes in ms. Shorter = faster tests.
+   */
+  private statusDelay = 50;
 
   constructor() {
     super();
@@ -25,34 +68,82 @@ export class MockWebBluetoothConnection
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
     (window as any).mockBluetooth = this;
   }
+
   private setStatus(newStatus: ConnectionStatus) {
     this.status = newStatus;
     this.dispatchTypedEvent("status", new ConnectionStatusEvent(newStatus));
   }
 
+  private delay(ms: number = this.statusDelay): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  /**
+   * Set behaviors for subsequent connect() calls.
+   * Each behavior is consumed in order. When empty, defaults to success.
+   *
+   * Example:
+   * ```typescript
+   * // First connect fails, second succeeds
+   * mock.setConnectBehaviors([
+   *   { outcome: 'failure', status: ConnectionStatus.DISCONNECTED },
+   *   { outcome: 'success' },
+   * ]);
+   * ```
+   */
+  setConnectBehaviors(behaviors: ConnectBehavior[]) {
+    this.connectBehaviors = [...behaviors];
+  }
+
+  /**
+   * Simulate the device disconnecting unexpectedly.
+   * This fires a DISCONNECTED status event, which the app's status listener
+   * will pick up and potentially trigger reconnection logic.
+   */
+  simulateDisconnect() {
+    this.setStatus(ConnectionStatus.DISCONNECTED);
+  }
+
+  /**
+   * Set the delay between status changes (default: 50ms).
+   * Shorter delays make tests faster but may cause timing issues.
+   */
+  setStatusDelay(ms: number) {
+    this.statusDelay = ms;
+  }
+
   async initialize(): Promise<void> {
     this.setStatus(ConnectionStatus.NO_AUTHORIZED_DEVICE);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await this.delay(100);
   }
 
   dispose(): void {}
 
-  mockConnectResults(results: ConnectionStatus[]) {
-    this.connectResults = results;
-  }
-
   async connect(_options?: ConnectOptions): Promise<void> {
-    if (this.connectResults.length > 0) {
-      for (const result of this.connectResults) {
-        this.setStatus(result);
-        await new Promise((resolve) => setTimeout(resolve, 100));
-      }
-      // Return early when mocking error scenarios
-      return;
+    const behavior = this.connectBehaviors.shift() ?? { outcome: "success" };
+
+    switch (behavior.outcome) {
+      case "success":
+        this.setStatus(ConnectionStatus.CONNECTING);
+        await this.delay();
+        this.setStatus(ConnectionStatus.CONNECTED);
+        await this.delay();
+        break;
+
+      case "failure":
+        this.setStatus(ConnectionStatus.CONNECTING);
+        await this.delay();
+        this.setStatus(behavior.status);
+        await this.delay();
+        break;
+
+      case "noDevice":
+        this.setStatus(ConnectionStatus.NO_AUTHORIZED_DEVICE);
+        throw new DeviceError({
+          code: "no-device-selected",
+          message: "No device selected",
+        });
     }
-    this.setStatus(ConnectionStatus.CONNECTING);
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    this.setStatus(ConnectionStatus.CONNECTED);
   }
 
   getBoardVersion(): BoardVersion | undefined {
@@ -65,10 +156,29 @@ export class MockWebBluetoothConnection
 
   async flash(
     _dataSource: FlashDataSource,
-    _options: FlashOptions = {}
-  ): Promise<void> {}
+    options: FlashOptions = {}
+  ): Promise<void> {
+    const progress = options.progress;
+    const stage = ProgressStage.PartialFlashing;
 
-  clearDevice(): void {
+    // Simulate flashing progress
+    progress?.(stage, 0.25);
+    await this.delay();
+    progress?.(stage, 0.5);
+    await this.delay();
+    progress?.(stage, 0.75);
+    await this.delay();
+    progress?.(stage, undefined);
+
+    // Real Bluetooth flash disconnects after completion
+    this.setStatus(ConnectionStatus.DISCONNECTED);
+  }
+
+  async clearDevice(): Promise<void> {
+    // Real implementation calls disconnect() which fires DISCONNECTED,
+    // then fires NO_AUTHORIZED_DEVICE
+    this.setStatus(ConnectionStatus.DISCONNECTED);
+    await this.delay();
     this.setStatus(ConnectionStatus.NO_AUTHORIZED_DEVICE);
   }
 

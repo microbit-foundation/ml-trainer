@@ -13,17 +13,11 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ButtonEvent } from "@microbit/microbit-connection";
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useConnectActions } from "../connect-actions-hooks";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { useMicrobitButtonListener } from "../hooks/use-microbit-button-listener";
+import { useDataConnectionActions } from "../data-connection-flow";
+import { DataConnectionStep } from "../data-connection-flow";
 import { ActionData } from "../model";
 import { useStore } from "../store";
 import ConnectFirstDialog from "./ConnectFirstDialog";
@@ -98,9 +92,9 @@ const DataSamplesTable = ({
   );
   const closeDialog = useStore((s) => s.closeDialog);
 
-  const connection = useConnectActions();
-  const { actions: connActions } = useConnectionStage();
-  const { isConnected } = useConnectionStage();
+  const connActions = useDataConnectionActions();
+  const step = useStore((s) => s.dataConnection.step);
+  const isConnected = step === DataConnectionStep.Connected;
   const loadProjectInputRef = useRef<LoadProjectInputRef>(null);
 
   // For adding flashing animation for new recording.
@@ -109,20 +103,19 @@ const DataSamplesTable = ({
   );
 
   const handleConnect = useCallback(() => {
-    connActions.startConnect();
+    connActions.connect();
   }, [connActions]);
 
-  useEffect(() => {
-    const listener = (e: ButtonEvent) => {
+  const buttonListener = useCallback(
+    (e: ButtonEvent) => {
       if (!isRecordingDialogOpen && e.state) {
         recordingDialogOnOpen();
       }
-    };
-    connection.addButtonListener("B", listener);
-    return () => {
-      connection.removeButtonListener("B", listener);
-    };
-  }, [connection, isRecordingDialogOpen, recordingDialogOnOpen]);
+    },
+    [isRecordingDialogOpen, recordingDialogOnOpen]
+  );
+
+  useMicrobitButtonListener("B", buttonListener);
 
   const [recordingOptions, setRecordingOptions] = useState<RecordingOptions>({
     continuousRecording: false,

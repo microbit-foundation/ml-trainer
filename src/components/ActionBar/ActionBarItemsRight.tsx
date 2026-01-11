@@ -67,7 +67,6 @@ const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
         onClose={closeDialog}
         onChooseConnect={() => setPostConnectTourTrigger(tourTrigger)}
         explanationTextId="connect-to-tour-body"
-        options={{ postConnectTourTrigger: tourTrigger }}
       />
       <AboutDialog isOpen={isAboutDialogOpen} onClose={closeDialog} />
       <HStack spacing={3} display={{ base: "none", lg: "flex" }}>

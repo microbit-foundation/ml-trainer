@@ -16,8 +16,12 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { ConnectionStatus } from "../connect-status-hooks";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { useDataConnectionActions } from "../data-connection-flow";
+import {
+  DataConnectionStep,
+  isDataConnectionDialogOpen,
+} from "../data-connection-flow";
+import { useStore } from "../store";
 import microbitImage from "../images/stylised-microbit-black.svg";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useLogging } from "../logging/logging-hooks";
@@ -38,32 +42,24 @@ const LiveGraphPanel = ({
   showPredictedAction,
   disconnectedTextId,
 }: LiveGraphPanelProps) => {
-  const { actions, status, isConnected } = useConnectionStage();
+  const actions = useDataConnectionActions();
+  const dataConnection = useStore((s) => s.dataConnection);
+  const isConnected = dataConnection.step === DataConnectionStep.Connected;
+  const isReconnecting = dataConnection.isReconnecting;
   const parentPortalRef = useRef(null);
   const logging = useLogging();
-  const isReconnecting =
-    status === ConnectionStatus.ReconnectingAutomatically ||
-    status === ConnectionStatus.ReconnectingExplicitly;
 
+  // Show disconnected state when not connected, not reconnecting, and not in the middle of initial connect flow
+  const isInitialConnecting = isDataConnectionDialogOpen(dataConnection.step);
   const isDisconnected =
-    !isConnected && !isReconnecting && status !== ConnectionStatus.Connecting;
+    !isConnected && !isReconnecting && !isInitialConnecting;
 
   const handleConnectOrReconnect = useCallback(() => {
-    if (
-      status === ConnectionStatus.NotConnected ||
-      status === ConnectionStatus.Connecting ||
-      status === ConnectionStatus.FailedToConnect ||
-      status === ConnectionStatus.FailedToReconnectTwice ||
-      status === ConnectionStatus.FailedToSelectBluetoothDevice
-    ) {
-      actions.startConnect();
-    } else {
-      logging.event({
-        type: "reconnect-user",
-      });
-      void actions.reconnect();
-    }
-  }, [status, actions, logging]);
+    logging.event({
+      type: "connect-user",
+    });
+    actions.connect();
+  }, [actions, logging]);
   useShortcut(keyboardShortcuts.connect, handleConnectOrReconnect, {
     enabled: isDisconnected,
   });

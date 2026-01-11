@@ -18,10 +18,10 @@ import ConnectContainerDialog, {
 } from "./ConnectContainerDialog";
 import ExternalLink from "./ExternalLink";
 import { useDeployment } from "../deployment";
-import { ConnectionFlowType } from "../connection-stage-hooks";
+import { DataConnectionType } from "../data-connection-flow";
 
 const itemsConfig: Record<
-  ConnectionFlowType,
+  DataConnectionType,
   Array<{
     imgSrc: string;
     titleId: string;
@@ -30,7 +30,7 @@ const itemsConfig: Record<
     height?: string;
   }>
 > = {
-  [ConnectionFlowType.ConnectRadioRemote]: [
+  [DataConnectionType.Radio]: [
     {
       imgSrc: twoMicrobitsImage,
       titleId: "connect-radio-start-requirements1",
@@ -51,7 +51,7 @@ const itemsConfig: Record<
       subtitleId: "connect-with-batteries",
     },
   ],
-  [ConnectionFlowType.ConnectWebBluetooth]: [
+  [DataConnectionType.WebBluetooth]: [
     {
       imgSrc: microbitImage,
       titleId: "connect-bluetooth-start-requirements1",
@@ -71,7 +71,7 @@ const itemsConfig: Record<
       subtitleId: "connect-with-batteries",
     },
   ],
-  [ConnectionFlowType.ConnectNativeBluetooth]: [
+  [DataConnectionType.NativeBluetooth]: [
     {
       imgSrc: microbitWithBatteryPack,
       titleId: "connect-native-start-requirements1",
@@ -86,7 +86,6 @@ const itemsConfig: Record<
       height: "148px",
     },
   ],
-  [ConnectionFlowType.ConnectRadioBridge]: [],
 };
 
 export interface WhatYouWillNeedDialogProps
@@ -95,7 +94,7 @@ export interface WhatYouWillNeedDialogProps
     "children" | "onBack" | "headingId"
   > {
   reconnect: boolean;
-  type: ConnectionFlowType;
+  type: DataConnectionType;
   onLinkClick: (() => void) | undefined;
 }
 
@@ -106,13 +105,10 @@ const WhatYouWillNeedDialog = ({
   ...props
 }: WhatYouWillNeedDialogProps) => {
   const { supportLinks } = useDeployment();
-  if (type === ConnectionFlowType.ConnectRadioBridge) {
-    throw new Error();
-  }
-  const simpleType = {
-    [ConnectionFlowType.ConnectNativeBluetooth]: "native",
-    [ConnectionFlowType.ConnectRadioRemote]: "radio",
-    [ConnectionFlowType.ConnectWebBluetooth]: "bluetooth",
+  const simpleType: string = {
+    [DataConnectionType.NativeBluetooth]: "native",
+    [DataConnectionType.Radio]: "radio",
+    [DataConnectionType.WebBluetooth]: "bluetooth",
   }[type];
   const otherSimpleType = simpleType === "radio" ? "bluetooth" : "radio";
   return (

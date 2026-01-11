@@ -17,7 +17,7 @@ export class OpenSharedProjectPage {
   /**
    * Unlike other page fixtures, you must specify a shareId in the goto
    */
-  async goto(shareId: string, flags: string[] = ["open"]) {
+  async goto(shareId: string, flags: string[] = []) {
     const response = await this.page.goto(`${this.url}${shareId}`);
     await this.page.evaluate(
       (flags) => localStorage.setItem("flags", flags.join(",")),

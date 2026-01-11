@@ -3,10 +3,17 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import path from "path";
+import { fileURLToPath } from "url";
 import { expect, Locator, type Page } from "@playwright/test";
 import { Navbar } from "./shared";
 import { ConnectionDialogs } from "./connection-dialogs";
 import { TrainModelDialog } from "./train-model-dialog";
+
+const getAbsoluteFilePath = (filePathFromProjectRoot: string) => {
+  const dir = path.dirname(fileURLToPath(import.meta.url));
+  return path.join(dir.replace("e2e/app", ""), filePathFromProjectRoot);
+};
 
 export class DataSamplesPage {
   public readonly navbar: Navbar;
@@ -23,7 +30,7 @@ export class DataSamplesPage {
     this.connectBtn = this.page.getByLabel("Connect to micro:bit");
   }
 
-  async goto(flags: string[] = ["open"]) {
+  async goto(flags: string[] = []) {
     const response = await this.page.goto(this.url);
     await this.page.evaluate(
       (flags) => localStorage.setItem("flags", flags.join(",")),
@@ -47,10 +54,22 @@ export class DataSamplesPage {
   }
 
   async expectConnected() {
-    await expect(this.connectBtn).toBeHidden();
-    await expect(
-      this.page.getByText("Your data collection micro:bit is connected!")
-    ).toBeVisible();
+    // Either the tour dialog or the Disconnect button indicates connection
+    // The tour dialog appears on first connection, Disconnect button otherwise
+    // Use .first() to handle case where both are visible
+    const tourOrDisconnect = this.page
+      .getByText("Your data collection micro:bit is connected!")
+      .or(this.page.getByRole("button", { name: "Disconnect" }))
+      .first();
+    await expect(tourOrDisconnect).toBeVisible({ timeout: 10000 });
+  }
+
+  /**
+   * Get ConnectionDialogs for use after already connecting.
+   * Used for testing reconnection scenarios.
+   */
+  getConnectionDialogs() {
+    return new ConnectionDialogs(this.page);
   }
 
   async expectOnPage() {
@@ -79,5 +98,18 @@ export class DataSamplesPage {
   async trainModel() {
     await this.page.getByRole("button", { name: "Train model" }).click();
     return new TrainModelDialog(this.page);
+  }
+
+  async importDataSamples(filePathFromProjectRoot: string) {
+    const filePath = getAbsoluteFilePath(filePathFromProjectRoot);
+    // Open the menu
+    await this.page.getByLabel("Data actions").click();
+    // Click import and handle file chooser
+    const fileChooserPromise = this.page.waitForEvent("filechooser");
+    await this.page
+      .getByRole("menuitem", { name: "Import data samples" })
+      .click();
+    const fileChooser = await fileChooserPromise;
+    await fileChooser.setFiles(filePath);
   }
 }

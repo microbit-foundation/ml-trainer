@@ -18,7 +18,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import { ConnectionFlowStep } from "../connection-stage-hooks";
+import { DataConnectionStep } from "../data-connection-flow";
 import { useDeployment } from "../deployment";
 
 const OneLineContent = ({ textId }: { textId: string }) => {
@@ -64,19 +64,19 @@ const CloseTabsContent = () => {
 };
 
 const configs = {
-  [ConnectionFlowStep.TryAgainReplugMicrobit]: {
+  [DataConnectionStep.TryAgainReplugMicrobit]: {
     headingId: "other-tabs-heading",
     children: <ReplugMicrobitContent />,
   },
-  [ConnectionFlowStep.TryAgainCloseTabs]: {
+  [DataConnectionStep.TryAgainCloseTabs]: {
     headingId: "other-tabs-heading",
     children: <CloseTabsContent />,
   },
-  [ConnectionFlowStep.TryAgainWebUsbSelectMicrobit]: {
+  [DataConnectionStep.TryAgainWebUsbSelectMicrobit]: {
     headingId: "other-tabs-heading",
     children: <OneLineContent textId="webusb-retry-no-select" />,
   },
-  [ConnectionFlowStep.TryAgainBluetoothSelectMicrobit]: {
+  [DataConnectionStep.TryAgainBluetoothSelectMicrobit]: {
     headingId: "connect-bluetooth-heading",
     children: (
       <OneLineContent textId="connect-bluetooth-cancelled-connection" />
@@ -89,10 +89,10 @@ interface TryAgainDialogProps {
   onClose: () => void;
   onTryAgain: () => void;
   type:
-    | ConnectionFlowStep.TryAgainReplugMicrobit
-    | ConnectionFlowStep.TryAgainCloseTabs
-    | ConnectionFlowStep.TryAgainWebUsbSelectMicrobit
-    | ConnectionFlowStep.TryAgainBluetoothSelectMicrobit;
+    | DataConnectionStep.TryAgainReplugMicrobit
+    | DataConnectionStep.TryAgainCloseTabs
+    | DataConnectionStep.TryAgainWebUsbSelectMicrobit
+    | DataConnectionStep.TryAgainBluetoothSelectMicrobit;
 }
 
 const TryAgainDialog = ({

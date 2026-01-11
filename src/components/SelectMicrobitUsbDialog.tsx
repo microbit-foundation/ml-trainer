@@ -19,19 +19,22 @@ import ConnectContainerDialog, {
 } from "./ConnectContainerDialog";
 import ArrowOne from "./ArrowOne";
 import ArrowTwo from "./ArrowTwo";
-import { ConnectionFlowType } from "../connection-stage-hooks";
+import { DataConnectionType, RadioFlowPhase } from "../data-connection-flow";
 
 export interface SelectMicrobitDialogProps
   extends Omit<ConnectContainerDialogProps, "children"> {}
 
-export const getHeadingId = (flowType: ConnectionFlowType) => {
+export const getHeadingId = (
+  flowType: DataConnectionType,
+  radioFlowPhase?: RadioFlowPhase
+): string => {
   switch (flowType) {
-    case ConnectionFlowType.ConnectWebBluetooth:
+    case DataConnectionType.WebBluetooth:
       return "connect-popup-usb-bluetooth-data-collection-title";
-    case ConnectionFlowType.ConnectRadioRemote:
-      return "connect-popup-usb-radio-data-collection-title";
-    case ConnectionFlowType.ConnectRadioBridge:
-      return "connect-popup-usb-radio-link-title";
+    case DataConnectionType.Radio:
+      return radioFlowPhase === "bridge"
+        ? "connect-popup-usb-radio-link-title"
+        : "connect-popup-usb-radio-data-collection-title";
     default:
       throw new Error(flowType);
   }

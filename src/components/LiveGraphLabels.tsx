@@ -6,9 +6,9 @@
  */
 import { Box, Icon, Text } from "@chakra-ui/react";
 import { AccelerometerDataEvent } from "@microbit/microbit-connection";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { RiArrowDropLeftFill } from "react-icons/ri";
-import { useConnectActions } from "../connect-actions-hooks";
+import { useAccelerometerListener } from "../hooks/use-accelerometer-listener";
 import { useGraphColors } from "../hooks/use-graph-colors";
 import { getLabelHeights } from "../live-graph-label-config";
 import { smoothenDataPoint } from "./LiveGraph";
@@ -17,7 +17,6 @@ import { useSettings } from "../store";
 const LiveGraphLabels = () => {
   const [{ graphColorScheme }] = useSettings();
   const colors = useGraphColors(graphColorScheme);
-  const connectActions = useConnectActions();
 
   const xArrowHeightRef = useRef<HTMLDivElement>(null);
   const xLabelHeightRef = useRef<HTMLParagraphElement>(null);
@@ -56,8 +55,8 @@ const LiveGraphLabels = () => {
     z: 0,
   });
 
-  useEffect(() => {
-    const listener = ({ data }: AccelerometerDataEvent) => {
+  const accelerometerListener = useCallback(
+    ({ data }: AccelerometerDataEvent) => {
       dataRef.current = {
         x: smoothenDataPoint(dataRef.current.x, data.x),
         y: smoothenDataPoint(dataRef.current.y, data.y),
@@ -75,12 +74,11 @@ const LiveGraphLabels = () => {
           config.labelHeightRef.current.style.transform = `translateY(${heights.labelHeight}rem)`;
         }
       });
-    };
-    connectActions.addAccelerometerListener(listener);
-    return () => {
-      connectActions.removeAccelerometerListener(listener);
-    };
-  }, [connectActions, labelConfig]);
+    },
+    [labelConfig]
+  );
+
+  useAccelerometerListener(accelerometerListener);
 
   return (
     <Box w={10} h={40} position="relative">

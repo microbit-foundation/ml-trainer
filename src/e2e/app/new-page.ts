@@ -31,7 +31,7 @@ export class NewPage {
     });
   }
 
-  async goto(flags: string[] = ["open"]) {
+  async goto(flags: string[] = []) {
     const response = await this.page.goto(this.url);
     await this.page.evaluate(
       (flags) => localStorage.setItem("flags", flags.join(",")),

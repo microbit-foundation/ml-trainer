@@ -41,7 +41,7 @@ import {
   getLowercaseFileExtension,
   readFileAsText,
 } from "../utils/fs-util";
-import { useDownloadActions } from "./download-hooks";
+import { useDownloadActions } from "../download-flow/download-hooks";
 
 class CodeEditorError extends Error {}
 

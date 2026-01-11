@@ -30,8 +30,8 @@ import IncompatibleEditorDevice from "../components/IncompatibleEditorDevice";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import MoreMenuButton from "../components/MoreMenuButton";
 import TestingModelTable from "../components/TestingModelTable";
-import { useConnectActions } from "../connect-actions-hooks";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { useBoardVersion } from "../hooks/use-board-version";
+import { DataConnectionStep } from "../data-connection-flow";
 import { useProject } from "../hooks/project-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useStore } from "../store";
@@ -69,7 +69,8 @@ const TestingModelPage = () => {
   ]);
 
   const tourStart = useStore((s) => s.tourStart);
-  const { isConnected } = useConnectionStage();
+  const step = useStore((s) => s.dataConnection.step);
+  const isConnected = step === DataConnectionStep.Connected;
   const wasConnected = usePrevious(isConnected);
   useEffect(() => {
     if (isConnected) {
@@ -81,7 +82,7 @@ const TestingModelPage = () => {
   }, [isConnected, tourStart, wasConnected]);
 
   const { openEditor, resetProject, projectEdited } = useProject();
-  const { getDataCollectionBoardVersion } = useConnectActions();
+  const boardVersion = useBoardVersion();
   const incompatibleEditorDeviceDialogOnOpen = useStore(
     (s) => s.incompatibleEditorDeviceDialogOnOpen
   );
@@ -91,17 +92,13 @@ const TestingModelPage = () => {
   const closeDialog = useStore((s) => s.closeDialog);
   const maybeOpenEditor = useCallback(async () => {
     // Open editor if device is not a V1, otherwise show warning dialog.
-    if (getDataCollectionBoardVersion() === "V1") {
+    if (boardVersion === "V1") {
       return incompatibleEditorDeviceDialogOnOpen();
     }
     setEditorLoading(true);
     await openEditor();
     setEditorLoading(false);
-  }, [
-    getDataCollectionBoardVersion,
-    incompatibleEditorDeviceDialogOnOpen,
-    openEditor,
-  ]);
+  }, [boardVersion, incompatibleEditorDeviceDialogOnOpen, openEditor]);
   const [editorLoading, setEditorLoading] = useState(false);
   const continueToEditor = useCallback(async () => {
     setEditorLoading(true);

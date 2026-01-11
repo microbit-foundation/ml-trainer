@@ -1,8 +1,8 @@
-import { Capacitor } from "@capacitor/core";
 import {
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
 } from "@microbit/microbit-connection";
+import { isNativePlatform } from "../platform";
 
 /**
  * DeviceConnection is a messy generic type.
@@ -23,4 +23,4 @@ export const isWebUSBConnection = (connection: MicrobitConnection) =>
 export const isNativeBluetoothConnection = (
   connection: MicrobitConnection
 ): connection is MicrobitWebBluetoothConnection =>
-  isBluetoothConnection(connection) && Capacitor.isNativePlatform();
+  isBluetoothConnection(connection) && isNativePlatform();

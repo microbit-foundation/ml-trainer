@@ -27,9 +27,8 @@ import EditCodeDialog from "./components/EditCodeDialog";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
 import NotFound from "./components/NotFound";
-import { ConnectProvider } from "./connect-actions-hooks";
-import { ConnectStatusProvider } from "./connect-status-hooks";
-import { ConnectionStageProvider } from "./connection-stage-hooks";
+import { ConnectionServiceProvider } from "./connection-service-hooks";
+import { DataConnectionEventProvider } from "./data-connection-flow";
 import { deployment, useDeployment } from "./deployment";
 import { MockWebBluetoothConnection } from "./device/mockBluetooth";
 import { MockRadioBridgeConnection } from "./device/mockRadioBridge";
@@ -91,15 +90,11 @@ const Providers = ({ children }: ProviderLayoutProps) => {
         <LoggingProvider value={logging}>
           <ConsentProvider>
             <TranslationProvider>
-              <ConnectStatusProvider>
-                <ConnectProvider {...{ usb, bluetooth, radioBridge }}>
-                  <BufferedDataProvider>
-                    <ConnectionStageProvider>
-                      {children}
-                    </ConnectionStageProvider>
-                  </BufferedDataProvider>
-                </ConnectProvider>
-              </ConnectStatusProvider>
+              <ConnectionServiceProvider {...{ usb, bluetooth, radioBridge }}>
+                <DataConnectionEventProvider>
+                  <BufferedDataProvider>{children}</BufferedDataProvider>
+                </DataConnectionEventProvider>
+              </ConnectionServiceProvider>
             </TranslationProvider>
           </ConsentProvider>
         </LoggingProvider>

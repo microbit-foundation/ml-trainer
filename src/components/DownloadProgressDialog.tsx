@@ -15,10 +15,10 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { Capacitor } from "@capacitor/core";
 import { ProgressStage } from "@microbit/microbit-connection";
 import { FormattedMessage } from "react-intl";
-import { ConnectionFlowType } from "../connection-stage-hooks";
+import { DataConnectionType, RadioFlowPhase } from "../data-connection-flow";
+import { isNativePlatform } from "../platform";
 import ChooseDeviceOverlay from "./ChooseDeviceOverlay";
 import LoadingAnimation from "./LoadingAnimation";
 
@@ -29,14 +29,18 @@ export interface DownloadProgressDialogProps {
   progress: number | undefined;
 }
 
-export const getHeadingId = (flowType: ConnectionFlowType) => {
+export const getHeadingId = (
+  flowType: DataConnectionType,
+  radioFlowPhase?: RadioFlowPhase
+): string => {
   switch (flowType) {
-    case ConnectionFlowType.ConnectWebBluetooth:
-    case ConnectionFlowType.ConnectNativeBluetooth:
-    case ConnectionFlowType.ConnectRadioRemote:
+    case DataConnectionType.WebBluetooth:
+    case DataConnectionType.NativeBluetooth:
       return "downloading-data-collection-header";
-    case ConnectionFlowType.ConnectRadioBridge:
-      return "downloading-radio-link-header";
+    case DataConnectionType.Radio:
+      return radioFlowPhase === "bridge"
+        ? "downloading-radio-link-header"
+        : "downloading-data-collection-header";
   }
 };
 
@@ -71,7 +75,7 @@ const DownloadProgressDialog = ({
   }
   // On web, show overlay instead of dialog while browser device picker is open.
   // On native, show progress dialog during device scanning.
-  if (!Capacitor.isNativePlatform() && stage === ProgressStage.FindingDevice) {
+  if (!isNativePlatform() && stage === ProgressStage.FindingDevice) {
     return <ChooseDeviceOverlay />;
   }
   const isIndeterminate = progress === undefined;

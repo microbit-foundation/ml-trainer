@@ -161,12 +161,6 @@ export enum SameOrDifferentChoice {
 
 export interface DownloadState {
   step: DownloadStep;
-  /**
-   * Navigation history stack. When navigating forward, the current step is
-   * pushed here. When navigating back, we pop and return to that step.
-   * This ensures "back" always returns to where you actually came from.
-   */
-  history: DownloadStep[];
   microbitChoice: SameOrDifferentChoice;
   hex?: HexData;
   /**
