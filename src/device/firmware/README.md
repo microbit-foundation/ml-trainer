@@ -20,8 +20,9 @@ Use the **nRF Connect** mobile app to verify the Bluetooth mode:
 1. Install nRF Connect ([Android](https://play.google.com/store/apps/details?id=no.nordicsemi.android.mcp) / [iOS](https://apps.apple.com/app/nrf-connect/id1054362403))
 2. Flash the hex file to your micro:bit
 3. Open nRF Connect and scan for devices
-4. Attempt to connect to your micro:bit
-5. Verify the pairing behavior matches your selected mode
+4. Attempt to connect to your micro:bit in Bluetooth mode
+5. Start notifications for the partial flashing service (the multiple arrows pointing down icon)
+6. Verify the pairing behaviour matches your selected mode
 
 ### Separating a universal hex
 
