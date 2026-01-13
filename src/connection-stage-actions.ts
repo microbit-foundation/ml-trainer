@@ -165,7 +165,8 @@ export class ConnectionStageActions {
       case ConnectionFlowType.ConnectNativeBluetooth: {
         // TODO: Tune delay.
         // If we try to reconnect too soon then we'll time out as it'll still be booting.
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        // Android seems to require a longer delay than iOS.
+        await new Promise((resolve) => setTimeout(resolve, 5000));
         await this.connectBluetooth(false);
         break;
       }
