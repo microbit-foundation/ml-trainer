@@ -61,12 +61,12 @@ npm run cap:sync:dev
 Then run
 
 ```bash
-npm run apps:dev
+npm run dev:apps
 ```
 
 Use e.g. `npx cap open ios` to open the IDE and run from there.
 
-The vite dev server run by apps:dev will be running inside the app.
+The vite dev server run by dev:apps will be running inside the app.
 
 ## Deployments
 
