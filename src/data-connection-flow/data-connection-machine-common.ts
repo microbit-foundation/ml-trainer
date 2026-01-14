@@ -53,6 +53,10 @@ export type DataConnectionEvent =
   | { type: "deviceConnecting" }
   | { type: "deviceReconnecting" }
   | { type: "deviceNoAuthorizedDevice" }
+  /**
+   * Connection paused due to tab visibility. Will reconnect when tab visible.
+   */
+  | { type: "devicePaused" }
   // User-initiated disconnect event.
   | { type: "disconnect" }
   // Reset state (use after disconnect when micro:bit is being reused).
@@ -318,17 +322,15 @@ export const idleFreshStart = {
 
 /**
  * Create device event handlers for the Connected state.
- * Handles reconnection logic with tab visibility awareness.
  */
 export const createConnectedHandlers = () => ({
+  // Connection paused due to tab visibility - stay connected, library handles reconnect
+  devicePaused: {
+    target: DataConnectionStep.Connected,
+    actions: actions.reconnecting,
+  },
   deviceDisconnected: [
-    // Tab hidden: silently keep trying to reconnect
-    {
-      guard: guards.isTabHidden,
-      target: DataConnectionStep.Connected,
-      actions: [...actions.setDisconnectSource, ...actions.reconnectWithFlag],
-    },
-    // Tab visible, first disconnect: try auto-reconnect
+    // First disconnect: try auto-reconnect
     {
       guard: (ctx: DataConnectionContext) => !ctx.hasFailedOnce,
       target: DataConnectionStep.Connected,
@@ -337,7 +339,7 @@ export const createConnectedHandlers = () => ({
         ...actions.firstReconnectAttempt,
       ],
     },
-    // Tab visible, second disconnect: show connection lost
+    // Second disconnect: show connection lost
     {
       guard: always,
       target: DataConnectionStep.ConnectionLost,

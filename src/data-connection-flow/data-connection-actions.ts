@@ -517,7 +517,9 @@ const performReconnect = async (deps: DataConnectionDeps): Promise<void> => {
           );
         } else {
           // USB is not connected, so we can't reconnect via serial.
-          // Fire a disconnect event to trigger proper failure handling.
+          // This happens when the bridge micro:bit was unplugged. Fire a
+          // disconnect event to trigger the normal failure handling flow
+          // (which will show ConnectionLost after the retry limit).
           await sendEvent(
             { type: "deviceDisconnected", source: "bridge" },
             deps

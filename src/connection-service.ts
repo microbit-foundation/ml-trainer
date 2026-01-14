@@ -254,6 +254,9 @@ export class ConnectionService {
         return { type: "deviceConnecting" };
       case DeviceConnectionStatus.RECONNECTING:
         return { type: "deviceReconnecting" };
+      case DeviceConnectionStatus.PAUSED:
+        // Connection paused due to tab visibility - will reconnect automatically.
+        return { type: "devicePaused" };
       case DeviceConnectionStatus.NO_AUTHORIZED_DEVICE:
         // Only fire this event when the status was already NO_AUTHORIZED_DEVICE,
         // indicating the user actively dismissed the device picker.
