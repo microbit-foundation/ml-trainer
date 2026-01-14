@@ -38,7 +38,8 @@ export const radioFlow: DataConnectionFlowDef = {
           target: DataConnectionStep.ConnectingMicrobits,
           actions: [
             { type: "addStatusListener" },
-            ...actions.reset,
+            { type: "setHasFailedOnce", value: false },
+            { type: "setIsStartingOver", value: false },
             { type: "setReconnecting", value: true },
             { type: "connectMicrobits" },
           ],

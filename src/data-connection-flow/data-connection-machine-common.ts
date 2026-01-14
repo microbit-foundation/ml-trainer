@@ -298,7 +298,8 @@ export const idleBluetoothReconnect = {
   target: DataConnectionStep.BluetoothConnect,
   actions: [
     { type: "addStatusListener" },
-    ...actions.reset,
+    { type: "setHasFailedOnce", value: false },
+    { type: "setIsStartingOver", value: false },
     { type: "setReconnecting", value: true },
     { type: "connectBluetooth", clearDevice: false },
   ],
