@@ -161,6 +161,7 @@ const executeAction = async (
           type: connectionType,
           isReconnecting: false,
           hasFailedOnce: false,
+          isStartingOver: false,
           hadSuccessfulConnection: false,
         },
         deps.setConfig
@@ -285,6 +286,13 @@ const executeAction = async (
     case "setHasFailedOnce":
       setDataConnectionState(
         { ...getDataConnectionState(), hasFailedOnce: action.value },
+        deps.setConfig
+      );
+      break;
+
+    case "setIsStartingOver":
+      setDataConnectionState(
+        { ...getDataConnectionState(), isStartingOver: action.value },
         deps.setConfig
       );
       break;

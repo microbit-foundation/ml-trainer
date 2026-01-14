@@ -25,6 +25,7 @@ const createState = (
   hasSwitchedConnectionType: false,
   isReconnecting: false,
   hasFailedOnce: false,
+  isStartingOver: false,
   isBrowserTabVisible: true,
   ...overrides,
 });
@@ -179,12 +180,12 @@ describe("data-connection-machine", () => {
         expect(result?.step).toBe(DataConnectionStep.Start);
       });
 
-      it("ConnectCable back -> StartOver (when hasFailedOnce)", () => {
+      it("ConnectCable back -> StartOver (when isStartingOver)", () => {
         const result = transition(
           flow,
           DataConnectionStep.ConnectCable,
           { type: "back" },
-          { hasFailedOnce: true }
+          { isStartingOver: true }
         );
 
         expect(result?.step).toBe(DataConnectionStep.StartOver);
@@ -535,12 +536,12 @@ describe("data-connection-machine", () => {
         expect(result?.step).toBe(DataConnectionStep.Start);
       });
 
-      it("NativeBluetoothPreConnectTutorial back -> StartOver (when hasFailedOnce)", () => {
+      it("NativeBluetoothPreConnectTutorial back -> StartOver (when isStartingOver)", () => {
         const result = transition(
           flow,
           DataConnectionStep.NativeBluetoothPreConnectTutorial,
           { type: "back" },
-          { hasFailedOnce: true }
+          { isStartingOver: true }
         );
 
         expect(result?.step).toBe(DataConnectionStep.StartOver);
@@ -770,12 +771,12 @@ describe("data-connection-machine", () => {
         expect(result?.step).toBe(DataConnectionStep.Start);
       });
 
-      it("ConnectCable back -> StartOver (when hasFailedOnce)", () => {
+      it("ConnectCable back -> StartOver (when isStartingOver)", () => {
         const result = transition(
           flow,
           DataConnectionStep.ConnectCable,
           { type: "back" },
-          { hasFailedOnce: true }
+          { isStartingOver: true }
         );
 
         expect(result?.step).toBe(DataConnectionStep.StartOver);

@@ -129,6 +129,12 @@ export interface DataConnectionState {
   hasFailedOnce: boolean;
 
   /**
+   * True when user is restarting the flow from the StartOver state.
+   * Used for back navigation to return to StartOver instead of Start.
+   */
+  isStartingOver: boolean;
+
+  /**
    * Browser tab visibility - used to defer error states while user is away.
    */
   isBrowserTabVisible: boolean;
@@ -187,6 +193,7 @@ export const getInitialDataConnectionState = (): DataConnectionState => {
     hasSwitchedConnectionType: false,
     isReconnecting: false,
     hasFailedOnce: false,
+    isStartingOver: false,
     isBrowserTabVisible: document.visibilityState === "visible",
   };
 };

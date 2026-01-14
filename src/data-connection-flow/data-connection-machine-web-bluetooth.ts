@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  actions,
   badFirmwareState,
   connectedState,
   createInitialConnectHandlers,
@@ -48,7 +47,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
       next: { target: DataConnectionStep.WebUsbFlashingTutorial },
       back: [
         {
-          guard: guards.hasFailedOnce,
+          guard: guards.isStartingOver,
           target: DataConnectionStep.StartOver,
         },
         {
@@ -144,14 +143,8 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
   // Error/recovery states
   [DataConnectionStep.StartOver]: {
     on: {
-      connect: {
-        target: DataConnectionStep.ConnectCable,
-        actions: actions.reset,
-      },
-      next: {
-        target: DataConnectionStep.ConnectCable,
-        actions: actions.reset,
-      },
+      connect: { target: DataConnectionStep.ConnectCable },
+      next: { target: DataConnectionStep.ConnectCable },
       ...switchToRadio,
     },
   },

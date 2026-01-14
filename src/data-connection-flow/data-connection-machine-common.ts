@@ -79,6 +79,7 @@ export type DataConnectionAction =
   | { type: "notifyConnected" }
   // Reconnect tracking actions.
   | { type: "setHasFailedOnce"; value: boolean }
+  | { type: "setIsStartingOver"; value: boolean }
   | { type: "reconnect" }
   // Connection state actions.
   | { type: "setReconnecting"; value: boolean }
@@ -113,6 +114,10 @@ export interface DataConnectionContext {
    * True if we've already failed once - next failure shows "start over" dialog.
    */
   hasFailedOnce: boolean;
+  /**
+   * True when user is restarting the flow from the StartOver state.
+   */
+  isStartingOver: boolean;
   /**
    * Browser tab visibility - used to defer error states while user is away.
    */
@@ -153,6 +158,9 @@ export const guards = {
 
   // Already failed once - next failure shows "start over" dialog
   hasFailedOnce: (ctx: DataConnectionContext) => ctx.hasFailedOnce,
+
+  // User is restarting the flow from StartOver - back should return there
+  isStartingOver: (ctx: DataConnectionContext) => ctx.isStartingOver,
 
   isV1Board: (ctx: DataConnectionContext) => ctx.boardVersion === "V1",
 
@@ -237,8 +245,12 @@ export const actions = {
     { type: "setReconnecting", value: false },
   ],
 
-  // Failed twice - show start over dialog
-  failedTwice: [{ type: "setReconnecting", value: false }],
+  // Failed twice - show start over dialog, reset state for fresh start
+  failedTwice: [
+    { type: "setReconnecting", value: false },
+    { type: "reset" },
+    { type: "setIsStartingOver", value: true },
+  ],
 
   // Reset flow state
   reset: [{ type: "reset" }],

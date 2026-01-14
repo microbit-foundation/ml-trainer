@@ -78,7 +78,7 @@ export const radioFlow: DataConnectionFlowDef = {
           actions: actions.setRemotePhase,
         },
         {
-          guard: guards.hasFailedOnce,
+          guard: guards.isStartingOver,
           target: DataConnectionStep.StartOver,
         },
         {
@@ -197,11 +197,11 @@ export const radioFlow: DataConnectionFlowDef = {
     on: {
       connect: {
         target: DataConnectionStep.ConnectCable,
-        actions: [...actions.reset, ...actions.setRemotePhase],
+        actions: actions.setRemotePhase,
       },
       next: {
         target: DataConnectionStep.ConnectCable,
-        actions: [...actions.reset, ...actions.setRemotePhase],
+        actions: actions.setRemotePhase,
       },
       ...switchToWebBluetooth,
     },

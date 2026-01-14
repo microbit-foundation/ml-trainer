@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  actions,
   connectedState,
   createInitialConnectHandlers,
   createRecoveryStates,
@@ -40,7 +39,7 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
       next: { target: DataConnectionStep.BluetoothPattern },
       back: [
         {
-          guard: guards.hasFailedOnce,
+          guard: guards.isStartingOver,
           target: DataConnectionStep.StartOver,
         },
         {
@@ -96,14 +95,8 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
   // Error/recovery states
   [DataConnectionStep.StartOver]: {
     on: {
-      connect: {
-        target: DataConnectionStep.NativeBluetoothPreConnectTutorial,
-        actions: actions.reset,
-      },
-      next: {
-        target: DataConnectionStep.NativeBluetoothPreConnectTutorial,
-        actions: actions.reset,
-      },
+      connect: { target: DataConnectionStep.NativeBluetoothPreConnectTutorial },
+      next: { target: DataConnectionStep.NativeBluetoothPreConnectTutorial },
     },
   },
 

@@ -57,6 +57,7 @@ export const dataConnectionTransition = (
     boardVersion: state.radioRemoteBoardVersion,
     hadSuccessfulConnection: state.hadSuccessfulConnection,
     hasFailedOnce: state.hasFailedOnce,
+    isStartingOver: state.isStartingOver,
     isBrowserTabVisible: state.isBrowserTabVisible,
     lastDisconnectSource: state.lastDisconnectSource,
     radioFlowPhase: state.radioFlowPhase,
