@@ -101,7 +101,11 @@ export const useDownloadActions = (): DownloadActions => {
       dataConnection,
       flashingProgressCallback: setDownloadFlashingProgress,
       logging,
-      disconnect: () => sendDataConnectionEvent({ type: "disconnect" }),
+      disconnect: async () => {
+        // Disconnect and reset - the micro:bit is being reused so reconnect won't work
+        await sendDataConnectionEvent({ type: "disconnect" });
+        await sendDataConnectionEvent({ type: "reset" });
+      },
     }),
     [
       config,

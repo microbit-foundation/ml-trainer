@@ -54,7 +54,9 @@ export type DataConnectionEvent =
   | { type: "deviceReconnecting" }
   | { type: "deviceNoAuthorizedDevice" }
   // User-initiated disconnect event.
-  | { type: "disconnect" };
+  | { type: "disconnect" }
+  // Reset state (use after disconnect when micro:bit is being reused).
+  | { type: "reset" };
 
 export type DataConnectionAction =
   | { type: "setConnectionType"; connectionType: DataConnectionType }
@@ -512,8 +514,9 @@ export const connectedState = {
 
 /**
  * Global handlers shared by all flows.
- * The close event always returns to Idle state.
- * Disconnect event returns to Idle and removes status listener.
+ * - close: returns to Idle and resets state
+ * - disconnect: returns to Idle (preserves hadSuccessfulConnection for reconnect)
+ * - reset: resets state in place (use after disconnect when micro:bit is being reused)
  */
 export const globalHandlers = {
   _global: {
@@ -525,6 +528,10 @@ export const globalHandlers = {
       disconnect: {
         target: DataConnectionStep.Idle,
         actions: [{ type: "removeStatusListener" }, { type: "disconnect" }],
+      },
+      reset: {
+        target: DataConnectionStep.Idle,
+        actions: actions.reset,
       },
     },
   },
