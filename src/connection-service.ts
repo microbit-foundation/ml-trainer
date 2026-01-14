@@ -23,9 +23,9 @@ import {
   DataConnectionEvent,
   DataConnectionType,
 } from "./data-connection-flow";
+import { MicrobitConnection } from "./device/connection-utils";
 import { HexType, getFlashDataSource } from "./device/get-hex-file";
 import { Logging } from "./logging/logging";
-import { MicrobitConnection } from "./device/connection-utils";
 import { isNativePlatform } from "./platform";
 
 export enum ConnectResult {
@@ -41,11 +41,6 @@ export type ConnectAndFlashFailResult = Exclude<
   ConnectResult.Success
 >;
 
-export interface StatusListeners {
-  bluetooth: (e: ConnectionStatusEvent) => void;
-  radioBridge: (e: ConnectionStatusEvent) => void;
-}
-
 type EventCallback = (event: DataConnectionEvent) => void;
 
 export interface ConnectionAndFlashOptions {
@@ -58,11 +53,6 @@ export interface ConnectionAndFlashOptions {
  * instead of directly using this service.
  */
 export class ConnectionService {
-  private statusListeners: StatusListeners = {
-    bluetooth: () => {},
-    radioBridge: () => {},
-  };
-
   constructor(
     private logging: Logging,
     private usb: MicrobitWebUSBConnection,
@@ -277,7 +267,10 @@ export class ConnectionService {
     }
   }
 
-  private handleStatusChange = (deviceStatus: DeviceConnectionStatus): void => {
+  private handleStatusChange = (
+    connectionStatusEvent: ConnectionStatusEvent
+  ): void => {
+    const deviceStatus = connectionStatusEvent.status;
     const event = this.mapDeviceStatusToEvent(deviceStatus);
     this.prevDeviceStatus = deviceStatus;
 
@@ -285,13 +278,6 @@ export class ConnectionService {
       this.eventCallback(event);
     }
   };
-
-  private prepareStatusListeners(): StatusListeners {
-    return {
-      bluetooth: (e) => this.handleStatusChange(e.status),
-      radioBridge: (e) => this.handleStatusChange(e.status),
-    };
-  }
 
   /**
    * Set the callback that will be invoked with mapped DataConnectionEvents.
@@ -318,17 +304,14 @@ export class ConnectionService {
     this.dataConnectionType = dataConnectionType;
     this.prevDeviceStatus = null;
 
-    const listeners = this.prepareStatusListeners();
     if (connType === "bluetooth") {
-      this.bluetooth.addEventListener("status", listeners.bluetooth);
-      this.statusListeners.bluetooth = listeners.bluetooth;
+      this.bluetooth.addEventListener("status", this.handleStatusChange);
     } else {
       // For radio connections, only listen to radioBridge status.
       // The radioBridge propagates USB connection issues via its delegateStatusListener,
       // so we don't need a separate USB listener. This also avoids the USB CONNECTED
       // event firing before the radioBridge has verified the remote micro:bit responds.
-      this.radioBridge.addEventListener("status", listeners.radioBridge);
-      this.statusListeners.radioBridge = listeners.radioBridge;
+      this.radioBridge.addEventListener("status", this.handleStatusChange);
     }
   }
 
@@ -336,8 +319,7 @@ export class ConnectionService {
    * Stop listening for device status events.
    */
   stopListening(): void {
-    const listeners = this.statusListeners;
-    this.bluetooth.removeEventListener("status", listeners.bluetooth);
-    this.radioBridge.removeEventListener("status", listeners.radioBridge);
+    this.bluetooth.removeEventListener("status", this.handleStatusChange);
+    this.radioBridge.removeEventListener("status", this.handleStatusChange);
   }
 }
