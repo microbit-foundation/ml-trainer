@@ -41,7 +41,7 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
       back: [
         {
           guard: guards.hasFailedOnce,
-          target: DataConnectionStep.ReconnectFailedTwice,
+          target: DataConnectionStep.StartOver,
         },
         {
           guard: always,
@@ -94,7 +94,7 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
   ...connectedState,
 
   // Error/recovery states
-  [DataConnectionStep.ReconnectFailedTwice]: {
+  [DataConnectionStep.StartOver]: {
     on: {
       connect: {
         target: DataConnectionStep.NativeBluetoothPreConnectTutorial,

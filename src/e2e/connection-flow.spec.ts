@@ -137,12 +137,12 @@ test.describe("bluetooth reconnection", () => {
     await dataSamplesPage.expectConnected();
   });
 
-  test("failed reconnection shows reconnect-failed text", async ({
+  test("failed reconnection shows start-over dialog", async ({
     dataSamplesPage,
   }) => {
     const connectionDialogs = dataSamplesPage.getConnectionDialogs();
 
-    // Auto-reconnect fails, user reconnect fails, second user reconnect succeeds
+    // Auto-reconnect fails, user reconnect fails, then user restarts flow
     await connectionDialogs.setBluetoothConnectBehaviors([
       { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
       { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
@@ -150,14 +150,11 @@ test.describe("bluetooth reconnection", () => {
     ]);
 
     await connectionDialogs.simulateBluetoothDisconnect();
-    // First failure shows "connection lost" dialog
     await connectionDialogs.expectConnectionLostDialog();
     await connectionDialogs.clickReconnectButton();
-    // Second failure shows "reconnect failed" (not "connect failed")
-    // because user had successfully connected before
-    await connectionDialogs.expectReconnectFailedDialog();
-    await connectionDialogs.clickReconnectButton();
-    await dataSamplesPage.expectConnected();
+    await connectionDialogs.expectStartOverDialog();
+    await connectionDialogs.clickNext();
+    await connectionDialogs.waitForText(dialog.bluetooth.connectUsb);
   });
 });
 
@@ -371,8 +368,8 @@ test.describe("tab visibility reconnection", () => {
     // Make tab visible quickly - reconnect failures should now show error
     await connectionDialogs.simulateTabVisible();
 
-    // Wait for error dialog to appear
-    await connectionDialogs.expectConnectionErrorDialog();
+    // Wait for connection lost dialog to appear
+    await connectionDialogs.expectConnectionLostDialog();
 
     // Now set success behavior for when user clicks reconnect
     // (replaces the depleted failure queue)
@@ -452,27 +449,21 @@ test.describe("radio reconnection", () => {
   }) => {
     const connectionDialogs = dataSamplesPage.getConnectionDialogs();
 
-    // All reconnection attempts fail:
-    // 1. Auto-reconnect fails → ConnectionLost (resets hasFailedOnce to false)
-    // 2. User retry fails → ConnectFailed (sets hasFailedOnce to true)
-    // 3. User retry fails → ReconnectFailedTwice
+    // Reconnection attempts fail:
+    // 1. Auto-reconnect fails → ConnectionLost (hasFailedOnce stays true)
+    // 2. User retry fails → StartOver
     await connectionDialogs.setRadioBridgeConnectBehaviors([
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
       { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
       { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
     ]);
 
     // Simulate disconnect - auto-reconnect fails → ConnectionLost
     await connectionDialogs.simulateRadioDisconnect("remote");
-    await connectionDialogs.expectConnectionErrorDialog();
+    await connectionDialogs.expectRadioRemoteDisconnectDialog();
 
-    // First user retry fails → ConnectFailed (but shows "Reconnect" since user was connected)
+    // User retry fails → StartOver
     await connectionDialogs.clickReconnectButton();
-    await connectionDialogs.expectConnectionErrorDialog();
-
-    // Second user retry fails → ReconnectFailedTwice
-    await connectionDialogs.clickReconnectButton();
-    await connectionDialogs.expectRadioReconnectFailedTwiceDialog();
+    await connectionDialogs.expectRadioStartOverDialog();
 
     // Start over should go back to radio flow (ConnectCable for micro:bit 1)
     await connectionDialogs.clickNext();

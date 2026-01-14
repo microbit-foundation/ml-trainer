@@ -79,7 +79,7 @@ export const radioFlow: DataConnectionFlowDef = {
         },
         {
           guard: guards.hasFailedOnce,
-          target: DataConnectionStep.ReconnectFailedTwice,
+          target: DataConnectionStep.StartOver,
         },
         {
           guard: always,
@@ -193,7 +193,7 @@ export const radioFlow: DataConnectionFlowDef = {
   },
 
   // Error/recovery states
-  [DataConnectionStep.ReconnectFailedTwice]: {
+  [DataConnectionStep.StartOver]: {
     on: {
       connect: {
         target: DataConnectionStep.ConnectCable,

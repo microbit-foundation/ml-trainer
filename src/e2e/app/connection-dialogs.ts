@@ -207,18 +207,6 @@ export class ConnectionDialogs {
   }
 
   /**
-   * Expect a connection error dialog to be visible.
-   * This covers ConnectionLost, ConnectFailed, and reconnection failure states.
-   * Waits with longer timeout since the flow involves async operations.
-   */
-  async expectConnectionErrorDialog() {
-    // Look for the Cancel button which appears in all error dialogs
-    await expect(this.page.getByRole("button", { name: "Cancel" })).toBeVisible(
-      { timeout: 10000 }
-    );
-  }
-
-  /**
    * Expect the "connection lost" dialog (first disconnect after being connected).
    */
   async expectConnectionLostDialog() {
@@ -301,16 +289,19 @@ export class ConnectionDialogs {
   }
 
   /**
-   * Expect the "reconnect failed twice" dialog for bluetooth to be visible.
+   * Expect the "start over" dialog for bluetooth to be visible.
+   * This shows WhatYouWillNeedDialog with reconnect=true.
    */
-  async expectReconnectFailedTwiceDialog() {
-    await expect(this.page.getByText("What you need to connect")).toBeVisible();
+  async expectStartOverDialog() {
+    await expect(
+      this.page.getByText("Follow these instructions to restart the connection")
+    ).toBeVisible({ timeout: 10000 });
   }
 
   /**
-   * Expect the "reconnect failed twice" dialog for radio to be visible.
+   * Expect the "start over" dialog for radio to be visible.
    */
-  async expectRadioReconnectFailedTwiceDialog() {
+  async expectRadioStartOverDialog() {
     await expect(
       this.page.getByText("Failed to reconnect to micro:bits")
     ).toBeVisible({ timeout: 10000 });

@@ -17,7 +17,6 @@ import ConnectCableDialog, {
 } from "./ConnectCableDialog";
 import ConnectErrorDialog, {
   ConnectionErrorDeviceType,
-  ConnectionErrorVariant,
 } from "./ConnectErrorDialog";
 import DownloadProgressDialog, {
   getHeadingId as getDownloadProgressHeadingId,
@@ -47,7 +46,7 @@ const DataConnectionDialogs = () => {
   const dialogCommonProps = { isOpen, onClose };
 
   switch (state.step) {
-    case DataConnectionStep.ReconnectFailedTwice:
+    case DataConnectionStep.StartOver:
     case DataConnectionStep.Start: {
       return (
         <WhatYouWillNeedDialog
@@ -57,7 +56,7 @@ const DataConnectionDialogs = () => {
             actions.canSwitchFlowType() ? actions.switchFlowType : undefined
           }
           onNextClick={actions.onNextClick}
-          reconnect={state.step === DataConnectionStep.ReconnectFailedTwice}
+          reconnect={state.step === DataConnectionStep.StartOver}
         />
       );
     }
@@ -197,7 +196,7 @@ const DataConnectionDialogs = () => {
     }
     case DataConnectionStep.ConnectFailed:
     case DataConnectionStep.ConnectionLost: {
-      const variant: ConnectionErrorVariant =
+      const variant =
         state.step === DataConnectionStep.ConnectionLost
           ? "connectionLost"
           : state.hadSuccessfulConnection

@@ -89,7 +89,7 @@ export enum DataConnectionStep {
   WebUsbBluetoothUnsupported = "WebUsbBluetoothUnsupported",
 
   ConnectionLost = "ConnectionLost",
-  ReconnectFailedTwice = "ReconnectFailedTwice",
+  StartOver = "StartOver",
 }
 
 export interface DataConnectionState {

@@ -220,11 +220,9 @@ export const actions = {
     { type: "setConnected" },
   ],
 
-  // Connection lost after retry
-  connectionLost: [
-    { type: "setHasFailedOnce", value: false },
-    { type: "setReconnecting", value: false },
-  ],
+  // Connection lost after retry - preserve hasFailedOnce so user-initiated
+  // reconnect failure goes to StartOver
+  connectionLost: [{ type: "setReconnecting", value: false }],
 
   // Initial connect success (first time connecting)
   initialConnectSuccess: [
@@ -359,7 +357,7 @@ export const createInitialConnectHandlers = () => ({
     // Retry attempt failed - show start over dialog
     {
       guard: always,
-      target: DataConnectionStep.ReconnectFailedTwice,
+      target: DataConnectionStep.StartOver,
       actions: [...actions.setDisconnectSource, ...actions.failedTwice],
     },
   ],

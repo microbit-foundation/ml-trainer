@@ -49,7 +49,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
       back: [
         {
           guard: guards.hasFailedOnce,
-          target: DataConnectionStep.ReconnectFailedTwice,
+          target: DataConnectionStep.StartOver,
         },
         {
           guard: always,
@@ -142,7 +142,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
   ...connectedState,
 
   // Error/recovery states
-  [DataConnectionStep.ReconnectFailedTwice]: {
+  [DataConnectionStep.StartOver]: {
     on: {
       connect: {
         target: DataConnectionStep.ConnectCable,

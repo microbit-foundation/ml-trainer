@@ -90,12 +90,10 @@ describe("data-connection-machine", () => {
         expect(result?.step).toBe(DataConnectionStep.ConnectCable);
       });
 
-      it("ReconnectFailedTwice -> ConnectCable", () => {
-        const result = transition(
-          flow,
-          DataConnectionStep.ReconnectFailedTwice,
-          { type: "next" }
-        );
+      it("StartOver -> ConnectCable", () => {
+        const result = transition(flow, DataConnectionStep.StartOver, {
+          type: "next",
+        });
 
         expect(result?.step).toBe(DataConnectionStep.ConnectCable);
       });
@@ -181,7 +179,7 @@ describe("data-connection-machine", () => {
         expect(result?.step).toBe(DataConnectionStep.Start);
       });
 
-      it("ConnectCable back -> ReconnectFailedTwice (when hasFailedOnce)", () => {
+      it("ConnectCable back -> StartOver (when hasFailedOnce)", () => {
         const result = transition(
           flow,
           DataConnectionStep.ConnectCable,
@@ -189,7 +187,7 @@ describe("data-connection-machine", () => {
           { hasFailedOnce: true }
         );
 
-        expect(result?.step).toBe(DataConnectionStep.ReconnectFailedTwice);
+        expect(result?.step).toBe(DataConnectionStep.StartOver);
       });
 
       it("WebUsbFlashingTutorial back -> ConnectCable", () => {
@@ -344,12 +342,10 @@ describe("data-connection-machine", () => {
         });
       });
 
-      it("ReconnectFailedTwice switchFlowType -> goes to Start with setFlowType to radio", () => {
-        const result = transition(
-          flow,
-          DataConnectionStep.ReconnectFailedTwice,
-          { type: "switchFlowType" }
-        );
+      it("StartOver switchFlowType -> goes to Start with setFlowType to radio", () => {
+        const result = transition(flow, DataConnectionStep.StartOver, {
+          type: "switchFlowType",
+        });
 
         expect(result?.step).toBe(DataConnectionStep.Start);
         expect(result?.actions).toContainEqual({
@@ -448,7 +444,7 @@ describe("data-connection-machine", () => {
     describe("close from any step", () => {
       const stepsWithClose = [
         DataConnectionStep.Start,
-        DataConnectionStep.ReconnectFailedTwice,
+        DataConnectionStep.StartOver,
         DataConnectionStep.ConnectCable,
         DataConnectionStep.WebUsbFlashingTutorial,
         DataConnectionStep.ManualFlashingTutorial,
@@ -498,12 +494,10 @@ describe("data-connection-machine", () => {
         );
       });
 
-      it("ReconnectFailedTwice -> NativeBluetoothPreConnectTutorial", () => {
-        const result = transition(
-          flow,
-          DataConnectionStep.ReconnectFailedTwice,
-          { type: "next" }
-        );
+      it("StartOver -> NativeBluetoothPreConnectTutorial", () => {
+        const result = transition(flow, DataConnectionStep.StartOver, {
+          type: "next",
+        });
 
         expect(result?.step).toBe(
           DataConnectionStep.NativeBluetoothPreConnectTutorial
@@ -541,7 +535,7 @@ describe("data-connection-machine", () => {
         expect(result?.step).toBe(DataConnectionStep.Start);
       });
 
-      it("NativeBluetoothPreConnectTutorial back -> ReconnectFailedTwice (when hasFailedOnce)", () => {
+      it("NativeBluetoothPreConnectTutorial back -> StartOver (when hasFailedOnce)", () => {
         const result = transition(
           flow,
           DataConnectionStep.NativeBluetoothPreConnectTutorial,
@@ -549,7 +543,7 @@ describe("data-connection-machine", () => {
           { hasFailedOnce: true }
         );
 
-        expect(result?.step).toBe(DataConnectionStep.ReconnectFailedTwice);
+        expect(result?.step).toBe(DataConnectionStep.StartOver);
       });
 
       it("BluetoothPattern back -> NativeBluetoothPreConnectTutorial", () => {
@@ -670,7 +664,7 @@ describe("data-connection-machine", () => {
     describe("close from any step", () => {
       const stepsWithClose = [
         DataConnectionStep.Start,
-        DataConnectionStep.ReconnectFailedTwice,
+        DataConnectionStep.StartOver,
         DataConnectionStep.NativeBluetoothPreConnectTutorial,
         DataConnectionStep.BluetoothPattern,
         DataConnectionStep.ConnectFailed,
@@ -727,12 +721,10 @@ describe("data-connection-machine", () => {
         expect(result?.step).toBe(DataConnectionStep.ConnectCable);
       });
 
-      it("ReconnectFailedTwice -> ConnectCable", () => {
-        const result = transition(
-          flow,
-          DataConnectionStep.ReconnectFailedTwice,
-          { type: "next" }
-        );
+      it("StartOver -> ConnectCable", () => {
+        const result = transition(flow, DataConnectionStep.StartOver, {
+          type: "next",
+        });
 
         expect(result?.step).toBe(DataConnectionStep.ConnectCable);
       });
@@ -778,7 +770,7 @@ describe("data-connection-machine", () => {
         expect(result?.step).toBe(DataConnectionStep.Start);
       });
 
-      it("ConnectCable back -> ReconnectFailedTwice (when hasFailedOnce)", () => {
+      it("ConnectCable back -> StartOver (when hasFailedOnce)", () => {
         const result = transition(
           flow,
           DataConnectionStep.ConnectCable,
@@ -786,7 +778,7 @@ describe("data-connection-machine", () => {
           { hasFailedOnce: true }
         );
 
-        expect(result?.step).toBe(DataConnectionStep.ReconnectFailedTwice);
+        expect(result?.step).toBe(DataConnectionStep.StartOver);
       });
 
       it("WebUsbFlashingTutorial back -> ConnectCable", () => {
@@ -936,10 +928,10 @@ describe("data-connection-machine", () => {
         expect(result).toBeNull();
       });
 
-      it("ReconnectFailedTwice switchFlowType -> goes to Start with setFlowType to WebBluetooth (if supported)", () => {
+      it("StartOver switchFlowType -> goes to Start with setFlowType to WebBluetooth (if supported)", () => {
         const result = transition(
           flow,
-          DataConnectionStep.ReconnectFailedTwice,
+          DataConnectionStep.StartOver,
           { type: "switchFlowType" },
           { isWebBluetoothSupported: true }
         );
@@ -951,10 +943,10 @@ describe("data-connection-machine", () => {
         });
       });
 
-      it("ReconnectFailedTwice switchFlowType -> ignored if WebBluetooth not supported", () => {
+      it("StartOver switchFlowType -> ignored if WebBluetooth not supported", () => {
         const result = transition(
           flow,
-          DataConnectionStep.ReconnectFailedTwice,
+          DataConnectionStep.StartOver,
           { type: "switchFlowType" },
           { isWebBluetoothSupported: false }
         );
@@ -1071,7 +1063,7 @@ describe("data-connection-machine", () => {
     describe("close from any step", () => {
       const stepsWithClose = [
         DataConnectionStep.Start,
-        DataConnectionStep.ReconnectFailedTwice,
+        DataConnectionStep.StartOver,
         DataConnectionStep.ConnectCable,
         DataConnectionStep.WebUsbFlashingTutorial,
         DataConnectionStep.ConnectBattery,
