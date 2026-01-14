@@ -8,7 +8,7 @@ import {
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
 } from "@microbit/microbit-connection";
-import { ConnectResult } from "../connection-service";
+import { DeviceErrorCode } from "../connection-service";
 import {
   DataConnectionType,
   dataConnectionTypeToTransport,
@@ -25,9 +25,9 @@ export type DownloadEvent =
   | { type: "choseSame" }
   | { type: "choseDifferent" }
   | { type: "connectSuccess"; boardVersion: "V1" | "V2" }
-  | { type: "connectFailure"; reason: ConnectResult }
+  | { type: "connectFailure"; errorCode: DeviceErrorCode }
   | { type: "flashSuccess" }
-  | { type: "flashFailure"; reason: ConnectResult };
+  | { type: "flashFailure"; errorCode: DeviceErrorCode };
 
 export type DownloadAction =
   | /**

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { BoardVersion } from "@microbit/microbit-connection";
-import { ConnectResult } from "../connection-service";
+import { DeviceErrorCode } from "../connection-service";
 import {
   DataConnectionStep,
   DataConnectionType,
@@ -38,7 +38,7 @@ export type DataConnectionEvent =
   | { type: "connectSuccess" }
   | {
       type: "connectFailure";
-      reason: ConnectResult;
+      errorCode: DeviceErrorCode;
     }
   | {
       type: "flashSuccess";
@@ -46,7 +46,7 @@ export type DataConnectionEvent =
       deviceId?: number;
       bluetoothMicrobitName?: string;
     }
-  | { type: "flashFailure"; reason: ConnectResult }
+  | { type: "flashFailure"; errorCode: DeviceErrorCode }
   // Device status events - sent directly from the status listener.
   | { type: "deviceConnected" }
   | { type: "deviceDisconnected"; source?: "bridge" | "remote" }
@@ -167,29 +167,25 @@ export const guards = {
   // Browser tab visibility guard
   isTabHidden: (ctx: DataConnectionContext) => !ctx.isBrowserTabVisible,
 
-  // Guards that check event payload
+  // Guards that check event payload for specific error codes
   isBadFirmwareError: (
     _ctx: DataConnectionContext,
     event: DataConnectionEvent
-  ) =>
-    event.type === "connectFailure" &&
-    event.reason === ConnectResult.ErrorBadFirmware,
+  ) => event.type === "connectFailure" && event.errorCode === "update-req",
 
   isNoDeviceSelectedError: (
     _ctx: DataConnectionContext,
     event: DataConnectionEvent
   ) =>
     (event.type === "connectFailure" || event.type === "flashFailure") &&
-    (event as { reason?: ConnectResult }).reason ===
-      ConnectResult.ErrorNoDeviceSelected,
+    event.errorCode === "no-device-selected",
 
   isUnableToClaimError: (
     _ctx: DataConnectionContext,
     event: DataConnectionEvent
   ) =>
     (event.type === "connectFailure" || event.type === "flashFailure") &&
-    (event as { reason?: ConnectResult }).reason ===
-      ConnectResult.ErrorUnableToClaimInterface,
+    event.errorCode === "clear-connect",
 };
 
 // =============================================================================

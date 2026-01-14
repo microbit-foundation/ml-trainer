@@ -17,7 +17,6 @@ import {
   useState,
 } from "react";
 import { ConnectionService } from "./connection-service";
-import { useLogging } from "./logging/logging-hooks";
 
 interface ConnectionServiceContextValue {
   connectionService: ConnectionService;
@@ -40,12 +39,10 @@ export const ConnectionServiceProvider = ({
   radioBridge,
 }: ConnectionServiceProviderProps) => {
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
-  const logging = useLogging();
   const connectionServiceRef = useRef<ConnectionService>();
 
   if (!connectionServiceRef.current) {
     connectionServiceRef.current = new ConnectionService(
-      logging,
       usb,
       bluetooth,
       radioBridge

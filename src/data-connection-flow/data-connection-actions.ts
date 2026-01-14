@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { DeviceError, ProgressStage } from "@microbit/microbit-connection";
+import { ProgressStage } from "@microbit/microbit-connection";
 import { deviceIdToMicrobitName } from "../bt-pattern-utils";
-import { ConnectionService, ConnectResult } from "../connection-service";
+import { ConnectionService, DeviceError } from "../connection-service";
 import {
   DataConnectionAction,
   DataConnectionEvent,
@@ -369,11 +369,10 @@ const performConnect = async (deps: DataConnectionDeps): Promise<void> => {
     connection.setNameFilter(bluetoothMicrobitName);
   }
 
-  const result = await deps.connectionService.connect(connection, {
-    progress: progressCallback,
-  });
-
-  if (result === ConnectResult.Success) {
+  try {
+    await deps.connectionService.connect(connection, {
+      progress: progressCallback,
+    });
     const boardVersion = connection.getBoardVersion();
     // Store board version in context for guard to check
     setDataConnectionState(
@@ -384,8 +383,12 @@ const performConnect = async (deps: DataConnectionDeps): Promise<void> => {
       deps.setConfig
     );
     await sendEvent({ type: "connectSuccess" }, deps);
-  } else {
-    await sendEvent({ type: "connectFailure", reason: result }, deps);
+  } catch (e) {
+    if (e instanceof DeviceError) {
+      await sendEvent({ type: "connectFailure", errorCode: e.code }, deps);
+    } else {
+      throw e;
+    }
   }
 };
 
@@ -397,13 +400,9 @@ const performFlash = async (deps: DataConnectionDeps): Promise<void> => {
   const connection = deps.connectionService.getDefaultFlashConnection();
   const hex = getHexType(state);
 
-  const result = await deps.connectionService.flash(
-    connection,
-    hex,
-    progressCallback
-  );
+  try {
+    await deps.connectionService.flash(connection, hex, progressCallback);
 
-  if (result === ConnectResult.Success) {
     const deviceId = isWebUSBConnection(connection)
       ? connection.getDeviceId()
       : undefined;
@@ -428,8 +427,12 @@ const performFlash = async (deps: DataConnectionDeps): Promise<void> => {
       },
       deps
     );
-  } else {
-    await sendEvent({ type: "flashFailure", reason: result }, deps);
+  } catch (e) {
+    if (e instanceof DeviceError) {
+      await sendEvent({ type: "flashFailure", errorCode: e.code }, deps);
+    } else {
+      throw e;
+    }
   }
 };
 
