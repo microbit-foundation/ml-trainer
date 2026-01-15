@@ -7,11 +7,11 @@ import { expect, Locator, type Page } from "@playwright/test";
 import { MockWebUSBConnection } from "../../device/mockUsb";
 
 export const downloadDialogTitles: {
-  webusb: Record<string, string>;
+  browserDefault: Record<string, string>;
   nativeBluetooth: Record<string, string>;
   radio: Record<string, string>;
 } = {
-  webusb: {
+  browserDefault: {
     help: "Download your machine learning MakeCode project",
     chooseMicrobit: "Which micro:bit do you want to use?",
     connectCable: "Connect USB cable to micro:bit",
@@ -82,29 +82,29 @@ export class DownloadDialogs {
 
   async expectManualFlashingDialog() {
     await expect(
-      this.page.getByText(downloadDialogTitles.webusb.manualFlashing)
+      this.page.getByText(downloadDialogTitles.browserDefault.manualFlashing)
     ).toBeVisible();
   }
 
   async expectHelpDialog() {
     await expect(
-      this.page.getByText(downloadDialogTitles.webusb.help)
+      this.page.getByText(downloadDialogTitles.browserDefault.help)
     ).toBeVisible();
   }
 
   async expectChooseMicrobitDialog() {
     await expect(
-      this.page.getByText(downloadDialogTitles.webusb.chooseMicrobit)
+      this.page.getByText(downloadDialogTitles.browserDefault.chooseMicrobit)
     ).toBeVisible();
   }
 
   async expectDialogClosed() {
     // Verify no download dialog is visible
     await expect(
-      this.page.getByText(downloadDialogTitles.webusb.help)
+      this.page.getByText(downloadDialogTitles.browserDefault.help)
     ).not.toBeVisible();
     await expect(
-      this.page.getByText(downloadDialogTitles.webusb.chooseMicrobit)
+      this.page.getByText(downloadDialogTitles.browserDefault.chooseMicrobit)
     ).not.toBeVisible();
   }
 

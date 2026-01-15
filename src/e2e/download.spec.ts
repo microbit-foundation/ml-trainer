@@ -6,7 +6,7 @@
 import { downloadDialogTitles as dialog } from "./app/download-dialogs";
 import { test } from "./fixtures";
 
-test.describe("webusb download flow", () => {
+test.describe("browser default download flow", () => {
   test.beforeEach(async ({ homePage, newPage, dataSamplesPage }) => {
     await homePage.setupContext();
     await homePage.goto();
@@ -24,11 +24,11 @@ test.describe("webusb download flow", () => {
     const makecodeEditor = await testModelPage.editInMakeCode();
     await makecodeEditor.closeTourDialog();
     const downloadDialogs = await makecodeEditor.clickDownload();
-    await downloadDialogs.waitForText(dialog.webusb.help);
+    await downloadDialogs.waitForText(dialog.browserDefault.help);
     await downloadDialogs.clickNext();
-    await downloadDialogs.waitForText(dialog.webusb.connectCable);
+    await downloadDialogs.waitForText(dialog.browserDefault.connectCable);
     await downloadDialogs.clickNext();
-    await downloadDialogs.waitForText(dialog.webusb.selectMicrobit);
+    await downloadDialogs.waitForText(dialog.browserDefault.selectMicrobit);
     await downloadDialogs.clickNext();
     // With mock device, should complete successfully
     await downloadDialogs.expectDialogClosed();
@@ -40,16 +40,16 @@ test.describe("webusb download flow", () => {
 
     // First download: check "don't show again" and proceed to next step
     let downloadDialogs = await makecodeEditor.clickDownload();
-    await downloadDialogs.waitForText(dialog.webusb.help);
+    await downloadDialogs.waitForText(dialog.browserDefault.help);
     await downloadDialogs.checkDontShowAgain();
     await downloadDialogs.clickNext();
     // Setting is saved when clicking Next, close the connect cable dialog
-    await downloadDialogs.waitForText(dialog.webusb.connectCable);
+    await downloadDialogs.waitForText(dialog.browserDefault.connectCable);
     await downloadDialogs.close();
 
     // Second download: should skip help and go straight to connect cable
     downloadDialogs = await makecodeEditor.clickDownload();
-    await downloadDialogs.waitForText(dialog.webusb.connectCable);
+    await downloadDialogs.waitForText(dialog.browserDefault.connectCable);
     await downloadDialogs.close();
   });
 
@@ -60,11 +60,11 @@ test.describe("webusb download flow", () => {
     await makecodeEditor.closeTourDialog();
     const downloadDialogs = await makecodeEditor.clickDownload();
     await downloadDialogs.mockUsbDeviceNotSelected();
-    await downloadDialogs.waitForText(dialog.webusb.help);
+    await downloadDialogs.waitForText(dialog.browserDefault.help);
     await downloadDialogs.clickNext();
-    await downloadDialogs.waitForText(dialog.webusb.connectCable);
+    await downloadDialogs.waitForText(dialog.browserDefault.connectCable);
     await downloadDialogs.clickNext();
-    await downloadDialogs.waitForText(dialog.webusb.selectMicrobit);
+    await downloadDialogs.waitForText(dialog.browserDefault.selectMicrobit);
     await downloadDialogs.clickNext();
     await downloadDialogs.expectManualFlashingDialog();
   });

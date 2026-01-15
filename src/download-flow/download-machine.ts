@@ -18,7 +18,7 @@ import {
 } from "./download-machine-common";
 import { nativeBluetoothFlow } from "./download-machine-native-bluetooth";
 import { radioFlow } from "./download-machine-radio";
-import { webusbFlow } from "./download-machine-webusb";
+import { browserDefaultFlow } from "./download-machine-browser-default";
 
 // Re-export types for external consumers
 export type {
@@ -27,7 +27,7 @@ export type {
   DownloadFlowContext,
 } from "./download-machine-common";
 
-export type DownloadFlowType = "webusb" | "nativeBluetooth" | "radio";
+export type DownloadFlowType = "browser-default" | "nativeBluetooth" | "radio";
 
 export const getDownloadFlowType = (
   dataConnectionType: DataConnectionType
@@ -36,7 +36,7 @@ export const getDownloadFlowType = (
     return "nativeBluetooth";
   }
   const connectionType = dataConnectionTypeToTransport(dataConnectionType);
-  return connectionType === "radio" ? "radio" : "webusb";
+  return connectionType === "radio" ? "radio" : "browser-default";
 };
 
 const getFlow = (flowType: DownloadFlowType): DownloadFlowDefinition => {
@@ -45,8 +45,8 @@ const getFlow = (flowType: DownloadFlowType): DownloadFlowDefinition => {
       return nativeBluetoothFlow;
     case "radio":
       return radioFlow;
-    case "webusb":
-      return webusbFlow;
+    case "browser-default":
+      return browserDefaultFlow;
   }
 };
 

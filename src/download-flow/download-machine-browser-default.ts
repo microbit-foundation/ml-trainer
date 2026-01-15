@@ -26,7 +26,7 @@ import {
  * For radio data connections, see radioFlow.
  * For native app platforms (iOS/Android), see nativeBluetoothFlow.
  */
-export const webusbFlow: DownloadFlowDefinition = {
+export const browserDefaultFlow: DownloadFlowDefinition = {
   ...globalHandlers,
 
   [DownloadStep.None]: {

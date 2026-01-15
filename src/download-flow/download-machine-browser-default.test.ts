@@ -31,10 +31,10 @@ const transition = (
   event: DownloadEvent,
   context: Partial<DownloadFlowContext> = {}
 ) => {
-  return downloadTransition("webusb", step, event, createContext(context));
+  return downloadTransition("browser-default", step, event, createContext(context));
 };
 
-describe("Download flow: WebUSB", () => {
+describe("Download flow: Browser Default", () => {
   describe("start transitions", () => {
     it("flashes immediately if there is an active USB connection", () => {
       const mockConnection = {
