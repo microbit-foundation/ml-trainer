@@ -5,6 +5,7 @@
  */
 import { BoardVersion } from "@microbit/microbit-connection";
 import {
+  DataConnectionState,
   DataConnectionStep,
   DataConnectionType,
   RadioFlowPhase,
@@ -107,94 +108,58 @@ export type DataConnectionAction =
    */
   | { type: "setDisconnectSource" };
 
-export interface DataConnectionContext {
-  type: DataConnectionType;
-  step: DataConnectionStep;
-  isWebBluetoothSupported: boolean;
-  isWebUsbSupported: boolean;
-  bluetoothMicrobitName?: string;
-  radioRemoteDeviceId?: number;
-  boardVersion?: BoardVersion;
-  /**
-   * True if user connected successfully in this session.
-   */
-  hadSuccessfulConnection: boolean;
-  /**
-   * True if we've already failed once - next failure shows "start over" dialog.
-   */
-  hasFailedOnce: boolean;
-  /**
-   * True when user is restarting the flow from the StartOver state.
-   */
-  isStartingOver: boolean;
-  /**
-   * Browser tab visibility - used to defer error states while user is away.
-   */
-  isBrowserTabVisible: boolean;
-  /**
-   * Tracks disconnect source for error dialogs.
-   */
-  lastDisconnectSource?: "bridge" | "remote";
-  /**
-   * Tracks the current phase within the radio connection flow.
-   */
-  radioFlowPhase?: RadioFlowPhase;
-}
-
 export type DataConnectionFlowDef = FlowDefinition<
   DataConnectionStep,
   DataConnectionEvent,
   DataConnectionAction,
-  DataConnectionContext
+  DataConnectionState
 >;
 
 export type DataConnectionTransition = ConditionalTransition<
   DataConnectionStep,
   DataConnectionAction,
-  DataConnectionContext,
+  DataConnectionState,
   DataConnectionEvent
 >;
 
 export const guards = {
-  isWebBluetoothSupported: (ctx: DataConnectionContext) =>
+  isWebBluetoothSupported: (ctx: DataConnectionState) =>
     ctx.isWebBluetoothSupported,
 
-  isWebUsbSupported: (ctx: DataConnectionContext) => ctx.isWebUsbSupported,
+  isWebUsbSupported: (ctx: DataConnectionState) => ctx.isWebUsbSupported,
 
   // User has connected successfully in this session - can attempt direct reconnection
-  hadSuccessfulConnection: (ctx: DataConnectionContext) =>
+  hadSuccessfulConnection: (ctx: DataConnectionState) =>
     ctx.hadSuccessfulConnection,
 
   // Already failed once - next failure shows "start over" dialog
-  hasFailedOnce: (ctx: DataConnectionContext) => ctx.hasFailedOnce,
+  hasFailedOnce: (ctx: DataConnectionState) => ctx.hasFailedOnce,
 
   // User is restarting the flow from StartOver - back should return there
-  isStartingOver: (ctx: DataConnectionContext) => ctx.isStartingOver,
+  isStartingOver: (ctx: DataConnectionState) => ctx.isStartingOver,
 
-  isV1Board: (ctx: DataConnectionContext) => ctx.boardVersion === "V1",
+  isV1Board: (ctx: DataConnectionState) => ctx.radioRemoteBoardVersion === "V1",
 
   // Radio flow phase guards
   // Remote phase is the default - undefined is treated as remote
-  isInRemotePhase: (ctx: DataConnectionContext) =>
+  isInRemotePhase: (ctx: DataConnectionState) =>
     ctx.radioFlowPhase === "remote" || ctx.radioFlowPhase === undefined,
-  isInBridgePhase: (ctx: DataConnectionContext) =>
+  isInBridgePhase: (ctx: DataConnectionState) =>
     ctx.radioFlowPhase === "bridge",
 
   // Browser supports neither WebBluetooth nor WebUSB
-  hasNoSupportedConnectionMethod: (ctx: DataConnectionContext) =>
+  hasNoSupportedConnectionMethod: (ctx: DataConnectionState) =>
     !ctx.isWebBluetoothSupported && !ctx.isWebUsbSupported,
 
   // Browser tab visibility guard
-  isTabHidden: (ctx: DataConnectionContext) => !ctx.isBrowserTabVisible,
+  isTabHidden: (ctx: DataConnectionState) => !ctx.isBrowserTabVisible,
 
   // Guards that check event payload (using DeviceError codes directly)
-  isBadFirmwareError: (
-    _ctx: DataConnectionContext,
-    event: DataConnectionEvent
-  ) => event.type === "connectFailure" && event.code === "update-req",
+  isBadFirmwareError: (_ctx: DataConnectionState, event: DataConnectionEvent) =>
+    event.type === "connectFailure" && event.code === "update-req",
 
   isNoDeviceSelectedError: (
-    _ctx: DataConnectionContext,
+    _ctx: DataConnectionState,
     event: DataConnectionEvent
   ) => {
     if (event.type === "connectFailure" || event.type === "flashFailure") {
@@ -204,7 +169,7 @@ export const guards = {
   },
 
   isUnableToClaimError: (
-    _ctx: DataConnectionContext,
+    _ctx: DataConnectionState,
     event: DataConnectionEvent
   ) => {
     if (event.type === "connectFailure" || event.type === "flashFailure") {
@@ -332,7 +297,7 @@ export const createConnectedHandlers = () => ({
   deviceDisconnected: [
     // First disconnect: try auto-reconnect
     {
-      guard: (ctx: DataConnectionContext) => !ctx.hasFailedOnce,
+      guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
       target: DataConnectionStep.Connected,
       actions: [
         ...actions.setDisconnectSource,
@@ -349,7 +314,7 @@ export const createConnectedHandlers = () => ({
   // Reconnection failed (e.g., user cancelled device picker). Treat like disconnect.
   connectFailure: [
     {
-      guard: (ctx: DataConnectionContext) => !ctx.hasFailedOnce,
+      guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
       target: DataConnectionStep.Connected,
       actions: actions.firstReconnectAttempt,
     },
@@ -383,7 +348,7 @@ export const createInitialConnectHandlers = (options?: {
   deviceDisconnected: [
     // First attempt failed - show retry dialog
     {
-      guard: (ctx: DataConnectionContext) => !ctx.hasFailedOnce,
+      guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
       target: DataConnectionStep.ConnectFailed,
       actions: [...actions.setDisconnectSource, ...actions.firstConnectFailure],
     },
@@ -398,7 +363,7 @@ export const createInitialConnectHandlers = (options?: {
   connectFailure: [
     ...(options?.connectFailureGuards ?? []),
     {
-      guard: (ctx: DataConnectionContext) => !ctx.hasFailedOnce,
+      guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
       target: DataConnectionStep.ConnectFailed,
       actions: actions.firstConnectFailure,
     },

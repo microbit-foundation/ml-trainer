@@ -5,7 +5,6 @@
  */
 import {
   DataConnectionAction,
-  DataConnectionContext,
   DataConnectionEvent,
   DataConnectionFlowDef,
 } from "./data-connection-machine-common";
@@ -22,7 +21,6 @@ import { transition } from "../state-machine";
 // Re-export types for external consumers
 export type {
   DataConnectionAction,
-  DataConnectionContext,
   DataConnectionEvent,
 } from "./data-connection-machine-common";
 
@@ -47,21 +45,5 @@ export const dataConnectionTransition = (
   event: DataConnectionEvent
 ): DataConnectionTransitionResult | null => {
   const flow = getFlow(state.type);
-  const context: DataConnectionContext = {
-    type: state.type,
-    step: state.step,
-    isWebBluetoothSupported: state.isWebBluetoothSupported,
-    isWebUsbSupported: state.isWebUsbSupported,
-    bluetoothMicrobitName: state.bluetoothMicrobitName,
-    radioRemoteDeviceId: state.radioRemoteDeviceId,
-    boardVersion: state.radioRemoteBoardVersion,
-    hadSuccessfulConnection: state.hadSuccessfulConnection,
-    hasFailedOnce: state.hasFailedOnce,
-    isStartingOver: state.isStartingOver,
-    isBrowserTabVisible: state.isBrowserTabVisible,
-    lastDisconnectSource: state.lastDisconnectSource,
-    radioFlowPhase: state.radioFlowPhase,
-  };
-
-  return transition(flow, state.step, event, context);
+  return transition(flow, state.step, event, state);
 };
