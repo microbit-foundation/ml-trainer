@@ -324,56 +324,6 @@ export const backToStartTransition: DataConnectionTransition[] = [
 ];
 
 /**
- * Create device event handlers for the Connected state.
- */
-export const createConnectedHandlers = () => ({
-  // Connection paused due to tab visibility - stay connected, library will move
-  // out of paused when tab is visible. Only used for USB connections.
-  devicePaused: {
-    target: DataConnectionStep.Connected,
-    actions: actions.reconnecting,
-  },
-  deviceDisconnected: [
-    // First disconnect: try auto-reconnect
-    {
-      guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
-      target: DataConnectionStep.Connected,
-      actions: [
-        ...actions.setDisconnectSource,
-        ...actions.firstReconnectAttempt,
-      ],
-    },
-    // Second disconnect: show connection lost
-    {
-      guard: always,
-      target: DataConnectionStep.ConnectionLost,
-      actions: [...actions.setDisconnectSource, ...actions.connectionLost],
-    },
-  ],
-  // Reconnection failed (e.g., user cancelled device picker). Treat like disconnect.
-  connectFailure: [
-    {
-      guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
-      target: DataConnectionStep.Connected,
-      actions: actions.firstReconnectAttempt,
-    },
-    {
-      guard: always,
-      target: DataConnectionStep.ConnectionLost,
-      actions: actions.connectionLost,
-    },
-  ],
-  deviceReconnecting: {
-    target: DataConnectionStep.Connected,
-    actions: actions.reconnecting,
-  },
-  deviceConnected: {
-    target: DataConnectionStep.Connected,
-    actions: actions.connected,
-  },
-});
-
-/**
  * Create device event handlers for initial connection (BluetoothConnect, ConnectingMicrobits).
  * @param options.connectFailureGuards - Additional guards checked before standard failure handling
  */
@@ -536,7 +486,49 @@ export const webUsbBluetoothUnsupportedState: DataConnectionFlowDef = {
 export const connectedState = {
   [DataConnectionStep.Connected]: {
     on: {
-      ...createConnectedHandlers(),
+      // Connection paused due to tab visibility - stay connected, library will move
+      // out of paused when tab is visible. Only used for USB connections.
+      // Internal transition - no exit/entry.
+      devicePaused: {
+        actions: actions.reconnecting,
+      },
+      deviceDisconnected: [
+        // First disconnect: try auto-reconnect (internal transition)
+        {
+          guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
+          actions: [
+            ...actions.setDisconnectSource,
+            ...actions.firstReconnectAttempt,
+          ],
+        },
+        // Second disconnect: show connection lost
+        {
+          guard: always,
+          target: DataConnectionStep.ConnectionLost,
+          actions: [...actions.setDisconnectSource, ...actions.connectionLost],
+        },
+      ],
+      // Reconnection failed (e.g., user cancelled device picker). Treat like disconnect.
+      connectFailure: [
+        // First failure: try again (internal transition)
+        {
+          guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
+          actions: actions.firstReconnectAttempt,
+        },
+        {
+          guard: always,
+          target: DataConnectionStep.ConnectionLost,
+          actions: actions.connectionLost,
+        },
+      ],
+      // Internal transition - no exit/entry.
+      deviceReconnecting: {
+        actions: actions.reconnecting,
+      },
+      // Internal transition - no exit/entry.
+      deviceConnected: {
+        actions: actions.connected,
+      },
     },
   },
 };
