@@ -4,7 +4,13 @@
 
 Run `npm run format` to format code with Prettier.
 
-When documenting properties use the /\*_ ... _/ style of documentation comment.
+When documenting properties/fields use the following style of comment:
+
+```typescript
+/**
+ * Example comment text.
+ */
+```
 
 ## Internationalization (i18n)
 
