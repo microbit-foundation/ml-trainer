@@ -130,21 +130,30 @@ export type DataConnectionTransition = ConditionalTransition<
 // =============================================================================
 
 export const guards = {
-  // User has connected successfully in this session - can attempt direct reconnection
+  /**
+   * User has connected successfully in this session - can attempt direct reconnection.
+   */
   hadSuccessfulConnection: (ctx: DataConnectionState) =>
     ctx.hadSuccessfulConnection,
 
-  // Already failed once - next failure shows "start over" dialog
+  /**
+   * Already failed once - next failure shows "start over" dialog.
+   */
   hasFailedOnce: (ctx: DataConnectionState) => ctx.hasFailedOnce,
 
-  // User is restarting the flow from StartOver - back should return there
+  /**
+   * User is restarting the flow from StartOver - back should return there.
+   */
   isStartingOver: (ctx: DataConnectionState) => ctx.isStartingOver,
 
   isV1Board: (_ctx: DataConnectionState, event: DataConnectionEvent) =>
     event.type === "connectSuccess" && event.boardVersion === "V1",
 
   // Radio flow phase guards
-  // Remote phase is the default - undefined is treated as remote
+
+  /**
+   * Remote phase is the default - undefined is treated as remote.
+   */
   isInRemotePhase: (ctx: DataConnectionState) =>
     ctx.radioFlowPhase === "remote" || ctx.radioFlowPhase === undefined,
   isInBridgePhase: (ctx: DataConnectionState) =>
@@ -172,7 +181,9 @@ export const guards = {
 
   // ==========================================================================
 
-  // Browser tab visibility guard
+  /**
+   * Browser tab visibility guard.
+   */
   isTabHidden: (ctx: DataConnectionState) => !ctx.isBrowserTabVisible,
 
   // Guards that check event payload (using DeviceError codes directly)
@@ -211,33 +222,47 @@ const connectedActions: DataConnectionAction[] = [
 ];
 
 export const actions = {
-  // Set reconnecting flag
+  /**
+   * Set reconnecting flag.
+   */
   reconnecting: [{ type: "setReconnecting", value: true }],
 
-  // First auto-reconnect attempt
+  /**
+   * First auto-reconnect attempt.
+   */
   firstReconnectAttempt: [
     { type: "setHasFailedOnce", value: true },
     { type: "setReconnecting", value: true },
     { type: "reconnect" },
   ],
 
-  // Successfully reconnected/connected
+  /**
+   * Successfully reconnected/connected.
+   */
   connected: connectedActions,
 
-  // Connection lost after retry - preserve hasFailedOnce so user-initiated
-  // reconnect failure goes to StartOver
+  /**
+   * Connection lost after retry - preserve hasFailedOnce so user-initiated
+   * reconnect failure goes to StartOver.
+   */
   connectionLost: [{ type: "setReconnecting", value: false }],
 
-  // Initial connect success (first time connecting)
+  /**
+   * Initial connect success (first time connecting).
+   */
   initialConnectSuccess: [{ type: "notifyConnected" }, ...connectedActions],
 
-  // First connection attempt failed
+  /**
+   * First connection attempt failed.
+   */
   firstConnectFailure: [
     { type: "setHasFailedOnce", value: true },
     { type: "setReconnecting", value: false },
   ],
 
-  // Reset flow state
+  /**
+   * Reset flow state.
+   */
   reset: [{ type: "reset" }],
 
   // Flow type switching
@@ -259,7 +284,9 @@ export const actions = {
   setRemotePhase: [{ type: "setRadioFlowPhase", phase: "remote" }],
   setBridgePhase: [{ type: "setRadioFlowPhase", phase: "bridge" }],
 
-  // Track disconnect source for error dialogs
+  /**
+   * Track disconnect source for error dialogs.
+   */
   setDisconnectSource: [{ type: "setDisconnectSource" }],
 } satisfies Record<string, DataConnectionAction[]>;
 
@@ -395,7 +422,9 @@ export const createInitialConnectHandlers = (options?: {
       actions: [...actions.setDisconnectSource, ...actions.reset],
     },
   ],
-  // Connection action failed (e.g., user cancelled device picker)
+  /**
+   * Connection action failed (e.g., user cancelled device picker).
+   */
   connectFailure: [
     ...(options?.connectFailureGuards ?? []),
     {
@@ -512,14 +541,16 @@ export const webUsbBluetoothUnsupportedState: DataConnectionFlowDef = {
 export const connectedState = {
   [DataConnectionStep.Connected]: {
     on: {
-      // Connection paused due to tab visibility - stay connected, library will move
-      // out of paused when tab is visible. Only used for USB connections.
-      // Internal transition - no exit/entry.
+      /**
+       * Connection paused due to tab visibility - stay connected, library will move
+       * out of paused when tab is visible. Only used for USB connections.
+       * Internal transition - no exit/entry.
+       */
       devicePaused: {
         actions: actions.reconnecting,
       },
       deviceDisconnected: [
-        // First disconnect: try auto-reconnect (internal transition)
+        // First disconnect: try auto-reconnect
         {
           guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
           actions: [
@@ -534,9 +565,11 @@ export const connectedState = {
           actions: [...actions.setDisconnectSource, ...actions.connectionLost],
         },
       ],
-      // Reconnection failed (e.g., user cancelled device picker). Treat like disconnect.
+      /**
+       * Reconnection failed (e.g., user cancelled device picker). Treat like disconnect.
+       */
       connectFailure: [
-        // First failure: try again (internal transition)
+        // First failure: try again
         {
           guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
           actions: actions.firstReconnectAttempt,
@@ -547,11 +580,9 @@ export const connectedState = {
           actions: actions.connectionLost,
         },
       ],
-      // Internal transition - no exit/entry.
       deviceReconnecting: {
         actions: actions.reconnecting,
       },
-      // Internal transition - no exit/entry.
       deviceConnected: {
         actions: actions.connected,
       },
