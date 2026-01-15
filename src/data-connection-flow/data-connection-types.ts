@@ -97,11 +97,9 @@ export interface DataConnectionState {
   isWebUsbSupported: boolean;
 
   // Connection state.
-  bluetoothDeviceId?: number;
   bluetoothMicrobitName?: string;
   radioBridgeDeviceId?: number;
   radioRemoteDeviceId?: number;
-  radioRemoteBoardVersion?: BoardVersion;
 
   /**
    * True if user connected successfully in this session.

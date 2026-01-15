@@ -809,12 +809,10 @@ describe("data-connection-machine", () => {
       });
 
       it("connectSuccess (V1 board) -> MicrobitUnsupported", () => {
-        const result = transition(
-          flow,
-          DataConnectionStep.FlashingInProgress,
-          { type: "connectSuccess" },
-          { radioRemoteBoardVersion: "V1" }
-        );
+        const result = transition(flow, DataConnectionStep.FlashingInProgress, {
+          type: "connectSuccess",
+          boardVersion: "V1",
+        });
 
         expect(result?.step).toBe(DataConnectionStep.MicrobitUnsupported);
       });
@@ -866,7 +864,6 @@ describe("data-connection-machine", () => {
         expect(result?.actions).toContainEqual({
           type: "setRadioRemoteDeviceId",
         });
-        expect(result?.actions).toContainEqual({ type: "setBoardVersion" });
       });
 
       it("flashFailure with no device selected -> TryAgainWebUsbSelectMicrobit", () => {

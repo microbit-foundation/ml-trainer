@@ -36,7 +36,7 @@ export type DataConnectionEvent =
    */
   | { type: "startBluetoothFlow" }
   | { type: "setMicrobitName"; name: string }
-  | { type: "connectSuccess" }
+  | { type: "connectSuccess"; boardVersion?: BoardVersion }
   | {
       type: "connectFailure";
       /** DeviceError code if the failure was due to a DeviceError. */
@@ -76,7 +76,6 @@ export type DataConnectionAction =
   | { type: "setBluetoothName"; name?: string }
   | { type: "setRadioRemoteDeviceId"; deviceId?: number }
   | { type: "setRadioBridgeDeviceId"; deviceId?: number }
-  | { type: "setBoardVersion"; version?: BoardVersion }
   /**
    * Sets flow type and capabilities for fresh connection.
    */
@@ -133,7 +132,8 @@ export const guards = {
   // User is restarting the flow from StartOver - back should return there
   isStartingOver: (ctx: DataConnectionState) => ctx.isStartingOver,
 
-  isV1Board: (ctx: DataConnectionState) => ctx.radioRemoteBoardVersion === "V1",
+  isV1Board: (_ctx: DataConnectionState, event: DataConnectionEvent) =>
+    event.type === "connectSuccess" && event.boardVersion === "V1",
 
   // Radio flow phase guards
   // Remote phase is the default - undefined is treated as remote

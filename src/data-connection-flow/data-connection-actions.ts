@@ -238,18 +238,6 @@ const executeAction = async (
       }
       break;
 
-    case "setBoardVersion":
-      if (event.type === "flashSuccess" && event.boardVersion) {
-        setDataConnectionState(
-          {
-            ...getDataConnectionState(),
-            radioRemoteBoardVersion: event.boardVersion,
-          },
-          deps.setConfig
-        );
-      }
-      break;
-
     case "connect":
       await performConnect(deps);
       break;
@@ -373,7 +361,8 @@ const performConnect = async (deps: DataConnectionDeps): Promise<void> => {
     await deps.connectionService.connect(connection, {
       progress: progressCallback,
     });
-    await sendEvent({ type: "connectSuccess" }, deps);
+    const boardVersion = connection.getBoardVersion();
+    await sendEvent({ type: "connectSuccess", boardVersion }, deps);
   } catch (e) {
     if (e instanceof DeviceError) {
       await sendEvent({ type: "connectFailure", code: e.code }, deps);
