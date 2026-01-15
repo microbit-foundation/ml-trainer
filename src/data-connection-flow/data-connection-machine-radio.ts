@@ -218,7 +218,7 @@ export const radioFlow: DataConnectionFlowDef = {
     on: {
       startBluetoothFlow: [
         {
-          guard: guards.isWebBluetoothSupported,
+          guard: guards.isWebBluetoothFlowSupported,
           target: DataConnectionStep.Start,
           actions: [
             {

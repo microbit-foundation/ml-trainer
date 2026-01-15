@@ -15,6 +15,7 @@ import {
   ConditionalTransition,
   FlowDefinition,
 } from "../state-machine";
+import { isNativePlatform } from "../platform";
 
 export type DataConnectionEvent =
   | /**
@@ -123,11 +124,6 @@ export type DataConnectionTransition = ConditionalTransition<
 >;
 
 export const guards = {
-  isWebBluetoothSupported: (ctx: DataConnectionState) =>
-    ctx.isWebBluetoothSupported,
-
-  isWebUsbSupported: (ctx: DataConnectionState) => ctx.isWebUsbSupported,
-
   // User has connected successfully in this session - can attempt direct reconnection
   hadSuccessfulConnection: (ctx: DataConnectionState) =>
     ctx.hadSuccessfulConnection,
@@ -147,9 +143,27 @@ export const guards = {
   isInBridgePhase: (ctx: DataConnectionState) =>
     ctx.radioFlowPhase === "bridge",
 
-  // Browser supports neither WebBluetooth nor WebUSB
-  hasNoSupportedConnectionMethod: (ctx: DataConnectionState) =>
-    !ctx.isWebBluetoothSupported && !ctx.isWebUsbSupported,
+  // ==========================================================================
+  // Flow support guards - which connection flows are available
+  // ==========================================================================
+
+  /** WebBluetooth flow requires browser WebBluetooth API support. */
+  isWebBluetoothFlowSupported: (ctx: DataConnectionState) =>
+    ctx.isWebBluetoothSupported,
+
+  /** Radio flow requires WebUSB for flashing the micro:bits. */
+  isRadioFlowSupported: (ctx: DataConnectionState) => ctx.isWebUsbSupported,
+
+  /** Native Bluetooth flow is available on iOS/Android apps. */
+  isNativeBluetoothFlowSupported: () => isNativePlatform(),
+
+  /** No connection flow is available - show unsupported browser message. */
+  hasNoSupportedFlow: (ctx: DataConnectionState) =>
+    !ctx.isWebBluetoothSupported &&
+    !ctx.isWebUsbSupported &&
+    !isNativePlatform(),
+
+  // ==========================================================================
 
   // Browser tab visibility guard
   isTabHidden: (ctx: DataConnectionState) => !ctx.isBrowserTabVisible,
@@ -256,7 +270,7 @@ export const actions = {
  * Browser unsupported transition - used by WebBluetooth and Radio flows.
  */
 export const idleBrowserUnsupported = {
-  guard: guards.hasNoSupportedConnectionMethod,
+  guard: guards.hasNoSupportedFlow,
   target: DataConnectionStep.WebUsbBluetoothUnsupported,
 };
 
@@ -462,7 +476,7 @@ export const switchToRadio = {
 export const switchToWebBluetooth = {
   switchFlowType: [
     {
-      guard: guards.isWebBluetoothSupported,
+      guard: guards.isWebBluetoothFlowSupported,
       target: DataConnectionStep.Start,
       actions: actions.switchToWebBluetooth,
     },
