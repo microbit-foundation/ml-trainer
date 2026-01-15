@@ -171,7 +171,7 @@ const performConnect = async (deps: DownloadDependencies): Promise<void> => {
     await sendEvent(
       {
         type: "connectSuccess",
-        boardVersion: boardVersion === "V1" ? "V1" : "V2",
+        boardVersion: boardVersion ?? "V2",
       },
       deps
     );

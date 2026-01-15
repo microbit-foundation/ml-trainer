@@ -76,7 +76,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
         {
           guard: always,
           target: DataConnectionStep.ManualFlashingTutorial,
-          actions: [{ type: "downloadHex" }],
+          actions: [{ type: "downloadHexFile" }],
         },
       ],
       flashSuccess: {
@@ -88,7 +88,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
       },
       flashFailure: {
         target: DataConnectionStep.ManualFlashingTutorial,
-        actions: [{ type: "downloadHex" }],
+        actions: [{ type: "downloadHexFile" }],
       },
     },
   },

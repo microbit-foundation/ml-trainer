@@ -256,14 +256,14 @@ describe("data-connection-machine", () => {
         expect(result?.step).toBe(DataConnectionStep.BadFirmware);
       });
 
-      it("connectFailure (other) -> ManualFlashingTutorial with downloadHex", () => {
+      it("connectFailure (other) -> ManualFlashingTutorial with downloadHexFile", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "connectFailure",
           code: "unknown-error",
         });
 
         expect(result?.step).toBe(DataConnectionStep.ManualFlashingTutorial);
-        expect(result?.actions).toContainEqual({ type: "downloadHex" });
+        expect(result?.actions).toContainEqual({ type: "downloadHexFile" });
       });
 
       it("flashSuccess -> ConnectBattery with bluetooth name/id actions", () => {
@@ -278,14 +278,14 @@ describe("data-connection-machine", () => {
         });
       });
 
-      it("flashFailure -> ManualFlashingTutorial with downloadHex", () => {
+      it("flashFailure -> ManualFlashingTutorial with downloadHexFile", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "flashFailure",
           code: "unknown-error",
         });
 
         expect(result?.step).toBe(DataConnectionStep.ManualFlashingTutorial);
-        expect(result?.actions).toContainEqual({ type: "downloadHex" });
+        expect(result?.actions).toContainEqual({ type: "downloadHexFile" });
       });
     });
 

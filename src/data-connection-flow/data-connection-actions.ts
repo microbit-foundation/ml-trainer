@@ -274,7 +274,7 @@ const executeAction = async (
       await performConnectMicrobits(deps);
       break;
 
-    case "downloadHex":
+    case "downloadHexFile":
       downloadHex(bluetoothUniversalHex);
       break;
 

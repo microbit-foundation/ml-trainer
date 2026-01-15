@@ -86,7 +86,7 @@ export type DataConnectionAction =
   | { type: "flash" }
   | { type: "connectBluetooth"; clearDevice: boolean }
   | { type: "connectMicrobits" }
-  | { type: "downloadHex" }
+  | { type: "downloadHexFile" }
   | { type: "notifyConnected" }
   // Reconnect tracking actions.
   | { type: "setHasFailedOnce"; value: boolean }
