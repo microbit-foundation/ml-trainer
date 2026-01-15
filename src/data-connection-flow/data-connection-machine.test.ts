@@ -582,7 +582,7 @@ describe("data-connection-machine", () => {
         expect(result?.step).toBe(DataConnectionStep.BluetoothConnect);
         expect(result?.actions).toContainEqual({
           type: "connectBluetooth",
-          clearDevice: true,
+          clearDevice: false,
         });
       });
 
