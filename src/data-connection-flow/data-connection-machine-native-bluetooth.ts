@@ -75,7 +75,7 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
       },
       flashSuccess: {
         target: DataConnectionStep.BluetoothConnect,
-        actions: [{ type: "connectBluetooth", clearDevice: true }],
+        actions: [{ type: "connectBluetooth", clearDevice: false }],
       },
       flashFailure: {
         target: DataConnectionStep.ConnectFailed,
