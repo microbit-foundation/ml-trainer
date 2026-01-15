@@ -13,6 +13,19 @@ import {
   manualFlashingTutorialState,
 } from "./download-machine-common";
 
+/**
+ * The default download flow for browser platforms.
+ *
+ * Used when:
+ *
+ * - The user has a Web Bluetooth data connection and wants to update the hex
+ *   (we'll use Web USB with fallback to DnD as we cannot flash over Bluetooth).
+ *
+ * - The user has no data connection yet (e.g., skipping straight to MakeCode)
+ *
+ * For radio data connections, see radioFlow.
+ * For native app platforms (iOS/Android), see nativeBluetoothFlow.
+ */
 export const webusbFlow: DownloadFlowDefinition = {
   ...globalHandlers,
 
