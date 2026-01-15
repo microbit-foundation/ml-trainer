@@ -133,8 +133,8 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
 
   // Error/recovery states
   [DataConnectionStep.StartOver]: {
+    entry: [{ type: "setIsStartingOver", value: true }],
     on: {
-      connect: { target: DataConnectionStep.ConnectCable },
       next: { target: DataConnectionStep.ConnectCable },
       ...switchToRadio,
     },

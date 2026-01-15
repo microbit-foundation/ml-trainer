@@ -13,6 +13,8 @@ import {
   globalHandlers,
   guards,
   idleBrowserUnsupported,
+  idleFreshStart,
+  idleRadioReconnect,
   switchToWebBluetooth,
   webUsbBluetoothUnsupportedState,
   webUsbFlashingTutorialState,
@@ -30,31 +32,7 @@ export const radioFlow: DataConnectionFlowDef = {
   // Entry point
   [DataConnectionStep.Idle]: {
     on: {
-      connect: [
-        idleBrowserUnsupported,
-        // If previously connected, attempt direct reconnection
-        {
-          guard: guards.hadSuccessfulConnection,
-          target: DataConnectionStep.ConnectingMicrobits,
-          actions: [
-            { type: "addStatusListener" },
-            { type: "setHasFailedOnce", value: false },
-            { type: "setIsStartingOver", value: false },
-            { type: "setReconnecting", value: true },
-            { type: "connectMicrobits" },
-          ],
-        },
-        // Fresh connection - start from beginning
-        {
-          guard: always,
-          target: DataConnectionStep.Start,
-          actions: [
-            { type: "addStatusListener" },
-            ...actions.reset,
-            ...actions.setRemotePhase,
-          ],
-        },
-      ],
+      connect: [idleBrowserUnsupported, idleRadioReconnect, idleFreshStart],
     },
   },
 
@@ -62,6 +40,7 @@ export const radioFlow: DataConnectionFlowDef = {
   //           → ConnectBattery → ConnectCable → WebUsbFlashingTutorial → FlashingInProgress
   //           → ConnectingMicrobits → Connected
   [DataConnectionStep.Start]: {
+    entry: actions.setRemotePhase,
     on: {
       next: { target: DataConnectionStep.ConnectCable },
       ...switchToWebBluetooth,
@@ -180,7 +159,7 @@ export const radioFlow: DataConnectionFlowDef = {
     on: {
       connect: {
         target: DataConnectionStep.Start,
-        actions: [...actions.reset, ...actions.setRemotePhase],
+        actions: actions.reset,
       },
       ...createConnectedHandlers(),
     },
@@ -188,15 +167,12 @@ export const radioFlow: DataConnectionFlowDef = {
 
   // Error/recovery states
   [DataConnectionStep.StartOver]: {
+    entry: [
+      { type: "setIsStartingOver", value: true },
+      ...actions.setRemotePhase,
+    ],
     on: {
-      connect: {
-        target: DataConnectionStep.ConnectCable,
-        actions: actions.setRemotePhase,
-      },
-      next: {
-        target: DataConnectionStep.ConnectCable,
-        actions: actions.setRemotePhase,
-      },
+      next: { target: DataConnectionStep.ConnectCable },
       ...switchToWebBluetooth,
     },
   },

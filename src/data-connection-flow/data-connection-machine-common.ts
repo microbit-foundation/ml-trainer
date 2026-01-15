@@ -231,10 +231,6 @@ export const actions = {
     { type: "setReconnecting", value: false },
   ],
 
-  // Failed twice - show start over dialog, reset state for fresh start
-  // Note: reset sets isStartingOver=false, then we override to true
-  failedTwice: [{ type: "reset" }, { type: "setIsStartingOver", value: true }],
-
   // Reset flow state
   reset: [{ type: "reset" }],
 
@@ -289,7 +285,22 @@ export const idleBluetoothReconnect = {
 } satisfies DataConnectionTransition;
 
 /**
- * Fresh start transition - used by WebBluetooth and NativeBluetooth flows.
+ * Radio reconnect transition - used by Radio flow.
+ */
+export const idleRadioReconnect = {
+  guard: guards.hadSuccessfulConnection,
+  target: DataConnectionStep.ConnectingMicrobits,
+  actions: [
+    { type: "addStatusListener" },
+    { type: "setHasFailedOnce", value: false },
+    { type: "setIsStartingOver", value: false },
+    { type: "setReconnecting", value: true },
+    { type: "connectMicrobits" },
+  ],
+} satisfies DataConnectionTransition;
+
+/**
+ * Fresh start transition - used by all flows.
  */
 export const idleFreshStart = {
   guard: always,
@@ -384,7 +395,7 @@ export const createInitialConnectHandlers = (options?: {
     {
       guard: always,
       target: DataConnectionStep.StartOver,
-      actions: [...actions.setDisconnectSource, ...actions.failedTwice],
+      actions: [...actions.setDisconnectSource, ...actions.reset],
     },
   ],
   // Connection action failed (e.g., user cancelled device picker)
@@ -398,7 +409,7 @@ export const createInitialConnectHandlers = (options?: {
     {
       guard: always,
       target: DataConnectionStep.StartOver,
-      actions: actions.failedTwice,
+      actions: actions.reset,
     },
   ],
 });
@@ -419,13 +430,11 @@ export const createRecoveryStates = (
   return {
     [DataConnectionStep.ConnectFailed]: {
       on: {
-        connect: { target: reconnectTarget, actions: reconnectActions },
         next: { target: reconnectTarget, actions: reconnectActions },
       },
     },
     [DataConnectionStep.ConnectionLost]: {
       on: {
-        connect: { target: reconnectTarget, actions: reconnectActions },
         next: { target: reconnectTarget, actions: reconnectActions },
       },
     },

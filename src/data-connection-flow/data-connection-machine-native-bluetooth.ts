@@ -82,8 +82,8 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
 
   // Error/recovery states
   [DataConnectionStep.StartOver]: {
+    entry: [{ type: "setIsStartingOver", value: true }],
     on: {
-      connect: { target: DataConnectionStep.NativeBluetoothPreConnectTutorial },
       next: { target: DataConnectionStep.NativeBluetoothPreConnectTutorial },
     },
   },
