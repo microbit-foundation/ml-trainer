@@ -6,7 +6,7 @@
 import {
   actions,
   badFirmwareState,
-  createConnectedHandlers,
+  connectedState,
   createInitialConnectHandlers,
   createRecoveryStates,
   DataConnectionFlowDef,
@@ -155,15 +155,7 @@ export const radioFlow: DataConnectionFlowDef = {
   },
 
   // Success state
-  [DataConnectionStep.Connected]: {
-    on: {
-      connect: {
-        target: DataConnectionStep.Start,
-        actions: actions.reset,
-      },
-      ...createConnectedHandlers(),
-    },
-  },
+  ...connectedState,
 
   // Error/recovery states
   [DataConnectionStep.StartOver]: {

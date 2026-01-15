@@ -531,16 +531,11 @@ export const webUsbBluetoothUnsupportedState: DataConnectionFlowDef = {
 };
 
 /**
- * Connected state shared by WebBluetooth and NativeBluetooth flows.
- * Radio flow needs additional setRemotePhase action.
+ * Connected state shared by all flows.
  */
 export const connectedState = {
   [DataConnectionStep.Connected]: {
     on: {
-      connect: {
-        target: DataConnectionStep.Start,
-        actions: actions.reset,
-      },
       ...createConnectedHandlers(),
     },
   },
