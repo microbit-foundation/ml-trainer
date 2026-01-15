@@ -101,7 +101,7 @@ export const radioFlow: DataConnectionFlowDef = {
       connectSuccess: [
         // V1 board check only applies in remote phase (first flash)
         {
-          guard: (ctx) => !guards.isInBridgePhase(ctx) && guards.isV1Board(ctx),
+          guard: (ctx) => guards.isInRemotePhase(ctx) && guards.isV1Board(ctx),
           target: DataConnectionStep.MicrobitUnsupported,
         },
         {
@@ -131,7 +131,7 @@ export const radioFlow: DataConnectionFlowDef = {
       flashSuccess: [
         // Remote phase: go to ConnectBattery
         {
-          guard: (ctx) => !guards.isInBridgePhase(ctx),
+          guard: guards.isInRemotePhase,
           target: DataConnectionStep.ConnectBattery,
           actions: [
             { type: "setRadioRemoteDeviceId" },

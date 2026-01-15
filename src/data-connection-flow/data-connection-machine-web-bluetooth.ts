@@ -4,13 +4,11 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  actions,
   badFirmwareState,
   connectedState,
   createInitialConnectHandlers,
   createRecoveryStates,
   createTryAgainState,
-  DataConnectionContext,
   DataConnectionFlowDef,
   globalHandlers,
   guards,
@@ -132,24 +130,14 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
 
   [DataConnectionStep.BluetoothConnect]: {
     on: {
-      ...createInitialConnectHandlers(),
-      connectFailure: [
-        {
-          guard: guards.isNoDeviceSelectedError,
-          target: DataConnectionStep.TryAgainBluetoothSelectMicrobit,
-        },
-        // Fallback for other errors
-        {
-          guard: (ctx: DataConnectionContext) => !ctx.hasFailedOnce,
-          target: DataConnectionStep.ConnectFailed,
-          actions: actions.firstConnectFailure,
-        },
-        {
-          guard: always,
-          target: DataConnectionStep.StartOver,
-          actions: actions.failedTwice,
-        },
-      ],
+      ...createInitialConnectHandlers({
+        connectFailureGuards: [
+          {
+            guard: guards.isNoDeviceSelectedError,
+            target: DataConnectionStep.TryAgainBluetoothSelectMicrobit,
+          },
+        ],
+      }),
     },
   },
 

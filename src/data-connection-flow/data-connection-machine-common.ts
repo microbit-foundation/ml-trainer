@@ -174,6 +174,9 @@ export const guards = {
   isV1Board: (ctx: DataConnectionContext) => ctx.boardVersion === "V1",
 
   // Radio flow phase guards
+  // Remote phase is the default - undefined is treated as remote
+  isInRemotePhase: (ctx: DataConnectionContext) =>
+    ctx.radioFlowPhase === "remote" || ctx.radioFlowPhase === undefined,
   isInBridgePhase: (ctx: DataConnectionContext) =>
     ctx.radioFlowPhase === "bridge",
 
@@ -216,6 +219,13 @@ export const guards = {
 // =============================================================================
 
 // Reusable action arrays for common patterns
+
+// Successfully reconnected/connected - defined first so it can be reused
+const connectedActions: DataConnectionAction[] = [
+  { type: "setHasFailedOnce", value: false },
+  { type: "setConnected" },
+];
+
 export const actions = {
   // Set reconnecting flag
   reconnecting: [{ type: "setReconnecting", value: true }],
@@ -228,21 +238,14 @@ export const actions = {
   ],
 
   // Successfully reconnected/connected
-  connected: [
-    { type: "setHasFailedOnce", value: false },
-    { type: "setConnected" },
-  ],
+  connected: connectedActions,
 
   // Connection lost after retry - preserve hasFailedOnce so user-initiated
   // reconnect failure goes to StartOver
   connectionLost: [{ type: "setReconnecting", value: false }],
 
   // Initial connect success (first time connecting)
-  initialConnectSuccess: [
-    { type: "notifyConnected" },
-    { type: "setHasFailedOnce", value: false },
-    { type: "setConnected" },
-  ],
+  initialConnectSuccess: [{ type: "notifyConnected" }, ...connectedActions],
 
   // First connection attempt failed
   firstConnectFailure: [
@@ -251,11 +254,8 @@ export const actions = {
   ],
 
   // Failed twice - show start over dialog, reset state for fresh start
-  failedTwice: [
-    { type: "setReconnecting", value: false },
-    { type: "reset" },
-    { type: "setIsStartingOver", value: true },
-  ],
+  // Note: reset sets isStartingOver=false, then we override to true
+  failedTwice: [{ type: "reset" }, { type: "setIsStartingOver", value: true }],
 
   // Reset flow state
   reset: [{ type: "reset" }],
@@ -371,8 +371,11 @@ export const createConnectedHandlers = () => ({
 
 /**
  * Create device event handlers for initial connection (BluetoothConnect, ConnectingMicrobits).
+ * @param options.connectFailureGuards - Additional guards checked before standard failure handling
  */
-export const createInitialConnectHandlers = () => ({
+export const createInitialConnectHandlers = (options?: {
+  connectFailureGuards?: DataConnectionTransition[];
+}) => ({
   deviceConnected: {
     target: DataConnectionStep.Connected,
     actions: actions.initialConnectSuccess,
@@ -393,6 +396,7 @@ export const createInitialConnectHandlers = () => ({
   ],
   // Connection action failed (e.g., user cancelled device picker)
   connectFailure: [
+    ...(options?.connectFailureGuards ?? []),
     {
       guard: (ctx: DataConnectionContext) => !ctx.hasFailedOnce,
       target: DataConnectionStep.ConnectFailed,
