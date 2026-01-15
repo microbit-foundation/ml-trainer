@@ -17,6 +17,10 @@ import {
 } from "../state-machine";
 import { isNativePlatform } from "../platform";
 
+// =============================================================================
+// Types
+// =============================================================================
+
 export type DataConnectionEvent =
   | /**
    * User wants to connect - state machine decides fresh vs reconnect.
@@ -121,6 +125,10 @@ export type DataConnectionTransition = ConditionalTransition<
   DataConnectionEvent
 >;
 
+// =============================================================================
+// Guards
+// =============================================================================
+
 export const guards = {
   // User has connected successfully in this session - can attempt direct reconnection
   hadSuccessfulConnection: (ctx: DataConnectionState) =>
@@ -193,10 +201,8 @@ export const guards = {
 };
 
 // =============================================================================
-// Shared state configurations
+// Reusable action arrays
 // =============================================================================
-
-// Reusable action arrays for common patterns
 
 // Successfully reconnected/connected - defined first so it can be reused
 const connectedActions: DataConnectionAction[] = [
@@ -258,8 +264,12 @@ export const actions = {
 } satisfies Record<string, DataConnectionAction[]>;
 
 // =============================================================================
-// Shared Idle state transitions
+// Shared transition helpers
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Idle state transitions
+// -----------------------------------------------------------------------------
 
 /**
  * Browser unsupported transition - used by WebBluetooth and Radio flows.
@@ -308,6 +318,10 @@ export const idleFreshStart = {
   actions: [{ type: "addStatusListener" }, ...actions.reset],
 } satisfies DataConnectionTransition;
 
+// -----------------------------------------------------------------------------
+// Back navigation
+// -----------------------------------------------------------------------------
+
 /**
  * Back navigation to Start or StartOver depending on isStartingOver flag.
  * Used by WebBluetooth and NativeBluetooth flows.
@@ -322,6 +336,39 @@ export const backToStartTransition: DataConnectionTransition[] = [
     target: DataConnectionStep.Start,
   },
 ];
+
+// -----------------------------------------------------------------------------
+// Flow type switching
+// -----------------------------------------------------------------------------
+
+/**
+ * switchFlowType handler for bluetooth flow (switches to radio).
+ * Always goes to Start to show the new flow's requirements.
+ */
+export const switchToRadio = {
+  switchFlowType: {
+    target: DataConnectionStep.Start,
+    actions: actions.switchToRadio,
+  },
+};
+
+/**
+ * switchFlowType handler for radio flow (switches to webBluetooth if supported).
+ * Always goes to Start to show the new flow's requirements.
+ */
+export const switchToWebBluetooth = {
+  switchFlowType: [
+    {
+      guard: guards.isWebBluetoothFlowSupported,
+      target: DataConnectionStep.Start,
+      actions: actions.switchToWebBluetooth,
+    },
+  ],
+};
+
+// =============================================================================
+// Factory functions
+// =============================================================================
 
 /**
  * Create device event handlers for initial connection (BluetoothConnect, ConnectingMicrobits).
@@ -405,8 +452,12 @@ export const createTryAgainState = (
   },
 });
 
+// =============================================================================
+// Shared states
+// =============================================================================
+
 /**
- * Create BadFirmware error state that returns to ConnectCable.
+ * BadFirmware error state - returns to ConnectCable.
  */
 export const badFirmwareState = createTryAgainState(
   DataConnectionStep.BadFirmware,
@@ -429,31 +480,6 @@ export const webUsbTryAgainStates = {
     DataConnectionStep.TryAgainWebUsbSelectMicrobit,
     DataConnectionStep.ConnectCable
   ),
-};
-
-/**
- * switchFlowType handler for bluetooth flow (switches to radio).
- * Always goes to Start to show the new flow's requirements.
- */
-export const switchToRadio = {
-  switchFlowType: {
-    target: DataConnectionStep.Start,
-    actions: actions.switchToRadio,
-  },
-};
-
-/**
- * switchFlowType handler for radio flow (switches to webBluetooth if supported).
- * Always goes to Start to show the new flow's requirements.
- */
-export const switchToWebBluetooth = {
-  switchFlowType: [
-    {
-      guard: guards.isWebBluetoothFlowSupported,
-      target: DataConnectionStep.Start,
-      actions: actions.switchToWebBluetooth,
-    },
-  ],
 };
 
 /**
@@ -532,6 +558,10 @@ export const connectedState = {
     },
   },
 };
+
+// =============================================================================
+// Global handlers
+// =============================================================================
 
 /**
  * Global handlers shared by all flows.
