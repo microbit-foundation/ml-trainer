@@ -2383,6 +2383,12 @@
       "value": "No s'ha pogut restablir la connexió amb la micro:bit connectada al teu ordinador."
     }
   ],
+  "reconnect-failed-native-heading": [
+    {
+      "type": 0,
+      "value": "Failed to reconnect to data collection micro:bit"
+    }
+  ],
   "reconnect-failed-radio-heading": [
     {
       "type": 0,

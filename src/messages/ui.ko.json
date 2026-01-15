@@ -2385,6 +2385,12 @@
       "value": "컴퓨터에 연결된 micro:bit에 대한 연결을 다시 설정할 수 없습니다."
     }
   ],
+  "reconnect-failed-native-heading": [
+    {
+      "type": 0,
+      "value": "Failed to reconnect to data collection micro:bit"
+    }
+  ],
   "reconnect-failed-radio-heading": [
     {
       "type": 0,

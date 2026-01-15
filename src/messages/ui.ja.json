@@ -2377,6 +2377,12 @@
       "value": "コンピューターに接続されたmicro:bitとの接続を再確立できませんでした。"
     }
   ],
+  "reconnect-failed-native-heading": [
+    {
+      "type": 0,
+      "value": "Failed to reconnect to data collection micro:bit"
+    }
+  ],
   "reconnect-failed-radio-heading": [
     {
       "type": 0,

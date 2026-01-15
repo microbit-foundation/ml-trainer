@@ -1399,6 +1399,10 @@
     "defaultMessage": "La connexion avec le micro:bit connecté à votre ordinateur n'a pas pu être rétablie.",
     "description": "Connection error dialog"
   },
+  "reconnect-failed-native-heading": {
+    "defaultMessage": "Failed to reconnect to data collection micro:bit",
+    "description": "Connection error dialog for native Bluetooth reconnection failure"
+  },
   "reconnect-failed-radio-heading": {
     "defaultMessage": "Impossible de se reconnecter au micro:bit",
     "description": "Connection error dialog"

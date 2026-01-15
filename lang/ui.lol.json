@@ -1399,6 +1399,10 @@
     "defaultMessage": "crwdns363256:0crwdne363256:0",
     "description": "Connection error dialog"
   },
+  "reconnect-failed-native-heading": {
+    "defaultMessage": "Failed to reconnect to data collection micro:bit",
+    "description": "Connection error dialog for native Bluetooth reconnection failure"
+  },
   "reconnect-failed-radio-heading": {
     "defaultMessage": "crwdns363258:0crwdne363258:0",
     "description": "Connection error dialog"

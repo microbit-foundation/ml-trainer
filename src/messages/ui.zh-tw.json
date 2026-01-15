@@ -2393,6 +2393,12 @@
       "value": "無法重新建立與您的電腦連線的 micro:bit 的連線。"
     }
   ],
+  "reconnect-failed-native-heading": [
+    {
+      "type": 0,
+      "value": "Failed to reconnect to data collection micro:bit"
+    }
+  ],
   "reconnect-failed-radio-heading": [
     {
       "type": 0,

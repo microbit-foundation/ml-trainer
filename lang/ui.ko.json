@@ -1399,6 +1399,10 @@
     "defaultMessage": "컴퓨터에 연결된 micro:bit에 대한 연결을 다시 설정할 수 없습니다.",
     "description": "Connection error dialog"
   },
+  "reconnect-failed-native-heading": {
+    "defaultMessage": "Failed to reconnect to data collection micro:bit",
+    "description": "Connection error dialog for native Bluetooth reconnection failure"
+  },
   "reconnect-failed-radio-heading": {
     "defaultMessage": "micro:bit에 다시 연결할 수 없습니다.",
     "description": "Connection error dialog"
