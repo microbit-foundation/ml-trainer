@@ -5,7 +5,7 @@
  */
 import { DeviceError, ProgressStage } from "@microbit/microbit-connection";
 import { deviceIdToMicrobitName } from "../bt-pattern-utils";
-import { ConnectionService, ConnectResult } from "../connection-service";
+import { ConnectionService } from "../connection-service";
 import {
   DataConnectionAction,
   DataConnectionEvent,
@@ -377,11 +377,10 @@ const performConnect = async (deps: DataConnectionDeps): Promise<void> => {
     connection.setNameFilter(bluetoothMicrobitName);
   }
 
-  const result = await deps.connectionService.connect(connection, {
-    progress: progressCallback,
-  });
-
-  if (result === ConnectResult.Success) {
+  try {
+    await deps.connectionService.connect(connection, {
+      progress: progressCallback,
+    });
     const boardVersion = connection.getBoardVersion();
     // Store board version in context for guard to check
     setDataConnectionState(
@@ -392,8 +391,12 @@ const performConnect = async (deps: DataConnectionDeps): Promise<void> => {
       deps.setConfig
     );
     await sendEvent({ type: "connectSuccess" }, deps);
-  } else {
-    await sendEvent({ type: "connectFailure", reason: result }, deps);
+  } catch (e) {
+    if (e instanceof DeviceError) {
+      await sendEvent({ type: "connectFailure", code: e.code }, deps);
+    } else {
+      throw e;
+    }
   }
 };
 
@@ -405,13 +408,9 @@ const performFlash = async (deps: DataConnectionDeps): Promise<void> => {
   const connection = deps.connectionService.getDefaultFlashConnection();
   const hex = getHexType(state);
 
-  const result = await deps.connectionService.flash(
-    connection,
-    hex,
-    progressCallback
-  );
+  try {
+    await deps.connectionService.flash(connection, hex, progressCallback);
 
-  if (result === ConnectResult.Success) {
     const deviceId = isWebUSBConnection(connection)
       ? connection.getDeviceId()
       : undefined;
@@ -436,8 +435,12 @@ const performFlash = async (deps: DataConnectionDeps): Promise<void> => {
       },
       deps
     );
-  } else {
-    await sendEvent({ type: "flashFailure", reason: result }, deps);
+  } catch (e) {
+    if (e instanceof DeviceError) {
+      await sendEvent({ type: "flashFailure", code: e.code }, deps);
+    } else {
+      throw e;
+    }
   }
 };
 
@@ -450,12 +453,17 @@ const performConnectBluetooth = async (
 ): Promise<void> => {
   const state = getDataConnectionState();
   deps.logging.event({ type: "connect-user", message: "bluetooth" });
-  const result = await deps.connectionService.connectBluetooth(
-    state.bluetoothMicrobitName,
-    clearDevice
-  );
-  if (result !== ConnectResult.Success) {
-    await sendEvent({ type: "connectFailure", reason: result }, deps);
+  try {
+    await deps.connectionService.connectBluetooth(
+      state.bluetoothMicrobitName,
+      clearDevice
+    );
+  } catch (e) {
+    if (e instanceof DeviceError) {
+      await sendEvent({ type: "connectFailure", code: e.code }, deps);
+    } else {
+      throw e;
+    }
   }
 };
 
@@ -470,9 +478,17 @@ const performConnectMicrobits = async (
     throw new Error("Radio remote device id not set");
   }
   deps.logging.event({ type: "connect-user", message: "radio-bridge" });
-  await deps.connectionService.connectMicrobitsSerial(
-    state.radioRemoteDeviceId
-  );
+  try {
+    await deps.connectionService.connectMicrobitsSerial(
+      state.radioRemoteDeviceId
+    );
+  } catch (e) {
+    if (e instanceof DeviceError) {
+      await sendEvent({ type: "connectFailure", code: e.code }, deps);
+    } else {
+      throw e;
+    }
+  }
 };
 
 /**
@@ -499,7 +515,6 @@ const performReconnect = async (deps: DataConnectionDeps): Promise<void> => {
   const state = getDataConnectionState();
 
   try {
-    // Use the appropriate reconnect method based on connection type
     switch (state.type) {
       case DataConnectionType.WebBluetooth:
       case DataConnectionType.NativeBluetooth:
@@ -531,10 +546,9 @@ const performReconnect = async (deps: DataConnectionDeps): Promise<void> => {
         break;
     }
   } catch (e) {
-    // DeviceErrors (e.g., connection timeout) are expected during reconnection.
-    // The status listener will fire deviceDisconnected to handle state transitions.
-    // Rethrow unexpected errors so they get logged.
-    if (!(e instanceof DeviceError)) {
+    if (e instanceof DeviceError) {
+      await sendEvent({ type: "connectFailure", code: e.code }, deps);
+    } else {
       throw e;
     }
   }

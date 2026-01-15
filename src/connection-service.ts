@@ -10,7 +10,6 @@ import {
   ConnectionStatus,
   ConnectionStatusEvent,
   ConnectionStatus as DeviceConnectionStatus,
-  DeviceError,
   FlashOptions,
   MicrobitRadioBridgeConnection,
   MicrobitWebBluetoothConnection,
@@ -25,21 +24,7 @@ import {
 } from "./data-connection-flow";
 import { MicrobitConnection } from "./device/connection-utils";
 import { HexType, getFlashDataSource } from "./device/get-hex-file";
-import { Logging } from "./logging/logging";
 import { isNativePlatform } from "./platform";
-
-export enum ConnectResult {
-  Success = "Success",
-  Failed = "Failed",
-  ErrorBadFirmware = "ErrorBadFirmware",
-  ErrorNoDeviceSelected = "ErrorNoDeviceSelected",
-  ErrorUnableToClaimInterface = "ErrorUnableToClaimInterface",
-}
-
-export type ConnectAndFlashFailResult = Exclude<
-  ConnectResult,
-  ConnectResult.Success
->;
 
 type EventCallback = (event: DataConnectionEvent) => void;
 
@@ -54,7 +39,6 @@ export interface ConnectionAndFlashOptions {
  */
 export class ConnectionService {
   constructor(
-    private logging: Logging,
     private usb: MicrobitWebUSBConnection,
     private bluetooth: MicrobitWebBluetoothConnection,
     private radioBridge: MicrobitRadioBridgeConnection
@@ -81,56 +65,27 @@ export class ConnectionService {
   async connect(
     connection: MicrobitConnection,
     options?: ConnectionAndFlashOptions
-  ): Promise<ConnectResult> {
-    try {
-      await connection.connect({ progress: options?.progress });
-      return ConnectResult.Success;
-    } catch (e) {
-      this.logging.error("USB request device failed/cancelled", e);
-      return this.handleConnectAndFlashError(e);
-    }
+  ): Promise<void> {
+    await connection.connect({ progress: options?.progress });
   }
 
   async flash(
     connection: MicrobitConnection,
     hex: string | HexType,
     progress: (stage: ProgressStage, value: number | undefined) => void
-  ): Promise<ConnectResult> {
+  ): Promise<void> {
     const data = Object.values(HexType).includes(hex as HexType)
       ? getFlashDataSource(hex as HexType)
       : createUniversalHexFlashDataSource(hex);
 
-    try {
-      const options: FlashOptions = {
-        partial: true,
-        // If we could improve the re-rendering due to progress further we can remove this and accept the
-        // default which updates 4x as often.
-        minimumProgressIncrement: 0.01,
-        progress,
-      };
-      await connection.flash(data, options);
-      return ConnectResult.Success;
-    } catch (e) {
-      this.logging.error("Flashing failed", e);
-      return this.handleConnectAndFlashError(e);
-    }
-  }
-
-  private handleConnectAndFlashError(err: unknown): ConnectAndFlashFailResult {
-    if (err instanceof DeviceError) {
-      switch (err.code) {
-        case "clear-connect":
-          return ConnectResult.ErrorUnableToClaimInterface;
-        case "no-device-selected":
-          return ConnectResult.ErrorNoDeviceSelected;
-        case "update-req":
-          return ConnectResult.ErrorBadFirmware;
-        // TODO: There are now bluetooth related codes to add which need custom UX.
-        default:
-          return ConnectResult.Failed;
-      }
-    }
-    return ConnectResult.Failed;
+    const options: FlashOptions = {
+      partial: true,
+      // If we could improve the re-rendering due to progress further we can remove this and accept the
+      // default which updates 4x as often.
+      minimumProgressIncrement: 0.01,
+      progress,
+    };
+    await connection.flash(data, options);
   }
 
   async connectMicrobitsSerial(deviceId: number): Promise<void> {
@@ -165,20 +120,14 @@ export class ConnectionService {
   async connectBluetooth(
     name: string | undefined,
     clearDevice: boolean
-  ): Promise<ConnectResult> {
+  ): Promise<void> {
     if (clearDevice) {
       await this.bluetooth.clearDevice();
     }
     if (name) {
       this.bluetooth.setNameFilter(name);
     }
-    try {
-      await this.bluetooth.connect();
-      return ConnectResult.Success;
-    } catch (e) {
-      this.logging.error("Bluetooth connect failed/cancelled", e);
-      return this.handleConnectAndFlashError(e);
-    }
+    await this.bluetooth.connect();
   }
 
   addAccelerometerListener(

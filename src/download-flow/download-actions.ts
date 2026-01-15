@@ -5,9 +5,10 @@
  */
 import {
   createWebUSBConnection,
+  DeviceError,
   ProgressCallback,
 } from "@microbit/microbit-connection";
-import { ConnectionService, ConnectResult } from "../connection-service";
+import { ConnectionService } from "../connection-service";
 import { DataConnectionState } from "../data-connection-flow";
 import { isNativeBluetoothConnection } from "../device/connection-utils";
 import {
@@ -160,11 +161,10 @@ const performConnect = async (deps: DownloadDependencies): Promise<void> => {
     connection.setNameFilter(state.bluetoothMicrobitName);
   }
 
-  const result = await deps.connectionService.connect(connection, {
-    progress: deps.flashingProgressCallback,
-  });
-
-  if (result === ConnectResult.Success) {
+  try {
+    await deps.connectionService.connect(connection, {
+      progress: deps.flashingProgressCallback,
+    });
     const boardVersion = connection.getBoardVersion();
     // Store connection for potential reuse
     setDownloadState({ ...getDownloadState(), connection });
@@ -175,8 +175,12 @@ const performConnect = async (deps: DownloadDependencies): Promise<void> => {
       },
       deps
     );
-  } else {
-    await sendEvent({ type: "connectFailure", reason: result }, deps);
+  } catch (e) {
+    if (e instanceof DeviceError) {
+      await sendEvent({ type: "connectFailure", code: e.code }, deps);
+    } else {
+      throw e;
+    }
   }
 };
 
@@ -191,16 +195,19 @@ const performFlash = async (deps: DownloadDependencies): Promise<void> => {
     throw new Error("Hex and connection required for flashing");
   }
 
-  const result = await deps.connectionService.flash(
-    connection,
-    hex.hex,
-    deps.flashingProgressCallback
-  );
-
-  if (result === ConnectResult.Success) {
+  try {
+    await deps.connectionService.flash(
+      connection,
+      hex.hex,
+      deps.flashingProgressCallback
+    );
     await sendEvent({ type: "flashSuccess" }, deps);
-  } else {
-    await sendEvent({ type: "flashFailure", reason: result }, deps);
+  } catch (e) {
+    if (e instanceof DeviceError) {
+      await sendEvent({ type: "flashFailure", code: e.code }, deps);
+    } else {
+      throw e;
+    }
   }
 };
 

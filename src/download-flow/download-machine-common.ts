@@ -8,7 +8,6 @@ import {
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
 } from "@microbit/microbit-connection";
-import { ConnectResult } from "../connection-service";
 import {
   DataConnectionType,
   dataConnectionTypeToTransport,
@@ -25,9 +24,9 @@ export type DownloadEvent =
   | { type: "choseSame" }
   | { type: "choseDifferent" }
   | { type: "connectSuccess"; boardVersion: "V1" | "V2" }
-  | { type: "connectFailure"; reason: ConnectResult }
+  | { type: "connectFailure"; code?: string }
   | { type: "flashSuccess" }
-  | { type: "flashFailure"; reason: ConnectResult };
+  | { type: "flashFailure"; code?: string };
 
 export type DownloadAction =
   | /**

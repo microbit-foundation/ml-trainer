@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { ConnectResult } from "../connection-service";
 import {
   DataConnectionEvent,
   dataConnectionTransition,
@@ -251,7 +250,7 @@ describe("data-connection-machine", () => {
       it("connectFailure with bad firmware -> BadFirmware", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "connectFailure",
-          reason: ConnectResult.ErrorBadFirmware,
+          code: "update-req",
         });
 
         expect(result?.step).toBe(DataConnectionStep.BadFirmware);
@@ -260,7 +259,7 @@ describe("data-connection-machine", () => {
       it("connectFailure (other) -> ManualFlashingTutorial with downloadHex", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "connectFailure",
-          reason: ConnectResult.Failed,
+          code: "unknown-error",
         });
 
         expect(result?.step).toBe(DataConnectionStep.ManualFlashingTutorial);
@@ -282,7 +281,7 @@ describe("data-connection-machine", () => {
       it("flashFailure -> ManualFlashingTutorial with downloadHex", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "flashFailure",
-          reason: ConnectResult.Failed,
+          code: "unknown-error",
         });
 
         expect(result?.step).toBe(DataConnectionStep.ManualFlashingTutorial);
@@ -321,7 +320,7 @@ describe("data-connection-machine", () => {
       it("connectFailure (no device selected) -> TryAgainBluetoothSelectMicrobit", () => {
         const result = transition(flow, DataConnectionStep.BluetoothConnect, {
           type: "connectFailure",
-          reason: ConnectResult.ErrorNoDeviceSelected,
+          code: "no-device-selected",
         });
 
         expect(result?.step).toBe(
@@ -572,7 +571,7 @@ describe("data-connection-machine", () => {
       it("connectFailure -> ConnectFailed", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "connectFailure",
-          reason: ConnectResult.Failed,
+          code: "unknown-error",
         });
 
         expect(result?.step).toBe(DataConnectionStep.ConnectFailed);
@@ -593,7 +592,7 @@ describe("data-connection-machine", () => {
       it("flashFailure -> ConnectFailed", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "flashFailure",
-          reason: ConnectResult.Failed,
+          code: "unknown-error",
         });
 
         expect(result?.step).toBe(DataConnectionStep.ConnectFailed);
@@ -826,7 +825,7 @@ describe("data-connection-machine", () => {
       it("connectFailure with bad firmware -> BadFirmware", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "connectFailure",
-          reason: ConnectResult.ErrorBadFirmware,
+          code: "update-req",
         });
 
         expect(result?.step).toBe(DataConnectionStep.BadFirmware);
@@ -835,7 +834,7 @@ describe("data-connection-machine", () => {
       it("connectFailure with no device selected -> TryAgainWebUsbSelectMicrobit", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "connectFailure",
-          reason: ConnectResult.ErrorNoDeviceSelected,
+          code: "no-device-selected",
         });
 
         expect(result?.step).toBe(
@@ -846,7 +845,7 @@ describe("data-connection-machine", () => {
       it("connectFailure with unable to claim -> TryAgainCloseTabs", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "connectFailure",
-          reason: ConnectResult.ErrorUnableToClaimInterface,
+          code: "clear-connect",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainCloseTabs);
@@ -855,7 +854,7 @@ describe("data-connection-machine", () => {
       it("connectFailure (other) -> TryAgainReplugMicrobit", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "connectFailure",
-          reason: ConnectResult.Failed,
+          code: "unknown-error",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainReplugMicrobit);
@@ -876,7 +875,7 @@ describe("data-connection-machine", () => {
       it("flashFailure with no device selected -> TryAgainWebUsbSelectMicrobit", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "flashFailure",
-          reason: ConnectResult.ErrorNoDeviceSelected,
+          code: "no-device-selected",
         });
 
         expect(result?.step).toBe(
@@ -887,7 +886,7 @@ describe("data-connection-machine", () => {
       it("flashFailure with unable to claim -> TryAgainCloseTabs", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "flashFailure",
-          reason: ConnectResult.ErrorUnableToClaimInterface,
+          code: "clear-connect",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainCloseTabs);
@@ -896,7 +895,7 @@ describe("data-connection-machine", () => {
       it("flashFailure (other) -> TryAgainReplugMicrobit", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "flashFailure",
-          reason: ConnectResult.Failed,
+          code: "unknown-error",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainReplugMicrobit);
@@ -1180,7 +1179,7 @@ describe("data-connection-machine", () => {
       it("connectFailure with bad firmware -> BadFirmware", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "connectFailure",
-          reason: ConnectResult.ErrorBadFirmware,
+          code: "update-req",
         });
 
         expect(result?.step).toBe(DataConnectionStep.BadFirmware);
@@ -1189,7 +1188,7 @@ describe("data-connection-machine", () => {
       it("connectFailure with no device selected -> TryAgainWebUsbSelectMicrobit", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "connectFailure",
-          reason: ConnectResult.ErrorNoDeviceSelected,
+          code: "no-device-selected",
         });
 
         expect(result?.step).toBe(
@@ -1200,7 +1199,7 @@ describe("data-connection-machine", () => {
       it("connectFailure with unable to claim -> TryAgainCloseTabs", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "connectFailure",
-          reason: ConnectResult.ErrorUnableToClaimInterface,
+          code: "clear-connect",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainCloseTabs);
@@ -1209,7 +1208,7 @@ describe("data-connection-machine", () => {
       it("connectFailure (other) -> TryAgainReplugMicrobit", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "connectFailure",
-          reason: ConnectResult.Failed,
+          code: "unknown-error",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainReplugMicrobit);
@@ -1233,7 +1232,7 @@ describe("data-connection-machine", () => {
       it("flashFailure with no device selected -> TryAgainWebUsbSelectMicrobit", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "flashFailure",
-          reason: ConnectResult.ErrorNoDeviceSelected,
+          code: "no-device-selected",
         });
 
         expect(result?.step).toBe(
@@ -1244,7 +1243,7 @@ describe("data-connection-machine", () => {
       it("flashFailure with unable to claim -> TryAgainCloseTabs", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "flashFailure",
-          reason: ConnectResult.ErrorUnableToClaimInterface,
+          code: "clear-connect",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainCloseTabs);
@@ -1253,7 +1252,7 @@ describe("data-connection-machine", () => {
       it("flashFailure (other) -> TryAgainReplugMicrobit", () => {
         const result = transition(flow, DataConnectionStep.FlashingInProgress, {
           type: "flashFailure",
-          reason: ConnectResult.Failed,
+          code: "unknown-error",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainReplugMicrobit);

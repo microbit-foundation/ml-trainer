@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { BoardVersion } from "@microbit/microbit-connection";
-import { ConnectResult } from "../connection-service";
 import {
   DataConnectionStep,
   DataConnectionType,
@@ -38,7 +37,8 @@ export type DataConnectionEvent =
   | { type: "connectSuccess" }
   | {
       type: "connectFailure";
-      reason: ConnectResult;
+      /** DeviceError code if the failure was due to a DeviceError. */
+      code?: string;
     }
   | {
       type: "flashSuccess";
@@ -46,7 +46,11 @@ export type DataConnectionEvent =
       deviceId?: number;
       bluetoothMicrobitName?: string;
     }
-  | { type: "flashFailure"; reason: ConnectResult }
+  | {
+      type: "flashFailure";
+      /** DeviceError code if the failure was due to a DeviceError. */
+      code?: string;
+    }
   // Device status events - sent directly from the status listener.
   | { type: "deviceConnected" }
   | { type: "deviceDisconnected"; source?: "bridge" | "remote" }
@@ -180,29 +184,31 @@ export const guards = {
   // Browser tab visibility guard
   isTabHidden: (ctx: DataConnectionContext) => !ctx.isBrowserTabVisible,
 
-  // Guards that check event payload
+  // Guards that check event payload (using DeviceError codes directly)
   isBadFirmwareError: (
     _ctx: DataConnectionContext,
     event: DataConnectionEvent
-  ) =>
-    event.type === "connectFailure" &&
-    event.reason === ConnectResult.ErrorBadFirmware,
+  ) => event.type === "connectFailure" && event.code === "update-req",
 
   isNoDeviceSelectedError: (
     _ctx: DataConnectionContext,
     event: DataConnectionEvent
-  ) =>
-    (event.type === "connectFailure" || event.type === "flashFailure") &&
-    (event as { reason?: ConnectResult }).reason ===
-      ConnectResult.ErrorNoDeviceSelected,
+  ) => {
+    if (event.type === "connectFailure" || event.type === "flashFailure") {
+      return event.code === "no-device-selected";
+    }
+    return false;
+  },
 
   isUnableToClaimError: (
     _ctx: DataConnectionContext,
     event: DataConnectionEvent
-  ) =>
-    (event.type === "connectFailure" || event.type === "flashFailure") &&
-    (event as { reason?: ConnectResult }).reason ===
-      ConnectResult.ErrorUnableToClaimInterface,
+  ) => {
+    if (event.type === "connectFailure" || event.type === "flashFailure") {
+      return event.code === "clear-connect";
+    }
+    return false;
+  },
 };
 
 // =============================================================================
@@ -338,6 +344,19 @@ export const createConnectedHandlers = () => ({
       guard: always,
       target: DataConnectionStep.ConnectionLost,
       actions: [...actions.setDisconnectSource, ...actions.connectionLost],
+    },
+  ],
+  // Reconnection failed (e.g., user cancelled device picker). Treat like disconnect.
+  connectFailure: [
+    {
+      guard: (ctx: DataConnectionContext) => !ctx.hasFailedOnce,
+      target: DataConnectionStep.Connected,
+      actions: actions.firstReconnectAttempt,
+    },
+    {
+      guard: always,
+      target: DataConnectionStep.ConnectionLost,
+      actions: actions.connectionLost,
     },
   ],
   deviceReconnecting: {

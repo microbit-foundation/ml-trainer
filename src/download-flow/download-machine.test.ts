@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { ConnectionStatus as DeviceConnectionStatus } from "@microbit/microbit-connection";
-import { ConnectResult } from "../connection-service";
 import { DataConnectionType } from "../data-connection-flow";
 import {
   DownloadEvent,
@@ -307,7 +306,7 @@ describe("download-machine", () => {
       it("connectFailure -> ManualFlashingTutorial", () => {
         const result = transition(flow, DownloadStep.FlashingInProgress, {
           type: "connectFailure",
-          reason: ConnectResult.Failed,
+          code: "unknown-error",
         });
 
         expect(result?.step).toBe(DownloadStep.ManualFlashingTutorial);
@@ -325,7 +324,7 @@ describe("download-machine", () => {
       it("flashFailure -> ManualFlashingTutorial", () => {
         const result = transition(flow, DownloadStep.FlashingInProgress, {
           type: "flashFailure",
-          reason: ConnectResult.Failed,
+          code: "unknown-error",
         });
 
         expect(result?.step).toBe(DownloadStep.ManualFlashingTutorial);
