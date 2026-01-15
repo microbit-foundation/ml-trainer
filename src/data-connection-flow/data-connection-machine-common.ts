@@ -391,6 +391,19 @@ export const createInitialConnectHandlers = () => ({
       actions: [...actions.setDisconnectSource, ...actions.failedTwice],
     },
   ],
+  // Connection action failed (e.g., user cancelled device picker)
+  connectFailure: [
+    {
+      guard: (ctx: DataConnectionContext) => !ctx.hasFailedOnce,
+      target: DataConnectionStep.ConnectFailed,
+      actions: actions.firstConnectFailure,
+    },
+    {
+      guard: always,
+      target: DataConnectionStep.StartOver,
+      actions: actions.failedTwice,
+    },
+  ],
 });
 
 /**
