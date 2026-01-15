@@ -135,30 +135,6 @@ export const globalHandlers: DownloadFlowDefinition = {
 // =============================================================================
 
 /**
- * FlashingInProgress state for flows that only fallback to manual flashing.
- * Used by native bluetooth flow.
- */
-export const flashingInProgressSimple: DownloadFlowDefinition = {
-  [DownloadStep.FlashingInProgress]: {
-    on: {
-      connectSuccess: {
-        target: DownloadStep.FlashingInProgress,
-        actions: [{ type: "flash" }],
-      },
-      connectFailure: {
-        target: DownloadStep.ManualFlashingTutorial,
-        actions: [{ type: "downloadHexFile" }],
-      },
-      flashSuccess: { target: DownloadStep.None },
-      flashFailure: {
-        target: DownloadStep.ManualFlashingTutorial,
-        actions: [{ type: "downloadHexFile" }],
-      },
-    },
-  },
-};
-
-/**
  * FlashingInProgress state with V1 board version check.
  * Used by webusb and radio flows.
  */

@@ -7,7 +7,7 @@ import { DownloadStep } from "../model";
 import { always } from "../state-machine";
 import {
   DownloadFlowDefinition,
-  flashingInProgressSimple,
+  flashingInProgressWithV1Check,
   globalHandlers,
   guards,
   manualFlashingTutorialState,
@@ -70,7 +70,16 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
     },
   },
 
-  ...flashingInProgressSimple,
+  ...flashingInProgressWithV1Check,
 
+  // TODO: This state and all transitions to it need to be replaced.
+  // We need a custom error state (perhaps more than one) for native
+  // bluetooth. But for sure not one about drag and drop!
   ...manualFlashingTutorialState,
+
+  [DownloadStep.IncompatibleDevice]: {
+    on: {
+      back: { target: DownloadStep.BluetoothPattern },
+    },
+  },
 };
