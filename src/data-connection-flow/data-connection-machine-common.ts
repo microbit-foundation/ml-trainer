@@ -215,12 +215,6 @@ export const actions = {
   // Set reconnecting flag
   reconnecting: [{ type: "setReconnecting", value: true }],
 
-  // Reconnect with flag update
-  reconnectWithFlag: [
-    { type: "setReconnecting", value: true },
-    { type: "reconnect" },
-  ],
-
   // First auto-reconnect attempt
   firstReconnectAttempt: [
     { type: "setHasFailedOnce", value: true },
@@ -324,7 +318,8 @@ export const idleFreshStart = {
  * Create device event handlers for the Connected state.
  */
 export const createConnectedHandlers = () => ({
-  // Connection paused due to tab visibility - stay connected, library handles reconnect
+  // Connection paused due to tab visibility - stay connected, library will move
+  // out of paused when tab is visible. Only used for USB connections.
   devicePaused: {
     target: DataConnectionStep.Connected,
     actions: actions.reconnecting,
