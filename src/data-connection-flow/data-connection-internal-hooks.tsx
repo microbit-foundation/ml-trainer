@@ -54,10 +54,13 @@ const useBrowserTabVisibilitySync = () => {
 type FireDataConnectionEvent = (event: DataConnectionEvent) => void;
 type SendDataConnectionEvent = (event: DataConnectionEvent) => Promise<void>;
 
-const DataConnectionEventContext =
-  createContext<FireDataConnectionEvent | null>(null);
-const DataConnectionSendEventContext =
-  createContext<SendDataConnectionEvent | null>(null);
+interface DataConnectionMachine {
+  fireEvent: FireDataConnectionEvent;
+  sendEvent: SendDataConnectionEvent;
+}
+
+const DataConnectionMachineContext =
+  createContext<DataConnectionMachine | null>(null);
 
 interface DataConnectionEventProviderProps {
   children: ReactNode;
@@ -96,50 +99,37 @@ export const DataConnectionEventProvider = ({
     [connectionService, dataCollectionMicrobitConnected, setConfig, logging]
   );
 
-  const fireEvent = useMemo(() => createFireDataConnectionEvent(deps), [deps]);
+  const api: DataConnectionMachine = useMemo(() => {
+    const fireEvent = createFireDataConnectionEvent(deps);
+    const sendEvent = createSendDataConnectionEvent(deps);
+    return { fireEvent, sendEvent };
+  }, [deps]);
 
   // Set up the event callback on ConnectionService
   useEffect(() => {
-    connectionService.setEventCallback(fireEvent);
-  }, [connectionService, fireEvent]);
-
-  const sendEvent: SendDataConnectionEvent = useMemo(
-    () => createSendDataConnectionEvent(deps),
-    [deps]
-  );
+    connectionService.setEventCallback(api.fireEvent);
+  }, [connectionService, api.fireEvent]);
 
   return (
-    <DataConnectionEventContext.Provider value={fireEvent}>
-      <DataConnectionSendEventContext.Provider value={sendEvent}>
-        {children}
-      </DataConnectionSendEventContext.Provider>
-    </DataConnectionEventContext.Provider>
+    <DataConnectionMachineContext.Provider value={api}>
+      {children}
+    </DataConnectionMachineContext.Provider>
   );
 };
 
 /**
- * Hook to get the fire event function for the connection state machine.
+ * Hook to get the event API for the connection state machine.
+ *
+ * Returns:
+ * - `fireEvent`: Fire-and-forget event dispatch with built-in error logging
+ * - `sendEvent`: Async event dispatch that returns a promise
  */
-export const useFireDataConnectionEvent = (): FireDataConnectionEvent => {
-  const fireEvent = useContext(DataConnectionEventContext);
-  if (!fireEvent) {
+export const useDataConnectionMachine = (): DataConnectionMachine => {
+  const value = useContext(DataConnectionMachineContext);
+  if (!value) {
     throw new Error(
-      "useFireDataConnectionEvent must be used within DataConnectionEventProvider"
+      "useDataConnectionMachine must be used within DataConnectionEventProvider"
     );
   }
-  return fireEvent;
-};
-
-/**
- * Hook to get the async send event function for the connection state machine.
- * Use this when you need to await event processing completion.
- */
-export const useSendDataConnectionEvent = (): SendDataConnectionEvent => {
-  const sendEvent = useContext(DataConnectionSendEventContext);
-  if (!sendEvent) {
-    throw new Error(
-      "useSendDataConnectionEvent must be used within DataConnectionEventProvider"
-    );
-  }
-  return sendEvent;
+  return value;
 };

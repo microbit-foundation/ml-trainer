@@ -5,7 +5,7 @@
  */
 import { useMemo } from "react";
 import { useConnectionService } from "../connection-service-hooks";
-import { useSendDataConnectionEvent } from "../data-connection-flow/data-connection-internal-hooks";
+import { useDataConnectionMachine } from "../data-connection-flow/data-connection-internal-hooks";
 import {
   canTransition,
   DownloadDependencies,
@@ -90,7 +90,7 @@ export const useDownloadActions = (): DownloadActions => {
   const [config] = useConnectionConfigStorage();
   const connectionService = useConnectionService();
   const logging = useLogging();
-  const sendDataConnectionEvent = useSendDataConnectionEvent();
+  const dataConnectionMachine = useDataConnectionMachine();
 
   const deps: DownloadDependencies = useMemo(
     () => ({
@@ -103,8 +103,8 @@ export const useDownloadActions = (): DownloadActions => {
       logging,
       disconnect: async () => {
         // Disconnect and reset - the micro:bit is being reused so reconnect won't work
-        await sendDataConnectionEvent({ type: "disconnect" });
-        await sendDataConnectionEvent({ type: "reset" });
+        await dataConnectionMachine.sendEvent({ type: "disconnect" });
+        await dataConnectionMachine.sendEvent({ type: "reset" });
       },
     }),
     [
@@ -115,7 +115,7 @@ export const useDownloadActions = (): DownloadActions => {
       dataConnection,
       setDownloadFlashingProgress,
       logging,
-      sendDataConnectionEvent,
+      dataConnectionMachine,
     ]
   );
 

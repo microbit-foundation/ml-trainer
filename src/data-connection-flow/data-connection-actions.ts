@@ -147,12 +147,7 @@ const executeAction = async (
     case "reset": {
       // Reset flow state and set connection type for fresh connection
       const currentState = getDataConnectionState();
-      // Preserve user's choice of connection type if they've connected before
-      // or explicitly switched types, otherwise use the default for new users
-      const preserveType =
-        currentState.hadSuccessfulConnection ||
-        currentState.hasSwitchedConnectionType;
-      const connectionType = preserveType
+      const connectionType = currentState.hasSwitchedConnectionType
         ? currentState.type
         : getInitialDataConnectionType(currentState.isWebBluetoothSupported);
       setDataConnectionState(
@@ -174,7 +169,6 @@ const executeAction = async (
         {
           ...state,
           type: action.connectionType,
-          // User explicitly switched flow types - preserve their choice on reconnect
           hasSwitchedConnectionType: true,
         },
         deps.setConfig

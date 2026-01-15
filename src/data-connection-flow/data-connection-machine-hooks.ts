@@ -3,8 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { useFireDataConnectionEvent } from "./data-connection-internal-hooks";
-import { DataConnectionEvent } from "./data-connection-machine";
+import { useDataConnectionMachine } from "./data-connection-internal-hooks";
 import { useStore } from "../store";
 import { canTransition } from "./data-connection-actions";
 import { useMemo } from "react";
@@ -33,30 +32,32 @@ export interface DataConnectionActions {
  * These actions fire events into the state machine.
  */
 export const useDataConnectionActions = (): DataConnectionActions => {
-  const fireEvent = useFireDataConnectionEvent();
+  const dataConnectionMachine = useDataConnectionMachine();
 
   return useMemo((): DataConnectionActions => {
     return {
       connect: () => {
-        fireEvent({ type: "connect" });
+        dataConnectionMachine.fireEvent({ type: "connect" });
       },
-      close: () => fireEvent({ type: "close" }),
-      onNextClick: () => fireEvent({ type: "next" }),
-      onBackClick: () => fireEvent({ type: "back" }),
-      onTryAgain: () => fireEvent({ type: "tryAgain" }),
-      switchFlowType: () => fireEvent({ type: "switchFlowType" }),
+      close: () => dataConnectionMachine.fireEvent({ type: "close" }),
+      onNextClick: () => dataConnectionMachine.fireEvent({ type: "next" }),
+      onBackClick: () => dataConnectionMachine.fireEvent({ type: "back" }),
+      onTryAgain: () => dataConnectionMachine.fireEvent({ type: "tryAgain" }),
+      switchFlowType: () =>
+        dataConnectionMachine.fireEvent({ type: "switchFlowType" }),
       canSwitchFlowType: () =>
         canTransition(
           { type: "switchFlowType" },
           useStore.getState().dataConnection
         ),
-      onSkip: () => fireEvent({ type: "skip" }),
-      onStartBluetoothFlow: () => fireEvent({ type: "startBluetoothFlow" }),
+      onSkip: () => dataConnectionMachine.fireEvent({ type: "skip" }),
+      onStartBluetoothFlow: () =>
+        dataConnectionMachine.fireEvent({ type: "startBluetoothFlow" }),
       onChangeMicrobitName: (name: string) =>
-        fireEvent({ type: "setMicrobitName", name }),
-      disconnect: () => fireEvent({ type: "disconnect" }),
+        dataConnectionMachine.fireEvent({ type: "setMicrobitName", name }),
+      disconnect: () => dataConnectionMachine.fireEvent({ type: "disconnect" }),
     };
-  }, [fireEvent]);
+  }, [dataConnectionMachine]);
 };
 
 /**
