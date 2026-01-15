@@ -69,20 +69,13 @@ export const webusbFlow: DownloadFlowDefinition = {
           ],
         },
         {
-          // Bluetooth data connection: disconnect input before connecting
-          guard: guards.isUsbConnectedWithBluetooth,
-          target: DownloadStep.FlashingInProgress,
-          actions: [
-            { type: "setMicrobitChoice", choice: SameOrDifferentChoice.Same },
-            { type: "disconnectDataConnection" },
-            { type: "connect" },
-          ],
-        },
-        {
+          // Fast path: micro:bit already connected via USB (likely never unplugged).
+          // Disconnect bluetooth data connection before flashing.
           guard: guards.isUsbConnected,
           target: DownloadStep.FlashingInProgress,
           actions: [
             { type: "setMicrobitChoice", choice: SameOrDifferentChoice.Same },
+            { type: "disconnectDataConnection" },
             { type: "connect" },
           ],
         },
@@ -124,8 +117,8 @@ export const webusbFlow: DownloadFlowDefinition = {
     on: {
       next: [
         {
-          // Same microbit with bluetooth: disconnect input before connecting
-          guard: guards.shouldDisconnectBeforeConnect,
+          // Same micro:bit: disconnect bluetooth data connection before USB connect
+          guard: guards.isSameMicrobitChoice,
           target: DownloadStep.FlashingInProgress,
           actions: [{ type: "disconnectDataConnection" }, { type: "connect" }],
         },

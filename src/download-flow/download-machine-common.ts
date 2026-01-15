@@ -8,10 +8,7 @@ import {
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
 } from "@microbit/microbit-connection";
-import {
-  DataConnectionType,
-  dataConnectionTypeToTransport,
-} from "../data-connection-flow";
+import { DataConnectionType } from "../data-connection-flow";
 import { isNativeBluetoothConnection } from "../device/connection-utils";
 import { DownloadStep, SameOrDifferentChoice } from "./download-types";
 import { always, FlowDefinition } from "../state-machine";
@@ -94,26 +91,9 @@ export const guards = {
   isV1BoardVersion: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
     ctx.connectedBoardVersion === "V1",
 
-  /** True when data connection uses bluetooth (need to disconnect before flashing same microbit) */
-  isBluetoothDataConnection: (
-    ctx: DownloadFlowContext,
-    _event: DownloadEvent
-  ) => dataConnectionTypeToTransport(ctx.dataConnectionType) === "bluetooth",
-
-  isUsbConnectedWithBluetooth: (
-    ctx: DownloadFlowContext,
-    _event: DownloadEvent
-  ) =>
-    ctx.isUsbConnected &&
-    dataConnectionTypeToTransport(ctx.dataConnectionType) === "bluetooth",
-
-  /** For WebUsbFlashingTutorial: disconnect needed when same microbit with bluetooth */
-  shouldDisconnectBeforeConnect: (
-    ctx: DownloadFlowContext,
-    _event: DownloadEvent
-  ) =>
-    ctx.microbitChoice === SameOrDifferentChoice.Same &&
-    dataConnectionTypeToTransport(ctx.dataConnectionType) === "bluetooth",
+  /** True when user chose to download to the same micro:bit as data connection */
+  isSameMicrobitChoice: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
+    ctx.microbitChoice === SameOrDifferentChoice.Same,
 };
 
 // =============================================================================
