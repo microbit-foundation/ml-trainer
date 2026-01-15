@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { BoardVersion } from "@microbit/microbit-connection";
 import { isNativePlatform } from "../platform";
 import { ConnectionTransport } from "../connection-service";
 
