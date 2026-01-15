@@ -12,7 +12,7 @@ import {
   RiInformationLine,
 } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import { DataConnectionStep } from "../data-connection-flow";
+import { useDataConnected } from "../data-connection-flow";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { TourTrigger } from "../model";
@@ -130,8 +130,7 @@ const TourMenuItem = ({
   tourTrigger,
 }: TourMenuItemProps) => {
   const tourStart = useStore((s) => s.tourStart);
-  const step = useStore((s) => s.dataConnection.step);
-  const isConnected = step === DataConnectionStep.Connected;
+  const isConnected = useDataConnected();
   if (tourTrigger) {
     return (
       <MenuItem

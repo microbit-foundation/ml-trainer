@@ -8,6 +8,7 @@ import { DataConnectionEvent } from "./data-connection-machine";
 import { useStore } from "../store";
 import { canTransition } from "./data-connection-actions";
 import { useMemo } from "react";
+import { DataConnectionStep } from "./data-connection-types";
 
 /**
  * UI actions for the connection flow.
@@ -59,3 +60,9 @@ export const useDataConnectionActions = (): DataConnectionActions => {
     };
   }, [fireEvent]);
 };
+
+/**
+ * Hook that returns true when a data collection micro:bit is connected.
+ */
+export const useDataConnected = (): boolean =>
+  useStore((s) => s.dataConnection.step === DataConnectionStep.Connected);

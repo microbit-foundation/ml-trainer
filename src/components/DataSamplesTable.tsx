@@ -16,8 +16,10 @@ import { ButtonEvent } from "@microbit/microbit-connection";
 import { ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useMicrobitButtonListener } from "../hooks/use-microbit-button-listener";
-import { useDataConnectionActions } from "../data-connection-flow";
-import { DataConnectionStep } from "../data-connection-flow";
+import {
+  useDataConnectionActions,
+  useDataConnected,
+} from "../data-connection-flow";
 import { ActionData } from "../model";
 import { useStore } from "../store";
 import ConnectFirstDialog from "./ConnectFirstDialog";
@@ -93,8 +95,7 @@ const DataSamplesTable = ({
   const closeDialog = useStore((s) => s.closeDialog);
 
   const connActions = useDataConnectionActions();
-  const step = useStore((s) => s.dataConnection.step);
-  const isConnected = step === DataConnectionStep.Connected;
+  const isConnected = useDataConnected();
   const loadProjectInputRef = useRef<LoadProjectInputRef>(null);
 
   // For adding flashing animation for new recording.

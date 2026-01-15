@@ -49,10 +49,11 @@ const LiveGraphPanel = ({
   const parentPortalRef = useRef(null);
   const logging = useLogging();
 
-  // Show disconnected state when not connected, not reconnecting, and not in the middle of initial connect flow
-  const isInitialConnecting = isDataConnectionDialogOpen(dataConnection.step);
+  // Show disconnected state when not connected, not reconnecting, and don't distract from dialogs.
   const isDisconnected =
-    !isConnected && !isReconnecting && !isInitialConnecting;
+    !isConnected &&
+    !isReconnecting &&
+    !isDataConnectionDialogOpen(dataConnection.step);
 
   const handleConnectOrReconnect = useCallback(() => {
     logging.event({

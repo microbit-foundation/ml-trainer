@@ -31,7 +31,7 @@ import LiveGraphPanel from "../components/LiveGraphPanel";
 import MoreMenuButton from "../components/MoreMenuButton";
 import TestingModelTable from "../components/TestingModelTable";
 import { useBoardVersion } from "../hooks/use-board-version";
-import { DataConnectionStep } from "../data-connection-flow";
+import { useDataConnected } from "../data-connection-flow";
 import { useProject } from "../hooks/project-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useStore } from "../store";
@@ -69,8 +69,7 @@ const TestingModelPage = () => {
   ]);
 
   const tourStart = useStore((s) => s.tourStart);
-  const step = useStore((s) => s.dataConnection.step);
-  const isConnected = step === DataConnectionStep.Connected;
+  const isConnected = useDataConnected();
   const wasConnected = usePrevious(isConnected);
   useEffect(() => {
     if (isConnected) {

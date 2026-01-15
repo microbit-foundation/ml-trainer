@@ -10,7 +10,7 @@ import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SmoothieChart, TimeSeries } from "@microbit/smoothie";
 import { useAccelerometerListener } from "../hooks/use-accelerometer-listener";
-import { DataConnectionStep } from "../data-connection-flow";
+import { useDataConnected } from "../data-connection-flow";
 import { useGraphColors } from "../hooks/use-graph-colors";
 import { maxAccelerationScaleForGraphs } from "../mlConfig";
 import { useSettings, useStore } from "../store";
@@ -24,8 +24,7 @@ export const smoothenDataPoint = (curr: number, next: number) => {
 };
 
 const LiveGraph = () => {
-  const dataConnection = useStore((s) => s.dataConnection);
-  const isConnected = dataConnection.step === DataConnectionStep.Connected;
+  const isConnected = useDataConnected();
   const [{ graphColorScheme, graphLineScheme, graphLineWeight }] =
     useSettings();
 
