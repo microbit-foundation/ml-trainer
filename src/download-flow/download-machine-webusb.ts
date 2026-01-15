@@ -64,9 +64,6 @@ export const webusbFlow: DownloadFlowDefinition = {
         {
           guard: guards.isUsbConnectedV1,
           target: DownloadStep.IncompatibleDevice,
-          actions: [
-            { type: "setMicrobitChoice", choice: SameOrDifferentChoice.Same },
-          ],
         },
         {
           // Fast path: micro:bit already connected via USB (likely never unplugged).
