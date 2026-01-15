@@ -31,7 +31,12 @@ const transition = (
   event: DownloadEvent,
   context: Partial<DownloadFlowContext> = {}
 ) => {
-  return downloadTransition("browser-default", step, event, createContext(context));
+  return downloadTransition(
+    "browser-default",
+    step,
+    event,
+    createContext(context)
+  );
 };
 
 describe("Download flow: Browser Default", () => {
@@ -94,17 +99,25 @@ describe("Download flow: Browser Default", () => {
 
   describe("forward navigation", () => {
     it("Help -> ChooseSameOrDifferentMicrobit (has connected before)", () => {
-      const result = transition(DownloadStep.Help, { type: "next" }, {
-        hadSuccessfulConnection: true,
-      });
+      const result = transition(
+        DownloadStep.Help,
+        { type: "next" },
+        {
+          hadSuccessfulConnection: true,
+        }
+      );
 
       expect(result?.step).toBe(DownloadStep.ChooseSameOrDifferentMicrobit);
     });
 
     it("Help -> ConnectCable (never connected)", () => {
-      const result = transition(DownloadStep.Help, { type: "next" }, {
-        hadSuccessfulConnection: false,
-      });
+      const result = transition(
+        DownloadStep.Help,
+        { type: "next" },
+        {
+          hadSuccessfulConnection: false,
+        }
+      );
 
       expect(result?.step).toBe(DownloadStep.ConnectCable);
     });
