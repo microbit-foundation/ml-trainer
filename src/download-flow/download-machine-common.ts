@@ -13,8 +13,9 @@ import {
   dataConnectionTypeToTransport,
 } from "../data-connection-flow";
 import { isNativeBluetoothConnection } from "../device/connection-utils";
-import { DownloadStep, HexData, SameOrDifferentChoice } from "../model";
+import { DownloadStep, SameOrDifferentChoice } from "./download-types";
 import { always, FlowDefinition } from "../state-machine";
+import { HexData } from "../model";
 
 export type DownloadEvent =
   | { type: "start"; hex: HexData; bluetoothMicrobitName?: string }

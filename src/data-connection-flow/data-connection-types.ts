@@ -5,6 +5,7 @@
  */
 import { BoardVersion } from "@microbit/microbit-connection";
 import { isNativePlatform } from "../platform";
+import { ConnectionTransport } from "../connection-service";
 
 export enum DataConnectionType {
   /**
@@ -30,12 +31,6 @@ export enum DataConnectionType {
  * - "bridge": Flashing the bridge micro:bit (second half)
  */
 export type RadioFlowPhase = "remote" | "bridge";
-
-/**
- * This is the connection type from the perspective of how we end up talking
- * to the data connection micro:bit.
- */
-export type ConnectionTransport = "bluetooth" | "radio";
 
 export const dataConnectionTypeToTransport = (
   type: DataConnectionType

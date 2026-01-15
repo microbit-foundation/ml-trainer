@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { DownloadStep } from "../model";
+import { DownloadStep } from "./download-types";
 import { always } from "../state-machine";
 import {
   DownloadFlowDefinition,

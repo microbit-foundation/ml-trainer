@@ -11,7 +11,7 @@ import {
   downloadTransition,
   DownloadFlowType,
 } from "./download-machine";
-import { DownloadStep, SameOrDifferentChoice } from "../model";
+import { DownloadStep, SameOrDifferentChoice } from "./download-types";
 
 const testHex = { name: "test", hex: "test-hex-data" };
 

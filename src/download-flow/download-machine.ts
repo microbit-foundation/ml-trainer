@@ -9,7 +9,7 @@ import {
 } from "../data-connection-flow";
 import { isNativePlatform } from "../platform";
 import { transition, TransitionResult } from "../state-machine";
-import { DownloadStep } from "../model";
+import { DownloadStep } from "./download-types";
 import {
   DownloadAction,
   DownloadEvent,

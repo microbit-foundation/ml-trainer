@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 export type {
-  ConnectionTransport,
   DataConnectionState,
   RadioFlowPhase,
 } from "./data-connection-types";
@@ -13,7 +12,6 @@ export {
   DataConnectionType,
   dataConnectionTypeToTransport,
   getInitialDataConnectionState,
-  getInitialDataConnectionType,
   isDataConnectionDialogOpen,
 } from "./data-connection-types";
 

@@ -25,11 +25,8 @@ import {
 } from "./data-connection-flow";
 import {
   DataSamplesView,
-  DownloadState,
-  DownloadStep,
   Action,
   ActionData,
-  SameOrDifferentChoice,
   PostImportDialogState,
   RecordingData,
   SaveState,
@@ -50,6 +47,11 @@ import { BufferedData } from "./buffered-data";
 import { getDetectedAction } from "./utils/prediction";
 import { getTour as getTourSpec } from "./tours";
 import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
+import {
+  DownloadState,
+  DownloadStep,
+  SameOrDifferentChoice,
+} from "./download-flow/download-types";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 

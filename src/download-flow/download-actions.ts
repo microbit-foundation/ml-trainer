@@ -19,12 +19,12 @@ import {
   getDownloadFlowType,
 } from "./download-machine";
 import { Logging } from "../logging/logging";
-import { DownloadState, SameOrDifferentChoice } from "../model";
 import { Settings } from "../settings";
 import { useStore } from "../store";
 import { getTotalNumSamples } from "../utils/actions";
 import { downloadHex } from "../utils/fs-util";
 import { StoredConnectionConfig } from "../hooks/use-connection-config-storage";
+import { DownloadState, SameOrDifferentChoice } from "./download-types";
 
 /**
  * Dependencies needed for download actions.

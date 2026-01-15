@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { useDownloadActions } from "../download-flow/download-hooks";
-import { DownloadStep } from "../model";
+import { DownloadStep } from "../download-flow/download-types";
 import { useStore } from "../store";
 import ConnectCableDialog from "./ConnectCableDialog";
 import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";

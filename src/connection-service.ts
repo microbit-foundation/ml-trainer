@@ -18,13 +18,18 @@ import {
   createUniversalHexFlashDataSource,
 } from "@microbit/microbit-connection";
 import {
-  ConnectionTransport,
   DataConnectionEvent,
   DataConnectionType,
 } from "./data-connection-flow";
 import { MicrobitConnection } from "./device/connection-utils";
 import { HexType, getFlashDataSource } from "./device/get-hex-file";
 import { isNativePlatform } from "./platform";
+
+/**
+ * This is the connection type from the perspective of how we end up talking
+ * to the data connection micro:bit.
+ */
+export type ConnectionTransport = "bluetooth" | "radio";
 
 type EventCallback = (event: DataConnectionEvent) => void;
 
