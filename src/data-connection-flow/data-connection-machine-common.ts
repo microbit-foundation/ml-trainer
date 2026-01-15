@@ -74,7 +74,6 @@ export type DataConnectionAction =
    */
   | { type: "setMicrobitName" }
   | { type: "setBluetoothName"; name?: string }
-  | { type: "setBluetoothDeviceId"; deviceId?: number }
   | { type: "setRadioRemoteDeviceId"; deviceId?: number }
   | { type: "setRadioBridgeDeviceId"; deviceId?: number }
   | { type: "setBoardVersion"; version?: BoardVersion }

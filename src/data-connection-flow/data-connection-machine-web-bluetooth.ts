@@ -81,10 +81,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
       ],
       flashSuccess: {
         target: DataConnectionStep.ConnectBattery,
-        actions: [
-          { type: "setBluetoothName" },
-          { type: "setBluetoothDeviceId" },
-        ],
+        actions: [{ type: "setBluetoothName" }],
       },
       flashFailure: {
         target: DataConnectionStep.ManualFlashingTutorial,

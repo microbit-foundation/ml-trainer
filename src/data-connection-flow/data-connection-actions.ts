@@ -185,7 +185,6 @@ const executeAction = async (
           {
             ...getDataConnectionState(),
             bluetoothMicrobitName: event.name,
-            bluetoothDeviceId: undefined,
           },
           deps.setConfig
         );
@@ -209,7 +208,6 @@ const executeAction = async (
         setDataConnectionState(
           {
             ...getDataConnectionState(),
-            bluetoothDeviceId: event.deviceId,
           },
           deps.setConfig
         );
@@ -357,7 +355,7 @@ const executeAction = async (
 // =============================================================================
 
 /**
- * Perform USB/Bluetooth connect operation.
+ * Perform USB or Native Bluetooth connect operation in order to flash.
  */
 const performConnect = async (deps: DataConnectionDeps): Promise<void> => {
   const state = getDataConnectionState();
@@ -375,15 +373,6 @@ const performConnect = async (deps: DataConnectionDeps): Promise<void> => {
     await deps.connectionService.connect(connection, {
       progress: progressCallback,
     });
-    const boardVersion = connection.getBoardVersion();
-    // Store board version in context for guard to check
-    setDataConnectionState(
-      {
-        ...getDataConnectionState(),
-        radioRemoteBoardVersion: boardVersion,
-      },
-      deps.setConfig
-    );
     await sendEvent({ type: "connectSuccess" }, deps);
   } catch (e) {
     if (e instanceof DeviceError) {
@@ -439,7 +428,7 @@ const performFlash = async (deps: DataConnectionDeps): Promise<void> => {
 };
 
 /**
- * Perform bluetooth connection.
+ * Perform Bluetooth connection to a data connection micro:bit.
  */
 const performConnectBluetooth = async (
   clearDevice: boolean,

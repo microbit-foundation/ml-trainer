@@ -273,9 +273,6 @@ describe("data-connection-machine", () => {
 
         expect(result?.step).toBe(DataConnectionStep.ConnectBattery);
         expect(result?.actions).toContainEqual({ type: "setBluetoothName" });
-        expect(result?.actions).toContainEqual({
-          type: "setBluetoothDeviceId",
-        });
       });
 
       it("flashFailure -> ManualFlashingTutorial with downloadHexFile", () => {
