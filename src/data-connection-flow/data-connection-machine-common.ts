@@ -298,6 +298,21 @@ export const idleFreshStart = {
 } satisfies DataConnectionTransition;
 
 /**
+ * Back navigation to Start or StartOver depending on isStartingOver flag.
+ * Used by WebBluetooth and NativeBluetooth flows.
+ */
+export const backToStartTransition: DataConnectionTransition[] = [
+  {
+    guard: guards.isStartingOver,
+    target: DataConnectionStep.StartOver,
+  },
+  {
+    guard: always,
+    target: DataConnectionStep.Start,
+  },
+];
+
+/**
  * Create device event handlers for the Connected state.
  */
 export const createConnectedHandlers = () => ({

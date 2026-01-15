@@ -17,27 +17,25 @@ export const webusbFlow: DownloadFlowDefinition = {
   ...globalHandlers,
 
   [DownloadStep.None]: {
+    exit: [{ type: "initializeDownload" }],
     on: {
       start: [
         {
           guard: guards.canReuseExistingConnection,
           target: DownloadStep.FlashingInProgress,
-          actions: [{ type: "initializeDownload" }, { type: "flash" }],
+          actions: [{ type: "flash" }],
         },
         {
           guard: guards.shouldShowHelp,
           target: DownloadStep.Help,
-          actions: [{ type: "initializeDownload" }],
         },
         {
           guard: guards.hasActiveDataConnection,
           target: DownloadStep.ChooseSameOrDifferentMicrobit,
-          actions: [{ type: "initializeDownload" }],
         },
         {
           guard: always,
           target: DownloadStep.ConnectCable,
-          actions: [{ type: "initializeDownload" }],
         },
       ],
     },

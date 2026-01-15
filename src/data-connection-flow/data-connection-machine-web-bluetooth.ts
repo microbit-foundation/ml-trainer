@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  backToStartTransition,
   badFirmwareState,
   connectedState,
   createInitialConnectHandlers,
@@ -45,16 +46,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
   [DataConnectionStep.ConnectCable]: {
     on: {
       next: { target: DataConnectionStep.WebUsbFlashingTutorial },
-      back: [
-        {
-          guard: guards.isStartingOver,
-          target: DataConnectionStep.StartOver,
-        },
-        {
-          guard: always,
-          target: DataConnectionStep.Start,
-        },
-      ],
+      back: backToStartTransition,
       skip: { target: DataConnectionStep.ConnectBattery },
       ...switchToRadio,
     },
@@ -65,7 +57,6 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
   [DataConnectionStep.FlashingInProgress]: {
     on: {
       connectSuccess: {
-        target: DataConnectionStep.FlashingInProgress,
         actions: [{ type: "flash" }],
       },
       connectFailure: [
@@ -109,7 +100,6 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
       next: { target: DataConnectionStep.WebBluetoothPreConnectTutorial },
       back: { target: DataConnectionStep.ConnectBattery },
       setMicrobitName: {
-        target: DataConnectionStep.BluetoothPattern,
         actions: [{ type: "setMicrobitName" }],
       },
     },

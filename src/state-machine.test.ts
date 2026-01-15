@@ -466,6 +466,346 @@ describe("transition", () => {
     });
   });
 
+  describe("entry and exit actions", () => {
+    const defaultContext: TestContext = { isEnabled: true, retryCount: 0 };
+
+    it("includes entry actions from target state", () => {
+      const flowWithEntry: FlowDefinition<
+        TestStep,
+        TestEvent,
+        TestAction,
+        TestContext
+      > = {
+        idle: {
+          on: {
+            start: { target: "loading" },
+          },
+        },
+        loading: {
+          entry: [{ type: "setLoading" }],
+          on: {},
+        },
+      };
+
+      const result = transition(
+        flowWithEntry,
+        "idle",
+        { type: "start" },
+        defaultContext
+      );
+
+      expect(result).toEqual({
+        step: "loading",
+        actions: [{ type: "setLoading" }],
+      });
+    });
+
+    it("includes exit actions from current state", () => {
+      const flowWithExit: FlowDefinition<
+        TestStep,
+        TestEvent,
+        TestAction,
+        TestContext
+      > = {
+        idle: {
+          exit: [{ type: "logError", message: "leaving idle" }],
+          on: {
+            start: { target: "loading" },
+          },
+        },
+        loading: {
+          on: {},
+        },
+      };
+
+      const result = transition(
+        flowWithExit,
+        "idle",
+        { type: "start" },
+        defaultContext
+      );
+
+      expect(result).toEqual({
+        step: "loading",
+        actions: [{ type: "logError", message: "leaving idle" }],
+      });
+    });
+
+    it("orders actions as exit → transition → entry", () => {
+      const flowWithAll: FlowDefinition<
+        TestStep,
+        TestEvent,
+        TestAction,
+        TestContext
+      > = {
+        idle: {
+          exit: [{ type: "logError", message: "exit" }],
+          on: {
+            start: {
+              target: "loading",
+              actions: [{ type: "setData" }],
+            },
+          },
+        },
+        loading: {
+          entry: [{ type: "setLoading" }],
+          on: {},
+        },
+      };
+
+      const result = transition(
+        flowWithAll,
+        "idle",
+        { type: "start" },
+        defaultContext
+      );
+
+      expect(result).toEqual({
+        step: "loading",
+        actions: [
+          { type: "logError", message: "exit" },
+          { type: "setData" },
+          { type: "setLoading" },
+        ],
+      });
+    });
+
+    it("runs exit actions with global transitions", () => {
+      const flowWithExit: FlowDefinition<
+        TestStep,
+        TestEvent,
+        TestAction,
+        TestContext
+      > = {
+        _global: {
+          on: {
+            reset: { target: "idle" },
+          },
+        },
+        loading: {
+          exit: [{ type: "logError", message: "leaving loading" }],
+          on: {},
+        },
+      };
+
+      const result = transition(
+        flowWithExit,
+        "loading",
+        { type: "reset" },
+        defaultContext
+      );
+
+      expect(result).toEqual({
+        step: "idle",
+        actions: [{ type: "logError", message: "leaving loading" }],
+      });
+    });
+
+    it("runs entry actions with global transitions", () => {
+      const flowWithEntry: FlowDefinition<
+        TestStep,
+        TestEvent,
+        TestAction,
+        TestContext
+      > = {
+        _global: {
+          on: {
+            reset: { target: "idle" },
+          },
+        },
+        idle: {
+          entry: [{ type: "setData" }],
+          on: {},
+        },
+        loading: {
+          on: {},
+        },
+      };
+
+      const result = transition(
+        flowWithEntry,
+        "loading",
+        { type: "reset" },
+        defaultContext
+      );
+
+      expect(result).toEqual({
+        step: "idle",
+        actions: [{ type: "setData" }],
+      });
+    });
+
+    it("runs both exit and entry on self-transition", () => {
+      const selfTransitionFlow: FlowDefinition<
+        TestStep,
+        TestEvent,
+        TestAction,
+        TestContext
+      > = {
+        loading: {
+          entry: [{ type: "setLoading" }],
+          exit: [{ type: "logError", message: "exit" }],
+          on: {
+            start: {
+              target: "loading",
+              actions: [{ type: "setData" }],
+            },
+          },
+        },
+      };
+
+      const result = transition(
+        selfTransitionFlow,
+        "loading",
+        { type: "start" },
+        defaultContext
+      );
+
+      expect(result).toEqual({
+        step: "loading",
+        actions: [
+          { type: "logError", message: "exit" },
+          { type: "setData" },
+          { type: "setLoading" },
+        ],
+      });
+    });
+  });
+
+  describe("internal transitions", () => {
+    const defaultContext: TestContext = { isEnabled: true, retryCount: 0 };
+
+    it("stays in current state with no target (simple)", () => {
+      const flowWithInternal: FlowDefinition<
+        TestStep,
+        TestEvent,
+        TestAction,
+        TestContext
+      > = {
+        loading: {
+          on: {
+            start: {
+              actions: [{ type: "setLoading" }],
+            },
+          },
+        },
+      };
+
+      const result = transition(
+        flowWithInternal,
+        "loading",
+        { type: "start" },
+        defaultContext
+      );
+
+      expect(result).toEqual({
+        step: "loading",
+        actions: [{ type: "setLoading" }],
+      });
+    });
+
+    it("stays in current state with no target (conditional)", () => {
+      const flowWithInternal: FlowDefinition<
+        TestStep,
+        TestEvent,
+        TestAction,
+        TestContext
+      > = {
+        loading: {
+          on: {
+            start: [
+              {
+                guard: always,
+                actions: [{ type: "setData" }],
+              },
+            ],
+          },
+        },
+      };
+
+      const result = transition(
+        flowWithInternal,
+        "loading",
+        { type: "start" },
+        defaultContext
+      );
+
+      expect(result).toEqual({
+        step: "loading",
+        actions: [{ type: "setData" }],
+      });
+    });
+
+    it("does not run exit/entry actions for internal transitions", () => {
+      const flowWithInternal: FlowDefinition<
+        TestStep,
+        TestEvent,
+        TestAction,
+        TestContext
+      > = {
+        loading: {
+          entry: [{ type: "setLoading" }],
+          exit: [{ type: "logError", message: "exit" }],
+          on: {
+            start: {
+              actions: [{ type: "setData" }],
+            },
+          },
+        },
+      };
+
+      const result = transition(
+        flowWithInternal,
+        "loading",
+        { type: "start" },
+        defaultContext
+      );
+
+      // Only transition actions, no exit/entry
+      expect(result).toEqual({
+        step: "loading",
+        actions: [{ type: "setData" }],
+      });
+    });
+
+    it("runs exit/entry for external self-transition (with target)", () => {
+      const flowWithExternal: FlowDefinition<
+        TestStep,
+        TestEvent,
+        TestAction,
+        TestContext
+      > = {
+        loading: {
+          entry: [{ type: "setLoading" }],
+          exit: [{ type: "logError", message: "exit" }],
+          on: {
+            start: {
+              target: "loading",
+              actions: [{ type: "setData" }],
+            },
+          },
+        },
+      };
+
+      const result = transition(
+        flowWithExternal,
+        "loading",
+        { type: "start" },
+        defaultContext
+      );
+
+      // exit → transition → entry
+      expect(result).toEqual({
+        step: "loading",
+        actions: [
+          { type: "logError", message: "exit" },
+          { type: "setData" },
+          { type: "setLoading" },
+        ],
+      });
+    });
+  });
+
   describe("edge cases", () => {
     const defaultContext: TestContext = { isEnabled: true, retryCount: 0 };
 

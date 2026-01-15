@@ -9,8 +9,18 @@ import { Logging } from "./logging/logging";
  * Generic state machine types and interpreter.
  */
 
+/**
+ * External transition - has target, runs exit/entry actions.
+ */
 export interface Transition<TStep, TAction> {
   target: TStep;
+  actions?: TAction[];
+}
+
+/**
+ * Internal transition - no target, stays in current state, no exit/entry.
+ */
+export interface InternalTransition<TAction> {
   actions?: TAction[];
 }
 
@@ -21,12 +31,16 @@ export interface ConditionalTransition<
   TEvent = unknown
 > {
   guard: (ctx: TContext, event: TEvent) => boolean;
-  target: TStep;
+  /**
+   * Target state. If omitted, this is an internal transition (no exit/entry).
+   */
+  target?: TStep;
   actions?: TAction[];
 }
 
 type TransitionConfig<TStep, TAction, TContext, TEvent> =
   | Transition<TStep, TAction>
+  | InternalTransition<TAction>
   | ConditionalTransition<TStep, TAction, TContext, TEvent>[];
 
 function isConditionalArray<TStep, TAction, TContext, TEvent>(
@@ -41,6 +55,16 @@ interface StateConfig<
   TAction,
   TContext
 > {
+  /**
+   * Actions to run when entering this state.
+   * Entry actions run after transition actions.
+   */
+  entry?: TAction[];
+  /**
+   * Actions to run when exiting this state.
+   * Exit actions run before transition actions.
+   */
+  exit?: TAction[];
   on: Partial<
     Record<TEvent["type"], TransitionConfig<TStep, TAction, TContext, TEvent>>
   >;
@@ -79,6 +103,21 @@ export interface TransitionResult<TStep, TAction> {
   actions: TAction[];
 }
 
+interface InternalTransitionResult<TAction> {
+  step: undefined;
+  actions: TAction[];
+}
+
+type ResolvedTransition<TStep, TAction> =
+  | TransitionResult<TStep, TAction>
+  | InternalTransitionResult<TAction>;
+
+function hasTarget<TStep, TAction>(
+  config: Transition<TStep, TAction> | InternalTransition<TAction>
+): config is Transition<TStep, TAction> {
+  return "target" in config;
+}
+
 /**
  * Resolve a transition configuration to a result.
  */
@@ -86,11 +125,18 @@ function resolveTransition<TStep, TAction, TContext, TEvent>(
   transitionConfig: TransitionConfig<TStep, TAction, TContext, TEvent>,
   context: TContext,
   event: TEvent
-): TransitionResult<TStep, TAction> | null {
+): ResolvedTransition<TStep, TAction> | null {
   // Conditional transitions - array of guarded transitions
   if (isConditionalArray(transitionConfig)) {
     for (const cond of transitionConfig) {
       if (cond.guard(context, event)) {
+        // Internal transition if no target
+        if (cond.target === undefined) {
+          return {
+            step: undefined,
+            actions: cond.actions ?? [],
+          };
+        }
         return {
           step: cond.target,
           actions: cond.actions ?? [],
@@ -100,9 +146,17 @@ function resolveTransition<TStep, TAction, TContext, TEvent>(
     return null;
   }
 
-  // Simple transition
+  // Simple transition (external or internal)
+  if (hasTarget(transitionConfig)) {
+    return {
+      step: transitionConfig.target,
+      actions: transitionConfig.actions ?? [],
+    };
+  }
+
+  // Internal transition (no target)
   return {
-    step: transitionConfig.target,
+    step: undefined,
     actions: transitionConfig.actions ?? [],
   };
 }
@@ -119,24 +173,44 @@ export function transition<
   context: TContext
 ): TransitionResult<TStep, TAction> | null {
   const stateConfig = flow[currentStep];
+  let resolved: ResolvedTransition<TStep, TAction> | null = null;
 
   // First, try state-specific transition
   if (stateConfig) {
     const transitionConfig = stateConfig.on[event.type as TEvent["type"]];
     if (transitionConfig) {
-      return resolveTransition(transitionConfig, context, event);
+      resolved = resolveTransition(transitionConfig, context, event);
     }
   }
 
   // Fall back to global transition
-  if (flow._global) {
+  if (!resolved && flow._global) {
     const globalConfig = flow._global.on[event.type as TEvent["type"]];
     if (globalConfig) {
-      return resolveTransition(globalConfig, context, event);
+      resolved = resolveTransition(globalConfig, context, event);
     }
   }
 
-  return null;
+  if (!resolved) {
+    return null;
+  }
+
+  // Internal transition (no target): stay in current state, no exit/entry
+  if (resolved.step === undefined) {
+    return {
+      step: currentStep,
+      actions: resolved.actions,
+    };
+  }
+
+  // External transition: exit → transition → entry
+  const exitActions = stateConfig?.exit ?? [];
+  const targetStateConfig = flow[resolved.step];
+  const entryActions = targetStateConfig?.entry ?? [];
+  return {
+    step: resolved.step,
+    actions: [...exitActions, ...resolved.actions, ...entryActions],
+  };
 }
 
 /**

@@ -4,17 +4,16 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  backToStartTransition,
   connectedState,
   createInitialConnectHandlers,
   createRecoveryStates,
   DataConnectionFlowDef,
   globalHandlers,
-  guards,
   idleBluetoothReconnect,
   idleFreshStart,
 } from "./data-connection-machine-common";
 import { DataConnectionStep } from "./data-connection-types";
-import { always } from "../state-machine";
 
 export const nativeBluetoothFlow: DataConnectionFlowDef = {
   ...globalHandlers,
@@ -37,16 +36,7 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
   [DataConnectionStep.NativeBluetoothPreConnectTutorial]: {
     on: {
       next: { target: DataConnectionStep.BluetoothPattern },
-      back: [
-        {
-          guard: guards.isStartingOver,
-          target: DataConnectionStep.StartOver,
-        },
-        {
-          guard: always,
-          target: DataConnectionStep.Start,
-        },
-      ],
+      back: backToStartTransition,
     },
   },
 
@@ -58,7 +48,6 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
       },
       back: { target: DataConnectionStep.NativeBluetoothPreConnectTutorial },
       setMicrobitName: {
-        target: DataConnectionStep.BluetoothPattern,
         actions: [{ type: "setMicrobitName" }],
       },
     },
@@ -67,7 +56,6 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
   [DataConnectionStep.FlashingInProgress]: {
     on: {
       connectSuccess: {
-        target: DataConnectionStep.FlashingInProgress,
         actions: [{ type: "flash" }],
       },
       connectFailure: {

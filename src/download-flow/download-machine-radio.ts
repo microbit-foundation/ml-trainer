@@ -17,25 +17,21 @@ export const radioFlow: DownloadFlowDefinition = {
   ...globalHandlers,
 
   [DownloadStep.None]: {
+    exit: [{ type: "initializeDownload" }],
     on: {
       start: [
         {
           guard: guards.canReuseExistingConnection,
           target: DownloadStep.FlashingInProgress,
-          actions: [{ type: "initializeDownload" }, { type: "flash" }],
+          actions: [{ type: "flash" }],
         },
         {
           guard: guards.shouldShowHelp,
           target: DownloadStep.Help,
-          actions: [{ type: "initializeDownload" }],
         },
         {
           guard: always,
           target: DownloadStep.UnplugRadioBridgeMicrobit,
-          actions: [
-            { type: "initializeDownload" },
-            { type: "disconnectDataConnection" },
-          ],
         },
       ],
     },
@@ -45,15 +41,13 @@ export const radioFlow: DownloadFlowDefinition = {
     on: {
       next: {
         target: DownloadStep.UnplugRadioBridgeMicrobit,
-        actions: [
-          { type: "saveHelpPreference" },
-          { type: "disconnectDataConnection" },
-        ],
+        actions: [{ type: "saveHelpPreference" }],
       },
     },
   },
 
   [DownloadStep.UnplugRadioBridgeMicrobit]: {
+    entry: [{ type: "disconnectDataConnection" }],
     on: {
       next: { target: DownloadStep.ConnectRadioRemoteMicrobit },
       back: [{ guard: guards.shouldShowHelp, target: DownloadStep.Help }],

@@ -103,7 +103,6 @@ export const radioFlow: DataConnectionFlowDef = {
         },
         {
           guard: always,
-          target: DataConnectionStep.FlashingInProgress,
           actions: [{ type: "flash" }],
         },
       ],
