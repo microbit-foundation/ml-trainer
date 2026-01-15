@@ -203,17 +203,6 @@ const executeAction = async (
       }
       break;
 
-    case "setBluetoothDeviceId":
-      if (event.type === "flashSuccess" && event.deviceId !== undefined) {
-        setDataConnectionState(
-          {
-            ...getDataConnectionState(),
-          },
-          deps.setConfig
-        );
-      }
-      break;
-
     case "setRadioRemoteDeviceId":
       if (event.type === "flashSuccess" && event.deviceId !== undefined) {
         setDataConnectionState(
