@@ -26,7 +26,6 @@ export interface DataConnectionActions {
   onStartBluetoothFlow: () => void;
   onChangeMicrobitName: (name: string) => void;
   disconnect: () => void;
-  fireDeviceEvent: (event: DataConnectionEvent) => void;
 }
 
 /**
@@ -56,7 +55,6 @@ export const useDataConnectionActions = (): DataConnectionActions => {
       onChangeMicrobitName: (name: string) =>
         fireEvent({ type: "setMicrobitName", name }),
       disconnect: () => fireEvent({ type: "disconnect" }),
-      fireDeviceEvent: (event: DataConnectionEvent) => fireEvent(event),
     };
   }, [fireEvent]);
 };
