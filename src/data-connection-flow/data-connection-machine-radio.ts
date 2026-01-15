@@ -87,9 +87,6 @@ export const radioFlow: DataConnectionFlowDef = {
           target: DataConnectionStep.Start,
         },
       ],
-      // Skip is only shown in the UI for dev mode because of the higher chance
-      // of users getting confused with two micro:bits.
-      skip: { target: DataConnectionStep.ConnectBattery },
       ...switchToWebBluetooth,
     },
   },

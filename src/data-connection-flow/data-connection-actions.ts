@@ -53,7 +53,6 @@ const setDataConnectionState = (
   useStore.getState().setDataConnection(state);
   setConfig({
     bluetoothMicrobitName: state.bluetoothMicrobitName,
-    radioRemoteDeviceId: state.radioRemoteDeviceId,
   });
 };
 

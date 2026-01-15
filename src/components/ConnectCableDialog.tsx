@@ -6,7 +6,6 @@
 import { Button, Image, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataConnectionType, RadioFlowPhase } from "../data-connection-flow";
-import { isLocalStage } from "../environment";
 import connectCableImage from "../images/connect-cable.gif";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
@@ -53,13 +52,6 @@ export const getConnectionCableDialogConfig = (
       return {
         headingId: "connect-data-collection-heading",
         subtitleId: "connect-data-collection-subtitle",
-        // Skip is only available in dev mode for faster testing
-        ...(isLocalStage()
-          ? {
-              linkTextId: "connect-cable-skip",
-              linkType: "skip",
-            }
-          : {}),
       };
   }
 };
