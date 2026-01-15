@@ -318,9 +318,10 @@ describe("data-connection-machine", () => {
         });
       });
 
-      it("deviceNoAuthorizedDevice -> TryAgainBluetoothSelectMicrobit", () => {
+      it("connectFailure (no device selected) -> TryAgainBluetoothSelectMicrobit", () => {
         const result = transition(flow, DataConnectionStep.BluetoothConnect, {
-          type: "deviceNoAuthorizedDevice",
+          type: "connectFailure",
+          reason: ConnectResult.ErrorNoDeviceSelected,
         });
 
         expect(result?.step).toBe(

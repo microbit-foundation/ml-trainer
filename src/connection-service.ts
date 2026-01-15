@@ -165,14 +165,20 @@ export class ConnectionService {
   async connectBluetooth(
     name: string | undefined,
     clearDevice: boolean
-  ): Promise<void> {
+  ): Promise<ConnectResult> {
     if (clearDevice) {
       await this.bluetooth.clearDevice();
     }
     if (name) {
       this.bluetooth.setNameFilter(name);
     }
-    await this.bluetooth.connect();
+    try {
+      await this.bluetooth.connect();
+      return ConnectResult.Success;
+    } catch (e) {
+      this.logging.error("Bluetooth connect failed/cancelled", e);
+      return this.handleConnectAndFlashError(e);
+    }
   }
 
   addAccelerometerListener(
@@ -240,16 +246,17 @@ export class ConnectionService {
       case DeviceConnectionStatus.CONNECTED:
         return { type: "deviceConnected" };
       case DeviceConnectionStatus.DISCONNECTED:
-        // Only fire disconnect event if we were previously connected or connecting.
-        // This avoids false positives during initialization or device clearing.
+      case DeviceConnectionStatus.NO_AUTHORIZED_DEVICE:
+        // Both DISCONNECTED and NO_AUTHORIZED_DEVICE mean "not connected".
+        // Ignore transitions between these disconnected states (e.g., during
+        // clearDevice() which goes DISCONNECTED → NO_AUTHORIZED_DEVICE).
         if (
-          prevStatus === DeviceConnectionStatus.CONNECTED ||
-          prevStatus === DeviceConnectionStatus.CONNECTING ||
-          prevStatus === DeviceConnectionStatus.RECONNECTING
+          prevStatus === DeviceConnectionStatus.DISCONNECTED ||
+          prevStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE
         ) {
-          return { type: "deviceDisconnected", source: disconnectSource };
+          return null;
         }
-        return null;
+        return { type: "deviceDisconnected", source: disconnectSource };
       case DeviceConnectionStatus.CONNECTING:
         return { type: "deviceConnecting" };
       case DeviceConnectionStatus.RECONNECTING:
@@ -257,14 +264,6 @@ export class ConnectionService {
       case DeviceConnectionStatus.PAUSED:
         // Connection paused due to tab visibility - will reconnect automatically.
         return { type: "devicePaused" };
-      case DeviceConnectionStatus.NO_AUTHORIZED_DEVICE:
-        // Only fire this event when the status was already NO_AUTHORIZED_DEVICE,
-        // indicating the user actively dismissed the device picker.
-        // This avoids false positives during initialization.
-        if (prevStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE) {
-          return { type: "deviceNoAuthorizedDevice" };
-        }
-        return null;
       default:
         return null;
     }
@@ -305,15 +304,17 @@ export class ConnectionService {
     this.stopListening();
 
     this.dataConnectionType = dataConnectionType;
-    this.prevDeviceStatus = null;
 
     if (connType === "bluetooth") {
+      // Initialize to current status so we correctly detect transitions
+      this.prevDeviceStatus = this.bluetooth.status;
       this.bluetooth.addEventListener("status", this.handleStatusChange);
     } else {
       // For radio connections, only listen to radioBridge status.
       // The radioBridge propagates USB connection issues via its delegateStatusListener,
       // so we don't need a separate USB listener. This also avoids the USB CONNECTED
       // event firing before the radioBridge has verified the remote micro:bit responds.
+      this.prevDeviceStatus = this.radioBridge.status;
       this.radioBridge.addEventListener("status", this.handleStatusChange);
     }
   }

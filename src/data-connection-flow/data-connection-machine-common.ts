@@ -52,7 +52,6 @@ export type DataConnectionEvent =
   | { type: "deviceDisconnected"; source?: "bridge" | "remote" }
   | { type: "deviceConnecting" }
   | { type: "deviceReconnecting" }
-  | { type: "deviceNoAuthorizedDevice" }
   /**
    * Connection paused due to tab visibility. Will reconnect when tab visible.
    */

@@ -131,9 +131,12 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
   [DataConnectionStep.BluetoothConnect]: {
     on: {
       ...createInitialConnectHandlers(),
-      deviceNoAuthorizedDevice: {
-        target: DataConnectionStep.TryAgainBluetoothSelectMicrobit,
-      },
+      connectFailure: [
+        {
+          guard: guards.isNoDeviceSelectedError,
+          target: DataConnectionStep.TryAgainBluetoothSelectMicrobit,
+        },
+      ],
     },
   },
 

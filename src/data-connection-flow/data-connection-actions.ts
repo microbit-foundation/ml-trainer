@@ -450,10 +450,13 @@ const performConnectBluetooth = async (
 ): Promise<void> => {
   const state = getDataConnectionState();
   deps.logging.event({ type: "connect-user", message: "bluetooth" });
-  await deps.connectionService.connectBluetooth(
+  const result = await deps.connectionService.connectBluetooth(
     state.bluetoothMicrobitName,
     clearDevice
   );
+  if (result !== ConnectResult.Success) {
+    await sendEvent({ type: "connectFailure", reason: result }, deps);
+  }
 };
 
 /**
