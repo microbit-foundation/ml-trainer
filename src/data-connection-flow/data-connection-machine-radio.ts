@@ -5,6 +5,7 @@
  */
 import {
   actions,
+  backToStartTransition,
   badFirmwareState,
   connectedState,
   createInitialConnectHandlers,
@@ -57,14 +58,7 @@ export const radioFlow: DataConnectionFlowDef = {
           target: DataConnectionStep.ConnectBattery,
           actions: actions.setRemotePhase,
         },
-        {
-          guard: guards.isStartingOver,
-          target: DataConnectionStep.StartOver,
-        },
-        {
-          guard: always,
-          target: DataConnectionStep.Start,
-        },
+        ...backToStartTransition,
       ],
       ...switchToWebBluetooth,
     },
