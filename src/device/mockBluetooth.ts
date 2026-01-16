@@ -21,11 +21,13 @@ import {
  * - 'success': Fires CONNECTING -> CONNECTED
  * - 'failure': Fires CONNECTING -> specified status (e.g., DISCONNECTED)
  * - 'noDevice': Fires NO_AUTHORIZED_DEVICE and throws DeviceError
+ * - 'error': Throws DeviceError with the specified code (e.g., 'disabled', 'permission-denied')
  */
 export type ConnectBehavior =
   | { outcome: "success" }
   | { outcome: "failure"; status: ConnectionStatus }
-  | { outcome: "noDevice" };
+  | { outcome: "noDevice" }
+  | { outcome: "error"; code: string };
 
 /**
  * A mock Bluetooth connection used during end-to-end testing.
@@ -57,6 +59,11 @@ export class MockWebBluetoothConnection
    * When empty, defaults to success.
    */
   private connectBehaviors: ConnectBehavior[] = [];
+
+  /**
+   * What checkAvailability() returns. Defaults to "available".
+   */
+  private availabilityStatus: ConnectionAvailabilityStatus = "available";
 
   /**
    * Delay between status changes in ms. Shorter = faster tests.
@@ -97,6 +104,20 @@ export class MockWebBluetoothConnection
   }
 
   /**
+   * Set what checkAvailability() returns.
+   * Used to test permission error scenarios in the native Bluetooth flow.
+   *
+   * Example:
+   * ```typescript
+   * // Simulate Bluetooth being disabled
+   * mock.setAvailabilityStatus('disabled');
+   * ```
+   */
+  setAvailabilityStatus(status: ConnectionAvailabilityStatus) {
+    this.availabilityStatus = status;
+  }
+
+  /**
    * Simulate the device disconnecting unexpectedly.
    * This fires a DISCONNECTED status event, which the app's status listener
    * will pick up and potentially trigger reconnection logic.
@@ -121,7 +142,7 @@ export class MockWebBluetoothConnection
   dispose(): void {}
 
   async checkAvailability(): Promise<ConnectionAvailabilityStatus> {
-    return "available";
+    return this.availabilityStatus;
   }
 
   async connect(_options?: ConnectOptions): Promise<void> {
@@ -147,6 +168,12 @@ export class MockWebBluetoothConnection
         throw new DeviceError({
           code: "no-device-selected",
           message: "No device selected",
+        });
+
+      case "error":
+        throw new DeviceError({
+          code: behavior.code,
+          message: `Mock error: ${behavior.code}`,
         });
     }
   }
