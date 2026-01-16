@@ -1,0 +1,8 @@
+# iOS
+app_identifier "org.microbit.createai"
+apple_id ENV["APPLE_ID"] # Only needed for deliver/pilot, not for building
+team_id "Z2ZPB8NPHN"
+
+# Android
+json_key_file ENV["GOOGLE_PLAY_JSON_KEY_FILE"] # For future Play Store uploads
+package_name "org.microbit.createai"

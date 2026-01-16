@@ -1,0 +1,58 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Build signed IPA for App Store/TestFlight"
+  lane :build do
+    setup_ci if ENV["CI"]
+
+    # Fetch certificates and profiles from Match repo
+    match(
+      type: "appstore",
+      readonly: ENV["CI"] == "true"
+    )
+
+    # Set build number from CI or default to 1
+    if ENV["BUILD_NUMBER"]
+      increment_build_number(
+        xcodeproj: "ios/App/App.xcodeproj",
+        build_number: ENV["BUILD_NUMBER"]
+      )
+    end
+
+    build_app(
+      workspace: "ios/App/App.xcworkspace",
+      scheme: "App",
+      configuration: "Release",
+      export_method: "app-store",
+      output_directory: "ios/App/build/output",
+      output_name: "App.ipa",
+      export_options: {
+        signingStyle: "manual",
+        provisioningProfiles: {
+          "org.microbit.createai" => "match AppStore org.microbit.createai"
+        }
+      }
+    )
+  end
+end
+
+platform :android do
+  desc "Build signed AAB and APK for Play Store"
+  lane :build do
+    # Set version code from CI or leave as-is for local builds
+    if ENV["BUILD_NUMBER"]
+      sh("sed -i'' -e 's/versionCode [0-9]*/versionCode #{ENV["BUILD_NUMBER"]}/' ../android/app/build.gradle")
+    end
+
+    gradle(
+      project_dir: "android",
+      tasks: ["assembleRelease", "bundleRelease"],
+      properties: {
+        "android.injected.signing.store.file" => ENV["SIGNING_STORE_FILE"],
+        "android.injected.signing.store.password" => ENV["SIGNING_STORE_PASSWORD"],
+        "android.injected.signing.key.alias" => ENV.fetch("SIGNING_KEY_ALIAS", "upload"),
+        "android.injected.signing.key.password" => ENV["SIGNING_KEY_PASSWORD"]
+      }
+    )
+  end
+end

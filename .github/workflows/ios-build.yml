@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   build-ios:
-    timeout-minutes: 10
+    timeout-minutes: 25
     runs-on: macos-latest
     permissions:
       contents: read
@@ -25,6 +25,16 @@ jobs:
           node-version: 20
           cache: "npm"
           registry-url: "https://npm.pkg.github.com"
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Setup SSH for Match
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.FASTLANE_MATCH_DEPLOY_KEY }}
 
       - run: npm ci
         env:
@@ -44,11 +54,14 @@ jobs:
       - run: pod install
         working-directory: ios/App
 
-      - run: xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug -sdk iphonesimulator -derivedDataPath build CODE_SIGNING_ALLOWED=NO
-        working-directory: ios/App
+      - name: Build with Fastlane
+        run: bundle exec fastlane ios build
+        env:
+          MATCH_PASSWORD: ${{ secrets.FASTLANE_MATCH_PASSWORD }}
+          BUILD_NUMBER: ${{ github.run_number }}
 
       - uses: actions/upload-artifact@v4
         with:
           name: ios-app-${{ github.sha }}
-          path: ios/App/build/Build/Products/Debug-iphonesimulator/*.app
+          path: ios/App/build/output/*.ipa
           retention-days: 30
