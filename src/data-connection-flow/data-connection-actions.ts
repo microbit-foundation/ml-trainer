@@ -334,6 +334,21 @@ const executeAction = async (
         deps.setConfig
       );
       break;
+
+    case "togglePairingMethod": {
+      const currentState = getDataConnectionState();
+      setDataConnectionState(
+        {
+          ...currentState,
+          pairingMethod:
+            currentState.pairingMethod === "triple-reset"
+              ? "a-b-reset"
+              : "triple-reset",
+        },
+        deps.setConfig
+      );
+      break;
+    }
   }
 };
 

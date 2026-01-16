@@ -126,6 +126,10 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
     on: {
       next: { target: DataConnectionStep.BluetoothPattern },
       back: backToStartTransition,
+      // Internal transition to toggle between pairing method variants
+      switchPairingMethod: {
+        actions: [{ type: "togglePairingMethod" }],
+      },
     },
   },
 

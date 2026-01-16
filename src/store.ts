@@ -344,6 +344,7 @@ const createMlStore = (logging: Logging) => {
           download: {
             step: DownloadStep.None,
             microbitChoice: SameOrDifferentChoice.Default,
+            pairingMethod: "triple-reset",
           },
           downloadFlashingProgress: { stage: undefined, value: undefined },
           dataConnection: getInitialDataConnectionState(),

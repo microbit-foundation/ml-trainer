@@ -74,7 +74,9 @@ export type DataConnectionEvent =
   | { type: "permissionsOk" }
   | { type: "bluetoothDisabled" }
   | { type: "permissionDenied" }
-  | { type: "locationDisabled" };
+  | { type: "locationDisabled" }
+  // Switch between pairing method variants (triple-reset vs a-b-reset).
+  | { type: "switchPairingMethod" };
 
 export type DataConnectionAction =
   | { type: "setConnectionType"; connectionType: DataConnectionType }
@@ -124,7 +126,11 @@ export type DataConnectionAction =
    * Set the checking permissions flag (native Bluetooth only).
    * Used to show loading state on "Try Again" button.
    */
-  | { type: "setCheckingPermissions"; value: boolean };
+  | { type: "setCheckingPermissions"; value: boolean }
+  /**
+   * Toggle between pairing method variants (triple-reset ↔ a-b-reset).
+   */
+  | { type: "togglePairingMethod" };
 
 export type DataConnectionFlowDef = FlowDefinition<
   DataConnectionStep,

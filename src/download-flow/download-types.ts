@@ -2,6 +2,7 @@ import {
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
 } from "@microbit/microbit-connection";
+import { BluetoothPairingMethod } from "../data-connection-flow/data-connection-types";
 import { HexData } from "../model";
 
 /**
@@ -65,4 +66,8 @@ export interface DownloadState {
    * We remember your choice for easy repeated flashes for as long as the editor is open.
    */
   connection?: MicrobitWebUSBConnection | MicrobitWebBluetoothConnection;
+  /**
+   * Which pairing method variant to show in the Bluetooth tutorial dialog.
+   */
+  pairingMethod: BluetoothPairingMethod;
 }

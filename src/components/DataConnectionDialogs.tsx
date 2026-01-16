@@ -68,6 +68,8 @@ const DataConnectionDialogs = () => {
           {...dialogCommonProps}
           onBackClick={actions.onBackClick}
           onNextClick={actions.onNextClick}
+          pairingMethod={state.pairingMethod}
+          onSwitchPairingMethod={actions.switchPairingMethod}
         />
       );
     }

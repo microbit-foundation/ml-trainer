@@ -412,7 +412,7 @@
     "description": "Troubleshooting heading"
   },
   "connect-try-another-way": {
-    "defaultMessage": "Not working? Try another way",
+    "defaultMessage": "Try another way",
     "description": "Link to alternative connection method"
   },
   "connect-with-batteries": {
@@ -1506,6 +1506,10 @@
   "reload-action": {
     "defaultMessage": "Recarregar",
     "description": "Reload button text"
+  },
+  "reset-to-bluetooth-mode-ab-subtitle": {
+    "defaultMessage": "Hold A+B and press RESET",
+    "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
   },
   "reset-to-bluetooth-mode-heading": {
     "defaultMessage": "Reset to Bluetooth mode",

@@ -31,6 +31,13 @@ export enum DataConnectionType {
  */
 export type RadioFlowPhase = "remote" | "bridge";
 
+/**
+ * Which method to show for entering Bluetooth pairing mode.
+ * - "triple-reset": Press reset button three times
+ * - "a-b-reset": Hold A+B and press reset
+ */
+export type BluetoothPairingMethod = "triple-reset" | "a-b-reset";
+
 export const dataConnectionTypeToTransport = (
   type: DataConnectionType
 ): ConnectionTransport => {
@@ -169,6 +176,12 @@ export interface DataConnectionState {
    * Used to show loading state on "Try Again" button in permission error dialogs.
    */
   isCheckingPermissions: boolean;
+
+  /**
+   * Which pairing method variant to show in the Bluetooth tutorial dialog.
+   * Allows user to switch between "triple-reset" and "a-b-reset" methods.
+   */
+  pairingMethod: BluetoothPairingMethod;
 }
 
 /**
@@ -208,6 +221,7 @@ export const getInitialDataConnectionState = (): DataConnectionState => {
     isStartingOver: false,
     isBrowserTabVisible: document.visibilityState === "visible",
     isCheckingPermissions: false,
+    pairingMethod: "triple-reset",
   };
 };
 

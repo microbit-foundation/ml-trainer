@@ -36,6 +36,10 @@ export interface DataConnectionActions {
    * Only needed on older Android (< API 31) where location is required for BLE.
    */
   openLocationSettings?: () => void;
+  /**
+   * Switches between pairing method variants (triple-reset ↔ a-b-reset).
+   */
+  switchPairingMethod: () => void;
 }
 
 /**
@@ -79,6 +83,8 @@ export const useDataConnectionActions = (): DataConnectionActions => {
       disconnect: () => dataConnectionMachine.fireEvent({ type: "disconnect" }),
       openAppSettings,
       openLocationSettings: android ? openLocationSettings : undefined,
+      switchPairingMethod: () =>
+        dataConnectionMachine.fireEvent({ type: "switchPairingMethod" }),
     };
   }, [dataConnectionMachine, openAppSettings, openLocationSettings, android]);
 };

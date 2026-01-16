@@ -27,6 +27,7 @@ const createState = (
   isStartingOver: false,
   isBrowserTabVisible: true,
   isCheckingPermissions: false,
+  pairingMethod: "triple-reset",
   ...overrides,
 });
 

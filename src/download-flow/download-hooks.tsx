@@ -61,6 +61,15 @@ const createDownloadActions = (deps: DownloadDependencies) => ({
     setDownloadState({ ...getDownloadState(), bluetoothMicrobitName: name });
   },
 
+  switchPairingMethod: () => {
+    const state = getDownloadState();
+    setDownloadState({
+      ...state,
+      pairingMethod:
+        state.pairingMethod === "triple-reset" ? "a-b-reset" : "triple-reset",
+    });
+  },
+
   getOnNext: (): (() => void) | undefined => {
     if (!canTransition({ type: "next" }, deps)) {
       return undefined;

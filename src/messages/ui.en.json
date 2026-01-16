@@ -742,7 +742,7 @@
   "connect-try-another-way": [
     {
       "type": 0,
-      "value": "Not working? Try another way"
+      "value": "Try another way"
     }
   ],
   "connect-with-batteries": [
@@ -2687,6 +2687,12 @@
     {
       "type": 0,
       "value": "Reload"
+    }
+  ],
+  "reset-to-bluetooth-mode-ab-subtitle": [
+    {
+      "type": 0,
+      "value": "Hold A+B and press RESET"
     }
   ],
   "reset-to-bluetooth-mode-heading": [
