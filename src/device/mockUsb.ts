@@ -37,8 +37,8 @@ export class MockWebUSBConnection
   }
   async initialize(): Promise<void> {}
 
-  async checkAvailability(): Promise<ConnectionAvailabilityStatus> {
-    return "available";
+  checkAvailability(): Promise<ConnectionAvailabilityStatus> {
+    return Promise.resolve("available");
   }
 
   dispose(): void {}

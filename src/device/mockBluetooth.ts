@@ -141,8 +141,8 @@ export class MockWebBluetoothConnection
 
   dispose(): void {}
 
-  async checkAvailability(): Promise<ConnectionAvailabilityStatus> {
-    return this.availabilityStatus;
+  checkAvailability(): Promise<ConnectionAvailabilityStatus> {
+    return Promise.resolve(this.availabilityStatus);
   }
 
   async connect(_options?: ConnectOptions): Promise<void> {
