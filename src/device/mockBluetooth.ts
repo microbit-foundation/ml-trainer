@@ -6,6 +6,7 @@ import {
   ConnectionStatusEvent,
   DeviceConnectionEventMap,
   DeviceError,
+  DeviceErrorCode,
   FlashDataSource,
   FlashOptions,
   LedMatrix,
@@ -27,7 +28,7 @@ export type ConnectBehavior =
   | { outcome: "success" }
   | { outcome: "failure"; status: ConnectionStatus }
   | { outcome: "noDevice" }
-  | { outcome: "error"; code: string };
+  | { outcome: "error"; code: DeviceErrorCode };
 
 /**
  * A mock Bluetooth connection used during end-to-end testing.
