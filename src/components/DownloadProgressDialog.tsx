@@ -56,7 +56,7 @@ const getSubtitleId = (stage: ProgressStage | undefined): string => {
     case ProgressStage.FullFlashing:
       return "downloading-stage-flashing";
     default:
-      return "downloading-subtitle";
+      throw new Error(stage);
   }
 };
 

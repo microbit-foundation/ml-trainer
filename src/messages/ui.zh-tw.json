@@ -1047,19 +1047,13 @@
       "value": "Finding micro:bit…"
     }
   ],
-  "downloading-stage-flashing": [
-    {
-      "type": 0,
-      "value": "Downloading program to micro:bit…"
-    }
-  ],
   "downloading-stage-initializing": [
     {
       "type": 0,
       "value": "Initializing…"
     }
   ],
-  "downloading-subtitle": [
+  "downloading-stage-flashing": [
     {
       "type": 0,
       "value": "請稍等。正在將程式下載至 micro:bit。"

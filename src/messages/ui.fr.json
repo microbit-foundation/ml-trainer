@@ -1051,19 +1051,13 @@
       "value": "Finding micro:bit…"
     }
   ],
-  "downloading-stage-flashing": [
-    {
-      "type": 0,
-      "value": "Downloading program to micro:bit…"
-    }
-  ],
   "downloading-stage-initializing": [
     {
       "type": 0,
       "value": "Initializing…"
     }
   ],
-  "downloading-subtitle": [
+  "downloading-stage-flashing": [
     {
       "type": 0,
       "value": "Veuillez patienter. Téléchargement du programme sur le micro:bit."
