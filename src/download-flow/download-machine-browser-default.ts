@@ -148,7 +148,16 @@ export const browserDefaultFlow: DownloadFlowDefinition = {
 
   [DownloadStep.IncompatibleDevice]: {
     on: {
-      back: { target: DownloadStep.ConnectCable },
+      back: [
+        {
+          guard: guards.hasActiveDataConnection,
+          target: DownloadStep.ChooseSameOrDifferentMicrobit,
+        },
+        {
+          guard: always,
+          target: DownloadStep.ConnectCable,
+        },
+      ],
     },
   },
 };

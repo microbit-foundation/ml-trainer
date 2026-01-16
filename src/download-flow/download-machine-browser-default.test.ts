@@ -268,10 +268,22 @@ describe("Download flow: Browser Default", () => {
       expect(result?.step).toBe(DownloadStep.ConnectCable);
     });
 
-    it("IncompatibleDevice back -> ConnectCable", () => {
-      const result = transition(DownloadStep.IncompatibleDevice, {
-        type: "back",
-      });
+    it("IncompatibleDevice back -> ChooseSameOrDifferentMicrobit (has data connection)", () => {
+      const result = transition(
+        DownloadStep.IncompatibleDevice,
+        { type: "back" },
+        { hadSuccessfulConnection: true }
+      );
+
+      expect(result?.step).toBe(DownloadStep.ChooseSameOrDifferentMicrobit);
+    });
+
+    it("IncompatibleDevice back -> ConnectCable (no data connection)", () => {
+      const result = transition(
+        DownloadStep.IncompatibleDevice,
+        { type: "back" },
+        { hadSuccessfulConnection: false }
+      );
 
       expect(result?.step).toBe(DownloadStep.ConnectCable);
     });
