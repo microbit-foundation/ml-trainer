@@ -68,9 +68,10 @@ const DownloadProgressDialog = ({
   stage,
   progress,
 }: DownloadProgressDialogProps) => {
-  // Initializing is quick and always first - skip showing dialog for it.
-  // On native the user might get Bluetooth permission dialogs at this point.
-  if (stage === ProgressStage.Initializing) {
+  // Skip showing dialog when stage is undefined (not yet started) or Initializing
+  // (quick and always first). On native the user might get Bluetooth permission
+  // dialogs at this point.
+  if (stage === undefined || stage === ProgressStage.Initializing) {
     return null;
   }
   // On web, show overlay instead of dialog while browser device picker is open.
