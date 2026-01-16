@@ -82,6 +82,20 @@ export enum DataConnectionStep {
   MicrobitUnsupported = "MicrobitUnsupported",
   WebUsbBluetoothUnsupported = "WebUsbBluetoothUnsupported",
 
+  // Permission error stages (native Bluetooth only).
+  /**
+   * Bluetooth is disabled on the device.
+   */
+  BluetoothDisabled = "BluetoothDisabled",
+  /**
+   * User denied Bluetooth permission request.
+   */
+  BluetoothPermissionDenied = "BluetoothPermissionDenied",
+  /**
+   * Location services are disabled (Android < 12 only).
+   */
+  LocationDisabled = "LocationDisabled",
+
   ConnectionLost = "ConnectionLost",
   StartOver = "StartOver",
 }
@@ -149,6 +163,12 @@ export interface DataConnectionState {
    * successfully connected yet.
    */
   hasSwitchedConnectionType: boolean;
+
+  /**
+   * True while a permission check is in progress (native Bluetooth only).
+   * Used to show loading state on "Try Again" button in permission error dialogs.
+   */
+  isCheckingPermissions: boolean;
 }
 
 /**
@@ -187,6 +207,7 @@ export const getInitialDataConnectionState = (): DataConnectionState => {
     hasFailedOnce: false,
     isStartingOver: false,
     isBrowserTabVisible: document.visibilityState === "visible",
+    isCheckingPermissions: false,
   };
 };
 

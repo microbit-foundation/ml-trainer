@@ -1,6 +1,7 @@
 import {
   BoardVersion,
   ConnectOptions,
+  ConnectionAvailabilityStatus,
   ConnectionStatus,
   ConnectionStatusEvent,
   DeviceConnectionEventMap,
@@ -118,6 +119,10 @@ export class MockWebBluetoothConnection
   }
 
   dispose(): void {}
+
+  async checkAvailability(): Promise<ConnectionAvailabilityStatus> {
+    return "available";
+  }
 
   async connect(_options?: ConnectOptions): Promise<void> {
     const behavior = this.connectBehaviors.shift() ?? { outcome: "success" };

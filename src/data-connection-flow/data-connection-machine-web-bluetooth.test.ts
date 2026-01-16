@@ -26,6 +26,7 @@ const createState = (
   hasFailedOnce: false,
   isStartingOver: false,
   isBrowserTabVisible: true,
+  isCheckingPermissions: false,
   ...overrides,
 });
 

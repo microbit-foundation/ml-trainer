@@ -7,6 +7,7 @@ import {
   AccelerometerDataEvent,
   BoardVersion,
   ButtonEvent,
+  ConnectionAvailabilityStatus,
   ConnectionStatus,
   ConnectionStatusEvent,
   ConnectionStatus as DeviceConnectionStatus,
@@ -55,12 +56,21 @@ export class ConnectionService {
     await this.radioBridge.initialize();
   }
 
-  isWebBluetoothSupported(): boolean {
-    return this.bluetooth.status !== DeviceConnectionStatus.NOT_SUPPORTED;
+  async isWebBluetoothSupported(): Promise<boolean> {
+    // On native platforms, we use native Bluetooth, not Web Bluetooth.
+    // Return false here - native is handled separately via isNativePlatform() checks.
+    if (isNativePlatform()) {
+      return false;
+    }
+    // Only check for "unsupported" - the browser's device picker handles the
+    // disabled case with its own UI ("Turn on Bluetooth to allow pairing").
+    const status = await this.bluetooth.checkAvailability();
+    return status !== "unsupported";
   }
 
-  isWebUsbSupported(): boolean {
-    return this.usb.status !== DeviceConnectionStatus.NOT_SUPPORTED;
+  async isWebUsbSupported(): Promise<boolean> {
+    const status = await this.usb.checkAvailability();
+    return status !== "unsupported";
   }
 
   getDefaultFlashConnection(): MicrobitConnection {
@@ -116,6 +126,14 @@ export class ConnectionService {
 
   getBluetoothBoardVersion(): BoardVersion | undefined {
     return this.bluetooth.getBoardVersion();
+  }
+
+  /**
+   * Check if Bluetooth is available and permissions are granted.
+   * Used by native Bluetooth flow before connecting.
+   */
+  async checkBluetoothAvailability(): Promise<ConnectionAvailabilityStatus> {
+    return this.bluetooth.checkAvailability();
   }
 
   async clearUsbDevice(): Promise<void> {

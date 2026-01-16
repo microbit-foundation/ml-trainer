@@ -75,6 +75,26 @@
     "defaultMessage": "Blocks preview",
     "description": "Blocks preview heading text"
   },
+  "bluetooth-disabled-body": {
+    "defaultMessage": "Please turn on Bluetooth and try again.",
+    "description": "Body text for Bluetooth disabled error dialog"
+  },
+  "bluetooth-disabled-heading": {
+    "defaultMessage": "Bluetooth is turned off",
+    "description": "Heading for Bluetooth disabled error dialog"
+  },
+  "bluetooth-permission-denied-body-android": {
+    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in <link>{appNameShort} settings</link>.",
+    "description": "Body text for Bluetooth permission denied error dialog on Android"
+  },
+  "bluetooth-permission-denied-body-ios": {
+    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in <link>{appNameShort} settings</link>.",
+    "description": "Body text for Bluetooth permission denied error dialog on iOS"
+  },
+  "bluetooth-permission-denied-heading": {
+    "defaultMessage": "Bluetooth permission required",
+    "description": "Heading for Bluetooth permission denied error dialog"
+  },
   "bluetooth-unsupported-advice": {
     "defaultMessage": "Nous recommandons Google Chrome ou Microsoft Edge pour que vous puissiez vous connecter directement à votre micro:bit.",
     "description": "Note on supported browsers"
@@ -1170,6 +1190,14 @@
   "loading": {
     "defaultMessage": "Chargement",
     "description": "Aria label for loading spinner"
+  },
+  "location-disabled-body": {
+    "defaultMessage": "Location services are required for Bluetooth on this device. Please enable location services in <link>Settings</link> and try again.",
+    "description": "Body text for location disabled error dialog (Android only)"
+  },
+  "location-disabled-heading": {
+    "defaultMessage": "Location services required",
+    "description": "Heading for location disabled error dialog (Android only)"
   },
   "main-menu": {
     "defaultMessage": "Menu principal",

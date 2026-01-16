@@ -6,8 +6,10 @@
 import { useDataConnectionMachine } from "./data-connection-internal-hooks";
 import { useStore } from "../store";
 import { canTransition } from "./data-connection-actions";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { DataConnectionStep } from "./data-connection-types";
+import { BleClient } from "@capacitor-community/bluetooth-le";
+import { isAndroid } from "../platform";
 
 /**
  * UI actions for the connection flow.
@@ -25,6 +27,15 @@ export interface DataConnectionActions {
   onStartBluetoothFlow: () => void;
   onChangeMicrobitName: (name: string) => void;
   disconnect: () => void;
+  /**
+   * Opens app settings. Use when permissions have been declined.
+   */
+  openAppSettings: () => void;
+  /**
+   * Opens location settings. Only available on Android.
+   * Only needed on older Android (< API 31) where location is required for BLE.
+   */
+  openLocationSettings?: () => void;
 }
 
 /**
@@ -33,6 +44,16 @@ export interface DataConnectionActions {
  */
 export const useDataConnectionActions = (): DataConnectionActions => {
   const dataConnectionMachine = useDataConnectionMachine();
+
+  const openAppSettings = useCallback(() => {
+    BleClient.openAppSettings().catch(() => {});
+  }, []);
+
+  const openLocationSettings = useCallback(() => {
+    BleClient.openLocationSettings().catch(() => {});
+  }, []);
+
+  const android = isAndroid();
 
   return useMemo((): DataConnectionActions => {
     return {
@@ -56,8 +77,10 @@ export const useDataConnectionActions = (): DataConnectionActions => {
       onChangeMicrobitName: (name: string) =>
         dataConnectionMachine.fireEvent({ type: "setMicrobitName", name }),
       disconnect: () => dataConnectionMachine.fireEvent({ type: "disconnect" }),
+      openAppSettings,
+      openLocationSettings: android ? openLocationSettings : undefined,
     };
-  }, [dataConnectionMachine]);
+  }, [dataConnectionMachine, openAppSettings, openLocationSettings, android]);
 };
 
 /**

@@ -26,6 +26,7 @@ const createState = (
   hasFailedOnce: false,
   isStartingOver: false,
   isBrowserTabVisible: true,
+  isCheckingPermissions: false,
   ...overrides,
 });
 
@@ -59,16 +60,60 @@ describe("Data connection flow: Native Bluetooth", () => {
   });
 
   describe("forward navigation", () => {
-    it("Start -> NativeBluetoothPreConnectTutorial", () => {
+    it("Start next -> triggers checkPermissions", () => {
       const result = transition(DataConnectionStep.Start, { type: "next" });
+
+      // Stay in Start while checking permissions (no step change in transition)
+      expect(result?.step).toBe(DataConnectionStep.Start);
+      expect(result?.actions).toContainEqual({ type: "checkPermissions" });
+    });
+
+    it("Start permissionsOk -> NativeBluetoothPreConnectTutorial", () => {
+      const result = transition(DataConnectionStep.Start, {
+        type: "permissionsOk",
+      });
 
       expect(result?.step).toBe(
         DataConnectionStep.NativeBluetoothPreConnectTutorial
       );
     });
 
-    it("StartOver -> NativeBluetoothPreConnectTutorial", () => {
+    it("Start bluetoothDisabled -> BluetoothDisabled", () => {
+      const result = transition(DataConnectionStep.Start, {
+        type: "bluetoothDisabled",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.BluetoothDisabled);
+    });
+
+    it("Start permissionDenied -> BluetoothPermissionDenied", () => {
+      const result = transition(DataConnectionStep.Start, {
+        type: "permissionDenied",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.BluetoothPermissionDenied);
+    });
+
+    it("Start locationDisabled -> LocationDisabled", () => {
+      const result = transition(DataConnectionStep.Start, {
+        type: "locationDisabled",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.LocationDisabled);
+    });
+
+    it("StartOver next -> triggers checkPermissions", () => {
       const result = transition(DataConnectionStep.StartOver, { type: "next" });
+
+      // Stay in StartOver while checking permissions
+      expect(result?.step).toBe(DataConnectionStep.StartOver);
+      expect(result?.actions).toContainEqual({ type: "checkPermissions" });
+    });
+
+    it("StartOver permissionsOk -> NativeBluetoothPreConnectTutorial", () => {
+      const result = transition(DataConnectionStep.StartOver, {
+        type: "permissionsOk",
+      });
 
       expect(result?.step).toBe(
         DataConnectionStep.NativeBluetoothPreConnectTutorial
@@ -84,7 +129,7 @@ describe("Data connection flow: Native Bluetooth", () => {
       expect(result?.step).toBe(DataConnectionStep.BluetoothPattern);
     });
 
-    it("BluetoothPattern -> FlashingInProgress with connect action", () => {
+    it("BluetoothPattern next -> FlashingInProgress with connect", () => {
       const result = transition(DataConnectionStep.BluetoothPattern, {
         type: "next",
       });
@@ -135,13 +180,40 @@ describe("Data connection flow: Native Bluetooth", () => {
       expect(result?.actions).toContainEqual({ type: "flash" });
     });
 
-    it("connectFailure -> ConnectFailed", () => {
+    it("connectFailure -> ConnectFailed for generic errors", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
         type: "connectFailure",
         code: "unknown-error",
       });
 
       expect(result?.step).toBe(DataConnectionStep.ConnectFailed);
+    });
+
+    it("connectFailure with disabled code -> BluetoothDisabled", () => {
+      const result = transition(DataConnectionStep.FlashingInProgress, {
+        type: "connectFailure",
+        code: "disabled",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.BluetoothDisabled);
+    });
+
+    it("connectFailure with permission-denied code -> BluetoothPermissionDenied", () => {
+      const result = transition(DataConnectionStep.FlashingInProgress, {
+        type: "connectFailure",
+        code: "permission-denied",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.BluetoothPermissionDenied);
+    });
+
+    it("connectFailure with location-disabled code -> LocationDisabled", () => {
+      const result = transition(DataConnectionStep.FlashingInProgress, {
+        type: "connectFailure",
+        code: "location-disabled",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.LocationDisabled);
     });
 
     it("flashSuccess -> BluetoothConnect with connectBluetooth action", () => {
@@ -194,6 +266,88 @@ describe("Data connection flow: Native Bluetooth", () => {
     });
   });
 
+  describe("permission error recovery", () => {
+    it("BluetoothDisabled tryAgain -> internal transition with checkPermissions", () => {
+      const result = transition(DataConnectionStep.BluetoothDisabled, {
+        type: "tryAgain",
+      });
+
+      // Stays in same state while checking permissions
+      expect(result?.step).toBe(DataConnectionStep.BluetoothDisabled);
+      expect(result?.actions).toContainEqual({
+        type: "setCheckingPermissions",
+        value: true,
+      });
+      expect(result?.actions).toContainEqual({ type: "checkPermissions" });
+    });
+
+    it("BluetoothDisabled permissionsOk -> NativeBluetoothPreConnectTutorial", () => {
+      // Always goes to tutorial after permission recovery.
+      // Stored name (if any) will be pre-filled there.
+      const result = transition(DataConnectionStep.BluetoothDisabled, {
+        type: "permissionsOk",
+      });
+
+      expect(result?.step).toBe(
+        DataConnectionStep.NativeBluetoothPreConnectTutorial
+      );
+      expect(result?.actions).toContainEqual({
+        type: "setCheckingPermissions",
+        value: false,
+      });
+    });
+
+    it("BluetoothDisabled bluetoothDisabled -> stays in BluetoothDisabled", () => {
+      const result = transition(DataConnectionStep.BluetoothDisabled, {
+        type: "bluetoothDisabled",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.BluetoothDisabled);
+      expect(result?.actions).toContainEqual({
+        type: "setCheckingPermissions",
+        value: false,
+      });
+    });
+
+    it("BluetoothDisabled permissionDenied -> BluetoothPermissionDenied", () => {
+      const result = transition(DataConnectionStep.BluetoothDisabled, {
+        type: "permissionDenied",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.BluetoothPermissionDenied);
+      expect(result?.actions).toContainEqual({
+        type: "setCheckingPermissions",
+        value: false,
+      });
+    });
+
+    it("BluetoothPermissionDenied tryAgain -> internal transition with checkPermissions", () => {
+      const result = transition(DataConnectionStep.BluetoothPermissionDenied, {
+        type: "tryAgain",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.BluetoothPermissionDenied);
+      expect(result?.actions).toContainEqual({
+        type: "setCheckingPermissions",
+        value: true,
+      });
+      expect(result?.actions).toContainEqual({ type: "checkPermissions" });
+    });
+
+    it("LocationDisabled tryAgain -> internal transition with checkPermissions", () => {
+      const result = transition(DataConnectionStep.LocationDisabled, {
+        type: "tryAgain",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.LocationDisabled);
+      expect(result?.actions).toContainEqual({
+        type: "setCheckingPermissions",
+        value: true,
+      });
+      expect(result?.actions).toContainEqual({ type: "checkPermissions" });
+    });
+  });
+
   describe("error recovery", () => {
     it("ConnectFailed next -> BluetoothConnect with status and connectBluetooth", () => {
       const result = transition(DataConnectionStep.ConnectFailed, {
@@ -236,6 +390,9 @@ describe("Data connection flow: Native Bluetooth", () => {
       DataConnectionStep.BluetoothPattern,
       DataConnectionStep.ConnectFailed,
       DataConnectionStep.ConnectionLost,
+      DataConnectionStep.BluetoothDisabled,
+      DataConnectionStep.BluetoothPermissionDenied,
+      DataConnectionStep.LocationDisabled,
     ];
 
     stepsWithClose.forEach((step) => {

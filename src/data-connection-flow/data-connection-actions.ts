@@ -323,6 +323,17 @@ const executeAction = async (
         );
       }
       break;
+
+    case "checkPermissions":
+      await performCheckPermissions(deps);
+      break;
+
+    case "setCheckingPermissions":
+      setDataConnectionState(
+        { ...getDataConnectionState(), isCheckingPermissions: action.value },
+        deps.setConfig
+      );
+      break;
   }
 };
 
@@ -527,17 +538,55 @@ const performDisconnect = async (deps: DataConnectionDeps): Promise<void> => {
 };
 
 /**
+ * Check Bluetooth permissions before connecting.
+ * Used by native Bluetooth flow to provide better error feedback.
+ */
+const performCheckPermissions = async (
+  deps: DataConnectionDeps
+): Promise<void> => {
+  try {
+    const status = await deps.connectionService.checkBluetoothAvailability();
+
+    switch (status) {
+      case "available":
+        await sendEvent({ type: "permissionsOk" }, deps);
+        break;
+      case "disabled":
+        await sendEvent({ type: "bluetoothDisabled" }, deps);
+        break;
+      case "permission-denied":
+        await sendEvent({ type: "permissionDenied" }, deps);
+        break;
+      case "location-disabled":
+        await sendEvent({ type: "locationDisabled" }, deps);
+        break;
+      case "unsupported":
+        // Treat unsupported the same as disabled - no meaningful devices lack BLE
+        await sendEvent({ type: "bluetoothDisabled" }, deps);
+        break;
+    }
+  } catch (e) {
+    // Treat unexpected errors as permission denied
+    await sendEvent({ type: "permissionDenied" }, deps);
+  }
+};
+
+/**
  * Initialize capabilities in state from connectionService.
  * Should be called once when the provider mounts.
  */
-export const initializeCapabilities = (connectionService: {
-  isWebBluetoothSupported: () => boolean;
-  isWebUsbSupported: () => boolean;
+export const initializeCapabilities = async (connectionService: {
+  isWebBluetoothSupported: () => Promise<boolean>;
+  isWebUsbSupported: () => Promise<boolean>;
 }) => {
+  const [isWebBluetoothSupported, isWebUsbSupported] = await Promise.all([
+    connectionService.isWebBluetoothSupported(),
+    connectionService.isWebUsbSupported(),
+  ]);
   const currentState = getDataConnectionState();
   useStore.getState().setDataConnection({
     ...currentState,
-    isWebBluetoothSupported: connectionService.isWebBluetoothSupported(),
-    isWebUsbSupported: connectionService.isWebUsbSupported(),
+    isWebBluetoothSupported,
+    isWebUsbSupported,
   });
 };

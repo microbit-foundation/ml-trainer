@@ -82,7 +82,7 @@ export const DataConnectionEventProvider = ({
 
   // Initialize capabilities once on mount
   useEffect(() => {
-    initializeCapabilities(connectionService);
+    void initializeCapabilities(connectionService);
   }, [connectionService]);
   const dataCollectionMicrobitConnected = useStore(
     (s) => s.dataCollectionMicrobitConnected
