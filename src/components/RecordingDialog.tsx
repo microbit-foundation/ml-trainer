@@ -267,7 +267,7 @@ const RecordingDialog = ({
       motionPreset="none"
       isOpen={isOpen}
       onClose={handleOnClose}
-      size="lg"
+      size={{ base: "full", md: "lg" }}
       isCentered
     >
       <ModalOverlay>

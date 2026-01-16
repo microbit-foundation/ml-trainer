@@ -5,7 +5,6 @@
  */
 import {
   Button,
-  HStack,
   ListItem,
   Modal,
   ModalBody,
@@ -19,8 +18,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import ExternalLink from "./ExternalLink";
 import { useDeployment } from "../deployment";
+import ExternalLink from "./ExternalLink";
+import ModalFooterContent from "./ModalFooterContent";
 
 export type ConnectionErrorVariant =
   | "connectionLost"
@@ -77,7 +77,7 @@ const ConnectErrorDialog = ({
       motionPreset="none"
       isOpen={isOpen}
       onClose={onClose}
-      size="2xl"
+      size={{ base: "full", md: "2xl" }}
       isCentered
     >
       <ModalOverlay>
@@ -107,19 +107,22 @@ const ConnectErrorDialog = ({
               </VStack>
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent="space-between">
-            <ExternalLink
-              textId="connect-troubleshooting"
-              href={supportLinks.troubleshooting}
-            />
-            <HStack gap={5}>
+          <ModalFooter>
+            <ModalFooterContent
+              leftContent={
+                <ExternalLink
+                  textId="connect-troubleshooting"
+                  href={supportLinks.troubleshooting}
+                />
+              }
+            >
               <Button onClick={onClose} variant="secondary" size="lg">
                 <FormattedMessage id="cancel-action" />
               </Button>
               <Button onClick={onRetry} variant="primary" size="lg">
                 <FormattedMessage id="try-again-action" />
               </Button>
-            </HStack>
+            </ModalFooterContent>
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>

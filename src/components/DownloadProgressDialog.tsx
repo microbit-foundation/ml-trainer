@@ -100,7 +100,7 @@ const DownloadProgressDialog = ({
       motionPreset="none"
       isOpen={isOpen}
       onClose={noop}
-      size="3xl"
+      size={{ md: "3xl" }}
       isCentered
     >
       <ModalOverlay>

@@ -26,6 +26,7 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
+import ModalFooterContent from "./ModalFooterContent";
 import React, { useCallback, useRef, useState } from "react";
 import {
   RiCheckboxBlankLine,
@@ -65,7 +66,7 @@ export const LanguageDialog = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      size="4xl"
+      size={{ base: "full", md: "4xl" }}
       scrollBehavior="outside"
       finalFocusRef={finalFocusRef}
     >
@@ -119,21 +120,25 @@ export const LanguageDialog = ({
               </SimpleGrid>
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent="space-between">
-            <Link
-              pl={1}
-              alignSelf="flex-start"
-              href={deployment.translationLink}
-              target="_blank"
-              rel="noopener"
-              color="brand.500"
+          <ModalFooter>
+            <ModalFooterContent
+              leftContent={
+                <Link
+                  pl={1}
+                  href={deployment.translationLink}
+                  target="_blank"
+                  rel="noopener"
+                  color="brand.500"
+                >
+                  <FormattedMessage id="help-translate" />{" "}
+                  <Icon as={RiExternalLinkLine} />
+                </Link>
+              }
             >
-              <FormattedMessage id="help-translate" />{" "}
-              <Icon as={RiExternalLinkLine} />
-            </Link>
-            <Button variant="primary" onClick={onClose}>
-              <FormattedMessage id="close-action" />
-            </Button>
+              <Button variant="primary" onClick={onClose}>
+                <FormattedMessage id="close-action" />
+              </Button>
+            </ModalFooterContent>
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>

@@ -18,10 +18,11 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { FormattedMessage } from "react-intl";
-import { useSettings } from "../store";
 import { ChangeEvent, useCallback } from "react";
+import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
+import { useSettings } from "../store";
+import ModalFooterContent from "./ModalFooterContent";
 
 interface SaveHelpDialogProps {
   isOpen: boolean;
@@ -64,13 +65,18 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
               </VStack>
             </Stack>
           </ModalBody>
-          <ModalFooter justifyContent="space-between">
-            <Checkbox isChecked={skip} onChange={handleChangeSkip}>
-              <FormattedMessage id="dont-show-again" />
-            </Checkbox>
-            <Button size="lg" variant="primary" onClick={onSave}>
-              <FormattedMessage id="save-action" />
-            </Button>
+          <ModalFooter>
+            <ModalFooterContent
+              leftContent={
+                <Checkbox isChecked={skip} onChange={handleChangeSkip}>
+                  <FormattedMessage id="dont-show-again" />
+                </Checkbox>
+              }
+            >
+              <Button size="lg" variant="primary" onClick={onSave}>
+                <FormattedMessage id="save-action" />
+              </Button>
+            </ModalFooterContent>
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>

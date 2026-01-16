@@ -12,13 +12,13 @@ import {
 } from "@chakra-ui/modal";
 import {
   Button,
-  HStack,
   ModalCloseButton,
   ModalHeader,
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
+import ModalFooterContent from "./ModalFooterContent";
 
 export interface ConnectContainerDialogProps {
   isOpen: boolean;
@@ -47,7 +47,7 @@ const ConnectContainerDialog = ({
       motionPreset="none"
       isOpen={isOpen}
       onClose={onClose}
-      size="3xl"
+      size={{ base: "full", md: "3xl" }}
       isCentered
     >
       <ModalOverlay>
@@ -61,9 +61,8 @@ const ConnectContainerDialog = ({
               {children}
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent={footerLeft ? "space-between" : "end"}>
-            {footerLeft && footerLeft}
-            <HStack gap={5}>
+          <ModalFooter>
+            <ModalFooterContent leftContent={footerLeft}>
               {onBackClick && (
                 <Button onClick={onBackClick} variant="secondary" size="lg">
                   <FormattedMessage id="back-action" />
@@ -75,7 +74,7 @@ const ConnectContainerDialog = ({
                   <FormattedMessage id="next-action" />
                 </Button>
               )}
-            </HStack>
+            </ModalFooterContent>
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>

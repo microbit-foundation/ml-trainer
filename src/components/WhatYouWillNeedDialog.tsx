@@ -143,7 +143,10 @@ const WhatYouWillNeedDialog = ({
       )}
       <Grid
         width="100%"
-        templateColumns={`repeat(${itemsConfig[type].length}, 1fr)`}
+        templateColumns={{
+          base: "1fr",
+          md: `repeat(${itemsConfig[type].length}, 1fr)`,
+        }}
         gap={16}
         p="30px"
       >

@@ -92,6 +92,8 @@ const LiveGraphPanel = ({
           gap={10}
           justifyContent="center"
           zIndex={1}
+          // On mobile text will overlap
+          bg={{ base: "white", md: "unset" }}
         >
           <MicrobitWarningIllustration
             display={{ base: "none", sm: "block" }}
