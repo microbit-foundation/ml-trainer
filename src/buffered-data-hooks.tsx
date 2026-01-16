@@ -10,12 +10,10 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useRef,
 } from "react";
 import { BufferedData } from "./buffered-data";
-import { useConnectActions } from "./connect-actions-hooks";
-import { ConnectionStatus, useConnectStatus } from "./connect-status-hooks";
+import { useAccelerometerListener } from "./hooks/use-accelerometer-listener";
 import { useStore } from "./store";
 
 const BufferedDataContext = createContext<BufferedData | null>(null);
@@ -42,8 +40,6 @@ export const useBufferedData = (): BufferedData => {
 };
 
 const useBufferedDataInternal = (): BufferedData => {
-  const [connectStatus] = useConnectStatus();
-  const connection = useConnectActions();
   const dataWindow = useStore((s) => s.dataWindow);
   const bufferRef = useRef<BufferedData>();
   const getBuffer = useCallback(() => {
@@ -53,11 +49,9 @@ const useBufferedDataInternal = (): BufferedData => {
     bufferRef.current = new BufferedData(dataWindow.minSamples * 2);
     return bufferRef.current;
   }, [dataWindow.minSamples]);
-  useEffect(() => {
-    if (connectStatus !== ConnectionStatus.Connected) {
-      return;
-    }
-    const listener = (e: AccelerometerDataEvent) => {
+
+  const accelerometerListener = useCallback(
+    (e: AccelerometerDataEvent) => {
       const { x, y, z } = e.data;
       const sample = {
         x: x / 1000,
@@ -65,11 +59,11 @@ const useBufferedDataInternal = (): BufferedData => {
         z: z / 1000,
       };
       getBuffer().addSample(sample, Date.now());
-    };
-    connection.addAccelerometerListener(listener);
-    return () => {
-      connection.removeAccelerometerListener(listener);
-    };
-  }, [connection, connectStatus, getBuffer]);
+    },
+    [getBuffer]
+  );
+
+  useAccelerometerListener(accelerometerListener);
+
   return getBuffer();
 };

@@ -17,7 +17,7 @@ import { ReactNode, useCallback, useEffect } from "react";
 import { RiDownload2Line, RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { isDataConnectionDialogOpen } from "../data-connection-flow";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
@@ -29,7 +29,7 @@ import { createHomePageUrl } from "../urls";
 import ActionBar from "./ActionBar/ActionBar";
 import ItemsRight from "./ActionBar/ActionBarItemsRight";
 import AppLogo from "./AppLogo";
-import ConnectionDialogs from "./ConnectionFlowDialogs";
+import DataConnectionDialogs from "./DataConnectionDialogs";
 import FeedbackForm from "./FeedbackForm";
 import ImportErrorDialog from "./ImportErrorDialog";
 import MakeCodeLoadErrorDialog from "./MakeCodeLoadErrorDialog";
@@ -56,7 +56,9 @@ const DefaultPageLayout = ({
   showPageTitle = false,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
-  const { isDialogOpen: isConnectionDialogOpen } = useConnectionStage();
+  const isConnectionDialogOpen = useStore((s) =>
+    isDataConnectionDialogOpen(s.dataConnection.step)
+  );
   const isNonConnectionDialogOpen = useStore((s) =>
     s.isNonConnectionDialogOpen()
   );
@@ -80,7 +82,7 @@ const DefaultPageLayout = ({
   return (
     <>
       {/* Suppress dialogs to prevent overlapping dialogs */}
-      {!isNonConnectionDialogOpen && <ConnectionDialogs />}
+      {!isNonConnectionDialogOpen && <DataConnectionDialogs />}
       <Tour />
       <SaveDialogs />
       <NotCreateAiHexImportDialog

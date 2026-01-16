@@ -3,11 +3,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { useDownloadActions } from "../hooks/download-hooks";
-import { useLogging } from "../logging/logging-hooks";
-import { DownloadStep } from "../model";
+import { useDownloadActions } from "../download-flow/download-hooks";
+import { DownloadStep } from "../download-flow/download-types";
 import { useStore } from "../store";
-import { getTotalNumSamples } from "../utils/actions";
 import ConnectCableDialog from "./ConnectCableDialog";
 import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
 import DownloadChooseMicrobitDialog from "./DownloadChooseMicrobitDialog";
@@ -24,8 +22,6 @@ const DownloadDialogs = () => {
   const downloadActions = useDownloadActions();
   const stage = useStore((s) => s.download);
   const flashingProgress = useStore((s) => s.downloadFlashingProgress);
-  const actions = useStore((s) => s.actions);
-  const logging = useLogging();
 
   switch (stage.step) {
     case DownloadStep.Help:
@@ -88,46 +84,29 @@ const DownloadDialogs = () => {
           onNextClick={downloadActions.getOnNext()}
         />
       );
-    case DownloadStep.WebUsbFlashingTutorial: {
-      const handleDownloadProject = async () => {
-        logging.event({
-          type: "hex-download",
-          detail: {
-            actions: actions.length,
-            samples: getTotalNumSamples(actions),
-          },
-        });
-        await downloadActions.connectAndFlash(stage);
-      };
-
+    case DownloadStep.WebUsbFlashingTutorial:
       return (
         <SelectMicrobitUsbDialog
           isOpen
           headingId="connect-popup"
           onClose={downloadActions.close}
           onBackClick={downloadActions.getOnBack()}
-          onNextClick={handleDownloadProject}
+          onNextClick={downloadActions.getOnNext()}
         />
       );
-    }
-    case DownloadStep.BluetoothPattern: {
-      // This is only used for native bluetooth.
-      const handleConnectNativeBluetooth = async () => {
-        await downloadActions.connectAndFlash(stage);
-      };
+    case DownloadStep.BluetoothPattern:
       return (
         <EnterBluetoothPatternDialog
           isOpen
           onClose={downloadActions.close}
           onBackClick={downloadActions.getOnBack()}
-          onNextClick={handleConnectNativeBluetooth}
+          onNextClick={downloadActions.getOnNext()}
           microbitName={stage.bluetoothMicrobitName}
           onChangeMicrobitName={(name: string) => {
             downloadActions.onChangeMicrobitName(name);
           }}
         />
       );
-    }
     case DownloadStep.FlashingInProgress:
       return (
         <DownloadProgressDialog

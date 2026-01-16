@@ -6,6 +6,7 @@ import {
   ConnectionStatus,
   ConnectionStatusEvent,
   DeviceConnectionEventMap,
+  DeviceError,
   FlashDataSource,
   FlashEvent,
   FlashOptions,
@@ -45,10 +46,27 @@ export class MockWebUSBConnection
     this.dispatchTypedEvent("status", new ConnectionStatusEvent(newStatus));
   }
 
-  async connect(_options?: ConnectOptions): Promise<void> {
+  async connect(options?: ConnectOptions): Promise<void> {
+    const progress = options?.progress;
+
+    // Report FindingDevice stage before showing browser device picker
+    progress?.(ProgressStage.FindingDevice);
     this.dispatchTypedEvent("beforerequestdevice", new BeforeRequestDevice());
     await new Promise((resolve) => setTimeout(resolve, 100));
     this.dispatchTypedEvent("afterrequestdevice", new AfterRequestDevice());
+
+    // Simulate "no device selected" error when fakeDeviceId is undefined
+    // Real implementation sets DISCONNECTED and throws when user cancels device dialog
+    if (this.fakeDeviceId === undefined) {
+      this.setStatus(ConnectionStatus.DISCONNECTED);
+      throw new DeviceError({
+        code: "no-device-selected",
+        message: "No device selected",
+      });
+    }
+
+    // Report Connecting stage after device selected
+    progress?.(ProgressStage.Connecting);
     await new Promise((resolve) => setTimeout(resolve, 100));
     this.setStatus(ConnectionStatus.CONNECTED);
   }
@@ -78,6 +96,22 @@ export class MockWebUSBConnection
 
   async disconnect(): Promise<void> {}
   async serialWrite(_data: string): Promise<void> {}
+
+  /**
+   * Simulate the USB device disconnecting unexpectedly.
+   * This triggers the app's error handling for USB connection loss.
+   */
+  simulateDisconnect() {
+    this.setStatus(ConnectionStatus.DISCONNECTED);
+  }
+
+  /**
+   * Simulate the USB device being reconnected (e.g., user plugs it back in).
+   * This sets status to CONNECTED without going through the connect flow.
+   */
+  simulateReconnect() {
+    this.setStatus(ConnectionStatus.CONNECTED);
+  }
 
   clearDevice(): void {
     this.fakeDeviceId = undefined;

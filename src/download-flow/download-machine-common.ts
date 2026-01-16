@@ -1,0 +1,158 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+import {
+  BoardVersion,
+  ConnectionStatus as DeviceConnectionStatus,
+  MicrobitWebBluetoothConnection,
+  MicrobitWebUSBConnection,
+} from "@microbit/microbit-connection";
+import { DataConnectionType } from "../data-connection-flow";
+import { isNativeBluetoothConnection } from "../device/connection-utils";
+import { DownloadStep, SameOrDifferentChoice } from "./download-types";
+import { always, FlowDefinition } from "../state-machine";
+import { HexData } from "../model";
+
+export type DownloadEvent =
+  | { type: "start"; hex: HexData; bluetoothMicrobitName?: string }
+  | { type: "next"; skipHelpNextTime?: boolean }
+  | { type: "back" }
+  | { type: "close" }
+  | { type: "choseSame" }
+  | { type: "choseDifferent" }
+  | { type: "connectSuccess"; boardVersion: "V1" | "V2" }
+  | { type: "connectFailure"; code?: string }
+  | { type: "flashSuccess" }
+  | { type: "flashFailure"; code?: string };
+
+export type DownloadAction =
+  | /**
+   * Sets hex and bluetoothMicrobitName from start event.
+   */
+  { type: "initializeDownload" }
+  | { type: "setMicrobitChoice"; choice: SameOrDifferentChoice }
+  /**
+   * Saves showPreDownloadHelp setting from next event.
+   */
+  | { type: "saveHelpPreference" }
+  | { type: "connect" }
+  | { type: "flash" }
+  | { type: "downloadHexFile" }
+  | { type: "disconnectDataConnection" };
+
+export interface DownloadFlowContext {
+  hex?: HexData;
+  microbitChoice: SameOrDifferentChoice;
+  bluetoothMicrobitName?: string;
+  connection?: MicrobitWebUSBConnection | MicrobitWebBluetoothConnection;
+
+  // Injected from external state.
+  showPreDownloadHelp: boolean;
+  hadSuccessfulConnection: boolean;
+  dataConnectionType: DataConnectionType;
+  isUsbConnected: boolean;
+  connectedBoardVersion?: BoardVersion;
+}
+
+export type DownloadFlowDefinition = FlowDefinition<
+  DownloadStep,
+  DownloadEvent,
+  DownloadAction,
+  DownloadFlowContext
+>;
+
+// =============================================================================
+// Guards
+// =============================================================================
+
+export const guards = {
+  /** Can skip dialogs and flash directly using existing USB connection */
+  canReuseExistingConnection: (
+    ctx: DownloadFlowContext,
+    _event: DownloadEvent
+  ) =>
+    ctx.connection !== undefined &&
+    ctx.connection.status === DeviceConnectionStatus.CONNECTED &&
+    !isNativeBluetoothConnection(ctx.connection) &&
+    ctx.connectedBoardVersion !== "V1",
+
+  shouldShowHelp: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
+    ctx.showPreDownloadHelp,
+
+  hasActiveDataConnection: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
+    ctx.hadSuccessfulConnection,
+
+  isUsbConnected: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
+    ctx.isUsbConnected,
+
+  isUsbConnectedV1: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
+    ctx.isUsbConnected && ctx.connectedBoardVersion === "V1",
+
+  isV1BoardVersion: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
+    ctx.connectedBoardVersion === "V1",
+
+  /** True when user chose to download to the same micro:bit as data connection */
+  isSameMicrobitChoice: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
+    ctx.microbitChoice === SameOrDifferentChoice.Same,
+};
+
+// =============================================================================
+// Global handlers
+// =============================================================================
+
+/**
+ * Global handlers shared by all download flows.
+ */
+export const globalHandlers: DownloadFlowDefinition = {
+  _global: {
+    on: {
+      close: { target: DownloadStep.None },
+    },
+  },
+};
+
+// =============================================================================
+// Shared state configurations
+// =============================================================================
+
+/**
+ * FlashingInProgress state with V1 board version check.
+ * Used by webusb and radio flows.
+ */
+export const flashingInProgressWithV1Check: DownloadFlowDefinition = {
+  [DownloadStep.FlashingInProgress]: {
+    on: {
+      connectSuccess: [
+        {
+          guard: guards.isV1BoardVersion,
+          target: DownloadStep.IncompatibleDevice,
+        },
+        {
+          guard: always,
+          target: DownloadStep.FlashingInProgress,
+          actions: [{ type: "flash" }],
+        },
+      ],
+      connectFailure: {
+        target: DownloadStep.ManualFlashingTutorial,
+        actions: [{ type: "downloadHexFile" }],
+      },
+      flashSuccess: { target: DownloadStep.None },
+      flashFailure: {
+        target: DownloadStep.ManualFlashingTutorial,
+        actions: [{ type: "downloadHexFile" }],
+      },
+    },
+  },
+};
+
+/**
+ * ManualFlashingTutorial terminal state.
+ */
+export const manualFlashingTutorialState: DownloadFlowDefinition = {
+  [DownloadStep.ManualFlashingTutorial]: {
+    on: {},
+  },
+};

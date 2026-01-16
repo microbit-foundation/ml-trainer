@@ -10,7 +10,8 @@ export class TrainModelDialog {
 
   async train() {
     await this.page.getByRole("button", { name: "Start training" }).click();
-    await this.page.getByText("Training model…").waitFor({ state: "visible" });
-    await this.page.getByText("Training model…").waitFor({ state: "hidden" });
+    // Wait for navigation to testing model page - more reliable than waiting
+    // for the "Training model…" dialog which may complete too fast to observe
+    await this.page.waitForURL(/testing-model/);
   }
 }

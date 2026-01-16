@@ -4,9 +4,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { expect, type Page } from "@playwright/test";
+import { DownloadDialogs } from "./download-dialogs";
 
 export class MakeCodeEditor {
   constructor(public readonly page: Page) {}
+
+  private get iframe() {
+    return this.page.frameLocator('iframe[title="MakeCode"]');
+  }
 
   expectUrl() {
     const url = `http://localhost:5173${
@@ -23,24 +28,19 @@ export class MakeCodeEditor {
   }
 
   async switchToJavaScript() {
-    await this.page
-      .frameLocator('iframe[title="MakeCode"]')
+    await this.iframe
       .getByRole("option", { name: "Convert code to JavaScript" })
       .click();
   }
 
   async switchToBlocks() {
-    await this.page
-      .frameLocator('iframe[title="MakeCode"]')
+    await this.iframe
       .getByRole("option", { name: "Convert code to Blocks" })
       .click();
   }
 
   async editJavaScript(jsText: string) {
-    const textArea = this.page
-      .frameLocator('iframe[title="MakeCode"]')
-      .getByText("ml.onStart(ml.event.")
-      .first();
+    const textArea = this.iframe.getByText("ml.onStart(ml.event.").first();
     await textArea.click();
     await this.page.keyboard.press("ControlOrMeta+A");
     await this.page.keyboard.insertText(jsText);
@@ -48,9 +48,13 @@ export class MakeCodeEditor {
   }
 
   async back() {
-    await this.page
-      .frameLocator('iframe[title="MakeCode"]')
-      .getByLabel("Back to application")
+    await this.iframe.getByLabel("Back to application").click();
+  }
+
+  async clickDownload() {
+    await this.iframe
+      .getByRole("menuitem", { name: "Download", exact: true })
       .click();
+    return new DownloadDialogs(this.page);
   }
 }

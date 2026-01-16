@@ -5,7 +5,7 @@
  */
 import { GridItem, HStack, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { useDataConnected } from "../data-connection-flow";
 import { ActionData } from "../model";
 import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import GreetingEmojiWithArrow from "./GreetingEmojiWithArrow";
@@ -21,7 +21,7 @@ const DataSamplesTableHints = ({
   action,
   onRecord,
 }: DataSamplesTableHintsProps) => {
-  const { isConnected } = useConnectionStage();
+  const isConnected = useDataConnected();
   return (
     <>
       {action.name.length === 0 ? (

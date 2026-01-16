@@ -1047,19 +1047,13 @@
       "value": "Finding micro:bit…"
     }
   ],
-  "downloading-stage-flashing": [
-    {
-      "type": 0,
-      "value": "Downloading program to micro:bit…"
-    }
-  ],
   "downloading-stage-initializing": [
     {
       "type": 0,
       "value": "Initializing…"
     }
   ],
-  "downloading-subtitle": [
+  "downloading-stage-flashing": [
     {
       "type": 0,
       "value": "請稍等。正在將程式下載至 micro:bit。"
@@ -2391,6 +2385,12 @@
     {
       "type": 0,
       "value": "無法重新建立與您的電腦連線的 micro:bit 的連線。"
+    }
+  ],
+  "reconnect-failed-native-heading": [
+    {
+      "type": 0,
+      "value": "Failed to reconnect to data collection micro:bit"
     }
   ],
   "reconnect-failed-radio-heading": [

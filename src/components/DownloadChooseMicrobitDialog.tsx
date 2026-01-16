@@ -22,7 +22,10 @@ import twoMicrobitsImage from "../images/stylised-two-microbits-black.svg";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
-import { DownloadState, SameOrDifferentChoice } from "../model";
+import {
+  DownloadState,
+  SameOrDifferentChoice,
+} from "../download-flow/download-types";
 
 export interface DownloadChooseMicrobitDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {

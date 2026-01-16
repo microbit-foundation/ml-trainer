@@ -5,8 +5,7 @@
  */
 import { Button, Image, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { ConnectionFlowType } from "../connection-stage-hooks";
-import { isLocalStage } from "../environment";
+import { DataConnectionType, RadioFlowPhase } from "../data-connection-flow";
 import connectCableImage from "../images/connect-cable.gif";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
@@ -21,40 +20,38 @@ interface Config {
 }
 
 export const getConnectionCableDialogConfig = (
-  flowType: ConnectionFlowType,
-  isWebBluetoothSupported: boolean
+  flowType: DataConnectionType,
+  canSwitchFlowType: boolean,
+  radioFlowPhase?: RadioFlowPhase
 ): Config => {
   switch (flowType) {
-    case ConnectionFlowType.ConnectNativeBluetooth:
+    case DataConnectionType.NativeBluetooth:
       throw new Error("Unused");
-    case ConnectionFlowType.ConnectWebBluetooth:
+    case DataConnectionType.WebBluetooth:
       return {
         headingId: "connect-cable-heading",
         subtitleId: "connect-cable-subtitle",
         linkTextId: "connect-cable-skip",
         linkType: "skip",
       };
-    case ConnectionFlowType.ConnectRadioRemote:
+    case DataConnectionType.Radio:
+      // In bridge phase, show different content
+      if (radioFlowPhase === "bridge") {
+        return {
+          headingId: "connect-radio-link-heading",
+          subtitleId: "connect-radio-link-subtitle",
+          ...(canSwitchFlowType
+            ? {
+                linkTextId: "connect-radio-start-switch-bluetooth",
+                linkType: "switch",
+              }
+            : {}),
+        };
+      }
+      // Remote phase (default)
       return {
         headingId: "connect-data-collection-heading",
         subtitleId: "connect-data-collection-subtitle",
-        ...(isLocalStage()
-          ? {
-              linkTextId: "connect-cable-skip",
-              linkType: "skip",
-            }
-          : {}),
-      };
-    case ConnectionFlowType.ConnectRadioBridge:
-      return {
-        headingId: "connect-radio-link-heading",
-        subtitleId: "connect-radio-link-subtitle",
-        ...(isWebBluetoothSupported
-          ? {
-              linkTextId: "connect-radio-start-switch-bluetooth",
-              linkType: "switch",
-            }
-          : {}),
       };
   }
 };

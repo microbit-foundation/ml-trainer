@@ -1047,19 +1047,13 @@
       "value": "Finding micro:bit…"
     }
   ],
-  "downloading-stage-flashing": [
-    {
-      "type": 0,
-      "value": "Downloading program to micro:bit…"
-    }
-  ],
   "downloading-stage-initializing": [
     {
       "type": 0,
       "value": "Initializing…"
     }
   ],
-  "downloading-subtitle": [
+  "downloading-stage-flashing": [
     {
       "type": 0,
       "value": "Si us plau, espera. Transferint el programa a la micro:bit."
@@ -2381,6 +2375,12 @@
     {
       "type": 0,
       "value": "No s'ha pogut restablir la connexió amb la micro:bit connectada al teu ordinador."
+    }
+  ],
+  "reconnect-failed-native-heading": [
+    {
+      "type": 0,
+      "value": "Failed to reconnect to data collection micro:bit"
     }
   ],
   "reconnect-failed-radio-heading": [

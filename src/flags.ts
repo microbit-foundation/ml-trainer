@@ -25,9 +25,17 @@ export type Flag =
    */
   | "e2e"
   /**
+   * Flag to simulate native platform behavior in web for testing.
+   */
+  | "simulateNative"
+  /**
    * Flag to add a beta warning. Enabled for review and staging site stages.
    */
   | "preReleaseNotice"
+  /**
+   * Flag to skip automatic tours. Useful for e2e tests that don't test tours.
+   */
+  | "skipTours"
   /**
    * Enables in-context Crowdin translating.
    */
@@ -53,14 +61,13 @@ interface FlagMetadata {
 
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
-  { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
-  { name: "exampleOptInB", defaultOnStages: [] },
   { name: "devtools", defaultOnStages: ["local"] },
   { name: "e2e", defaultOnStages: [] },
-  {
-    name: "preReleaseNotice",
-    defaultOnStages: ["staging", "beta"],
-  },
+  { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
+  { name: "exampleOptInB", defaultOnStages: [] },
+  { name: "preReleaseNotice", defaultOnStages: ["staging", "beta"] },
+  { name: "simulateNative", defaultOnStages: [] },
+  { name: "skipTours", defaultOnStages: [] },
   { name: "translate", defaultOnStages: [] },
   { name: "translationPreview", defaultOnStages: ["beta"] },
   // We can probably remove this flag now it's enabled everywhere!

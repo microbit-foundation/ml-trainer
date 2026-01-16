@@ -1,7 +1,7 @@
 import { HotkeyCallback, Keys, useHotkeys } from "react-hotkeys-hook";
-import { useStore } from "./store";
 import { Options } from "react-hotkeys-hook/dist/types";
-import { useConnectionStage } from "./connection-stage-hooks";
+import { isDataConnectionDialogOpen } from "./data-connection-flow";
+import { useStore } from "./store";
 
 // Shortcuts are global unless noted otherwise.
 export const keyboardShortcuts = {
@@ -31,7 +31,9 @@ export const useShortcut = (
   const isNonConnectionDialogOpen = useStore((s) =>
     s.isNonConnectionDialogOpen()
   );
-  const { isDialogOpen: isConnectionDialogOpen } = useConnectionStage();
+  const isConnectionDialogOpen = useStore((s) =>
+    isDataConnectionDialogOpen(s.dataConnection.step)
+  );
   return useHotkeys(keys, hotkeyCallback, {
     ...globalShortcutConfig,
     ...options,

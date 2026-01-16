@@ -19,31 +19,39 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import {
-  ConnectionFlowStep,
-  ConnectionFlowType,
-} from "../connection-stage-hooks";
 import ExternalLink from "./ExternalLink";
 import { useDeployment } from "../deployment";
+
+export type ConnectionErrorVariant =
+  | "connectionLost"
+  | "connectFailed"
+  | "reconnectFailed";
+
+export type ConnectionErrorDeviceType = "bluetooth" | "bridge" | "remote";
 
 interface ConnectErrorDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onConnect: () => void;
-  flowType: ConnectionFlowType;
-  errorStep:
-    | ConnectionFlowStep.ConnectFailed
-    | ConnectionFlowStep.ReconnectFailed
-    | ConnectionFlowStep.ConnectionLost;
+  onRetry: () => void;
+  variant: ConnectionErrorVariant;
+  deviceType: ConnectionErrorDeviceType;
 }
 
-const getContentConfig = (flowType: ConnectionFlowType) => {
-  if (flowType === ConnectionFlowType.ConnectRadioBridge) {
+const variantToTextPrefix: Record<ConnectionErrorVariant, string> = {
+  connectionLost: "disconnected-warning",
+  connectFailed: "connect-failed",
+  reconnectFailed: "reconnect-failed",
+};
+
+const getRecoveryStepsConfig = (deviceType: ConnectionErrorDeviceType) => {
+  // USB (bridge) disconnect shows USB replug steps
+  if (deviceType === "bridge") {
     return {
       listHeading: "webusb-retry-replug2",
       bullets: ["webusb-retry-replug3", "webusb-retry-replug4"],
     };
   }
+  // Bluetooth and remote disconnects show bluetooth recovery steps
   return {
     listHeading: "disconnected-warning-bluetooth2",
     bullets: [
@@ -53,28 +61,19 @@ const getContentConfig = (flowType: ConnectionFlowType) => {
   };
 };
 
-const errorTextIdPrefixConfig = {
-  [ConnectionFlowStep.ConnectionLost]: "disconnected-warning",
-  [ConnectionFlowStep.ReconnectFailed]: "reconnect-failed",
-  [ConnectionFlowStep.ConnectFailed]: "connect-failed",
-};
-
-const ReconnectErrorDialog = ({
+const ConnectErrorDialog = ({
   isOpen,
   onClose,
-  onConnect,
-  flowType,
-  errorStep,
+  onRetry,
+  variant,
+  deviceType,
 }: ConnectErrorDialogProps) => {
   const { supportLinks } = useDeployment();
-  const errorTextIdPrefix = errorTextIdPrefixConfig[errorStep];
-  const contentConfig = getContentConfig(flowType);
-  const flowTypeText = {
-    [ConnectionFlowType.ConnectNativeBluetooth]: "bluetooth",
-    [ConnectionFlowType.ConnectWebBluetooth]: "bluetooth",
-    [ConnectionFlowType.ConnectRadioBridge]: "bridge",
-    [ConnectionFlowType.ConnectRadioRemote]: "remote",
-  }[flowType];
+  const textPrefix = variantToTextPrefix[variant];
+  const recoverySteps = getRecoveryStepsConfig(deviceType);
+  const retryButtonTextId =
+    variant === "connectFailed" ? "connect-action" : "reconnect-action";
+
   return (
     <Modal
       motionPreset="none"
@@ -86,24 +85,20 @@ const ReconnectErrorDialog = ({
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage
-              id={`${errorTextIdPrefix}-${flowTypeText}-heading`}
-            />
+            <FormattedMessage id={`${textPrefix}-${deviceType}-heading`} />
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
               <VStack gap={3} textAlign="left" w="100%">
                 <Text w="100%">
-                  <FormattedMessage
-                    id={`${errorTextIdPrefix}-${flowTypeText}1`}
-                  />
+                  <FormattedMessage id={`${textPrefix}-${deviceType}1`} />
                 </Text>
                 <Text w="100%">
-                  <FormattedMessage id={contentConfig.listHeading} />
+                  <FormattedMessage id={recoverySteps.listHeading} />
                 </Text>
                 <UnorderedList textAlign="left" w="100%" ml={20}>
-                  {contentConfig.bullets.map((textId) => (
+                  {recoverySteps.bullets.map((textId) => (
                     <ListItem key={textId}>
                       <Text>
                         <FormattedMessage id={textId} />
@@ -123,14 +118,8 @@ const ReconnectErrorDialog = ({
               <Button onClick={onClose} variant="secondary" size="lg">
                 <FormattedMessage id="cancel-action" />
               </Button>
-              <Button onClick={onConnect} variant="primary" size="lg">
-                <FormattedMessage
-                  id={
-                    errorStep === ConnectionFlowStep.ConnectFailed
-                      ? "connect-action"
-                      : "reconnect-action"
-                  }
-                />
+              <Button onClick={onRetry} variant="primary" size="lg">
+                <FormattedMessage id={retryButtonTextId} />
               </Button>
             </HStack>
           </ModalFooter>
@@ -140,4 +129,4 @@ const ReconnectErrorDialog = ({
   );
 };
 
-export default ReconnectErrorDialog;
+export default ConnectErrorDialog;

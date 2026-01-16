@@ -20,12 +20,13 @@ import {
 } from "./makecode/utils";
 import { Confidences, predict, trainModel } from "./ml";
 import {
+  DataConnectionState,
+  getInitialDataConnectionState,
+} from "./data-connection-flow";
+import {
   DataSamplesView,
-  DownloadState,
-  DownloadStep,
   Action,
   ActionData,
-  SameOrDifferentChoice,
   PostImportDialogState,
   RecordingData,
   SaveState,
@@ -46,6 +47,11 @@ import { BufferedData } from "./buffered-data";
 import { getDetectedAction } from "./utils/prediction";
 import { getTour as getTourSpec } from "./tours";
 import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
+import {
+  DownloadState,
+  DownloadStep,
+  SameOrDifferentChoice,
+} from "./download-flow/download-types";
 
 export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
 
@@ -194,6 +200,11 @@ export interface State {
     stage: ProgressStage | undefined;
     value: number | undefined;
   };
+  dataConnection: DataConnectionState;
+  dataConnectionFlashingProgress: {
+    stage: ProgressStage | undefined;
+    value: number | undefined;
+  };
   save: SaveState;
 
   settings: Settings;
@@ -236,7 +247,6 @@ export interface Actions {
   deleteAllActions(): void;
   downloadDataset(): void;
 
-  dataCollectionMicrobitConnectionStart(options?: ConnectOptions): void;
   dataCollectionMicrobitConnected(): void;
 
   loadDataset(actions: ActionData[]): void;
@@ -279,6 +289,11 @@ export interface Actions {
 
   setDownload(state: DownloadState): void;
   setDownloadFlashingProgress(
+    stage: ProgressStage,
+    value: number | undefined
+  ): void;
+  setDataConnection(state: DataConnectionState): void;
+  setDataConnectionFlashingProgress(
     stage: ProgressStage,
     value: number | undefined
   ): void;
@@ -328,10 +343,14 @@ const createMlStore = (logging: Logging) => {
           projectLoadTimestamp: 0,
           download: {
             step: DownloadStep.None,
-            history: [],
             microbitChoice: SameOrDifferentChoice.Default,
           },
           downloadFlashingProgress: { stage: undefined, value: undefined },
+          dataConnection: getInitialDataConnectionState(),
+          dataConnectionFlashingProgress: {
+            stage: undefined,
+            value: undefined,
+          },
           save: {
             step: SaveStep.None,
           },
@@ -998,6 +1017,16 @@ const createMlStore = (logging: Logging) => {
               downloadFlashingProgress: { stage, value },
             }));
           },
+          setDataConnection(dataConnection: DataConnectionState) {
+            set({ dataConnection }, false, "setDataConnection");
+          },
+          setDataConnectionFlashingProgress(stage, value) {
+            set(
+              { dataConnectionFlashingProgress: { stage, value } },
+              false,
+              "setDataConnectionFlashingProgress"
+            );
+          },
           setSave(save: SaveState) {
             set({ save }, false, "setSave");
           },
@@ -1036,13 +1065,6 @@ const createMlStore = (logging: Logging) => {
               "setPostConnectTourId"
             );
           },
-          dataCollectionMicrobitConnectionStart(options) {
-            set(
-              { postConnectTourTrigger: options?.postConnectTourTrigger },
-              false,
-              "dataCollectionMicrobitConnectionStart"
-            );
-          },
           dataCollectionMicrobitConnected() {
             set(
               ({ actions, tourState, postConnectTourTrigger }) => {
@@ -1068,6 +1090,9 @@ const createMlStore = (logging: Logging) => {
 
           tourStart(trigger: TourTrigger, manual: boolean = false) {
             set((state) => {
+              if (flags.skipTours && !manual) {
+                return state;
+              }
               if (
                 manual ||
                 (!state.tourState &&

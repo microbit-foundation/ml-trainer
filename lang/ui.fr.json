@@ -611,15 +611,11 @@
     "defaultMessage": "Finding micro:bit…",
     "description": "Progress text during device discovery stage of flashing"
   },
-  "downloading-stage-flashing": {
-    "defaultMessage": "Downloading program to micro:bit…",
-    "description": "Progress text during actual flashing stage"
-  },
   "downloading-stage-initializing": {
     "defaultMessage": "Initializing…",
     "description": "Progress text during initialization stage of flashing"
   },
-  "downloading-subtitle": {
+  "downloading-stage-flashing": {
     "defaultMessage": "Veuillez patienter. Téléchargement du programme sur le micro:bit.",
     "description": "Progress text"
   },
@@ -1398,6 +1394,10 @@
   "reconnect-failed-bridge1": {
     "defaultMessage": "La connexion avec le micro:bit connecté à votre ordinateur n'a pas pu être rétablie.",
     "description": "Connection error dialog"
+  },
+  "reconnect-failed-native-heading": {
+    "defaultMessage": "Failed to reconnect to data collection micro:bit",
+    "description": "Connection error dialog for native Bluetooth reconnection failure"
   },
   "reconnect-failed-radio-heading": {
     "defaultMessage": "Impossible de se reconnecter au micro:bit",

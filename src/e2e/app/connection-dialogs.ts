@@ -5,11 +5,17 @@
  */
 import { expect, Locator, type Page } from "@playwright/test";
 import { MockWebUSBConnection } from "../../device/mockUsb";
-import { MockWebBluetoothConnection } from "../../device/mockBluetooth";
-import { ConnectionStatus } from "@microbit/microbit-connection";
+import {
+  ConnectBehavior,
+  MockWebBluetoothConnection,
+} from "../../device/mockBluetooth";
+import { MockRadioBridgeConnection } from "../../device/mockRadioBridge";
+
+export type RadioDisconnectType = "bridge" | "remote";
 
 export const dialogTitles: {
   bluetooth: Record<string, string>;
+  nativeBluetooth: Record<string, string>;
   radio: Record<string, string>;
 } = {
   bluetooth: {
@@ -19,6 +25,12 @@ export const dialogTitles: {
     connectBattery: "Disconnect USB and connect battery pack",
     copyPattern: "Copy pattern",
     connectBluetooth: "Connect to micro:bit using Web Bluetooth",
+  },
+  nativeBluetooth: {
+    whatYouNeed: "What you need to connect",
+    resetToBluetooth: "Reset to Bluetooth mode",
+    copyPattern: "Copy pattern",
+    connectBluetooth: "Connect to micro:bit using Bluetooth",
   },
   radio: {
     whatYouNeed: "What you need to connect using micro:bit radio",
@@ -84,17 +96,106 @@ export class ConnectionDialogs {
     });
   }
 
-  async mockBluetoothStatus(status: ConnectionStatus[]) {
-    await this.page.evaluate((results: ConnectionStatus[]) => {
+  /**
+   * Configure Bluetooth mock to simulate "no device selected" on next connect.
+   */
+  async mockBluetoothDeviceNotSelected() {
+    await this.setBluetoothConnectBehaviors([{ outcome: "noDevice" }]);
+  }
+
+  /**
+   * Set behaviors for subsequent Bluetooth connect() calls.
+   * Each behavior is consumed in order. When empty, defaults to success.
+   *
+   * @example
+   * // First connect fails with disconnect, second succeeds
+   * await dialogs.setBluetoothConnectBehaviors([
+   *   { outcome: 'failure', status: ConnectionStatus.DISCONNECTED },
+   *   { outcome: 'success' },
+   * ]);
+   */
+  async setBluetoothConnectBehaviors(behaviors: ConnectBehavior[]) {
+    await this.page.evaluate((b: ConnectBehavior[]) => {
       const mockBluetooth =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
         (window as any).mockBluetooth as MockWebBluetoothConnection;
-      mockBluetooth.mockConnectResults(results);
-    }, status);
+      mockBluetooth.setConnectBehaviors(b);
+    }, behaviors);
   }
 
-  async mockBluetoothDeviceNotSelected() {
-    await this.mockBluetoothStatus([ConnectionStatus.NO_AUTHORIZED_DEVICE]);
+  /**
+   * Simulate the Bluetooth device disconnecting unexpectedly.
+   * This triggers the app's reconnection logic.
+   */
+  async simulateBluetoothDisconnect() {
+    await this.page.evaluate(() => {
+      const mockBluetooth =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        (window as any).mockBluetooth as MockWebBluetoothConnection;
+      mockBluetooth.simulateDisconnect();
+    });
+  }
+
+  /**
+   * Set behaviors for subsequent Radio Bridge connect() calls.
+   */
+  async setRadioBridgeConnectBehaviors(behaviors: ConnectBehavior[]) {
+    await this.page.evaluate((b: ConnectBehavior[]) => {
+      const mockRadioBridge =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        (window as any).mockRadioBridge as MockRadioBridgeConnection;
+      mockRadioBridge.setConnectBehaviors(b);
+    }, behaviors);
+  }
+
+  /**
+   * Simulate the Radio Bridge remote micro:bit disconnecting unexpectedly.
+   * USB remains connected, only the radio link fails.
+   */
+  async simulateRadioBridgeDisconnect() {
+    await this.page.evaluate(() => {
+      const mockRadioBridge =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        (window as any).mockRadioBridge as MockRadioBridgeConnection;
+      mockRadioBridge.simulateDisconnect();
+    });
+  }
+
+  /**
+   * Simulate the USB (bridge) micro:bit disconnecting unexpectedly.
+   * This propagates to the radio bridge and shows different error UI than remote disconnect.
+   */
+  async simulateUsbDisconnect() {
+    await this.page.evaluate(() => {
+      const mockUsb =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        (window as any).mockUsb as MockWebUSBConnection;
+      mockUsb.simulateDisconnect();
+    });
+  }
+
+  /**
+   * Simulate the USB device being reconnected (e.g., user plugs it back in).
+   */
+  async simulateUsbReconnect() {
+    await this.page.evaluate(() => {
+      const mockUsb =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        (window as any).mockUsb as MockWebUSBConnection;
+      mockUsb.simulateReconnect();
+    });
+  }
+
+  /**
+   * Simulate a radio connection disconnect with specific type.
+   * @param type - 'bridge' simulates USB disconnect, 'remote' simulates radio link failure
+   */
+  async simulateRadioDisconnect(type: RadioDisconnectType) {
+    if (type === "bridge") {
+      await this.simulateUsbDisconnect();
+    } else {
+      await this.simulateRadioBridgeDisconnect();
+    }
   }
 
   async enterBluetoothPattern() {
@@ -103,5 +204,159 @@ export class ConnectionDialogs {
       const n = (i + 1).toString();
       await this.page.getByLabel(`Column ${n} - number of LEDs lit`).fill(n);
     }
+  }
+
+  /**
+   * Expect the "connection lost" dialog (first disconnect after being connected).
+   */
+  async expectConnectionLostDialog() {
+    await expect(
+      this.page.getByText("Data collection micro:bit connection lost")
+    ).toBeVisible({ timeout: 10000 });
+  }
+
+  /**
+   * Expect the "connect failed" dialog (fresh connection attempt failed).
+   * Shows "Failed to connect" and a "Connect" button.
+   */
+  async expectConnectFailedDialog() {
+    await expect(
+      this.page.getByText("Failed to connect to micro:bit")
+    ).toBeVisible({ timeout: 10000 });
+    await expect(
+      this.page.getByRole("button", { name: "Connect" })
+    ).toBeVisible();
+  }
+
+  /**
+   * Expect the "reconnect failed" dialog (reconnection attempt failed).
+   * Shows "Failed to reconnect" and a "Reconnect" button.
+   */
+  async expectReconnectFailedDialog() {
+    await expect(
+      this.page.getByText("Failed to reconnect to data collection micro:bit")
+    ).toBeVisible({ timeout: 10000 });
+    await expect(
+      this.page.getByRole("button", { name: "Reconnect" })
+    ).toBeVisible();
+  }
+
+  /**
+   * Expect a radio bridge disconnect error dialog showing bridge-specific message.
+   * This indicates the USB (bridge) micro:bit was disconnected.
+   */
+  async expectRadioBridgeDisconnectDialog() {
+    await expect(
+      this.page.getByText("Radio link micro:bit connection lost")
+    ).toBeVisible({ timeout: 10000 });
+  }
+
+  /**
+   * Expect a radio remote disconnect error dialog showing remote-specific message.
+   * This indicates the data collection (remote) micro:bit was disconnected.
+   */
+  async expectRadioRemoteDisconnectDialog() {
+    await expect(
+      this.page.getByText("Data collection micro:bit connection lost")
+    ).toBeVisible({ timeout: 10000 });
+  }
+
+  /**
+   * Click the "Connect" button in error dialogs.
+   * Only shown for fresh connection failures (user never connected successfully).
+   */
+  async clickConnectButton() {
+    await this.page.getByRole("button", { name: "Connect" }).click();
+  }
+
+  /**
+   * Click the "Reconnect" button in error dialogs.
+   * Shown for connection lost, reconnect failed, or connect failed after
+   * user had previously connected successfully.
+   */
+  async clickReconnectButton() {
+    await this.page.getByRole("button", { name: "Reconnect" }).click();
+  }
+
+  /**
+   * Wait for the connection dialog to close.
+   * Useful for waiting after a successful reconnection.
+   */
+  async waitForDialogToClose() {
+    await expect(
+      this.page.getByRole("button", { name: "Reconnect" })
+    ).toBeHidden({ timeout: 10000 });
+  }
+
+  /**
+   * Expect the "start over" dialog for bluetooth to be visible.
+   * This shows WhatYouWillNeedDialog with reconnect=true.
+   */
+  async expectStartOverDialog() {
+    await expect(
+      this.page.getByText("Follow these instructions to restart the connection")
+    ).toBeVisible({ timeout: 10000 });
+  }
+
+  /**
+   * Expect the "start over" dialog for radio to be visible.
+   */
+  async expectRadioStartOverDialog() {
+    await expect(
+      this.page.getByText("Failed to reconnect to micro:bits")
+    ).toBeVisible({ timeout: 10000 });
+  }
+
+  /**
+   * Simulate the browser tab becoming hidden (user switched tabs).
+   * This uses the fake event approach since Playwright can't truly hide tabs.
+   */
+  async simulateTabHidden() {
+    await this.page.evaluate(() => {
+      Object.defineProperty(document, "hidden", {
+        value: true,
+        writable: true,
+        configurable: true,
+      });
+      Object.defineProperty(document, "visibilityState", {
+        value: "hidden",
+        writable: true,
+        configurable: true,
+      });
+      document.dispatchEvent(new Event("visibilitychange"));
+    });
+  }
+
+  /**
+   * Simulate the browser tab becoming visible again (user switched back).
+   */
+  async simulateTabVisible() {
+    await this.page.evaluate(() => {
+      Object.defineProperty(document, "hidden", {
+        value: false,
+        writable: true,
+        configurable: true,
+      });
+      Object.defineProperty(document, "visibilityState", {
+        value: "visible",
+        writable: true,
+        configurable: true,
+      });
+      document.dispatchEvent(new Event("visibilitychange"));
+    });
+  }
+
+  /**
+   * Expect no connection error dialog to be visible.
+   * Use this to verify reconnection happens silently when tab is hidden.
+   */
+  async expectNoConnectionErrorDialog() {
+    // Check that neither the Cancel nor Reconnect buttons are visible
+    await expect(
+      this.page.getByRole("button", { name: "Cancel" })
+    ).not.toBeVisible();
+    await expect(
+      this.page.getByRole("button", { name: "Reconnect" })
+    ).not.toBeVisible();
   }
 }
