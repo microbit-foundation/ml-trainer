@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   build-android:
-    timeout-minutes: 10
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -31,6 +31,11 @@ jobs:
           distribution: "temurin"
           java-version: "21"
 
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
       - run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -46,20 +51,22 @@ jobs:
 
       - run: npx cap sync android
 
-      - run: |
+      - name: Decode keystore
+        run: |
           echo "SIGNING_STORE_FILE=$RUNNER_TEMP/keystore.jks" >> $GITHUB_ENV
           printenv SIGNING_STORE_FILE_BASE64 | base64 -d > "$RUNNER_TEMP/keystore.jks"
         env:
           SIGNING_STORE_FILE_BASE64: ${{ secrets.ANDROID_SIGNING_STORE_FILE_BASE64 }}
 
-      - run: ./gradlew --no-daemon assembleRelease bundleRelease
-        working-directory: android
+      - name: Build with Fastlane
+        run: bundle exec fastlane android build
         env:
+          SIGNING_KEY_ALIAS: upload
           SIGNING_KEY_PASSWORD: ${{ secrets.ANDROID_SIGNING_PASSWORD }}
           SIGNING_STORE_PASSWORD: ${{ secrets.ANDROID_SIGNING_PASSWORD }}
-          SIGNING_KEY_ALIAS: upload
 
-      - run: rm -f "$RUNNER_TEMP/keystore.jks"
+      - name: Clean up keystore
+        run: rm -f "$RUNNER_TEMP/keystore.jks"
         if: always()
 
       - uses: actions/upload-artifact@v4

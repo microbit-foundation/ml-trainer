@@ -68,6 +68,22 @@ Use e.g. `npx cap open ios` to open the IDE and run from there.
 
 The vite dev server run by dev:apps will be running inside the app.
 
+### Signed builds
+
+CI builds signed artifacts using [Fastlane](https://fastlane.tools/). iOS certificates and provisioning profiles are managed via [Fastlane Match](https://docs.fastlane.tools/actions/match/) with encrypted credentials stored in a private repository. Android signing uses a keystore stored in CI secrets.
+
+To run Fastlane locally:
+
+```bash
+bundle install
+bundle exec fastlane ios build    # Build signed IPA (macOS only)
+bundle exec fastlane android build # Build signed APK/AAB
+```
+
+Or you can use Homebrew via `brew install fastlane` (can sidestep Ruby version issues).
+
+Android builds require the signing keystore and passwords via environment variables. iOS builds require Match credentials to fetch certificates.
+
 ## Deployments
 
 Most users should use the supported Foundation deployment at https://createai.microbit.org/

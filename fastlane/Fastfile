@@ -1,0 +1,45 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Build signed IPA for App Store/TestFlight"
+  lane :build do
+    setup_ci if ENV["CI"]
+
+    # Fetch certificates and profiles from Match repo
+    match(
+      type: "appstore",
+      readonly: ENV["CI"] == "true"
+    )
+
+    build_app(
+      workspace: "ios/App/App.xcworkspace",
+      scheme: "App",
+      configuration: "Release",
+      export_method: "app-store",
+      output_directory: "ios/App/build/output",
+      output_name: "App.ipa",
+      export_options: {
+        signingStyle: "manual",
+        provisioningProfiles: {
+          "org.microbit.createai" => "match AppStore org.microbit.createai"
+        }
+      }
+    )
+  end
+end
+
+platform :android do
+  desc "Build signed AAB and APK for Play Store"
+  lane :build do
+    gradle(
+      project_dir: "android",
+      tasks: ["assembleRelease", "bundleRelease"],
+      properties: {
+        "android.injected.signing.store.file" => ENV["SIGNING_STORE_FILE"],
+        "android.injected.signing.store.password" => ENV["SIGNING_STORE_PASSWORD"],
+        "android.injected.signing.key.alias" => ENV.fetch("SIGNING_KEY_ALIAS", "upload"),
+        "android.injected.signing.key.password" => ENV["SIGNING_KEY_PASSWORD"]
+      }
+    )
+  end
+end
