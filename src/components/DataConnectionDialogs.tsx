@@ -154,7 +154,12 @@ const DataConnectionDialogs = () => {
     }
     case DataConnectionStep.BluetoothConnect: {
       return (
-        <LoadingDialog isOpen={isOpen} headingId="connect-bluetooth-heading" />
+        <DownloadProgressDialog
+          headingId="connect-bluetooth-heading"
+          isOpen={isOpen}
+          stage={flashProgress.stage}
+          progress={flashProgress.value}
+        />
       );
     }
     case DataConnectionStep.ConnectingMicrobits: {

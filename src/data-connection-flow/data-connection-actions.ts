@@ -416,7 +416,8 @@ const performConnectBluetooth = async (
   try {
     await deps.connectionService.connectBluetooth(
       state.bluetoothMicrobitName,
-      clearDevice
+      clearDevice,
+      { progress: progressCallback }
     );
   } catch (e) {
     if (e instanceof DeviceError) {

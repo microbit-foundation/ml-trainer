@@ -124,7 +124,8 @@ export class ConnectionService {
 
   async connectBluetooth(
     name: string | undefined,
-    clearDevice: boolean
+    clearDevice: boolean,
+    options?: ConnectionAndFlashOptions
   ): Promise<void> {
     if (clearDevice) {
       await this.bluetooth.clearDevice();
@@ -132,7 +133,7 @@ export class ConnectionService {
     if (name) {
       this.bluetooth.setNameFilter(name);
     }
-    await this.bluetooth.connect();
+    await this.bluetooth.connect({ progress: options?.progress });
   }
 
   addAccelerometerListener(
