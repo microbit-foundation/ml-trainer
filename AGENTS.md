@@ -19,6 +19,14 @@ To add or amend UI strings:
 1. Edit `lang/ui.en.json`
 2. Run `npm run i18n:compile` to update `src/messages/` via formatjs
 
+## Vitest
+
+To run a subset of unit tests, pass a file pattern directly (not `--testPathPattern`):
+
+```bash
+npm test -- download-machine-browser-default
+```
+
 ## Playwright
 
 If you run the e2e tests, be sure to run them headlessly via `npm run test:e2e:headless`.

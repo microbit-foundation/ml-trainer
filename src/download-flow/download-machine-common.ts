@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  BoardVersion,
   ConnectionStatus as DeviceConnectionStatus,
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
@@ -52,7 +53,7 @@ export interface DownloadFlowContext {
   hadSuccessfulConnection: boolean;
   dataConnectionType: DataConnectionType;
   isUsbConnected: boolean;
-  connectedBoardVersion?: "V1" | "V2";
+  connectedBoardVersion?: BoardVersion;
 }
 
 export type DownloadFlowDefinition = FlowDefinition<
@@ -74,7 +75,8 @@ export const guards = {
   ) =>
     ctx.connection !== undefined &&
     ctx.connection.status === DeviceConnectionStatus.CONNECTED &&
-    !isNativeBluetoothConnection(ctx.connection),
+    !isNativeBluetoothConnection(ctx.connection) &&
+    ctx.connectedBoardVersion !== "V1",
 
   shouldShowHelp: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
     ctx.showPreDownloadHelp,

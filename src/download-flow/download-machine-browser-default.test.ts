@@ -41,7 +41,7 @@ const transition = (
 
 describe("Download flow: Browser Default", () => {
   describe("start transitions", () => {
-    it("flashes immediately if there is an active USB connection", () => {
+    it("flashes immediately if there is an active USB connection to V2", () => {
       const mockConnection = {
         status: DeviceConnectionStatus.CONNECTED,
       } as DownloadFlowContext["connection"];
@@ -51,11 +51,31 @@ describe("Download flow: Browser Default", () => {
         { type: "start", hex: testHex },
         {
           connection: mockConnection,
+          connectedBoardVersion: "V2",
         }
       );
 
       expect(result?.step).toBe(DownloadStep.FlashingInProgress);
       expect(result?.actions).toContainEqual({ type: "flash" });
+    });
+
+    it("does not reuse existing USB connection to V1", () => {
+      const mockConnection = {
+        status: DeviceConnectionStatus.CONNECTED,
+      } as DownloadFlowContext["connection"];
+
+      const result = transition(
+        DownloadStep.None,
+        { type: "start", hex: testHex },
+        {
+          connection: mockConnection,
+          connectedBoardVersion: "V1",
+          showPreDownloadHelp: false,
+        }
+      );
+
+      // Should not take the fast path to FlashingInProgress
+      expect(result?.step).toBe(DownloadStep.ConnectCable);
     });
 
     it("shows help if showPreDownloadHelp is true", () => {
