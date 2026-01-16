@@ -307,6 +307,12 @@
       "value": "您沒有選擇 micro:bit。您想再試一次嗎？"
     }
   ],
+  "connect-bluetooth-enabled": [
+    {
+      "type": 0,
+      "value": "Bluetooth enabled"
+    }
+  ],
   "connect-bluetooth-heading": [
     {
       "type": 0,
@@ -623,12 +629,6 @@
       "value": "改用網路藍牙進行連線"
     }
   ],
-  "connect-tablet": [
-    {
-      "type": 0,
-      "value": "iPad or Android tablet"
-    }
-  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -675,12 +675,6 @@
     {
       "type": 0,
       "value": "需要電池"
-    }
-  ],
-  "connect-with-bluetooth": [
-    {
-      "type": 0,
-      "value": "with Bluetooth enabled"
     }
   ],
   "connect-with-web-bluetooth": [
@@ -1047,16 +1041,16 @@
       "value": "Finding micro:bit…"
     }
   ],
+  "downloading-stage-flashing": [
+    {
+      "type": 0,
+      "value": "Please wait. Downloading program to micro:bit."
+    }
+  ],
   "downloading-stage-initializing": [
     {
       "type": 0,
       "value": "Initializing…"
-    }
-  ],
-  "downloading-stage-flashing": [
-    {
-      "type": 0,
-      "value": "請稍等。正在將程式下載至 micro:bit。"
     }
   ],
   "edit-in-makecode-action": [
@@ -2850,7 +2844,21 @@
   "third-party-content-description": [
     {
       "type": 0,
-      "value": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation."
+      "value": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "MakeCode shared project"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
     }
   ],
   "tour-action": [

@@ -299,6 +299,12 @@
       "value": "micro:bit를 선택하지 않으셨습니다. 다시 시도하시겠습니까? "
     }
   ],
+  "connect-bluetooth-enabled": [
+    {
+      "type": 0,
+      "value": "Bluetooth enabled"
+    }
+  ],
   "connect-bluetooth-heading": [
     {
       "type": 0,
@@ -615,12 +621,6 @@
       "value": "대신 Web Bluetooth를 사용하여 연결하기"
     }
   ],
-  "connect-tablet": [
-    {
-      "type": 0,
-      "value": "iPad or Android tablet"
-    }
-  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -667,12 +667,6 @@
     {
       "type": 0,
       "value": "배터리"
-    }
-  ],
-  "connect-with-bluetooth": [
-    {
-      "type": 0,
-      "value": "with Bluetooth enabled"
     }
   ],
   "connect-with-web-bluetooth": [
@@ -1039,16 +1033,16 @@
       "value": "Finding micro:bit…"
     }
   ],
+  "downloading-stage-flashing": [
+    {
+      "type": 0,
+      "value": "Please wait. Downloading program to micro:bit."
+    }
+  ],
   "downloading-stage-initializing": [
     {
       "type": 0,
       "value": "Initializing…"
-    }
-  ],
-  "downloading-stage-flashing": [
-    {
-      "type": 0,
-      "value": "잠시만 기다리세요. micro:bit에 프로그램을 다운로드하는 중입니다."
     }
   ],
   "edit-in-makecode-action": [
@@ -2838,7 +2832,21 @@
   "third-party-content-description": [
     {
       "type": 0,
-      "value": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation."
+      "value": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "MakeCode shared project"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
     }
   ],
   "tour-action": [
