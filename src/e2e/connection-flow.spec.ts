@@ -235,7 +235,6 @@ test.describe("native bluetooth permission errors", () => {
       await connectionDialogs.clickCancelButton();
       await connectionDialogs.expectNoDialog();
     });
-
   });
 
   test.describe("connect errors with permission-related DeviceError", () => {
@@ -292,7 +291,6 @@ test.describe("native bluetooth permission errors", () => {
         dialog.nativeBluetooth.resetToBluetooth
       );
     });
-
   });
 });
 
