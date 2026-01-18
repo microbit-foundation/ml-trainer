@@ -1,17 +1,20 @@
 name: iOS Build
 
 on:
+  release:
+    types: [created]
   push:
     branches:
-      - apps
-      - apps-*
+      - "**"
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/apps' }}
+  group: ${{ github.workflow }}-${{ startsWith(github.ref, 'refs/tags/v') && 'release' || github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/v') }}
 
 jobs:
   build-ios:
+    # Only run for apps releases, not web releases
+    if: ${{ github.event_name != 'release' || contains(github.event.release.tag_name, '-apps') }}
     timeout-minutes: 25
     runs-on: macos-latest
     permissions:
@@ -25,6 +28,12 @@ jobs:
           node-version: 20
           cache: "npm"
           registry-url: "https://npm.pkg.github.com"
+
+      - uses: microbit-foundation/npm-package-versioner-action@v1
+
+      # Strip prerelease suffix - app stores require X.Y.Z format
+      - name: Set marketing version
+        run: echo "MARKETING_VERSION=$(jq -r .version package.json | sed 's/-.*//')" >> $GITHUB_ENV
 
       - uses: ruby/setup-ruby@v1
         with:
@@ -63,6 +72,7 @@ jobs:
         env:
           MATCH_PASSWORD: ${{ secrets.FASTLANE_MATCH_PASSWORD }}
           BUILD_NUMBER: ${{ github.run_number }}
+          MARKETING_VERSION: ${{ env.MARKETING_VERSION }}
 
       - uses: actions/upload-artifact@v4
         with:
