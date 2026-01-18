@@ -32,9 +32,13 @@ jobs:
           bundler-cache: true
 
       - name: Setup SSH for Match
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.FASTLANE_MATCH_DEPLOY_KEY }}
+        run: |
+          eval "$(ssh-agent -s)"
+          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $GITHUB_ENV
+          echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> $GITHUB_ENV
+          ssh-add - <<< "$FASTLANE_MATCH_DEPLOY_KEY"
+        env:
+          FASTLANE_MATCH_DEPLOY_KEY: ${{ secrets.FASTLANE_MATCH_DEPLOY_KEY }}
 
       - run: npm ci
         env:
