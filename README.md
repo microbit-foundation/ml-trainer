@@ -80,7 +80,7 @@ bundle exec fastlane ios build    # Build signed IPA (macOS only)
 bundle exec fastlane android build # Build signed APK/AAB
 ```
 
-Or you can use Homebrew via `brew install fastlane` (can sidestep Ruby version issues).
+Or you can use Homebrew via `brew install fastlane` and drop the `bundle exec` (this can sidestep Ruby version issues).
 
 Android builds require the signing keystore and passwords via environment variables. iOS builds require Match credentials to fetch certificates.
 
