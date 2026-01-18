@@ -74,6 +74,7 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@formatjs/intl-localematcher": "^0.8.0",
     "@microbit/capacitor-community-nordic-dfu": "^7.0.0-microbit.3",
     "@microbit/makecode-embed": "^0.3.0",
     "@microbit/microbit-connection": "^0.9.0-apps.alpha.6",

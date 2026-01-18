@@ -4,6 +4,8 @@
 
 Run `npm run format` to format code with Prettier.
 
+New files should have a copyright header with the current year. Use an existing file as a template.
+
 When documenting properties/fields use the following style of comment:
 
 ```typescript

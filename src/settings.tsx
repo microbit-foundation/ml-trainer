@@ -4,6 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { match } from "@formatjs/intl-localematcher";
 import { DataSamplesView, TourTriggerName } from "./model";
 
 type Translation = "preview" | boolean;
@@ -270,15 +271,29 @@ export const allLanguages: Language[] = [
 export const getMakeCodeLang = (languageId: string): string =>
   allLanguages.find((l) => l.id === languageId)?.makeCode ? languageId : "en";
 
-export const getLanguageFromQuery = (): string => {
+const supportedLanguageIds = allLanguages.map((l) => l.id);
+const defaultLanguageId = allLanguages[0].id;
+
+/**
+ * Match the user's preferred languages (from browser/OS) to supported languages.
+ */
+export const matchLanguage = (requestedLanguages: readonly string[]): string =>
+  match(requestedLanguages, supportedLanguageIds, defaultLanguageId);
+
+/**
+ * Get the initial language, checking URL parameter first, then OS/browser preference.
+ */
+export const getDefaultLanguage = (): string => {
   const searchParams = new URLSearchParams(window.location.search);
   const l = searchParams.get("l");
-  const language = allLanguages.find((x) => x.id === l);
-  return language?.id || allLanguages[0].id;
+  const requestedLanguages = l
+    ? [l, ...navigator.languages]
+    : navigator.languages;
+  return matchLanguage(requestedLanguages);
 };
 
 export const defaultSettings: Settings = {
-  languageId: getLanguageFromQuery(),
+  languageId: getDefaultLanguage(),
   showPreSaveHelp: true,
   showPreTrainHelp: true,
   showPreDownloadHelp: true,
