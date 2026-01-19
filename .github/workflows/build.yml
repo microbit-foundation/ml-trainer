@@ -13,6 +13,8 @@ concurrency:
 
 jobs:
   build:
+    # Skip apps releases - handled by ios-build.yml and android-build.yml
+    if: ${{ github.event_name != 'release' || !contains(github.event.release.tag_name, '-apps') }}
     timeout-minutes: 10
     runs-on: ubuntu-latest
     permissions:
@@ -61,12 +63,16 @@ jobs:
           path: playwright-report/
           retention-days: 3
       - run: npx website-deploy-aws
-        if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || success())
+        # TODO: Reinstate after first apps branch tagged release.
+        if: false
+        # if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || success())
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.WEB_DEPLOY_ML_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.WEB_DEPLOY_ML_AWS_SECRET_ACCESS_KEY }}
       - run: npx invalidate-cloudfront-distribution
-        if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || success())
+        # TODO: Reinstate after first apps branch tagged release.
+        if: false
+        # if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || success())
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.WEB_DEPLOY_ML_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.WEB_DEPLOY_ML_AWS_SECRET_ACCESS_KEY }}

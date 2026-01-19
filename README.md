@@ -84,6 +84,22 @@ Or you can use Homebrew via `brew install fastlane` and drop the `bundle exec` (
 
 Android builds require the signing keystore and passwords via environment variables. iOS builds require Match credentials to fetch certificates.
 
+### App versioning
+
+App releases use tags with an `-apps` suffix to distinguish them from web releases on main until we merge the apps work back. The marketing version is derived from the tag with the suffix stripped (store limitation).
+
+When creating an apps tag we target next unreleased minor version, so if main is on v1.2.3:
+
+| Stage    | Example tag              | Marketing version | Build number  |
+| -------- | ------------------------ | ----------------- | ------------- |
+| Internal | `v1.3.0-apps.internal.1` | 1.3.0             | CI run number |
+| Beta     | `v1.3.0-apps.beta.1`     | 1.3.0             | CI run number |
+| Public   | `v1.3.0-apps`            | 1.3.0             | CI run number |
+
+If main releases a new minor version (e.g., 1.3.0) before apps ships, then we'll bump the next apps version (assuming we've merged main into apps).
+
+If we've merged apps back into main before we get to a public release we can drop the apps suffix.
+
 ## Deployments
 
 Most users should use the supported Foundation deployment at https://createai.microbit.org/

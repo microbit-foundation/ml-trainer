@@ -19,6 +19,14 @@ platform :ios do
       )
     end
 
+    # Set marketing version from CI
+    if ENV["MARKETING_VERSION"]
+      increment_version_number(
+        xcodeproj: "ios/App/App.xcodeproj",
+        version_number: ENV["MARKETING_VERSION"]
+      )
+    end
+
     build_app(
       workspace: "ios/App/App.xcworkspace",
       scheme: "App",
@@ -42,6 +50,11 @@ platform :android do
     # Set version code from CI or leave as-is for local builds
     if ENV["BUILD_NUMBER"]
       sh("sed -i'' -e 's/versionCode [0-9]*/versionCode #{ENV["BUILD_NUMBER"]}/' ../android/app/build.gradle")
+    end
+
+    # Set marketing version from CI
+    if ENV["MARKETING_VERSION"]
+      sh("sed -i'' -e 's/versionName \"[^\"]*\"/versionName \"#{ENV["MARKETING_VERSION"]}\"/' ../android/app/build.gradle")
     end
 
     gradle(
