@@ -25,12 +25,23 @@ const baseStyle = definePartsStyle({
 const full = definePartsStyle({
   dialog: {
     mx: 0,
+    maxHeight: "100dvh",
     paddingTop: "env(safe-area-inset-top)",
     paddingBottom: "env(safe-area-inset-bottom)",
     paddingLeft: "env(safe-area-inset-left)",
     paddingRight: "env(safe-area-inset-right)",
     background:
       "linear-gradient(to bottom, var(--chakra-colors-brand2-600) env(safe-area-inset-top), white env(safe-area-inset-top))",
+  },
+  header: {
+    flexShrink: 0,
+  },
+  body: {
+    flex: 1,
+    overflowY: "auto",
+  },
+  footer: {
+    flexShrink: 0,
   },
   closeButton: {
     top: "calc(env(safe-area-inset-top) + var(--chakra-space-2))",
