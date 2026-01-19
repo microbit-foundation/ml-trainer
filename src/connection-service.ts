@@ -192,7 +192,6 @@ export class ConnectionService {
   }
 
   private eventCallback: EventCallback | null = null;
-  private prevDeviceStatus: DeviceConnectionStatus | null = null;
   private dataConnectionType: DataConnectionType =
     DataConnectionType.WebBluetooth;
 
@@ -201,7 +200,8 @@ export class ConnectionService {
    * Some events require checking the previous status to avoid false positives.
    */
   private mapDeviceStatusToEvent(
-    deviceStatus: DeviceConnectionStatus
+    deviceStatus: DeviceConnectionStatus,
+    previousStatus: DeviceConnectionStatus
   ): DataConnectionEvent | null {
     // For radio connections, determine if disconnect is from bridge or remote.
     let disconnectSource: "bridge" | "remote" | undefined;
@@ -213,8 +213,6 @@ export class ConnectionService {
       disconnectSource = usbConnected ? "remote" : "bridge";
     }
 
-    const prevStatus = this.prevDeviceStatus;
-
     switch (deviceStatus) {
       case DeviceConnectionStatus.CONNECTED:
         return { type: "deviceConnected" };
@@ -224,8 +222,8 @@ export class ConnectionService {
         // Ignore transitions between these disconnected states (e.g., during
         // clearDevice() which goes DISCONNECTED → NO_AUTHORIZED_DEVICE).
         if (
-          prevStatus === DeviceConnectionStatus.DISCONNECTED ||
-          prevStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE
+          previousStatus === DeviceConnectionStatus.DISCONNECTED ||
+          previousStatus === DeviceConnectionStatus.NO_AUTHORIZED_DEVICE
         ) {
           return null;
         }
@@ -245,10 +243,8 @@ export class ConnectionService {
   private handleStatusChange = (
     connectionStatusEvent: ConnectionStatusEvent
   ): void => {
-    const deviceStatus = connectionStatusEvent.status;
-    const event = this.mapDeviceStatusToEvent(deviceStatus);
-    this.prevDeviceStatus = deviceStatus;
-
+    const { status, previousStatus } = connectionStatusEvent;
+    const event = this.mapDeviceStatusToEvent(status, previousStatus);
     if (event && this.eventCallback) {
       this.eventCallback(event);
     }
@@ -279,15 +275,12 @@ export class ConnectionService {
     this.dataConnectionType = dataConnectionType;
 
     if (connType === "bluetooth") {
-      // Initialize to current status so we correctly detect transitions
-      this.prevDeviceStatus = this.bluetooth.status;
       this.bluetooth.addEventListener("status", this.handleStatusChange);
     } else {
       // For radio connections, only listen to radioBridge status.
       // The radioBridge propagates USB connection issues via its delegateStatusListener,
       // so we don't need a separate USB listener. This also avoids the USB CONNECTED
       // event firing before the radioBridge has verified the remote micro:bit responds.
-      this.prevDeviceStatus = this.radioBridge.status;
       this.radioBridge.addEventListener("status", this.handleStatusChange);
     }
   }

@@ -65,8 +65,12 @@ export class MockRadioBridgeConnection
   }
 
   private setStatus(newStatus: ConnectionStatus) {
+    const previousStatus = this.status;
     this.status = newStatus;
-    this.dispatchTypedEvent("status", new ConnectionStatusEvent(newStatus));
+    this.dispatchTypedEvent(
+      "status",
+      new ConnectionStatusEvent(newStatus, previousStatus)
+    );
   }
 
   private delay(ms: number = this.statusDelay): Promise<void> {

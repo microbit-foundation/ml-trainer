@@ -48,8 +48,12 @@ export class MockWebUSBConnection
   }
 
   private setStatus(newStatus: ConnectionStatus) {
+    const previousStatus = this.status;
     this.status = newStatus;
-    this.dispatchTypedEvent("status", new ConnectionStatusEvent(newStatus));
+    this.dispatchTypedEvent(
+      "status",
+      new ConnectionStatusEvent(newStatus, previousStatus)
+    );
   }
 
   async connect(options?: ConnectOptions): Promise<void> {
