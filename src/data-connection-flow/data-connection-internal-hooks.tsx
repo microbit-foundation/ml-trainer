@@ -10,7 +10,7 @@ import {
   useEffect,
   useMemo,
 } from "react";
-import { useConnectionService } from "../connection-service-hooks";
+import { useConnections } from "../connections-hooks";
 import {
   createFireDataConnectionEvent,
   createSendDataConnectionEvent,
@@ -21,6 +21,11 @@ import { DataConnectionEvent } from "./data-connection-machine";
 import { useConnectionConfigStorage } from "../hooks/use-connection-config-storage";
 import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
+import {
+  ConnectionStatus,
+  ConnectionStatusEvent,
+} from "@microbit/microbit-connection";
+import { DataConnectionType } from "./data-connection-types";
 
 /**
  * Hook that syncs browser tab visibility with the data connection store.
@@ -69,7 +74,7 @@ interface DataConnectionEventProviderProps {
 /**
  * Provider that sets up the connection state machine infrastructure.
  * Creates the bound fireEvent function with all required dependencies.
- * Should be placed inside ConnectProvider and ConnectStatusProvider.
+ * Should be placed inside ConnectionsProvider.
  */
 export const DataConnectionEventProvider = ({
   children,
@@ -78,12 +83,8 @@ export const DataConnectionEventProvider = ({
   useBrowserTabVisibilitySync();
 
   const [, setConfig] = useConnectionConfigStorage();
-  const connectionService = useConnectionService();
+  const connections = useConnections();
 
-  // Initialize capabilities once on mount
-  useEffect(() => {
-    void initializeCapabilities(connectionService);
-  }, [connectionService]);
   const dataCollectionMicrobitConnected = useStore(
     (s) => s.dataCollectionMicrobitConnected
   );
@@ -91,12 +92,12 @@ export const DataConnectionEventProvider = ({
 
   const deps: DataConnectionDeps = useMemo(
     () => ({
-      connectionService,
+      connections,
       dataCollectionMicrobitConnected,
       setConfig,
       logging,
     }),
-    [connectionService, dataCollectionMicrobitConnected, setConfig, logging]
+    [connections, dataCollectionMicrobitConnected, setConfig, logging]
   );
 
   const api: DataConnectionMachine = useMemo(() => {
@@ -105,10 +106,30 @@ export const DataConnectionEventProvider = ({
     return { fireEvent, sendEvent };
   }, [deps]);
 
-  // Set up the event callback on ConnectionService
+  // Initialize capabilities once on mount
   useEffect(() => {
-    connectionService.setEventCallback(api.fireEvent);
-  }, [connectionService, api.fireEvent]);
+    void initializeCapabilities(connections);
+
+    connections.setDataConnectionListener((event: ConnectionStatusEvent) => {
+      const { status, previousStatus } = event;
+      const isUsbConnected =
+        connections.usb.status === ConnectionStatus.CONNECTED;
+      const type = connections.getDataConnectionType();
+      const mappedEvent = mapStatusToEvent(
+        status,
+        previousStatus,
+        isUsbConnected,
+        type
+      );
+      if (mappedEvent) {
+        api.fireEvent(mappedEvent);
+      }
+    });
+
+    return () => {
+      connections.setDataConnectionListener(undefined);
+    };
+  }, [api, connections]);
 
   return (
     <DataConnectionMachineContext.Provider value={api}>
@@ -132,4 +153,50 @@ export const useDataConnectionMachine = (): DataConnectionMachine => {
     );
   }
   return value;
+};
+
+/**
+ * Map device status to a state machine event.
+ * Some events require checking the previous status to avoid false positives.
+ */
+const mapStatusToEvent = (
+  status: ConnectionStatus,
+  previousStatus: ConnectionStatus,
+  isUsbConnected: boolean,
+  dataConnectionType: DataConnectionType
+): DataConnectionEvent | null => {
+  // For radio connections, determine if disconnect is from bridge or remote.
+  let disconnectSource: "bridge" | "remote" | undefined;
+  if (
+    dataConnectionType === DataConnectionType.Radio &&
+    status === ConnectionStatus.DISCONNECTED
+  ) {
+    disconnectSource = isUsbConnected ? "remote" : "bridge";
+  }
+
+  switch (status) {
+    case ConnectionStatus.CONNECTED:
+      return { type: "deviceConnected" };
+    case ConnectionStatus.DISCONNECTED:
+    case ConnectionStatus.NO_AUTHORIZED_DEVICE:
+      // Both DISCONNECTED and NO_AUTHORIZED_DEVICE mean "not connected".
+      // Ignore transitions between these disconnected states (e.g., during
+      // clearDevice() which goes DISCONNECTED → NO_AUTHORIZED_DEVICE).
+      if (
+        previousStatus === ConnectionStatus.DISCONNECTED ||
+        previousStatus === ConnectionStatus.NO_AUTHORIZED_DEVICE
+      ) {
+        return null;
+      }
+      return { type: "deviceDisconnected", source: disconnectSource };
+    case ConnectionStatus.CONNECTING:
+      return { type: "deviceConnecting" };
+    case ConnectionStatus.RECONNECTING:
+      return { type: "deviceReconnecting" };
+    case ConnectionStatus.PAUSED:
+      // Connection paused due to tab visibility - will reconnect automatically.
+      return { type: "devicePaused" };
+    default:
+      return null;
+  }
 };

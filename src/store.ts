@@ -21,6 +21,7 @@ import {
 import { Confidences, predict, trainModel } from "./ml";
 import {
   DataConnectionState,
+  DataConnectionType,
   getInitialDataConnectionState,
 } from "./data-connection-flow";
 import {
@@ -293,6 +294,7 @@ export interface Actions {
     value: number | undefined
   ): void;
   setDataConnection(state: DataConnectionState): void;
+  setDataConnectionType(type: DataConnectionType): void;
   setDataConnectionFlashingProgress(
     stage: ProgressStage,
     value: number | undefined
@@ -1020,6 +1022,15 @@ const createMlStore = (logging: Logging) => {
           },
           setDataConnection(dataConnection: DataConnectionState) {
             set({ dataConnection }, false, "setDataConnection");
+          },
+          setDataConnectionType(dataConnectionType: DataConnectionType) {
+            set(
+              ({ dataConnection }) => ({
+                dataConnection: { ...dataConnection, type: dataConnectionType },
+              }),
+              false,
+              "setDataConnectionType"
+            );
           },
           setDataConnectionFlashingProgress(stage, value) {
             set(

@@ -5,18 +5,20 @@
  */
 import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 import { useEffect } from "react";
-import { useConnectionService } from "../connection-service-hooks";
+import { useDataConnection } from "../connections-hooks";
 
 type AccelerometerListener = (e: AccelerometerDataEvent) => void;
 
 /**
- * Subscribes to accelerometer data. Callbacks only fire when connected.
+ * Subscribes to accelerometer data on the active data connection.
+ * Callbacks only fire when connected.
  */
 export const useAccelerometerListener = (listener: AccelerometerListener) => {
-  const connectionService = useConnectionService();
+  const connection = useDataConnection();
 
   useEffect(() => {
-    connectionService.addAccelerometerListener(listener);
-    return () => connectionService.removeAccelerometerListener(listener);
-  }, [connectionService, listener]);
+    connection.addEventListener("accelerometerdatachanged", listener);
+    return () =>
+      connection.removeEventListener("accelerometerdatachanged", listener);
+  }, [connection, listener]);
 };

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { useMemo } from "react";
-import { useConnectionService } from "../connection-service-hooks";
+import { useConnections } from "../connections-hooks";
 import { useDataConnectionMachine } from "../data-connection-flow/data-connection-internal-hooks";
 import {
   canTransition,
@@ -97,7 +97,7 @@ export const useDownloadActions = (): DownloadActions => {
   const dataConnection = useStore((s) => s.dataConnection);
   const [settings, setSettings] = useSettings();
   const [config] = useConnectionConfigStorage();
-  const connectionService = useConnectionService();
+  const connections = useConnections();
   const logging = useLogging();
   const dataConnectionMachine = useDataConnectionMachine();
 
@@ -106,7 +106,7 @@ export const useDownloadActions = (): DownloadActions => {
       config,
       settings,
       setSettings,
-      connectionService,
+      connections,
       dataConnection,
       flashingProgressCallback: setDownloadFlashingProgress,
       logging,
@@ -120,7 +120,7 @@ export const useDownloadActions = (): DownloadActions => {
       config,
       settings,
       setSettings,
-      connectionService,
+      connections,
       dataConnection,
       setDownloadFlashingProgress,
       logging,

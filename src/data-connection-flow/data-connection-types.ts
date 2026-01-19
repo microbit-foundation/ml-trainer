@@ -4,7 +4,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { isNativePlatform } from "../platform";
-import { ConnectionTransport } from "../connection-service";
+
+/**
+ * This is the connection type from the perspective of how we end up talking
+ * to the data connection micro:bit.
+ */
+export type ConnectionTransport = "bluetooth" | "radio";
 
 export enum DataConnectionType {
   /**

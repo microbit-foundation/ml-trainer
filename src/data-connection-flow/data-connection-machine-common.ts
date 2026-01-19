@@ -108,9 +108,6 @@ export type DataConnectionAction =
    * Sets hadSuccessfulConnection=true, isReconnecting=false.
    */
   | { type: "setConnected" }
-  // Listener management actions.
-  | { type: "addStatusListener" }
-  | { type: "removeStatusListener" }
   // Disconnect action.
   | { type: "disconnect" }
   /**
@@ -349,7 +346,6 @@ export const idleBluetoothReconnect = {
   guard: guards.hadSuccessfulConnection,
   target: DataConnectionStep.BluetoothConnect,
   actions: [
-    { type: "addStatusListener" },
     { type: "setHasFailedOnce", value: false },
     { type: "setIsStartingOver", value: false },
     { type: "setReconnecting", value: true },
@@ -364,7 +360,6 @@ export const idleRadioReconnect = {
   guard: guards.hadSuccessfulConnection,
   target: DataConnectionStep.ConnectingMicrobits,
   actions: [
-    { type: "addStatusListener" },
     { type: "setHasFailedOnce", value: false },
     { type: "setIsStartingOver", value: false },
     { type: "setReconnecting", value: true },
@@ -378,7 +373,7 @@ export const idleRadioReconnect = {
 export const idleFreshStart = {
   guard: always,
   target: DataConnectionStep.Start,
-  actions: [{ type: "addStatusListener" }, ...actions.reset],
+  actions: actions.reset,
 } satisfies DataConnectionTransition;
 
 // -----------------------------------------------------------------------------
@@ -645,7 +640,7 @@ export const globalHandlers = {
       },
       disconnect: {
         target: DataConnectionStep.Idle,
-        actions: [{ type: "removeStatusListener" }, { type: "disconnect" }],
+        actions: [{ type: "disconnect" }],
       },
       reset: {
         target: DataConnectionStep.Idle,

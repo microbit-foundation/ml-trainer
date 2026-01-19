@@ -3,9 +3,13 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { DeviceError, ProgressStage } from "@microbit/microbit-connection";
+import {
+  ConnectionStatus,
+  DeviceError,
+  ProgressStage,
+} from "@microbit/microbit-connection";
 import { deviceIdToMicrobitName } from "../bt-pattern-utils";
-import { ConnectionService } from "../connection-service";
+import { Connections } from "../connections-hooks";
 import {
   DataConnectionAction,
   DataConnectionEvent,
@@ -14,13 +18,15 @@ import {
 import {
   DataConnectionType,
   DataConnectionState,
-  dataConnectionTypeToTransport,
   getInitialDataConnectionType,
 } from "./data-connection-types";
 import { Logging } from "../logging/logging";
 import {
+  flashConnection,
   isNativeBluetoothConnection,
   isWebUSBConnection,
+  isWebBluetoothSupported,
+  isWebUsbSupported,
 } from "../device/connection-utils";
 import { bluetoothUniversalHex, HexType } from "../device/get-hex-file";
 import { useStore } from "../store";
@@ -31,7 +37,7 @@ import { StoredConnectionConfig } from "../hooks/use-connection-config-storage";
  * Dependencies needed for state machine action execution.
  */
 export interface DataConnectionDeps {
-  connectionService: ConnectionService;
+  connections: Connections;
   dataCollectionMicrobitConnected: () => void;
   setConfig: (config: StoredConnectionConfig) => void;
   logging: Logging;
@@ -139,9 +145,6 @@ const executeAction = async (
   event: DataConnectionEvent,
   deps: DataConnectionDeps
 ): Promise<void> => {
-  // Always get fresh state - previous actions in the loop may have modified it
-  const state = getDataConnectionState();
-
   switch (action.type) {
     case "reset": {
       // Reset flow state and set connection type for fresh connection
@@ -164,17 +167,11 @@ const executeAction = async (
     }
 
     case "setConnectionType": {
+      deps.connections.setDataConnectionType(action.connectionType);
       setDataConnectionState(
-        {
-          ...state,
-          type: action.connectionType,
-          hasSwitchedConnectionType: true,
-        },
+        { ...getDataConnectionState(), hasSwitchedConnectionType: true },
         deps.setConfig
       );
-      // Update the status listener for the new connection type
-      const connType = dataConnectionTypeToTransport(action.connectionType);
-      deps.connectionService.startListening(connType, action.connectionType);
       break;
     }
 
@@ -298,19 +295,6 @@ const executeAction = async (
       );
       break;
 
-    // Listener management actions
-    case "addStatusListener": {
-      const dataConnectionType = getDataConnectionState().type;
-      const connType = dataConnectionTypeToTransport(dataConnectionType);
-      deps.connectionService.startListening(connType, dataConnectionType);
-      break;
-    }
-
-    case "removeStatusListener":
-      deps.connectionService.stopListening();
-      break;
-
-    // Disconnect action
     case "disconnect":
       await performDisconnect(deps);
       break;
@@ -361,7 +345,7 @@ const executeAction = async (
  */
 const performConnect = async (deps: DataConnectionDeps): Promise<void> => {
   const state = getDataConnectionState();
-  const connection = deps.connectionService.getDefaultFlashConnection();
+  const connection = deps.connections.getDefaultFlashConnection();
 
   if (isNativeBluetoothConnection(connection)) {
     const { bluetoothMicrobitName } = state;
@@ -372,9 +356,7 @@ const performConnect = async (deps: DataConnectionDeps): Promise<void> => {
   }
 
   try {
-    await deps.connectionService.connect(connection, {
-      progress: progressCallback,
-    });
+    await connection.connect({ progress: progressCallback });
     const boardVersion = connection.getBoardVersion();
     await sendEvent({ type: "connectSuccess", boardVersion }, deps);
   } catch (e) {
@@ -391,11 +373,11 @@ const performConnect = async (deps: DataConnectionDeps): Promise<void> => {
  */
 const performFlash = async (deps: DataConnectionDeps): Promise<void> => {
   const state = getDataConnectionState();
-  const connection = deps.connectionService.getDefaultFlashConnection();
+  const connection = deps.connections.getDefaultFlashConnection();
   const hex = getHexType(state);
 
   try {
-    await deps.connectionService.flash(connection, hex, progressCallback);
+    await flashConnection(connection, hex, progressCallback);
 
     const deviceId = isWebUSBConnection(connection)
       ? connection.getDeviceId()
@@ -438,13 +420,16 @@ const performConnectBluetooth = async (
   deps: DataConnectionDeps
 ): Promise<void> => {
   const state = getDataConnectionState();
+  const { bluetooth } = deps.connections;
   deps.logging.event({ type: "connect-user", message: "bluetooth" });
   try {
-    await deps.connectionService.connectBluetooth(
-      state.bluetoothMicrobitName,
-      clearDevice,
-      { progress: progressCallback }
-    );
+    if (clearDevice) {
+      await bluetooth.clearDevice();
+    }
+    if (state.bluetoothMicrobitName) {
+      bluetooth.setNameFilter(state.bluetoothMicrobitName);
+    }
+    await bluetooth.connect({ progress: progressCallback });
   } catch (e) {
     if (e instanceof DeviceError) {
       await sendEvent({ type: "connectFailure", code: e.code }, deps);
@@ -461,14 +446,14 @@ const performConnectMicrobits = async (
   deps: DataConnectionDeps
 ): Promise<void> => {
   const state = getDataConnectionState();
+  const { radioBridge } = deps.connections;
   if (!state.radioRemoteDeviceId) {
     throw new Error("Radio remote device id not set");
   }
   deps.logging.event({ type: "connect-user", message: "radio-bridge" });
   try {
-    await deps.connectionService.connectMicrobitsSerial(
-      state.radioRemoteDeviceId
-    );
+    radioBridge.setRemoteDeviceId(state.radioRemoteDeviceId);
+    await radioBridge.connect();
   } catch (e) {
     if (e instanceof DeviceError) {
       await sendEvent({ type: "connectFailure", code: e.code }, deps);
@@ -500,26 +485,27 @@ const getHexType = (state: DataConnectionState): HexType => {
  */
 const performReconnect = async (deps: DataConnectionDeps): Promise<void> => {
   const state = getDataConnectionState();
+  const { bluetooth, radioBridge, usb } = deps.connections;
 
   try {
     switch (state.type) {
       case DataConnectionType.WebBluetooth:
       case DataConnectionType.NativeBluetooth:
-        await deps.connectionService.connectBluetooth(
-          state.bluetoothMicrobitName,
-          false // Don't clear device, try to reconnect to same one
-        );
+        if (state.bluetoothMicrobitName) {
+          bluetooth.setNameFilter(state.bluetoothMicrobitName);
+        }
+        // Don't clear device, try to reconnect to same one
+        await bluetooth.connect();
         break;
       case DataConnectionType.Radio:
         // Only attempt serial reconnection if USB is connected.
         // If USB is disconnected (bridge failure), we can't reconnect via serial.
         if (
           state.radioRemoteDeviceId !== undefined &&
-          deps.connectionService.isUsbDeviceConnected()
+          usb.status === ConnectionStatus.CONNECTED
         ) {
-          await deps.connectionService.connectMicrobitsSerial(
-            state.radioRemoteDeviceId
-          );
+          radioBridge.setRemoteDeviceId(state.radioRemoteDeviceId);
+          await radioBridge.connect();
         } else {
           // USB is not connected, so we can't reconnect via serial.
           // This happens when the bridge micro:bit was unplugged. Fire a
@@ -549,7 +535,7 @@ const performDisconnect = async (deps: DataConnectionDeps): Promise<void> => {
     { ...getDataConnectionState(), isReconnecting: false },
     deps.setConfig
   );
-  await deps.connectionService.disconnect();
+  await deps.connections.getDataConnection().disconnect();
 };
 
 /**
@@ -559,8 +545,9 @@ const performDisconnect = async (deps: DataConnectionDeps): Promise<void> => {
 const performCheckPermissions = async (
   deps: DataConnectionDeps
 ): Promise<void> => {
+  const { bluetooth } = deps.connections;
   try {
-    const status = await deps.connectionService.checkBluetoothAvailability();
+    const status = await bluetooth.checkAvailability();
 
     switch (status) {
       case "available":
@@ -587,21 +574,18 @@ const performCheckPermissions = async (
 };
 
 /**
- * Initialize capabilities in state from connectionService.
+ * Initialize capabilities in state from connections.
  * Should be called once when the provider mounts.
  */
-export const initializeCapabilities = async (connectionService: {
-  isWebBluetoothSupported: () => Promise<boolean>;
-  isWebUsbSupported: () => Promise<boolean>;
-}) => {
-  const [isWebBluetoothSupported, isWebUsbSupported] = await Promise.all([
-    connectionService.isWebBluetoothSupported(),
-    connectionService.isWebUsbSupported(),
+export const initializeCapabilities = async (connections: Connections) => {
+  const [webBluetoothSupported, webUsbSupported] = await Promise.all([
+    isWebBluetoothSupported(connections.bluetooth),
+    isWebUsbSupported(connections.usb),
   ]);
   const currentState = getDataConnectionState();
   useStore.getState().setDataConnection({
     ...currentState,
-    isWebBluetoothSupported,
-    isWebUsbSupported,
+    isWebBluetoothSupported: webBluetoothSupported,
+    isWebUsbSupported: webUsbSupported,
   });
 };
