@@ -22,3 +22,10 @@
 /ml4f-output/
 /android/app/src/main/assets/public
 /ios/App/App/public
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+Gemfile.lock
