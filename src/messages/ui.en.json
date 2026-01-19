@@ -307,6 +307,12 @@
       "value": "You didn't choose a micro:bit. Do you want to try again?"
     }
   ],
+  "connect-bluetooth-enabled": [
+    {
+      "type": 0,
+      "value": "Bluetooth enabled"
+    }
+  ],
   "connect-bluetooth-heading": [
     {
       "type": 0,
@@ -623,12 +629,6 @@
       "value": "Connect using Web Bluetooth instead"
     }
   ],
-  "connect-tablet": [
-    {
-      "type": 0,
-      "value": "iPad or Android tablet"
-    }
-  ],
   "connect-to-record": [
     {
       "type": 0,
@@ -675,12 +675,6 @@
     {
       "type": 0,
       "value": "with batteries"
-    }
-  ],
-  "connect-with-bluetooth": [
-    {
-      "type": 0,
-      "value": "with Bluetooth enabled"
     }
   ],
   "connect-with-web-bluetooth": [
@@ -1047,16 +1041,16 @@
       "value": "Finding micro:bit…"
     }
   ],
-  "downloading-stage-initializing": [
-    {
-      "type": 0,
-      "value": "Initializing…"
-    }
-  ],
   "downloading-stage-flashing": [
     {
       "type": 0,
       "value": "Please wait. Downloading program to micro:bit."
+    }
+  ],
+  "downloading-stage-initializing": [
+    {
+      "type": 0,
+      "value": "Initializing…"
     }
   ],
   "edit-in-makecode-action": [

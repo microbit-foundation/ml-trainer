@@ -8,7 +8,7 @@ import { FormattedMessage } from "react-intl";
 import batteryPackImage from "../images/stylised-battery-pack.svg";
 import microbitImage from "../images/stylised-microbit-black.svg";
 import microbitWithBatteryPack from "../images/microbit-with-battery-pack.svg";
-import tablet from "../images/tablet-bluetooth.svg";
+import bluetoothSymbol from "../images/bluetooth-symbol.svg";
 import twoMicrobitsImage from "../images/stylised-two-microbits-black.svg";
 import usbCableImage from "../images/stylised-usb-cable.svg";
 import computerImage from "../images/stylised_computer.svg";
@@ -79,9 +79,8 @@ const itemsConfig: Record<
       height: "148px",
     },
     {
-      imgSrc: tablet,
-      titleId: "connect-tablet",
-      subtitleId: "connect-with-bluetooth",
+      imgSrc: bluetoothSymbol,
+      titleId: "connect-bluetooth-enabled",
       width: "148px",
       height: "148px",
     },
