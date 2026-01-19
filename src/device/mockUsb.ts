@@ -3,6 +3,7 @@ import {
   BeforeRequestDevice,
   BoardVersion,
   ConnectOptions,
+  ConnectionAvailabilityStatus,
   ConnectionStatus,
   ConnectionStatusEvent,
   DeviceConnectionEventMap,
@@ -35,6 +36,11 @@ export class MockWebUSBConnection
     this.fakeDeviceId = Math.round(Math.random() * 1000);
   }
   async initialize(): Promise<void> {}
+
+  checkAvailability(): Promise<ConnectionAvailabilityStatus> {
+    return Promise.resolve("available");
+  }
+
   dispose(): void {}
 
   mockDeviceId(deviceId: number | undefined) {

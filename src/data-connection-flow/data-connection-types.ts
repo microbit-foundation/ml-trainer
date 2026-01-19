@@ -31,6 +31,13 @@ export enum DataConnectionType {
  */
 export type RadioFlowPhase = "remote" | "bridge";
 
+/**
+ * Which method to show for entering Bluetooth pairing mode.
+ * - "triple-reset": Press reset button three times
+ * - "a-b-reset": Hold A+B and press reset
+ */
+export type BluetoothPairingMethod = "triple-reset" | "a-b-reset";
+
 export const dataConnectionTypeToTransport = (
   type: DataConnectionType
 ): ConnectionTransport => {
@@ -81,6 +88,20 @@ export enum DataConnectionStep {
   BadFirmware = "BadFirmware",
   MicrobitUnsupported = "MicrobitUnsupported",
   WebUsbBluetoothUnsupported = "WebUsbBluetoothUnsupported",
+
+  // Permission error stages (native Bluetooth only).
+  /**
+   * Bluetooth is disabled on the device.
+   */
+  BluetoothDisabled = "BluetoothDisabled",
+  /**
+   * User denied Bluetooth permission request.
+   */
+  BluetoothPermissionDenied = "BluetoothPermissionDenied",
+  /**
+   * Location services are disabled (Android < 12 only).
+   */
+  LocationDisabled = "LocationDisabled",
 
   ConnectionLost = "ConnectionLost",
   StartOver = "StartOver",
@@ -149,6 +170,18 @@ export interface DataConnectionState {
    * successfully connected yet.
    */
   hasSwitchedConnectionType: boolean;
+
+  /**
+   * True while a permission check is in progress (native Bluetooth only).
+   * Used to show loading state on "Try Again" button in permission error dialogs.
+   */
+  isCheckingPermissions: boolean;
+
+  /**
+   * Which pairing method variant to show in the Bluetooth tutorial dialog.
+   * Allows user to switch between "triple-reset" and "a-b-reset" methods.
+   */
+  pairingMethod: BluetoothPairingMethod;
 }
 
 /**
@@ -187,6 +220,8 @@ export const getInitialDataConnectionState = (): DataConnectionState => {
     hasFailedOnce: false,
     isStartingOver: false,
     isBrowserTabVisible: document.visibilityState === "visible",
+    isCheckingPermissions: false,
+    pairingMethod: "triple-reset",
   };
 };
 

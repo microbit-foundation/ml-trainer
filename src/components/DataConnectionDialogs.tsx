@@ -10,6 +10,7 @@ import {
 } from "../data-connection-flow";
 import { useStore } from "../store";
 import { useDataConnectionActions } from "../data-connection-flow";
+import PermissionErrorDialog from "./BluetoothPermissionErrorDialog";
 import BrokenFirmwareDialog from "./BrokenFirmwareDialog";
 import ConnectBatteryDialog from "./ConnectBatteryDialog";
 import ConnectCableDialog, {
@@ -34,6 +35,7 @@ import UnsupportedMicrobitDialog from "./UnsupportedMicrobitDialog";
 import WebUsbBluetoothUnsupportedDialog from "./WebUsbBluetoothUnsupportedDialog";
 import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
 import { bluetoothUniversalHex } from "../device/get-hex-file";
+import { isAndroid } from "../platform";
 
 const DataConnectionDialogs = () => {
   const state = useStore((s) => s.dataConnection);
@@ -66,6 +68,8 @@ const DataConnectionDialogs = () => {
           {...dialogCommonProps}
           onBackClick={actions.onBackClick}
           onNextClick={actions.onNextClick}
+          pairingMethod={state.pairingMethod}
+          onSwitchPairingMethod={actions.switchPairingMethod}
         />
       );
     }
@@ -224,6 +228,39 @@ const DataConnectionDialogs = () => {
         />
       );
     }
+    case DataConnectionStep.BluetoothDisabled:
+      return (
+        <PermissionErrorDialog
+          headingId="bluetooth-disabled-heading"
+          bodyId="bluetooth-disabled-body"
+          {...dialogCommonProps}
+          onTryAgain={actions.onTryAgain}
+        />
+      );
+    case DataConnectionStep.BluetoothPermissionDenied:
+      return (
+        <PermissionErrorDialog
+          headingId="bluetooth-permission-denied-heading"
+          bodyId={
+            isAndroid()
+              ? "bluetooth-permission-denied-body-android"
+              : "bluetooth-permission-denied-body-ios"
+          }
+          {...dialogCommonProps}
+          onTryAgain={actions.onTryAgain}
+          onOpenSettings={actions.openAppSettings}
+        />
+      );
+    case DataConnectionStep.LocationDisabled:
+      return (
+        <PermissionErrorDialog
+          headingId="location-disabled-heading"
+          bodyId="location-disabled-body"
+          {...dialogCommonProps}
+          onTryAgain={actions.onTryAgain}
+          onOpenSettings={actions.openLocationSettings}
+        />
+      );
   }
 };
 

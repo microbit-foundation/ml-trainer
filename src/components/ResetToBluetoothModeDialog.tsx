@@ -5,47 +5,61 @@
  */
 import { AspectRatio, Image, Link, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
+import { BluetoothPairingMethod } from "../data-connection-flow/data-connection-types";
+import abReset from "../images/bluetooth-mode-a+b+reset.gif";
 import tripleReset from "../images/bluetooth-mode-triple-reset.gif";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
 
 export interface ResetToBluetoothModeDialogProps
-  extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {}
+  extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
+  pairingMethod?: BluetoothPairingMethod;
+  onSwitchPairingMethod?: () => void;
+}
 
 const ResetToBluetoothModeDialog = ({
+  pairingMethod = "triple-reset",
+  onSwitchPairingMethod,
   ...props
 }: ResetToBluetoothModeDialogProps) => {
+  const isTripleReset = pairingMethod === "triple-reset";
+  const subtitleId = isTripleReset
+    ? "reset-to-bluetooth-mode-subtitle"
+    : "reset-to-bluetooth-mode-ab-subtitle";
+  const image = isTripleReset ? tripleReset : abReset;
+
   return (
     <ConnectContainerDialog
       {...props}
       headingId="reset-to-bluetooth-mode-heading"
       footerLeft={
-        <Link
-          color="brand.600"
-          // TODO: implement
-          href=""
-          target="_blank"
-          rel="noopener"
-          display="flex"
-          flexDirection="row"
-          gap={1}
-        >
-          <FormattedMessage id="connect-try-another-way" />
-        </Link>
+        onSwitchPairingMethod ? (
+          <Link
+            as="button"
+            color="brand.600"
+            onClick={onSwitchPairingMethod}
+            display="flex"
+            flexDirection="row"
+            gap={1}
+          >
+            <FormattedMessage id="connect-try-another-way" />
+          </Link>
+        ) : undefined
       }
     >
       <VStack gap={5} width="100%">
         <Text alignSelf="left" width="100%">
-          <FormattedMessage id="reset-to-bluetooth-mode-subtitle" />
+          <FormattedMessage id={subtitleId} />
         </Text>
         <AspectRatio
           ratio={3 / 2}
-          bgColor="blackAlpha.300"
+          bgColor="black"
           width="22rem"
           rounded="md"
+          pt={isTripleReset ? 0 : 12}
         >
-          <Image src={tripleReset} alt="" mt={-2.5} px={5} />
+          <Image src={image} alt="" mt={-2.5} px={5} />
         </AspectRatio>
       </VStack>
     </ConnectContainerDialog>

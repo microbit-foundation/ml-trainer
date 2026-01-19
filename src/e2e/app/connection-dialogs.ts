@@ -31,6 +31,8 @@ export const dialogTitles: {
     resetToBluetooth: "Reset to Bluetooth mode",
     copyPattern: "Copy pattern",
     connectBluetooth: "Connect to micro:bit using Bluetooth",
+    bluetoothDisabled: "Bluetooth is turned off",
+    permissionDenied: "Bluetooth permission required",
   },
   radio: {
     whatYouNeed: "What you need to connect using micro:bit radio",
@@ -358,5 +360,69 @@ export class ConnectionDialogs {
     await expect(
       this.page.getByRole("button", { name: "Reconnect" })
     ).not.toBeVisible();
+  }
+
+  /**
+   * Set what checkAvailability() returns on the Bluetooth mock.
+   * Used to test permission error scenarios in the native Bluetooth flow.
+   */
+  async setBluetoothAvailability(
+    status: "available" | "disabled" | "permission-denied" | "location-disabled"
+  ) {
+    await this.page.evaluate((s: string) => {
+      const mockBluetooth =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        (window as any).mockBluetooth as MockWebBluetoothConnection;
+      mockBluetooth.setAvailabilityStatus(
+        s as
+          | "available"
+          | "disabled"
+          | "permission-denied"
+          | "location-disabled"
+      );
+    }, status);
+  }
+
+  /**
+   * Expect the "Bluetooth is turned off" dialog to be visible.
+   */
+  async expectBluetoothDisabledDialog() {
+    await expect(
+      this.page.getByText(dialogTitles.nativeBluetooth.bluetoothDisabled)
+    ).toBeVisible({ timeout: 10000 });
+    await expect(this.tryAgainButton).toBeVisible();
+  }
+
+  /**
+   * Expect the "Bluetooth permission required" dialog to be visible.
+   */
+  async expectBluetoothPermissionDeniedDialog() {
+    await expect(
+      this.page.getByText(dialogTitles.nativeBluetooth.permissionDenied)
+    ).toBeVisible({ timeout: 10000 });
+    await expect(this.tryAgainButton).toBeVisible();
+  }
+
+  /**
+   * Click the "Try again" button in permission error dialogs.
+   */
+  async clickTryAgainButton() {
+    await this.tryAgainButton.click();
+  }
+
+  /**
+   * Click the "Cancel" button in permission error dialogs.
+   */
+  async clickCancelButton() {
+    await this.page.getByRole("button", { name: "Cancel" }).click();
+  }
+
+  /**
+   * Expect no dialog to be visible (e.g., after clicking Cancel).
+   */
+  async expectNoDialog() {
+    await expect(this.page.getByRole("dialog")).not.toBeVisible({
+      timeout: 10000,
+    });
   }
 }

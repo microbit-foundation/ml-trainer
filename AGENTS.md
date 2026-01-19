@@ -17,7 +17,7 @@ When documenting properties/fields use the following style of comment:
 To add or amend UI strings:
 
 1. Edit `lang/ui.en.json`
-2. Run `npm run i18n:compile` to update `src/messages/` via formatjs
+2. Run `find lang -type f -not -name ui.en.json | while read n; do git checkout main -- $n; done  && npm run i18n:compile` to update `src/messages/` via formatjs and ensure that outdated text of new message is not preserved in translation bundles as we iterate on the text.
 
 ## Vitest
 

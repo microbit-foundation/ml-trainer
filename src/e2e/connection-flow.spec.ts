@@ -181,6 +181,119 @@ test.describe("native bluetooth connection", () => {
   });
 });
 
+test.describe("native bluetooth permission errors", () => {
+  test.beforeEach(async ({ homePage, newPage }) => {
+    await homePage.setupContext();
+    await homePage.goto(["simulateNative"]);
+    await homePage.getStarted();
+    await newPage.startNewSession();
+  });
+
+  test.describe("pre-flight checkAvailability errors", () => {
+    test("shows bluetooth disabled dialog when bluetooth is off", async ({
+      dataSamplesPage,
+    }) => {
+      const connectionDialogs = await dataSamplesPage.connect();
+      await connectionDialogs.setBluetoothAvailability("disabled");
+      await connectionDialogs.waitForText(dialog.nativeBluetooth.whatYouNeed);
+      await connectionDialogs.clickNext();
+      await connectionDialogs.expectBluetoothDisabledDialog();
+
+      // Try again after enabling bluetooth
+      await connectionDialogs.setBluetoothAvailability("available");
+      await connectionDialogs.clickTryAgainButton();
+      await connectionDialogs.waitForText(
+        dialog.nativeBluetooth.resetToBluetooth
+      );
+    });
+
+    test("shows permission denied dialog when permission not granted", async ({
+      dataSamplesPage,
+    }) => {
+      const connectionDialogs = await dataSamplesPage.connect();
+      await connectionDialogs.setBluetoothAvailability("permission-denied");
+      await connectionDialogs.waitForText(dialog.nativeBluetooth.whatYouNeed);
+      await connectionDialogs.clickNext();
+      await connectionDialogs.expectBluetoothPermissionDeniedDialog();
+
+      // Try again after granting permission
+      await connectionDialogs.setBluetoothAvailability("available");
+      await connectionDialogs.clickTryAgainButton();
+      await connectionDialogs.waitForText(
+        dialog.nativeBluetooth.resetToBluetooth
+      );
+    });
+
+    test("cancel from bluetooth disabled dialog closes dialogs", async ({
+      dataSamplesPage,
+    }) => {
+      const connectionDialogs = await dataSamplesPage.connect();
+      await connectionDialogs.setBluetoothAvailability("disabled");
+      await connectionDialogs.waitForText(dialog.nativeBluetooth.whatYouNeed);
+      await connectionDialogs.clickNext();
+      await connectionDialogs.expectBluetoothDisabledDialog();
+      await connectionDialogs.clickCancelButton();
+      await connectionDialogs.expectNoDialog();
+    });
+  });
+
+  test.describe("connect errors with permission-related DeviceError", () => {
+    test("shows bluetooth disabled dialog when connect fails with disabled error", async ({
+      dataSamplesPage,
+    }) => {
+      const connectionDialogs = await dataSamplesPage.connect();
+      // Availability check passes, but connect will fail
+      await connectionDialogs.setBluetoothConnectBehaviors([
+        { outcome: "error", code: "disabled" },
+        { outcome: "success" },
+      ]);
+      await connectionDialogs.waitForText(dialog.nativeBluetooth.whatYouNeed);
+      await connectionDialogs.clickNext();
+      await connectionDialogs.waitForText(
+        dialog.nativeBluetooth.resetToBluetooth
+      );
+      await connectionDialogs.clickNext();
+      await connectionDialogs.waitForText(dialog.nativeBluetooth.copyPattern);
+      await connectionDialogs.enterBluetoothPattern();
+      await connectionDialogs.clickNext();
+      // Connect throws DeviceError with code "disabled"
+      await connectionDialogs.expectBluetoothDisabledDialog();
+
+      // Try again after enabling bluetooth
+      await connectionDialogs.clickTryAgainButton();
+      await connectionDialogs.waitForText(
+        dialog.nativeBluetooth.resetToBluetooth
+      );
+    });
+
+    test("shows permission denied dialog when connect fails with permission-denied error", async ({
+      dataSamplesPage,
+    }) => {
+      const connectionDialogs = await dataSamplesPage.connect();
+      await connectionDialogs.setBluetoothConnectBehaviors([
+        { outcome: "error", code: "permission-denied" },
+        { outcome: "success" },
+      ]);
+      await connectionDialogs.waitForText(dialog.nativeBluetooth.whatYouNeed);
+      await connectionDialogs.clickNext();
+      await connectionDialogs.waitForText(
+        dialog.nativeBluetooth.resetToBluetooth
+      );
+      await connectionDialogs.clickNext();
+      await connectionDialogs.waitForText(dialog.nativeBluetooth.copyPattern);
+      await connectionDialogs.enterBluetoothPattern();
+      await connectionDialogs.clickNext();
+      await connectionDialogs.expectBluetoothPermissionDeniedDialog();
+
+      // Try again after granting permission
+      await connectionDialogs.clickTryAgainButton();
+      await connectionDialogs.waitForText(
+        dialog.nativeBluetooth.resetToBluetooth
+      );
+    });
+  });
+});
+
 test.describe("radio connection", () => {
   test.beforeEach(async ({ homePage, newPage }) => {
     await homePage.setupContext();

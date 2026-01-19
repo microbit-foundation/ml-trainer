@@ -1,6 +1,7 @@
 import {
   BoardVersion,
   ConnectOptions,
+  ConnectionAvailabilityStatus,
   ConnectionStatus,
   ConnectionStatusEvent,
   DeviceConnectionEventMap,
@@ -95,6 +96,11 @@ export class MockRadioBridgeConnection
   }
 
   async initialize(): Promise<void> {}
+
+  async checkAvailability(): Promise<ConnectionAvailabilityStatus> {
+    return this.delegate.checkAvailability();
+  }
+
   dispose(): void {}
   setRemoteDeviceId(_deviceId: number): void {}
   async disconnect(): Promise<void> {}

@@ -13,3 +13,17 @@ import { flags } from "./flags";
 export const isNativePlatform = (): boolean => {
   return Capacitor.isNativePlatform() || flags.simulateNative;
 };
+
+/**
+ * Check if running on iOS.
+ */
+export const isIOS = (): boolean => {
+  return Capacitor.getPlatform() === "ios";
+};
+
+/**
+ * Check if running on Android.
+ */
+export const isAndroid = (): boolean => {
+  return Capacitor.getPlatform() === "android";
+};

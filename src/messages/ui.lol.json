@@ -137,6 +137,80 @@
       "value": "crwdns368553:0crwdne368553:0"
     }
   ],
+  "bluetooth-disabled-body": [
+    {
+      "type": 0,
+      "value": "Please turn on Bluetooth and try again."
+    }
+  ],
+  "bluetooth-disabled-heading": [
+    {
+      "type": 0,
+      "value": "Bluetooth is turned off"
+    }
+  ],
+  "bluetooth-permission-denied-body-android": [
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": " uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in "
+    },
+    {
+      "children": [
+        {
+          "type": 1,
+          "value": "appNameShort"
+        },
+        {
+          "type": 0,
+          "value": " settings"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "bluetooth-permission-denied-body-ios": [
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": " uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in "
+    },
+    {
+      "children": [
+        {
+          "type": 1,
+          "value": "appNameShort"
+        },
+        {
+          "type": 0,
+          "value": " settings"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "bluetooth-permission-denied-heading": [
+    {
+      "type": 0,
+      "value": "Bluetooth permission required"
+    }
+  ],
   "bluetooth-unsupported-advice": [
     {
       "type": 0,
@@ -638,7 +712,7 @@
   "connect-try-another-way": [
     {
       "type": 0,
-      "value": "Not working? Try another way"
+      "value": "Try another way"
     }
   ],
   "connect-with-batteries": [
@@ -1877,6 +1951,32 @@
       "value": "crwdns363158:0crwdne363158:0"
     }
   ],
+  "location-disabled-body": [
+    {
+      "type": 0,
+      "value": "Location services are required for Bluetooth on this device. Please enable location services in "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Settings"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " and try again."
+    }
+  ],
+  "location-disabled-heading": [
+    {
+      "type": 0,
+      "value": "Location services required"
+    }
+  ],
   "main-menu": [
     {
       "type": 0,
@@ -2449,6 +2549,12 @@
     {
       "type": 0,
       "value": "crwdns363298:0crwdne363298:0"
+    }
+  ],
+  "reset-to-bluetooth-mode-ab-subtitle": [
+    {
+      "type": 0,
+      "value": "Hold A+B and press RESET"
     }
   ],
   "reset-to-bluetooth-mode-heading": [

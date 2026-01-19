@@ -69,7 +69,14 @@ export type DataConnectionEvent =
   // User-initiated disconnect event.
   | { type: "disconnect" }
   // Reset state (use after disconnect when micro:bit is being reused).
-  | { type: "reset" };
+  | { type: "reset" }
+  // Permission check result events (native Bluetooth only).
+  | { type: "permissionsOk" }
+  | { type: "bluetoothDisabled" }
+  | { type: "permissionDenied" }
+  | { type: "locationDisabled" }
+  // Switch between pairing method variants (triple-reset vs a-b-reset).
+  | { type: "switchPairingMethod" };
 
 export type DataConnectionAction =
   | { type: "setConnectionType"; connectionType: DataConnectionType }
@@ -109,7 +116,21 @@ export type DataConnectionAction =
   /**
    * Track disconnect source for error dialogs.
    */
-  | { type: "setDisconnectSource" };
+  | { type: "setDisconnectSource" }
+  /**
+   * Check Bluetooth permissions (native Bluetooth only).
+   * Sends permissionsOk, bluetoothDisabled, permissionDenied, or locationDisabled events.
+   */
+  | { type: "checkPermissions" }
+  /**
+   * Set the checking permissions flag (native Bluetooth only).
+   * Used to show loading state on "Try Again" button.
+   */
+  | { type: "setCheckingPermissions"; value: boolean }
+  /**
+   * Toggle between pairing method variants (triple-reset ↔ a-b-reset).
+   */
+  | { type: "togglePairingMethod" };
 
 export type DataConnectionFlowDef = FlowDefinition<
   DataConnectionStep,
@@ -189,6 +210,21 @@ export const guards = {
   // Guards that check event payload (using DeviceError codes directly)
   isBadFirmwareError: (_ctx: DataConnectionState, event: DataConnectionEvent) =>
     event.type === "connectFailure" && event.code === "update-req",
+
+  isBluetoothDisabledError: (
+    _ctx: DataConnectionState,
+    event: DataConnectionEvent
+  ) => event.type === "connectFailure" && event.code === "disabled",
+
+  isPermissionDeniedError: (
+    _ctx: DataConnectionState,
+    event: DataConnectionEvent
+  ) => event.type === "connectFailure" && event.code === "permission-denied",
+
+  isLocationDisabledError: (
+    _ctx: DataConnectionState,
+    event: DataConnectionEvent
+  ) => event.type === "connectFailure" && event.code === "location-disabled",
 
   isNoDeviceSelectedError: (
     _ctx: DataConnectionState,
