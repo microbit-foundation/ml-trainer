@@ -10,6 +10,7 @@ import {
   DeviceError,
   FlashOptions,
   ProgressCallback,
+  ProgressStage,
 } from "@microbit/microbit-connection";
 import { Connections } from "../connections-hooks";
 import { DataConnectionState } from "../data-connection-flow";
@@ -156,6 +157,12 @@ const executeAction = async (
         ...getDownloadState(),
         isCheckingPermissions: action.value,
       });
+      break;
+
+    case "initializeFlashingProgress":
+      useStore
+        .getState()
+        .setDownloadFlashingProgress(ProgressStage.Initializing, undefined);
       break;
   }
 };

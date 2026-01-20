@@ -45,6 +45,7 @@ const connectFlashFailureWithPermissionHandling = [
 // FlashingInProgress state with V1 board version check and permission error handling.
 const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
   [DownloadStep.FlashingInProgress]: {
+    entry: [{ type: "initializeFlashingProgress" }],
     on: {
       connectFlashSuccess: [
         {

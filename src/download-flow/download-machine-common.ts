@@ -62,7 +62,12 @@ export type DownloadAction =
    * Set the checking permissions flag (native Bluetooth only).
    * Used to show loading state on "Try Again" button.
    */
-  | { type: "setCheckingPermissions"; value: boolean };
+  | { type: "setCheckingPermissions"; value: boolean }
+  /**
+   * Initialize flashing progress to Initializing stage.
+   * Used as entry action for FlashingInProgress state.
+   */
+  | { type: "initializeFlashingProgress" };
 
 export interface DownloadFlowContext {
   hex?: HexData;
@@ -155,6 +160,7 @@ export const globalHandlers: DownloadFlowDefinition = {
  */
 export const flashingInProgressWithV1Check: DownloadFlowDefinition = {
   [DownloadStep.FlashingInProgress]: {
+    entry: [{ type: "initializeFlashingProgress" }],
     on: {
       connectFlashSuccess: [
         {

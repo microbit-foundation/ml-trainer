@@ -631,10 +631,6 @@
     "defaultMessage": "Please wait. Downloading program to micro:bit.",
     "description": "Progress text during actual flashing stage"
   },
-  "downloading-stage-initializing": {
-    "defaultMessage": "Initializing…",
-    "description": "Progress text during initialization stage of flashing"
-  },
   "edit-in-makecode-action": {
     "defaultMessage": "Bewerken in MakeCode",
     "description": "Edit in MakeCode button text"

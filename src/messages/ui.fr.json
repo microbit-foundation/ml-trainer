@@ -1125,12 +1125,6 @@
       "value": "Please wait. Downloading program to micro:bit."
     }
   ],
-  "downloading-stage-initializing": [
-    {
-      "type": 0,
-      "value": "Initializing…"
-    }
-  ],
   "edit-in-makecode-action": [
     {
       "type": 0,
