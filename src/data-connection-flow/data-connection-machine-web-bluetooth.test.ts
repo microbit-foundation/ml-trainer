@@ -132,14 +132,14 @@ describe("Data connection flow: Web Bluetooth", () => {
       expect(result?.actions).toContainEqual({ type: "connectData" });
     });
 
-    it("BluetoothPattern setMicrobitName -> stays on BluetoothPattern with setBluetoothName action", () => {
+    it("BluetoothPattern setMicrobitName -> stays on BluetoothPattern with setMicrobitName action", () => {
       const result = transition(DataConnectionStep.BluetoothPattern, {
         type: "setMicrobitName",
         name: "zogup",
       });
 
       expect(result?.step).toBe(DataConnectionStep.BluetoothPattern);
-      expect(result?.actions).toContainEqual({ type: "setBluetoothName" });
+      expect(result?.actions).toContainEqual({ type: "setMicrobitName" });
     });
   });
 
@@ -239,7 +239,7 @@ describe("Data connection flow: Web Bluetooth", () => {
       });
 
       expect(result?.step).toBe(DataConnectionStep.ConnectBattery);
-      expect(result?.actions).toContainEqual({ type: "setBluetoothName" });
+      expect(result?.actions).toContainEqual({ type: "setMicrobitName" });
     });
 
     it("flashFailure -> ManualFlashingTutorial with downloadHexFile", () => {

@@ -11,10 +11,7 @@ import {
 } from "@microbit/microbit-connection";
 import { Connections } from "../connections-hooks";
 import { DataConnectionState } from "../data-connection-flow";
-import {
-  flashConnection,
-  isNativeBluetoothConnection,
-} from "../device/connection-utils";
+import { flashConnection } from "../device/connection-utils";
 import {
   DownloadAction,
   DownloadEvent,
@@ -93,6 +90,9 @@ const executeAction = async (
       if (event.type !== "start") {
         throw new Error("initializeDownload requires start event");
       }
+      if (event.bluetoothMicrobitName) {
+        deps.connections.bluetooth.setNameFilter(event.bluetoothMicrobitName);
+      }
       setDownloadState({
         ...state,
         hex: event.hex,
@@ -112,8 +112,19 @@ const executeAction = async (
       break;
     }
 
-    case "connect":
-      await performConnect(deps);
+    case "setMicrobitName": {
+      if (event.type === "setMicrobitName") {
+        deps.connections.bluetooth.setNameFilter(event.name);
+        setDownloadState({
+          ...state,
+          bluetoothMicrobitName: event.name,
+        });
+      }
+      break;
+    }
+
+    case "connectFlash":
+      await performConnectFlash(deps);
       break;
 
     case "flash":
@@ -137,9 +148,11 @@ const executeAction = async (
 };
 
 /**
- * Perform USB/Bluetooth connect operation.
+ * Perform USB/Bluetooth connect operation for flashing.
  */
-const performConnect = async (deps: DownloadDependencies): Promise<void> => {
+const performConnectFlash = async (
+  deps: DownloadDependencies
+): Promise<void> => {
   const state = getDownloadState();
   const { microbitChoice } = state;
   const actions = useStore.getState().actions;
@@ -162,11 +175,6 @@ const performConnect = async (deps: DownloadDependencies): Promise<void> => {
     }
   }
 
-  // Set name filter for native bluetooth
-  if (isNativeBluetoothConnection(connection) && state.bluetoothMicrobitName) {
-    connection.setNameFilter(state.bluetoothMicrobitName);
-  }
-
   try {
     await connection.connect({ progress: deps.flashingProgressCallback });
     const boardVersion = connection.getBoardVersion();
@@ -174,14 +182,14 @@ const performConnect = async (deps: DownloadDependencies): Promise<void> => {
     setDownloadState({ ...getDownloadState(), connection });
     await sendEvent(
       {
-        type: "connectSuccess",
+        type: "connectFlashSuccess",
         boardVersion: boardVersion ?? "V2",
       },
       deps
     );
   } catch (e) {
     if (e instanceof DeviceError) {
-      await sendEvent({ type: "connectFailure", code: e.code }, deps);
+      await sendEvent({ type: "connectFlashFailure", code: e.code }, deps);
     } else {
       throw e;
     }

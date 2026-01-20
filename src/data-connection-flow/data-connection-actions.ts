@@ -170,7 +170,7 @@ const executeAction = async (
       break;
     }
 
-    case "setBluetoothName": {
+    case "setMicrobitName": {
       // Extract name from either setMicrobitName event (user input) or flashSuccess event (from USB flashing)
       const name =
         event.type === "setMicrobitName"

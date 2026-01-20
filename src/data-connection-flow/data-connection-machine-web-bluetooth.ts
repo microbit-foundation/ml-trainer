@@ -72,7 +72,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
       ],
       flashSuccess: {
         target: DataConnectionStep.ConnectBattery,
-        actions: [{ type: "setBluetoothName" }],
+        actions: [{ type: "setMicrobitName" }],
       },
       flashFailure: {
         target: DataConnectionStep.ManualFlashingTutorial,

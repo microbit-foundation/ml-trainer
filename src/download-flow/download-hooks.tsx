@@ -58,7 +58,7 @@ const createDownloadActions = (deps: DownloadDependencies) => ({
   },
 
   onChangeMicrobitName: (name: string) => {
-    setDownloadState({ ...getDownloadState(), bluetoothMicrobitName: name });
+    fireEvent({ type: "setMicrobitName", name }, deps);
   },
 
   switchPairingMethod: () => {

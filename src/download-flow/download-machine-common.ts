@@ -22,8 +22,9 @@ export type DownloadEvent =
   | { type: "close" }
   | { type: "choseSame" }
   | { type: "choseDifferent" }
-  | { type: "connectSuccess"; boardVersion: "V1" | "V2" }
-  | { type: "connectFailure"; code?: string }
+  | { type: "setMicrobitName"; name: string }
+  | { type: "connectFlashSuccess"; boardVersion: "V1" | "V2" }
+  | { type: "connectFlashFailure"; code?: string }
   | { type: "flashSuccess" }
   | { type: "flashFailure"; code?: string };
 
@@ -37,7 +38,11 @@ export type DownloadAction =
    * Saves showPreDownloadHelp setting from next event.
    */
   | { type: "saveHelpPreference" }
-  | { type: "connect" }
+  /**
+   * Sets micro:bit name from setMicrobitName event (user input).
+   */
+  | { type: "setMicrobitName" }
+  | { type: "connectFlash" }
   | { type: "flash" }
   | { type: "downloadHexFile" }
   | { type: "disconnectDataConnection" };
@@ -124,7 +129,7 @@ export const globalHandlers: DownloadFlowDefinition = {
 export const flashingInProgressWithV1Check: DownloadFlowDefinition = {
   [DownloadStep.FlashingInProgress]: {
     on: {
-      connectSuccess: [
+      connectFlashSuccess: [
         {
           guard: guards.isV1BoardVersion,
           target: DownloadStep.IncompatibleDevice,
@@ -135,7 +140,7 @@ export const flashingInProgressWithV1Check: DownloadFlowDefinition = {
           actions: [{ type: "flash" }],
         },
       ],
-      connectFailure: {
+      connectFlashFailure: {
         target: DownloadStep.ManualFlashingTutorial,
         actions: [{ type: "downloadHexFile" }],
       },

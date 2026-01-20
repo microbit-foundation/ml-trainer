@@ -81,9 +81,9 @@ export type DataConnectionEvent =
 export type DataConnectionAction =
   | { type: "setConnectionType"; connectionType: DataConnectionType }
   /**
-   * Sets bluetooth name from setMicrobitName event (user input) or flashSuccess event (from flashing).
+   * Sets micro:bit name from setMicrobitName event (user input) or flashSuccess event (from flashing).
    */
-  | { type: "setBluetoothName" }
+  | { type: "setMicrobitName" }
   | { type: "setRadioRemoteDeviceId"; deviceId?: number }
   | { type: "setRadioBridgeDeviceId"; deviceId?: number }
   /**
@@ -529,12 +529,12 @@ export const bluetoothRecoveryStates = createRecoveryStates(
 // =============================================================================
 
 /**
- * Handler for setMicrobitName event - stores the bluetooth name from user input.
+ * Handler for setMicrobitName event - stores the micro:bit name from user input.
  * Used by WebBluetooth and NativeBluetooth flows in BluetoothPattern step.
  */
 export const setMicrobitNameHandler = {
   setMicrobitName: {
-    actions: [{ type: "setBluetoothName" }] as DataConnectionAction[],
+    actions: [{ type: "setMicrobitName" }] as DataConnectionAction[],
   },
 };
 
