@@ -5,13 +5,14 @@
  */
 import {
   ConnectionStatus,
+  createUniversalHexFlashDataSource,
   createWebUSBConnection,
   DeviceError,
+  FlashOptions,
   ProgressCallback,
 } from "@microbit/microbit-connection";
 import { Connections } from "../connections-hooks";
 import { DataConnectionState } from "../data-connection-flow";
-import { flashConnection } from "../device/connection-utils";
 import {
   DownloadAction,
   DownloadEvent,
@@ -208,7 +209,12 @@ const performFlash = async (deps: DownloadDependencies): Promise<void> => {
   }
 
   try {
-    await flashConnection(connection, hex.hex, deps.flashingProgressCallback);
+    const options: FlashOptions = {
+      partial: true,
+      minimumProgressIncrement: 0.01,
+      progress: deps.flashingProgressCallback,
+    };
+    await connection.flash(createUniversalHexFlashDataSource(hex.hex), options);
     await sendEvent({ type: "flashSuccess" }, deps);
   } catch (e) {
     if (e instanceof DeviceError) {

@@ -3,7 +3,11 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { DeviceError, ProgressStage } from "@microbit/microbit-connection";
+import {
+  DeviceError,
+  FlashOptions,
+  ProgressStage,
+} from "@microbit/microbit-connection";
 import { deviceIdToMicrobitName } from "../bt-pattern-utils";
 import { Connections } from "../connections-hooks";
 import {
@@ -18,12 +22,15 @@ import {
 } from "./data-connection-types";
 import { Logging } from "../logging/logging";
 import {
-  flashConnection,
   isWebUSBConnection,
   isWebBluetoothSupported,
   isWebUsbSupported,
 } from "../device/connection-utils";
-import { bluetoothUniversalHex, HexType } from "../device/get-hex-file";
+import {
+  bluetoothUniversalHex,
+  getFlashDataSource,
+  HexType,
+} from "../device/get-hex-file";
 import { useStore } from "../store";
 import { downloadHex } from "../utils/fs-util";
 import { StoredConnectionConfig } from "../hooks/use-connection-config-storage";
@@ -352,7 +359,12 @@ const performFlash = async (deps: DataConnectionDeps): Promise<void> => {
   const hex = getHexType(state);
 
   try {
-    await flashConnection(connection, hex, progressCallback);
+    const options: FlashOptions = {
+      partial: true,
+      minimumProgressIncrement: 0.01,
+      progress: progressCallback,
+    };
+    await connection.flash(getFlashDataSource(hex), options);
 
     const deviceId = isWebUSBConnection(connection)
       ? connection.getDeviceId()
