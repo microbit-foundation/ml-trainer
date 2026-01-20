@@ -225,8 +225,7 @@ const executeAction = async (
       break;
 
     case "clearDevice":
-      // Currently only bluetooth supports clearDevice
-      await deps.connections.bluetooth.clearDevice();
+      await deps.connections.getDataConnection().clearDevice();
       break;
 
     case "connectData":
