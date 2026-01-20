@@ -6,9 +6,10 @@
 import {
   backToStartTransition,
   badFirmwareState,
+  bluetoothRecoveryStates,
   connectedState,
+  connectFlashSuccessHandler,
   createInitialConnectHandlers,
-  createRecoveryStates,
   createTryAgainState,
   DataConnectionFlowDef,
   globalHandlers,
@@ -16,6 +17,7 @@ import {
   idleBluetoothReconnect,
   idleBrowserUnsupported,
   idleFreshStart,
+  setMicrobitNameHandler,
   switchToRadio,
   webUsbBluetoothUnsupportedState,
   webUsbFlashingTutorialState,
@@ -56,9 +58,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
 
   [DataConnectionStep.FlashingInProgress]: {
     on: {
-      connectSuccess: {
-        actions: [{ type: "flash" }],
-      },
+      ...connectFlashSuccessHandler,
       connectFailure: [
         {
           guard: guards.isBadFirmwareError,
@@ -99,9 +99,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
     on: {
       next: { target: DataConnectionStep.WebBluetoothPreConnectTutorial },
       back: { target: DataConnectionStep.ConnectBattery },
-      setMicrobitName: {
-        actions: [{ type: "setMicrobitName" }],
-      },
+      ...setMicrobitNameHandler,
     },
   },
 
@@ -109,7 +107,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
     on: {
       next: {
         target: DataConnectionStep.BluetoothConnect,
-        actions: [{ type: "connectBluetooth", clearDevice: true }],
+        actions: [{ type: "clearDevice" }, { type: "connectData" }],
       },
       back: { target: DataConnectionStep.BluetoothPattern },
     },
@@ -147,10 +145,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
     DataConnectionStep.BluetoothPattern
   ),
 
-  ...createRecoveryStates(DataConnectionStep.BluetoothConnect, {
-    type: "connectBluetooth",
-    clearDevice: false,
-  }),
+  ...bluetoothRecoveryStates,
 
   ...webUsbBluetoothUnsupportedState,
 };

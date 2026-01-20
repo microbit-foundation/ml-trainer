@@ -86,13 +86,13 @@ describe("Data connection flow: Web Bluetooth", () => {
       expect(result?.step).toBe(DataConnectionStep.WebUsbFlashingTutorial);
     });
 
-    it("WebUsbFlashingTutorial -> FlashingInProgress with connect action", () => {
+    it("WebUsbFlashingTutorial -> FlashingInProgress with connectFlash action", () => {
       const result = transition(DataConnectionStep.WebUsbFlashingTutorial, {
         type: "next",
       });
 
       expect(result?.step).toBe(DataConnectionStep.FlashingInProgress);
-      expect(result?.actions).toContainEqual({ type: "connect" });
+      expect(result?.actions).toContainEqual({ type: "connectFlash" });
     });
 
     it("ManualFlashingTutorial -> ConnectBattery", () => {
@@ -121,27 +121,25 @@ describe("Data connection flow: Web Bluetooth", () => {
       );
     });
 
-    it("WebBluetoothPreConnectTutorial -> BluetoothConnect with connectBluetooth action", () => {
+    it("WebBluetoothPreConnectTutorial -> BluetoothConnect with connectData action", () => {
       const result = transition(
         DataConnectionStep.WebBluetoothPreConnectTutorial,
         { type: "next" }
       );
 
       expect(result?.step).toBe(DataConnectionStep.BluetoothConnect);
-      expect(result?.actions).toContainEqual({
-        type: "connectBluetooth",
-        clearDevice: true,
-      });
+      expect(result?.actions).toContainEqual({ type: "clearDevice" });
+      expect(result?.actions).toContainEqual({ type: "connectData" });
     });
 
-    it("BluetoothPattern setMicrobitName -> stays on BluetoothPattern with setMicrobitName action", () => {
+    it("BluetoothPattern setMicrobitName -> stays on BluetoothPattern with setBluetoothName action", () => {
       const result = transition(DataConnectionStep.BluetoothPattern, {
         type: "setMicrobitName",
         name: "zogup",
       });
 
       expect(result?.step).toBe(DataConnectionStep.BluetoothPattern);
-      expect(result?.actions).toContainEqual({ type: "setMicrobitName" });
+      expect(result?.actions).toContainEqual({ type: "setBluetoothName" });
     });
   });
 
@@ -207,9 +205,9 @@ describe("Data connection flow: Web Bluetooth", () => {
   });
 
   describe("flashing outcomes", () => {
-    it("connectSuccess -> FlashingInProgress with flash action", () => {
+    it("connectFlashSuccess -> FlashingInProgress with flash action", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
-        type: "connectSuccess",
+        type: "connectFlashSuccess",
       });
 
       expect(result?.step).toBe(DataConnectionStep.FlashingInProgress);
@@ -372,7 +370,7 @@ describe("Data connection flow: Web Bluetooth", () => {
       expect(result?.step).toBe(DataConnectionStep.BluetoothPattern);
     });
 
-    it("ConnectFailed next -> BluetoothConnect with status and connectBluetooth", () => {
+    it("ConnectFailed next -> BluetoothConnect with status and connectData", () => {
       const result = transition(DataConnectionStep.ConnectFailed, {
         type: "next",
       });
@@ -382,13 +380,10 @@ describe("Data connection flow: Web Bluetooth", () => {
         type: "setReconnecting",
         value: true,
       });
-      expect(result?.actions).toContainEqual({
-        type: "connectBluetooth",
-        clearDevice: false,
-      });
+      expect(result?.actions).toContainEqual({ type: "connectData" });
     });
 
-    it("ConnectionLost next -> BluetoothConnect with status and connectBluetooth", () => {
+    it("ConnectionLost next -> BluetoothConnect with status and connectData", () => {
       const result = transition(DataConnectionStep.ConnectionLost, {
         type: "next",
       });
@@ -398,10 +393,7 @@ describe("Data connection flow: Web Bluetooth", () => {
         type: "setReconnecting",
         value: true,
       });
-      expect(result?.actions).toContainEqual({
-        type: "connectBluetooth",
-        clearDevice: false,
-      });
+      expect(result?.actions).toContainEqual({ type: "connectData" });
     });
   });
 

@@ -68,7 +68,7 @@ export const radioFlow: DataConnectionFlowDef = {
 
   [DataConnectionStep.FlashingInProgress]: {
     on: {
-      connectSuccess: [
+      connectFlashSuccess: [
         // Radio requires V2 for both remote and bridge micro:bits
         {
           guard: (ctx, event) => guards.isV1Board(ctx, event),
@@ -110,7 +110,7 @@ export const radioFlow: DataConnectionFlowDef = {
           target: DataConnectionStep.ConnectingMicrobits,
           actions: [
             { type: "setRadioBridgeDeviceId" },
-            { type: "connectMicrobits" },
+            { type: "connectData" },
           ],
         },
       ],
@@ -166,7 +166,7 @@ export const radioFlow: DataConnectionFlowDef = {
   ...badFirmwareState,
   ...webUsbTryAgainStates,
   ...createRecoveryStates(DataConnectionStep.ConnectingMicrobits, {
-    type: "connectMicrobits",
+    type: "connectData",
   }),
 
   [DataConnectionStep.MicrobitUnsupported]: {
