@@ -6,7 +6,7 @@
 import { useDownloadActions } from "../download-flow/download-hooks";
 import { DownloadStep } from "../download-flow/download-types";
 import { isAndroid } from "../platform";
-import { useStore } from "../store";
+import { useSettings, useStore } from "../store";
 import PermissionErrorDialog from "./BluetoothPermissionErrorDialog";
 import ConnectCableDialog from "./ConnectCableDialog";
 import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
@@ -24,6 +24,7 @@ const DownloadDialogs = () => {
   const downloadActions = useDownloadActions();
   const stage = useStore((s) => s.download);
   const flashingProgress = useStore((s) => s.downloadFlashingProgress);
+  const [settings] = useSettings();
 
   switch (stage.step) {
     case DownloadStep.Help:
@@ -105,7 +106,7 @@ const DownloadDialogs = () => {
           onClose={downloadActions.close}
           onBackClick={downloadActions.getOnBack()}
           onNextClick={downloadActions.getOnNext()}
-          microbitName={stage.bluetoothMicrobitName}
+          microbitName={settings.bluetoothMicrobitName}
           onChangeMicrobitName={(name: string) => {
             downloadActions.onChangeMicrobitName(name);
           }}

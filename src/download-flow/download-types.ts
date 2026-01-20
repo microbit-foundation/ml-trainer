@@ -63,12 +63,6 @@ export interface DownloadState {
   microbitChoice: SameOrDifferentChoice;
   hex?: HexData;
   /**
-   * We populate this from the connection.
-   * If the connection is connected we'll just go ahead and use it.
-   * If the connection is not provided we'll collect this in the flow.
-   */
-  bluetoothMicrobitName?: string;
-  /**
    * The micro:bit used to flash the hex.
    * We remember your choice for easy repeated flashes for as long as the editor is open.
    */

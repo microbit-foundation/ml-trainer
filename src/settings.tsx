@@ -317,4 +317,10 @@ export interface Settings {
   graphColorScheme: GraphColorScheme;
   graphLineScheme: GraphLineScheme;
   graphLineWeight: GraphLineWeight;
+  /**
+   * The micro:bit Bluetooth name, used to filter for a specific device during pairing.
+   * Set from user input (Bluetooth pattern dialog) or derived from USB device ID after flashing.
+   * Persisted so it can be reused across sessions and between data connection/download flows.
+   */
+  bluetoothMicrobitName?: string;
 }

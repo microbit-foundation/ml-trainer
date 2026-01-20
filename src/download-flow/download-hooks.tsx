@@ -19,7 +19,6 @@ import { HexData } from "../model";
 import { isAndroid } from "../platform";
 import { createFireEvent } from "../state-machine";
 import { useSettings, useStore } from "../store";
-import { useConnectionConfigStorage } from "../hooks/use-connection-config-storage";
 
 const fireEvent = createFireEvent(sendEvent, "Download flow error");
 
@@ -33,14 +32,7 @@ const createDownloadActions = (deps: DownloadDependencies) => ({
   },
 
   start: (download: HexData) => {
-    fireEvent(
-      {
-        type: "start",
-        hex: download,
-        bluetoothMicrobitName: deps.config.bluetoothMicrobitName,
-      },
-      deps
-    );
+    fireEvent({ type: "start", hex: download }, deps);
   },
 
   onHelpNext: (skipNextTime: boolean) => {
@@ -118,7 +110,6 @@ export const useDownloadActions = (): DownloadActions => {
   );
   const dataConnection = useStore((s) => s.dataConnection);
   const [settings, setSettings] = useSettings();
-  const [config] = useConnectionConfigStorage();
   const connections = useConnections();
   const logging = useLogging();
   const dataConnectionMachine = useDataConnectionMachine();
@@ -135,7 +126,6 @@ export const useDownloadActions = (): DownloadActions => {
 
   const deps: DownloadDependencies = useMemo(
     () => ({
-      config,
       settings,
       setSettings,
       connections,
@@ -149,7 +139,6 @@ export const useDownloadActions = (): DownloadActions => {
       },
     }),
     [
-      config,
       settings,
       setSettings,
       connections,
