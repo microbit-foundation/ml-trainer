@@ -56,6 +56,7 @@ interface ConnectionsRefValue {
  * Use {@link useDataConnection} for reactive access to the current data connection.
  */
 export interface Connections {
+  // Prefer getDefaultFlashConnection / getDataConnection.
   radioBridge: MicrobitRadioBridgeConnection;
   bluetooth: MicrobitWebBluetoothConnection;
   usb: MicrobitWebUSBConnection;
