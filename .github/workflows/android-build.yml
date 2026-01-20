@@ -91,3 +91,21 @@ jobs:
           name: android-aab-${{ github.sha }}
           path: android/app/build/outputs/bundle/release/*.aab
           retention-days: 30
+
+      - name: Decode Google Play service account key
+        if: github.event_name == 'release'
+        run: |
+          echo "GOOGLE_PLAY_JSON_KEY_FILE=$RUNNER_TEMP/play-store-key.json" >> $GITHUB_ENV
+          printenv GOOGLE_PLAY_JSON_KEY_BASE64 | base64 -d > "$RUNNER_TEMP/play-store-key.json"
+        env:
+          GOOGLE_PLAY_JSON_KEY_BASE64: ${{ secrets.GOOGLE_PLAY_JSON_KEY_BASE64 }}
+
+      - name: Upload to Google Play
+        if: github.event_name == 'release'
+        run: bundle exec fastlane android upload
+        env:
+          GOOGLE_PLAY_JSON_KEY_FILE: ${{ env.GOOGLE_PLAY_JSON_KEY_FILE }}
+
+      - name: Clean up service account key
+        run: rm -f "$RUNNER_TEMP/play-store-key.json"
+        if: always()
