@@ -63,7 +63,16 @@ const CloseTabsContent = () => {
   );
 };
 
-const configs = {
+type TryAgainStepType =
+  | typeof DataConnectionStep.TryAgainReplugMicrobit
+  | typeof DataConnectionStep.TryAgainCloseTabs
+  | typeof DataConnectionStep.TryAgainWebUsbSelectMicrobit
+  | typeof DataConnectionStep.TryAgainBluetoothSelectMicrobit;
+
+const configs: Record<
+  TryAgainStepType,
+  { headingId: string; children: React.ReactNode }
+> = {
   [DataConnectionStep.TryAgainReplugMicrobit]: {
     headingId: "other-tabs-heading",
     children: <ReplugMicrobitContent />,
@@ -88,11 +97,7 @@ interface TryAgainDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onTryAgain: () => void;
-  type:
-    | DataConnectionStep.TryAgainReplugMicrobit
-    | DataConnectionStep.TryAgainCloseTabs
-    | DataConnectionStep.TryAgainWebUsbSelectMicrobit
-    | DataConnectionStep.TryAgainBluetoothSelectMicrobit;
+  type: TryAgainStepType;
 }
 
 const TryAgainDialog = ({

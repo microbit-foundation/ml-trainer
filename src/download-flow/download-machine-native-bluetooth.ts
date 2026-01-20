@@ -7,11 +7,65 @@ import { DownloadStep } from "./download-types";
 import { always } from "../state-machine";
 import {
   DownloadFlowDefinition,
-  flashingInProgressWithV1Check,
   globalHandlers,
   guards,
   manualFlashingTutorialState,
 } from "./download-machine-common";
+import {
+  createPermissionErrorStateHandlers,
+  permissionErrorTransitions,
+} from "../shared-steps";
+
+// Permission error state handlers using shared factory
+const permissionErrorStateHandlers = createPermissionErrorStateHandlers(
+  DownloadStep.NativeBluetoothPreConnectTutorial
+);
+
+// Connect failure handlers that route permission errors to appropriate states
+const connectFlashFailureWithPermissionHandling = [
+  {
+    guard: guards.isBluetoothDisabledError,
+    target: DownloadStep.BluetoothDisabled,
+  },
+  {
+    guard: guards.isPermissionDeniedError,
+    target: DownloadStep.BluetoothPermissionDenied,
+  },
+  {
+    guard: guards.isLocationDisabledError,
+    target: DownloadStep.LocationDisabled,
+  },
+  {
+    guard: always,
+    target: DownloadStep.ManualFlashingTutorial,
+    actions: [{ type: "downloadHexFile" as const }],
+  },
+];
+
+// FlashingInProgress state with V1 board version check and permission error handling.
+const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
+  [DownloadStep.FlashingInProgress]: {
+    on: {
+      connectFlashSuccess: [
+        {
+          guard: guards.isV1BoardVersion,
+          target: DownloadStep.IncompatibleDevice,
+        },
+        {
+          guard: always,
+          target: DownloadStep.FlashingInProgress,
+          actions: [{ type: "flash" }],
+        },
+      ],
+      connectFlashFailure: connectFlashFailureWithPermissionHandling,
+      flashSuccess: { target: DownloadStep.None },
+      flashFailure: {
+        target: DownloadStep.ManualFlashingTutorial,
+        actions: [{ type: "downloadHexFile" }],
+      },
+    },
+  },
+};
 
 export const nativeBluetoothFlow: DownloadFlowDefinition = {
   ...globalHandlers,
@@ -28,12 +82,19 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
         {
           guard: guards.shouldShowHelp,
           target: DownloadStep.Help,
+          actions: [{ type: "checkPermissions" }],
         },
         {
           guard: always,
           target: DownloadStep.NativeBluetoothPreConnectTutorial,
+          actions: [{ type: "checkPermissions" }],
         },
       ],
+      // Permission check results (from checkPermissions action)
+      permissionsOk: {
+        // Stay in current target - permission check is non-blocking for start
+      },
+      ...permissionErrorTransitions,
     },
   },
 
@@ -43,7 +104,20 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
         target: DownloadStep.NativeBluetoothPreConnectTutorial,
         actions: [{ type: "saveHelpPreference" }],
       },
+      // Handle permission errors that arrive while on help screen
+      ...permissionErrorTransitions,
     },
+  },
+
+  // Permission error states with retry option.
+  [DownloadStep.BluetoothDisabled]: {
+    on: permissionErrorStateHandlers,
+  },
+  [DownloadStep.BluetoothPermissionDenied]: {
+    on: permissionErrorStateHandlers,
+  },
+  [DownloadStep.LocationDisabled]: {
+    on: permissionErrorStateHandlers,
   },
 
   [DownloadStep.NativeBluetoothPreConnectTutorial]: {
@@ -67,7 +141,7 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
     },
   },
 
-  ...flashingInProgressWithV1Check,
+  ...flashingInProgressWithPermissionHandling,
 
   // TODO: This state and all transitions to it need to be replaced.
   // We need a custom error state (perhaps more than one) for native

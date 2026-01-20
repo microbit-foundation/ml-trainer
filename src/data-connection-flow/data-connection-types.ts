@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { isNativePlatform } from "../platform";
+import { PermissionStep } from "../shared-steps";
 
 /**
  * This is the connection type from the perspective of how we end up talking
@@ -55,62 +56,51 @@ export const dataConnectionTypeToTransport = (
   }
 };
 
-export enum DataConnectionStep {
-  /**
-   * Idle/not started - no connection flow dialog open, no device monitoring.
-   */
-  Idle = "Idle",
-  /**
-   * Successfully connected - device is ready to use.
-   */
-  Connected = "Connected",
+/**
+ * Steps in the data connection flow.
+ * Using const object pattern with string literal union types.
+ */
+export const DataConnectionStep = {
+  // Idle/not started - no connection flow dialog open, no device monitoring.
+  Idle: "Idle",
+  // Successfully connected - device is ready to use.
+  Connected: "Connected",
 
   // Happy flow stages.
-  Start = "Start",
-  ConnectCable = "ConnectCable",
-  WebUsbFlashingTutorial = "WebUsbFlashingTutorial",
-  ManualFlashingTutorial = "ManualFlashingTutorial",
-  ConnectBattery = "ConnectBattery",
-  BluetoothPattern = "BluetoothPattern",
-  WebBluetoothPreConnectTutorial = "WebBluetoothPreConnectTutorial",
-  /**
-   * Reset to pairing mode.
-   */
-  NativeBluetoothPreConnectTutorial = "NativeBluetoothPreConnectTutorial",
+  Start: "Start",
+  ConnectCable: "ConnectCable",
+  WebUsbFlashingTutorial: "WebUsbFlashingTutorial",
+  ConnectBattery: "ConnectBattery",
+  BluetoothPattern: "BluetoothPattern",
+  NativeBluetoothPreConnectTutorial: "NativeBluetoothPreConnectTutorial",
+  WebBluetoothPreConnectTutorial: "WebBluetoothPreConnectTutorial",
 
   // Transient stages (not user-controlled, not navigable).
-  WebUsbChooseMicrobit = "WebUsbChooseMicrobit",
-  BluetoothConnect = "BluetoothConnect",
-  ConnectingMicrobits = "ConnectingMicrobits",
-  FlashingInProgress = "FlashingInProgress",
+  WebUsbChooseMicrobit: "WebUsbChooseMicrobit",
+  BluetoothConnect: "BluetoothConnect",
+  ConnectingMicrobits: "ConnectingMicrobits",
+  FlashingInProgress: "FlashingInProgress",
 
   // Failure stages.
-  TryAgainReplugMicrobit = "TryAgainReplugMicrobit",
-  TryAgainCloseTabs = "TryAgainCloseTabs",
-  TryAgainWebUsbSelectMicrobit = "TryAgainWebUsbSelectMicrobit",
-  TryAgainBluetoothSelectMicrobit = "TryAgainBluetoothSelectMicrobit",
-  ConnectFailed = "ConnectFailed",
-  BadFirmware = "BadFirmware",
-  MicrobitUnsupported = "MicrobitUnsupported",
-  WebUsbBluetoothUnsupported = "WebUsbBluetoothUnsupported",
+  TryAgainReplugMicrobit: "TryAgainReplugMicrobit",
+  TryAgainCloseTabs: "TryAgainCloseTabs",
+  TryAgainWebUsbSelectMicrobit: "TryAgainWebUsbSelectMicrobit",
+  TryAgainBluetoothSelectMicrobit: "TryAgainBluetoothSelectMicrobit",
+  ConnectFailed: "ConnectFailed",
+  BadFirmware: "BadFirmware",
+  MicrobitUnsupported: "MicrobitUnsupported",
+  WebUsbBluetoothUnsupported: "WebUsbBluetoothUnsupported",
+  ManualFlashingTutorial: "ManualFlashingTutorial",
 
-  // Permission error stages (native Bluetooth only).
-  /**
-   * Bluetooth is disabled on the device.
-   */
-  BluetoothDisabled = "BluetoothDisabled",
-  /**
-   * User denied Bluetooth permission request.
-   */
-  BluetoothPermissionDenied = "BluetoothPermissionDenied",
-  /**
-   * Location services are disabled (Android < 12 only).
-   */
-  LocationDisabled = "LocationDisabled",
+  ConnectionLost: "ConnectionLost",
+  StartOver: "StartOver",
 
-  ConnectionLost = "ConnectionLost",
-  StartOver = "StartOver",
-}
+  // Permission error steps (shared with download flow)
+  ...PermissionStep,
+} as const;
+
+export type DataConnectionStep =
+  (typeof DataConnectionStep)[keyof typeof DataConnectionStep];
 
 export interface DataConnectionState {
   // For connection flow.

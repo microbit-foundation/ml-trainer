@@ -34,6 +34,7 @@ import {
 import { useStore } from "../store";
 import { downloadHex } from "../utils/fs-util";
 import { StoredConnectionConfig } from "../hooks/use-connection-config-storage";
+import { checkPermissions } from "../shared-steps";
 
 /**
  * Dependencies needed for state machine action execution.
@@ -462,39 +463,11 @@ const performDisconnectData = async (
   await deps.connections.getDataConnection().disconnect();
 };
 
-/**
- * Check Bluetooth permissions before connecting.
- * Used by native Bluetooth flow to provide better error feedback.
- */
 const performCheckPermissions = async (
   deps: DataConnectionDeps
 ): Promise<void> => {
-  const { bluetooth } = deps.connections;
-  try {
-    const status = await bluetooth.checkAvailability();
-
-    switch (status) {
-      case "available":
-        await sendEvent({ type: "permissionsOk" }, deps);
-        break;
-      case "disabled":
-        await sendEvent({ type: "bluetoothDisabled" }, deps);
-        break;
-      case "permission-denied":
-        await sendEvent({ type: "permissionDenied" }, deps);
-        break;
-      case "location-disabled":
-        await sendEvent({ type: "locationDisabled" }, deps);
-        break;
-      case "unsupported":
-        // Treat unsupported the same as disabled - no meaningful devices lack BLE
-        await sendEvent({ type: "bluetoothDisabled" }, deps);
-        break;
-    }
-  } catch (e) {
-    // Treat unexpected errors as permission denied
-    await sendEvent({ type: "permissionDenied" }, deps);
-  }
+  const event = await checkPermissions(deps.connections.bluetooth);
+  await sendEvent(event, deps);
 };
 
 /**

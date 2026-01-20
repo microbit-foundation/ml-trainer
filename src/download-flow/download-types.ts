@@ -4,6 +4,7 @@ import {
 } from "@microbit/microbit-connection";
 import { BluetoothPairingMethod } from "../data-connection-flow/data-connection-types";
 import { HexData } from "../model";
+import { PermissionStep } from "../shared-steps";
 
 /**
  * Steps in the flow to download a hex from MakeCode.
@@ -16,31 +17,37 @@ import { HexData } from "../model";
  * Native bluetooth users use the same micro:bit for now.
  *
  * Note: The flow to download the data collection hex is part of ConnectionFlowStep.
+ *
+ * Using const object pattern with string literal union types.
  */
-export enum DownloadStep {
-  None = "None",
-  Help = "Help",
-  ChooseSameOrDifferentMicrobit = "ChooseSameOrDifferentMicrobit",
+export const DownloadStep = {
+  None: "None",
+  Help: "Help",
+  ChooseSameOrDifferentMicrobit: "ChooseSameOrDifferentMicrobit",
 
   // WebUSB/radio
-  ConnectCable = "ConnectCable",
-  ConnectRadioRemoteMicrobit = "ConnectRadioRemoteMicrobit",
-  WebUsbFlashingTutorial = "WebUsbFlashingTutorial",
+  ConnectCable: "ConnectCable",
+  WebUsbFlashingTutorial: "WebUsbFlashingTutorial",
+  ConnectRadioRemoteMicrobit: "ConnectRadioRemoteMicrobit",
+  ManualFlashingTutorial: "ManualFlashingTutorial",
 
-  // Bluetooth (native only for download). There's a good chance we can skip
-  // connection steps because we'll already be connected.
-  BluetoothPattern = "BluetoothPattern",
-  NativeBluetoothPreConnectTutorial = "NativeBluetoothPreConnectTutorial",
-  BluetoothSearchConnect = "BluetoothSearchConnect",
+  // Bluetooth (native only for download)
+  BluetoothPattern: "BluetoothPattern",
+  NativeBluetoothPreConnectTutorial: "NativeBluetoothPreConnectTutorial",
+  BluetoothSearchConnect: "BluetoothSearchConnect",
 
   // Common
-  IncompatibleDevice = "IncompatibleDevice",
-  FlashingInProgress = "FlashingInProgress",
+  FlashingInProgress: "FlashingInProgress",
+  IncompatibleDevice: "IncompatibleDevice",
 
   // WebUSB/radio
-  ManualFlashingTutorial = "ManualFlashingTutorial",
-  UnplugRadioBridgeMicrobit = "UnplugRadioBridgeMicrobit",
-}
+  UnplugRadioBridgeMicrobit: "UnplugRadioBridgeMicrobit",
+
+  // Permission error steps (shared with data connection flow)
+  ...PermissionStep,
+} as const;
+
+export type DownloadStep = (typeof DownloadStep)[keyof typeof DownloadStep];
 
 export enum SameOrDifferentChoice {
   // No micro:bit is connected.
@@ -70,4 +77,9 @@ export interface DownloadState {
    * Which pairing method variant to show in the Bluetooth tutorial dialog.
    */
   pairingMethod: BluetoothPairingMethod;
+  /**
+   * True while a permission check is in progress (native Bluetooth only).
+   * Used to show loading state on "Try Again" button in permission error dialogs.
+   */
+  isCheckingPermissions: boolean;
 }

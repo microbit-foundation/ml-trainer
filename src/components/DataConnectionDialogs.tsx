@@ -235,6 +235,7 @@ const DataConnectionDialogs = () => {
           bodyId="bluetooth-disabled-body"
           {...dialogCommonProps}
           onTryAgain={actions.onTryAgain}
+          isCheckingPermissions={state.isCheckingPermissions}
         />
       );
     case DataConnectionStep.BluetoothPermissionDenied:
@@ -249,6 +250,7 @@ const DataConnectionDialogs = () => {
           {...dialogCommonProps}
           onTryAgain={actions.onTryAgain}
           onOpenSettings={actions.openAppSettings}
+          isCheckingPermissions={state.isCheckingPermissions}
         />
       );
     case DataConnectionStep.LocationDisabled:
@@ -259,6 +261,7 @@ const DataConnectionDialogs = () => {
           {...dialogCommonProps}
           onTryAgain={actions.onTryAgain}
           onOpenSettings={actions.openLocationSettings}
+          isCheckingPermissions={state.isCheckingPermissions}
         />
       );
   }

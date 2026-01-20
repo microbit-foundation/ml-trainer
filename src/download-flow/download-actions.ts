@@ -27,6 +27,7 @@ import { getTotalNumSamples } from "../utils/actions";
 import { downloadHex } from "../utils/fs-util";
 import { StoredConnectionConfig } from "../hooks/use-connection-config-storage";
 import { DownloadState, SameOrDifferentChoice } from "./download-types";
+import { checkPermissions } from "../shared-steps";
 
 /**
  * Dependencies needed for download actions.
@@ -145,6 +146,17 @@ const executeAction = async (
       // to Idle and stop auto-reconnect attempts before proceeding
       await deps.disconnect();
       break;
+
+    case "checkPermissions":
+      await performCheckPermissions(deps);
+      break;
+
+    case "setCheckingPermissions":
+      setDownloadState({
+        ...getDownloadState(),
+        isCheckingPermissions: action.value,
+      });
+      break;
   }
 };
 
@@ -195,6 +207,13 @@ const performConnectFlash = async (
       throw e;
     }
   }
+};
+
+const performCheckPermissions = async (
+  deps: DownloadDependencies
+): Promise<void> => {
+  const event = await checkPermissions(deps.connections.bluetooth);
+  await sendEvent(event, deps);
 };
 
 /**

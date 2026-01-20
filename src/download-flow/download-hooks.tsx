@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { useMemo } from "react";
+import { BleClient } from "@capacitor-community/bluetooth-le";
+import { useCallback, useMemo } from "react";
 import { useConnections } from "../connections-hooks";
 import { useDataConnectionMachine } from "../data-connection-flow/data-connection-internal-hooks";
 import {
@@ -15,6 +16,7 @@ import {
 } from "./download-actions";
 import { useLogging } from "../logging/logging-hooks";
 import { HexData } from "../model";
+import { isAndroid } from "../platform";
 import { createFireEvent } from "../state-machine";
 import { useSettings, useStore } from "../store";
 import { useConnectionConfigStorage } from "../hooks/use-connection-config-storage";
@@ -83,12 +85,32 @@ const createDownloadActions = (deps: DownloadDependencies) => ({
     }
     return () => fireEvent({ type: "back" }, deps);
   },
+
+  onTryAgain: () => {
+    fireEvent({ type: "tryAgain" }, deps);
+  },
 });
+
+/**
+ * Additional actions for permission dialogs that don't go through the state machine.
+ */
+interface PermissionActions {
+  /**
+   * Opens app settings. Use when permissions have been declined.
+   */
+  openAppSettings: () => void;
+  /**
+   * Opens location settings. Only available on Android.
+   * Only needed on older Android (< API 31) where location is required for BLE.
+   */
+  openLocationSettings?: () => void;
+}
 
 /**
  * Type for the download actions object.
  */
-export type DownloadActions = ReturnType<typeof createDownloadActions>;
+export type DownloadActions = ReturnType<typeof createDownloadActions> &
+  PermissionActions;
 
 export const useDownloadActions = (): DownloadActions => {
   const setDownloadFlashingProgress = useStore(
@@ -100,6 +122,16 @@ export const useDownloadActions = (): DownloadActions => {
   const connections = useConnections();
   const logging = useLogging();
   const dataConnectionMachine = useDataConnectionMachine();
+
+  const openAppSettings = useCallback(() => {
+    BleClient.openAppSettings().catch(() => {});
+  }, []);
+
+  const openLocationSettings = useCallback(() => {
+    BleClient.openLocationSettings().catch(() => {});
+  }, []);
+
+  const android = isAndroid();
 
   const deps: DownloadDependencies = useMemo(
     () => ({
@@ -128,5 +160,12 @@ export const useDownloadActions = (): DownloadActions => {
     ]
   );
 
-  return useMemo(() => createDownloadActions(deps), [deps]);
+  return useMemo(
+    () => ({
+      ...createDownloadActions(deps),
+      openAppSettings,
+      openLocationSettings: android ? openLocationSettings : undefined,
+    }),
+    [deps, openAppSettings, openLocationSettings, android]
+  );
 };

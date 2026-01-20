@@ -5,7 +5,9 @@
  */
 import { useDownloadActions } from "../download-flow/download-hooks";
 import { DownloadStep } from "../download-flow/download-types";
+import { isAndroid } from "../platform";
 import { useStore } from "../store";
+import PermissionErrorDialog from "./BluetoothPermissionErrorDialog";
 import ConnectCableDialog from "./ConnectCableDialog";
 import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
 import DownloadChooseMicrobitDialog from "./DownloadChooseMicrobitDialog";
@@ -137,6 +139,45 @@ const DownloadDialogs = () => {
           onClose={downloadActions.close}
           onBack={downloadActions.getOnBack()}
           stage="flashDevice"
+        />
+      );
+    case DownloadStep.BluetoothDisabled:
+      return (
+        <PermissionErrorDialog
+          headingId="bluetooth-disabled-heading"
+          bodyId="bluetooth-disabled-body"
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
+          isCheckingPermissions={stage.isCheckingPermissions}
+        />
+      );
+    case DownloadStep.BluetoothPermissionDenied:
+      return (
+        <PermissionErrorDialog
+          headingId="bluetooth-permission-denied-heading"
+          bodyId={
+            isAndroid()
+              ? "bluetooth-permission-denied-body-android"
+              : "bluetooth-permission-denied-body-ios"
+          }
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
+          onOpenSettings={downloadActions.openAppSettings}
+          isCheckingPermissions={stage.isCheckingPermissions}
+        />
+      );
+    case DownloadStep.LocationDisabled:
+      return (
+        <PermissionErrorDialog
+          headingId="location-disabled-heading"
+          bodyId="location-disabled-body"
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
+          onOpenSettings={downloadActions.openLocationSettings}
+          isCheckingPermissions={stage.isCheckingPermissions}
         />
       );
   }
