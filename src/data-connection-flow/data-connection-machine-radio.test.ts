@@ -168,18 +168,18 @@ describe("Data connection flow: Radio", () => {
         expect(result?.step).toBe(DataConnectionStep.MicrobitUnsupported);
       });
 
-      it("connectFailure with bad firmware -> BadFirmware", () => {
+      it("connectFlashFailure with bad firmware -> BadFirmware", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "update-req",
         });
 
         expect(result?.step).toBe(DataConnectionStep.BadFirmware);
       });
 
-      it("connectFailure with no device selected -> TryAgainWebUsbSelectMicrobit", () => {
+      it("connectFlashFailure with no device selected -> TryAgainWebUsbSelectMicrobit", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "no-device-selected",
         });
 
@@ -188,18 +188,18 @@ describe("Data connection flow: Radio", () => {
         );
       });
 
-      it("connectFailure with unable to claim -> TryAgainCloseTabs", () => {
+      it("connectFlashFailure with unable to claim -> TryAgainCloseTabs", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "clear-connect",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainCloseTabs);
       });
 
-      it("connectFailure (other) -> TryAgainReplugMicrobit", () => {
+      it("connectFlashFailure (other) -> TryAgainReplugMicrobit", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "unknown-error",
         });
 
@@ -495,18 +495,18 @@ describe("Data connection flow: Radio", () => {
         expect(result?.actions).toContainEqual({ type: "flash" });
       });
 
-      it("connectFailure with bad firmware -> BadFirmware", () => {
+      it("connectFlashFailure with bad firmware -> BadFirmware", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "update-req",
         });
 
         expect(result?.step).toBe(DataConnectionStep.BadFirmware);
       });
 
-      it("connectFailure with no device selected -> TryAgainWebUsbSelectMicrobit", () => {
+      it("connectFlashFailure with no device selected -> TryAgainWebUsbSelectMicrobit", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "no-device-selected",
         });
 
@@ -515,18 +515,18 @@ describe("Data connection flow: Radio", () => {
         );
       });
 
-      it("connectFailure with unable to claim -> TryAgainCloseTabs", () => {
+      it("connectFlashFailure with unable to claim -> TryAgainCloseTabs", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "clear-connect",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainCloseTabs);
       });
 
-      it("connectFailure (other) -> TryAgainReplugMicrobit", () => {
+      it("connectFlashFailure (other) -> TryAgainReplugMicrobit", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "unknown-error",
         });
 

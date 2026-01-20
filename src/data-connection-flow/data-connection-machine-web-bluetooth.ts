@@ -59,7 +59,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
   [DataConnectionStep.FlashingInProgress]: {
     on: {
       ...connectFlashSuccessHandler,
-      connectFailure: [
+      connectFlashFailure: [
         {
           guard: guards.isBadFirmwareError,
           target: DataConnectionStep.BadFirmware,
@@ -116,7 +116,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
   [DataConnectionStep.BluetoothConnect]: {
     on: {
       ...createInitialConnectHandlers({
-        connectFailureGuards: [
+        connectFlashFailureGuards: [
           {
             guard: guards.isNoDeviceSelectedError,
             target: DataConnectionStep.TryAgainBluetoothSelectMicrobit,

@@ -44,7 +44,7 @@ const startStepHandlers = {
 };
 
 // Connect failure handlers that route permission errors to appropriate states
-const connectFailureWithPermissionHandling = [
+const connectFlashFailureWithPermissionHandling = [
   {
     guard: guards.isBluetoothDisabledError,
     target: DataConnectionStep.BluetoothDisabled,
@@ -150,7 +150,7 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
   [DataConnectionStep.FlashingInProgress]: {
     on: {
       ...connectFlashSuccessHandler,
-      connectFailure: connectFailureWithPermissionHandling,
+      connectFlashFailure: connectFlashFailureWithPermissionHandling,
       flashSuccess: {
         target: DataConnectionStep.BluetoothConnect,
         actions: [{ type: "connectData" }],

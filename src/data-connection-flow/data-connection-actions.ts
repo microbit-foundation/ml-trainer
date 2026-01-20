@@ -336,7 +336,7 @@ const performConnectFlash = async (deps: DataConnectionDeps): Promise<void> => {
     await sendEvent({ type: "connectFlashSuccess", boardVersion }, deps);
   } catch (e) {
     if (e instanceof DeviceError) {
-      await sendEvent({ type: "connectFailure", code: e.code }, deps);
+      await sendEvent({ type: "connectFlashFailure", code: e.code }, deps);
     } else {
       throw e;
     }
@@ -390,6 +390,9 @@ const performFlash = async (deps: DataConnectionDeps): Promise<void> => {
 /**
  * Connect to the data connection micro:bit (bluetooth or radio bridge).
  * If clearDevice is true, clears any existing device first (for fresh connections).
+ *
+ * Success is handled via the status listener (deviceConnected event) because
+ * that route also handles internal reconnections.
  */
 const performConnectData = async (
   clearDevice: boolean,
@@ -408,9 +411,10 @@ const performConnectData = async (
       await connection.clearDevice();
     }
     await connection.connect();
+    // Success event (deviceConnected) is sent by the status listener.
   } catch (e) {
     if (e instanceof DeviceError) {
-      await sendEvent({ type: "connectFailure", code: e.code }, deps);
+      await sendEvent({ type: "connectDataFailure", code: e.code }, deps);
     } else {
       throw e;
     }

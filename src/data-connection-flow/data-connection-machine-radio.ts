@@ -79,7 +79,7 @@ export const radioFlow: DataConnectionFlowDef = {
           actions: [{ type: "flash" }],
         },
       ],
-      connectFailure: [
+      connectFlashFailure: [
         {
           guard: guards.isBadFirmwareError,
           target: DataConnectionStep.BadFirmware,

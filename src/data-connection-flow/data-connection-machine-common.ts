@@ -42,7 +42,7 @@ export type DataConnectionEvent =
   | { type: "setMicrobitName"; name: string }
   | { type: "connectFlashSuccess"; boardVersion?: BoardVersion }
   | {
-      type: "connectFailure";
+      type: "connectFlashFailure";
       /** DeviceError code if the failure was due to a DeviceError. */
       code?: string;
     }
@@ -57,10 +57,12 @@ export type DataConnectionEvent =
       /** DeviceError code if the failure was due to a DeviceError. */
       code?: string;
     }
-  // Device status events - sent directly from the status listener.
+  // Data connection failure event - sent from performConnectData.
+  // Success is handled via the status listener (deviceConnected).
+  | { type: "connectDataFailure"; code?: string }
+  // Device status events - sent from the status listener.
   | { type: "deviceConnected" }
   | { type: "deviceDisconnected"; source?: "bridge" | "remote" }
-  | { type: "deviceConnecting" }
   | { type: "deviceReconnecting" }
   /**
    * Connection paused due to tab visibility. Will reconnect when tab visible.
@@ -212,29 +214,47 @@ export const guards = {
   isTabHidden: (ctx: DataConnectionState) => !ctx.isBrowserTabVisible,
 
   // Guards that check event payload (using DeviceError codes directly)
+  // Flash connection errors (from performConnectFlash)
   isBadFirmwareError: (_ctx: DataConnectionState, event: DataConnectionEvent) =>
-    event.type === "connectFailure" && event.code === "update-req",
+    event.type === "connectFlashFailure" && event.code === "update-req",
 
+  // Native Bluetooth permission errors - can occur in both flash and data connection contexts.
+  // In native Bluetooth, both connectFlash and connectData use Bluetooth, so permission errors
+  // can come from either connectFlashFailure (flash) or connectDataFailure (data).
   isBluetoothDisabledError: (
     _ctx: DataConnectionState,
     event: DataConnectionEvent
-  ) => event.type === "connectFailure" && event.code === "disabled",
+  ) =>
+    (event.type === "connectFlashFailure" ||
+      event.type === "connectDataFailure") &&
+    event.code === "disabled",
 
   isPermissionDeniedError: (
     _ctx: DataConnectionState,
     event: DataConnectionEvent
-  ) => event.type === "connectFailure" && event.code === "permission-denied",
+  ) =>
+    (event.type === "connectFlashFailure" ||
+      event.type === "connectDataFailure") &&
+    event.code === "permission-denied",
 
   isLocationDisabledError: (
     _ctx: DataConnectionState,
     event: DataConnectionEvent
-  ) => event.type === "connectFailure" && event.code === "location-disabled",
+  ) =>
+    (event.type === "connectFlashFailure" ||
+      event.type === "connectDataFailure") &&
+    event.code === "location-disabled",
 
+  // Errors that can occur in flash or data connection contexts
   isNoDeviceSelectedError: (
     _ctx: DataConnectionState,
     event: DataConnectionEvent
   ) => {
-    if (event.type === "connectFailure" || event.type === "flashFailure") {
+    if (
+      event.type === "connectFlashFailure" ||
+      event.type === "connectDataFailure" ||
+      event.type === "flashFailure"
+    ) {
       return event.code === "no-device-selected";
     }
     return false;
@@ -244,7 +264,11 @@ export const guards = {
     _ctx: DataConnectionState,
     event: DataConnectionEvent
   ) => {
-    if (event.type === "connectFailure" || event.type === "flashFailure") {
+    if (
+      event.type === "connectFlashFailure" ||
+      event.type === "connectDataFailure" ||
+      event.type === "flashFailure"
+    ) {
       return event.code === "clear-connect";
     }
     return false;
@@ -436,12 +460,14 @@ export const switchToWebBluetooth = {
 // =============================================================================
 
 /**
- * Create device event handlers for initial connection (BluetoothConnect, ConnectingMicrobits).
- * @param options.connectFailureGuards - Additional guards checked before standard failure handling
+ * Create event handlers for initial connection (BluetoothConnect, ConnectingMicrobits).
+ * @param options.connectFlashFailureGuards - Additional guards checked before standard failure handling
  */
 export const createInitialConnectHandlers = (options?: {
-  connectFailureGuards?: DataConnectionTransition[];
+  connectFlashFailureGuards?: DataConnectionTransition[];
 }) => ({
+  // Success comes via status listener, not explicit event from performConnectData,
+  // because the connection library has internal auto-reconnect logic.
   deviceConnected: {
     target: DataConnectionStep.Connected,
     actions: actions.initialConnectSuccess,
@@ -463,8 +489,8 @@ export const createInitialConnectHandlers = (options?: {
   /**
    * Connection action failed (e.g., user cancelled device picker).
    */
-  connectFailure: [
-    ...(options?.connectFailureGuards ?? []),
+  connectDataFailure: [
+    ...(options?.connectFlashFailureGuards ?? []),
     {
       guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
       target: DataConnectionStep.ConnectFailed,
@@ -644,7 +670,7 @@ export const connectedState = {
       /**
        * Reconnection failed (e.g., user cancelled device picker). Treat like disconnect.
        */
-      connectFailure: [
+      connectDataFailure: [
         // First failure: try again
         {
           guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
@@ -659,6 +685,8 @@ export const connectedState = {
       deviceReconnecting: {
         actions: actions.reconnecting,
       },
+      // Success comes via status listener, not explicit event from performConnectData,
+      // because the connection library has internal auto-reconnect logic.
       deviceConnected: {
         actions: actions.connected,
       },

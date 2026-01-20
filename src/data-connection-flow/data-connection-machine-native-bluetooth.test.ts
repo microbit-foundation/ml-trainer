@@ -194,36 +194,36 @@ describe("Data connection flow: Native Bluetooth", () => {
       expect(result?.actions).toContainEqual({ type: "flash" });
     });
 
-    it("connectFailure -> ConnectFailed for generic errors", () => {
+    it("connectFlashFailure -> ConnectFailed for generic errors", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
-        type: "connectFailure",
+        type: "connectFlashFailure",
         code: "unknown-error",
       });
 
       expect(result?.step).toBe(DataConnectionStep.ConnectFailed);
     });
 
-    it("connectFailure with disabled code -> BluetoothDisabled", () => {
+    it("connectFlashFailure with disabled code -> BluetoothDisabled", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
-        type: "connectFailure",
+        type: "connectFlashFailure",
         code: "disabled",
       });
 
       expect(result?.step).toBe(DataConnectionStep.BluetoothDisabled);
     });
 
-    it("connectFailure with permission-denied code -> BluetoothPermissionDenied", () => {
+    it("connectFlashFailure with permission-denied code -> BluetoothPermissionDenied", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
-        type: "connectFailure",
+        type: "connectFlashFailure",
         code: "permission-denied",
       });
 
       expect(result?.step).toBe(DataConnectionStep.BluetoothPermissionDenied);
     });
 
-    it("connectFailure with location-disabled code -> LocationDisabled", () => {
+    it("connectFlashFailure with location-disabled code -> LocationDisabled", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
-        type: "connectFailure",
+        type: "connectFlashFailure",
         code: "location-disabled",
       });
 

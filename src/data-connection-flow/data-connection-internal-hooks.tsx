@@ -158,6 +158,10 @@ export const useDataConnectionMachine = (): DataConnectionMachine => {
 /**
  * Map device status to a state machine event.
  * Some events require checking the previous status to avoid false positives.
+ *
+ * Note: Connection success (deviceConnected) must be handled via status listener
+ * rather than explicit events because the connection library has internal
+ * auto-reconnect logic that can succeed independently of performConnectData.
  */
 const mapStatusToEvent = (
   status: ConnectionStatus,
@@ -189,8 +193,6 @@ const mapStatusToEvent = (
         return null;
       }
       return { type: "deviceDisconnected", source: disconnectSource };
-    case ConnectionStatus.CONNECTING:
-      return { type: "deviceConnecting" };
     case ConnectionStatus.RECONNECTING:
       return { type: "deviceReconnecting" };
     case ConnectionStatus.PAUSED:

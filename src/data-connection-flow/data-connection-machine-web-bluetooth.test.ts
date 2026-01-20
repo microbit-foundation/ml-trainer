@@ -216,18 +216,18 @@ describe("Data connection flow: Web Bluetooth", () => {
       expect(result?.actions).toContainEqual({ type: "flash" });
     });
 
-    it("connectFailure with bad firmware -> BadFirmware", () => {
+    it("connectFlashFailure with bad firmware -> BadFirmware", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
-        type: "connectFailure",
+        type: "connectFlashFailure",
         code: "update-req",
       });
 
       expect(result?.step).toBe(DataConnectionStep.BadFirmware);
     });
 
-    it("connectFailure (other) -> ManualFlashingTutorial with downloadHexFile", () => {
+    it("connectFlashFailure (other) -> ManualFlashingTutorial with downloadHexFile", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
-        type: "connectFailure",
+        type: "connectFlashFailure",
         code: "unknown-error",
       });
 
@@ -282,9 +282,9 @@ describe("Data connection flow: Web Bluetooth", () => {
       });
     });
 
-    it("connectFailure (no device selected) -> TryAgainBluetoothSelectMicrobit", () => {
+    it("connectDataFailure (no device selected) -> TryAgainBluetoothSelectMicrobit", () => {
       const result = transition(DataConnectionStep.BluetoothConnect, {
-        type: "connectFailure",
+        type: "connectDataFailure",
         code: "no-device-selected",
       });
 
