@@ -224,12 +224,8 @@ const executeAction = async (
       await performFlash(deps);
       break;
 
-    case "clearDevice":
-      await deps.connections.getDataConnection().clearDevice();
-      break;
-
     case "connectData":
-      await performConnectData(deps);
+      await performConnectData(action.clearDevice ?? false, deps);
       break;
 
     case "downloadHexFile":
@@ -393,8 +389,12 @@ const performFlash = async (deps: DataConnectionDeps): Promise<void> => {
 
 /**
  * Connect to the data connection micro:bit (bluetooth or radio bridge).
+ * If clearDevice is true, clears any existing device first (for fresh connections).
  */
-const performConnectData = async (deps: DataConnectionDeps): Promise<void> => {
+const performConnectData = async (
+  clearDevice: boolean,
+  deps: DataConnectionDeps
+): Promise<void> => {
   const state = getDataConnectionState();
   // Only log for user-initiated connections, not reconnects.
   if (!state.isReconnecting) {
@@ -403,7 +403,11 @@ const performConnectData = async (deps: DataConnectionDeps): Promise<void> => {
     deps.logging.event({ type: "connect-user", message: logMessage });
   }
   try {
-    await deps.connections.getDataConnection().connect();
+    const connection = deps.connections.getDataConnection();
+    if (clearDevice) {
+      await connection.clearDevice();
+    }
+    await connection.connect();
   } catch (e) {
     if (e instanceof DeviceError) {
       await sendEvent({ type: "connectFailure", code: e.code }, deps);

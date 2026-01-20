@@ -128,8 +128,10 @@ describe("Data connection flow: Web Bluetooth", () => {
       );
 
       expect(result?.step).toBe(DataConnectionStep.BluetoothConnect);
-      expect(result?.actions).toContainEqual({ type: "clearDevice" });
-      expect(result?.actions).toContainEqual({ type: "connectData" });
+      expect(result?.actions).toContainEqual({
+        type: "connectData",
+        clearDevice: true,
+      });
     });
 
     it("BluetoothPattern setMicrobitName -> stays on BluetoothPattern with setMicrobitName action", () => {

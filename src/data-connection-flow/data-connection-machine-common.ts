@@ -92,8 +92,11 @@ export type DataConnectionAction =
   | { type: "reset" }
   | { type: "connectFlash" }
   | { type: "flash" }
-  | { type: "clearDevice" }
-  | { type: "connectData" }
+  /**
+   * Connect to the data connection (bluetooth or radio bridge).
+   * If clearDevice is true, clears any existing device first.
+   */
+  | { type: "connectData"; clearDevice?: boolean }
   | { type: "downloadHexFile" }
   | { type: "notifyConnected" }
   // Reconnect tracking actions.

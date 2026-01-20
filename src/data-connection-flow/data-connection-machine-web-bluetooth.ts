@@ -107,7 +107,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
     on: {
       next: {
         target: DataConnectionStep.BluetoothConnect,
-        actions: [{ type: "clearDevice" }, { type: "connectData" }],
+        actions: [{ type: "connectData", clearDevice: true }],
       },
       back: { target: DataConnectionStep.BluetoothPattern },
     },
