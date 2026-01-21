@@ -25,7 +25,6 @@ import { Settings } from "../settings";
 import { useStore } from "../store";
 import { getTotalNumSamples } from "../utils/actions";
 import { downloadHex } from "../utils/fs-util";
-import { StoredConnectionConfig } from "../hooks/use-connection-config-storage";
 import { DownloadState, SameOrDifferentChoice } from "./download-types";
 import { checkPermissions } from "../shared-steps";
 
@@ -34,7 +33,6 @@ import { checkPermissions } from "../shared-steps";
  * These are gathered by the hook and passed to the actions.
  */
 export interface DownloadDependencies {
-  config: StoredConnectionConfig;
   settings: Settings;
   setSettings: (settings: Partial<Settings>) => void;
   connections: Connections;
@@ -59,7 +57,7 @@ const buildContext = (
   return {
     hex: state.hex,
     microbitChoice: state.microbitChoice,
-    bluetoothMicrobitName: state.bluetoothMicrobitName,
+    bluetoothMicrobitName: deps.settings.bluetoothMicrobitName,
     connection: state.connection,
     showPreDownloadHelp: deps.settings.showPreDownloadHelp,
     hadSuccessfulConnection: deps.dataConnection.hadSuccessfulConnection,
@@ -92,13 +90,14 @@ const executeAction = async (
       if (event.type !== "start") {
         throw new Error("initializeDownload requires start event");
       }
-      if (event.bluetoothMicrobitName) {
-        deps.connections.bluetooth.setNameFilter(event.bluetoothMicrobitName);
+      // Set name filter from settings (already persisted)
+      const bluetoothMicrobitName = deps.settings.bluetoothMicrobitName;
+      if (bluetoothMicrobitName) {
+        deps.connections.bluetooth.setNameFilter(bluetoothMicrobitName);
       }
       setDownloadState({
         ...state,
         hex: event.hex,
-        bluetoothMicrobitName: event.bluetoothMicrobitName,
       });
       break;
     }
@@ -117,10 +116,7 @@ const executeAction = async (
     case "setMicrobitName": {
       if (event.type === "setMicrobitName") {
         deps.connections.bluetooth.setNameFilter(event.name);
-        setDownloadState({
-          ...state,
-          bluetoothMicrobitName: event.name,
-        });
+        deps.setSettings({ bluetoothMicrobitName: event.name });
       }
       break;
     }

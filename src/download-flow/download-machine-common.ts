@@ -16,7 +16,7 @@ import { always, FlowDefinition } from "../state-machine";
 import { HexData } from "../model";
 
 export type DownloadEvent =
-  | { type: "start"; hex: HexData; bluetoothMicrobitName?: string }
+  | { type: "start"; hex: HexData }
   | { type: "next"; skipHelpNextTime?: boolean }
   | { type: "back" }
   | { type: "close" }
@@ -37,7 +37,7 @@ export type DownloadEvent =
 
 export type DownloadAction =
   | /**
-   * Sets hex and bluetoothMicrobitName from start event.
+   * Sets hex from start event and initializes bluetooth name filter from settings.
    */
   { type: "initializeDownload" }
   | { type: "setMicrobitChoice"; choice: SameOrDifferentChoice }

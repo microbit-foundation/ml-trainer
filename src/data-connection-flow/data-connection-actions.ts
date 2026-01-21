@@ -33,7 +33,6 @@ import {
 } from "../device/get-hex-file";
 import { useStore } from "../store";
 import { downloadHex } from "../utils/fs-util";
-import { StoredConnectionConfig } from "../hooks/use-connection-config-storage";
 import { checkPermissions } from "../shared-steps";
 
 /**
@@ -42,7 +41,6 @@ import { checkPermissions } from "../shared-steps";
 export interface DataConnectionDeps {
   connections: Connections;
   dataCollectionMicrobitConnected: () => void;
-  setConfig: (config: StoredConnectionConfig) => void;
   logging: Logging;
 }
 
@@ -52,17 +50,8 @@ export interface DataConnectionDeps {
 
 const getDataConnectionState = () => useStore.getState().dataConnection;
 
-/**
- * Update connection state in the store and persist relevant fields to config.
- */
-const setDataConnectionState = (
-  state: DataConnectionState,
-  setConfig: (config: StoredConnectionConfig) => void
-) => {
+const setDataConnectionState = (state: DataConnectionState) => {
   useStore.getState().setDataConnection(state);
-  setConfig({
-    bluetoothMicrobitName: state.bluetoothMicrobitName,
-  });
 };
 
 /**
@@ -90,10 +79,7 @@ const sendEvent = async (
   }
 
   // Update step first
-  setDataConnectionState(
-    { ...getDataConnectionState(), step: result.step },
-    deps.setConfig
-  );
+  setDataConnectionState({ ...getDataConnectionState(), step: result.step });
 
   // Execute actions sequentially, getting fresh state for each
   for (const action of result.actions) {
@@ -155,26 +141,23 @@ const executeAction = async (
       const connectionType = currentState.hasSwitchedConnectionType
         ? currentState.type
         : getInitialDataConnectionType(currentState.isWebBluetoothSupported);
-      setDataConnectionState(
-        {
-          ...currentState,
-          type: connectionType,
-          isReconnecting: false,
-          hasFailedOnce: false,
-          isStartingOver: false,
-          hadSuccessfulConnection: false,
-        },
-        deps.setConfig
-      );
+      setDataConnectionState({
+        ...currentState,
+        type: connectionType,
+        isReconnecting: false,
+        hasFailedOnce: false,
+        isStartingOver: false,
+        hadSuccessfulConnection: false,
+      });
       break;
     }
 
     case "setConnectionType": {
       deps.connections.setDataConnectionType(action.connectionType);
-      setDataConnectionState(
-        { ...getDataConnectionState(), hasSwitchedConnectionType: true },
-        deps.setConfig
-      );
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        hasSwitchedConnectionType: true,
+      });
       break;
     }
 
@@ -188,13 +171,7 @@ const executeAction = async (
           : undefined;
       if (name) {
         deps.connections.bluetooth.setNameFilter(name);
-        setDataConnectionState(
-          {
-            ...getDataConnectionState(),
-            bluetoothMicrobitName: name,
-          },
-          deps.setConfig
-        );
+        useStore.getState().setSettings({ bluetoothMicrobitName: name });
       }
       break;
     }
@@ -202,25 +179,19 @@ const executeAction = async (
     case "setRadioRemoteDeviceId":
       if (event.type === "flashSuccess" && event.deviceId !== undefined) {
         deps.connections.radioBridge.setRemoteDeviceId(event.deviceId);
-        setDataConnectionState(
-          {
-            ...getDataConnectionState(),
-            radioRemoteDeviceId: event.deviceId,
-          },
-          deps.setConfig
-        );
+        setDataConnectionState({
+          ...getDataConnectionState(),
+          radioRemoteDeviceId: event.deviceId,
+        });
       }
       break;
 
     case "setRadioBridgeDeviceId":
       if (event.type === "flashSuccess" && event.deviceId !== undefined) {
-        setDataConnectionState(
-          {
-            ...getDataConnectionState(),
-            radioBridgeDeviceId: event.deviceId,
-          },
-          deps.setConfig
-        );
+        setDataConnectionState({
+          ...getDataConnectionState(),
+          radioBridgeDeviceId: event.deviceId,
+        });
       }
       break;
 
@@ -246,46 +217,40 @@ const executeAction = async (
 
     // Reconnect tracking actions
     case "setHasFailedOnce":
-      setDataConnectionState(
-        { ...getDataConnectionState(), hasFailedOnce: action.value },
-        deps.setConfig
-      );
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        hasFailedOnce: action.value,
+      });
       break;
 
     case "setIsStartingOver":
-      setDataConnectionState(
-        { ...getDataConnectionState(), isStartingOver: action.value },
-        deps.setConfig
-      );
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        isStartingOver: action.value,
+      });
       break;
 
     // Connection state actions
     case "setReconnecting":
-      setDataConnectionState(
-        { ...getDataConnectionState(), isReconnecting: action.value },
-        deps.setConfig
-      );
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        isReconnecting: action.value,
+      });
       break;
 
     case "setRadioFlowPhase":
-      setDataConnectionState(
-        {
-          ...getDataConnectionState(),
-          radioFlowPhase: action.phase,
-        },
-        deps.setConfig
-      );
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        radioFlowPhase: action.phase,
+      });
       break;
 
     case "setConnected":
-      setDataConnectionState(
-        {
-          ...getDataConnectionState(),
-          hadSuccessfulConnection: true,
-          isReconnecting: false,
-        },
-        deps.setConfig
-      );
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        hadSuccessfulConnection: true,
+        isReconnecting: false,
+      });
       break;
 
     case "disconnectData":
@@ -294,10 +259,10 @@ const executeAction = async (
 
     case "setDisconnectSource":
       if (event.type === "deviceDisconnected" && event.source) {
-        setDataConnectionState(
-          { ...getDataConnectionState(), lastDisconnectSource: event.source },
-          deps.setConfig
-        );
+        setDataConnectionState({
+          ...getDataConnectionState(),
+          lastDisconnectSource: event.source,
+        });
       }
       break;
 
@@ -306,24 +271,21 @@ const executeAction = async (
       break;
 
     case "setCheckingPermissions":
-      setDataConnectionState(
-        { ...getDataConnectionState(), isCheckingPermissions: action.value },
-        deps.setConfig
-      );
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        isCheckingPermissions: action.value,
+      });
       break;
 
     case "togglePairingMethod": {
       const currentState = getDataConnectionState();
-      setDataConnectionState(
-        {
-          ...currentState,
-          pairingMethod:
-            currentState.pairingMethod === "triple-reset"
-              ? "a-b-reset"
-              : "triple-reset",
-        },
-        deps.setConfig
-      );
+      setDataConnectionState({
+        ...currentState,
+        pairingMethod:
+          currentState.pairingMethod === "triple-reset"
+            ? "a-b-reset"
+            : "triple-reset",
+      });
       break;
     }
   }
@@ -456,10 +418,10 @@ const getHexType = (state: DataConnectionState): HexType => {
 const performDisconnectData = async (
   deps: DataConnectionDeps
 ): Promise<void> => {
-  setDataConnectionState(
-    { ...getDataConnectionState(), isReconnecting: false },
-    deps.setConfig
-  );
+  setDataConnectionState({
+    ...getDataConnectionState(),
+    isReconnecting: false,
+  });
   await deps.connections.getDataConnection().disconnect();
 };
 
@@ -479,9 +441,16 @@ export const initializeCapabilities = async (connections: Connections) => {
     isWebBluetoothSupported(connections.bluetooth),
     isWebUsbSupported(connections.usb),
   ]);
-  const currentState = getDataConnectionState();
-  useStore.getState().setDataConnection({
-    ...currentState,
+  const store = useStore.getState();
+
+  // Initialize bluetooth name filter from persisted settings
+  const bluetoothMicrobitName = store.settings.bluetoothMicrobitName;
+  if (bluetoothMicrobitName) {
+    connections.bluetooth.setNameFilter(bluetoothMicrobitName);
+  }
+
+  store.setDataConnection({
+    ...store.dataConnection,
     isWebBluetoothSupported: webBluetoothSupported,
     isWebUsbSupported: webUsbSupported,
   });

@@ -18,7 +18,6 @@ import {
   initializeCapabilities,
 } from "./data-connection-actions";
 import { DataConnectionEvent } from "./data-connection-machine";
-import { useConnectionConfigStorage } from "../hooks/use-connection-config-storage";
 import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 import {
@@ -82,7 +81,6 @@ export const DataConnectionEventProvider = ({
   // Sync browser tab visibility with the store
   useBrowserTabVisibilitySync();
 
-  const [, setConfig] = useConnectionConfigStorage();
   const connections = useConnections();
 
   const dataCollectionMicrobitConnected = useStore(
@@ -94,10 +92,9 @@ export const DataConnectionEventProvider = ({
     () => ({
       connections,
       dataCollectionMicrobitConnected,
-      setConfig,
       logging,
     }),
-    [connections, dataCollectionMicrobitConnected, setConfig, logging]
+    [connections, dataCollectionMicrobitConnected, logging]
   );
 
   const api: DataConnectionMachine = useMemo(() => {
