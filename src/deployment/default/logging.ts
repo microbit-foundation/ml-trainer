@@ -11,8 +11,8 @@ export class ConsoleLogging implements Logging {
   event(event: LoggingEvent): void {
     console.log(event);
   }
-  error(e: unknown): void {
-    console.error(e);
+  error(message: string, e: unknown): void {
+    console.error(message, e);
   }
   log(e: unknown): void {
     console.log(e);
