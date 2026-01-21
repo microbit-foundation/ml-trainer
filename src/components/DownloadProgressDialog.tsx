@@ -44,10 +44,12 @@ export const getHeadingId = (
   }
 };
 
-const getSubtitleId = (stage: ProgressStage | undefined): string => {
+const getSubtitleId = (
+  stage: ProgressStage | undefined
+): string | undefined => {
   switch (stage) {
     case ProgressStage.Initializing:
-      return "downloading-stage-initializing";
+      return undefined;
     case ProgressStage.FindingDevice:
       return "downloading-stage-finding-device";
     case ProgressStage.Connecting:
@@ -68,10 +70,8 @@ const DownloadProgressDialog = ({
   stage,
   progress,
 }: DownloadProgressDialogProps) => {
-  // Skip showing dialog when stage is undefined (not yet started) or Initializing
-  // (quick and always first). On native the user might get Bluetooth permission
-  // dialogs at this point.
-  if (stage === undefined || stage === ProgressStage.Initializing) {
+  // Skip showing dialog when stage is undefined (not yet started).
+  if (stage === undefined) {
     return null;
   }
   // On web, show overlay instead of dialog while browser device picker is open.
@@ -80,6 +80,7 @@ const DownloadProgressDialog = ({
     return <ChooseDeviceOverlay />;
   }
   const isIndeterminate = progress === undefined;
+  const subtitleId = getSubtitleId(stage);
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -101,7 +102,7 @@ const DownloadProgressDialog = ({
               alignItems={isIndeterminate ? "center" : "flex-start"}
             >
               <Text>
-                <FormattedMessage id={getSubtitleId(stage)} />
+                {subtitleId ? <FormattedMessage id={subtitleId} /> : "\u00A0"}
               </Text>
               {isIndeterminate ? (
                 <LoadingAnimation />

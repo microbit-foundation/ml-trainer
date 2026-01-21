@@ -999,27 +999,14 @@ const createMlStore = (logging: Logging) => {
             );
           },
           setDownload(download: DownloadState) {
-            set(
-              {
-                download,
-                downloadFlashingProgress: {
-                  stage: undefined,
-                  value: undefined,
-                },
-              },
-              false,
-              "setDownload"
-            );
+            set({ download }, false, "setDownload");
           },
           setDownloadFlashingProgress(stage, value) {
-            set((state) => ({
-              // Show progress dialog if not already showing
-              download:
-                state.download.step !== DownloadStep.FlashingInProgress
-                  ? { ...state.download, step: DownloadStep.FlashingInProgress }
-                  : state.download,
-              downloadFlashingProgress: { stage, value },
-            }));
+            set(
+              { downloadFlashingProgress: { stage, value } },
+              false,
+              "setDownloadFlashingProgress"
+            );
           },
           setDataConnection(dataConnection: DataConnectionState) {
             set({ dataConnection }, false, "setDataConnection");
