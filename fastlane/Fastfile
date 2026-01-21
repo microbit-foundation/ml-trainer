@@ -42,6 +42,28 @@ platform :ios do
       }
     )
   end
+
+  desc "Upload to TestFlight for internal testing"
+  lane :upload do
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
+      issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+      key_content: ENV["APP_STORE_CONNECT_KEY_CONTENT"],
+      is_key_content_base64: true
+    )
+
+    upload_to_testflight(
+      api_key: api_key,
+      ipa: "ios/App/build/output/App.ipa",
+      skip_waiting_for_build_processing: true
+    )
+  end
+
+  desc "Build and upload to TestFlight"
+  lane :release do
+    build
+    upload
+  end
 end
 
 platform :android do
@@ -67,5 +89,23 @@ platform :android do
         "android.injected.signing.key.password" => ENV["SIGNING_KEY_PASSWORD"]
       }
     )
+  end
+
+  desc "Upload to Google Play internal testing track"
+  lane :upload do
+    upload_to_play_store(
+      track: "internal",
+      aab: "android/app/build/outputs/bundle/release/app-release.aab",
+      skip_upload_apk: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Build and upload to Google Play internal track"
+  lane :release do
+    build
+    upload
   end
 end

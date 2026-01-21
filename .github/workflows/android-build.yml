@@ -20,6 +20,7 @@ jobs:
     permissions:
       contents: read
       packages: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
@@ -91,3 +92,14 @@ jobs:
           name: android-aab-${{ github.sha }}
           path: android/app/build/outputs/bundle/release/*.aab
           retention-days: 30
+
+      - name: Authenticate to Google Cloud
+        if: github.event_name == 'release'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/311821962964/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions
+          service_account: fastlane-supply@microbit-fastlane.iam.gserviceaccount.com
+
+      - name: Upload to Google Play
+        if: github.event_name == 'release'
+        run: bundle exec fastlane android upload

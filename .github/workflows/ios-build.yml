@@ -79,3 +79,11 @@ jobs:
           name: ios-app-${{ github.sha }}
           path: ios/App/build/output/*.ipa
           retention-days: 30
+
+      - name: Upload to TestFlight
+        if: github.event_name == 'release'
+        run: bundle exec fastlane ios upload
+        env:
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_KEY_CONTENT }}
