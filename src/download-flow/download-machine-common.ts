@@ -26,7 +26,14 @@ export type DownloadEvent =
   | { type: "connectFlashSuccess"; boardVersion: "V1" | "V2" }
   | { type: "connectFlashFailure"; code?: string }
   | { type: "flashSuccess" }
-  | { type: "flashFailure"; code?: string };
+  | { type: "flashFailure"; code?: string }
+  // Permission check result events (native Bluetooth only).
+  | { type: "permissionsOk" }
+  | { type: "bluetoothDisabled" }
+  | { type: "permissionDenied" }
+  | { type: "locationDisabled" }
+  // Permission dialog events.
+  | { type: "tryAgain" };
 
 export type DownloadAction =
   | /**
@@ -45,7 +52,17 @@ export type DownloadAction =
   | { type: "connectFlash" }
   | { type: "flash" }
   | { type: "downloadHexFile" }
-  | { type: "disconnectDataConnection" };
+  | { type: "disconnectDataConnection" }
+  /**
+   * Check Bluetooth permissions (native Bluetooth only).
+   * Sends permissionsOk, bluetoothDisabled, permissionDenied, or locationDisabled events.
+   */
+  | { type: "checkPermissions" }
+  /**
+   * Set the checking permissions flag (native Bluetooth only).
+   * Used to show loading state on "Try Again" button.
+   */
+  | { type: "setCheckingPermissions"; value: boolean };
 
 export interface DownloadFlowContext {
   hex?: HexData;
@@ -101,6 +118,16 @@ export const guards = {
   /** True when user chose to download to the same micro:bit as data connection */
   isSameMicrobitChoice: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
     ctx.microbitChoice === SameOrDifferentChoice.Same,
+
+  // Native Bluetooth permission errors (from connectFlash failures).
+  isBluetoothDisabledError: (_ctx: DownloadFlowContext, event: DownloadEvent) =>
+    event.type === "connectFlashFailure" && event.code === "disabled",
+
+  isPermissionDeniedError: (_ctx: DownloadFlowContext, event: DownloadEvent) =>
+    event.type === "connectFlashFailure" && event.code === "permission-denied",
+
+  isLocationDisabledError: (_ctx: DownloadFlowContext, event: DownloadEvent) =>
+    event.type === "connectFlashFailure" && event.code === "location-disabled",
 };
 
 // =============================================================================

@@ -18,7 +18,6 @@ import {
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
-import { useStore } from "../store";
 
 export interface PermissionErrorDialogProps {
   headingId: string;
@@ -27,6 +26,11 @@ export interface PermissionErrorDialogProps {
   onClose: () => void;
   onTryAgain: () => void;
   onOpenSettings?: () => void;
+  /**
+   * Whether a permission check is in progress.
+   * Shows loading state on the "Try Again" button.
+   */
+  isCheckingPermissions: boolean;
 }
 
 const PermissionErrorDialog = ({
@@ -36,11 +40,9 @@ const PermissionErrorDialog = ({
   onClose,
   onTryAgain,
   onOpenSettings,
+  isCheckingPermissions,
 }: PermissionErrorDialogProps) => {
   const { appNameShort } = useDeployment();
-  const isCheckingPermissions = useStore(
-    (s) => s.dataConnection.isCheckingPermissions
-  );
 
   // Ensure spinner shows for minimum 200ms so it's perceivable
   const loadingStartRef = useRef<number>(0);
