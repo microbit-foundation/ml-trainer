@@ -4,13 +4,15 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ConnectionStatus,
+  createUniversalHexFlashDataSource,
   createWebUSBConnection,
   DeviceError,
+  FlashOptions,
   ProgressCallback,
 } from "@microbit/microbit-connection";
-import { ConnectionService } from "../connection-service";
+import { Connections } from "../connections-hooks";
 import { DataConnectionState } from "../data-connection-flow";
-import { isNativeBluetoothConnection } from "../device/connection-utils";
 import {
   DownloadAction,
   DownloadEvent,
@@ -34,7 +36,7 @@ export interface DownloadDependencies {
   config: StoredConnectionConfig;
   settings: Settings;
   setSettings: (settings: Partial<Settings>) => void;
-  connectionService: ConnectionService;
+  connections: Connections;
   dataConnection: DataConnectionState;
   flashingProgressCallback: ProgressCallback;
   logging: Logging;
@@ -50,19 +52,21 @@ export interface DownloadDependencies {
 const buildContext = (
   state: DownloadState,
   deps: DownloadDependencies
-): DownloadFlowContext => ({
-  hex: state.hex,
-  microbitChoice: state.microbitChoice,
-  bluetoothMicrobitName: state.bluetoothMicrobitName,
-  connection: state.connection,
-  showPreDownloadHelp: deps.settings.showPreDownloadHelp,
-  hadSuccessfulConnection: deps.dataConnection.hadSuccessfulConnection,
-  dataConnectionType: deps.dataConnection.type,
-  isUsbConnected: deps.connectionService.isUsbDeviceConnected(),
-  connectedBoardVersion: deps.connectionService.isUsbDeviceConnected()
-    ? deps.connectionService.getUsbBoardVersion()
-    : undefined,
-});
+): DownloadFlowContext => {
+  const { usb } = deps.connections;
+  const isUsbConnected = usb.status === ConnectionStatus.CONNECTED;
+  return {
+    hex: state.hex,
+    microbitChoice: state.microbitChoice,
+    bluetoothMicrobitName: state.bluetoothMicrobitName,
+    connection: state.connection,
+    showPreDownloadHelp: deps.settings.showPreDownloadHelp,
+    hadSuccessfulConnection: deps.dataConnection.hadSuccessfulConnection,
+    dataConnectionType: deps.dataConnection.type,
+    isUsbConnected,
+    connectedBoardVersion: isUsbConnected ? usb.getBoardVersion() : undefined,
+  };
+};
 
 /**
  * Get fresh download state from the store.
@@ -87,6 +91,9 @@ const executeAction = async (
       if (event.type !== "start") {
         throw new Error("initializeDownload requires start event");
       }
+      if (event.bluetoothMicrobitName) {
+        deps.connections.bluetooth.setNameFilter(event.bluetoothMicrobitName);
+      }
       setDownloadState({
         ...state,
         hex: event.hex,
@@ -106,8 +113,19 @@ const executeAction = async (
       break;
     }
 
-    case "connect":
-      await performConnect(deps);
+    case "setMicrobitName": {
+      if (event.type === "setMicrobitName") {
+        deps.connections.bluetooth.setNameFilter(event.name);
+        setDownloadState({
+          ...state,
+          bluetoothMicrobitName: event.name,
+        });
+      }
+      break;
+    }
+
+    case "connectFlash":
+      await performConnectFlash(deps);
       break;
 
     case "flash":
@@ -131,9 +149,11 @@ const executeAction = async (
 };
 
 /**
- * Perform USB/Bluetooth connect operation.
+ * Perform USB/Bluetooth connect operation for flashing.
  */
-const performConnect = async (deps: DownloadDependencies): Promise<void> => {
+const performConnectFlash = async (
+  deps: DownloadDependencies
+): Promise<void> => {
   const state = getDownloadState();
   const { microbitChoice } = state;
   const actions = useStore.getState().actions;
@@ -145,39 +165,32 @@ const performConnect = async (deps: DownloadDependencies): Promise<void> => {
     },
   });
 
-  let connection = deps.connectionService.getDefaultFlashConnection();
+  let connection = deps.connections.getDefaultFlashConnection();
 
   // Use temporary connection for "different" microbit choice
   if (microbitChoice === SameOrDifferentChoice.Different) {
     connection = createWebUSBConnection();
-    const serialNumber = deps.connectionService.getUsbDeviceSerialNumber();
+    const serialNumber = deps.connections.usb.getDevice()?.serialNumber;
     if (serialNumber) {
       connection.setRequestDeviceExclusionFilters([{ serialNumber }]);
     }
   }
 
-  // Set name filter for native bluetooth
-  if (isNativeBluetoothConnection(connection) && state.bluetoothMicrobitName) {
-    connection.setNameFilter(state.bluetoothMicrobitName);
-  }
-
   try {
-    await deps.connectionService.connect(connection, {
-      progress: deps.flashingProgressCallback,
-    });
+    await connection.connect({ progress: deps.flashingProgressCallback });
     const boardVersion = connection.getBoardVersion();
     // Store connection for potential reuse
     setDownloadState({ ...getDownloadState(), connection });
     await sendEvent(
       {
-        type: "connectSuccess",
+        type: "connectFlashSuccess",
         boardVersion: boardVersion ?? "V2",
       },
       deps
     );
   } catch (e) {
     if (e instanceof DeviceError) {
-      await sendEvent({ type: "connectFailure", code: e.code }, deps);
+      await sendEvent({ type: "connectFlashFailure", code: e.code }, deps);
     } else {
       throw e;
     }
@@ -196,11 +209,12 @@ const performFlash = async (deps: DownloadDependencies): Promise<void> => {
   }
 
   try {
-    await deps.connectionService.flash(
-      connection,
-      hex.hex,
-      deps.flashingProgressCallback
-    );
+    const options: FlashOptions = {
+      partial: true,
+      minimumProgressIncrement: 0.01,
+      progress: deps.flashingProgressCallback,
+    };
+    await connection.flash(createUniversalHexFlashDataSource(hex.hex), options);
     await sendEvent({ type: "flashSuccess" }, deps);
   } catch (e) {
     if (e instanceof DeviceError) {

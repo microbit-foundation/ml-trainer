@@ -5,21 +5,24 @@
  */
 import { ButtonEvent } from "@microbit/microbit-connection";
 import { useEffect } from "react";
-import { useConnectionService } from "../connection-service-hooks";
+import { useDataConnection } from "../connections-hooks";
 
 type ButtonListener = (e: ButtonEvent) => void;
 
 /**
- * Subscribes to micro:bit button events. Callbacks only fire when connected.
+ * Subscribes to micro:bit button events on the active data connection.
+ * Callbacks only fire when connected.
  */
 export const useMicrobitButtonListener = (
   button: "A" | "B",
   listener: ButtonListener
 ) => {
-  const connectionService = useConnectionService();
+  const connection = useDataConnection();
 
   useEffect(() => {
-    connectionService.addButtonListener(button, listener);
-    return () => connectionService.removeButtonListener(button, listener);
-  }, [connectionService, button, listener]);
+    const eventType = button === "A" ? "buttonachanged" : "buttonbchanged";
+
+    connection.addEventListener(eventType, listener);
+    return () => connection.removeEventListener(eventType, listener);
+  }, [connection, button, listener]);
 };

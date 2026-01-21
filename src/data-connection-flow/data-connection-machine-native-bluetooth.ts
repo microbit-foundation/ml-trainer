@@ -5,14 +5,16 @@
  */
 import {
   backToStartTransition,
+  bluetoothRecoveryStates,
   connectedState,
+  connectFlashSuccessHandler,
   createInitialConnectHandlers,
-  createRecoveryStates,
   DataConnectionFlowDef,
   globalHandlers,
   guards,
   idleBluetoothReconnect,
   idleFreshStart,
+  setMicrobitNameHandler,
 } from "./data-connection-machine-common";
 import { DataConnectionStep } from "./data-connection-types";
 import { always } from "../state-machine";
@@ -42,7 +44,7 @@ const startStepHandlers = {
 };
 
 // Connect failure handlers that route permission errors to appropriate states
-const connectFailureWithPermissionHandling = [
+const connectFlashFailureWithPermissionHandling = [
   {
     guard: guards.isBluetoothDisabledError,
     target: DataConnectionStep.BluetoothDisabled,
@@ -135,27 +137,23 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
 
   [DataConnectionStep.BluetoothPattern]: {
     on: {
-      // Go directly to flashing - connect() handles permission checks internally
+      // Go directly to flashing - connectFlash() handles permission checks internally
       next: {
         target: DataConnectionStep.FlashingInProgress,
-        actions: [{ type: "connect" }],
+        actions: [{ type: "connectFlash" }],
       },
       back: { target: DataConnectionStep.NativeBluetoothPreConnectTutorial },
-      setMicrobitName: {
-        actions: [{ type: "setMicrobitName" }],
-      },
+      ...setMicrobitNameHandler,
     },
   },
 
   [DataConnectionStep.FlashingInProgress]: {
     on: {
-      connectSuccess: {
-        actions: [{ type: "flash" }],
-      },
-      connectFailure: connectFailureWithPermissionHandling,
+      ...connectFlashSuccessHandler,
+      connectFlashFailure: connectFlashFailureWithPermissionHandling,
       flashSuccess: {
         target: DataConnectionStep.BluetoothConnect,
-        actions: [{ type: "connectBluetooth", clearDevice: false }],
+        actions: [{ type: "connectData" }],
       },
       flashFailure: {
         target: DataConnectionStep.ConnectFailed,
@@ -178,8 +176,5 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
     on: startStepHandlers,
   },
 
-  ...createRecoveryStates(DataConnectionStep.BluetoothConnect, {
-    type: "connectBluetooth",
-    clearDevice: false,
-  }),
+  ...bluetoothRecoveryStates,
 };

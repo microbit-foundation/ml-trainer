@@ -86,7 +86,7 @@ export const browserDefaultFlow: DownloadFlowDefinition = {
           actions: [
             { type: "setMicrobitChoice", choice: SameOrDifferentChoice.Same },
             { type: "disconnectDataConnection" },
-            { type: "connect" },
+            { type: "connectFlash" },
           ],
         },
         {
@@ -130,12 +130,15 @@ export const browserDefaultFlow: DownloadFlowDefinition = {
           // Same micro:bit: disconnect bluetooth data connection before USB connect
           guard: guards.isSameMicrobitChoice,
           target: DownloadStep.FlashingInProgress,
-          actions: [{ type: "disconnectDataConnection" }, { type: "connect" }],
+          actions: [
+            { type: "disconnectDataConnection" },
+            { type: "connectFlash" },
+          ],
         },
         {
           guard: always,
           target: DownloadStep.FlashingInProgress,
-          actions: [{ type: "connect" }],
+          actions: [{ type: "connectFlash" }],
         },
       ],
       back: { target: DownloadStep.ConnectCable },

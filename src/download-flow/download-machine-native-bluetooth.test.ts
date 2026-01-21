@@ -93,7 +93,7 @@ describe("Download flow: Native Bluetooth", () => {
       });
 
       expect(result?.step).toBe(DownloadStep.FlashingInProgress);
-      expect(result?.actions).toContainEqual({ type: "connect" });
+      expect(result?.actions).toContainEqual({ type: "connectFlash" });
     });
   });
 
@@ -132,9 +132,9 @@ describe("Download flow: Native Bluetooth", () => {
   });
 
   describe("flashing outcomes", () => {
-    it("connectSuccess -> flash", () => {
+    it("connectFlashSuccess -> flash", () => {
       const result = transition(DownloadStep.FlashingInProgress, {
-        type: "connectSuccess",
+        type: "connectFlashSuccess",
         boardVersion: "V2",
       });
 

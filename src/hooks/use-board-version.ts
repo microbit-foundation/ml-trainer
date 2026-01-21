@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { BoardVersion } from "@microbit/microbit-connection";
-import { useConnectionService } from "../connection-service-hooks";
+import { useConnections } from "../connections-hooks";
 
 /**
  * Returns the connected micro:bit's board version.
@@ -14,6 +14,6 @@ import { useConnectionService } from "../connection-service-hooks";
  * during the connection flow.
  */
 export const useBoardVersion = (): BoardVersion => {
-  const connectionService = useConnectionService();
-  return connectionService.getBluetoothBoardVersion() ?? "V2";
+  const connections = useConnections();
+  return connections.bluetooth.getBoardVersion() ?? "V2";
 };

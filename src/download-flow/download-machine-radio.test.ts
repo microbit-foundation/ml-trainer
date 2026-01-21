@@ -95,7 +95,7 @@ describe("Download flow: Radio", () => {
       });
 
       expect(result?.step).toBe(DownloadStep.FlashingInProgress);
-      expect(result?.actions).toContainEqual({ type: "connect" });
+      expect(result?.actions).toContainEqual({ type: "connectFlash" });
     });
   });
 
@@ -150,10 +150,10 @@ describe("Download flow: Radio", () => {
   });
 
   describe("flashing outcomes", () => {
-    it("connectSuccess -> flash (V2 board)", () => {
+    it("connectFlashSuccess -> flash (V2 board)", () => {
       const result = transition(
         DownloadStep.FlashingInProgress,
-        { type: "connectSuccess", boardVersion: "V2" },
+        { type: "connectFlashSuccess", boardVersion: "V2" },
         {
           connectedBoardVersion: "V2",
         }
@@ -163,10 +163,10 @@ describe("Download flow: Radio", () => {
       expect(result?.actions).toContainEqual({ type: "flash" });
     });
 
-    it("connectSuccess -> IncompatibleDevice (V1 board)", () => {
+    it("connectFlashSuccess -> IncompatibleDevice (V1 board)", () => {
       const result = transition(
         DownloadStep.FlashingInProgress,
-        { type: "connectSuccess", boardVersion: "V1" },
+        { type: "connectFlashSuccess", boardVersion: "V1" },
         {
           connectedBoardVersion: "V1",
         }

@@ -143,13 +143,13 @@ describe("Data connection flow: Native Bluetooth", () => {
       expect(result?.actions).toContainEqual({ type: "togglePairingMethod" });
     });
 
-    it("BluetoothPattern next -> FlashingInProgress with connect", () => {
+    it("BluetoothPattern next -> FlashingInProgress with connectFlash", () => {
       const result = transition(DataConnectionStep.BluetoothPattern, {
         type: "next",
       });
 
       expect(result?.step).toBe(DataConnectionStep.FlashingInProgress);
-      expect(result?.actions).toContainEqual({ type: "connect" });
+      expect(result?.actions).toContainEqual({ type: "connectFlash" });
     });
   });
 
@@ -185,61 +185,58 @@ describe("Data connection flow: Native Bluetooth", () => {
   });
 
   describe("flashing outcomes", () => {
-    it("connectSuccess -> FlashingInProgress with flash action", () => {
+    it("connectFlashSuccess -> FlashingInProgress with flash action", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
-        type: "connectSuccess",
+        type: "connectFlashSuccess",
       });
 
       expect(result?.step).toBe(DataConnectionStep.FlashingInProgress);
       expect(result?.actions).toContainEqual({ type: "flash" });
     });
 
-    it("connectFailure -> ConnectFailed for generic errors", () => {
+    it("connectFlashFailure -> ConnectFailed for generic errors", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
-        type: "connectFailure",
+        type: "connectFlashFailure",
         code: "unknown-error",
       });
 
       expect(result?.step).toBe(DataConnectionStep.ConnectFailed);
     });
 
-    it("connectFailure with disabled code -> BluetoothDisabled", () => {
+    it("connectFlashFailure with disabled code -> BluetoothDisabled", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
-        type: "connectFailure",
+        type: "connectFlashFailure",
         code: "disabled",
       });
 
       expect(result?.step).toBe(DataConnectionStep.BluetoothDisabled);
     });
 
-    it("connectFailure with permission-denied code -> BluetoothPermissionDenied", () => {
+    it("connectFlashFailure with permission-denied code -> BluetoothPermissionDenied", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
-        type: "connectFailure",
+        type: "connectFlashFailure",
         code: "permission-denied",
       });
 
       expect(result?.step).toBe(DataConnectionStep.BluetoothPermissionDenied);
     });
 
-    it("connectFailure with location-disabled code -> LocationDisabled", () => {
+    it("connectFlashFailure with location-disabled code -> LocationDisabled", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
-        type: "connectFailure",
+        type: "connectFlashFailure",
         code: "location-disabled",
       });
 
       expect(result?.step).toBe(DataConnectionStep.LocationDisabled);
     });
 
-    it("flashSuccess -> BluetoothConnect with connectBluetooth action", () => {
+    it("flashSuccess -> BluetoothConnect with connectData action", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
         type: "flashSuccess",
       });
 
       expect(result?.step).toBe(DataConnectionStep.BluetoothConnect);
-      expect(result?.actions).toContainEqual({
-        type: "connectBluetooth",
-        clearDevice: false,
-      });
+      expect(result?.actions).toContainEqual({ type: "connectData" });
     });
 
     it("flashFailure -> ConnectFailed", () => {
@@ -363,7 +360,7 @@ describe("Data connection flow: Native Bluetooth", () => {
   });
 
   describe("error recovery", () => {
-    it("ConnectFailed next -> BluetoothConnect with status and connectBluetooth", () => {
+    it("ConnectFailed next -> BluetoothConnect with status and connectData", () => {
       const result = transition(DataConnectionStep.ConnectFailed, {
         type: "next",
       });
@@ -373,13 +370,10 @@ describe("Data connection flow: Native Bluetooth", () => {
         type: "setReconnecting",
         value: true,
       });
-      expect(result?.actions).toContainEqual({
-        type: "connectBluetooth",
-        clearDevice: false,
-      });
+      expect(result?.actions).toContainEqual({ type: "connectData" });
     });
 
-    it("ConnectionLost next -> BluetoothConnect with status and connectBluetooth", () => {
+    it("ConnectionLost next -> BluetoothConnect with status and connectData", () => {
       const result = transition(DataConnectionStep.ConnectionLost, {
         type: "next",
       });
@@ -389,10 +383,7 @@ describe("Data connection flow: Native Bluetooth", () => {
         type: "setReconnecting",
         value: true,
       });
-      expect(result?.actions).toContainEqual({
-        type: "connectBluetooth",
-        clearDevice: false,
-      });
+      expect(result?.actions).toContainEqual({ type: "connectData" });
     });
   });
 

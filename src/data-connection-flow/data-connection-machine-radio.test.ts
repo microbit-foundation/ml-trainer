@@ -91,13 +91,13 @@ describe("Data connection flow: Radio", () => {
         expect(result?.step).toBe(DataConnectionStep.WebUsbFlashingTutorial);
       });
 
-      it("WebUsbFlashingTutorial -> FlashingInProgress with connect action", () => {
+      it("WebUsbFlashingTutorial -> FlashingInProgress with connectFlash action", () => {
         const result = transition(DataConnectionStep.WebUsbFlashingTutorial, {
           type: "next",
         });
 
         expect(result?.step).toBe(DataConnectionStep.FlashingInProgress);
-        expect(result?.actions).toContainEqual({ type: "connect" });
+        expect(result?.actions).toContainEqual({ type: "connectFlash" });
       });
 
       it("ConnectBattery -> switches to bridge phase", () => {
@@ -150,36 +150,36 @@ describe("Data connection flow: Radio", () => {
     });
 
     describe("flashing outcomes", () => {
-      it("connectSuccess (V2 board) -> FlashingInProgress with flash action", () => {
+      it("connectFlashSuccess (V2 board) -> FlashingInProgress with flash action", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectSuccess",
+          type: "connectFlashSuccess",
         });
 
         expect(result?.step).toBe(DataConnectionStep.FlashingInProgress);
         expect(result?.actions).toContainEqual({ type: "flash" });
       });
 
-      it("connectSuccess (V1 board) -> MicrobitUnsupported", () => {
+      it("connectFlashSuccess (V1 board) -> MicrobitUnsupported", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectSuccess",
+          type: "connectFlashSuccess",
           boardVersion: "V1",
         });
 
         expect(result?.step).toBe(DataConnectionStep.MicrobitUnsupported);
       });
 
-      it("connectFailure with bad firmware -> BadFirmware", () => {
+      it("connectFlashFailure with bad firmware -> BadFirmware", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "update-req",
         });
 
         expect(result?.step).toBe(DataConnectionStep.BadFirmware);
       });
 
-      it("connectFailure with no device selected -> TryAgainWebUsbSelectMicrobit", () => {
+      it("connectFlashFailure with no device selected -> TryAgainWebUsbSelectMicrobit", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "no-device-selected",
         });
 
@@ -188,18 +188,18 @@ describe("Data connection flow: Radio", () => {
         );
       });
 
-      it("connectFailure with unable to claim -> TryAgainCloseTabs", () => {
+      it("connectFlashFailure with unable to claim -> TryAgainCloseTabs", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "clear-connect",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainCloseTabs);
       });
 
-      it("connectFailure (other) -> TryAgainReplugMicrobit", () => {
+      it("connectFlashFailure (other) -> TryAgainReplugMicrobit", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "unknown-error",
         });
 
@@ -438,7 +438,7 @@ describe("Data connection flow: Radio", () => {
         });
 
         expect(result?.step).toBe(DataConnectionStep.ConnectingMicrobits);
-        expect(result?.actions).toContainEqual({ type: "connectMicrobits" });
+        expect(result?.actions).toContainEqual({ type: "connectData" });
       });
     });
 
@@ -451,13 +451,13 @@ describe("Data connection flow: Radio", () => {
         expect(result?.step).toBe(DataConnectionStep.WebUsbFlashingTutorial);
       });
 
-      it("WebUsbFlashingTutorial -> FlashingInProgress with connect action", () => {
+      it("WebUsbFlashingTutorial -> FlashingInProgress with connectFlash action", () => {
         const result = transition(DataConnectionStep.WebUsbFlashingTutorial, {
           type: "next",
         });
 
         expect(result?.step).toBe(DataConnectionStep.FlashingInProgress);
-        expect(result?.actions).toContainEqual({ type: "connect" });
+        expect(result?.actions).toContainEqual({ type: "connectFlash" });
       });
     });
 
@@ -486,27 +486,27 @@ describe("Data connection flow: Radio", () => {
     });
 
     describe("flashing outcomes", () => {
-      it("connectSuccess -> FlashingInProgress with flash action", () => {
+      it("connectFlashSuccess -> FlashingInProgress with flash action", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectSuccess",
+          type: "connectFlashSuccess",
         });
 
         expect(result?.step).toBe(DataConnectionStep.FlashingInProgress);
         expect(result?.actions).toContainEqual({ type: "flash" });
       });
 
-      it("connectFailure with bad firmware -> BadFirmware", () => {
+      it("connectFlashFailure with bad firmware -> BadFirmware", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "update-req",
         });
 
         expect(result?.step).toBe(DataConnectionStep.BadFirmware);
       });
 
-      it("connectFailure with no device selected -> TryAgainWebUsbSelectMicrobit", () => {
+      it("connectFlashFailure with no device selected -> TryAgainWebUsbSelectMicrobit", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "no-device-selected",
         });
 
@@ -515,25 +515,25 @@ describe("Data connection flow: Radio", () => {
         );
       });
 
-      it("connectFailure with unable to claim -> TryAgainCloseTabs", () => {
+      it("connectFlashFailure with unable to claim -> TryAgainCloseTabs", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "clear-connect",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainCloseTabs);
       });
 
-      it("connectFailure (other) -> TryAgainReplugMicrobit", () => {
+      it("connectFlashFailure (other) -> TryAgainReplugMicrobit", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
-          type: "connectFailure",
+          type: "connectFlashFailure",
           code: "unknown-error",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainReplugMicrobit);
       });
 
-      it("flashSuccess in bridge phase -> ConnectingMicrobits with device id and connectMicrobits action", () => {
+      it("flashSuccess in bridge phase -> ConnectingMicrobits with device id and connectData action", () => {
         const result = transition(
           DataConnectionStep.FlashingInProgress,
           { type: "flashSuccess" },
@@ -544,7 +544,7 @@ describe("Data connection flow: Radio", () => {
         expect(result?.actions).toContainEqual({
           type: "setRadioBridgeDeviceId",
         });
-        expect(result?.actions).toContainEqual({ type: "connectMicrobits" });
+        expect(result?.actions).toContainEqual({ type: "connectData" });
       });
 
       it("flashFailure with no device selected -> TryAgainWebUsbSelectMicrobit", () => {
@@ -639,7 +639,7 @@ describe("Data connection flow: Radio", () => {
         expect(result?.step).toBe(DataConnectionStep.ConnectCable);
       });
 
-      it("ConnectFailed next -> ConnectingMicrobits with status and connectMicrobits", () => {
+      it("ConnectFailed next -> ConnectingMicrobits with status and connectData", () => {
         const result = transition(DataConnectionStep.ConnectFailed, {
           type: "next",
         });
@@ -649,10 +649,10 @@ describe("Data connection flow: Radio", () => {
           type: "setReconnecting",
           value: true,
         });
-        expect(result?.actions).toContainEqual({ type: "connectMicrobits" });
+        expect(result?.actions).toContainEqual({ type: "connectData" });
       });
 
-      it("ConnectionLost next -> ConnectingMicrobits with status and connectMicrobits", () => {
+      it("ConnectionLost next -> ConnectingMicrobits with status and connectData", () => {
         const result = transition(DataConnectionStep.ConnectionLost, {
           type: "next",
         });
@@ -662,7 +662,7 @@ describe("Data connection flow: Radio", () => {
           type: "setReconnecting",
           value: true,
         });
-        expect(result?.actions).toContainEqual({ type: "connectMicrobits" });
+        expect(result?.actions).toContainEqual({ type: "connectData" });
       });
     });
 
