@@ -20,6 +20,7 @@ jobs:
     permissions:
       contents: read
       packages: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
@@ -92,20 +93,13 @@ jobs:
           path: android/app/build/outputs/bundle/release/*.aab
           retention-days: 30
 
-      - name: Decode Google Play service account key
+      - name: Authenticate to Google Cloud
         if: github.event_name == 'release'
-        run: |
-          echo "GOOGLE_PLAY_JSON_KEY_FILE=$RUNNER_TEMP/play-store-key.json" >> $GITHUB_ENV
-          printenv GOOGLE_PLAY_JSON_KEY_BASE64 | base64 -d > "$RUNNER_TEMP/play-store-key.json"
-        env:
-          GOOGLE_PLAY_JSON_KEY_BASE64: ${{ secrets.GOOGLE_PLAY_JSON_KEY_BASE64 }}
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/311821962964/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions
+          service_account: fastlane-supply@microbit-fastlane.iam.gserviceaccount.com
 
       - name: Upload to Google Play
         if: github.event_name == 'release'
         run: bundle exec fastlane android upload
-        env:
-          GOOGLE_PLAY_JSON_KEY_FILE: ${{ env.GOOGLE_PLAY_JSON_KEY_FILE }}
-
-      - name: Clean up service account key
-        run: rm -f "$RUNNER_TEMP/play-store-key.json"
-        if: always()
