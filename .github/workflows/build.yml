@@ -63,16 +63,12 @@ jobs:
           path: playwright-report/
           retention-days: 3
       - run: npx website-deploy-aws
-        # TODO: Reinstate after first apps branch tagged release.
-        if: false
-        # if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || success())
+        if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || success())
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.WEB_DEPLOY_ML_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.WEB_DEPLOY_ML_AWS_SECRET_ACCESS_KEY }}
       - run: npx invalidate-cloudfront-distribution
-        # TODO: Reinstate after first apps branch tagged release.
-        if: false
-        # if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || success())
+        if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || success())
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.WEB_DEPLOY_ML_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.WEB_DEPLOY_ML_AWS_SECRET_ACCESS_KEY }}
