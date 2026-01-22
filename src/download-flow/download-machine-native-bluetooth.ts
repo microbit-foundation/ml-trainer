@@ -81,6 +81,13 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
           target: DownloadStep.FlashingInProgress,
           actions: [{ type: "flash" }],
         },
+        // Skip help if we've downloaded before this session
+        {
+          guard: guards.hasDownloadedBefore,
+          target: DownloadStep.NativeBluetoothPreConnectTutorial,
+          actions: [{ type: "checkPermissions" }],
+        },
+        // Show help on first download (if setting enabled)
         {
           guard: guards.shouldShowHelp,
           target: DownloadStep.Help,

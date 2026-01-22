@@ -108,6 +108,24 @@ export const guards = {
   shouldShowHelp: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
     ctx.showPreDownloadHelp,
 
+  /**
+   * True if the user has completed a download this session.
+   * We use connection !== undefined as a proxy since connection is set
+   * after a successful flash and persists for the session.
+   * Used to skip help on subsequent downloads.
+   */
+  hasDownloadedBefore: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
+    ctx.connection !== undefined,
+
+  /**
+   * Combined guard: has downloaded before AND has active data connection.
+   * Used for routing to ChooseSameOrDifferentMicrobit when skipping help.
+   */
+  hasDownloadedBeforeWithActiveConnection: (
+    ctx: DownloadFlowContext,
+    _event: DownloadEvent
+  ) => ctx.connection !== undefined && ctx.hadSuccessfulConnection,
+
   hasActiveDataConnection: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
     ctx.hadSuccessfulConnection,
 
