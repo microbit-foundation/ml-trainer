@@ -71,8 +71,6 @@ const ConnectErrorDialog = ({
   const { supportLinks } = useDeployment();
   const textPrefix = variantToTextPrefix[variant];
   const recoverySteps = getRecoveryStepsConfig(deviceType);
-  const retryButtonTextId =
-    variant === "connectFailed" ? "connect-action" : "reconnect-action";
 
   return (
     <Modal
@@ -119,7 +117,7 @@ const ConnectErrorDialog = ({
                 <FormattedMessage id="cancel-action" />
               </Button>
               <Button onClick={onRetry} variant="primary" size="lg">
-                <FormattedMessage id={retryButtonTextId} />
+                <FormattedMessage id="try-again-action" />
               </Button>
             </HStack>
           </ModalFooter>

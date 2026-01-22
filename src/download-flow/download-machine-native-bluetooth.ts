@@ -9,7 +9,6 @@ import {
   DownloadFlowDefinition,
   globalHandlers,
   guards,
-  manualFlashingTutorialState,
 } from "./download-machine-common";
 import {
   createPermissionErrorStateHandlers,
@@ -36,9 +35,12 @@ const connectFlashFailureWithPermissionHandling = [
     target: DownloadStep.LocationDisabled,
   },
   {
+    guard: guards.isNoDeviceSelectedError,
+    target: DownloadStep.NoMatchingDevice,
+  },
+  {
     guard: always,
-    target: DownloadStep.ManualFlashingTutorial,
-    actions: [{ type: "downloadHexFile" as const }],
+    target: DownloadStep.ConnectFailed,
   },
 ];
 
@@ -61,8 +63,7 @@ const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
       connectFlashFailure: connectFlashFailureWithPermissionHandling,
       flashSuccess: { target: DownloadStep.None },
       flashFailure: {
-        target: DownloadStep.ManualFlashingTutorial,
-        actions: [{ type: "downloadHexFile" }],
+        target: DownloadStep.ConnectFailed,
       },
     },
   },
@@ -144,14 +145,21 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
 
   ...flashingInProgressWithPermissionHandling,
 
-  // TODO: This state and all transitions to it need to be replaced.
-  // We need a custom error state (perhaps more than one) for native
-  // bluetooth. But for sure not one about drag and drop!
-  ...manualFlashingTutorialState,
+  [DownloadStep.ConnectFailed]: {
+    on: {
+      tryAgain: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
+    },
+  },
 
   [DownloadStep.IncompatibleDevice]: {
     on: {
       back: { target: DownloadStep.BluetoothPattern },
+    },
+  },
+
+  [DownloadStep.NoMatchingDevice]: {
+    on: {
+      tryAgain: { target: DownloadStep.BluetoothPattern },
     },
   },
 };

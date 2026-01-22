@@ -230,6 +230,15 @@ describe("Data connection flow: Native Bluetooth", () => {
       expect(result?.step).toBe(DataConnectionStep.LocationDisabled);
     });
 
+    it("connectFlashFailure with no-device-selected code -> NoMatchingDevice", () => {
+      const result = transition(DataConnectionStep.FlashingInProgress, {
+        type: "connectFlashFailure",
+        code: "no-device-selected",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.NoMatchingDevice);
+    });
+
     it("flashSuccess -> BluetoothConnect with connectData action", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
         type: "flashSuccess",
@@ -274,6 +283,62 @@ describe("Data connection flow: Native Bluetooth", () => {
         type: "setReconnecting",
         value: false,
       });
+    });
+
+    it("connectDataFailure with disabled code -> BluetoothDisabled", () => {
+      const result = transition(DataConnectionStep.BluetoothConnect, {
+        type: "connectDataFailure",
+        code: "disabled",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.BluetoothDisabled);
+    });
+
+    it("connectDataFailure with permission-denied code -> BluetoothPermissionDenied", () => {
+      const result = transition(DataConnectionStep.BluetoothConnect, {
+        type: "connectDataFailure",
+        code: "permission-denied",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.BluetoothPermissionDenied);
+    });
+
+    it("connectDataFailure with location-disabled code -> LocationDisabled", () => {
+      const result = transition(DataConnectionStep.BluetoothConnect, {
+        type: "connectDataFailure",
+        code: "location-disabled",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.LocationDisabled);
+    });
+
+    it("connectDataFailure with no-device-selected code -> NoMatchingDevice", () => {
+      const result = transition(DataConnectionStep.BluetoothConnect, {
+        type: "connectDataFailure",
+        code: "no-device-selected",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.NoMatchingDevice);
+    });
+
+    it("connectDataFailure with generic error -> ConnectFailed (first attempt)", () => {
+      const result = transition(
+        DataConnectionStep.BluetoothConnect,
+        { type: "connectDataFailure", code: "unknown-error" },
+        { hasFailedOnce: false }
+      );
+
+      expect(result?.step).toBe(DataConnectionStep.ConnectFailed);
+    });
+
+    it("connectDataFailure with generic error -> StartOver (second attempt)", () => {
+      const result = transition(
+        DataConnectionStep.BluetoothConnect,
+        { type: "connectDataFailure", code: "unknown-error" },
+        { hasFailedOnce: true }
+      );
+
+      expect(result?.step).toBe(DataConnectionStep.StartOver);
     });
   });
 
@@ -360,10 +425,24 @@ describe("Data connection flow: Native Bluetooth", () => {
   });
 
   describe("error recovery", () => {
-    it("ConnectFailed next -> BluetoothConnect with status and connectData", () => {
-      const result = transition(DataConnectionStep.ConnectFailed, {
-        type: "next",
-      });
+    it("ConnectFailed next -> NativeBluetoothPreConnectTutorial (first-time failure)", () => {
+      const result = transition(
+        DataConnectionStep.ConnectFailed,
+        { type: "next" },
+        { hadSuccessfulConnection: false }
+      );
+
+      expect(result?.step).toBe(
+        DataConnectionStep.NativeBluetoothPreConnectTutorial
+      );
+    });
+
+    it("ConnectFailed next -> BluetoothConnect (reconnection failure)", () => {
+      const result = transition(
+        DataConnectionStep.ConnectFailed,
+        { type: "next" },
+        { hadSuccessfulConnection: true }
+      );
 
       expect(result?.step).toBe(DataConnectionStep.BluetoothConnect);
       expect(result?.actions).toContainEqual({
@@ -385,6 +464,14 @@ describe("Data connection flow: Native Bluetooth", () => {
       });
       expect(result?.actions).toContainEqual({ type: "connectData" });
     });
+
+    it("NoMatchingDevice tryAgain -> BluetoothPattern", () => {
+      const result = transition(DataConnectionStep.NoMatchingDevice, {
+        type: "tryAgain",
+      });
+
+      expect(result?.step).toBe(DataConnectionStep.BluetoothPattern);
+    });
   });
 
   describe("close from any step", () => {
@@ -398,6 +485,7 @@ describe("Data connection flow: Native Bluetooth", () => {
       DataConnectionStep.BluetoothDisabled,
       DataConnectionStep.BluetoothPermissionDenied,
       DataConnectionStep.LocationDisabled,
+      DataConnectionStep.NoMatchingDevice,
     ];
 
     stepsWithClose.forEach((step) => {

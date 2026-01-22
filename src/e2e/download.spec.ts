@@ -94,6 +94,31 @@ test.describe("native bluetooth download flow", () => {
     // With mock device, should complete successfully
     await downloadDialogs.expectDialogClosed();
   });
+
+  test("connect failure shows error and retry goes back to reset tutorial", async ({
+    testModelPage,
+  }) => {
+    const makecodeEditor = await testModelPage.editInMakeCode();
+    await makecodeEditor.closeTourDialog();
+    const downloadDialogs = await makecodeEditor.clickDownload();
+    // First connect fails, second succeeds
+    await downloadDialogs.setBluetoothConnectBehaviors([
+      { outcome: "error", code: "reconnect-microbit" },
+      { outcome: "success" },
+    ]);
+    await downloadDialogs.waitForText(dialog.nativeBluetooth.help);
+    await downloadDialogs.clickNext();
+    await downloadDialogs.waitForText(dialog.nativeBluetooth.resetToBluetooth);
+    await downloadDialogs.clickNext();
+    await downloadDialogs.waitForText(dialog.nativeBluetooth.copyPattern);
+    await downloadDialogs.enterBluetoothPattern();
+    await downloadDialogs.clickNext();
+    // Connect failure shows error dialog
+    await downloadDialogs.expectConnectFailedDialog();
+    // Retry should go back to reset tutorial
+    await downloadDialogs.clickTryAgainButton();
+    await downloadDialogs.waitForText(dialog.nativeBluetooth.resetToBluetooth);
+  });
 });
 
 // Radio download flow tests are in connection-flow.spec.ts

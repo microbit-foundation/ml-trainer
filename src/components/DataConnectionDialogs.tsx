@@ -25,6 +25,7 @@ import DownloadProgressDialog, {
 import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import LoadingDialog from "./LoadingDialog";
 import ManualFlashingDialog from "./ManualFlashingDialog";
+import NativeBluetoothErrorDialog from "./NativeBluetoothErrorDialog";
 import ResetToBluetoothModeDialog from "./ResetToBluetoothModeDialog";
 import SelectMicrobitBluetoothDialog from "./SelectMicrobitBluetoothDialog";
 import SelectMicrobitUsbDialog, {
@@ -36,6 +37,14 @@ import WebUsbBluetoothUnsupportedDialog from "./WebUsbBluetoothUnsupportedDialog
 import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
 import { bluetoothUniversalHex } from "../device/get-hex-file";
 import { isAndroid } from "../platform";
+import { DataConnectionState } from "../data-connection-flow/data-connection-types";
+
+const getDeviceType = (state: DataConnectionState): ConnectionErrorDeviceType =>
+  state.type === DataConnectionType.Radio
+    ? state.lastDisconnectSource === "bridge"
+      ? "bridge"
+      : "remote"
+    : "bluetooth";
 
 const DataConnectionDialogs = () => {
   const state = useStore((s) => s.dataConnection);
@@ -204,28 +213,37 @@ const DataConnectionDialogs = () => {
     case DataConnectionStep.WebUsbBluetoothUnsupported: {
       return <WebUsbBluetoothUnsupportedDialog {...dialogCommonProps} />;
     }
-    case DataConnectionStep.ConnectFailed:
-    case DataConnectionStep.ConnectionLost: {
-      const variant =
-        state.step === DataConnectionStep.ConnectionLost
-          ? "connectionLost"
-          : state.hadSuccessfulConnection
-          ? "reconnectFailed"
-          : "connectFailed";
-
-      const deviceType: ConnectionErrorDeviceType =
-        state.type === DataConnectionType.Radio
-          ? state.lastDisconnectSource === "bridge"
-            ? "bridge"
-            : "remote"
-          : "bluetooth";
-
+    case DataConnectionStep.ConnectFailed: {
+      // Native Bluetooth: show native-specific error dialog with pattern/mode/distance advice
+      if (state.type === DataConnectionType.NativeBluetooth) {
+        return (
+          <NativeBluetoothErrorDialog
+            {...dialogCommonProps}
+            onTryAgain={actions.onNextClick}
+            variant="native-bluetooth-error"
+          />
+        );
+      }
+      // WebBluetooth/Radio: show standard connect error dialog
       return (
         <ConnectErrorDialog
           {...dialogCommonProps}
           onRetry={actions.onNextClick}
-          variant={variant}
-          deviceType={deviceType}
+          variant={
+            state.hadSuccessfulConnection ? "reconnectFailed" : "connectFailed"
+          }
+          deviceType={getDeviceType(state)}
+        />
+      );
+    }
+    case DataConnectionStep.ConnectionLost: {
+      // Connection was working then lost - standard dialog is appropriate for all flows
+      return (
+        <ConnectErrorDialog
+          {...dialogCommonProps}
+          onRetry={actions.onNextClick}
+          variant="connectionLost"
+          deviceType={getDeviceType(state)}
         />
       );
     }
@@ -263,6 +281,14 @@ const DataConnectionDialogs = () => {
           onTryAgain={actions.onTryAgain}
           onOpenSettings={actions.openLocationSettings}
           isCheckingPermissions={state.isCheckingPermissions}
+        />
+      );
+    case DataConnectionStep.NoMatchingDevice:
+      return (
+        <NativeBluetoothErrorDialog
+          {...dialogCommonProps}
+          onTryAgain={actions.onTryAgain}
+          variant="no-matching-device"
         />
       );
   }

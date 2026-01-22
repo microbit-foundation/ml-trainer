@@ -219,28 +219,37 @@ export class ConnectionDialogs {
 
   /**
    * Expect the "connect failed" dialog (fresh connection attempt failed).
-   * Shows "Failed to connect" and a "Connect" button.
+   * Shows "Failed to connect" and a "Try again" button.
+   * Used for WebBluetooth and Radio flows.
    */
   async expectConnectFailedDialog() {
     await expect(
       this.page.getByText("Failed to connect to micro:bit")
     ).toBeVisible({ timeout: 10000 });
+    await expect(this.tryAgainButton).toBeVisible();
+  }
+
+  /**
+   * Expect the native Bluetooth error dialog.
+   * Shows "Could not connect to micro:bit" and troubleshooting advice.
+   * Used for NativeBluetooth flow ConnectFailed state.
+   */
+  async expectNativeBluetoothErrorDialog() {
     await expect(
-      this.page.getByRole("button", { name: "Connect" })
-    ).toBeVisible();
+      this.page.getByText("Could not connect to micro:bit")
+    ).toBeVisible({ timeout: 10000 });
+    await expect(this.tryAgainButton).toBeVisible();
   }
 
   /**
    * Expect the "reconnect failed" dialog (reconnection attempt failed).
-   * Shows "Failed to reconnect" and a "Reconnect" button.
+   * Shows "Failed to reconnect" and a "Try again" button.
    */
   async expectReconnectFailedDialog() {
     await expect(
       this.page.getByText("Failed to reconnect to data collection micro:bit")
     ).toBeVisible({ timeout: 10000 });
-    await expect(
-      this.page.getByRole("button", { name: "Reconnect" })
-    ).toBeVisible();
+    await expect(this.tryAgainButton).toBeVisible();
   }
 
   /**
@@ -261,23 +270,6 @@ export class ConnectionDialogs {
     await expect(
       this.page.getByText("Data collection micro:bit connection lost")
     ).toBeVisible({ timeout: 10000 });
-  }
-
-  /**
-   * Click the "Connect" button in error dialogs.
-   * Only shown for fresh connection failures (user never connected successfully).
-   */
-  async clickConnectButton() {
-    await this.page.getByRole("button", { name: "Connect" }).click();
-  }
-
-  /**
-   * Click the "Reconnect" button in error dialogs.
-   * Shown for connection lost, reconnect failed, or connect failed after
-   * user had previously connected successfully.
-   */
-  async clickReconnectButton() {
-    await this.page.getByRole("button", { name: "Reconnect" }).click();
   }
 
   /**

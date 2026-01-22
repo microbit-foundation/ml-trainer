@@ -90,7 +90,7 @@ test.describe("bluetooth connection", () => {
     // Fresh connection failure shows "connect failed" (not "reconnect failed")
     // because user has never connected successfully
     await connectionDialogs.expectConnectFailedDialog();
-    await connectionDialogs.clickConnectButton();
+    await connectionDialogs.clickTryAgainButton();
     await dataSamplesPage.expectConnected();
   });
 });
@@ -133,7 +133,7 @@ test.describe("bluetooth reconnection", () => {
     await connectionDialogs.simulateBluetoothDisconnect();
     // First failure shows "connection lost" dialog
     await connectionDialogs.expectConnectionLostDialog();
-    await connectionDialogs.clickReconnectButton();
+    await connectionDialogs.clickTryAgainButton();
     await dataSamplesPage.expectConnected();
   });
 
@@ -151,7 +151,7 @@ test.describe("bluetooth reconnection", () => {
 
     await connectionDialogs.simulateBluetoothDisconnect();
     await connectionDialogs.expectConnectionLostDialog();
-    await connectionDialogs.clickReconnectButton();
+    await connectionDialogs.clickTryAgainButton();
     await connectionDialogs.expectStartOverDialog();
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(dialog.bluetooth.connectUsb);
@@ -178,6 +178,33 @@ test.describe("native bluetooth connection", () => {
     await connectionDialogs.enterBluetoothPattern();
     await connectionDialogs.clickNext();
     await dataSamplesPage.expectConnected();
+  });
+
+  test("first-time connect failure goes back to reset tutorial", async ({
+    dataSamplesPage,
+  }) => {
+    const connectionDialogs = await dataSamplesPage.connect();
+    // First connect fails, second succeeds
+    await connectionDialogs.setBluetoothConnectBehaviors([
+      { outcome: "error", code: "reconnect-microbit" },
+      { outcome: "success" },
+    ]);
+    await connectionDialogs.waitForText(dialog.nativeBluetooth.whatYouNeed);
+    await connectionDialogs.clickNext();
+    await connectionDialogs.waitForText(
+      dialog.nativeBluetooth.resetToBluetooth
+    );
+    await connectionDialogs.clickNext();
+    await connectionDialogs.waitForText(dialog.nativeBluetooth.copyPattern);
+    await connectionDialogs.enterBluetoothPattern();
+    await connectionDialogs.clickNext();
+    // First-time failure shows native Bluetooth error dialog
+    await connectionDialogs.expectNativeBluetoothErrorDialog();
+    // Retry should go back to reset tutorial (not directly to connect)
+    await connectionDialogs.clickTryAgainButton();
+    await connectionDialogs.waitForText(
+      dialog.nativeBluetooth.resetToBluetooth
+    );
   });
 });
 
@@ -489,7 +516,7 @@ test.describe("tab visibility reconnection", () => {
     await connectionDialogs.setBluetoothConnectBehaviors([
       { outcome: "success" },
     ]);
-    await connectionDialogs.clickReconnectButton();
+    await connectionDialogs.clickTryAgainButton();
     await dataSamplesPage.expectConnected();
   });
 });
@@ -535,7 +562,7 @@ test.describe("radio reconnection", () => {
 
     // Simulate USB being plugged back in before user clicks reconnect
     await connectionDialogs.simulateUsbReconnect();
-    await connectionDialogs.clickReconnectButton();
+    await connectionDialogs.clickTryAgainButton();
     await dataSamplesPage.expectConnected();
   });
 
@@ -553,7 +580,7 @@ test.describe("radio reconnection", () => {
     // Simulate radio (remote) disconnect
     await connectionDialogs.simulateRadioDisconnect("remote");
     await connectionDialogs.expectRadioRemoteDisconnectDialog();
-    await connectionDialogs.clickReconnectButton();
+    await connectionDialogs.clickTryAgainButton();
     await dataSamplesPage.expectConnected();
   });
 
@@ -575,7 +602,7 @@ test.describe("radio reconnection", () => {
     await connectionDialogs.expectRadioRemoteDisconnectDialog();
 
     // User retry fails → StartOver
-    await connectionDialogs.clickReconnectButton();
+    await connectionDialogs.clickTryAgainButton();
     await connectionDialogs.expectRadioStartOverDialog();
 
     // Start over should go back to radio flow (ConnectCable for micro:bit 1)

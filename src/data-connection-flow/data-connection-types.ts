@@ -87,6 +87,8 @@ export const DataConnectionStep = {
   TryAgainWebUsbSelectMicrobit: "TryAgainWebUsbSelectMicrobit",
   TryAgainBluetoothSelectMicrobit: "TryAgainBluetoothSelectMicrobit",
   ConnectFailed: "ConnectFailed",
+  // Native Bluetooth only - no device matching pattern found
+  NoMatchingDevice: "NoMatchingDevice",
   BadFirmware: "BadFirmware",
   MicrobitUnsupported: "MicrobitUnsupported",
   WebUsbBluetoothUnsupported: "WebUsbBluetoothUnsupported",

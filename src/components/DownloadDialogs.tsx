@@ -16,6 +16,7 @@ import DownloadProgressDialog from "./DownloadProgressDialog";
 import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 import ManualFlashingDialog from "./ManualFlashingDialog";
+import NativeBluetoothErrorDialog from "./NativeBluetoothErrorDialog";
 import ResetToBluetoothModeDialog from "./ResetToBluetoothModeDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import UnplugRadioLinkMicrobitDialog from "./UnplugRadioLinkMicrobitDialog";
@@ -121,6 +122,15 @@ const DownloadDialogs = () => {
           progress={flashingProgress.value}
         />
       );
+    case DownloadStep.ConnectFailed:
+      return (
+        <NativeBluetoothErrorDialog
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
+          variant="native-bluetooth-error"
+        />
+      );
     case DownloadStep.ManualFlashingTutorial:
       if (!stage.hex) {
         throw new Error("Project expected");
@@ -179,6 +189,15 @@ const DownloadDialogs = () => {
           onTryAgain={downloadActions.onTryAgain}
           onOpenSettings={downloadActions.openLocationSettings}
           isCheckingPermissions={stage.isCheckingPermissions}
+        />
+      );
+    case DownloadStep.NoMatchingDevice:
+      return (
+        <NativeBluetoothErrorDialog
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
+          variant="no-matching-device"
         />
       );
   }

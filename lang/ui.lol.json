@@ -1247,6 +1247,30 @@
     "defaultMessage": "crwdns363186:0crwdne363186:0",
     "description": "Text under project name field"
   },
+  "native-bluetooth-error-body": {
+    "defaultMessage": "The connection to the micro:bit failed.",
+    "description": "Body text for native Bluetooth connection error dialog"
+  },
+  "native-bluetooth-error-check": {
+    "defaultMessage": "Please check that:",
+    "description": "Heading for list of things to check in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-distance": {
+    "defaultMessage": "the micro:bit is close to this device",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-mode": {
+    "defaultMessage": "the micro:bit is in Bluetooth mode (showing the pairing pattern)",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-pattern": {
+    "defaultMessage": "the pattern you entered is correct",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-heading": {
+    "defaultMessage": "Could not connect to micro:bit",
+    "description": "Heading for native Bluetooth connection error dialog"
+  },
   "new-session-setup-description": {
     "defaultMessage": "crwdns363188:0crwdne363188:0",
     "description": "New session setup description"
@@ -1306,6 +1330,14 @@
   "no-data-samples": {
     "defaultMessage": "crwdns363216:0crwdne363216:0",
     "description": "Empty data samples page status text"
+  },
+  "no-matching-device-body": {
+    "defaultMessage": "A micro:bit matching the pattern could not be found.",
+    "description": "Body text for no matching device dialog (native Bluetooth)"
+  },
+  "no-matching-device-heading": {
+    "defaultMessage": "No micro:bit found",
+    "description": "Heading for no matching device dialog (native Bluetooth)"
   },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "crwdns363218:0crwdne363218:0",

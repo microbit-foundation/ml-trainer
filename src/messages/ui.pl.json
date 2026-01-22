@@ -2163,6 +2163,42 @@
       "value": "Nazwa jest używana podczas zapisywania pliku."
     }
   ],
+  "native-bluetooth-error-body": [
+    {
+      "type": 0,
+      "value": "The connection to the micro:bit failed."
+    }
+  ],
+  "native-bluetooth-error-check": [
+    {
+      "type": 0,
+      "value": "Please check that:"
+    }
+  ],
+  "native-bluetooth-error-check-distance": [
+    {
+      "type": 0,
+      "value": "the micro:bit is close to this device"
+    }
+  ],
+  "native-bluetooth-error-check-mode": [
+    {
+      "type": 0,
+      "value": "the micro:bit is in Bluetooth mode (showing the pairing pattern)"
+    }
+  ],
+  "native-bluetooth-error-check-pattern": [
+    {
+      "type": 0,
+      "value": "the pattern you entered is correct"
+    }
+  ],
+  "native-bluetooth-error-heading": [
+    {
+      "type": 0,
+      "value": "Could not connect to micro:bit"
+    }
+  ],
   "new-session-setup-description": [
     {
       "type": 0,
@@ -2293,6 +2329,18 @@
     {
       "type": 0,
       "value": "Brak próbek danych"
+    }
+  ],
+  "no-matching-device-body": [
+    {
+      "type": 0,
+      "value": "A micro:bit matching the pattern could not be found."
+    }
+  ],
+  "no-matching-device-heading": [
+    {
+      "type": 0,
+      "value": "No micro:bit found"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
