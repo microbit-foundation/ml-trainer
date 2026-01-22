@@ -339,9 +339,8 @@ const performFlash = async (deps: DataConnectionDeps): Promise<void> => {
 
     // For native bluetooth, we need a delay before reconnecting
     if (state.type === DataConnectionType.NativeBluetooth) {
-      // Android seems to require a longer delay than iOS which was OK with 2000.
-      // TODO: investigate what we're actually waiting for.
-      await new Promise((resolve) => setTimeout(resolve, 5000));
+      // If we try to reconnect too soon then we'll time out as it'll still be booting.
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
     await sendEvent(
