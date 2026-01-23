@@ -10,7 +10,6 @@ import {
   MicrobitWebUSBConnection,
 } from "@microbit/microbit-connection";
 import { DataConnectionType } from "../data-connection-flow";
-import { isNativeBluetoothConnection } from "../device/connection-utils";
 import { DownloadStep, SameOrDifferentChoice } from "./download-types";
 import { always, FlowDefinition } from "../state-machine";
 import { HexData } from "../model";
@@ -102,7 +101,6 @@ export const guards = {
   ) =>
     ctx.connection !== undefined &&
     ctx.connection.status === DeviceConnectionStatus.CONNECTED &&
-    !isNativeBluetoothConnection(ctx.connection) &&
     ctx.connectedBoardVersion !== "V1",
 
   shouldShowHelp: (ctx: DownloadFlowContext, _event: DownloadEvent) =>

@@ -72,11 +72,6 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
     exit: [{ type: "initializeDownload" }],
     on: {
       start: [
-        {
-          guard: guards.canReuseExistingConnection,
-          target: DownloadStep.FlashingInProgress,
-          actions: [{ type: "flash" }],
-        },
         // Skip help if we've downloaded before this session
         {
           guard: guards.hasDownloadedBefore,
