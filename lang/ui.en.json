@@ -1247,6 +1247,30 @@
     "defaultMessage": "The name is used when you save a file.",
     "description": "Text under project name field"
   },
+  "native-bluetooth-error-body": {
+    "defaultMessage": "The connection to the micro:bit failed.",
+    "description": "Body text for native Bluetooth connection error dialog"
+  },
+  "native-bluetooth-error-check": {
+    "defaultMessage": "Please check that:",
+    "description": "Heading for list of things to check in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-distance": {
+    "defaultMessage": "the micro:bit is close to this device",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-mode": {
+    "defaultMessage": "the micro:bit is in Bluetooth mode (showing the pairing pattern)",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-pattern": {
+    "defaultMessage": "the pattern you entered is correct",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-heading": {
+    "defaultMessage": "Could not connect to micro:bit",
+    "description": "Heading for native Bluetooth connection error dialog"
+  },
   "new-session-setup-description": {
     "defaultMessage": "Starting a new session will overwrite your existing session. You may want to <link>save your existing session</link> first.",
     "description": "New session setup description"

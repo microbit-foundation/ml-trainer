@@ -70,32 +70,5 @@ test.describe("browser default download flow", () => {
   });
 });
 
-test.describe("native bluetooth download flow", () => {
-  test.beforeEach(async ({ homePage, newPage, dataSamplesPage }) => {
-    await homePage.setupContext();
-    await homePage.goto(["simulateNative"]);
-    await homePage.getStarted();
-    await newPage.continueSavedSession("test-data/dataset.json");
-    const trainModelDialog = await dataSamplesPage.trainModel();
-    await trainModelDialog.train();
-  });
-
-  test("happy flow", async ({ testModelPage }) => {
-    const makecodeEditor = await testModelPage.editInMakeCode();
-    await makecodeEditor.closeTourDialog();
-    const downloadDialogs = await makecodeEditor.clickDownload();
-    await downloadDialogs.waitForText(dialog.nativeBluetooth.help);
-    await downloadDialogs.clickNext();
-    await downloadDialogs.waitForText(dialog.nativeBluetooth.resetToBluetooth);
-    await downloadDialogs.clickNext();
-    await downloadDialogs.waitForText(dialog.nativeBluetooth.copyPattern);
-    await downloadDialogs.enterBluetoothPattern();
-    await downloadDialogs.clickNext();
-    // With mock device, should complete successfully
-    await downloadDialogs.expectDialogClosed();
-  });
-});
-
+// Native Bluetooth download flow tests are in native-bluetooth.spec.ts
 // Radio download flow tests are in connection-flow.spec.ts
-// They run after the radio connection tests since the download flow
-// requires having previously connected via radio.

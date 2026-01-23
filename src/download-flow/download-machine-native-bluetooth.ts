@@ -9,7 +9,6 @@ import {
   DownloadFlowDefinition,
   globalHandlers,
   guards,
-  manualFlashingTutorialState,
 } from "./download-machine-common";
 import {
   createPermissionErrorStateHandlers,
@@ -37,8 +36,7 @@ const connectFlashFailureWithPermissionHandling = [
   },
   {
     guard: always,
-    target: DownloadStep.ManualFlashingTutorial,
-    actions: [{ type: "downloadHexFile" as const }],
+    target: DownloadStep.ConnectFailed,
   },
 ];
 
@@ -61,8 +59,7 @@ const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
       connectFlashFailure: connectFlashFailureWithPermissionHandling,
       flashSuccess: { target: DownloadStep.None },
       flashFailure: {
-        target: DownloadStep.ManualFlashingTutorial,
-        actions: [{ type: "downloadHexFile" }],
+        target: DownloadStep.ConnectFailed,
       },
     },
   },
@@ -75,11 +72,13 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
     exit: [{ type: "initializeDownload" }],
     on: {
       start: [
+        // Skip help if we've downloaded before this session
         {
-          guard: guards.canReuseExistingConnection,
-          target: DownloadStep.FlashingInProgress,
-          actions: [{ type: "flash" }],
+          guard: guards.hasDownloadedBefore,
+          target: DownloadStep.NativeBluetoothPreConnectTutorial,
+          actions: [{ type: "checkPermissions" }],
         },
+        // Show help on first download (if setting enabled)
         {
           guard: guards.shouldShowHelp,
           target: DownloadStep.Help,
@@ -144,10 +143,11 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
 
   ...flashingInProgressWithPermissionHandling,
 
-  // TODO: This state and all transitions to it need to be replaced.
-  // We need a custom error state (perhaps more than one) for native
-  // bluetooth. But for sure not one about drag and drop!
-  ...manualFlashingTutorialState,
+  [DownloadStep.ConnectFailed]: {
+    on: {
+      tryAgain: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
+    },
+  },
 
   [DownloadStep.IncompatibleDevice]: {
     on: {

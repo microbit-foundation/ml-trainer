@@ -38,6 +38,16 @@ export const browserDefaultFlow: DownloadFlowDefinition = {
           target: DownloadStep.FlashingInProgress,
           actions: [{ type: "flash" }],
         },
+        // Skip help if we've downloaded before this session
+        {
+          guard: guards.hasDownloadedBeforeWithActiveConnection,
+          target: DownloadStep.ChooseSameOrDifferentMicrobit,
+        },
+        {
+          guard: guards.hasDownloadedBefore,
+          target: DownloadStep.ConnectCable,
+        },
+        // Show help on first download (if setting enabled)
         {
           guard: guards.shouldShowHelp,
           target: DownloadStep.Help,

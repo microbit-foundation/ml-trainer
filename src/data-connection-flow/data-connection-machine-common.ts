@@ -507,20 +507,45 @@ export const createInitialConnectHandlers = (options?: {
 /**
  * Create recovery error states (ConnectFailed, ConnectionLost).
  * These states allow the user to retry reconnection.
+ *
+ * @param reconnectTarget - Target state for reconnection attempt
+ * @param reconnectAction - Action to trigger reconnection
+ * @param options.connectFailedFallbackTarget - If provided, ConnectFailed will go here
+ *   when hadSuccessfulConnection is false (first-time failure), otherwise goes to
+ *   reconnectTarget (reconnection attempt for previously working connection).
  */
 export const createRecoveryStates = (
   reconnectTarget: DataConnectionStep,
-  reconnectAction: DataConnectionAction
+  reconnectAction: DataConnectionAction,
+  options?: {
+    connectFailedFallbackTarget?: DataConnectionStep;
+  }
 ) => {
   const reconnectActions: DataConnectionAction[] = [
     { type: "setReconnecting", value: true },
     reconnectAction,
   ];
 
+  const connectFailedTransition = options?.connectFailedFallbackTarget
+    ? [
+        {
+          // Previously connected successfully - try reconnect directly
+          guard: guards.hadSuccessfulConnection,
+          target: reconnectTarget,
+          actions: reconnectActions,
+        },
+        {
+          // First-time failure - go back to fallback target
+          guard: always,
+          target: options.connectFailedFallbackTarget,
+        },
+      ]
+    : { target: reconnectTarget, actions: reconnectActions };
+
   return {
     [DataConnectionStep.ConnectFailed]: {
       on: {
-        next: { target: reconnectTarget, actions: reconnectActions },
+        next: connectFailedTransition,
       },
     },
     [DataConnectionStep.ConnectionLost]: {
@@ -546,11 +571,26 @@ export const createTryAgainState = (
 });
 
 /**
- * Recovery states for bluetooth flows (WebBluetooth and NativeBluetooth).
+ * Recovery states for WebBluetooth flow.
+ * Always attempts reconnect directly since pattern is derived from USB.
  */
 export const bluetoothRecoveryStates = createRecoveryStates(
   DataConnectionStep.BluetoothConnect,
   { type: "connectData" }
+);
+
+/**
+ * Recovery states for NativeBluetooth flow.
+ * On first-time failure, goes back to tutorial (pattern might be wrong or not in bluetooth mode).
+ * On reconnection failure, attempts reconnect directly (we know the pattern works).
+ */
+export const nativeBluetoothRecoveryStates = createRecoveryStates(
+  DataConnectionStep.BluetoothConnect,
+  { type: "connectData" },
+  {
+    connectFailedFallbackTarget:
+      DataConnectionStep.NativeBluetoothPreConnectTutorial,
+  }
 );
 
 // =============================================================================

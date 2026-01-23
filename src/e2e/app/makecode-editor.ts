@@ -52,8 +52,9 @@ export class MakeCodeEditor {
   }
 
   async clickDownload() {
+    // MakeCode in portrait tablet has a "Download" button with just a more verbose title attribute (no real accessible label)
     await this.iframe
-      .getByRole("menuitem", { name: "Download", exact: true })
+      .getByRole("menuitem", { name: /^Download( your code|$)/ })
       .click();
     return new DownloadDialogs(this.page);
   }

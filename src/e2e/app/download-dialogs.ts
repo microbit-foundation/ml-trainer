@@ -4,7 +4,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { expect, Locator, type Page } from "@playwright/test";
+import { ProgressStage } from "@microbit/microbit-connection";
 import { MockWebUSBConnection } from "../../device/mockUsb";
+import {
+  ConnectBehavior,
+  MockWebBluetoothConnection,
+} from "../../device/mockBluetooth";
 
 export const downloadDialogTitles: {
   browserDefault: Record<string, string>;
@@ -65,6 +70,10 @@ export class DownloadDialogs {
     await this.backButton.click();
   }
 
+  async clickTryAnotherWay() {
+    await this.page.getByRole("button", { name: "Try another way" }).click();
+  }
+
   async clickSameMicrobit() {
     await this.page.getByRole("button", { name: "Same micro:bit" }).click();
   }
@@ -122,5 +131,68 @@ export class DownloadDialogs {
       const n = (i + 1).toString();
       await this.page.getByLabel(`Column ${n} - number of LEDs lit`).fill(n);
     }
+  }
+
+  /**
+   * Set behaviors for subsequent Bluetooth connect() calls.
+   * Each behavior is consumed in order. When empty, defaults to success.
+   */
+  async setBluetoothConnectBehaviors(behaviors: ConnectBehavior[]) {
+    await this.page.evaluate((b: ConnectBehavior[]) => {
+      const mockBluetooth =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        (window as any).mockBluetooth as MockWebBluetoothConnection;
+      mockBluetooth.setConnectBehaviors(b);
+    }, behaviors);
+  }
+
+  /**
+   * Expect the "connect failed" dialog for native bluetooth download flow.
+   */
+  async expectConnectFailedDialog() {
+    await expect(
+      this.page.getByText("Could not connect to micro:bit")
+    ).toBeVisible({ timeout: 10000 });
+  }
+
+  /**
+   * Click the "Try again" button in the connect failed dialog.
+   */
+  async clickTryAgainButton() {
+    await this.page.getByRole("button", { name: "Try again" }).click();
+  }
+
+  /**
+   * Configure mock Bluetooth to pause at a specific progress stage.
+   * Call resumeBluetoothProgress() to continue.
+   *
+   * @param stage - ProgressStage to pause at, or undefined to clear
+   * @param progress - Progress value (0-1) or undefined for indeterminate
+   */
+  async setBluetoothProgressPause(
+    stage: ProgressStage | undefined,
+    progress: number | undefined
+  ) {
+    await this.page.evaluate(
+      ({ stage, progress }) => {
+        const mockBluetooth =
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+          (window as any).mockBluetooth as MockWebBluetoothConnection;
+        mockBluetooth.setProgressPauseAt(stage, progress);
+      },
+      { stage, progress }
+    );
+  }
+
+  /**
+   * Resume Bluetooth progress after pause.
+   */
+  async resumeBluetoothProgress() {
+    await this.page.evaluate(() => {
+      const mockBluetooth =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        (window as any).mockBluetooth as MockWebBluetoothConnection;
+      mockBluetooth.resumeProgress();
+    });
   }
 }

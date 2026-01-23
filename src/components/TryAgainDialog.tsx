@@ -35,7 +35,7 @@ const ReplugMicrobitContent = () => {
       <OneLineContent textId="webusb-retry-replug1" />
       <VStack textAlign="left" w="100%">
         <OneLineContent textId="webusb-retry-replug2" />
-        <UnorderedList textAlign="left" w="100%" ml={20}>
+        <UnorderedList textAlign="left" ps={8}>
           {["webusb-retry-replug3", "webusb-retry-replug4"].map((textId) => (
             <ListItem key={textId}>
               <Text>

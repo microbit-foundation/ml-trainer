@@ -16,6 +16,7 @@
 
 .env.*
 
+/screenshots/
 /src/.DS_Store
 /playwright-report/
 /test-results/

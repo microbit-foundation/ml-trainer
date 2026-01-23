@@ -16,6 +16,7 @@ import DownloadProgressDialog from "./DownloadProgressDialog";
 import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 import ManualFlashingDialog from "./ManualFlashingDialog";
+import NativeBluetoothErrorDialog from "./NativeBluetoothErrorDialog";
 import ResetToBluetoothModeDialog from "./ResetToBluetoothModeDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import UnplugRadioLinkMicrobitDialog from "./UnplugRadioLinkMicrobitDialog";
@@ -119,6 +120,14 @@ const DownloadDialogs = () => {
           headingId="downloading-header"
           stage={flashingProgress.stage}
           progress={flashingProgress.value}
+        />
+      );
+    case DownloadStep.ConnectFailed:
+      return (
+        <NativeBluetoothErrorDialog
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
         />
       );
     case DownloadStep.ManualFlashingTutorial:

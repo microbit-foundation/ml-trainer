@@ -39,6 +39,7 @@ export const DownloadStep = {
   // Common
   FlashingInProgress: "FlashingInProgress",
   IncompatibleDevice: "IncompatibleDevice",
+  ConnectFailed: "ConnectFailed",
 
   // WebUSB/radio
   UnplugRadioBridgeMicrobit: "UnplugRadioBridgeMicrobit",

@@ -1247,6 +1247,30 @@
     "defaultMessage": "hex 파일을 저장할 때 해당 이름을 사용합니다.",
     "description": "Text under project name field"
   },
+  "native-bluetooth-error-body": {
+    "defaultMessage": "The connection to the micro:bit failed.",
+    "description": "Body text for native Bluetooth connection error dialog"
+  },
+  "native-bluetooth-error-check": {
+    "defaultMessage": "Please check that:",
+    "description": "Heading for list of things to check in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-distance": {
+    "defaultMessage": "the micro:bit is close to this device",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-mode": {
+    "defaultMessage": "the micro:bit is in Bluetooth mode (showing the pairing pattern)",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-pattern": {
+    "defaultMessage": "the pattern you entered is correct",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-heading": {
+    "defaultMessage": "Could not connect to micro:bit",
+    "description": "Heading for native Bluetooth connection error dialog"
+  },
   "new-session-setup-description": {
     "defaultMessage": "새 세션을 시작하면 기존 세션을 덮어쓱[ 됩니다. 먼저 <link>기존 세션을 저장</link>하는 것이 좋습니다.",
     "description": "New session setup description"

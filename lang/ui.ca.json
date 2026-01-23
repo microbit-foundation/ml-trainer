@@ -1247,6 +1247,30 @@
     "defaultMessage": "El nom s'utilitza quan deses un fitxer hexadecimal.",
     "description": "Text under project name field"
   },
+  "native-bluetooth-error-body": {
+    "defaultMessage": "The connection to the micro:bit failed.",
+    "description": "Body text for native Bluetooth connection error dialog"
+  },
+  "native-bluetooth-error-check": {
+    "defaultMessage": "Please check that:",
+    "description": "Heading for list of things to check in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-distance": {
+    "defaultMessage": "the micro:bit is close to this device",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-mode": {
+    "defaultMessage": "the micro:bit is in Bluetooth mode (showing the pairing pattern)",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-pattern": {
+    "defaultMessage": "the pattern you entered is correct",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-heading": {
+    "defaultMessage": "Could not connect to micro:bit",
+    "description": "Heading for native Bluetooth connection error dialog"
+  },
   "new-session-setup-description": {
     "defaultMessage": "Iniciar una sessió nova sobreescriurà la sessió existent. És possible que vulguis <link>desar la teva sessió existent</link> primer.",
     "description": "New session setup description"

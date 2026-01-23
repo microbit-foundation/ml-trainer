@@ -10,7 +10,6 @@ import {
   MicrobitWebUSBConnection,
 } from "@microbit/microbit-connection";
 import { DataConnectionType } from "../data-connection-flow";
-import { isNativeBluetoothConnection } from "../device/connection-utils";
 import { DownloadStep, SameOrDifferentChoice } from "./download-types";
 import { always, FlowDefinition } from "../state-machine";
 import { HexData } from "../model";
@@ -102,11 +101,28 @@ export const guards = {
   ) =>
     ctx.connection !== undefined &&
     ctx.connection.status === DeviceConnectionStatus.CONNECTED &&
-    !isNativeBluetoothConnection(ctx.connection) &&
     ctx.connectedBoardVersion !== "V1",
 
   shouldShowHelp: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
     ctx.showPreDownloadHelp,
+
+  /**
+   * True if the user has completed a download this session.
+   * We use connection !== undefined as a proxy since connection is set
+   * after a successful flash and persists for the session.
+   * Used to skip help on subsequent downloads.
+   */
+  hasDownloadedBefore: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
+    ctx.connection !== undefined,
+
+  /**
+   * Combined guard: has downloaded before AND has active data connection.
+   * Used for routing to ChooseSameOrDifferentMicrobit when skipping help.
+   */
+  hasDownloadedBeforeWithActiveConnection: (
+    ctx: DownloadFlowContext,
+    _event: DownloadEvent
+  ) => ctx.connection !== undefined && ctx.hadSuccessfulConnection,
 
   hasActiveDataConnection: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
     ctx.hadSuccessfulConnection,
@@ -133,6 +149,10 @@ export const guards = {
 
   isLocationDisabledError: (_ctx: DownloadFlowContext, event: DownloadEvent) =>
     event.type === "connectFlashFailure" && event.code === "location-disabled",
+
+  // Native Bluetooth: no device matching the pattern was found during scan
+  isNoDeviceSelectedError: (_ctx: DownloadFlowContext, event: DownloadEvent) =>
+    event.type === "connectFlashFailure" && event.code === "no-device-selected",
 };
 
 // =============================================================================

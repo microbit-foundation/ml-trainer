@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { expect, Locator, type Page } from "@playwright/test";
+import { ProgressStage } from "@microbit/microbit-connection";
 import { MockWebUSBConnection } from "../../device/mockUsb";
 import {
   ConnectBehavior,
@@ -68,6 +69,10 @@ export class ConnectionDialogs {
     await this.page
       .getByRole("button", { name: "Connect using micro:bit radio" })
       .click();
+  }
+
+  async clickTryAnotherWay() {
+    await this.page.getByRole("button", { name: "Try another way" }).click();
   }
 
   async expectConnectWebUsbErrorDialog() {
@@ -219,28 +224,37 @@ export class ConnectionDialogs {
 
   /**
    * Expect the "connect failed" dialog (fresh connection attempt failed).
-   * Shows "Failed to connect" and a "Connect" button.
+   * Shows "Failed to connect" and a "Try again" button.
+   * Used for WebBluetooth and Radio flows.
    */
   async expectConnectFailedDialog() {
     await expect(
       this.page.getByText("Failed to connect to micro:bit")
     ).toBeVisible({ timeout: 10000 });
+    await expect(this.tryAgainButton).toBeVisible();
+  }
+
+  /**
+   * Expect the native Bluetooth error dialog.
+   * Shows "Could not connect to micro:bit" and troubleshooting advice.
+   * Used for NativeBluetooth flow ConnectFailed state.
+   */
+  async expectNativeBluetoothErrorDialog() {
     await expect(
-      this.page.getByRole("button", { name: "Connect" })
-    ).toBeVisible();
+      this.page.getByText("Could not connect to micro:bit")
+    ).toBeVisible({ timeout: 10000 });
+    await expect(this.tryAgainButton).toBeVisible();
   }
 
   /**
    * Expect the "reconnect failed" dialog (reconnection attempt failed).
-   * Shows "Failed to reconnect" and a "Reconnect" button.
+   * Shows "Failed to reconnect" and a "Try again" button.
    */
   async expectReconnectFailedDialog() {
     await expect(
       this.page.getByText("Failed to reconnect to data collection micro:bit")
     ).toBeVisible({ timeout: 10000 });
-    await expect(
-      this.page.getByRole("button", { name: "Reconnect" })
-    ).toBeVisible();
+    await expect(this.tryAgainButton).toBeVisible();
   }
 
   /**
@@ -261,23 +275,6 @@ export class ConnectionDialogs {
     await expect(
       this.page.getByText("Data collection micro:bit connection lost")
     ).toBeVisible({ timeout: 10000 });
-  }
-
-  /**
-   * Click the "Connect" button in error dialogs.
-   * Only shown for fresh connection failures (user never connected successfully).
-   */
-  async clickConnectButton() {
-    await this.page.getByRole("button", { name: "Connect" }).click();
-  }
-
-  /**
-   * Click the "Reconnect" button in error dialogs.
-   * Shown for connection lost, reconnect failed, or connect failed after
-   * user had previously connected successfully.
-   */
-  async clickReconnectButton() {
-    await this.page.getByRole("button", { name: "Reconnect" }).click();
   }
 
   /**
@@ -423,6 +420,40 @@ export class ConnectionDialogs {
   async expectNoDialog() {
     await expect(this.page.getByRole("dialog")).not.toBeVisible({
       timeout: 10000,
+    });
+  }
+
+  /**
+   * Configure mock Bluetooth to pause at a specific progress stage.
+   * Call resumeBluetoothProgress() to continue.
+   *
+   * @param stage - ProgressStage to pause at, or undefined to clear
+   * @param progress - Progress value (0-1) or undefined for indeterminate
+   */
+  async setBluetoothProgressPause(
+    stage: ProgressStage | undefined,
+    progress: number | undefined
+  ) {
+    await this.page.evaluate(
+      ({ stage, progress }) => {
+        const mockBluetooth =
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+          (window as any).mockBluetooth as MockWebBluetoothConnection;
+        mockBluetooth.setProgressPauseAt(stage, progress);
+      },
+      { stage, progress }
+    );
+  }
+
+  /**
+   * Resume Bluetooth progress after pause.
+   */
+  async resumeBluetoothProgress() {
+    await this.page.evaluate(() => {
+      const mockBluetooth =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        (window as any).mockBluetooth as MockWebBluetoothConnection;
+      mockBluetooth.resumeProgress();
     });
   }
 }
