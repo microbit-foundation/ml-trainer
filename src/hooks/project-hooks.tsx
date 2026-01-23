@@ -29,7 +29,10 @@ import {
   PostImportDialogState,
   SaveStep,
 } from "../model";
-import { untitledProjectName as untitled } from "../project-name";
+import {
+  untitledProjectName as untitled,
+  untitledProjectName,
+} from "../project-name";
 import { useStore } from "../store";
 import {
   createCodePageUrl,
@@ -158,43 +161,6 @@ export const ProjectProvider = ({
     // This is a useful point to introduce a delay to debug MakeCode init dependencies.
     return Promise.resolve([project]);
   }, [logging, project]);
-
-  const projectRef = useRef<MakeCodeProject>();
-  projectRef.current = project;
-
-  // Native app-specific handlers
-  useEffect(() => {
-    if (Capacitor.isNativePlatform()) {
-      const appUrlListener = CapacitorApp.addListener(
-        "appUrlOpen",
-        async (evt) => {
-          const contents = await Filesystem.readFile({
-            path: evt.url,
-            encoding: Encoding.UTF8,
-          });
-          let filename = evt.url.substring(evt.url.lastIndexOf("/") + 1);
-          // Forgivingly shim broken filenames to hex files,
-          // we can't rely on android to maintain file data.
-          // Even Android's Files app often passes us a broken
-          // filename. MakeCode is resilient to bad files.
-          if (filename.length === 0) {
-            filename = "Unnamed.hex";
-          }
-          if (!filename.includes(".")) {
-            filename += ".hex";
-          }
-          await importProjectFromHexText(contents.data as string, filename);
-        }
-      );
-
-      return () => {
-        const removeListenerHandler = async () => {
-          void (await appUrlListener).remove();
-        };
-        void removeListenerHandler();
-      };
-    }
-  });
 
   const startUpTimeout = 90000;
 
@@ -349,6 +315,7 @@ export const ProjectProvider = ({
       // Check if is a MakeCode hex, otherwise show error dialog.
       if (!hex.includes(makeCodeMagicMark)) {
         setPostImportDialogState(PostImportDialogState.Error);
+        return;
       }
       const hasTimedOut = await checkIfEditorStartUpTimedOut(
         editorReadyPromise.promise
@@ -504,6 +471,42 @@ export const ProjectProvider = ({
     },
     [downloadActions, saveHex]
   );
+
+  // Native app-specific handlers
+  useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      const appUrlListener = CapacitorApp.addListener(
+        "appUrlOpen",
+        async (evt) => {
+          const contents = await Filesystem.readFile({
+            path: evt.url,
+            encoding: Encoding.UTF8,
+          });
+          let filename = decodeURIComponent(
+            evt.url.substring(evt.url.lastIndexOf("/") + 1)
+          );
+          // Forgivingly shim broken filenames to hex files,
+          // we can't rely on android to maintain file data.
+          // Even Android's Files app often passes us a broken
+          // filename. MakeCode is resilient to bad files.
+          if (filename.length === 0) {
+            filename = `${untitledProjectName}.hex`;
+          }
+          if (!filename.includes(".")) {
+            filename += ".hex";
+          }
+          await importProjectFromHexText(contents.data as string, filename);
+        }
+      );
+
+      return () => {
+        const removeListenerHandler = async () => {
+          void (await appUrlListener).remove();
+        };
+        void removeListenerHandler();
+      };
+    }
+  }, [importProjectFromHexText]);
 
   const value = useMemo(
     () => ({
