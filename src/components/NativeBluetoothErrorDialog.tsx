@@ -19,35 +19,19 @@ import {
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 
-/**
- * Message ID prefix that determines heading and body text:
- * - no-matching-device: No micro:bit matching the pattern was found during scan
- * - native-bluetooth-error: Connection or flash failed for other reasons
- */
-export type NativeBluetoothErrorVariant =
-  | "no-matching-device"
-  | "native-bluetooth-error";
-
 interface NativeBluetoothErrorDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onTryAgain: () => void;
-  variant: NativeBluetoothErrorVariant;
 }
 
 /**
- * Error dialog for native Bluetooth connection/flash failures.
- *
- * Shows troubleshooting advice relevant to native Bluetooth:
- * - Check the pattern is correct
- * - Check the micro:bit is in Bluetooth mode
- * - Check the micro:bit is close to this device
+ * Error dialog for native Bluetooth connection/flash failures for when we've not previously connected.
  */
 const NativeBluetoothErrorDialog = ({
   isOpen,
   onClose,
   onTryAgain,
-  variant,
 }: NativeBluetoothErrorDialogProps) => {
   return (
     <Modal
@@ -61,12 +45,12 @@ const NativeBluetoothErrorDialog = ({
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage id={`${variant}-heading`} />
+            <FormattedMessage id="native-bluetooth-error-heading" />
           </ModalHeader>
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
               <Text textAlign="left" w="100%">
-                <FormattedMessage id={`${variant}-body`} />
+                <FormattedMessage id="native-bluetooth-error-body" />
               </Text>
               <VStack textAlign="left" w="100%" gap={3}>
                 <Text w="100%">

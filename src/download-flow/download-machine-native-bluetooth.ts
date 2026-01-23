@@ -35,10 +35,6 @@ const connectFlashFailureWithPermissionHandling = [
     target: DownloadStep.LocationDisabled,
   },
   {
-    guard: guards.isNoDeviceSelectedError,
-    target: DownloadStep.NoMatchingDevice,
-  },
-  {
     guard: always,
     target: DownloadStep.ConnectFailed,
   },
@@ -161,12 +157,6 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
   [DownloadStep.IncompatibleDevice]: {
     on: {
       back: { target: DownloadStep.BluetoothPattern },
-    },
-  },
-
-  [DownloadStep.NoMatchingDevice]: {
-    on: {
-      tryAgain: { target: DownloadStep.BluetoothPattern },
     },
   },
 };

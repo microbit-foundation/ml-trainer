@@ -52,11 +52,7 @@ export class MakeCodeEditor {
   }
 
   async clickDownload() {
-    // MakeCode a11y bug: portrait mode download button has no accessible name
-    // (icon-only with aria-hidden, no aria-label). Match either:
-    // - "Download" exactly (desktop mode, visible text)
-    // - "Download your code..." (portrait mode, title fallback)
-    // Exclude "Download options" dropdown button
+    // MakeCode in portrait tablet has a "Download" button with just a more verbose title attribute (no real accessible label)
     await this.iframe
       .getByRole("menuitem", { name: /^Download( your code|$)/ })
       .click();

@@ -1331,14 +1331,6 @@
     "defaultMessage": "데이터 샘플 없음",
     "description": "Empty data samples page status text"
   },
-  "no-matching-device-body": {
-    "defaultMessage": "A micro:bit matching the pattern could not be found.",
-    "description": "Body text for no matching device dialog (native Bluetooth)"
-  },
-  "no-matching-device-heading": {
-    "defaultMessage": "No micro:bit found",
-    "description": "Heading for no matching device dialog (native Bluetooth)"
-  },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "이 프로젝트에는 데이터 샘플이 없어 코드만 공개되었습니다. 코드를 사용하기 전에 모델을 훈련해야 합니다.",
     "description": "Content of import non-CreateAI hex dialog"

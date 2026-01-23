@@ -2331,18 +2331,6 @@
       "value": "Brak próbek danych"
     }
   ],
-  "no-matching-device-body": [
-    {
-      "type": 0,
-      "value": "A micro:bit matching the pattern could not be found."
-    }
-  ],
-  "no-matching-device-heading": [
-    {
-      "type": 0,
-      "value": "No micro:bit found"
-    }
-  ],
   "not-create-ai-hex-import-dialog-content": [
     {
       "type": 0,

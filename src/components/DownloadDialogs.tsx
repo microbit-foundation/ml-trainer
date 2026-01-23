@@ -128,7 +128,6 @@ const DownloadDialogs = () => {
           isOpen
           onClose={downloadActions.close}
           onTryAgain={downloadActions.onTryAgain}
-          variant="native-bluetooth-error"
         />
       );
     case DownloadStep.ManualFlashingTutorial:
@@ -189,15 +188,6 @@ const DownloadDialogs = () => {
           onTryAgain={downloadActions.onTryAgain}
           onOpenSettings={downloadActions.openLocationSettings}
           isCheckingPermissions={stage.isCheckingPermissions}
-        />
-      );
-    case DownloadStep.NoMatchingDevice:
-      return (
-        <NativeBluetoothErrorDialog
-          isOpen
-          onClose={downloadActions.close}
-          onTryAgain={downloadActions.onTryAgain}
-          variant="no-matching-device"
         />
       );
   }

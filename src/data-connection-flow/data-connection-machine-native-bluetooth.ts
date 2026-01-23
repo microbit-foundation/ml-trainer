@@ -42,10 +42,6 @@ const nativeBluetoothErrorGuards = [
     guard: guards.isLocationDisabledError,
     target: DataConnectionStep.LocationDisabled,
   },
-  {
-    guard: guards.isNoDeviceSelectedError,
-    target: DataConnectionStep.NoMatchingDevice,
-  },
 ];
 
 // Connect failure handlers that route known errors to specific states
@@ -148,11 +144,4 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
   },
 
   ...nativeBluetoothRecoveryStates,
-
-  // No device matching pattern found - go back to pattern entry
-  [DataConnectionStep.NoMatchingDevice]: {
-    on: {
-      tryAgain: { target: DataConnectionStep.BluetoothPattern },
-    },
-  },
 };

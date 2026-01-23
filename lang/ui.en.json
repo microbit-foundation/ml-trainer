@@ -1331,14 +1331,6 @@
     "defaultMessage": "No data samples",
     "description": "Empty data samples page status text"
   },
-  "no-matching-device-body": {
-    "defaultMessage": "A micro:bit matching the pattern could not be found.",
-    "description": "Body text for no matching device dialog (native Bluetooth)"
-  },
-  "no-matching-device-heading": {
-    "defaultMessage": "No micro:bit found",
-    "description": "Heading for no matching device dialog (native Bluetooth)"
-  },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "This project did not contain any data samples, so only the code has been opened. You need to train a model before you can use the code.",
     "description": "Content of import non-CreateAI hex dialog"

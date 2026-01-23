@@ -158,13 +158,13 @@ describe("Download flow: Native Bluetooth", () => {
       expect(result?.step).toBe(DownloadStep.ConnectFailed);
     });
 
-    it("connectFlashFailure with no-device-selected -> NoMatchingDevice", () => {
+    it("connectFlashFailure with no-device-selected -> ConnectFailed", () => {
       const result = transition(DownloadStep.FlashingInProgress, {
         type: "connectFlashFailure",
         code: "no-device-selected",
       });
 
-      expect(result?.step).toBe(DownloadStep.NoMatchingDevice);
+      expect(result?.step).toBe(DownloadStep.ConnectFailed);
     });
 
     it("flashFailure -> ConnectFailed", () => {
@@ -186,23 +186,12 @@ describe("Download flow: Native Bluetooth", () => {
     });
   });
 
-  describe("NoMatchingDevice recovery", () => {
-    it("tryAgain -> BluetoothPattern", () => {
-      const result = transition(DownloadStep.NoMatchingDevice, {
-        type: "tryAgain",
-      });
-
-      expect(result?.step).toBe(DownloadStep.BluetoothPattern);
-    });
-  });
-
   describe("close from any step", () => {
     const stepsWithClose = [
       DownloadStep.Help,
       DownloadStep.NativeBluetoothPreConnectTutorial,
       DownloadStep.BluetoothPattern,
       DownloadStep.ConnectFailed,
-      DownloadStep.NoMatchingDevice,
     ];
 
     stepsWithClose.forEach((step) => {

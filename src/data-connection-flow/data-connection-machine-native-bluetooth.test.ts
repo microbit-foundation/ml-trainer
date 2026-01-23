@@ -230,13 +230,13 @@ describe("Data connection flow: Native Bluetooth", () => {
       expect(result?.step).toBe(DataConnectionStep.LocationDisabled);
     });
 
-    it("connectFlashFailure with no-device-selected code -> NoMatchingDevice", () => {
+    it("connectFlashFailure with no-device-selected code -> ConnectFailed", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
         type: "connectFlashFailure",
         code: "no-device-selected",
       });
 
-      expect(result?.step).toBe(DataConnectionStep.NoMatchingDevice);
+      expect(result?.step).toBe(DataConnectionStep.ConnectFailed);
     });
 
     it("flashSuccess -> BluetoothConnect with connectData action", () => {
@@ -312,13 +312,13 @@ describe("Data connection flow: Native Bluetooth", () => {
       expect(result?.step).toBe(DataConnectionStep.LocationDisabled);
     });
 
-    it("connectDataFailure with no-device-selected code -> NoMatchingDevice", () => {
+    it("connectDataFailure with no-device-selected code -> ConnectFailed", () => {
       const result = transition(DataConnectionStep.BluetoothConnect, {
         type: "connectDataFailure",
         code: "no-device-selected",
       });
 
-      expect(result?.step).toBe(DataConnectionStep.NoMatchingDevice);
+      expect(result?.step).toBe(DataConnectionStep.ConnectFailed);
     });
 
     it("connectDataFailure with generic error -> ConnectFailed (first attempt)", () => {
@@ -464,14 +464,6 @@ describe("Data connection flow: Native Bluetooth", () => {
       });
       expect(result?.actions).toContainEqual({ type: "connectData" });
     });
-
-    it("NoMatchingDevice tryAgain -> BluetoothPattern", () => {
-      const result = transition(DataConnectionStep.NoMatchingDevice, {
-        type: "tryAgain",
-      });
-
-      expect(result?.step).toBe(DataConnectionStep.BluetoothPattern);
-    });
   });
 
   describe("close from any step", () => {
@@ -485,7 +477,6 @@ describe("Data connection flow: Native Bluetooth", () => {
       DataConnectionStep.BluetoothDisabled,
       DataConnectionStep.BluetoothPermissionDenied,
       DataConnectionStep.LocationDisabled,
-      DataConnectionStep.NoMatchingDevice,
     ];
 
     stepsWithClose.forEach((step) => {

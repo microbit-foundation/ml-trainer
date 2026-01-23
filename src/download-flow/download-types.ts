@@ -40,8 +40,6 @@ export const DownloadStep = {
   FlashingInProgress: "FlashingInProgress",
   IncompatibleDevice: "IncompatibleDevice",
   ConnectFailed: "ConnectFailed",
-  // Native Bluetooth only - no device matching pattern found
-  NoMatchingDevice: "NoMatchingDevice",
 
   // WebUSB/radio
   UnplugRadioBridgeMicrobit: "UnplugRadioBridgeMicrobit",

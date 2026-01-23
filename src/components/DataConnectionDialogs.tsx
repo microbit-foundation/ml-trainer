@@ -220,7 +220,6 @@ const DataConnectionDialogs = () => {
           <NativeBluetoothErrorDialog
             {...dialogCommonProps}
             onTryAgain={actions.onNextClick}
-            variant="native-bluetooth-error"
           />
         );
       }
@@ -281,14 +280,6 @@ const DataConnectionDialogs = () => {
           onTryAgain={actions.onTryAgain}
           onOpenSettings={actions.openLocationSettings}
           isCheckingPermissions={state.isCheckingPermissions}
-        />
-      );
-    case DataConnectionStep.NoMatchingDevice:
-      return (
-        <NativeBluetoothErrorDialog
-          {...dialogCommonProps}
-          onTryAgain={actions.onTryAgain}
-          variant="no-matching-device"
         />
       );
   }
