@@ -71,6 +71,19 @@ export class MockWebBluetoothConnection
    */
   private statusDelay = 50;
 
+  /**
+   * If set, connect()/flash() will pause at this stage/progress.
+   * Call resumeProgress() to continue.
+   */
+  private progressPauseAt:
+    | { stage: ProgressStage; progress: number | undefined }
+    | undefined;
+
+  /**
+   * Resolver to continue after pause.
+   */
+  private progressResolve: (() => void) | undefined;
+
   constructor() {
     super();
     // Make globally available to allow e2e tests to configure interactions.
@@ -139,6 +152,36 @@ export class MockWebBluetoothConnection
     this.statusDelay = ms;
   }
 
+  /**
+   * Configure connect()/flash() to pause at a specific stage/progress for screenshots.
+   * Call resumeProgress() to continue.
+   *
+   * @param stage - The ProgressStage to pause at
+   * @param progress - The progress value (0-1) or undefined for indeterminate
+   *
+   * Example:
+   * ```typescript
+   * // Pause at 50% flashing progress
+   * mock.setProgressPauseAt(ProgressStage.PartialFlashing, 0.5);
+   * // ... trigger connect/flash, take screenshot ...
+   * mock.resumeProgress();
+   * ```
+   */
+  setProgressPauseAt(
+    stage: ProgressStage | undefined,
+    progress: number | undefined
+  ) {
+    this.progressPauseAt = stage ? { stage, progress } : undefined;
+  }
+
+  /**
+   * Resume after pause set by setProgressPauseAt().
+   */
+  resumeProgress() {
+    this.progressResolve?.();
+    this.progressResolve = undefined;
+  }
+
   async initialize(): Promise<void> {
     this.setStatus(ConnectionStatus.NO_AUTHORIZED_DEVICE);
     await this.delay(100);
@@ -150,20 +193,31 @@ export class MockWebBluetoothConnection
     return Promise.resolve(this.availabilityStatus);
   }
 
-  async connect(_options?: ConnectOptions): Promise<void> {
+  async connect(options?: ConnectOptions): Promise<void> {
     const behavior = this.connectBehaviors.shift() ?? { outcome: "success" };
+    const progress = options?.progress;
 
     switch (behavior.outcome) {
       case "success":
+        await this.progressStage(
+          progress,
+          ProgressStage.FindingDevice,
+          undefined
+        );
         this.setStatus(ConnectionStatus.CONNECTING);
-        await this.delay();
+        await this.progressStage(progress, ProgressStage.Connecting, undefined);
         this.setStatus(ConnectionStatus.CONNECTED);
         await this.delay();
         break;
 
       case "failure":
+        await this.progressStage(
+          progress,
+          ProgressStage.FindingDevice,
+          undefined
+        );
         this.setStatus(ConnectionStatus.CONNECTING);
-        await this.delay();
+        await this.progressStage(progress, ProgressStage.Connecting, undefined);
         this.setStatus(behavior.status);
         await this.delay();
         break;
@@ -191,21 +245,41 @@ export class MockWebBluetoothConnection
   async serialWrite(_data: string): Promise<void> {}
   setNameFilter(_name: string): void {}
 
+  private async progressStage(
+    progressCallback: FlashOptions["progress"],
+    stage: ProgressStage,
+    progress: number | undefined
+  ): Promise<void> {
+    progressCallback?.(stage, progress);
+    // Check if we should pause at this point
+    if (
+      this.progressPauseAt?.stage === stage &&
+      this.progressPauseAt?.progress === progress
+    ) {
+      await new Promise<void>((resolve) => {
+        this.progressResolve = resolve;
+      });
+    } else {
+      await this.delay();
+    }
+  }
+
   async flash(
     _dataSource: FlashDataSource,
     options: FlashOptions = {}
   ): Promise<void> {
     const progress = options.progress;
-    const stage = ProgressStage.PartialFlashing;
 
-    // Simulate flashing progress
-    progress?.(stage, 0.25);
-    await this.delay();
-    progress?.(stage, 0.5);
-    await this.delay();
-    progress?.(stage, 0.75);
-    await this.delay();
-    progress?.(stage, undefined);
+    // Simulate full flash sequence with all stages
+    await this.progressStage(progress, ProgressStage.Connecting, undefined);
+    await this.progressStage(progress, ProgressStage.PartialFlashing, 0.25);
+    await this.progressStage(progress, ProgressStage.PartialFlashing, 0.5);
+    await this.progressStage(progress, ProgressStage.PartialFlashing, 0.75);
+    await this.progressStage(
+      progress,
+      ProgressStage.PartialFlashing,
+      undefined
+    );
 
     // Real Bluetooth flash disconnects after completion
     this.setStatus(ConnectionStatus.DISCONNECTED);

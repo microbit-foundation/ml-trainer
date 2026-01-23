@@ -55,7 +55,7 @@ const NativeBluetoothErrorDialog = ({
       motionPreset="none"
       isOpen={isOpen}
       onClose={onClose}
-      size="lg"
+      size="xl"
       isCentered
     >
       <ModalOverlay>
@@ -72,7 +72,7 @@ const NativeBluetoothErrorDialog = ({
                 <Text w="100%">
                   <FormattedMessage id="native-bluetooth-error-check" />
                 </Text>
-                <UnorderedList textAlign="left" w="100%" ml={20}>
+                <UnorderedList textAlign="left" ps={8}>
                   <ListItem>
                     <Text>
                       <FormattedMessage id="native-bluetooth-error-check-mode" />

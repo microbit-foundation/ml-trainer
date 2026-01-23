@@ -95,7 +95,7 @@ const ConnectErrorDialog = ({
                 <Text w="100%">
                   <FormattedMessage id={recoverySteps.listHeading} />
                 </Text>
-                <UnorderedList textAlign="left" w="100%" ml={20}>
+                <UnorderedList textAlign="left" ps={8}>
                   {recoverySteps.bullets.map((textId) => (
                     <ListItem key={textId}>
                       <Text>
