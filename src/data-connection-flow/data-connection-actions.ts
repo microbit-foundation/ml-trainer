@@ -337,12 +337,6 @@ const performFlash = async (deps: DataConnectionDeps): Promise<void> => {
       : undefined;
     const boardVersion = connection.getBoardVersion();
 
-    // For native bluetooth, we need a delay before reconnecting
-    if (state.type === DataConnectionType.NativeBluetooth) {
-      // If we try to reconnect too soon then we'll time out as it'll still be booting.
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-    }
-
     await sendEvent(
       {
         type: "flashSuccess",
