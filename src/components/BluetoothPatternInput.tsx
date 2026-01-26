@@ -11,9 +11,10 @@ import {
   GridItem,
   NumberInput,
   NumberInputField,
+  Text,
   VisuallyHidden,
 } from "@chakra-ui/react";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import {
   generateMatrix,
@@ -22,12 +23,13 @@ import {
   transformMatrixToColumns,
   updateMatrixColumns,
 } from "../bt-pattern-matrix-utils";
-import React from "react";
+import { isNativePlatform } from "../platform";
 
 interface BluetoothPatternInputProps {
   pattern: boolean[];
   onChange: (matrix: boolean[]) => void;
   invalid: boolean;
+  microbitName: string | undefined;
 }
 
 const matrixDim = 5;
@@ -36,6 +38,7 @@ const BluetoothPatternInput = ({
   pattern,
   onChange,
   invalid,
+  microbitName,
 }: BluetoothPatternInputProps) => {
   const [highlighted, setHighlighted] = useState<boolean[][]>(
     generateMatrix(matrixDim, false)
@@ -73,10 +76,12 @@ const BluetoothPatternInput = ({
     [inputValues, updateMatrix]
   );
 
+  const nativePlatform = isNativePlatform();
+
   return (
     <Grid
       templateColumns="repeat(5, 35px)"
-      templateRows="repeat(6, 35px)"
+      templateRows={`repeat(${nativePlatform ? 7 : 6}, 35px)`}
       gap={1}
     >
       {matrixColumns.map((cells, colIdx) => (
@@ -103,6 +108,15 @@ const BluetoothPatternInput = ({
               />
             </GridItem>
           ))}
+          {nativePlatform && (
+            <GridItem
+              rowStart={6}
+              textAlign="center"
+              key={`col-${colIdx}-pattern-letter`}
+            >
+              <Text>{microbitName ? microbitName[colIdx] : " "}</Text>
+            </GridItem>
+          )}
           <GridItem key={`col-${colIdx}-pattern-input`}>
             <PatternColumnInput
               isInvalid={invalid}

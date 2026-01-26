@@ -74,6 +74,7 @@ const EnterBluetoothPatternDialog = ({
             pattern={bluetoothPattern}
             onChange={handlePatternChange}
             invalid={showInvalid}
+            microbitName={microbitName}
           />
           <VStack>
             <Text
