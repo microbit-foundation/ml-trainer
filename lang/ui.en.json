@@ -1828,7 +1828,7 @@
     "description": "WebUSB error dialog"
   },
   "welcome-title": {
-    "defaultMessage": "Welcome to micro:bit CreateAI",
+    "defaultMessage": "How CreateAI works",
     "description": "Welcome dialog"
   }
 }

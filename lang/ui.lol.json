@@ -80,7 +80,7 @@
     "description": "Back button text"
   },
   "blocks-preview-title": {
-    "defaultMessage": "Blocks preview",
+    "defaultMessage": "crwdns368553:0crwdne368553:0",
     "description": "Blocks preview heading text"
   },
   "bluetooth-unsupported-advice": {
@@ -436,7 +436,7 @@
     "description": "Show data features button text"
   },
   "data-preview-title": {
-    "defaultMessage": "Data preview",
+    "defaultMessage": "crwdns368555:0crwdne368555:0",
     "description": "Data preview heading text"
   },
   "data-samples-actions-region": {
@@ -808,7 +808,7 @@
     "description": "Alt text for image in homepage"
   },
   "homepage-alt-media": {
-    "defaultMessage": "video showing CreateAI detecting different movements",
+    "defaultMessage": "crwdns368557:0crwdne368557:0",
     "description": "Alt text for media in homepage"
   },
   "homepage-description": {
@@ -824,51 +824,51 @@
     "description": "Home page content under the video"
   },
   "homepage-media-description": {
-    "defaultMessage": "Video descriptive transcript",
+    "defaultMessage": "crwdns368559:0crwdne368559:0",
     "description": "Homepage media description"
   },
   "homepage-media-descriptive-transcript-dialog-content-1": {
-    "defaultMessage": "There is no sound in this video.",
+    "defaultMessage": "crwdns368561:0crwdne368561:0",
     "description": "Homepage media descriptive transcript dialog content"
   },
   "homepage-media-descriptive-transcript-dialog-content-2": {
-    "defaultMessage": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting 'Waving' rather than 'Clapping'.",
+    "defaultMessage": "crwdns368563:0crwdne368563:0",
     "description": "Homepage media descriptive transcript dialog content"
   },
   "homepage-media-descriptive-transcript-dialog-content-3": {
-    "defaultMessage": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting 'Clapping' rather than 'Waving'.",
+    "defaultMessage": "crwdns368565:0crwdne368565:0",
     "description": "Homepage media descriptive transcript dialog content"
   },
   "homepage-media-descriptive-transcript-dialog-content-4": {
-    "defaultMessage": "The meter now displays 'Bouncing' versus 'Running'. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects 'Bouncing' rather than 'Running' as she bounces the ball.",
+    "defaultMessage": "crwdns368567:0crwdne368567:0",
     "description": "Homepage media descriptive transcript dialog content"
   },
   "homepage-media-descriptive-transcript-dialog-content-5": {
-    "defaultMessage": "The scene shifts to a boy running across a field. As he runs, the model detects 'Running' rather than 'Bouncing'.",
+    "defaultMessage": "crwdns368569:0crwdne368569:0",
     "description": "Homepage media descriptive transcript dialog content"
   },
   "homepage-media-descriptive-transcript-dialog-content-6": {
-    "defaultMessage": "The meter changes to show 'Jumping' versus 'Walking'. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects 'Walking' rather than 'Jumping'. As the children leap into the air, the detection switches to 'Jumping' rather than 'Walking'. The children land and walk across the field. The detection returns to 'Walking' rather than 'Jumping'.",
+    "defaultMessage": "crwdns368571:0crwdne368571:0",
     "description": "Homepage media descriptive transcript dialog content"
   },
   "homepage-media-descriptive-transcript-dialog-content-7": {
-    "defaultMessage": "The children land and walk across the field. The detection returns to 'Walking' rather than 'Jumping'.",
+    "defaultMessage": "crwdns368573:0crwdne368573:0",
     "description": "Homepage media descriptive transcript dialog content"
   },
   "homepage-media-descriptive-transcript-dialog-content-8": {
-    "defaultMessage": "This video plays on a continuous loop.",
+    "defaultMessage": "crwdns368575:0crwdne368575:0",
     "description": "Homepage media descriptive transcript dialog content"
   },
   "homepage-media-descriptive-transcript-dialog-heading": {
-    "defaultMessage": "Descriptive transcript",
+    "defaultMessage": "crwdns368577:0crwdne368577:0",
     "description": "Homepage media descriptive transcript dialog heading"
   },
   "homepage-media-pause-action": {
-    "defaultMessage": "Pause video",
+    "defaultMessage": "crwdns368579:0crwdne368579:0",
     "description": "Homepage media pause video button text"
   },
   "homepage-media-play-action": {
-    "defaultMessage": "Play video",
+    "defaultMessage": "crwdns368581:0crwdne368581:0",
     "description": "Homepage media play video button text"
   },
   "homepage-projects": {
@@ -1284,31 +1284,31 @@
     "description": "Aria label for file drop target"
   },
   "open-project-action": {
-    "defaultMessage": "Open project",
+    "defaultMessage": "crwdns368583:0crwdne368583:0",
     "description": "Open project button text"
   },
   "open-project-setup-description": {
-    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
+    "defaultMessage": "crwdns368585:0crwdne368585:0",
     "description": "Open project setup description"
   },
   "open-shared-project-blocks-preview-description": {
-    "defaultMessage": "Preview of the MakeCode code contained within this project.",
+    "defaultMessage": "crwdns368587:0crwdne368587:0",
     "description": "Blocks preview description text"
   },
   "open-shared-project-data-preview-description": {
-    "defaultMessage": "Preview of the actions and data contained within this project.",
+    "defaultMessage": "crwdns368589:0crwdne368589:0",
     "description": "Data preview description text"
   },
   "open-shared-project-description": {
-    "defaultMessage": "This is a Microsoft MakeCode shared project compatible with CreateAI.",
+    "defaultMessage": "crwdns368591:0crwdne368591:0",
     "description": "Import shared CreateAI project description"
   },
   "open-shared-project-error-description": {
-    "defaultMessage": "Check the link you followed is correct, and make sure you are connected to the internet before trying again.",
+    "defaultMessage": "crwdns368593:0crwdne368593:0",
     "description": "Import shared CreateAI error description"
   },
   "open-shared-project-title": {
-    "defaultMessage": "Open shared CreateAI project",
+    "defaultMessage": "crwdns368595:0crwdne368595:0",
     "description": "Import shared CreateAI project title"
   },
   "other-tabs-body1": {
@@ -1600,7 +1600,7 @@
     "description": "Testing model page title"
   },
   "third-party-content-description": {
-    "defaultMessage": "The content above is provided by a third party, and is not endorsed by the Micro:bit Educational Foundation.",
+    "defaultMessage": "crwdns368597:0crwdne368597:0",
     "description": "Notify user of third party content"
   },
   "tour-action": {
@@ -1828,7 +1828,7 @@
     "description": "WebUSB error dialog"
   },
   "welcome-title": {
-    "defaultMessage": "Welcome to micro:bit CreateAI",
+    "defaultMessage": "How CreateAI works",
     "description": "Welcome dialog"
   }
 }
