@@ -273,6 +273,20 @@ export const guards = {
     }
     return false;
   },
+
+  isPairingInformationLostError: (
+    _ctx: DataConnectionState,
+    event: DataConnectionEvent
+  ) => {
+    if (
+      event.type === "connectFlashFailure" ||
+      event.type === "connectDataFailure" ||
+      event.type === "flashFailure"
+    ) {
+      return event.code === "pairing-information-lost";
+    }
+    return false;
+  },
 };
 
 // =============================================================================
@@ -543,6 +557,11 @@ export const createRecoveryStates = (
     : { target: reconnectTarget, actions: reconnectActions };
 
   return {
+    [DataConnectionStep.PairingLost]: {
+      on: {
+        next: connectFailedTransition,
+      },
+    },
     [DataConnectionStep.ConnectFailed]: {
       on: {
         next: connectFailedTransition,

@@ -48,6 +48,10 @@ const nativeBluetoothErrorGuards = [
 const connectFlashFailureWithErrorHandling = [
   ...nativeBluetoothErrorGuards,
   {
+    guard: guards.isPairingInformationLostError,
+    target: DataConnectionStep.PairingLost
+  },
+  {
     guard: always,
     target: DataConnectionStep.ConnectFailed,
   },

@@ -39,6 +39,7 @@ export const DownloadStep = {
   // Common
   FlashingInProgress: "FlashingInProgress",
   IncompatibleDevice: "IncompatibleDevice",
+  PairingLost: "PairingLost",
   ConnectFailed: "ConnectFailed",
 
   // WebUSB/radio

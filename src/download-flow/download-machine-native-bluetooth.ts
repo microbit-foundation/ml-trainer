@@ -35,6 +35,10 @@ const connectFlashFailureWithPermissionHandling = [
     target: DownloadStep.LocationDisabled,
   },
   {
+    guard: guards.isPairingInformationLostError,
+    target: DownloadStep.PairingLost,
+  },
+  {
     guard: always,
     target: DownloadStep.ConnectFailed,
   },
@@ -142,6 +146,12 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
   },
 
   ...flashingInProgressWithPermissionHandling,
+
+  [DownloadStep.PairingLost]: {
+    on: {
+      tryAgain: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
+    },
+  },
 
   [DownloadStep.ConnectFailed]: {
     on: {

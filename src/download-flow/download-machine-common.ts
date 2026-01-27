@@ -150,6 +150,10 @@ export const guards = {
   isLocationDisabledError: (_ctx: DownloadFlowContext, event: DownloadEvent) =>
     event.type === "connectFlashFailure" && event.code === "location-disabled",
 
+  // Native Bluetooth pairing information lost on micro:bit
+  isPairingInformationLostError: (_ctx: DownloadFlowContext, event: DownloadEvent) =>
+    event.type === "connectFlashFailure" && event.code === "pairing-information-lost",
+
   // Native Bluetooth: no device matching the pattern was found during scan
   isNoDeviceSelectedError: (_ctx: DownloadFlowContext, event: DownloadEvent) =>
     event.type === "connectFlashFailure" && event.code === "no-device-selected",

@@ -38,6 +38,7 @@ import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
 import { bluetoothUniversalHex } from "../device/get-hex-file";
 import { isAndroid } from "../platform";
 import { DataConnectionState } from "../data-connection-flow/data-connection-types";
+import NativeBluetoothPairingLostDialog from "./NativeBluetoothPairingLostDialog";
 
 const getDeviceType = (state: DataConnectionState): ConnectionErrorDeviceType =>
   state.type === DataConnectionType.Radio
@@ -232,6 +233,14 @@ const DataConnectionDialogs = () => {
             state.hadSuccessfulConnection ? "reconnectFailed" : "connectFailed"
           }
           deviceType={getDeviceType(state)}
+        />
+      );
+    }
+    case DataConnectionStep.PairingLost: {
+      return (
+        <NativeBluetoothPairingLostDialog
+          {...dialogCommonProps}
+          onTryAgain={actions.onNextClick}
         />
       );
     }

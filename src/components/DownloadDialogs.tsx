@@ -17,6 +17,7 @@ import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 import ManualFlashingDialog from "./ManualFlashingDialog";
 import NativeBluetoothErrorDialog from "./NativeBluetoothErrorDialog";
+import NativeBluetoothPairingLostDialog from "./NativeBluetoothPairingLostDialog";
 import ResetToBluetoothModeDialog from "./ResetToBluetoothModeDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import UnplugRadioLinkMicrobitDialog from "./UnplugRadioLinkMicrobitDialog";
@@ -125,6 +126,14 @@ const DownloadDialogs = () => {
     case DownloadStep.ConnectFailed:
       return (
         <NativeBluetoothErrorDialog
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
+        />
+      );
+    case DownloadStep.PairingLost:
+      return (
+        <NativeBluetoothPairingLostDialog
           isOpen
           onClose={downloadActions.close}
           onTryAgain={downloadActions.onTryAgain}
