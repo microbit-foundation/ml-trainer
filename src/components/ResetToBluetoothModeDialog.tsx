@@ -15,12 +15,14 @@ import ConnectContainerDialog, {
 export interface ResetToBluetoothModeDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
   pairingMethod?: BluetoothPairingMethod;
-  onSwitchPairingMethod?: () => void;
+  onSwitchPairingMethod: () => void;
+  onTroubleshooting: () => void;
 }
 
 const ResetToBluetoothModeDialog = ({
   pairingMethod = "triple-reset",
   onSwitchPairingMethod,
+  onTroubleshooting,
   ...props
 }: ResetToBluetoothModeDialogProps) => {
   const isTripleReset = pairingMethod === "triple-reset";
@@ -34,18 +36,20 @@ const ResetToBluetoothModeDialog = ({
       {...props}
       headingId="reset-to-bluetooth-mode-heading"
       footerLeft={
-        onSwitchPairingMethod ? (
-          <Link
-            as="button"
-            color="brand.600"
-            onClick={onSwitchPairingMethod}
-            display="flex"
-            flexDirection="row"
-            gap={1}
-          >
+        <Link
+          as="button"
+          color="brand.600"
+          onClick={isTripleReset ? onSwitchPairingMethod : onTroubleshooting}
+          display="flex"
+          flexDirection="row"
+          gap={1}
+        >
+          {isTripleReset ? (
             <FormattedMessage id="connect-try-another-way" />
-          </Link>
-        ) : undefined
+          ) : (
+            "Unable to enter Bluetooth mode?"
+          )}
+        </Link>
       }
     >
       <VStack gap={5} width="100%">

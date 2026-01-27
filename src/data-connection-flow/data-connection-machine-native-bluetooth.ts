@@ -49,7 +49,7 @@ const connectFlashFailureWithErrorHandling = [
   ...nativeBluetoothErrorGuards,
   {
     guard: guards.isPairingInformationLostError,
-    target: DataConnectionStep.PairingLost
+    target: DataConnectionStep.PairingLost,
   },
   {
     guard: always,
@@ -97,6 +97,18 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
       back: backToStartTransition,
       // Internal transition to toggle between pairing method variants
       switchPairingMethod: {
+        actions: [{ type: "togglePairingMethod" }],
+      },
+      troubleshootPairingMethod: {
+        target: DataConnectionStep.NativeBluetoothPreConnectTroubleshooting,
+      },
+    },
+  },
+
+  [DataConnectionStep.NativeBluetoothPreConnectTroubleshooting]: {
+    on: {
+      tryAgain: {
+        target: DataConnectionStep.NativeBluetoothPreConnectTutorial,
         actions: [{ type: "togglePairingMethod" }],
       },
     },

@@ -19,6 +19,7 @@ import ManualFlashingDialog from "./ManualFlashingDialog";
 import NativeBluetoothErrorDialog from "./NativeBluetoothErrorDialog";
 import NativeBluetoothPairingLostDialog from "./NativeBluetoothPairingLostDialog";
 import ResetToBluetoothModeDialog from "./ResetToBluetoothModeDialog";
+import ResetToBluetoothModeTroubleshootDialog from "./ResetToBluetoothModeTroubleshootDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import UnplugRadioLinkMicrobitDialog from "./UnplugRadioLinkMicrobitDialog";
 
@@ -57,6 +58,16 @@ const DownloadDialogs = () => {
           onNextClick={downloadActions.getOnNext()}
           pairingMethod={stage.pairingMethod}
           onSwitchPairingMethod={downloadActions.switchPairingMethod}
+          onTroubleshooting={downloadActions.troubleshootPairingMethod}
+        />
+      );
+    }
+    case DownloadStep.NativeBluetoothPreConnectTroubleshooting: {
+      return (
+        <ResetToBluetoothModeTroubleshootDialog
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
         />
       );
     }

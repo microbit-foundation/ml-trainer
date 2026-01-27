@@ -40,6 +40,7 @@ export interface DataConnectionActions {
    * Switches between pairing method variants (triple-reset ↔ a-b-reset).
    */
   switchPairingMethod: () => void;
+  troubleshootPairingMethod: () => void;
 }
 
 /**
@@ -85,6 +86,8 @@ export const useDataConnectionActions = (): DataConnectionActions => {
       openLocationSettings: android ? openLocationSettings : undefined,
       switchPairingMethod: () =>
         dataConnectionMachine.fireEvent({ type: "switchPairingMethod" }),
+      troubleshootPairingMethod: () => 
+        dataConnectionMachine.fireEvent({ type: "troubleshootPairingMethod" }),
     };
   }, [dataConnectionMachine, openAppSettings, openLocationSettings, android]);
 };

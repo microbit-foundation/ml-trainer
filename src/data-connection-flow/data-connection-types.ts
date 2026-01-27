@@ -82,6 +82,7 @@ export const DataConnectionStep = {
   FlashingInProgress: "FlashingInProgress",
 
   // Failure stages.
+  NativeBluetoothPreConnectTroubleshooting: "NativeBluetoothPreConnectTroubleshooting",
   TryAgainReplugMicrobit: "TryAgainReplugMicrobit",
   TryAgainCloseTabs: "TryAgainCloseTabs",
   TryAgainWebUsbSelectMicrobit: "TryAgainWebUsbSelectMicrobit",

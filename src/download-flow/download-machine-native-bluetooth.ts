@@ -129,6 +129,21 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
     on: {
       next: { target: DownloadStep.BluetoothPattern },
       back: [{ guard: guards.shouldShowHelp, target: DownloadStep.Help }],
+      switchPairingMethod: {
+        actions: [{ type: "togglePairingMethod" }],
+      },
+      troubleshootPairingMethod: {
+        target: DownloadStep.NativeBluetoothPreConnectTroubleshooting,
+      },
+    },
+  },
+
+  [DownloadStep.NativeBluetoothPreConnectTroubleshooting]: {
+    on: {
+      tryAgain: {
+        target: DownloadStep.NativeBluetoothPreConnectTutorial,
+        actions: [{ type: "togglePairingMethod" }],
+      },
     },
   },
 

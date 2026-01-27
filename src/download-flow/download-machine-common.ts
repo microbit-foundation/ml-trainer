@@ -32,7 +32,9 @@ export type DownloadEvent =
   | { type: "permissionDenied" }
   | { type: "locationDisabled" }
   // Permission dialog events.
-  | { type: "tryAgain" };
+  | { type: "tryAgain" }
+  | { type: "switchPairingMethod" }
+  | { type: "troubleshootPairingMethod" };
 
 export type DownloadAction =
   | /**
@@ -66,7 +68,11 @@ export type DownloadAction =
    * Initialize flashing progress to Initializing stage.
    * Used as entry action for FlashingInProgress state.
    */
-  | { type: "initializeFlashingProgress" };
+  | { type: "initializeFlashingProgress" }
+  /**
+   * Toggle between pairing method variants (triple-reset ↔ a-b-reset).
+   */
+  | { type: "togglePairingMethod" };
 
 export interface DownloadFlowContext {
   hex?: HexData;
@@ -151,8 +157,12 @@ export const guards = {
     event.type === "connectFlashFailure" && event.code === "location-disabled",
 
   // Native Bluetooth pairing information lost on micro:bit
-  isPairingInformationLostError: (_ctx: DownloadFlowContext, event: DownloadEvent) =>
-    event.type === "connectFlashFailure" && event.code === "pairing-information-lost",
+  isPairingInformationLostError: (
+    _ctx: DownloadFlowContext,
+    event: DownloadEvent
+  ) =>
+    event.type === "connectFlashFailure" &&
+    event.code === "pairing-information-lost",
 
   // Native Bluetooth: no device matching the pattern was found during scan
   isNoDeviceSelectedError: (_ctx: DownloadFlowContext, event: DownloadEvent) =>

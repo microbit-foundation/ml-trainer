@@ -78,7 +78,9 @@ export type DataConnectionEvent =
   | { type: "permissionDenied" }
   | { type: "locationDisabled" }
   // Switch between pairing method variants (triple-reset vs a-b-reset).
-  | { type: "switchPairingMethod" };
+  | { type: "switchPairingMethod" }
+  // Troubleshoot pairing method.
+  | { type: "troubleshootPairingMethod" };
 
 export type DataConnectionAction =
   | { type: "setConnectionType"; connectionType: DataConnectionType }

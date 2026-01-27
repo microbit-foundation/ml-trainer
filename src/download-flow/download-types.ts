@@ -34,12 +34,14 @@ export const DownloadStep = {
   // Bluetooth (native only for download)
   BluetoothPattern: "BluetoothPattern",
   NativeBluetoothPreConnectTutorial: "NativeBluetoothPreConnectTutorial",
+  NativeBluetoothPreConnectTroubleshooting:
+    "NativeBluetoothPreConnectTroubleshooting",
+  PairingLost: "PairingLost",
   BluetoothSearchConnect: "BluetoothSearchConnect",
 
   // Common
   FlashingInProgress: "FlashingInProgress",
   IncompatibleDevice: "IncompatibleDevice",
-  PairingLost: "PairingLost",
   ConnectFailed: "ConnectFailed",
 
   // WebUSB/radio

@@ -39,6 +39,7 @@ import { bluetoothUniversalHex } from "../device/get-hex-file";
 import { isAndroid } from "../platform";
 import { DataConnectionState } from "../data-connection-flow/data-connection-types";
 import NativeBluetoothPairingLostDialog from "./NativeBluetoothPairingLostDialog";
+import ResetToBluetoothModeTroubleshootDialog from "./ResetToBluetoothModeTroubleshootDialog";
 
 const getDeviceType = (state: DataConnectionState): ConnectionErrorDeviceType =>
   state.type === DataConnectionType.Radio
@@ -81,6 +82,15 @@ const DataConnectionDialogs = () => {
           onNextClick={actions.onNextClick}
           pairingMethod={state.pairingMethod}
           onSwitchPairingMethod={actions.switchPairingMethod}
+          onTroubleshooting={actions.troubleshootPairingMethod}
+        />
+      );
+    }
+    case DataConnectionStep.NativeBluetoothPreConnectTroubleshooting: {
+      return (
+        <ResetToBluetoothModeTroubleshootDialog
+          {...dialogCommonProps}
+          onTryAgain={actions.onTryAgain}
         />
       );
     }
