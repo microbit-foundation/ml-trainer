@@ -5,6 +5,7 @@
  */
 import {
   Box,
+  Button,
   Modal,
   ModalBody,
   ModalContent,
@@ -21,12 +22,15 @@ import { DataConnectionType, RadioFlowPhase } from "../data-connection-flow";
 import { isNativePlatform } from "../platform";
 import ChooseDeviceOverlay from "./ChooseDeviceOverlay";
 import LoadingAnimation from "./LoadingAnimation";
+import BluetoothPatternInput from "./BluetoothPatternInput";
+import { useSettings } from "../store";
 
 export interface DownloadProgressDialogProps {
   isOpen: boolean;
   headingId: string;
   stage: ProgressStage | undefined;
   progress: number | undefined;
+  tryAgain?: () => void;
 }
 
 export const getHeadingId = (
@@ -69,7 +73,9 @@ const DownloadProgressDialog = ({
   headingId,
   stage,
   progress,
+  tryAgain,
 }: DownloadProgressDialogProps) => {
+  const [settings] = useSettings();
   // Skip showing dialog when stage is undefined (not yet started).
   if (stage === undefined) {
     return null;
@@ -81,6 +87,7 @@ const DownloadProgressDialog = ({
   }
   const isIndeterminate = progress === undefined;
   const subtitleId = getSubtitleId(stage);
+  const isFindingDevice = stage === ProgressStage.FindingDevice;
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -104,7 +111,12 @@ const DownloadProgressDialog = ({
               <Text>
                 {subtitleId ? <FormattedMessage id={subtitleId} /> : "\u00A0"}
               </Text>
-              {isIndeterminate ? (
+              {isNativePlatform() && isFindingDevice ? (
+                <BluetoothPatternInput
+                  microbitName={settings.bluetoothMicrobitName}
+                  invalid={false}
+                />
+              ) : isIndeterminate ? (
                 <LoadingAnimation />
               ) : (
                 <Box h={25} display="flex" alignItems="center" width="100%">
@@ -119,7 +131,13 @@ const DownloadProgressDialog = ({
               )}
             </VStack>
           </ModalBody>
-          <ModalFooter />
+          <ModalFooter justifyContent="start">
+            {isNativePlatform() && tryAgain && isFindingDevice && (
+              <Button onClick={tryAgain} variant="link" size="lg">
+                My pattern is different
+              </Button>
+            )}
+          </ModalFooter>
         </ModalContent>
       </ModalOverlay>
     </Modal>

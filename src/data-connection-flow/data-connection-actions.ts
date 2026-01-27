@@ -195,6 +195,10 @@ const executeAction = async (
       }
       break;
 
+    case "abortFindingDevice":
+      await abortFindingDevice(deps);
+      break;
+
     case "connectFlash":
       await performConnectFlash(deps);
       break;
@@ -312,6 +316,14 @@ const performConnectFlash = async (deps: DataConnectionDeps): Promise<void> => {
     }
   }
 };
+
+const abortFindingDevice = async (deps:DataConnectionDeps): Promise<void> => {
+  const connection = deps.connections.getDefaultFlashConnection();
+  if (!isWebUSBConnection(connection)) {
+    console.log("Aborted device scan!")
+    await connection.abortDeviceScan()
+  }
+}
 
 /**
  * Perform flash operation.

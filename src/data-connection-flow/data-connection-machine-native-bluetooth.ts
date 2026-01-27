@@ -137,6 +137,10 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
       flashFailure: {
         target: DataConnectionStep.ConnectFailed,
       },
+      tryAgain: {
+        target: DataConnectionStep.BluetoothPattern,
+        actions: [{ type: "abortFindingDevice" }],
+      },
     },
   },
 

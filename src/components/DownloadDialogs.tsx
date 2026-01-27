@@ -132,6 +132,7 @@ const DownloadDialogs = () => {
           headingId="downloading-header"
           stage={flashingProgress.stage}
           progress={flashingProgress.value}
+          tryAgain={downloadActions.onTryAgain}
         />
       );
     case DownloadStep.ConnectFailed:

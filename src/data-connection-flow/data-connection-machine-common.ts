@@ -132,7 +132,11 @@ export type DataConnectionAction =
   /**
    * Toggle between pairing method variants (triple-reset ↔ a-b-reset).
    */
-  | { type: "togglePairingMethod" };
+  | { type: "togglePairingMethod" }
+  /**
+   * Abort finding device.
+   */
+  | { type: "abortFindingDevice" };
 
 export type DataConnectionFlowDef = FlowDefinition<
   DataConnectionStep,

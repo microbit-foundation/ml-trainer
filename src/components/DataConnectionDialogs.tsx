@@ -174,6 +174,7 @@ const DataConnectionDialogs = () => {
           isOpen={isOpen}
           stage={flashProgress.stage}
           progress={flashProgress.value}
+          tryAgain={actions.onTryAgain}
         />
       );
     }

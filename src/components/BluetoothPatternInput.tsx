@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  Box,
   Button,
   FormControl,
   FormLabel,
@@ -31,7 +32,7 @@ import {
 } from "../bt-pattern-utils";
 
 interface BluetoothPatternInputProps {
-  onChange: (name: string) => void;
+  onChange?: (name: string) => void;
   invalid: boolean;
   microbitName: string | undefined;
 }
@@ -62,7 +63,7 @@ const BluetoothPatternInput = ({
     (colIdx: number, rowIdx: number) => {
       const columns = updateMatrixColumns(matrixColumns, { colIdx, rowIdx });
       const matrix = transformColumnsToMatrix(columns) as boolean[];
-      onChange(microbitPatternToName(matrix));
+      onChange && onChange(microbitPatternToName(matrix));
     },
     [matrixColumns, onChange]
   );
@@ -83,6 +84,7 @@ const BluetoothPatternInput = ({
   );
 
   const nativePlatform = isNativePlatform();
+  const isEditable = !!onChange;
 
   return (
     <Grid
@@ -111,6 +113,7 @@ const BluetoothPatternInput = ({
                 onMouseLeave={clearHighlighted}
                 isOn={c}
                 isHighlighted={highlighted[colIdx][rowIdx]}
+                editable={isEditable}
               />
             </GridItem>
           ))}
@@ -124,12 +127,14 @@ const BluetoothPatternInput = ({
             </GridItem>
           )}
           <GridItem key={`col-${colIdx}-pattern-input`}>
-            <PatternColumnInput
-              isInvalid={invalid}
-              onChange={columnInputOnChange(colIdx)}
-              colIdx={colIdx}
-              value={inputValues[colIdx]}
-            />
+            {onChange && (
+              <PatternColumnInput
+                isInvalid={invalid}
+                onChange={columnInputOnChange(colIdx)}
+                colIdx={colIdx}
+                value={inputValues[colIdx]}
+              />
+            )}
           </GridItem>
         </React.Fragment>
       ))}
@@ -143,6 +148,7 @@ interface PatternBoxProps {
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   isHighlighted: boolean;
+  editable: boolean;
 }
 
 const PatternBox = ({
@@ -151,8 +157,9 @@ const PatternBox = ({
   onMouseEnter,
   onMouseLeave,
   isHighlighted,
+  editable,
 }: PatternBoxProps) => {
-  return (
+  return editable ? (
     <Button
       size="sm"
       w="100%"
@@ -166,6 +173,13 @@ const PatternBox = ({
       borderWidth={isHighlighted && !isOn ? 3 : 0}
       borderColor={isHighlighted ? (isOn ? "white" : "brand2.500") : undefined}
       opacity={isHighlighted && isOn ? 0.25 : 1}
+    />
+  ) : (
+    <Box
+      w="100%"
+      h="100%"
+      bgColor={isOn ? "brand2.500" : "gray.300"}
+      borderRadius={5}
     />
   );
 };

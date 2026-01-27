@@ -60,6 +60,10 @@ const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
           actions: [{ type: "flash" }],
         },
       ],
+      tryAgain: {
+        target: DownloadStep.BluetoothPattern,
+        actions: [{ type: "disconnectDataConnection" }],
+      },
       connectFlashFailure: connectFlashFailureWithPermissionHandling,
       flashSuccess: { target: DownloadStep.None },
       flashFailure: {
