@@ -10,11 +10,6 @@ import BluetoothPatternInput from "./BluetoothPatternInput";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
-import {
-  BluetoothPattern,
-  microbitNameToBluetoothPattern,
-  microbitPatternToName,
-} from "../bt-pattern-utils";
 
 export interface EnterBluetoothPatternDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
@@ -30,29 +25,23 @@ const EnterBluetoothPatternDialog = ({
   ...props
 }: EnterBluetoothPatternDialogProps) => {
   const [showInvalid, setShowInvalid] = useState<boolean>(false);
-  const [bluetoothPattern, setBluetoothPattern] = useState<BluetoothPattern>(
-    microbitName
-      ? microbitNameToBluetoothPattern(microbitName)
-      : Array(25).fill(false)
-  );
 
   const handleNextClick = useCallback(() => {
-    if (!isPatternValid(bluetoothPattern)) {
+    if (!microbitName || microbitName.includes(" ")) {
       setShowInvalid(true);
       return;
     }
     onNextClick && onNextClick();
-  }, [bluetoothPattern, onNextClick]);
+  }, [microbitName, onNextClick]);
 
   const handleBackClick = useCallback(() => {
     setShowInvalid(false);
     onBackClick && onBackClick();
   }, [onBackClick]);
 
-  const handlePatternChange = useCallback(
-    (newPattern: BluetoothPattern) => {
-      setBluetoothPattern(newPattern);
-      onChangeMicrobitName(microbitPatternToName(newPattern));
+  const handleNameChange = useCallback(
+    (name: string) => {
+      onChangeMicrobitName(name);
       setShowInvalid(false);
     },
     [onChangeMicrobitName]
@@ -71,8 +60,7 @@ const EnterBluetoothPatternDialog = ({
         </Text>
         <VStack>
           <BluetoothPatternInput
-            pattern={bluetoothPattern}
-            onChange={handlePatternChange}
+            onChange={handleNameChange}
             invalid={showInvalid}
             microbitName={microbitName}
           />
@@ -89,21 +77,6 @@ const EnterBluetoothPatternDialog = ({
       </VStack>
     </ConnectContainerDialog>
   );
-};
-
-const isPatternValid = (pattern: BluetoothPattern) => {
-  for (let col = 0; col < 5; col++) {
-    let isAnyHighlighted = false;
-    for (let row = 0; row < 5; row++) {
-      if (pattern[row * 5 + col]) {
-        isAnyHighlighted = true;
-      }
-    }
-    if (!isAnyHighlighted) {
-      return false;
-    }
-  }
-  return true;
 };
 
 export default EnterBluetoothPatternDialog;

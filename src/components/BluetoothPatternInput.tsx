@@ -24,10 +24,14 @@ import {
   updateMatrixColumns,
 } from "../bt-pattern-matrix-utils";
 import { isNativePlatform } from "../platform";
+import {
+  BluetoothPattern,
+  microbitNameToBluetoothPattern,
+  microbitPatternToName,
+} from "../bt-pattern-utils";
 
 interface BluetoothPatternInputProps {
-  pattern: boolean[];
-  onChange: (matrix: boolean[]) => void;
+  onChange: (name: string) => void;
   invalid: boolean;
   microbitName: string | undefined;
 }
@@ -35,11 +39,13 @@ interface BluetoothPatternInputProps {
 const matrixDim = 5;
 
 const BluetoothPatternInput = ({
-  pattern,
   onChange,
   invalid,
   microbitName,
 }: BluetoothPatternInputProps) => {
+  const pattern = microbitName
+    ? microbitNameToBluetoothPattern(microbitName)
+    : (Array(25).fill(false) as BluetoothPattern);
   const [highlighted, setHighlighted] = useState<boolean[][]>(
     generateMatrix(matrixDim, false)
   );
@@ -56,7 +62,7 @@ const BluetoothPatternInput = ({
     (colIdx: number, rowIdx: number) => {
       const columns = updateMatrixColumns(matrixColumns, { colIdx, rowIdx });
       const matrix = transformColumnsToMatrix(columns) as boolean[];
-      onChange(matrix);
+      onChange(microbitPatternToName(matrix));
     },
     [matrixColumns, onChange]
   );
