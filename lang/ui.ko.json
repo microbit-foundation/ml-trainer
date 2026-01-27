@@ -1227,6 +1227,10 @@
     "defaultMessage": "마지막 세션 열기",
     "description": "Open last session title"
   },
+  "newpage-new-project-title": {
+    "defaultMessage": "New project",
+    "description": "Start new project title"
+  },
   "newpage-new-session-subtitle": {
     "defaultMessage": "micro:bit를 연결하고 움직임 데이터를 수집하여 기계 학습 모델을 구축하세요.",
     "description": "Start new session subtitle"

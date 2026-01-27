@@ -12,20 +12,23 @@ import {
   createWebBluetoothConnection,
   createWebUSBConnection,
 } from "@microbit/microbit-connection";
-import React, { ReactNode, Suspense, useEffect, useMemo, useRef } from "react";
+import React, { ReactNode, useEffect, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
-  Await,
   createBrowserRouter,
   defer,
   Outlet,
   RouterProvider,
   ScrollRestoration,
-  useLoaderData,
   useLocation,
   useNavigate,
 } from "react-router-dom";
 import "theme-package/fonts/fonts.css";
+import {
+  broadcastChannel,
+  BroadcastChannelData,
+  BroadcastChannelMessageType,
+} from "./broadcast-channel";
 import { BufferedDataProvider } from "./buffered-data-hooks";
 import EditCodeDialog from "./components/EditCodeDialog";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -46,11 +49,11 @@ import TranslationProvider from "./messages/TranslationProvider";
 import { PostImportDialogState } from "./model";
 import CodePage from "./pages/CodePage";
 import DataSamplesPage from "./pages/DataSamplesPage";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/AboutPage";
 import ImportPage from "./pages/ImportPage";
-import NewPage from "./pages/NewPage";
-import TestingModelPage from "./pages/TestingModelPage";
 import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
+import TestingModelPage from "./pages/TestingModelPage";
+import { projectSessionStorage } from "./session-storage";
 import {
   getAllProjectsFromStorage,
   loadProjectAndModelFromStorage,
@@ -61,17 +64,15 @@ import {
   createDataSamplesPageUrl,
   createHomePageUrl,
   createImportPageUrl,
-  createOpenSharedProjectPageUrl,
   createNewPageUrl,
+  createOpenSharedProjectPageUrl,
+  createProjectsUrl,
   createTestingModelPageUrl,
 } from "./urls";
-import LoadingPage from "./components/LoadingPage";
-import {
-  broadcastChannel,
-  BroadcastChannelData,
-  BroadcastChannelMessageType,
-} from "./broadcast-channel";
-import { projectSessionStorage } from "./session-storage";
+import ProjectLoadWrapper from "./components/ProjectLoadWrapper";
+import NewPageMultipleProjects from "./pages/NewPageMultipleProjects";
+import NewPageSingleProject from "./pages/NewPageSingleProject";
+import ProjectsPage from "./pages/ProjectsPage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -132,7 +133,6 @@ const Layout = () => {
   const navigate = useNavigate();
   const toast = useToast();
   const intl = useIntl();
-  const { projectLoaded } = useLoaderData() as { projectLoaded: boolean };
   const updateProjectTimestampUrls = useMemo(() => {
     return [
       createDataSamplesPageUrl(),
@@ -217,39 +217,36 @@ const Layout = () => {
   ]);
 
   return (
-    <Suspense fallback={<LoadingPage />}>
-      <Await resolve={projectLoaded}>
-        {/* We use this even though we have errorElement as this does logging. */}
-        <ErrorBoundary>
-          <ScrollRestoration />
-          <ProjectProvider driverRef={driverRef}>
-            <EditCodeDialog ref={driverRef} />
-            <Outlet />
-          </ProjectProvider>
-        </ErrorBoundary>
-      </Await>
-    </Suspense>
+    // We use this even though we have errorElement as this does logging.
+    <ErrorBoundary>
+      <ScrollRestoration />
+      <ProjectProvider driverRef={driverRef}>
+        <EditCodeDialog ref={driverRef} />
+        <Outlet />
+      </ProjectProvider>
+    </ErrorBoundary>
   );
 };
 
+let loaderFuncCalled = false;
+const commonLoaderFunction = () => {
+  if (!loaderFuncCalled) {
+    loaderFuncCalled = true;
+    const projectId = projectSessionStorage.getProjectId();
+    if (projectId) {
+      const projectLoaded = loadProjectAndModelFromStorage(projectId);
+      return defer({ projectLoaded });
+    }
+  }
+  return { projectLoaded: true };
+};
+
 const createRouter = () => {
-  let loaderFuncCalled = false;
   return createBrowserRouter([
     {
       id: "root",
       path: "",
       element: <Layout />,
-      loader: () => {
-        if (!loaderFuncCalled) {
-          loaderFuncCalled = true;
-          const projectId = projectSessionStorage.getProjectId();
-          if (projectId) {
-            const projectLoaded = loadProjectAndModelFromStorage(projectId);
-            return defer({ projectLoaded });
-          }
-        }
-        return { projectLoaded: true };
-      },
       // This one gets used for loader errors (typically offline)
       // We set an error boundary inside the routes too that logs render-time errors.
       // ErrorBoundary doesn't work properly in the loader case at least.
@@ -261,7 +258,19 @@ const createRouter = () => {
         },
         {
           path: createNewPageUrl(),
-          element: <NewPage />,
+          element: flags.multipleProjects ? (
+            <NewPageMultipleProjects />
+          ) : (
+            <NewPageSingleProject />
+          ),
+          loader: () => {
+            const allProjectDataLoaded = getAllProjectsFromStorage();
+            return defer({ allProjectDataLoaded });
+          },
+        },
+        {
+          path: createProjectsUrl(),
+          element: <ProjectsPage />,
           loader: () => {
             const allProjectDataLoaded = getAllProjectsFromStorage();
             return defer({ allProjectDataLoaded });
@@ -270,15 +279,30 @@ const createRouter = () => {
         { path: createImportPageUrl(), element: <ImportPage /> },
         {
           path: createDataSamplesPageUrl(),
-          element: <DataSamplesPage />,
+          element: (
+            <ProjectLoadWrapper>
+              <DataSamplesPage />
+            </ProjectLoadWrapper>
+          ),
+          loader: () => commonLoaderFunction(),
         },
         {
           path: createTestingModelPageUrl(),
-          element: <TestingModelPage />,
+          element: (
+            <ProjectLoadWrapper>
+              <TestingModelPage />,
+            </ProjectLoadWrapper>
+          ),
+          loader: commonLoaderFunction,
         },
         {
           path: createCodePageUrl(),
-          element: <CodePage />,
+          element: (
+            <ProjectLoadWrapper>
+              <CodePage />,
+            </ProjectLoadWrapper>
+          ),
+          loader: commonLoaderFunction,
         },
         {
           path: createOpenSharedProjectPageUrl(),

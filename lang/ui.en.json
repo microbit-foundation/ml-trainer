@@ -1227,6 +1227,10 @@
     "defaultMessage": "Open last session",
     "description": "Open last session title"
   },
+  "newpage-new-project-title": {
+    "defaultMessage": "New project",
+    "description": "Start new project title"
+  },
   "newpage-new-session-subtitle": {
     "defaultMessage": "Connect your micro:bit and collect movement data to build a machine learning model.",
     "description": "Start new session subtitle"

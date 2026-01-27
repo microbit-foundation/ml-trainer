@@ -2109,6 +2109,12 @@
       "value": "開啟上一個會話"
     }
   ],
+  "newpage-new-project-title": [
+    {
+      "type": 0,
+      "value": "New project"
+    }
+  ],
   "newpage-new-session-subtitle": [
     {
       "type": 0,

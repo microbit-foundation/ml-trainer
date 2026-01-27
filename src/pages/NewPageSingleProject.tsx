@@ -4,51 +4,39 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { DeleteIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Card,
-  CardBody,
   Container,
-  Grid,
-  GridItem,
   Heading,
   HStack,
   Icon,
-  IconButton,
   Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { ReactNode, Suspense, useCallback, useRef } from "react";
+import { ReactNode, useCallback, useRef } from "react";
 import { RiAddLine, RiFolderOpenLine, RiRestartLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Await, useLoaderData, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import DefaultPageLayout, {
   HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
-import LoadingAnimation from "../components/LoadingAnimation";
 import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
 import NewPageChoice from "../components/NewPageChoice";
-import { flags } from "../flags";
 import { useProjectName } from "../hooks/project-hooks";
 import { useLogging } from "../logging/logging-hooks";
-import { StoreAction } from "../storage";
-import { loadProjectAndModelFromStorage, useStore } from "../store";
+import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 
-const NewPage = () => {
+const NewPageSingleProject = () => {
   const existingSessionTimestamp = useStore((s) => s.timestamp);
   const projectName = useProjectName();
   const newSession = useStore((s) => s.newSession);
   const navigate = useNavigate();
   const logging = useLogging();
-  const { allProjectDataLoaded } = useLoaderData() as {
-    allProjectDataLoaded: boolean;
-  };
 
   const handleOpenLastSession = useCallback(() => {
     logging.event({
@@ -177,13 +165,6 @@ const NewPage = () => {
               </NewPageChoice>
               <Box flex="1" />
             </HStack>
-            {flags.multipleProjects && (
-              <Suspense fallback={<LoadingAnimation />}>
-                <Await resolve={allProjectDataLoaded}>
-                  <ProjectsList />
-                </Await>
-              </Suspense>
-            )}
           </VStack>
         </Container>
       </VStack>
@@ -191,107 +172,4 @@ const NewPage = () => {
   );
 };
 
-const ProjectsList = () => {
-  const allProjectData = useStore((s) => s.allProjectData);
-  const deleteProject = useStore((s) => s.deleteProject);
-
-  const handleDeleteProject = useCallback(
-    async (id: string) => {
-      // setProjects((prev) => prev.filter((p) => p.id !== id));
-      await deleteProject(id);
-    },
-    [deleteProject]
-  );
-
-  return (
-    <>
-      <Heading as="h2" fontSize="2xl" mt={8}>
-        Projects
-      </Heading>
-      <Grid mt={3} gap={3} templateColumns="repeat(5, 1fr)">
-        {allProjectData.map((projectData) => (
-          <GridItem key={projectData.id} display="flex">
-            <ProjectCard
-              id={projectData.id}
-              name={projectData.name}
-              actions={projectData.actions}
-              updatedAt={projectData.timestamp}
-              onDeleteProject={handleDeleteProject}
-            />
-          </GridItem>
-        ))}
-      </Grid>
-    </>
-  );
-};
-
-interface ProjectCard {
-  id: string;
-  name: string;
-  actions: StoreAction[];
-  updatedAt: number;
-  onDeleteProject: (id: string) => Promise<void>;
-}
-
-const ProjectCard = ({
-  id,
-  name,
-  actions,
-  updatedAt,
-  onDeleteProject,
-}: ProjectCard) => {
-  const navigate = useNavigate();
-
-  const handleLoadProject = useCallback(
-    async (_e: React.MouseEvent) => {
-      await loadProjectAndModelFromStorage(id);
-      navigate(createDataSamplesPageUrl());
-    },
-    [id, navigate]
-  );
-
-  const handleDeleteProject = useCallback(
-    async (e: React.MouseEvent) => {
-      e.stopPropagation();
-      await onDeleteProject(id);
-    },
-    [id, onDeleteProject]
-  );
-
-  return (
-    <Card onClick={handleLoadProject} cursor="pointer" flexGrow={1}>
-      <IconButton
-        aria-label="Delete project"
-        onClick={handleDeleteProject}
-        icon={<DeleteIcon />}
-        position="absolute"
-        right={1}
-        top={1}
-        borderRadius="sm"
-        border="none"
-      />
-      <CardBody display="flex">
-        <Stack h="100%">
-          <Heading as="h3" fontSize="xl">
-            {name}
-          </Heading>
-          <Text mb="auto">
-            Actions:{" "}
-            {actions.length > 0
-              ? actions.map((a) => a.name).join(", ")
-              : "none"}
-          </Text>
-          <Text>{`Last edited: ${new Intl.DateTimeFormat(undefined, {
-            dateStyle: "medium",
-            timeStyle: "medium",
-          }).format(updatedAt)}`}</Text>
-          <Text fontSize="xs" color="gray.600">
-            id: {id}
-          </Text>
-        </Stack>
-      </CardBody>
-    </Card>
-  );
-};
-
-export default NewPage;
+export default NewPageSingleProject;

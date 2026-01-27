@@ -18,30 +18,22 @@ import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import DefaultPageLayout from "../components/DefaultPageLayout";
-import ResourceCard from "../components/ResourceCard";
 import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import clap from "../images/clap-hands.png";
 import xyzGraph from "../images/xyz-graph.png";
 import { createNewPageUrl } from "../urls";
-
-import projectImage3 from "theme-package/images/ai-activity-timer.png";
-import projectImage2 from "theme-package/images/simple-ai-exercise-timer.png";
-import projectImage1 from "theme-package/images/ai-storytelling-friend.png";
 import homepageVideo from "theme-package/images/homepage-short-clip.mp4";
 import HomepageBannerVideo from "../components/HomepageBannerVideo";
 import StepByStepIllustration from "../components/StepByStepIllustration";
-import {
-  landingPageUrl,
-  projectUrl,
-  userGuideUrl,
-} from "../utils/external-links";
+import { landingPageUrl, userGuideUrl } from "../utils/external-links";
 import { useSettings } from "../store";
 import { useSearchParams } from "react-router-dom";
 import { setEditorVersionOverride } from "../editor-version";
+import { createResourceCards } from "../components/ResourceCards";
 
-const HomePage = () => {
+const AboutPage = () => {
   const [params] = useSearchParams();
   setEditorVersionOverride(params.get("editorVersion") || undefined);
   const navigate = useNavigate();
@@ -181,27 +173,7 @@ const HomePage = () => {
               <FormattedMessage id="homepage-projects" />
             </Heading>
             <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
-              <ResourceCard
-                title={intl.formatMessage({
-                  id: "ai-storytelling-friend-resource-title",
-                })}
-                url={projectUrl("ai-storytelling-friend", languageId)}
-                imgSrc={projectImage1}
-              />
-              <ResourceCard
-                title={intl.formatMessage({
-                  id: "simple-ai-exercise-timer-resource-title",
-                })}
-                url={projectUrl("simple-ai-exercise-timer", languageId)}
-                imgSrc={projectImage2}
-              />
-              <ResourceCard
-                title={intl.formatMessage({
-                  id: "ai-activity-timer-resource-title",
-                })}
-                url={projectUrl("ai-activity-timer", languageId)}
-                imgSrc={projectImage3}
-              />
+              {createResourceCards(intl, languageId)}
             </HStack>
             <Text fontSize="md">
               <FormattedMessage
@@ -226,4 +198,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default AboutPage;

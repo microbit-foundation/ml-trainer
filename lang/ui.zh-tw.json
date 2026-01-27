@@ -1227,6 +1227,10 @@
     "defaultMessage": "開啟上一個會話",
     "description": "Open last session title"
   },
+  "newpage-new-project-title": {
+    "defaultMessage": "New project",
+    "description": "Start new project title"
+  },
   "newpage-new-session-subtitle": {
     "defaultMessage": "連線您的 micro:bit 並收集移動數據以建立機器學習模型。",
     "description": "Start new session subtitle"

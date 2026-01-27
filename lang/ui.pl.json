@@ -1227,6 +1227,10 @@
     "defaultMessage": "Otwórz ostatnią sesję",
     "description": "Open last session title"
   },
+  "newpage-new-project-title": {
+    "defaultMessage": "New project",
+    "description": "Start new project title"
+  },
   "newpage-new-session-subtitle": {
     "defaultMessage": "Połącz swój micro:bit i zebierz dane o ruchach, aby zbudować model uczenia maszynowego.",
     "description": "Start new session subtitle"

@@ -1227,6 +1227,10 @@
     "defaultMessage": "crwdns363202:0crwdne363202:0",
     "description": "Open last session title"
   },
+  "newpage-new-project-title": {
+    "defaultMessage": "New project",
+    "description": "Start new project title"
+  },
   "newpage-new-session-subtitle": {
     "defaultMessage": "crwdns363204:0crwdne363204:0",
     "description": "Start new session subtitle"

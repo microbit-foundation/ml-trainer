@@ -63,7 +63,7 @@ const allFlags: FlagMetadata[] = [
   { name: "e2e", defaultOnStages: [] },
   {
     name: "multipleProjects",
-    defaultOnStages: [],
+    defaultOnStages: ["local"],
   },
   {
     name: "preReleaseNotice",

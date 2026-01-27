@@ -2101,6 +2101,12 @@
       "value": "마지막 세션 열기"
     }
   ],
+  "newpage-new-project-title": [
+    {
+      "type": 0,
+      "value": "New project"
+    }
+  ],
   "newpage-new-session-subtitle": [
     {
       "type": 0,

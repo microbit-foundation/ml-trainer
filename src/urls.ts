@@ -13,6 +13,8 @@ export const createHomePageUrl = () => `${basepath}`;
 
 export const createNewPageUrl = () => `${basepath}new`;
 
+export const createProjectsUrl = () => `${basepath}projects`;
+
 export const createImportPageUrl = () => `${basepath}import`;
 
 export const createOpenSharedProjectPageUrl = () => `${basepath}:shareId`;
@@ -22,3 +24,5 @@ export const createDataSamplesPageUrl = () => `${basepath}data-samples`;
 export const createTestingModelPageUrl = () => `${basepath}testing-model`;
 
 export const createCodePageUrl = () => `${basepath}code`;
+
+export const createAboutPageUrl = () => `${basepath}about`;

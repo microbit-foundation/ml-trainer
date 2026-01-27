@@ -1227,6 +1227,10 @@
     "defaultMessage": "最後のセッションを開く",
     "description": "Open last session title"
   },
+  "newpage-new-project-title": {
+    "defaultMessage": "New project",
+    "description": "Start new project title"
+  },
   "newpage-new-session-subtitle": {
     "defaultMessage": "micro:bitに接続し、動作データを収集して機械学習モデルを構築します。",
     "description": "Start new session subtitle"
