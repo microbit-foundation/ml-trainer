@@ -1122,7 +1122,7 @@
   "downloading-stage-flashing": [
     {
       "type": 0,
-      "value": "Please wait. Downloading program to micro:bit."
+      "value": "Please do not interact with the micro:bit before the downloading is complete."
     }
   ],
   "edit-in-makecode-action": [

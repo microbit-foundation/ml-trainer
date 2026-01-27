@@ -628,7 +628,7 @@
     "description": "Progress text during device discovery stage of flashing"
   },
   "downloading-stage-flashing": {
-    "defaultMessage": "Please wait. Downloading program to micro:bit.",
+    "defaultMessage": "Please do not interact with the micro:bit before the downloading is complete.",
     "description": "Progress text during actual flashing stage"
   },
   "edit-in-makecode-action": {
