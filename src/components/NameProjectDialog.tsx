@@ -25,6 +25,7 @@ import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useProjectName } from "../hooks/project-hooks";
 import { validateProjectName } from "../project-name";
+import { Capacitor } from "@capacitor/core";
 
 interface NameProjectDialogProps {
   onClose: () => void;
@@ -47,6 +48,11 @@ export const NameProjectDialog = ({
   const handleSubmit = useCallback(() => {
     onSave(name);
   }, [name, onSave]);
+
+  const confirmActionId = Capacitor.isNativePlatform()
+    ? "confirm-share-action"
+    : "confirm-save-action";
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay>
@@ -90,7 +96,7 @@ export const NameProjectDialog = ({
               ml={3}
               isDisabled={!isValid}
             >
-              <FormattedMessage id="confirm-save-action" />
+              <FormattedMessage id={confirmActionId} />
             </Button>
           </ModalFooter>
         </ModalContent>

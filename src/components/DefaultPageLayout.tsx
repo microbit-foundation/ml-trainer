@@ -14,7 +14,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect } from "react";
-import { RiDownload2Line, RiHome2Line } from "react-icons/ri";
+import { RiDownload2Line, RiHome2Line, RiShareLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { isDataConnectionDialogOpen } from "../data-connection-flow";
@@ -37,6 +37,7 @@ import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
+import { Capacitor } from "@capacitor/core";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -156,14 +157,18 @@ export const ProjectToolbarItems = () => {
   }, [saveHex]);
   useShortcut(keyboardShortcuts.saveSession, handleSave);
 
+  const isShare = Capacitor.isNativePlatform();
+  const exportTextId = isShare ? "share-action" : "save-action";
+  const ExportIconId = isShare ? RiShareLine : RiDownload2Line;
+
   return (
     <>
       <Button
         variant="toolbar"
-        leftIcon={<RiDownload2Line />}
+        leftIcon={<ExportIconId />}
         onClick={handleSave}
       >
-        <FormattedMessage id="save-action" />
+        <FormattedMessage id={exportTextId} />
       </Button>
       <HomeToolbarItem />
     </>
@@ -198,13 +203,17 @@ export const ProjectMenuItems = () => {
     void saveHex();
   }, [saveHex]);
 
+  const isShare = Capacitor.isNativePlatform();
+  const exportTextId = isShare ? "share-action" : "save-action";
+  const exportIconId = isShare ? RiShareLine : RiDownload2Line;
+
   return (
     <>
       <MenuItem
         onClick={handleSave}
-        icon={<Icon h={5} w={5} as={RiDownload2Line} />}
+        icon={<Icon h={5} w={5} as={exportIconId} />}
       >
-        <FormattedMessage id="save-action" />
+        <FormattedMessage id={exportTextId} />
       </MenuItem>
       <MenuDivider />
       <HomeMenuItem />
