@@ -23,7 +23,7 @@ import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import clap from "../images/clap-hands.png";
 import xyzGraph from "../images/xyz-graph.png";
-import { createNewPageUrl } from "../urls";
+import { createHomePageUrl } from "../urls";
 import homepageVideo from "theme-package/images/homepage-short-clip.mp4";
 import HomepageBannerVideo from "../components/HomepageBannerVideo";
 import StepByStepIllustration from "../components/StepByStepIllustration";
@@ -38,7 +38,7 @@ const AboutPage = () => {
   setEditorVersionOverride(params.get("editorVersion") || undefined);
   const navigate = useNavigate();
   const handleGetStarted = useCallback(() => {
-    navigate(createNewPageUrl());
+    navigate(createHomePageUrl());
   }, [navigate]);
   const intl = useIntl();
   const [{ languageId }] = useSettings();

@@ -29,10 +29,10 @@ import ProjectCard from "../components/ProjectCard";
 import { createResourceCards } from "../components/ResourceCards";
 import { useLogging } from "../logging/logging-hooks";
 import { useSettings, useStore } from "../store";
-import { createDataSamplesPageUrl, createProjectsUrl } from "../urls";
+import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
 import LoadingPage from "../components/LoadingPage";
 
-const NewPageMultipleProjects = () => {
+const HomePage = () => {
   const { allProjectDataLoaded } = useLoaderData() as {
     allProjectDataLoaded: boolean;
   };
@@ -85,7 +85,7 @@ const ProjectRow = () => {
 const ViewAllProjectsButton = () => {
   const navigate = useNavigate();
   const handleClick = useCallback(() => {
-    navigate(createProjectsUrl());
+    navigate(createProjectsPageUrl());
   }, [navigate]);
   return <Button onClick={handleClick}>View all</Button>;
 };
@@ -139,4 +139,4 @@ const ImportProjectButton = () => {
   );
 };
 
-export default NewPageMultipleProjects;
+export default HomePage;

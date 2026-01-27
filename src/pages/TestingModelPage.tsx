@@ -39,7 +39,6 @@ import { tourElClassname } from "../tours";
 import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
 import { ButtonWithLoading } from "../components/ButtonWithLoading";
 import { projectSessionStorage } from "../session-storage";
-import { flags } from "../flags";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
@@ -54,7 +53,7 @@ const TestingModelPage = () => {
   }, [navigate]);
 
   useEffect(() => {
-    if (!projectSessionStorage.getProjectId() && flags.multipleProjects) {
+    if (!projectSessionStorage.getProjectId()) {
       return navigate(createHomePageUrl());
     }
     if (!model) {

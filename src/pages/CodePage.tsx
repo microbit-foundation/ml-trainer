@@ -18,7 +18,6 @@ import {
 } from "../urls";
 import Tour from "./Tour";
 import { projectSessionStorage } from "../session-storage";
-import { flags } from "../flags";
 
 const CodePage = () => {
   const navigate = useNavigate();
@@ -30,7 +29,7 @@ const CodePage = () => {
   const intl = useIntl();
   const initAsyncCalled = useRef(false);
   useEffect(() => {
-    if (!projectSessionStorage.getProjectId() && flags.multipleProjects) {
+    if (!projectSessionStorage.getProjectId()) {
       return navigate(createHomePageUrl());
     }
     if (!model) {

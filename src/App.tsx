@@ -49,7 +49,6 @@ import TranslationProvider from "./messages/TranslationProvider";
 import { PostImportDialogState } from "./model";
 import CodePage from "./pages/CodePage";
 import DataSamplesPage from "./pages/DataSamplesPage";
-import HomePage from "./pages/AboutPage";
 import ImportPage from "./pages/ImportPage";
 import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
 import TestingModelPage from "./pages/TestingModelPage";
@@ -60,19 +59,19 @@ import {
   useStore,
 } from "./store";
 import {
+  createAboutPageUrl,
   createCodePageUrl,
   createDataSamplesPageUrl,
   createHomePageUrl,
   createImportPageUrl,
-  createNewPageUrl,
   createOpenSharedProjectPageUrl,
-  createProjectsUrl,
+  createProjectsPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
 import ProjectLoadWrapper from "./components/ProjectLoadWrapper";
-import NewPageMultipleProjects from "./pages/NewPageMultipleProjects";
-import NewPageSingleProject from "./pages/NewPageSingleProject";
 import ProjectsPage from "./pages/ProjectsPage";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -174,12 +173,9 @@ const Layout = () => {
   useEffect(() => {
     const listener = async (event: MessageEvent<BroadcastChannelData>) => {
       const data = event.data;
-      // If multiple projects are allowed, only respond to broadcastChannel messages
+      // Only respond to broadcastChannel messages
       // from projects with the same id to keep tabs / windows in sync.
-      if (
-        data.projectId &&
-        (!flags.multipleProjects || data.projectId === id)
-      ) {
+      if (data.projectId && data.projectId === id) {
         switch (data.messageType) {
           case BroadcastChannelMessageType.RELOAD_PROJECT: {
             await loadProjectAndModelFromStorage(data.projectId);
@@ -198,8 +194,11 @@ const Layout = () => {
           }
         }
       }
-      // Update all project data on new / listing page.
-      if (location.pathname === createNewPageUrl()) {
+      // Update all project data on the home page and projects page.
+      if (
+        location.pathname === createHomePageUrl() ||
+        location.pathname === createProjectsPageUrl()
+      ) {
         await getAllProjectsFromStorage();
       }
     };
@@ -255,21 +254,13 @@ const createRouter = () => {
         {
           path: createHomePageUrl(),
           element: <HomePage />,
-        },
-        {
-          path: createNewPageUrl(),
-          element: flags.multipleProjects ? (
-            <NewPageMultipleProjects />
-          ) : (
-            <NewPageSingleProject />
-          ),
           loader: () => {
             const allProjectDataLoaded = getAllProjectsFromStorage();
             return defer({ allProjectDataLoaded });
           },
         },
         {
-          path: createProjectsUrl(),
+          path: createProjectsPageUrl(),
           element: <ProjectsPage />,
           loader: () => {
             const allProjectDataLoaded = getAllProjectsFromStorage();
@@ -303,6 +294,10 @@ const createRouter = () => {
             </ProjectLoadWrapper>
           ),
           loader: commonLoaderFunction,
+        },
+        {
+          path: createAboutPageUrl(),
+          element: <AboutPage />,
         },
         {
           path: createOpenSharedProjectPageUrl(),

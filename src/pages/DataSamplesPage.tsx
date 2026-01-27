@@ -22,7 +22,6 @@ import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createHomePageUrl, createTestingModelPageUrl } from "../urls";
 import { projectSessionStorage } from "../session-storage";
-import { flags } from "../flags";
 
 const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
@@ -33,16 +32,9 @@ const DataSamplesPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const initAsync = async () => {
-      if (!projectSessionStorage.getProjectId()) {
-        if (flags.multipleProjects) {
-          return navigate(createHomePageUrl());
-        } else {
-          await newSession();
-        }
-      }
-    };
-    void initAsync();
+    if (!projectSessionStorage.getProjectId()) {
+      return navigate(createHomePageUrl());
+    }
   }, [navigate, newSession]);
 
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
