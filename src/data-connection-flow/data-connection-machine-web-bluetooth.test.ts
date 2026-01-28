@@ -22,6 +22,7 @@ const createState = (
   isWebUsbSupported: true,
   hadSuccessfulConnection: false,
   hasSwitchedConnectionType: false,
+  hasMicrobitName: false,
   isReconnecting: false,
   hasFailedOnce: false,
   isStartingOver: false,
@@ -108,11 +109,11 @@ describe("Data connection flow: Web Bluetooth", () => {
         type: "next",
       });
 
-      expect(result?.step).toBe(DataConnectionStep.BluetoothPattern);
+      expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);
     });
 
     it("BluetoothPattern -> WebBluetoothPreConnectTutorial", () => {
-      const result = transition(DataConnectionStep.BluetoothPattern, {
+      const result = transition(DataConnectionStep.EnterBluetoothPattern, {
         type: "next",
       });
 
@@ -135,12 +136,12 @@ describe("Data connection flow: Web Bluetooth", () => {
     });
 
     it("BluetoothPattern setMicrobitName -> stays on BluetoothPattern with setMicrobitName action", () => {
-      const result = transition(DataConnectionStep.BluetoothPattern, {
+      const result = transition(DataConnectionStep.EnterBluetoothPattern, {
         type: "setMicrobitName",
         name: "zogup",
       });
 
-      expect(result?.step).toBe(DataConnectionStep.BluetoothPattern);
+      expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);
       expect(result?.actions).toContainEqual({ type: "setMicrobitName" });
     });
   });
@@ -189,7 +190,7 @@ describe("Data connection flow: Web Bluetooth", () => {
     });
 
     it("BluetoothPattern back -> ConnectBattery", () => {
-      const result = transition(DataConnectionStep.BluetoothPattern, {
+      const result = transition(DataConnectionStep.EnterBluetoothPattern, {
         type: "back",
       });
 
@@ -202,7 +203,7 @@ describe("Data connection flow: Web Bluetooth", () => {
         { type: "back" }
       );
 
-      expect(result?.step).toBe(DataConnectionStep.BluetoothPattern);
+      expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);
     });
   });
 
@@ -369,7 +370,7 @@ describe("Data connection flow: Web Bluetooth", () => {
         { type: "tryAgain" }
       );
 
-      expect(result?.step).toBe(DataConnectionStep.BluetoothPattern);
+      expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);
     });
 
     it("ConnectFailed next -> BluetoothConnect with status and connectData", () => {
@@ -407,7 +408,7 @@ describe("Data connection flow: Web Bluetooth", () => {
       DataConnectionStep.WebUsbFlashingTutorial,
       DataConnectionStep.ManualFlashingTutorial,
       DataConnectionStep.ConnectBattery,
-      DataConnectionStep.BluetoothPattern,
+      DataConnectionStep.EnterBluetoothPattern,
       DataConnectionStep.WebBluetoothPreConnectTutorial,
       DataConnectionStep.BadFirmware,
       DataConnectionStep.TryAgainBluetoothSelectMicrobit,

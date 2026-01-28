@@ -92,8 +92,18 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
   },
 
   [DataConnectionStep.NativeBluetoothPreConnectTutorial]: {
+    entry: [{ type: "checkMicrobitName" }],
     on: {
-      next: { target: DataConnectionStep.BluetoothPattern },
+      next: [
+        {
+          guard: guards.hasMicrobitName,
+          target: DataConnectionStep.NativeCompareBluetoothPattern,
+        },
+        {
+          guard: always,
+          target: DataConnectionStep.EnterBluetoothPattern,
+        },
+      ],
       back: backToStartTransition,
       // Internal transition to toggle between pairing method variants
       switchPairingMethod: {
@@ -114,7 +124,7 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
     },
   },
 
-  [DataConnectionStep.BluetoothPattern]: {
+  [DataConnectionStep.EnterBluetoothPattern]: {
     on: {
       // Go directly to flashing - connectFlash() handles permission checks internally
       next: {
@@ -123,6 +133,20 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
       },
       back: { target: DataConnectionStep.NativeBluetoothPreConnectTutorial },
       ...setMicrobitNameHandler,
+    },
+  },
+
+  [DataConnectionStep.NativeCompareBluetoothPattern]: {
+    on: {
+      // Go directly to flashing - connectFlash() handles permission checks internally
+      next: {
+        target: DataConnectionStep.FlashingInProgress,
+        actions: [{ type: "connectFlash" }],
+      },
+      back: { target: DataConnectionStep.NativeBluetoothPreConnectTutorial },
+      editBluetoothPattern: {
+        target: DataConnectionStep.EnterBluetoothPattern,
+      },
     },
   },
 
@@ -138,7 +162,7 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
         target: DataConnectionStep.ConnectFailed,
       },
       tryAgain: {
-        target: DataConnectionStep.BluetoothPattern,
+        target: DataConnectionStep.EnterBluetoothPattern,
         actions: [{ type: "abortFindingDevice" }],
       },
     },

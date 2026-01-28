@@ -22,6 +22,7 @@ const createState = (
   isWebUsbSupported: true,
   hadSuccessfulConnection: false,
   hasSwitchedConnectionType: false,
+  hasMicrobitName: false,
   isReconnecting: false,
   hasFailedOnce: false,
   isStartingOver: false,

@@ -274,6 +274,16 @@ const executeAction = async (
       await performCheckPermissions(deps);
       break;
 
+    case "checkMicrobitName": {
+      const currentState = getDataConnectionState();
+      const microbitName = useStore.getState().settings.bluetoothMicrobitName;
+      setDataConnectionState({
+        ...currentState,
+        hasMicrobitName: !!microbitName
+      });
+      break;
+    }
+
     case "setCheckingPermissions":
       setDataConnectionState({
         ...getDataConnectionState(),
@@ -317,13 +327,13 @@ const performConnectFlash = async (deps: DataConnectionDeps): Promise<void> => {
   }
 };
 
-const abortFindingDevice = async (deps:DataConnectionDeps): Promise<void> => {
+const abortFindingDevice = async (deps: DataConnectionDeps): Promise<void> => {
   const connection = deps.connections.getDefaultFlashConnection();
   if (!isWebUSBConnection(connection)) {
-    console.log("Aborted device scan!")
-    await connection.abortDeviceScan()
+    console.log("Aborted device scan!");
+    await connection.abortDeviceScan();
   }
-}
+};
 
 /**
  * Perform flash operation.

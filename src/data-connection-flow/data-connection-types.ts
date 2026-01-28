@@ -71,7 +71,8 @@ export const DataConnectionStep = {
   ConnectCable: "ConnectCable",
   WebUsbFlashingTutorial: "WebUsbFlashingTutorial",
   ConnectBattery: "ConnectBattery",
-  BluetoothPattern: "BluetoothPattern",
+  NativeCompareBluetoothPattern: "NativeCompareBluetoothPattern",
+  EnterBluetoothPattern: "EnterBluetoothPattern",
   NativeBluetoothPreConnectTutorial: "NativeBluetoothPreConnectTutorial",
   WebBluetoothPreConnectTutorial: "WebBluetoothPreConnectTutorial",
 
@@ -82,7 +83,8 @@ export const DataConnectionStep = {
   FlashingInProgress: "FlashingInProgress",
 
   // Failure stages.
-  NativeBluetoothPreConnectTroubleshooting: "NativeBluetoothPreConnectTroubleshooting",
+  NativeBluetoothPreConnectTroubleshooting:
+    "NativeBluetoothPreConnectTroubleshooting",
   TryAgainReplugMicrobit: "TryAgainReplugMicrobit",
   TryAgainCloseTabs: "TryAgainCloseTabs",
   TryAgainWebUsbSelectMicrobit: "TryAgainWebUsbSelectMicrobit",
@@ -123,6 +125,11 @@ export interface DataConnectionState {
    * reconnection scenario (skip flow, show "reconnect" text on errors).
    */
   hadSuccessfulConnection: boolean;
+
+  /**
+   * True if a micro:bit name is stored.
+   */
+  hasMicrobitName: boolean;
 
   /**
    * True when an auto or explicit reconnection is in progress.
@@ -212,6 +219,7 @@ export const getInitialDataConnectionState = (): DataConnectionState => {
     isWebUsbSupported: false,
     hadSuccessfulConnection: false,
     hasSwitchedConnectionType: false,
+    hasMicrobitName: false,
     isReconnecting: false,
     hasFailedOnce: false,
     isStartingOver: false,

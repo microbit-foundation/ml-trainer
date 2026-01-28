@@ -22,6 +22,7 @@ const createState = (
   isWebUsbSupported: true,
   hadSuccessfulConnection: false,
   hasSwitchedConnectionType: false,
+  hasMicrobitName: false,
   isReconnecting: false,
   hasFailedOnce: false,
   isStartingOver: false,
@@ -127,7 +128,7 @@ describe("Data connection flow: Native Bluetooth", () => {
         { type: "next" }
       );
 
-      expect(result?.step).toBe(DataConnectionStep.BluetoothPattern);
+      expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);
     });
 
     it("NativeBluetoothPreConnectTutorial switchPairingMethod -> internal transition with toggle", () => {
@@ -144,7 +145,7 @@ describe("Data connection flow: Native Bluetooth", () => {
     });
 
     it("BluetoothPattern next -> FlashingInProgress with connectFlash", () => {
-      const result = transition(DataConnectionStep.BluetoothPattern, {
+      const result = transition(DataConnectionStep.EnterBluetoothPattern, {
         type: "next",
       });
 
@@ -174,7 +175,7 @@ describe("Data connection flow: Native Bluetooth", () => {
     });
 
     it("BluetoothPattern back -> NativeBluetoothPreConnectTutorial", () => {
-      const result = transition(DataConnectionStep.BluetoothPattern, {
+      const result = transition(DataConnectionStep.EnterBluetoothPattern, {
         type: "back",
       });
 
@@ -471,7 +472,7 @@ describe("Data connection flow: Native Bluetooth", () => {
       DataConnectionStep.Start,
       DataConnectionStep.StartOver,
       DataConnectionStep.NativeBluetoothPreConnectTutorial,
-      DataConnectionStep.BluetoothPattern,
+      DataConnectionStep.EnterBluetoothPattern,
       DataConnectionStep.ConnectFailed,
       DataConnectionStep.ConnectionLost,
       DataConnectionStep.BluetoothDisabled,

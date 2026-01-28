@@ -40,6 +40,7 @@ export type DataConnectionEvent =
    */
   | { type: "startBluetoothFlow" }
   | { type: "setMicrobitName"; name: string }
+  | { type: "editBluetoothPattern" }
   | { type: "connectFlashSuccess"; boardVersion?: BoardVersion }
   | {
       type: "connectFlashFailure";
@@ -125,6 +126,10 @@ export type DataConnectionAction =
    */
   | { type: "checkPermissions" }
   /**
+   * Check if micro:bit name is saved and updates connection state accordingly.
+   */
+  | { type: "checkMicrobitName" }
+  /**
    * Set the checking permissions flag (native Bluetooth only).
    * Used to show loading state on "Try Again" button.
    */
@@ -167,6 +172,11 @@ export const guards = {
    * Already failed once - next failure shows "start over" dialog.
    */
   hasFailedOnce: (ctx: DataConnectionState) => ctx.hasFailedOnce,
+
+  /**
+   * A micro:bit name is stored.
+   */
+  hasMicrobitName: (ctx: DataConnectionState) => ctx.hasMicrobitName,
 
   /**
    * User is restarting the flow from StartOver - back should return there.

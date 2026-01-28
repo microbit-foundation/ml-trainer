@@ -40,6 +40,7 @@ import { isAndroid } from "../platform";
 import { DataConnectionState } from "../data-connection-flow/data-connection-types";
 import NativeBluetoothPairingLostDialog from "./NativeBluetoothPairingLostDialog";
 import ResetToBluetoothModeTroubleshootDialog from "./ResetToBluetoothModeTroubleshootDialog";
+import CompareBluetoothPatternDialog from "./CompareBluetoothPatternDialog";
 
 const getDeviceType = (state: DataConnectionState): ConnectionErrorDeviceType =>
   state.type === DataConnectionType.Radio
@@ -144,7 +145,18 @@ const DataConnectionDialogs = () => {
         />
       );
     }
-    case DataConnectionStep.BluetoothPattern: {
+    case DataConnectionStep.NativeCompareBluetoothPattern: {
+      return (
+        <CompareBluetoothPatternDialog
+          {...dialogCommonProps}
+          onBackClick={actions.onBackClick}
+          onNextClick={actions.onNextClick}
+          microbitName={settings.bluetoothMicrobitName}
+          onEditBluetoothPattern={actions.onEditBluetoothPattern}
+        />
+      );
+    }
+    case DataConnectionStep.EnterBluetoothPattern: {
       return (
         <EnterBluetoothPatternDialog
           {...dialogCommonProps}
