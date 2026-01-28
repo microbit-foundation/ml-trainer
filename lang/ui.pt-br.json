@@ -1312,7 +1312,7 @@
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-2": {
-    "defaultMessage": "Tap the (i) icon next to the BBC micro:bit device",
+    "defaultMessage": "Tap the information button (circular i icon) next to the BBC micro:bit device",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-3": {
