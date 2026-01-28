@@ -47,6 +47,7 @@ import NewPage from "./pages/NewPage";
 import TestingModelPage from "./pages/TestingModelPage";
 import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
 import { useStore } from "./store";
+import { useSafeAreaInsets } from "./hooks/use-safe-area-insets";
 import {
   createCodePageUrl,
   createDataSamplesPageUrl,
@@ -56,8 +57,6 @@ import {
   createNewPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
-import { SafeArea, SystemBarsStyle } from "@capacitor-community/safe-area";
-import { Capacitor } from "@capacitor/core";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -202,13 +201,10 @@ const createRouter = () => {
 };
 
 const App = () => {
-  useEffect(() => {
-    if (Capacitor.isNativePlatform()) {
-      void SafeArea.setSystemBarsStyle({
-        style: SystemBarsStyle.Dark,
-      });
-    }
+  // Detect safe area insets and set CSS variables for nav bar side only
+  useSafeAreaInsets();
 
+  useEffect(() => {
     if (navigator.bluetooth) {
       navigator.bluetooth
         .getAvailability()

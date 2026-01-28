@@ -45,6 +45,11 @@ interface DefaultPageLayoutProps {
   toolbarItemsRight?: ReactNode;
   menuItems?: ReactNode;
   showPageTitle?: boolean;
+  /**
+   * Content to render at the bottom of the page with safe area padding.
+   * Use this for fixed bottom bars with action buttons, live graphs, etc.
+   */
+  bottomContent?: ReactNode;
 }
 
 const DefaultPageLayout = ({
@@ -54,6 +59,7 @@ const DefaultPageLayout = ({
   toolbarItemsLeft,
   toolbarItemsRight,
   showPageTitle = false,
+  bottomContent,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
   const isConnectionDialogOpen = useStore((s) =>
@@ -99,11 +105,19 @@ const DefaultPageLayout = ({
         isEnabled={!isNonConnectionDialogOpen && !isConnectionDialogOpen}
       >
         <VStack
-          minH="100vh"
+          h="100vh"
           w="100%"
           alignItems="stretch"
           spacing={0}
           bgColor="whitesmoke"
+          overflow="hidden"
+          sx={{
+            // Handle landscape orientation where nav bar moves to side.
+            // Uses heuristic: larger inset is nav bar, smaller is camera cutout.
+            paddingLeft: "var(--safe-area-nav-left, 0px)",
+            paddingRight: "var(--safe-area-nav-right, 0px)",
+            paddingBottom: "env(safe-area-inset-bottom)",
+          }}
         >
           <VStack zIndex={999} position="sticky" top={0} gap={0}>
             <ActionBar
@@ -140,9 +154,14 @@ const DefaultPageLayout = ({
             />
             {flags.preReleaseNotice && <PreReleaseNotice />}
           </VStack>
-          <Flex flexGrow={1} flexDir="column">
+          <Flex flexGrow={1} flexDir="column" overflow="auto">
             {children}
           </Flex>
+          {bottomContent && (
+            <VStack w="full" flexShrink={0} gap={0} bg="gray.25">
+              {bottomContent}
+            </VStack>
+          )}
         </VStack>
       </ProjectDropTarget>
     </>

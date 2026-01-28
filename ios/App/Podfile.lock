@@ -5,7 +5,7 @@ PODS:
     - Capacitor
   - CapacitorCommunityBluetoothLe (7.3.0):
     - Capacitor
-  - CapacitorCommunitySafeArea (7.0.0-beta.5):
+  - CapacitorCommunitySafeArea (7.0.0):
     - Capacitor
   - CapacitorCordova (7.4.4)
   - CapacitorFilesystem (7.1.6):
@@ -54,7 +54,7 @@ SPEC CHECKSUMS:
   Capacitor: 358dd1c3fdd71d969547b17e159fd8a7736cb45f
   CapacitorApp: 26587c2ce485d88ddb39adb21cac64f8e481afe3
   CapacitorCommunityBluetoothLe: 41f9dec8a4c16ab6b81e56402b6047fc19b4735d
-  CapacitorCommunitySafeArea: 53e3ad999bada9892cb4e9aca8fa8012aabad4b2
+  CapacitorCommunitySafeArea: 211e919d3f0ff6020a3b2acb3b772fa30fb685ef
   CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
   CapacitorFilesystem: 66f05ee0d8b1ccdc00d509091273a9b3b57c4a0b
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
