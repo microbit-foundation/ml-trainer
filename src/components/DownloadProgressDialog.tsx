@@ -56,6 +56,10 @@ const getSubtitleId = (
       return undefined;
     case ProgressStage.FindingDevice:
       return "downloading-stage-finding-device";
+    case ProgressStage.CheckingBond:
+      return "Pairing with micro:bit if needed. Choose 'Pair' if you receive a notification.";
+    case ProgressStage.ResettingDevice:
+      return "Waiting for micro:bit to reboot...";
     case ProgressStage.Connecting:
       return "downloading-stage-connecting";
     case ProgressStage.PartialFlashing:
