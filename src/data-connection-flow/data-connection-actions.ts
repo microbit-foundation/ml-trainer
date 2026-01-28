@@ -400,7 +400,8 @@ const performConnectData = async (
     if (clearDevice) {
       await connection.clearDevice();
     }
-    await connection.connect({ progress: progressCallback });
+    progressCallback(ProgressStage.Connecting, undefined)
+    await connection.connect();
     // Success event (deviceConnected) is sent by the status listener.
   } catch (e) {
     if (e instanceof DeviceError) {
