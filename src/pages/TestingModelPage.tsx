@@ -14,7 +14,6 @@ import {
   MenuList,
   Portal,
   usePrevious,
-  VStack,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import { RiDeleteBin2Line } from "react-icons/ri";
@@ -122,6 +121,60 @@ const TestingModelPage = () => {
           <FormattedMessage id="back-to-data-samples-action" />
         </Button>
       }
+      bottomContent={
+        <>
+          <HStack
+            role="region"
+            aria-label={intl.formatMessage({
+              id: "testing-model-actions-region",
+            })}
+            justifyContent="right"
+            px={5}
+            py={2}
+            w="full"
+            borderBottomWidth={3}
+            borderTopWidth={3}
+            borderColor="gray.200"
+            alignItems="center"
+          >
+            <Menu>
+              <ButtonGroup isAttached>
+                <ButtonWithLoading
+                  variant="primary"
+                  onClick={maybeOpenEditor}
+                  className={tourElClassname.editInMakeCodeButton}
+                  isLoading={
+                    editorLoading && !isIncompatibleEditorDeviceDialogOpen
+                  }
+                >
+                  <FormattedMessage id="edit-in-makecode-action" />
+                </ButtonWithLoading>
+                <MoreMenuButton
+                  variant="primary"
+                  aria-label={intl.formatMessage({
+                    id: "more-edit-in-makecode-options",
+                  })}
+                />
+                <Portal>
+                  <MenuList>
+                    <MenuItem
+                      icon={<RiDeleteBin2Line />}
+                      onClick={resetProject}
+                      isDisabled={!projectEdited}
+                    >
+                      <FormattedMessage id="reset-to-default-action" />
+                    </MenuItem>
+                  </MenuList>
+                </Portal>
+              </ButtonGroup>
+            </Menu>
+          </HStack>
+          <LiveGraphPanel
+            showPredictedAction
+            disconnectedTextId="connect-to-test-model"
+          />
+        </>
+      }
     >
       <IncompatibleEditorDevice
         isOpen={isIncompatibleEditorDeviceDialogOpen}
@@ -133,58 +186,6 @@ const TestingModelPage = () => {
       <Flex as="main" flexGrow={1} flexDir="column">
         <TestingModelTable />
       </Flex>
-      <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
-        <HStack
-          role="region"
-          aria-label={intl.formatMessage({
-            id: "testing-model-actions-region",
-          })}
-          justifyContent="right"
-          px={5}
-          py={2}
-          w="full"
-          borderBottomWidth={3}
-          borderTopWidth={3}
-          borderColor="gray.200"
-          alignItems="center"
-        >
-          <Menu>
-            <ButtonGroup isAttached>
-              <ButtonWithLoading
-                variant="primary"
-                onClick={maybeOpenEditor}
-                className={tourElClassname.editInMakeCodeButton}
-                isLoading={
-                  editorLoading && !isIncompatibleEditorDeviceDialogOpen
-                }
-              >
-                <FormattedMessage id="edit-in-makecode-action" />
-              </ButtonWithLoading>
-              <MoreMenuButton
-                variant="primary"
-                aria-label={intl.formatMessage({
-                  id: "more-edit-in-makecode-options",
-                })}
-              />
-              <Portal>
-                <MenuList>
-                  <MenuItem
-                    icon={<RiDeleteBin2Line />}
-                    onClick={resetProject}
-                    isDisabled={!projectEdited}
-                  >
-                    <FormattedMessage id="reset-to-default-action" />
-                  </MenuItem>
-                </MenuList>
-              </Portal>
-            </ButtonGroup>
-          </Menu>
-        </HStack>
-        <LiveGraphPanel
-          showPredictedAction
-          disconnectedTextId="connect-to-test-model"
-        />
-      </VStack>
     </DefaultPageLayout>
   ) : (
     <></>

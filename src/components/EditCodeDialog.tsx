@@ -31,6 +31,9 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
         position={isOpen ? undefined : "absolute"}
         sx={{
           paddingTop: "env(safe-area-inset-top)",
+          paddingBottom: "env(safe-area-inset-bottom)",
+          paddingLeft: "var(--safe-area-nav-left, 0px)",
+          paddingRight: "var(--safe-area-nav-right, 0px)",
         }}
       >
         <Editor ref={ref} style={{ flexGrow: 1 }} />
