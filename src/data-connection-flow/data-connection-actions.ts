@@ -279,7 +279,7 @@ const executeAction = async (
       const microbitName = useStore.getState().settings.bluetoothMicrobitName;
       setDataConnectionState({
         ...currentState,
-        hasMicrobitName: !!microbitName
+        hasMicrobitName: !!microbitName,
       });
       break;
     }
@@ -399,7 +399,7 @@ const performConnectData = async (
     if (clearDevice) {
       await connection.clearDevice();
     }
-    progressCallback(ProgressStage.Connecting, undefined)
+    progressCallback(ProgressStage.Connecting, undefined);
     await connection.connect();
     // Success event (deviceConnected) is sent by the status listener.
   } catch (e) {

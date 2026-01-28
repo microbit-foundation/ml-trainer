@@ -82,14 +82,14 @@ export const useDataConnectionActions = (): DataConnectionActions => {
         dataConnectionMachine.fireEvent({ type: "startBluetoothFlow" }),
       onChangeMicrobitName: (name: string) =>
         dataConnectionMachine.fireEvent({ type: "setMicrobitName", name }),
-      onEditBluetoothPattern: () => 
+      onEditBluetoothPattern: () =>
         dataConnectionMachine.fireEvent({ type: "editBluetoothPattern" }),
       disconnect: () => dataConnectionMachine.fireEvent({ type: "disconnect" }),
       openAppSettings,
       openLocationSettings: android ? openLocationSettings : undefined,
       switchPairingMethod: () =>
         dataConnectionMachine.fireEvent({ type: "switchPairingMethod" }),
-      troubleshootPairingMethod: () => 
+      troubleshootPairingMethod: () =>
         dataConnectionMachine.fireEvent({ type: "troubleshootPairingMethod" }),
     };
   }, [dataConnectionMachine, openAppSettings, openLocationSettings, android]);

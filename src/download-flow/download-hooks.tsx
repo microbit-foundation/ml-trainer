@@ -53,8 +53,7 @@ const createDownloadActions = (deps: DownloadDependencies) => ({
     fireEvent({ type: "setMicrobitName", name }, deps);
   },
 
-  switchPairingMethod: () =>
-    fireEvent({ type: "switchPairingMethod" }, deps),
+  switchPairingMethod: () => fireEvent({ type: "switchPairingMethod" }, deps),
 
   troubleshootPairingMethod: () => {
     fireEvent({ type: "troubleshootPairingMethod" }, deps);
