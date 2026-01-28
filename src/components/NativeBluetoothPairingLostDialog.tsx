@@ -51,22 +51,21 @@ const NativeBluetoothPairingLostDialog = ({
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
               <Text textAlign="left" w="100%">
-                Please forget this device in your Bluetooth settings and try
-                again.
+                <FormattedMessage id="native-bluetooth-error-forget-device" />
               </Text>
               <VStack textAlign="left" w="100%" gap={3}>
                 <OrderedList textAlign="left">
                   <ListItem>
-                    <Text>Go to the Settings app &gt; Bluetooth</Text>
+                    <FormattedMessage id="native-bluetooth-error-forget-device-step-1" />
                   </ListItem>
                   <ListItem>
-                    <Text>Tap the (i) icon next to the BBC micro:bit device</Text>
+                    <FormattedMessage id="native-bluetooth-error-forget-device-step-2" />
                   </ListItem>
                   <ListItem>
-                    <Text>Tap "Forget This Device"</Text>
+                    <FormattedMessage id="native-bluetooth-error-forget-device-step-3" />
                   </ListItem>
                   <ListItem>
-                    <Text>Return to this app to try again</Text>
+                    <FormattedMessage id="native-bluetooth-error-forget-device-step-4" />
                   </ListItem>
                 </OrderedList>
               </VStack>

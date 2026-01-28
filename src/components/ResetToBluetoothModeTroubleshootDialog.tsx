@@ -44,23 +44,23 @@ const ResetToBluetoothModeTroubleshootDialog = ({
     >
       <ModalOverlay>
         <ModalContent>
-          <ModalHeader>Unable to enter Bluetooth mode?</ModalHeader>
+          <ModalHeader>
+            <FormattedMessage id="connect-unable-to-enter-bluetooth-mode-heading" />
+          </ModalHeader>
           <ModalBody>
             <VStack textAlign="left" w="100%" gap={3}>
-              <Text w="100%">Try the following:</Text>
+              <Text w="100%">
+                <FormattedMessage id="connect-unable-to-enter-bluetooth-mode-troubleshooting" />
+              </Text>
               <UnorderedList textAlign="left" ps={8}>
                 <ListItem>
                   <Text>
-                    Disconnect and then reconnect the micro:bit with the power
-                    source.
+                    <FormattedMessage id="connect-unable-to-enter-bluetooth-mode-troubleshooting-1" />
                   </Text>
                 </ListItem>
                 <ListItem>
                   <Text>
-                    If your micro:bit shows a "+" icon, connect the micro:bit to
-                    a computer with a USB cable and download a simple program.
-                    Unpair/Forget the micro:bit in the Settings app before
-                    trying again.
+                    <FormattedMessage id="connect-unable-to-enter-bluetooth-mode-troubleshooting-2" />
                   </Text>
                 </ListItem>
               </UnorderedList>

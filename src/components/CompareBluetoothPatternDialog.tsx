@@ -9,6 +9,7 @@ import BluetoothPatternInput from "./BluetoothPatternInput";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
+import { FormattedMessage } from "react-intl";
 
 export interface CompareBluetoothPatternDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
@@ -23,7 +24,6 @@ const CompareBluetoothPatternDialog = ({
   microbitName,
   ...props
 }: CompareBluetoothPatternDialogProps) => {
-
   const handleNextClick = useCallback(() => {
     onNextClick && onNextClick();
   }, [onNextClick]);
@@ -39,14 +39,14 @@ const CompareBluetoothPatternDialog = ({
       headingId="Compare pattern"
       footerLeft={
         <Button onClick={onChangeMicrobitName} variant="link" size="lg">
-          My pattern is different
+          <FormattedMessage id="connect-native-edit-pattern" />
         </Button>
       }
       {...props}
     >
       <VStack gap={10}>
         <Text width="100%">
-          Compare this pattern with the one displayed on your micro:bit.
+          <FormattedMessage id="connect-native-compare-pattern-subtitle" />
         </Text>
         <VStack>
           <BluetoothPatternInput invalid={false} microbitName={microbitName} />

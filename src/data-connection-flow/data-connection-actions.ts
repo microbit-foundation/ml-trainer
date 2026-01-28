@@ -330,7 +330,6 @@ const performConnectFlash = async (deps: DataConnectionDeps): Promise<void> => {
 const abortFindingDevice = async (deps: DataConnectionDeps): Promise<void> => {
   const connection = deps.connections.getDefaultFlashConnection();
   if (!isWebUSBConnection(connection)) {
-    console.log("Aborted device scan!");
     await connection.abortDeviceScan();
   }
 };

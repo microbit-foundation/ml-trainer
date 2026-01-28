@@ -47,7 +47,7 @@ const ResetToBluetoothModeDialog = ({
           {isTripleReset ? (
             <FormattedMessage id="connect-try-another-way" />
           ) : (
-            "Unable to enter Bluetooth mode?"
+            <FormattedMessage id="connect-unable-to-enter-bluetooth-mode" />
           )}
         </Link>
       }

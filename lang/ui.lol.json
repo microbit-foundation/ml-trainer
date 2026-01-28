@@ -283,6 +283,14 @@
     "defaultMessage": "crwdns362770:0crwdne362770:0",
     "description": "Label for cable icon in list of requirements"
   },
+  "connect-native-compare-pattern-subtitle": {
+    "defaultMessage": "Compare this pattern with the one displayed on your micro:bit.",
+    "description": "Compare bluetooth pattern dialog subtitle"
+  },
+  "connect-native-edit-pattern": {
+    "defaultMessage": "My pattern is different.",
+    "description": "Edit bluetooth pattern link"
+  },
   "connect-native-start-heading": {
     "defaultMessage": "What you need to connect",
     "description": "Connection dialog heading"
@@ -414,6 +422,26 @@
   "connect-try-another-way": {
     "defaultMessage": "Try another way",
     "description": "Link to alternative connection method"
+  },
+  "connect-unable-to-enter-bluetooth-mode": {
+    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "description": "Link to troubleshooting entering bluetooth mode"
+  },
+  "connect-unable-to-enter-bluetooth-mode-heading": {
+    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "description": "Unable to enter Bluetooth mode dialog heading"
+  },
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting": {
+    "defaultMessage": "Try the following:",
+    "description": "Heading for list of things to try to enter Bluetooth mode dialog"
+  },
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": {
+    "defaultMessage": "Disconnect and then reconnect the micro:bit with the power source.",
+    "description": "List item in things to try to enter Bluetooth mode dialog"
+  },
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": {
+    "defaultMessage": "If your micro:bit shows an ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again.",
+    "description": "List item in things to try to enter Bluetooth mode dialog"
   },
   "connect-with-batteries": {
     "defaultMessage": "crwdns362832:0crwdne362832:0",
@@ -619,6 +647,10 @@
     "defaultMessage": "crwdns362930:0crwdne362930:0",
     "description": "Progress text"
   },
+  "downloading-stage-checking-bond": {
+    "defaultMessage": "Pairing with micro:bit if needed. Choose 'Pair' if you receive a notification.",
+    "description": "Progress text when ensuring device is paired before flashing"
+  },
   "downloading-stage-connecting": {
     "defaultMessage": "Connecting to micro:bit…",
     "description": "Progress text during connection stage of flashing"
@@ -630,6 +662,10 @@
   "downloading-stage-flashing": {
     "defaultMessage": "Please do not interact with the micro:bit before the downloading is complete.",
     "description": "Progress text during actual flashing stage"
+  },
+  "downloading-stage-resetting-device": {
+    "defaultMessage": "Waiting for micro:bit to reboot...",
+    "description": "Progress text when rebooting micro:bit before flashing"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "crwdns362934:0crwdne362934:0",
@@ -1265,6 +1301,26 @@
   },
   "native-bluetooth-error-check-pattern": {
     "defaultMessage": "the pattern you entered is correct",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-forget-device": {
+    "defaultMessage": "Please forget this device in your Bluetooth settings and try again.",
+    "description": "Heading for instructions on how to forget device in Bluetooth error dialog"
+  },
+  "native-bluetooth-error-forget-device-step-1": {
+    "defaultMessage": "Go to Bluetooth in the Settings app",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-forget-device-step-2": {
+    "defaultMessage": "Tap the (i) icon next to the BBC micro:bit device",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-forget-device-step-3": {
+    "defaultMessage": "Tap ‘Forget This Device’",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-forget-device-step-4": {
+    "defaultMessage": "Return to this app to try again",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-heading": {

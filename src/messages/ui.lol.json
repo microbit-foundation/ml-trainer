@@ -509,6 +509,18 @@
       "value": "crwdns362770:0crwdne362770:0"
     }
   ],
+  "connect-native-compare-pattern-subtitle": [
+    {
+      "type": 0,
+      "value": "Compare this pattern with the one displayed on your micro:bit."
+    }
+  ],
+  "connect-native-edit-pattern": [
+    {
+      "type": 0,
+      "value": "My pattern is different."
+    }
+  ],
   "connect-native-start-heading": [
     {
       "type": 0,
@@ -713,6 +725,36 @@
     {
       "type": 0,
       "value": "Try another way"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode": [
+    {
+      "type": 0,
+      "value": "Unable to enter Bluetooth mode?"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-heading": [
+    {
+      "type": 0,
+      "value": "Unable to enter Bluetooth mode?"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting": [
+    {
+      "type": 0,
+      "value": "Try the following:"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": [
+    {
+      "type": 0,
+      "value": "Disconnect and then reconnect the micro:bit with the power source."
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": [
+    {
+      "type": 0,
+      "value": "If your micro:bit shows an ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again."
     }
   ],
   "connect-with-batteries": [
@@ -1077,6 +1119,12 @@
       "value": "crwdns362930:0crwdne362930:0"
     }
   ],
+  "downloading-stage-checking-bond": [
+    {
+      "type": 0,
+      "value": "Pairing with micro:bit if needed. Choose 'Pair' if you receive a notification."
+    }
+  ],
   "downloading-stage-connecting": [
     {
       "type": 0,
@@ -1093,6 +1141,12 @@
     {
       "type": 0,
       "value": "Please do not interact with the micro:bit before the downloading is complete."
+    }
+  ],
+  "downloading-stage-resetting-device": [
+    {
+      "type": 0,
+      "value": "Waiting for micro:bit to reboot..."
     }
   ],
   "edit-in-makecode-action": [
@@ -2085,6 +2139,36 @@
     {
       "type": 0,
       "value": "the pattern you entered is correct"
+    }
+  ],
+  "native-bluetooth-error-forget-device": [
+    {
+      "type": 0,
+      "value": "Please forget this device in your Bluetooth settings and try again."
+    }
+  ],
+  "native-bluetooth-error-forget-device-step-1": [
+    {
+      "type": 0,
+      "value": "Go to Bluetooth in the Settings app"
+    }
+  ],
+  "native-bluetooth-error-forget-device-step-2": [
+    {
+      "type": 0,
+      "value": "Tap the (i) icon next to the BBC micro:bit device"
+    }
+  ],
+  "native-bluetooth-error-forget-device-step-3": [
+    {
+      "type": 0,
+      "value": "Tap ‘Forget This Device’"
+    }
+  ],
+  "native-bluetooth-error-forget-device-step-4": [
+    {
+      "type": 0,
+      "value": "Return to this app to try again"
     }
   ],
   "native-bluetooth-error-heading": [

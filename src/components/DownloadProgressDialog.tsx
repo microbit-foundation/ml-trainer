@@ -57,9 +57,9 @@ const getSubtitleId = (
     case ProgressStage.FindingDevice:
       return "downloading-stage-finding-device";
     case ProgressStage.CheckingBond:
-      return "Pairing with micro:bit if needed. Choose 'Pair' if you receive a notification.";
+      return "downloading-stage-checking-bond";
     case ProgressStage.ResettingDevice:
-      return "Waiting for micro:bit to reboot...";
+      return "downloading-stage-resetting-device";
     case ProgressStage.Connecting:
       return "downloading-stage-connecting";
     case ProgressStage.PartialFlashing:
@@ -138,7 +138,7 @@ const DownloadProgressDialog = ({
           <ModalFooter justifyContent="start">
             {isNativePlatform() && tryAgain && isFindingDevice && (
               <Button onClick={tryAgain} variant="link" size="lg">
-                My pattern is different
+                <FormattedMessage id="connect-native-edit-pattern" />
               </Button>
             )}
           </ModalFooter>
