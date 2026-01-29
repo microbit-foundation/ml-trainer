@@ -152,7 +152,7 @@ const DataConnectionDialogs = () => {
           onBackClick={actions.onBackClick}
           onNextClick={actions.onNextClick}
           microbitName={settings.bluetoothMicrobitName}
-          onEditBluetoothPattern={actions.onEditBluetoothPattern}
+          onChangeBluetoothPattern={actions.onEditBluetoothPattern}
         />
       );
     }

@@ -53,6 +53,8 @@ const createDownloadActions = (deps: DownloadDependencies) => ({
     fireEvent({ type: "setMicrobitName", name }, deps);
   },
 
+  onEditBluetoothPattern: () => fireEvent({ type: "editBluetoothPattern"}, deps),
+
   switchPairingMethod: () => fireEvent({ type: "switchPairingMethod" }, deps),
 
   troubleshootPairingMethod: () => {

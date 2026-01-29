@@ -13,14 +13,14 @@ import { FormattedMessage } from "react-intl";
 
 export interface CompareBluetoothPatternDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
-  onEditBluetoothPattern: () => void;
+  onChangeBluetoothPattern: () => void;
   microbitName: string | undefined;
 }
 
 const CompareBluetoothPatternDialog = ({
   onNextClick,
   onBackClick,
-  onEditBluetoothPattern: onChangeMicrobitName,
+  onChangeBluetoothPattern: onChangeMicrobitName,
   microbitName,
   ...props
 }: CompareBluetoothPatternDialogProps) => {

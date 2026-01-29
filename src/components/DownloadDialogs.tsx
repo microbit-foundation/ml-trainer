@@ -8,6 +8,7 @@ import { DownloadStep } from "../download-flow/download-types";
 import { isAndroid } from "../platform";
 import { useSettings, useStore } from "../store";
 import PermissionErrorDialog from "./BluetoothPermissionErrorDialog";
+import CompareBluetoothPatternDialog from "./CompareBluetoothPatternDialog";
 import ConnectCableDialog from "./ConnectCableDialog";
 import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
 import DownloadChooseMicrobitDialog from "./DownloadChooseMicrobitDialog";
@@ -112,7 +113,18 @@ const DownloadDialogs = () => {
           onNextClick={downloadActions.getOnNext()}
         />
       );
-    case DownloadStep.BluetoothPattern:
+    case DownloadStep.NativeCompareBluetoothPattern:
+      return (
+        <CompareBluetoothPatternDialog
+          isOpen
+          onClose={downloadActions.close}
+          onBackClick={downloadActions.getOnBack()}
+          onNextClick={downloadActions.getOnNext()}
+          microbitName={settings.bluetoothMicrobitName}
+          onChangeBluetoothPattern={downloadActions.onEditBluetoothPattern}
+        />
+      );
+    case DownloadStep.EnterBluetoothPattern:
       return (
         <EnterBluetoothPatternDialog
           isOpen

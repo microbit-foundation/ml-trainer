@@ -32,7 +32,8 @@ export const DownloadStep = {
   ManualFlashingTutorial: "ManualFlashingTutorial",
 
   // Bluetooth (native only for download)
-  BluetoothPattern: "BluetoothPattern",
+  EnterBluetoothPattern: "EnterBluetoothPattern",
+  NativeCompareBluetoothPattern: "NativeCompareBluetoothPattern",
   NativeBluetoothPreConnectTutorial: "NativeBluetoothPreConnectTutorial",
   NativeBluetoothPreConnectTroubleshooting:
     "NativeBluetoothPreConnectTroubleshooting",

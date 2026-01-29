@@ -28,6 +28,7 @@ import { getTotalNumSamples } from "../utils/actions";
 import { downloadHex } from "../utils/fs-util";
 import { DownloadState, SameOrDifferentChoice } from "./download-types";
 import { checkPermissions } from "../shared-steps";
+import { isWebUSBConnection } from "../device/connection-utils";
 
 /**
  * Dependencies needed for download actions.
@@ -114,6 +115,7 @@ const executeAction = async (
       break;
     }
 
+    // TODO: Duplicated in data-connection-actions.ts. Consider de-duplicating.
     case "togglePairingMethod": {
       setDownloadState({
         ...state,
@@ -128,6 +130,12 @@ const executeAction = async (
         deps.connections.bluetooth.setNameFilter(event.name);
         deps.setSettings({ bluetoothMicrobitName: event.name });
       }
+      break;
+    }
+
+    // TODO: Duplicated in data-connection-actions.ts. Consider de-duplicating.
+    case "abortFindingDevice": {
+      await abortFindingDevice(deps);
       break;
     }
 
@@ -226,6 +234,17 @@ const performCheckPermissions = async (
 ): Promise<void> => {
   const event = await checkPermissions(deps.connections.bluetooth);
   await sendEvent(event, deps);
+};
+
+/**
+ * Abort finding device process.
+ * TODO: Duplicated in data-connection-actions. Consider de-duplicating.
+ */
+const abortFindingDevice = async (deps: DownloadDependencies): Promise<void> => {
+  const connection = deps.connections.getDefaultFlashConnection();
+  if (!isWebUSBConnection(connection)) {
+    await connection.abortDeviceScan();
+  }
 };
 
 /**

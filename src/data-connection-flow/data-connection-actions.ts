@@ -291,6 +291,7 @@ const executeAction = async (
       });
       break;
 
+    // TODO: Duplicated in download-actions.ts. Consider de-duplicating.
     case "togglePairingMethod": {
       const currentState = getDataConnectionState();
       setDataConnectionState({
@@ -327,6 +328,10 @@ const performConnectFlash = async (deps: DataConnectionDeps): Promise<void> => {
   }
 };
 
+/**
+ * Abort finding device process.
+ * TODO: Duplicated in data-connection-actions. Consider de-duplicating.
+ */
 const abortFindingDevice = async (deps: DataConnectionDeps): Promise<void> => {
   const connection = deps.connections.getDefaultFlashConnection();
   if (!isWebUSBConnection(connection)) {

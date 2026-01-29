@@ -22,6 +22,7 @@ export type DownloadEvent =
   | { type: "choseSame" }
   | { type: "choseDifferent" }
   | { type: "setMicrobitName"; name: string }
+  | { type: "editBluetoothPattern" }
   | { type: "connectFlashSuccess"; boardVersion: "V1" | "V2" }
   | { type: "connectFlashFailure"; code?: string }
   | { type: "flashSuccess" }
@@ -55,6 +56,14 @@ export type DownloadAction =
   | { type: "downloadHexFile" }
   | { type: "disconnectDataConnection" }
   /**
+   * Initialize flashing progress to Initializing stage.
+   * Used as entry action for FlashingInProgress state.
+   */
+  | { type: "initializeFlashingProgress" }
+
+  // TODO: Below types are duplicated in data-connection-machine-common.ts. Consider de-duplicating.
+
+  /**
    * Check Bluetooth permissions (native Bluetooth only).
    * Sends permissionsOk, bluetoothDisabled, permissionDenied, or locationDisabled events.
    */
@@ -65,14 +74,13 @@ export type DownloadAction =
    */
   | { type: "setCheckingPermissions"; value: boolean }
   /**
-   * Initialize flashing progress to Initializing stage.
-   * Used as entry action for FlashingInProgress state.
-   */
-  | { type: "initializeFlashingProgress" }
-  /**
    * Toggle between pairing method variants (triple-reset ↔ a-b-reset).
    */
-  | { type: "togglePairingMethod" };
+  | { type: "togglePairingMethod" }
+  /**
+   * Abort finding device.
+   */
+  | { type: "abortFindingDevice" };
 
 export interface DownloadFlowContext {
   hex?: HexData;
@@ -120,6 +128,12 @@ export const guards = {
    */
   hasDownloadedBefore: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
     ctx.connection !== undefined,
+
+  /**
+   * A micro:bit name is stored.
+   */
+  hasMicrobitName: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
+    !!ctx.bluetoothMicrobitName,
 
   /**
    * Combined guard: has downloaded before AND has active data connection.

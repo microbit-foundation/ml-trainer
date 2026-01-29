@@ -61,8 +61,8 @@ const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
         },
       ],
       tryAgain: {
-        target: DownloadStep.BluetoothPattern,
-        actions: [{ type: "disconnectDataConnection" }],
+        target: DownloadStep.EnterBluetoothPattern,
+        actions: [{ type: "abortFindingDevice" }],
       },
       connectFlashFailure: connectFlashFailureWithPermissionHandling,
       flashSuccess: { target: DownloadStep.None },
@@ -131,7 +131,16 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
   [DownloadStep.NativeBluetoothPreConnectTutorial]: {
     entry: [{ type: "disconnectDataConnection" }],
     on: {
-      next: { target: DownloadStep.BluetoothPattern },
+      next: [
+        {
+          guard: guards.hasMicrobitName,
+          target: DownloadStep.NativeCompareBluetoothPattern,
+        },
+        {
+          guard: always,
+          target: DownloadStep.EnterBluetoothPattern,
+        },
+      ],
       back: [{ guard: guards.shouldShowHelp, target: DownloadStep.Help }],
       switchPairingMethod: {
         actions: [{ type: "togglePairingMethod" }],
@@ -151,7 +160,7 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
     },
   },
 
-  [DownloadStep.BluetoothPattern]: {
+  [DownloadStep.EnterBluetoothPattern]: {
     on: {
       next: {
         target: DownloadStep.FlashingInProgress,
@@ -160,6 +169,19 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
       back: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
       setMicrobitName: {
         actions: [{ type: "setMicrobitName" }],
+      },
+    },
+  },
+
+  [DownloadStep.NativeCompareBluetoothPattern]: {
+    on: {
+      next: {
+        target: DownloadStep.FlashingInProgress,
+        actions: [{ type: "connectFlash" }],
+      },
+      back: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
+      editBluetoothPattern: {
+        target: DownloadStep.EnterBluetoothPattern,
       },
     },
   },
@@ -180,7 +202,7 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
 
   [DownloadStep.IncompatibleDevice]: {
     on: {
-      back: { target: DownloadStep.BluetoothPattern },
+      back: { target: DownloadStep.EnterBluetoothPattern },
     },
   },
 };
