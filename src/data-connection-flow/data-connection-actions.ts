@@ -202,9 +202,11 @@ const executeAction = async (
 
     case "abortFindingDevice": {
       const { connectionAbortController } = getDataConnectionState();
-      if (connectionAbortController) {
-        connectionAbortController.abort();
-      }
+      connectionAbortController?.abort();
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        connectionAbortController: undefined,
+      });
       break;
     }
 
@@ -323,10 +325,11 @@ const executeAction = async (
  * Connect to the flash connection (USB or Native Bluetooth) in order to flash.
  */
 const performConnectFlash = async (deps: DataConnectionDeps): Promise<void> => {
+  const state = getDataConnectionState();
   const connection = deps.connections.getDefaultFlashConnection();
   const abortController = new AbortController();
   setDataConnectionState({
-    ...getDataConnectionState(),
+    ...state,
     connectionAbortController: abortController,
   });
   try {

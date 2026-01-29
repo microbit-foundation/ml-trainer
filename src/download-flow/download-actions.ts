@@ -137,9 +137,13 @@ const executeAction = async (
       break;
     }
 
-    // TODO: Duplicated in data-connection-actions.ts. Consider de-duplicating.
     case "abortFindingDevice": {
-      // TODO: Copy abort logic from data-connection-actions.ts
+      const { connectionAbortController } = getDownloadState();
+      connectionAbortController?.abort();
+      setDownloadState({
+        ...getDownloadState(),
+        connectionAbortController: undefined,
+      });
       break;
     }
 
@@ -211,9 +215,16 @@ const performConnectFlash = async (
       connection.setRequestDeviceExclusionFilters([{ serialNumber }]);
     }
   }
-
+  const abortController = new AbortController();
+  setDownloadState({
+    ...getDownloadState(),
+    connectionAbortController: abortController,
+  });
   try {
-    await connection.connect({ progress: deps.flashingProgressCallback });
+    await connection.connect({
+      progress: deps.flashingProgressCallback,
+      signal: abortController.signal,
+    });
     const boardVersion = connection.getBoardVersion();
     // Store connection for potential reuse
     setDownloadState({ ...getDownloadState(), connection });

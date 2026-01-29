@@ -187,8 +187,8 @@ export interface DataConnectionState {
   pairingMethod: BluetoothPairingMethod;
 
   /**
-   * Abort controller for aborting finding device in the connection process. 
-   * It is `undefined` if there is no process to abort.
+   * Abort controller for aborting the connection process. 
+   * If `undefined`, there is no process to abort.
    */
   connectionAbortController: AbortController | undefined;
 }
