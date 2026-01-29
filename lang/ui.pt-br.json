@@ -283,13 +283,17 @@
     "defaultMessage": "Cabo Micro USB",
     "description": "Label for cable icon in list of requirements"
   },
+  "connect-native-change-pattern": {
+    "defaultMessage": "My pattern is different",
+    "description": "Change bluetooth pattern link"
+  },
+  "connect-native-compare-pattern-heading": {
+    "defaultMessage": "Compare pattern",
+    "description": "Compare bluetooth pattern dialog heading"
+  },
   "connect-native-compare-pattern-subtitle": {
     "defaultMessage": "Compare this pattern with the one displayed on your micro:bit.",
     "description": "Compare bluetooth pattern dialog subtitle"
-  },
-  "connect-native-edit-pattern": {
-    "defaultMessage": "My pattern is different",
-    "description": "Edit bluetooth pattern link"
   },
   "connect-native-start-heading": {
     "defaultMessage": "What you need to connect",

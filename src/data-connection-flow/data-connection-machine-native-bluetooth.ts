@@ -144,8 +144,9 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
         actions: [{ type: "connectFlash" }],
       },
       back: { target: DataConnectionStep.NativeBluetoothPreConnectTutorial },
-      editBluetoothPattern: {
+      changeBluetoothPattern: {
         target: DataConnectionStep.EnterBluetoothPattern,
+        actions: [{ type: "clearMicrobitName" }],
       },
     },
   },
@@ -163,7 +164,10 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
       },
       tryAgain: {
         target: DataConnectionStep.EnterBluetoothPattern,
-        actions: [{ type: "abortFindingDevice" }],
+        actions: [
+          { type: "clearMicrobitName" },
+          { type: "abortFindingDevice" },
+        ],
       },
     },
   },

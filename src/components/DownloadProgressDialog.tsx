@@ -138,7 +138,7 @@ const DownloadProgressDialog = ({
           <ModalFooter justifyContent="start">
             {isNativePlatform() && tryAgain && isFindingDevice && (
               <Button onClick={tryAgain} variant="link" size="lg">
-                <FormattedMessage id="connect-native-edit-pattern" />
+                <FormattedMessage id="connect-native-change-pattern" />
               </Button>
             )}
           </ModalFooter>

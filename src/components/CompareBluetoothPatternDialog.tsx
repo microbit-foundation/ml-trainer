@@ -20,7 +20,7 @@ export interface CompareBluetoothPatternDialogProps
 const CompareBluetoothPatternDialog = ({
   onNextClick,
   onBackClick,
-  onChangeBluetoothPattern: onChangeMicrobitName,
+  onChangeBluetoothPattern,
   microbitName,
   ...props
 }: CompareBluetoothPatternDialogProps) => {
@@ -36,10 +36,10 @@ const CompareBluetoothPatternDialog = ({
     <ConnectContainerDialog
       onNextClick={handleNextClick}
       onBackClick={handleBackClick}
-      headingId="Compare pattern"
+      headingId="connect-native-compare-pattern-heading"
       footerLeft={
-        <Button onClick={onChangeMicrobitName} variant="link" size="lg">
-          <FormattedMessage id="connect-native-edit-pattern" />
+        <Button onClick={onChangeBluetoothPattern} variant="link" size="lg">
+          <FormattedMessage id="connect-native-change-pattern" />
         </Button>
       }
       {...props}

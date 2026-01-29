@@ -511,16 +511,22 @@
       "value": "マイクロUSBケーブル"
     }
   ],
+  "connect-native-change-pattern": [
+    {
+      "type": 0,
+      "value": "My pattern is different"
+    }
+  ],
+  "connect-native-compare-pattern-heading": [
+    {
+      "type": 0,
+      "value": "Compare pattern"
+    }
+  ],
   "connect-native-compare-pattern-subtitle": [
     {
       "type": 0,
       "value": "Compare this pattern with the one displayed on your micro:bit."
-    }
-  ],
-  "connect-native-edit-pattern": [
-    {
-      "type": 0,
-      "value": "My pattern is different"
     }
   ],
   "connect-native-start-heading": [

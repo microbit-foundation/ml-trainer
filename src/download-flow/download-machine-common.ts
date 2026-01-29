@@ -22,7 +22,7 @@ export type DownloadEvent =
   | { type: "choseSame" }
   | { type: "choseDifferent" }
   | { type: "setMicrobitName"; name: string }
-  | { type: "editBluetoothPattern" }
+  | { type: "changeBluetoothPattern" }
   | { type: "connectFlashSuccess"; boardVersion: "V1" | "V2" }
   | { type: "connectFlashFailure"; code?: string }
   | { type: "flashSuccess" }
@@ -51,6 +51,7 @@ export type DownloadAction =
    * Sets micro:bit name from setMicrobitName event (user input).
    */
   | { type: "setMicrobitName" }
+  | { type: "clearMicrobitName" }
   | { type: "connectFlash" }
   | { type: "flash" }
   | { type: "downloadHexFile" }

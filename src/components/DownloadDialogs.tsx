@@ -121,7 +121,7 @@ const DownloadDialogs = () => {
           onBackClick={downloadActions.getOnBack()}
           onNextClick={downloadActions.getOnNext()}
           microbitName={settings.bluetoothMicrobitName}
-          onChangeBluetoothPattern={downloadActions.onEditBluetoothPattern}
+          onChangeBluetoothPattern={downloadActions.changeBluetoothPattern}
         />
       );
     case DownloadStep.EnterBluetoothPattern:

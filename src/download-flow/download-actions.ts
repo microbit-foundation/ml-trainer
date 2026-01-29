@@ -133,6 +133,11 @@ const executeAction = async (
       break;
     }
 
+    case "clearMicrobitName": {
+      deps.setSettings({ bluetoothMicrobitName: undefined });
+      break;
+    }
+
     // TODO: Duplicated in data-connection-actions.ts. Consider de-duplicating.
     case "abortFindingDevice": {
       await abortFindingDevice(deps);
@@ -240,7 +245,9 @@ const performCheckPermissions = async (
  * Abort finding device process.
  * TODO: Duplicated in data-connection-actions. Consider de-duplicating.
  */
-const abortFindingDevice = async (deps: DownloadDependencies): Promise<void> => {
+const abortFindingDevice = async (
+  deps: DownloadDependencies
+): Promise<void> => {
   const connection = deps.connections.getDefaultFlashConnection();
   if (!isWebUSBConnection(connection)) {
     await connection.abortDeviceScan();

@@ -62,7 +62,10 @@ const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
       ],
       tryAgain: {
         target: DownloadStep.EnterBluetoothPattern,
-        actions: [{ type: "abortFindingDevice" }],
+        actions: [
+          { type: "clearMicrobitName" },
+          { type: "abortFindingDevice" },
+        ],
       },
       connectFlashFailure: connectFlashFailureWithPermissionHandling,
       flashSuccess: { target: DownloadStep.None },
@@ -180,8 +183,9 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
         actions: [{ type: "connectFlash" }],
       },
       back: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
-      editBluetoothPattern: {
+      changeBluetoothPattern: {
         target: DownloadStep.EnterBluetoothPattern,
+        actions: [{ type: "clearMicrobitName" }],
       },
     },
   },

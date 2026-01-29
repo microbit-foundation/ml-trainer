@@ -40,7 +40,7 @@ export type DataConnectionEvent =
    */
   | { type: "startBluetoothFlow" }
   | { type: "setMicrobitName"; name: string }
-  | { type: "editBluetoothPattern" }
+  | { type: "changeBluetoothPattern" }
   | { type: "connectFlashSuccess"; boardVersion?: BoardVersion }
   | {
       type: "connectFlashFailure";
@@ -89,6 +89,7 @@ export type DataConnectionAction =
    * Sets micro:bit name from setMicrobitName event (user input) or flashSuccess event (from flashing).
    */
   | { type: "setMicrobitName" }
+  | { type: "clearMicrobitName" }
   | { type: "setRadioRemoteDeviceId"; deviceId?: number }
   | { type: "setRadioBridgeDeviceId"; deviceId?: number }
   /**

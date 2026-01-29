@@ -176,6 +176,11 @@ const executeAction = async (
       break;
     }
 
+    case "clearMicrobitName": {
+      useStore.getState().setSettings({ bluetoothMicrobitName: undefined });
+      break;
+    }
+
     case "setRadioRemoteDeviceId":
       if (event.type === "flashSuccess" && event.deviceId !== undefined) {
         deps.connections.radioBridge.setRemoteDeviceId(event.deviceId);
