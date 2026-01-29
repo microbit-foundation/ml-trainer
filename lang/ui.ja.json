@@ -648,7 +648,7 @@
     "description": "Progress text"
   },
   "downloading-stage-checking-bond": {
-    "defaultMessage": "Pairing with micro:bit if needed. Choose 'Pair' if you receive a notification.",
+    "defaultMessage": "Choose ‘Pair’ if asked.",
     "description": "Progress text when ensuring device is paired before flashing"
   },
   "downloading-stage-connecting": {

@@ -1140,7 +1140,7 @@
   "downloading-stage-checking-bond": [
     {
       "type": 0,
-      "value": "Pairing with micro:bit if needed. Choose 'Pair' if you receive a notification."
+      "value": "Choose ‘Pair’ if asked."
     }
   ],
   "downloading-stage-connecting": [
