@@ -21,7 +21,7 @@ import {
   Input,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { useCallback, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useProjectName } from "../hooks/project-hooks";
 import { validateProjectName } from "../project-utils";
@@ -30,12 +30,14 @@ interface NameProjectDialogProps {
   onClose: () => void;
   isOpen: boolean;
   onSave: (newName?: string) => void;
+  projectName?: string;
 }
 
 export const NameProjectDialog = ({
   onClose,
   isOpen,
   onSave,
+  projectName,
 }: NameProjectDialogProps) => {
   const initialName = useProjectName();
   const [name, setName] = useState<string>(initialName);
@@ -44,9 +46,19 @@ export const NameProjectDialog = ({
     input?.setSelectionRange(0, input.value.length);
   }, []);
 
-  const handleSubmit = useCallback(() => {
-    onSave(name);
-  }, [name, onSave]);
+  const handleSubmit = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault();
+      onSave(name);
+    },
+    [name, onSave]
+  );
+
+  useEffect(() => {
+    if (projectName !== undefined) {
+      setName(projectName);
+    }
+  }, [projectName]);
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay>

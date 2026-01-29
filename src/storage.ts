@@ -749,6 +749,41 @@ export class Database {
     return tx.done;
   }
 
+  async renameProject(id: string, name: string, timestamp: number) {
+    const tx = (await this.useDb()).transaction(
+      [DatabaseStore.MAKECODE_DATA, DatabaseStore.PROJECT_DATA],
+      "readwrite"
+    );
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeData = assertData(await makeCodeStore.get(id));
+    await makeCodeStore.put(
+      {
+        ...makeCodeData,
+        project: {
+          ...makeCodeData.project,
+          header: makeCodeData.project.header
+            ? {
+                ...makeCodeData.project.header,
+                name,
+              }
+            : undefined,
+        },
+      },
+      id
+    );
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(id));
+    await projectDataStore.put(
+      {
+        ...projectData,
+        timestamp,
+        name,
+      },
+      id
+    );
+    return tx.done;
+  }
+
   async deleteProject(id: string): Promise<void> {
     const tx = (await this.useDb()).transaction(
       [
@@ -773,6 +808,37 @@ export class Database {
     await makeCodeStore.delete(id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     await projectDataStore.delete(id);
+    await tx.done;
+  }
+
+  async deleteProjects(ids: string[]): Promise<void> {
+    const tx = (await this.useDb()).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.RECORDINGS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+      ],
+      "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const actionIds = (
+      await Promise.all(
+        ids.map((id) => actionsStore.index("projectId").getAllKeys(id))
+      )
+    ).flat();
+    await Promise.all(actionIds.map((id) => actionsStore.delete(id)));
+    const recordingIds = (
+      await Promise.all(
+        actionIds.map((id) => recordingsStore.index("actionId").getAllKeys(id))
+      )
+    ).flat();
+    await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
+    await Promise.all(ids.map((id) => makeCodeStore.delete(id)));
+    await Promise.all(ids.map((id) => projectDataStore.delete(id)));
     await tx.done;
   }
 

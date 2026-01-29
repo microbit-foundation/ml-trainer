@@ -193,7 +193,9 @@ export interface Actions {
   getAllProjectData(): Promise<void>;
   loadProjectFromStorage(id: string): Promise<void>;
   updateProjectUpdatedAt(): Promise<void>;
+  renameProject(id: string, name: string): Promise<void>;
   deleteProject(id: string): Promise<void>;
+  deleteProjects(ids: string[]): Promise<void>;
   clearProjectState(): void;
   addNewAction(): Promise<void>;
   addActionRecording(id: string, recording: RecordingData): Promise<void>;
@@ -471,7 +473,44 @@ const createMlStore = (logging: Logging) => {
           );
         },
 
-        async deleteProject(id) {
+        async renameProject(id: string, name: string) {
+          const {
+            actions,
+            allProjectData,
+            dataWindow,
+            id: currentProjectId,
+            model,
+            project,
+            projectEdited,
+          } = get();
+          const timestamp = Date.now();
+          set({
+            ...(() => {
+              if (id === currentProjectId) {
+                // You have renamed the currently open project.
+                return {
+                  ...updateProject(
+                    project,
+                    projectEdited,
+                    actions,
+                    model,
+                    dataWindow
+                  ),
+                  timestamp,
+                };
+              }
+              return {};
+            })(),
+            allProjectData: allProjectData.map((p) =>
+              p.id === id ? { ...p, name, timestamp } : p
+            ),
+          });
+          await storageWithErrHandling(() =>
+            storage.renameProject(id, name, timestamp)
+          );
+        },
+
+        async deleteProject(id: string) {
           const { id: currentProjectId, allProjectData } = get();
           set({
             ...(() => {
@@ -499,6 +538,40 @@ const createMlStore = (logging: Logging) => {
           const message: BroadcastChannelData = {
             messageType: BroadcastChannelMessageType.DELETE_PROJECT,
             projectId: id,
+          };
+          broadcastChannel.postMessage(message);
+        },
+
+        async deleteProjects(ids: string[]) {
+          const { id: currentProjectId, allProjectData } = get();
+          set({
+            ...(() => {
+              if (currentProjectId && ids.includes(currentProjectId)) {
+                // You have deleted the currently open project.
+                return {
+                  id: undefined,
+                  actions: [],
+                  dataWindow: currentDataWindow,
+                  model: undefined,
+                  project: createUntitledProject(),
+                  projectEdited: false,
+                  appEditNeedsFlushToEditor: true,
+                  timestamp: undefined,
+                };
+              }
+              return {};
+            })(),
+            allProjectData: allProjectData.filter((p) => !ids.includes(p.id)),
+          });
+          if (currentProjectId && ids.includes(currentProjectId)) {
+            projectSessionStorage.clearProjectId();
+          }
+          await storageWithErrHandling(
+            () => storage.deleteProjects(ids),
+            false
+          );
+          const message: BroadcastChannelData = {
+            messageType: BroadcastChannelMessageType.DELETE_PROJECT,
           };
           broadcastChannel.postMessage(message);
         },

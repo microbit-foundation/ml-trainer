@@ -8,20 +8,26 @@ import {
   Button,
   Card,
   CardBody,
+  Heading,
+  HStack,
   Icon,
   LinkBox,
   LinkOverlay,
+  Text,
   VStack,
 } from "@chakra-ui/react";
+import orderBy from "lodash.orderby";
 import { Suspense, useCallback, useRef } from "react";
-import { RiAddLine } from "react-icons/ri";
+import { RiAddLine, RiInformationLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Await, useLoaderData, useNavigate } from "react-router";
 import CarouselRow from "../components/Carousel/CarouselRow";
+import ClickableTooltip from "../components/ClickableTooltip";
 import DefaultPageLayout, {
   HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
+import LoadingPage from "../components/LoadingPage";
 import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
@@ -30,7 +36,6 @@ import { createResourceCards } from "../components/ResourceCards";
 import { useLogging } from "../logging/logging-hooks";
 import { useSettings, useStore } from "../store";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
-import LoadingPage from "../components/LoadingPage";
 
 const HomePage = () => {
   const { allProjectDataLoaded } = useLoaderData() as {
@@ -73,11 +78,39 @@ const ProjectRow = () => {
   return (
     <CarouselRow
       actions={[<ViewAllProjectsButton key="viewAll" />]}
-      carouselItems={allProjectData.map((projectData) => (
-        <ProjectCard key={projectData.id} projectData={projectData} />
-      ))}
+      carouselItems={orderBy(allProjectData, "timestamp", "desc").map(
+        (projectData) => (
+          <ProjectCard key={projectData.id} projectData={projectData} />
+        )
+      )}
       itemTypeMessage="my projects"
-      title="My projects"
+      title={
+        <HStack spacing={3}>
+          <Heading as="h2" fontSize="3xl">
+            My projects
+          </Heading>
+          <ClickableTooltip
+            isFocusable
+            hasArrow
+            placement="right"
+            label={
+              <VStack
+                textAlign="left"
+                alignContent="left"
+                alignItems="left"
+                m={3}
+              >
+                <Text>
+                  Text to inform the user about where their projects are
+                  actually stored with link to support article?
+                </Text>
+              </VStack>
+            }
+          >
+            <Icon opacity={0.7} h={5} w={5} as={RiInformationLine} />
+          </ClickableTooltip>
+        </HStack>
+      }
     />
   );
 };
