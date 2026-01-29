@@ -315,6 +315,10 @@
     "defaultMessage": "{colNum}열 - micro:bit 디스플레이에 켜진 LED 개수",
     "description": "Screen reader text for numeric pattern input"
   },
+  "connect-pattern-label": {
+    "defaultMessage": "The number of LEDs lit in each column of the micro:bit display, from left to right, are {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, and {numLedsOnCol5}.",
+    "description": "Screen reader text for numeric pattern input"
+  },
   "connect-pattern-subtitle": {
     "defaultMessage": "micro:bit에 표시된 패턴을 복사합니다.",
     "description": "Instruction for bluetooth pattern dialog"
@@ -1258,6 +1262,10 @@
   "makecode-load-error-dialog-title": {
     "defaultMessage": "Microsoft MakeCode를 불러올 수 없습니다.",
     "description": "Title of MakeCode load error dialog"
+  },
+  "microbit-name-label": {
+    "defaultMessage": "micro:bit name: {name}",
+    "description": "Screen reader text for micro:bit name"
   },
   "microbit-not-connected": {
     "defaultMessage": "micro:bit가 연결되지 않았습니다.",

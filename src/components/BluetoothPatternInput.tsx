@@ -122,6 +122,7 @@ const BluetoothPatternInput = ({
               rowStart={6}
               textAlign="center"
               key={`col-${colIdx}-pattern-letter`}
+              aria-hidden
             >
               <Text>{microbitName ? microbitName[colIdx] : " "}</Text>
             </GridItem>
@@ -138,6 +139,28 @@ const BluetoothPatternInput = ({
           </GridItem>
         </React.Fragment>
       ))}
+      {nativePlatform && (
+        <VisuallyHidden>
+          <Text>
+            <FormattedMessage
+              id="connect-pattern-label"
+              values={{
+                numLedsOnCol1: inputValues[0],
+                numLedsOnCol2: inputValues[1],
+                numLedsOnCol3: inputValues[2],
+                numLedsOnCol4: inputValues[3],
+                numLedsOnCol5: inputValues[4],
+              }}
+            />
+          </Text>
+          <Text>
+            <FormattedMessage
+              id="microbit-name-label"
+              values={{ name: microbitName }}
+            />
+          </Text>
+        </VisuallyHidden>
+      )}
     </Grid>
   );
 };

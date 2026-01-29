@@ -315,6 +315,10 @@
     "defaultMessage": "Kolumna {colNum} - liczba diod LED włączonych na wyświetlaczu micro:bita",
     "description": "Screen reader text for numeric pattern input"
   },
+  "connect-pattern-label": {
+    "defaultMessage": "The number of LEDs lit in each column of the micro:bit display, from left to right, are {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, and {numLedsOnCol5}.",
+    "description": "Screen reader text for numeric pattern input"
+  },
   "connect-pattern-subtitle": {
     "defaultMessage": "Skopiuj wzór wyświetlany na micro:bicie.",
     "description": "Instruction for bluetooth pattern dialog"
@@ -1258,6 +1262,10 @@
   "makecode-load-error-dialog-title": {
     "defaultMessage": "Nie można załadować Microsoft MakeCode",
     "description": "Title of MakeCode load error dialog"
+  },
+  "microbit-name-label": {
+    "defaultMessage": "micro:bit name: {name}",
+    "description": "Screen reader text for micro:bit name"
   },
   "microbit-not-connected": {
     "defaultMessage": "Twój micro:bit nie jest połączony",

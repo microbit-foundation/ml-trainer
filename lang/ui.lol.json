@@ -315,6 +315,10 @@
     "defaultMessage": "crwdns362776:0{colNum}crwdne362776:0",
     "description": "Screen reader text for numeric pattern input"
   },
+  "connect-pattern-label": {
+    "defaultMessage": "The number of LEDs lit in each column of the micro:bit display, from left to right, are {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, and {numLedsOnCol5}.",
+    "description": "Screen reader text for numeric pattern input"
+  },
   "connect-pattern-subtitle": {
     "defaultMessage": "crwdns362778:0crwdne362778:0",
     "description": "Instruction for bluetooth pattern dialog"
@@ -1258,6 +1262,10 @@
   "makecode-load-error-dialog-title": {
     "defaultMessage": "crwdns363174:0crwdne363174:0",
     "description": "Title of MakeCode load error dialog"
+  },
+  "microbit-name-label": {
+    "defaultMessage": "micro:bit name: {name}",
+    "description": "Screen reader text for micro:bit name"
   },
   "microbit-not-connected": {
     "defaultMessage": "crwdns363176:0crwdne363176:0",

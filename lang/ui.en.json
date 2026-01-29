@@ -285,15 +285,15 @@
   },
   "connect-native-change-pattern": {
     "defaultMessage": "My pattern is different",
-    "description": "Change bluetooth pattern link"
+    "description": "Change Bluetooth pattern link"
   },
   "connect-native-compare-pattern-heading": {
     "defaultMessage": "Compare pattern",
-    "description": "Compare bluetooth pattern dialog heading"
+    "description": "Compare Bluetooth pattern dialog heading"
   },
   "connect-native-compare-pattern-subtitle": {
     "defaultMessage": "Compare this pattern with the one displayed on your micro:bit.",
-    "description": "Compare bluetooth pattern dialog subtitle"
+    "description": "Compare Bluetooth pattern dialog subtitle"
   },
   "connect-native-start-heading": {
     "defaultMessage": "What you need to connect",
@@ -313,6 +313,10 @@
   },
   "connect-pattern-input-label": {
     "defaultMessage": "Column {colNum} - number of LEDs lit on the micro:bit display",
+    "description": "Screen reader text for numeric pattern input"
+  },
+  "connect-pattern-label": {
+    "defaultMessage": "The number of LEDs lit in each column of the micro:bit display, from left to right, are {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, and {numLedsOnCol5}.",
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-subtitle": {
@@ -429,7 +433,7 @@
   },
   "connect-unable-to-enter-bluetooth-mode": {
     "defaultMessage": "Unable to enter Bluetooth mode?",
-    "description": "Link to troubleshooting entering bluetooth mode"
+    "description": "Link to troubleshooting entering Bluetooth mode"
   },
   "connect-unable-to-enter-bluetooth-mode-heading": {
     "defaultMessage": "Unable to enter Bluetooth mode?",
@@ -652,7 +656,7 @@
     "description": "Progress text"
   },
   "downloading-stage-checking-bond": {
-    "defaultMessage": "Choose ‘Pair’ if asked.",
+    "defaultMessage": "Choose ‘Pair’ if asked",
     "description": "Progress text when ensuring device is paired before flashing"
   },
   "downloading-stage-connecting": {
@@ -1258,6 +1262,10 @@
   "makecode-load-error-dialog-title": {
     "defaultMessage": "Could not load Microsoft MakeCode",
     "description": "Title of MakeCode load error dialog"
+  },
+  "microbit-name-label": {
+    "defaultMessage": "micro:bit name: {name}",
+    "description": "Screen reader text for micro:bit name"
   },
   "microbit-not-connected": {
     "defaultMessage": "Your micro:bit is not connected",

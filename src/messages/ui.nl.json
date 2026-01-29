@@ -595,6 +595,52 @@
       "value": " - aantal verlichte LEDs op de micro:bit display"
     }
   ],
+  "connect-pattern-label": [
+    {
+      "type": 0,
+      "value": "The number of LEDs lit in each column of the micro:bit display, from left to right, are "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol1"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol2"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol3"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol4"
+    },
+    {
+      "type": 0,
+      "value": ", and "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol5"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "connect-pattern-subtitle": [
     {
       "type": 0,
@@ -2175,6 +2221,16 @@
     {
       "type": 0,
       "value": "Kon Microsoft MakeCode niet laden"
+    }
+  ],
+  "microbit-name-label": [
+    {
+      "type": 0,
+      "value": "micro:bit name: "
+    },
+    {
+      "type": 1,
+      "value": "name"
     }
   ],
   "microbit-not-connected": [
