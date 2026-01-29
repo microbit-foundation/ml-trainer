@@ -288,7 +288,7 @@
     "description": "Compare bluetooth pattern dialog subtitle"
   },
   "connect-native-edit-pattern": {
-    "defaultMessage": "My pattern is different.",
+    "defaultMessage": "My pattern is different",
     "description": "Edit bluetooth pattern link"
   },
   "connect-native-start-heading": {

@@ -520,7 +520,7 @@
   "connect-native-edit-pattern": [
     {
       "type": 0,
-      "value": "My pattern is different."
+      "value": "My pattern is different"
     }
   ],
   "connect-native-start-heading": [
