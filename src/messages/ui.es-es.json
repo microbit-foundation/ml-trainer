@@ -217,6 +217,12 @@
       "value": "Cómo de seguro está el modelo de que estás realizando cada acción."
     }
   ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "click-to-reload-page-action": [
     {
       "type": 0,
@@ -2631,6 +2637,12 @@
     {
       "type": 0,
       "value": "Se ha descargado tu archivo hexadecimal"
+    }
+  ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
     }
   ],
   "select-icon-action-aria": [

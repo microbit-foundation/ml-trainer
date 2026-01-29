@@ -111,6 +111,10 @@
     "defaultMessage": "Quina confiança té el model que actualment esteu fent cada acció.",
     "description": "Tooltip for certainty column"
   },
+  "clear": {
+    "defaultMessage": "Clear",
+    "description": "Aria label for the search input"
+  },
   "click-to-reload-page-action": {
     "defaultMessage": "Fes clic per tornar a carregar la pàgina",
     "description": "Reload page button text"
@@ -1502,6 +1506,10 @@
   "saving-toast-title": {
     "defaultMessage": "S'ha transferit el teu fitxer hexadecimal",
     "description": "Notification after a hex file has been downloaded"
+  },
+  "search": {
+    "defaultMessage": "Search",
+    "description": "Aria label for searching documentation"
   },
   "select-icon-action-aria": {
     "defaultMessage": "Tria la icona per a l'acció \"{action}\"",

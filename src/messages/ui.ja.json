@@ -209,6 +209,12 @@
       "value": "現在各アクションを実行しているかどうかについて、モデルがどの程度確信を持っているか。"
     }
   ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "click-to-reload-page-action": [
     {
       "type": 0,
@@ -2599,6 +2605,12 @@
     {
       "type": 0,
       "value": "hexファイルをダウンロードしました"
+    }
+  ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
     }
   ],
   "select-icon-action-aria": [

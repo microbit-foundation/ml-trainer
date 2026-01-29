@@ -111,6 +111,10 @@
     "defaultMessage": "crwdns362696:0crwdne362696:0",
     "description": "Tooltip for certainty column"
   },
+  "clear": {
+    "defaultMessage": "Clear",
+    "description": "Aria label for the search input"
+  },
   "click-to-reload-page-action": {
     "defaultMessage": "crwdns362698:0crwdne362698:0",
     "description": "Reload page button text"
@@ -1502,6 +1506,10 @@
   "saving-toast-title": {
     "defaultMessage": "crwdns363324:0crwdne363324:0",
     "description": "Notification after a hex file has been downloaded"
+  },
+  "search": {
+    "defaultMessage": "Search",
+    "description": "Aria label for searching documentation"
   },
   "select-icon-action-aria": {
     "defaultMessage": "crwdns363326:0{action}crwdne363326:0",

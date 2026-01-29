@@ -217,6 +217,12 @@
       "value": "Hoeveel vertrouwen het model erin heeft dat je momenteel elke actie uitvoert."
     }
   ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "click-to-reload-page-action": [
     {
       "type": 0,
@@ -2631,6 +2637,12 @@
     {
       "type": 0,
       "value": "Je hex bestand is gedownload"
+    }
+  ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
     }
   ],
   "select-icon-action-aria": [

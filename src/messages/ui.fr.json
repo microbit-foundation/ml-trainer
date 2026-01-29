@@ -217,6 +217,12 @@
       "value": "Le niveau de confiance du modèle quant à la réalisation de chaque action."
     }
   ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "click-to-reload-page-action": [
     {
       "type": 0,
@@ -2635,6 +2641,12 @@
     {
       "type": 0,
       "value": "Votre fichier hex a été téléchargé"
+    }
+  ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
     }
   ],
   "select-icon-action-aria": [

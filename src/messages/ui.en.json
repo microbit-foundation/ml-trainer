@@ -217,6 +217,12 @@
       "value": "How confident the model is that you are currently doing each action."
     }
   ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "click-to-reload-page-action": [
     {
       "type": 0,
@@ -2631,6 +2637,12 @@
     {
       "type": 0,
       "value": "Your hex file has been downloaded"
+    }
+  ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
     }
   ],
   "select-icon-action-aria": [

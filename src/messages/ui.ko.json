@@ -209,6 +209,12 @@
       "value": "현재 사용자가 각 행동을 수행하고 있는 모델에 대한 확신 정도를 나타냅니다."
     }
   ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "click-to-reload-page-action": [
     {
       "type": 0,
@@ -2615,6 +2621,12 @@
     {
       "type": 0,
       "value": "hex 파일이 다운로드되었습니다."
+    }
+  ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
     }
   ],
   "select-icon-action-aria": [

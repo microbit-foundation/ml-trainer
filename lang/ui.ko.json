@@ -111,6 +111,10 @@
     "defaultMessage": "현재 사용자가 각 행동을 수행하고 있는 모델에 대한 확신 정도를 나타냅니다.",
     "description": "Tooltip for certainty column"
   },
+  "clear": {
+    "defaultMessage": "Clear",
+    "description": "Aria label for the search input"
+  },
   "click-to-reload-page-action": {
     "defaultMessage": "클릭하여 페이지 새로 고침",
     "description": "Reload page button text"
@@ -1502,6 +1506,10 @@
   "saving-toast-title": {
     "defaultMessage": "hex 파일이 다운로드되었습니다.",
     "description": "Notification after a hex file has been downloaded"
+  },
+  "search": {
+    "defaultMessage": "Search",
+    "description": "Aria label for searching documentation"
   },
   "select-icon-action-aria": {
     "defaultMessage": "\"{action}\" 행동에 대한 아이콘 선택",

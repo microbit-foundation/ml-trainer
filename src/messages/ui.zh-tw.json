@@ -217,6 +217,12 @@
       "value": "模型對您目前正在執行的各個動作的信心程度。"
     }
   ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "click-to-reload-page-action": [
     {
       "type": 0,
@@ -2623,6 +2629,12 @@
     {
       "type": 0,
       "value": "您的十六進位檔案已下載"
+    }
+  ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
     }
   ],
   "select-icon-action-aria": [

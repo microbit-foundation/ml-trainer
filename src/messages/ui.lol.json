@@ -207,6 +207,12 @@
       "value": "crwdns362696:0crwdne362696:0"
     }
   ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "click-to-reload-page-action": [
     {
       "type": 0,
@@ -2493,6 +2499,12 @@
     {
       "type": 0,
       "value": "crwdns363324:0crwdne363324:0"
+    }
+  ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
     }
   ],
   "select-icon-action-aria": [

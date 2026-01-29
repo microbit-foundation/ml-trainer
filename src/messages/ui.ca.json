@@ -217,6 +217,12 @@
       "value": "Quina confiança té el model que actualment esteu fent cada acció."
     }
   ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "click-to-reload-page-action": [
     {
       "type": 0,
@@ -2617,6 +2623,12 @@
     {
       "type": 0,
       "value": "S'ha transferit el teu fitxer hexadecimal"
+    }
+  ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
     }
   ],
   "select-icon-action-aria": [
