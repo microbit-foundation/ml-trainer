@@ -74,6 +74,12 @@ export class DownloadDialogs {
     await this.page.getByRole("button", { name: "Try another way" }).click();
   }
 
+  async clickUnableToEnterBluetoothMode() {
+    await this.page
+      .getByRole("button", { name: "Unable to enter Bluetooth mode" })
+      .click();
+  }
+
   async clickSameMicrobit() {
     await this.page.getByRole("button", { name: "Same micro:bit" }).click();
   }

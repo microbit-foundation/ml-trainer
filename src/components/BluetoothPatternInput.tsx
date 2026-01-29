@@ -128,7 +128,7 @@ const BluetoothPatternInput = ({
             </GridItem>
           )}
           <GridItem key={`col-${colIdx}-pattern-input`}>
-            {onChange && (
+            {isEditable && (
               <PatternColumnInput
                 isInvalid={invalid}
                 onChange={columnInputOnChange(colIdx)}
@@ -141,18 +141,20 @@ const BluetoothPatternInput = ({
       ))}
       {nativePlatform && (
         <VisuallyHidden>
-          <Text>
-            <FormattedMessage
-              id="connect-pattern-label"
-              values={{
-                numLedsOnCol1: inputValues[0],
-                numLedsOnCol2: inputValues[1],
-                numLedsOnCol3: inputValues[2],
-                numLedsOnCol4: inputValues[3],
-                numLedsOnCol5: inputValues[4],
-              }}
-            />
-          </Text>
+          {!isEditable && (
+            <Text>
+              <FormattedMessage
+                id="connect-pattern-label"
+                values={{
+                  numLedsOnCol1: inputValues[0],
+                  numLedsOnCol2: inputValues[1],
+                  numLedsOnCol3: inputValues[2],
+                  numLedsOnCol4: inputValues[3],
+                  numLedsOnCol5: inputValues[4],
+                }}
+              />
+            </Text>
+          )}
           <Text>
             <FormattedMessage
               id="microbit-name-label"
