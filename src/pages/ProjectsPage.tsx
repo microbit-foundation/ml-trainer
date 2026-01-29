@@ -51,7 +51,13 @@ const ProjectsPage = () => {
   const handleOrderByFieldChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setOrderByField(e.target.value as OrderByField);
+    const value = e.target.value as OrderByField;
+    if (value === "name") {
+      setOrderByDirection("asc");
+    } else {
+      setOrderByDirection("desc");
+    }
+    setOrderByField(value);
   };
   const toggleOrderByDirection = () => {
     setOrderByDirection((prev) => (prev === "asc" ? "desc" : "asc"));
