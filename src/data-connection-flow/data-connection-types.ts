@@ -185,6 +185,12 @@ export interface DataConnectionState {
    * Allows user to switch between "triple-reset" and "a-b-reset" methods.
    */
   pairingMethod: BluetoothPairingMethod;
+
+  /**
+   * Abort controller for aborting finding device in the connection process. 
+   * It is `undefined` if there is no process to abort.
+   */
+  connectionAbortController: AbortController | undefined;
 }
 
 /**
@@ -226,6 +232,7 @@ export const getInitialDataConnectionState = (): DataConnectionState => {
     isBrowserTabVisible: document.visibilityState === "visible",
     isCheckingPermissions: false,
     pairingMethod: "triple-reset",
+    connectionAbortController: undefined,
   };
 };
 

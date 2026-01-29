@@ -200,9 +200,13 @@ const executeAction = async (
       }
       break;
 
-    case "abortFindingDevice":
-      await abortFindingDevice(deps);
+    case "abortFindingDevice": {
+      const { connectionAbortController } = getDataConnectionState();
+      if (connectionAbortController) {
+        connectionAbortController.abort();
+      }
       break;
+    }
 
     case "connectFlash":
       await performConnectFlash(deps);
@@ -320,8 +324,16 @@ const executeAction = async (
  */
 const performConnectFlash = async (deps: DataConnectionDeps): Promise<void> => {
   const connection = deps.connections.getDefaultFlashConnection();
+  const abortController = new AbortController();
+  setDataConnectionState({
+    ...getDataConnectionState(),
+    connectionAbortController: abortController,
+  });
   try {
-    await connection.connect({ progress: progressCallback });
+    await connection.connect({
+      progress: progressCallback,
+      signal: abortController.signal,
+    });
     const boardVersion = connection.getBoardVersion();
     await sendEvent({ type: "connectFlashSuccess", boardVersion }, deps);
   } catch (e) {
@@ -330,17 +342,6 @@ const performConnectFlash = async (deps: DataConnectionDeps): Promise<void> => {
     } else {
       throw e;
     }
-  }
-};
-
-/**
- * Abort finding device process.
- * TODO: Duplicated in data-connection-actions. Consider de-duplicating.
- */
-const abortFindingDevice = async (deps: DataConnectionDeps): Promise<void> => {
-  const connection = deps.connections.getDefaultFlashConnection();
-  if (!isWebUSBConnection(connection)) {
-    await connection.abortDeviceScan();
   }
 };
 

@@ -29,6 +29,7 @@ const createState = (
   isBrowserTabVisible: true,
   isCheckingPermissions: false,
   pairingMethod: "triple-reset",
+  connectionAbortController: undefined,
   ...overrides,
 });
 
