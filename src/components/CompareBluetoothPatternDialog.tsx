@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { Button, Text, VStack } from "@chakra-ui/react";
-import { useCallback } from "react";
 import BluetoothPatternInput from "./BluetoothPatternInput";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
@@ -18,24 +17,12 @@ export interface CompareBluetoothPatternDialogProps
 }
 
 const CompareBluetoothPatternDialog = ({
-  onNextClick,
-  onBackClick,
   onChangeBluetoothPattern,
   microbitName,
   ...props
 }: CompareBluetoothPatternDialogProps) => {
-  const handleNextClick = useCallback(() => {
-    onNextClick && onNextClick();
-  }, [onNextClick]);
-
-  const handleBackClick = useCallback(() => {
-    onBackClick && onBackClick();
-  }, [onBackClick]);
-
   return (
     <ConnectContainerDialog
-      onNextClick={handleNextClick}
-      onBackClick={handleBackClick}
       headingId="connect-native-compare-pattern-heading"
       footerLeft={
         <Button onClick={onChangeBluetoothPattern} variant="link" size="lg">
