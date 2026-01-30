@@ -40,7 +40,7 @@ const DownloadHelpDialog = ({
       closeOnOverlayClick={false}
       motionPreset="none"
       onClose={onClose}
-      size="xl"
+      size={{ base: "full", md: "xl" }}
       isCentered
       {...rest}
     >

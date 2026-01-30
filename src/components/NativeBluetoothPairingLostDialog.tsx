@@ -40,7 +40,7 @@ const NativeBluetoothPairingLostDialog = ({
       motionPreset="none"
       isOpen={isOpen}
       onClose={onClose}
-      size="xl"
+      size={{ base: "full", md: "xl" }}
       isCentered
     >
       <ModalOverlay>

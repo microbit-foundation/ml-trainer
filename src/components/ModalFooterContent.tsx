@@ -30,12 +30,12 @@ const ModalFooterContent = ({
   <Flex
     direction={{ base: "column", md: "row" }}
     justifyContent={leftContent ? "space-between" : "end"}
-    alignItems={{ base: "stretch", md: "center" }}
+    alignItems={{ base: "flex-start", md: "center" }}
     gap={{ base: 4, md: 0 }}
     width="100%"
   >
     {leftContent}
-    <HStack gap={5} justifyContent="end">
+    <HStack gap={5} justifyContent="end" width="100%">
       {children}
     </HStack>
   </Flex>

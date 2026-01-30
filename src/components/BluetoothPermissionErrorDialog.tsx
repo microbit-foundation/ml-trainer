@@ -65,7 +65,7 @@ const PermissionErrorDialog = ({
       motionPreset="none"
       isOpen={isOpen}
       onClose={onClose}
-      size="lg"
+      size={{ base: "full", md: "lg" }}
       isCentered
     >
       <ModalOverlay>

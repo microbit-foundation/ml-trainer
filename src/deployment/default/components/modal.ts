@@ -20,7 +20,7 @@ const baseStyle = definePartsStyle({
 
 /**
  * Add safe area inset handling for full-screen modals on devices with notches/status bars.
- * Uses a gradient to maintain the brand color in the status bar area (matching ActionBar).
+ * Uses brand color in status bar area (matching ActionBar) with DARK status bar style (white icons).
  */
 const full = definePartsStyle({
   dialog: {
@@ -31,7 +31,7 @@ const full = definePartsStyle({
     paddingLeft: "env(safe-area-inset-left)",
     paddingRight: "env(safe-area-inset-right)",
     background:
-      "linear-gradient(to bottom, var(--chakra-colors-brand2-600) env(safe-area-inset-top), white env(safe-area-inset-top))",
+      "linear-gradient(to bottom, var(--chakra-colors-brand2-500) env(safe-area-inset-top), white env(safe-area-inset-top))",
   },
   header: {
     flexShrink: 0,

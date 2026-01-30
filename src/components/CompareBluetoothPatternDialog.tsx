@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, Text, VStack } from "@chakra-ui/react";
+import { Link, Text, VStack } from "@chakra-ui/react";
 import BluetoothPatternInput from "./BluetoothPatternInput";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
@@ -25,9 +25,9 @@ const CompareBluetoothPatternDialog = ({
     <ConnectContainerDialog
       headingId="connect-native-compare-pattern-heading"
       footerLeft={
-        <Button onClick={onChangeBluetoothPattern} variant="link" size="lg">
+        <Link as="button" color="brand.600" onClick={onChangeBluetoothPattern}>
           <FormattedMessage id="connect-native-change-pattern" />
-        </Button>
+        </Link>
       }
       {...props}
     >
