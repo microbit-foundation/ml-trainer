@@ -8,6 +8,7 @@ import {
   MenuList,
   Portal,
 } from "@chakra-ui/react";
+import { RefObject, useCallback, useRef } from "react";
 import { MdMoreVert } from "react-icons/md";
 import {
   RiDeleteBin2Line,
@@ -22,6 +23,7 @@ interface ProjectCardMenuProps {
   onOpenProject: (id?: string) => void;
   onRenameProject: (id?: string) => void;
   onDeleteProject: (id?: string) => void;
+  setFinalFocusRef: (value: RefObject<HTMLElement>) => void;
 }
 
 const ProjectCardActions = ({
@@ -31,7 +33,17 @@ const ProjectCardActions = ({
   onDeleteProject,
   onOpenProject,
   onRenameProject,
+  setFinalFocusRef,
 }: ProjectCardMenuProps) => {
+  const menuButtonRef = useRef(null);
+  const handleRenameProject = useCallback(
+    (id: string) => {
+      setFinalFocusRef(menuButtonRef);
+      onRenameProject(id);
+    },
+    [onRenameProject, setFinalFocusRef]
+  );
+
   return (
     <HStack
       justifyContent="space-between"
@@ -57,6 +69,7 @@ const ProjectCardActions = ({
       />
       <Menu>
         <MenuButton
+          ref={menuButtonRef}
           zIndex={1}
           as={IconButton}
           aria-label="project actions"
@@ -75,7 +88,7 @@ const ProjectCardActions = ({
             </MenuItem>
             <MenuItem
               icon={<RiEdit2Line />}
-              onClick={() => onRenameProject(id)}
+              onClick={() => handleRenameProject(id)}
             >
               Rename
             </MenuItem>

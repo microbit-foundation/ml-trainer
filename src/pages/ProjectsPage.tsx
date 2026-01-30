@@ -1,14 +1,13 @@
 import {
   Box,
   Button,
-  ButtonGroup,
   Container,
   HStack,
   SimpleGrid,
   VStack,
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
-import { Suspense, useCallback, useState } from "react";
+import { RefObject, Suspense, useCallback, useState } from "react";
 import { Await, useLoaderData, useNavigate } from "react-router";
 import BackArrow from "../components/BackArrow";
 import DefaultPageLayout, {
@@ -18,16 +17,12 @@ import DefaultPageLayout, {
 import LoadingPage from "../components/LoadingPage";
 import { NameProjectDialog } from "../components/NameProjectDialog";
 import ProjectCard from "../components/ProjectCard";
+import ProjectCardActions from "../components/ProjectCardActions";
+import ProjectsToolbar from "../components/ProjectsToolbar";
 import Search from "../components/Search";
 import SortInput from "../components/SortInput";
 import { loadProjectAndModelFromStorage, useStore } from "../store";
 import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
-import ProjectCardActions from "../components/ProjectCardActions";
-import {
-  RiDeleteBin2Line,
-  RiEdit2Line,
-  RiFolderOpenLine,
-} from "react-icons/ri";
 
 type OrderByField = "timestamp" | "name";
 
@@ -117,6 +112,10 @@ const ProjectsPage = () => {
     setProjectToRename(null);
   }, []);
 
+  const handleNameProjectDialogCloseComplete = useCallback(() => {
+    setFinalFocusRef(undefined);
+  }, []);
+
   const handleRenameProject = useCallback(
     async (name: string | undefined) => {
       if (projectToRename) {
@@ -147,6 +146,10 @@ const ProjectsPage = () => {
     orderByDirection
   );
 
+  const [finalFocusRef, setFinalFocusRef] = useState<
+    RefObject<HTMLElement> | undefined
+  >();
+
   return (
     <Suspense fallback={<LoadingPage />}>
       <Await resolve={allProjectDataLoaded}>
@@ -154,7 +157,9 @@ const ProjectsPage = () => {
           projectName={projectName}
           isOpen={nameDialogIsOpen}
           onClose={handleNameProjectDialogClose}
+          onCloseComplete={handleNameProjectDialogCloseComplete}
           onSave={handleRenameProject}
+          finalFocusRef={finalFocusRef}
         />
         <DefaultPageLayout
           toolbarItemsRight={<HomeToolbarItem />}
@@ -179,40 +184,12 @@ const ProjectsPage = () => {
                 />
               </Box>
               <HStack>
-                <ButtonGroup>
-                  {selectedProjectIds.length === 1 && (
-                    <Button
-                      onClick={() => handleOpenProject()}
-                      leftIcon={<RiFolderOpenLine />}
-                      borderRadius="md"
-                      variant="toolbar"
-                      _focusVisible={{ boxShadow: "outline" }}
-                    >
-                      Open
-                    </Button>
-                  )}
-                  {selectedProjectIds.length === 1 && (
-                    <Button
-                      onClick={() => handleOpenNameProjectDialog()}
-                      leftIcon={<RiEdit2Line />}
-                      borderRadius="md"
-                      variant="toolbar"
-                      _focusVisible={{ boxShadow: "outline" }}
-                    >
-                      Rename
-                    </Button>
-                  )}
-                  {selectedProjectIds.length !== 0 && (
-                    <Button
-                      onClick={() => handleDeleteProject()}
-                      leftIcon={<RiDeleteBin2Line />}
-                      borderRadius="md"
-                      variant="warning"
-                    >
-                      Delete
-                    </Button>
-                  )}
-                </ButtonGroup>
+                <ProjectsToolbar
+                  selectedProjectIds={selectedProjectIds}
+                  onDeleteProject={handleDeleteProject}
+                  onOpenProject={handleOpenProject}
+                  onRenameProject={handleOpenNameProjectDialog}
+                />
                 <SortInput
                   value={orderByField}
                   onSelectChange={handleOrderByFieldChange}
@@ -234,6 +211,7 @@ const ProjectsPage = () => {
                         onDeleteProject={handleDeleteProject}
                         onOpenProject={handleOpenProject}
                         onRenameProject={handleOpenNameProjectDialog}
+                        setFinalFocusRef={setFinalFocusRef}
                       />
                     }
                   />

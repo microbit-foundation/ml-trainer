@@ -27,15 +27,19 @@ import { useProjectName } from "../hooks/project-hooks";
 import { validateProjectName } from "../project-utils";
 
 interface NameProjectDialogProps {
-  onClose: () => void;
+  finalFocusRef?: React.RefObject<HTMLElement>;
   isOpen: boolean;
+  onClose: () => void;
+  onCloseComplete?: () => void;
   onSave: (newName?: string) => void;
   projectName?: string;
 }
 
 export const NameProjectDialog = ({
-  onClose,
+  finalFocusRef,
   isOpen,
+  onClose,
+  onCloseComplete,
   onSave,
   projectName,
 }: NameProjectDialogProps) => {
@@ -59,8 +63,14 @@ export const NameProjectDialog = ({
       setName(projectName);
     }
   }, [projectName]);
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      finalFocusRef={finalFocusRef}
+      onCloseComplete={onCloseComplete}
+    >
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
