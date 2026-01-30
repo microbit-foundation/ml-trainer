@@ -2807,6 +2807,18 @@
       "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
     }
   ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "now"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "a few seconds ago"
+    }
+  ],
   "tour-action": [
     {
       "type": 0,

@@ -2661,6 +2661,18 @@
       "value": "crwdns368597:0crwdne368597:0"
     }
   ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "now"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "a few seconds ago"
+    }
+  ],
   "tour-action": [
     {
       "type": 0,

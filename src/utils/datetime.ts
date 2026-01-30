@@ -1,3 +1,5 @@
+import { IntlShape } from "react-intl";
+
 const units: Array<{ unit: Intl.RelativeTimeFormatUnit; seconds: number }> = [
   { unit: "year", seconds: 31536000 },
   { unit: "month", seconds: 2592000 },
@@ -7,19 +9,16 @@ const units: Array<{ unit: Intl.RelativeTimeFormatUnit; seconds: number }> = [
   { unit: "second", seconds: 1 },
 ];
 
-export const timeAgo = (timestamp: number) => {
-  const rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+export const timeAgo = (intl: IntlShape, timestamp: number) => {
   const diffInSeconds = (timestamp - Date.now()) / 1000;
-
   for (const { unit, seconds } of units) {
     const interval = Math.round(diffInSeconds / seconds);
     if (Math.abs(interval) >= 1) {
       if (unit === "second") {
-        return "a few seconds ago";
+        return intl.formatMessage({ id: "timestamp-seconds" });
       }
-      return rtf.format(interval, unit);
+      return intl.formatRelativeTime(interval, unit);
     }
   }
-
-  return "now";
+  return intl.formatMessage({ id: "timestamp-now" });
 };

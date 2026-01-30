@@ -15,6 +15,7 @@ import { ProjectDataWithActions } from "../storage";
 import { loadProjectAndModelFromStorage } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 import { timeAgo } from "../utils/datetime";
+import { useIntl } from "react-intl";
 
 interface ProjectCardProps {
   projectData: ProjectDataWithActions;
@@ -23,6 +24,7 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ projectData, projectCardActions }: ProjectCardProps) => {
   const navigate = useNavigate();
+  const intl = useIntl();
   const { id, name, actions, timestamp } = projectData;
 
   const handleLoadProject = useCallback(
@@ -57,7 +59,7 @@ const ProjectCard = ({ projectData, projectCardActions }: ProjectCardProps) => {
                 {actions.map((a) => a.name).join(", ")}
               </Text>
             )}
-            <Text color="blackAlpha.700">{timeAgo(timestamp)}</Text>
+            <Text color="blackAlpha.700">{timeAgo(intl, timestamp)}</Text>
           </Stack>
         </CardBody>
       </Card>

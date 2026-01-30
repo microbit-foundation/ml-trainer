@@ -1603,6 +1603,14 @@
     "defaultMessage": "crwdns368597:0crwdne368597:0",
     "description": "Notify user of third party content"
   },
+  "timestamp-now": {
+    "defaultMessage": "now",
+    "description": "The last edit time of a project"
+  },
+  "timestamp-seconds": {
+    "defaultMessage": "a few seconds ago",
+    "description": "The last edit time of a project"
+  },
   "tour-action": {
     "defaultMessage": "crwdns363370:0crwdne363370:0",
     "description": "Button label that starts a tour of the app's features"

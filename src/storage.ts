@@ -847,22 +847,24 @@ export class Database {
     settings: Settings,
     timestamp: number
   ): Promise<void> {
-    id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
       [DatabaseStore.PROJECT_DATA, DatabaseStore.SETTINGS],
       "readwrite"
     );
     const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
     await settingsStore.put(settings, DatabaseStore.SETTINGS);
-    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    const projectData = assertData(await projectDataStore.get(id));
-    await projectDataStore.put(
-      {
-        ...projectData,
-        timestamp,
-      },
-      id
-    );
+    // Settings can be changed on pages where a project might not yet be loaded.
+    if (id) {
+      const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+      const projectData = assertData(await projectDataStore.get(id));
+      await projectDataStore.put(
+        {
+          ...projectData,
+          timestamp,
+        },
+        id
+      );
+    }
     return tx.done;
   }
 
