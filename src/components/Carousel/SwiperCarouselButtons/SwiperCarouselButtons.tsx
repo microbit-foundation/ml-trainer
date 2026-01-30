@@ -14,6 +14,8 @@ const SwiperCarouselButtons = () => {
       swiper.navigation.prevEl = prevButtonRef.current;
       swiper.navigation.nextEl = nextButtonRef.current;
       swiper.navigation.update();
+      swiper.navigation.nextEl.tabIndex = -1;
+      swiper.navigation.prevEl.tabIndex = -1;
     }
   }, [swiper.destroyed, swiper.navigation]);
 
