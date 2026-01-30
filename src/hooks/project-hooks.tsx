@@ -134,8 +134,8 @@ export const ProjectProvider = ({
   const getEditorStartUp = useStore((s) => s.getEditorStartUp);
   const editorReady = useStore((s) => s.editorReady);
   const editorTimedOut = useStore((s) => s.editorTimedOut);
-  const openEditorTimedOutDialog = useStore(
-    (s) => () => s.setIsEditorTimedOutDialogOpen(true)
+  const setIsEditorTimedOutDialogOpen = useStore(
+    (s) => s.setIsEditorTimedOutDialogOpen
   );
   const setEditorLoadingFile = useStore((s) => s.setEditorLoadingFile);
   const setEditorImportingState = useStore((s) => s.setEditorImportingState);
@@ -152,6 +152,10 @@ export const ProjectProvider = ({
   );
   const checkIfLangChanged = useStore((s) => s.checkIfLangChanged);
   const navigate = useNavigate();
+
+  const openEditorTimedOutDialog = useCallback(() => {
+    setIsEditorTimedOutDialogOpen(true);
+  }, [setIsEditorTimedOutDialogOpen]);
 
   const project = useStore((s) => s.project);
   const initialProjects = useCallback(() => {
