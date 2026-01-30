@@ -34,7 +34,7 @@ const ProjectCard = ({ projectData, projectCardActions }: ProjectCardProps) => {
   );
 
   return (
-    <LinkBox h="100%" w="100%">
+    <LinkBox h="100%" w="100%" role="group">
       <Card h="100%" w="100%">
         <CardBody display="flex">
           <Stack h="100%" w="100%" spacing={0}>

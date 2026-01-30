@@ -47,6 +47,13 @@ const ProjectCardActions = ({
         aria-selected={isSelected}
         color="brand.600"
         zIndex={1}
+        opacity={isSelected ? 1 : 0}
+        _groupHover={{
+          opacity: 1,
+        }}
+        _groupFocusWithin={{
+          opacity: 1,
+        }}
       />
       <Menu>
         <MenuButton
