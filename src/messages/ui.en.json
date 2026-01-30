@@ -1218,6 +1218,12 @@
   "downloading-stage-flashing": [
     {
       "type": 0,
+      "value": "Please wait. Downloading program to micro:bit."
+    }
+  ],
+  "downloading-stage-flashing-native": [
+    {
+      "type": 0,
       "value": "Please do not interact with the micro:bit before the downloading is complete."
     }
   ],

@@ -64,7 +64,9 @@ const getSubtitleId = (
       return "downloading-stage-connecting";
     case ProgressStage.PartialFlashing:
     case ProgressStage.FullFlashing:
-      return "downloading-stage-flashing";
+      return isNativePlatform()
+        ? "downloading-stage-flashing-native"
+        : "downloading-stage-flashing";
     default:
       throw new Error(stage);
   }
