@@ -8,6 +8,7 @@ import { DownloadStep } from "../download-flow/download-types";
 import { isAndroid } from "../platform";
 import { useSettings, useStore } from "../store";
 import PermissionErrorDialog from "./BluetoothPermissionErrorDialog";
+import CompareBluetoothPatternDialog from "./CompareBluetoothPatternDialog";
 import ConnectCableDialog from "./ConnectCableDialog";
 import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
 import DownloadChooseMicrobitDialog from "./DownloadChooseMicrobitDialog";
@@ -17,7 +18,9 @@ import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 import ManualFlashingDialog from "./ManualFlashingDialog";
 import NativeBluetoothErrorDialog from "./NativeBluetoothErrorDialog";
+import NativeBluetoothPairingLostDialog from "./NativeBluetoothPairingLostDialog";
 import ResetToBluetoothModeDialog from "./ResetToBluetoothModeDialog";
+import ResetToBluetoothModeTroubleshootDialog from "./ResetToBluetoothModeTroubleshootDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import UnplugRadioLinkMicrobitDialog from "./UnplugRadioLinkMicrobitDialog";
 
@@ -54,8 +57,16 @@ const DownloadDialogs = () => {
           onClose={downloadActions.close}
           onBackClick={downloadActions.getOnBack()}
           onNextClick={downloadActions.getOnNext()}
-          pairingMethod={stage.pairingMethod}
-          onSwitchPairingMethod={downloadActions.switchPairingMethod}
+          onTroubleshooting={downloadActions.troubleshootPairingMethod}
+        />
+      );
+    }
+    case DownloadStep.NativeBluetoothPreConnectTroubleshooting: {
+      return (
+        <ResetToBluetoothModeTroubleshootDialog
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
         />
       );
     }
@@ -100,7 +111,18 @@ const DownloadDialogs = () => {
           onNextClick={downloadActions.getOnNext()}
         />
       );
-    case DownloadStep.BluetoothPattern:
+    case DownloadStep.NativeCompareBluetoothPattern:
+      return (
+        <CompareBluetoothPatternDialog
+          isOpen
+          onClose={downloadActions.close}
+          onBackClick={downloadActions.getOnBack()}
+          onNextClick={downloadActions.getOnNext()}
+          microbitName={settings.bluetoothMicrobitName}
+          onChangeBluetoothPattern={downloadActions.changeBluetoothPattern}
+        />
+      );
+    case DownloadStep.EnterBluetoothPattern:
       return (
         <EnterBluetoothPatternDialog
           isOpen
@@ -120,11 +142,20 @@ const DownloadDialogs = () => {
           headingId="downloading-header"
           stage={flashingProgress.stage}
           progress={flashingProgress.value}
+          tryAgain={downloadActions.onTryAgain}
         />
       );
     case DownloadStep.ConnectFailed:
       return (
         <NativeBluetoothErrorDialog
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
+        />
+      );
+    case DownloadStep.PairingLost:
+      return (
+        <NativeBluetoothPairingLostDialog
           isOpen
           onClose={downloadActions.close}
           onTryAgain={downloadActions.onTryAgain}

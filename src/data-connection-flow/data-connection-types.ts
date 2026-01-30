@@ -71,7 +71,8 @@ export const DataConnectionStep = {
   ConnectCable: "ConnectCable",
   WebUsbFlashingTutorial: "WebUsbFlashingTutorial",
   ConnectBattery: "ConnectBattery",
-  BluetoothPattern: "BluetoothPattern",
+  NativeCompareBluetoothPattern: "NativeCompareBluetoothPattern",
+  EnterBluetoothPattern: "EnterBluetoothPattern",
   NativeBluetoothPreConnectTutorial: "NativeBluetoothPreConnectTutorial",
   WebBluetoothPreConnectTutorial: "WebBluetoothPreConnectTutorial",
 
@@ -82,11 +83,14 @@ export const DataConnectionStep = {
   FlashingInProgress: "FlashingInProgress",
 
   // Failure stages.
+  NativeBluetoothPreConnectTroubleshooting:
+    "NativeBluetoothPreConnectTroubleshooting",
   TryAgainReplugMicrobit: "TryAgainReplugMicrobit",
   TryAgainCloseTabs: "TryAgainCloseTabs",
   TryAgainWebUsbSelectMicrobit: "TryAgainWebUsbSelectMicrobit",
   TryAgainBluetoothSelectMicrobit: "TryAgainBluetoothSelectMicrobit",
   ConnectFailed: "ConnectFailed",
+  PairingLost: "PairingLost",
   BadFirmware: "BadFirmware",
   MicrobitUnsupported: "MicrobitUnsupported",
   WebUsbBluetoothUnsupported: "WebUsbBluetoothUnsupported",
@@ -176,6 +180,12 @@ export interface DataConnectionState {
    * Allows user to switch between "triple-reset" and "a-b-reset" methods.
    */
   pairingMethod: BluetoothPairingMethod;
+
+  /**
+   * Abort controller for aborting the connection process.
+   * If `undefined`, there is no process to abort.
+   */
+  connectionAbortController: AbortController | undefined;
 }
 
 /**
@@ -216,6 +226,7 @@ export const getInitialDataConnectionState = (): DataConnectionState => {
     isBrowserTabVisible: document.visibilityState === "visible",
     isCheckingPermissions: false,
     pairingMethod: "triple-reset",
+    connectionAbortController: undefined,
   };
 };
 

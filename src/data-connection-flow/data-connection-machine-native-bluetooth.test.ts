@@ -5,17 +5,17 @@
  */
 import {
   DataConnectionEvent,
+  DataConnectionFlowContext,
   dataConnectionTransition,
 } from "./data-connection-machine";
 import {
   DataConnectionStep,
   DataConnectionType,
-  DataConnectionState,
 } from "./data-connection-types";
 
-const createState = (
-  overrides: Partial<DataConnectionState> = {}
-): DataConnectionState => ({
+const createContext = (
+  overrides: Partial<DataConnectionFlowContext> = {}
+): DataConnectionFlowContext => ({
   type: DataConnectionType.NativeBluetooth,
   step: DataConnectionStep.Idle,
   isWebBluetoothSupported: true,
@@ -28,6 +28,8 @@ const createState = (
   isBrowserTabVisible: true,
   isCheckingPermissions: false,
   pairingMethod: "triple-reset",
+  connectionAbortController: undefined,
+  bluetoothMicrobitName: undefined,
   ...overrides,
 });
 
@@ -38,10 +40,10 @@ const connectEvent = (): DataConnectionEvent => ({
 const transition = (
   step: DataConnectionStep,
   event: DataConnectionEvent,
-  overrides: Partial<DataConnectionState> = {}
+  overrides: Partial<DataConnectionFlowContext> = {}
 ) => {
   return dataConnectionTransition(
-    createState({
+    createContext({
       type: DataConnectionType.NativeBluetooth,
       step,
       ...overrides,
@@ -127,24 +129,11 @@ describe("Data connection flow: Native Bluetooth", () => {
         { type: "next" }
       );
 
-      expect(result?.step).toBe(DataConnectionStep.BluetoothPattern);
-    });
-
-    it("NativeBluetoothPreConnectTutorial switchPairingMethod -> internal transition with toggle", () => {
-      const result = transition(
-        DataConnectionStep.NativeBluetoothPreConnectTutorial,
-        { type: "switchPairingMethod" }
-      );
-
-      // Internal transition - stays in same step
-      expect(result?.step).toBe(
-        DataConnectionStep.NativeBluetoothPreConnectTutorial
-      );
-      expect(result?.actions).toContainEqual({ type: "togglePairingMethod" });
+      expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);
     });
 
     it("BluetoothPattern next -> FlashingInProgress with connectFlash", () => {
-      const result = transition(DataConnectionStep.BluetoothPattern, {
+      const result = transition(DataConnectionStep.EnterBluetoothPattern, {
         type: "next",
       });
 
@@ -174,7 +163,7 @@ describe("Data connection flow: Native Bluetooth", () => {
     });
 
     it("BluetoothPattern back -> NativeBluetoothPreConnectTutorial", () => {
-      const result = transition(DataConnectionStep.BluetoothPattern, {
+      const result = transition(DataConnectionStep.EnterBluetoothPattern, {
         type: "back",
       });
 
@@ -471,7 +460,7 @@ describe("Data connection flow: Native Bluetooth", () => {
       DataConnectionStep.Start,
       DataConnectionStep.StartOver,
       DataConnectionStep.NativeBluetoothPreConnectTutorial,
-      DataConnectionStep.BluetoothPattern,
+      DataConnectionStep.EnterBluetoothPattern,
       DataConnectionStep.ConnectFailed,
       DataConnectionStep.ConnectionLost,
       DataConnectionStep.BluetoothDisabled,

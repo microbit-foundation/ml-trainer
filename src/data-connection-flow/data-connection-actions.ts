@@ -61,6 +61,15 @@ const progressCallback = (stage: ProgressStage, value: number | undefined) => {
   useStore.getState().setDataConnectionFlashingProgress(stage, value);
 };
 
+/**
+ * Build the flow context from state and settings.
+ * Context is rebuilt fresh for each transition.
+ */
+const buildContext = (state: DataConnectionState) => ({
+  ...state,
+  bluetoothMicrobitName: useStore.getState().settings.bluetoothMicrobitName,
+});
+
 // =============================================================================
 // State machine event handling
 // =============================================================================
@@ -72,7 +81,9 @@ const sendEvent = async (
   event: DataConnectionEvent,
   deps: DataConnectionDeps
 ): Promise<void> => {
-  const result = dataConnectionTransition(getDataConnectionState(), event);
+  const state = getDataConnectionState();
+  const context = buildContext(state);
+  const result = dataConnectionTransition(context, event);
 
   if (!result) {
     return;
@@ -148,6 +159,7 @@ const executeAction = async (
         hasFailedOnce: false,
         isStartingOver: false,
         hadSuccessfulConnection: false,
+        pairingMethod: "triple-reset",
       });
       break;
     }
@@ -176,6 +188,11 @@ const executeAction = async (
       break;
     }
 
+    case "clearMicrobitName": {
+      useStore.getState().setSettings({ bluetoothMicrobitName: undefined });
+      break;
+    }
+
     case "setRadioRemoteDeviceId":
       if (event.type === "flashSuccess" && event.deviceId !== undefined) {
         deps.connections.radioBridge.setRemoteDeviceId(event.deviceId);
@@ -194,6 +211,16 @@ const executeAction = async (
         });
       }
       break;
+
+    case "abortFindingDevice": {
+      const { connectionAbortController } = getDataConnectionState();
+      connectionAbortController?.abort();
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        connectionAbortController: undefined,
+      });
+      break;
+    }
 
     case "connectFlash":
       await performConnectFlash(deps);
@@ -276,18 +303,6 @@ const executeAction = async (
         isCheckingPermissions: action.value,
       });
       break;
-
-    case "togglePairingMethod": {
-      const currentState = getDataConnectionState();
-      setDataConnectionState({
-        ...currentState,
-        pairingMethod:
-          currentState.pairingMethod === "triple-reset"
-            ? "a-b-reset"
-            : "triple-reset",
-      });
-      break;
-    }
   }
 };
 
@@ -299,9 +314,18 @@ const executeAction = async (
  * Connect to the flash connection (USB or Native Bluetooth) in order to flash.
  */
 const performConnectFlash = async (deps: DataConnectionDeps): Promise<void> => {
+  const state = getDataConnectionState();
   const connection = deps.connections.getDefaultFlashConnection();
+  const abortController = new AbortController();
+  setDataConnectionState({
+    ...state,
+    connectionAbortController: abortController,
+  });
   try {
-    await connection.connect({ progress: progressCallback });
+    await connection.connect({
+      progress: progressCallback,
+      signal: abortController.signal,
+    });
     const boardVersion = connection.getBoardVersion();
     await sendEvent({ type: "connectFlashSuccess", boardVersion }, deps);
   } catch (e) {
@@ -378,7 +402,8 @@ const performConnectData = async (
     if (clearDevice) {
       await connection.clearDevice();
     }
-    await connection.connect({ progress: progressCallback });
+    progressCallback(ProgressStage.Connecting, undefined);
+    await connection.connect();
     // Success event (deviceConnected) is sent by the status listener.
   } catch (e) {
     if (e instanceof DeviceError) {

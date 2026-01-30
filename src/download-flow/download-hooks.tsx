@@ -10,8 +10,6 @@ import { useDataConnectionMachine } from "../data-connection-flow/data-connectio
 import {
   canTransition,
   DownloadDependencies,
-  getDownloadState,
-  setDownloadState,
   sendEvent,
 } from "./download-actions";
 import { useLogging } from "../logging/logging-hooks";
@@ -55,13 +53,11 @@ const createDownloadActions = (deps: DownloadDependencies) => ({
     fireEvent({ type: "setMicrobitName", name }, deps);
   },
 
-  switchPairingMethod: () => {
-    const state = getDownloadState();
-    setDownloadState({
-      ...state,
-      pairingMethod:
-        state.pairingMethod === "triple-reset" ? "a-b-reset" : "triple-reset",
-    });
+  changeBluetoothPattern: () =>
+    fireEvent({ type: "changeBluetoothPattern" }, deps),
+
+  troubleshootPairingMethod: () => {
+    fireEvent({ type: "troubleshootPairingMethod" }, deps);
   },
 
   getOnNext: (): (() => void) | undefined => {

@@ -26,6 +26,7 @@ export interface DataConnectionActions {
   onSkip: () => void;
   onStartBluetoothFlow: () => void;
   onChangeMicrobitName: (name: string) => void;
+  changeBluetoothPattern: () => void;
   disconnect: () => void;
   /**
    * Opens app settings. Use when permissions have been declined.
@@ -36,10 +37,7 @@ export interface DataConnectionActions {
    * Only needed on older Android (< API 31) where location is required for BLE.
    */
   openLocationSettings?: () => void;
-  /**
-   * Switches between pairing method variants (triple-reset ↔ a-b-reset).
-   */
-  switchPairingMethod: () => void;
+  troubleshootPairingMethod: () => void;
 }
 
 /**
@@ -80,11 +78,13 @@ export const useDataConnectionActions = (): DataConnectionActions => {
         dataConnectionMachine.fireEvent({ type: "startBluetoothFlow" }),
       onChangeMicrobitName: (name: string) =>
         dataConnectionMachine.fireEvent({ type: "setMicrobitName", name }),
+      changeBluetoothPattern: () =>
+        dataConnectionMachine.fireEvent({ type: "changeBluetoothPattern" }),
       disconnect: () => dataConnectionMachine.fireEvent({ type: "disconnect" }),
       openAppSettings,
       openLocationSettings: android ? openLocationSettings : undefined,
-      switchPairingMethod: () =>
-        dataConnectionMachine.fireEvent({ type: "switchPairingMethod" }),
+      troubleshootPairingMethod: () =>
+        dataConnectionMachine.fireEvent({ type: "troubleshootPairingMethod" }),
     };
   }, [dataConnectionMachine, openAppSettings, openLocationSettings, android]);
 };

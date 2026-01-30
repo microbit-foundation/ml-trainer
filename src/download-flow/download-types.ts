@@ -32,8 +32,12 @@ export const DownloadStep = {
   ManualFlashingTutorial: "ManualFlashingTutorial",
 
   // Bluetooth (native only for download)
-  BluetoothPattern: "BluetoothPattern",
+  EnterBluetoothPattern: "EnterBluetoothPattern",
+  NativeCompareBluetoothPattern: "NativeCompareBluetoothPattern",
   NativeBluetoothPreConnectTutorial: "NativeBluetoothPreConnectTutorial",
+  NativeBluetoothPreConnectTroubleshooting:
+    "NativeBluetoothPreConnectTroubleshooting",
+  PairingLost: "PairingLost",
   BluetoothSearchConnect: "BluetoothSearchConnect",
 
   // Common
@@ -77,4 +81,10 @@ export interface DownloadState {
    * Used to show loading state on "Try Again" button in permission error dialogs.
    */
   isCheckingPermissions: boolean;
+
+  /**
+   * Abort controller for aborting the connection process.
+   * If `undefined`, there is no process to abort.
+   */
+  connectionAbortController: AbortController | undefined;
 }

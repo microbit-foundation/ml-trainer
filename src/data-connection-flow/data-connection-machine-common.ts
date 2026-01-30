@@ -40,6 +40,7 @@ export type DataConnectionEvent =
    */
   | { type: "startBluetoothFlow" }
   | { type: "setMicrobitName"; name: string }
+  | { type: "changeBluetoothPattern" }
   | { type: "connectFlashSuccess"; boardVersion?: BoardVersion }
   | {
       type: "connectFlashFailure";
@@ -77,8 +78,8 @@ export type DataConnectionEvent =
   | { type: "bluetoothDisabled" }
   | { type: "permissionDenied" }
   | { type: "locationDisabled" }
-  // Switch between pairing method variants (triple-reset vs a-b-reset).
-  | { type: "switchPairingMethod" };
+  // Troubleshoot pairing method.
+  | { type: "troubleshootPairingMethod" };
 
 export type DataConnectionAction =
   | { type: "setConnectionType"; connectionType: DataConnectionType }
@@ -86,6 +87,7 @@ export type DataConnectionAction =
    * Sets micro:bit name from setMicrobitName event (user input) or flashSuccess event (from flashing).
    */
   | { type: "setMicrobitName" }
+  | { type: "clearMicrobitName" }
   | { type: "setRadioRemoteDeviceId"; deviceId?: number }
   | { type: "setRadioBridgeDeviceId"; deviceId?: number }
   /**
@@ -128,21 +130,32 @@ export type DataConnectionAction =
    */
   | { type: "setCheckingPermissions"; value: boolean }
   /**
-   * Toggle between pairing method variants (triple-reset ↔ a-b-reset).
+   * Abort finding device.
    */
-  | { type: "togglePairingMethod" };
+  | { type: "abortFindingDevice" };
+
+/**
+ * Context for the data connection flow.
+ * Built fresh for each transition from state + external sources (settings).
+ */
+export interface DataConnectionFlowContext extends DataConnectionState {
+  /**
+   * Micro:bit name from settings. Used for native Bluetooth pattern matching.
+   */
+  bluetoothMicrobitName?: string;
+}
 
 export type DataConnectionFlowDef = FlowDefinition<
   DataConnectionStep,
   DataConnectionEvent,
   DataConnectionAction,
-  DataConnectionState
+  DataConnectionFlowContext
 >;
 
 export type DataConnectionTransition = ConditionalTransition<
   DataConnectionStep,
   DataConnectionAction,
-  DataConnectionState,
+  DataConnectionFlowContext,
   DataConnectionEvent
 >;
 
@@ -154,36 +167,44 @@ export const guards = {
   /**
    * User has connected successfully in this session - can attempt direct reconnection.
    */
-  hadSuccessfulConnection: (ctx: DataConnectionState) =>
+  hadSuccessfulConnection: (ctx: DataConnectionFlowContext) =>
     ctx.hadSuccessfulConnection,
 
   /**
    * Already failed once - next failure shows "start over" dialog.
    */
-  hasFailedOnce: (ctx: DataConnectionState) => ctx.hasFailedOnce,
+  hasFailedOnce: (ctx: DataConnectionFlowContext) => ctx.hasFailedOnce,
+
+  /**
+   * A micro:bit name is stored in settings.
+   */
+  hasMicrobitName: (ctx: DataConnectionFlowContext) =>
+    !!ctx.bluetoothMicrobitName,
 
   /**
    * User is restarting the flow from StartOver - back should return there.
    */
-  isStartingOver: (ctx: DataConnectionState) => ctx.isStartingOver,
+  isStartingOver: (ctx: DataConnectionFlowContext) => ctx.isStartingOver,
 
-  isV1Board: (_ctx: DataConnectionState, event: DataConnectionEvent) =>
+  isV1Board: (_ctx: DataConnectionFlowContext, event: DataConnectionEvent) =>
     event.type === "connectFlashSuccess" && event.boardVersion === "V1",
 
   /**
    * Radio bridge disconnected (USB unplugged) - can't auto-reconnect.
    */
-  isBridgeDisconnect: (_ctx: DataConnectionState, event: DataConnectionEvent) =>
-    event.type === "deviceDisconnected" && event.source === "bridge",
+  isBridgeDisconnect: (
+    _ctx: DataConnectionFlowContext,
+    event: DataConnectionEvent
+  ) => event.type === "deviceDisconnected" && event.source === "bridge",
 
   // Radio flow phase guards
 
   /**
    * Remote phase is the default - undefined is treated as remote.
    */
-  isInRemotePhase: (ctx: DataConnectionState) =>
+  isInRemotePhase: (ctx: DataConnectionFlowContext) =>
     ctx.radioFlowPhase === "remote" || ctx.radioFlowPhase === undefined,
-  isInBridgePhase: (ctx: DataConnectionState) =>
+  isInBridgePhase: (ctx: DataConnectionFlowContext) =>
     ctx.radioFlowPhase === "bridge",
 
   // ==========================================================================
@@ -191,17 +212,18 @@ export const guards = {
   // ==========================================================================
 
   /** WebBluetooth flow requires browser WebBluetooth API support. */
-  isWebBluetoothFlowSupported: (ctx: DataConnectionState) =>
+  isWebBluetoothFlowSupported: (ctx: DataConnectionFlowContext) =>
     ctx.isWebBluetoothSupported,
 
   /** Radio flow requires WebUSB for flashing the micro:bits. */
-  isRadioFlowSupported: (ctx: DataConnectionState) => ctx.isWebUsbSupported,
+  isRadioFlowSupported: (ctx: DataConnectionFlowContext) =>
+    ctx.isWebUsbSupported,
 
   /** Native Bluetooth flow is available on iOS/Android apps. */
   isNativeBluetoothFlowSupported: () => isNativePlatform(),
 
   /** No connection flow is available - show unsupported browser message. */
-  hasNoSupportedFlow: (ctx: DataConnectionState) =>
+  hasNoSupportedFlow: (ctx: DataConnectionFlowContext) =>
     !ctx.isWebBluetoothSupported &&
     !ctx.isWebUsbSupported &&
     !isNativePlatform(),
@@ -211,18 +233,20 @@ export const guards = {
   /**
    * Browser tab visibility guard.
    */
-  isTabHidden: (ctx: DataConnectionState) => !ctx.isBrowserTabVisible,
+  isTabHidden: (ctx: DataConnectionFlowContext) => !ctx.isBrowserTabVisible,
 
   // Guards that check event payload (using DeviceError codes directly)
   // Flash connection errors (from performConnectFlash)
-  isBadFirmwareError: (_ctx: DataConnectionState, event: DataConnectionEvent) =>
-    event.type === "connectFlashFailure" && event.code === "update-req",
+  isBadFirmwareError: (
+    _ctx: DataConnectionFlowContext,
+    event: DataConnectionEvent
+  ) => event.type === "connectFlashFailure" && event.code === "update-req",
 
   // Native Bluetooth permission errors - can occur in both flash and data connection contexts.
   // In native Bluetooth, both connectFlash and connectData use Bluetooth, so permission errors
   // can come from either connectFlashFailure (flash) or connectDataFailure (data).
   isBluetoothDisabledError: (
-    _ctx: DataConnectionState,
+    _ctx: DataConnectionFlowContext,
     event: DataConnectionEvent
   ) =>
     (event.type === "connectFlashFailure" ||
@@ -230,7 +254,7 @@ export const guards = {
     event.code === "disabled",
 
   isPermissionDeniedError: (
-    _ctx: DataConnectionState,
+    _ctx: DataConnectionFlowContext,
     event: DataConnectionEvent
   ) =>
     (event.type === "connectFlashFailure" ||
@@ -238,7 +262,7 @@ export const guards = {
     event.code === "permission-denied",
 
   isLocationDisabledError: (
-    _ctx: DataConnectionState,
+    _ctx: DataConnectionFlowContext,
     event: DataConnectionEvent
   ) =>
     (event.type === "connectFlashFailure" ||
@@ -247,7 +271,7 @@ export const guards = {
 
   // Errors that can occur in flash or data connection contexts
   isNoDeviceSelectedError: (
-    _ctx: DataConnectionState,
+    _ctx: DataConnectionFlowContext,
     event: DataConnectionEvent
   ) => {
     if (
@@ -261,7 +285,7 @@ export const guards = {
   },
 
   isUnableToClaimError: (
-    _ctx: DataConnectionState,
+    _ctx: DataConnectionFlowContext,
     event: DataConnectionEvent
   ) => {
     if (
@@ -270,6 +294,20 @@ export const guards = {
       event.type === "flashFailure"
     ) {
       return event.code === "clear-connect";
+    }
+    return false;
+  },
+
+  isPairingInformationLostError: (
+    _ctx: DataConnectionFlowContext,
+    event: DataConnectionEvent
+  ) => {
+    if (
+      event.type === "connectFlashFailure" ||
+      event.type === "connectDataFailure" ||
+      event.type === "flashFailure"
+    ) {
+      return event.code === "pairing-information-lost";
     }
     return false;
   },
@@ -475,7 +513,7 @@ export const createInitialConnectHandlers = (options?: {
   deviceDisconnected: [
     // First attempt failed - show retry dialog
     {
-      guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
+      guard: (ctx: DataConnectionFlowContext) => !ctx.hasFailedOnce,
       target: DataConnectionStep.ConnectFailed,
       actions: [...actions.setDisconnectSource, ...actions.firstConnectFailure],
     },
@@ -492,7 +530,7 @@ export const createInitialConnectHandlers = (options?: {
   connectDataFailure: [
     ...(options?.connectFlashFailureGuards ?? []),
     {
-      guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
+      guard: (ctx: DataConnectionFlowContext) => !ctx.hasFailedOnce,
       target: DataConnectionStep.ConnectFailed,
       actions: actions.firstConnectFailure,
     },
@@ -543,6 +581,11 @@ export const createRecoveryStates = (
     : { target: reconnectTarget, actions: reconnectActions };
 
   return {
+    [DataConnectionStep.PairingLost]: {
+      on: {
+        next: connectFailedTransition,
+      },
+    },
     [DataConnectionStep.ConnectFailed]: {
       on: {
         next: connectFailedTransition,
@@ -694,7 +737,7 @@ export const connectedState = {
         },
         // First disconnect: try auto-reconnect
         {
-          guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
+          guard: (ctx: DataConnectionFlowContext) => !ctx.hasFailedOnce,
           actions: [
             ...actions.setDisconnectSource,
             ...actions.firstReconnectAttempt,
@@ -713,7 +756,7 @@ export const connectedState = {
       connectDataFailure: [
         // First failure: try again
         {
-          guard: (ctx: DataConnectionState) => !ctx.hasFailedOnce,
+          guard: (ctx: DataConnectionFlowContext) => !ctx.hasFailedOnce,
           actions: actions.firstReconnectAttempt,
         },
         {

@@ -122,6 +122,21 @@ const executeAction = async (
       break;
     }
 
+    case "clearMicrobitName": {
+      deps.setSettings({ bluetoothMicrobitName: undefined });
+      break;
+    }
+
+    case "abortFindingDevice": {
+      const { connectionAbortController } = getDownloadState();
+      connectionAbortController?.abort();
+      setDownloadState({
+        ...getDownloadState(),
+        connectionAbortController: undefined,
+      });
+      break;
+    }
+
     case "connectFlash":
       await performConnectFlash(deps);
       break;
@@ -190,9 +205,16 @@ const performConnectFlash = async (
       connection.setRequestDeviceExclusionFilters([{ serialNumber }]);
     }
   }
-
+  const abortController = new AbortController();
+  setDownloadState({
+    ...getDownloadState(),
+    connectionAbortController: abortController,
+  });
   try {
-    await connection.connect({ progress: deps.flashingProgressCallback });
+    await connection.connect({
+      progress: deps.flashingProgressCallback,
+      signal: abortController.signal,
+    });
     const boardVersion = connection.getBoardVersion();
     // Store connection for potential reuse
     setDownloadState({ ...getDownloadState(), connection });

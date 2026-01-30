@@ -5,17 +5,17 @@
  */
 import {
   DataConnectionEvent,
+  DataConnectionFlowContext,
   dataConnectionTransition,
 } from "./data-connection-machine";
 import {
   DataConnectionStep,
   DataConnectionType,
-  DataConnectionState,
 } from "./data-connection-types";
 
-const createState = (
-  overrides: Partial<DataConnectionState> = {}
-): DataConnectionState => ({
+const createContext = (
+  overrides: Partial<DataConnectionFlowContext> = {}
+): DataConnectionFlowContext => ({
   type: DataConnectionType.Radio,
   step: DataConnectionStep.Idle,
   isWebBluetoothSupported: true,
@@ -28,6 +28,8 @@ const createState = (
   isBrowserTabVisible: true,
   isCheckingPermissions: false,
   pairingMethod: "triple-reset",
+  connectionAbortController: undefined,
+  bluetoothMicrobitName: undefined,
   ...overrides,
 });
 
@@ -38,10 +40,10 @@ const connectEvent = (): DataConnectionEvent => ({
 const transition = (
   step: DataConnectionStep,
   event: DataConnectionEvent,
-  overrides: Partial<DataConnectionState> = {}
+  overrides: Partial<DataConnectionFlowContext> = {}
 ) => {
   return dataConnectionTransition(
-    createState({ type: DataConnectionType.Radio, step, ...overrides }),
+    createContext({ type: DataConnectionType.Radio, step, ...overrides }),
     event
   );
 };

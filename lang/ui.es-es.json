@@ -283,6 +283,18 @@
     "defaultMessage": "Cable micro USB",
     "description": "Label for cable icon in list of requirements"
   },
+  "connect-native-change-pattern": {
+    "defaultMessage": "My pattern is different",
+    "description": "Change bluetooth pattern link"
+  },
+  "connect-native-compare-pattern-heading": {
+    "defaultMessage": "Compare pattern",
+    "description": "Compare bluetooth pattern dialog heading"
+  },
+  "connect-native-compare-pattern-subtitle": {
+    "defaultMessage": "Compare this pattern with the one displayed on your micro:bit.",
+    "description": "Compare bluetooth pattern dialog subtitle"
+  },
   "connect-native-start-heading": {
     "defaultMessage": "What you need to connect",
     "description": "Connection dialog heading"
@@ -301,6 +313,10 @@
   },
   "connect-pattern-input-label": {
     "defaultMessage": "Columna {colNum}: número de LED encendidos en la pantalla del micro:bit",
+    "description": "Screen reader text for numeric pattern input"
+  },
+  "connect-pattern-label": {
+    "defaultMessage": "The number of LEDs lit in each column of the micro:bit display, from left to right, are {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, and {numLedsOnCol5}.",
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-subtitle": {
@@ -414,6 +430,26 @@
   "connect-try-another-way": {
     "defaultMessage": "Try another way",
     "description": "Link to alternative connection method"
+  },
+  "connect-unable-to-enter-bluetooth-mode": {
+    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "description": "Link to troubleshooting entering bluetooth mode"
+  },
+  "connect-unable-to-enter-bluetooth-mode-heading": {
+    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "description": "Unable to enter Bluetooth mode dialog heading"
+  },
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting": {
+    "defaultMessage": "Try the following:",
+    "description": "Heading for list of things to try to enter Bluetooth mode dialog"
+  },
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": {
+    "defaultMessage": "Disconnect and then reconnect the micro:bit with the power source.",
+    "description": "List item in things to try to enter Bluetooth mode dialog"
+  },
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": {
+    "defaultMessage": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again.",
+    "description": "List item in things to try to enter Bluetooth mode dialog"
   },
   "connect-with-batteries": {
     "defaultMessage": "con pilas",
@@ -619,6 +655,10 @@
     "defaultMessage": "Descargando el programa de enlace de radio",
     "description": "Progress text"
   },
+  "downloading-stage-checking-bond": {
+    "defaultMessage": "Choose ‘Pair’ if asked.",
+    "description": "Progress text when ensuring device is paired before flashing"
+  },
   "downloading-stage-connecting": {
     "defaultMessage": "Connecting to micro:bit…",
     "description": "Progress text during connection stage of flashing"
@@ -628,8 +668,16 @@
     "description": "Progress text during device discovery stage of flashing"
   },
   "downloading-stage-flashing": {
-    "defaultMessage": "Please wait. Downloading program to micro:bit.",
+    "defaultMessage": "Please do not interact with the micro:bit before the downloading is complete.",
     "description": "Progress text during actual flashing stage"
+  },
+  "downloading-stage-flashing-native": {
+    "defaultMessage": "Please do not interact with the micro:bit before the downloading is complete.",
+    "description": "Progress text during native flashing stage"
+  },
+  "downloading-stage-resetting-device": {
+    "defaultMessage": "Waiting for micro:bit to reboot...",
+    "description": "Progress text when rebooting micro:bit before flashing"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "Editar en MakeCode",
@@ -1219,6 +1267,10 @@
     "defaultMessage": "No se ha podido cargar Microsoft MakeCode",
     "description": "Title of MakeCode load error dialog"
   },
+  "microbit-name-label": {
+    "defaultMessage": "micro:bit name: {name}",
+    "description": "Screen reader text for micro:bit name"
+  },
   "microbit-not-connected": {
     "defaultMessage": "Tu micro:bit no está conectado",
     "description": "Live graph disconnected micro:bit status message"
@@ -1265,6 +1317,26 @@
   },
   "native-bluetooth-error-check-pattern": {
     "defaultMessage": "the pattern you entered is correct",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-forget-device": {
+    "defaultMessage": "Please forget this device in your Bluetooth settings and try again.",
+    "description": "Heading for instructions on how to forget device in Bluetooth error dialog"
+  },
+  "native-bluetooth-error-forget-device-step-1": {
+    "defaultMessage": "Go to Bluetooth in the Settings app",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-forget-device-step-2": {
+    "defaultMessage": "Tap the information button (circular i icon) next to the BBC micro:bit device",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-forget-device-step-3": {
+    "defaultMessage": "Tap ‘Forget This Device’",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-forget-device-step-4": {
+    "defaultMessage": "Return to this app to try again",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-heading": {

@@ -75,6 +75,12 @@ export class ConnectionDialogs {
     await this.page.getByRole("button", { name: "Try another way" }).click();
   }
 
+  async clickUnableToEnterBluetoothMode() {
+    await this.page
+      .getByRole("button", { name: "Unable to enter Bluetooth mode" })
+      .click();
+  }
+
   async expectConnectWebUsbErrorDialog() {
     await expect(this.page.getByText("Connect using WebUSB")).toBeVisible();
     await expect(this.tryAgainButton).toBeVisible();

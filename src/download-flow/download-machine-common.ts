@@ -22,6 +22,7 @@ export type DownloadEvent =
   | { type: "choseSame" }
   | { type: "choseDifferent" }
   | { type: "setMicrobitName"; name: string }
+  | { type: "changeBluetoothPattern" }
   | { type: "connectFlashSuccess"; boardVersion: "V1" | "V2" }
   | { type: "connectFlashFailure"; code?: string }
   | { type: "flashSuccess" }
@@ -32,7 +33,8 @@ export type DownloadEvent =
   | { type: "permissionDenied" }
   | { type: "locationDisabled" }
   // Permission dialog events.
-  | { type: "tryAgain" };
+  | { type: "tryAgain" }
+  | { type: "troubleshootPairingMethod" };
 
 export type DownloadAction =
   | /**
@@ -48,10 +50,16 @@ export type DownloadAction =
    * Sets micro:bit name from setMicrobitName event (user input).
    */
   | { type: "setMicrobitName" }
+  | { type: "clearMicrobitName" }
   | { type: "connectFlash" }
   | { type: "flash" }
   | { type: "downloadHexFile" }
   | { type: "disconnectDataConnection" }
+  /**
+   * Initialize flashing progress to Initializing stage.
+   * Used as entry action for FlashingInProgress state.
+   */
+  | { type: "initializeFlashingProgress" }
   /**
    * Check Bluetooth permissions (native Bluetooth only).
    * Sends permissionsOk, bluetoothDisabled, permissionDenied, or locationDisabled events.
@@ -63,10 +71,9 @@ export type DownloadAction =
    */
   | { type: "setCheckingPermissions"; value: boolean }
   /**
-   * Initialize flashing progress to Initializing stage.
-   * Used as entry action for FlashingInProgress state.
+   * Abort finding device.
    */
-  | { type: "initializeFlashingProgress" };
+  | { type: "abortFindingDevice" };
 
 export interface DownloadFlowContext {
   hex?: HexData;
@@ -116,6 +123,12 @@ export const guards = {
     ctx.connection !== undefined,
 
   /**
+   * A micro:bit name is stored.
+   */
+  hasMicrobitName: (ctx: DownloadFlowContext, _event: DownloadEvent) =>
+    !!ctx.bluetoothMicrobitName,
+
+  /**
    * Combined guard: has downloaded before AND has active data connection.
    * Used for routing to ChooseSameOrDifferentMicrobit when skipping help.
    */
@@ -149,6 +162,14 @@ export const guards = {
 
   isLocationDisabledError: (_ctx: DownloadFlowContext, event: DownloadEvent) =>
     event.type === "connectFlashFailure" && event.code === "location-disabled",
+
+  // Native Bluetooth pairing information lost on micro:bit
+  isPairingInformationLostError: (
+    _ctx: DownloadFlowContext,
+    event: DownloadEvent
+  ) =>
+    event.type === "connectFlashFailure" &&
+    event.code === "pairing-information-lost",
 
   // Native Bluetooth: no device matching the pattern was found during scan
   isNoDeviceSelectedError: (_ctx: DownloadFlowContext, event: DownloadEvent) =>

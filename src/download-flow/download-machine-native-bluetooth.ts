@@ -35,6 +35,10 @@ const connectFlashFailureWithPermissionHandling = [
     target: DownloadStep.LocationDisabled,
   },
   {
+    guard: guards.isPairingInformationLostError,
+    target: DownloadStep.PairingLost,
+  },
+  {
     guard: always,
     target: DownloadStep.ConnectFailed,
   },
@@ -56,6 +60,13 @@ const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
           actions: [{ type: "flash" }],
         },
       ],
+      tryAgain: {
+        target: DownloadStep.EnterBluetoothPattern,
+        actions: [
+          { type: "clearMicrobitName" },
+          { type: "abortFindingDevice" },
+        ],
+      },
       connectFlashFailure: connectFlashFailureWithPermissionHandling,
       flashSuccess: { target: DownloadStep.None },
       flashFailure: {
@@ -123,12 +134,32 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
   [DownloadStep.NativeBluetoothPreConnectTutorial]: {
     entry: [{ type: "disconnectDataConnection" }],
     on: {
-      next: { target: DownloadStep.BluetoothPattern },
+      next: [
+        {
+          guard: guards.hasMicrobitName,
+          target: DownloadStep.NativeCompareBluetoothPattern,
+        },
+        {
+          guard: always,
+          target: DownloadStep.EnterBluetoothPattern,
+        },
+      ],
       back: [{ guard: guards.shouldShowHelp, target: DownloadStep.Help }],
+      troubleshootPairingMethod: {
+        target: DownloadStep.NativeBluetoothPreConnectTroubleshooting,
+      },
     },
   },
 
-  [DownloadStep.BluetoothPattern]: {
+  [DownloadStep.NativeBluetoothPreConnectTroubleshooting]: {
+    on: {
+      tryAgain: {
+        target: DownloadStep.NativeBluetoothPreConnectTutorial,
+      },
+    },
+  },
+
+  [DownloadStep.EnterBluetoothPattern]: {
     on: {
       next: {
         target: DownloadStep.FlashingInProgress,
@@ -141,7 +172,27 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
     },
   },
 
+  [DownloadStep.NativeCompareBluetoothPattern]: {
+    on: {
+      next: {
+        target: DownloadStep.FlashingInProgress,
+        actions: [{ type: "connectFlash" }],
+      },
+      back: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
+      changeBluetoothPattern: {
+        target: DownloadStep.EnterBluetoothPattern,
+        actions: [{ type: "clearMicrobitName" }],
+      },
+    },
+  },
+
   ...flashingInProgressWithPermissionHandling,
+
+  [DownloadStep.PairingLost]: {
+    on: {
+      tryAgain: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
+    },
+  },
 
   [DownloadStep.ConnectFailed]: {
     on: {
@@ -151,7 +202,7 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
 
   [DownloadStep.IncompatibleDevice]: {
     on: {
-      back: { target: DownloadStep.BluetoothPattern },
+      back: { target: DownloadStep.EnterBluetoothPattern },
     },
   },
 };

@@ -84,11 +84,11 @@ describe("Download flow: Native Bluetooth", () => {
         { type: "next" }
       );
 
-      expect(result?.step).toBe(DownloadStep.BluetoothPattern);
+      expect(result?.step).toBe(DownloadStep.EnterBluetoothPattern);
     });
 
     it("BluetoothPattern -> FlashingInProgress", () => {
-      const result = transition(DownloadStep.BluetoothPattern, {
+      const result = transition(DownloadStep.EnterBluetoothPattern, {
         type: "next",
       });
 
@@ -123,7 +123,7 @@ describe("Download flow: Native Bluetooth", () => {
     });
 
     it("BluetoothPattern back -> NativeBluetoothPreConnectTutorial", () => {
-      const result = transition(DownloadStep.BluetoothPattern, {
+      const result = transition(DownloadStep.EnterBluetoothPattern, {
         type: "back",
       });
 
@@ -190,7 +190,7 @@ describe("Download flow: Native Bluetooth", () => {
     const stepsWithClose = [
       DownloadStep.Help,
       DownloadStep.NativeBluetoothPreConnectTutorial,
-      DownloadStep.BluetoothPattern,
+      DownloadStep.EnterBluetoothPattern,
       DownloadStep.ConnectFailed,
     ];
 

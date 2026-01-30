@@ -11,41 +11,49 @@ import tripleReset from "../images/bluetooth-mode-triple-reset.gif";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
+import { useCallback, useState } from "react";
 
 export interface ResetToBluetoothModeDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
-  pairingMethod?: BluetoothPairingMethod;
-  onSwitchPairingMethod?: () => void;
+  onTroubleshooting: () => void;
 }
 
 const ResetToBluetoothModeDialog = ({
-  pairingMethod = "triple-reset",
-  onSwitchPairingMethod,
+  onTroubleshooting,
   ...props
 }: ResetToBluetoothModeDialogProps) => {
+  const [pairingMethod, setPairingMethod] =
+    useState<BluetoothPairingMethod>("triple-reset");
   const isTripleReset = pairingMethod === "triple-reset";
   const subtitleId = isTripleReset
     ? "reset-to-bluetooth-mode-subtitle"
     : "reset-to-bluetooth-mode-ab-subtitle";
   const image = isTripleReset ? tripleReset : abReset;
 
+  const onSwitchPairingMethod = useCallback(() => {
+    setPairingMethod(isTripleReset ? "a-b-reset" : "triple-reset");
+  }, [isTripleReset]);
+
   return (
     <ConnectContainerDialog
       {...props}
+      key={pairingMethod}
       headingId="reset-to-bluetooth-mode-heading"
       footerLeft={
-        onSwitchPairingMethod ? (
-          <Link
-            as="button"
-            color="brand.600"
-            onClick={onSwitchPairingMethod}
-            display="flex"
-            flexDirection="row"
-            gap={1}
-          >
+        <Link
+          as="button"
+          color="brand.600"
+          onClick={isTripleReset ? onSwitchPairingMethod : onTroubleshooting}
+          display="flex"
+          flexDirection="row"
+          gap={1}
+        >
+          {isTripleReset ? (
             <FormattedMessage id="connect-try-another-way" />
-          </Link>
-        ) : undefined
+          ) : (
+            <FormattedMessage id="connect-unable-to-enter-bluetooth-mode" />
+          )}
+        </Link>
       }
     >
       <VStack gap={5} width="100%">

@@ -38,6 +38,9 @@ import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
 import { bluetoothUniversalHex } from "../device/get-hex-file";
 import { isAndroid } from "../platform";
 import { DataConnectionState } from "../data-connection-flow/data-connection-types";
+import NativeBluetoothPairingLostDialog from "./NativeBluetoothPairingLostDialog";
+import ResetToBluetoothModeTroubleshootDialog from "./ResetToBluetoothModeTroubleshootDialog";
+import CompareBluetoothPatternDialog from "./CompareBluetoothPatternDialog";
 
 const getDeviceType = (state: DataConnectionState): ConnectionErrorDeviceType =>
   state.type === DataConnectionType.Radio
@@ -78,8 +81,15 @@ const DataConnectionDialogs = () => {
           {...dialogCommonProps}
           onBackClick={actions.onBackClick}
           onNextClick={actions.onNextClick}
-          pairingMethod={state.pairingMethod}
-          onSwitchPairingMethod={actions.switchPairingMethod}
+          onTroubleshooting={actions.troubleshootPairingMethod}
+        />
+      );
+    }
+    case DataConnectionStep.NativeBluetoothPreConnectTroubleshooting: {
+      return (
+        <ResetToBluetoothModeTroubleshootDialog
+          {...dialogCommonProps}
+          onTryAgain={actions.onTryAgain}
         />
       );
     }
@@ -133,7 +143,18 @@ const DataConnectionDialogs = () => {
         />
       );
     }
-    case DataConnectionStep.BluetoothPattern: {
+    case DataConnectionStep.NativeCompareBluetoothPattern: {
+      return (
+        <CompareBluetoothPatternDialog
+          {...dialogCommonProps}
+          onBackClick={actions.onBackClick}
+          onNextClick={actions.onNextClick}
+          microbitName={settings.bluetoothMicrobitName}
+          onChangeBluetoothPattern={actions.changeBluetoothPattern}
+        />
+      );
+    }
+    case DataConnectionStep.EnterBluetoothPattern: {
       return (
         <EnterBluetoothPatternDialog
           {...dialogCommonProps}
@@ -163,6 +184,7 @@ const DataConnectionDialogs = () => {
           isOpen={isOpen}
           stage={flashProgress.stage}
           progress={flashProgress.value}
+          tryAgain={actions.onTryAgain}
         />
       );
     }
@@ -232,6 +254,14 @@ const DataConnectionDialogs = () => {
             state.hadSuccessfulConnection ? "reconnectFailed" : "connectFailed"
           }
           deviceType={getDeviceType(state)}
+        />
+      );
+    }
+    case DataConnectionStep.PairingLost: {
+      return (
+        <NativeBluetoothPairingLostDialog
+          {...dialogCommonProps}
+          onTryAgain={actions.onNextClick}
         />
       );
     }

@@ -90,12 +90,12 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
 
   [DataConnectionStep.ConnectBattery]: {
     on: {
-      next: { target: DataConnectionStep.BluetoothPattern },
+      next: { target: DataConnectionStep.EnterBluetoothPattern },
       back: { target: DataConnectionStep.WebUsbFlashingTutorial },
     },
   },
 
-  [DataConnectionStep.BluetoothPattern]: {
+  [DataConnectionStep.EnterBluetoothPattern]: {
     on: {
       next: { target: DataConnectionStep.WebBluetoothPreConnectTutorial },
       back: { target: DataConnectionStep.ConnectBattery },
@@ -109,7 +109,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
         target: DataConnectionStep.BluetoothConnect,
         actions: [{ type: "connectData", clearDevice: true }],
       },
-      back: { target: DataConnectionStep.BluetoothPattern },
+      back: { target: DataConnectionStep.EnterBluetoothPattern },
     },
   },
 
@@ -142,7 +142,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
 
   ...createTryAgainState(
     DataConnectionStep.TryAgainBluetoothSelectMicrobit,
-    DataConnectionStep.BluetoothPattern
+    DataConnectionStep.EnterBluetoothPattern
   ),
 
   ...bluetoothRecoveryStates,

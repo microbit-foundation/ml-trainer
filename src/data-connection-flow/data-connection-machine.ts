@@ -6,13 +6,13 @@
 import {
   DataConnectionAction,
   DataConnectionEvent,
+  DataConnectionFlowContext,
   DataConnectionFlowDef,
 } from "./data-connection-machine-common";
 import { nativeBluetoothFlow } from "./data-connection-machine-native-bluetooth";
 import { radioFlow } from "./data-connection-machine-radio";
 import { webBluetoothFlow } from "./data-connection-machine-web-bluetooth";
 import {
-  DataConnectionState,
   DataConnectionStep,
   DataConnectionType,
 } from "./data-connection-types";
@@ -22,6 +22,7 @@ import { transition } from "../state-machine";
 export type {
   DataConnectionAction,
   DataConnectionEvent,
+  DataConnectionFlowContext,
 } from "./data-connection-machine-common";
 
 const getFlow = (type: DataConnectionType): DataConnectionFlowDef => {
@@ -41,9 +42,9 @@ export type DataConnectionTransitionResult = {
 };
 
 export const dataConnectionTransition = (
-  state: DataConnectionState,
+  context: DataConnectionFlowContext,
   event: DataConnectionEvent
 ): DataConnectionTransitionResult | null => {
-  const flow = getFlow(state.type);
-  return transition(flow, state.step, event, state);
+  const flow = getFlow(context.type);
+  return transition(flow, context.step, event, context);
 };
