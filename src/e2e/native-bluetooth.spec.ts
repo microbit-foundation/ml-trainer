@@ -380,7 +380,7 @@ test.describe("native bluetooth", () => {
     await page.waitForTimeout(200);
     await captureDialog(page, "download-02b-reset-to-bluetooth-alt");
 
-        // 2c. Unable to enter Bluetooth mode (troubleshooting)
+    // 2c. Unable to enter Bluetooth mode (troubleshooting)
     await downloadDialogs.clickUnableToEnterBluetoothMode();
     await page.waitForTimeout(200);
     await captureDialog(page, "connection-02c-unable-to-enter-bluetooth-mode");
