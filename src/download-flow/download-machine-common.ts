@@ -60,9 +60,6 @@ export type DownloadAction =
    * Used as entry action for FlashingInProgress state.
    */
   | { type: "initializeFlashingProgress" }
-
-  // TODO: Below types are duplicated in data-connection-machine-common.ts. Consider de-duplicating.
-
   /**
    * Check Bluetooth permissions (native Bluetooth only).
    * Sends permissionsOk, bluetoothDisabled, permissionDenied, or locationDisabled events.

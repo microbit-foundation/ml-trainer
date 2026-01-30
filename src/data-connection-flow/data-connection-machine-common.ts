@@ -123,9 +123,6 @@ export type DataConnectionAction =
    * Check if micro:bit name is saved and updates connection state accordingly.
    */
   | { type: "checkMicrobitName" }
-
-  // TODO: Below types are duplicated in download-machine-common.ts. Consider de-duplicating following types.
-
   /**
    * Check Bluetooth permissions (native Bluetooth only).
    * Sends permissionsOk, bluetoothDisabled, permissionDenied, or locationDisabled events.
