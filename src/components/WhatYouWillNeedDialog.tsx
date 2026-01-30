@@ -28,6 +28,7 @@ const itemsConfig: Record<
     subtitleId?: string;
     width?: string;
     height?: string;
+    mobileMaxHeight?: string;
   }>
 > = {
   [DataConnectionType.Radio]: [
@@ -83,6 +84,7 @@ const itemsConfig: Record<
       titleId: "connect-bluetooth-enabled",
       width: "148px",
       height: "148px",
+      mobileMaxHeight: "50vw",
     },
   ],
 };
@@ -151,7 +153,7 @@ const WhatYouWillNeedDialog = ({
         p="30px"
       >
         {itemsConfig[type].map(
-          ({ imgSrc, width, height, titleId, subtitleId }) => {
+          ({ imgSrc, width, height, mobileMaxHeight, titleId, subtitleId }) => {
             return (
               <GridItem key={titleId}>
                 <VStack gap={5}>
@@ -159,8 +161,9 @@ const WhatYouWillNeedDialog = ({
                     src={imgSrc}
                     alt=""
                     objectFit="contain"
-                    width={width ?? "107px"}
-                    height={height ?? "107px"}
+                    width={{ base: "100%", md: width ?? "107px" }}
+                    height={{ base: "auto", md: height ?? "107px" }}
+                    maxHeight={{ base: mobileMaxHeight, md: "none" }}
                   />
                   <VStack textAlign="center">
                     <Text fontWeight="bold">

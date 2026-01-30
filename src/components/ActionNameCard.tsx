@@ -22,6 +22,7 @@ import LedIconSvg from "./icons/LedIconSvg";
 import LedIcon from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";
 import debounce from "lodash.debounce";
+import { isNativePlatform } from "../platform";
 
 export enum ActionCardNameViewMode {
   Editable = "Editable", // Interaction, color, depth
@@ -63,8 +64,9 @@ const ActionNameCard = ({
     viewMode === ActionCardNameViewMode.ReadOnly
       ? predictionResult?.detected?.ID === value.ID
       : undefined;
-  // Avoid autofocus on mobile as it triggers the keyboard
-  const allowAutoFocus = useBreakpointValue({ base: false, md: true });
+  // Avoid autofocus on mobile/native as it triggers the keyboard
+  const allowAutoFocus =
+    useBreakpointValue({ base: false, md: true }) && !isNativePlatform();
 
   const debouncedSetActionName = useMemo(
     () =>
