@@ -61,6 +61,15 @@ const progressCallback = (stage: ProgressStage, value: number | undefined) => {
   useStore.getState().setDataConnectionFlashingProgress(stage, value);
 };
 
+/**
+ * Build the flow context from state and settings.
+ * Context is rebuilt fresh for each transition.
+ */
+const buildContext = (state: DataConnectionState) => ({
+  ...state,
+  bluetoothMicrobitName: useStore.getState().settings.bluetoothMicrobitName,
+});
+
 // =============================================================================
 // State machine event handling
 // =============================================================================
@@ -72,7 +81,9 @@ const sendEvent = async (
   event: DataConnectionEvent,
   deps: DataConnectionDeps
 ): Promise<void> => {
-  const result = dataConnectionTransition(getDataConnectionState(), event);
+  const state = getDataConnectionState();
+  const context = buildContext(state);
+  const result = dataConnectionTransition(context, event);
 
   if (!result) {
     return;
@@ -285,16 +296,6 @@ const executeAction = async (
     case "checkPermissions":
       await performCheckPermissions(deps);
       break;
-
-    case "checkMicrobitName": {
-      const currentState = getDataConnectionState();
-      const microbitName = useStore.getState().settings.bluetoothMicrobitName;
-      setDataConnectionState({
-        ...currentState,
-        hasMicrobitName: !!microbitName,
-      });
-      break;
-    }
 
     case "setCheckingPermissions":
       setDataConnectionState({
