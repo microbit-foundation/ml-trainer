@@ -208,8 +208,9 @@ const App = () => {
   // Set status bar style on native platforms (LIGHT = dark icons for light backgrounds)
   useEffect(() => {
     if (isNativePlatform()) {
-      void import("@capacitor-community/safe-area").then(({ SafeArea }) =>
-        SafeArea.setSystemBarsStyle({ style: "LIGHT" })
+      void import("@capacitor-community/safe-area").then(
+        ({ SafeArea, SystemBarsStyle }) =>
+          SafeArea.setSystemBarsStyle({ style: SystemBarsStyle.Light })
       );
     }
   }, []);
