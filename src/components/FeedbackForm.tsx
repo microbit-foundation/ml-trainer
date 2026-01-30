@@ -50,7 +50,7 @@ const FeedbackForm = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      size="2xl"
+      size={{ base: "full", md: "2xl" }}
       finalFocusRef={finalFocusRef}
     >
       <ModalOverlay>

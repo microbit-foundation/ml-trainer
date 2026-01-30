@@ -104,7 +104,7 @@ export const SettingsDialog = ({
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        size="xl"
+        size={{ base: "full", md: "xl" }}
         finalFocusRef={finalFocusRef}
       >
         <ModalOverlay>

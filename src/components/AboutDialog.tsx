@@ -66,7 +66,7 @@ const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      size="2xl"
+      size={{ base: "full", md: "2xl" }}
       finalFocusRef={finalFocusRef}
     >
       <ModalOverlay>

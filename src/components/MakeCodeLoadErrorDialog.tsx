@@ -5,7 +5,6 @@
  */
 import {
   Button,
-  HStack,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -18,9 +17,10 @@ import {
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
+import { useDeployment } from "../deployment";
 import { useStore } from "../store";
 import ExternalLink from "./ExternalLink";
-import { useDeployment } from "../deployment";
+import ModalFooterContent from "./ModalFooterContent";
 
 const MakeCodeLoadErrorDialog = () => {
   const isOpen = useStore((s) => s.isEditorTimedOutDialogOpen);
@@ -32,7 +32,7 @@ const MakeCodeLoadErrorDialog = () => {
       motionPreset="none"
       isOpen={isOpen}
       onClose={onClose}
-      size="2xl"
+      size={{ base: "full", md: "2xl" }}
       isCentered
     >
       <ModalOverlay>
@@ -51,12 +51,15 @@ const MakeCodeLoadErrorDialog = () => {
               </Text>
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent="space-between">
-            <ExternalLink
-              textId="learn-about-firewall-requirements-action"
-              href="https://support.microbit.org/support/solutions/articles/19000030385-firewall-requirements-for-micro-bit-editors-and-websites"
-            />
-            <HStack gap={5}>
+          <ModalFooter>
+            <ModalFooterContent
+              leftContent={
+                <ExternalLink
+                  textId="learn-about-firewall-requirements-action"
+                  href="https://support.microbit.org/support/solutions/articles/19000030385-firewall-requirements-for-micro-bit-editors-and-websites"
+                />
+              }
+            >
               <Button onClick={onClose} variant="secondary" size="lg">
                 <FormattedMessage id="cancel-action" />
               </Button>
@@ -67,7 +70,7 @@ const MakeCodeLoadErrorDialog = () => {
               >
                 <FormattedMessage id="reload-action" />
               </Button>
-            </HStack>
+            </ModalFooterContent>
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>

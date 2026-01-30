@@ -27,7 +27,7 @@ const SaveProgressDialog = ({ isOpen }: SavingDialogProps) => {
       motionPreset="none"
       isOpen={isOpen}
       onClose={() => {}}
-      size="2xl"
+      size={{ base: "full", md: "2xl" }}
       isCentered
     >
       <ModalOverlay>

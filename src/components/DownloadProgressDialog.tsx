@@ -5,7 +5,7 @@
  */
 import {
   Box,
-  Button,
+  Link,
   Modal,
   ModalBody,
   ModalContent,
@@ -100,7 +100,7 @@ const DownloadProgressDialog = ({
       motionPreset="none"
       isOpen={isOpen}
       onClose={noop}
-      size="3xl"
+      size={{ base: "full", md: "3xl" }}
       isCentered
     >
       <ModalOverlay>
@@ -114,7 +114,7 @@ const DownloadProgressDialog = ({
               gap={5}
               alignItems={isIndeterminate ? "center" : "flex-start"}
             >
-              <Text>
+              <Text textAlign={isIndeterminate ? "center" : "left"}>
                 {subtitleId ? <FormattedMessage id={subtitleId} /> : "\u00A0"}
               </Text>
               {isNativePlatform() && isFindingDevice ? (
@@ -139,9 +139,9 @@ const DownloadProgressDialog = ({
           </ModalBody>
           <ModalFooter justifyContent="start">
             {isNativePlatform() && tryAgain && isFindingDevice && (
-              <Button onClick={tryAgain} variant="link" size="lg">
+              <Link as="button" color="brand.600" onClick={tryAgain}>
                 <FormattedMessage id="connect-native-change-pattern" />
-              </Button>
+              </Link>
             )}
           </ModalFooter>
         </ModalContent>

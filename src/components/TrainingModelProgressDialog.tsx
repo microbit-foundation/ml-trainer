@@ -32,7 +32,7 @@ const TrainingModelProgressDialog = ({
       motionPreset="none"
       isOpen={isOpen}
       onClose={() => {}}
-      size="2xl"
+      size={{ base: "full", md: "2xl" }}
       isCentered
       finalFocusRef={finalFocusRef}
     >

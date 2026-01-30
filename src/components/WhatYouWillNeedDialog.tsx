@@ -28,6 +28,7 @@ const itemsConfig: Record<
     subtitleId?: string;
     width?: string;
     height?: string;
+    mobileMaxHeight?: string;
   }>
 > = {
   [DataConnectionType.Radio]: [
@@ -83,6 +84,7 @@ const itemsConfig: Record<
       titleId: "connect-bluetooth-enabled",
       width: "148px",
       height: "148px",
+      mobileMaxHeight: "50vw",
     },
   ],
 };
@@ -143,21 +145,30 @@ const WhatYouWillNeedDialog = ({
       )}
       <Grid
         width="100%"
-        templateColumns={`repeat(${itemsConfig[type].length}, 1fr)`}
-        gap={16}
-        p="30px"
+        templateColumns={{
+          base: itemsConfig[type].length > 2 ? "1fr 1fr" : "1fr",
+          md: `repeat(${itemsConfig[type].length}, 1fr)`,
+        }}
+        gap={{ base: 6, md: 16 }}
+        p={{ base: "15px", md: "30px" }}
       >
         {itemsConfig[type].map(
-          ({ imgSrc, width, height, titleId, subtitleId }) => {
+          ({ imgSrc, width, height, mobileMaxHeight, titleId, subtitleId }) => {
+            const defaultMobileMaxHeight =
+              itemsConfig[type].length > 2 ? "25vw" : undefined;
             return (
               <GridItem key={titleId}>
-                <VStack gap={5}>
+                <VStack gap={{ base: 3, md: 5 }}>
                   <Image
                     src={imgSrc}
                     alt=""
                     objectFit="contain"
-                    width={width ?? "107px"}
-                    height={height ?? "107px"}
+                    width={{ base: "100%", md: width ?? "107px" }}
+                    height={{ base: "auto", md: height ?? "107px" }}
+                    maxHeight={{
+                      base: mobileMaxHeight ?? defaultMobileMaxHeight,
+                      md: "none",
+                    }}
                   />
                   <VStack textAlign="center">
                     <Text fontWeight="bold">

@@ -34,7 +34,7 @@ const HomepageBannerVideoTranscriptDialog = ({
       motionPreset="none"
       isOpen={isOpen}
       onClose={onClose}
-      size="3xl"
+      size={{ base: "full", md: "3xl" }}
       isCentered
     >
       <ModalOverlay>

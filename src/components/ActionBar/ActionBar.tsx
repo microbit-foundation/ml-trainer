@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { BoxProps, HStack, StackProps } from "@chakra-ui/react";
+import { Box, BoxProps, HStack, StackProps, VStack } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
 export interface ActionBarProps extends BoxProps {
@@ -13,6 +13,13 @@ export interface ActionBarProps extends BoxProps {
   itemsLeftProps?: StackProps;
 }
 
+/**
+ * Overlap between status bar area and ActionBar content area.
+ * Reduces visual "double padding" when both have centered content.
+ * Only applied when there's a non-zero safe area inset.
+ */
+const statusBarOverlap = "12px";
+
 const ActionBar = ({
   itemsLeft,
   itemsCenter,
@@ -21,34 +28,41 @@ const ActionBar = ({
   ...rest
 }: ActionBarProps) => {
   return (
-    <HStack
+    <VStack
       as="header"
-      alignItems="center"
-      justifyContent="space-between"
-      gap={0}
+      spacing={0}
+      bgColor="brand2.500"
       sx={{
-        // Pad the action bar when it appears under the system status bar.
         "--inset-top": "env(safe-area-inset-top)",
-        maxHeight: "calc(64px + var(--inset-top))",
-        height: "calc(64px + var(--inset-top))",
-        paddingTop: "var(--inset-top)",
-        background:
-          "linear-gradient(to bottom, var(--chakra-colors-brand2-600) var(--inset-top), var(--chakra-colors-brand2-500) var(--inset-top))",
       }}
       {...rest}
     >
+      {/* Status bar spacer: full inset minus overlap (but never negative) */}
+      <Box
+        flexShrink={0}
+        h={`max(0px, calc(var(--inset-top) - ${statusBarOverlap}))`}
+      />
+      {/* ActionBar content */}
       <HStack
-        flex={`${itemsCenter ? 1 : 4} 0`}
-        justifyContent="flex-start"
-        {...itemsLeftProps}
+        alignItems="center"
+        justifyContent="space-between"
+        gap={0}
+        h="64px"
+        w="100%"
       >
-        {itemsLeft}
+        <HStack
+          flex={`${itemsCenter ? 1 : 4} 0`}
+          justifyContent="flex-start"
+          {...itemsLeftProps}
+        >
+          {itemsLeft}
+        </HStack>
+        {itemsCenter && <HStack justifyContent="center">{itemsCenter}</HStack>}
+        <HStack flex="1 0" justifyContent="flex-end">
+          {itemsRight}
+        </HStack>
       </HStack>
-      {itemsCenter && <HStack justifyContent="center">{itemsCenter}</HStack>}
-      <HStack flex="1 0" justifyContent="flex-end">
-        {itemsRight}
-      </HStack>
-    </HStack>
+    </VStack>
   );
 };
 

@@ -48,6 +48,7 @@ import TestingModelPage from "./pages/TestingModelPage";
 import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
 import { useStore } from "./store";
 import { useSafeAreaInsets } from "./hooks/use-safe-area-insets";
+import { isNativePlatform } from "./platform";
 import {
   createCodePageUrl,
   createDataSamplesPageUrl,
@@ -203,6 +204,16 @@ const createRouter = () => {
 const App = () => {
   // Detect safe area insets and set CSS variables for nav bar side only
   useSafeAreaInsets();
+
+  // Set status bar style on native platforms (LIGHT = dark icons for light backgrounds)
+  useEffect(() => {
+    if (isNativePlatform()) {
+      void import("@capacitor-community/safe-area").then(
+        ({ SafeArea, SystemBarsStyle }) =>
+          SafeArea.setSystemBarsStyle({ style: SystemBarsStyle.Light })
+      );
+    }
+  }, []);
 
   useEffect(() => {
     if (navigator.bluetooth) {
