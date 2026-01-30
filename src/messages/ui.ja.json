@@ -1188,7 +1188,7 @@
   "downloading-stage-checking-bond": [
     {
       "type": 0,
-      "value": "Choose ‘Pair’ if asked."
+      "value": "Choose ‘Pair’ if asked"
     }
   ],
   "downloading-stage-connecting": [
@@ -1206,7 +1206,7 @@
   "downloading-stage-flashing": [
     {
       "type": 0,
-      "value": "Please do not interact with the micro:bit before the downloading is complete."
+      "value": "Please wait. Downloading program to micro:bit."
     }
   ],
   "downloading-stage-flashing-native": [
@@ -2306,7 +2306,21 @@
   "native-bluetooth-error-forget-device-step-2": [
     {
       "type": 0,
-      "value": "Tap the information button (circular i icon) next to the BBC micro:bit device"
+      "value": "Tap the "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "information"
+        }
+      ],
+      "type": 8,
+      "value": "infoIcon"
+    },
+    {
+      "type": 0,
+      "value": " icon next to the BBC micro:bit device"
     }
   ],
   "native-bluetooth-error-forget-device-step-3": [

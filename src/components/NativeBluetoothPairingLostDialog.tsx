@@ -6,6 +6,7 @@
 import {
   Button,
   HStack,
+  Icon,
   ListItem,
   Modal,
   ModalBody,
@@ -17,6 +18,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { RiInformationLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 
 interface NativeBluetoothPairingLostDialogProps {
@@ -59,7 +61,21 @@ const NativeBluetoothPairingLostDialog = ({
                     <FormattedMessage id="native-bluetooth-error-forget-device-step-1" />
                   </ListItem>
                   <ListItem>
-                    <FormattedMessage id="native-bluetooth-error-forget-device-step-2" />
+                    <FormattedMessage
+                      id="native-bluetooth-error-forget-device-step-2"
+                      values={{
+                        infoIcon: (chunks: React.ReactNode) => (
+                          <Icon
+                            as={RiInformationLine}
+                            boxSize="1.2em"
+                            verticalAlign="text-bottom"
+                            color="blue.500"
+                            aria-label={String(chunks)}
+                            role="img"
+                          />
+                        ),
+                      }}
+                    />
                   </ListItem>
                   <ListItem>
                     <FormattedMessage id="native-bluetooth-error-forget-device-step-3" />

@@ -285,15 +285,15 @@
   },
   "connect-native-change-pattern": {
     "defaultMessage": "My pattern is different",
-    "description": "Change bluetooth pattern link"
+    "description": "Change Bluetooth pattern link"
   },
   "connect-native-compare-pattern-heading": {
     "defaultMessage": "Compare pattern",
-    "description": "Compare bluetooth pattern dialog heading"
+    "description": "Compare Bluetooth pattern dialog heading"
   },
   "connect-native-compare-pattern-subtitle": {
     "defaultMessage": "Compare this pattern with the one displayed on your micro:bit.",
-    "description": "Compare bluetooth pattern dialog subtitle"
+    "description": "Compare Bluetooth pattern dialog subtitle"
   },
   "connect-native-start-heading": {
     "defaultMessage": "What you need to connect",
@@ -433,7 +433,7 @@
   },
   "connect-unable-to-enter-bluetooth-mode": {
     "defaultMessage": "Unable to enter Bluetooth mode?",
-    "description": "Link to troubleshooting entering bluetooth mode"
+    "description": "Link to troubleshooting entering Bluetooth mode"
   },
   "connect-unable-to-enter-bluetooth-mode-heading": {
     "defaultMessage": "Unable to enter Bluetooth mode?",
@@ -656,7 +656,7 @@
     "description": "Progress text"
   },
   "downloading-stage-checking-bond": {
-    "defaultMessage": "Choose ‘Pair’ if asked.",
+    "defaultMessage": "Choose ‘Pair’ if asked",
     "description": "Progress text when ensuring device is paired before flashing"
   },
   "downloading-stage-connecting": {
@@ -668,7 +668,7 @@
     "description": "Progress text during device discovery stage of flashing"
   },
   "downloading-stage-flashing": {
-    "defaultMessage": "Please do not interact with the micro:bit before the downloading is complete.",
+    "defaultMessage": "Please wait. Downloading program to micro:bit.",
     "description": "Progress text during actual flashing stage"
   },
   "downloading-stage-flashing-native": {
@@ -1328,8 +1328,8 @@
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-2": {
-    "defaultMessage": "Tap the information button (circular i icon) next to the BBC micro:bit device",
-    "description": "List item in native Bluetooth error dialog"
+    "defaultMessage": "Tap the <infoIcon>information</infoIcon> icon next to the BBC micro:bit device",
+    "description": "List item in native Bluetooth error dialog. infoIcon is an inline SVG icon, the text inside is used as alt text."
   },
   "native-bluetooth-error-forget-device-step-3": {
     "defaultMessage": "Tap ‘Forget This Device’",
