@@ -96,9 +96,10 @@ const SwiperCarousel = ({
     (e: React.FocusEvent<HTMLElement, Element>) => {
       if (swiper) {
         swiper.slides.forEach((slide, i) => {
-          if (slide === e.target) {
+          if (slide.contains(e.target)) {
             swiper.activeIndex = i;
             swiper.updateSlidesClasses();
+            swiper.slideTo(i);
           }
         });
       }

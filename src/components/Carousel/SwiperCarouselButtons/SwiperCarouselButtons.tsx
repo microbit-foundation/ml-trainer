@@ -15,7 +15,25 @@ const SwiperCarouselButtons = () => {
       swiper.navigation.nextEl = nextButtonRef.current;
       swiper.navigation.update();
     }
-  });
+  }, [swiper.destroyed, swiper.navigation]);
+
+  // Override tab index on buttons. These are useless for keyboard users.
+  // Just tab through the slide items/cards instead.
+  useEffect(() => {
+    const listener = () => {
+      swiper.navigation.nextEl.tabIndex = -1;
+      swiper.navigation.prevEl.tabIndex = -1;
+    };
+    if (!swiper.destroyed) {
+      swiper.on("activeIndexChange", listener);
+    }
+    return () => {
+      if (!swiper.destroyed) {
+        swiper.off("activeIndexChange", listener);
+      }
+    };
+  }, [swiper]);
+
   return (
     <>
       <CarouselButton
