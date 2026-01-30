@@ -92,7 +92,6 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
   },
 
   [DataConnectionStep.NativeBluetoothPreConnectTutorial]: {
-    entry: [{ type: "checkMicrobitName" }],
     on: {
       next: [
         {

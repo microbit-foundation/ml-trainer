@@ -127,11 +127,6 @@ export interface DataConnectionState {
   hadSuccessfulConnection: boolean;
 
   /**
-   * True if a micro:bit name is stored.
-   */
-  hasMicrobitName: boolean;
-
-  /**
    * True when an auto or explicit reconnection is in progress.
    * Used by UI to show reconnecting indicator without changing step.
    */
@@ -225,7 +220,6 @@ export const getInitialDataConnectionState = (): DataConnectionState => {
     isWebUsbSupported: false,
     hadSuccessfulConnection: false,
     hasSwitchedConnectionType: false,
-    hasMicrobitName: false,
     isReconnecting: false,
     hasFailedOnce: false,
     isStartingOver: false,
