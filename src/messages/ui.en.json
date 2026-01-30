@@ -2326,7 +2326,21 @@
   "native-bluetooth-error-forget-device-step-2": [
     {
       "type": 0,
-      "value": "Tap the information button (circular i icon) next to the BBC micro:bit device"
+      "value": "Tap the "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "information"
+        }
+      ],
+      "type": 8,
+      "value": "infoIcon"
+    },
+    {
+      "type": 0,
+      "value": " icon next to the BBC micro:bit device"
     }
   ],
   "native-bluetooth-error-forget-device-step-3": [

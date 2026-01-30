@@ -1328,8 +1328,8 @@
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-2": {
-    "defaultMessage": "Tap the information button (circular i icon) next to the BBC micro:bit device",
-    "description": "List item in native Bluetooth error dialog"
+    "defaultMessage": "Tap the <infoIcon>information</infoIcon> icon next to the BBC micro:bit device",
+    "description": "List item in native Bluetooth error dialog. infoIcon is an inline SVG icon, the text inside is used as alt text."
   },
   "native-bluetooth-error-forget-device-step-3": {
     "defaultMessage": "Tap ‘Forget This Device’",
