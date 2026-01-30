@@ -146,24 +146,29 @@ const WhatYouWillNeedDialog = ({
       <Grid
         width="100%"
         templateColumns={{
-          base: "1fr",
+          base: itemsConfig[type].length > 2 ? "1fr 1fr" : "1fr",
           md: `repeat(${itemsConfig[type].length}, 1fr)`,
         }}
-        gap={16}
-        p="30px"
+        gap={{ base: 6, md: 16 }}
+        p={{ base: "15px", md: "30px" }}
       >
         {itemsConfig[type].map(
           ({ imgSrc, width, height, mobileMaxHeight, titleId, subtitleId }) => {
+            const defaultMobileMaxHeight =
+              itemsConfig[type].length > 2 ? "25vw" : undefined;
             return (
               <GridItem key={titleId}>
-                <VStack gap={5}>
+                <VStack gap={{ base: 3, md: 5 }}>
                   <Image
                     src={imgSrc}
                     alt=""
                     objectFit="contain"
                     width={{ base: "100%", md: width ?? "107px" }}
                     height={{ base: "auto", md: height ?? "107px" }}
-                    maxHeight={{ base: mobileMaxHeight, md: "none" }}
+                    maxHeight={{
+                      base: mobileMaxHeight ?? defaultMobileMaxHeight,
+                      md: "none",
+                    }}
                   />
                   <VStack textAlign="center">
                     <Text fontWeight="bold">
