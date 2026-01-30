@@ -11,6 +11,7 @@ interface SortInputProps extends ButtonGroupProps {
   onSelectChange: React.ChangeEventHandler<HTMLSelectElement>;
   order: "desc" | "asc";
   toggleOrder: () => void;
+  hasSearchQuery: boolean;
 }
 
 const SortInput = ({
@@ -18,6 +19,7 @@ const SortInput = ({
   onSelectChange,
   order,
   toggleOrder,
+  hasSearchQuery,
   ...rest
 }: SortInputProps) => {
   return (
@@ -37,9 +39,16 @@ const SortInput = ({
         _focus={{
           zIndex: 1,
         }}
+        isDisabled={hasSearchQuery}
       >
-        <option value="name">Name</option>
-        <option value="timestamp">Last modified</option>
+        {hasSearchQuery ? (
+          <option value="relevance">Relevance</option>
+        ) : (
+          <>
+            <option value="name">Name</option>
+            <option value="timestamp">Last modified</option>
+          </>
+        )}
       </Select>
       <IconButton
         borderBottomLeftRadius={0}
@@ -55,7 +64,16 @@ const SortInput = ({
         aria-label="toggle..."
         color="#838383"
         onClick={toggleOrder}
-        icon={order === "asc" ? <RiArrowUpLine /> : <RiArrowDownLine />}
+        isDisabled={hasSearchQuery}
+        icon={
+          hasSearchQuery ? (
+            <RiArrowDownLine />
+          ) : order === "asc" ? (
+            <RiArrowUpLine />
+          ) : (
+            <RiArrowDownLine />
+          )
+        }
       />
     </ButtonGroup>
   );

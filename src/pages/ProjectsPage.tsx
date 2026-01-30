@@ -7,7 +7,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
-import { RefObject, Suspense, useCallback, useState } from "react";
+import { RefObject, Suspense, useCallback, useMemo, useState } from "react";
 import { Await, useLoaderData, useNavigate } from "react-router";
 import BackArrow from "../components/BackArrow";
 import DefaultPageLayout, {
@@ -23,8 +23,13 @@ import Search from "../components/Search";
 import SortInput from "../components/SortInput";
 import { loadProjectAndModelFromStorage, useStore } from "../store";
 import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
+import { ProjectDataWithActions } from "../storage";
 
 type OrderByField = "timestamp" | "name";
+
+interface RankedProject extends ProjectDataWithActions {
+  score: number;
+}
 
 const ProjectsPage = () => {
   const { allProjectDataLoaded } = useLoaderData() as {
@@ -138,13 +143,86 @@ const ProjectsPage = () => {
     setQuery("");
   }, []);
 
-  const processedProjects = orderBy(
-    allProjectData.filter((p) =>
-      p.name.toLowerCase().includes(query.toLowerCase())
-    ),
-    orderByField === "name" ? (p) => p.name.toLowerCase() : orderByField,
-    orderByDirection
-  );
+  const getSearchResults = useCallback(() => {
+    const normalizedQuery = query.toLowerCase().trim();
+    const queryTerms = normalizedQuery.split(/\s+/);
+
+    const rankedProjects: RankedProject[] = allProjectData
+      .map((project) => {
+        let score = 0;
+        const normalizedTitle = project.name.toLowerCase();
+        const normalizedActions = project.actions.map((action) =>
+          action.name.toLowerCase()
+        );
+
+        // Check if all query terms match somewhere in the project.
+        const allTermsMatch = queryTerms.every((term) => {
+          const titleMatches = normalizedTitle.includes(term);
+          const actionMatches = normalizedActions.some((action) =>
+            action.includes(term)
+          );
+          return titleMatches || actionMatches;
+        });
+
+        // If not all terms match, exclude this project.
+        if (!allTermsMatch) {
+          return { ...project, score: 0 };
+        }
+
+        // Score for title matches (higher weight).
+        queryTerms.forEach((term) => {
+          // Exact title match - highest score.
+          if (normalizedTitle === term) {
+            score += 100;
+          }
+          // Title starts with term - high score.
+          else if (normalizedTitle.startsWith(term)) {
+            score += 50;
+          }
+          // Title contains term - good score.
+          else if (normalizedTitle.includes(term)) {
+            score += 30;
+          }
+        });
+
+        // Score for action matches (lower weight).
+        normalizedActions.forEach((action) => {
+          queryTerms.forEach((term) => {
+            // Exact action match
+            if (action === term) {
+              score += 15;
+            }
+            // Action starts with term.
+            else if (action.startsWith(term)) {
+              score += 8;
+            }
+            // Action contains term.
+            else if (action.includes(term)) {
+              score += 5;
+            }
+          });
+        });
+
+        return { ...project, score };
+      })
+      .filter((project) => project.score > 0)
+      .sort((a, b) => b.score - a.score);
+
+    return rankedProjects.map(({ score: _, ...project }) => project);
+  }, [allProjectData, query]);
+
+  const processedProjects = useMemo((): ProjectDataWithActions[] => {
+    if (query) {
+      return getSearchResults();
+    }
+    return orderBy(
+      allProjectData.filter((p) =>
+        p.name.toLowerCase().includes(query.toLowerCase())
+      ),
+      orderByField === "name" ? (p) => p.name.toLowerCase() : orderByField,
+      orderByDirection
+    );
+  }, [allProjectData, getSearchResults, orderByDirection, orderByField, query]);
 
   const [finalFocusRef, setFinalFocusRef] = useState<
     RefObject<HTMLElement> | undefined
@@ -196,6 +274,7 @@ const ProjectsPage = () => {
                   order={orderByDirection}
                   toggleOrder={toggleOrderByDirection}
                   marginLeft="auto"
+                  hasSearchQuery={!!query}
                 />
               </HStack>
               <SimpleGrid mt={3} spacing={3} columns={[1, 2, 3, 4, 5]}>
