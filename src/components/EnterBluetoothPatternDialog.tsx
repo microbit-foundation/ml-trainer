@@ -6,6 +6,7 @@
 import { Text, VStack } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { blank } from "../bt-pattern-utils";
 import BluetoothPatternInput from "./BluetoothPatternInput";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
@@ -27,7 +28,7 @@ const EnterBluetoothPatternDialog = ({
   const [showInvalid, setShowInvalid] = useState<boolean>(false);
 
   const handleNextClick = useCallback(() => {
-    if (!microbitName || microbitName.includes(" ")) {
+    if (!microbitName || microbitName.includes(blank)) {
       setShowInvalid(true);
       return;
     }
