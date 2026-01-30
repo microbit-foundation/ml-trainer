@@ -8,6 +8,18 @@ const config: CapacitorConfig = {
   android: {
     adjustMarginsForEdgeToEdge: "disable",
   },
+  plugins: {
+    SafeArea: {
+      // "DARK" = light/white icons for dark header background
+      // (confusing name - it refers to the background, not the icons)
+      statusBarStyle: "DARK",
+      navigationBarStyle: "LIGHT",
+    },
+    // Required by @capacitor-community/safe-area plugin from v8
+    SystemBars: {
+      insetsHandling: "disable",
+    },
+  },
 };
 
 function getIP() {

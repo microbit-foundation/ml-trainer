@@ -27,12 +27,13 @@ const ActionBar = ({
       justifyContent="space-between"
       gap={0}
       sx={{
-        // Pad the action bar when it appears under the system status bar
-        maxHeight: "calc(64px + env(safe-area-inset-top))",
-        height: "calc(64px + env(safe-area-inset-top))",
-        paddingTop: "env(safe-area-inset-top)",
+        // Pad the action bar when it appears under the system status bar.
+        "--inset-top": "env(safe-area-inset-top)",
+        maxHeight: "calc(64px + var(--inset-top))",
+        height: "calc(64px + var(--inset-top))",
+        paddingTop: "var(--inset-top)",
         background:
-          "linear-gradient(to bottom, var(--chakra-colors-brand2-600) env(safe-area-inset-top), var(--chakra-colors-brand2-500) env(safe-area-inset-top))",
+          "linear-gradient(to bottom, var(--chakra-colors-brand2-600) var(--inset-top), var(--chakra-colors-brand2-500) var(--inset-top))",
       }}
       {...rest}
     >
