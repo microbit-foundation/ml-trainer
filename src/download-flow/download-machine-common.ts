@@ -34,7 +34,6 @@ export type DownloadEvent =
   | { type: "locationDisabled" }
   // Permission dialog events.
   | { type: "tryAgain" }
-  | { type: "switchPairingMethod" }
   | { type: "troubleshootPairingMethod" };
 
 export type DownloadAction =
@@ -74,10 +73,6 @@ export type DownloadAction =
    * Used to show loading state on "Try Again" button.
    */
   | { type: "setCheckingPermissions"; value: boolean }
-  /**
-   * Toggle between pairing method variants (triple-reset ↔ a-b-reset).
-   */
-  | { type: "togglePairingMethod" }
   /**
    * Abort finding device.
    */

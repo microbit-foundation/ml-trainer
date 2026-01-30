@@ -105,10 +105,6 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
         },
       ],
       back: backToStartTransition,
-      // Internal transition to toggle between pairing method variants
-      switchPairingMethod: {
-        actions: [{ type: "togglePairingMethod" }],
-      },
       troubleshootPairingMethod: {
         target: DataConnectionStep.NativeBluetoothPreConnectTroubleshooting,
       },
@@ -119,7 +115,6 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
     on: {
       tryAgain: {
         target: DataConnectionStep.NativeBluetoothPreConnectTutorial,
-        actions: [{ type: "togglePairingMethod" }],
       },
     },
   },

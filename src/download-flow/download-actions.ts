@@ -114,16 +114,6 @@ const executeAction = async (
       break;
     }
 
-    // TODO: Duplicated in data-connection-actions.ts. Consider de-duplicating.
-    case "togglePairingMethod": {
-      setDownloadState({
-        ...state,
-        pairingMethod:
-          state.pairingMethod === "triple-reset" ? "a-b-reset" : "triple-reset",
-      });
-      break;
-    }
-
     case "setMicrobitName": {
       if (event.type === "setMicrobitName") {
         deps.connections.bluetooth.setNameFilter(event.name);

@@ -57,8 +57,6 @@ const DownloadDialogs = () => {
           onClose={downloadActions.close}
           onBackClick={downloadActions.getOnBack()}
           onNextClick={downloadActions.getOnNext()}
-          pairingMethod={stage.pairingMethod}
-          onSwitchPairingMethod={downloadActions.switchPairingMethod}
           onTroubleshooting={downloadActions.troubleshootPairingMethod}
         />
       );

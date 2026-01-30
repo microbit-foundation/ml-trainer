@@ -132,19 +132,6 @@ describe("Data connection flow: Native Bluetooth", () => {
       expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);
     });
 
-    it("NativeBluetoothPreConnectTutorial switchPairingMethod -> internal transition with toggle", () => {
-      const result = transition(
-        DataConnectionStep.NativeBluetoothPreConnectTutorial,
-        { type: "switchPairingMethod" }
-      );
-
-      // Internal transition - stays in same step
-      expect(result?.step).toBe(
-        DataConnectionStep.NativeBluetoothPreConnectTutorial
-      );
-      expect(result?.actions).toContainEqual({ type: "togglePairingMethod" });
-    });
-
     it("BluetoothPattern next -> FlashingInProgress with connectFlash", () => {
       const result = transition(DataConnectionStep.EnterBluetoothPattern, {
         type: "next",

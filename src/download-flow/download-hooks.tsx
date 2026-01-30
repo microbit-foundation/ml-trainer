@@ -56,8 +56,6 @@ const createDownloadActions = (deps: DownloadDependencies) => ({
   changeBluetoothPattern: () =>
     fireEvent({ type: "changeBluetoothPattern" }, deps),
 
-  switchPairingMethod: () => fireEvent({ type: "switchPairingMethod" }, deps),
-
   troubleshootPairingMethod: () => {
     fireEvent({ type: "troubleshootPairingMethod" }, deps);
   },

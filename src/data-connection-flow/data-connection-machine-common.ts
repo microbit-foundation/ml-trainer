@@ -78,8 +78,6 @@ export type DataConnectionEvent =
   | { type: "bluetoothDisabled" }
   | { type: "permissionDenied" }
   | { type: "locationDisabled" }
-  // Switch between pairing method variants (triple-reset vs a-b-reset).
-  | { type: "switchPairingMethod" }
   // Troubleshoot pairing method.
   | { type: "troubleshootPairingMethod" };
 
@@ -138,10 +136,6 @@ export type DataConnectionAction =
    * Used to show loading state on "Try Again" button.
    */
   | { type: "setCheckingPermissions"; value: boolean }
-  /**
-   * Toggle between pairing method variants (triple-reset ↔ a-b-reset).
-   */
-  | { type: "togglePairingMethod" }
   /**
    * Abort finding device.
    */

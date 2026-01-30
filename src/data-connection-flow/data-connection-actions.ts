@@ -148,6 +148,7 @@ const executeAction = async (
         hasFailedOnce: false,
         isStartingOver: false,
         hadSuccessfulConnection: false,
+        pairingMethod: "triple-reset",
       });
       break;
     }
@@ -301,19 +302,6 @@ const executeAction = async (
         isCheckingPermissions: action.value,
       });
       break;
-
-    // TODO: Duplicated in download-actions.ts. Consider de-duplicating.
-    case "togglePairingMethod": {
-      const currentState = getDataConnectionState();
-      setDataConnectionState({
-        ...currentState,
-        pairingMethod:
-          currentState.pairingMethod === "triple-reset"
-            ? "a-b-reset"
-            : "triple-reset",
-      });
-      break;
-    }
   }
 };
 
