@@ -163,6 +163,10 @@
     "defaultMessage": "確認して保存",
     "description": "Confirm and save action label"
   },
+  "confirm-share-action": {
+    "defaultMessage": "Confirm and share",
+    "description": "Confirm and share action label"
+  },
   "connect-action": {
     "defaultMessage": "接続",
     "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
@@ -1682,6 +1686,30 @@
   "settings-menu-action": {
     "defaultMessage": "設定アクションメニュー",
     "description": "Label for settings actions menu button"
+  },
+  "share-action": {
+    "defaultMessage": "Share",
+    "description": "Label for action that intiiates sharing the project on mobile"
+  },
+  "share-hex-dialog-heading": {
+    "defaultMessage": "Share project as hex file",
+    "description": "Heading for the dialog shown when sharing a hex file on mobile"
+  },
+  "share-hex-dialog-message1": {
+    "defaultMessage": "The shared object contains your actions, data samples and your MakeCode project.",
+    "description": "Text in the dialog shown when sharing a hex file on mobile"
+  },
+  "share-hex-dialog-message2": {
+    "defaultMessage": "You can also share it to the Files app on your device, or send to cloud storage.",
+    "description": "Text in the dialog shown when sharing a hex file on mobile"
+  },
+  "sharing-description": {
+    "defaultMessage": "Preparing project for sharing.",
+    "description": "Sharing progress dialog text for mobile"
+  },
+  "sharing-title": {
+    "defaultMessage": "Sharing…",
+    "description": "Sharing progress title"
   },
   "show-graphs-checkbox-label-text": {
     "defaultMessage": "グラフを表示",

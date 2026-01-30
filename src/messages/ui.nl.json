@@ -339,6 +339,12 @@
       "value": "Bevestigen en opslaan"
     }
   ],
+  "confirm-share-action": [
+    {
+      "type": 0,
+      "value": "Confirm and share"
+    }
+  ],
   "connect-action": [
     {
       "type": 0,
@@ -3019,6 +3025,42 @@
     {
       "type": 0,
       "value": "Instellingen acties menu"
+    }
+  ],
+  "share-action": [
+    {
+      "type": 0,
+      "value": "Share"
+    }
+  ],
+  "share-hex-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Share project as hex file"
+    }
+  ],
+  "share-hex-dialog-message1": [
+    {
+      "type": 0,
+      "value": "The shared object contains your actions, data samples and your MakeCode project."
+    }
+  ],
+  "share-hex-dialog-message2": [
+    {
+      "type": 0,
+      "value": "You can also share it to the Files app on your device, or send to cloud storage."
+    }
+  ],
+  "sharing-description": [
+    {
+      "type": 0,
+      "value": "Preparing project for sharing."
+    }
+  ],
+  "sharing-title": [
+    {
+      "type": 0,
+      "value": "Sharing…"
     }
   ],
   "show-graphs-checkbox-label-text": [

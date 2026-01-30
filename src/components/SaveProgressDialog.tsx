@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { Capacitor } from "@capacitor/core";
 import {
   Modal,
   ModalBody,
@@ -21,6 +22,12 @@ export interface SavingDialogProps {
 }
 
 const SaveProgressDialog = ({ isOpen }: SavingDialogProps) => {
+  const isShare = Capacitor.isNativePlatform();
+  const progressTitleId = isShare ? "sharing-title" : "saving-title";
+  const progressDescriptionId = isShare
+    ? "sharing-description"
+    : "saving-description";
+
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -33,12 +40,12 @@ const SaveProgressDialog = ({ isOpen }: SavingDialogProps) => {
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage id="saving-title" />
+            <FormattedMessage id={progressTitleId} />
           </ModalHeader>
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
               <Text>
-                <FormattedMessage id="saving-description" />
+                <FormattedMessage id={progressDescriptionId} />
               </Text>
               <Progress colorScheme="brand2" isIndeterminate rounded="md" />
             </VStack>

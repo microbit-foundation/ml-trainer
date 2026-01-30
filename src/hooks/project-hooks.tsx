@@ -49,6 +49,7 @@ import { useDownloadActions } from "../download-flow/download-hooks";
 import { Capacitor } from "@capacitor/core";
 import { App as CapacitorApp } from "@capacitor/app";
 import { Encoding, Filesystem } from "@capacitor/filesystem";
+import { shareHex } from "../utils/share-util";
 
 class CodeEditorError extends Error {}
 
@@ -382,6 +383,7 @@ export const ProjectProvider = ({
   const translatedUntitled = useDefaultProjectName();
   const saveHex = useCallback(
     async (hex?: HexData): Promise<void> => {
+      const isShare = Capacitor.isNativePlatform();
       const { step } = save;
       const projectName = getCurrentProject().header?.name;
       if (settings.showPreSaveHelp && step === SaveStep.None) {
@@ -411,17 +413,28 @@ export const ProjectProvider = ({
           detail: {
             actions: actions.length,
             samples: getTotalNumSamples(actions),
+            isShare,
           },
         });
-        downloadHex(hex);
+        if (isShare) {
+          try {
+            await shareHex(hex);
+          } catch (e) {
+            logging.error("Sharing failed", e);
+          }
+        } else {
+          downloadHex(hex);
+        }
         setSave({ step: SaveStep.None });
-        toast({
-          id: "save-complete",
-          position: "top",
-          duration: 5_000,
-          title: intl.formatMessage({ id: "saving-toast-title" }),
-          status: "info",
-        });
+        if (!isShare) {
+          toast({
+            id: "save-complete",
+            position: "top",
+            duration: 5_000,
+            title: intl.formatMessage({ id: "saving-toast-title" }),
+            status: "info",
+          });
+        }
       }
     },
     [

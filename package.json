@@ -71,6 +71,7 @@
     "@capacitor/core": "^7.4.4",
     "@capacitor/filesystem": "^7.1.5",
     "@capacitor/ios": "^7.4.4",
+    "@capacitor/share": "^7.0.3",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",

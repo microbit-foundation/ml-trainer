@@ -22,6 +22,7 @@ import { FormattedMessage } from "react-intl";
 import { useSettings } from "../store";
 import { ChangeEvent, useCallback } from "react";
 import { useDeployment } from "../deployment";
+import { Capacitor } from "@capacitor/core";
 
 interface SaveHelpDialogProps {
   isOpen: boolean;
@@ -39,13 +40,25 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
     },
     [setSettings]
   );
+
+  const isShare = Capacitor.isNativePlatform();
+
+  const dialogHeadingId = isShare
+    ? "share-hex-dialog-heading"
+    : "save-hex-dialog-heading";
+  const message1Id = isShare
+    ? "share-hex-dialog-message1"
+    : "save-hex-dialog-message1";
+  const message2Id = isShare
+    ? "share-hex-dialog-message2"
+    : "save-hex-dialog-message2";
   return (
     <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
             <Heading as="h2" fontSize="xl" fontWeight="bold">
-              <FormattedMessage id="save-hex-dialog-heading" />
+              <FormattedMessage id={dialogHeadingId} />
             </Heading>
           </ModalHeader>
           <ModalCloseButton />
@@ -53,13 +66,10 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
             <Stack gap={5}>
               <VStack gap={3}>
                 <Text>
-                  <FormattedMessage
-                    id="save-hex-dialog-message1"
-                    values={{ appNameFull }}
-                  />
+                  <FormattedMessage id={message1Id} values={{ appNameFull }} />
                 </Text>
                 <Text>
-                  <FormattedMessage id="save-hex-dialog-message2" />
+                  <FormattedMessage id={message2Id} />
                 </Text>
               </VStack>
             </Stack>
@@ -69,7 +79,7 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
               <FormattedMessage id="dont-show-again" />
             </Checkbox>
             <Button size="lg" variant="primary" onClick={onSave}>
-              <FormattedMessage id="save-action" />
+              <FormattedMessage id="share-action" />
             </Button>
           </ModalFooter>
         </ModalContent>

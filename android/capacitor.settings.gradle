@@ -14,5 +14,8 @@ project(':capacitor-app').projectDir = new File('../node_modules/@capacitor/app/
 include ':capacitor-filesystem'
 project(':capacitor-filesystem').projectDir = new File('../node_modules/@capacitor/filesystem/android')
 
+include ':capacitor-share'
+project(':capacitor-share').projectDir = new File('../node_modules/@capacitor/share/android')
+
 include ':microbit-capacitor-community-nordic-dfu'
 project(':microbit-capacitor-community-nordic-dfu').projectDir = new File('../node_modules/@microbit/capacitor-community-nordic-dfu/android')

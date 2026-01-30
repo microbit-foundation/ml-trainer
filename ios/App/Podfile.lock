@@ -11,6 +11,8 @@ PODS:
   - CapacitorFilesystem (7.1.6):
     - Capacitor
     - IONFilesystemLib (~> 1.0.1)
+  - CapacitorShare (7.0.3):
+    - Capacitor
   - IONFilesystemLib (1.0.1)
   - MicrobitCapacitorCommunityNordicDfu (7.0.0-microbit.3):
     - Capacitor
@@ -26,6 +28,7 @@ DEPENDENCIES:
   - "CapacitorCommunitySafeArea (from `../../node_modules/@capacitor-community/safe-area`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
+  - "CapacitorShare (from `../../node_modules/@capacitor/share`)"
   - "MicrobitCapacitorCommunityNordicDfu (from `../../node_modules/@microbit/capacitor-community-nordic-dfu`)"
 
 SPEC REPOS:
@@ -47,6 +50,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorFilesystem:
     :path: "../../node_modules/@capacitor/filesystem"
+  CapacitorShare:
+    :path: "../../node_modules/@capacitor/share"
   MicrobitCapacitorCommunityNordicDfu:
     :path: "../../node_modules/@microbit/capacitor-community-nordic-dfu"
 
@@ -57,11 +62,12 @@ SPEC CHECKSUMS:
   CapacitorCommunitySafeArea: 211e919d3f0ff6020a3b2acb3b772fa30fb685ef
   CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
   CapacitorFilesystem: 66f05ee0d8b1ccdc00d509091273a9b3b57c4a0b
+  CapacitorShare: a4f4f86eabd4b3ff52ba6a11b754713c6926a8d1
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
   MicrobitCapacitorCommunityNordicDfu: 2fc86a9ebd698d5609023cafd74ece8b5d64a59e
   NordicDFU: 116a4ec458945889f8e0e71759e03b23c39c3482
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 1b18202e6f59ad2a7694de09b5a672105ac90e81
+PODFILE CHECKSUM: b4fd1fe7cd243f3e6da8924a0ec5f1728011559c
 
 COCOAPODS: 1.16.2
