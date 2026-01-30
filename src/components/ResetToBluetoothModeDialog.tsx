@@ -37,6 +37,7 @@ const ResetToBluetoothModeDialog = ({
   return (
     <ConnectContainerDialog
       {...props}
+      key={pairingMethod}
       headingId="reset-to-bluetooth-mode-heading"
       footerLeft={
         <Link
