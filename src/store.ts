@@ -109,7 +109,8 @@ const createUntitledProject = (): MakeCodeProject => ({
     untitledProjectName,
     { data: [] },
     undefined,
-    currentDataWindow
+    currentDataWindow,
+    false
   ),
 });
 
@@ -126,12 +127,19 @@ const updateProject = (
     text: {
       ...project.text,
       ...(projectEdited
-        ? generateCustomFiles(actionsData, model, dataWindow, project)
+        ? generateCustomFiles(
+            actionsData,
+            model,
+            dataWindow,
+            projectEdited,
+            project
+          )
         : generateProject(
             project.header?.name ?? untitledProjectName,
             actionsData,
             model,
-            dataWindow
+            dataWindow,
+            projectEdited
           ).text),
     },
   };
@@ -811,7 +819,8 @@ const createMlStore = (logging: Logging) => {
                   previousProject.header?.name ?? untitledProjectName,
                   { data: actions },
                   model,
-                  dataWindow
+                  dataWindow,
+                  false
                 ).text,
               },
             };
@@ -932,6 +941,18 @@ const createMlStore = (logging: Logging) => {
                     );
                     const timestamp = Date.now();
                     const newActions = getActionsFromProject(newProject);
+                    let projectEdited = true;
+                    const metadataString =
+                      newProject.text?.[filenames.metadata];
+                    const metadata = JSON.parse(
+                      metadataString ?? "{}"
+                    ) as Record<string, unknown>;
+                    if (
+                      !metadata["projectEdited"] &&
+                      newProject.text?.[filenames.mainTs] === "\n"
+                    ) {
+                      projectEdited = false;
+                    }
                     return {
                       settings: {
                         ...settings,
@@ -946,7 +967,7 @@ const createMlStore = (logging: Logging) => {
                       projectLoadTimestamp: timestamp,
                       timestamp,
                       // New project loaded externally so we can't know whether its edited.
-                      projectEdited: true,
+                      projectEdited,
                       actions: newActions,
                       dataWindow: getDataWindowFromActions(newActions),
                       model: undefined,
