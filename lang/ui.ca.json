@@ -495,6 +495,14 @@
     "defaultMessage": "Estàs segur que vols suprimir totes les mostres de dades?",
     "description": "Confirmation dialog text"
   },
+  "delete-project-confirm-heading": {
+    "defaultMessage": "Confirm delete project",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-project-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete the project \"{project}\"?",
+    "description": "Confirmation dialog text"
+  },
   "delete-recording-aria": {
     "defaultMessage": "Suprimeix l'enregistrament {sample} de {numSamples} per a l'acció \"{action}\"",
     "description": "Aria label for data sample delete action"

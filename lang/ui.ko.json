@@ -495,6 +495,14 @@
     "defaultMessage": "모든 데이터 샘플을 삭제하시겠습니까?",
     "description": "Confirmation dialog text"
   },
+  "delete-project-confirm-heading": {
+    "defaultMessage": "Confirm delete project",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-project-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete the project \"{project}\"?",
+    "description": "Confirmation dialog text"
+  },
   "delete-recording-aria": {
     "defaultMessage": "\"{action}\" 행동에 대한 {numSamples}개의 기록 {sample} 삭제",
     "description": "Aria label for data sample delete action"

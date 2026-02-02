@@ -44,6 +44,14 @@ const ProjectCardActions = ({
     [onRenameProject, setFinalFocusRef]
   );
 
+  const handleDeleteProject = useCallback(
+    (id: string) => {
+      setFinalFocusRef(menuButtonRef);
+      onDeleteProject(id);
+    },
+    [onDeleteProject, setFinalFocusRef]
+  );
+
   return (
     <HStack
       justifyContent="space-between"
@@ -94,7 +102,7 @@ const ProjectCardActions = ({
             </MenuItem>
             <MenuItem
               icon={<RiDeleteBin2Line />}
-              onClick={() => onDeleteProject(id)}
+              onClick={() => handleDeleteProject(id)}
             >
               Delete
             </MenuItem>

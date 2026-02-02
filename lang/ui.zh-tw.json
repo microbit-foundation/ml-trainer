@@ -495,6 +495,14 @@
     "defaultMessage": "您確定您要刪除所有的數據樣本嗎？",
     "description": "Confirmation dialog text"
   },
+  "delete-project-confirm-heading": {
+    "defaultMessage": "Confirm delete project",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-project-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete the project \"{project}\"?",
+    "description": "Confirmation dialog text"
+  },
   "delete-recording-aria": {
     "defaultMessage": "刪除對於動作「{action}」的 {numSamples} 個記錄 {sample}",
     "description": "Aria label for data sample delete action"

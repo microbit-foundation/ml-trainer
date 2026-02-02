@@ -495,6 +495,14 @@
     "defaultMessage": "Tem certeza de que deseja excluir todas as amostras de dados?",
     "description": "Confirmation dialog text"
   },
+  "delete-project-confirm-heading": {
+    "defaultMessage": "Confirm delete project",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-project-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete the project \"{project}\"?",
+    "description": "Confirmation dialog text"
+  },
   "delete-recording-aria": {
     "defaultMessage": "Excluir gravação {sample} de {numSamples} para a ação \"{action}\".",
     "description": "Aria label for data sample delete action"

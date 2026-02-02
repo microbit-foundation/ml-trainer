@@ -4,6 +4,7 @@ import {
   Container,
   HStack,
   SimpleGrid,
+  Text,
   VStack,
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
@@ -24,6 +25,8 @@ import SortInput from "../components/SortInput";
 import { loadProjectAndModelFromStorage, useStore } from "../store";
 import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
 import { ProjectDataWithActions } from "../storage";
+import { ConfirmDialog } from "../components/ConfirmDialog";
+import { FormattedMessage, useIntl } from "react-intl";
 
 type OrderByField = "timestamp" | "name";
 
@@ -41,7 +44,7 @@ const ProjectsPage = () => {
   const deleteProject = useStore((s) => s.deleteProject);
   const deleteProjects = useStore((s) => s.deleteProjects);
   const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
-  const [projectToRename, setProjectToRename] = useState<string | null>(null);
+  const [projectForAction, setProjectForAction] = useState<string | null>(null);
 
   const navigateToHomePage = useCallback(() => {
     navigate(createHomePageUrl());
@@ -79,12 +82,16 @@ const ProjectsPage = () => {
       if (id) {
         return deleteProject(id);
       }
+      if (projectForAction) {
+        await deleteProject(projectForAction);
+        setConfirmDialogIsOpen(false);
+      }
       if (selectedProjectIds.length === 1) {
         return deleteProject(selectedProjectIds[0]);
       }
       await deleteProjects(selectedProjectIds);
     },
-    [deleteProject, deleteProjects, selectedProjectIds]
+    [deleteProject, deleteProjects, projectForAction, selectedProjectIds]
   );
 
   const updateSelectedProjects = useCallback((id: string) => {
@@ -106,7 +113,7 @@ const ProjectsPage = () => {
       if (project) {
         setProjectName(project.name);
         setNameDialogIsOpen(true);
-        setProjectToRename(project.id);
+        setProjectForAction(project.id);
       }
     },
     [allProjectData, selectedProjectIds]
@@ -114,21 +121,21 @@ const ProjectsPage = () => {
 
   const handleNameProjectDialogClose = useCallback(() => {
     setNameDialogIsOpen(false);
-    setProjectToRename(null);
+    setProjectForAction(null);
   }, []);
 
-  const handleNameProjectDialogCloseComplete = useCallback(() => {
+  const clearFinalFocusRef = useCallback(() => {
     setFinalFocusRef(undefined);
   }, []);
 
   const handleRenameProject = useCallback(
     async (name: string | undefined) => {
-      if (projectToRename) {
-        await renameProject(projectToRename, name ?? "");
+      if (projectForAction) {
+        await renameProject(projectForAction, name ?? "");
       }
       handleNameProjectDialogClose();
     },
-    [handleNameProjectDialogClose, projectToRename, renameProject]
+    [handleNameProjectDialogClose, projectForAction, renameProject]
   );
 
   const [query, setQuery] = useState("");
@@ -228,6 +235,27 @@ const ProjectsPage = () => {
     RefObject<HTMLElement> | undefined
   >();
 
+  const [confirmDialogIsOpen, setConfirmDialogIsOpen] = useState(false);
+
+  const handleOpenConfirmDialog = useCallback(
+    (id?: string) => {
+      const projectId = id ?? selectedProjectIds[0];
+      const project = allProjectData.find((p) => p.id === projectId);
+      if (project) {
+        setProjectName(project.name);
+        setConfirmDialogIsOpen(true);
+        setProjectForAction(project.id);
+      }
+    },
+    [allProjectData, selectedProjectIds]
+  );
+
+  const handleCloseConfirmDialog = useCallback(() => {
+    setConfirmDialogIsOpen(false);
+  }, []);
+
+  const intl = useIntl();
+
   return (
     <Suspense fallback={<LoadingPage />}>
       <Await resolve={allProjectDataLoaded}>
@@ -235,8 +263,26 @@ const ProjectsPage = () => {
           projectName={projectName}
           isOpen={nameDialogIsOpen}
           onClose={handleNameProjectDialogClose}
-          onCloseComplete={handleNameProjectDialogCloseComplete}
+          onCloseComplete={clearFinalFocusRef}
           onSave={handleRenameProject}
+          finalFocusRef={finalFocusRef}
+        />
+        <ConfirmDialog
+          isOpen={confirmDialogIsOpen}
+          heading={intl.formatMessage({
+            id: "delete-project-confirm-heading",
+          })}
+          body={
+            <Text>
+              <FormattedMessage
+                id="delete-project-confirm-text"
+                values={{ project: projectName }}
+              />
+            </Text>
+          }
+          onConfirm={() => handleDeleteProject()}
+          onCancel={handleCloseConfirmDialog}
+          onCloseComplete={clearFinalFocusRef}
           finalFocusRef={finalFocusRef}
         />
         <DefaultPageLayout
@@ -264,7 +310,7 @@ const ProjectsPage = () => {
               <HStack>
                 <ProjectsToolbar
                   selectedProjectIds={selectedProjectIds}
-                  onDeleteProject={handleDeleteProject}
+                  onDeleteProject={handleOpenConfirmDialog}
                   onOpenProject={handleOpenProject}
                   onRenameProject={handleOpenNameProjectDialog}
                 />
@@ -287,7 +333,7 @@ const ProjectsPage = () => {
                         id={projectData.id}
                         isSelected={selectedProjectIds.includes(projectData.id)}
                         onSelected={updateSelectedProjects}
-                        onDeleteProject={handleDeleteProject}
+                        onDeleteProject={handleOpenConfirmDialog}
                         onOpenProject={handleOpenProject}
                         onRenameProject={handleOpenNameProjectDialog}
                         setFinalFocusRef={setFinalFocusRef}

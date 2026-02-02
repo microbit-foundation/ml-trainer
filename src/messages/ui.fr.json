@@ -845,6 +845,26 @@
       "value": "Voulez-vous supprimer tous les échantillons de données ?"
     }
   ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete project"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
   "delete-recording-aria": [
     {
       "type": 0,
