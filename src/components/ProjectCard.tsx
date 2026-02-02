@@ -45,9 +45,9 @@ const ProjectCard = ({ projectData, projectCardActions }: ProjectCardProps) => {
             <LinkOverlay
               as={Button}
               h={8}
-              mb="auto"
               textAlign="left"
               fontSize="xl"
+              isTruncated
               onClick={handleLoadProject}
               variant="unstyled"
               _focusVisible={{ boxShadow: "outline", outline: "none" }}
@@ -59,7 +59,9 @@ const ProjectCard = ({ projectData, projectCardActions }: ProjectCardProps) => {
                 {actions.map((a) => a.name).join(", ")}
               </Text>
             )}
-            <Text color="blackAlpha.700">{timeAgo(intl, timestamp)}</Text>
+            <Text mt="auto" color="blackAlpha.700">
+              {timeAgo(intl, timestamp)}
+            </Text>
           </Stack>
         </CardBody>
       </Card>
