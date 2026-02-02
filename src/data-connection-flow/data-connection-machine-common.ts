@@ -64,7 +64,6 @@ export type DataConnectionEvent =
   // Device status events - sent from the status listener.
   | { type: "deviceConnected" }
   | { type: "deviceDisconnected"; source?: "bridge" | "remote" }
-  | { type: "deviceReconnecting" }
   /**
    * Connection paused due to tab visibility. Will reconnect when tab visible.
    */
@@ -169,11 +168,6 @@ export const guards = {
    */
   hadSuccessfulConnection: (ctx: DataConnectionFlowContext) =>
     ctx.hadSuccessfulConnection,
-
-  /**
-   * Already failed once - next failure shows "start over" dialog.
-   */
-  hasFailedOnce: (ctx: DataConnectionFlowContext) => ctx.hasFailedOnce,
 
   /**
    * A micro:bit name is stored in settings.
@@ -765,9 +759,6 @@ export const connectedState = {
           actions: actions.connectionLost,
         },
       ],
-      deviceReconnecting: {
-        actions: actions.reconnecting,
-      },
       // Success comes via status listener, not explicit event from performConnectData,
       // because the connection library has internal auto-reconnect logic.
       deviceConnected: {
