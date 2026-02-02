@@ -2,20 +2,25 @@ import { Button, ButtonGroup } from "@chakra-ui/react";
 import {
   RiDeleteBin2Line,
   RiEdit2Line,
+  RiFileCopyLine,
   RiFolderOpenLine,
 } from "react-icons/ri";
+import { ProjectNameDialogReason } from "../pages/ProjectsPage";
 
 interface ProjectsToolbarProps {
   selectedProjectIds: string[];
   onOpenProject: (id?: string) => void;
-  onRenameProject: (id?: string) => void;
+  onRenameDuplicateProject: (
+    reason: ProjectNameDialogReason,
+    id?: string
+  ) => void;
   onDeleteProject: (id?: string) => void;
 }
 
 const ProjectsToolbar = ({
   selectedProjectIds,
   onOpenProject,
-  onRenameProject,
+  onRenameDuplicateProject,
   onDeleteProject,
 }: ProjectsToolbarProps) => {
   return (
@@ -33,13 +38,24 @@ const ProjectsToolbar = ({
       )}
       {selectedProjectIds.length === 1 && (
         <Button
-          onClick={() => onRenameProject()}
+          onClick={() => onRenameDuplicateProject("rename")}
           leftIcon={<RiEdit2Line />}
           borderRadius="md"
           variant="toolbar"
           _focusVisible={{ boxShadow: "outline" }}
         >
           Rename
+        </Button>
+      )}
+      {selectedProjectIds.length === 1 && (
+        <Button
+          onClick={() => onRenameDuplicateProject("duplicate")}
+          leftIcon={<RiFileCopyLine />}
+          borderRadius="md"
+          variant="toolbar"
+          _focusVisible={{ boxShadow: "outline" }}
+        >
+          Duplicate
         </Button>
       )}
       {selectedProjectIds.length !== 0 && (

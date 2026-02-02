@@ -13,16 +13,21 @@ import { MdMoreVert } from "react-icons/md";
 import {
   RiDeleteBin2Line,
   RiEdit2Line,
+  RiFileCopyLine,
   RiFolderOpenLine,
 } from "react-icons/ri";
+import { ProjectNameDialogReason } from "../pages/ProjectsPage";
 
 interface ProjectCardMenuProps {
   id: string;
   isSelected: boolean;
   onSelected: (id: string) => void;
-  onOpenProject: (id?: string) => void;
-  onRenameProject: (id?: string) => void;
   onDeleteProject: (id?: string) => void;
+  onOpenProject: (id?: string) => void;
+  onRenameDuplicateProject: (
+    reason: ProjectNameDialogReason,
+    id?: string
+  ) => void;
   setFinalFocusRef: (value: RefObject<HTMLElement>) => void;
 }
 
@@ -31,17 +36,25 @@ const ProjectCardActions = ({
   isSelected,
   onSelected,
   onDeleteProject,
+  onRenameDuplicateProject,
   onOpenProject,
-  onRenameProject,
   setFinalFocusRef,
 }: ProjectCardMenuProps) => {
   const menuButtonRef = useRef(null);
   const handleRenameProject = useCallback(
     (id: string) => {
       setFinalFocusRef(menuButtonRef);
-      onRenameProject(id);
+      onRenameDuplicateProject("rename", id);
     },
-    [onRenameProject, setFinalFocusRef]
+    [onRenameDuplicateProject, setFinalFocusRef]
+  );
+
+  const handleDuplicateProject = useCallback(
+    (id: string) => {
+      setFinalFocusRef(menuButtonRef);
+      onRenameDuplicateProject("duplicate", id);
+    },
+    [onRenameDuplicateProject, setFinalFocusRef]
   );
 
   const handleDeleteProject = useCallback(
@@ -99,6 +112,12 @@ const ProjectCardActions = ({
               onClick={() => handleRenameProject(id)}
             >
               Rename
+            </MenuItem>
+            <MenuItem
+              icon={<RiFileCopyLine />}
+              onClick={() => handleDuplicateProject(id)}
+            >
+              Duplicate
             </MenuItem>
             <MenuItem
               icon={<RiDeleteBin2Line />}

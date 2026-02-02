@@ -784,6 +784,81 @@ export class Database {
     return tx.done;
   }
 
+  async duplicateProject(
+    existingProjectId: string,
+    newProjectData: ProjectData
+  ) {
+    const { id, name, timestamp } = newProjectData;
+    const tx = (await this.useDb()).transaction(
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.RECORDINGS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+      ],
+      "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    const actions = await actionsStore
+      .index("projectId")
+      .getAll(existingProjectId);
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    const storePromises: Promise<string>[] = [];
+    actions.forEach(async (action) => {
+      const recordings = await recordingsStore
+        .index("actionId")
+        .getAll(action.id);
+      const newActionId = uuid();
+      storePromises.push(
+        actionsStore.add(
+          { ...action, id: newActionId, projectId: id },
+          newActionId
+        )
+      );
+      recordings.forEach((r) => {
+        const newRecordingId = uuid();
+        storePromises.push(
+          recordingsStore.add(
+            { ...r, id: newRecordingId, actionId: newActionId },
+            newRecordingId
+          )
+        );
+      });
+    });
+    await Promise.all(storePromises);
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeData = assertData(await makeCodeStore.get(existingProjectId));
+    await makeCodeStore.add(
+      {
+        ...makeCodeData,
+        project: {
+          ...makeCodeData.project,
+          header: makeCodeData.project.header
+            ? {
+                ...makeCodeData.project.header,
+                name,
+              }
+            : undefined,
+        },
+      },
+      id
+    );
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(
+      await projectDataStore.get(existingProjectId)
+    );
+    await projectDataStore.add(
+      {
+        ...projectData,
+        id,
+        name,
+        timestamp,
+      },
+      id
+    );
+    return tx.done;
+  }
+
   async deleteProject(id: string): Promise<void> {
     const tx = (await this.useDb()).transaction(
       [

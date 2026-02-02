@@ -194,6 +194,7 @@ export interface Actions {
   loadProjectFromStorage(id: string): Promise<void>;
   updateProjectUpdatedAt(): Promise<void>;
   renameProject(id: string, name: string): Promise<void>;
+  duplicateProject(id: string, name: string): Promise<void>;
   deleteProject(id: string): Promise<void>;
   deleteProjects(ids: string[]): Promise<void>;
   clearProjectState(): void;
@@ -508,6 +509,28 @@ const createMlStore = (logging: Logging) => {
           await storageWithErrHandling(() =>
             storage.renameProject(id, name, timestamp)
           );
+        },
+
+        async duplicateProject(id: string, name: string) {
+          const { allProjectData } = get();
+          const duplicatedProject = allProjectData.find((p) => p.id === id);
+          const newProjectId = uuid();
+          const timestamp = Date.now();
+          if (duplicatedProject) {
+            set({
+              allProjectData: [
+                ...allProjectData,
+                { ...duplicatedProject, name, id: newProjectId, timestamp },
+              ],
+            });
+            await storageWithErrHandling(() =>
+              storage.duplicateProject(id, {
+                id: newProjectId,
+                name,
+                timestamp,
+              })
+            );
+          }
         },
 
         async deleteProject(id: string) {

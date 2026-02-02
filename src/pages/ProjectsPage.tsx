@@ -29,6 +29,7 @@ import { ConfirmDialog } from "../components/ConfirmDialog";
 import { FormattedMessage, useIntl } from "react-intl";
 
 type OrderByField = "timestamp" | "name";
+export type ProjectNameDialogReason = "rename" | "duplicate";
 
 interface RankedProject extends ProjectDataWithActions {
   score: number;
@@ -39,8 +40,10 @@ const ProjectsPage = () => {
     allProjectDataLoaded: boolean;
   };
   const navigate = useNavigate();
+  const intl = useIntl();
   const allProjectData = useStore((s) => s.allProjectData);
   const renameProject = useStore((s) => s.renameProject);
+  const duplicateProject = useStore((s) => s.duplicateProject);
   const deleteProject = useStore((s) => s.deleteProject);
   const deleteProjects = useStore((s) => s.deleteProjects);
   const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
@@ -106,11 +109,15 @@ const ProjectsPage = () => {
   const [nameDialogIsOpen, setNameDialogIsOpen] = useState(false);
   const [projectName, setProjectName] = useState("");
 
+  const [projectNameReason, setProjectNameReason] =
+    useState<ProjectNameDialogReason>();
+
   const handleOpenNameProjectDialog = useCallback(
-    (id?: string) => {
+    (reason: ProjectNameDialogReason, id?: string) => {
       const projectId = id ?? selectedProjectIds[0];
       const project = allProjectData.find((p) => p.id === projectId);
       if (project) {
+        setProjectNameReason(reason);
         setProjectName(project.name);
         setNameDialogIsOpen(true);
         setProjectForAction(project.id);
@@ -128,14 +135,24 @@ const ProjectsPage = () => {
     setFinalFocusRef(undefined);
   }, []);
 
-  const handleRenameProject = useCallback(
-    async (name: string | undefined) => {
+  const handleNameProjectSave = useCallback(
+    async (name: string) => {
       if (projectForAction) {
-        await renameProject(projectForAction, name ?? "");
+        if (projectNameReason === "rename") {
+          await renameProject(projectForAction, name);
+        } else {
+          await duplicateProject(projectForAction, name);
+        }
       }
       handleNameProjectDialogClose();
     },
-    [handleNameProjectDialogClose, projectForAction, renameProject]
+    [
+      duplicateProject,
+      handleNameProjectDialogClose,
+      projectForAction,
+      projectNameReason,
+      renameProject,
+    ]
   );
 
   const [query, setQuery] = useState("");
@@ -254,8 +271,6 @@ const ProjectsPage = () => {
     setConfirmDialogIsOpen(false);
   }, []);
 
-  const intl = useIntl();
-
   return (
     <Suspense fallback={<LoadingPage />}>
       <Await resolve={allProjectDataLoaded}>
@@ -264,7 +279,7 @@ const ProjectsPage = () => {
           isOpen={nameDialogIsOpen}
           onClose={handleNameProjectDialogClose}
           onCloseComplete={clearFinalFocusRef}
-          onSave={handleRenameProject}
+          onSave={handleNameProjectSave}
           finalFocusRef={finalFocusRef}
         />
         <ConfirmDialog
@@ -312,7 +327,7 @@ const ProjectsPage = () => {
                   selectedProjectIds={selectedProjectIds}
                   onDeleteProject={handleOpenConfirmDialog}
                   onOpenProject={handleOpenProject}
-                  onRenameProject={handleOpenNameProjectDialog}
+                  onRenameDuplicateProject={handleOpenNameProjectDialog}
                 />
                 <SortInput
                   value={orderByField}
@@ -334,8 +349,8 @@ const ProjectsPage = () => {
                         isSelected={selectedProjectIds.includes(projectData.id)}
                         onSelected={updateSelectedProjects}
                         onDeleteProject={handleOpenConfirmDialog}
+                        onRenameDuplicateProject={handleOpenNameProjectDialog}
                         onOpenProject={handleOpenProject}
-                        onRenameProject={handleOpenNameProjectDialog}
                         setFinalFocusRef={setFinalFocusRef}
                       />
                     }

@@ -31,7 +31,7 @@ interface NameProjectDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onCloseComplete?: () => void;
-  onSave: (newName?: string) => void;
+  onSave: (newName: string) => void;
   projectName?: string;
 }
 
