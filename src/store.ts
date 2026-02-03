@@ -941,18 +941,7 @@ const createMlStore = (logging: Logging) => {
                     );
                     const timestamp = Date.now();
                     const newActions = getActionsFromProject(newProject);
-                    let projectEdited = true;
-                    const metadataString =
-                      newProject.text?.[filenames.metadata];
-                    const metadata = JSON.parse(
-                      metadataString ?? "{}"
-                    ) as Record<string, unknown>;
-                    if (
-                      !metadata["projectEdited"] &&
-                      newProject.text?.[filenames.mainTs] === "\n"
-                    ) {
-                      projectEdited = false;
-                    }
+                    const projectEdited = projectInHexIsEdited(newProject);
                     return {
                       settings: {
                         ...settings,
@@ -966,7 +955,7 @@ const createMlStore = (logging: Logging) => {
                       project: newProject,
                       projectLoadTimestamp: timestamp,
                       timestamp,
-                      // New project loaded externally so we can't know whether its edited.
+
                       projectEdited,
                       actions: newActions,
                       dataWindow: getDataWindowFromActions(newActions),
@@ -1485,4 +1474,23 @@ const renameProject = (
       }),
     },
   };
+};
+
+const projectInHexIsEdited = (project: MakeCodeProject): boolean => {
+  // Prior to storing projectEdited in the MakeCode project, hex files loaded externally
+  // are assumed to be edited but there is no way of knowing for sure.
+  let projectEdited = true;
+  const metadataString = project.text?.[filenames.metadata];
+  const metadata = JSON.parse(metadataString ?? "{}") as Record<
+    string,
+    unknown
+  >;
+  // projectEdited is only ever a flag to indicate whether the project was edited in this app. It cannot
+  // account for cases where the project was edited in MakeCode after being downloaded from this app.
+  // A value of false cannot be trusted which is why main.ts must also be checked.
+  // For older projects without the projectEdited metadata, this may restore the default program over a blank program.
+  if (!metadata["projectEdited"] && project.text?.[filenames.mainTs] === "\n") {
+    projectEdited = false;
+  }
+  return projectEdited;
 };
