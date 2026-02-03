@@ -2331,6 +2331,12 @@
       "value": "Nazwa projektu nie może być pusta"
     }
   ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
+    }
+  ],
   "radio-link-microbit": [
     {
       "type": 0,

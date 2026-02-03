@@ -75,6 +75,9 @@ const HomePage = () => {
 
 const ProjectRow = () => {
   const allProjectData = useStore((s) => s.allProjectData);
+  if (allProjectData.length === 0) {
+    return null;
+  }
   return (
     <CarouselRow
       actions={[<ViewAllProjectsButton key="viewAll" />]}

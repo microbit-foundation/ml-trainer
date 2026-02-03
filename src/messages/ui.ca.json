@@ -2313,6 +2313,12 @@
       "value": "El nom del projecte no pot estar buit"
     }
   ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
+    }
+  ],
   "radio-link-microbit": [
     {
       "type": 0,

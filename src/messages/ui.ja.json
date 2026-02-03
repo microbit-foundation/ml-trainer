@@ -2307,6 +2307,12 @@
       "value": "プロジェクト名は空にできません"
     }
   ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
+    }
+  ],
   "radio-link-microbit": [
     {
       "type": 0,

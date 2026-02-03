@@ -2327,6 +2327,12 @@
       "value": "El nombre del proyecto no puede estar en blanco"
     }
   ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
+    }
+  ],
   "radio-link-microbit": [
     {
       "type": 0,

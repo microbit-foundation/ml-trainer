@@ -1347,6 +1347,10 @@
     "defaultMessage": "El nom del projecte no pot estar buit",
     "description": "Validation message for project name"
   },
+  "projects-page-title": {
+    "defaultMessage": "Projects",
+    "description": "Projects page title"
+  },
   "radio-link-microbit": {
     "defaultMessage": "micro:bit d'enllaç de ràdio ",
     "description": "Radio link micro:bit image caption"

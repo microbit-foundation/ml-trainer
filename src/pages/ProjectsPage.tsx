@@ -4,6 +4,7 @@ import {
   Container,
   HStack,
   SimpleGrid,
+  Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -158,6 +159,9 @@ const ProjectsPage = () => {
   const [query, setQuery] = useState("");
   const handleQueryChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.value.trim()) {
+        setSelectedProjectIds([]);
+      }
       setQuery(e.target.value);
     },
     []
@@ -236,13 +240,11 @@ const ProjectsPage = () => {
   }, [allProjectData, query]);
 
   const processedProjects = useMemo((): ProjectDataWithActions[] => {
-    if (query) {
+    if (query.trim()) {
       return getSearchResults();
     }
     return orderBy(
-      allProjectData.filter((p) =>
-        p.name.toLowerCase().includes(query.toLowerCase())
-      ),
+      allProjectData,
       orderByField === "name" ? (p) => p.name.toLowerCase() : orderByField,
       orderByDirection
     );
@@ -301,6 +303,8 @@ const ProjectsPage = () => {
           finalFocusRef={finalFocusRef}
         />
         <DefaultPageLayout
+          titleId="projects-page-title"
+          showPageTitle
           toolbarItemsRight={<HomeToolbarItem />}
           menuItems={<HomeMenuItem />}
           toolbarItemsLeft={
@@ -313,8 +317,16 @@ const ProjectsPage = () => {
             </Button>
           }
         >
-          <VStack as="main" alignItems="center">
-            <Container maxW="1180px" alignItems="stretch" p={4} mt={4}>
+          <VStack as="main" alignItems="center" flexGrow={1}>
+            <Container
+              maxW="1180px"
+              alignItems="stretch"
+              p={4}
+              mt={4}
+              display="flex"
+              flexDir="column"
+              flexGrow={1}
+            >
               <Box mb={8} maxW={["100%", null, "600px"]}>
                 <Search
                   query={query}
@@ -338,25 +350,38 @@ const ProjectsPage = () => {
                   hasSearchQuery={!!query}
                 />
               </HStack>
-              <SimpleGrid mt={3} spacing={3} columns={[1, 2, 3, 4, 5]}>
-                {processedProjects.map((projectData) => (
-                  <ProjectCard
-                    key={projectData.id}
-                    projectData={projectData}
-                    projectCardActions={
-                      <ProjectCardActions
-                        id={projectData.id}
-                        isSelected={selectedProjectIds.includes(projectData.id)}
-                        onSelected={updateSelectedProjects}
-                        onDeleteProject={handleOpenConfirmDialog}
-                        onRenameDuplicateProject={handleOpenNameProjectDialog}
-                        onOpenProject={handleOpenProject}
-                        setFinalFocusRef={setFinalFocusRef}
-                      />
-                    }
-                  />
-                ))}
-              </SimpleGrid>
+              {processedProjects.length > 0 ? (
+                <SimpleGrid mt={3} spacing={3} columns={[1, 2, 3, 4, 5]}>
+                  {processedProjects.map((projectData) => (
+                    <ProjectCard
+                      key={projectData.id}
+                      projectData={projectData}
+                      projectCardActions={
+                        <ProjectCardActions
+                          id={projectData.id}
+                          isSelected={selectedProjectIds.includes(
+                            projectData.id
+                          )}
+                          onSelected={updateSelectedProjects}
+                          onDeleteProject={handleOpenConfirmDialog}
+                          onRenameDuplicateProject={handleOpenNameProjectDialog}
+                          onOpenProject={handleOpenProject}
+                          setFinalFocusRef={setFinalFocusRef}
+                        />
+                      }
+                    />
+                  ))}
+                </SimpleGrid>
+              ) : (
+                <Stack
+                  justifyContent="center"
+                  alignItems="center"
+                  flexGrow={1}
+                  p={12}
+                >
+                  <Text>No projects to display</Text>
+                </Stack>
+              )}
             </Container>
           </VStack>
         </DefaultPageLayout>

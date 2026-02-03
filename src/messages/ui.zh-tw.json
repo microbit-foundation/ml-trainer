@@ -2323,6 +2323,12 @@
       "value": "專案名稱不可為空白"
     }
   ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
+    }
+  ],
   "radio-link-microbit": [
     {
       "type": 0,

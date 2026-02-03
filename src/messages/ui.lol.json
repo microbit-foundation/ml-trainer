@@ -2189,6 +2189,12 @@
       "value": "crwdns363240:0crwdne363240:0"
     }
   ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
+    }
+  ],
   "radio-link-microbit": [
     {
       "type": 0,

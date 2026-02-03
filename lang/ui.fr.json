@@ -1347,6 +1347,10 @@
     "defaultMessage": "Le nom du projet ne peut pas être vide",
     "description": "Validation message for project name"
   },
+  "projects-page-title": {
+    "defaultMessage": "Projects",
+    "description": "Projects page title"
+  },
   "radio-link-microbit": {
     "defaultMessage": "micro:bit de liaison radio",
     "description": "Radio link micro:bit image caption"

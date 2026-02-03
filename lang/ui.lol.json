@@ -1347,6 +1347,10 @@
     "defaultMessage": "crwdns363240:0crwdne363240:0",
     "description": "Validation message for project name"
   },
+  "projects-page-title": {
+    "defaultMessage": "Projects",
+    "description": "Projects page title"
+  },
   "radio-link-microbit": {
     "defaultMessage": "crwdns363242:0crwdne363242:0",
     "description": "Radio link micro:bit image caption"

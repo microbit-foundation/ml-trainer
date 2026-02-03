@@ -2315,6 +2315,12 @@
       "value": "프로젝트 이름을 입력해야 합니다"
     }
   ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
+    }
+  ],
   "radio-link-microbit": [
     {
       "type": 0,

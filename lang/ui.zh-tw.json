@@ -1347,6 +1347,10 @@
     "defaultMessage": "專案名稱不可為空白",
     "description": "Validation message for project name"
   },
+  "projects-page-title": {
+    "defaultMessage": "Projects",
+    "description": "Projects page title"
+  },
   "radio-link-microbit": {
     "defaultMessage": "無線電連結 micro:bit",
     "description": "Radio link micro:bit image caption"

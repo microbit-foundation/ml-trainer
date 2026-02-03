@@ -70,23 +70,22 @@ const ProjectCardActions = ({
       justifyContent="space-between"
       position="absolute"
       w="100%"
-      p={5}
       top={0}
       left={0}
     >
       <Checkbox
+        p={5}
         isChecked={isSelected}
         onChange={() => onSelected(id)}
         aria-selected={isSelected}
         color="brand.600"
         zIndex={1}
-        opacity={isSelected ? 1 : 0}
-        _groupHover={{
-          opacity: 1,
+        borderColor="gray.600"
+        _hover={{
+          backgroundColor: "blackAlpha.50",
         }}
-        _groupFocusWithin={{
-          opacity: 1,
-        }}
+        borderBottomRightRadius="md"
+        h="60px"
       />
       <Menu>
         <MenuButton
@@ -94,6 +93,10 @@ const ProjectCardActions = ({
           zIndex={1}
           as={IconButton}
           aria-label="project actions"
+          p={5}
+          h="100%"
+          borderRadius={0}
+          borderBottomLeftRadius="md"
           fontSize="xl"
           variant="ghost"
           icon={<MdMoreVert />}

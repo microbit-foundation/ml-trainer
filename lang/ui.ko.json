@@ -1347,6 +1347,10 @@
     "defaultMessage": "프로젝트 이름을 입력해야 합니다",
     "description": "Validation message for project name"
   },
+  "projects-page-title": {
+    "defaultMessage": "Projects",
+    "description": "Projects page title"
+  },
   "radio-link-microbit": {
     "defaultMessage": "라디오 링크 micro:bit",
     "description": "Radio link micro:bit image caption"
