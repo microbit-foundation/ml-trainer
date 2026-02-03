@@ -955,7 +955,6 @@ const createMlStore = (logging: Logging) => {
                       project: newProject,
                       projectLoadTimestamp: timestamp,
                       timestamp,
-
                       projectEdited,
                       actions: newActions,
                       dataWindow: getDataWindowFromActions(newActions),
@@ -969,7 +968,15 @@ const createMlStore = (logging: Logging) => {
                     `[MakeCode] Edit copied to project. ID ${newProject.header?.id}`
                   );
                   return {
-                    project: newProject,
+                    project: {
+                      ...newProject,
+                      text: {
+                        ...newProject.text,
+                        [filenames.metadata]: JSON.stringify({
+                          projectEdited: true,
+                        }),
+                      },
+                    },
                     // We just assume its been edited as spurious changes from MakeCode happen that we can't identify
                     projectEdited: true,
                   };
