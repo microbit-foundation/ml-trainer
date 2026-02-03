@@ -723,12 +723,6 @@ export const connectedState = {
         actions: actions.reconnecting,
       },
       deviceDisconnected: [
-        // Bridge disconnect (USB unplugged): can't auto-reconnect
-        {
-          guard: guards.isBridgeDisconnect,
-          target: DataConnectionStep.ConnectionLost,
-          actions: [...actions.setDisconnectSource, ...actions.connectionLost],
-        },
         // First disconnect: try auto-reconnect
         {
           guard: (ctx: DataConnectionFlowContext) => !ctx.hasFailedOnce,
@@ -736,6 +730,12 @@ export const connectedState = {
             ...actions.setDisconnectSource,
             ...actions.firstReconnectAttempt,
           ],
+        },
+        // Bridge disconnect: can't auto-reconnect
+        {
+          guard: guards.isBridgeDisconnect,
+          target: DataConnectionStep.ConnectionLost,
+          actions: [...actions.setDisconnectSource, ...actions.connectionLost],
         },
         // Second disconnect: show connection lost
         {
