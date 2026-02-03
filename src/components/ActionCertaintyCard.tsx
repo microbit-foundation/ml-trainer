@@ -28,7 +28,7 @@ interface ActionCertaintyCardProps {
   requiredConfidence?: number;
   onThresholdChange: (val: number) => void;
   actionName: string;
-  actionId: number;
+  actionId: string;
   disabled?: boolean;
 }
 
@@ -42,7 +42,7 @@ const ActionCertaintyCard = ({
   const intl = useIntl();
   const barWidth = 240;
   const predictionResult = useStore((s) => s.predictionResult);
-  const isTriggered = predictionResult?.detected?.ID === actionId;
+  const isTriggered = predictionResult?.detected?.id === actionId;
   const colorScheme = useMemo(
     () => (isTriggered ? "brand2.500" : undefined),
     [isTriggered]

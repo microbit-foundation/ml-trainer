@@ -20,7 +20,7 @@ interface DataSamplesTableRowProps {
   onSelectRow?: () => void;
   onRecord?: (recordingOptions: RecordingOptions) => void;
   showHints: boolean;
-  newRecordingId?: number;
+  newRecordingId?: string;
   clearNewRecordingId?: () => void;
   onDeleteAction?: () => void;
   renameShortcutScopeRef?: (instance: RefType<HTMLElement>) => void;
@@ -41,51 +41,49 @@ const DataSamplesTableRow = ({
   const intl = useIntl();
 
   return (
-    <>
-      <Box
-        ref={selected ? renameShortcutScopeRef : undefined}
-        role="region"
-        aria-label={intl.formatMessage(
-          {
-            id: "action-region",
-          },
-          { action: action.name }
-        )}
-        display="contents"
-        onFocusCapture={onSelectRow}
-      >
+    <Box
+      ref={selected ? renameShortcutScopeRef : undefined}
+      role="region"
+      aria-label={intl.formatMessage(
+        {
+          id: "action-region",
+        },
+        { action: action.name }
+      )}
+      display="contents"
+      onFocusCapture={onSelectRow}
+    >
+      <GridItem>
+        <ActionNameCard
+          value={action}
+          onDeleteAction={onDeleteAction}
+          onSelectRow={onSelectRow}
+          selected={selected}
+          viewMode={
+            preview
+              ? ActionCardNameViewMode.Preview
+              : ActionCardNameViewMode.Editable
+          }
+        />
+      </GridItem>
+      {showHints ? (
+        <DataSamplesTableHints action={action} onRecord={onRecord} />
+      ) : (
         <GridItem>
-          <ActionNameCard
-            value={action}
-            onDeleteAction={onDeleteAction}
-            onSelectRow={onSelectRow}
-            selected={selected}
-            viewMode={
-              preview
-                ? ActionCardNameViewMode.Preview
-                : ActionCardNameViewMode.Editable
-            }
-          />
+          {(action.name.length > 0 || action.recordings.length > 0) && (
+            <ActionDataSamplesCard
+              preview={preview}
+              newRecordingId={newRecordingId}
+              value={action}
+              selected={selected}
+              onSelectRow={onSelectRow}
+              onRecord={onRecord}
+              clearNewRecordingId={clearNewRecordingId}
+            />
+          )}
         </GridItem>
-        {showHints ? (
-          <DataSamplesTableHints action={action} onRecord={onRecord} />
-        ) : (
-          <GridItem>
-            {(action.name.length > 0 || action.recordings.length > 0) && (
-              <ActionDataSamplesCard
-                preview={preview}
-                newRecordingId={newRecordingId}
-                value={action}
-                selected={selected}
-                onSelectRow={onSelectRow}
-                onRecord={onRecord}
-                clearNewRecordingId={clearNewRecordingId}
-              />
-            )}
-          </GridItem>
-        )}
-      </Box>
-    </>
+      )}
+    </Box>
   );
 };
 

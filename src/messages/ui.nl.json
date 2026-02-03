@@ -217,6 +217,12 @@
       "value": "Hoeveel vertrouwen het model erin heeft dat je momenteel elke actie uitvoert."
     }
   ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "click-to-reload-page-action": [
     {
       "type": 0,
@@ -833,6 +839,26 @@
     {
       "type": 0,
       "value": "Weet je zeker dat je alle data samples wil verwijderen?"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete project"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
     }
   ],
   "delete-recording-aria": [
@@ -2113,6 +2139,12 @@
       "value": "Laatste sessie openen"
     }
   ],
+  "newpage-new-project-title": [
+    {
+      "type": 0,
+      "value": "New project"
+    }
+  ],
   "newpage-new-session-subtitle": [
     {
       "type": 0,
@@ -2293,6 +2325,12 @@
     {
       "type": 0,
       "value": "De projectnaam kan niet leeg zijn"
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
     }
   ],
   "radio-link-microbit": [
@@ -2627,6 +2665,12 @@
       "value": "Je hex bestand is gedownload"
     }
   ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
+    }
+  ],
   "select-icon-action-aria": [
     {
       "type": 0,
@@ -2807,6 +2851,18 @@
     {
       "type": 0,
       "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "now"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "a few seconds ago"
     }
   ],
   "tour-action": [

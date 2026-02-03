@@ -104,7 +104,7 @@ const DataSamplesTable = ({
   const loadProjectInputRef = useRef<LoadProjectInputRef>(null);
 
   // For adding flashing animation for new recording.
-  const [newRecordingId, setNewRecordingId] = useState<number | undefined>(
+  const [newRecordingId, setNewRecordingId] = useState<string | undefined>(
     undefined
   );
 
@@ -138,12 +138,20 @@ const DataSamplesTable = ({
 
   const tourStart = useStore((s) => s.tourStart);
   const handleRecordingComplete = useCallback(
-    ({ mostRecentRecordingId, recordingCount }: RecordingCompleteDetail) => {
+    async ({
+      mostRecentRecordingId,
+      recordingCount,
+    }: RecordingCompleteDetail) => {
       setNewRecordingId(mostRecentRecordingId);
-      tourStart({ name: "DataSamplesRecorded", recordingCount });
+      await tourStart({ name: "DataSamplesRecorded", recordingCount });
     },
     [tourStart]
   );
+
+  const handleConfirm = useCallback(async () => {
+    await deleteAction(selectedAction);
+    closeDialog();
+  }, [closeDialog, deleteAction, selectedAction]);
 
   const actionNameInputEl = useCallback(
     (idx: number) => document.getElementById(actionNameInputId(actions[idx])),
@@ -205,14 +213,11 @@ const DataSamplesTable = ({
                 />
               </Text>
             }
-            onConfirm={() => {
-              deleteAction(selectedAction.ID);
-              closeDialog();
-            }}
+            onConfirm={handleConfirm}
             onCancel={closeDialog}
           />
           <RecordingDialog
-            actionId={selectedAction.ID}
+            actionId={selectedAction.id}
             isOpen={isRecordingDialogOpen}
             onClose={closeDialog}
             actionName={selectedAction.name}
@@ -258,7 +263,11 @@ const DataSamplesTable = ({
                       fontSize="lg"
                       color="brand.600"
                       variant="link"
-                      onClick={() => loadProjectInputRef.current?.chooseFile()}
+                      onClick={() =>
+                        loadProjectInputRef.current?.chooseFile(
+                          "replaceActions"
+                        )
+                      }
                     >
                       {chunks}
                     </Button>
@@ -280,11 +289,11 @@ const DataSamplesTable = ({
         >
           {actions.map((action, idx) => (
             <DataSamplesTableRow
-              key={action.ID}
+              key={action.id}
               action={action}
               newRecordingId={newRecordingId}
               clearNewRecordingId={() => setNewRecordingId(undefined)}
-              selected={selectedAction.ID === action.ID}
+              selected={selectedAction.id === action.id}
               onSelectRow={() => setSelectedActionIdx(idx)}
               onRecord={handleRecord}
               showHints={showHints}

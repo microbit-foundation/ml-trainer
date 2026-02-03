@@ -111,6 +111,10 @@
     "defaultMessage": "현재 사용자가 각 행동을 수행하고 있는 모델에 대한 확신 정도를 나타냅니다.",
     "description": "Tooltip for certainty column"
   },
+  "clear": {
+    "defaultMessage": "Clear",
+    "description": "Aria label for the search input"
+  },
   "click-to-reload-page-action": {
     "defaultMessage": "클릭하여 페이지 새로 고침",
     "description": "Reload page button text"
@@ -489,6 +493,14 @@
   },
   "delete-data-samples-confirm-text": {
     "defaultMessage": "모든 데이터 샘플을 삭제하시겠습니까?",
+    "description": "Confirmation dialog text"
+  },
+  "delete-project-confirm-heading": {
+    "defaultMessage": "Confirm delete project",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-project-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete the project \"{project}\"?",
     "description": "Confirmation dialog text"
   },
   "delete-recording-aria": {
@@ -1227,6 +1239,10 @@
     "defaultMessage": "마지막 세션 열기",
     "description": "Open last session title"
   },
+  "newpage-new-project-title": {
+    "defaultMessage": "New project",
+    "description": "Start new project title"
+  },
   "newpage-new-session-subtitle": {
     "defaultMessage": "micro:bit를 연결하고 움직임 데이터를 수집하여 기계 학습 모델을 구축하세요.",
     "description": "Start new session subtitle"
@@ -1330,6 +1346,10 @@
   "project-name-not-empty": {
     "defaultMessage": "프로젝트 이름을 입력해야 합니다",
     "description": "Validation message for project name"
+  },
+  "projects-page-title": {
+    "defaultMessage": "Projects",
+    "description": "Projects page title"
   },
   "radio-link-microbit": {
     "defaultMessage": "라디오 링크 micro:bit",
@@ -1499,6 +1519,10 @@
     "defaultMessage": "hex 파일이 다운로드되었습니다.",
     "description": "Notification after a hex file has been downloaded"
   },
+  "search": {
+    "defaultMessage": "Search",
+    "description": "Aria label for searching documentation"
+  },
   "select-icon-action-aria": {
     "defaultMessage": "\"{action}\" 행동에 대한 아이콘 선택",
     "description": "Aria label for pick icon button"
@@ -1590,6 +1614,14 @@
   "third-party-content-description": {
     "defaultMessage": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the <link>MakeCode shared project</link> to report abuse to Microsoft MakeCode if you think it's not appropriate.",
     "description": "Notify user of third party content"
+  },
+  "timestamp-now": {
+    "defaultMessage": "now",
+    "description": "The last edit time of a project"
+  },
+  "timestamp-seconds": {
+    "defaultMessage": "a few seconds ago",
+    "description": "The last edit time of a project"
   },
   "tour-action": {
     "defaultMessage": "투어",

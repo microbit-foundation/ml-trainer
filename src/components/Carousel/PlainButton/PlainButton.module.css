@@ -1,0 +1,25 @@
+.root {
+  padding: 10px 20px;
+  border-radius: 23px;
+  border-style: solid;
+  height: auto;
+  background-color: transparent;
+  border-width: 0;
+  cursor: pointer;
+}
+
+.root:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.6);
+}
+
+.childrenContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.disabled {
+  opacity: 0.5;
+}

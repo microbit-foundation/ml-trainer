@@ -207,6 +207,12 @@
       "value": "crwdns362696:0crwdne362696:0"
     }
   ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "click-to-reload-page-action": [
     {
       "type": 0,
@@ -807,6 +813,26 @@
     {
       "type": 0,
       "value": "crwdns362884:0crwdne362884:0"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete project"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
     }
   ],
   "delete-recording-aria": [
@@ -1985,6 +2011,12 @@
       "value": "crwdns363202:0crwdne363202:0"
     }
   ],
+  "newpage-new-project-title": [
+    {
+      "type": 0,
+      "value": "New project"
+    }
+  ],
   "newpage-new-session-subtitle": [
     {
       "type": 0,
@@ -2155,6 +2187,12 @@
     {
       "type": 0,
       "value": "crwdns363240:0crwdne363240:0"
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
     }
   ],
   "radio-link-microbit": [
@@ -2489,6 +2527,12 @@
       "value": "crwdns363324:0crwdne363324:0"
     }
   ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
+    }
+  ],
   "select-icon-action-aria": [
     {
       "type": 0,
@@ -2641,6 +2685,18 @@
     {
       "type": 0,
       "value": "crwdns368597:0crwdne368597:0"
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "now"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "a few seconds ago"
     }
   ],
   "tour-action": [

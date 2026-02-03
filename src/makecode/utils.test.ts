@@ -12,9 +12,9 @@ import { MakeCodeProject } from "@microbit/makecode-embed/react";
 import * as tf from "@tensorflow/tfjs";
 import { assert, vi } from "vitest";
 import { TrainingResult, trainModel } from "../ml";
-import { DatasetEditorJsonFormat, ActionData } from "../model";
+import { ActionData, DatasetEditorJsonFormat } from "../model";
 import oldProject from "../test-fixtures/project-to-update.json";
-import actionData from "../test-fixtures/still-wave-clap-data-samples-legacy.json";
+import actionData from "../test-fixtures/wand-data-samples.json";
 import {
   ActionName,
   actionNamesFromLabels,
@@ -25,7 +25,7 @@ import {
   hasMakeCodeMlExtension,
   pxt,
 } from "./utils";
-import { currentDataWindow } from "../store";
+import { currentDataWindow } from "../project-utils";
 
 const data: DatasetEditorJsonFormat = {
   data: actionData as ActionData[],
@@ -42,10 +42,7 @@ beforeAll(async () => {
   const randomSpy = vi.spyOn(Math, "random");
   randomSpy.mockImplementation(() => 0.5);
 
-  trainingResult = await trainModel(
-    actionData as ActionData[],
-    currentDataWindow
-  );
+  trainingResult = await trainModel(data.data, currentDataWindow);
 });
 
 describe("test project generation", () => {
