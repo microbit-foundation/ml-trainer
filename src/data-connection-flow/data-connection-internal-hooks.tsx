@@ -179,7 +179,7 @@ const mapStatusToEvent = (
     case ConnectionStatus.CONNECTED:
       return { type: "deviceConnected" };
     case ConnectionStatus.DISCONNECTED:
-    case ConnectionStatus.NO_AUTHORIZED_DEVICE:{
+    case ConnectionStatus.NO_AUTHORIZED_DEVICE: {
       // Both DISCONNECTED and NO_AUTHORIZED_DEVICE mean "not connected".
       // Ignore transitions between these disconnected states (e.g., during
       // clearDevice() which goes DISCONNECTED → NO_AUTHORIZED_DEVICE).
@@ -189,7 +189,8 @@ const mapStatusToEvent = (
       ) {
         return null;
       }
-      return { type: "deviceDisconnected", source: disconnectSource };}
+      return { type: "deviceDisconnected", source: disconnectSource };
+    }
     case ConnectionStatus.PAUSED:
       // Connection paused due to tab visibility - will reconnect automatically.
       return { type: "devicePaused" };

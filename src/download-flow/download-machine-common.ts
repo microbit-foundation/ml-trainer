@@ -51,7 +51,7 @@ export type DownloadAction =
    */
   | { type: "setMicrobitName" }
   | { type: "clearMicrobitName" }
-  | { type: "connectFlash", clearDevice?: boolean }
+  | { type: "connectFlash"; clearDevice?: boolean }
   | { type: "flash" }
   | { type: "downloadHexFile" }
   | { type: "disconnectDataConnection" }
