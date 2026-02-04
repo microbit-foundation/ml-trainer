@@ -263,6 +263,7 @@ export interface Actions {
    * Sets the project name.
    */
   setProjectName(name: string): void;
+  setProjectEdited(): void;
 
   /**
    * When interacting outside of React to sync with MakeCode it's important to have
@@ -848,6 +849,31 @@ const createMlStore = (logging: Logging) => {
             );
           },
 
+          setProjectEdited() {
+            return set(
+              ({ project, projectEdited }) => {
+                if (projectEdited) {
+                  return {};
+                }
+                return {
+                  appEditNeedsFlushToEditor: true,
+                  project: {
+                    ...project,
+                    text: {
+                      ...project.text,
+                      [filenames.metadata]: JSON.stringify({
+                        projectEdited: true,
+                      }),
+                    },
+                  },
+                  projectEdited: true,
+                };
+              },
+              false,
+              "setProjectEdited"
+            );
+          },
+
           checkIfProjectNeedsFlush() {
             return get().appEditNeedsFlushToEditor;
           },
@@ -968,15 +994,7 @@ const createMlStore = (logging: Logging) => {
                     `[MakeCode] Edit copied to project. ID ${newProject.header?.id}`
                   );
                   return {
-                    project: {
-                      ...newProject,
-                      text: {
-                        ...newProject.text,
-                        [filenames.metadata]: JSON.stringify({
-                          projectEdited: true,
-                        }),
-                      },
-                    },
+                    project: newProject,
                     // We just assume its been edited as spurious changes from MakeCode happen that we can't identify
                     projectEdited: true,
                   };

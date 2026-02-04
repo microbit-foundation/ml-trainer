@@ -130,6 +130,7 @@ export const ProjectProvider = ({
   const openEditorTimedOutDialog = useStore(
     (s) => () => s.setIsEditorTimedOutDialogOpen(true)
   );
+  const setProjectEdited = useStore((s) => s.setProjectEdited);
   const setEditorLoadingFile = useStore((s) => s.setEditorLoadingFile);
   const setEditorImportingState = useStore((s) => s.setEditorImportingState);
   const projectFlushedToEditor = useStore((s) => s.projectFlushedToEditor);
@@ -273,6 +274,7 @@ export const ProjectProvider = ({
       type: "edit-in-makecode",
     });
     try {
+      setProjectEdited();
       await doAfterEditorUpdate(() => {
         navigate(createCodePageUrl());
         return Promise.resolve();
@@ -282,9 +284,16 @@ export const ProjectProvider = ({
         openEditorTimedOutDialog();
       }
     }
-  }, [doAfterEditorUpdate, logging, navigate, openEditorTimedOutDialog]);
+  }, [
+    doAfterEditorUpdate,
+    logging,
+    navigate,
+    openEditorTimedOutDialog,
+    setProjectEdited,
+  ]);
   const browserNavigationToEditor = useCallback(async () => {
     try {
+      setProjectEdited();
       await doAfterEditorUpdate(() => {
         return Promise.resolve();
       });
@@ -299,7 +308,7 @@ export const ProjectProvider = ({
       logging.error(e);
       return false;
     }
-  }, [doAfterEditorUpdate, logging]);
+  }, [doAfterEditorUpdate, logging, setProjectEdited]);
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
   const loadFile = useCallback(
