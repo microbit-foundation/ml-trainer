@@ -9,7 +9,6 @@ import {
   CloseButton,
   HStack,
   Input,
-  useBreakpointValue,
   useToast,
 } from "@chakra-ui/react";
 import { useCallback, useMemo, useState } from "react";
@@ -63,8 +62,6 @@ const ActionNameCard = ({
     viewMode === ActionCardNameViewMode.ReadOnly
       ? predictionResult?.detected?.ID === value.ID
       : undefined;
-  // Avoid autofocus on mobile as it triggers the keyboard
-  const allowAutoFocus = useBreakpointValue({ base: false, md: true });
 
   const debouncedSetActionName = useMemo(
     () =>
@@ -155,7 +152,7 @@ const ActionNameCard = ({
           </HStack>
           <Input
             id={actionNameInputId(value)}
-            autoFocus={allowAutoFocus && localName.length === 0}
+            autoFocus={localName.length === 0}
             isTruncated
             readOnly={viewMode !== ActionCardNameViewMode.Editable}
             value={localName}
