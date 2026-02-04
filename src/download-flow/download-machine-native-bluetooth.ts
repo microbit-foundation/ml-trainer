@@ -163,7 +163,7 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
     on: {
       next: {
         target: DownloadStep.FlashingInProgress,
-        actions: [{ type: "connectFlash" }],
+        actions: [{ type: "connectFlash", clearDevice: true }],
       },
       back: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
       setMicrobitName: {

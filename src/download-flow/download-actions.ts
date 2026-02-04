@@ -138,7 +138,7 @@ const executeAction = async (
     }
 
     case "connectFlash":
-      await performConnectFlash(deps);
+      await performConnectFlash(action.clearDevice ?? false, deps);
       break;
 
     case "flash":
@@ -182,6 +182,7 @@ const executeAction = async (
  * Perform USB/Bluetooth connect operation for flashing.
  */
 const performConnectFlash = async (
+  clearDevice: boolean,
   deps: DownloadDependencies
 ): Promise<void> => {
   const state = getDownloadState();
@@ -211,6 +212,9 @@ const performConnectFlash = async (
     connectionAbortController: abortController,
   });
   try {
+    if (clearDevice) {
+      await connection.clearDevice();
+    }
     await connection.connect({
       progress: deps.flashingProgressCallback,
       signal: abortController.signal,

@@ -93,7 +93,7 @@ export type DataConnectionAction =
    * Sets flow type and capabilities for fresh connection.
    */
   | { type: "reset" }
-  | { type: "connectFlash" }
+  | { type: "connectFlash"; clearDevice?: boolean }
   | { type: "flash" }
   /**
    * Connect to the data connection (bluetooth or radio bridge).
