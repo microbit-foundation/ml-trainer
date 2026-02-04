@@ -90,6 +90,9 @@ export const generateCustomFiles = (
     try {
       const updatedPxt = JSON.parse(currentPxtJSON) as typeof pxt;
       updatedPxt.dependencies[extensionName] = extensionURL;
+      if (!updatedPxt.files.includes(filenames.metadata)) {
+        updatedPxt.files.push(filenames.metadata);
+      }
       return {
         ...customFiles,
         [filenames.pxtJson]: JSON.stringify(updatedPxt),

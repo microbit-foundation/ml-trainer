@@ -851,22 +851,27 @@ const createMlStore = (logging: Logging) => {
 
           setProjectEdited() {
             return set(
-              ({ project, projectEdited }) => {
-                if (projectEdited) {
+              ({
+                actions,
+                dataWindow,
+                model,
+                project,
+                projectEdited: prevProjectEdited,
+              }) => {
+                if (prevProjectEdited) {
                   return {};
                 }
+                const projectEdited = true;
                 return {
                   appEditNeedsFlushToEditor: true,
-                  project: {
-                    ...project,
-                    text: {
-                      ...project.text,
-                      [filenames.metadata]: JSON.stringify({
-                        projectEdited: true,
-                      }),
-                    },
-                  },
-                  projectEdited: true,
+                  ...updateProject(
+                    project,
+                    projectEdited,
+                    actions,
+                    model,
+                    dataWindow
+                  ),
+                  projectEdited,
                 };
               },
               false,
