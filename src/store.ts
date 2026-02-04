@@ -109,7 +109,8 @@ const createUntitledProject = (): MakeCodeProject => ({
     untitledProjectName,
     { data: [] },
     undefined,
-    currentDataWindow
+    currentDataWindow,
+    false
   ),
 });
 
@@ -126,12 +127,19 @@ const updateProject = (
     text: {
       ...project.text,
       ...(projectEdited
-        ? generateCustomFiles(actionsData, model, dataWindow, project)
+        ? generateCustomFiles(
+            actionsData,
+            model,
+            dataWindow,
+            projectEdited,
+            project
+          )
         : generateProject(
             project.header?.name ?? untitledProjectName,
             actionsData,
             model,
-            dataWindow
+            dataWindow,
+            projectEdited
           ).text),
     },
   };
@@ -255,6 +263,7 @@ export interface Actions {
    * Sets the project name.
    */
   setProjectName(name: string): void;
+  setProjectEdited(): void;
 
   /**
    * When interacting outside of React to sync with MakeCode it's important to have
@@ -811,7 +820,8 @@ const createMlStore = (logging: Logging) => {
                   previousProject.header?.name ?? untitledProjectName,
                   { data: actions },
                   model,
-                  dataWindow
+                  dataWindow,
+                  false
                 ).text,
               },
             };
@@ -836,6 +846,36 @@ const createMlStore = (logging: Logging) => {
               },
               false,
               "setProjectName"
+            );
+          },
+
+          setProjectEdited() {
+            return set(
+              ({
+                actions,
+                dataWindow,
+                model,
+                project,
+                projectEdited: prevProjectEdited,
+              }) => {
+                if (prevProjectEdited) {
+                  return {};
+                }
+                const projectEdited = true;
+                return {
+                  appEditNeedsFlushToEditor: true,
+                  ...updateProject(
+                    project,
+                    projectEdited,
+                    actions,
+                    model,
+                    dataWindow
+                  ),
+                  projectEdited,
+                };
+              },
+              false,
+              "setProjectEdited"
             );
           },
 
@@ -932,6 +972,7 @@ const createMlStore = (logging: Logging) => {
                     );
                     const timestamp = Date.now();
                     const newActions = getActionsFromProject(newProject);
+                    const projectEdited = projectInHexIsEdited(newProject);
                     return {
                       settings: {
                         ...settings,
@@ -945,8 +986,7 @@ const createMlStore = (logging: Logging) => {
                       project: newProject,
                       projectLoadTimestamp: timestamp,
                       timestamp,
-                      // New project loaded externally so we can't know whether its edited.
-                      projectEdited: true,
+                      projectEdited,
                       actions: newActions,
                       dataWindow: getDataWindowFromActions(newActions),
                       model: undefined,
@@ -1464,4 +1504,23 @@ const renameProject = (
       }),
     },
   };
+};
+
+const projectInHexIsEdited = (project: MakeCodeProject): boolean => {
+  // Prior to storing projectEdited in the MakeCode project, hex files loaded externally
+  // are assumed to be edited but there is no way of knowing for sure.
+  let projectEdited = true;
+  const metadataString = project.text?.[filenames.metadata];
+  const metadata = JSON.parse(metadataString ?? "{}") as Record<
+    string,
+    unknown
+  >;
+  // projectEdited is only ever a flag to indicate whether the project was edited in this app. It cannot
+  // account for cases where the project was edited in MakeCode after being downloaded from this app.
+  // A value of false cannot be trusted which is why main.ts must also be checked.
+  // For older projects without the projectEdited metadata, this may restore the default program over a blank program.
+  if (!metadata["projectEdited"] && project.text?.[filenames.mainTs] === "\n") {
+    projectEdited = false;
+  }
+  return projectEdited;
 };
