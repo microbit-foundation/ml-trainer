@@ -93,7 +93,10 @@ describe("Download flow: Native Bluetooth", () => {
       });
 
       expect(result?.step).toBe(DownloadStep.FlashingInProgress);
-      expect(result?.actions).toContainEqual({ type: "connectFlash" });
+      expect(result?.actions).toContainEqual({
+        type: "connectFlash",
+        clearDevice: true,
+      });
     });
   });
 

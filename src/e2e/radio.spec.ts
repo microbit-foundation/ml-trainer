@@ -161,6 +161,8 @@ test.describe("radio reconnection", () => {
 
     // Simulate USB (bridge) disconnect
     await connectionDialogs.simulateRadioDisconnect("bridge");
+    // Simulate USB (bridge) auto-reconnect attempt fail
+    await connectionDialogs.simulateRadioDisconnect("bridge");
     await connectionDialogs.expectRadioBridgeDisconnectDialog();
 
     // Simulate USB being plugged back in before user clicks reconnect

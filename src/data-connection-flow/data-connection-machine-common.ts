@@ -64,7 +64,6 @@ export type DataConnectionEvent =
   // Device status events - sent from the status listener.
   | { type: "deviceConnected" }
   | { type: "deviceDisconnected"; source?: "bridge" | "remote" }
-  | { type: "deviceReconnecting" }
   /**
    * Connection paused due to tab visibility. Will reconnect when tab visible.
    */
@@ -94,7 +93,7 @@ export type DataConnectionAction =
    * Sets flow type and capabilities for fresh connection.
    */
   | { type: "reset" }
-  | { type: "connectFlash" }
+  | { type: "connectFlash"; clearDevice?: boolean }
   | { type: "flash" }
   /**
    * Connect to the data connection (bluetooth or radio bridge).
@@ -169,11 +168,6 @@ export const guards = {
    */
   hadSuccessfulConnection: (ctx: DataConnectionFlowContext) =>
     ctx.hadSuccessfulConnection,
-
-  /**
-   * Already failed once - next failure shows "start over" dialog.
-   */
-  hasFailedOnce: (ctx: DataConnectionFlowContext) => ctx.hasFailedOnce,
 
   /**
    * A micro:bit name is stored in settings.
@@ -729,12 +723,6 @@ export const connectedState = {
         actions: actions.reconnecting,
       },
       deviceDisconnected: [
-        // Bridge disconnect (USB unplugged): can't auto-reconnect
-        {
-          guard: guards.isBridgeDisconnect,
-          target: DataConnectionStep.ConnectionLost,
-          actions: [...actions.setDisconnectSource, ...actions.connectionLost],
-        },
         // First disconnect: try auto-reconnect
         {
           guard: (ctx: DataConnectionFlowContext) => !ctx.hasFailedOnce,
@@ -742,6 +730,12 @@ export const connectedState = {
             ...actions.setDisconnectSource,
             ...actions.firstReconnectAttempt,
           ],
+        },
+        // Bridge disconnect: can't auto-reconnect
+        {
+          guard: guards.isBridgeDisconnect,
+          target: DataConnectionStep.ConnectionLost,
+          actions: [...actions.setDisconnectSource, ...actions.connectionLost],
         },
         // Second disconnect: show connection lost
         {
@@ -765,9 +759,6 @@ export const connectedState = {
           actions: actions.connectionLost,
         },
       ],
-      deviceReconnecting: {
-        actions: actions.reconnecting,
-      },
       // Success comes via status listener, not explicit event from performConnectData,
       // because the connection library has internal auto-reconnect logic.
       deviceConnected: {

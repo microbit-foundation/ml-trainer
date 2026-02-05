@@ -138,7 +138,10 @@ describe("Data connection flow: Native Bluetooth", () => {
       });
 
       expect(result?.step).toBe(DataConnectionStep.FlashingInProgress);
-      expect(result?.actions).toContainEqual({ type: "connectFlash" });
+      expect(result?.actions).toContainEqual({
+        type: "connectFlash",
+        clearDevice: true,
+      });
     });
   });
 
