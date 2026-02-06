@@ -103,6 +103,18 @@
     "defaultMessage": "기록 취소",
     "description": "Button label to cancel a movement data recording"
   },
+  "carousel-role": {
+    "defaultMessage": "carousel",
+    "description": "aria-roledescription for carousel"
+  },
+  "carousel-slide-label": {
+    "defaultMessage": "{slideNum} of {totalSlides}",
+    "description": "Label for carousel slide / item"
+  },
+  "carousel-slide-role": {
+    "defaultMessage": "slide",
+    "description": "aria-roledescription for carousel slide / item"
+  },
   "certainty-label": {
     "defaultMessage": "확실성",
     "description": "Heading for certainty column"
@@ -499,6 +511,10 @@
     "defaultMessage": "모든 데이터 샘플을 삭제하시겠습니까?",
     "description": "Confirmation dialog text"
   },
+  "delete-project-action": {
+    "defaultMessage": "Delete",
+    "description": "Delete project action"
+  },
   "delete-project-confirm-heading": {
     "defaultMessage": "Confirm delete project",
     "description": "Confirmation dialog heading"
@@ -602,6 +618,10 @@
   "downloading-subtitle": {
     "defaultMessage": "잠시만 기다리세요. micro:bit에 프로그램을 다운로드하는 중입니다.",
     "description": "Progress text"
+  },
+  "duplicate-project-action": {
+    "defaultMessage": "Duplicate",
+    "description": "Duplicate project action"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "MakeCode에서 편집하기",
@@ -803,6 +823,10 @@
     "defaultMessage": "처음으로",
     "description": "Home button text"
   },
+  "home-page-action": {
+    "defaultMessage": "Home page",
+    "description": "Home page navigation action"
+  },
   "homepage": {
     "defaultMessage": "홈페이지",
     "description": "Link to home page"
@@ -914,6 +938,10 @@
   "import-error-dialog-title": {
     "defaultMessage": "지원되지 않는 파일 유형",
     "description": "Title of import error dialog"
+  },
+  "import-file-action": {
+    "defaultMessage": "Import",
+    "description": "Import file action"
   },
   "incompatible-device-body-alt": {
     "defaultMessage": "뒤로 돌아가 다른 micro:bit를 선택하거나,  <link>프로젝트 hex를 저장</link>하세요. 프로젝트 hex는 나중에 micro:bit V2에 다운로드할 수 있습니다.",
@@ -1199,6 +1227,14 @@
     "defaultMessage": "Move the micro:bit to explore how different actions change the graph",
     "description": "Hint when you have just connected a micro:bit"
   },
+  "my-projects-row-carousel": {
+    "defaultMessage": "List of my projects",
+    "description": "Label for home page row carousel"
+  },
+  "my-projects-row-title": {
+    "defaultMessage": "My projects",
+    "description": "Title for home page row"
+  },
   "name-action-hint": {
     "defaultMessage": "micro:bit가 인식할 행동의 이름 지정하기",
     "description": "Hint shown when you have an unnamed action"
@@ -1214,6 +1250,14 @@
   "name-used-when": {
     "defaultMessage": "hex 파일을 저장할 때 해당 이름을 사용합니다.",
     "description": "Text under project name field"
+  },
+  "new-projects-row-carousel": {
+    "defaultMessage": "List of new project actions",
+    "description": "Label for home page row carousel"
+  },
+  "new-projects-row-title": {
+    "defaultMessage": "New projects",
+    "description": "Title for home page row"
   },
   "new-session-setup-description": {
     "defaultMessage": "새 세션을 시작하면 기존 세션을 덮어쓱[ 됩니다. 먼저 <link>기존 세션을 저장</link>하는 것이 좋습니다.",
@@ -1275,6 +1319,10 @@
     "defaultMessage": "다음",
     "description": "Next button text for dialogs and similar"
   },
+  "no-projects": {
+    "defaultMessage": "No projects to display",
+    "description": "Shown on all projects page when the user has no projects"
+  },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "이 프로젝트에는 데이터 샘플이 없어 코드만 공개되었습니다. 코드를 사용하기 전에 모델을 훈련해야 합니다.",
     "description": "Content of import non-CreateAI hex dialog"
@@ -1306,6 +1354,10 @@
   "open-project-setup-description": {
     "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
     "description": "Open project setup description"
+  },
+  "open-shared-project-action": {
+    "defaultMessage": "Open project",
+    "description": "Open project button text"
   },
   "open-shared-project-blocks-preview-description": {
     "defaultMessage": "Preview of the MakeCode code contained within this project.",
@@ -1343,13 +1395,29 @@
     "defaultMessage": "개인정보 보호 정책",
     "description": "Link to view privacy policy"
   },
+  "project-ideas-row-carousel": {
+    "defaultMessage": "List of project ideas",
+    "description": "Label for home page row carousel"
+  },
+  "project-ideas-row-title": {
+    "defaultMessage": "Project ideas",
+    "description": "Title for home page row"
+  },
   "project-loaded": {
     "defaultMessage": "프로젝트 불러오기 완료",
     "description": "Toast when a new project is loaded"
   },
+  "project-menu-action": {
+    "defaultMessage": "Project actions menu",
+    "description": "Label for project actions menu button"
+  },
   "project-name-not-empty": {
     "defaultMessage": "프로젝트 이름을 입력해야 합니다",
     "description": "Validation message for project name"
+  },
+  "project-storage-tooltip": {
+    "defaultMessage": "Text to inform the user about where their projects are actually stored with link to support article?",
+    "description": "Tooltip for my projects row"
   },
   "projects-page-title": {
     "defaultMessage": "Projects",
@@ -1479,6 +1547,10 @@
     "defaultMessage": "새로 고침",
     "description": "Reload button text"
   },
+  "rename-project-action": {
+    "defaultMessage": "Rename",
+    "description": "Rename project action"
+  },
   "reset-to-default-action": {
     "defaultMessage": "기본 블록으로 초기화",
     "description": "Reset to default blocks button text"
@@ -1570,6 +1642,30 @@
   "software-versions": {
     "defaultMessage": "소프트웨어 버전",
     "description": "Software versions text"
+  },
+  "sort-option-last-modified": {
+    "defaultMessage": "Last modified",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-name": {
+    "defaultMessage": "Name",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-relevance": {
+    "defaultMessage": "Relevance",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-order-ascending-label": {
+    "defaultMessage": "Ascending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-order-descending-label": {
+    "defaultMessage": "Descending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-select-label": {
+    "defaultMessage": "Sort projects",
+    "description": "Label for select element to sort projects"
   },
   "start-session-action": {
     "defaultMessage": "세션 시작",

@@ -10,13 +10,11 @@ import "swiper/css/pagination";
 import SwiperCarouselButtons from "../SwiperCarouselButtons/SwiperCarouselButtons";
 import styles from "./SwiperCarousel.module.css";
 import classNames from "classnames";
-
-// Look at the following modules:
-// Virtual slides - might be useful for performance
+import { useIntl } from "react-intl";
 
 interface SwiperCarouselProps extends SwiperProps {
   carouselItems: JSX.Element[];
-  itemTypeMessage: string;
+  containerMessageId: string;
   padding?: string | number;
   slideClassName?: string;
   swiperWrapperClassName?: string;
@@ -24,15 +22,15 @@ interface SwiperCarouselProps extends SwiperProps {
 
 const SwiperCarousel = ({
   carouselItems,
-  itemTypeMessage,
+  containerMessageId,
   padding,
   navigation,
   slideClassName,
   swiperWrapperClassName,
   ...props
 }: SwiperCarouselProps) => {
+  const intl = useIntl();
   const isRtl = false;
-  // FreeMode does not play well with button navigation.
   const modules = [A11y, Autoplay, Navigation, Pagination];
   const [swiper, setSwiper] = useState<SwiperClass>();
   useEffect(() => {
@@ -118,13 +116,21 @@ const SwiperCarousel = ({
         dir={isRtl ? "rtl" : "ltr"}
         a11y={{
           enabled: true,
-          prevSlideMessage: "Previous slide",
-          nextSlideMessage: "Next slide",
           slideRole: "presentation",
-          containerRoleDescriptionMessage: "carousel",
-          itemRoleDescriptionMessage: "slide",
-          containerMessage: `List of ${itemTypeMessage}`,
-          slideLabelMessage: "{{index}} of {{slidesLength}}",
+          containerRoleDescriptionMessage: intl.formatMessage({
+            id: "carousel-role",
+          }),
+          itemRoleDescriptionMessage: intl.formatMessage({
+            id: "carousel-slide-role",
+          }),
+          containerMessage: intl.formatMessage({ id: containerMessageId }),
+          slideLabelMessage: intl.formatMessage(
+            { id: "carousel-slide-label" },
+            {
+              slideNum: "{{index}}",
+              totalSlides: "{{slidesLength}}",
+            }
+          ),
         }}
         modules={modules}
         tag="ul"

@@ -258,7 +258,7 @@ const OpenProjectButton = ({
       onClick={onClick}
       size="lg"
     >
-      <FormattedMessage id="open-project-action" />
+      <FormattedMessage id="open-shared-project-action" />
     </ButtonWithLoading>
   </HStack>
 );

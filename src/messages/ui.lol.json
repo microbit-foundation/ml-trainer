@@ -205,6 +205,32 @@
       "value": "crwdns362688:0crwdne362688:0"
     }
   ],
+  "carousel-role": [
+    {
+      "type": 0,
+      "value": "carousel"
+    }
+  ],
+  "carousel-slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "carousel-slide-role": [
+    {
+      "type": 0,
+      "value": "slide"
+    }
+  ],
   "certainty-label": [
     {
       "type": 0,
@@ -847,6 +873,12 @@
       "value": "crwdns362884:0crwdne362884:0"
     }
   ],
+  "delete-project-action": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
   "delete-project-confirm-heading": [
     {
       "type": 0,
@@ -1041,6 +1073,12 @@
     {
       "type": 0,
       "value": "crwdns362932:0crwdne362932:0"
+    }
+  ],
+  "duplicate-project-action": [
+    {
+      "type": 0,
+      "value": "Duplicate"
     }
   ],
   "edit-in-makecode-action": [
@@ -1351,6 +1389,12 @@
       "value": "crwdns363018:0crwdne363018:0"
     }
   ],
+  "home-page-action": [
+    {
+      "type": 0,
+      "value": "Home page"
+    }
+  ],
   "homepage": [
     {
       "type": 0,
@@ -1525,6 +1569,12 @@
     {
       "type": 0,
       "value": "crwdns363048:0crwdne363048:0"
+    }
+  ],
+  "import-file-action": [
+    {
+      "type": 0,
+      "value": "Import"
     }
   ],
   "incompatible-device-body-alt": [
@@ -1961,6 +2011,18 @@
       "value": "Move the micro:bit to explore how different actions change the graph"
     }
   ],
+  "my-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of my projects"
+    }
+  ],
+  "my-projects-row-title": [
+    {
+      "type": 0,
+      "value": "My projects"
+    }
+  ],
   "name-action-hint": [
     {
       "type": 0,
@@ -1983,6 +2045,18 @@
     {
       "type": 0,
       "value": "crwdns363186:0crwdne363186:0"
+    }
+  ],
+  "new-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of new project actions"
+    }
+  ],
+  "new-projects-row-title": [
+    {
+      "type": 0,
+      "value": "New projects"
     }
   ],
   "new-session-setup-description": [
@@ -2091,6 +2165,12 @@
       "value": "crwdns363214:0crwdne363214:0"
     }
   ],
+  "no-projects": [
+    {
+      "type": 0,
+      "value": "No projects to display"
+    }
+  ],
   "not-create-ai-hex-import-dialog-content": [
     {
       "type": 0,
@@ -2145,6 +2225,12 @@
     {
       "type": 0,
       "value": "crwdns368585:0crwdne368585:0"
+    }
+  ],
+  "open-shared-project-action": [
+    {
+      "type": 0,
+      "value": "Open project"
     }
   ],
   "open-shared-project-blocks-preview-description": [
@@ -2209,16 +2295,40 @@
       "value": "crwdns363236:0crwdne363236:0"
     }
   ],
+  "project-ideas-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of project ideas"
+    }
+  ],
+  "project-ideas-row-title": [
+    {
+      "type": 0,
+      "value": "Project ideas"
+    }
+  ],
   "project-loaded": [
     {
       "type": 0,
       "value": "crwdns363238:0crwdne363238:0"
     }
   ],
+  "project-menu-action": [
+    {
+      "type": 0,
+      "value": "Project actions menu"
+    }
+  ],
   "project-name-not-empty": [
     {
       "type": 0,
       "value": "crwdns363240:0crwdne363240:0"
+    }
+  ],
+  "project-storage-tooltip": [
+    {
+      "type": 0,
+      "value": "Text to inform the user about where their projects are actually stored with link to support article?"
     }
   ],
   "projects-page-title": [
@@ -2557,6 +2667,12 @@
       "value": "crwdns363298:0crwdne363298:0"
     }
   ],
+  "rename-project-action": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
   "reset-to-default-action": [
     {
       "type": 0,
@@ -2717,6 +2833,42 @@
     {
       "type": 0,
       "value": "crwdns363342:0crwdne363342:0"
+    }
+  ],
+  "sort-option-last-modified": [
+    {
+      "type": 0,
+      "value": "Last modified"
+    }
+  ],
+  "sort-option-name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "sort-option-relevance": [
+    {
+      "type": 0,
+      "value": "Relevance"
+    }
+  ],
+  "sort-order-ascending-label": [
+    {
+      "type": 0,
+      "value": "Ascending order"
+    }
+  ],
+  "sort-order-descending-label": [
+    {
+      "type": 0,
+      "value": "Descending order"
+    }
+  ],
+  "sort-select-label": [
+    {
+      "type": 0,
+      "value": "Sort projects"
     }
   ],
   "start-session-action": [

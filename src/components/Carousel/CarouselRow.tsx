@@ -1,35 +1,38 @@
 import { Box, Heading, HStack } from "@chakra-ui/react";
 import NewPageCarousel from "./NewPageCarousel/NewPageCarousel";
 import { ReactNode } from "react";
+import { FormattedMessage } from "react-intl";
 
 interface CarouselRowProps {
   carouselItems: JSX.Element[];
-  itemTypeMessage: string;
-  title: string | ReactNode;
+  containerMessageId: string;
+  titleElement?: ReactNode;
+  titleId?: string;
   actions?: JSX.Element[];
 }
 
 const CarouselRow = ({
   carouselItems,
-  itemTypeMessage,
-  title,
+  containerMessageId,
+  titleElement,
+  titleId,
   actions,
 }: CarouselRowProps) => {
   return (
     <Box w="100%" py={8}>
       <HStack px={16} mt={2} mb={2} justifyContent="space-between">
-        {typeof title === "string" ? (
+        {typeof titleId === "string" ? (
           <Heading as="h2" fontSize="3xl">
-            {title}
+            <FormattedMessage id={titleId} />
           </Heading>
         ) : (
-          title
+          titleElement
         )}
         <HStack>{actions}</HStack>
       </HStack>
       <NewPageCarousel
         carouselItems={carouselItems}
-        itemTypeMessage={itemTypeMessage}
+        containerMessageId={containerMessageId}
       />
     </Box>
   );

@@ -51,22 +51,18 @@ const HomePage = () => {
           toolbarItemsRight={<HomeToolbarItem />}
           menuItems={<HomeMenuItem />}
         >
-          {/* <VStack as="main" alignItems="center">
-        <Container maxW="calc(1180px + 64px)" alignItems="stretch" p={4} mt={8}> */}
           <CarouselRow
             actions={[<ImportProjectButton key="importProject" />]}
             carouselItems={[<NewProjectCard key="newProject" />]}
-            itemTypeMessage="new project actions"
-            title="New projects"
+            containerMessageId="new-projects-row-carousel"
+            titleId="new-projects-row-title"
           />
           <ProjectRow />
           <CarouselRow
-            itemTypeMessage="project ideas"
+            containerMessageId="project-ideas-row-carousel"
             carouselItems={createResourceCards(intl, languageId)}
-            title="Project ideas"
+            titleId="project-ideas-row-title"
           />
-          {/* </Container>
-      </VStack> */}
         </DefaultPageLayout>
       </Await>
     </Suspense>
@@ -86,11 +82,11 @@ const ProjectRow = () => {
           <ProjectCard key={projectData.id} projectData={projectData} />
         )
       )}
-      itemTypeMessage="my projects"
-      title={
+      containerMessageId="my-projects-row-carousel"
+      titleElement={
         <HStack spacing={3}>
           <Heading as="h2" fontSize="3xl">
-            My projects
+            <FormattedMessage id="my-projects-row-title" />
           </Heading>
           <ClickableTooltip
             isFocusable
@@ -104,8 +100,7 @@ const ProjectRow = () => {
                 m={3}
               >
                 <Text>
-                  Text to inform the user about where their projects are
-                  actually stored with link to support article?
+                  <FormattedMessage id="project-storage-tooltip" />
                 </Text>
               </VStack>
             }
@@ -170,7 +165,9 @@ const ImportProjectButton = () => {
   return (
     <>
       <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
-      <Button onClick={handleContinueSessionFromFile}>Import</Button>
+      <Button onClick={handleContinueSessionFromFile}>
+        <FormattedMessage id="import-file-action" />
+      </Button>
     </>
   );
 };

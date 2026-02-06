@@ -313,7 +313,7 @@ const ProjectsPage = () => {
               variant="toolbar"
               onClick={navigateToHomePage}
             >
-              Home page
+              <FormattedMessage id="home-page-action" />
             </Button>
           }
         >
@@ -379,7 +379,9 @@ const ProjectsPage = () => {
                   flexGrow={1}
                   p={12}
                 >
-                  <Text>No projects to display</Text>
+                  <Text>
+                    <FormattedMessage id="no-projects" />
+                  </Text>
                 </Stack>
               )}
             </Container>

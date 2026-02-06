@@ -47,7 +47,6 @@ const SwiperCarouselButtons = () => {
         direction={isRtl ? "right" : "left"}
         size="large"
         onClick={() => swiper.slidePrev()}
-        aria-label={isRtl ? "Next slide group" : "Previous slide group"}
       />
       <CarouselButton
         ref={nextButtonRef}
@@ -58,7 +57,6 @@ const SwiperCarouselButtons = () => {
         direction={isRtl ? "left" : "right"}
         size="large"
         onClick={() => swiper.slideNext()}
-        aria-label={isRtl ? "Previous slide group" : "Next slide group"}
       />
     </>
   );

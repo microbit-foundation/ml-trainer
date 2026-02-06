@@ -103,6 +103,18 @@
     "defaultMessage": "Cancel·la l'enregistrament",
     "description": "Button label to cancel a movement data recording"
   },
+  "carousel-role": {
+    "defaultMessage": "carousel",
+    "description": "aria-roledescription for carousel"
+  },
+  "carousel-slide-label": {
+    "defaultMessage": "{slideNum} of {totalSlides}",
+    "description": "Label for carousel slide / item"
+  },
+  "carousel-slide-role": {
+    "defaultMessage": "slide",
+    "description": "aria-roledescription for carousel slide / item"
+  },
   "certainty-label": {
     "defaultMessage": "Certesa",
     "description": "Heading for certainty column"
@@ -499,6 +511,10 @@
     "defaultMessage": "Estàs segur que vols suprimir totes les mostres de dades?",
     "description": "Confirmation dialog text"
   },
+  "delete-project-action": {
+    "defaultMessage": "Delete",
+    "description": "Delete project action"
+  },
   "delete-project-confirm-heading": {
     "defaultMessage": "Confirm delete project",
     "description": "Confirmation dialog heading"
@@ -602,6 +618,10 @@
   "downloading-subtitle": {
     "defaultMessage": "Si us plau, espera. Transferint el programa a la micro:bit.",
     "description": "Progress text"
+  },
+  "duplicate-project-action": {
+    "defaultMessage": "Duplicate",
+    "description": "Duplicate project action"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "Edita a MakeCode",
@@ -803,6 +823,10 @@
     "defaultMessage": "Inici",
     "description": "Home button text"
   },
+  "home-page-action": {
+    "defaultMessage": "Home page",
+    "description": "Home page navigation action"
+  },
   "homepage": {
     "defaultMessage": "Pàgina d'inici",
     "description": "Link to home page"
@@ -914,6 +938,10 @@
   "import-error-dialog-title": {
     "defaultMessage": "Tipus d'arxiu no permés",
     "description": "Title of import error dialog"
+  },
+  "import-file-action": {
+    "defaultMessage": "Import",
+    "description": "Import file action"
   },
   "incompatible-device-body-alt": {
     "defaultMessage": "Torna enrere per seleccionar una micro:bit diferent, o bé <link>desa l'hexadecimal del projecte</link> que es pot transferir a una micro:bit V2 més tard.",
@@ -1199,6 +1227,14 @@
     "defaultMessage": "Move the micro:bit to explore how different actions change the graph",
     "description": "Hint when you have just connected a micro:bit"
   },
+  "my-projects-row-carousel": {
+    "defaultMessage": "List of my projects",
+    "description": "Label for home page row carousel"
+  },
+  "my-projects-row-title": {
+    "defaultMessage": "My projects",
+    "description": "Title for home page row"
+  },
   "name-action-hint": {
     "defaultMessage": "Anomena una acció que vulguis que reconegui la micro:bit",
     "description": "Hint shown when you have an unnamed action"
@@ -1214,6 +1250,14 @@
   "name-used-when": {
     "defaultMessage": "El nom s'utilitza quan deses un fitxer hexadecimal.",
     "description": "Text under project name field"
+  },
+  "new-projects-row-carousel": {
+    "defaultMessage": "List of new project actions",
+    "description": "Label for home page row carousel"
+  },
+  "new-projects-row-title": {
+    "defaultMessage": "New projects",
+    "description": "Title for home page row"
   },
   "new-session-setup-description": {
     "defaultMessage": "Iniciar una sessió nova sobreescriurà la sessió existent. És possible que vulguis <link>desar la teva sessió existent</link> primer.",
@@ -1275,6 +1319,10 @@
     "defaultMessage": "Següent",
     "description": "Next button text for dialogs and similar"
   },
+  "no-projects": {
+    "defaultMessage": "No projects to display",
+    "description": "Shown on all projects page when the user has no projects"
+  },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "Aquest projecte no contenia cap mostra de dades, de manera que només s'ha obert el programa. Has d'entrenar un model abans de poder utilitzar el programa.",
     "description": "Content of import non-CreateAI hex dialog"
@@ -1306,6 +1354,10 @@
   "open-project-setup-description": {
     "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
     "description": "Open project setup description"
+  },
+  "open-shared-project-action": {
+    "defaultMessage": "Open project",
+    "description": "Open project button text"
   },
   "open-shared-project-blocks-preview-description": {
     "defaultMessage": "Preview of the MakeCode code contained within this project.",
@@ -1343,13 +1395,29 @@
     "defaultMessage": "Política de privadesa",
     "description": "Link to view privacy policy"
   },
+  "project-ideas-row-carousel": {
+    "defaultMessage": "List of project ideas",
+    "description": "Label for home page row carousel"
+  },
+  "project-ideas-row-title": {
+    "defaultMessage": "Project ideas",
+    "description": "Title for home page row"
+  },
   "project-loaded": {
     "defaultMessage": "Projecte desat",
     "description": "Toast when a new project is loaded"
   },
+  "project-menu-action": {
+    "defaultMessage": "Project actions menu",
+    "description": "Label for project actions menu button"
+  },
   "project-name-not-empty": {
     "defaultMessage": "El nom del projecte no pot estar buit",
     "description": "Validation message for project name"
+  },
+  "project-storage-tooltip": {
+    "defaultMessage": "Text to inform the user about where their projects are actually stored with link to support article?",
+    "description": "Tooltip for my projects row"
   },
   "projects-page-title": {
     "defaultMessage": "Projects",
@@ -1479,6 +1547,10 @@
     "defaultMessage": "Torna a carregar",
     "description": "Reload button text"
   },
+  "rename-project-action": {
+    "defaultMessage": "Rename",
+    "description": "Rename project action"
+  },
   "reset-to-default-action": {
     "defaultMessage": "Restableix els blocs predeterminats",
     "description": "Reset to default blocks button text"
@@ -1570,6 +1642,30 @@
   "software-versions": {
     "defaultMessage": "Versions de programari",
     "description": "Software versions text"
+  },
+  "sort-option-last-modified": {
+    "defaultMessage": "Last modified",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-name": {
+    "defaultMessage": "Name",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-relevance": {
+    "defaultMessage": "Relevance",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-order-ascending-label": {
+    "defaultMessage": "Ascending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-order-descending-label": {
+    "defaultMessage": "Descending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-select-label": {
+    "defaultMessage": "Sort projects",
+    "description": "Label for select element to sort projects"
   },
   "start-session-action": {
     "defaultMessage": "Inicia sessió",

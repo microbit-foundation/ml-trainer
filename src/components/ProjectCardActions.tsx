@@ -17,6 +17,7 @@ import {
   RiFolderOpenLine,
 } from "react-icons/ri";
 import { ProjectNameDialogReason } from "../pages/ProjectsPage";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface ProjectCardMenuProps {
   id: string;
@@ -40,6 +41,7 @@ const ProjectCardActions = ({
   onOpenProject,
   setFinalFocusRef,
 }: ProjectCardMenuProps) => {
+  const intl = useIntl();
   const menuButtonRef = useRef(null);
   const handleRenameProject = useCallback(
     (id: string) => {
@@ -92,7 +94,7 @@ const ProjectCardActions = ({
           ref={menuButtonRef}
           zIndex={1}
           as={IconButton}
-          aria-label="project actions"
+          aria-label={intl.formatMessage({ id: "project-menu-action" })}
           p={5}
           h="100%"
           borderRadius={0}
@@ -108,25 +110,25 @@ const ProjectCardActions = ({
               icon={<RiFolderOpenLine />}
               onClick={() => onOpenProject(id)}
             >
-              Open
+              <FormattedMessage id="open-project-action" />
             </MenuItem>
             <MenuItem
               icon={<RiEdit2Line />}
               onClick={() => handleRenameProject(id)}
             >
-              Rename
+              <FormattedMessage id="rename-project-action" />
             </MenuItem>
             <MenuItem
               icon={<RiFileCopyLine />}
               onClick={() => handleDuplicateProject(id)}
             >
-              Duplicate
+              <FormattedMessage id="duplicate-project-action" />
             </MenuItem>
             <MenuItem
               icon={<RiDeleteBin2Line />}
               onClick={() => handleDeleteProject(id)}
             >
-              Delete
+              <FormattedMessage id="delete-project-action" />
             </MenuItem>
           </MenuList>
         </Portal>

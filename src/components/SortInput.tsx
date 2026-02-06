@@ -5,6 +5,7 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { RiArrowDownLine, RiArrowUpLine } from "react-icons/ri";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface SortInputProps extends ButtonGroupProps {
   value: string;
@@ -22,11 +23,13 @@ const SortInput = ({
   hasSearchQuery,
   ...rest
 }: SortInputProps) => {
+  const intl = useIntl();
   return (
     <ButtonGroup isAttached {...rest}>
       <Select
         value={value}
         onChange={onSelectChange}
+        aria-label={intl.formatMessage({ id: "sort-select-label" })}
         fontSize="lg"
         _focusVisible={{
           outline: "none",
@@ -42,11 +45,17 @@ const SortInput = ({
         isDisabled={hasSearchQuery}
       >
         {hasSearchQuery ? (
-          <option value="relevance">Relevance</option>
+          <option value="relevance">
+            <FormattedMessage id="sort-option-relevance" />
+          </option>
         ) : (
           <>
-            <option value="name">Name</option>
-            <option value="timestamp">Last modified</option>
+            <option value="name">
+              <FormattedMessage id="sort-option-name" />
+            </option>
+            <option value="timestamp">
+              <FormattedMessage id="sort-option-last-modified" />
+            </option>
           </>
         )}
       </Select>
@@ -61,7 +70,13 @@ const SortInput = ({
         border="1px"
         borderColor="inherit"
         variant="ghost"
-        aria-label="toggle..."
+        aria-label={intl.formatMessage({
+          id: hasSearchQuery
+            ? "sort-order-descending-label"
+            : order === "asc"
+            ? "sort-order-ascending-label"
+            : "sort-order-descending-label",
+        })}
         color="#838383"
         onClick={toggleOrder}
         isDisabled={hasSearchQuery}

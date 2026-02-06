@@ -103,6 +103,18 @@
     "defaultMessage": "crwdns362688:0crwdne362688:0",
     "description": "Button label to cancel a movement data recording"
   },
+  "carousel-role": {
+    "defaultMessage": "carousel",
+    "description": "aria-roledescription for carousel"
+  },
+  "carousel-slide-label": {
+    "defaultMessage": "{slideNum} of {totalSlides}",
+    "description": "Label for carousel slide / item"
+  },
+  "carousel-slide-role": {
+    "defaultMessage": "slide",
+    "description": "aria-roledescription for carousel slide / item"
+  },
   "certainty-label": {
     "defaultMessage": "crwdns362690:0crwdne362690:0",
     "description": "Heading for certainty column"
@@ -499,6 +511,10 @@
     "defaultMessage": "crwdns362884:0crwdne362884:0",
     "description": "Confirmation dialog text"
   },
+  "delete-project-action": {
+    "defaultMessage": "Delete",
+    "description": "Delete project action"
+  },
   "delete-project-confirm-heading": {
     "defaultMessage": "Confirm delete project",
     "description": "Confirmation dialog heading"
@@ -602,6 +618,10 @@
   "downloading-subtitle": {
     "defaultMessage": "crwdns362932:0crwdne362932:0",
     "description": "Progress text"
+  },
+  "duplicate-project-action": {
+    "defaultMessage": "Duplicate",
+    "description": "Duplicate project action"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "crwdns362934:0crwdne362934:0",
@@ -803,6 +823,10 @@
     "defaultMessage": "crwdns363018:0crwdne363018:0",
     "description": "Home button text"
   },
+  "home-page-action": {
+    "defaultMessage": "Home page",
+    "description": "Home page navigation action"
+  },
   "homepage": {
     "defaultMessage": "crwdns363020:0crwdne363020:0",
     "description": "Link to home page"
@@ -914,6 +938,10 @@
   "import-error-dialog-title": {
     "defaultMessage": "crwdns363048:0crwdne363048:0",
     "description": "Title of import error dialog"
+  },
+  "import-file-action": {
+    "defaultMessage": "Import",
+    "description": "Import file action"
   },
   "incompatible-device-body-alt": {
     "defaultMessage": "crwdns363050:0crwdne363050:0",
@@ -1199,6 +1227,14 @@
     "defaultMessage": "Move the micro:bit to explore how different actions change the graph",
     "description": "Hint when you have just connected a micro:bit"
   },
+  "my-projects-row-carousel": {
+    "defaultMessage": "List of my projects",
+    "description": "Label for home page row carousel"
+  },
+  "my-projects-row-title": {
+    "defaultMessage": "My projects",
+    "description": "Title for home page row"
+  },
   "name-action-hint": {
     "defaultMessage": "crwdns363180:0crwdne363180:0",
     "description": "Hint shown when you have an unnamed action"
@@ -1214,6 +1250,14 @@
   "name-used-when": {
     "defaultMessage": "crwdns363186:0crwdne363186:0",
     "description": "Text under project name field"
+  },
+  "new-projects-row-carousel": {
+    "defaultMessage": "List of new project actions",
+    "description": "Label for home page row carousel"
+  },
+  "new-projects-row-title": {
+    "defaultMessage": "New projects",
+    "description": "Title for home page row"
   },
   "new-session-setup-description": {
     "defaultMessage": "crwdns363188:0crwdne363188:0",
@@ -1275,6 +1319,10 @@
     "defaultMessage": "crwdns363214:0crwdne363214:0",
     "description": "Next button text for dialogs and similar"
   },
+  "no-projects": {
+    "defaultMessage": "No projects to display",
+    "description": "Shown on all projects page when the user has no projects"
+  },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "crwdns363218:0crwdne363218:0",
     "description": "Content of import non-CreateAI hex dialog"
@@ -1306,6 +1354,10 @@
   "open-project-setup-description": {
     "defaultMessage": "crwdns368585:0crwdne368585:0",
     "description": "Open project setup description"
+  },
+  "open-shared-project-action": {
+    "defaultMessage": "Open project",
+    "description": "Open project button text"
   },
   "open-shared-project-blocks-preview-description": {
     "defaultMessage": "crwdns368587:0crwdne368587:0",
@@ -1343,13 +1395,29 @@
     "defaultMessage": "crwdns363236:0crwdne363236:0",
     "description": "Link to view privacy policy"
   },
+  "project-ideas-row-carousel": {
+    "defaultMessage": "List of project ideas",
+    "description": "Label for home page row carousel"
+  },
+  "project-ideas-row-title": {
+    "defaultMessage": "Project ideas",
+    "description": "Title for home page row"
+  },
   "project-loaded": {
     "defaultMessage": "crwdns363238:0crwdne363238:0",
     "description": "Toast when a new project is loaded"
   },
+  "project-menu-action": {
+    "defaultMessage": "Project actions menu",
+    "description": "Label for project actions menu button"
+  },
   "project-name-not-empty": {
     "defaultMessage": "crwdns363240:0crwdne363240:0",
     "description": "Validation message for project name"
+  },
+  "project-storage-tooltip": {
+    "defaultMessage": "Text to inform the user about where their projects are actually stored with link to support article?",
+    "description": "Tooltip for my projects row"
   },
   "projects-page-title": {
     "defaultMessage": "Projects",
@@ -1479,6 +1547,10 @@
     "defaultMessage": "crwdns363298:0crwdne363298:0",
     "description": "Reload button text"
   },
+  "rename-project-action": {
+    "defaultMessage": "Rename",
+    "description": "Rename project action"
+  },
   "reset-to-default-action": {
     "defaultMessage": "crwdns363300:0crwdne363300:0",
     "description": "Reset to default blocks button text"
@@ -1570,6 +1642,30 @@
   "software-versions": {
     "defaultMessage": "crwdns363342:0crwdne363342:0",
     "description": "Software versions text"
+  },
+  "sort-option-last-modified": {
+    "defaultMessage": "Last modified",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-name": {
+    "defaultMessage": "Name",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-relevance": {
+    "defaultMessage": "Relevance",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-order-ascending-label": {
+    "defaultMessage": "Ascending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-order-descending-label": {
+    "defaultMessage": "Descending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-select-label": {
+    "defaultMessage": "Sort projects",
+    "description": "Label for select element to sort projects"
   },
   "start-session-action": {
     "defaultMessage": "crwdns363344:0crwdne363344:0",

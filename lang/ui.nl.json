@@ -103,6 +103,18 @@
     "defaultMessage": "Opname annuleren",
     "description": "Button label to cancel a movement data recording"
   },
+  "carousel-role": {
+    "defaultMessage": "carousel",
+    "description": "aria-roledescription for carousel"
+  },
+  "carousel-slide-label": {
+    "defaultMessage": "{slideNum} of {totalSlides}",
+    "description": "Label for carousel slide / item"
+  },
+  "carousel-slide-role": {
+    "defaultMessage": "slide",
+    "description": "aria-roledescription for carousel slide / item"
+  },
   "certainty-label": {
     "defaultMessage": "Zekerheid",
     "description": "Heading for certainty column"
@@ -499,6 +511,10 @@
     "defaultMessage": "Weet je zeker dat je alle data samples wil verwijderen?",
     "description": "Confirmation dialog text"
   },
+  "delete-project-action": {
+    "defaultMessage": "Delete",
+    "description": "Delete project action"
+  },
   "delete-project-confirm-heading": {
     "defaultMessage": "Confirm delete project",
     "description": "Confirmation dialog heading"
@@ -602,6 +618,10 @@
   "downloading-subtitle": {
     "defaultMessage": "Even geduld. Programma is aan het downloaden naar de micro:bit.",
     "description": "Progress text"
+  },
+  "duplicate-project-action": {
+    "defaultMessage": "Duplicate",
+    "description": "Duplicate project action"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "Bewerken in MakeCode",
@@ -803,6 +823,10 @@
     "defaultMessage": "Startpagina",
     "description": "Home button text"
   },
+  "home-page-action": {
+    "defaultMessage": "Home page",
+    "description": "Home page navigation action"
+  },
   "homepage": {
     "defaultMessage": "Startpagina",
     "description": "Link to home page"
@@ -914,6 +938,10 @@
   "import-error-dialog-title": {
     "defaultMessage": "Niet-ondersteund bestandstype",
     "description": "Title of import error dialog"
+  },
+  "import-file-action": {
+    "defaultMessage": "Import",
+    "description": "Import file action"
   },
   "incompatible-device-body-alt": {
     "defaultMessage": "Ga terug naar een andere micro:bit, of <link>sla de project-hex</link> op die later kan worden gedownload naar een micro:bit V2",
@@ -1199,6 +1227,14 @@
     "defaultMessage": "Move the micro:bit to explore how different actions change the graph",
     "description": "Hint when you have just connected a micro:bit"
   },
+  "my-projects-row-carousel": {
+    "defaultMessage": "List of my projects",
+    "description": "Label for home page row carousel"
+  },
+  "my-projects-row-title": {
+    "defaultMessage": "My projects",
+    "description": "Title for home page row"
+  },
   "name-action-hint": {
     "defaultMessage": "Geef een naam aan een actie die je wilt dat de micro:bit herkent",
     "description": "Hint shown when you have an unnamed action"
@@ -1214,6 +1250,14 @@
   "name-used-when": {
     "defaultMessage": "De naam wordt gebruikt wanneer je een hex-bestand opslaat.",
     "description": "Text under project name field"
+  },
+  "new-projects-row-carousel": {
+    "defaultMessage": "List of new project actions",
+    "description": "Label for home page row carousel"
+  },
+  "new-projects-row-title": {
+    "defaultMessage": "New projects",
+    "description": "Title for home page row"
   },
   "new-session-setup-description": {
     "defaultMessage": "Een nieuwe sessie starten overschrijft je bestaande sessie. Mogelijk wil je eerst <link>je bestaande sessie opslaan</link>.",
@@ -1275,6 +1319,10 @@
     "defaultMessage": "Volgende",
     "description": "Next button text for dialogs and similar"
   },
+  "no-projects": {
+    "defaultMessage": "No projects to display",
+    "description": "Shown on all projects page when the user has no projects"
+  },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "Dit project bevatte geen data samples, dus alleen de code is geopend. Je moet een model trainen voordat je de code kunt gebruiken.",
     "description": "Content of import non-CreateAI hex dialog"
@@ -1306,6 +1354,10 @@
   "open-project-setup-description": {
     "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
     "description": "Open project setup description"
+  },
+  "open-shared-project-action": {
+    "defaultMessage": "Open project",
+    "description": "Open project button text"
   },
   "open-shared-project-blocks-preview-description": {
     "defaultMessage": "Preview of the MakeCode code contained within this project.",
@@ -1343,13 +1395,29 @@
     "defaultMessage": "Privacybeleid",
     "description": "Link to view privacy policy"
   },
+  "project-ideas-row-carousel": {
+    "defaultMessage": "List of project ideas",
+    "description": "Label for home page row carousel"
+  },
+  "project-ideas-row-title": {
+    "defaultMessage": "Project ideas",
+    "description": "Title for home page row"
+  },
   "project-loaded": {
     "defaultMessage": "Project geladen",
     "description": "Toast when a new project is loaded"
   },
+  "project-menu-action": {
+    "defaultMessage": "Project actions menu",
+    "description": "Label for project actions menu button"
+  },
   "project-name-not-empty": {
     "defaultMessage": "De projectnaam kan niet leeg zijn",
     "description": "Validation message for project name"
+  },
+  "project-storage-tooltip": {
+    "defaultMessage": "Text to inform the user about where their projects are actually stored with link to support article?",
+    "description": "Tooltip for my projects row"
   },
   "projects-page-title": {
     "defaultMessage": "Projects",
@@ -1479,6 +1547,10 @@
     "defaultMessage": "Herladen",
     "description": "Reload button text"
   },
+  "rename-project-action": {
+    "defaultMessage": "Rename",
+    "description": "Rename project action"
+  },
   "reset-to-default-action": {
     "defaultMessage": "Herstel naar standaardblokken",
     "description": "Reset to default blocks button text"
@@ -1570,6 +1642,30 @@
   "software-versions": {
     "defaultMessage": "Software versies",
     "description": "Software versions text"
+  },
+  "sort-option-last-modified": {
+    "defaultMessage": "Last modified",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-name": {
+    "defaultMessage": "Name",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-relevance": {
+    "defaultMessage": "Relevance",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-order-ascending-label": {
+    "defaultMessage": "Ascending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-order-descending-label": {
+    "defaultMessage": "Descending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-select-label": {
+    "defaultMessage": "Sort projects",
+    "description": "Label for select element to sort projects"
   },
   "start-session-action": {
     "defaultMessage": "Start sessie",

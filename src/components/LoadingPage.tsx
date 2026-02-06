@@ -1,7 +1,8 @@
-import { Flex, VStack } from "@chakra-ui/react";
+import { Flex, VisuallyHidden, VStack } from "@chakra-ui/react";
 import ActionBar from "./ActionBar/ActionBar";
 import AppLogo from "./AppLogo";
 import LoadingAnimation from "./LoadingAnimation";
+import { FormattedMessage } from "react-intl";
 
 const LoadingPage = () => {
   return (
@@ -31,6 +32,9 @@ const LoadingPage = () => {
         justifyContent="center"
         alignItems="center"
       >
+        <VisuallyHidden>
+          <FormattedMessage id="loading" />
+        </VisuallyHidden>
         <LoadingAnimation />
       </Flex>
     </VStack>

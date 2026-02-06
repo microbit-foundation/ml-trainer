@@ -215,6 +215,32 @@
       "value": "Opname annuleren"
     }
   ],
+  "carousel-role": [
+    {
+      "type": 0,
+      "value": "carousel"
+    }
+  ],
+  "carousel-slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "carousel-slide-role": [
+    {
+      "type": 0,
+      "value": "slide"
+    }
+  ],
   "certainty-label": [
     {
       "type": 0,
@@ -853,6 +879,12 @@
       "value": "Weet je zeker dat je alle data samples wil verwijderen?"
     }
   ],
+  "delete-project-action": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
   "delete-project-confirm-heading": [
     {
       "type": 0,
@@ -1047,6 +1079,12 @@
     {
       "type": 0,
       "value": "Even geduld. Programma is aan het downloaden naar de micro:bit."
+    }
+  ],
+  "duplicate-project-action": [
+    {
+      "type": 0,
+      "value": "Duplicate"
     }
   ],
   "edit-in-makecode-action": [
@@ -1371,6 +1409,12 @@
       "value": "Startpagina"
     }
   ],
+  "home-page-action": [
+    {
+      "type": 0,
+      "value": "Home page"
+    }
+  ],
   "homepage": [
     {
       "type": 0,
@@ -1573,6 +1617,12 @@
     {
       "type": 0,
       "value": "Niet-ondersteund bestandstype"
+    }
+  ],
+  "import-file-action": [
+    {
+      "type": 0,
+      "value": "Import"
     }
   ],
   "incompatible-device-body-alt": [
@@ -2043,6 +2093,18 @@
       "value": "Move the micro:bit to explore how different actions change the graph"
     }
   ],
+  "my-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of my projects"
+    }
+  ],
+  "my-projects-row-title": [
+    {
+      "type": 0,
+      "value": "My projects"
+    }
+  ],
   "name-action-hint": [
     {
       "type": 0,
@@ -2065,6 +2127,18 @@
     {
       "type": 0,
       "value": "De naam wordt gebruikt wanneer je een hex-bestand opslaat."
+    }
+  ],
+  "new-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of new project actions"
+    }
+  ],
+  "new-projects-row-title": [
+    {
+      "type": 0,
+      "value": "New projects"
     }
   ],
   "new-session-setup-description": [
@@ -2199,6 +2273,12 @@
       "value": "Volgende"
     }
   ],
+  "no-projects": [
+    {
+      "type": 0,
+      "value": "No projects to display"
+    }
+  ],
   "not-create-ai-hex-import-dialog-content": [
     {
       "type": 0,
@@ -2265,6 +2345,12 @@
       "value": " first."
     }
   ],
+  "open-shared-project-action": [
+    {
+      "type": 0,
+      "value": "Open project"
+    }
+  ],
   "open-shared-project-blocks-preview-description": [
     {
       "type": 0,
@@ -2327,16 +2413,40 @@
       "value": "Privacybeleid"
     }
   ],
+  "project-ideas-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of project ideas"
+    }
+  ],
+  "project-ideas-row-title": [
+    {
+      "type": 0,
+      "value": "Project ideas"
+    }
+  ],
   "project-loaded": [
     {
       "type": 0,
       "value": "Project geladen"
     }
   ],
+  "project-menu-action": [
+    {
+      "type": 0,
+      "value": "Project actions menu"
+    }
+  ],
   "project-name-not-empty": [
     {
       "type": 0,
       "value": "De projectnaam kan niet leeg zijn"
+    }
+  ],
+  "project-storage-tooltip": [
+    {
+      "type": 0,
+      "value": "Text to inform the user about where their projects are actually stored with link to support article?"
     }
   ],
   "projects-page-title": [
@@ -2675,6 +2785,12 @@
       "value": "Herladen"
     }
   ],
+  "rename-project-action": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
   "reset-to-default-action": [
     {
       "type": 0,
@@ -2835,6 +2951,42 @@
     {
       "type": 0,
       "value": "Software versies"
+    }
+  ],
+  "sort-option-last-modified": [
+    {
+      "type": 0,
+      "value": "Last modified"
+    }
+  ],
+  "sort-option-name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "sort-option-relevance": [
+    {
+      "type": 0,
+      "value": "Relevance"
+    }
+  ],
+  "sort-order-ascending-label": [
+    {
+      "type": 0,
+      "value": "Ascending order"
+    }
+  ],
+  "sort-order-descending-label": [
+    {
+      "type": 0,
+      "value": "Descending order"
+    }
+  ],
+  "sort-select-label": [
+    {
+      "type": 0,
+      "value": "Sort projects"
     }
   ],
   "start-session-action": [

@@ -5,19 +5,19 @@ import SwiperCarousel from "../SwiperCarousel/SwiperCarousel";
 const slow = 3000;
 const fast = 1000;
 
-interface TeachFeaturedCarouselProps {
+interface NewPageCarouselProps {
   carouselItems: JSX.Element[];
-  itemTypeMessage: string;
+  containerMessageId: string;
   hero?: boolean;
   centerItems?: boolean;
 }
 
 const NewPageCarousel = ({
   carouselItems,
-  itemTypeMessage,
+  containerMessageId,
   hero = false,
   centerItems = false,
-}: TeachFeaturedCarouselProps) => {
+}: NewPageCarouselProps) => {
   const getOffset = useCallback(
     (slidesPerGroup: number) => {
       if (centerItems && carouselItems.length <= slidesPerGroup) {
@@ -117,7 +117,7 @@ const NewPageCarousel = ({
       }
       carouselItems={carouselItems}
       centerInsufficientSlides={centerItems}
-      itemTypeMessage={itemTypeMessage}
+      containerMessageId={containerMessageId}
       loop={hero}
       navigation={!hero}
       onResize={(swiper) => {

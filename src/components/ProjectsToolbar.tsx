@@ -6,6 +6,7 @@ import {
   RiFolderOpenLine,
 } from "react-icons/ri";
 import { ProjectNameDialogReason } from "../pages/ProjectsPage";
+import { FormattedMessage } from "react-intl";
 
 interface ProjectsToolbarProps {
   selectedProjectIds: string[];
@@ -33,7 +34,7 @@ const ProjectsToolbar = ({
           variant="toolbar"
           _focusVisible={{ boxShadow: "outline" }}
         >
-          Open
+          <FormattedMessage id="open-project-action" />
         </Button>
       )}
       {selectedProjectIds.length === 1 && (
@@ -44,7 +45,7 @@ const ProjectsToolbar = ({
           variant="toolbar"
           _focusVisible={{ boxShadow: "outline" }}
         >
-          Rename
+          <FormattedMessage id="rename-project-action" />
         </Button>
       )}
       {selectedProjectIds.length === 1 && (
@@ -55,7 +56,7 @@ const ProjectsToolbar = ({
           variant="toolbar"
           _focusVisible={{ boxShadow: "outline" }}
         >
-          Duplicate
+          <FormattedMessage id="duplicate-project-action" />
         </Button>
       )}
       {selectedProjectIds.length !== 0 && (
@@ -65,7 +66,7 @@ const ProjectsToolbar = ({
           borderRadius="md"
           variant="warning"
         >
-          Delete
+          <FormattedMessage id="delete-project-action" />
         </Button>
       )}
     </ButtonGroup>

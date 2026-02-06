@@ -103,6 +103,18 @@
     "defaultMessage": "Annuler l'enregistrement",
     "description": "Button label to cancel a movement data recording"
   },
+  "carousel-role": {
+    "defaultMessage": "carousel",
+    "description": "aria-roledescription for carousel"
+  },
+  "carousel-slide-label": {
+    "defaultMessage": "{slideNum} of {totalSlides}",
+    "description": "Label for carousel slide / item"
+  },
+  "carousel-slide-role": {
+    "defaultMessage": "slide",
+    "description": "aria-roledescription for carousel slide / item"
+  },
   "certainty-label": {
     "defaultMessage": "Certitude",
     "description": "Heading for certainty column"
@@ -499,6 +511,10 @@
     "defaultMessage": "Voulez-vous supprimer tous les échantillons de données ?",
     "description": "Confirmation dialog text"
   },
+  "delete-project-action": {
+    "defaultMessage": "Delete",
+    "description": "Delete project action"
+  },
   "delete-project-confirm-heading": {
     "defaultMessage": "Confirm delete project",
     "description": "Confirmation dialog heading"
@@ -602,6 +618,10 @@
   "downloading-subtitle": {
     "defaultMessage": "Veuillez patienter. Téléchargement du programme sur le micro:bit.",
     "description": "Progress text"
+  },
+  "duplicate-project-action": {
+    "defaultMessage": "Duplicate",
+    "description": "Duplicate project action"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "Modifier dans MakeCode",
@@ -803,6 +823,10 @@
     "defaultMessage": "Accueil",
     "description": "Home button text"
   },
+  "home-page-action": {
+    "defaultMessage": "Home page",
+    "description": "Home page navigation action"
+  },
   "homepage": {
     "defaultMessage": "Page d’accueil",
     "description": "Link to home page"
@@ -914,6 +938,10 @@
   "import-error-dialog-title": {
     "defaultMessage": "Type de fichier non pris en charge",
     "description": "Title of import error dialog"
+  },
+  "import-file-action": {
+    "defaultMessage": "Import",
+    "description": "Import file action"
   },
   "incompatible-device-body-alt": {
     "defaultMessage": "Revenez en arrière pour sélectionner un autre micro:bit, ou <link>enregistrer le projet hex</link> qui pourra être téléchargé ultérieurement sur un micro:bit V2.",
@@ -1199,6 +1227,14 @@
     "defaultMessage": "Move the micro:bit to explore how different actions change the graph",
     "description": "Hint when you have just connected a micro:bit"
   },
+  "my-projects-row-carousel": {
+    "defaultMessage": "List of my projects",
+    "description": "Label for home page row carousel"
+  },
+  "my-projects-row-title": {
+    "defaultMessage": "My projects",
+    "description": "Title for home page row"
+  },
   "name-action-hint": {
     "defaultMessage": "Nommez une action que vous voulez que le micro:bit reconnaisse",
     "description": "Hint shown when you have an unnamed action"
@@ -1214,6 +1250,14 @@
   "name-used-when": {
     "defaultMessage": "Ce nom est utilisé lorsque vous enregistrez un fichier hex.",
     "description": "Text under project name field"
+  },
+  "new-projects-row-carousel": {
+    "defaultMessage": "List of new project actions",
+    "description": "Label for home page row carousel"
+  },
+  "new-projects-row-title": {
+    "defaultMessage": "New projects",
+    "description": "Title for home page row"
   },
   "new-session-setup-description": {
     "defaultMessage": "Le démarrage d'une nouvelle session écrasera votre session existante. Vous pouvez donc commencer par <link>enregistrer votre session existante</link>.",
@@ -1275,6 +1319,10 @@
     "defaultMessage": "Suivant",
     "description": "Next button text for dialogs and similar"
   },
+  "no-projects": {
+    "defaultMessage": "No projects to display",
+    "description": "Shown on all projects page when the user has no projects"
+  },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "Ce projet ne contenait pas d'échantillons de données, donc seul le code a été ouvert. Vous devez entraîner un modèle avant de pouvoir utiliser le code.",
     "description": "Content of import non-CreateAI hex dialog"
@@ -1306,6 +1354,10 @@
   "open-project-setup-description": {
     "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
     "description": "Open project setup description"
+  },
+  "open-shared-project-action": {
+    "defaultMessage": "Open project",
+    "description": "Open project button text"
   },
   "open-shared-project-blocks-preview-description": {
     "defaultMessage": "Preview of the MakeCode code contained within this project.",
@@ -1343,13 +1395,29 @@
     "defaultMessage": "Politique de confidentialité",
     "description": "Link to view privacy policy"
   },
+  "project-ideas-row-carousel": {
+    "defaultMessage": "List of project ideas",
+    "description": "Label for home page row carousel"
+  },
+  "project-ideas-row-title": {
+    "defaultMessage": "Project ideas",
+    "description": "Title for home page row"
+  },
   "project-loaded": {
     "defaultMessage": "Projet chargé",
     "description": "Toast when a new project is loaded"
   },
+  "project-menu-action": {
+    "defaultMessage": "Project actions menu",
+    "description": "Label for project actions menu button"
+  },
   "project-name-not-empty": {
     "defaultMessage": "Le nom du projet ne peut pas être vide",
     "description": "Validation message for project name"
+  },
+  "project-storage-tooltip": {
+    "defaultMessage": "Text to inform the user about where their projects are actually stored with link to support article?",
+    "description": "Tooltip for my projects row"
   },
   "projects-page-title": {
     "defaultMessage": "Projects",
@@ -1479,6 +1547,10 @@
     "defaultMessage": "Recharger",
     "description": "Reload button text"
   },
+  "rename-project-action": {
+    "defaultMessage": "Rename",
+    "description": "Rename project action"
+  },
   "reset-to-default-action": {
     "defaultMessage": "Réinitialiser les blocs par défaut",
     "description": "Reset to default blocks button text"
@@ -1570,6 +1642,30 @@
   "software-versions": {
     "defaultMessage": "Versions logicielles",
     "description": "Software versions text"
+  },
+  "sort-option-last-modified": {
+    "defaultMessage": "Last modified",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-name": {
+    "defaultMessage": "Name",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-relevance": {
+    "defaultMessage": "Relevance",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-order-ascending-label": {
+    "defaultMessage": "Ascending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-order-descending-label": {
+    "defaultMessage": "Descending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-select-label": {
+    "defaultMessage": "Sort projects",
+    "description": "Label for select element to sort projects"
   },
   "start-session-action": {
     "defaultMessage": "Démarrer la session",
