@@ -175,6 +175,15 @@ const executeAction = async (
         .getState()
         .setDownloadFlashingProgress(ProgressStage.Initializing, undefined);
       break;
+
+    case "setIsDeviceBonded": {
+      const dataConnectionState = useStore.getState().dataConnection;
+      useStore.getState().setDataConnection({
+        ...dataConnectionState,
+        isDeviceBonded: action.value,
+      });
+      break;
+    }
   }
 };
 
@@ -218,6 +227,7 @@ const performConnectFlash = async (
     await connection.connect({
       progress: deps.flashingProgressCallback,
       signal: abortController.signal,
+      isIosBonded: deps.dataConnection.isDeviceBonded,
     });
     const boardVersion = connection.getBoardVersion();
     // Store connection for potential reuse

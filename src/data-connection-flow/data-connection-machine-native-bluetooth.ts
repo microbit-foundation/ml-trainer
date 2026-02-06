@@ -8,6 +8,7 @@ import {
   connectedState,
   connectFlashSuccessHandler,
   createInitialConnectHandlers,
+  DataConnectionAction,
   DataConnectionFlowDef,
   globalHandlers,
   guards,
@@ -50,6 +51,9 @@ const connectFlashFailureWithErrorHandling = [
   {
     guard: guards.isPairingInformationLostError,
     target: DataConnectionStep.PairingLost,
+    actions: [
+      { type: "setIsDeviceBonded", value: false },
+    ] as DataConnectionAction[],
   },
   {
     guard: always,
@@ -123,7 +127,10 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
       // Go directly to flashing - connectFlash() handles permission checks internally
       next: {
         target: DataConnectionStep.FlashingInProgress,
-        actions: [{ type: "connectFlash", clearDevice: true }],
+        actions: [
+          { type: "setIsDeviceBonded", value: false },
+          { type: "connectFlash", clearDevice: true },
+        ],
       },
       back: { target: DataConnectionStep.NativeBluetoothPreConnectTutorial },
       ...setMicrobitNameHandler,
@@ -151,7 +158,10 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
       connectFlashFailure: connectFlashFailureWithErrorHandling,
       flashSuccess: {
         target: DataConnectionStep.BluetoothConnect,
-        actions: [{ type: "connectData" }],
+        actions: [
+          { type: "setIsDeviceBonded", value: true },
+          { type: "connectData" },
+        ],
       },
       flashFailure: {
         target: DataConnectionStep.ConnectFailed,
