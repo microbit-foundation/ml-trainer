@@ -1329,7 +1329,7 @@ const createMlStore = (logging: Logging) => {
             projectEdited,
             settings,
             timestamp,
-            isDeviceBonded: dataConnection.isDeviceBonded,
+            dataConnection: { isDeviceBonded: dataConnection.isDeviceBonded },
             // The model itself is in IndexDB
           }),
           migrate(persistedStateUnknown, version) {
@@ -1358,6 +1358,10 @@ const createMlStore = (logging: Logging) => {
                 ...defaultSettings,
                 ...currentState.settings,
                 ...persistedState.settings,
+              },
+              dataConnection: {
+                ...currentState.dataConnection,
+                ...persistedState.dataConnection
               },
             };
           },
