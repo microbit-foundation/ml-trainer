@@ -283,6 +283,13 @@ const executeAction = async (
       });
       break;
 
+    case "setIsDeviceBonded":
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        isDeviceBonded: action.value,
+      });
+      break;
+
     case "disconnectData":
       await performDisconnectData(deps);
       break;
@@ -348,6 +355,7 @@ const performConnectFlash = async (
     await connection.connect({
       progress: progressCallback,
       signal: abortController.signal,
+      isIosBonded: state.isDeviceBonded
     });
     const boardVersion = connection.getBoardVersion();
     await sendEvent({ type: "connectFlashSuccess", boardVersion }, deps);
