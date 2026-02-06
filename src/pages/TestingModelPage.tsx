@@ -36,8 +36,9 @@ import { useProject } from "../hooks/project-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
-import { createDataSamplesPageUrl } from "../urls";
+import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
 import { ButtonWithLoading } from "../components/ButtonWithLoading";
+import { projectSessionStorage } from "../session-storage";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
@@ -52,6 +53,9 @@ const TestingModelPage = () => {
   }, [navigate]);
 
   useEffect(() => {
+    if (!projectSessionStorage.getProjectId()) {
+      return navigate(createHomePageUrl());
+    }
     if (!model) {
       return navigateToDataSamples();
     }
@@ -63,6 +67,7 @@ const TestingModelPage = () => {
   }, [
     bufferedData,
     model,
+    navigate,
     navigateToDataSamples,
     startPredicting,
     stopPredicting,
@@ -73,7 +78,7 @@ const TestingModelPage = () => {
   const wasConnected = usePrevious(isConnected);
   useEffect(() => {
     if (isConnected) {
-      tourStart(
+      void tourStart(
         { name: "TrainModel", delayedUntilConnection: wasConnected === false },
         false
       );

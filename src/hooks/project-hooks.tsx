@@ -28,7 +28,7 @@ import {
   PostImportDialogState,
   SaveStep,
 } from "../model";
-import { untitledProjectName as untitled } from "../project-name";
+import { untitledProjectName as untitled } from "../project-utils";
 import { useStore } from "../store";
 import {
   createCodePageUrl,
@@ -50,13 +50,19 @@ class CodeEditorError extends Error {}
  */
 export type LoadType = "drop-load" | "file-upload";
 
+/**
+ * Distinguishes the whether the file loaded should replace the entire project
+ * or just the actions. This depends on where this action was triggered in the UI.
+ */
+export type LoadAction = "replaceProject" | "replaceActions";
+
 interface ProjectContext {
   browserNavigationToEditor(): Promise<boolean>;
   openEditor(): Promise<void>;
   project: MakeCodeProject;
   projectEdited: boolean;
   resetProject: () => void;
-  loadFile: (file: File, type: LoadType) => void;
+  loadFile: (file: File, type: LoadType, loadAction: LoadAction) => void;
   /**
    * Called to request a save.
    *
@@ -312,7 +318,11 @@ export const ProjectProvider = ({
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
   const loadFile = useCallback(
-    async (file: File, type: LoadType): Promise<void> => {
+    async (
+      file: File,
+      type: LoadType,
+      loadAction: LoadAction
+    ): Promise<void> => {
       const fileExtension = getLowercaseFileExtension(file.name);
       logging.event({
         type,
@@ -324,7 +334,7 @@ export const ProjectProvider = ({
         const actionsString = await readFileAsText(file);
         const actions = JSON.parse(actionsString) as unknown;
         if (isDatasetUserFileFormat(actions)) {
-          loadDataset(actions);
+          await loadDataset(actions, loadAction);
           navigate(createDataSamplesPageUrl());
         } else {
           setPostImportDialogState(PostImportDialogState.Error);
@@ -437,12 +447,12 @@ export const ProjectProvider = ({
 
   const editorChange = useStore((s) => s.editorChange);
   const onWorkspaceSave = useCallback(
-    (event: EditorWorkspaceSaveRequest) => {
+    async (event: EditorWorkspaceSaveRequest) => {
       if (!checkIfLangChanged()) {
         // We don't want to handle these events until MakeCode has been
         // reinitialised after a language change.
         // We should reinitialise with the latest project.
-        editorChange(event.project);
+        await editorChange(event.project);
       }
     },
     [checkIfLangChanged, editorChange]

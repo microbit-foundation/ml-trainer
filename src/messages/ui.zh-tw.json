@@ -219,6 +219,32 @@
       "value": "取消錄製"
     }
   ],
+  "carousel-role": [
+    {
+      "type": 0,
+      "value": "carousel"
+    }
+  ],
+  "carousel-slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "carousel-slide-role": [
+    {
+      "type": 0,
+      "value": "slide"
+    }
+  ],
   "certainty-label": [
     {
       "type": 0,
@@ -253,6 +279,12 @@
     {
       "type": 0,
       "value": "模型對您目前正在執行的各個動作的信心程度。"
+    }
+  ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
     }
   ],
   "click-to-reload-page-action": [
@@ -851,6 +883,52 @@
       "value": "您確定您要刪除所有的數據樣本嗎？"
     }
   ],
+  "delete-project-action": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete project"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "delete-projects-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete projects"
+    }
+  ],
+  "delete-projects-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete "
+    },
+    {
+      "type": 1,
+      "value": "numProjects"
+    },
+    {
+      "type": 0,
+      "value": " projects?"
+    }
+  ],
   "delete-recording-aria": [
     {
       "type": 0,
@@ -1021,6 +1099,12 @@
     {
       "type": 0,
       "value": "請稍等。正在將程式下載至 micro:bit。"
+    }
+  ],
+  "duplicate-project-action": [
+    {
+      "type": 0,
+      "value": "Duplicate"
     }
   ],
   "edit-in-makecode-action": [
@@ -1345,6 +1429,12 @@
       "value": "主頁"
     }
   ],
+  "home-page-action": [
+    {
+      "type": 0,
+      "value": "Home page"
+    }
+  ],
   "homepage": [
     {
       "type": 0,
@@ -1543,6 +1633,12 @@
     {
       "type": 0,
       "value": "不支援的檔案類型"
+    }
+  ],
+  "import-file-action": [
+    {
+      "type": 0,
+      "value": "Import"
     }
   ],
   "incompatible-device-body-alt": [
@@ -2013,6 +2109,18 @@
       "value": "Move the micro:bit to explore how different actions change the graph"
     }
   ],
+  "my-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of my projects"
+    }
+  ],
+  "my-projects-row-title": [
+    {
+      "type": 0,
+      "value": "My projects"
+    }
+  ],
   "name-action-hint": [
     {
       "type": 0,
@@ -2035,6 +2143,18 @@
     {
       "type": 0,
       "value": "儲存 HEX 檔案時，使用該名稱。"
+    }
+  ],
+  "new-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of new project actions"
+    }
+  ],
+  "new-projects-row-title": [
+    {
+      "type": 0,
+      "value": "New projects"
     }
   ],
   "new-session-setup-description": [
@@ -2127,6 +2247,12 @@
       "value": "開啟上一個會話"
     }
   ],
+  "newpage-new-project-title": [
+    {
+      "type": 0,
+      "value": "New project"
+    }
+  ],
   "newpage-new-session-subtitle": [
     {
       "type": 0,
@@ -2161,6 +2287,12 @@
     {
       "type": 0,
       "value": "下一個"
+    }
+  ],
+  "no-projects": [
+    {
+      "type": 0,
+      "value": "No projects to display"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
@@ -2229,6 +2361,12 @@
       "value": " first."
     }
   ],
+  "open-shared-project-action": [
+    {
+      "type": 0,
+      "value": "Open project"
+    }
+  ],
   "open-shared-project-blocks-preview-description": [
     {
       "type": 0,
@@ -2291,16 +2429,46 @@
       "value": "隱私權政策"
     }
   ],
+  "project-ideas-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of project ideas"
+    }
+  ],
+  "project-ideas-row-title": [
+    {
+      "type": 0,
+      "value": "Project ideas"
+    }
+  ],
   "project-loaded": [
     {
       "type": 0,
       "value": "專案已載入"
     }
   ],
+  "project-menu-action": [
+    {
+      "type": 0,
+      "value": "Project actions menu"
+    }
+  ],
   "project-name-not-empty": [
     {
       "type": 0,
       "value": "專案名稱不可為空白"
+    }
+  ],
+  "project-storage-tooltip": [
+    {
+      "type": 0,
+      "value": "Text to inform the user about where their projects are actually stored with link to support article?"
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
     }
   ],
   "radio-link-microbit": [
@@ -2629,6 +2797,12 @@
       "value": "重新載入"
     }
   ],
+  "rename-project-action": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
   "reset-to-default-action": [
     {
       "type": 0,
@@ -2715,6 +2889,12 @@
       "value": "您的十六進位檔案已下載"
     }
   ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
+    }
+  ],
   "select-icon-action-aria": [
     {
       "type": 0,
@@ -2783,6 +2963,42 @@
     {
       "type": 0,
       "value": "軟體版本"
+    }
+  ],
+  "sort-option-last-modified": [
+    {
+      "type": 0,
+      "value": "Last modified"
+    }
+  ],
+  "sort-option-name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "sort-option-relevance": [
+    {
+      "type": 0,
+      "value": "Relevance"
+    }
+  ],
+  "sort-order-ascending-label": [
+    {
+      "type": 0,
+      "value": "Ascending order"
+    }
+  ],
+  "sort-order-descending-label": [
+    {
+      "type": 0,
+      "value": "Descending order"
+    }
+  ],
+  "sort-select-label": [
+    {
+      "type": 0,
+      "value": "Sort projects"
     }
   ],
   "start-session-action": [
@@ -2895,6 +3111,18 @@
     {
       "type": 0,
       "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "now"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "a few seconds ago"
     }
   ],
   "tour-action": [

@@ -103,6 +103,18 @@
     "defaultMessage": "Cancelar a gravação",
     "description": "Button label to cancel a movement data recording"
   },
+  "carousel-role": {
+    "defaultMessage": "carousel",
+    "description": "aria-roledescription for carousel"
+  },
+  "carousel-slide-label": {
+    "defaultMessage": "{slideNum} of {totalSlides}",
+    "description": "Label for carousel slide / item"
+  },
+  "carousel-slide-role": {
+    "defaultMessage": "slide",
+    "description": "aria-roledescription for carousel slide / item"
+  },
   "certainty-label": {
     "defaultMessage": "Certeza",
     "description": "Heading for certainty column"
@@ -118,6 +130,10 @@
   "certainty-tooltip": {
     "defaultMessage": "Quão confiante o modelo está de que você está realizando cada ação no momento.",
     "description": "Tooltip for certainty column"
+  },
+  "clear": {
+    "defaultMessage": "Clear",
+    "description": "Aria label for the search input"
   },
   "click-to-reload-page-action": {
     "defaultMessage": "Clique para recarregar a página",
@@ -495,6 +511,26 @@
     "defaultMessage": "Tem certeza de que deseja excluir todas as amostras de dados?",
     "description": "Confirmation dialog text"
   },
+  "delete-project-action": {
+    "defaultMessage": "Delete",
+    "description": "Delete project action"
+  },
+  "delete-project-confirm-heading": {
+    "defaultMessage": "Confirm delete project",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-project-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete the project \"{project}\"?",
+    "description": "Confirmation dialog text"
+  },
+  "delete-projects-confirm-heading": {
+    "defaultMessage": "Confirm delete projects",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-projects-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete {numProjects} projects?",
+    "description": "Confirmation dialog text"
+  },
   "delete-recording-aria": {
     "defaultMessage": "Excluir gravação {sample} de {numSamples} para a ação \"{action}\".",
     "description": "Aria label for data sample delete action"
@@ -590,6 +626,10 @@
   "downloading-subtitle": {
     "defaultMessage": "Por favor, aguarde. Baixando o programa para o micro:bit.",
     "description": "Progress text"
+  },
+  "duplicate-project-action": {
+    "defaultMessage": "Duplicate",
+    "description": "Duplicate project action"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "Editar no MakeCode",
@@ -791,6 +831,10 @@
     "defaultMessage": "Início",
     "description": "Home button text"
   },
+  "home-page-action": {
+    "defaultMessage": "Home page",
+    "description": "Home page navigation action"
+  },
   "homepage": {
     "defaultMessage": "Página Inicial",
     "description": "Link to home page"
@@ -902,6 +946,10 @@
   "import-error-dialog-title": {
     "defaultMessage": "Tipo de arquivo não suportado.",
     "description": "Title of import error dialog"
+  },
+  "import-file-action": {
+    "defaultMessage": "Import",
+    "description": "Import file action"
   },
   "incompatible-device-body-alt": {
     "defaultMessage": "Volte para selecionar um micro:bit diferente, ou <link>salve o arquivo hex do projeto</link>, que pode ser baixado em um micro:bit V2 mais tarde.",
@@ -1187,6 +1235,14 @@
     "defaultMessage": "Move the micro:bit to explore how different actions change the graph",
     "description": "Hint when you have just connected a micro:bit"
   },
+  "my-projects-row-carousel": {
+    "defaultMessage": "List of my projects",
+    "description": "Label for home page row carousel"
+  },
+  "my-projects-row-title": {
+    "defaultMessage": "My projects",
+    "description": "Title for home page row"
+  },
   "name-action-hint": {
     "defaultMessage": "Nomeie uma ação que você deseja que o micro:bit reconheça.",
     "description": "Hint shown when you have an unnamed action"
@@ -1202,6 +1258,14 @@
   "name-used-when": {
     "defaultMessage": "O nome é usado quando você salva um arquivo.",
     "description": "Text under project name field"
+  },
+  "new-projects-row-carousel": {
+    "defaultMessage": "List of new project actions",
+    "description": "Label for home page row carousel"
+  },
+  "new-projects-row-title": {
+    "defaultMessage": "New projects",
+    "description": "Title for home page row"
   },
   "new-session-setup-description": {
     "defaultMessage": "Iniciar uma nova sessão substituirá sua sessão atual. Você pode querer <link>salvar sua sessão atual</link> primeiro.",
@@ -1235,6 +1299,10 @@
     "defaultMessage": "Abrir a última sessão",
     "description": "Open last session title"
   },
+  "newpage-new-project-title": {
+    "defaultMessage": "New project",
+    "description": "Start new project title"
+  },
   "newpage-new-session-subtitle": {
     "defaultMessage": "Conecte seu micro:bit e colete dados de movimento para construir um modelo de aprendizado de máquina.",
     "description": "Start new session subtitle"
@@ -1258,6 +1326,10 @@
   "next-action": {
     "defaultMessage": "Próximo",
     "description": "Next button text for dialogs and similar"
+  },
+  "no-projects": {
+    "defaultMessage": "No projects to display",
+    "description": "Shown on all projects page when the user has no projects"
   },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "Este projeto não contém amostras de dados, portanto, apenas o código foi aberto. Você precisa treinar um modelo antes de poder usar o código.",
@@ -1290,6 +1362,10 @@
   "open-project-setup-description": {
     "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
     "description": "Open project setup description"
+  },
+  "open-shared-project-action": {
+    "defaultMessage": "Open project",
+    "description": "Open project button text"
   },
   "open-shared-project-blocks-preview-description": {
     "defaultMessage": "Preview of the MakeCode code contained within this project.",
@@ -1327,13 +1403,33 @@
     "defaultMessage": "Política de privacidade",
     "description": "Link to view privacy policy"
   },
+  "project-ideas-row-carousel": {
+    "defaultMessage": "List of project ideas",
+    "description": "Label for home page row carousel"
+  },
+  "project-ideas-row-title": {
+    "defaultMessage": "Project ideas",
+    "description": "Title for home page row"
+  },
   "project-loaded": {
     "defaultMessage": "Projeto carregado",
     "description": "Toast when a new project is loaded"
   },
+  "project-menu-action": {
+    "defaultMessage": "Project actions menu",
+    "description": "Label for project actions menu button"
+  },
   "project-name-not-empty": {
     "defaultMessage": "O nome do projeto não pode estar vazio",
     "description": "Validation message for project name"
+  },
+  "project-storage-tooltip": {
+    "defaultMessage": "Text to inform the user about where their projects are actually stored with link to support article?",
+    "description": "Tooltip for my projects row"
+  },
+  "projects-page-title": {
+    "defaultMessage": "Projects",
+    "description": "Projects page title"
   },
   "radio-link-microbit": {
     "defaultMessage": "Link de rádio micro:bit",
@@ -1459,6 +1555,10 @@
     "defaultMessage": "Recarregar",
     "description": "Reload button text"
   },
+  "rename-project-action": {
+    "defaultMessage": "Rename",
+    "description": "Rename project action"
+  },
   "reset-to-default-action": {
     "defaultMessage": "Resetar para os blocos padrão",
     "description": "Reset to default blocks button text"
@@ -1511,6 +1611,10 @@
     "defaultMessage": "Seu arquivo .hex foi baixado.",
     "description": "Notification after a hex file has been downloaded"
   },
+  "search": {
+    "defaultMessage": "Search",
+    "description": "Aria label for searching documentation"
+  },
   "select-icon-action-aria": {
     "defaultMessage": "Escolher ícone para a ação \"{action}\"",
     "description": "Aria label for pick icon button"
@@ -1546,6 +1650,30 @@
   "software-versions": {
     "defaultMessage": "Versões de Software",
     "description": "Software versions text"
+  },
+  "sort-option-last-modified": {
+    "defaultMessage": "Last modified",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-name": {
+    "defaultMessage": "Name",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-relevance": {
+    "defaultMessage": "Relevance",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-order-ascending-label": {
+    "defaultMessage": "Ascending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-order-descending-label": {
+    "defaultMessage": "Descending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-select-label": {
+    "defaultMessage": "Sort projects",
+    "description": "Label for select element to sort projects"
   },
   "start-session-action": {
     "defaultMessage": "Iniciar sessão",
@@ -1602,6 +1730,14 @@
   "third-party-content-description": {
     "defaultMessage": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the <link>MakeCode shared project</link> to report abuse to Microsoft MakeCode if you think it's not appropriate.",
     "description": "Notify user of third party content"
+  },
+  "timestamp-now": {
+    "defaultMessage": "now",
+    "description": "The last edit time of a project"
+  },
+  "timestamp-seconds": {
+    "defaultMessage": "a few seconds ago",
+    "description": "The last edit time of a project"
   },
   "tour-action": {
     "defaultMessage": "Fazer um tour",

@@ -8,7 +8,7 @@ import * as tf from "@tensorflow/tfjs";
 import { SymbolicTensor } from "@tensorflow/tfjs";
 import { getMlFilters, mlSettings } from "./mlConfig";
 import { ActionData, XYZData } from "./model";
-import { DataWindow } from "./store";
+import { DataWindow } from "./project-utils";
 
 export type TrainingResult =
   | { error: false; model: tf.LayersModel }
@@ -128,10 +128,10 @@ export const applyFilters = (
 interface PredictInput {
   model: tf.LayersModel;
   data: XYZData;
-  classificationIds: number[];
+  classificationIds: string[];
 }
 
-export type Confidences = Record<ActionData["ID"], number>;
+export type Confidences = Record<string, number>;
 
 export type ConfidencesResult =
   | { error: true; detail: unknown }

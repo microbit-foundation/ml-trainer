@@ -83,11 +83,11 @@ const TestingModelTable = () => {
             h="fit-content"
             alignSelf="start"
           >
-            {actions.map((action, idx) => {
+            {actions.map((action) => {
               const { requiredConfidence: threshold } = action;
               return (
                 <Box
-                  key={idx}
+                  key={action.id}
                   role="region"
                   aria-label={intl.formatMessage(
                     {
@@ -107,9 +107,9 @@ const TestingModelTable = () => {
                   <GridItem>
                     <ActionCertaintyCard
                       actionName={action.name}
-                      actionId={action.ID}
+                      actionId={action.id}
                       onThresholdChange={(val) =>
-                        setRequiredConfidence(action.ID, val)
+                        setRequiredConfidence(action.id, val)
                       }
                       requiredConfidence={
                         threshold ?? mlSettings.defaultRequiredConfidence

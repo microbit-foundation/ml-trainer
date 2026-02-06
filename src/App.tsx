@@ -16,12 +16,19 @@ import React, { ReactNode, useEffect, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
   createBrowserRouter,
+  defer,
   Outlet,
   RouterProvider,
   ScrollRestoration,
+  useLocation,
   useNavigate,
 } from "react-router-dom";
 import "theme-package/fonts/fonts.css";
+import {
+  broadcastChannel,
+  BroadcastChannelData,
+  BroadcastChannelMessageType,
+} from "./broadcast-channel";
 import { BufferedDataProvider } from "./buffered-data-hooks";
 import EditCodeDialog from "./components/EditCodeDialog";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -42,21 +49,29 @@ import TranslationProvider from "./messages/TranslationProvider";
 import { PostImportDialogState } from "./model";
 import CodePage from "./pages/CodePage";
 import DataSamplesPage from "./pages/DataSamplesPage";
-import HomePage from "./pages/HomePage";
 import ImportPage from "./pages/ImportPage";
-import NewPage from "./pages/NewPage";
-import TestingModelPage from "./pages/TestingModelPage";
 import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
-import { useStore } from "./store";
+import TestingModelPage from "./pages/TestingModelPage";
+import { projectSessionStorage } from "./session-storage";
 import {
+  getAllProjectsFromStorage,
+  loadProjectAndModelFromStorage,
+  useStore,
+} from "./store";
+import {
+  createAboutPageUrl,
   createCodePageUrl,
   createDataSamplesPageUrl,
   createHomePageUrl,
   createImportPageUrl,
   createOpenSharedProjectPageUrl,
-  createNewPageUrl,
+  createProjectsPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
+import ProjectLoadWrapper from "./components/ProjectLoadWrapper";
+import ProjectsPage from "./pages/ProjectsPage";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -109,9 +124,21 @@ const Providers = ({ children }: ProviderLayoutProps) => {
 const Layout = () => {
   const driverRef = useRef<MakeCodeFrameDriver>(null);
   const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
+  const id = useStore((s) => s.id);
+  const updateProjectTimestamp = useStore((s) => s.updateProjectUpdatedAt);
+  const clearProjectState = useStore((s) => s.clearProjectState);
+  const removeModel = useStore((s) => s.removeModel);
+  const location = useLocation();
   const navigate = useNavigate();
   const toast = useToast();
   const intl = useIntl();
+  const updateProjectTimestampUrls = useMemo(() => {
+    return [
+      createDataSamplesPageUrl(),
+      createTestingModelPageUrl(),
+      createCodePageUrl(),
+    ];
+  }, []);
 
   useEffect(() => {
     return useStore.subscribe(
@@ -137,6 +164,57 @@ const Layout = () => {
     );
   }, [intl, navigate, setPostImportDialogState, toast]);
 
+  useEffect(() => {
+    if (updateProjectTimestampUrls.includes(location.pathname) && id) {
+      void updateProjectTimestamp();
+    }
+  }, [id, location, updateProjectTimestamp, updateProjectTimestampUrls]);
+
+  useEffect(() => {
+    const listener = async (event: MessageEvent<BroadcastChannelData>) => {
+      const data = event.data;
+      // Only respond to broadcastChannel messages
+      // from projects with the same id to keep tabs / windows in sync.
+      if (data.projectId && data.projectId === id) {
+        switch (data.messageType) {
+          case BroadcastChannelMessageType.RELOAD_PROJECT: {
+            await loadProjectAndModelFromStorage(data.projectId);
+            break;
+          }
+          case BroadcastChannelMessageType.DELETE_PROJECT: {
+            clearProjectState();
+            if (updateProjectTimestampUrls.includes(location.pathname)) {
+              navigate(createHomePageUrl());
+            }
+            break;
+          }
+          case BroadcastChannelMessageType.REMOVE_MODEL: {
+            removeModel();
+            break;
+          }
+        }
+      }
+      // Update all project data on the home page and projects page.
+      if (
+        location.pathname === createHomePageUrl() ||
+        location.pathname === createProjectsPageUrl()
+      ) {
+        await getAllProjectsFromStorage();
+      }
+    };
+    broadcastChannel.addEventListener("message", listener);
+    return () => {
+      broadcastChannel.removeEventListener("message", listener);
+    };
+  }, [
+    clearProjectState,
+    id,
+    location.pathname,
+    navigate,
+    removeModel,
+    updateProjectTimestampUrls,
+  ]);
+
   return (
     // We use this even though we have errorElement as this does logging.
     <ErrorBoundary>
@@ -147,6 +225,19 @@ const Layout = () => {
       </ProjectProvider>
     </ErrorBoundary>
   );
+};
+
+let loaderFuncCalled = false;
+const commonLoaderFunction = () => {
+  if (!loaderFuncCalled) {
+    loaderFuncCalled = true;
+    const projectId = projectSessionStorage.getProjectId();
+    if (projectId) {
+      const projectLoaded = loadProjectAndModelFromStorage(projectId);
+      return defer({ projectLoaded });
+    }
+  }
+  return { projectLoaded: true };
 };
 
 const createRouter = () => {
@@ -163,23 +254,50 @@ const createRouter = () => {
         {
           path: createHomePageUrl(),
           element: <HomePage />,
+          loader: () => {
+            const allProjectDataLoaded = getAllProjectsFromStorage();
+            return defer({ allProjectDataLoaded });
+          },
         },
         {
-          path: createNewPageUrl(),
-          element: <NewPage />,
+          path: createProjectsPageUrl(),
+          element: <ProjectsPage />,
+          loader: () => {
+            const allProjectDataLoaded = getAllProjectsFromStorage();
+            return defer({ allProjectDataLoaded });
+          },
         },
         { path: createImportPageUrl(), element: <ImportPage /> },
         {
           path: createDataSamplesPageUrl(),
-          element: <DataSamplesPage />,
+          element: (
+            <ProjectLoadWrapper>
+              <DataSamplesPage />
+            </ProjectLoadWrapper>
+          ),
+          loader: () => commonLoaderFunction(),
         },
         {
           path: createTestingModelPageUrl(),
-          element: <TestingModelPage />,
+          element: (
+            <ProjectLoadWrapper>
+              <TestingModelPage />,
+            </ProjectLoadWrapper>
+          ),
+          loader: commonLoaderFunction,
         },
         {
           path: createCodePageUrl(),
-          element: <CodePage />,
+          element: (
+            <ProjectLoadWrapper>
+              <CodePage />,
+            </ProjectLoadWrapper>
+          ),
+          loader: commonLoaderFunction,
+        },
+        {
+          path: createAboutPageUrl(),
+          element: <AboutPage />,
         },
         {
           path: createOpenSharedProjectPageUrl(),

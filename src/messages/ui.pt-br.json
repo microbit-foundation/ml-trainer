@@ -215,6 +215,32 @@
       "value": "Cancelar a gravação"
     }
   ],
+  "carousel-role": [
+    {
+      "type": 0,
+      "value": "carousel"
+    }
+  ],
+  "carousel-slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "carousel-slide-role": [
+    {
+      "type": 0,
+      "value": "slide"
+    }
+  ],
   "certainty-label": [
     {
       "type": 0,
@@ -253,6 +279,12 @@
     {
       "type": 0,
       "value": "Quão confiante o modelo está de que você está realizando cada ação no momento."
+    }
+  ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
     }
   ],
   "click-to-reload-page-action": [
@@ -847,6 +879,52 @@
       "value": "Tem certeza de que deseja excluir todas as amostras de dados?"
     }
   ],
+  "delete-project-action": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete project"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "delete-projects-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete projects"
+    }
+  ],
+  "delete-projects-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete "
+    },
+    {
+      "type": 1,
+      "value": "numProjects"
+    },
+    {
+      "type": 0,
+      "value": " projects?"
+    }
+  ],
   "delete-recording-aria": [
     {
       "type": 0,
@@ -1021,6 +1099,12 @@
     {
       "type": 0,
       "value": "Por favor, aguarde. Baixando o programa para o micro:bit."
+    }
+  ],
+  "duplicate-project-action": [
+    {
+      "type": 0,
+      "value": "Duplicate"
     }
   ],
   "edit-in-makecode-action": [
@@ -1345,6 +1429,12 @@
       "value": "Início"
     }
   ],
+  "home-page-action": [
+    {
+      "type": 0,
+      "value": "Home page"
+    }
+  ],
   "homepage": [
     {
       "type": 0,
@@ -1547,6 +1637,12 @@
     {
       "type": 0,
       "value": "Tipo de arquivo não suportado."
+    }
+  ],
+  "import-file-action": [
+    {
+      "type": 0,
+      "value": "Import"
     }
   ],
   "incompatible-device-body-alt": [
@@ -2017,6 +2113,18 @@
       "value": "Move the micro:bit to explore how different actions change the graph"
     }
   ],
+  "my-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of my projects"
+    }
+  ],
+  "my-projects-row-title": [
+    {
+      "type": 0,
+      "value": "My projects"
+    }
+  ],
   "name-action-hint": [
     {
       "type": 0,
@@ -2039,6 +2147,18 @@
     {
       "type": 0,
       "value": "O nome é usado quando você salva um arquivo."
+    }
+  ],
+  "new-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of new project actions"
+    }
+  ],
+  "new-projects-row-title": [
+    {
+      "type": 0,
+      "value": "New projects"
     }
   ],
   "new-session-setup-description": [
@@ -2111,6 +2231,12 @@
       "value": "Abrir a última sessão"
     }
   ],
+  "newpage-new-project-title": [
+    {
+      "type": 0,
+      "value": "New project"
+    }
+  ],
   "newpage-new-session-subtitle": [
     {
       "type": 0,
@@ -2145,6 +2271,12 @@
     {
       "type": 0,
       "value": "Próximo"
+    }
+  ],
+  "no-projects": [
+    {
+      "type": 0,
+      "value": "No projects to display"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
@@ -2217,6 +2349,12 @@
       "value": " first."
     }
   ],
+  "open-shared-project-action": [
+    {
+      "type": 0,
+      "value": "Open project"
+    }
+  ],
   "open-shared-project-blocks-preview-description": [
     {
       "type": 0,
@@ -2279,16 +2417,46 @@
       "value": "Política de privacidade"
     }
   ],
+  "project-ideas-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of project ideas"
+    }
+  ],
+  "project-ideas-row-title": [
+    {
+      "type": 0,
+      "value": "Project ideas"
+    }
+  ],
   "project-loaded": [
     {
       "type": 0,
       "value": "Projeto carregado"
     }
   ],
+  "project-menu-action": [
+    {
+      "type": 0,
+      "value": "Project actions menu"
+    }
+  ],
   "project-name-not-empty": [
     {
       "type": 0,
       "value": "O nome do projeto não pode estar vazio"
+    }
+  ],
+  "project-storage-tooltip": [
+    {
+      "type": 0,
+      "value": "Text to inform the user about where their projects are actually stored with link to support article?"
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
     }
   ],
   "radio-link-microbit": [
@@ -2621,6 +2789,12 @@
       "value": "Recarregar"
     }
   ],
+  "rename-project-action": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
   "reset-to-default-action": [
     {
       "type": 0,
@@ -2707,6 +2881,12 @@
       "value": "Seu arquivo .hex foi baixado."
     }
   ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
+    }
+  ],
   "select-icon-action-aria": [
     {
       "type": 0,
@@ -2775,6 +2955,42 @@
     {
       "type": 0,
       "value": "Versões de Software"
+    }
+  ],
+  "sort-option-last-modified": [
+    {
+      "type": 0,
+      "value": "Last modified"
+    }
+  ],
+  "sort-option-name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "sort-option-relevance": [
+    {
+      "type": 0,
+      "value": "Relevance"
+    }
+  ],
+  "sort-order-ascending-label": [
+    {
+      "type": 0,
+      "value": "Ascending order"
+    }
+  ],
+  "sort-order-descending-label": [
+    {
+      "type": 0,
+      "value": "Descending order"
+    }
+  ],
+  "sort-select-label": [
+    {
+      "type": 0,
+      "value": "Sort projects"
     }
   ],
   "start-session-action": [
@@ -2883,6 +3099,18 @@
     {
       "type": 0,
       "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "now"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "a few seconds ago"
     }
   ],
   "tour-action": [
