@@ -227,13 +227,29 @@ export class Database {
   }
 
   async newSession(
+    actions: ActionData[],
     makeCodeData: MakeCodeData,
     projectData: { timestamp: number; name: string; id: string }
   ): Promise<void> {
     const id = projectData.id;
     const tx = (await this.useDb()).transaction(
-      [DatabaseStore.MAKECODE_DATA, DatabaseStore.PROJECT_DATA],
+      [
+        DatabaseStore.ACTIONS,
+        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.PROJECT_DATA,
+        DatabaseStore.RECORDINGS,
+      ],
       "readwrite"
+    );
+    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
+    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
+    await Promise.all(
+      actions
+        .flatMap((a) => a.recordings.map((r) => ({ ...r, actionId: a.id })))
+        .map((r) => recordingsStore.add(r, r.id))
+    );
+    await Promise.all(
+      actions.map((a) => actionsStore.add(prepActionForStorage(a, id), a.id))
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.add(makeCodeData, id);
@@ -519,6 +535,7 @@ export class Database {
   async deleteAction(
     id: string | undefined,
     action: ActionData,
+    newActions: ActionData[],
     makeCodeData: MakeCodeData,
     timestamp: number
   ): Promise<void> {
@@ -539,6 +556,14 @@ export class Database {
       .index("actionId")
       .getAllKeys(action.id);
     await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
+    await Promise.all(
+      newActions
+        .flatMap((a) => a.recordings.map((r) => ({ ...r, actionId: a.id })))
+        .map((r) => recordingsStore.add(r, r.id))
+    );
+    await Promise.all(
+      newActions.map((a) => actionsStore.add(prepActionForStorage(a, id), a.id))
+    );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
@@ -549,6 +574,7 @@ export class Database {
 
   async deleteAllActions(
     id: string | undefined,
+    newActions: ActionData[],
     makeCodeData: MakeCodeData,
     timestamp: number
   ): Promise<void> {
@@ -574,6 +600,14 @@ export class Database {
       )
     ).flat();
     await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
+    await Promise.all(
+      newActions
+        .flatMap((a) => a.recordings.map((r) => ({ ...r, actionId: a.id })))
+        .map((r) => recordingsStore.add(r, r.id))
+    );
+    await Promise.all(
+      newActions.map((a) => actionsStore.add(prepActionForStorage(a, id), a.id))
+    );
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.put(makeCodeData, id);
     await projectDataStore.put({ ...projectData, timestamp }, id);

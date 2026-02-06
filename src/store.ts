@@ -435,6 +435,7 @@ const createMlStore = (logging: Logging) => {
           projectSessionStorage.setProjectId(id);
           await storageWithErrHandling(() =>
             storage.newSession(
+              actions,
               {
                 project: newProject,
                 projectEdited,
@@ -765,6 +766,7 @@ const createMlStore = (logging: Logging) => {
             storage.deleteAction(
               id,
               action,
+              newActions,
               {
                 project: updatedProject.project,
                 projectEdited: updatedProject.projectEdited,
@@ -959,15 +961,15 @@ const createMlStore = (logging: Logging) => {
 
         async deleteAllActions() {
           const { id, project, projectEdited } = get();
+          const actions = [createFirstAction()];
           const updatedProject = updateProject(
             project,
             projectEdited,
-            [],
+            actions,
             undefined,
             currentDataWindow
           );
           const timestamp = Date.now();
-          const actions = [createFirstAction()];
           set({
             actions,
             hint: getHint(actions, false),
@@ -978,6 +980,7 @@ const createMlStore = (logging: Logging) => {
           await storageWithErrHandling(() =>
             storage.deleteAllActions(
               id,
+              actions,
               {
                 project: updatedProject.project,
                 projectEdited: updatedProject.projectEdited,
