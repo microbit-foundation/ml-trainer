@@ -223,14 +223,11 @@ const executeAction = async (
     }
 
     case "connectFlash":
-      await logDuration(
-        "connectFlash",
-        async () => await performConnectFlash(action.clearDevice ?? false, deps)
-      );
+      await performConnectFlash(action.clearDevice ?? false, deps);
       break;
 
     case "flash":
-      await logDuration("flash", async () => await performFlash(deps));
+      await performFlash(deps);
       break;
 
     case "connectData":
@@ -314,20 +311,6 @@ const executeAction = async (
       });
       break;
   }
-};
-
-const logDuration = async <T>(
-  action: string,
-  actionPromise: () => Promise<T>
-): Promise<{ duration: number; result: T }> => {
-  const startTime = Date.now();
-  console.log(`${action} start time: ${startTime}`);
-  const result = await actionPromise();
-  const endTime = Date.now();
-  console.log(`${action} end time: ${endTime}`);
-  const duration = endTime - startTime;
-  console.log(`${action} duration: ${duration}`);
-  return { duration, result };
 };
 
 // =============================================================================
