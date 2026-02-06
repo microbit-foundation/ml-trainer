@@ -523,6 +523,14 @@
     "defaultMessage": "Are you sure you want to delete the project \"{project}\"?",
     "description": "Confirmation dialog text"
   },
+  "delete-projects-confirm-heading": {
+    "defaultMessage": "Confirm delete projects",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-projects-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete {numProjects} projects?",
+    "description": "Confirmation dialog text"
+  },
   "delete-recording-aria": {
     "defaultMessage": "刪除對於動作「{action}」的 {numSamples} 個記錄 {sample}",
     "description": "Aria label for data sample delete action"

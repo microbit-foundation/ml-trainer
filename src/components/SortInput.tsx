@@ -31,10 +31,6 @@ const SortInput = ({
         onChange={onSelectChange}
         aria-label={intl.formatMessage({ id: "sort-select-label" })}
         fontSize="lg"
-        _focusVisible={{
-          outline: "none",
-          boxShadow: "outline",
-        }}
         background="white"
         icon={<span />}
         borderBottomRightRadius={0}

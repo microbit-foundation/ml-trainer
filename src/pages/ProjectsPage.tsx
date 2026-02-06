@@ -258,6 +258,9 @@ const ProjectsPage = () => {
 
   const handleOpenConfirmDialog = useCallback(
     (id?: string) => {
+      if (selectedProjectIds.length > 1) {
+        return setConfirmDialogIsOpen(true);
+      }
       const projectId = id ?? selectedProjectIds[0];
       const project = allProjectData.find((p) => p.id === projectId);
       if (project) {
@@ -271,6 +274,8 @@ const ProjectsPage = () => {
 
   const handleCloseConfirmDialog = useCallback(() => {
     setConfirmDialogIsOpen(false);
+    setProjectName("");
+    setProjectForAction(null);
   }, []);
 
   return (
@@ -287,14 +292,23 @@ const ProjectsPage = () => {
         <ConfirmDialog
           isOpen={confirmDialogIsOpen}
           heading={intl.formatMessage({
-            id: "delete-project-confirm-heading",
+            id: projectName
+              ? "delete-project-confirm-heading"
+              : "delete-projects-confirm-heading",
           })}
           body={
             <Text>
-              <FormattedMessage
-                id="delete-project-confirm-text"
-                values={{ project: projectName }}
-              />
+              {projectName ? (
+                <FormattedMessage
+                  id="delete-project-confirm-text"
+                  values={{ project: projectName }}
+                />
+              ) : (
+                <FormattedMessage
+                  id="delete-projects-confirm-text"
+                  values={{ numProjects: selectedProjectIds.length }}
+                />
+              )}
             </Text>
           }
           onConfirm={() => handleDeleteProject()}

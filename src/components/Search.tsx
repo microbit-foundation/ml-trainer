@@ -39,10 +39,6 @@ const Search = ({ query, onChange: onQueryChange, onClear }: SearchProps) => {
         type="text"
         placeholder={intl.formatMessage({ id: "search" })}
         fontSize="lg"
-        _focusVisible={{
-          outline: "none",
-          boxShadow: "outline",
-        }}
         _placeholder={{
           color: "gray.600",
         }}
