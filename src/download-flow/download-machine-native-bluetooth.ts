@@ -43,6 +43,7 @@ const connectFlashFailureWithPermissionHandling = [
   {
     guard: always,
     target: DownloadStep.ConnectFailed,
+    actions: [{ type: "setIsDeviceBonded", value: false }] as DownloadAction[],
   },
 ];
 
@@ -74,9 +75,17 @@ const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
         target: DownloadStep.None,
         actions: [{ type: "setIsDeviceBonded", value: true }],
       },
-      flashFailure: {
-        target: DownloadStep.ConnectFailed,
-      },
+      flashFailure: [
+        {
+          guard: guards.isPairingNotPermittedError,
+          target: DownloadStep.ConnectFailed,
+          actions: [{ type: "setIsDeviceBonded", value: false }],
+        },
+        {
+          guard: always,
+          target: DownloadStep.ConnectFailed,
+        },
+      ],
     },
   },
 };

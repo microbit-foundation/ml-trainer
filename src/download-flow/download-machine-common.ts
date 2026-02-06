@@ -175,6 +175,14 @@ export const guards = {
     (event.type === "connectFlashFailure" || event.type === "flashFailure") &&
     event.code === "pairing-information-lost",
 
+  // Native Bluetooth: user did not permit pairing
+  isPairingNotPermittedError: (
+    _ctx: DownloadFlowContext,
+    event: DownloadEvent
+  ) =>
+    (event.type === "connectFlashFailure" || event.type === "flashFailure") &&
+    event.code === "pairing-not-permitted",
+
   // Native Bluetooth: no device matching the pattern was found during scan
   isNoDeviceSelectedError: (_ctx: DownloadFlowContext, event: DownloadEvent) =>
     (event.type === "connectFlashFailure" || event.type === "flashFailure") &&
