@@ -8,6 +8,7 @@ import {
   connectedState,
   connectFlashSuccessHandler,
   createInitialConnectHandlers,
+  DataConnectionAction,
   DataConnectionFlowDef,
   globalHandlers,
   guards,
@@ -50,6 +51,9 @@ const connectFlashFailureWithErrorHandling = [
   {
     guard: guards.isPairingInformationLostError,
     target: DataConnectionStep.PairingLost,
+    actions: [
+      { type: "setIsDeviceBonded", value: false },
+    ] as DataConnectionAction[],
   },
   {
     guard: always,
