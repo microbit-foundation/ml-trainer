@@ -393,6 +393,7 @@ const createMlStore = (logging: Logging) => {
           isConnectToRecordDialogOpen: false,
           isDeleteActionDialogOpen: false,
           isIncompatibleEditorDeviceDialogOpen: false,
+          isDeviceBonded: false,
 
           setSettings(update: Partial<Settings>) {
             set(
@@ -1321,12 +1322,14 @@ const createMlStore = (logging: Logging) => {
             projectEdited,
             settings,
             timestamp,
+            dataConnection,
           }) => ({
             actions,
             project,
             projectEdited,
             settings,
             timestamp,
+            isDeviceBonded: dataConnection.isDeviceBonded,
             // The model itself is in IndexDB
           }),
           migrate(persistedStateUnknown, version) {

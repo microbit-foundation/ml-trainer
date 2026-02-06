@@ -186,6 +186,11 @@ export interface DataConnectionState {
    * If `undefined`, there is no process to abort.
    */
   connectionAbortController: AbortController | undefined;
+
+  /**
+   * Set to true if micro:bit is already bonded to native device.
+   */
+  isDeviceBonded: boolean;
 }
 
 /**
@@ -227,6 +232,7 @@ export const getInitialDataConnectionState = (): DataConnectionState => {
     isCheckingPermissions: false,
     pairingMethod: "triple-reset",
     connectionAbortController: undefined,
+    isDeviceBonded: false
   };
 };
 
