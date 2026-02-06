@@ -170,7 +170,10 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
       },
       back: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
       setMicrobitName: {
-        actions: [{ type: "setMicrobitName" }],
+        actions: [
+          { type: "setMicrobitName" },
+          { type: "setIsDeviceBonded", value: false },
+        ],
       },
     },
   },

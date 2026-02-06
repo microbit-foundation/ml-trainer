@@ -123,7 +123,10 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
       // Go directly to flashing - connectFlash() handles permission checks internally
       next: {
         target: DataConnectionStep.FlashingInProgress,
-        actions: [{ type: "connectFlash", clearDevice: true }],
+        actions: [
+          { type: "setIsDeviceBonded", value: false },
+          { type: "connectFlash", clearDevice: true },
+        ],
       },
       back: { target: DataConnectionStep.NativeBluetoothPreConnectTutorial },
       ...setMicrobitNameHandler,
