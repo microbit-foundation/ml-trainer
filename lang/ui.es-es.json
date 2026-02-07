@@ -133,7 +133,7 @@
   },
   "clear": {
     "defaultMessage": "Clear",
-    "description": "Aria label for the search input"
+    "description": "Aria label for the search input and project toolbar (clears selection/search text)"
   },
   "click-to-reload-page-action": {
     "defaultMessage": "Haga clic para recargar la página",
@@ -512,7 +512,7 @@
     "description": "Confirmation dialog text"
   },
   "delete-project-action": {
-    "defaultMessage": "{count, plural, one {Delete} other {Delete {count} items}}",
+    "defaultMessage": "{count, plural, one {Delete} other {Delete {count} projects}}",
     "description": "Delete project button"
   },
   "delete-project-confirm-heading": {
