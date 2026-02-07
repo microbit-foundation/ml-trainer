@@ -54,10 +54,10 @@ const ProjectCard = ({ projectData, projectCardActions }: ProjectCardProps) => {
             >
               {name}
             </LinkOverlay>
-            {actions.length > 0 && (
-              <Text noOfLines={2}>{actions.map((a) => a.name).join(", ")}</Text>
-            )}
-            <Text mt="auto" color="blackAlpha.700">
+            <Text noOfLines={1} h="1lh">
+              {actions.map((a) => a.name).join(", ")}
+            </Text>
+            <Text fontSize="sm" pt={2} mt="auto" color="blackAlpha.700">
               {timeAgo(intl, timestamp)}
             </Text>
           </Stack>

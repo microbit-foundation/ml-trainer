@@ -133,7 +133,7 @@
   },
   "clear": {
     "defaultMessage": "Clear",
-    "description": "Aria label for the search input"
+    "description": "Aria label for the search input and project toolbar (clears selection/search text)"
   },
   "click-to-reload-page-action": {
     "defaultMessage": "Fes clic per tornar a carregar la pàgina",
@@ -512,8 +512,8 @@
     "description": "Confirmation dialog text"
   },
   "delete-project-action": {
-    "defaultMessage": "Delete",
-    "description": "Delete project action"
+    "defaultMessage": "{count, plural, one {Delete} other {Delete {count} projects}}",
+    "description": "Delete project button"
   },
   "delete-project-confirm-heading": {
     "defaultMessage": "Confirm delete project",
@@ -1613,7 +1613,7 @@
   },
   "search": {
     "defaultMessage": "Search",
-    "description": "Aria label for searching documentation"
+    "description": "Aria label for searching projects"
   },
   "select-icon-action-aria": {
     "defaultMessage": "Tria la icona per a l'acció \"{action}\"",

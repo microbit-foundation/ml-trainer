@@ -1,74 +1,71 @@
-import { Button, ButtonGroup } from "@chakra-ui/react";
+import { Button, ButtonGroup, ButtonGroupProps } from "@chakra-ui/react";
 import {
+  RiCloseLine,
   RiDeleteBin2Line,
   RiEdit2Line,
   RiFileCopyLine,
-  RiFolderOpenLine,
 } from "react-icons/ri";
 import { ProjectNameDialogReason } from "../pages/ProjectsPage";
 import { FormattedMessage } from "react-intl";
 
-interface ProjectsToolbarProps {
+interface ProjectsToolbarProps extends ButtonGroupProps {
   selectedProjectIds: string[];
-  onOpenProject: (id?: string) => void;
   onRenameDuplicateProject: (
     reason: ProjectNameDialogReason,
     id?: string
   ) => void;
   onDeleteProject: (id?: string) => void;
+  onClearSelection: () => void;
 }
 
 const ProjectsToolbar = ({
   selectedProjectIds,
-  onOpenProject,
   onRenameDuplicateProject,
   onDeleteProject,
+  onClearSelection,
+  ...rest
 }: ProjectsToolbarProps) => {
+  const count = selectedProjectIds.length;
+  const isSingle = count === 1;
+
   return (
-    <ButtonGroup>
-      {selectedProjectIds.length === 1 && (
-        <Button
-          onClick={() => onOpenProject()}
-          leftIcon={<RiFolderOpenLine />}
-          borderRadius="md"
-          variant="toolbar"
-          _focusVisible={{ boxShadow: "outline" }}
-        >
-          <FormattedMessage id="open-project-action" />
-        </Button>
-      )}
-      {selectedProjectIds.length === 1 && (
+    <ButtonGroup
+      role="group"
+      aria-label="Selection actions"
+      isAttached
+      variant="ghost"
+      sx={{
+        "& > button": { borderRadius: 0 },
+        "& > button + button": {
+          borderLeftWidth: "1px",
+          borderColor: "gray.200",
+        },
+      }}
+      {...rest}
+    >
+      {isSingle && (
         <Button
           onClick={() => onRenameDuplicateProject("rename")}
           leftIcon={<RiEdit2Line />}
-          borderRadius="md"
-          variant="toolbar"
-          _focusVisible={{ boxShadow: "outline" }}
+          variant="ghost"
         >
           <FormattedMessage id="rename-project-action" />
         </Button>
       )}
-      {selectedProjectIds.length === 1 && (
+      {isSingle && (
         <Button
           onClick={() => onRenameDuplicateProject("duplicate")}
           leftIcon={<RiFileCopyLine />}
-          borderRadius="md"
-          variant="toolbar"
-          _focusVisible={{ boxShadow: "outline" }}
         >
           <FormattedMessage id="duplicate-project-action" />
         </Button>
       )}
-      {selectedProjectIds.length !== 0 && (
-        <Button
-          onClick={() => onDeleteProject()}
-          leftIcon={<RiDeleteBin2Line />}
-          borderRadius="md"
-          variant="warning"
-        >
-          <FormattedMessage id="delete-project-action" />
-        </Button>
-      )}
+      <Button onClick={() => onDeleteProject()} leftIcon={<RiDeleteBin2Line />}>
+        <FormattedMessage id="delete-project-action" values={{ count }} />
+      </Button>
+      <Button leftIcon={<RiCloseLine />} onClick={onClearSelection}>
+        <FormattedMessage id="clear" />
+      </Button>
     </ButtonGroup>
   );
 };

@@ -1,4 +1,5 @@
 import {
+  Button,
   Checkbox,
   HStack,
   IconButton,
@@ -30,6 +31,7 @@ interface ProjectCardMenuProps {
     id?: string
   ) => void;
   setFinalFocusRef: (value: RefObject<HTMLElement>) => void;
+  onSkipToToolbar: () => void;
 }
 
 const ProjectCardActions = ({
@@ -40,6 +42,7 @@ const ProjectCardActions = ({
   onRenameDuplicateProject,
   onOpenProject,
   setFinalFocusRef,
+  onSkipToToolbar,
 }: ProjectCardMenuProps) => {
   const intl = useIntl();
   const menuButtonRef = useRef(null);
@@ -89,6 +92,27 @@ const ProjectCardActions = ({
         borderBottomRightRadius="md"
         h="60px"
       />
+      <Button
+        tabIndex={isSelected ? 0 : -1}
+        onClick={onSkipToToolbar}
+        zIndex={3}
+        position="absolute"
+        left="50%"
+        top={1}
+        transform="translateX(-50%)"
+        size="xs"
+        variant="primary"
+        opacity={0}
+        pointerEvents="none"
+        _focusVisible={{
+          opacity: 1,
+          pointerEvents: "auto",
+          boxShadow:
+            "0 0 0 2px white, 0 0 0 4px var(--chakra-colors-brand-500)",
+        }}
+      >
+        Skip to toolbar
+      </Button>
       <Menu>
         <MenuButton
           ref={menuButtonRef}
