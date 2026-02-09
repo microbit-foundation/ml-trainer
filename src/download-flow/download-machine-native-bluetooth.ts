@@ -69,9 +69,12 @@ const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
       },
       connectFlashFailure: connectFlashFailureWithPermissionHandling,
       flashSuccess: { target: DownloadStep.None },
-      flashFailure: {
-        target: DownloadStep.ConnectFailed,
-      },
+      flashFailure: [
+        {
+          guard: always,
+          target: DownloadStep.ConnectFailed,
+        },
+      ],
     },
   },
 };

@@ -168,12 +168,13 @@ export const guards = {
     _ctx: DownloadFlowContext,
     event: DownloadEvent
   ) =>
-    event.type === "connectFlashFailure" &&
+    (event.type === "connectFlashFailure" || event.type === "flashFailure") &&
     event.code === "pairing-information-lost",
 
   // Native Bluetooth: no device matching the pattern was found during scan
   isNoDeviceSelectedError: (_ctx: DownloadFlowContext, event: DownloadEvent) =>
-    event.type === "connectFlashFailure" && event.code === "no-device-selected",
+    (event.type === "connectFlashFailure" || event.type === "flashFailure") &&
+    event.code === "no-device-selected",
 };
 
 // =============================================================================
