@@ -96,6 +96,12 @@ const ProjectsPage = () => {
     [navigate, selectedProjectIds]
   );
 
+  const handleCloseConfirmDialog = useCallback(() => {
+    setConfirmDialogIsOpen(false);
+    setProjectName("");
+    setProjectForAction(null);
+  }, []);
+
   const handleDeleteProject = useCallback(
     async (id?: string) => {
       if (id) {
@@ -103,14 +109,20 @@ const ProjectsPage = () => {
       }
       if (projectForAction) {
         await deleteProject(projectForAction);
-        setConfirmDialogIsOpen(false);
+      } else if (selectedProjectIds.length === 1) {
+        await deleteProject(selectedProjectIds[0]);
+      } else {
+        await deleteProjects(selectedProjectIds);
       }
-      if (selectedProjectIds.length === 1) {
-        return deleteProject(selectedProjectIds[0]);
-      }
-      await deleteProjects(selectedProjectIds);
+      handleCloseConfirmDialog();
     },
-    [deleteProject, deleteProjects, projectForAction, selectedProjectIds]
+    [
+      deleteProject,
+      deleteProjects,
+      handleCloseConfirmDialog,
+      projectForAction,
+      selectedProjectIds,
+    ]
   );
 
   const updateSelectedProjects = useCallback((id: string) => {
@@ -305,12 +317,6 @@ const ProjectsPage = () => {
     },
     [allProjectData, selectedProjectIds]
   );
-
-  const handleCloseConfirmDialog = useCallback(() => {
-    setConfirmDialogIsOpen(false);
-    setProjectName("");
-    setProjectForAction(null);
-  }, []);
 
   return (
     <Suspense fallback={<LoadingPage />}>
