@@ -766,7 +766,7 @@ const createMlStore = (logging: Logging) => {
             storage.deleteAction(
               id,
               action,
-              newActions,
+              remainingActions.length === 0 ? newActions : [],
               {
                 project: updatedProject.project,
                 projectEdited: updatedProject.projectEdited,
