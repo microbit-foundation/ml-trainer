@@ -76,7 +76,10 @@ const usb = isMockDeviceMode()
   : createWebUSBConnection({ logging });
 const bluetooth = isMockDeviceMode()
   ? new MockWebBluetoothConnection()
-  : createWebBluetoothConnection({ logging });
+  : createWebBluetoothConnection({
+      logging,
+      deviceBondState: useStore.getState().deviceBondState,
+    });
 const radioBridge = isMockDeviceMode()
   ? new MockRadioBridgeConnection(usb)
   : createRadioBridgeConnection(usb, { logging });
