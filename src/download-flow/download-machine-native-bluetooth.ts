@@ -71,10 +71,6 @@ const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
       flashSuccess: { target: DownloadStep.None },
       flashFailure: [
         {
-          guard: guards.isPairingNotPermittedError,
-          target: DownloadStep.ConnectFailed,
-        },
-        {
           guard: always,
           target: DownloadStep.ConnectFailed,
         },
