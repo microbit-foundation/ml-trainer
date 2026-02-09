@@ -10,11 +10,9 @@ import { dialogTitles as dialog } from "./app/connection-dialogs";
 import { test } from "./fixtures";
 
 test.describe("web bluetooth connection", () => {
-  test.beforeEach(async ({ homePage, newPage }) => {
-    await homePage.setupContext();
+  test.beforeEach(async ({ homePage }) => {
     await homePage.goto();
-    await homePage.getStarted();
-    await newPage.startNewSession();
+    await homePage.newProject();
   });
 
   test("happy flow", async ({ dataSamplesPage }) => {
@@ -97,11 +95,9 @@ test.describe("web bluetooth connection", () => {
 });
 
 test.describe("web bluetooth reconnection", () => {
-  test.beforeEach(async ({ homePage, newPage, dataSamplesPage }) => {
-    await homePage.setupContext();
-    await homePage.goto(["skipTours"]);
-    await homePage.getStarted();
-    await newPage.startNewSession();
+  test.beforeEach(async ({ homePage, dataSamplesPage }) => {
+    await homePage.goto();
+    await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
     await connectionDialogs.waitForText(dialog.bluetooth.whatYouNeed);
@@ -118,6 +114,9 @@ test.describe("web bluetooth reconnection", () => {
     await connectionDialogs.waitForText(dialog.bluetooth.connectBluetooth);
     await connectionDialogs.clickNext();
     await dataSamplesPage.expectConnected();
+    await dataSamplesPage.page
+      .getByRole("button", { name: "Skip tour" })
+      .click();
   });
 
   test("connection lost shows error dialog and reconnects", async ({

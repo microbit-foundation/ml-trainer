@@ -83,6 +83,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
       globals: true,
       environment: "jsdom",
       exclude: [...configDefaults.exclude, "**/e2e/**"],
+      setupFiles: ["fake-indexeddb/auto"],
     },
     resolve: {
       alias: {

@@ -1,0 +1,39 @@
+.root {
+  padding: 0 !important;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 50% !important;
+  .shadow {
+    box-shadow: 0 0 7px 0 #c7c4c4;
+  }
+  svg {
+    object-fit: contain;
+  }
+  &.small {
+    min-width: 46px;
+    min-height: 46px;
+    svg {
+      width: 20px;
+      height: 20px;
+      &.left {
+        margin-right: 2px;
+      }
+      &.right {
+        margin-left: 2px;
+      }
+    }
+  }
+  &.large {
+    min-width: 80px;
+    min-height: 80px;
+    svg {
+      width: 40px;
+      height: 40px;
+      &.left {
+        margin-right: 4px;
+      }
+      &.right {
+        margin-left: 4px;
+      }
+    }
+  }
+}

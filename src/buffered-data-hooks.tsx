@@ -4,15 +4,21 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { AccelerometerDataEvent } from "@microbit/microbit-connection";
+import {
+  AccelerometerData,
+  AccelerometerDataEvent,
+} from "@microbit/microbit-connection";
 import {
   ReactNode,
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useRef,
 } from "react";
 import { BufferedData } from "./buffered-data";
+import { useDataConnection } from "./connections-hooks";
+import { useDataConnected } from "./data-connection-flow";
 import { useAccelerometerListener } from "./hooks/use-accelerometer-listener";
 import { useStore } from "./store";
 
@@ -66,4 +72,61 @@ const useBufferedDataInternal = (): BufferedData => {
   useAccelerometerListener(accelerometerListener);
 
   return getBuffer();
+};
+
+export const useHasMoved = (): boolean => {
+  const hasMoved = useStore((s) => s.hasMoved);
+  const setHasMoved = useStore((s) => s.setHasMoved);
+  const isConnected = useDataConnected();
+  const connection = useDataConnection();
+  useEffect(() => {
+    if (!isConnected) {
+      setHasMoved(false);
+    }
+    let ignore = false;
+    const delta: AccelerometerData = { x: 0, y: 0, z: 0 };
+    let lastSample: AccelerometerData | undefined;
+    const threshold = 40_000;
+    const minDelta = 100;
+    const skipSamples = 10;
+    let skipped = 0;
+    const listener = (e: AccelerometerDataEvent) => {
+      if (skipped < skipSamples) {
+        skipped++;
+      } else if (lastSample) {
+        const deltaX = Math.abs(lastSample.x - e.data.x);
+        if (deltaX > minDelta) {
+          delta.x += deltaX;
+        }
+        const deltaY = Math.abs(lastSample.y - e.data.y);
+        if (deltaY > minDelta) {
+          delta.y += deltaY;
+        }
+        const deltaZ = Math.abs(lastSample.z - e.data.z);
+        if (deltaZ > minDelta) {
+          delta.z += deltaZ;
+        }
+      }
+      lastSample = e.data;
+      if (
+        (delta.x > threshold ? 1 : 0) +
+          (delta.y > threshold ? 1 : 0) +
+          (delta.z > threshold ? 1 : 0) >
+        1
+      ) {
+        connection.removeEventListener("accelerometerdatachanged", listener);
+        if (!ignore) {
+          setHasMoved(true);
+        }
+      }
+    };
+    if (!hasMoved) {
+      connection.addEventListener("accelerometerdatachanged", listener);
+    }
+    return () => {
+      ignore = true;
+      connection.removeEventListener("accelerometerdatachanged", listener);
+    };
+  }, [connection, isConnected, hasMoved, setHasMoved]);
+  return hasMoved;
 };

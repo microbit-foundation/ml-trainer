@@ -183,13 +183,15 @@ const executeAction = async (
           : undefined;
       if (name) {
         deps.connections.bluetooth.setNameFilter(name);
-        useStore.getState().setSettings({ bluetoothMicrobitName: name });
+        await useStore.getState().setSettings({ bluetoothMicrobitName: name });
       }
       break;
     }
 
     case "clearMicrobitName": {
-      useStore.getState().setSettings({ bluetoothMicrobitName: undefined });
+      await useStore
+        .getState()
+        .setSettings({ bluetoothMicrobitName: undefined });
       break;
     }
 

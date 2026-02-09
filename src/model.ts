@@ -16,15 +16,28 @@ export interface XYZData {
 }
 
 export interface RecordingData {
-  ID: number;
+  id: string;
   data: XYZData;
+  createdAt: number;
 }
 
 export interface Action {
   name: string;
-  ID: number;
+  id: string;
   icon: MakeCodeIcon;
   requiredConfidence?: number;
+  createdAt: number;
+}
+
+export interface OldRecordingData {
+  ID: number;
+  data: XYZData;
+}
+
+export interface OldActionData
+  extends Omit<ActionData, "id" | "recordings" | "createdAt"> {
+  ID: number;
+  recordings: OldRecordingData[];
 }
 
 export interface ActionData extends Action {
@@ -51,7 +64,7 @@ export const isDatasetUserFileFormat = (
     }
     if (
       !("name" in item) ||
-      !("ID" in item) ||
+      !("ID" in item || "id" in item) ||
       !("recordings" in item) ||
       !Array.isArray(item.recordings)
     ) {
@@ -62,7 +75,11 @@ export const isDatasetUserFileFormat = (
       if (typeof rec !== "object" || rec === null) {
         return false;
       }
-      if (!("data" in rec) || !("ID" in rec) || Array.isArray(rec.data)) {
+      if (
+        !("data" in rec) ||
+        !("ID" in rec || "id" in rec) ||
+        Array.isArray(rec.data)
+      ) {
         return false;
       }
       const xyzData = rec.data as object;
@@ -189,6 +206,18 @@ export enum DataSamplesView {
   DataFeatures = "data features",
   GraphAndDataFeatures = "graph and data features",
 }
+
+export type DataSamplesPageHint =
+  | null
+  | "move-microbit"
+  | "name-first-action"
+  | "record-first-action"
+  | "record-more-action"
+  | "add-action"
+  | "name-action"
+  | "record-action"
+  | "train"
+  | "name-action-with-samples";
 
 export enum PostImportDialogState {
   None = "none",

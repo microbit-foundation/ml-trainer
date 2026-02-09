@@ -7,11 +7,9 @@ import { downloadDialogTitles as dialog } from "./app/download-dialogs";
 import { test } from "./fixtures";
 
 test.describe("browser default download flow", () => {
-  test.beforeEach(async ({ homePage, newPage, dataSamplesPage }) => {
-    await homePage.setupContext();
+  test.beforeEach(async ({ homePage, dataSamplesPage }) => {
     await homePage.goto();
-    await homePage.getStarted();
-    await newPage.continueSavedSession("test-data/dataset.json");
+    await homePage.importProject("test-data/dataset.json");
     // Open and close connection dialog to set flow type to bluetooth
     // This simulates a user who has attempted to connect before
     const connectionDialogs = await dataSamplesPage.connect();

@@ -55,6 +55,14 @@
     "defaultMessage": "Afegir una acció",
     "description": "Button to add an action (movement related, e.g. clapping)"
   },
+  "add-action-hint": {
+    "defaultMessage": "Finished recording for {actionName}?<mark>Add another action</mark>",
+    "description": "Hint when you have recorded enough data samples for one action"
+  },
+  "add-action-hint-label": {
+    "defaultMessage": "Finished recording for {actionName}? Press ‘Add action’ button to add another action",
+    "description": "Hint when you have recorded enough data samples for one action aria label"
+  },
   "ai-activity-timer-resource-title": {
     "defaultMessage": "Temporitzador d'activitat d'IA",
     "description": "Home page resource card title"
@@ -115,6 +123,18 @@
     "defaultMessage": "Cancel·la l'enregistrament",
     "description": "Button label to cancel a movement data recording"
   },
+  "carousel-role": {
+    "defaultMessage": "carousel",
+    "description": "aria-roledescription for carousel"
+  },
+  "carousel-slide-label": {
+    "defaultMessage": "{slideNum} of {totalSlides}",
+    "description": "Label for carousel slide / item"
+  },
+  "carousel-slide-role": {
+    "defaultMessage": "slide",
+    "description": "aria-roledescription for carousel slide / item"
+  },
   "certainty-label": {
     "defaultMessage": "Certesa",
     "description": "Heading for certainty column"
@@ -130,6 +150,10 @@
   "certainty-tooltip": {
     "defaultMessage": "Quina confiança té el model que actualment esteu fent cada acció.",
     "description": "Tooltip for certainty column"
+  },
+  "clear": {
+    "defaultMessage": "Clear",
+    "description": "Aria label for the search input and project toolbar (clears selection/search text)"
   },
   "click-to-reload-page-action": {
     "defaultMessage": "Fes clic per tornar a carregar la pàgina",
@@ -563,6 +587,26 @@
     "defaultMessage": "Estàs segur que vols suprimir totes les mostres de dades?",
     "description": "Confirmation dialog text"
   },
+  "delete-project-action": {
+    "defaultMessage": "{count, plural, one {Delete} other {Delete {count} projects}}",
+    "description": "Delete project button"
+  },
+  "delete-project-confirm-heading": {
+    "defaultMessage": "Confirm delete project",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-project-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete the project \"{project}\"?",
+    "description": "Confirmation dialog text"
+  },
+  "delete-projects-confirm-heading": {
+    "defaultMessage": "Confirm delete projects",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-projects-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete {numProjects} projects?",
+    "description": "Confirmation dialog text"
+  },
   "delete-recording-aria": {
     "defaultMessage": "Suprimeix l'enregistrament {sample} de {numSamples} per a l'acció \"{action}\"",
     "description": "Aria label for data sample delete action"
@@ -678,6 +722,14 @@
   "downloading-stage-resetting-device": {
     "defaultMessage": "Waiting for micro:bit to reboot...",
     "description": "Progress text when rebooting micro:bit before flashing"
+  },
+  "duplicate-project-action": {
+    "defaultMessage": "Duplicate",
+    "description": "Duplicate project action"
+  },
+  "duplicate-project-heading": {
+    "defaultMessage": "Duplicate project",
+    "description": "Heading for duplicate project dialog"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "Edita a MakeCode",
@@ -879,6 +931,10 @@
     "defaultMessage": "Inici",
     "description": "Home button text"
   },
+  "home-page-action": {
+    "defaultMessage": "Home page",
+    "description": "Home page navigation action"
+  },
   "homepage": {
     "defaultMessage": "Pàgina d'inici",
     "description": "Link to home page"
@@ -990,6 +1046,10 @@
   "import-error-dialog-title": {
     "defaultMessage": "Tipus d'arxiu no permés",
     "description": "Title of import error dialog"
+  },
+  "import-file-action": {
+    "defaultMessage": "Import",
+    "description": "Import file action"
   },
   "incompatible-device-body-alt": {
     "defaultMessage": "Torna enrere per seleccionar una micro:bit diferent, o bé <link>desa l'hexadecimal del projecte</link> que es pot transferir a una micro:bit V2 més tard.",
@@ -1283,6 +1343,18 @@
     "defaultMessage": "Més edició a les opcions de MakeCode",
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
   },
+  "move-hint": {
+    "defaultMessage": "Move the micro:bit to explore how different actions change the graph",
+    "description": "Hint when you have just connected a micro:bit"
+  },
+  "my-projects-row-carousel": {
+    "defaultMessage": "List of my projects",
+    "description": "Label for home page row carousel"
+  },
+  "my-projects-row-title": {
+    "defaultMessage": "My projects",
+    "description": "Title for home page row"
+  },
   "name-action-hint": {
     "defaultMessage": "Anomena una acció que vulguis que reconegui la micro:bit",
     "description": "Hint shown when you have an unnamed action"
@@ -1343,6 +1415,14 @@
     "defaultMessage": "Could not connect to micro:bit",
     "description": "Heading for native Bluetooth connection error dialog"
   },
+  "new-projects-row-carousel": {
+    "defaultMessage": "List of new project actions",
+    "description": "Label for home page row carousel"
+  },
+  "new-projects-row-title": {
+    "defaultMessage": "New projects",
+    "description": "Title for home page row"
+  },
   "new-session-setup-description": {
     "defaultMessage": "Iniciar una sessió nova sobreescriurà la sessió existent. És possible que vulguis <link>desar la teva sessió existent</link> primer.",
     "description": "New session setup description"
@@ -1375,6 +1455,10 @@
     "defaultMessage": "Obre l'última sessió",
     "description": "Open last session title"
   },
+  "newpage-new-project-title": {
+    "defaultMessage": "New project",
+    "description": "Start new project title"
+  },
   "newpage-new-session-subtitle": {
     "defaultMessage": "Connecta la teva micro:bit i recull dades de moviment per crear un model d'aprenentatge automàtic.",
     "description": "Start new session subtitle"
@@ -1399,9 +1483,9 @@
     "defaultMessage": "Següent",
     "description": "Next button text for dialogs and similar"
   },
-  "no-data-samples": {
-    "defaultMessage": "No hi ha mostres de dades",
-    "description": "Empty data samples page status text"
+  "no-projects": {
+    "defaultMessage": "No projects to display",
+    "description": "Shown on all projects page when the user has no projects"
   },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "Aquest projecte no contenia cap mostra de dades, de manera que només s'ha obert el programa. Has d'entrenar un model abans de poder utilitzar el programa.",
@@ -1434,6 +1518,10 @@
   "open-project-setup-description": {
     "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
     "description": "Open project setup description"
+  },
+  "open-shared-project-action": {
+    "defaultMessage": "Open project",
+    "description": "Open project button text"
   },
   "open-shared-project-blocks-preview-description": {
     "defaultMessage": "Preview of the MakeCode code contained within this project.",
@@ -1471,13 +1559,37 @@
     "defaultMessage": "Política de privadesa",
     "description": "Link to view privacy policy"
   },
+  "project-ideas-row-carousel": {
+    "defaultMessage": "List of project ideas",
+    "description": "Label for home page row carousel"
+  },
+  "project-ideas-row-title": {
+    "defaultMessage": "Project ideas",
+    "description": "Title for home page row"
+  },
   "project-loaded": {
     "defaultMessage": "Projecte desat",
     "description": "Toast when a new project is loaded"
   },
+  "project-menu-action": {
+    "defaultMessage": "{name} actions menu",
+    "description": "Label for project actions menu button"
+  },
   "project-name-not-empty": {
     "defaultMessage": "El nom del projecte no pot estar buit",
     "description": "Validation message for project name"
+  },
+  "project-skip-to-toolbar": {
+    "defaultMessage": "Skip to toolbar",
+    "description": "Button to skip focus to the projects toolbar"
+  },
+  "project-storage-tooltip": {
+    "defaultMessage": "Text to inform the user about where their projects are actually stored with link to support article?",
+    "description": "Tooltip for my projects row"
+  },
+  "projects-page-title": {
+    "defaultMessage": "Projects",
+    "description": "Projects page title"
   },
   "radio-link-microbit": {
     "defaultMessage": "micro:bit d'enllaç de ràdio ",
@@ -1551,6 +1663,14 @@
     "defaultMessage": "Prem per gravar una mostra de dades o prem el botó B de la teva micro:bit de recollida de dades.",
     "description": "Hint when you have named the first action but not recorded any data samples and have a micro:bit connected"
   },
+  "record-more-hint": {
+    "defaultMessage": "Record at least {numSamples, plural, one {{numSamples} more data sample} other {{numSamples} more data samples}}",
+    "description": "Hint when you have not recorded enough data samples. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+  },
+  "record-more-hint-label": {
+    "defaultMessage": "Record at least {numSamples, plural, one {{numSamples} more data sample} other {{numSamples} more data samples}} for {actionName}",
+    "description": "Hint when you have not recorded enough data samples aria label. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+  },
   "record-samples": {
     "defaultMessage": "Enregistra {numSamples} mostres",
     "description": "Additional recording action text"
@@ -1598,6 +1718,14 @@
   "reload-action": {
     "defaultMessage": "Torna a carregar",
     "description": "Reload button text"
+  },
+  "rename-project-action": {
+    "defaultMessage": "Rename",
+    "description": "Rename project action"
+  },
+  "rename-project-heading": {
+    "defaultMessage": "Rename project",
+    "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "Hold A+B and press RESET",
@@ -1663,6 +1791,10 @@
     "defaultMessage": "S'ha transferit el teu fitxer hexadecimal",
     "description": "Notification after a hex file has been downloaded"
   },
+  "search": {
+    "defaultMessage": "Search",
+    "description": "Aria label for searching projects"
+  },
   "select-icon-action-aria": {
     "defaultMessage": "Tria la icona per a l'acció \"{action}\"",
     "description": "Aria label for pick icon button"
@@ -1674,6 +1806,10 @@
   "select-icon-option-action-aria": {
     "defaultMessage": "Selecciona la icona \"{iconName}\".",
     "description": "Aria label for icon option"
+  },
+  "select-project-action": {
+    "defaultMessage": "Select {name}",
+    "description": "Label for project selection checkbox"
   },
   "settings": {
     "defaultMessage": "Configuració",
@@ -1698,6 +1834,30 @@
   "software-versions": {
     "defaultMessage": "Versions de programari",
     "description": "Software versions text"
+  },
+  "sort-option-last-modified": {
+    "defaultMessage": "Last modified",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-name": {
+    "defaultMessage": "Name",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-relevance": {
+    "defaultMessage": "Relevance",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-order-ascending-label": {
+    "defaultMessage": "Ascending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-order-descending-label": {
+    "defaultMessage": "Descending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-select-label": {
+    "defaultMessage": "Sort projects",
+    "description": "Label for select element to sort projects"
   },
   "start-session-action": {
     "defaultMessage": "Inicia sessió",
@@ -1754,6 +1914,14 @@
   "third-party-content-description": {
     "defaultMessage": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the <link>MakeCode shared project</link> to report abuse to Microsoft MakeCode if you think it's not appropriate.",
     "description": "Notify user of third party content"
+  },
+  "timestamp-now": {
+    "defaultMessage": "now",
+    "description": "The last edit time of a project"
+  },
+  "timestamp-seconds": {
+    "defaultMessage": "a few seconds ago",
+    "description": "The last edit time of a project"
   },
   "tour-action": {
     "defaultMessage": "Tour",
@@ -1887,6 +2055,14 @@
     "defaultMessage": "Entrenant un model",
     "description": "Training dialog"
   },
+  "train-hint": {
+    "defaultMessage": "Finished recording?<mark>Train the model</mark>",
+    "description": "Hint when you have recorded enough data samples to train a model"
+  },
+  "train-hint-label": {
+    "defaultMessage": "Finished recording? Press ‘Train the model’ button to train the model",
+    "description": "Hint when you have recorded enough data samples to train a model aria label"
+  },
   "train-model": {
     "defaultMessage": "Entrenant un model",
     "description": "Action to train a model"
@@ -1970,5 +2146,9 @@
   "webusb-retry-replug4": {
     "defaultMessage": "desconnecta i torna a connectar el cable USB",
     "description": "WebUSB error dialog"
+  },
+  "welcome-title": {
+    "defaultMessage": "How CreateAI works",
+    "description": "Welcome dialog"
   }
 }

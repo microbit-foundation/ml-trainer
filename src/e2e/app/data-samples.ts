@@ -19,7 +19,7 @@ export class DataSamplesPage {
   public readonly navbar: Navbar;
   private url: string;
   private heading: Locator;
-  private connectBtn: Locator;
+  public welcomeDialog: WelcomeDialog;
 
   constructor(public readonly page: Page) {
     this.url = `http://localhost:5173${
@@ -27,7 +27,7 @@ export class DataSamplesPage {
     }data-samples`;
     this.navbar = new Navbar(page);
     this.heading = this.page.getByRole("heading", { name: "Data samples" });
-    this.connectBtn = this.page.getByLabel("Connect to micro:bit");
+    this.welcomeDialog = new WelcomeDialog(page);
   }
 
   async goto(flags: string[] = []) {
@@ -39,8 +39,8 @@ export class DataSamplesPage {
     return response;
   }
 
-  expectUrl() {
-    expect(this.page.url()).toEqual(this.url);
+  async expectUrl() {
+    return this.page.waitForURL(this.url, { timeout: 3_000 });
   }
 
   async closeDialog() {
@@ -48,7 +48,7 @@ export class DataSamplesPage {
   }
 
   async connect() {
-    await this.connectBtn.click();
+    await this.welcomeDialog.connect();
     const connectionDialogs = new ConnectionDialogs(this.page);
     return connectionDialogs;
   }
@@ -73,13 +73,9 @@ export class DataSamplesPage {
   }
 
   async expectOnPage() {
+    await this.welcomeDialog.close();
     await expect(this.heading).toBeVisible();
-    this.expectUrl();
-  }
-
-  async expectCorrectInitialState() {
-    this.expectUrl();
-    await expect(this.heading).toBeVisible({ timeout: 10000 });
+    await this.expectUrl();
   }
 
   async expectActions(expectedActions: string[]) {
@@ -111,5 +107,26 @@ export class DataSamplesPage {
       .click();
     const fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(filePath);
+  }
+}
+
+class WelcomeDialog {
+  private heading: Locator;
+
+  constructor(public readonly page: Page) {
+    this.page = page;
+    this.heading = this.page.getByText("Welcome to micro:bit CreateAI");
+  }
+
+  async expectOpen() {
+    await expect(this.heading).toBeVisible();
+  }
+
+  async close() {
+    await this.page.getByRole("button", { name: "Close" }).click();
+  }
+
+  async connect() {
+    await this.page.getByRole("button", { name: "Connect" }).click();
   }
 }
