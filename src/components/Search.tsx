@@ -1,4 +1,5 @@
 import {
+  BoxProps,
   IconButton,
   Input,
   InputGroup,
@@ -9,13 +10,18 @@ import { useCallback, useRef } from "react";
 import { RiCloseLine, RiSearch2Line } from "react-icons/ri";
 import { useIntl } from "react-intl";
 
-interface SearchProps {
+interface SearchProps extends BoxProps {
   query: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   onClear: () => void;
 }
 
-const Search = ({ query, onChange: onQueryChange, onClear }: SearchProps) => {
+const Search = ({
+  query,
+  onChange: onQueryChange,
+  onClear,
+  ...rest
+}: SearchProps) => {
   const intl = useIntl();
   const ref = useRef<HTMLInputElement>(null);
 
@@ -27,7 +33,7 @@ const Search = ({ query, onChange: onQueryChange, onClear }: SearchProps) => {
   }, [onClear]);
 
   return (
-    <InputGroup variant="outline">
+    <InputGroup variant="outline" {...rest}>
       <InputLeftElement pointerEvents="none">
         <RiSearch2Line color="gray.800" />
       </InputLeftElement>

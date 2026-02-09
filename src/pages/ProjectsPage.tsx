@@ -2,14 +2,24 @@ import {
   Box,
   Button,
   Container,
+  Flex,
   HStack,
   SimpleGrid,
+  Slide,
   Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
-import { RefObject, Suspense, useCallback, useMemo, useState } from "react";
+import {
+  RefObject,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Await, useLoaderData, useNavigate } from "react-router";
 import BackArrow from "../components/BackArrow";
 import DefaultPageLayout, {
@@ -50,6 +60,11 @@ const ProjectsPage = () => {
   const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
   const [projectForAction, setProjectForAction] = useState<string | null>(null);
 
+  useEffect(() => {
+    const projectIds = new Set(allProjectData.map((p) => p.id));
+    setSelectedProjectIds((prev) => prev.filter((id) => projectIds.has(id)));
+  }, [allProjectData]);
+
   const navigateToHomePage = useCallback(() => {
     navigate(createHomePageUrl());
   }, [navigate]);
@@ -81,21 +96,33 @@ const ProjectsPage = () => {
     [navigate, selectedProjectIds]
   );
 
+  const handleCloseConfirmDialog = useCallback(() => {
+    setConfirmDialogIsOpen(false);
+    setProjectName("");
+    setProjectForAction(null);
+  }, []);
+
   const handleDeleteProject = useCallback(
     async (id?: string) => {
       if (id) {
         return deleteProject(id);
       }
+      handleCloseConfirmDialog();
       if (projectForAction) {
         await deleteProject(projectForAction);
-        setConfirmDialogIsOpen(false);
+      } else if (selectedProjectIds.length === 1) {
+        await deleteProject(selectedProjectIds[0]);
+      } else {
+        await deleteProjects(selectedProjectIds);
       }
-      if (selectedProjectIds.length === 1) {
-        return deleteProject(selectedProjectIds[0]);
-      }
-      await deleteProjects(selectedProjectIds);
     },
-    [deleteProject, deleteProjects, projectForAction, selectedProjectIds]
+    [
+      deleteProject,
+      deleteProjects,
+      handleCloseConfirmDialog,
+      projectForAction,
+      selectedProjectIds,
+    ]
   );
 
   const updateSelectedProjects = useCallback((id: string) => {
@@ -105,6 +132,25 @@ const ProjectsPage = () => {
       }
       return [...prev, id];
     });
+  }, []);
+
+  const clearSelection = useCallback(() => {
+    setSelectedProjectIds([]);
+  }, []);
+
+  const hasSelection = selectedProjectIds.length > 0;
+  const lastSelectionRef = useRef(selectedProjectIds);
+  if (hasSelection) {
+    lastSelectionRef.current = selectedProjectIds;
+  }
+
+  const desktopToolbarRef = useRef<HTMLDivElement>(null);
+  const mobileToolbarRef = useRef<HTMLDivElement>(null);
+  const handleSkipToToolbar = useCallback(() => {
+    const toolbar = desktopToolbarRef.current?.offsetParent
+      ? desktopToolbarRef.current
+      : mobileToolbarRef.current;
+    toolbar?.querySelector<HTMLElement>("button")?.focus();
   }, []);
 
   const [nameDialogIsOpen, setNameDialogIsOpen] = useState(false);
@@ -272,12 +318,6 @@ const ProjectsPage = () => {
     [allProjectData, selectedProjectIds]
   );
 
-  const handleCloseConfirmDialog = useCallback(() => {
-    setConfirmDialogIsOpen(false);
-    setProjectName("");
-    setProjectForAction(null);
-  }, []);
-
   return (
     <Suspense fallback={<LoadingPage />}>
       <Await resolve={allProjectDataLoaded}>
@@ -341,21 +381,36 @@ const ProjectsPage = () => {
               flexDir="column"
               flexGrow={1}
             >
-              <Box mb={8} maxW={["100%", null, "600px"]}>
+              <HStack mb={4} justifyContent="space-between" alignItems="center">
                 <Search
                   query={query}
                   onChange={handleQueryChange}
                   onClear={handleQueryClear}
+                  maxW="30ch"
+                  my="1px"
                 />
-              </Box>
-              <HStack>
-                <ProjectsToolbar
-                  selectedProjectIds={selectedProjectIds}
-                  onDeleteProject={handleOpenConfirmDialog}
-                  onOpenProject={handleOpenProject}
-                  onRenameDuplicateProject={handleOpenNameProjectDialog}
-                />
+                {hasSelection && (
+                  <Box
+                    ref={desktopToolbarRef}
+                    display={{ base: "none", lg: "block" }}
+                    bg="white"
+                    borderWidth="1px"
+                    borderColor="gray.200"
+                    borderRadius="lg"
+                    marginLeft="auto"
+                  >
+                    <ProjectsToolbar
+                      selectedProjectIds={selectedProjectIds}
+                      onDeleteProject={handleOpenConfirmDialog}
+                      onRenameDuplicateProject={handleOpenNameProjectDialog}
+                      onClearSelection={clearSelection}
+                    />
+                  </Box>
+                )}
                 <SortInput
+                  display={
+                    hasSelection ? { base: "flex", lg: "none" } : undefined
+                  }
                   value={orderByField}
                   onSelectChange={handleOrderByFieldChange}
                   order={orderByDirection}
@@ -365,7 +420,12 @@ const ProjectsPage = () => {
                 />
               </HStack>
               {processedProjects.length > 0 ? (
-                <SimpleGrid mt={3} spacing={3} columns={[1, 2, 3, 4, 5]}>
+                <SimpleGrid
+                  mt={3}
+                  spacing={3}
+                  columns={[1, 2, 3, 4, 5]}
+                  pb={hasSelection ? { base: 16, lg: 0 } : 0}
+                >
                   {processedProjects.map((projectData) => (
                     <ProjectCard
                       key={projectData.id}
@@ -381,6 +441,7 @@ const ProjectsPage = () => {
                           onRenameDuplicateProject={handleOpenNameProjectDialog}
                           onOpenProject={handleOpenProject}
                           setFinalFocusRef={setFinalFocusRef}
+                          onSkipToToolbar={handleSkipToToolbar}
                         />
                       }
                     />
@@ -401,6 +462,30 @@ const ProjectsPage = () => {
             </Container>
           </VStack>
         </DefaultPageLayout>
+        <Slide direction="bottom" in={hasSelection} style={{ zIndex: 10 }}>
+          <Flex
+            justifyContent="center"
+            pb={4}
+            display={{ base: "flex", lg: "none" }}
+          >
+            <Box
+              ref={mobileToolbarRef}
+              bg="white"
+              shadow="lg"
+              borderWidth="1px"
+              borderColor="gray.200"
+              borderRadius="lg"
+              p={1}
+            >
+              <ProjectsToolbar
+                selectedProjectIds={lastSelectionRef.current}
+                onDeleteProject={handleOpenConfirmDialog}
+                onRenameDuplicateProject={handleOpenNameProjectDialog}
+                onClearSelection={clearSelection}
+              />
+            </Box>
+          </Flex>
+        </Slide>
       </Await>
     </Suspense>
   );

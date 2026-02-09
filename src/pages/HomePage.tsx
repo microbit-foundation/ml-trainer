@@ -7,7 +7,6 @@
 import {
   Button,
   Card,
-  CardBody,
   Heading,
   HStack,
   Icon,
@@ -136,21 +135,26 @@ const NewProjectCard = () => {
 
   return (
     <LinkBox>
-      <Card flexGrow={1} overflow="hidden">
-        <CardBody display="flex" background="brand.700" color="white">
-          <VStack h="100%" w="100%" py={8} gap={3}>
-            <Icon as={RiAddLine} h={10} w={10} />
-            <LinkOverlay
-              as={Button}
-              fontSize="xl"
-              onClick={handleStartNewSession}
-              variant="unstyled"
-              _focusVisible={{ boxShadow: "outline", outline: "none" }}
-            >
-              <FormattedMessage id="newpage-new-project-title" />
-            </LinkOverlay>
-          </VStack>
-        </CardBody>
+      <Card flexGrow={1} overflow="hidden" aspectRatio={4 / 3}>
+        <VStack
+          h="100%"
+          w="100%"
+          py={8}
+          gap={3}
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Icon as={RiAddLine} h={10} w={10} />
+          <LinkOverlay
+            as={Button}
+            fontSize="xl"
+            onClick={handleStartNewSession}
+            variant="unstyled"
+            _focusVisible={{ boxShadow: "outline", outline: "none" }}
+          >
+            <FormattedMessage id="newpage-new-project-title" />
+          </LinkOverlay>
+        </VStack>
       </Card>
     </LinkBox>
   );

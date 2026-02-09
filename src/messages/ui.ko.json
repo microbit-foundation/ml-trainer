@@ -869,8 +869,36 @@
   ],
   "delete-project-action": [
     {
-      "type": 0,
-      "value": "Delete"
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete "
+            },
+            {
+              "type": 1,
+              "value": "count"
+            },
+            {
+              "type": 0,
+              "value": " projects"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
     }
   ],
   "delete-project-confirm-heading": [
@@ -2445,6 +2473,12 @@
     {
       "type": 0,
       "value": "프로젝트 이름을 입력해야 합니다"
+    }
+  ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "Skip to toolbar"
     }
   ],
   "project-storage-tooltip": [
