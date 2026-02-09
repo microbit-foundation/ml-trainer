@@ -107,6 +107,7 @@ const ProjectsPage = () => {
       if (id) {
         return deleteProject(id);
       }
+      handleCloseConfirmDialog();
       if (projectForAction) {
         await deleteProject(projectForAction);
       } else if (selectedProjectIds.length === 1) {
@@ -114,7 +115,6 @@ const ProjectsPage = () => {
       } else {
         await deleteProjects(selectedProjectIds);
       }
-      handleCloseConfirmDialog();
     },
     [
       deleteProject,
