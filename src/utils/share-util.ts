@@ -15,7 +15,7 @@ export const shareHex = async (hex: HexData) => {
     data: hex.hex,
     encoding: Encoding.UTF8,
     directory: tempStorageLocation,
-    recursive: true
+    recursive: true,
   });
 
   await Share.share({
@@ -23,7 +23,6 @@ export const shareHex = async (hex: HexData) => {
     text: `micro:bit CreateAI project: ${hex.name}`,
     files: [url],
   });
-
 };
 
 const cleanOldFiles = async () => {
@@ -47,8 +46,8 @@ const cleanOldFiles = async () => {
     if (file.mtime < deletionCutoff) {
       await Filesystem.deleteFile({
         path: `${shareFromDirectory}/${file.name}`,
-        directory: tempStorageLocation
+        directory: tempStorageLocation,
       });
     }
   }
-}
+};

@@ -78,10 +78,10 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
               }
             >
               <Button size="lg" variant="primary" onClick={onSave}>
-              <FormattedMessage id={`${shareOrSave}-action`} />
+                <FormattedMessage id={`${shareOrSave}-action`} />
               </Button>
             </ModalFooterContent>
-         </ModalFooter>
+          </ModalFooter>
         </ModalContent>
       </ModalOverlay>
     </Modal>
