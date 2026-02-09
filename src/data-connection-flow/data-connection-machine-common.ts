@@ -112,10 +112,6 @@ export type DataConnectionAction =
    * Sets hadSuccessfulConnection=true, isReconnecting=false.
    */
   | { type: "setConnected" }
-  /**
-   * Sets isDeviceBonded=true.
-   */
-  | { type: "setIsDeviceBonded"; value: boolean }
   // Disconnect action.
   | { type: "disconnectData" }
   /**

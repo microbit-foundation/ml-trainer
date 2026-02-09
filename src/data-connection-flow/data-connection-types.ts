@@ -188,9 +188,10 @@ export interface DataConnectionState {
   connectionAbortController: AbortController | undefined;
 
   /**
-   * Set to true if micro:bit is already bonded to native device.
+   * Record of device bond states storing device ids and whether it is bonded
+   * for the corresponding devices.
    */
-  isDeviceBonded: boolean;
+  deviceBonds: Record<string, boolean>;
 }
 
 /**
@@ -232,7 +233,7 @@ export const getInitialDataConnectionState = (): DataConnectionState => {
     isCheckingPermissions: false,
     pairingMethod: "triple-reset",
     connectionAbortController: undefined,
-    isDeviceBonded: false
+    deviceBonds: {},
   };
 };
 

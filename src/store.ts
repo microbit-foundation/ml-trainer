@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
-import { ProgressStage } from "@microbit/microbit-connection";
+import { DeviceBondState, ProgressStage } from "@microbit/microbit-connection";
 import * as tf from "@tensorflow/tfjs";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
@@ -202,6 +202,7 @@ export interface State {
     value: number | undefined;
   };
   dataConnection: DataConnectionState;
+  deviceBondState: DeviceBondState;
   dataConnectionFlashingProgress: {
     stage: ProgressStage | undefined;
     value: number | undefined;
@@ -352,6 +353,22 @@ const createMlStore = (logging: Logging) => {
           },
           downloadFlashingProgress: { stage: undefined, value: undefined },
           dataConnection: getInitialDataConnectionState(),
+          deviceBondState: {
+            setBonded(id: string, isBonded: boolean) {
+              set(({ dataConnection }) => ({
+                dataConnection: {
+                  ...dataConnection,
+                  deviceBonds: {
+                    ...dataConnection.deviceBonds,
+                    [id]: isBonded,
+                  },
+                },
+              }));
+            },
+            isBonded(id: string) {
+              return get().dataConnection.deviceBonds[id] ?? false;
+            },
+          },
           dataConnectionFlashingProgress: {
             stage: undefined,
             value: undefined,
@@ -393,7 +410,6 @@ const createMlStore = (logging: Logging) => {
           isConnectToRecordDialogOpen: false,
           isDeleteActionDialogOpen: false,
           isIncompatibleEditorDeviceDialogOpen: false,
-          isDeviceBonded: false,
 
           setSettings(update: Partial<Settings>) {
             set(
@@ -1329,7 +1345,7 @@ const createMlStore = (logging: Logging) => {
             projectEdited,
             settings,
             timestamp,
-            dataConnection: { isDeviceBonded: dataConnection.isDeviceBonded },
+            dataConnection: { deviceBonds: dataConnection.deviceBonds },
             // The model itself is in IndexDB
           }),
           migrate(persistedStateUnknown, version) {
@@ -1361,7 +1377,7 @@ const createMlStore = (logging: Logging) => {
               },
               dataConnection: {
                 ...currentState.dataConnection,
-                ...persistedState.dataConnection
+                ...persistedState.dataConnection,
               },
             };
           },

@@ -73,11 +73,7 @@ export type DownloadAction =
   /**
    * Abort finding device.
    */
-  | { type: "abortFindingDevice" }
-  /**
-   * Sets isDeviceBonded=true.
-   */
-  | { type: "setIsDeviceBonded"; value: boolean };
+  | { type: "abortFindingDevice" };
 
 export interface DownloadFlowContext {
   hex?: HexData;

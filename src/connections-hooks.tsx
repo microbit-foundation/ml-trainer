@@ -5,6 +5,7 @@
  */
 import {
   ConnectionStatusEvent,
+  DeviceBondState,
   MicrobitRadioBridgeConnection,
   MicrobitWebBluetoothConnection,
   MicrobitWebUSBConnection,
@@ -102,6 +103,7 @@ const createConnections = (
   bluetooth: MicrobitWebBluetoothConnection,
   radioBridge: MicrobitRadioBridgeConnection,
   persistType: (type: DataConnectionType) => void,
+  deviceBondState: DeviceBondState,
   ref: MutableRefObject<ConnectionsRefValue>
 ): Connections => {
   return {
@@ -111,6 +113,7 @@ const createConnections = (
 
     async initialize() {
       await usb.initialize();
+      bluetooth.setDeviceBondState(deviceBondState);
       await bluetooth.initialize();
       await radioBridge.initialize();
     },
@@ -178,6 +181,7 @@ export const ConnectionsProvider = ({
 }: ConnectionsProviderProps) => {
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
   const setDataConnectionType = useStore((s) => s.setDataConnectionType);
+  const deviceBondState = useStore((s) => s.deviceBondState);
 
   // Read initial value directly from store to avoid subscription.
   const initialType = useStore.getState().dataConnection.type;
@@ -198,9 +202,10 @@ export const ConnectionsProvider = ({
         bluetooth,
         radioBridge,
         setDataConnectionType,
+        deviceBondState,
         valueRef
       ),
-    [usb, bluetooth, radioBridge, setDataConnectionType]
+    [usb, bluetooth, radioBridge, setDataConnectionType, deviceBondState]
   );
 
   useEffect(() => {

@@ -293,6 +293,8 @@ export class MockWebBluetoothConnection
     this.setStatus(ConnectionStatus.NO_AUTHORIZED_DEVICE);
   }
 
+  setDeviceBondState(): void {}
+
   async getAccelerometerData(): Promise<undefined> {}
   async getAccelerometerPeriod(): Promise<undefined> {}
   async setAccelerometerPeriod(_value: number): Promise<void> {}

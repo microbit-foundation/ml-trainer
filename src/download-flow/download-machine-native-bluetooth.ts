@@ -6,7 +6,6 @@
 import { DownloadStep } from "./download-types";
 import { always } from "../state-machine";
 import {
-  DownloadAction,
   DownloadFlowDefinition,
   globalHandlers,
   guards,
@@ -38,12 +37,10 @@ const connectFlashFailureWithPermissionHandling = [
   {
     guard: guards.isPairingInformationLostError,
     target: DownloadStep.PairingLost,
-    actions: [{ type: "setIsDeviceBonded", value: false }] as DownloadAction[],
   },
   {
     guard: always,
     target: DownloadStep.ConnectFailed,
-    actions: [{ type: "setIsDeviceBonded", value: false }] as DownloadAction[],
   },
 ];
 
@@ -71,15 +68,11 @@ const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
         ],
       },
       connectFlashFailure: connectFlashFailureWithPermissionHandling,
-      flashSuccess: {
-        target: DownloadStep.None,
-        actions: [{ type: "setIsDeviceBonded", value: true }],
-      },
+      flashSuccess: { target: DownloadStep.None },
       flashFailure: [
         {
           guard: guards.isPairingNotPermittedError,
           target: DownloadStep.ConnectFailed,
-          actions: [{ type: "setIsDeviceBonded", value: false }],
         },
         {
           guard: always,
@@ -181,10 +174,7 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
       },
       back: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
       setMicrobitName: {
-        actions: [
-          { type: "setMicrobitName" },
-          { type: "setIsDeviceBonded", value: false },
-        ],
+        actions: [{ type: "setMicrobitName" }],
       },
     },
   },

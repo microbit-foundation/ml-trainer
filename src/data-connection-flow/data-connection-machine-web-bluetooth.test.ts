@@ -30,7 +30,7 @@ const createContext = (
   pairingMethod: "triple-reset",
   connectionAbortController: undefined,
   bluetoothMicrobitName: undefined,
-  isDeviceBonded: false,
+  deviceBonds: {},
   ...overrides,
 });
 
