@@ -354,18 +354,21 @@ const createMlStore = (logging: Logging) => {
         dataConnection: getInitialDataConnectionState(),
         deviceBondState: {
           setBonded(id: string, isBonded: boolean) {
-            set(({ dataConnection }) => ({
-              dataConnection: {
-                ...dataConnection,
-                deviceBonds: {
-                  ...dataConnection.deviceBonds,
-                  [id]: isBonded,
-                },
-              },
-            }));
+            const { settings } = get();
+            const current = settings.bondedDevices ?? [];
+            const bondedDevices = isBonded
+              ? current.includes(id)
+                ? current
+                : [...current, id]
+              : current.filter((d) => d !== id);
+            set({
+              settings: { ...settings, bondedDevices },
+            });
+            // Persist to IndexedDB via setSettings (fire-and-forget).
+            void get().setSettings({ bondedDevices });
           },
           isBonded(id: string) {
-            return get().dataConnection.deviceBonds[id] ?? false;
+            return get().settings.bondedDevices?.includes(id) ?? false;
           },
         },
         dataConnectionFlashingProgress: {

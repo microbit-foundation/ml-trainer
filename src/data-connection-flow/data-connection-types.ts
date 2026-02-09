@@ -186,12 +186,6 @@ export interface DataConnectionState {
    * If `undefined`, there is no process to abort.
    */
   connectionAbortController: AbortController | undefined;
-
-  /**
-   * Record of device bond states storing device ids and whether it is bonded
-   * for the corresponding devices.
-   */
-  deviceBonds: Record<string, boolean>;
 }
 
 /**
@@ -233,7 +227,6 @@ export const getInitialDataConnectionState = (): DataConnectionState => {
     isCheckingPermissions: false,
     pairingMethod: "triple-reset",
     connectionAbortController: undefined,
-    deviceBonds: {},
   };
 };
 
