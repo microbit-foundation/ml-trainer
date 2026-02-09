@@ -204,7 +204,7 @@ export const ProjectToolbarItems = () => {
   useShortcut(keyboardShortcuts.saveSession, handleSave);
 
   const isShare = Capacitor.isNativePlatform();
-  const exportTextId = isShare ? "share-action" : "save-action";
+  const shareOrSave = isShare ? "share" : "save";
   const ExportIconId = isShare ? RiShareLine : RiDownload2Line;
 
   return (
@@ -214,7 +214,7 @@ export const ProjectToolbarItems = () => {
         leftIcon={<ExportIconId />}
         onClick={handleSave}
       >
-        <FormattedMessage id={exportTextId} />
+        <FormattedMessage id={`${shareOrSave}-action`} />
       </Button>
       <HomeToolbarItem />
     </>
@@ -250,7 +250,7 @@ export const ProjectMenuItems = () => {
   }, [saveHex]);
 
   const isShare = Capacitor.isNativePlatform();
-  const exportTextId = isShare ? "share-action" : "save-action";
+  const shareOrSave = isShare ? "share" : "save";
   const exportIconId = isShare ? RiShareLine : RiDownload2Line;
 
   return (
@@ -259,7 +259,7 @@ export const ProjectMenuItems = () => {
         onClick={handleSave}
         icon={<Icon h={5} w={5} as={exportIconId} />}
       >
-        <FormattedMessage id={exportTextId} />
+        <FormattedMessage id={`${shareOrSave}-action`} />
       </MenuItem>
       <MenuDivider />
       <HomeMenuItem />

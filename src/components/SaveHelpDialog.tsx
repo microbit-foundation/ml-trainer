@@ -42,24 +42,15 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
     [setSettings]
   );
 
-  const isShare = Capacitor.isNativePlatform();
+  const shareOrSave = Capacitor.isNativePlatform() ? "share" : "save";
 
-  const dialogHeadingId = isShare
-    ? "share-hex-dialog-heading"
-    : "save-hex-dialog-heading";
-  const message1Id = isShare
-    ? "share-hex-dialog-message1"
-    : "save-hex-dialog-message1";
-  const message2Id = isShare
-    ? "share-hex-dialog-message2"
-    : "save-hex-dialog-message2";
   return (
     <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
             <Heading as="h2" fontSize="xl" fontWeight="bold">
-              <FormattedMessage id={dialogHeadingId} />
+              <FormattedMessage id={`${shareOrSave}-hex-dialog-heading`} />
             </Heading>
           </ModalHeader>
           <ModalCloseButton />
@@ -67,10 +58,13 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
             <Stack gap={5}>
               <VStack gap={3}>
                 <Text>
-                  <FormattedMessage id={message1Id} values={{ appNameFull }} />
+                  <FormattedMessage
+                    id={`${shareOrSave}-hex-dialog-message1`}
+                    values={{ appNameFull }}
+                  />
                 </Text>
                 <Text>
-                  <FormattedMessage id={message2Id} />
+                  <FormattedMessage id={`${shareOrSave}-hex-dialog-message2`} />
                 </Text>
               </VStack>
             </Stack>
@@ -84,7 +78,7 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
               }
             >
               <Button size="lg" variant="primary" onClick={onSave}>
-                <FormattedMessage id="save-action" />
+              <FormattedMessage id={`${shareOrSave}-action`} />
               </Button>
             </ModalFooterContent>
          </ModalFooter>

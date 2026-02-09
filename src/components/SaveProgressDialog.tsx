@@ -23,7 +23,7 @@ export interface SavingDialogProps {
 
 const SaveProgressDialog = ({ isOpen }: SavingDialogProps) => {
   const isShare = Capacitor.isNativePlatform();
-  const progressTitleId = isShare ? "sharing-title" : "saving-title";
+  const sharingOrSaving = isShare ? "sharing" : "saving";
   const progressDescriptionId = isShare
     ? "sharing-description"
     : "saving-description";
@@ -40,7 +40,7 @@ const SaveProgressDialog = ({ isOpen }: SavingDialogProps) => {
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage id={progressTitleId} />
+            <FormattedMessage id={`${sharingOrSaving}-title`} />
           </ModalHeader>
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
