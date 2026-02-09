@@ -152,7 +152,7 @@ const ProjectCardActions = ({
               icon={<RiDeleteBin2Line />}
               onClick={() => handleDeleteProject(id)}
             >
-              <FormattedMessage id="delete-project-action" />
+              <FormattedMessage id="delete-project-action" values={{ count: 1 }} />
             </MenuItem>
           </MenuList>
         </Portal>
