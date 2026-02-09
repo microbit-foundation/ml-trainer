@@ -2495,6 +2495,12 @@
       "value": "Nazwa projektu nie może być pusta"
     }
   ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "Skip to toolbar"
+    }
+  ],
   "project-storage-tooltip": [
     {
       "type": 0,

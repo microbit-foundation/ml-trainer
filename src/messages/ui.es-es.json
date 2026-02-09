@@ -2491,6 +2491,12 @@
       "value": "El nombre del proyecto no puede estar en blanco"
     }
   ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "Skip to toolbar"
+    }
+  ],
   "project-storage-tooltip": [
     {
       "type": 0,

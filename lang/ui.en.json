@@ -1423,6 +1423,10 @@
     "defaultMessage": "The project name cannot be empty",
     "description": "Validation message for project name"
   },
+  "project-skip-to-toolbar": {
+    "defaultMessage": "Skip to toolbar",
+    "description": "Button to skip focus to the projects toolbar"
+  },
   "project-storage-tooltip": {
     "defaultMessage": "Text to inform the user about where their projects are actually stored with link to support article?",
     "description": "Tooltip for my projects row"

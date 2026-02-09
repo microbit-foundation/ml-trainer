@@ -2471,6 +2471,12 @@
       "value": "プロジェクト名は空にできません"
     }
   ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "Skip to toolbar"
+    }
+  ],
   "project-storage-tooltip": [
     {
       "type": 0,

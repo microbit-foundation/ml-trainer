@@ -2475,6 +2475,12 @@
       "value": "프로젝트 이름을 입력해야 합니다"
     }
   ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "Skip to toolbar"
+    }
+  ],
   "project-storage-tooltip": [
     {
       "type": 0,

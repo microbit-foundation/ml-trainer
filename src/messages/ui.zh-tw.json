@@ -2487,6 +2487,12 @@
       "value": "專案名稱不可為空白"
     }
   ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "Skip to toolbar"
+    }
+  ],
   "project-storage-tooltip": [
     {
       "type": 0,

@@ -111,7 +111,7 @@ const ProjectCardActions = ({
             "0 0 0 2px white, 0 0 0 4px var(--chakra-colors-brand-500)",
         }}
       >
-        Skip to toolbar
+        <FormattedMessage id="project-skip-to-toolbar" />
       </Button>
       <Menu>
         <MenuButton

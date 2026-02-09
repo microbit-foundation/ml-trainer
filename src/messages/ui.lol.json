@@ -2373,6 +2373,12 @@
       "value": "crwdns363240:0crwdne363240:0"
     }
   ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "Skip to toolbar"
+    }
+  ],
   "project-storage-tooltip": [
     {
       "type": 0,
