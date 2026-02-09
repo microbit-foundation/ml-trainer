@@ -41,7 +41,7 @@ const ProjectCard = ({ projectData, projectCardActions }: ProjectCardProps) => {
         <CardBody display="flex">
           <Stack h="100%" w="100%" spacing={0}>
             {projectCardActions}
-            <Image src={actionRecording} width="100%" />
+            <Image src={actionRecording} alt="" width="100%" />
             <LinkOverlay
               as={Button}
               h={8}

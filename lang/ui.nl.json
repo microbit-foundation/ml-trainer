@@ -1416,7 +1416,7 @@
     "description": "Toast when a new project is loaded"
   },
   "project-menu-action": {
-    "defaultMessage": "Project actions menu",
+    "defaultMessage": "{name} actions menu",
     "description": "Label for project actions menu button"
   },
   "project-name-not-empty": {
@@ -1630,6 +1630,10 @@
   "select-icon-option-action-aria": {
     "defaultMessage": "Selecteer \"{iconName}\" pictogram",
     "description": "Aria label for icon option"
+  },
+  "select-project-action": {
+    "defaultMessage": "Select {name}",
+    "description": "Label for project selection checkbox"
   },
   "settings": {
     "defaultMessage": "Instellingen",

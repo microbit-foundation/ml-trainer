@@ -2477,8 +2477,12 @@
   ],
   "project-menu-action": [
     {
+      "type": 1,
+      "value": "name"
+    },
+    {
       "type": 0,
-      "value": "Project actions menu"
+      "value": " actions menu"
     }
   ],
   "project-name-not-empty": [
@@ -2961,6 +2965,16 @@
     {
       "type": 0,
       "value": "」圖標"
+    }
+  ],
+  "select-project-action": [
+    {
+      "type": 0,
+      "value": "Select "
+    },
+    {
+      "type": 1,
+      "value": "name"
     }
   ],
   "settings": [

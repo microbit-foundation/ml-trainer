@@ -2363,8 +2363,12 @@
   ],
   "project-menu-action": [
     {
+      "type": 1,
+      "value": "name"
+    },
+    {
       "type": 0,
-      "value": "Project actions menu"
+      "value": " actions menu"
     }
   ],
   "project-name-not-empty": [
@@ -2851,6 +2855,16 @@
     {
       "type": 0,
       "value": "crwdne363330:0"
+    }
+  ],
+  "select-project-action": [
+    {
+      "type": 0,
+      "value": "Select "
+    },
+    {
+      "type": 1,
+      "value": "name"
     }
   ],
   "settings": [

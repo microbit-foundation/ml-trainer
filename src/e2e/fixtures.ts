@@ -7,17 +7,17 @@ import { test as base } from "@playwright/test";
 import { HomePage } from "./app/home-page";
 import { DataSamplesPage } from "./app/data-samples";
 import { TestModelPage } from "./app/test-model-page";
-import { NewPage } from "./app/new-page";
 import { OpenSharedProjectPage } from "./app/open-shared-project-page";
 import { ImportPage } from "./app/import-page";
+import { ProjectsPage } from "./app/projects-page";
 
 type MyFixtures = {
   homePage: HomePage;
-  newPage: NewPage;
   dataSamplesPage: DataSamplesPage;
   testModelPage: TestModelPage;
   openSharedProjectPage: OpenSharedProjectPage;
   importPage: ImportPage;
+  projectsPage: ProjectsPage;
 };
 
 export const test = base.extend<MyFixtures>({
@@ -25,9 +25,6 @@ export const test = base.extend<MyFixtures>({
     const homePage = new HomePage(page, context);
     await homePage.setupContext();
     await use(homePage);
-  },
-  newPage: async ({ page }, use) => {
-    await use(new NewPage(page));
   },
   dataSamplesPage: async ({ page }, use) => {
     await use(new DataSamplesPage(page));
@@ -40,5 +37,8 @@ export const test = base.extend<MyFixtures>({
   },
   importPage: async ({ page }, use) => {
     await use(new ImportPage(page));
+  },
+  projectsPage: async ({ page }, use) => {
+    await use(new ProjectsPage(page));
   },
 });

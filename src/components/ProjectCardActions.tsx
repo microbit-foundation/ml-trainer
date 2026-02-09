@@ -8,6 +8,7 @@ import {
   MenuItem,
   MenuList,
   Portal,
+  VisuallyHidden,
 } from "@chakra-ui/react";
 import { RefObject, useCallback, useRef } from "react";
 import { MdMoreVert } from "react-icons/md";
@@ -22,6 +23,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 interface ProjectCardMenuProps {
   id: string;
+  name: string;
   isSelected: boolean;
   onSelected: (id: string) => void;
   onDeleteProject: (id?: string) => void;
@@ -36,6 +38,7 @@ interface ProjectCardMenuProps {
 
 const ProjectCardActions = ({
   id,
+  name,
   isSelected,
   onSelected,
   onDeleteProject,
@@ -82,7 +85,6 @@ const ProjectCardActions = ({
         p={5}
         isChecked={isSelected}
         onChange={() => onSelected(id)}
-        aria-selected={isSelected}
         color="brand.600"
         zIndex={1}
         borderColor="gray.600"
@@ -91,7 +93,11 @@ const ProjectCardActions = ({
         }}
         borderBottomRightRadius="md"
         h="60px"
-      />
+      >
+        <VisuallyHidden>
+          <FormattedMessage id="select-project-action" values={{ name }} />
+        </VisuallyHidden>
+      </Checkbox>
       <Button
         tabIndex={isSelected ? 0 : -1}
         onClick={onSkipToToolbar}
@@ -118,7 +124,10 @@ const ProjectCardActions = ({
           ref={menuButtonRef}
           zIndex={1}
           as={IconButton}
-          aria-label={intl.formatMessage({ id: "project-menu-action" })}
+          aria-label={intl.formatMessage(
+            { id: "project-menu-action" },
+            { name }
+          )}
           p={5}
           h="100%"
           borderRadius={0}

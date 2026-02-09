@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { expect, type Page, type BrowserContext } from "@playwright/test";
-import { Navbar } from "./shared";
+import { getAbsoluteFilePath, Navbar } from "./shared";
 
 export class HomePage {
   public navbar: Navbar;
@@ -49,8 +49,18 @@ export class HomePage {
     return response;
   }
 
-  async getStarted() {
-    await this.page.getByText("Get started").first().click();
+  async newProject() {
+    await this.page
+      .getByRole("button", { name: "New project" })
+      .click();
+  }
+
+  async importProject(filePathFromProjectRoot: string) {
+    const filePath = getAbsoluteFilePath(filePathFromProjectRoot);
+    const fileChooserPromise = this.page.waitForEvent("filechooser");
+    await this.page.getByRole("button", { name: "Import" }).click();
+    const fileChooser = await fileChooserPromise;
+    await fileChooser.setFiles(filePath);
   }
 
   expectOnHomePage() {

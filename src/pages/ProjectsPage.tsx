@@ -433,6 +433,7 @@ const ProjectsPage = () => {
                       projectCardActions={
                         <ProjectCardActions
                           id={projectData.id}
+                          name={projectData.name}
                           isSelected={selectedProjectIds.includes(
                             projectData.id
                           )}
