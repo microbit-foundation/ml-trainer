@@ -131,9 +131,7 @@ test.describe("projects page toolbar actions", () => {
     ]);
   });
 
-  test("clear clears selection and hides toolbar", async ({
-    projectsPage,
-  }) => {
+  test("clear clears selection and hides toolbar", async ({ projectsPage }) => {
     await projectsPage.selectProject("Untitled");
     await projectsPage.expectToolbarVisible();
     await projectsPage.toolbarClear();
@@ -190,18 +188,14 @@ test.describe("projects page multi-select", () => {
     await projectsPage.expectToolbarButtons(["Delete 2 projects", "Clear"]);
   });
 
-  test("multi-select delete removes all selected", async ({
-    projectsPage,
-  }) => {
+  test("multi-select delete removes all selected", async ({ projectsPage }) => {
     await projectsPage.selectProject("Project A");
     await projectsPage.selectProject("Project B");
     await projectsPage.toolbarDelete();
     await projectsPage.expectNoProjects();
   });
 
-  test("multi-select clear clears all selections", async ({
-    projectsPage,
-  }) => {
+  test("multi-select clear clears all selections", async ({ projectsPage }) => {
     await projectsPage.selectProject("Project A");
     await projectsPage.selectProject("Project B");
     await projectsPage.expectToolbarVisible();

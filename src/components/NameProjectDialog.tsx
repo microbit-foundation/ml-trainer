@@ -21,7 +21,7 @@ import {
   Input,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, ReactNode, useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useProjectName } from "../hooks/project-hooks";
 import { validateProjectName } from "../project-utils";
@@ -33,6 +33,9 @@ interface NameProjectDialogProps {
   onCloseComplete?: () => void;
   onSave: (newName: string) => void;
   projectName?: string;
+  heading?: ReactNode;
+  helperText?: ReactNode;
+  confirmText?: ReactNode;
 }
 
 export const NameProjectDialog = ({
@@ -42,9 +45,12 @@ export const NameProjectDialog = ({
   onCloseComplete,
   onSave,
   projectName,
+  heading = <FormattedMessage id="name-project" />,
+  helperText = <FormattedMessage id="name-used-when" />,
+  confirmText = <FormattedMessage id="confirm-save-action" />,
 }: NameProjectDialogProps) => {
   const initialName = useProjectName();
-  const [name, setName] = useState<string>(initialName);
+  const [name, setName] = useState<string>(projectName ?? initialName);
   const isValid = validateProjectName(name);
   const ref = useCallback((input: HTMLInputElement | null) => {
     input?.setSelectionRange(0, input.value.length);
@@ -59,10 +65,10 @@ export const NameProjectDialog = ({
   );
 
   useEffect(() => {
-    if (projectName !== undefined) {
-      setName(projectName);
+    if (isOpen) {
+      setName(projectName ?? initialName);
     }
-  }, [projectName]);
+  }, [isOpen, projectName, initialName]);
 
   return (
     <Modal
@@ -73,9 +79,7 @@ export const NameProjectDialog = ({
     >
       <ModalOverlay>
         <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id="name-project" />
-          </ModalHeader>
+          <ModalHeader>{heading}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <VStack>
@@ -90,9 +94,11 @@ export const NameProjectDialog = ({
                     value={name}
                     onChange={(e) => setName(e.currentTarget.value)}
                   ></Input>
-                  <FormHelperText color="gray.700">
-                    <FormattedMessage id="name-used-when" />
-                  </FormHelperText>
+                  {helperText && (
+                    <FormHelperText color="gray.700">
+                      {helperText}
+                    </FormHelperText>
+                  )}
                   {!isValid && (
                     <FormErrorMessage>
                       <FormattedMessage id="project-name-not-empty" />
@@ -112,7 +118,7 @@ export const NameProjectDialog = ({
               ml={3}
               isDisabled={!isValid}
             >
-              <FormattedMessage id="confirm-save-action" />
+              {confirmText}
             </Button>
           </ModalFooter>
         </ModalContent>

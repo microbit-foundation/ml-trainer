@@ -328,6 +328,25 @@ const ProjectsPage = () => {
           onCloseComplete={clearFinalFocusRef}
           onSave={handleNameProjectSave}
           finalFocusRef={finalFocusRef}
+          heading={
+            <FormattedMessage
+              id={
+                projectNameReason === "rename"
+                  ? "rename-project-heading"
+                  : "duplicate-project-heading"
+              }
+            />
+          }
+          helperText={null}
+          confirmText={
+            <FormattedMessage
+              id={
+                projectNameReason === "rename"
+                  ? "rename-project-action"
+                  : "duplicate-project-action"
+              }
+            />
+          }
         />
         <ConfirmDialog
           isOpen={confirmDialogIsOpen}

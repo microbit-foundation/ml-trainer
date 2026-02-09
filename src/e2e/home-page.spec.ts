@@ -29,5 +29,4 @@ test.describe("home page", () => {
       homePage.page.getByRole("heading", { name: "Project ideas" })
     ).toBeVisible();
   });
-
 });

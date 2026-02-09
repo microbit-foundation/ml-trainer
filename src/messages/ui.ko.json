@@ -1123,6 +1123,12 @@
       "value": "Duplicate"
     }
   ],
+  "duplicate-project-heading": [
+    {
+      "type": 0,
+      "value": "Duplicate project"
+    }
+  ],
   "edit-in-makecode-action": [
     {
       "type": 0,
@@ -2827,6 +2833,12 @@
     {
       "type": 0,
       "value": "Rename"
+    }
+  ],
+  "rename-project-heading": [
+    {
+      "type": 0,
+      "value": "Rename project"
     }
   ],
   "reset-to-default-action": [

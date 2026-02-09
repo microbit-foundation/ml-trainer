@@ -43,9 +43,7 @@ export class ProjectsPage {
   }
 
   async expectNoProjects() {
-    await expect(
-      this.page.getByText("No projects to display")
-    ).toBeVisible();
+    await expect(this.page.getByText("No projects to display")).toBeVisible();
   }
 
   async expectProjectVisible(name: string) {
@@ -83,32 +81,24 @@ export class ProjectsPage {
 
   async menuOpen(projectName: string) {
     await this.openCardMenu(projectName);
-    await this.page
-      .getByRole("menuitem", { name: "Open" })
-      .click();
+    await this.page.getByRole("menuitem", { name: "Open" }).click();
   }
 
   async menuRename(projectName: string, newName: string) {
     await this.openCardMenu(projectName);
-    await this.page
-      .getByRole("menuitem", { name: "Rename" })
-      .click();
-    await this.fillNameDialogAndSave(newName);
+    await this.page.getByRole("menuitem", { name: "Rename" }).click();
+    await this.fillNameDialogAndConfirm(newName, "Rename");
   }
 
   async menuDuplicate(projectName: string, newName: string) {
     await this.openCardMenu(projectName);
-    await this.page
-      .getByRole("menuitem", { name: "Duplicate" })
-      .click();
-    await this.fillNameDialogAndSave(newName);
+    await this.page.getByRole("menuitem", { name: "Duplicate" }).click();
+    await this.fillNameDialogAndConfirm(newName, "Duplicate");
   }
 
   async menuDelete(projectName: string) {
     await this.openCardMenu(projectName);
-    await this.page
-      .getByRole("menuitem", { name: "Delete" })
-      .click();
+    await this.page.getByRole("menuitem", { name: "Delete" }).click();
     await this.confirmDelete();
   }
 
@@ -147,7 +137,7 @@ export class ProjectsPage {
       .first()
       .getByRole("button", { name: "Rename" })
       .click();
-    await this.fillNameDialogAndSave(newName);
+    await this.fillNameDialogAndConfirm(newName, "Rename");
   }
 
   async toolbarDuplicate(newName: string) {
@@ -155,7 +145,7 @@ export class ProjectsPage {
       .first()
       .getByRole("button", { name: "Duplicate" })
       .click();
-    await this.fillNameDialogAndSave(newName);
+    await this.fillNameDialogAndConfirm(newName, "Duplicate");
   }
 
   async toolbarDelete() {
@@ -175,15 +165,16 @@ export class ProjectsPage {
 
   // Dialog helpers
 
-  private async fillNameDialogAndSave(newName: string) {
+  private async fillNameDialogAndConfirm(
+    newName: string,
+    confirmLabel: string
+  ) {
     const dialog = this.page.getByRole("dialog");
     await expect(dialog).toBeVisible();
     const nameInput = dialog.getByRole("textbox");
     await nameInput.clear();
     await nameInput.fill(newName);
-    await dialog
-      .getByRole("button", { name: "Confirm and save" })
-      .click();
+    await dialog.getByRole("button", { name: confirmLabel }).click();
     await expect(dialog).toBeHidden();
   }
 

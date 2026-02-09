@@ -631,6 +631,10 @@
     "defaultMessage": "Duplicate",
     "description": "Duplicate project action"
   },
+  "duplicate-project-heading": {
+    "defaultMessage": "Duplicate project",
+    "description": "Heading for duplicate project dialog"
+  },
   "edit-in-makecode-action": {
     "defaultMessage": "crwdns362934:0crwdne362934:0",
     "description": "Edit in MakeCode button text"
@@ -1562,6 +1566,10 @@
   "rename-project-action": {
     "defaultMessage": "Rename",
     "description": "Rename project action"
+  },
+  "rename-project-heading": {
+    "defaultMessage": "Rename project",
+    "description": "Heading for rename project dialog"
   },
   "reset-to-default-action": {
     "defaultMessage": "crwdns363300:0crwdne363300:0",
