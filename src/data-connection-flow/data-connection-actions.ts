@@ -182,7 +182,6 @@ const executeAction = async (
           ? event.bluetoothMicrobitName
           : undefined;
       if (name) {
-        deps.connections.bluetooth.setNameFilter(name);
         await useStore.getState().setSettings({ bluetoothMicrobitName: name });
       }
       break;
@@ -313,12 +312,25 @@ const executeAction = async (
 // =============================================================================
 
 /**
+ * Sync connection configuration from persisted settings.
+ * Called before each connection attempt so settings loaded asynchronously
+ * from IndexedDB or updated mid-flow are reflected on the connection.
+ */
+const syncConnectionSettings = (deps: DataConnectionDeps) => {
+  const { bluetoothMicrobitName } = useStore.getState().settings;
+  if (bluetoothMicrobitName) {
+    deps.connections.bluetooth.setNameFilter(bluetoothMicrobitName);
+  }
+};
+
+/**
  * Connect to the flash connection (USB or Native Bluetooth) in order to flash.
  */
 const performConnectFlash = async (
   clearDevice: boolean,
   deps: DataConnectionDeps
 ): Promise<void> => {
+  syncConnectionSettings(deps);
   const state = getDataConnectionState();
   const connection = deps.connections.getDefaultFlashConnection();
   const abortController = new AbortController();
@@ -398,6 +410,7 @@ const performConnectData = async (
   clearDevice: boolean,
   deps: DataConnectionDeps
 ): Promise<void> => {
+  syncConnectionSettings(deps);
   const state = getDataConnectionState();
   // Only log for user-initiated connections, not reconnects.
   if (!state.isReconnecting) {
@@ -468,13 +481,6 @@ export const initializeCapabilities = async (connections: Connections) => {
     isWebUsbSupported(connections.usb),
   ]);
   const store = useStore.getState();
-
-  // Initialize bluetooth name filter from persisted settings
-  const bluetoothMicrobitName = store.settings.bluetoothMicrobitName;
-  if (bluetoothMicrobitName) {
-    connections.bluetooth.setNameFilter(bluetoothMicrobitName);
-  }
-
   store.setDataConnection({
     ...store.dataConnection,
     isWebBluetoothSupported: webBluetoothSupported,
