@@ -33,7 +33,7 @@ const WelcomeDialog = ({ onClose, isOpen, ...rest }: WelcomeDialogProps) => {
     <Modal
       closeOnOverlayClick={false}
       motionPreset="none"
-      size="4xl"
+      size={{ base: "full", md: "4xl" }}
       isCentered
       onClose={handleClose}
       isOpen={isOpen}
