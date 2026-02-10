@@ -1652,6 +1652,9 @@ const createMlStore = (logging: Logging) => {
         },
 
         async tourStart(trigger: TourTrigger, manual: boolean = false) {
+          if (flags.skipTours && !manual) {
+            return;
+          }
           const { actions, id, settings, tourState } = get();
           if (
             manual ||
