@@ -1556,14 +1556,7 @@ const createMlStore = (logging: Logging) => {
           }
         },
         setDownload(download: DownloadState) {
-          set(
-            {
-              download,
-              downloadFlashingProgress: { stage: undefined, value: undefined },
-            },
-            false,
-            "setDownload"
-          );
+          set({ download }, false, "setDownload");
         },
         setDownloadFlashingProgress(stage, value) {
           set(
