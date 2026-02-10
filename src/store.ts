@@ -219,10 +219,6 @@ export interface State {
   allProjectData: ProjectDataWithActions[];
 }
 
-export interface ConnectOptions {
-  postConnectTourTrigger?: TourTrigger;
-}
-
 export interface Actions {
   getAllProjectData(): Promise<void>;
   loadProjectFromStorage(id: string): Promise<void>;
@@ -242,7 +238,6 @@ export interface Actions {
   deleteAllActions(): Promise<void>;
   downloadDataset(): void;
 
-  dataCollectionMicrobitConnectionStart(options?: ConnectOptions): void;
   dataCollectionMicrobitConnected(): void;
 
   loadDataset(actions: ActionData[], loadAction: LoadAction): Promise<void>;
@@ -504,7 +499,7 @@ const createMlStore = (logging: Logging) => {
               isEditorOpen: open,
               download: {
                 ...download,
-                usbDevice: undefined,
+                connection: undefined,
               },
             }),
             false,
@@ -1632,13 +1627,6 @@ const createMlStore = (logging: Logging) => {
             { postConnectTourTrigger: trigger },
             false,
             "setPostConnectTourId"
-          );
-        },
-        dataCollectionMicrobitConnectionStart(options) {
-          set(
-            { postConnectTourTrigger: options?.postConnectTourTrigger },
-            false,
-            "dataCollectionMicrobitConnectionStart"
           );
         },
         dataCollectionMicrobitConnected() {
