@@ -16,7 +16,7 @@ test.describe("projects page", () => {
     await projectsPage.expectNoProjects();
   });
 
-  test("shows project after creating one", async ({
+  test("shows project after creating one via import", async ({
     homePage,
     dataSamplesPage,
     projectsPage,

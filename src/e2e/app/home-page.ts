@@ -51,6 +51,7 @@ export class HomePage {
 
   async newProject() {
     await this.page.getByRole("button", { name: "New project" }).click();
+    await this.page.getByRole("button", { name: "Create project" }).click();
   }
 
   async importProject(filePathFromProjectRoot: string) {

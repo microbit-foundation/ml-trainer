@@ -11,10 +11,10 @@ test.describe("home page", () => {
     await homePage.goto();
   });
 
-  test("shows new projects section", async ({ homePage }) => {
+  test("my projects section", async ({ homePage }) => {
     homePage.expectOnHomePage();
     await expect(
-      homePage.page.getByRole("heading", { name: "New projects" })
+      homePage.page.getByRole("heading", { name: "My projects" })
     ).toBeVisible();
     await expect(
       homePage.page.getByRole("button", { name: "New project" })
