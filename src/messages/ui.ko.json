@@ -721,6 +721,18 @@
       "value": "복사"
     }
   ],
+  "create-project": [
+    {
+      "type": 0,
+      "value": "Create project"
+    }
+  ],
+  "create-project-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Create a project"
+    }
+  ],
   "data-actions-menu": [
     {
       "type": 0,

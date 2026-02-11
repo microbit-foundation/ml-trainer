@@ -427,6 +427,14 @@
     "defaultMessage": "crwdns362844:0crwdne362844:0",
     "description": "Copy button text"
   },
+  "create-project": {
+    "defaultMessage": "Create project",
+    "description": "Create project button text"
+  },
+  "create-project-dialog-heading": {
+    "defaultMessage": "Create a project",
+    "description": "Create project dialog heading"
+  },
   "data-actions-menu": {
     "defaultMessage": "crwdns362846:0crwdne362846:0",
     "description": "Aria label for menu"

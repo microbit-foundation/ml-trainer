@@ -723,6 +723,18 @@
       "value": "crwdns362844:0crwdne362844:0"
     }
   ],
+  "create-project": [
+    {
+      "type": 0,
+      "value": "Create project"
+    }
+  ],
+  "create-project-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Create a project"
+    }
+  ],
   "data-actions-menu": [
     {
       "type": 0,

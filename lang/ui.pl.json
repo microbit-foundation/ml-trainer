@@ -427,6 +427,14 @@
     "defaultMessage": "Kopiuj",
     "description": "Copy button text"
   },
+  "create-project": {
+    "defaultMessage": "Create project",
+    "description": "Create project button text"
+  },
+  "create-project-dialog-heading": {
+    "defaultMessage": "Create a project",
+    "description": "Create project dialog heading"
+  },
   "data-actions-menu": {
     "defaultMessage": "Akcje danych",
     "description": "Aria label for menu"

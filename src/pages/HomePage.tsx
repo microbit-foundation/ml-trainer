@@ -203,7 +203,8 @@ const NewProjectCard = () => {
         onClose={handleCloseNameDialog}
         onSave={handleNameProjectSave}
         helperText={null}
-        confirmText={<FormattedMessage id="confirm-action" />}
+        heading={<FormattedMessage id="create-project-dialog-heading" />}
+        confirmText={<FormattedMessage id="create-project" />}
       />
       <ActionCard
         onClick={handleOpenNameDialog}
