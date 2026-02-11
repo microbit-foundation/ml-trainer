@@ -12,6 +12,14 @@ import { RiEditLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
 import { useStore } from "../store";
 
+const commonStyleProps = {
+  h: 10,
+  px: 2,
+  borderRadius: "md",
+};
+
+const backgroundColor = "blackAlpha.300";
+
 const EditableName = () => {
   const intl = useIntl();
   const getCurrentProject = useStore((s) => s.getCurrentProject);
@@ -60,11 +68,9 @@ const EditableName = () => {
           >
             <Button
               display={!isEditing ? "flex" : "none"}
-              h={10}
-              px={2}
-              borderRadius="md"
+              {...commonStyleProps}
               _hover={{
-                backgroundColor: "blackAlpha.300",
+                backgroundColor,
               }}
               fontWeight="normal"
               onClick={onEdit}
@@ -78,10 +84,8 @@ const EditableName = () => {
           <>
             <HStack
               display={isEditing ? "flex" : "none"}
-              h={10}
-              px={2}
-              borderRadius="md"
-              backgroundColor="blackAlpha.300"
+              {...commonStyleProps}
+              backgroundColor={backgroundColor}
             >
               <Icon as={RiEditLine} />
               <EditableInput
