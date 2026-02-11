@@ -159,6 +159,7 @@ const DataSamplesPage = () => {
         showPageTitle
         menuItems={<ProjectMenuItems />}
         toolbarItemsRight={<ProjectToolbarItems />}
+        showProjectName
       >
         <Flex as="main" flexGrow={1} flexDir="column" ref={pageRef}>
           <DataSamplesTable

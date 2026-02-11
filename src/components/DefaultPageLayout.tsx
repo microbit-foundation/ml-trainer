@@ -37,6 +37,7 @@ import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
+import EditableName from "./EditableName";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -45,6 +46,7 @@ interface DefaultPageLayoutProps {
   toolbarItemsRight?: ReactNode;
   menuItems?: ReactNode;
   showPageTitle?: boolean;
+  showProjectName?: boolean;
 }
 
 const DefaultPageLayout = ({
@@ -54,6 +56,7 @@ const DefaultPageLayout = ({
   toolbarItemsLeft,
   toolbarItemsRight,
   showPageTitle = false,
+  showProjectName,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
   const { isDialogOpen: isConnectionDialogOpen } = useConnectionStage();
@@ -109,6 +112,7 @@ const DefaultPageLayout = ({
               px={{ base: 3, sm: 5 }}
               itemsCenter={
                 <>
+                  {showProjectName && <EditableName />}
                   {showPageTitle && (
                     <Heading size="md" fontWeight="normal" color="white">
                       <FormattedMessage id={titleId} />

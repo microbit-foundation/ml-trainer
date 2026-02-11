@@ -1435,6 +1435,14 @@
     "defaultMessage": "El nombre del proyecto no puede estar en blanco",
     "description": "Validation message for project name"
   },
+  "project-name-text": {
+    "defaultMessage": "Project name",
+    "description": "Label for project name input"
+  },
+  "project-name-tooltip": {
+    "defaultMessage": "Click to edit project name",
+    "description": "Tooltip for the project name editable input"
+  },
   "project-skip-to-toolbar": {
     "defaultMessage": "Skip to toolbar",
     "description": "Button to skip focus to the projects toolbar"

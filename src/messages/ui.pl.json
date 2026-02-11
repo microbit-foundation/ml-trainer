@@ -2517,6 +2517,18 @@
       "value": "Nazwa projektu nie może być pusta"
     }
   ],
+  "project-name-text": [
+    {
+      "type": 0,
+      "value": "Project name"
+    }
+  ],
+  "project-name-tooltip": [
+    {
+      "type": 0,
+      "value": "Click to edit project name"
+    }
+  ],
   "project-skip-to-toolbar": [
     {
       "type": 0,

@@ -131,6 +131,7 @@ const TestingModelPage = () => {
           <FormattedMessage id="back-to-data-samples-action" />
         </Button>
       }
+      showProjectName
     >
       <IncompatibleEditorDevice
         isOpen={isIncompatibleEditorDeviceDialogOpen}
