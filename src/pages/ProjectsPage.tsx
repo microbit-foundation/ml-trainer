@@ -38,9 +38,9 @@ import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
 import { ProjectDataWithActions } from "../storage";
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import { FormattedMessage, useIntl } from "react-intl";
+import { ProjectNameDialogReason } from "../project-utils";
 
 type OrderByField = "timestamp" | "name";
-export type ProjectNameDialogReason = "rename" | "duplicate";
 
 interface RankedProject extends ProjectDataWithActions {
   score: number;
