@@ -2514,7 +2514,7 @@
   "project-storage-tooltip": [
     {
       "type": 0,
-      "value": "Text to inform the user about where their projects are actually stored with link to support article?"
+      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if you don't visit for a while, especially in Safari."
     }
   ],
   "projects-page-title": [

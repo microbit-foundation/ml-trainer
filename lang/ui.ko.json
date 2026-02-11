@@ -1432,7 +1432,7 @@
     "description": "Button to skip focus to the projects toolbar"
   },
   "project-storage-tooltip": {
-    "defaultMessage": "Text to inform the user about where their projects are actually stored with link to support article?",
+    "defaultMessage": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if you don't visit for a while, especially in Safari.",
     "description": "Tooltip for my projects row"
   },
   "projects-page-title": {
