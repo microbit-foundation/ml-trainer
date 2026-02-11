@@ -20,7 +20,7 @@ const CarouselRow = ({
 }: CarouselRowProps) => {
   return (
     <Box w="100%" py={8}>
-      <HStack px={16} mt={2} mb={2} spacing={4}>
+      <HStack px={16} mt={2} mb={2} spacing={12}>
         {typeof titleId === "string" ? (
           <Heading as="h2" fontSize="3xl">
             <FormattedMessage id={titleId} />
