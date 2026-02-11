@@ -3,20 +3,16 @@ import {
   Editable,
   EditableInput,
   EditablePreview,
-  HStack,
   Icon,
+  Input,
+  InputGroup,
+  InputLeftElement,
   Tooltip,
 } from "@chakra-ui/react";
 import { useCallback, useRef, useState } from "react";
 import { RiEditLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
 import { useStore } from "../store";
-
-const commonStyleProps = {
-  h: 10,
-  px: 2,
-  borderRadius: "md",
-};
 
 const backgroundColor = "blackAlpha.300";
 
@@ -68,7 +64,9 @@ const EditableName = () => {
           >
             <Button
               display={!isEditing ? "flex" : "none"}
-              {...commonStyleProps}
+              h={10}
+              px={2}
+              borderRadius="md"
               _hover={{
                 backgroundColor,
               }}
@@ -77,28 +75,37 @@ const EditableName = () => {
               ref={ref}
               variant="unstyled"
               leftIcon={<Icon as={RiEditLine} />}
+              _focusVisible={{
+                boxShadow: "outlineDark",
+              }}
             >
               <EditablePreview
                 cursor="pointer"
-                w="200px"
+                fontSize={20}
+                maxW="200px"
+                w="fit-content"
                 noOfLines={1}
                 textAlign="left"
               />
             </Button>
           </Tooltip>
           <>
-            <HStack
+            <InputGroup
               display={isEditing ? "flex" : "none"}
-              {...commonStyleProps}
               backgroundColor={backgroundColor}
+              borderRadius="md"
             >
-              <Icon as={RiEditLine} />
-              <EditableInput
-                aria-label={intl.formatMessage({ id: "name-text" })}
-                w="200px"
-                _focusVisible={{ boxShadow: "none" }}
+              <InputLeftElement pointerEvents="none">
+                <Icon as={RiEditLine} />
+              </InputLeftElement>
+              <Input
+                as={EditableInput}
+                aria-label={intl.formatMessage({ id: "project-name-text" })}
+                _focusVisible={{
+                  boxShadow: "0 0 0 2px rgba(0, 0, 0, 0.5)",
+                }}
               />
-            </HStack>
+            </InputGroup>
           </>
         </>
       )}
