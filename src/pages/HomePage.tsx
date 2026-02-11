@@ -16,7 +16,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
-import { Suspense, useCallback, useRef } from "react";
+import { Suspense, useCallback, useRef, useState } from "react";
 import { RiAddLine, RiInformationLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Await, useLoaderData, useNavigate } from "react-router";
@@ -35,6 +35,8 @@ import { createResourceCards } from "../components/ResourceCards";
 import { useLogging } from "../logging/logging-hooks";
 import { useSettings, useStore } from "../store";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
+import { NameProjectDialog } from "../components/NameProjectDialog";
+import { untitledProjectName } from "../project-utils";
 
 const HomePage = () => {
   const { allProjectDataLoaded } = useLoaderData() as {
@@ -122,41 +124,63 @@ const ViewAllProjectsButton = () => {
 
 const NewProjectCard = () => {
   const newSession = useStore((s) => s.newSession);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const logging = useLogging();
 
-  const handleStartNewSession = useCallback(async () => {
-    logging.event({
-      type: "session-open-new",
-    });
-    await newSession();
-    navigate(createDataSamplesPageUrl());
-  }, [logging, newSession, navigate]);
+  const handleNameProjectSave = useCallback(
+    async (projectName: string) => {
+      logging.event({
+        type: "session-open-new",
+      });
+      await newSession(projectName);
+      navigate(createDataSamplesPageUrl());
+    },
+    [logging, newSession, navigate]
+  );
+
+  const handleOpenNameDialog = useCallback(() => {
+    setIsOpen(true);
+  }, []);
+
+  const handleCloseNameDialog = useCallback(() => {
+    setIsOpen(false);
+  }, []);
 
   return (
-    <LinkBox>
-      <Card flexGrow={1} overflow="hidden" aspectRatio={4 / 3}>
-        <VStack
-          h="100%"
-          w="100%"
-          py={8}
-          gap={3}
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Icon as={RiAddLine} h={10} w={10} />
-          <LinkOverlay
-            as={Button}
-            fontSize="xl"
-            onClick={handleStartNewSession}
-            variant="unstyled"
-            _focusVisible={{ boxShadow: "outline", outline: "none" }}
+    <>
+      <NameProjectDialog
+        projectName={untitledProjectName}
+        isOpen={isOpen}
+        onClose={handleCloseNameDialog}
+        onSave={handleNameProjectSave}
+        helperText={null}
+        confirmText={<FormattedMessage id="confirm-action" />}
+      />
+      <LinkBox>
+        <Card flexGrow={1} overflow="hidden" aspectRatio={4 / 3}>
+          <VStack
+            h="100%"
+            w="100%"
+            py={8}
+            gap={3}
+            alignItems="center"
+            justifyContent="center"
           >
-            <FormattedMessage id="newpage-new-project-title" />
-          </LinkOverlay>
-        </VStack>
-      </Card>
-    </LinkBox>
+            <Icon as={RiAddLine} h={10} w={10} />
+            <LinkOverlay
+              as={Button}
+              fontSize="xl"
+              onClick={handleOpenNameDialog}
+              variant="unstyled"
+              _focusVisible={{ boxShadow: "outline", outline: "none" }}
+            >
+              <FormattedMessage id="newpage-new-project-title" />
+            </LinkOverlay>
+          </VStack>
+        </Card>
+      </LinkBox>
+    </>
   );
 };
 
