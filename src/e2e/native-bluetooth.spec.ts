@@ -38,17 +38,9 @@ test.describe("native bluetooth", () => {
     fs.mkdirSync(screenshotDir, { recursive: true });
   });
 
-  test("data connection flow", async ({
-    homePage,
-    newPage,
-    dataSamplesPage,
-    page,
-  }) => {
-    await homePage.setupContext();
+  test("data connection flow", async ({ homePage, dataSamplesPage, page }) => {
     await homePage.goto(["simulateNative"]);
-    // Use button role selector which works better at tablet viewport
-    await page.getByRole("button", { name: "Get started" }).click();
-    await newPage.startNewSession();
+    await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
 
@@ -125,14 +117,11 @@ test.describe("native bluetooth", () => {
 
   test("data connection - bluetooth disabled error", async ({
     homePage,
-    newPage,
     dataSamplesPage,
     page,
   }) => {
-    await homePage.setupContext();
     await homePage.goto(["simulateNative"]);
-    await page.getByRole("button", { name: "Get started" }).click();
-    await newPage.startNewSession();
+    await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
 
@@ -158,14 +147,11 @@ test.describe("native bluetooth", () => {
 
   test("data connection - permission denied error", async ({
     homePage,
-    newPage,
     dataSamplesPage,
     page,
   }) => {
-    await homePage.setupContext();
     await homePage.goto(["simulateNative"]);
-    await page.getByRole("button", { name: "Get started" }).click();
-    await newPage.startNewSession();
+    await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
 
@@ -189,14 +175,10 @@ test.describe("native bluetooth", () => {
 
   test("data connection - cancel from error dialog closes dialogs", async ({
     homePage,
-    newPage,
     dataSamplesPage,
-    page,
   }) => {
-    await homePage.setupContext();
     await homePage.goto(["simulateNative"]);
-    await page.getByRole("button", { name: "Get started" }).click();
-    await newPage.startNewSession();
+    await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
     await connectionDialogs.setBluetoothAvailability("disabled");
@@ -214,14 +196,10 @@ test.describe("native bluetooth", () => {
 
   test("data connection - DeviceError during connect shows same error dialogs", async ({
     homePage,
-    newPage,
     dataSamplesPage,
-    page,
   }) => {
-    await homePage.setupContext();
     await homePage.goto(["simulateNative"]);
-    await page.getByRole("button", { name: "Get started" }).click();
-    await newPage.startNewSession();
+    await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
 
@@ -251,14 +229,11 @@ test.describe("native bluetooth", () => {
 
   test("data connection - connection lost", async ({
     homePage,
-    newPage,
     dataSamplesPage,
     page,
   }) => {
-    await homePage.setupContext();
     await homePage.goto(["simulateNative"]);
-    await page.getByRole("button", { name: "Get started" }).click();
-    await newPage.startNewSession();
+    await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
 
@@ -299,14 +274,11 @@ test.describe("native bluetooth", () => {
 
   test("data connection - connect failed error", async ({
     homePage,
-    newPage,
     dataSamplesPage,
     page,
   }) => {
-    await homePage.setupContext();
     await homePage.goto(["simulateNative"]);
-    await page.getByRole("button", { name: "Get started" }).click();
-    await newPage.startNewSession();
+    await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
 
@@ -342,16 +314,14 @@ test.describe("native bluetooth", () => {
 
   test("download flow", async ({
     homePage,
-    newPage,
     dataSamplesPage,
     testModelPage,
     page,
   }) => {
     // Setup: train model (no need to connect first for native BT download)
-    await homePage.setupContext();
     await homePage.goto(["simulateNative"]);
-    await page.getByRole("button", { name: "Get started" }).click();
-    await newPage.continueSavedSession("test-data/dataset.json");
+    await homePage.importProject("test-data/dataset.json");
+    await dataSamplesPage.welcomeDialog.close();
 
     const trainModelDialog = await dataSamplesPage.trainModel();
     await trainModelDialog.train();
@@ -432,15 +402,13 @@ test.describe("native bluetooth", () => {
 
   test("download flow - connect failed error", async ({
     homePage,
-    newPage,
     dataSamplesPage,
     testModelPage,
     page,
   }) => {
-    await homePage.setupContext();
     await homePage.goto(["simulateNative"]);
-    await page.getByRole("button", { name: "Get started" }).click();
-    await newPage.continueSavedSession("test-data/dataset.json");
+    await homePage.importProject("test-data/dataset.json");
+    await dataSamplesPage.welcomeDialog.close();
 
     const trainModelDialog = await dataSamplesPage.trainModel();
     await trainModelDialog.train();

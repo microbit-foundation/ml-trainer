@@ -11,11 +11,9 @@ import { downloadDialogTitles as downloadDialog } from "./app/download-dialogs";
 import { test } from "./fixtures";
 
 test.describe("radio connection", () => {
-  test.beforeEach(async ({ homePage, newPage }) => {
-    await homePage.setupContext();
+  test.beforeEach(async ({ homePage }) => {
     await homePage.goto();
-    await homePage.getStarted();
-    await newPage.startNewSession();
+    await homePage.newProject();
   });
 
   test("happy flow", async ({ dataSamplesPage }) => {
@@ -125,11 +123,9 @@ test.describe("radio connection", () => {
 });
 
 test.describe("radio reconnection", () => {
-  test.beforeEach(async ({ homePage, newPage, dataSamplesPage }) => {
-    await homePage.setupContext();
-    await homePage.goto(["skipTours"]);
-    await homePage.getStarted();
-    await newPage.startNewSession();
+  test.beforeEach(async ({ homePage, dataSamplesPage }) => {
+    await homePage.goto();
+    await homePage.newProject();
 
     // Connect via radio
     const connectionDialogs = await dataSamplesPage.connect();
@@ -147,6 +143,9 @@ test.describe("radio reconnection", () => {
     await connectionDialogs.waitForText(dialog.radio.download2);
     await connectionDialogs.clickNext();
     await dataSamplesPage.expectConnected();
+    await dataSamplesPage.page
+      .getByRole("button", { name: "Skip tour" })
+      .click();
   });
 
   test("bridge disconnect shows bridge-specific error and reconnects", async ({

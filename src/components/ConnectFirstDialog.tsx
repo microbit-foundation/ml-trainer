@@ -36,63 +36,18 @@ const ConnectFirstDialog = ({
   isOpen,
   ...rest
 }: ConnectFirstDialogProps) => {
-  const actions = useDataConnectionActions();
-  const dataConnection = useStore((s) => s.dataConnection);
-  const isConnected = dataConnection.step === DataConnectionStep.Connected;
-  const isReconnecting = dataConnection.isReconnecting;
-  const isConnectionDialogOpen = isDataConnectionDialogOpen(
-    dataConnection.step
-  );
-  const [isWaiting, setIsWaiting] = useState<boolean>(false);
-
-  const handleOnClose = useCallback(() => {
-    setIsWaiting(false);
-    onClose();
-  }, [onClose]);
-
-  const handleConnect = useCallback(() => {
-    onChooseConnect?.();
-
-    // Auto-reconnection in progress - show loading and wait for it
-    if (isReconnecting) {
-      setIsWaiting(true);
-      return;
-    }
-
-    // Already connected or connection dialog in progress - just close
-    if (isConnected || isConnectionDialogOpen) {
-      handleOnClose();
-      return;
-    }
-
-    // Initiate connection - state machine decides fresh vs reconnect
-    actions.connect();
-    handleOnClose();
-  }, [
-    onChooseConnect,
-    isReconnecting,
-    isConnected,
-    isConnectionDialogOpen,
-    actions,
-    handleOnClose,
-  ]);
-
-  useEffect(() => {
-    if (isOpen && (isConnectionDialogOpen || (isWaiting && isConnected))) {
-      // Close dialog if connection dialog is opened, or
-      // once connected after waiting.
-      handleOnClose();
-      return;
-    }
-  }, [isConnected, handleOnClose, isConnectionDialogOpen, isOpen, isWaiting]);
-
+  const { handleClose, isConnecting, handleConnect } = useConnectFirst({
+    isOpen,
+    onClose,
+    onConnect: onChooseConnect,
+  });
   return (
     <Modal
       closeOnOverlayClick={false}
       motionPreset="none"
       size="md"
       isCentered
-      onClose={handleOnClose}
+      onClose={handleClose}
       isOpen={isOpen}
       {...rest}
     >
@@ -111,7 +66,7 @@ const ConnectFirstDialog = ({
             <ButtonWithLoading
               variant="primary"
               onClick={handleConnect}
-              isLoading={isWaiting}
+              isLoading={isConnecting}
             >
               <FormattedMessage id="connect-action" />
             </ButtonWithLoading>
@@ -120,6 +75,68 @@ const ConnectFirstDialog = ({
       </ModalOverlay>
     </Modal>
   );
+};
+
+export const useConnectFirst = ({
+  isOpen,
+  onClose,
+  onConnect,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onConnect?: () => void;
+}) => {
+  const connActions = useDataConnectionActions();
+  const dataConnection = useStore((s) => s.dataConnection);
+  const isConnected = dataConnection.step === DataConnectionStep.Connected;
+  const isReconnecting = dataConnection.isReconnecting;
+  const isConnectionDialogOpen = isDataConnectionDialogOpen(
+    dataConnection.step
+  );
+  const [isConnecting, setIsConnecting] = useState<boolean>(false);
+
+  const handleClose = useCallback(() => {
+    setIsConnecting(false);
+    onClose();
+  }, [onClose]);
+
+  const handleConnect = useCallback(() => {
+    onConnect?.();
+
+    // Auto-reconnection in progress - show loading and wait for it
+    if (isReconnecting) {
+      setIsConnecting(true);
+      return;
+    }
+
+    // Already connected or connection dialog in progress - just close
+    if (isConnected || isConnectionDialogOpen) {
+      handleClose();
+      return;
+    }
+
+    // Initiate connection - state machine decides fresh vs reconnect
+    connActions.connect();
+    handleClose();
+  }, [
+    onConnect,
+    isReconnecting,
+    isConnected,
+    isConnectionDialogOpen,
+    connActions,
+    handleClose,
+  ]);
+
+  useEffect(() => {
+    if (isOpen && (isConnectionDialogOpen || (isConnecting && isConnected))) {
+      // Close dialog if connection dialog is opened, or
+      // once connected after waiting.
+      handleClose();
+      return;
+    }
+  }, [isConnected, handleClose, isConnectionDialogOpen, isOpen, isConnecting]);
+
+  return { handleConnect, isConnecting, handleClose };
 };
 
 export default ConnectFirstDialog;

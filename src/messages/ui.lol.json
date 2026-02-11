@@ -107,6 +107,44 @@
       "value": "crwdns362672:0crwdne362672:0"
     }
   ],
+  "add-action-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Add another action"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
+  "add-action-hint-label": [
+    {
+      "type": 0,
+      "value": "Finished recording for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "? Press ‘Add action’ button to add another action"
+    }
+  ],
   "ai-activity-timer-resource-title": [
     {
       "type": 0,
@@ -241,6 +279,32 @@
       "value": "crwdns362688:0crwdne362688:0"
     }
   ],
+  "carousel-role": [
+    {
+      "type": 0,
+      "value": "carousel"
+    }
+  ],
+  "carousel-slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "carousel-slide-role": [
+    {
+      "type": 0,
+      "value": "slide"
+    }
+  ],
   "certainty-label": [
     {
       "type": 0,
@@ -279,6 +343,12 @@
     {
       "type": 0,
       "value": "crwdns362696:0crwdne362696:0"
+    }
+  ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
     }
   ],
   "click-to-reload-page-action": [
@@ -1001,6 +1071,80 @@
       "value": "crwdns362884:0crwdne362884:0"
     }
   ],
+  "delete-project-action": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete "
+            },
+            {
+              "type": 1,
+              "value": "count"
+            },
+            {
+              "type": 0,
+              "value": " projects"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete project"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "delete-projects-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete projects"
+    }
+  ],
+  "delete-projects-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete "
+    },
+    {
+      "type": 1,
+      "value": "numProjects"
+    },
+    {
+      "type": 0,
+      "value": " projects?"
+    }
+  ],
   "delete-recording-aria": [
     {
       "type": 0,
@@ -1205,6 +1349,18 @@
     {
       "type": 0,
       "value": "Waiting for micro:bit to reboot..."
+    }
+  ],
+  "duplicate-project-action": [
+    {
+      "type": 0,
+      "value": "Duplicate"
+    }
+  ],
+  "duplicate-project-heading": [
+    {
+      "type": 0,
+      "value": "Duplicate project"
     }
   ],
   "edit-in-makecode-action": [
@@ -1515,6 +1671,12 @@
       "value": "crwdns363018:0crwdne363018:0"
     }
   ],
+  "home-page-action": [
+    {
+      "type": 0,
+      "value": "Home page"
+    }
+  ],
   "homepage": [
     {
       "type": 0,
@@ -1689,6 +1851,12 @@
     {
       "type": 0,
       "value": "crwdns363048:0crwdne363048:0"
+    }
+  ],
+  "import-file-action": [
+    {
+      "type": 0,
+      "value": "Import"
     }
   ],
   "incompatible-device-body-alt": [
@@ -2155,6 +2323,24 @@
       "value": "crwdns363178:0crwdne363178:0"
     }
   ],
+  "move-hint": [
+    {
+      "type": 0,
+      "value": "Move the micro:bit to explore how different actions change the graph"
+    }
+  ],
+  "my-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of my projects"
+    }
+  ],
+  "my-projects-row-title": [
+    {
+      "type": 0,
+      "value": "My projects"
+    }
+  ],
   "name-action-hint": [
     {
       "type": 0,
@@ -2259,6 +2445,18 @@
       "value": "Could not connect to micro:bit"
     }
   ],
+  "new-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of new project actions"
+    }
+  ],
+  "new-projects-row-title": [
+    {
+      "type": 0,
+      "value": "New projects"
+    }
+  ],
   "new-session-setup-description": [
     {
       "type": 0,
@@ -2323,6 +2521,12 @@
       "value": "crwdns363202:0crwdne363202:0"
     }
   ],
+  "newpage-new-project-title": [
+    {
+      "type": 0,
+      "value": "New project"
+    }
+  ],
   "newpage-new-session-subtitle": [
     {
       "type": 0,
@@ -2359,10 +2563,10 @@
       "value": "crwdns363214:0crwdne363214:0"
     }
   ],
-  "no-data-samples": [
+  "no-projects": [
     {
       "type": 0,
-      "value": "crwdns363216:0crwdne363216:0"
+      "value": "No projects to display"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
@@ -2419,6 +2623,12 @@
     {
       "type": 0,
       "value": "crwdns368585:0crwdne368585:0"
+    }
+  ],
+  "open-shared-project-action": [
+    {
+      "type": 0,
+      "value": "Open project"
     }
   ],
   "open-shared-project-blocks-preview-description": [
@@ -2483,16 +2693,56 @@
       "value": "crwdns363236:0crwdne363236:0"
     }
   ],
+  "project-ideas-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of project ideas"
+    }
+  ],
+  "project-ideas-row-title": [
+    {
+      "type": 0,
+      "value": "Project ideas"
+    }
+  ],
   "project-loaded": [
     {
       "type": 0,
       "value": "crwdns363238:0crwdne363238:0"
     }
   ],
+  "project-menu-action": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " actions menu"
+    }
+  ],
   "project-name-not-empty": [
     {
       "type": 0,
       "value": "crwdns363240:0crwdne363240:0"
+    }
+  ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "Skip to toolbar"
+    }
+  ],
+  "project-storage-tooltip": [
+    {
+      "type": 0,
+      "value": "Text to inform the user about where their projects are actually stored with link to support article?"
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
     }
   ],
   "radio-link-microbit": [
@@ -2609,6 +2859,90 @@
     {
       "type": 0,
       "value": "crwdns363274:0crwdne363274:0"
+    }
+  ],
+  "record-more-hint": [
+    {
+      "type": 0,
+      "value": "Record at least "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    }
+  ],
+  "record-more-hint-label": [
+    {
+      "type": 0,
+      "value": "Record at least "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
     }
   ],
   "record-samples": [
@@ -2747,6 +3081,18 @@
       "value": "crwdns363298:0crwdne363298:0"
     }
   ],
+  "rename-project-action": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
+  "rename-project-heading": [
+    {
+      "type": 0,
+      "value": "Rename project"
+    }
+  ],
   "reset-to-bluetooth-mode-ab-subtitle": [
     {
       "type": 0,
@@ -2851,6 +3197,12 @@
       "value": "crwdns363324:0crwdne363324:0"
     }
   ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
+    }
+  ],
   "select-icon-action-aria": [
     {
       "type": 0,
@@ -2883,6 +3235,16 @@
     {
       "type": 0,
       "value": "crwdne363330:0"
+    }
+  ],
+  "select-project-action": [
+    {
+      "type": 0,
+      "value": "Select "
+    },
+    {
+      "type": 1,
+      "value": "name"
     }
   ],
   "settings": [
@@ -2919,6 +3281,42 @@
     {
       "type": 0,
       "value": "crwdns363342:0crwdne363342:0"
+    }
+  ],
+  "sort-option-last-modified": [
+    {
+      "type": 0,
+      "value": "Last modified"
+    }
+  ],
+  "sort-option-name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "sort-option-relevance": [
+    {
+      "type": 0,
+      "value": "Relevance"
+    }
+  ],
+  "sort-order-ascending-label": [
+    {
+      "type": 0,
+      "value": "Ascending order"
+    }
+  ],
+  "sort-order-descending-label": [
+    {
+      "type": 0,
+      "value": "Descending order"
+    }
+  ],
+  "sort-select-label": [
+    {
+      "type": 0,
+      "value": "Sort projects"
     }
   ],
   "start-session-action": [
@@ -3003,6 +3401,18 @@
     {
       "type": 0,
       "value": "crwdns368597:0crwdne368597:0"
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "now"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "a few seconds ago"
     }
   ],
   "tour-action": [
@@ -3219,6 +3629,28 @@
       "value": "crwdns363434:0crwdne363434:0"
     }
   ],
+  "train-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Train the model"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
+  "train-hint-label": [
+    {
+      "type": 0,
+      "value": "Finished recording? Press ‘Train the model’ button to train the model"
+    }
+  ],
   "train-model": [
     {
       "type": 0,
@@ -3343,6 +3775,12 @@
     {
       "type": 0,
       "value": "crwdns363476:0crwdne363476:0"
+    }
+  ],
+  "welcome-title": [
+    {
+      "type": 0,
+      "value": "How CreateAI works"
     }
   ]
 }

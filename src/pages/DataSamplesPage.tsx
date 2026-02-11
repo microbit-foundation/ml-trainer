@@ -4,39 +4,74 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, Flex, HStack } from "@chakra-ui/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  Button,
+  Flex,
+  HStack,
+  useDisclosure,
+  usePrefersReducedMotion,
+} from "@chakra-ui/react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, IntlFormatters, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { useHasMoved } from "../buffered-data-hooks";
 import DataSamplesTable from "../components/DataSamplesTable";
+import {
+  AddActionHint,
+  MoveMicrobitHint,
+  TrainHint,
+} from "../components/DataSamplesTableHints";
 import DefaultPageLayout, {
   ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
-import { useDataConnected } from "../data-connection-flow";
+import WelcomeDialog from "../components/WelcomeDialog";
+import {
+  useDataConnected,
+  isDataConnectionDialogOpen,
+} from "../data-connection-flow";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
+import {
+  ActionData,
+  DataSamplesPageHint,
+  PostImportDialogState,
+} from "../model";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
-import { createTestingModelPageUrl } from "../urls";
+import { animations } from "../components/Emoji";
+import { useLiveRegion } from "../live-region-hook";
+import debounce from "lodash.debounce";
+import { createHomePageUrl, createTestingModelPageUrl } from "../urls";
+import { projectSessionStorage } from "../session-storage";
 
 const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
   const addNewAction = useStore((s) => s.addNewAction);
   const model = useStore((s) => s.model);
+  const newSession = useStore((s) => s.newSession);
   const [selectedActionIdx, setSelectedActionIdx] = useState<number>(0);
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!projectSessionStorage.getProjectId()) {
+      return navigate(createHomePageUrl());
+    }
+  }, [navigate, newSession]);
+
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
 
   const tourStart = useStore((s) => s.tourStart);
   const isConnected = useDataConnected();
+  const isConnectionDialogOpen = useStore((s) =>
+    isDataConnectionDialogOpen(s.dataConnection.step)
+  );
   useEffect(() => {
     // If a user first connects on "Testing model" this can result in the tour when they return to the "Data samples" page.
     if (isConnected) {
-      tourStart({ name: "Connect" }, false);
+      void tourStart({ name: "Connect" }, false);
     }
   }, [isConnected, tourStart]);
 
@@ -48,16 +83,80 @@ const DataSamplesPage = () => {
   }, [navigate]);
 
   const trainButtonRef = useRef(null);
-  const handleAddNewAction = useCallback(() => {
+  const handleAddNewAction = useCallback(async () => {
     setSelectedActionIdx(actions.length);
-    addNewAction();
+    await addNewAction();
   }, [addNewAction, actions]);
   useShortcut(keyboardShortcuts.addAction, handleAddNewAction, {
     enabled: !isAddNewActionDisabled,
   });
   const intl = useIntl();
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const welcomeDialogDisclosure = useDisclosure({
+    defaultIsOpen: !isConnected && !model,
+  });
+  const hasMoved = useHasMoved();
+  const tourInProgress = useStore((s) => !!s.tourState);
+  const isRecordingDialogOpen = useStore((s) => !!s.isRecordingDialogOpen);
+  const isPostImportDialogOpen = useStore(
+    (s) => s.postImportDialogState !== PostImportDialogState.None
+  );
+  const isDialogOpen =
+    welcomeDialogDisclosure.isOpen ||
+    isConnectionDialogOpen ||
+    tourInProgress ||
+    isRecordingDialogOpen ||
+    isPostImportDialogOpen;
+  const hint = useStore((s) => s.hint);
+  const setHint = useStore((s) => s.setHint);
+  useEffect(() => {
+    // Initialise hint on first load.
+    setHint(true);
+  }, [setHint]);
+  const dataSamplesHint: DataSamplesPageHint = isDialogOpen
+    ? null
+    : isConnected && !hasMoved
+    ? "move-microbit"
+    : hint;
+
+  const pageRef = useRef(null);
+  const region = useLiveRegion(pageRef.current);
+
+  // To avoid aria-live interruptions, particularly when inputting action name.
+  const debouncedSpeakHint = useMemo(
+    () =>
+      debounce(
+        (hintText: string) => {
+          region.speak(hintText);
+        },
+        1000,
+        { leading: false, trailing: true }
+      ),
+    [region]
+  );
+
+  useEffect(() => {
+    if (!dataSamplesHint) {
+      return;
+    }
+    const actionWithHint = actions[actions.length - 1];
+    const hintText = getHintText(
+      intl,
+      dataSamplesHint,
+      isConnected,
+      actionWithHint
+    );
+    debouncedSpeakHint(hintText);
+  }, [actions, dataSamplesHint, debouncedSpeakHint, intl, isConnected, region]);
+
   return (
     <>
+      {welcomeDialogDisclosure.isOpen && !isPostImportDialogOpen && (
+        <WelcomeDialog
+          onClose={welcomeDialogDisclosure.onClose}
+          isOpen={welcomeDialogDisclosure.isOpen}
+        />
+      )}
       <TrainModelDialogs finalFocusRef={trainButtonRef} />
       <DefaultPageLayout
         titleId="data-samples-title"
@@ -79,6 +178,7 @@ const DataSamplesPage = () => {
               borderTopWidth={3}
               borderColor="gray.200"
               alignItems="center"
+              position="relative"
             >
               <HStack gap={2} alignItems="center">
                 <Button
@@ -91,6 +191,9 @@ const DataSamplesPage = () => {
                   <FormattedMessage id="add-action-action" />
                 </Button>
               </HStack>
+              {dataSamplesHint === "add-action" && (
+                <AddActionHint action={actions[0]} />
+              )}
               <HStack>
                 {model ? (
                   <Button
@@ -109,25 +212,88 @@ const DataSamplesPage = () => {
                     variant={
                       hasSufficientData ? "primary" : "secondary-disabled"
                     }
+                    animation={
+                      hasSufficientData &&
+                      !isRecordingDialogOpen &&
+                      !prefersReducedMotion
+                        ? animations.tada
+                        : undefined
+                    }
                   >
                     <FormattedMessage id="train-model" />
                   </Button>
                 )}
               </HStack>
+              {dataSamplesHint === "train" && <TrainHint />}
+              {dataSamplesHint === "move-microbit" && <MoveMicrobitHint />}
             </HStack>
-            <LiveGraphPanel disconnectedTextId="connect-to-record" />
+            <LiveGraphPanel
+              disconnectedTextId="connect-to-record"
+              showDisconnectedOverlay={!isDialogOpen}
+            />
           </>
         }
       >
-        <Flex as="main" flexGrow={1} flexDir="column">
+        <Flex as="main" flexGrow={1} flexDir="column" ref={pageRef}>
           <DataSamplesTable
             selectedActionIdx={selectedActionIdx}
             setSelectedActionIdx={setSelectedActionIdx}
+            hint={dataSamplesHint}
           />
         </Flex>
       </DefaultPageLayout>
     </>
   );
+};
+
+const getHintText = (
+  intl: IntlFormatters,
+  hint: DataSamplesPageHint,
+  isConnected: boolean,
+  action: ActionData
+): string => {
+  if (!hint) {
+    return "";
+  }
+  switch (hint) {
+    case "add-action": {
+      return intl.formatMessage(
+        { id: "add-action-hint-label" },
+        { actionName: action.name }
+      );
+    }
+    case "move-microbit": {
+      return intl.formatMessage({ id: "move-hint" });
+    }
+    case "record-first-action":
+    case "record-action": {
+      return isConnected
+        ? intl
+            .formatMessage(
+              { id: "record-hint-button-b" },
+              { mark: (chunks: string[]) => chunks }
+            )
+            .toString()
+        : intl.formatMessage({ id: "record-hint" });
+    }
+    case "name-first-action":
+    case "name-action-with-samples":
+    case "name-action": {
+      return intl.formatMessage({ id: "name-action-hint" });
+    }
+    case "record-more-action": {
+      return intl.formatMessage(
+        { id: "record-more-hint-label" },
+        {
+          numSamples: action.recordings.length === 1 ? 2 : 1,
+          actionName: action.name,
+        }
+      );
+    }
+    case "train": {
+      return intl.formatMessage({ id: "train-hint-label" });
+    }
+  }
 };
 
 export default DataSamplesPage;

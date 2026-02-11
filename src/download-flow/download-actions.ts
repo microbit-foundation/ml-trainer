@@ -91,11 +91,6 @@ const executeAction = async (
       if (event.type !== "start") {
         throw new Error("initializeDownload requires start event");
       }
-      // Set name filter from settings (already persisted)
-      const bluetoothMicrobitName = deps.settings.bluetoothMicrobitName;
-      if (bluetoothMicrobitName) {
-        deps.connections.bluetooth.setNameFilter(bluetoothMicrobitName);
-      }
       setDownloadState({
         ...state,
         hex: event.hex,
@@ -116,7 +111,6 @@ const executeAction = async (
 
     case "setMicrobitName": {
       if (event.type === "setMicrobitName") {
-        deps.connections.bluetooth.setNameFilter(event.name);
         deps.setSettings({ bluetoothMicrobitName: event.name });
       }
       break;
@@ -179,12 +173,25 @@ const executeAction = async (
 };
 
 /**
+ * Sync connection configuration from persisted settings.
+ * Called before each connection attempt so settings loaded asynchronously
+ * from IndexedDB or updated mid-flow are reflected on the connection.
+ */
+const syncConnectionSettings = (deps: DownloadDependencies) => {
+  const { bluetoothMicrobitName } = useStore.getState().settings;
+  if (bluetoothMicrobitName) {
+    deps.connections.bluetooth.setNameFilter(bluetoothMicrobitName);
+  }
+};
+
+/**
  * Perform USB/Bluetooth connect operation for flashing.
  */
 const performConnectFlash = async (
   clearDevice: boolean,
   deps: DownloadDependencies
 ): Promise<void> => {
+  syncConnectionSettings(deps);
   const state = getDownloadState();
   const { microbitChoice } = state;
   const actions = useStore.getState().actions;

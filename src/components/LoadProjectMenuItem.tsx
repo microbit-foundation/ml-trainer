@@ -28,7 +28,10 @@ const LoadProjectMenuItem = ({
   const ref = useRef<LoadProjectInputRef>(null);
   return (
     <>
-      <MenuItem {...props} onClick={() => ref.current?.chooseFile()} />
+      <MenuItem
+        {...props}
+        onClick={() => ref.current?.chooseFile("replaceActions")}
+      />
       <LoadProjectInput ref={ref} accept={accept} />
     </>
   );

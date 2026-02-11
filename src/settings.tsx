@@ -338,4 +338,10 @@ export interface Settings {
    * Persisted so it can be reused across sessions and between data connection/download flows.
    */
   bluetoothMicrobitName?: string;
+  /**
+   * List of bonded Bluetooth device ids.
+   * The connection library needs us to store this because iOS doesn't
+   * have API for checking whether a device is bonded.
+   */
+  bondedDevices?: string[];
 }

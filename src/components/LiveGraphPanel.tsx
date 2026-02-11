@@ -33,6 +33,7 @@ import PredictedAction from "./PredictedAction";
 
 interface LiveGraphPanelProps {
   showPredictedAction?: boolean;
+  showDisconnectedOverlay?: boolean;
   disconnectedTextId: string;
 }
 
@@ -41,6 +42,7 @@ export const predictedActionDisplayWidth = 180;
 const LiveGraphPanel = ({
   showPredictedAction,
   disconnectedTextId,
+  showDisconnectedOverlay = true,
 }: LiveGraphPanelProps) => {
   const actions = useDataConnectionActions();
   const dataConnection = useStore((s) => s.dataConnection);
@@ -84,7 +86,7 @@ const LiveGraphPanel = ({
       bgColor="white"
       className={tourElClassname.liveGraph}
     >
-      {isDisconnected && (
+      {isDisconnected && showDisconnectedOverlay && (
         <HStack
           position="absolute"
           w="100%"
