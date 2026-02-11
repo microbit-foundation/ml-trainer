@@ -18,7 +18,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
-import { Suspense, useCallback, useRef, useState } from "react";
+import { RefObject, Suspense, useCallback, useRef, useState } from "react";
 import { RiAddLine, RiFolderOpenLine, RiInformationLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Await, useLoaderData, useNavigate } from "react-router";
@@ -35,11 +35,17 @@ import LoadProjectInput, {
 import ProjectCard from "../components/ProjectCard";
 import { createResourceCards } from "../components/ResourceCards";
 import { useLogging } from "../logging/logging-hooks";
-import { useSettings, useStore } from "../store";
+import {
+  loadProjectAndModelFromStorage,
+  useSettings,
+  useStore,
+} from "../store";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
 import { NameProjectDialog } from "../components/NameProjectDialog";
-import { untitledProjectName } from "../project-utils";
+import { ProjectNameDialogReason, untitledProjectName } from "../project-utils";
 import { IconType } from "react-icons/lib";
+import ProjectCardActions from "../components/ProjectCardActions";
+import { ConfirmDialog } from "../components/ConfirmDialog";
 
 const HomePage = () => {
   const { allProjectDataLoaded } = useLoaderData() as {
@@ -68,58 +74,217 @@ const HomePage = () => {
 };
 
 const ProjectRow = () => {
-  const allProjectData = useStore((s) => s.allProjectData);
-  if (allProjectData.length === 0) {
-    return null;
-  }
   const numCardsDisplayed = 10;
+  const navigate = useNavigate();
+  const intl = useIntl();
+  const allProjectData = useStore((s) => s.allProjectData);
+  const renameProject = useStore((s) => s.renameProject);
+  const duplicateProject = useStore((s) => s.duplicateProject);
+  const deleteProject = useStore((s) => s.deleteProject);
+  const [projectForAction, setProjectForAction] = useState<string | null>(null);
+
+  const handleOpenProject = useCallback(
+    async (id?: string) => {
+      if (id) {
+        await loadProjectAndModelFromStorage(id);
+        navigate(createDataSamplesPageUrl());
+      }
+    },
+    [navigate]
+  );
+
+  const handleCloseConfirmDialog = useCallback(() => {
+    setConfirmDialogIsOpen(false);
+    setProjectName("");
+    setProjectForAction(null);
+  }, []);
+
+  const handleDeleteProject = useCallback(
+    async (id?: string) => {
+      if (id) {
+        return deleteProject(id);
+      }
+      handleCloseConfirmDialog();
+      if (projectForAction) {
+        await deleteProject(projectForAction);
+      }
+    },
+    [deleteProject, handleCloseConfirmDialog, projectForAction]
+  );
+
+  const [nameDialogIsOpen, setNameDialogIsOpen] = useState(false);
+  const [projectName, setProjectName] = useState("");
+
+  const [projectNameReason, setProjectNameReason] =
+    useState<ProjectNameDialogReason>();
+
+  const handleOpenNameProjectDialog = useCallback(
+    (reason: ProjectNameDialogReason, id?: string) => {
+      const project = allProjectData.find((p) => p.id === id);
+      if (project) {
+        setProjectNameReason(reason);
+        setProjectName(project.name);
+        setNameDialogIsOpen(true);
+        setProjectForAction(project.id);
+      }
+    },
+    [allProjectData]
+  );
+
+  const handleNameProjectDialogClose = useCallback(() => {
+    setNameDialogIsOpen(false);
+    setProjectForAction(null);
+  }, []);
+
+  const clearFinalFocusRef = useCallback(() => {
+    setFinalFocusRef(undefined);
+  }, []);
+
+  const handleNameProjectSave = useCallback(
+    async (name: string) => {
+      if (projectForAction) {
+        if (projectNameReason === "rename") {
+          await renameProject(projectForAction, name);
+        } else {
+          await duplicateProject(projectForAction, name);
+        }
+      }
+      handleNameProjectDialogClose();
+    },
+    [
+      duplicateProject,
+      handleNameProjectDialogClose,
+      projectForAction,
+      projectNameReason,
+      renameProject,
+    ]
+  );
+
+  const [finalFocusRef, setFinalFocusRef] = useState<
+    RefObject<HTMLElement> | undefined
+  >();
+
+  const [confirmDialogIsOpen, setConfirmDialogIsOpen] = useState(false);
+
+  const handleOpenConfirmDialog = useCallback(
+    (id?: string) => {
+      const project = allProjectData.find((p) => p.id === id);
+      if (project) {
+        setProjectName(project.name);
+        setConfirmDialogIsOpen(true);
+        setProjectForAction(project.id);
+      }
+    },
+    [allProjectData]
+  );
+
   return (
-    <CarouselRow
-      actions={[
-        <ImportProjectButton key="importProject" />,
-        <ViewAllProjectsButton key="viewAll" />,
-      ]}
-      carouselItems={
-        [
-          <NewProjectCard key="new-project" />,
-          ...orderBy(allProjectData, "timestamp", "desc")
-            .map((projectData) => (
-              <ProjectCard key={projectData.id} projectData={projectData} />
-            ))
-            .slice(0, numCardsDisplayed),
-          allProjectData.length > numCardsDisplayed ? (
-            <ViewAllProjectsCard key="view-all" />
-          ) : undefined,
-        ].filter(Boolean) as JSX.Element[]
-      }
-      containerMessageId="my-projects-row-carousel"
-      titleElement={
-        <HStack spacing={3}>
-          <Heading as="h2" fontSize="3xl">
-            <FormattedMessage id="my-projects-row-title" />
-          </Heading>
-          <ClickableTooltip
-            isFocusable
-            hasArrow
-            placement="right"
-            label={
-              <VStack
-                textAlign="left"
-                alignContent="left"
-                alignItems="left"
-                m={3}
-              >
-                <Text>
-                  <FormattedMessage id="project-storage-tooltip" />
-                </Text>
-              </VStack>
+    <>
+      <NameProjectDialog
+        projectName={projectName}
+        isOpen={nameDialogIsOpen}
+        onClose={handleNameProjectDialogClose}
+        onCloseComplete={clearFinalFocusRef}
+        onSave={handleNameProjectSave}
+        finalFocusRef={finalFocusRef}
+        heading={
+          <FormattedMessage
+            id={
+              projectNameReason === "rename"
+                ? "rename-project-heading"
+                : "duplicate-project-heading"
             }
-          >
-            <Icon opacity={0.7} h={5} w={5} as={RiInformationLine} />
-          </ClickableTooltip>
-        </HStack>
-      }
-    />
+          />
+        }
+        helperText={null}
+        confirmText={
+          <FormattedMessage
+            id={
+              projectNameReason === "rename"
+                ? "rename-project-action"
+                : "duplicate-project-action"
+            }
+          />
+        }
+      />
+      <ConfirmDialog
+        isOpen={confirmDialogIsOpen}
+        heading={intl.formatMessage({
+          id: "delete-project-confirm-heading",
+        })}
+        body={
+          <Text>
+            <FormattedMessage
+              id="delete-project-confirm-text"
+              values={{ project: projectName }}
+            />
+          </Text>
+        }
+        onConfirm={() => handleDeleteProject()}
+        onCancel={handleCloseConfirmDialog}
+        onCloseComplete={clearFinalFocusRef}
+        finalFocusRef={finalFocusRef}
+      />
+      <CarouselRow
+        actions={[
+          <ImportProjectButton key="importProject" />,
+          <ViewAllProjectsButton key="viewAll" />,
+        ]}
+        carouselItems={
+          [
+            <NewProjectCard key="new-project" />,
+            ...orderBy(allProjectData, "timestamp", "desc")
+              .map((projectData) => (
+                <ProjectCard
+                  key={projectData.id}
+                  projectData={projectData}
+                  projectCardActions={
+                    <ProjectCardActions
+                      id={projectData.id}
+                      name={projectData.name}
+                      onDeleteProject={handleOpenConfirmDialog}
+                      onRenameDuplicateProject={handleOpenNameProjectDialog}
+                      onOpenProject={handleOpenProject}
+                      setFinalFocusRef={setFinalFocusRef}
+                    />
+                  }
+                />
+              ))
+              .slice(0, numCardsDisplayed),
+            allProjectData.length > numCardsDisplayed ? (
+              <ViewAllProjectsCard key="view-all" />
+            ) : undefined,
+          ].filter(Boolean) as JSX.Element[]
+        }
+        containerMessageId="my-projects-row-carousel"
+        titleElement={
+          <HStack spacing={3}>
+            <Heading as="h2" fontSize="3xl">
+              <FormattedMessage id="my-projects-row-title" />
+            </Heading>
+            <ClickableTooltip
+              isFocusable
+              hasArrow
+              placement="right"
+              label={
+                <VStack
+                  textAlign="left"
+                  alignContent="left"
+                  alignItems="left"
+                  m={3}
+                >
+                  <Text>
+                    <FormattedMessage id="project-storage-tooltip" />
+                  </Text>
+                </VStack>
+              }
+            >
+              <Icon opacity={0.7} h={5} w={5} as={RiInformationLine} />
+            </ClickableTooltip>
+          </HStack>
+        }
+      />
+    </>
   );
 };
 
