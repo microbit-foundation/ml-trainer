@@ -78,7 +78,12 @@ const EditableName = () => {
               variant="unstyled"
               leftIcon={<Icon as={RiEditLine} />}
             >
-              <EditablePreview cursor="pointer" w="200px" noOfLines={1} />
+              <EditablePreview
+                cursor="pointer"
+                w="200px"
+                noOfLines={1}
+                textAlign="left"
+              />
             </Button>
           </Tooltip>
           <>
