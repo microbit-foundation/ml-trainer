@@ -20,7 +20,7 @@ const CarouselRow = ({
 }: CarouselRowProps) => {
   return (
     <Box w="100%" py={8}>
-      <HStack px={16} mt={2} mb={2} justifyContent="space-between">
+      <HStack px={16} mt={2} mb={2} spacing={4}>
         {typeof titleId === "string" ? (
           <Heading as="h2" fontSize="3xl">
             <FormattedMessage id={titleId} />
@@ -28,7 +28,7 @@ const CarouselRow = ({
         ) : (
           titleElement
         )}
-        <HStack>{actions}</HStack>
+        <HStack spacing={3}>{actions}</HStack>
       </HStack>
       <NewPageCarousel
         carouselItems={carouselItems}

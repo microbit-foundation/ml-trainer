@@ -1959,6 +1959,10 @@
     "defaultMessage": "사용자 가이드",
     "description": "Used for link to user guide page on microbit.org"
   },
+  "view-all-projects": {
+    "defaultMessage": "View all",
+    "description": "View all projects button / card text"
+  },
   "webusb-retry-no-select": {
     "defaultMessage": "micro:bit를 선택하지 않으셨습니다. 다시 시도하시겠습니까?",
     "description": "Shown if the user fails to choose a micro:bit"

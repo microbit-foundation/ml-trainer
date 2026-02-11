@@ -5,8 +5,10 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  AspectRatio,
   Button,
   Card,
+  CardBody,
   Heading,
   HStack,
   Icon,
@@ -17,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
 import { Suspense, useCallback, useRef, useState } from "react";
-import { RiAddLine, RiInformationLine } from "react-icons/ri";
+import { RiAddLine, RiFolderOpenLine, RiInformationLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Await, useLoaderData, useNavigate } from "react-router";
 import CarouselRow from "../components/Carousel/CarouselRow";
@@ -37,6 +39,7 @@ import { useSettings, useStore } from "../store";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
 import { NameProjectDialog } from "../components/NameProjectDialog";
 import { untitledProjectName } from "../project-utils";
+import { IconType } from "react-icons/lib";
 
 const HomePage = () => {
   const { allProjectDataLoaded } = useLoaderData() as {
@@ -52,12 +55,6 @@ const HomePage = () => {
           toolbarItemsRight={<HomeToolbarItem />}
           menuItems={<HomeMenuItem />}
         >
-          <CarouselRow
-            actions={[<ImportProjectButton key="importProject" />]}
-            carouselItems={[<NewProjectCard key="newProject" />]}
-            containerMessageId="new-projects-row-carousel"
-            titleId="new-projects-row-title"
-          />
           <ProjectRow />
           <CarouselRow
             containerMessageId="project-ideas-row-carousel"
@@ -75,14 +72,26 @@ const ProjectRow = () => {
   if (allProjectData.length === 0) {
     return null;
   }
+  const numCardsDisplayed = 10;
   return (
     <CarouselRow
-      actions={[<ViewAllProjectsButton key="viewAll" />]}
-      carouselItems={orderBy(allProjectData, "timestamp", "desc").map(
-        (projectData) => (
-          <ProjectCard key={projectData.id} projectData={projectData} />
-        )
-      )}
+      actions={[
+        <ImportProjectButton key="importProject" />,
+        <ViewAllProjectsButton key="viewAll" />,
+      ]}
+      carouselItems={
+        [
+          <NewProjectCard key="new-project" />,
+          ...orderBy(allProjectData, "timestamp", "desc")
+            .map((projectData) => (
+              <ProjectCard key={projectData.id} projectData={projectData} />
+            ))
+            .slice(0, numCardsDisplayed),
+          allProjectData.length > numCardsDisplayed ? (
+            <ViewAllProjectsCard key="view-all" />
+          ) : undefined,
+        ].filter(Boolean) as JSX.Element[]
+      }
       containerMessageId="my-projects-row-carousel"
       titleElement={
         <HStack spacing={3}>
@@ -119,7 +128,46 @@ const ViewAllProjectsButton = () => {
   const handleClick = useCallback(() => {
     navigate(createProjectsPageUrl());
   }, [navigate]);
-  return <Button onClick={handleClick}>View all</Button>;
+  return (
+    <Button onClick={handleClick}>
+      <FormattedMessage id="view-all-projects" />
+    </Button>
+  );
+};
+
+interface ActionCardProps {
+  onClick: () => void;
+  icon: IconType;
+  textId: string;
+}
+
+const ActionCard = ({ onClick, icon, textId }: ActionCardProps) => {
+  return (
+    <LinkBox display="flex">
+      <Card flexGrow={1} overflow="hidden">
+        <CardBody display="flex" backgroundColor="brand.600" color="white">
+          <VStack h="100%" w="100%" spacing={0}>
+            {/* Ratio matches current recording icon / image */}
+            <AspectRatio ratio={1591 / 1144} w="100%">
+              <VStack>
+                <Icon as={icon} h={20} w={20} />
+              </VStack>
+            </AspectRatio>
+            <LinkOverlay
+              as={Button}
+              h={8}
+              fontSize="xl"
+              onClick={onClick}
+              variant="unstyled"
+              _focusVisible={{ boxShadow: "outline", outline: "none" }}
+            >
+              <FormattedMessage id={textId} />
+            </LinkOverlay>
+          </VStack>
+        </CardBody>
+      </Card>
+    </LinkBox>
+  );
 };
 
 const NewProjectCard = () => {
@@ -157,29 +205,11 @@ const NewProjectCard = () => {
         helperText={null}
         confirmText={<FormattedMessage id="confirm-action" />}
       />
-      <LinkBox>
-        <Card flexGrow={1} overflow="hidden" aspectRatio={4 / 3}>
-          <VStack
-            h="100%"
-            w="100%"
-            py={8}
-            gap={3}
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Icon as={RiAddLine} h={10} w={10} />
-            <LinkOverlay
-              as={Button}
-              fontSize="xl"
-              onClick={handleOpenNameDialog}
-              variant="unstyled"
-              _focusVisible={{ boxShadow: "outline", outline: "none" }}
-            >
-              <FormattedMessage id="newpage-new-project-title" />
-            </LinkOverlay>
-          </VStack>
-        </Card>
-      </LinkBox>
+      <ActionCard
+        onClick={handleOpenNameDialog}
+        icon={RiAddLine}
+        textId="newpage-new-project-title"
+      />
     </>
   );
 };
@@ -189,7 +219,6 @@ const ImportProjectButton = () => {
   const handleContinueSessionFromFile = useCallback(() => {
     loadProjectRef.current?.chooseFile("replaceProject");
   }, []);
-
   return (
     <>
       <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
@@ -197,6 +226,20 @@ const ImportProjectButton = () => {
         <FormattedMessage id="import-file-action" />
       </Button>
     </>
+  );
+};
+
+const ViewAllProjectsCard = () => {
+  const navigate = useNavigate();
+  const handleClick = useCallback(() => {
+    navigate(createProjectsPageUrl());
+  }, [navigate]);
+  return (
+    <ActionCard
+      onClick={handleClick}
+      icon={RiFolderOpenLine}
+      textId="view-all-projects"
+    />
   );
 };
 

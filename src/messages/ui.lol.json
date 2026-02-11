@@ -3379,6 +3379,12 @@
       "value": "crwdns363466:0crwdne363466:0"
     }
   ],
+  "view-all-projects": [
+    {
+      "type": 0,
+      "value": "View all"
+    }
+  ],
   "webusb-retry-no-select": [
     {
       "type": 0,

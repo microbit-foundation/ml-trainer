@@ -3579,6 +3579,12 @@
       "value": "用戶指南 "
     }
   ],
+  "view-all-projects": [
+    {
+      "type": 0,
+      "value": "View all"
+    }
+  ],
   "webusb-retry-no-select": [
     {
       "type": 0,
