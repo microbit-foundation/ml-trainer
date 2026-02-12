@@ -4,7 +4,7 @@
 
 Run `npm run format` to format code with Prettier.
 
-New files should have a copyright header with the current year. Use an existing file as a template.
+New files should have a copyright header with the current year which is 2026. Use an existing file as a template but update the year.
 
 When documenting properties/fields use the following style of comment:
 
