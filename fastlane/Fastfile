@@ -95,6 +95,7 @@ platform :android do
   lane :upload do
     upload_to_play_store(
       track: "internal",
+      release_status: "draft",
       aab: "android/app/build/outputs/bundle/release/app-release.aab",
       json_key: ENV["GOOGLE_APPLICATION_CREDENTIALS"],
       skip_upload_apk: true,
