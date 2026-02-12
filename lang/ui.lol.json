@@ -843,10 +843,6 @@
     "defaultMessage": "crwdns363018:0crwdne363018:0",
     "description": "Home button text"
   },
-  "home-page-action": {
-    "defaultMessage": "Home page",
-    "description": "Home page navigation action"
-  },
   "homepage": {
     "defaultMessage": "crwdns363020:0crwdne363020:0",
     "description": "Link to home page"

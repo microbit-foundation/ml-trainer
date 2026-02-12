@@ -843,10 +843,6 @@
     "defaultMessage": "ホーム",
     "description": "Home button text"
   },
-  "home-page-action": {
-    "defaultMessage": "Home page",
-    "description": "Home page navigation action"
-  },
   "homepage": {
     "defaultMessage": "ホームページ",
     "description": "Link to home page"

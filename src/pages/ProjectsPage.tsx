@@ -386,7 +386,7 @@ const ProjectsPage = () => {
               variant="toolbar"
               onClick={navigateToHomePage}
             >
-              <FormattedMessage id="home-page-action" />
+              <FormattedMessage id="home-action" />
             </Button>
           }
         >

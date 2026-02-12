@@ -843,10 +843,6 @@
     "defaultMessage": "처음으로",
     "description": "Home button text"
   },
-  "home-page-action": {
-    "defaultMessage": "Home page",
-    "description": "Home page navigation action"
-  },
   "homepage": {
     "defaultMessage": "홈페이지",
     "description": "Link to home page"

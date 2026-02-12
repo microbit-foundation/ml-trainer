@@ -843,10 +843,6 @@
     "defaultMessage": "Início",
     "description": "Home button text"
   },
-  "home-page-action": {
-    "defaultMessage": "Home page",
-    "description": "Home page navigation action"
-  },
   "homepage": {
     "defaultMessage": "Página Inicial",
     "description": "Link to home page"
