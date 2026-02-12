@@ -37,6 +37,7 @@ import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
+import EditableName from "./EditableName";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -44,6 +45,7 @@ interface DefaultPageLayoutProps {
   toolbarItemsLeft?: ReactNode;
   toolbarItemsRight?: ReactNode;
   menuItems?: ReactNode;
+  showProjectName?: boolean;
   showPageTitle?: boolean;
   /**
    * Content to render at the bottom of the page with safe area padding.
@@ -59,6 +61,7 @@ const DefaultPageLayout = ({
   toolbarItemsLeft,
   toolbarItemsRight,
   showPageTitle = false,
+  showProjectName,
   bottomContent,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
@@ -125,6 +128,7 @@ const DefaultPageLayout = ({
               px={{ base: 3, sm: 5 }}
               itemsCenter={
                 <>
+                  {showProjectName && <EditableName />}
                   {showPageTitle && (
                     <Heading size="md" fontWeight="normal" color="white">
                       <FormattedMessage id={titleId} />

@@ -19,8 +19,14 @@ export const projectUrl = (slug: string, language: string) =>
     language
   )}projects/make-it-code-it/${encodeURIComponent(slug)}/`;
 
+export const lessonUrl = (slug: string) =>
+  `${microbitOrgBaseUrl}teach/lessons/${encodeURIComponent(slug)}/`;
+
 export const userGuideUrl = () =>
   `${microbitOrgBaseUrl}get-started/user-guide/microbit-createai/`;
 
 export const landingPageUrl = (language: string) =>
   `${microbitOrgBaseUrl}${langPath(language)}ai/`;
+
+export const supportSiteFolderUrl = () =>
+  "https://support.microbit.org/support/solutions/folders/19000176257";

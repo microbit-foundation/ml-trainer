@@ -67,6 +67,14 @@
     "defaultMessage": "AI 활동 타이머",
     "description": "Home page resource card title"
   },
+  "ai-light-switch-resource-title": {
+    "defaultMessage": "AI light switch",
+    "description": "Home page resource card title"
+  },
+  "ai-sports-data-logger-resource-title": {
+    "defaultMessage": "AI sports data logger",
+    "description": "Home page resource card title"
+  },
   "ai-storytelling-friend-resource-title": {
     "defaultMessage": "AI 스토리텔링 친구",
     "description": "Home page resource card title"
@@ -503,6 +511,18 @@
     "defaultMessage": "복사",
     "description": "Copy button text"
   },
+  "create-project": {
+    "defaultMessage": "Create project",
+    "description": "Create project button text"
+  },
+  "create-project-dialog-heading": {
+    "defaultMessage": "Create a project",
+    "description": "Create project dialog heading"
+  },
+  "createai-taster-lessons-resource-title": {
+    "defaultMessage": "CreateAI taster lessons",
+    "description": "Home page resource card title"
+  },
   "data-actions-menu": {
     "defaultMessage": "데이터 행동",
     "description": "Aria label for menu"
@@ -863,6 +883,10 @@
     "defaultMessage": "펌웨어 업데이트 필요",
     "description": "Connection error dialog"
   },
+  "first-lessons-with-microbit-createai-resource-title": {
+    "defaultMessage": "First lessons with micro:bit CreateAI",
+    "description": "Home page resource card title"
+  },
   "get-started-action": {
     "defaultMessage": "시작하기",
     "description": "Get started action"
@@ -919,6 +943,14 @@
     "defaultMessage": "도움 및 지원",
     "description": "Help icon aria label"
   },
+  "help-resources-row-carousel": {
+    "defaultMessage": "List of help resources",
+    "description": "Label for home page row carousel"
+  },
+  "help-resources-row-title": {
+    "defaultMessage": "Help section",
+    "description": "Title for home page row"
+  },
   "help-support": {
     "defaultMessage": "도움말 및 지원",
     "description": "Link or menu item link to support site"
@@ -930,10 +962,6 @@
   "home-action": {
     "defaultMessage": "처음으로",
     "description": "Home button text"
-  },
-  "home-page-action": {
-    "defaultMessage": "Home page",
-    "description": "Home page navigation action"
   },
   "homepage": {
     "defaultMessage": "홈페이지",
@@ -1415,6 +1443,10 @@
     "defaultMessage": "Could not connect to micro:bit",
     "description": "Heading for native Bluetooth connection error dialog"
   },
+  "new-project-setup-title": {
+    "defaultMessage": "New project setup",
+    "description": "New project setup title"
+  },
   "new-projects-row-carousel": {
     "defaultMessage": "List of new project actions",
     "description": "Label for home page row carousel"
@@ -1422,14 +1454,6 @@
   "new-projects-row-title": {
     "defaultMessage": "New projects",
     "description": "Title for home page row"
-  },
-  "new-session-setup-description": {
-    "defaultMessage": "새 세션을 시작하면 기존 세션을 덮어쓱[ 됩니다. 먼저 <link>기존 세션을 저장</link>하는 것이 좋습니다.",
-    "description": "New session setup description"
-  },
-  "new-session-setup-title": {
-    "defaultMessage": "새 세션 설정",
-    "description": "New session setup title"
   },
   "newpage-continue-session-subtitle": {
     "defaultMessage": "컴퓨터에 저장한 데이터 샘플 파일 또는 hex 파일을 사용하여 세션을 계속 진행하세요.",
@@ -1515,10 +1539,6 @@
     "defaultMessage": "Open project",
     "description": "Open project button text"
   },
-  "open-project-setup-description": {
-    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
-    "description": "Open project setup description"
-  },
   "open-shared-project-action": {
     "defaultMessage": "Open project",
     "description": "Open project button text"
@@ -1579,12 +1599,20 @@
     "defaultMessage": "프로젝트 이름을 입력해야 합니다",
     "description": "Validation message for project name"
   },
+  "project-name-text": {
+    "defaultMessage": "Project name",
+    "description": "Label for project name input"
+  },
+  "project-name-tooltip": {
+    "defaultMessage": "Click to edit project name",
+    "description": "Tooltip for the project name editable input"
+  },
   "project-skip-to-toolbar": {
     "defaultMessage": "Skip to toolbar",
     "description": "Button to skip focus to the projects toolbar"
   },
   "project-storage-tooltip": {
-    "defaultMessage": "Text to inform the user about where their projects are actually stored with link to support article?",
+    "defaultMessage": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if you don't visit for a while, especially in Safari.",
     "description": "Tooltip for my projects row"
   },
   "projects-page-title": {
@@ -1899,6 +1927,14 @@
     "defaultMessage": "<link>지원 요청</link>을 생각해 보세요.",
     "description": "Support request link text"
   },
+  "teacher-resources-row-carousel": {
+    "defaultMessage": "List of teacher resources",
+    "description": "Label for home page row carousel"
+  },
+  "teacher-resources-row-title": {
+    "defaultMessage": "Teacher resources",
+    "description": "Title for home page row"
+  },
   "terms": {
     "defaultMessage": "이용 약관",
     "description": "Link or menu item link to view terms of use"
@@ -2087,6 +2123,10 @@
     "defaultMessage": "다운로드 폴더의 hex 파일을 MICROBIT 드라이브로 드래그하세요.",
     "description": "Dialog shown when WebUSB fails"
   },
+  "troubleshooting-resource-title": {
+    "defaultMessage": "Troubleshooting",
+    "description": "Home page resource card title"
+  },
   "try-again-action": {
     "defaultMessage": "다시 시도",
     "description": "Button label"
@@ -2126,6 +2166,10 @@
   "user-guide": {
     "defaultMessage": "사용자 가이드",
     "description": "Used for link to user guide page on microbit.org"
+  },
+  "view-all-projects": {
+    "defaultMessage": "View all",
+    "description": "View all projects button / card text"
   },
   "webusb-retry-no-select": {
     "defaultMessage": "micro:bit를 선택하지 않으셨습니다. 다시 시도하시겠습니까?",

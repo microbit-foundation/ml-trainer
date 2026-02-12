@@ -31,7 +31,7 @@ import { landingPageUrl, userGuideUrl } from "../utils/external-links";
 import { useSettings } from "../store";
 import { useSearchParams } from "react-router-dom";
 import { setEditorVersionOverride } from "../editor-version";
-import { createResourceCards } from "../components/ResourceCards";
+import { createProjectIdeaCards } from "../components/ProjectIdeaCards";
 
 const AboutPage = () => {
   const [params] = useSearchParams();
@@ -174,7 +174,7 @@ const AboutPage = () => {
               <FormattedMessage id="homepage-projects" />
             </Heading>
             <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
-              {createResourceCards(intl, languageId)}
+              {createProjectIdeaCards(intl, languageId)}
             </HStack>
             <Text fontSize="md">
               <FormattedMessage

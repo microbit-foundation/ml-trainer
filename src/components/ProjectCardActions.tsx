@@ -18,14 +18,14 @@ import {
   RiFileCopyLine,
   RiFolderOpenLine,
 } from "react-icons/ri";
-import { ProjectNameDialogReason } from "../pages/ProjectsPage";
 import { FormattedMessage, useIntl } from "react-intl";
+import { ProjectNameDialogReason } from "../project-utils";
 
 interface ProjectCardMenuProps {
   id: string;
   name: string;
-  isSelected: boolean;
-  onSelected: (id: string) => void;
+  isSelected?: boolean;
+  onSelected?: (id: string) => void;
   onDeleteProject: (id?: string) => void;
   onOpenProject: (id?: string) => void;
   onRenameDuplicateProject: (
@@ -33,7 +33,7 @@ interface ProjectCardMenuProps {
     id?: string
   ) => void;
   setFinalFocusRef: (value: RefObject<HTMLElement>) => void;
-  onSkipToToolbar: () => void;
+  onSkipToToolbar?: () => void;
 }
 
 const ProjectCardActions = ({
@@ -81,44 +81,48 @@ const ProjectCardActions = ({
       top={0}
       left={0}
     >
-      <Checkbox
-        p={5}
-        isChecked={isSelected}
-        onChange={() => onSelected(id)}
-        color="brand.600"
-        zIndex={1}
-        borderColor="gray.600"
-        _hover={{
-          backgroundColor: "blackAlpha.50",
-        }}
-        borderBottomRightRadius="md"
-        h="60px"
-      >
-        <VisuallyHidden>
-          <FormattedMessage id="select-project-action" values={{ name }} />
-        </VisuallyHidden>
-      </Checkbox>
-      <Button
-        tabIndex={isSelected ? 0 : -1}
-        onClick={onSkipToToolbar}
-        zIndex={3}
-        position="absolute"
-        left="50%"
-        top={1}
-        transform="translateX(-50%)"
-        size="xs"
-        variant="primary"
-        opacity={0}
-        pointerEvents="none"
-        _focusVisible={{
-          opacity: 1,
-          pointerEvents: "auto",
-          boxShadow:
-            "0 0 0 2px white, 0 0 0 4px var(--chakra-colors-brand-500)",
-        }}
-      >
-        <FormattedMessage id="project-skip-to-toolbar" />
-      </Button>
+      {onSelected && (
+        <Checkbox
+          p={5}
+          isChecked={isSelected}
+          onChange={() => onSelected(id)}
+          color="brand.600"
+          zIndex={1}
+          borderColor="gray.600"
+          _hover={{
+            backgroundColor: "blackAlpha.50",
+          }}
+          borderBottomRightRadius="md"
+          h="60px"
+        >
+          <VisuallyHidden>
+            <FormattedMessage id="select-project-action" values={{ name }} />
+          </VisuallyHidden>
+        </Checkbox>
+      )}
+      {onSkipToToolbar && (
+        <Button
+          tabIndex={isSelected ? 0 : -1}
+          onClick={onSkipToToolbar}
+          zIndex={3}
+          position="absolute"
+          left="50%"
+          top={1}
+          transform="translateX(-50%)"
+          size="xs"
+          variant="primary"
+          opacity={0}
+          pointerEvents="none"
+          _focusVisible={{
+            opacity: 1,
+            pointerEvents: "auto",
+            boxShadow:
+              "0 0 0 2px white, 0 0 0 4px var(--chakra-colors-brand-500)",
+          }}
+        >
+          <FormattedMessage id="project-skip-to-toolbar" />
+        </Button>
+      )}
       <Menu>
         <MenuButton
           ref={menuButtonRef}
@@ -136,6 +140,7 @@ const ProjectCardActions = ({
           variant="ghost"
           icon={<MdMoreVert />}
           color="grey.800"
+          ml="auto"
         />
         <Portal>
           <MenuList zIndex={1}>

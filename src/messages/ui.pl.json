@@ -161,6 +161,18 @@
       "value": "Licznik aktywności AI"
     }
   ],
+  "ai-light-switch-resource-title": [
+    {
+      "type": 0,
+      "value": "AI light switch"
+    }
+  ],
+  "ai-sports-data-logger-resource-title": [
+    {
+      "type": 0,
+      "value": "AI sports data logger"
+    }
+  ],
   "ai-storytelling-friend-resource-title": [
     {
       "type": 0,
@@ -951,6 +963,24 @@
       "value": "Kopiuj"
     }
   ],
+  "create-project": [
+    {
+      "type": 0,
+      "value": "Create project"
+    }
+  ],
+  "create-project-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Create a project"
+    }
+  ],
+  "createai-taster-lessons-resource-title": [
+    {
+      "type": 0,
+      "value": "CreateAI taster lessons"
+    }
+  ],
   "data-actions-menu": [
     {
       "type": 0,
@@ -1613,6 +1643,12 @@
       "value": "Wymagana jest aktualizacja oprogramowania firmowego"
     }
   ],
+  "first-lessons-with-microbit-createai-resource-title": [
+    {
+      "type": 0,
+      "value": "First lessons with micro:bit CreateAI"
+    }
+  ],
   "get-started-action": [
     {
       "type": 0,
@@ -1697,6 +1733,18 @@
       "value": "Pomoc"
     }
   ],
+  "help-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of help resources"
+    }
+  ],
+  "help-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Help section"
+    }
+  ],
   "help-support": [
     {
       "type": 0,
@@ -1713,12 +1761,6 @@
     {
       "type": 0,
       "value": "Strona główna"
-    }
-  ],
-  "home-page-action": [
-    {
-      "type": 0,
-      "value": "Home page"
     }
   ],
   "homepage": [
@@ -2551,6 +2593,12 @@
       "value": "Could not connect to micro:bit"
     }
   ],
+  "new-project-setup-title": [
+    {
+      "type": 0,
+      "value": "New project setup"
+    }
+  ],
   "new-projects-row-carousel": [
     {
       "type": 0,
@@ -2561,32 +2609,6 @@
     {
       "type": 0,
       "value": "New projects"
-    }
-  ],
-  "new-session-setup-description": [
-    {
-      "type": 0,
-      "value": "Rozpoczęcie nowej sesji zastąpi Twoją istniejącą sesję. Możesz najpierw "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "zapisać swoją istniejącą sesję"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "new-session-setup-title": [
-    {
-      "type": 0,
-      "value": "Nowa konfiguracja sesji"
     }
   ],
   "newpage-continue-session-subtitle": [
@@ -2747,26 +2769,6 @@
       "value": "Open project"
     }
   ],
-  "open-project-setup-description": [
-    {
-      "type": 0,
-      "value": "Opening this project will overwrite any existing session. You may want to "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "save your existing session"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " first."
-    }
-  ],
   "open-shared-project-action": [
     {
       "type": 0,
@@ -2869,6 +2871,18 @@
       "value": "Nazwa projektu nie może być pusta"
     }
   ],
+  "project-name-text": [
+    {
+      "type": 0,
+      "value": "Project name"
+    }
+  ],
+  "project-name-tooltip": [
+    {
+      "type": 0,
+      "value": "Click to edit project name"
+    }
+  ],
   "project-skip-to-toolbar": [
     {
       "type": 0,
@@ -2878,7 +2892,7 @@
   "project-storage-tooltip": [
     {
       "type": 0,
-      "value": "Text to inform the user about where their projects are actually stored with link to support article?"
+      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if you don't visit for a while, especially in Safari."
     }
   ],
   "projects-page-title": [
@@ -3527,6 +3541,18 @@
       "value": "."
     }
   ],
+  "teacher-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of teacher resources"
+    }
+  ],
+  "teacher-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Teacher resources"
+    }
+  ],
   "terms": [
     {
       "type": 0,
@@ -3883,6 +3909,12 @@
       "value": "Przeciągnij plik hex ze swojego folderu Downloads na dysk MICROBIT."
     }
   ],
+  "troubleshooting-resource-title": [
+    {
+      "type": 0,
+      "value": "Troubleshooting"
+    }
+  ],
   "try-again-action": [
     {
       "type": 0,
@@ -3969,6 +4001,12 @@
     {
       "type": 0,
       "value": "Podręcznik użytkownika"
+    }
+  ],
+  "view-all-projects": [
+    {
+      "type": 0,
+      "value": "View all"
     }
   ],
   "webusb-retry-no-select": [

@@ -157,6 +157,18 @@
       "value": "AI 활동 타이머"
     }
   ],
+  "ai-light-switch-resource-title": [
+    {
+      "type": 0,
+      "value": "AI light switch"
+    }
+  ],
+  "ai-sports-data-logger-resource-title": [
+    {
+      "type": 0,
+      "value": "AI sports data logger"
+    }
+  ],
   "ai-storytelling-friend-resource-title": [
     {
       "type": 0,
@@ -943,6 +955,24 @@
       "value": "복사"
     }
   ],
+  "create-project": [
+    {
+      "type": 0,
+      "value": "Create project"
+    }
+  ],
+  "create-project-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Create a project"
+    }
+  ],
+  "createai-taster-lessons-resource-title": [
+    {
+      "type": 0,
+      "value": "CreateAI taster lessons"
+    }
+  ],
   "data-actions-menu": [
     {
       "type": 0,
@@ -1601,6 +1631,12 @@
       "value": "펌웨어 업데이트 필요"
     }
   ],
+  "first-lessons-with-microbit-createai-resource-title": [
+    {
+      "type": 0,
+      "value": "First lessons with micro:bit CreateAI"
+    }
+  ],
   "get-started-action": [
     {
       "type": 0,
@@ -1685,6 +1721,18 @@
       "value": "도움 및 지원"
     }
   ],
+  "help-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of help resources"
+    }
+  ],
+  "help-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Help section"
+    }
+  ],
   "help-support": [
     {
       "type": 0,
@@ -1701,12 +1749,6 @@
     {
       "type": 0,
       "value": "처음으로"
-    }
-  ],
-  "home-page-action": [
-    {
-      "type": 0,
-      "value": "Home page"
     }
   ],
   "homepage": [
@@ -2535,6 +2577,12 @@
       "value": "Could not connect to micro:bit"
     }
   ],
+  "new-project-setup-title": [
+    {
+      "type": 0,
+      "value": "New project setup"
+    }
+  ],
   "new-projects-row-carousel": [
     {
       "type": 0,
@@ -2545,32 +2593,6 @@
     {
       "type": 0,
       "value": "New projects"
-    }
-  ],
-  "new-session-setup-description": [
-    {
-      "type": 0,
-      "value": "새 세션을 시작하면 기존 세션을 덮어쓱[ 됩니다. 먼저 "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "기존 세션을 저장"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "하는 것이 좋습니다."
-    }
-  ],
-  "new-session-setup-title": [
-    {
-      "type": 0,
-      "value": "새 세션 설정"
     }
   ],
   "newpage-continue-session-subtitle": [
@@ -2731,26 +2753,6 @@
       "value": "Open project"
     }
   ],
-  "open-project-setup-description": [
-    {
-      "type": 0,
-      "value": "Opening this project will overwrite any existing session. You may want to "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "save your existing session"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " first."
-    }
-  ],
   "open-shared-project-action": [
     {
       "type": 0,
@@ -2853,6 +2855,18 @@
       "value": "프로젝트 이름을 입력해야 합니다"
     }
   ],
+  "project-name-text": [
+    {
+      "type": 0,
+      "value": "Project name"
+    }
+  ],
+  "project-name-tooltip": [
+    {
+      "type": 0,
+      "value": "Click to edit project name"
+    }
+  ],
   "project-skip-to-toolbar": [
     {
       "type": 0,
@@ -2862,7 +2876,7 @@
   "project-storage-tooltip": [
     {
       "type": 0,
-      "value": "Text to inform the user about where their projects are actually stored with link to support article?"
+      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if you don't visit for a while, especially in Safari."
     }
   ],
   "projects-page-title": [
@@ -3511,6 +3525,18 @@
       "value": "을 생각해 보세요."
     }
   ],
+  "teacher-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of teacher resources"
+    }
+  ],
+  "teacher-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Teacher resources"
+    }
+  ],
   "terms": [
     {
       "type": 0,
@@ -3859,6 +3885,12 @@
       "value": "다운로드 폴더의 hex 파일을 MICROBIT 드라이브로 드래그하세요."
     }
   ],
+  "troubleshooting-resource-title": [
+    {
+      "type": 0,
+      "value": "Troubleshooting"
+    }
+  ],
   "try-again-action": [
     {
       "type": 0,
@@ -3945,6 +3977,12 @@
     {
       "type": 0,
       "value": "사용자 가이드"
+    }
+  ],
+  "view-all-projects": [
+    {
+      "type": 0,
+      "value": "View all"
     }
   ],
   "webusb-retry-no-select": [

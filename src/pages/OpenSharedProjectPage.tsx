@@ -1,69 +1,36 @@
 import {
-  Box,
   Button,
-  Grid,
   Heading,
   HStack,
-  HTMLChakraProps,
   Icon,
-  Input,
   Link,
-  SkeletonText,
   Stack,
-  StackProps,
   Text,
   VisuallyHidden,
   VStack,
 } from "@chakra-ui/react";
-import {
-  MakeCodeBlocksRendering,
-  MakeCodeRenderBlocksProvider,
-} from "@microbit/makecode-embed";
-import {
-  BlockLayout,
-  Header,
-  MakeCodeProject,
-  ScriptText,
-} from "@microbit/makecode-embed/vanilla";
+import { Header, ScriptText } from "@microbit/makecode-embed/vanilla";
 import { ReactNode, useCallback, useEffect, useState } from "react";
 import { RiInformationLine } from "react-icons/ri";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { useNavigate, useParams } from "react-router";
-import { ButtonWithLoading } from "../components/ButtonWithLoading";
-import DataSamplesTableRow from "../components/DataSamplesTableRow";
 import DefaultPageLayout, {
   HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
 import LoadingAnimation from "../components/LoadingAnimation";
-import { useProject } from "../hooks/project-hooks";
+import ProjectPreview from "../components/ProjectPreview";
 import { useLogging } from "../logging/logging-hooks";
 import { ActionData, DatasetEditorJsonFormat } from "../model";
-import { getMakeCodeLang } from "../settings";
-import { useSettings, useStore } from "../store";
+import { useStore } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 
 const enum SharedState {
-  None = 0,
-  GettingHeader = 1,
-  GettingProject = 2,
-  Complete = 3,
-  Failed = 4,
+  GettingHeader,
+  GettingProject,
+  Complete,
+  Failed,
 }
-
-const contentStackProps: Partial<StackProps> = {
-  bgColor: "white",
-  spacing: 5,
-  my: [0, 0, 20],
-  borderRadius: [0, "20px"],
-  borderWidth: [null, null, 1],
-  borderBottomWidth: 1,
-  borderColor: [null, null, "gray.300"],
-  p: 10,
-  minW: [null, null, "xl"],
-  alignItems: "stretch",
-  width: ["full", "full", "3xl", "4xl"],
-};
 
 const OpenSharedProjectPage = () => {
   const logging = useLogging();
@@ -88,13 +55,13 @@ const OpenSharedProjectPage = () => {
     return <ErrorPreloading />;
   }
 
-  if (sharedState < SharedState.GettingProject)
-    return (
-      <DefaultPageLayout
-        titleId="open-shared-project-title"
-        toolbarItemsRight={<HomeToolbarItem />}
-        menuItems={<HomeMenuItem />}
-      >
+  return (
+    <DefaultPageLayout
+      titleId="open-shared-project-title"
+      toolbarItemsRight={<HomeToolbarItem />}
+      menuItems={<HomeMenuItem />}
+    >
+      {sharedState === SharedState.GettingHeader ? (
         <VStack
           as="main"
           justifyContent="center"
@@ -111,239 +78,47 @@ const OpenSharedProjectPage = () => {
           </VisuallyHidden>
           <LoadingAnimation />
         </VStack>
-      </DefaultPageLayout>
-    );
-
-  return (
-    <DefaultPageLayout
-      titleId="open-shared-project-title"
-      toolbarItemsRight={<HomeToolbarItem />}
-      menuItems={<HomeMenuItem />}
-    >
-      <VStack as="main" justifyContent="center" paddingBottom={20}>
-        <Stack {...contentStackProps} mb="5">
-          <Heading as="h1" mb={5}>
-            <FormattedMessage id="open-shared-project-title" />
-          </Heading>
-          {sharedState === SharedState.GettingHeader && <LoadingAnimation />}
-          {sharedState >= SharedState.GettingProject && (
-            <>
-              <ProjectLoadDetails name={name} setName={setName} />
-              {sharedState === SharedState.Complete && (
-                <HStack gap={3}>
-                  <Icon as={RiInformationLine} boxSize={6} alignSelf="start" />
-                  <Text fontSize="md">
-                    <FormattedMessage
-                      id="third-party-content-description"
-                      values={{
-                        link: (children: ReactNode) => (
-                          <Link
-                            color="brand.600"
-                            textDecoration="underline"
-                            href={`https://makecode.microbit.org/${encodeURIComponent(
-                              shareId!
-                            )}`}
-                          >
-                            {children}
-                          </Link>
-                        ),
-                      }}
-                    />
-                  </Text>
-                </HStack>
-              )}
-              <OpenProjectButton
-                onClick={handleOpenProject}
-                isDisabled={sharedState !== SharedState.Complete}
-                isLoading={
-                  sharedState === SharedState.GettingHeader ||
-                  sharedState === SharedState.GettingProject
-                }
-              />
-            </>
-          )}
-          {sharedState === SharedState.Complete && (
-            <>
-              {dataset && <PreviewData dataset={dataset} />}
-              <MakeCodePreview
-                project={{
-                  header,
-                  text: projectText,
-                }}
-              />
-              <OpenProjectButton
-                onClick={handleOpenProject}
-                isDisabled={false}
-                isLoading={false}
-              />
-            </>
-          )}
-        </Stack>
-      </VStack>
-    </DefaultPageLayout>
-  );
-};
-
-interface ProjectLoadDetailsProps {
-  name: string;
-  setName: (name: string) => void;
-}
-const ProjectLoadDetails = ({ name, setName }: ProjectLoadDetailsProps) => {
-  const intl = useIntl();
-  const timestamp = useStore((s) => s.timestamp);
-  const nameLabel = intl.formatMessage({ id: "name-text" });
-  const { saveHex } = useProject();
-  const handleSave = useCallback(() => {
-    void saveHex();
-  }, [saveHex]);
-
-  return (
-    <>
-      <Text>
-        <FormattedMessage id="open-shared-project-description" />
-      </Text>
-      {timestamp !== undefined && (
-        <Text>
-          <FormattedMessage
-            id="open-project-setup-description"
-            values={{
-              link: (chunks: ReactNode) => (
-                <Button
-                  onClick={handleSave}
-                  variant="link"
-                  color="brand.600"
-                  textDecoration="underline"
-                >
-                  {chunks}
-                </Button>
-              ),
-            }}
-          />
-        </Text>
-      )}
-      <Stack py={2} spacing={5}>
-        <Heading size="md" as="h2">
-          <FormattedMessage id="name-text" />
-        </Heading>
-        <Input
-          aria-label={nameLabel}
-          data-testid="name-text"
-          minW="25ch"
-          value={name}
-          placeholder={nameLabel}
-          size="lg"
-          onChange={(e) => setName(e.currentTarget.value)}
-        />
-      </Stack>
-    </>
-  );
-};
-
-interface OpenProjectButtonProps {
-  isDisabled: boolean;
-  isLoading: boolean;
-  onClick: () => void;
-}
-
-const OpenProjectButton = ({
-  isDisabled,
-  isLoading,
-  onClick,
-}: OpenProjectButtonProps) => (
-  <HStack pt={5} justifyContent="flex-end">
-    <ButtonWithLoading
-      isDisabled={isDisabled}
-      isLoading={isLoading}
-      variant="primary"
-      onClick={onClick}
-      size="lg"
-    >
-      <FormattedMessage id="open-shared-project-action" />
-    </ButtonWithLoading>
-  </HStack>
-);
-
-const previewFrameOuter: HTMLChakraProps<"div"> = {
-  p: 2,
-  bg: "whitesmoke",
-  borderRadius: "sm",
-};
-const previewFrame: HTMLChakraProps<"div"> = {
-  overflow: "auto",
-  h: 96,
-  minW: "100%",
-};
-
-interface PreviewDataProps {
-  dataset: ActionData[];
-}
-
-const PreviewData = ({ dataset }: PreviewDataProps) => {
-  return (
-    <>
-      <Heading size="md" as="h2">
-        <FormattedMessage id="data-preview-title" />
-      </Heading>
-      <Text>
-        <FormattedMessage id="open-shared-project-data-preview-description" />
-      </Text>
-      <Box {...previewFrameOuter}>
-        <Box {...previewFrame}>
-          <Grid gap={3} gridTemplateColumns="290px 1fr">
-            {dataset.map((action) => (
-              <DataSamplesTableRow
-                preview={true}
-                key={action.id}
-                action={action}
-                selected={false}
-                hint={null}
-              />
-            ))}
-          </Grid>
-        </Box>
-      </Box>
-    </>
-  );
-};
-
-interface MakeCodePreviewProps {
-  project: MakeCodeProject;
-}
-
-const MakeCodePreview = ({ project }: MakeCodePreviewProps) => {
-  const [{ languageId }] = useSettings();
-  const makeCodeLang = getMakeCodeLang(languageId);
-  return (
-    <>
-      <Heading size="md" as="h2" pt={[1, 3, 5]}>
-        <FormattedMessage id="blocks-preview-title" />
-      </Heading>
-      <Text>
-        <FormattedMessage id="open-shared-project-blocks-preview-description" />
-      </Text>
-      <MakeCodeRenderBlocksProvider key={makeCodeLang} lang={makeCodeLang}>
-        <Box
-          {...previewFrameOuter}
-          sx={{
-            "> div": previewFrame,
-            img: { maxWidth: "unset", height: "unset" },
+      ) : (
+        <ProjectPreview
+          dataset={dataset}
+          descriptionTextId="open-shared-project-description"
+          isLoading={sharedState === SharedState.GettingProject}
+          onOpenProject={handleOpenProject}
+          project={{
+            header,
+            text: projectText,
           }}
-        >
-          <MakeCodeBlocksRendering
-            code={project}
-            layout={BlockLayout.Clean}
-            loaderCmp={
-              <SkeletonText
-                w="xs"
-                noOfLines={5}
-                spacing="5"
-                skeletonHeight="2"
-              />
-            }
-          />
-        </Box>
-      </MakeCodeRenderBlocksProvider>
-    </>
+          projectName={name}
+          setProjectName={setName}
+          sourceInfo={
+            sharedState === SharedState.Complete && (
+              <HStack gap={3}>
+                <Icon as={RiInformationLine} boxSize={6} alignSelf="start" />
+                <Text fontSize="md">
+                  <FormattedMessage
+                    id="third-party-content-description"
+                    values={{
+                      link: (children: ReactNode) => (
+                        <Link
+                          color="brand.600"
+                          textDecoration="underline"
+                          href={`https://makecode.microbit.org/${encodeURIComponent(
+                            shareId!
+                          )}`}
+                        >
+                          {children}
+                        </Link>
+                      ),
+                    }}
+                  />
+                </Text>
+              </HStack>
+            )
+          }
+          titleId="open-shared-project-title"
+        />
+      )}
+    </DefaultPageLayout>
   );
 };
 
