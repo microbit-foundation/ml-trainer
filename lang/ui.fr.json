@@ -67,6 +67,14 @@
     "defaultMessage": "Minuteur d'activité IA",
     "description": "Home page resource card title"
   },
+  "ai-light-switch-resource-title": {
+    "defaultMessage": "AI light switch",
+    "description": "Home page resource card title"
+  },
+  "ai-sports-data-logger-resource-title": {
+    "defaultMessage": "AI sports data logger",
+    "description": "Home page resource card title"
+  },
   "ai-storytelling-friend-resource-title": {
     "defaultMessage": "L'IA, l'amie de la narration",
     "description": "Home page resource card title"
@@ -503,6 +511,18 @@
     "defaultMessage": "Copier",
     "description": "Copy button text"
   },
+  "create-project": {
+    "defaultMessage": "Create project",
+    "description": "Create project button text"
+  },
+  "create-project-dialog-heading": {
+    "defaultMessage": "Create a project",
+    "description": "Create project dialog heading"
+  },
+  "createai-taster-lessons-resource-title": {
+    "defaultMessage": "CreateAI taster lessons",
+    "description": "Home page resource card title"
+  },
   "data-actions-menu": {
     "defaultMessage": "Actions de données",
     "description": "Aria label for menu"
@@ -863,6 +883,10 @@
     "defaultMessage": "Mise à jour du micrologiciel requise",
     "description": "Connection error dialog"
   },
+  "first-lessons-with-microbit-createai-resource-title": {
+    "defaultMessage": "First lessons with micro:bit CreateAI",
+    "description": "Home page resource card title"
+  },
   "get-started-action": {
     "defaultMessage": "C'est parti",
     "description": "Get started action"
@@ -919,6 +943,14 @@
     "defaultMessage": "Aide",
     "description": "Help icon aria label"
   },
+  "help-resources-row-carousel": {
+    "defaultMessage": "List of help resources",
+    "description": "Label for home page row carousel"
+  },
+  "help-resources-row-title": {
+    "defaultMessage": "Help section",
+    "description": "Title for home page row"
+  },
   "help-support": {
     "defaultMessage": "Aide et support",
     "description": "Link or menu item link to support site"
@@ -930,10 +962,6 @@
   "home-action": {
     "defaultMessage": "Accueil",
     "description": "Home button text"
-  },
-  "home-page-action": {
-    "defaultMessage": "Home page",
-    "description": "Home page navigation action"
   },
   "homepage": {
     "defaultMessage": "Page d’accueil",
@@ -1415,6 +1443,10 @@
     "defaultMessage": "Could not connect to micro:bit",
     "description": "Heading for native Bluetooth connection error dialog"
   },
+  "new-project-setup-title": {
+    "defaultMessage": "New project setup",
+    "description": "New project setup title"
+  },
   "new-projects-row-carousel": {
     "defaultMessage": "List of new project actions",
     "description": "Label for home page row carousel"
@@ -1422,14 +1454,6 @@
   "new-projects-row-title": {
     "defaultMessage": "New projects",
     "description": "Title for home page row"
-  },
-  "new-session-setup-description": {
-    "defaultMessage": "Le démarrage d'une nouvelle session écrasera votre session existante. Vous pouvez donc commencer par <link>enregistrer votre session existante</link>.",
-    "description": "New session setup description"
-  },
-  "new-session-setup-title": {
-    "defaultMessage": "Configuration d'une nouvelle session",
-    "description": "New session setup title"
   },
   "newpage-continue-session-subtitle": {
     "defaultMessage": "Utilisez un fichier hex ou un fichier d’échantillons de données que vous avez enregistré sur votre ordinateur pour continuer une session.",
@@ -1515,10 +1539,6 @@
     "defaultMessage": "Open project",
     "description": "Open project button text"
   },
-  "open-project-setup-description": {
-    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
-    "description": "Open project setup description"
-  },
   "open-shared-project-action": {
     "defaultMessage": "Open project",
     "description": "Open project button text"
@@ -1579,12 +1599,20 @@
     "defaultMessage": "Le nom du projet ne peut pas être vide",
     "description": "Validation message for project name"
   },
+  "project-name-text": {
+    "defaultMessage": "Project name",
+    "description": "Label for project name input"
+  },
+  "project-name-tooltip": {
+    "defaultMessage": "Click to edit project name",
+    "description": "Tooltip for the project name editable input"
+  },
   "project-skip-to-toolbar": {
     "defaultMessage": "Skip to toolbar",
     "description": "Button to skip focus to the projects toolbar"
   },
   "project-storage-tooltip": {
-    "defaultMessage": "Text to inform the user about where their projects are actually stored with link to support article?",
+    "defaultMessage": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if you don't visit for a while, especially in Safari.",
     "description": "Tooltip for my projects row"
   },
   "projects-page-title": {
@@ -1899,6 +1927,14 @@
     "defaultMessage": "Veuillez <link>formuler une demande de support</link>.",
     "description": "Support request link text"
   },
+  "teacher-resources-row-carousel": {
+    "defaultMessage": "List of teacher resources",
+    "description": "Label for home page row carousel"
+  },
+  "teacher-resources-row-title": {
+    "defaultMessage": "Teacher resources",
+    "description": "Title for home page row"
+  },
   "terms": {
     "defaultMessage": "Conditions d’utilisation",
     "description": "Link or menu item link to view terms of use"
@@ -2087,6 +2123,10 @@
     "defaultMessage": "Faites glisser le fichier hex de votre dossier Téléchargements vers le lecteur MICROBIT.",
     "description": "Dialog shown when WebUSB fails"
   },
+  "troubleshooting-resource-title": {
+    "defaultMessage": "Troubleshooting",
+    "description": "Home page resource card title"
+  },
   "try-again-action": {
     "defaultMessage": "Réessayer",
     "description": "Button label"
@@ -2126,6 +2166,10 @@
   "user-guide": {
     "defaultMessage": "Guide de l'utilisateur",
     "description": "Used for link to user guide page on microbit.org"
+  },
+  "view-all-projects": {
+    "defaultMessage": "View all",
+    "description": "View all projects button / card text"
   },
   "webusb-retry-no-select": {
     "defaultMessage": "Vous n'avez pas sélectionné de micro:bit. Voulez-vous réessayer ?",

@@ -115,6 +115,7 @@ const TestingModelPage = () => {
     <DefaultPageLayout
       titleId="testing-model-title"
       showPageTitle
+      showProjectName
       menuItems={<ProjectMenuItems />}
       toolbarItemsRight={<ProjectToolbarItems />}
       toolbarItemsLeft={

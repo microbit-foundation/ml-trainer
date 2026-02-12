@@ -5,8 +5,8 @@ import {
   RiEdit2Line,
   RiFileCopyLine,
 } from "react-icons/ri";
-import { ProjectNameDialogReason } from "../pages/ProjectsPage";
 import { FormattedMessage } from "react-intl";
+import { ProjectNameDialogReason } from "../project-utils";
 
 interface ProjectsToolbarProps extends ButtonGroupProps {
   selectedProjectIds: string[];

@@ -16,12 +16,20 @@ import { ReactNode } from "react";
 import Link from "./Link";
 
 interface ResourceCardProps {
+  aspectRatio?: number;
+  imagePadding?: number;
   url: string;
   imgSrc: string;
   title: ReactNode;
 }
 
-const ResourceCard = ({ imgSrc, url, title }: ResourceCardProps) => {
+const ResourceCard = ({
+  aspectRatio = 4 / 3,
+  imagePadding,
+  imgSrc,
+  url,
+  title,
+}: ResourceCardProps) => {
   return (
     <LinkBox
       display="flex"
@@ -33,8 +41,8 @@ const ResourceCard = ({ imgSrc, url, title }: ResourceCardProps) => {
       boxShadow="md"
       alignSelf="stretch"
     >
-      <AspectRatio w="100%" ratio={4 / 3} position="relative">
-        <Image src={imgSrc} alt="" />
+      <AspectRatio w="100%" ratio={aspectRatio} position="relative">
+        <Image src={imgSrc} alt="" p={imagePadding} />
       </AspectRatio>
       <VStack p={3} py={2} pb={3} flexGrow={1} spacing={3} alignItems="stretch">
         <HStack justifyContent="space-between" alignItems="flex-start">

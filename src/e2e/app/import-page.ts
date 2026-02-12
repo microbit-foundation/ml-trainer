@@ -3,15 +3,17 @@ import { Locator, type Page, expect } from "@playwright/test";
 export class ImportPage {
   private readonly url: string;
   private nameInputField: Locator;
-  private startSessionBtn: Locator;
+  private openProjectBtn: Locator;
 
   constructor(public readonly page: Page) {
     this.url = `http://localhost:5173${
       process.env.CI ? process.env.BASE_URL : "/"
     }`;
 
-    this.startSessionBtn = page.getByRole("button", { name: "Start session" });
-    this.nameInputField = page.getByRole("textbox", { name: "Name" });
+    this.openProjectBtn = page
+      .getByRole("button", { name: "Open project" })
+      .first();
+    this.nameInputField = page.getByTestId("name-text");
   }
 
   async gotoSimpleAIExerciseTimer() {
@@ -26,17 +28,17 @@ export class ImportPage {
     return expect(this.nameInputField).toHaveValue(expected);
   }
 
-  async startSession() {
+  async openProject() {
     // Might still be loading.
-    await expect(this.startSessionBtn).toBeEnabled({
+    await expect(this.openProjectBtn).toBeEnabled({
       timeout: 5_000,
     });
-    await this.startSessionBtn.click();
+    await this.openProjectBtn.click();
   }
 
   async expectOnPage() {
-    await expect(this.page.getByText("New session setup")).toBeVisible();
+    await expect(this.page.getByText("New project setup")).toBeVisible();
     await expect(this.nameInputField).toBeVisible();
-    await expect(this.startSessionBtn).toBeVisible();
+    await expect(this.openProjectBtn).toBeVisible();
   }
 }

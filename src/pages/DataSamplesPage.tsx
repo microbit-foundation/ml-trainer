@@ -160,6 +160,7 @@ const DataSamplesPage = () => {
       <TrainModelDialogs finalFocusRef={trainButtonRef} />
       <DefaultPageLayout
         titleId="data-samples-title"
+        showProjectName
         showPageTitle
         menuItems={<ProjectMenuItems />}
         toolbarItemsRight={<ProjectToolbarItems />}

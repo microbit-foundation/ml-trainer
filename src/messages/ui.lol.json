@@ -151,6 +151,18 @@
       "value": "crwdns362674:0crwdne362674:0"
     }
   ],
+  "ai-light-switch-resource-title": [
+    {
+      "type": 0,
+      "value": "AI light switch"
+    }
+  ],
+  "ai-sports-data-logger-resource-title": [
+    {
+      "type": 0,
+      "value": "AI sports data logger"
+    }
+  ],
   "ai-storytelling-friend-resource-title": [
     {
       "type": 0,
@@ -921,6 +933,24 @@
       "value": "crwdns362844:0crwdne362844:0"
     }
   ],
+  "create-project": [
+    {
+      "type": 0,
+      "value": "Create project"
+    }
+  ],
+  "create-project-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Create a project"
+    }
+  ],
+  "createai-taster-lessons-resource-title": [
+    {
+      "type": 0,
+      "value": "CreateAI taster lessons"
+    }
+  ],
   "data-actions-menu": [
     {
       "type": 0,
@@ -1569,6 +1599,12 @@
       "value": "crwdns362998:0crwdne362998:0"
     }
   ],
+  "first-lessons-with-microbit-createai-resource-title": [
+    {
+      "type": 0,
+      "value": "First lessons with micro:bit CreateAI"
+    }
+  ],
   "get-started-action": [
     {
       "type": 0,
@@ -1653,6 +1689,18 @@
       "value": "crwdns363014:0crwdne363014:0"
     }
   ],
+  "help-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of help resources"
+    }
+  ],
+  "help-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Help section"
+    }
+  ],
   "help-support": [
     {
       "type": 0,
@@ -1669,12 +1717,6 @@
     {
       "type": 0,
       "value": "crwdns363018:0crwdne363018:0"
-    }
-  ],
-  "home-page-action": [
-    {
-      "type": 0,
-      "value": "Home page"
     }
   ],
   "homepage": [
@@ -2445,6 +2487,12 @@
       "value": "Could not connect to micro:bit"
     }
   ],
+  "new-project-setup-title": [
+    {
+      "type": 0,
+      "value": "New project setup"
+    }
+  ],
   "new-projects-row-carousel": [
     {
       "type": 0,
@@ -2455,18 +2503,6 @@
     {
       "type": 0,
       "value": "New projects"
-    }
-  ],
-  "new-session-setup-description": [
-    {
-      "type": 0,
-      "value": "crwdns363188:0crwdne363188:0"
-    }
-  ],
-  "new-session-setup-title": [
-    {
-      "type": 0,
-      "value": "crwdns363190:0crwdne363190:0"
     }
   ],
   "newpage-continue-session-subtitle": [
@@ -2619,12 +2655,6 @@
       "value": "crwdns368583:0crwdne368583:0"
     }
   ],
-  "open-project-setup-description": [
-    {
-      "type": 0,
-      "value": "crwdns368585:0crwdne368585:0"
-    }
-  ],
   "open-shared-project-action": [
     {
       "type": 0,
@@ -2727,6 +2757,18 @@
       "value": "crwdns363240:0crwdne363240:0"
     }
   ],
+  "project-name-text": [
+    {
+      "type": 0,
+      "value": "Project name"
+    }
+  ],
+  "project-name-tooltip": [
+    {
+      "type": 0,
+      "value": "Click to edit project name"
+    }
+  ],
   "project-skip-to-toolbar": [
     {
       "type": 0,
@@ -2736,7 +2778,7 @@
   "project-storage-tooltip": [
     {
       "type": 0,
-      "value": "Text to inform the user about where their projects are actually stored with link to support article?"
+      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if you don't visit for a while, especially in Safari."
     }
   ],
   "projects-page-title": [
@@ -3379,6 +3421,18 @@
       "value": "crwdns363362:0crwdne363362:0"
     }
   ],
+  "teacher-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of teacher resources"
+    }
+  ],
+  "teacher-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Teacher resources"
+    }
+  ],
   "terms": [
     {
       "type": 0,
@@ -3687,6 +3741,12 @@
       "value": "crwdns363446:0crwdne363446:0"
     }
   ],
+  "troubleshooting-resource-title": [
+    {
+      "type": 0,
+      "value": "Troubleshooting"
+    }
+  ],
   "try-again-action": [
     {
       "type": 0,
@@ -3745,6 +3805,12 @@
     {
       "type": 0,
       "value": "crwdns363466:0crwdne363466:0"
+    }
+  ],
+  "view-all-projects": [
+    {
+      "type": 0,
+      "value": "View all"
     }
   ],
   "webusb-retry-no-select": [

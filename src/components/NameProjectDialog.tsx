@@ -21,7 +21,14 @@ import {
   Input,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { FormEvent, ReactNode, useCallback, useEffect, useState } from "react";
+import {
+  FormEvent,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FormattedMessage } from "react-intl";
 import { useProjectName } from "../hooks/project-hooks";
 import { validateProjectName } from "../project-utils";
@@ -52,10 +59,14 @@ export const NameProjectDialog = ({
   const initialName = useProjectName();
   const [name, setName] = useState<string>(projectName ?? initialName);
   const isValid = validateProjectName(name);
-  const ref = useCallback((input: HTMLInputElement | null) => {
-    input?.setSelectionRange(0, input.value.length);
-  }, []);
-
+  const ref = useRef<HTMLInputElement>(null);
+  const handleFocus = useCallback(
+    (event: React.FocusEvent<HTMLInputElement>) => {
+      const input = event.target;
+      input.setSelectionRange(0, input.value.length);
+    },
+    []
+  );
   const handleSubmit = useCallback(
     (e: FormEvent) => {
       e.preventDefault();
@@ -77,6 +88,7 @@ export const NameProjectDialog = ({
       size="md"
       isCentered
       finalFocusRef={finalFocusRef}
+      initialFocusRef={ref}
       onCloseComplete={onCloseComplete}
     >
       <ModalOverlay>
@@ -95,6 +107,8 @@ export const NameProjectDialog = ({
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.currentTarget.value)}
+                    onFocus={handleFocus}
+                    autoComplete="off"
                   ></Input>
                   {helperText && (
                     <FormHelperText color="gray.700">
