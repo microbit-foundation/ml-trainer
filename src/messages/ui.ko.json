@@ -2179,6 +2179,12 @@
       "value": "hex 파일을 저장할 때 해당 이름을 사용합니다."
     }
   ],
+  "new-project-setup-title": [
+    {
+      "type": 0,
+      "value": "New project setup"
+    }
+  ],
   "new-projects-row-carousel": [
     {
       "type": 0,
@@ -2189,32 +2195,6 @@
     {
       "type": 0,
       "value": "New projects"
-    }
-  ],
-  "new-session-setup-description": [
-    {
-      "type": 0,
-      "value": "새 세션을 시작하면 기존 세션을 덮어쓱[ 됩니다. 먼저 "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "기존 세션을 저장"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "하는 것이 좋습니다."
-    }
-  ],
-  "new-session-setup-title": [
-    {
-      "type": 0,
-      "value": "새 세션 설정"
     }
   ],
   "newpage-continue-session-subtitle": [
@@ -2373,26 +2353,6 @@
     {
       "type": 0,
       "value": "Open project"
-    }
-  ],
-  "open-project-setup-description": [
-    {
-      "type": 0,
-      "value": "Opening this project will overwrite any existing session. You may want to "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "save your existing session"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " first."
     }
   ],
   "open-shared-project-action": [

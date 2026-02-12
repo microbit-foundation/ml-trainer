@@ -1271,6 +1271,10 @@
     "defaultMessage": "The name is used when you save a file.",
     "description": "Text under project name field"
   },
+  "new-project-setup-title": {
+    "defaultMessage": "New project setup",
+    "description": "New project setup title"
+  },
   "new-projects-row-carousel": {
     "defaultMessage": "List of new project actions",
     "description": "Label for home page row carousel"
@@ -1278,14 +1282,6 @@
   "new-projects-row-title": {
     "defaultMessage": "New projects",
     "description": "Title for home page row"
-  },
-  "new-session-setup-description": {
-    "defaultMessage": "Starting a new session will overwrite your existing session. You may want to <link>save your existing session</link> first.",
-    "description": "New session setup description"
-  },
-  "new-session-setup-title": {
-    "defaultMessage": "New session setup",
-    "description": "New session setup title"
   },
   "newpage-continue-session-subtitle": {
     "defaultMessage": "Use a hex file or data samples file you saved to your computer to continue a session.",
@@ -1370,10 +1366,6 @@
   "open-project-action": {
     "defaultMessage": "Open",
     "description": "Open project action"
-  },
-  "open-project-setup-description": {
-    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
-    "description": "Open project setup description"
   },
   "open-shared-project-action": {
     "defaultMessage": "Open project",

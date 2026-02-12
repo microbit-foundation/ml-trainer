@@ -2113,6 +2113,12 @@
       "value": "crwdns363186:0crwdne363186:0"
     }
   ],
+  "new-project-setup-title": [
+    {
+      "type": 0,
+      "value": "New project setup"
+    }
+  ],
   "new-projects-row-carousel": [
     {
       "type": 0,
@@ -2123,18 +2129,6 @@
     {
       "type": 0,
       "value": "New projects"
-    }
-  ],
-  "new-session-setup-description": [
-    {
-      "type": 0,
-      "value": "crwdns363188:0crwdne363188:0"
-    }
-  ],
-  "new-session-setup-title": [
-    {
-      "type": 0,
-      "value": "crwdns363190:0crwdne363190:0"
     }
   ],
   "newpage-continue-session-subtitle": [
@@ -2285,12 +2279,6 @@
     {
       "type": 0,
       "value": "crwdns368583:0crwdne368583:0"
-    }
-  ],
-  "open-project-setup-description": [
-    {
-      "type": 0,
-      "value": "crwdns368585:0crwdne368585:0"
     }
   ],
   "open-shared-project-action": [

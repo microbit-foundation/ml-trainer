@@ -1271,6 +1271,10 @@
     "defaultMessage": "El nombre se usa al guardar un archivo HEX.",
     "description": "Text under project name field"
   },
+  "new-project-setup-title": {
+    "defaultMessage": "New project setup",
+    "description": "New project setup title"
+  },
   "new-projects-row-carousel": {
     "defaultMessage": "List of new project actions",
     "description": "Label for home page row carousel"
@@ -1278,14 +1282,6 @@
   "new-projects-row-title": {
     "defaultMessage": "New projects",
     "description": "Title for home page row"
-  },
-  "new-session-setup-description": {
-    "defaultMessage": "Al iniciar una nueva sesión, se sobrescribirá la sesión existente. Es posible que quieras <link>guardar primero tu sesión actual</link>.",
-    "description": "New session setup description"
-  },
-  "new-session-setup-title": {
-    "defaultMessage": "Nueva configuración de sesión",
-    "description": "New session setup title"
   },
   "newpage-continue-session-subtitle": {
     "defaultMessage": "Utiliza un archivo hexadecimal o un archivo de muestras de datos que hayas guardado en tu ordenador para continuar una sesión.",
@@ -1370,10 +1366,6 @@
   "open-project-action": {
     "defaultMessage": "Open project",
     "description": "Open project button text"
-  },
-  "open-project-setup-description": {
-    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
-    "description": "Open project setup description"
   },
   "open-shared-project-action": {
     "defaultMessage": "Open project",

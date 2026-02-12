@@ -1271,6 +1271,10 @@
     "defaultMessage": "儲存 HEX 檔案時，使用該名稱。",
     "description": "Text under project name field"
   },
+  "new-project-setup-title": {
+    "defaultMessage": "New project setup",
+    "description": "New project setup title"
+  },
   "new-projects-row-carousel": {
     "defaultMessage": "List of new project actions",
     "description": "Label for home page row carousel"
@@ -1278,14 +1282,6 @@
   "new-projects-row-title": {
     "defaultMessage": "New projects",
     "description": "Title for home page row"
-  },
-  "new-session-setup-description": {
-    "defaultMessage": "啟動新會話將覆蓋您現有的會話。您可能需要先<link>儲存您的現有會話</link>。",
-    "description": "New session setup description"
-  },
-  "new-session-setup-title": {
-    "defaultMessage": "新會話設定",
-    "description": "New session setup title"
   },
   "newpage-continue-session-subtitle": {
     "defaultMessage": "利用您儲存到您電腦的十六進位檔案或數據樣本檔案以繼續會話。",
@@ -1370,10 +1366,6 @@
   "open-project-action": {
     "defaultMessage": "Open project",
     "description": "Open project button text"
-  },
-  "open-project-setup-description": {
-    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
-    "description": "Open project setup description"
   },
   "open-shared-project-action": {
     "defaultMessage": "Open project",

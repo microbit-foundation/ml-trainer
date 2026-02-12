@@ -1271,6 +1271,10 @@
     "defaultMessage": "crwdns363186:0crwdne363186:0",
     "description": "Text under project name field"
   },
+  "new-project-setup-title": {
+    "defaultMessage": "New project setup",
+    "description": "New project setup title"
+  },
   "new-projects-row-carousel": {
     "defaultMessage": "List of new project actions",
     "description": "Label for home page row carousel"
@@ -1278,14 +1282,6 @@
   "new-projects-row-title": {
     "defaultMessage": "New projects",
     "description": "Title for home page row"
-  },
-  "new-session-setup-description": {
-    "defaultMessage": "crwdns363188:0crwdne363188:0",
-    "description": "New session setup description"
-  },
-  "new-session-setup-title": {
-    "defaultMessage": "crwdns363190:0crwdne363190:0",
-    "description": "New session setup title"
   },
   "newpage-continue-session-subtitle": {
     "defaultMessage": "crwdns363192:0crwdne363192:0",
@@ -1370,10 +1366,6 @@
   "open-project-action": {
     "defaultMessage": "crwdns368583:0crwdne368583:0",
     "description": "Open project button text"
-  },
-  "open-project-setup-description": {
-    "defaultMessage": "crwdns368585:0crwdne368585:0",
-    "description": "Open project setup description"
   },
   "open-shared-project-action": {
     "defaultMessage": "Open project",

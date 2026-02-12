@@ -1271,6 +1271,10 @@
     "defaultMessage": "hex 파일을 저장할 때 해당 이름을 사용합니다.",
     "description": "Text under project name field"
   },
+  "new-project-setup-title": {
+    "defaultMessage": "New project setup",
+    "description": "New project setup title"
+  },
   "new-projects-row-carousel": {
     "defaultMessage": "List of new project actions",
     "description": "Label for home page row carousel"
@@ -1278,14 +1282,6 @@
   "new-projects-row-title": {
     "defaultMessage": "New projects",
     "description": "Title for home page row"
-  },
-  "new-session-setup-description": {
-    "defaultMessage": "새 세션을 시작하면 기존 세션을 덮어쓱[ 됩니다. 먼저 <link>기존 세션을 저장</link>하는 것이 좋습니다.",
-    "description": "New session setup description"
-  },
-  "new-session-setup-title": {
-    "defaultMessage": "새 세션 설정",
-    "description": "New session setup title"
   },
   "newpage-continue-session-subtitle": {
     "defaultMessage": "컴퓨터에 저장한 데이터 샘플 파일 또는 hex 파일을 사용하여 세션을 계속 진행하세요.",
@@ -1370,10 +1366,6 @@
   "open-project-action": {
     "defaultMessage": "Open project",
     "description": "Open project button text"
-  },
-  "open-project-setup-description": {
-    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
-    "description": "Open project setup description"
   },
   "open-shared-project-action": {
     "defaultMessage": "Open project",
