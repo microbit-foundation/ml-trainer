@@ -1,0 +1,11 @@
+{
+  "name": "microbit-app",
+  "version": "0.0.0",
+  "description": "micro:bit data collection firmware for ML trainer",
+  "license": "MIT",
+  "dependencies": {
+    "microbit": "lancaster-university/microbit#v2.1.1"
+  },
+  "targetDependencies": {},
+  "bin": "./source"
+}
