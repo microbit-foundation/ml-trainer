@@ -54,12 +54,7 @@ const ProjectPreview = ({
   titleId,
 }: ProjectPreviewProps) => {
   return (
-    <VStack
-      as="main"
-      justifyContent="center"
-      paddingBottom={20}
-      aria-busy={isLoading}
-    >
+    <VStack as="main" justifyContent="center" paddingBottom={20}>
       <Stack
         bgColor="white"
         spacing={5}
