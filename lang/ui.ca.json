@@ -435,6 +435,10 @@
     "defaultMessage": "Create a project",
     "description": "Create project dialog heading"
   },
+  "createai-taster-lessons-resource-title": {
+    "defaultMessage": "Simple AI exercise timer",
+    "description": "Home page resource card title"
+  },
   "data-actions-menu": {
     "defaultMessage": "Accions de dades",
     "description": "Aria label for menu"
@@ -775,6 +779,10 @@
     "defaultMessage": "Cal actualitzar el firmware",
     "description": "Connection error dialog"
   },
+  "first-lessons-with-microbit-createai-resource-title": {
+    "defaultMessage": "Simple AI exercise timer",
+    "description": "Home page resource card title"
+  },
   "get-started-action": {
     "defaultMessage": "Comencem",
     "description": "Get started action"
@@ -830,6 +838,14 @@
   "help-label": {
     "defaultMessage": "Ajuda",
     "description": "Help icon aria label"
+  },
+  "help-resources-row-carousel": {
+    "defaultMessage": "List of help resources",
+    "description": "Label for home page row carousel"
+  },
+  "help-resources-row-title": {
+    "defaultMessage": "Help section",
+    "description": "Title for home page row"
   },
   "help-support": {
     "defaultMessage": "Ajuda i suport",
@@ -1735,6 +1751,14 @@
     "defaultMessage": "Si us plau, considera<link>fer una sol·licitud d'assistència</link>.",
     "description": "Support request link text"
   },
+  "teacher-resources-row-carousel": {
+    "defaultMessage": "List of teacher resources",
+    "description": "Label for home page row carousel"
+  },
+  "teacher-resources-row-title": {
+    "defaultMessage": "Teacher resources",
+    "description": "Title for home page row"
+  },
   "terms": {
     "defaultMessage": "Condicions d'ús",
     "description": "Link or menu item link to view terms of use"
@@ -1922,6 +1946,10 @@
   "transfer-hex-message": {
     "defaultMessage": "Arrossega el fitxer hexadecimal de la teva carpeta de descàrregues a la unitat MICROBIT.",
     "description": "Dialog shown when WebUSB fails"
+  },
+  "troubleshooting-resource-title": {
+    "defaultMessage": "Troubleshooting",
+    "description": "Home page resource card title"
   },
   "try-again-action": {
     "defaultMessage": "Torna-ho a provar",

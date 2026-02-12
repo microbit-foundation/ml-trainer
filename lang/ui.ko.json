@@ -435,6 +435,10 @@
     "defaultMessage": "Create a project",
     "description": "Create project dialog heading"
   },
+  "createai-taster-lessons-resource-title": {
+    "defaultMessage": "Simple AI exercise timer",
+    "description": "Home page resource card title"
+  },
   "data-actions-menu": {
     "defaultMessage": "데이터 행동",
     "description": "Aria label for menu"
@@ -775,6 +779,10 @@
     "defaultMessage": "펌웨어 업데이트 필요",
     "description": "Connection error dialog"
   },
+  "first-lessons-with-microbit-createai-resource-title": {
+    "defaultMessage": "Simple AI exercise timer",
+    "description": "Home page resource card title"
+  },
   "get-started-action": {
     "defaultMessage": "시작하기",
     "description": "Get started action"
@@ -830,6 +838,14 @@
   "help-label": {
     "defaultMessage": "도움 및 지원",
     "description": "Help icon aria label"
+  },
+  "help-resources-row-carousel": {
+    "defaultMessage": "List of help resources",
+    "description": "Label for home page row carousel"
+  },
+  "help-resources-row-title": {
+    "defaultMessage": "Help section",
+    "description": "Title for home page row"
   },
   "help-support": {
     "defaultMessage": "도움말 및 지원",
@@ -1735,6 +1751,14 @@
     "defaultMessage": "<link>지원 요청</link>을 생각해 보세요.",
     "description": "Support request link text"
   },
+  "teacher-resources-row-carousel": {
+    "defaultMessage": "List of teacher resources",
+    "description": "Label for home page row carousel"
+  },
+  "teacher-resources-row-title": {
+    "defaultMessage": "Teacher resources",
+    "description": "Title for home page row"
+  },
   "terms": {
     "defaultMessage": "이용 약관",
     "description": "Link or menu item link to view terms of use"
@@ -1922,6 +1946,10 @@
   "transfer-hex-message": {
     "defaultMessage": "다운로드 폴더의 hex 파일을 MICROBIT 드라이브로 드래그하세요.",
     "description": "Dialog shown when WebUSB fails"
+  },
+  "troubleshooting-resource-title": {
+    "defaultMessage": "Troubleshooting",
+    "description": "Home page resource card title"
   },
   "try-again-action": {
     "defaultMessage": "다시 시도",

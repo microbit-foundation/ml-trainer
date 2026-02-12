@@ -29,7 +29,7 @@ const projectIdeas: ProjectIdeaConfig[] = [
   },
 ];
 
-export const createResourceCards = (intl: IntlShape, languageId: string) =>
+export const createProjectIdeaCards = (intl: IntlShape, languageId: string) =>
   projectIdeas.map((project) => (
     <ResourceCard
       key={project.titleId}

@@ -745,6 +745,12 @@
       "value": "Create a project"
     }
   ],
+  "createai-taster-lessons-resource-title": [
+    {
+      "type": 0,
+      "value": "Simple AI exercise timer"
+    }
+  ],
   "data-actions-menu": [
     {
       "type": 0,
@@ -1373,6 +1379,12 @@
       "value": "Es necesario actualizar el firmware"
     }
   ],
+  "first-lessons-with-microbit-createai-resource-title": [
+    {
+      "type": 0,
+      "value": "Simple AI exercise timer"
+    }
+  ],
   "get-started-action": [
     {
       "type": 0,
@@ -1455,6 +1467,18 @@
     {
       "type": 0,
       "value": "Ayuda"
+    }
+  ],
+  "help-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of help resources"
+    }
+  ],
+  "help-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Help section"
     }
   ],
   "help-support": [
@@ -3121,6 +3145,18 @@
       "value": "."
     }
   ],
+  "teacher-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of teacher resources"
+    }
+  ],
+  "teacher-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Teacher resources"
+    }
+  ],
   "terms": [
     {
       "type": 0,
@@ -3475,6 +3511,12 @@
     {
       "type": 0,
       "value": "Arrastra el archivo hexadecimal desde tu carpeta Descargas a la unidad MICROBIT."
+    }
+  ],
+  "troubleshooting-resource-title": [
+    {
+      "type": 0,
+      "value": "Troubleshooting"
     }
   ],
   "try-again-action": [

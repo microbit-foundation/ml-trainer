@@ -33,7 +33,7 @@ import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
 import ProjectCard from "../components/ProjectCard";
-import { createResourceCards } from "../components/ResourceCards";
+import { createProjectIdeaCards } from "../components/ProjectIdeaCards";
 import { useLogging } from "../logging/logging-hooks";
 import {
   loadProjectAndModelFromStorage,
@@ -46,6 +46,8 @@ import { ProjectNameDialogReason, untitledProjectName } from "../project-utils";
 import { IconType } from "react-icons/lib";
 import ProjectCardActions from "../components/ProjectCardActions";
 import { ConfirmDialog } from "../components/ConfirmDialog";
+import { createLessonCards } from "../components/LessonCards";
+import { createHelpCards } from "../components/HelpCards";
 
 const HomePage = () => {
   const { allProjectDataLoaded } = useLoaderData() as {
@@ -64,8 +66,18 @@ const HomePage = () => {
           <ProjectRow />
           <CarouselRow
             containerMessageId="project-ideas-row-carousel"
-            carouselItems={createResourceCards(intl, languageId)}
+            carouselItems={createProjectIdeaCards(intl, languageId)}
             titleId="project-ideas-row-title"
+          />
+          <CarouselRow
+            containerMessageId="teacher-resources-row-carousel"
+            carouselItems={createLessonCards(intl)}
+            titleId="teacher-resources-row-title"
+          />
+          <CarouselRow
+            containerMessageId="help-resources-row-carousel"
+            carouselItems={createHelpCards(intl)}
+            titleId="help-resources-row-title"
           />
         </DefaultPageLayout>
       </Await>

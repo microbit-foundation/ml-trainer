@@ -745,6 +745,12 @@
       "value": "Create a project"
     }
   ],
+  "createai-taster-lessons-resource-title": [
+    {
+      "type": 0,
+      "value": "CreateAI taster lessons"
+    }
+  ],
   "data-actions-menu": [
     {
       "type": 0,
@@ -1373,6 +1379,12 @@
       "value": "Firmware update required"
     }
   ],
+  "first-lessons-with-microbit-createai-resource-title": [
+    {
+      "type": 0,
+      "value": "First lessons with micro:bit CreateAI"
+    }
+  ],
   "get-started-action": [
     {
       "type": 0,
@@ -1455,6 +1467,18 @@
     {
       "type": 0,
       "value": "Help"
+    }
+  ],
+  "help-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of help resources"
+    }
+  ],
+  "help-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Help section"
     }
   ],
   "help-support": [
@@ -3135,6 +3159,18 @@
       "value": "."
     }
   ],
+  "teacher-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of teacher resources"
+    }
+  ],
+  "teacher-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Teacher resources"
+    }
+  ],
   "terms": [
     {
       "type": 0,
@@ -3489,6 +3525,12 @@
     {
       "type": 0,
       "value": "Drag the hex file from your Downloads folder to the MICROBIT drive."
+    }
+  ],
+  "troubleshooting-resource-title": [
+    {
+      "type": 0,
+      "value": "Troubleshooting"
     }
   ],
   "try-again-action": [

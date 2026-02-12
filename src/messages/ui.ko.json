@@ -733,6 +733,12 @@
       "value": "Create a project"
     }
   ],
+  "createai-taster-lessons-resource-title": [
+    {
+      "type": 0,
+      "value": "Simple AI exercise timer"
+    }
+  ],
   "data-actions-menu": [
     {
       "type": 0,
@@ -1361,6 +1367,12 @@
       "value": "펌웨어 업데이트 필요"
     }
   ],
+  "first-lessons-with-microbit-createai-resource-title": [
+    {
+      "type": 0,
+      "value": "Simple AI exercise timer"
+    }
+  ],
   "get-started-action": [
     {
       "type": 0,
@@ -1443,6 +1455,18 @@
     {
       "type": 0,
       "value": "도움 및 지원"
+    }
+  ],
+  "help-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of help resources"
+    }
+  ],
+  "help-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Help section"
     }
   ],
   "help-support": [
@@ -3097,6 +3121,18 @@
       "value": "을 생각해 보세요."
     }
   ],
+  "teacher-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of teacher resources"
+    }
+  ],
+  "teacher-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Teacher resources"
+    }
+  ],
   "terms": [
     {
       "type": 0,
@@ -3443,6 +3479,12 @@
     {
       "type": 0,
       "value": "다운로드 폴더의 hex 파일을 MICROBIT 드라이브로 드래그하세요."
+    }
+  ],
+  "troubleshooting-resource-title": [
+    {
+      "type": 0,
+      "value": "Troubleshooting"
     }
   ],
   "try-again-action": [
