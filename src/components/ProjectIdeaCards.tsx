@@ -2,6 +2,8 @@ import ResourceCard from "./ResourceCard";
 import projectImage1 from "theme-package/images/ai-storytelling-friend.png";
 import projectImage2 from "theme-package/images/simple-ai-exercise-timer.png";
 import projectImage3 from "theme-package/images/ai-activity-timer.png";
+import projectImage4 from "theme-package/images/ai-light-switch.png";
+import projectImage5 from "theme-package/images/ai-sports-data-logger.png";
 import { projectUrl } from "../utils/external-links";
 import { IntlShape } from "react-intl";
 
@@ -26,6 +28,16 @@ const projectIdeas: ProjectIdeaConfig[] = [
     titleId: "ai-activity-timer-resource-title",
     url: "ai-activity-timer",
     imgSrc: projectImage3,
+  },
+  {
+    titleId: "ai-light-switch-resource-title",
+    url: "ai-light-switch",
+    imgSrc: projectImage4,
+  },
+  {
+    titleId: "ai-sports-data-logger-resource-title",
+    url: "ai-sports-data-logger",
+    imgSrc: projectImage5,
   },
 ];
 

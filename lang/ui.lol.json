@@ -67,6 +67,14 @@
     "defaultMessage": "crwdns362674:0crwdne362674:0",
     "description": "Home page resource card title"
   },
+  "ai-light-switch-resource-title": {
+    "defaultMessage": "AI light switch",
+    "description": "Home page resource card title"
+  },
+  "ai-sports-data-logger-resource-title": {
+    "defaultMessage": "AI sports data logger",
+    "description": "Home page resource card title"
+  },
   "ai-storytelling-friend-resource-title": {
     "defaultMessage": "crwdns363518:0crwdne363518:0",
     "description": "Home page resource card title"

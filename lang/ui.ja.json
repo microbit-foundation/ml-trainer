@@ -67,6 +67,14 @@
     "defaultMessage": "AI活動タイマー",
     "description": "Home page resource card title"
   },
+  "ai-light-switch-resource-title": {
+    "defaultMessage": "AI light switch",
+    "description": "Home page resource card title"
+  },
+  "ai-sports-data-logger-resource-title": {
+    "defaultMessage": "AI sports data logger",
+    "description": "Home page resource card title"
+  },
   "ai-storytelling-friend-resource-title": {
     "defaultMessage": "AIストーリーテリングの友達",
     "description": "Home page resource card title"
