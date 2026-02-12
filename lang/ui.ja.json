@@ -716,7 +716,7 @@
     "description": "Progress text during actual flashing stage"
   },
   "downloading-stage-flashing-native": {
-    "defaultMessage": "Please do not interact with the micro:bit before the downloading is complete.",
+    "defaultMessage": "Please do not interact with the micro:bit before the download is complete.",
     "description": "Progress text during native flashing stage"
   },
   "downloading-stage-resetting-device": {
