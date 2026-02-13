@@ -175,7 +175,7 @@ enum DatabaseStore {
  * Serializable model data stored in IndexedDB.
  */
 interface StoredModelData {
-  modelTopology?: {} | ArrayBuffer;
+  modelTopology?: object | ArrayBuffer;
   trainingConfig?: tf.io.TrainingConfig;
   weightSpecs?: tf.io.WeightsManifestEntry[];
   weightData?: ArrayBuffer;
@@ -1073,7 +1073,7 @@ export class IdbDatabase implements Database {
     await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.delete(id);
-    tx.objectStore(DatabaseStore.MODELS).delete(id);
+    await tx.objectStore(DatabaseStore.MODELS).delete(id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     await projectDataStore.delete(id);
     await tx.done;
