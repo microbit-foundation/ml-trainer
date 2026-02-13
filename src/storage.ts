@@ -15,7 +15,7 @@ import { projectSessionStorage } from "./session-storage";
 
 const DATABASE_NAME = "ml";
 
-interface PersistedProjectData {
+export interface PersistedProjectData {
   id: string;
   actions: ActionData[];
   project: MakeCodeProject;
@@ -24,35 +24,12 @@ interface PersistedProjectData {
   timestamp: number | undefined;
 }
 
-interface MakeCodeData {
+export interface MakeCodeData {
   project: MakeCodeProject;
   projectEdited: boolean;
 }
 
-enum DatabaseStore {
-  PROJECT_DATA = "project-data",
-  MAKECODE_DATA = "makecode-data",
-  RECORDINGS = "recordings",
-  ACTIONS = "actions",
-  SETTINGS = "settings",
-}
-
-const oldModelUrl = "indexeddb://micro:bit-ai-creator-model";
-
 export class StorageError extends Error {}
-
-const defaultTimestamp = Date.now();
-const defaultProjectId = uuid();
-
-const defaultStoreData: Record<
-  DatabaseStore.SETTINGS,
-  { key: string; value: Settings }
-> = {
-  [DatabaseStore.SETTINGS]: {
-    value: defaultSettings,
-    key: DatabaseStore.SETTINGS,
-  },
-};
 
 export interface StoreAction extends Action {
   projectId: string;
@@ -71,6 +48,124 @@ export interface ProjectData {
 export interface ProjectDataWithActions extends ProjectData {
   actions: StoreAction[];
 }
+
+/**
+ * Storage backend interface for project data persistence.
+ */
+export interface Database {
+  newSession(
+    actions: ActionData[],
+    makeCodeData: MakeCodeData,
+    projectData: { timestamp: number; name: string; id: string }
+  ): Promise<void>;
+  getProject(id: string): Promise<PersistedProjectData>;
+  getLatestProject(): Promise<PersistedProjectData | undefined>;
+  getAllProjectData(): Promise<ProjectDataWithActions[]>;
+  importProject(
+    actions: ActionData[],
+    makeCodeData: MakeCodeData,
+    projectData: { timestamp: number; id: string },
+    settings: Settings
+  ): Promise<void>;
+  addAction(
+    id: string | undefined,
+    action: ActionData,
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  updateAction(
+    id: string | undefined,
+    action: ActionData,
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  updateActions(
+    id: string | undefined,
+    actions: ActionData[],
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  deleteAction(
+    id: string | undefined,
+    action: ActionData,
+    newActions: ActionData[],
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  deleteAllActions(
+    id: string | undefined,
+    newActions: ActionData[],
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  replaceActions(
+    actions: ActionData[],
+    makeCodeData: MakeCodeData,
+    projectData: { timestamp: number; id: string | undefined },
+    settings: Settings
+  ): Promise<void>;
+  addRecording(
+    id: string | undefined,
+    recording: RecordingData,
+    action: ActionData,
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  deleteRecording(
+    id: string | undefined,
+    key: string,
+    action: ActionData,
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  updateMakeCodeProject(
+    id: string | undefined,
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  updateProjectTimestamp(
+    id: string | undefined,
+    timestamp: number
+  ): Promise<void>;
+  renameProject(id: string, name: string, timestamp: number): Promise<void>;
+  duplicateProject(
+    existingProjectId: string,
+    newProjectData: ProjectData
+  ): Promise<void>;
+  deleteProject(id: string): Promise<void>;
+  deleteProjects(ids: string[]): Promise<void>;
+  updateSettings(
+    id: string | undefined,
+    settings: Settings,
+    timestamp: number
+  ): Promise<void>;
+  saveModel(id: string | undefined, model: tf.LayersModel): Promise<void>;
+  removeModel(id: string | undefined): Promise<void>;
+  loadModel(id: string): Promise<tf.LayersModel | undefined>;
+}
+
+enum DatabaseStore {
+  PROJECT_DATA = "project-data",
+  MAKECODE_DATA = "makecode-data",
+  RECORDINGS = "recordings",
+  ACTIONS = "actions",
+  SETTINGS = "settings",
+}
+
+const oldModelUrl = "indexeddb://micro:bit-ai-creator-model";
+
+const defaultTimestamp = Date.now();
+const defaultProjectId = uuid();
+
+const defaultStoreData: Record<
+  DatabaseStore.SETTINGS,
+  { key: string; value: Settings }
+> = {
+  [DatabaseStore.SETTINGS]: {
+    value: defaultSettings,
+    key: DatabaseStore.SETTINGS,
+  },
+};
 
 interface Schema extends DBSchema {
   [DatabaseStore.PROJECT_DATA]: {
@@ -97,15 +192,15 @@ interface Schema extends DBSchema {
   };
 }
 
-export class Database {
-  dbPromise: Promise<IDBPDatabase<Schema>>;
-  dbInitValuesPromise: PromiseInfo<void> | undefined;
-  dbReady: boolean = false;
+export class IdbDatabase implements Database {
+  private dbPromise: Promise<IDBPDatabase<Schema>>;
+  private dbInitValuesPromise: PromiseInfo<void> | undefined;
+  private dbReady: boolean = false;
   constructor() {
     this.dbPromise = this.initializeDb();
   }
 
-  async useDb(): Promise<IDBPDatabase<Schema>> {
+  private async useDb(): Promise<IDBPDatabase<Schema>> {
     if (this.dbReady) {
       return this.dbPromise;
     }
@@ -129,7 +224,7 @@ export class Database {
     return db;
   }
 
-  initializeDb(): Promise<IDBPDatabase<Schema>> {
+  private initializeDb(): Promise<IDBPDatabase<Schema>> {
     return openDB(DATABASE_NAME, 1, {
       upgrade(db) {
         for (const store of Object.values(DatabaseStore)) {
@@ -159,7 +254,9 @@ export class Database {
     });
   }
 
-  async migrateFromLocalStorage(db: IDBPDatabase<Schema>): Promise<void> {
+  private async migrateFromLocalStorage(
+    db: IDBPDatabase<Schema>
+  ): Promise<void> {
     const localStorageProject = getLocalStorageProject();
     if (!localStorageProject) {
       // Set default values if there is are no data to migrate.
@@ -1004,7 +1101,7 @@ export class Database {
     }
   }
 
-  assertProjectId(id: string | undefined) {
+  private assertProjectId(id: string | undefined) {
     if (!id) {
       throw new StorageError("Project id is undefined");
     }
@@ -1028,7 +1125,7 @@ const assertDataArray = <T>(data: (undefined | T)[]) => {
   return data as T[];
 };
 
-export const getLocalStorageProject = (): PersistedProjectData | undefined => {
+const getLocalStorageProject = (): PersistedProjectData | undefined => {
   const data = localStorage.getItem(DATABASE_NAME);
   if (!data) {
     return undefined;

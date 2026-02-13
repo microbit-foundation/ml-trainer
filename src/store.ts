@@ -51,7 +51,12 @@ import {
   untitledProjectName,
 } from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
-import { Database, ProjectDataWithActions, StorageError } from "./storage";
+import {
+  Database,
+  IdbDatabase,
+  ProjectDataWithActions,
+  StorageError,
+} from "./storage";
 import { getTour as getTourSpec } from "./tours";
 import { getTotalNumSamples } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
@@ -64,7 +69,7 @@ import {
 } from "./broadcast-channel";
 import { projectSessionStorage } from "./session-storage";
 
-const storage = new Database();
+const storage: Database = new IdbDatabase();
 
 const createFirstAction = (): ActionData => ({
   icon: defaultIcons[0],
