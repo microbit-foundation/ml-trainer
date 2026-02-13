@@ -3,11 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  CapacitorSQLite,
-  SQLiteConnection,
-  SQLiteDBConnection,
-} from "@capacitor-community/sqlite";
+import { CapacitorSQLite, SQLiteConnection } from "@capacitor-community/sqlite";
 import * as tf from "@tensorflow/tfjs";
 import { v4 as uuid } from "uuid";
 import { ActionData, RecordingData } from "./model";
@@ -26,7 +22,7 @@ import {
 const DATABASE_NAME = "ml";
 const DATABASE_VERSION = 1;
 
-const SCHEMA = `
+export const SCHEMA = `
 CREATE TABLE IF NOT EXISTS projects (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
@@ -64,26 +60,36 @@ CREATE TABLE IF NOT EXISTS models (
 );
 `;
 
-export class SqliteDatabase implements Database {
-  private dbReady: Promise<SQLiteDBConnection>;
+/**
+ * Subset of SQLiteDBConnection used by SqliteDatabase, allowing test
+ * implementations (e.g. better-sqlite3) to be injected without pulling
+ * in the full Capacitor plugin.
+ */
+export interface SqliteConnection {
+  execute(statements: string, transaction?: boolean): Promise<unknown>;
+  run(statement: string, values?: unknown[]): Promise<unknown>;
+  query(
+    statement: string,
+    values?: unknown[]
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ): Promise<{ values?: Record<string, any>[] }>;
+  executeTransaction(
+    txn: { statement: string; values?: unknown[] }[]
+  ): Promise<unknown>;
+}
 
-  constructor() {
-    this.dbReady = this.initializeDb();
+export class SqliteDatabase implements Database {
+  private dbReady: Promise<SqliteConnection>;
+
+  constructor(connectionFactory?: () => Promise<SqliteConnection>) {
+    this.dbReady = connectionFactory
+      ? connectionFactory().then((db) => this.initializeSchema(db))
+      : this.initializeCapacitorDb();
   }
 
-  // To add a schema migration, bump DATABASE_VERSION and register upgrade
-  // statements via sqlite.addUpgradeStatement() before createConnection().
-  // Keep SCHEMA as the full current schema for fresh installs.
-  private async initializeDb(): Promise<SQLiteDBConnection> {
-    const sqlite = new SQLiteConnection(CapacitorSQLite);
-    const db = await sqlite.createConnection(
-      DATABASE_NAME,
-      false,
-      "no-encryption",
-      DATABASE_VERSION,
-      false
-    );
-    await db.open();
+  private async initializeSchema(
+    db: SqliteConnection
+  ): Promise<SqliteConnection> {
     await db.execute("PRAGMA foreign_keys = ON;");
     await db.execute(SCHEMA);
     // Ensure default settings exist.
@@ -99,7 +105,23 @@ export class SqliteDatabase implements Database {
     return db;
   }
 
-  private async useDb(): Promise<SQLiteDBConnection> {
+  // To add a schema migration, bump DATABASE_VERSION and register upgrade
+  // statements via sqlite.addUpgradeStatement() before createConnection().
+  // Keep SCHEMA as the full current schema for fresh installs.
+  private async initializeCapacitorDb(): Promise<SqliteConnection> {
+    const sqlite = new SQLiteConnection(CapacitorSQLite);
+    const db = await sqlite.createConnection(
+      DATABASE_NAME,
+      false,
+      "no-encryption",
+      DATABASE_VERSION,
+      false
+    );
+    await db.open();
+    return this.initializeSchema(db);
+  }
+
+  private async useDb(): Promise<SqliteConnection> {
     return this.dbReady;
   }
 
@@ -177,7 +199,7 @@ export class SqliteDatabase implements Database {
   }
 
   private async loadProject(
-    db: SQLiteDBConnection,
+    db: SqliteConnection,
     id: string
   ): Promise<PersistedProjectData> {
     const projectResult = await db.query(
