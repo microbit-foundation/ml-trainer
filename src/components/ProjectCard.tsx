@@ -3,21 +3,18 @@ import {
   Card,
   CardBody,
   Icon,
-  Image,
   LinkBox,
   LinkOverlay,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback } from "react";
+import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import actionRecording from "../images/action-recording.svg";
 import { ProjectDataWithActions } from "../storage";
 import { loadProjectAndModelFromStorage } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 import { timeAgo } from "../utils/datetime";
-import { useIntl } from "react-intl";
-import { RiShakeHandsLine } from "react-icons/ri";
 
 interface ProjectCardProps {
   projectData: ProjectDataWithActions;

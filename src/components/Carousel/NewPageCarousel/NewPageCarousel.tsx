@@ -1,9 +1,10 @@
 import { useCallback, useMemo } from "react";
-import styles from "./NewPageCarousel.module.css";
 import SwiperCarousel from "../SwiperCarousel/SwiperCarousel";
+import styles from "./NewPageCarousel.module.css";
 
 const slow = 3000;
 const fast = 1000;
+const cardWidth = 200;
 
 interface NewPageCarouselProps {
   carouselItems: JSX.Element[];
@@ -28,54 +29,54 @@ const NewPageCarousel = ({
     [carouselItems.length, centerItems]
   );
 
+  const getSlidesPerGroup = useCallback((spacing: number) => {
+    return Math.floor(window.innerWidth / (cardWidth + spacing));
+  }, []);
+
   // Pass this in as a prop for other carousels?
   const breakpoints = useMemo(() => {
     if (typeof window === "undefined") {
       return;
     }
+
     return {
       // When window width is >= 0px.
       0: {
-        slidesPerView: 2,
         spaceBetween: 15,
-        slidesPerGroup: 2,
-        slidesOffsetAfter: getOffset(2),
-        slidesOffsetBefore: getOffset(2),
+        slidesPerGroup: getSlidesPerGroup(15),
+        slidesOffsetAfter: getSlidesPerGroup(15),
+        slidesOffsetBefore: getSlidesPerGroup(15),
       },
       // When window width is >= 768px.
       768: {
-        slidesPerView: 3,
         spaceBetween: 20,
-        slidesPerGroup: 3,
-        slidesOffsetAfter: getOffset(3),
-        slidesOffsetBefore: getOffset(3),
+        slidesPerGroup: getSlidesPerGroup(20),
+        slidesOffsetAfter: getSlidesPerGroup(20),
+        slidesOffsetBefore: getSlidesPerGroup(20),
       },
       // When window width is >= 992ppx.
       992: {
-        slidesPerView: 4,
         spaceBetween: 25,
-        slidesPerGroup: 4,
-        slidesOffsetAfter: getOffset(4),
-        slidesOffsetBefore: getOffset(4),
+        slidesPerGroup: getSlidesPerGroup(25),
+        slidesOffsetAfter: getSlidesPerGroup(25),
+        slidesOffsetBefore: getSlidesPerGroup(25),
       },
       // When window width is >= 1200px.
       1200: {
-        slidesPerView: 5,
         spaceBetween: 30,
-        slidesPerGroup: 5,
-        slidesOffsetAfter: getOffset(5),
-        slidesOffsetBefore: getOffset(5),
+        slidesPerGroup: getSlidesPerGroup(30),
+        slidesOffsetAfter: getOffset(getSlidesPerGroup(30)),
+        slidesOffsetBefore: getOffset(getSlidesPerGroup(30)),
       },
       // When window width is >= 1400px.
       1400: {
-        slidesPerView: 6,
         spaceBetween: 30,
-        slidesPerGroup: 6,
-        slidesOffsetAfter: getOffset(6),
-        slidesOffsetBefore: getOffset(6),
+        slidesPerGroup: getSlidesPerGroup(30),
+        slidesOffsetAfter: getOffset(getSlidesPerGroup(30)),
+        slidesOffsetBefore: getOffset(getSlidesPerGroup(30)),
       },
     };
-  }, [getOffset]);
+  }, [getOffset, getSlidesPerGroup]);
 
   const getBreakpoint = useCallback(() => {
     if (typeof window !== "undefined" && breakpoints) {
@@ -115,6 +116,7 @@ const NewPageCarousel = ({
             }
           : breakpoints
       }
+      slidesPerView="auto"
       carouselItems={carouselItems}
       centerInsufficientSlides={centerItems}
       containerMessageId={containerMessageId}
@@ -126,9 +128,11 @@ const NewPageCarousel = ({
         }
         const breakpoint = getBreakpoint();
         if (breakpoint) {
-          const offset = getOffset(breakpoint.slidesPerGroup);
+          const slidesPerGroup = getSlidesPerGroup(breakpoint.spaceBetween);
+          const offset = getOffset(slidesPerGroup);
           swiper.params.slidesOffsetAfter = offset;
           swiper.params.slidesOffsetBefore = offset;
+          swiper.params.slidesPerGroup = slidesPerGroup;
         }
       }}
       // Padding to account for card box-shadow.

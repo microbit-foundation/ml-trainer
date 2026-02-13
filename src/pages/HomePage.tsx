@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  AspectRatio,
   Button,
   Card,
   CardBody,
@@ -19,35 +18,35 @@ import {
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
 import { RefObject, Suspense, useCallback, useRef, useState } from "react";
+import { IconType } from "react-icons/lib";
 import { RiAddLine, RiFolderOpenLine, RiInformationLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Await, useLoaderData, useNavigate } from "react-router";
 import CarouselRow from "../components/Carousel/CarouselRow";
 import ClickableTooltip from "../components/ClickableTooltip";
+import { ConfirmDialog } from "../components/ConfirmDialog";
 import DefaultPageLayout, {
   HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
+import { createHelpCards } from "../components/HelpCards";
+import { createLessonCards } from "../components/LessonCards";
 import LoadingPage from "../components/LoadingPage";
 import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
+import { NameProjectDialog } from "../components/NameProjectDialog";
 import ProjectCard from "../components/ProjectCard";
+import ProjectCardActions from "../components/ProjectCardActions";
 import { createProjectIdeaCards } from "../components/ProjectIdeaCards";
 import { useLogging } from "../logging/logging-hooks";
+import { ProjectNameDialogReason, untitledProjectName } from "../project-utils";
 import {
   loadProjectAndModelFromStorage,
   useSettings,
   useStore,
 } from "../store";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
-import { NameProjectDialog } from "../components/NameProjectDialog";
-import { ProjectNameDialogReason, untitledProjectName } from "../project-utils";
-import { IconType } from "react-icons/lib";
-import ProjectCardActions from "../components/ProjectCardActions";
-import { ConfirmDialog } from "../components/ConfirmDialog";
-import { createLessonCards } from "../components/LessonCards";
-import { createHelpCards } from "../components/HelpCards";
 
 const HomePage = () => {
   const { allProjectDataLoaded } = useLoaderData() as {

@@ -4,9 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  Box,
   Button,
-  Divider,
   Flex,
   Heading,
   HStack,
@@ -17,11 +15,8 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect } from "react";
-import {
-  RiArrowRightDoubleLine,
-  RiDownload2Line,
-  RiHome2Line,
-} from "react-icons/ri";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { RiDownload2Line, RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useConnectionStage } from "../connection-stage-hooks";
@@ -37,6 +32,7 @@ import ActionBar from "./ActionBar/ActionBar";
 import ItemsRight from "./ActionBar/ActionBarItemsRight";
 import AppLogo from "./AppLogo";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
+import EditableName from "./EditableName";
 import FeedbackForm from "./FeedbackForm";
 import ImportErrorDialog from "./ImportErrorDialog";
 import MakeCodeLoadErrorDialog from "./MakeCodeLoadErrorDialog";
@@ -44,8 +40,6 @@ import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
-import EditableName from "./EditableName";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
