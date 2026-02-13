@@ -16,7 +16,7 @@ jobs:
     # Only run for apps releases, not web releases
     if: ${{ github.event_name != 'release' || contains(github.event.release.tag_name, '-apps') }}
     timeout-minutes: 25
-    runs-on: macos-latest
+    runs-on: macos-26
     permissions:
       contents: read
       packages: read
