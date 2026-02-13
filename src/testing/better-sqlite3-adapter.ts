@@ -14,29 +14,31 @@ import { SqliteConnection } from "../sqlite-storage";
  * SqliteDatabase can be tested without the Capacitor plugin.
  */
 export const createBetterSqlite3Connection =
-  (): (() => Promise<SqliteConnection>) =>
-  async (): Promise<SqliteConnection> => {
+  (): (() => Promise<SqliteConnection>) => (): Promise<SqliteConnection> => {
     const db = new Database(":memory:");
-    return {
-      async execute(statements: string) {
+    return Promise.resolve({
+      execute(statements: string) {
         db.exec(statements);
+        return Promise.resolve(undefined);
       },
-      async run(statement: string, values?: unknown[]) {
+      run(statement: string, values?: unknown[]) {
         db.prepare(statement).run(...(values ?? []));
+        return Promise.resolve(undefined);
       },
-      async query(statement: string, values?: unknown[]) {
+      query(statement: string, values?: unknown[]) {
         const rows = db.prepare(statement).all(...(values ?? []));
-        return { values: rows as Record<string, unknown>[] };
+        return Promise.resolve({
+          values: rows as Record<string, unknown>[],
+        });
       },
-      async executeTransaction(
-        txn: { statement: string; values?: unknown[] }[]
-      ) {
+      executeTransaction(txn: { statement: string; values?: unknown[] }[]) {
         const runTxn = db.transaction(() => {
           for (const { statement, values } of txn) {
             db.prepare(statement).run(...(values ?? []));
           }
         });
         runTxn();
+        return Promise.resolve(undefined);
       },
-    };
+    });
   };

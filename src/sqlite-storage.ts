@@ -6,7 +6,9 @@
 import { CapacitorSQLite, SQLiteConnection } from "@capacitor-community/sqlite";
 import * as tf from "@tensorflow/tfjs";
 import { v4 as uuid } from "uuid";
+import { MakeCodeProject } from "@microbit/makecode-embed/react";
 import { ActionData, RecordingData } from "./model";
+import { MakeCodeIcon } from "./utils/icons";
 import { untitledProjectName } from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
 import {
@@ -76,6 +78,43 @@ export interface SqliteConnection {
   executeTransaction(
     txn: { statement: string; values?: unknown[] }[]
   ): Promise<unknown>;
+}
+
+// Row types for typed query results.
+interface ProjectRow {
+  id: string;
+  name: string;
+  timestamp: number;
+}
+
+interface ActionRow {
+  id: string;
+  project_id: string;
+  name: string;
+  icon: MakeCodeIcon;
+  required_confidence: number | null;
+  created_at: number;
+}
+
+interface RecordingRow {
+  id: string;
+  data: string;
+  created_at: number;
+}
+
+interface MakeCodeRow {
+  project_id: string;
+  project: string;
+  project_edited: number;
+}
+
+interface SettingsRow {
+  value: string;
+}
+
+interface ModelRow {
+  metadata: string;
+  weight_data: string | null;
 }
 
 export class SqliteDatabase implements Database {
@@ -195,7 +234,7 @@ export class SqliteDatabase implements Database {
     if (!result.values?.length) {
       return undefined;
     }
-    return this.loadProject(db, result.values[0].id);
+    return this.loadProject(db, (result.values[0] as ProjectRow).id);
   }
 
   private async loadProject(
@@ -203,83 +242,32 @@ export class SqliteDatabase implements Database {
     id: string
   ): Promise<PersistedProjectData> {
     const projectResult = await db.query(
-      "SELECT * FROM projects WHERE id = ?",
+      "SELECT id, name, timestamp FROM projects WHERE id = ?",
       [id]
     );
-    const projectRow = projectResult.values?.[0];
+    const projectRow = projectResult.values?.[0] as ProjectRow | undefined;
     if (!projectRow) {
       throw new StorageError("Failed to fetch expected data from storage");
     }
     const actionsResult = await db.query(
-      "SELECT * FROM actions WHERE project_id = ? ORDER BY created_at ASC",
+      "SELECT id, project_id, name, icon, required_confidence, created_at FROM actions WHERE project_id = ? ORDER BY created_at ASC",
       [id]
     );
     const actions: ActionData[] = await Promise.all(
-      (actionsResult.values ?? []).map(async (row) => {
-        const recordingsResult = await db.query(
-          "SELECT * FROM recordings WHERE action_id = ?",
-          [row.id]
-        );
-        const recordings: RecordingData[] = (recordingsResult.values ?? []).map(
-          (r) => ({
+      ((actionsResult.values as ActionRow[] | undefined) ?? []).map(
+        async (row: ActionRow) => {
+          const recordingsResult = await db.query(
+            "SELECT id, data, created_at FROM recordings WHERE action_id = ?",
+            [row.id]
+          );
+          const recordings: RecordingData[] = (
+            (recordingsResult.values as RecordingRow[] | undefined) ?? []
+          ).map((r: RecordingRow) => ({
             id: r.id,
-            data: JSON.parse(r.data),
+            data: JSON.parse(r.data) as RecordingData["data"],
             createdAt: r.created_at,
-          })
-        );
-        return {
-          id: row.id,
-          name: row.name,
-          icon: row.icon,
-          requiredConfidence:
-            row.required_confidence != null
-              ? row.required_confidence
-              : undefined,
-          createdAt: row.created_at,
-          recordings,
-        };
-      })
-    );
-    const makeCodeResult = await db.query(
-      "SELECT * FROM makecode_data WHERE project_id = ?",
-      [id]
-    );
-    const makeCodeRow = makeCodeResult.values?.[0];
-    if (!makeCodeRow) {
-      throw new StorageError("Failed to fetch expected data from storage");
-    }
-    const settingsResult = await db.query(
-      "SELECT value FROM settings WHERE key = ?",
-      ["settings"]
-    );
-    const settingsRow = settingsResult.values?.[0];
-    if (!settingsRow) {
-      throw new StorageError("Failed to fetch expected data from storage");
-    }
-    return {
-      id,
-      actions,
-      project: JSON.parse(makeCodeRow.project),
-      projectEdited: !!makeCodeRow.project_edited,
-      timestamp: projectRow.timestamp,
-      settings: JSON.parse(settingsRow.value),
-    };
-  }
-
-  async getAllProjectData(): Promise<ProjectDataWithActions[]> {
-    const db = await this.useDb();
-    const projectsResult = await db.query(
-      "SELECT * FROM projects ORDER BY timestamp DESC"
-    );
-    const projects = projectsResult.values ?? [];
-    return Promise.all(
-      projects.map(async (p) => {
-        const actionsResult = await db.query(
-          "SELECT * FROM actions WHERE project_id = ?",
-          [p.id]
-        );
-        const actions: StoreAction[] = (actionsResult.values ?? []).map(
-          (row) => ({
+          }));
+          return {
             id: row.id,
             name: row.name,
             icon: row.icon,
@@ -288,9 +276,62 @@ export class SqliteDatabase implements Database {
                 ? row.required_confidence
                 : undefined,
             createdAt: row.created_at,
-            projectId: row.project_id,
-          })
+            recordings,
+          };
+        }
+      )
+    );
+    const makeCodeResult = await db.query(
+      "SELECT project_id, project, project_edited FROM makecode_data WHERE project_id = ?",
+      [id]
+    );
+    const makeCodeRow = makeCodeResult.values?.[0] as MakeCodeRow | undefined;
+    if (!makeCodeRow) {
+      throw new StorageError("Failed to fetch expected data from storage");
+    }
+    const settingsResult = await db.query(
+      "SELECT value FROM settings WHERE key = ?",
+      ["settings"]
+    );
+    const settingsRow = settingsResult.values?.[0] as SettingsRow | undefined;
+    if (!settingsRow) {
+      throw new StorageError("Failed to fetch expected data from storage");
+    }
+    return {
+      id,
+      actions,
+      project: JSON.parse(makeCodeRow.project) as MakeCodeProject,
+      projectEdited: !!makeCodeRow.project_edited,
+      timestamp: projectRow.timestamp,
+      settings: JSON.parse(settingsRow.value) as Settings,
+    };
+  }
+
+  async getAllProjectData(): Promise<ProjectDataWithActions[]> {
+    const db = await this.useDb();
+    const projectsResult = await db.query(
+      "SELECT id, name, timestamp FROM projects ORDER BY timestamp DESC"
+    );
+    const projects = (projectsResult.values ?? []) as ProjectRow[];
+    return Promise.all(
+      projects.map(async (p: ProjectRow) => {
+        const actionsResult = await db.query(
+          "SELECT id, project_id, name, icon, required_confidence, created_at FROM actions WHERE project_id = ?",
+          [p.id]
         );
+        const actions: StoreAction[] = (
+          (actionsResult.values ?? []) as ActionRow[]
+        ).map((row: ActionRow) => ({
+          id: row.id,
+          name: row.name,
+          icon: row.icon,
+          requiredConfidence:
+            row.required_confidence != null
+              ? row.required_confidence
+              : undefined,
+          createdAt: row.created_at,
+          projectId: row.project_id,
+        }));
         return {
           id: p.id,
           name: p.name,
@@ -750,12 +791,12 @@ export class SqliteDatabase implements Database {
     const db = await this.useDb();
     // Update project name and the MakeCode project header.
     const makeCodeResult = await db.query(
-      "SELECT * FROM makecode_data WHERE project_id = ?",
+      "SELECT project_id, project, project_edited FROM makecode_data WHERE project_id = ?",
       [id]
     );
-    const makeCodeRow = makeCodeResult.values?.[0];
+    const makeCodeRow = makeCodeResult.values?.[0] as MakeCodeRow | undefined;
     if (makeCodeRow) {
-      const project = JSON.parse(makeCodeRow.project);
+      const project = JSON.parse(makeCodeRow.project) as MakeCodeProject;
       if (project.header) {
         project.header.name = name;
       }
@@ -787,24 +828,24 @@ export class SqliteDatabase implements Database {
     const { id, name, timestamp } = newProjectData;
     // Load source data.
     const actionsResult = await db.query(
-      "SELECT * FROM actions WHERE project_id = ?",
+      "SELECT id, project_id, name, icon, required_confidence, created_at FROM actions WHERE project_id = ?",
       [existingProjectId]
     );
     const makeCodeResult = await db.query(
-      "SELECT * FROM makecode_data WHERE project_id = ?",
+      "SELECT project_id, project, project_edited FROM makecode_data WHERE project_id = ?",
       [existingProjectId]
     );
     const projectResult = await db.query(
-      "SELECT * FROM projects WHERE id = ?",
+      "SELECT id, name, timestamp FROM projects WHERE id = ?",
       [existingProjectId]
     );
-    const makeCodeRow = makeCodeResult.values?.[0];
-    const projectRow = projectResult.values?.[0];
+    const makeCodeRow = makeCodeResult.values?.[0] as MakeCodeRow | undefined;
+    const projectRow = projectResult.values?.[0] as ProjectRow | undefined;
     if (!makeCodeRow || !projectRow) {
       throw new StorageError("Failed to fetch expected data from storage");
     }
     // Update MakeCode project header name.
-    const project = JSON.parse(makeCodeRow.project);
+    const project = JSON.parse(makeCodeRow.project) as MakeCodeProject;
     if (project.header) {
       project.header.name = name;
     }
@@ -820,7 +861,7 @@ export class SqliteDatabase implements Database {
         values: [id, JSON.stringify(project), makeCodeRow.project_edited],
       },
     ];
-    for (const action of actionsResult.values ?? []) {
+    for (const action of (actionsResult.values ?? []) as ActionRow[]) {
       const newActionId = uuid();
       txn.push({
         statement:
@@ -835,10 +876,11 @@ export class SqliteDatabase implements Database {
         ],
       });
       const recordingsResult = await db.query(
-        "SELECT * FROM recordings WHERE action_id = ?",
+        "SELECT id, data, created_at FROM recordings WHERE action_id = ?",
         [action.id]
       );
-      for (const recording of recordingsResult.values ?? []) {
+      for (const recording of (recordingsResult.values ??
+        []) as RecordingRow[]) {
         const newRecordingId = uuid();
         txn.push({
           statement:
@@ -858,14 +900,11 @@ export class SqliteDatabase implements Database {
       [existingProjectId]
     );
     if (modelResult.values?.length) {
+      const modelRow = modelResult.values[0] as ModelRow;
       txn.push({
         statement:
           "INSERT INTO models (project_id, metadata, weight_data) VALUES (?, ?, ?)",
-        values: [
-          id,
-          modelResult.values[0].metadata,
-          modelResult.values[0].weight_data,
-        ],
+        values: [id, modelRow.metadata, modelRow.weight_data],
       });
     }
     await db.executeTransaction(txn);
@@ -1002,8 +1041,11 @@ export class SqliteDatabase implements Database {
     if (!result.values?.length) {
       return undefined;
     }
-    const row = result.values[0];
-    const metadata = JSON.parse(row.metadata);
+    const row = result.values[0] as ModelRow;
+    const metadata = JSON.parse(row.metadata) as Omit<
+      tf.io.ModelArtifacts,
+      "weightData"
+    >;
     const artifacts: tf.io.ModelArtifacts = {
       ...metadata,
       weightData: row.weight_data

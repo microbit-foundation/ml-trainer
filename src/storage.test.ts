@@ -71,8 +71,9 @@ interface BackendConfig {
  * until the connection is released.
  */
 const cleanupIdb = async (db: Database) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
   const idbDb = await (db as any).dbPromise;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
   idbDb.close();
   const req = indexedDB.deleteDatabase("ml");
   await new Promise<void>((resolve, reject) => {
