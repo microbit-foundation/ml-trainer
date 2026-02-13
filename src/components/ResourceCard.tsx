@@ -5,6 +5,7 @@
  */
 import {
   AspectRatio,
+  Box,
   HStack,
   Heading,
   Image,
@@ -42,7 +43,9 @@ const ResourceCard = ({
       alignSelf="stretch"
     >
       <AspectRatio w="100%" ratio={aspectRatio} position="relative">
-        <Image src={imgSrc} alt="" p={imagePadding} />
+        <Box>
+          <Image src={imgSrc} alt="" p={imagePadding} h="100%" w="100%" />
+        </Box>
       </AspectRatio>
       <VStack p={3} py={2} pb={3} flexGrow={1} spacing={3} alignItems="stretch">
         <HStack justifyContent="space-between" alignItems="flex-start">

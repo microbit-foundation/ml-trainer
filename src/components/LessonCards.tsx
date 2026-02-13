@@ -32,7 +32,6 @@ export const createLessonCards = (intl: IntlShape) =>
       })}
       url={lessonUrl(lesson.url)}
       imgSrc={lesson.imgSrc}
-      aspectRatio={1}
       imagePadding={5}
     />
   ));
