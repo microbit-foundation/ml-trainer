@@ -54,6 +54,8 @@ import {
   untitledProjectName,
 } from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
+import { isNativePlatform } from "./platform";
+import { SqliteDatabase } from "./sqlite-storage";
 import {
   Database,
   IdbDatabase,
@@ -77,7 +79,9 @@ import {
 } from "./broadcast-channel";
 import { projectSessionStorage } from "./session-storage";
 
-const storage: Database = new IdbDatabase();
+const storage: Database = isNativePlatform()
+  ? new SqliteDatabase()
+  : new IdbDatabase();
 
 const createFirstAction = (): ActionData => ({
   icon: defaultIcons[0],

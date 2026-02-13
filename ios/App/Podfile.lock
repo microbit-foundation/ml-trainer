@@ -1,13 +1,17 @@
 PODS:
-  - Capacitor (7.4.4):
+  - Capacitor (7.4.5):
     - CapacitorCordova
-  - CapacitorApp (7.1.0):
+  - CapacitorApp (7.1.1):
     - Capacitor
-  - CapacitorCommunityBluetoothLe (7.3.0):
+  - CapacitorCommunityBluetoothLe (7.3.2):
     - Capacitor
   - CapacitorCommunitySafeArea (7.0.0):
     - Capacitor
-  - CapacitorCordova (7.4.4)
+  - CapacitorCommunitySqlite (7.0.3):
+    - Capacitor
+    - SQLCipher
+    - ZIPFoundation
+  - CapacitorCordova (7.4.5)
   - CapacitorFilesystem (7.1.6):
     - Capacitor
     - IONFilesystemLib (~> 1.0.1)
@@ -17,6 +21,11 @@ PODS:
     - NordicDFU (~> 4.16.0)
   - NordicDFU (4.16.0):
     - ZIPFoundation (= 0.9.19)
+  - SQLCipher (4.10.0):
+    - SQLCipher/standard (= 4.10.0)
+  - SQLCipher/common (4.10.0)
+  - SQLCipher/standard (4.10.0):
+    - SQLCipher/common
   - ZIPFoundation (0.9.19)
 
 DEPENDENCIES:
@@ -24,6 +33,7 @@ DEPENDENCIES:
   - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
   - "CapacitorCommunityBluetoothLe (from `../../node_modules/@capacitor-community/bluetooth-le`)"
   - "CapacitorCommunitySafeArea (from `../../node_modules/@capacitor-community/safe-area`)"
+  - "CapacitorCommunitySqlite (from `../../node_modules/@capacitor-community/sqlite`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
   - "MicrobitCapacitorCommunityNordicDfu (from `../../node_modules/@microbit/capacitor-community-nordic-dfu`)"
@@ -32,6 +42,7 @@ SPEC REPOS:
   trunk:
     - IONFilesystemLib
     - NordicDFU
+    - SQLCipher
     - ZIPFoundation
 
 EXTERNAL SOURCES:
@@ -43,6 +54,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor-community/bluetooth-le"
   CapacitorCommunitySafeArea:
     :path: "../../node_modules/@capacitor-community/safe-area"
+  CapacitorCommunitySqlite:
+    :path: "../../node_modules/@capacitor-community/sqlite"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorFilesystem:
@@ -51,17 +64,19 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@microbit/capacitor-community-nordic-dfu"
 
 SPEC CHECKSUMS:
-  Capacitor: 358dd1c3fdd71d969547b17e159fd8a7736cb45f
-  CapacitorApp: 26587c2ce485d88ddb39adb21cac64f8e481afe3
-  CapacitorCommunityBluetoothLe: 41f9dec8a4c16ab6b81e56402b6047fc19b4735d
+  Capacitor: 12914e6f1b7835e161a74ebd19cb361efa37a7dd
+  CapacitorApp: 63b237168fc869e758481dba283315a85743ee78
+  CapacitorCommunityBluetoothLe: 9aa29c1555fbe797e6b595db824c2acd39a5bdf5
   CapacitorCommunitySafeArea: 211e919d3f0ff6020a3b2acb3b772fa30fb685ef
-  CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
+  CapacitorCommunitySqlite: 4813d82ad33001e612a39d313cb5d28066cbafda
+  CapacitorCordova: 31bbe4466000c6b86d9b7f1181ee286cff0205aa
   CapacitorFilesystem: 66f05ee0d8b1ccdc00d509091273a9b3b57c4a0b
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
   MicrobitCapacitorCommunityNordicDfu: 2fc86a9ebd698d5609023cafd74ece8b5d64a59e
   NordicDFU: 116a4ec458945889f8e0e71759e03b23c39c3482
+  SQLCipher: eb79c64049cb002b4e9fcb30edb7979bf4706dfc
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 1b18202e6f59ad2a7694de09b5a672105ac90e81
+PODFILE CHECKSUM: 958057d7b552a55fb338ba59aef5b19c5800107d
 
 COCOAPODS: 1.16.2
