@@ -54,7 +54,7 @@ import {
   untitledProjectName,
 } from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
-import { isNativePlatform } from "./platform";
+import { Capacitor } from "@capacitor/core";
 import { SqliteDatabase } from "./sqlite-storage";
 import {
   Database,
@@ -79,7 +79,10 @@ import {
 } from "./broadcast-channel";
 import { projectSessionStorage } from "./session-storage";
 
-const storage: Database = isNativePlatform()
+// Use Capacitor.isNativePlatform() directly rather than the isNativePlatform()
+// helper (which also respects the simulateNative flag) because the Capacitor
+// SQLite plugin is only available on actual native platforms.
+const storage: Database = Capacitor.isNativePlatform()
   ? new SqliteDatabase()
   : new IdbDatabase();
 
