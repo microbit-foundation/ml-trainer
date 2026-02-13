@@ -323,13 +323,10 @@ const ActionCard = ({ onClick, icon, textId }: ActionCardProps) => {
     <LinkBox display="flex">
       <Card flexGrow={1} overflow="hidden">
         <CardBody display="flex" backgroundColor="brand.600" color="white">
-          <VStack h="100%" w="100%" spacing={0}>
-            {/* Ratio matches current recording icon / image */}
-            <AspectRatio ratio={1591 / 1144} w="100%">
-              <VStack>
-                <Icon as={icon} h={20} w={20} />
-              </VStack>
-            </AspectRatio>
+          <VStack h="100%" w="100%" spacing={0} justifyContent="space-evenly">
+            <VStack>
+              <Icon as={icon} h={20} w={20} />
+            </VStack>
             <LinkOverlay
               as={Button}
               h={8}

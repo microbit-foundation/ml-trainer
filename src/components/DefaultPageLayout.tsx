@@ -4,9 +4,12 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  Box,
   Button,
+  Divider,
   Flex,
   Heading,
+  HStack,
   Icon,
   IconButton,
   MenuDivider,
@@ -14,7 +17,11 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect } from "react";
-import { RiDownload2Line, RiHome2Line } from "react-icons/ri";
+import {
+  RiArrowRightDoubleLine,
+  RiDownload2Line,
+  RiHome2Line,
+} from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useConnectionStage } from "../connection-stage-hooks";
@@ -38,6 +45,7 @@ import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
 import EditableName from "./EditableName";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -111,21 +119,35 @@ const DefaultPageLayout = ({
               w="100%"
               px={{ base: 3, sm: 5 }}
               itemsCenter={
-                <>
-                  {showProjectName && <EditableName />}
+                <HStack h={10}>
+                  {showProjectName && (
+                    <>
+                      <EditableName />
+                      <Icon
+                        as={MdOutlineKeyboardArrowRight}
+                        color="white"
+                        boxSize="6"
+                      />
+                    </>
+                  )}
                   {showPageTitle && (
                     <Heading size="md" fontWeight="normal" color="white">
                       <FormattedMessage id={titleId} />
                     </Heading>
                   )}
-                </>
+                </HStack>
               }
               itemsLeft={
                 toolbarItemsLeft || (
                   <AppLogo
                     display={
                       showPageTitle
-                        ? { base: "none", md: "inline-flex" }
+                        ? {
+                            base: "none",
+                            sm: "none",
+                            md: "none",
+                            lg: "inline-flex",
+                          }
                         : "inline-flex"
                     }
                     transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}

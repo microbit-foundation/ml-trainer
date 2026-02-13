@@ -47,7 +47,6 @@ const EditableName = () => {
       color="white"
       display="flex"
       finalFocusRef={ref}
-      m={2}
       isPreviewFocusable={false}
       onCancel={handleCancel}
       onChange={handleChange}
@@ -65,7 +64,6 @@ const EditableName = () => {
             <Button
               display={!isEditing ? "flex" : "none"}
               h={10}
-              px={2}
               borderRadius="md"
               _hover={{
                 backgroundColor,
