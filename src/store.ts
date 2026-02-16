@@ -1846,9 +1846,7 @@ const loadModelFromStorage = async (id: string) => {
     () => storage.loadModel(id),
     false
   );
-  if (model) {
-    useStore.setState({ model }, false, "loadModel");
-  }
+  useStore.setState({ model }, false, "loadModel");
 };
 
 useStore.subscribe(async (state, prevState) => {
