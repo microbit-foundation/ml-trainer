@@ -115,16 +115,28 @@ const DefaultPageLayout = ({
               itemsCenter={
                 <HStack h={10}>
                   {showProjectName && (
-                    <>
-                      <EditableName />
-                      <Icon
-                        as={MdOutlineKeyboardArrowRight}
-                        color="white"
-                        boxSize="6"
-                      />
-                    </>
+                    <EditableName
+                      suffix={
+                        showPageTitle ? (
+                          <>
+                            <Icon
+                              as={MdOutlineKeyboardArrowRight}
+                              color="white"
+                              boxSize="6"
+                            />
+                            <Heading
+                              size="md"
+                              fontWeight="normal"
+                              color="white"
+                            >
+                              <FormattedMessage id={titleId} />
+                            </Heading>
+                          </>
+                        ) : undefined
+                      }
+                    />
                   )}
-                  {showPageTitle && (
+                  {!showProjectName && showPageTitle && (
                     <Heading size="md" fontWeight="normal" color="white">
                       <FormattedMessage id={titleId} />
                     </Heading>
