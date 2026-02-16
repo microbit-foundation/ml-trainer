@@ -37,7 +37,6 @@ import LoadProjectInput, {
 } from "../components/LoadProjectInput";
 import { NameProjectDialog } from "../components/NameProjectDialog";
 import ProjectCard from "../components/ProjectCard";
-import ProjectCardActions from "../components/ProjectCardActions";
 import { createProjectIdeaCards } from "../components/ProjectIdeaCards";
 import { useLogging } from "../logging/logging-hooks";
 import { ProjectNameDialogReason, untitledProjectName } from "../project-utils";
@@ -249,16 +248,10 @@ const ProjectRow = () => {
                 <ProjectCard
                   key={projectData.id}
                   projectData={projectData}
-                  projectCardActions={
-                    <ProjectCardActions
-                      id={projectData.id}
-                      name={projectData.name}
-                      onDeleteProject={handleOpenConfirmDialog}
-                      onRenameDuplicateProject={handleOpenNameProjectDialog}
-                      onOpenProject={handleOpenProject}
-                      setFinalFocusRef={setFinalFocusRef}
-                    />
-                  }
+                  onDeleteProject={handleOpenConfirmDialog}
+                  onRenameDuplicateProject={handleOpenNameProjectDialog}
+                  onOpenProject={handleOpenProject}
+                  setFinalFocusRef={setFinalFocusRef}
                 />
               ))
               .slice(0, numCardsDisplayed),

@@ -8,28 +8,44 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { ReactNode, useCallback } from "react";
+import { RefObject, useCallback } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { ProjectNameDialogReason } from "../project-utils";
 import { ProjectDataWithActions } from "../storage";
 import { loadProjectAndModelFromStorage } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 import { timeAgo } from "../utils/datetime";
+import ProjectCardActions from "./ProjectCardActions";
 
 interface ProjectCardProps {
   projectData: ProjectDataWithActions;
-  projectCardActions?: ReactNode;
-  hasCheckbox?: boolean;
+  isSelected?: boolean;
+  onSelected?: (id: string) => void;
+  onSkipToToolbar?: () => void;
+  onDeleteProject: (id?: string) => void;
+  onOpenProject: (id?: string) => void;
+  onRenameDuplicateProject: (
+    reason: ProjectNameDialogReason,
+    id?: string
+  ) => void;
+  setFinalFocusRef: (value: RefObject<HTMLElement>) => void;
 }
 
 const ProjectCard = ({
   projectData,
-  projectCardActions,
-  hasCheckbox,
+  isSelected,
+  onSelected,
+  onSkipToToolbar,
+  onDeleteProject,
+  onOpenProject,
+  onRenameDuplicateProject,
+  setFinalFocusRef,
 }: ProjectCardProps) => {
   const navigate = useNavigate();
   const intl = useIntl();
   const { id, name, actions, timestamp } = projectData;
+  const hasCheckbox = !!onSelected;
 
   const handleLoadProject = useCallback(
     async (_e: React.MouseEvent) => {
@@ -44,7 +60,17 @@ const ProjectCard = ({
       <Card h="100%" w="100%">
         <CardBody display="flex">
           <Stack h="100%" w="100%" spacing={0}>
-            {projectCardActions}
+            <ProjectCardActions
+              id={id}
+              name={name}
+              isSelected={isSelected}
+              onSelected={onSelected}
+              onDeleteProject={onDeleteProject}
+              onOpenProject={onOpenProject}
+              onRenameDuplicateProject={onRenameDuplicateProject}
+              setFinalFocusRef={setFinalFocusRef}
+              onSkipToToolbar={onSkipToToolbar}
+            />
             <Icon
               width={32}
               height="auto"
