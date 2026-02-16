@@ -53,15 +53,15 @@ const NewPageCarousel = ({
       768: {
         spaceBetween: 20,
         slidesPerGroup: getSlidesPerGroup(20),
-        slidesOffsetAfter: getSlidesPerGroup(20),
-        slidesOffsetBefore: getSlidesPerGroup(20),
+        slidesOffsetAfter: getOffset(getSlidesPerGroup(20)),
+        slidesOffsetBefore: getOffset(getSlidesPerGroup(20)),
       },
       // When window width is >= 992ppx.
       992: {
         spaceBetween: 25,
         slidesPerGroup: getSlidesPerGroup(25),
-        slidesOffsetAfter: getSlidesPerGroup(25),
-        slidesOffsetBefore: getSlidesPerGroup(25),
+        slidesOffsetAfter: getOffset(getSlidesPerGroup(25)),
+        slidesOffsetBefore: getOffset(getSlidesPerGroup(25)),
       },
       // When window width is >= 1200px.
       1200: {
