@@ -270,7 +270,7 @@ const ProjectRow = () => {
         containerMessageId="my-projects-row-carousel"
         titleElement={
           <HStack spacing={3}>
-            <Heading as="h2" fontSize="3xl">
+            <Heading as="h2" size="lg">
               <FormattedMessage id="my-projects-row-title" />
             </Heading>
             <ClickableTooltip

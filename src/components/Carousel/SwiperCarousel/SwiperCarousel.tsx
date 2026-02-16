@@ -105,10 +105,15 @@ const SwiperCarousel = ({
     [swiper]
   );
 
+  const handleSwiper = useCallback((swiper: SwiperClass) => {
+    setSwiper(swiper);
+    swiper.update();
+  }, []);
+
   return (
     <div className={styles.carouselContainer}>
       <Swiper
-        onSwiper={setSwiper}
+        onSwiper={handleSwiper}
         style={{
           padding: padding ? padding : 0,
           alignItems: "stretch",

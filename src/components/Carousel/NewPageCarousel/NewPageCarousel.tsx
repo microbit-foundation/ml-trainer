@@ -1,10 +1,11 @@
 import { useCallback, useMemo } from "react";
 import SwiperCarousel from "../SwiperCarousel/SwiperCarousel";
 import styles from "./NewPageCarousel.module.css";
+import { SwiperClass } from "swiper/react";
 
 const slow = 3000;
 const fast = 1000;
-const cardWidth = 200;
+const cardWidth = 260;
 
 interface NewPageCarouselProps {
   carouselItems: JSX.Element[];
@@ -30,7 +31,8 @@ const NewPageCarousel = ({
   );
 
   const getSlidesPerGroup = useCallback((spacing: number) => {
-    return Math.floor(window.innerWidth / (cardWidth + spacing));
+    // 24px padding left/right.
+    return Math.floor((window.innerWidth - 24) / (cardWidth + spacing));
   }, []);
 
   // Pass this in as a prop for other carousels?
@@ -43,9 +45,9 @@ const NewPageCarousel = ({
       // When window width is >= 0px.
       0: {
         spaceBetween: 15,
-        slidesPerGroup: getSlidesPerGroup(15),
-        slidesOffsetAfter: getSlidesPerGroup(15),
-        slidesOffsetBefore: getSlidesPerGroup(15),
+        slidesPerGroup: 1,
+        slidesOffsetAfter: 0,
+        slidesOffsetBefore: 0,
       },
       // When window width is >= 768px.
       768: {
@@ -94,6 +96,27 @@ const NewPageCarousel = ({
     }
   }, [breakpoints]);
 
+  const recalculateBreakpoints = useCallback(
+    (swiper: SwiperClass) => {
+      if (hero || typeof window === "undefined") {
+        return;
+      }
+      const breakpoint = getBreakpoint();
+      if (breakpoint) {
+        let slidesPerGroup = breakpoint.slidesPerGroup;
+        let offset = breakpoint.slidesOffsetAfter;
+        if (breakpoint.spaceBetween !== 15) {
+          slidesPerGroup = getSlidesPerGroup(breakpoint.spaceBetween);
+          offset = getOffset(slidesPerGroup);
+        }
+        swiper.params.slidesOffsetAfter = offset;
+        swiper.params.slidesOffsetBefore = offset;
+        swiper.params.slidesPerGroup = slidesPerGroup;
+      }
+    },
+    [getBreakpoint, getOffset, getSlidesPerGroup, hero]
+  );
+
   return (
     <SwiperCarousel
       autoHeight={hero}
@@ -122,19 +145,8 @@ const NewPageCarousel = ({
       containerMessageId={containerMessageId}
       loop={hero}
       navigation={!hero}
-      onResize={(swiper) => {
-        if (hero || typeof window === "undefined") {
-          return;
-        }
-        const breakpoint = getBreakpoint();
-        if (breakpoint) {
-          const slidesPerGroup = getSlidesPerGroup(breakpoint.spaceBetween);
-          const offset = getOffset(slidesPerGroup);
-          swiper.params.slidesOffsetAfter = offset;
-          swiper.params.slidesOffsetBefore = offset;
-          swiper.params.slidesPerGroup = slidesPerGroup;
-        }
-      }}
+      onResize={recalculateBreakpoints}
+      onInit={recalculateBreakpoints}
       // Padding to account for card box-shadow.
       padding={hero ? 0 : "1rem 12px 12px 12px"}
       speed={hero ? slow : fast}
