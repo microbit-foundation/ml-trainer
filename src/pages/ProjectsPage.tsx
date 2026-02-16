@@ -449,6 +449,7 @@ const ProjectsPage = () => {
                     <ProjectCard
                       key={projectData.id}
                       projectData={projectData}
+                      hasCheckbox
                       projectCardActions={
                         <ProjectCardActions
                           id={projectData.id}

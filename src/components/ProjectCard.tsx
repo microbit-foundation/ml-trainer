@@ -19,9 +19,14 @@ import { timeAgo } from "../utils/datetime";
 interface ProjectCardProps {
   projectData: ProjectDataWithActions;
   projectCardActions?: ReactNode;
+  hasCheckbox?: boolean;
 }
 
-const ProjectCard = ({ projectData, projectCardActions }: ProjectCardProps) => {
+const ProjectCard = ({
+  projectData,
+  projectCardActions,
+  hasCheckbox,
+}: ProjectCardProps) => {
   const navigate = useNavigate();
   const intl = useIntl();
   const { id, name, actions, timestamp } = projectData;
@@ -40,7 +45,13 @@ const ProjectCard = ({ projectData, projectCardActions }: ProjectCardProps) => {
         <CardBody display="flex">
           <Stack h="100%" w="100%" spacing={0}>
             {projectCardActions}
-            <Icon width={32} height="auto" color="brand.500" ml={-5} mt={-5}>
+            <Icon
+              width={32}
+              height="auto"
+              color="brand.500"
+              ml={hasCheckbox ? -2 : -5}
+              mt={hasCheckbox ? 4 : -5}
+            >
               <svg
                 width="27"
                 height="22"

@@ -319,8 +319,8 @@ interface ActionCardProps {
 
 const ActionCard = ({ onClick, icon, textId }: ActionCardProps) => {
   return (
-    <LinkBox display="flex">
-      <Card flexGrow={1} overflow="hidden">
+    <LinkBox h="100%" display="flex">
+      <Card flexGrow={1} overflow="hidden" minH="233px">
         <CardBody display="flex" backgroundColor="brand.600" color="white">
           <VStack h="100%" w="100%" spacing={0} justifyContent="space-evenly">
             <VStack>
