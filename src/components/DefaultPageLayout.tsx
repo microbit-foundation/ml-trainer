@@ -136,12 +136,7 @@ const DefaultPageLayout = ({
                   <AppLogo
                     display={
                       showPageTitle
-                        ? {
-                            base: "none",
-                            sm: "none",
-                            md: "none",
-                            lg: "inline-flex",
-                          }
+                        ? { base: "none", lg: "inline-flex" }
                         : "inline-flex"
                     }
                     transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}

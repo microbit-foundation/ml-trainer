@@ -6,6 +6,7 @@ import { SwiperClass } from "swiper/react";
 const slow = 3000;
 const fast = 1000;
 const cardWidth = 260;
+const mobileSpaceBetween = 15;
 
 interface NewPageCarouselProps {
   carouselItems: JSX.Element[];
@@ -44,7 +45,7 @@ const NewPageCarousel = ({
     return {
       // When window width is >= 0px.
       0: {
-        spaceBetween: 15,
+        spaceBetween: mobileSpaceBetween,
         slidesPerGroup: 1,
         slidesOffsetAfter: 0,
         slidesOffsetBefore: 0,
@@ -56,7 +57,7 @@ const NewPageCarousel = ({
         slidesOffsetAfter: getOffset(getSlidesPerGroup(20)),
         slidesOffsetBefore: getOffset(getSlidesPerGroup(20)),
       },
-      // When window width is >= 992ppx.
+      // When window width is >= 992px.
       992: {
         spaceBetween: 25,
         slidesPerGroup: getSlidesPerGroup(25),
@@ -105,7 +106,7 @@ const NewPageCarousel = ({
       if (breakpoint) {
         let slidesPerGroup = breakpoint.slidesPerGroup;
         let offset = breakpoint.slidesOffsetAfter;
-        if (breakpoint.spaceBetween !== 15) {
+        if (breakpoint.spaceBetween !== mobileSpaceBetween) {
           slidesPerGroup = getSlidesPerGroup(breakpoint.spaceBetween);
           offset = getOffset(slidesPerGroup);
         }
