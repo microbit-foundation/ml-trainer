@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  AspectRatio,
   Button,
   Card,
   CardBody,
@@ -19,35 +18,34 @@ import {
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
 import { RefObject, Suspense, useCallback, useRef, useState } from "react";
+import { IconType } from "react-icons/lib";
 import { RiAddLine, RiFolderOpenLine, RiInformationLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Await, useLoaderData, useNavigate } from "react-router";
 import CarouselRow from "../components/Carousel/CarouselRow";
 import ClickableTooltip from "../components/ClickableTooltip";
+import { ConfirmDialog } from "../components/ConfirmDialog";
 import DefaultPageLayout, {
   HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
+import { createHelpCards } from "../components/HelpCards";
+import { createLessonCards } from "../components/LessonCards";
 import LoadingPage from "../components/LoadingPage";
 import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
+import { NameProjectDialog } from "../components/NameProjectDialog";
 import ProjectCard from "../components/ProjectCard";
 import { createProjectIdeaCards } from "../components/ProjectIdeaCards";
 import { useLogging } from "../logging/logging-hooks";
+import { ProjectNameDialogReason, untitledProjectName } from "../project-utils";
 import {
   loadProjectAndModelFromStorage,
   useSettings,
   useStore,
 } from "../store";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
-import { NameProjectDialog } from "../components/NameProjectDialog";
-import { ProjectNameDialogReason, untitledProjectName } from "../project-utils";
-import { IconType } from "react-icons/lib";
-import ProjectCardActions from "../components/ProjectCardActions";
-import { ConfirmDialog } from "../components/ConfirmDialog";
-import { createLessonCards } from "../components/LessonCards";
-import { createHelpCards } from "../components/HelpCards";
 
 const HomePage = () => {
   const { allProjectDataLoaded } = useLoaderData() as {
@@ -250,16 +248,10 @@ const ProjectRow = () => {
                 <ProjectCard
                   key={projectData.id}
                   projectData={projectData}
-                  projectCardActions={
-                    <ProjectCardActions
-                      id={projectData.id}
-                      name={projectData.name}
-                      onDeleteProject={handleOpenConfirmDialog}
-                      onRenameDuplicateProject={handleOpenNameProjectDialog}
-                      onOpenProject={handleOpenProject}
-                      setFinalFocusRef={setFinalFocusRef}
-                    />
-                  }
+                  onDeleteProject={handleOpenConfirmDialog}
+                  onRenameDuplicateProject={handleOpenNameProjectDialog}
+                  onOpenProject={handleOpenProject}
+                  setFinalFocusRef={setFinalFocusRef}
                 />
               ))
               .slice(0, numCardsDisplayed),
@@ -271,7 +263,7 @@ const ProjectRow = () => {
         containerMessageId="my-projects-row-carousel"
         titleElement={
           <HStack spacing={3}>
-            <Heading as="h2" fontSize="3xl">
+            <Heading as="h2" size="lg">
               <FormattedMessage id="my-projects-row-title" />
             </Heading>
             <ClickableTooltip
@@ -320,16 +312,13 @@ interface ActionCardProps {
 
 const ActionCard = ({ onClick, icon, textId }: ActionCardProps) => {
   return (
-    <LinkBox display="flex">
-      <Card flexGrow={1} overflow="hidden">
+    <LinkBox h="100%" display="flex">
+      <Card flexGrow={1} overflow="hidden" minH="233px">
         <CardBody display="flex" backgroundColor="brand.600" color="white">
-          <VStack h="100%" w="100%" spacing={0}>
-            {/* Ratio matches current recording icon / image */}
-            <AspectRatio ratio={1591 / 1144} w="100%">
-              <VStack>
-                <Icon as={icon} h={20} w={20} />
-              </VStack>
-            </AspectRatio>
+          <VStack h="100%" w="100%" spacing={0} justifyContent="space-evenly">
+            <VStack>
+              <Icon as={icon} h={20} w={20} />
+            </VStack>
             <LinkOverlay
               as={Button}
               h={8}

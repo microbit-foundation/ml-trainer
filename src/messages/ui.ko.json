@@ -748,7 +748,7 @@
   "createai-taster-lessons-resource-title": [
     {
       "type": 0,
-      "value": "Simple AI exercise timer"
+      "value": "Taster lessons"
     }
   ],
   "data-actions-menu": [
@@ -1382,7 +1382,7 @@
   "first-lessons-with-microbit-createai-resource-title": [
     {
       "type": 0,
-      "value": "Simple AI exercise timer"
+      "value": "First lessons"
     }
   ],
   "get-started-action": [

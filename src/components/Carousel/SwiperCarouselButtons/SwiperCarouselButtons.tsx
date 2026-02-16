@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { useSwiper } from "swiper/react";
 import styles from "./SwiperCarouselButtons.module.css";
 import CarouselButton from "../CarouselButton/CarouselButton";
+import { Box } from "@chakra-ui/react";
 
 const SwiperCarouselButtons = () => {
   const isRtl = false;
@@ -37,7 +38,7 @@ const SwiperCarouselButtons = () => {
   }, [swiper]);
 
   return (
-    <>
+    <Box display={["none", null, "contents"]}>
       <CarouselButton
         ref={prevButtonRef}
         className={classNames(
@@ -58,7 +59,7 @@ const SwiperCarouselButtons = () => {
         size="large"
         onClick={() => swiper.slideNext()}
       />
-    </>
+    </Box>
   );
 };
 

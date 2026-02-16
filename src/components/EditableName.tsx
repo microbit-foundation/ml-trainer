@@ -3,20 +3,25 @@ import {
   Editable,
   EditableInput,
   EditablePreview,
+  HStack,
   Icon,
   Input,
   InputGroup,
   InputLeftElement,
   Tooltip,
 } from "@chakra-ui/react";
-import { useCallback, useRef, useState } from "react";
+import { ReactNode, useCallback, useRef, useState } from "react";
 import { RiEditLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
 import { useStore } from "../store";
 
 const backgroundColor = "blackAlpha.300";
 
-const EditableName = () => {
+interface EditableNameProps {
+  suffix?: ReactNode;
+}
+
+const EditableName = ({ suffix }: EditableNameProps) => {
   const intl = useIntl();
   const getCurrentProject = useStore((s) => s.getCurrentProject);
   const renameProject = useStore((s) => s.renameProject);
@@ -47,7 +52,6 @@ const EditableName = () => {
       color="white"
       display="flex"
       finalFocusRef={ref}
-      m={2}
       isPreviewFocusable={false}
       onCancel={handleCancel}
       onChange={handleChange}
@@ -55,45 +59,12 @@ const EditableName = () => {
       value={value}
     >
       {({ onEdit, isEditing }) => (
-        <>
-          <Tooltip
-            display={!isEditing ? "flex" : "none"}
-            label={intl.formatMessage({ id: "project-name-tooltip" })}
-            hasArrow
-            placement="bottom"
-          >
-            <Button
-              display={!isEditing ? "flex" : "none"}
-              h={10}
-              px={2}
-              borderRadius="md"
-              _hover={{
-                backgroundColor,
-              }}
-              fontWeight="normal"
-              onClick={onEdit}
-              ref={ref}
-              variant="unstyled"
-              leftIcon={<Icon as={RiEditLine} />}
-              _focusVisible={{
-                boxShadow: "outlineDark",
-              }}
-            >
-              <EditablePreview
-                cursor="pointer"
-                fontSize={20}
-                maxW="200px"
-                w="fit-content"
-                noOfLines={1}
-                textAlign="left"
-              />
-            </Button>
-          </Tooltip>
-          <>
+        <HStack spacing={0}>
+          {isEditing ? (
             <InputGroup
-              display={isEditing ? "flex" : "none"}
               backgroundColor={backgroundColor}
               borderRadius="md"
+              minW="250px"
             >
               <InputLeftElement pointerEvents="none">
                 <Icon as={RiEditLine} />
@@ -106,8 +77,48 @@ const EditableName = () => {
                 }}
               />
             </InputGroup>
-          </>
-        </>
+          ) : (
+            <>
+              <Tooltip
+                label={intl.formatMessage({ id: "project-name-tooltip" })}
+                hasArrow
+                placement="bottom"
+              >
+                <Button
+                  display="flex"
+                  h={10}
+                  p={1.5}
+                  borderRadius="md"
+                  _hover={{
+                    backgroundColor,
+                  }}
+                  fontWeight="normal"
+                  onClick={onEdit}
+                  ref={ref}
+                  variant="unstyled"
+                  leftIcon={<Icon as={RiEditLine} />}
+                  _focusVisible={{
+                    boxShadow: "outlineDark",
+                  }}
+                >
+                  <EditablePreview
+                    cursor="pointer"
+                    fontSize={20}
+                    maxW="200px"
+                    w="fit-content"
+                    noOfLines={1}
+                    textAlign="left"
+                  />
+                </Button>
+              </Tooltip>
+              {suffix && (
+                <HStack spacing={0} marginInlineStart={-1.5}>
+                  {suffix}
+                </HStack>
+              )}
+            </>
+          )}
+        </HStack>
       )}
     </Editable>
   );

@@ -1,9 +1,12 @@
 import { useCallback, useMemo } from "react";
-import styles from "./NewPageCarousel.module.css";
 import SwiperCarousel from "../SwiperCarousel/SwiperCarousel";
+import styles from "./NewPageCarousel.module.css";
+import { SwiperClass } from "swiper/react";
 
 const slow = 3000;
 const fast = 1000;
+const cardWidth = 260;
+const mobileSpaceBetween = 15;
 
 interface NewPageCarouselProps {
   carouselItems: JSX.Element[];
@@ -28,54 +31,55 @@ const NewPageCarousel = ({
     [carouselItems.length, centerItems]
   );
 
+  const getSlidesPerGroup = useCallback((spacing: number) => {
+    // 24px padding left/right.
+    return Math.floor((window.innerWidth - 24) / (cardWidth + spacing));
+  }, []);
+
   // Pass this in as a prop for other carousels?
   const breakpoints = useMemo(() => {
     if (typeof window === "undefined") {
       return;
     }
+
     return {
       // When window width is >= 0px.
       0: {
-        slidesPerView: 2,
-        spaceBetween: 15,
-        slidesPerGroup: 2,
-        slidesOffsetAfter: getOffset(2),
-        slidesOffsetBefore: getOffset(2),
+        spaceBetween: mobileSpaceBetween,
+        slidesPerGroup: 1,
+        slidesOffsetAfter: 0,
+        slidesOffsetBefore: 0,
       },
       // When window width is >= 768px.
       768: {
-        slidesPerView: 3,
         spaceBetween: 20,
-        slidesPerGroup: 3,
-        slidesOffsetAfter: getOffset(3),
-        slidesOffsetBefore: getOffset(3),
+        slidesPerGroup: getSlidesPerGroup(20),
+        slidesOffsetAfter: getOffset(getSlidesPerGroup(20)),
+        slidesOffsetBefore: getOffset(getSlidesPerGroup(20)),
       },
-      // When window width is >= 992ppx.
+      // When window width is >= 992px.
       992: {
-        slidesPerView: 4,
         spaceBetween: 25,
-        slidesPerGroup: 4,
-        slidesOffsetAfter: getOffset(4),
-        slidesOffsetBefore: getOffset(4),
+        slidesPerGroup: getSlidesPerGroup(25),
+        slidesOffsetAfter: getOffset(getSlidesPerGroup(25)),
+        slidesOffsetBefore: getOffset(getSlidesPerGroup(25)),
       },
       // When window width is >= 1200px.
       1200: {
-        slidesPerView: 5,
         spaceBetween: 30,
-        slidesPerGroup: 5,
-        slidesOffsetAfter: getOffset(5),
-        slidesOffsetBefore: getOffset(5),
+        slidesPerGroup: getSlidesPerGroup(30),
+        slidesOffsetAfter: getOffset(getSlidesPerGroup(30)),
+        slidesOffsetBefore: getOffset(getSlidesPerGroup(30)),
       },
       // When window width is >= 1400px.
       1400: {
-        slidesPerView: 6,
         spaceBetween: 30,
-        slidesPerGroup: 6,
-        slidesOffsetAfter: getOffset(6),
-        slidesOffsetBefore: getOffset(6),
+        slidesPerGroup: getSlidesPerGroup(30),
+        slidesOffsetAfter: getOffset(getSlidesPerGroup(30)),
+        slidesOffsetBefore: getOffset(getSlidesPerGroup(30)),
       },
     };
-  }, [getOffset]);
+  }, [getOffset, getSlidesPerGroup]);
 
   const getBreakpoint = useCallback(() => {
     if (typeof window !== "undefined" && breakpoints) {
@@ -92,6 +96,27 @@ const NewPageCarousel = ({
       }
     }
   }, [breakpoints]);
+
+  const recalculateBreakpoints = useCallback(
+    (swiper: SwiperClass) => {
+      if (hero || typeof window === "undefined") {
+        return;
+      }
+      const breakpoint = getBreakpoint();
+      if (breakpoint) {
+        let slidesPerGroup = breakpoint.slidesPerGroup;
+        let offset = breakpoint.slidesOffsetAfter;
+        if (breakpoint.spaceBetween !== mobileSpaceBetween) {
+          slidesPerGroup = getSlidesPerGroup(breakpoint.spaceBetween);
+          offset = getOffset(slidesPerGroup);
+        }
+        swiper.params.slidesOffsetAfter = offset;
+        swiper.params.slidesOffsetBefore = offset;
+        swiper.params.slidesPerGroup = slidesPerGroup;
+      }
+    },
+    [getBreakpoint, getOffset, getSlidesPerGroup, hero]
+  );
 
   return (
     <SwiperCarousel
@@ -115,22 +140,14 @@ const NewPageCarousel = ({
             }
           : breakpoints
       }
+      slidesPerView="auto"
       carouselItems={carouselItems}
       centerInsufficientSlides={centerItems}
       containerMessageId={containerMessageId}
       loop={hero}
       navigation={!hero}
-      onResize={(swiper) => {
-        if (hero || typeof window === "undefined") {
-          return;
-        }
-        const breakpoint = getBreakpoint();
-        if (breakpoint) {
-          const offset = getOffset(breakpoint.slidesPerGroup);
-          swiper.params.slidesOffsetAfter = offset;
-          swiper.params.slidesOffsetBefore = offset;
-        }
-      }}
+      onResize={recalculateBreakpoints}
+      onInit={recalculateBreakpoints}
       // Padding to account for card box-shadow.
       padding={hero ? 0 : "1rem 12px 12px 12px"}
       speed={hero ? slow : fast}
