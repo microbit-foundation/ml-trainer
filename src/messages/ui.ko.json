@@ -3321,6 +3321,12 @@
       "value": "행동과 데이터 샘플을 변경할 필요가 없는 경우 Microsoft MakeCode로도 열 수 있습니다."
     }
   ],
+  "saving-dataset-toast-title": [
+    {
+      "type": 0,
+      "value": "Your dataset has been downloaded"
+    }
+  ],
   "saving-description": [
     {
       "type": 0,

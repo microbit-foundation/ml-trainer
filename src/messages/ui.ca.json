@@ -3323,6 +3323,12 @@
       "value": "També pots obrir-lo amb Microsoft MakeCode si no necessites canviar les accions i les mostres de dades."
     }
   ],
+  "saving-dataset-toast-title": [
+    {
+      "type": 0,
+      "value": "Your dataset has been downloaded"
+    }
+  ],
   "saving-description": [
     {
       "type": 0,

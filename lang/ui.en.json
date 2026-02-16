@@ -1811,6 +1811,10 @@
     "defaultMessage": "You can also open it with Microsoft MakeCode if you don't need to change the actions and data samples.",
     "description": "Text in the dialog shown when saving a hex file"
   },
+  "saving-dataset-toast-title": {
+    "defaultMessage": "Your dataset has been downloaded",
+    "description": "Notification after a dataset has been downloaded"
+  },
   "saving-description": {
     "defaultMessage": "Your download will be ready soon.",
     "description": "Saving progress dialog text"

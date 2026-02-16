@@ -1811,6 +1811,10 @@
     "defaultMessage": "crwdns363318:0crwdne363318:0",
     "description": "Text in the dialog shown when saving a hex file"
   },
+  "saving-dataset-toast-title": {
+    "defaultMessage": "Your dataset has been downloaded",
+    "description": "Notification after a dataset has been downloaded"
+  },
   "saving-description": {
     "defaultMessage": "crwdns363320:0crwdne363320:0",
     "description": "Saving progress dialog text"

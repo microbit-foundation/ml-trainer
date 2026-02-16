@@ -4,7 +4,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { Capacitor } from "@capacitor/core";
 import { HexData, HexUrl } from "../model";
+import { Directory, Encoding, Filesystem } from "@capacitor/filesystem";
 
 export const getFileExtension = (filename: string): string | undefined => {
   const parts = filename.split(".");
@@ -37,30 +39,48 @@ export const readFileAsText = async (file: File): Promise<string> => {
   });
 };
 
-const isHexUrl = (hex: HexData | HexUrl): hex is HexUrl => {
+export const isHexUrl = (hex: HexData | HexUrl): hex is HexUrl => {
   return "url" in hex;
 };
 
-export const downloadHex = (hex: HexData | HexUrl) => {
-  if (isHexUrl(hex)) {
-    downloadUrl(hex.url, `${hex.name}.hex`);
+export const downloadDataString = async (
+  data: string,
+  filename: string,
+  mimeType: string
+) => {
+  if (Capacitor.isNativePlatform()) {
+    await Filesystem.writeFile({
+      path: filename,
+      data,
+      directory: Directory.Documents,
+      recursive: true,
+      encoding: Encoding.UTF8,
+    });
   } else {
-    downloadHexData(hex);
+    const blob = new Blob([data], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    await downloadUrl(url, filename);
+    URL.revokeObjectURL(url);
   }
 };
 
-const downloadHexData = (hex: HexData) => {
-  const blob = new Blob([hex.hex], { type: "application/octet-stream" });
-  const url = URL.createObjectURL(blob);
-  downloadUrl(url, `${hex.name}.hex`);
-  URL.revokeObjectURL(url);
-};
+export const downloadHexData = (hex: HexData) =>
+  downloadDataString(hex.hex, `${hex.name}.hex`, "application/octet-stream");
 
-export const downloadUrl = (url: string, download?: string) => {
-  const a = document.createElement("a");
-  a.href = url;
-  if (download) {
-    a.download = download;
+// Only used for stored Bluetooth hex files.
+// Does not support data URLs on mobile devices
+export const downloadUrl = async (url: string, filename: string) => {
+  if (Capacitor.isNativePlatform()) {
+    await Filesystem.downloadFile({
+      url,
+      path: filename,
+      directory: Directory.Documents,
+      recursive: true,
+    });
+  } else {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
   }
-  a.click();
 };

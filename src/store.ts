@@ -71,6 +71,7 @@ import {
   DownloadStep,
   SameOrDifferentChoice,
 } from "./download-flow/download-types";
+import { downloadDataString } from "./utils/fs-util";
 import { LoadAction } from "./hooks/project-hooks";
 import {
   broadcastChannel,
@@ -1014,21 +1015,16 @@ const createMlStore = (logging: Logging) => {
           );
         },
 
-        downloadDataset() {
-          const { actions, project } = get();
-          const a = document.createElement("a");
-          a.setAttribute(
-            "href",
-            "data:application/json;charset=utf-8," +
-              encodeURIComponent(JSON.stringify(actions, null, 2))
-          );
-          a.setAttribute(
-            "download",
-            `${project.header?.name ?? untitledProjectName}-data-samples.json`
-          );
-          a.style.display = "none";
-          a.click();
-        },
+          async downloadDataset() {
+            const { actions, project } = get();
+            await downloadDataString(
+              JSON.stringify(actions, null, 2),
+              `${
+                project.header?.name ?? untitledProjectName
+              }-data-samples.json`,
+              "application/json"
+            );
+          },
 
         async loadDataset(
           datasetActions: ActionData[],

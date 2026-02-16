@@ -3341,6 +3341,12 @@
       "value": "Vous pouvez également l'ouvrir avec Microsoft MakeCode si vous ne devez pas modifier les actions et les échantillons de données."
     }
   ],
+  "saving-dataset-toast-title": [
+    {
+      "type": 0,
+      "value": "Your dataset has been downloaded"
+    }
+  ],
   "saving-description": [
     {
       "type": 0,

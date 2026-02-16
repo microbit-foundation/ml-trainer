@@ -1811,6 +1811,10 @@
     "defaultMessage": "アクションとデータサンプルを変更する必要がない場合は、Microsoft MakeCode で開くこともできます。",
     "description": "Text in the dialog shown when saving a hex file"
   },
+  "saving-dataset-toast-title": {
+    "defaultMessage": "Your dataset has been downloaded",
+    "description": "Notification after a dataset has been downloaded"
+  },
   "saving-description": {
     "defaultMessage": "ダウンロードはまもなく完了します。",
     "description": "Saving progress dialog text"

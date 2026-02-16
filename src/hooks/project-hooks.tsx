@@ -41,7 +41,7 @@ import {
 } from "../urls";
 import { getTotalNumSamples } from "../utils/actions";
 import {
-  downloadHex,
+  downloadHexData,
   getLowercaseFileExtension,
   readFileAsText,
 } from "../utils/fs-util";
@@ -446,7 +446,7 @@ export const ProjectProvider = ({
             logging.error("Sharing failed", e);
           }
         } else {
-          downloadHex(hex);
+          await downloadHexData(hex);
         }
         setSave({ step: SaveStep.None });
         if (!isShare) {

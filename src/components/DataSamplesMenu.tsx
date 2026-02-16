@@ -13,6 +13,7 @@ import {
   MenuList,
   Portal,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { MdMoreVert } from "react-icons/md";
@@ -30,6 +31,7 @@ import LoadProjectMenuItem from "./LoadProjectMenuItem";
 import { NameProjectDialog } from "./NameProjectDialog";
 import ViewDataFeaturesMenuItem from "./ViewDataFeaturesMenuItem";
 import { useProjectIsUntitled } from "../hooks/project-hooks";
+import { Capacitor } from "@capacitor/core";
 
 const DataSamplesMenu = () => {
   const intl = useIntl();
@@ -47,8 +49,9 @@ const DataSamplesMenu = () => {
   const nameProjectDialogOnOpen = useStore((s) => s.nameProjectDialogOnOpen);
   const isUntitled = useProjectIsUntitled();
   const setProjectName = useStore((s) => s.setProjectName);
+  const toast = useToast();
 
-  const download = useCallback(() => {
+  const download = useCallback(async () => {
     logging.event({
       type: "dataset-save",
       detail: {
@@ -56,8 +59,18 @@ const DataSamplesMenu = () => {
         samples: getTotalNumSamples(actions),
       },
     });
-    downloadDataset();
-  }, [downloadDataset, actions, logging]);
+    await downloadDataset();
+    if (Capacitor.isNativePlatform()) {
+      // No browser feedback on download complete when using native app
+      toast({
+        id: "save-complete",
+        position: "top",
+        duration: 5_000,
+        title: intl.formatMessage({ id: "saving-dataset-toast-title" }),
+        status: "info",
+      });
+    }
+  }, [actions, downloadDataset, intl, logging, toast]);
   const deleteAllActions = useStore((s) => s.deleteAllActions);
   const handleDeleteAllActions = useCallback(async () => {
     logging.event({
@@ -72,17 +85,17 @@ const DataSamplesMenu = () => {
       if (newName) {
         await setProjectName(newName);
       }
-      download();
+      await download();
       closeDialog();
     },
     [closeDialog, download, setProjectName]
   );
 
-  const handleDownloadDataset = useCallback(() => {
+  const handleDownloadDataset = useCallback(async () => {
     if (isUntitled) {
       nameProjectDialogOnOpen();
     } else {
-      download();
+      await download();
     }
   }, [download, isUntitled, nameProjectDialogOnOpen]);
 

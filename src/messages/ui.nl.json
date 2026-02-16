@@ -3337,6 +3337,12 @@
       "value": "Je kunt het ook openen met Microsoft MakeCode als je de acties en data samples niet hoeft te wijzigen."
     }
   ],
+  "saving-dataset-toast-title": [
+    {
+      "type": 0,
+      "value": "Your dataset has been downloaded"
+    }
+  ],
   "saving-description": [
     {
       "type": 0,
