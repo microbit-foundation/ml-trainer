@@ -7,6 +7,7 @@ import {
   Button,
   Flex,
   Heading,
+  HStack,
   Icon,
   IconButton,
   MenuDivider,
@@ -14,6 +15,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect } from "react";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { RiDownload2Line, RiHome2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
@@ -30,6 +32,7 @@ import ActionBar from "./ActionBar/ActionBar";
 import ItemsRight from "./ActionBar/ActionBarItemsRight";
 import AppLogo from "./AppLogo";
 import DataConnectionDialogs from "./DataConnectionDialogs";
+import EditableName from "./EditableName";
 import FeedbackForm from "./FeedbackForm";
 import ImportErrorDialog from "./ImportErrorDialog";
 import MakeCodeLoadErrorDialog from "./MakeCodeLoadErrorDialog";
@@ -37,7 +40,6 @@ import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
-import EditableName from "./EditableName";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -127,21 +129,42 @@ const DefaultPageLayout = ({
               w="100%"
               px={{ base: 3, sm: 5 }}
               itemsCenter={
-                <>
-                  {showProjectName && <EditableName />}
-                  {showPageTitle && (
+                <HStack h={10}>
+                  {showProjectName && (
+                    <EditableName
+                      suffix={
+                        showPageTitle ? (
+                          <>
+                            <Icon
+                              as={MdOutlineKeyboardArrowRight}
+                              color="white"
+                              boxSize="6"
+                            />
+                            <Heading
+                              size="md"
+                              fontWeight="normal"
+                              color="white"
+                            >
+                              <FormattedMessage id={titleId} />
+                            </Heading>
+                          </>
+                        ) : undefined
+                      }
+                    />
+                  )}
+                  {!showProjectName && showPageTitle && (
                     <Heading size="md" fontWeight="normal" color="white">
                       <FormattedMessage id={titleId} />
                     </Heading>
                   )}
-                </>
+                </HStack>
               }
               itemsLeft={
                 toolbarItemsLeft || (
                   <AppLogo
                     display={
                       showPageTitle
-                        ? { base: "none", md: "inline-flex" }
+                        ? { base: "none", lg: "inline-flex" }
                         : "inline-flex"
                     }
                     transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}

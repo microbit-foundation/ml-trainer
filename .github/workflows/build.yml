@@ -41,7 +41,6 @@ jobs:
       - run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - run: echo "ML_THEME_VERSION=$(jq -r '.["theme-package-version"]' workflow-config.json)" >> $GITHUB_ENV
       - run: npm install --no-save @microbit-foundation/ml-trainer-microbit@${{ env.ML_THEME_VERSION }} @microbit-foundation/website-deploy-aws@0.6 @microbit-foundation/website-deploy-aws-config@0.10
         if: github.repository_owner == 'microbit-foundation'

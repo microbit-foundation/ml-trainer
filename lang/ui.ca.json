@@ -520,7 +520,7 @@
     "description": "Create project dialog heading"
   },
   "createai-taster-lessons-resource-title": {
-    "defaultMessage": "CreateAI taster lessons",
+    "defaultMessage": "Taster lessons",
     "description": "Home page resource card title"
   },
   "data-actions-menu": {
@@ -884,7 +884,7 @@
     "description": "Connection error dialog"
   },
   "first-lessons-with-microbit-createai-resource-title": {
-    "defaultMessage": "First lessons with micro:bit CreateAI",
+    "defaultMessage": "First lessons",
     "description": "Home page resource card title"
   },
   "get-started-action": {
@@ -948,7 +948,7 @@
     "description": "Label for home page row carousel"
   },
   "help-resources-row-title": {
-    "defaultMessage": "Help section",
+    "defaultMessage": "Help",
     "description": "Title for home page row"
   },
   "help-support": {

@@ -29,7 +29,6 @@ import DefaultPageLayout, {
 import LoadingPage from "../components/LoadingPage";
 import { NameProjectDialog } from "../components/NameProjectDialog";
 import ProjectCard from "../components/ProjectCard";
-import ProjectCardActions from "../components/ProjectCardActions";
 import ProjectsToolbar from "../components/ProjectsToolbar";
 import Search from "../components/Search";
 import SortInput from "../components/SortInput";
@@ -449,21 +448,13 @@ const ProjectsPage = () => {
                     <ProjectCard
                       key={projectData.id}
                       projectData={projectData}
-                      projectCardActions={
-                        <ProjectCardActions
-                          id={projectData.id}
-                          name={projectData.name}
-                          isSelected={selectedProjectIds.includes(
-                            projectData.id
-                          )}
-                          onSelected={updateSelectedProjects}
-                          onDeleteProject={handleOpenConfirmDialog}
-                          onRenameDuplicateProject={handleOpenNameProjectDialog}
-                          onOpenProject={handleOpenProject}
-                          setFinalFocusRef={setFinalFocusRef}
-                          onSkipToToolbar={handleSkipToToolbar}
-                        />
-                      }
+                      isSelected={selectedProjectIds.includes(projectData.id)}
+                      onSelected={updateSelectedProjects}
+                      onDeleteProject={handleOpenConfirmDialog}
+                      onRenameDuplicateProject={handleOpenNameProjectDialog}
+                      onOpenProject={handleOpenProject}
+                      setFinalFocusRef={setFinalFocusRef}
+                      onSkipToToolbar={handleSkipToToolbar}
                     />
                   ))}
                 </SimpleGrid>

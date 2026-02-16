@@ -15,7 +15,7 @@ import { projectSessionStorage } from "./session-storage";
 
 const DATABASE_NAME = "ml";
 
-interface PersistedProjectData {
+export interface PersistedProjectData {
   id: string;
   actions: ActionData[];
   project: MakeCodeProject;
@@ -24,35 +24,12 @@ interface PersistedProjectData {
   timestamp: number | undefined;
 }
 
-interface MakeCodeData {
+export interface MakeCodeData {
   project: MakeCodeProject;
   projectEdited: boolean;
 }
 
-enum DatabaseStore {
-  PROJECT_DATA = "project-data",
-  MAKECODE_DATA = "makecode-data",
-  RECORDINGS = "recordings",
-  ACTIONS = "actions",
-  SETTINGS = "settings",
-}
-
-const oldModelUrl = "indexeddb://micro:bit-ai-creator-model";
-
 export class StorageError extends Error {}
-
-const defaultTimestamp = Date.now();
-const defaultProjectId = uuid();
-
-const defaultStoreData: Record<
-  DatabaseStore.SETTINGS,
-  { key: string; value: Settings }
-> = {
-  [DatabaseStore.SETTINGS]: {
-    value: defaultSettings,
-    key: DatabaseStore.SETTINGS,
-  },
-};
 
 export interface StoreAction extends Action {
   projectId: string;
@@ -71,6 +48,156 @@ export interface ProjectData {
 export interface ProjectDataWithActions extends ProjectData {
   actions: StoreAction[];
 }
+
+/**
+ * Storage backend interface for project data persistence.
+ */
+export interface Database {
+  newSession(
+    actions: ActionData[],
+    makeCodeData: MakeCodeData,
+    projectData: { timestamp: number; name: string; id: string }
+  ): Promise<void>;
+  /**
+   * Load a project by ID. Updates the project's timestamp so it becomes
+   * the most recently accessed project.
+   */
+  getProject(id: string): Promise<PersistedProjectData>;
+  /**
+   * Load the most recently accessed project without updating its timestamp.
+   */
+  getLatestProject(): Promise<PersistedProjectData | undefined>;
+  getAllProjectData(): Promise<ProjectDataWithActions[]>;
+  importProject(
+    actions: ActionData[],
+    makeCodeData: MakeCodeData,
+    projectData: { timestamp: number; id: string },
+    settings: Settings
+  ): Promise<void>;
+  addAction(
+    id: string | undefined,
+    action: ActionData,
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  updateAction(
+    id: string | undefined,
+    action: ActionData,
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  updateActions(
+    id: string | undefined,
+    actions: ActionData[],
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  deleteAction(
+    id: string | undefined,
+    action: ActionData,
+    newActions: ActionData[],
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  deleteAllActions(
+    id: string | undefined,
+    newActions: ActionData[],
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  replaceActions(
+    actions: ActionData[],
+    makeCodeData: MakeCodeData,
+    projectData: { timestamp: number; id: string | undefined },
+    settings: Settings
+  ): Promise<void>;
+  addRecording(
+    id: string | undefined,
+    recording: RecordingData,
+    action: ActionData,
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  deleteRecording(
+    id: string | undefined,
+    key: string,
+    action: ActionData,
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  updateMakeCodeProject(
+    id: string | undefined,
+    makeCodeData: MakeCodeData,
+    timestamp: number
+  ): Promise<void>;
+  updateProjectTimestamp(
+    id: string | undefined,
+    timestamp: number
+  ): Promise<void>;
+  renameProject(id: string, name: string, timestamp: number): Promise<void>;
+  /**
+   * Duplicate a project including actions, recordings, MakeCode data,
+   * and trained model.
+   */
+  duplicateProject(
+    existingProjectId: string,
+    newProjectData: ProjectData
+  ): Promise<void>;
+  /**
+   * Delete a project and all associated data including actions, recordings,
+   * MakeCode data, and trained model.
+   */
+  deleteProject(id: string): Promise<void>;
+  /**
+   * Delete multiple projects and all associated data.
+   */
+  deleteProjects(ids: string[]): Promise<void>;
+  updateSettings(
+    id: string | undefined,
+    settings: Settings,
+    timestamp: number
+  ): Promise<void>;
+  saveModel(id: string | undefined, model: tf.LayersModel): Promise<void>;
+  removeModel(id: string | undefined): Promise<void>;
+  loadModel(id: string): Promise<tf.LayersModel | undefined>;
+}
+
+enum DatabaseStore {
+  PROJECT_DATA = "project-data",
+  MAKECODE_DATA = "makecode-data",
+  RECORDINGS = "recordings",
+  ACTIONS = "actions",
+  SETTINGS = "settings",
+  MODELS = "models",
+}
+
+/**
+ * Serializable model data stored in IndexedDB.
+ */
+interface StoredModelData {
+  modelTopology?: object | ArrayBuffer;
+  trainingConfig?: tf.io.TrainingConfig;
+  weightSpecs?: tf.io.WeightsManifestEntry[];
+  weightData?: ArrayBuffer;
+  format?: string;
+  generatedBy?: string;
+  convertedBy?: string | null;
+}
+
+const oldModelUrl = "indexeddb://micro:bit-ai-creator-model";
+
+const defaultTimestamp = Date.now();
+const defaultProjectId = uuid();
+
+const defaultStoreData: Record<
+  DatabaseStore.SETTINGS,
+  { key: string; value: Settings }
+> = {
+  [DatabaseStore.SETTINGS]: {
+    value: defaultSettings,
+    key: DatabaseStore.SETTINGS,
+  },
+};
 
 interface Schema extends DBSchema {
   [DatabaseStore.PROJECT_DATA]: {
@@ -95,17 +222,21 @@ interface Schema extends DBSchema {
     key: string;
     value: Settings;
   };
+  [DatabaseStore.MODELS]: {
+    key: string;
+    value: StoredModelData;
+  };
 }
 
-export class Database {
-  dbPromise: Promise<IDBPDatabase<Schema>>;
-  dbInitValuesPromise: PromiseInfo<void> | undefined;
-  dbReady: boolean = false;
+export class IdbDatabase implements Database {
+  private dbPromise: Promise<IDBPDatabase<Schema>>;
+  private dbInitValuesPromise: PromiseInfo<void> | undefined;
+  private dbReady: boolean = false;
   constructor() {
     this.dbPromise = this.initializeDb();
   }
 
-  async useDb(): Promise<IDBPDatabase<Schema>> {
+  private async useDb(): Promise<IDBPDatabase<Schema>> {
     if (this.dbReady) {
       return this.dbPromise;
     }
@@ -129,37 +260,46 @@ export class Database {
     return db;
   }
 
-  initializeDb(): Promise<IDBPDatabase<Schema>> {
-    return openDB(DATABASE_NAME, 1, {
-      upgrade(db) {
-        for (const store of Object.values(DatabaseStore)) {
-          const objectStore = db.createObjectStore(store);
-          if (store === DatabaseStore.ACTIONS) {
-            (
-              objectStore as IDBPObjectStore<
-                Schema,
-                ArrayLike<DatabaseStore>,
-                DatabaseStore.ACTIONS,
-                "versionchange"
-              >
-            ).createIndex("projectId", "projectId");
+  private initializeDb(): Promise<IDBPDatabase<Schema>> {
+    return openDB(DATABASE_NAME, 2, {
+      upgrade(db, oldVersion) {
+        if (oldVersion < 1) {
+          for (const store of Object.values(DatabaseStore)) {
+            const objectStore = db.createObjectStore(store);
+            if (store === DatabaseStore.ACTIONS) {
+              (
+                objectStore as IDBPObjectStore<
+                  Schema,
+                  ArrayLike<DatabaseStore>,
+                  DatabaseStore.ACTIONS,
+                  "versionchange"
+                >
+              ).createIndex("projectId", "projectId");
+            }
+            if (store === DatabaseStore.RECORDINGS) {
+              (
+                objectStore as IDBPObjectStore<
+                  Schema,
+                  ArrayLike<DatabaseStore>,
+                  DatabaseStore.RECORDINGS,
+                  "versionchange"
+                >
+              ).createIndex("actionId", "actionId");
+            }
           }
-          if (store === DatabaseStore.RECORDINGS) {
-            (
-              objectStore as IDBPObjectStore<
-                Schema,
-                ArrayLike<DatabaseStore>,
-                DatabaseStore.RECORDINGS,
-                "versionchange"
-              >
-            ).createIndex("actionId", "actionId");
+        }
+        if (oldVersion < 2) {
+          if (!db.objectStoreNames.contains(DatabaseStore.MODELS)) {
+            db.createObjectStore(DatabaseStore.MODELS);
           }
         }
       },
     });
   }
 
-  async migrateFromLocalStorage(db: IDBPDatabase<Schema>): Promise<void> {
+  private async migrateFromLocalStorage(
+    db: IDBPDatabase<Schema>
+  ): Promise<void> {
     const localStorageProject = getLocalStorageProject();
     if (!localStorageProject) {
       // Set default values if there is are no data to migrate.
@@ -216,7 +356,18 @@ export class Database {
     try {
       const model = await tf.loadLayersModel(oldModelUrl);
       if (model) {
-        await model.save(defaultProjectId);
+        await model.save(
+          tf.io.withSaveHandler(async (artifacts) => {
+            await db.add(
+              DatabaseStore.MODELS,
+              modelArtifactsToStoredData(artifacts),
+              defaultProjectId
+            );
+            return {
+              modelArtifactsInfo: tf.io.getModelArtifactsInfoForJSON(artifacts),
+            };
+          })
+        );
         await tf.io.removeModel(oldModelUrl);
       }
     } catch (err) {
@@ -828,6 +979,7 @@ export class Database {
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
         DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.MODELS,
         DatabaseStore.PROJECT_DATA,
       ],
       "readwrite"
@@ -890,6 +1042,11 @@ export class Database {
       },
       id
     );
+    const modelsStore = tx.objectStore(DatabaseStore.MODELS);
+    const modelData = await modelsStore.get(existingProjectId);
+    if (modelData) {
+      await modelsStore.add(modelData, id);
+    }
     return tx.done;
   }
 
@@ -899,6 +1056,7 @@ export class Database {
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
         DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.MODELS,
         DatabaseStore.PROJECT_DATA,
       ],
       "readwrite"
@@ -915,6 +1073,7 @@ export class Database {
     await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     await makeCodeStore.delete(id);
+    await tx.objectStore(DatabaseStore.MODELS).delete(id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     await projectDataStore.delete(id);
     await tx.done;
@@ -926,6 +1085,7 @@ export class Database {
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
         DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.MODELS,
         DatabaseStore.PROJECT_DATA,
       ],
       "readwrite"
@@ -933,6 +1093,7 @@ export class Database {
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const modelsStore = tx.objectStore(DatabaseStore.MODELS);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const actionIds = (
       await Promise.all(
@@ -947,6 +1108,7 @@ export class Database {
     ).flat();
     await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
     await Promise.all(ids.map((id) => makeCodeStore.delete(id)));
+    await Promise.all(ids.map((id) => modelsStore.delete(id)));
     await Promise.all(ids.map((id) => projectDataStore.delete(id)));
     await tx.done;
   }
@@ -979,38 +1141,73 @@ export class Database {
 
   async saveModel(id: string | undefined, model: tf.LayersModel) {
     id = this.assertProjectId(id);
-    try {
-      await model.save(`indexeddb://${id}`);
-    } catch (err) {
-      // IndexedDB not available?
-    }
+    const db = await this.useDb();
+    await model.save(
+      tf.io.withSaveHandler(async (artifacts) => {
+        await db.put(
+          DatabaseStore.MODELS,
+          modelArtifactsToStoredData(artifacts),
+          id
+        );
+        return {
+          modelArtifactsInfo: tf.io.getModelArtifactsInfoForJSON(artifacts),
+        };
+      })
+    );
   }
 
   async removeModel(id: string | undefined) {
     id = this.assertProjectId(id);
-    try {
-      await tf.io.removeModel(`indexeddb://${id}`);
-    } catch (err) {
-      // IndexedDB not available?
-    }
+    const db = await this.useDb();
+    await db.delete(DatabaseStore.MODELS, id);
   }
 
   async loadModel(id: string): Promise<tf.LayersModel | undefined> {
-    try {
-      return await tf.loadLayersModel(`indexeddb://${id}`);
-    } catch (err) {
-      // There is no model.
+    const db = await this.useDb();
+    const stored = await db.get(DatabaseStore.MODELS, id);
+    if (!stored) {
       return undefined;
     }
+    const artifacts: tf.io.ModelArtifacts = {
+      modelTopology: stored.modelTopology,
+      weightSpecs: stored.weightSpecs,
+      weightData: stored.weightData,
+      trainingConfig: stored.trainingConfig,
+      format: stored.format,
+      generatedBy: stored.generatedBy,
+      convertedBy: stored.convertedBy,
+    };
+    return tf.loadLayersModel(tf.io.fromMemory(artifacts));
   }
 
-  assertProjectId(id: string | undefined) {
+  private assertProjectId(id: string | undefined) {
     if (!id) {
       throw new StorageError("Project id is undefined");
     }
     return id;
   }
 }
+
+const modelArtifactsToStoredData = (
+  artifacts: tf.io.ModelArtifacts
+): StoredModelData => {
+  const weightData = artifacts.weightData
+    ? tf.io.concatenateArrayBuffers(
+        Array.isArray(artifacts.weightData)
+          ? artifacts.weightData
+          : [artifacts.weightData]
+      )
+    : undefined;
+  return {
+    modelTopology: artifacts.modelTopology,
+    trainingConfig: artifacts.trainingConfig,
+    weightSpecs: artifacts.weightSpecs,
+    weightData,
+    format: artifacts.format,
+    generatedBy: artifacts.generatedBy,
+    convertedBy: artifacts.convertedBy,
+  };
+};
 
 const assertData = <T>(data: T) => {
   if (!data) {
@@ -1028,7 +1225,7 @@ const assertDataArray = <T>(data: (undefined | T)[]) => {
   return data as T[];
 };
 
-export const getLocalStorageProject = (): PersistedProjectData | undefined => {
+const getLocalStorageProject = (): PersistedProjectData | undefined => {
   const data = localStorage.getItem(DATABASE_NAME);
   if (!data) {
     return undefined;

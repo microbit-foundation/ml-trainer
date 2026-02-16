@@ -966,7 +966,7 @@
   "createai-taster-lessons-resource-title": [
     {
       "type": 0,
-      "value": "CreateAI taster lessons"
+      "value": "Taster lessons"
     }
   ],
   "data-actions-menu": [
@@ -1630,7 +1630,7 @@
   "first-lessons-with-microbit-createai-resource-title": [
     {
       "type": 0,
-      "value": "First lessons with micro:bit CreateAI"
+      "value": "First lessons"
     }
   ],
   "get-started-action": [
@@ -1726,7 +1726,7 @@
   "help-resources-row-title": [
     {
       "type": 0,
-      "value": "Help section"
+      "value": "Help"
     }
   ],
   "help-support": [
