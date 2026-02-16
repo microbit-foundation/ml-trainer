@@ -117,8 +117,32 @@ interface ModelRow {
   weight_data: string | null;
 }
 
+class Mutex {
+  private queue: Promise<void> = Promise.resolve();
+
+  async run<T>(fn: () => Promise<T>): Promise<T> {
+    let release: () => void;
+    const next = new Promise<void>((r) => {
+      release = r;
+    });
+    const prev = this.queue;
+    this.queue = next;
+    await prev;
+    try {
+      return await fn();
+    } finally {
+      release!();
+    }
+  }
+}
+
 export class SqliteDatabase implements Database {
   private dbReady: Promise<SqliteConnection>;
+  // Serialise all database operations. The Capacitor SQLite plugin supports
+  // only one active transaction at a time on a single connection, so
+  // concurrent calls (e.g. a store subscription firing while another write
+  // is in progress) must be queued.
+  private mutex = new Mutex();
 
   constructor(connectionFactory?: () => Promise<SqliteConnection>) {
     this.dbReady = connectionFactory
@@ -160,8 +184,12 @@ export class SqliteDatabase implements Database {
     return this.initializeSchema(db);
   }
 
-  private async useDb(): Promise<SqliteConnection> {
-    return this.dbReady;
+  /**
+   * Run a database operation, serialised so that only one operation
+   * is in progress at a time.
+   */
+  private serialise<T>(fn: (db: SqliteConnection) => Promise<T>): Promise<T> {
+    return this.mutex.run(async () => fn(await this.dbReady));
   }
 
   private assertProjectId(id: string | undefined): string {
@@ -176,65 +204,68 @@ export class SqliteDatabase implements Database {
     makeCodeData: MakeCodeData,
     projectData: { timestamp: number; name: string; id: string }
   ): Promise<void> {
-    const db = await this.useDb();
-    const { id, name, timestamp } = projectData;
-    const txn = [
-      {
-        statement:
-          "INSERT INTO projects (id, name, timestamp) VALUES (?, ?, ?)",
-        values: [id, name, timestamp],
-      },
-      {
-        statement:
-          "INSERT INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
-        values: [
-          id,
-          JSON.stringify(makeCodeData.project),
-          makeCodeData.projectEdited ? 1 : 0,
-        ],
-      },
-      ...actions.map((a) => ({
-        statement:
-          "INSERT INTO actions (id, project_id, name, icon, required_confidence, created_at) VALUES (?, ?, ?, ?, ?, ?)",
-        values: [
-          a.id,
-          id,
-          a.name,
-          a.icon,
-          a.requiredConfidence ?? null,
-          a.createdAt,
-        ],
-      })),
-      ...actions.flatMap((a) =>
-        a.recordings.map((r) => ({
+    return this.serialise(async (db) => {
+      const { id, name, timestamp } = projectData;
+      const txn = [
+        {
           statement:
-            "INSERT INTO recordings (id, action_id, data, created_at) VALUES (?, ?, ?, ?)",
-          values: [r.id, a.id, JSON.stringify(r.data), r.createdAt],
-        }))
-      ),
-    ];
-    await db.executeTransaction(txn);
+            "INSERT INTO projects (id, name, timestamp) VALUES (?, ?, ?)",
+          values: [id, name, timestamp],
+        },
+        {
+          statement:
+            "INSERT INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+          values: [
+            id,
+            JSON.stringify(makeCodeData.project),
+            makeCodeData.projectEdited ? 1 : 0,
+          ],
+        },
+        ...actions.map((a) => ({
+          statement:
+            "INSERT INTO actions (id, project_id, name, icon, required_confidence, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+          values: [
+            a.id,
+            id,
+            a.name,
+            a.icon,
+            a.requiredConfidence ?? null,
+            a.createdAt,
+          ],
+        })),
+        ...actions.flatMap((a) =>
+          a.recordings.map((r) => ({
+            statement:
+              "INSERT INTO recordings (id, action_id, data, created_at) VALUES (?, ?, ?, ?)",
+            values: [r.id, a.id, JSON.stringify(r.data), r.createdAt],
+          }))
+        ),
+      ];
+      await db.executeTransaction(txn);
+    });
   }
 
   async getProject(id: string): Promise<PersistedProjectData> {
-    const db = await this.useDb();
-    // Update timestamp to mark as most recently accessed.
-    await db.run("UPDATE projects SET timestamp = ? WHERE id = ?", [
-      Date.now(),
-      id,
-    ]);
-    return this.loadProject(db, id);
+    return this.serialise(async (db) => {
+      // Update timestamp to mark as most recently accessed.
+      await db.run("UPDATE projects SET timestamp = ? WHERE id = ?", [
+        Date.now(),
+        id,
+      ]);
+      return this.loadProject(db, id);
+    });
   }
 
   async getLatestProject(): Promise<PersistedProjectData | undefined> {
-    const db = await this.useDb();
-    const result = await db.query(
-      "SELECT id FROM projects ORDER BY timestamp DESC LIMIT 1"
-    );
-    if (!result.values?.length) {
-      return undefined;
-    }
-    return this.loadProject(db, (result.values[0] as ProjectRow).id);
+    return this.serialise(async (db) => {
+      const result = await db.query(
+        "SELECT id FROM projects ORDER BY timestamp DESC LIMIT 1"
+      );
+      if (!result.values?.length) {
+        return undefined;
+      }
+      return this.loadProject(db, (result.values[0] as ProjectRow).id);
+    });
   }
 
   private async loadProject(
@@ -308,38 +339,39 @@ export class SqliteDatabase implements Database {
   }
 
   async getAllProjectData(): Promise<ProjectDataWithActions[]> {
-    const db = await this.useDb();
-    const projectsResult = await db.query(
-      "SELECT id, name, timestamp FROM projects ORDER BY timestamp DESC"
-    );
-    const projects = (projectsResult.values ?? []) as ProjectRow[];
-    return Promise.all(
-      projects.map(async (p: ProjectRow) => {
-        const actionsResult = await db.query(
-          "SELECT id, project_id, name, icon, required_confidence, created_at FROM actions WHERE project_id = ?",
-          [p.id]
-        );
-        const actions: StoreAction[] = (
-          (actionsResult.values ?? []) as ActionRow[]
-        ).map((row: ActionRow) => ({
-          id: row.id,
-          name: row.name,
-          icon: row.icon,
-          requiredConfidence:
-            row.required_confidence != null
-              ? row.required_confidence
-              : undefined,
-          createdAt: row.created_at,
-          projectId: row.project_id,
-        }));
-        return {
-          id: p.id,
-          name: p.name,
-          timestamp: p.timestamp,
-          actions,
-        };
-      })
-    );
+    return this.serialise(async (db) => {
+      const projectsResult = await db.query(
+        "SELECT id, name, timestamp FROM projects ORDER BY timestamp DESC"
+      );
+      const projects = (projectsResult.values ?? []) as ProjectRow[];
+      return Promise.all(
+        projects.map(async (p: ProjectRow) => {
+          const actionsResult = await db.query(
+            "SELECT id, project_id, name, icon, required_confidence, created_at FROM actions WHERE project_id = ?",
+            [p.id]
+          );
+          const actions: StoreAction[] = (
+            (actionsResult.values ?? []) as ActionRow[]
+          ).map((row: ActionRow) => ({
+            id: row.id,
+            name: row.name,
+            icon: row.icon,
+            requiredConfidence:
+              row.required_confidence != null
+                ? row.required_confidence
+                : undefined,
+            createdAt: row.created_at,
+            projectId: row.project_id,
+          }));
+          return {
+            id: p.id,
+            name: p.name,
+            timestamp: p.timestamp,
+            actions,
+          };
+        })
+      );
+    });
   }
 
   async importProject(
@@ -348,49 +380,51 @@ export class SqliteDatabase implements Database {
     projectData: { timestamp: number; id: string },
     settings: Settings
   ): Promise<void> {
-    const db = await this.useDb();
-    const { id, timestamp } = projectData;
-    const name = makeCodeData.project.header?.name ?? untitledProjectName;
-    const txn = [
-      {
-        statement:
-          "INSERT INTO projects (id, name, timestamp) VALUES (?, ?, ?)",
-        values: [id, name, timestamp],
-      },
-      {
-        statement:
-          "INSERT INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
-        values: [
-          id,
-          JSON.stringify(makeCodeData.project),
-          makeCodeData.projectEdited ? 1 : 0,
-        ],
-      },
-      {
-        statement: "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
-        values: ["settings", JSON.stringify(settings)],
-      },
-      ...actions.map((a) => ({
-        statement:
-          "INSERT INTO actions (id, project_id, name, icon, required_confidence, created_at) VALUES (?, ?, ?, ?, ?, ?)",
-        values: [
-          a.id,
-          id,
-          a.name,
-          a.icon,
-          a.requiredConfidence ?? null,
-          a.createdAt,
-        ],
-      })),
-      ...actions.flatMap((a) =>
-        a.recordings.map((r) => ({
+    return this.serialise(async (db) => {
+      const { id, timestamp } = projectData;
+      const name = makeCodeData.project.header?.name ?? untitledProjectName;
+      const txn = [
+        {
           statement:
-            "INSERT INTO recordings (id, action_id, data, created_at) VALUES (?, ?, ?, ?)",
-          values: [r.id, a.id, JSON.stringify(r.data), r.createdAt],
-        }))
-      ),
-    ];
-    await db.executeTransaction(txn);
+            "INSERT INTO projects (id, name, timestamp) VALUES (?, ?, ?)",
+          values: [id, name, timestamp],
+        },
+        {
+          statement:
+            "INSERT INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+          values: [
+            id,
+            JSON.stringify(makeCodeData.project),
+            makeCodeData.projectEdited ? 1 : 0,
+          ],
+        },
+        {
+          statement:
+            "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
+          values: ["settings", JSON.stringify(settings)],
+        },
+        ...actions.map((a) => ({
+          statement:
+            "INSERT INTO actions (id, project_id, name, icon, required_confidence, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+          values: [
+            a.id,
+            id,
+            a.name,
+            a.icon,
+            a.requiredConfidence ?? null,
+            a.createdAt,
+          ],
+        })),
+        ...actions.flatMap((a) =>
+          a.recordings.map((r) => ({
+            statement:
+              "INSERT INTO recordings (id, action_id, data, created_at) VALUES (?, ?, ?, ?)",
+            values: [r.id, a.id, JSON.stringify(r.data), r.createdAt],
+          }))
+        ),
+      ];
+      await db.executeTransaction(txn);
+    });
   }
 
   async addAction(
@@ -400,34 +434,35 @@ export class SqliteDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const db = await this.useDb();
-    await db.executeTransaction([
-      {
-        statement:
-          "INSERT INTO actions (id, project_id, name, icon, required_confidence, created_at) VALUES (?, ?, ?, ?, ?, ?)",
-        values: [
-          action.id,
-          id,
-          action.name,
-          action.icon,
-          action.requiredConfidence ?? null,
-          action.createdAt,
-        ],
-      },
-      {
-        statement:
-          "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
-        values: [
-          id,
-          JSON.stringify(makeCodeData.project),
-          makeCodeData.projectEdited ? 1 : 0,
-        ],
-      },
-      {
-        statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
-        values: [timestamp, id],
-      },
-    ]);
+    return this.serialise(async (db) => {
+      await db.executeTransaction([
+        {
+          statement:
+            "INSERT INTO actions (id, project_id, name, icon, required_confidence, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+          values: [
+            action.id,
+            id,
+            action.name,
+            action.icon,
+            action.requiredConfidence ?? null,
+            action.createdAt,
+          ],
+        },
+        {
+          statement:
+            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+          values: [
+            id,
+            JSON.stringify(makeCodeData.project),
+            makeCodeData.projectEdited ? 1 : 0,
+          ],
+        },
+        {
+          statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
+          values: [timestamp, id],
+        },
+      ]);
+    });
   }
 
   async updateAction(
@@ -437,32 +472,33 @@ export class SqliteDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const db = await this.useDb();
-    await db.executeTransaction([
-      {
-        statement:
-          "UPDATE actions SET name = ?, icon = ?, required_confidence = ? WHERE id = ?",
-        values: [
-          action.name,
-          action.icon,
-          action.requiredConfidence ?? null,
-          action.id,
-        ],
-      },
-      {
-        statement:
-          "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
-        values: [
-          id,
-          JSON.stringify(makeCodeData.project),
-          makeCodeData.projectEdited ? 1 : 0,
-        ],
-      },
-      {
-        statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
-        values: [timestamp, id],
-      },
-    ]);
+    return this.serialise(async (db) => {
+      await db.executeTransaction([
+        {
+          statement:
+            "UPDATE actions SET name = ?, icon = ?, required_confidence = ? WHERE id = ?",
+          values: [
+            action.name,
+            action.icon,
+            action.requiredConfidence ?? null,
+            action.id,
+          ],
+        },
+        {
+          statement:
+            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+          values: [
+            id,
+            JSON.stringify(makeCodeData.project),
+            makeCodeData.projectEdited ? 1 : 0,
+          ],
+        },
+        {
+          statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
+          values: [timestamp, id],
+        },
+      ]);
+    });
   }
 
   async updateActions(
@@ -472,27 +508,28 @@ export class SqliteDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const db = await this.useDb();
-    await db.executeTransaction([
-      ...actions.map((a) => ({
-        statement:
-          "UPDATE actions SET name = ?, icon = ?, required_confidence = ? WHERE id = ?",
-        values: [a.name, a.icon, a.requiredConfidence ?? null, a.id],
-      })),
-      {
-        statement:
-          "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
-        values: [
-          id,
-          JSON.stringify(makeCodeData.project),
-          makeCodeData.projectEdited ? 1 : 0,
-        ],
-      },
-      {
-        statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
-        values: [timestamp, id],
-      },
-    ]);
+    return this.serialise(async (db) => {
+      await db.executeTransaction([
+        ...actions.map((a) => ({
+          statement:
+            "UPDATE actions SET name = ?, icon = ?, required_confidence = ? WHERE id = ?",
+          values: [a.name, a.icon, a.requiredConfidence ?? null, a.id],
+        })),
+        {
+          statement:
+            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+          values: [
+            id,
+            JSON.stringify(makeCodeData.project),
+            makeCodeData.projectEdited ? 1 : 0,
+          ],
+        },
+        {
+          statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
+          values: [timestamp, id],
+        },
+      ]);
+    });
   }
 
   async deleteAction(
@@ -503,49 +540,50 @@ export class SqliteDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const db = await this.useDb();
-    await db.executeTransaction([
-      {
-        statement: "DELETE FROM recordings WHERE action_id = ?",
-        values: [action.id],
-      },
-      {
-        statement: "DELETE FROM actions WHERE id = ?",
-        values: [action.id],
-      },
-      ...newActions.map((a) => ({
-        statement:
-          "INSERT OR REPLACE INTO actions (id, project_id, name, icon, required_confidence, created_at) VALUES (?, ?, ?, ?, ?, ?)",
-        values: [
-          a.id,
-          id,
-          a.name,
-          a.icon,
-          a.requiredConfidence ?? null,
-          a.createdAt,
-        ],
-      })),
-      ...newActions.flatMap((a) =>
-        a.recordings.map((r) => ({
+    return this.serialise(async (db) => {
+      await db.executeTransaction([
+        {
+          statement: "DELETE FROM recordings WHERE action_id = ?",
+          values: [action.id],
+        },
+        {
+          statement: "DELETE FROM actions WHERE id = ?",
+          values: [action.id],
+        },
+        ...newActions.map((a) => ({
           statement:
-            "INSERT OR REPLACE INTO recordings (id, action_id, data, created_at) VALUES (?, ?, ?, ?)",
-          values: [r.id, a.id, JSON.stringify(r.data), r.createdAt],
-        }))
-      ),
-      {
-        statement:
-          "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
-        values: [
-          id,
-          JSON.stringify(makeCodeData.project),
-          makeCodeData.projectEdited ? 1 : 0,
-        ],
-      },
-      {
-        statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
-        values: [timestamp, id],
-      },
-    ]);
+            "INSERT OR REPLACE INTO actions (id, project_id, name, icon, required_confidence, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+          values: [
+            a.id,
+            id,
+            a.name,
+            a.icon,
+            a.requiredConfidence ?? null,
+            a.createdAt,
+          ],
+        })),
+        ...newActions.flatMap((a) =>
+          a.recordings.map((r) => ({
+            statement:
+              "INSERT OR REPLACE INTO recordings (id, action_id, data, created_at) VALUES (?, ?, ?, ?)",
+            values: [r.id, a.id, JSON.stringify(r.data), r.createdAt],
+          }))
+        ),
+        {
+          statement:
+            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+          values: [
+            id,
+            JSON.stringify(makeCodeData.project),
+            makeCodeData.projectEdited ? 1 : 0,
+          ],
+        },
+        {
+          statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
+          values: [timestamp, id],
+        },
+      ]);
+    });
   }
 
   async deleteAllActions(
@@ -555,50 +593,51 @@ export class SqliteDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const db = await this.useDb();
-    await db.executeTransaction([
-      {
-        statement:
-          "DELETE FROM recordings WHERE action_id IN (SELECT id FROM actions WHERE project_id = ?)",
-        values: [id],
-      },
-      {
-        statement: "DELETE FROM actions WHERE project_id = ?",
-        values: [id],
-      },
-      ...newActions.map((a) => ({
-        statement:
-          "INSERT INTO actions (id, project_id, name, icon, required_confidence, created_at) VALUES (?, ?, ?, ?, ?, ?)",
-        values: [
-          a.id,
-          id,
-          a.name,
-          a.icon,
-          a.requiredConfidence ?? null,
-          a.createdAt,
-        ],
-      })),
-      ...newActions.flatMap((a) =>
-        a.recordings.map((r) => ({
+    return this.serialise(async (db) => {
+      await db.executeTransaction([
+        {
           statement:
-            "INSERT INTO recordings (id, action_id, data, created_at) VALUES (?, ?, ?, ?)",
-          values: [r.id, a.id, JSON.stringify(r.data), r.createdAt],
-        }))
-      ),
-      {
-        statement:
-          "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
-        values: [
-          id,
-          JSON.stringify(makeCodeData.project),
-          makeCodeData.projectEdited ? 1 : 0,
-        ],
-      },
-      {
-        statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
-        values: [timestamp, id],
-      },
-    ]);
+            "DELETE FROM recordings WHERE action_id IN (SELECT id FROM actions WHERE project_id = ?)",
+          values: [id],
+        },
+        {
+          statement: "DELETE FROM actions WHERE project_id = ?",
+          values: [id],
+        },
+        ...newActions.map((a) => ({
+          statement:
+            "INSERT INTO actions (id, project_id, name, icon, required_confidence, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+          values: [
+            a.id,
+            id,
+            a.name,
+            a.icon,
+            a.requiredConfidence ?? null,
+            a.createdAt,
+          ],
+        })),
+        ...newActions.flatMap((a) =>
+          a.recordings.map((r) => ({
+            statement:
+              "INSERT INTO recordings (id, action_id, data, created_at) VALUES (?, ?, ?, ?)",
+            values: [r.id, a.id, JSON.stringify(r.data), r.createdAt],
+          }))
+        ),
+        {
+          statement:
+            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+          values: [
+            id,
+            JSON.stringify(makeCodeData.project),
+            makeCodeData.projectEdited ? 1 : 0,
+          ],
+        },
+        {
+          statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
+          values: [timestamp, id],
+        },
+      ]);
+    });
   }
 
   async replaceActions(
@@ -608,56 +647,58 @@ export class SqliteDatabase implements Database {
     settings: Settings
   ): Promise<void> {
     const id = this.assertProjectId(projectData.id);
-    const db = await this.useDb();
-    const name = makeCodeData.project.header?.name ?? untitledProjectName;
-    await db.executeTransaction([
-      {
-        statement:
-          "DELETE FROM recordings WHERE action_id IN (SELECT id FROM actions WHERE project_id = ?)",
-        values: [id],
-      },
-      {
-        statement: "DELETE FROM actions WHERE project_id = ?",
-        values: [id],
-      },
-      ...actions.map((a) => ({
-        statement:
-          "INSERT INTO actions (id, project_id, name, icon, required_confidence, created_at) VALUES (?, ?, ?, ?, ?, ?)",
-        values: [
-          a.id,
-          id,
-          a.name,
-          a.icon,
-          a.requiredConfidence ?? null,
-          a.createdAt,
-        ],
-      })),
-      ...actions.flatMap((a) =>
-        a.recordings.map((r) => ({
+    return this.serialise(async (db) => {
+      const name = makeCodeData.project.header?.name ?? untitledProjectName;
+      await db.executeTransaction([
+        {
           statement:
-            "INSERT INTO recordings (id, action_id, data, created_at) VALUES (?, ?, ?, ?)",
-          values: [r.id, a.id, JSON.stringify(r.data), r.createdAt],
-        }))
-      ),
-      {
-        statement:
-          "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
-        values: [
-          id,
-          JSON.stringify(makeCodeData.project),
-          makeCodeData.projectEdited ? 1 : 0,
-        ],
-      },
-      {
-        statement:
-          "INSERT OR REPLACE INTO projects (id, name, timestamp) VALUES (?, ?, ?)",
-        values: [id, name, projectData.timestamp],
-      },
-      {
-        statement: "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
-        values: ["settings", JSON.stringify(settings)],
-      },
-    ]);
+            "DELETE FROM recordings WHERE action_id IN (SELECT id FROM actions WHERE project_id = ?)",
+          values: [id],
+        },
+        {
+          statement: "DELETE FROM actions WHERE project_id = ?",
+          values: [id],
+        },
+        ...actions.map((a) => ({
+          statement:
+            "INSERT INTO actions (id, project_id, name, icon, required_confidence, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+          values: [
+            a.id,
+            id,
+            a.name,
+            a.icon,
+            a.requiredConfidence ?? null,
+            a.createdAt,
+          ],
+        })),
+        ...actions.flatMap((a) =>
+          a.recordings.map((r) => ({
+            statement:
+              "INSERT INTO recordings (id, action_id, data, created_at) VALUES (?, ?, ?, ?)",
+            values: [r.id, a.id, JSON.stringify(r.data), r.createdAt],
+          }))
+        ),
+        {
+          statement:
+            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+          values: [
+            id,
+            JSON.stringify(makeCodeData.project),
+            makeCodeData.projectEdited ? 1 : 0,
+          ],
+        },
+        {
+          statement:
+            "INSERT OR REPLACE INTO projects (id, name, timestamp) VALUES (?, ?, ?)",
+          values: [id, name, projectData.timestamp],
+        },
+        {
+          statement:
+            "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
+          values: ["settings", JSON.stringify(settings)],
+        },
+      ]);
+    });
   }
 
   async addRecording(
@@ -668,42 +709,43 @@ export class SqliteDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const db = await this.useDb();
-    await db.executeTransaction([
-      {
-        statement:
-          "INSERT INTO recordings (id, action_id, data, created_at) VALUES (?, ?, ?, ?)",
-        values: [
-          recording.id,
-          action.id,
-          JSON.stringify(recording.data),
-          recording.createdAt,
-        ],
-      },
-      {
-        statement:
-          "UPDATE actions SET name = ?, icon = ?, required_confidence = ? WHERE id = ?",
-        values: [
-          action.name,
-          action.icon,
-          action.requiredConfidence ?? null,
-          action.id,
-        ],
-      },
-      {
-        statement:
-          "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
-        values: [
-          id,
-          JSON.stringify(makeCodeData.project),
-          makeCodeData.projectEdited ? 1 : 0,
-        ],
-      },
-      {
-        statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
-        values: [timestamp, id],
-      },
-    ]);
+    return this.serialise(async (db) => {
+      await db.executeTransaction([
+        {
+          statement:
+            "INSERT INTO recordings (id, action_id, data, created_at) VALUES (?, ?, ?, ?)",
+          values: [
+            recording.id,
+            action.id,
+            JSON.stringify(recording.data),
+            recording.createdAt,
+          ],
+        },
+        {
+          statement:
+            "UPDATE actions SET name = ?, icon = ?, required_confidence = ? WHERE id = ?",
+          values: [
+            action.name,
+            action.icon,
+            action.requiredConfidence ?? null,
+            action.id,
+          ],
+        },
+        {
+          statement:
+            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+          values: [
+            id,
+            JSON.stringify(makeCodeData.project),
+            makeCodeData.projectEdited ? 1 : 0,
+          ],
+        },
+        {
+          statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
+          values: [timestamp, id],
+        },
+      ]);
+    });
   }
 
   async deleteRecording(
@@ -714,36 +756,37 @@ export class SqliteDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const db = await this.useDb();
-    await db.executeTransaction([
-      {
-        statement: "DELETE FROM recordings WHERE id = ?",
-        values: [key],
-      },
-      {
-        statement:
-          "UPDATE actions SET name = ?, icon = ?, required_confidence = ? WHERE id = ?",
-        values: [
-          action.name,
-          action.icon,
-          action.requiredConfidence ?? null,
-          action.id,
-        ],
-      },
-      {
-        statement:
-          "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
-        values: [
-          id,
-          JSON.stringify(makeCodeData.project),
-          makeCodeData.projectEdited ? 1 : 0,
-        ],
-      },
-      {
-        statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
-        values: [timestamp, id],
-      },
-    ]);
+    return this.serialise(async (db) => {
+      await db.executeTransaction([
+        {
+          statement: "DELETE FROM recordings WHERE id = ?",
+          values: [key],
+        },
+        {
+          statement:
+            "UPDATE actions SET name = ?, icon = ?, required_confidence = ? WHERE id = ?",
+          values: [
+            action.name,
+            action.icon,
+            action.requiredConfidence ?? null,
+            action.id,
+          ],
+        },
+        {
+          statement:
+            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+          values: [
+            id,
+            JSON.stringify(makeCodeData.project),
+            makeCodeData.projectEdited ? 1 : 0,
+          ],
+        },
+        {
+          statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
+          values: [timestamp, id],
+        },
+      ]);
+    });
   }
 
   async updateMakeCodeProject(
@@ -752,23 +795,24 @@ export class SqliteDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const db = await this.useDb();
-    const name = makeCodeData.project.header?.name;
-    await db.executeTransaction([
-      {
-        statement:
-          "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
-        values: [
-          id,
-          JSON.stringify(makeCodeData.project),
-          makeCodeData.projectEdited ? 1 : 0,
-        ],
-      },
-      {
-        statement: "UPDATE projects SET timestamp = ?, name = ? WHERE id = ?",
-        values: [timestamp, name ?? untitledProjectName, id],
-      },
-    ]);
+    return this.serialise(async (db) => {
+      const name = makeCodeData.project.header?.name;
+      await db.executeTransaction([
+        {
+          statement:
+            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+          values: [
+            id,
+            JSON.stringify(makeCodeData.project),
+            makeCodeData.projectEdited ? 1 : 0,
+          ],
+        },
+        {
+          statement: "UPDATE projects SET timestamp = ?, name = ? WHERE id = ?",
+          values: [timestamp, name ?? untitledProjectName, id],
+        },
+      ]);
+    });
   }
 
   async updateProjectTimestamp(
@@ -776,11 +820,12 @@ export class SqliteDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const db = await this.useDb();
-    await db.run("UPDATE projects SET timestamp = ? WHERE id = ?", [
-      timestamp,
-      id,
-    ]);
+    return this.serialise(async (db) => {
+      await db.run("UPDATE projects SET timestamp = ? WHERE id = ?", [
+        timestamp,
+        id,
+      ]);
+    });
   }
 
   async renameProject(
@@ -788,160 +833,133 @@ export class SqliteDatabase implements Database {
     name: string,
     timestamp: number
   ): Promise<void> {
-    const db = await this.useDb();
-    // Update project name and the MakeCode project header.
-    const makeCodeResult = await db.query(
-      "SELECT project_id, project, project_edited FROM makecode_data WHERE project_id = ?",
-      [id]
-    );
-    const makeCodeRow = makeCodeResult.values?.[0] as MakeCodeRow | undefined;
-    if (makeCodeRow) {
-      const project = JSON.parse(makeCodeRow.project) as MakeCodeProject;
-      if (project.header) {
-        project.header.name = name;
+    return this.serialise(async (db) => {
+      // Update project name and the MakeCode project header.
+      const makeCodeResult = await db.query(
+        "SELECT project_id, project, project_edited FROM makecode_data WHERE project_id = ?",
+        [id]
+      );
+      const makeCodeRow = makeCodeResult.values?.[0] as MakeCodeRow | undefined;
+      if (makeCodeRow) {
+        const project = JSON.parse(makeCodeRow.project) as MakeCodeProject;
+        if (project.header) {
+          project.header.name = name;
+        }
+        await db.executeTransaction([
+          {
+            statement:
+              "UPDATE makecode_data SET project = ? WHERE project_id = ?",
+            values: [JSON.stringify(project), id],
+          },
+          {
+            statement:
+              "UPDATE projects SET name = ?, timestamp = ? WHERE id = ?",
+            values: [name, timestamp, id],
+          },
+        ]);
+      } else {
+        await db.run(
+          "UPDATE projects SET name = ?, timestamp = ? WHERE id = ?",
+          [name, timestamp, id]
+        );
       }
-      await db.executeTransaction([
-        {
-          statement:
-            "UPDATE makecode_data SET project = ? WHERE project_id = ?",
-          values: [JSON.stringify(project), id],
-        },
-        {
-          statement: "UPDATE projects SET name = ?, timestamp = ? WHERE id = ?",
-          values: [name, timestamp, id],
-        },
-      ]);
-    } else {
-      await db.run("UPDATE projects SET name = ?, timestamp = ? WHERE id = ?", [
-        name,
-        timestamp,
-        id,
-      ]);
-    }
+    });
   }
 
   async duplicateProject(
     existingProjectId: string,
     newProjectData: ProjectData
   ): Promise<void> {
-    const db = await this.useDb();
-    const { id, name, timestamp } = newProjectData;
-    // Load source data.
-    const actionsResult = await db.query(
-      "SELECT id, project_id, name, icon, required_confidence, created_at FROM actions WHERE project_id = ?",
-      [existingProjectId]
-    );
-    const makeCodeResult = await db.query(
-      "SELECT project_id, project, project_edited FROM makecode_data WHERE project_id = ?",
-      [existingProjectId]
-    );
-    const projectResult = await db.query(
-      "SELECT id, name, timestamp FROM projects WHERE id = ?",
-      [existingProjectId]
-    );
-    const makeCodeRow = makeCodeResult.values?.[0] as MakeCodeRow | undefined;
-    const projectRow = projectResult.values?.[0] as ProjectRow | undefined;
-    if (!makeCodeRow || !projectRow) {
-      throw new StorageError("Failed to fetch expected data from storage");
-    }
-    // Update MakeCode project header name.
-    const project = JSON.parse(makeCodeRow.project) as MakeCodeProject;
-    if (project.header) {
-      project.header.name = name;
-    }
-    const txn: { statement: string; values: unknown[] }[] = [
-      {
-        statement:
-          "INSERT INTO projects (id, name, timestamp) VALUES (?, ?, ?)",
-        values: [id, name, timestamp],
-      },
-      {
-        statement:
-          "INSERT INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
-        values: [id, JSON.stringify(project), makeCodeRow.project_edited],
-      },
-    ];
-    for (const action of (actionsResult.values ?? []) as ActionRow[]) {
-      const newActionId = uuid();
-      txn.push({
-        statement:
-          "INSERT INTO actions (id, project_id, name, icon, required_confidence, created_at) VALUES (?, ?, ?, ?, ?, ?)",
-        values: [
-          newActionId,
-          id,
-          action.name,
-          action.icon,
-          action.required_confidence,
-          action.created_at,
-        ],
-      });
-      const recordingsResult = await db.query(
-        "SELECT id, data, created_at FROM recordings WHERE action_id = ?",
-        [action.id]
+    return this.serialise(async (db) => {
+      const { id, name, timestamp } = newProjectData;
+      // Load source data.
+      const actionsResult = await db.query(
+        "SELECT id, project_id, name, icon, required_confidence, created_at FROM actions WHERE project_id = ?",
+        [existingProjectId]
       );
-      for (const recording of (recordingsResult.values ??
-        []) as RecordingRow[]) {
-        const newRecordingId = uuid();
+      const makeCodeResult = await db.query(
+        "SELECT project_id, project, project_edited FROM makecode_data WHERE project_id = ?",
+        [existingProjectId]
+      );
+      const projectResult = await db.query(
+        "SELECT id, name, timestamp FROM projects WHERE id = ?",
+        [existingProjectId]
+      );
+      const makeCodeRow = makeCodeResult.values?.[0] as MakeCodeRow | undefined;
+      const projectRow = projectResult.values?.[0] as ProjectRow | undefined;
+      if (!makeCodeRow || !projectRow) {
+        throw new StorageError("Failed to fetch expected data from storage");
+      }
+      // Update MakeCode project header name.
+      const project = JSON.parse(makeCodeRow.project) as MakeCodeProject;
+      if (project.header) {
+        project.header.name = name;
+      }
+      const txn: { statement: string; values: unknown[] }[] = [
+        {
+          statement:
+            "INSERT INTO projects (id, name, timestamp) VALUES (?, ?, ?)",
+          values: [id, name, timestamp],
+        },
+        {
+          statement:
+            "INSERT INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+          values: [id, JSON.stringify(project), makeCodeRow.project_edited],
+        },
+      ];
+      for (const action of (actionsResult.values ?? []) as ActionRow[]) {
+        const newActionId = uuid();
         txn.push({
           statement:
-            "INSERT INTO recordings (id, action_id, data, created_at) VALUES (?, ?, ?, ?)",
+            "INSERT INTO actions (id, project_id, name, icon, required_confidence, created_at) VALUES (?, ?, ?, ?, ?, ?)",
           values: [
-            newRecordingId,
             newActionId,
-            recording.data,
-            recording.created_at,
+            id,
+            action.name,
+            action.icon,
+            action.required_confidence,
+            action.created_at,
           ],
         });
+        const recordingsResult = await db.query(
+          "SELECT id, data, created_at FROM recordings WHERE action_id = ?",
+          [action.id]
+        );
+        for (const recording of (recordingsResult.values ??
+          []) as RecordingRow[]) {
+          const newRecordingId = uuid();
+          txn.push({
+            statement:
+              "INSERT INTO recordings (id, action_id, data, created_at) VALUES (?, ?, ?, ?)",
+            values: [
+              newRecordingId,
+              newActionId,
+              recording.data,
+              recording.created_at,
+            ],
+          });
+        }
       }
-    }
-    // Copy model if it exists.
-    const modelResult = await db.query(
-      "SELECT metadata, weight_data FROM models WHERE project_id = ?",
-      [existingProjectId]
-    );
-    if (modelResult.values?.length) {
-      const modelRow = modelResult.values[0] as ModelRow;
-      txn.push({
-        statement:
-          "INSERT INTO models (project_id, metadata, weight_data) VALUES (?, ?, ?)",
-        values: [id, modelRow.metadata, modelRow.weight_data],
-      });
-    }
-    await db.executeTransaction(txn);
+      // Copy model if it exists.
+      const modelResult = await db.query(
+        "SELECT metadata, weight_data FROM models WHERE project_id = ?",
+        [existingProjectId]
+      );
+      if (modelResult.values?.length) {
+        const modelRow = modelResult.values[0] as ModelRow;
+        txn.push({
+          statement:
+            "INSERT INTO models (project_id, metadata, weight_data) VALUES (?, ?, ?)",
+          values: [id, modelRow.metadata, modelRow.weight_data],
+        });
+      }
+      await db.executeTransaction(txn);
+    });
   }
 
   async deleteProject(id: string): Promise<void> {
-    const db = await this.useDb();
-    await db.executeTransaction([
-      {
-        statement:
-          "DELETE FROM recordings WHERE action_id IN (SELECT id FROM actions WHERE project_id = ?)",
-        values: [id],
-      },
-      {
-        statement: "DELETE FROM actions WHERE project_id = ?",
-        values: [id],
-      },
-      {
-        statement: "DELETE FROM makecode_data WHERE project_id = ?",
-        values: [id],
-      },
-      {
-        statement: "DELETE FROM models WHERE project_id = ?",
-        values: [id],
-      },
-      {
-        statement: "DELETE FROM projects WHERE id = ?",
-        values: [id],
-      },
-    ]);
-  }
-
-  async deleteProjects(ids: string[]): Promise<void> {
-    const db = await this.useDb();
-    const txn: { statement: string; values: unknown[] }[] = [];
-    for (const id of ids) {
-      txn.push(
+    return this.serialise(async (db) => {
+      await db.executeTransaction([
         {
           statement:
             "DELETE FROM recordings WHERE action_id IN (SELECT id FROM actions WHERE project_id = ?)",
@@ -962,10 +980,41 @@ export class SqliteDatabase implements Database {
         {
           statement: "DELETE FROM projects WHERE id = ?",
           values: [id],
-        }
-      );
-    }
-    await db.executeTransaction(txn);
+        },
+      ]);
+    });
+  }
+
+  async deleteProjects(ids: string[]): Promise<void> {
+    return this.serialise(async (db) => {
+      const txn: { statement: string; values: unknown[] }[] = [];
+      for (const id of ids) {
+        txn.push(
+          {
+            statement:
+              "DELETE FROM recordings WHERE action_id IN (SELECT id FROM actions WHERE project_id = ?)",
+            values: [id],
+          },
+          {
+            statement: "DELETE FROM actions WHERE project_id = ?",
+            values: [id],
+          },
+          {
+            statement: "DELETE FROM makecode_data WHERE project_id = ?",
+            values: [id],
+          },
+          {
+            statement: "DELETE FROM models WHERE project_id = ?",
+            values: [id],
+          },
+          {
+            statement: "DELETE FROM projects WHERE id = ?",
+            values: [id],
+          }
+        );
+      }
+      await db.executeTransaction(txn);
+    });
   }
 
   async updateSettings(
@@ -973,20 +1022,22 @@ export class SqliteDatabase implements Database {
     settings: Settings,
     timestamp: number
   ): Promise<void> {
-    const db = await this.useDb();
-    const txn: { statement: string; values: unknown[] }[] = [
-      {
-        statement: "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
-        values: ["settings", JSON.stringify(settings)],
-      },
-    ];
-    if (id) {
-      txn.push({
-        statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
-        values: [timestamp, id],
-      });
-    }
-    await db.executeTransaction(txn);
+    return this.serialise(async (db) => {
+      const txn: { statement: string; values: unknown[] }[] = [
+        {
+          statement:
+            "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
+          values: ["settings", JSON.stringify(settings)],
+        },
+      ];
+      if (id) {
+        txn.push({
+          statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
+          values: [timestamp, id],
+        });
+      }
+      await db.executeTransaction(txn);
+    });
   }
 
   async saveModel(
@@ -994,65 +1045,68 @@ export class SqliteDatabase implements Database {
     model: tf.LayersModel
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const db = await this.useDb();
-    await model.save(
-      tf.io.withSaveHandler(async (artifacts) => {
-        // Normalize weight data to single ArrayBuffer for consistent serialization.
-        const weightData = artifacts.weightData
-          ? tf.io.concatenateArrayBuffers(
-              Array.isArray(artifacts.weightData)
-                ? artifacts.weightData
-                : [artifacts.weightData]
-            )
-          : undefined;
-        const metadata = JSON.stringify({
-          modelTopology: artifacts.modelTopology,
-          weightSpecs: artifacts.weightSpecs,
-          format: artifacts.format,
-          generatedBy: artifacts.generatedBy,
-          convertedBy: artifacts.convertedBy,
-          signature: artifacts.signature,
-          userDefinedMetadata: artifacts.userDefinedMetadata,
-          trainingConfig: artifacts.trainingConfig,
-        });
-        await db.run(
-          "INSERT OR REPLACE INTO models (project_id, metadata, weight_data) VALUES (?, ?, ?)",
-          [id, metadata, weightData ? arrayBufferToBase64(weightData) : null]
-        );
-        return {
-          modelArtifactsInfo: tf.io.getModelArtifactsInfoForJSON(artifacts),
-        };
-      })
-    );
+    return this.serialise(async (db) => {
+      await model.save(
+        tf.io.withSaveHandler(async (artifacts) => {
+          // Normalize weight data to single ArrayBuffer for consistent serialization.
+          const weightData = artifacts.weightData
+            ? tf.io.concatenateArrayBuffers(
+                Array.isArray(artifacts.weightData)
+                  ? artifacts.weightData
+                  : [artifacts.weightData]
+              )
+            : undefined;
+          const metadata = JSON.stringify({
+            modelTopology: artifacts.modelTopology,
+            weightSpecs: artifacts.weightSpecs,
+            format: artifacts.format,
+            generatedBy: artifacts.generatedBy,
+            convertedBy: artifacts.convertedBy,
+            signature: artifacts.signature,
+            userDefinedMetadata: artifacts.userDefinedMetadata,
+            trainingConfig: artifacts.trainingConfig,
+          });
+          await db.run(
+            "INSERT OR REPLACE INTO models (project_id, metadata, weight_data) VALUES (?, ?, ?)",
+            [id, metadata, weightData ? arrayBufferToBase64(weightData) : null]
+          );
+          return {
+            modelArtifactsInfo: tf.io.getModelArtifactsInfoForJSON(artifacts),
+          };
+        })
+      );
+    });
   }
 
   async removeModel(id: string | undefined): Promise<void> {
     id = this.assertProjectId(id);
-    const db = await this.useDb();
-    await db.run("DELETE FROM models WHERE project_id = ?", [id]);
+    return this.serialise(async (db) => {
+      await db.run("DELETE FROM models WHERE project_id = ?", [id]);
+    });
   }
 
   async loadModel(id: string): Promise<tf.LayersModel | undefined> {
-    const db = await this.useDb();
-    const result = await db.query(
-      "SELECT metadata, weight_data FROM models WHERE project_id = ?",
-      [id]
-    );
-    if (!result.values?.length) {
-      return undefined;
-    }
-    const row = result.values[0] as ModelRow;
-    const metadata = JSON.parse(row.metadata) as Omit<
-      tf.io.ModelArtifacts,
-      "weightData"
-    >;
-    const artifacts: tf.io.ModelArtifacts = {
-      ...metadata,
-      weightData: row.weight_data
-        ? base64ToArrayBuffer(row.weight_data)
-        : undefined,
-    };
-    return tf.loadLayersModel(tf.io.fromMemory(artifacts));
+    return this.serialise(async (db) => {
+      const result = await db.query(
+        "SELECT metadata, weight_data FROM models WHERE project_id = ?",
+        [id]
+      );
+      if (!result.values?.length) {
+        return undefined;
+      }
+      const row = result.values[0] as ModelRow;
+      const metadata = JSON.parse(row.metadata) as Omit<
+        tf.io.ModelArtifacts,
+        "weightData"
+      >;
+      const artifacts: tf.io.ModelArtifacts = {
+        ...metadata,
+        weightData: row.weight_data
+          ? base64ToArrayBuffer(row.weight_data)
+          : undefined,
+      };
+      return tf.loadLayersModel(tf.io.fromMemory(artifacts));
+    });
   }
 }
 
