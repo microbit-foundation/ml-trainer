@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS projects (
 );
 CREATE TABLE IF NOT EXISTS actions (
   id TEXT PRIMARY KEY,
-  project_id TEXT NOT NULL REFERENCES projects(id),
+  project_id TEXT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
   icon TEXT NOT NULL,
   required_confidence REAL,
@@ -41,13 +41,13 @@ CREATE TABLE IF NOT EXISTS actions (
 CREATE INDEX IF NOT EXISTS idx_actions_project_id ON actions(project_id);
 CREATE TABLE IF NOT EXISTS recordings (
   id TEXT PRIMARY KEY,
-  action_id TEXT NOT NULL REFERENCES actions(id),
+  action_id TEXT NOT NULL REFERENCES actions(id) ON DELETE CASCADE,
   data TEXT NOT NULL,
   created_at INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_recordings_action_id ON recordings(action_id);
 CREATE TABLE IF NOT EXISTS makecode_data (
-  project_id TEXT PRIMARY KEY REFERENCES projects(id),
+  project_id TEXT PRIMARY KEY REFERENCES projects(id) ON DELETE CASCADE,
   project TEXT NOT NULL,
   project_edited INTEGER NOT NULL
 );
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS settings (
   value TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS models (
-  project_id TEXT PRIMARY KEY REFERENCES projects(id),
+  project_id TEXT PRIMARY KEY REFERENCES projects(id) ON DELETE CASCADE,
   metadata TEXT NOT NULL,
   weight_data TEXT
 );
@@ -543,10 +543,6 @@ export class SqliteDatabase implements Database {
     return this.serialise(async (db) => {
       await db.executeTransaction([
         {
-          statement: "DELETE FROM recordings WHERE action_id = ?",
-          values: [action.id],
-        },
-        {
           statement: "DELETE FROM actions WHERE id = ?",
           values: [action.id],
         },
@@ -595,11 +591,6 @@ export class SqliteDatabase implements Database {
     id = this.assertProjectId(id);
     return this.serialise(async (db) => {
       await db.executeTransaction([
-        {
-          statement:
-            "DELETE FROM recordings WHERE action_id IN (SELECT id FROM actions WHERE project_id = ?)",
-          values: [id],
-        },
         {
           statement: "DELETE FROM actions WHERE project_id = ?",
           values: [id],
@@ -651,11 +642,6 @@ export class SqliteDatabase implements Database {
       const name = makeCodeData.project.header?.name ?? untitledProjectName;
       await db.executeTransaction([
         {
-          statement:
-            "DELETE FROM recordings WHERE action_id IN (SELECT id FROM actions WHERE project_id = ?)",
-          values: [id],
-        },
-        {
           statement: "DELETE FROM actions WHERE project_id = ?",
           values: [id],
         },
@@ -688,9 +674,8 @@ export class SqliteDatabase implements Database {
           ],
         },
         {
-          statement:
-            "INSERT OR REPLACE INTO projects (id, name, timestamp) VALUES (?, ?, ?)",
-          values: [id, name, projectData.timestamp],
+          statement: "UPDATE projects SET name = ?, timestamp = ? WHERE id = ?",
+          values: [name, projectData.timestamp, id],
         },
         {
           statement:
@@ -959,61 +944,18 @@ export class SqliteDatabase implements Database {
 
   async deleteProject(id: string): Promise<void> {
     return this.serialise(async (db) => {
-      await db.executeTransaction([
-        {
-          statement:
-            "DELETE FROM recordings WHERE action_id IN (SELECT id FROM actions WHERE project_id = ?)",
-          values: [id],
-        },
-        {
-          statement: "DELETE FROM actions WHERE project_id = ?",
-          values: [id],
-        },
-        {
-          statement: "DELETE FROM makecode_data WHERE project_id = ?",
-          values: [id],
-        },
-        {
-          statement: "DELETE FROM models WHERE project_id = ?",
-          values: [id],
-        },
-        {
-          statement: "DELETE FROM projects WHERE id = ?",
-          values: [id],
-        },
-      ]);
+      await db.run("DELETE FROM projects WHERE id = ?", [id]);
     });
   }
 
   async deleteProjects(ids: string[]): Promise<void> {
     return this.serialise(async (db) => {
-      const txn: { statement: string; values: unknown[] }[] = [];
-      for (const id of ids) {
-        txn.push(
-          {
-            statement:
-              "DELETE FROM recordings WHERE action_id IN (SELECT id FROM actions WHERE project_id = ?)",
-            values: [id],
-          },
-          {
-            statement: "DELETE FROM actions WHERE project_id = ?",
-            values: [id],
-          },
-          {
-            statement: "DELETE FROM makecode_data WHERE project_id = ?",
-            values: [id],
-          },
-          {
-            statement: "DELETE FROM models WHERE project_id = ?",
-            values: [id],
-          },
-          {
-            statement: "DELETE FROM projects WHERE id = ?",
-            values: [id],
-          }
-        );
-      }
-      await db.executeTransaction(txn);
+      await db.executeTransaction(
+        ids.map((id) => ({
+          statement: "DELETE FROM projects WHERE id = ?",
+          values: [id],
+        }))
+      );
     });
   }
 
