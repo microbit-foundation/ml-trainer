@@ -44,6 +44,7 @@ import {
   TourTrigger,
   TourTriggerName,
   TrainModelDialogStage,
+  SaveType,
 } from "./model";
 import {
   createUntitledProject,
@@ -385,6 +386,7 @@ const createMlStore = (logging: Logging) => {
         },
         save: {
           step: SaveStep.None,
+          type: SaveType.Download,
         },
         projectEdited: false,
         settings: defaultSettings,

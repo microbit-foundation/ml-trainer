@@ -21,9 +21,9 @@ import {
 import { ChangeEvent, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
-import { useSettings } from "../store";
+import { useSettings, useStore } from "../store";
 import ModalFooterContent from "./ModalFooterContent";
-import { Capacitor } from "@capacitor/core";
+import { SaveType } from "../model";
 
 interface SaveHelpDialogProps {
   isOpen: boolean;
@@ -42,7 +42,8 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
     [setSettings]
   );
 
-  const shareOrSave = Capacitor.isNativePlatform() ? "share" : "save";
+  const shareOrSave =
+    useStore((s) => s.save.type) === SaveType.Share ? "share" : "save";
 
   return (
     <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>

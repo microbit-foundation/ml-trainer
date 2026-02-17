@@ -21,6 +21,7 @@ import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import { useProject } from "../hooks/project-hooks";
 import { ButtonWithLoading } from "./ButtonWithLoading";
+import { SaveType } from "../model";
 
 interface IncompatibleEditorDeviceProps {
   isOpen: boolean;
@@ -90,7 +91,7 @@ const IncompatibleEditorDevice = ({
                               variant="link"
                               color="brand.600"
                               textDecoration="underline"
-                              onClick={() => saveHex()}
+                              onClick={() => saveHex(SaveType.Download)}
                             >
                               {chunks}
                             </Button>
@@ -105,7 +106,10 @@ const IncompatibleEditorDevice = ({
                       id="incompatible-device-body-alt"
                       values={{
                         link: (chunks: ReactNode) => (
-                          <Button variant="link" onClick={() => saveHex()}>
+                          <Button
+                            variant="link"
+                            onClick={() => saveHex(SaveType.Download)}
+                          >
                             {chunks}
                           </Button>
                         ),

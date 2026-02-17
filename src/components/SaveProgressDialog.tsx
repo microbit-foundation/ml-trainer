@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Capacitor } from "@capacitor/core";
 import {
   Modal,
   ModalBody,
@@ -16,17 +15,16 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
+import { useStore } from "../store";
+import { SaveType } from "../model";
 
 export interface SavingDialogProps {
   isOpen: boolean;
 }
 
 const SaveProgressDialog = ({ isOpen }: SavingDialogProps) => {
-  const isShare = Capacitor.isNativePlatform();
+  const isShare = useStore((s) => s.save.type) === SaveType.Share;
   const sharingOrSaving = isShare ? "sharing" : "saving";
-  const progressDescriptionId = isShare
-    ? "sharing-description"
-    : "saving-description";
 
   return (
     <Modal
@@ -45,7 +43,7 @@ const SaveProgressDialog = ({ isOpen }: SavingDialogProps) => {
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
               <Text>
-                <FormattedMessage id={progressDescriptionId} />
+                <FormattedMessage id={`${sharingOrSaving}-description`} />
               </Text>
               <Progress colorScheme="brand2" isIndeterminate rounded="md" />
             </VStack>

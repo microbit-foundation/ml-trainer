@@ -129,6 +129,12 @@ export const enum TrainModelDialogStage {
 export interface SaveState {
   step: SaveStep;
   hex?: HexData;
+  type: SaveType;
+}
+
+export enum SaveType {
+  Download = "download",
+  Share = "share",
 }
 
 export enum SaveStep {

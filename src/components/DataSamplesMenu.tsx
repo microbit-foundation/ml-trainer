@@ -80,6 +80,7 @@ const DataSamplesMenu = () => {
     closeDialog();
   }, [closeDialog, deleteAllActions, logging]);
 
+  // called if nameProjectDialog was launched from handleDownloadDataset
   const handleSave = useCallback(
     async (newName?: string) => {
       if (newName) {

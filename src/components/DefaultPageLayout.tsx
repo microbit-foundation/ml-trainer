@@ -10,8 +10,11 @@ import {
   HStack,
   Icon,
   IconButton,
+  Menu,
+  MenuButton,
   MenuDivider,
   MenuItem,
+  MenuList,
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect } from "react";
@@ -24,7 +27,7 @@ import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
-import { PostImportDialogState } from "../model";
+import { PostImportDialogState, SaveType } from "../model";
 import Tour from "../pages/Tour";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
@@ -199,23 +202,48 @@ const DefaultPageLayout = ({
 export const ProjectToolbarItems = () => {
   const { saveHex } = useProject();
   const handleSave = useCallback(() => {
-    void saveHex();
+    void saveHex(SaveType.Download);
+  }, [saveHex]);
+  const handleShare = useCallback(() => {
+    void saveHex(SaveType.Share);
   }, [saveHex]);
   useShortcut(keyboardShortcuts.saveSession, handleSave);
 
-  const isShare = Capacitor.isNativePlatform();
-  const shareOrSave = isShare ? "share" : "save";
-  const ExportIconId = isShare ? RiShareLine : RiDownload2Line;
+  const canShare = Capacitor.isNativePlatform();
 
   return (
     <>
-      <Button
-        variant="toolbar"
-        leftIcon={<ExportIconId />}
-        onClick={handleSave}
-      >
-        <FormattedMessage id={`${shareOrSave}-action`} />
-      </Button>
+      {canShare && (
+        <Menu>
+          <MenuButton as={Button} leftIcon={<RiShareLine />} variant="toolbar">
+            <FormattedMessage id={`share-action`} />
+          </MenuButton>
+
+          <MenuList zIndex={2}>
+            <MenuItem
+              onClick={handleSave}
+              icon={<Icon h={5} w={5} as={RiDownload2Line} />}
+            >
+              <FormattedMessage id="save-action" />
+            </MenuItem>
+            <MenuItem
+              onClick={handleShare}
+              icon={<Icon h={5} w={5} as={RiShareLine} />}
+            >
+              <FormattedMessage id="share-action" />
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      )}
+      {!canShare && (
+        <Button
+          variant="toolbar"
+          leftIcon={<RiDownload2Line />}
+          onClick={handleSave}
+        >
+          <FormattedMessage id="save-action" />
+        </Button>
+      )}
       <HomeToolbarItem />
     </>
   );
@@ -246,20 +274,29 @@ export const HomeToolbarItem = () => {
 export const ProjectMenuItems = () => {
   const { saveHex } = useProject();
   const handleSave = useCallback(() => {
-    void saveHex();
+    void saveHex(SaveType.Download);
+  }, [saveHex]);
+  const handleShare = useCallback(() => {
+    void saveHex(SaveType.Share);
   }, [saveHex]);
 
-  const isShare = Capacitor.isNativePlatform();
-  const shareOrSave = isShare ? "share" : "save";
-  const exportIconId = isShare ? RiShareLine : RiDownload2Line;
+  const canShare = Capacitor.isNativePlatform();
 
   return (
     <>
+      {canShare && (
+        <MenuItem
+          onClick={handleShare}
+          icon={<Icon h={5} w={5} as={RiShareLine} />}
+        >
+          <FormattedMessage id="share-action" />
+        </MenuItem>
+      )}
       <MenuItem
         onClick={handleSave}
-        icon={<Icon h={5} w={5} as={exportIconId} />}
+        icon={<Icon h={5} w={5} as={RiDownload2Line} />}
       >
-        <FormattedMessage id={`${shareOrSave}-action`} />
+        <FormattedMessage id="save-action" />
       </MenuItem>
       <MenuDivider />
       <HomeMenuItem />

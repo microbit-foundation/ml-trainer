@@ -14,31 +14,31 @@ import { NameProjectDialog } from "./NameProjectDialog";
 const SaveDialogs = () => {
   const setSave = useStore((s) => s.setSave);
   const isUntitled = useProjectIsUntitled();
-  const { step, hex } = useStore((s) => s.save);
+  const { step, hex, type } = useStore((s) => s.save);
   const setProjectName = useStore((s) => s.setProjectName);
   const { saveHex } = useProject();
 
   const handleHelpNext = useCallback(async () => {
     if (isUntitled) {
-      setSave({ step: SaveStep.ProjectName });
+      setSave({ type, step: SaveStep.ProjectName });
     } else {
-      await saveHex();
+      await saveHex(type);
     }
-  }, [isUntitled, saveHex, setSave]);
+  }, [isUntitled, saveHex, setSave, type]);
 
   const handleSave = useCallback(
     async (newName?: string) => {
       if (newName) {
         await setProjectName(newName);
       }
-      await saveHex(hex);
+      await saveHex(type, hex);
     },
-    [hex, saveHex, setProjectName]
+    [hex, saveHex, setProjectName, type]
   );
 
   const handleClose = useCallback(() => {
-    setSave({ step: SaveStep.None });
-  }, [setSave]);
+    setSave({ step: SaveStep.None, type });
+  }, [setSave, type]);
 
   switch (step) {
     case SaveStep.PreSaveHelp:
