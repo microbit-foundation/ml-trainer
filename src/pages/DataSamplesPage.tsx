@@ -8,7 +8,6 @@ import {
   Button,
   Flex,
   HStack,
-  useDisclosure,
   usePrefersReducedMotion,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -92,9 +91,17 @@ const DataSamplesPage = () => {
   });
   const intl = useIntl();
   const prefersReducedMotion = usePrefersReducedMotion();
-  const welcomeDialogDisclosure = useDisclosure({
-    defaultIsOpen: !isConnected && !model,
-  });
+  const [initialiseWelcomeDialog, setInitialisedWelcomeDialog] =
+    useState<boolean>(false);
+  const isWelcomeDialogOpen = useStore((s) => s.isWelcomeDialogOpen);
+  const welcomeDialogOnOpen = useStore((s) => s.welcomeDialogOnOpen);
+  const closeDialog = useStore((s) => s.closeDialog);
+  useEffect(() => {
+    if (!initialiseWelcomeDialog && !isConnected && !model) {
+      welcomeDialogOnOpen();
+      setInitialisedWelcomeDialog(true);
+    }
+  }, [initialiseWelcomeDialog, isConnected, model, welcomeDialogOnOpen]);
   const hasMoved = useHasMoved();
   const tourInProgress = useStore((s) => !!s.tourState);
   const isRecordingDialogOpen = useStore((s) => !!s.isRecordingDialogOpen);
@@ -102,7 +109,7 @@ const DataSamplesPage = () => {
     (s) => s.postImportDialogState !== PostImportDialogState.None
   );
   const isDialogOpen =
-    welcomeDialogDisclosure.isOpen ||
+    isWelcomeDialogOpen ||
     isConnectionDialogOpen ||
     tourInProgress ||
     isRecordingDialogOpen ||
@@ -151,11 +158,8 @@ const DataSamplesPage = () => {
 
   return (
     <>
-      {welcomeDialogDisclosure.isOpen && !isPostImportDialogOpen && (
-        <WelcomeDialog
-          onClose={welcomeDialogDisclosure.onClose}
-          isOpen={welcomeDialogDisclosure.isOpen}
-        />
+      {isWelcomeDialogOpen && !isPostImportDialogOpen && (
+        <WelcomeDialog onClose={closeDialog} isOpen={isWelcomeDialogOpen} />
       )}
       <TrainModelDialogs finalFocusRef={trainButtonRef} />
       <DefaultPageLayout

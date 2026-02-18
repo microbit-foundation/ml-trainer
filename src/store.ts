@@ -227,6 +227,7 @@ export interface State {
   isNameProjectDialogOpen: boolean;
   isRecordingDialogOpen: boolean;
   isConnectToRecordDialogOpen: boolean;
+  isWelcomeDialogOpen: boolean;
 
   allProjectData: ProjectDataWithActions[];
 }
@@ -333,6 +334,7 @@ export interface Actions {
   connectToRecordDialogOnOpen(): void;
   closeDialog(): void;
   isNonConnectionDialogOpen(): boolean;
+  welcomeDialogOnOpen(): void;
 }
 
 type Store = State & Actions;
@@ -419,6 +421,7 @@ const createMlStore = (logging: Logging) => {
         isConnectToRecordDialogOpen: false,
         isDeleteActionDialogOpen: false,
         isIncompatibleEditorDeviceDialogOpen: false,
+        isWelcomeDialogOpen: false,
 
         allProjectData: [],
 
@@ -1848,6 +1851,9 @@ const createMlStore = (logging: Logging) => {
         incompatibleEditorDeviceDialogOnOpen() {
           set({ isIncompatibleEditorDeviceDialogOpen: true });
         },
+        welcomeDialogOnOpen() {
+          set({ isWelcomeDialogOpen: true });
+        },
         closeDialog() {
           set({
             isLanguageDialogOpen: false,
@@ -1861,6 +1867,7 @@ const createMlStore = (logging: Logging) => {
             isConnectToRecordDialogOpen: false,
             isDeleteActionDialogOpen: false,
             isIncompatibleEditorDeviceDialogOpen: false,
+            isWelcomeDialogOpen: false,
           });
         },
 
@@ -1881,6 +1888,7 @@ const createMlStore = (logging: Logging) => {
             isConnectToRecordDialogOpen,
             isDeleteActionDialogOpen,
             isIncompatibleEditorDeviceDialogOpen,
+            isWelcomeDialogOpen,
             save,
           } = get();
           return (
@@ -1899,7 +1907,8 @@ const createMlStore = (logging: Logging) => {
             tourState !== undefined ||
             trainModelDialogStage !== TrainModelDialogStage.Closed ||
             isEditorTimedOutDialogOpen ||
-            save.step !== SaveStep.None
+            save.step !== SaveStep.None ||
+            isWelcomeDialogOpen
           );
         },
       }),
