@@ -529,13 +529,14 @@ const createMlStore = (logging: Logging) => {
             projectEdited,
           } = get();
           const timestamp = Date.now();
+          const updatedProject = renameProject(project, name);
           set({
             ...(() => {
               if (id === currentProjectId) {
                 // You have renamed the currently open project.
                 return {
                   ...updateProject(
-                    project,
+                    updatedProject,
                     projectEdited,
                     actions,
                     model,
