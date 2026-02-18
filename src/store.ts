@@ -1000,6 +1000,7 @@ const createMlStore = (logging: Logging) => {
           const timestamp = Date.now();
           set({
             actions: updatedActions,
+            hint: getHint(updatedActions, false),
             dataWindow: newDataWindow,
             model: undefined,
             timestamp,
@@ -1514,6 +1515,7 @@ const createMlStore = (logging: Logging) => {
                     projectEdited: updatedProjectEdited,
                     actions: newActions,
                     dataWindow: getDataWindowFromActions(newActions),
+                    hint: getHint(newActions, true),
                     model: undefined,
                     isEditorOpen: false,
                     isEditorLoadingFile: false,

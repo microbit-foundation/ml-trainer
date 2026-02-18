@@ -990,27 +990,29 @@ export class IdbDatabase implements Database {
       .getAll(existingProjectId);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
     const storePromises: Promise<string>[] = [];
-    actions.forEach(async (action) => {
-      const recordings = await recordingsStore
-        .index("actionId")
-        .getAll(action.id);
-      const newActionId = uuid();
-      storePromises.push(
-        actionsStore.add(
-          { ...action, id: newActionId, projectId: id },
-          newActionId
-        )
-      );
-      recordings.forEach((r) => {
-        const newRecordingId = uuid();
+    await Promise.all(
+      actions.map(async (action) => {
+        const recordings = await recordingsStore
+          .index("actionId")
+          .getAll(action.id);
+        const newActionId = uuid();
         storePromises.push(
-          recordingsStore.add(
-            { ...r, id: newRecordingId, actionId: newActionId },
-            newRecordingId
+          actionsStore.add(
+            { ...action, id: newActionId, projectId: id },
+            newActionId
           )
         );
-      });
-    });
+        recordings.forEach((r) => {
+          const newRecordingId = uuid();
+          storePromises.push(
+            recordingsStore.add(
+              { ...r, id: newRecordingId, actionId: newActionId },
+              newRecordingId
+            )
+          );
+        });
+      })
+    );
     await Promise.all(storePromises);
     const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
     const makeCodeData = assertData(await makeCodeStore.get(existingProjectId));
