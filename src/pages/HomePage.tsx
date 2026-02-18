@@ -88,7 +88,7 @@ const ProjectRow = () => {
   const navigate = useNavigate();
   const intl = useIntl();
   const allProjectData = useStore((s) => s.allProjectData);
-  const renameProject = useStore((s) => s.renameProject);
+  const renameProject = useStore((s) => s.setProjectName);
   const duplicateProject = useStore((s) => s.duplicateProject);
   const deleteProject = useStore((s) => s.deleteProject);
   const [projectForAction, setProjectForAction] = useState<string | null>(null);
@@ -154,7 +154,7 @@ const ProjectRow = () => {
     async (name: string) => {
       if (projectForAction) {
         if (projectNameReason === "rename") {
-          await renameProject(projectForAction, name);
+          await renameProject(name, projectForAction);
         } else {
           await duplicateProject(projectForAction, name);
         }

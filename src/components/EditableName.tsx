@@ -24,7 +24,7 @@ interface EditableNameProps {
 const EditableName = ({ suffix }: EditableNameProps) => {
   const intl = useIntl();
   const getCurrentProject = useStore((s) => s.getCurrentProject);
-  const renameProject = useStore((s) => s.renameProject);
+  const renameProject = useStore((s) => s.setProjectName);
   const id = useStore((s) => s.id);
   const ref = useRef<HTMLButtonElement>(null);
   const [value, setValue] = useState(getCurrentProject().header?.name);
@@ -40,7 +40,7 @@ const EditableName = ({ suffix }: EditableNameProps) => {
   const handleSubmit = useCallback(
     async (nextValue: string) => {
       if (id) {
-        await renameProject(id, nextValue);
+        await renameProject(nextValue, id);
       }
     },
     [id, renameProject]
