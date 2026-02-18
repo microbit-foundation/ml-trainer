@@ -14,6 +14,7 @@ dependencies {
     implementation project(':capacitor-app')
     implementation project(':capacitor-filesystem')
     implementation project(':microbit-capacitor-community-nordic-dfu')
+    implementation project(':microbit-capacitor-sqlite-vanilla')
 
 }
 

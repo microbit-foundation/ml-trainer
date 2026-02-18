@@ -54,6 +54,8 @@ import {
   untitledProjectName,
 } from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
+import { Capacitor } from "@capacitor/core";
+import { SqliteDatabase } from "./sqlite-storage";
 import {
   Database,
   IdbDatabase,
@@ -77,7 +79,12 @@ import {
 } from "./broadcast-channel";
 import { projectSessionStorage } from "./session-storage";
 
-const storage: Database = new IdbDatabase();
+// Use Capacitor.isNativePlatform() directly rather than the isNativePlatform()
+// helper (which also respects the simulateNative flag) because the Capacitor
+// SQLite plugin is only available on actual native platforms.
+const storage: Database = Capacitor.isNativePlatform()
+  ? new SqliteDatabase()
+  : new IdbDatabase();
 
 const createFirstAction = (): ActionData => ({
   icon: defaultIcons[0],

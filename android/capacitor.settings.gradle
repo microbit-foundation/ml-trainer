@@ -16,3 +16,6 @@ project(':capacitor-filesystem').projectDir = new File('../node_modules/@capacit
 
 include ':microbit-capacitor-community-nordic-dfu'
 project(':microbit-capacitor-community-nordic-dfu').projectDir = new File('../node_modules/@microbit/capacitor-community-nordic-dfu/android')
+
+include ':microbit-capacitor-sqlite-vanilla'
+project(':microbit-capacitor-sqlite-vanilla').projectDir = new File('../../capacitor-sqlite-vanilla/android')
