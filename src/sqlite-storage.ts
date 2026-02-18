@@ -3,7 +3,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { CapacitorSQLite, SQLiteConnection } from "@capacitor-community/sqlite";
+import {
+  SQLiteVanilla,
+  SQLiteConnection,
+} from "@microbit/capacitor-sqlite-vanilla";
 import * as tf from "@tensorflow/tfjs";
 import { v4 as uuid } from "uuid";
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
@@ -22,7 +25,6 @@ import {
 } from "./storage";
 
 const DATABASE_NAME = "ml";
-const DATABASE_VERSION = 1;
 
 export const SCHEMA = `
 CREATE TABLE IF NOT EXISTS projects (
@@ -168,19 +170,9 @@ export class SqliteDatabase implements Database {
     return db;
   }
 
-  // To add a schema migration, bump DATABASE_VERSION and register upgrade
-  // statements via sqlite.addUpgradeStatement() before createConnection().
-  // Keep SCHEMA as the full current schema for fresh installs.
   private async initializeCapacitorDb(): Promise<SqliteConnection> {
-    const sqlite = new SQLiteConnection(CapacitorSQLite);
-    const db = await sqlite.createConnection(
-      DATABASE_NAME,
-      false,
-      "no-encryption",
-      DATABASE_VERSION,
-      false
-    );
-    await db.open();
+    const sqlite = new SQLiteConnection(SQLiteVanilla);
+    const db = await sqlite.createConnection(DATABASE_NAME);
     return this.initializeSchema(db);
   }
 

@@ -69,7 +69,6 @@
   "dependencies": {
     "@capacitor-community/bluetooth-le": "^7.3.0",
     "@capacitor-community/safe-area": "^7.0.0-beta.5",
-    "@capacitor-community/sqlite": "^7.0.3",
     "@capacitor/android": "^7.4.4",
     "@capacitor/app": "^7.1.0",
     "@capacitor/core": "^7.4.4",
@@ -81,6 +80,7 @@
     "@emotion/styled": "^11.11.5",
     "@formatjs/intl-localematcher": "^0.8.0",
     "@microbit/capacitor-community-nordic-dfu": "^7.0.0-microbit.3",
+    "@microbit/capacitor-sqlite-vanilla": "^0.1.0-alpha.4",
     "@microbit/makecode-embed": "^0.3.0",
     "@microbit/microbit-connection": "^0.9.0-apps.alpha.15",
     "@microbit/ml-header-generator": "^0.4.3",

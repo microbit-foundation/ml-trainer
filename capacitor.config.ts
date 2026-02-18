@@ -19,9 +19,6 @@ const config: CapacitorConfig = {
     SystemBars: {
       insetsHandling: "disable",
     },
-    CapacitorSQLite: {
-      iosDatabaseLocation: "Library/CapacitorDatabase",
-    },
   },
 };
 
