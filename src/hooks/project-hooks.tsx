@@ -49,6 +49,7 @@ import { useDownloadActions } from "../download-flow/download-hooks";
 import { Capacitor } from "@capacitor/core";
 import { App as CapacitorApp } from "@capacitor/app";
 import { Encoding, Filesystem } from "@capacitor/filesystem";
+import { DataConnectionStep } from "../data-connection-flow";
 
 class CodeEditorError extends Error {}
 
@@ -495,6 +496,13 @@ export const ProjectProvider = ({
     [downloadActions, saveHex]
   );
 
+  const isNonConnectionDialogOpen = useStore(
+    (s) => s.isNonConnectionDialogOpen
+  );
+  const isConnectionDialogOpen = useStore(
+    (s) => s.dataConnection.step !== DataConnectionStep.Idle
+  );
+
   // Native app-specific handlers
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
@@ -522,14 +530,27 @@ export const ProjectProvider = ({
         }
       );
 
+      const backButtonListener = CapacitorApp.addListener("backButton", () => {
+        if (isNonConnectionDialogOpen() || isConnectionDialogOpen) {
+          // Disable back button if dialog is opened.
+          return;
+        }
+        window.history.back();
+      });
+
       return () => {
         const removeListenerHandler = async () => {
           void (await appUrlListener).remove();
+          void (await backButtonListener).remove();
         };
         void removeListenerHandler();
       };
     }
-  }, [importProjectFromHexText]);
+  }, [
+    importProjectFromHexText,
+    isConnectionDialogOpen,
+    isNonConnectionDialogOpen,
+  ]);
 
   const value = useMemo(
     () => ({
