@@ -26,27 +26,26 @@ const EnterBluetoothPatternDialog = ({
   ...props
 }: EnterBluetoothPatternDialogProps) => {
   const [showInvalid, setShowInvalid] = useState<boolean>(false);
+  const [value, setValue] = useState<string | undefined>(microbitName);
 
   const handleNextClick = useCallback(() => {
-    if (!microbitName || microbitName.includes(blank)) {
+    if (!value || value.includes(blank)) {
       setShowInvalid(true);
       return;
     }
+    onChangeMicrobitName(value);
     onNextClick && onNextClick();
-  }, [microbitName, onNextClick]);
+  }, [onChangeMicrobitName, onNextClick, value]);
 
   const handleBackClick = useCallback(() => {
     setShowInvalid(false);
     onBackClick && onBackClick();
   }, [onBackClick]);
 
-  const handleNameChange = useCallback(
-    (name: string) => {
-      onChangeMicrobitName(name);
-      setShowInvalid(false);
-    },
-    [onChangeMicrobitName]
-  );
+  const handleNameChange = useCallback((name: string) => {
+    setValue(name);
+    setShowInvalid(false);
+  }, []);
 
   return (
     <ConnectContainerDialog
@@ -63,7 +62,7 @@ const EnterBluetoothPatternDialog = ({
           <BluetoothPatternInput
             onChange={handleNameChange}
             invalid={showInvalid}
-            microbitName={microbitName}
+            microbitName={value}
           />
           <VStack>
             <Text
