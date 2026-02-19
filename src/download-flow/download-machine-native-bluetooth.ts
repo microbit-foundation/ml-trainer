@@ -139,6 +139,13 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
     on: {
       next: [
         {
+          guard: (ctx, event) =>
+            guards.hasDownloadedBefore(ctx, event) &&
+            guards.hasMicrobitName(ctx, event),
+          target: DownloadStep.FlashingInProgress,
+          actions: [{ type: "connectFlash", clearDevice: true }],
+        },
+        {
           guard: guards.hasMicrobitName,
           target: DownloadStep.NativeCompareBluetoothPattern,
         },
