@@ -16,7 +16,7 @@ def capacitor_pods
   pod 'CapacitorApp', :path => '../../node_modules/@capacitor/app'
   pod 'CapacitorFilesystem', :path => '../../node_modules/@capacitor/filesystem'
   pod 'MicrobitCapacitorCommunityNordicDfu', :path => '../../node_modules/@microbit/capacitor-community-nordic-dfu'
-  pod 'MicrobitCapacitorSqliteVanilla', :path => '../../../capacitor-sqlite-vanilla'
+  pod 'MicrobitCapacitorSqliteVanilla', :path => '../../node_modules/@microbit/capacitor-sqlite-vanilla'
 end
 
 target 'App' do

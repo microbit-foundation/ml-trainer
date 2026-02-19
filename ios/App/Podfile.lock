@@ -15,7 +15,7 @@ PODS:
   - MicrobitCapacitorCommunityNordicDfu (7.0.0-microbit.3):
     - Capacitor
     - NordicDFU (~> 4.16.0)
-  - MicrobitCapacitorSqliteVanilla (0.1.0):
+  - MicrobitCapacitorSqliteVanilla (0.1.0-alpha.5):
     - Capacitor
   - NordicDFU (4.16.0):
     - ZIPFoundation (= 0.9.19)
@@ -29,7 +29,7 @@ DEPENDENCIES:
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
   - "MicrobitCapacitorCommunityNordicDfu (from `../../node_modules/@microbit/capacitor-community-nordic-dfu`)"
-  - MicrobitCapacitorSqliteVanilla (from `../../../capacitor-sqlite-vanilla`)
+  - "MicrobitCapacitorSqliteVanilla (from `../../node_modules/@microbit/capacitor-sqlite-vanilla`)"
 
 SPEC REPOS:
   trunk:
@@ -53,7 +53,7 @@ EXTERNAL SOURCES:
   MicrobitCapacitorCommunityNordicDfu:
     :path: "../../node_modules/@microbit/capacitor-community-nordic-dfu"
   MicrobitCapacitorSqliteVanilla:
-    :path: "../../../capacitor-sqlite-vanilla"
+    :path: "../../node_modules/@microbit/capacitor-sqlite-vanilla"
 
 SPEC CHECKSUMS:
   Capacitor: 12914e6f1b7835e161a74ebd19cb361efa37a7dd
@@ -64,10 +64,10 @@ SPEC CHECKSUMS:
   CapacitorFilesystem: 66f05ee0d8b1ccdc00d509091273a9b3b57c4a0b
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
   MicrobitCapacitorCommunityNordicDfu: 2fc86a9ebd698d5609023cafd74ece8b5d64a59e
-  MicrobitCapacitorSqliteVanilla: 20584fdeb0bc80de2678af959381eafee8dc93b3
+  MicrobitCapacitorSqliteVanilla: 007363ee4be41cd778997dda58b6827173ffb67f
   NordicDFU: 116a4ec458945889f8e0e71759e03b23c39c3482
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 000b99dd468474f0b898c404aeabc5154a54acf2
+PODFILE CHECKSUM: 269e540067d282ad97c40f14f82bc0720634dee3
 
 COCOAPODS: 1.16.2
