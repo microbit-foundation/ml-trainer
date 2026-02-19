@@ -249,7 +249,7 @@ export interface Actions {
   setRequiredConfidence(id: string, value: number): Promise<void>;
   deleteActionRecording(id: string, recordingId: string): Promise<void>;
   deleteAllActions(): Promise<void>;
-  downloadDataset(): void;
+  downloadDataset(): Promise<void>;
 
   dataCollectionMicrobitConnected(): void;
 
@@ -1017,16 +1017,14 @@ const createMlStore = (logging: Logging) => {
           );
         },
 
-          async downloadDataset() {
-            const { actions, project } = get();
-            await downloadDataString(
-              JSON.stringify(actions, null, 2),
-              `${
-                project.header?.name ?? untitledProjectName
-              }-data-samples.json`,
-              "application/json"
-            );
-          },
+        async downloadDataset() {
+          const { actions, project } = get();
+          await downloadDataString(
+            JSON.stringify(actions, null, 2),
+            `${project.header?.name ?? untitledProjectName}-data-samples.json`,
+            "application/json"
+          );
+        },
 
         async loadDataset(
           datasetActions: ActionData[],

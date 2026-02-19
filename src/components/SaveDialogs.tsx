@@ -8,8 +8,9 @@ import { useProjectIsUntitled, useProject } from "../hooks/project-hooks";
 import { useStore } from "../store";
 import SaveHelpDialog from "./SaveHelpDialog";
 import SaveProgressDialog from "./SaveProgressDialog";
-import { SaveStep } from "../model";
+import { SaveStep, SaveType } from "../model";
 import { NameProjectDialog } from "./NameProjectDialog";
+import { FormattedMessage } from "react-intl";
 
 const SaveDialogs = () => {
   const setSave = useStore((s) => s.setSave);
@@ -45,10 +46,22 @@ const SaveDialogs = () => {
       return (
         <SaveHelpDialog isOpen onClose={handleClose} onSave={handleHelpNext} />
       );
-    case SaveStep.ProjectName:
+    case SaveStep.ProjectName: {
+      const confirmText =
+        type === SaveType.Download ? (
+          <FormattedMessage id="confirm-save-action" />
+        ) : (
+          <FormattedMessage id="confirm-share-action" />
+        );
       return (
-        <NameProjectDialog isOpen onClose={handleClose} onSave={handleSave} />
+        <NameProjectDialog
+          isOpen
+          onClose={handleClose}
+          onSave={handleSave}
+          confirmText={confirmText}
+        />
       );
+    }
     case SaveStep.SaveProgress:
       return <SaveProgressDialog isOpen />;
     default:

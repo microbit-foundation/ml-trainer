@@ -1812,7 +1812,7 @@
     "description": "Text in the dialog shown when saving a hex file"
   },
   "saving-dataset-toast-title": {
-    "defaultMessage": "Your dataset has been downloaded",
+    "defaultMessage": "Your data samples have been downloaded",
     "description": "Notification after a dataset has been downloaded"
   },
   "saving-description": {
