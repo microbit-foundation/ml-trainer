@@ -134,6 +134,7 @@ export interface Database {
     id: string | undefined,
     timestamp: number
   ): Promise<void>;
+  renameProject(id: string, name: string, timestamp: number): Promise<void>;
   /**
    * Duplicate a project including actions, recordings, MakeCode data,
    * and trained model.
@@ -927,6 +928,41 @@ export class IdbDatabase implements Database {
       {
         ...projectData,
         timestamp,
+      },
+      id
+    );
+    return tx.done;
+  }
+
+  async renameProject(id: string, name: string, timestamp: number) {
+    const tx = (await this.useDb()).transaction(
+      [DatabaseStore.MAKECODE_DATA, DatabaseStore.PROJECT_DATA],
+      "readwrite"
+    );
+    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeData = assertData(await makeCodeStore.get(id));
+    await makeCodeStore.put(
+      {
+        ...makeCodeData,
+        project: {
+          ...makeCodeData.project,
+          header: makeCodeData.project.header
+            ? {
+                ...makeCodeData.project.header,
+                name,
+              }
+            : undefined,
+        },
+      },
+      id
+    );
+    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
+    const projectData = assertData(await projectDataStore.get(id));
+    await projectDataStore.put(
+      {
+        ...projectData,
+        timestamp,
+        name,
       },
       id
     );

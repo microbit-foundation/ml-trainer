@@ -1248,13 +1248,11 @@ const createMlStore = (logging: Logging) => {
         },
 
         async setProjectName(name: string, projectId?: string): Promise<void> {
-          const {
-            id: openedProjectId,
-            project,
-            projectEdited,
-            allProjectData,
-          } = get();
+          const { id: openedProjectId, project, allProjectData } = get();
           const id = projectId ?? openedProjectId;
+          if (id === undefined) {
+            throw new Error("No project id");
+          }
           const updatedProject = renameProject(project, name);
           const timestamp = Date.now();
           set(
@@ -1275,14 +1273,7 @@ const createMlStore = (logging: Logging) => {
             "setProjectName"
           );
           await storageWithErrHandling(() =>
-            storage.updateMakeCodeProject(
-              id,
-              {
-                project: updatedProject,
-                projectEdited,
-              },
-              timestamp
-            )
+            storage.renameProject(id, name, timestamp)
           );
         },
 
