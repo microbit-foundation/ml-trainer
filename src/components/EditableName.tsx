@@ -10,7 +10,7 @@ import {
   InputLeftElement,
   Tooltip,
 } from "@chakra-ui/react";
-import { ReactNode, useCallback, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { RiEditLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
 import { useStore } from "../store";
@@ -24,27 +24,39 @@ interface EditableNameProps {
 const EditableName = ({ suffix }: EditableNameProps) => {
   const intl = useIntl();
   const getCurrentProject = useStore((s) => s.getCurrentProject);
-  const renameProject = useStore((s) => s.renameProject);
+  const renameProject = useStore((s) => s.setProjectName);
   const id = useStore((s) => s.id);
   const ref = useRef<HTMLButtonElement>(null);
-  const [value, setValue] = useState(getCurrentProject().header?.name);
+  const projectName = getCurrentProject().header?.name;
+  const [value, setValue] = useState(projectName);
+  const [editing, setEditing] = useState<boolean>(false);
 
   const handleChange = useCallback((nextValue: string) => {
     setValue(nextValue);
+    setEditing(true);
   }, []);
 
   const handleCancel = useCallback((previousValue: string) => {
     setValue(previousValue);
+    setEditing(false);
   }, []);
 
   const handleSubmit = useCallback(
     async (nextValue: string) => {
       if (id) {
-        await renameProject(id, nextValue);
+        await renameProject(nextValue, id);
+        setEditing(false);
       }
     },
     [id, renameProject]
   );
+
+  useEffect(() => {
+    // Sync changes in project name outside of this component.
+    if (!editing && projectName !== value) {
+      setValue(projectName);
+    }
+  }, [projectName, value, editing]);
 
   return (
     <Editable

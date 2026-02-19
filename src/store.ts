@@ -235,7 +235,6 @@ export interface Actions {
   getAllProjectData(): Promise<void>;
   loadProjectFromStorage(id: string): Promise<void>;
   updateProjectUpdatedAt(): Promise<void>;
-  renameProject(id: string, name: string): Promise<void>;
   duplicateProject(id: string, name: string): Promise<void>;
   deleteProject(id: string): Promise<void>;
   deleteProjects(ids: string[]): Promise<void>;
@@ -273,8 +272,9 @@ export interface Actions {
   resetProject(): Promise<void>;
   /**
    * Sets the project name.
+   * Unless projectId is specified, the opened project id will be used.
    */
-  setProjectName(name: string): Promise<void>;
+  setProjectName(name: string, projectId?: string): Promise<void>;
   setProjectEdited(): void;
   /**
    * When interacting outside of React to sync with MakeCode it's important to have
@@ -570,43 +570,6 @@ const createMlStore = (logging: Logging) => {
           const { id } = get();
           await storageWithErrHandling(() =>
             storage.updateProjectTimestamp(id, Date.now())
-          );
-        },
-
-        async renameProject(id: string, name: string) {
-          const {
-            actions,
-            allProjectData,
-            dataWindow,
-            id: currentProjectId,
-            model,
-            project,
-            projectEdited,
-          } = get();
-          const timestamp = Date.now();
-          set({
-            ...(() => {
-              if (id === currentProjectId) {
-                // You have renamed the currently open project.
-                return {
-                  ...updateProject(
-                    project,
-                    projectEdited,
-                    actions,
-                    model,
-                    dataWindow
-                  ),
-                  timestamp,
-                };
-              }
-              return {};
-            })(),
-            allProjectData: allProjectData.map((p) =>
-              p.id === id ? { ...p, name, timestamp } : p
-            ),
-          });
-          await storageWithErrHandling(() =>
-            storage.renameProject(id, name, timestamp)
           );
         },
 
@@ -1339,28 +1302,36 @@ const createMlStore = (logging: Logging) => {
           );
         },
 
-        async setProjectName(name: string): Promise<void> {
-          const { id, project, projectEdited } = get();
-          const updatedProject = renameProject(project, name);
+        async setProjectName(name: string, projectId?: string): Promise<void> {
+          const {
+            id: openedProjectId,
+            project: openedProject,
+            allProjectData,
+          } = get();
+          const id = projectId ?? openedProjectId;
+          if (id === undefined) {
+            throw new Error("No project id");
+          }
           const timestamp = Date.now();
           set(
             {
-              appEditNeedsFlushToEditor: true,
-              project: updatedProject,
-              timestamp,
+              allProjectData: allProjectData.map((p) =>
+                p.id === id ? { ...p, name, timestamp } : p
+              ),
+              // Rename currently opened project.
+              ...(openedProjectId === id
+                ? {
+                    appEditNeedsFlushToEditor: true,
+                    project: renameProject(openedProject, name),
+                    timestamp,
+                  }
+                : {}),
             },
             false,
             "setProjectName"
           );
           await storageWithErrHandling(() =>
-            storage.updateMakeCodeProject(
-              id,
-              {
-                project: updatedProject,
-                projectEdited,
-              },
-              timestamp
-            )
+            storage.renameProject(id, name, timestamp)
           );
         },
 
