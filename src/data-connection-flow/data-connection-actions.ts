@@ -152,6 +152,7 @@ const executeAction = async (
       const connectionType = currentState.hasSwitchedConnectionType
         ? currentState.type
         : getInitialDataConnectionType(currentState.isWebBluetoothSupported);
+      const name = useStore.getState().settings.bluetoothMicrobitName;
       setDataConnectionState({
         ...currentState,
         type: connectionType,
@@ -160,6 +161,7 @@ const executeAction = async (
         isStartingOver: false,
         hadSuccessfulConnection: false,
         pairingMethod: "triple-reset",
+        bluetoothMicrobitName: name,
       });
       break;
     }

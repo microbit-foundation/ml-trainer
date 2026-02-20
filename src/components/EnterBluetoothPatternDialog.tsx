@@ -11,6 +11,7 @@ import BluetoothPatternInput from "./BluetoothPatternInput";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
+import { isNativePlatform } from "../platform";
 
 export interface EnterBluetoothPatternDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
@@ -26,7 +27,9 @@ const EnterBluetoothPatternDialog = ({
   ...props
 }: EnterBluetoothPatternDialogProps) => {
   const [showInvalid, setShowInvalid] = useState<boolean>(false);
-  const [value, setValue] = useState<string | undefined>(microbitName);
+  const [value, setValue] = useState<string | undefined>(
+    isNativePlatform() ? undefined : microbitName
+  );
 
   const handleNextClick = useCallback(() => {
     if (!value || value.includes(blank)) {

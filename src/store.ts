@@ -389,9 +389,7 @@ const createMlStore = (logging: Logging) => {
           connectionAbortController: undefined,
         },
         downloadFlashingProgress: { stage: undefined, value: undefined },
-        dataConnection: getInitialDataConnectionState(
-          get().settings.bluetoothMicrobitName
-        ),
+        dataConnection: getInitialDataConnectionState(),
         deviceBondState: {
           setBonded(id: string, isBonded: boolean) {
             const { settings } = get();

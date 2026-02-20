@@ -91,6 +91,9 @@ export type DataConnectionAction =
    * Sets micro:bit name from user input.
    */
   | { type: "setMicrobitName"; name: string }
+  /**
+   * Resets micro:bit name to what is stored.
+   */
   | { type: "resetMicrobitName" }
   | { type: "clearMicrobitName" }
   | { type: "setRadioRemoteDeviceId"; deviceId?: number }

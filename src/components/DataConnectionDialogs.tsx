@@ -8,7 +8,7 @@ import {
   DataConnectionType,
   isDataConnectionDialogOpen,
 } from "../data-connection-flow";
-import { useSettings, useStore } from "../store";
+import { useStore } from "../store";
 import { useDataConnectionActions } from "../data-connection-flow";
 import PermissionErrorDialog from "./BluetoothPermissionErrorDialog";
 import BrokenFirmwareDialog from "./BrokenFirmwareDialog";
@@ -185,6 +185,7 @@ const DataConnectionDialogs = () => {
           stage={flashProgress.stage}
           progress={flashProgress.value}
           tryAgain={actions.onTryAgain}
+          microbitName={state.bluetoothMicrobitName}
         />
       );
     }

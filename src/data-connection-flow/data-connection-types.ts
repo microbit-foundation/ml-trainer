@@ -216,7 +216,6 @@ export const getInitialDataConnectionType = (
  * Called at store creation time.
  */
 export const getInitialDataConnectionState = (
-  bluetoothMicrobitName: string | undefined
 ): DataConnectionState => {
   // At store init time, we don't have web bluetooth/usb support info yet.
   // These will be updated when the provider initializes.
@@ -235,8 +234,7 @@ export const getInitialDataConnectionState = (
     isCheckingPermissions: false,
     pairingMethod: "triple-reset",
     connectionAbortController: undefined,
-    // Fill with persisted name.
-    bluetoothMicrobitName,
+    bluetoothMicrobitName: undefined,
   };
 };
 

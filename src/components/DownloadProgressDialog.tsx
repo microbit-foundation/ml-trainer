@@ -23,7 +23,6 @@ import { isNativePlatform } from "../platform";
 import ChooseDeviceOverlay from "./ChooseDeviceOverlay";
 import LoadingAnimation from "./LoadingAnimation";
 import BluetoothPatternInput from "./BluetoothPatternInput";
-import { useSettings } from "../store";
 
 export interface DownloadProgressDialogProps {
   isOpen: boolean;
@@ -31,6 +30,7 @@ export interface DownloadProgressDialogProps {
   stage: ProgressStage | undefined;
   progress: number | undefined;
   tryAgain?: () => void;
+  microbitName?: string | undefined;
 }
 
 export const getHeadingId = (
@@ -80,8 +80,8 @@ const DownloadProgressDialog = ({
   stage,
   progress,
   tryAgain,
+  microbitName
 }: DownloadProgressDialogProps) => {
-  const [settings] = useSettings();
   // Skip showing dialog when stage is undefined (not yet started).
   if (stage === undefined) {
     return null;
@@ -121,7 +121,7 @@ const DownloadProgressDialog = ({
               </Text>
               {isNativePlatform() && canChangeBluetoothPattern ? (
                 <BluetoothPatternInput
-                  microbitName={settings.bluetoothMicrobitName}
+                  microbitName={microbitName}
                   invalid={false}
                 />
               ) : isIndeterminate ? (
