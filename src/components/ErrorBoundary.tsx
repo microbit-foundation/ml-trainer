@@ -7,7 +7,7 @@ import React, { ReactNode } from "react";
 import ErrorHandlerErrorView from "./ErrorHandlerErrorView";
 
 interface ErrorBoundaryState {
-  hasError: boolean;
+  error: unknown;
 }
 
 interface ErrorBoundaryProps {
@@ -22,20 +22,20 @@ class ErrorBoundary extends React.Component<
 > {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { error: undefined };
   }
 
   componentDidCatch() {
     // TODO: reinstate logging!
   }
 
-  static getDerivedStateFromError() {
-    return { hasError: true };
+  static getDerivedStateFromError(error: unknown) {
+    return { error };
   }
 
   render() {
-    if (this.state.hasError) {
-      return <ErrorHandlerErrorView />;
+    if (this.state.error) {
+      return <ErrorHandlerErrorView error={this.state.error} />;
     }
     return this.props.children;
   }
