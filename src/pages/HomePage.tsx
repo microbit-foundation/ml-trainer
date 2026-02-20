@@ -53,6 +53,7 @@ import {
   useSettings,
   useStore,
 } from "../store";
+import { isNativePlatform } from "../platform";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
 
 const HomePage = () => {
@@ -278,25 +279,27 @@ const ProjectRow = () => {
             <Heading as="h2" size="lg">
               <FormattedMessage id="my-projects-row-title" />
             </Heading>
-            <ClickableTooltip
-              isFocusable
-              hasArrow
-              placement={tooltipPlacement}
-              label={
-                <VStack
-                  textAlign="left"
-                  alignContent="left"
-                  alignItems="left"
-                  m={3}
-                >
-                  <Text>
-                    <FormattedMessage id="project-storage-tooltip" />
-                  </Text>
-                </VStack>
-              }
-            >
-              <Icon opacity={0.7} h={5} w={5} as={RiInformationLine} />
-            </ClickableTooltip>
+            {!isNativePlatform() && (
+              <ClickableTooltip
+                isFocusable
+                hasArrow
+                placement={tooltipPlacement}
+                label={
+                  <VStack
+                    textAlign="left"
+                    alignContent="left"
+                    alignItems="left"
+                    m={3}
+                  >
+                    <Text>
+                      <FormattedMessage id="project-storage-tooltip" />
+                    </Text>
+                  </VStack>
+                }
+              >
+                <Icon opacity={0.7} h={5} w={5} as={RiInformationLine} />
+              </ClickableTooltip>
+            )}
           </HStack>
         }
       />
