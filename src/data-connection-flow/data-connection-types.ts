@@ -190,7 +190,7 @@ export interface DataConnectionState {
   /**
    * Bluetooth micro:bit name that changes with user input.
    * If connection succeeds with this name, it gets saved into settings.
-   * If connection fails with this name (not due to permissions or pairing 
+   * If connection fails with this name (not due to permissions or pairing
    * information lost), it gets reset to the persisted name.
    */
   bluetoothMicrobitName: string | undefined;
@@ -217,8 +217,7 @@ export const getInitialDataConnectionType = (
  * Get initial data connection state.
  * Called at store creation time.
  */
-export const getInitialDataConnectionState = (
-): DataConnectionState => {
+export const getInitialDataConnectionState = (): DataConnectionState => {
   // At store init time, we don't have web bluetooth/usb support info yet.
   // These will be updated when the provider initializes.
   return {

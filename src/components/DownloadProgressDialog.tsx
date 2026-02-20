@@ -80,7 +80,7 @@ const DownloadProgressDialog = ({
   stage,
   progress,
   tryAgain,
-  microbitName
+  microbitName,
 }: DownloadProgressDialogProps) => {
   // Skip showing dialog when stage is undefined (not yet started).
   if (stage === undefined) {
