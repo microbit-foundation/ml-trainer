@@ -25,7 +25,8 @@ const CarouselRow = ({
         px={isNativePlatform() ? 3 : [3, null, 16]}
         mt={2}
         mb={2}
-        spacing={12}
+        spacing={{ base: 3, sm: 12 }}
+        justifyContent={{ base: "space-between", sm: "flex-start" }}
       >
         {typeof titleId === "string" ? (
           <Heading as="h2" size="lg">

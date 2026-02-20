@@ -11,20 +11,28 @@ import {
   Heading,
   HStack,
   Icon,
+  IconButton,
   LinkBox,
   LinkOverlay,
   Text,
+  useBreakpointValue,
   VStack,
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
 import { RefObject, Suspense, useCallback, useRef, useState } from "react";
 import { IconType } from "react-icons/lib";
-import { RiAddLine, RiFolderOpenLine, RiInformationLine } from "react-icons/ri";
+import {
+  RiAddLine,
+  RiFolderOpenLine,
+  RiInformationLine,
+  RiUpload2Line,
+} from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Await, useLoaderData, useNavigate } from "react-router";
 import CarouselRow from "../components/Carousel/CarouselRow";
 import ClickableTooltip from "../components/ClickableTooltip";
 import { ConfirmDialog } from "../components/ConfirmDialog";
+import Link from "../components/Link";
 import DefaultPageLayout, {
   HomeMenuItem,
   HomeToolbarItem,
@@ -85,6 +93,10 @@ const HomePage = () => {
 
 const ProjectRow = () => {
   const numCardsDisplayed = 10;
+  const tooltipPlacement = useBreakpointValue<"bottom" | "right">({
+    base: "bottom",
+    sm: "right",
+  });
   const navigate = useNavigate();
   const intl = useIntl();
   const allProjectData = useStore((s) => s.allProjectData);
@@ -238,7 +250,7 @@ const ProjectRow = () => {
       <CarouselRow
         actions={[
           <ImportProjectButton key="importProject" />,
-          <ViewAllProjectsButton key="viewAll" />,
+          <ViewAllProjectsLink key="viewAll" />,
         ]}
         carouselItems={
           [
@@ -269,7 +281,7 @@ const ProjectRow = () => {
             <ClickableTooltip
               isFocusable
               hasArrow
-              placement="right"
+              placement={tooltipPlacement}
               label={
                 <VStack
                   textAlign="left"
@@ -292,15 +304,15 @@ const ProjectRow = () => {
   );
 };
 
-const ViewAllProjectsButton = () => {
-  const navigate = useNavigate();
-  const handleClick = useCallback(() => {
-    navigate(createProjectsPageUrl());
-  }, [navigate]);
+const ViewAllProjectsLink = () => {
   return (
-    <Button onClick={handleClick}>
+    <Link
+      href={createProjectsPageUrl()}
+      color="brand.700"
+      fontWeight="semibold"
+    >
       <FormattedMessage id="view-all-projects" />
-    </Button>
+    </Link>
   );
 };
 
@@ -382,6 +394,7 @@ const NewProjectCard = () => {
 };
 
 const ImportProjectButton = () => {
+  const intl = useIntl();
   const loadProjectRef = useRef<LoadProjectInputRef>(null);
   const handleContinueSessionFromFile = useCallback(() => {
     loadProjectRef.current?.chooseFile("replaceProject");
@@ -389,7 +402,18 @@ const ImportProjectButton = () => {
   return (
     <>
       <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
-      <Button onClick={handleContinueSessionFromFile}>
+      <IconButton
+        icon={<RiUpload2Line />}
+        onClick={handleContinueSessionFromFile}
+        aria-label={intl.formatMessage({ id: "import-file-action" })}
+        variant="ghost"
+        display={{ base: "inline-flex", sm: "none" }}
+      />
+      <Button
+        leftIcon={<RiUpload2Line />}
+        onClick={handleContinueSessionFromFile}
+        display={{ base: "none", sm: "inline-flex" }}
+      >
         <FormattedMessage id="import-file-action" />
       </Button>
     </>
