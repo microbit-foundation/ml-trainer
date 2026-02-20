@@ -88,7 +88,7 @@ export type DataConnectionAction =
    */
   | { type: "saveMicrobitName" }
   /**
-   * Sets micro:bit name from user input.
+   * Sets micro:bit name from setMicrobitName event (user input).
    */
   | { type: "setMicrobitName"; name: string }
   /**

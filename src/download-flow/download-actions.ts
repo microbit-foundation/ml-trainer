@@ -91,9 +91,11 @@ const executeAction = async (
       if (event.type !== "start") {
         throw new Error("initializeDownload requires start event");
       }
+      const name = deps.settings.bluetoothMicrobitName;
       setDownloadState({
         ...state,
         hex: event.hex,
+        bluetoothMicrobitName: name,
       });
       break;
     }
@@ -109,15 +111,30 @@ const executeAction = async (
       break;
     }
 
+    case "saveMicrobitName": {
+      const name = getDownloadState().bluetoothMicrobitName;
+      if (name) {
+        deps.setSettings({ bluetoothMicrobitName: name });
+      }
+      break;
+    }
+
+    case "resetMicrobitName": {
+      const name = deps.settings.bluetoothMicrobitName;
+      setDownloadState({ ...state, bluetoothMicrobitName: name });
+      break;
+    }
+
     case "setMicrobitName": {
       if (event.type === "setMicrobitName") {
-        deps.setSettings({ bluetoothMicrobitName: event.name });
+        setDownloadState({ ...state, bluetoothMicrobitName: event.name });
       }
       break;
     }
 
     case "clearMicrobitName": {
       deps.setSettings({ bluetoothMicrobitName: undefined });
+      setDownloadState({ ...state, bluetoothMicrobitName: undefined });
       break;
     }
 

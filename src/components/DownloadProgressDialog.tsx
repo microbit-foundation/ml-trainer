@@ -30,7 +30,7 @@ export interface DownloadProgressDialogProps {
   stage: ProgressStage | undefined;
   progress: number | undefined;
   tryAgain?: () => void;
-  microbitName?: string | undefined;
+  microbitName: string | undefined;
 }
 
 export const getHeadingId = (

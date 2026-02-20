@@ -26,11 +26,11 @@ import UnplugRadioLinkMicrobitDialog from "./UnplugRadioLinkMicrobitDialog";
 
 const DownloadDialogs = () => {
   const downloadActions = useDownloadActions();
-  const stage = useStore((s) => s.download);
+  const state = useStore((s) => s.download);
   const flashingProgress = useStore((s) => s.downloadFlashingProgress);
   const [settings] = useSettings();
 
-  switch (stage.step) {
+  switch (state.step) {
     case DownloadStep.Help:
       return (
         <DownloadHelpDialog
@@ -47,7 +47,7 @@ const DownloadDialogs = () => {
           onClose={downloadActions.close}
           onDifferentMicrobitClick={downloadActions.onChosenDifferentMicrobit}
           onSameMicrobitClick={downloadActions.onChosenSameMicrobit}
-          stage={stage}
+          stage={state}
         />
       );
     case DownloadStep.NativeBluetoothPreConnectTutorial: {
@@ -143,6 +143,7 @@ const DownloadDialogs = () => {
           stage={flashingProgress.stage}
           progress={flashingProgress.value}
           tryAgain={downloadActions.onTryAgain}
+          microbitName={state.bluetoothMicrobitName}
         />
       );
     case DownloadStep.ConnectFailed:
@@ -162,13 +163,13 @@ const DownloadDialogs = () => {
         />
       );
     case DownloadStep.ManualFlashingTutorial:
-      if (!stage.hex) {
+      if (!state.hex) {
         throw new Error("Project expected");
       }
       return (
         <ManualFlashingDialog
           isOpen
-          hex={stage.hex}
+          hex={state.hex}
           onClose={downloadActions.close}
           closeIsPrimaryAction={true}
         />
@@ -190,7 +191,7 @@ const DownloadDialogs = () => {
           isOpen
           onClose={downloadActions.close}
           onTryAgain={downloadActions.onTryAgain}
-          isCheckingPermissions={stage.isCheckingPermissions}
+          isCheckingPermissions={state.isCheckingPermissions}
         />
       );
     case DownloadStep.BluetoothPermissionDenied:
@@ -206,7 +207,7 @@ const DownloadDialogs = () => {
           onClose={downloadActions.close}
           onTryAgain={downloadActions.onTryAgain}
           onOpenSettings={downloadActions.openAppSettings}
-          isCheckingPermissions={stage.isCheckingPermissions}
+          isCheckingPermissions={state.isCheckingPermissions}
         />
       );
     case DownloadStep.LocationDisabled:
@@ -218,7 +219,7 @@ const DownloadDialogs = () => {
           onClose={downloadActions.close}
           onTryAgain={downloadActions.onTryAgain}
           onOpenSettings={downloadActions.openLocationSettings}
-          isCheckingPermissions={stage.isCheckingPermissions}
+          isCheckingPermissions={state.isCheckingPermissions}
         />
       );
   }

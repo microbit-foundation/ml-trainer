@@ -188,8 +188,9 @@ export interface DataConnectionState {
   connectionAbortController: AbortController | undefined;
 
   /**
-   * Pending Bluetooth micro:bit name to potentially save if connection succeeds.
-   * If `undefined`, there is no pending micro:bit name to consider.
+   * Bluetooth micro:bit name that changes with user input. 
+   * If connection succeeds with this name, it gets saved into settings.
+   * If connection fails with this name, it gets reset to the persisted name.
    */
   bluetoothMicrobitName: string | undefined;
 }
@@ -234,6 +235,7 @@ export const getInitialDataConnectionState = (
     isCheckingPermissions: false,
     pairingMethod: "triple-reset",
     connectionAbortController: undefined,
+    // This value will be replaced by persisted name before it is used.
     bluetoothMicrobitName: undefined,
   };
 };

@@ -387,6 +387,8 @@ const createMlStore = (logging: Logging) => {
           pairingMethod: "triple-reset",
           isCheckingPermissions: false,
           connectionAbortController: undefined,
+          // This value will be replaced by persisted name before it is used.
+          bluetoothMicrobitName: undefined,
         },
         downloadFlashingProgress: { stage: undefined, value: undefined },
         dataConnection: getInitialDataConnectionState(),
