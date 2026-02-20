@@ -6,7 +6,6 @@
 import {
   Icon,
   IconButton,
-  Menu,
   MenuButton,
   MenuDivider,
   MenuItem,
@@ -30,6 +29,7 @@ import LoadProjectMenuItem from "./LoadProjectMenuItem";
 import { NameProjectDialog } from "./NameProjectDialog";
 import ViewDataFeaturesMenuItem from "./ViewDataFeaturesMenuItem";
 import { useProjectIsUntitled } from "../hooks/project-hooks";
+import Menu from "./Menu";
 
 const DataSamplesMenu = () => {
   const intl = useIntl();

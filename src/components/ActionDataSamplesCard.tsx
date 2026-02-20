@@ -15,7 +15,6 @@ import {
   HStack,
   Icon,
   keyframes,
-  Menu,
   MenuItem,
   MenuList,
   Portal,
@@ -26,6 +25,7 @@ import { ReactNode, useCallback } from "react";
 import { RiHashtag, RiTimerLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataSamplesView, ActionData, RecordingData } from "../model";
+import Menu from "./Menu";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import MoreMenuButton from "./MoreMenuButton";
