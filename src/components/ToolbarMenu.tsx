@@ -7,13 +7,13 @@ import {
   Box,
   BoxProps,
   IconButton,
-  Menu,
   MenuButton,
   MenuList,
   ThemeTypings,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { RiMenuLine } from "react-icons/ri";
+import Menu from "./Menu";
 
 interface ToolbarMenuProps extends BoxProps {
   label: string;
