@@ -4,6 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { Capacitor } from "@capacitor/core";
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
 import { DeviceBondState, ProgressStage } from "@microbit/microbit-connection";
 import * as tf from "@tensorflow/tfjs";
@@ -11,9 +12,25 @@ import { v4 as uuid } from "uuid";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
+import {
+  broadcastChannel,
+  BroadcastChannelData,
+  BroadcastChannelMessageType,
+} from "./broadcast-channel";
 import { BufferedData } from "./buffered-data";
+import {
+  DataConnectionState,
+  DataConnectionType,
+  getInitialDataConnectionState,
+} from "./data-connection-flow";
 import { deployment } from "./deployment";
+import {
+  DownloadState,
+  DownloadStep,
+  SameOrDifferentChoice,
+} from "./download-flow/download-types";
 import { flags } from "./flags";
+import { LoadAction } from "./hooks/project-hooks";
 import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
 import { Logging } from "./logging/logging";
 import {
@@ -24,13 +41,9 @@ import {
 import { Confidences, predict, trainModel } from "./ml";
 import { mlSettings } from "./mlConfig";
 import {
-  DataConnectionState,
-  DataConnectionType,
-  getInitialDataConnectionState,
-} from "./data-connection-flow";
-import {
   Action,
   ActionData,
+  DataSamplesPageHint,
   DataSamplesView,
   EditorStartUp,
   OldActionData,
@@ -39,7 +52,6 @@ import {
   SaveState,
   SaveStep,
   tourSequence,
-  DataSamplesPageHint,
   TourState,
   TourTrigger,
   TourTriggerName,
@@ -53,8 +65,8 @@ import {
   migrateLegacyActionDataAndAssignNewIds,
   untitledProjectName,
 } from "./project-utils";
+import { projectSessionStorage } from "./session-storage";
 import { defaultSettings, Settings } from "./settings";
-import { Capacitor } from "@capacitor/core";
 import { SqliteDatabase } from "./sqlite-storage";
 import {
   Database,
@@ -66,18 +78,6 @@ import { getTour as getTourSpec } from "./tours";
 import { getTotalNumSamples } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { getDetectedAction } from "./utils/prediction";
-import {
-  DownloadState,
-  DownloadStep,
-  SameOrDifferentChoice,
-} from "./download-flow/download-types";
-import { LoadAction } from "./hooks/project-hooks";
-import {
-  broadcastChannel,
-  BroadcastChannelData,
-  BroadcastChannelMessageType,
-} from "./broadcast-channel";
-import { projectSessionStorage } from "./session-storage";
 
 // Use Capacitor.isNativePlatform() directly rather than the isNativePlatform()
 // helper (which also respects the simulateNative flag) because the Capacitor
@@ -227,6 +227,7 @@ export interface State {
   isNameProjectDialogOpen: boolean;
   isRecordingDialogOpen: boolean;
   isConnectToRecordDialogOpen: boolean;
+  isWelcomeDialogOpen: boolean;
 
   allProjectData: ProjectDataWithActions[];
 }
@@ -333,9 +334,39 @@ export interface Actions {
   connectToRecordDialogOnOpen(): void;
   closeDialog(): void;
   isNonConnectionDialogOpen(): boolean;
+  welcomeDialogOnOpen(): void;
 }
 
 type Store = State & Actions;
+
+/**
+ * Whether a closeable (simple, non-flow) dialog is currently open.
+ *
+ * Used by the Android back button handler to decide whether to dismiss a
+ * dialog via {@link closeDialog}. Must stay in sync with {@link closeDialog}.
+ *
+ * Excludes non-closeable operations (recording, training, saving) which
+ * swallow back navigation, and connection/download flows which have their
+ * own back/close logic.
+ */
+export const isCloseableDialogOpen = (state: State): boolean =>
+  state.isAboutDialogOpen ||
+  state.isSettingsDialogOpen ||
+  state.isConnectFirstDialogOpen ||
+  state.isLanguageDialogOpen ||
+  state.isFeedbackFormOpen ||
+  state.isDeleteAllActionsDialogOpen ||
+  state.isNameProjectDialogOpen ||
+  state.isConnectToRecordDialogOpen ||
+  state.isDeleteActionDialogOpen ||
+  state.isIncompatibleEditorDeviceDialogOpen ||
+  state.isWelcomeDialogOpen ||
+  state.isEditorTimedOutDialogOpen ||
+  state.postImportDialogState !== PostImportDialogState.None ||
+  (state.trainModelDialogStage !== TrainModelDialogStage.Closed &&
+    state.trainModelDialogStage !== TrainModelDialogStage.TrainingInProgress) ||
+  (state.save.step !== SaveStep.None &&
+    state.save.step !== SaveStep.SaveProgress);
 
 const createMlStore = (logging: Logging) => {
   return create<Store>()(
@@ -419,6 +450,7 @@ const createMlStore = (logging: Logging) => {
         isConnectToRecordDialogOpen: false,
         isDeleteActionDialogOpen: false,
         isIncompatibleEditorDeviceDialogOpen: false,
+        isWelcomeDialogOpen: false,
 
         allProjectData: [],
 
@@ -1819,6 +1851,9 @@ const createMlStore = (logging: Logging) => {
         incompatibleEditorDeviceDialogOnOpen() {
           set({ isIncompatibleEditorDeviceDialogOpen: true });
         },
+        welcomeDialogOnOpen() {
+          set({ isWelcomeDialogOpen: true });
+        },
         closeDialog() {
           set({
             isLanguageDialogOpen: false,
@@ -1832,6 +1867,11 @@ const createMlStore = (logging: Logging) => {
             isConnectToRecordDialogOpen: false,
             isDeleteActionDialogOpen: false,
             isIncompatibleEditorDeviceDialogOpen: false,
+            isWelcomeDialogOpen: false,
+            isEditorTimedOutDialogOpen: false,
+            trainModelDialogStage: TrainModelDialogStage.Closed,
+            postImportDialogState: PostImportDialogState.None,
+            save: { step: SaveStep.None },
           });
         },
 
@@ -1848,10 +1888,12 @@ const createMlStore = (logging: Logging) => {
             trainModelDialogStage,
             isEditorTimedOutDialogOpen,
             isDeleteAllActionsDialogOpen,
+            isNameProjectDialogOpen,
             isRecordingDialogOpen,
             isConnectToRecordDialogOpen,
             isDeleteActionDialogOpen,
             isIncompatibleEditorDeviceDialogOpen,
+            isWelcomeDialogOpen,
             save,
           } = get();
           return (
@@ -1861,6 +1903,7 @@ const createMlStore = (logging: Logging) => {
             isLanguageDialogOpen ||
             isFeedbackFormOpen ||
             isDeleteAllActionsDialogOpen ||
+            isNameProjectDialogOpen ||
             isRecordingDialogOpen ||
             isConnectToRecordDialogOpen ||
             isDeleteActionDialogOpen ||
@@ -1870,7 +1913,8 @@ const createMlStore = (logging: Logging) => {
             tourState !== undefined ||
             trainModelDialogStage !== TrainModelDialogStage.Closed ||
             isEditorTimedOutDialogOpen ||
-            save.step !== SaveStep.None
+            save.step !== SaveStep.None ||
+            isWelcomeDialogOpen
           );
         },
       }),

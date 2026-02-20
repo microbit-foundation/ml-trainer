@@ -29,6 +29,7 @@ import {
   BroadcastChannelData,
   BroadcastChannelMessageType,
 } from "./broadcast-channel";
+import { useNativeBackButton } from "./back-button";
 import { BufferedDataProvider } from "./buffered-data-hooks";
 import EditCodeDialog from "./components/EditCodeDialog";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -214,6 +215,9 @@ const Layout = () => {
     removeModel,
     updateProjectTimestampUrls,
   ]);
+
+  // Native back button / swipe-back handling (no-op on desktop).
+  useNativeBackButton();
 
   return (
     // We use this even though we have errorElement as this does logging.
