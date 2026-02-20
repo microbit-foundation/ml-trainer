@@ -34,6 +34,7 @@ import {
 import { useStore } from "../store";
 import { downloadHex } from "../utils/fs-util";
 import { checkPermissions } from "../shared-steps";
+import { isNativePlatform } from "../platform";
 
 /**
  * Dependencies needed for state machine action execution.
@@ -423,8 +424,13 @@ const performConnectData = async (
     if (clearDevice) {
       await connection.clearDevice();
     }
-    progressCallback(ProgressStage.Connecting, undefined);
-    await connection.connect();
+    if (isNativePlatform()) {
+      // Only show connecting progress stage for Native platforms. Hide UI for the other stages.
+      progressCallback(ProgressStage.Connecting, undefined);
+      await connection.connect();
+    } else {
+      await connection.connect({ progress: progressCallback });
+    }
     // Success event (deviceConnected) is sent by the status listener.
   } catch (e) {
     if (e instanceof DeviceError) {
