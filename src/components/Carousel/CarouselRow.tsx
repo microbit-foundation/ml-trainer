@@ -2,6 +2,7 @@ import { Box, Heading, HStack } from "@chakra-ui/react";
 import NewPageCarousel from "./NewPageCarousel/NewPageCarousel";
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
+import { isNativePlatform } from "../../platform";
 
 interface CarouselRowProps {
   carouselItems: JSX.Element[];
@@ -20,7 +21,12 @@ const CarouselRow = ({
 }: CarouselRowProps) => {
   return (
     <Box w="100%" py={8}>
-      <HStack px={[3, null, 16]} mt={2} mb={2} spacing={12}>
+      <HStack
+        px={isNativePlatform() ? 3 : [3, null, 16]}
+        mt={2}
+        mb={2}
+        spacing={12}
+      >
         {typeof titleId === "string" ? (
           <Heading as="h2" size="lg">
             <FormattedMessage id={titleId} />

@@ -164,7 +164,7 @@ export interface Database {
 
 enum DatabaseStore {
   PROJECT_DATA = "project-data",
-  MAKECODE_DATA = "makecode-data",
+  EDITOR_PROJECT = "editor-project",
   RECORDINGS = "recordings",
   ACTIONS = "actions",
   SETTINGS = "settings",
@@ -214,7 +214,7 @@ interface Schema extends DBSchema {
     value: StoreRecordingData;
     indexes: { actionId: string };
   };
-  [DatabaseStore.MAKECODE_DATA]: {
+  [DatabaseStore.EDITOR_PROJECT]: {
     key: string;
     value: MakeCodeData;
   };
@@ -260,41 +260,45 @@ export class IdbDatabase implements Database {
     return db;
   }
 
-  private initializeDb(): Promise<IDBPDatabase<Schema>> {
-    return openDB(DATABASE_NAME, 2, {
-      upgrade(db, oldVersion) {
-        if (oldVersion < 1) {
-          for (const store of Object.values(DatabaseStore)) {
-            const objectStore = db.createObjectStore(store);
-            if (store === DatabaseStore.ACTIONS) {
-              (
-                objectStore as IDBPObjectStore<
-                  Schema,
-                  ArrayLike<DatabaseStore>,
-                  DatabaseStore.ACTIONS,
-                  "versionchange"
-                >
-              ).createIndex("projectId", "projectId");
-            }
-            if (store === DatabaseStore.RECORDINGS) {
-              (
-                objectStore as IDBPObjectStore<
-                  Schema,
-                  ArrayLike<DatabaseStore>,
-                  DatabaseStore.RECORDINGS,
-                  "versionchange"
-                >
-              ).createIndex("actionId", "actionId");
-            }
+  private async initializeDb(): Promise<IDBPDatabase<Schema>> {
+    const db = await openDB<Schema>(DATABASE_NAME, 1, {
+      upgrade(db) {
+        for (const store of Object.values(DatabaseStore)) {
+          const objectStore = db.createObjectStore(store);
+          if (store === DatabaseStore.ACTIONS) {
+            (
+              objectStore as IDBPObjectStore<
+                Schema,
+                ArrayLike<DatabaseStore>,
+                DatabaseStore.ACTIONS,
+                "versionchange"
+              >
+            ).createIndex("projectId", "projectId");
           }
-        }
-        if (oldVersion < 2) {
-          if (!db.objectStoreNames.contains(DatabaseStore.MODELS)) {
-            db.createObjectStore(DatabaseStore.MODELS);
+          if (store === DatabaseStore.RECORDINGS) {
+            (
+              objectStore as IDBPObjectStore<
+                Schema,
+                ArrayLike<DatabaseStore>,
+                DatabaseStore.RECORDINGS,
+                "versionchange"
+              >
+            ).createIndex("actionId", "actionId");
           }
         }
       },
     });
+    for (const store of Object.values(DatabaseStore)) {
+      if (!db.objectStoreNames.contains(store)) {
+        db.close();
+        throw new DOMException(
+          `Database is missing expected store "${store}". ` +
+            "It may have been created by an incompatible version of the app.",
+          "VersionError"
+        );
+      }
+    }
+    return db;
   }
 
   private async migrateFromLocalStorage(
@@ -311,7 +315,7 @@ export class IdbDatabase implements Database {
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
         DatabaseStore.SETTINGS,
       ],
@@ -330,7 +334,7 @@ export class IdbDatabase implements Database {
         .map((r) => recordingsStore.add(r, r.id))
     );
 
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     await makeCodeStore.add(
       {
         project: localStorageProject.project,
@@ -368,13 +372,15 @@ export class IdbDatabase implements Database {
             };
           })
         );
-        await tf.io.removeModel(oldModelUrl);
       }
     } catch (err) {
       // There is no model.
     }
     projectSessionStorage.setProjectId(defaultProjectId);
-    localStorage.removeItem(DATABASE_NAME);
+    // TODO: Re-enable when merging beta to main. Disabled because beta
+    // shares an origin with live, so we must not delete live's data.
+    // await tf.io.removeModel(oldModelUrl);
+    // localStorage.removeItem(DATABASE_NAME);
   }
 
   async newSession(
@@ -386,7 +392,7 @@ export class IdbDatabase implements Database {
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
         DatabaseStore.RECORDINGS,
       ],
@@ -402,7 +408,7 @@ export class IdbDatabase implements Database {
     await Promise.all(
       actions.map((a) => actionsStore.add(prepActionForStorage(a, id), a.id))
     );
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     await makeCodeStore.add(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     await projectDataStore.add(projectData, id);
@@ -414,7 +420,7 @@ export class IdbDatabase implements Database {
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
         DatabaseStore.SETTINGS,
       ],
@@ -445,7 +451,7 @@ export class IdbDatabase implements Database {
         };
       })
     );
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     const makeCodeData = assertData(await makeCodeStore.get(id));
     const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
     const settings = assertData(
@@ -468,7 +474,7 @@ export class IdbDatabase implements Database {
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
         DatabaseStore.SETTINGS,
       ],
@@ -502,7 +508,7 @@ export class IdbDatabase implements Database {
         };
       })
     );
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     const makeCodeData = assertData(await makeCodeStore.get(id));
     const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
     const settings = assertData(
@@ -530,7 +536,7 @@ export class IdbDatabase implements Database {
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
         DatabaseStore.SETTINGS,
       ],
@@ -546,7 +552,7 @@ export class IdbDatabase implements Database {
     await Promise.all(
       actions.map((a) => actionsStore.add(prepActionForStorage(a, id), a.id))
     );
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     await makeCodeStore.add(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     await projectDataStore.add(
@@ -594,7 +600,7 @@ export class IdbDatabase implements Database {
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
       ],
       "readwrite"
@@ -602,7 +608,7 @@ export class IdbDatabase implements Database {
     const actionToStore = prepActionForStorage(action, id);
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     await actionsStore.add(actionToStore, actionToStore.id);
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(id));
@@ -626,7 +632,7 @@ export class IdbDatabase implements Database {
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
       ],
       "readwrite"
@@ -634,7 +640,7 @@ export class IdbDatabase implements Database {
     const actionToStore = prepActionForStorage(action, id);
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     await actionsStore.put(actionToStore, actionToStore.id);
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(id));
@@ -658,7 +664,7 @@ export class IdbDatabase implements Database {
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
       ],
       "readwrite"
@@ -669,7 +675,7 @@ export class IdbDatabase implements Database {
         actionsStore.put(prepActionForStorage(action, id), action.id)
       )
     );
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(id));
@@ -695,7 +701,7 @@ export class IdbDatabase implements Database {
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
       ],
       "readwrite"
@@ -715,7 +721,7 @@ export class IdbDatabase implements Database {
     await Promise.all(
       newActions.map((a) => actionsStore.add(prepActionForStorage(a, id), a.id))
     );
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(id));
@@ -734,7 +740,7 @@ export class IdbDatabase implements Database {
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
       ],
       "readwrite"
@@ -759,7 +765,7 @@ export class IdbDatabase implements Database {
     await Promise.all(
       newActions.map((a) => actionsStore.add(prepActionForStorage(a, id), a.id))
     );
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     await makeCodeStore.put(makeCodeData, id);
     await projectDataStore.put({ ...projectData, timestamp }, id);
     return tx.done;
@@ -776,7 +782,7 @@ export class IdbDatabase implements Database {
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
         DatabaseStore.SETTINGS,
       ],
@@ -800,7 +806,7 @@ export class IdbDatabase implements Database {
     await Promise.all(
       actions.map((a) => actionsStore.add(prepActionForStorage(a, id), a.id))
     );
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     await projectDataStore.put(
@@ -827,7 +833,7 @@ export class IdbDatabase implements Database {
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
         DatabaseStore.RECORDINGS,
       ],
@@ -841,7 +847,7 @@ export class IdbDatabase implements Database {
       { ...recording, actionId: action.id },
       recording.id
     );
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(id));
@@ -866,7 +872,7 @@ export class IdbDatabase implements Database {
     const tx = (await this.useDb()).transaction(
       [
         DatabaseStore.ACTIONS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
         DatabaseStore.RECORDINGS,
       ],
@@ -877,7 +883,7 @@ export class IdbDatabase implements Database {
     await actionsStore.put(actionToStore, actionToStore.id);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
     await recordingsStore.delete(key);
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(id));
@@ -898,10 +904,10 @@ export class IdbDatabase implements Database {
   ): Promise<void> {
     id = this.assertProjectId(id);
     const tx = (await this.useDb()).transaction(
-      [DatabaseStore.MAKECODE_DATA, DatabaseStore.PROJECT_DATA],
+      [DatabaseStore.EDITOR_PROJECT, DatabaseStore.PROJECT_DATA],
       "readwrite"
     );
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     await makeCodeStore.put(makeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(id));
@@ -936,10 +942,10 @@ export class IdbDatabase implements Database {
 
   async renameProject(id: string, name: string, timestamp: number) {
     const tx = (await this.useDb()).transaction(
-      [DatabaseStore.MAKECODE_DATA, DatabaseStore.PROJECT_DATA],
+      [DatabaseStore.EDITOR_PROJECT, DatabaseStore.PROJECT_DATA],
       "readwrite"
     );
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     const makeCodeData = assertData(await makeCodeStore.get(id));
     await makeCodeStore.put(
       {
@@ -978,7 +984,7 @@ export class IdbDatabase implements Database {
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.MODELS,
         DatabaseStore.PROJECT_DATA,
       ],
@@ -1014,7 +1020,7 @@ export class IdbDatabase implements Database {
       })
     );
     await Promise.all(storePromises);
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     const makeCodeData = assertData(await makeCodeStore.get(existingProjectId));
     await makeCodeStore.add(
       {
@@ -1057,7 +1063,7 @@ export class IdbDatabase implements Database {
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.MODELS,
         DatabaseStore.PROJECT_DATA,
       ],
@@ -1073,7 +1079,7 @@ export class IdbDatabase implements Database {
       )
     ).flat();
     await Promise.all(recordingIds.map((id) => recordingsStore.delete(id)));
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     await makeCodeStore.delete(id);
     await tx.objectStore(DatabaseStore.MODELS).delete(id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
@@ -1086,7 +1092,7 @@ export class IdbDatabase implements Database {
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
-        DatabaseStore.MAKECODE_DATA,
+        DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.MODELS,
         DatabaseStore.PROJECT_DATA,
       ],
@@ -1094,7 +1100,7 @@ export class IdbDatabase implements Database {
     );
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    const makeCodeStore = tx.objectStore(DatabaseStore.MAKECODE_DATA);
+    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     const modelsStore = tx.objectStore(DatabaseStore.MODELS);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const actionIds = (

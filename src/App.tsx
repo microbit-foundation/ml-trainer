@@ -22,6 +22,7 @@ import {
   ScrollRestoration,
   useLocation,
   useNavigate,
+  useRouteError,
 } from "react-router-dom";
 import "theme-package/fonts/fonts.css";
 import {
@@ -244,6 +245,11 @@ const commonLoaderFunction = () => {
   return { projectLoaded: true };
 };
 
+const RouteErrorView = () => {
+  const error = useRouteError();
+  return <ErrorHandlerErrorView error={error} />;
+};
+
 const createRouter = () => {
   return createBrowserRouter([
     {
@@ -253,7 +259,7 @@ const createRouter = () => {
       // This one gets used for loader errors (typically offline)
       // We set an error boundary inside the routes too that logs render-time errors.
       // ErrorBoundary doesn't work properly in the loader case at least.
-      errorElement: <ErrorHandlerErrorView />,
+      errorElement: <RouteErrorView />,
       children: [
         {
           path: createHomePageUrl(),
