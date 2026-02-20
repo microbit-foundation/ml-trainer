@@ -157,14 +157,7 @@ const DefaultPageLayout = ({
                   />
                 )
               }
-              itemsLeftProps={{
-                width: 0,
-                display: { base: "none", sm: "flex" },
-              }}
-              itemsCenterProps={{
-                flex: { base: "4 0", sm: "unset" },
-                justifyContent: { base: "flex-start", sm: "center" },
-              }}
+              itemsLeftProps={{ width: 0 }}
               itemsRight={
                 <ItemsRight
                   menuItems={menuItems}
