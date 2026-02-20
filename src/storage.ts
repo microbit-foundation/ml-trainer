@@ -368,13 +368,15 @@ export class IdbDatabase implements Database {
             };
           })
         );
-        await tf.io.removeModel(oldModelUrl);
       }
     } catch (err) {
       // There is no model.
     }
     projectSessionStorage.setProjectId(defaultProjectId);
-    localStorage.removeItem(DATABASE_NAME);
+    // TODO: Re-enable when merging beta to main. Disabled because beta
+    // shares an origin with live, so we must not delete live's data.
+    // await tf.io.removeModel(oldModelUrl);
+    // localStorage.removeItem(DATABASE_NAME);
   }
 
   async newSession(
