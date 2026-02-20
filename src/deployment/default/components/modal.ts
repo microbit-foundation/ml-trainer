@@ -11,10 +11,26 @@ const { definePartsStyle, defineMultiStyleConfig } =
 
 /**
  * Add horizontal margin for breathing room on mobile.
+ *
+ * Override Chakra's default 100vw/100vh on the overlay and dialog
+ * container with 100%. Both elements use position:fixed so 100% is
+ * relative to the viewport (the initial containing block) — same
+ * result as 100vw but immune to iOS WKWebView returning stale
+ * viewport-unit values after the app resumes from background.
+ *
+ * See https://bugs.webkit.org/show_bug.cgi?id=170595
  */
 const baseStyle = definePartsStyle({
   dialog: {
     mx: 2,
+  },
+  overlay: {
+    w: "100%",
+    h: "100%",
+  },
+  dialogContainer: {
+    width: "100%",
+    height: "100%",
   },
 });
 
@@ -25,7 +41,7 @@ const baseStyle = definePartsStyle({
 const full = definePartsStyle({
   dialog: {
     mx: 0,
-    maxHeight: "100dvh",
+    maxHeight: "100%",
     paddingTop: "env(safe-area-inset-top)",
     paddingBottom: "env(safe-area-inset-bottom)",
     paddingLeft: "env(safe-area-inset-left)",
