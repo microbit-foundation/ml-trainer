@@ -39,7 +39,7 @@ import DefaultPageLayout, {
 } from "../components/DefaultPageLayout";
 import { createHelpCards } from "../components/HelpCards";
 import { createLessonCards } from "../components/LessonCards";
-import LoadingPage from "../components/LoadingPage";
+import LoadingAnimation from "../components/LoadingAnimation";
 import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
@@ -63,12 +63,12 @@ const HomePage = () => {
   const [{ languageId }] = useSettings();
 
   return (
-    <Suspense fallback={<LoadingPage />}>
-      <Await resolve={allProjectDataLoaded}>
-        <DefaultPageLayout
-          toolbarItemsRight={<HomeToolbarItem />}
-          menuItems={<HomeMenuItem />}
-        >
+    <DefaultPageLayout
+      toolbarItemsRight={<HomeToolbarItem />}
+      menuItems={<HomeMenuItem />}
+    >
+      <Suspense fallback={<LoadingAnimation />}>
+        <Await resolve={allProjectDataLoaded}>
           <ProjectRow />
           <CarouselRow
             containerMessageId="project-ideas-row-carousel"
@@ -85,9 +85,9 @@ const HomePage = () => {
             carouselItems={createHelpCards(intl)}
             titleId="help-resources-row-title"
           />
-        </DefaultPageLayout>
-      </Await>
-    </Suspense>
+        </Await>
+      </Suspense>
+    </DefaultPageLayout>
   );
 };
 

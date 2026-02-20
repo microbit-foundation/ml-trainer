@@ -15,13 +15,30 @@ import { RiEditLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
 import { useStore } from "../store";
 
-const backgroundColor = "blackAlpha.300";
-
 interface EditableNameProps {
   suffix?: ReactNode;
+  variant?: "toolbar" | "drawer";
 }
 
-const EditableName = ({ suffix }: EditableNameProps) => {
+const variantStyles = {
+  toolbar: {
+    color: "white",
+    backgroundColor: "blackAlpha.300",
+    focusShadow: "outlineDark",
+    maxW: "200px",
+    fontSize: 20,
+  },
+  drawer: {
+    color: "gray.800",
+    backgroundColor: "blackAlpha.100",
+    focusShadow: "outline",
+    maxW: "100%",
+    fontSize: 16,
+  },
+};
+
+const EditableName = ({ suffix, variant = "toolbar" }: EditableNameProps) => {
+  const styles = variantStyles[variant];
   const intl = useIntl();
   const getCurrentProject = useStore((s) => s.getCurrentProject);
   const renameProject = useStore((s) => s.setProjectName);
@@ -61,8 +78,9 @@ const EditableName = ({ suffix }: EditableNameProps) => {
   return (
     <Editable
       alignItems="center"
-      color="white"
+      color={styles.color}
       display="flex"
+      w={variant === "drawer" ? "100%" : undefined}
       finalFocusRef={ref}
       isPreviewFocusable={false}
       onCancel={handleCancel}
@@ -71,18 +89,22 @@ const EditableName = ({ suffix }: EditableNameProps) => {
       value={value}
     >
       {({ onEdit, isEditing }) => (
-        <HStack spacing={0}>
+        <HStack spacing={0} w={variant === "drawer" ? "100%" : undefined}>
           {isEditing ? (
             <InputGroup
-              backgroundColor={backgroundColor}
+              backgroundColor={styles.backgroundColor}
               borderRadius="md"
-              minW="250px"
+              minW={variant === "drawer" ? undefined : "250px"}
+              w={variant === "drawer" ? "100%" : undefined}
             >
-              <InputLeftElement pointerEvents="none">
-                <Icon as={RiEditLine} />
-              </InputLeftElement>
+              {variant !== "drawer" && (
+                <InputLeftElement pointerEvents="none">
+                  <Icon as={RiEditLine} />
+                </InputLeftElement>
+              )}
               <Input
                 as={EditableInput}
+                pl={variant === "drawer" ? 3 : undefined}
                 aria-label={intl.formatMessage({ id: "project-name-text" })}
                 _focusVisible={{
                   boxShadow: "0 0 0 2px rgba(0, 0, 0, 0.5)",
@@ -95,28 +117,32 @@ const EditableName = ({ suffix }: EditableNameProps) => {
                 label={intl.formatMessage({ id: "project-name-tooltip" })}
                 hasArrow
                 placement="bottom"
+                isDisabled={variant === "drawer"}
               >
                 <Button
                   display="flex"
                   h={10}
                   p={1.5}
+                  pl={variant === "drawer" ? 0 : 1.5}
                   borderRadius="md"
                   _hover={{
-                    backgroundColor,
+                    backgroundColor: styles.backgroundColor,
                   }}
                   fontWeight="normal"
                   onClick={onEdit}
                   ref={ref}
                   variant="unstyled"
-                  leftIcon={<Icon as={RiEditLine} />}
+                  {...(variant === "drawer"
+                    ? { rightIcon: <Icon as={RiEditLine} /> }
+                    : { leftIcon: <Icon as={RiEditLine} /> })}
                   _focusVisible={{
-                    boxShadow: "outlineDark",
+                    boxShadow: styles.focusShadow,
                   }}
                 >
                   <EditablePreview
                     cursor="pointer"
-                    fontSize={20}
-                    maxW="200px"
+                    fontSize={styles.fontSize}
+                    maxW={styles.maxW}
                     w="fit-content"
                     noOfLines={1}
                     textAlign="left"

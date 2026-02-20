@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  Box,
   Button,
   Flex,
   Heading,
@@ -12,13 +13,14 @@ import {
   IconButton,
   MenuDivider,
   MenuItem,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { ReactNode, useCallback, useEffect } from "react";
+import { ReactNode, useCallback, useEffect, useMemo } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { RiDownload2Line, RiHome2Line } from "react-icons/ri";
+import { RiDownload2Line, RiHome2Line, RiMenuLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
@@ -34,8 +36,11 @@ import AppLogo from "./AppLogo";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
 import EditableName from "./EditableName";
 import FeedbackForm from "./FeedbackForm";
+import { tourMap } from "./HelpMenuItems";
 import ImportErrorDialog from "./ImportErrorDialog";
+import Link from "./Link";
 import MakeCodeLoadErrorDialog from "./MakeCodeLoadErrorDialog";
+import NavigationDrawer from "./NavigationDrawer";
 import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
@@ -66,6 +71,7 @@ const DefaultPageLayout = ({
     s.isNonConnectionDialogOpen()
   );
   const { appNameFull } = useDeployment();
+  const drawer = useDisclosure();
 
   useEffect(() => {
     document.title = titleId
@@ -81,6 +87,24 @@ const DefaultPageLayout = ({
 
   const isFeedbackOpen = useStore((s) => s.isFeedbackFormOpen);
   const closeDialog = useStore((s) => s.closeDialog);
+
+  const tourTriggerName = tourMap[useLocation().pathname];
+  const tourTrigger = useMemo(() => {
+    switch (tourTriggerName) {
+      case "TrainModel": {
+        return {
+          name: tourTriggerName,
+          delayedUntilConnection: true,
+        };
+      }
+      case "Connect": {
+        return { name: tourTriggerName };
+      }
+      default: {
+        return undefined;
+      }
+    }
+  }, [tourTriggerName]);
 
   return (
     <>
@@ -98,6 +122,12 @@ const DefaultPageLayout = ({
       />
       <MakeCodeLoadErrorDialog />
       <FeedbackForm isOpen={isFeedbackOpen} onClose={closeDialog} />
+      <NavigationDrawer
+        isOpen={drawer.isOpen}
+        onClose={drawer.onClose}
+        showProjectName={showProjectName}
+        tourTrigger={tourTrigger}
+      />
       <ProjectDropTarget
         isEnabled={!isNonConnectionDialogOpen && !isConnectionDialogOpen}
       >
@@ -111,33 +141,48 @@ const DefaultPageLayout = ({
           <VStack zIndex={999} position="sticky" top={0} gap={0}>
             <ActionBar
               w="100%"
-              px={{ base: 3, sm: 5 }}
+              px={{ base: 2, md: 5 }}
               itemsCenter={
                 showProjectName || showPageTitle ? (
                   <HStack h={10}>
+                    {/* Desktop/tablet: show project name + page title */}
                     {showProjectName && (
-                      <EditableName
-                        suffix={
-                          showPageTitle ? (
-                            <>
-                              <Icon
-                                as={MdOutlineKeyboardArrowRight}
-                                color="white"
-                                boxSize="6"
-                              />
-                              <Heading
-                                size="md"
-                                fontWeight="normal"
-                                color="white"
-                              >
-                                <FormattedMessage id={titleId} />
-                              </Heading>
-                            </>
-                          ) : undefined
-                        }
-                      />
+                      <Box display={{ base: "none", md: "flex" }}>
+                        <EditableName
+                          suffix={
+                            showPageTitle ? (
+                              <>
+                                <Icon
+                                  as={MdOutlineKeyboardArrowRight}
+                                  color="white"
+                                  boxSize="6"
+                                />
+                                <Heading
+                                  size="md"
+                                  fontWeight="normal"
+                                  color="white"
+                                >
+                                  <FormattedMessage id={titleId} />
+                                </Heading>
+                              </>
+                            ) : undefined
+                          }
+                        />
+                      </Box>
                     )}
-                    {!showProjectName && showPageTitle && (
+                    {/* Mobile: page title only (project name is in drawer) */}
+                    {showPageTitle && showProjectName && (
+                      <Heading
+                        display={{ base: "block", md: "none" }}
+                        size="md"
+                        fontWeight="normal"
+                        color="white"
+                      >
+                        <FormattedMessage id={titleId} />
+                      </Heading>
+                    )}
+                    {/* All breakpoints: page title when no project name */}
+                    {showPageTitle && !showProjectName && (
                       <Heading size="md" fontWeight="normal" color="white">
                         <FormattedMessage id={titleId} />
                       </Heading>
@@ -146,16 +191,43 @@ const DefaultPageLayout = ({
                 ) : undefined
               }
               itemsLeft={
-                toolbarItemsLeft || (
-                  <AppLogo
-                    display={
-                      showPageTitle
-                        ? { base: "none", lg: "inline-flex" }
-                        : "inline-flex"
-                    }
-                    transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}
+                <>
+                  {/* Mobile: hamburger button */}
+                  <IconButton
+                    display={{ base: "inline-flex", md: "none" }}
+                    aria-label={intl.formatMessage({ id: "main-menu" })}
+                    icon={<RiMenuLine size={24} />}
+                    color="white"
+                    variant="plain"
+                    size="lg"
+                    fontSize="xl"
+                    onClick={drawer.onOpen}
+                    _focusVisible={{
+                      boxShadow: "outlineDark",
+                    }}
                   />
-                )
+                  {/* Mobile: app logo when no page title */}
+                  {!showPageTitle && !showProjectName && (
+                    <Box display={{ base: "flex", md: "none" }} ml={1}>
+                      <AppLogo transform="scale(0.8)" transformOrigin="left" />
+                    </Box>
+                  )}
+                  {/* Desktop/tablet: logo or custom left items */}
+                  {toolbarItemsLeft || (
+                    <Link
+                      href={createHomePageUrl()}
+                      display={{ base: "none", md: "inline-flex" }}
+                      _focusVisible={{
+                        boxShadow: "outlineDark",
+                        borderRadius: "md",
+                      }}
+                    >
+                      <AppLogo
+                        transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}
+                      />
+                    </Link>
+                  )}
+                </>
               }
               itemsLeftProps={{ width: 0 }}
               itemsRight={

@@ -2485,6 +2485,12 @@
       "value": "Project ideas"
     }
   ],
+  "project-label": [
+    {
+      "type": 0,
+      "value": "Project"
+    }
+  ],
   "project-loaded": [
     {
       "type": 0,

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, MenuDivider } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 import { ReactNode, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
@@ -12,7 +12,7 @@ import { useStore } from "../../store";
 import AboutDialog from "../AboutDialog";
 import ConnectFirstDialog from "../ConnectFirstDialog";
 import HelpMenu from "../HelpMenu";
-import HelpMenuItems, { tourMap } from "../HelpMenuItems";
+import { tourMap } from "../HelpMenuItems";
 import { LanguageDialog } from "../LanguageDialog";
 import LanguageMenuItem from "../LanguageMenuItem";
 import { SettingsDialog } from "../SettingsDialog";
@@ -92,23 +92,6 @@ const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
         {menuItems}
         <LanguageMenuItem onOpen={languageDialogOnOpen} />
         <SettingsMenuItem onOpen={settingsDialogOnOpen} />
-      </ToolbarMenu>
-      {/* Toolbar items when sm window size. */}
-      <ToolbarMenu
-        display={{ base: "block", md: "none" }}
-        variant="plain"
-        label={intl.formatMessage({ id: "main-menu" })}
-      >
-        {menuItems}
-        <LanguageMenuItem onOpen={languageDialogOnOpen} />
-        <SettingsMenuItem onOpen={settingsDialogOnOpen} />
-        <MenuDivider />
-        <HelpMenuItems
-          onAboutDialogOpen={aboutDialogOnOpen}
-          onConnectFirstDialogOpen={connectFirstDialogOnOpen}
-          onFeedbackOpen={feedbackOnOpen}
-          tourTrigger={tourTrigger}
-        />
       </ToolbarMenu>
     </>
   );
