@@ -34,7 +34,6 @@ import {
 import { useStore } from "../store";
 import { downloadHex } from "../utils/fs-util";
 import { checkPermissions } from "../shared-steps";
-import { isNativePlatform } from "../platform";
 
 /**
  * Dependencies needed for state machine action execution.
