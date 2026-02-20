@@ -17,7 +17,7 @@ import {
   idleBluetoothReconnect,
   idleBrowserUnsupported,
   idleFreshStart,
-  setMicrobitNameHandler,
+  setPendingMicrobitNameHandler,
   switchToRadio,
   webUsbBluetoothUnsupportedState,
   webUsbFlashingTutorialState,
@@ -72,7 +72,6 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
       ],
       flashSuccess: {
         target: DataConnectionStep.ConnectBattery,
-        actions: [{ type: "setMicrobitName" }],
       },
       flashFailure: {
         target: DataConnectionStep.ManualFlashingTutorial,
@@ -99,7 +98,7 @@ export const webBluetoothFlow: DataConnectionFlowDef = {
     on: {
       next: { target: DataConnectionStep.WebBluetoothPreConnectTutorial },
       back: { target: DataConnectionStep.ConnectBattery },
-      ...setMicrobitNameHandler,
+      ...setPendingMicrobitNameHandler,
     },
   },
 

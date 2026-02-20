@@ -186,6 +186,12 @@ export interface DataConnectionState {
    * If `undefined`, there is no process to abort.
    */
   connectionAbortController: AbortController | undefined;
+
+  /**
+   * Pending Bluetooth micro:bit name to potentially save if connection succeeds.
+   * If `undefined`, there is no pending micro:bit name to consider.
+   */
+  pendingBluetoothMicrobitName: string | undefined;
 }
 
 /**
@@ -227,6 +233,7 @@ export const getInitialDataConnectionState = (): DataConnectionState => {
     isCheckingPermissions: false,
     pairingMethod: "triple-reset",
     connectionAbortController: undefined,
+    pendingBluetoothMicrobitName: undefined,
   };
 };
 

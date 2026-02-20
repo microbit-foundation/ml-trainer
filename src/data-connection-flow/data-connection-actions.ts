@@ -173,16 +173,26 @@ const executeAction = async (
       break;
     }
 
-    case "setMicrobitName": {
-      // Extract name from either setMicrobitName event (user input) or flashSuccess event (from USB flashing)
-      const name =
-        event.type === "setMicrobitName"
-          ? event.name
-          : event.type === "flashSuccess"
-          ? event.bluetoothMicrobitName
-          : undefined;
-      if (name) {
-        await useStore.getState().setSettings({ bluetoothMicrobitName: name });
+    case "saveMicrobitName": {
+      const pendingName = getDataConnectionState().pendingBluetoothMicrobitName;
+      if (pendingName) {
+        await useStore
+          .getState()
+          .setSettings({ bluetoothMicrobitName: pendingName });
+        setDataConnectionState({
+          ...getDataConnectionState(),
+          pendingBluetoothMicrobitName: undefined,
+        });
+      }
+      break;
+    }
+
+    case "setPendingMicrobitName": {
+      if (event.type === "setPendingMicrobitName") {
+        setDataConnectionState({
+          ...getDataConnectionState(),
+          pendingBluetoothMicrobitName: event.name,
+        });
       }
       break;
     }

@@ -8,13 +8,14 @@ import {
   connectedState,
   connectFlashSuccessHandler,
   createInitialConnectHandlers,
+  DataConnectionAction,
   DataConnectionFlowDef,
   globalHandlers,
   guards,
   idleBluetoothReconnect,
   idleFreshStart,
   nativeBluetoothRecoveryStates,
-  setMicrobitNameHandler,
+  setPendingMicrobitNameHandler,
 } from "./data-connection-machine-common";
 import { DataConnectionStep } from "./data-connection-types";
 import { always } from "../state-machine";
@@ -54,6 +55,9 @@ const connectFlashFailureWithErrorHandling = [
   {
     guard: always,
     target: DataConnectionStep.ConnectFailed,
+    actions: [
+      { type: "setPendingMicrobitName", name: undefined },
+    ] as DataConnectionAction[],
   },
 ];
 
@@ -126,7 +130,7 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
         actions: [{ type: "connectFlash", clearDevice: true }],
       },
       back: { target: DataConnectionStep.NativeBluetoothPreConnectTutorial },
-      ...setMicrobitNameHandler,
+      ...setPendingMicrobitNameHandler,
     },
   },
 

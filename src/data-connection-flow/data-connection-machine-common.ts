@@ -39,7 +39,8 @@ export type DataConnectionEvent =
    * From MicrobitUnsupported dialog.
    */
   | { type: "startBluetoothFlow" }
-  | { type: "setMicrobitName"; name: string }
+  | { type: "saveMicrobitName"; name: string }
+  | { type: "setPendingMicrobitName"; name: string | undefined }
   | { type: "changeBluetoothPattern" }
   | { type: "connectFlashSuccess"; boardVersion?: BoardVersion }
   | {
@@ -83,9 +84,13 @@ export type DataConnectionEvent =
 export type DataConnectionAction =
   | { type: "setConnectionType"; connectionType: DataConnectionType }
   /**
-   * Sets micro:bit name from setMicrobitName event (user input) or flashSuccess event (from flashing).
+   * Saves micro:bit name from pending micro:bit name and clears pending micro:bit name.
    */
-  | { type: "setMicrobitName" }
+  | { type: "saveMicrobitName" }
+  /**
+   * Sets pending micro:bit name from user input.
+   */
+  | { type: "setPendingMicrobitName"; name: string | undefined }
   | { type: "clearMicrobitName" }
   | { type: "setRadioRemoteDeviceId"; deviceId?: number }
   | { type: "setRadioBridgeDeviceId"; deviceId?: number }
@@ -635,22 +640,25 @@ export const nativeBluetoothRecoveryStates = createRecoveryStates(
 // =============================================================================
 
 /**
- * Handler for setMicrobitName event - stores the micro:bit name from user input.
- * Used by WebBluetooth and NativeBluetooth flows in BluetoothPattern step.
+ * Handler for setPendingMicrobitName event - stores the micro:bit name from user input.
+ * Used by WebBluetooth and NativeBluetooth flows when connect flash succeeds.
  */
-export const setMicrobitNameHandler = {
-  setMicrobitName: {
-    actions: [{ type: "setMicrobitName" }] as DataConnectionAction[],
+export const setPendingMicrobitNameHandler = {
+  setPendingMicrobitName: {
+    actions: [{ type: "setPendingMicrobitName" }] as DataConnectionAction[],
   },
 };
 
 /**
- * Handler for connectFlashSuccess that triggers flash.
+ * Handler for connectFlashSuccess that triggers flash and saves micro:bit name.
  * Used by WebBluetooth and NativeBluetooth flows in FlashingInProgress step.
  */
 export const connectFlashSuccessHandler = {
   connectFlashSuccess: {
-    actions: [{ type: "flash" }] as DataConnectionAction[],
+    actions: [
+      { type: "saveMicrobitName" },
+      { type: "flash" },
+    ] as DataConnectionAction[],
   },
 };
 

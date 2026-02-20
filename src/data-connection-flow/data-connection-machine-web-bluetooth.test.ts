@@ -29,7 +29,7 @@ const createContext = (
   isCheckingPermissions: false,
   pairingMethod: "triple-reset",
   connectionAbortController: undefined,
-  bluetoothMicrobitName: undefined,
+  pendingBluetoothMicrobitName: undefined,
   ...overrides,
 });
 
@@ -140,14 +140,16 @@ describe("Data connection flow: Web Bluetooth", () => {
       });
     });
 
-    it("BluetoothPattern setMicrobitName -> stays on BluetoothPattern with setMicrobitName action", () => {
+    it("BluetoothPattern setPendingMicrobitName -> stays on BluetoothPattern with setPendingMicrobitName action", () => {
       const result = transition(DataConnectionStep.EnterBluetoothPattern, {
-        type: "setMicrobitName",
+        type: "setPendingMicrobitName",
         name: "zogup",
       });
 
       expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);
-      expect(result?.actions).toContainEqual({ type: "setMicrobitName" });
+      expect(result?.actions).toContainEqual({
+        type: "setPendingMicrobitName",
+      });
     });
   });
 
@@ -219,7 +221,10 @@ describe("Data connection flow: Web Bluetooth", () => {
       });
 
       expect(result?.step).toBe(DataConnectionStep.FlashingInProgress);
-      expect(result?.actions).toContainEqual({ type: "flash" });
+      expect(result?.actions).toContainEqual([
+        { type: "saveMicrobitName" },
+        { type: "flash" },
+      ]);
     });
 
     it("connectFlashFailure with bad firmware -> BadFirmware", () => {
@@ -247,7 +252,6 @@ describe("Data connection flow: Web Bluetooth", () => {
       });
 
       expect(result?.step).toBe(DataConnectionStep.ConnectBattery);
-      expect(result?.actions).toContainEqual({ type: "setMicrobitName" });
     });
 
     it("flashFailure -> ManualFlashingTutorial with downloadHexFile", () => {
