@@ -221,7 +221,7 @@ describe("Data connection flow: Web Bluetooth", () => {
       });
 
       expect(result?.step).toBe(DataConnectionStep.FlashingInProgress);
-      expect(result?.actions).toContainEqual([
+      expect(result?.actions).toEqual([
         { type: "saveMicrobitName" },
         { type: "flash" },
       ]);
