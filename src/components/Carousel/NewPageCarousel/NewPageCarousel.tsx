@@ -2,6 +2,7 @@ import { useCallback, useMemo } from "react";
 import SwiperCarousel from "../SwiperCarousel/SwiperCarousel";
 import styles from "./NewPageCarousel.module.css";
 import { SwiperClass } from "swiper/react";
+import { isNativePlatform } from "../../../platform";
 
 const slow = 3000;
 const fast = 1000;
@@ -23,6 +24,9 @@ const NewPageCarousel = ({
 }: NewPageCarouselProps) => {
   const getOffset = useCallback(
     (slidesPerGroup: number) => {
+      if (isNativePlatform()) {
+        return 0;
+      }
       if (centerItems && carouselItems.length <= slidesPerGroup) {
         return 0;
       }

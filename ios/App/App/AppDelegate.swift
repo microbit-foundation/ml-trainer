@@ -26,7 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        // Work around an iOS WKWebView bug where viewport units (vw, vh)
+        // become stale after the app resumes from background. Forcing a
+        // layout pass may cause WebKit to recalculate them.
+        // See https://bugs.webkit.org/show_bug.cgi?id=170595
+        guard let vc = window?.rootViewController as? CAPBridgeViewController,
+              let webView = vc.webView else { return }
+        webView.setNeedsLayout()
+        webView.layoutIfNeeded()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

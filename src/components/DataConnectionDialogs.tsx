@@ -41,6 +41,7 @@ import { DataConnectionState } from "../data-connection-flow/data-connection-typ
 import NativeBluetoothPairingLostDialog from "./NativeBluetoothPairingLostDialog";
 import ResetToBluetoothModeTroubleshootDialog from "./ResetToBluetoothModeTroubleshootDialog";
 import CompareBluetoothPatternDialog from "./CompareBluetoothPatternDialog";
+import BluetoothConnectingDialog from "./BluetoothConnectingDialog";
 
 const getDeviceType = (state: DataConnectionState): ConnectionErrorDeviceType =>
   state.type === DataConnectionType.Radio
@@ -189,11 +190,9 @@ const DataConnectionDialogs = () => {
     }
     case DataConnectionStep.BluetoothConnect: {
       return (
-        <DownloadProgressDialog
-          headingId="connect-bluetooth-heading"
+        <BluetoothConnectingDialog
           isOpen={isOpen}
           stage={flashProgress.stage}
-          progress={flashProgress.value}
         />
       );
     }

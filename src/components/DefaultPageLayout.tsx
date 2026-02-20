@@ -129,35 +129,37 @@ const DefaultPageLayout = ({
               w="100%"
               px={{ base: 3, sm: 5 }}
               itemsCenter={
-                <HStack h={10}>
-                  {showProjectName && (
-                    <EditableName
-                      suffix={
-                        showPageTitle ? (
-                          <>
-                            <Icon
-                              as={MdOutlineKeyboardArrowRight}
-                              color="white"
-                              boxSize="6"
-                            />
-                            <Heading
-                              size="md"
-                              fontWeight="normal"
-                              color="white"
-                            >
-                              <FormattedMessage id={titleId} />
-                            </Heading>
-                          </>
-                        ) : undefined
-                      }
-                    />
-                  )}
-                  {!showProjectName && showPageTitle && (
-                    <Heading size="md" fontWeight="normal" color="white">
-                      <FormattedMessage id={titleId} />
-                    </Heading>
-                  )}
-                </HStack>
+                showProjectName || showPageTitle ? (
+                  <HStack h={10}>
+                    {showProjectName && (
+                      <EditableName
+                        suffix={
+                          showPageTitle ? (
+                            <>
+                              <Icon
+                                as={MdOutlineKeyboardArrowRight}
+                                color="white"
+                                boxSize="6"
+                              />
+                              <Heading
+                                size="md"
+                                fontWeight="normal"
+                                color="white"
+                              >
+                                <FormattedMessage id={titleId} />
+                              </Heading>
+                            </>
+                          ) : undefined
+                        }
+                      />
+                    )}
+                    {!showProjectName && showPageTitle && (
+                      <Heading size="md" fontWeight="normal" color="white">
+                        <FormattedMessage id={titleId} />
+                      </Heading>
+                    )}
+                  </HStack>
+                ) : undefined
               }
               itemsLeft={
                 toolbarItemsLeft || (
