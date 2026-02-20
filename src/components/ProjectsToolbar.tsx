@@ -1,11 +1,16 @@
-import { Button, ButtonGroup, ButtonGroupProps } from "@chakra-ui/react";
+import {
+  Button,
+  ButtonGroup,
+  ButtonGroupProps,
+  IconButton,
+} from "@chakra-ui/react";
 import {
   RiCloseLine,
   RiDeleteBin2Line,
   RiEdit2Line,
   RiFileCopyLine,
 } from "react-icons/ri";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { ProjectNameDialogReason } from "../project-utils";
 
 interface ProjectsToolbarProps extends ButtonGroupProps {
@@ -16,6 +21,7 @@ interface ProjectsToolbarProps extends ButtonGroupProps {
   ) => void;
   onDeleteProject: (id?: string) => void;
   onClearSelection: () => void;
+  iconOnly?: boolean;
 }
 
 const ProjectsToolbar = ({
@@ -23,10 +29,13 @@ const ProjectsToolbar = ({
   onRenameDuplicateProject,
   onDeleteProject,
   onClearSelection,
+  iconOnly,
   ...rest
 }: ProjectsToolbarProps) => {
   const count = selectedProjectIds.length;
   const isSingle = count === 1;
+  const intl = useIntl();
+  const iconFontSize = iconOnly ? "xl" : undefined;
 
   return (
     <ButtonGroup
@@ -43,29 +52,71 @@ const ProjectsToolbar = ({
       }}
       {...rest}
     >
-      {isSingle && (
+      {isSingle &&
+        (iconOnly ? (
+          <IconButton
+            onClick={() => onRenameDuplicateProject("rename")}
+            icon={<RiEdit2Line />}
+            fontSize={iconFontSize}
+            aria-label={intl.formatMessage({ id: "rename-project-action" })}
+          />
+        ) : (
+          <Button
+            onClick={() => onRenameDuplicateProject("rename")}
+            leftIcon={<RiEdit2Line />}
+            variant="ghost"
+          >
+            <FormattedMessage id="rename-project-action" />
+          </Button>
+        ))}
+      {isSingle &&
+        (iconOnly ? (
+          <IconButton
+            onClick={() => onRenameDuplicateProject("duplicate")}
+            icon={<RiFileCopyLine />}
+            fontSize={iconFontSize}
+            aria-label={intl.formatMessage({
+              id: "duplicate-project-action",
+            })}
+          />
+        ) : (
+          <Button
+            onClick={() => onRenameDuplicateProject("duplicate")}
+            leftIcon={<RiFileCopyLine />}
+          >
+            <FormattedMessage id="duplicate-project-action" />
+          </Button>
+        ))}
+      {iconOnly && isSingle ? (
+        <IconButton
+          onClick={() => onDeleteProject()}
+          icon={<RiDeleteBin2Line />}
+          fontSize={iconFontSize}
+          aria-label={intl.formatMessage(
+            { id: "delete-project-action" },
+            { count }
+          )}
+        />
+      ) : (
         <Button
-          onClick={() => onRenameDuplicateProject("rename")}
-          leftIcon={<RiEdit2Line />}
-          variant="ghost"
+          onClick={() => onDeleteProject()}
+          leftIcon={<RiDeleteBin2Line />}
         >
-          <FormattedMessage id="rename-project-action" />
+          <FormattedMessage id="delete-project-action" values={{ count }} />
         </Button>
       )}
-      {isSingle && (
-        <Button
-          onClick={() => onRenameDuplicateProject("duplicate")}
-          leftIcon={<RiFileCopyLine />}
-        >
-          <FormattedMessage id="duplicate-project-action" />
+      {iconOnly ? (
+        <IconButton
+          onClick={onClearSelection}
+          icon={<RiCloseLine />}
+          fontSize={iconFontSize}
+          aria-label={intl.formatMessage({ id: "clear" })}
+        />
+      ) : (
+        <Button leftIcon={<RiCloseLine />} onClick={onClearSelection}>
+          <FormattedMessage id="clear" />
         </Button>
       )}
-      <Button onClick={() => onDeleteProject()} leftIcon={<RiDeleteBin2Line />}>
-        <FormattedMessage id="delete-project-action" values={{ count }} />
-      </Button>
-      <Button leftIcon={<RiCloseLine />} onClick={onClearSelection}>
-        <FormattedMessage id="clear" />
-      </Button>
     </ButtonGroup>
   );
 };

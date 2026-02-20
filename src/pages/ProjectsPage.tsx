@@ -8,6 +8,7 @@ import {
   Slide,
   Stack,
   Text,
+  useBreakpointValue,
   VStack,
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
@@ -57,6 +58,7 @@ const ProjectsPage = () => {
   const deleteProject = useStore((s) => s.deleteProject);
   const deleteProjects = useStore((s) => s.deleteProjects);
   const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
+  const mobileIconOnly = useBreakpointValue({ base: true, md: false });
   const [projectForAction, setProjectForAction] = useState<string | null>(null);
 
   useEffect(() => {
@@ -476,25 +478,25 @@ const ProjectsPage = () => {
         <Slide direction="bottom" in={hasSelection} style={{ zIndex: 10 }}>
           <Flex
             justifyContent="center"
-            pb={4}
             display={{ base: "flex", lg: "none" }}
+            ref={mobileToolbarRef}
+            bg="white"
+            shadow="0 -2px 8px rgba(0,0,0,0.1)"
+            borderTopWidth="1px"
+            borderColor="gray.200"
+            py={2}
+            px={4}
           >
-            <Box
-              ref={mobileToolbarRef}
-              bg="white"
-              shadow="lg"
-              borderWidth="1px"
-              borderColor="gray.200"
-              borderRadius="lg"
-              p={1}
-            >
-              <ProjectsToolbar
-                selectedProjectIds={lastSelectionRef.current}
-                onDeleteProject={handleOpenConfirmDialog}
-                onRenameDuplicateProject={handleOpenNameProjectDialog}
-                onClearSelection={clearSelection}
-              />
-            </Box>
+            <ProjectsToolbar
+              selectedProjectIds={lastSelectionRef.current}
+              onDeleteProject={handleOpenConfirmDialog}
+              onRenameDuplicateProject={handleOpenNameProjectDialog}
+              onClearSelection={clearSelection}
+              isAttached={false}
+              iconOnly={mobileIconOnly}
+              size="lg"
+              sx={{}}
+            />
           </Flex>
         </Slide>
       </Await>
