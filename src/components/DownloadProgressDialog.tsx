@@ -93,9 +93,7 @@ const DownloadProgressDialog = ({
   }
   const isIndeterminate = progress === undefined;
   const subtitleId = getSubtitleId(stage);
-  const canChangeBluetoothPattern =
-    stage === ProgressStage.FindingDevice ||
-    stage === ProgressStage.CheckingBond;
+  const isFindingDevice = stage === ProgressStage.FindingDevice;
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -119,7 +117,7 @@ const DownloadProgressDialog = ({
               <Text textAlign={isIndeterminate ? "center" : "left"}>
                 {subtitleId ? <FormattedMessage id={subtitleId} /> : "\u00A0"}
               </Text>
-              {isNativePlatform() && canChangeBluetoothPattern ? (
+              {isNativePlatform() && isFindingDevice ? (
                 <BluetoothPatternInput
                   microbitName={microbitName}
                   invalid={false}
@@ -140,7 +138,7 @@ const DownloadProgressDialog = ({
             </VStack>
           </ModalBody>
           <ModalFooter justifyContent="start">
-            {isNativePlatform() && tryAgain && canChangeBluetoothPattern && (
+            {isNativePlatform() && tryAgain && isFindingDevice && (
               <Link as="button" color="brand.600" onClick={tryAgain}>
                 <FormattedMessage id="connect-native-change-pattern" />
               </Link>
