@@ -53,7 +53,6 @@ const DataConnectionDialogs = () => {
   const state = useStore((s) => s.dataConnection);
   const actions = useDataConnectionActions();
   const flashProgress = useStore((s) => s.dataConnectionFlashingProgress);
-  const [settings] = useSettings();
   const onClose = actions.close;
 
   const isOpen = isDataConnectionDialogOpen(state.step);
@@ -149,7 +148,7 @@ const DataConnectionDialogs = () => {
           {...dialogCommonProps}
           onBackClick={actions.onBackClick}
           onNextClick={actions.onNextClick}
-          microbitName={settings.bluetoothMicrobitName}
+          microbitName={state.bluetoothMicrobitName}
           onChangeBluetoothPattern={actions.changeBluetoothPattern}
         />
       );
@@ -160,7 +159,7 @@ const DataConnectionDialogs = () => {
           {...dialogCommonProps}
           onBackClick={actions.onBackClick}
           onNextClick={actions.onNextClick}
-          microbitName={settings.bluetoothMicrobitName}
+          microbitName={state.bluetoothMicrobitName}
           onChangeMicrobitName={actions.onChangeMicrobitName}
         />
       );

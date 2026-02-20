@@ -40,7 +40,7 @@ export type DataConnectionEvent =
    */
   | { type: "startBluetoothFlow" }
   | { type: "saveMicrobitName"; name: string }
-  | { type: "setPendingMicrobitName"; name: string | undefined }
+  | { type: "setMicrobitName"; name: string }
   | { type: "changeBluetoothPattern" }
   | { type: "connectFlashSuccess"; boardVersion?: BoardVersion }
   | {
@@ -84,13 +84,14 @@ export type DataConnectionEvent =
 export type DataConnectionAction =
   | { type: "setConnectionType"; connectionType: DataConnectionType }
   /**
-   * Saves micro:bit name from pending micro:bit name and clears pending micro:bit name.
+   * Saves micro:bit name to storage so that it is persisted.
    */
   | { type: "saveMicrobitName" }
   /**
-   * Sets pending micro:bit name from user input.
+   * Sets micro:bit name from user input.
    */
-  | { type: "setPendingMicrobitName"; name: string | undefined }
+  | { type: "setMicrobitName"; name: string }
+  | { type: "resetMicrobitName" }
   | { type: "clearMicrobitName" }
   | { type: "setRadioRemoteDeviceId"; deviceId?: number }
   | { type: "setRadioBridgeDeviceId"; deviceId?: number }
@@ -142,12 +143,7 @@ export type DataConnectionAction =
  * Context for the data connection flow.
  * Built fresh for each transition from state + external sources (settings).
  */
-export interface DataConnectionFlowContext extends DataConnectionState {
-  /**
-   * Micro:bit name from settings. Used for native Bluetooth pattern matching.
-   */
-  bluetoothMicrobitName?: string;
-}
+export interface DataConnectionFlowContext extends DataConnectionState {}
 
 export type DataConnectionFlowDef = FlowDefinition<
   DataConnectionStep,
@@ -640,12 +636,12 @@ export const nativeBluetoothRecoveryStates = createRecoveryStates(
 // =============================================================================
 
 /**
- * Handler for setPendingMicrobitName event - stores the micro:bit name from user input.
+ * Handler for setMicrobitName event - stores the micro:bit name from user input.
  * Used by WebBluetooth and NativeBluetooth flows when connect flash succeeds.
  */
-export const setPendingMicrobitNameHandler = {
-  setPendingMicrobitName: {
-    actions: [{ type: "setPendingMicrobitName" }] as DataConnectionAction[],
+export const setMicrobitNameHandler = {
+  setMicrobitName: {
+    actions: [{ type: "setMicrobitName" }] as DataConnectionAction[],
   },
 };
 

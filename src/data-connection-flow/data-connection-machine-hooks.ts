@@ -77,7 +77,7 @@ export const useDataConnectionActions = (): DataConnectionActions => {
       onStartBluetoothFlow: () =>
         dataConnectionMachine.fireEvent({ type: "startBluetoothFlow" }),
       onChangeMicrobitName: (name: string) =>
-        dataConnectionMachine.fireEvent({ type: "setPendingMicrobitName", name }),
+        dataConnectionMachine.fireEvent({ type: "setMicrobitName", name }),
       changeBluetoothPattern: () =>
         dataConnectionMachine.fireEvent({ type: "changeBluetoothPattern" }),
       disconnect: () => dataConnectionMachine.fireEvent({ type: "disconnect" }),

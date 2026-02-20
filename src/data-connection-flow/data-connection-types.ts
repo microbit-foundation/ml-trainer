@@ -191,7 +191,7 @@ export interface DataConnectionState {
    * Pending Bluetooth micro:bit name to potentially save if connection succeeds.
    * If `undefined`, there is no pending micro:bit name to consider.
    */
-  pendingBluetoothMicrobitName: string | undefined;
+  bluetoothMicrobitName: string | undefined;
 }
 
 /**
@@ -215,7 +215,9 @@ export const getInitialDataConnectionType = (
  * Get initial data connection state.
  * Called at store creation time.
  */
-export const getInitialDataConnectionState = (): DataConnectionState => {
+export const getInitialDataConnectionState = (
+  bluetoothMicrobitName: string | undefined
+): DataConnectionState => {
   // At store init time, we don't have web bluetooth/usb support info yet.
   // These will be updated when the provider initializes.
   return {
@@ -233,7 +235,8 @@ export const getInitialDataConnectionState = (): DataConnectionState => {
     isCheckingPermissions: false,
     pairingMethod: "triple-reset",
     connectionAbortController: undefined,
-    pendingBluetoothMicrobitName: undefined,
+    // Fill with persisted name.
+    bluetoothMicrobitName,
   };
 };
 

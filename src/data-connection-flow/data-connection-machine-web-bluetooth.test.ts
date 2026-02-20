@@ -29,7 +29,7 @@ const createContext = (
   isCheckingPermissions: false,
   pairingMethod: "triple-reset",
   connectionAbortController: undefined,
-  pendingBluetoothMicrobitName: undefined,
+  bluetoothMicrobitName: undefined,
   ...overrides,
 });
 
@@ -140,15 +140,15 @@ describe("Data connection flow: Web Bluetooth", () => {
       });
     });
 
-    it("BluetoothPattern setPendingMicrobitName -> stays on BluetoothPattern with setPendingMicrobitName action", () => {
+    it("BluetoothPattern setMicrobitName -> stays on BluetoothPattern with setMicrobitName action", () => {
       const result = transition(DataConnectionStep.EnterBluetoothPattern, {
-        type: "setPendingMicrobitName",
+        type: "setMicrobitName",
         name: "zogup",
       });
 
       expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);
       expect(result?.actions).toContainEqual({
-        type: "setPendingMicrobitName",
+        type: "setMicrobitName",
       });
     });
   });

@@ -174,24 +174,27 @@ const executeAction = async (
     }
 
     case "saveMicrobitName": {
-      const pendingName = getDataConnectionState().pendingBluetoothMicrobitName;
-      if (pendingName) {
-        await useStore
-          .getState()
-          .setSettings({ bluetoothMicrobitName: pendingName });
-        setDataConnectionState({
-          ...getDataConnectionState(),
-          pendingBluetoothMicrobitName: undefined,
-        });
+      const name = getDataConnectionState().bluetoothMicrobitName;
+      if (name) {
+        await useStore.getState().setSettings({ bluetoothMicrobitName: name });
       }
       break;
     }
 
-    case "setPendingMicrobitName": {
-      if (event.type === "setPendingMicrobitName") {
+    case "resetMicrobitName": {
+      const name = useStore.getState().settings.bluetoothMicrobitName;
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        bluetoothMicrobitName: name,
+      });
+      break;
+    }
+
+    case "setMicrobitName": {
+      if (event.type === "setMicrobitName") {
         setDataConnectionState({
           ...getDataConnectionState(),
-          pendingBluetoothMicrobitName: event.name,
+          bluetoothMicrobitName: event.name,
         });
       }
       break;
@@ -201,6 +204,10 @@ const executeAction = async (
       await useStore
         .getState()
         .setSettings({ bluetoothMicrobitName: undefined });
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        bluetoothMicrobitName: undefined,
+      });
       break;
     }
 
@@ -322,12 +329,13 @@ const executeAction = async (
 // =============================================================================
 
 /**
- * Sync connection configuration from persisted settings.
+ * Sync connection configuration.
+ * Use pending micro:bit name if it exists, otherwise use persisted settings.
  * Called before each connection attempt so settings loaded asynchronously
  * from IndexedDB or updated mid-flow are reflected on the connection.
  */
 const syncConnectionSettings = (deps: DataConnectionDeps) => {
-  const { bluetoothMicrobitName } = useStore.getState().settings;
+  const { bluetoothMicrobitName } = useStore.getState().dataConnection;
   if (bluetoothMicrobitName) {
     deps.connections.bluetooth.setNameFilter(bluetoothMicrobitName);
   }
