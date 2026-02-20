@@ -424,13 +424,7 @@ const performConnectData = async (
     if (clearDevice) {
       await connection.clearDevice();
     }
-    if (isNativePlatform()) {
-      // Only show connecting progress stage for Native platforms. Hide UI for the other stages.
-      progressCallback(ProgressStage.Connecting, undefined);
-      await connection.connect();
-    } else {
-      await connection.connect({ progress: progressCallback });
-    }
+    await connection.connect({ progress: progressCallback });
     // Success event (deviceConnected) is sent by the status listener.
   } catch (e) {
     if (e instanceof DeviceError) {
