@@ -13,19 +13,17 @@ import {
 import orderBy from "lodash.orderby";
 import {
   RefObject,
-  Suspense,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
-import { Await, useLoaderData, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import DefaultPageLayout, {
   HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
-import LoadingPage from "../components/LoadingPage";
 import { NameProjectDialog } from "../components/NameProjectDialog";
 import ProjectCard from "../components/ProjectCard";
 import ProjectsToolbar from "../components/ProjectsToolbar";
@@ -45,9 +43,6 @@ interface RankedProject extends ProjectDataWithActions {
 }
 
 const ProjectsPage = () => {
-  const { allProjectDataLoaded } = useLoaderData() as {
-    allProjectDataLoaded: boolean;
-  };
   const navigate = useNavigate();
   const intl = useIntl();
   const allProjectData = useStore((s) => s.allProjectData);
@@ -377,97 +372,89 @@ const ProjectsPage = () => {
         backUrl={createHomePageUrl()}
         backLabelId="home-action"
       >
-        <Suspense fallback={<LoadingPage />}>
-          <Await resolve={allProjectDataLoaded}>
-            <VStack as="main" alignItems="center" flexGrow={1}>
-              <Container
-                maxW="1180px"
-                alignItems="stretch"
-                p={4}
-                mt={4}
-                display="flex"
-                flexDir="column"
-                flexGrow={1}
-              >
-                <HStack
-                  mb={4}
-                  justifyContent="space-between"
-                  alignItems="center"
+        <VStack as="main" alignItems="center" flexGrow={1}>
+          <Container
+            maxW="1180px"
+            alignItems="stretch"
+            p={4}
+            mt={4}
+            display="flex"
+            flexDir="column"
+            flexGrow={1}
+          >
+            <HStack mb={4} justifyContent="space-between" alignItems="center">
+              <Search
+                query={query}
+                onChange={handleQueryChange}
+                onClear={handleQueryClear}
+                maxW="30ch"
+                my="1px"
+              />
+              {hasSelection && (
+                <Box
+                  ref={desktopToolbarRef}
+                  display={{ base: "none", lg: "block" }}
+                  bg="white"
+                  borderWidth="1px"
+                  borderColor="gray.200"
+                  borderRadius="lg"
+                  marginLeft="auto"
                 >
-                  <Search
-                    query={query}
-                    onChange={handleQueryChange}
-                    onClear={handleQueryClear}
-                    maxW="30ch"
-                    my="1px"
+                  <ProjectsToolbar
+                    selectedProjectIds={selectedProjectIds}
+                    onDeleteProject={handleOpenConfirmDialog}
+                    onRenameDuplicateProject={handleOpenNameProjectDialog}
+                    onClearSelection={clearSelection}
                   />
-                  {hasSelection && (
-                    <Box
-                      ref={desktopToolbarRef}
-                      display={{ base: "none", lg: "block" }}
-                      bg="white"
-                      borderWidth="1px"
-                      borderColor="gray.200"
-                      borderRadius="lg"
-                      marginLeft="auto"
-                    >
-                      <ProjectsToolbar
-                        selectedProjectIds={selectedProjectIds}
-                        onDeleteProject={handleOpenConfirmDialog}
-                        onRenameDuplicateProject={handleOpenNameProjectDialog}
-                        onClearSelection={clearSelection}
-                      />
-                    </Box>
-                  )}
-                  <SortInput
-                    display={
-                      hasSelection ? { base: "flex", lg: "none" } : undefined
-                    }
-                    value={orderByField}
-                    onSelectChange={handleOrderByFieldChange}
-                    order={orderByDirection}
-                    toggleOrder={toggleOrderByDirection}
-                    marginLeft="auto"
-                    hasSearchQuery={!!query}
+                </Box>
+              )}
+              <SortInput
+                display={
+                  hasSelection ? { base: "flex", lg: "none" } : undefined
+                }
+                value={orderByField}
+                onSelectChange={handleOrderByFieldChange}
+                order={orderByDirection}
+                toggleOrder={toggleOrderByDirection}
+                marginLeft="auto"
+                hasSearchQuery={!!query}
+              />
+            </HStack>
+            {processedProjects.length > 0 ? (
+              <SimpleGrid
+                mt={3}
+                spacing={3}
+                columns={[1, 2, 3, 4, 5]}
+                pb={hasSelection ? { base: 16, lg: 0 } : 0}
+              >
+                {processedProjects.map((projectData) => (
+                  <ProjectCard
+                    key={projectData.id}
+                    projectData={projectData}
+                    isSelected={selectedProjectIds.includes(projectData.id)}
+                    onSelected={updateSelectedProjects}
+                    onDeleteProject={handleOpenConfirmDialog}
+                    onRenameDuplicateProject={handleOpenNameProjectDialog}
+                    onOpenProject={handleOpenProject}
+                    setFinalFocusRef={setFinalFocusRef}
+                    onSkipToToolbar={handleSkipToToolbar}
                   />
-                </HStack>
-                {processedProjects.length > 0 ? (
-                  <SimpleGrid
-                    mt={3}
-                    spacing={3}
-                    columns={[1, 2, 3, 4, 5]}
-                    pb={hasSelection ? { base: 16, lg: 0 } : 0}
-                  >
-                    {processedProjects.map((projectData) => (
-                      <ProjectCard
-                        key={projectData.id}
-                        projectData={projectData}
-                        isSelected={selectedProjectIds.includes(projectData.id)}
-                        onSelected={updateSelectedProjects}
-                        onDeleteProject={handleOpenConfirmDialog}
-                        onRenameDuplicateProject={handleOpenNameProjectDialog}
-                        onOpenProject={handleOpenProject}
-                        setFinalFocusRef={setFinalFocusRef}
-                        onSkipToToolbar={handleSkipToToolbar}
-                      />
-                    ))}
-                  </SimpleGrid>
-                ) : (
-                  <Stack
-                    justifyContent="center"
-                    alignItems="center"
-                    flexGrow={1}
-                    p={12}
-                  >
-                    <Text>
-                      <FormattedMessage id="no-projects" />
-                    </Text>
-                  </Stack>
-                )}
-              </Container>
-            </VStack>
-          </Await>
-        </Suspense>
+                ))}
+              </SimpleGrid>
+            ) : (
+              <Stack
+                justifyContent="center"
+                alignItems="center"
+                flexGrow={1}
+                p={12}
+              >
+                <Text>
+                  <FormattedMessage id="no-projects" />
+                </Text>
+              </Stack>
+            )}
+          </Container>
+        </VStack>
       </DefaultPageLayout>
       <Slide direction="bottom" in={hasSelection} style={{ zIndex: 10 }}>
         <Flex

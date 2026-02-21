@@ -203,7 +203,9 @@ const DefaultPageLayout = ({
                   {backUrl ? (
                     <IconButton
                       display={{ base: "inline-flex", md: "none" }}
-                      aria-label={intl.formatMessage({ id: "back-action" })}
+                      aria-label={intl.formatMessage({
+                        id: backLabelId ?? "back-action",
+                      })}
                       icon={<BackArrow />}
                       color="white"
                       variant="plain"
