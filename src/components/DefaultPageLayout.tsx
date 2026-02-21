@@ -195,7 +195,12 @@ const DefaultPageLayout = ({
                       </Heading>
                     )}
                   </HStack>
-                ) : undefined
+                ) : (
+                  /* Mobile: centered app logo when no page title */
+                  <Box display={{ base: "flex", md: "none" }}>
+                    <AppLogo transform="scale(0.8)" transformOrigin="center" />
+                  </Box>
+                )
               }
               itemsLeft={
                 <>
@@ -230,12 +235,6 @@ const DefaultPageLayout = ({
                         boxShadow: "outlineDark",
                       }}
                     />
-                  )}
-                  {/* Mobile: app logo when no page title */}
-                  {!showPageTitle && !showProjectName && (
-                    <Box display={{ base: "flex", md: "none" }} ml={1}>
-                      <AppLogo transform="scale(0.8)" transformOrigin="left" />
-                    </Box>
                   )}
                   {/* Desktop/tablet: back button with label, logo, or custom left items */}
                   {backUrl && backLabelId ? (
