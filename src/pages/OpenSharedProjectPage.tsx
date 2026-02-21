@@ -23,7 +23,7 @@ import ProjectPreview from "../components/ProjectPreview";
 import { useLogging } from "../logging/logging-hooks";
 import { ActionData, DatasetEditorJsonFormat } from "../model";
 import { useStore } from "../store";
-import { createDataSamplesPageUrl } from "../urls";
+import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
 
 const enum SharedState {
   GettingHeader,
@@ -60,6 +60,7 @@ const OpenSharedProjectPage = () => {
       titleId="open-shared-project-title"
       toolbarItemsRight={<HomeToolbarItem />}
       menuItems={<HomeMenuItem />}
+      backUrl={createHomePageUrl()}
     >
       {sharedState === SharedState.GettingHeader ? (
         <VStack

@@ -23,7 +23,7 @@ import {
   MicrobitOrgResource,
 } from "../model";
 import { useStore } from "../store";
-import { createDataSamplesPageUrl } from "../urls";
+import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
 
 const ImportPage = () => {
   const intl = useIntl();
@@ -99,6 +99,7 @@ const ImportPage = () => {
       titleId="new-project-setup-title"
       toolbarItemsRight={<HomeToolbarItem />}
       menuItems={<HomeMenuItem />}
+      backUrl={createHomePageUrl()}
     >
       <ProjectPreview
         dataset={dataset}

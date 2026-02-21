@@ -39,7 +39,7 @@ import DefaultPageLayout, {
 } from "../components/DefaultPageLayout";
 import { createHelpCards } from "../components/HelpCards";
 import { createLessonCards } from "../components/LessonCards";
-import LoadingAnimation from "../components/LoadingAnimation";
+import LoadingPage from "../components/LoadingPage";
 import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
@@ -67,7 +67,7 @@ const HomePage = () => {
       toolbarItemsRight={<HomeToolbarItem />}
       menuItems={<HomeMenuItem />}
     >
-      <Suspense fallback={<LoadingAnimation />}>
+      <Suspense fallback={<LoadingPage />}>
         <Await resolve={allProjectDataLoaded}>
           <ProjectRow />
           <CarouselRow

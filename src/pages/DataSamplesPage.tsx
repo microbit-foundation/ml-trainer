@@ -160,6 +160,7 @@ const DataSamplesPage = () => {
         menuItems={<ProjectMenuItems />}
         toolbarItemsRight={<ProjectToolbarItems />}
         showProjectName
+        backUrl={createHomePageUrl()}
       >
         <Flex as="main" flexGrow={1} flexDir="column" ref={pageRef}>
           <DataSamplesTable

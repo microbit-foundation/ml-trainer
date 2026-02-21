@@ -33,6 +33,7 @@ import { createHomePageUrl } from "../urls";
 import ActionBar from "./ActionBar/ActionBar";
 import ItemsRight from "./ActionBar/ActionBarItemsRight";
 import AppLogo from "./AppLogo";
+import BackArrow from "./BackArrow";
 import ConnectionDialogs from "./ConnectionFlowDialogs";
 import EditableName from "./EditableName";
 import FeedbackForm from "./FeedbackForm";
@@ -54,6 +55,8 @@ interface DefaultPageLayoutProps {
   menuItems?: ReactNode;
   showPageTitle?: boolean;
   showProjectName?: boolean;
+  backUrl?: string;
+  backLabelId?: string;
 }
 
 const DefaultPageLayout = ({
@@ -64,8 +67,11 @@ const DefaultPageLayout = ({
   toolbarItemsRight,
   showPageTitle = false,
   showProjectName,
+  backUrl,
+  backLabelId,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const { isDialogOpen: isConnectionDialogOpen } = useConnectionStage();
   const isNonConnectionDialogOpen = useStore((s) =>
     s.isNonConnectionDialogOpen()
@@ -125,6 +131,7 @@ const DefaultPageLayout = ({
       <NavigationDrawer
         isOpen={drawer.isOpen}
         onClose={drawer.onClose}
+        placement={backUrl ? "right" : "left"}
         showProjectName={showProjectName}
         tourTrigger={tourTrigger}
       />
@@ -192,49 +199,94 @@ const DefaultPageLayout = ({
               }
               itemsLeft={
                 <>
-                  {/* Mobile: hamburger button */}
-                  <IconButton
-                    display={{ base: "inline-flex", md: "none" }}
-                    aria-label={intl.formatMessage({ id: "main-menu" })}
-                    icon={<RiMenuLine size={24} />}
-                    color="white"
-                    variant="plain"
-                    size="lg"
-                    fontSize="xl"
-                    onClick={drawer.onOpen}
-                    _focusVisible={{
-                      boxShadow: "outlineDark",
-                    }}
-                  />
+                  {/* Mobile: back arrow (when backUrl set) or hamburger */}
+                  {backUrl ? (
+                    <IconButton
+                      display={{ base: "inline-flex", md: "none" }}
+                      aria-label={intl.formatMessage({ id: "back-action" })}
+                      icon={<BackArrow />}
+                      color="white"
+                      variant="plain"
+                      size="lg"
+                      fontSize="xl"
+                      onClick={() => navigate(backUrl)}
+                      _focusVisible={{
+                        boxShadow: "outlineDark",
+                      }}
+                    />
+                  ) : (
+                    <IconButton
+                      display={{ base: "inline-flex", md: "none" }}
+                      aria-label={intl.formatMessage({ id: "main-menu" })}
+                      icon={<RiMenuLine size={24} />}
+                      color="white"
+                      variant="plain"
+                      size="lg"
+                      fontSize="xl"
+                      onClick={drawer.onOpen}
+                      _focusVisible={{
+                        boxShadow: "outlineDark",
+                      }}
+                    />
+                  )}
                   {/* Mobile: app logo when no page title */}
                   {!showPageTitle && !showProjectName && (
                     <Box display={{ base: "flex", md: "none" }} ml={1}>
                       <AppLogo transform="scale(0.8)" transformOrigin="left" />
                     </Box>
                   )}
-                  {/* Desktop/tablet: logo or custom left items */}
-                  {toolbarItemsLeft || (
-                    <Link
-                      href={createHomePageUrl()}
+                  {/* Desktop/tablet: back button with label, logo, or custom left items */}
+                  {backUrl && backLabelId ? (
+                    <Button
                       display={{ base: "none", md: "inline-flex" }}
-                      _focusVisible={{
-                        boxShadow: "outlineDark",
-                        borderRadius: "md",
-                      }}
+                      leftIcon={<BackArrow />}
+                      variant="toolbar"
+                      onClick={() => navigate(backUrl)}
                     >
-                      <AppLogo
-                        transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}
-                      />
-                    </Link>
+                      <FormattedMessage id={backLabelId} />
+                    </Button>
+                  ) : (
+                    toolbarItemsLeft || (
+                      <Link
+                        href={createHomePageUrl()}
+                        display={{ base: "none", md: "inline-flex" }}
+                        _focusVisible={{
+                          boxShadow: "outlineDark",
+                          borderRadius: "md",
+                        }}
+                      >
+                        <AppLogo
+                          transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}
+                        />
+                      </Link>
+                    )
                   )}
                 </>
               }
               itemsLeftProps={{ width: 0 }}
               itemsRight={
-                <ItemsRight
-                  menuItems={menuItems}
-                  toolbarItems={toolbarItemsRight}
-                />
+                <>
+                  <ItemsRight
+                    menuItems={menuItems}
+                    toolbarItems={toolbarItemsRight}
+                  />
+                  {/* Mobile: right-side hamburger when back arrow is on the left */}
+                  {backUrl && (
+                    <IconButton
+                      display={{ base: "inline-flex", md: "none" }}
+                      aria-label={intl.formatMessage({ id: "main-menu" })}
+                      icon={<RiMenuLine size={24} />}
+                      color="white"
+                      variant="plain"
+                      size="lg"
+                      fontSize="xl"
+                      onClick={drawer.onOpen}
+                      _focusVisible={{
+                        boxShadow: "outlineDark",
+                      }}
+                    />
+                  )}
+                </>
               }
             />
             {flags.preReleaseNotice && <PreReleaseNotice />}
