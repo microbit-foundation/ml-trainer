@@ -140,13 +140,10 @@ const NavigationDrawer = ({
                 <Divider borderColor="gray.300" />
               </>
             )}
-            {/* Primary nav (only on project pages) */}
+            {/* Project actions (only on project pages) */}
             {showProjectName && (
               <>
                 <NavSection>
-                  <NavItem icon={RiHome2Line} onClick={handleHome}>
-                    <FormattedMessage id="home-action" />
-                  </NavItem>
                   <NavItem icon={RiDownload2Line} onClick={handleSave}>
                     <FormattedMessage id="save-action" />
                   </NavItem>
@@ -156,8 +153,11 @@ const NavigationDrawer = ({
               </>
             )}
 
-            {/* Settings */}
+            {/* Global */}
             <NavSection>
+              <NavItem icon={RiHome2Line} onClick={handleHome}>
+                <FormattedMessage id="home-action" />
+              </NavItem>
               <NavItem icon={IoMdGlobe} onClick={handleLanguage}>
                 <FormattedMessage id="language" />
               </NavItem>
