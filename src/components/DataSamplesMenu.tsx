@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { Capacitor } from "@capacitor/core";
 import {
   Icon,
   IconButton,
-  Menu,
   MenuButton,
   MenuDivider,
   MenuItem,
@@ -23,15 +23,15 @@ import {
   RiUpload2Line,
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useProjectIsUntitled } from "../hooks/project-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 import { getTotalNumSamples } from "../utils/actions";
 import { ConfirmDialog } from "./ConfirmDialog";
 import LoadProjectMenuItem from "./LoadProjectMenuItem";
+import Menu from "./Menu";
 import { NameProjectDialog } from "./NameProjectDialog";
 import ViewDataFeaturesMenuItem from "./ViewDataFeaturesMenuItem";
-import { useProjectIsUntitled } from "../hooks/project-hooks";
-import { Capacitor } from "@capacitor/core";
 
 const DataSamplesMenu = () => {
   const intl = useIntl();

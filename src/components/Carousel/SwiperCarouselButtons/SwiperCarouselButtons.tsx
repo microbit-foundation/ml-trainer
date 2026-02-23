@@ -4,6 +4,7 @@ import { useSwiper } from "swiper/react";
 import styles from "./SwiperCarouselButtons.module.css";
 import CarouselButton from "../CarouselButton/CarouselButton";
 import { Box } from "@chakra-ui/react";
+import { isNativePlatform } from "../../../platform";
 
 const SwiperCarouselButtons = () => {
   const isRtl = false;
@@ -38,7 +39,7 @@ const SwiperCarouselButtons = () => {
   }, [swiper]);
 
   return (
-    <Box display={["none", null, "contents"]}>
+    <Box display={isNativePlatform() ? "none" : ["none", null, "contents"]}>
       <CarouselButton
         ref={prevButtonRef}
         className={classNames(

@@ -9,7 +9,6 @@ import {
   ButtonGroup,
   Flex,
   HStack,
-  Menu,
   MenuItem,
   MenuList,
   Portal,
@@ -27,6 +26,7 @@ import DefaultPageLayout, {
 } from "../components/DefaultPageLayout";
 import IncompatibleEditorDevice from "../components/IncompatibleEditorDevice";
 import LiveGraphPanel from "../components/LiveGraphPanel";
+import Menu from "../components/Menu";
 import MoreMenuButton from "../components/MoreMenuButton";
 import TestingModelTable from "../components/TestingModelTable";
 import { useBoardVersion } from "../hooks/use-board-version";

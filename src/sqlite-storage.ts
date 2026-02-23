@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS recordings (
   created_at INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_recordings_action_id ON recordings(action_id);
-CREATE TABLE IF NOT EXISTS makecode_data (
+CREATE TABLE IF NOT EXISTS editor_project (
   project_id TEXT PRIMARY KEY REFERENCES projects(id) ON DELETE CASCADE,
   project TEXT NOT NULL,
   project_edited INTEGER NOT NULL
@@ -104,7 +104,7 @@ interface RecordingRow {
   created_at: number;
 }
 
-interface MakeCodeRow {
+interface EditorProjectRow {
   project_id: string;
   project: string;
   project_edited: number;
@@ -206,7 +206,7 @@ export class SqliteDatabase implements Database {
         },
         {
           statement:
-            "INSERT INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+            "INSERT INTO editor_project (project_id, project, project_edited) VALUES (?, ?, ?)",
           values: [
             id,
             JSON.stringify(makeCodeData.project),
@@ -305,10 +305,12 @@ export class SqliteDatabase implements Database {
       )
     );
     const makeCodeResult = await db.query(
-      "SELECT project_id, project, project_edited FROM makecode_data WHERE project_id = ?",
+      "SELECT project_id, project, project_edited FROM editor_project WHERE project_id = ?",
       [id]
     );
-    const makeCodeRow = makeCodeResult.values?.[0] as MakeCodeRow | undefined;
+    const makeCodeRow = makeCodeResult.values?.[0] as
+      | EditorProjectRow
+      | undefined;
     if (!makeCodeRow) {
       throw new StorageError("Failed to fetch expected data from storage");
     }
@@ -383,7 +385,7 @@ export class SqliteDatabase implements Database {
         },
         {
           statement:
-            "INSERT INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+            "INSERT INTO editor_project (project_id, project, project_edited) VALUES (?, ?, ?)",
           values: [
             id,
             JSON.stringify(makeCodeData.project),
@@ -442,7 +444,7 @@ export class SqliteDatabase implements Database {
         },
         {
           statement:
-            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+            "INSERT OR REPLACE INTO editor_project (project_id, project, project_edited) VALUES (?, ?, ?)",
           values: [
             id,
             JSON.stringify(makeCodeData.project),
@@ -478,7 +480,7 @@ export class SqliteDatabase implements Database {
         },
         {
           statement:
-            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+            "INSERT OR REPLACE INTO editor_project (project_id, project, project_edited) VALUES (?, ?, ?)",
           values: [
             id,
             JSON.stringify(makeCodeData.project),
@@ -509,7 +511,7 @@ export class SqliteDatabase implements Database {
         })),
         {
           statement:
-            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+            "INSERT OR REPLACE INTO editor_project (project_id, project, project_edited) VALUES (?, ?, ?)",
           values: [
             id,
             JSON.stringify(makeCodeData.project),
@@ -559,7 +561,7 @@ export class SqliteDatabase implements Database {
         ),
         {
           statement:
-            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+            "INSERT OR REPLACE INTO editor_project (project_id, project, project_edited) VALUES (?, ?, ?)",
           values: [
             id,
             JSON.stringify(makeCodeData.project),
@@ -608,7 +610,7 @@ export class SqliteDatabase implements Database {
         ),
         {
           statement:
-            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+            "INSERT OR REPLACE INTO editor_project (project_id, project, project_edited) VALUES (?, ?, ?)",
           values: [
             id,
             JSON.stringify(makeCodeData.project),
@@ -658,7 +660,7 @@ export class SqliteDatabase implements Database {
         ),
         {
           statement:
-            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+            "INSERT OR REPLACE INTO editor_project (project_id, project, project_edited) VALUES (?, ?, ?)",
           values: [
             id,
             JSON.stringify(makeCodeData.project),
@@ -710,7 +712,7 @@ export class SqliteDatabase implements Database {
         },
         {
           statement:
-            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+            "INSERT OR REPLACE INTO editor_project (project_id, project, project_edited) VALUES (?, ?, ?)",
           values: [
             id,
             JSON.stringify(makeCodeData.project),
@@ -751,7 +753,7 @@ export class SqliteDatabase implements Database {
         },
         {
           statement:
-            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+            "INSERT OR REPLACE INTO editor_project (project_id, project, project_edited) VALUES (?, ?, ?)",
           values: [
             id,
             JSON.stringify(makeCodeData.project),
@@ -777,7 +779,7 @@ export class SqliteDatabase implements Database {
       await db.executeTransaction([
         {
           statement:
-            "INSERT OR REPLACE INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+            "INSERT OR REPLACE INTO editor_project (project_id, project, project_edited) VALUES (?, ?, ?)",
           values: [
             id,
             JSON.stringify(makeCodeData.project),
@@ -813,10 +815,12 @@ export class SqliteDatabase implements Database {
     return this.serialise(async (db) => {
       // Update project name and the MakeCode project header.
       const makeCodeResult = await db.query(
-        "SELECT project_id, project, project_edited FROM makecode_data WHERE project_id = ?",
+        "SELECT project_id, project, project_edited FROM editor_project WHERE project_id = ?",
         [id]
       );
-      const makeCodeRow = makeCodeResult.values?.[0] as MakeCodeRow | undefined;
+      const makeCodeRow = makeCodeResult.values?.[0] as
+        | EditorProjectRow
+        | undefined;
       if (makeCodeRow) {
         const project = JSON.parse(makeCodeRow.project) as MakeCodeProject;
         if (project.header) {
@@ -825,7 +829,7 @@ export class SqliteDatabase implements Database {
         await db.executeTransaction([
           {
             statement:
-              "UPDATE makecode_data SET project = ? WHERE project_id = ?",
+              "UPDATE editor_project SET project = ? WHERE project_id = ?",
             values: [JSON.stringify(project), id],
           },
           {
@@ -855,14 +859,16 @@ export class SqliteDatabase implements Database {
         [existingProjectId]
       );
       const makeCodeResult = await db.query(
-        "SELECT project_id, project, project_edited FROM makecode_data WHERE project_id = ?",
+        "SELECT project_id, project, project_edited FROM editor_project WHERE project_id = ?",
         [existingProjectId]
       );
       const projectResult = await db.query(
         "SELECT id, name, timestamp FROM projects WHERE id = ?",
         [existingProjectId]
       );
-      const makeCodeRow = makeCodeResult.values?.[0] as MakeCodeRow | undefined;
+      const makeCodeRow = makeCodeResult.values?.[0] as
+        | EditorProjectRow
+        | undefined;
       const projectRow = projectResult.values?.[0] as ProjectRow | undefined;
       if (!makeCodeRow || !projectRow) {
         throw new StorageError("Failed to fetch expected data from storage");
@@ -880,7 +886,7 @@ export class SqliteDatabase implements Database {
         },
         {
           statement:
-            "INSERT INTO makecode_data (project_id, project, project_edited) VALUES (?, ?, ?)",
+            "INSERT INTO editor_project (project_id, project, project_edited) VALUES (?, ?, ?)",
           values: [id, JSON.stringify(project), makeCodeRow.project_edited],
         },
       ];

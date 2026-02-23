@@ -22,6 +22,7 @@ import {
   ScrollRestoration,
   useLocation,
   useNavigate,
+  useRouteError,
 } from "react-router-dom";
 import "theme-package/fonts/fonts.css";
 import {
@@ -29,6 +30,7 @@ import {
   BroadcastChannelData,
   BroadcastChannelMessageType,
 } from "./broadcast-channel";
+import { useNativeBackButton } from "./back-button";
 import { BufferedDataProvider } from "./buffered-data-hooks";
 import EditCodeDialog from "./components/EditCodeDialog";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -215,6 +217,9 @@ const Layout = () => {
     updateProjectTimestampUrls,
   ]);
 
+  // Native back button / swipe-back handling (no-op on desktop).
+  useNativeBackButton();
+
   return (
     // We use this even though we have errorElement as this does logging.
     <ErrorBoundary>
@@ -240,6 +245,11 @@ const commonLoaderFunction = () => {
   return { projectLoaded: true };
 };
 
+const RouteErrorView = () => {
+  const error = useRouteError();
+  return <ErrorHandlerErrorView error={error} />;
+};
+
 const createRouter = () => {
   return createBrowserRouter([
     {
@@ -249,7 +259,7 @@ const createRouter = () => {
       // This one gets used for loader errors (typically offline)
       // We set an error boundary inside the routes too that logs render-time errors.
       // ErrorBoundary doesn't work properly in the loader case at least.
-      errorElement: <ErrorHandlerErrorView />,
+      errorElement: <RouteErrorView />,
       children: [
         {
           path: createHomePageUrl(),

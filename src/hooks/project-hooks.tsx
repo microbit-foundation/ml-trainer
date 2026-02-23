@@ -513,7 +513,7 @@ export const ProjectProvider = ({
     [downloadActions, saveHex]
   );
 
-  // Native app-specific handlers
+  // Native app URL open handler (e.g. opening a .hex file).
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
       const appUrlListener = CapacitorApp.addListener(
@@ -541,10 +541,7 @@ export const ProjectProvider = ({
       );
 
       return () => {
-        const removeListenerHandler = async () => {
-          void (await appUrlListener).remove();
-        };
-        void removeListenerHandler();
+        void appUrlListener.then((l) => l.remove());
       };
     }
   }, [importProjectFromHexText]);
