@@ -50,6 +50,7 @@ import { useDownloadActions } from "../download-flow/download-hooks";
 import { Capacitor } from "@capacitor/core";
 import { App as CapacitorApp } from "@capacitor/app";
 import { Encoding, Filesystem } from "@capacitor/filesystem";
+import { isIOS } from "../platform";
 import { shareHex } from "../utils/share-util";
 
 class CodeEditorError extends Error {}
@@ -450,7 +451,8 @@ export const ProjectProvider = ({
           await downloadHexData(hex);
         }
         setSave({ step: SaveStep.None, type: SaveType.Download });
-        if (saveType === SaveType.Download) {
+        if (saveType === SaveType.Download && !isIOS()) {
+          // iOS share sheet provides its own feedback
           toast({
             id: "save-complete",
             position: "top",

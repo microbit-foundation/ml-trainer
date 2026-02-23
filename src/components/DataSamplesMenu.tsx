@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Capacitor } from "@capacitor/core";
+import { isAndroid } from "../platform";
 import {
   Icon,
   IconButton,
@@ -60,8 +60,9 @@ const DataSamplesMenu = () => {
       },
     });
     await downloadDataset();
-    if (Capacitor.isNativePlatform()) {
-      // No browser feedback on download complete when using native app
+    if (isAndroid()) {
+      // Android saves to Downloads with no browser feedback;
+      // iOS share sheet provides its own; web has the browser download bar.
       toast({
         id: "save-complete",
         position: "top",

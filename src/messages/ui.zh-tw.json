@@ -3424,25 +3424,33 @@
   "share-hex-dialog-heading": [
     {
       "type": 0,
-      "value": "Share project as hex file"
+      "value": "Share project as a hex file"
     }
   ],
   "share-hex-dialog-message1": [
     {
       "type": 0,
-      "value": "The hex file contains your actions, data samples and your MakeCode project."
+      "value": "The hex file contains your actions, data samples and your MakeCode project. Open it in "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to continue working."
     }
   ],
   "share-hex-dialog-message2": [
     {
       "type": 0,
-      "value": "You can also share it to the Files app on your device, or send to cloud storage."
+      "value": "You can also open it with Microsoft MakeCode if you don't need to change the actions and data samples."
     }
   ],
   "sharing-description": [
     {
       "type": 0,
-      "value": "Preparing project for sharing."
+      "value": "Your project will be ready to share soon."
     }
   ],
   "sharing-title": [

@@ -7,6 +7,9 @@
 import { Capacitor } from "@capacitor/core";
 import { HexData, HexUrl } from "../model";
 import { Directory, Encoding, Filesystem } from "@capacitor/filesystem";
+import { isAndroid, isIOS } from "../platform";
+import { shareFile } from "./share-util";
+import { saveToDownloads } from "./save-to-downloads";
 
 export const getFileExtension = (filename: string): string | undefined => {
   const parts = filename.split(".");
@@ -48,14 +51,21 @@ export const downloadDataString = async (
   filename: string,
   mimeType: string
 ) => {
-  if (Capacitor.isNativePlatform()) {
-    await Filesystem.writeFile({
-      path: filename,
-      data,
-      directory: Directory.Documents,
-      recursive: true,
-      encoding: Encoding.UTF8,
-    });
+  if (isIOS()) {
+    await shareFile(filename, data, filename, filename);
+  } else if (isAndroid()) {
+    try {
+      await saveToDownloads(filename, data, mimeType);
+    } catch {
+      // Falls back to Documents on Android < 10 (API 29).
+      await Filesystem.writeFile({
+        path: filename,
+        data,
+        directory: Directory.Documents,
+        recursive: true,
+        encoding: Encoding.UTF8,
+      });
+    }
   } else {
     const blob = new Blob([data], { type: mimeType });
     const url = URL.createObjectURL(blob);
@@ -67,8 +77,10 @@ export const downloadDataString = async (
 export const downloadHexData = (hex: HexData) =>
   downloadDataString(hex.hex, `${hex.name}.hex`, "application/octet-stream");
 
-// Only used for stored Bluetooth hex files.
-// Does not support data URLs on mobile devices
+/**
+ * Only used for stored Bluetooth hex files.
+ * Does not support data URLs on mobile devices.
+ */
 export const downloadUrl = async (url: string, filename: string) => {
   if (Capacitor.isNativePlatform()) {
     await Filesystem.downloadFile({

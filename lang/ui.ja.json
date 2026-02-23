@@ -1860,19 +1860,19 @@
     "description": "Label for action that initiates sharing the project on mobile"
   },
   "share-hex-dialog-heading": {
-    "defaultMessage": "Share project as hex file",
+    "defaultMessage": "Share project as a hex file",
     "description": "Heading for the dialog shown when sharing a hex file on mobile"
   },
   "share-hex-dialog-message1": {
-    "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project.",
+    "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
     "description": "Text in the dialog shown when sharing a hex file on mobile"
   },
   "share-hex-dialog-message2": {
-    "defaultMessage": "You can also share it to the Files app on your device, or send to cloud storage.",
+    "defaultMessage": "You can also open it with Microsoft MakeCode if you don't need to change the actions and data samples.",
     "description": "Text in the dialog shown when sharing a hex file on mobile"
   },
   "sharing-description": {
-    "defaultMessage": "Preparing project for sharing.",
+    "defaultMessage": "Your project will be ready to share soon.",
     "description": "Sharing progress dialog text for mobile"
   },
   "sharing-title": {

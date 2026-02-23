@@ -10,24 +10,39 @@ import { HexData } from "../model";
 const shareFromDirectory = "share";
 const tempStorageLocation = Directory.Temporary;
 
-export const shareHex = async (hex: HexData) => {
-  const hexFilePath = `${hex.name}.hex`;
-
+/**
+ * Share an arbitrary text file via the native share sheet.
+ */
+export const shareFile = async (
+  filename: string,
+  data: string,
+  title: string,
+  text: string
+) => {
   await cleanOldFiles();
 
   const { uri: url } = await Filesystem.writeFile({
-    path: `${shareFromDirectory}/${hexFilePath}`,
-    data: hex.hex,
+    path: `${shareFromDirectory}/${filename}`,
+    data,
     encoding: Encoding.UTF8,
     directory: tempStorageLocation,
     recursive: true,
   });
 
   await Share.share({
-    title: `Share ${hex.name}`,
-    text: `micro:bit CreateAI project: ${hex.name}`,
+    title,
+    text,
     files: [url],
   });
+};
+
+export const shareHex = async (hex: HexData) => {
+  await shareFile(
+    `${hex.name}.hex`,
+    hex.hex,
+    `Share ${hex.name}`,
+    `micro:bit CreateAI project: ${hex.name}`
+  );
 };
 
 const cleanOldFiles = async () => {

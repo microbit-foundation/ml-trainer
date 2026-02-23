@@ -44,6 +44,7 @@ import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
 import { Capacitor } from "@capacitor/core";
+import { isIOS } from "../platform";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -212,10 +213,19 @@ export const ProjectToolbarItems = () => {
   useShortcut(keyboardShortcuts.saveSession, handleSave);
 
   const canShare = Capacitor.isNativePlatform();
+  const shareOnly = isIOS();
 
   return (
     <>
-      {canShare ? (
+      {shareOnly ? (
+        <Button
+          variant="toolbar"
+          leftIcon={<RiShareLine />}
+          onClick={handleShare}
+        >
+          <FormattedMessage id="share-action" />
+        </Button>
+      ) : canShare ? (
         <Menu>
           <MenuButton as={Button} leftIcon={<RiShareLine />} variant="toolbar">
             <FormattedMessage id="share-action" />
@@ -282,6 +292,7 @@ export const ProjectMenuItems = () => {
   }, [saveHex]);
 
   const canShare = Capacitor.isNativePlatform();
+  const shareOnly = isIOS();
 
   return (
     <>
@@ -293,12 +304,14 @@ export const ProjectMenuItems = () => {
           <FormattedMessage id="share-action" />
         </MenuItem>
       )}
-      <MenuItem
-        onClick={handleSave}
-        icon={<Icon h={5} w={5} as={RiDownload2Line} />}
-      >
-        <FormattedMessage id="save-action" />
-      </MenuItem>
+      {!shareOnly && (
+        <MenuItem
+          onClick={handleSave}
+          icon={<Icon h={5} w={5} as={RiDownload2Line} />}
+        >
+          <FormattedMessage id="save-action" />
+        </MenuItem>
+      )}
       <MenuDivider />
       <HomeMenuItem />
     </>
