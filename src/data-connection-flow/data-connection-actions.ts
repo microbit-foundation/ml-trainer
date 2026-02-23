@@ -193,11 +193,24 @@ const executeAction = async (
     }
 
     case "setMicrobitName": {
+      // Extract name from setMicrobitName event (user input)
       if (event.type === "setMicrobitName") {
         setDataConnectionState({
           ...getDataConnectionState(),
           bluetoothMicrobitName: event.name,
         });
+      }
+      // Extract name from flashSuccess event (from USB flashing)
+      if (event.type === "flashSuccess") {
+        setDataConnectionState({
+          ...getDataConnectionState(),
+          bluetoothMicrobitName: event.bluetoothMicrobitName,
+        });
+        // We are sure it is a valid pattern and can persist the name 
+        // since it has flashed successfully.
+        await useStore
+          .getState()
+          .setSettings({ bluetoothMicrobitName: event.bluetoothMicrobitName });
       }
       break;
     }

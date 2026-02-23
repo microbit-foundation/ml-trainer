@@ -88,9 +88,9 @@ export type DataConnectionAction =
    */
   | { type: "saveMicrobitName" }
   /**
-   * Sets micro:bit name from setMicrobitName event (user input).
+   * Sets micro:bit name from setMicrobitName event (user input) or from flashSuccess event (USB flashing).
    */
-  | { type: "setMicrobitName"; name: string }
+  | { type: "setMicrobitName"; name?: string }
   /**
    * Resets micro:bit name to what is stored.
    */
