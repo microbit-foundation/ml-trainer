@@ -149,7 +149,7 @@ export enum SaveStep {
   /**
    * Only used for the sharesheet on mobile devices
    */
-  ChooseDestination = "choose destination"
+  ChooseDestination = "choose destination",
 }
 
 export interface TourStep {
