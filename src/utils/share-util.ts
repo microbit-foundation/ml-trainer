@@ -1,3 +1,8 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Encoding, Directory, Filesystem } from "@capacitor/filesystem";
 import { Share } from "@capacitor/share";
 import { HexData } from "../model";

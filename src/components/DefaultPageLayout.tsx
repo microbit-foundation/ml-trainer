@@ -218,7 +218,7 @@ export const ProjectToolbarItems = () => {
       {canShare ? (
         <Menu>
           <MenuButton as={Button} leftIcon={<RiShareLine />} variant="toolbar">
-            <FormattedMessage id={`share-action`} />
+            <FormattedMessage id="share-action" />
           </MenuButton>
 
           <MenuList zIndex={2}>

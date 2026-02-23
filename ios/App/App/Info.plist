@@ -42,7 +42,8 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<true/><key>UIFileSharingEnabled</key>
+	<true/>
+	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>The micro:bit CreateAI app uses Bluetooth to connect to your micro:bit.</string>

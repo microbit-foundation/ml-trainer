@@ -38,8 +38,8 @@ const SaveDialogs = () => {
   );
 
   const handleClose = useCallback(() => {
-    setSave({ step: SaveStep.None, type });
-  }, [setSave, type]);
+    setSave({ step: SaveStep.None, type: SaveType.Download });
+  }, [setSave]);
 
   switch (step) {
     case SaveStep.PreSaveHelp:
