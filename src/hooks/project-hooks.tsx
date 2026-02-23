@@ -441,6 +441,7 @@ export const ProjectProvider = ({
         });
         if (saveType === SaveType.Share) {
           try {
+            setSave({ hex, step: SaveStep.ChooseDestination, type: saveType });
             await shareHex(hex);
           } catch (e) {
             logging.error("Sharing failed", e);

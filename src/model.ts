@@ -146,6 +146,10 @@ export enum SaveStep {
    * Otherwise we already have the project data in the state and save it directly.
    */
   SaveProgress = "progress",
+  /**
+   * Only used for the sharesheet on mobile devices
+   */
+  ChooseDestination = "choose destination"
 }
 
 export interface TourStep {

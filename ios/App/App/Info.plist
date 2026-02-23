@@ -2,22 +2,27 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<true/>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>The micro:bit CreateAI app uses Bluetooth to connect to your micro:bit.</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>The micro:bit CreateAI app uses Bluetooth to connect to your micro:bit.</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>bluetooth-central</string>
-	</array>
 	<key>CFBundleDisplayName</key>
 	<string>CreateAI</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Micro:bit HEX File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.microbit.hex</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -32,8 +37,21 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/><key>UIFileSharingEnabled</key>
+	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>The micro:bit CreateAI app uses Bluetooth to connect to your micro:bit.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>The micro:bit CreateAI app uses Bluetooth to connect to your micro:bit.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>bluetooth-central</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -60,38 +78,23 @@
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
-			<key>UTTypeIdentifier</key>
-			<string>org.microbit.hex</string>
-			<key>UTTypeDescription</key>
-			<string>Micro:bit HEX File</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
 			</array>
+			<key>UTTypeDescription</key>
+			<string>Micro:bit HEX File</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.microbit.hex</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
+				<key>public.filename-extension</key>
+				<string>hex</string>
 				<key>public.mime-type</key>
 				<array>
 					<string>application/octet-stream</string>
 				</array>
-				<key>public.filename-extension</key>
-				<string>hex</string>
 			</dict>
-		</dict>
-	</array>
-	<key>CFBundleDocumentTypes</key>
-	<array>
-		<dict>
-			<key>LSHandlerRank</key>
-			<string>Owner</string>
-			<key>CFBundleTypeName</key>
-			<string>Micro:bit HEX File</string>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>org.microbit.hex</string>
-			</array>
 		</dict>
 	</array>
 </dict>

@@ -213,7 +213,7 @@ export const ProjectToolbarItems = () => {
 
   return (
     <>
-      {canShare && (
+      {canShare ? (
         <Menu>
           <MenuButton as={Button} leftIcon={<RiShareLine />} variant="toolbar">
             <FormattedMessage id={`share-action`} />
@@ -234,8 +234,7 @@ export const ProjectToolbarItems = () => {
             </MenuItem>
           </MenuList>
         </Menu>
-      )}
-      {!canShare && (
+      ) : (
         <Button
           variant="toolbar"
           leftIcon={<RiDownload2Line />}
