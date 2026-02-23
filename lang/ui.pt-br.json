@@ -1857,14 +1857,14 @@
   },
   "share-action": {
     "defaultMessage": "Share",
-    "description": "Label for action that intiiates sharing the project on mobile"
+    "description": "Label for action that initiates sharing the project on mobile"
   },
   "share-hex-dialog-heading": {
     "defaultMessage": "Share project as hex file",
     "description": "Heading for the dialog shown when sharing a hex file on mobile"
   },
   "share-hex-dialog-message1": {
-    "defaultMessage": "The shared object contains your actions, data samples and your MakeCode project.",
+    "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project.",
     "description": "Text in the dialog shown when sharing a hex file on mobile"
   },
   "share-hex-dialog-message2": {

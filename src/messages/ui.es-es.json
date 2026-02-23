@@ -3438,7 +3438,7 @@
   "share-hex-dialog-message1": [
     {
       "type": 0,
-      "value": "The shared object contains your actions, data samples and your MakeCode project."
+      "value": "The hex file contains your actions, data samples and your MakeCode project."
     }
   ],
   "share-hex-dialog-message2": [
