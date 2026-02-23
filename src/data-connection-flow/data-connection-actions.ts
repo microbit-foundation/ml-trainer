@@ -206,7 +206,7 @@ const executeAction = async (
           ...getDataConnectionState(),
           bluetoothMicrobitName: event.bluetoothMicrobitName,
         });
-        // We are sure it is a valid pattern and can persist the name 
+        // We are sure it is a valid pattern and can persist the name
         // since it has flashed successfully.
         await useStore
           .getState()
