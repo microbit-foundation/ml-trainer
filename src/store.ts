@@ -665,17 +665,17 @@ const createMlStore = (logging: Logging) => {
 
         async addActionRecording(actionId: string, recording: RecordingData) {
           const { actions, dataWindow, id, project, projectEdited } = get();
-          let updatedAction: ActionData;
-          const updatedActions = actions.map((action) => {
-            if (action.id === actionId) {
-              updatedAction = {
-                ...action,
-                recordings: [recording, ...action.recordings],
-              };
-              return updatedAction;
-            }
-            return action;
-          });
+          const action = actions.find((a) => a.id === actionId);
+          if (!action) {
+            return;
+          }
+          const updatedAction = {
+            ...action,
+            recordings: [recording, ...action.recordings],
+          };
+          const updatedActions = actions.map((a) =>
+            a.id === actionId ? updatedAction : a
+          );
           const updatedProject = updateProject(
             project,
             projectEdited,
@@ -714,7 +714,7 @@ const createMlStore = (logging: Logging) => {
               ? [createFirstAction()]
               : remainingActions;
           const newDataWindow =
-            newActions.length === 0 ? currentDataWindow : dataWindow;
+            remainingActions.length === 0 ? currentDataWindow : dataWindow;
           const updatedProject = updateProject(
             project,
             projectEdited,
@@ -755,14 +755,14 @@ const createMlStore = (logging: Logging) => {
             projectEdited,
             model,
           } = get();
-          let updatedAction: ActionData;
-          const newActions = actions.map((action) => {
-            if (actionId === action.id) {
-              updatedAction = { ...action, name };
-              return updatedAction;
-            }
-            return action;
-          });
+          const action = actions.find((a) => a.id === actionId);
+          if (!action) {
+            return;
+          }
+          const updatedAction = { ...action, name };
+          const newActions = actions.map((a) =>
+            a.id === actionId ? updatedAction : a
+          );
           const updatedProject = updateProject(
             project,
             projectEdited,
@@ -846,14 +846,14 @@ const createMlStore = (logging: Logging) => {
         async setRequiredConfidence(actionId: string, value: number) {
           const { actions, dataWindow, id, project, projectEdited, model } =
             get();
-          let updatedAction: ActionData;
-          const newActions = actions.map((action) => {
-            if (actionId === action.id) {
-              updatedAction = { ...action, requiredConfidence: value };
-              return updatedAction;
-            }
-            return action;
-          });
+          const action = actions.find((a) => a.id === actionId);
+          if (!action) {
+            return;
+          }
+          const updatedAction = { ...action, requiredConfidence: value };
+          const newActions = actions.map((a) =>
+            a.id === actionId ? updatedAction : a
+          );
           const updatedProject = updateProject(
             project,
             projectEdited,
@@ -882,17 +882,19 @@ const createMlStore = (logging: Logging) => {
 
         async deleteActionRecording(actionId: string, recordingId: string) {
           const { actions, dataWindow, id, project, projectEdited } = get();
-          let updatedAction: ActionData;
-          const updatedActions = actions.map((action) => {
-            if (actionId !== action.id) {
-              return action;
-            }
-            const recordings = action.recordings.filter(
+          const action = actions.find((a) => a.id === actionId);
+          if (!action) {
+            return;
+          }
+          const updatedAction = {
+            ...action,
+            recordings: action.recordings.filter(
               (recording) => recording.id !== recordingId
-            );
-            updatedAction = { ...action, recordings };
-            return updatedAction;
-          });
+            ),
+          };
+          const updatedActions = actions.map((a) =>
+            a.id === actionId ? updatedAction : a
+          );
           const numRecordings = updatedActions.reduce(
             (acc, curr) => acc + curr.recordings.length,
             0

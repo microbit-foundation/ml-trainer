@@ -210,7 +210,6 @@ const useProjectPreload = (setName: (name: string) => void) => {
     header,
     dataset,
     projectText,
-    name,
   };
 };
 

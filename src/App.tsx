@@ -226,6 +226,9 @@ const Layout = () => {
   );
 };
 
+// Guard ensures we only load from storage once per page lifecycle (on
+// refresh/deeplink). Subsequent in-app navigations populate the store
+// directly via loadProjectAndModelFromStorage calls in HomePage/ProjectsPage.
 let loaderFuncCalled = false;
 const commonLoaderFunction = async () => {
   if (!loaderFuncCalled) {
