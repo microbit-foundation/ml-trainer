@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  Button,
   ButtonGroup,
   Flex,
   HStack,
@@ -21,9 +20,7 @@ import { RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useBufferedData } from "../buffered-data-hooks";
-import BackArrow from "../components/BackArrow";
 import DefaultPageLayout, {
-  ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
 import IncompatibleEditorDevice from "../components/IncompatibleEditorDevice";
@@ -120,18 +117,10 @@ const TestingModelPage = () => {
     <DefaultPageLayout
       titleId="testing-model-title"
       showPageTitle
-      menuItems={<ProjectMenuItems />}
       toolbarItemsRight={<ProjectToolbarItems />}
-      toolbarItemsLeft={
-        <Button
-          leftIcon={<BackArrow />}
-          variant="toolbar"
-          onClick={navigateToDataSamples}
-        >
-          <FormattedMessage id="back-to-data-samples-action" />
-        </Button>
-      }
       showProjectName
+      backUrl={createDataSamplesPageUrl()}
+      backLabelId="back-to-data-samples-action"
     >
       <IncompatibleEditorDevice
         isOpen={isIncompatibleEditorDeviceDialogOpen}

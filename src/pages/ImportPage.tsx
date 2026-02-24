@@ -9,7 +9,6 @@ import { IntlShape, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import DefaultPageLayout, {
-  HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
 import ProjectPreview from "../components/ProjectPreview";
@@ -23,7 +22,7 @@ import {
   MicrobitOrgResource,
 } from "../model";
 import { useStore } from "../store";
-import { createDataSamplesPageUrl } from "../urls";
+import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
 
 const ImportPage = () => {
   const intl = useIntl();
@@ -98,7 +97,7 @@ const ImportPage = () => {
     <DefaultPageLayout
       titleId="new-project-setup-title"
       toolbarItemsRight={<HomeToolbarItem />}
-      menuItems={<HomeMenuItem />}
+      backUrl={createHomePageUrl()}
     >
       <ProjectPreview
         dataset={dataset}

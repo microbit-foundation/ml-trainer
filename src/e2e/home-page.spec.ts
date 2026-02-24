@@ -12,7 +12,7 @@ test.describe("home page", () => {
   });
 
   test("my projects section", async ({ homePage }) => {
-    homePage.expectOnHomePage();
+    await homePage.expectOnHomePage();
     await expect(
       homePage.page.getByRole("heading", { name: "My projects" })
     ).toBeVisible();

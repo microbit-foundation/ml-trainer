@@ -24,7 +24,6 @@ import {
   TrainHint,
 } from "../components/DataSamplesTableHints";
 import DefaultPageLayout, {
-  ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
 import LiveGraphPanel from "../components/LiveGraphPanel";
@@ -157,9 +156,9 @@ const DataSamplesPage = () => {
       <DefaultPageLayout
         titleId="data-samples-title"
         showPageTitle
-        menuItems={<ProjectMenuItems />}
         toolbarItemsRight={<ProjectToolbarItems />}
         showProjectName
+        backUrl={createHomePageUrl()}
       >
         <Flex as="main" flexGrow={1} flexDir="column" ref={pageRef}>
           <DataSamplesTable

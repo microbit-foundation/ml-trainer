@@ -16,7 +16,6 @@ import React, { ReactNode, useEffect, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
   createBrowserRouter,
-  defer,
   Outlet,
   RouterProvider,
   ScrollRestoration,
@@ -69,7 +68,6 @@ import {
   createProjectsPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
-import ProjectLoadWrapper from "./components/ProjectLoadWrapper";
 import ProjectsPage from "./pages/ProjectsPage";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
@@ -229,16 +227,15 @@ const Layout = () => {
 };
 
 let loaderFuncCalled = false;
-const commonLoaderFunction = () => {
+const commonLoaderFunction = async () => {
   if (!loaderFuncCalled) {
     loaderFuncCalled = true;
     const projectId = projectSessionStorage.getProjectId();
     if (projectId) {
-      const projectLoaded = loadProjectAndModelFromStorage(projectId);
-      return defer({ projectLoaded });
+      await loadProjectAndModelFromStorage(projectId);
     }
   }
-  return { projectLoaded: true };
+  return null;
 };
 
 const RouteErrorView = () => {
@@ -260,45 +257,27 @@ const createRouter = () => {
         {
           path: createHomePageUrl(),
           element: <HomePage />,
-          loader: () => {
-            const allProjectDataLoaded = getAllProjectsFromStorage();
-            return defer({ allProjectDataLoaded });
-          },
+          loader: () => getAllProjectsFromStorage(),
         },
         {
           path: createProjectsPageUrl(),
           element: <ProjectsPage />,
-          loader: () => {
-            const allProjectDataLoaded = getAllProjectsFromStorage();
-            return defer({ allProjectDataLoaded });
-          },
+          loader: () => getAllProjectsFromStorage(),
         },
         { path: createImportPageUrl(), element: <ImportPage /> },
         {
           path: createDataSamplesPageUrl(),
-          element: (
-            <ProjectLoadWrapper>
-              <DataSamplesPage />
-            </ProjectLoadWrapper>
-          ),
+          element: <DataSamplesPage />,
           loader: () => commonLoaderFunction(),
         },
         {
           path: createTestingModelPageUrl(),
-          element: (
-            <ProjectLoadWrapper>
-              <TestingModelPage />,
-            </ProjectLoadWrapper>
-          ),
+          element: <TestingModelPage />,
           loader: commonLoaderFunction,
         },
         {
           path: createCodePageUrl(),
-          element: (
-            <ProjectLoadWrapper>
-              <CodePage />,
-            </ProjectLoadWrapper>
-          ),
+          element: <CodePage />,
           loader: commonLoaderFunction,
         },
         {

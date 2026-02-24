@@ -19,7 +19,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
-import { RefObject, Suspense, useCallback, useRef, useState } from "react";
+import { RefObject, useCallback, useRef, useState } from "react";
 import { IconType } from "react-icons/lib";
 import {
   RiAddLine,
@@ -28,18 +28,16 @@ import {
   RiUpload2Line,
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Await, useLoaderData, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import CarouselRow from "../components/Carousel/CarouselRow";
 import ClickableTooltip from "../components/ClickableTooltip";
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import Link from "../components/Link";
 import DefaultPageLayout, {
-  HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
 import { createHelpCards } from "../components/HelpCards";
 import { createLessonCards } from "../components/LessonCards";
-import LoadingPage from "../components/LoadingPage";
 import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
@@ -57,39 +55,29 @@ import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
 import HomepageBanner from "../components/HomepageBanner";
 
 const HomePage = () => {
-  const { allProjectDataLoaded } = useLoaderData() as {
-    allProjectDataLoaded: boolean;
-  };
   const intl = useIntl();
   const [{ languageId }] = useSettings();
 
   return (
-    <Suspense fallback={<LoadingPage />}>
-      <Await resolve={allProjectDataLoaded}>
-        <DefaultPageLayout
-          toolbarItemsRight={<HomeToolbarItem />}
-          menuItems={<HomeMenuItem />}
-        >
-          <HomepageBanner />
-          <ProjectRow />
-          <CarouselRow
-            containerMessageId="project-ideas-row-carousel"
-            carouselItems={createProjectIdeaCards(intl, languageId)}
-            titleId="project-ideas-row-title"
-          />
-          <CarouselRow
-            containerMessageId="teacher-resources-row-carousel"
-            carouselItems={createLessonCards(intl)}
-            titleId="teacher-resources-row-title"
-          />
-          <CarouselRow
-            containerMessageId="help-resources-row-carousel"
-            carouselItems={createHelpCards(intl)}
-            titleId="help-resources-row-title"
-          />
-        </DefaultPageLayout>
-      </Await>
-    </Suspense>
+    <DefaultPageLayout toolbarItemsRight={<HomeToolbarItem />}>
+      <HomepageBanner />
+      <ProjectRow />
+      <CarouselRow
+        containerMessageId="project-ideas-row-carousel"
+        carouselItems={createProjectIdeaCards(intl, languageId)}
+        titleId="project-ideas-row-title"
+      />
+      <CarouselRow
+        containerMessageId="teacher-resources-row-carousel"
+        carouselItems={createLessonCards(intl)}
+        titleId="teacher-resources-row-title"
+      />
+      <CarouselRow
+        containerMessageId="help-resources-row-carousel"
+        carouselItems={createHelpCards(intl)}
+        titleId="help-resources-row-title"
+      />
+    </DefaultPageLayout>
   );
 };
 
