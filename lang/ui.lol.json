@@ -987,6 +987,14 @@
     "defaultMessage": "crwdns368557:0crwdne368557:0",
     "description": "Alt text for media in homepage"
   },
+  "homepage-banner-heading": {
+    "defaultMessage": "New to {appName}?",
+    "description": "Homepage banner heading"
+  },
+  "homepage-banner-subtitle": {
+    "defaultMessage": "Discover in-depth tutorials and teaching resources",
+    "description": "Homepage banner subtitle"
+  },
   "homepage-description": {
     "defaultMessage": "crwdns363028:0crwdne363028:0",
     "description": "Home page description"
@@ -1142,6 +1150,10 @@
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "crwdns363066:0crwdne363066:0",
     "description": "Link to support article for firewall requirements"
+  },
+  "learn-more-action": {
+    "defaultMessage": "Learn more",
+    "description": "Learn more button text"
   },
   "led-icon-option-angry": {
     "defaultMessage": "crwdns363068:0crwdne363068:0",
@@ -1620,7 +1632,7 @@
     "description": "Button to skip focus to the projects toolbar"
   },
   "project-storage-tooltip": {
-    "defaultMessage": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if you don't visit for a while, especially in Safari.",
+    "defaultMessage": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if your computer is low on space.",
     "description": "Tooltip for my projects row"
   },
   "projects-page-title": {

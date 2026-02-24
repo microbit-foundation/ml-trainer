@@ -71,9 +71,8 @@ export const NameProjectDialog = ({
     (e: FormEvent) => {
       e.preventDefault();
       onSave(name);
-      onClose();
     },
-    [name, onClose, onSave]
+    [name, onSave]
   );
 
   useEffect(() => {

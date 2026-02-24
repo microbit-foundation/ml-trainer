@@ -17,7 +17,9 @@ import {
 import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import DefaultPageLayout from "../components/DefaultPageLayout";
+import DefaultPageLayout, {
+  HomeToolbarItem,
+} from "../components/DefaultPageLayout";
 import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
@@ -46,11 +48,9 @@ const AboutPage = () => {
 
   return (
     <DefaultPageLayout
-      toolbarItemsRight={
-        <Button variant="toolbar" onClick={handleGetStarted}>
-          <FormattedMessage id="get-started-action" />
-        </Button>
-      }
+      toolbarItemsRight={<HomeToolbarItem />}
+      backUrl={createHomePageUrl()}
+      backLabelId="home-action"
     >
       <Container
         as="main"

@@ -987,6 +987,14 @@
     "defaultMessage": "video showing CreateAI detecting different movements",
     "description": "Alt text for media in homepage"
   },
+  "homepage-banner-heading": {
+    "defaultMessage": "New to {appName}?",
+    "description": "Homepage banner heading"
+  },
+  "homepage-banner-subtitle": {
+    "defaultMessage": "Discover in-depth tutorials and teaching resources",
+    "description": "Homepage banner subtitle"
+  },
   "homepage-description": {
     "defaultMessage": "Entrena un model d'aprenentatge automàtic amb les teves dades de moviment i executa'l a la teva micro:bit.",
     "description": "Home page description"
@@ -1142,6 +1150,10 @@
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "Més informació sobre els requisits del tallafoc",
     "description": "Link to support article for firewall requirements"
+  },
+  "learn-more-action": {
+    "defaultMessage": "Learn more",
+    "description": "Learn more button text"
   },
   "led-icon-option-angry": {
     "defaultMessage": "Enfadat",
@@ -1620,7 +1632,7 @@
     "description": "Button to skip focus to the projects toolbar"
   },
   "project-storage-tooltip": {
-    "defaultMessage": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if you don't visit for a while, especially in Safari.",
+    "defaultMessage": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if your computer is low on space.",
     "description": "Tooltip for my projects row"
   },
   "projects-page-title": {

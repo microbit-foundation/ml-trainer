@@ -6,7 +6,7 @@ export enum BroadcastChannelMessageType {
 
 export interface BroadcastChannelData {
   messageType: BroadcastChannelMessageType;
-  projectId?: string;
+  projectIds: string[];
 }
 
 // Used to keep project state synced between open tabs / windows.
