@@ -10,18 +10,47 @@ import {
   InputLeftElement,
   Tooltip,
 } from "@chakra-ui/react";
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import {
+  MutableRefObject,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { RiEditLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
 import { useStore } from "../store";
 
-const backgroundColor = "blackAlpha.300";
-
 interface EditableNameProps {
   suffix?: ReactNode;
+  variant?: "toolbar" | "drawer";
+  onEditRef?: MutableRefObject<(() => void) | undefined>;
 }
 
-const EditableName = ({ suffix }: EditableNameProps) => {
+const variantStyles = {
+  toolbar: {
+    color: "white",
+    backgroundColor: "blackAlpha.300",
+    focusShadow: "outlineDark",
+    maxW: "200px",
+    fontSize: 20,
+  },
+  drawer: {
+    color: "gray.800",
+    backgroundColor: "blackAlpha.100",
+    focusShadow: "outline",
+    maxW: "100%",
+    fontSize: 16,
+  },
+};
+
+const EditableName = ({
+  suffix,
+  variant = "toolbar",
+  onEditRef,
+}: EditableNameProps) => {
+  const styles = variantStyles[variant];
   const intl = useIntl();
   const getCurrentProject = useStore((s) => s.getCurrentProject);
   const renameProject = useStore((s) => s.setProjectName);
@@ -61,8 +90,9 @@ const EditableName = ({ suffix }: EditableNameProps) => {
   return (
     <Editable
       alignItems="center"
-      color="white"
+      color={styles.color}
       display="flex"
+      w={variant === "drawer" ? "100%" : undefined}
       finalFocusRef={ref}
       isPreviewFocusable={false}
       onCancel={handleCancel}
@@ -70,68 +100,83 @@ const EditableName = ({ suffix }: EditableNameProps) => {
       onSubmit={handleSubmit}
       value={value}
     >
-      {({ onEdit, isEditing }) => (
-        <HStack spacing={0}>
-          {isEditing ? (
-            <InputGroup
-              backgroundColor={backgroundColor}
-              borderRadius="md"
-              minW="250px"
-            >
-              <InputLeftElement pointerEvents="none">
-                <Icon as={RiEditLine} />
-              </InputLeftElement>
-              <Input
-                as={EditableInput}
-                aria-label={intl.formatMessage({ id: "project-name-text" })}
-                _focusVisible={{
-                  boxShadow: "0 0 0 2px rgba(0, 0, 0, 0.5)",
-                }}
-              />
-            </InputGroup>
-          ) : (
-            <>
-              <Tooltip
-                label={intl.formatMessage({ id: "project-name-tooltip" })}
-                hasArrow
-                placement="bottom"
+      {({ onEdit, isEditing }) => {
+        if (onEditRef) {
+          onEditRef.current = onEdit;
+        }
+        return (
+          <HStack spacing={0} w={variant === "drawer" ? "100%" : undefined}>
+            {isEditing ? (
+              <InputGroup
+                backgroundColor={styles.backgroundColor}
+                borderRadius="md"
+                minW={variant === "drawer" ? undefined : "250px"}
+                w={variant === "drawer" ? "100%" : undefined}
               >
-                <Button
-                  display="flex"
-                  h={10}
-                  p={1.5}
-                  borderRadius="md"
-                  _hover={{
-                    backgroundColor,
-                  }}
-                  fontWeight="normal"
-                  onClick={onEdit}
-                  ref={ref}
-                  variant="unstyled"
-                  leftIcon={<Icon as={RiEditLine} />}
+                {variant !== "drawer" && (
+                  <InputLeftElement pointerEvents="none">
+                    <Icon as={RiEditLine} />
+                  </InputLeftElement>
+                )}
+                <Input
+                  as={EditableInput}
+                  pl={variant === "drawer" ? 3 : undefined}
+                  aria-label={intl.formatMessage({ id: "project-name-text" })}
                   _focusVisible={{
-                    boxShadow: "outlineDark",
+                    boxShadow: "0 0 0 2px rgba(0, 0, 0, 0.5)",
                   }}
+                />
+              </InputGroup>
+            ) : (
+              <>
+                <Tooltip
+                  label={intl.formatMessage({ id: "project-name-tooltip" })}
+                  hasArrow
+                  placement="bottom"
+                  isDisabled={variant === "drawer"}
                 >
-                  <EditablePreview
-                    cursor="pointer"
-                    fontSize={20}
-                    maxW="200px"
-                    w="fit-content"
-                    noOfLines={1}
-                    textAlign="left"
-                  />
-                </Button>
-              </Tooltip>
-              {suffix && (
-                <HStack spacing={0} marginInlineStart={-1.5}>
-                  {suffix}
-                </HStack>
-              )}
-            </>
-          )}
-        </HStack>
-      )}
+                  <Button
+                    display="flex"
+                    h={10}
+                    p={1.5}
+                    pl={variant === "drawer" ? 0 : 1.5}
+                    borderRadius="md"
+                    _hover={
+                      variant === "drawer"
+                        ? {}
+                        : { backgroundColor: styles.backgroundColor }
+                    }
+                    fontWeight="normal"
+                    onClick={onEdit}
+                    ref={ref}
+                    variant="unstyled"
+                    {...(variant === "drawer"
+                      ? { rightIcon: <Icon as={RiEditLine} /> }
+                      : { leftIcon: <Icon as={RiEditLine} /> })}
+                    _focusVisible={{
+                      boxShadow: styles.focusShadow,
+                    }}
+                  >
+                    <EditablePreview
+                      cursor="pointer"
+                      fontSize={styles.fontSize}
+                      maxW={styles.maxW}
+                      w="fit-content"
+                      noOfLines={1}
+                      textAlign="left"
+                    />
+                  </Button>
+                </Tooltip>
+                {suffix && (
+                  <HStack spacing={0} marginInlineStart={-1.5}>
+                    {suffix}
+                  </HStack>
+                )}
+              </>
+            )}
+          </HStack>
+        );
+      }}
     </Editable>
   );
 };

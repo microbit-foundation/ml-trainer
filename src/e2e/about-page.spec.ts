@@ -13,6 +13,6 @@ test.describe("about page", () => {
       .getByRole("button", { name: "Get started" })
       .first()
       .click();
-    homePage.expectOnHomePage();
+    await homePage.expectOnHomePage();
   });
 });

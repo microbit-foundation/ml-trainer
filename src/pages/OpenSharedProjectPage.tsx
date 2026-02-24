@@ -15,7 +15,6 @@ import { RiInformationLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { useNavigate, useParams } from "react-router";
 import DefaultPageLayout, {
-  HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
 import LoadingAnimation from "../components/LoadingAnimation";
@@ -23,7 +22,7 @@ import ProjectPreview from "../components/ProjectPreview";
 import { useLogging } from "../logging/logging-hooks";
 import { ActionData, DatasetEditorJsonFormat } from "../model";
 import { useStore } from "../store";
-import { createDataSamplesPageUrl } from "../urls";
+import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
 
 const enum SharedState {
   GettingHeader,
@@ -59,7 +58,7 @@ const OpenSharedProjectPage = () => {
     <DefaultPageLayout
       titleId="open-shared-project-title"
       toolbarItemsRight={<HomeToolbarItem />}
-      menuItems={<HomeMenuItem />}
+      backUrl={createHomePageUrl()}
     >
       {sharedState === SharedState.GettingHeader ? (
         <VStack

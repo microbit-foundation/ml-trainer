@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  Button,
   ButtonGroup,
   Flex,
   HStack,
@@ -19,9 +18,8 @@ import { RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useBufferedData } from "../buffered-data-hooks";
-import BackArrow from "../components/BackArrow";
+import { ButtonWithLoading } from "../components/ButtonWithLoading";
 import DefaultPageLayout, {
-  ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
 import IncompatibleEditorDevice from "../components/IncompatibleEditorDevice";
@@ -29,15 +27,14 @@ import LiveGraphPanel from "../components/LiveGraphPanel";
 import Menu from "../components/Menu";
 import MoreMenuButton from "../components/MoreMenuButton";
 import TestingModelTable from "../components/TestingModelTable";
-import { useBoardVersion } from "../hooks/use-board-version";
 import { useDataConnected } from "../data-connection-flow";
 import { useProject } from "../hooks/project-hooks";
+import { useBoardVersion } from "../hooks/use-board-version";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
+import { projectSessionStorage } from "../session-storage";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
-import { ButtonWithLoading } from "../components/ButtonWithLoading";
-import { projectSessionStorage } from "../session-storage";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
@@ -116,17 +113,9 @@ const TestingModelPage = () => {
       titleId="testing-model-title"
       showPageTitle
       showProjectName
-      menuItems={<ProjectMenuItems />}
       toolbarItemsRight={<ProjectToolbarItems />}
-      toolbarItemsLeft={
-        <Button
-          leftIcon={<BackArrow />}
-          variant="toolbar"
-          onClick={navigateToDataSamples}
-        >
-          <FormattedMessage id="back-to-data-samples-action" />
-        </Button>
-      }
+      backUrl={createDataSamplesPageUrl()}
+      backLabelId="back-to-data-samples-action"
       bottomContent={
         <>
           <HStack
