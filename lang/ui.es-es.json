@@ -887,6 +887,14 @@
     "defaultMessage": "video showing CreateAI detecting different movements",
     "description": "Alt text for media in homepage"
   },
+  "homepage-banner-heading": {
+    "defaultMessage": "New to {appNameFull}?",
+    "description": "Homepage banner heading"
+  },
+  "homepage-banner-subtitle": {
+    "defaultMessage": "Discover in-depth tutorials and teaching resources",
+    "description": "Homepage banner subtitle"
+  },
   "homepage-description": {
     "defaultMessage": "Entrena un modelo de aprendizaje automático con tus propios datos de movimiento y ejecútalo en tu micro:bit.",
     "description": "Home page description"
@@ -1042,6 +1050,10 @@
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "Conoce los requisitos del cortafuegos",
     "description": "Link to support article for firewall requirements"
+  },
+  "learn-more-action": {
+    "defaultMessage": "Learn more",
+    "description": "Learn more button text"
   },
   "led-icon-option-angry": {
     "defaultMessage": "Enfadado",

@@ -1541,6 +1541,26 @@
       "value": "video showing CreateAI detecting different movements"
     }
   ],
+  "homepage-banner-heading": [
+    {
+      "type": 0,
+      "value": "New to "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "?"
+    }
+  ],
+  "homepage-banner-subtitle": [
+    {
+      "type": 0,
+      "value": "Discover in-depth tutorials and teaching resources"
+    }
+  ],
   "homepage-description": [
     {
       "type": 0,
@@ -1847,6 +1867,12 @@
     {
       "type": 0,
       "value": "Conoce los requisitos del cortafuegos"
+    }
+  ],
+  "learn-more-action": [
+    {
+      "type": 0,
+      "value": "Learn more"
     }
   ],
   "led-icon-option-angry": [

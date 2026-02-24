@@ -54,6 +54,7 @@ import {
   useStore,
 } from "../store";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
+import HomepageBanner from "../components/HomepageBanner";
 
 const HomePage = () => {
   const { allProjectDataLoaded } = useLoaderData() as {
@@ -69,6 +70,7 @@ const HomePage = () => {
           toolbarItemsRight={<HomeToolbarItem />}
           menuItems={<HomeMenuItem />}
         >
+          <HomepageBanner />
           <ProjectRow />
           <CarouselRow
             containerMessageId="project-ideas-row-carousel"
