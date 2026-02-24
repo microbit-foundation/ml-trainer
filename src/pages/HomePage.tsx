@@ -346,6 +346,7 @@ const NewProjectCard = () => {
 
   const handleNameProjectSave = useCallback(
     async (projectName: string) => {
+      setIsOpen(false);
       logging.event({
         type: "session-open-new",
       });
