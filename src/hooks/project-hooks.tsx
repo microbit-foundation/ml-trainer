@@ -51,7 +51,7 @@ import { Capacitor } from "@capacitor/core";
 import { App as CapacitorApp } from "@capacitor/app";
 import { Encoding, Filesystem } from "@capacitor/filesystem";
 import { isIOS } from "../platform";
-import { shareHex } from "../utils/share-util";
+import { isShareCanceled, shareHex } from "../utils/share-util";
 
 class CodeEditorError extends Error {}
 
@@ -445,7 +445,9 @@ export const ProjectProvider = ({
             setSave({ hex, step: SaveStep.ChooseDestination, type: saveType });
             await shareHex(hex);
           } catch (e) {
-            logging.error("Sharing failed", e);
+            if (!isShareCanceled(e)) {
+              logging.error("Sharing failed", e);
+            }
           }
         } else {
           await downloadHexData(hex);

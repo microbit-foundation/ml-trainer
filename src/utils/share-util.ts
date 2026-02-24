@@ -45,6 +45,16 @@ export const shareHex = async (hex: HexData) => {
   );
 };
 
+/**
+ * Returns true if the error represents the user dismissing the share sheet.
+ *
+ * Both iOS and Android Capacitor Share plugins reject with "Share canceled"
+ * when the user dismisses without completing. There is no error code — the
+ * message string is the only signal.
+ */
+export const isShareCanceled = (e: unknown): boolean =>
+  e instanceof Error && e.message === "Share canceled";
+
 const cleanOldFiles = async () => {
   let files;
   try {
