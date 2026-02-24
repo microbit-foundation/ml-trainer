@@ -63,10 +63,6 @@ export interface Database {
    * the most recently accessed project.
    */
   getProject(id: string): Promise<PersistedProjectData>;
-  /**
-   * Load the most recently accessed project without updating its timestamp.
-   */
-  getLatestProject(): Promise<PersistedProjectData | undefined>;
   getAllProjectData(): Promise<ProjectDataWithActions[]>;
   importProject(
     actions: ActionData[],
@@ -430,63 +426,6 @@ export class IdbDatabase implements Database {
     const projectData = assertData(await projectDataStore.get(id));
     // Ensure that this project will be loaded by default during next page load.
     await projectDataStore.put({ ...projectData, timestamp: Date.now() }, id);
-    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const storeActions = orderBy(
-      assertDataArray(await actionsStore.index("projectId").getAll(id)),
-      "createdAt",
-      "asc"
-    );
-    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    const actions: ActionData[] = await Promise.all(
-      storeActions.map(async (action) => {
-        return {
-          id: action.id,
-          name: action.name,
-          icon: action.icon,
-          requiredConfidence: action.requiredConfidence,
-          createdAt: action.createdAt,
-          recordings: assertDataArray(
-            await recordingsStore.index("actionId").getAll(action.id)
-          ),
-        };
-      })
-    );
-    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
-    const makeCodeData = assertData(await makeCodeStore.get(id));
-    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
-    const settings = assertData(
-      await settingsStore.get(DatabaseStore.SETTINGS)
-    );
-    await tx.done;
-    return {
-      id,
-      actions,
-      project: makeCodeData.project,
-      projectEdited: makeCodeData.projectEdited,
-      timestamp: projectData.timestamp,
-      settings,
-    };
-  }
-
-  // This method is used passively. Don't update the project timestamp.
-  async getLatestProject(): Promise<PersistedProjectData | undefined> {
-    const tx = (await this.useDb()).transaction(
-      [
-        DatabaseStore.ACTIONS,
-        DatabaseStore.RECORDINGS,
-        DatabaseStore.EDITOR_PROJECT,
-        DatabaseStore.PROJECT_DATA,
-        DatabaseStore.SETTINGS,
-      ],
-      "readwrite"
-    );
-    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    const allProjectsData = await projectDataStore.getAll();
-    if (!allProjectsData.length) {
-      return undefined;
-    }
-    const projectData = orderBy(allProjectsData, "timestamp", "desc")[0];
-    const id = projectData.id;
     const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
     const storeActions = orderBy(
       assertDataArray(await actionsStore.index("projectId").getAll(id)),
