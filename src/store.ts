@@ -368,20 +368,21 @@ const createMlStore = (logging: Logging) => {
         allProjectData: [],
 
         async setSettings(update: Partial<Settings>) {
-          const { id, settings } = get();
+          const { settings } = get();
           const updatedSettings = {
             ...settings,
             ...update,
           };
           const timestamp = Date.now();
           set({ settings: updatedSettings, timestamp }, false, "setSettings");
-          await storageWithErrHandling(() =>
-            storage.updateSettings(id, updatedSettings, timestamp)
+          await storageWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
           );
         },
 
         async setLanguage(languageId: string) {
-          const { id, settings } = get();
+          const { settings } = get();
           if (languageId === settings.languageId) {
             // No need to update language if language is the same.
             // MakeCode does not reload.
@@ -408,8 +409,9 @@ const createMlStore = (logging: Logging) => {
             false,
             "setLanguage"
           );
-          await storageWithErrHandling(() =>
-            storage.updateSettings(id, updatedSettings, timestamp)
+          await storageWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
           );
         },
 
@@ -1031,9 +1033,11 @@ const createMlStore = (logging: Logging) => {
                 {
                   timestamp,
                   id,
-                },
-                updatedSettings
+                }
               )
+            );
+            await storageWithErrHandling(() =>
+              storage.updateSettings(updatedSettings)
             );
           } else if (loadAction === "replaceProject") {
             const newId = uuid();
@@ -1057,9 +1061,11 @@ const createMlStore = (logging: Logging) => {
                 {
                   timestamp,
                   id: newId,
-                },
-                updatedSettings
+                }
               )
+            );
+            await storageWithErrHandling(() =>
+              storage.updateSettings(updatedSettings)
             );
           }
         },
@@ -1111,9 +1117,11 @@ const createMlStore = (logging: Logging) => {
             storage.importProject(
               newActions,
               { project, projectEdited },
-              { timestamp, id },
-              updatedSettings
+              { timestamp, id }
             )
+          );
+          await storageWithErrHandling(() =>
+            storage.updateSettings(updatedSettings)
           );
         },
 
@@ -1471,9 +1479,11 @@ const createMlStore = (logging: Logging) => {
                   project: newProject,
                   projectEdited: updatedProjectEdited,
                 },
-                { timestamp: updatedTimestamp, id: newProjectId },
-                updatedSettings
+                { timestamp: updatedTimestamp, id: newProjectId }
               )
+            );
+            await storageWithErrHandling(() =>
+              storage.updateSettings(updatedSettings)
             );
           } else if (updateMakeCodeProject) {
             await storageWithErrHandling(() =>
@@ -1562,7 +1572,7 @@ const createMlStore = (logging: Logging) => {
         },
 
         async tourStart(trigger: TourTrigger, manual: boolean = false) {
-          const { actions, id, settings, tourState } = get();
+          const { actions, settings, tourState } = get();
           if (
             manual ||
             (!tourState && !settings.toursCompleted.includes(trigger.name))
@@ -1589,8 +1599,9 @@ const createMlStore = (logging: Logging) => {
               timestamp,
             };
             set(updatedState);
-            await storageWithErrHandling(() =>
-              storage.updateSettings(id, updatedSettings, timestamp)
+            await storageWithErrHandling(
+              () => storage.updateSettings(updatedSettings),
+              "settings"
             );
           }
         },
@@ -1615,7 +1626,7 @@ const createMlStore = (logging: Logging) => {
           });
         },
         async tourComplete(triggers: TourTriggerName[]) {
-          const { id, settings } = get();
+          const { settings } = get();
           const updatedSettings = {
             ...settings,
             toursCompleted: Array.from(
@@ -1628,13 +1639,14 @@ const createMlStore = (logging: Logging) => {
             settings: updatedSettings,
             timestamp,
           });
-          await storageWithErrHandling(() =>
-            storage.updateSettings(id, updatedSettings, timestamp)
+          await storageWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
           );
         },
 
         async setDataSamplesView(view: DataSamplesView) {
-          const { id, settings } = get();
+          const { settings } = get();
           const updatedSettings = {
             ...settings,
             dataSamplesView: view,
@@ -1644,22 +1656,23 @@ const createMlStore = (logging: Logging) => {
             settings: updatedSettings,
             timestamp,
           });
-          await storageWithErrHandling(() =>
-            storage.updateSettings(id, updatedSettings, timestamp)
+          await storageWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
           );
         },
         async setShowGraphs(show: boolean) {
-          const { id, settings } = get();
+          const { settings } = get();
           const updatedSettings = {
             ...settings,
             showGraphs: show,
           };
-          const timestamp = Date.now();
           set({
             settings: updatedSettings,
           });
-          await storageWithErrHandling(() =>
-            storage.updateSettings(id, updatedSettings, timestamp)
+          await storageWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
           );
         },
 
@@ -2005,15 +2018,17 @@ const projectInHexIsEdited = (project: MakeCodeProject): boolean => {
 
 const storageWithErrHandling = async <T>(
   callback: () => Promise<T>,
-  broadcastEvent: boolean = true
+  broadcastEvent: boolean | "settings" = true
 ) => {
   try {
     const value = await callback();
     const projectId = useStore.getState().id;
-    if (broadcastEvent && projectId) {
+    const settings = broadcastEvent === "settings";
+    if (broadcastEvent && (projectId || settings)) {
       const message: BroadcastChannelData = {
         messageType: BroadcastChannelMessageType.RELOAD_PROJECT,
-        projectIds: [projectId],
+        projectIds: projectId ? [projectId] : [],
+        ...(settings && { settings: true }),
       };
       broadcastChannel.postMessage(message);
     }
@@ -2043,4 +2058,9 @@ export const loadProjectAndModelFromStorage = async (id: string) => {
 export const getAllProjectsFromStorage = async (): Promise<boolean> => {
   await useStore.getState().getAllProjectData();
   return true;
+};
+
+export const loadSettingsFromStorage = async () => {
+  const settings = await storage.getSettings();
+  useStore.setState({ settings });
 };
