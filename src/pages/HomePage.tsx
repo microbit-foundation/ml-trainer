@@ -228,6 +228,10 @@ const ViewAllProjectsLink = () => {
       href={createProjectsPageUrl()}
       color="brand.700"
       fontWeight="semibold"
+      borderRadius="md"
+      px={2}
+      py={1}
+      _focusVisible={{ boxShadow: "outline", outline: "none" }}
     >
       <FormattedMessage id="view-all-projects" />
     </Link>
