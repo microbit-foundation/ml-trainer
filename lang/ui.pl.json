@@ -888,7 +888,7 @@
     "description": "Alt text for media in homepage"
   },
   "homepage-banner-heading": {
-    "defaultMessage": "New to {appNameFull}?",
+    "defaultMessage": "New to {appName}?",
     "description": "Homepage banner heading"
   },
   "homepage-banner-subtitle": {

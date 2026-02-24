@@ -8,7 +8,7 @@ import { useDeployment } from "../deployment";
 
 const HomepageBanner = () => {
   const navigate = useNavigate();
-  const { appNameFull } = useDeployment();
+  const { appNameShort } = useDeployment();
 
   const handleLearnMore = useCallback(() => {
     navigate(createAboutPageUrl());
@@ -39,7 +39,7 @@ const HomepageBanner = () => {
             <Heading fontSize={{ base: "2xl", sm: "3xl" }}>
               <FormattedMessage
                 id="homepage-banner-heading"
-                values={{ appNameFull }}
+                values={{ appName: appNameShort }}
               />
             </Heading>
             <Text fontSize={{ base: "md", sm: "lg" }} pr={5} pl={5}>
