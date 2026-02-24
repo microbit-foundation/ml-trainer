@@ -195,6 +195,10 @@
     "defaultMessage": "확인 및 저장",
     "description": "Confirm and save action label"
   },
+  "confirm-share-action": {
+    "defaultMessage": "Confirm and share",
+    "description": "Confirm and share action label"
+  },
   "connect-action": {
     "defaultMessage": "연결하기",
     "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
@@ -1811,6 +1815,14 @@
     "defaultMessage": "행동과 데이터 샘플을 변경할 필요가 없는 경우 Microsoft MakeCode로도 열 수 있습니다.",
     "description": "Text in the dialog shown when saving a hex file"
   },
+  "save-to-files-action": {
+    "defaultMessage": "Save to Files",
+    "description": "Label for action that saves the project to the device file system on Android"
+  },
+  "saving-dataset-toast-title": {
+    "defaultMessage": "Your data samples have been downloaded",
+    "description": "Notification after a dataset has been downloaded"
+  },
   "saving-description": {
     "defaultMessage": "다운로드 파일이 곧 준비됩니다.",
     "description": "Saving progress dialog text"
@@ -1850,6 +1862,26 @@
   "settings-menu-action": {
     "defaultMessage": "설정 행동 메뉴",
     "description": "Label for settings actions menu button"
+  },
+  "share-action": {
+    "defaultMessage": "Share",
+    "description": "Label for action that initiates sharing the project on mobile"
+  },
+  "share-hex-dialog-heading": {
+    "defaultMessage": "Share project as a hex file",
+    "description": "Heading for the dialog shown when sharing a hex file on mobile"
+  },
+  "share-hex-dialog-message1": {
+    "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
+    "description": "Text in the dialog shown when sharing a hex file on mobile"
+  },
+  "sharing-description": {
+    "defaultMessage": "Your project will be ready to share soon.",
+    "description": "Sharing progress dialog text for mobile"
+  },
+  "sharing-title": {
+    "defaultMessage": "Sharing…",
+    "description": "Sharing progress title"
   },
   "show-graphs-checkbox-label-text": {
     "defaultMessage": "그래프 표시",

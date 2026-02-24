@@ -25,9 +25,9 @@ import { Logging } from "../logging/logging";
 import { Settings } from "../settings";
 import { useStore } from "../store";
 import { getTotalNumSamples } from "../utils/actions";
-import { downloadHex } from "../utils/fs-util";
 import { DownloadState, SameOrDifferentChoice } from "./download-types";
 import { checkPermissions } from "../shared-steps";
+import { downloadHexData } from "../utils/fs-util";
 
 /**
  * Dependencies needed for download actions.
@@ -142,7 +142,7 @@ const executeAction = async (
     case "downloadHexFile": {
       const currentState = getDownloadState();
       if (currentState.hex) {
-        downloadHex(currentState.hex);
+        await downloadHexData(currentState.hex);
       }
       break;
     }

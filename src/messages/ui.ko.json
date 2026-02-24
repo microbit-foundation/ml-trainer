@@ -413,6 +413,12 @@
       "value": "확인 및 저장"
     }
   ],
+  "confirm-share-action": [
+    {
+      "type": 0,
+      "value": "Confirm and share"
+    }
+  ],
   "connect-action": [
     {
       "type": 0,
@@ -3321,6 +3327,18 @@
       "value": "행동과 데이터 샘플을 변경할 필요가 없는 경우 Microsoft MakeCode로도 열 수 있습니다."
     }
   ],
+  "save-to-files-action": [
+    {
+      "type": 0,
+      "value": "Save to Files"
+    }
+  ],
+  "saving-dataset-toast-title": [
+    {
+      "type": 0,
+      "value": "Your data samples have been downloaded"
+    }
+  ],
   "saving-description": [
     {
       "type": 0,
@@ -3399,6 +3417,44 @@
     {
       "type": 0,
       "value": "설정 행동 메뉴"
+    }
+  ],
+  "share-action": [
+    {
+      "type": 0,
+      "value": "Share"
+    }
+  ],
+  "share-hex-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Share project as a hex file"
+    }
+  ],
+  "share-hex-dialog-message1": [
+    {
+      "type": 0,
+      "value": "The hex file contains your actions, data samples and your MakeCode project. Open it in "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to continue working."
+    }
+  ],
+  "sharing-description": [
+    {
+      "type": 0,
+      "value": "Your project will be ready to share soon."
+    }
+  ],
+  "sharing-title": [
+    {
+      "type": 0,
+      "value": "Sharing…"
     }
   ],
   "show-graphs-checkbox-label-text": [

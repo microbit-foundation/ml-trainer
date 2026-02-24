@@ -11,12 +11,21 @@ import {
   HStack,
   Icon,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect, useMemo } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { RiDownload2Line, RiHome2Line, RiMenuLine } from "react-icons/ri";
+import {
+  RiDownload2Line,
+  RiHome2Line,
+  RiMenuLine,
+  RiShareLine,
+} from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation, useNavigate } from "react-router";
 import { isDataConnectionDialogOpen } from "../data-connection-flow";
@@ -25,7 +34,7 @@ import { flags } from "../flags";
 import { useNativeTabletBreakpoint } from "../native-breakpoint-hooks";
 import { useProject } from "../hooks/project-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
-import { PostImportDialogState } from "../model";
+import { PostImportDialogState, SaveType } from "../model";
 import Tour from "../pages/Tour";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
@@ -45,6 +54,7 @@ import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
+import { isIOS, isNativePlatform } from "../platform";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -332,19 +342,56 @@ const DefaultPageLayout = ({
 export const ProjectToolbarItems = () => {
   const { saveHex } = useProject();
   const handleSave = useCallback(() => {
-    void saveHex();
+    void saveHex(SaveType.Download);
+  }, [saveHex]);
+  const handleShare = useCallback(() => {
+    void saveHex(SaveType.Share);
   }, [saveHex]);
   useShortcut(keyboardShortcuts.saveSession, handleSave);
 
+  const canShare = isNativePlatform();
+  const shareOnly = isIOS();
+
   return (
     <>
-      <Button
-        variant="toolbar"
-        leftIcon={<RiDownload2Line />}
-        onClick={handleSave}
-      >
-        <FormattedMessage id="save-action" />
-      </Button>
+      {shareOnly ? (
+        <Button
+          variant="toolbar"
+          leftIcon={<RiShareLine />}
+          onClick={handleShare}
+        >
+          <FormattedMessage id="share-action" />
+        </Button>
+      ) : canShare ? (
+        <Menu>
+          <MenuButton as={Button} leftIcon={<RiShareLine />} variant="toolbar">
+            <FormattedMessage id="share-action" />
+          </MenuButton>
+
+          <MenuList zIndex={2}>
+            <MenuItem
+              onClick={handleSave}
+              icon={<Icon h={5} w={5} as={RiDownload2Line} />}
+            >
+              <FormattedMessage id="save-to-files-action" />
+            </MenuItem>
+            <MenuItem
+              onClick={handleShare}
+              icon={<Icon h={5} w={5} as={RiShareLine} />}
+            >
+              <FormattedMessage id="share-action" />
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      ) : (
+        <Button
+          variant="toolbar"
+          leftIcon={<RiDownload2Line />}
+          onClick={handleSave}
+        >
+          <FormattedMessage id="save-action" />
+        </Button>
+      )}
       <HomeToolbarItem />
     </>
   );

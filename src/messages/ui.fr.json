@@ -421,6 +421,12 @@
       "value": "Confirmer et enregistrer"
     }
   ],
+  "confirm-share-action": [
+    {
+      "type": 0,
+      "value": "Confirm and share"
+    }
+  ],
   "connect-action": [
     {
       "type": 0,
@@ -3341,6 +3347,18 @@
       "value": "Vous pouvez également l'ouvrir avec Microsoft MakeCode si vous ne devez pas modifier les actions et les échantillons de données."
     }
   ],
+  "save-to-files-action": [
+    {
+      "type": 0,
+      "value": "Save to Files"
+    }
+  ],
+  "saving-dataset-toast-title": [
+    {
+      "type": 0,
+      "value": "Your data samples have been downloaded"
+    }
+  ],
   "saving-description": [
     {
       "type": 0,
@@ -3419,6 +3437,44 @@
     {
       "type": 0,
       "value": "Menu d'actions des paramètres"
+    }
+  ],
+  "share-action": [
+    {
+      "type": 0,
+      "value": "Share"
+    }
+  ],
+  "share-hex-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Share project as a hex file"
+    }
+  ],
+  "share-hex-dialog-message1": [
+    {
+      "type": 0,
+      "value": "The hex file contains your actions, data samples and your MakeCode project. Open it in "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to continue working."
+    }
+  ],
+  "sharing-description": [
+    {
+      "type": 0,
+      "value": "Your project will be ready to share soon."
+    }
+  ],
+  "sharing-title": [
+    {
+      "type": 0,
+      "value": "Sharing…"
     }
   ],
   "show-graphs-checkbox-label-text": [

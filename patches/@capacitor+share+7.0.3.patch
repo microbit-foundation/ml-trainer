@@ -1,0 +1,13 @@
+diff --git a/node_modules/@capacitor/share/android/src/main/java/com/capacitorjs/plugins/share/SharePlugin.java b/node_modules/@capacitor/share/android/src/main/java/com/capacitorjs/plugins/share/SharePlugin.java
+index 36171b7..fa9417c 100644
+--- a/node_modules/@capacitor/share/android/src/main/java/com/capacitorjs/plugins/share/SharePlugin.java
++++ b/node_modules/@capacitor/share/android/src/main/java/com/capacitorjs/plugins/share/SharePlugin.java
+@@ -149,7 +149,7 @@ public class SharePlugin extends Plugin {
+                 if (isFileUrl(file)) {
+                     String type = getMimeType(file);
+                     if (type == null || filesList.size() > 1) {
+-                        type = "*/*";
++                        type = "application/octet-stream";
+                     }
+                     intent.setType(type);
+

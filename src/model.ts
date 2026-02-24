@@ -129,6 +129,12 @@ export const enum TrainModelDialogStage {
 export interface SaveState {
   step: SaveStep;
   hex?: HexData;
+  type: SaveType;
+}
+
+export enum SaveType {
+  Download = "download",
+  Share = "share",
 }
 
 export enum SaveStep {
@@ -140,6 +146,10 @@ export enum SaveStep {
    * Otherwise we already have the project data in the state and save it directly.
    */
   SaveProgress = "progress",
+  /**
+   * Only used for the sharesheet on mobile devices
+   */
+  ChooseDestination = "choose destination",
 }
 
 export interface TourStep {

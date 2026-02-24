@@ -21,8 +21,9 @@ import {
 import { ChangeEvent, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
-import { useSettings } from "../store";
+import { useSettings, useStore } from "../store";
 import ModalFooterContent from "./ModalFooterContent";
+import { SaveType } from "../model";
 
 interface SaveHelpDialogProps {
   isOpen: boolean;
@@ -40,13 +41,17 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
     },
     [setSettings]
   );
+
+  const shareOrSave =
+    useStore((s) => s.save.type) === SaveType.Share ? "share" : "save";
+
   return (
     <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
             <Heading as="h2" fontSize="xl" fontWeight="bold">
-              <FormattedMessage id="save-hex-dialog-heading" />
+              <FormattedMessage id={`${shareOrSave}-hex-dialog-heading`} />
             </Heading>
           </ModalHeader>
           <ModalCloseButton />
@@ -55,7 +60,7 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
               <VStack gap={3}>
                 <Text>
                   <FormattedMessage
-                    id="save-hex-dialog-message1"
+                    id={`${shareOrSave}-hex-dialog-message1`}
                     values={{ appNameFull }}
                   />
                 </Text>
@@ -74,7 +79,7 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
               }
             >
               <Button size="lg" variant="primary" onClick={onSave}>
-                <FormattedMessage id="save-action" />
+                <FormattedMessage id={`${shareOrSave}-action`} />
               </Button>
             </ModalFooterContent>
           </ModalFooter>

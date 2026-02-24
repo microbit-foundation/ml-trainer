@@ -195,6 +195,10 @@
     "defaultMessage": "crwdns362712:0crwdne362712:0",
     "description": "Confirm and save action label"
   },
+  "confirm-share-action": {
+    "defaultMessage": "Confirm and share",
+    "description": "Confirm and share action label"
+  },
   "connect-action": {
     "defaultMessage": "crwdns362714:0crwdne362714:0",
     "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
@@ -1811,6 +1815,14 @@
     "defaultMessage": "crwdns363318:0crwdne363318:0",
     "description": "Text in the dialog shown when saving a hex file"
   },
+  "save-to-files-action": {
+    "defaultMessage": "Save to Files",
+    "description": "Label for action that saves the project to the device file system on Android"
+  },
+  "saving-dataset-toast-title": {
+    "defaultMessage": "Your data samples have been downloaded",
+    "description": "Notification after a dataset has been downloaded"
+  },
   "saving-description": {
     "defaultMessage": "crwdns363320:0crwdne363320:0",
     "description": "Saving progress dialog text"
@@ -1850,6 +1862,26 @@
   "settings-menu-action": {
     "defaultMessage": "crwdns363334:0crwdne363334:0",
     "description": "Label for settings actions menu button"
+  },
+  "share-action": {
+    "defaultMessage": "Share",
+    "description": "Label for action that initiates sharing the project on mobile"
+  },
+  "share-hex-dialog-heading": {
+    "defaultMessage": "Share project as a hex file",
+    "description": "Heading for the dialog shown when sharing a hex file on mobile"
+  },
+  "share-hex-dialog-message1": {
+    "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
+    "description": "Text in the dialog shown when sharing a hex file on mobile"
+  },
+  "sharing-description": {
+    "defaultMessage": "Your project will be ready to share soon.",
+    "description": "Sharing progress dialog text for mobile"
+  },
+  "sharing-title": {
+    "defaultMessage": "Sharing…",
+    "description": "Sharing progress title"
   },
   "show-graphs-checkbox-label-text": {
     "defaultMessage": "crwdns363336:0crwdne363336:0",

@@ -28,6 +28,7 @@ import {
   RiFlag2Line,
   RiHome2Line,
   RiListSettingsLine,
+  RiShareLine,
 } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
@@ -35,7 +36,8 @@ import { useDataConnected } from "../data-connection-flow";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
-import { TourTrigger } from "../model";
+import { SaveType, TourTrigger } from "../model";
+import { isAndroid, isIOS, isNativePlatform } from "../platform";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
 import { userGuideUrl } from "../utils/external-links";
@@ -84,8 +86,16 @@ const NavigationDrawer = ({
 
   const handleSave = useCallback(() => {
     onClose();
-    void saveHex();
+    void saveHex(SaveType.Download);
   }, [onClose, saveHex]);
+
+  const handleShare = useCallback(() => {
+    onClose();
+    void saveHex(SaveType.Share);
+  }, [onClose, saveHex]);
+
+  const canShare = isNativePlatform();
+  const shareOnly = isIOS();
 
   const handleLanguage = useCallback(() => {
     onClose();
@@ -152,9 +162,20 @@ const NavigationDrawer = ({
             {showProjectName && (
               <>
                 <NavSection>
-                  <NavItem icon={RiDownload2Line} onClick={handleSave}>
-                    <FormattedMessage id="save-action" />
-                  </NavItem>
+                  {canShare && (
+                    <NavItem icon={RiShareLine} onClick={handleShare}>
+                      <FormattedMessage id="share-action" />
+                    </NavItem>
+                  )}
+                  {!shareOnly && (
+                    <NavItem icon={RiDownload2Line} onClick={handleSave}>
+                      <FormattedMessage
+                        id={
+                          isAndroid() ? "save-to-files-action" : "save-action"
+                        }
+                      />
+                    </NavItem>
+                  )}
                 </NavSection>
 
                 <Divider borderColor="gray.300" />

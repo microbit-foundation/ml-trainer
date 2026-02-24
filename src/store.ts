@@ -51,6 +51,7 @@ import {
   RecordingData,
   SaveState,
   SaveStep,
+  SaveType,
   tourSequence,
   TourState,
   TourTrigger,
@@ -76,11 +77,12 @@ import {
 } from "./storage";
 import { getTour as getTourSpec } from "./tours";
 import { getTotalNumSamples } from "./utils/actions";
+import { downloadDataString } from "./utils/fs-util";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { getDetectedAction } from "./utils/prediction";
 
 // Use Capacitor.isNativePlatform() directly rather than the isNativePlatform()
-// helper (which also respects the simulateNative flag) because the Capacitor
+// helper (which also respects the ios/android flags) because the Capacitor
 // SQLite plugin is only available on actual native platforms.
 const storage: Database = Capacitor.isNativePlatform()
   ? new SqliteDatabase()
@@ -248,7 +250,7 @@ export interface Actions {
   setRequiredConfidence(id: string, value: number): Promise<void>;
   deleteActionRecording(id: string, recordingId: string): Promise<void>;
   deleteAllActions(): Promise<void>;
-  downloadDataset(): void;
+  downloadDataset(): Promise<void>;
 
   dataCollectionMicrobitConnected(): void;
 
@@ -415,6 +417,7 @@ const createMlStore = (logging: Logging) => {
         },
         save: {
           step: SaveStep.None,
+          type: SaveType.Download,
         },
         projectEdited: false,
         settings: defaultSettings,
@@ -1046,20 +1049,15 @@ const createMlStore = (logging: Logging) => {
           );
         },
 
-        downloadDataset() {
+        async downloadDataset() {
           const { actions, project } = get();
-          const a = document.createElement("a");
-          a.setAttribute(
-            "href",
-            "data:application/json;charset=utf-8," +
-              encodeURIComponent(JSON.stringify(actions, null, 2))
+          const name = project.header?.name ?? untitledProjectName;
+          await downloadDataString(
+            JSON.stringify(actions, null, 2),
+            `${name}-data-samples.json`,
+            "application/json",
+            `Share ${name} data samples`
           );
-          a.setAttribute(
-            "download",
-            `${project.header?.name ?? untitledProjectName}-data-samples.json`
-          );
-          a.style.display = "none";
-          a.click();
         },
 
         async loadDataset(
@@ -1871,7 +1869,7 @@ const createMlStore = (logging: Logging) => {
             isEditorTimedOutDialogOpen: false,
             trainModelDialogStage: TrainModelDialogStage.Closed,
             postImportDialogState: PostImportDialogState.None,
-            save: { step: SaveStep.None },
+            save: { step: SaveStep.None, type: SaveType.Download },
           });
         },
 

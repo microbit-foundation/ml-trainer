@@ -32,7 +32,7 @@ import {
   HexType,
 } from "../device/get-hex-file";
 import { useStore } from "../store";
-import { downloadHex } from "../utils/fs-util";
+import { downloadUrl } from "../utils/fs-util";
 import { checkPermissions } from "../shared-steps";
 
 /**
@@ -236,7 +236,7 @@ const executeAction = async (
       break;
 
     case "downloadHexFile":
-      downloadHex(bluetoothUniversalHex);
+      await downloadUrl(bluetoothUniversalHex.url, bluetoothUniversalHex.name);
       break;
 
     case "notifyConnected":

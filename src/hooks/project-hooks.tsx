@@ -28,6 +28,7 @@ import {
   isDatasetUserFileFormat,
   PostImportDialogState,
   SaveStep,
+  SaveType,
 } from "../model";
 import {
   untitledProjectName as untitled,
@@ -41,7 +42,7 @@ import {
 } from "../urls";
 import { getTotalNumSamples } from "../utils/actions";
 import {
-  downloadHex,
+  downloadHexData,
   getLowercaseFileExtension,
   readFileAsText,
 } from "../utils/fs-util";
@@ -49,6 +50,8 @@ import { useDownloadActions } from "../download-flow/download-hooks";
 import { Capacitor } from "@capacitor/core";
 import { App as CapacitorApp } from "@capacitor/app";
 import { Encoding, Filesystem } from "@capacitor/filesystem";
+import { isIOS } from "../platform";
+import { isShareCanceled, shareHex } from "../utils/share-util";
 
 class CodeEditorError extends Error {}
 
@@ -80,7 +83,7 @@ interface ProjectContext {
    * on MakeCode or a dialog flow. The progress will be reflected in the `save`
    * state field.
    */
-  saveHex: (hex?: HexData) => Promise<void>;
+  saveHex: (saveType: SaveType, hex?: HexData) => Promise<void>;
 
   editorCallbacks: Pick<
     MakeCodeFrameProps,
@@ -401,30 +404,30 @@ export const ProjectProvider = ({
   const save = useStore((s) => s.save);
   const settings = useStore((s) => s.settings);
   const actions = useStore((s) => s.actions);
-  const saveNextDownloadRef = useRef(false);
+  const saveNextDownloadRef = useRef<SaveType | null>(null);
   const translatedUntitled = useDefaultProjectName();
   const saveHex = useCallback(
-    async (hex?: HexData): Promise<void> => {
+    async (saveType: SaveType, hex?: HexData): Promise<void> => {
       const { step } = save;
       const projectName = getCurrentProject().header?.name;
       if (settings.showPreSaveHelp && step === SaveStep.None) {
-        setSave({ hex, step: SaveStep.PreSaveHelp });
+        setSave({ hex, step: SaveStep.PreSaveHelp, type: saveType });
       } else if (
         (projectName === untitled || projectName === translatedUntitled) &&
         step === SaveStep.None
       ) {
-        setSave({ hex, step: SaveStep.ProjectName });
+        setSave({ hex, step: SaveStep.ProjectName, type: saveType });
       } else if (!hex) {
-        setSave({ hex, step: SaveStep.SaveProgress });
+        setSave({ hex, step: SaveStep.SaveProgress, type: saveType });
         // This will result in a future call to saveHex with a hex.
         try {
           await doAfterEditorUpdate(async () => {
-            saveNextDownloadRef.current = true;
+            saveNextDownloadRef.current = saveType;
             await driverRef.current!.compile();
           });
         } catch (e) {
           if (e instanceof CodeEditorError) {
-            setSave({ step: SaveStep.None });
+            setSave({ step: SaveStep.None, type: SaveType.Download });
             openEditorTimedOutDialog();
           }
         }
@@ -434,17 +437,32 @@ export const ProjectProvider = ({
           detail: {
             actions: actions.length,
             samples: getTotalNumSamples(actions),
+            saveType,
           },
         });
-        downloadHex(hex);
-        setSave({ step: SaveStep.None });
-        toast({
-          id: "save-complete",
-          position: "top",
-          duration: 5_000,
-          title: intl.formatMessage({ id: "saving-toast-title" }),
-          status: "info",
-        });
+        if (saveType === SaveType.Share) {
+          try {
+            setSave({ hex, step: SaveStep.ChooseDestination, type: saveType });
+            await shareHex(hex);
+          } catch (e) {
+            if (!isShareCanceled(e)) {
+              logging.error("Sharing failed", e);
+            }
+          }
+        } else {
+          await downloadHexData(hex);
+        }
+        setSave({ step: SaveStep.None, type: SaveType.Download });
+        if (saveType === SaveType.Download && !isIOS()) {
+          // iOS share sheet provides its own feedback
+          toast({
+            id: "save-complete",
+            position: "top",
+            duration: 5_000,
+            title: intl.formatMessage({ id: "saving-toast-title" }),
+            status: "info",
+          });
+        }
       }
     },
     [
@@ -481,13 +499,17 @@ export const ProjectProvider = ({
   const onBack = useCallback(() => {
     navigate(createTestingModelPageUrl());
   }, [navigate]);
-  const onSave = saveHex;
+  const onSave = useCallback(
+    (hex: HexData) => saveHex(SaveType.Download, hex),
+    [saveHex]
+  );
   const downloadActions = useDownloadActions();
   const onDownload = useCallback(
     (download: HexData) => {
       if (saveNextDownloadRef.current) {
-        saveNextDownloadRef.current = false;
-        void saveHex(download);
+        const saveType = saveNextDownloadRef.current;
+        saveNextDownloadRef.current = null;
+        void saveHex(saveType, download);
       } else {
         void downloadActions.start(download);
       }
