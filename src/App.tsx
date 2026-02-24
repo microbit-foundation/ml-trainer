@@ -16,6 +16,7 @@ import React, { ReactNode, useEffect, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
   createBrowserRouter,
+  Navigate,
   Outlet,
   RouterProvider,
   ScrollRestoration,
@@ -58,6 +59,7 @@ import { isNativePlatform } from "./platform";
 import {
   getAllProjectsFromStorage,
   loadProjectAndModelFromStorage,
+  loadSettingsFromStorage,
   useStore,
 } from "./store";
 import {
@@ -193,6 +195,8 @@ const Layout = () => {
             break;
           }
         }
+      } else if (data.settings) {
+        await loadSettingsFromStorage();
       }
       // Update all project data on the home page and projects page.
       if (
@@ -230,6 +234,9 @@ const Layout = () => {
   );
 };
 
+// Guard ensures we only load from storage once per page lifecycle (on
+// refresh/deeplink). Subsequent in-app navigations populate the store
+// directly via loadProjectAndModelFromStorage calls in HomePage/ProjectsPage.
 let loaderFuncCalled = false;
 const commonLoaderFunction = async () => {
   if (!loaderFuncCalled) {
@@ -252,6 +259,10 @@ const createRouter = () => {
     {
       id: "root",
       path: "",
+      loader: async () => {
+        await loadSettingsFromStorage();
+        return null;
+      },
       element: <Layout />,
       // This one gets used for loader errors (typically offline)
       // We set an error boundary inside the routes too that logs render-time errors.
@@ -301,6 +312,10 @@ const createRouter = () => {
           },
           element: <OpenSharedProjectPage />,
           errorElement: <NotFound />,
+        },
+        {
+          path: "/new",
+          element: <Navigate to={createHomePageUrl()} replace />,
         },
         {
           path: "*",

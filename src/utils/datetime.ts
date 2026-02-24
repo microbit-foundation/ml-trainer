@@ -1,3 +1,8 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { IntlShape } from "react-intl";
 
 const units: Array<{ unit: Intl.RelativeTimeFormatUnit; seconds: number }> = [

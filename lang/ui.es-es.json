@@ -1632,7 +1632,7 @@
     "description": "Button to skip focus to the projects toolbar"
   },
   "project-storage-tooltip": {
-    "defaultMessage": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if your computer is low on space.",
+    "defaultMessage": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed by your browser if your device is low on storage.",
     "description": "Tooltip for my projects row"
   },
   "projects-page-title": {
@@ -1866,6 +1866,10 @@
   "select-project-action": {
     "defaultMessage": "Select {name}",
     "description": "Label for project selection checkbox"
+  },
+  "selection-actions-group": {
+    "defaultMessage": "Selection actions",
+    "description": "Accessible label for the group of actions available when projects are selected"
   },
   "settings": {
     "defaultMessage": "Configuración",

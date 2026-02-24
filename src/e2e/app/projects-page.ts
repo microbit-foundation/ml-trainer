@@ -163,6 +163,28 @@ export class ProjectsPage {
       .click();
   }
 
+  // Sort controls
+
+  async sortBy(field: "Name" | "Last modified") {
+    await this.page
+      .getByRole("combobox", { name: "Sort projects" })
+      .selectOption({ label: field });
+  }
+
+  async toggleSortDirection() {
+    await this.page.getByRole("button", { name: /order$/ }).click();
+  }
+
+  async expectProjectOrder(expectedNames: string[]) {
+    const checkboxes = this.page.getByRole("checkbox");
+    await expect(checkboxes).toHaveCount(expectedNames.length);
+    for (let i = 0; i < expectedNames.length; i++) {
+      await expect(checkboxes.nth(i)).toHaveAccessibleName(
+        `Select ${expectedNames[i]}`
+      );
+    }
+  }
+
   // Dialog helpers
 
   private async fillNameDialogAndConfirm(

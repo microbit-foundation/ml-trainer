@@ -42,6 +42,7 @@ const SwiperCarouselButtons = () => {
     <Box display={isNativePlatform() ? "none" : ["none", null, "contents"]}>
       <CarouselButton
         ref={prevButtonRef}
+        aria-hidden="true"
         className={classNames(
           styles.carouselButton,
           isRtl ? styles.right : styles.left
@@ -52,6 +53,7 @@ const SwiperCarouselButtons = () => {
       />
       <CarouselButton
         ref={nextButtonRef}
+        aria-hidden="true"
         className={classNames(
           styles.carouselButton,
           isRtl ? styles.left : styles.right

@@ -302,21 +302,12 @@ export class SqliteDatabase implements Database {
     if (!makeCodeRow) {
       throw new StorageError("Failed to fetch expected data from storage");
     }
-    const settingsResult = await db.query(
-      "SELECT value FROM settings WHERE key = ?",
-      ["settings"]
-    );
-    const settingsRow = settingsResult.values?.[0] as SettingsRow | undefined;
-    if (!settingsRow) {
-      throw new StorageError("Failed to fetch expected data from storage");
-    }
     return {
       id,
       actions,
       project: JSON.parse(makeCodeRow.project) as MakeCodeProject,
       projectEdited: !!makeCodeRow.project_edited,
       timestamp: projectRow.timestamp,
-      settings: JSON.parse(settingsRow.value) as Settings,
     };
   }
 
@@ -359,8 +350,7 @@ export class SqliteDatabase implements Database {
   async importProject(
     actions: ActionData[],
     makeCodeData: MakeCodeData,
-    projectData: { timestamp: number; id: string },
-    settings: Settings
+    projectData: { timestamp: number; id: string }
   ): Promise<void> {
     return this.serialise(async (db) => {
       const { id, timestamp } = projectData;
@@ -379,11 +369,6 @@ export class SqliteDatabase implements Database {
             JSON.stringify(makeCodeData.project),
             makeCodeData.projectEdited ? 1 : 0,
           ],
-        },
-        {
-          statement:
-            "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
-          values: ["settings", JSON.stringify(settings)],
         },
         ...actions.map((a) => ({
           statement:
@@ -616,8 +601,7 @@ export class SqliteDatabase implements Database {
   async replaceActions(
     actions: ActionData[],
     makeCodeData: MakeCodeData,
-    projectData: { timestamp: number; id: string | undefined },
-    settings: Settings
+    projectData: { timestamp: number; id: string | undefined }
   ): Promise<void> {
     const id = this.assertProjectId(projectData.id);
     return this.serialise(async (db) => {
@@ -658,11 +642,6 @@ export class SqliteDatabase implements Database {
         {
           statement: "UPDATE projects SET name = ?, timestamp = ? WHERE id = ?",
           values: [name, projectData.timestamp, id],
-        },
-        {
-          statement:
-            "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
-          values: ["settings", JSON.stringify(settings)],
         },
       ]);
     });
@@ -945,26 +924,26 @@ export class SqliteDatabase implements Database {
     });
   }
 
-  async updateSettings(
-    id: string | undefined,
-    settings: Settings,
-    timestamp: number
-  ): Promise<void> {
+  async getSettings(): Promise<Settings> {
     return this.serialise(async (db) => {
-      const txn: { statement: string; values: unknown[] }[] = [
-        {
-          statement:
-            "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
-          values: ["settings", JSON.stringify(settings)],
-        },
-      ];
-      if (id) {
-        txn.push({
-          statement: "UPDATE projects SET timestamp = ? WHERE id = ?",
-          values: [timestamp, id],
-        });
+      const result = await db.query(
+        "SELECT value FROM settings WHERE key = ?",
+        ["settings"]
+      );
+      const row = result.values?.[0] as SettingsRow | undefined;
+      if (!row) {
+        throw new StorageError("Failed to fetch expected data from storage");
       }
-      await db.executeTransaction(txn);
+      return JSON.parse(row.value) as Settings;
+    });
+  }
+
+  async updateSettings(settings: Settings): Promise<void> {
+    return this.serialise(async (db) => {
+      await db.run(
+        "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
+        ["settings", JSON.stringify(settings)]
+      );
     });
   }
 
