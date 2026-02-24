@@ -48,7 +48,7 @@ import SaveDialogs from "./SaveDialogs";
 interface DefaultPageLayoutProps {
   titleId?: string;
   children: ReactNode;
-  toolbarItemsLeft?: ReactNode;
+
   toolbarItemsRight?: ReactNode;
 
   showPageTitle?: boolean;
@@ -63,7 +63,6 @@ const DefaultPageLayout = ({
   titleId,
   children,
 
-  toolbarItemsLeft,
   toolbarItemsRight,
   showPageTitle = false,
   showProjectName,
@@ -257,22 +256,21 @@ const DefaultPageLayout = ({
                       <FormattedMessage id={backLabelId ?? "back-action"} />
                     </Button>
                   )}
-                  {/* Desktop: logo or custom left items (when no backUrl) */}
-                  {!backUrl &&
-                    (toolbarItemsLeft || (
-                      <Link
-                        href={createHomePageUrl()}
-                        display={{ base: "none", lg: "inline-flex" }}
-                        _focusVisible={{
-                          boxShadow: "outlineDark",
-                          borderRadius: "md",
-                        }}
-                      >
-                        <AppLogo
-                          transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}
-                        />
-                      </Link>
-                    ))}
+                  {/* Desktop: logo (when no backUrl) */}
+                  {!backUrl && (
+                    <Link
+                      href={createHomePageUrl()}
+                      display={{ base: "none", lg: "inline-flex" }}
+                      _focusVisible={{
+                        boxShadow: "outlineDark",
+                        borderRadius: "md",
+                      }}
+                    >
+                      <AppLogo
+                        transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}
+                      />
+                    </Link>
+                  )}
                 </>
               }
               itemsLeftProps={{ width: 0 }}
