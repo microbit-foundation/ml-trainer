@@ -33,14 +33,12 @@ const variantStyles = {
     color: "white",
     backgroundColor: "blackAlpha.300",
     focusShadow: "outlineDark",
-    maxW: "200px",
     fontSize: 20,
   },
   drawer: {
     color: "gray.800",
     backgroundColor: "blackAlpha.100",
     focusShadow: "outline",
-    maxW: "100%",
     fontSize: 16,
   },
 };
@@ -105,7 +103,11 @@ const EditableName = ({
           onEditRef.current = onEdit;
         }
         return (
-          <HStack spacing={0} w={variant === "drawer" ? "100%" : undefined}>
+          <HStack
+            spacing={0}
+            w={variant === "drawer" ? "100%" : undefined}
+            overflow={variant === "drawer" ? undefined : "hidden"}
+          >
             {isEditing ? (
               <InputGroup
                 backgroundColor={styles.backgroundColor}
@@ -141,6 +143,8 @@ const EditableName = ({
                     p={1.5}
                     pl={variant === "drawer" ? 0 : 1.5}
                     borderRadius="md"
+                    minW={0}
+                    overflow="hidden"
                     _hover={
                       variant === "drawer"
                         ? {}
@@ -160,7 +164,6 @@ const EditableName = ({
                     <EditablePreview
                       cursor="pointer"
                       fontSize={styles.fontSize}
-                      maxW={styles.maxW}
                       w="fit-content"
                       noOfLines={1}
                       textAlign="left"
@@ -168,7 +171,7 @@ const EditableName = ({
                   </Button>
                 </Tooltip>
                 {suffix && (
-                  <HStack spacing={0} marginInlineStart={-1.5}>
+                  <HStack spacing={0} marginInlineStart={-1.5} flexShrink={0}>
                     {suffix}
                   </HStack>
                 )}

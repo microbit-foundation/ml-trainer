@@ -52,6 +52,7 @@ import {
   useStore,
 } from "../store";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
+import HomepageBanner from "../components/HomepageBanner";
 
 const HomePage = () => {
   const intl = useIntl();
@@ -59,6 +60,7 @@ const HomePage = () => {
 
   return (
     <DefaultPageLayout toolbarItemsRight={<HomeToolbarItem />}>
+      <HomepageBanner />
       <ProjectRow />
       <CarouselRow
         containerMessageId="project-ideas-row-carousel"
