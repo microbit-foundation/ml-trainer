@@ -19,7 +19,9 @@ import {
   useRef,
   useState,
 } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { ConfirmDialog } from "../components/ConfirmDialog";
 import DefaultPageLayout, {
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
@@ -28,12 +30,10 @@ import ProjectCard from "../components/ProjectCard";
 import ProjectsToolbar from "../components/ProjectsToolbar";
 import Search from "../components/Search";
 import SortInput from "../components/SortInput";
+import { ProjectNameDialogReason } from "../project-utils";
+import { ProjectDataWithActions } from "../storage";
 import { loadProjectAndModelFromStorage, useStore } from "../store";
 import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
-import { ProjectDataWithActions } from "../storage";
-import { ConfirmDialog } from "../components/ConfirmDialog";
-import { FormattedMessage, useIntl } from "react-intl";
-import { ProjectNameDialogReason } from "../project-utils";
 
 type OrderByField = "timestamp" | "name";
 
@@ -422,7 +422,7 @@ const ProjectsPage = () => {
               <SimpleGrid
                 mt={3}
                 spacing={3}
-                columns={[1, 2, 3, 4, 5]}
+                columns={[1, 2, 3, 4]}
                 pb={hasSelection ? { base: 16, lg: 0 } : 0}
               >
                 {processedProjects.map((projectData) => (
