@@ -1687,6 +1687,10 @@
     "defaultMessage": "Select {name}",
     "description": "Label for project selection checkbox"
   },
+  "selection-actions-group": {
+    "defaultMessage": "Selection actions",
+    "description": "Accessible label for the group of actions available when projects are selected"
+  },
   "settings": {
     "defaultMessage": "Instellingen",
     "description": "Text for settings dialog header and menu item"

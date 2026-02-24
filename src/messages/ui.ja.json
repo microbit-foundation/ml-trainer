@@ -3011,6 +3011,12 @@
       "value": "name"
     }
   ],
+  "selection-actions-group": [
+    {
+      "type": 0,
+      "value": "Selection actions"
+    }
+  ],
   "settings": [
     {
       "type": 0,
