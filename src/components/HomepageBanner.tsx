@@ -6,6 +6,9 @@ import { createAboutPageUrl } from "../urls";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
 
+// For landscape mobile screen sizes.
+const shortScreenHeightBreakpoint = "@media (max-height: 500px)";
+
 const HomepageBanner = () => {
   const navigate = useNavigate();
   const { appNameShort } = useDeployment();
@@ -27,22 +30,37 @@ const HomepageBanner = () => {
         backgroundSize="cover"
         backgroundPosition="center"
         height={{ base: 200, sm: 230, "2xl": 300 }}
+        sx={{
+          [shortScreenHeightBreakpoint]: {
+            height: 150,
+            backgroundSize: "auto 140%",
+          },
+        }}
       >
         <VStack
           pt={5}
           pb={5}
           textColor="white"
           textAlign="center"
-          gap={{ base: 3, md: 4 }}
+          gap={{ base: 3, md: 4, "2xl": 5 }}
+          sx={{ [shortScreenHeightBreakpoint]: { gap: 3 } }}
         >
           <VStack gap={{ base: 1, md: 2 }}>
-            <Heading fontSize={{ base: "2xl", sm: "3xl" }}>
+            <Heading
+              sx={{ [shortScreenHeightBreakpoint]: { fontSize: "2xl" } }}
+              fontSize={{ base: "2xl", sm: "3xl" }}
+            >
               <FormattedMessage
                 id="homepage-banner-heading"
                 values={{ appName: appNameShort }}
               />
             </Heading>
-            <Text fontSize={{ base: "md", sm: "lg" }} pr={5} pl={5}>
+            <Text
+              sx={{ [shortScreenHeightBreakpoint]: { fontSize: "md" } }}
+              fontSize={{ base: "md", sm: "lg" }}
+              pr={5}
+              pl={5}
+            >
               <FormattedMessage id="homepage-banner-subtitle" />
             </Text>
           </VStack>
