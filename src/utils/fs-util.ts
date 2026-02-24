@@ -53,6 +53,8 @@ export const downloadDataString = async (
   shareTitle?: string
 ) => {
   if (isIOS()) {
+    // iOS has no user-accessible file system; the share sheet is the
+    // standard way to save or send files, so we always use it here.
     await shareFile(
       filename,
       data,

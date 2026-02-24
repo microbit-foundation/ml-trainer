@@ -20,6 +20,10 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Saves a text string to the device Downloads folder via MediaStore.
+ * Only supports text data (written as UTF-8). Not suitable for binary content.
+ */
 @CapacitorPlugin(name = "SaveToDownloads")
 public class SaveToDownloadsPlugin extends Plugin {
 

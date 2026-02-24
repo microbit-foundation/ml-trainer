@@ -55,29 +55,19 @@ export const shareHex = async (hex: HexData) => {
 export const isShareCanceled = (e: unknown): boolean =>
   e instanceof Error && e.message === "Share canceled";
 
+/**
+ * Delete all previously shared files. By the time the user initiates a new
+ * share the previous share is complete and the receiving app has copied the
+ * file, so it is safe to remove everything.
+ */
 const cleanOldFiles = async () => {
-  let files;
   try {
-    // avoid buildup of shared files
-    const readdirResult = await Filesystem.readdir({
+    await Filesystem.rmdir({
       path: shareFromDirectory,
       directory: tempStorageLocation,
+      recursive: true,
     });
-    files = readdirResult.files;
   } catch {
-    // if the directory does not exist, don't clean it
-    return;
-  }
-
-  // Don't let files older than 5m build up
-  const deletionCutoff = Date.now() - 1000 * 60 * 5;
-
-  for (const file of files) {
-    if (file.mtime < deletionCutoff) {
-      await Filesystem.deleteFile({
-        path: `${shareFromDirectory}/${file.name}`,
-        directory: tempStorageLocation,
-      });
-    }
+    // Directory may not exist yet on first share.
   }
 };
