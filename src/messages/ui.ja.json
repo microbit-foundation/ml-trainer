@@ -3311,6 +3311,12 @@
       "value": "アクションとデータサンプルを変更する必要がない場合は、Microsoft MakeCode で開くこともできます。"
     }
   ],
+  "save-to-files-action": [
+    {
+      "type": 0,
+      "value": "Save to Files"
+    }
+  ],
   "saving-dataset-toast-title": [
     {
       "type": 0,

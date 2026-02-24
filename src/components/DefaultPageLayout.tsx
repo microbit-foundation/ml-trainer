@@ -373,7 +373,7 @@ export const ProjectToolbarItems = () => {
               onClick={handleSave}
               icon={<Icon h={5} w={5} as={RiDownload2Line} />}
             >
-              <FormattedMessage id="save-action" />
+              <FormattedMessage id="save-to-files-action" />
             </MenuItem>
             <MenuItem
               onClick={handleShare}

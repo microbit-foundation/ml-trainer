@@ -3343,6 +3343,12 @@
       "value": "Możesz go również otworzyć za pomocą Microsoft MakeCode, jeśli nie musisz zmieniać akcji i próbek danych."
     }
   ],
+  "save-to-files-action": [
+    {
+      "type": 0,
+      "value": "Save to Files"
+    }
+  ],
   "saving-dataset-toast-title": [
     {
       "type": 0,

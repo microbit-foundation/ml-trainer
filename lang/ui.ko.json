@@ -1815,6 +1815,10 @@
     "defaultMessage": "행동과 데이터 샘플을 변경할 필요가 없는 경우 Microsoft MakeCode로도 열 수 있습니다.",
     "description": "Text in the dialog shown when saving a hex file"
   },
+  "save-to-files-action": {
+    "defaultMessage": "Save to Files",
+    "description": "Label for action that saves the project to the device file system on Android"
+  },
   "saving-dataset-toast-title": {
     "defaultMessage": "Your data samples have been downloaded",
     "description": "Notification after a dataset has been downloaded"

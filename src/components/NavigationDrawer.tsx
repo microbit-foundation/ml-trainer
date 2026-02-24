@@ -37,7 +37,7 @@ import { useDeployment } from "../deployment";
 import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
 import { SaveType, TourTrigger } from "../model";
-import { isIOS, isNativePlatform } from "../platform";
+import { isAndroid, isIOS, isNativePlatform } from "../platform";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
 import { userGuideUrl } from "../utils/external-links";
@@ -169,7 +169,11 @@ const NavigationDrawer = ({
                   )}
                   {!shareOnly && (
                     <NavItem icon={RiDownload2Line} onClick={handleSave}>
-                      <FormattedMessage id="save-action" />
+                      <FormattedMessage
+                        id={
+                          isAndroid() ? "save-to-files-action" : "save-action"
+                        }
+                      />
                     </NavItem>
                   )}
                 </NavSection>

@@ -3335,6 +3335,12 @@
       "value": "如果您不需要變更動作和數據樣本，您也可以使用 Microsoft MakeCode 開啟它。"
     }
   ],
+  "save-to-files-action": [
+    {
+      "type": 0,
+      "value": "Save to Files"
+    }
+  ],
   "saving-dataset-toast-title": [
     {
       "type": 0,
