@@ -157,27 +157,6 @@ describe.each(backends)("$name", ({ name, factory }) => {
     });
   });
 
-  describe("getLatestProject", () => {
-    it("returns undefined for empty database", async () => {
-      const result = await db.getLatestProject();
-      expect(result).toBeUndefined();
-    });
-
-    it("returns most recent project", async () => {
-      const older = makeProjectData("Older");
-      older.timestamp = 1000;
-      await db.newSession([makeAction()], makeMakeCodeData("Older"), older);
-
-      const newer = makeProjectData("Newer");
-      newer.timestamp = 2000;
-      await db.newSession([makeAction()], makeMakeCodeData("Newer"), newer);
-
-      const result = await db.getLatestProject();
-      expect(result).toBeDefined();
-      expect(result!.id).toBe(newer.id);
-    });
-  });
-
   describe("getAllProjectData", () => {
     it("returns empty array for empty database", async () => {
       const result = await db.getAllProjectData();

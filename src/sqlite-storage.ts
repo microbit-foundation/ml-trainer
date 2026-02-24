@@ -248,18 +248,6 @@ export class SqliteDatabase implements Database {
     });
   }
 
-  async getLatestProject(): Promise<PersistedProjectData | undefined> {
-    return this.serialise(async (db) => {
-      const result = await db.query(
-        "SELECT id FROM projects ORDER BY timestamp DESC LIMIT 1"
-      );
-      if (!result.values?.length) {
-        return undefined;
-      }
-      return this.loadProject(db, (result.values[0] as ProjectRow).id);
-    });
-  }
-
   private async loadProject(
     db: SqliteConnection,
     id: string
