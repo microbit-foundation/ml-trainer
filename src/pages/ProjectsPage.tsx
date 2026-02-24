@@ -11,14 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
-import {
-  RefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { ConfirmDialog } from "../components/ConfirmDialog";
@@ -30,7 +23,7 @@ import ProjectCard from "../components/ProjectCard";
 import ProjectsToolbar from "../components/ProjectsToolbar";
 import Search from "../components/Search";
 import SortInput from "../components/SortInput";
-import { ProjectNameDialogReason } from "../project-utils";
+import { useProjectCardActions } from "../hooks/use-project-card-actions";
 import { ProjectDataWithActions } from "../storage";
 import { loadProjectAndModelFromStorage, useStore } from "../store";
 import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
@@ -45,13 +38,9 @@ const ProjectsPage = () => {
   const navigate = useNavigate();
   const intl = useIntl();
   const allProjectData = useStore((s) => s.allProjectData);
-  const renameProject = useStore((s) => s.setProjectName);
-  const duplicateProject = useStore((s) => s.duplicateProject);
-  const deleteProject = useStore((s) => s.deleteProject);
   const deleteProjects = useStore((s) => s.deleteProjects);
   const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
   const mobileIconOnly = useBreakpointValue({ base: true, md: false });
-  const [projectForAction, setProjectForAction] = useState<string | null>(null);
 
   useEffect(() => {
     const projectIds = new Set(allProjectData.map((p) => p.id));
@@ -85,34 +74,25 @@ const ProjectsPage = () => {
     [navigate, selectedProjectIds]
   );
 
-  const handleCloseConfirmDialog = useCallback(() => {
-    setConfirmDialogIsOpen(false);
-    setProjectName("");
-    setProjectForAction(null);
-  }, []);
-
-  const handleDeleteProject = useCallback(
-    async (id?: string) => {
-      if (id) {
-        return deleteProject(id);
-      }
-      handleCloseConfirmDialog();
-      if (projectForAction) {
-        await deleteProject(projectForAction);
-      } else if (selectedProjectIds.length === 1) {
-        await deleteProject(selectedProjectIds[0]);
-      } else {
-        await deleteProjects(selectedProjectIds);
-      }
-    },
-    [
-      deleteProject,
-      deleteProjects,
-      handleCloseConfirmDialog,
-      projectForAction,
-      selectedProjectIds,
-    ]
-  );
+  const {
+    projectName,
+    projectNameReason,
+    nameDialogIsOpen,
+    confirmDialogIsOpen,
+    finalFocusRef,
+    setFinalFocusRef,
+    clearFinalFocusRef,
+    handleOpenNameProjectDialog,
+    handleNameProjectDialogClose,
+    handleNameProjectSave,
+    handleOpenConfirmDialog,
+    handleCloseConfirmDialog,
+    handleDeleteProject,
+  } = useProjectCardActions({
+    getSelectedProjectId: () =>
+      selectedProjectIds.length === 1 ? selectedProjectIds[0] : undefined,
+    onDeleteSelected: () => deleteProjects(selectedProjectIds),
+  });
 
   const updateSelectedProjects = useCallback((id: string) => {
     setSelectedProjectIds((prev) => {
@@ -141,55 +121,6 @@ const ProjectsPage = () => {
       : mobileToolbarRef.current;
     toolbar?.querySelector<HTMLElement>("button")?.focus();
   }, []);
-
-  const [nameDialogIsOpen, setNameDialogIsOpen] = useState(false);
-  const [projectName, setProjectName] = useState("");
-
-  const [projectNameReason, setProjectNameReason] =
-    useState<ProjectNameDialogReason>();
-
-  const handleOpenNameProjectDialog = useCallback(
-    (reason: ProjectNameDialogReason, id?: string) => {
-      const projectId = id ?? selectedProjectIds[0];
-      const project = allProjectData.find((p) => p.id === projectId);
-      if (project) {
-        setProjectNameReason(reason);
-        setProjectName(project.name);
-        setNameDialogIsOpen(true);
-        setProjectForAction(project.id);
-      }
-    },
-    [allProjectData, selectedProjectIds]
-  );
-
-  const handleNameProjectDialogClose = useCallback(() => {
-    setNameDialogIsOpen(false);
-    setProjectForAction(null);
-  }, []);
-
-  const clearFinalFocusRef = useCallback(() => {
-    setFinalFocusRef(undefined);
-  }, []);
-
-  const handleNameProjectSave = useCallback(
-    async (name: string) => {
-      if (projectForAction) {
-        if (projectNameReason === "rename") {
-          await renameProject(name, projectForAction);
-        } else {
-          await duplicateProject(projectForAction, name);
-        }
-      }
-      handleNameProjectDialogClose();
-    },
-    [
-      duplicateProject,
-      handleNameProjectDialogClose,
-      projectForAction,
-      projectNameReason,
-      renameProject,
-    ]
-  );
 
   const [query, setQuery] = useState("");
   const handleQueryChange = useCallback(
@@ -284,28 +215,6 @@ const ProjectsPage = () => {
       orderByDirection
     );
   }, [allProjectData, getSearchResults, orderByDirection, orderByField, query]);
-
-  const [finalFocusRef, setFinalFocusRef] = useState<
-    RefObject<HTMLElement> | undefined
-  >();
-
-  const [confirmDialogIsOpen, setConfirmDialogIsOpen] = useState(false);
-
-  const handleOpenConfirmDialog = useCallback(
-    (id?: string) => {
-      if (selectedProjectIds.length > 1) {
-        return setConfirmDialogIsOpen(true);
-      }
-      const projectId = id ?? selectedProjectIds[0];
-      const project = allProjectData.find((p) => p.id === projectId);
-      if (project) {
-        setProjectName(project.name);
-        setConfirmDialogIsOpen(true);
-        setProjectForAction(project.id);
-      }
-    },
-    [allProjectData, selectedProjectIds]
-  );
 
   return (
     <>

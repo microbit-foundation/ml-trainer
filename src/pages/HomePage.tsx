@@ -19,7 +19,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
-import { RefObject, useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { IconType } from "react-icons/lib";
 import {
   RiAddLine,
@@ -44,8 +44,9 @@ import LoadProjectInput, {
 import { NameProjectDialog } from "../components/NameProjectDialog";
 import ProjectCard from "../components/ProjectCard";
 import { createProjectIdeaCards } from "../components/ProjectIdeaCards";
+import { useProjectCardActions } from "../hooks/use-project-card-actions";
 import { useLogging } from "../logging/logging-hooks";
-import { ProjectNameDialogReason, untitledProjectName } from "../project-utils";
+import { untitledProjectName } from "../project-utils";
 import {
   loadProjectAndModelFromStorage,
   useSettings,
@@ -90,10 +91,6 @@ const ProjectRow = () => {
   const navigate = useNavigate();
   const intl = useIntl();
   const allProjectData = useStore((s) => s.allProjectData);
-  const renameProject = useStore((s) => s.setProjectName);
-  const duplicateProject = useStore((s) => s.duplicateProject);
-  const deleteProject = useStore((s) => s.deleteProject);
-  const [projectForAction, setProjectForAction] = useState<string | null>(null);
 
   const handleOpenProject = useCallback(
     async (id?: string) => {
@@ -105,90 +102,21 @@ const ProjectRow = () => {
     [navigate]
   );
 
-  const handleCloseConfirmDialog = useCallback(() => {
-    setConfirmDialogIsOpen(false);
-    setProjectName("");
-    setProjectForAction(null);
-  }, []);
-
-  const handleDeleteProject = useCallback(
-    async (id?: string) => {
-      if (id) {
-        return deleteProject(id);
-      }
-      handleCloseConfirmDialog();
-      if (projectForAction) {
-        await deleteProject(projectForAction);
-      }
-    },
-    [deleteProject, handleCloseConfirmDialog, projectForAction]
-  );
-
-  const [nameDialogIsOpen, setNameDialogIsOpen] = useState(false);
-  const [projectName, setProjectName] = useState("");
-
-  const [projectNameReason, setProjectNameReason] =
-    useState<ProjectNameDialogReason>();
-
-  const handleOpenNameProjectDialog = useCallback(
-    (reason: ProjectNameDialogReason, id?: string) => {
-      const project = allProjectData.find((p) => p.id === id);
-      if (project) {
-        setProjectNameReason(reason);
-        setProjectName(project.name);
-        setNameDialogIsOpen(true);
-        setProjectForAction(project.id);
-      }
-    },
-    [allProjectData]
-  );
-
-  const handleNameProjectDialogClose = useCallback(() => {
-    setNameDialogIsOpen(false);
-    setProjectForAction(null);
-  }, []);
-
-  const clearFinalFocusRef = useCallback(() => {
-    setFinalFocusRef(undefined);
-  }, []);
-
-  const handleNameProjectSave = useCallback(
-    async (name: string) => {
-      if (projectForAction) {
-        if (projectNameReason === "rename") {
-          await renameProject(name, projectForAction);
-        } else {
-          await duplicateProject(projectForAction, name);
-        }
-      }
-      handleNameProjectDialogClose();
-    },
-    [
-      duplicateProject,
-      handleNameProjectDialogClose,
-      projectForAction,
-      projectNameReason,
-      renameProject,
-    ]
-  );
-
-  const [finalFocusRef, setFinalFocusRef] = useState<
-    RefObject<HTMLElement> | undefined
-  >();
-
-  const [confirmDialogIsOpen, setConfirmDialogIsOpen] = useState(false);
-
-  const handleOpenConfirmDialog = useCallback(
-    (id?: string) => {
-      const project = allProjectData.find((p) => p.id === id);
-      if (project) {
-        setProjectName(project.name);
-        setConfirmDialogIsOpen(true);
-        setProjectForAction(project.id);
-      }
-    },
-    [allProjectData]
-  );
+  const {
+    projectName,
+    projectNameReason,
+    nameDialogIsOpen,
+    confirmDialogIsOpen,
+    finalFocusRef,
+    setFinalFocusRef,
+    clearFinalFocusRef,
+    handleOpenNameProjectDialog,
+    handleNameProjectDialogClose,
+    handleNameProjectSave,
+    handleOpenConfirmDialog,
+    handleCloseConfirmDialog,
+    handleDeleteProject,
+  } = useProjectCardActions();
 
   return (
     <>
