@@ -34,7 +34,6 @@ import ClickableTooltip from "../components/ClickableTooltip";
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import Link from "../components/Link";
 import DefaultPageLayout, {
-  HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
 import { createHelpCards } from "../components/HelpCards";
@@ -59,10 +58,7 @@ const HomePage = () => {
   const [{ languageId }] = useSettings();
 
   return (
-    <DefaultPageLayout
-      toolbarItemsRight={<HomeToolbarItem />}
-      menuItems={<HomeMenuItem />}
-    >
+    <DefaultPageLayout toolbarItemsRight={<HomeToolbarItem />}>
       <ProjectRow />
       <CarouselRow
         containerMessageId="project-ideas-row-carousel"

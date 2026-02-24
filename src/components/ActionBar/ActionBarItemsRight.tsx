@@ -5,7 +5,6 @@
  */
 import { HStack } from "@chakra-ui/react";
 import { ReactNode, useMemo } from "react";
-import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 import { keyboardShortcuts, useShortcut } from "../../keyboard-shortcut-hooks";
 import { useStore } from "../../store";
@@ -14,19 +13,14 @@ import ConnectFirstDialog from "../ConnectFirstDialog";
 import HelpMenu from "../HelpMenu";
 import { tourMap } from "../HelpMenuItems";
 import { LanguageDialog } from "../LanguageDialog";
-import LanguageMenuItem from "../LanguageMenuItem";
 import { SettingsDialog } from "../SettingsDialog";
 import SettingsMenu from "../SettingsMenu";
-import SettingsMenuItem from "../SettingsMenuItem";
-import ToolbarMenu from "../ToolbarMenu";
 
 interface ItemsRightProps {
-  menuItems?: ReactNode;
   toolbarItems?: ReactNode;
 }
 
-const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
-  const intl = useIntl();
+const ItemsRight = ({ toolbarItems }: ItemsRightProps) => {
   const closeDialog = useStore((s) => s.closeDialog);
   const languageDialogOnOpen = useStore((s) => s.languageDialogOnOpen);
   const isLanguageDialogOpen = useStore((s) => s.isLanguageDialogOpen);
@@ -78,21 +72,12 @@ const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
         />
       </HStack>
       <HelpMenu
-        display={{ base: "none", md: "block", lg: "block" }}
+        display={{ base: "none", lg: "block" }}
         onAboutDialogOpen={aboutDialogOnOpen}
         onConnectFirstDialogOpen={connectFirstDialogOnOpen}
         onFeedbackOpen={feedbackOnOpen}
         tourTrigger={tourTrigger}
       />
-      <ToolbarMenu
-        display={{ base: "none", md: "block", lg: "none" }}
-        variant="plain"
-        label={intl.formatMessage({ id: "main-menu" })}
-      >
-        {menuItems}
-        <LanguageMenuItem onOpen={languageDialogOnOpen} />
-        <SettingsMenuItem onOpen={settingsDialogOnOpen} />
-      </ToolbarMenu>
     </>
   );
 };

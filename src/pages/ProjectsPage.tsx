@@ -21,7 +21,6 @@ import {
 } from "react";
 import { useNavigate } from "react-router";
 import DefaultPageLayout, {
-  HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
 import { NameProjectDialog } from "../components/NameProjectDialog";
@@ -368,7 +367,6 @@ const ProjectsPage = () => {
         titleId="projects-page-title"
         showPageTitle
         toolbarItemsRight={<HomeToolbarItem />}
-        menuItems={<HomeMenuItem />}
         backUrl={createHomePageUrl()}
         backLabelId="home-action"
       >

@@ -21,7 +21,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useBufferedData } from "../buffered-data-hooks";
 import DefaultPageLayout, {
-  ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
 import IncompatibleEditorDevice from "../components/IncompatibleEditorDevice";
@@ -118,7 +117,6 @@ const TestingModelPage = () => {
     <DefaultPageLayout
       titleId="testing-model-title"
       showPageTitle
-      menuItems={<ProjectMenuItems />}
       toolbarItemsRight={<ProjectToolbarItems />}
       showProjectName
       backUrl={createDataSamplesPageUrl()}

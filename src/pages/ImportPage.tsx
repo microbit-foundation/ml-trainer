@@ -9,7 +9,6 @@ import { IntlShape, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import DefaultPageLayout, {
-  HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
 import ProjectPreview from "../components/ProjectPreview";
@@ -98,7 +97,6 @@ const ImportPage = () => {
     <DefaultPageLayout
       titleId="new-project-setup-title"
       toolbarItemsRight={<HomeToolbarItem />}
-      menuItems={<HomeMenuItem />}
       backUrl={createHomePageUrl()}
     >
       <ProjectPreview

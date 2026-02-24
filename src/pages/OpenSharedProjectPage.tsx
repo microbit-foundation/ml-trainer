@@ -15,7 +15,6 @@ import { RiInformationLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { useNavigate, useParams } from "react-router";
 import DefaultPageLayout, {
-  HomeMenuItem,
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
 import LoadingAnimation from "../components/LoadingAnimation";
@@ -59,7 +58,6 @@ const OpenSharedProjectPage = () => {
     <DefaultPageLayout
       titleId="open-shared-project-title"
       toolbarItemsRight={<HomeToolbarItem />}
-      menuItems={<HomeMenuItem />}
       backUrl={createHomePageUrl()}
     >
       {sharedState === SharedState.GettingHeader ? (

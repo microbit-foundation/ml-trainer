@@ -11,8 +11,6 @@ import {
   HStack,
   Icon,
   IconButton,
-  MenuDivider,
-  MenuItem,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
@@ -52,17 +50,19 @@ interface DefaultPageLayoutProps {
   children: ReactNode;
   toolbarItemsLeft?: ReactNode;
   toolbarItemsRight?: ReactNode;
-  menuItems?: ReactNode;
+
   showPageTitle?: boolean;
   showProjectName?: boolean;
   backUrl?: string;
   backLabelId?: string;
 }
 
+const backButtonBreakpoint = "@media (min-width: 52.25em)";
+
 const DefaultPageLayout = ({
   titleId,
   children,
-  menuItems,
+
   toolbarItemsLeft,
   toolbarItemsRight,
   showPageTitle = false,
@@ -196,8 +196,8 @@ const DefaultPageLayout = ({
                     )}
                   </HStack>
                 ) : (
-                  /* Mobile: centered app logo when no page title */
-                  <Box display={{ base: "flex", md: "none" }}>
+                  /* Mobile/tablet: centered app logo when no page title */
+                  <Box display={{ base: "flex", lg: "none" }}>
                     <AppLogo transform="scale(0.8)" transformOrigin="center" />
                   </Box>
                 )
@@ -207,7 +207,12 @@ const DefaultPageLayout = ({
                   {/* Mobile: back arrow (when backUrl set) or hamburger */}
                   {backUrl ? (
                     <IconButton
-                      display={{ base: "inline-flex", md: "none" }}
+                      display="inline-flex"
+                      sx={{
+                        [backButtonBreakpoint]: {
+                          display: "none",
+                        },
+                      }}
                       aria-label={intl.formatMessage({
                         id: backLabelId ?? "back-action",
                       })}
@@ -223,7 +228,7 @@ const DefaultPageLayout = ({
                     />
                   ) : (
                     <IconButton
-                      display={{ base: "inline-flex", md: "none" }}
+                      display={{ base: "inline-flex", lg: "none" }}
                       aria-label={intl.formatMessage({ id: "main-menu" })}
                       icon={<RiMenuLine size={24} />}
                       color="white"
@@ -236,21 +241,28 @@ const DefaultPageLayout = ({
                       }}
                     />
                   )}
-                  {/* Desktop/tablet: back button with label, logo, or custom left items */}
-                  {backUrl && backLabelId ? (
+                  {/* Tablet/desktop: back button with label */}
+                  {backUrl && (
                     <Button
-                      display={{ base: "none", md: "inline-flex" }}
+                      display="none"
+                      sx={{
+                        [backButtonBreakpoint]: {
+                          display: "inline-flex",
+                        },
+                      }}
                       leftIcon={<BackArrow />}
                       variant="toolbar"
                       onClick={() => navigate(backUrl)}
                     >
-                      <FormattedMessage id={backLabelId} />
+                      <FormattedMessage id={backLabelId ?? "back-action"} />
                     </Button>
-                  ) : (
-                    toolbarItemsLeft || (
+                  )}
+                  {/* Desktop: logo or custom left items (when no backUrl) */}
+                  {!backUrl &&
+                    (toolbarItemsLeft || (
                       <Link
                         href={createHomePageUrl()}
-                        display={{ base: "none", md: "inline-flex" }}
+                        display={{ base: "none", lg: "inline-flex" }}
                         _focusVisible={{
                           boxShadow: "outlineDark",
                           borderRadius: "md",
@@ -260,21 +272,17 @@ const DefaultPageLayout = ({
                           transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}
                         />
                       </Link>
-                    )
-                  )}
+                    ))}
                 </>
               }
               itemsLeftProps={{ width: 0 }}
               itemsRight={
                 <>
-                  <ItemsRight
-                    menuItems={menuItems}
-                    toolbarItems={toolbarItemsRight}
-                  />
-                  {/* Mobile: right-side hamburger when back arrow is on the left */}
+                  <ItemsRight toolbarItems={toolbarItemsRight} />
+                  {/* Mobile/tablet: right-side hamburger when back arrow is on the left */}
                   {backUrl && (
                     <IconButton
-                      display={{ base: "inline-flex", md: "none" }}
+                      display={{ base: "inline-flex", lg: "none" }}
                       aria-label={intl.formatMessage({ id: "main-menu" })}
                       icon={<RiMenuLine size={24} />}
                       color="white"
@@ -341,41 +349,6 @@ export const HomeToolbarItem = () => {
         boxShadow: "outlineDark",
       }}
     />
-  );
-};
-
-export const ProjectMenuItems = () => {
-  const { saveHex } = useProject();
-  const handleSave = useCallback(() => {
-    void saveHex();
-  }, [saveHex]);
-
-  return (
-    <>
-      <MenuItem
-        onClick={handleSave}
-        icon={<Icon h={5} w={5} as={RiDownload2Line} />}
-      >
-        <FormattedMessage id="save-action" />
-      </MenuItem>
-      <MenuDivider />
-      <HomeMenuItem />
-    </>
-  );
-};
-
-export const HomeMenuItem = () => {
-  const navigate = useNavigate();
-  const handleHomeClick = useCallback(() => {
-    navigate(createHomePageUrl());
-  }, [navigate]);
-  return (
-    <MenuItem
-      onClick={handleHomeClick}
-      icon={<Icon h={5} w={5} as={RiHome2Line} />}
-    >
-      <FormattedMessage id="home-action" />
-    </MenuItem>
   );
 };
 

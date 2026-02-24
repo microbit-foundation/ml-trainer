@@ -68,6 +68,7 @@ const NavigationDrawer = ({
   const tourStart = useStore((s) => s.tourStart);
   const { isConnected } = useConnectionStage();
   const pendingNavRef = useRef<string | null>(null);
+  const onEditRef = useRef<(() => void) | undefined>(undefined);
 
   const handleCloseComplete = useCallback(() => {
     if (pendingNavRef.current) {
@@ -130,15 +131,22 @@ const NavigationDrawer = ({
         <DrawerBody px={0} py={0}>
           <VStack align="stretch" spacing={0} h="100%">
             {showProjectName && (
-              <>
-                <Box px={4} py={3} bgColor="gray.100">
+              <Box display={{ base: "block", md: "none" }}>
+                <Box
+                  px={4}
+                  py={3}
+                  bgColor="gray.100"
+                  cursor="pointer"
+                  _hover={{ bgColor: "gray.200" }}
+                  onClick={() => onEditRef.current?.()}
+                >
                   <Text fontSize="xs" color="gray.700" mb={1}>
                     <FormattedMessage id="project-label" />
                   </Text>
-                  <EditableName variant="drawer" />
+                  <EditableName variant="drawer" onEditRef={onEditRef} />
                 </Box>
                 <Divider borderColor="gray.300" />
-              </>
+              </Box>
             )}
             {/* Project actions (only on project pages) */}
             {showProjectName && (
