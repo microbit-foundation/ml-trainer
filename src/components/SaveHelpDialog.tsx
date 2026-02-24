@@ -65,7 +65,7 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
                   />
                 </Text>
                 <Text>
-                  <FormattedMessage id={`${shareOrSave}-hex-dialog-message2`} />
+                  <FormattedMessage id="save-hex-dialog-message2" />
                 </Text>
               </VStack>
             </Stack>

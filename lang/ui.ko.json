@@ -1867,10 +1867,6 @@
     "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
     "description": "Text in the dialog shown when sharing a hex file on mobile"
   },
-  "share-hex-dialog-message2": {
-    "defaultMessage": "You can also open it with Microsoft MakeCode if you don't need to change the actions and data samples.",
-    "description": "Text in the dialog shown when sharing a hex file on mobile"
-  },
   "sharing-description": {
     "defaultMessage": "Your project will be ready to share soon.",
     "description": "Sharing progress dialog text for mobile"

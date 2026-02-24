@@ -1051,10 +1051,12 @@ const createMlStore = (logging: Logging) => {
 
         async downloadDataset() {
           const { actions, project } = get();
+          const name = project.header?.name ?? untitledProjectName;
           await downloadDataString(
             JSON.stringify(actions, null, 2),
-            `${project.header?.name ?? untitledProjectName}-data-samples.json`,
-            "application/json"
+            `${name}-data-samples.json`,
+            "application/json",
+            `Share ${name} data samples`
           );
         },
 

@@ -49,10 +49,16 @@ export const isHexUrl = (hex: HexData | HexUrl): hex is HexUrl => {
 export const downloadDataString = async (
   data: string,
   filename: string,
-  mimeType: string
+  mimeType: string,
+  shareTitle?: string
 ) => {
   if (isIOS()) {
-    await shareFile(filename, data, filename, filename);
+    await shareFile(
+      filename,
+      data,
+      shareTitle ?? filename,
+      shareTitle ?? filename
+    );
   } else if (isAndroid()) {
     try {
       await saveToDownloads(filename, data, mimeType);

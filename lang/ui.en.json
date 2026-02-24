@@ -1809,7 +1809,7 @@
   },
   "save-hex-dialog-message2": {
     "defaultMessage": "You can also open it with Microsoft MakeCode if you don't need to change the actions and data samples.",
-    "description": "Text in the dialog shown when saving a hex file"
+    "description": "Text in the save/share hex dialog explaining MakeCode compatibility"
   },
   "saving-dataset-toast-title": {
     "defaultMessage": "Your data samples have been downloaded",
@@ -1865,10 +1865,6 @@
   },
   "share-hex-dialog-message1": {
     "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
-    "description": "Text in the dialog shown when sharing a hex file on mobile"
-  },
-  "share-hex-dialog-message2": {
-    "defaultMessage": "You can also open it with Microsoft MakeCode if you don't need to change the actions and data samples.",
     "description": "Text in the dialog shown when sharing a hex file on mobile"
   },
   "sharing-description": {

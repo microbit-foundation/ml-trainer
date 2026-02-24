@@ -3433,12 +3433,6 @@
       "value": " to continue working."
     }
   ],
-  "share-hex-dialog-message2": [
-    {
-      "type": 0,
-      "value": "You can also open it with Microsoft MakeCode if you don't need to change the actions and data samples."
-    }
-  ],
   "sharing-description": [
     {
       "type": 0,
