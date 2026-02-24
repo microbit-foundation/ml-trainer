@@ -1476,7 +1476,7 @@
     "description": "Button to skip focus to the projects toolbar"
   },
   "project-storage-tooltip": {
-    "defaultMessage": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if you don't visit for a while, especially in Safari.",
+    "defaultMessage": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if your computer is low on space.",
     "description": "Tooltip for my projects row"
   },
   "projects-page-title": {
