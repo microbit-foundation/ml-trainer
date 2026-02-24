@@ -174,10 +174,10 @@ const Layout = () => {
       const data = event.data;
       // Only respond to broadcastChannel messages
       // from projects with the same id to keep tabs / windows in sync.
-      if (data.projectId && data.projectId === id) {
+      if (id && data.projectIds.includes(id)) {
         switch (data.messageType) {
           case BroadcastChannelMessageType.RELOAD_PROJECT: {
-            await loadProjectAndModelFromStorage(data.projectId);
+            await loadProjectAndModelFromStorage(id);
             break;
           }
           case BroadcastChannelMessageType.DELETE_PROJECT: {

@@ -567,7 +567,7 @@ const createMlStore = (logging: Logging) => {
           await storageWithErrHandling(() => storage.deleteProject(id), false);
           const message: BroadcastChannelData = {
             messageType: BroadcastChannelMessageType.DELETE_PROJECT,
-            projectId: id,
+            projectIds: [id],
           };
           broadcastChannel.postMessage(message);
         },
@@ -602,6 +602,7 @@ const createMlStore = (logging: Logging) => {
           );
           const message: BroadcastChannelData = {
             messageType: BroadcastChannelMessageType.DELETE_PROJECT,
+            projectIds: ids,
           };
           broadcastChannel.postMessage(message);
         },
@@ -1826,11 +1827,11 @@ useStore.subscribe(async (state, prevState) => {
   const { model: newModel, id: newId } = state;
   const { model: previousModel, id: prevId } = prevState;
   if (newModel !== previousModel) {
-    if (!newModel && newId === prevId) {
+    if (!newModel && newId && newId === prevId) {
       await storageWithErrHandling(() => storage.removeModel(newId), false);
       const message: BroadcastChannelData = {
         messageType: BroadcastChannelMessageType.REMOVE_MODEL,
-        projectId: newId,
+        projectIds: [newId],
       };
       broadcastChannel.postMessage(message);
     } else if (newModel) {
@@ -2006,10 +2007,11 @@ const storageWithErrHandling = async <T>(
 ) => {
   try {
     const value = await callback();
-    if (broadcastEvent) {
+    const projectId = useStore.getState().id;
+    if (broadcastEvent && projectId) {
       const message: BroadcastChannelData = {
         messageType: BroadcastChannelMessageType.RELOAD_PROJECT,
-        projectId: useStore.getState().id,
+        projectIds: [projectId],
       };
       broadcastChannel.postMessage(message);
     }
