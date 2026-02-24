@@ -1435,6 +1435,10 @@
     "defaultMessage": "Project ideas",
     "description": "Title for home page row"
   },
+  "project-label": {
+    "defaultMessage": "Project",
+    "description": "Label for project input"
+  },
   "project-loaded": {
     "defaultMessage": "crwdns363238:0crwdne363238:0",
     "description": "Toast when a new project is loaded"

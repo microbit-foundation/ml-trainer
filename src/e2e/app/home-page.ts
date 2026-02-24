@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { expect, type Page, type BrowserContext } from "@playwright/test";
+import { type Page, type BrowserContext } from "@playwright/test";
 import { getAbsoluteFilePath, Navbar } from "./shared";
 
 export class HomePage {
@@ -62,7 +62,7 @@ export class HomePage {
     await fileChooser.setFiles(filePath);
   }
 
-  expectOnHomePage() {
-    expect(this.page.url()).toEqual(this.url);
+  async expectOnHomePage() {
+    await this.page.waitForURL(this.url);
   }
 }

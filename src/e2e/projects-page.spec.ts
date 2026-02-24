@@ -38,7 +38,7 @@ test.describe("projects page", () => {
     await projectsPage.goto();
     await projectsPage.expectOnPage();
     await projectsPage.goHome();
-    homePage.expectOnHomePage();
+    await homePage.expectOnHomePage();
   });
 
   test("search filters projects", async ({
