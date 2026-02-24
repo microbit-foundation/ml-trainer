@@ -34,8 +34,8 @@ export class DataSamplesPage {
     return response;
   }
 
-  expectUrl() {
-    expect(this.page.url()).toEqual(this.url);
+  async expectUrl() {
+    return this.page.waitForURL(this.url, { timeout: 3_000 });
   }
 
   async closeDialog() {
@@ -58,7 +58,7 @@ export class DataSamplesPage {
   async expectOnPage() {
     await this.welcomeDialog.close();
     await expect(this.heading).toBeVisible();
-    this.expectUrl();
+    await this.expectUrl();
   }
 
   async expectActions(expectedActions: string[]) {

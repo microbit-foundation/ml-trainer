@@ -157,6 +157,18 @@
       "value": "AI活動タイマー"
     }
   ],
+  "ai-light-switch-resource-title": [
+    {
+      "type": 0,
+      "value": "AI light switch"
+    }
+  ],
+  "ai-sports-data-logger-resource-title": [
+    {
+      "type": 0,
+      "value": "AI sports data logger"
+    }
+  ],
   "ai-storytelling-friend-resource-title": [
     {
       "type": 0,
@@ -211,6 +223,32 @@
       "value": "記録をキャンセル"
     }
   ],
+  "carousel-role": [
+    {
+      "type": 0,
+      "value": "carousel"
+    }
+  ],
+  "carousel-slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "carousel-slide-role": [
+    {
+      "type": 0,
+      "value": "slide"
+    }
+  ],
   "certainty-label": [
     {
       "type": 0,
@@ -245,6 +283,12 @@
     {
       "type": 0,
       "value": "現在各アクションを実行しているかどうかについて、モデルがどの程度確信を持っているか。"
+    }
+  ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
     }
   ],
   "click-to-reload-page-action": [
@@ -689,6 +733,24 @@
       "value": "コピー"
     }
   ],
+  "create-project": [
+    {
+      "type": 0,
+      "value": "Create project"
+    }
+  ],
+  "create-project-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Create a project"
+    }
+  ],
+  "createai-taster-lessons-resource-title": [
+    {
+      "type": 0,
+      "value": "Taster lessons"
+    }
+  ],
   "data-actions-menu": [
     {
       "type": 0,
@@ -833,6 +895,80 @@
     {
       "type": 0,
       "value": "すべてのデータサンプルを削除してもよろしいですか？"
+    }
+  ],
+  "delete-project-action": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete "
+            },
+            {
+              "type": 1,
+              "value": "count"
+            },
+            {
+              "type": 0,
+              "value": " projects"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete project"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "delete-projects-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete projects"
+    }
+  ],
+  "delete-projects-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete "
+    },
+    {
+      "type": 1,
+      "value": "numProjects"
+    },
+    {
+      "type": 0,
+      "value": " projects?"
     }
   ],
   "delete-recording-aria": [
@@ -1009,6 +1145,18 @@
     {
       "type": 0,
       "value": "しばらくお待ちください。micro:bitにプログラムをダウンロードしています。"
+    }
+  ],
+  "duplicate-project-action": [
+    {
+      "type": 0,
+      "value": "Duplicate"
+    }
+  ],
+  "duplicate-project-heading": [
+    {
+      "type": 0,
+      "value": "Duplicate project"
     }
   ],
   "edit-in-makecode-action": [
@@ -1231,6 +1379,12 @@
       "value": "ファームウェアの更新が必要です"
     }
   ],
+  "first-lessons-with-microbit-createai-resource-title": [
+    {
+      "type": 0,
+      "value": "First lessons"
+    }
+  ],
   "get-started-action": [
     {
       "type": 0,
@@ -1315,6 +1469,18 @@
       "value": "ヘルプ"
     }
   ],
+  "help-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of help resources"
+    }
+  ],
+  "help-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Help"
+    }
+  ],
   "help-support": [
     {
       "type": 0,
@@ -1361,6 +1527,26 @@
     {
       "type": 0,
       "value": "video showing CreateAI detecting different movements"
+    }
+  ],
+  "homepage-banner-heading": [
+    {
+      "type": 0,
+      "value": "New to "
+    },
+    {
+      "type": 1,
+      "value": "appName"
+    },
+    {
+      "type": 0,
+      "value": "?"
+    }
+  ],
+  "homepage-banner-subtitle": [
+    {
+      "type": 0,
+      "value": "Discover in-depth tutorials and teaching resources"
     }
   ],
   "homepage-description": [
@@ -1529,6 +1715,12 @@
       "value": "対応していないファイル形式です"
     }
   ],
+  "import-file-action": [
+    {
+      "type": 0,
+      "value": "Import"
+    }
+  ],
   "incompatible-device-body-alt": [
     {
       "type": 0,
@@ -1655,6 +1847,12 @@
     {
       "type": 0,
       "value": "ファイアウォール要件について調べる"
+    }
+  ],
+  "learn-more-action": [
+    {
+      "type": 0,
+      "value": "Learn more"
     }
   ],
   "led-icon-option-angry": [
@@ -1997,6 +2195,18 @@
       "value": "Move the micro:bit to explore how different actions change the graph"
     }
   ],
+  "my-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of my projects"
+    }
+  ],
+  "my-projects-row-title": [
+    {
+      "type": 0,
+      "value": "My projects"
+    }
+  ],
   "name-action-hint": [
     {
       "type": 0,
@@ -2021,30 +2231,22 @@
       "value": "この名前は hex ファイルを保存するときに使用されます。"
     }
   ],
-  "new-session-setup-description": [
+  "new-project-setup-title": [
     {
       "type": 0,
-      "value": "新しいセッションを開始すると、既存のセッションを上書きすることになります。"
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "既存のセッションを保存"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "することもできますよ。"
+      "value": "New project setup"
     }
   ],
-  "new-session-setup-title": [
+  "new-projects-row-carousel": [
     {
       "type": 0,
-      "value": "新しいセッションの設定"
+      "value": "List of new project actions"
+    }
+  ],
+  "new-projects-row-title": [
+    {
+      "type": 0,
+      "value": "New projects"
     }
   ],
   "newpage-continue-session-subtitle": [
@@ -2111,6 +2313,12 @@
       "value": "最後のセッションを開く"
     }
   ],
+  "newpage-new-project-title": [
+    {
+      "type": 0,
+      "value": "New project"
+    }
+  ],
   "newpage-new-session-subtitle": [
     {
       "type": 0,
@@ -2145,6 +2353,12 @@
     {
       "type": 0,
       "value": "次"
+    }
+  ],
+  "no-projects": [
+    {
+      "type": 0,
+      "value": "No projects to display"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
@@ -2193,24 +2407,10 @@
       "value": "Open project"
     }
   ],
-  "open-project-setup-description": [
+  "open-shared-project-action": [
     {
       "type": 0,
-      "value": "Opening this project will overwrite any existing session. You may want to "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "save your existing session"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " first."
+      "value": "Open project"
     }
   ],
   "open-shared-project-blocks-preview-description": [
@@ -2275,16 +2475,74 @@
       "value": "プライバシーポリシー"
     }
   ],
+  "project-ideas-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of project ideas"
+    }
+  ],
+  "project-ideas-row-title": [
+    {
+      "type": 0,
+      "value": "Project ideas"
+    }
+  ],
+  "project-label": [
+    {
+      "type": 0,
+      "value": "Project"
+    }
+  ],
   "project-loaded": [
     {
       "type": 0,
       "value": "プロジェクトが読み込まれました"
     }
   ],
+  "project-menu-action": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " actions menu"
+    }
+  ],
   "project-name-not-empty": [
     {
       "type": 0,
       "value": "プロジェクト名は空にできません"
+    }
+  ],
+  "project-name-text": [
+    {
+      "type": 0,
+      "value": "Project name"
+    }
+  ],
+  "project-name-tooltip": [
+    {
+      "type": 0,
+      "value": "Click to edit project name"
+    }
+  ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "Skip to toolbar"
+    }
+  ],
+  "project-storage-tooltip": [
+    {
+      "type": 0,
+      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed by your browser if your device is low on storage."
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
     }
   ],
   "radio-link-microbit": [
@@ -2605,6 +2863,18 @@
       "value": "再読み込み"
     }
   ],
+  "rename-project-action": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
+  "rename-project-heading": [
+    {
+      "type": 0,
+      "value": "Rename project"
+    }
+  ],
   "reset-to-default-action": [
     {
       "type": 0,
@@ -2691,6 +2961,12 @@
       "value": "hexファイルをダウンロードしました"
     }
   ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
+    }
+  ],
   "select-icon-action-aria": [
     {
       "type": 0,
@@ -2723,6 +2999,22 @@
     {
       "type": 0,
       "value": "」アイコンを選択"
+    }
+  ],
+  "select-project-action": [
+    {
+      "type": 0,
+      "value": "Select "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "selection-actions-group": [
+    {
+      "type": 0,
+      "value": "Selection actions"
     }
   ],
   "settings": [
@@ -2759,6 +3051,42 @@
     {
       "type": 0,
       "value": "ソフトウェアのバージョン"
+    }
+  ],
+  "sort-option-last-modified": [
+    {
+      "type": 0,
+      "value": "Last modified"
+    }
+  ],
+  "sort-option-name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "sort-option-relevance": [
+    {
+      "type": 0,
+      "value": "Relevance"
+    }
+  ],
+  "sort-order-ascending-label": [
+    {
+      "type": 0,
+      "value": "Ascending order"
+    }
+  ],
+  "sort-order-descending-label": [
+    {
+      "type": 0,
+      "value": "Descending order"
+    }
+  ],
+  "sort-select-label": [
+    {
+      "type": 0,
+      "value": "Sort projects"
     }
   ],
   "start-session-action": [
@@ -2831,6 +3159,18 @@
       "value": " を検討してください。"
     }
   ],
+  "teacher-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of teacher resources"
+    }
+  ],
+  "teacher-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Teacher resources"
+    }
+  ],
   "terms": [
     {
       "type": 0,
@@ -2867,6 +3207,18 @@
     {
       "type": 0,
       "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "now"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "a few seconds ago"
     }
   ],
   "tour-action": [
@@ -3175,6 +3527,12 @@
       "value": "hex ファイルをダウンロードフォルダからMICROBITドライブへドラッグします。"
     }
   ],
+  "troubleshooting-resource-title": [
+    {
+      "type": 0,
+      "value": "Troubleshooting"
+    }
+  ],
   "try-again-action": [
     {
       "type": 0,
@@ -3261,6 +3619,12 @@
     {
       "type": 0,
       "value": "ユーザーガイド"
+    }
+  ],
+  "view-all-projects": [
+    {
+      "type": 0,
+      "value": "View all"
     }
   ],
   "webusb-retry-no-select": [

@@ -27,7 +27,7 @@ interface DataSamplesTableRowProps {
   onSelectRow?: () => void;
   onRecord?: (recordingOptions: RecordingOptions) => void;
   hint: DataSamplesPageHint;
-  newRecordingId?: number;
+  newRecordingId?: string;
   clearNewRecordingId?: () => void;
   onDeleteAction?: () => void;
   renameShortcutScopeRef?: (instance: RefType<HTMLElement>) => void;
@@ -47,74 +47,72 @@ const DataSamplesTableRow = ({
 }: DataSamplesTableRowProps) => {
   const intl = useIntl();
   return (
-    <>
-      <Box
-        ref={selected ? renameShortcutScopeRef : undefined}
-        role="region"
-        aria-label={intl.formatMessage(
-          {
-            id: "action-region",
-          },
-          { action: action.name }
-        )}
-        display="contents"
-        onFocusCapture={onSelectRow}
-      >
-        <GridItem>
-          <ActionNameCard
+    <Box
+      ref={selected ? renameShortcutScopeRef : undefined}
+      role="region"
+      aria-label={intl.formatMessage(
+        {
+          id: "action-region",
+        },
+        { action: action.name }
+      )}
+      display="contents"
+      onFocusCapture={onSelectRow}
+    >
+      <GridItem>
+        <ActionNameCard
+          value={action}
+          onDeleteAction={onDeleteAction}
+          onSelectRow={onSelectRow}
+          selected={selected}
+          viewMode={
+            preview
+              ? ActionCardNameViewMode.Preview
+              : ActionCardNameViewMode.Editable
+          }
+        />
+      </GridItem>
+      {(hint === "name-first-action" || hint === "name-action") && (
+        <GridItem h="120px">
+          {hint === "name-first-action" && <NameFirstActionHint />}
+          {hint === "name-action" && <NameActionHint />}
+        </GridItem>
+      )}
+      <GridItem position="relative">
+        {(action.name.length > 0 || action.recordings.length > 0) && (
+          <ActionDataSamplesCard
+            preview={preview}
+            newRecordingId={newRecordingId}
             value={action}
-            onDeleteAction={onDeleteAction}
-            onSelectRow={onSelectRow}
             selected={selected}
-            viewMode={
-              preview
-                ? ActionCardNameViewMode.Preview
-                : ActionCardNameViewMode.Editable
-            }
+            onSelectRow={onSelectRow}
+            onRecord={onRecord}
+            clearNewRecordingId={clearNewRecordingId}
           />
+        )}
+        {hint === "record-action" && <RecordHint />}
+        {hint === "record-more-action" && (
+          <RecordMoreHint
+            actionName={action.name}
+            recorded={action.recordings.length}
+          />
+        )}
+      </GridItem>
+      {hint === "name-action-with-samples" && (
+        <GridItem h="120px">
+          <NameActionWithSamplesHint />
         </GridItem>
-        {(hint === "name-first-action" || hint === "name-action") && (
+      )}
+      {hint === "record-first-action" && (
+        <>
+          {/* Skip first column to correctly place hint. */}
+          <GridItem />
           <GridItem h="120px">
-            {hint === "name-first-action" && <NameFirstActionHint />}
-            {hint === "name-action" && <NameActionHint />}
+            {hint === "record-first-action" && <RecordFirstActionHint />}
           </GridItem>
-        )}
-        <GridItem position="relative">
-          {(action.name.length > 0 || action.recordings.length > 0) && (
-            <ActionDataSamplesCard
-              preview={preview}
-              newRecordingId={newRecordingId}
-              value={action}
-              selected={selected}
-              onSelectRow={onSelectRow}
-              onRecord={onRecord}
-              clearNewRecordingId={clearNewRecordingId}
-            />
-          )}
-          {hint === "record-action" && <RecordHint />}
-          {hint === "record-more-action" && (
-            <RecordMoreHint
-              actionName={action.name}
-              recorded={action.recordings.length}
-            />
-          )}
-        </GridItem>
-        {hint === "name-action-with-samples" && (
-          <GridItem h="120px">
-            <NameActionWithSamplesHint />
-          </GridItem>
-        )}
-        {hint === "record-first-action" && (
-          <>
-            {/* Skip first column to correctly place hint. */}
-            <GridItem />
-            <GridItem h="120px">
-              {hint === "record-first-action" && <RecordFirstActionHint />}
-            </GridItem>
-          </>
-        )}
-      </Box>
-    </>
+        </>
+      )}
+    </Box>
   );
 };
 

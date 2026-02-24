@@ -12,6 +12,7 @@ import {
   usePrefersReducedMotion,
   VStack,
 } from "@chakra-ui/react";
+import debounce from "lodash.debounce";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, IntlFormatters, useIntl } from "react-intl";
@@ -24,33 +25,39 @@ import {
   TrainHint,
 } from "../components/DataSamplesTableHints";
 import DefaultPageLayout, {
-  ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
+import { animations } from "../components/Emoji";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import WelcomeDialog from "../components/WelcomeDialog";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
+import { useLiveRegion } from "../live-region-hook";
 import {
   ActionData,
   DataSamplesPageHint,
   PostImportDialogState,
 } from "../model";
+import { projectSessionStorage } from "../session-storage";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
-import { createTestingModelPageUrl } from "../urls";
-import { animations } from "../components/Emoji";
-import { useLiveRegion } from "../live-region-hook";
-import debounce from "lodash.debounce";
+import { createHomePageUrl, createTestingModelPageUrl } from "../urls";
 
 const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
   const addNewAction = useStore((s) => s.addNewAction);
   const model = useStore((s) => s.model);
+  const newSession = useStore((s) => s.newSession);
   const [selectedActionIdx, setSelectedActionIdx] = useState<number>(0);
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!projectSessionStorage.getProjectId()) {
+      return navigate(createHomePageUrl());
+    }
+  }, [navigate, newSession]);
+
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
 
   const tourStart = useStore((s) => s.tourStart);
@@ -59,7 +66,7 @@ const DataSamplesPage = () => {
   useEffect(() => {
     // If a user first connects on "Testing model" this can result in the tour when they return to the "Data samples" page.
     if (isConnected) {
-      tourStart({ name: "Connect" }, false);
+      void tourStart({ name: "Connect" }, false);
     }
   }, [isConnected, tourStart]);
 
@@ -71,9 +78,9 @@ const DataSamplesPage = () => {
   }, [navigate]);
 
   const trainButtonRef = useRef(null);
-  const handleAddNewAction = useCallback(() => {
+  const handleAddNewAction = useCallback(async () => {
     setSelectedActionIdx(actions.length);
-    addNewAction();
+    await addNewAction();
   }, [addNewAction, actions]);
   useShortcut(keyboardShortcuts.addAction, handleAddNewAction, {
     enabled: !isAddNewActionDisabled,
@@ -149,8 +156,10 @@ const DataSamplesPage = () => {
       <DefaultPageLayout
         titleId="data-samples-title"
         showPageTitle
-        menuItems={<ProjectMenuItems />}
         toolbarItemsRight={<ProjectToolbarItems />}
+        showProjectName
+        backUrl={createHomePageUrl()}
+        backLabelId="home-action"
       >
         <Flex as="main" flexGrow={1} flexDir="column" ref={pageRef}>
           <DataSamplesTable

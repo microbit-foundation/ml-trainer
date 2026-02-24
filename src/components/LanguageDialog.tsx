@@ -55,8 +55,8 @@ export const LanguageDialog = ({
 }: LanguageDialogProps) => {
   const setLanguage = useStore((s) => s.setLanguage);
   const handleChooseLanguage = useCallback(
-    (languageId: string) => {
-      setLanguage(languageId);
+    async (languageId: string) => {
+      await setLanguage(languageId);
       onClose();
     },
     [onClose, setLanguage]

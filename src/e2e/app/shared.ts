@@ -4,6 +4,13 @@
  * SPDX-License-Identifier: MIT
  */
 import type { Locator, Page } from "@playwright/test";
+import path from "path";
+import { fileURLToPath } from "url";
+
+export const getAbsoluteFilePath = (filePathFromProjectRoot: string) => {
+  const dir = path.dirname(fileURLToPath(import.meta.url));
+  return path.join(dir.replace("e2e/app", ""), filePathFromProjectRoot);
+};
 
 export class Navbar {
   private saveButton: Locator;
