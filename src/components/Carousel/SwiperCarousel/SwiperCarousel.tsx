@@ -20,6 +20,8 @@ interface SwiperCarouselProps extends SwiperProps {
   swiperWrapperClassName?: string;
 }
 
+const swiperModules = [A11y, Autoplay, Navigation, Pagination];
+
 const SwiperCarousel = ({
   carouselItems,
   containerMessageId,
@@ -31,7 +33,6 @@ const SwiperCarousel = ({
 }: SwiperCarouselProps) => {
   const intl = useIntl();
   const isRtl = false;
-  const modules = [A11y, Autoplay, Navigation, Pagination];
   const [swiper, setSwiper] = useState<SwiperClass>();
   const handleSlideFocus = useCallback(
     (e: React.FocusEvent<HTMLElement, Element>) => {
@@ -80,7 +81,7 @@ const SwiperCarousel = ({
             }
           ),
         }}
-        modules={modules}
+        modules={swiperModules}
         tag="ul"
         watchSlidesProgress
         wrapperClass={classNames(swiperWrapperClassName)}

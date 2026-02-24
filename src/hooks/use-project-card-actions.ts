@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { RefObject, useCallback, useState } from "react";
+import { RefObject, useCallback, useRef, useState } from "react";
 import { ProjectNameDialogReason } from "../project-utils";
 import { useStore } from "../store";
 
@@ -19,6 +19,9 @@ export const useProjectCardActions = (
   const renameProject = useStore((s) => s.setProjectName);
   const duplicateProject = useStore((s) => s.duplicateProject);
   const deleteProject = useStore((s) => s.deleteProject);
+
+  const optionsRef = useRef(options);
+  optionsRef.current = options;
 
   const [projectForAction, setProjectForAction] = useState<string | null>(null);
   const [nameDialogIsOpen, setNameDialogIsOpen] = useState(false);
@@ -44,16 +47,16 @@ export const useProjectCardActions = (
       handleCloseConfirmDialog();
       if (projectForAction) {
         await deleteProject(projectForAction);
-      } else if (options?.onDeleteSelected) {
-        await options.onDeleteSelected();
+      } else if (optionsRef.current?.onDeleteSelected) {
+        await optionsRef.current.onDeleteSelected();
       }
     },
-    [deleteProject, handleCloseConfirmDialog, options, projectForAction]
+    [deleteProject, handleCloseConfirmDialog, projectForAction]
   );
 
   const handleOpenNameProjectDialog = useCallback(
     (reason: ProjectNameDialogReason, id?: string) => {
-      const projectId = id ?? options?.getSelectedProjectId?.();
+      const projectId = id ?? optionsRef.current?.getSelectedProjectId?.();
       const project = allProjectData.find((p) => p.id === projectId);
       if (project) {
         setProjectNameReason(reason);
@@ -62,7 +65,7 @@ export const useProjectCardActions = (
         setProjectForAction(project.id);
       }
     },
-    [allProjectData, options]
+    [allProjectData]
   );
 
   const handleNameProjectDialogClose = useCallback(() => {
@@ -96,7 +99,7 @@ export const useProjectCardActions = (
 
   const handleOpenConfirmDialog = useCallback(
     (id?: string) => {
-      const projectId = id ?? options?.getSelectedProjectId?.();
+      const projectId = id ?? optionsRef.current?.getSelectedProjectId?.();
       const project = projectId
         ? allProjectData.find((p) => p.id === projectId)
         : undefined;
@@ -109,7 +112,7 @@ export const useProjectCardActions = (
         setConfirmDialogIsOpen(true);
       }
     },
-    [allProjectData, options]
+    [allProjectData]
   );
 
   return {
