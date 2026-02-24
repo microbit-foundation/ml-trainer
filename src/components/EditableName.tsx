@@ -39,7 +39,6 @@ const variantStyles = {
     color: "gray.800",
     backgroundColor: "blackAlpha.100",
     focusShadow: "outline",
-    maxW: "100%",
     fontSize: 16,
   },
 };
@@ -165,7 +164,6 @@ const EditableName = ({
                     <EditablePreview
                       cursor="pointer"
                       fontSize={styles.fontSize}
-                      maxW={styles.maxW}
                       w="fit-content"
                       noOfLines={1}
                       textAlign="left"
