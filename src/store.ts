@@ -82,7 +82,7 @@ import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { getDetectedAction } from "./utils/prediction";
 
 // Use Capacitor.isNativePlatform() directly rather than the isNativePlatform()
-// helper (which also respects the simulateNative flag) because the Capacitor
+// helper (which also respects the ios/android flags) because the Capacitor
 // SQLite plugin is only available on actual native platforms.
 const storage: Database = Capacitor.isNativePlatform()
   ? new SqliteDatabase()

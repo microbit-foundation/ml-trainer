@@ -39,7 +39,7 @@ test.describe("native bluetooth", () => {
   });
 
   test("data connection flow", async ({ homePage, dataSamplesPage, page }) => {
-    await homePage.goto(["simulateNative"]);
+    await homePage.goto(["android"]);
     await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
@@ -120,7 +120,7 @@ test.describe("native bluetooth", () => {
     dataSamplesPage,
     page,
   }) => {
-    await homePage.goto(["simulateNative"]);
+    await homePage.goto(["android"]);
     await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
@@ -150,7 +150,7 @@ test.describe("native bluetooth", () => {
     dataSamplesPage,
     page,
   }) => {
-    await homePage.goto(["simulateNative"]);
+    await homePage.goto(["android"]);
     await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
@@ -177,7 +177,7 @@ test.describe("native bluetooth", () => {
     homePage,
     dataSamplesPage,
   }) => {
-    await homePage.goto(["simulateNative"]);
+    await homePage.goto(["android"]);
     await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
@@ -198,7 +198,7 @@ test.describe("native bluetooth", () => {
     homePage,
     dataSamplesPage,
   }) => {
-    await homePage.goto(["simulateNative"]);
+    await homePage.goto(["android"]);
     await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
@@ -232,7 +232,7 @@ test.describe("native bluetooth", () => {
     dataSamplesPage,
     page,
   }) => {
-    await homePage.goto(["simulateNative"]);
+    await homePage.goto(["android"]);
     await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
@@ -277,7 +277,7 @@ test.describe("native bluetooth", () => {
     dataSamplesPage,
     page,
   }) => {
-    await homePage.goto(["simulateNative"]);
+    await homePage.goto(["android"]);
     await homePage.newProject();
 
     const connectionDialogs = await dataSamplesPage.connect();
@@ -319,7 +319,7 @@ test.describe("native bluetooth", () => {
     page,
   }) => {
     // Setup: train model (no need to connect first for native BT download)
-    await homePage.goto(["simulateNative"]);
+    await homePage.goto(["android"]);
     await homePage.importProject("test-data/dataset.json");
     await dataSamplesPage.welcomeDialog.close();
 
@@ -406,7 +406,7 @@ test.describe("native bluetooth", () => {
     testModelPage,
     page,
   }) => {
-    await homePage.goto(["simulateNative"]);
+    await homePage.goto(["android"]);
     await homePage.importProject("test-data/dataset.json");
     await dataSamplesPage.welcomeDialog.close();
 

@@ -10,6 +10,7 @@ import {
   HStack,
   usePrefersReducedMotion,
 } from "@chakra-ui/react";
+import debounce from "lodash.debounce";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, IntlFormatters, useIntl } from "react-intl";
@@ -22,29 +23,27 @@ import {
   TrainHint,
 } from "../components/DataSamplesTableHints";
 import DefaultPageLayout, {
-  ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
+import { animations } from "../components/Emoji";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import WelcomeDialog from "../components/WelcomeDialog";
 import {
-  useDataConnected,
   isDataConnectionDialogOpen,
+  useDataConnected,
 } from "../data-connection-flow";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
+import { useLiveRegion } from "../live-region-hook";
 import {
   ActionData,
   DataSamplesPageHint,
   PostImportDialogState,
 } from "../model";
+import { projectSessionStorage } from "../session-storage";
 import { useHasSufficientDataForTraining, useStore } from "../store";
 import { tourElClassname } from "../tours";
-import { animations } from "../components/Emoji";
-import { useLiveRegion } from "../live-region-hook";
-import debounce from "lodash.debounce";
 import { createHomePageUrl, createTestingModelPageUrl } from "../urls";
-import { projectSessionStorage } from "../session-storage";
 
 const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
@@ -165,8 +164,8 @@ const DataSamplesPage = () => {
         titleId="data-samples-title"
         showProjectName
         showPageTitle
-        menuItems={<ProjectMenuItems />}
         toolbarItemsRight={<ProjectToolbarItems />}
+        backUrl={createHomePageUrl()}
         bottomContent={
           <>
             <HStack

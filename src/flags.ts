@@ -25,9 +25,9 @@ export type Flag =
    */
   | "e2e"
   /**
-   * Flag to simulate native platform behavior in web for testing.
+   * Flag to simulate Android native platform behavior in web for testing.
    */
-  | "simulateNative"
+  | "android"
   /**
    * Flag to add a beta warning. Enabled for review and staging site stages.
    */
@@ -52,7 +52,11 @@ export type Flag =
    * Example flags used for testing.
    */
   | "exampleOptInA"
-  | "exampleOptInB";
+  | "exampleOptInB"
+  /**
+   * Flag to simulate iOS native platform behavior in web for testing.
+   */
+  | "ios";
 
 interface FlagMetadata {
   defaultOnStages: Stage[];
@@ -61,12 +65,13 @@ interface FlagMetadata {
 
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
+  { name: "android", defaultOnStages: [] },
   { name: "devtools", defaultOnStages: ["local"] },
   { name: "e2e", defaultOnStages: [] },
   { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
   { name: "exampleOptInB", defaultOnStages: [] },
+  { name: "ios", defaultOnStages: [] },
   { name: "preReleaseNotice", defaultOnStages: ["staging", "beta"] },
-  { name: "simulateNative", defaultOnStages: [] },
   { name: "skipTours", defaultOnStages: [] },
   { name: "translate", defaultOnStages: [] },
   { name: "translationPreview", defaultOnStages: ["beta"] },

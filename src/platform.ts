@@ -11,19 +11,19 @@ import { flags } from "./flags";
  * Use this instead of Capacitor.isNativePlatform() to allow testing native flows in web.
  */
 export const isNativePlatform = (): boolean => {
-  return Capacitor.isNativePlatform() || flags.simulateNative;
+  return Capacitor.isNativePlatform() || flags.ios || flags.android;
 };
 
 /**
- * Check if running on iOS.
+ * Check if running on iOS or simulating iOS behavior.
  */
 export const isIOS = (): boolean => {
-  return Capacitor.getPlatform() === "ios";
+  return Capacitor.getPlatform() === "ios" || flags.ios;
 };
 
 /**
- * Check if running on Android.
+ * Check if running on Android or simulating Android behavior.
  */
 export const isAndroid = (): boolean => {
-  return Capacitor.getPlatform() === "android";
+  return Capacitor.getPlatform() === "android" || flags.android;
 };

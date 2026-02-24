@@ -1591,6 +1591,10 @@
     "defaultMessage": "Project ideas",
     "description": "Title for home page row"
   },
+  "project-label": {
+    "defaultMessage": "Project",
+    "description": "Label for project input"
+  },
   "project-loaded": {
     "defaultMessage": "Projeto carregado",
     "description": "Toast when a new project is loaded"
