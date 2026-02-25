@@ -1,0 +1,9 @@
+/* Keep in sync with --carousel-px in NewPageCarousel.module.css */
+.title {
+  padding-left: 12px;
+  padding-right: 12px;
+  @media (min-width: 768px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

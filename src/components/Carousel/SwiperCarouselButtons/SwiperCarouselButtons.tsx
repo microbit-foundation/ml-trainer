@@ -47,7 +47,6 @@ const SwiperCarouselButtons = () => {
           isRtl ? styles.right : styles.left
         )}
         direction={isRtl ? "right" : "left"}
-        size="large"
         onClick={() => swiper.slidePrev()}
       />
       <CarouselButton
@@ -58,7 +57,6 @@ const SwiperCarouselButtons = () => {
           isRtl ? styles.left : styles.right
         )}
         direction={isRtl ? "left" : "right"}
-        size="large"
         onClick={() => swiper.slideNext()}
       />
     </Box>

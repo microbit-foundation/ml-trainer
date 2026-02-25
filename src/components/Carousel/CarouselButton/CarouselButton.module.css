@@ -1,36 +1,37 @@
 .root {
-  padding: 0 !important;
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background-color: rgba(245, 245, 245, 0.5);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  &:hover {
+    background-color: rgb(245, 245, 245);
+    svg {
+      transform: scale(1.2);
+    }
+  }
   svg {
     object-fit: contain;
+    transition: transform 0.2s ease;
   }
-  &.small {
-    min-width: 46px;
-    min-height: 46px;
-    svg {
-      width: 20px;
-      height: 20px;
-      &.left {
-        margin-right: 2px;
-      }
-      &.right {
-        margin-left: 2px;
-      }
+  width: 60px;
+  svg {
+    width: 30px;
+    height: 30px;
+    &.left {
+      margin-right: 3px;
+    }
+    &.right {
+      margin-left: 3px;
     }
   }
-  &.large {
-    min-width: 80px;
-    min-height: 80px;
-    svg {
-      width: 40px;
-      height: 40px;
-      &.left {
-        margin-right: 4px;
-      }
-      &.right {
-        margin-left: 4px;
-      }
-    }
-  }
+}
+
+.root:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.6);
 }

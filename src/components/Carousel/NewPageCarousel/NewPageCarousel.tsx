@@ -13,32 +13,17 @@ interface NewPageCarouselProps {
   containerMessageId: string;
   hero?: boolean;
   centerItems?: boolean;
-  padding?: string | number;
 }
-
-const defaultPadding = "1rem 12px 12px 12px";
 
 const NewPageCarousel = ({
   carouselItems,
   containerMessageId,
   hero = false,
   centerItems = false,
-  padding,
 }: NewPageCarouselProps) => {
-  const resolvedPadding = padding ?? (hero ? 0 : defaultPadding);
-  const getOffset = useCallback(
-    (slidesPerGroup: number) => {
-      if (centerItems && carouselItems.length <= slidesPerGroup) {
-        return 0;
-      }
-      return (window.innerWidth / (slidesPerGroup + 0.4)) * 0.2;
-    },
-    [carouselItems.length, centerItems]
-  );
-
   const getSlidesPerGroup = useCallback((spacing: number) => {
-    // 24px padding left/right.
-    return Math.floor((window.innerWidth - 24) / (cardWidth + spacing));
+    // --carousel-px is 20px at md+ where this calculation is used.
+    return Math.floor((window.innerWidth - 40) / (cardWidth + spacing));
   }, []);
 
   // Pass this in as a prop for other carousels?
@@ -52,39 +37,29 @@ const NewPageCarousel = ({
       0: {
         spaceBetween: mobileSpaceBetween,
         slidesPerGroup: 1,
-        slidesOffsetAfter: 0,
-        slidesOffsetBefore: 0,
       },
       // When window width is >= 768px.
       768: {
         spaceBetween: 20,
         slidesPerGroup: getSlidesPerGroup(20),
-        slidesOffsetAfter: getOffset(getSlidesPerGroup(20)),
-        slidesOffsetBefore: getOffset(getSlidesPerGroup(20)),
       },
       // When window width is >= 992px.
       992: {
         spaceBetween: 25,
         slidesPerGroup: getSlidesPerGroup(25),
-        slidesOffsetAfter: getOffset(getSlidesPerGroup(25)),
-        slidesOffsetBefore: getOffset(getSlidesPerGroup(25)),
       },
       // When window width is >= 1200px.
       1200: {
         spaceBetween: 30,
         slidesPerGroup: getSlidesPerGroup(30),
-        slidesOffsetAfter: getOffset(getSlidesPerGroup(30)),
-        slidesOffsetBefore: getOffset(getSlidesPerGroup(30)),
       },
       // When window width is >= 1400px.
       1400: {
         spaceBetween: 30,
         slidesPerGroup: getSlidesPerGroup(30),
-        slidesOffsetAfter: getOffset(getSlidesPerGroup(30)),
-        slidesOffsetBefore: getOffset(getSlidesPerGroup(30)),
       },
     };
-  }, [getOffset, getSlidesPerGroup]);
+  }, [getSlidesPerGroup]);
 
   const getBreakpoint = useCallback(() => {
     if (typeof window !== "undefined" && breakpoints) {
@@ -110,17 +85,13 @@ const NewPageCarousel = ({
       const breakpoint = getBreakpoint();
       if (breakpoint) {
         let slidesPerGroup = breakpoint.slidesPerGroup;
-        let offset = breakpoint.slidesOffsetAfter;
         if (breakpoint.spaceBetween !== mobileSpaceBetween) {
           slidesPerGroup = getSlidesPerGroup(breakpoint.spaceBetween);
-          offset = getOffset(slidesPerGroup);
         }
-        swiper.params.slidesOffsetAfter = offset;
-        swiper.params.slidesOffsetBefore = offset;
         swiper.params.slidesPerGroup = slidesPerGroup;
       }
     },
-    [getBreakpoint, getOffset, getSlidesPerGroup, hero]
+    [getBreakpoint, getSlidesPerGroup, hero]
   );
 
   return (
@@ -153,7 +124,7 @@ const NewPageCarousel = ({
       navigation={!hero}
       onResize={recalculateBreakpoints}
       onInit={recalculateBreakpoints}
-      padding={resolvedPadding}
+      padding={hero ? 0 : undefined}
       speed={hero ? slow : fast}
       className={styles.root}
     />

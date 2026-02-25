@@ -59,7 +59,7 @@ const SwiperCarousel = ({
       <Swiper
         onSwiper={handleSwiper}
         style={{
-          padding: padding ? padding : 0,
+          ...(padding !== undefined && { padding }),
           alignItems: "stretch",
         }}
         dir={isRtl ? "rtl" : "ltr"}

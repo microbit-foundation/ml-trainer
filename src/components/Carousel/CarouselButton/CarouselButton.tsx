@@ -3,29 +3,27 @@ import styles from "./CarouselButton.module.css";
 import classNames from "classnames";
 import ChevronLeftIcon from "../../icons/ChevronLeftIcon";
 import ChevronRightIcon from "../../icons/ChevronRightIcon";
-import PlainButton from "../PlainButton/PlainButton";
 
-const CarouselButton = React.forwardRef(
-  (
-    {
-      className,
-      direction,
-      onClick,
-      size = "small",
-      stroke,
-      ...rest
-    }: {
-      direction: "left" | "right";
-      className?: string;
-      onClick?: () => void;
-      size?: "small" | "large";
-      stroke?: string;
-    },
-    ref: React.ForwardedRef<HTMLButtonElement>
-  ) => (
-    <PlainButton
+const CarouselButton = React.forwardRef(function CarouselButton(
+  {
+    className,
+    direction,
+    onClick,
+    stroke,
+    ...rest
+  }: {
+    direction: "left" | "right";
+    className?: string;
+    onClick?: () => void;
+    stroke?: string;
+  },
+  ref: React.ForwardedRef<HTMLButtonElement>
+) {
+  return (
+    <button
       ref={ref}
-      className={classNames(styles.root, styles[size], className)}
+      type="button"
+      className={classNames(styles.root, className)}
       onClick={onClick}
       {...rest}
     >
@@ -34,10 +32,8 @@ const CarouselButton = React.forwardRef(
       ) : (
         <ChevronRightIcon className={styles.right} stroke={stroke} />
       )}
-    </PlainButton>
-  )
-);
-
-CarouselButton.displayName = "CarouselButton";
+    </button>
+  );
+});
 
 export default CarouselButton;

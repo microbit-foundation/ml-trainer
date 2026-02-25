@@ -1,17 +1,15 @@
 .carouselButton {
   position: absolute;
   z-index: 5;
-  background-color: transparent;
-  transform: translateY(-50%);
-  top: 50%;
+  top: calc(var(--carousel-pt) - 6px);
+  bottom: calc(var(--carousel-pb) - 6px);
   &.left {
     left: 0;
   }
   &.right {
     right: 0;
   }
-}
-:global(.swiper-button-disabled) {
-  cursor: auto;
-  opacity: 0.35;
+  &:global(.swiper-button-disabled) {
+    display: none;
+  }
 }
