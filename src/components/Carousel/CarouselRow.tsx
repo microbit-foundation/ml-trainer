@@ -22,7 +22,7 @@ const CarouselRow = ({
   return (
     <Box w="100%" py={8}>
       <HStack
-        px={isNativePlatform() ? 3 : [3, null, 16]}
+        px={isNativePlatform() ? { base: 3, md: 5 } : [3, null, 16]}
         mt={2}
         mb={2}
         spacing={{ base: 3, sm: 12 }}

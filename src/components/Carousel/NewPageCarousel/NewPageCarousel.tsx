@@ -1,3 +1,4 @@
+import { useBreakpointValue } from "@chakra-ui/react";
 import { useCallback, useMemo } from "react";
 import SwiperCarousel from "../SwiperCarousel/SwiperCarousel";
 import styles from "./NewPageCarousel.module.css";
@@ -18,6 +19,7 @@ interface NewPageCarouselProps {
 }
 
 const defaultPadding = "1rem 12px 12px 12px";
+const tabletPadding = "1rem 20px 12px 20px";
 
 const NewPageCarousel = ({
   carouselItems,
@@ -26,7 +28,11 @@ const NewPageCarousel = ({
   centerItems = false,
   padding,
 }: NewPageCarouselProps) => {
-  const resolvedPadding = padding ?? (hero ? 0 : defaultPadding);
+  const nativePadding =
+    useBreakpointValue({ base: defaultPadding, md: tabletPadding }) ??
+    defaultPadding;
+  const resolvedPadding =
+    padding ?? (hero ? 0 : isNativePlatform() ? nativePadding : defaultPadding);
   const getOffset = useCallback(
     (slidesPerGroup: number) => {
       if (isNativePlatform()) {
