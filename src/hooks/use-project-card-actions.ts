@@ -70,6 +70,7 @@ export const useProjectCardActions = (
 
   const handleNameProjectDialogClose = useCallback(() => {
     setNameDialogIsOpen(false);
+    setProjectName("");
     setProjectForAction(null);
   }, []);
 
