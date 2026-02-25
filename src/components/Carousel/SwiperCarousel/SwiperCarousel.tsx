@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import React, { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 import { Swiper as SwiperClass } from "swiper";
@@ -9,8 +8,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperProps, SwiperSlide } from "swiper/react";
+import { Box, SystemStyleObject } from "@chakra-ui/react";
 import SwiperCarouselButtons from "../SwiperCarouselButtons/SwiperCarouselButtons";
-import styles from "./SwiperCarousel.module.css";
 
 interface SwiperCarouselProps extends SwiperProps {
   carouselItems: JSX.Element[];
@@ -18,6 +17,7 @@ interface SwiperCarouselProps extends SwiperProps {
   padding?: string | number;
   slideClassName?: string;
   swiperWrapperClassName?: string;
+  sx?: SystemStyleObject;
 }
 
 const swiperModules = [A11y, Autoplay, Navigation, Pagination];
@@ -29,6 +29,7 @@ const SwiperCarousel = ({
   navigation,
   slideClassName,
   swiperWrapperClassName,
+  sx: sxProp,
   ...props
 }: SwiperCarouselProps) => {
   const intl = useIntl();
@@ -55,7 +56,20 @@ const SwiperCarousel = ({
   }, []);
 
   return (
-    <div className={styles.carouselContainer}>
+    <Box
+      display="grid"
+      overflow="hidden"
+      sx={{
+        "--swiper-theme-color": "black",
+        "--swiper-navigation-size": "50",
+        "& ul": { margin: 0 },
+        "& .swiper-slide": {
+          transform: "translate3d(0, 0, 0) translateZ(0) !important",
+          width: "unset",
+        },
+        ...sxProp,
+      }}
+    >
       <Swiper
         onSwiper={handleSwiper}
         style={{
@@ -84,14 +98,14 @@ const SwiperCarousel = ({
         modules={swiperModules}
         tag="ul"
         watchSlidesProgress
-        wrapperClass={classNames(swiperWrapperClassName)}
+        wrapperClass={swiperWrapperClassName}
         {...props}
       >
         {navigation && <SwiperCarouselButtons />}
         {carouselItems.map((item) => (
           <SwiperSlide
             key={item.key}
-            className={classNames(slideClassName)}
+            className={slideClassName}
             onFocus={handleSlideFocus}
             tag="li"
           >
@@ -99,7 +113,7 @@ const SwiperCarousel = ({
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </Box>
   );
 };
 

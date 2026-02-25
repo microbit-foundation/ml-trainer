@@ -2,7 +2,6 @@ import { Box, Heading, HStack } from "@chakra-ui/react";
 import NewPageCarousel from "./NewPageCarousel/NewPageCarousel";
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
-import styles from "./CarouselRow.module.css";
 
 interface CarouselRowProps {
   carouselItems: JSX.Element[];
@@ -22,7 +21,7 @@ const CarouselRow = ({
   return (
     <Box w="100%" py={8}>
       <HStack
-        className={styles.title}
+        px={{ base: "12px", md: "20px" }}
         mt={2}
         mb={2}
         spacing={{ base: 3, sm: 12 }}
