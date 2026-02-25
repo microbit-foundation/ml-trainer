@@ -1,5 +1,5 @@
 import { Box, Heading, HStack } from "@chakra-ui/react";
-import NewPageCarousel from "./NewPageCarousel/NewPageCarousel";
+import NewPageCarousel from "./NewPageCarousel";
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 

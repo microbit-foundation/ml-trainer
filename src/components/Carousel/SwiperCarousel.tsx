@@ -9,7 +9,7 @@ import "swiper/css/pagination";
 import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperProps, SwiperSlide } from "swiper/react";
 import { Box, SystemStyleObject } from "@chakra-ui/react";
-import SwiperCarouselButtons from "../SwiperCarouselButtons/SwiperCarouselButtons";
+import SwiperCarouselButtons from "./SwiperCarouselButtons";
 
 interface SwiperCarouselProps extends SwiperProps {
   carouselItems: JSX.Element[];

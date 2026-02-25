@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, BoxProps } from "@chakra-ui/react";
-import ChevronLeftIcon from "../../icons/ChevronLeftIcon";
-import ChevronRightIcon from "../../icons/ChevronRightIcon";
+import ChevronLeftIcon from "../icons/ChevronLeftIcon";
+import ChevronRightIcon from "../icons/ChevronRightIcon";
 
 interface CarouselButtonProps extends BoxProps {
   direction: "left" | "right";
