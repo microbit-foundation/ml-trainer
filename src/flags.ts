@@ -45,10 +45,6 @@ export type Flag =
    */
   | "translationPreview"
   /**
-   * Flag to show links to website content for the CreateAI release.
-   */
-  | "websiteContent"
-  /**
    * Example flags used for testing.
    */
   | "exampleOptInA"
@@ -75,11 +71,6 @@ const allFlags: FlagMetadata[] = [
   { name: "skipTours", defaultOnStages: [] },
   { name: "translate", defaultOnStages: [] },
   { name: "translationPreview", defaultOnStages: ["beta"] },
-  // We can probably remove this flag now it's enabled everywhere!
-  {
-    name: "websiteContent",
-    defaultOnStages: ["local", "review", "staging", "beta", "production"],
-  },
 ];
 
 type Flags = Record<Flag, boolean>;

@@ -34,7 +34,6 @@ import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
 import { useDataConnected } from "../data-connection-flow";
 import { useDeployment } from "../deployment";
-import { flags } from "../flags";
 import { useProject } from "../hooks/project-hooks";
 import { SaveType, TourTrigger } from "../model";
 import { isAndroid, isIOS, isNativePlatform } from "../platform";
@@ -199,11 +198,9 @@ const NavigationDrawer = ({
 
             {/* Help & support */}
             <NavSection>
-              {flags.websiteContent && (
-                <NavLink href={userGuideUrl()} onClick={onClose}>
-                  <FormattedMessage id="user-guide" />
-                </NavLink>
-              )}
+              <NavLink href={userGuideUrl()} onClick={onClose}>
+                <FormattedMessage id="user-guide" />
+              </NavLink>
               {tourTrigger && (
                 <NavItem icon={RiFlag2Line} onClick={handleTour}>
                   <FormattedMessage id="tour-action" />

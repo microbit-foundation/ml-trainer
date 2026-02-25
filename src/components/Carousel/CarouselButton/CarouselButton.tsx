@@ -12,7 +12,6 @@ const CarouselButton = React.forwardRef(
       direction,
       onClick,
       size = "small",
-      shadow = true,
       stroke,
       ...rest
     }: {
@@ -20,19 +19,13 @@ const CarouselButton = React.forwardRef(
       className?: string;
       onClick?: () => void;
       size?: "small" | "large";
-      shadow?: boolean;
       stroke?: string;
     },
     ref: React.ForwardedRef<HTMLButtonElement>
   ) => (
     <PlainButton
       ref={ref}
-      className={classNames(
-        styles.root,
-        styles[size],
-        shadow && "shadow",
-        className
-      )}
+      className={classNames(styles.root, styles[size], className)}
       onClick={onClick}
       {...rest}
     >

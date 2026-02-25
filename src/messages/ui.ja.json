@@ -1783,6 +1783,26 @@
       "value": "video showing CreateAI detecting different movements"
     }
   ],
+  "homepage-banner-heading": [
+    {
+      "type": 0,
+      "value": "New to "
+    },
+    {
+      "type": 1,
+      "value": "appName"
+    },
+    {
+      "type": 0,
+      "value": "?"
+    }
+  ],
+  "homepage-banner-subtitle": [
+    {
+      "type": 0,
+      "value": "Discover in-depth tutorials and teaching resources"
+    }
+  ],
   "homepage-description": [
     {
       "type": 0,
@@ -2081,6 +2101,12 @@
     {
       "type": 0,
       "value": "ファイアウォール要件について調べる"
+    }
+  ],
+  "learn-more-action": [
+    {
+      "type": 0,
+      "value": "Learn more"
     }
   ],
   "led-icon-option-angry": [
@@ -2880,7 +2906,7 @@
   "project-storage-tooltip": [
     {
       "type": 0,
-      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed if you don't visit for a while, especially in Safari."
+      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed by your browser if your device is low on storage."
     }
   ],
   "projects-page-title": [
@@ -3389,6 +3415,12 @@
     {
       "type": 1,
       "value": "name"
+    }
+  ],
+  "selection-actions-group": [
+    {
+      "type": 0,
+      "value": "Selection actions"
     }
   ],
   "settings": [

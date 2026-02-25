@@ -156,11 +156,37 @@ export class ProjectsPage {
     await this.confirmDelete();
   }
 
+  async toolbarClick(name: string) {
+    await this.selectionToolbar.first().getByRole("button", { name }).click();
+  }
+
   async toolbarClear() {
     await this.selectionToolbar
       .first()
       .getByRole("button", { name: "Clear" })
       .click();
+  }
+
+  // Sort controls
+
+  async sortBy(field: "Name" | "Last modified") {
+    await this.page
+      .getByRole("combobox", { name: "Sort projects" })
+      .selectOption({ label: field });
+  }
+
+  async toggleSortDirection() {
+    await this.page.getByRole("button", { name: /order$/ }).click();
+  }
+
+  async expectProjectOrder(expectedNames: string[]) {
+    const checkboxes = this.page.getByRole("checkbox");
+    await expect(checkboxes).toHaveCount(expectedNames.length);
+    for (let i = 0; i < expectedNames.length; i++) {
+      await expect(checkboxes.nth(i)).toHaveAccessibleName(
+        `Select ${expectedNames[i]}`
+      );
+    }
   }
 
   // Dialog helpers
@@ -183,5 +209,11 @@ export class ProjectsPage {
     await expect(dialog).toBeVisible();
     await dialog.getByRole("button", { name: "Confirm" }).click();
     await expect(dialog).toBeHidden();
+  }
+
+  async expectDeleteDialogText(expected: string | RegExp) {
+    const dialog = this.page.getByRole("alertdialog");
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toContainText(expected);
   }
 }

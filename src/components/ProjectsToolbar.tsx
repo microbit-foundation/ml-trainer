@@ -40,7 +40,7 @@ const ProjectsToolbar = ({
   return (
     <ButtonGroup
       role="group"
-      aria-label="Selection actions"
+      aria-label={intl.formatMessage({ id: "selection-actions-group" })}
       isAttached
       variant="ghost"
       sx={{

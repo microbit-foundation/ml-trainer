@@ -458,20 +458,21 @@ const createMlStore = (logging: Logging) => {
         allProjectData: [],
 
         async setSettings(update: Partial<Settings>) {
-          const { id, settings } = get();
+          const { settings } = get();
           const updatedSettings = {
             ...settings,
             ...update,
           };
           const timestamp = Date.now();
           set({ settings: updatedSettings, timestamp }, false, "setSettings");
-          await storageWithErrHandling(() =>
-            storage.updateSettings(id, updatedSettings, timestamp)
+          await storageWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
           );
         },
 
         async setLanguage(languageId: string) {
-          const { id, settings } = get();
+          const { settings } = get();
           if (languageId === settings.languageId) {
             // No need to update language if language is the same.
             // MakeCode does not reload.
@@ -498,8 +499,9 @@ const createMlStore = (logging: Logging) => {
             false,
             "setLanguage"
           );
-          await storageWithErrHandling(() =>
-            storage.updateSettings(id, updatedSettings, timestamp)
+          await storageWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
           );
         },
 
@@ -657,7 +659,7 @@ const createMlStore = (logging: Logging) => {
           await storageWithErrHandling(() => storage.deleteProject(id), false);
           const message: BroadcastChannelData = {
             messageType: BroadcastChannelMessageType.DELETE_PROJECT,
-            projectId: id,
+            projectIds: [id],
           };
           broadcastChannel.postMessage(message);
         },
@@ -692,6 +694,7 @@ const createMlStore = (logging: Logging) => {
           );
           const message: BroadcastChannelData = {
             messageType: BroadcastChannelMessageType.DELETE_PROJECT,
+            projectIds: ids,
           };
           broadcastChannel.postMessage(message);
         },
@@ -754,17 +757,17 @@ const createMlStore = (logging: Logging) => {
 
         async addActionRecording(actionId: string, recording: RecordingData) {
           const { actions, dataWindow, id, project, projectEdited } = get();
-          let updatedAction: ActionData;
-          const updatedActions = actions.map((action) => {
-            if (action.id === actionId) {
-              updatedAction = {
-                ...action,
-                recordings: [recording, ...action.recordings],
-              };
-              return updatedAction;
-            }
-            return action;
-          });
+          const action = actions.find((a) => a.id === actionId);
+          if (!action) {
+            return;
+          }
+          const updatedAction = {
+            ...action,
+            recordings: [recording, ...action.recordings],
+          };
+          const updatedActions = actions.map((a) =>
+            a.id === actionId ? updatedAction : a
+          );
           const updatedProject = updateProject(
             project,
             projectEdited,
@@ -803,7 +806,7 @@ const createMlStore = (logging: Logging) => {
               ? [createFirstAction()]
               : remainingActions;
           const newDataWindow =
-            newActions.length === 0 ? currentDataWindow : dataWindow;
+            remainingActions.length === 0 ? currentDataWindow : dataWindow;
           const updatedProject = updateProject(
             project,
             projectEdited,
@@ -844,14 +847,14 @@ const createMlStore = (logging: Logging) => {
             projectEdited,
             model,
           } = get();
-          let updatedAction: ActionData;
-          const newActions = actions.map((action) => {
-            if (actionId === action.id) {
-              updatedAction = { ...action, name };
-              return updatedAction;
-            }
-            return action;
-          });
+          const action = actions.find((a) => a.id === actionId);
+          if (!action) {
+            return;
+          }
+          const updatedAction = { ...action, name };
+          const newActions = actions.map((a) =>
+            a.id === actionId ? updatedAction : a
+          );
           const updatedProject = updateProject(
             project,
             projectEdited,
@@ -935,14 +938,14 @@ const createMlStore = (logging: Logging) => {
         async setRequiredConfidence(actionId: string, value: number) {
           const { actions, dataWindow, id, project, projectEdited, model } =
             get();
-          let updatedAction: ActionData;
-          const newActions = actions.map((action) => {
-            if (actionId === action.id) {
-              updatedAction = { ...action, requiredConfidence: value };
-              return updatedAction;
-            }
-            return action;
-          });
+          const action = actions.find((a) => a.id === actionId);
+          if (!action) {
+            return;
+          }
+          const updatedAction = { ...action, requiredConfidence: value };
+          const newActions = actions.map((a) =>
+            a.id === actionId ? updatedAction : a
+          );
           const updatedProject = updateProject(
             project,
             projectEdited,
@@ -971,17 +974,19 @@ const createMlStore = (logging: Logging) => {
 
         async deleteActionRecording(actionId: string, recordingId: string) {
           const { actions, dataWindow, id, project, projectEdited } = get();
-          let updatedAction: ActionData;
-          const updatedActions = actions.map((action) => {
-            if (actionId !== action.id) {
-              return action;
-            }
-            const recordings = action.recordings.filter(
+          const action = actions.find((a) => a.id === actionId);
+          if (!action) {
+            return;
+          }
+          const updatedAction = {
+            ...action,
+            recordings: action.recordings.filter(
               (recording) => recording.id !== recordingId
-            );
-            updatedAction = { ...action, recordings };
-            return updatedAction;
-          });
+            ),
+          };
+          const updatedActions = actions.map((a) =>
+            a.id === actionId ? updatedAction : a
+          );
           const numRecordings = updatedActions.reduce(
             (acc, curr) => acc + curr.recordings.length,
             0
@@ -1113,9 +1118,11 @@ const createMlStore = (logging: Logging) => {
                 {
                   timestamp,
                   id,
-                },
-                updatedSettings
+                }
               )
+            );
+            await storageWithErrHandling(() =>
+              storage.updateSettings(updatedSettings)
             );
           } else if (loadAction === "replaceProject") {
             const newId = uuid();
@@ -1126,6 +1133,7 @@ const createMlStore = (logging: Logging) => {
               dataWindow,
               model: undefined,
               timestamp,
+              hint: getHint(newActionsWithIcons, true),
               ...updatedProject,
             });
             projectSessionStorage.setProjectId(newId);
@@ -1139,9 +1147,11 @@ const createMlStore = (logging: Logging) => {
                 {
                   timestamp,
                   id: newId,
-                },
-                updatedSettings
+                }
               )
+            );
+            await storageWithErrHandling(() =>
+              storage.updateSettings(updatedSettings)
             );
           }
         },
@@ -1193,9 +1203,11 @@ const createMlStore = (logging: Logging) => {
             storage.importProject(
               newActions,
               { project, projectEdited },
-              { timestamp, id },
-              updatedSettings
+              { timestamp, id }
             )
+          );
+          await storageWithErrHandling(() =>
+            storage.updateSettings(updatedSettings)
           );
         },
 
@@ -1553,9 +1565,11 @@ const createMlStore = (logging: Logging) => {
                   project: newProject,
                   projectEdited: updatedProjectEdited,
                 },
-                { timestamp: updatedTimestamp, id: newProjectId },
-                updatedSettings
+                { timestamp: updatedTimestamp, id: newProjectId }
               )
+            );
+            await storageWithErrHandling(() =>
+              storage.updateSettings(updatedSettings)
             );
           } else if (updateMakeCodeProject) {
             await storageWithErrHandling(() =>
@@ -1663,7 +1677,7 @@ const createMlStore = (logging: Logging) => {
           if (flags.skipTours && !manual) {
             return;
           }
-          const { actions, id, settings, tourState } = get();
+          const { actions, settings, tourState } = get();
           if (
             manual ||
             (!tourState && !settings.toursCompleted.includes(trigger.name))
@@ -1690,8 +1704,9 @@ const createMlStore = (logging: Logging) => {
               timestamp,
             };
             set(updatedState);
-            await storageWithErrHandling(() =>
-              storage.updateSettings(id, updatedSettings, timestamp)
+            await storageWithErrHandling(
+              () => storage.updateSettings(updatedSettings),
+              "settings"
             );
           }
         },
@@ -1716,7 +1731,7 @@ const createMlStore = (logging: Logging) => {
           });
         },
         async tourComplete(triggers: TourTriggerName[]) {
-          const { id, settings } = get();
+          const { settings } = get();
           const updatedSettings = {
             ...settings,
             toursCompleted: Array.from(
@@ -1729,13 +1744,14 @@ const createMlStore = (logging: Logging) => {
             settings: updatedSettings,
             timestamp,
           });
-          await storageWithErrHandling(() =>
-            storage.updateSettings(id, updatedSettings, timestamp)
+          await storageWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
           );
         },
 
         async setDataSamplesView(view: DataSamplesView) {
-          const { id, settings } = get();
+          const { settings } = get();
           const updatedSettings = {
             ...settings,
             dataSamplesView: view,
@@ -1745,22 +1761,23 @@ const createMlStore = (logging: Logging) => {
             settings: updatedSettings,
             timestamp,
           });
-          await storageWithErrHandling(() =>
-            storage.updateSettings(id, updatedSettings, timestamp)
+          await storageWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
           );
         },
         async setShowGraphs(show: boolean) {
-          const { id, settings } = get();
+          const { settings } = get();
           const updatedSettings = {
             ...settings,
             showGraphs: show,
           };
-          const timestamp = Date.now();
           set({
             settings: updatedSettings,
           });
-          await storageWithErrHandling(() =>
-            storage.updateSettings(id, updatedSettings, timestamp)
+          await storageWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
           );
         },
 
@@ -1942,11 +1959,11 @@ useStore.subscribe(async (state, prevState) => {
   const { model: newModel, id: newId } = state;
   const { model: previousModel, id: prevId } = prevState;
   if (newModel !== previousModel) {
-    if (!newModel && newId === prevId) {
+    if (!newModel && newId && newId === prevId) {
       await storageWithErrHandling(() => storage.removeModel(newId), false);
       const message: BroadcastChannelData = {
         messageType: BroadcastChannelMessageType.REMOVE_MODEL,
-        projectId: newId,
+        projectIds: [newId],
       };
       broadcastChannel.postMessage(message);
     } else if (newModel) {
@@ -2118,14 +2135,17 @@ const projectInHexIsEdited = (project: MakeCodeProject): boolean => {
 
 const storageWithErrHandling = async <T>(
   callback: () => Promise<T>,
-  broadcastEvent: boolean = true
+  broadcastEvent: boolean | "settings" = true
 ) => {
   try {
     const value = await callback();
-    if (broadcastEvent) {
+    const projectId = useStore.getState().id;
+    const settings = broadcastEvent === "settings";
+    if (broadcastEvent && (projectId || settings)) {
       const message: BroadcastChannelData = {
         messageType: BroadcastChannelMessageType.RELOAD_PROJECT,
-        projectId: useStore.getState().id,
+        projectIds: projectId ? [projectId] : [],
+        ...(settings && { settings: true }),
       };
       broadcastChannel.postMessage(message);
     }
@@ -2155,4 +2175,9 @@ export const loadProjectAndModelFromStorage = async (id: string) => {
 export const getAllProjectsFromStorage = async (): Promise<boolean> => {
   await useStore.getState().getAllProjectData();
   return true;
+};
+
+export const loadSettingsFromStorage = async () => {
+  const settings = await storage.getSettings();
+  useStore.setState({ settings });
 };

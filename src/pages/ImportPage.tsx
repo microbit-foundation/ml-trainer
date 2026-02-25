@@ -76,7 +76,7 @@ const ImportPage = () => {
     void updateAsync().then(() => {
       setFetchingProject(false);
     });
-  }, [activitiesBaseUrl, defaultProjectName, intl, logging, params]);
+  }, [activitiesBaseUrl, intl, logging, params]);
 
   const loadProject = useStore((s) => s.loadProject);
   const newSession = useStore((s) => s.newSession);

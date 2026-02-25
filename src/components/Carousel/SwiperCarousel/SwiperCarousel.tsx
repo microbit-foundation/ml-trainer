@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Swiper as SwiperClass } from "swiper";
 import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperProps, SwiperSlide } from "swiper/react";
@@ -20,6 +20,8 @@ interface SwiperCarouselProps extends SwiperProps {
   swiperWrapperClassName?: string;
 }
 
+const swiperModules = [A11y, Autoplay, Navigation, Pagination];
+
 const SwiperCarousel = ({
   carouselItems,
   containerMessageId,
@@ -31,65 +33,7 @@ const SwiperCarousel = ({
 }: SwiperCarouselProps) => {
   const intl = useIntl();
   const isRtl = false;
-  const modules = [A11y, Autoplay, Navigation, Pagination];
   const [swiper, setSwiper] = useState<SwiperClass>();
-  useEffect(() => {
-    if (swiper) {
-      const listener = (e: KeyboardEvent) => {
-        if (swiper.el.contains(document.activeElement)) {
-          let indexUpdated = false;
-          switch (e.key) {
-            case "ArrowRight": {
-              if (swiper.activeIndex === swiper.slides.length - 1) {
-                break;
-              }
-              const incremented = swiper.activeIndex + 1;
-              if (swiper.slides[incremented + 1]) {
-                if (
-                  !swiper.slides[incremented + 1].classList.contains(
-                    "swiper-slide-visible"
-                  )
-                ) {
-                  // This automatically updates the activeIndex.
-                  swiper.slideNext();
-                  swiper.slides[swiper.activeIndex].focus();
-                  indexUpdated = true;
-                }
-              }
-              if (!indexUpdated) {
-                swiper.slides[++swiper.activeIndex].focus();
-              }
-              break;
-            }
-            case "ArrowLeft": {
-              if (swiper.activeIndex === 0) {
-                break;
-              }
-              const decremented = swiper.activeIndex - 1;
-              if (swiper.slides[decremented - 1]) {
-                if (
-                  !swiper.slides[decremented - 1].classList.contains(
-                    "swiper-slide-visible"
-                  )
-                ) {
-                  // This automatically updates the activeIndex incorrectly
-                  // for our purposes.
-                  swiper.slidePrev();
-                }
-              }
-              swiper.slides[decremented].focus();
-              break;
-            }
-            default:
-              break;
-          }
-        }
-      };
-      window.addEventListener("keydown", listener);
-      return () => window.removeEventListener("keydown", listener);
-    }
-  }, [swiper]);
-
   const handleSlideFocus = useCallback(
     (e: React.FocusEvent<HTMLElement, Element>) => {
       if (swiper) {
@@ -137,7 +81,7 @@ const SwiperCarousel = ({
             }
           ),
         }}
-        modules={modules}
+        modules={swiperModules}
         tag="ul"
         watchSlidesProgress
         wrapperClass={classNames(swiperWrapperClassName)}

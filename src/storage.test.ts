@@ -142,7 +142,6 @@ describe.each(backends)("$name", ({ name, factory }) => {
       expect(loaded.actions[1].recordings).toHaveLength(1);
       expect(loaded.project.header?.name).toBe("Test Project");
       expect(loaded.projectEdited).toBe(false);
-      expect(loaded.settings).toBeDefined();
     });
 
     it("preserves requiredConfidence", async () => {
@@ -154,27 +153,6 @@ describe.each(backends)("$name", ({ name, factory }) => {
       const loaded = await db.getProject(projectData.id);
 
       expect(loaded.actions[0].requiredConfidence).toBe(0.8);
-    });
-  });
-
-  describe("getLatestProject", () => {
-    it("returns undefined for empty database", async () => {
-      const result = await db.getLatestProject();
-      expect(result).toBeUndefined();
-    });
-
-    it("returns most recent project", async () => {
-      const older = makeProjectData("Older");
-      older.timestamp = 1000;
-      await db.newSession([makeAction()], makeMakeCodeData("Older"), older);
-
-      const newer = makeProjectData("Newer");
-      newer.timestamp = 2000;
-      await db.newSession([makeAction()], makeMakeCodeData("Newer"), newer);
-
-      const result = await db.getLatestProject();
-      expect(result).toBeDefined();
-      expect(result!.id).toBe(newer.id);
     });
   });
 
@@ -209,23 +187,18 @@ describe.each(backends)("$name", ({ name, factory }) => {
   });
 
   describe("importProject", () => {
-    it("imports project with settings", async () => {
+    it("imports project data", async () => {
       const actions = [makeAction({}, 1)];
       const makeCodeData = makeMakeCodeData("Imported");
       const projectData = { id: uuid(), timestamp: Date.now() };
-      const settings: Settings = {
-        ...testSettings,
-        languageId: "fr",
-      };
 
-      await db.importProject(actions, makeCodeData, projectData, settings);
+      await db.importProject(actions, makeCodeData, projectData);
       const loaded = await db.getProject(projectData.id);
 
       expect(loaded.id).toBe(projectData.id);
       expect(loaded.actions).toHaveLength(1);
       expect(loaded.actions[0].recordings).toHaveLength(1);
       expect(loaded.project.header?.name).toBe("Imported");
-      expect(loaded.settings.languageId).toBe("fr");
     });
   });
 
@@ -415,12 +388,10 @@ describe.each(backends)("$name", ({ name, factory }) => {
       ];
       const newMakeCode = makeMakeCodeData("Replaced");
 
-      await db.replaceActions(
-        newActions,
-        newMakeCode,
-        { timestamp: Date.now(), id: projectData.id },
-        testSettings
-      );
+      await db.replaceActions(newActions, newMakeCode, {
+        timestamp: Date.now(),
+        id: projectData.id,
+      });
 
       const loaded = await db.getProject(projectData.id);
       expect(loaded.actions).toHaveLength(2);
@@ -521,27 +492,18 @@ describe.each(backends)("$name", ({ name, factory }) => {
   });
 
   describe("updateSettings", () => {
-    it("updates settings with a project id", async () => {
-      const projectData = makeProjectData();
-      await db.newSession([makeAction()], makeMakeCodeData(), projectData);
-
+    it("updates and retrieves settings", async () => {
       const newSettings: Settings = { ...testSettings, languageId: "de" };
-      await db.updateSettings(projectData.id, newSettings, Date.now());
+      await db.updateSettings(newSettings);
 
-      const loaded = await db.getProject(projectData.id);
-      expect(loaded.settings.languageId).toBe("de");
+      const loaded = await db.getSettings();
+      expect(loaded.languageId).toBe("de");
     });
 
-    it("updates settings without a project id", async () => {
-      // Create a project so we can later verify settings via getProject.
-      const projectData = makeProjectData();
-      await db.newSession([makeAction()], makeMakeCodeData(), projectData);
-
-      const newSettings: Settings = { ...testSettings, showGraphs: false };
-      await db.updateSettings(undefined, newSettings, Date.now());
-
-      const loaded = await db.getProject(projectData.id);
-      expect(loaded.settings.showGraphs).toBe(false);
+    it("getSettings returns default settings initially", async () => {
+      const loaded = await db.getSettings();
+      expect(loaded).toBeDefined();
+      expect(loaded.languageId).toBe("en");
     });
   });
 

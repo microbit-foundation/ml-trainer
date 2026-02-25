@@ -236,6 +236,7 @@ const DataSamplesPage = () => {
             />
           </>
         }
+        backLabelId="home-action"
       >
         <Flex as="main" flexGrow={1} flexDir="column" ref={pageRef}>
           <DataSamplesTable

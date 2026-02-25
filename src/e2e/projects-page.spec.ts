@@ -160,6 +160,40 @@ test.describe("projects page toolbar actions", () => {
   });
 });
 
+test.describe("projects page sort", () => {
+  test("sort by name and by date", async ({
+    homePage,
+    dataSamplesPage,
+    projectsPage,
+  }) => {
+    await homePage.goto();
+
+    // Create two projects
+    await homePage.importProject("test-data/dataset.json");
+    await dataSamplesPage.welcomeDialog.close();
+    await dataSamplesPage.navbar.home();
+    await homePage.newProject();
+    await dataSamplesPage.welcomeDialog.close();
+    await dataSamplesPage.navbar.home();
+
+    await projectsPage.goto();
+    await projectsPage.expectProjectCount(2);
+    await projectsPage.menuRename("Untitled", "Apple");
+    await projectsPage.menuRename("Untitled", "Banana");
+
+    // Default sort is date descending — "Banana" was renamed last
+    await projectsPage.expectProjectOrder(["Banana", "Apple"]);
+
+    // Sort by name ascending
+    await projectsPage.sortBy("Name");
+    await projectsPage.expectProjectOrder(["Apple", "Banana"]);
+
+    // Toggle to name descending
+    await projectsPage.toggleSortDirection();
+    await projectsPage.expectProjectOrder(["Banana", "Apple"]);
+  });
+});
+
 test.describe("projects page multi-select", () => {
   test.beforeEach(async ({ homePage, dataSamplesPage, projectsPage }) => {
     // Create first project and rename it
@@ -201,6 +235,17 @@ test.describe("projects page multi-select", () => {
     await projectsPage.expectToolbarVisible();
     await projectsPage.toolbarClear();
     await projectsPage.expectToolbarHidden();
+  });
+
+  test("delete dialog correct after duplicate then multi-select", async ({
+    projectsPage,
+  }) => {
+    await projectsPage.menuDuplicate("Project A", "Copy of A");
+    await projectsPage.expectProjectCount(3);
+    await projectsPage.selectProject("Project A");
+    await projectsPage.selectProject("Project B");
+    await projectsPage.toolbarClick("Delete 2 projects");
+    await projectsPage.expectDeleteDialogText("delete 2 projects");
   });
 
   test("multi-select delete only removes selected projects", async ({

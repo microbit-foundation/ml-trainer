@@ -20,7 +20,6 @@ export interface PersistedProjectData {
   actions: ActionData[];
   project: MakeCodeProject;
   projectEdited: boolean;
-  settings: Settings;
   timestamp: number | undefined;
 }
 
@@ -63,16 +62,11 @@ export interface Database {
    * the most recently accessed project.
    */
   getProject(id: string): Promise<PersistedProjectData>;
-  /**
-   * Load the most recently accessed project without updating its timestamp.
-   */
-  getLatestProject(): Promise<PersistedProjectData | undefined>;
   getAllProjectData(): Promise<ProjectDataWithActions[]>;
   importProject(
     actions: ActionData[],
     makeCodeData: MakeCodeData,
-    projectData: { timestamp: number; id: string },
-    settings: Settings
+    projectData: { timestamp: number; id: string }
   ): Promise<void>;
   addAction(
     id: string | undefined,
@@ -108,8 +102,7 @@ export interface Database {
   replaceActions(
     actions: ActionData[],
     makeCodeData: MakeCodeData,
-    projectData: { timestamp: number; id: string | undefined },
-    settings: Settings
+    projectData: { timestamp: number; id: string | undefined }
   ): Promise<void>;
   addRecording(
     id: string | undefined,
@@ -152,11 +145,8 @@ export interface Database {
    * Delete multiple projects and all associated data.
    */
   deleteProjects(ids: string[]): Promise<void>;
-  updateSettings(
-    id: string | undefined,
-    settings: Settings,
-    timestamp: number
-  ): Promise<void>;
+  getSettings(): Promise<Settings>;
+  updateSettings(settings: Settings): Promise<void>;
   saveModel(id: string | undefined, model: tf.LayersModel): Promise<void>;
   removeModel(id: string | undefined): Promise<void>;
   loadModel(id: string): Promise<tf.LayersModel | undefined>;
@@ -422,7 +412,6 @@ export class IdbDatabase implements Database {
         DatabaseStore.RECORDINGS,
         DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
-        DatabaseStore.SETTINGS,
       ],
       "readwrite"
     );
@@ -453,10 +442,6 @@ export class IdbDatabase implements Database {
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     const makeCodeData = assertData(await makeCodeStore.get(id));
-    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
-    const settings = assertData(
-      await settingsStore.get(DatabaseStore.SETTINGS)
-    );
     await tx.done;
     return {
       id,
@@ -464,72 +449,13 @@ export class IdbDatabase implements Database {
       project: makeCodeData.project,
       projectEdited: makeCodeData.projectEdited,
       timestamp: projectData.timestamp,
-      settings,
-    };
-  }
-
-  // This method is used passively. Don't update the project timestamp.
-  async getLatestProject(): Promise<PersistedProjectData | undefined> {
-    const tx = (await this.useDb()).transaction(
-      [
-        DatabaseStore.ACTIONS,
-        DatabaseStore.RECORDINGS,
-        DatabaseStore.EDITOR_PROJECT,
-        DatabaseStore.PROJECT_DATA,
-        DatabaseStore.SETTINGS,
-      ],
-      "readwrite"
-    );
-    const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-    const allProjectsData = await projectDataStore.getAll();
-    if (!allProjectsData.length) {
-      return undefined;
-    }
-    const projectData = orderBy(allProjectsData, "timestamp", "desc")[0];
-    const id = projectData.id;
-    const actionsStore = tx.objectStore(DatabaseStore.ACTIONS);
-    const storeActions = orderBy(
-      assertDataArray(await actionsStore.index("projectId").getAll(id)),
-      "createdAt",
-      "asc"
-    );
-    const recordingsStore = tx.objectStore(DatabaseStore.RECORDINGS);
-    const actions: ActionData[] = await Promise.all(
-      storeActions.map(async (action) => {
-        return {
-          id: action.id,
-          name: action.name,
-          icon: action.icon,
-          requiredConfidence: action.requiredConfidence,
-          createdAt: action.createdAt,
-          recordings: assertDataArray(
-            await recordingsStore.index("actionId").getAll(action.id)
-          ),
-        };
-      })
-    );
-    const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
-    const makeCodeData = assertData(await makeCodeStore.get(id));
-    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
-    const settings = assertData(
-      await settingsStore.get(DatabaseStore.SETTINGS)
-    );
-    await tx.done;
-    return {
-      id,
-      actions,
-      project: makeCodeData.project,
-      projectEdited: makeCodeData.projectEdited,
-      timestamp: projectData.timestamp,
-      settings,
     };
   }
 
   async importProject(
     actions: ActionData[],
     makeCodeData: MakeCodeData,
-    projectData: { timestamp: number; id: string },
-    settings: Settings
+    projectData: { timestamp: number; id: string }
   ): Promise<void> {
     const id = projectData.id;
     const tx = (await this.useDb()).transaction(
@@ -538,7 +464,6 @@ export class IdbDatabase implements Database {
         DatabaseStore.RECORDINGS,
         DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
-        DatabaseStore.SETTINGS,
       ],
       "readwrite"
     );
@@ -562,8 +487,6 @@ export class IdbDatabase implements Database {
       },
       id
     );
-    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
-    await settingsStore.put(settings, DatabaseStore.SETTINGS);
     return tx.done;
   }
 
@@ -774,8 +697,7 @@ export class IdbDatabase implements Database {
   async replaceActions(
     actions: ActionData[],
     makeCodeData: MakeCodeData,
-    projectData: { timestamp: number; id: string | undefined },
-    settings: Settings
+    projectData: { timestamp: number; id: string | undefined }
   ) {
     const id = this.assertProjectId(projectData.id);
     const tx = (await this.useDb()).transaction(
@@ -784,7 +706,6 @@ export class IdbDatabase implements Database {
         DatabaseStore.RECORDINGS,
         DatabaseStore.EDITOR_PROJECT,
         DatabaseStore.PROJECT_DATA,
-        DatabaseStore.SETTINGS,
       ],
       "readwrite"
     );
@@ -817,8 +738,6 @@ export class IdbDatabase implements Database {
       },
       id
     );
-    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
-    await settingsStore.put(settings, DatabaseStore.SETTINGS);
     return tx.done;
   }
 
@@ -1121,30 +1040,16 @@ export class IdbDatabase implements Database {
     await tx.done;
   }
 
-  async updateSettings(
-    id: string | undefined,
-    settings: Settings,
-    timestamp: number
-  ): Promise<void> {
-    const tx = (await this.useDb()).transaction(
-      [DatabaseStore.PROJECT_DATA, DatabaseStore.SETTINGS],
-      "readwrite"
+  async getSettings(): Promise<Settings> {
+    const db = await this.useDb();
+    return assertData(
+      await db.get(DatabaseStore.SETTINGS, DatabaseStore.SETTINGS)
     );
-    const settingsStore = tx.objectStore(DatabaseStore.SETTINGS);
-    await settingsStore.put(settings, DatabaseStore.SETTINGS);
-    // Settings can be changed on pages where a project might not yet be loaded.
-    if (id) {
-      const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
-      const projectData = assertData(await projectDataStore.get(id));
-      await projectDataStore.put(
-        {
-          ...projectData,
-          timestamp,
-        },
-        id
-      );
-    }
-    return tx.done;
+  }
+
+  async updateSettings(settings: Settings): Promise<void> {
+    const db = await this.useDb();
+    await db.put(DatabaseStore.SETTINGS, settings, DatabaseStore.SETTINGS);
   }
 
   async saveModel(id: string | undefined, model: tf.LayersModel) {
@@ -1233,12 +1138,16 @@ const assertDataArray = <T>(data: (undefined | T)[]) => {
   return data as T[];
 };
 
-const getLocalStorageProject = (): PersistedProjectData | undefined => {
+interface LegacyPersistedData extends PersistedProjectData {
+  settings: Settings;
+}
+
+const getLocalStorageProject = (): LegacyPersistedData | undefined => {
   const data = localStorage.getItem(DATABASE_NAME);
   if (!data) {
     return undefined;
   }
-  const dataToMigrate = JSON.parse(data) as { state: PersistedProjectData };
+  const dataToMigrate = JSON.parse(data) as { state: LegacyPersistedData };
   return {
     ...dataToMigrate.state,
     actions: migrateLegacyActionDataAndAssignNewIds(
