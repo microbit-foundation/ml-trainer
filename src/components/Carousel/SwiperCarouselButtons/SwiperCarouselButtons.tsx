@@ -1,13 +1,14 @@
+import { Box } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 import { useSwiper } from "swiper/react";
 import CarouselButton from "../CarouselButton/CarouselButton";
-import { Box } from "@chakra-ui/react";
 
 const buttonStyles = {
   position: "absolute" as const,
   zIndex: 5,
-  top: "calc(var(--carousel-pt) - 6px)",
-  bottom: "calc(var(--carousel-pb) - 6px)",
+  top: "var(--carousel-pt)",
+  // Draw over the box shadow below the carousel cards
+  bottom: "calc(var(--carousel-pb) - 8px)",
 };
 
 const SwiperCarouselButtons = () => {
