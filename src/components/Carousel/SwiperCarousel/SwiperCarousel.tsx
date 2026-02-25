@@ -1,16 +1,16 @@
+import classNames from "classnames";
 import React, { useCallback, useState } from "react";
+import { useIntl } from "react-intl";
 import { Swiper as SwiperClass } from "swiper";
-import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules";
-import { Swiper, SwiperProps, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/a11y";
 import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperProps, SwiperSlide } from "swiper/react";
 import SwiperCarouselButtons from "../SwiperCarouselButtons/SwiperCarouselButtons";
 import styles from "./SwiperCarousel.module.css";
-import classNames from "classnames";
-import { useIntl } from "react-intl";
 
 interface SwiperCarouselProps extends SwiperProps {
   carouselItems: JSX.Element[];
