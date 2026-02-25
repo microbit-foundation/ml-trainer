@@ -1,10 +1,16 @@
-import classNames from "classnames";
+import { Box } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 import { useSwiper } from "swiper/react";
-import styles from "./SwiperCarouselButtons.module.css";
 import CarouselButton from "../CarouselButton/CarouselButton";
-import { Box } from "@chakra-ui/react";
 import { isNativePlatform } from "../../../platform";
+
+const buttonStyles = {
+  position: "absolute" as const,
+  zIndex: 5,
+  top: "var(--carousel-pt)",
+  // Draw over the box shadow below the carousel cards
+  bottom: "calc(var(--carousel-pb) - 8px)",
+};
 
 const SwiperCarouselButtons = () => {
   const isRtl = false;
@@ -39,27 +45,28 @@ const SwiperCarouselButtons = () => {
   }, [swiper]);
 
   return (
-    <Box display={isNativePlatform() ? "none" : ["none", null, "contents"]}>
+    <Box
+      display={isNativePlatform() ? "none" : ["none", null, "contents"]}
+      sx={{
+        "& .swiper-button-disabled": { display: "none" },
+      }}
+    >
       <CarouselButton
         ref={prevButtonRef}
         aria-hidden="true"
-        className={classNames(
-          styles.carouselButton,
-          isRtl ? styles.right : styles.left
-        )}
+        {...buttonStyles}
+        left={isRtl ? undefined : 0}
+        right={isRtl ? 0 : undefined}
         direction={isRtl ? "right" : "left"}
-        size="large"
         onClick={() => swiper.slidePrev()}
       />
       <CarouselButton
         ref={nextButtonRef}
         aria-hidden="true"
-        className={classNames(
-          styles.carouselButton,
-          isRtl ? styles.left : styles.right
-        )}
+        {...buttonStyles}
+        left={isRtl ? 0 : undefined}
+        right={isRtl ? undefined : 0}
         direction={isRtl ? "left" : "right"}
-        size="large"
         onClick={() => swiper.slideNext()}
       />
     </Box>
