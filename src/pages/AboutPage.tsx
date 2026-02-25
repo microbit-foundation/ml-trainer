@@ -168,7 +168,6 @@ const AboutPage = () => {
           containerMessageId="project-ideas-row-carousel"
           carouselItems={createProjectIdeaCards(intl, languageId)}
           centerItems
-          padding="1rem 12px 12px 12px"
         />
         <Text fontSize="md" px={8} textAlign="center">
           <FormattedMessage

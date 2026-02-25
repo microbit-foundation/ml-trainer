@@ -259,7 +259,7 @@ const ActionCard = ({ onClick, icon, textId }: ActionCardProps) => {
               fontSize="xl"
               onClick={onClick}
               variant="unstyled"
-              _focusVisible={{ boxShadow: "outline", outline: "none" }}
+              _focusVisible={{ boxShadow: "outlineLight", outline: "none" }}
             >
               <FormattedMessage id={textId} />
             </LinkOverlay>

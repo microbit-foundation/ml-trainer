@@ -21,7 +21,7 @@ const CarouselRow = ({
   return (
     <Box w="100%" py={8}>
       <HStack
-        px={[3, null, 16]}
+        px={{ base: "12px", md: "20px" }}
         mt={2}
         mb={2}
         spacing={{ base: 3, sm: 12 }}
