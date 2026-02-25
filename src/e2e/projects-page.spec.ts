@@ -237,6 +237,17 @@ test.describe("projects page multi-select", () => {
     await projectsPage.expectToolbarHidden();
   });
 
+  test("delete dialog correct after duplicate then multi-select", async ({
+    projectsPage,
+  }) => {
+    await projectsPage.menuDuplicate("Project A", "Copy of A");
+    await projectsPage.expectProjectCount(3);
+    await projectsPage.selectProject("Project A");
+    await projectsPage.selectProject("Project B");
+    await projectsPage.toolbarClick("Delete 2 projects");
+    await projectsPage.expectDeleteDialogText("delete 2 projects");
+  });
+
   test("multi-select delete only removes selected projects", async ({
     projectsPage,
   }) => {
