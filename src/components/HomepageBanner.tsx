@@ -69,6 +69,11 @@ const HomepageBanner = () => {
             border={0}
             textColor="brand.700"
             onClick={handleLearnMore}
+            _focusVisible={{
+              boxShadow:
+                "0 0 0 2px var(--chakra-colors-brand-600), 0 0 0 6px rgba(255, 255, 255, 0.8)",
+              outline: "none",
+            }}
           >
             <FormattedMessage id="learn-more-action" />
           </Button>
