@@ -21,8 +21,8 @@ const HomepageBanner = () => {
     <HStack w="100%">
       <HStack
         w="100%"
-        m={5}
-        mb={0}
+        mx={{ base: 3, md: 5 }}
+        mt={5}
         rounded={5}
         justifyContent="center"
         backgroundColor="brand.600"
