@@ -14,14 +14,19 @@ interface NewPageCarouselProps {
   containerMessageId: string;
   hero?: boolean;
   centerItems?: boolean;
+  padding?: string | number;
 }
+
+const defaultPadding = "1rem 12px 12px 12px";
 
 const NewPageCarousel = ({
   carouselItems,
   containerMessageId,
   hero = false,
   centerItems = false,
+  padding,
 }: NewPageCarouselProps) => {
+  const resolvedPadding = padding ?? (hero ? 0 : defaultPadding);
   const getOffset = useCallback(
     (slidesPerGroup: number) => {
       if (isNativePlatform()) {
@@ -152,8 +157,7 @@ const NewPageCarousel = ({
       navigation={!hero}
       onResize={recalculateBreakpoints}
       onInit={recalculateBreakpoints}
-      // Padding to account for card box-shadow.
-      padding={hero ? 0 : "1rem 12px 12px 12px"}
+      padding={resolvedPadding}
       speed={hero ? slow : fast}
       className={styles.root}
     />

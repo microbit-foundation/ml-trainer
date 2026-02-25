@@ -19,6 +19,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import homepageVideo from "theme-package/images/homepage-short-clip.mp4";
+import NewPageCarousel from "../components/Carousel/NewPageCarousel/NewPageCarousel";
 import DefaultPageLayout, {
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
@@ -51,14 +52,7 @@ const AboutPage = () => {
       backUrl={createHomePageUrl()}
       backLabelId="home-action"
     >
-      <Container
-        as="main"
-        centerContent
-        gap={20}
-        p={8}
-        pb={20}
-        maxW="container.lg"
-      >
+      <Container as="main" centerContent gap={20} p={8} maxW="container.lg">
         <HStack
           gap={5}
           flexDir={{ base: "column-reverse", lg: "row" }}
@@ -165,31 +159,34 @@ const AboutPage = () => {
             />
           </Text>
         </VStack>
-        <VStack gap={10}>
-          <Heading as="h2" textAlign="center" variant="marketing">
-            <FormattedMessage id="homepage-projects" />
-          </Heading>
-          <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
-            {createProjectIdeaCards(intl, languageId)}
-          </HStack>
-          <Text fontSize="md">
-            <FormattedMessage
-              id="homepage-projects-more"
-              values={{
-                link: (children) => (
-                  <Link
-                    color="brand.600"
-                    textDecoration="underline"
-                    href={landingPageUrl(languageId)}
-                  >
-                    {children}
-                  </Link>
-                ),
-              }}
-            />
-          </Text>
-        </VStack>
       </Container>
+      <VStack gap={6} w="100%" pt={12} pb={20}>
+        <Heading as="h2" textAlign="center" variant="marketing">
+          <FormattedMessage id="homepage-projects" />
+        </Heading>
+        <NewPageCarousel
+          containerMessageId="project-ideas-row-carousel"
+          carouselItems={createProjectIdeaCards(intl, languageId)}
+          centerItems
+          padding="1rem 12px 12px 12px"
+        />
+        <Text fontSize="md" px={8} textAlign="center">
+          <FormattedMessage
+            id="homepage-projects-more"
+            values={{
+              link: (children) => (
+                <Link
+                  color="brand.600"
+                  textDecoration="underline"
+                  href={landingPageUrl(languageId)}
+                >
+                  {children}
+                </Link>
+              ),
+            }}
+          />
+        </Text>
+      </VStack>
     </DefaultPageLayout>
   );
 };
