@@ -11,11 +11,9 @@ describe("flags", () => {
 
     const flags = flagsForParams("production", params);
 
-    expect(
-      Object.entries(flags).every(
-        ([flag, status]) => !status || (flag === "websiteContent" && status)
-      )
-    ).toEqual(true);
+    expect(Object.entries(flags).every(([_flag, status]) => !status)).toEqual(
+      true
+    );
   });
 
   it("enables by stage", () => {
