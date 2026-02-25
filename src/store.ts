@@ -1048,6 +1048,7 @@ const createMlStore = (logging: Logging) => {
               dataWindow,
               model: undefined,
               timestamp,
+              hint: getHint(newActionsWithIcons, true),
               ...updatedProject,
             });
             projectSessionStorage.setProjectId(newId);
