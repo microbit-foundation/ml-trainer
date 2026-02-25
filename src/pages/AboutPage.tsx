@@ -19,7 +19,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import homepageVideo from "theme-package/images/homepage-short-clip.mp4";
-import NewPageCarousel from "../components/Carousel/NewPageCarousel/NewPageCarousel";
+import NewPageCarousel from "../components/Carousel/NewPageCarousel";
 import DefaultPageLayout, {
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";

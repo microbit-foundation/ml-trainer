@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import SwiperCarousel from "../SwiperCarousel/SwiperCarousel";
+import SwiperCarousel from "./SwiperCarousel";
 import { SwiperClass } from "swiper/react";
 
 const slow = 3000;

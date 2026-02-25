@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 import { useSwiper } from "swiper/react";
-import CarouselButton from "../CarouselButton/CarouselButton";
+import CarouselButton from "./CarouselButton";
 
 const buttonStyles = {
   position: "absolute" as const,
