@@ -156,6 +156,10 @@ export class ProjectsPage {
     await this.confirmDelete();
   }
 
+  async toolbarClick(name: string) {
+    await this.selectionToolbar.first().getByRole("button", { name }).click();
+  }
+
   async toolbarClear() {
     await this.selectionToolbar
       .first()
@@ -205,5 +209,11 @@ export class ProjectsPage {
     await expect(dialog).toBeVisible();
     await dialog.getByRole("button", { name: "Confirm" }).click();
     await expect(dialog).toBeHidden();
+  }
+
+  async expectDeleteDialogText(expected: string | RegExp) {
+    const dialog = this.page.getByRole("alertdialog");
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toContainText(expected);
   }
 }
