@@ -17,23 +17,22 @@ import {
 import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { useSearchParams } from "react-router-dom";
+import homepageVideo from "theme-package/images/homepage-short-clip.mp4";
 import DefaultPageLayout, {
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
+import HomepageBannerVideo from "../components/HomepageBannerVideo";
+import { createProjectIdeaCards } from "../components/ProjectIdeaCards";
 import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
 import { useDeployment } from "../deployment";
-import { flags } from "../flags";
-import clap from "../images/clap-hands.png";
-import xyzGraph from "../images/xyz-graph.png";
-import { createHomePageUrl } from "../urls";
-import homepageVideo from "theme-package/images/homepage-short-clip.mp4";
-import HomepageBannerVideo from "../components/HomepageBannerVideo";
-import stepByStep from "../images/step-by-step.svg";
-import { landingPageUrl, userGuideUrl } from "../utils/external-links";
-import { useSettings } from "../store";
-import { useSearchParams } from "react-router-dom";
 import { setEditorVersionOverride } from "../editor-version";
-import { createProjectIdeaCards } from "../components/ProjectIdeaCards";
+import clap from "../images/clap-hands.png";
+import stepByStep from "../images/step-by-step.svg";
+import xyzGraph from "../images/xyz-graph.png";
+import { useSettings } from "../store";
+import { createHomePageUrl } from "../urls";
+import { landingPageUrl, userGuideUrl } from "../utils/external-links";
 
 const AboutPage = () => {
   const [params] = useSearchParams();
@@ -148,52 +147,48 @@ const AboutPage = () => {
               alt={intl.formatMessage({ id: "homepage-video-alt" })}
             />
           </Box>
-          {flags.websiteContent && (
-            <Text fontSize="md">
-              <FormattedMessage
-                id="homepage-how-it-works-paragraph"
-                values={{
-                  appNameFull,
-                  link: (children) => (
-                    <Link
-                      color="brand.600"
-                      textDecoration="underline"
-                      href={userGuideUrl()}
-                    >
-                      {children}
-                    </Link>
-                  ),
-                }}
-              />
-            </Text>
-          )}
+          <Text fontSize="md">
+            <FormattedMessage
+              id="homepage-how-it-works-paragraph"
+              values={{
+                appNameFull,
+                link: (children) => (
+                  <Link
+                    color="brand.600"
+                    textDecoration="underline"
+                    href={userGuideUrl()}
+                  >
+                    {children}
+                  </Link>
+                ),
+              }}
+            />
+          </Text>
         </VStack>
-        {flags.websiteContent && (
-          <VStack gap={10}>
-            <Heading as="h2" textAlign="center" variant="marketing">
-              <FormattedMessage id="homepage-projects" />
-            </Heading>
-            <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
-              {createProjectIdeaCards(intl, languageId)}
-            </HStack>
-            <Text fontSize="md">
-              <FormattedMessage
-                id="homepage-projects-more"
-                values={{
-                  link: (children) => (
-                    <Link
-                      color="brand.600"
-                      textDecoration="underline"
-                      href={landingPageUrl(languageId)}
-                    >
-                      {children}
-                    </Link>
-                  ),
-                }}
-              />
-            </Text>
-          </VStack>
-        )}
+        <VStack gap={10}>
+          <Heading as="h2" textAlign="center" variant="marketing">
+            <FormattedMessage id="homepage-projects" />
+          </Heading>
+          <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
+            {createProjectIdeaCards(intl, languageId)}
+          </HStack>
+          <Text fontSize="md">
+            <FormattedMessage
+              id="homepage-projects-more"
+              values={{
+                link: (children) => (
+                  <Link
+                    color="brand.600"
+                    textDecoration="underline"
+                    href={landingPageUrl(languageId)}
+                  >
+                    {children}
+                  </Link>
+                ),
+              }}
+            />
+          </Text>
+        </VStack>
       </Container>
     </DefaultPageLayout>
   );
