@@ -20,7 +20,8 @@
     "theme:watch": "chakra-cli tokens src/deployment/default/theme.ts --watch",
     "theme": "chakra-cli tokens src/deployment/default/theme.ts",
     "i18n:compile": "node bin/tidy-lang.cjs && formatjs compile-folder --ast lang src/messages",
-    "ml4f-output": "vitest ml4f-output --run"
+    "ml4f-output": "vitest ml4f-output --run",
+    "new-translations": "node bin/new-translations.js"
   },
   "devDependencies": {
     "@chakra-ui/cli": "^2.4.1",
