@@ -521,6 +521,7 @@ export const ProjectProvider = ({
     [downloadActions, saveHex]
   );
 
+  const isEditorReady = useStore((s) => s.isEditorReady);
   // Native app URL open handler (e.g. opening a .hex file).
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
@@ -548,11 +549,19 @@ export const ProjectProvider = ({
         }
       );
 
+      const resumeListener = CapacitorApp.addListener("resume", () => {
+        if (!isEditorReady) {
+          logging.log("Editor not ready when resuming app, reloading...");
+          window.location.reload();
+        }
+      });
+
       return () => {
         void appUrlListener.then((l) => l.remove());
+        void resumeListener.then((l) => l.remove());
       };
     }
-  }, [importProjectFromHexText]);
+  }, [driverRef, editorReady, importProjectFromHexText, isEditorReady, logging]);
 
   const value = useMemo(
     () => ({
