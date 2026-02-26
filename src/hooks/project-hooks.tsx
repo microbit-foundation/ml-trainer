@@ -561,7 +561,13 @@ export const ProjectProvider = ({
         void resumeListener.then((l) => l.remove());
       };
     }
-  }, [driverRef, editorReady, importProjectFromHexText, isEditorReady, logging]);
+  }, [
+    driverRef,
+    editorReady,
+    importProjectFromHexText,
+    isEditorReady,
+    logging,
+  ]);
 
   const value = useMemo(
     () => ({
