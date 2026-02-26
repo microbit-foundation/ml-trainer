@@ -87,4 +87,12 @@ export interface DownloadState {
    * If `undefined`, there is no process to abort.
    */
   connectionAbortController: AbortController | undefined;
+
+  /**
+   * Bluetooth micro:bit name that changes with user input.
+   * If connection succeeds with this name, it gets saved into settings.
+   * If connection fails with this name (not due to permissions or pairing
+   * information lost), it gets reset to the persisted name.
+   */
+  bluetoothMicrobitName: string | undefined;
 }

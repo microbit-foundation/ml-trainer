@@ -147,7 +147,9 @@ describe("Data connection flow: Web Bluetooth", () => {
       });
 
       expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);
-      expect(result?.actions).toContainEqual({ type: "setMicrobitName" });
+      expect(result?.actions).toContainEqual({
+        type: "setMicrobitName",
+      });
     });
   });
 
@@ -219,7 +221,10 @@ describe("Data connection flow: Web Bluetooth", () => {
       });
 
       expect(result?.step).toBe(DataConnectionStep.FlashingInProgress);
-      expect(result?.actions).toContainEqual({ type: "flash" });
+      expect(result?.actions).toEqual([
+        { type: "saveMicrobitName" },
+        { type: "flash" },
+      ]);
     });
 
     it("connectFlashFailure with bad firmware -> BadFirmware", () => {
@@ -247,7 +252,6 @@ describe("Data connection flow: Web Bluetooth", () => {
       });
 
       expect(result?.step).toBe(DataConnectionStep.ConnectBattery);
-      expect(result?.actions).toContainEqual({ type: "setMicrobitName" });
     });
 
     it("flashFailure -> ManualFlashingTutorial with downloadHexFile", () => {

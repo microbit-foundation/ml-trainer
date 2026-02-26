@@ -8,7 +8,7 @@ import {
   DataConnectionType,
   isDataConnectionDialogOpen,
 } from "../data-connection-flow";
-import { useSettings, useStore } from "../store";
+import { useStore } from "../store";
 import { useDataConnectionActions } from "../data-connection-flow";
 import PermissionErrorDialog from "./BluetoothPermissionErrorDialog";
 import BrokenFirmwareDialog from "./BrokenFirmwareDialog";
@@ -54,7 +54,6 @@ const DataConnectionDialogs = () => {
   const state = useStore((s) => s.dataConnection);
   const actions = useDataConnectionActions();
   const flashProgress = useStore((s) => s.dataConnectionFlashingProgress);
-  const [settings] = useSettings();
   const onClose = actions.close;
 
   const isOpen = isDataConnectionDialogOpen(state.step);
@@ -150,7 +149,7 @@ const DataConnectionDialogs = () => {
           {...dialogCommonProps}
           onBackClick={actions.onBackClick}
           onNextClick={actions.onNextClick}
-          microbitName={settings.bluetoothMicrobitName}
+          microbitName={state.bluetoothMicrobitName}
           onChangeBluetoothPattern={actions.changeBluetoothPattern}
         />
       );
@@ -161,7 +160,7 @@ const DataConnectionDialogs = () => {
           {...dialogCommonProps}
           onBackClick={actions.onBackClick}
           onNextClick={actions.onNextClick}
-          microbitName={settings.bluetoothMicrobitName}
+          microbitName={state.bluetoothMicrobitName}
           onChangeMicrobitName={actions.onChangeMicrobitName}
         />
       );
@@ -186,6 +185,7 @@ const DataConnectionDialogs = () => {
           stage={flashProgress.stage}
           progress={flashProgress.value}
           tryAgain={actions.onTryAgain}
+          microbitName={state.bluetoothMicrobitName}
         />
       );
     }

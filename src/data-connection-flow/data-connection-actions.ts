@@ -152,6 +152,7 @@ const executeAction = async (
       const connectionType = currentState.hasSwitchedConnectionType
         ? currentState.type
         : getInitialDataConnectionType(currentState.isWebBluetoothSupported);
+      const name = useStore.getState().settings.bluetoothMicrobitName;
       setDataConnectionState({
         ...currentState,
         type: connectionType,
@@ -160,6 +161,7 @@ const executeAction = async (
         isStartingOver: false,
         hadSuccessfulConnection: false,
         pairingMethod: "triple-reset",
+        bluetoothMicrobitName: name,
       });
       break;
     }
@@ -173,16 +175,42 @@ const executeAction = async (
       break;
     }
 
-    case "setMicrobitName": {
-      // Extract name from either setMicrobitName event (user input) or flashSuccess event (from USB flashing)
-      const name =
-        event.type === "setMicrobitName"
-          ? event.name
-          : event.type === "flashSuccess"
-          ? event.bluetoothMicrobitName
-          : undefined;
+    case "saveMicrobitName": {
+      const name = getDataConnectionState().bluetoothMicrobitName;
       if (name) {
         await useStore.getState().setSettings({ bluetoothMicrobitName: name });
+      }
+      break;
+    }
+
+    case "resetMicrobitName": {
+      const name = useStore.getState().settings.bluetoothMicrobitName;
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        bluetoothMicrobitName: name,
+      });
+      break;
+    }
+
+    case "setMicrobitName": {
+      // Extract name from setMicrobitName event (user input)
+      if (event.type === "setMicrobitName") {
+        setDataConnectionState({
+          ...getDataConnectionState(),
+          bluetoothMicrobitName: event.name,
+        });
+      }
+      // Extract name from flashSuccess event (from USB flashing)
+      if (event.type === "flashSuccess") {
+        setDataConnectionState({
+          ...getDataConnectionState(),
+          bluetoothMicrobitName: event.bluetoothMicrobitName,
+        });
+        // We are sure it is a valid pattern and can persist the name
+        // since it has flashed successfully.
+        await useStore
+          .getState()
+          .setSettings({ bluetoothMicrobitName: event.bluetoothMicrobitName });
       }
       break;
     }
@@ -191,6 +219,10 @@ const executeAction = async (
       await useStore
         .getState()
         .setSettings({ bluetoothMicrobitName: undefined });
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        bluetoothMicrobitName: undefined,
+      });
       break;
     }
 
@@ -312,12 +344,13 @@ const executeAction = async (
 // =============================================================================
 
 /**
- * Sync connection configuration from persisted settings.
+ * Sync connection configuration.
+ * Use pending micro:bit name if it exists, otherwise use persisted settings.
  * Called before each connection attempt so settings loaded asynchronously
  * from IndexedDB or updated mid-flow are reflected on the connection.
  */
 const syncConnectionSettings = (deps: DataConnectionDeps) => {
-  const { bluetoothMicrobitName } = useStore.getState().settings;
+  const { bluetoothMicrobitName } = useStore.getState().dataConnection;
   if (bluetoothMicrobitName) {
     deps.connections.bluetooth.setNameFilter(bluetoothMicrobitName);
   }

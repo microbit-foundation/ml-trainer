@@ -8,6 +8,7 @@ import {
   connectedState,
   connectFlashSuccessHandler,
   createInitialConnectHandlers,
+  DataConnectionAction,
   DataConnectionFlowDef,
   globalHandlers,
   guards,
@@ -54,6 +55,7 @@ const connectFlashFailureWithErrorHandling = [
   {
     guard: always,
     target: DataConnectionStep.ConnectFailed,
+    action: [{ type: "resetMicrobitName" }] as DataConnectionAction[],
   },
 ];
 

@@ -47,9 +47,17 @@ export type DownloadAction =
    */
   | { type: "saveHelpPreference" }
   /**
+   * Saves micro:bit name to storage so that it is persisted.
+   */
+  | { type: "saveMicrobitName" }
+  /**
    * Sets micro:bit name from setMicrobitName event (user input).
    */
   | { type: "setMicrobitName" }
+  /**
+   * Resets micro:bit name to what is stored.
+   */
+  | { type: "resetMicrobitName" }
   | { type: "clearMicrobitName" }
   | { type: "connectFlash"; clearDevice?: boolean }
   | { type: "flash" }

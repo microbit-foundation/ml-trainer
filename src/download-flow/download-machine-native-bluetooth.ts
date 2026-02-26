@@ -6,6 +6,7 @@
 import { DownloadStep } from "./download-types";
 import { always } from "../state-machine";
 import {
+  DownloadAction,
   DownloadFlowDefinition,
   globalHandlers,
   guards,
@@ -41,6 +42,7 @@ const connectFlashFailureWithPermissionHandling = [
   {
     guard: always,
     target: DownloadStep.ConnectFailed,
+    actions: [{ type: "resetMicrobitName" }] as DownloadAction[],
   },
 ];
 
@@ -57,7 +59,7 @@ const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
         {
           guard: always,
           target: DownloadStep.FlashingInProgress,
-          actions: [{ type: "flash" }],
+          actions: [{ type: "saveMicrobitName" }, { type: "flash" }],
         },
       ],
       tryAgain: {
@@ -138,6 +140,13 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
     entry: [{ type: "disconnectDataConnection" }],
     on: {
       next: [
+        {
+          guard: (ctx, event) =>
+            guards.hasDownloadedBefore(ctx, event) &&
+            guards.hasMicrobitName(ctx, event),
+          target: DownloadStep.FlashingInProgress,
+          actions: [{ type: "connectFlash", clearDevice: true }],
+        },
         {
           guard: guards.hasMicrobitName,
           target: DownloadStep.NativeCompareBluetoothPattern,
