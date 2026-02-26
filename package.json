@@ -27,7 +27,8 @@
     "typecheck": "tsc --noEmit",
     "typecheck:watch": "tsc --noEmit --watch",
     "i18n:compile": "node bin/tidy-lang.cjs && formatjs compile-folder --ast lang src/messages",
-    "ml4f-output": "vitest ml4f-output --run"
+    "ml4f-output": "vitest ml4f-output --run",
+    "new-translations": "node bin/new-translations.js"
   },
   "devDependencies": {
     "@capacitor/cli": "^7.4.4",

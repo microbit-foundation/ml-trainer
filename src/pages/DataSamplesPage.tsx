@@ -95,11 +95,11 @@ const DataSamplesPage = () => {
   const welcomeDialogOnOpen = useStore((s) => s.welcomeDialogOnOpen);
   const closeDialog = useStore((s) => s.closeDialog);
   useEffect(() => {
-    if (!initialiseWelcomeDialog.current && !isConnected && !model) {
+    if (!initialiseWelcomeDialog.current && !isConnected) {
       welcomeDialogOnOpen();
       initialiseWelcomeDialog.current = true;
     }
-  }, [isConnected, model, welcomeDialogOnOpen]);
+  }, [isConnected, welcomeDialogOnOpen]);
   const hasMoved = useHasMoved();
   const tourInProgress = useStore((s) => !!s.tourState);
   const isRecordingDialogOpen = useStore((s) => !!s.isRecordingDialogOpen);
