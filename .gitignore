@@ -20,3 +20,8 @@
 /playwright-report/
 /test-results/
 /ml4f-output/
+/android/
+/ios/
+/screenshots/
+Gemfile.lock
+report.xml
