@@ -72,7 +72,11 @@ interface ProjectContext {
   project: MakeCodeProject;
   projectEdited: boolean;
   resetProject: () => void;
-  loadFile: (file: File, type: LoadType, loadAction: LoadAction) => void;
+  loadFile: (
+    file: File,
+    type: LoadType,
+    loadAction: LoadAction
+  ) => Promise<void>;
   /**
    * Called to request a save.
    *

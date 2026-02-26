@@ -55,6 +55,7 @@ import {
 import { isNativePlatform } from "../platform";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
 import HomepageBanner from "../components/HomepageBanner";
+import { ButtonWithLoading } from "../components/ButtonWithLoading";
 
 const HomePage = () => {
   const intl = useIntl();
@@ -325,9 +326,27 @@ const ImportProjectButton = () => {
   const handleContinueSessionFromFile = useCallback(() => {
     loadProjectRef.current?.chooseFile("replaceProject");
   }, []);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const loadingTimeoutRef = useRef<NodeJS.Timeout>();
+  const handleSetLoading = useCallback((loading: boolean) => {
+    if (loading && loadingTimeoutRef.current === undefined) {
+      loadingTimeoutRef.current = setTimeout(() => {
+        setLoading(loading);
+      }, 500); // Only show loading state if it takes > 500 ms.
+    }
+    if (!loading) {
+      setLoading(loading);
+      clearTimeout(loadingTimeoutRef.current);
+      loadingTimeoutRef.current = undefined;
+    }
+  }, []);
   return (
     <>
-      <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
+      <LoadProjectInput
+        ref={loadProjectRef}
+        accept=".json,.hex"
+        setLoading={handleSetLoading}
+      />
       <IconButton
         icon={<RiUpload2Line />}
         onClick={handleContinueSessionFromFile}
@@ -335,13 +354,14 @@ const ImportProjectButton = () => {
         variant="ghost"
         display={{ base: "inline-flex", sm: "none" }}
       />
-      <Button
+      <ButtonWithLoading
         leftIcon={<RiUpload2Line />}
         onClick={handleContinueSessionFromFile}
         display={{ base: "none", sm: "inline-flex" }}
+        isLoading={isLoading}
       >
         <FormattedMessage id="import-file-action" />
-      </Button>
+      </ButtonWithLoading>
     </>
   );
 };
