@@ -88,7 +88,7 @@ const DataSamplesPage = () => {
   const intl = useIntl();
   const prefersReducedMotion = usePrefersReducedMotion();
   const welcomeDialogDisclosure = useDisclosure({
-    defaultIsOpen: !isConnected && !model,
+    defaultIsOpen: !isConnected,
   });
   const hasMoved = useHasMoved();
   const tourInProgress = useStore((s) => !!s.tourState);
