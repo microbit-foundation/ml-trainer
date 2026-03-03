@@ -20,6 +20,10 @@ export interface LoadProjectInputProps {
    * A project can be opened from .json or .hex file.
    */
   accept: ".json" | ".hex" | ".json,.hex";
+  /**
+   * Set file loading state.
+   */
+  setLoading?: (isLoading: boolean) => void;
 }
 
 export interface LoadProjectInputRef {
@@ -27,7 +31,10 @@ export interface LoadProjectInputRef {
 }
 
 const LoadProjectInput = forwardRef<LoadProjectInputRef, LoadProjectInputProps>(
-  function LoadProjectInput({ accept }: LoadProjectInputProps, ref) {
+  function LoadProjectInput(
+    { accept, setLoading }: LoadProjectInputProps,
+    ref
+  ) {
     const { loadFile } = useProject();
     const inputRef = useRef<HTMLInputElement>(null);
     const [action, setAction] = useState<LoadAction>("replaceProject");
@@ -45,12 +52,14 @@ const LoadProjectInput = forwardRef<LoadProjectInputRef, LoadProjectInputProps>(
     );
 
     const onOpen = useCallback(
-      (files: File[]) => {
+      async (files: File[]) => {
         if (files.length === 1) {
-          loadFile(files[0], "file-upload", action);
+          setLoading && setLoading(true);
+          await loadFile(files[0], "file-upload", action);
+          setLoading && setLoading(false);
         }
       },
-      [action, loadFile]
+      [action, loadFile, setLoading]
     );
 
     const handleOpenFile = useCallback(
@@ -61,7 +70,7 @@ const LoadProjectInput = forwardRef<LoadProjectInputRef, LoadProjectInputProps>(
           // Clear the input so we're triggered if the user opens the same file again.
           inputRef.current!.value = "";
           if (filesArray.length > 0) {
-            onOpen(filesArray);
+            void onOpen(filesArray);
           }
         }
       },
