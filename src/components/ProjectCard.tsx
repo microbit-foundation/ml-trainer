@@ -81,7 +81,7 @@ const ProjectCard = ({
             <Icon
               width={32}
               height="auto"
-              color="brand.500"
+              color="brand.400"
               ml={hasCheckbox ? -2 : -5}
               mt={hasCheckbox ? 4 : -5}
               sx={
