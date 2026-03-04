@@ -18,8 +18,11 @@ import { createDataSamplesPageUrl } from "../urls";
 import { timeAgo } from "../utils/datetime";
 import ProjectCardActions from "./ProjectCardActions";
 
+const shortScreenHeightBreakpoint = "@media (max-height: 800px)";
+
 interface ProjectCardProps {
   projectData: ProjectDataWithActions;
+  short?: boolean;
   isSelected?: boolean;
   onSelected?: (id: string) => void;
   onSkipToToolbar?: () => void;
@@ -34,6 +37,7 @@ interface ProjectCardProps {
 
 const ProjectCard = ({
   projectData,
+  short,
   isSelected,
   onSelected,
   onSkipToToolbar,
@@ -58,7 +62,10 @@ const ProjectCard = ({
   return (
     <LinkBox h="100%" w="100%" role="group">
       <Card h="100%" w="100%">
-        <CardBody display="flex">
+        <CardBody
+          display="flex"
+          sx={short ? { [shortScreenHeightBreakpoint]: { p: 3 } } : undefined}
+        >
           <Stack h="100%" w="100%" spacing={0}>
             <ProjectCardActions
               id={id}
@@ -77,6 +84,17 @@ const ProjectCard = ({
               color="brand.500"
               ml={hasCheckbox ? -2 : -5}
               mt={hasCheckbox ? 4 : -5}
+              sx={
+                short
+                  ? {
+                      [shortScreenHeightBreakpoint]: {
+                        width: 20,
+                        ml: hasCheckbox ? -1 : -2,
+                        mt: hasCheckbox ? 2 : -2,
+                      },
+                    }
+                  : undefined
+              }
             >
               <svg
                 width="27"

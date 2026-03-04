@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
 
 // For landscape mobile screen sizes.
-const shortScreenHeightBreakpoint = "@media (max-height: 500px)";
+const shortScreenHeightBreakpoint = "@media (max-height: 700px)";
 
 const HomepageBanner = () => {
   const navigate = useNavigate();

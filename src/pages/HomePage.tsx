@@ -177,6 +177,7 @@ const ProjectRow = () => {
               .map((projectData) => (
                 <ProjectCard
                   key={projectData.id}
+                  short
                   projectData={projectData}
                   onDeleteProject={handleOpenConfirmDialog}
                   onRenameDuplicateProject={handleOpenNameProjectDialog}
@@ -238,6 +239,8 @@ const ViewAllProjectsLink = () => {
   );
 };
 
+const shortScreenHeightBreakpoint = "@media (max-height: 800px)";
+
 interface ActionCardProps {
   onClick: () => void;
   icon: IconType;
@@ -247,11 +250,26 @@ interface ActionCardProps {
 const ActionCard = ({ onClick, icon, textId }: ActionCardProps) => {
   return (
     <LinkBox h="100%" display="flex">
-      <Card flexGrow={1} overflow="hidden" minH="233px">
-        <CardBody display="flex" backgroundColor="brand.600" color="white">
+      <Card
+        flexGrow={1}
+        overflow="hidden"
+        minH="233px"
+        sx={{ [shortScreenHeightBreakpoint]: { minH: "160px" } }}
+      >
+        <CardBody
+          display="flex"
+          backgroundColor="brand.600"
+          color="white"
+          sx={{ [shortScreenHeightBreakpoint]: { p: 3 } }}
+        >
           <VStack h="100%" w="100%" spacing={0} justifyContent="space-evenly">
             <VStack>
-              <Icon as={icon} h={20} w={20} />
+              <Icon
+                as={icon}
+                h={20}
+                w={20}
+                sx={{ [shortScreenHeightBreakpoint]: { h: 10, w: 10 } }}
+              />
             </VStack>
             <LinkOverlay
               as={Button}

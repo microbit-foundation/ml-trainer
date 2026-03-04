@@ -3,6 +3,8 @@ import NewPageCarousel from "./NewPageCarousel";
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
+const shortScreenHeightBreakpoint = "@media (max-height: 800px)";
+
 interface CarouselRowProps {
   carouselItems: JSX.Element[];
   containerMessageId: string;
@@ -19,7 +21,7 @@ const CarouselRow = ({
   actions,
 }: CarouselRowProps) => {
   return (
-    <Box w="100%" py={8}>
+    <Box w="100%" py={8} sx={{ [shortScreenHeightBreakpoint]: { py: 4 } }}>
       <HStack
         px={{ base: "12px", md: "20px" }}
         mt={2}
