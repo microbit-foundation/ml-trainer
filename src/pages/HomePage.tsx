@@ -54,6 +54,7 @@ import {
 } from "../store";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
 import HomepageBanner from "../components/HomepageBanner";
+import { shortScreenHeightBreakpoint } from "../responsive";
 
 const HomePage = () => {
   const intl = useIntl();
@@ -238,8 +239,6 @@ const ViewAllProjectsLink = () => {
     </Link>
   );
 };
-
-const shortScreenHeightBreakpoint = "@media (max-height: 800px)";
 
 interface ActionCardProps {
   onClick: () => void;

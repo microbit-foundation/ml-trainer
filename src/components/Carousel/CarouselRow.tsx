@@ -2,8 +2,7 @@ import { Box, Heading, HStack } from "@chakra-ui/react";
 import NewPageCarousel from "./NewPageCarousel";
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
-
-const shortScreenHeightBreakpoint = "@media (max-height: 800px)";
+import { shortScreenHeightBreakpoint } from "../../responsive";
 
 interface CarouselRowProps {
   carouselItems: JSX.Element[];

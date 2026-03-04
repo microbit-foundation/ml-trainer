@@ -17,8 +17,7 @@ import { loadProjectAndModelFromStorage } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 import { timeAgo } from "../utils/datetime";
 import ProjectCardActions from "./ProjectCardActions";
-
-const shortScreenHeightBreakpoint = "@media (max-height: 800px)";
+import { shortScreenHeightBreakpoint } from "../responsive";
 
 interface ProjectCardProps {
   projectData: ProjectDataWithActions;
