@@ -32,12 +32,13 @@ import { useNavigate } from "react-router";
 import CarouselRow from "../components/Carousel/CarouselRow";
 import ClickableTooltip from "../components/ClickableTooltip";
 import { ConfirmDialog } from "../components/ConfirmDialog";
-import Link from "../components/Link";
 import DefaultPageLayout, {
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
 import { createHelpCards } from "../components/HelpCards";
+import HomepageBanner from "../components/HomepageBanner";
 import { createLessonCards } from "../components/LessonCards";
+import Link from "../components/Link";
 import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
@@ -47,14 +48,13 @@ import { createProjectIdeaCards } from "../components/ProjectIdeaCards";
 import { useProjectCardActions } from "../hooks/use-project-card-actions";
 import { useLogging } from "../logging/logging-hooks";
 import { untitledProjectName } from "../project-utils";
+import { shortScreenHeightBreakpoint } from "../responsive";
 import {
   loadProjectAndModelFromStorage,
   useSettings,
   useStore,
 } from "../store";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
-import HomepageBanner from "../components/HomepageBanner";
-import { shortScreenHeightBreakpoint } from "../responsive";
 
 const HomePage = () => {
   const intl = useIntl();
@@ -257,7 +257,7 @@ const ActionCard = ({ onClick, icon, textId }: ActionCardProps) => {
       >
         <CardBody
           display="flex"
-          backgroundColor="brand.600"
+          backgroundColor="brand.500"
           color="white"
           sx={{ [shortScreenHeightBreakpoint]: { p: 3 } }}
         >

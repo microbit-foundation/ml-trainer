@@ -1,10 +1,10 @@
-import { Button, Heading, VStack, HStack, Text } from "@chakra-ui/react";
-import bannerBackground from "theme-package/images/banner-background.svg";
-import { useNavigate } from "react-router";
+import { Button, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import { useCallback } from "react";
-import { createAboutPageUrl } from "../urls";
 import { FormattedMessage } from "react-intl";
+import { useNavigate } from "react-router";
+import bannerBackground from "theme-package/images/banner-background.svg";
 import { useDeployment } from "../deployment";
+import { createAboutPageUrl } from "../urls";
 
 // For landscape mobile screen sizes.
 const shortScreenHeightBreakpoint = "@media (max-height: 700px)";
@@ -25,7 +25,7 @@ const HomepageBanner = () => {
         mt={5}
         rounded={5}
         justifyContent="center"
-        backgroundColor="brand.600"
+        backgroundColor="brand.500"
         backgroundImage={bannerBackground}
         backgroundSize="cover"
         backgroundPosition="center"

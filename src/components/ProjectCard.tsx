@@ -12,12 +12,12 @@ import { RefObject, useCallback } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { ProjectNameDialogReason } from "../project-utils";
+import { shortScreenHeightBreakpoint } from "../responsive";
 import { ProjectDataWithActions } from "../storage";
 import { loadProjectAndModelFromStorage } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
 import { timeAgo } from "../utils/datetime";
 import ProjectCardActions from "./ProjectCardActions";
-import { shortScreenHeightBreakpoint } from "../responsive";
 
 interface ProjectCardProps {
   projectData: ProjectDataWithActions;
@@ -80,7 +80,7 @@ const ProjectCard = ({
             <Icon
               width={32}
               height="auto"
-              color="brand.400"
+              color="brand.500"
               ml={hasCheckbox ? -2 : -5}
               mt={hasCheckbox ? 4 : -5}
               sx={
