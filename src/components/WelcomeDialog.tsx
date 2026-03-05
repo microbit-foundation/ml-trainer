@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  AspectRatio,
-  Box,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -13,11 +11,10 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
+  Text
 } from "@chakra-ui/react";
 import { ComponentProps } from "react";
 import { FormattedMessage } from "react-intl";
-import preConnectVideo from "../images/pre-connect-video.mp4";
 import { ButtonWithLoading } from "./ButtonWithLoading";
 import { useConnectFirst } from "./ConnectFirstDialog";
 import HowItWorksAnimation from "./HowItWorksAnimation/HowItWorksAnimation";

@@ -199,6 +199,12 @@
       "value": "Use"
     }
   ],
+  "animation-training": [
+    {
+      "type": 0,
+      "value": "Training"
+    }
+  ],
   "back-action": [
     {
       "type": 0,

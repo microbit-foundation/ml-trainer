@@ -1,24 +1,46 @@
-import { Box, Icon, IconProps, keyframes, Stack } from "@chakra-ui/react";
-import { forwardRef, useImperativeHandle, useState } from "react";
+import { Box, Icon, IconProps, Stack, VStack, Text } from "@chakra-ui/react";
+import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import Tick from "./Tick";
+import DataSamplesCollection, {
+  DataSamplesCollectionRef,
+} from "./DataSamplesCollection";
+import { animation } from "./utils";
+import { FormattedMessage } from "react-intl";
 
 interface LaptopProps extends IconProps {}
 
 export interface LaptopRef {
   displayTick(): void;
+  displayNone(): void;
+  playDataCollectionTopSamples(): Promise<void>;
+  playDataCollectionBottomSamples(): Promise<void>;
 }
 
 const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
   { ...props }: LaptopProps,
   ref
 ) {
-  const [display, setDisplay] = useState<null | "tick">(null);
+  const dataSamplesCollectionRef = useRef<DataSamplesCollectionRef>(null);
+  const [display, setDisplay] = useState<
+    null | "tick" | "data-collection" | "training"
+  >(null);
   useImperativeHandle(
     ref,
     () => {
       return {
         displayTick() {
           setDisplay("tick");
+        },
+        displayNone() {
+          setDisplay(null);
+        },
+        async playDataCollectionTopSamples() {
+          setDisplay("data-collection");
+          await dataSamplesCollectionRef.current?.playTopSamples();
+        },
+        async playDataCollectionBottomSamples() {
+          setDisplay("data-collection");
+          await dataSamplesCollectionRef.current?.playBottomSamples();
         },
       };
     },
@@ -54,11 +76,21 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
         {display === "tick" && (
           <Tick
             size="40px"
-            animation={`${keyframes({
-              "0%": { opacity: 0 },
-              "100%": { opacity: 1 },
-            })} 0.3s ease-in-out forwards`}
+            animation={`${animation.fadeIn} 0.3s ease-in-out forwards`}
           />
+        )}
+        {display === "data-collection" && (
+          <DataSamplesCollection
+            color="gray.600"
+            ref={dataSamplesCollectionRef}
+          />
+        )}
+        {display === "training" && (
+          <VStack>
+            <Text>
+              <FormattedMessage id="animation-training" />
+            </Text>
+          </VStack>
         )}
       </Stack>
     </Box>

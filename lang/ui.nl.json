@@ -99,6 +99,10 @@
     "defaultMessage": "Use",
     "description": "Step 5 of how it works animation"
   },
+  "animation-training": {
+    "defaultMessage": "Training",
+    "description": "Training on laptop screen of how it works animation"
+  },
   "back-action": {
     "defaultMessage": "Terug",
     "description": "Back button text"

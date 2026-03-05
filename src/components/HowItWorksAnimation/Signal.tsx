@@ -89,7 +89,7 @@ const keyframeSignalEnter = `${keyframes({
   "100%": { opacity: 1, transform: "translate(0, 0)" },
 })} ${signalFadeInDuration}s ease-in-out forwards`;
 
-const keyrameTravellingDots = keyframes({
+const keyframeTravellingDots = keyframes({
   "0%": { transform: `translateX(-${travelOffset}px)` },
   "38.46%": { transform: `translateX(${travelOffset}px)` },
   "76.92%": { transform: `translateX(-${travelOffset}px)` },
@@ -158,7 +158,7 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
             display="flex"
             alignItems="center"
             gap={`${dotGap}px`}
-            animation={`${keyrameTravellingDots} ${dotTravelDuration}s cubic-bezier(0.45, 0, 0.55, 1) forwards`}
+            animation={`${keyframeTravellingDots} ${dotTravelDuration}s cubic-bezier(0.45, 0, 0.55, 1) forwards`}
             style={{ transform: `translateX(-${travelOffset}px)` }}
           >
             {dotOpacities.map(

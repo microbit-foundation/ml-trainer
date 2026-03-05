@@ -24,7 +24,7 @@ export interface StepTickPillRef {
   reset(): void;
 }
 
-const activeColor = "brand2.500"
+const activeColor = "brand2.500";
 
 const StepTickPill = forwardRef<StepTickPillRef, StepTickPillProps>(
   function StepTickPill({ text }: StepTickPillProps, ref) {
@@ -46,7 +46,7 @@ const StepTickPill = forwardRef<StepTickPillRef, StepTickPillProps>(
           reset() {
             setTickVisible(false);
             setFillColor("gray.500");
-          }
+          },
         };
       },
       []

@@ -1,7 +1,7 @@
 import { Icon, IconProps } from "@chakra-ui/react";
 
 interface TickProps extends IconProps {
-  size?: string
+  size?: string;
 }
 
 const Tick = ({ size, ...props }: TickProps) => {

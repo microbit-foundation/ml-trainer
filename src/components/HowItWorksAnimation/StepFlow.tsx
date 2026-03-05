@@ -1,7 +1,7 @@
 import { HStack } from "@chakra-ui/react";
 import StepTickPill, { StepTickPillRef } from "./StepTickPill";
 import { useIntl } from "react-intl";
-import { forwardRef, useImperativeHandle, useRef } from "react";
+import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
 
 export interface StepFlowRef {
   setStep(stepNum: number, state: "active" | "completed"): void;
@@ -17,6 +17,13 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
     useRef<StepTickPillRef>(null),
     useRef<StepTickPillRef>(null),
   ]);
+
+  const resetAllSteps = useCallback(() => {
+    stepRefs.current.forEach((ref) => {
+      ref.current?.reset();
+    });
+  }, []);
+
   useImperativeHandle(
     stepFlowRef,
     () => {
@@ -26,21 +33,22 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
           if (!stepRef) {
             throw new Error(`Step num does not exist: ${stepNum}`);
           }
+          resetAllSteps();
+          // Set all previous step as completed.
+          for (let i = 0; i < stepNum; i++) {
+            stepRefs.current[i].current?.setCompleted();
+          }
           if (state === "active") {
-            // Reset activeness, before setting one active.
-            stepRefs.current.forEach((ref) => {
-              ref.current?.setInactive();
-            });
             stepRef.current?.setActive();
           }
           if (state === "completed") {
             stepRef.current?.setCompleted();
           }
         },
-        reset() {},
+        reset: resetAllSteps,
       };
     },
-    [stepRefs]
+    [resetAllSteps]
   );
 
   return (
