@@ -49,11 +49,11 @@ const bottomSamples = [
   },
 ];
 
-const sampleTransitionDelay = 0.3; //s
+const sampleTransitionDelay = 0.8; //s
 const sampleTransitionDuration = 0.4; //s
 const numSamplesPerRow = 3;
 
-const rowDurationInSec =
+export const dataCollectionDurationInSec =
   sampleTransitionDelay * (numSamplesPerRow - 1) +
   sampleTransitionDuration * numSamplesPerRow;
 
@@ -99,11 +99,11 @@ const DataSamplesCollection = forwardRef<
     () => ({
       async playTopSamples() {
         setTopVisible(true);
-        await delayInSec(rowDurationInSec);
+        await delayInSec(dataCollectionDurationInSec);
       },
       async playBottomSamples() {
         setBottomVisible(true);
-        await delayInSec(rowDurationInSec);
+        await delayInSec(dataCollectionDurationInSec);
       },
       reset() {
         setTopVisible(false);

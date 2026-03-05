@@ -6,6 +6,9 @@ import DataSamplesCollection, {
 } from "./DataSamplesCollection";
 import { animation } from "./utils";
 import { FormattedMessage } from "react-intl";
+import AnimatedProgressBar, {
+  AnimatedProgressBarRef,
+} from "./AnimatedProgressBar";
 
 interface LaptopProps extends IconProps {}
 
@@ -14,13 +17,15 @@ export interface LaptopRef {
   displayNone(): void;
   playDataCollectionTopSamples(): Promise<void>;
   playDataCollectionBottomSamples(): Promise<void>;
+  playTraining(durationInSecs?: number): Promise<void>;
 }
 
 const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
   { ...props }: LaptopProps,
   ref
 ) {
-  const dataSamplesCollectionRef = useRef<DataSamplesCollectionRef>(null);
+  const dataSamplesRef = useRef<DataSamplesCollectionRef>(null);
+  const progressBarRef = useRef<AnimatedProgressBarRef>(null);
   const [display, setDisplay] = useState<
     null | "tick" | "data-collection" | "training"
   >(null);
@@ -36,11 +41,15 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
         },
         async playDataCollectionTopSamples() {
           setDisplay("data-collection");
-          await dataSamplesCollectionRef.current?.playTopSamples();
+          await dataSamplesRef.current?.playTopSamples();
         },
         async playDataCollectionBottomSamples() {
           setDisplay("data-collection");
-          await dataSamplesCollectionRef.current?.playBottomSamples();
+          await dataSamplesRef.current?.playBottomSamples();
+        },
+        async playTraining(secs = 2) {
+          setDisplay("training");
+          await progressBarRef.current?.play(secs);
         },
       };
     },
@@ -80,18 +89,14 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
           />
         )}
         {display === "data-collection" && (
-          <DataSamplesCollection
-            color="gray.600"
-            ref={dataSamplesCollectionRef}
-          />
+          <DataSamplesCollection color="gray.600" ref={dataSamplesRef} />
         )}
-        {display === "training" && (
-          <VStack>
-            <Text>
-              <FormattedMessage id="animation-training" />
-            </Text>
-          </VStack>
-        )}
+        <VStack display={display === "training" ? "flex" : "none"}>
+          <Text fontWeight="bold">
+            <FormattedMessage id="animation-training" />
+          </Text>
+          <AnimatedProgressBar ref={progressBarRef} />
+        </VStack>
       </Stack>
     </Box>
   );
