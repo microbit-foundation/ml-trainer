@@ -63,7 +63,6 @@ import {
   useStore,
 } from "./store";
 import {
-  createAboutPageUrl,
   createCodePageUrl,
   createDataSamplesPageUrl,
   createHomePageUrl,
@@ -74,7 +73,6 @@ import {
 } from "./urls";
 import ProjectsPage from "./pages/ProjectsPage";
 import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -294,10 +292,6 @@ const createRouter = () => {
           path: createCodePageUrl(),
           element: <CodePage />,
           loader: commonLoaderFunction,
-        },
-        {
-          path: createAboutPageUrl(),
-          element: <AboutPage />,
         },
         {
           path: createOpenSharedProjectPageUrl(),

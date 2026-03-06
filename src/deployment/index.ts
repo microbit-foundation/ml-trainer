@@ -39,7 +39,6 @@ export interface DeploymentConfig {
   AppLogo: ComponentType<BoxProps>;
   OrgLogo?: ComponentType<BoxProps>;
   welcomeVideoYouTubeId?: string;
-  hasCustomHomepageVideo?: boolean;
   compliance: {
     /**
      * A provider that will be used to wrap the app UI.

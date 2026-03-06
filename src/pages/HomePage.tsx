@@ -29,15 +29,17 @@ import {
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { ButtonWithLoading } from "../components/ButtonWithLoading";
 import CarouselRow from "../components/Carousel/CarouselRow";
 import ClickableTooltip from "../components/ClickableTooltip";
 import { ConfirmDialog } from "../components/ConfirmDialog";
-import Link from "../components/Link";
 import DefaultPageLayout, {
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
 import { createHelpCards } from "../components/HelpCards";
+import HomepageBanner from "../components/HomepageBanner";
 import { createLessonCards } from "../components/LessonCards";
+import Link from "../components/Link";
 import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
@@ -46,16 +48,15 @@ import ProjectCard from "../components/ProjectCard";
 import { createProjectIdeaCards } from "../components/ProjectIdeaCards";
 import { useProjectCardActions } from "../hooks/use-project-card-actions";
 import { useLogging } from "../logging/logging-hooks";
+import { isNativePlatform } from "../platform";
 import { untitledProjectName } from "../project-utils";
+import { shortScreenHeightBreakpoint } from "../responsive";
 import {
   loadProjectAndModelFromStorage,
   useSettings,
   useStore,
 } from "../store";
-import { isNativePlatform } from "../platform";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
-import HomepageBanner from "../components/HomepageBanner";
-import { ButtonWithLoading } from "../components/ButtonWithLoading";
 
 const HomePage = () => {
   const intl = useIntl();
@@ -179,6 +180,7 @@ const ProjectRow = () => {
               .map((projectData) => (
                 <ProjectCard
                   key={projectData.id}
+                  short
                   projectData={projectData}
                   onDeleteProject={handleOpenConfirmDialog}
                   onRenameDuplicateProject={handleOpenNameProjectDialog}
@@ -251,11 +253,26 @@ interface ActionCardProps {
 const ActionCard = ({ onClick, icon, textId }: ActionCardProps) => {
   return (
     <LinkBox h="100%" display="flex">
-      <Card flexGrow={1} overflow="hidden" minH="233px">
-        <CardBody display="flex" backgroundColor="brand.600" color="white">
+      <Card
+        flexGrow={1}
+        overflow="hidden"
+        minH="233px"
+        sx={{ [shortScreenHeightBreakpoint]: { minH: "160px" } }}
+      >
+        <CardBody
+          display="flex"
+          backgroundColor="brand.500"
+          color="white"
+          sx={{ [shortScreenHeightBreakpoint]: { p: 3 } }}
+        >
           <VStack h="100%" w="100%" spacing={0} justifyContent="space-evenly">
             <VStack>
-              <Icon as={icon} h={20} w={20} />
+              <Icon
+                as={icon}
+                h={20}
+                w={20}
+                sx={{ [shortScreenHeightBreakpoint]: { h: 10, w: 10 } }}
+              />
             </VStack>
             <LinkOverlay
               as={Button}
