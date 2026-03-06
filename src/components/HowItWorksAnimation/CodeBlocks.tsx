@@ -1,6 +1,6 @@
 import { Box, Icon, IconProps, keyframes } from "@chakra-ui/react";
 import { useImperativeHandle, forwardRef, useState } from "react";
-import { delayInSec } from "../../utils/delay";
+import { useAnimation } from "../AnimationProvider";
 
 export interface CodeBlockRef {
   play(durationInSecs?: number): Promise<void>;
@@ -24,7 +24,9 @@ const CodeBlock = forwardRef<CodeBlockRef, IconProps>(function CodeBlock(
   { ...props },
   ref
 ) {
+  const { delayInSec } = useAnimation();
   const [duration, setDuration] = useState<number | null>(null);
+
   useImperativeHandle(
     ref,
     () => ({
@@ -36,7 +38,7 @@ const CodeBlock = forwardRef<CodeBlockRef, IconProps>(function CodeBlock(
         setDuration(null);
       },
     }),
-    []
+    [delayInSec]
   );
   return (
     <Box position="relative">

@@ -29,6 +29,7 @@ export interface LaptopRef {
   playTestModelAction2(): Promise<void>;
   playCode(): Promise<void>;
   hide(): void;
+  reset(): void;
 }
 
 const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
@@ -73,6 +74,9 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
         hide() {
           setVisible(false);
         },
+        reset() {
+          setVisible(true);
+        },
       };
     },
     []
@@ -80,9 +84,8 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
   return (
     <Box
       position="relative"
-      animation={
-        !visible ? `${animation.fadeOut} 0.3s ease-in-out forwards` : undefined
-      }
+      opacity={visible ? 1 : 0}
+      transition="opacity 0.3s ease"
     >
       <Icon viewBox="0 0 195.46 133.33" {...props}>
         <path

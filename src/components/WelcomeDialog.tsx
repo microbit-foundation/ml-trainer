@@ -18,6 +18,7 @@ import { FormattedMessage } from "react-intl";
 import { ButtonWithLoading } from "./ButtonWithLoading";
 import { useConnectFirst } from "./ConnectFirstDialog";
 import HowItWorksAnimation from "./HowItWorksAnimation/index";
+import { AnimationProvider } from "./AnimationProvider";
 
 type WelcomeDialogProps = Omit<ComponentProps<typeof Modal>, "children">;
 
@@ -46,7 +47,9 @@ const WelcomeDialog = ({ onClose, isOpen, ...rest }: WelcomeDialogProps) => {
           </ModalHeader>
           <ModalBody>
             <ModalCloseButton />
-            <HowItWorksAnimation />
+            <AnimationProvider>
+              <HowItWorksAnimation />
+            </AnimationProvider>
           </ModalBody>
           <ModalFooter justifyContent="flex-end">
             <ButtonWithLoading

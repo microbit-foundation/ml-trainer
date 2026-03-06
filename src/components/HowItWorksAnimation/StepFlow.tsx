@@ -1,7 +1,7 @@
 import { HStack, Icon, IconProps } from "@chakra-ui/react";
-import StepTickPill, { StepTickPillRef } from "./StepTickPill";
-import { useIntl } from "react-intl";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import { useIntl } from "react-intl";
+import StepTickPill, { StepTickPillRef } from "./StepTickPill";
 
 const inactiveColor = "gray.500";
 const activeColor = "brand2.500";
@@ -76,6 +76,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
           stepRefs.current.forEach((ref) => {
             ref.current?.setState({ active: false, completed: false });
           });
+          setArrowColor(arrowColors.hidden);
         },
       };
     },

@@ -7,8 +7,8 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { useImperativeHandle, forwardRef, useState } from "react";
-import { delayInSec } from "../../utils/delay";
 import { animation } from "./utils";
+import { useAnimation } from "../AnimationProvider";
 
 interface SignalProps extends StackProps {}
 export interface SignalRef {
@@ -103,6 +103,7 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
   { ...props }: SignalProps,
   ref
 ) {
+  const { delayInSec } = useAnimation();
   const [phase, setPhase] = useState<Phase>("idle");
   const [visible, setVisible] = useState<boolean>(true);
 
@@ -130,7 +131,7 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
         setVisible(false);
       },
     }),
-    []
+    [delayInSec]
   );
 
   const dotsVisible = phase !== "idle" && phase !== "entering";

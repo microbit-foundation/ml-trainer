@@ -1,6 +1,6 @@
 import { Box, HStack, keyframes } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
-import { delayInSec } from "../../utils/delay";
+import { useAnimation } from "../AnimationProvider";
 
 export const totalDuration = 2.5;
 const pct = (s: number) => `${((s / totalDuration) * 100).toFixed(1)}%`;
@@ -84,6 +84,7 @@ const AnimatedGauge = forwardRef<AnimatedGaugeRef, AnimatedGaugeProps>(
     { empty = "#CBD5E0", filled = "#718096", filledDark = "#48BB78" },
     ref
   ) {
+    const { delayInSec } = useAnimation();
     const [isPlaying, setIsPlaying] = useState(false);
 
     const segmentKeyframes = useMemo(
@@ -102,7 +103,7 @@ const AnimatedGauge = forwardRef<AnimatedGaugeRef, AnimatedGaugeProps>(
           setIsPlaying(false);
         },
       }),
-      []
+      [delayInSec]
     );
 
     return (

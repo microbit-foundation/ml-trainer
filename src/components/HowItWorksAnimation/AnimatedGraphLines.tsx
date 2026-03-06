@@ -2,7 +2,7 @@ import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { useGraphColors } from "../../hooks/use-graph-colors";
 import { useSettings } from "../../store";
-import { delayInSec } from "../../utils/delay";
+import { useAnimation } from "../AnimationProvider";
 
 const tileWidth = 177;
 const height = 28;
@@ -58,6 +58,7 @@ export interface AnimatedGraphLinesRef {
 
 const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
   function AnimatedGraphLines(_, ref) {
+    const { delayInSec } = useAnimation();
     const [{ graphColorScheme }] = useSettings();
     const [displayState, setDisplayState] = useState<DisplayState>("none");
     const [fadeDuration, setFadeDuration] = useState<number>(fadeOutDuration);
@@ -95,7 +96,7 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
           setDisplayState("none");
         },
       }),
-      []
+      [delayInSec]
     );
 
     const paths = motionPaths[motion];

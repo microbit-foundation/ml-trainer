@@ -5,7 +5,6 @@
  */
 import { HStack, VStack } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { delayInSec } from "../../utils/delay";
 import AnimatedArrow, { AnimatedArrowRef } from "./AnimatedArrow";
 import AnimatedGraphLines, {
   AnimatedGraphLinesRef,
@@ -21,8 +20,12 @@ import Signal, { SignalRef } from "./Signal";
 import StepFlow, { StepFlowRef } from "./StepFlow";
 import { testModeldurationInSec } from "./TestModelScreen";
 import { ledPatternOptions } from "./utils";
+import { useAnimation } from "../AnimationProvider";
+
+const fadeInOutDuration = 2; //s
 
 const HowItWorksAnimation = () => {
+  const { delayInSec, restart } = useAnimation();
   const stepFlowRef = useRef<StepFlowRef>(null);
   const signalRef = useRef<SignalRef>(null);
   const codeArrowRef = useRef<AnimatedArrowRef>(null);
@@ -33,13 +36,20 @@ const HowItWorksAnimation = () => {
   const layoutRef = useRef<LayoutRef>(null);
   const [visible, setVisible] = useState<boolean>(true);
 
-  const runConnect = useCallback(async () => {
-    // Reset.
+  const reset = useCallback(() => {
     handHoldingMicrobitRef.current?.reset();
     animatedGraphLinesRef.current?.reset();
+    microbitOnWristRef.current?.reset();
+    stepFlowRef.current?.reset();
+    laptopRef.current?.reset();
+    signalRef.current?.reset();
+    layoutRef.current?.reset();
+  }, []);
 
+  const runConnect = useCallback(async () => {
     // Setup.
     stepFlowRef.current?.setStep(0, "active");
+    animatedGraphLinesRef.current?.setDisplayState("hidden");
     handHoldingMicrobitRef.current?.show();
 
     // Connect.
@@ -51,7 +61,7 @@ const HowItWorksAnimation = () => {
     ]);
     stepFlowRef.current?.setStep(0, "completed");
     await delayInSec(0.5);
-  }, []);
+  }, [delayInSec]);
 
   const runCollectData = useCallback(async () => {
     // Setup.
@@ -135,7 +145,7 @@ const HowItWorksAnimation = () => {
     stepFlowRef.current?.setAllInactive();
     laptopRef.current?.setDisplay("none");
     await delayInSec(0.5);
-  }, []);
+  }, [delayInSec]);
 
   const runCode = useCallback(async () => {
     // Reset.
@@ -161,7 +171,7 @@ const HowItWorksAnimation = () => {
     codeArrowRef.current?.setDisplayState("hidden");
     stepFlowRef.current?.setAllInactive();
     laptopRef.current?.setDisplay("none");
-  }, []);
+  }, [delayInSec]);
 
   const runUse = useCallback(async () => {
     // Setup
@@ -185,29 +195,52 @@ const HowItWorksAnimation = () => {
       backgroundMode: "sparkly-cross",
     });
     await delayInSec(3);
-  }, []);
+  }, [delayInSec]);
 
   useEffect(() => {
     const run = async () => {
-      setVisible(true)
-      await runConnect();
-      await runCollectData();
-      await runTraining();
-      await runTestModel();
-      await runCode();
-      await runUse();
-      setVisible(false);
-      
+      // eslint-disable-next-line no-constant-condition
+      while (true) {
+        try {
+          setVisible(true);
+          await runConnect();
+          await runCollectData();
+          await runTraining();
+          await runTestModel();
+          await runCode();
+          await runUse();
+          setVisible(false);
+          await delayInSec(fadeInOutDuration);
+          reset();
+        } catch (e) {
+          if (e instanceof DOMException && e.name === "AbortError") {
+            // Abort running animation.
+            return;
+          }
+          throw e;
+        }
+      }
     };
 
+    restart();
     void run();
-  }, [runConnect, runCollectData, runTestModel, runTraining, runCode, runUse]);
+  }, [
+    runConnect,
+    runCollectData,
+    runTestModel,
+    runTraining,
+    runCode,
+    runUse,
+    reset,
+    delayInSec,
+    restart,
+  ]);
 
   return (
     <VStack
       gap={7}
       opacity={visible ? 1 : 0}
-      transition="opacity 3s ease"
+      transition={`opacity ${fadeInOutDuration}s ease`}
     >
       <HStack justifyContent="center" width="100%" gap={5}>
         <StepFlow ref={stepFlowRef} />

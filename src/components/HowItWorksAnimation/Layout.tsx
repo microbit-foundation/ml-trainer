@@ -1,13 +1,6 @@
-import { HStack, StackProps, Stack, keyframes } from "@chakra-ui/react";
-import { useImperativeHandle, forwardRef, useState, ReactNode } from "react";
-import { delayInSec } from "../../utils/delay";
-
-const shrinkWidth = keyframes({ "0%": {}, "100%": { width: 0 } });
-
-const enlarge = keyframes({
-  "0%": { transform: "scale(1.0)" },
-  "100%": { transform: "scale(1.2)" },
-});
+import { HStack, Stack, StackProps } from "@chakra-ui/react";
+import { ReactNode, forwardRef, useImperativeHandle, useState } from "react";
+import { useAnimation } from "../AnimationProvider";
 
 interface LayoutProps extends StackProps {
   leftItems: ReactNode;
@@ -17,12 +10,14 @@ interface LayoutProps extends StackProps {
 
 export interface LayoutRef {
   playCenteringLeft(durationInSec?: number): Promise<void>;
+  reset(): void;
 }
 
 const Layout = forwardRef<LayoutRef, LayoutProps>(function Signal(
   { leftItems, middleItems, rightItems, ...props }: LayoutProps,
   ref
 ) {
+  const { delayInSec } = useAnimation();
   const [centerLeftDuration, setCenterLeftDuration] = useState<number | null>(
     null
   );
@@ -31,46 +26,52 @@ const Layout = forwardRef<LayoutRef, LayoutProps>(function Signal(
     ref,
     () => ({
       async playCenteringLeft(durationInSec = 1) {
-        console.log("pkla");
         setCenterLeftDuration(durationInSec);
         await delayInSec(durationInSec);
       },
+      reset() {
+        setCenterLeftDuration(null);
+      },
     }),
-    []
+    [delayInSec]
   );
 
   return (
     <HStack
       alignItems="center"
       gap={centerLeftDuration ? 0 : 5}
-      transition="gap 0.3s ease"
+      transition={
+        centerLeftDuration ? `gap ${centerLeftDuration}s ease` : undefined
+      }
       justifyContent="center"
       {...props}
     >
       {/* Left */}
       <Stack
         width={200}
-        animation={
-          centerLeftDuration ? `${enlarge} 1s ease-in-out forwards` : undefined
+        transform={centerLeftDuration ? "scale(1.2)" : "scale(1)"}
+        transition={
+          centerLeftDuration
+            ? `transform ${centerLeftDuration}s ease`
+            : undefined
         }
       >
         {leftItems}
       </Stack>
       {/* Middle */}
       <Stack
-        animation={
-          centerLeftDuration ? `${shrinkWidth} 1s ease-in-out` : undefined
+        width={centerLeftDuration ? 0 : undefined}
+        transition={
+          centerLeftDuration ? `width ${centerLeftDuration}s ease` : undefined
         }
       >
         {middleItems}
       </Stack>
       {/* Right */}
       <Stack
-        width={230}
-        animation={
-          centerLeftDuration
-            ? `${shrinkWidth} ${centerLeftDuration}s ease-in-out forwards`
-            : undefined
+        width={centerLeftDuration ? 0 : 230}
+        transition={
+          centerLeftDuration ? `width ${centerLeftDuration}s ease` : undefined
         }
       >
         {rightItems}

@@ -1,7 +1,7 @@
 import { Icon, IconProps } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { motion } from "framer-motion";
-import { delayInSec } from "../../utils/delay";
+import { useAnimation } from "../AnimationProvider";
 
 interface DataSamplesCollectionProps extends IconProps {
   rowGap?: number;
@@ -91,6 +91,7 @@ const DataSamplesCollection = forwardRef<
   { rowGap = 5, ...props }: DataSamplesCollectionProps,
   ref
 ) {
+  const { delayInSec } = useAnimation();
   const [topVisible, setTopVisible] = useState(false);
   const [bottomVisible, setBottomVisible] = useState(false);
 
@@ -110,7 +111,7 @@ const DataSamplesCollection = forwardRef<
         setBottomVisible(false);
       },
     }),
-    []
+    [delayInSec]
   );
 
   if (!topVisible && !bottomVisible) {

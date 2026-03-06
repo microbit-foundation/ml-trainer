@@ -1,6 +1,6 @@
 import { Box, keyframes } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { delayInSec } from "../../utils/delay";
+import { useAnimation } from "../AnimationProvider";
 
 const progressBar = keyframes({
   "0%": { width: 0 },
@@ -15,6 +15,7 @@ export interface AnimatedProgressBarRef {
 
 const AnimatedProgressBar = forwardRef<AnimatedProgressBarRef>(
   function AnimatedProgressBar(_, ref) {
+    const { delayInSec } = useAnimation();
     const [durationInSecs, setDuration] = useState<null | number>(null);
     useImperativeHandle(
       ref,
@@ -27,7 +28,7 @@ const AnimatedProgressBar = forwardRef<AnimatedProgressBarRef>(
           setDuration(null);
         },
       }),
-      []
+      [delayInSec]
     );
     if (durationInSecs === null) {
       return null;

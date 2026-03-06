@@ -118,7 +118,7 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
             { delay: 0 },
             { delay: 1, top: "50%", left: "-20%" },
             { delay: 2, top: "25%", left: "5%" },
-            { delay: 3, top: "80%", left: "-10%" },
+            { delay: 3, top: "80%", left: "-20%" },
           ].map(({ delay, ...props }, i) => (
             <HeartLedIcon
               key={i}

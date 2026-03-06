@@ -7,7 +7,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { delayInSec } from "../../utils/delay";
+import { useAnimation } from "../AnimationProvider";
 
 const color = "brand.500";
 
@@ -69,6 +69,7 @@ const AnimatedArrow = forwardRef<AnimatedArrowRef>(function AnimatedArrow(
   _,
   ref
 ) {
+  const { delayInSec } = useAnimation();
   const [displayState, setDisplayState] = useState<DisplayState>("none");
   const [duration, setDuration] = useState<null | number>(null);
   useImperativeHandle(
@@ -83,7 +84,7 @@ const AnimatedArrow = forwardRef<AnimatedArrowRef>(function AnimatedArrow(
         },
       };
     },
-    []
+    [delayInSec]
   );
   return (
     <VStack
