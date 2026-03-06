@@ -10,14 +10,16 @@ import DataSamplesCollection, {
 import TestModelScreen, { TestModelScreenRef } from "./TestModelScreen";
 import Tick from "./Tick";
 import { animation } from "./utils";
+import CodeBlock, { CodeBlockRef } from "./CodeBlocks";
 
 interface LaptopProps extends IconProps {}
 type DisplayType =
-  | null
+  | "none"
   | "tick"
   | "data-collection"
   | "training"
-  | "test-model";
+  | "test-model"
+  | "code";
 export interface LaptopRef {
   setDisplay(type: DisplayType): void;
   playDataCollectionTopSamples(): Promise<void>;
@@ -25,6 +27,8 @@ export interface LaptopRef {
   playTraining(durationInSecs?: number): Promise<void>;
   playTestModelAction1(): Promise<void>;
   playTestModelAction2(): Promise<void>;
+  playCode(): Promise<void>;
+  hide(): void;
 }
 
 const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
@@ -32,11 +36,11 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
   ref
 ) {
   const testModelRef = useRef<TestModelScreenRef>(null);
+  const codeRef = useRef<CodeBlockRef>(null);
   const dataSamplesRef = useRef<DataSamplesCollectionRef>(null);
   const progressBarRef = useRef<AnimatedProgressBarRef>(null);
-  const [display, setDisplay] = useState<
-    null | "tick" | "data-collection" | "training" | "test-model"
-  >(null);
+  const [visible, setVisible] = useState<boolean>(true);
+  const [display, setDisplay] = useState<DisplayType>("none");
   useImperativeHandle(
     ref,
     () => {
@@ -62,12 +66,24 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
           setDisplay("test-model");
           await testModelRef.current?.playAction2();
         },
+        async playCode() {
+          setDisplay("code");
+          await codeRef.current?.play();
+        },
+        hide() {
+          setVisible(false);
+        },
       };
     },
     []
   );
   return (
-    <Box position="relative">
+    <Box
+      position="relative"
+      animation={
+        !visible ? `${animation.fadeOut} 0.3s ease-in-out forwards` : undefined
+      }
+    >
       <Icon viewBox="0 0 195.46 133.33" {...props}>
         <path
           fill="none"
@@ -93,22 +109,33 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
         alignItems="center"
         justifyContent="center"
       >
+        {/* Tick display */}
         {display === "tick" && (
           <Tick
             size="40px"
             animation={`${animation.fadeIn} 0.3s ease-in-out forwards`}
           />
         )}
+        {/* Data collection display */}
         {display === "data-collection" && (
           <DataSamplesCollection color="gray.600" ref={dataSamplesRef} />
         )}
+        {/* Training display */}
         <VStack display={display === "training" ? "flex" : "none"}>
           <Text fontWeight="bold">
             <FormattedMessage id="animation-training" />
           </Text>
           <AnimatedProgressBar ref={progressBarRef} />
         </VStack>
+        {/* Test model display */}
         {display === "test-model" && <TestModelScreen ref={testModelRef} />}
+        {/* Code display */}
+        {display === "code" && (
+          <CodeBlock
+            ref={codeRef}
+            animation={`${animation.fadeIn} 0.3s ease-in-out forwards`}
+          />
+        )}
       </Stack>
     </Box>
   );

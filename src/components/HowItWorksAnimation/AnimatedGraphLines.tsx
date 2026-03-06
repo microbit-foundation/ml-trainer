@@ -1,4 +1,5 @@
 import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
+import { Box, Flex } from "@chakra-ui/react";
 import { useGraphColors } from "../../hooks/use-graph-colors";
 import { useSettings } from "../../store";
 import { delayInSec } from "../../utils/delay";
@@ -35,13 +36,21 @@ const motionPaths = {
   chaotic: chaoticWavePaths,
 } as const;
 
-const visibleWindowWidth = 100; //px
-const animationDuration = 3; //sec
-const fadeOutDuration = 0.4; //sec
+const visibleWindowWidth = 100;
+const animationDuration = 3;
+const fadeOutDuration = 0.4;
 
 type MotionType = keyof typeof motionPaths;
 
+type DisplayState =
+  // Visible.
+  | "visible"
+  // Hidden but still taking up space.
+  | "hidden"
+  // Not displayed at all and not taking up space.
+  | "none";
 export interface AnimatedGraphLinesRef {
+  setDisplayState(state: DisplayState): void;
   play(motion: MotionType, secs?: number): Promise<void>;
   fadeOut(durationInSecs?: number): Promise<void>;
   reset(): void;
@@ -50,8 +59,7 @@ export interface AnimatedGraphLinesRef {
 const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
   function AnimatedGraphLines(_, ref) {
     const [{ graphColorScheme }] = useSettings();
-    const [visible, setVisible] = useState<boolean>(false);
-    const [opacity, setOpacity] = useState<number>(1);
+    const [displayState, setDisplayState] = useState<DisplayState>("none");
     const [fadeDuration, setFadeDuration] = useState<number>(fadeOutDuration);
     const colors = useGraphColors(graphColorScheme);
     const [motion, setMotion] = useState<MotionType>("wavy");
@@ -68,10 +76,10 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
     useImperativeHandle(
       ref,
       () => ({
+        setDisplayState,
         async play(motionType, durationInSecs = 3) {
-          setOpacity(1);
+          setDisplayState("visible");
           setFadeDuration(0);
-          setVisible(true);
           if (motionType) {
             setMotion(motionType);
           }
@@ -79,14 +87,12 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
         },
         async fadeOut(durationInSecs = fadeOutDuration) {
           setFadeDuration(durationInSecs);
-          setOpacity(0);
           await delayInSec(durationInSecs);
-          setVisible(false);
+          setDisplayState("hidden");
         },
         reset() {
-          setOpacity(1);
           setFadeDuration(0);
-          setVisible(false);
+          setDisplayState("none");
         },
       }),
       []
@@ -95,18 +101,16 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
     const paths = motionPaths[motion];
 
     return (
-      <div
-        style={{
-          opacity: visible ? opacity : 0,
-          transition: `opacity ${fadeDuration}s ease-out`,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          position: "relative",
-        }}
+      <Flex
+        display={displayState === "none" ? "none" : "flex"}
+        opacity={displayState === "hidden" ? 0 : 1}
+        transition={`opacity ${fadeDuration}s ease-out`}
+        direction="column"
+        align="center"
+        justify="center"
+        position="relative"
       >
-        <div style={{ position: "relative", zIndex: 2 }}>
+        <Box position="relative" zIndex={2}>
           <style>{`
             @keyframes waveScroll-${motion} {
               from { transform: translateX(${
@@ -116,27 +120,24 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
             }
           `}</style>
 
-          <div
-            style={{
-              width: `${visibleWindowWidth}px`,
-              height: `${height}px`,
-              overflow: "hidden",
-            }}
+          <Box
+            width={`${visibleWindowWidth}px`}
+            height={`${height}px`}
+            overflow="hidden"
           >
-            <div
-              style={{
-                display: "flex",
-                animation: `waveScroll-${motion} ${animationDuration}s linear infinite`,
-              }}
+            <Flex
+              animation={`waveScroll-${motion} ${animationDuration}s linear infinite`}
             >
               {[0, 1].map((copy) => (
-                <svg
+                <Box
+                  as="svg"
                   key={copy}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox={viewBox}
                   width={`${tileWidth}px`}
                   height={`${height}px`}
-                  style={{ display: "block", flexShrink: 0 }}
+                  display="block"
+                  flexShrink={0}
                   preserveAspectRatio="none"
                 >
                   {waves.map((wave) => (
@@ -151,12 +152,12 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
                       strokeWidth={2}
                     />
                   ))}
-                </svg>
+                </Box>
               ))}
-            </div>
-          </div>
-        </div>
-      </div>
+            </Flex>
+          </Box>
+        </Box>
+      </Flex>
     );
   }
 );

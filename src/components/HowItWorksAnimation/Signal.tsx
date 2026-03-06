@@ -8,12 +8,14 @@ import {
 } from "@chakra-ui/react";
 import { useImperativeHandle, forwardRef, useState } from "react";
 import { delayInSec } from "../../utils/delay";
+import { animation } from "./utils";
 
 interface SignalProps extends StackProps {}
 export interface SignalRef {
   showConnecting(): Promise<void>;
   showConnected(): Promise<void>;
   reset(): void;
+  hide(): void;
 }
 
 // ─── Layout constants ────────────────────────────────────────────────────────
@@ -102,6 +104,7 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
   ref
 ) {
   const [phase, setPhase] = useState<Phase>("idle");
+  const [visible, setVisible] = useState<boolean>(true);
 
   useImperativeHandle(
     ref,
@@ -121,6 +124,10 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
       },
       reset() {
         setPhase("idle");
+        setVisible(true);
+      },
+      hide() {
+        setVisible(false);
       },
     }),
     []
@@ -133,6 +140,9 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
       alignItems="center"
       gap={`${signalGap}px`}
       position="relative"
+      animation={
+        !visible ? `${animation.fadeOut} 0.3s ease-in-out forwards` : undefined
+      }
       {...props}
     >
       <SignalIcon

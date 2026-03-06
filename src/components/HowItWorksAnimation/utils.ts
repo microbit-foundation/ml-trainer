@@ -10,12 +10,22 @@ export const ledPatternOptions = {
   smile: [
     0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0,
   ],
+  heart: [
+    0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0,
+  ],
+  cross: [
+    1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+  ],
 };
 
 export const animation = {
   fadeIn: keyframes({
     "0%": { opacity: 0 },
     "100%": { opacity: 1 },
+  }),
+  fadeOut: keyframes({
+    "0%": { opacity: 1 },
+    "100%": { opacity: 0 },
   }),
 };
 
