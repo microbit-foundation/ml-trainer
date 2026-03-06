@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { ButtonEvent } from "@microbit/microbit-connection";
+import { ButtonData } from "@microbit/microbit-connection";
 import { useEffect } from "react";
 import { useDataConnection } from "../connections-hooks";
 
-type ButtonListener = (e: ButtonEvent) => void;
+type ButtonListener = (e: ButtonData) => void;
 
 /**
  * Subscribes to micro:bit button events on the active data connection.

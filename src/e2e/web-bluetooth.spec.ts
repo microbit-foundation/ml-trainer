@@ -70,7 +70,7 @@ test.describe("web bluetooth connection", () => {
     const connectionDialogs = await dataSamplesPage.connect();
     // First connection attempt fails, second succeeds
     await connectionDialogs.setBluetoothConnectBehaviors([
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
       { outcome: "success" },
     ]);
     await connectionDialogs.waitForText(dialog.bluetooth.whatYouNeed);
@@ -126,7 +126,7 @@ test.describe("web bluetooth reconnection", () => {
 
     // Auto-reconnect fails, then user reconnect succeeds
     await connectionDialogs.setBluetoothConnectBehaviors([
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
       { outcome: "success" },
     ]);
 
@@ -144,8 +144,8 @@ test.describe("web bluetooth reconnection", () => {
 
     // Auto-reconnect fails, user reconnect fails, then user restarts flow
     await connectionDialogs.setBluetoothConnectBehaviors([
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
       { outcome: "success" },
     ]);
 
@@ -187,14 +187,14 @@ test.describe("web bluetooth reconnection", () => {
     // Many failures - the reconnect loop will consume these while tab is hidden
     // and after tab becomes visible
     await connectionDialogs.setBluetoothConnectBehaviors([
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
     ]);
 
     // Hide tab, then disconnect - triggers silent reconnection loop

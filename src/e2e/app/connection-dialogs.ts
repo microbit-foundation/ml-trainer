@@ -5,10 +5,10 @@
  */
 import { expect, Locator, type Page } from "@playwright/test";
 import { ProgressStage } from "@microbit/microbit-connection";
-import { MockWebUSBConnection } from "../../device/mockUsb";
+import { MockUSBConnection } from "../../device/mockUsb";
 import {
   ConnectBehavior,
-  MockWebBluetoothConnection,
+  MockBluetoothConnection,
 } from "../../device/mockBluetooth";
 import { MockRadioBridgeConnection } from "../../device/mockRadioBridge";
 
@@ -104,7 +104,7 @@ export class ConnectionDialogs {
   async mockUsbDeviceNotSelected() {
     await this.page.evaluate(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
-      const usb = (window as any).mockUsb as MockWebUSBConnection;
+      const usb = (window as any).mockUsb as MockUSBConnection;
       usb.mockDeviceId(undefined);
     });
   }
@@ -123,7 +123,7 @@ export class ConnectionDialogs {
    * @example
    * // First connect fails with disconnect, second succeeds
    * await dialogs.setBluetoothConnectBehaviors([
-   *   { outcome: 'failure', status: ConnectionStatus.DISCONNECTED },
+   *   { outcome: 'failure', status: ConnectionStatus.Disconnected },
    *   { outcome: 'success' },
    * ]);
    */
@@ -131,7 +131,7 @@ export class ConnectionDialogs {
     await this.page.evaluate((b: ConnectBehavior[]) => {
       const mockBluetooth =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockBluetooth as MockWebBluetoothConnection;
+        (window as any).mockBluetooth as MockBluetoothConnection;
       mockBluetooth.setConnectBehaviors(b);
     }, behaviors);
   }
@@ -144,7 +144,7 @@ export class ConnectionDialogs {
     await this.page.evaluate(() => {
       const mockBluetooth =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockBluetooth as MockWebBluetoothConnection;
+        (window as any).mockBluetooth as MockBluetoothConnection;
       mockBluetooth.simulateDisconnect();
     });
   }
@@ -182,7 +182,7 @@ export class ConnectionDialogs {
     await this.page.evaluate(() => {
       const mockUsb =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockUsb as MockWebUSBConnection;
+        (window as any).mockUsb as MockUSBConnection;
       mockUsb.simulateDisconnect();
     });
   }
@@ -194,7 +194,7 @@ export class ConnectionDialogs {
     await this.page.evaluate(() => {
       const mockUsb =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockUsb as MockWebUSBConnection;
+        (window as any).mockUsb as MockUSBConnection;
       mockUsb.simulateReconnect();
     });
   }
@@ -375,7 +375,7 @@ export class ConnectionDialogs {
     await this.page.evaluate((s: string) => {
       const mockBluetooth =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockBluetooth as MockWebBluetoothConnection;
+        (window as any).mockBluetooth as MockBluetoothConnection;
       mockBluetooth.setAvailabilityStatus(
         s as
           | "available"
@@ -444,7 +444,7 @@ export class ConnectionDialogs {
       ({ stage, progress }) => {
         const mockBluetooth =
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-          (window as any).mockBluetooth as MockWebBluetoothConnection;
+          (window as any).mockBluetooth as MockBluetoothConnection;
         mockBluetooth.setProgressPauseAt(stage, progress);
       },
       { stage, progress }
@@ -458,7 +458,7 @@ export class ConnectionDialogs {
     await this.page.evaluate(() => {
       const mockBluetooth =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockBluetooth as MockWebBluetoothConnection;
+        (window as any).mockBluetooth as MockBluetoothConnection;
       mockBluetooth.resumeProgress();
     });
   }

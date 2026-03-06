@@ -6,7 +6,8 @@
  */
 import { Capacitor } from "@capacitor/core";
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
-import { DeviceBondState, ProgressStage } from "@microbit/microbit-connection";
+import { ProgressStage } from "@microbit/microbit-connection";
+import { DeviceBondState } from "@microbit/microbit-connection/bluetooth";
 import * as tf from "@tensorflow/tfjs";
 import { v4 as uuid } from "uuid";
 import { create } from "zustand";
