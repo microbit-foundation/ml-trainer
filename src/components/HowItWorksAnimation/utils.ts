@@ -18,3 +18,5 @@ export const animation = {
     "100%": { opacity: 1 },
   }),
 };
+
+export const pct = (s: number, total: number) => ((s / total) * 100).toFixed(1);

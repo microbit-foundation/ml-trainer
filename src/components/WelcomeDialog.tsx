@@ -17,7 +17,7 @@ import { ComponentProps } from "react";
 import { FormattedMessage } from "react-intl";
 import { ButtonWithLoading } from "./ButtonWithLoading";
 import { useConnectFirst } from "./ConnectFirstDialog";
-import HowItWorksAnimation from "./HowItWorksAnimation/HowItWorksAnimation";
+import HowItWorksAnimation from "./HowItWorksAnimation/index";
 
 type WelcomeDialogProps = Omit<ComponentProps<typeof Modal>, "children">;
 

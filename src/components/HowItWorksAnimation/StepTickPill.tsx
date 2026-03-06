@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Icon, useToken, VStack } from "@chakra-ui/react";
-import { forwardRef, useImperativeHandle, useState } from "react";
+import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
 import Tick from "./Tick";
 
 const fontWeight = 700;
@@ -14,61 +14,53 @@ const paddingx = 20;
 
 interface StepTickPillProps {
   text: string;
-  showTick?: boolean;
+  inactiveColor: string;
+  activeColor: string;
 }
 
+type StepState = { active: boolean; completed: boolean };
 export interface StepTickPillRef {
-  setActive(): void;
-  setCompleted(): void;
-  setInactive(): void;
-  reset(): void;
+  setState(newState: Partial<StepState>): void;
 }
-
-const activeColor = "brand2.500";
 
 const StepTickPill = forwardRef<StepTickPillRef, StepTickPillProps>(
-  function StepTickPill({ text }: StepTickPillProps, ref) {
-    const [isTickVisible, setTickVisible] = useState(false);
-    const [fillColor, setFillColor] = useState("gray.500");
+  function StepTickPill(
+    { text, inactiveColor, activeColor }: StepTickPillProps,
+    ref
+  ) {
+    const [state, setState] = useState<StepState>({
+      active: false,
+      completed: false,
+    });
     useImperativeHandle(
       ref,
       () => {
         return {
-          setActive() {
-            setFillColor(activeColor);
-          },
-          setCompleted() {
-            setTickVisible(true);
-          },
-          setInactive() {
-            setFillColor("gray.500");
-          },
-          reset() {
-            setTickVisible(false);
-            setFillColor("gray.500");
+          setState(newState) {
+            setState({ ...state, ...newState });
           },
         };
       },
-      []
+      [state]
     );
 
     const fontFamily = useToken("fonts", "heading");
-    const pillWidth =
-      getTextWidth({ text, fontFamily, fontWeight, fontSize }) + paddingx * 2;
+    const pillWidth = useMemo(
+      () =>
+        getTextWidth({ text, fontFamily, fontWeight, fontSize }) + paddingx * 2,
+      [fontFamily, text]
+    );
+    const color = state.active ? activeColor : inactiveColor;
     return (
       <VStack gap={3}>
         {/* Tick icon */}
-        <Tick
-          size="30px"
-          transition={fillColor === activeColor ? "color 0.3s ease" : undefined}
-          color={isTickVisible ? fillColor : "transparent"}
-        />
+        <Tick size="30px" color={state.completed ? color : "transparent"} />
         {/* Pill with step name */}
         <Icon
           viewBox={`0 0 ${pillWidth} ${height}`}
           width={pillWidth}
           height="37px"
-          color={fillColor}
+          color={color}
         >
           <rect
             x="0"

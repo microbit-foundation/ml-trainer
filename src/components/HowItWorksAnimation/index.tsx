@@ -5,20 +5,20 @@
  */
 import { HStack, VStack } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef } from "react";
-
-import Laptop, { LaptopRef } from "./Laptop";
-import Signal, { SignalRef } from "./Signal";
-import StepFlow, { StepFlowRef } from "./StepFlow";
-import HandHoldingMicrobit, {
-  HandHoldingMicrobitRef,
-} from "./HandHoldingMicrobit";
-import MicrobitOnWrist, { MicrobitOnWristRef } from "./MicrobitOnWrist";
+import { delayInSec } from "../../utils/delay";
 import AnimatedGraphLines, {
   AnimatedGraphLinesRef,
 } from "./AnimatedGraphLines";
-import { ledPatternOptions } from "./utils";
 import { dataCollectionDurationInSec } from "./DataSamplesCollection";
-import { delayInSec } from "../../utils/delay";
+import HandHoldingMicrobit, {
+  HandHoldingMicrobitRef,
+} from "./HandHoldingMicrobit";
+import Laptop, { LaptopRef } from "./Laptop";
+import MicrobitOnWrist, { MicrobitOnWristRef } from "./MicrobitOnWrist";
+import Signal, { SignalRef } from "./Signal";
+import StepFlow, { StepFlowRef } from "./StepFlow";
+import { ledPatternOptions } from "./utils";
+import { testModeldurationInSec } from "./TestModelScreen";
 
 const HowItWorksAnimation = () => {
   const stepFlowRef = useRef<StepFlowRef>(null);
@@ -28,7 +28,7 @@ const HowItWorksAnimation = () => {
   const laptopRef = useRef<LaptopRef>(null);
   const animatedGraphLinesRef = useRef<AnimatedGraphLinesRef>(null);
 
-  const runStep1 = useCallback(async () => {
+  const runConnect = useCallback(async () => {
     handHoldingMicrobitRef.current?.reset();
     animatedGraphLinesRef.current?.reset();
     handHoldingMicrobitRef.current?.show();
@@ -37,14 +37,15 @@ const HowItWorksAnimation = () => {
     await Promise.all([
       signalRef.current?.showConnected(),
       handHoldingMicrobitRef.current?.displaySmileLed(),
-      laptopRef.current?.displayTick(),
+      laptopRef.current?.setDisplay("tick"),
     ]);
     stepFlowRef.current?.setStep(0, "completed");
     await delayInSec(0.5);
   }, []);
 
-  const runStep2 = useCallback(async () => {
-    laptopRef.current?.displayNone();
+  const runCollectData = useCallback(async () => {
+    // Setup.
+    laptopRef.current?.setDisplay(null);
     handHoldingMicrobitRef.current?.reset();
     microbitOnWristRef.current?.show({
       orientation: "horizontal",
@@ -53,14 +54,14 @@ const HowItWorksAnimation = () => {
     stepFlowRef.current?.setStep(1, "active");
     await animatedGraphLinesRef.current?.play("smooth", 1);
 
-    // Collect data for top samples.
+    // Collect data for wave movement.
     microbitOnWristRef.current?.setMove("wave");
     await Promise.all([
       animatedGraphLinesRef.current?.play("wavy", dataCollectionDurationInSec),
       laptopRef.current?.playDataCollectionTopSamples(),
     ]);
 
-    // Collect data for bottom samples.
+    // Collect data for up down movement.
     microbitOnWristRef.current?.setMove("up-down");
     await Promise.all([
       animatedGraphLinesRef.current?.play(
@@ -69,24 +70,71 @@ const HowItWorksAnimation = () => {
       ),
       laptopRef.current?.playDataCollectionBottomSamples(),
     ]);
+
     stepFlowRef.current?.setStep(1, "completed");
+  }, []);
+
+  const runTraining = useCallback(async () => {
+    microbitOnWristRef.current?.setMove("still");
+    await Promise.all([
+      animatedGraphLinesRef.current?.play("smooth"),
+      laptopRef.current?.playTraining(),
+    ]);
+  }, []);
+
+  const runTestModel = useCallback(async () => {
+    // Setup
+    laptopRef.current?.setDisplay("test-model");
+    handHoldingMicrobitRef.current?.reset();
+    microbitOnWristRef.current?.show({
+      orientation: "horizontal",
+      ledPattern: ledPatternOptions.smile,
+    });
+    stepFlowRef.current?.setStep(2, "active");
+    microbitOnWristRef.current?.setMove("still");
+    await animatedGraphLinesRef.current?.play("smooth", 1);
+
+    // Test model for wave movement.
+    microbitOnWristRef.current?.setMove("wave");
+    await Promise.all([
+      animatedGraphLinesRef.current?.play("wavy", testModeldurationInSec),
+      laptopRef.current?.playTestModelAction1(),
+    ]);
+
+    // Pause on still.
+    microbitOnWristRef.current?.setMove("still");
+    await animatedGraphLinesRef.current?.play("smooth", 1);
+
+    // Test model for up down movement.
+    microbitOnWristRef.current?.setMove("up-down");
+    await Promise.all([
+      animatedGraphLinesRef.current?.play("chaotic", testModeldurationInSec),
+      laptopRef.current?.playTestModelAction2(),
+    ]);
+
+    // Show iterative flow.
+    microbitOnWristRef.current?.setMove("still");
+    await animatedGraphLinesRef.current?.fadeOut();
+
+    stepFlowRef.current?.setArrows("active");
+    await delayInSec(0.5);
+    stepFlowRef.current?.setStep(2, "completed");
+    await delayInSec(0.5);
+
+    stepFlowRef.current?.setAllInactive();
+    laptopRef.current?.setDisplay(null);
   }, []);
 
   useEffect(() => {
     const run = async () => {
-      await runStep1();
-      await runStep2();
-
-      // Training.
-      microbitOnWristRef.current?.setMove("still");
-      await Promise.all([
-        animatedGraphLinesRef.current?.play("smooth"),
-        laptopRef.current?.playTraining(),
-      ]);
+      await runConnect();
+      await runCollectData();
+      await runTraining();
+      await runTestModel();
     };
 
     void run();
-  }, [runStep1, runStep2]);
+  }, [runConnect, runCollectData, runTestModel, runTraining]);
 
   return (
     <VStack gap={7}>

@@ -1,44 +1,47 @@
-import { Box, Icon, IconProps, Stack, VStack, Text } from "@chakra-ui/react";
+import { Box, Icon, IconProps, Stack, Text, VStack } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
-import Tick from "./Tick";
-import DataSamplesCollection, {
-  DataSamplesCollectionRef,
-} from "./DataSamplesCollection";
-import { animation } from "./utils";
 import { FormattedMessage } from "react-intl";
 import AnimatedProgressBar, {
   AnimatedProgressBarRef,
 } from "./AnimatedProgressBar";
+import DataSamplesCollection, {
+  DataSamplesCollectionRef,
+} from "./DataSamplesCollection";
+import TestModelScreen, { TestModelScreenRef } from "./TestModelScreen";
+import Tick from "./Tick";
+import { animation } from "./utils";
 
 interface LaptopProps extends IconProps {}
-
+type DisplayType =
+  | null
+  | "tick"
+  | "data-collection"
+  | "training"
+  | "test-model";
 export interface LaptopRef {
-  displayTick(): void;
-  displayNone(): void;
+  setDisplay(type: DisplayType): void;
   playDataCollectionTopSamples(): Promise<void>;
   playDataCollectionBottomSamples(): Promise<void>;
   playTraining(durationInSecs?: number): Promise<void>;
+  playTestModelAction1(): Promise<void>;
+  playTestModelAction2(): Promise<void>;
 }
 
 const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
   { ...props }: LaptopProps,
   ref
 ) {
+  const testModelRef = useRef<TestModelScreenRef>(null);
   const dataSamplesRef = useRef<DataSamplesCollectionRef>(null);
   const progressBarRef = useRef<AnimatedProgressBarRef>(null);
   const [display, setDisplay] = useState<
-    null | "tick" | "data-collection" | "training"
+    null | "tick" | "data-collection" | "training" | "test-model"
   >(null);
   useImperativeHandle(
     ref,
     () => {
       return {
-        displayTick() {
-          setDisplay("tick");
-        },
-        displayNone() {
-          setDisplay(null);
-        },
+        setDisplay,
         async playDataCollectionTopSamples() {
           setDisplay("data-collection");
           await dataSamplesRef.current?.playTopSamples();
@@ -50,6 +53,14 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
         async playTraining(secs = 2) {
           setDisplay("training");
           await progressBarRef.current?.play(secs);
+        },
+        async playTestModelAction1() {
+          setDisplay("test-model");
+          await testModelRef.current?.playAction1();
+        },
+        async playTestModelAction2() {
+          setDisplay("test-model");
+          await testModelRef.current?.playAction2();
         },
       };
     },
@@ -97,6 +108,7 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
           </Text>
           <AnimatedProgressBar ref={progressBarRef} />
         </VStack>
+        {display === "test-model" && <TestModelScreen ref={testModelRef} />}
       </Stack>
     </Box>
   );

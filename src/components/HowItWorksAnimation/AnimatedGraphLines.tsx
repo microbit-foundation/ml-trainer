@@ -37,11 +37,13 @@ const motionPaths = {
 
 const visibleWindowWidth = 100; //px
 const animationDuration = 3; //sec
+const fadeOutDuration = 0.4; //sec
 
 type MotionType = keyof typeof motionPaths;
 
 export interface AnimatedGraphLinesRef {
   play(motion: MotionType, secs?: number): Promise<void>;
+  fadeOut(durationInSecs?: number): Promise<void>;
   reset(): void;
 }
 
@@ -49,6 +51,8 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
   function AnimatedGraphLines(_, ref) {
     const [{ graphColorScheme }] = useSettings();
     const [visible, setVisible] = useState<boolean>(false);
+    const [opacity, setOpacity] = useState<number>(1);
+    const [fadeDuration, setFadeDuration] = useState<number>(fadeOutDuration);
     const colors = useGraphColors(graphColorScheme);
     const [motion, setMotion] = useState<MotionType>("wavy");
 
@@ -65,13 +69,23 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
       ref,
       () => ({
         async play(motionType, durationInSecs = 3) {
+          setOpacity(1);
+          setFadeDuration(0);
           setVisible(true);
           if (motionType) {
             setMotion(motionType);
           }
           await delayInSec(durationInSecs);
         },
+        async fadeOut(durationInSecs = fadeOutDuration) {
+          setFadeDuration(durationInSecs);
+          setOpacity(0);
+          await delayInSec(durationInSecs);
+          setVisible(false);
+        },
         reset() {
+          setOpacity(1);
+          setFadeDuration(0);
           setVisible(false);
         },
       }),
@@ -83,7 +97,8 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
     return (
       <div
         style={{
-          opacity: visible ? 1 : 0,
+          opacity: visible ? opacity : 0,
+          transition: `opacity ${fadeDuration}s ease-out`,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
