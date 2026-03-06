@@ -5,8 +5,9 @@ import {
   keyframes,
   StackProps,
   Box,
+  useBreakpointValue,
 } from "@chakra-ui/react";
-import { useImperativeHandle, forwardRef, useState } from "react";
+import { useImperativeHandle, forwardRef, useState, useMemo } from "react";
 import { animation } from "./utils";
 import { useAnimation } from "../AnimationProvider";
 
@@ -19,31 +20,39 @@ export interface SignalRef {
 }
 
 // ─── Layout constants ────────────────────────────────────────────────────────
-const signalGap = 230; // px
-const totalNumDots = 18;
-const numTravelDots = 8;
-const dotSize = 7; // px
-const dotGap = 4; // px
-const travelDotsWidth = numTravelDots * dotSize + (numTravelDots - 1) * dotGap;
-const travelOffset = (signalGap - travelDotsWidth) / 2 - dotGap * 2;
+// Base dot sizing — scales down proportionally on small gaps
+const BASE_DOT_SIZE = 7; // px at full gap
+const BASE_DOT_GAP = 4; // px at full gap
+const FULL_GAP = 270; // px — the largest signalGap value
+
+// Travel group is always ~40% of total dots, minimum 3
+const TRAVEL_DOT_RATIO = 0.2;
+
+// ─── Gap-derived dot metrics ──────────────────────────────────────────────────
+// Scale dot size + gap proportionally so dots shrink on small screens.
+// Clamped: never go below 3px dot or 2px gap so they remain visible.
+const dotMetricsForGap = (gap: number) => {
+  const scale = Math.min(gap / FULL_GAP, 1);
+  const dotSize = Math.max(Math.round(BASE_DOT_SIZE * scale), 3);
+  const dotGap = Math.max(Math.round(BASE_DOT_GAP * scale), 2);
+  return { dotSize, dotGap };
+};
+
+// ─── Derive dot count from gap ────────────────────────────────────────────────
+// Fills the gap wall-to-wall: N × dotSize + (N-1) × dotGap = gap
+// => N = (gap + dotGap) / (dotSize + dotGap)
+const dotsForGap = (gap: number) => {
+  const { dotSize, dotGap } = dotMetricsForGap(gap);
+  return Math.floor((gap + dotGap) / (dotSize + dotGap));
+};
 
 // ─── Timing constants ────────────────────────────────────────────────────────
-const signalFadeInDuration = 1; // s — icons slide up and fade in
-const dotTravelDuration = 2.6; // s — dot group travels left → right → left → centre
-const dotSettleDuration = 0.6; // s — each dot fades to its settled opacity
+const signalFadeInDuration = 1;
+const dotTravelDuration = 2.6;
+const dotSettleDuration = 0.6;
 
 // ─── Animation phases ────────────────────────────────────────────────────────
-type Phase =
-  // idle - reset() can be called at any point to return here.
-  | "idle"
-  // entering - Signal icons slide up and fade in.
-  | "entering"
-  // travelling - Dots travel between the sign icons.
-  | "travelling"
-  // settling - Dots are centered and the outermost dots fade in.
-  | "settling"
-  // settled - Settle animation is complete.
-  | "settled";
+type Phase = "idle" | "entering" | "travelling" | "settling" | "settled";
 
 // ─── Opacity helpers ─────────────────────────────────────────────────────────
 const hiddenDotsEachSide = 5;
@@ -55,48 +64,24 @@ const settledEdgeOpacity: Record<number, number> = {
   3: 0.7,
 };
 
-const getTravelOpacity = (i: number): number => {
-  const fromEdge = Math.min(i, totalNumDots - 1 - i);
+const getTravelOpacity = (i: number, total: number): number => {
+  const fromEdge = Math.min(i, total - 1 - i);
   if (fromEdge < hiddenDotsEachSide) return 0;
   const visIdx = i - hiddenDotsEachSide;
-  const visEdge = Math.min(
-    visIdx,
-    totalNumDots - hiddenDotsEachSide * 2 - 1 - visIdx
-  );
+  const visEdge = Math.min(visIdx, total - hiddenDotsEachSide * 2 - 1 - visIdx);
   return travelEdgeOpacity[visEdge] ?? 1;
 };
 
-const getSettledOpacity = (i: number): number => {
-  const fromEdge = Math.min(i, totalNumDots - 1 - i);
+const getSettledOpacity = (i: number, total: number): number => {
+  const fromEdge = Math.min(i, total - 1 - i);
   return settledEdgeOpacity[fromEdge] ?? 1;
 };
 
-const dotOpacities = Array.from({ length: totalNumDots }, (_, i) => {
-  const travelOpacity = getTravelOpacity(i);
-  const settledOpacity = getSettledOpacity(i);
-
-  // Pre-bake the settle transition keyframe for each dot.
-  // Defined here so it's a stable reference across all renders.
-  const settleAnimation = `${keyframes({
-    "0%": { opacity: travelOpacity },
-    "100%": { opacity: settledOpacity },
-  })} ${dotSettleDuration}s ease-in-out forwards`;
-
-  return { travelOpacity, settledOpacity, settleAnimation };
-});
-
-// ─── Keyframes ───────────────────────────────────────────────────────────────
+// ─── Keyframes (gap-independent) ─────────────────────────────────────────────
 const keyframeSignalEnter = `${keyframes({
   "0%": { opacity: 0, transform: "translate(0, 20px)" },
   "100%": { opacity: 1, transform: "translate(0, 0)" },
 })} ${signalFadeInDuration}s ease-in-out forwards`;
-
-const keyframeTravellingDots = keyframes({
-  "0%": { transform: `translateX(-${travelOffset}px)` },
-  "38.46%": { transform: `translateX(${travelOffset}px)` },
-  "76.92%": { transform: `translateX(-${travelOffset}px)` },
-  "100%": { transform: `translateX(0px)` },
-});
 
 // ─── Component ───────────────────────────────────────────────────────────────
 const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
@@ -107,20 +92,72 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
   const [phase, setPhase] = useState<Phase>("idle");
   const [visible, setVisible] = useState<boolean>(true);
 
+  const signalGap = useBreakpointValue({ base: 130, sm: 230, md: 270 }) ?? 230;
+
+  // All dot metrics derived from the current gap
+  const { dotSize, dotGap } = useMemo(
+    () => dotMetricsForGap(signalGap),
+    [signalGap]
+  );
+
+  // Total dots sized to exactly fill the gap when settled
+  const totalNumDots = useMemo(() => dotsForGap(signalGap), [signalGap]);
+
+  // Travel group: ~40% of total, minimum 3, kept odd so it centres cleanly
+  const numTravelDots = useMemo(() => {
+    const n = Math.max(3, Math.round(totalNumDots * TRAVEL_DOT_RATIO));
+    return n % 2 === 0 ? n + 1 : n;
+  }, [totalNumDots]);
+
+  const travelDotsWidth =
+    numTravelDots * dotSize + (numTravelDots - 1) * dotGap;
+
+  // Extra clearance on each side so the travelling dots never touch the icons.
+  const edgePadding = useBreakpointValue({ base: 30, sm: 50, md: 50 }) ?? 230;
+
+  const travelOffset = useMemo(
+    () => (signalGap - travelDotsWidth) / 2 - dotGap * 2 - edgePadding,
+    [signalGap, travelDotsWidth, dotGap, edgePadding]
+  );
+
+  // Per-dot opacities — recalculated when totalNumDots changes
+  const dotOpacities = useMemo(
+    () =>
+      Array.from({ length: totalNumDots }, (_, i) => {
+        const travelOpacity = getTravelOpacity(i, totalNumDots);
+        const settledOpacity = getSettledOpacity(i, totalNumDots);
+        const settleAnimation = `${keyframes({
+          "0%": { opacity: travelOpacity },
+          "100%": { opacity: settledOpacity },
+        })} ${dotSettleDuration}s ease-in-out forwards`;
+        return { travelOpacity, settledOpacity, settleAnimation };
+      }),
+    [totalNumDots]
+  );
+
+  const keyframeTravellingDots = useMemo(
+    () =>
+      keyframes({
+        "0%": { transform: `translateX(-${travelOffset}px)` },
+        "38.46%": { transform: `translateX(${travelOffset}px)` },
+        "76.92%": { transform: `translateX(-${travelOffset}px)` },
+        "100%": { transform: `translateX(0px)` },
+      }),
+    [travelOffset]
+  );
+
   useImperativeHandle(
     ref,
     () => ({
       async showConnecting() {
         setPhase("entering");
         await delayInSec(signalFadeInDuration);
-
         setPhase("travelling");
         await delayInSec(dotTravelDuration);
       },
       async showConnected() {
         setPhase("settling");
         await delayInSec(dotSettleDuration);
-
         setPhase("settled");
       },
       reset() {
@@ -201,8 +238,8 @@ const SignalIcon = ({ ...props }: IconProps) => (
   <Icon
     viewBox="0 0 23.27 23.27"
     color="brand2.500"
-    width={30}
-    height={30}
+    width={{ base: "1.5em", sm: "2em", md: "1.5em" }}
+    height={{ base: "1.5em", sm: "2em", md: "1.5em" }}
     {...props}
   >
     <path

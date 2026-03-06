@@ -251,15 +251,12 @@ const HowItWorksAnimation = () => {
         leftItems={
           <>
             <HandHoldingMicrobit
-              width={200}
-              height={180}
+              px="5%"
+              width={{ base: "100%", sm: "80%", md: "60%" }}
+              height="auto"
               ref={handHoldingMicrobitRef}
             />
-            <MicrobitOnWrist
-              width={200}
-              height={180}
-              ref={microbitOnWristRef}
-            />
+            <MicrobitOnWrist ref={microbitOnWristRef} />
           </>
         }
         middleItems={
@@ -268,7 +265,13 @@ const HowItWorksAnimation = () => {
             <AnimatedArrow ref={codeArrowRef} />
           </>
         }
-        rightItems={<Laptop width={230} height="auto" ref={laptopRef} />}
+        rightItems={
+          <Laptop
+            height="auto"
+            ref={laptopRef}
+            boxSize={{ base: "100%", sm: "80%", md: "60%" }}
+          />
+        }
       />
     </VStack>
   );

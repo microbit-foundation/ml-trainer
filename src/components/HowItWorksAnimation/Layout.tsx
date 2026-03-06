@@ -39,7 +39,7 @@ const Layout = forwardRef<LayoutRef, LayoutProps>(function Signal(
   return (
     <HStack
       alignItems="center"
-      gap={centerLeftDuration ? 0 : 5}
+      gap={centerLeftDuration ? 0 : { base: 1, md: 5 }}
       transition={
         centerLeftDuration ? `gap ${centerLeftDuration}s ease` : undefined
       }
@@ -48,13 +48,13 @@ const Layout = forwardRef<LayoutRef, LayoutProps>(function Signal(
     >
       {/* Left */}
       <Stack
-        width={200}
-        transform={centerLeftDuration ? "scale(1.2)" : "scale(1)"}
+        transform={centerLeftDuration ? "scale(1.2)" : undefined}
         transition={
           centerLeftDuration
             ? `transform ${centerLeftDuration}s ease`
             : undefined
         }
+        alignItems="end"
       >
         {leftItems}
       </Stack>
@@ -69,10 +69,11 @@ const Layout = forwardRef<LayoutRef, LayoutProps>(function Signal(
       </Stack>
       {/* Right */}
       <Stack
-        width={centerLeftDuration ? 0 : 230}
+        width={centerLeftDuration ? 0 : undefined}
         transition={
           centerLeftDuration ? `width ${centerLeftDuration}s ease` : undefined
         }
+        alignItems="start"
       >
         {rightItems}
       </Stack>

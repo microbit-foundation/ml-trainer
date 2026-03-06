@@ -105,17 +105,17 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
       </Icon>
       <Stack
         position="absolute"
-        width="175px"
-        height="122px"
-        left="28px"
-        top="8px"
+        width={{ base: "80%", md: "40%" }}
+        height="80%"
+        left="10%"
+        top="5%"
         alignItems="center"
         justifyContent="center"
       >
         {/* Tick display */}
         {display === "tick" && (
           <Tick
-            size="40px"
+            size="30%"
             animation={`${animation.fadeIn} 0.3s ease-in-out forwards`}
           />
         )}

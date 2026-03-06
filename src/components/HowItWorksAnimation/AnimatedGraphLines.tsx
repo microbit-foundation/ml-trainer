@@ -1,11 +1,11 @@
 import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { useGraphColors } from "../../hooks/use-graph-colors";
 import { useSettings } from "../../store";
 import { useAnimation } from "../AnimationProvider";
 
 const tileWidth = 177;
-const height = 28;
+const baseHeight = 28;
 const viewBox = "0 0 177 28";
 
 // ── Smooth mode: gentle rolling waves ────────────────────
@@ -36,19 +36,13 @@ const motionPaths = {
   chaotic: chaoticWavePaths,
 } as const;
 
-const visibleWindowWidth = 100;
 const animationDuration = 3;
 const fadeOutDuration = 0.4;
 
 type MotionType = keyof typeof motionPaths;
 
-type DisplayState =
-  // Visible.
-  | "visible"
-  // Hidden but still taking up space.
-  | "hidden"
-  // Not displayed at all and not taking up space.
-  | "none";
+type DisplayState = "visible" | "hidden" | "none";
+
 export interface AnimatedGraphLinesRef {
   setDisplayState(state: DisplayState): void;
   play(motion: MotionType, secs?: number): Promise<void>;
@@ -64,6 +58,21 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
     const [fadeDuration, setFadeDuration] = useState<number>(fadeOutDuration);
     const colors = useGraphColors(graphColorScheme);
     const [motion, setMotion] = useState<MotionType>("wavy");
+
+    // Responsive dimensions
+    const visibleWindowWidth =
+      useBreakpointValue({
+        base: 20,
+        sm: 85,
+        md: 100,
+      }) ?? 100;
+
+    const height =
+      useBreakpointValue({
+        sm: 24,
+        md: 28,
+        lg: 32,
+      }) ?? baseHeight;
 
     const waves = useMemo(
       () => [
@@ -101,6 +110,10 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
 
     const paths = motionPaths[motion];
 
+    // Unique keyframe name encodes both motion and window width so the
+    // correct translateX offset is used whenever either changes.
+    const keyframeName = `waveScroll-${motion}-${visibleWindowWidth}`;
+
     return (
       <Flex
         display={displayState === "none" ? "none" : "flex"}
@@ -113,7 +126,7 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
       >
         <Box position="relative" zIndex={2}>
           <style>{`
-            @keyframes waveScroll-${motion} {
+            @keyframes ${keyframeName} {
               from { transform: translateX(${
                 -tileWidth + visibleWindowWidth
               }px); }
@@ -127,7 +140,7 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
             overflow="hidden"
           >
             <Flex
-              animation={`waveScroll-${motion} ${animationDuration}s linear infinite`}
+              animation={`${keyframeName} ${animationDuration}s linear infinite`}
             >
               {[0, 1].map((copy) => (
                 <Box

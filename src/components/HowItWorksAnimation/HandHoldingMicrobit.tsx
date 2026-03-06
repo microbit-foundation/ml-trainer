@@ -48,7 +48,7 @@ const HandHoldingMicrobit = forwardRef<
     return <></>;
   }
   return (
-    <Icon viewBox="0 0 194.7 200.05" {...props}>
+    <Icon viewBox="0 0 194.7 200.05" w="100%" {...props}>
       {ledPattern.map((lit, i) => (
         <circle
           key={i}
