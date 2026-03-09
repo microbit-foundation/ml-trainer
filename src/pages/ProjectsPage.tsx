@@ -71,7 +71,7 @@ const ProjectsPage = () => {
       await loadProjectAndModelFromStorage(id);
       navigate(createDataSamplesPageUrl());
     },
-    [navigate, allProjectData]
+    [navigate]
   );
 
   const {
