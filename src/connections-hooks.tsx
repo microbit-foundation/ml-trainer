@@ -3,12 +3,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  ConnectionStatusEvent,
-  MicrobitRadioBridgeConnection,
-  MicrobitWebBluetoothConnection,
-  MicrobitWebUSBConnection,
-} from "@microbit/microbit-connection";
+import { ConnectionStatusChange } from "@microbit/microbit-connection";
+import { MicrobitBluetoothConnection } from "@microbit/microbit-connection/bluetooth";
+import { MicrobitRadioBridgeConnection } from "@microbit/microbit-connection/radio-bridge";
+import { MicrobitUSBConnection } from "@microbit/microbit-connection/usb";
 import {
   MutableRefObject,
   ReactNode,
@@ -30,15 +28,15 @@ import { useStore } from "./store";
  * Union type for connections that can be used for data collection.
  */
 export type DataConnection =
-  | MicrobitWebBluetoothConnection
+  | MicrobitBluetoothConnection
   | MicrobitRadioBridgeConnection;
 
 /**
  * Union type for connections that can be used for flashing.
  */
 export type FlashConnection =
-  | MicrobitWebBluetoothConnection
-  | MicrobitWebUSBConnection;
+  | MicrobitBluetoothConnection
+  | MicrobitUSBConnection;
 
 /**
  * Tracks mutable connection state.
@@ -46,7 +44,7 @@ export type FlashConnection =
 interface ConnectionsRefValue {
   connection: DataConnection;
   type: DataConnectionType;
-  listener: ((event: ConnectionStatusEvent) => void) | undefined;
+  listener: ((event: ConnectionStatusChange) => void) | undefined;
 }
 
 /**
@@ -58,8 +56,8 @@ interface ConnectionsRefValue {
 export interface Connections {
   // Prefer getDefaultFlashConnection / getDataConnection.
   radioBridge: MicrobitRadioBridgeConnection;
-  bluetooth: MicrobitWebBluetoothConnection;
-  usb: MicrobitWebUSBConnection;
+  bluetooth: MicrobitBluetoothConnection;
+  usb: MicrobitUSBConnection;
 
   initialize(): Promise<void>;
 
@@ -90,7 +88,7 @@ export interface Connections {
    * current data connection.
    */
   setDataConnectionListener(
-    listener: ((event: ConnectionStatusEvent) => void) | undefined
+    listener: ((event: ConnectionStatusChange) => void) | undefined
   ): void;
 }
 
@@ -98,8 +96,8 @@ export interface Connections {
  * Create a Connections object with the given connection instances.
  */
 const createConnections = (
-  usb: MicrobitWebUSBConnection,
-  bluetooth: MicrobitWebBluetoothConnection,
+  usb: MicrobitUSBConnection,
+  bluetooth: MicrobitBluetoothConnection,
   radioBridge: MicrobitRadioBridgeConnection,
   persistType: (type: DataConnectionType) => void,
   ref: MutableRefObject<ConnectionsRefValue>
@@ -128,7 +126,7 @@ const createConnections = (
     },
 
     setDataConnectionListener(
-      listener: ((event: ConnectionStatusEvent) => void) | undefined
+      listener: ((event: ConnectionStatusChange) => void) | undefined
     ) {
       const oldListener = ref.current.listener;
       if (oldListener) {
@@ -165,8 +163,8 @@ const ConnectionsContext = createContext<Connections | null>(null);
 
 interface ConnectionsProviderProps {
   children: ReactNode;
-  usb: MicrobitWebUSBConnection;
-  bluetooth: MicrobitWebBluetoothConnection;
+  usb: MicrobitUSBConnection;
+  bluetooth: MicrobitBluetoothConnection;
   radioBridge: MicrobitRadioBridgeConnection;
 }
 

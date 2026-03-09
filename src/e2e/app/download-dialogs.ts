@@ -5,10 +5,10 @@
  */
 import { expect, Locator, type Page } from "@playwright/test";
 import { ProgressStage } from "@microbit/microbit-connection";
-import { MockWebUSBConnection } from "../../device/mockUsb";
+import { MockUSBConnection } from "../../device/mockUsb";
 import {
   ConnectBehavior,
-  MockWebBluetoothConnection,
+  MockBluetoothConnection,
 } from "../../device/mockBluetooth";
 
 export const downloadDialogTitles: {
@@ -126,7 +126,7 @@ export class DownloadDialogs {
   async mockUsbDeviceNotSelected() {
     await this.page.evaluate(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
-      const usb = (window as any).mockUsb as MockWebUSBConnection;
+      const usb = (window as any).mockUsb as MockUSBConnection;
       usb.mockDeviceId(undefined);
     });
   }
@@ -147,7 +147,7 @@ export class DownloadDialogs {
     await this.page.evaluate((b: ConnectBehavior[]) => {
       const mockBluetooth =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockBluetooth as MockWebBluetoothConnection;
+        (window as any).mockBluetooth as MockBluetoothConnection;
       mockBluetooth.setConnectBehaviors(b);
     }, behaviors);
   }
@@ -183,7 +183,7 @@ export class DownloadDialogs {
       ({ stage, progress }) => {
         const mockBluetooth =
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-          (window as any).mockBluetooth as MockWebBluetoothConnection;
+          (window as any).mockBluetooth as MockBluetoothConnection;
         mockBluetooth.setProgressPauseAt(stage, progress);
       },
       { stage, progress }
@@ -197,7 +197,7 @@ export class DownloadDialogs {
     await this.page.evaluate(() => {
       const mockBluetooth =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockBluetooth as MockWebBluetoothConnection;
+        (window as any).mockBluetooth as MockBluetoothConnection;
       mockBluetooth.resumeProgress();
     });
   }

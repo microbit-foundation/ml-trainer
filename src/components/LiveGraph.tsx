@@ -6,7 +6,7 @@
  */
 import { HStack } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
-import { AccelerometerDataEvent } from "@microbit/microbit-connection";
+import { AccelerometerData } from "@microbit/microbit-connection";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SmoothieChart, TimeSeries } from "@microbit/smoothie";
 import { useAccelerometerListener } from "../hooks/use-accelerometer-listener";
@@ -141,7 +141,7 @@ const LiveGraph = () => {
   });
 
   const accelerometerListener = useCallback(
-    ({ data }: AccelerometerDataEvent) => {
+    (data: AccelerometerData) => {
       const t = new Date().getTime();
       dataRef.current = {
         x: smoothenDataPoint(dataRef.current.x, data.x),

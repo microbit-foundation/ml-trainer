@@ -5,13 +5,13 @@
  */
 import {
   ConnectionStatus,
-  createUniversalHexFlashDataSource,
-  createWebUSBConnection,
   DeviceError,
   FlashOptions,
   ProgressCallback,
   ProgressStage,
 } from "@microbit/microbit-connection";
+import { createUniversalHexFlashDataSource } from "@microbit/microbit-connection/universal-hex";
+import { createUSBConnection } from "@microbit/microbit-connection/usb";
 import { Connections } from "../connections-hooks";
 import { DataConnectionState } from "../data-connection-flow";
 import {
@@ -54,7 +54,7 @@ const buildContext = (
   deps: DownloadDependencies
 ): DownloadFlowContext => {
   const { usb } = deps.connections;
-  const isUsbConnected = usb.status === ConnectionStatus.CONNECTED;
+  const isUsbConnected = usb.status === ConnectionStatus.Connected;
   return {
     hex: state.hex,
     microbitChoice: state.microbitChoice,
@@ -224,7 +224,7 @@ const performConnectFlash = async (
 
   // Use temporary connection for "different" microbit choice
   if (microbitChoice === SameOrDifferentChoice.Different) {
-    connection = createWebUSBConnection();
+    connection = createUSBConnection();
     const serialNumber = deps.connections.usb.getDevice()?.serialNumber;
     if (serialNumber) {
       connection.setRequestDeviceExclusionFilters([{ serialNumber }]);

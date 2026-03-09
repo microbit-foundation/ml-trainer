@@ -8,7 +8,7 @@
  */
 import * as fs from "fs";
 import * as path from "path";
-import { ProgressStage } from "@microbit/microbit-connection";
+import { ConnectionStatus, ProgressStage } from "@microbit/microbit-connection";
 import { test } from "./fixtures";
 
 const screenshotDir = "screenshots/native-bt";
@@ -261,7 +261,7 @@ test.describe("native bluetooth", () => {
 
     // Configure mock to fail on reconnect attempt (the auto-reconnect after disconnect)
     await connectionDialogs.setBluetoothConnectBehaviors([
-      { outcome: "failure", status: "DISCONNECTED" as never },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
     ]);
 
     // Simulate disconnect - this triggers auto-reconnect which will fail

@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Grid, GridProps, HStack, Text } from "@chakra-ui/react";
-import { ButtonEvent } from "@microbit/microbit-connection";
+import { ButtonData } from "@microbit/microbit-connection";
 import { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useMicrobitButtonListener } from "../hooks/use-microbit-button-listener";
@@ -87,7 +87,7 @@ const DataSamplesTable = ({
   );
 
   const buttonListener = useCallback(
-    (e: ButtonEvent) => {
+    (e: ButtonData) => {
       if (!isRecordingDialogOpen && e.state) {
         recordingDialogOnOpen();
       }

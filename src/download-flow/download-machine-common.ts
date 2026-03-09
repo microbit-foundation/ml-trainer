@@ -6,9 +6,9 @@
 import {
   BoardVersion,
   ConnectionStatus as DeviceConnectionStatus,
-  MicrobitWebBluetoothConnection,
-  MicrobitWebUSBConnection,
 } from "@microbit/microbit-connection";
+import { MicrobitBluetoothConnection } from "@microbit/microbit-connection/bluetooth";
+import { MicrobitUSBConnection } from "@microbit/microbit-connection/usb";
 import { DataConnectionType } from "../data-connection-flow";
 import { DownloadStep, SameOrDifferentChoice } from "./download-types";
 import { always, FlowDefinition } from "../state-machine";
@@ -87,7 +87,7 @@ export interface DownloadFlowContext {
   hex?: HexData;
   microbitChoice: SameOrDifferentChoice;
   bluetoothMicrobitName?: string;
-  connection?: MicrobitWebUSBConnection | MicrobitWebBluetoothConnection;
+  connection?: MicrobitUSBConnection | MicrobitBluetoothConnection;
 
   // Injected from external state.
   showPreDownloadHelp: boolean;
@@ -115,7 +115,7 @@ export const guards = {
     _event: DownloadEvent
   ) =>
     ctx.connection !== undefined &&
-    ctx.connection.status === DeviceConnectionStatus.CONNECTED &&
+    ctx.connection.status === DeviceConnectionStatus.Connected &&
     ctx.connectedBoardVersion !== "V1",
 
   shouldShowHelp: (ctx: DownloadFlowContext, _event: DownloadEvent) =>

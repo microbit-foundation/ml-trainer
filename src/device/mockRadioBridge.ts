@@ -3,13 +3,13 @@ import {
   ConnectOptions,
   ConnectionAvailabilityStatus,
   ConnectionStatus,
-  ConnectionStatusEvent,
+  ConnectionStatusChange,
   DeviceConnectionEventMap,
-  MicrobitRadioBridgeConnection,
-  MicrobitWebUSBConnection,
   ServiceConnectionEventMap,
   TypedEventTarget,
 } from "@microbit/microbit-connection";
+import { MicrobitRadioBridgeConnection } from "@microbit/microbit-connection/radio-bridge";
+import { MicrobitUSBConnection } from "@microbit/microbit-connection/usb";
 import { ConnectBehavior } from "./mockBluetooth";
 
 /**
@@ -39,16 +39,16 @@ export class MockRadioBridgeConnection
    * Listener for delegate (USB) status changes.
    * Like the real implementation, we propagate USB disconnects.
    */
-  private delegateStatusListener = (e: ConnectionStatusEvent) => {
+  private delegateStatusListener = (e: ConnectionStatusChange) => {
     // Propagate USB disconnects to the radio bridge status.
     // This simulates the real behavior where USB issues are propagated
     // through the delegateStatusListener.
-    if (e.status === ConnectionStatus.DISCONNECTED) {
-      this.setStatus(ConnectionStatus.DISCONNECTED);
+    if (e.status === ConnectionStatus.Disconnected) {
+      this.setStatus(ConnectionStatus.Disconnected);
     }
   };
 
-  constructor(private delegate: MicrobitWebUSBConnection) {
+  constructor(private delegate: MicrobitUSBConnection) {
     super();
     this.status = this.statusFromDelegate();
     // Listen for delegate (USB) status changes
@@ -59,18 +59,18 @@ export class MockRadioBridgeConnection
   }
 
   private statusFromDelegate(): ConnectionStatus {
-    return this.delegate.status == ConnectionStatus.CONNECTED
-      ? ConnectionStatus.DISCONNECTED
+    return this.delegate.status == ConnectionStatus.Connected
+      ? ConnectionStatus.Disconnected
       : this.delegate.status;
   }
 
   private setStatus(newStatus: ConnectionStatus) {
     const previousStatus = this.status;
     this.status = newStatus;
-    this.dispatchTypedEvent(
-      "status",
-      new ConnectionStatusEvent(newStatus, previousStatus)
-    );
+    this.dispatchEvent("status", {
+      status: newStatus,
+      previousStatus,
+    });
   }
 
   private delay(ms: number = this.statusDelay): Promise<void> {
@@ -89,7 +89,7 @@ export class MockRadioBridgeConnection
    * Simulate the device disconnecting unexpectedly.
    */
   simulateDisconnect() {
-    this.setStatus(ConnectionStatus.DISCONNECTED);
+    this.setStatus(ConnectionStatus.Disconnected);
   }
 
   /**
@@ -116,14 +116,14 @@ export class MockRadioBridgeConnection
       // Use configured behavior
       switch (behavior.outcome) {
         case "success":
-          this.setStatus(ConnectionStatus.CONNECTING);
+          this.setStatus(ConnectionStatus.Connecting);
           await this.delay();
-          this.setStatus(ConnectionStatus.CONNECTED);
+          this.setStatus(ConnectionStatus.Connected);
           await this.delay();
           break;
 
         case "failure":
-          this.setStatus(ConnectionStatus.CONNECTING);
+          this.setStatus(ConnectionStatus.Connecting);
           await this.delay();
           this.setStatus(behavior.status);
           await this.delay();
@@ -137,14 +137,14 @@ export class MockRadioBridgeConnection
     } else {
       // Default behavior: connect via delegate, then establish radio link
       await this.delegate.connect(options);
-      this.setStatus(ConnectionStatus.CONNECTING);
+      this.setStatus(ConnectionStatus.Connecting);
       await this.delay();
-      this.setStatus(ConnectionStatus.CONNECTED);
+      this.setStatus(ConnectionStatus.Connected);
       await this.delay();
     }
   }
 
-  getBoardVersion(): BoardVersion | undefined {
+  getBoardVersion(): BoardVersion {
     return this.delegate.getBoardVersion();
   }
 

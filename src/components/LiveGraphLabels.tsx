@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Box, Icon, Text } from "@chakra-ui/react";
-import { AccelerometerDataEvent } from "@microbit/microbit-connection";
+import { AccelerometerData } from "@microbit/microbit-connection";
 import React, { useCallback, useMemo, useRef } from "react";
 import { RiArrowDropLeftFill } from "react-icons/ri";
 import { useAccelerometerListener } from "../hooks/use-accelerometer-listener";
@@ -56,7 +56,7 @@ const LiveGraphLabels = () => {
   });
 
   const accelerometerListener = useCallback(
-    ({ data }: AccelerometerDataEvent) => {
+    (data: AccelerometerData) => {
       dataRef.current = {
         x: smoothenDataPoint(dataRef.current.x, data.x),
         y: smoothenDataPoint(dataRef.current.y, data.y),

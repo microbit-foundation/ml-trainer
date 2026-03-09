@@ -177,7 +177,7 @@ test.describe("radio reconnection", () => {
 
     // Auto-reconnect fails, then user reconnect succeeds
     await connectionDialogs.setRadioBridgeConnectBehaviors([
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
       { outcome: "success" },
     ]);
 
@@ -197,8 +197,8 @@ test.describe("radio reconnection", () => {
     // 1. Auto-reconnect fails → ConnectionLost (hasFailedOnce stays true)
     // 2. User retry fails → StartOver
     await connectionDialogs.setRadioBridgeConnectBehaviors([
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
-      { outcome: "failure", status: ConnectionStatus.DISCONNECTED },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
     ]);
 
     // Simulate disconnect - auto-reconnect fails → ConnectionLost
