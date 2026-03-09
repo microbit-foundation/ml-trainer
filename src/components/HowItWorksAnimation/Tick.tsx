@@ -1,3 +1,8 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Icon, IconProps } from "@chakra-ui/react";
 
 interface TickProps extends IconProps {

@@ -1,3 +1,8 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Grid, GridItem, useToken } from "@chakra-ui/react";
 import {
   forwardRef,

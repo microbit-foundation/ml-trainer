@@ -1,3 +1,8 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Icon, keyframes, Stack, StackProps } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { ledPatternOptions, litLedColor, unlitLedColor } from "./utils";

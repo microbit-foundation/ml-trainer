@@ -1,3 +1,8 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
 import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { useGraphColors } from "../../hooks/use-graph-colors";

@@ -1,3 +1,8 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Box, Icon, IconProps, Stack, Text, VStack } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";

@@ -1,3 +1,8 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { Box, Icon, IconProps, keyframes } from "@chakra-ui/react";
 import { useImperativeHandle, forwardRef, useState } from "react";
 import { useAnimation } from "../AnimationProvider";

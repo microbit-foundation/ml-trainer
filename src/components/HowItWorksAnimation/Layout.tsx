@@ -1,3 +1,8 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { HStack, Stack, StackProps } from "@chakra-ui/react";
 import { ReactNode, forwardRef, useImperativeHandle, useState } from "react";
 import { useAnimation } from "../AnimationProvider";
