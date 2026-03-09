@@ -10,12 +10,9 @@ import {
 } from "@chakra-ui/react";
 import { RefObject, useCallback } from "react";
 import { useIntl } from "react-intl";
-import { useNavigate } from "react-router";
 import { ProjectNameDialogReason } from "../project-utils";
 import { shortScreenHeightBreakpoint } from "../responsive";
 import { ProjectDataWithActions } from "../storage";
-import { loadProjectAndModelFromStorage } from "../store";
-import { createDataSamplesPageUrl } from "../urls";
 import { timeAgo } from "../utils/datetime";
 import ProjectCardActions from "./ProjectCardActions";
 
@@ -26,7 +23,7 @@ interface ProjectCardProps {
   onSelected?: (id: string) => void;
   onSkipToToolbar?: () => void;
   onDeleteProject: (id?: string) => void;
-  onOpenProject: (id?: string) => void;
+  onOpenProject: (id: string) => void;
   onRenameDuplicateProject: (
     reason: ProjectNameDialogReason,
     id?: string
@@ -45,17 +42,13 @@ const ProjectCard = ({
   onRenameDuplicateProject,
   setFinalFocusRef,
 }: ProjectCardProps) => {
-  const navigate = useNavigate();
   const intl = useIntl();
   const { id, name, actions, timestamp } = projectData;
   const hasCheckbox = !!onSelected;
 
   const handleLoadProject = useCallback(
-    async (_e: React.MouseEvent) => {
-      await loadProjectAndModelFromStorage(id);
-      navigate(createDataSamplesPageUrl());
-    },
-    [id, navigate]
+    (_e: React.MouseEvent) => onOpenProject(id),
+    [id, onOpenProject]
   );
 
   return (

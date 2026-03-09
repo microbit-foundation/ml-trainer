@@ -586,6 +586,21 @@ const createMlStore = (logging: Logging) => {
             () => storage.getProject(id),
             false
           );
+
+          // If the stored project was renamed or duplicated while not active,
+          // the stored name will need syncing to the project.
+          const storedName = (
+            await storageWithErrHandling(
+              () => storage.getAllProjectData(),
+              false
+            )
+          ).find((storedProject) => storedProject.id === id)!.name;
+
+          persistedData.project = renameProject(
+            persistedData.project,
+            storedName
+          );
+
           projectSessionStorage.setProjectId(id);
           set({
             // Get data window from actions on app load.

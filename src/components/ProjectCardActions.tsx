@@ -27,7 +27,7 @@ interface ProjectCardMenuProps {
   isSelected?: boolean;
   onSelected?: (id: string) => void;
   onDeleteProject: (id?: string) => void;
-  onOpenProject: (id?: string) => void;
+  onOpenProject: (id: string) => void;
   onRenameDuplicateProject: (
     reason: ProjectNameDialogReason,
     id?: string
