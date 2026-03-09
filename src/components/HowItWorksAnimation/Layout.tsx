@@ -48,13 +48,18 @@ const Layout = forwardRef<LayoutRef, LayoutProps>(function Signal(
     >
       {/* Left */}
       <Stack
-        transform={centerLeftDuration ? "scale(1.2)" : undefined}
+        width={centerLeftDuration ? "45%" : undefined}
+        transform={
+          centerLeftDuration
+            ? { base: "scale(1)", sm: "scale(1.2)" }
+            : undefined
+        }
         transition={
           centerLeftDuration
             ? `transform ${centerLeftDuration}s ease`
             : undefined
         }
-        alignItems="end"
+        alignItems={centerLeftDuration ? "center" : "end"}
       >
         {leftItems}
       </Stack>

@@ -105,7 +105,7 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
       </Icon>
       <Stack
         position="absolute"
-        width={{ base: "80%", md: "40%" }}
+        width={{ base: "80%", sm: "60%", md: "40%" }}
         height="80%"
         left="10%"
         top="5%"
@@ -120,12 +120,14 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
           />
         )}
         {/* Data collection display */}
-        {display === "data-collection" && (
-          <DataSamplesCollection color="gray.600" ref={dataSamplesRef} />
-        )}
+        <DataSamplesCollection
+          color="gray.600"
+          ref={dataSamplesRef}
+          display={display === "data-collection" ? "block" : "none"}
+        />
         {/* Training display */}
         <VStack display={display === "training" ? "flex" : "none"}>
-          <Text fontWeight="bold">
+          <Text fontWeight="bold" fontSize={{ base: "sm", sm: "sm", md: "md" }}>
             <FormattedMessage id="animation-training" />
           </Text>
           <AnimatedProgressBar ref={progressBarRef} />

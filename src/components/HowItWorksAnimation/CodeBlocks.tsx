@@ -7,7 +7,20 @@ export interface CodeBlockRef {
   reset(): void;
 }
 
-const innerBlockKeyframe = keyframes({
+const innerBlockKeyframeBase = keyframes({
+  "0%": {
+    left: "100%",
+    top: "80%",
+    transform: "rotate(-30deg)",
+  },
+  "100%": {
+    left: "10%",
+    top: "17%",
+    transform: "rotate(0deg)",
+  },
+});
+
+const innerBlockKeyframeSm = keyframes({
   "0%": {
     left: "100%",
     top: "80%",
@@ -19,6 +32,9 @@ const innerBlockKeyframe = keyframes({
     transform: "rotate(0deg)",
   },
 });
+
+const outerBlockSize = { base: "4em", sm: "6em" };
+const innerBlockSize = { base: "3em", sm: "5em" };
 
 const CodeBlock = forwardRef<CodeBlockRef, IconProps>(function CodeBlock(
   { ...props },
@@ -42,13 +58,21 @@ const CodeBlock = forwardRef<CodeBlockRef, IconProps>(function CodeBlock(
   );
   return (
     <Box position="relative">
-      <OuterCodeBlock width="6em" height="6em" color="brand.500" {...props} />
+      <OuterCodeBlock
+        width={outerBlockSize}
+        height={outerBlockSize}
+        color="brand.500"
+        {...props}
+      />
       {duration && (
         <InnerCodeBlock
           position="absolute"
-          width="5em"
-          height="5em"
-          animation={`${innerBlockKeyframe} ${duration}s ease-in-out forwards`}
+          width={innerBlockSize}
+          height={innerBlockSize}
+          animation={{
+            base: `${innerBlockKeyframeBase} ${duration}s ease-in-out forwards`,
+            sm: `${innerBlockKeyframeSm} ${duration}s ease-in-out forwards`,
+          }}
           color="brand.500"
         />
       )}

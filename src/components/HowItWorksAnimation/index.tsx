@@ -176,11 +176,11 @@ const HowItWorksAnimation = () => {
   const runUse = useCallback(async () => {
     // Setup
     microbitOnWristRef.current?.show({ ledPattern: ledPatternOptions.default });
+    stepFlowRef.current?.setStep(4, "active");
+    await layoutRef.current?.playCenteringLeft();
     signalRef.current?.hide();
     laptopRef.current?.hide();
     codeArrowRef.current?.setDisplayState("none");
-    stepFlowRef.current?.setStep(4, "active");
-    await layoutRef.current?.playCenteringLeft();
     await delayInSec(1);
     microbitOnWristRef.current?.show({
       ledPattern: ledPatternOptions.heart,
@@ -241,6 +241,7 @@ const HowItWorksAnimation = () => {
       gap={7}
       opacity={visible ? 1 : 0}
       transition={`opacity ${fadeInOutDuration}s ease`}
+      height={{ base: "auto", md: "20em" }}
     >
       <HStack justifyContent="center" width="100%" gap={5}>
         <StepFlow ref={stepFlowRef} />

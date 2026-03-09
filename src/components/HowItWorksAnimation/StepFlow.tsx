@@ -1,4 +1,4 @@
-import { HStack, Icon, IconProps } from "@chakra-ui/react";
+import { Icon, IconProps, Stack } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import StepTickPill, { StepTickPillRef } from "./StepTickPill";
@@ -7,9 +7,14 @@ const inactiveColor = "gray.500";
 const activeColor = "brand2.500";
 
 type ArrowState = "hidden" | "active" | "inactive";
-const arrowColors: Record<ArrowState, string> = {
+const largeArrowColors: Record<ArrowState, string> = {
   hidden: "transparent",
   active: activeColor,
+  inactive: inactiveColor,
+};
+const smallArrowColors: Record<ArrowState, string> = {
+  hidden: "transparent",
+  active: inactiveColor,
   inactive: inactiveColor,
 };
 
@@ -34,7 +39,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
     useRef<StepTickPillRef>(null),
   ]);
 
-  const [arrowColor, setArrowColor] = useState<string>(arrowColors.hidden);
+  const [arrowState, setArrowState] = useState<ArrowState>("hidden");
 
   useImperativeHandle(
     stepFlowRef,
@@ -53,8 +58,8 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
             });
           }
           // Set arrow as inactive if past step 3 (index 2).
-          if (stepIdx > 2 && arrowColor !== arrowColors.inactive) {
-            setArrowColor(arrowColors.inactive);
+          if (stepIdx > 2 && arrowState !== "inactive") {
+            setArrowState("inactive");
           }
           if (state === "active") {
             step.setState({ active: true, completed: false });
@@ -67,24 +72,28 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
           stepRefs.current.forEach((ref) => {
             ref.current?.setState({ active: false });
           });
-          setArrowColor(arrowColors.inactive);
+          setArrowState("inactive");
         },
-        setArrows(state) {
-          setArrowColor(arrowColors[state]);
-        },
+        setArrows: setArrowState,
         reset() {
           stepRefs.current.forEach((ref) => {
             ref.current?.setState({ active: false, completed: false });
           });
-          setArrowColor(arrowColors.hidden);
+          setArrowState("hidden");
         },
       };
     },
-    [arrowColor]
+    [arrowState]
   );
 
   return (
-    <HStack justifyContent="center" width="100%" gap={5} position="relative">
+    <Stack
+      direction={{ base: "column", md: "row" }}
+      justifyContent="center"
+      width={{ base: "13em", md: "100%" }}
+      gap={{ base: 0, sm: 0, md: 5 }}
+      position="relative"
+    >
       <StepTickPill
         text={intl.formatMessage({ id: "animation-step-1" })}
         ref={stepRefs.current[0]}
@@ -95,20 +104,44 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
         ref={stepRefs.current[1]}
         {...commonStepTickPillProps}
       />
+      {/* Arrows for md / lg screen sizes */}
       <ArrowIcon
+        display={{ base: "none", sm: "none", md: "block" }}
         position="absolute"
         left="44%"
         width="3em"
         top="30%"
-        color={arrowColor}
+        color={largeArrowColors[arrowState]}
       />
       <ArrowIcon
+        display={{ base: "none", sm: "none", md: "block" }}
         position="absolute"
         left="44%"
         width="3em"
-        bottom="-20%"
+        bottom="-22%"
         transform="rotate(180deg)"
-        color={arrowColor}
+        color={largeArrowColors[arrowState]}
+      />
+      {/* Arrows for base / sm screen sizes */}
+      <ArrowIcon
+        display={{ sm: "block", md: "none" }}
+        position="absolute"
+        zIndex={2}
+        top="32%"
+        left="2em"
+        width="2em"
+        transform="rotate(-90deg)"
+        color={smallArrowColors[arrowState]}
+      />
+      <ArrowIcon
+        display={{ sm: "block", md: "none" }}
+        position="absolute"
+        zIndex={2}
+        top="32%"
+        right="2em"
+        width="2em"
+        transform="rotate(90deg)"
+        color={smallArrowColors[arrowState]}
       />
       <StepTickPill
         text={intl.formatMessage({ id: "animation-step-3" })}
@@ -125,7 +158,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
         ref={stepRefs.current[4]}
         {...commonStepTickPillProps}
       />
-    </HStack>
+    </Stack>
   );
 });
 

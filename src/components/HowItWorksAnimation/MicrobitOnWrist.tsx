@@ -1,4 +1,4 @@
-import { Icon, IconProps, keyframes, Stack } from "@chakra-ui/react";
+import { Icon, keyframes, Stack, StackProps } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { ledPatternOptions, litLedColor, unlitLedColor } from "./utils";
 import HeartLedIcon from "./HeartLedIcon";
@@ -56,7 +56,7 @@ const defaultShowOption: ShowOption = {
   backgroundMode: "default",
 };
 
-interface MicrobitOnWristProps extends IconProps {}
+interface MicrobitOnWristProps extends StackProps {}
 
 export interface MicrobitOnWristRef {
   show(option?: ShowOption): void;
@@ -111,14 +111,19 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
     }
 
     return (
-      <Stack position="relative">
+      <Stack
+        position="relative"
+        width={{ base: "100%", sm: "60%", md: "50%" }}
+        height="auto"
+        {...props}
+      >
         {/* Sparkly heart background */}
         {backgroundMode === "sparkly-heart" &&
           [
             { delay: 0 },
-            { delay: 1, top: "50%", left: "-20%" },
-            { delay: 2, top: "25%", left: "5%" },
-            { delay: 3, top: "80%", left: "-20%" },
+            { delay: 1, top: "50%", left: "-25%" },
+            { delay: 2, top: "25%", left: "-50%" },
+            { delay: 3, top: "80%", left: "-30%" },
           ].map(({ delay, ...props }, i) => (
             <HeartLedIcon
               key={i}
@@ -137,7 +142,7 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
             { delay: 1, top: "80%", left: "-20%" },
             { delay: 2, top: "80%", right: "20%" },
             { delay: 3, top: "50%", right: "-10%" },
-          ].map(({ delay, ...props }, i) => (
+          ].map(({ delay, top, left, right }, i) => (
             <CrossLedIcon
               key={i}
               size="2em"
@@ -145,11 +150,15 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
               animation={`${sparkle} 2s ease-in-out ${delay * 0.5}s`}
               opacity={0}
               color={litLedColor}
-              {...props}
+              top={top}
+              left={left}
+              right={right}
+              width="15%"
+              height="15%"
             />
           ))}
         <Icon
-          viewBox="0 0 222.61 236.16"
+          viewBox="0 0 250.61 236.16"
           fill="red"
           width="100%"
           height="auto"
@@ -164,7 +173,6 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
                 animation: `${animationKeyframes.wave} 3s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite`,
               }
             : {})}
-          {...props}
         >
           {/* Hand outline */}
           <path

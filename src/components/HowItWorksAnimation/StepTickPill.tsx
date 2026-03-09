@@ -3,14 +3,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, useToken, VStack } from "@chakra-ui/react";
-import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
+import { Button, HStack, useToken, VStack } from "@chakra-ui/react";
+import { forwardRef, useImperativeHandle, useState } from "react";
 import Tick from "./Tick";
-
-const fontWeight = 700;
-const fontSize = 20;
-const height = 40;
-const paddingx = 20;
 
 interface StepTickPillProps {
   text: string;
@@ -45,66 +40,53 @@ const StepTickPill = forwardRef<StepTickPillRef, StepTickPillProps>(
     );
 
     const fontFamily = useToken("fonts", "heading");
-    const pillWidth = useMemo(
-      () =>
-        getTextWidth({ text, fontFamily, fontWeight, fontSize }) + paddingx * 2,
-      [fontFamily, text]
-    );
     const color = state.active ? activeColor : inactiveColor;
     return (
-      <VStack gap={3}>
-        {/* Tick icon */}
-        <Tick size="30px" color={state.completed ? color : "transparent"} />
-        {/* Pill with step name */}
-        <Icon
-          viewBox={`0 0 ${pillWidth} ${height}`}
-          width={pillWidth}
-          height="37px"
-          color={color}
+      <>
+        <VStack
+          gap={3}
+          alignItems="center"
+          display={{ base: "none", md: "flex" }}
         >
-          <rect
-            x="0"
-            y="0"
-            width={pillWidth}
-            height={height}
-            rx={height / 2}
-            ry={height / 2}
-            fill="currentColor"
-          />
-          <text
-            fill="#fff"
+          <Tick size="30px" color={state.completed ? color : "transparent"} />
+          <Button
+            as="div"
+            backgroundColor={color}
+            textColor="white"
+            border="none"
             fontFamily={fontFamily}
-            fontSize={fontSize}
-            fontWeight={fontWeight}
-            x={pillWidth / 2}
-            y={height / 2}
-            dominantBaseline="central"
-            textAnchor="middle"
+            py={0}
           >
             {text}
-          </text>
-        </Icon>
-      </VStack>
+          </Button>
+        </VStack>
+        <HStack
+          gap={5}
+          m="auto"
+          display={{ base: "flex", md: "none" }}
+          w="100%"
+        >
+          <Button
+            as="div"
+            backgroundColor={state.active ? activeColor : "transparent"}
+            textColor={state.active ? "white" : activeColor}
+            border="none"
+            fontFamily={fontFamily}
+            size="sm"
+            width="100%"
+          >
+            {text}
+          </Button>
+          <Tick
+            position="absolute"
+            size="15px"
+            color={state.completed ? inactiveColor : "transparent"}
+            right="0.5em"
+          />
+        </HStack>
+      </>
     );
   }
 );
-const getTextWidth = ({
-  text,
-  fontFamily,
-  fontSize,
-  fontWeight,
-}: {
-  text: string;
-  fontFamily: string;
-  fontSize: number;
-  fontWeight: number;
-}) => {
-  const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d");
-  context!.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
-  const width = context!.measureText(text).width;
-  canvas.remove();
-  return width;
-};
 
 export default StepTickPill;

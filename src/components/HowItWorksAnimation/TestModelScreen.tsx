@@ -20,7 +20,7 @@ export interface TestModelScreenRef {
 }
 
 export const testModeldurationInSec = totalDuration;
-
+const iconSize = { base: "1em", sm: "1.25em", md: "1.75em" };
 const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
   _,
   ref
@@ -58,10 +58,20 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
   );
 
   return (
-    <Grid templateColumns="2.5em 1fr" rowGap={3} alignItems="center">
+    <Grid
+      templateColumns={{
+        base: `${iconSize.base} 1fr`,
+        sm: `${iconSize.sm} 1fr`,
+        md: `${iconSize.md} 1fr`,
+      }}
+      columnGap={2}
+      rowGap={{ sm: 1, md: 3 }}
+      alignItems="center"
+    >
       <GridItem w="auto">
         <HeartLedIcon
-          size="1.75em"
+          width={iconSize}
+          height={iconSize}
           color="gray.600"
           animation={
             playing === "heart" ? `${colorChange} ${totalDuration}s` : undefined
@@ -78,7 +88,8 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
       </GridItem>
       <GridItem>
         <CrossLedIcon
-          size="1.75em"
+          width={iconSize}
+          height={iconSize}
           color="gray.600"
           animation={
             playing === "cross" ? `${colorChange} ${totalDuration}s` : undefined
