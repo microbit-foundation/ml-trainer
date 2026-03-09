@@ -3,8 +3,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, VStack } from "@chakra-ui/react";
+import { HStack, VisuallyHidden, VStack, Image } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useAnimation } from "../AnimationProvider";
 import AnimatedArrow, { AnimatedArrowRef } from "./AnimatedArrow";
 import AnimatedGraphLines, {
   AnimatedGraphLinesRef,
@@ -20,11 +21,12 @@ import Signal, { SignalRef } from "./Signal";
 import StepFlow, { StepFlowRef } from "./StepFlow";
 import { testModeldurationInSec } from "./TestModelScreen";
 import { ledPatternOptions } from "./utils";
-import { useAnimation } from "../AnimationProvider";
+import { useIntl } from "react-intl";
 
 const fadeInOutDuration = 2; //s
 
 const HowItWorksAnimation = () => {
+  const intl = useIntl();
   const { delayInSec, restart } = useAnimation();
   const stepFlowRef = useRef<StepFlowRef>(null);
   const signalRef = useRef<SignalRef>(null);
@@ -237,44 +239,49 @@ const HowItWorksAnimation = () => {
   ]);
 
   return (
-    <VStack
-      gap={7}
-      opacity={visible ? 1 : 0}
-      transition={`opacity ${fadeInOutDuration}s ease`}
-      height={{ base: "auto", md: "20em" }}
-    >
-      <HStack justifyContent="center" width="100%" gap={5}>
-        <StepFlow ref={stepFlowRef} />
-      </HStack>
-      <Signal ref={signalRef} />
-      <Layout
-        ref={layoutRef}
-        leftItems={
-          <>
-            <HandHoldingMicrobit
-              px="5%"
-              width={{ base: "100%", sm: "80%", md: "60%" }}
+    <>
+      <VisuallyHidden>
+        <Image aria-label={intl.formatMessage({ id: "animation-iframe" })} />
+      </VisuallyHidden>
+      <VStack
+        gap={7}
+        opacity={visible ? 1 : 0}
+        transition={`opacity ${fadeInOutDuration}s ease`}
+        height={{ base: "auto", md: "20em" }}
+      >
+        <HStack justifyContent="center" width="100%" gap={5}>
+          <StepFlow ref={stepFlowRef} />
+        </HStack>
+        <Signal ref={signalRef} />
+        <Layout
+          ref={layoutRef}
+          leftItems={
+            <>
+              <HandHoldingMicrobit
+                px="5%"
+                width={{ base: "100%", sm: "80%", md: "60%" }}
+                height="auto"
+                ref={handHoldingMicrobitRef}
+              />
+              <MicrobitOnWrist ref={microbitOnWristRef} />
+            </>
+          }
+          middleItems={
+            <>
+              <AnimatedGraphLines ref={animatedGraphLinesRef} />
+              <AnimatedArrow ref={codeArrowRef} />
+            </>
+          }
+          rightItems={
+            <Laptop
               height="auto"
-              ref={handHoldingMicrobitRef}
+              ref={laptopRef}
+              boxSize={{ base: "100%", sm: "80%", md: "60%" }}
             />
-            <MicrobitOnWrist ref={microbitOnWristRef} />
-          </>
-        }
-        middleItems={
-          <>
-            <AnimatedGraphLines ref={animatedGraphLinesRef} />
-            <AnimatedArrow ref={codeArrowRef} />
-          </>
-        }
-        rightItems={
-          <Laptop
-            height="auto"
-            ref={laptopRef}
-            boxSize={{ base: "100%", sm: "80%", md: "60%" }}
-          />
-        }
-      />
-    </VStack>
+          }
+        />
+      </VStack>
+    </>
   );
 };
 
