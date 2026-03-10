@@ -13,13 +13,14 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { useImperativeHandle, forwardRef, useState, useMemo } from "react";
-import { animation } from "./utils";
+import { animations } from "./utils";
 import { useAnimation } from "../AnimationProvider";
 
 interface SignalProps extends StackProps {}
 export interface SignalRef {
-  showConnecting(): Promise<void>;
-  showConnected(): Promise<void>;
+  playConnecting(): Promise<void>;
+  playConnected(): Promise<void>;
+  connected(): void;
   reset(): void;
   hide(): void;
 }
@@ -93,9 +94,9 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
   { ...props }: SignalProps,
   ref
 ) {
-  const { delayInSec } = useAnimation();
+  const { delayInSec, withPlayState } = useAnimation();
   const [phase, setPhase] = useState<Phase>("idle");
-  const [visible, setVisible] = useState<boolean>(true);
+  const [visible, setVisible] = useState<boolean>(false);
 
   const signalGap = useBreakpointValue({ base: 130, sm: 230, md: 270 }) ?? 230;
 
@@ -154,20 +155,26 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
   useImperativeHandle(
     ref,
     () => ({
-      async showConnecting() {
+      async playConnecting() {
+        setVisible(true);
         setPhase("entering");
         await delayInSec(signalFadeInDuration);
         setPhase("travelling");
         await delayInSec(dotTravelDuration);
       },
-      async showConnected() {
+      async playConnected() {
+        setVisible(true);
         setPhase("settling");
         await delayInSec(dotSettleDuration);
         setPhase("settled");
       },
+      connected() {
+        setVisible(true);
+        setPhase("settled");
+      },
       reset() {
         setPhase("idle");
-        setVisible(true);
+        setVisible(false);
       },
       hide() {
         setVisible(false);
@@ -184,12 +191,16 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
       gap={`${signalGap}px`}
       position="relative"
       animation={
-        !visible ? `${animation.fadeOut} 0.3s ease-in-out forwards` : undefined
+        !visible
+          ? withPlayState(`${animations.fadeOut} 0.3s ease-in-out forwards`)
+          : undefined
       }
       {...props}
     >
       <SignalIcon
-        animation={phase !== "idle" ? keyframeSignalEnter : undefined}
+        animation={
+          phase === "entering" ? withPlayState(keyframeSignalEnter) : undefined
+        }
       />
 
       {/* Dot layer — centred over the gap between the signal icons */}
@@ -211,8 +222,16 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
             display="flex"
             alignItems="center"
             gap={`${dotGap}px`}
-            animation={`${keyframeTravellingDots} ${dotTravelDuration}s cubic-bezier(0.45, 0, 0.55, 1) forwards`}
-            style={{ transform: `translateX(-${travelOffset}px)` }}
+            animation={
+              phase !== "settled"
+                ? withPlayState(
+                    `${keyframeTravellingDots} ${dotTravelDuration}s cubic-bezier(0.45, 0, 0.55, 1) forwards`
+                  )
+                : undefined
+            }
+            transform={
+              phase !== "settled" ? `translateX(-${travelOffset}px)` : undefined
+            }
           >
             {dotOpacities.map(
               ({ travelOpacity, settledOpacity, settleAnimation }, i) => (
@@ -224,7 +243,11 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
                   height={`${dotSize}px`}
                   flexShrink={0}
                   opacity={phase === "settled" ? settledOpacity : travelOpacity}
-                  animation={phase === "settling" ? settleAnimation : undefined}
+                  animation={
+                    phase === "settling"
+                      ? withPlayState(settleAnimation)
+                      : undefined
+                  }
                 />
               )
             )}
@@ -233,7 +256,9 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
       </Box>
 
       <SignalIcon
-        animation={phase !== "idle" ? keyframeSignalEnter : undefined}
+        animation={
+          phase === "entering" ? withPlayState(keyframeSignalEnter) : undefined
+        }
       />
     </HStack>
   );

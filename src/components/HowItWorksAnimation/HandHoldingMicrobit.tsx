@@ -5,7 +5,7 @@
  */
 import { Icon, IconProps } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { ledPatternOptions, litLedColor, unlitLedColor } from "./utils";
+import { ledPatterns, litLedColor, unlitLedColor } from "./utils";
 
 interface HandHoldingMicrobitProps extends IconProps {}
 
@@ -22,23 +22,21 @@ const HandHoldingMicrobit = forwardRef<
   HandHoldingMicrobitRef,
   HandHoldingMicrobitProps
 >(function HandHoldingMicrobit({ ...props }: HandHoldingMicrobitProps, ref) {
-  const [ledPattern, setLedPattern] = useState<number[]>(
-    ledPatternOptions.default
-  );
+  const [ledPattern, setLedPattern] = useState<number[]>(ledPatterns.none);
   const [visible, setVisible] = useState<boolean>(false);
   useImperativeHandle(
     ref,
     () => {
       return {
         displaySmileLed() {
-          setLedPattern(ledPatternOptions.smile);
+          setLedPattern(ledPatterns.smile);
         },
         show() {
           setVisible(true);
         },
         reset() {
           setVisible(false);
-          setLedPattern(ledPatternOptions.default);
+          setLedPattern(ledPatterns.none);
         },
       };
     },

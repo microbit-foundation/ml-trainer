@@ -18,10 +18,13 @@ import AnimatedGauge, {
 } from "./AnimatedGauge";
 import CrossLedIcon from "./CrossLedIcon";
 import HeartLedIcon from "./HeartLedIcon";
+import { useAnimation } from "../AnimationProvider";
 
 export interface TestModelScreenRef {
   playAction1(): Promise<void>;
   playAction2(): Promise<void>;
+  show(): void;
+  reset(): void;
 }
 
 export const testModeldurationInSec = totalDuration;
@@ -41,12 +44,17 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
   );
 
   const [playing, setPlaying] = useState<"heart" | "cross" | false>(false);
+  const [visible, setVisible] = useState<boolean>(false);
   const gaugeRef1 = useRef<AnimatedGaugeRef>(null);
   const gaugeRef2 = useRef<AnimatedGaugeRef>(null);
+  const { withPlayState } = useAnimation();
 
   useImperativeHandle(
     ref,
     () => ({
+      show() {
+        setVisible(true);
+      },
       async playAction1() {
         setPlaying("heart");
         await gaugeRef1.current?.play();
@@ -56,6 +64,7 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
         await gaugeRef2.current?.play();
       },
       reset() {
+        setVisible(false);
         setPlaying(false);
       },
     }),
@@ -72,6 +81,7 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
       columnGap={2}
       rowGap={{ sm: 1, md: 3 }}
       alignItems="center"
+      display={visible ? "grid" : "none"}
     >
       <GridItem w="auto">
         <HeartLedIcon
@@ -79,7 +89,9 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
           height={iconSize}
           color="gray.600"
           animation={
-            playing === "heart" ? `${colorChange} ${totalDuration}s` : undefined
+            playing === "heart"
+              ? withPlayState(`${colorChange} ${totalDuration}s`)
+              : undefined
           }
         />
       </GridItem>
@@ -97,7 +109,9 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
           height={iconSize}
           color="gray.600"
           animation={
-            playing === "cross" ? `${colorChange} ${totalDuration}s` : undefined
+            playing === "cross"
+              ? withPlayState(`${colorChange} ${totalDuration}s`)
+              : undefined
           }
         />
       </GridItem>

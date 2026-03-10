@@ -70,6 +70,7 @@ const Layout = forwardRef<LayoutRef, LayoutProps>(function Signal(
       </Stack>
       {/* Middle */}
       <Stack
+        alignItems="center"
         width={centerLeftDuration ? 0 : undefined}
         transition={
           centerLeftDuration ? `width ${centerLeftDuration}s ease` : undefined

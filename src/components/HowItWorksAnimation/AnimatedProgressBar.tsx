@@ -20,7 +20,7 @@ export interface AnimatedProgressBarRef {
 
 const AnimatedProgressBar = forwardRef<AnimatedProgressBarRef>(
   function AnimatedProgressBar(_, ref) {
-    const { delayInSec } = useAnimation();
+    const { delayInSec, withPlayState } = useAnimation();
     const [durationInSecs, setDuration] = useState<null | number>(null);
     useImperativeHandle(
       ref,
@@ -52,7 +52,9 @@ const AnimatedProgressBar = forwardRef<AnimatedProgressBarRef>(
           rounded="full"
           zIndex={2}
           background="brand2.500"
-          animation={`${progressBar} ${durationInSecs}s ease-in-out forwards`}
+          animation={withPlayState(
+            `${progressBar} ${durationInSecs}s ease-in-out forwards`
+          )}
           bottom={0}
           display="block"
           left={0}

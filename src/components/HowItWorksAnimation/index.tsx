@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, VisuallyHidden, VStack, Image } from "@chakra-ui/react";
+import { HStack, VisuallyHidden, VStack, Box, Button } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAnimation } from "../AnimationProvider";
 import AnimatedArrow, { AnimatedArrowRef } from "./AnimatedArrow";
@@ -20,184 +20,278 @@ import MicrobitOnWrist, { MicrobitOnWristRef } from "./MicrobitOnWrist";
 import Signal, { SignalRef } from "./Signal";
 import StepFlow, { StepFlowRef } from "./StepFlow";
 import { testModeldurationInSec } from "./TestModelScreen";
-import { ledPatternOptions } from "./utils";
 import { useIntl } from "react-intl";
 
 const fadeInOutDuration = 2; //s
+const duration = {
+  connect: {
+    completed: 0.5, // Pause after completion.
+  },
+  collectData: {
+    prep: 1, // Before collecting data.
+    action: dataCollectionDurationInSec, // Collecting a data samples row.
+  },
+  training: {
+    action: 2, // Training duration.
+  },
+  testingModel: {
+    prep: 1, // Before testing model.
+    action: testModeldurationInSec, // Testing an action.
+    pause: 1, // Pause between testing actions.
+    stepPause: 0.5, // Pause between steps.
+  },
+  code: {
+    prep: 1.3, // Before coding.
+    download: 2, // Downloading code.
+  },
+  use: {
+    prep: 1, // Before using.
+    pauseBeforeAction: 1, // Pause before action.
+    action: 3, // Trying out each action.
+  },
+};
 
 const HowItWorksAnimation = () => {
   const intl = useIntl();
-  const { delayInSec, restart } = useAnimation();
+  const { delayInSec, restartAbortController, resume, pause, isPaused } =
+    useAnimation();
   const stepFlowRef = useRef<StepFlowRef>(null);
   const signalRef = useRef<SignalRef>(null);
   const codeArrowRef = useRef<AnimatedArrowRef>(null);
   const handHoldingMicrobitRef = useRef<HandHoldingMicrobitRef>(null);
   const microbitOnWristRef = useRef<MicrobitOnWristRef>(null);
   const laptopRef = useRef<LaptopRef>(null);
-  const animatedGraphLinesRef = useRef<AnimatedGraphLinesRef>(null);
+  const graphLinesRef = useRef<AnimatedGraphLinesRef>(null);
   const layoutRef = useRef<LayoutRef>(null);
   const [visible, setVisible] = useState<boolean>(true);
 
-  const reset = useCallback(() => {
+  const cleanUp = useCallback(() => {
     handHoldingMicrobitRef.current?.reset();
-    animatedGraphLinesRef.current?.reset();
+    graphLinesRef.current?.reset();
     microbitOnWristRef.current?.reset();
     stepFlowRef.current?.reset();
     laptopRef.current?.reset();
     signalRef.current?.reset();
     layoutRef.current?.reset();
+    codeArrowRef.current?.reset();
   }, []);
 
   const runConnect = useCallback(async () => {
     // Setup.
-    stepFlowRef.current?.setStep(0, "active");
-    animatedGraphLinesRef.current?.setDisplayState("hidden");
+    stepFlowRef.current?.setStep(1, "active");
     handHoldingMicrobitRef.current?.show();
+    laptopRef.current?.setVisible(true);
 
-    // Connect.
-    await signalRef.current?.showConnecting();
+    // Connecting.
+    await signalRef.current?.playConnecting();
+
+    // Connected.
     await Promise.all([
-      signalRef.current?.showConnected(),
+      signalRef.current?.playConnected(),
       handHoldingMicrobitRef.current?.displaySmileLed(),
       laptopRef.current?.setDisplay("tick"),
     ]);
-    stepFlowRef.current?.setStep(0, "completed");
-    await delayInSec(0.5);
-  }, [delayInSec]);
+
+    stepFlowRef.current?.setStep(1, "completed");
+    await delayInSec(duration.connect.completed);
+
+    // Clean up.
+    cleanUp();
+  }, [cleanUp, delayInSec]);
 
   const runCollectData = useCallback(async () => {
     // Setup.
-    laptopRef.current?.setDisplay("none");
-    animatedGraphLinesRef.current?.setDisplayState("hidden");
-    handHoldingMicrobitRef.current?.reset();
-    microbitOnWristRef.current?.show({
-      ledPattern: ledPatternOptions.smile,
-    });
-    stepFlowRef.current?.setStep(1, "active");
-    await animatedGraphLinesRef.current?.play("smooth", 1);
+    laptopRef.current?.setVisible(true);
+    stepFlowRef.current?.setStep(2, "active");
+    signalRef.current?.connected();
+
+    // Before data collection.
+    await Promise.all([
+      microbitOnWristRef.current?.play({
+        move: "still",
+        ledPattern: "smile",
+        duration: duration.collectData.prep,
+      }),
+      graphLinesRef.current?.play("smooth", duration.collectData.prep),
+    ]);
 
     // Collect data for wave movement.
-    microbitOnWristRef.current?.setMove("wave");
     await Promise.all([
-      animatedGraphLinesRef.current?.play("wavy", dataCollectionDurationInSec),
-      laptopRef.current?.playDataCollectionTopSamples(),
+      microbitOnWristRef.current?.play({
+        move: "wave",
+        ledPattern: "smile",
+        duration: duration.collectData.action,
+      }),
+      graphLinesRef.current?.play("wavy", duration.collectData.action),
+      laptopRef.current?.dataSamples?.playTopSamples(),
     ]);
 
     // Collect data for up down movement.
-    microbitOnWristRef.current?.setMove("up-down");
     await Promise.all([
-      animatedGraphLinesRef.current?.play(
-        "chaotic",
-        dataCollectionDurationInSec
-      ),
-      laptopRef.current?.playDataCollectionBottomSamples(),
+      microbitOnWristRef.current?.play({
+        move: "up-down",
+        ledPattern: "smile",
+        duration: duration.collectData.action,
+      }),
+      graphLinesRef.current?.play("chaotic", duration.collectData.action),
+      laptopRef.current?.dataSamples?.playBottomSamples(),
     ]);
 
-    stepFlowRef.current?.setStep(1, "completed");
-  }, []);
+    stepFlowRef.current?.setStep(2, "completed");
+
+    // Clean up.
+    cleanUp();
+  }, [cleanUp]);
 
   const runTraining = useCallback(async () => {
-    microbitOnWristRef.current?.setMove("still");
+    // Setup.
+    signalRef.current?.connected();
+    laptopRef.current?.setVisible(true);
+
     await Promise.all([
-      animatedGraphLinesRef.current?.play("smooth"),
-      laptopRef.current?.playTraining(),
+      microbitOnWristRef.current?.play({
+        move: "still",
+        ledPattern: "smile",
+        duration: duration.training.action,
+      }),
+      graphLinesRef.current?.play("smooth", duration.training.action),
+      laptopRef.current?.playTraining(duration.training.action),
     ]);
-  }, []);
+
+    // Clean up.
+    cleanUp();
+  }, [cleanUp]);
 
   const runTestModel = useCallback(async () => {
-    // Reset.
-    handHoldingMicrobitRef.current?.reset();
-
     // Setup
-    laptopRef.current?.setDisplay("test-model");
-    microbitOnWristRef.current?.show({
-      ledPattern: ledPatternOptions.smile,
-    });
-    stepFlowRef.current?.setStep(2, "active");
-    microbitOnWristRef.current?.setMove("still");
-    await animatedGraphLinesRef.current?.play("smooth", 1);
-
-    // Test model for wave movement.
-    microbitOnWristRef.current?.setMove("wave");
+    signalRef.current?.connected();
+    stepFlowRef.current?.setStep(3, "active");
+    laptopRef.current?.setVisible(true);
+    laptopRef.current?.testModel?.show();
     await Promise.all([
-      animatedGraphLinesRef.current?.play("wavy", testModeldurationInSec),
-      laptopRef.current?.playTestModelAction1(),
+      microbitOnWristRef.current?.play({
+        ledPattern: "smile",
+        move: "still",
+        duration: duration.testingModel.prep,
+      }),
+      graphLinesRef.current?.play("smooth", duration.testingModel.prep),
     ]);
 
-    // Pause on still.
-    microbitOnWristRef.current?.setMove("still");
-    await animatedGraphLinesRef.current?.play("smooth", 1);
+    // Test model for wave movement.
+    await Promise.all([
+      microbitOnWristRef.current?.play({
+        ledPattern: "smile",
+        move: "wave",
+        duration: duration.testingModel.action,
+      }),
+      graphLinesRef.current?.play("wavy", duration.testingModel.action),
+      laptopRef.current?.testModel?.playAction1(),
+    ]);
+
+    // Pause between testing actions.
+    await Promise.all([
+      microbitOnWristRef.current?.play({
+        ledPattern: "smile",
+        move: "still",
+        duration: duration.testingModel.pause,
+      }),
+      graphLinesRef.current?.play("smooth", duration.testingModel.pause),
+    ]);
 
     // Test model for up down movement.
-    microbitOnWristRef.current?.setMove("up-down");
     await Promise.all([
-      animatedGraphLinesRef.current?.play("chaotic", testModeldurationInSec),
-      laptopRef.current?.playTestModelAction2(),
+      microbitOnWristRef.current?.play({
+        ledPattern: "smile",
+        move: "up-down",
+        duration: duration.testingModel.action,
+      }),
+      graphLinesRef.current?.play("chaotic", duration.testingModel.action),
+      laptopRef.current?.testModel?.playAction2(),
     ]);
 
     // Show iterative flow.
-    microbitOnWristRef.current?.setMove("still");
-    await animatedGraphLinesRef.current?.fadeOut();
+    await microbitOnWristRef.current?.play({
+      ledPattern: "smile",
+      move: "still",
+      duration: duration.testingModel.stepPause,
+    }),
+      await graphLinesRef.current?.fadeOut();
 
     stepFlowRef.current?.setArrows("active");
-    await delayInSec(0.5);
-    stepFlowRef.current?.setStep(2, "completed");
-    await delayInSec(0.5);
+    await delayInSec(duration.testingModel.stepPause);
+    stepFlowRef.current?.setStep(3, "completed");
+    await delayInSec(duration.testingModel.stepPause);
 
     stepFlowRef.current?.setAllInactive();
     laptopRef.current?.setDisplay("none");
-    await delayInSec(0.5);
-  }, [delayInSec]);
+    await delayInSec(duration.testingModel.stepPause);
+
+    // Clean up.
+    cleanUp();
+  }, [cleanUp, delayInSec]);
 
   const runCode = useCallback(async () => {
-    // Reset.
-    animatedGraphLinesRef.current?.reset();
-    handHoldingMicrobitRef.current?.reset();
-
     // Setup.
-    codeArrowRef.current?.setDisplayState("hidden");
-    laptopRef.current?.setDisplay("code");
-    microbitOnWristRef.current?.show({
-      ledPattern: ledPatternOptions.smile,
+    signalRef.current?.connected();
+    laptopRef.current?.setVisible(true);
+    laptopRef.current?.codeBlock?.show();
+    stepFlowRef.current?.setStep(4, "active");
+    await microbitOnWristRef.current?.play({
+      ledPattern: "smile",
+      move: "still",
+      duration: duration.code.prep,
     });
-    stepFlowRef.current?.setStep(3, "active");
 
     // Code.
-    await delayInSec(1.3);
-    await laptopRef.current?.playCode();
-    stepFlowRef.current?.setStep(3, "completed");
+    await laptopRef.current?.codeBlock?.play();
+    stepFlowRef.current?.setStep(4, "completed");
 
     // Download program.
-    await codeArrowRef.current?.play();
-    microbitOnWristRef.current?.show({ ledPattern: ledPatternOptions.default });
-    codeArrowRef.current?.setDisplayState("hidden");
-    stepFlowRef.current?.setAllInactive();
-    laptopRef.current?.setDisplay("none");
-  }, [delayInSec]);
+    await Promise.all([
+      codeArrowRef.current?.play(duration.code.download),
+      microbitOnWristRef.current?.play({
+        move: "still",
+        ledPattern: "none",
+        duration: duration.code.download,
+      }),
+    ]);
+
+    // Clean up.
+    cleanUp();
+  }, [cleanUp]);
 
   const runUse = useCallback(async () => {
-    // Setup
-    microbitOnWristRef.current?.show({ ledPattern: ledPatternOptions.default });
-    stepFlowRef.current?.setStep(4, "active");
-    await layoutRef.current?.playCenteringLeft();
+    // Setup.
     signalRef.current?.hide();
-    laptopRef.current?.hide();
-    codeArrowRef.current?.setDisplayState("none");
-    await delayInSec(1);
-    microbitOnWristRef.current?.show({
-      ledPattern: ledPatternOptions.heart,
+    stepFlowRef.current?.setStep(5, "active");
+    await Promise.all([
+      microbitOnWristRef.current?.play({
+        ledPattern: "none",
+        move: "still",
+        duration: duration.use.prep,
+      }),
+      layoutRef.current?.playCenteringLeft(duration.use.prep),
+    ]);
+    await delayInSec(duration.use.pauseBeforeAction);
+
+    // Use.
+    await microbitOnWristRef.current?.play({
+      ledPattern: "heart",
       move: "wave",
       backgroundMode: "sparkly-heart",
+      duration: duration.use.action,
     });
-    stepFlowRef.current?.setStep(4, "completed");
-    await delayInSec(3);
-    microbitOnWristRef.current?.show({
-      ledPattern: ledPatternOptions.cross,
+    stepFlowRef.current?.setStep(5, "completed");
+    await microbitOnWristRef.current?.play({
+      ledPattern: "cross",
       move: "up-down",
       backgroundMode: "sparkly-cross",
+      duration: duration.use.action,
     });
-    await delayInSec(3);
-  }, [delayInSec]);
+
+    // Clean up.
+    cleanUp();
+  }, [cleanUp, delayInSec]);
 
   useEffect(() => {
     const run = async () => {
@@ -213,7 +307,7 @@ const HowItWorksAnimation = () => {
           await runUse();
           setVisible(false);
           await delayInSec(fadeInOutDuration);
-          reset();
+          cleanUp();
         } catch (e) {
           if (e instanceof DOMException && e.name === "AbortError") {
             // Abort running animation.
@@ -224,7 +318,7 @@ const HowItWorksAnimation = () => {
       }
     };
 
-    restart();
+    restartAbortController();
     void run();
   }, [
     runConnect,
@@ -233,21 +327,24 @@ const HowItWorksAnimation = () => {
     runTraining,
     runCode,
     runUse,
-    reset,
+    cleanUp,
     delayInSec,
-    restart,
+    restartAbortController,
   ]);
 
   return (
     <>
       <VisuallyHidden>
-        <Image aria-label={intl.formatMessage({ id: "animation-iframe" })} />
+        <Box
+          as="video"
+          aria-label={intl.formatMessage({ id: "animation-label" })}
+        />
       </VisuallyHidden>
       <VStack
         gap={7}
         opacity={visible ? 1 : 0}
         transition={`opacity ${fadeInOutDuration}s ease`}
-        height={{ base: "auto", md: "20em" }}
+        height={{ base: "30em", md: "20em" }}
       >
         <HStack justifyContent="center" width="100%" gap={5}>
           <StepFlow ref={stepFlowRef} />
@@ -268,7 +365,7 @@ const HowItWorksAnimation = () => {
           }
           middleItems={
             <>
-              <AnimatedGraphLines ref={animatedGraphLinesRef} />
+              <AnimatedGraphLines ref={graphLinesRef} />
               <AnimatedArrow ref={codeArrowRef} />
             </>
           }
@@ -281,6 +378,9 @@ const HowItWorksAnimation = () => {
           }
         />
       </VStack>
+      <Button size="small" onClick={isPaused ? resume : pause}>
+        {isPaused ? "Play" : "Pause"}
+      </Button>
     </>
   );
 };

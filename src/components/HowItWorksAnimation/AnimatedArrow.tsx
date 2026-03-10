@@ -58,46 +58,35 @@ const starIconConfigs = [
 ];
 
 export interface AnimatedArrowRef {
-  setDisplayState(state: DisplayState): void;
   play(durationInSecs?: number): Promise<void>;
+  reset(): void;
 }
-
-type DisplayState =
-  // Visible.
-  | "visible"
-  // Hidden but still taking up space.
-  | "hidden"
-  // Not displayed at all and not taking up space.
-  | "none";
 
 const AnimatedArrow = forwardRef<AnimatedArrowRef>(function AnimatedArrow(
   _,
   ref
 ) {
-  const { delayInSec } = useAnimation();
-  const [displayState, setDisplayState] = useState<DisplayState>("none");
+  const { delayInSec, withPlayState } = useAnimation();
+  const [visible, setVisible] = useState<boolean>(false);
   const [duration, setDuration] = useState<null | number>(null);
   useImperativeHandle(
     ref,
     () => {
       return {
-        setDisplayState,
         async play(durationInSecs = 2) {
-          setDisplayState("visible");
+          setVisible(true);
           setDuration(durationInSecs);
           await delayInSec(durationInSecs);
+        },
+        reset() {
+          setVisible(false);
         },
       };
     },
     [delayInSec]
   );
   return (
-    <VStack
-      width="4em"
-      height="100%"
-      display={displayState === "none" ? "none" : "flex"}
-      opacity={displayState === "hidden" ? 0 : 1}
-    >
+    <VStack width="4em" height="100%" opacity={visible ? 1 : 0}>
       <Box position="relative" width="100%" height="100%">
         {starIconConfigs.map(({ size, delay, top, right }, i) => (
           <StarIcon
@@ -110,9 +99,11 @@ const AnimatedArrow = forwardRef<AnimatedArrowRef>(function AnimatedArrow(
             opacity={0}
             animation={
               duration
-                ? `${sparkleKeyframes} ${duration}s ease-in-out ${
-                    delay * duration * 0.5
-                  }s infinite`
+                ? withPlayState(
+                    `${sparkleKeyframes} ${duration}s ease-in-out ${
+                      delay * duration * 0.5
+                    }s infinite`
+                  )
                 : undefined
             }
           />
@@ -127,7 +118,9 @@ const AnimatedArrow = forwardRef<AnimatedArrowRef>(function AnimatedArrow(
           color={color}
           animation={
             duration
-              ? `${arrowMovingKeyframes} ${duration * 0.5}s linear infinite`
+              ? withPlayState(
+                  `${arrowMovingKeyframes} ${duration * 0.5}s linear infinite`
+                )
               : undefined
           }
         >

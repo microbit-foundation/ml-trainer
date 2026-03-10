@@ -28,7 +28,7 @@ const commonStepTickPillProps = {
   activeColor,
 };
 export interface StepFlowRef {
-  setStep(stepNum: number, state: "active" | "completed"): void;
+  setStep(stepNum: 1 | 2 | 3 | 4 | 5, state: "active" | "completed"): void;
   setAllInactive(): void;
   setArrows(state: ArrowState): void;
   reset(): void;
@@ -50,7 +50,8 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
     stepFlowRef,
     () => {
       return {
-        setStep(stepIdx, state) {
+        setStep(stepNum, state) {
+          const stepIdx = stepNum - 1;
           const step = stepRefs.current[stepIdx].current;
           if (!step) {
             throw new Error(`Step num does not exist: ${stepIdx}`);
@@ -63,7 +64,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
             });
           }
           // Set arrow as inactive if past step 3 (index 2).
-          if (stepIdx > 2 && arrowState !== "inactive") {
+          if (stepIdx > 2) {
             setArrowState("inactive");
           }
           if (state === "active") {
@@ -88,7 +89,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
         },
       };
     },
-    [arrowState]
+    []
   );
 
   return (

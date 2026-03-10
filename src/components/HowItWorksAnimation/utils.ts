@@ -8,8 +8,10 @@ import { keyframes } from "@emotion/react";
 export const litLedColor = "#CD0365";
 export const unlitLedColor = "#dbd9dc";
 
-export const ledPatternOptions = {
-  default: [
+export type LedPattern = "none" | "smile" | "heart" | "cross";
+
+export const ledPatterns: Record<LedPattern, Array<0 | 1>> = {
+  none: [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   ],
   smile: [
@@ -23,14 +25,14 @@ export const ledPatternOptions = {
   ],
 };
 
-export const animation = {
+export const animations = {
   fadeIn: keyframes({
-    "0%": { opacity: 0 },
-    "100%": { opacity: 1 },
+    from: { opacity: 0 },
+    to: { opacity: 1 },
   }),
   fadeOut: keyframes({
-    "0%": { opacity: 1 },
-    "100%": { opacity: 0 },
+    from: { opacity: 1 },
+    to: { opacity: 0 },
   }),
 };
 

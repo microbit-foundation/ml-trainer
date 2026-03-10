@@ -8,6 +8,7 @@ import { useImperativeHandle, forwardRef, useState } from "react";
 import { useAnimation } from "../AnimationProvider";
 
 export interface CodeBlockRef {
+  show(): void;
   play(durationInSecs?: number): Promise<void>;
   reset(): void;
 }
@@ -45,24 +46,30 @@ const CodeBlock = forwardRef<CodeBlockRef, IconProps>(function CodeBlock(
   { ...props },
   ref
 ) {
-  const { delayInSec } = useAnimation();
+  const { delayInSec, withPlayState } = useAnimation();
+  const [visible, setVisible] = useState<boolean>(false);
   const [duration, setDuration] = useState<number | null>(null);
 
   useImperativeHandle(
     ref,
     () => ({
+      show() {
+        setVisible(true);
+      },
       async play(secs = 1) {
+        setVisible(true);
         setDuration(secs);
         await delayInSec(secs);
       },
       reset() {
         setDuration(null);
+        setVisible(false);
       },
     }),
     [delayInSec]
   );
   return (
-    <Box position="relative">
+    <Box position="relative" display={visible ? "block" : "none"}>
       <OuterCodeBlock
         width={outerBlockSize}
         height={outerBlockSize}
@@ -75,8 +82,12 @@ const CodeBlock = forwardRef<CodeBlockRef, IconProps>(function CodeBlock(
           width={innerBlockSize}
           height={innerBlockSize}
           animation={{
-            base: `${innerBlockKeyframeBase} ${duration}s ease-in-out forwards`,
-            sm: `${innerBlockKeyframeSm} ${duration}s ease-in-out forwards`,
+            base: withPlayState(
+              `${innerBlockKeyframeBase} ${duration}s ease-in-out forwards`
+            ),
+            sm: withPlayState(
+              `${innerBlockKeyframeSm} ${duration}s ease-in-out forwards`
+            ),
           }}
           color="brand.500"
         />

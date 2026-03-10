@@ -14,8 +14,9 @@ import DataSamplesCollection, {
 } from "./DataSamplesCollection";
 import TestModelScreen, { TestModelScreenRef } from "./TestModelScreen";
 import Tick from "./Tick";
-import { animation } from "./utils";
+import { animations } from "./utils";
 import CodeBlock, { CodeBlockRef } from "./CodeBlocks";
+import { useAnimation } from "../AnimationProvider";
 
 interface LaptopProps extends IconProps {}
 type DisplayType =
@@ -27,13 +28,12 @@ type DisplayType =
   | "code";
 export interface LaptopRef {
   setDisplay(type: DisplayType): void;
-  playDataCollectionTopSamples(): Promise<void>;
-  playDataCollectionBottomSamples(): Promise<void>;
+  dataSamples: DataSamplesCollectionRef | null;
+  testModel: TestModelScreenRef | null;
+  codeBlock: CodeBlockRef | null;
   playTraining(durationInSecs?: number): Promise<void>;
-  playTestModelAction1(): Promise<void>;
-  playTestModelAction2(): Promise<void>;
   playCode(): Promise<void>;
-  hide(): void;
+  setVisible(visible: boolean): void;
   reset(): void;
 }
 
@@ -41,8 +41,9 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
   { ...props }: LaptopProps,
   ref
 ) {
+  const { withPlayState } = useAnimation();
   const testModelRef = useRef<TestModelScreenRef>(null);
-  const codeRef = useRef<CodeBlockRef>(null);
+  const codeBlockRef = useRef<CodeBlockRef>(null);
   const dataSamplesRef = useRef<DataSamplesCollectionRef>(null);
   const progressBarRef = useRef<AnimatedProgressBarRef>(null);
   const [visible, setVisible] = useState<boolean>(true);
@@ -52,35 +53,24 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
     () => {
       return {
         setDisplay,
-        async playDataCollectionTopSamples() {
-          setDisplay("data-collection");
-          await dataSamplesRef.current?.playTopSamples();
-        },
-        async playDataCollectionBottomSamples() {
-          setDisplay("data-collection");
-          await dataSamplesRef.current?.playBottomSamples();
-        },
+        dataSamples: dataSamplesRef.current,
+        testModel: testModelRef.current,
+        codeBlock: codeBlockRef.current,
         async playTraining(secs = 2) {
           setDisplay("training");
           await progressBarRef.current?.play(secs);
         },
-        async playTestModelAction1() {
-          setDisplay("test-model");
-          await testModelRef.current?.playAction1();
-        },
-        async playTestModelAction2() {
-          setDisplay("test-model");
-          await testModelRef.current?.playAction2();
-        },
         async playCode() {
           setDisplay("code");
-          await codeRef.current?.play();
+          await codeBlockRef.current?.play();
         },
-        hide() {
-          setVisible(false);
-        },
+        setVisible,
         reset() {
-          setVisible(true);
+          setVisible(false);
+          dataSamplesRef.current?.reset();
+          testModelRef.current?.reset();
+          codeBlockRef.current?.reset();
+          setDisplay("none");
         },
       };
     },
@@ -118,18 +108,15 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
         justifyContent="center"
       >
         {/* Tick display */}
-        {display === "tick" && (
-          <Tick
-            size="30%"
-            animation={`${animation.fadeIn} 0.3s ease-in-out forwards`}
-          />
-        )}
-        {/* Data collection display */}
-        <DataSamplesCollection
-          color="gray.600"
-          ref={dataSamplesRef}
-          display={display === "data-collection" ? "block" : "none"}
+        <Tick
+          display={display === "tick" ? "block" : "none"}
+          size="30%"
+          animation={withPlayState(
+            `${animations.fadeIn} 0.3s ease-in-out forwards`
+          )}
         />
+        {/* Data collection display */}
+        <DataSamplesCollection ref={dataSamplesRef} />
         {/* Training display */}
         <VStack display={display === "training" ? "flex" : "none"}>
           <Text fontWeight="bold" fontSize={{ base: "sm", sm: "sm", md: "md" }}>
@@ -137,15 +124,14 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
           </Text>
           <AnimatedProgressBar ref={progressBarRef} />
         </VStack>
-        {/* Test model display */}
-        {display === "test-model" && <TestModelScreen ref={testModelRef} />}
+        <TestModelScreen ref={testModelRef} />
         {/* Code display */}
-        {display === "code" && (
-          <CodeBlock
-            ref={codeRef}
-            animation={`${animation.fadeIn} 0.3s ease-in-out forwards`}
-          />
-        )}
+        <CodeBlock
+          ref={codeBlockRef}
+          animation={withPlayState(
+            `${animations.fadeIn} 0.3s ease-in-out forwards`
+          )}
+        />
       </Stack>
     </Box>
   );

@@ -46,10 +46,7 @@ const fadeOutDuration = 0.4;
 
 type MotionType = keyof typeof motionPaths;
 
-type DisplayState = "visible" | "hidden" | "none";
-
 export interface AnimatedGraphLinesRef {
-  setDisplayState(state: DisplayState): void;
   play(motion: MotionType, secs?: number): Promise<void>;
   fadeOut(durationInSecs?: number): Promise<void>;
   reset(): void;
@@ -57,9 +54,9 @@ export interface AnimatedGraphLinesRef {
 
 const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
   function AnimatedGraphLines(_, ref) {
-    const { delayInSec } = useAnimation();
+    const { delayInSec, withPlayState } = useAnimation();
     const [{ graphColorScheme }] = useSettings();
-    const [displayState, setDisplayState] = useState<DisplayState>("none");
+    const [visible, setVisible] = useState<boolean>(false);
     const [fadeDuration, setFadeDuration] = useState<number>(fadeOutDuration);
     const colors = useGraphColors(graphColorScheme);
     const [motion, setMotion] = useState<MotionType>("wavy");
@@ -91,9 +88,9 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
     useImperativeHandle(
       ref,
       () => ({
-        setDisplayState,
+        setDisplayState: setVisible,
         async play(motionType, durationInSecs = 3) {
-          setDisplayState("visible");
+          setVisible(true);
           setFadeDuration(0);
           if (motionType) {
             setMotion(motionType);
@@ -103,11 +100,11 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
         async fadeOut(durationInSecs = fadeOutDuration) {
           setFadeDuration(durationInSecs);
           await delayInSec(durationInSecs);
-          setDisplayState("hidden");
+          setVisible(false);
         },
         reset() {
           setFadeDuration(0);
-          setDisplayState("none");
+          setVisible(false);
         },
       }),
       [delayInSec]
@@ -121,8 +118,7 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
 
     return (
       <Flex
-        display={displayState === "none" ? "none" : "flex"}
-        opacity={displayState === "hidden" ? 0 : 1}
+        opacity={visible ? 1 : 0}
         transition={`opacity ${fadeDuration}s ease-out`}
         direction="column"
         align="center"
@@ -145,7 +141,9 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
             overflow="hidden"
           >
             <Flex
-              animation={`${keyframeName} ${animationDuration}s linear infinite`}
+              animation={withPlayState(
+                `${keyframeName} ${animationDuration}s linear infinite`
+              )}
             >
               {[0, 1].map((copy) => (
                 <Box

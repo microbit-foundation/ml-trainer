@@ -5,9 +5,10 @@
  */
 import { Icon, keyframes, Stack, StackProps } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { ledPatternOptions, litLedColor, unlitLedColor } from "./utils";
+import { LedPattern, ledPatterns, litLedColor, unlitLedColor } from "./utils";
 import HeartLedIcon from "./HeartLedIcon";
 import CrossLedIcon from "./CrossLedIcon";
+import { useAnimation } from "../AnimationProvider";
 
 type MoveType = "still" | "wave" | "up-down";
 
@@ -47,53 +48,46 @@ const sparkle = keyframes({
 
 type BackgroundMode = "default" | "sparkly-heart" | "sparkly-cross";
 
-interface ShowOption {
-  orientation?: "horizontal" | "vertical";
-  ledPattern?: number[];
+interface PlayOption {
+  ledPattern?: LedPattern;
   move?: MoveType;
   backgroundMode?: BackgroundMode;
+  duration: number; // sec
 }
 
-const defaultShowOption: ShowOption = {
-  orientation: "horizontal",
-  ledPattern: ledPatternOptions.default,
+const defaultShowOption: PlayOption = {
+  ledPattern: "none",
   move: "still",
   backgroundMode: "default",
+  duration: 1,
 };
 
 interface MicrobitOnWristProps extends StackProps {}
 
 export interface MicrobitOnWristRef {
-  show(option?: ShowOption): void;
+  play(option?: PlayOption): Promise<void>;
   reset(): void;
   setMove(type: MoveType): void;
 }
 
 const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
   function MicrobitOnWrist({ ...props }: MicrobitOnWristProps, ref) {
-    const [ledPattern, setLedPattern] = useState<number[]>(
-      ledPatternOptions.default
-    );
+    const { withPlayState, delayInSec } = useAnimation();
+    const [ledPattern, setLedPattern] = useState<number[]>(ledPatterns.none);
     const [move, setMove] = useState<MoveType>("still");
     const [backgroundMode, setMode] = useState<BackgroundMode>("default");
 
     const [visible, setVisible] = useState<boolean>(false);
-    const [orientation, setOrientation] = useState<"horizontal" | "vertical">(
-      "horizontal"
-    );
     useImperativeHandle(
       ref,
       () => {
         return {
           setLedPattern,
-          show(option) {
+          async play(option) {
             const config = { ...defaultShowOption, ...option };
             setVisible(true);
-            if (config?.orientation) {
-              setOrientation(config.orientation);
-            }
             if (config?.ledPattern) {
-              setLedPattern(config.ledPattern);
+              setLedPattern(ledPatterns[config.ledPattern]);
             }
             if (config?.move) {
               setMove(config.move);
@@ -101,15 +95,16 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
             if (config?.backgroundMode) {
               setMode(config.backgroundMode);
             }
+            await delayInSec(config.duration);
           },
           setMove,
           reset() {
             setVisible(false);
-            setLedPattern(ledPatternOptions.default);
+            setLedPattern(ledPatterns.none);
           },
         };
       },
-      []
+      [delayInSec]
     );
     if (!visible) {
       return <></>;
@@ -134,7 +129,9 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
               key={i}
               size="2em"
               position="absolute"
-              animation={`${sparkle} 2s ease-in-out ${delay * 0.5}s`}
+              animation={withPlayState(
+                `${sparkle} 2s ease-in-out ${delay * 0.5}s`
+              )}
               opacity={0}
               color={litLedColor}
               {...props}
@@ -152,7 +149,9 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
               key={i}
               size="2em"
               position="absolute"
-              animation={`${sparkle} 2s ease-in-out ${delay * 0.5}s`}
+              animation={withPlayState(
+                `${sparkle} 2s ease-in-out ${delay * 0.5}s`
+              )}
               opacity={0}
               color={litLedColor}
               top={top}
@@ -167,15 +166,19 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
           fill="red"
           width="100%"
           height="auto"
-          transform={orientation === "horizontal" ? "rotate(15deg)" : undefined}
+          transform="rotate(15deg)"
           {...(move === "up-down"
             ? {
-                animation: `${animationKeyframes["up-down"]} 1.6s ease-in-out infinite`,
+                animation: withPlayState(
+                  `${animationKeyframes["up-down"]} 1.6s ease-in-out infinite`
+                ),
               }
             : move === "wave"
             ? {
                 transformOrigin: "bottom center",
-                animation: `${animationKeyframes.wave} 3s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite`,
+                animation: withPlayState(
+                  `${animationKeyframes.wave} 3s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite`
+                ),
               }
             : {})}
         >

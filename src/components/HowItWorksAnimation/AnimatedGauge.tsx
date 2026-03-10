@@ -89,7 +89,7 @@ const AnimatedGauge = forwardRef<AnimatedGaugeRef, AnimatedGaugeProps>(
     { empty = "#CBD5E0", filled = "#718096", filledDark = "#48BB78", ...props },
     ref
   ) {
-    const { delayInSec } = useAnimation();
+    const { delayInSec, withPlayState } = useAnimation();
     const [isPlaying, setIsPlaying] = useState(false);
 
     const segmentKeyframes = useMemo(
@@ -119,7 +119,9 @@ const AnimatedGauge = forwardRef<AnimatedGaugeRef, AnimatedGaugeProps>(
             w="0.5em"
             h="0.66em"
             background={empty}
-            animation={isPlaying ? `${kf} ${totalDuration}s` : undefined}
+            animation={
+              isPlaying ? withPlayState(`${kf} ${totalDuration}s`) : undefined
+            }
             roundedRight={
               i === segmentKeyframes.length - 1 ? "100%" : undefined
             }
