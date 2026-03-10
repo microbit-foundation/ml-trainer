@@ -6,9 +6,7 @@
 import { Box, Icon, IconProps, Stack, Text, VStack } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import AnimatedProgressBar, {
-  AnimatedProgressBarRef,
-} from "./AnimatedProgressBar";
+import ProgressBar, { ProgressBarRef } from "./ProgressBar";
 import DataSamplesCollection, {
   DataSamplesCollectionRef,
 } from "./DataSamplesCollection";
@@ -45,7 +43,7 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
   const testModelRef = useRef<TestModelScreenRef>(null);
   const codeBlockRef = useRef<CodeBlockRef>(null);
   const dataSamplesRef = useRef<DataSamplesCollectionRef>(null);
-  const progressBarRef = useRef<AnimatedProgressBarRef>(null);
+  const progressBarRef = useRef<ProgressBarRef>(null);
   const [visible, setVisible] = useState<boolean>(true);
   const [display, setDisplay] = useState<DisplayType>("none");
   useImperativeHandle(
@@ -122,7 +120,7 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
           <Text fontWeight="bold" fontSize={{ base: "sm", sm: "sm", md: "md" }}>
             <FormattedMessage id="animation-training" />
           </Text>
-          <AnimatedProgressBar ref={progressBarRef} />
+          <ProgressBar ref={progressBarRef} />
         </VStack>
         <TestModelScreen ref={testModelRef} />
         {/* Code display */}

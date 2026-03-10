@@ -11,11 +11,11 @@ import {
   useRef,
   useState,
 } from "react";
-import AnimatedGauge, {
-  AnimatedGaugeRef,
+import Gauge, {
+  GaugeRef,
   buildIconColorKeyframes,
   totalDuration,
-} from "./AnimatedGauge";
+} from "./Gauge";
 import CrossLedIcon from "./CrossLedIcon";
 import HeartLedIcon from "./HeartLedIcon";
 import { useAnimation } from "../AnimationProvider";
@@ -45,8 +45,8 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
 
   const [playing, setPlaying] = useState<"heart" | "cross" | false>(false);
   const [visible, setVisible] = useState<boolean>(false);
-  const gaugeRef1 = useRef<AnimatedGaugeRef>(null);
-  const gaugeRef2 = useRef<AnimatedGaugeRef>(null);
+  const gaugeRef1 = useRef<GaugeRef>(null);
+  const gaugeRef2 = useRef<GaugeRef>(null);
   const { withPlayState } = useAnimation();
 
   useImperativeHandle(
@@ -96,7 +96,7 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
         />
       </GridItem>
       <GridItem>
-        <AnimatedGauge
+        <Gauge
           empty={empty}
           filled={filled}
           filledDark={filledDark}
@@ -116,7 +116,7 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
         />
       </GridItem>
       <GridItem>
-        <AnimatedGauge
+        <Gauge
           ref={gaugeRef2}
           empty={empty}
           filled={filled}

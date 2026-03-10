@@ -6,10 +6,8 @@
 import { HStack, VisuallyHidden, VStack, Box, Button } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAnimation } from "../AnimationProvider";
-import AnimatedArrow, { AnimatedArrowRef } from "./AnimatedArrow";
-import AnimatedGraphLines, {
-  AnimatedGraphLinesRef,
-} from "./AnimatedGraphLines";
+import Arrow, { ArrowRef } from "./Arrow";
+import GraphLines, { GraphLinesRef } from "./GraphLines";
 import { dataCollectionDurationInSec } from "./DataSamplesCollection";
 import HandHoldingMicrobit, {
   HandHoldingMicrobitRef,
@@ -57,11 +55,11 @@ const HowItWorksAnimation = () => {
     useAnimation();
   const stepFlowRef = useRef<StepFlowRef>(null);
   const signalRef = useRef<SignalRef>(null);
-  const codeArrowRef = useRef<AnimatedArrowRef>(null);
+  const codeArrowRef = useRef<ArrowRef>(null);
   const handHoldingMicrobitRef = useRef<HandHoldingMicrobitRef>(null);
   const microbitOnWristRef = useRef<MicrobitOnWristRef>(null);
   const laptopRef = useRef<LaptopRef>(null);
-  const graphLinesRef = useRef<AnimatedGraphLinesRef>(null);
+  const graphLinesRef = useRef<GraphLinesRef>(null);
   const layoutRef = useRef<LayoutRef>(null);
   const [visible, setVisible] = useState<boolean>(true);
 
@@ -365,8 +363,8 @@ const HowItWorksAnimation = () => {
           }
           middleItems={
             <>
-              <AnimatedGraphLines ref={graphLinesRef} />
-              <AnimatedArrow ref={codeArrowRef} />
+              <GraphLines ref={graphLinesRef} />
+              <Arrow ref={codeArrowRef} />
             </>
           }
           rightItems={

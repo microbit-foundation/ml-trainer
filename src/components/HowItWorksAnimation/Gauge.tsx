@@ -11,13 +11,13 @@ export const totalDuration = 2.5;
 const pct = (s: number) => `${((s / totalDuration) * 100).toFixed(1)}%`;
 const filledDarkPct = pct(1.94);
 
-export interface AnimatedGaugeProps extends StackProps {
+export interface GaugeProps extends StackProps {
   empty?: string;
   filled?: string;
   filledDark?: string;
 }
 
-export interface AnimatedGaugeRef {
+export interface GaugeRef {
   play(duration?: number): Promise<void>;
   reset(): void;
 }
@@ -84,53 +84,49 @@ function buildKeyframes(empty: string, filled: string, filledDark: string) {
   ];
 }
 
-const AnimatedGauge = forwardRef<AnimatedGaugeRef, AnimatedGaugeProps>(
-  function AnimatedGauge(
-    { empty = "#CBD5E0", filled = "#718096", filledDark = "#48BB78", ...props },
-    ref
-  ) {
-    const { delayInSec, withPlayState } = useAnimation();
-    const [isPlaying, setIsPlaying] = useState(false);
+const Gauge = forwardRef<GaugeRef, GaugeProps>(function Gauge(
+  { empty = "#CBD5E0", filled = "#718096", filledDark = "#48BB78", ...props },
+  ref
+) {
+  const { delayInSec, withPlayState } = useAnimation();
+  const [isPlaying, setIsPlaying] = useState(false);
 
-    const segmentKeyframes = useMemo(
-      () => buildKeyframes(empty, filled, filledDark),
-      [empty, filled, filledDark]
-    );
+  const segmentKeyframes = useMemo(
+    () => buildKeyframes(empty, filled, filledDark),
+    [empty, filled, filledDark]
+  );
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        async play(secs = totalDuration) {
-          setIsPlaying(true);
-          await delayInSec(secs);
-        },
-        reset() {
-          setIsPlaying(false);
-        },
-      }),
-      [delayInSec]
-    );
+  useImperativeHandle(
+    ref,
+    () => ({
+      async play(secs = totalDuration) {
+        setIsPlaying(true);
+        await delayInSec(secs);
+      },
+      reset() {
+        setIsPlaying(false);
+      },
+    }),
+    [delayInSec]
+  );
 
-    return (
-      <HStack gap="0.1em" {...props}>
-        {segmentKeyframes.map((kf, i) => (
-          <Box
-            key={i}
-            w="0.5em"
-            h="0.66em"
-            background={empty}
-            animation={
-              isPlaying ? withPlayState(`${kf} ${totalDuration}s`) : undefined
-            }
-            roundedRight={
-              i === segmentKeyframes.length - 1 ? "100%" : undefined
-            }
-            roundedLeft={i === 0 ? "100%" : undefined}
-          />
-        ))}
-      </HStack>
-    );
-  }
-);
+  return (
+    <HStack gap="0.1em" {...props}>
+      {segmentKeyframes.map((kf, i) => (
+        <Box
+          key={i}
+          w="0.5em"
+          h="0.66em"
+          background={empty}
+          animation={
+            isPlaying ? withPlayState(`${kf} ${totalDuration}s`) : undefined
+          }
+          roundedRight={i === segmentKeyframes.length - 1 ? "100%" : undefined}
+          roundedLeft={i === 0 ? "100%" : undefined}
+        />
+      ))}
+    </HStack>
+  );
+});
 
-export default AnimatedGauge;
+export default Gauge;

@@ -13,13 +13,12 @@ const progressBar = keyframes({
   "100%": { width: "100%" },
 });
 
-export interface AnimatedProgressBarRef {
+export interface ProgressBarRef {
   play(duration?: number): Promise<void>;
   reset(): void;
 }
 
-const AnimatedProgressBar = forwardRef<AnimatedProgressBarRef>(
-  function AnimatedProgressBar(_, ref) {
+const ProgressBar = forwardRef<ProgressBarRef>(function ProgressBar(_, ref) {
     const { delayInSec, withPlayState } = useAnimation();
     const [durationInSecs, setDuration] = useState<null | number>(null);
     useImperativeHandle(
@@ -61,7 +60,6 @@ const AnimatedProgressBar = forwardRef<AnimatedProgressBarRef>(
         />
       </Box>
     );
-  }
-);
+});
 
-export default AnimatedProgressBar;
+export default ProgressBar;

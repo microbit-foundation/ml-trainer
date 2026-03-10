@@ -46,14 +46,13 @@ const fadeOutDuration = 0.4;
 
 type MotionType = keyof typeof motionPaths;
 
-export interface AnimatedGraphLinesRef {
+export interface GraphLinesRef {
   play(motion: MotionType, secs?: number): Promise<void>;
   fadeOut(durationInSecs?: number): Promise<void>;
   reset(): void;
 }
 
-const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
-  function AnimatedGraphLines(_, ref) {
+const GraphLines = forwardRef<GraphLinesRef>(function GraphLines(_, ref) {
     const { delayInSec, withPlayState } = useAnimation();
     const [{ graphColorScheme }] = useSettings();
     const [visible, setVisible] = useState<boolean>(false);
@@ -179,4 +178,4 @@ const AnimatedGraphLines = forwardRef<AnimatedGraphLinesRef>(
   }
 );
 
-export default AnimatedGraphLines;
+export default GraphLines;

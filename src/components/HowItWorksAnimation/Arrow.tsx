@@ -57,15 +57,12 @@ const starIconConfigs = [
   },
 ];
 
-export interface AnimatedArrowRef {
+export interface ArrowRef {
   play(durationInSecs?: number): Promise<void>;
   reset(): void;
 }
 
-const AnimatedArrow = forwardRef<AnimatedArrowRef>(function AnimatedArrow(
-  _,
-  ref
-) {
+const Arrow = forwardRef<ArrowRef>(function Arrow(_, ref) {
   const { delayInSec, withPlayState } = useAnimation();
   const [visible, setVisible] = useState<boolean>(false);
   const [duration, setDuration] = useState<null | number>(null);
@@ -152,4 +149,4 @@ const StarIcon = (props: IconProps) => (
   </Icon>
 );
 
-export default AnimatedArrow;
+export default Arrow;
