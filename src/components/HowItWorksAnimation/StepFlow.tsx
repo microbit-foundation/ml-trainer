@@ -8,18 +8,13 @@ import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import StepTickPill, { StepTickPillRef } from "./StepTickPill";
 
-const inactiveColor = "gray.500";
+const inactiveColor = { base: "gray.700", sm: "gray.700", md: "gray.500" };
 const activeColor = "brand2.500";
 
 type ArrowState = "hidden" | "active" | "inactive";
-const largeArrowColors: Record<ArrowState, string> = {
+const arrowColors: Record<ArrowState, object | string> = {
   hidden: "transparent",
-  active: activeColor,
-  inactive: inactiveColor,
-};
-const smallArrowColors: Record<ArrowState, string> = {
-  hidden: "transparent",
-  active: inactiveColor,
+  active: { base: "active", sm: "active", md: activeColor },
   inactive: inactiveColor,
 };
 
@@ -127,7 +122,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
         left="44%"
         width="3em"
         top="30%"
-        color={largeArrowColors[arrowState]}
+        color={arrowColors[arrowState]}
       />
       <ArrowIcon
         display={{ base: "none", sm: "none", md: "block" }}
@@ -136,7 +131,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
         width="3em"
         bottom="-22%"
         transform="rotate(180deg)"
-        color={largeArrowColors[arrowState]}
+        color={arrowColors[arrowState]}
       />
       {/* Arrows for base / sm screen sizes */}
       <ArrowIcon
@@ -144,20 +139,20 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
         position="absolute"
         zIndex={1}
         top="32%"
-        left="2em"
+        left="-2em"
         width="2em"
         transform="rotate(-90deg)"
-        color={smallArrowColors[arrowState]}
+        color={arrowColors[arrowState]}
       />
       <ArrowIcon
         display={{ sm: "block", md: "none" }}
         position="absolute"
         zIndex={1}
         top="32%"
-        right="2em"
+        right="-2em"
         width="2em"
         transform="rotate(90deg)"
-        color={smallArrowColors[arrowState]}
+        color={arrowColors[arrowState]}
       />
       <StepTickPill
         text={intl.formatMessage({ id: "animation-step-3" })}

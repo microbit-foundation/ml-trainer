@@ -9,8 +9,8 @@ import Tick from "./Tick";
 
 interface StepTickPillProps {
   text: string;
-  inactiveColor: string;
-  activeColor: string;
+  inactiveColor: string | object;
+  activeColor: string | object;
 }
 
 type StepState = { active: boolean; completed: boolean };
@@ -68,7 +68,7 @@ const StepTickPill = forwardRef<StepTickPillRef, StepTickPillProps>(
           <Button
             as="div"
             backgroundColor={state.active ? activeColor : "transparent"}
-            textColor={state.active ? "white" : activeColor}
+            textColor={state.active ? "white" : inactiveColor}
             border="none"
             size="sm"
             width="100%"
@@ -80,7 +80,13 @@ const StepTickPill = forwardRef<StepTickPillRef, StepTickPillProps>(
           <Tick
             position="absolute"
             size="15px"
-            color={state.completed ? inactiveColor : "transparent"}
+            color={
+              state.completed
+                ? state.active
+                  ? "white"
+                  : inactiveColor
+                : "transparent"
+            }
             right="0.5em"
           />
         </HStack>
