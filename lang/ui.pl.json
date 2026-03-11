@@ -113,7 +113,7 @@
   },
   "animation-training": {
     "defaultMessage": "Training",
-    "description": "Training on computer screen of how it works animation"
+    "description": "Machine learning training on computer screen of how it works animation"
   },
   "back-action": {
     "defaultMessage": "Wróć",
