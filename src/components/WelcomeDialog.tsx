@@ -17,12 +17,13 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ComponentProps } from "react";
-import { RiPauseFill, RiPlayFill } from "react-icons/ri";
+import { RiPlayFill } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { AnimationProvider, useAnimation } from "./AnimationProvider";
 import { ButtonWithLoading } from "./ButtonWithLoading";
 import { useConnectFirst } from "./ConnectFirstDialog";
 import HowItWorksAnimation from "./HowItWorksAnimation/index";
+import PauseIcon from "./icons/PauseIcon";
 
 type WelcomeDialogProps = Omit<ComponentProps<typeof Modal>, "children">;
 
@@ -80,7 +81,7 @@ const PauseResumeButton = () => {
       <FormattedMessage id="animation-resume-action" />
     </Button>
   ) : (
-    <Button variant="link" onClick={pause} leftIcon={<Icon as={RiPauseFill} />}>
+    <Button variant="link" onClick={pause} leftIcon={<PauseIcon />}>
       <FormattedMessage id="animation-pause-action" />
     </Button>
   );
