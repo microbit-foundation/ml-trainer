@@ -101,7 +101,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
     <Stack
       direction={{ base: "column", md: "row" }}
       justifyContent="center"
-      width={{ base: "13em", md: "100%" }}
+      width={{ base: "auto", md: "100%" }}
       gap={{ base: 0, sm: 0, md: 5 }}
       position="relative"
     >
