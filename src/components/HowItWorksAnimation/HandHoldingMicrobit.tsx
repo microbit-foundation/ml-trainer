@@ -46,11 +46,14 @@ const HandHoldingMicrobit = forwardRef<
     },
     []
   );
-  if (!visible) {
-    return <></>;
-  }
   return (
-    <Icon viewBox="0 0 194.7 200.05" w="100%" {...props}>
+    <Icon
+      viewBox="0 0 194.7 200.05"
+      w="100%"
+      position="absolute"
+      opacity={visible ? 1 : 0}
+      {...props}
+    >
       {[...ledPattern].map((lit, i) => (
         <circle
           key={i}

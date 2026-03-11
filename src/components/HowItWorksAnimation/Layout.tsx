@@ -65,6 +65,7 @@ const Layout = forwardRef<LayoutRef, LayoutProps>(function Signal(
             : undefined
         }
         alignItems={centerLeftDuration ? "center" : "end"}
+        position="relative"
       >
         {leftItems}
       </Stack>

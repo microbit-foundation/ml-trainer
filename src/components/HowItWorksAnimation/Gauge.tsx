@@ -113,8 +113,8 @@ const Gauge = forwardRef<GaugeRef, GaugeProps>(function Gauge(
       {segmentKeyframes.map((kf, i) => (
         <Box
           key={i}
-          w="0.5em"
-          h="0.66em"
+          w={{ base: "0.32em", sm: "0.5em" }}
+          h={{ base: "0.4em", sm: "0.66em" }}
           background={empty}
           animation={
             isPlaying ? withPlayState(`${kf} ${totalDuration}s`) : undefined

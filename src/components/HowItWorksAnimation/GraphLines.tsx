@@ -63,7 +63,7 @@ const GraphLines = forwardRef<GraphLinesRef>(function GraphLines(_, ref) {
   // Responsive dimensions
   const visibleWindowWidth =
     useBreakpointValue({
-      base: 20,
+      base: 40,
       sm: 70,
       md: 70,
     }) ?? 100;

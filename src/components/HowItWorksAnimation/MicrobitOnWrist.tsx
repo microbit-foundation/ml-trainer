@@ -104,15 +104,13 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
       },
       [delayInSec]
     );
-    if (!visible) {
-      return <></>;
-    }
 
     return (
       <Stack
         position="relative"
         width={{ base: "100%", sm: "60%", md: "50%" }}
         height="auto"
+        opacity={visible ? 1 : 0}
         {...props}
       >
         {/* Sparkly heart background */}

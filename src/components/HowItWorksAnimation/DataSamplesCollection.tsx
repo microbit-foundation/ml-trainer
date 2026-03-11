@@ -23,7 +23,7 @@ export interface DataSamplesCollectionRef {
   reset(): void;
 }
 
-const iconSize = { base: "1.25em", sm: "1.25em", md: "1.25em" };
+const iconSize = { base: "1em", sm: "1.25em", md: "1.25em" };
 const sampleTransitionDelay = 0.5; // s
 const sampleTransitionDuration = 0.4; // s
 const numSamplesPerRow = 3;

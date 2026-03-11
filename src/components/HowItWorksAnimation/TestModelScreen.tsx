@@ -28,7 +28,7 @@ export interface TestModelScreenRef {
 }
 
 export const testModeldurationInSec = totalDuration;
-const iconSize = { base: "1em", sm: "1.25em", md: "1.75em" };
+const iconSize = { base: "1em", sm: "1.25em", md: "1.5em" };
 const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
   _,
   ref

@@ -8,7 +8,7 @@ import { forwardRef, useImperativeHandle, useState } from "react";
 import { useAnimation } from "../AnimationProvider";
 
 const progressBar = keyframes({
-  "0%": { width: "5%" },
+  "0%": { width: "10%" },
   "90%": { width: "100%" },
   "100%": { width: "100%" },
 });
