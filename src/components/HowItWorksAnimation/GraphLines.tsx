@@ -3,8 +3,14 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
-import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
+import {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from "react";
+import { Box, Flex, keyframes, useBreakpointValue } from "@chakra-ui/react";
 import { useGraphColors } from "../../hooks/use-graph-colors";
 import { useSettings } from "../../store";
 import { useAnimation } from "../AnimationProvider";
@@ -109,8 +115,15 @@ const GraphLines = forwardRef<GraphLinesRef>(function GraphLines(_, ref) {
     [delayInSec]
   );
 
+  const waveScroll = useCallback(
+    (visibleWindowWidth: number) =>
+      keyframes`
+    from { transform: translateX(${-tileWidth + visibleWindowWidth}px); }
+    to   { transform: translateX(0); }
+  `,
+    []
+  );
   const paths = motionPaths[motion];
-  const keyframeName = `waveScroll-${motion}-${visibleWindowWidth}`;
 
   return (
     <Flex
@@ -122,15 +135,6 @@ const GraphLines = forwardRef<GraphLinesRef>(function GraphLines(_, ref) {
       position="relative"
     >
       <Box position="relative" zIndex={1}>
-        <style>{`
-            @keyframes ${keyframeName} {
-              from { transform: translateX(${
-                -tileWidth + visibleWindowWidth
-              }px); }
-              to   { transform: translateX(0); }
-            }
-          `}</style>
-
         <Box
           width={`${visibleWindowWidth}px`}
           height={`${height}px`}
@@ -138,7 +142,9 @@ const GraphLines = forwardRef<GraphLinesRef>(function GraphLines(_, ref) {
         >
           <Flex
             animation={withPlayState(
-              `${keyframeName} ${animationDuration}s linear infinite`
+              `${waveScroll(
+                visibleWindowWidth
+              )} ${animationDuration}s linear infinite`
             )}
           >
             {[0, 1].map((copy) => (
