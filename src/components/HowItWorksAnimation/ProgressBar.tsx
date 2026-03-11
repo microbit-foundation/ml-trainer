@@ -42,7 +42,7 @@ const ProgressBar = forwardRef<ProgressBarRef>(function ProgressBar(_, ref) {
       height="0.75em"
       width="5em"
       rounded="full"
-      background="#DDDDDD"
+      background="gray.500"
       position="relative"
     >
       <Box
