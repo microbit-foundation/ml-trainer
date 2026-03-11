@@ -33,10 +33,10 @@ const duration = {
     action: 2, // Training duration.
   },
   testingModel: {
-    prep: 1, // Before testing model.
+    prep: 0.3, // Before testing model.
     action: testModeldurationInSec, // Testing an action.
-    pause: 1, // Pause between testing actions.
-    stepPause: 0.5, // Pause between steps.
+    pause: 0.3, // Pause between testing actions.
+    stepPause: 0.5, // Pause between steps / arrows.
   },
   code: {
     prep: 1.3, // Before coding.
@@ -296,15 +296,14 @@ const HowItWorksAnimation = () => {
       while (true) {
         try {
           setVisible(true);
-          await runConnect();
+          // await runConnect();
           await runCollectData();
-          await runTraining();
-          await runTestModel();
-          await runCode();
-          await runUse();
+          // await runTraining();
+          // await runTestModel();
+          // await runCode();
+          // await runUse();
           setVisible(false);
           await delayInSec(fadeInOutDuration);
-          cleanUp();
         } catch (e) {
           if (e instanceof DOMException && e.name === "AbortError") {
             // Abort running animation.

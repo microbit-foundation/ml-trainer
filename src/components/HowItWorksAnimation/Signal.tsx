@@ -54,7 +54,7 @@ const dotsForGap = (gap: number) => {
 
 // ─── Timing constants ────────────────────────────────────────────────────────
 const signalFadeInDuration = 1;
-const dotTravelDuration = 2.6;
+const dotTravelDuration = 2;
 const dotSettleDuration = 0.6;
 
 // ─── Animation phases ────────────────────────────────────────────────────────
@@ -98,7 +98,7 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
   const [phase, setPhase] = useState<Phase>("idle");
   const [visible, setVisible] = useState<boolean>(false);
 
-  const signalGap = useBreakpointValue({ base: 130, sm: 230, md: 270 }) ?? 230;
+  const signalGap = useBreakpointValue({ base: 130, sm: 230, md: 230 }) ?? 230;
 
   // All dot metrics derived from the current gap
   const { dotSize, dotGap } = useMemo(

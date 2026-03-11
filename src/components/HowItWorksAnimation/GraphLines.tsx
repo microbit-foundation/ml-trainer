@@ -64,8 +64,8 @@ const GraphLines = forwardRef<GraphLinesRef>(function GraphLines(_, ref) {
   const visibleWindowWidth =
     useBreakpointValue({
       base: 20,
-      sm: 85,
-      md: 100,
+      sm: 70,
+      md: 70,
     }) ?? 100;
 
   const height =

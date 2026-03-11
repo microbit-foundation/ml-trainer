@@ -24,15 +24,15 @@ export interface DataSamplesCollectionRef {
 }
 
 const iconSize = { base: "1.25em", sm: "1.25em", md: "1.25em" };
-const sampleTransitionDelay = 0.8; // s
+const sampleTransitionDelay = 0.5; // s
 const sampleTransitionDuration = 0.4; // s
 const numSamplesPerRow = 3;
 
-const topSamples = [{ order: 0 }, { order: 1 }, { order: 2 }];
-const bottomSamples = [{ order: 0 }, { order: 1 }, { order: 2 }];
+const topSamples = [{ order: 1 }, { order: 2 }, { order: 3 }];
+const bottomSamples = [{ order: 1 }, { order: 2 }, { order: 3 }];
 
 export const dataCollectionDurationInSec =
-  sampleTransitionDelay * (numSamplesPerRow - 1) +
+  sampleTransitionDelay * numSamplesPerRow +
   sampleTransitionDuration * numSamplesPerRow;
 
 const DataSamplesCollection = forwardRef<DataSamplesCollectionRef, GridProps>(

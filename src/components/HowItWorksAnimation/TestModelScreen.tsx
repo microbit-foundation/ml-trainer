@@ -66,6 +66,8 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
       reset() {
         setVisible(false);
         setPlaying(false);
+        gaugeRef1.current?.reset();
+        gaugeRef2.current?.reset();
       },
     }),
     []

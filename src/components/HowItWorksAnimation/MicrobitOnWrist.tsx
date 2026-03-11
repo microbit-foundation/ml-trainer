@@ -15,15 +15,11 @@ type MoveType = "still" | "wave" | "up-down";
 // Natural waving hand: pivots from wrist, decays in amplitude like a real wave
 const animationKeyframes = {
   wave: keyframes({
-    "0%": { transform: "rotate(0deg)" },
-    "10%": { transform: "rotate(14deg)" },
+    "0%": { transform: "rotate(12deg)" },
     "25%": { transform: "rotate(-10deg)" },
-    "40%": { transform: "rotate(12deg)" },
-    "55%": { transform: "rotate(-7deg)" },
-    "68%": { transform: "rotate(8deg)" },
-    "80%": { transform: "rotate(-3deg)" },
-    "90%": { transform: "rotate(4deg)" },
-    "100%": { transform: "rotate(0deg)" },
+    "50%": { transform: "rotate(10deg)" },
+    "75%": { transform: "rotate(-7deg)" },
+    "100%": { transform: "rotate(12deg)" },
   }),
   // Smooth sinusoidal bob using ease-in-out between each stop
   "up-down": keyframes({
@@ -170,14 +166,14 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
           {...(move === "up-down"
             ? {
                 animation: withPlayState(
-                  `${animationKeyframes["up-down"]} 1.6s ease-in-out infinite`
+                  `${animationKeyframes["up-down"]} 1.1s ease-in-out infinite`
                 ),
               }
             : move === "wave"
             ? {
                 transformOrigin: "bottom center",
                 animation: withPlayState(
-                  `${animationKeyframes.wave} 3s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite`
+                  `${animationKeyframes.wave} 1.1s ease-in-out infinite`
                 ),
               }
             : {})}

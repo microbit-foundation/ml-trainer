@@ -7,9 +7,7 @@ import { Box, HStack, keyframes, StackProps } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
 import { useAnimation } from "../AnimationProvider";
 
-export const totalDuration = 2.5;
-const pct = (s: number) => `${((s / totalDuration) * 100).toFixed(1)}%`;
-const filledDarkPct = pct(1.94);
+export const totalDuration = 2;
 
 export interface GaugeProps extends StackProps {
   empty?: string;
@@ -22,59 +20,59 @@ export interface GaugeRef {
   reset(): void;
 }
 
+const filledDarkPct = "75%";
 export const buildIconColorKeyframes = (from: string, to: string) => {
   return keyframes({
     "0%": { color: from },
-    [pct(1.9)]: { color: from },
+    "74%": { color: from },
     [filledDarkPct]: { color: to },
     "100%": { color: to },
   });
 };
-
 function buildKeyframes(empty: string, filled: string, filledDark: string) {
   return [
     keyframes({
       "0%": { background: empty },
-      [pct(0.17)]: { background: filled },
-      [pct(1.78)]: { background: filled },
+      "6.8%": { background: filled },
+      "71.2%": { background: filled },
       [filledDarkPct]: { background: filledDark },
       "100%": { background: filledDark },
     }),
     keyframes({
       "0%": { background: empty },
-      [pct(0.39)]: { background: empty },
-      [pct(0.56)]: { background: filled },
-      [pct(1.78)]: { background: filled },
+      "15.6%": { background: empty },
+      "22.4%": { background: filled },
+      "71.2%": { background: filled },
       [filledDarkPct]: { background: filledDark },
       "100%": { background: filledDark },
     }),
     keyframes({
       "0%": { background: empty },
-      [pct(0.61)]: { background: empty },
-      [pct(0.78)]: { background: filled },
-      [pct(1.78)]: { background: filled },
+      "24.4%": { background: empty },
+      "31.2%": { background: filled },
+      "71.2%": { background: filled },
       [filledDarkPct]: { background: filledDark },
       "100%": { background: filledDark },
     }),
     keyframes({
       "0%": { background: empty },
-      [pct(0.83)]: { background: empty },
-      [pct(1.06)]: { background: filled },
-      [pct(1.28)]: { background: empty },
-      [pct(1.5)]: { background: filled },
-      [pct(1.78)]: { background: filled },
+      "33.2%": { background: empty },
+      "42.4%": { background: filled },
+      "51.2%": { background: empty },
+      "60%": { background: filled },
+      "71.2%": { background: filled },
       [filledDarkPct]: { background: filledDark },
       "100%": { background: filledDark },
     }),
     keyframes({
       "0%": { background: empty },
       [filledDarkPct]: { background: empty },
-      [pct(2.0)]: { background: filledDark },
+      "76%": { background: filledDark },
       "100%": { background: filledDark },
     }),
     keyframes({
       "0%": { background: empty },
-      [pct(2.17)]: { background: empty },
+      "90%": { background: empty },
       "100%": { background: filledDark },
     }),
     keyframes({
