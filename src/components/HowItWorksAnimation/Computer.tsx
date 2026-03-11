@@ -26,9 +26,9 @@ type DisplayType =
   | "code";
 export interface ComputerRef {
   setDisplay(type: DisplayType): void;
-  dataSamples: DataSamplesCollectionRef | null;
-  testModel: TestModelScreenRef | null;
-  codeBlock: CodeBlockRef | null;
+  getDataSamples(): DataSamplesCollectionRef | null;
+  getTestModel(): TestModelScreenRef | null;
+  getCodeBlock(): CodeBlockRef | null;
   playTraining(durationInSecs?: number): Promise<void>;
   playCode(): Promise<void>;
   setVisible(visible: boolean): void;
@@ -51,9 +51,15 @@ const Computer = forwardRef<ComputerRef, ComputerProps>(function Computer(
     () => {
       return {
         setDisplay,
-        dataSamples: dataSamplesRef.current,
-        testModel: testModelRef.current,
-        codeBlock: codeBlockRef.current,
+        getDataSamples() {
+          return dataSamplesRef.current;
+        },
+        getTestModel() {
+          return testModelRef.current;
+        },
+        getCodeBlock() {
+          return codeBlockRef.current;
+        },
         async playTraining(secs = 2) {
           setDisplay("training");
           await progressBarRef.current?.play(secs);

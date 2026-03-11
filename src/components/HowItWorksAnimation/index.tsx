@@ -120,7 +120,7 @@ const HowItWorksAnimation = () => {
         duration: duration.collectData.action,
       }),
       graphLinesRef.current?.play("wavy", duration.collectData.action),
-      computerRef.current?.dataSamples?.playTopSamples(),
+      computerRef.current?.getDataSamples()?.playTopSamples(),
     ]);
 
     // Collect data for up down movement.
@@ -131,7 +131,7 @@ const HowItWorksAnimation = () => {
         duration: duration.collectData.action,
       }),
       graphLinesRef.current?.play("chaotic", duration.collectData.action),
-      computerRef.current?.dataSamples?.playBottomSamples(),
+      computerRef.current?.getDataSamples()?.playBottomSamples(),
     ]);
 
     stepFlowRef.current?.setStep(2, "completed");
@@ -165,7 +165,7 @@ const HowItWorksAnimation = () => {
     signalRef.current?.connected();
     stepFlowRef.current?.setStep(3, "active");
     computerRef.current?.setVisible(true);
-    computerRef.current?.testModel?.show();
+    computerRef.current?.getTestModel()?.show();
     await Promise.all([
       microbitOnWristRef.current?.play({
         ledPattern: "Happy",
@@ -183,7 +183,7 @@ const HowItWorksAnimation = () => {
         duration: duration.testingModel.action,
       }),
       graphLinesRef.current?.play("wavy", duration.testingModel.action),
-      computerRef.current?.testModel?.playAction1(),
+      computerRef.current?.getTestModel()?.playAction1(),
     ]);
 
     // Pause between testing actions.
@@ -204,7 +204,7 @@ const HowItWorksAnimation = () => {
         duration: duration.testingModel.action,
       }),
       graphLinesRef.current?.play("chaotic", duration.testingModel.action),
-      computerRef.current?.testModel?.playAction2(),
+      computerRef.current?.getTestModel()?.playAction2(),
     ]);
 
     // Show iterative flow.
@@ -232,7 +232,7 @@ const HowItWorksAnimation = () => {
     // Setup.
     signalRef.current?.connected();
     computerRef.current?.setVisible(true);
-    computerRef.current?.codeBlock?.show();
+    computerRef.current?.getCodeBlock()?.show();
     stepFlowRef.current?.setStep(4, "active");
     await microbitOnWristRef.current?.play({
       ledPattern: "Happy",
@@ -241,7 +241,7 @@ const HowItWorksAnimation = () => {
     });
 
     // Code.
-    await computerRef.current?.codeBlock?.play();
+    await computerRef.current?.getCodeBlock()?.play();
     stepFlowRef.current?.setStep(4, "completed");
 
     // Download program.
